@@ -17,6 +17,9 @@ export interface PlayerChipProps {
   isMe?: boolean;
   /** A bot player (ADR-028): shows a robot tag so nobody mistakes it for a person. */
   isBot?: boolean;
+  /** Renders a ✕ inside the chip (e.g. remove a bot you own); 44 px hit area. */
+  onRemove?: () => void;
+  removeLabel?: string;
   size?: 'sm' | 'md' | 'lg';
 }
 
@@ -39,6 +42,8 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
     active,
     isMe,
     isBot,
+    onRemove,
+    removeLabel = 'remove',
     size = 'md',
   } = props;
   const glyph = connected ? GLYPH[status] : { text: '⟳', label: 'reconnecting' };
@@ -64,8 +69,8 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
         </span>
       ) : null}
       {isBot ? (
-        <span className={styles.bot} aria-hidden>
-          🤖 bot
+        <span className={styles.bot} role="img" aria-label="bot">
+          🤖
         </span>
       ) : null}
       {isVip ? (
@@ -82,6 +87,11 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
         </span>
       ) : null}
       {score !== undefined ? <span className={styles.score}>{score}</span> : null}
+      {onRemove ? (
+        <button type="button" className={styles.remove} onClick={onRemove} aria-label={removeLabel}>
+          ✕
+        </button>
+      ) : null}
     </div>
   );
 }

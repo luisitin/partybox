@@ -8,65 +8,30 @@
   padding: 0;
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: var(--pb-space-2);
 }
 
-.bots {
-  display: flex;
-  flex-direction: column;
-  gap: var(--pb-space-2);
-  padding-top: var(--pb-space-4);
-  border-top: 1px solid var(--pb-surface-2);
-}
-
+/* The last "chip" in the grid is the add-a-bot action: dashed so it reads as a slot, not a player. */
 .addBot {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-2);
   min-height: var(--pb-touch);
-  padding: 0 var(--pb-space-4);
-  border-radius: var(--pb-radius);
-  background: var(--pb-surface-2);
-  font-weight: 800;
-  text-align: left;
+  padding: var(--pb-space-1) var(--pb-space-4) var(--pb-space-1) var(--pb-space-3);
+  border-radius: 999px;
+  border: 2px dashed var(--pb-text-muted);
+  color: var(--pb-text);
+  font-weight: 700;
 }
 
 .addBot:disabled {
-  opacity: 0.5;
+  border-color: var(--pb-surface-2);
+  color: var(--pb-text-muted);
   cursor: default;
 }
 
-.botList {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--pb-space-2);
-}
-
-.botRow {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--pb-space-3);
-  min-height: var(--pb-touch);
-  padding: 0 var(--pb-space-3);
-  border-radius: var(--pb-radius);
-  background: var(--pb-surface);
-}
-
-.botName {
-  font-weight: 700;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.removeBot {
-  flex-shrink: 0;
-  min-height: var(--pb-touch);
-  padding: 0 var(--pb-space-3);
-  border-radius: var(--pb-radius);
-  background: var(--pb-surface-2);
-  font-size: var(--pb-font-caption);
-  font-weight: 700;
-  color: var(--pb-danger);
+.addBotPlus {
+  font-weight: 900;
+  color: var(--pb-accent-2);
 }

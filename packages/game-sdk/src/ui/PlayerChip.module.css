@@ -45,13 +45,28 @@
 
 .bot {
   flex-shrink: 0;
-  padding: 0 0.45em;
+  padding: 0 0.35em;
   border-radius: 999px;
   background: var(--pb-surface-2);
-  color: var(--pb-info);
-  font-size: 0.7em;
-  font-weight: 800;
-  line-height: 1.6;
+  font-size: 0.75em;
+  line-height: 1.5;
+}
+
+/* ✕ to remove (bots you own): a full 44 px target that does not enlarge the chip visually. */
+.remove {
+  flex-shrink: 0;
+  width: var(--pb-touch);
+  height: var(--pb-touch);
+  margin: calc(-1 * var(--pb-space-2)) calc(-1 * var(--pb-space-2)) calc(-1 * var(--pb-space-2)) 0;
+  border-radius: 50%;
+  color: var(--pb-text-muted);
+  font-size: 1em;
+  font-weight: 900;
+}
+
+.remove:hover,
+.remove:focus-visible {
+  color: var(--pb-danger);
 }
 
 /* Readable from the couch (the old 0.7em star over the avatar was 12–20 px on the TV strip). */
