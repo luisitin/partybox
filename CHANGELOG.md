@@ -27,3 +27,11 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 - Phase 6: `@partybox/sim` — headless simulator with five strategies + `mixed`, chaos actions,
   invariants after every event, determinism replay, repro files + `--replay`, `--smoke` (now part of
   `pnpm verify`), `--dump-fixtures`; `@partybox/game-sdk/testing` entry point.
+- Phase 7: `@partybox/e2e` — `pnpm e2e` (TV + phones through the real UI, moves via the new
+  `POST /api/dev/act`, zero-console-error gate) and `pnpm e2e:snap` (frozen-clock screenshots per
+  phase, per device preset incl. iPhone SE / Galaxy / landscape / 200 % font, spectator phone);
+  `/preview` route renders any fixture inside the real shells; `GET /api/games`; Vite HMR now on the
+  app's own port (ADR-026).
+- `games/lightning-round` ("Lightning Round"): speed trivia — 216 original questions in 8 categories,
+  speed + streak scoring, a final wager question, three awards, fixtures, tests and contract config.
+- `games/wisecrack` ("Wisecrack", prompt → answer → vote): 3–8 players, rounds/answerSeconds/spicy settings, double-points last round, sweep bonus, three awards, 160 family + 56 spicy prompts.

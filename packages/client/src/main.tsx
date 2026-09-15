@@ -5,6 +5,8 @@ import type { JSX } from 'react';
 import { createRoot } from 'react-dom/client';
 import { ControllerApp } from './controller/ControllerApp';
 import { Preview } from './preview/Preview';
+// Bundled OFL font (ADR-012, BL-001): only the upright weight axis; unicode-range keeps downloads small.
+import '@fontsource-variable/nunito/wght.css';
 import './styles/tokens.css';
 import './styles/global.css';
 import { TvApp } from './tv/TvApp';

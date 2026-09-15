@@ -7,7 +7,6 @@ Keep the top 10 ordered by value. Move done items to `CHANGELOG.md`.
 
 | Id     | Item                                                                        | Notes                                                    |
 | ------ | --------------------------------------------------------------------------- | -------------------------------------------------------- |
-| BL-001 | Bundle one OFL display font (woff2) instead of the system stack             | ADR-012; Phase 8 if fetchable                            |
 | BL-002 | Drawing game (canvas input)                                                 | contract already allows it (ADR-002)                     |
 | BL-003 | Audience mode (non-players vote from phones)                                | out of scope for v0.1                                    |
 | BL-004 | Multi-room UI (create/join by code)                                         | model supports it (ADR-005)                              |

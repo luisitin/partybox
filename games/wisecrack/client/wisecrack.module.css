@@ -1,0 +1,115 @@
+/* Wisecrack layout helpers. Tokens only (docs/DESIGN_SYSTEM.md); primitives do the heavy lifting. */
+
+.kicker {
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  color: var(--pb-accent-2);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* TV: the two anonymous answers side by side during "vote". */
+.cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--pb-space-6);
+  width: 100%;
+  margin-top: var(--pb-space-5);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-4);
+  padding: var(--pb-space-6);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface);
+  min-height: 12em;
+  animation: pb-rise var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.card:nth-child(2) {
+  animation-delay: var(--pb-motion-fast);
+}
+
+.letter {
+  display: grid;
+  place-items: center;
+  width: 1.6em;
+  height: 1.6em;
+  border-radius: 50%;
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  background: var(--pb-accent-2);
+  color: var(--pb-on-accent);
+}
+
+.answer {
+  font-size: var(--pb-font-h2);
+  font-weight: 800;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.blank {
+  color: var(--pb-text-muted);
+  font-style: italic;
+}
+
+.progress {
+  margin-top: auto;
+  color: var(--pb-text-muted);
+  font-size: var(--pb-font-body);
+}
+
+/* TV "done": awards under the scoreboard. */
+.awards {
+  list-style: none;
+  margin: var(--pb-space-5) 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pb-space-4);
+}
+
+.award {
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-3);
+  padding: var(--pb-space-3) var(--pb-space-5);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  font-size: var(--pb-font-body);
+}
+
+.awardTitle {
+  font-weight: 800;
+  color: var(--pb-accent-2);
+}
+
+/* Phone: my answer echoed back on the waiting screens. */
+.quote {
+  padding: var(--pb-space-3) var(--pb-space-4);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.points {
+  font-size: var(--pb-font-display);
+  font-weight: 900;
+  line-height: 1;
+  color: var(--pb-accent-2);
+  font-variant-numeric: tabular-nums;
+}
+
+/* TV: the Scoreboard caps itself at 28em, and `em` here resolves against the 18px body font (the
+   TV tokens live on the shell element, not on body). A token font-size on the wrapper makes that
+   cap 28 × body = ~1000px so names are not truncated; the rows set their own size anyway. */
+.board {
+  width: 100%;
+  font-size: var(--pb-font-body);
+  display: flex;
+  justify-content: center;
+}

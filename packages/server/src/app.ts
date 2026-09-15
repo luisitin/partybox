@@ -7,6 +7,7 @@ import Fastify from 'fastify';
 import type { FastifyInstance } from 'fastify';
 import type { EngineDeps } from '@partybox/engine';
 import { PARTYBOX_VERSION, gameManifestSchema } from '@partybox/shared';
+import { gameSummaries } from '@partybox/engine';
 import { createBotManager } from './bots';
 import type { BotManager } from './bots';
 import { createClock } from './clock';
@@ -133,6 +134,9 @@ export async function createApp(options: AppOptions): Promise<App> {
     };
   });
 
+  // Public: the registered games (what the lobby's picker shows), for tools and tests.
+  fastify.get('/api/games', async () => gameSummaries(deps));
+
   registerDevApi(fastify, {
     enabled: options.dev || options.devApi,
     host,
@@ -161,7 +165,8 @@ async function registerViteDev(fastify: FastifyInstance): Promise<void> {
   const vite = await createViteServer({
     configFile: join(CLIENT_DIR, 'vite.config.ts'),
     root: CLIENT_DIR,
-    server: { middlewareMode: true },
+    // HMR rides the same HTTP server (one port for phones); Socket.IO ignores non-matching upgrades.
+    server: { middlewareMode: true, hmr: { server: fastify.server } },
     appType: 'spa',
   });
   await fastify.register(middie.default);
