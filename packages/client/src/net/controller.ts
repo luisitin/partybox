@@ -120,8 +120,11 @@ export function createController(url?: string): Controller {
       sendJoin(session, session.token);
     }
   });
-  socket.on('disconnect', () => {
+  socket.on('disconnect', (reason) => {
     store.set({ connection: store.get().joined ? 'reconnecting' : 'connecting' });
+    // A kick closes the socket from the server side; socket.io treats that as final, but the
+    // person still needs a live connection to join again (or another room) without reloading.
+    if (reason === 'io server disconnect') socket.connect();
   });
   socket.on('welcome', (payload: WelcomePayload) => {
     const session = pending ?? loadSession();

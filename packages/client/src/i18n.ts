@@ -13,7 +13,8 @@ export const t = {
     joining: 'Joining…',
     tryAgain: 'Try another.',
     resuming: 'Reconnecting…',
-    kicked: 'You were removed from the room.',
+    offline: 'Connecting…',
+    kicked: 'The VIP removed you from the room. You can join again.',
     noRooms: 'No room is open right now. Start the server and open /tv on the big screen.',
   },
   lobby: {

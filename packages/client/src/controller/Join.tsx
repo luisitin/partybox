@@ -68,7 +68,11 @@ export function Join({ controller, state }: JoinProps): JSX.Element {
         title={t.join.title}
         footer={
           <PrimaryButton type="submit" disabled={!canSubmit || submitting}>
-            {submitting ? t.join.joining : t.join.submit}
+            {submitting
+              ? t.join.joining
+              : state.connection !== 'connected'
+                ? t.join.offline
+                : t.join.submit}
           </PrimaryButton>
         }
       >
