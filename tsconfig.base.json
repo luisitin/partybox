@@ -23,7 +23,8 @@
     "paths": {
       "@partybox/shared": ["./packages/shared/src/index.ts"],
       "@partybox/engine": ["./packages/engine/src/index.ts"],
-      "@partybox/game-sdk": ["./packages/game-sdk/src/index.ts"]
+      "@partybox/game-sdk": ["./packages/game-sdk/src/index.ts"],
+      "@partybox/game-sdk/ui": ["./packages/game-sdk/src/ui.ts"]
     }
   }
 }

@@ -2,7 +2,7 @@
 // status. Game components are loaded lazily from the generated registry.
 import { useMemo } from 'react';
 import type { JSX } from 'react';
-import { ServerClockProvider } from '@partybox/game-sdk';
+import { ServerClockProvider } from '@partybox/game-sdk/ui';
 import { createController } from '../net/controller';
 import type { Controller } from '../net/controller';
 import { useStore } from '../net/store';

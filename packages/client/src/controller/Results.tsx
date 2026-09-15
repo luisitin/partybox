@@ -2,7 +2,7 @@
 // new game / lobby. Everyone else sees who won and waits.
 import type { JSX } from 'react';
 import type { PlayerPublic, RoomSnapshot } from '@partybox/shared';
-import { PrimaryButton, Scoreboard, Screen } from '@partybox/game-sdk';
+import { PrimaryButton, Scoreboard, Screen } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import type { Controller } from '../net/controller';
 import { scoreboardRows, winnerLine } from './results-rows';

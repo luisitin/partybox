@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import type { JSX } from 'react';
 import type { PlayerPublic, RoomSnapshot } from '@partybox/shared';
-import { Avatar, PrimaryButton } from '@partybox/game-sdk';
+import { Avatar, PrimaryButton } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import type { Controller } from '../net/controller';
 import styles from './VipMenu.module.css';

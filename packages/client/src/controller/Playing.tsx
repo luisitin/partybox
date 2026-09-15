@@ -3,7 +3,7 @@
 import { Suspense } from 'react';
 import type { JSX } from 'react';
 import type { ControllerView, PlayerPublic, PushedView, RoomSnapshot } from '@partybox/shared';
-import { WaitingScreen } from '@partybox/game-sdk';
+import { WaitingScreen } from '@partybox/game-sdk/ui';
 import { clientGames } from '../games.generated';
 import { t } from '../i18n';
 import type { Controller } from '../net/controller';

@@ -14,10 +14,12 @@ export interface GameControllerProps<V extends ControllerView = ControllerView, 
   send: (input: I) => void;
 }
 
+/* eslint-disable @typescript-eslint/no-explicit-any -- each game narrows its own view/input types */
 export interface GameClientModule {
   id: string;
-  Tv: LazyExoticComponent<ComponentType<GameTvProps<never>>>;
-  Controller: LazyExoticComponent<ComponentType<GameControllerProps<never, never>>>;
+  Tv: LazyExoticComponent<ComponentType<GameTvProps<any>>>;
+  Controller: LazyExoticComponent<ComponentType<GameControllerProps<any, any>>>;
   /** Optional map from game moments to design-system sound cue names (docs/DESIGN_SYSTEM.md). */
   sounds?: Record<string, string>;
 }
+/* eslint-enable @typescript-eslint/no-explicit-any */

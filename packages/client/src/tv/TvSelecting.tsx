@@ -1,7 +1,7 @@
 // The VIP is choosing: show the highlighted game big, its settings, and who is here.
 import type { JSX } from 'react';
 import type { RoomSnapshot } from '@partybox/shared';
-import { BigText, PlayerChips, Stage } from '@partybox/game-sdk';
+import { BigText, PlayerChips, Stage } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import styles from './TvSelecting.module.css';
 

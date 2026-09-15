@@ -1,0 +1,42 @@
+.kicker {
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  color: var(--pb-accent-2);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.prompt {
+  font-size: var(--pb-font-h2);
+  font-weight: 800;
+  text-wrap: balance;
+}
+
+.input {
+  width: 100%;
+  min-height: 120px;
+  padding: var(--pb-space-3) var(--pb-space-4);
+  border-radius: var(--pb-radius);
+  border: 2px solid var(--pb-surface-2);
+  background: var(--pb-surface);
+  font-size: var(--pb-font-h2);
+  font-weight: 600;
+  line-height: 1.3;
+  resize: none;
+}
+
+.input:focus {
+  border-color: var(--pb-accent);
+  outline: none;
+}
+
+.input:disabled {
+  opacity: 0.7;
+}
+
+.counter {
+  text-align: right;
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+  font-variant-numeric: tabular-nums;
+}

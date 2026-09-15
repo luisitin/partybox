@@ -1,7 +1,7 @@
 // Lobby on the phone: who is here, and for the VIP the button that opens game selection.
 import type { JSX } from 'react';
 import type { PlayerPublic, RoomSnapshot } from '@partybox/shared';
-import { PlayerChip, PrimaryButton, Screen } from '@partybox/game-sdk';
+import { PlayerChip, PrimaryButton, Screen } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import type { Controller } from '../net/controller';
 import styles from './Lobby.module.css';

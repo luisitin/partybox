@@ -34,6 +34,13 @@ module.exports = {
       to: { path: '^games/[^/]+/client/' },
     },
     {
+      name: 'game-server-never-imports-sdk-ui',
+      comment: 'ADR-023: the pure sdk entry point must stay loadable by Node (no React/CSS).',
+      severity: 'error',
+      from: { path: '^(games/[^/]+/server/|packages/game-sdk/src/(index|timer|scoring|views).ts)' },
+      to: { path: '^packages/game-sdk/src/(ui|tv|controller)/' },
+    },
+    {
       name: 'game-server-no-node-core',
       comment: 'No I/O in game logic (docs/GAME_CONTRACT.md).',
       severity: 'error',

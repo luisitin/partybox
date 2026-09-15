@@ -134,8 +134,10 @@ export const clientModule: GameClientModule = {
 ```
 
 Components receive `{ view, send(input), me }` and are dumb: no sockets, no global state, no game logic —
-compose `@partybox/game-sdk` primitives (`TextAnswer`, `ChoiceGrid`, `VoteList`, `WaitingScreen`,
-`Timer`, `PlayerChips`, `Scoreboard`, `Reveal`). The shell already renders the envelope.
+compose `@partybox/game-sdk/ui` primitives (`TextAnswer`, `ChoiceGrid`, `VoteList`, `WaitingScreen`,
+`Stage`, `BigText`, `Timer`, `PlayerChips`, `Scoreboard`, `Reveal`). The shell already renders the envelope
+(timer, chips, VIP overlay). Server code imports `@partybox/game-sdk` (pure); client code imports
+`@partybox/game-sdk/ui` (ADR-023) — the linter enforces the split.
 
 ## Worked example — the template game (`games/_template`)
 

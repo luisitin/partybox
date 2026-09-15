@@ -1,6 +1,6 @@
 // Shared by the phone and TV results screens: results → scoreboard rows + winner sentence.
 import type { RoomSnapshot } from '@partybox/shared';
-import type { ScoreboardRow } from '@partybox/game-sdk';
+import type { ScoreboardRow } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 
 export function scoreboardRows(room: RoomSnapshot): ScoreboardRow[] {

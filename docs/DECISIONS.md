@@ -129,3 +129,15 @@ session might want to undo. Never edit an old one — supersede it.
 **Context.** ADR-004 described a `scheduleTimer` effect. Implementing it showed the engine has three time-based rules, not one: game deadlines, the 30 s VIP handover and the 120 s disconnect expiry. Three effect kinds and three host timers invite drift.
 **Decision.** The engine exposes `nextWakeAt(room): number | null` — the earliest pending moment across all three rules. After every event the host re-derives it and keeps exactly one `setTimeout` per room that sends `{ type: 'tick', now }`. On a tick the engine does everything that is due; ticks are idempotent (a spurious tick changes nothing) and the `timer` game event still fires exactly once per `phase.id + startedAt` (`RunningGame.firedTimer`). Chained already-due deadlines fire within one tick, capped at 10.
 **Consequences.** ADR-004's _rule_ stands (timers are data); only the mechanism changed. Frozen clocks, replay and the sim need no timer bookkeeping at all — they just call `tick` with the simulated `now`.
+
+## ADR-023 — Two SDK entry points: `@partybox/game-sdk` (pure) and `@partybox/game-sdk/ui` (React)
+
+**Context.** The server, the sim and the contract tests load `games/<id>/server/index.ts` under Node. Phase 3 put React primitives (with CSS modules) in the same barrel; Node cannot load `.css`, so `pnpm dev` crashed the moment a real game was registered.
+**Decision.** `@partybox/game-sdk` exports only contract types, `z`, rng and reducer/view helpers. `@partybox/game-sdk/ui` exports the primitives (`Stage`, `Timer`, `TextAnswer`, …). ESLint forbids `game-sdk/ui` under `games/*/server`; dependency-cruiser forbids the pure entry point from reaching `ui/`, `tv/`, `controller/`.
+**Consequences.** Game server files import `@partybox/game-sdk`; game client files import `@partybox/game-sdk/ui` (+ types from either). `pnpm verify` catches a mix-up before it reaches the server.
+
+## ADR-024 — Contract fuzzing sends only schema-valid inputs
+
+**Context.** The first contract run threw junk inputs (`null`, `{ nope: true }`) at reducers and they crashed. The engine validates every input with `inputSchema` before `reduce` runs, so those events cannot occur.
+**Decision.** The fuzzer sends inputs that pass the schema but are wrong in every other way (other players' inputs, unknown senders, inputs from earlier phases, `now` before the phase). Reducers may rely on the input shape.
+**Consequences.** Games stay simple; the socket layer + engine are the only input validators (tested in `packages/server` and `packages/engine`).

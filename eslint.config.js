@@ -163,6 +163,10 @@ export default tseslint.config(
               message: 'No I/O.',
             },
             { group: ['../client/**', '**/client/**'], message: 'Server code never imports UI.' },
+            {
+              group: ['@partybox/game-sdk/ui'],
+              message: 'Server code never imports UI (ADR-023): use @partybox/game-sdk.',
+            },
           ],
         },
       ],

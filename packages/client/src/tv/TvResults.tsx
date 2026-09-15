@@ -2,7 +2,7 @@
 // what the VIP can do next.
 import type { JSX } from 'react';
 import type { RoomSnapshot } from '@partybox/shared';
-import { BigText, Scoreboard, Stage } from '@partybox/game-sdk';
+import { BigText, Scoreboard, Stage } from '@partybox/game-sdk/ui';
 import { scoreboardRows, winnerLine } from '../controller/results-rows';
 import { t } from '../i18n';
 import styles from './TvResults.module.css';

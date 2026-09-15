@@ -1,7 +1,7 @@
 // Lobby on the stage: the join instructions (big) and everyone who is in. First player = VIP.
 import type { JSX } from 'react';
 import type { RoomSnapshot } from '@partybox/shared';
-import { BigText, PlayerChips, Stage } from '@partybox/game-sdk';
+import { BigText, PlayerChips, Stage } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import { useServerInfo } from '../net/info';
 import styles from './TvLobby.module.css';

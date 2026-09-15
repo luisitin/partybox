@@ -18,3 +18,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
   VIP menu, TV frame with QR, synthesized sound cues, tap-to-start + mute + fullscreen) plus the first
   `@partybox/game-sdk` UI primitives (Avatar, PlayerChip, Stage, BigText, Timer, PlayerChips,
   Scoreboard, Screen, PrimaryButton, WaitingScreen, server clock hooks).
+- Phase 3: `@partybox/game-sdk` helpers (`enterPhase`, `applyVip`, `buildResults`, `envelope`…),
+  interaction primitives (`TextAnswer`, `ChoiceGrid`, `VoteList`, `Reveal`), the split into
+  `@partybox/game-sdk` (pure) and `@partybox/game-sdk/ui` (React), the contract suite that runs
+  against every `games/*` folder (totality fuzz, purity scan, packs, fixtures, termination with four
+  bot strategies, determinism, stale timers, hidden-info leaks), `games/_template` ("Quick Poll"),
+  and `pnpm new-game <id>`.

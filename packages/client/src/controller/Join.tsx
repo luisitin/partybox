@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import type { FormEvent, JSX } from 'react';
 import { AVATAR_IDS, PLAYER_NAME_MAX } from '@partybox/shared';
-import { Avatar, PrimaryButton, Screen } from '@partybox/game-sdk';
+import { Avatar, PrimaryButton, Screen } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import type { Controller, ControllerState } from '../net/controller';
 import { useServerInfo } from '../net/info';

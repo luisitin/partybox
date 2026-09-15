@@ -2,7 +2,7 @@
 // transitions, and never sends player events. `?room=CODE` watches a specific room.
 import { useEffect, useMemo, useRef } from 'react';
 import type { JSX } from 'react';
-import { ServerClockProvider } from '@partybox/game-sdk';
+import { ServerClockProvider } from '@partybox/game-sdk/ui';
 import { useStore } from '../net/store';
 import { createTvClient } from '../net/tv';
 import { createSoundEngine } from '../sound';

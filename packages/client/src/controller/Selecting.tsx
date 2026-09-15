@@ -2,7 +2,7 @@
 // with the server's reason). Everyone else: a calm "X is choosing…" with the current pick.
 import type { JSX } from 'react';
 import type { PlayerPublic, RoomSnapshot, SettingSpec, Settings } from '@partybox/shared';
-import { PrimaryButton, Screen, WaitingScreen } from '@partybox/game-sdk';
+import { PrimaryButton, Screen, WaitingScreen } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import type { Controller } from '../net/controller';
 import styles from './Selecting.module.css';

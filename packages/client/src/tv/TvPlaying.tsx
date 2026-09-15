@@ -3,7 +3,7 @@
 import { Suspense, useCallback } from 'react';
 import type { JSX } from 'react';
 import type { PushedView, RoomSnapshot, TvView } from '@partybox/shared';
-import { BigText, PlayerChips, Timer } from '@partybox/game-sdk';
+import { BigText, PlayerChips, Timer } from '@partybox/game-sdk/ui';
 import { GameErrorBoundary } from '../controller/GameErrorBoundary';
 import { clientGames } from '../games.generated';
 import { t } from '../i18n';

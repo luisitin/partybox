@@ -1,31 +1,60 @@
 // Public surface of @partybox/game-sdk: everything a game is allowed to import (ADR-009).
-// Contract + helpers from shared, then UI primitives (docs/DESIGN_SYSTEM.md).
-export { PARTYBOX_VERSION } from '@partybox/shared';
+// Sections: contract (from shared) · reducer helpers · UI primitives (docs/DESIGN_SYSTEM.md).
+
+// ── contract types + zod, re-exported from shared ─────────────────────────────────────────────
+export { PARTYBOX_VERSION, gameManifestSchema, z } from '@partybox/shared';
+export type {
+  ControllerView,
+  GameAward,
+  GameBot,
+  GameDefinition,
+  GameEvent,
+  GameManifest,
+  GameResults,
+  GameStateBase,
+  InitContext,
+  PhaseInfo,
+  PlayerInfo,
+  PlayerStatus,
+  PushedView,
+  Rng,
+  RngState,
+  SettingSpec,
+  Settings,
+  SettingValue,
+  TvView,
+  ViewEnvelope,
+  ViewPlayer,
+  VipGameAction,
+} from '@partybox/shared';
 export type { GameClientModule, GameControllerProps, GameTvProps } from './client-module';
 
-// UI: shared
-export { Avatar, avatarColorVar } from './ui/Avatar';
-export type { AvatarProps } from './ui/Avatar';
-export { PlayerChip } from './ui/PlayerChip';
-export type { PlayerChipProps } from './ui/PlayerChip';
-export { ServerClockProvider, useSecondsLeft, useServerNow } from './ui/clock';
+// ── randomness (pure `[value, next]` helpers; `createRng` only for bots) ──────────────────────
+export {
+  createRng,
+  hashString,
+  nextFloat,
+  nextInt,
+  pick,
+  seedRng,
+  shuffle,
+} from '@partybox/shared';
 
-// UI: TV
-export { Stage } from './tv/Stage';
-export type { StageProps } from './tv/Stage';
-export { BigText } from './tv/BigText';
-export type { BigTextProps } from './tv/BigText';
-export { Timer } from './tv/Timer';
-export type { TimerProps } from './tv/Timer';
-export { PlayerChips } from './tv/PlayerChips';
-export type { PlayerChipsProps } from './tv/PlayerChips';
-export { Scoreboard } from './tv/Scoreboard';
-export type { ScoreboardProps, ScoreboardRow } from './tv/Scoreboard';
+// ── reducer helpers ──────────────────────────────────────────────────────────────────────────
+export {
+  allConnectedDone,
+  applyVip,
+  connectedIds,
+  enterPhase,
+  isPaused,
+  isTimerFor,
+  setConnected,
+} from './timer';
+export type { VipHandlers } from './timer';
+export { addScores, buildResults, rank, speedPoints } from './scoring';
+export type { RankedRow } from './scoring';
+export { controllerEnvelope, envelope, viewPlayers } from './views';
+export type { EnvelopeOptions } from './views';
 
-// UI: controller
-export { Screen } from './controller/Screen';
-export type { ScreenProps } from './controller/Screen';
-export { PrimaryButton } from './controller/PrimaryButton';
-export type { PrimaryButtonProps } from './controller/PrimaryButton';
-export { WaitingScreen } from './controller/WaitingScreen';
-export type { WaitingScreenProps } from './controller/WaitingScreen';
+// UI primitives live in `@partybox/game-sdk/ui` (ADR-023): this entry point stays free of React
+// and CSS so game server code can be loaded by Node (server, sim, contract tests).

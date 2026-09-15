@@ -57,7 +57,8 @@ function collectGames(): { id: string; ident: string }[] {
     const missing = missingGameFiles(folder.dir);
     if (missing.length > 0) problems.push(`games/${folder.id} is missing: ${missing.join(', ')}`);
     const manifest = readManifest(folder.dir);
-    if (manifest['id'] !== folder.id)
+    // `_template` carries id `template`: leading underscores mean "not registered".
+    if (manifest['id'] !== folder.id.replace(/^_/, ''))
       problems.push(`games/${folder.id}/manifest.json has id "${String(manifest['id'])}"`);
     if (folder.registered) games.push({ id: folder.id, ident: toIdentifier(folder.id) });
   }

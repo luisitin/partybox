@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import type { JSX, ReactNode } from 'react';
 import type { PlayerPublic } from '@partybox/shared';
-import { Avatar } from '@partybox/game-sdk';
+import { Avatar } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import type { Controller, ControllerState } from '../net/controller';
 import styles from './ControllerShell.module.css';

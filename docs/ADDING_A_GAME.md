@@ -14,15 +14,15 @@ TypeScript plus content. Everything below is checked by `pnpm verify`; nothing i
    `version`, `minPlayers`, `maxPlayers`, `estimatedMinutes`, `tags`, `settings[]`. Copy the same object
    into `server/index.ts` (`manifest`), the contract test asserts equality.
 4. **State + phases**: declare `State` and the `Input` union in `server/types.ts`; one file per phase in
-   `server/phases/<phaseId>.ts` exporting `{ enter, reduce }`; compose them in `server/index.ts`
-   (`phases: [...]` in typical order). Scoring math in `server/scoring.ts`. Content access in
+   `server/phases/<phaseId>.ts` exporting `enterX` + `reduceX`; compose them in `server/index.ts`
+   (`phases: [...]` in typical order). Server code imports only `@partybox/game-sdk` (pure helpers). Scoring math in `server/scoring.ts`. Content access in
    `server/content.ts`.
 5. **Content**: JSON packs in `content/*.json`; the zod schema in `content/schema.ts`. Family-friendly
    by default; put edgier items in a separate pack behind a `spicy` setting.
 6. **Fixtures**: one full `State` per phase id in `fixtures/<phaseId>.json`. Easiest: run a game in the
    sim and dump states (`pnpm sim --game <id> --players 4 --runs 1 --dump-fixtures`). Fixtures feed
    `/preview` and the contract tests.
-7. **Client**: `client/Tv.tsx` and `client/Controller.tsx` built from `@partybox/game-sdk` primitives;
+7. **Client**: `client/Tv.tsx` and `client/Controller.tsx` built from `@partybox/game-sdk/ui` primitives;
    `client/index.ts` exports `clientModule`. No sockets, no game logic, no global state.
 8. **Bot**: `bot.sampleInput` must return a valid input in every phase (or `null`). The sim, e2e and the
    contract tests all depend on it.
@@ -36,20 +36,21 @@ TypeScript plus content. Everything below is checked by `pnpm verify`; nothing i
 
 ## Files `pnpm new-game` creates (from `games/_template`)
 
-| File                                                                 | Purpose                                                           |
-| -------------------------------------------------------------------- | ----------------------------------------------------------------- |
-| `manifest.json`                                                      | metadata, player bounds, settings spec                            |
-| `README.md`                                                          | the spec (required headings above)                                |
-| `CLAUDE.md`                                                          | ≤ 30 lines: local rules and commands for this game                |
-| `server/index.ts`                                                    | exports `game: GameDefinition<State, Input>` composing the phases |
-| `server/types.ts`                                                    | `State`, `Input`, `Settings` types + `inputSchema`                |
-| `server/phases/answer.ts`, `server/phases/reveal.ts`                 | one file per phase: `enter(state, now)` + `reduce(state, event)`  |
-| `server/scoring.ts`                                                  | pure scoring functions                                            |
-| `server/content.ts`                                                  | typed access to `content/*.json`                                  |
-| `content/schema.ts`, `content/words.json`                            | content pack schema + pack                                        |
-| `client/index.ts`, `client/Tv.tsx`, `client/Controller.tsx`          | lazy module + the two views                                       |
-| `fixtures/answer.json`, `fixtures/reveal.json`, `fixtures/done.json` | one full state per phase                                          |
-| `__tests__/game.test.ts`                                             | example unit tests                                                |
+| File                                                                 | Purpose                                                                                                       |
+| -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `manifest.json`                                                      | metadata, player bounds, settings spec (parsed with `gameManifestSchema` in `server/index.ts`)                |
+| `README.md`                                                          | the spec (required headings above)                                                                            |
+| `CLAUDE.md`                                                          | ≤ 30 lines: local rules and commands for this game                                                            |
+| `server/index.ts`                                                    | exports `game: GameDefinition<State, Input>`: `init`, `reduce` (composes the phases), views, `results`, `bot` |
+| `server/types.ts`                                                    | `State`, `Input` + `inputSchema`, `PHASES`                                                                    |
+| `server/phases/answer.ts`, `server/phases/reveal.ts`                 | one file per phase: `enterX(state, now)` + `reduceX(state, event)`                                            |
+| `server/scoring.ts`                                                  | pure scoring + `results()`                                                                                    |
+| `server/content.ts`                                                  | typed, validated access to `content/*.json`                                                                   |
+| `content/schema.ts`, `content/words.json`                            | `packs` (pack name → zod schema) + the pack itself                                                            |
+| `client/index.ts`, `client/Tv.tsx`, `client/Controller.tsx`          | lazy `clientModule` + the two dumb views (they import `@partybox/game-sdk/ui`)                                |
+| `fixtures/answer.json`, `fixtures/reveal.json`, `fixtures/done.json` | one full state per phase                                                                                      |
+| `__tests__/game.test.ts`                                             | unit tests pinning the README rules                                                                           |
+| `__tests__/contract.config.ts`                                       | optional hints for the contract suite: `hiddenFromTv`, `hiddenFromController`, `settingsVariants`             |
 
 ## Definition of done
 
