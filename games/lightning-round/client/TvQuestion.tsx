@@ -36,14 +36,21 @@ export function RoundHeader({
 export function ChoiceBoard({
   question,
   correctIndex,
+  compact,
 }: {
   question: QuestionView;
   /** Undefined until the reveal. */
   correctIndex?: number;
+  /** One row of four (reveal: the player rows below need the space). */
+  compact?: boolean;
 }): JSX.Element {
   const revealed = correctIndex !== undefined;
   return (
-    <div className={styles.grid} role="list" aria-label="choices">
+    <div
+      className={`${styles.grid} ${compact ? styles.gridCompact : ''}`}
+      role="list"
+      aria-label="choices"
+    >
       {question.choices.map((text, index) => {
         const isCorrect = revealed && index === correctIndex;
         const classes = [
