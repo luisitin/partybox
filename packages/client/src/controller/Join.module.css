@@ -52,6 +52,16 @@
   outline: none;
 }
 
+.inputError {
+  border-color: var(--pb-danger);
+}
+
+.error {
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  color: var(--pb-danger);
+}
+
 .code {
   font-family: var(--pb-font-mono);
   letter-spacing: 0.3em;

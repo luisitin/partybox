@@ -1,6 +1,6 @@
 // Join form: name, avatar grid, room code (only when more than one room exists), and the
 // resume/kicked states. The submit button lives in the sticky footer so the keyboard never hides it.
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { FormEvent, JSX } from 'react';
 import { AVATAR_IDS, PLAYER_NAME_MAX } from '@partybox/shared';
 import { Avatar, PrimaryButton, Screen } from '@partybox/game-sdk/ui';
@@ -25,8 +25,16 @@ export function Join({ controller, state }: JoinProps): JSX.Element {
   const [code, setCode] = useState('');
   const [submittedAt, setSubmittedAt] = useState<number | null>(null);
   const needsCode = info !== null && info.rooms.length !== 1;
-  // "Joining…" until the server answers (welcome unmounts this screen; an error clears it).
-  const submitting = submittedAt !== null && state.error === null;
+  // "Joining…" until the server answers: a welcome unmounts this screen, an error (or a 6 s safety
+  // timeout, for a server that never answers) re-enables the button.
+  const submitting = submittedAt !== null;
+  // "Adjust state when a prop changes": an error answers the pending join, right in this render.
+  if (submittedAt !== null && state.error !== null) setSubmittedAt(null);
+  useEffect(() => {
+    if (submittedAt === null) return;
+    const handle = setTimeout(() => setSubmittedAt(null), 6000);
+    return () => clearTimeout(handle);
+  }, [submittedAt]);
 
   if (state.resuming) {
     return (
@@ -73,9 +81,11 @@ export function Join({ controller, state }: JoinProps): JSX.Element {
         <label className={styles.field}>
           <span className={styles.label}>{t.join.name}</span>
           <input
-            className={styles.input}
+            className={`${styles.input} ${state.error ? styles.inputError : ''}`}
             value={name}
             onChange={(e) => setName(e.target.value)}
+            aria-invalid={state.error !== null}
+            aria-describedby={state.error ? 'join-error' : undefined}
             placeholder={t.join.namePlaceholder}
             maxLength={PLAYER_NAME_MAX}
             autoComplete="nickname"
@@ -83,6 +93,11 @@ export function Join({ controller, state }: JoinProps): JSX.Element {
             enterKeyHint="done"
             required
           />
+          {state.error ? (
+            <span id="join-error" className={styles.error} role="alert">
+              {state.error.message} {t.join.tryAgain}
+            </span>
+          ) : null}
         </label>
         {needsCode ? (
           <label className={styles.field}>

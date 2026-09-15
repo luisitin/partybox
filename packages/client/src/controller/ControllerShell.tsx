@@ -67,7 +67,7 @@ export function ControllerShell({
           {t.connection.reconnecting}
         </div>
       ) : null}
-      {state.error ? (
+      {state.error && state.joined ? (
         <button type="button" className={styles.error} onClick={controller.dismissError}>
           {state.error.message}
         </button>

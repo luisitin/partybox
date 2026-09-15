@@ -11,6 +11,7 @@ export const t = {
     codePlaceholder: 'ABCD',
     submit: 'Join',
     joining: 'Joining…',
+    tryAgain: 'Try another.',
     resuming: 'Reconnecting…',
     kicked: 'You were removed from the room.',
     noRooms: 'No room is open right now. Start the server and open /tv on the big screen.',
