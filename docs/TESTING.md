@@ -35,6 +35,8 @@ and ghost inputs, stale timers); `mixed` assigns one per player. Invariants run 
 every run is replayed and hashed to prove determinism. On failure a repro
 `reports/stress/repros/<game>-<hash>.json` (init + event log) is written; `pnpm sim --replay <file>`
 reproduces it. `pnpm verify` runs `pnpm sim --smoke` (50 mixed runs per game, player counts varied).
+Stress layers (not part of verify): `pnpm sim --fuzz` (attack chains per game), `--room-chaos`
+(engine rooms), `--net` (real server on the stress port), `--soak` (minutes of bot games + metrics).
 Details: `packages/sim/README.md`.
 
 ## E2E (`packages/e2e`)

@@ -12,7 +12,7 @@ line here (match is on the backticked name). Versions live in `pnpm-workspace.ya
 | `@fastify/static`    | server                                  | serves the built client in `pnpm start`                                                                            |
 | `@fastify/middie`    | server                                  | mounts Vite's connect middleware in dev so there is one port (ADR-006)                                             |
 | `socket.io`          | server                                  | rooms, reconnection, heartbeats and binary-safe events out of the box                                              |
-| `socket.io-client`   | client                                  | matching client with auto-reconnect                                                                                |
+| `socket.io-client`   | client, sim (net fuzz)                  | matching client with auto-reconnect                                                                                |
 | `qrcode`             | server                                  | renders the join URL as an SVG QR code locally (no network, ADR-012)                                               |
 | `vite`               | client (build), server (dev middleware) | bundler + dev server with HMR; middleware mode keeps one port                                                      |
 | `react`, `react-dom` | client, game-sdk, games                 | UI; lazy-loaded game modules; the most widely known choice for AI sessions                                         |

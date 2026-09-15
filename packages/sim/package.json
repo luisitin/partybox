@@ -7,5 +7,8 @@
     "@partybox/engine": "workspace:*",
     "@partybox/game-sdk": "workspace:*",
     "@partybox/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "socket.io-client": "catalog:"
   }
 }
