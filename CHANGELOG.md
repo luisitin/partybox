@@ -4,6 +4,10 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ## [Unreleased]
 
+(nothing yet)
+
+## [0.1.0] - 2026-09-15
+
 ### Added
 - Phase 0: monorepo scaffold (pnpm workspaces, TypeScript 6, ESLint boundaries, dependency-cruiser,
   Prettier, Vitest projects), `pnpm verify` gate, generated game registry, doc set and ADRs 001–021.
@@ -18,6 +22,8 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
   VIP menu, TV frame with QR, synthesized sound cues, tap-to-start + mute + fullscreen) plus the first
   `@partybox/game-sdk` UI primitives (Avatar, PlayerChip, Stage, BigText, Timer, PlayerChips,
   Scoreboard, Screen, PrimaryButton, WaitingScreen, server clock hooks).
+- Phase 4 + 5 (the two launch games, built by context-free sessions from the docs):
+  `games/wisecrack` and `games/lightning-round` — see the entries below.
 - Phase 3: `@partybox/game-sdk` helpers (`enterPhase`, `applyVip`, `buildResults`, `envelope`…),
   interaction primitives (`TextAnswer`, `ChoiceGrid`, `VoteList`, `Reveal`), the split into
   `@partybox/game-sdk` (pure) and `@partybox/game-sdk/ui` (React), the contract suite that runs
@@ -35,3 +41,6 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 - `games/lightning-round` ("Lightning Round"): speed trivia — 216 original questions in 8 categories,
   speed + streak scoring, a final wager question, three awards, fixtures, tests and contract config.
 - `games/wisecrack` ("Wisecrack", prompt → answer → vote): 3–8 players, rounds/answerSeconds/spicy settings, double-points last round, sweep bonus, three awards, 160 family + 56 spicy prompts.
+- Phase 8: bundled Nunito Variable (OFL) display font, 4× CPU-throttle budget check in `pnpm e2e`,
+  surface base font-size fix, `/api/dev/act`, e2e screenshots for every phase of both games.
+- Phase 9: fresh-eyes pass — "adding a phase" checklist and ADR-027 fixes from the two game builds.
