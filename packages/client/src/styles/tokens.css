@@ -15,6 +15,11 @@
   --pb-info: #4cc9f0;
   --pb-focus: #ffd166;
   --pb-on-accent: #1a0b12;
+  /* accent-2 as a FILL (VIP pill, letter discs) — stays gold even where accent-2 text darkens */
+  --pb-accent-2-fill: #ffd166;
+  --pb-on-accent-2-fill: #1a0b12;
+  /* optional edge for surfaces; only High Contrast sets it */
+  --pb-border: transparent;
 
   --pb-player-1: #ff5d8f;
   --pb-player-2: #ffd166;
@@ -77,6 +82,8 @@ ight is the :root default above) ────────
   --pb-info: #0b6e99;
   --pb-focus: #d81b60;
   --pb-on-accent: #ffffff;
+  --pb-accent-2-fill: #ffd166;
+  --pb-on-accent-2-fill: #1a0b12;
 }
 
 [data-theme='arcade'] {
@@ -92,6 +99,8 @@ ight is the :root default above) ────────
   --pb-info: #8f96ff;
   --pb-focus: #00f0ff;
   --pb-on-accent: #050014;
+  --pb-accent-2-fill: #00f0ff;
+  --pb-on-accent-2-fill: #050014;
 }
 
 [data-theme='cabin'] {
@@ -107,6 +116,8 @@ ight is the :root default above) ────────
   --pb-info: #6fb3d2;
   --pb-focus: #f2c14e;
   --pb-on-accent: #1d1410;
+  --pb-accent-2-fill: #f2c14e;
+  --pb-on-accent-2-fill: #1d1410;
 }
 
 [data-theme='contrast'] {
@@ -122,6 +133,9 @@ ight is the :root default above) ────────
   --pb-info: #66ccff;
   --pb-focus: #ffffff;
   --pb-on-accent: #000000;
+  --pb-accent-2-fill: #ffff00;
+  --pb-on-accent-2-fill: #000000;
+  --pb-border: #ffffff;
 }
 [data-surface='tv'] {
   --pb-font-display: 128px;

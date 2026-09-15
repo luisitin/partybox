@@ -18,6 +18,7 @@
 }
 
 .card {
+  border: 1px solid var(--pb-border);
   display: flex;
   flex-direction: column;
   gap: var(--pb-space-4);
@@ -40,8 +41,8 @@
   border-radius: 50%;
   font-size: var(--pb-font-h2);
   font-weight: 900;
-  background: var(--pb-accent-2);
-  color: var(--pb-on-accent);
+  background: var(--pb-accent-2-fill);
+  color: var(--pb-on-accent-2-fill);
 }
 
 .answer {
@@ -104,12 +105,9 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* TV: the Scoreboard caps itself at 28em, and `em` here resolves against the 18px body font (the
-   TV tokens live on the shell element, not on body). A token font-size on the wrapper makes that
-   cap 28 × body = ~1000px so names are not truncated; the rows set their own size anyway. */
+/* TV: centre the (self-capped) Scoreboard on the stage. */
 .board {
   width: 100%;
-  font-size: var(--pb-font-body);
   display: flex;
   justify-content: center;
 }

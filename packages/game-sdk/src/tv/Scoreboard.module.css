@@ -28,6 +28,7 @@
   gap: var(--pb-space-3);
   padding: var(--pb-space-2) var(--pb-space-4);
   border-radius: var(--pb-radius);
+  border: 1px solid var(--pb-border);
   background: var(--pb-surface);
   font-size: var(--pb-font-h2);
   font-weight: 700;
@@ -58,6 +59,8 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  /* a centred Stage must not centre the names */
+  text-align: left;
 }
 
 /* 16-character names must not truncate before the score column gives way. */

@@ -92,8 +92,8 @@
   min-height: var(--pb-touch);
   padding: 0 var(--pb-space-3);
   border-radius: 999px;
-  background: var(--pb-accent-2);
-  color: var(--pb-on-accent);
+  background: var(--pb-accent-2-fill);
+  color: var(--pb-on-accent-2-fill);
   font-weight: 800;
   font-size: min(var(--pb-font-caption), 16px);
 }

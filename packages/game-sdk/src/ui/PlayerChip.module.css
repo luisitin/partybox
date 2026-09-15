@@ -1,4 +1,5 @@
 .chip {
+  border: 1px solid var(--pb-border);
   display: inline-flex;
   align-items: center;
   gap: var(--pb-space-2);
@@ -47,8 +48,8 @@
   flex-shrink: 0;
   padding: 0 0.45em;
   border-radius: 999px;
-  background: var(--pb-accent-2);
-  color: var(--pb-on-accent);
+  background: var(--pb-accent-2-fill);
+  color: var(--pb-on-accent-2-fill);
   font-size: 0.7em;
   font-weight: 900;
   line-height: 1.6;
