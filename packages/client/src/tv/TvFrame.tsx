@@ -1,5 +1,6 @@
-// The stage chrome: brand + room code on the left, join URL + QR on the right (large in the
-// lobby, small during play), connection state and toasts. Overscan-safe padding is on the Stage.
+// The stage chrome: brand + room code on the left, the join URL on the right (the lobby shows the
+// big QR; during play a 120 px QR only crowded the timer), connection state and toasts.
+// Overscan-safe padding is on the Stage.
 import type { JSX, ReactNode } from 'react';
 import type { RoomSnapshot } from '@partybox/shared';
 import { t } from '../i18n';
@@ -35,14 +36,6 @@ export function TvFrame({ room, connected, toasts, compact, children }: TvFrameP
             <span className={styles.url}>
               {info.joinUrl.replace(/^https?:\/\//, '').replace(/\/$/, '')}
             </span>
-            {compact ? (
-              <span
-                className={styles.qr}
-                dangerouslySetInnerHTML={{ __html: info.qrSvg }}
-                aria-label={`QR code for ${info.joinUrl}`}
-                role="img"
-              />
-            ) : null}
           </div>
         ) : null}
       </header>
