@@ -174,7 +174,7 @@ async function main(): Promise<void> {
     await vip.page.getByRole('button', { name: /end game/i }).click();
     await phoneShot(vip, GAME, 'vip-menu-confirm', 'vip', 'destructive: tap again to confirm');
     await vip.page.getByRole('button', { name: /^pause$/i }).click();
-    await settle(400);
+    await settle(600);
     await tvShot(tv, `${GAME}-paused`, 'stage', 'paused curtain');
     await phoneShot(phones[1]!, GAME, 'paused', 'active');
     await vip.page.getByRole('button', { name: /^resume$/i }).click();
@@ -231,7 +231,7 @@ async function main(): Promise<void> {
     await phoneShot(vip, core, 'play-again', 'vip');
     await vip.page.getByRole('button', { name: /vip/i }).click();
     await vip.page.getByRole('button', { name: /end game/i }).click();
-    await vip.page.getByRole('button', { name: /end game\?/i }).click();
+    await vip.page.getByRole('button', { name: /confirm: end game/i }).click();
     await settle(800);
     await tvShot(tv, 'results-after-end', 'stage', 'VIP ended the game early');
 

@@ -62,6 +62,7 @@ export const t = {
     lock: 'Lock room',
     unlock: 'Unlock room',
     close: 'Close',
+    confirm: (action: string) => `Confirm: ${action}`,
     badge: 'VIP',
   },
   spectator: {

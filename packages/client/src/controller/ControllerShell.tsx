@@ -101,7 +101,13 @@ export function ControllerShell({
         ))}
       </div>
       {menuOpen && room && me?.isVip ? (
-        <VipMenu controller={controller} room={room} me={me} onClose={() => setMenuOpen(false)} />
+        <VipMenu
+          controller={controller}
+          room={room}
+          me={me}
+          paused={view?.paused ?? false}
+          onClose={() => setMenuOpen(false)}
+        />
       ) : null}
     </div>
   );
