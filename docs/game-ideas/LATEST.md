@@ -6,4 +6,7 @@
 - Build first: 001 — it is requested, sized M, and needs only two small shell changes.
 - SDK gaps (`sdk-requests.md`): R-1 quiet timer mode (blocking for any short-cadence phase), R-2 game-triggered sound cues, R-3 a `penalty` chip status.
 - Scorecard: all ≥ 4 except novelty (2, by request — it is bingo).
-- Next: 002 — a draw-and-describe chain game (owner request; needs BL-002 canvas input, `maxInputBytes` raise); then fill the matrix (text/vote/hidden-roles are empty).
+- 2026-09-15 · idea **002 Broken Pencil** written (`002-broken-pencil.html`): Telestrations-style word → draw → guess chains; the owner turns the pages of their book on the TV; UNBROKEN/CHAIN BROKEN verdict; per-book vote; ink budget keeps state under 256 KB. Sized L (first canvas in the repo). Status `idea`.
+- New SDK gaps: R-4 shared DrawPad/DrawingView + stroke encoding; R-5 clarify whether spectator inputs reach `reduce`.
+- Build order: 001 Bingo first (M, two shell tweaks), then 002 (L, builds the drawing surface BL-002 wants).
+- Next: 003 should sit far from both — hidden roles / deception / text or choice, 2–3 players or < 5 min (all empty in the matrix).

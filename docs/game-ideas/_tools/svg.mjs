@@ -383,3 +383,27 @@ export function svg(w, h, body, o = {}) {
   const { label = 'diagram' } = o;
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="100%" role="img" aria-label="${esc(label)}">${rect(0, 0, w, h, { fill: T.bg, r: 12 })}${ARROW_DEFS}${body}</svg>`;
 }
+
+// ─── Document helpers (figures with callouts) ──────────────────────────────────────────────────
+export function fig(svgStr, caption, callouts = [], cls = 'tv') {
+  const co = callouts.length
+    ? `<ol class="callouts">${callouts.map((c, i) => `<li><b class="n">${i + 1}</b>${c}</li>`).join('')}</ol>`
+    : '';
+  return `<figure class="${cls}">${svgStr}<figcaption>${caption}</figcaption>${co}</figure>`;
+}
+export function phones(items) {
+  return `<div class="phones">${items.map(([s, cap]) => `<figure>${s}<figcaption>${cap}</figcaption></figure>`).join('')}</div>`;
+}
+export function contentList(items) {
+  return `<ol class="content-list">${items.map((s) => `<li>${s}</li>`).join('')}</ol>`;
+}
+/** Polyline stroke in canvas units (0..256) scaled into a box at (x,y,size). */
+export function doodle(x, y, size, strokes) {
+  const k = size / 256;
+  return strokes
+    .map(
+      (s) =>
+        `<polyline points="${s.pts.map(([px, py]) => `${(x + px * k).toFixed(1)},${(y + py * k).toFixed(1)}`).join(' ')}" fill="none" stroke="${s.color}" stroke-width="${(s.w ?? 4) * k}" stroke-linecap="round" stroke-linejoin="round"/>`,
+    )
+    .join('');
+}
