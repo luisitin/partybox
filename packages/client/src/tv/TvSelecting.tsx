@@ -14,7 +14,9 @@ export function TvSelecting({ room }: TvSelectingProps): JSX.Element {
   const vip = room.players.find((p) => p.isVip);
   return (
     <Stage>
-      <p className="pb-muted">{t.selecting.vipChoosing(vip?.name ?? 'The VIP')}</p>
+      <p className={`pb-muted ${styles.choosing}`}>
+        {t.selecting.vipChoosing(vip?.name ?? 'The VIP')}
+      </p>
       {game ? (
         <div className={`${styles.card} pb-enter`} key={game.id}>
           <BigText level="display">{game.name}</BigText>
@@ -32,6 +34,9 @@ export function TvSelecting({ room }: TvSelectingProps): JSX.Element {
                 <li key={s.key}>
                   <span className="pb-muted">{s.label}</span>{' '}
                   <strong>{String(room.settings[s.key] ?? s.default)}</strong>
+                  {s.description ? (
+                    <span className={styles.settingHint}>{s.description}</span>
+                  ) : null}
                 </li>
               ))}
             </ul>
@@ -48,6 +53,7 @@ export function TvSelecting({ room }: TvSelectingProps): JSX.Element {
           status: p.spectator ? 'spectator' : 'active',
         }))}
         vip={room.vip}
+        botIds={room.players.filter((p) => p.bot).map((p) => p.id)}
         layout="grid"
       />
     </Stage>

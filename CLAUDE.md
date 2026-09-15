@@ -33,7 +33,8 @@ pnpm verify                  # THE gate: typecheck → lint → boundaries → f
 pnpm new-game <id>           # scaffold games/<id> from games/_template, then regenerates the registry
 pnpm gen-registry            # regenerate packages/{server,client}/src/games.generated.ts
 pnpm sim --game <id> --players 6 --runs 200 --seed 1     # headless games; --replay <file> reproduces a failure
-pnpm e2e | pnpm e2e:snap --game <id>                     # browsers: full game / screenshots per phase
+pnpm e2e | pnpm e2e:snap --game <id>                     # browsers: full game / screenshots per phase (needs: pnpm exec playwright install chromium)
+/preview/<gameId>/<fixture>?view=tv|controller&player=<id>   # in pnpm dev: any fixture inside the real shells
 pnpm test | pnpm vitest --project engine                 # all unit tests / one package
 ```
 

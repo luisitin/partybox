@@ -8,7 +8,7 @@ same primitives. Games must not hard-code colours, sizes or durations — use th
 
 1. **10-foot first on the TV**: 1920×1080, viewed from ~3 m. Body ≥ 32 px, timers ≥ 96 px, one focal point.
 2. **Thumb first on the phone**: portrait, primary action in the bottom third, targets ≥ 44 px.
-3. **Never colour alone**: every state also has a shape, icon or word (chips show ✓ for submitted, ⟳ for reconnecting).
+3. **Never colour alone**: every state also has a shape, icon or word (chips show ✓ for submitted, ⟳ for reconnecting, a `🤖 bot` tag for bot seats).
 4. **Calm feedback**: reconnecting is a quiet banner, not a red alarm. Errors say what to do next.
 5. **The TV reveals, the phone never spoils**: controller views hide what the stage hasn't shown yet.
 
@@ -26,6 +26,10 @@ same primitives. Games must not hard-code colours, sizes or durations — use th
 | `--pb-info`                       | `#4cc9f0`                                                         | informational toasts                          |
 | `--pb-player-1…8`                 | `#ff5d8f #ffd166 #06d6a0 #4cc9f0 #b388ff #ff9f43 #48dbfb #f368e0` | per-player chip hues (avatar id % 8)          |
 
+## Themes
+
+Five palettes re-declare the colour tokens (`tokens.css` → `[data-theme='…']`): `night` (default), `daylight` (light, `color-scheme: light`), `arcade`, `cabin`, `contrast`. The choice is per device (`localStorage`, `src/theme.ts`), picked from the TV corner 🎨 or the phone header 🎨; `?theme=<id>` forces one for previews and screenshots. Rules for a new theme: text ≥ 4.5:1 on `bg`/`surface`, `on-accent` ≥ 4.5:1 on every accent, `accent-2` readable as text on `surface` (light themes use a dark amber), player colours untouched.
+
 ## Type scale
 
 | Role                         | TV (1080p) | Phone | Token               |
@@ -37,7 +41,8 @@ same primitives. Games must not hard-code colours, sizes or durations — use th
 | caption                      | 28 px      | 14 px | `--pb-font-caption` |
 | button                       | —          | 20 px | `--pb-font-button`  |
 
-Font: system UI stack (`--pb-font-family`), bold weights for display/h1. Line height 1.2 display, 1.4 body.
+Font: Nunito Variable (OFL, bundled via `@fontsource-variable/nunito`, weights 200–1000) with a
+system-UI fallback stack (`--pb-font-family`); bold weights for display/h1. Line height 1.2 display, 1.4 body.
 The TV shell sets the TV column; the controller shell sets the phone column; tokens switch by shell, not by media query.
 
 ## Spacing, shape, layout
@@ -50,15 +55,16 @@ The TV shell sets the TV column; the controller shell sets the phone column; tok
 
 ## Motion
 
-| Token              | Value                            | Use                                   |
-| ------------------ | -------------------------------- | ------------------------------------- |
-| `--pb-motion-fast` | 150 ms                           | hover/press feedback, chip state      |
-| `--pb-motion-base` | 300 ms                           | phase transitions (fade + 12 px rise) |
-| `--pb-motion-slow` | 600 ms                           | reveal / winner — the maximum allowed |
-| easing             | `cubic-bezier(0.2, 0.8, 0.2, 1)` | everything                            |
+| Token               | Value                            | Use                                   |
+| ------------------- | -------------------------------- | ------------------------------------- |
+| `--pb-motion-fast`  | 150 ms                           | hover/press feedback, chip state      |
+| `--pb-motion-base`  | 300 ms                           | phase transitions (fade + 12 px rise) |
+| `--pb-motion-slow`  | 600 ms                           | reveal / winner — the maximum allowed |
+| `--pb-motion-pulse` | 1000 ms                          | urgent-timer beat (≤ 1 flash/s)       |
+| easing              | `cubic-bezier(0.2, 0.8, 0.2, 1)` | everything                            |
 
 `prefers-reduced-motion: reduce` sets every duration to 0. Transitions never hide information (no full-screen wipes).
-Timer: in the last 5 s it switches to `--pb-danger`, scales 1.1× and ticks (sound `countdown`).
+Timer: in the last 5 s it switches to `--pb-danger`, scales 1.15×, pulses once per second (`--pb-motion-pulse`, 0 under reduced motion) and ticks (sound `countdown`).
 
 ## Sound cues (Web Audio, synthesized — no files)
 
@@ -77,6 +83,7 @@ TV has a mute toggle (persisted in `localStorage`) and a "tap to start" overlay 
 ## Primitives
 
 TV (`@partybox/game-sdk` → `tv/`): `Timer`, `PlayerChips`, `Scoreboard`, `Reveal`, `Stage` (overscan frame), `BigText`.
+Shared (`ui/`): `DeadlineBar` (draining bar, danger in the last 5 s — the TV strip and the phone header both use it), `usePrefersReducedMotion` (for JS-driven sequences).
 Controller (`controller/`): `TextAnswer`, `ChoiceGrid`, `VoteList`, `WaitingScreen`, `Screen` (safe-area frame), `PrimaryButton`.
 Shared: `Avatar`, `Chip`. Each primitive's props are documented in its file header.
 

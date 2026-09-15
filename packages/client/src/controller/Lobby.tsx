@@ -1,5 +1,7 @@
-// Lobby on the phone: who is here, and for the VIP the button that opens game selection.
+// Lobby on the phone: who is here, "Add a bot" for everyone (ADR-028), and for the VIP the
+// button that opens game selection.
 import type { JSX } from 'react';
+import { MAX_BOTS_PER_OWNER } from '@partybox/shared';
 import type { PlayerPublic, RoomSnapshot } from '@partybox/shared';
 import { PlayerChip, PrimaryButton, Screen } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
@@ -17,6 +19,8 @@ export function Lobby({ controller, room, me }: LobbyProps): JSX.Element {
   const pick = (): void => {
     if (first) controller.vip({ action: 'selectGame', gameId: first.id });
   };
+  const myBots = room.players.filter((p) => p.bot?.ownerId === me.id);
+  const canAddBot = myBots.length < MAX_BOTS_PER_OWNER && room.players.length < room.capacity;
   return (
     <Screen
       title={t.lobby.title}
@@ -41,12 +45,41 @@ export function Lobby({ controller, room, me }: LobbyProps): JSX.Element {
               avatarId={p.avatarId}
               connected={p.connected}
               isVip={p.isVip}
+              isBot={p.bot !== undefined}
               status={p.spectator ? 'spectator' : 'active'}
-              active={p.id === me.id}
+              isMe={p.id === me.id}
             />
           </li>
         ))}
       </ul>
+      <section className={styles.bots} aria-label={t.lobby.yourBots}>
+        <button
+          type="button"
+          className={styles.addBot}
+          onClick={() => controller.bot({ action: 'add' })}
+          disabled={!canAddBot}
+        >
+          🤖 {t.lobby.addBot}
+        </button>
+        <p className="pb-caption pb-muted">{t.lobby.addBotHint}</p>
+        {myBots.length > 0 ? (
+          <ul className={styles.botList}>
+            {myBots.map((bot) => (
+              <li key={bot.id} className={styles.botRow}>
+                <span className={styles.botName}>{bot.name}</span>
+                <button
+                  type="button"
+                  className={styles.removeBot}
+                  onClick={() => controller.bot({ action: 'remove', botId: bot.id })}
+                  aria-label={`${t.lobby.removeBot} ${bot.name}`}
+                >
+                  {t.lobby.removeBot}
+                </button>
+              </li>
+            ))}
+          </ul>
+        ) : null}
+      </section>
     </Screen>
   );
 }

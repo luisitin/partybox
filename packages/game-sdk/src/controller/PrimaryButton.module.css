@@ -15,8 +15,10 @@
   transform: scale(0.97);
 }
 
+/* Disabled reads as "not yet", not as a dimmer version of the action (label contrast 6.9:1). */
 .button:disabled {
-  opacity: 0.55;
+  background: var(--pb-surface-2);
+  color: var(--pb-text-muted);
   cursor: default;
 }
 
@@ -28,6 +30,7 @@
 .neutral {
   background: var(--pb-surface-2);
   color: var(--pb-text);
+  box-shadow: inset 0 0 0 1px var(--pb-border);
 }
 
 .danger {
@@ -40,8 +43,8 @@
   color: var(--pb-on-accent);
 }
 
-.done {
+.done,
+.done:disabled {
   background: var(--pb-accent-3);
   color: var(--pb-on-accent);
-  opacity: 1 !important;
 }

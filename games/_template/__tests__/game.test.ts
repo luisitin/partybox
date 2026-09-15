@@ -63,6 +63,9 @@ describe('Quick Poll', () => {
     const s = answer(start(), 'a', 'secretword');
     expect(JSON.stringify(game.tvView(s))).not.toContain('secretword');
     expect(JSON.stringify(game.controllerView(s, 'b'))).not.toContain('secretword');
-    expect(game.controllerView(s, 'a')).toMatchObject({ submitted: true, myAnswer: 'secretword' });
+    const mine = game.controllerView(s, 'a');
+    expect(mine.submitted).toBe(true);
+    expect(mine.myAnswer).toBe('secretword');
+    expect(game.tvView(s).answeredCount).toBe(1);
   });
 });

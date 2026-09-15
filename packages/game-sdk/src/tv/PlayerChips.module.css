@@ -8,13 +8,18 @@
 }
 
 .row {
-  flex-wrap: nowrap;
-  overflow: hidden;
+  /* Wraps so 16 players stay visible (two rows of sm chips at 1080p) instead of being clipped. */
+  flex-wrap: wrap;
+  gap: var(--pb-space-2) var(--pb-space-3);
 }
 
 .grid {
   flex-wrap: wrap;
   justify-content: center;
+}
+
+.start {
+  justify-content: flex-start;
 }
 
 .item {

@@ -44,6 +44,32 @@ export function TextAnswer(props: TextAnswerProps): JSX.Element {
   }, [promptKey]);
   const trimmed = text.trim();
   const canSubmit = trimmed.length > 0 && !submitted && !disabled;
+  if (submitted) {
+    // The dead textarea + counter added nothing once the answer was in; show what was sent instead.
+    return (
+      <Screen
+        footer={
+          <PrimaryButton done onClick={() => undefined}>
+            Submitted
+          </PrimaryButton>
+        }
+      >
+        {kicker ? <p className={styles.kicker}>{kicker}</p> : null}
+        <p className={styles.prompt}>{prompt}</p>
+        <div className={styles.sent} role="status">
+          {trimmed ? (
+            <>
+              <span className={styles.sentLabel}>You said</span>
+              <span className={styles.sentText}>{trimmed}</span>
+            </>
+          ) : (
+            <span className={styles.sentLabel}>Your answer is in</span>
+          )}
+          <span className={styles.sentHint}>Waiting for the others — look at the TV</span>
+        </div>
+      </Screen>
+    );
+  }
   return (
     <Screen
       footer={
@@ -76,9 +102,15 @@ export function TextAnswer(props: TextAnswerProps): JSX.Element {
         }}
         aria-label="your answer"
       />
-      <p className={styles.counter} aria-live="off">
-        {text.length} / {maxLength}
-      </p>
+      {disabled && trimmed ? (
+        <p className={styles.late} role="status">
+          Time's up — your answer wasn't sent.
+        </p>
+      ) : (
+        <p className={styles.counter} aria-live="off">
+          {text.length} / {maxLength}
+        </p>
+      )}
     </Screen>
   );
 }

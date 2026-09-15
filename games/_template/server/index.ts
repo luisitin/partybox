@@ -5,6 +5,7 @@ import {
   controllerEnvelope,
   envelope,
   gameManifestSchema,
+  hasPlayer,
   seedRng,
   setConnected,
 } from '@partybox/game-sdk';
@@ -55,21 +56,29 @@ function init(ctx: InitContext): State {
   return enterAnswer(base, ctx.now);
 }
 
+/** The phase order. What a deadline does — and what a VIP skip does (docs/GAME_CONTRACT.md). */
+export function advance(state: State, now: number): State {
+  switch (state.phase.id) {
+    case 'answer':
+      return enterReveal(state, now);
+    case 'reveal':
+      return enterDone(state, now);
+    default:
+      return state;
+  }
+}
+
 function reduce(state: State, event: GameEvent<Input>): State {
   if (event.type === 'player') return setConnected(state, event);
-  // VIP skip from "answer" still shows the reveal (people want to see the answers); from
-  // "reveal" it ends the game. VIP end always ends.
-  const vip = applyVip(state, event, {
-    skip: (s, now) => (s.phase.id === 'answer' ? enterReveal(s, now) : enterDone(s, now)),
-    end: enterDone,
-  });
+  // VIP skip = the phase's normal exit; VIP end always jumps to done. Pause/resume shift the deadline.
+  const vip = applyVip(state, event, { skip: advance, end: enterDone });
   if (vip) return vip;
   if (state.phase.paused) return state; // inputs and timers wait while paused
   switch (state.phase.id) {
     case 'answer':
-      return reduceAnswer(state, event);
+      return reduceAnswer(state, event, advance);
     case 'reveal':
-      return reduceReveal(state, event);
+      return reduceReveal(state, event, advance);
     default:
       return state;
   }
@@ -109,7 +118,8 @@ function controllerView(state: State, playerId: string): QuickPollControllerView
   };
 }
 
-export const game: GameDefinition<State, Input> = {
+// The view generics make `game.tvView(state).answers` type-check in tests and client code.
+export const game: GameDefinition<State, Input, QuickPollTvView, QuickPollControllerView> = {
   manifest,
   phases: PHASES,
   inputSchema,
@@ -120,7 +130,7 @@ export const game: GameDefinition<State, Input> = {
   results,
   bot: {
     sampleInput(state, playerId, rng) {
-      if (state.phase.id !== 'answer' || !state.players[playerId] || playerId in state.answers)
+      if (state.phase.id !== 'answer' || !hasPlayer(state, playerId) || playerId in state.answers)
         return null;
       return { type: 'answer', text: rng.pick(WORDS.words) };
     },

@@ -1,0 +1,175 @@
+/* TV layout for Lightning Round: 2×2 choice grid + reveal rows. Tokens only (docs/DESIGN_SYSTEM.md). */
+.header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--pb-space-5);
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.kicker {
+  color: var(--pb-accent-2);
+}
+
+.final {
+  color: var(--pb-accent);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--pb-space-4);
+  width: 100%;
+}
+
+.choice {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--pb-space-4);
+  min-height: 120px;
+  padding: var(--pb-space-4) var(--pb-space-5);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface);
+  border: 4px solid var(--pb-border);
+  font-size: var(--pb-font-body);
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+/* Reveal: the four choices become one row so up to 16 player rows fit underneath. */
+.gridCompact {
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--pb-space-3);
+}
+
+.gridCompact .choice {
+  min-height: 80px;
+  padding: var(--pb-space-3) var(--pb-space-4);
+  font-size: var(--pb-font-caption);
+  gap: var(--pb-space-3);
+}
+
+.gridCompact .letter {
+  width: 48px;
+  height: 48px;
+  font-size: var(--pb-font-body);
+}
+
+.letter {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--pb-surface-2);
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  flex-shrink: 0;
+}
+
+.mark {
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  min-width: 1.2em;
+  text-align: right;
+}
+
+.correct {
+  border-color: var(--pb-accent-3);
+  background: var(--pb-surface-2);
+}
+
+.correct .letter,
+.correct .mark {
+  color: var(--pb-accent-3);
+}
+
+.dim {
+  opacity: 0.45;
+}
+
+.count {
+  font-size: var(--pb-font-h2);
+  color: var(--pb-text-muted);
+  text-align: center;
+  margin: 0;
+}
+
+.rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  /* two columns up to ~8 players, three beyond (16 players = 6 rows of 60 px) */
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  gap: var(--pb-space-2) var(--pb-space-3);
+  width: 100%;
+}
+
+.row {
+  border: 1px solid var(--pb-border);
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-3);
+  padding: var(--pb-space-1) var(--pb-space-4);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  font-size: var(--pb-font-body);
+  animation: pb-rise var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.rowCorrect {
+  outline: 3px solid var(--pb-accent-3);
+}
+
+.name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 700;
+}
+
+.verdict {
+  font-weight: 900;
+  min-width: 1.2em;
+  text-align: center;
+}
+
+.verdictOk {
+  color: var(--pb-accent-3);
+}
+
+.verdictNo {
+  color: var(--pb-danger);
+}
+
+.delta {
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.deltaUp {
+  color: var(--pb-accent-3);
+}
+
+.deltaDown {
+  color: var(--pb-danger);
+}
+
+.streak {
+  color: var(--pb-accent-2);
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+}
+
+.wager {
+  color: var(--pb-text-muted);
+  font-size: var(--pb-font-caption);
+}

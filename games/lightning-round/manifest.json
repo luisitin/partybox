@@ -1,0 +1,79 @@
+{
+  "id": "lightning-round",
+  "name": "Lightning Round",
+  "tagline": "Fast fingers, sharp minds. Bet big on the last one.",
+  "description": "Speed trivia. Every question has four choices: answer fast for more points, keep a streak for a bonus, then wager part of your score on one final question. Highest score wins.",
+  "version": "1.0.0",
+  "minPlayers": 1,
+  "maxPlayers": 16,
+  "estimatedMinutes": 8,
+  "tags": ["trivia", "choice", "speed"],
+  "settings": [
+    {
+      "key": "questions",
+      "label": "Questions",
+      "description": "Regular questions before the final wager question",
+      "type": "number",
+      "default": 10,
+      "min": 5,
+      "max": 20,
+      "step": 1
+    },
+    {
+      "key": "answerSeconds",
+      "label": "Answer time",
+      "description": "Seconds to answer each question",
+      "type": "number",
+      "default": 15,
+      "min": 5,
+      "max": 30,
+      "step": 5
+    },
+    {
+      "key": "category",
+      "label": "Category",
+      "description": "Draw questions from one category only (falls back to all when it is too small)",
+      "type": "select",
+      "default": "all",
+      "options": [
+        {
+          "value": "all",
+          "label": "All categories"
+        },
+        {
+          "value": "geography",
+          "label": "Geography"
+        },
+        {
+          "value": "science",
+          "label": "Science"
+        },
+        {
+          "value": "history",
+          "label": "History"
+        },
+        {
+          "value": "arts-and-literature",
+          "label": "Arts & Literature"
+        },
+        {
+          "value": "sports",
+          "label": "Sports"
+        },
+        {
+          "value": "food-and-drink",
+          "label": "Food & Drink"
+        },
+        {
+          "value": "nature",
+          "label": "Nature"
+        },
+        {
+          "value": "language",
+          "label": "Language"
+        }
+      ]
+    }
+  ],
+  "supportsBots": true
+}

@@ -1,29 +1,59 @@
 # @partybox/e2e
 
-Playwright harness (library, not test runner — ADR-016). Boots the server on a free port with the dev API,
-opens 1 TV + N phones, drives play with dev-API bots, and asserts zero console errors / unhandled
-rejections and that every phone reaches results. Also the screenshot tool for the design session.
+Playwright harness (library, not test runner — ADR-016). Boots `pnpm dev` on a free port, opens 1 TV +
+N phones through the REAL UI (join form, avatars), drives play through the dev API, and fails on any
+console error, page error, React error boundary, or a phone that never reaches the results screen.
+Also the screenshot tool the design session uses.
 
-## Usage (Phase 7)
+## Usage
 
 ```
-pnpm exec playwright install chromium          # once per machine
-pnpm e2e [--game <id>] [--phones 4] [--port <n>]
-pnpm e2e:snap --game <id> [--out reports/design/<stamp>/<id>] [--devices iphone,pixel]
+pnpm exec playwright install chromium                  # once per machine (shared by all worktrees)
+pnpm e2e [--game <id>]... [--phones 4] [--port <n>] [--seed 1] [--timeout 300]
+pnpm e2e:snap --game <id> [--out <dir>] [--devices iphone,pixel,iphone-se,galaxy,landscape,font200] [--seed 1] [--max-phases 14]
 ```
+
+`pnpm e2e` plays every registered game (or the given ones) with phones alternating iPhone / Pixel; the TV
+page runs at 4× CPU throttling (CDP) and any long task over 250 ms fails the run (design-system budget);
+players' moves come from `POST /api/dev/act` (each game's own `bot.sampleInput`); timer-only phases
+are skipped via `POST /api/dev/skip` so a run takes seconds. `pnpm e2e:snap` freezes the clock before
+starting, then for each phase writes `<out>/<nn>-<phase>/tv.png`, one `<device>-<player|vip>.png` per
+device preset, `pixel-spectator.png` (a late joiner), and a `-after` set once half the room has acted
+(submitted vs waiting states). Default `--out` is `reports/e2e/screenshots/<game>/` (gitignored).
 
 ## Key files
 
-- `src/cli.ts` — commands `run` and `snap`.
-- `src/server.ts` — spawns `pnpm dev --port <free>` and waits for `/healthz`.
-- `src/devices.ts` — named presets: `tv` (1920×1080), `tv4k`, `iphone`, `iphone-se`, `pixel`, `galaxy`, `landscape`, `font200`.
-- `src/session.ts` — opens TV + phone contexts, joins players, collects console errors.
-- `src/snap.ts` — freezes the clock, walks phases via `/api/dev/skip`, screenshots TV + each phone per phase.
+- `src/cli.ts` — commands `run` (default) and `snap`.
+- `src/server.ts` — `startServer(port?)`: spawns `pnpm dev --port <free> --host 127.0.0.1`, waits for `/healthz`, kills the process tree.
+- `src/devices.ts` — presets `tv`, `tv4k`, `iphone`, `iphone-se`, `pixel`, `galaxy`, `landscape`, `font200` (emulated by scaling the phone type tokens).
+- `src/dev-api.ts` — typed client for `/api/dev/*` and `/api/games`.
+- `src/session.ts` — `openTv`, `joinPhone` (through the form), console/pageerror/boundary collection.
+- `src/run.ts`, `src/snap.ts` — the two commands.
 
 ## Test
 
-`pnpm vitest --project e2e` (unit for helpers) · the harness itself is the test.
+`pnpm vitest --project e2e` (helpers) · the harness itself is the test: `pnpm e2e`.
 
 ## Must NOT go here
 
 Anything another package imports. Game knowledge beyond the dev API and `bot.sampleInput`.
+
+## Design capture (`src/design/`, added by the design session)
+
+Standalone until the Phase 7 harness lands; each script boots its own server on **42071**.
+
+```
+pnpm exec tsx packages/e2e/src/design/capture-core.ts  --out reports/design/<stamp> [--game quickpoll]
+pnpm exec tsx packages/e2e/src/design/capture-video.ts --out reports/design/<stamp> [--game quickpoll]
+pnpm exec tsx packages/e2e/src/design/sheet.ts         --dir reports/design/<stamp>   # contact-sheet.html
+pnpm exec tsx packages/e2e/src/design/measure.ts                                     # computed sizes → stdout
+pnpm exec tsx packages/e2e/src/design/capture-preview.ts --out <dir> [--games a,b] [--themes night,daylight] [--phones iphone,iphone-se]
+pnpm exec tsx packages/e2e/src/design/capture-game.ts --game <id> --out <dir>         # live run, every phase, 4 phones + 2 bots
+pnpm exec tsx packages/e2e/src/design/capture-themes.ts --out <dir>                    # TV lobby + phone join/lobby per theme
+```
+
+`devices.ts` = tv, tv4k, iphone, iphone-se, pixel, galaxy, font200 (CSS-emulated 200 % scale),
+landscape. `session.ts` = dev-API client + join-through-the-form helpers. `shooter.ts` records every
+still in `manifest.json` (game / phase / device / role) for the contact sheet. `capture-core.ts` walks
+join errors, lobby 1/6/16, selecting, every game phase with active/submitted/VIP/spectator/reconnecting
+phones, results, play-again, end, kick, server restart. `capture-video.ts` records one unfrozen round.

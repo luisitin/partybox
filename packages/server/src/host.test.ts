@@ -25,6 +25,7 @@ const tiny: GameDefinition<S, { hit: true }> = {
     estimatedMinutes: 1,
     tags: [],
     settings: [],
+    supportsBots: true,
   },
   phases: ['play', 'done'],
   inputSchema: z.object({ hit: z.literal(true) }),
@@ -153,24 +154,22 @@ describe('host', () => {
     const host = createHost({ deps: { games: { tiny } }, clock, transport, log: () => {} });
     const bots = createBotManager(host, { games: { tiny } }, clock);
     const code = host.house().code;
+    // Bots are never VIP: a human owns the room and starts the game.
+    host.dispatch(code, { type: 'join', playerId: 'a', token: 'ta', name: 'Ana', avatarId: 'fox' });
     const ids = bots.add(code, 3, 'fast');
     expect(ids).toHaveLength(3);
     expect(bots.ids(code)).toEqual(ids);
+    expect(host.house().vipId).toBe('a');
     host.dispatch(code, {
       type: 'vip',
-      playerId: ids[0] as string,
+      playerId: 'a',
       action: { action: 'selectGame', gameId: 'tiny' },
     });
-    host.dispatch(code, {
-      type: 'vip',
-      playerId: ids[0] as string,
-      action: { action: 'start' },
-      seed: 1,
-    });
+    host.dispatch(code, { type: 'vip', playerId: 'a', action: { action: 'start' }, seed: 1 });
     await vi.advanceTimersByTimeAsync(400);
     expect((host.house().game?.state as S).hits).toBeGreaterThanOrEqual(3);
     bots.removeAll(code);
-    expect(host.house().players).toEqual({});
+    expect(Object.keys(host.house().players)).toEqual(['a']);
     expect(bots.add(code, 1, 'idle', 0)).toHaveLength(1);
     bots.close();
     host.close();

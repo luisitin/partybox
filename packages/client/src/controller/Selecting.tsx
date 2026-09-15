@@ -145,7 +145,8 @@ export function Selecting({ controller, room, me }: SelectingProps): JSX.Element
                 <span className={styles.cardTagline}>{g.tagline}</span>
                 <span className={styles.cardMeta}>
                   {t.selecting.players(g.minPlayers, g.maxPlayers)} ·{' '}
-                  {t.selecting.minutes(g.estimatedMinutes)}
+                  {t.selecting.minutes(g.estimatedMinutes)} ·{' '}
+                  {g.supportsBots ? `🤖 ${t.lobby.botsWelcome}` : t.lobby.noBots}
                 </span>
                 {isSelected ? (
                   <span className={styles.cardDescription}>{g.description}</span>

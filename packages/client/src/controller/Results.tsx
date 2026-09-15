@@ -5,7 +5,7 @@ import type { PlayerPublic, RoomSnapshot } from '@partybox/shared';
 import { PrimaryButton, Scoreboard, Screen } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import type { Controller } from '../net/controller';
-import { scoreboardRows, winnerLine } from './results-rows';
+import { nobodyScored, scoreboardRows, winnerLine } from './results-rows';
 import styles from './Results.module.css';
 
 export interface ResultsProps {
@@ -26,8 +26,9 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
               {t.results.playAgain}
             </PrimaryButton>
             <div className={styles.row}>
-              <PrimaryButton
-                tone="neutral"
+              <button
+                type="button"
+                className={styles.secondary}
                 onClick={() =>
                   controller.vip({
                     action: 'selectGame',
@@ -36,10 +37,14 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
                 }
               >
                 {t.results.newGame}
-              </PrimaryButton>
-              <PrimaryButton tone="neutral" onClick={() => controller.vip({ action: 'toLobby' })}>
+              </button>
+              <button
+                type="button"
+                className={styles.secondary}
+                onClick={() => controller.vip({ action: 'toLobby' })}
+              >
                 {t.results.lobby}
-              </PrimaryButton>
+              </button>
             </div>
           </div>
         ) : (
@@ -48,7 +53,7 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
       }
     >
       <p className={styles.winner}>{winnerLine(room)}</p>
-      <Scoreboard rows={rows} compact highlightId={me.id} />
+      <Scoreboard rows={rows} compact highlightId={me.id} noTrophy={nobodyScored(room)} />
       {room.results?.results.awards.length ? (
         <ul className={styles.awards}>
           {room.results.results.awards.map((a) => (

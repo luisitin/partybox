@@ -1,11 +1,13 @@
-// Phone frame: header (room code, me, connection, VIP badge + menu), calm reconnect banner,
-// toasts and the error strip. Everything below the header is the current screen.
+// Phone frame: header (room code, me, connection, VIP badge + menu), a countdown line during play
+// (the TV timer is 3 m away), calm reconnect banner, toasts and the error strip. Everything below
+// the header is the current screen.
 import { useState } from 'react';
 import type { JSX, ReactNode } from 'react';
 import type { PlayerPublic } from '@partybox/shared';
-import { Avatar } from '@partybox/game-sdk/ui';
+import { Avatar, DeadlineBar, useSecondsLeft } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import type { Controller, ControllerState } from '../net/controller';
+import { ThemePicker } from '../ThemePicker';
 import styles from './ControllerShell.module.css';
 import { VipMenu } from './VipMenu';
 
@@ -23,13 +25,21 @@ export function ControllerShell({
   children,
 }: ControllerShellProps): JSX.Element {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [themeOpen, setThemeOpen] = useState(false);
   const room = state.room;
   const showBanner = state.connection !== 'connected' && state.joined;
+  const view = room?.status === 'playing' ? state.view : null;
+  const seconds = useSecondsLeft(view?.deadline ?? null, view?.paused ?? false);
   return (
     <div className={styles.shell} data-surface="controller">
       <header className={styles.header}>
         <div className={styles.left}>
-          <span className={styles.brand}>{t.appName}</span>
+          <span className={styles.brand} aria-label={t.appName}>
+            <span className={styles.brandFull}>{t.appName}</span>
+            <span className={styles.brandShort} aria-hidden>
+              {t.appShort}
+            </span>
+          </span>
           {room ? (
             <span className={styles.code} aria-label={`${t.lobby.room} ${room.code}`}>
               {room.code}
@@ -37,6 +47,15 @@ export function ControllerShell({
           ) : null}
         </div>
         <div className={styles.right}>
+          <button
+            type="button"
+            className={styles.iconButton}
+            onClick={() => setThemeOpen(true)}
+            aria-haspopup="dialog"
+            aria-label={t.theme.title}
+          >
+            🎨
+          </button>
           <span
             className={`${styles.dot} ${state.connection === 'connected' ? styles.on : styles.off}`}
             role="status"
@@ -44,7 +63,9 @@ export function ControllerShell({
           />
           {me ? (
             <>
-              {me.isVip ? (
+              {/* Offline, the badge may already be stale (the server hands the VIP over after 30 s):
+                  hide it until the connection is back and the snapshot is fresh. */}
+              {me.isVip && state.connection === 'connected' ? (
                 <button
                   type="button"
                   className={styles.vipBadge}
@@ -62,12 +83,24 @@ export function ControllerShell({
           ) : null}
         </div>
       </header>
+      {view && seconds !== null ? (
+        <div
+          className={`${styles.deadline} ${seconds <= 5 && !view.paused ? styles.urgent : ''}`}
+          role="timer"
+          aria-label={view.paused ? t.tv.paused : t.connection.secondsLeft(seconds)}
+        >
+          <DeadlineBar deadline={view.deadline} phaseKey={view.phaseId} paused={view.paused} />
+          <span className={styles.seconds}>
+            {view.paused ? `⏸ ${t.tv.paused}` : t.connection.seconds(seconds)}
+          </span>
+        </div>
+      ) : null}
       {showBanner ? (
         <div className={styles.banner} role="status">
           {t.connection.reconnecting}
         </div>
       ) : null}
-      {state.error ? (
+      {state.error && state.joined ? (
         <button type="button" className={styles.error} onClick={controller.dismissError}>
           {state.error.message}
         </button>
@@ -75,19 +108,28 @@ export function ControllerShell({
       <main className={styles.main}>{children}</main>
       <div className={styles.toasts} aria-live="polite">
         {state.toasts.map((toast) => (
-          <button
+          // A status line, not a button: screen readers announce it once and it never masquerades
+          // as an action (a "… is now the VIP" toast used to match button lookups for /VIP/).
+          <div
             key={toast.id}
-            type="button"
+            role="status"
             className={`${styles.toast} ${styles[toast.kind]}`}
             onClick={() => controller.dismissToast(toast.id)}
           >
             {toast.text}
-          </button>
+          </div>
         ))}
       </div>
       {menuOpen && room && me?.isVip ? (
-        <VipMenu controller={controller} room={room} me={me} onClose={() => setMenuOpen(false)} />
+        <VipMenu
+          controller={controller}
+          room={room}
+          me={me}
+          paused={view?.paused ?? false}
+          onClose={() => setMenuOpen(false)}
+        />
       ) : null}
+      {themeOpen ? <ThemePicker variant="sheet" onClose={() => setThemeOpen(false)} /> : null}
     </div>
   );
 }

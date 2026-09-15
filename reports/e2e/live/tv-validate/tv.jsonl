@@ -1,0 +1,14 @@
+{"t":"2026-09-15T22:03:05.148Z","agent":"tv","event":"start","base":"http://127.0.0.1:42090","maxS":25}
+{"t":"2026-09-15T22:03:05.486Z","agent":"tv","event":"tv-open","elapsedS":0.4}
+{"t":"2026-09-15T22:03:05.516Z","agent":"tv","event":"screenshot","label":"opened","path":"C:\\dev\\partybox\\reports\\e2e\\live\\tv-validate\\tv-01-opened.png","elapsedS":0.4}
+{"t":"2026-09-15T22:03:05.525Z","agent":"tv","event":"status","from":null,"to":"lobby","status":"lobby","phaseId":null,"startedAt":null,"deadline":null,"vipId":"1f8be65e-737b-41ec-a107-384f508d9dba","vipName":"Vera","gameId":null,"players":["Vera*(off)","Sloane(off)","Rory(off)"],"elapsedS":0.4}
+{"t":"2026-09-15T22:03:05.816Z","agent":"tv","event":"screenshot","label":"status-lobby","path":"C:\\dev\\partybox\\reports\\e2e\\live\\tv-validate\\tv-02-status-lobby.png","elapsedS":0.7}
+{"t":"2026-09-15T22:03:05.816Z","agent":"tv","event":"players","players":["Vera*(off)","Sloane(off)","Rory(off)"],"count":3,"elapsedS":0.7}
+{"t":"2026-09-15T22:03:05.819Z","agent":"tv","event":"chips","where":"main","chips":[{"label":"Vera, VIP, reconnecting","name":"Vera","spectator":false,"vip":true,"avatarOpacity":"0.45","connected":false},{"label":"Sloane, reconnecting","name":"Sloane","spectator":false,"vip":false,"avatarOpacity":"0.45","connected":false},{"label":"Rory, reconnecting","name":"Rory","spectator":false,"vip":false,"avatarOpacity":"0.45","connected":false}],"elapsedS":0.7}
+{"t":"2026-09-15T22:03:16.629Z","agent":"tv","event":"toast","text":"Rory left","elapsedS":11.6}
+{"t":"2026-09-15T22:03:16.661Z","agent":"tv","event":"screenshot","label":"toast-Rory left","path":"C:\\dev\\partybox\\reports\\e2e\\live\\tv-validate\\tv-03-toast-Rory_left.png","elapsedS":11.6}
+{"t":"2026-09-15T22:03:16.661Z","agent":"tv","event":"chips","where":"main","chips":[{"label":"Vera, VIP, reconnecting","name":"Vera","spectator":false,"vip":true,"avatarOpacity":"0.45","connected":false},{"label":"Sloane, reconnecting","name":"Sloane","spectator":false,"vip":false,"avatarOpacity":"0.45","connected":false}],"elapsedS":11.6}
+{"t":"2026-09-15T22:03:18.208Z","agent":"tv","event":"players","players":["Vera*(off)","Sloane(off)"],"count":2,"elapsedS":13.1}
+{"t":"2026-09-15T22:03:20.281Z","agent":"tv","event":"toast-gone","text":"Rory left","elapsedS":15.2}
+{"t":"2026-09-15T22:03:30.552Z","agent":"tv","event":"screenshot","label":"final","path":"C:\\dev\\partybox\\reports\\e2e\\live\\tv-validate\\tv-04-final.png","elapsedS":25.5}
+{"t":"2026-09-15T22:03:30.552Z","agent":"tv","event":"summary","stopReason":"timeout","elapsedS":25.5,"phasesSeen":[],"resultsSeen":0,"statusChanges":1,"toasts":[{"t":"2026-09-15T22:03:16.629Z","text":"Rory left","elapsedS":11.6}],"consoleErrors":[],"timerMaxMsAtZero":0}

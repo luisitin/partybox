@@ -1,7 +1,7 @@
 // Doc-drift checks (Section 7 of the spec). Cheap, deterministic, part of `pnpm verify`.
 // Every check prints one line; any failure exits 1 at the end so you see all of them at once.
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
-import { join, relative } from 'node:path';
+import { join, relative, sep } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { listGameFolders, REPO_ROOT, REQUIRED_README_HEADINGS } from './lib/games';
 import { run } from './lib/run';
@@ -60,11 +60,14 @@ function checkFolderDocs(): void {
     join(REPO_ROOT, 'reports'),
   ];
   for (const dir of folders) {
-    const rel = relative(REPO_ROOT, dir).replaceAll('\\', '/');
+    const rel = relative(REPO_ROOT, dir).split(sep).join('/');
+    const isPackageOrGame = rel.startsWith('packages/') || rel.startsWith('games/');
+    // A game README is its spec (8 required sections + edge cases): it gets twice the room.
+    const readmeCap = rel.startsWith('games/') ? 120 : 60;
     const readme = join(dir, 'README.md');
     if (!existsSync(readme)) bad(`${rel}/README.md is missing`);
-    else if (lines(readme) > 60) bad(`${rel}/README.md has ${lines(readme)} lines (max 60)`);
-    const isPackageOrGame = rel.startsWith('packages/') || rel.startsWith('games/');
+    else if (lines(readme) > readmeCap)
+      bad(`${rel}/README.md has ${lines(readme)} lines (max ${readmeCap})`);
     if (isPackageOrGame) {
       const local = join(dir, 'CLAUDE.md');
       if (!existsSync(local)) bad(`${rel}/CLAUDE.md is missing`);

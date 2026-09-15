@@ -11,6 +11,7 @@ export type {
 export { applyRoomEvent, createRoom } from './room';
 export type { CreateRoomOptions } from './room';
 export { nextWakeAt, playerInfos } from './runner';
+export { botsOf, isBot } from './bots';
 export { canStart } from './vip';
 export { controllerView, gameSummaries, publicPlayers, snapshot, tvView } from './views';
 export { coerceSettings, defaultSettings } from './settings';

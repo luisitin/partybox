@@ -5,9 +5,9 @@ import { join } from 'node:path';
 import type { FastifyInstance } from 'fastify';
 import type { EngineDeps } from '@partybox/engine';
 import { nextWakeAt } from '@partybox/engine';
-import { z } from '@partybox/shared';
-import type { BotManager, BotStrategy } from './bots';
-import { BOT_STRATEGIES } from './bots';
+import { createRng, z } from '@partybox/shared';
+import type { BotManager } from './bots';
+import { BOT_STRATEGIES } from '@partybox/shared';
 import type { Clock } from './clock';
 import type { Host } from './host';
 
@@ -22,7 +22,7 @@ export interface DevApiOptions {
 
 const botsBody = z.object({
   count: z.number().int().min(1).max(16),
-  strategy: z.enum(BOT_STRATEGIES as [BotStrategy, ...BotStrategy[]]).optional(),
+  strategy: z.enum(BOT_STRATEGIES).optional(),
   reactionMs: z.number().int().min(0).max(60_000).optional(),
 });
 const startBody = z.object({
@@ -36,6 +36,7 @@ const loadStateBody = z.object({
   state: z.unknown(),
   settings: z.record(z.string(), z.union([z.number(), z.boolean(), z.string()])).optional(),
 });
+const actBody = z.object({ playerId: z.string().optional(), seed: z.number().int().optional() });
 const clockBody = z.object({ freeze: z.boolean(), now: z.number().optional() });
 const disconnectBody = z.object({ playerId: z.string(), seconds: z.number().min(0).max(3600) });
 const previewQuery = z.object({
@@ -196,6 +197,37 @@ export function registerDevApi(app: FastifyInstance, options: DevApiOptions): vo
     return { ok: true };
   });
 
+  app.post('/api/dev/act', async (req, reply) => {
+    const body = actBody.safeParse(req.body ?? {});
+    if (!body.success) return reply.code(400).send({ error: body.error.message });
+    const code = roomOf(req.query);
+    const room = host.get(code);
+    if (!room?.game || room.status !== 'playing')
+      return { ok: true, acted: [], status: room?.status ?? null };
+    const game = deps.games[room.game.gameId];
+    if (!game) return reply.code(404).send({ error: 'unknown game' });
+    const botIds = new Set(bots.ids(code));
+    const targets = body.data.playerId
+      ? [body.data.playerId]
+      : Object.keys(room.game.state.players).filter((id) => !botIds.has(id));
+    const acted: string[] = [];
+    const rng = createRng(body.data.seed ?? room.game.state.rng.step + Date.now());
+    for (const playerId of targets) {
+      const current = host.get(code);
+      if (!current?.game || current.status !== 'playing') break;
+      const input = game.bot.sampleInput(current.game.state, playerId, rng);
+      if (input === null) continue;
+      host.dispatch(code, { type: 'input', playerId, input });
+      acted.push(playerId);
+    }
+    return {
+      ok: true,
+      acted,
+      status: host.get(code)?.status,
+      phase: host.get(code)?.game?.state.phase.id ?? null,
+    };
+  });
+
   app.get('/api/dev/preview/:gameId/:fixture', async (req, reply) => {
     const { gameId, fixture } = req.params as { gameId: string; fixture: string };
     const query = previewQuery.safeParse(req.query);
@@ -214,8 +246,14 @@ export function registerDevApi(app: FastifyInstance, options: DevApiOptions): vo
     const playerId = query.data.player ?? Object.keys(state.players)[0] ?? 'spectator';
     const view =
       query.data.view === 'tv' ? game.tvView(state) : game.controllerView(state, playerId);
+    // Fixture deadlines are historical timestamps; rebase so the timer shows the phase's full length.
+    const phase = (state as { phase?: { startedAt?: number; deadline?: number | null } }).phase;
+    const deadline =
+      typeof phase?.deadline === 'number' && typeof phase.startedAt === 'number'
+        ? clock.now() + Math.max(0, phase.deadline - phase.startedAt)
+        : view.deadline;
     return {
-      view: { ...view, vip: Object.keys(state.players)[0] ?? null },
+      view: { ...view, deadline, vip: Object.keys(state.players)[0] ?? null },
       playerIds: Object.keys(state.players),
     };
   });

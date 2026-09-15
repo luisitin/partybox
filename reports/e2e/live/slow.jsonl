@@ -1,0 +1,85 @@
+{"t":"2026-09-15T21:53:23.189Z","agent":"slow","event":"start","ms":57,"name":"Sloane","avatar":"frog","preset":"se","plan":"join third"}
+{"t":"2026-09-15T21:53:23.199Z","agent":"slow","event":"join-gate","ms":67,"playersBefore":2,"waitedMs":9,"names":["Finn","Vera"]}
+{"t":"2026-09-15T21:53:23.548Z","agent":"slow","event":"joined","name":"Sloane","playerId":"cf7d21c5-a707-4657-ab51-51a4e7436958"}
+{"t":"2026-09-15T21:53:23.549Z","agent":"slow","event":"viewport","ms":417,"viewport":{"width":320,"height":568}}
+{"t":"2026-09-15T21:53:23.592Z","agent":"slow","event":"screenshot","ms":460,"label":"00-joined","path":"C:\\dev\\partybox\\reports\\e2e\\live\\slow-00-joined.png"}
+{"t":"2026-09-15T21:53:23.595Z","agent":"slow","event":"status","ms":463,"from":null,"to":"lobby","players":3,"vipId":"3e242650-d7fb-4c4a-83f2-7b3415307882"}
+{"t":"2026-09-15T21:53:23.595Z","agent":"slow","event":"players","ms":463,"count":3,"names":["Finn*","Vera","Sloane"]}
+{"t":"2026-09-15T21:53:23.595Z","agent":"slow","event":"vip-id","ms":463,"vipId":"3e242650-d7fb-4c4a-83f2-7b3415307882","vipName":"Finn","meIsVip":false}
+{"t":"2026-09-15T21:53:23.607Z","agent":"slow","event":"vip-badge","ms":475,"badge":false,"devSaysVip":false}
+{"t":"2026-09-15T21:53:23.609Z","agent":"slow","event":"screen","ms":477,"from":null,"to":"lobby","heading":"Lobby","status":"lobby","phase":null}
+{"t":"2026-09-15T21:53:23.643Z","agent":"slow","event":"screenshot","ms":511,"label":"01-lobby","path":"C:\\dev\\partybox\\reports\\e2e\\live\\slow-01-lobby.png"}
+{"t":"2026-09-15T21:53:24.312Z","agent":"slow","event":"players","ms":1180,"count":4,"names":["Finn*","Vera","Sloane","Rory"]}
+{"t":"2026-09-15T21:53:25.015Z","agent":"slow","event":"status","ms":1883,"from":"lobby","to":"selecting","players":4,"vipId":"3e242650-d7fb-4c4a-83f2-7b3415307882"}
+{"t":"2026-09-15T21:53:25.025Z","agent":"slow","event":"screen","ms":1893,"from":"lobby","to":"selecting-wait","heading":"Finn is choosing a game…","status":"selecting","phase":null}
+{"t":"2026-09-15T21:53:25.042Z","agent":"slow","event":"screenshot","ms":1910,"label":"02-selecting-wait","path":"C:\\dev\\partybox\\reports\\e2e\\live\\slow-02-selecting-wait.png"}
+{"t":"2026-09-15T21:53:28.530Z","agent":"slow","event":"status","ms":5398,"from":"selecting","to":"playing","players":4,"vipId":"3e242650-d7fb-4c4a-83f2-7b3415307882"}
+{"t":"2026-09-15T21:53:28.531Z","agent":"slow","event":"phase","ms":5399,"phase":"wisecrack:intro@1789509208400","id":"intro","startedAt":1789509208400,"deadline":1789509213400,"status":"playing"}
+{"t":"2026-09-15T21:53:28.541Z","agent":"slow","event":"screen","ms":5409,"from":"selecting-wait","to":"waiting","heading":"Connecting…","status":"playing","phase":"wisecrack:intro@1789509208400"}
+{"t":"2026-09-15T21:53:28.556Z","agent":"slow","event":"screenshot","ms":5424,"label":"03-waiting","path":"C:\\dev\\partybox\\reports\\e2e\\live\\slow-03-waiting.png"}
+{"t":"2026-09-15T21:53:33.465Z","agent":"slow","event":"phase","ms":10333,"phase":"wisecrack:answer@1789509213401","id":"answer","startedAt":1789509213401,"deadline":1789509273401,"status":"playing"}
+{"t":"2026-09-15T21:53:33.968Z","agent":"slow","event":"screen","ms":10836,"from":"waiting","to":"text-answer","heading":"","status":"playing","phase":"wisecrack:answer@1789509213401"}
+{"t":"2026-09-15T21:53:34.009Z","agent":"slow","event":"screenshot","ms":10877,"label":"04-text-answer","path":"C:\\dev\\partybox\\reports\\e2e\\live\\slow-04-text-answer.png"}
+{"t":"2026-09-15T21:53:34.513Z","agent":"slow","event":"input-seen","ms":11381,"screen":"text-answer","heading":"","willWaitMs":12353,"deadline":1789509273401,"deadlineInMs":59937}
+{"t":"2026-09-15T21:53:34.527Z","agent":"slow","event":"players","ms":11395,"count":5,"names":["Finn*","Vera","Sloane","Rory(off)","Lou(spec)"]}
+{"t":"2026-09-15T21:54:17.082Z","agent":"slow","event":"button-check","ms":53950,"when":"before-act","button":null,"inside":null,"viewport":{"w":320,"h":568},"radios":0,"radiosInside":0}
+{"t":"2026-09-15T21:54:47.089Z","agent":"slow","event":"act","ms":83957,"screen":"text-answer","heading":"","result":null,"waitedMs":72576}
+{"t":"2026-09-15T21:55:17.250Z","agent":"slow","event":"button-check","ms":114118,"when":"after-act","button":null,"inside":null,"viewport":{"w":320,"h":568},"radios":0,"radiosInside":0}
+{"t":"2026-09-15T21:55:17.761Z","agent":"slow","event":"after-act","ms":114629,"screen":"text-answer","heading":""}
+{"t":"2026-09-15T21:55:17.805Z","agent":"slow","event":"screenshot","ms":114673,"label":"05-after-act-text-answer","path":"C:\\dev\\partybox\\reports\\e2e\\live\\slow-05-after-act-text-answer.png"}
+{"t":"2026-09-15T21:55:17.807Z","agent":"slow","event":"phase","ms":114675,"phase":"wisecrack:answer@1789509286434","id":"answer","startedAt":1789509286434,"deadline":1789509346434,"status":"playing"}
+{"t":"2026-09-15T21:55:18.323Z","agent":"slow","event":"input-seen","ms":115191,"screen":"text-answer","heading":"","willWaitMs":10116,"deadline":1789509346434,"deadlineInMs":28627}
+{"t":"2026-09-15T21:55:58.945Z","agent":"slow","event":"button-check","ms":155813,"when":"before-act","button":null,"inside":null,"viewport":{"w":320,"h":568},"radios":0,"radiosInside":0}
+{"t":"2026-09-15T21:55:58.954Z","agent":"slow","event":"act","ms":155822,"screen":"text-answer","heading":"","result":null,"waitedMs":40631}
+{"t":"2026-09-15T21:56:29.140Z","agent":"slow","event":"button-check","ms":186008,"when":"after-act","button":null,"inside":null,"viewport":{"w":320,"h":568},"radios":4,"radiosInside":4}
+{"t":"2026-09-15T21:56:29.650Z","agent":"slow","event":"after-act","ms":186518,"screen":"choices","heading":""}
+{"t":"2026-09-15T21:56:29.685Z","agent":"slow","event":"screenshot","ms":186553,"label":"06-after-act-text-answer","path":"C:\\dev\\partybox\\reports\\e2e\\live\\slow-06-after-act-text-answer.png"}
+{"t":"2026-09-15T21:56:29.702Z","agent":"slow","event":"phase","ms":186570,"phase":"lightning-round:question@1789509389419","id":"question","startedAt":1789509389419,"deadline":1789509399419,"status":"playing"}
+{"t":"2026-09-15T21:56:30.218Z","agent":"slow","event":"screen","ms":187086,"from":"text-answer","to":"choices","heading":"","status":"playing","phase":"lightning-round:question@1789509389419"}
+{"t":"2026-09-15T21:56:30.235Z","agent":"slow","event":"screenshot","ms":187103,"label":"07-choices","path":"C:\\dev\\partybox\\reports\\e2e\\live\\slow-07-choices.png"}
+{"t":"2026-09-15T21:56:30.735Z","agent":"slow","event":"input-seen","ms":187603,"screen":"choices","heading":"","willWaitMs":12454,"deadline":1789509399419,"deadlineInMs":9718}
+{"t":"2026-09-15T21:56:39.904Z","agent":"slow","event":"phase","ms":196772,"phase":"lightning-round:reveal@1789509399433","id":"reveal","startedAt":1789509399433,"deadline":1789509404433,"status":"playing"}
+{"t":"2026-09-15T21:56:40.409Z","agent":"slow","event":"input-replaced-before-act","ms":197277,"was":"choices|lightning-round:question@1789509389419|","now":"choices|lightning-round:reveal@1789509399433|","waitedMs":9674}
+{"t":"2026-09-15T21:56:40.409Z","agent":"slow","event":"input-seen","ms":197277,"screen":"choices","heading":"","willWaitMs":10065,"deadline":1789509404433,"deadlineInMs":4530}
+{"t":"2026-09-15T21:56:44.844Z","agent":"slow","event":"phase","ms":201712,"phase":"lightning-round:question@1789509404437","id":"question","startedAt":1789509404437,"deadline":1789509414437,"status":"playing"}
+{"t":"2026-09-15T21:56:45.359Z","agent":"slow","event":"input-replaced-before-act","ms":202227,"was":"choices|lightning-round:reveal@1789509399433|","now":"choices|lightning-round:question@1789509404437|","waitedMs":4950}
+{"t":"2026-09-15T21:56:45.360Z","agent":"slow","event":"input-seen","ms":202228,"screen":"choices","heading":"","willWaitMs":12343,"deadline":1789509414437,"deadlineInMs":9594}
+{"t":"2026-09-15T21:56:54.716Z","agent":"slow","event":"phase","ms":211584,"phase":"lightning-round:reveal@1789509414440","id":"reveal","startedAt":1789509414440,"deadline":1789509419440,"status":"playing"}
+{"t":"2026-09-15T21:56:55.232Z","agent":"slow","event":"input-replaced-before-act","ms":212100,"was":"choices|lightning-round:question@1789509404437|","now":"choices|lightning-round:reveal@1789509414440|","waitedMs":9872}
+{"t":"2026-09-15T21:56:55.232Z","agent":"slow","event":"input-seen","ms":212100,"screen":"choices","heading":"","willWaitMs":10357,"deadline":1789509419440,"deadlineInMs":4724}
+{"t":"2026-09-15T21:56:59.665Z","agent":"slow","event":"phase","ms":216533,"phase":"lightning-round:question@1789509419449","id":"question","startedAt":1789509419449,"deadline":1789509429449,"status":"playing"}
+{"t":"2026-09-15T21:57:00.179Z","agent":"slow","event":"input-replaced-before-act","ms":217047,"was":"choices|lightning-round:reveal@1789509414440|","now":"choices|lightning-round:question@1789509419449|","waitedMs":4947}
+{"t":"2026-09-15T21:57:00.179Z","agent":"slow","event":"input-seen","ms":217047,"screen":"choices","heading":"","willWaitMs":9754,"deadline":1789509429449,"deadlineInMs":9784}
+{"t":"2026-09-15T21:57:09.554Z","agent":"slow","event":"phase","ms":226422,"phase":"lightning-round:reveal@1789509429461","id":"reveal","startedAt":1789509429461,"deadline":1789509434461,"status":"playing"}
+{"t":"2026-09-15T21:57:10.069Z","agent":"slow","event":"input-replaced-before-act","ms":226937,"was":"choices|lightning-round:question@1789509419449|","now":"choices|lightning-round:reveal@1789509429461|","waitedMs":9890}
+{"t":"2026-09-15T21:57:10.069Z","agent":"slow","event":"input-seen","ms":226937,"screen":"choices","heading":"","willWaitMs":9706,"deadline":1789509434461,"deadlineInMs":4907}
+{"t":"2026-09-15T21:57:14.480Z","agent":"slow","event":"phase","ms":231348,"phase":"lightning-round:wager@1789509434464","id":"wager","startedAt":1789509434464,"deadline":1789509449464,"status":"playing"}
+{"t":"2026-09-15T21:57:14.996Z","agent":"slow","event":"input-replaced-before-act","ms":231864,"was":"choices|lightning-round:reveal@1789509429461|","now":"choices|lightning-round:wager@1789509434464|","waitedMs":4927}
+{"t":"2026-09-15T21:57:14.997Z","agent":"slow","event":"input-seen","ms":231865,"screen":"choices","heading":"","willWaitMs":12157,"deadline":1789509449464,"deadlineInMs":14984}
+{"t":"2026-09-15T21:57:57.705Z","agent":"slow","event":"button-check","ms":274573,"when":"before-act","button":null,"inside":null,"viewport":{"w":320,"h":568},"radios":0,"radiosInside":0}
+{"t":"2026-09-15T21:57:57.712Z","agent":"slow","event":"act","ms":274580,"screen":"choices","heading":"","result":null,"waitedMs":42715}
+{"t":"2026-09-15T21:58:27.887Z","agent":"slow","event":"button-check","ms":304755,"when":"after-act","button":null,"inside":null,"viewport":{"w":320,"h":568},"radios":0,"radiosInside":0}
+{"t":"2026-09-15T21:58:27.895Z","agent":"slow","event":"after-act","ms":304763,"screen":"lobby","heading":"Lobby"}
+{"t":"2026-09-15T21:58:27.914Z","agent":"slow","event":"screenshot","ms":304782,"label":"08-after-act-choices","path":"C:\\dev\\partybox\\reports\\e2e\\live\\slow-08-after-act-choices.png"}
+{"t":"2026-09-15T21:58:27.918Z","agent":"slow","event":"status","ms":304786,"from":"playing","to":"lobby","players":5,"vipId":"1f8be65e-737b-41ec-a107-384f508d9dba"}
+{"t":"2026-09-15T21:58:27.918Z","agent":"slow","event":"phase","ms":304786,"phase":null,"id":null,"startedAt":null,"deadline":null,"status":"lobby"}
+{"t":"2026-09-15T21:58:27.918Z","agent":"slow","event":"vip-id","ms":304786,"vipId":"1f8be65e-737b-41ec-a107-384f508d9dba","vipName":"Vera","meIsVip":false}
+{"t":"2026-09-15T21:58:27.927Z","agent":"slow","event":"screen","ms":304795,"from":"choices","to":"lobby","heading":"Lobby","status":"lobby","phase":null}
+{"t":"2026-09-15T21:58:27.964Z","agent":"slow","event":"screenshot","ms":304832,"label":"09-lobby","path":"C:\\dev\\partybox\\reports\\e2e\\live\\slow-09-lobby.png"}
+{"t":"2026-09-15T21:59:45.500Z","agent":"slow","event":"players","ms":382368,"count":4,"names":["Vera*","Sloane","Rory","Lou(off)"]}
+{"t":"2026-09-15T21:59:46.208Z","agent":"slow","event":"players","ms":383076,"count":3,"names":["Vera*","Sloane","Rory"]}
+{"t":"2026-09-15T22:01:43.293Z","agent":"slow","event":"stop","ms":500161,"reason":"hard stop at 500 s","elapsedMs":500161}
+{"t":"2026-09-15T22:01:43.322Z","agent":"slow","event":"screenshot","ms":500190,"label":"zz-final","path":"C:\\dev\\partybox\\reports\\e2e\\live\\slow-zz-final.png"}
+{"t":"2026-09-15T22:01:43.323Z","agent":"slow","event":"summary","ms":500191,"restarted":false,"phasesSeen":["wisecrack:intro@1789509208400","wisecrack:answer@1789509213401","wisecrack:answer@1789509286434","lightning-round:question@1789509389419","lightning-round:reveal@1789509399433","lightning-round:question@1789509404437","lightning-round:reveal@1789509414440","lightning-round:question@1789509419449","lightning-round:reveal@1789509429461","lightning-round:wager@1789509434464"],"gamesFinished":0,"screenshots":["C:\\dev\\partybox\\reports\\e2e\\live\\slow-00-joined.png","C:\\dev\\partybox\\reports\\e2e\\live\\slow-01-lobby.png","C:\\dev\\partybox\\reports\\e2e\\live\\slow-02-selecting-wait.png","C:\\dev\\partybox\\reports\\e2e\\live\\slow-03-waiting.png","C:\\dev\\partybox\\reports\\e2e\\live\\slow-04-text-answer.png","C:\\dev\\partybox\\reports\\e2e\\live\\slow-05-after-act-text-answer.png","C:\\dev\\partybox\\reports\\e2e\\live\\slow-06-after-act-text-answer.png","C:\\dev\\partybox\\reports\\e2e\\live\\slow-07-choices.png","C:\\dev\\partybox\\reports\\e2e\\live\\slow-08-after-act-choices.png","C:\\dev\\partybox\\reports\\e2e\\live\\slow-09-lobby.png","C:\\dev\\partybox\\reports\\e2e\\live\\slow-zz-final.png"],"consoleErrors":[],"missedInputs":6,"acts":3,"vipBadgeEver":false,"badgeActions":[],"buttonChecks":{"inside":0,"outside":0,"missing":6},"endStatus":"lobby","endReason":"hard stop at 500 s"}
+{"t":"2026-09-15T22:04:01.247Z","agent":"slow","event":"start","ms":53,"name":"Sloane","avatar":"frog","preset":"se","plan":"join third","observeOnly":true,"hardStopMs":40000}
+{"t":"2026-09-15T22:04:46.560Z","agent":"slow","event":"join-gate-timeout","ms":45366,"playersBefore":0,"note":"joining anyway after 45 s"}
+{"t":"2026-09-15T22:04:46.907Z","agent":"slow","event":"joined","name":"Sloane","playerId":"131c6455-ea4e-4a05-aafd-c52debb27070"}
+{"t":"2026-09-15T22:04:46.908Z","agent":"slow","event":"viewport","ms":45714,"viewport":{"width":320,"height":568}}
+{"t":"2026-09-15T22:04:46.947Z","agent":"slow","event":"screenshot","ms":45753,"label":"00-joined","path":"C:\\dev\\partybox\\reports\\e2e\\live\\slow-00-joined.png"}
+{"t":"2026-09-15T22:04:46.948Z","agent":"slow","event":"stop","ms":45754,"reason":"hard stop at 46 s","elapsedMs":45754}
+{"t":"2026-09-15T22:04:46.981Z","agent":"slow","event":"screenshot","ms":45787,"label":"zz-final","path":"C:\\dev\\partybox\\reports\\e2e\\live\\slow-zz-final.png"}
+{"t":"2026-09-15T22:04:46.982Z","agent":"slow","event":"summary","ms":45788,"restarted":false,"phasesSeen":[],"gamesFinished":0,"screenshots":["C:\\dev\\partybox\\reports\\e2e\\live\\slow-00-joined.png","C:\\dev\\partybox\\reports\\e2e\\live\\slow-zz-final.png"],"consoleErrors":[],"missedInputs":0,"acts":0,"vipBadgeEver":false,"badgeActions":[],"buttonChecks":{"inside":0,"outside":0,"missing":0},"endStatus":null,"endReason":"hard stop at 46 s"}
+{"t":"2026-09-15T22:05:12.755Z","agent":"slow","event":"start","ms":62,"name":"Sloane","avatar":"frog","preset":"se","plan":"join third","observeOnly":true,"hardStopMs":25000}
+{"t":"2026-09-15T22:05:12.756Z","agent":"slow","event":"join-gate-skipped","ms":63}
+{"t":"2026-09-15T22:05:28.070Z","agent":"slow","event":"fatal","ms":15377,"error":"locator.waitFor: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('header').getByText('Sloane', { exact: true }) to be visible\u001b[22m\n","stack":"locator.waitFor: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('header').getByText('Sloane', { exact: true }) to be visible\u001b[22m\n\n    at openPhone (C:\\dev\\partybox\\packages\\e2e\\src\\live\\lib.mts:80:65)\n    at async <anonymous> (C:\\dev\\partybox\\packages\\e2e\\src\\live\\slow.helper.mts:158:11)"}
+{"t":"2026-09-15T22:05:28.071Z","agent":"slow","event":"summary","ms":15378,"restarted":false,"phasesSeen":[],"gamesFinished":0,"screenshots":[],"consoleErrors":[],"missedInputs":0,"acts":0,"vipBadgeEver":false,"badgeActions":[],"buttonChecks":{"inside":0,"outside":0,"missing":0},"endStatus":null,"endReason":"fatal: locator.waitFor: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('header').getByText('Sloane', { exact: true }) to be visible\u001b[22m\n"}

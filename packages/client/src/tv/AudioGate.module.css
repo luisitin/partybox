@@ -1,47 +1,62 @@
-.gate {
+/* Non-blocking prompt, bottom-centre inside the overscan margin. */
+.pill {
   position: fixed;
-  inset: 0;
+  left: 50%;
+  bottom: var(--pb-overscan-y);
+  transform: translateX(-50%);
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: var(--pb-space-4);
-  background: rgb(15 16 32 / 92%);
-  z-index: 20;
-  cursor: pointer;
-}
-
-.gateTitle {
-  font-size: var(--pb-font-display);
-  font-weight: 900;
+  align-items: baseline;
+  gap: var(--pb-space-3);
+  padding: var(--pb-space-2) var(--pb-space-5);
+  border-radius: 999px;
+  background: var(--pb-surface-2);
   color: var(--pb-accent-2);
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  z-index: 20;
+  animation: pb-rise var(--pb-motion-base) var(--pb-ease) both;
 }
 
-.gateHint {
-  font-size: var(--pb-font-body);
+.pillHint {
   color: var(--pb-text-muted);
+  font-weight: 600;
 }
 
+/* Corner controls, inside the safe area; the header leaves room for them (TvFrame.joinBlock). */
 .controls {
   position: fixed;
-  right: var(--pb-space-3);
-  top: var(--pb-space-3);
+  right: var(--pb-overscan-x);
+  top: var(--pb-overscan-y);
   display: flex;
   gap: var(--pb-space-2);
   z-index: 21;
   opacity: 0.6;
 }
 
-.controls:hover {
+.controls:hover,
+.controls:focus-within {
   opacity: 1;
 }
 
 .control {
-  width: 56px;
-  height: 56px;
+  width: var(--pb-space-7);
+  height: var(--pb-space-7);
   border-radius: 50%;
   background: var(--pb-surface);
-  font-size: 28px;
+  font-size: var(--pb-font-caption);
   display: grid;
   place-items: center;
+}
+
+/* Theme strip drops down from the corner controls; the header leaves room for three buttons. */
+.themes {
+  position: absolute;
+  right: 0;
+  top: calc(var(--pb-space-7) + var(--pb-space-2));
+  width: max-content;
+  max-width: 60vw;
+  padding: var(--pb-space-2);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface-2);
+  animation: pb-rise var(--pb-motion-base) var(--pb-ease) both;
 }

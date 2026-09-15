@@ -24,6 +24,37 @@
   min-width: 0;
 }
 
+/* The name gives way first; code, dot and badge keep their size on a 320 px SE or at 200 % text. */
+.right {
+  flex-shrink: 0;
+}
+
+.left {
+  flex: 1 1 auto;
+  overflow: hidden;
+}
+
+/* Phone widths: the wordmark shrinks to its initials so code, theme, dot and badge always fit. */
+.brandShort {
+  display: none;
+}
+
+@media (max-width: 439px) {
+  .brandFull {
+    display: none;
+  }
+
+  .brandShort {
+    display: inline;
+  }
+}
+
+.brand,
+.code {
+  /* Chrome, not content: capped so a large OS text size does not push the header apart. */
+  font-size: min(var(--pb-font-body), 20px);
+}
+
 .brand {
   font-weight: 900;
   color: var(--pb-accent);
@@ -31,6 +62,7 @@
 }
 
 .code {
+  flex-shrink: 0;
   font-family: var(--pb-font-mono);
   font-weight: 800;
   letter-spacing: 0.15em;
@@ -40,6 +72,7 @@
 }
 
 .dot {
+  flex: 0 0 12px;
   width: 12px;
   height: 12px;
   border-radius: 50%;
@@ -55,13 +88,14 @@
 }
 
 .vipBadge {
+  flex-shrink: 0;
   min-height: var(--pb-touch);
   padding: 0 var(--pb-space-3);
   border-radius: 999px;
-  background: var(--pb-accent-2);
-  color: var(--pb-on-accent);
+  background: var(--pb-accent-2-fill);
+  color: var(--pb-on-accent-2-fill);
   font-weight: 800;
-  font-size: var(--pb-font-caption);
+  font-size: min(var(--pb-font-caption), 16px);
 }
 
 .me {
@@ -73,11 +107,45 @@
 
 .meName {
   font-weight: 700;
-  max-width: 7em;
+  max-width: 9em;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  font-size: min(var(--pb-font-caption), 16px);
+}
+
+@media (max-width: 359px) {
+  .meName {
+    display: none;
+  }
+}
+
+/* Countdown line during play: bar + seconds, danger-coloured in the last 5 s. */
+.deadline {
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-3);
+  padding: var(--pb-space-1) var(--pb-space-4);
+  background: var(--pb-surface);
+}
+
+.deadline > :first-child {
+  flex: 1;
+  height: 4px;
+}
+
+.seconds {
+  flex: 0 0 auto;
+  min-width: 3ch;
+  text-align: right;
   font-size: var(--pb-font-caption);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--pb-accent-2);
+}
+
+.urgent .seconds {
+  color: var(--pb-danger);
 }
 
 .banner {
@@ -108,7 +176,8 @@
   position: fixed;
   left: var(--pb-space-4);
   right: var(--pb-space-4);
-  bottom: calc(var(--pb-space-8) + env(safe-area-inset-bottom));
+  /* above the sticky footer (56 px button + padding), never over the thumb */
+  bottom: calc(var(--pb-space-8) + var(--pb-space-7) + env(safe-area-inset-bottom));
   display: flex;
   flex-direction: column;
   gap: var(--pb-space-2);
@@ -137,4 +206,15 @@
 
 .info {
   border-left: 4px solid var(--pb-info);
+}
+
+/* Header icon button (theme): a real 44 px target, quiet until pressed. */
+.iconButton {
+  flex-shrink: 0;
+  width: var(--pb-touch);
+  height: var(--pb-touch);
+  border-radius: 50%;
+  font-size: 20px;
+  display: grid;
+  place-items: center;
 }

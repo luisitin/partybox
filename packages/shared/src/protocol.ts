@@ -50,6 +50,18 @@ export type VipAction = z.infer<typeof vipPayloadSchema>;
 export const tvJoinPayloadSchema = z.object({ roomCode: z.string().max(8).optional() });
 export type TvJoinPayload = z.infer<typeof tvJoinPayloadSchema>;
 
+/** Any player may add bots they own (ADR-028); owners and the VIP may remove them. */
+export const botPayloadSchema = z.discriminatedUnion('action', [
+  z.object({ action: z.literal('add') }),
+  z.object({ action: z.literal('remove'), botId: z.string().max(64) }),
+]);
+export type BotAction = z.infer<typeof botPayloadSchema>;
+
+/** How a bot decides when to act; `random` is what the lobby button creates. */
+export const BOT_STRATEGIES = ['random', 'fast', 'slow', 'idle', 'chaos'] as const;
+export type BotStrategy = (typeof BOT_STRATEGIES)[number];
+export const MAX_BOTS_PER_OWNER = 4;
+
 // ─── server → client ────────────────────────────────────────────────────────────────────────────
 
 export type RoomStatus = 'lobby' | 'selecting' | 'playing' | 'results';
@@ -62,6 +74,8 @@ export interface PlayerPublic {
   connected: boolean;
   spectator: boolean;
   joinedAt: number;
+  /** Present for bots: who added it (null = added by the dev API). */
+  bot?: { ownerId: string | null; strategy: BotStrategy };
 }
 
 export interface GameSummary {
@@ -74,6 +88,7 @@ export interface GameSummary {
   estimatedMinutes: number;
   tags: string[];
   settings: SettingSpec[];
+  supportsBots: boolean;
 }
 
 export interface RoomResults {
@@ -140,7 +155,9 @@ export type ErrorCode =
   | 'invalid_input'
   | 'not_playing'
   | 'rate_limited'
-  | 'payload_too_large';
+  | 'payload_too_large'
+  | 'bots_not_supported'
+  | 'bot_limit';
 
 export interface ErrorPayload {
   code: ErrorCode;

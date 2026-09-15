@@ -2,6 +2,7 @@
 // friendly and consistent; games own their own copy.
 export const t = {
   appName: 'PartyBox',
+  appShort: 'PB',
   join: {
     title: 'Join the party',
     name: 'Your name',
@@ -11,13 +12,18 @@ export const t = {
     codePlaceholder: 'ABCD',
     submit: 'Join',
     joining: 'Joining…',
+    tryAgain: 'Try another.',
     resuming: 'Reconnecting…',
-    kicked: 'You were removed from the room.',
+    offline: 'Connecting…',
+    kicked: 'The VIP removed you from the room. You can join again.',
+    restarted: 'The party restarted — tap Join to get back in.',
     noRooms: 'No room is open right now. Start the server and open /tv on the big screen.',
   },
   lobby: {
     title: 'Lobby',
     waitingForVip: 'Waiting for the VIP to pick a game…',
+    waitingFor: (name: string) => `Waiting for ${name} to pick a game…`,
+    waitingForFirst: 'Waiting for the first player…',
     youAreVip: 'You are the VIP — pick a game when everyone is in.',
     pickGame: 'Pick a game',
     players: (n: number, cap: number) => `${n} / ${cap} players`,
@@ -25,6 +31,13 @@ export const t = {
     orOpen: 'or open',
     room: 'Room',
     locked: 'Room locked',
+    full: 'Room full',
+    addBot: 'Add a bot',
+    addBotHint: 'A bot plays on your behalf in games that welcome bots.',
+    removeBot: 'Remove',
+    yourBots: 'Your bots',
+    botsWelcome: 'Bots welcome',
+    noBots: 'No bots',
   },
   selecting: {
     vipChoosing: (name: string) => `${name} is choosing a game…`,
@@ -38,6 +51,9 @@ export const t = {
     title: 'Results',
     winner: (name: string) => `${name} wins!`,
     winners: (names: string) => `${names} win!`,
+    tieAmong: (names: string, others: number) => `${names} & ${others} others tie!`,
+    tie: "It's a tie!",
+    over: 'Game over',
     playAgain: 'Play again',
     newGame: 'New game',
     lobby: 'Back to lobby',
@@ -54,6 +70,7 @@ export const t = {
     lock: 'Lock room',
     unlock: 'Unlock room',
     close: 'Close',
+    confirm: (action: string) => `Confirm: ${action}`,
     badge: 'VIP',
   },
   spectator: {
@@ -63,13 +80,21 @@ export const t = {
   connection: {
     reconnecting: 'Reconnecting…',
     connecting: 'Connecting…',
+    loadingGame: 'Getting the game ready…',
+    lostServer: 'Lost the PartyBox server — reconnecting…',
+    seconds: (n: number) => `${n} s`,
+    secondsLeft: (n: number) => `${n} seconds left`,
+  },
+  theme: {
+    title: 'Theme',
   },
   tv: {
-    tapToStart: 'Tap to start',
-    tapHint: 'Enables sound on this screen',
+    tapToStart: 'Tap anywhere for sound',
+    tapHint: 'the party works without it',
     mute: 'Mute',
     unmute: 'Unmute',
     fullscreen: 'Fullscreen',
     paused: 'Paused',
+    pausedHint: (name: string) => `${name} can resume from the VIP menu`,
   },
 } as const;

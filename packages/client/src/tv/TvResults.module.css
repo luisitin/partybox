@@ -9,6 +9,11 @@
   align-items: start;
 }
 
+/* No awards → the board gets the whole stage width (two dense columns for 7+ players). */
+.single {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 .awards {
   list-style: none;
   margin: 0;

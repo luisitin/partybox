@@ -44,7 +44,8 @@ h2 {
 
 button,
 input,
-select {
+select,
+textarea {
   font: inherit;
   color: inherit;
 }
@@ -100,4 +101,10 @@ button {
 
 .pb-enter {
   animation: pb-rise var(--pb-motion-base) var(--pb-ease) both;
+}
+
+/* Each surface sets its own base size so em-based sizing inside primitives follows the TV or phone
+   type scale (body itself sits outside the surface element). */
+[data-surface] {
+  font-size: var(--pb-font-body);
 }

@@ -49,6 +49,12 @@ export const gameManifestSchema = z
     settings: z.array(settingSpecSchema).max(12),
     /** ADR-002: raise for stroke-list inputs (drawing games). */
     maxInputBytes: z.number().int().min(1024).max(HARD_MAX_INPUT_BYTES).optional(),
+    /**
+     * "Available for bots": the author certifies `bot.sampleInput` is a reasonable opponent in every
+     * input phase. Players may add bots in the lobby; a game without this flag cannot be started
+     * while bots are in the room (ADR-028).
+     */
+    supportsBots: z.boolean().optional(),
   })
   .refine((m) => m.minPlayers <= m.maxPlayers, { message: 'minPlayers must be <= maxPlayers' });
 export type GameManifest = z.infer<typeof gameManifestSchema>;
@@ -151,20 +157,29 @@ export interface GameBot<S, I> {
   sampleInput(state: S, playerId: string, rng: Rng): I | null;
 }
 
-export interface GameDefinition<S extends GameStateBase, I> {
+/**
+ * S = your state, I = your input union. TV / CV default to the bare envelopes; declare your own view
+ * interfaces (extending TvView / ControllerView) so `game.tvView(state).yourField` type-checks in tests.
+ */
+export interface GameDefinition<
+  S extends GameStateBase,
+  I,
+  TV extends TvView = TvView,
+  CV extends ControllerView = ControllerView,
+> {
   manifest: GameManifest;
   phases: readonly string[];
   inputSchema: z.ZodType<I>;
   init(ctx: InitContext): S;
   reduce(state: S, event: GameEvent<I>): S;
-  tvView(state: S): TvView;
-  controllerView(state: S, playerId: string): ControllerView;
+  tvView(state: S): TV;
+  controllerView(state: S, playerId: string): CV;
   results(state: S): GameResults | null;
   bot: GameBot<S, I>;
 }
 
 /* eslint-disable @typescript-eslint/no-explicit-any -- the registry holds heterogeneous games */
-export type AnyGameDefinition = GameDefinition<any, any>;
+export type AnyGameDefinition = GameDefinition<any, any, any, any>;
 /* eslint-enable @typescript-eslint/no-explicit-any */
 
 export const STATE_SIZE_LIMIT_BYTES = 256 * 1024;

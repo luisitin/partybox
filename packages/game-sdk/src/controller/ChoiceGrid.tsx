@@ -76,6 +76,11 @@ export function ChoiceGrid(props: ChoiceGridProps): JSX.Element {
           );
         })}
       </div>
+      {selectedId !== null && correctId === null ? (
+        <p className={styles.locked} role="status">
+          ✓ Locked in — look at the TV
+        </p>
+      ) : null}
     </Screen>
   );
 }

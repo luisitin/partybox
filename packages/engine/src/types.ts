@@ -2,6 +2,7 @@
 // (ADR-010). Everything is plain JSON-able data; no classes, no functions inside state.
 import type {
   AnyGameDefinition,
+  BotStrategy,
   ErrorCode,
   GameStateBase,
   RoomResults,
@@ -22,6 +23,8 @@ export interface RoomPlayer {
   disconnectedAt: number | null;
   /** Joined while a game was running; waits for the next one. */
   spectator: boolean;
+  /** Bots are room players driven by the host from `game.bot.sampleInput` (ADR-028). Never VIP. */
+  bot?: { ownerId: string | null; strategy: BotStrategy };
 }
 
 export interface RunningGame {
@@ -63,6 +66,16 @@ export type RoomEvent =
       avatarId: string;
       existingToken?: string;
     }
+  | {
+      /** A player (or the dev API, ownerId null) adds a bot; the host mints id + token. */
+      type: 'bot-add';
+      now: number;
+      ownerId: string | null;
+      playerId: string;
+      token: string;
+      strategy: BotStrategy;
+    }
+  | { type: 'bot-remove'; now: number; ownerId: string | null; botId: string }
   | { type: 'disconnect'; now: number; playerId: string }
   | { type: 'leave'; now: number; playerId: string }
   | { type: 'vip'; now: number; playerId: string; action: VipAction; seed?: number }

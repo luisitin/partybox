@@ -13,6 +13,10 @@ export interface PlayerChipsProps {
   size?: 'sm' | 'md' | 'lg';
   /** `grid` wraps into rows (lobby), `row` stays on one line (game footer). */
   layout?: 'grid' | 'row';
+  /** Grid alignment: centred by default; `start` lines up under a left-aligned heading. */
+  align?: 'center' | 'start';
+  /** Ids of bot players (they get a 🤖 tag). The room snapshot knows; the game view does not. */
+  botIds?: readonly string[];
 }
 
 export function PlayerChips({
@@ -22,9 +26,14 @@ export function PlayerChips({
   showScores,
   size = 'md',
   layout = 'row',
+  align = 'center',
+  botIds = [],
 }: PlayerChipsProps): JSX.Element {
   return (
-    <ul className={`${styles.list} ${styles[layout]}`} aria-label="players">
+    <ul
+      className={`${styles.list} ${styles[layout]} ${align === 'start' ? styles.start : ''}`}
+      aria-label="players"
+    >
       {players.map((p) => (
         <li key={p.id} className={styles.item}>
           <PlayerChip
@@ -35,6 +44,7 @@ export function PlayerChips({
             isVip={vip === p.id}
             active={activeIds.includes(p.id)}
             score={showScores ? p.score : undefined}
+            isBot={botIds.includes(p.id)}
             size={size}
           />
         </li>

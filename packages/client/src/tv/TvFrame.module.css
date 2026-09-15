@@ -6,6 +6,24 @@
   background: var(--pb-bg);
 }
 
+.lost .main {
+  opacity: 0.4;
+}
+
+.lostBanner {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: var(--pb-space-4) var(--pb-space-7);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface);
+  color: var(--pb-accent-2);
+  font-size: var(--pb-font-h2);
+  font-weight: 800;
+  text-align: center;
+}
+
 .header {
   display: flex;
   align-items: flex-start;
@@ -62,6 +80,8 @@
   display: flex;
   align-items: center;
   gap: var(--pb-space-4);
+  /* room for the theme + mute + fullscreen controls (AudioGate) in the corner */
+  padding-right: calc(3 * var(--pb-space-7) + var(--pb-space-5));
 }
 
 .url {
@@ -71,21 +91,6 @@
   white-space: nowrap;
 }
 
-.qr {
-  display: inline-block;
-  width: 120px;
-  height: 120px;
-  border-radius: var(--pb-radius);
-  overflow: hidden;
-  background: #fff;
-}
-
-.qr :global(svg) {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
 .main {
   flex: 1;
   min-height: 0;
@@ -93,12 +98,12 @@
   flex-direction: column;
 }
 
+/* Bottom-left, inside the overscan margins, never over the focal point in the middle of the stage. */
 .toasts {
   position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: var(--pb-space-3);
-  align-items: center;
+  left: var(--pb-overscan-x);
+  bottom: var(--pb-overscan-y);
+  align-items: flex-start;
   display: flex;
   flex-direction: column;
   gap: var(--pb-space-2);
