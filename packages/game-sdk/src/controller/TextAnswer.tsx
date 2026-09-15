@@ -102,9 +102,15 @@ export function TextAnswer(props: TextAnswerProps): JSX.Element {
         }}
         aria-label="your answer"
       />
-      <p className={styles.counter} aria-live="off">
-        {text.length} / {maxLength}
-      </p>
+      {disabled && trimmed ? (
+        <p className={styles.late} role="status">
+          Time's up — your answer wasn't sent.
+        </p>
+      ) : (
+        <p className={styles.counter} aria-live="off">
+          {text.length} / {maxLength}
+        </p>
+      )}
     </Screen>
   );
 }

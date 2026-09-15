@@ -61,6 +61,12 @@
   margin-top: var(--pb-space-2);
 }
 
+.late {
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  color: var(--pb-accent-2);
+}
+
 .counter {
   text-align: right;
   font-size: var(--pb-font-caption);
