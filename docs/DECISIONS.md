@@ -141,3 +141,9 @@ session might want to undo. Never edit an old one — supersede it.
 **Context.** The first contract run threw junk inputs (`null`, `{ nope: true }`) at reducers and they crashed. The engine validates every input with `inputSchema` before `reduce` runs, so those events cannot occur.
 **Decision.** The fuzzer sends inputs that pass the schema but are wrong in every other way (other players' inputs, unknown senders, inputs from earlier phases, `now` before the phase). Reducers may rely on the input shape.
 **Consequences.** Games stay simple; the socket layer + engine are the only input validators (tested in `packages/server` and `packages/engine`).
+
+## ADR-025 — `@partybox/game-sdk/testing` exposes the contract-suite internals
+
+**Context.** The sim (and the stress session's future harnesses) need the headless runner, hashing, fuzzing and game loader that the contract suite already has. Deep imports across packages are ugly; duplicating the code invites drift.
+**Decision.** A third SDK entry point, `@partybox/game-sdk/testing` (Node-only: reads `games/` from disk). ESLint bans it under `games/`.
+**Consequences.** `packages/sim`, `packages/e2e` and scripts import it; the suite and the sim share one definition of "plays a game" and "hash of a state".

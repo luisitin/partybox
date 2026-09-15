@@ -107,7 +107,12 @@ export default tseslint.config(
       'no-restricted-imports': [
         'error',
         {
-          paths: [...sharedBans, '@partybox/shared', '@partybox/engine'],
+          paths: [
+            ...sharedBans,
+            '@partybox/shared',
+            '@partybox/engine',
+            '@partybox/game-sdk/testing',
+          ],
           patterns: [
             {
               group: ['**/packages/**'],

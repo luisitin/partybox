@@ -6,7 +6,8 @@
   "types": "./src/index.ts",
   "exports": {
     ".": "./src/index.ts",
-    "./ui": "./src/ui.ts"
+    "./ui": "./src/ui.ts",
+    "./testing": "./src/testing.ts"
   },
   "dependencies": {
     "@partybox/shared": "workspace:*",

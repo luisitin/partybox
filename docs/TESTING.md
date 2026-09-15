@@ -29,10 +29,13 @@ manifest equality, fixtures per phase, content validation.
 
 ## Simulator (`packages/sim`)
 
-Strategies: `random` (valid random inputs), `fast` (answers immediately), `slow` (answers just before the
-deadline), `idle` (never answers), `chaos` (mix, plus disconnects/reconnects and VIP skips). Invariants are
-checked after every event. On failure a repro `reports/stress/repros/<hash>.json` (seed + event log) is
-written; `pnpm sim --replay <file>` reproduces it exactly. Details: `packages/sim/README.md`.
+Strategies: `random`, `fast` (answers immediately), `slow` (answers just before the deadline), `idle`
+(never answers), `chaos` (random timing plus disconnects/reconnects, VIP skip/pause/resume, duplicate
+and ghost inputs, stale timers); `mixed` assigns one per player. Invariants run after every event;
+every run is replayed and hashed to prove determinism. On failure a repro
+`reports/stress/repros/<game>-<hash>.json` (init + event log) is written; `pnpm sim --replay <file>`
+reproduces it. `pnpm verify` runs `pnpm sim --smoke` (50 mixed runs per game, player counts varied).
+Details: `packages/sim/README.md`.
 
 ## E2E (`packages/e2e`)
 

@@ -24,3 +24,6 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
   against every `games/*` folder (totality fuzz, purity scan, packs, fixtures, termination with four
   bot strategies, determinism, stale timers, hidden-info leaks), `games/_template` ("Quick Poll"),
   and `pnpm new-game <id>`.
+- Phase 6: `@partybox/sim` — headless simulator with five strategies + `mixed`, chaos actions,
+  invariants after every event, determinism replay, repro files + `--replay`, `--smoke` (now part of
+  `pnpm verify`), `--dump-fixtures`; `@partybox/game-sdk/testing` entry point.
