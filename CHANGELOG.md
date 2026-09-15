@@ -24,3 +24,5 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
   against every `games/*` folder (totality fuzz, purity scan, packs, fixtures, termination with four
   bot strategies, determinism, stale timers, hidden-info leaks), `games/_template` ("Quick Poll"),
   and `pnpm new-game <id>`.
+- `games/lightning-round` ("Lightning Round"): speed trivia — 216 original questions in 8 categories,
+  speed + streak scoring, a final wager question, three awards, fixtures, tests and contract config.
