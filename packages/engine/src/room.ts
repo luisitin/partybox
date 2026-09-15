@@ -58,7 +58,7 @@ function handleInput(
         { type: 'error', to: playerId, code: 'not_playing', message: 'No game is running.' },
       ],
     };
-  if (player.spectator || !running.state.players[playerId])
+  if (player.spectator || !Object.hasOwn(running.state.players, playerId))
     return {
       room,
       effects: [

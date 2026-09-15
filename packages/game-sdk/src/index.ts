@@ -46,6 +46,7 @@ export {
   applyVip,
   connectedIds,
   enterPhase,
+  hasPlayer,
   isPaused,
   isTimerFor,
   setConnected,

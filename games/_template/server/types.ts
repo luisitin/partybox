@@ -20,3 +20,6 @@ export const inputSchema = z.object({
 export type Input = z.infer<typeof inputSchema>;
 
 export const REVEAL_MS = 8_000;
+
+/** "Leave the current phase now" — injected into phase reducers by server/index.ts (`advance`). */
+export type Transition = (state: State, now: number) => State;

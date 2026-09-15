@@ -1,6 +1,9 @@
 // Optional hints for the shared contract suite (packages/game-sdk/src/contract-tests).
-// hiddenFromTv: strings that must not appear in tvView(state) — here, answers before the reveal.
-// hiddenFromController: strings other players must never see on their phone.
+// hiddenFromTv: strings that must not appear anywhere in tvView(state) except players[] — here, the
+// answers before the reveal. hiddenFromController(state, viewer): strings that must not appear in
+// that viewer's phone view — exclude what the viewer legitimately sees (their own answer, their own
+// id: `me.id` is always present). For numeric secrets (indices, amounts) list the KEY names you
+// omit from the view instead of values; the suite matches substrings ≥ 3 characters.
 import type { GameStateBase } from '@partybox/game-sdk';
 import type { State } from '../server/types';
 

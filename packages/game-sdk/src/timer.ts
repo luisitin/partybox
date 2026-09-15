@@ -30,7 +30,7 @@ export function isPaused(state: GameStateBase): boolean {
 
 /** Applies `player` events to `state.players[].connected`; other players are ignored. */
 export function setConnected<S extends GameStateBase>(state: S, event: GameEvent<unknown>): S {
-  if (event.type !== 'player') return state;
+  if (event.type !== 'player' || !hasPlayer(state, event.playerId)) return state;
   const player = state.players[event.playerId];
   if (!player || player.connected === event.connected) return state;
   return {
@@ -102,4 +102,12 @@ export function allConnectedDone(state: GameStateBase, done: Iterable<string>): 
   const set = new Set(done);
   const ids = connectedIds(state);
   return ids.length > 0 && ids.every((id) => set.has(id));
+}
+
+/**
+ * True when `playerId` is one of the game's players. Use this instead of `state.players[id]`
+ * truthiness: `state.players['__proto__']` is Object.prototype, which is truthy.
+ */
+export function hasPlayer(state: GameStateBase, playerId: string): boolean {
+  return Object.hasOwn(state.players, playerId);
 }

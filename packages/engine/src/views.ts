@@ -103,7 +103,7 @@ export function controllerView(
   if (!running || room.status !== 'playing') return null;
   const game = deps.games[running.gameId];
   if (!game) return null;
-  const role = running.state.players[playerId] ? 'player' : 'spectator';
+  const role = Object.hasOwn(running.state.players, playerId) ? 'player' : 'spectator';
   try {
     return { ...game.controllerView(running.state, playerId), vip: room.vipId };
   } catch {

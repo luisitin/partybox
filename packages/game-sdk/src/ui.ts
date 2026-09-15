@@ -1,8 +1,16 @@
 // `@partybox/game-sdk/ui` — React primitives for games and the client shells (docs/DESIGN_SYSTEM.md).
 // Kept separate from the pure entry point (ADR-023) because these import CSS modules.
 
-// Component prop types (also available from the pure entry point).
+// Types client code needs (also available from the pure entry point).
 export type { GameClientModule, GameControllerProps, GameTvProps } from './client-module';
+export type {
+  ControllerView,
+  PlayerStatus,
+  PushedView,
+  TvView,
+  ViewEnvelope,
+  ViewPlayer,
+} from '@partybox/shared';
 
 // ── shared ───────────────────────────────────────────────────────────────────────────────────
 export { Avatar, avatarColorVar } from './ui/Avatar';

@@ -28,7 +28,7 @@ function notifyGame(
   now: number,
   deps: EngineDeps,
 ): ApplyResult {
-  if (room.status !== 'playing' || !room.game?.state.players[playerId])
+  if (room.status !== 'playing' || !Object.hasOwn(room.game?.state.players ?? {}, playerId))
     return { room, effects: [] };
   return applyGameEvent(room, { type: 'player', now, playerId, connected }, deps);
 }
