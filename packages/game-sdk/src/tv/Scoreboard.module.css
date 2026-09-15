@@ -16,9 +16,9 @@
 }
 
 .dense .row {
-  font-size: var(--pb-font-body);
+  /* h2 digits still read from the couch; 16 rows in two columns ≈ 620 px */
   padding: var(--pb-space-1) var(--pb-space-3);
-  --pb-chip-size: 1.4em;
+  --pb-chip-size: 1.3em;
 }
 
 .row {
