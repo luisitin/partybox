@@ -42,7 +42,7 @@ export function Lobby({ controller, room, me }: LobbyProps): JSX.Element {
               connected={p.connected}
               isVip={p.isVip}
               status={p.spectator ? 'spectator' : 'active'}
-              active={p.id === me.id}
+              isMe={p.id === me.id}
             />
           </li>
         ))}

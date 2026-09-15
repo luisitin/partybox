@@ -31,6 +31,17 @@
   display: inline-flex;
 }
 
+.you {
+  flex-shrink: 0;
+  padding: 0 0.45em;
+  border-radius: 999px;
+  background: var(--pb-surface-2);
+  color: var(--pb-text-muted);
+  font-size: 0.7em;
+  font-weight: 800;
+  line-height: 1.6;
+}
+
 /* Readable from the couch (the old 0.7em star over the avatar was 12–20 px on the TV strip). */
 .vip {
   flex-shrink: 0;
