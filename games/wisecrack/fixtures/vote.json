@@ -1,0 +1,268 @@
+{
+  "phase": {
+    "id": "vote",
+    "startedAt": 1700000065000,
+    "deadline": 1700000085000
+  },
+  "rng": {
+    "seed": 7,
+    "step": 166
+  },
+  "players": {
+    "p-ana": {
+      "id": "p-ana",
+      "name": "Ana",
+      "avatarId": "fox",
+      "connected": true
+    },
+    "p-ben": {
+      "id": "p-ben",
+      "name": "Ben",
+      "avatarId": "owl",
+      "connected": true
+    },
+    "p-cleo": {
+      "id": "p-cleo",
+      "name": "Cleo",
+      "avatarId": "frog",
+      "connected": true
+    },
+    "p-dev": {
+      "id": "p-dev",
+      "name": "Dev",
+      "avatarId": "panda",
+      "connected": true
+    }
+  },
+  "settings": {
+    "rounds": 2,
+    "answerSeconds": 60,
+    "spicy": false
+  },
+  "deck": [
+    "f041",
+    "f140",
+    "f017",
+    "f142",
+    "f049",
+    "f013",
+    "f081",
+    "f084",
+    "f032",
+    "f157",
+    "f020",
+    "f153",
+    "f131",
+    "f019",
+    "f068",
+    "f031",
+    "f095",
+    "f125",
+    "f090",
+    "f144",
+    "f067",
+    "f108",
+    "f046",
+    "f145",
+    "f080",
+    "f023",
+    "f122",
+    "f127",
+    "f076",
+    "f039",
+    "f094",
+    "f114",
+    "f151",
+    "f150",
+    "f055",
+    "f044",
+    "f018",
+    "f045",
+    "f133",
+    "f121",
+    "f064",
+    "f103",
+    "f083",
+    "f028",
+    "f027",
+    "f071",
+    "f053",
+    "f154",
+    "f047",
+    "f030",
+    "f134",
+    "f050",
+    "f070",
+    "f101",
+    "f061",
+    "f033",
+    "f054",
+    "f099",
+    "f156",
+    "f008",
+    "f077",
+    "f060",
+    "f160",
+    "f011",
+    "f056",
+    "f092",
+    "f115",
+    "f065",
+    "f048",
+    "f110",
+    "f059",
+    "f005",
+    "f069",
+    "f025",
+    "f026",
+    "f021",
+    "f063",
+    "f007",
+    "f146",
+    "f051",
+    "f116",
+    "f136",
+    "f016",
+    "f029",
+    "f117",
+    "f128",
+    "f022",
+    "f087",
+    "f104",
+    "f155",
+    "f141",
+    "f034",
+    "f074",
+    "f079",
+    "f058",
+    "f072",
+    "f004",
+    "f062",
+    "f089",
+    "f148",
+    "f123",
+    "f139",
+    "f135",
+    "f086",
+    "f158",
+    "f002",
+    "f052",
+    "f098",
+    "f120",
+    "f006",
+    "f043",
+    "f159",
+    "f111",
+    "f093",
+    "f057",
+    "f119",
+    "f152",
+    "f085",
+    "f036",
+    "f042",
+    "f001",
+    "f105",
+    "f082",
+    "f040",
+    "f037",
+    "f107",
+    "f088",
+    "f124",
+    "f003",
+    "f024",
+    "f129",
+    "f100",
+    "f075",
+    "f102",
+    "f126",
+    "f138",
+    "f038",
+    "f014",
+    "f143",
+    "f118",
+    "f078",
+    "f112",
+    "f091",
+    "f147",
+    "f106",
+    "f015",
+    "f132",
+    "f109",
+    "f073",
+    "f066",
+    "f035",
+    "f097",
+    "f113",
+    "f096",
+    "f130",
+    "f137"
+  ],
+  "round": 1,
+  "prompts": [
+    {
+      "id": "f149",
+      "text": "A weird thing to find inside a knight's armour",
+      "authors": ["p-ana", "p-ben"]
+    },
+    {
+      "id": "f012",
+      "text": "A new holiday nobody asked for",
+      "authors": ["p-ben", "p-dev"]
+    },
+    {
+      "id": "f010",
+      "text": "A motivational poster for sloths would say: ___",
+      "authors": ["p-cleo", "p-dev"]
+    },
+    {
+      "id": "f009",
+      "text": "The worst thing to find at the bottom of your cereal box",
+      "authors": ["p-cleo", "p-ana"]
+    }
+  ],
+  "promptIndex": 0,
+  "answers": {
+    "f149": {
+      "p-ana": "a second, smaller knight",
+      "p-ben": "his mum's packed lunch"
+    },
+    "f009": {
+      "p-ana": "a note that says: you are next",
+      "p-cleo": "the top of the cereal box"
+    },
+    "f012": {
+      "p-ben": "National Wet Sock Day",
+      "p-dev": "Tax Return Eve"
+    },
+    "f010": {
+      "p-cleo": "Tomorrow is also a day"
+    }
+  },
+  "votes": {
+    "f149": {
+      "p-cleo": "p-ben"
+    }
+  },
+  "scores": {
+    "p-ana": 0,
+    "p-ben": 0,
+    "p-cleo": 0,
+    "p-dev": 0
+  },
+  "roundStartScores": {
+    "p-ana": 0,
+    "p-ben": 0,
+    "p-cleo": 0,
+    "p-dev": 0
+  },
+  "stats": {
+    "votesReceived": {},
+    "sweeps": {},
+    "fastAnswers": {
+      "p-ana": 2,
+      "p-ben": 2,
+      "p-cleo": 1,
+      "p-dev": 0
+    }
+  }
+}

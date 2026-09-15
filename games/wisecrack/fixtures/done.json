@@ -1,0 +1,287 @@
+{
+  "phase": {
+    "id": "done",
+    "startedAt": 1700000203600,
+    "deadline": null
+  },
+  "rng": {
+    "seed": 7,
+    "step": 173
+  },
+  "players": {
+    "p-ana": {
+      "id": "p-ana",
+      "name": "Ana",
+      "avatarId": "fox",
+      "connected": true
+    },
+    "p-ben": {
+      "id": "p-ben",
+      "name": "Ben",
+      "avatarId": "owl",
+      "connected": true
+    },
+    "p-cleo": {
+      "id": "p-cleo",
+      "name": "Cleo",
+      "avatarId": "frog",
+      "connected": true
+    },
+    "p-dev": {
+      "id": "p-dev",
+      "name": "Dev",
+      "avatarId": "panda",
+      "connected": true
+    }
+  },
+  "settings": {
+    "rounds": 2,
+    "answerSeconds": 60,
+    "spicy": false
+  },
+  "deck": [
+    "f049",
+    "f013",
+    "f081",
+    "f084",
+    "f032",
+    "f157",
+    "f020",
+    "f153",
+    "f131",
+    "f019",
+    "f068",
+    "f031",
+    "f095",
+    "f125",
+    "f090",
+    "f144",
+    "f067",
+    "f108",
+    "f046",
+    "f145",
+    "f080",
+    "f023",
+    "f122",
+    "f127",
+    "f076",
+    "f039",
+    "f094",
+    "f114",
+    "f151",
+    "f150",
+    "f055",
+    "f044",
+    "f018",
+    "f045",
+    "f133",
+    "f121",
+    "f064",
+    "f103",
+    "f083",
+    "f028",
+    "f027",
+    "f071",
+    "f053",
+    "f154",
+    "f047",
+    "f030",
+    "f134",
+    "f050",
+    "f070",
+    "f101",
+    "f061",
+    "f033",
+    "f054",
+    "f099",
+    "f156",
+    "f008",
+    "f077",
+    "f060",
+    "f160",
+    "f011",
+    "f056",
+    "f092",
+    "f115",
+    "f065",
+    "f048",
+    "f110",
+    "f059",
+    "f005",
+    "f069",
+    "f025",
+    "f026",
+    "f021",
+    "f063",
+    "f007",
+    "f146",
+    "f051",
+    "f116",
+    "f136",
+    "f016",
+    "f029",
+    "f117",
+    "f128",
+    "f022",
+    "f087",
+    "f104",
+    "f155",
+    "f141",
+    "f034",
+    "f074",
+    "f079",
+    "f058",
+    "f072",
+    "f004",
+    "f062",
+    "f089",
+    "f148",
+    "f123",
+    "f139",
+    "f135",
+    "f086",
+    "f158",
+    "f002",
+    "f052",
+    "f098",
+    "f120",
+    "f006",
+    "f043",
+    "f159",
+    "f111",
+    "f093",
+    "f057",
+    "f119",
+    "f152",
+    "f085",
+    "f036",
+    "f042",
+    "f001",
+    "f105",
+    "f082",
+    "f040",
+    "f037",
+    "f107",
+    "f088",
+    "f124",
+    "f003",
+    "f024",
+    "f129",
+    "f100",
+    "f075",
+    "f102",
+    "f126",
+    "f138",
+    "f038",
+    "f014",
+    "f143",
+    "f118",
+    "f078",
+    "f112",
+    "f091",
+    "f147",
+    "f106",
+    "f015",
+    "f132",
+    "f109",
+    "f073",
+    "f066",
+    "f035",
+    "f097",
+    "f113",
+    "f096",
+    "f130",
+    "f137"
+  ],
+  "round": 2,
+  "prompts": [
+    {
+      "id": "f041",
+      "text": "The worst name for a pet goldfish",
+      "authors": ["p-dev", "p-cleo"]
+    },
+    {
+      "id": "f140",
+      "text": "A new air freshener scent for cars",
+      "authors": ["p-dev", "p-ana"]
+    },
+    {
+      "id": "f017",
+      "text": "Something you should never say to a goose",
+      "authors": ["p-ana", "p-ben"]
+    },
+    {
+      "id": "f142",
+      "text": "What bees discuss at their meetings",
+      "authors": ["p-ben", "p-cleo"]
+    }
+  ],
+  "promptIndex": 3,
+  "answers": {
+    "f140": {
+      "p-ana": "Fresh Parking Ticket",
+      "p-dev": "Grandpa's Glovebox"
+    },
+    "f017": {
+      "p-ana": "nice try, duck",
+      "p-ben": "I have seen bigger"
+    },
+    "f142": {
+      "p-ben": "quarterly buzz targets",
+      "p-cleo": "whether the queen is a bit much lately"
+    },
+    "f041": {
+      "p-cleo": "Captain Bathtub the Third",
+      "p-dev": "Sushi"
+    }
+  },
+  "votes": {
+    "f041": {
+      "p-ana": "p-dev",
+      "p-ben": "p-cleo"
+    },
+    "f140": {
+      "p-ben": "p-ana",
+      "p-cleo": "p-ana"
+    },
+    "f017": {
+      "p-cleo": "p-ben",
+      "p-dev": "p-ana"
+    },
+    "f142": {
+      "p-ana": "p-cleo",
+      "p-dev": "p-cleo"
+    }
+  },
+  "scores": {
+    "p-ana": 800,
+    "p-ben": 550,
+    "p-cleo": 1050,
+    "p-dev": 300
+  },
+  "roundStartScores": {
+    "p-ana": 100,
+    "p-ben": 350,
+    "p-cleo": 350,
+    "p-dev": 100
+  },
+  "stats": {
+    "votesReceived": {
+      "p-ana": 4,
+      "p-ben": 4,
+      "p-dev": 2,
+      "p-cleo": 6
+    },
+    "sweeps": {
+      "p-ben": 1,
+      "p-cleo": 2,
+      "p-ana": 1
+    },
+    "fastAnswers": {
+      "p-ana": 4,
+      "p-ben": 4,
+      "p-cleo": 2,
+      "p-dev": 0
+    }
+  }
+}

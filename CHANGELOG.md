@@ -34,3 +34,4 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
   app's own port (ADR-026).
 - `games/lightning-round` ("Lightning Round"): speed trivia — 216 original questions in 8 categories,
   speed + streak scoring, a final wager question, three awards, fixtures, tests and contract config.
+- `games/wisecrack` ("Wisecrack", prompt → answer → vote): 3–8 players, rounds/answerSeconds/spicy settings, double-points last round, sweep bonus, three awards, 160 family + 56 spicy prompts.
