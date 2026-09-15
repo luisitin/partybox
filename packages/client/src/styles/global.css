@@ -12,6 +12,12 @@ body,
   margin: 0;
 }
 
+/* The TV design is 1920×1080 CSS px; src/tv/fit.ts sets --pb-tv-zoom so it fits any viewport
+   (a PC at 150 % scaling, a 4K TV browser). */
+html[data-surface='tv'] {
+  zoom: var(--pb-tv-zoom, 1);
+}
+
 body {
   background: var(--pb-bg);
   color: var(--pb-text);

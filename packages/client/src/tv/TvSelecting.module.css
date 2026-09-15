@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   gap: var(--pb-space-4);
-  width: min(100%, 60vw);
+  width: min(100%, 1152px); /* 60 % of the 1920 px design (no vw: fit zoom) */
   margin-inline: auto;
   padding: var(--pb-space-6);
   border-radius: var(--pb-radius-lg);

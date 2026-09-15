@@ -54,7 +54,7 @@
   right: 0;
   top: calc(var(--pb-space-7) + var(--pb-space-2));
   width: max-content;
-  max-width: 60vw;
+  max-width: 1152px; /* 60 % of the 1920 px design (no vw: fit zoom) */
   padding: var(--pb-space-2);
   border-radius: var(--pb-radius);
   background: var(--pb-surface-2);
