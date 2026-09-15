@@ -88,3 +88,10 @@
 .dim {
   opacity: 0.5;
 }
+
+.locked {
+  text-align: center;
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  color: var(--pb-accent-3);
+}
