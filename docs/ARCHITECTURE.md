@@ -1,0 +1,72 @@
+# Architecture
+
+## Runtime topology
+
+One Node process (`packages/server`) on one port (default **42069**, `--port` / `PORT`), bound to `0.0.0.0`.
+
+| Route                                                       | Who                                     | What                                                    |
+| ----------------------------------------------------------- | --------------------------------------- | ------------------------------------------------------- |
+| `/tv`                                                       | any TV / monitor browser (many at once) | read-only stage: join URL + QR, room code, lobby, game  |
+| `/`                                                         | phones                                  | controller: join → lobby → per-game controls            |
+| `/preview/:gameId/:fixture?view=tv\|controller&player=<id>` | tools, dev                              | renders a fixture with no live state (dev only)         |
+| `/api/dev/*`                                                | tools, AI sessions                      | deterministic control API (`docs/DEV_API.md`), dev only |
+| `/healthz`                                                  | anyone                                  | `{ ok, version, rooms, uptime }`                        |
+
+Dev mode (`pnpm dev`) mounts Vite in middleware mode inside Fastify (ADR-006) so phones still use one URL.
+Prod (`pnpm start`) serves `packages/client/dist`. Nothing touches the internet at runtime (ADR-012).
+
+## Data flow
+
+```
+phone (controller)                    server (packages/server)                         TVs
+──────────────────                    ────────────────────────                         ───
+join/input/vip ──socket.io──▶ zod-validate payload (shared/protocol)
+                              │  invalid → `error` event, ignored
+                              ▼
+                        engine.applyRoomEvent(room, event, now)      ← pure (packages/engine)
+                              │   ├─ room lifecycle: lobby / selecting / playing / results
+                              │   ├─ VIP rules, reconnect, spectators
+                              │   └─ GameRunner: game.reduce(state, gameEvent)   ← pure (games/<id>/server)
+                              ▼
+                        { room', effects[] }
+                              │   effects: push(views) · toast · kicked · scheduleTimer · vipChanged
+                              ▼
+                        host interprets effects (the ONLY place with I/O)
+                              ├─ game.controllerView(state, playerId) ──`view {rev}`──▶ each phone
+                              ├─ game.tvView(state) ──────────────────`view {rev}`──▶ every TV
+                              └─ scheduleTimer → one setTimeout per room → later: timer event → same path
+```
+
+- The server is authoritative. Clients render what they are pushed; they never compute game state.
+- Every push carries a monotonically increasing `rev`; clients drop out-of-order pushes.
+- **Timers are data** (ADR-004): after every reduce the engine reads `state.phase.deadline` and emits one
+  `scheduleTimer` effect keyed by `phase.id + startedAt`. The host keeps exactly one pending timer per room.
+  A frozen dev clock never reaches a deadline until `/api/dev/clock` advances it.
+- `now` is injected everywhere (server `clock.ts`); engine and games never read the wall clock.
+
+## Packages and dependency direction
+
+```
+games/<id> ──▶ game-sdk ──▶ shared ◀── engine ◀── server ──▶ games/<id>/server (generated registry)
+                  ▲                                 client ──▶ games/<id>/client (generated registry)
+                  └────────────── client            sim, e2e ──▶ anything;  nothing ──▶ sim, e2e
+```
+
+Enforced by `eslint.config.js` (package-name bans) and `.dependency-cruiser.cjs` (path rules), both in `pnpm verify`.
+
+## Game discovery
+
+Explicit and generated (ADR-003): `scripts/gen-registry.ts` scans `games/*/manifest.json` and writes
+`packages/server/src/games.generated.ts` (server definitions) and `packages/client/src/games.generated.ts`
+(lazy client modules). Folders starting with `_` (the template) are tested but not registered.
+`pnpm verify` fails when the generated files are stale or a game folder lacks a required file.
+
+## Where state lives
+
+| State                       | Owner                          | Notes                                            |
+| --------------------------- | ------------------------------ | ------------------------------------------------ |
+| Rooms, players, tokens, VIP | engine `RoomState` (in memory) | lost on restart by design (no DB, ADR-005)       |
+| Game state                  | `RoomState.game.state`         | JSON, ≤ 256 KB, deterministic                    |
+| Pending timer               | server host                    | derived from state; re-derived after every event |
+| Controller token            | phone `localStorage`           | reconnect resumes identical controller state     |
+| TV mute                     | TV `localStorage`              | several TVs may run at once                      |

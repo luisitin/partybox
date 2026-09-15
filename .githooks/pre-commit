@@ -1,0 +1,4 @@
+#!/bin/sh
+# Opt-in hook (ADR-013): enable with `git config core.hooksPath .githooks`.
+# Runs the full gate before every commit. Skip once with `git commit --no-verify`.
+pnpm verify

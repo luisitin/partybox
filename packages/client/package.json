@@ -1,0 +1,23 @@
+{
+  "name": "@partybox/client",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@partybox/game-sdk": "workspace:*",
+    "@partybox/shared": "workspace:*",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "socket.io-client": "catalog:"
+  },
+  "devDependencies": {
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "^6.1.1",
+    "vite": "catalog:"
+  }
+}

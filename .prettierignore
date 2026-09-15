@@ -1,0 +1,8 @@
+node_modules
+dist
+pnpm-lock.yaml
+reports/**/screenshots
+reports/**/video
+*.generated.ts
+.claude/worktrees
+CHANGELOG.md

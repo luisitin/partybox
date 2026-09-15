@@ -1,0 +1,46 @@
+{
+  "name": "partybox",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Self-hosted, LAN-only party game platform: one TV page, phones as controllers, games as plugins.",
+  "type": "module",
+  "packageManager": "pnpm@12.4.2",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "dev": "tsx packages/server/src/main.ts --dev",
+    "dev:watch": "tsx watch --clear-screen=false --include packages --include games --exclude packages/client packages/server/src/main.ts --dev",
+    "start": "cross-env NODE_ENV=production tsx packages/server/src/main.ts",
+    "build": "pnpm gen-registry && pnpm --filter @partybox/client build",
+    "verify": "tsx scripts/verify.ts",
+    "typecheck": "tsc -p tsconfig.json",
+    "lint": "eslint . --max-warnings 0",
+    "lint:deps": "depcruise --config .dependency-cruiser.cjs packages games scripts",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "sim": "tsx packages/sim/src/cli.ts",
+    "e2e": "tsx packages/e2e/src/cli.ts run",
+    "e2e:snap": "tsx packages/e2e/src/cli.ts snap",
+    "new-game": "tsx scripts/new-game.ts",
+    "gen-registry": "tsx scripts/gen-registry.ts",
+    "check-drift": "tsx scripts/check-drift.ts",
+    "lan-ip": "tsx scripts/lan-ip.ts"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "@vitest/coverage-v8": "catalog:",
+    "cross-env": "^10.1.0",
+    "dependency-cruiser": "^18.3.0",
+    "eslint": "^10.10.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "prettier": "^3.9.6",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "typescript-eslint": "^8.70.0",
+    "vitest": "catalog:"
+  }
+}

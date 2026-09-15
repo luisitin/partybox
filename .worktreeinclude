@@ -1,0 +1,3 @@
+# Gitignored files that a Claude Code worktree (`claude --worktree <name>`) needs copied in.
+# One path per line, relative to the repo root. Add local config here (e.g. *.local.json)
+# if you create any; nothing is required today because every setting lives in git.

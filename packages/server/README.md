@@ -1,0 +1,22 @@
+# @partybox/server
+
+The only process. Fastify + Socket.IO host that wires the pure engine to real sockets and timers.
+
+## Key files (Phase 2)
+
+- `src/main.ts` — CLI (`--port`, `--host`, `--dev`, `--dev-api`), banner with LAN IP / URLs / firewall hint, port-in-use warning.
+- `src/app.ts` — Fastify app: `/healthz`, static client (prod) or Vite middleware (dev, ADR-006), dev API.
+- `src/sockets.ts` — Socket.IO: zod validation, rate limit (20 inputs/s), 16 KB payloads, heartbeats, TV vs controller sockets.
+- `src/host.ts` — interprets engine effects: pushes views with `rev`, one timer per room, toasts, kicks.
+- `src/clock.ts` — injectable clock (real / frozen) used by everything that needs `now`.
+- `src/dev-api.ts` — `/api/dev/*` (docs/DEV_API.md). `src/bots.ts` — server-played bots.
+- `src/qr.ts` — SVG QR for the join URL. `src/lan-ip.ts` — LAN IPv4 detection.
+- `src/games.generated.ts` — GENERATED registry (ADR-003). Do not edit.
+
+## Test
+
+`pnpm vitest --project server` (unit) · `pnpm e2e` (through real browsers)
+
+## Must NOT go here
+
+Game logic, view computation, React, imports from `packages/client` or `@partybox/game-sdk`.

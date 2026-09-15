@@ -1,0 +1,11 @@
+{
+  "name": "@partybox/sim",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@partybox/engine": "workspace:*",
+    "@partybox/game-sdk": "workspace:*",
+    "@partybox/shared": "workspace:*"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "@partybox/games",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "All game plugins live here, one folder each. This package.json only supplies their imports (ADR-008).",
+  "dependencies": {
+    "@partybox/game-sdk": "workspace:*",
+    "react": "catalog:"
+  },
+  "devDependencies": {
+    "@types/react": "catalog:"
+  }
+}

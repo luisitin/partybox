@@ -1,0 +1,10 @@
+{
+  "name": "@partybox/e2e",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@partybox/shared": "workspace:*",
+    "playwright": "^1.63.0"
+  }
+}

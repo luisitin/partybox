@@ -1,0 +1,21 @@
+# dependencies / build
+node_modules/
+dist/
+*.tsbuildinfo
+coverage/
+
+# Claude Code worktrees for the parallel sessions (see reports/README.md)
+.claude/worktrees/
+
+# local-only artefacts: markdown reports are committed, media is not
+reports/**/screenshots/
+reports/**/video/
+reports/**/*.png
+reports/**/*.webm
+*.local.json
+
+# tooling
+.vite/
+.eslintcache
+.DS_Store
+Thumbs.db

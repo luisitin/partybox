@@ -1,0 +1,53 @@
+# PartyBox
+
+A self-hosted, LAN-only party game platform. One Node process on your PC serves a **TV page** for the big
+screen and a **controller page** for everyone's phone — no app install, no accounts, no internet needed.
+Games are plugins; two ship with v0.1: **Wisecrack** (write answers, vote for the funniest) and
+**Lightning Round** (speed trivia with streaks and a final wager).
+
+## Quickstart (Windows 11, macOS or Linux)
+
+```bash
+corepack enable            # gives you pnpm (Node >= 24 required)
+pnpm install
+pnpm build                 # builds the client once
+pnpm start                 # http://<your-lan-ip>:42069  (printed at startup, with a QR on /tv)
+```
+
+Development: `pnpm dev` (hot reload, dev API on). Other port: `pnpm dev --port 42071` or `PORT=42071`.
+
+### Windows Firewall (once)
+
+Phones can only reach the PC if Windows allows inbound TCP on the port:
+
+```
+netsh advfirewall firewall add rule name="PartyBox" dir=in action=allow protocol=TCP localport=42069
+```
+
+(Run in an elevated PowerShell/cmd. The server prints this hint at startup.)
+
+## Getting it on the TV
+
+Any of these works — the TV only needs a browser that can open one URL:
+
+1. **Smart TV browser** — open `http://<lan-ip>:42069/tv` on the TV's built-in browser (Samsung, LG, Fire TV Silk, Android TV Chrome).
+2. **Cast a Chrome tab** — open `/tv` in Chrome on a laptop, then ⋮ → _Cast…_ → pick the TV (Chromecast / Google TV).
+3. **Laptop + HDMI** — plug the PC or a laptop into the TV, open `/tv`, press F11 for full screen.
+4. **Fire TV Silk** — open Silk, type the URL; use _Fullscreen_ from the Silk menu.
+
+Then everyone opens `http://<lan-ip>:42069` on their phone (or scans the QR on the TV). The first person
+in is the VIP and picks the game. Several TVs can open `/tv` at once; each has its own mute toggle.
+
+## Commands
+
+| Command                                       | What                                              |
+| --------------------------------------------- | ------------------------------------------------- |
+| `pnpm dev` / `pnpm start`                     | run (dev / production)                            |
+| `pnpm verify`                                 | the full quality gate (< 3 min)                   |
+| `pnpm new-game <id>`                          | scaffold a new game — see `docs/ADDING_A_GAME.md` |
+| `pnpm sim --game <id> --players 6 --runs 200` | headless simulation                               |
+| `pnpm e2e`, `pnpm e2e:snap --game <id>`       | browser tests and screenshots                     |
+
+## Where to read next
+
+`CLAUDE.md` is the map of the repo; `docs/START_HERE.md` gives a reading order per task.
