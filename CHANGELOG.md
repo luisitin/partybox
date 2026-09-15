@@ -32,3 +32,5 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
   phase, per device preset incl. iPhone SE / Galaxy / landscape / 200 % font, spectator phone);
   `/preview` route renders any fixture inside the real shells; `GET /api/games`; Vite HMR now on the
   app's own port (ADR-026).
+- `games/lightning-round` ("Lightning Round"): speed trivia — 216 original questions in 8 categories,
+  speed + streak scoring, a final wager question, three awards, fixtures, tests and contract config.
