@@ -60,11 +60,14 @@ export function createTvClient(roomCode?: string, url?: string): TvClient {
     store.set({ rev: push.rev, view: push.view, offsetMs: push.at - Date.now() });
   });
   socket.on('toast', (toast: ToastPayload) => {
+    // During play the chips already show who joined; a join toast would only cover the stage.
+    // (Payloads carry no category yet, so this matches the engine's "<name> joined…" text.)
+    if (store.get().room?.status === 'playing' && /joined/.test(toast.text)) return;
     const id = nextToastId();
-    store.set((prev) => ({ toasts: [...prev.toasts.slice(-2), { id, ...toast }] }));
+    store.set((prev) => ({ toasts: [...prev.toasts.slice(-1), { id, ...toast }] }));
     setTimeout(
       () => store.set((prev) => ({ toasts: prev.toasts.filter((t) => t.id !== id) })),
-      4000,
+      3000,
     );
   });
 
