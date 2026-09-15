@@ -1,14 +1,23 @@
 .card {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: var(--pb-space-4);
+  width: min(100%, 60vw);
+  margin-inline: auto;
   padding: var(--pb-space-6);
   border-radius: var(--pb-radius-lg);
   background: var(--pb-surface);
+  text-align: center;
 }
 
 .description {
   max-width: 30em;
+  text-wrap: balance;
+}
+
+.choosing {
+  text-align: center;
 }
 
 .meta {
@@ -23,7 +32,13 @@
   display: flex;
   gap: var(--pb-space-6);
   flex-wrap: wrap;
+  justify-content: center;
+}
+
+.settingHint {
+  display: block;
   font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
 }
 
 .reason {
