@@ -4,7 +4,7 @@
 // never reaches the results screen.
 import { AVATAR_IDS } from '@partybox/shared';
 import { chromium } from 'playwright';
-import type { Browser } from 'playwright';
+import type { Browser, Page } from 'playwright';
 import { DevApi } from './dev-api';
 import type { DevicePreset } from './devices';
 import { startServer } from './server';
@@ -56,6 +56,26 @@ export async function runFullGames(options: RunOptions): Promise<GameReport[]> {
   return reports;
 }
 
+/** Throttles the TV page 4× (weak smart-TV browsers) and records long tasks during the game. */
+async function throttleTv(page: Page): Promise<() => Promise<{ count: number; worstMs: number }>> {
+  const cdp = await page.context().newCDPSession(page);
+  await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 });
+  await page.evaluate(() => {
+    const w = window as unknown as { __pbLongTasks: number[] };
+    w.__pbLongTasks = [];
+    new PerformanceObserver((list) => {
+      for (const entry of list.getEntries()) w.__pbLongTasks.push(entry.duration);
+    }).observe({ type: 'longtask', buffered: true });
+  });
+  return async () => {
+    const durations = await page.evaluate(
+      () => (window as unknown as { __pbLongTasks: number[] }).__pbLongTasks,
+    );
+    await cdp.send('Emulation.setCPUThrottlingRate', { rate: 1 }).catch(() => undefined);
+    return { count: durations.length, worstMs: Math.round(Math.max(0, ...durations)) };
+  };
+}
+
 async function playOne(
   api: DevApi,
   url: string,
@@ -76,7 +96,8 @@ async function playOne(
   try {
     await api.reset();
     await api.clock(false);
-    await session.openTv('tv');
+    const tv = await session.openTv('tv');
+    const readLongTasks = await throttleTv(tv.page);
     const humans = Math.min(options.phones, game.maxPlayers);
     for (let i = 0; i < humans; i++) {
       await session.joinPhone(
@@ -139,6 +160,15 @@ async function playOne(
       if (!ok) report.failures.push(`${screen.label}: did not reach the results screen`);
     }
     await session.checkBoundaries();
+    // Performance budget (docs/DESIGN_SYSTEM.md): the stage stays smooth at 4x CPU throttling.
+    const longTasks = await readLongTasks();
+    report.notes.push(
+      `tv at 4x CPU throttle: ${longTasks.count} long tasks, worst ${longTasks.worstMs} ms`,
+    );
+    if (longTasks.worstMs > 250)
+      report.failures.push(
+        `tv jank: a ${longTasks.worstMs} ms task at 4x CPU throttle (budget 250 ms)`,
+      );
   } catch (err) {
     report.failures.push(String(err));
   } finally {

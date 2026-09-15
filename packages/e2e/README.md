@@ -13,7 +13,8 @@ pnpm e2e [--game <id>]... [--phones 4] [--port <n>] [--seed 1] [--timeout 300]
 pnpm e2e:snap --game <id> [--out <dir>] [--devices iphone,pixel,iphone-se,galaxy,landscape,font200] [--seed 1] [--max-phases 14]
 ```
 
-`pnpm e2e` plays every registered game (or the given ones) with phones alternating iPhone / Pixel;
+`pnpm e2e` plays every registered game (or the given ones) with phones alternating iPhone / Pixel; the TV
+page runs at 4× CPU throttling (CDP) and any long task over 250 ms fails the run (design-system budget);
 players' moves come from `POST /api/dev/act` (each game's own `bot.sampleInput`); timer-only phases
 are skipped via `POST /api/dev/skip` so a run takes seconds. `pnpm e2e:snap` freezes the clock before
 starting, then for each phase writes `<out>/<nn>-<phase>/tv.png`, one `<device>-<player|vip>.png` per
