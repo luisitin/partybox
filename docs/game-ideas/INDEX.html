@@ -5,40 +5,141 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>PartyBox — game ideas</title>
     <style>
-      :root { --bg:#0f1020; --surface:#1c1e3a; --surface-2:#272a52; --text:#f5f6ff; --muted:#b3b7d9; --accent:#ff5d8f; --accent-2:#ffd166; --line:#2a2d55; }
-      body { margin:0; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; background:var(--bg); color:var(--text); padding:40px; }
-      h1 { margin:0 0 8px; font-size:36px; }
-      .sub { color:var(--muted); margin:0 0 32px; }
-      .grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap:20px; }
-      a.card { display:block; background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:20px; color:inherit; text-decoration:none; }
-      a.card:hover { border-color:var(--accent); }
-      .num { color:var(--accent-2); font-weight:800; font-size:13px; letter-spacing:.1em; }
-      a.card h2 { margin:6px 0 8px; font-size:22px; }
-      a.card p { color:var(--muted); margin:0 0 12px; font-size:14px; }
-      .row { display:flex; gap:12px; flex-wrap:wrap; font-size:13px; color:var(--muted); align-items:center; }
-      .status { background:var(--surface-2); color:var(--accent-2); border-radius:999px; padding:2px 10px; font-weight:800; font-size:11px; text-transform:uppercase; letter-spacing:.05em; }
-      .tags { margin-top:10px; display:flex; gap:6px; flex-wrap:wrap; }
-      .tags span { font-size:11px; background:var(--surface-2); border-radius:6px; padding:2px 8px; color:var(--muted); }
-      .foot { color:var(--muted); font-size:13px; margin-top:32px; }
+      :root {
+        --bg: #0f1020;
+        --surface: #1c1e3a;
+        --surface-2: #272a52;
+        --text: #f5f6ff;
+        --muted: #b3b7d9;
+        --accent: #ff5d8f;
+        --accent-2: #ffd166;
+        --line: #2a2d55;
+      }
+      body {
+        margin: 0;
+        font-family:
+          system-ui,
+          -apple-system,
+          'Segoe UI',
+          Roboto,
+          sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        padding: 40px;
+      }
+      h1 {
+        margin: 0 0 8px;
+        font-size: 36px;
+      }
+      .sub {
+        color: var(--muted);
+        margin: 0 0 32px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+      }
+      a.card {
+        display: block;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 20px;
+        color: inherit;
+        text-decoration: none;
+      }
+      a.card:hover {
+        border-color: var(--accent);
+      }
+      .num {
+        color: var(--accent-2);
+        font-weight: 800;
+        font-size: 13px;
+        letter-spacing: 0.1em;
+      }
+      a.card h2 {
+        margin: 6px 0 8px;
+        font-size: 22px;
+      }
+      a.card p {
+        color: var(--muted);
+        margin: 0 0 12px;
+        font-size: 14px;
+      }
+      .row {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        font-size: 13px;
+        color: var(--muted);
+        align-items: center;
+      }
+      .status {
+        background: var(--surface-2);
+        color: var(--accent-2);
+        border-radius: 999px;
+        padding: 2px 10px;
+        font-weight: 800;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .tags {
+        margin-top: 10px;
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+      .tags span {
+        font-size: 11px;
+        background: var(--surface-2);
+        border-radius: 6px;
+        padding: 2px 8px;
+        color: var(--muted);
+      }
+      .foot {
+        color: var(--muted);
+        font-size: 13px;
+        margin-top: 32px;
+      }
     </style>
   </head>
   <body>
     <h1>PartyBox — game ideas</h1>
-    <p class="sub">2 implementation-ready design documents. Coverage matrix in <code>INDEX.md</code>; SDK gaps in <code>sdk-requests.md</code>; digest in <code>LATEST.md</code>.</p>
+    <p class="sub">
+      2 implementation-ready design documents. Coverage matrix in <code>INDEX.md</code>; SDK gaps in
+      <code>sdk-requests.md</code>; digest in <code>LATEST.md</code>.
+    </p>
     <div class="grid">
-<a class="card" href="001-bingo.html">
+      <a class="card" href="001-bingo.html">
         <div class="num">001</div>
         <h2>Bingo</h2>
-        <p>The TV calls the numbers, your phone is your card. Daub what you like — but press BINGO! and the caller stops while the whole room checks your card.</p>
-        <div class="row"><span class="status">idea</span><span>1–16 players</span><span>≈10 min (3 line rounds)</span><span>size S</span></div>
+        <p>
+          The TV calls the numbers, your phone is your card. Daub what you like — but press BINGO!
+          and the caller stops while the whole room checks your card.
+        </p>
+        <div class="row">
+          <span class="status">idea</span><span>1–16 players</span
+          ><span>≈10 min (3 line rounds)</span><span>size S</span>
+        </div>
         <div class="tags"><span>tap</span><span>cozy</span><span>silly</span></div>
       </a>
-<a class="card" href="002-broken-pencil.html">
+      <a class="card" href="002-broken-pencil.html">
         <div class="num">002</div>
         <h2>Broken Pencil</h2>
-        <p>Telephone with a pencil: your word becomes a drawing, a guess, a drawing again — then every book is shown on the TV first page to last, one picture at a time, with the VIP turning the pages.</p>
-        <div class="row"><span class="status">idea</span><span>3–10 players</span><span>≈12 min at 8 players (5 min play + 7 min show)</span><span>size L</span></div>
-        <div class="tags"><span>draw</span><span>text</span><span>silly</span><span>cozy</span></div>
+        <p>
+          Telephone with a pencil: your word becomes a drawing, a guess, a drawing again — then
+          every book is shown on the TV first page to last, one picture at a time, with the VIP
+          turning the pages.
+        </p>
+        <div class="row">
+          <span class="status">idea</span><span>3–10 players</span
+          ><span>≈12 min at 8 players (5 min play + 7 min show)</span><span>size L</span>
+        </div>
+        <div class="tags">
+          <span>draw</span><span>text</span><span>silly</span><span>cozy</span>
+        </div>
       </a>
     </div>
     <p class="foot">Generated by <code>_tools/build.mjs</code>.</p>
