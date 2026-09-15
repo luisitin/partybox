@@ -47,6 +47,9 @@ pnpm exec tsx packages/e2e/src/design/capture-core.ts  --out reports/design/<sta
 pnpm exec tsx packages/e2e/src/design/capture-video.ts --out reports/design/<stamp> [--game quickpoll]
 pnpm exec tsx packages/e2e/src/design/sheet.ts         --dir reports/design/<stamp>   # contact-sheet.html
 pnpm exec tsx packages/e2e/src/design/measure.ts                                     # computed sizes → stdout
+pnpm exec tsx packages/e2e/src/design/capture-preview.ts --out <dir> [--games a,b] [--themes night,daylight] [--phones iphone,iphone-se]
+pnpm exec tsx packages/e2e/src/design/capture-game.ts --game <id> --out <dir>         # live run, every phase, 4 phones + 2 bots
+pnpm exec tsx packages/e2e/src/design/capture-themes.ts --out <dir>                    # TV lobby + phone join/lobby per theme
 ```
 
 `devices.ts` = tv, tv4k, iphone, iphone-se, pixel, galaxy, font200 (CSS-emulated 200 % scale),

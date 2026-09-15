@@ -17,7 +17,10 @@ export function TvScores({ view }: Props): JSX.Element {
       </p>
       <BigText level="h1">{done ? "That's Wisecrack!" : 'Scores so far'}</BigText>
       <div className={styles.board}>
-        <Scoreboard rows={view.standings.map((row) => ({ ...row, delta: done ? 0 : row.delta }))} />
+        <Scoreboard
+          rows={view.standings.map((row) => ({ ...row, delta: done ? 0 : row.delta }))}
+          noTrophy={!done}
+        />
       </div>
       {done && view.awards.length > 0 ? (
         <ul className={styles.awards} aria-label="awards">

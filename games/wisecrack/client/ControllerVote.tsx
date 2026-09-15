@@ -9,7 +9,7 @@ import styles from './wisecrack.module.css';
 
 type Props = GameControllerProps<WisecrackControllerView, Input>;
 
-const LETTERS = ['A', 'B'];
+const BLANK = '(no answer)';
 
 export function ControllerVote({ view, send }: Props): JSX.Element {
   const vote = view.vote;
@@ -25,14 +25,11 @@ export function ControllerVote({ view, send }: Props): JSX.Element {
     <VoteList
       kicker={`Round ${view.round} · vote${view.multiplier > 1 ? ' · double points' : ''}`}
       prompt={vote.promptText}
+      size="large"
       options={vote.options.map((o) => ({
         id: String(o.slot),
-        text: (
-          <>
-            <span aria-hidden>{LETTERS[o.slot]} · </span>
-            {o.text}
-          </>
-        ),
+        text: o.text,
+        muted: o.text === BLANK,
       }))}
       votedId={vote.votedSlot === null ? null : String(vote.votedSlot)}
       onVote={(id) => send({ type: 'vote', promptId: vote.promptId, slot: Number(id) })}

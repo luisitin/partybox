@@ -1,0 +1,3763 @@
+<!doctype html><meta charset="utf-8" /><title>
+  PartyBox design pass — reports/design/2026-09-15-1730
+</title>
+<style>
+  body {
+    margin: 0;
+    padding: 24px;
+    background: #111;
+    color: #eee;
+    font:
+      14px system-ui,
+      sans-serif;
+  }
+  nav {
+    position: sticky;
+    top: 0;
+    background: #111;
+    padding: 8px 0;
+    border-bottom: 1px solid #333;
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-size: 28px;
+    margin: 32px 0 8px;
+    color: #ffd166;
+  }
+  h2 {
+    font-size: 16px;
+    margin: 24px 0 8px;
+    color: #b3b7d9;
+    font-weight: 600;
+  }
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  figure {
+    margin: 0;
+    background: #1c1e3a;
+    border-radius: 8px;
+    padding: 6px;
+  }
+  figure img {
+    display: block;
+    border-radius: 4px;
+    background: #000;
+  }
+  .tv img {
+    width: 640px;
+  }
+  .phone img {
+    width: 180px;
+  }
+  .wide img {
+    width: 390px;
+  }
+  figcaption {
+    margin-top: 6px;
+    font-size: 12px;
+    color: #b3b7d9;
+    max-width: 640px;
+  }
+  .phone figcaption {
+    max-width: 180px;
+  }
+  .wide figcaption {
+    max-width: 390px;
+  }
+</style>
+<nav>
+  383 stills · <a href="#themes">themes</a> · <a href="#wisecrack">wisecrack</a> ·
+  <a href="#lightning-round">lightning-round</a>
+</nav>
+<h1 id="themes">themes</h1>
+<section>
+  <h2>themes / night</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="themes/night/tv-lobby.png" target="_blank"
+        ><img src="themes/night/tv-lobby.png" loading="lazy" alt="night tv lobby"
+      /></a>
+      <figcaption><b>TV 1080p</b> · lobby</figcaption>
+    </figure>
+    <figure class="tv">
+      <a href="themes/night/tv-picker-open.png" target="_blank"
+        ><img src="themes/night/tv-picker-open.png" loading="lazy" alt="night tv picker-open"
+      /></a>
+      <figcaption><b>TV 1080p</b> · picker-open</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="themes/night/iphone-lobby-vip.png" target="_blank"
+        ><img src="themes/night/iphone-lobby-vip.png" loading="lazy" alt="night iphone lobby-vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · lobby-vip</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="themes/night/iphone-picker-open.png" target="_blank"
+        ><img
+          src="themes/night/iphone-picker-open.png"
+          loading="lazy"
+          alt="night iphone picker-open"
+      /></a>
+      <figcaption><b>iPhone 15</b> · picker-open</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="themes/night/pixel-join.png" target="_blank"
+        ><img src="themes/night/pixel-join.png" loading="lazy" alt="night pixel join"
+      /></a>
+      <figcaption><b>Pixel 7</b> · join</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>themes / daylight</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="themes/daylight/tv-lobby.png" target="_blank"
+        ><img src="themes/daylight/tv-lobby.png" loading="lazy" alt="daylight tv lobby"
+      /></a>
+      <figcaption><b>TV 1080p</b> · lobby</figcaption>
+    </figure>
+    <figure class="tv">
+      <a href="themes/daylight/tv-picker-open.png" target="_blank"
+        ><img src="themes/daylight/tv-picker-open.png" loading="lazy" alt="daylight tv picker-open"
+      /></a>
+      <figcaption><b>TV 1080p</b> · picker-open</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="themes/daylight/iphone-lobby-vip.png" target="_blank"
+        ><img
+          src="themes/daylight/iphone-lobby-vip.png"
+          loading="lazy"
+          alt="daylight iphone lobby-vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · lobby-vip</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="themes/daylight/iphone-picker-open.png" target="_blank"
+        ><img
+          src="themes/daylight/iphone-picker-open.png"
+          loading="lazy"
+          alt="daylight iphone picker-open"
+      /></a>
+      <figcaption><b>iPhone 15</b> · picker-open</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="themes/daylight/pixel-join.png" target="_blank"
+        ><img src="themes/daylight/pixel-join.png" loading="lazy" alt="daylight pixel join"
+      /></a>
+      <figcaption><b>Pixel 7</b> · join</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>themes / arcade</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="themes/arcade/tv-lobby.png" target="_blank"
+        ><img src="themes/arcade/tv-lobby.png" loading="lazy" alt="arcade tv lobby"
+      /></a>
+      <figcaption><b>TV 1080p</b> · lobby</figcaption>
+    </figure>
+    <figure class="tv">
+      <a href="themes/arcade/tv-picker-open.png" target="_blank"
+        ><img src="themes/arcade/tv-picker-open.png" loading="lazy" alt="arcade tv picker-open"
+      /></a>
+      <figcaption><b>TV 1080p</b> · picker-open</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="themes/arcade/iphone-lobby-vip.png" target="_blank"
+        ><img src="themes/arcade/iphone-lobby-vip.png" loading="lazy" alt="arcade iphone lobby-vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · lobby-vip</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="themes/arcade/iphone-picker-open.png" target="_blank"
+        ><img
+          src="themes/arcade/iphone-picker-open.png"
+          loading="lazy"
+          alt="arcade iphone picker-open"
+      /></a>
+      <figcaption><b>iPhone 15</b> · picker-open</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="themes/arcade/pixel-join.png" target="_blank"
+        ><img src="themes/arcade/pixel-join.png" loading="lazy" alt="arcade pixel join"
+      /></a>
+      <figcaption><b>Pixel 7</b> · join</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>themes / cabin</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="themes/cabin/tv-lobby.png" target="_blank"
+        ><img src="themes/cabin/tv-lobby.png" loading="lazy" alt="cabin tv lobby"
+      /></a>
+      <figcaption><b>TV 1080p</b> · lobby</figcaption>
+    </figure>
+    <figure class="tv">
+      <a href="themes/cabin/tv-picker-open.png" target="_blank"
+        ><img src="themes/cabin/tv-picker-open.png" loading="lazy" alt="cabin tv picker-open"
+      /></a>
+      <figcaption><b>TV 1080p</b> · picker-open</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="themes/cabin/iphone-lobby-vip.png" target="_blank"
+        ><img src="themes/cabin/iphone-lobby-vip.png" loading="lazy" alt="cabin iphone lobby-vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · lobby-vip</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="themes/cabin/iphone-picker-open.png" target="_blank"
+        ><img
+          src="themes/cabin/iphone-picker-open.png"
+          loading="lazy"
+          alt="cabin iphone picker-open"
+      /></a>
+      <figcaption><b>iPhone 15</b> · picker-open</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="themes/cabin/pixel-join.png" target="_blank"
+        ><img src="themes/cabin/pixel-join.png" loading="lazy" alt="cabin pixel join"
+      /></a>
+      <figcaption><b>Pixel 7</b> · join</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>themes / contrast</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="themes/contrast/tv-lobby.png" target="_blank"
+        ><img src="themes/contrast/tv-lobby.png" loading="lazy" alt="contrast tv lobby"
+      /></a>
+      <figcaption><b>TV 1080p</b> · lobby</figcaption>
+    </figure>
+    <figure class="tv">
+      <a href="themes/contrast/tv-picker-open.png" target="_blank"
+        ><img src="themes/contrast/tv-picker-open.png" loading="lazy" alt="contrast tv picker-open"
+      /></a>
+      <figcaption><b>TV 1080p</b> · picker-open</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="themes/contrast/iphone-lobby-vip.png" target="_blank"
+        ><img
+          src="themes/contrast/iphone-lobby-vip.png"
+          loading="lazy"
+          alt="contrast iphone lobby-vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · lobby-vip</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="themes/contrast/iphone-picker-open.png" target="_blank"
+        ><img
+          src="themes/contrast/iphone-picker-open.png"
+          loading="lazy"
+          alt="contrast iphone picker-open"
+      /></a>
+      <figcaption><b>iPhone 15</b> · picker-open</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="themes/contrast/pixel-join.png" target="_blank"
+        ><img src="themes/contrast/pixel-join.png" loading="lazy" alt="contrast pixel join"
+      /></a>
+      <figcaption><b>Pixel 7</b> · join</figcaption>
+    </figure>
+  </div>
+</section>
+<h1 id="wisecrack">wisecrack</h1>
+<section>
+  <h2>wisecrack / answer</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/answer/tv-stage.png" target="_blank"
+        ><img src="wisecrack/answer/tv-stage.png" loading="lazy" alt="answer tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/answer/iphone-p1-p-ana.png" target="_blank"
+        ><img
+          src="wisecrack/answer/iphone-p1-p-ana.png"
+          loading="lazy"
+          alt="answer iphone p1-p-ana"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p-ana</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/answer/iphone-p2-p-ben.png" target="_blank"
+        ><img
+          src="wisecrack/answer/iphone-p2-p-ben.png"
+          loading="lazy"
+          alt="answer iphone p2-p-ben"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p2-p-ben</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/answer/iphone-p3-p-cleo.png" target="_blank"
+        ><img
+          src="wisecrack/answer/iphone-p3-p-cleo.png"
+          loading="lazy"
+          alt="answer iphone p3-p-cleo"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p3-p-cleo</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/answer/iphone-se-p1-p-ana.png" target="_blank"
+        ><img
+          src="wisecrack/answer/iphone-se-p1-p-ana.png"
+          loading="lazy"
+          alt="answer iphone-se p1-p-ana"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p1-p-ana</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/answer/iphone-se-p2-p-ben.png" target="_blank"
+        ><img
+          src="wisecrack/answer/iphone-se-p2-p-ben.png"
+          loading="lazy"
+          alt="answer iphone-se p2-p-ben"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p2-p-ben</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/answer/iphone-se-p3-p-cleo.png" target="_blank"
+        ><img
+          src="wisecrack/answer/iphone-se-p3-p-cleo.png"
+          loading="lazy"
+          alt="answer iphone-se p3-p-cleo"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p3-p-cleo</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/answer/font200-p1-p-ana.png" target="_blank"
+        ><img
+          src="wisecrack/answer/font200-p1-p-ana.png"
+          loading="lazy"
+          alt="answer font200 p1-p-ana"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p1-p-ana</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/answer/font200-p2-p-ben.png" target="_blank"
+        ><img
+          src="wisecrack/answer/font200-p2-p-ben.png"
+          loading="lazy"
+          alt="answer font200 p2-p-ben"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p2-p-ben</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/answer/font200-p3-p-cleo.png" target="_blank"
+        ><img
+          src="wisecrack/answer/font200-p3-p-cleo.png"
+          loading="lazy"
+          alt="answer font200 p3-p-cleo"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p3-p-cleo</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / done</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/done/tv-stage.png" target="_blank"
+        ><img src="wisecrack/done/tv-stage.png" loading="lazy" alt="done tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/done/iphone-p1-p-ana.png" target="_blank"
+        ><img src="wisecrack/done/iphone-p1-p-ana.png" loading="lazy" alt="done iphone p1-p-ana"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p-ana</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/done/iphone-p2-p-ben.png" target="_blank"
+        ><img src="wisecrack/done/iphone-p2-p-ben.png" loading="lazy" alt="done iphone p2-p-ben"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p2-p-ben</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/done/iphone-p3-p-cleo.png" target="_blank"
+        ><img src="wisecrack/done/iphone-p3-p-cleo.png" loading="lazy" alt="done iphone p3-p-cleo"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p3-p-cleo</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/done/iphone-se-p1-p-ana.png" target="_blank"
+        ><img
+          src="wisecrack/done/iphone-se-p1-p-ana.png"
+          loading="lazy"
+          alt="done iphone-se p1-p-ana"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p1-p-ana</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/done/iphone-se-p2-p-ben.png" target="_blank"
+        ><img
+          src="wisecrack/done/iphone-se-p2-p-ben.png"
+          loading="lazy"
+          alt="done iphone-se p2-p-ben"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p2-p-ben</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/done/iphone-se-p3-p-cleo.png" target="_blank"
+        ><img
+          src="wisecrack/done/iphone-se-p3-p-cleo.png"
+          loading="lazy"
+          alt="done iphone-se p3-p-cleo"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p3-p-cleo</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/done/font200-p1-p-ana.png" target="_blank"
+        ><img src="wisecrack/done/font200-p1-p-ana.png" loading="lazy" alt="done font200 p1-p-ana"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p1-p-ana</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/done/font200-p2-p-ben.png" target="_blank"
+        ><img src="wisecrack/done/font200-p2-p-ben.png" loading="lazy" alt="done font200 p2-p-ben"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p2-p-ben</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/done/font200-p3-p-cleo.png" target="_blank"
+        ><img
+          src="wisecrack/done/font200-p3-p-cleo.png"
+          loading="lazy"
+          alt="done font200 p3-p-cleo"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p3-p-cleo</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / intro</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/intro/tv-stage.png" target="_blank"
+        ><img src="wisecrack/intro/tv-stage.png" loading="lazy" alt="intro tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/intro/iphone-p1-p-ana.png" target="_blank"
+        ><img src="wisecrack/intro/iphone-p1-p-ana.png" loading="lazy" alt="intro iphone p1-p-ana"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p-ana</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/intro/iphone-p2-p-ben.png" target="_blank"
+        ><img src="wisecrack/intro/iphone-p2-p-ben.png" loading="lazy" alt="intro iphone p2-p-ben"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p2-p-ben</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/intro/iphone-p3-p-cleo.png" target="_blank"
+        ><img
+          src="wisecrack/intro/iphone-p3-p-cleo.png"
+          loading="lazy"
+          alt="intro iphone p3-p-cleo"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p3-p-cleo</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/intro/iphone-se-p1-p-ana.png" target="_blank"
+        ><img
+          src="wisecrack/intro/iphone-se-p1-p-ana.png"
+          loading="lazy"
+          alt="intro iphone-se p1-p-ana"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p1-p-ana</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/intro/iphone-se-p2-p-ben.png" target="_blank"
+        ><img
+          src="wisecrack/intro/iphone-se-p2-p-ben.png"
+          loading="lazy"
+          alt="intro iphone-se p2-p-ben"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p2-p-ben</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/intro/iphone-se-p3-p-cleo.png" target="_blank"
+        ><img
+          src="wisecrack/intro/iphone-se-p3-p-cleo.png"
+          loading="lazy"
+          alt="intro iphone-se p3-p-cleo"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p3-p-cleo</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/intro/font200-p1-p-ana.png" target="_blank"
+        ><img
+          src="wisecrack/intro/font200-p1-p-ana.png"
+          loading="lazy"
+          alt="intro font200 p1-p-ana"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p1-p-ana</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/intro/font200-p2-p-ben.png" target="_blank"
+        ><img
+          src="wisecrack/intro/font200-p2-p-ben.png"
+          loading="lazy"
+          alt="intro font200 p2-p-ben"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p2-p-ben</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/intro/font200-p3-p-cleo.png" target="_blank"
+        ><img
+          src="wisecrack/intro/font200-p3-p-cleo.png"
+          loading="lazy"
+          alt="intro font200 p3-p-cleo"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p3-p-cleo</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / reveal</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/reveal/tv-stage.png" target="_blank"
+        ><img src="wisecrack/reveal/tv-stage.png" loading="lazy" alt="reveal tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/reveal/iphone-p1-p-ana.png" target="_blank"
+        ><img
+          src="wisecrack/reveal/iphone-p1-p-ana.png"
+          loading="lazy"
+          alt="reveal iphone p1-p-ana"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p-ana</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/reveal/iphone-p2-p-ben.png" target="_blank"
+        ><img
+          src="wisecrack/reveal/iphone-p2-p-ben.png"
+          loading="lazy"
+          alt="reveal iphone p2-p-ben"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p2-p-ben</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/reveal/iphone-p3-p-cleo.png" target="_blank"
+        ><img
+          src="wisecrack/reveal/iphone-p3-p-cleo.png"
+          loading="lazy"
+          alt="reveal iphone p3-p-cleo"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p3-p-cleo</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/reveal/iphone-se-p1-p-ana.png" target="_blank"
+        ><img
+          src="wisecrack/reveal/iphone-se-p1-p-ana.png"
+          loading="lazy"
+          alt="reveal iphone-se p1-p-ana"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p1-p-ana</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/reveal/iphone-se-p2-p-ben.png" target="_blank"
+        ><img
+          src="wisecrack/reveal/iphone-se-p2-p-ben.png"
+          loading="lazy"
+          alt="reveal iphone-se p2-p-ben"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p2-p-ben</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/reveal/iphone-se-p3-p-cleo.png" target="_blank"
+        ><img
+          src="wisecrack/reveal/iphone-se-p3-p-cleo.png"
+          loading="lazy"
+          alt="reveal iphone-se p3-p-cleo"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p3-p-cleo</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/reveal/font200-p1-p-ana.png" target="_blank"
+        ><img
+          src="wisecrack/reveal/font200-p1-p-ana.png"
+          loading="lazy"
+          alt="reveal font200 p1-p-ana"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p1-p-ana</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/reveal/font200-p2-p-ben.png" target="_blank"
+        ><img
+          src="wisecrack/reveal/font200-p2-p-ben.png"
+          loading="lazy"
+          alt="reveal font200 p2-p-ben"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p2-p-ben</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/reveal/font200-p3-p-cleo.png" target="_blank"
+        ><img
+          src="wisecrack/reveal/font200-p3-p-cleo.png"
+          loading="lazy"
+          alt="reveal font200 p3-p-cleo"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p3-p-cleo</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / scores</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/scores/tv-stage.png" target="_blank"
+        ><img src="wisecrack/scores/tv-stage.png" loading="lazy" alt="scores tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/scores/iphone-p1-p-ana.png" target="_blank"
+        ><img
+          src="wisecrack/scores/iphone-p1-p-ana.png"
+          loading="lazy"
+          alt="scores iphone p1-p-ana"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p-ana</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/scores/iphone-p2-p-ben.png" target="_blank"
+        ><img
+          src="wisecrack/scores/iphone-p2-p-ben.png"
+          loading="lazy"
+          alt="scores iphone p2-p-ben"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p2-p-ben</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/scores/iphone-p3-p-cleo.png" target="_blank"
+        ><img
+          src="wisecrack/scores/iphone-p3-p-cleo.png"
+          loading="lazy"
+          alt="scores iphone p3-p-cleo"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p3-p-cleo</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/scores/iphone-se-p1-p-ana.png" target="_blank"
+        ><img
+          src="wisecrack/scores/iphone-se-p1-p-ana.png"
+          loading="lazy"
+          alt="scores iphone-se p1-p-ana"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p1-p-ana</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/scores/iphone-se-p2-p-ben.png" target="_blank"
+        ><img
+          src="wisecrack/scores/iphone-se-p2-p-ben.png"
+          loading="lazy"
+          alt="scores iphone-se p2-p-ben"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p2-p-ben</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/scores/iphone-se-p3-p-cleo.png" target="_blank"
+        ><img
+          src="wisecrack/scores/iphone-se-p3-p-cleo.png"
+          loading="lazy"
+          alt="scores iphone-se p3-p-cleo"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p3-p-cleo</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/scores/font200-p1-p-ana.png" target="_blank"
+        ><img
+          src="wisecrack/scores/font200-p1-p-ana.png"
+          loading="lazy"
+          alt="scores font200 p1-p-ana"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p1-p-ana</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/scores/font200-p2-p-ben.png" target="_blank"
+        ><img
+          src="wisecrack/scores/font200-p2-p-ben.png"
+          loading="lazy"
+          alt="scores font200 p2-p-ben"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p2-p-ben</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/scores/font200-p3-p-cleo.png" target="_blank"
+        ><img
+          src="wisecrack/scores/font200-p3-p-cleo.png"
+          loading="lazy"
+          alt="scores font200 p3-p-cleo"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p3-p-cleo</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / vote</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/vote/tv-stage.png" target="_blank"
+        ><img src="wisecrack/vote/tv-stage.png" loading="lazy" alt="vote tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/vote/iphone-p1-p-ana.png" target="_blank"
+        ><img src="wisecrack/vote/iphone-p1-p-ana.png" loading="lazy" alt="vote iphone p1-p-ana"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p-ana</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/vote/iphone-p2-p-ben.png" target="_blank"
+        ><img src="wisecrack/vote/iphone-p2-p-ben.png" loading="lazy" alt="vote iphone p2-p-ben"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p2-p-ben</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/vote/iphone-p3-p-cleo.png" target="_blank"
+        ><img src="wisecrack/vote/iphone-p3-p-cleo.png" loading="lazy" alt="vote iphone p3-p-cleo"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p3-p-cleo</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/vote/iphone-se-p1-p-ana.png" target="_blank"
+        ><img
+          src="wisecrack/vote/iphone-se-p1-p-ana.png"
+          loading="lazy"
+          alt="vote iphone-se p1-p-ana"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p1-p-ana</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/vote/iphone-se-p2-p-ben.png" target="_blank"
+        ><img
+          src="wisecrack/vote/iphone-se-p2-p-ben.png"
+          loading="lazy"
+          alt="vote iphone-se p2-p-ben"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p2-p-ben</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/vote/iphone-se-p3-p-cleo.png" target="_blank"
+        ><img
+          src="wisecrack/vote/iphone-se-p3-p-cleo.png"
+          loading="lazy"
+          alt="vote iphone-se p3-p-cleo"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p3-p-cleo</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/vote/font200-p1-p-ana.png" target="_blank"
+        ><img src="wisecrack/vote/font200-p1-p-ana.png" loading="lazy" alt="vote font200 p1-p-ana"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p1-p-ana</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/vote/font200-p2-p-ben.png" target="_blank"
+        ><img src="wisecrack/vote/font200-p2-p-ben.png" loading="lazy" alt="vote font200 p2-p-ben"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p2-p-ben</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/vote/font200-p3-p-cleo.png" target="_blank"
+        ><img
+          src="wisecrack/vote/font200-p3-p-cleo.png"
+          loading="lazy"
+          alt="vote font200 p3-p-cleo"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p3-p-cleo</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / answer-daylight</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/answer-daylight/tv-stage.png" target="_blank"
+        ><img
+          src="wisecrack/answer-daylight/tv-stage.png"
+          loading="lazy"
+          alt="answer-daylight tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/answer-daylight/iphone-p1-p-ana.png" target="_blank"
+        ><img
+          src="wisecrack/answer-daylight/iphone-p1-p-ana.png"
+          loading="lazy"
+          alt="answer-daylight iphone p1-p-ana"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p-ana</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / answer-arcade</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/answer-arcade/tv-stage.png" target="_blank"
+        ><img
+          src="wisecrack/answer-arcade/tv-stage.png"
+          loading="lazy"
+          alt="answer-arcade tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/answer-arcade/iphone-p1-p-ana.png" target="_blank"
+        ><img
+          src="wisecrack/answer-arcade/iphone-p1-p-ana.png"
+          loading="lazy"
+          alt="answer-arcade iphone p1-p-ana"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p-ana</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / answer-cabin</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/answer-cabin/tv-stage.png" target="_blank"
+        ><img src="wisecrack/answer-cabin/tv-stage.png" loading="lazy" alt="answer-cabin tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/answer-cabin/iphone-p1-p-ana.png" target="_blank"
+        ><img
+          src="wisecrack/answer-cabin/iphone-p1-p-ana.png"
+          loading="lazy"
+          alt="answer-cabin iphone p1-p-ana"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p-ana</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / answer-contrast</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/answer-contrast/tv-stage.png" target="_blank"
+        ><img
+          src="wisecrack/answer-contrast/tv-stage.png"
+          loading="lazy"
+          alt="answer-contrast tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/answer-contrast/iphone-p1-p-ana.png" target="_blank"
+        ><img
+          src="wisecrack/answer-contrast/iphone-p1-p-ana.png"
+          loading="lazy"
+          alt="answer-contrast iphone p1-p-ana"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p-ana</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / done-daylight</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/done-daylight/tv-stage.png" target="_blank"
+        ><img
+          src="wisecrack/done-daylight/tv-stage.png"
+          loading="lazy"
+          alt="done-daylight tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/done-daylight/iphone-p1-p-ana.png" target="_blank"
+        ><img
+          src="wisecrack/done-daylight/iphone-p1-p-ana.png"
+          loading="lazy"
+          alt="done-daylight iphone p1-p-ana"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p-ana</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / done-arcade</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/done-arcade/tv-stage.png" target="_blank"
+        ><img src="wisecrack/done-arcade/tv-stage.png" loading="lazy" alt="done-arcade tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/done-arcade/iphone-p1-p-ana.png" target="_blank"
+        ><img
+          src="wisecrack/done-arcade/iphone-p1-p-ana.png"
+          loading="lazy"
+          alt="done-arcade iphone p1-p-ana"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p-ana</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / done-cabin</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/done-cabin/tv-stage.png" target="_blank"
+        ><img src="wisecrack/done-cabin/tv-stage.png" loading="lazy" alt="done-cabin tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/done-cabin/iphone-p1-p-ana.png" target="_blank"
+        ><img
+          src="wisecrack/done-cabin/iphone-p1-p-ana.png"
+          loading="lazy"
+          alt="done-cabin iphone p1-p-ana"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p-ana</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / done-contrast</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/done-contrast/tv-stage.png" target="_blank"
+        ><img
+          src="wisecrack/done-contrast/tv-stage.png"
+          loading="lazy"
+          alt="done-contrast tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/done-contrast/iphone-p1-p-ana.png" target="_blank"
+        ><img
+          src="wisecrack/done-contrast/iphone-p1-p-ana.png"
+          loading="lazy"
+          alt="done-contrast iphone p1-p-ana"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p-ana</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / intro-daylight</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/intro-daylight/tv-stage.png" target="_blank"
+        ><img
+          src="wisecrack/intro-daylight/tv-stage.png"
+          loading="lazy"
+          alt="intro-daylight tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/intro-daylight/iphone-p1-p-ana.png" target="_blank"
+        ><img
+          src="wisecrack/intro-daylight/iphone-p1-p-ana.png"
+          loading="lazy"
+          alt="intro-daylight iphone p1-p-ana"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p-ana</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / intro-arcade</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/intro-arcade/tv-stage.png" target="_blank"
+        ><img src="wisecrack/intro-arcade/tv-stage.png" loading="lazy" alt="intro-arcade tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/intro-arcade/iphone-p1-p-ana.png" target="_blank"
+        ><img
+          src="wisecrack/intro-arcade/iphone-p1-p-ana.png"
+          loading="lazy"
+          alt="intro-arcade iphone p1-p-ana"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p-ana</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / intro-cabin</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/intro-cabin/tv-stage.png" target="_blank"
+        ><img src="wisecrack/intro-cabin/tv-stage.png" loading="lazy" alt="intro-cabin tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/intro-cabin/iphone-p1-p-ana.png" target="_blank"
+        ><img
+          src="wisecrack/intro-cabin/iphone-p1-p-ana.png"
+          loading="lazy"
+          alt="intro-cabin iphone p1-p-ana"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p-ana</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / intro-contrast</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/intro-contrast/tv-stage.png" target="_blank"
+        ><img
+          src="wisecrack/intro-contrast/tv-stage.png"
+          loading="lazy"
+          alt="intro-contrast tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/intro-contrast/iphone-p1-p-ana.png" target="_blank"
+        ><img
+          src="wisecrack/intro-contrast/iphone-p1-p-ana.png"
+          loading="lazy"
+          alt="intro-contrast iphone p1-p-ana"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p-ana</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / reveal-daylight</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/reveal-daylight/tv-stage.png" target="_blank"
+        ><img
+          src="wisecrack/reveal-daylight/tv-stage.png"
+          loading="lazy"
+          alt="reveal-daylight tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/reveal-daylight/iphone-p1-p-ana.png" target="_blank"
+        ><img
+          src="wisecrack/reveal-daylight/iphone-p1-p-ana.png"
+          loading="lazy"
+          alt="reveal-daylight iphone p1-p-ana"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p-ana</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / reveal-arcade</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/reveal-arcade/tv-stage.png" target="_blank"
+        ><img
+          src="wisecrack/reveal-arcade/tv-stage.png"
+          loading="lazy"
+          alt="reveal-arcade tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/reveal-arcade/iphone-p1-p-ana.png" target="_blank"
+        ><img
+          src="wisecrack/reveal-arcade/iphone-p1-p-ana.png"
+          loading="lazy"
+          alt="reveal-arcade iphone p1-p-ana"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p-ana</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / reveal-cabin</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/reveal-cabin/tv-stage.png" target="_blank"
+        ><img src="wisecrack/reveal-cabin/tv-stage.png" loading="lazy" alt="reveal-cabin tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/reveal-cabin/iphone-p1-p-ana.png" target="_blank"
+        ><img
+          src="wisecrack/reveal-cabin/iphone-p1-p-ana.png"
+          loading="lazy"
+          alt="reveal-cabin iphone p1-p-ana"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p-ana</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / reveal-contrast</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/reveal-contrast/tv-stage.png" target="_blank"
+        ><img
+          src="wisecrack/reveal-contrast/tv-stage.png"
+          loading="lazy"
+          alt="reveal-contrast tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/reveal-contrast/iphone-p1-p-ana.png" target="_blank"
+        ><img
+          src="wisecrack/reveal-contrast/iphone-p1-p-ana.png"
+          loading="lazy"
+          alt="reveal-contrast iphone p1-p-ana"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p-ana</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / scores-daylight</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/scores-daylight/tv-stage.png" target="_blank"
+        ><img
+          src="wisecrack/scores-daylight/tv-stage.png"
+          loading="lazy"
+          alt="scores-daylight tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/scores-daylight/iphone-p1-p-ana.png" target="_blank"
+        ><img
+          src="wisecrack/scores-daylight/iphone-p1-p-ana.png"
+          loading="lazy"
+          alt="scores-daylight iphone p1-p-ana"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p-ana</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / scores-arcade</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/scores-arcade/tv-stage.png" target="_blank"
+        ><img
+          src="wisecrack/scores-arcade/tv-stage.png"
+          loading="lazy"
+          alt="scores-arcade tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/scores-arcade/iphone-p1-p-ana.png" target="_blank"
+        ><img
+          src="wisecrack/scores-arcade/iphone-p1-p-ana.png"
+          loading="lazy"
+          alt="scores-arcade iphone p1-p-ana"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p-ana</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / scores-cabin</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/scores-cabin/tv-stage.png" target="_blank"
+        ><img src="wisecrack/scores-cabin/tv-stage.png" loading="lazy" alt="scores-cabin tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/scores-cabin/iphone-p1-p-ana.png" target="_blank"
+        ><img
+          src="wisecrack/scores-cabin/iphone-p1-p-ana.png"
+          loading="lazy"
+          alt="scores-cabin iphone p1-p-ana"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p-ana</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / scores-contrast</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/scores-contrast/tv-stage.png" target="_blank"
+        ><img
+          src="wisecrack/scores-contrast/tv-stage.png"
+          loading="lazy"
+          alt="scores-contrast tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/scores-contrast/iphone-p1-p-ana.png" target="_blank"
+        ><img
+          src="wisecrack/scores-contrast/iphone-p1-p-ana.png"
+          loading="lazy"
+          alt="scores-contrast iphone p1-p-ana"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p-ana</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / vote-daylight</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/vote-daylight/tv-stage.png" target="_blank"
+        ><img
+          src="wisecrack/vote-daylight/tv-stage.png"
+          loading="lazy"
+          alt="vote-daylight tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/vote-daylight/iphone-p1-p-ana.png" target="_blank"
+        ><img
+          src="wisecrack/vote-daylight/iphone-p1-p-ana.png"
+          loading="lazy"
+          alt="vote-daylight iphone p1-p-ana"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p-ana</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / vote-arcade</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/vote-arcade/tv-stage.png" target="_blank"
+        ><img src="wisecrack/vote-arcade/tv-stage.png" loading="lazy" alt="vote-arcade tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/vote-arcade/iphone-p1-p-ana.png" target="_blank"
+        ><img
+          src="wisecrack/vote-arcade/iphone-p1-p-ana.png"
+          loading="lazy"
+          alt="vote-arcade iphone p1-p-ana"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p-ana</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / vote-cabin</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/vote-cabin/tv-stage.png" target="_blank"
+        ><img src="wisecrack/vote-cabin/tv-stage.png" loading="lazy" alt="vote-cabin tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/vote-cabin/iphone-p1-p-ana.png" target="_blank"
+        ><img
+          src="wisecrack/vote-cabin/iphone-p1-p-ana.png"
+          loading="lazy"
+          alt="vote-cabin iphone p1-p-ana"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p-ana</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / vote-contrast</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/vote-contrast/tv-stage.png" target="_blank"
+        ><img
+          src="wisecrack/vote-contrast/tv-stage.png"
+          loading="lazy"
+          alt="vote-contrast tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/vote-contrast/iphone-p1-p-ana.png" target="_blank"
+        ><img
+          src="wisecrack/vote-contrast/iphone-p1-p-ana.png"
+          loading="lazy"
+          alt="vote-contrast iphone p1-p-ana"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p-ana</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / live-intro</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/live-intro/tv-stage.png" target="_blank"
+        ><img src="wisecrack/live-intro/tv-stage.png" loading="lazy" alt="live-intro tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>before anyone acts (step 0)</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-intro/iphone-vip.png" target="_blank"
+        ><img src="wisecrack/live-intro/iphone-vip.png" loading="lazy" alt="live-intro iphone vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · vip</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-intro/iphone-se-p2.png" target="_blank"
+        ><img
+          src="wisecrack/live-intro/iphone-se-p2.png"
+          loading="lazy"
+          alt="live-intro iphone-se p2"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p2</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-intro/pixel-p3.png" target="_blank"
+        ><img src="wisecrack/live-intro/pixel-p3.png" loading="lazy" alt="live-intro pixel p3"
+      /></a>
+      <figcaption><b>Pixel 7</b> · p3</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-intro/font200-p4.png" target="_blank"
+        ><img src="wisecrack/live-intro/font200-p4.png" loading="lazy" alt="live-intro font200 p4"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p4</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / live-answer</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/live-answer/tv-stage.png" target="_blank"
+        ><img src="wisecrack/live-answer/tv-stage.png" loading="lazy" alt="live-answer tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>before anyone acts (step 1)</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-answer/iphone-vip.png" target="_blank"
+        ><img
+          src="wisecrack/live-answer/iphone-vip.png"
+          loading="lazy"
+          alt="live-answer iphone vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · vip</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-answer/iphone-se-p2.png" target="_blank"
+        ><img
+          src="wisecrack/live-answer/iphone-se-p2.png"
+          loading="lazy"
+          alt="live-answer iphone-se p2"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p2</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-answer/pixel-p3.png" target="_blank"
+        ><img src="wisecrack/live-answer/pixel-p3.png" loading="lazy" alt="live-answer pixel p3"
+      /></a>
+      <figcaption><b>Pixel 7</b> · p3</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-answer/font200-p4.png" target="_blank"
+        ><img
+          src="wisecrack/live-answer/font200-p4.png"
+          loading="lazy"
+          alt="live-answer font200 p4"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p4</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / live-answer-acted</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/live-answer-acted/tv-stage.png" target="_blank"
+        ><img
+          src="wisecrack/live-answer-acted/tv-stage.png"
+          loading="lazy"
+          alt="live-answer-acted tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>Priya typed</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-answer-acted/pixel-p3.png" target="_blank"
+        ><img
+          src="wisecrack/live-answer-acted/pixel-p3.png"
+          loading="lazy"
+          alt="live-answer-acted pixel p3"
+      /></a>
+      <figcaption><b>Pixel 7</b> · p3<br /><i>typed</i></figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / live-vote</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/live-vote/tv-stage.png" target="_blank"
+        ><img src="wisecrack/live-vote/tv-stage.png" loading="lazy" alt="live-vote tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>before anyone acts (step 2)</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-vote/iphone-vip.png" target="_blank"
+        ><img src="wisecrack/live-vote/iphone-vip.png" loading="lazy" alt="live-vote iphone vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · vip</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-vote/iphone-se-p2.png" target="_blank"
+        ><img
+          src="wisecrack/live-vote/iphone-se-p2.png"
+          loading="lazy"
+          alt="live-vote iphone-se p2"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p2</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-vote/pixel-p3.png" target="_blank"
+        ><img src="wisecrack/live-vote/pixel-p3.png" loading="lazy" alt="live-vote pixel p3"
+      /></a>
+      <figcaption><b>Pixel 7</b> · p3</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-vote/font200-p4.png" target="_blank"
+        ><img src="wisecrack/live-vote/font200-p4.png" loading="lazy" alt="live-vote font200 p4"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p4</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / live-reveal</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/live-reveal/tv-stage.png" target="_blank"
+        ><img src="wisecrack/live-reveal/tv-stage.png" loading="lazy" alt="live-reveal tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>before anyone acts (step 3)</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-reveal/iphone-vip.png" target="_blank"
+        ><img
+          src="wisecrack/live-reveal/iphone-vip.png"
+          loading="lazy"
+          alt="live-reveal iphone vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · vip</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-reveal/iphone-se-p2.png" target="_blank"
+        ><img
+          src="wisecrack/live-reveal/iphone-se-p2.png"
+          loading="lazy"
+          alt="live-reveal iphone-se p2"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p2</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-reveal/pixel-p3.png" target="_blank"
+        ><img src="wisecrack/live-reveal/pixel-p3.png" loading="lazy" alt="live-reveal pixel p3"
+      /></a>
+      <figcaption><b>Pixel 7</b> · p3</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-reveal/font200-p4.png" target="_blank"
+        ><img
+          src="wisecrack/live-reveal/font200-p4.png"
+          loading="lazy"
+          alt="live-reveal font200 p4"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p4</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / live-scores</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/live-scores/tv-stage.png" target="_blank"
+        ><img src="wisecrack/live-scores/tv-stage.png" loading="lazy" alt="live-scores tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>before anyone acts (step 4)</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-scores/iphone-vip.png" target="_blank"
+        ><img
+          src="wisecrack/live-scores/iphone-vip.png"
+          loading="lazy"
+          alt="live-scores iphone vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · vip</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-scores/iphone-se-p2.png" target="_blank"
+        ><img
+          src="wisecrack/live-scores/iphone-se-p2.png"
+          loading="lazy"
+          alt="live-scores iphone-se p2"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p2</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-scores/pixel-p3.png" target="_blank"
+        ><img src="wisecrack/live-scores/pixel-p3.png" loading="lazy" alt="live-scores pixel p3"
+      /></a>
+      <figcaption><b>Pixel 7</b> · p3</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-scores/font200-p4.png" target="_blank"
+        ><img
+          src="wisecrack/live-scores/font200-p4.png"
+          loading="lazy"
+          alt="live-scores font200 p4"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p4</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / live-intro-2</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/live-intro-2/tv-stage.png" target="_blank"
+        ><img src="wisecrack/live-intro-2/tv-stage.png" loading="lazy" alt="live-intro-2 tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>before anyone acts (step 5)</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-intro-2/iphone-vip.png" target="_blank"
+        ><img
+          src="wisecrack/live-intro-2/iphone-vip.png"
+          loading="lazy"
+          alt="live-intro-2 iphone vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · vip</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-intro-2/iphone-se-p2.png" target="_blank"
+        ><img
+          src="wisecrack/live-intro-2/iphone-se-p2.png"
+          loading="lazy"
+          alt="live-intro-2 iphone-se p2"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p2</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-intro-2/pixel-p3.png" target="_blank"
+        ><img src="wisecrack/live-intro-2/pixel-p3.png" loading="lazy" alt="live-intro-2 pixel p3"
+      /></a>
+      <figcaption><b>Pixel 7</b> · p3</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-intro-2/font200-p4.png" target="_blank"
+        ><img
+          src="wisecrack/live-intro-2/font200-p4.png"
+          loading="lazy"
+          alt="live-intro-2 font200 p4"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p4</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / live-answer-2</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/live-answer-2/tv-stage.png" target="_blank"
+        ><img
+          src="wisecrack/live-answer-2/tv-stage.png"
+          loading="lazy"
+          alt="live-answer-2 tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>before anyone acts (step 6)</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-answer-2/iphone-vip.png" target="_blank"
+        ><img
+          src="wisecrack/live-answer-2/iphone-vip.png"
+          loading="lazy"
+          alt="live-answer-2 iphone vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · vip</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-answer-2/iphone-se-p2.png" target="_blank"
+        ><img
+          src="wisecrack/live-answer-2/iphone-se-p2.png"
+          loading="lazy"
+          alt="live-answer-2 iphone-se p2"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p2</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-answer-2/pixel-p3.png" target="_blank"
+        ><img
+          src="wisecrack/live-answer-2/pixel-p3.png"
+          loading="lazy"
+          alt="live-answer-2 pixel p3"
+      /></a>
+      <figcaption><b>Pixel 7</b> · p3</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-answer-2/font200-p4.png" target="_blank"
+        ><img
+          src="wisecrack/live-answer-2/font200-p4.png"
+          loading="lazy"
+          alt="live-answer-2 font200 p4"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p4</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / live-answer-2-acted</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/live-answer-2-acted/tv-stage.png" target="_blank"
+        ><img
+          src="wisecrack/live-answer-2-acted/tv-stage.png"
+          loading="lazy"
+          alt="live-answer-2-acted tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>Priya typed</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-answer-2-acted/pixel-p3.png" target="_blank"
+        ><img
+          src="wisecrack/live-answer-2-acted/pixel-p3.png"
+          loading="lazy"
+          alt="live-answer-2-acted pixel p3"
+      /></a>
+      <figcaption><b>Pixel 7</b> · p3<br /><i>typed</i></figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / live-vote-2</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/live-vote-2/tv-stage.png" target="_blank"
+        ><img src="wisecrack/live-vote-2/tv-stage.png" loading="lazy" alt="live-vote-2 tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>before anyone acts (step 7)</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-vote-2/iphone-vip.png" target="_blank"
+        ><img
+          src="wisecrack/live-vote-2/iphone-vip.png"
+          loading="lazy"
+          alt="live-vote-2 iphone vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · vip</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-vote-2/iphone-se-p2.png" target="_blank"
+        ><img
+          src="wisecrack/live-vote-2/iphone-se-p2.png"
+          loading="lazy"
+          alt="live-vote-2 iphone-se p2"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p2</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-vote-2/pixel-p3.png" target="_blank"
+        ><img src="wisecrack/live-vote-2/pixel-p3.png" loading="lazy" alt="live-vote-2 pixel p3"
+      /></a>
+      <figcaption><b>Pixel 7</b> · p3</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-vote-2/font200-p4.png" target="_blank"
+        ><img
+          src="wisecrack/live-vote-2/font200-p4.png"
+          loading="lazy"
+          alt="live-vote-2 font200 p4"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p4</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / live-reveal-2</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/live-reveal-2/tv-stage.png" target="_blank"
+        ><img
+          src="wisecrack/live-reveal-2/tv-stage.png"
+          loading="lazy"
+          alt="live-reveal-2 tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>before anyone acts (step 8)</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-reveal-2/iphone-vip.png" target="_blank"
+        ><img
+          src="wisecrack/live-reveal-2/iphone-vip.png"
+          loading="lazy"
+          alt="live-reveal-2 iphone vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · vip</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-reveal-2/iphone-se-p2.png" target="_blank"
+        ><img
+          src="wisecrack/live-reveal-2/iphone-se-p2.png"
+          loading="lazy"
+          alt="live-reveal-2 iphone-se p2"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p2</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-reveal-2/pixel-p3.png" target="_blank"
+        ><img
+          src="wisecrack/live-reveal-2/pixel-p3.png"
+          loading="lazy"
+          alt="live-reveal-2 pixel p3"
+      /></a>
+      <figcaption><b>Pixel 7</b> · p3</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-reveal-2/font200-p4.png" target="_blank"
+        ><img
+          src="wisecrack/live-reveal-2/font200-p4.png"
+          loading="lazy"
+          alt="live-reveal-2 font200 p4"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p4</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / live-scores-2</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/live-scores-2/tv-stage.png" target="_blank"
+        ><img
+          src="wisecrack/live-scores-2/tv-stage.png"
+          loading="lazy"
+          alt="live-scores-2 tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>before anyone acts (step 9)</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-scores-2/iphone-vip.png" target="_blank"
+        ><img
+          src="wisecrack/live-scores-2/iphone-vip.png"
+          loading="lazy"
+          alt="live-scores-2 iphone vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · vip</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-scores-2/iphone-se-p2.png" target="_blank"
+        ><img
+          src="wisecrack/live-scores-2/iphone-se-p2.png"
+          loading="lazy"
+          alt="live-scores-2 iphone-se p2"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p2</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-scores-2/pixel-p3.png" target="_blank"
+        ><img
+          src="wisecrack/live-scores-2/pixel-p3.png"
+          loading="lazy"
+          alt="live-scores-2 pixel p3"
+      /></a>
+      <figcaption><b>Pixel 7</b> · p3</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-scores-2/font200-p4.png" target="_blank"
+        ><img
+          src="wisecrack/live-scores-2/font200-p4.png"
+          loading="lazy"
+          alt="live-scores-2 font200 p4"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p4</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / live-intro-3</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/live-intro-3/tv-stage.png" target="_blank"
+        ><img src="wisecrack/live-intro-3/tv-stage.png" loading="lazy" alt="live-intro-3 tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>before anyone acts (step 10)</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-intro-3/iphone-vip.png" target="_blank"
+        ><img
+          src="wisecrack/live-intro-3/iphone-vip.png"
+          loading="lazy"
+          alt="live-intro-3 iphone vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · vip</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-intro-3/iphone-se-p2.png" target="_blank"
+        ><img
+          src="wisecrack/live-intro-3/iphone-se-p2.png"
+          loading="lazy"
+          alt="live-intro-3 iphone-se p2"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p2</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-intro-3/pixel-p3.png" target="_blank"
+        ><img src="wisecrack/live-intro-3/pixel-p3.png" loading="lazy" alt="live-intro-3 pixel p3"
+      /></a>
+      <figcaption><b>Pixel 7</b> · p3</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-intro-3/font200-p4.png" target="_blank"
+        ><img
+          src="wisecrack/live-intro-3/font200-p4.png"
+          loading="lazy"
+          alt="live-intro-3 font200 p4"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p4</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / live-answer-3</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/live-answer-3/tv-stage.png" target="_blank"
+        ><img
+          src="wisecrack/live-answer-3/tv-stage.png"
+          loading="lazy"
+          alt="live-answer-3 tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>before anyone acts (step 11)</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-answer-3/iphone-vip.png" target="_blank"
+        ><img
+          src="wisecrack/live-answer-3/iphone-vip.png"
+          loading="lazy"
+          alt="live-answer-3 iphone vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · vip</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-answer-3/iphone-se-p2.png" target="_blank"
+        ><img
+          src="wisecrack/live-answer-3/iphone-se-p2.png"
+          loading="lazy"
+          alt="live-answer-3 iphone-se p2"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p2</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-answer-3/pixel-p3.png" target="_blank"
+        ><img
+          src="wisecrack/live-answer-3/pixel-p3.png"
+          loading="lazy"
+          alt="live-answer-3 pixel p3"
+      /></a>
+      <figcaption><b>Pixel 7</b> · p3</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-answer-3/font200-p4.png" target="_blank"
+        ><img
+          src="wisecrack/live-answer-3/font200-p4.png"
+          loading="lazy"
+          alt="live-answer-3 font200 p4"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p4</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / live-answer-3-acted</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/live-answer-3-acted/tv-stage.png" target="_blank"
+        ><img
+          src="wisecrack/live-answer-3-acted/tv-stage.png"
+          loading="lazy"
+          alt="live-answer-3-acted tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>Priya typed</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-answer-3-acted/pixel-p3.png" target="_blank"
+        ><img
+          src="wisecrack/live-answer-3-acted/pixel-p3.png"
+          loading="lazy"
+          alt="live-answer-3-acted pixel p3"
+      /></a>
+      <figcaption><b>Pixel 7</b> · p3<br /><i>typed</i></figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / live-vote-3</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/live-vote-3/tv-stage.png" target="_blank"
+        ><img src="wisecrack/live-vote-3/tv-stage.png" loading="lazy" alt="live-vote-3 tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>before anyone acts (step 12)</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-vote-3/iphone-vip.png" target="_blank"
+        ><img
+          src="wisecrack/live-vote-3/iphone-vip.png"
+          loading="lazy"
+          alt="live-vote-3 iphone vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · vip</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-vote-3/iphone-se-p2.png" target="_blank"
+        ><img
+          src="wisecrack/live-vote-3/iphone-se-p2.png"
+          loading="lazy"
+          alt="live-vote-3 iphone-se p2"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p2</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-vote-3/pixel-p3.png" target="_blank"
+        ><img src="wisecrack/live-vote-3/pixel-p3.png" loading="lazy" alt="live-vote-3 pixel p3"
+      /></a>
+      <figcaption><b>Pixel 7</b> · p3</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-vote-3/font200-p4.png" target="_blank"
+        ><img
+          src="wisecrack/live-vote-3/font200-p4.png"
+          loading="lazy"
+          alt="live-vote-3 font200 p4"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p4</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>wisecrack / live-reveal-3</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="wisecrack/live-reveal-3/tv-stage.png" target="_blank"
+        ><img
+          src="wisecrack/live-reveal-3/tv-stage.png"
+          loading="lazy"
+          alt="live-reveal-3 tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>before anyone acts (step 13)</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-reveal-3/iphone-vip.png" target="_blank"
+        ><img
+          src="wisecrack/live-reveal-3/iphone-vip.png"
+          loading="lazy"
+          alt="live-reveal-3 iphone vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · vip</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-reveal-3/iphone-se-p2.png" target="_blank"
+        ><img
+          src="wisecrack/live-reveal-3/iphone-se-p2.png"
+          loading="lazy"
+          alt="live-reveal-3 iphone-se p2"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p2</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-reveal-3/pixel-p3.png" target="_blank"
+        ><img
+          src="wisecrack/live-reveal-3/pixel-p3.png"
+          loading="lazy"
+          alt="live-reveal-3 pixel p3"
+      /></a>
+      <figcaption><b>Pixel 7</b> · p3</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="wisecrack/live-reveal-3/font200-p4.png" target="_blank"
+        ><img
+          src="wisecrack/live-reveal-3/font200-p4.png"
+          loading="lazy"
+          alt="live-reveal-3 font200 p4"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p4</figcaption>
+    </figure>
+  </div>
+</section>
+<h1 id="lightning-round">lightning-round</h1>
+<section>
+  <h2>lightning-round / done</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/done/tv-stage.png" target="_blank"
+        ><img src="lightning-round/done/tv-stage.png" loading="lazy" alt="done tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/done/iphone-p1-p1.png" target="_blank"
+        ><img src="lightning-round/done/iphone-p1-p1.png" loading="lazy" alt="done iphone p1-p1"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p1</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/done/iphone-p2-p2.png" target="_blank"
+        ><img src="lightning-round/done/iphone-p2-p2.png" loading="lazy" alt="done iphone p2-p2"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p2-p2</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/done/iphone-p3-p3.png" target="_blank"
+        ><img src="lightning-round/done/iphone-p3-p3.png" loading="lazy" alt="done iphone p3-p3"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p3-p3</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/done/iphone-se-p1-p1.png" target="_blank"
+        ><img
+          src="lightning-round/done/iphone-se-p1-p1.png"
+          loading="lazy"
+          alt="done iphone-se p1-p1"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p1-p1</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/done/iphone-se-p2-p2.png" target="_blank"
+        ><img
+          src="lightning-round/done/iphone-se-p2-p2.png"
+          loading="lazy"
+          alt="done iphone-se p2-p2"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p2-p2</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/done/iphone-se-p3-p3.png" target="_blank"
+        ><img
+          src="lightning-round/done/iphone-se-p3-p3.png"
+          loading="lazy"
+          alt="done iphone-se p3-p3"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p3-p3</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/done/font200-p1-p1.png" target="_blank"
+        ><img src="lightning-round/done/font200-p1-p1.png" loading="lazy" alt="done font200 p1-p1"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p1-p1</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/done/font200-p2-p2.png" target="_blank"
+        ><img src="lightning-round/done/font200-p2-p2.png" loading="lazy" alt="done font200 p2-p2"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p2-p2</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/done/font200-p3-p3.png" target="_blank"
+        ><img src="lightning-round/done/font200-p3-p3.png" loading="lazy" alt="done font200 p3-p3"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p3-p3</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / intro</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/intro/tv-stage.png" target="_blank"
+        ><img src="lightning-round/intro/tv-stage.png" loading="lazy" alt="intro tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/intro/iphone-p1-p1.png" target="_blank"
+        ><img src="lightning-round/intro/iphone-p1-p1.png" loading="lazy" alt="intro iphone p1-p1"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p1</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/intro/iphone-p2-p2.png" target="_blank"
+        ><img src="lightning-round/intro/iphone-p2-p2.png" loading="lazy" alt="intro iphone p2-p2"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p2-p2</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/intro/iphone-p3-p3.png" target="_blank"
+        ><img src="lightning-round/intro/iphone-p3-p3.png" loading="lazy" alt="intro iphone p3-p3"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p3-p3</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/intro/iphone-se-p1-p1.png" target="_blank"
+        ><img
+          src="lightning-round/intro/iphone-se-p1-p1.png"
+          loading="lazy"
+          alt="intro iphone-se p1-p1"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p1-p1</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/intro/iphone-se-p2-p2.png" target="_blank"
+        ><img
+          src="lightning-round/intro/iphone-se-p2-p2.png"
+          loading="lazy"
+          alt="intro iphone-se p2-p2"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p2-p2</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/intro/iphone-se-p3-p3.png" target="_blank"
+        ><img
+          src="lightning-round/intro/iphone-se-p3-p3.png"
+          loading="lazy"
+          alt="intro iphone-se p3-p3"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p3-p3</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/intro/font200-p1-p1.png" target="_blank"
+        ><img
+          src="lightning-round/intro/font200-p1-p1.png"
+          loading="lazy"
+          alt="intro font200 p1-p1"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p1-p1</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/intro/font200-p2-p2.png" target="_blank"
+        ><img
+          src="lightning-round/intro/font200-p2-p2.png"
+          loading="lazy"
+          alt="intro font200 p2-p2"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p2-p2</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/intro/font200-p3-p3.png" target="_blank"
+        ><img
+          src="lightning-round/intro/font200-p3-p3.png"
+          loading="lazy"
+          alt="intro font200 p3-p3"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p3-p3</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / question</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/question/tv-stage.png" target="_blank"
+        ><img src="lightning-round/question/tv-stage.png" loading="lazy" alt="question tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/question/iphone-p1-p1.png" target="_blank"
+        ><img
+          src="lightning-round/question/iphone-p1-p1.png"
+          loading="lazy"
+          alt="question iphone p1-p1"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p1</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/question/iphone-p2-p2.png" target="_blank"
+        ><img
+          src="lightning-round/question/iphone-p2-p2.png"
+          loading="lazy"
+          alt="question iphone p2-p2"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p2-p2</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/question/iphone-p3-p3.png" target="_blank"
+        ><img
+          src="lightning-round/question/iphone-p3-p3.png"
+          loading="lazy"
+          alt="question iphone p3-p3"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p3-p3</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/question/iphone-se-p1-p1.png" target="_blank"
+        ><img
+          src="lightning-round/question/iphone-se-p1-p1.png"
+          loading="lazy"
+          alt="question iphone-se p1-p1"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p1-p1</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/question/iphone-se-p2-p2.png" target="_blank"
+        ><img
+          src="lightning-round/question/iphone-se-p2-p2.png"
+          loading="lazy"
+          alt="question iphone-se p2-p2"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p2-p2</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/question/iphone-se-p3-p3.png" target="_blank"
+        ><img
+          src="lightning-round/question/iphone-se-p3-p3.png"
+          loading="lazy"
+          alt="question iphone-se p3-p3"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p3-p3</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/question/font200-p1-p1.png" target="_blank"
+        ><img
+          src="lightning-round/question/font200-p1-p1.png"
+          loading="lazy"
+          alt="question font200 p1-p1"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p1-p1</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/question/font200-p2-p2.png" target="_blank"
+        ><img
+          src="lightning-round/question/font200-p2-p2.png"
+          loading="lazy"
+          alt="question font200 p2-p2"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p2-p2</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/question/font200-p3-p3.png" target="_blank"
+        ><img
+          src="lightning-round/question/font200-p3-p3.png"
+          loading="lazy"
+          alt="question font200 p3-p3"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p3-p3</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / reveal</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/reveal/tv-stage.png" target="_blank"
+        ><img src="lightning-round/reveal/tv-stage.png" loading="lazy" alt="reveal tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/reveal/iphone-p1-p1.png" target="_blank"
+        ><img
+          src="lightning-round/reveal/iphone-p1-p1.png"
+          loading="lazy"
+          alt="reveal iphone p1-p1"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p1</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/reveal/iphone-p2-p2.png" target="_blank"
+        ><img
+          src="lightning-round/reveal/iphone-p2-p2.png"
+          loading="lazy"
+          alt="reveal iphone p2-p2"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p2-p2</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/reveal/iphone-p3-p3.png" target="_blank"
+        ><img
+          src="lightning-round/reveal/iphone-p3-p3.png"
+          loading="lazy"
+          alt="reveal iphone p3-p3"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p3-p3</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/reveal/iphone-se-p1-p1.png" target="_blank"
+        ><img
+          src="lightning-round/reveal/iphone-se-p1-p1.png"
+          loading="lazy"
+          alt="reveal iphone-se p1-p1"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p1-p1</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/reveal/iphone-se-p2-p2.png" target="_blank"
+        ><img
+          src="lightning-round/reveal/iphone-se-p2-p2.png"
+          loading="lazy"
+          alt="reveal iphone-se p2-p2"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p2-p2</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/reveal/iphone-se-p3-p3.png" target="_blank"
+        ><img
+          src="lightning-round/reveal/iphone-se-p3-p3.png"
+          loading="lazy"
+          alt="reveal iphone-se p3-p3"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p3-p3</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/reveal/font200-p1-p1.png" target="_blank"
+        ><img
+          src="lightning-round/reveal/font200-p1-p1.png"
+          loading="lazy"
+          alt="reveal font200 p1-p1"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p1-p1</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/reveal/font200-p2-p2.png" target="_blank"
+        ><img
+          src="lightning-round/reveal/font200-p2-p2.png"
+          loading="lazy"
+          alt="reveal font200 p2-p2"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p2-p2</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/reveal/font200-p3-p3.png" target="_blank"
+        ><img
+          src="lightning-round/reveal/font200-p3-p3.png"
+          loading="lazy"
+          alt="reveal font200 p3-p3"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p3-p3</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / wager</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/wager/tv-stage.png" target="_blank"
+        ><img src="lightning-round/wager/tv-stage.png" loading="lazy" alt="wager tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/wager/iphone-p1-p1.png" target="_blank"
+        ><img src="lightning-round/wager/iphone-p1-p1.png" loading="lazy" alt="wager iphone p1-p1"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p1</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/wager/iphone-p2-p2.png" target="_blank"
+        ><img src="lightning-round/wager/iphone-p2-p2.png" loading="lazy" alt="wager iphone p2-p2"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p2-p2</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/wager/iphone-p3-p3.png" target="_blank"
+        ><img src="lightning-round/wager/iphone-p3-p3.png" loading="lazy" alt="wager iphone p3-p3"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p3-p3</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/wager/iphone-se-p1-p1.png" target="_blank"
+        ><img
+          src="lightning-round/wager/iphone-se-p1-p1.png"
+          loading="lazy"
+          alt="wager iphone-se p1-p1"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p1-p1</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/wager/iphone-se-p2-p2.png" target="_blank"
+        ><img
+          src="lightning-round/wager/iphone-se-p2-p2.png"
+          loading="lazy"
+          alt="wager iphone-se p2-p2"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p2-p2</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/wager/iphone-se-p3-p3.png" target="_blank"
+        ><img
+          src="lightning-round/wager/iphone-se-p3-p3.png"
+          loading="lazy"
+          alt="wager iphone-se p3-p3"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p3-p3</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/wager/font200-p1-p1.png" target="_blank"
+        ><img
+          src="lightning-round/wager/font200-p1-p1.png"
+          loading="lazy"
+          alt="wager font200 p1-p1"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p1-p1</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/wager/font200-p2-p2.png" target="_blank"
+        ><img
+          src="lightning-round/wager/font200-p2-p2.png"
+          loading="lazy"
+          alt="wager font200 p2-p2"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p2-p2</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/wager/font200-p3-p3.png" target="_blank"
+        ><img
+          src="lightning-round/wager/font200-p3-p3.png"
+          loading="lazy"
+          alt="wager font200 p3-p3"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p3-p3</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / done-daylight</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/done-daylight/tv-stage.png" target="_blank"
+        ><img
+          src="lightning-round/done-daylight/tv-stage.png"
+          loading="lazy"
+          alt="done-daylight tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/done-daylight/iphone-p1-p1.png" target="_blank"
+        ><img
+          src="lightning-round/done-daylight/iphone-p1-p1.png"
+          loading="lazy"
+          alt="done-daylight iphone p1-p1"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p1</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / done-arcade</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/done-arcade/tv-stage.png" target="_blank"
+        ><img
+          src="lightning-round/done-arcade/tv-stage.png"
+          loading="lazy"
+          alt="done-arcade tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/done-arcade/iphone-p1-p1.png" target="_blank"
+        ><img
+          src="lightning-round/done-arcade/iphone-p1-p1.png"
+          loading="lazy"
+          alt="done-arcade iphone p1-p1"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p1</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / done-cabin</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/done-cabin/tv-stage.png" target="_blank"
+        ><img
+          src="lightning-round/done-cabin/tv-stage.png"
+          loading="lazy"
+          alt="done-cabin tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/done-cabin/iphone-p1-p1.png" target="_blank"
+        ><img
+          src="lightning-round/done-cabin/iphone-p1-p1.png"
+          loading="lazy"
+          alt="done-cabin iphone p1-p1"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p1</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / done-contrast</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/done-contrast/tv-stage.png" target="_blank"
+        ><img
+          src="lightning-round/done-contrast/tv-stage.png"
+          loading="lazy"
+          alt="done-contrast tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/done-contrast/iphone-p1-p1.png" target="_blank"
+        ><img
+          src="lightning-round/done-contrast/iphone-p1-p1.png"
+          loading="lazy"
+          alt="done-contrast iphone p1-p1"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p1</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / intro-daylight</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/intro-daylight/tv-stage.png" target="_blank"
+        ><img
+          src="lightning-round/intro-daylight/tv-stage.png"
+          loading="lazy"
+          alt="intro-daylight tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/intro-daylight/iphone-p1-p1.png" target="_blank"
+        ><img
+          src="lightning-round/intro-daylight/iphone-p1-p1.png"
+          loading="lazy"
+          alt="intro-daylight iphone p1-p1"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p1</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / intro-arcade</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/intro-arcade/tv-stage.png" target="_blank"
+        ><img
+          src="lightning-round/intro-arcade/tv-stage.png"
+          loading="lazy"
+          alt="intro-arcade tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/intro-arcade/iphone-p1-p1.png" target="_blank"
+        ><img
+          src="lightning-round/intro-arcade/iphone-p1-p1.png"
+          loading="lazy"
+          alt="intro-arcade iphone p1-p1"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p1</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / intro-cabin</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/intro-cabin/tv-stage.png" target="_blank"
+        ><img
+          src="lightning-round/intro-cabin/tv-stage.png"
+          loading="lazy"
+          alt="intro-cabin tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/intro-cabin/iphone-p1-p1.png" target="_blank"
+        ><img
+          src="lightning-round/intro-cabin/iphone-p1-p1.png"
+          loading="lazy"
+          alt="intro-cabin iphone p1-p1"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p1</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / intro-contrast</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/intro-contrast/tv-stage.png" target="_blank"
+        ><img
+          src="lightning-round/intro-contrast/tv-stage.png"
+          loading="lazy"
+          alt="intro-contrast tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/intro-contrast/iphone-p1-p1.png" target="_blank"
+        ><img
+          src="lightning-round/intro-contrast/iphone-p1-p1.png"
+          loading="lazy"
+          alt="intro-contrast iphone p1-p1"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p1</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / question-daylight</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/question-daylight/tv-stage.png" target="_blank"
+        ><img
+          src="lightning-round/question-daylight/tv-stage.png"
+          loading="lazy"
+          alt="question-daylight tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/question-daylight/iphone-p1-p1.png" target="_blank"
+        ><img
+          src="lightning-round/question-daylight/iphone-p1-p1.png"
+          loading="lazy"
+          alt="question-daylight iphone p1-p1"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p1</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / question-arcade</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/question-arcade/tv-stage.png" target="_blank"
+        ><img
+          src="lightning-round/question-arcade/tv-stage.png"
+          loading="lazy"
+          alt="question-arcade tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/question-arcade/iphone-p1-p1.png" target="_blank"
+        ><img
+          src="lightning-round/question-arcade/iphone-p1-p1.png"
+          loading="lazy"
+          alt="question-arcade iphone p1-p1"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p1</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / question-cabin</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/question-cabin/tv-stage.png" target="_blank"
+        ><img
+          src="lightning-round/question-cabin/tv-stage.png"
+          loading="lazy"
+          alt="question-cabin tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/question-cabin/iphone-p1-p1.png" target="_blank"
+        ><img
+          src="lightning-round/question-cabin/iphone-p1-p1.png"
+          loading="lazy"
+          alt="question-cabin iphone p1-p1"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p1</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / question-contrast</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/question-contrast/tv-stage.png" target="_blank"
+        ><img
+          src="lightning-round/question-contrast/tv-stage.png"
+          loading="lazy"
+          alt="question-contrast tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/question-contrast/iphone-p1-p1.png" target="_blank"
+        ><img
+          src="lightning-round/question-contrast/iphone-p1-p1.png"
+          loading="lazy"
+          alt="question-contrast iphone p1-p1"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p1</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / reveal-daylight</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/reveal-daylight/tv-stage.png" target="_blank"
+        ><img
+          src="lightning-round/reveal-daylight/tv-stage.png"
+          loading="lazy"
+          alt="reveal-daylight tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/reveal-daylight/iphone-p1-p1.png" target="_blank"
+        ><img
+          src="lightning-round/reveal-daylight/iphone-p1-p1.png"
+          loading="lazy"
+          alt="reveal-daylight iphone p1-p1"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p1</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / reveal-arcade</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/reveal-arcade/tv-stage.png" target="_blank"
+        ><img
+          src="lightning-round/reveal-arcade/tv-stage.png"
+          loading="lazy"
+          alt="reveal-arcade tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/reveal-arcade/iphone-p1-p1.png" target="_blank"
+        ><img
+          src="lightning-round/reveal-arcade/iphone-p1-p1.png"
+          loading="lazy"
+          alt="reveal-arcade iphone p1-p1"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p1</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / reveal-cabin</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/reveal-cabin/tv-stage.png" target="_blank"
+        ><img
+          src="lightning-round/reveal-cabin/tv-stage.png"
+          loading="lazy"
+          alt="reveal-cabin tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/reveal-cabin/iphone-p1-p1.png" target="_blank"
+        ><img
+          src="lightning-round/reveal-cabin/iphone-p1-p1.png"
+          loading="lazy"
+          alt="reveal-cabin iphone p1-p1"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p1</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / reveal-contrast</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/reveal-contrast/tv-stage.png" target="_blank"
+        ><img
+          src="lightning-round/reveal-contrast/tv-stage.png"
+          loading="lazy"
+          alt="reveal-contrast tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/reveal-contrast/iphone-p1-p1.png" target="_blank"
+        ><img
+          src="lightning-round/reveal-contrast/iphone-p1-p1.png"
+          loading="lazy"
+          alt="reveal-contrast iphone p1-p1"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p1</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / wager-daylight</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/wager-daylight/tv-stage.png" target="_blank"
+        ><img
+          src="lightning-round/wager-daylight/tv-stage.png"
+          loading="lazy"
+          alt="wager-daylight tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/wager-daylight/iphone-p1-p1.png" target="_blank"
+        ><img
+          src="lightning-round/wager-daylight/iphone-p1-p1.png"
+          loading="lazy"
+          alt="wager-daylight iphone p1-p1"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p1</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / wager-arcade</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/wager-arcade/tv-stage.png" target="_blank"
+        ><img
+          src="lightning-round/wager-arcade/tv-stage.png"
+          loading="lazy"
+          alt="wager-arcade tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/wager-arcade/iphone-p1-p1.png" target="_blank"
+        ><img
+          src="lightning-round/wager-arcade/iphone-p1-p1.png"
+          loading="lazy"
+          alt="wager-arcade iphone p1-p1"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p1</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / wager-cabin</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/wager-cabin/tv-stage.png" target="_blank"
+        ><img
+          src="lightning-round/wager-cabin/tv-stage.png"
+          loading="lazy"
+          alt="wager-cabin tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/wager-cabin/iphone-p1-p1.png" target="_blank"
+        ><img
+          src="lightning-round/wager-cabin/iphone-p1-p1.png"
+          loading="lazy"
+          alt="wager-cabin iphone p1-p1"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p1</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / wager-contrast</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/wager-contrast/tv-stage.png" target="_blank"
+        ><img
+          src="lightning-round/wager-contrast/tv-stage.png"
+          loading="lazy"
+          alt="wager-contrast tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/wager-contrast/iphone-p1-p1.png" target="_blank"
+        ><img
+          src="lightning-round/wager-contrast/iphone-p1-p1.png"
+          loading="lazy"
+          alt="wager-contrast iphone p1-p1"
+      /></a>
+      <figcaption><b>iPhone 15</b> · p1-p1</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / live-intro</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/live-intro/tv-stage.png" target="_blank"
+        ><img
+          src="lightning-round/live-intro/tv-stage.png"
+          loading="lazy"
+          alt="live-intro tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>before anyone acts (step 0)</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-intro/iphone-vip.png" target="_blank"
+        ><img
+          src="lightning-round/live-intro/iphone-vip.png"
+          loading="lazy"
+          alt="live-intro iphone vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · vip</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-intro/iphone-se-p2.png" target="_blank"
+        ><img
+          src="lightning-round/live-intro/iphone-se-p2.png"
+          loading="lazy"
+          alt="live-intro iphone-se p2"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p2</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-intro/pixel-p3.png" target="_blank"
+        ><img
+          src="lightning-round/live-intro/pixel-p3.png"
+          loading="lazy"
+          alt="live-intro pixel p3"
+      /></a>
+      <figcaption><b>Pixel 7</b> · p3</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-intro/font200-p4.png" target="_blank"
+        ><img
+          src="lightning-round/live-intro/font200-p4.png"
+          loading="lazy"
+          alt="live-intro font200 p4"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p4</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / live-question</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/live-question/tv-stage.png" target="_blank"
+        ><img
+          src="lightning-round/live-question/tv-stage.png"
+          loading="lazy"
+          alt="live-question tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>before anyone acts (step 1)</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-question/iphone-vip.png" target="_blank"
+        ><img
+          src="lightning-round/live-question/iphone-vip.png"
+          loading="lazy"
+          alt="live-question iphone vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · vip</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-question/iphone-se-p2.png" target="_blank"
+        ><img
+          src="lightning-round/live-question/iphone-se-p2.png"
+          loading="lazy"
+          alt="live-question iphone-se p2"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p2</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-question/pixel-p3.png" target="_blank"
+        ><img
+          src="lightning-round/live-question/pixel-p3.png"
+          loading="lazy"
+          alt="live-question pixel p3"
+      /></a>
+      <figcaption><b>Pixel 7</b> · p3</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-question/font200-p4.png" target="_blank"
+        ><img
+          src="lightning-round/live-question/font200-p4.png"
+          loading="lazy"
+          alt="live-question font200 p4"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p4</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / live-question-acted</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/live-question-acted/tv-stage.png" target="_blank"
+        ><img
+          src="lightning-round/live-question-acted/tv-stage.png"
+          loading="lazy"
+          alt="live-question-acted tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>Priya picked</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-question-acted/pixel-p3.png" target="_blank"
+        ><img
+          src="lightning-round/live-question-acted/pixel-p3.png"
+          loading="lazy"
+          alt="live-question-acted pixel p3"
+      /></a>
+      <figcaption><b>Pixel 7</b> · p3<br /><i>picked</i></figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / live-reveal</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/live-reveal/tv-stage.png" target="_blank"
+        ><img
+          src="lightning-round/live-reveal/tv-stage.png"
+          loading="lazy"
+          alt="live-reveal tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>before anyone acts (step 2)</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-reveal/iphone-vip.png" target="_blank"
+        ><img
+          src="lightning-round/live-reveal/iphone-vip.png"
+          loading="lazy"
+          alt="live-reveal iphone vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · vip</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-reveal/iphone-se-p2.png" target="_blank"
+        ><img
+          src="lightning-round/live-reveal/iphone-se-p2.png"
+          loading="lazy"
+          alt="live-reveal iphone-se p2"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p2</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-reveal/pixel-p3.png" target="_blank"
+        ><img
+          src="lightning-round/live-reveal/pixel-p3.png"
+          loading="lazy"
+          alt="live-reveal pixel p3"
+      /></a>
+      <figcaption><b>Pixel 7</b> · p3</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-reveal/font200-p4.png" target="_blank"
+        ><img
+          src="lightning-round/live-reveal/font200-p4.png"
+          loading="lazy"
+          alt="live-reveal font200 p4"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p4</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / live-question-2</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/live-question-2/tv-stage.png" target="_blank"
+        ><img
+          src="lightning-round/live-question-2/tv-stage.png"
+          loading="lazy"
+          alt="live-question-2 tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>before anyone acts (step 3)</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-question-2/iphone-vip.png" target="_blank"
+        ><img
+          src="lightning-round/live-question-2/iphone-vip.png"
+          loading="lazy"
+          alt="live-question-2 iphone vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · vip</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-question-2/iphone-se-p2.png" target="_blank"
+        ><img
+          src="lightning-round/live-question-2/iphone-se-p2.png"
+          loading="lazy"
+          alt="live-question-2 iphone-se p2"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p2</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-question-2/pixel-p3.png" target="_blank"
+        ><img
+          src="lightning-round/live-question-2/pixel-p3.png"
+          loading="lazy"
+          alt="live-question-2 pixel p3"
+      /></a>
+      <figcaption><b>Pixel 7</b> · p3</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-question-2/font200-p4.png" target="_blank"
+        ><img
+          src="lightning-round/live-question-2/font200-p4.png"
+          loading="lazy"
+          alt="live-question-2 font200 p4"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p4</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / live-question-2-acted</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/live-question-2-acted/tv-stage.png" target="_blank"
+        ><img
+          src="lightning-round/live-question-2-acted/tv-stage.png"
+          loading="lazy"
+          alt="live-question-2-acted tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>Priya picked</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-question-2-acted/pixel-p3.png" target="_blank"
+        ><img
+          src="lightning-round/live-question-2-acted/pixel-p3.png"
+          loading="lazy"
+          alt="live-question-2-acted pixel p3"
+      /></a>
+      <figcaption><b>Pixel 7</b> · p3<br /><i>picked</i></figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / live-reveal-2</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/live-reveal-2/tv-stage.png" target="_blank"
+        ><img
+          src="lightning-round/live-reveal-2/tv-stage.png"
+          loading="lazy"
+          alt="live-reveal-2 tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>before anyone acts (step 4)</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-reveal-2/iphone-vip.png" target="_blank"
+        ><img
+          src="lightning-round/live-reveal-2/iphone-vip.png"
+          loading="lazy"
+          alt="live-reveal-2 iphone vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · vip</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-reveal-2/iphone-se-p2.png" target="_blank"
+        ><img
+          src="lightning-round/live-reveal-2/iphone-se-p2.png"
+          loading="lazy"
+          alt="live-reveal-2 iphone-se p2"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p2</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-reveal-2/pixel-p3.png" target="_blank"
+        ><img
+          src="lightning-round/live-reveal-2/pixel-p3.png"
+          loading="lazy"
+          alt="live-reveal-2 pixel p3"
+      /></a>
+      <figcaption><b>Pixel 7</b> · p3</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-reveal-2/font200-p4.png" target="_blank"
+        ><img
+          src="lightning-round/live-reveal-2/font200-p4.png"
+          loading="lazy"
+          alt="live-reveal-2 font200 p4"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p4</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / live-question-3</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/live-question-3/tv-stage.png" target="_blank"
+        ><img
+          src="lightning-round/live-question-3/tv-stage.png"
+          loading="lazy"
+          alt="live-question-3 tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>before anyone acts (step 5)</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-question-3/iphone-vip.png" target="_blank"
+        ><img
+          src="lightning-round/live-question-3/iphone-vip.png"
+          loading="lazy"
+          alt="live-question-3 iphone vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · vip</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-question-3/iphone-se-p2.png" target="_blank"
+        ><img
+          src="lightning-round/live-question-3/iphone-se-p2.png"
+          loading="lazy"
+          alt="live-question-3 iphone-se p2"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p2</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-question-3/pixel-p3.png" target="_blank"
+        ><img
+          src="lightning-round/live-question-3/pixel-p3.png"
+          loading="lazy"
+          alt="live-question-3 pixel p3"
+      /></a>
+      <figcaption><b>Pixel 7</b> · p3</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-question-3/font200-p4.png" target="_blank"
+        ><img
+          src="lightning-round/live-question-3/font200-p4.png"
+          loading="lazy"
+          alt="live-question-3 font200 p4"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p4</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / live-question-3-acted</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/live-question-3-acted/tv-stage.png" target="_blank"
+        ><img
+          src="lightning-round/live-question-3-acted/tv-stage.png"
+          loading="lazy"
+          alt="live-question-3-acted tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>Priya picked</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-question-3-acted/pixel-p3.png" target="_blank"
+        ><img
+          src="lightning-round/live-question-3-acted/pixel-p3.png"
+          loading="lazy"
+          alt="live-question-3-acted pixel p3"
+      /></a>
+      <figcaption><b>Pixel 7</b> · p3<br /><i>picked</i></figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / live-reveal-3</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/live-reveal-3/tv-stage.png" target="_blank"
+        ><img
+          src="lightning-round/live-reveal-3/tv-stage.png"
+          loading="lazy"
+          alt="live-reveal-3 tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>before anyone acts (step 6)</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-reveal-3/iphone-vip.png" target="_blank"
+        ><img
+          src="lightning-round/live-reveal-3/iphone-vip.png"
+          loading="lazy"
+          alt="live-reveal-3 iphone vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · vip</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-reveal-3/iphone-se-p2.png" target="_blank"
+        ><img
+          src="lightning-round/live-reveal-3/iphone-se-p2.png"
+          loading="lazy"
+          alt="live-reveal-3 iphone-se p2"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p2</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-reveal-3/pixel-p3.png" target="_blank"
+        ><img
+          src="lightning-round/live-reveal-3/pixel-p3.png"
+          loading="lazy"
+          alt="live-reveal-3 pixel p3"
+      /></a>
+      <figcaption><b>Pixel 7</b> · p3</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-reveal-3/font200-p4.png" target="_blank"
+        ><img
+          src="lightning-round/live-reveal-3/font200-p4.png"
+          loading="lazy"
+          alt="live-reveal-3 font200 p4"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p4</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / live-question-4</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/live-question-4/tv-stage.png" target="_blank"
+        ><img
+          src="lightning-round/live-question-4/tv-stage.png"
+          loading="lazy"
+          alt="live-question-4 tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>before anyone acts (step 7)</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-question-4/iphone-vip.png" target="_blank"
+        ><img
+          src="lightning-round/live-question-4/iphone-vip.png"
+          loading="lazy"
+          alt="live-question-4 iphone vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · vip</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-question-4/iphone-se-p2.png" target="_blank"
+        ><img
+          src="lightning-round/live-question-4/iphone-se-p2.png"
+          loading="lazy"
+          alt="live-question-4 iphone-se p2"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p2</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-question-4/pixel-p3.png" target="_blank"
+        ><img
+          src="lightning-round/live-question-4/pixel-p3.png"
+          loading="lazy"
+          alt="live-question-4 pixel p3"
+      /></a>
+      <figcaption><b>Pixel 7</b> · p3</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-question-4/font200-p4.png" target="_blank"
+        ><img
+          src="lightning-round/live-question-4/font200-p4.png"
+          loading="lazy"
+          alt="live-question-4 font200 p4"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p4</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / live-question-4-acted</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/live-question-4-acted/tv-stage.png" target="_blank"
+        ><img
+          src="lightning-round/live-question-4-acted/tv-stage.png"
+          loading="lazy"
+          alt="live-question-4-acted tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>Priya picked</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-question-4-acted/pixel-p3.png" target="_blank"
+        ><img
+          src="lightning-round/live-question-4-acted/pixel-p3.png"
+          loading="lazy"
+          alt="live-question-4-acted pixel p3"
+      /></a>
+      <figcaption><b>Pixel 7</b> · p3<br /><i>picked</i></figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / live-reveal-4</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/live-reveal-4/tv-stage.png" target="_blank"
+        ><img
+          src="lightning-round/live-reveal-4/tv-stage.png"
+          loading="lazy"
+          alt="live-reveal-4 tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>before anyone acts (step 8)</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-reveal-4/iphone-vip.png" target="_blank"
+        ><img
+          src="lightning-round/live-reveal-4/iphone-vip.png"
+          loading="lazy"
+          alt="live-reveal-4 iphone vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · vip</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-reveal-4/iphone-se-p2.png" target="_blank"
+        ><img
+          src="lightning-round/live-reveal-4/iphone-se-p2.png"
+          loading="lazy"
+          alt="live-reveal-4 iphone-se p2"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p2</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-reveal-4/pixel-p3.png" target="_blank"
+        ><img
+          src="lightning-round/live-reveal-4/pixel-p3.png"
+          loading="lazy"
+          alt="live-reveal-4 pixel p3"
+      /></a>
+      <figcaption><b>Pixel 7</b> · p3</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-reveal-4/font200-p4.png" target="_blank"
+        ><img
+          src="lightning-round/live-reveal-4/font200-p4.png"
+          loading="lazy"
+          alt="live-reveal-4 font200 p4"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p4</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / live-question-5</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/live-question-5/tv-stage.png" target="_blank"
+        ><img
+          src="lightning-round/live-question-5/tv-stage.png"
+          loading="lazy"
+          alt="live-question-5 tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>before anyone acts (step 9)</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-question-5/iphone-vip.png" target="_blank"
+        ><img
+          src="lightning-round/live-question-5/iphone-vip.png"
+          loading="lazy"
+          alt="live-question-5 iphone vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · vip</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-question-5/iphone-se-p2.png" target="_blank"
+        ><img
+          src="lightning-round/live-question-5/iphone-se-p2.png"
+          loading="lazy"
+          alt="live-question-5 iphone-se p2"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p2</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-question-5/pixel-p3.png" target="_blank"
+        ><img
+          src="lightning-round/live-question-5/pixel-p3.png"
+          loading="lazy"
+          alt="live-question-5 pixel p3"
+      /></a>
+      <figcaption><b>Pixel 7</b> · p3</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-question-5/font200-p4.png" target="_blank"
+        ><img
+          src="lightning-round/live-question-5/font200-p4.png"
+          loading="lazy"
+          alt="live-question-5 font200 p4"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p4</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / live-question-5-acted</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/live-question-5-acted/tv-stage.png" target="_blank"
+        ><img
+          src="lightning-round/live-question-5-acted/tv-stage.png"
+          loading="lazy"
+          alt="live-question-5-acted tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>Priya picked</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-question-5-acted/pixel-p3.png" target="_blank"
+        ><img
+          src="lightning-round/live-question-5-acted/pixel-p3.png"
+          loading="lazy"
+          alt="live-question-5-acted pixel p3"
+      /></a>
+      <figcaption><b>Pixel 7</b> · p3<br /><i>picked</i></figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / live-reveal-5</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/live-reveal-5/tv-stage.png" target="_blank"
+        ><img
+          src="lightning-round/live-reveal-5/tv-stage.png"
+          loading="lazy"
+          alt="live-reveal-5 tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>before anyone acts (step 10)</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-reveal-5/iphone-vip.png" target="_blank"
+        ><img
+          src="lightning-round/live-reveal-5/iphone-vip.png"
+          loading="lazy"
+          alt="live-reveal-5 iphone vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · vip</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-reveal-5/iphone-se-p2.png" target="_blank"
+        ><img
+          src="lightning-round/live-reveal-5/iphone-se-p2.png"
+          loading="lazy"
+          alt="live-reveal-5 iphone-se p2"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p2</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-reveal-5/pixel-p3.png" target="_blank"
+        ><img
+          src="lightning-round/live-reveal-5/pixel-p3.png"
+          loading="lazy"
+          alt="live-reveal-5 pixel p3"
+      /></a>
+      <figcaption><b>Pixel 7</b> · p3</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-reveal-5/font200-p4.png" target="_blank"
+        ><img
+          src="lightning-round/live-reveal-5/font200-p4.png"
+          loading="lazy"
+          alt="live-reveal-5 font200 p4"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p4</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / live-question-6</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/live-question-6/tv-stage.png" target="_blank"
+        ><img
+          src="lightning-round/live-question-6/tv-stage.png"
+          loading="lazy"
+          alt="live-question-6 tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>before anyone acts (step 11)</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-question-6/iphone-vip.png" target="_blank"
+        ><img
+          src="lightning-round/live-question-6/iphone-vip.png"
+          loading="lazy"
+          alt="live-question-6 iphone vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · vip</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-question-6/iphone-se-p2.png" target="_blank"
+        ><img
+          src="lightning-round/live-question-6/iphone-se-p2.png"
+          loading="lazy"
+          alt="live-question-6 iphone-se p2"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p2</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-question-6/pixel-p3.png" target="_blank"
+        ><img
+          src="lightning-round/live-question-6/pixel-p3.png"
+          loading="lazy"
+          alt="live-question-6 pixel p3"
+      /></a>
+      <figcaption><b>Pixel 7</b> · p3</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-question-6/font200-p4.png" target="_blank"
+        ><img
+          src="lightning-round/live-question-6/font200-p4.png"
+          loading="lazy"
+          alt="live-question-6 font200 p4"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p4</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / live-question-6-acted</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/live-question-6-acted/tv-stage.png" target="_blank"
+        ><img
+          src="lightning-round/live-question-6-acted/tv-stage.png"
+          loading="lazy"
+          alt="live-question-6-acted tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>Priya picked</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-question-6-acted/pixel-p3.png" target="_blank"
+        ><img
+          src="lightning-round/live-question-6-acted/pixel-p3.png"
+          loading="lazy"
+          alt="live-question-6-acted pixel p3"
+      /></a>
+      <figcaption><b>Pixel 7</b> · p3<br /><i>picked</i></figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / live-reveal-6</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/live-reveal-6/tv-stage.png" target="_blank"
+        ><img
+          src="lightning-round/live-reveal-6/tv-stage.png"
+          loading="lazy"
+          alt="live-reveal-6 tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>before anyone acts (step 12)</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-reveal-6/iphone-vip.png" target="_blank"
+        ><img
+          src="lightning-round/live-reveal-6/iphone-vip.png"
+          loading="lazy"
+          alt="live-reveal-6 iphone vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · vip</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-reveal-6/iphone-se-p2.png" target="_blank"
+        ><img
+          src="lightning-round/live-reveal-6/iphone-se-p2.png"
+          loading="lazy"
+          alt="live-reveal-6 iphone-se p2"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p2</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-reveal-6/pixel-p3.png" target="_blank"
+        ><img
+          src="lightning-round/live-reveal-6/pixel-p3.png"
+          loading="lazy"
+          alt="live-reveal-6 pixel p3"
+      /></a>
+      <figcaption><b>Pixel 7</b> · p3</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-reveal-6/font200-p4.png" target="_blank"
+        ><img
+          src="lightning-round/live-reveal-6/font200-p4.png"
+          loading="lazy"
+          alt="live-reveal-6 font200 p4"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p4</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / live-question-7</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/live-question-7/tv-stage.png" target="_blank"
+        ><img
+          src="lightning-round/live-question-7/tv-stage.png"
+          loading="lazy"
+          alt="live-question-7 tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>before anyone acts (step 13)</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-question-7/iphone-vip.png" target="_blank"
+        ><img
+          src="lightning-round/live-question-7/iphone-vip.png"
+          loading="lazy"
+          alt="live-question-7 iphone vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · vip</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-question-7/iphone-se-p2.png" target="_blank"
+        ><img
+          src="lightning-round/live-question-7/iphone-se-p2.png"
+          loading="lazy"
+          alt="live-question-7 iphone-se p2"
+      /></a>
+      <figcaption><b>iPhone SE</b> · p2</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-question-7/pixel-p3.png" target="_blank"
+        ><img
+          src="lightning-round/live-question-7/pixel-p3.png"
+          loading="lazy"
+          alt="live-question-7 pixel p3"
+      /></a>
+      <figcaption><b>Pixel 7</b> · p3</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-question-7/font200-p4.png" target="_blank"
+        ><img
+          src="lightning-round/live-question-7/font200-p4.png"
+          loading="lazy"
+          alt="live-question-7 font200 p4"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · p4</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>lightning-round / live-question-7-acted</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="lightning-round/live-question-7-acted/tv-stage.png" target="_blank"
+        ><img
+          src="lightning-round/live-question-7-acted/tv-stage.png"
+          loading="lazy"
+          alt="live-question-7-acted tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>Priya picked</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="lightning-round/live-question-7-acted/pixel-p3.png" target="_blank"
+        ><img
+          src="lightning-round/live-question-7-acted/pixel-p3.png"
+          loading="lazy"
+          alt="live-question-7-acted pixel p3"
+      /></a>
+      <figcaption><b>Pixel 7</b> · p3<br /><i>picked</i></figcaption>
+    </figure>
+  </div>
+</section>

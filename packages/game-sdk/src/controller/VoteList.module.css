@@ -26,10 +26,48 @@
   padding: var(--pb-space-3) var(--pb-space-4);
   border-radius: var(--pb-radius);
   background: var(--pb-surface);
-  border: 3px solid transparent;
+  border: 3px solid var(--pb-border);
   text-align: left;
   font-size: var(--pb-font-body);
   font-weight: 700;
+}
+
+/* size="large": two or three tall cards that fill the thumb zone. */
+.large {
+  flex: 1;
+}
+
+.large .option {
+  flex: 1;
+  min-height: max(112px, 22dvh);
+  gap: var(--pb-space-4);
+  font-size: var(--pb-font-h2);
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.letter {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: var(--pb-touch);
+  height: var(--pb-touch);
+  border-radius: 50%;
+  background: var(--pb-surface-2);
+  font-size: var(--pb-font-body);
+  font-weight: 900;
+}
+
+.voted .letter {
+  background: var(--pb-accent);
+  color: var(--pb-on-accent);
+}
+
+/* Placeholder answers ("(no answer)") look like what they are; still votable per the game's rules. */
+.muted .text {
+  color: var(--pb-text-muted);
+  font-style: italic;
+  font-weight: 600;
 }
 
 .option:disabled {

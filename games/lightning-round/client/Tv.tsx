@@ -40,7 +40,7 @@ export function Tv({ view }: GameTvProps<LightningTvView>): JSX.Element {
         <RoundHeader round={view.round} question={view.question} />
         <BigText level="h2">{view.question?.text ?? '…'}</BigText>
         {view.question ? (
-          <ChoiceBoard question={view.question} correctIndex={view.correctIndex} />
+          <ChoiceBoard question={view.question} correctIndex={view.correctIndex} compact />
         ) : null}
         <RevealRows rows={view.rows ?? []} final={view.round?.final ?? false} />
       </Stage>
@@ -57,7 +57,7 @@ export function Tv({ view }: GameTvProps<LightningTvView>): JSX.Element {
           {view.answeredCount} / {view.totalCount} placed · right answer wins it, wrong answer loses
           it
         </p>
-        <Scoreboard rows={standings} />
+        <Scoreboard rows={standings} noTrophy />
       </Stage>
     );
   }

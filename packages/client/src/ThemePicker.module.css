@@ -1,0 +1,126 @@
+.row,
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: var(--pb-space-2);
+}
+
+.row {
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.list {
+  flex-direction: column;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-3);
+  width: 100%;
+  min-height: var(--pb-touch);
+  padding: var(--pb-space-2) var(--pb-space-3);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  border: 3px solid transparent;
+  text-align: left;
+  font-weight: 700;
+}
+
+.row .option {
+  font-size: var(--pb-font-caption);
+}
+
+.active {
+  border-color: var(--pb-accent-2);
+  background: var(--pb-surface-2);
+}
+
+/* Three stripes: background, accent, accent-2 — a preview that does not depend on the current theme. */
+.swatch {
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr;
+  flex-shrink: 0;
+  width: 2em;
+  height: 1.4em;
+  padding: 0.2em;
+  gap: 0.15em;
+  border-radius: 6px;
+  border: 1px solid rgb(128 128 128 / 50%);
+}
+
+.swatch span {
+  border-radius: 3px;
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.label small {
+  font-weight: 400;
+  color: var(--pb-text-muted);
+  font-size: var(--pb-font-caption);
+}
+
+.mark {
+  margin-left: auto;
+  min-width: 1em;
+  color: var(--pb-accent-2);
+  font-weight: 900;
+}
+
+/* sheet variant (phones) — same shape as the VIP menu */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgb(0 0 0 / 60%);
+  display: flex;
+  align-items: flex-end;
+  z-index: 10;
+}
+
+.sheet {
+  width: 100%;
+  max-height: 85dvh;
+  overflow-y: auto;
+  padding: var(--pb-space-4) var(--pb-space-4) calc(var(--pb-space-4) + env(safe-area-inset-bottom));
+  border-radius: var(--pb-radius-lg) var(--pb-radius-lg) 0 0;
+  background: var(--pb-surface);
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-4);
+  animation: pb-rise var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.sheet .option {
+  background: var(--pb-surface-2);
+}
+
+.sheet .active {
+  background: var(--pb-bg);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: var(--pb-font-h2);
+}
+
+.close {
+  width: var(--pb-touch);
+  height: var(--pb-touch);
+  border-radius: 50%;
+  background: var(--pb-surface-2);
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+}

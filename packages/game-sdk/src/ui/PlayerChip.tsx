@@ -23,8 +23,8 @@ export interface PlayerChipProps {
 const GLYPH: Record<NonNullable<PlayerChipProps['status']>, { text: string; label: string }> = {
   active: { text: '', label: '' },
   submitted: { text: '✓', label: 'submitted' },
-  // An en dash, not "…": three dots read as "still typing" during a reveal.
-  waiting: { text: '–', label: 'waiting' },
+  // No glyph: a row of dashes during a reveal carried nothing; the label keeps it for screen readers.
+  waiting: { text: '', label: 'waiting' },
   spectator: { text: '◎', label: 'spectator' },
 };
 

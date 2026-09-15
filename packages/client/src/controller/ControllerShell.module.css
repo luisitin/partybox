@@ -31,6 +31,22 @@
 
 .left {
   flex: 1 1 auto;
+  overflow: hidden;
+}
+
+/* Phone widths: the wordmark shrinks to its initials so code, theme, dot and badge always fit. */
+.brandShort {
+  display: none;
+}
+
+@media (max-width: 439px) {
+  .brandFull {
+    display: none;
+  }
+
+  .brandShort {
+    display: inline;
+  }
 }
 
 .brand,
@@ -76,8 +92,8 @@
   min-height: var(--pb-touch);
   padding: 0 var(--pb-space-3);
   border-radius: 999px;
-  background: var(--pb-accent-2);
-  color: var(--pb-on-accent);
+  background: var(--pb-accent-2-fill);
+  color: var(--pb-on-accent-2-fill);
   font-weight: 800;
   font-size: min(var(--pb-font-caption), 16px);
 }
@@ -190,4 +206,15 @@
 
 .info {
   border-left: 4px solid var(--pb-info);
+}
+
+/* Header icon button (theme): a real 44 px target, quiet until pressed. */
+.iconButton {
+  flex-shrink: 0;
+  width: var(--pb-touch);
+  height: var(--pb-touch);
+  border-radius: 50%;
+  font-size: 20px;
+  display: grid;
+  place-items: center;
 }

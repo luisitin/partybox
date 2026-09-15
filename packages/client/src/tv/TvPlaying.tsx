@@ -1,5 +1,5 @@
-// The envelope during play: chips + timer in a top strip, VIP overlay in a corner, "Paused" curtain,
-// and the game's lazy Tv component in the middle.
+// The envelope during play: chips + timer in a top strip (the VIP is marked on their chip), a
+// "Paused" curtain, and the game's lazy Tv component in the middle.
 import { Suspense, useCallback } from 'react';
 import type { JSX } from 'react';
 import type { PushedView, RoomSnapshot, TvView } from '@partybox/shared';
@@ -77,11 +77,6 @@ export function TvPlaying({ room, view, audio }: TvPlayingProps): JSX.Element {
             <BigText level="h1">⏸ {t.tv.paused}</BigText>
             {vip ? <p className="pb-muted">{t.tv.pausedHint(vip.name)}</p> : null}
           </div>
-        </div>
-      ) : null}
-      {vip ? (
-        <div className={styles.vip} aria-label={`VIP ${vip.name}`}>
-          ★ {vip.name}
         </div>
       ) : null}
     </div>
