@@ -29,16 +29,22 @@ export const meta = {
   title: 'Broken Pencil',
   pitch:
     'Telephone with a pencil: your word becomes a drawing, a guess, a drawing again — then every book is shown on the TV first page to last, one picture at a time, with the VIP turning the pages.',
-  players: { min: 3, max: 10, sweet: '6–8' },
-  duration: '≈12 min at 8 players (5 min play + 7 min show)',
-  rounds: '1 book per player; 3 drawings per book by default',
+  players: { min: 3, max: 8, sweet: '5–8' },
+  duration: '≈18 min at 8 players (6 min play + 12 min show); ≈10 min at 5',
+  rounds:
+    '1 book per player; by default every other player touches every book once (a full circle), fewer via the passes setting',
   interaction: ['draw', 'text'],
   tone: ['silly', 'cozy'],
   contentRating:
     'Family by default; optional spicy word pack (PG-13); custom words can be switched off',
   difficulty: 'L',
   status: 'idea',
-  version: '0.2.0',
+  version: '0.3.0',
+  bots: {
+    supports: false,
+    reason:
+      'A bot cannot draw or guess: its random scribble and dictionary guess would be an obvious tell and break every chain it touches. Its sampleInput exists for the contract suite only.',
+  },
   date: '2026-09-15',
   axes: {
     interaction: ['draw', 'text'],
@@ -58,8 +64,6 @@ const PLAYERS = [
   { name: 'Dee', i: 3 },
   { name: 'Eli', i: 4 },
   { name: 'Fay', i: 5 },
-  { name: 'Gus', i: 6 },
-  { name: 'Hal', i: 7 },
 ];
 const INK = [
   '#0f1020',
@@ -279,7 +283,7 @@ const tvPick = tv(
     ]
       .map((s, k) => text(TV.padX + 130, 305 + k * 32, s, { size: TV.body }))
       .join('') +
-    text(TV.W / 2, 476, '5 of 8 picked', {
+    text(TV.W / 2, 476, '4 of 6 picked', {
       size: TV.h2,
       weight: 700,
       fill: T.accent3,
@@ -306,7 +310,7 @@ const tvDraw = tv(
     PLAYERS.map((p, k) => {
       const x = TV.padX + 70 + (k % 4) * 210;
       const y = 220 + Math.floor(k / 4) * 120;
-      const done = k < 5;
+      const done = k < 4;
       return (
         rect(x - 60, y - 40, 190, 96, { fill: T.surface, r: 16, stroke: done ? T.accent3 : null }) +
         avatar(x - 30, y + 8, 22, p.i, p.name) +
@@ -318,7 +322,7 @@ const tvDraw = tv(
         })
       );
     }).join('') +
-    text(TV.W / 2, 486, '5 of 8 done — the clock stops when everyone is', {
+    text(TV.W / 2, 486, '4 of 6 done — the clock stops when everyone is', {
       size: TV.body,
       fill: T.muted,
       anchor: 'middle',
@@ -354,7 +358,7 @@ const tvGuess = tv(
         })
       );
     }).join('') +
-    text(TV.W / 2, 486, '3 of 8 done', { size: TV.body, fill: T.muted, anchor: 'middle' }),
+    text(TV.W / 2, 486, '2 of 6 done', { size: TV.body, fill: T.muted, anchor: 'middle' }),
   {
     kicker: 'BROKEN PENCIL · PAGE 3 OF 7',
     timer: { seconds: 21 },
@@ -389,7 +393,7 @@ function filmstrip(x, y, book, upto, o = {}) {
 
 const tvRevealDraw = tv(
   text(TV.padX, 96, 'Ana’s book', { size: TV.h1, weight: 800 }) +
-    text(TV.padX, 128, 'Book 1 of 8 · page 6 of 7', { size: TV.body, fill: T.muted }) +
+    text(TV.padX, 128, 'Book 1 of 6 · page 6 of 7', { size: TV.body, fill: T.muted }) +
     filmstrip(TV.padX, 150, BOOK, 5, { cell: 50, gap: 6 }) +
     // current step big
     text(640, 150, 'Eli drew', { size: TV.h2, weight: 700, anchor: 'middle' }) +
@@ -408,7 +412,7 @@ const tvRevealDraw = tv(
 
 const tvRevealGuess = tv(
   text(TV.padX, 96, 'Ana’s book', { size: TV.h1, weight: 800 }) +
-    text(TV.padX, 128, 'Book 1 of 8 · page 7 of 7 · started as “a cat wearing a crown”', {
+    text(TV.padX, 128, 'Book 1 of 6 · page 7 of 7 · started as “a cat wearing a crown”', {
       size: TV.body,
       fill: T.muted,
     }) +
@@ -606,7 +610,7 @@ const tvShowVerdict = tvRevealGuess;
 
 const tvDone = tv(
   text(TV.padX, 96, 'That’s the show', { size: TV.h1, weight: 800 }) +
-    text(TV.padX, 130, '3 of 8 books survived the telephone', { size: TV.body, fill: T.muted }) +
+    text(TV.padX, 130, '3 of 6 books survived the telephone', { size: TV.body, fill: T.muted }) +
     [
       ['Ana', 0, 'a cat wearing a crown', 'a fat king', false],
       ['Bo', 1, 'flat tire', 'flat tire', true],
@@ -614,8 +618,6 @@ const tvDone = tv(
       ['Dee', 3, 'a snail race', 'the snail race', true],
       ['Eli', 4, 'lighthouse', 'lighthouse', true],
       ['Fay', 5, 'karaoke night', 'angry toaster', false],
-      ['Gus', 6, 'zombie wedding', 'a very bad party', false],
-      ['Hal', 7, 'lawn mower', 'angry vacuum', false],
     ]
       .map(([n, i, word, last, ok], k) => {
         const yy = 150 + k * 40;
@@ -672,12 +674,12 @@ const phShowVip = phone(
 const phShowWatch = phone(
   text(PH.W / 2, 200, '👀', { size: 56, anchor: 'middle' }) +
     text(PH.W / 2, 250, 'Watch the TV', { size: PH.h1, weight: 800, anchor: 'middle' }) +
-    text(PH.W / 2, 280, 'Gus (VIP) is turning the pages of Ana’s book.', {
+    text(PH.W / 2, 280, 'Cy (VIP) is turning the pages of Ana’s book.', {
       size: PH.body,
       fill: T.muted,
       anchor: 'middle',
     }) +
-    text(PH.W / 2, 330, 'Book 1 of 8 · page 6 of 7', {
+    text(PH.W / 2, 330, 'Book 1 of 6 · page 6 of 7', {
       size: PH.caption,
       fill: T.muted,
       anchor: 'middle',
@@ -705,7 +707,7 @@ const phSpectator = phone(
       fill: T.muted,
       anchor: 'middle',
     }) +
-    text(PH.W / 2, 360, 'Page 2 of 7 · 5 of 8 drawing', {
+    text(PH.W / 2, 360, 'Page 2 of 7 · 4 of 6 drawing', {
       size: PH.caption,
       fill: T.muted,
       anchor: 'middle',
@@ -732,7 +734,7 @@ const phReconnect = phone(
 
 const phDone = phone(
   text(PH.pad, 130, 'That’s the show', { size: PH.h1, weight: 800 }) +
-    text(PH.pad, 158, '3 of 8 books survived.', { size: PH.caption, fill: T.muted }) +
+    text(PH.pad, 158, '3 of 6 books survived.', { size: PH.caption, fill: T.muted }) +
     rect(PH.pad, 190, PH.W - 2 * PH.pad, 150, { fill: T.surface, r: 14 }) +
     text(PH.pad + 16, 220, 'YOUR BOOK', { size: 12, weight: 800, fill: T.muted }) +
     text(PH.pad + 16, 254, '“a cat wearing a crown”', { size: 18, weight: 800 }) +
@@ -879,9 +881,9 @@ export const sections = [
   {
     title: "A round from a player's seat",
     html: `
-<p><b>Ana</b> is one of eight. Her phone offers three words — <i>toaster</i>, <i>a cat wearing a crown</i>, <i>a pirate at the gym</i> — plus a box to write her own. She taps the cat and locks it in; the TV shows "5 of 8 picked". Then her phone becomes a square sheet of paper with the word above it, eight ink colours, three pen sizes, undo, clear and a green ink bar. She draws a lumpy cat, a red nose, a yellow zigzag crown. The ink bar is at 40 %. She hits <b>Done drawing</b>; the phone shows her cat and says "Bo gets this next. Good luck, Bo." The TV shows eight cards with pencils, five ticked.</p>
-<p>Next page: her phone shows a drawing she has never seen — Hal's, of what might be a lawn mower — and a text box. She types "angry vacuum" and sends. Then a drawing turn again: she is handed the words "haunted spoon" and has 60 seconds. The room is quiet except for giggling.</p>
-<p>After the sixth page the TV says <b>The show</b>, and Ana's book is first. Every phone says <i>Watch the TV</i>; Gus, the VIP, has <b>Next ▸</b> and <b>Pause</b>. The TV shows "a cat wearing a crown", then Ana's drawing (polite applause), then Bo's guess: "royal cat" — fine. Cy's drawing of a royal cat looks a lot like a potato. Dee's guess: <b>"hamster king"</b>. The room loses it; Gus hits Pause so it can sink in. Eli's hamster king is a masterpiece. Fay's final guess: <b>"a fat king"</b> — CHAIN BROKEN in red, with the original word next to it. Gus taps Next and Bo's book begins. Seven more to go, and Ana is already crying laughing.</p>`,
+<p><b>Ana</b> is one of six. Her phone offers three words — <i>toaster</i>, <i>a cat wearing a crown</i>, <i>a pirate at the gym</i> — plus a box to write her own. She taps the cat and locks it in; the TV shows "4 of 6 picked". Then her phone becomes a square sheet of paper with the word above it, eight ink colours, three pen sizes, undo, clear and a green ink bar. She draws a lumpy cat, a red nose, a yellow zigzag crown. The ink bar is at 40 %. She hits <b>Done drawing</b>; the phone shows her cat and says "Bo gets this next. Good luck, Bo." The TV shows six cards with pencils, four ticked.</p>
+<p>Next page: her phone shows a drawing she has never seen — Fay's, of what might be a lawn mower — and a text box. She types "angry vacuum" and sends. Then a drawing turn again: she is handed the words "haunted spoon" and has 60 seconds. The room is quiet except for giggling.</p>
+<p>After the sixth page the TV says <b>The show</b>, and Ana's book is first. Every phone says <i>Watch the TV</i>; Cy, the VIP, has <b>Next ▸</b> and <b>Pause</b>. The TV shows "a cat wearing a crown", then Ana's drawing (polite applause), then Bo's guess: "royal cat" — fine. Cy's drawing of a royal cat looks a lot like a potato. Dee's guess: <b>"hamster king"</b>. The room loses it; Cy hits Pause so it can sink in. Eli's hamster king is a masterpiece. Fay's final guess: <b>"a fat king"</b> — CHAIN BROKEN in red, with the original word next to it. Cy taps Next and Bo's book begins. Five more to go, and Ana is already crying laughing. (With six players every book has seven pages: Ana's word, her own drawing, then one page from each of the other five.)</p>`,
   },
   {
     title: 'Complete rules',
@@ -889,15 +891,16 @@ export const sections = [
 <h3>Setup</h3>
 <ol>
 <li><b>Seats</b>: at start, players are shuffled into a ring of seats <code>0…N−1</code> (from <code>state.rng</code>). Every player owns one <b>book</b>.</li>
-<li><b>Pages</b>: a book has <code>L = 2·D + 1</code> pages: page 1 is the <b>word</b>, then <b>drawing</b> and <b>guess</b> pages alternate, ending with a guess. <code>D</code> is the number of drawings per book: <code>min(settings.drawings, ⌊N/2⌋)</code> (default 3 → 7 pages; 3 players → 1 drawing, 4–5 players → 2).</li>
-<li><b>Who writes what</b>: page 1 (word) and page 2 (first drawing) are the owner's. Page <code>p ≥ 3</code> of the book owned by seat <code>b</code> is done by seat <code>(b + p − 2) mod N</code>. Every player works exactly one page per step, and no player works the same book twice (guaranteed by the cap on D).</li>
+<li><b>Passes</b>: <code>P = min(settings.passes, N − 1)</code> other players touch each book. By default <code>passes</code> is "everyone" (15, always capped to N − 1): the book goes round the whole circle and every player sees every other player's book exactly once before it comes home. The VIP can lower it for a shorter game; then each book is seen by only the next P seats.</li>
+<li><b>Pages</b>: page 1 is the <b>word</b>; after it, <b>drawing</b> and <b>guess</b> pages alternate and the book must end on a guess. So: if <code>P</code> is <b>odd</b>, the owner draws their own word first (Telestrations style) and the P others alternate guess, draw, …, guess — <code>L = P + 2</code> pages. If <code>P</code> is <b>even</b>, the owner only writes the word and the next seat draws it — <code>L = P + 1</code> pages. Either way page index <code>i ≥ 1</code> is a drawing when <code>i</code> is odd and a guess when <code>i</code> is even. (6 players: P = 5, 7 pages, 3 drawings. 8 players: P = 7, 9 pages, 4 drawings. 3 players: P = 2, 3 pages, 1 drawing.)</li>
+<li><b>Who writes what</b>: let <code>od = 1</code> if the owner draws first (P odd) else <code>0</code>. Page index <code>i ≥ 1</code> of the book owned by seat <code>b</code> is done by seat <code>(b + i − od) mod N</code>. Every player works exactly one page per step, and no player works the same book twice (because <code>P ≤ N − 1</code>).</li>
 </ol>
 <h3>Play</h3>
 <ol start="4">
 <li><b>Pick (20 s)</b>: each player is offered three words from the pack (one easy, one medium, one hard, none repeated across players) and may instead type their own (1–30 characters, if <code>customWords</code> is on). Nothing picked by the deadline → the medium word is used.</li>
 <li><b>Draw (<code>drawSeconds</code>, default 60)</b>: draw the text on the previous page. Tools: 8 colours, 3 pen sizes, undo, clear. <b>Ink</b> is limited (≈1 100 simplified points per drawing); when it runs out the pen stops until you undo. "Done" sends the drawing; you may not edit after sending. No submission by the deadline → the page is an <b>empty canvas</b>.</li>
 <li><b>Guess (<code>guessSeconds</code>, default 30)</b>: look at the previous page's drawing and write what it is (1–40 characters). No submission → the page reads <b>"???"</b>.</li>
-<li>Steps 5–6 repeat until every book has L pages. A step ends when every connected player has submitted or the deadline passes.</li>
+<li>Steps 5–6 repeat until every book has <code>L</code> pages. A step ends when every connected player has submitted or the deadline passes.</li>
 <li><b>Never spoil</b>: while playing you only ever see the single previous page of the book in your hands. The TV shows only progress (who is done).</li>
 </ol>
 <h3>The show</h3>
@@ -930,7 +933,7 @@ export const sections = [
 <tr><td><code>show</code></td><td>Book title + filmstrip of the pages shown so far + the current page big; UNBROKEN / CHAIN BROKEN banner on the last page</td><td>"Watch the TV" + book/page counter + "your page is next" hint. The VIP additionally has the shell's VIP overlay: Next ▸ (skip) and Pause</td><td>"Watch the TV"</td><td>none (VIP actions only)</td><td>VIP skip · deadline → next page; after the last page of the last book → <code>done</code>. VIP pause holds a page.</td><td>6 / 12 / 8 s per page kind</td><td>fixed</td></tr>
 <tr><td><code>done</code></td><td>"k of N books survived", every book's word → last guess</td><td>Your book's word → last guess</td><td>Same</td><td>none</td><td>terminal</td><td>—</td><td>—</td></tr>
 </tbody></table></div>
-<div class="note"><b><code>draw</code> and <code>guess</code> re-enter themselves</b> for each step with a new <code>startedAt</code> (the step index lives in state); <code>show</code> re-enters per page. One fixture per phase id is enough. <b>VIP skip means "next page" in <code>show</code></b> — the contract's skip is "advance past the current phase instance", and a page is a phase instance.</div>`,
+<div class="note"><b><code>draw</code> and <code>guess</code> re-enter themselves</b> for each step with a new <code>startedAt</code> (the step index lives in state); <code>show</code> re-enters per page. One fixture per phase id is enough. <b>VIP skip means "next page" in <code>show</code></b> — the contract's skip is "advance past the current phase instance", and a page is a phase instance. Page index <code>i</code> is a <code>draw</code> step when odd and a <code>guess</code> step when even, whichever seat draws first.</div>`,
   },
   {
     title: 'Screens',
@@ -1001,7 +1004,7 @@ import type { GameStateBase } from '@partybox/game-sdk';
 export const PHASES = ['pick', 'draw', 'guess', 'show', 'done'] as const;
 
 export interface Settings {
-  drawings: number;      // drawings per book, 1..4, default 3 (capped at floor(N/2) in init)
+  passes: number;        // other players per book, 1..15, default 15 = "everyone" (capped to N − 1 in init)
   drawSeconds: number;   // 30..120 step 10, default 60
   guessSeconds: number;  // 15..60 step 5, default 30
   customWords: boolean;  // default true
@@ -1022,7 +1025,9 @@ export interface Book { ownerId: string; pages: Page[] }
 export interface State extends GameStateBase {
   settings: Settings;
   seats: string[];                       // seat index → playerId, shuffled at init
-  pageCount: number;                     // L = 2·D + 1
+  passes: number;                        // P after the cap
+  ownerDraws: 0 | 1;                     // 1 if P is odd (owner draws page 1), else 0
+  pageCount: number;                     // L = P + 1 + ownerDraws
   step: number;                          // play: index of the page being written (1..L−1); 0 during pick
   books: Book[];                         // books[b].ownerId === seats[b]; pages.length grows to L
   offers: Record&lt;string, string[]&gt;;      // playerId → the 3 offered words
@@ -1047,7 +1052,7 @@ export type Input = z.infer&lt;typeof inputSchema&gt;;
 
 export const PICK_MS = 20_000;
 export const SHOW_MS = { word: 6_000, draw: 12_000, guess: 8_000 } as const;</code></pre>
-<p><b>Manifest</b>: <code>maxInputBytes: 6144</code> (ADR-002). A full drawing is ≤ 3 000 chars of points + ≤ 80 × ~20 bytes of stroke envelope ≈ 4.7 KB. <b>State budget</b>: 10 books × 4 drawings × 4.7 KB ≈ 190 KB worst case; 8 players × 3 drawings ≈ 115 KB. Under the 256 KB cap with margin — hence <code>maxPlayers = 10</code> and <code>drawings ≤ 4</code>. Verified by the design simulation in §13.</p>
+<p><b>Manifest</b>: <code>maxInputBytes: 6144</code> (ADR-002). A full drawing is ≤ 3 000 chars of points + ≤ 80 × ~20 bytes of stroke envelope ≈ 4.7 KB. <b>State budget</b>: with the full circle, N books × ⌈P/2⌉ drawings: 8 players → 8 × 4 × 4.7 KB ≈ 150 KB worst case (10 players would be 10 × 5 × 4.7 ≈ 235 KB, too close to the 256 KB cap — hence <code>maxPlayers = 8</code>, which is also Telestrations' own limit). Verified by the design simulation in §13.</p>
 
 <h4>Views</h4>
 <pre><code>export interface PencilTvView extends TvView {
@@ -1075,14 +1080,14 @@ export interface PencilControllerView extends ControllerView {
 // who the VIP is (ADR-020), so they are not part of this view.</code></pre>
 <p>Contract-test hints: <code>hiddenFromTv(state)</code> = every word/guess text of pages not yet shown (in play: all of them); <code>hiddenFromController(state, me)</code> = every text page except the one in <code>prompt</code> and my own submissions; during the show the controller carries no page content at all (the TV does).</p>
 
-<h4>Sample mid-game state (8 players, step 3 = a guess page, 5 of 8 submitted; two books shown)</h4>
+<h4>Sample mid-game state (8 players → P = 7, owner draws first, 9 pages; step 3 = a guess page, 5 of 8 submitted; two books shown)</h4>
 <pre><code>{
   "phase": { "id": "guess", "startedAt": 1758001200000, "deadline": 1758001230000 },
   "rng": { "seed": 4471, "step": 41 },
   "players": { "p1": { "id": "p1", "name": "Ana", "avatarId": "a03", "connected": true }, "p2": { "id": "p2", "name": "Bo", "avatarId": "a07", "connected": true }, "…": "…" },
-  "settings": { "drawings": 3, "drawSeconds": 60, "guessSeconds": 30, "customWords": true, "spicy": false },
+  "settings": { "passes": 15, "drawSeconds": 60, "guessSeconds": 30, "customWords": true, "spicy": false },
   "seats": ["p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8"],
-  "pageCount": 7, "step": 3,
+  "passes": 7, "ownerDraws": 1, "pageCount": 9, "step": 3,
   "books": [
     { "ownerId": "p1", "pages": [
       { "kind": "word", "authorId": "p1", "text": "a cat wearing a crown" },
@@ -1128,12 +1133,13 @@ ${fig(stateDiagram, '<b>State diagram.</b> Three self-loops (draw/guess alternat
 function init(ctx) {
   const settings = readSettings(ctx.settings);
   const N = ctx.players.length;
-  const D = Math.max(1, Math.min(settings.drawings, Math.floor(N / 2)));
+  const P = Math.max(1, Math.min(settings.passes, N - 1));       // others per book; default "everyone"
+  const od = P % 2;                                                // owner draws first iff P is odd → the book ends on a guess
   let rng = seedRng(ctx.seed);
   const [seats, r1] = shuffle(rng, ctx.players.map((p) =&gt; p.id).sort()); rng = r1;   // sorted first ⇒ deterministic
   const [offers, r2] = dealOffers(rng, seats, settings.spicy); rng = r2;                // 3 per player, no repeats
   const books = seats.map((id) =&gt; ({ ownerId: id, pages: [] }));
-  const s = { ...base(ctx, rng), settings: { ...settings, drawings: D }, seats, pageCount: 2 * D + 1, step: 0, books, offers, showing: null, intactBooks: 0 };
+  const s = { ...base(ctx, rng), settings: { ...settings, passes: P }, seats, passes: P, ownerDraws: od, pageCount: P + 1 + od, step: 0, books, offers, showing: null, intactBooks: 0 };
   return enterPhase(s, 'pick', ctx.now, PICK_MS);
 }
 
@@ -1156,15 +1162,16 @@ function reduce(state, event) {
   }
 }
 
-/** Which book seat k holds at step i (0-based page index): the owner's own book for i ≤ 1 (word, first drawing);
- *  for i ≥ 2 the book b whose page i is authored by seat (b + i − 1) mod N — i.e. b = k − (i − 1).
+/** Which book seat k holds at step i (0-based page index ≥ 1): page i of book b is authored by seat
+ *  (b + i − ownerDraws) mod N, so b = k − i + ownerDraws. With ownerDraws = 1, i = 1 is the owner's own book.
  *  (An earlier draft had an off-by-one here; the design simulation caught it: at i = 2 the owner would have
- *  guessed their own drawing.) */
+ *  guessed their own drawing. The simulation now checks every N × passes.) */
 function bookInHands(s, playerId) {
   const N = s.seats.length; const k = s.seats.indexOf(playerId);
   if (k &lt; 0) return -1;
-  return s.step &lt;= 1 ? k : (((k - (s.step - 1)) % N) + N) % N;
+  return (((k - s.step + s.ownerDraws) % N) + N) % N;
 }
+function authorOfPage(s, b, i) { return s.seats[(b + i - s.ownerDraws + s.seats.length) % s.seats.length]; }   // i ≥ 1
 function enterStep(s, now) {
   const kind = s.step % 2 === 1 ? 'draw' : 'guess';
   const ms = (kind === 'draw' ? s.settings.drawSeconds : s.settings.guessSeconds) * 1000;
@@ -1189,7 +1196,7 @@ function closeStep(s, now) {
   const N = s.seats.length;
   const books = s.books.map((bk, b) =&gt; {
     if (bk.pages.length &gt; s.step) return bk;
-    const author = s.seats[s.step &lt;= 1 ? b : (b + s.step - 1) % N];   // page index i ≥ 2 → seat b + i − 1 (rule 3)
+    const author = authorOfPage(s, b, s.step);                       // rule 3
     const page = s.step % 2 === 1 ? { kind: 'draw', authorId: author, drawing: null } : { kind: 'guess', authorId: author, text: null };
     return { ...bk, pages: [...bk.pages, page] };
   });
@@ -1231,7 +1238,16 @@ export function results(state) {
 <li>Nothing else. Bots use their own <code>rng</code> argument.</li>
 </ul>
 
-<h3><code>bot.sampleInput</code></h3>
+<h3><code>bot.sampleInput</code> — per phase (ADR-028, <code>supportsBots: false</code>)</h3>
+<p>The bot exists because the contract, the sim and e2e need one; it is <b>not</b> offered to players: its scribbles and dictionary guesses would be an obvious tell and would break every chain they touch, and a drawing game with a bot in the circle is a worse game for the humans. The manifest therefore omits <code>supportsBots</code>, and the lobby's Start button will tell a room with bots to remove them or pick another game.</p>
+<table>
+<thead><tr><th>Phase</th><th>What the bot sends</th><th>How it varies</th><th>What it must NOT know</th></tr></thead>
+<tbody>
+<tr><td><code>pick</code></td><td><code>{ type: 'pick', option: rng.int(0, 2) }</code>; 20 % of the time <code>pickCustom</code> with a fixed phrase when custom words are on.</td><td>option index from <code>rng</code></td><td>Only its own three offers.</td></tr>
+<tr><td><code>draw</code></td><td>2–7 strokes, each a random walk of 6–40 quantised points, random colour and width, encoded with the pure base64 encoder.</td><td>every stroke from <code>rng</code>; never the same drawing twice</td><td>Only the text of the previous page (which it ignores — it cannot read).</td></tr>
+<tr><td><code>guess</code></td><td><code>{ type: 'guess', text: rng.pick(botGuesses) }</code> from the 40-word pool in <code>lines.json</code>; in the sim 20 % of guesses are the book's word so some chains survive in replays.</td><td>pool pick from <code>rng</code></td><td>Only the previous page's drawing. <em>The sim's "peek at the word" shortcut is for coverage of the intact path and must not ship</em> — the real bot may only use its <code>controllerView</code> fields.</td></tr>
+<tr><td><code>show</code>, <code>done</code></td><td><code>null</code></td><td>—</td><td>—</td></tr>
+</tbody></table>
 <pre><code>sampleInput(state, playerId, rng) {
   const me = state.players[playerId];
   switch (state.phase.id) {
@@ -1268,7 +1284,8 @@ export function results(state) {
 <tr><td>Cy's</td><td>"hiccups" (Cy) · draw (Cy) · "screaming" (Dee) · draw (Ana) · "hiccups" (Bo)</td><td>intact — only the last page is compared to the word</td></tr>
 <tr><td>Dee's</td><td>"a snail race" (Dee) · draw (Dee) · "snail race" (Ana) · draw (Bo) · "The Snail Race!" (Cy)</td><td>intact — "the" and punctuation are ignored by <code>norm</code></td></tr>
 </tbody></table>
-<p><b>Results</b>: scores Ana 0, Bo 0, Cy 0, Dee 0; ranking all rank 1; <code>winnerIds = [Ana, Bo, Cy, Dee]</code>; awards: Unbroken → Ana ("toaster"), Unbroken → Cy ("hiccups"), Unbroken → Dee ("a snail race"); <code>intactBooks = 3</code>. No tie-breaks exist because nothing is ranked. No setting changes any of this.</p>`,
+<p><b>Results</b>: scores Ana 0, Bo 0, Cy 0, Dee 0; ranking all rank 1; <code>winnerIds = [Ana, Bo, Cy, Dee]</code>; awards: Unbroken → Ana ("toaster"), Unbroken → Cy ("hiccups"), Unbroken → Dee ("a snail race"); <code>intactBooks = 3</code>. No tie-breaks exist because nothing is ranked. No setting changes any of this.</p>
+<p><b>Bots</b>: not applicable — the game is <code>supportsBots: false</code>, so no bot can be in the room when it starts. If one were (a future flag flip), it would score 0 like everyone and could receive an honorary Unbroken award only if its book survived, which its own scribble makes practically impossible.</p>`,
   },
   {
     title: 'Content',
@@ -1279,7 +1296,7 @@ export const wordsPack = z.object({
   pack: z.enum(['family', 'spicy']),
   words: z.array(z.object({ text: z.string().min(2).max(30), difficulty: z.number().int().min(1).max(3) })).min(30),
 });
-export const linesPack = z.object({ intact: z.array(z.string()).min(3), broken: z.array(z.string()).min(3), botGuesses: z.array(z.string()).min(20) });
+export const linesPack = z.object({ intact: z.array(z.string()).min(3), broken: z.array(z.string()).min(3), botGuesses: z.array(z.string()).min(40) });
 export const packs = { words: wordsPack, wordsSpicy: wordsPack, lines: linesPack };</code></pre>
 <p><b>Offers</b>: with <code>spicy</code> on, the two packs are merged. Each player is offered one word of each difficulty; a game with 10 players needs 10 per difficulty, so each pool must hold ≥ 10 (family has 20 / 20 / 20).</p>
 <h3>Authoring guidelines</h3>
@@ -1294,8 +1311,8 @@ ${contentList(WORDS.map(([w, d]) => `${w} <span style="color:var(--muted)">· ${
 <h3>words-spicy.json (20)</h3>
 ${contentList(SPICY.map(([w, d]) => `${w} <span style="color:var(--muted)">· ${['', 'easy', 'medium', 'hard'][d]}</span>`))}
 <h3>lines.json</h3>
-<p><b>intact</b>: ${LINES.intact.map((s) => `“${s}”`).join(' · ')}<br><b>broken</b>: ${LINES.broken.map((s) => `“${s}”`).join(' · ')}<br><b>botGuesses</b> (24): cat, dog, house, sun, car, tree, banana, ghost, robot, fish, hat, boat, cake, king, snake, cloud, pizza, spider, moon, chair, dragon, sock, egg, bird.</p>
-<p>Total: 80 words + 30 lines. A game burns 3 × N words; 60 family words last a 10-player game twice without repeats — the pack should grow to 150+ before release (§14).</p>`,
+<p><b>intact</b>: ${LINES.intact.map((s) => `“${s}”`).join(' · ')}<br><b>broken</b>: ${LINES.broken.map((s) => `“${s}”`).join(' · ')}<br><b>botGuesses</b> (40): cat, dog, house, sun, car, tree, banana, ghost, robot, fish, hat, boat, cake, king, snake, cloud, pizza, spider, moon, chair, dragon, sock, egg, bird, flower, shoe, clock, apple, star, key, cup, bus, frog, bell, door, kite, bone, lamp, ring, leaf.<br><b>Authoring</b>: bot guesses are single concrete nouns a child would draw — short, family-safe, no two too similar (so replays read naturally and the contract's "inputs vary" check passes trivially). They are used only by the test bot; players never see the pool.</p>
+<p>Total: 80 words + 46 lines. A game burns 3 × N words; 60 family words last an 8-player game twice without repeats — the pack should grow to 150+ before release (§14).</p>`,
   },
   {
     title: 'Edge cases',
@@ -1303,9 +1320,10 @@ ${contentList(SPICY.map(([w, d]) => `${w} <span style="color:var(--muted)">· ${
 <table>
 <thead><tr><th>Case</th><th>Behaviour</th></tr></thead>
 <tbody>
-<tr><td>1–2 players</td><td><code>minPlayers = 3</code>; the engine will not start. Defensive: <code>D = max(1, ⌊N/2⌋)</code> → 1 player gets word → draw → guess all by themselves (works, pointless); 2 players: D = 1, the other player guesses.</td></tr>
-<tr><td>3 players</td><td>D = 1 (3 pages). Duration ≈ 20 + 60 + 30 + 3 × 26 ≈ 3 min. The <code>drawings</code> setting is silently capped; the pick screen states "3 pages" so nobody is surprised.</td></tr>
-<tr><td>10 players (max)</td><td>Show ≈ 10 × (6 + 3 × 12 + 3 × 8) = 11 min if nobody presses Next; VIPs usually go faster. State 185 KB worst case (§13 simulation).</td></tr>
+<tr><td>1–2 players</td><td><code>minPlayers = 3</code>; the engine will not start. Defensive: <code>P = max(1, min(passes, N − 1))</code> → 2 players: P = 1, owner draws, the other guesses (works); 1 player: P = 1 with N − 1 = 0 → the owner draws and then "guesses" their own drawing (pointless but terminates).</td></tr>
+<tr><td>3 players</td><td>P = 2 (even): word, the next seat draws, the third guesses — 3 pages, 1 drawing. Duration ≈ 20 + 60 + 30 + 3 × 26 ≈ 3 min.</td></tr>
+<tr><td>8 players (max), full circle</td><td>P = 7, 9 pages, 4 drawings per book. Play ≈ 20 + 4 × 60 + 4 × 30 ≈ 6.3 min; show ≈ 8 × (6 + 4 × 12 + 4 × 8) ≈ 11.5 min if nobody presses Next — VIPs usually go faster. State 150 KB worst case (§13 simulation).</td></tr>
+<tr><td><code>passes</code> lowered (e.g. 3 with 8 players)</td><td>Each book is seen by the next 3 seats only (P odd → owner draws first: word, draw, guess, draw, guess — 5 pages). Not everyone sees every book; the show is shorter (8 × 46 s ≈ 6 min). The pick screen says "3 of your 7 friends will see this book".</td></tr>
 <tr><td>Disconnect in <code>pick</code></td><td>Deadline assigns the medium word. Their first drawing is theirs if they are back before the draw deadline; else an empty canvas.</td></tr>
 <tr><td>Disconnect in <code>draw</code>/<code>guess</code></td><td>Not waited for (<code>allConnectedDone</code>); their page becomes the placeholder at the deadline. Back before the deadline: the phone still has the local strokes/draft and can send.</td></tr>
 <tr><td>VIP leaves during the show</td><td>The engine reassigns the VIP; the new VIP's overlay has Next/Pause. Meanwhile the auto-turn timers carry the show. The game itself never references the VIP.</td></tr>
@@ -1318,6 +1336,10 @@ ${contentList(SPICY.map(([w, d]) => `${w} <span style="color:var(--muted)">· ${
 <tr><td>Late joiners</td><td>Spectate play and watch the show. Never waited for.</td></tr>
 <tr><td>VIP skip mid-phase</td><td><code>pick</code>/<code>draw</code>/<code>guess</code>: close the step with placeholders. <code>show</code>: next page (this is the intended control, not an abort). To jump a whole book the VIP taps through its pages.</td></tr>
 <tr><td>Skip mashing</td><td>Each skip is one page; a VIP hammering Next flips through a book in seconds. Accepted — it is their party.</td></tr>
+<tr><td>1 human + N bots reaching <code>minPlayers</code></td><td>Cannot happen: the game is <code>supportsBots: false</code>, so the engine refuses to start it while bots are in the room. Three humans are the minimum.</td></tr>
+<tr><td>Bot owner leaves mid-phase</td><td>Not reachable in a started game (no bots can be in it). If the flag is ever flipped: a bot's pages would be filled by the deadline rule like any disconnected player's.</td></tr>
+<tr><td>Bot added mid-game</td><td>Becomes a spectator (engine) — allowed, since spectators do nothing here; it watches the show and would block the <em>next</em> Broken Pencil start until removed.</td></tr>
+<tr><td>Room has bots but this game is <code>supportsBots: false</code></td><td>The Start button reads "Broken Pencil has no bot support — remove the bots or pick a game that welcomes bots". The README's <code>## Players</code> says: "Bots: not supported — a bot cannot draw or guess; its page would break every chain."</td></tr>
 <tr><td>VIP end mid-show</td><td><code>done</code> immediately; the summary lists every book, shown or not.</td></tr>
 <tr><td>Spicy off</td><td>Family pool only. Custom words are unaffected (a setting of their own).</td></tr>
 <tr><td>Unspent timers</td><td>All-submitted exits abandon the step timer (stale by <code>startedAt</code>); a VIP skip abandons the page timer.</td></tr>
@@ -1395,8 +1417,8 @@ ${[
 <table>
 <thead><tr><th>File</th><th>Contents</th></tr></thead>
 <tbody>
-<tr><td><code>manifest.json</code></td><td>id <code>broken-pencil</code>, name "Broken Pencil", tagline "Draw it. Guess it. Watch it fall apart.", minPlayers 3, maxPlayers 10, estimatedMinutes 15, tags ["drawing","telephone","show","no-scores"], <code>maxInputBytes: 6144</code>, settings: <code>drawings</code> (1–4, default 3), <code>drawSeconds</code> (30–120 step 10, default 60), <code>guessSeconds</code> (15–60 step 5, default 30), <code>customWords</code> (true), <code>spicy</code> (false).</td></tr>
-<tr><td><code>README.md</code>, <code>CLAUDE.md</code></td><td>Spec (§3/§4/§8/§10) and local rules ("pages append only; step index lives in state; never put unshown pages in a view; the show has no inputs").</td></tr>
+<tr><td><code>manifest.json</code></td><td>id <code>broken-pencil</code>, name "Broken Pencil", tagline "Draw it. Guess it. Watch it fall apart.", minPlayers 3, maxPlayers 8, estimatedMinutes 18, tags ["drawing","telephone","show","no-scores"], <code>maxInputBytes: 6144</code>, <b>no <code>supportsBots</code></b> (ADR-028), settings: <code>passes</code> (number 1–15 step 1, default 15, label "Players per book", description "How many other players see each book — 15 = everyone (capped to the player count)"), <code>drawSeconds</code> (30–120 step 10, default 60), <code>guessSeconds</code> (15–60 step 5, default 30), <code>customWords</code> (true), <code>spicy</code> (false).</td></tr>
+<tr><td><code>README.md</code>, <code>CLAUDE.md</code></td><td>Spec (§3/§4/§8/§10) and local rules ("pages append only; step index lives in state; never put unshown pages in a view; the show has no inputs"). <code>## Players</code> must contain: "3–8. Bots: not supported — a bot cannot draw or guess; its page would break every chain." so the contract suite's flag check and the lobby message agree.</td></tr>
 <tr><td><code>server/types.ts</code></td><td>§6.</td></tr>
 <tr><td><code>server/encoding.ts</code></td><td>Pure base64 encode/decode of point arrays (table-based), <code>pointCount(p)</code>, <code>encodeWalk(rng, n)</code> for bots. Shared with the client via a relative import.</td></tr>
 <tr><td><code>server/routing.ts</code></td><td><code>bookInHands</code>, <code>authorOfPage</code>, <code>norm</code>, <code>isIntact</code>.</td></tr>
@@ -1409,25 +1431,25 @@ ${[
 <tr><td><code>client/Toolbar.tsx</code>, <code>client/InkBar.tsx</code></td><td>Tools.</td></tr>
 <tr><td><code>client/Tv.tsx</code>, <code>client/Controller.tsx</code>, <code>client/index.ts</code></td><td>Phase switches; <code>sounds: { page: 'reveal', intact: 'win', broken: 'error' }</code>.</td></tr>
 <tr><td><code>fixtures/pick.json, draw.json, guess.json, show.json, done.json</code></td><td>Sim dump at 6 players; hand-edit <code>show.json</code> to page 5 of a 7-page book with one <code>null</code> drawing.</td></tr>
-<tr><td><code>__tests__/routing.test.ts</code></td><td>Every (N, D) in 3…10 × 1…4: every player writes exactly one page per step; nobody touches a book twice; the last page is a guess. (Already verified by the design simulation below.)</td></tr>
+<tr><td><code>__tests__/routing.test.ts</code></td><td>Every (N, passes) in 3…8 × 1…7: every player writes exactly one page per step; nobody touches a book twice; the last page is a guess; with the default every book has N pages (+1 when N is even). (Already verified by the design simulation below.)</td></tr>
 <tr><td><code>__tests__/encoding.test.ts</code></td><td>Round-trip; size bound; invalid strings rejected by the schema.</td></tr>
 <tr><td><code>__tests__/results.test.ts</code></td><td>The §8 example: all zeros, everyone rank 1, three Unbroken awards to the right owners; <code>norm</code> cases ("The Snail Race!" ≡ "a snail race").</td></tr>
 <tr><td><code>__tests__/phases.test.ts</code></td><td>"pick deadline assigns medium word", "draw all-submitted closes early", "deadline fills placeholders", "show: timer turns the page", "show: VIP skip turns the page", "show: VIP pause holds and resume shifts", "verdict computed on the last page only", "last page of last book → done", "inputs during show ignored", "VIP end mid-show → done".</td></tr>
 <tr><td><code>__tests__/views.test.ts</code></td><td>No unshown page text/drawing in any view; controller prompt is exactly the previous page; show TV pages ≤ showing.page.</td></tr>
-<tr><td><code>__tests__/contract.config.ts</code></td><td><code>settingsVariants: [{ drawings: 1 }, { drawings: 4, drawSeconds: 30, guessSeconds: 15, spicy: true, customWords: false }]</code>; <code>hiddenFromTv</code>/<code>hiddenFromController</code> as in §6.</td></tr>
+<tr><td><code>__tests__/contract.config.ts</code></td><td><code>settingsVariants: [{ passes: 2 }, { passes: 15, drawSeconds: 30, guessSeconds: 15, spicy: true, customWords: false }]</code>; <code>hiddenFromTv</code>/<code>hiddenFromController</code> as in §6.</td></tr>
 </tbody></table>
 <h3>Effort</h3>
 <p><b>L</b> — ≈ 700 lines TS + 700 lines TSX. The canvas (input capture, simplification, ink, undo) is the bulk and is the first drawing surface in the repo; budget 3 days. Server logic is routine once the routing helper is tested.</p>
 <h3>Design simulation (run before implementation)</h3>
 <p><code>docs/game-ideas/_tools/sim-002-broken-pencil.mjs</code> is a headless model of this reducer (seats and routing, pick, draw/guess steps with placeholders, the VIP-driven show, results, both views) driven by contract-shaped events. Run: <code>node docs/game-ideas/_tools/sim-002-broken-pencil.mjs</code>. Results, 2026-09-15:</p>
 <ul>
-<li><b>Routing</b>: for every N in 3…10 and D in 1…4 (32 configurations) — every player writes exactly one page per step, no player touches a book twice, every book ends with a guess. <em>The first run of this check found an off-by-one in the pseudocode's <code>bookInHands</code> (the owner would have guessed their own drawing at step 2); §7 is corrected.</em></li>
+<li><b>Routing</b>: for every N in 2…8 and <code>passes</code> in 1…15 (105 configurations) — every player writes exactly one page per step, no player touches a book twice, every book ends with a guess, and the default gives every book exactly N pages (+1 when N is even, because the owner draws first). <em>The first run of this check found an off-by-one in the pseudocode's <code>bookInHands</code> (the owner would have guessed their own drawing at step 2); §7 is corrected and now covers the parity rule.</em></li>
 <li><b>Encoding</b>: 500 random stroke round-trips pass; a one-point stroke (a dot) encodes to 3 chars + padding, which the first draft of the schema regex rejected — §6 is corrected. <code>norm()</code>: 5/5 cases.</li>
 <li><b>Fuzz</b>: 100 × 300 arbitrary events never threw — after fixing a second finding: <code>tvView</code> crashed when the VIP ended the game during <code>pick</code> (empty books). Views now tolerate books with 0–1 pages (§7).</li>
-<li><b>Termination</b>: 504 games (3–10 players; honest, fast, idle, max-ink and VIP-mashing strategies; defaults, both contract variants and the slowest settings) all reach <code>done</code>. Defaults: median 7.4 min, max 12.8 (bound 45). Slowest settings with an idle room: 26.7 min.</li>
+<li><b>Termination</b>: 504 games (3–8 players; honest, fast, idle, max-ink and VIP-mashing strategies; the full-circle default, <code>passes = 2</code>, the fast variant and the slowest settings) all reach <code>done</code>. Defaults: median 7.4 min, max 13.1 (bound 54; bots submit early, humans take longer — §0's 18 min assumes real people). Slowest settings with an idle room: 23.8 min.</li>
 <li><b>Never spoils</b>: in every sampled view of every run, no TV view carried page text during play, no TV view carried pages beyond <code>showing.page</code>, no controller view carried any text page but the prompt and the player's own, and no controller view carried strokes during the show. 0 spoils.</li>
 <li><b>Results</b>: every run reports all-zero scores, everyone rank 1, one Unbroken award per intact book. Replays are byte-identical.</li>
-<li><b>Sizes</b>: largest state 185 KB with every drawing at the ink cap (10 players, D = 4) — under 256 KB with 28 % margin; typical games 40–90 KB. Largest view 19.3 KB (the show's filmstrip with four full drawings) — larger than the “a few KB” guideline; if the design review objects, send thumbnails (first 20 % of each stroke) for filmstrip pages.</li>
+<li><b>Sizes</b>: largest state 148 KB with every drawing at the ink cap (8 players, full circle, 4 drawings per book) — under 256 KB with 42 % margin; typical games 30–80 KB. Largest view 19.2 KB (the show's filmstrip with four full drawings) — larger than the “a few KB” guideline; if the design review objects, send thumbnails (first 20 % of each stroke) for filmstrip pages.</li>
 </ul>
 <h3>SDK gaps (appended to <code>sdk-requests.md</code>)</h3>
 <ol>
@@ -1443,10 +1465,10 @@ ${[
 <ol>
 <li><b>Decided (owner, v0.2)</b>: the VIP turns the pages; no scoring or voting. Implemented via VIP skip/pause because games never learn who the VIP is. <b>Open</b>: going backwards needs R-6 — recommended to ship forward-only first and add "Prev" when the contract allows it.</li>
 <li><b>Should everyone be allowed to press Next, not only the VIP?</b> Recommended: <b>no</b> — one driver plus the auto-turn floor; a room full of Next buttons ends the show in a minute.</li>
-<li><b>Should the owner draw their own word first?</b> Recommended: <b>yes</b> (Telestrations rule) — it guarantees the last page is a guess for every N and gives the owner skin in the game.</li>
+<li><b>Decided (owner, v0.3)</b>: by default every book goes round the whole circle (everyone sees every book once); <code>passes</code> can shorten it. The owner draws first only when that keeps the last page a guess (odd P) — with an even P the next seat draws the word.</li>
 <li><b>Show the "next up" hint on phones?</b> ("Your page is next.") Recommended: <b>yes</b> — it gives every player a reason to look up at the right moment without spoiling anything.</li>
 <li><b>Word pool size.</b> 60 family words means a repeat-free game twice; recommended target 150 family / 40 spicy before release, same difficulty split.</li>
-<li><b>Ink budget.</b> 3 000 chars (~1 125 points after simplification) fits a detailed 60-second doodle; if playtests hit the limit often, raise <code>INK_CHARS</code> to 4 000 and <code>maxInputBytes</code> to 8 192, and lower <code>maxPlayers</code> to 8 to keep state under 256 KB.</li>
+<li><b>Ink budget.</b> 3 000 chars (~1 125 points after simplification) fits a detailed 60-second doodle; if playtests hit the limit often, raise <code>INK_CHARS</code> to 4 000 and <code>maxInputBytes</code> to 8 192 — at 8 players × 4 drawings that is ≈ 200 KB, still under the cap.</li>
 <li><b>Stroke replay on the show.</b> Recommended: <b>on</b> (≤ 600 ms) — the cheapest spectacle in the game. Off under reduced motion.</li>
 </ol>`,
   },
@@ -1457,11 +1479,11 @@ ${[
 <span>Fun</span><b class="v">5</b><span>The show is the best ten minutes of any telephone-drawing game; with no points to argue about, the room just laughs.</span>
 <span>Clarity</span><b class="v">5</b><span>Six rules of play, three of show; the routing rule (§3.3) is the one thing a referee must trust and it is simulated for every player count.</span>
 <span>Implementability</span><b class="v">4</b><span>Reducer is fully specified and simulated; the canvas is real client work with no primitive to lean on (R-4).</span>
-<span>Novelty</span><b class="v">3</b><span>A known genre by request; the TV-driven page-by-page show, ink budget and chain verdict are the additions.</span>
+<span>Novelty</span><b class="v">3</b><span>A known genre by request; the TV-driven page-by-page show, the parity rule that keeps every book ending on a guess for any circle size, the ink budget and the chain verdict are the additions.</span>
 <span>TV spectacle</span><b class="v">5</b><span>Filmstrip + big page + verdict banner; stroke replay.</span>
 <span>Phone ergonomics</span><b class="v">4</b><span>328 px canvas with a sticky Done; toolbar targets ≥ 44 px; the risk is accidental scrolls, handled by <code>touch-action: none</code>.</span>
 <span>Content longevity</span><b class="v">3</b><span>Custom words make it infinite in practice; the shipped pool needs to grow (§14.5).</span>
-<span>Pacing</span><b class="v">4</b><span>≈12 min at 8; the show scales linearly with players, which is why max is 10, and the VIP can speed it up.</span>
+<span>Pacing</span><b class="v">3</b><span>≈18 min at 8 with the full circle — long, but that is Telestrations; the VIP can speed the show up and <code>passes</code> shortens the game.</span>
 <span>Edge-case coverage</span><b class="v">5</b><span>Placeholders make every missing page harmless; every phase has a floor timer; 1 200 simulated runs terminate.</span>
 </div>`,
   },

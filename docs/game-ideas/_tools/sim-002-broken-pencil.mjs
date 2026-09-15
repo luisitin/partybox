@@ -236,6 +236,26 @@ const BOT_GUESSES = [
   'spider',
   'moon',
   'chair',
+  'dragon',
+  'sock',
+  'egg',
+  'bird',
+  'flower',
+  'shoe',
+  'clock',
+  'apple',
+  'star',
+  'key',
+  'cup',
+  'bus',
+  'frog',
+  'bell',
+  'door',
+  'kite',
+  'bone',
+  'lamp',
+  'ring',
+  'leaf',
 ];
 export const norm = (t) =>
   t
@@ -245,7 +265,7 @@ export const norm = (t) =>
     .trim()
     .replace(/^(a|an|the) /, '');
 const readSettings = (s) => ({
-  drawings: Math.min(4, Math.max(1, Number(s.drawings ?? 3))),
+  passes: Math.min(15, Math.max(1, Number(s.passes ?? 15))),
   drawSeconds: Math.min(120, Math.max(30, Number(s.drawSeconds ?? 60))),
   guessSeconds: Math.min(60, Math.max(15, Number(s.guessSeconds ?? 30))),
   customWords: Boolean(s.customWords ?? true),
@@ -270,7 +290,8 @@ export function init(ctx) {
   for (const p of ctx.players) players[p.id] = p;
   const settings = readSettings(ctx.settings);
   const N = ctx.players.length;
-  const D = Math.max(1, Math.min(settings.drawings, Math.floor(N / 2)));
+  const P = Math.max(1, Math.min(settings.passes, N - 1));
+  const od = P % 2;
   let rng = seedRng(ctx.seed);
   const [seats, r1] = shuffle(rng, ctx.players.map((p) => p.id).sort());
   rng = r1;
@@ -281,9 +302,11 @@ export function init(ctx) {
     phase: { id: 'pick', startedAt: ctx.now, deadline: null },
     rng,
     players,
-    settings: { ...settings, drawings: D },
+    settings: { ...settings, passes: P },
     seats,
-    pageCount: 2 * D + 1,
+    passes: P,
+    ownerDraws: od,
+    pageCount: P + 1 + od,
     step: 0,
     books,
     offers,
@@ -297,12 +320,12 @@ function bookInHands(s, playerId) {
   const N = s.seats.length;
   const k = s.seats.indexOf(playerId);
   if (k < 0) return -1;
-  return s.step <= 1 ? k : (((k - (s.step - 1)) % N) + N) % N;
+  return (((k - s.step + s.ownerDraws) % N) + N) % N;
 }
-/** Author of page index p (0-based) of book b: pages 0 and 1 are the owner's; page p ≥ 2 → seat (b + p − 1). */
+/** Author of page index p ≥ 1 of book b: seat (b + p − ownerDraws) mod N (page 0 is the owner's word). */
 function authorOfPage(s, b, p) {
   const N = s.seats.length;
-  return s.seats[p <= 1 ? b : (b + p - 1) % N];
+  return s.seats[(((b + p - s.ownerDraws) % N) + N) % N];
 }
 function enterStep(s, now) {
   const kind = s.step % 2 === 1 ? 'draw' : 'guess';
@@ -643,7 +666,7 @@ const fatBot = {
 };
 
 // ─── Harness ───────────────────────────────────────────────────────────────────────────────────
-const ESTIMATED_MINUTES = 15;
+const ESTIMATED_MINUTES = 18;
 function play({ seed, players, settings, strategy, vipEvery = 0 }) {
   const rng = createRng(seed * 104729 + 3);
   const ids = Array.from({ length: players }, (_, i) => `p${i + 1}`);
@@ -891,22 +914,28 @@ const log = (s) => console.log(s);
 {
   let bad = 0,
     total = 0;
-  for (let N = 3; N <= 10; N++)
-    for (let D = 1; D <= 4; D++) {
+  for (let N = 2; N <= 8; N++)
+    for (let P = 1; P <= 15; P++) {
       total++;
       const r = play({
-        seed: N * 10 + D,
+        seed: N * 100 + P,
         players: N,
-        settings: { drawings: D, drawSeconds: 30, guessSeconds: 15 },
+        settings: { passes: P, drawSeconds: 30, guessSeconds: 15 },
         strategy: 'fast',
       });
+      // default (P ≥ N−1): every other player touches every book exactly once → pages = N (+1 if N even)
+      const expectPages = P >= N - 1 ? N + (N % 2 === 0 ? 1 : 0) : P + 1 + (P % 2);
+      if (r.state.pageCount !== expectPages) {
+        r.routingBad++;
+        console.error('pageCount', N, P, r.state.pageCount, expectPages);
+      }
       if (r.routingBad || r.stuck) {
         bad++;
-        console.error('routing', N, D, r.routingBad, r.stuck);
+        console.error('routing', N, P, r.routingBad, r.stuck);
       }
     }
   log(
-    `routing: ${total - bad}/${total} (N 3–10 × D 1–4) — every player one page per step, no book touched twice, books end with a guess`,
+    `routing: ${total - bad}/${total} (N 2–8 × passes 1–15) — every player one page per step, no book touched twice, books end with a guess, default = full circle`,
   );
 }
 {
@@ -916,13 +945,19 @@ const log = (s) => console.log(s);
   );
 }
 const configs = [
-  { name: 'defaults (D3, 60/30 s)', settings: { drawings: 3, drawSeconds: 60, guessSeconds: 30 } },
-  { name: 'variant A (D1)', settings: { drawings: 1, drawSeconds: 60, guessSeconds: 30 } },
   {
-    name: 'variant B (D4, 30/15 s, no custom)',
-    settings: { drawings: 4, drawSeconds: 30, guessSeconds: 15, customWords: false, spicy: true },
+    name: 'defaults (full circle, 60/30 s)',
+    settings: { passes: 15, drawSeconds: 60, guessSeconds: 30 },
   },
-  { name: 'slowest (D4, 120/60 s)', settings: { drawings: 4, drawSeconds: 120, guessSeconds: 60 } },
+  { name: 'variant A (passes 2)', settings: { passes: 2, drawSeconds: 60, guessSeconds: 30 } },
+  {
+    name: 'variant B (full circle, 30/15 s, no custom)',
+    settings: { passes: 15, drawSeconds: 30, guessSeconds: 15, customWords: false, spicy: true },
+  },
+  {
+    name: 'slowest (full circle, 120/60 s)',
+    settings: { passes: 15, drawSeconds: 120, guessSeconds: 60 },
+  },
 ];
 let totalRuns = 0,
   allStuck = 0,
@@ -940,7 +975,7 @@ for (const cfg of configs)
       routing = 0,
       intact = 0;
     for (let k = 0; k < runs; k++) {
-      const players = [3, 4, 5, 6, 8, 10][k % 6];
+      const players = [3, 4, 5, 6, 7, 8][k % 6];
       const r = play({
         seed: k + 11,
         players,
@@ -972,7 +1007,7 @@ for (const cfg of configs)
     const sorted = [...mins].sort((a, b) => a - b);
     const q = (p) => sorted[Math.min(sorted.length - 1, Math.floor(sorted.length * p))].toFixed(1);
     log(
-      `${cfg.name} · ${strategy.padEnd(6)} · ${runs} runs (3–10 players): minutes median ${q(0.5)} / max ${sorted[sorted.length - 1].toFixed(1)} (bound ${ESTIMATED_MINUTES * 3}) · intact books avg ${(intact / runs).toFixed(1)} · stuck ${stuck} · spoils ${spoils} · routing/results violations ${routing}`,
+      `${cfg.name} · ${strategy.padEnd(6)} · ${runs} runs (3–8 players): minutes median ${q(0.5)} / max ${sorted[sorted.length - 1].toFixed(1)} (bound ${ESTIMATED_MINUTES * 3}) · intact books avg ${(intact / runs).toFixed(1)} · stuck ${stuck} · spoils ${spoils} · routing/results violations ${routing}`,
     );
     allStuck += stuck;
     allSpoils += spoils;
