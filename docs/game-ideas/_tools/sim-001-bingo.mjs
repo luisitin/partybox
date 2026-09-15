@@ -267,11 +267,11 @@ function reducePlay(s, e) {
     if (r.drawn < (r.waitForCall[p] ?? 0)) return s;
     const claim = evaluate(p, r.cards[p], r.daubs[p], r.deck.slice(0, r.drawn), s.settings.pattern);
     if (claim.valid) return enterBingo(s, e.now, p, claim);
-    const cleaned = r.daubs[p].filter((i) => !claim.red.includes(i));
+    // v0.4: the card goes back BLANK
     const round = {
       ...r,
       claim,
-      daubs: { ...r.daubs, [p]: cleaned },
+      daubs: { ...r.daubs, [p]: [] },
       waitForCall: { ...r.waitForCall, [p]: r.drawn + 1 },
     };
     return enterPhase({ ...s, round }, 'check', e.now, CHECK_MS);
@@ -497,8 +497,7 @@ function play({ seed, players, settings, strategy, vipEvery = 0 }) {
       const called = new Set(r.deck.slice(0, r.drawn));
       for (const i of c.red)
         if (called.has(r.cards[c.playerId][i])) invariants.push('red cell was called');
-      for (const i of c.red)
-        if (r.daubs[c.playerId].includes(i)) invariants.push('red cell not wiped');
+      if (r.daubs[c.playerId].length !== 0) invariants.push('card not wiped on invalid claim');
     }
     for (const id of ids)
       for (const i of r.daubs[id]) if (i === 12) invariants.push('FREE in daubs');
