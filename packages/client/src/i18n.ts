@@ -70,8 +70,8 @@ export const t = {
     connecting: 'Connecting…',
   },
   tv: {
-    tapToStart: 'Tap to start',
-    tapHint: 'Enables sound on this screen',
+    tapToStart: 'Tap anywhere for sound',
+    tapHint: 'the party works without it',
     mute: 'Mute',
     unmute: 'Unmute',
     fullscreen: 'Fullscreen',

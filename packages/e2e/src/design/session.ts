@@ -81,9 +81,9 @@ export async function openTv(
   return page;
 }
 
-/** Dismiss the "Tap to start" audio gate so it does not cover every later still. */
+/** Enable audio (first gesture) so the "tap for sound" pill does not appear in later stills. */
 export async function passAudioGate(tv: Page): Promise<void> {
-  const gate = tv.getByRole('button', { name: /tap to start/i });
+  const gate = tv.getByRole('button', { name: /tap (to start|anywhere)/i });
   if (await gate.isVisible()) await gate.click();
 }
 
