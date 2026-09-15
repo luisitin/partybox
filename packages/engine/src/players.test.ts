@@ -13,6 +13,60 @@ import {
   vip,
 } from './test-utils.helper';
 
+describe('F-002: a VIP-less room recovers when a player resumes', () => {
+  it('promotes the resuming player when the VIP left while everyone else was disconnected', () => {
+    let room = roomWith(3);
+    room = applyRoomEvent(room, { type: 'disconnect', now: T0 + 10, playerId: 'p2' }, deps).room;
+    room = applyRoomEvent(room, { type: 'disconnect', now: T0 + 11, playerId: 'p3' }, deps).room;
+    room = applyRoomEvent(room, { type: 'leave', now: T0 + 20, playerId: 'p1' }, deps).room;
+    expect(room.vipId).toBeNull();
+    const back = applyRoomEvent(
+      room,
+      { ...joinEvent(9, T0 + 30), existingToken: 't3' } as never,
+      deps,
+    );
+    expect(back.room.vipId).toBe('p3');
+    expect(back.room.players['p3']?.isVip).toBe(true);
+    expect(toasts(back.effects)).toEqual(['P3 is now the VIP']);
+    expect(effectTypes(back.effects)).toEqual(['welcome', 'toast', 'push']);
+  });
+
+  it('also after the VIP expired through the grace period', () => {
+    let room = roomWith(2);
+    room = applyRoomEvent(room, { type: 'disconnect', now: T0 + 10, playerId: 'p1' }, deps).room;
+    room = applyRoomEvent(
+      room,
+      { type: 'disconnect', now: T0 + 100_000, playerId: 'p2' },
+      deps,
+    ).room;
+    room = applyRoomEvent(
+      room,
+      { type: 'tick', now: T0 + 10 + LIMITS.disconnectGraceMs },
+      deps,
+    ).room;
+    expect(Object.keys(room.players)).toEqual(['p2']);
+    expect(room.vipId).toBeNull();
+    const back = applyRoomEvent(
+      room,
+      { ...joinEvent(9, T0 + 131_000), existingToken: 't2' } as never,
+      deps,
+    ).room;
+    expect(back.vipId).toBe('p2');
+  });
+
+  it('leaves an existing VIP alone', () => {
+    let room = roomWith(2);
+    room = applyRoomEvent(room, { type: 'disconnect', now: T0 + 10, playerId: 'p2' }, deps).room;
+    const back = applyRoomEvent(
+      room,
+      { ...joinEvent(9, T0 + 30), existingToken: 't2' } as never,
+      deps,
+    );
+    expect(back.room.vipId).toBe('p1');
+    expect(effectTypes(back.effects)).toEqual(['welcome', 'push']);
+  });
+});
+
 describe('join', () => {
   it('first player becomes VIP, later ones do not', () => {
     const room = roomWith(2);

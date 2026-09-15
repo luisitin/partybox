@@ -86,12 +86,17 @@ export function join(room: RoomState, event: JoinEvent, deps: EngineDeps): Apply
 
 function resume(room: RoomState, player: RoomPlayer, now: number, deps: EngineDeps): ApplyResult {
   const updated: RoomPlayer = { ...player, connected: true, disconnectedAt: null };
-  const next: RoomState = { ...room, players: { ...room.players, [player.id]: updated } };
+  let next: RoomState = { ...room, players: { ...room.players, [player.id]: updated } };
+  const effects: Effect[] = [{ type: 'welcome', playerId: player.id }];
+  // The VIP may have left while everyone else was away (F-002): the first one back takes over,
+  // otherwise nobody could start, kick or end anything until a brand-new player joined.
+  if (next.vipId === null) {
+    const handover = promoteVip(next, now);
+    next = handover.room;
+    effects.push(...handover.effects);
+  }
   const game = notifyGame(next, player.id, true, now, deps);
-  return {
-    room: game.room,
-    effects: [{ type: 'welcome', playerId: player.id }, ...game.effects, { type: 'push' }],
-  };
+  return { room: game.room, effects: [...effects, ...game.effects, { type: 'push' }] };
 }
 
 export function disconnect(
