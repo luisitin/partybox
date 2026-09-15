@@ -81,6 +81,10 @@ export function createSocketLayer(server: HttpServer): SocketLayer {
       socket.on('join', (raw: unknown) => {
         const parsed = joinPayloadSchema.safeParse(raw);
         if (!parsed.success) return sendError('invalid_payload', 'Bad join payload.');
+        // One role and one identity per socket (docs/PROTOCOL.md): a TV never plays (F-005) and a
+        // phone that already holds a player must `leave` first, otherwise the earlier player would
+        // stay "connected" with no socket behind it, forever (F-003).
+        if (data.role === 'tv') return sendError('invalid_payload', 'TVs cannot join as players.');
         const code = resolveRoom(parsed.data.roomCode);
         if (!code) return sendError('room_not_found', 'No room with that code.');
         const { playerId, token } = host.mintPlayer();
@@ -89,6 +93,12 @@ export function createSocketLayer(server: HttpServer): SocketLayer {
         const resumed = parsed.data.token
           ? Object.values(host.get(code)?.players ?? {}).find((p) => p.token === parsed.data.token)
           : undefined;
+        if (
+          data.playerId &&
+          byPlayer.get(data.playerId) === socket &&
+          resumed?.id !== data.playerId
+        )
+          return sendError('invalid_payload', 'Leave the room before joining again.');
         for (const id of [playerId, resumed?.id]) {
           if (!id) continue;
           const previous = byPlayer.get(id);
@@ -164,6 +174,8 @@ export function createSocketLayer(server: HttpServer): SocketLayer {
       socket.on('tv:join', (raw: unknown) => {
         const parsed = tvJoinPayloadSchema.safeParse(raw);
         if (!parsed.success) return sendError('invalid_payload', 'Bad TV payload.');
+        if (data.role === 'controller')
+          return sendError('invalid_payload', 'Phones cannot become TVs.');
         const code = resolveRoom(parsed.data.roomCode) ?? host.house().code;
         if (data.code && data.role === 'tv') void socket.leave(`tv:${data.code}`);
         data.role = 'tv';
