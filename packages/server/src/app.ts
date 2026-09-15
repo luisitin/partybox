@@ -70,6 +70,8 @@ export async function createApp(options: AppOptions): Promise<App> {
     try {
       done(null, body === '' ? {} : JSON.parse(body as string));
     } catch (err) {
+      // A client's bad JSON is a 400, not a 500 (F-007).
+      (err as Error & { statusCode?: number }).statusCode = 400;
       done(err as Error, undefined);
     }
   });

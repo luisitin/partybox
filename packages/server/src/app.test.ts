@@ -56,6 +56,17 @@ describe('http', () => {
     expect(info.houseRoom).toMatch(/^[A-Z]{4}$/);
   });
 
+  it('F-007: malformed JSON bodies are a 400, not a 500', async () => {
+    for (const body of ['{', 'nope', '[1,', '']) {
+      const res = await fetch(`${url}/api/dev/clock`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body,
+      });
+      expect(res.status, body).toBe(400);
+    }
+  });
+
   it('dev api answers 403 when disabled', async () => {
     const off = await createApp({
       port: 0,
@@ -190,5 +201,45 @@ describe('sockets', () => {
     a.emit('leave', {});
     await new Promise((r) => setTimeout(r, 50));
     expect(Object.keys(app.host.house().players)).toEqual([]);
+  });
+
+  it('F-003: a second join on the same socket is refused; leave first then join works', async () => {
+    await fetch(`${url}/api/dev/reset`, { method: 'POST' });
+    const a = client();
+    const first = await join(a, 'Ana');
+    const error = once<ErrorPayload>(a, 'error');
+    a.emit('join', { name: 'Ann', avatarId: 'fox' });
+    expect((await error).code).toBe('invalid_payload');
+    expect(Object.keys(app.host.house().players)).toEqual([first.playerId]);
+    // Re-sending join with my own token (a resume on the same socket) is still fine.
+    const same = await join(a, 'Ana', first.token);
+    expect(same.playerId).toBe(first.playerId);
+    a.emit('leave', {});
+    const second = await join(a, 'Ann');
+    expect(second.playerId).not.toBe(first.playerId);
+    a.disconnect();
+    await new Promise((r) => setTimeout(r, 100));
+    const players = Object.values(app.host.house().players);
+    expect(players.map((p) => [p.name, p.connected])).toEqual([['Ann', false]]);
+  });
+
+  it('F-005: a TV socket cannot join as a player and a phone cannot become a TV', async () => {
+    await fetch(`${url}/api/dev/reset`, { method: 'POST' });
+    const tv = client();
+    const room = once<RoomPush>(tv, 'room');
+    tv.emit('tv:join', {});
+    await room;
+    const refused = once<ErrorPayload>(tv, 'error');
+    tv.emit('join', { name: 'TvGuy', avatarId: 'fox' });
+    expect((await refused).code).toBe('invalid_payload');
+    expect(Object.keys(app.host.house().players)).toEqual([]);
+    const phone = client();
+    await join(phone, 'Ana');
+    const refused2 = once<ErrorPayload>(phone, 'error');
+    phone.emit('tv:join', {});
+    expect((await refused2).code).toBe('invalid_payload');
+    phone.disconnect();
+    await new Promise((r) => setTimeout(r, 100));
+    expect(Object.values(app.host.house().players)[0]?.connected).toBe(false);
   });
 });
