@@ -41,6 +41,12 @@
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .urgent {
+    transform: none;
+  }
+}
+
 .paused {
   color: var(--pb-text-muted);
 }

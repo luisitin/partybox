@@ -2,6 +2,7 @@
 // appear one by one every `stepMs`; emphasised items get the accent outline. Pure presentation.
 import { useEffect, useState } from 'react';
 import type { JSX, ReactNode } from 'react';
+import { usePrefersReducedMotion } from '../ui/motion';
 import styles from './Reveal.module.css';
 
 export interface RevealItem {
@@ -21,7 +22,9 @@ export interface RevealProps {
   onDone?: () => void;
 }
 
-export function Reveal({ items, stepMs = 700, onDone }: RevealProps): JSX.Element {
+export function Reveal({ items, stepMs: requestedStepMs = 700, onDone }: RevealProps): JSX.Element {
+  // Reduced motion: no one-by-one sequence, everything at once.
+  const stepMs = usePrefersReducedMotion() ? 0 : requestedStepMs;
   const [shown, setShown] = useState(stepMs === 0 ? items.length : 0);
   useEffect(() => {
     if (shown >= items.length) {
