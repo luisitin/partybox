@@ -37,7 +37,8 @@ same primitives. Games must not hard-code colours, sizes or durations — use th
 | caption                      | 28 px      | 14 px | `--pb-font-caption` |
 | button                       | —          | 20 px | `--pb-font-button`  |
 
-Font: system UI stack (`--pb-font-family`), bold weights for display/h1. Line height 1.2 display, 1.4 body.
+Font: Nunito Variable (OFL, bundled via `@fontsource-variable/nunito`, weights 200–1000) with a
+system-UI fallback stack (`--pb-font-family`); bold weights for display/h1. Line height 1.2 display, 1.4 body.
 The TV shell sets the TV column; the controller shell sets the phone column; tokens switch by shell, not by media query.
 
 ## Spacing, shape, layout

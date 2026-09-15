@@ -72,7 +72,7 @@ session might want to undo. Never edit an old one — supersede it.
 ## ADR-012 — Zero runtime network: synthesized sounds, local QR, bundled fonts
 
 **Context.** Smart TVs and phones on a LAN may have no internet; the app must not depend on it.
-**Decision.** Sound cues are generated with Web Audio (no audio files). QR codes via the `qrcode` package. Fonts: system stack through Phase 7; Phase 8 may bundle one OFL font as woff2 (BL-001).
+**Decision.** Sound cues are generated with Web Audio (no audio files). QR codes via the `qrcode` package. Fonts: Nunito Variable (OFL) bundled from `@fontsource-variable/nunito` since Phase 8.
 **Consequences.** No CDN links anywhere; `pnpm build` output is self-contained.
 
 ## ADR-013 — `pnpm verify` is a convention, not a git hook
