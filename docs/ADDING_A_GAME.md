@@ -21,13 +21,14 @@ TypeScript plus content. Everything below is checked by `pnpm verify`; nothing i
    forbids cycles, and real games loop): `server/index.ts` owns the order in `advance(state, now)` and passes
    it in as `next` — the same `advance` is what a VIP skip runs. Declare `phases: [...]` in typical order.
    Server code imports only `@partybox/game-sdk` (pure helpers). Use `hasPlayer(state, id)` / `Object.hasOwn`
-   rather than `state.players[id]` truthiness (`'__proto__'` is a sender the contract suite tries). Scoring math in `server/scoring.ts`. Content access in
-   `server/content.ts`.
+   rather than `state.players[id]` truthiness (`'__proto__'` is a sender the contract suite tries).
+   Scoring math lives in `server/scoring.ts`, content access in `server/content.ts`.
 5. **Content**: JSON packs in `content/*.json`; the zod schema in `content/schema.ts`. Family-friendly
    by default; put edgier items in a separate pack behind a `spicy` setting.
 6. **Fixtures**: one full `State` per phase id in `fixtures/<phaseId>.json`. Easiest: run a game in the
-   sim and dump states (`pnpm sim --game <id> --players 4 --runs 1 --dump-fixtures`). Fixtures feed
-   `/preview` and the contract tests.
+   sim and dump states (`pnpm sim --game <id> --dump-fixtures --players 4`; it overwrites all fixtures
+   with the first state seen per phase, so re-run it after any change to the state shape and hand-edit
+   the JSON where you want a more interesting moment). Fixtures feed `/preview` and the contract tests.
 7. **Client**: `client/Tv.tsx` and `client/Controller.tsx` built from `@partybox/game-sdk/ui` primitives;
    `client/index.ts` exports `clientModule`. No sockets, no game logic, no global state.
 8. **Bot**: `bot.sampleInput` must return a valid input in every phase (or `null`). The sim, e2e and the
@@ -45,6 +46,19 @@ TypeScript plus content. Everything below is checked by `pnpm verify`; nothing i
     for each fixture; then `pnpm e2e:snap --game <id>` for screenshots of a real run.
 12. **Gate**: `pnpm verify` green → conventional commit `feat(<id>): add <name>` → update
     `CHANGELOG.md` (Unreleased).
+
+## Adding (or renaming) a phase — the checklist
+
+1. `server/types.ts`: add the id to `PHASES` (and a duration constant).
+2. `server/phases/<id>.ts`: `enterX(state, now)` + `reduceX(state, event, next)`.
+3. `server/index.ts`: import it; add it to `advance` (what comes after it, and what leads into it) and to
+   the `switch` in `reduce`.
+4. `fixtures/<id>.json`: `pnpm sim --game <game> --dump-fixtures` (or by hand). The contract suite fails
+   with the exact missing file name until this exists.
+5. `client/Tv.tsx` / `client/Controller.tsx`: render it (unknown phases fall through to a waiting screen).
+6. `README.md` phase table; `__tests__`: the scaffolded tests pin the phase ORDER, so a test that expected
+   `reveal → done` now fails on purpose — update it.
+7. `pnpm verify`.
 
 ## Files `pnpm new-game` creates (from `games/_template`)
 
