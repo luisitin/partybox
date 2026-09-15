@@ -3,7 +3,7 @@
 import type { JSX } from 'react';
 import type { RoomSnapshot } from '@partybox/shared';
 import { BigText, Scoreboard, Stage } from '@partybox/game-sdk/ui';
-import { scoreboardRows, winnerLine } from '../controller/results-rows';
+import { nobodyScored, scoreboardRows, winnerLine } from '../controller/results-rows';
 import { t } from '../i18n';
 import styles from './TvResults.module.css';
 
@@ -25,7 +25,7 @@ export function TvResults({ room }: TvResultsProps): JSX.Element {
         </BigText>
       </div>
       <div className={`${styles.columns} ${awards.length === 0 ? styles.single : ''}`}>
-        <Scoreboard rows={rows} />
+        <Scoreboard rows={rows} noTrophy={nobodyScored(room)} />
         {awards.length > 0 ? (
           <ul className={styles.awards} aria-label="awards">
             {awards.map((a) => (

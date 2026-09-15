@@ -21,13 +21,21 @@ export function scoreboardRows(room: RoomSnapshot): ScoreboardRow[] {
   });
 }
 
+/** True when nobody scored anything (a game ended early): trophies and "wins" would be nonsense. */
+export function nobodyScored(room: RoomSnapshot): boolean {
+  const scores = Object.values(room.results?.results.scores ?? {});
+  return scores.length > 0 && scores.every((s) => s <= 0);
+}
+
 export function winnerLine(room: RoomSnapshot): string {
   const results = room.results;
   if (!results) return '';
-  const names = results.results.winnerIds.map(
-    (id) => results.players.find((p) => p.id === id)?.name ?? '?',
-  );
-  if (names.length === 0) return '';
+  if (nobodyScored(room)) return t.results.over;
+  const ids = results.results.winnerIds;
+  if (ids.length === 0) return '';
+  if (ids.length >= results.players.length && ids.length > 1) return t.results.tie;
+  const names = ids.map((id) => results.players.find((p) => p.id === id)?.name ?? '?');
   if (names.length === 1) return t.results.winner(names[0] as string);
-  return t.results.winners(`${names.slice(0, -1).join(', ')} & ${names.at(-1)}`);
+  if (names.length === 2) return t.results.winners(`${names[0]} & ${names[1]}`);
+  return t.results.tieAmong(`${names[0]}, ${names[1]}`, names.length - 2);
 }
