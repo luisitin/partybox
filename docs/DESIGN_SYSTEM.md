@@ -51,15 +51,16 @@ The TV shell sets the TV column; the controller shell sets the phone column; tok
 
 ## Motion
 
-| Token              | Value                            | Use                                   |
-| ------------------ | -------------------------------- | ------------------------------------- |
-| `--pb-motion-fast` | 150 ms                           | hover/press feedback, chip state      |
-| `--pb-motion-base` | 300 ms                           | phase transitions (fade + 12 px rise) |
-| `--pb-motion-slow` | 600 ms                           | reveal / winner — the maximum allowed |
-| easing             | `cubic-bezier(0.2, 0.8, 0.2, 1)` | everything                            |
+| Token               | Value                            | Use                                   |
+| ------------------- | -------------------------------- | ------------------------------------- |
+| `--pb-motion-fast`  | 150 ms                           | hover/press feedback, chip state      |
+| `--pb-motion-base`  | 300 ms                           | phase transitions (fade + 12 px rise) |
+| `--pb-motion-slow`  | 600 ms                           | reveal / winner — the maximum allowed |
+| `--pb-motion-pulse` | 1000 ms                          | urgent-timer beat (≤ 1 flash/s)       |
+| easing              | `cubic-bezier(0.2, 0.8, 0.2, 1)` | everything                            |
 
 `prefers-reduced-motion: reduce` sets every duration to 0. Transitions never hide information (no full-screen wipes).
-Timer: in the last 5 s it switches to `--pb-danger`, scales 1.1× and ticks (sound `countdown`).
+Timer: in the last 5 s it switches to `--pb-danger`, scales 1.15×, pulses once per second (`--pb-motion-pulse`, 0 under reduced motion) and ticks (sound `countdown`).
 
 ## Sound cues (Web Audio, synthesized — no files)
 
@@ -78,6 +79,7 @@ TV has a mute toggle (persisted in `localStorage`) and a "tap to start" overlay 
 ## Primitives
 
 TV (`@partybox/game-sdk` → `tv/`): `Timer`, `PlayerChips`, `Scoreboard`, `Reveal`, `Stage` (overscan frame), `BigText`.
+Shared (`ui/`): `DeadlineBar` (draining bar, danger in the last 5 s — the TV strip and the phone header both use it), `usePrefersReducedMotion` (for JS-driven sequences).
 Controller (`controller/`): `TextAnswer`, `ChoiceGrid`, `VoteList`, `WaitingScreen`, `Screen` (safe-area frame), `PrimaryButton`.
 Shared: `Avatar`, `Chip`. Each primitive's props are documented in its file header.
 
