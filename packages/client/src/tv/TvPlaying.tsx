@@ -56,7 +56,10 @@ export function TvPlaying({ room, view, audio }: TvPlayingProps): JSX.Element {
       </div>
       {view.paused ? (
         <div className={styles.curtain} role="status">
-          <BigText level="display">{t.tv.paused}</BigText>
+          <div className={styles.pausedCard}>
+            <BigText level="h1">⏸ {t.tv.paused}</BigText>
+            {vip ? <p className="pb-muted">{t.tv.pausedHint(vip.name)}</p> : null}
+          </div>
         </div>
       ) : null}
       {vip ? (

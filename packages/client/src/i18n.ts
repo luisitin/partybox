@@ -76,5 +76,6 @@ export const t = {
     unmute: 'Unmute',
     fullscreen: 'Fullscreen',
     paused: 'Paused',
+    pausedHint: (name: string) => `${name} can resume from the VIP menu`,
   },
 } as const;
