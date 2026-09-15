@@ -80,8 +80,8 @@
   display: flex;
   align-items: center;
   gap: var(--pb-space-4);
-  /* room for the mute + fullscreen controls (AudioGate) in the corner */
-  padding-right: calc(2 * var(--pb-space-7) + var(--pb-space-4));
+  /* room for the theme + mute + fullscreen controls (AudioGate) in the corner */
+  padding-right: calc(3 * var(--pb-space-7) + var(--pb-space-5));
 }
 
 .url {

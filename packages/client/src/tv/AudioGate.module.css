@@ -47,3 +47,16 @@
   display: grid;
   place-items: center;
 }
+
+/* Theme strip drops down from the corner controls; the header leaves room for three buttons. */
+.themes {
+  position: absolute;
+  right: 0;
+  top: calc(var(--pb-space-7) + var(--pb-space-2));
+  width: max-content;
+  max-width: 60vw;
+  padding: var(--pb-space-2);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface-2);
+  animation: pb-rise var(--pb-motion-base) var(--pb-ease) both;
+}

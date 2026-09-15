@@ -7,6 +7,7 @@ import type { PlayerPublic } from '@partybox/shared';
 import { Avatar, DeadlineBar, useSecondsLeft } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import type { Controller, ControllerState } from '../net/controller';
+import { ThemePicker } from '../ThemePicker';
 import styles from './ControllerShell.module.css';
 import { VipMenu } from './VipMenu';
 
@@ -24,6 +25,7 @@ export function ControllerShell({
   children,
 }: ControllerShellProps): JSX.Element {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [themeOpen, setThemeOpen] = useState(false);
   const room = state.room;
   const showBanner = state.connection !== 'connected' && state.joined;
   const view = room?.status === 'playing' ? state.view : null;
@@ -40,6 +42,15 @@ export function ControllerShell({
           ) : null}
         </div>
         <div className={styles.right}>
+          <button
+            type="button"
+            className={styles.iconButton}
+            onClick={() => setThemeOpen(true)}
+            aria-haspopup="dialog"
+            aria-label={t.theme.title}
+          >
+            🎨
+          </button>
           <span
             className={`${styles.dot} ${state.connection === 'connected' ? styles.on : styles.off}`}
             role="status"
@@ -109,6 +120,7 @@ export function ControllerShell({
           onClose={() => setMenuOpen(false)}
         />
       ) : null}
+      {themeOpen ? <ThemePicker variant="sheet" onClose={() => setThemeOpen(false)} /> : null}
     </div>
   );
 }

@@ -77,6 +77,9 @@ export const t = {
     seconds: (n: number) => `${n} s`,
     secondsLeft: (n: number) => `${n} seconds left`,
   },
+  theme: {
+    title: 'Theme',
+  },
   tv: {
     tapToStart: 'Tap anywhere for sound',
     tapHint: 'the party works without it',

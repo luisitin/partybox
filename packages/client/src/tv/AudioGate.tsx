@@ -1,11 +1,12 @@
 // Browser autoplay policy: sound needs a gesture. Instead of a full-screen gate (which hid the QR
 // after every load and left an unattended TV stuck), the stage renders normally with a small
-// "tap for sound" pill; the first click/key anywhere enables audio. Mute (persisted) and fullscreen
-// sit in the corner inside the overscan margin.
+// "tap for sound" pill; the first click/key anywhere enables audio. Theme, mute (persisted) and
+// fullscreen sit in the corner inside the overscan margin.
 import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
 import { t } from '../i18n';
 import type { SoundEngine } from '../sound';
+import { ThemePicker } from '../ThemePicker';
 import styles from './AudioGate.module.css';
 
 export interface AudioGateProps {
@@ -15,6 +16,7 @@ export interface AudioGateProps {
 export function AudioGate({ audio }: AudioGateProps): JSX.Element {
   const [started, setStarted] = useState(false);
   const [muted, setMuted] = useState(audio.muted());
+  const [themes, setThemes] = useState(false);
   useEffect(() => {
     if (started) return;
     const start = (): void => {
@@ -45,6 +47,20 @@ export function AudioGate({ audio }: AudioGateProps): JSX.Element {
         </button>
       ) : null}
       <div className={styles.controls}>
+        {themes ? (
+          <div className={styles.themes}>
+            <ThemePicker variant="row" />
+          </div>
+        ) : null}
+        <button
+          type="button"
+          className={styles.control}
+          onClick={() => setThemes((open) => !open)}
+          aria-expanded={themes}
+          aria-label={t.theme.title}
+        >
+          🎨
+        </button>
         <button
           type="button"
           className={styles.control}
