@@ -9,7 +9,7 @@ Vite + React front end: the TV stage (`/tv`), the phone controller (`/`), and th
 - `src/tv/TvApp.tsx` + `TvFrame.tsx` — stage chrome (room code, join URL, QR) and sound cues; `TvLobby`, `TvSelecting`, `TvPlaying` (envelope: chips + timer + VIP overlay + paused curtain), `TvResults`, `AudioGate` (tap to start, mute, fullscreen).
 - `src/controller/ControllerApp.tsx` + `ControllerShell.tsx` — phone frame: header (room, me, connection dot, VIP badge → `VipMenu`), reconnect banner, error strip, toasts.
 - `src/controller/{Join,Lobby,Selecting,Playing,Results}.tsx` — core screens; `Playing` mounts the game.s lazy Controller inside `GameErrorBoundary`; `results-rows.ts` is shared with the TV.
-- `src/preview/Preview.tsx` — renders a fixture's view fetched from the dev API.
+- `src/preview/Preview.tsx` — `/preview/:gameId/:fixture?view=tv|controller&player=<id>`: renders a fixture's view (from `GET /api/dev/preview`) inside the real TV/controller shells with a fake room; `send` logs to the console.
 - `src/styles/tokens.css` + `global.css` — design tokens and reset (docs/DESIGN_SYSTEM.md). `src/sound.ts` — synthesized Web Audio cues. `src/i18n.ts` — every core string.
 - `src/games.generated.ts` — GENERATED lazy game modules (ADR-003).
 

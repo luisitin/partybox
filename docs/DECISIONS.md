@@ -147,3 +147,9 @@ session might want to undo. Never edit an old one — supersede it.
 **Context.** The sim (and the stress session's future harnesses) need the headless runner, hashing, fuzzing and game loader that the contract suite already has. Deep imports across packages are ugly; duplicating the code invites drift.
 **Decision.** A third SDK entry point, `@partybox/game-sdk/testing` (Node-only: reads `games/` from disk). ESLint bans it under `games/`.
 **Consequences.** `packages/sim`, `packages/e2e` and scripts import it; the suite and the sim share one definition of "plays a game" and "hash of a state".
+
+## ADR-026 — Vite HMR rides the app's HTTP server
+
+**Context.** Vite in middleware mode opens its own HMR WebSocket server on port 24678 by default: a second port (phones on the LAN could not reach it) and a collision as soon as two dev servers run on one machine (the parallel sessions do). It surfaced as console errors on every page.
+**Decision.** `createViteServer({ server: { middlewareMode: true, hmr: { server: fastify.server } } })`. Socket.IO ignores upgrade requests that are not for `/socket.io/`, so both share the port.
+**Consequences.** One port in dev, for real. The e2e harness treats any console error as a failure, which is what caught this.

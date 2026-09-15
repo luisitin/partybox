@@ -40,9 +40,11 @@ Details: `packages/sim/README.md`.
 ## E2E (`packages/e2e`)
 
 Boots the server on a free port with the dev API, opens 1 TV (1920×1080) + N phones (iPhone and Pixel
-profiles), drives play through dev-API bots, asserts zero console errors / unhandled rejections and that
-every phone reached results. `pnpm e2e:snap --game <id> [--out <dir>]` freezes the clock and writes a
-screenshot per phase for the TV and each phone. Details: `packages/e2e/README.md`.
+profiles) that join through the real form, plays every registered game with `POST /api/dev/act` (each
+game's bot playing for the humans) and `/api/dev/skip` for timer-only phases, and asserts zero console
+errors / page errors / error boundaries and that every phone reached results. `pnpm e2e:snap --game <id>`
+freezes the clock and writes screenshots per phase for the TV, each device preset and a spectator phone.
+Details: `packages/e2e/README.md`. `pnpm e2e` is NOT part of `pnpm verify` (browsers take minutes).
 
 ## Determinism
 
