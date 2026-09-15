@@ -22,9 +22,17 @@ export interface ScoreboardProps {
   highlightId?: string | null;
 }
 
+// Past six rows the TV board would run off a 1080p stage at h2 size, so it drops to body size and
+// two columns (16 players = 8 rows ≈ 500 px).
+const DENSE_FROM = 7;
+
 export function Scoreboard({ rows, compact, highlightId }: ScoreboardProps): JSX.Element {
+  const dense = !compact && rows.length >= DENSE_FROM;
   return (
-    <ol className={`${styles.board} ${compact ? styles.compact : ''}`} aria-label="scoreboard">
+    <ol
+      className={`${styles.board} ${compact ? styles.compact : ''} ${dense ? styles.dense : ''}`}
+      aria-label="scoreboard"
+    >
       {rows.map((row) => (
         <li
           key={row.playerId}

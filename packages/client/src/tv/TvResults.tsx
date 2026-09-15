@@ -14,16 +14,17 @@ export interface TvResultsProps {
 export function TvResults({ room }: TvResultsProps): JSX.Element {
   const rows = scoreboardRows(room);
   const awards = room.results?.results.awards ?? [];
+  const many = rows.length >= 7;
   const nameOf = (id: string): string =>
     room.results?.players.find((p) => p.id === id)?.name ?? '?';
   return (
     <Stage>
       <div className={`${styles.hero} pb-enter`}>
-        <BigText level="display" tone="accent">
+        <BigText level={many ? 'h1' : 'display'} tone="accent">
           {winnerLine(room) || t.results.title}
         </BigText>
       </div>
-      <div className={styles.columns}>
+      <div className={`${styles.columns} ${awards.length === 0 ? styles.single : ''}`}>
         <Scoreboard rows={rows} />
         {awards.length > 0 ? (
           <ul className={styles.awards} aria-label="awards">

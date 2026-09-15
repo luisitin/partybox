@@ -2,11 +2,23 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--pb-space-2);
   width: 100%;
   max-width: 28em;
+}
+
+.dense {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--pb-space-2) var(--pb-space-4);
+  max-width: none;
+}
+
+.dense .row {
+  font-size: var(--pb-font-body);
+  padding: var(--pb-space-1) var(--pb-space-3);
+  --pb-chip-size: 1.4em;
 }
 
 .row {
@@ -46,6 +58,11 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+/* 16-character names must not truncate before the score column gives way. */
+.dense .name {
+  min-width: 9ch;
 }
 
 .delta {
