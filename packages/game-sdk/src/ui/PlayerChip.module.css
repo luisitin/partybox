@@ -12,8 +12,12 @@
 }
 
 .sm {
-  --pb-chip-size: 28px;
+  --pb-chip-size: max(28px, calc(var(--pb-font-caption) * 1.45));
   font-size: var(--pb-font-caption);
+}
+
+.md {
+  font-size: var(--pb-font-body);
 }
 
 .lg {
