@@ -45,6 +45,7 @@
   --pb-motion-fast: 150ms;
   --pb-motion-base: 300ms;
   --pb-motion-slow: 600ms;
+  --pb-motion-pulse: 1000ms;
   --pb-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
 
   /* phone column by default; the TV shell overrides */
@@ -74,5 +75,6 @@
     --pb-motion-fast: 0ms;
     --pb-motion-base: 0ms;
     --pb-motion-slow: 0ms;
+    --pb-motion-pulse: 0ms;
   }
 }

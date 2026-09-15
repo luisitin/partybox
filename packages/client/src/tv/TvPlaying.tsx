@@ -3,7 +3,7 @@
 import { Suspense, useCallback } from 'react';
 import type { JSX } from 'react';
 import type { PushedView, RoomSnapshot, TvView } from '@partybox/shared';
-import { BigText, PlayerChips, Timer } from '@partybox/game-sdk/ui';
+import { BigText, DeadlineBar, PlayerChips, Timer } from '@partybox/game-sdk/ui';
 import { GameErrorBoundary } from '../controller/GameErrorBoundary';
 import { clientGames } from '../games.generated';
 import { t } from '../i18n';
@@ -33,8 +33,16 @@ export function TvPlaying({ room, view, audio }: TvPlayingProps): JSX.Element {
     <div className={styles.playing}>
       <div className={styles.strip}>
         <PlayerChips players={view.players} vip={view.vip} size="sm" />
-        <Timer deadline={view.deadline} paused={view.paused} onTick={onTick} size="md" />
+        <div className={styles.timer}>
+          <Timer deadline={view.deadline} paused={view.paused} onTick={onTick} size="lg" />
+        </div>
       </div>
+      <DeadlineBar
+        deadline={view.deadline}
+        phaseKey={view.phaseId}
+        paused={view.paused}
+        className={styles.bar}
+      />
       <div className={styles.game} key={view.phaseId}>
         {GameTv ? (
           <GameErrorBoundary surface="tv">

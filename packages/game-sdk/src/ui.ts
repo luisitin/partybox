@@ -10,6 +10,8 @@ export type { AvatarProps } from './ui/Avatar';
 export { PlayerChip } from './ui/PlayerChip';
 export type { PlayerChipProps } from './ui/PlayerChip';
 export { ServerClockProvider, useSecondsLeft, useServerNow } from './ui/clock';
+export { DeadlineBar } from './ui/DeadlineBar';
+export type { DeadlineBarProps } from './ui/DeadlineBar';
 
 // ── TV ───────────────────────────────────────────────────────────────────────────────────────
 export { Stage } from './tv/Stage';
