@@ -5,18 +5,18 @@ Keep the top 10 ordered by value. Move done items to `CHANGELOG.md`.
 
 ## Top 10
 
-| Id     | Item                                                                                                          | Notes                                                                                                                |
-| ------ | ------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| BL-002 | Drawing game (canvas input → stroke list)                                                                     | contract already allows it (ADR-002, `maxInputBytes`); the `_template` + `ChoiceGrid`/`VoteList` cover the vote half |
-| BL-011 | TV results screen polish: awards column when there are none, scoreboard width, winner hero                    | design-review session; core screen                                                                                   |
-| BL-014 | Socket-level fuzz (`packages/sim/src/net`) and 60-minute soak (`src/soak`) with RSS / event-loop-lag sampling | stress session; `runGame` + `invariants.ts` are the building blocks                                                  |
-| BL-013 | UI-driven e2e variant: phones tap real buttons (TextAnswer/ChoiceGrid/VoteList) instead of `/api/dev/act`     | catches controller regressions the dev-API path skips                                                                |
-| BL-006 | Persist rooms across a server restart (JSON snapshot on change, restore on boot)                              | no DB by design; tokens must survive                                                                                 |
-| BL-012 | TV toast queue: collapse bursts ("Ana, Ben and 3 others joined")                                              | 16 joins in a row stack toasts                                                                                       |
-| BL-004 | Multi-room UI (create / join by code)                                                                         | model + protocol support it (ADR-005); join form already shows the code field when > 1 room                          |
-| BL-009 | Windows one-click launcher (`start-partybox.cmd`: firewall rule + `pnpm start` + open `/tv`)                  | README covers the manual steps                                                                                       |
-| BL-003 | Audience mode (non-players vote from phones)                                                                  | out of scope for 0.1                                                                                                 |
-| BL-017 | `/preview` toolbar to switch fixture / player / view without editing the URL                                  | design session convenience                                                                                           |
+| Id     | Item                                                                                                             | Notes                                                                                                                |
+| ------ | ---------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| BL-002 | Drawing game (canvas input → stroke list)                                                                        | contract already allows it (ADR-002, `maxInputBytes`); the `_template` + `ChoiceGrid`/`VoteList` cover the vote half |
+| BL-011 | TV results screen polish: awards column when there are none, scoreboard width, winner hero                       | design-review session; core screen                                                                                   |
+| BL-014 | Socket-level fuzz (`packages/sim/src/net`) and 60-minute soak (`src/soak`) with RSS / event-loop-lag sampling    | stress session; `runGame` + `invariants.ts` are the building blocks                                                  |
+| BL-013 | UI-driven e2e variant: phones tap real buttons (TextAnswer/ChoiceGrid/VoteList) instead of `/api/dev/act`        | catches controller regressions the dev-API path skips                                                                |
+| BL-006 | Persist rooms across a server restart (JSON snapshot on change, restore on boot)                                 | no DB by design; tokens must survive                                                                                 |
+| BL-012 | TV toast queue: collapse bursts ("Ana, Ben and 3 others joined")                                                 | 16 joins in a row stack toasts                                                                                       |
+| BL-004 | Multi-room UI (create / join by code)                                                                            | model + protocol support it (ADR-005); join form already shows the code field when > 1 room                          |
+| BL-009 | Windows one-click launcher — done: `start-partybox.bat` (pnpm, firewall rule, install, build, start, open `/tv`) | shipped 2026-09-15; keep the row until the launcher is exercised on a fresh PC                                       |
+| BL-003 | Audience mode (non-players vote from phones)                                                                     | out of scope for 0.1                                                                                                 |
+| BL-017 | `/preview` toolbar to switch fixture / player / view without editing the URL                                     | design session convenience                                                                                           |
 
 ## Everything else
 

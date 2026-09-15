@@ -33,6 +33,16 @@
   color: var(--pb-text-muted);
 }
 
+/* "Bots welcome" is a capability (success colour); "No bots" is a limit, not a feature. */
+.botsOk {
+  color: var(--pb-accent-3);
+}
+
+.botsNo {
+  color: var(--pb-text-muted);
+  font-weight: 600;
+}
+
 .cardMeta {
   font-size: var(--pb-font-caption);
   color: var(--pb-accent-2);

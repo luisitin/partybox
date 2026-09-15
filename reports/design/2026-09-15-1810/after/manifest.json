@@ -1,0 +1,156 @@
+[
+  {
+    "file": "bots/lobby-no-bots/iphone-vip.png",
+    "group": "bots",
+    "phase": "lobby-no-bots",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "vip",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "bots/lobby/tv-stage.png",
+    "group": "bots",
+    "phase": "lobby",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "note": "3 bots",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "bots/lobby/iphone-vip-owner-of-2.png",
+    "group": "bots",
+    "phase": "lobby",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "vip-owner-of-2",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "bots/lobby/iphone-se-owner-of-1.png",
+    "group": "bots",
+    "phase": "lobby",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "owner-of-1",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "bots/lobby/font200-no-bots.png",
+    "group": "bots",
+    "phase": "lobby",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "no-bots",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "bots/lobby-scrolled/iphone-vip.png",
+    "group": "bots",
+    "phase": "lobby-scrolled",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "vip",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "bots/selecting/iphone-vip.png",
+    "group": "bots",
+    "phase": "selecting",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "vip",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "bots/selecting/tv-stage.png",
+    "group": "bots",
+    "phase": "selecting",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "bots/selecting-refused/iphone-vip.png",
+    "group": "bots",
+    "phase": "selecting-refused",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "vip",
+    "note": "game without supportsBots",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "bots/selecting-refused/tv-stage.png",
+    "group": "bots",
+    "phase": "selecting-refused",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "bots/vip-menu/iphone-vip.png",
+    "group": "bots",
+    "phase": "vip-menu",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "vip",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "bots/playing/tv-stage.png",
+    "group": "bots",
+    "phase": "playing",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "note": "bots + spectator in the strip",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "bots/playing/pixel-spectator.png",
+    "group": "bots",
+    "phase": "playing",
+    "device": "pixel",
+    "deviceLabel": "Pixel 7",
+    "role": "spectator",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "bots/results/tv-stage.png",
+    "group": "bots",
+    "phase": "results",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "note": "bots on the board",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "bots/results/iphone-vip.png",
+    "group": "bots",
+    "phase": "results",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "vip",
+    "width": 393,
+    "height": 659
+  }
+]

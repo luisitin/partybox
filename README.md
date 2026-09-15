@@ -7,6 +7,10 @@ Games are plugins; two ship with v0.1: **Wisecrack** (write answers, vote for th
 
 ## Quickstart (Windows 11, macOS or Linux)
 
+Windows: double-click **`start-partybox.bat`** — it enables pnpm if needed, adds the firewall rule (one
+UAC prompt, first time only), installs, builds, starts the server and opens the TV page. Close the window
+to stop. Everything else below is the manual equivalent.
+
 ```bash
 corepack enable            # gives you pnpm (Node >= 24 required)
 pnpm install

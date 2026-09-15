@@ -109,6 +109,7 @@ export function Selecting({ controller, room, me }: SelectingProps): JSX.Element
   }
 
   const start = (): void => controller.vip({ action: 'start' });
+  const botCount = room.players.filter((p) => p.bot).length;
   return (
     <Screen
       title={t.lobby.pickGame}
@@ -146,7 +147,14 @@ export function Selecting({ controller, room, me }: SelectingProps): JSX.Element
                 <span className={styles.cardMeta}>
                   {t.selecting.players(g.minPlayers, g.maxPlayers)} ·{' '}
                   {t.selecting.minutes(g.estimatedMinutes)} ·{' '}
-                  {g.supportsBots ? `🤖 ${t.lobby.botsWelcome}` : t.lobby.noBots}
+                  {g.supportsBots ? (
+                    <span className={styles.botsOk}>🤖 {t.lobby.botsWelcome}</span>
+                  ) : (
+                    <span className={styles.botsNo}>
+                      {t.lobby.noBots}
+                      {botCount > 0 ? ` (${t.lobby.removeBotsFirst(botCount)})` : ''}
+                    </span>
+                  )}
                 </span>
                 {isSelected ? (
                   <span className={styles.cardDescription}>{g.description}</span>
