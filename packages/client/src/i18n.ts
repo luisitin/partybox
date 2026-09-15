@@ -2,6 +2,7 @@
 // friendly and consistent; games own their own copy.
 export const t = {
   appName: 'PartyBox',
+  appShort: 'PB',
   join: {
     title: 'Join the party',
     name: 'Your name',

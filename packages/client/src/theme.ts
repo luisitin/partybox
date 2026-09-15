@@ -49,12 +49,15 @@ export const THEMES: readonly ThemeSpec[] = [
 const KEY = 'partybox:theme';
 const DEFAULT: ThemeId = 'night';
 const listeners = new Set<() => void>();
+/** What is on <html> right now (a ?theme= override may differ from the stored choice). */
+let current: ThemeId | null = null;
 
 function isThemeId(value: string | null): value is ThemeId {
   return THEMES.some((t) => t.id === value);
 }
 
 export function getTheme(): ThemeId {
+  if (current) return current;
   try {
     const stored = localStorage.getItem(KEY);
     return isThemeId(stored) ? stored : DEFAULT;
@@ -65,6 +68,7 @@ export function getTheme(): ThemeId {
 
 /** Stamp the stored theme on <html>; call once at boot (before the first render). */
 export function applyTheme(id: ThemeId = getTheme()): void {
+  current = id;
   if (id === DEFAULT) delete document.documentElement.dataset['theme'];
   else document.documentElement.dataset['theme'] = id;
 }

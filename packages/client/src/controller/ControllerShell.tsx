@@ -34,7 +34,12 @@ export function ControllerShell({
     <div className={styles.shell} data-surface="controller">
       <header className={styles.header}>
         <div className={styles.left}>
-          <span className={styles.brand}>{t.appName}</span>
+          <span className={styles.brand} aria-label={t.appName}>
+            <span className={styles.brandFull}>{t.appName}</span>
+            <span className={styles.brandShort} aria-hidden>
+              {t.appShort}
+            </span>
+          </span>
           {room ? (
             <span className={styles.code} aria-label={`${t.lobby.room} ${room.code}`}>
               {room.code}

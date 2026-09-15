@@ -31,6 +31,22 @@
 
 .left {
   flex: 1 1 auto;
+  overflow: hidden;
+}
+
+/* Phone widths: the wordmark shrinks to its initials so code, theme, dot and badge always fit. */
+.brandShort {
+  display: none;
+}
+
+@media (max-width: 439px) {
+  .brandFull {
+    display: none;
+  }
+
+  .brandShort {
+    display: inline;
+  }
 }
 
 .brand,

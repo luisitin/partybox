@@ -26,6 +26,10 @@ same primitives. Games must not hard-code colours, sizes or durations — use th
 | `--pb-info`                       | `#4cc9f0`                                                         | informational toasts                          |
 | `--pb-player-1…8`                 | `#ff5d8f #ffd166 #06d6a0 #4cc9f0 #b388ff #ff9f43 #48dbfb #f368e0` | per-player chip hues (avatar id % 8)          |
 
+## Themes
+
+Five palettes re-declare the colour tokens (`tokens.css` → `[data-theme='…']`): `night` (default), `daylight` (light, `color-scheme: light`), `arcade`, `cabin`, `contrast`. The choice is per device (`localStorage`, `src/theme.ts`), picked from the TV corner 🎨 or the phone header 🎨; `?theme=<id>` forces one for previews and screenshots. Rules for a new theme: text ≥ 4.5:1 on `bg`/`surface`, `on-accent` ≥ 4.5:1 on every accent, `accent-2` readable as text on `surface` (light themes use a dark amber), player colours untouched.
+
 ## Type scale
 
 | Role                         | TV (1080p) | Phone | Token               |
