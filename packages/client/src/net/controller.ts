@@ -163,7 +163,7 @@ export function createController(url?: string): Controller {
   });
   socket.on('toast', (toast: ToastPayload) => {
     // "<name> joined" is TV information; on a phone it only piles up over the primary button.
-    if (/joined/.test(toast.text)) return;
+    if (/\bjoined\b/.test(toast.text)) return;
     const id = nextToastId();
     store.set(() => ({ toasts: [{ id, ...toast }] }));
     setTimeout(
