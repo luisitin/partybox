@@ -120,7 +120,11 @@ export const game: GameDefinition<State, Input> = {
   results,
   bot: {
     sampleInput(state, playerId, rng) {
-      if (state.phase.id !== 'answer' || !state.players[playerId] || playerId in state.answers)
+      if (
+        state.phase.id !== 'answer' ||
+        !Object.hasOwn(state.players, playerId) ||
+        playerId in state.answers
+      )
         return null;
       return { type: 'answer', text: rng.pick(WORDS.words) };
     },

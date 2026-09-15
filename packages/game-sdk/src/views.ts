@@ -55,6 +55,6 @@ export function controllerEnvelope(
 ): ControllerView {
   return {
     ...envelope(state, gameId, options),
-    me: { id: playerId, role: state.players[playerId] ? 'player' : 'spectator' },
+    me: { id: playerId, role: Object.hasOwn(state.players, playerId) ? 'player' : 'spectator' },
   };
 }

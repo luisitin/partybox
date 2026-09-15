@@ -11,9 +11,11 @@ export function enterAnswer(state: State, now: number): State {
 
 export function reduceAnswer(state: State, event: GameEvent<Input>): State {
   if (event.type === 'input') {
-    // Only playing players, only once each. Later inputs from the same player are ignored, which
-    // keeps "submitted" honest on the TV and makes replays trivially deterministic.
-    if (!state.players[event.playerId] || event.playerId in state.answers) return state;
+    // Only playing players (own keys — "constructor" is not a player, F-006), only once each.
+    // Later inputs from the same player are ignored, which keeps "submitted" honest on the TV
+    // and makes replays trivially deterministic.
+    if (!Object.hasOwn(state.players, event.playerId) || event.playerId in state.answers)
+      return state;
     const next: State = {
       ...state,
       answers: { ...state.answers, [event.playerId]: event.input.text.trim() },

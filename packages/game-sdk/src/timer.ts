@@ -31,7 +31,10 @@ export function isPaused(state: GameStateBase): boolean {
 /** Applies `player` events to `state.players[].connected`; other players are ignored. */
 export function setConnected<S extends GameStateBase>(state: S, event: GameEvent<unknown>): S {
   if (event.type !== 'player') return state;
-  const player = state.players[event.playerId];
+  // Own keys only: `players['constructor']` would otherwise be Object's constructor (F-006).
+  const player = Object.hasOwn(state.players, event.playerId)
+    ? state.players[event.playerId]
+    : undefined;
   if (!player || player.connected === event.connected) return state;
   return {
     ...state,

@@ -48,6 +48,13 @@ describe('timer helpers', () => {
       base,
     );
   });
+  it('F-006: setConnected ignores prototype keys used as player ids', () => {
+    for (const id of ['constructor', '__proto__', 'toString', 'hasOwnProperty']) {
+      const next = setConnected(base, { type: 'player', now: 1, playerId: id, connected: false });
+      expect(next).toBe(base);
+      expect(Object.keys(next.players)).toEqual(['a', 'b']);
+    }
+  });
   it('applyVip pauses, resumes with a shifted deadline, ignores nonsense, delegates skip/end', () => {
     const handlers = {
       skip: (s: GameStateBase) => ({ ...s, phase: { ...s.phase, id: 'skipped' } }),
@@ -128,5 +135,7 @@ describe('view helpers', () => {
   it('controllerEnvelope marks unknown ids as spectators', () => {
     expect(controllerEnvelope(base, 'g', 'a').me).toEqual({ id: 'a', role: 'player' });
     expect(controllerEnvelope(base, 'g', 'zz').me).toEqual({ id: 'zz', role: 'spectator' });
+    // F-006: prototype keys are not players either.
+    expect(controllerEnvelope(base, 'g', 'constructor').me.role).toBe('spectator');
   });
 });
