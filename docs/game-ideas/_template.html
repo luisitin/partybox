@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{TITLE}} — PartyBox game idea {{NUMBER}}</title>
+    <style>
+      /* Self-contained: no external fonts, scripts or images. Print-friendly. Section ids are fixed
+         (s0 … s15) so every idea document has the same anatomy and the same anchors. */
+      :root {
+        --bg: #0f1020;
+        --surface: #1c1e3a;
+        --surface-2: #272a52;
+        --text: #f5f6ff;
+        --muted: #b3b7d9;
+        --accent: #ff5d8f;
+        --accent-2: #ffd166;
+        --accent-3: #06d6a0;
+        --danger: #ef476f;
+        --info: #4cc9f0;
+        --line: #2a2d55;
+        --font: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        font-family: var(--font);
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.5;
+        font-size: 16px;
+      }
+      a {
+        color: var(--info);
+      }
+      .layout {
+        display: grid;
+        grid-template-columns: 260px minmax(0, 1fr);
+        gap: 0;
+        min-height: 100vh;
+      }
+      nav.toc {
+        position: sticky;
+        top: 0;
+        align-self: start;
+        height: 100vh;
+        overflow: auto;
+        padding: 20px 16px;
+        border-right: 1px solid var(--line);
+        background: var(--surface);
+        font-size: 14px;
+      }
+      nav.toc .brand {
+        font-weight: 800;
+        color: var(--accent);
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        font-size: 12px;
+        margin-bottom: 8px;
+      }
+      nav.toc .doc-title {
+        font-weight: 800;
+        font-size: 18px;
+        margin-bottom: 16px;
+      }
+      nav.toc ol {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      nav.toc li a {
+        display: block;
+        padding: 6px 8px;
+        border-radius: 8px;
+        color: var(--muted);
+        text-decoration: none;
+      }
+      nav.toc li a:hover {
+        background: var(--surface-2);
+        color: var(--text);
+      }
+      nav.toc li a b {
+        display: inline-block;
+        width: 24px;
+        color: var(--accent-2);
+      }
+      nav.toc .links {
+        margin-top: 16px;
+        padding-top: 12px;
+        border-top: 1px solid var(--line);
+      }
+      main {
+        padding: 32px 48px 96px;
+        max-width: 1180px;
+      }
+      section {
+        margin-bottom: 56px;
+        scroll-margin-top: 16px;
+      }
+      h1 {
+        font-size: 40px;
+        line-height: 1.1;
+        margin: 0 0 8px;
+      }
+      h2 {
+        font-size: 26px;
+        margin: 0 0 16px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid var(--line);
+      }
+      h2 .n {
+        color: var(--accent-2);
+        margin-right: 10px;
+      }
+      h3 {
+        font-size: 19px;
+        margin: 28px 0 10px;
+        color: var(--accent-2);
+      }
+      h4 {
+        font-size: 16px;
+        margin: 20px 0 8px;
+      }
+      p,
+      li {
+        max-width: 78ch;
+      }
+      .pitch {
+        font-size: 20px;
+        color: var(--muted);
+        margin: 0 0 20px;
+      }
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 20px 24px;
+      }
+      .meta {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+        gap: 12px 20px;
+      }
+      .meta div {
+        font-size: 14px;
+      }
+      .meta dt {
+        color: var(--muted);
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+      .meta dd {
+        margin: 2px 0 0;
+        font-weight: 700;
+      }
+      .status {
+        display: inline-block;
+        padding: 2px 10px;
+        border-radius: 999px;
+        background: var(--surface-2);
+        color: var(--accent-2);
+        font-weight: 800;
+        font-size: 12px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 14px;
+        margin: 12px 0 20px;
+      }
+      th,
+      td {
+        text-align: left;
+        vertical-align: top;
+        padding: 8px 10px;
+        border-bottom: 1px solid var(--line);
+      }
+      th {
+        color: var(--muted);
+        font-weight: 700;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      tr:nth-child(even) td {
+        background: rgba(255, 255, 255, 0.02);
+      }
+      .scroll {
+        overflow-x: auto;
+      }
+      code,
+      pre {
+        font-family: var(--mono);
+        font-size: 13px;
+      }
+      code {
+        background: var(--surface-2);
+        padding: 1px 6px;
+        border-radius: 6px;
+      }
+      pre {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 16px 18px;
+        overflow-x: auto;
+        line-height: 1.45;
+        max-width: 100%;
+      }
+      pre code {
+        background: none;
+        padding: 0;
+      }
+      figure {
+        margin: 24px 0 32px;
+      }
+      figure.tv {
+        max-width: 960px;
+      }
+      figure.tv svg {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        display: block;
+      }
+      .phones {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 300px));
+        gap: 24px;
+        align-items: start;
+      }
+      .phones figure {
+        margin: 0;
+      }
+      .phones svg {
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        display: block;
+      }
+      figcaption {
+        color: var(--muted);
+        font-size: 14px;
+        margin-top: 10px;
+      }
+      figcaption b {
+        color: var(--text);
+      }
+      ol.callouts {
+        padding-left: 0;
+        list-style: none;
+        margin: 10px 0 0;
+        font-size: 14px;
+        color: var(--muted);
+      }
+      ol.callouts li {
+        margin: 4px 0;
+      }
+      ol.callouts li b.n {
+        display: inline-block;
+        min-width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: var(--accent-2);
+        color: var(--bg);
+        text-align: center;
+        font-weight: 800;
+        line-height: 22px;
+        margin-right: 8px;
+        font-size: 13px;
+      }
+      .grid2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+      }
+      .note {
+        border-left: 4px solid var(--accent-2);
+        background: var(--surface);
+        padding: 12px 16px;
+        border-radius: 0 12px 12px 0;
+        margin: 16px 0;
+      }
+      .warn {
+        border-left-color: var(--danger);
+      }
+      .swatches {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .swatch {
+        width: 120px;
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        font-size: 12px;
+      }
+      .swatch div {
+        height: 48px;
+      }
+      .swatch span {
+        display: block;
+        padding: 6px 8px;
+        background: var(--surface);
+      }
+      .score {
+        display: grid;
+        grid-template-columns: 200px 60px 1fr;
+        gap: 6px 14px;
+        align-items: baseline;
+        font-size: 14px;
+      }
+      .score b.v {
+        color: var(--accent-2);
+        font-size: 18px;
+      }
+      .content-list {
+        columns: 2;
+        column-gap: 32px;
+        font-size: 14px;
+      }
+      .content-list li {
+        break-inside: avoid;
+        margin-bottom: 4px;
+      }
+      .footer-note {
+        color: var(--muted);
+        font-size: 12px;
+        margin-top: 48px;
+        border-top: 1px solid var(--line);
+        padding-top: 12px;
+      }
+      @media (max-width: 900px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+        nav.toc {
+          position: static;
+          height: auto;
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+        main {
+          padding: 24px 16px 64px;
+        }
+        .grid2 {
+          grid-template-columns: 1fr;
+        }
+        .content-list {
+          columns: 1;
+        }
+      }
+      @media print {
+        body {
+          background: #fff;
+          color: #111;
+        }
+        nav.toc {
+          display: none;
+        }
+        .layout {
+          grid-template-columns: 1fr;
+        }
+        main {
+          padding: 0;
+          max-width: none;
+        }
+        section {
+          break-inside: avoid-page;
+          page-break-inside: avoid;
+        }
+        h2 {
+          break-after: avoid;
+        }
+        .card,
+        pre,
+        .note {
+          background: #f4f4f8;
+          color: #111;
+          border-color: #ccc;
+        }
+        code {
+          background: #eee;
+          color: #111;
+        }
+        th,
+        td {
+          border-color: #ccc;
+        }
+        a {
+          color: #0645ad;
+        }
+        figure.tv svg,
+        .phones svg {
+          border-color: #999;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="toc" aria-label="Table of contents">
+        <div class="brand">PartyBox · game idea {{NUMBER}}</div>
+        <div class="doc-title">{{TITLE}}</div>
+        <ol>
+          {{TOC}}
+        </ol>
+        <div class="links">
+          <a href="INDEX.html">← All ideas</a>
+        </div>
+      </nav>
+      <main>
+        {{BODY}}
+        <p class="footer-note">
+          Generated {{GENERATED}} from <code>docs/game-ideas/_src/{{SRC}}</code> by
+          <code>_tools/build.mjs</code>. Design-system tokens from
+          <code>docs/DESIGN_SYSTEM.md</code>; contract from <code>docs/GAME_CONTRACT.md</code>. TV
+          mockups are drawn at 960×540 (half of 1080p); phone mockups at 360×780.
+        </p>
+      </main>
+    </div>
+  </body>
+</html>
