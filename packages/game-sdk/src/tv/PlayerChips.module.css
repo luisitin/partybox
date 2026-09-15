@@ -8,11 +8,9 @@
 }
 
 .row {
-  /* Up to two rows so 16 players stay visible; anything beyond is clipped, never squeezed. */
+  /* Wraps so 16 players stay visible (two rows of sm chips at 1080p) instead of being clipped. */
   flex-wrap: wrap;
   gap: var(--pb-space-2) var(--pb-space-3);
-  max-height: calc(2 * (var(--pb-chip-size) + 2 * var(--pb-space-1)) + var(--pb-space-2));
-  overflow: hidden;
 }
 
 .grid {
