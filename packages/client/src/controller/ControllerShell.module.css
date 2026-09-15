@@ -160,7 +160,8 @@
   position: fixed;
   left: var(--pb-space-4);
   right: var(--pb-space-4);
-  bottom: calc(var(--pb-space-8) + env(safe-area-inset-bottom));
+  /* above the sticky footer (56 px button + padding), never over the thumb */
+  bottom: calc(var(--pb-space-8) + var(--pb-space-7) + env(safe-area-inset-bottom));
   display: flex;
   flex-direction: column;
   gap: var(--pb-space-2);

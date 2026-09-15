@@ -155,11 +155,13 @@ export function createController(url?: string): Controller {
     store.set({ rev: push.rev, view: push.view });
   });
   socket.on('toast', (toast: ToastPayload) => {
+    // "<name> joined" is TV information; on a phone it only piles up over the primary button.
+    if (/joined/.test(toast.text)) return;
     const id = nextToastId();
-    store.set((prev) => ({ toasts: [...prev.toasts.slice(-3), { id, ...toast }] }));
+    store.set(() => ({ toasts: [{ id, ...toast }] }));
     setTimeout(
       () => store.set((prev) => ({ toasts: prev.toasts.filter((t) => t.id !== id) })),
-      4000,
+      2500,
     );
   });
   socket.on('error', (error: ErrorPayload) => {
