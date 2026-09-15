@@ -26,7 +26,7 @@ The server never crashes on client input. The server is authoritative; clients r
 
 ## TV → server / server → TV
 
-`tv:join { roomCode? }` → server pushes `room`, `view { rev, view: TvView & { vip } }`, `toast`.
+`tv:join { roomCode? }` → server pushes `room`, `view { rev, view: TvView & { vip }, at }`, `toast`. `roomCode` defaults to the house room.
 TVs are pure observers: any player/VIP event from a TV socket is ignored.
 
 ## `rev` ordering
@@ -51,4 +51,4 @@ Every `room` and `view` push carries a per-room, monotonically increasing `rev`.
   selectedGameId: string | null, settings: Settings, results: GameResults | null, capacity: number, games: GameSummary[] }
 ```
 
-Filled in during Phase 2; see `packages/shared/src/protocol.ts` for the exact schema.
+`canStart` is computed by the engine (`docs/GLOSSARY.md`). Exact shapes: `packages/shared/src/protocol.ts`.

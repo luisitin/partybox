@@ -2,11 +2,12 @@
 
 The only process. Fastify + Socket.IO host that wires the pure engine to real sockets and timers.
 
-## Key files (Phase 2)
+## Key files
 
 - `src/main.ts` — CLI (`--port`, `--host`, `--dev`, `--dev-api`), banner with LAN IP / URLs / firewall hint, port-in-use warning.
 - `src/app.ts` — Fastify app: `/healthz`, static client (prod) or Vite middleware (dev, ADR-006), dev API.
-- `src/sockets.ts` — Socket.IO: zod validation, rate limit (20 inputs/s), 16 KB payloads, heartbeats, TV vs controller sockets.
+- `src/sockets.ts` — Socket.IO: zod validation, rate limit (20 inputs/s, non-VIP `vip` costs 5), payload size vs `manifest.maxInputBytes`, resume-by-token socket remapping, TV rooms.
+- `src/rate-limit.ts` — token bucket + `jsonBytes`.
 - `src/host.ts` — interprets engine effects: pushes views with `rev`, one timer per room, toasts, kicks.
 - `src/clock.ts` — injectable clock (real / frozen) used by everything that needs `now`.
 - `src/dev-api.ts` — `/api/dev/*` (docs/DEV_API.md). `src/bots.ts` — server-played bots.

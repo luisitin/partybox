@@ -1,0 +1,43 @@
+// `/api/info`: what the TV shows in its frame (join URL, QR) and what the join form needs
+// (how many rooms exist). Fetched once per page load and refreshed every minute.
+import { useEffect, useState } from 'react';
+
+export interface ServerInfo {
+  version: string;
+  publicHost: string;
+  port: number;
+  tvUrl: string;
+  joinUrl: string;
+  qrSvg: string;
+  rooms: { code: string; locked: boolean; players: number }[];
+  houseRoom: string;
+  dev: boolean;
+}
+
+let cached: ServerInfo | null = null;
+
+export async function fetchInfo(): Promise<ServerInfo> {
+  const res = await fetch('/api/info');
+  if (!res.ok) throw new Error(`info ${res.status}`);
+  cached = (await res.json()) as ServerInfo;
+  return cached;
+}
+
+export function useServerInfo(refreshMs = 60_000): ServerInfo | null {
+  const [info, setInfo] = useState<ServerInfo | null>(cached);
+  useEffect(() => {
+    let alive = true;
+    const load = (): void => {
+      fetchInfo()
+        .then((i) => alive && setInfo(i))
+        .catch(() => undefined);
+    };
+    load();
+    const handle = setInterval(load, refreshMs);
+    return () => {
+      alive = false;
+      clearInterval(handle);
+    };
+  }, [refreshMs]);
+  return info;
+}

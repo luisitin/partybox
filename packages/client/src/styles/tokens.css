@@ -1,0 +1,77 @@
+/* Design tokens (docs/DESIGN_SYSTEM.md). Every colour, size and duration in the app comes from here.
+   The TV shell and the controller shell each set a type-scale column via `data-surface`. */
+:root {
+  --pb-bg: #0f1020;
+  --pb-surface: #1c1e3a;
+  --pb-surface-2: #272a52;
+  --pb-text: #f5f6ff;
+  --pb-text-muted: #b3b7d9;
+  --pb-accent: #ff5d8f;
+  --pb-accent-2: #ffd166;
+  --pb-accent-3: #06d6a0;
+  --pb-danger: #ef476f;
+  --pb-info: #4cc9f0;
+  --pb-focus: #ffd166;
+  --pb-on-accent: #1a0b12;
+
+  --pb-player-1: #ff5d8f;
+  --pb-player-2: #ffd166;
+  --pb-player-3: #06d6a0;
+  --pb-player-4: #4cc9f0;
+  --pb-player-5: #b388ff;
+  --pb-player-6: #ff9f43;
+  --pb-player-7: #48dbfb;
+  --pb-player-8: #f368e0;
+
+  --pb-font-family:
+    'Segoe UI Variable Display', 'Segoe UI', system-ui, -apple-system, Roboto, 'Helvetica Neue',
+    Arial, sans-serif;
+  --pb-font-mono: ui-monospace, 'Cascadia Mono', Consolas, Menlo, monospace;
+
+  --pb-space-1: 4px;
+  --pb-space-2: 8px;
+  --pb-space-3: 12px;
+  --pb-space-4: 16px;
+  --pb-space-5: 24px;
+  --pb-space-6: 32px;
+  --pb-space-7: 48px;
+  --pb-space-8: 64px;
+
+  --pb-radius: 12px;
+  --pb-radius-lg: 24px;
+  --pb-touch: 44px;
+
+  --pb-motion-fast: 150ms;
+  --pb-motion-base: 300ms;
+  --pb-motion-slow: 600ms;
+  --pb-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  /* phone column by default; the TV shell overrides */
+  --pb-font-display: 48px;
+  --pb-font-h1: 28px;
+  --pb-font-h2: 22px;
+  --pb-font-body: 18px;
+  --pb-font-caption: 14px;
+  --pb-font-button: 20px;
+  --pb-chip-size: 40px;
+}
+
+[data-surface='tv'] {
+  --pb-font-display: 128px;
+  --pb-font-h1: 72px;
+  --pb-font-h2: 48px;
+  --pb-font-body: 36px;
+  --pb-font-caption: 28px;
+  --pb-font-button: 36px;
+  --pb-chip-size: 72px;
+  --pb-overscan-x: 5vw;
+  --pb-overscan-y: 5vh;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --pb-motion-fast: 0ms;
+    --pb-motion-base: 0ms;
+    --pb-motion-slow: 0ms;
+  }
+}

@@ -1,0 +1,115 @@
+.frame {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--pb-bg);
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--pb-space-6);
+  padding: var(--pb-overscan-y) var(--pb-overscan-x) 0;
+}
+
+.compact {
+  align-items: center;
+  padding-bottom: var(--pb-space-3);
+}
+
+.brandBlock {
+  display: flex;
+  align-items: baseline;
+  gap: var(--pb-space-5);
+  flex-wrap: wrap;
+}
+
+.brand {
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  color: var(--pb-accent);
+  letter-spacing: 0.02em;
+}
+
+.code {
+  font-family: var(--pb-font-mono);
+  font-size: var(--pb-font-h2);
+  font-weight: 800;
+  letter-spacing: 0.15em;
+}
+
+.codeLabel {
+  font-family: var(--pb-font-family);
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+  letter-spacing: 0;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.lock {
+  font-size: var(--pb-font-caption);
+}
+
+.offline {
+  font-size: var(--pb-font-caption);
+  color: var(--pb-accent-2);
+}
+
+.joinBlock {
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-4);
+}
+
+.url {
+  font-family: var(--pb-font-mono);
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+  white-space: nowrap;
+}
+
+.qr {
+  display: inline-block;
+  width: 120px;
+  height: 120px;
+  border-radius: var(--pb-radius);
+  overflow: hidden;
+  background: #fff;
+}
+
+.qr :global(svg) {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.main {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.toasts {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: var(--pb-space-3);
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-2);
+  pointer-events: none;
+}
+
+.toast {
+  padding: var(--pb-space-2) var(--pb-space-5);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface-2);
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  animation: pb-rise var(--pb-motion-base) var(--pb-ease) both;
+}

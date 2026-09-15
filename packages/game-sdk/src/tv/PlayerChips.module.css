@@ -1,0 +1,23 @@
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: var(--pb-space-3);
+  max-width: 100%;
+}
+
+.row {
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+
+.grid {
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.item {
+  min-width: 0;
+  max-width: 100%;
+}

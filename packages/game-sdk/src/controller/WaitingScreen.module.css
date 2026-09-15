@@ -1,0 +1,39 @@
+.center {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pb-space-3);
+  text-align: center;
+  padding: var(--pb-space-6) 0;
+}
+
+.glyph {
+  display: grid;
+  place-items: center;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  font-size: 48px;
+  font-weight: 900;
+  background: var(--pb-surface);
+  color: var(--pb-text-muted);
+}
+
+.done {
+  background: var(--pb-accent-3);
+  color: var(--pb-on-accent);
+}
+
+.watch {
+  color: var(--pb-info);
+}
+
+.title {
+  text-wrap: balance;
+}
+
+.hint {
+  color: var(--pb-text-muted);
+}

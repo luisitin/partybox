@@ -1,0 +1,12 @@
+.count {
+  color: var(--pb-text-muted);
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pb-space-2);
+}

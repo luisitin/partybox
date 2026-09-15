@@ -1,0 +1,103 @@
+/* Global reset + shared element styles. Component styles live in CSS Modules next to components. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--pb-bg);
+  color: var(--pb-text);
+  font-family: var(--pb-font-family);
+  font-size: var(--pb-font-body);
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  overscroll-behavior: none;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+h1 {
+  font-size: var(--pb-font-h1);
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+h2 {
+  font-size: var(--pb-font-h2);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+button,
+input,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: 0;
+  background: none;
+  padding: 0;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+  outline: 3px solid var(--pb-focus);
+  outline-offset: 2px;
+}
+
+.pb-muted {
+  color: var(--pb-text-muted);
+}
+
+.pb-caption {
+  font-size: var(--pb-font-caption);
+}
+
+.pb-display {
+  font-size: var(--pb-font-display);
+  font-weight: 900;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.pb-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@keyframes pb-rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.pb-enter {
+  animation: pb-rise var(--pb-motion-base) var(--pb-ease) both;
+}

@@ -1,0 +1,138 @@
+.games {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-3);
+}
+
+.card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-1);
+  padding: var(--pb-space-4);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  border: 3px solid transparent;
+  text-align: left;
+}
+
+.selected {
+  border-color: var(--pb-accent);
+  background: var(--pb-surface-2);
+}
+
+.cardTitle {
+  font-size: var(--pb-font-h2);
+  font-weight: 800;
+}
+
+.cardTagline {
+  color: var(--pb-text-muted);
+}
+
+.cardMeta {
+  font-size: var(--pb-font-caption);
+  color: var(--pb-accent-2);
+  font-weight: 700;
+}
+
+.cardDescription {
+  margin-top: var(--pb-space-2);
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text);
+}
+
+.settings {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-2);
+}
+
+.settingsTitle {
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  color: var(--pb-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.setting {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--pb-space-3);
+  min-height: 56px;
+  padding: var(--pb-space-2) var(--pb-space-4);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+}
+
+.settingLabel {
+  display: flex;
+  flex-direction: column;
+  font-weight: 700;
+}
+
+.settingLabel small {
+  font-weight: 400;
+  color: var(--pb-text-muted);
+  font-size: var(--pb-font-caption);
+}
+
+.checkbox {
+  width: 28px;
+  height: 28px;
+  accent-color: var(--pb-accent);
+}
+
+.stepper {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+}
+
+.stepper button {
+  width: var(--pb-touch);
+  height: var(--pb-touch);
+  border-radius: 50%;
+  background: var(--pb-surface-2);
+  font-size: var(--pb-font-h2);
+  font-weight: 800;
+}
+
+.stepper output {
+  min-width: 2.5ch;
+  text-align: center;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.select {
+  min-height: var(--pb-touch);
+  padding: 0 var(--pb-space-3);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface-2);
+  border: 0;
+  font-weight: 700;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-2);
+}
+
+.reason {
+  font-size: var(--pb-font-caption);
+  color: var(--pb-accent-2);
+  text-align: center;
+}
+
+.back {
+  min-height: var(--pb-touch);
+  color: var(--pb-text-muted);
+  font-weight: 700;
+}

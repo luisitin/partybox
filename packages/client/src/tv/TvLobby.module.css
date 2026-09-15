@@ -1,0 +1,60 @@
+.split {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  gap: var(--pb-space-8);
+  align-items: start;
+}
+
+.join {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pb-space-4);
+  text-align: center;
+  padding: var(--pb-space-6);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface);
+}
+
+.qr {
+  display: block;
+  width: 360px;
+  height: 360px;
+  padding: var(--pb-space-3);
+  border-radius: var(--pb-radius);
+  background: #fff;
+}
+
+.qr :global(svg) {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.or {
+  color: var(--pb-text-muted);
+  font-size: var(--pb-font-caption);
+}
+
+.url {
+  font-family: var(--pb-font-mono);
+  overflow-wrap: anywhere;
+}
+
+.code {
+  font-size: var(--pb-font-body);
+  color: var(--pb-text-muted);
+}
+
+.code strong {
+  font-family: var(--pb-font-mono);
+  letter-spacing: 0.15em;
+  color: var(--pb-text);
+}
+
+.players {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-5);
+}

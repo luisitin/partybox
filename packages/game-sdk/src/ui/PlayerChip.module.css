@@ -1,0 +1,74 @@
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+  padding: var(--pb-space-1) var(--pb-space-3) var(--pb-space-1) var(--pb-space-1);
+  border-radius: 999px;
+  background: var(--pb-surface);
+  max-width: 100%;
+  transition:
+    opacity var(--pb-motion-fast) var(--pb-ease),
+    transform var(--pb-motion-fast) var(--pb-ease);
+}
+
+.sm {
+  --pb-chip-size: 28px;
+  font-size: var(--pb-font-caption);
+}
+
+.lg {
+  --pb-chip-size: calc(var(--pb-font-h2) * 1.6);
+  font-size: var(--pb-font-h2);
+  padding-right: var(--pb-space-4);
+}
+
+.avatar {
+  position: relative;
+  display: inline-flex;
+}
+
+.crown {
+  position: absolute;
+  right: -4px;
+  top: -6px;
+  font-size: 0.7em;
+  color: var(--pb-accent-2);
+  text-shadow: 0 0 2px #000;
+}
+
+.name {
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+.glyph {
+  font-weight: 800;
+  color: var(--pb-text-muted);
+}
+
+.ok {
+  color: var(--pb-accent-3);
+}
+
+.score {
+  margin-left: var(--pb-space-2);
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  color: var(--pb-accent-2);
+}
+
+.active {
+  outline: 3px solid var(--pb-accent-2);
+  transform: scale(1.04);
+}
+
+.off .name {
+  color: var(--pb-text-muted);
+}
+
+.spectator {
+  opacity: 0.6;
+}

@@ -1,0 +1,49 @@
+.playing {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.center {
+  flex: 1;
+  display: grid;
+  place-items: center;
+}
+
+.strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--pb-space-5);
+  padding: 0 var(--pb-overscan-x) var(--pb-space-3);
+}
+
+.game {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  animation: pb-rise var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.curtain {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgb(15 16 32 / 85%);
+}
+
+.vip {
+  position: absolute;
+  right: var(--pb-overscan-x);
+  bottom: var(--pb-overscan-y);
+  padding: var(--pb-space-1) var(--pb-space-4);
+  border-radius: 999px;
+  background: var(--pb-surface);
+  color: var(--pb-accent-2);
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+}

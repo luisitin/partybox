@@ -30,4 +30,4 @@ curl -X POST :42069/api/dev/start -d '{"gameId":"wisecrack","seed":1}' -H 'conte
 curl -X POST :42069/api/dev/skip
 ```
 
-Filled in during Phase 2 (implementation) and Phase 7 (preview).
+Also public (not dev-only): `GET /api/info` → `{ version, publicHost, port, tvUrl, joinUrl, qrSvg, rooms[], houseRoom, dev }` — what the TV frame and the join form read.

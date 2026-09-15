@@ -1,0 +1,60 @@
+.board {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-2);
+  width: 100%;
+  max-width: 28em;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1.6em auto 1fr auto auto;
+  align-items: center;
+  gap: var(--pb-space-3);
+  padding: var(--pb-space-2) var(--pb-space-4);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  font-size: var(--pb-font-h2);
+  font-weight: 700;
+}
+
+.compact .row {
+  font-size: var(--pb-font-body);
+  padding: var(--pb-space-2) var(--pb-space-3);
+}
+
+.top {
+  background: var(--pb-surface-2);
+  outline: 3px solid var(--pb-accent-2);
+}
+
+.me {
+  box-shadow: inset 4px 0 0 var(--pb-accent);
+}
+
+.rank {
+  text-align: center;
+  color: var(--pb-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.delta {
+  color: var(--pb-accent-3);
+  font-size: 0.8em;
+}
+
+.score {
+  font-variant-numeric: tabular-nums;
+  color: var(--pb-accent-2);
+  font-weight: 900;
+}

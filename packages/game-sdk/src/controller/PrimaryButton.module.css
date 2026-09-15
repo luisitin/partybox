@@ -1,0 +1,47 @@
+.button {
+  width: 100%;
+  min-height: 56px;
+  padding: var(--pb-space-3) var(--pb-space-5);
+  border-radius: var(--pb-radius);
+  font-size: var(--pb-font-button);
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  transition:
+    transform var(--pb-motion-fast) var(--pb-ease),
+    opacity var(--pb-motion-fast) var(--pb-ease);
+}
+
+.button:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.button:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.accent {
+  background: var(--pb-accent);
+  color: var(--pb-on-accent);
+}
+
+.neutral {
+  background: var(--pb-surface-2);
+  color: var(--pb-text);
+}
+
+.danger {
+  background: var(--pb-danger);
+  color: var(--pb-on-accent);
+}
+
+.success {
+  background: var(--pb-accent-3);
+  color: var(--pb-on-accent);
+}
+
+.done {
+  background: var(--pb-accent-3);
+  color: var(--pb-on-accent);
+  opacity: 1 !important;
+}

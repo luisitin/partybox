@@ -102,16 +102,20 @@ export interface WelcomePayload {
   playerId: string;
   token: string;
   room: RoomSnapshot;
+  at: number;
 }
 
 export interface RoomPush {
   rev: number;
   room: RoomSnapshot;
+  /** Server time when pushed; clients derive their clock offset from it. */
+  at: number;
 }
 
 export interface ViewPush<V> {
   rev: number;
   view: V;
+  at: number;
 }
 
 export type ToastKind = 'info' | 'success' | 'warning';

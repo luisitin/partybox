@@ -24,33 +24,29 @@ const targets: Target[] = [
   {
     file: join(REPO_ROOT, 'packages/server/src/games.generated.ts'),
     render: (games) =>
-      games.length === 0
-        ? `${HEADER}// No games yet. Add one with: pnpm new-game <id>\nexport const serverGames: Readonly<Record<string, never>> = {};\n`
-        : `${HEADER}import type { AnyGameDefinition } from '@partybox/shared';\n` +
-          games
-            .map(
-              (g) => `import { game as ${g.ident} } from '../../../games/${g.id}/server/index';\n`,
-            )
-            .join('') +
-          `\nexport const serverGames: Readonly<Record<string, AnyGameDefinition>> = {\n` +
-          games.map((g) => `  '${g.id}': ${g.ident},\n`).join('') +
-          `};\n`,
+      `${HEADER}import type { AnyGameDefinition } from '@partybox/shared';\n` +
+      (games.length === 0 ? '// No games yet. Add one with: pnpm new-game <id>\n' : '') +
+      games
+        .map((g) => `import { game as ${g.ident} } from '../../../games/${g.id}/server/index';\n`)
+        .join('') +
+      `\nexport const serverGames: Readonly<Record<string, AnyGameDefinition>> = {\n` +
+      games.map((g) => `  '${g.id}': ${g.ident},\n`).join('') +
+      `};\n`,
   },
   {
     file: join(REPO_ROOT, 'packages/client/src/games.generated.ts'),
     render: (games) =>
-      games.length === 0
-        ? `${HEADER}// No games yet. Add one with: pnpm new-game <id>\nexport const clientGames: Readonly<Record<string, never>> = {};\n`
-        : `${HEADER}import type { GameClientModule } from '@partybox/game-sdk';\n` +
-          games
-            .map(
-              (g) =>
-                `import { clientModule as ${g.ident} } from '../../../games/${g.id}/client/index';\n`,
-            )
-            .join('') +
-          `\nexport const clientGames: Readonly<Record<string, GameClientModule>> = {\n` +
-          games.map((g) => `  '${g.id}': ${g.ident},\n`).join('') +
-          `};\n`,
+      `${HEADER}import type { GameClientModule } from '@partybox/game-sdk';\n` +
+      (games.length === 0 ? '// No games yet. Add one with: pnpm new-game <id>\n' : '') +
+      games
+        .map(
+          (g) =>
+            `import { clientModule as ${g.ident} } from '../../../games/${g.id}/client/index';\n`,
+        )
+        .join('') +
+      `\nexport const clientGames: Readonly<Record<string, GameClientModule>> = {\n` +
+      games.map((g) => `  '${g.id}': ${g.ident},\n`).join('') +
+      `};\n`,
   },
 ];
 

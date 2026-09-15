@@ -1,0 +1,13 @@
+.stage {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-5);
+  min-height: 100%;
+  padding: var(--pb-overscan-y, 5vh) var(--pb-overscan-x, 5vw);
+}
+
+.center {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}

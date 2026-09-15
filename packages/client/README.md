@@ -2,15 +2,15 @@
 
 Vite + React front end: the TV stage (`/tv`), the phone controller (`/`), and the dev preview.
 
-## Key files (Phase 2)
+## Key files
 
 - `src/main.tsx` — route switch (`/tv`, `/`, `/preview/...`), no router library (ADR-011).
-- `src/net/store.ts` — one socket.io-client store (`useSyncExternalStore`), token in `localStorage`, `rev` gating, reconnect state.
-- `src/tv/TvShell.tsx` — stage frame: join URL + QR, room code, envelope (timer, chips, VIP overlay), sound + mute, "tap to start".
-- `src/controller/ControllerShell.tsx` — phone frame: header (room, me, connection, VIP badge), reconnect banner, game loader.
-- `src/core/{Join,Lobby,Selecting,Results}.tsx` — core screens shared by every game.
+- `src/net/store.ts` — tiny external store + `useStore`. `src/net/controller.ts` — the phone connection (join/resume by token in `localStorage`, `rev` gating, clock offset, toasts, kicked). `src/net/tv.ts` — the TV observer. `src/net/info.ts` — `/api/info` hook.
+- `src/tv/TvApp.tsx` + `TvFrame.tsx` — stage chrome (room code, join URL, QR) and sound cues; `TvLobby`, `TvSelecting`, `TvPlaying` (envelope: chips + timer + VIP overlay + paused curtain), `TvResults`, `AudioGate` (tap to start, mute, fullscreen).
+- `src/controller/ControllerApp.tsx` + `ControllerShell.tsx` — phone frame: header (room, me, connection dot, VIP badge → `VipMenu`), reconnect banner, error strip, toasts.
+- `src/controller/{Join,Lobby,Selecting,Playing,Results}.tsx` — core screens; `Playing` mounts the game.s lazy Controller inside `GameErrorBoundary`; `results-rows.ts` is shared with the TV.
 - `src/preview/Preview.tsx` — renders a fixture's view fetched from the dev API.
-- `src/styles/tokens.css` — design tokens (docs/DESIGN_SYSTEM.md). `src/sound.ts` — Web Audio cues.
+- `src/styles/tokens.css` + `global.css` — design tokens and reset (docs/DESIGN_SYSTEM.md). `src/sound.ts` — synthesized Web Audio cues. `src/i18n.ts` — every core string.
 - `src/games.generated.ts` — GENERATED lazy game modules (ADR-003).
 
 ## Test
