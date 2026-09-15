@@ -1,9 +1,10 @@
-// Phone frame: header (room code, me, connection, VIP badge + menu), calm reconnect banner,
-// toasts and the error strip. Everything below the header is the current screen.
+// Phone frame: header (room code, me, connection, VIP badge + menu), a countdown line during play
+// (the TV timer is 3 m away), calm reconnect banner, toasts and the error strip. Everything below
+// the header is the current screen.
 import { useState } from 'react';
 import type { JSX, ReactNode } from 'react';
 import type { PlayerPublic } from '@partybox/shared';
-import { Avatar } from '@partybox/game-sdk/ui';
+import { Avatar, DeadlineBar, useSecondsLeft } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import type { Controller, ControllerState } from '../net/controller';
 import styles from './ControllerShell.module.css';
@@ -25,6 +26,8 @@ export function ControllerShell({
   const [menuOpen, setMenuOpen] = useState(false);
   const room = state.room;
   const showBanner = state.connection !== 'connected' && state.joined;
+  const view = room?.status === 'playing' ? state.view : null;
+  const seconds = useSecondsLeft(view?.deadline ?? null, view?.paused ?? false);
   return (
     <div className={styles.shell} data-surface="controller">
       <header className={styles.header}>
@@ -62,12 +65,24 @@ export function ControllerShell({
           ) : null}
         </div>
       </header>
+      {view && seconds !== null ? (
+        <div
+          className={`${styles.deadline} ${seconds <= 5 && !view.paused ? styles.urgent : ''}`}
+          role="timer"
+          aria-label={view.paused ? t.tv.paused : t.connection.secondsLeft(seconds)}
+        >
+          <DeadlineBar deadline={view.deadline} phaseKey={view.phaseId} paused={view.paused} />
+          <span className={styles.seconds}>
+            {view.paused ? `⏸ ${t.tv.paused}` : t.connection.seconds(seconds)}
+          </span>
+        </div>
+      ) : null}
       {showBanner ? (
         <div className={styles.banner} role="status">
           {t.connection.reconnecting}
         </div>
       ) : null}
-      {state.error ? (
+      {state.error && state.joined ? (
         <button type="button" className={styles.error} onClick={controller.dismissError}>
           {state.error.message}
         </button>
@@ -86,7 +101,13 @@ export function ControllerShell({
         ))}
       </div>
       {menuOpen && room && me?.isVip ? (
-        <VipMenu controller={controller} room={room} me={me} onClose={() => setMenuOpen(false)} />
+        <VipMenu
+          controller={controller}
+          room={room}
+          me={me}
+          paused={view?.paused ?? false}
+          onClose={() => setMenuOpen(false)}
+        />
       ) : null}
     </div>
   );

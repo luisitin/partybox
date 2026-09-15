@@ -13,12 +13,14 @@ export interface TvLobbyProps {
 export function TvLobby({ room }: TvLobbyProps): JSX.Element {
   const info = useServerInfo();
   const players = room?.players ?? [];
+  const vip = players.find((p) => p.isVip);
+  const full = room !== null && players.length >= room.capacity;
   return (
     <Stage>
       <div className={styles.split}>
-        <div className={styles.join}>
-          <BigText level="h2" tone="muted">
-            {t.lobby.scan}
+        <div className={`${styles.join} ${full ? styles.full : ''}`}>
+          <BigText level="h2" tone={full ? 'accent' : 'muted'}>
+            {full ? t.lobby.full : t.lobby.scan}
           </BigText>
           {info ? (
             <span
@@ -43,9 +45,7 @@ export function TvLobby({ room }: TvLobbyProps): JSX.Element {
             {room ? t.lobby.players(players.length, room.capacity) : t.connection.connecting}
           </BigText>
           {players.length === 0 ? (
-            <p className="pb-muted">
-              {t.lobby.waitingForVip.replace('the VIP to pick a game', 'the first player')}
-            </p>
+            <p className="pb-muted">{t.lobby.waitingForFirst}</p>
           ) : (
             <PlayerChips
               players={players.map((p) => ({
@@ -58,9 +58,10 @@ export function TvLobby({ room }: TvLobbyProps): JSX.Element {
               vip={room?.vip}
               layout="grid"
               size="lg"
+              align="start"
             />
           )}
-          {room && room.vip ? <p className="pb-muted pb-caption">{t.lobby.waitingForVip}</p> : null}
+          {room && vip ? <p className="pb-muted">{t.lobby.waitingFor(vip.name)}</p> : null}
         </div>
       </div>
     </Stage>

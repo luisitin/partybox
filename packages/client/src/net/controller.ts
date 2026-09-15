@@ -33,6 +33,8 @@ export interface ControllerState {
   error: ErrorPayload | null;
   toasts: Toast[];
   kicked: string | null;
+  /** The stored session was rejected (server restarted, room gone): the join form explains why. */
+  restarted: boolean;
 }
 
 const SESSION_KEY = 'partybox:session';
@@ -86,6 +88,7 @@ export function createController(url?: string): Controller {
     error: null,
     toasts: [],
     kicked: null,
+    restarted: false,
   });
   const socket: Socket = io(url ?? '/', { transports: ['websocket', 'polling'] });
   let seq = 0;
@@ -120,8 +123,11 @@ export function createController(url?: string): Controller {
       sendJoin(session, session.token);
     }
   });
-  socket.on('disconnect', () => {
+  socket.on('disconnect', (reason) => {
     store.set({ connection: store.get().joined ? 'reconnecting' : 'connecting' });
+    // A kick closes the socket from the server side; socket.io treats that as final, but the
+    // person still needs a live connection to join again (or another room) without reloading.
+    if (reason === 'io server disconnect') socket.connect();
   });
   socket.on('welcome', (payload: WelcomePayload) => {
     const session = pending ?? loadSession();
@@ -137,6 +143,7 @@ export function createController(url?: string): Controller {
       view: null,
       error: null,
       kicked: null,
+      restarted: false,
     });
   });
   socket.on('room', (push: RoomPush) => {
@@ -155,18 +162,20 @@ export function createController(url?: string): Controller {
     store.set({ rev: push.rev, view: push.view });
   });
   socket.on('toast', (toast: ToastPayload) => {
+    // "<name> joined" is TV information; on a phone it only piles up over the primary button.
+    if (/\bjoined\b/.test(toast.text)) return;
     const id = nextToastId();
-    store.set((prev) => ({ toasts: [...prev.toasts.slice(-3), { id, ...toast }] }));
+    store.set(() => ({ toasts: [{ id, ...toast }] }));
     setTimeout(
       () => store.set((prev) => ({ toasts: prev.toasts.filter((t) => t.id !== id) })),
-      4000,
+      2500,
     );
   });
   socket.on('error', (error: ErrorPayload) => {
     if (store.get().resuming) {
       // The stored session is stale (server restarted, room gone): show the join form instead.
       saveSession(null);
-      store.set({ resuming: false, error: null });
+      store.set({ resuming: false, error: null, restarted: true });
       return;
     }
     if (error.code === 'rate_limited') return;

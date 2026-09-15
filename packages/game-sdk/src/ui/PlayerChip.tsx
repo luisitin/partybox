@@ -13,13 +13,16 @@ export interface PlayerChipProps {
   score?: number;
   /** Highlight (e.g. it is this player's turn). */
   active?: boolean;
+  /** This chip is the viewer: a small "you" tag (not the turn outline). */
+  isMe?: boolean;
   size?: 'sm' | 'md' | 'lg';
 }
 
 const GLYPH: Record<NonNullable<PlayerChipProps['status']>, { text: string; label: string }> = {
   active: { text: '', label: '' },
   submitted: { text: '✓', label: 'submitted' },
-  waiting: { text: '…', label: 'waiting' },
+  // An en dash, not "…": three dots read as "still typing" during a reveal.
+  waiting: { text: '–', label: 'waiting' },
   spectator: { text: '◎', label: 'spectator' },
 };
 
@@ -32,6 +35,7 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
     isVip,
     score,
     active,
+    isMe,
     size = 'md',
   } = props;
   const glyph = connected ? GLYPH[status] : { text: '⟳', label: 'reconnecting' };
@@ -45,17 +49,22 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
   return (
     <div
       className={classes}
-      aria-label={`${name}${isVip ? ', VIP' : ''}${glyph.label ? `, ${glyph.label}` : ''}`}
+      aria-label={`${name}${isMe ? ' (you)' : ''}${isVip ? ', VIP' : ''}${glyph.label ? `, ${glyph.label}` : ''}`}
     >
       <span className={styles.avatar}>
         <Avatar avatarId={avatarId} dim={!connected || status === 'spectator'} />
-        {isVip ? (
-          <span className={styles.crown} aria-hidden>
-            ★
-          </span>
-        ) : null}
       </span>
       <span className={styles.name}>{name}</span>
+      {isMe ? (
+        <span className={styles.you} aria-hidden>
+          you
+        </span>
+      ) : null}
+      {isVip ? (
+        <span className={styles.vip} aria-hidden>
+          ★ VIP
+        </span>
+      ) : null}
       {glyph.text ? (
         <span
           className={`${styles.glyph} ${status === 'submitted' && connected ? styles.ok : ''}`}

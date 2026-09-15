@@ -58,6 +58,11 @@ export function VoteList(props: VoteListProps): JSX.Element {
           );
         })}
       </div>
+      {votedId !== null ? (
+        <p className={styles.locked} role="status">
+          ✓ Vote in — look at the TV
+        </p>
+      ) : null}
     </Screen>
   );
 }

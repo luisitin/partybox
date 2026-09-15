@@ -1,6 +1,7 @@
-// VIP sheet: game controls while playing (skip / pause / resume / end), room lock, and per-player
-// kick / transfer. Destructive actions ask once (tap again) so a pocket-tap can't end a game.
-import { useState } from 'react';
+// VIP sheet: game controls while playing (skip / pause or resume / end), room lock, and per-player
+// kick / transfer. Destructive actions ask once (tap again within 4 s) so a pocket-tap can't end a
+// game; the confirm state is loud (danger tone + "Confirm …"). Close is a ✕ in the sticky header.
+import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
 import type { PlayerPublic, RoomSnapshot } from '@partybox/shared';
 import { Avatar, PrimaryButton } from '@partybox/game-sdk/ui';
@@ -12,11 +13,20 @@ export interface VipMenuProps {
   controller: Controller;
   room: RoomSnapshot;
   me: PlayerPublic;
+  /** Current game paused state (from the pushed view), for the Pause/Resume toggle. */
+  paused?: boolean;
   onClose: () => void;
 }
 
-export function VipMenu({ controller, room, me, onClose }: VipMenuProps): JSX.Element {
+const CONFIRM_MS = 4000;
+
+export function VipMenu({ controller, room, me, paused, onClose }: VipMenuProps): JSX.Element {
   const [confirm, setConfirm] = useState<string | null>(null);
+  useEffect(() => {
+    if (confirm === null) return;
+    const handle = setTimeout(() => setConfirm(null), CONFIRM_MS);
+    return () => clearTimeout(handle);
+  }, [confirm]);
   const playing = room.status === 'playing';
   const act = (key: string, run: () => void, dangerous = false): void => {
     if (dangerous && confirm !== key) {
@@ -26,7 +36,8 @@ export function VipMenu({ controller, room, me, onClose }: VipMenuProps): JSX.El
     setConfirm(null);
     run();
   };
-  const label = (key: string, text: string): string => (confirm === key ? `${text}?` : text);
+  const label = (key: string, text: string): string =>
+    confirm === key ? t.vip.confirm(text) : text;
   return (
     <div
       className={styles.backdrop}
@@ -36,7 +47,12 @@ export function VipMenu({ controller, room, me, onClose }: VipMenuProps): JSX.El
       onClick={onClose}
     >
       <div className={styles.sheet} onClick={(e) => e.stopPropagation()}>
-        <h2 className={styles.title}>{t.vip.menu}</h2>
+        <div className={styles.head}>
+          <h2 className={styles.title}>{t.vip.menu}</h2>
+          <button type="button" className={styles.close} onClick={onClose} aria-label={t.vip.close}>
+            ✕
+          </button>
+        </div>
         {playing ? (
           <div className={styles.group}>
             <PrimaryButton
@@ -47,18 +63,13 @@ export function VipMenu({ controller, room, me, onClose }: VipMenuProps): JSX.El
             </PrimaryButton>
             <PrimaryButton
               tone="neutral"
-              onClick={() => act('pause', () => controller.vip({ action: 'pause' }))}
+              onClick={() => controller.vip({ action: paused ? 'resume' : 'pause' })}
             >
-              {t.vip.pause}
+              {paused ? t.vip.resume : t.vip.pause}
             </PrimaryButton>
             <PrimaryButton
-              tone="neutral"
-              onClick={() => act('resume', () => controller.vip({ action: 'resume' }))}
-            >
-              {t.vip.resume}
-            </PrimaryButton>
-            <PrimaryButton
-              tone="danger"
+              tone={confirm === 'end' ? 'danger' : 'neutral'}
+              className={styles.wide}
               onClick={() =>
                 act(
                   'end',
@@ -77,6 +88,7 @@ export function VipMenu({ controller, room, me, onClose }: VipMenuProps): JSX.El
         <div className={styles.group}>
           <PrimaryButton
             tone="neutral"
+            className={styles.wide}
             onClick={() => controller.vip({ action: room.locked ? 'unlock' : 'lock' })}
           >
             {room.locked ? t.vip.unlock : t.vip.lock}
@@ -91,7 +103,7 @@ export function VipMenu({ controller, room, me, onClose }: VipMenuProps): JSX.El
                 <span className={styles.playerName}>{p.name}</span>
                 <button
                   type="button"
-                  className={styles.small}
+                  className={`${styles.small} ${confirm === `vip:${p.id}` ? styles.confirming : ''}`}
                   onClick={() =>
                     act(
                       `vip:${p.id}`,
@@ -104,7 +116,7 @@ export function VipMenu({ controller, room, me, onClose }: VipMenuProps): JSX.El
                 </button>
                 <button
                   type="button"
-                  className={`${styles.small} ${styles.danger}`}
+                  className={`${styles.small} ${styles.danger} ${confirm === `kick:${p.id}` ? styles.confirming : ''}`}
                   onClick={() =>
                     act(
                       `kick:${p.id}`,
@@ -118,7 +130,6 @@ export function VipMenu({ controller, room, me, onClose }: VipMenuProps): JSX.El
               </li>
             ))}
         </ul>
-        <PrimaryButton onClick={onClose}>{t.vip.close}</PrimaryButton>
       </div>
     </div>
   );

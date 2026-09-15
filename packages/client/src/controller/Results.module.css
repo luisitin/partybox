@@ -14,7 +14,16 @@
 
 .row {
   display: flex;
-  gap: var(--pb-space-2);
+  justify-content: center;
+  gap: var(--pb-space-5);
+}
+
+/* Secondary choices as text buttons: the footer stays one primary button tall. */
+.secondary {
+  min-height: var(--pb-touch);
+  padding: 0 var(--pb-space-2);
+  color: var(--pb-text-muted);
+  font-weight: 700;
 }
 
 .wait {

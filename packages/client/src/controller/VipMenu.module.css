@@ -20,14 +20,39 @@
   animation: pb-rise var(--pb-motion-base) var(--pb-ease) both;
 }
 
+.head {
+  position: sticky;
+  top: calc(-1 * var(--pb-space-4));
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: calc(-1 * var(--pb-space-4)) calc(-1 * var(--pb-space-4)) 0;
+  padding: var(--pb-space-3) var(--pb-space-4);
+  background: var(--pb-surface);
+}
+
 .title {
   font-size: var(--pb-font-h2);
+}
+
+.close {
+  width: var(--pb-touch);
+  height: var(--pb-touch);
+  border-radius: 50%;
+  background: var(--pb-surface-2);
+  font-size: var(--pb-font-body);
+  font-weight: 800;
 }
 
 .group {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--pb-space-2);
+}
+
+.wide {
+  grid-column: 1 / -1;
 }
 
 .players {
@@ -66,4 +91,10 @@
 
 .danger {
   color: var(--pb-danger);
+}
+
+/* Second tap needed: the button itself turns loud instead of a "?" suffix. */
+.confirming {
+  background: var(--pb-danger);
+  color: var(--pb-on-accent);
 }

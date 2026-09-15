@@ -12,8 +12,12 @@
 }
 
 .sm {
-  --pb-chip-size: 28px;
+  --pb-chip-size: max(28px, calc(var(--pb-font-caption) * 1.45));
   font-size: var(--pb-font-caption);
+}
+
+.md {
+  font-size: var(--pb-font-body);
 }
 
 .lg {
@@ -27,13 +31,28 @@
   display: inline-flex;
 }
 
-.crown {
-  position: absolute;
-  right: -4px;
-  top: -6px;
+.you {
+  flex-shrink: 0;
+  padding: 0 0.45em;
+  border-radius: 999px;
+  background: var(--pb-surface-2);
+  color: var(--pb-text-muted);
   font-size: 0.7em;
-  color: var(--pb-accent-2);
-  text-shadow: 0 0 2px #000;
+  font-weight: 800;
+  line-height: 1.6;
+}
+
+/* Readable from the couch (the old 0.7em star over the avatar was 12–20 px on the TV strip). */
+.vip {
+  flex-shrink: 0;
+  padding: 0 0.45em;
+  border-radius: 999px;
+  background: var(--pb-accent-2);
+  color: var(--pb-on-accent);
+  font-size: 0.7em;
+  font-weight: 900;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
 }
 
 .name {
@@ -46,6 +65,8 @@
 
 .glyph {
   font-weight: 800;
+  font-size: 1.15em;
+  line-height: 1;
   color: var(--pb-text-muted);
 }
 

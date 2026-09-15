@@ -11,9 +11,19 @@ import './styles/tokens.css';
 import './styles/global.css';
 import { TvApp } from './tv/TvApp';
 
+// The surface is also stamped on <html> so `body` and overlays rendered outside the shell (the audio
+// gate) inherit the TV or phone type column (tokens.css) instead of the default phone sizes.
 function route(pathname: string): JSX.Element {
-  if (pathname === '/tv' || pathname === '/tv/') return <TvApp />;
-  if (pathname.startsWith('/preview/')) return <Preview />;
+  if (pathname === '/tv' || pathname === '/tv/') {
+    document.documentElement.dataset['surface'] = 'tv';
+    return <TvApp />;
+  }
+  if (pathname.startsWith('/preview/')) {
+    document.documentElement.dataset['surface'] =
+      new URLSearchParams(location.search).get('view') === 'controller' ? 'controller' : 'tv';
+    return <Preview />;
+  }
+  document.documentElement.dataset['surface'] = 'controller';
   return <ControllerApp />;
 }
 
