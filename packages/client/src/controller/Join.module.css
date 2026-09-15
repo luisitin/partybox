@@ -79,14 +79,15 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  /* 4 columns on a portrait phone, 8+ in landscape or on a tablet — cells never balloon */
+  grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
   gap: var(--pb-space-2);
 }
 
 .avatarButton {
   display: grid;
   place-items: center;
-  min-height: 72px;
+  min-height: 64px;
   border-radius: var(--pb-radius);
   background: var(--pb-surface);
   border: 3px solid transparent;
