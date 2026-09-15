@@ -50,6 +50,8 @@
 
 .glyph {
   font-weight: 800;
+  font-size: 1.15em;
+  line-height: 1;
   color: var(--pb-text-muted);
 }
 
