@@ -12,7 +12,10 @@ export function enterReveal(state: State, now: number): State {
 }
 
 export function enterDone(state: State, now: number): State {
-  return enterPhase(state, 'done', now, null);
+  // VIP "end" straight from "answer" skips the reveal, but answers submitted so far still count
+  // (README "Edge cases"); scores are otherwise locked in by enterReveal.
+  const scored = state.phase.id === 'answer' ? { ...state, scores: scoreAnswers(state) } : state;
+  return enterPhase(scored, 'done', now, null);
 }
 
 export function reduceReveal(state: State, event: GameEvent<Input>): State {

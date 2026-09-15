@@ -59,6 +59,22 @@ describe('Quick Poll', () => {
     expect(s.phase.id).toBe('reveal');
   });
 
+  it('F-001: VIP end during answer keeps the answers submitted so far', () => {
+    let s = answer(start(), 'a', 'early');
+    s = game.reduce(s, { type: 'vip', now: T0 + 2000, action: 'end' });
+    expect(s.phase.id).toBe('done');
+    expect(game.results(s)?.scores).toEqual({ a: 1, b: 0 });
+    expect(game.results(s)?.winnerIds).toEqual(['a']);
+  });
+
+  it('F-006: prototype keys are not players', () => {
+    const initial = start();
+    const s = answer(initial, 'constructor', 'sneaky');
+    expect(s).toBe(initial);
+    expect(s.answers).toEqual({});
+    expect(game.bot.sampleInput(start(), 'toString', { pick: () => 'x' } as never)).toBeNull();
+  });
+
   it('hides answers from the TV until reveal and from other phones always', () => {
     const s = answer(start(), 'a', 'secretword');
     expect(JSON.stringify(game.tvView(s))).not.toContain('secretword');
