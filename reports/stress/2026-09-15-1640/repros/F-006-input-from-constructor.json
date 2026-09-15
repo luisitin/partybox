@@ -1,0 +1,95 @@
+{
+  "version": 1,
+  "gameId": "template",
+  "seed": 4,
+  "players": 5,
+  "strategy": "fuzz:adversarial:p3's input sent by \"constructor\"",
+  "settings": {
+    "answerSeconds": 30
+  },
+  "init": {
+    "players": [
+      {
+        "id": "p1",
+        "name": "Player 1",
+        "avatarId": "fox",
+        "connected": true
+      },
+      {
+        "id": "p2",
+        "name": "Player 2",
+        "avatarId": "owl",
+        "connected": true
+      },
+      {
+        "id": "p3",
+        "name": "Player 3",
+        "avatarId": "frog",
+        "connected": true
+      },
+      {
+        "id": "p4",
+        "name": "Player 4",
+        "avatarId": "cat",
+        "connected": true
+      },
+      {
+        "id": "p5",
+        "name": "Player 5",
+        "avatarId": "panda",
+        "connected": true
+      }
+    ],
+    "settings": {
+      "answerSeconds": 30
+    },
+    "seed": 4,
+    "now": 1700000000000
+  },
+  "events": [
+    {
+      "type": "input",
+      "now": 1700000029180,
+      "playerId": "p1",
+      "input": {
+        "type": "answer",
+        "text": "confetti"
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700000029385,
+      "playerId": "p2",
+      "input": {
+        "type": "answer",
+        "text": "karaoke"
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700000029462,
+      "playerId": "p4",
+      "input": {
+        "type": "answer",
+        "text": "puddle"
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700000001000,
+      "playerId": "constructor",
+      "input": {
+        "type": "answer",
+        "text": "mystery"
+      }
+    }
+  ],
+  "violations": [
+    {
+      "at": 3,
+      "rule": "adversarial",
+      "detail": "p3's input sent by \"constructor\": controllerView(__proto__).me.role is player; controllerView(constructor).me.role is player; controllerView(toString).me.role is player"
+    }
+  ],
+  "finalHash": "db5c44a2"
+}

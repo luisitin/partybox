@@ -1,0 +1,3304 @@
+{
+  "version": "room-1",
+  "seed": 129,
+  "steps": 400,
+  "gameIds": ["template"],
+  "events": [
+    {
+      "type": "tick",
+      "now": 1700000000222
+    },
+    {
+      "type": "leave",
+      "now": 1700000002007,
+      "playerId": "nobody"
+    },
+    {
+      "type": "disconnect",
+      "now": 1700000032008,
+      "playerId": "nobody"
+    },
+    {
+      "type": "tick",
+      "now": 1700000034238
+    },
+    {
+      "type": "input",
+      "now": 1700000064239,
+      "playerId": "",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "tick",
+      "now": 1700000067069
+    },
+    {
+      "type": "input",
+      "now": 1700000069323,
+      "playerId": "nobody",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "join",
+      "now": 1700000071302,
+      "playerId": "u1",
+      "token": "tok-1",
+      "name": "Ivy",
+      "avatarId": "whale"
+    },
+    {
+      "type": "vip",
+      "now": 1700000072276,
+      "playerId": "u1",
+      "action": {
+        "action": "selectGame",
+        "gameId": "template"
+      }
+    },
+    {
+      "type": "vip",
+      "now": 1700000072276,
+      "playerId": "u1",
+      "action": {
+        "action": "start"
+      },
+      "seed": 91773
+    },
+    {
+      "type": "tick",
+      "now": 1700000102276
+    },
+    {
+      "type": "tick",
+      "now": 1700000110276
+    },
+    {
+      "type": "input",
+      "now": 1700000192277,
+      "playerId": "u1",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "tick",
+      "now": 1700000222278
+    },
+    {
+      "type": "vip",
+      "now": 1700000223590,
+      "playerId": "u1",
+      "action": {
+        "action": "selectGame",
+        "gameId": "template"
+      }
+    },
+    {
+      "type": "vip",
+      "now": 1700000223590,
+      "playerId": "u1",
+      "action": {
+        "action": "start"
+      },
+      "seed": 990114
+    },
+    {
+      "type": "join",
+      "now": 1700000224006,
+      "playerId": "u2",
+      "token": "tok-2",
+      "name": "Ivy",
+      "avatarId": "fox",
+      "existingToken": "tok-1"
+    },
+    {
+      "type": "input",
+      "now": 1700000224907,
+      "playerId": "u1",
+      "input": {
+        "type": "answer",
+        "text": "waffle"
+      }
+    },
+    {
+      "type": "tick",
+      "now": 1700000225585
+    },
+    {
+      "type": "join",
+      "now": 1700000226130,
+      "playerId": "u3",
+      "token": "tok-3",
+      "name": "Ivy",
+      "avatarId": "fox",
+      "existingToken": "tok-1"
+    },
+    {
+      "type": "input",
+      "now": 1700000226968,
+      "playerId": "",
+      "input": {
+        "nope": true
+      }
+    },
+    {
+      "type": "tick",
+      "now": 1700000232907
+    },
+    {
+      "type": "vip",
+      "now": 1700000235363,
+      "playerId": "u1",
+      "action": {
+        "action": "selectGame",
+        "gameId": "template"
+      }
+    },
+    {
+      "type": "vip",
+      "now": 1700000235363,
+      "playerId": "u1",
+      "action": {
+        "action": "start"
+      },
+      "seed": 899133
+    },
+    {
+      "type": "join",
+      "now": 1700000237211,
+      "playerId": "u4",
+      "token": "tok-4",
+      "name": "Ivy",
+      "avatarId": "fox",
+      "existingToken": "bogus-4"
+    },
+    {
+      "type": "input",
+      "now": 1700000238447,
+      "playerId": "u1",
+      "input": {
+        "type": "answer",
+        "text": "chaos"
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700000238704,
+      "playerId": "u1",
+      "input": {
+        "nope": true
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700000239803,
+      "playerId": "u1",
+      "input": {
+        "nope": true
+      }
+    },
+    {
+      "type": "disconnect",
+      "now": 1700000240479,
+      "playerId": "u1"
+    },
+    {
+      "type": "tick",
+      "now": 1700000246447
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "tick",
+      "now": 1700000270479
+    },
+    {
+      "type": "join",
+      "now": 1700000360480,
+      "playerId": "u5",
+      "token": "tok-5",
+      "name": "Hal",
+      "avatarId": "lion"
+    },
+    {
+      "type": "tick",
+      "now": 1700000360480
+    },
+    {
+      "type": "disconnect",
+      "now": 1700000362538,
+      "playerId": "u5"
+    },
+    {
+      "type": "input",
+      "now": 1700000364363,
+      "playerId": "u5",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "join",
+      "now": 1700000365757,
+      "playerId": "u6",
+      "token": "tok-6",
+      "name": "Hal",
+      "avatarId": "fox",
+      "existingToken": "tok-5"
+    },
+    {
+      "type": "tick",
+      "now": 1700000367903
+    },
+    {
+      "type": "tick",
+      "now": 1700000368283
+    },
+    {
+      "type": "tick",
+      "now": 1700000368708
+    },
+    {
+      "type": "input",
+      "now": 1700000369821,
+      "playerId": "u5",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700000371698,
+      "playerId": "u5",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "vip",
+      "now": 1700000401699,
+      "playerId": "u5",
+      "action": {
+        "action": "selectGame",
+        "gameId": "template"
+      }
+    },
+    {
+      "type": "vip",
+      "now": 1700000401699,
+      "playerId": "u5",
+      "action": {
+        "action": "start"
+      },
+      "seed": 378705
+    },
+    {
+      "type": "tick",
+      "now": 1700000431699
+    },
+    {
+      "type": "tick",
+      "now": 1700000439699
+    },
+    {
+      "type": "vip",
+      "now": 1700000523816,
+      "playerId": "u5",
+      "action": {
+        "action": "selectGame",
+        "gameId": "template"
+      },
+      "seed": 599068
+    },
+    {
+      "type": "vip",
+      "now": 1700000644372,
+      "playerId": "u5",
+      "action": {
+        "action": "unlock"
+      },
+      "seed": 34063
+    },
+    {
+      "type": "vip",
+      "now": 1700000645179,
+      "playerId": "u5",
+      "action": {
+        "action": "transferVip",
+        "playerId": "u5"
+      },
+      "seed": 640881
+    },
+    {
+      "type": "join",
+      "now": 1700000677097,
+      "playerId": "u7",
+      "token": "tok-7",
+      "name": "Аna",
+      "avatarId": "ghost"
+    },
+    {
+      "type": "tick",
+      "now": 1700000677285
+    },
+    {
+      "type": "join",
+      "now": 1700000678391,
+      "playerId": "u8",
+      "token": "tok-8",
+      "name": "Ivy",
+      "avatarId": "fox",
+      "existingToken": "tok-1"
+    },
+    {
+      "type": "leave",
+      "now": 1700000680836,
+      "playerId": "u8"
+    },
+    {
+      "type": "vip",
+      "now": 1700000682632,
+      "playerId": "u5",
+      "action": {
+        "action": "start"
+      },
+      "seed": 446943
+    },
+    {
+      "type": "input",
+      "now": 1700000683078,
+      "playerId": "u7",
+      "input": {
+        "type": "answer",
+        "text": "cozy"
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700000683078,
+      "playerId": "u5",
+      "input": {
+        "type": "answer",
+        "text": "snooze"
+      }
+    },
+    {
+      "type": "tick",
+      "now": 1700000691078
+    },
+    {
+      "type": "join",
+      "now": 1700000692520,
+      "playerId": "u9",
+      "token": "tok-9",
+      "name": "Lou",
+      "avatarId": "dino"
+    },
+    {
+      "type": "input",
+      "now": 1700000694395,
+      "playerId": "u5",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "disconnect",
+      "now": 1700000694895,
+      "playerId": "u9"
+    },
+    {
+      "type": "vip",
+      "now": 1700000695266,
+      "playerId": "u5",
+      "action": {
+        "action": "kick",
+        "playerId": "u5"
+      },
+      "seed": 438854
+    },
+    {
+      "type": "disconnect",
+      "now": 1700000696108,
+      "playerId": "u5"
+    },
+    {
+      "type": "input",
+      "now": 1700000697695,
+      "playerId": "u5",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "vip",
+      "now": 1700000697967,
+      "playerId": "u5",
+      "action": {
+        "action": "selectGame",
+        "gameId": "template"
+      }
+    },
+    {
+      "type": "vip",
+      "now": 1700000697967,
+      "playerId": "u5",
+      "action": {
+        "action": "start"
+      },
+      "seed": 900753
+    },
+    {
+      "type": "tick",
+      "now": 1700000726108
+    },
+    {
+      "type": "tick",
+      "now": 1700000727967
+    },
+    {
+      "type": "tick",
+      "now": 1700000735967
+    },
+    {
+      "type": "tick",
+      "now": 1700000814895
+    },
+    {
+      "type": "tick",
+      "now": 1700000816108
+    },
+    {
+      "type": "input",
+      "now": 1700000817968,
+      "playerId": "u7",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "tick",
+      "now": 1700000818479
+    },
+    {
+      "type": "input",
+      "now": 1700000818990,
+      "playerId": "u7",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "join",
+      "now": 1700000820668,
+      "playerId": "u10",
+      "token": "tok-10",
+      "name": "Lou",
+      "avatarId": "fox",
+      "existingToken": "bogus-10"
+    },
+    {
+      "type": "vip",
+      "now": 1700000822678,
+      "playerId": "u7",
+      "action": {
+        "action": "selectGame",
+        "gameId": "template"
+      }
+    },
+    {
+      "type": "vip",
+      "now": 1700000822678,
+      "playerId": "u7",
+      "action": {
+        "action": "start"
+      },
+      "seed": 563069
+    },
+    {
+      "type": "input",
+      "now": 1700000824204,
+      "playerId": "u7",
+      "input": {
+        "type": "answer",
+        "text": "bubble"
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700000826071,
+      "playerId": "u10",
+      "input": {
+        "type": "answer",
+        "text": "chaos"
+      }
+    },
+    {
+      "type": "tick",
+      "now": 1700000834071
+    },
+    {
+      "type": "input",
+      "now": 1700000835227,
+      "playerId": "u7",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700000837306,
+      "playerId": "",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700000838831,
+      "playerId": "u7",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "join",
+      "now": 1700000840755,
+      "playerId": "u11",
+      "token": "tok-11",
+      "name": "Lou",
+      "avatarId": "fox",
+      "existingToken": "tok-9"
+    },
+    {
+      "type": "vip",
+      "now": 1700000842997,
+      "playerId": "u7",
+      "action": {
+        "action": "selectGame",
+        "gameId": "template"
+      }
+    },
+    {
+      "type": "vip",
+      "now": 1700000842997,
+      "playerId": "u7",
+      "action": {
+        "action": "start"
+      },
+      "seed": 67183
+    },
+    {
+      "type": "input",
+      "now": 1700000844084,
+      "playerId": "u10",
+      "input": {
+        "type": "answer",
+        "text": "waffle"
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700000845364,
+      "playerId": "u10",
+      "input": {
+        "nope": true
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700000845364,
+      "playerId": "u7",
+      "input": {
+        "type": "answer",
+        "text": "banana"
+      }
+    },
+    {
+      "type": "vip",
+      "now": 1700000845822,
+      "playerId": "u7",
+      "action": {
+        "action": "selectGame",
+        "gameId": "nope"
+      },
+      "seed": 566
+    },
+    {
+      "type": "join",
+      "now": 1700000845923,
+      "playerId": "u12",
+      "token": "tok-12",
+      "name": "",
+      "avatarId": "ghost"
+    },
+    {
+      "type": "tick",
+      "now": 1700000853364
+    },
+    {
+      "type": "vip",
+      "now": 1700000855605,
+      "playerId": "u7",
+      "action": {
+        "action": "selectGame",
+        "gameId": "template"
+      }
+    },
+    {
+      "type": "vip",
+      "now": 1700000855605,
+      "playerId": "u7",
+      "action": {
+        "action": "start"
+      },
+      "seed": 876019
+    },
+    {
+      "type": "vip",
+      "now": 1700000856963,
+      "playerId": "u10",
+      "action": {
+        "action": "unlock"
+      },
+      "seed": 349771
+    },
+    {
+      "type": "tick",
+      "now": 1700000885605
+    },
+    {
+      "type": "tick",
+      "now": 1700000893605
+    },
+    {
+      "type": "vip",
+      "now": 1700000895337,
+      "playerId": "u7",
+      "action": {
+        "action": "selectGame",
+        "gameId": "template"
+      }
+    },
+    {
+      "type": "vip",
+      "now": 1700000895337,
+      "playerId": "u7",
+      "action": {
+        "action": "start"
+      },
+      "seed": 858491
+    },
+    {
+      "type": "join",
+      "now": 1700000895529,
+      "playerId": "u13",
+      "token": "tok-13",
+      "name": "Ivy",
+      "avatarId": "fox",
+      "existingToken": "bogus-13"
+    },
+    {
+      "type": "vip",
+      "now": 1700000896432,
+      "playerId": "u7",
+      "action": {
+        "action": "unlock"
+      },
+      "seed": 429982
+    },
+    {
+      "type": "tick",
+      "now": 1700000925337
+    },
+    {
+      "type": "tick",
+      "now": 1700000933337
+    },
+    {
+      "type": "vip",
+      "now": 1700000933421,
+      "playerId": "u13",
+      "action": {
+        "action": "playAgain"
+      },
+      "seed": 721582
+    },
+    {
+      "type": "input",
+      "now": 1700001053422,
+      "playerId": "u10",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "tick",
+      "now": 1700001055870
+    },
+    {
+      "type": "vip",
+      "now": 1700001058292,
+      "playerId": "u7",
+      "action": {
+        "action": "selectGame",
+        "gameId": "template"
+      },
+      "seed": 801319
+    },
+    {
+      "type": "vip",
+      "now": 1700001060156,
+      "playerId": "u13",
+      "action": {
+        "action": "start"
+      },
+      "seed": 338987
+    },
+    {
+      "type": "join",
+      "now": 1700001061223,
+      "playerId": "u14",
+      "token": "tok-14",
+      "name": "Ben",
+      "avatarId": "owl"
+    },
+    {
+      "type": "join",
+      "now": 1700001061842,
+      "playerId": "u15",
+      "token": "tok-15",
+      "name": "a  b",
+      "avatarId": "ghost"
+    },
+    {
+      "type": "input",
+      "now": 1700001062382,
+      "playerId": "u10",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "vip",
+      "now": 1700001064633,
+      "playerId": "u7",
+      "action": {
+        "action": "selectGame",
+        "gameId": "template"
+      },
+      "seed": 526939
+    },
+    {
+      "type": "vip",
+      "now": 1700001066923,
+      "playerId": "u7",
+      "action": {
+        "action": "toLobby"
+      },
+      "seed": 370728
+    },
+    {
+      "type": "vip",
+      "now": 1700001068312,
+      "playerId": "u7",
+      "action": {
+        "action": "selectGame",
+        "gameId": "template"
+      }
+    },
+    {
+      "type": "vip",
+      "now": 1700001068312,
+      "playerId": "u7",
+      "action": {
+        "action": "start"
+      },
+      "seed": 367621
+    },
+    {
+      "type": "vip",
+      "now": 1700001069192,
+      "playerId": "u15",
+      "action": {
+        "action": "updateSettings",
+        "settings": {
+          "answerSeconds": 1000,
+          "bogus": "x"
+        }
+      },
+      "seed": 829907
+    },
+    {
+      "type": "input",
+      "now": 1700001069271,
+      "playerId": "u15",
+      "input": {
+        "type": "answer",
+        "text": "penguin"
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700001069271,
+      "playerId": "u7",
+      "input": {
+        "type": "answer",
+        "text": "disco"
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700001069271,
+      "playerId": "u14",
+      "input": {
+        "type": "answer",
+        "text": "dinosaur"
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700001069271,
+      "playerId": "u10",
+      "input": {
+        "type": "answer",
+        "text": "comet"
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700001069271,
+      "playerId": "u13",
+      "input": {
+        "type": "answer",
+        "text": "pickle"
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700001070506,
+      "playerId": "u10",
+      "input": {
+        "nope": true
+      }
+    },
+    {
+      "type": "vip",
+      "now": 1700001070971,
+      "playerId": "u7",
+      "action": {
+        "action": "selectGame",
+        "gameId": "nope"
+      },
+      "seed": 431112
+    },
+    {
+      "type": "input",
+      "now": 1700001071957,
+      "playerId": "u13",
+      "input": {
+        "nope": true
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700001074412,
+      "playerId": "u14",
+      "input": {
+        "nope": true
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700001074412,
+      "playerId": "u10",
+      "input": {
+        "nope": true
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700001074412,
+      "playerId": "u15",
+      "input": {
+        "nope": true
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700001074412,
+      "playerId": "u7",
+      "input": {
+        "nope": true
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700001074412,
+      "playerId": "u13",
+      "input": {
+        "nope": true
+      }
+    },
+    {
+      "type": "tick",
+      "now": 1700001077271
+    },
+    {
+      "type": "tick",
+      "now": 1700001079186
+    },
+    {
+      "type": "input",
+      "now": 1700001079449,
+      "playerId": "u7",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "vip",
+      "now": 1700001080210,
+      "playerId": "u7",
+      "action": {
+        "action": "selectGame",
+        "gameId": "template"
+      }
+    },
+    {
+      "type": "vip",
+      "now": 1700001080210,
+      "playerId": "u7",
+      "action": {
+        "action": "start"
+      },
+      "seed": 110604
+    },
+    {
+      "type": "input",
+      "now": 1700001082445,
+      "playerId": "u10",
+      "input": {
+        "type": "answer",
+        "text": "pizza"
+      }
+    },
+    {
+      "type": "tick",
+      "now": 1700001082943
+    },
+    {
+      "type": "vip",
+      "now": 1700001084067,
+      "playerId": "u7",
+      "action": {
+        "action": "skip"
+      },
+      "seed": 906620
+    },
+    {
+      "type": "tick",
+      "now": 1700001092067
+    },
+    {
+      "type": "input",
+      "now": 1700001093315,
+      "playerId": "u13",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700001094330,
+      "playerId": "u10",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "tick",
+      "now": 1700001096676
+    },
+    {
+      "type": "vip",
+      "now": 1700001097662,
+      "playerId": "u7",
+      "action": {
+        "action": "transferVip",
+        "playerId": "u13"
+      },
+      "seed": 716776
+    },
+    {
+      "type": "input",
+      "now": 1700001098906,
+      "playerId": "u15",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "vip",
+      "now": 1700001099093,
+      "playerId": "u13",
+      "action": {
+        "action": "selectGame",
+        "gameId": "template"
+      }
+    },
+    {
+      "type": "vip",
+      "now": 1700001099093,
+      "playerId": "u13",
+      "action": {
+        "action": "start"
+      },
+      "seed": 982135
+    },
+    {
+      "type": "tick",
+      "now": 1700001129093
+    },
+    {
+      "type": "vip",
+      "now": 1700001129094,
+      "playerId": "u13",
+      "action": {
+        "action": "updateSettings",
+        "settings": {
+          "answerSeconds": 12.5,
+          "bogus": "x"
+        }
+      },
+      "seed": 627849
+    },
+    {
+      "type": "input",
+      "now": 1700001131010,
+      "playerId": "u10",
+      "input": {
+        "nope": true
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700001131010,
+      "playerId": "u15",
+      "input": {
+        "nope": true
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700001131010,
+      "playerId": "u13",
+      "input": {
+        "nope": true
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700001131010,
+      "playerId": "u7",
+      "input": {
+        "nope": true
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700001131010,
+      "playerId": "u14",
+      "input": {
+        "nope": true
+      }
+    },
+    {
+      "type": "disconnect",
+      "now": 1700001132221,
+      "playerId": "u15"
+    },
+    {
+      "type": "input",
+      "now": 1700001132963,
+      "playerId": "u10",
+      "input": {
+        "nope": true
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700001132963,
+      "playerId": "u7",
+      "input": {
+        "nope": true
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700001132963,
+      "playerId": "u14",
+      "input": {
+        "nope": true
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700001132963,
+      "playerId": "u13",
+      "input": {
+        "nope": true
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700001132963,
+      "playerId": "u15",
+      "input": {
+        "nope": true
+      }
+    },
+    {
+      "type": "vip",
+      "now": 1700001135176,
+      "playerId": "u13",
+      "action": {
+        "action": "start"
+      },
+      "seed": 184480
+    },
+    {
+      "type": "tick",
+      "now": 1700001137093
+    },
+    {
+      "type": "tick",
+      "now": 1700001252221
+    },
+    {
+      "type": "join",
+      "now": 1700001254318,
+      "playerId": "u16",
+      "token": "tok-16",
+      "name": "   ",
+      "avatarId": "cat"
+    },
+    {
+      "type": "vip",
+      "now": 1700001284319,
+      "playerId": "u13",
+      "action": {
+        "action": "selectGame",
+        "gameId": "template"
+      }
+    },
+    {
+      "type": "vip",
+      "now": 1700001284319,
+      "playerId": "u13",
+      "action": {
+        "action": "start"
+      },
+      "seed": 995577
+    },
+    {
+      "type": "tick",
+      "now": 1700001314319
+    },
+    {
+      "type": "input",
+      "now": 1700001314320,
+      "playerId": "u14",
+      "input": {
+        "nope": true
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700001316440,
+      "playerId": "u7",
+      "input": {
+        "nope": true
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700001316440,
+      "playerId": "u13",
+      "input": {
+        "nope": true
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700001316440,
+      "playerId": "u10",
+      "input": {
+        "nope": true
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700001316440,
+      "playerId": "u14",
+      "input": {
+        "nope": true
+      }
+    },
+    {
+      "type": "tick",
+      "now": 1700001322319
+    },
+    {
+      "type": "vip",
+      "now": 1700001323204,
+      "playerId": "u13",
+      "action": {
+        "action": "lock"
+      },
+      "seed": 701491
+    },
+    {
+      "type": "input",
+      "now": 1700001323892,
+      "playerId": "u7",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700001324201,
+      "playerId": "u14",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "join",
+      "now": 1700001326129,
+      "playerId": "u17",
+      "token": "tok-17",
+      "name": "xxxxxxxxxxxxxxxx",
+      "avatarId": "sloth"
+    },
+    {
+      "type": "join",
+      "now": 1700001326901,
+      "playerId": "u18",
+      "token": "tok-18",
+      "name": "ana",
+      "avatarId": "bee"
+    },
+    {
+      "type": "join",
+      "now": 1700001327622,
+      "playerId": "u19",
+      "token": "tok-19",
+      "name": "Ben",
+      "avatarId": "fox",
+      "existingToken": "tok-14"
+    },
+    {
+      "type": "disconnect",
+      "now": 1700001329161,
+      "playerId": "u7"
+    },
+    {
+      "type": "input",
+      "now": 1700001330843,
+      "playerId": "u10",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "vip",
+      "now": 1700001332386,
+      "playerId": "u13",
+      "action": {
+        "action": "selectGame",
+        "gameId": "template"
+      }
+    },
+    {
+      "type": "vip",
+      "now": 1700001332386,
+      "playerId": "u13",
+      "action": {
+        "action": "start"
+      },
+      "seed": 464909
+    },
+    {
+      "type": "vip",
+      "now": 1700001334168,
+      "playerId": "u13",
+      "action": {
+        "action": "playAgain"
+      },
+      "seed": 911847
+    },
+    {
+      "type": "join",
+      "now": 1700001336348,
+      "playerId": "u20",
+      "token": "tok-20",
+      "name": "Ivy",
+      "avatarId": "fox",
+      "existingToken": "tok-1"
+    },
+    {
+      "type": "tick",
+      "now": 1700001362386
+    },
+    {
+      "type": "input",
+      "now": 1700001363085,
+      "playerId": "u7",
+      "input": {
+        "nope": true
+      }
+    },
+    {
+      "type": "vip",
+      "now": 1700001363135,
+      "playerId": "u14",
+      "action": {
+        "action": "start"
+      },
+      "seed": 733090
+    },
+    {
+      "type": "input",
+      "now": 1700001364985,
+      "playerId": "u10",
+      "input": {
+        "nope": true
+      }
+    },
+    {
+      "type": "tick",
+      "now": 1700001370386
+    },
+    {
+      "type": "tick",
+      "now": 1700001449161
+    },
+    {
+      "type": "input",
+      "now": 1700001450140,
+      "playerId": "",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "vip",
+      "now": 1700001450410,
+      "playerId": "u13",
+      "action": {
+        "action": "selectGame",
+        "gameId": "template"
+      }
+    },
+    {
+      "type": "vip",
+      "now": 1700001450410,
+      "playerId": "u13",
+      "action": {
+        "action": "start"
+      },
+      "seed": 810265
+    },
+    {
+      "type": "input",
+      "now": 1700001452802,
+      "playerId": "",
+      "input": {
+        "nope": true
+      }
+    },
+    {
+      "type": "tick",
+      "now": 1700001480410
+    },
+    {
+      "type": "join",
+      "now": 1700001481035,
+      "playerId": "u21",
+      "token": "tok-21",
+      "name": "__proto__",
+      "avatarId": "penguin"
+    },
+    {
+      "type": "join",
+      "now": 1700001482510,
+      "playerId": "u22",
+      "token": "tok-22",
+      "name": "Oz",
+      "avatarId": "owl"
+    },
+    {
+      "type": "tick",
+      "now": 1700001488410
+    },
+    {
+      "type": "input",
+      "now": 1700001490389,
+      "playerId": "u14",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "disconnect",
+      "now": 1700001491016,
+      "playerId": "u13"
+    },
+    {
+      "type": "vip",
+      "now": 1700001491232,
+      "playerId": "u13",
+      "action": {
+        "action": "selectGame",
+        "gameId": "template"
+      }
+    },
+    {
+      "type": "vip",
+      "now": 1700001491232,
+      "playerId": "u13",
+      "action": {
+        "action": "start"
+      },
+      "seed": 971441
+    },
+    {
+      "type": "disconnect",
+      "now": 1700001493325,
+      "playerId": "u14"
+    },
+    {
+      "type": "input",
+      "now": 1700001494959,
+      "playerId": "u14",
+      "input": {
+        "type": "answer",
+        "text": "snooze"
+      }
+    },
+    {
+      "type": "vip",
+      "now": 1700001495734,
+      "playerId": "u13",
+      "action": {
+        "action": "transferVip",
+        "playerId": "u10"
+      },
+      "seed": 522613
+    },
+    {
+      "type": "vip",
+      "now": 1700001497070,
+      "playerId": "u10",
+      "action": {
+        "action": "toLobby"
+      },
+      "seed": 231789
+    },
+    {
+      "type": "input",
+      "now": 1700001499425,
+      "playerId": "u13",
+      "input": {
+        "type": "answer",
+        "text": "dinosaur"
+      }
+    },
+    {
+      "type": "join",
+      "now": 1700001499474,
+      "playerId": "u23",
+      "token": "tok-23",
+      "name": "Hal",
+      "avatarId": "fox",
+      "existingToken": "tok-5"
+    },
+    {
+      "type": "tick",
+      "now": 1700001501927
+    },
+    {
+      "type": "input",
+      "now": 1700001504213,
+      "playerId": "u14",
+      "input": {
+        "nope": true
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700001504213,
+      "playerId": "u10",
+      "input": {
+        "type": "answer",
+        "text": "puddle"
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700001504213,
+      "playerId": "u13",
+      "input": {
+        "nope": true
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700001504382,
+      "playerId": "u10",
+      "input": {
+        "nope": true
+      }
+    },
+    {
+      "type": "join",
+      "now": 1700001505409,
+      "playerId": "u24",
+      "token": "tok-24",
+      "name": "constructor",
+      "avatarId": "owl"
+    },
+    {
+      "type": "input",
+      "now": 1700001507276,
+      "playerId": "u10",
+      "input": {
+        "nope": true
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700001508114,
+      "playerId": "u14",
+      "input": {
+        "nope": true
+      }
+    },
+    {
+      "type": "join",
+      "now": 1700001509738,
+      "playerId": "u25",
+      "token": "tok-25",
+      "name": "a b",
+      "avatarId": "fox",
+      "existingToken": "tok-15"
+    },
+    {
+      "type": "input",
+      "now": 1700001510676,
+      "playerId": "u13",
+      "input": {
+        "nope": true
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700001511921,
+      "playerId": "u10",
+      "input": {
+        "nope": true
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700001511921,
+      "playerId": "u14",
+      "input": {
+        "nope": true
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700001511921,
+      "playerId": "u13",
+      "input": {
+        "nope": true
+      }
+    },
+    {
+      "type": "tick",
+      "now": 1700001512213
+    },
+    {
+      "type": "vip",
+      "now": 1700001513164,
+      "playerId": "u10",
+      "action": {
+        "action": "selectGame",
+        "gameId": "template"
+      }
+    },
+    {
+      "type": "vip",
+      "now": 1700001513164,
+      "playerId": "u10",
+      "action": {
+        "action": "start"
+      },
+      "seed": 602655
+    },
+    {
+      "type": "join",
+      "now": 1700001515571,
+      "playerId": "u26",
+      "token": "tok-26",
+      "name": "éva",
+      "avatarId": "unicorn"
+    },
+    {
+      "type": "vip",
+      "now": 1700001517739,
+      "playerId": "u10",
+      "action": {
+        "action": "lock"
+      },
+      "seed": 559608
+    },
+    {
+      "type": "tick",
+      "now": 1700001543164
+    },
+    {
+      "type": "tick",
+      "now": 1700001551164
+    },
+    {
+      "type": "vip",
+      "now": 1700001581165,
+      "playerId": "u10",
+      "action": {
+        "action": "kick",
+        "playerId": "u13"
+      },
+      "seed": 553331
+    },
+    {
+      "type": "disconnect",
+      "now": 1700001583202,
+      "playerId": "u14"
+    },
+    {
+      "type": "vip",
+      "now": 1700001583880,
+      "playerId": "u10",
+      "action": {
+        "action": "start"
+      },
+      "seed": 218057
+    },
+    {
+      "type": "vip",
+      "now": 1700001584958,
+      "playerId": "u10",
+      "action": {
+        "action": "end"
+      },
+      "seed": 802218
+    },
+    {
+      "type": "vip",
+      "now": 1700001586176,
+      "playerId": "u10",
+      "action": {
+        "action": "end"
+      },
+      "seed": 57865
+    },
+    {
+      "type": "leave",
+      "now": 1700001588043,
+      "playerId": "u10"
+    },
+    {
+      "type": "join",
+      "now": 1700001590152,
+      "playerId": "u27",
+      "token": "tok-27",
+      "name": "Lou",
+      "avatarId": "fox",
+      "existingToken": "tok-9"
+    },
+    {
+      "type": "join",
+      "now": 1700001590471,
+      "playerId": "u28",
+      "token": "tok-28",
+      "name": "Hal",
+      "avatarId": "fox",
+      "existingToken": "tok-5"
+    },
+    {
+      "type": "vip",
+      "now": 1700001593110,
+      "playerId": "u14",
+      "action": {
+        "action": "skip"
+      },
+      "seed": 759831
+    },
+    {
+      "type": "join",
+      "now": 1700001594600,
+      "playerId": "u29",
+      "token": "tok-29",
+      "name": " Ben ",
+      "avatarId": "fox"
+    },
+    {
+      "type": "disconnect",
+      "now": 1700001594912,
+      "playerId": "u14"
+    },
+    {
+      "type": "input",
+      "now": 1700001595125,
+      "playerId": "u14",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "join",
+      "now": 1700001596925,
+      "playerId": "u30",
+      "token": "tok-30",
+      "name": "Fay",
+      "avatarId": "unicorn"
+    },
+    {
+      "type": "input",
+      "now": 1700001598357,
+      "playerId": "u14",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "vip",
+      "now": 1700001599439,
+      "playerId": "u14",
+      "action": {
+        "action": "resume"
+      },
+      "seed": 294829
+    },
+    {
+      "type": "join",
+      "now": 1700001601586,
+      "playerId": "u31",
+      "token": "tok-31",
+      "name": "Ben",
+      "avatarId": "fox",
+      "existingToken": "tok-14"
+    },
+    {
+      "type": "tick",
+      "now": 1700001602740
+    },
+    {
+      "type": "vip",
+      "now": 1700001604045,
+      "playerId": "u14",
+      "action": {
+        "action": "resume"
+      },
+      "seed": 921250
+    },
+    {
+      "type": "input",
+      "now": 1700001604312,
+      "playerId": "u14",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700001605516,
+      "playerId": "ghost",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "tick",
+      "now": 1700001608360
+    },
+    {
+      "type": "join",
+      "now": 1700001609678,
+      "playerId": "u32",
+      "token": "tok-32",
+      "name": "Gus",
+      "avatarId": "dragon"
+    },
+    {
+      "type": "join",
+      "now": 1700001729679,
+      "playerId": "u33",
+      "token": "tok-33",
+      "name": "Eve",
+      "avatarId": "ghost"
+    },
+    {
+      "type": "vip",
+      "now": 1700001731608,
+      "playerId": "u14",
+      "action": {
+        "action": "kick",
+        "playerId": "u14"
+      },
+      "seed": 214591
+    },
+    {
+      "type": "input",
+      "now": 1700001734847,
+      "playerId": "u14",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "tick",
+      "now": 1700001736377
+    },
+    {
+      "type": "input",
+      "now": 1700001736974,
+      "playerId": "u14",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "tick",
+      "now": 1700001740017
+    },
+    {
+      "type": "leave",
+      "now": 1700001741221,
+      "playerId": "u14"
+    },
+    {
+      "type": "disconnect",
+      "now": 1700001742449,
+      "playerId": "nobody"
+    },
+    {
+      "type": "join",
+      "now": 1700001743041,
+      "playerId": "u34",
+      "token": "tok-34",
+      "name": "Ben",
+      "avatarId": "bee"
+    },
+    {
+      "type": "disconnect",
+      "now": 1700001743348,
+      "playerId": "nobody"
+    },
+    {
+      "type": "input",
+      "now": 1700001744118,
+      "playerId": "nobody",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "tick",
+      "now": 1700001744363
+    },
+    {
+      "type": "join",
+      "now": 1700001774364,
+      "playerId": "u35",
+      "token": "tok-35",
+      "name": "Hal",
+      "avatarId": "fox",
+      "existingToken": "tok-5"
+    },
+    {
+      "type": "input",
+      "now": 1700001776831,
+      "playerId": "nobody",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "leave",
+      "now": 1700001777712,
+      "playerId": "nobody"
+    },
+    {
+      "type": "vip",
+      "now": 1700001778744,
+      "playerId": "nobody",
+      "action": {
+        "action": "kick",
+        "playerId": "nobody"
+      },
+      "seed": 213801
+    },
+    {
+      "type": "tick",
+      "now": 1700001779998
+    },
+    {
+      "type": "join",
+      "now": 1700001781471,
+      "playerId": "u36",
+      "token": "tok-36",
+      "name": "Lou",
+      "avatarId": "fox",
+      "existingToken": "tok-9"
+    },
+    {
+      "type": "vip",
+      "now": 1700001783920,
+      "playerId": "nobody",
+      "action": {
+        "action": "updateSettings",
+        "settings": {
+          "answerSeconds": -1,
+          "bogus": "x"
+        }
+      },
+      "seed": 503280
+    },
+    {
+      "type": "tick",
+      "now": 1700001785042
+    },
+    {
+      "type": "input",
+      "now": 1700001791648,
+      "playerId": "nobody",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "join",
+      "now": 1700001911649,
+      "playerId": "u37",
+      "token": "tok-37",
+      "name": "Ben",
+      "avatarId": "fox",
+      "existingToken": "tok-14"
+    },
+    {
+      "type": "tick",
+      "now": 1700001913671
+    },
+    {
+      "type": "vip",
+      "now": 1700001914768,
+      "playerId": "nobody",
+      "action": {
+        "action": "updateSettings",
+        "settings": {
+          "answerSeconds": 10,
+          "bogus": "x"
+        }
+      },
+      "seed": 658994
+    },
+    {
+      "type": "tick",
+      "now": 1700001917049
+    },
+    {
+      "type": "input",
+      "now": 1700001917132,
+      "playerId": "nobody",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "vip",
+      "now": 1700001917459,
+      "playerId": "nobody",
+      "action": {
+        "action": "transferVip",
+        "playerId": "nobody"
+      },
+      "seed": 43056
+    },
+    {
+      "type": "join",
+      "now": 1700001918665,
+      "playerId": "u38",
+      "token": "tok-38",
+      "name": "Ivy",
+      "avatarId": "koala"
+    },
+    {
+      "type": "join",
+      "now": 1700001920153,
+      "playerId": "u39",
+      "token": "tok-39",
+      "name": "Hal",
+      "avatarId": "fox",
+      "existingToken": "tok-5"
+    },
+    {
+      "type": "vip",
+      "now": 1700001922107,
+      "playerId": "nobody",
+      "action": {
+        "action": "transferVip",
+        "playerId": "nobody"
+      },
+      "seed": 360771
+    },
+    {
+      "type": "disconnect",
+      "now": 1700001923061,
+      "playerId": "nobody"
+    },
+    {
+      "type": "vip",
+      "now": 1700001923765,
+      "playerId": "nobody",
+      "action": {
+        "action": "start"
+      },
+      "seed": 929720
+    },
+    {
+      "type": "join",
+      "now": 1700002047579,
+      "playerId": "u40",
+      "token": "tok-40",
+      "name": "Gus",
+      "avatarId": "robot"
+    },
+    {
+      "type": "vip",
+      "now": 1700002050999,
+      "playerId": "nobody",
+      "action": {
+        "action": "updateSettings",
+        "settings": {
+          "answerSeconds": 12.5,
+          "bogus": "x"
+        }
+      },
+      "seed": 905374
+    },
+    {
+      "type": "input",
+      "now": 1700002053548,
+      "playerId": "nobody",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "vip",
+      "now": 1700002056014,
+      "playerId": "nobody",
+      "action": {
+        "action": "start"
+      },
+      "seed": 763133
+    },
+    {
+      "type": "tick",
+      "now": 1700002056881
+    },
+    {
+      "type": "leave",
+      "now": 1700002058500,
+      "playerId": "nobody"
+    },
+    {
+      "type": "tick",
+      "now": 1700002060935
+    },
+    {
+      "type": "input",
+      "now": 1700002092290,
+      "playerId": "",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "tick",
+      "now": 1700002094583
+    },
+    {
+      "type": "input",
+      "now": 1700002095212,
+      "playerId": "nobody",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "join",
+      "now": 1700002096477,
+      "playerId": "u41",
+      "token": "tok-41",
+      "name": "Lou",
+      "avatarId": "fox",
+      "existingToken": "tok-9"
+    },
+    {
+      "type": "vip",
+      "now": 1700002097421,
+      "playerId": "nobody",
+      "action": {
+        "action": "start"
+      },
+      "seed": 718194
+    },
+    {
+      "type": "input",
+      "now": 1700002099716,
+      "playerId": "nobody",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "vip",
+      "now": 1700002102047,
+      "playerId": "nobody",
+      "action": {
+        "action": "kick",
+        "playerId": "nobody"
+      },
+      "seed": 966203
+    },
+    {
+      "type": "input",
+      "now": 1700002104221,
+      "playerId": "nobody",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "join",
+      "now": 1700002106034,
+      "playerId": "u42",
+      "token": "tok-42",
+      "name": "a b",
+      "avatarId": "frog"
+    },
+    {
+      "type": "input",
+      "now": 1700002107519,
+      "playerId": "nobody",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "vip",
+      "now": 1700002109587,
+      "playerId": "nobody",
+      "action": {
+        "action": "kick",
+        "playerId": "nobody"
+      },
+      "seed": 601253
+    },
+    {
+      "type": "join",
+      "now": 1700002111406,
+      "playerId": "u43",
+      "token": "tok-43",
+      "name": "a b",
+      "avatarId": "koala"
+    },
+    {
+      "type": "disconnect",
+      "now": 1700002111591,
+      "playerId": "nobody"
+    },
+    {
+      "type": "tick",
+      "now": 1700002114543
+    },
+    {
+      "type": "join",
+      "now": 1700002115445,
+      "playerId": "u44",
+      "token": "tok-44",
+      "name": "a b",
+      "avatarId": "fox",
+      "existingToken": "tok-15"
+    },
+    {
+      "type": "input",
+      "now": 1700002115537,
+      "playerId": "nobody",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "tick",
+      "now": 1700002117612
+    },
+    {
+      "type": "input",
+      "now": 1700002121978,
+      "playerId": "nobody",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700002123564,
+      "playerId": "nobody",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "join",
+      "now": 1700002125206,
+      "playerId": "u45",
+      "token": "tok-45",
+      "name": "Аna",
+      "avatarId": "fox",
+      "existingToken": "tok-7"
+    },
+    {
+      "type": "join",
+      "now": 1700002125680,
+      "playerId": "u46",
+      "token": "tok-46",
+      "name": "xxxxxxxxxxxxxxxx",
+      "avatarId": "dino"
+    },
+    {
+      "type": "input",
+      "now": 1700002127259,
+      "playerId": "nobody",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700002127815,
+      "playerId": "nobody",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "disconnect",
+      "now": 1700002128537,
+      "playerId": "nobody"
+    },
+    {
+      "type": "vip",
+      "now": 1700002131818,
+      "playerId": "nobody",
+      "action": {
+        "action": "updateSettings",
+        "settings": {
+          "answerSeconds": -1,
+          "bogus": "x"
+        }
+      },
+      "seed": 507418
+    },
+    {
+      "type": "input",
+      "now": 1700002136031,
+      "playerId": "ghost",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700002138104,
+      "playerId": "nobody",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "vip",
+      "now": 1700002139082,
+      "playerId": "nobody",
+      "action": {
+        "action": "transferVip",
+        "playerId": "nobody"
+      },
+      "seed": 240946
+    },
+    {
+      "type": "tick",
+      "now": 1700002146037
+    },
+    {
+      "type": "input",
+      "now": 1700002147814,
+      "playerId": "nobody",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "tick",
+      "now": 1700002148005
+    },
+    {
+      "type": "join",
+      "now": 1700002150585,
+      "playerId": "u47",
+      "token": "tok-47",
+      "name": "Hal",
+      "avatarId": "fox",
+      "existingToken": "tok-5"
+    },
+    {
+      "type": "join",
+      "now": 1700002151782,
+      "playerId": "u48",
+      "token": "tok-48",
+      "name": "Lou",
+      "avatarId": "fox",
+      "existingToken": "tok-9"
+    },
+    {
+      "type": "input",
+      "now": 1700002153271,
+      "playerId": "nobody",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "join",
+      "now": 1700002154994,
+      "playerId": "u49",
+      "token": "tok-49",
+      "name": "Аna",
+      "avatarId": "fox",
+      "existingToken": "tok-7"
+    },
+    {
+      "type": "tick",
+      "now": 1700002159349
+    },
+    {
+      "type": "vip",
+      "now": 1700002160229,
+      "playerId": "nobody",
+      "action": {
+        "action": "start"
+      },
+      "seed": 45454
+    },
+    {
+      "type": "join",
+      "now": 1700002166592,
+      "playerId": "u50",
+      "token": "tok-50",
+      "name": "😀",
+      "avatarId": "koala"
+    },
+    {
+      "type": "tick",
+      "now": 1700002166805
+    },
+    {
+      "type": "input",
+      "now": 1700002168202,
+      "playerId": "nobody",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "tick",
+      "now": 1700002169403
+    },
+    {
+      "type": "join",
+      "now": 1700002171460,
+      "playerId": "u51",
+      "token": "tok-51",
+      "name": "xxxxxxxxxxxxxxxxx",
+      "avatarId": "lion"
+    },
+    {
+      "type": "vip",
+      "now": 1700002172461,
+      "playerId": "nobody",
+      "action": {
+        "action": "updateSettings",
+        "settings": {
+          "answerSeconds": -1,
+          "bogus": "x"
+        }
+      },
+      "seed": 583761
+    },
+    {
+      "type": "input",
+      "now": 1700002173391,
+      "playerId": "nobody",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700002174788,
+      "playerId": "nobody",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700002176667,
+      "playerId": "nobody",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700002177842,
+      "playerId": "nobody",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "join",
+      "now": 1700002298794,
+      "playerId": "u52",
+      "token": "tok-52",
+      "name": "Fay",
+      "avatarId": "whale"
+    },
+    {
+      "type": "tick",
+      "now": 1700002418795
+    },
+    {
+      "type": "vip",
+      "now": 1700002420176,
+      "playerId": "nobody",
+      "action": {
+        "action": "resume"
+      },
+      "seed": 145342
+    },
+    {
+      "type": "join",
+      "now": 1700002422190,
+      "playerId": "u53",
+      "token": "tok-53",
+      "name": "Hal",
+      "avatarId": "fox",
+      "existingToken": "bogus-53"
+    },
+    {
+      "type": "input",
+      "now": 1700002423182,
+      "playerId": "ghost",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "disconnect",
+      "now": 1700002423210,
+      "playerId": "nobody"
+    },
+    {
+      "type": "join",
+      "now": 1700002425268,
+      "playerId": "u54",
+      "token": "tok-54",
+      "name": "constructor",
+      "avatarId": "panda"
+    },
+    {
+      "type": "vip",
+      "now": 1700002426444,
+      "playerId": "nobody",
+      "action": {
+        "action": "start"
+      },
+      "seed": 713075
+    },
+    {
+      "type": "tick",
+      "now": 1700002430325
+    },
+    {
+      "type": "vip",
+      "now": 1700002432645,
+      "playerId": "nobody",
+      "action": {
+        "action": "toLobby"
+      },
+      "seed": 918020
+    },
+    {
+      "type": "vip",
+      "now": 1700002433558,
+      "playerId": "nobody",
+      "action": {
+        "action": "selectGame",
+        "gameId": "nope"
+      },
+      "seed": 906363
+    },
+    {
+      "type": "leave",
+      "now": 1700002434112,
+      "playerId": "nobody"
+    },
+    {
+      "type": "tick",
+      "now": 1700002435897
+    },
+    {
+      "type": "join",
+      "now": 1700002436774,
+      "playerId": "u55",
+      "token": "tok-55",
+      "name": "éva",
+      "avatarId": "frog"
+    },
+    {
+      "type": "input",
+      "now": 1700002438843,
+      "playerId": "nobody",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "vip",
+      "now": 1700002440062,
+      "playerId": "nobody",
+      "action": {
+        "action": "lock"
+      },
+      "seed": 777149
+    },
+    {
+      "type": "join",
+      "now": 1700002442424,
+      "playerId": "u56",
+      "token": "tok-56",
+      "name": "Ben",
+      "avatarId": "fox",
+      "existingToken": "tok-14"
+    },
+    {
+      "type": "tick",
+      "now": 1700002443940
+    },
+    {
+      "type": "input",
+      "now": 1700002445882,
+      "playerId": "ghost",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700002445910,
+      "playerId": "",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "disconnect",
+      "now": 1700002447836,
+      "playerId": "nobody"
+    },
+    {
+      "type": "disconnect",
+      "now": 1700002448139,
+      "playerId": "nobody"
+    },
+    {
+      "type": "input",
+      "now": 1700002448435,
+      "playerId": "",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700002452268,
+      "playerId": "nobody",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700002454865,
+      "playerId": "nobody",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "vip",
+      "now": 1700002455862,
+      "playerId": "nobody",
+      "action": {
+        "action": "end"
+      },
+      "seed": 278731
+    },
+    {
+      "type": "input",
+      "now": 1700002456290,
+      "playerId": "nobody",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "leave",
+      "now": 1700002457186,
+      "playerId": "nobody"
+    },
+    {
+      "type": "tick",
+      "now": 1700002577187
+    },
+    {
+      "type": "tick",
+      "now": 1700002578617
+    },
+    {
+      "type": "vip",
+      "now": 1700002582493,
+      "playerId": "nobody",
+      "action": {
+        "action": "start"
+      },
+      "seed": 427654
+    },
+    {
+      "type": "input",
+      "now": 1700002582681,
+      "playerId": "nobody",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "vip",
+      "now": 1700002584723,
+      "playerId": "nobody",
+      "action": {
+        "action": "kick",
+        "playerId": "nobody"
+      },
+      "seed": 442256
+    },
+    {
+      "type": "input",
+      "now": 1700002586084,
+      "playerId": "nobody",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "join",
+      "now": 1700002586923,
+      "playerId": "u57",
+      "token": "tok-57",
+      "name": "<b>Cy</b>",
+      "avatarId": "penguin"
+    },
+    {
+      "type": "input",
+      "now": 1700002588492,
+      "playerId": "nobody",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "join",
+      "now": 1700002592476,
+      "playerId": "u58",
+      "token": "tok-58",
+      "name": "Lou",
+      "avatarId": "fox",
+      "existingToken": "tok-9"
+    },
+    {
+      "type": "input",
+      "now": 1700002595728,
+      "playerId": "nobody",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "disconnect",
+      "now": 1700002596775,
+      "playerId": "nobody"
+    },
+    {
+      "type": "vip",
+      "now": 1700002716776,
+      "playerId": "nobody",
+      "action": {
+        "action": "pause"
+      },
+      "seed": 972750
+    },
+    {
+      "type": "tick",
+      "now": 1700002718733
+    },
+    {
+      "type": "vip",
+      "now": 1700002720942,
+      "playerId": "nobody",
+      "action": {
+        "action": "selectGame",
+        "gameId": "template"
+      },
+      "seed": 36193
+    },
+    {
+      "type": "join",
+      "now": 1700002723196,
+      "playerId": "u59",
+      "token": "tok-59",
+      "name": "Lou",
+      "avatarId": "fox",
+      "existingToken": "tok-9"
+    },
+    {
+      "type": "join",
+      "now": 1700002724660,
+      "playerId": "u60",
+      "token": "tok-60",
+      "name": "constructor",
+      "avatarId": "owl"
+    },
+    {
+      "type": "input",
+      "now": 1700002727182,
+      "playerId": "nobody",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "vip",
+      "now": 1700002727939,
+      "playerId": "nobody",
+      "action": {
+        "action": "start"
+      },
+      "seed": 61911
+    },
+    {
+      "type": "disconnect",
+      "now": 1700002729740,
+      "playerId": "nobody"
+    },
+    {
+      "type": "vip",
+      "now": 1700002731724,
+      "playerId": "nobody",
+      "action": {
+        "action": "selectGame",
+        "gameId": "template"
+      },
+      "seed": 962968
+    },
+    {
+      "type": "vip",
+      "now": 1700002733683,
+      "playerId": "nobody",
+      "action": {
+        "action": "kick",
+        "playerId": "nobody"
+      },
+      "seed": 486729
+    },
+    {
+      "type": "tick",
+      "now": 1700002736145
+    },
+    {
+      "type": "tick",
+      "now": 1700002737464
+    },
+    {
+      "type": "tick",
+      "now": 1700002738247
+    },
+    {
+      "type": "tick",
+      "now": 1700002739971
+    },
+    {
+      "type": "input",
+      "now": 1700002741989,
+      "playerId": "ghost",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "tick",
+      "now": 1700002744101
+    },
+    {
+      "type": "vip",
+      "now": 1700002745278,
+      "playerId": "nobody",
+      "action": {
+        "action": "unlock"
+      },
+      "seed": 497097
+    },
+    {
+      "type": "vip",
+      "now": 1700002745656,
+      "playerId": "nobody",
+      "action": {
+        "action": "start"
+      },
+      "seed": 943032
+    },
+    {
+      "type": "input",
+      "now": 1700002747012,
+      "playerId": "nobody",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "join",
+      "now": 1700002749446,
+      "playerId": "u61",
+      "token": "tok-61",
+      "name": "Hal",
+      "avatarId": "fox",
+      "existingToken": "tok-5"
+    },
+    {
+      "type": "input",
+      "now": 1700002782038,
+      "playerId": "nobody",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700002784118,
+      "playerId": "nobody",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "disconnect",
+      "now": 1700002786044,
+      "playerId": "nobody"
+    },
+    {
+      "type": "tick",
+      "now": 1700002788312
+    },
+    {
+      "type": "input",
+      "now": 1700002908313,
+      "playerId": "ghost",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "input",
+      "now": 1700002909640,
+      "playerId": "nobody",
+      "input": {
+        "type": "answer",
+        "text": "lobby"
+      }
+    },
+    {
+      "type": "join",
+      "now": 1700002910323,
+      "playerId": "u62",
+      "token": "tok-62",
+      "name": "xxxxxxxxxxxxxxxxx",
+      "avatarId": "koala"
+    },
+    {
+      "type": "join",
+      "now": 1700002912376,
+      "playerId": "u63",
+      "token": "tok-63",
+      "name": "Ana",
+      "avatarId": "cat"
+    }
+  ],
+  "violations": [
+    {
+      "at": 288,
+      "detail": "no VIP while Ben connected (room cannot proceed)"
+    },
+    {
+      "at": 289,
+      "detail": "no VIP while Ben connected (room cannot proceed)"
+    },
+    {
+      "at": 290,
+      "detail": "no VIP while Ben connected (room cannot proceed)"
+    },
+    {
+      "at": 291,
+      "detail": "no VIP while Ben connected (room cannot proceed)"
+    },
+    {
+      "at": 292,
+      "detail": "no VIP while Ben connected (room cannot proceed)"
+    },
+    {
+      "at": 293,
+      "detail": "no VIP while Ben connected (room cannot proceed)"
+    },
+    {
+      "at": 294,
+      "detail": "no VIP while Ben connected (room cannot proceed)"
+    },
+    {
+      "at": 295,
+      "detail": "no VIP while Ben connected (room cannot proceed)"
+    },
+    {
+      "at": 296,
+      "detail": "no VIP while Ben connected (room cannot proceed)"
+    },
+    {
+      "at": 297,
+      "detail": "no VIP while Ben connected (room cannot proceed)"
+    },
+    {
+      "at": 298,
+      "detail": "no VIP while Ben connected (room cannot proceed)"
+    },
+    {
+      "at": 299,
+      "detail": "no VIP while Ben connected (room cannot proceed)"
+    },
+    {
+      "at": 300,
+      "detail": "no VIP while Ben connected (room cannot proceed)"
+    }
+  ],
+  "finalHash": "3ce23d62"
+}

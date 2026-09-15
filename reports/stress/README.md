@@ -13,4 +13,4 @@ Layout (per the session prompt):
   - `metrics/` soak CSVs + interpretation
   - `for-design-session.md`
 
-Status: waiting for the initial build to land on `main`. Nothing run yet.
+Status: loop 1 done (2026-09-15-1640); see `LATEST.md` and `MATRIX.md`.
