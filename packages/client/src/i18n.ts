@@ -18,6 +18,8 @@ export const t = {
   lobby: {
     title: 'Lobby',
     waitingForVip: 'Waiting for the VIP to pick a game…',
+    waitingFor: (name: string) => `Waiting for ${name} to pick a game…`,
+    waitingForFirst: 'Waiting for the first player…',
     youAreVip: 'You are the VIP — pick a game when everyone is in.',
     pickGame: 'Pick a game',
     players: (n: number, cap: number) => `${n} / ${cap} players`,

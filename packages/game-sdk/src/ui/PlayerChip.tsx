@@ -49,13 +49,13 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
     >
       <span className={styles.avatar}>
         <Avatar avatarId={avatarId} dim={!connected || status === 'spectator'} />
-        {isVip ? (
-          <span className={styles.crown} aria-hidden>
-            ★
-          </span>
-        ) : null}
       </span>
       <span className={styles.name}>{name}</span>
+      {isVip ? (
+        <span className={styles.vip} aria-hidden>
+          ★ VIP
+        </span>
+      ) : null}
       {glyph.text ? (
         <span
           className={`${styles.glyph} ${status === 'submitted' && connected ? styles.ok : ''}`}

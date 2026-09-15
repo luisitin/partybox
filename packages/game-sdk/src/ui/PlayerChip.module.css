@@ -31,13 +31,17 @@
   display: inline-flex;
 }
 
-.crown {
-  position: absolute;
-  right: -4px;
-  top: -6px;
+/* Readable from the couch (the old 0.7em star over the avatar was 12–20 px on the TV strip). */
+.vip {
+  flex-shrink: 0;
+  padding: 0 0.45em;
+  border-radius: 999px;
+  background: var(--pb-accent-2);
+  color: var(--pb-on-accent);
   font-size: 0.7em;
-  color: var(--pb-accent-2);
-  text-shadow: 0 0 2px #000;
+  font-weight: 900;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
 }
 
 .name {
