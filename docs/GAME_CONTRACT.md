@@ -145,6 +145,15 @@ interface GameResults {
 }
 ```
 
+### Bots (`manifest.supportsBots`)
+
+Every game ships `bot.sampleInput` (sim, e2e and the contract suite need it). Setting
+`"supportsBots": true` in `manifest.json` additionally declares the game **available for bots**: players may
+add bot seats from the lobby and they will play with your bot logic. Without the flag the engine refuses to
+start your game while bots are in the room. When you set it, make the bot an honest opponent: it acts in
+every input phase, its inputs vary (the contract suite fails a bot that always sends the same input), and it
+never needs information a phone would not have. Bots are never VIP and count toward `minPlayers`/`maxPlayers`.
+
 ### Settings
 
 `manifest.settings` is a list of specs (`number` with min/max/step, `boolean`, `select` with options).

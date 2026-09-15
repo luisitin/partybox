@@ -20,11 +20,13 @@ Keep the top 10 ordered by value. Move done items to `CHANGELOG.md`.
 
 ## Everything else
 
-| Id     | Item                                                                      |
-| ------ | ------------------------------------------------------------------------- |
-| BL-005 | Diffed view pushes if measured necessary (views are pushed in full today) |
-| BL-007 | Localisation of core screens (`packages/client/src/i18n.ts` is the seam)  |
-| BL-008 | Screen-reader audit of the controller (labels exist; not audited)         |
-| BL-010 | Custom avatars / more than 16                                             |
-| BL-015 | More content: Wisecrack prompt packs by theme, Lightning Round categories |
-| BL-016 | Hot-reload game reducers in `pnpm dev:watch` without dropping rooms       |
+| Id     | Item                                                                                   |
+| ------ | -------------------------------------------------------------------------------------- |
+| BL-005 | Diffed view pushes if measured necessary (views are pushed in full today)              |
+| BL-007 | Localisation of core screens (`packages/client/src/i18n.ts` is the seam)               |
+| BL-008 | Screen-reader audit of the controller (labels exist; not audited)                      |
+| BL-010 | Custom avatars / more than 16                                                          |
+| BL-015 | More content: Wisecrack prompt packs by theme, Lightning Round categories              |
+| BL-016 | Hot-reload game reducers in `pnpm dev:watch` without dropping rooms                    |
+| BL-018 | Opt-in PIN per player so resume-by-name (ADR-029) can be locked down for public spaces |
+| BL-019 | Bot difficulty picker in the lobby (`strategy` is already in the room model)           |

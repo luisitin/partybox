@@ -6,8 +6,8 @@ import type { FastifyInstance } from 'fastify';
 import type { EngineDeps } from '@partybox/engine';
 import { nextWakeAt } from '@partybox/engine';
 import { createRng, z } from '@partybox/shared';
-import type { BotManager, BotStrategy } from './bots';
-import { BOT_STRATEGIES } from './bots';
+import type { BotManager } from './bots';
+import { BOT_STRATEGIES } from '@partybox/shared';
 import type { Clock } from './clock';
 import type { Host } from './host';
 
@@ -22,7 +22,7 @@ export interface DevApiOptions {
 
 const botsBody = z.object({
   count: z.number().int().min(1).max(16),
-  strategy: z.enum(BOT_STRATEGIES as [BotStrategy, ...BotStrategy[]]).optional(),
+  strategy: z.enum(BOT_STRATEGIES).optional(),
   reactionMs: z.number().int().min(0).max(60_000).optional(),
 });
 const startBody = z.object({

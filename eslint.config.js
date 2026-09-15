@@ -18,6 +18,8 @@ export default tseslint.config(
       'reports/**',
       '.claude/**',
       'docs/**',
+      // Ad-hoc multi-persona live-play scripts (packages/e2e/live/README.md): not part of verify.
+      'packages/e2e/live/**',
     ],
   },
   ...tseslint.configs.recommended,

@@ -32,7 +32,24 @@ export function TvPlaying({ room, view, audio }: TvPlayingProps): JSX.Element {
   return (
     <div className={styles.playing}>
       <div className={styles.strip}>
-        <PlayerChips players={view.players} vip={view.vip} size="sm" />
+        <PlayerChips
+          players={[
+            ...view.players,
+            // Spectators are not in the game state; show them dimmed so late joiners feel seen.
+            ...room.players
+              .filter((p) => p.spectator)
+              .map((p) => ({
+                id: p.id,
+                name: p.name,
+                avatarId: p.avatarId,
+                connected: p.connected,
+                status: 'spectator' as const,
+              })),
+          ]}
+          vip={view.vip}
+          botIds={room.players.filter((p) => p.bot).map((p) => p.id)}
+          size="sm"
+        />
         <div className={styles.timer}>
           <Timer deadline={view.deadline} paused={view.paused} onTick={onTick} size="lg" />
         </div>

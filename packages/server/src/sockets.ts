@@ -14,6 +14,7 @@ import {
   normalizeRoomCode,
   tvJoinPayloadSchema,
   vipPayloadSchema,
+  botPayloadSchema,
 } from '@partybox/shared';
 import type { ErrorPayload } from '@partybox/shared';
 import type { Host, Transport } from './host';
@@ -150,6 +151,29 @@ export function createSocketLayer(server: HttpServer): SocketLayer {
         const isVip = room?.players[data.playerId]?.isVip === true;
         if (!limiter.take(isVip ? 1 : 5)) return sendError('rate_limited', 'Slow down.');
         host.dispatch(data.code, { type: 'vip', playerId: data.playerId, action: parsed.data });
+      });
+
+      socket.on('bot', (raw: unknown) => {
+        if (!data.playerId || !data.code) return sendError('not_in_room', 'Join a room first.');
+        const parsed = botPayloadSchema.safeParse(raw);
+        if (!parsed.success) return sendError('invalid_payload', 'Bad bot payload.');
+        if (!limiter.take(5)) return sendError('rate_limited', 'Slow down.');
+        if (parsed.data.action === 'add') {
+          const { playerId, token } = host.mintPlayer();
+          host.dispatch(data.code, {
+            type: 'bot-add',
+            ownerId: data.playerId,
+            playerId,
+            token,
+            strategy: 'random',
+          });
+          return;
+        }
+        host.dispatch(data.code, {
+          type: 'bot-remove',
+          ownerId: data.playerId,
+          botId: parsed.data.botId,
+        });
       });
 
       socket.on('leave', () => {

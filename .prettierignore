@@ -6,3 +6,4 @@ reports/**/video
 *.generated.ts
 .claude/worktrees
 CHANGELOG.md
+packages/e2e/live/*.helper.mts

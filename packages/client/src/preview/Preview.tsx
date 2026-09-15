@@ -138,6 +138,7 @@ export function Preview(): JSX.Element {
     join: () => undefined,
     sendInput: (input) => console.log('[preview] send', input),
     vip: (action) => console.log('[preview] vip', action),
+    bot: (action) => console.log('[preview] bot', action),
     leave: () => undefined,
     dismissError: () => undefined,
     dismissToast: () => undefined,

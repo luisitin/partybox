@@ -15,6 +15,8 @@ export interface PlayerChipsProps {
   layout?: 'grid' | 'row';
   /** Grid alignment: centred by default; `start` lines up under a left-aligned heading. */
   align?: 'center' | 'start';
+  /** Ids of bot players (they get a 🤖 tag). The room snapshot knows; the game view does not. */
+  botIds?: readonly string[];
 }
 
 export function PlayerChips({
@@ -25,6 +27,7 @@ export function PlayerChips({
   size = 'md',
   layout = 'row',
   align = 'center',
+  botIds = [],
 }: PlayerChipsProps): JSX.Element {
   return (
     <ul
@@ -41,6 +44,7 @@ export function PlayerChips({
             isVip={vip === p.id}
             active={activeIds.includes(p.id)}
             score={showScores ? p.score : undefined}
+            isBot={botIds.includes(p.id)}
             size={size}
           />
         </li>

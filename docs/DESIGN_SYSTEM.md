@@ -8,7 +8,7 @@ same primitives. Games must not hard-code colours, sizes or durations — use th
 
 1. **10-foot first on the TV**: 1920×1080, viewed from ~3 m. Body ≥ 32 px, timers ≥ 96 px, one focal point.
 2. **Thumb first on the phone**: portrait, primary action in the bottom third, targets ≥ 44 px.
-3. **Never colour alone**: every state also has a shape, icon or word (chips show ✓ for submitted, ⟳ for reconnecting).
+3. **Never colour alone**: every state also has a shape, icon or word (chips show ✓ for submitted, ⟳ for reconnecting, a `🤖 bot` tag for bot seats).
 4. **Calm feedback**: reconnecting is a quiet banner, not a red alarm. Errors say what to do next.
 5. **The TV reveals, the phone never spoils**: controller views hide what the stage hasn't shown yet.
 

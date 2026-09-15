@@ -37,6 +37,7 @@ Any of these works — the TV only needs a browser that can open one URL:
 
 Then everyone opens `http://<lan-ip>:42069` on their phone (or scans the QR on the TV). The first person
 in is the VIP and picks the game. Several TVs can open `/tv` at once; each has its own mute toggle.
+Short on players? Anyone can tap **Add a bot** in the lobby (games marked 🤖 _Bots welcome_).
 
 ## Commands
 

@@ -7,7 +7,7 @@ the last question everyone wagers part of their score. Highest score wins. ~8 mi
 
 ## Players
 
-1–16. Late joiners spectate (engine). Disconnected players are not waited for; reconnect → can answer.
+1–16. Late joiners spectate (engine). Disconnected players are not waited for; reconnect → can answer. Bots: welcome (`supportsBots`) — the bot answers from the pack / plays the odds.
 
 ## Phases
 

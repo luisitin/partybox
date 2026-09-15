@@ -27,6 +27,7 @@ export function gameSummaries(deps: EngineDeps): GameSummary[] {
         estimatedMinutes,
         tags,
         settings,
+        supportsBots,
       }) => ({
         id,
         name,
@@ -37,6 +38,7 @@ export function gameSummaries(deps: EngineDeps): GameSummary[] {
         estimatedMinutes,
         tags,
         settings,
+        supportsBots: supportsBots === true,
       }),
     );
 }
@@ -52,6 +54,7 @@ export function publicPlayers(room: RoomState): PlayerPublic[] {
       connected: p.connected,
       spectator: p.spectator,
       joinedAt: p.joinedAt,
+      ...(p.bot ? { bot: p.bot } : {}),
     }));
 }
 

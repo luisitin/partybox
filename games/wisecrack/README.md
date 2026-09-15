@@ -9,7 +9,7 @@ revealed, points awarded, round scoreboard, next round. The last round is worth 
 ## Players
 
 3–8; ≈ 10 min by default. Every `init` player writes every round, connected or not (a disconnected
-player's prompts stay blank). Late joiners spectate (engine behaviour).
+player's prompts stay blank). Late joiners spectate (engine behaviour). Bots: welcome (`supportsBots`) — the bot answers from the pack / plays the odds.
 
 ## Phases
 

@@ -1,0 +1,19 @@
+{"t":"2026-09-15T22:14:33.173Z","agent":"vip","event":"RESTART","base":"http://127.0.0.1:42090","persona":"vip","name":"Vera","helper":true,"minPlayers":2,"maxMs":360000,"note":"run 2: other agents already finished; opening a helper phone \"Hank\" (owl) in this script so a VIP handoff target exists"}
+{"t":"2026-09-15T22:14:48.504Z","agent":"vip","event":"FATAL","error":"TimeoutError: locator.waitFor: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('header').getByText('Vera', { exact: true }) to be visible\u001b[22m\n","stack":"locator.waitFor: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('header').getByText('Vera', { exact: true }) to be visible\u001b[22m\n\n    at openPhone (C:\\dev\\partybox\\packages\\e2e\\src\\live\\lib.mts:80:65)\n    at async <anonymous> (C:\\dev\\partybox\\packages\\e2e\\src\\live\\vip.helper.mts:162:16)"}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+locator.waitFor: Timeout 15000ms exceeded.
+Call log:
+[2m  - waiting for locator('header').getByText('Vera', { exact: true }) to be visible[22m
+
+    at openPhone (C:\dev\partybox\packages\e2e\src\live\lib.mts:80:65)
+    at async <anonymous> (C:\dev\partybox\packages\e2e\src\live\vip.helper.mts:162:16) {
+  log: [
+    "  - waiting for locator('header').getByText('Vera', { exact: true }) to be visible"
+  ],
+  name: 'TimeoutError'
+}
+
+Node.js v24.19.0

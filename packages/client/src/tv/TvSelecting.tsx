@@ -53,6 +53,7 @@ export function TvSelecting({ room }: TvSelectingProps): JSX.Element {
           status: p.spectator ? 'spectator' : 'active',
         }))}
         vip={room.vip}
+        botIds={room.players.filter((p) => p.bot).map((p) => p.id)}
         layout="grid"
       />
     </Stage>

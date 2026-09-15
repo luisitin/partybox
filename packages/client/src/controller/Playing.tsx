@@ -20,7 +20,8 @@ export function Playing({ controller, room, me, view }: PlayingProps): JSX.Eleme
   if (me.spectator || view?.me.role === 'spectator') {
     return <WaitingScreen title={t.spectator.title} hint={t.spectator.hint} mood="watch" />;
   }
-  if (!view) return <WaitingScreen title={t.connection.connecting} mood="wait" />;
+  // The socket is up; we are waiting for the first view push or the lazy chunk — say so.
+  if (!view) return <WaitingScreen title={t.connection.loadingGame} mood="wait" />;
   const module = room.selectedGameId ? clientGames[room.selectedGameId] : undefined;
   if (!module)
     return (
@@ -37,7 +38,7 @@ export function Playing({ controller, room, me, view }: PlayingProps): JSX.Eleme
   }) => JSX.Element;
   return (
     <GameErrorBoundary key={view.gameId}>
-      <Suspense fallback={<WaitingScreen title={t.connection.connecting} mood="wait" />}>
+      <Suspense fallback={<WaitingScreen title={t.connection.loadingGame} mood="wait" />}>
         <GameController
           view={view}
           me={{ id: me.id, name: me.name, avatarId: me.avatarId }}

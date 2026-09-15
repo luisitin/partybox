@@ -20,6 +20,13 @@ function nameTaken(room: RoomState, name: string): boolean {
   return Object.values(room.players).some((p) => nameKey(p.name) === key);
 }
 
+function findDisconnectedByName(room: RoomState, rawName: string): RoomPlayer | undefined {
+  const name = normalizeName(rawName);
+  if (!name) return undefined;
+  const key = nameKey(name);
+  return Object.values(room.players).find((p) => !p.connected && !p.bot && nameKey(p.name) === key);
+}
+
 /** Playing players (not spectators) receive `player` events; others don't exist to the game. */
 function notifyGame(
   room: RoomState,
@@ -36,6 +43,10 @@ function notifyGame(
 export function join(room: RoomState, event: JoinEvent, deps: EngineDeps): ApplyResult {
   const existing = event.existingToken ? findByToken(room, event.existingToken) : undefined;
   if (existing) return resume(room, existing, event.now, deps);
+  // A closed tab loses its token. A token-less join under the name of a player who is currently
+  // DISCONNECTED resumes that player (living-room trust model, ADR-029) instead of "name taken".
+  const orphan = findDisconnectedByName(room, event.name);
+  if (orphan) return resume(room, orphan, event.now, deps);
 
   if (room.locked)
     return { room, effects: [error(event.playerId, 'room_locked', 'This room is locked.')] };
@@ -124,6 +135,13 @@ export function removePlayer(
   delete players[playerId];
   let next: RoomState = { ...room, players, vipId: room.vipId === playerId ? null : room.vipId };
   const effects: Effect[] = [];
+  // A human's bots leave with them (ADR-028); bots own nothing, so this recurses one level at most.
+  for (const bot of Object.values(room.players)) {
+    if (bot.bot?.ownerId !== playerId) continue;
+    const gone = removePlayer(next, bot.id, now, deps, 'left');
+    next = gone.room;
+    effects.push(...gone.effects);
+  }
   // Idempotent for the game: a second `connected: false` is harmless, a missed one is not.
   const game = notifyGame(next, playerId, false, now, deps);
   next = game.room;
@@ -148,7 +166,7 @@ export function removePlayer(
 /** Longest-connected connected player becomes VIP. No-op when nobody is connected. */
 export function promoteVip(room: RoomState, _now: number): ApplyResult {
   const candidates = Object.values(room.players)
-    .filter((p) => p.connected && p.id !== room.vipId)
+    .filter((p) => p.connected && p.id !== room.vipId && !p.bot) // bots are never VIP
     .sort((a, b) => a.joinedAt - b.joinedAt);
   const chosen = candidates[0];
   if (!chosen) return { room, effects: [] };

@@ -31,6 +31,12 @@ export const t = {
     room: 'Room',
     locked: 'Room locked',
     full: 'Room full',
+    addBot: 'Add a bot',
+    addBotHint: 'A bot plays on your behalf in games that welcome bots.',
+    removeBot: 'Remove',
+    yourBots: 'Your bots',
+    botsWelcome: 'Bots welcome',
+    noBots: 'No bots',
   },
   selecting: {
     vipChoosing: (name: string) => `${name} is choosing a game…`,
@@ -73,6 +79,7 @@ export const t = {
   connection: {
     reconnecting: 'Reconnecting…',
     connecting: 'Connecting…',
+    loadingGame: 'Getting the game ready…',
     lostServer: 'Lost the PartyBox server — reconnecting…',
     seconds: (n: number) => `${n} s`,
     secondsLeft: (n: number) => `${n} seconds left`,

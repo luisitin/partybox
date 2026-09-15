@@ -4,7 +4,17 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ## [Unreleased]
 
-(nothing yet)
+### Added
+- Bots as room players (ADR-028): "Add a bot" in the lobby (max 4 per person, owner/VIP can remove,
+  never VIP, leave with their owner), `supportsBots` manifest flag gates Start, contract check that a
+  flagged bot acts with varied inputs, `bot` socket event, 🤖 chip tag, dev-API bots now go through the
+  engine.
+- Resume by name (ADR-029): a token-less join under a disconnected player's name resumes that player.
+- Multi-persona live-play harness (`packages/e2e/live/`) and the 2026-09-15 session report.
+
+### Fixed
+- Stale VIP badge while offline, toasts rendered as buttons, "Connecting…" shown while connected,
+  spectators missing from the TV strip during play (all from the live-play report).
 
 ## [0.1.0] - 2026-09-15
 

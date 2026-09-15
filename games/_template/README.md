@@ -11,7 +11,7 @@ point. One round, about two minutes. Interaction type: free text.
 
 ## Players
 
-1–16. Late joiners spectate until the next game (engine behaviour, nothing to do here).
+1–16. Late joiners spectate until the next game (engine behaviour, nothing to do here). Bots: welcome (`supportsBots`) — the bot picks a word from the pack.
 
 ## Phases
 

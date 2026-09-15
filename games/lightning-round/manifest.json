@@ -36,16 +36,44 @@
       "type": "select",
       "default": "all",
       "options": [
-        { "value": "all", "label": "All categories" },
-        { "value": "geography", "label": "Geography" },
-        { "value": "science", "label": "Science" },
-        { "value": "history", "label": "History" },
-        { "value": "arts-and-literature", "label": "Arts & Literature" },
-        { "value": "sports", "label": "Sports" },
-        { "value": "food-and-drink", "label": "Food & Drink" },
-        { "value": "nature", "label": "Nature" },
-        { "value": "language", "label": "Language" }
+        {
+          "value": "all",
+          "label": "All categories"
+        },
+        {
+          "value": "geography",
+          "label": "Geography"
+        },
+        {
+          "value": "science",
+          "label": "Science"
+        },
+        {
+          "value": "history",
+          "label": "History"
+        },
+        {
+          "value": "arts-and-literature",
+          "label": "Arts & Literature"
+        },
+        {
+          "value": "sports",
+          "label": "Sports"
+        },
+        {
+          "value": "food-and-drink",
+          "label": "Food & Drink"
+        },
+        {
+          "value": "nature",
+          "label": "Nature"
+        },
+        {
+          "value": "language",
+          "label": "Language"
+        }
       ]
     }
-  ]
+  ],
+  "supportsBots": true
 }

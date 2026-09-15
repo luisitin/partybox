@@ -15,6 +15,8 @@ export interface PlayerChipProps {
   active?: boolean;
   /** This chip is the viewer: a small "you" tag (not the turn outline). */
   isMe?: boolean;
+  /** A bot player (ADR-028): shows a robot tag so nobody mistakes it for a person. */
+  isBot?: boolean;
   size?: 'sm' | 'md' | 'lg';
 }
 
@@ -36,6 +38,7 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
     score,
     active,
     isMe,
+    isBot,
     size = 'md',
   } = props;
   const glyph = connected ? GLYPH[status] : { text: '⟳', label: 'reconnecting' };
@@ -49,7 +52,7 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
   return (
     <div
       className={classes}
-      aria-label={`${name}${isMe ? ' (you)' : ''}${isVip ? ', VIP' : ''}${glyph.label ? `, ${glyph.label}` : ''}`}
+      aria-label={`${name}${isMe ? ' (you)' : ''}${isBot ? ' (bot)' : ''}${isVip ? ', VIP' : ''}${glyph.label ? `, ${glyph.label}` : ''}`}
     >
       <span className={styles.avatar}>
         <Avatar avatarId={avatarId} dim={!connected || status === 'spectator'} />
@@ -58,6 +61,11 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
       {isMe ? (
         <span className={styles.you} aria-hidden>
           you
+        </span>
+      ) : null}
+      {isBot ? (
+        <span className={styles.bot} aria-hidden>
+          🤖 bot
         </span>
       ) : null}
       {isVip ? (

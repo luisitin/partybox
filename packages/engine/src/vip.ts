@@ -27,6 +27,12 @@ export function canStart(
   if (!game) return { ok: false, reason: 'Pick a game first.' };
   const count = Object.keys(room.players).length;
   const { minPlayers, maxPlayers, name } = game.manifest;
+  const bots = Object.values(room.players).filter((p) => p.bot).length;
+  if (bots > 0 && !game.manifest.supportsBots)
+    return {
+      ok: false,
+      reason: `${name} has no bot support — remove the ${bots === 1 ? 'bot' : `${bots} bots`} or pick a game that welcomes bots.`,
+    };
   if (count < minPlayers)
     return { ok: false, reason: `${name} needs at least ${minPlayers} players (${count} here).` };
   if (count > maxPlayers)

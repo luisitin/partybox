@@ -3,6 +3,7 @@
 // exactly when a push is emitted.
 import { LIMITS } from '@partybox/shared';
 import type { GameEvent, GameStateBase } from '@partybox/shared';
+import { addBot, removeBot } from './bots';
 import { disconnect, expirePlayers, join, removePlayer } from './players';
 import { applyGameEvent, fireDueTimer } from './runner';
 import type { ApplyResult, Effect, EngineDeps, RoomEvent, RoomState } from './types';
@@ -116,6 +117,10 @@ function dispatch(room: RoomState, event: RoomEvent, deps: EngineDeps): ApplyRes
   switch (event.type) {
     case 'join':
       return join(room, event, deps);
+    case 'bot-add':
+      return addBot(room, event);
+    case 'bot-remove':
+      return removeBot(room, event, deps);
     case 'disconnect':
       return disconnect(room, event.playerId, event.now, deps);
     case 'leave':

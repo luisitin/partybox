@@ -200,6 +200,29 @@ for (const loaded of games) {
       });
     }
 
+    it(`bot support flag: ${game.manifest.supportsBots ? 'bots act in every input phase with varied inputs' : 'not declared (players cannot add bots to this game)'}`, () => {
+      if (!game.manifest.supportsBots) return;
+      // ADR-028: a game that welcomes bots must have a bot that actually plays — it acts at least
+      // and its inputs are not all identical (a bot that always taps A is not an opponent).
+      const inputsByPhase = new Map<string, Set<string>>();
+      playGame(game, {
+        players: playerCounts(loaded).at(-1) as number,
+        seed: 2024,
+        strategy: 'fast',
+        maxSimMs: budgetMs,
+        onEvent: (event, state) => {
+          if (event.type !== 'input') return;
+          const phase = state.phase.id;
+          if (!inputsByPhase.has(phase)) inputsByPhase.set(phase, new Set());
+          inputsByPhase.get(phase)?.add(JSON.stringify(event.input));
+        },
+      });
+      const all = [...inputsByPhase.values()].flatMap((set) => [...set]);
+      expect(all.length, 'the bot never produced an input').toBeGreaterThan(0);
+      if (all.length >= 4)
+        expect(new Set(all).size, 'bot inputs are all identical').toBeGreaterThan(1);
+    });
+
     it('is deterministic: same seed + same events ⇒ identical state after every event', () => {
       const run = playGame(game, {
         players: playerCounts(loaded)[0] as number,

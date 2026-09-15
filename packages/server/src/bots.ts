@@ -1,35 +1,38 @@
-// Server-played bots for the dev API and e2e: virtual players (no socket) that answer through each
-// game's `bot.sampleInput`. Strategies decide *when* (and, for chaos, whether to misbehave).
+// Drives bot players (ADR-028). Bots are ordinary room players whose `bot` field is set — added
+// by a person from the lobby or by the dev API. This manager watches every room and, for each
+// bot, answers through the game's own `bot.sampleInput` on a strategy-driven delay.
 import type { EngineDeps, RoomState } from '@partybox/engine';
-import { AVATAR_IDS, createRng } from '@partybox/shared';
-import type { Rng } from '@partybox/shared';
+import { createRng, hashString } from '@partybox/shared';
+import type { BotStrategy, Rng } from '@partybox/shared';
 import type { Clock } from './clock';
 import type { Host } from './host';
 
-export type BotStrategy = 'random' | 'fast' | 'slow' | 'idle' | 'chaos';
-export const BOT_STRATEGIES: readonly BotStrategy[] = ['random', 'fast', 'slow', 'idle', 'chaos'];
+export { BOT_STRATEGIES } from '@partybox/shared';
+export type { BotStrategy } from '@partybox/shared';
 
-interface Bot {
+interface Driver {
   id: string;
-  token: string;
   code: string;
   strategy: BotStrategy;
-  reactionMs: number | null;
   rng: Rng;
   pending: NodeJS.Timeout | null;
+  /** Fixed reaction time (dev API), else strategy-based. */
+  reactionMs: number | null;
 }
 
 export interface BotManager {
+  /** Adds `count` ownerless bots through the engine; returns their player ids. */
   add(code: string, count: number, strategy: BotStrategy, reactionMs?: number): string[];
+  /** Removes every bot (dev API reset), or only a room's. */
   removeAll(code?: string): void;
   ids(code: string): string[];
   close(): void;
 }
 
-function delayFor(bot: Bot, room: RoomState, now: number): number | null {
-  if (bot.reactionMs !== null) return bot.reactionMs;
+function delayFor(driver: Driver, room: RoomState, now: number): number | null {
+  if (driver.reactionMs !== null) return driver.reactionMs;
   const deadline = room.game?.state.phase.deadline ?? null;
-  switch (bot.strategy) {
+  switch (driver.strategy) {
     case 'idle':
       return null;
     case 'fast':
@@ -37,66 +40,83 @@ function delayFor(bot: Bot, room: RoomState, now: number): number | null {
     case 'slow':
       return deadline === null ? 3000 : Math.max(200, deadline - now - 700);
     case 'chaos':
-      return bot.rng.int(100, 2500);
+      return driver.rng.int(100, 2500);
     case 'random':
-      return bot.rng.int(500, 4000);
+      return driver.rng.int(800, 4500);
   }
 }
 
 export function createBotManager(host: Host, deps: EngineDeps, clock: Clock): BotManager {
-  const bots = new Map<string, Bot>();
-  let counter = 0;
+  const drivers = new Map<string, Driver>();
+  const reactionOverride = new Map<string, number>();
 
-  function act(bot: Bot): void {
-    bot.pending = null;
-    const room = host.get(bot.code);
+  /** Keeps the driver set equal to the bots currently in the rooms. */
+  function sync(room: RoomState): void {
+    const present = new Set<string>();
+    for (const p of Object.values(room.players)) {
+      if (!p.bot) continue;
+      present.add(p.id);
+      if (!drivers.has(p.id))
+        drivers.set(p.id, {
+          id: p.id,
+          code: room.code,
+          strategy: p.bot.strategy,
+          rng: createRng(hashString(p.id)),
+          pending: null,
+          reactionMs: reactionOverride.get(p.id) ?? null,
+        });
+    }
+    for (const [id, driver] of drivers) {
+      if (driver.code !== room.code || present.has(id)) continue;
+      if (driver.pending) clearTimeout(driver.pending);
+      drivers.delete(id);
+    }
+  }
+
+  function act(driver: Driver): void {
+    driver.pending = null;
+    const room = host.get(driver.code);
     if (!room || room.status !== 'playing' || !room.game || clock.isFrozen()) return;
     const game = deps.games[room.game.gameId];
-    if (!game || !room.game.state.players[bot.id]) return;
-    if (bot.strategy === 'chaos' && bot.rng.chance(0.1)) {
-      host.dispatch(bot.code, { type: 'input', playerId: bot.id, input: { nope: true } });
+    if (!game || !Object.hasOwn(room.game.state.players, driver.id)) return;
+    if (driver.strategy === 'chaos' && driver.rng.chance(0.1)) {
+      host.dispatch(driver.code, { type: 'input', playerId: driver.id, input: { nope: true } });
       return;
     }
-    if (bot.strategy === 'chaos' && bot.rng.chance(0.05)) {
-      host.dispatch(bot.code, { type: 'disconnect', playerId: bot.id });
-      setTimeout(() => {
-        host.dispatch(bot.code, {
-          type: 'join',
-          playerId: bot.id,
-          token: bot.token,
-          name: '',
-          avatarId: '',
-          existingToken: bot.token,
-        });
-      }, 1500);
+    let input: unknown = null;
+    try {
+      input = game.bot.sampleInput(room.game.state, driver.id, driver.rng);
+    } catch (err) {
+      console.warn(`[bots] sampleInput threw for ${driver.id}: ${String(err)}`);
       return;
     }
-    const input = game.bot.sampleInput(room.game.state, bot.id, bot.rng);
     if (input === null) return;
-    host.dispatch(bot.code, { type: 'input', playerId: bot.id, input });
+    host.dispatch(driver.code, { type: 'input', playerId: driver.id, input });
   }
 
   function consider(room: RoomState): void {
-    for (const bot of bots.values()) {
-      if (bot.code !== room.code || bot.pending || room.status !== 'playing' || !room.game)
-        continue;
-      if (clock.isFrozen()) continue;
-      const game = deps.games[room.game.gameId];
-      if (!game || !room.game.state.players[bot.id]) continue;
+    sync(room);
+    if (room.status !== 'playing' || !room.game || clock.isFrozen()) return;
+    const game = deps.games[room.game.gameId];
+    if (!game) return;
+    for (const driver of drivers.values()) {
+      if (driver.code !== room.code || driver.pending) continue;
+      if (!Object.hasOwn(room.game.state.players, driver.id)) continue;
       let wants: unknown = null;
       try {
+        // Peek with a throwaway rng so the real one only advances when the bot actually acts.
         wants = game.bot.sampleInput(
           room.game.state,
-          bot.id,
-          createRng(bot.rng.state().seed + bot.rng.state().step),
+          driver.id,
+          createRng(driver.rng.state().step),
         );
       } catch {
         continue;
       }
       if (wants === null) continue;
-      const delay = delayFor(bot, room, clock.now());
+      const delay = delayFor(driver, room, clock.now());
       if (delay === null) continue;
-      bot.pending = setTimeout(() => act(bot), delay);
+      driver.pending = setTimeout(() => act(driver), delay);
     }
   }
 
@@ -109,46 +129,34 @@ export function createBotManager(host: Host, deps: EngineDeps, clock: Clock): Bo
     add(code, count, strategy, reactionMs) {
       const ids: string[] = [];
       for (let i = 0; i < count; i++) {
-        counter += 1;
         const { playerId, token } = host.mintPlayer();
-        const bot: Bot = {
-          id: playerId,
-          token,
-          code,
-          strategy,
-          reactionMs: reactionMs ?? null,
-          rng: createRng(counter * 7919),
-          pending: null,
-        };
+        if (reactionMs !== undefined) reactionOverride.set(playerId, reactionMs);
         const result = host.dispatch(code, {
-          type: 'join',
+          type: 'bot-add',
+          ownerId: null,
           playerId,
           token,
-          name: `Bot ${counter}`,
-          avatarId: AVATAR_IDS[counter % AVATAR_IDS.length] as string,
+          strategy,
         });
-        if (result?.effects.some((e) => e.type === 'welcome')) {
-          bots.set(playerId, bot);
-          ids.push(playerId);
-        }
+        if (result?.room.players[playerId]) ids.push(playerId);
+        else reactionOverride.delete(playerId);
       }
-      const room = host.get(code);
-      if (room) consider(room);
       return ids;
     },
     removeAll(code) {
-      for (const bot of [...bots.values()]) {
-        if (code && bot.code !== code) continue;
-        if (bot.pending) clearTimeout(bot.pending);
-        bots.delete(bot.id);
-        if (host.get(bot.code)?.players[bot.id])
-          host.dispatch(bot.code, { type: 'leave', playerId: bot.id });
+      for (const room of host.rooms()) {
+        if (code && room.code !== code) continue;
+        for (const p of Object.values(room.players))
+          if (p.bot) host.dispatch(room.code, { type: 'bot-remove', ownerId: null, botId: p.id });
       }
     },
-    ids: (code) => [...bots.values()].filter((b) => b.code === code).map((b) => b.id),
+    ids: (code) =>
+      Object.values(host.get(code)?.players ?? {})
+        .filter((p) => p.bot)
+        .map((p) => p.id),
     close() {
-      for (const bot of bots.values()) if (bot.pending) clearTimeout(bot.pending);
-      bots.clear();
+      for (const driver of drivers.values()) if (driver.pending) clearTimeout(driver.pending);
+      drivers.clear();
     },
   };
 }

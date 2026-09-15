@@ -13,6 +13,7 @@ import type {
   ViewPush,
   VipAction,
   WelcomePayload,
+  BotAction,
 } from '@partybox/shared';
 import { createStore, nextToastId } from './store';
 import type { Store, Toast } from './store';
@@ -69,6 +70,8 @@ export interface Controller {
   join(input: { name: string; avatarId: string; roomCode?: string }): void;
   sendInput(input: unknown): void;
   vip(action: VipAction): void;
+  /** Add a bot you own, or remove one of yours (VIPs may remove any). */
+  bot(action: BotAction): void;
   leave(): void;
   dismissError(): void;
   dismissToast(id: number): void;
@@ -205,6 +208,9 @@ export function createController(url?: string): Controller {
     },
     vip(action) {
       socket.emit('vip', action);
+    },
+    bot(action) {
+      socket.emit('bot', action);
     },
     leave() {
       socket.emit('leave', {});

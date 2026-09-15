@@ -49,6 +49,12 @@ export const gameManifestSchema = z
     settings: z.array(settingSpecSchema).max(12),
     /** ADR-002: raise for stroke-list inputs (drawing games). */
     maxInputBytes: z.number().int().min(1024).max(HARD_MAX_INPUT_BYTES).optional(),
+    /**
+     * "Available for bots": the author certifies `bot.sampleInput` is a reasonable opponent in every
+     * input phase. Players may add bots in the lobby; a game without this flag cannot be started
+     * while bots are in the room (ADR-028).
+     */
+    supportsBots: z.boolean().optional(),
   })
   .refine((m) => m.minPlayers <= m.maxPlayers, { message: 'minPlayers must be <= maxPlayers' });
 export type GameManifest = z.infer<typeof gameManifestSchema>;
