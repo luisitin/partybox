@@ -18,6 +18,10 @@
   justify-content: center;
 }
 
+.start {
+  justify-content: flex-start;
+}
+
 .item {
   min-width: 0;
   max-width: 100%;

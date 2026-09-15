@@ -27,6 +27,7 @@ export const t = {
     orOpen: 'or open',
     room: 'Room',
     locked: 'Room locked',
+    full: 'Room full',
   },
   selecting: {
     vipChoosing: (name: string) => `${name} is choosing a game…`,

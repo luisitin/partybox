@@ -13,6 +13,8 @@ export interface PlayerChipsProps {
   size?: 'sm' | 'md' | 'lg';
   /** `grid` wraps into rows (lobby), `row` stays on one line (game footer). */
   layout?: 'grid' | 'row';
+  /** Grid alignment: centred by default; `start` lines up under a left-aligned heading. */
+  align?: 'center' | 'start';
 }
 
 export function PlayerChips({
@@ -22,9 +24,13 @@ export function PlayerChips({
   showScores,
   size = 'md',
   layout = 'row',
+  align = 'center',
 }: PlayerChipsProps): JSX.Element {
   return (
-    <ul className={`${styles.list} ${styles[layout]}`} aria-label="players">
+    <ul
+      className={`${styles.list} ${styles[layout]} ${align === 'start' ? styles.start : ''}`}
+      aria-label="players"
+    >
       {players.map((p) => (
         <li key={p.id} className={styles.item}>
           <PlayerChip

@@ -14,12 +14,13 @@ export function TvLobby({ room }: TvLobbyProps): JSX.Element {
   const info = useServerInfo();
   const players = room?.players ?? [];
   const vip = players.find((p) => p.isVip);
+  const full = room !== null && players.length >= room.capacity;
   return (
     <Stage>
       <div className={styles.split}>
-        <div className={styles.join}>
-          <BigText level="h2" tone="muted">
-            {t.lobby.scan}
+        <div className={`${styles.join} ${full ? styles.full : ''}`}>
+          <BigText level="h2" tone={full ? 'accent' : 'muted'}>
+            {full ? t.lobby.full : t.lobby.scan}
           </BigText>
           {info ? (
             <span
@@ -57,6 +58,7 @@ export function TvLobby({ room }: TvLobbyProps): JSX.Element {
               vip={room?.vip}
               layout="grid"
               size="lg"
+              align="start"
             />
           )}
           {room && vip ? <p className="pb-muted">{t.lobby.waitingFor(vip.name)}</p> : null}

@@ -17,6 +17,13 @@
   background: var(--pb-surface);
 }
 
+/* Room full: the panel stays (people can read the code) but stops inviting. */
+.full .qr,
+.full .url,
+.full .or {
+  opacity: 0.35;
+}
+
 .qr {
   display: block;
   width: 360px;

@@ -18,7 +18,10 @@ export function Join({ controller, state }: JoinProps): JSX.Element {
   const info = useServerInfo();
   const session = controller.session();
   const [name, setName] = useState(session?.name ?? '');
-  const [avatarId, setAvatarId] = useState<string>(session?.avatarId ?? AVATAR_IDS[0]);
+  // A random default (instead of always the fox) so two phones joining together rarely match.
+  const [avatarId, setAvatarId] = useState<string>(
+    () => session?.avatarId ?? AVATAR_IDS[Math.floor(Math.random() * AVATAR_IDS.length)] ?? 'fox',
+  );
   const [code, setCode] = useState('');
   const [submittedAt, setSubmittedAt] = useState<number | null>(null);
   const needsCode = info !== null && info.rooms.length !== 1;
