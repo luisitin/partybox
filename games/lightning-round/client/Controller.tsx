@@ -6,6 +6,7 @@ import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { LightningControllerView } from '../server/index';
 import type { Input } from '../server/types';
 import { Outcome, wagerLabel } from './ControllerBits';
+import styles from './Controller.module.css';
 
 function roundKicker(view: LightningControllerView): string {
   const round = view.round;
@@ -47,9 +48,7 @@ export function Controller({
         correctId={revealed && view.correctIndex !== undefined ? String(view.correctIndex) : null}
         disabled={revealed}
         onPick={(id) => send({ type: 'pick', index: Number(id) })}
-        footer={
-          revealed ? <Outcome view={view} /> : locked ? <p role="status">Locked in ✓</p> : null
-        }
+        footer={revealed ? <Outcome view={view} /> : null}
       />
     );
   }
@@ -73,10 +72,8 @@ export function Controller({
         }}
         footer={
           placed === undefined ? (
-            <p>Right answer: +wager. Wrong or no answer: −wager.</p>
-          ) : (
-            <p role="status">Wager locked: {placed} ✓</p>
-          )
+            <p className={styles.footnote}>Right answer: +wager. Wrong or no answer: −wager.</p>
+          ) : null
         }
       />
     );
