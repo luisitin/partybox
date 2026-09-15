@@ -26,8 +26,9 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
               {t.results.playAgain}
             </PrimaryButton>
             <div className={styles.row}>
-              <PrimaryButton
-                tone="neutral"
+              <button
+                type="button"
+                className={styles.secondary}
                 onClick={() =>
                   controller.vip({
                     action: 'selectGame',
@@ -36,10 +37,14 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
                 }
               >
                 {t.results.newGame}
-              </PrimaryButton>
-              <PrimaryButton tone="neutral" onClick={() => controller.vip({ action: 'toLobby' })}>
+              </button>
+              <button
+                type="button"
+                className={styles.secondary}
+                onClick={() => controller.vip({ action: 'toLobby' })}
+              >
                 {t.results.lobby}
-              </PrimaryButton>
+              </button>
             </div>
           </div>
         ) : (
