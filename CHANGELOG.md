@@ -24,3 +24,4 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
   against every `games/*` folder (totality fuzz, purity scan, packs, fixtures, termination with four
   bot strategies, determinism, stale timers, hidden-info leaks), `games/_template` ("Quick Poll"),
   and `pnpm new-game <id>`.
+- `games/wisecrack` ("Wisecrack", prompt → answer → vote): 3–8 players, rounds/answerSeconds/spicy settings, double-points last round, sweep bonus, three awards, 160 family + 56 spicy prompts.

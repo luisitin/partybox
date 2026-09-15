@@ -1,0 +1,40 @@
+{
+  "id": "wisecrack",
+  "name": "Wisecrack",
+  "tagline": "Write the funniest answer. Win the room's votes.",
+  "description": "Everyone gets two prompts and writes a one-liner for each. Each prompt then goes on the TV with its two answers, anonymously; everyone else votes for the funnier one. 100 points per vote, a bonus for a clean sweep, and the last round counts double.",
+  "version": "0.1.0",
+  "minPlayers": 3,
+  "maxPlayers": 8,
+  "estimatedMinutes": 10,
+  "tags": ["text", "voting", "comedy"],
+  "settings": [
+    {
+      "key": "rounds",
+      "label": "Rounds",
+      "description": "Rounds to play; the last one is worth double",
+      "type": "number",
+      "default": 3,
+      "min": 1,
+      "max": 5,
+      "step": 1
+    },
+    {
+      "key": "answerSeconds",
+      "label": "Writing time",
+      "description": "Seconds to answer both prompts",
+      "type": "number",
+      "default": 60,
+      "min": 30,
+      "max": 120,
+      "step": 10
+    },
+    {
+      "key": "spicy",
+      "label": "Spicy prompts",
+      "description": "Mix in edgier (still PG-13) prompts",
+      "type": "boolean",
+      "default": false
+    }
+  ]
+}
