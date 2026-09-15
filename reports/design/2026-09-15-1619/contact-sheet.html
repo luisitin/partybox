@@ -1,0 +1,1041 @@
+<!doctype html><meta charset="utf-8" /><title>
+  PartyBox design pass — reports/design/2026-09-15-1619
+</title>
+<style>
+  body {
+    margin: 0;
+    padding: 24px;
+    background: #111;
+    color: #eee;
+    font:
+      14px system-ui,
+      sans-serif;
+  }
+  nav {
+    position: sticky;
+    top: 0;
+    background: #111;
+    padding: 8px 0;
+    border-bottom: 1px solid #333;
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-size: 28px;
+    margin: 32px 0 8px;
+    color: #ffd166;
+  }
+  h2 {
+    font-size: 16px;
+    margin: 24px 0 8px;
+    color: #b3b7d9;
+    font-weight: 600;
+  }
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  figure {
+    margin: 0;
+    background: #1c1e3a;
+    border-radius: 8px;
+    padding: 6px;
+  }
+  figure img {
+    display: block;
+    border-radius: 4px;
+    background: #000;
+  }
+  .tv img {
+    width: 640px;
+  }
+  .phone img {
+    width: 180px;
+  }
+  .wide img {
+    width: 390px;
+  }
+  figcaption {
+    margin-top: 6px;
+    font-size: 12px;
+    color: #b3b7d9;
+    max-width: 640px;
+  }
+  .phone figcaption {
+    max-width: 180px;
+  }
+  .wide figcaption {
+    max-width: 390px;
+  }
+</style>
+<nav>92 stills · <a href="#core">core</a> · <a href="#quickpoll">quickpoll</a></nav>
+<h1 id="core">core</h1>
+<section>
+  <h2>core / tv-gate</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="core/tv-gate/tv-stage.png" target="_blank"
+        ><img src="core/tv-gate/tv-stage.png" loading="lazy" alt="tv-gate tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>first load: tap-to-start overlay</i></figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>core / lobby-0</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="core/lobby-0/tv-stage.png" target="_blank"
+        ><img src="core/lobby-0/tv-stage.png" loading="lazy" alt="lobby-0 tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>no players yet</i></figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>core / join-empty</h2>
+  <div class="row">
+    <figure class="phone">
+      <a href="core/join-empty/iphone-vip.png" target="_blank"
+        ><img src="core/join-empty/iphone-vip.png" loading="lazy" alt="join-empty iphone vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · vip</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="core/join-empty/iphone-se-active.png" target="_blank"
+        ><img
+          src="core/join-empty/iphone-se-active.png"
+          loading="lazy"
+          alt="join-empty iphone-se active"
+      /></a>
+      <figcaption><b>iPhone SE</b> · active</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="core/join-empty/pixel-submitted.png" target="_blank"
+        ><img
+          src="core/join-empty/pixel-submitted.png"
+          loading="lazy"
+          alt="join-empty pixel submitted"
+      /></a>
+      <figcaption><b>Pixel 7</b> · submitted</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="core/join-empty/galaxy-reconnecting.png" target="_blank"
+        ><img
+          src="core/join-empty/galaxy-reconnecting.png"
+          loading="lazy"
+          alt="join-empty galaxy reconnecting"
+      /></a>
+      <figcaption><b>Galaxy S9+</b> · reconnecting</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="core/join-empty/font200-active.png" target="_blank"
+        ><img
+          src="core/join-empty/font200-active.png"
+          loading="lazy"
+          alt="join-empty font200 active"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · active</figcaption>
+    </figure>
+    <figure class="phone wide">
+      <a href="core/join-empty/landscape-active.png" target="_blank"
+        ><img
+          src="core/join-empty/landscape-active.png"
+          loading="lazy"
+          alt="join-empty landscape active"
+      /></a>
+      <figcaption><b>iPhone 15 landscape</b> · active</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>core / join-filled</h2>
+  <div class="row">
+    <figure class="phone">
+      <a href="core/join-filled/iphone-vip.png" target="_blank"
+        ><img src="core/join-filled/iphone-vip.png" loading="lazy" alt="join-filled iphone vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · vip<br /><i>name typed, avatar picked</i></figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>core / join-keyboard-focus</h2>
+  <div class="row">
+    <figure class="phone">
+      <a href="core/join-keyboard-focus/iphone-vip.png" target="_blank"
+        ><img
+          src="core/join-keyboard-focus/iphone-vip.png"
+          loading="lazy"
+          alt="join-keyboard-focus iphone vip"
+      /></a>
+      <figcaption>
+        <b>iPhone 15</b> · vip<br /><i>name field focused (no OS keyboard in headless)</i>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>core / lobby-1</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="core/lobby-1/tv-stage.png" target="_blank"
+        ><img src="core/lobby-1/tv-stage.png" loading="lazy" alt="lobby-1 tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>first player = VIP</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="core/lobby-1/iphone-vip.png" target="_blank"
+        ><img src="core/lobby-1/iphone-vip.png" loading="lazy" alt="lobby-1 iphone vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · vip</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>core / lobby-6</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="core/lobby-6/tv-stage.png" target="_blank"
+        ><img src="core/lobby-6/tv-stage.png" loading="lazy" alt="lobby-6 tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="core/lobby-6/iphone-vip.png" target="_blank"
+        ><img src="core/lobby-6/iphone-vip.png" loading="lazy" alt="lobby-6 iphone vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · vip</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="core/lobby-6/iphone-se-active.png" target="_blank"
+        ><img src="core/lobby-6/iphone-se-active.png" loading="lazy" alt="lobby-6 iphone-se active"
+      /></a>
+      <figcaption><b>iPhone SE</b> · active</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="core/lobby-6/pixel-submitted.png" target="_blank"
+        ><img src="core/lobby-6/pixel-submitted.png" loading="lazy" alt="lobby-6 pixel submitted"
+      /></a>
+      <figcaption><b>Pixel 7</b> · submitted</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="core/lobby-6/galaxy-reconnecting.png" target="_blank"
+        ><img
+          src="core/lobby-6/galaxy-reconnecting.png"
+          loading="lazy"
+          alt="lobby-6 galaxy reconnecting"
+      /></a>
+      <figcaption><b>Galaxy S9+</b> · reconnecting</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="core/lobby-6/font200-active.png" target="_blank"
+        ><img src="core/lobby-6/font200-active.png" loading="lazy" alt="lobby-6 font200 active"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · active</figcaption>
+    </figure>
+    <figure class="phone wide">
+      <a href="core/lobby-6/landscape-active.png" target="_blank"
+        ><img src="core/lobby-6/landscape-active.png" loading="lazy" alt="lobby-6 landscape active"
+      /></a>
+      <figcaption><b>iPhone 15 landscape</b> · active</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>core / join-name-taken</h2>
+  <div class="row">
+    <figure class="phone">
+      <a href="core/join-name-taken/iphone-joiner.png" target="_blank"
+        ><img
+          src="core/join-name-taken/iphone-joiner.png"
+          loading="lazy"
+          alt="join-name-taken iphone joiner"
+      /></a>
+      <figcaption><b>iPhone 15</b> · joiner<br /><i>"That name is taken."</i></figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>core / vip-menu-lobby</h2>
+  <div class="row">
+    <figure class="phone">
+      <a href="core/vip-menu-lobby/iphone-vip.png" target="_blank"
+        ><img
+          src="core/vip-menu-lobby/iphone-vip.png"
+          loading="lazy"
+          alt="vip-menu-lobby iphone vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · vip</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>core / lobby-locked</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="core/lobby-locked/tv-stage.png" target="_blank"
+        ><img src="core/lobby-locked/tv-stage.png" loading="lazy" alt="lobby-locked tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>lock glyph in header</i></figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>core / join-room-locked</h2>
+  <div class="row">
+    <figure class="phone">
+      <a href="core/join-room-locked/iphone-joiner.png" target="_blank"
+        ><img
+          src="core/join-room-locked/iphone-joiner.png"
+          loading="lazy"
+          alt="join-room-locked iphone joiner"
+      /></a>
+      <figcaption><b>iPhone 15</b> · joiner<br /><i>"This room is locked."</i></figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>core / selecting</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="core/selecting/tv-stage.png" target="_blank"
+        ><img src="core/selecting/tv-stage.png" loading="lazy" alt="selecting tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="core/selecting/iphone-vip.png" target="_blank"
+        ><img src="core/selecting/iphone-vip.png" loading="lazy" alt="selecting iphone vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · vip<br /><i>game cards + settings</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="core/selecting/iphone-se-active.png" target="_blank"
+        ><img
+          src="core/selecting/iphone-se-active.png"
+          loading="lazy"
+          alt="selecting iphone-se active"
+      /></a>
+      <figcaption><b>iPhone SE</b> · active<br /><i>non-VIP waits</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="core/selecting/font200-active.png" target="_blank"
+        ><img src="core/selecting/font200-active.png" loading="lazy" alt="selecting font200 active"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · active</figcaption>
+    </figure>
+    <figure class="phone wide">
+      <a href="core/selecting/landscape-active.png" target="_blank"
+        ><img
+          src="core/selecting/landscape-active.png"
+          loading="lazy"
+          alt="selecting landscape active"
+      /></a>
+      <figcaption><b>iPhone 15 landscape</b> · active</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>core / quickpoll-answer</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="core/quickpoll-answer/tv-stage.png" target="_blank"
+        ><img
+          src="core/quickpoll-answer/tv-stage.png"
+          loading="lazy"
+          alt="quickpoll-answer tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>nobody answered yet</i></figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>core / quickpoll-answer-1-submitted</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="core/quickpoll-answer-1-submitted/tv-stage.png" target="_blank"
+        ><img
+          src="core/quickpoll-answer-1-submitted/tv-stage.png"
+          loading="lazy"
+          alt="quickpoll-answer-1-submitted tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>one ✓ chip</i></figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>core / quickpoll-answer-spectator</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="core/quickpoll-answer-spectator/tv-stage.png" target="_blank"
+        ><img
+          src="core/quickpoll-answer-spectator/tv-stage.png"
+          loading="lazy"
+          alt="quickpoll-answer-spectator tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>spectator chip</i></figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>core / quickpoll-answer-reconnecting</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="core/quickpoll-answer-reconnecting/tv-stage.png" target="_blank"
+        ><img
+          src="core/quickpoll-answer-reconnecting/tv-stage.png"
+          loading="lazy"
+          alt="quickpoll-answer-reconnecting tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>Jo ⟳ chip</i></figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>core / quickpoll-paused</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="core/quickpoll-paused/tv-stage.png" target="_blank"
+        ><img
+          src="core/quickpoll-paused/tv-stage.png"
+          loading="lazy"
+          alt="quickpoll-paused tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>paused curtain</i></figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>core / quickpoll-reveal</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="core/quickpoll-reveal/tv-stage.png" target="_blank"
+        ><img
+          src="core/quickpoll-reveal/tv-stage.png"
+          loading="lazy"
+          alt="quickpoll-reveal tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>core / results</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="core/results/tv-stage.png" target="_blank"
+        ><img src="core/results/tv-stage.png" loading="lazy" alt="results tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>status=results</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="core/results/iphone-vip.png" target="_blank"
+        ><img src="core/results/iphone-vip.png" loading="lazy" alt="results iphone vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · vip</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="core/results/iphone-se-active.png" target="_blank"
+        ><img src="core/results/iphone-se-active.png" loading="lazy" alt="results iphone-se active"
+      /></a>
+      <figcaption><b>iPhone SE</b> · active</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="core/results/pixel-submitted.png" target="_blank"
+        ><img src="core/results/pixel-submitted.png" loading="lazy" alt="results pixel submitted"
+      /></a>
+      <figcaption><b>Pixel 7</b> · submitted</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="core/results/galaxy-reconnecting.png" target="_blank"
+        ><img
+          src="core/results/galaxy-reconnecting.png"
+          loading="lazy"
+          alt="results galaxy reconnecting"
+      /></a>
+      <figcaption><b>Galaxy S9+</b> · reconnecting</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="core/results/font200-active.png" target="_blank"
+        ><img src="core/results/font200-active.png" loading="lazy" alt="results font200 active"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · active</figcaption>
+    </figure>
+    <figure class="phone wide">
+      <a href="core/results/landscape-active.png" target="_blank"
+        ><img src="core/results/landscape-active.png" loading="lazy" alt="results landscape active"
+      /></a>
+      <figcaption><b>iPhone 15 landscape</b> · active</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="core/results/iphone-spectator.png" target="_blank"
+        ><img src="core/results/iphone-spectator.png" loading="lazy" alt="results iphone spectator"
+      /></a>
+      <figcaption><b>iPhone 15</b> · spectator</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>core / play-again</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="core/play-again/tv-stage.png" target="_blank"
+        ><img src="core/play-again/tv-stage.png" loading="lazy" alt="play-again tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>second round starts</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="core/play-again/iphone-vip.png" target="_blank"
+        ><img src="core/play-again/iphone-vip.png" loading="lazy" alt="play-again iphone vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · vip</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>core / results-after-end</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="core/results-after-end/tv-stage.png" target="_blank"
+        ><img
+          src="core/results-after-end/tv-stage.png"
+          loading="lazy"
+          alt="results-after-end tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>VIP ended the game early</i></figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>core / vip-kick-confirm</h2>
+  <div class="row">
+    <figure class="phone">
+      <a href="core/vip-kick-confirm/iphone-vip.png" target="_blank"
+        ><img
+          src="core/vip-kick-confirm/iphone-vip.png"
+          loading="lazy"
+          alt="vip-kick-confirm iphone vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · vip</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>core / kicked</h2>
+  <div class="row">
+    <figure class="phone wide">
+      <a href="core/kicked/landscape-kicked.png" target="_blank"
+        ><img src="core/kicked/landscape-kicked.png" loading="lazy" alt="kicked landscape kicked"
+      /></a>
+      <figcaption><b>iPhone 15 landscape</b> · kicked<br /><i>back on the join form</i></figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>core / lobby-16</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="core/lobby-16/tv-stage.png" target="_blank"
+        ><img src="core/lobby-16/tv-stage.png" loading="lazy" alt="lobby-16 tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="core/lobby-16/iphone-vip.png" target="_blank"
+        ><img src="core/lobby-16/iphone-vip.png" loading="lazy" alt="lobby-16 iphone vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · vip</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="core/lobby-16/iphone-se-active.png" target="_blank"
+        ><img
+          src="core/lobby-16/iphone-se-active.png"
+          loading="lazy"
+          alt="lobby-16 iphone-se active"
+      /></a>
+      <figcaption><b>iPhone SE</b> · active</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="core/lobby-16/font200-active.png" target="_blank"
+        ><img src="core/lobby-16/font200-active.png" loading="lazy" alt="lobby-16 font200 active"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · active</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>core / join-room-full</h2>
+  <div class="row">
+    <figure class="phone wide">
+      <a href="core/join-room-full/landscape-joiner.png" target="_blank"
+        ><img
+          src="core/join-room-full/landscape-joiner.png"
+          loading="lazy"
+          alt="join-room-full landscape joiner"
+      /></a>
+      <figcaption><b>iPhone 15 landscape</b> · joiner<br /><i>"This room is full."</i></figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>core / server-down</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="core/server-down/tv-stage.png" target="_blank"
+        ><img src="core/server-down/tv-stage.png" loading="lazy" alt="server-down tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>server killed</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="core/server-down/iphone-vip.png" target="_blank"
+        ><img src="core/server-down/iphone-vip.png" loading="lazy" alt="server-down iphone vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · vip<br /><i>banner while the server is gone</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="core/server-down/iphone-se-active.png" target="_blank"
+        ><img
+          src="core/server-down/iphone-se-active.png"
+          loading="lazy"
+          alt="server-down iphone-se active"
+      /></a>
+      <figcaption><b>iPhone SE</b> · active</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>core / server-restarted</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="core/server-restarted/tv-stage.png" target="_blank"
+        ><img
+          src="core/server-restarted/tv-stage.png"
+          loading="lazy"
+          alt="server-restarted tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>new house room</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="core/server-restarted/iphone-vip.png" target="_blank"
+        ><img
+          src="core/server-restarted/iphone-vip.png"
+          loading="lazy"
+          alt="server-restarted iphone vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · vip<br /><i>stale token → join form</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="core/server-restarted/iphone-se-active.png" target="_blank"
+        ><img
+          src="core/server-restarted/iphone-se-active.png"
+          loading="lazy"
+          alt="server-restarted iphone-se active"
+      /></a>
+      <figcaption><b>iPhone SE</b> · active</figcaption>
+    </figure>
+  </div>
+</section>
+<h1 id="quickpoll">quickpoll</h1>
+<section>
+  <h2>quickpoll / answer</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="quickpoll/answer/tv4k-stage.png" target="_blank"
+        ><img src="quickpoll/answer/tv4k-stage.png" loading="lazy" alt="answer tv4k stage"
+      /></a>
+      <figcaption><b>TV 4K (2× DPR)</b> · stage</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="quickpoll/answer/iphone-vip.png" target="_blank"
+        ><img src="quickpoll/answer/iphone-vip.png" loading="lazy" alt="answer iphone vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · vip<br /><i>input open</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="quickpoll/answer/iphone-se-active.png" target="_blank"
+        ><img
+          src="quickpoll/answer/iphone-se-active.png"
+          loading="lazy"
+          alt="answer iphone-se active"
+      /></a>
+      <figcaption><b>iPhone SE</b> · active<br /><i>input open</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="quickpoll/answer/pixel-submitted.png" target="_blank"
+        ><img
+          src="quickpoll/answer/pixel-submitted.png"
+          loading="lazy"
+          alt="answer pixel submitted"
+      /></a>
+      <figcaption><b>Pixel 7</b> · submitted<br /><i>input open</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="quickpoll/answer/galaxy-reconnecting.png" target="_blank"
+        ><img
+          src="quickpoll/answer/galaxy-reconnecting.png"
+          loading="lazy"
+          alt="answer galaxy reconnecting"
+      /></a>
+      <figcaption><b>Galaxy S9+</b> · reconnecting<br /><i>input open</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="quickpoll/answer/font200-active.png" target="_blank"
+        ><img src="quickpoll/answer/font200-active.png" loading="lazy" alt="answer font200 active"
+      /></a>
+      <figcaption><b>Pixel 7 · 200 % font</b> · active<br /><i>input open</i></figcaption>
+    </figure>
+    <figure class="phone wide">
+      <a href="quickpoll/answer/landscape-active.png" target="_blank"
+        ><img
+          src="quickpoll/answer/landscape-active.png"
+          loading="lazy"
+          alt="answer landscape active"
+      /></a>
+      <figcaption><b>iPhone 15 landscape</b> · active<br /><i>input open</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="quickpoll/answer/iphone-spectator.png" target="_blank"
+        ><img
+          src="quickpoll/answer/iphone-spectator.png"
+          loading="lazy"
+          alt="answer iphone spectator"
+      /></a>
+      <figcaption><b>iPhone 15</b> · spectator</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>quickpoll / answer-typed</h2>
+  <div class="row">
+    <figure class="phone">
+      <a href="quickpoll/answer-typed/pixel-submitted.png" target="_blank"
+        ><img
+          src="quickpoll/answer-typed/pixel-submitted.png"
+          loading="lazy"
+          alt="answer-typed pixel submitted"
+      /></a>
+      <figcaption><b>Pixel 7</b> · submitted<br /><i>text typed, not yet sent</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="quickpoll/answer-typed/iphone-se-active.png" target="_blank"
+        ><img
+          src="quickpoll/answer-typed/iphone-se-active.png"
+          loading="lazy"
+          alt="answer-typed iphone-se active"
+      /></a>
+      <figcaption><b>iPhone SE</b> · active<br /><i>SE: near max length</i></figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>quickpoll / answer-submitted</h2>
+  <div class="row">
+    <figure class="phone">
+      <a href="quickpoll/answer-submitted/pixel-submitted.png" target="_blank"
+        ><img
+          src="quickpoll/answer-submitted/pixel-submitted.png"
+          loading="lazy"
+          alt="answer-submitted pixel submitted"
+      /></a>
+      <figcaption><b>Pixel 7</b> · submitted</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>quickpoll / answer-reconnecting</h2>
+  <div class="row">
+    <figure class="phone">
+      <a href="quickpoll/answer-reconnecting/galaxy-reconnecting.png" target="_blank"
+        ><img
+          src="quickpoll/answer-reconnecting/galaxy-reconnecting.png"
+          loading="lazy"
+          alt="answer-reconnecting galaxy reconnecting"
+      /></a>
+      <figcaption><b>Galaxy S9+</b> · reconnecting<br /><i>phone offline: banner</i></figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>quickpoll / vip-menu-playing</h2>
+  <div class="row">
+    <figure class="phone">
+      <a href="quickpoll/vip-menu-playing/iphone-vip.png" target="_blank"
+        ><img
+          src="quickpoll/vip-menu-playing/iphone-vip.png"
+          loading="lazy"
+          alt="vip-menu-playing iphone vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · vip</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>quickpoll / vip-menu-confirm</h2>
+  <div class="row">
+    <figure class="phone">
+      <a href="quickpoll/vip-menu-confirm/iphone-vip.png" target="_blank"
+        ><img
+          src="quickpoll/vip-menu-confirm/iphone-vip.png"
+          loading="lazy"
+          alt="vip-menu-confirm iphone vip"
+      /></a>
+      <figcaption><b>iPhone 15</b> · vip<br /><i>destructive: tap again to confirm</i></figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>quickpoll / paused</h2>
+  <div class="row">
+    <figure class="phone">
+      <a href="quickpoll/paused/iphone-se-active.png" target="_blank"
+        ><img
+          src="quickpoll/paused/iphone-se-active.png"
+          loading="lazy"
+          alt="paused iphone-se active"
+      /></a>
+      <figcaption><b>iPhone SE</b> · active</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>quickpoll / answer-last5</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="quickpoll/answer-last5/tv-stage.png" target="_blank"
+        ><img src="quickpoll/answer-last5/tv-stage.png" loading="lazy" alt="answer-last5 tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>≈4 s left</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="quickpoll/answer-last5/iphone-se-active.png" target="_blank"
+        ><img
+          src="quickpoll/answer-last5/iphone-se-active.png"
+          loading="lazy"
+          alt="answer-last5 iphone-se active"
+      /></a>
+      <figcaption><b>iPhone SE</b> · active</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>quickpoll / reveal</h2>
+  <div class="row">
+    <figure class="phone">
+      <a href="quickpoll/reveal/pixel-submitted.png" target="_blank"
+        ><img
+          src="quickpoll/reveal/pixel-submitted.png"
+          loading="lazy"
+          alt="reveal pixel submitted"
+      /></a>
+      <figcaption><b>Pixel 7</b> · submitted</figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="quickpoll/reveal/iphone-se-active.png" target="_blank"
+        ><img
+          src="quickpoll/reveal/iphone-se-active.png"
+          loading="lazy"
+          alt="reveal iphone-se active"
+      /></a>
+      <figcaption><b>iPhone SE</b> · active<br /><i>did not submit</i></figcaption>
+    </figure>
+    <figure class="phone">
+      <a href="quickpoll/reveal/iphone-spectator.png" target="_blank"
+        ><img
+          src="quickpoll/reveal/iphone-spectator.png"
+          loading="lazy"
+          alt="reveal iphone spectator"
+      /></a>
+      <figcaption><b>iPhone 15</b> · spectator</figcaption>
+    </figure>
+    <figure class="phone wide">
+      <a href="quickpoll/reveal/landscape-active.png" target="_blank"
+        ><img
+          src="quickpoll/reveal/landscape-active.png"
+          loading="lazy"
+          alt="reveal landscape active"
+      /></a>
+      <figcaption><b>iPhone 15 landscape</b> · active</figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>quickpoll / motion-t0-start</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="quickpoll/motion-t0-start/tv-stage.png" target="_blank"
+        ><img
+          src="quickpoll/motion-t0-start/tv-stage.png"
+          loading="lazy"
+          alt="motion-t0-start tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>first frame after start</i></figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>quickpoll / motion-t0.3</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="quickpoll/motion-t0.3/tv-stage.png" target="_blank"
+        ><img src="quickpoll/motion-t0.3/tv-stage.png" loading="lazy" alt="motion-t0.3 tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>enter animation mid-way</i></figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>quickpoll / motion-t2-submitted</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="quickpoll/motion-t2-submitted/tv-stage.png" target="_blank"
+        ><img
+          src="quickpoll/motion-t2-submitted/tv-stage.png"
+          loading="lazy"
+          alt="motion-t2-submitted tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>chip flips to ✓</i></figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>quickpoll / motion-last-5s</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="quickpoll/motion-last-5s/tv-stage.png" target="_blank"
+        ><img
+          src="quickpoll/motion-last-5s/tv-stage.png"
+          loading="lazy"
+          alt="motion-last-5s tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>urgent timer</i></figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>quickpoll / motion-last-4s</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="quickpoll/motion-last-4s/tv-stage.png" target="_blank"
+        ><img
+          src="quickpoll/motion-last-4s/tv-stage.png"
+          loading="lazy"
+          alt="motion-last-4s tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>urgent timer</i></figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>quickpoll / motion-last-3s</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="quickpoll/motion-last-3s/tv-stage.png" target="_blank"
+        ><img
+          src="quickpoll/motion-last-3s/tv-stage.png"
+          loading="lazy"
+          alt="motion-last-3s tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>urgent timer</i></figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>quickpoll / motion-last-2s</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="quickpoll/motion-last-2s/tv-stage.png" target="_blank"
+        ><img
+          src="quickpoll/motion-last-2s/tv-stage.png"
+          loading="lazy"
+          alt="motion-last-2s tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>urgent timer</i></figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>quickpoll / motion-last-1s</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="quickpoll/motion-last-1s/tv-stage.png" target="_blank"
+        ><img
+          src="quickpoll/motion-last-1s/tv-stage.png"
+          loading="lazy"
+          alt="motion-last-1s tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>urgent timer</i></figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>quickpoll / motion-reveal-0</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="quickpoll/motion-reveal-0/tv-stage.png" target="_blank"
+        ><img
+          src="quickpoll/motion-reveal-0/tv-stage.png"
+          loading="lazy"
+          alt="motion-reveal-0 tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>first reveal frame</i></figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>quickpoll / motion-reveal-0.7</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="quickpoll/motion-reveal-0.7/tv-stage.png" target="_blank"
+        ><img
+          src="quickpoll/motion-reveal-0.7/tv-stage.png"
+          loading="lazy"
+          alt="motion-reveal-0.7 tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>second item in</i></figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>quickpoll / motion-reveal-2.2</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="quickpoll/motion-reveal-2.2/tv-stage.png" target="_blank"
+        ><img
+          src="quickpoll/motion-reveal-2.2/tv-stage.png"
+          loading="lazy"
+          alt="motion-reveal-2.2 tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>reveal complete</i></figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>quickpoll / motion-results-0</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="quickpoll/motion-results-0/tv-stage.png" target="_blank"
+        ><img
+          src="quickpoll/motion-results-0/tv-stage.png"
+          loading="lazy"
+          alt="motion-results-0 tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>first results frame</i></figcaption>
+    </figure>
+  </div>
+</section>
+<section>
+  <h2>quickpoll / motion-results-0.7</h2>
+  <div class="row">
+    <figure class="tv">
+      <a href="quickpoll/motion-results-0.7/tv-stage.png" target="_blank"
+        ><img
+          src="quickpoll/motion-results-0.7/tv-stage.png"
+          loading="lazy"
+          alt="motion-results-0.7 tv stage"
+      /></a>
+      <figcaption><b>TV 1080p</b> · stage<br /><i>hero settled</i></figcaption>
+    </figure>
+  </div>
+</section>

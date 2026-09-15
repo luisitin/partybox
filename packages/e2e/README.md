@@ -27,3 +27,20 @@ pnpm e2e:snap --game <id> [--out reports/design/<stamp>/<id>] [--devices iphone,
 ## Must NOT go here
 
 Anything another package imports. Game knowledge beyond the dev API and `bot.sampleInput`.
+
+## Design capture (`src/design/`, added by the design session)
+
+Standalone until the Phase 7 harness lands; each script boots its own server on **42071**.
+
+```
+pnpm exec tsx packages/e2e/src/design/capture-core.ts  --out reports/design/<stamp> [--game quickpoll]
+pnpm exec tsx packages/e2e/src/design/capture-video.ts --out reports/design/<stamp> [--game quickpoll]
+pnpm exec tsx packages/e2e/src/design/sheet.ts         --dir reports/design/<stamp>   # contact-sheet.html
+pnpm exec tsx packages/e2e/src/design/measure.ts                                     # computed sizes → stdout
+```
+
+`devices.ts` = tv, tv4k, iphone, iphone-se, pixel, galaxy, font200 (CSS-emulated 200 % scale),
+landscape. `session.ts` = dev-API client + join-through-the-form helpers. `shooter.ts` records every
+still in `manifest.json` (game / phase / device / role) for the contact sheet. `capture-core.ts` walks
+join errors, lobby 1/6/16, selecting, every game phase with active/submitted/VIP/spectator/reconnecting
+phones, results, play-again, end, kick, server restart. `capture-video.ts` records one unfrozen round.
