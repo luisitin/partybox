@@ -29,18 +29,20 @@ join/input/vip ──socket.io──▶ zod-validate payload (shared/protocol)
                               │   └─ GameRunner: game.reduce(state, gameEvent)   ← pure (games/<id>/server)
                               ▼
                         { room', effects[] }
-                              │   effects: push(views) · toast · kicked · scheduleTimer · vipChanged
+                              │   effects: push · toast · kicked · error · log
                               ▼
                         host interprets effects (the ONLY place with I/O)
                               ├─ game.controllerView(state, playerId) ──`view {rev}`──▶ each phone
                               ├─ game.tvView(state) ──────────────────`view {rev}`──▶ every TV
-                              └─ scheduleTimer → one setTimeout per room → later: timer event → same path
+                              └─ engine.nextWakeAt(room') → ONE setTimeout per room → later: `tick` event → same path
 ```
 
 - The server is authoritative. Clients render what they are pushed; they never compute game state.
 - Every push carries a monotonically increasing `rev`; clients drop out-of-order pushes.
-- **Timers are data** (ADR-004): after every reduce the engine reads `state.phase.deadline` and emits one
-  `scheduleTimer` effect keyed by `phase.id + startedAt`. The host keeps exactly one pending timer per room.
+- **Timers are data** (ADR-004, ADR-022): games set `state.phase.deadline`; after every event the host asks
+  `nextWakeAt(room)` (earliest of: game deadline, VIP handover, disconnect expiry) and keeps exactly one
+  `setTimeout` per room that sends a `tick`. On a tick the engine fires the `timer` event once per
+  `phase.id + startedAt`, hands the VIP over, and expires long-disconnected players. Ticks are idempotent.
   A frozen dev clock never reaches a deadline until `/api/dev/clock` advances it.
 - `now` is injected everywhere (server `clock.ts`); engine and games never read the wall clock.
 

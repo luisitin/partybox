@@ -25,7 +25,7 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text-summary', 'html'],
       include: ['packages/engine/src/**/*.ts', 'packages/shared/src/**/*.ts'],
-      exclude: ['**/*.test.ts', '**/index.ts'],
+      exclude: ['**/*.test.ts', '**/*.helper.ts', '**/index.ts'],
       thresholds: {
         // Section 5: engine >= 90 % line coverage.
         'packages/engine/src/**/*.ts': { lines: 90 },

@@ -1,0 +1,166 @@
+// VIP powers (docs/PROTOCOL.md `vip` payload). Every action is validated against the room status
+// and the sender; a non-VIP gets `not_vip` and nothing changes (the server counts those).
+import type { GameManifest, VipAction } from '@partybox/shared';
+import { removePlayer } from './players';
+import { abortGame, applyGameEvent, startGame } from './runner';
+import { coerceSettings, defaultSettings } from './settings';
+import type { ApplyResult, EngineDeps, RoomState } from './types';
+
+function reject(
+  room: RoomState,
+  to: string,
+  code: 'not_vip' | 'unknown_game' | 'cannot_start' | 'not_playing' | 'not_in_room',
+  message: string,
+): ApplyResult {
+  return { room, effects: [{ type: 'error', to, code, message }] };
+}
+
+/** Why the Start button is disabled, or ok. Shown to everyone in the room snapshot. */
+export function canStart(
+  room: RoomState,
+  deps: EngineDeps,
+): { ok: true } | { ok: false; reason: string } {
+  if (room.status !== 'selecting' && room.status !== 'results' && room.status !== 'lobby')
+    return { ok: false, reason: 'A game is already running.' };
+  const gameId = room.selectedGameId;
+  const game = gameId ? deps.games[gameId] : undefined;
+  if (!game) return { ok: false, reason: 'Pick a game first.' };
+  const count = Object.keys(room.players).length;
+  const { minPlayers, maxPlayers, name } = game.manifest;
+  if (count < minPlayers)
+    return { ok: false, reason: `${name} needs at least ${minPlayers} players (${count} here).` };
+  if (count > maxPlayers)
+    return { ok: false, reason: `${name} takes at most ${maxPlayers} players (${count} here).` };
+  return { ok: true };
+}
+
+function manifestOf(room: RoomState, deps: EngineDeps): GameManifest | undefined {
+  return room.selectedGameId ? deps.games[room.selectedGameId]?.manifest : undefined;
+}
+
+export function applyVip(
+  room: RoomState,
+  playerId: string,
+  action: VipAction,
+  now: number,
+  seed: number | undefined,
+  deps: EngineDeps,
+): ApplyResult {
+  const sender = room.players[playerId];
+  if (!sender) return reject(room, playerId, 'not_in_room', 'You are not in this room.');
+  if (!sender.isVip) return reject(room, playerId, 'not_vip', 'Only the VIP can do that.');
+
+  switch (action.action) {
+    case 'selectGame': {
+      const game = deps.games[action.gameId];
+      if (!game) return reject(room, playerId, 'unknown_game', 'Unknown game.');
+      if (room.status === 'playing')
+        return reject(room, playerId, 'cannot_start', 'End the current game first.');
+      return {
+        room: {
+          ...room,
+          status: 'selecting',
+          selectedGameId: action.gameId,
+          settings: defaultSettings(game.manifest),
+          results: null,
+        },
+        effects: [{ type: 'push' }],
+      };
+    }
+    case 'updateSettings': {
+      const manifest = manifestOf(room, deps);
+      if (room.status !== 'selecting' || !manifest)
+        return reject(room, playerId, 'cannot_start', 'Pick a game first.');
+      return {
+        room: { ...room, settings: coerceSettings(manifest, room.settings, action.settings) },
+        effects: [{ type: 'push' }],
+      };
+    }
+    case 'start': {
+      if (room.status !== 'selecting')
+        return reject(room, playerId, 'cannot_start', 'Pick a game first.');
+      const check = canStart(room, deps);
+      if (!check.ok) return reject(room, playerId, 'cannot_start', check.reason);
+      return startGame(room, room.selectedGameId as string, room.settings, seed ?? now, now, deps);
+    }
+    case 'playAgain': {
+      if (room.status !== 'results' || !room.lastGame)
+        return reject(room, playerId, 'cannot_start', 'Nothing to replay.');
+      const again: RoomState = {
+        ...room,
+        status: 'selecting',
+        selectedGameId: room.lastGame.gameId,
+        settings: room.lastGame.settings,
+      };
+      const check = canStart(again, deps);
+      if (!check.ok) return reject(room, playerId, 'cannot_start', check.reason);
+      return startGame(
+        again,
+        again.selectedGameId as string,
+        again.settings,
+        seed ?? now,
+        now,
+        deps,
+      );
+    }
+    case 'skip':
+    case 'pause':
+    case 'resume':
+    case 'end': {
+      if (room.status !== 'playing')
+        return reject(room, playerId, 'not_playing', 'No game is running.');
+      const result = applyGameEvent(room, { type: 'vip', now, action: action.action }, deps);
+      // A game that ignores `end` still has to stop: fall back to aborting without a scoreboard.
+      if (action.action === 'end' && result.room.status === 'playing')
+        return abortGame(result.room);
+      return result;
+    }
+    case 'kick': {
+      if (action.playerId === playerId)
+        return reject(room, playerId, 'cannot_start', 'You cannot kick yourself.');
+      if (!room.players[action.playerId])
+        return reject(room, playerId, 'not_in_room', 'That player already left.');
+      const removed = removePlayer(room, action.playerId, now, deps, 'kicked');
+      return {
+        room: removed.room,
+        effects: [
+          {
+            type: 'kicked',
+            playerId: action.playerId,
+            reason: 'The VIP removed you from the room.',
+          },
+          ...removed.effects,
+        ],
+      };
+    }
+    case 'transferVip': {
+      const target = room.players[action.playerId];
+      if (!target || target.id === playerId)
+        return reject(room, playerId, 'not_in_room', 'Pick another player.');
+      const demoted: RoomState = {
+        ...room,
+        vipId: target.id,
+        players: {
+          ...room.players,
+          [playerId]: { ...sender, isVip: false },
+          [target.id]: { ...target, isVip: true },
+        },
+      };
+      return {
+        room: demoted,
+        effects: [
+          { type: 'push' },
+          { type: 'toast', to: 'all', kind: 'info', text: `${target.name} is now the VIP` },
+        ],
+      };
+    }
+    case 'lock':
+    case 'unlock':
+      return { room: { ...room, locked: action.action === 'lock' }, effects: [{ type: 'push' }] };
+    case 'toLobby': {
+      if (room.status === 'playing')
+        return reject(room, playerId, 'cannot_start', 'End the current game first.');
+      return { room: { ...room, status: 'lobby', results: null }, effects: [{ type: 'push' }] };
+    }
+  }
+}

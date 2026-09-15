@@ -123,3 +123,9 @@ session might want to undo. Never edit an old one — supersede it.
 
 **Context.** A restart drops every room; while testing on phones that is worse than a manual restart.
 **Decision.** `pnpm dev` runs once; `pnpm dev:watch` restarts on server/engine/game changes. Client changes hot-reload through Vite in both.
+
+## ADR-022 — One wake per room: `nextWakeAt` + `tick` instead of a `scheduleTimer` effect
+
+**Context.** ADR-004 described a `scheduleTimer` effect. Implementing it showed the engine has three time-based rules, not one: game deadlines, the 30 s VIP handover and the 120 s disconnect expiry. Three effect kinds and three host timers invite drift.
+**Decision.** The engine exposes `nextWakeAt(room): number | null` — the earliest pending moment across all three rules. After every event the host re-derives it and keeps exactly one `setTimeout` per room that sends `{ type: 'tick', now }`. On a tick the engine does everything that is due; ticks are idempotent (a spurious tick changes nothing) and the `timer` game event still fires exactly once per `phase.id + startedAt` (`RunningGame.firedTimer`). Chained already-due deadlines fire within one tick, capped at 10.
+**Consequences.** ADR-004's _rule_ stands (timers are data); only the mechanism changed. Frozen clocks, replay and the sim need no timer bookkeeping at all — they just call `tick` with the simulated `now`.
