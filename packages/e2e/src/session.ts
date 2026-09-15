@@ -53,10 +53,11 @@ export class Session {
     return screen;
   }
 
-  /** Opens /tv and dismisses the "tap to start" overlay. */
+  /** Opens /tv and enables sound (the "tap anywhere for sound" pill goes away on the first gesture). */
   async openTv(preset: DevicePreset = 'tv', label = 'tv'): Promise<Screen> {
     const screen = await this.open(label, preset, '/tv');
-    await screen.page.getByRole('button', { name: /tap to start/i }).click();
+    const pill = screen.page.getByRole('button', { name: /tap (to start|anywhere)/i });
+    if (await pill.isVisible()) await pill.click();
     return screen;
   }
 
