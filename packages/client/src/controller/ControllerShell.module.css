@@ -80,6 +80,34 @@
   font-size: var(--pb-font-caption);
 }
 
+/* Countdown line during play: bar + seconds, danger-coloured in the last 5 s. */
+.deadline {
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-3);
+  padding: var(--pb-space-1) var(--pb-space-4);
+  background: var(--pb-surface);
+}
+
+.deadline > :first-child {
+  flex: 1;
+  height: 4px;
+}
+
+.seconds {
+  flex: 0 0 auto;
+  min-width: 3ch;
+  text-align: right;
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--pb-accent-2);
+}
+
+.urgent .seconds {
+  color: var(--pb-danger);
+}
+
 .banner {
   padding: var(--pb-space-2) var(--pb-space-4);
   background: var(--pb-surface-2);

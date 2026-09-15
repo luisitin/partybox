@@ -70,6 +70,8 @@ export const t = {
   connection: {
     reconnecting: 'Reconnecting…',
     connecting: 'Connecting…',
+    seconds: (n: number) => `${n} s`,
+    secondsLeft: (n: number) => `${n} seconds left`,
   },
   tv: {
     tapToStart: 'Tap anywhere for sound',
