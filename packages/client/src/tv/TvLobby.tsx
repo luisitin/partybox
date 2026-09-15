@@ -58,7 +58,7 @@ export function TvLobby({ room }: TvLobbyProps): JSX.Element {
               vip={room?.vip}
               botIds={players.filter((p) => p.bot).map((p) => p.id)}
               layout="grid"
-              size="lg"
+              size={players.length > 8 ? 'md' : 'lg'}
               align="start"
             />
           )}
