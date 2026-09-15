@@ -15,9 +15,9 @@ export interface CheckResult {
 }
 
 /**
- * A hidden string leaks when it appears as a JSON string value in the game-specific part of a view
- * (the envelope is public by definition), or anywhere inside a longer value when it is long enough
- * not to collide with ordinary words.
+ * A hidden string leaks when it appears as a JSON string VALUE in the game-specific part of a view
+ * (the envelope is public by definition). Exact values only: a substring rule flags a player whose
+ * own answer happens to contain someone else's.
  */
 function leaks(view: unknown, hidden: string[]): string[] {
   const {
@@ -30,8 +30,7 @@ function leaks(view: unknown, hidden: string[]): string[] {
   const text = JSON.stringify(rest) ?? '';
   return hidden.filter((s) => {
     if (typeof s !== 'string' || s.length < 3) return false;
-    const quoted = JSON.stringify(s);
-    return text.includes(quoted) || (s.length >= 8 && text.includes(quoted.slice(1, -1)));
+    return text.includes(JSON.stringify(s));
   });
 }
 
