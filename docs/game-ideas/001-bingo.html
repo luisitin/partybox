@@ -6,7 +6,8 @@
     <title>Bingo — PartyBox game idea 001</title>
     <style>
       /* Self-contained: no external fonts, scripts or images. Print-friendly. Section ids are fixed
-         (s0 … s15) so every idea document has the same anatomy and the same anchors. */
+         (s0 … s16) so every idea document has the same anatomy and the same anchors. Section 0 carries the
+         Bots field (ADR-028: supportsBots true/false + reason); section 7 carries the per-phase bot table. */
       :root {
         --bg: #0f1020;
         --surface: #1c1e3a;
@@ -159,6 +160,22 @@
       .meta dd {
         margin: 2px 0 0;
         font-weight: 700;
+      }
+      .bots {
+        display: inline-block;
+        padding: 2px 10px;
+        border-radius: 999px;
+        font-weight: 800;
+        font-size: 12px;
+        margin-right: 6px;
+      }
+      .bots.yes {
+        background: rgba(6, 214, 160, 0.15);
+        color: var(--accent-3);
+      }
+      .bots.no {
+        background: rgba(239, 71, 111, 0.15);
+        color: var(--danger);
       }
       .status {
         display: inline-block;
@@ -517,6 +534,10 @@
               <div>
                 <dt>Date</dt>
                 <dd>2026-09-15</dd>
+              </div>
+              <div>
+                <dt>Bots (ADR-028)</dt>
+                <dd><span class="bots no">🚫 supportsBots: false</span> not decided</dd>
               </div>
               <div>
                 <dt>Matrix</dt>
