@@ -131,6 +131,7 @@ export function Preview(): JSX.Element {
     error: null,
     toasts: [],
     kicked: null,
+    restarted: false,
   };
   const controller: Controller = {
     store: createStore(state),

@@ -81,6 +81,11 @@ export function Join({ controller, state }: JoinProps): JSX.Element {
             {t.join.kicked}
           </p>
         ) : null}
+        {state.restarted && !state.kicked ? (
+          <p className={styles.kicked} role="status">
+            {t.join.restarted}
+          </p>
+        ) : null}
         {info && info.rooms.length === 0 ? <p className={styles.hint}>{t.join.noRooms}</p> : null}
         <label className={styles.field}>
           <span className={styles.label}>{t.join.name}</span>

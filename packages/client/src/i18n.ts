@@ -15,6 +15,7 @@ export const t = {
     resuming: 'Reconnecting…',
     offline: 'Connecting…',
     kicked: 'The VIP removed you from the room. You can join again.',
+    restarted: 'The party restarted — tap Join to get back in.',
     noRooms: 'No room is open right now. Start the server and open /tv on the big screen.',
   },
   lobby: {
@@ -72,6 +73,7 @@ export const t = {
   connection: {
     reconnecting: 'Reconnecting…',
     connecting: 'Connecting…',
+    lostServer: 'Lost the PartyBox server — reconnecting…',
     seconds: (n: number) => `${n} s`,
     secondsLeft: (n: number) => `${n} seconds left`,
   },

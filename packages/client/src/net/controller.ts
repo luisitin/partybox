@@ -33,6 +33,8 @@ export interface ControllerState {
   error: ErrorPayload | null;
   toasts: Toast[];
   kicked: string | null;
+  /** The stored session was rejected (server restarted, room gone): the join form explains why. */
+  restarted: boolean;
 }
 
 const SESSION_KEY = 'partybox:session';
@@ -86,6 +88,7 @@ export function createController(url?: string): Controller {
     error: null,
     toasts: [],
     kicked: null,
+    restarted: false,
   });
   const socket: Socket = io(url ?? '/', { transports: ['websocket', 'polling'] });
   let seq = 0;
@@ -140,6 +143,7 @@ export function createController(url?: string): Controller {
       view: null,
       error: null,
       kicked: null,
+      restarted: false,
     });
   });
   socket.on('room', (push: RoomPush) => {
@@ -171,7 +175,7 @@ export function createController(url?: string): Controller {
     if (store.get().resuming) {
       // The stored session is stale (server restarted, room gone): show the join form instead.
       saveSession(null);
-      store.set({ resuming: false, error: null });
+      store.set({ resuming: false, error: null, restarted: true });
       return;
     }
     if (error.code === 'rate_limited') return;
