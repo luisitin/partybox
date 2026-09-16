@@ -1,6 +1,7 @@
 // TV view for Broken Pencil. While playing the stage shows only progress (never a page); during
 // the show it turns one page at a time — the filmstrip of pages shown so far on the left, the
 // current page big on the right, the verdict on a book's last page.
+import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
 import { Avatar, BigText, Stage } from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
@@ -10,12 +11,54 @@ import styles from './Tv.module.css';
 
 const STAGE_MARK = { guess: '💬', draw: '✏️', done: '✓' } as const;
 
+/** One muted line under the counter, rotating every 8 s: a 60–90 s wait with something to read
+ *  instead of an empty stage (review-loop #8). Keyed so each line rises in. */
+const HINTS = {
+  draw: [
+    'Draw big — every picture goes on the TV at the end.',
+    'No letters, no numbers: the pencil has to do the talking.',
+    'Done early? Tap Done and watch the tiles fill in.',
+  ],
+  pass: [
+    'Guess first, then draw your guess for the next player.',
+    'Wrong guesses are the fun part — the chain shows every step.',
+    'Stuck? A rough sketch beats a blank page.',
+  ],
+  guess: ['One word, best guess — then the reveal.', 'The whole chain shows on the TV next.'],
+} as const;
+
+function Hint({ phase }: { phase: keyof typeof HINTS }): JSX.Element {
+  const [i, setI] = useState(0);
+  useEffect(() => {
+    const handle = setInterval(() => setI((n) => n + 1), 8000);
+    return () => clearInterval(handle);
+  }, [phase]);
+  const lines = HINTS[phase];
+  const line = lines[i % lines.length];
+  return (
+    <p key={line} className={`${styles.hint} pb-enter`} aria-live="off">
+      {line}
+    </p>
+  );
+}
+
+/** Tiles in the same order as the chip strip above them (alphabetical, numeric-aware). */
+function byName(view: PencilTvView): PencilTvView['progress'] {
+  const nameOf = (id: string): string => view.players.find((x) => x.id === id)?.name ?? '';
+  return [...view.progress].sort((a, b) =>
+    nameOf(a.playerId).localeCompare(nameOf(b.playerId), undefined, {
+      numeric: true,
+      sensitivity: 'base',
+    }),
+  );
+}
+
 function Progress({ view }: { view: PencilTvView }): JSX.Element {
   const done = view.progress.filter((p) => p.stage === 'done').length;
   return (
     <>
       <ul className={styles.cards} aria-label="who is done">
-        {view.progress.map((p) => {
+        {byName(view).map((p) => {
           const player = view.players.find((x) => x.id === p.playerId);
           const finished = p.stage === 'done';
           return (
@@ -113,14 +156,17 @@ export function Tv({ view }: GameTvProps<PencilTvView>): JSX.Element {
           ? 'Guess the drawing, then draw your guess…'
           : 'Last guesses…';
     return (
-      <Stage>
+      <Stage className={styles.waiting}>
         <div className={styles.head}>
           <BigText level="h1">{title}</BigText>
           <p className={styles.kicker}>
             round {view.step} of {view.stepCount}
           </p>
         </div>
-        <Progress view={view} />
+        <div className={styles.waitBlock}>
+          <Progress view={view} />
+          <Hint phase={view.phaseId} />
+        </div>
       </Stage>
     );
   }
