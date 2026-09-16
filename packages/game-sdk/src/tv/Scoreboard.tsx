@@ -87,6 +87,7 @@ export function Scoreboard({
         <li
           key={row.playerId}
           className={`${styles.row} ${row.rank === 1 && trophy ? styles.top : ''} ${row.playerId === highlightId ? styles.me : ''}`}
+          aria-current={row.playerId === highlightId ? 'true' : undefined}
           style={staggered ? ({ '--pb-i': order(index) } as CSSProperties) : undefined}
         >
           <span className={styles.rank} aria-label={`rank ${row.rank}`}>

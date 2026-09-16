@@ -2,6 +2,7 @@
 // compact scoreboard with "me" marked; the VIP gets play again / new game / lobby, everyone else
 // waits for the VIP by name. The board shows the instant the TV's does (the phone never spoils,
 // and never hides a board the TV is already showing); the cue + buzz come from the shell.
+import { useEffect, useRef } from 'react';
 import type { JSX } from 'react';
 import type { PlayerPublic, RoomSnapshot } from '@partybox/shared';
 import { PrimaryButton, Scoreboard, Screen } from '@partybox/game-sdk/ui';
@@ -17,6 +18,11 @@ export interface ResultsProps {
 }
 
 export function Results({ controller, room, me }: ResultsProps): JSX.Element {
+  // Your own row is what you look for first: bring it above the sticky footer (review-loop #15).
+  const list = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    list.current?.querySelector('[aria-current="true"]')?.scrollIntoView({ block: 'nearest' });
+  }, []);
   const rows = scoreboardRows(room);
   const mine = myRow(room, me.id);
   const over = nobodyScored(room);
@@ -66,7 +72,9 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
           {t.results.yourPlace(mine.rank, mine.score)}
         </p>
       ) : null}
-      <Scoreboard rows={rows} compact highlightId={me.id} noTrophy={over} />
+      <div ref={list}>
+        <Scoreboard rows={rows} compact highlightId={me.id} noTrophy={over} />
+      </div>
       {room.results?.results.awards.length ? (
         <ul className={styles.awards}>
           {room.results.results.awards.map((a) => (
