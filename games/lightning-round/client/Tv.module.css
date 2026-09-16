@@ -290,6 +290,11 @@
   display: none;
 }
 
+/* Totals land on every row at once (the per-row stagger is for verdicts and deltas only). */
+.pop.total {
+  animation-delay: 0ms;
+}
+
 .deltaZero {
   color: var(--pb-text-muted);
 }
