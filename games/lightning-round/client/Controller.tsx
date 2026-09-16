@@ -41,6 +41,7 @@ export function Controller({
     const locked = view.myPickIndex !== null;
     return (
       <ChoiceGrid
+        fill
         promptKey={`${phaseId}:${view.round?.number ?? 0}`}
         kicker={roundKicker(view)}
         prompt={view.question.text}
@@ -59,6 +60,7 @@ export function Controller({
     const selected = placed === undefined ? null : options.find((o) => o.amount === placed);
     return (
       <ChoiceGrid
+        fill
         promptKey="wager"
         kicker="Final question next"
         prompt={

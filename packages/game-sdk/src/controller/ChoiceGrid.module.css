@@ -18,6 +18,18 @@
   gap: var(--pb-space-3);
 }
 
+/* fill: grow into the Screen body so the last choice lands in the thumb zone (DESIGN_SYSTEM
+   Principle 2). min-height stays `auto` on purpose: the grid never shrinks below 4 x 64 px + gaps,
+   the Screen body scrolls instead, and rows never overflow onto the "Locked in" line. */
+.fill {
+  flex: 1;
+}
+
+.fill .choice {
+  flex: 1 1 0;
+  max-height: 22dvh; /* only guards a future 2-3-choice grid; 4 x 22dvh exceeds any phone body */
+}
+
 .choice {
   display: grid;
   grid-template-columns: auto 1fr auto;

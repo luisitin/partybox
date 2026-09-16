@@ -29,6 +29,8 @@ export interface ChoiceGridProps {
    * prompt arrives — never keyed on `choices`, which callers rebuild every render.
    */
   promptKey?: string;
+  /** Stretch the choices to fill the screen body — for speed games where reach and target size matter. */
+  fill?: boolean;
 }
 
 const LETTERS = 'ABCDEFGH';
@@ -53,6 +55,7 @@ export function ChoiceGrid(props: ChoiceGridProps): JSX.Element {
     onPick,
     footer,
     promptKey,
+    fill,
   } = props;
   const [pending, setPending] = useState<Pending | null>(null);
   // "Adjust state when a prop changes": a new prompt clears the optimistic lock.
@@ -78,7 +81,11 @@ export function ChoiceGrid(props: ChoiceGridProps): JSX.Element {
     <Screen footer={footer}>
       {kicker ? <p className={styles.kicker}>{kicker}</p> : null}
       {prompt ? <p className={styles.prompt}>{prompt}</p> : null}
-      <div className={styles.grid} role="radiogroup" aria-label="choices">
+      <div
+        className={`${styles.grid} ${fill ? styles.fill : ''}`}
+        role="radiogroup"
+        aria-label="choices"
+      >
         {choices.map((choice, index) => {
           const isSelected = choice.id === shownId;
           const revealed = correctId !== null;
