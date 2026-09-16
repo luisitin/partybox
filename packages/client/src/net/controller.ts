@@ -234,7 +234,15 @@ export function createController(url?: string): Controller {
     // "<name> joined" is TV information; on a phone it only piles up over the primary button.
     if (/\bjoined\b/.test(toast.text)) return;
     const id = nextToastId();
-    store.set(() => ({ toasts: [{ id, ...toast }] }));
+    // "<name> is now the VIP" lands on every phone; on the new VIP's own it should speak to them
+    // and point at the badge that just appeared (review-loop #5). Names are unique per room.
+    const s = store.get();
+    const handover = /^(.+) is now the VIP$/.exec(toast.text);
+    const mine = handover && s.room?.players.find((p) => p.id === s.playerId)?.name === handover[1];
+    const shown: ToastPayload = mine
+      ? { kind: 'success', text: "You're the VIP now — tap ★ VIP for host controls" }
+      : toast;
+    store.set(() => ({ toasts: [{ id, ...shown }] }));
     setTimeout(
       () => store.set((prev) => ({ toasts: prev.toasts.filter((t) => t.id !== id) })),
       2500,
