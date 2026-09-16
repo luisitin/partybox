@@ -13,7 +13,12 @@
   display: flex;
   flex-direction: column;
   pointer-events: none;
-  animation: global(pb-fade-out) var(--pb-motion-fast) var(--pb-ease) both;
+}
+
+/* Held (the incoming screen has nothing to show yet) → opaque; released → the fade. */
+.ghostFade {
+  /* Same length as the incoming pb-rise, so the pair reads as one dissolve, not a dip. */
+  animation: global(pb-fade-out) var(--pb-motion-base) var(--pb-ease) both;
 }
 
 /* Cloned nodes would replay their entrance keyframes; freeze them at their settled state. */
