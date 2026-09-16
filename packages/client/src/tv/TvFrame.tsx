@@ -14,10 +14,22 @@ export interface TvFrameProps {
   connected: boolean;
   toasts: Toast[];
   compact: boolean;
+  /** Top-left corner: the host's ⌂ button (ADR-031). */
+  corner?: ReactNode;
+  /** Bottom row, in the flow (never over the stage): the host toolbar (ADR-031). */
+  footer?: ReactNode;
   children: ReactNode;
 }
 
-export function TvFrame({ room, connected, toasts, compact, children }: TvFrameProps): JSX.Element {
+export function TvFrame({
+  room,
+  connected,
+  toasts,
+  compact,
+  corner,
+  footer,
+  children,
+}: TvFrameProps): JSX.Element {
   const info = useServerInfo();
   // A blip stays a header caption; after 3 s the whole stage says so (a lit lobby + QR would keep
   // inviting people to scan a dead server).
@@ -33,6 +45,7 @@ export function TvFrame({ room, connected, toasts, compact, children }: TvFrameP
     <div className={`${styles.frame} ${lost ? styles.lost : ''}`} data-surface="tv">
       <header className={`${styles.header} ${compact ? styles.compact : ''}`}>
         <div className={styles.brandBlock}>
+          {corner}
           <span className={styles.brand}>{t.appName}</span>
           {room ? (
             <span className={styles.code}>
@@ -51,6 +64,7 @@ export function TvFrame({ room, connected, toasts, compact, children }: TvFrameP
         ) : null}
       </header>
       <main className={styles.main}>{children}</main>
+      {footer ? <div className={styles.footer}>{footer}</div> : null}
       {lost ? (
         <div className={styles.lostBanner} role="status">
           {t.connection.lostServer}

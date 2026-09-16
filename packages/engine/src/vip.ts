@@ -51,10 +51,15 @@ export function applyVip(
   now: number,
   seed: number | undefined,
   deps: EngineDeps,
+  host = false,
 ): ApplyResult {
+  // The TV is the host's screen (ADR-031): it may do anything the VIP can, even in a room with no
+  // human VIP yet (bots only). Every other rule below still applies.
   const sender = room.players[playerId];
-  if (!sender) return reject(room, playerId, 'not_in_room', 'You are not in this room.');
-  if (!sender.isVip) return reject(room, playerId, 'not_vip', 'Only the VIP can do that.');
+  if (!host) {
+    if (!sender) return reject(room, playerId, 'not_in_room', 'You are not in this room.');
+    if (!sender.isVip) return reject(room, playerId, 'not_vip', 'Only the VIP can do that.');
+  }
 
   switch (action.action) {
     case 'selectGame': {
@@ -122,7 +127,7 @@ export function applyVip(
       return result;
     }
     case 'kick': {
-      if (action.playerId === playerId)
+      if (action.playerId === playerId && !host)
         return reject(room, playerId, 'cannot_start', 'You cannot kick yourself.');
       if (!room.players[action.playerId])
         return reject(room, playerId, 'not_in_room', 'That player already left.');
@@ -141,17 +146,12 @@ export function applyVip(
     }
     case 'transferVip': {
       const target = room.players[action.playerId];
-      if (!target || target.id === playerId)
+      if (!target || target.id === room.vipId || target.bot)
         return reject(room, playerId, 'not_in_room', 'Pick another player.');
-      const demoted: RoomState = {
-        ...room,
-        vipId: target.id,
-        players: {
-          ...room.players,
-          [playerId]: { ...sender, isVip: false },
-          [target.id]: { ...target, isVip: true },
-        },
-      };
+      const players: Record<string, RoomState['players'][string]> = {};
+      for (const p of Object.values(room.players))
+        players[p.id] = { ...p, isVip: p.id === target.id };
+      const demoted: RoomState = { ...room, vipId: target.id, players };
       return {
         room: demoted,
         effects: [

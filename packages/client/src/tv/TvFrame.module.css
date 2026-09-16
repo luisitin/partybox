@@ -98,11 +98,19 @@
   flex-direction: column;
 }
 
+/* The host toolbar row (ADR-031): part of the layout so the stage above it never has to dodge it. */
+.footer {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: flex-end;
+  padding: var(--pb-space-2) var(--pb-overscan-x) var(--pb-space-3);
+}
+
 /* Bottom-left, inside the overscan margins, never over the focal point in the middle of the stage. */
 .toasts {
   position: fixed;
   left: var(--pb-overscan-x);
-  bottom: var(--pb-overscan-y);
+  bottom: var(--pb-space-3);
   align-items: flex-start;
   display: flex;
   flex-direction: column;

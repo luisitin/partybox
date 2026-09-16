@@ -126,7 +126,7 @@ function dispatch(room: RoomState, event: RoomEvent, deps: EngineDeps): ApplyRes
     case 'leave':
       return removePlayer(room, event.playerId, event.now, deps, 'left');
     case 'vip':
-      return applyVip(room, event.playerId, event.action, event.now, event.seed, deps);
+      return applyVip(room, event.playerId, event.action, event.now, event.seed, deps, event.host);
     case 'input':
       return handleInput(room, event.playerId, event.input, event.now, deps);
     case 'tick':

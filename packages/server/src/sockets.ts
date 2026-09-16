@@ -185,6 +185,59 @@ export function createSocketLayer(server: HttpServer): SocketLayer {
         void socket.leave(`room:${code}`);
       });
 
+      // The TV is the host's screen (ADR-031): it may run any VIP action and add/remove bots,
+      // with the engine's `host` flag (no VIP check — a room of bots has no VIP). The sender id is
+      // the VIP when there is one so per-player errors land on their phone too.
+      function tvActor(): string {
+        const room = data.code ? host.get(data.code) : undefined;
+        return room?.vipId ?? '@tv';
+      }
+
+      function reportErrors(result: ReturnType<Host['dispatch']>): void {
+        for (const effect of result?.effects ?? [])
+          if (effect.type === 'error') sendError(effect.code, effect.message);
+      }
+
+      socket.on('tv:vip', (raw: unknown) => {
+        if (data.role !== 'tv' || !data.code)
+          return sendError('not_in_room', 'This TV is not watching a room.');
+        const parsed = vipPayloadSchema.safeParse(raw);
+        if (!parsed.success) return sendError('invalid_payload', 'Bad TV payload.');
+        if (!limiter.take(1)) return sendError('rate_limited', 'Slow down.');
+        reportErrors(
+          host.dispatch(data.code, {
+            type: 'vip',
+            playerId: tvActor(),
+            action: parsed.data,
+            host: true,
+          }),
+        );
+      });
+
+      socket.on('tv:bot', (raw: unknown) => {
+        if (data.role !== 'tv' || !data.code)
+          return sendError('not_in_room', 'This TV is not watching a room.');
+        const parsed = botPayloadSchema.safeParse(raw);
+        if (!parsed.success) return sendError('invalid_payload', 'Bad TV payload.');
+        if (!limiter.take(5)) return sendError('rate_limited', 'Slow down.');
+        if (parsed.data.action === 'add') {
+          const { playerId, token } = host.mintPlayer();
+          reportErrors(
+            host.dispatch(data.code, {
+              type: 'bot-add',
+              ownerId: null,
+              playerId,
+              token,
+              strategy: 'random',
+            }),
+          );
+          return;
+        }
+        reportErrors(
+          host.dispatch(data.code, { type: 'bot-remove', ownerId: null, botId: parsed.data.botId }),
+        );
+      });
+
       socket.on('tv:join', (raw: unknown) => {
         const parsed = tvJoinPayloadSchema.safeParse(raw);
         if (!parsed.success) return sendError('invalid_payload', 'Bad TV payload.');

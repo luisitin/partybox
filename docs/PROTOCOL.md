@@ -28,7 +28,10 @@ The server never crashes on client input. The server is authoritative; clients r
 ## TV → server / server → TV
 
 `tv:join { roomCode? }` → server pushes `room`, `view { rev, view: TvView & { vip }, at }`, `toast`. `roomCode` defaults to the house room.
-TVs are pure observers: any player/VIP event from a TV socket is ignored.
+TVs never send _player_ events (`join`, `input`, `leave`, `vip`, `bot` from a TV socket are ignored). The TV
+is the host's screen (ADR-031): `tv:vip { action, … }` (same payload as `vip`) runs any VIP action with the
+engine's `host` flag — no VIP check, every other rule intact — and `tv:bot { action: 'add' }` /
+`{ action: 'remove', botId }` adds ownerless bots or removes any bot. Refusals come back as `error`.
 
 ## `rev` ordering
 

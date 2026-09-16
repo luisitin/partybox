@@ -1,13 +1,16 @@
-// The TV's store: a pure observer. Joins the house room (or ?room=CODE), applies pushes in rev
-// order, tracks the clock offset, and buffers toasts.
+// The TV's store: an observer that renders pushes (room snapshots, views, toasts) — plus the host
+// controls (ADR-031): `act` runs a VIP action as the room's VIP, `bot` adds/removes house bots.
 import { io } from 'socket.io-client';
 import type {
+  BotAction,
+  ErrorPayload,
   PushedView,
   RoomPush,
   RoomSnapshot,
   ToastPayload,
   TvView,
   ViewPush,
+  VipAction,
 } from '@partybox/shared';
 import { createStore, nextToastId } from './store';
 import type { Store, Toast } from './store';
@@ -23,6 +26,9 @@ export interface TvState {
 
 export interface TvClient {
   store: Store<TvState>;
+  /** Host control: any VIP action, applied as the room's VIP (the server enforces every rule). */
+  act(action: VipAction): void;
+  bot(action: BotAction): void;
 }
 
 export function createTvClient(roomCode?: string, url?: string): TvClient {
@@ -59,17 +65,26 @@ export function createTvClient(roomCode?: string, url?: string): TvClient {
     if (push.rev < store.get().rev) return;
     store.set({ rev: push.rev, view: push.view, offsetMs: push.at - Date.now() });
   });
-  socket.on('toast', (toast: ToastPayload) => {
-    // During play the chips already show who joined; a join toast would only cover the stage.
-    // (Payloads carry no category yet, so this matches the engine's "<name> joined…" text.)
-    if (store.get().room?.status === 'playing' && /\bjoined\b/.test(toast.text)) return;
+  const showToast = (toast: ToastPayload): void => {
     const id = nextToastId();
     store.set((prev) => ({ toasts: [...prev.toasts.slice(-1), { id, ...toast }] }));
     setTimeout(
       () => store.set((prev) => ({ toasts: prev.toasts.filter((t) => t.id !== id) })),
       3000,
     );
+  };
+  socket.on('toast', (toast: ToastPayload) => {
+    // During play the chips already show who joined; a join toast would only cover the stage.
+    // (Payloads carry no category yet, so this matches the engine's "<name> joined…" text.)
+    if (store.get().room?.status === 'playing' && /joined/.test(toast.text)) return;
+    showToast(toast);
   });
+  // Refusals of host actions (a game that cannot start, nobody in the room) come back as errors.
+  socket.on('error', (error: ErrorPayload) => showToast({ kind: 'warning', text: error.message }));
 
-  return { store };
+  return {
+    store,
+    act: (action) => socket.emit('tv:vip', action),
+    bot: (action) => socket.emit('tv:bot', action),
+  };
 }

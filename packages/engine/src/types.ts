@@ -78,7 +78,15 @@ export type RoomEvent =
   | { type: 'bot-remove'; now: number; ownerId: string | null; botId: string }
   | { type: 'disconnect'; now: number; playerId: string }
   | { type: 'leave'; now: number; playerId: string }
-  | { type: 'vip'; now: number; playerId: string; action: VipAction; seed?: number }
+  | {
+      type: 'vip';
+      now: number;
+      /** The sender; must be the VIP — unless `host` is set (the TV, ADR-031), then any id works. */
+      playerId: string;
+      action: VipAction;
+      seed?: number;
+      host?: boolean;
+    }
   | { type: 'input'; now: number; playerId: string; input: unknown }
   | { type: 'tick'; now: number }
   | { type: 'dev:loadState'; now: number; gameId: string; state: unknown; settings?: Settings }

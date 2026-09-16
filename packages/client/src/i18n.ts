@@ -89,6 +89,16 @@ export const t = {
   theme: {
     title: 'Theme',
   },
+  host: {
+    title: 'Host',
+    home: 'Home',
+    homeEnds: 'Home — ends the running game',
+    homeConfirm: 'End & go home?',
+    pickGame: 'Pick a game',
+    skip: 'Skip / Next',
+    removeBots: (n: number) => (n === 1 ? 'Remove bot' : `Remove ${n} bots`),
+    choosing: 'Pick a game and its settings here, or from the VIP phone.',
+  },
   tv: {
     tapToStart: 'Tap anywhere for sound',
     tapHint: 'the party works without it',
