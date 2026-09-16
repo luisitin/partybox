@@ -1,0 +1,142 @@
+/* DrawPad: toolbar, square sheet, ink meter + undo/clear. Tokens only; the paper stays white. */
+.pad {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-3);
+}
+
+.tools {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--pb-space-3);
+}
+
+.swatches {
+  display: flex;
+  gap: var(--pb-space-2);
+  flex-wrap: wrap;
+}
+
+.swatch {
+  width: var(--pb-touch);
+  height: var(--pb-touch);
+  border-radius: 50%;
+  border: 3px solid transparent;
+  padding: 0;
+  cursor: pointer;
+  box-shadow: inset 0 0 0 2px rgb(255 255 255 / 25%);
+}
+
+.swatchOn {
+  border-color: var(--pb-text);
+  transform: scale(1.12);
+}
+
+.sizes {
+  display: flex;
+  gap: var(--pb-space-1);
+}
+
+.size {
+  width: var(--pb-touch);
+  height: var(--pb-touch);
+  display: grid;
+  place-items: center;
+  border-radius: var(--pb-radius);
+  border: 2px solid transparent;
+  background: var(--pb-surface);
+  padding: 0;
+  cursor: pointer;
+}
+
+.size span {
+  display: block;
+  border-radius: 50%;
+  background: var(--pb-text);
+}
+
+.sizeOn {
+  border-color: var(--pb-accent-2);
+  background: var(--pb-surface-2);
+}
+
+.box {
+  width: 100%;
+  max-width: min(100%, 60vh);
+  align-self: center;
+}
+
+.canvas {
+  display: block;
+  touch-action: none;
+  border-radius: var(--pb-radius);
+  box-shadow: 0 6px 24px rgb(0 0 0 / 35%);
+  background: #fffdf5;
+  cursor: crosshair;
+}
+
+.canvasOff {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.bottom {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  grid-template-areas:
+    'ink undo clear'
+    'label undo clear';
+  align-items: center;
+  column-gap: var(--pb-space-2);
+}
+
+.ink {
+  grid-area: ink;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--pb-surface-2);
+  overflow: hidden;
+}
+
+.inkFill {
+  display: block;
+  height: 100%;
+  background: var(--pb-accent-3);
+  transition: width var(--pb-motion-fast) linear;
+}
+
+.inkOut {
+  background: var(--pb-danger);
+}
+
+.inkLabel {
+  grid-area: label;
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+}
+
+.tool {
+  min-height: var(--pb-touch);
+  padding: 0 var(--pb-space-4);
+  border-radius: var(--pb-radius);
+  border: 0;
+  background: var(--pb-surface);
+  color: var(--pb-text);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.tool:first-of-type {
+  grid-area: undo;
+}
+
+.tool:last-of-type {
+  grid-area: clear;
+}
+
+.tool:disabled {
+  opacity: 0.4;
+  cursor: default;
+}

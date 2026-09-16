@@ -1,0 +1,59 @@
+{
+  "id": "broken-pencil",
+  "name": "Broken Pencil",
+  "tagline": "Draw it. Guess it. Watch it fall apart.",
+  "description": "Telephone with a pencil. Pick a secret word, draw it on your phone, pass the book on: the next player guesses, the one after draws that guess, and so on around the circle. Then the TV turns the pages of every book one at a time while the VIP holds the Next button. No points — the show is the game.",
+  "version": "1.0.0",
+  "minPlayers": 3,
+  "maxPlayers": 8,
+  "estimatedMinutes": 18,
+  "tags": ["drawing", "party", "creative", "no-scores"],
+  "maxInputBytes": 6144,
+  "settings": [
+    {
+      "key": "passes",
+      "label": "Players per book",
+      "description": "How many other players touch each book. 15 = everyone (the full circle).",
+      "type": "number",
+      "default": 15,
+      "min": 1,
+      "max": 15,
+      "step": 1
+    },
+    {
+      "key": "drawSeconds",
+      "label": "Drawing time",
+      "description": "Seconds per drawing",
+      "type": "number",
+      "default": 60,
+      "min": 30,
+      "max": 120,
+      "step": 10
+    },
+    {
+      "key": "guessSeconds",
+      "label": "Guessing time",
+      "description": "Seconds per guess",
+      "type": "number",
+      "default": 30,
+      "min": 15,
+      "max": 60,
+      "step": 5
+    },
+    {
+      "key": "customWords",
+      "label": "Custom words",
+      "description": "Let players type their own secret word",
+      "type": "boolean",
+      "default": true
+    },
+    {
+      "key": "spicy",
+      "label": "Spicy words",
+      "description": "Adds cheekier words to the offers (PG-13)",
+      "type": "boolean",
+      "default": false
+    }
+  ],
+  "supportsBots": true
+}
