@@ -10,6 +10,8 @@ export interface PlayerChipsProps {
   /** Ids to highlight. */
   activeIds?: string[];
   showScores?: boolean;
+  /** The scores are held-over values, not live: rendered muted (review-loop #32). */
+  scoresMuted?: boolean;
   size?: 'sm' | 'md' | 'lg';
   /** `grid` wraps into rows (lobby), `row` stays on one line (game footer). */
   layout?: 'grid' | 'row';
@@ -28,6 +30,7 @@ export function PlayerChips({
   vip,
   activeIds = [],
   showScores,
+  scoresMuted = false,
   size = 'md',
   layout = 'row',
   align = 'center',
@@ -62,6 +65,7 @@ export function PlayerChips({
             isVip={vip === p.id}
             active={activeIds.includes(p.id)}
             score={showScores ? p.score : undefined}
+            scoreMuted={scoresMuted}
             leader={leaders.has(p.id)}
             isBot={botIds.includes(p.id)}
             size={size}

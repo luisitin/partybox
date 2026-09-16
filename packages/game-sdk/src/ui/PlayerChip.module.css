@@ -155,6 +155,12 @@
   color: var(--pb-accent-2);
 }
 
+/* Held-over number while the game withholds the strip: quiet, and it must not pop again. */
+.scoreMuted {
+  color: var(--pb-text-muted);
+  animation: none;
+}
+
 .leader + .score {
   margin-left: var(--pb-space-1);
 }

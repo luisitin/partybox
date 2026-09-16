@@ -12,6 +12,8 @@ export interface PlayerChipProps {
   status?: 'active' | 'submitted' | 'waiting' | 'spectator';
   isVip?: boolean;
   score?: number;
+  /** A held-over score (the strip is frozen for a beat): muted, no pop. */
+  scoreMuted?: boolean;
   /** Currently leading on points: a ▲ before the score. */
   leader?: boolean;
   /** Highlight (e.g. it is this player's turn). */
@@ -42,6 +44,7 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
     status = 'active',
     isVip,
     score,
+    scoreMuted = false,
     leader,
     active,
     isMe,
@@ -110,7 +113,7 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
       ) : null}
       {score !== undefined ? (
         // keyed on the value so a change re-mounts and pops in place
-        <span key={score} className={styles.score}>
+        <span key={score} className={`${styles.score} ${scoreMuted ? styles.scoreMuted : ''}`}>
           {score}
         </span>
       ) : null}

@@ -72,6 +72,9 @@ export function TvPlaying({ room, view, audio, onGameReady }: TvPlayingProps): J
   const module = room.selectedGameId ? clientGames[room.selectedGameId] : undefined;
   const gameName = room.games.find((g) => g.id === room.selectedGameId)?.name ?? '';
   const vip = room.players.find((p) => p.id === (view?.vip ?? room.vip));
+  // While a game withholds the strip (Wisecrack's reveal), the chips keep the numbers they last
+  // showed, muted: the tally is not spoiled and the row does not reflow (review-loop #32).
+  const [held, setHeld] = useState<Record<string, number>>({});
   if (!view) {
     return (
       <div className={styles.center}>
@@ -87,12 +90,19 @@ export function TvPlaying({ room, view, audio, onGameReady }: TvPlayingProps): J
   // score-less games (Broken Pencil) stay number-free; a game can hold the strip back per phase.
   const showScores =
     view.players.some((p) => p.score !== undefined) && (module?.stripScores?.(view) ?? true);
+  if (showScores && view.players.some((p) => p.score !== undefined && held[p.id] !== p.score)) {
+    const next: Record<string, number> = {};
+    for (const p of view.players) if (p.score !== undefined) next[p.id] = p.score;
+    setHeld(next);
+  }
+  const frozen = !showScores && view.players.some((p) => held[p.id] !== undefined);
+  const players = frozen ? view.players.map((p) => ({ ...p, score: held[p.id] })) : view.players;
   return (
     <div className={styles.playing}>
       <div className={styles.strip}>
         <PlayerChips
           players={[
-            ...view.players,
+            ...players,
             // Spectators are not in the game state; show them dimmed so late joiners feel seen.
             ...room.players
               .filter((p) => p.spectator)
@@ -106,7 +116,8 @@ export function TvPlaying({ room, view, audio, onGameReady }: TvPlayingProps): J
           ]}
           vip={view.vip}
           botIds={room.players.filter((p) => p.bot).map((p) => p.id)}
-          showScores={showScores}
+          showScores={showScores || frozen}
+          scoresMuted={frozen}
           size="sm"
         />
         {/* Quiet/hidden timers free the column: six chips fit on one row instead of wrapping (loop #1). */}
