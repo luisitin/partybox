@@ -88,6 +88,9 @@ export const t = {
     close: 'Close',
     confirm: (action: string) => `Confirm: ${action}`,
     badge: 'VIP',
+    groupGame: 'Game',
+    groupRoom: 'Room',
+    groupPlayers: 'Players',
   },
   paused: {
     other: (name: string) => `Paused — ${name} will resume the game`,
