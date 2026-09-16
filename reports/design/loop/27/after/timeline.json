@@ -1,0 +1,114 @@
+{
+  "pass": "27",
+  "game": "lightning-round",
+  "players": 6,
+  "scenario": "reconnect",
+  "focus": "phone",
+  "started": "22:39:18.191",
+  "tvVideoT0": "22:39:14.985",
+  "changes": [
+    {
+      "t": 1789598358195,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789598362188,
+      "at": "22:39:18.195",
+      "sinceStartS": 0,
+      "videoS": 3.2
+    },
+    {
+      "t": 1789598362219,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789598377192,
+      "at": "22:39:22.219",
+      "sinceStartS": 4,
+      "videoS": 7.2
+    },
+    {
+      "t": 1789598381445,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789598382205,
+      "at": "22:39:41.445",
+      "sinceStartS": 23.3,
+      "videoS": 26.5
+    },
+    {
+      "t": 1789598382725,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789598397217,
+      "at": "22:39:42.725",
+      "sinceStartS": 24.5,
+      "videoS": 27.7
+    },
+    {
+      "t": 1789598386851,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789598391738,
+      "at": "22:39:46.851",
+      "sinceStartS": 28.7,
+      "videoS": 31.9
+    },
+    {
+      "t": 1789598391803,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789598406751,
+      "at": "22:39:51.803",
+      "sinceStartS": 33.6,
+      "videoS": 36.8
+    },
+    {
+      "t": 1789598395986,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789598400877,
+      "at": "22:39:55.986",
+      "sinceStartS": 37.8,
+      "videoS": 41
+    },
+    {
+      "t": 1789598400972,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789598415877,
+      "at": "22:40:00.972",
+      "sinceStartS": 42.8,
+      "videoS": 46
+    },
+    {
+      "t": 1789598405172,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789598410064,
+      "at": "22:40:05.172",
+      "sinceStartS": 47,
+      "videoS": 50.2
+    },
+    {
+      "t": 1789598410134,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789598425064,
+      "at": "22:40:10.134",
+      "sinceStartS": 51.9,
+      "videoS": 55.1
+    },
+    {
+      "t": 1789598414355,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789598419245,
+      "at": "22:40:14.355",
+      "sinceStartS": 56.2,
+      "videoS": 59.4
+    }
+  ],
+  "notes": [
+    "reconnect: Sam dropped for 8 s at 2026-09-16T22:39:26.319Z in question",
+    "budget reached while playing; skipped to results"
+  ]
+}
