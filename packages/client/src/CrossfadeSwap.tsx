@@ -11,7 +11,8 @@ import styles from './CrossfadeSwap.module.css';
 
 export interface CrossfadeSwapProps {
   swapKey: string;
-  /** Class for the live container (layout + the rise animation). */
+  /** Class for the live container (layout + the rise animation). Default: a flex column the
+   *  phone Screen fills, so its sticky footer parks at the bottom (review-loop #31). */
   className?: string;
   /** Keep the outgoing snapshot fully opaque while true (the incoming screen has nothing to show
    *  yet); the fade starts when it turns false. Capped at HOLD_MAX_MS (review-loop #10). */
@@ -64,7 +65,7 @@ interface Ghost {
 
 export function CrossfadeSwap({
   swapKey,
-  className,
+  className = styles.live,
   hold = false,
   children,
 }: CrossfadeSwapProps): JSX.Element {
