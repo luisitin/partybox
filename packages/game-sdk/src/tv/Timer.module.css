@@ -11,9 +11,11 @@
   font-weight: 900;
   font-variant-numeric: tabular-nums;
   line-height: 1.1;
+  /* Leaving urgency at a phase boundary eases over the base token: the fast one read as a snap
+     next to the 300 ms phase rise (review-loop #17). */
   transition:
-    transform var(--pb-motion-fast) var(--pb-ease),
-    color var(--pb-motion-fast) var(--pb-ease);
+    transform var(--pb-motion-base) var(--pb-ease),
+    color var(--pb-motion-base) var(--pb-ease);
 }
 
 .lg {
