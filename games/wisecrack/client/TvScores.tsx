@@ -1,4 +1,8 @@
-// TV: the round scoreboard with deltas ("scores") and the final standings with awards ("done").
+// TV: the round scoreboard with deltas ("scores"). After the last round it is the drumroll for the
+// engine's results screen: 'Final scores' + 'And the winner is…', crown withheld (noTrophy) so the
+// core ceremony keeps it. results() ends the game in the same dispatch that enters 'done', so the
+// engine's results screen is the ceremony — only the dev fixture preview renders 'done', and it
+// renders as this final-scores screen.
 import type { JSX } from 'react';
 import { BigText, Scoreboard, Stage } from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
@@ -8,38 +12,30 @@ import styles from './wisecrack.module.css';
 type Props = GameTvProps<WisecrackTvView>;
 
 export function TvScores({ view }: Props): JSX.Element {
-  const done = view.phaseId === 'done';
-  const names = new Map(view.players.map((p) => [p.id, p.name]));
+  const final = view.round >= view.rounds;
   return (
     <Stage center>
       <p className={styles.kicker}>
-        {done ? 'Final standings' : `After round ${view.round} of ${view.rounds}`}
+        {final ? 'Final round played' : `After round ${view.round} of ${view.rounds}`}
       </p>
-      <BigText level="h1">{done ? "That's Wisecrack!" : 'Scores so far'}</BigText>
+      <BigText level="h1">{final ? 'Final scores' : 'Scores so far'}</BigText>
       <div className={styles.board}>
-        <Scoreboard
-          rows={view.standings.map((row) => ({ ...row, delta: done ? 0 : row.delta }))}
-          noTrophy={!done}
-        />
+        <Scoreboard rows={view.standings} noTrophy />
       </div>
-      {done && view.awards.length > 0 ? (
-        <ul className={styles.awards} aria-label="awards">
-          {view.awards.map((award) => (
-            <li key={award.id} className={styles.award}>
-              <span className={styles.awardTitle}>{award.title}</span>
-              <span>{names.get(award.playerId) ?? '?'}</span>
-              <span className="pb-muted">· {award.description}</span>
-            </li>
-          ))}
-        </ul>
-      ) : null}
-      {!done && view.round < view.rounds ? (
+      {final ? (
+        <BigText level="h2" tone="accent">
+          And the winner is
+          <span className={styles.ellipsis} aria-hidden>
+            …
+          </span>
+        </BigText>
+      ) : (
         <BigText level="h2" tone="muted">
           {view.round + 1 === view.rounds
             ? 'Next: the final round — double points!'
             : 'Next round coming up…'}
         </BigText>
-      ) : null}
+      )}
     </Stage>
   );
 }

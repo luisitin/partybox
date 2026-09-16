@@ -108,29 +108,21 @@
   font-style: italic;
 }
 
-/* TV "done": awards under the scoreboard. */
-.awards {
-  list-style: none;
-  margin: var(--pb-space-5) 0 0;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--pb-space-4);
+/* TV "scores" after the last round: 'And the winner is…' — one pulse per second; the token is
+   0 ms under reduced motion, so the glyph simply stays. */
+.ellipsis {
+  display: inline-block;
+  animation: pb-wc-ellipsis var(--pb-motion-pulse) ease-in-out infinite;
 }
 
-.award {
-  display: flex;
-  align-items: center;
-  gap: var(--pb-space-3);
-  padding: var(--pb-space-3) var(--pb-space-5);
-  border-radius: var(--pb-radius);
-  background: var(--pb-surface);
-  font-size: var(--pb-font-body);
-}
-
-.awardTitle {
-  font-weight: 800;
-  color: var(--pb-accent-2);
+@keyframes pb-wc-ellipsis {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
 }
 
 /* Phone: my answer echoed back on the waiting screens. */

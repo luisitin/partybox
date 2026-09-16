@@ -11,17 +11,19 @@ import { ControllerReveal, ControllerVote } from './ControllerVote';
 
 type Props = GameControllerProps<WisecrackControllerView, Input>;
 
+// results() ends the game in the same dispatch that enters 'done'; the engine's results screen is
+// the ceremony — only the dev fixture preview renders that phase, as the final-scores screen.
 function ControllerScores({ view, me }: Props): JSX.Element {
-  const done = view.phaseId === 'done';
+  const final = view.round >= view.rounds;
   return (
     <WaitingScreen
-      title={done ? 'Thanks for playing!' : `You have ${view.myScore} points`}
+      title={final ? `Your final score: ${view.myScore}` : `You have ${view.myScore} points`}
       hint={
-        done
-          ? `You finished #${view.myRank} with ${view.myScore} points.`
+        final
+          ? `#${view.myRank} · +${view.myDelta} in the final round`
           : `#${view.myRank} · +${view.myDelta} this round`
       }
-      mood={done ? 'done' : 'watch'}
+      mood="watch"
     >
       <Scoreboard compact highlightId={me.id} rows={view.standings} />
     </WaitingScreen>
