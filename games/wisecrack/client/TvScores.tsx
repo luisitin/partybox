@@ -13,12 +13,19 @@ type Props = GameTvProps<WisecrackTvView>;
 
 export function TvScores({ view }: Props): JSX.Element {
   const final = view.round >= view.rounds;
+  const finalNext = !final && view.round + 1 === view.rounds;
   return (
     <Stage center>
       <p className={styles.kicker}>
         {final ? 'Final round played' : `After round ${view.round} of ${view.rounds}`}
       </p>
       <BigText level="h1">{final ? 'Final scores' : 'Scores so far'}</BigText>
+      {/* The hook goes above the board: at 5-6 players the bottom slot is the first thing clipped. */}
+      {finalNext ? (
+        <BigText level="h2" tone="accent">
+          Next: the final round — double points!
+        </BigText>
+      ) : null}
       <div className={styles.board}>
         <Scoreboard rows={view.standings} noTrophy />
       </div>
@@ -29,11 +36,9 @@ export function TvScores({ view }: Props): JSX.Element {
             …
           </span>
         </BigText>
-      ) : (
+      ) : finalNext ? null : (
         <BigText level="h2" tone="muted">
-          {view.round + 1 === view.rounds
-            ? 'Next: the final round — double points!'
-            : 'Next round coming up…'}
+          Next round coming up…
         </BigText>
       )}
     </Stage>
