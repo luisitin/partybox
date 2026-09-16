@@ -92,7 +92,10 @@ export function TvQuestion({
       <BigText level="h1">{question?.text ?? '…'}</BigText>
       {question ? <ChoiceBoard question={question} /> : null}
       <p className={styles.count} role="status">
-        {answeredCount} / {totalCount} answered
+        <span key={answeredCount} className={styles.countNum}>
+          {answeredCount}
+        </span>{' '}
+        / {totalCount} answered
       </p>
     </>
   );

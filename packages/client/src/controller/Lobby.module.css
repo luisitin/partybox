@@ -12,6 +12,12 @@
   gap: var(--pb-space-2);
 }
 
+/* A new player pops in (keys are ids: only a fresh chip animates). */
+.item {
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+  transform-origin: center;
+}
+
 /* The last "chip" in the grid is the add-a-bot action: dashed so it reads as a slot, not a player. */
 .addBot {
   display: inline-flex;

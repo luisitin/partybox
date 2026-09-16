@@ -129,6 +129,25 @@ button {
   animation: pb-pop var(--pb-motion-base) var(--pb-ease) both;
 }
 
+/* A veil arriving / leaving (pause curtain, server-lost dim). */
+@keyframes pb-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pb-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
 /* A "no": three quick sideways jolts. */
 @keyframes pb-shake {
   0%,
@@ -146,6 +165,50 @@ button {
   }
   80% {
     transform: translateX(6px);
+  }
+}
+
+/* A count that just changed (the lobby's "3 / 16 players"): a scale bump, no opacity change. */
+@keyframes pb-bump {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.06);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* A slow turn for a "reconnecting" glyph; absent under reduced motion (the glyph is static). */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes pb-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* Idle cues for an empty lobby: the heading breathes, the waiting line's dots chase. */
+  @keyframes pb-breathe {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.55;
+    }
+  }
+
+  @keyframes pb-dot {
+    0%,
+    80%,
+    100% {
+      opacity: 0.25;
+    }
+    40% {
+      opacity: 1;
+    }
   }
 }
 

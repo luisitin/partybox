@@ -54,82 +54,92 @@ export function VipMenu({ controller, room, me, paused, onClose }: VipMenuProps)
           </button>
         </div>
         {playing ? (
+          <section className={styles.section}>
+            <h3 className={styles.label}>{t.vip.groupGame}</h3>
+            <div className={styles.group}>
+              <PrimaryButton
+                tone="neutral"
+                onClick={() => act('skip', () => controller.vip({ action: 'skip' }))}
+              >
+                {t.vip.skip}
+              </PrimaryButton>
+              <PrimaryButton
+                tone="neutral"
+                onClick={() => controller.vip({ action: paused ? 'resume' : 'pause' })}
+              >
+                {paused ? t.vip.resume : t.vip.pause}
+              </PrimaryButton>
+              <PrimaryButton
+                tone={confirm === 'end' ? 'danger' : 'neutral'}
+                className={`${styles.wide} ${confirm === 'end' ? '' : styles.dangerRest}`}
+                onClick={() =>
+                  act(
+                    'end',
+                    () => {
+                      controller.vip({ action: 'end' });
+                      onClose();
+                    },
+                    true,
+                  )
+                }
+              >
+                {label('end', t.vip.end)}
+              </PrimaryButton>
+            </div>
+          </section>
+        ) : null}
+        <section className={styles.section}>
+          <h3 className={styles.label}>{t.vip.groupRoom}</h3>
           <div className={styles.group}>
             <PrimaryButton
               tone="neutral"
-              onClick={() => act('skip', () => controller.vip({ action: 'skip' }))}
-            >
-              {t.vip.skip}
-            </PrimaryButton>
-            <PrimaryButton
-              tone="neutral"
-              onClick={() => controller.vip({ action: paused ? 'resume' : 'pause' })}
-            >
-              {paused ? t.vip.resume : t.vip.pause}
-            </PrimaryButton>
-            <PrimaryButton
-              tone={confirm === 'end' ? 'danger' : 'neutral'}
               className={styles.wide}
-              onClick={() =>
-                act(
-                  'end',
-                  () => {
-                    controller.vip({ action: 'end' });
-                    onClose();
-                  },
-                  true,
-                )
-              }
+              onClick={() => controller.vip({ action: room.locked ? 'unlock' : 'lock' })}
             >
-              {label('end', t.vip.end)}
+              {room.locked ? t.vip.unlock : t.vip.lock}
             </PrimaryButton>
           </div>
-        ) : null}
-        <div className={styles.group}>
-          <PrimaryButton
-            tone="neutral"
-            className={styles.wide}
-            onClick={() => controller.vip({ action: room.locked ? 'unlock' : 'lock' })}
-          >
-            {room.locked ? t.vip.unlock : t.vip.lock}
-          </PrimaryButton>
-        </div>
-        <ul className={styles.players} aria-label="players">
-          {room.players
-            .filter((p) => p.id !== me.id)
-            .map((p) => (
-              <li key={p.id} className={styles.player}>
-                <Avatar avatarId={p.avatarId} size={32} dim={!p.connected} />
-                <span className={styles.playerName}>{p.name}</span>
-                <button
-                  type="button"
-                  className={`${styles.small} ${confirm === `vip:${p.id}` ? styles.confirming : ''}`}
-                  onClick={() =>
-                    act(
-                      `vip:${p.id}`,
-                      () => controller.vip({ action: 'transferVip', playerId: p.id }),
-                      true,
-                    )
-                  }
-                >
-                  {label(`vip:${p.id}`, t.vip.transfer)}
-                </button>
-                <button
-                  type="button"
-                  className={`${styles.small} ${styles.danger} ${confirm === `kick:${p.id}` ? styles.confirming : ''}`}
-                  onClick={() =>
-                    act(
-                      `kick:${p.id}`,
-                      () => controller.vip({ action: 'kick', playerId: p.id }),
-                      true,
-                    )
-                  }
-                >
-                  {label(`kick:${p.id}`, t.vip.kick)}
-                </button>
-              </li>
-            ))}
-        </ul>
+        </section>
+        <section className={`${styles.section} ${styles.sectionPlayers}`}>
+          <h3 className={styles.label}>{t.vip.groupPlayers}</h3>
+          <ul className={styles.players} aria-label={t.vip.groupPlayers}>
+            {room.players
+              .filter((p) => p.id !== me.id)
+              .map((p) => (
+                <li key={p.id} className={styles.player}>
+                  <Avatar avatarId={p.avatarId} size={32} dim={!p.connected} />
+                  <span className={styles.playerName}>{p.name}</span>
+                  <button
+                    type="button"
+                    className={`${styles.small} ${confirm === `vip:${p.id}` ? styles.confirming : ''}`}
+                    onClick={() =>
+                      act(
+                        `vip:${p.id}`,
+                        () => controller.vip({ action: 'transferVip', playerId: p.id }),
+                        true,
+                      )
+                    }
+                  >
+                    {label(`vip:${p.id}`, t.vip.transfer)}
+                  </button>
+                  <button
+                    type="button"
+                    className={`${styles.small} ${styles.danger} ${confirm === `kick:${p.id}` ? styles.confirming : ''}`}
+                    onClick={() =>
+                      act(
+                        `kick:${p.id}`,
+                        () => controller.vip({ action: 'kick', playerId: p.id }),
+                        true,
+                      )
+                    }
+                  >
+                    <span aria-hidden>✕ </span>
+                    {label(`kick:${p.id}`, t.vip.kick)}
+                  </button>
+                </li>
+              ))}
+          </ul>
+        </section>
       </div>
     </div>
   );

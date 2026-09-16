@@ -122,6 +122,7 @@
 
 /* Countdown line during play: bar + seconds, danger-coloured in the last 5 s. */
 .deadline {
+  position: relative;
   display: flex;
   align-items: center;
   gap: var(--pb-space-3);
@@ -148,6 +149,53 @@
   color: var(--pb-danger);
 }
 
+/* An unanswered phone in the last 5 s (`data-urgent`, ControllerShell.tsx): the digits grow ×1.5
+   in place (transform, so the row never reflows) and beat once a second; "Pick now" sits over the
+   right end of the bar track, which is empty by then, so the bar and row keep their size. */
+[data-urgent] .seconds {
+  display: inline-block;
+  transform: scale(1.5);
+  transform-origin: right center;
+  animation: pb-pulse var(--pb-motion-pulse) ease-in-out infinite;
+}
+
+.cue {
+  display: none;
+  position: absolute;
+  right: calc(var(--pb-space-4) + 4.5ch + var(--pb-space-3));
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0 6px;
+  background: var(--pb-surface);
+  color: var(--pb-danger);
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+[data-urgent] .cue {
+  display: block;
+}
+
+/* One beat per second (≤ 1 flash/s); reduced motion sets --pb-motion-pulse to 0 → no pulse. */
+@keyframes pb-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-urgent] .seconds {
+    transform: none;
+  }
+}
+
 .banner {
   padding: var(--pb-space-2) var(--pb-space-4);
   background: var(--pb-surface-2);
@@ -165,11 +213,23 @@
   text-align: left;
 }
 
+/* A rejected input: three sideways jolts (global keyframe; 0 ms under reduced motion). */
+.shake {
+  animation: global(pb-shake) var(--pb-motion-base) var(--pb-ease) both;
+}
+
 .main {
   flex: 1;
   min-height: 0;
   display: flex;
   flex-direction: column;
+  transition: opacity var(--pb-motion-base) var(--pb-ease);
+}
+
+/* Paused: the screen goes quiet like the TV curtain (0.5 still reads ≈ 9:1 for the question text);
+   the `inert` attribute on <main> does the real work (no taps, no focus). */
+.pausedMain {
+  opacity: 0.5;
 }
 
 .toasts {

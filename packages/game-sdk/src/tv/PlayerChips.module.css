@@ -26,3 +26,30 @@
   min-width: 0;
   max-width: 100%;
 }
+
+/* A new chip pops into place (opt-in via `enter`; keys are player ids, so only a fresh mount pops). */
+.enter {
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+  transform-origin: center;
+}
+
+/* Empty seats: the outline of a `lg` chip (the size in force whenever seats are shown). */
+.seat {
+  --pb-chip-size: calc(var(--pb-font-h2) * 1.6);
+  display: inline-flex;
+  align-items: center;
+  width: 7em;
+  font-size: var(--pb-font-h2);
+  padding: var(--pb-space-1) var(--pb-space-4) var(--pb-space-1) var(--pb-space-1);
+  border-radius: 999px;
+  border: 2px dashed var(--pb-text-muted);
+  opacity: 0.45;
+}
+
+.seatDisc {
+  width: var(--pb-chip-size);
+  height: var(--pb-chip-size);
+  border-radius: 50%;
+  background: var(--pb-surface-2);
+  flex-shrink: 0;
+}

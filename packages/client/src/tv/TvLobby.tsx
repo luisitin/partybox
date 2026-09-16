@@ -1,4 +1,6 @@
 // Lobby on the stage: the join instructions (big) and everyone who is in. First player = VIP.
+// An empty lobby breathes (heading + waiting dots) and shows six dashed seats; a join pops its chip
+// into the first seat and bumps the count — so the eye lands on the chip, not a toast.
 import type { JSX } from 'react';
 import type { RoomSnapshot } from '@partybox/shared';
 import { BigText, PlayerChips, Stage } from '@partybox/game-sdk/ui';
@@ -15,11 +17,17 @@ export function TvLobby({ room }: TvLobbyProps): JSX.Element {
   const players = room?.players ?? [];
   const vip = players.find((p) => p.isVip);
   const full = room !== null && players.length >= room.capacity;
+  const empty = players.length === 0;
+  const seats = room ? Math.max(0, Math.min(6, room.capacity) - players.length) : 0;
   return (
     <Stage>
       <div className={styles.split}>
         <div className={`${styles.join} ${full ? styles.full : ''}`}>
-          <BigText level="h2" tone={full ? 'accent' : 'muted'}>
+          <BigText
+            level="h2"
+            tone={full ? 'accent' : 'muted'}
+            className={empty ? styles.scanIdle : ''}
+          >
             {full ? t.lobby.full : t.lobby.scan}
           </BigText>
           {info ? (
@@ -41,28 +49,37 @@ export function TvLobby({ room }: TvLobbyProps): JSX.Element {
           ) : null}
         </div>
         <div className={styles.players}>
-          <BigText level="h2">
+          <BigText key={players.length} level="h2" className={styles.count}>
             {room ? t.lobby.players(players.length, room.capacity) : t.connection.connecting}
           </BigText>
-          {players.length === 0 ? (
-            <p className="pb-muted">{t.lobby.waitingForFirst}</p>
-          ) : (
-            <PlayerChips
-              players={players.map((p) => ({
-                id: p.id,
-                name: p.name,
-                avatarId: p.avatarId,
-                connected: p.connected,
-                status: p.spectator ? 'spectator' : 'active',
-              }))}
-              vip={room?.vip}
-              botIds={players.filter((p) => p.bot).map((p) => p.id)}
-              layout="grid"
-              size={players.length > 8 ? 'md' : 'lg'}
-              align="start"
-            />
-          )}
-          {room && vip ? <p className="pb-muted">{t.lobby.waitingFor(vip.name)}</p> : null}
+          <PlayerChips
+            players={players.map((p) => ({
+              id: p.id,
+              name: p.name,
+              avatarId: p.avatarId,
+              connected: p.connected,
+              status: p.spectator ? 'spectator' : 'active',
+            }))}
+            vip={room?.vip}
+            botIds={players.filter((p) => p.bot).map((p) => p.id)}
+            layout="grid"
+            size={players.length > 8 ? 'md' : 'lg'}
+            align="start"
+            enter
+            seats={seats}
+          />
+          {empty ? (
+            <p className="pb-muted">
+              {t.lobby.waitingForFirst.replace(/…$/, '')}
+              {[0, 1, 2].map((i) => (
+                <span key={i} className={styles.dot} aria-hidden="true">
+                  .
+                </span>
+              ))}
+            </p>
+          ) : room && vip ? (
+            <p className="pb-muted">{t.lobby.waitingFor(vip.name)}</p>
+          ) : null}
         </div>
       </div>
     </Stage>

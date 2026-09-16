@@ -1,9 +1,13 @@
+/* Every screen rises on mount (the phone was the only surface that hard-cut). Fill `backwards`,
+   not `both`: a retained transform would make this frame the containing block for any future
+   position: fixed game element. Taps are never blocked (opacity does not gate pointer events). */
 .screen {
   display: flex;
   flex-direction: column;
   flex: 1;
   min-height: 0;
   overscroll-behavior: none;
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) backwards;
 }
 
 .title {

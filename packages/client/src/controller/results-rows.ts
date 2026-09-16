@@ -39,3 +39,20 @@ export function winnerLine(room: RoomSnapshot): string {
   if (names.length === 2) return t.results.winners(`${names[0]} & ${names[1]}`);
   return t.results.tieAmong(`${names[0]}, ${names[1]}`, names.length - 2);
 }
+
+/** My ranking entry — undefined for a spectator or a late joiner who has no row. */
+export function myRow(room: RoomSnapshot, meId: string): ScoreboardRow | undefined {
+  return scoreboardRows(room).find((r) => r.playerId === meId);
+}
+
+/** The winner sentence in the first person: "You win!" on the winner's own phone. */
+export function winnerLineFor(room: RoomSnapshot, meId: string): string {
+  const results = room.results;
+  if (!results) return '';
+  if (nobodyScored(room)) return t.results.over;
+  const ids = results.results.winnerIds;
+  if (!ids.includes(meId)) return winnerLine(room);
+  if (ids.length === 1) return t.results.youWin;
+  if (ids.length >= results.players.length) return t.results.tie;
+  return t.results.youTie;
+}

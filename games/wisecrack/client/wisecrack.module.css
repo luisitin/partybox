@@ -111,3 +111,12 @@
   display: flex;
   justify-content: center;
 }
+
+/* The leading number of "n / m" pops when it changes; min-width so 9 → 10 does not shift the text. */
+.countNum {
+  display: inline-block;
+  min-width: 2ch;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}

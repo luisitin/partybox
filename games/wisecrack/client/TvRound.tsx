@@ -41,7 +41,10 @@ export function TvAnswer({ view }: Props): JSX.Element {
         Two prompts are waiting on your phone.
       </BigText>
       <BigText level="h1" tone="accent">
-        {view.answeredCount} / {view.answersExpected} answers in
+        <span key={view.answeredCount} className={styles.countNum}>
+          {view.answeredCount}
+        </span>{' '}
+        / {view.answersExpected} answers in
       </BigText>
     </Stage>
   );

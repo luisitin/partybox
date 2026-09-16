@@ -11,6 +11,7 @@
 }
 
 .lostBanner {
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
   position: fixed;
   left: 50%;
   top: 50%;
@@ -138,10 +139,14 @@
   min-height: 0;
   display: flex;
   flex-direction: column;
+  transition: opacity var(--pb-motion-slow) var(--pb-ease);
 }
 
-/* The host toolbar row (ADR-031): part of the layout so the stage above it never has to dodge it. */
+/* The host toolbar row (ADR-031): part of the layout so the stage above it never has to dodge it.
+   Above the pause curtain (z 5) so Resume / Skip / End stay lit and clickable. */
 .footer {
+  position: relative;
+  z-index: 6;
   flex: 0 0 auto;
   display: flex;
   justify-content: flex-end;
@@ -151,6 +156,7 @@
 /* Bottom-left, inside the overscan margins, never over the focal point in the middle of the stage. */
 .toasts {
   position: fixed;
+  z-index: 6;
   left: var(--pb-overscan-x);
   bottom: var(--pb-space-3);
   align-items: flex-start;

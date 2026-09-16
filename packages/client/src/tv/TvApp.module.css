@@ -1,0 +1,10 @@
+/* One wrapper per room status (keyed): every status swap — selecting → playing, playing → results,
+   results → lobby, Home reset — rises in instead of cutting. Fill `backwards`, not `both`: a retained
+   transform would make this box the containing block for the fixed pause curtain (TvPlaying). */
+.swap {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) backwards;
+}

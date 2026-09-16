@@ -44,7 +44,10 @@ export function TvVote({ view }: Props): JSX.Element {
         ))}
       </div>
       <p className={styles.progress} aria-live="polite">
-        {view.votedCount} / {view.votersExpected} voted — pick the funnier one on your phone
+        <span key={view.votedCount} className={styles.countNum}>
+          {view.votedCount}
+        </span>{' '}
+        / {view.votersExpected} voted — pick the funnier one on your phone
       </p>
     </Stage>
   );

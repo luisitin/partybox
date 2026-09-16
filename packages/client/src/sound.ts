@@ -6,6 +6,8 @@ import type { SoundCue } from '@partybox/game-sdk/ui';
 export type { SoundCue };
 
 const MUTE_KEY = 'partybox:muted';
+/** The phone remembers its own mute (default on) separately from the TV's. */
+export const PHONE_MUTE_KEY = 'partybox:phone-sound';
 
 interface Note {
   freq: number;
@@ -18,6 +20,18 @@ interface Note {
 }
 
 const CUES: Record<SoundCue, Note[]> = {
+  // Sound enabled / unmuted (C5 → G5, ~250 ms): the TV proving its speakers work.
+  ready: [
+    { freq: 523, at: 0, dur: 0.08, type: 'triangle', gain: 0.12 },
+    { freq: 784, at: 0.09, dur: 0.16, type: 'triangle', gain: 0.12 },
+  ],
+  // A game begins (selecting → playing): a G-major arpeggio with the held tail `phase` lacks.
+  start: [
+    { freq: 392, at: 0, dur: 0.1, type: 'triangle' },
+    { freq: 523, at: 0.1, dur: 0.1, type: 'triangle' },
+    { freq: 659, at: 0.2, dur: 0.1, type: 'triangle' },
+    { freq: 784, at: 0.3, dur: 0.45, type: 'triangle', gain: 0.2 },
+  ],
   join: [
     { freq: 523, at: 0, dur: 0.08 },
     { freq: 659, at: 0.09, dur: 0.12 },
@@ -25,21 +39,36 @@ const CUES: Record<SoundCue, Note[]> = {
   phase: [
     { freq: 392, at: 0, dur: 0.1, type: 'triangle' },
     { freq: 523, at: 0.1, dur: 0.1, type: 'triangle' },
-    { freq: 784, at: 0.2, dur: 0.18, type: 'triangle' },
+    { freq: 784, at: 0.2, dur: 0.12, type: 'triangle' },
   ],
-  countdown: [{ freq: 880, at: 0, dur: 0.05, type: 'square', gain: 0.12 }],
+  // Pitched up per second via `countdownSemitones` (a major scale rising to the fifth).
+  countdown: [{ freq: 880, at: 0, dur: 0.06, type: 'triangle', gain: 0.12 }],
   // Half-gain countdown for the phone's 5 s edge.
   tick: [{ freq: 880, at: 0, dur: 0.05, type: 'square', gain: 0.06 }],
+  // Pickup, then resolve (~0.7 s): two soft E4 taps, a B4+E5 lift, a held B5+E6 chord.
   reveal: [
-    { freq: 440, at: 0, dur: 0.12, type: 'sawtooth', gain: 0.1 },
-    { freq: 554, at: 0.12, dur: 0.12, type: 'sawtooth', gain: 0.1 },
-    { freq: 659, at: 0.24, dur: 0.3, type: 'sawtooth', gain: 0.1 },
+    { freq: 330, at: 0, dur: 0.09, type: 'triangle', gain: 0.14 },
+    { freq: 330, at: 0.11, dur: 0.09, type: 'triangle', gain: 0.14 },
+    { freq: 494, at: 0.3, dur: 0.14, type: 'sawtooth', gain: 0.09 },
+    { freq: 659, at: 0.3, dur: 0.14, type: 'triangle', gain: 0.1 },
+    { freq: 988, at: 0.44, dur: 0.26, type: 'sawtooth', gain: 0.08 },
+    { freq: 1319, at: 0.44, dur: 0.26, type: 'sine', gain: 0.1 },
   ],
   win: [
     { freq: 523, at: 0, dur: 0.12 },
     { freq: 659, at: 0.13, dur: 0.12 },
     { freq: 784, at: 0.26, dur: 0.12 },
     { freq: 1047, at: 0.4, dur: 0.45 },
+  ],
+  // The VIP pauses: A4 → E4 settling. Resume plays `phase` (the room is back on).
+  pause: [
+    { freq: 440, at: 0, dur: 0.12, type: 'triangle', gain: 0.12 },
+    { freq: 330, at: 0.14, dur: 0.24, type: 'triangle', gain: 0.12 },
+  ],
+  // A player is kicked, leaves, or a bot is removed: the mirror of `join`.
+  leave: [
+    { freq: 659, at: 0, dur: 0.08 },
+    { freq: 523, at: 0.09, dur: 0.14 },
   ],
   fanfare: [
     { freq: 523, at: 0, dur: 0.12 },
@@ -107,11 +136,35 @@ const CUES: Record<SoundCue, Note[]> = {
   daub: [{ freq: 1200, at: 0, dur: 0.03, type: 'triangle', gain: 0.1 }],
 };
 
+/** 5 s → 880 Hz, 4 → 988, 3 → 1109, 2 → 1175, 1 → 1319: A major up to the fifth. */
+export const COUNTDOWN_STEPS = [7, 5, 4, 2, 0] as const;
+export function countdownSemitones(secondsLeft: number): number {
+  return COUNTDOWN_STEPS[secondsLeft - 1] ?? 0;
+}
+
+/** Successive joins step up a scale and wrap (16 identical blips felt like a fault). */
+export const JOIN_STEPS = [0, 2, 4, 5, 7] as const;
+export function joinSemitones(playerCount: number): number {
+  return JOIN_STEPS[Math.max(0, playerCount - 1) % JOIN_STEPS.length] ?? 0;
+}
+
+export interface PlayOptions {
+  /** Transpose every note of the cue (12 = one octave up). */
+  semitones?: number;
+  /** Do not touch `lastPlayedAt`: a quiet cue must never suppress the shell's phase chime. */
+  quiet?: boolean;
+}
+
+/** One lock-in = one soft tick, each higher than the last (whole tones, capped at the 5th). */
+export function lockSemitones(lockedCount: number): number {
+  return Math.min(Math.max(lockedCount - 1, 0), 4) * 2;
+}
+
 export interface SoundEngine {
   /** Create/resume the AudioContext. Call from a click/tap handler. */
   enable(): Promise<boolean>;
   enabled(): boolean;
-  play(cue: SoundCue): void;
+  play(cue: SoundCue, opts?: PlayOptions): void;
   /** performance.now() of the last cue actually started — lets the shell skip a generic cue
    *  when the game just played a specific one in the same commit. */
   lastPlayedAt(): number;
@@ -119,12 +172,22 @@ export interface SoundEngine {
   setMuted(muted: boolean): void;
 }
 
-export function createSoundEngine(): SoundEngine {
+export interface SoundEngineOptions {
+  /** Overall level (0–1) applied to every cue: the phone sits at 0.35 so it never competes
+   *  with the TV. Omitted = unity (the TV and /preview). */
+  master?: number;
+  /** localStorage key for the persisted mute; the TV and the phone remember theirs separately. */
+  muteKey?: string;
+}
+
+export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine {
+  const muteKey = options.muteKey ?? MUTE_KEY;
   let ctx: AudioContext | null = null;
+  let master: GainNode | null = null;
   let muted = false;
   let lastPlayedAt = -Infinity;
   try {
-    muted = localStorage.getItem(MUTE_KEY) === '1';
+    muted = localStorage.getItem(muteKey) === '1';
   } catch {
     /* ignore */
   }
@@ -137,28 +200,37 @@ export function createSoundEngine(): SoundEngine {
           (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
         if (!Ctor) return false;
         ctx = ctx ?? new Ctor();
-        if (ctx.state === 'suspended') await ctx.resume();
+        if (options.master !== undefined && !master) {
+          master = ctx.createGain();
+          master.gain.value = options.master;
+          master.connect(ctx.destination);
+        }
+        // Not only 'suspended': iOS Safari reports 'interrupted' after a lock or a background
+        // tab, which a phone does far more often than a TV.
+        if (ctx.state !== 'running') await ctx.resume();
         return ctx.state === 'running';
       } catch {
         return false;
       }
     },
     enabled: () => ctx?.state === 'running',
-    play(cue) {
-      lastPlayedAt = performance.now();
+    play(cue, opts) {
+      if (!opts?.quiet) lastPlayedAt = performance.now();
       if (!ctx || muted || ctx.state !== 'running') return;
       const t0 = ctx.currentTime;
+      const k = 2 ** ((opts?.semitones ?? 0) / 12);
       for (const note of CUES[cue]) {
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
         osc.type = note.type ?? 'sine';
-        osc.frequency.setValueAtTime(note.freq, t0 + note.at);
-        if (note.to) osc.frequency.exponentialRampToValueAtTime(note.to, t0 + note.at + note.dur);
+        osc.frequency.setValueAtTime(note.freq * k, t0 + note.at);
+        if (note.to)
+          osc.frequency.exponentialRampToValueAtTime(note.to * k, t0 + note.at + note.dur);
         const level = note.gain ?? 0.18;
         gain.gain.setValueAtTime(0.0001, t0 + note.at);
         gain.gain.exponentialRampToValueAtTime(level, t0 + note.at + 0.01);
         gain.gain.exponentialRampToValueAtTime(0.0001, t0 + note.at + note.dur);
-        osc.connect(gain).connect(ctx.destination);
+        osc.connect(gain).connect(master ?? ctx.destination);
         osc.start(t0 + note.at);
         osc.stop(t0 + note.at + note.dur + 0.02);
       }
@@ -168,7 +240,7 @@ export function createSoundEngine(): SoundEngine {
     setMuted(value) {
       muted = value;
       try {
-        localStorage.setItem(MUTE_KEY, value ? '1' : '0');
+        localStorage.setItem(muteKey, value ? '1' : '0');
       } catch {
         /* ignore */
       }

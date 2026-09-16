@@ -6,12 +6,16 @@ import { createContext, useContext } from 'react';
 import type { JSX, ReactNode } from 'react';
 
 export const SOUND_CUES = [
+  'ready',
+  'start',
   'join',
   'phase',
   'countdown',
   'tick',
   'reveal',
   'win',
+  'pause',
+  'leave',
   'fanfare',
   'jackpot',
   'bust',

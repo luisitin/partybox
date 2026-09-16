@@ -6,5 +6,5 @@ export const clientModule: GameClientModule = {
   id: 'lightning-round',
   Tv: lazy(() => import('./Tv').then((m) => ({ default: m.Tv }))),
   Controller: lazy(() => import('./Controller').then((m) => ({ default: m.Controller }))),
-  sounds: { reveal: 'reveal' },
+  sounds: { reveal: 'reveal', wager: 'wager' },
 };

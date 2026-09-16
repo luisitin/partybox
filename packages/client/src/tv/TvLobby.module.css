@@ -65,3 +65,28 @@
   flex-direction: column;
   gap: var(--pb-space-5);
 }
+
+/* The count bumps when it changes (keyed on the player count); no opacity change, it stays readable. */
+.count {
+  animation: global(pb-bump) var(--pb-motion-base) var(--pb-ease) both;
+  transform-origin: left center;
+}
+
+/* Idle cues while nobody has joined (both unmount on the first join). The keyframes only exist
+   under prefers-reduced-motion: no-preference, so a reduced-motion TV shows the static text. */
+.scanIdle {
+  animation: global(pb-breathe) 3s ease-in-out infinite;
+}
+
+.dot {
+  display: inline-block;
+  animation: global(pb-dot) 1.2s ease-in-out infinite;
+}
+
+.dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.dot:nth-child(3) {
+  animation-delay: 0.4s;
+}

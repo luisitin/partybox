@@ -56,6 +56,11 @@
   border-color: var(--pb-danger);
 }
 
+/* A rejected join: three sideways jolts (global keyframe; 0 ms under reduced motion). */
+.shake {
+  animation: global(pb-shake) var(--pb-motion-base) var(--pb-ease) both;
+}
+
 .error {
   font-size: var(--pb-font-caption);
   font-weight: 700;

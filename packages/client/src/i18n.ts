@@ -1,5 +1,14 @@
 // Every user-facing string in the core screens (BL-007 localisation hook). Keep the voice short,
 // friendly and consistent; games own their own copy.
+
+/** 1st, 2nd, 3rd, 4th … 11th–13th, 21st. */
+export function ordinal(n: number): string {
+  const mod100 = n % 100;
+  if (mod100 >= 11 && mod100 <= 13) return `${n}th`;
+  const suffix = { 1: 'st', 2: 'nd', 3: 'rd' }[n % 10] ?? 'th';
+  return `${n}${suffix}`;
+}
+
 export const t = {
   appName: 'PartyBox',
   appShort: 'PB',
@@ -11,6 +20,8 @@ export const t = {
     code: 'Room code',
     codePlaceholder: 'ABCD',
     submit: 'Join',
+    needName: 'Enter a name to join',
+    needCode: 'Enter the 4-letter code',
     joining: 'Joining…',
     tryAgain: 'Try another.',
     resuming: 'Reconnecting…',
@@ -59,6 +70,10 @@ export const t = {
     newGame: 'New game',
     lobby: 'Back to lobby',
     waitingForVip: 'Waiting for the VIP…',
+    waitingFor: (name: string) => `Waiting for ${name}…`,
+    youWin: 'You win! 🏆',
+    youTie: 'You tie for first! 🏆',
+    yourPlace: (rank: number, score: number) => `You finished ${ordinal(rank)} · ${score} pts`,
   },
   vip: {
     menu: 'VIP menu',
@@ -73,6 +88,13 @@ export const t = {
     close: 'Close',
     confirm: (action: string) => `Confirm: ${action}`,
     badge: 'VIP',
+    groupGame: 'Game',
+    groupRoom: 'Room',
+    groupPlayers: 'Players',
+  },
+  paused: {
+    other: (name: string) => `Paused — ${name} will resume the game`,
+    vip: 'Paused — open ★ VIP and tap Resume',
   },
   spectator: {
     title: 'Waiting for the next game',
@@ -85,9 +107,16 @@ export const t = {
     lostServer: 'Lost the PartyBox server — reconnecting…',
     seconds: (n: number) => `${n} s`,
     secondsLeft: (n: number) => `${n} seconds left`,
+    pickNow: 'Pick now',
   },
   theme: {
     title: 'Theme',
+  },
+  controller: {
+    phoneSound: 'Sounds on this phone',
+    vibration: 'Vibration',
+    on: 'On',
+    off: 'Off',
   },
   host: {
     title: 'Host',
@@ -101,6 +130,8 @@ export const t = {
     tapHint: 'the party works without it',
     mute: 'Mute',
     unmute: 'Unmute',
+    enableSound: 'Sound is off — tap to enable',
+    soundOn: 'Sound on',
     fullscreen: 'Fullscreen',
     paused: 'Paused',
     pausedHint: (name: string) => `${name} can resume from the VIP menu`,

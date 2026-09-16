@@ -90,15 +90,46 @@
   min-width: 0;
 }
 
+/* A fixed slot: empty and invisible until there is a glyph, then it scales in (no layout shift). */
 .glyph {
-  font-weight: 800;
-  font-size: 1.15em;
+  display: inline-grid;
+  place-items: center;
+  width: 1.3em;
+  min-width: 1.3em;
+  height: 1.3em;
   line-height: 1;
+  font-weight: 800;
   color: var(--pb-text-muted);
+  opacity: 0;
+  transform: scale(0.6);
+  transform-origin: 50% 50%;
+  transition:
+    opacity var(--pb-motion-fast) var(--pb-ease),
+    transform var(--pb-motion-fast) var(--pb-ease);
 }
 
+.glyph.shown {
+  opacity: 1;
+  transform: none;
+}
+
+/* Locked in: a solid success disc that pops, plus an inner ring on the whole pill (box-shadow,
+   not outline, so it coexists with .active's outline when a game passes activeIds). */
 .ok {
-  color: var(--pb-accent-3);
+  border-radius: 50%;
+  background: var(--pb-accent-3);
+  color: var(--pb-on-accent);
+  font-size: 1em;
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.locked {
+  box-shadow: inset 0 0 0 2px var(--pb-accent-3);
+}
+
+/* Reconnecting: the ⟳ actually turns (pb-spin is defined only under no-preference). */
+.spin {
+  animation: global(pb-spin) 2s linear infinite;
 }
 
 .score {

@@ -15,8 +15,17 @@
   padding: var(--pb-space-4);
   border-radius: var(--pb-radius);
   background: var(--pb-surface);
-  border: 3px solid transparent;
+  /* --pb-border is transparent except in High Contrast, where every card gets a white edge and
+     the selected one turns accent + ✓, so the state never rests on colour alone. */
+  border: 3px solid var(--pb-border);
   text-align: left;
+  transition:
+    transform var(--pb-motion-fast) var(--pb-ease),
+    border-color var(--pb-motion-fast) var(--pb-ease);
+}
+
+.card:active {
+  transform: scale(0.98);
 }
 
 .selected {
@@ -24,9 +33,38 @@
   background: var(--pb-surface-2);
 }
 
+/* Title + a 28 px ✓ disc: a long title wraps under the disc instead of colliding with it. */
+.cardHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--pb-space-3);
+}
+
 .cardTitle {
+  min-width: 0;
   font-size: var(--pb-font-h2);
   font-weight: 800;
+}
+
+.check {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: var(--pb-font-body);
+  font-weight: 900;
+  line-height: 1;
+  border: 2px solid var(--pb-text-muted);
+  color: transparent;
+}
+
+.selected .check {
+  background: var(--pb-accent);
+  border-color: var(--pb-accent);
+  color: var(--pb-on-accent);
 }
 
 .cardTagline {

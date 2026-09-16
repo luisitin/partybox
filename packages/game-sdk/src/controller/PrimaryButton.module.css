@@ -11,15 +11,20 @@
     opacity var(--pb-motion-fast) var(--pb-ease);
 }
 
-.button:active:not(:disabled) {
+.button:active:not([aria-disabled='true']) {
   transform: scale(0.97);
 }
 
 /* Disabled reads as "not yet", not as a dimmer version of the action (label contrast 6.9:1). */
-.button:disabled {
+.button[aria-disabled='true'] {
   background: var(--pb-surface-2);
   color: var(--pb-text-muted);
   cursor: default;
+}
+
+/* A tap on a disabled button: three sideways jolts (global keyframe; 0 ms under reduced motion). */
+.shake {
+  animation: global(pb-shake) var(--pb-motion-base) var(--pb-ease);
 }
 
 .accent {
@@ -44,7 +49,26 @@
 }
 
 .done,
-.done:disabled {
+.done[aria-disabled='true'] {
   background: var(--pb-accent-3);
   color: var(--pb-on-accent);
+}
+
+/* The last 5 s for an unanswered phone (`data-urgent` on the controller shell): a danger outline
+   and one nudge when the attribute lands — no JS timer. A button disabled by an empty answer gets
+   nothing (there is nothing to press yet); the header cue and haptic still cover that player. */
+[data-urgent] .button.accent:not([aria-disabled='true']) {
+  outline: 3px solid var(--pb-danger);
+  outline-offset: 2px;
+  animation: pb-nudge var(--pb-motion-slow) var(--pb-ease) 1;
+}
+
+@keyframes pb-nudge {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.03);
+  }
 }

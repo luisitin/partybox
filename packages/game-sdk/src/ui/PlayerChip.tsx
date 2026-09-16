@@ -47,12 +47,14 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
     size = 'md',
   } = props;
   const glyph = connected ? GLYPH[status] : { text: '⟳', label: 'reconnecting' };
+  const locked = status === 'submitted' && connected;
   const classes = [
     styles.chip,
     styles[size],
     active ? styles.active : '',
     !connected ? styles.off : '',
     status === 'spectator' ? styles.spectator : '',
+    locked ? styles.locked : '',
   ].join(' ');
   return (
     <div
@@ -78,14 +80,13 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
           ★ VIP
         </span>
       ) : null}
-      {glyph.text ? (
-        <span
-          className={`${styles.glyph} ${status === 'submitted' && connected ? styles.ok : ''}`}
-          aria-hidden
-        >
-          {glyph.text}
-        </span>
-      ) : null}
+      {/* Always in the layout (a reserved slot), so a ✓ landing never shoves the neighbours. */}
+      <span
+        className={`${styles.glyph} ${glyph.text ? styles.shown : ''} ${locked ? styles.ok : ''} ${!connected ? styles.spin : ''}`}
+        aria-hidden
+      >
+        {glyph.text}
+      </span>
       {score !== undefined ? <span className={styles.score}>{score}</span> : null}
       {onRemove ? (
         <button type="button" className={styles.remove} onClick={onRemove} aria-label={removeLabel}>

@@ -74,7 +74,7 @@ export function Controller({
 
   if (view.phaseId === 'intro') {
     return (
-      <Screen title={`Round ${view.round} of ${view.totalRounds}`}>
+      <Screen key="intro" title={`Round ${view.round} of ${view.totalRounds}`}>
         <div className={styles.intro}>
           <PatternIcon cells={view.patternCells} size={72} />
           <div>
@@ -106,7 +106,10 @@ export function Controller({
           ? 'Next number soon…'
           : 'BINGO!';
     return (
+      // One node for play + check: a claim check must not re-animate the card (freeDaubed lives
+      // in this Controller, above the Screen, so it survives either way).
       <Screen
+        key="play"
         footer={
           <PrimaryButton
             tone={mine ? 'danger' : 'accent'}
@@ -157,6 +160,7 @@ export function Controller({
     const claim = view.claim;
     return (
       <Screen
+        key="bingo"
         title={
           iWon
             ? `BINGO! You win round ${view.round}`
@@ -179,7 +183,7 @@ export function Controller({
 
   if (view.phaseId === 'scoreboard') {
     return (
-      <Screen title="Rounds won">
+      <Screen key="scoreboard" title="Rounds won">
         <Scoreboard rows={rows(view)} compact highlightId={me.id} noTrophy />
         <p className={styles.hint}>
           Next: round {view.round + 1} — {view.patterns[view.round] ?? ''}
@@ -191,6 +195,7 @@ export function Controller({
   const myRank = view.standings.find((s) => s.playerId === me.id)?.rank ?? null;
   return (
     <Screen
+      key="done"
       title={myRank === 1 ? 'You won!' : myRank ? `You finished #${myRank}` : 'Thanks for playing'}
     >
       <Scoreboard rows={rows(view)} compact highlightId={me.id} />
