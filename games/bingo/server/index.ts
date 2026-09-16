@@ -38,6 +38,8 @@ export function readSettings(raw: RawSettings): Settings {
     patterns,
     callSeconds: Math.min(12, Math.max(3, Number(raw['callSeconds'] ?? 6))),
     spicy: raw['spicy'] === true,
+    showBoard: raw['showBoard'] !== false,
+    showPrevious: raw['showPrevious'] !== false,
   };
 }
 

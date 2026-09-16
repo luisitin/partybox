@@ -191,6 +191,17 @@
   gap: var(--pb-space-3);
 }
 
+/* No board (VIP toggle): the ball gets the stage back at full size. */
+.roomy .callBig .letter {
+  width: 220px;
+  height: 220px;
+  font-size: 150px;
+}
+
+.roomy .callBig .number {
+  font-size: 320px;
+}
+
 .boardRow {
   display: flex;
   align-items: center;

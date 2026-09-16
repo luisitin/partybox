@@ -48,6 +48,9 @@ interface Common {
 export interface BingoTvView extends TvView, Common {
   /** Every number called so far this round, in call order — the TV's hall board (review-loop #1). */
   called: number[];
+  /** VIP toggles at game selection: the board and the previous call are optional on the TV. */
+  showBoard: boolean;
+  showPrevious: boolean;
 }
 
 export interface BingoControllerView extends ControllerView, Common {
@@ -116,6 +119,8 @@ export function tvView(state: State, gameId: string): BingoTvView {
     timerMode: 'quiet',
     ...common(state),
     called: calledNumbers(state),
+    showBoard: state.settings.showBoard,
+    showPrevious: state.settings.showPrevious,
   };
 }
 

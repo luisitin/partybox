@@ -92,6 +92,20 @@
       "step": 1
     },
     {
+      "key": "showBoard",
+      "label": "Called board",
+      "description": "Show every number called so far on the TV",
+      "type": "boolean",
+      "default": true
+    },
+    {
+      "key": "showPrevious",
+      "label": "Previous number",
+      "description": "Show the number before this one under the call",
+      "type": "boolean",
+      "default": true
+    },
+    {
       "key": "spicy",
       "label": "Cheeky caller",
       "description": "Cheekier nicknames for some numbers (PG-13)",

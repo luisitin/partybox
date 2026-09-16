@@ -18,6 +18,9 @@ export interface Settings {
   patterns: Pattern[];
   callSeconds: number;
   spicy: boolean;
+  /** TV extras the VIP can switch off at game selection (review-loop #2, owner request). */
+  showBoard: boolean;
+  showPrevious: boolean;
 }
 
 /** What the TV shows while a claim is checked (or celebrated). Computed once, never re-evaluated. */

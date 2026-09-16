@@ -38,7 +38,9 @@
     "rounds": 3,
     "patterns": ["line", "corners", "x"],
     "callSeconds": 6,
-    "spicy": false
+    "spicy": false,
+    "showBoard": true,
+    "showPrevious": true
   },
   "round": {
     "number": 3,

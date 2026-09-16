@@ -10,5 +10,6 @@ export const contractConfig = {
   settingsVariants: [
     { rounds: 1, round1: 'blackout', callSeconds: 3 },
     { rounds: 2, round1: 'corners', round2: 'x', callSeconds: 4, spicy: true },
+    { rounds: 1, showBoard: false, showPrevious: false },
   ],
 };

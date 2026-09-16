@@ -136,7 +136,7 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
 
   if (view.phaseId === 'play') {
     return (
-      <Stage center className={styles.playStage}>
+      <Stage center className={`${styles.playStage} ${view.showBoard ? '' : styles.roomy}`}>
         <p className={styles.kicker}>
           {roundLabel} · {view.patternLabel} · call {view.callIndex} of 75
         </p>
@@ -147,11 +147,15 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
             <BigText level="h1">{view.current.call}</BigText>
           </div>
         ) : null}
-        <div className={styles.previousRow}>
-          <span className={styles.previousLabel}>{view.previous ? 'Before that' : ' '}</span>
-          {view.previous ? <Call call={view.previous} /> : null}
-        </div>
-        <CalledBoard called={view.called} current={view.current?.number ?? null} />
+        {view.showPrevious ? (
+          <div className={styles.previousRow}>
+            <span className={styles.previousLabel}>{view.previous ? 'Before that' : ' '}</span>
+            {view.previous ? <Call call={view.previous} /> : null}
+          </div>
+        ) : null}
+        {view.showBoard ? (
+          <CalledBoard called={view.called} current={view.current?.number ?? null} />
+        ) : null}
       </Stage>
     );
   }

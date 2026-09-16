@@ -79,6 +79,8 @@ exactly like humans.
 | `rounds`          | number  | 3                                | 1–5                           | Rounds played; fresh cards and deck each round.             |
 | `round1`…`round5` | select  | line, corners, x, line, blackout | line / corners / x / blackout | The pattern for that round (only the first `rounds` apply). |
 | `callSeconds`     | number  | 6                                | 3–12                          | Seconds each number stays up before the next call.          |
+| `showBoard`       | boolean | true                             | —                             | TV shows the hall board of every number called so far.      |
+| `showPrevious`    | boolean | true                             | —                             | TV shows the previous number under the current call.        |
 | `spicy`           | boolean | false                            | —                             | Cheekier caller nicknames for some numbers (PG-13).         |
 
 Patterns: **line** = any full row, column or diagonal (FREE counts); **corners** = the four corners;
