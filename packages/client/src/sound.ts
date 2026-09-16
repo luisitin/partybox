@@ -195,6 +195,10 @@ export interface SoundEngine {
   /** performance.now() of the last cue actually started — lets the shell skip a generic cue
    *  when the game just played a specific one in the same commit. */
   lastPlayedAt(): number;
+  /** A recorded clip under /sfx (a bingo call): decoded once, scheduled exactly, mute-aware. */
+  clip(src: string, opts?: { gain?: number; delayMs?: number }): void;
+  /** Stop every clip now (a claim interrupts the caller). */
+  hushClips(): void;
   muted(): boolean;
   setMuted(muted: boolean): void;
 }
@@ -214,6 +218,7 @@ export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine
   let muted = false;
   let lastPlayedAt = -Infinity;
   let lastCue: { cue: SoundCue; at: number } | null = null;
+  let lastClip: { src: string; at: number } | null = null;
   const buffers = new Map<string, Promise<AudioBuffer | null>>();
   const buffer = (src: string): Promise<AudioBuffer | null> => {
     let pending = buffers.get(src);
@@ -226,12 +231,17 @@ export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine
     }
     return pending;
   };
-  const playSample = (sample: Sample, t0: number): void => {
+  const clips = new Set<AudioBufferSourceNode>();
+  const playSample = (sample: Sample, t0: number, track = false): void => {
     void buffer(sample.src).then((buf) => {
       if (!buf || !ctx || muted || ctx.state !== 'running') return;
       const source = ctx.createBufferSource();
       const gain = ctx.createGain();
       source.buffer = buf;
+      if (track) {
+        clips.add(source);
+        source.addEventListener('ended', () => clips.delete(source));
+      }
       const start = Math.max(ctx.currentTime, t0 + sample.at);
       gain.gain.setValueAtTime(sample.gain, start);
       if (sample.fadeAt !== undefined) {
@@ -309,6 +319,31 @@ export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine
       }
     },
     lastPlayedAt: () => lastPlayedAt,
+    clip(src, opts) {
+      const now = performance.now();
+      if (lastClip && lastClip.src === src && now - lastClip.at < 40) return;
+      lastClip = { src, at: now };
+      const name = src.split('/').pop() ?? src;
+      trace('clip', { src: name, muted, ready: ctx?.state === 'running' });
+      // The audio trace reads calls as `speak` events (what the caller used to emit).
+      if (name.match(/^[bingo]\d+\.wav$/)) trace('speak', { text: name, voice: 'clip' });
+      if (!ctx || muted || ctx.state !== 'running') return;
+      playSample(
+        { src, at: (opts?.delayMs ?? 0) / 1000, gain: opts?.gain ?? 1 },
+        ctx.currentTime,
+        true,
+      );
+    },
+    hushClips() {
+      for (const s of clips) {
+        try {
+          s.stop();
+        } catch {
+          /* already ended */
+        }
+      }
+      clips.clear();
+    },
     muted: () => muted,
     setMuted(value) {
       muted = value;

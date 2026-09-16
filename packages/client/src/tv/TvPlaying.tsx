@@ -15,6 +15,7 @@ import { GameErrorBoundary } from '../controller/GameErrorBoundary';
 import { clientGames } from '../games.generated';
 import { t } from '../i18n';
 import { countdownSemitones } from '../sound';
+import type { MusicEngine } from '../music';
 import type { SoundCue, SoundEngine } from '../sound';
 import styles from './TvPlaying.module.css';
 
@@ -22,6 +23,8 @@ export interface TvPlayingProps {
   room: RoomSnapshot;
   view: PushedView<TvView> | null;
   audio: SoundEngine;
+  /** The stage's background music: a cheer ducks it. */
+  music?: MusicEngine;
 }
 
 /** Shows its children only after a short wait: a game chunk that loads fast never flashes a
@@ -36,7 +39,7 @@ function DelayedFallback({ children }: { children: ReactNode }): JSX.Element | n
   return show ? <>{children}</> : null;
 }
 
-export function TvPlaying({ room, view, audio }: TvPlayingProps): JSX.Element {
+export function TvPlaying({ room, view, audio, music }: TvPlayingProps): JSX.Element {
   // The curtain stays mounted while it fades out after a resume ("adjust state during render":
   // the paused flag flipping true → false starts the leave; animationend or 400 ms clears it).
   const paused = view?.paused ?? false;
@@ -57,7 +60,19 @@ export function TvPlaying({ room, view, audio }: TvPlayingProps): JSX.Element {
     (s: number) => audio.play('countdown', { semitones: countdownSemitones(s), quiet: true }),
     [audio],
   );
-  const play = useCallback((cue: SoundCue) => audio.play(cue), [audio]);
+  const play = useCallback(
+    (cue: SoundCue) => {
+      // The winner moment sits on top of the music, not inside it.
+      if (cue === 'cheer') music?.duck(9000);
+      audio.play(cue);
+    },
+    [audio, music],
+  );
+  const clip = useCallback(
+    (src: string, opts?: { gain?: number; delayMs?: number }) => audio.clip(src, opts),
+    [audio],
+  );
+  const hush = useCallback(() => audio.hushClips(), [audio]);
   const module = room.selectedGameId ? clientGames[room.selectedGameId] : undefined;
   const gameName = room.games.find((g) => g.id === room.selectedGameId)?.name ?? '';
   const vip = room.players.find((p) => p.id === (view?.vip ?? room.vip));
@@ -131,7 +146,7 @@ export function TvPlaying({ room, view, audio }: TvPlayingProps): JSX.Element {
                 </DelayedFallback>
               }
             >
-              <SoundProvider play={play}>
+              <SoundProvider play={play} clip={clip} hush={hush}>
                 <GameTv view={view} />
               </SoundProvider>
             </Suspense>

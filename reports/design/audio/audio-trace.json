@@ -28,7 +28,7 @@
       "scenario": "A",
       "check": "selecting keeps the lobby music (no plan change), a status-swap cue only",
       "pass": true,
-      "detail": "cues=none; playing=[{\"track\":\"local-forecast-elevator.mp3\",\"vol\":0.35,\"t\":4.3}]"
+      "detail": "cues=none; playing=[{\"track\":\"local-forecast-elevator.mp3\",\"vol\":0.35,\"t\":4.4}]"
     },
     {
       "scenario": "B",
@@ -130,7 +130,7 @@
       "scenario": "D",
       "check": "exactly one track audible after the switch",
       "pass": true,
-      "detail": "[{\"track\":\"wallpaper.mp3\",\"vol\":0.2,\"t\":2.9}]"
+      "detail": "[{\"track\":\"wallpaper.mp3\",\"vol\":0.2,\"t\":3}]"
     },
     {
       "scenario": "D",
@@ -140,9 +140,9 @@
     },
     {
       "scenario": "D",
-      "check": "two calls → two boings and two spoken calls in Zira",
+      "check": "two calls → two boings and two recorded calls",
       "pass": true,
-      "detail": "cues=call,call; spoken=B, 9. | B, 8. voice=Microsoft Zira - English (United States)"
+      "detail": "cues=call,call; spoken=b9.wav | b8.wav voice=clip"
     },
     {
       "scenario": "D",
@@ -152,21 +152,21 @@
     },
     {
       "scenario": "D",
-      "check": "wrong claim → caller hushed at once, buzzer after the card lands, no chime on entry, nothing spoken",
+      "check": "wrong claim → caller hushed at once, buzzer at the verdict (after the reveal), no chime on entry, nothing spoken",
       "pass": true,
-      "detail": "events=hush,ss:cancel,silence,hush,ss:cancel,wrong"
+      "detail": "events=hush,silence,hush,wrong"
     },
     {
       "scenario": "D",
       "check": "music keeps playing through the check",
       "pass": true,
-      "detail": "[{\"track\":\"wallpaper.mp3\",\"vol\":0.2,\"t\":8.9}]"
+      "detail": "[{\"track\":\"wallpaper.mp3\",\"vol\":0.2,\"t\":10.5}]"
     },
     {
       "scenario": "D",
       "check": "play resumes → the next number is spoken",
       "pass": true,
-      "detail": "spoken=N, 34."
+      "detail": "spoken=n34.wav"
     },
     {
       "scenario": "D",
@@ -178,13 +178,13 @@
       "scenario": "D",
       "check": "resume → phase chime, music resumes",
       "pass": true,
-      "detail": "cues=phase playing=[{\"track\":\"wallpaper.mp3\",\"vol\":0.2,\"t\":12.3}]"
+      "detail": "cues=phase playing=[{\"track\":\"wallpaper.mp3\",\"vol\":0.2,\"t\":13.9}]"
     },
     {
       "scenario": "D",
-      "check": "BINGO → caller hushed, cheer once after the card lands (~1.3 s), no chime on entry, music continues",
+      "check": "BINGO → caller hushed, cheer once at the verdict (~3.3 s, after every cell has turned), no chime on entry, music continues",
       "pass": true,
-      "detail": "cues=silence,cheer cheer@+1306ms playing=[{\"track\":\"wallpaper.mp3\",\"vol\":0.2,\"t\":19}]"
+      "detail": "cues=silence,cheer cheer@+3311ms playing=[{\"track\":\"wallpaper.mp3\",\"vol\":0.06,\"t\":22.5}]"
     },
     {
       "scenario": "D",
@@ -196,7 +196,7 @@
       "scenario": "D",
       "check": "keep going → play resumes, next number spoken, no start/phase chime",
       "pass": true,
-      "detail": "cues=lock,call spoken=N, 44."
+      "detail": "cues=lock,call spoken=n44.wav"
     },
     {
       "scenario": "D",
@@ -214,7 +214,7 @@
       "scenario": "E",
       "check": "Home mid-call → speech cancelled, Bingo music out, lobby music in, one track audible",
       "pass": true,
-      "detail": "events=ss:cancel,music:plan,ss:cancel,music:plan,music:start,music:stop playing=[{\"track\":\"local-forecast-elevator.mp3\",\"vol\":0.35,\"t\":2.4}]"
+      "detail": "events=ss:cancel,music:plan,ss:cancel,music:plan,music:start,music:stop playing=[{\"track\":\"bossa-antigua.mp3\",\"vol\":0.35,\"t\":2.4}]"
     },
     {
       "scenario": "E",
@@ -226,7 +226,7 @@
       "scenario": "F",
       "check": "Wisecrack start → start cue, no music (none configured; the lobby track only fading out)",
       "pass": true,
-      "detail": "cues=leave,leave,leave,join,start playing=[{\"track\":\"local-forecast-elevator.mp3\",\"vol\":0.07,\"t\":9.2}]"
+      "detail": "cues=leave,leave,leave,join,start playing=[{\"track\":\"bossa-antigua.mp3\",\"vol\":0.07,\"t\":9.2}]"
     },
     {
       "scenario": "F",
@@ -262,7 +262,7 @@
       "scenario": "G",
       "check": "draw/guess/pass (draw) → the Broken Pencil set at 0.2, one track",
       "pass": true,
-      "detail": "[{\"track\":\"lobby-time.mp3\",\"vol\":0.2,\"t\":1.4}]"
+      "detail": "[{\"track\":\"hep-cats.mp3\",\"vol\":0.2,\"t\":1.4}]"
     },
     {
       "scenario": "G",
@@ -273,38 +273,38 @@
   ],
   "tv": [
     {
-      "t": 442,
+      "t": 417,
       "kind": "ss:cancel",
       "speaking": false,
       "pending": false
     },
     {
-      "t": 443,
+      "t": 418,
       "kind": "ss:cancel",
       "speaking": false,
       "pending": false
     },
     {
-      "t": 455,
+      "t": 431,
       "kind": "ss:cancel",
       "speaking": false,
       "pending": false
     },
     {
-      "t": 455,
+      "t": 431,
       "kind": "music:plan",
       "from": null,
       "to": "lobby"
     },
     {
-      "t": 980,
+      "t": 924,
       "kind": "mark",
       "label": "A0",
       "status": "lobby",
       "phase": null
     },
     {
-      "t": 1857,
+      "t": 1783,
       "kind": "music:start",
       "plan": "lobby",
       "track": "local-forecast-elevator",
@@ -312,7 +312,7 @@
       "volume": 0.35
     },
     {
-      "t": 1858,
+      "t": 1783,
       "kind": "cue",
       "cue": "ready",
       "surface": "tv",
@@ -321,14 +321,14 @@
       "semitones": 0
     },
     {
-      "t": 3081,
+      "t": 3015,
       "kind": "mark",
       "label": "A1",
       "status": "lobby",
       "phase": null
     },
     {
-      "t": 3164,
+      "t": 3096,
       "kind": "cue",
       "cue": "join",
       "surface": "tv",
@@ -337,7 +337,7 @@
       "semitones": 0
     },
     {
-      "t": 3296,
+      "t": 3229,
       "kind": "cue",
       "cue": "join",
       "surface": "tv",
@@ -346,14 +346,14 @@
       "semitones": 2
     },
     {
-      "t": 3971,
+      "t": 3907,
       "kind": "mark",
       "label": "A2",
       "status": "lobby",
       "phase": null
     },
     {
-      "t": 3991,
+      "t": 3926,
       "kind": "cue",
       "cue": "join",
       "surface": "tv",
@@ -362,7 +362,7 @@
       "semitones": 4
     },
     {
-      "t": 4617,
+      "t": 4547,
       "kind": "cue",
       "cue": "leave",
       "surface": "tv",
@@ -371,33 +371,33 @@
       "semitones": 0
     },
     {
-      "t": 5441,
+      "t": 5360,
       "kind": "mark",
       "label": "A3",
       "status": "lobby",
       "phase": null
     },
     {
-      "t": 5466,
+      "t": 5381,
       "kind": "ss:cancel",
       "speaking": false,
       "pending": false
     },
     {
-      "t": 6284,
+      "t": 6191,
       "kind": "mark",
       "label": "A4",
       "status": "selecting",
       "phase": null
     },
     {
-      "t": 6309,
+      "t": 6217,
       "kind": "music:plan",
       "from": "lobby",
       "to": null
     },
     {
-      "t": 6309,
+      "t": 6217,
       "kind": "cue",
       "cue": "start",
       "surface": "tv",
@@ -406,19 +406,19 @@
       "semitones": 0
     },
     {
-      "t": 7810,
+      "t": 7721,
       "kind": "music:stop",
       "track": "local-forecast-elevator.mp3"
     },
     {
-      "t": 7828,
+      "t": 7724,
       "kind": "mark",
       "label": "B1",
       "status": "playing",
       "phase": "intro"
     },
     {
-      "t": 8256,
+      "t": 8160,
       "kind": "cue",
       "cue": "phase",
       "surface": "tv",
@@ -427,14 +427,14 @@
       "semitones": 0
     },
     {
-      "t": 9170,
+      "t": 9081,
       "kind": "mark",
       "label": "B2",
       "status": "playing",
       "phase": "question"
     },
     {
-      "t": 9532,
+      "t": 9449,
       "kind": "cue",
       "cue": "lock",
       "surface": "tv",
@@ -443,21 +443,21 @@
       "semitones": 0
     },
     {
-      "t": 10454,
+      "t": 10363,
       "kind": "mark",
       "label": "B3",
       "status": "playing",
       "phase": "question"
     },
     {
-      "t": 15819,
+      "t": 15732,
       "kind": "mark",
       "label": "B3b",
       "status": "playing",
       "phase": "question"
     },
     {
-      "t": 16522,
+      "t": 16416,
       "kind": "cue",
       "cue": "countdown",
       "surface": "tv",
@@ -466,7 +466,7 @@
       "semitones": 0
     },
     {
-      "t": 17508,
+      "t": 17414,
       "kind": "cue",
       "cue": "countdown",
       "surface": "tv",
@@ -475,7 +475,7 @@
       "semitones": 2
     },
     {
-      "t": 18511,
+      "t": 18419,
       "kind": "cue",
       "cue": "countdown",
       "surface": "tv",
@@ -484,7 +484,7 @@
       "semitones": 4
     },
     {
-      "t": 19507,
+      "t": 19421,
       "kind": "cue",
       "cue": "countdown",
       "surface": "tv",
@@ -493,7 +493,7 @@
       "semitones": 5
     },
     {
-      "t": 20523,
+      "t": 20422,
       "kind": "cue",
       "cue": "countdown",
       "surface": "tv",
@@ -502,7 +502,7 @@
       "semitones": 7
     },
     {
-      "t": 21311,
+      "t": 21227,
       "kind": "cue",
       "cue": "reveal",
       "surface": "tv",
@@ -511,14 +511,14 @@
       "semitones": 0
     },
     {
-      "t": 22037,
+      "t": 21955,
       "kind": "mark",
       "label": "B4",
       "status": "playing",
       "phase": "reveal"
     },
     {
-      "t": 22106,
+      "t": 22023,
       "kind": "cue",
       "cue": "phase",
       "surface": "tv",
@@ -527,7 +527,7 @@
       "semitones": 0
     },
     {
-      "t": 22264,
+      "t": 22181,
       "kind": "cue",
       "cue": "reveal",
       "surface": "tv",
@@ -536,7 +536,7 @@
       "semitones": 0
     },
     {
-      "t": 22418,
+      "t": 22334,
       "kind": "cue",
       "cue": "phase",
       "surface": "tv",
@@ -545,7 +545,7 @@
       "semitones": 0
     },
     {
-      "t": 22572,
+      "t": 22493,
       "kind": "cue",
       "cue": "reveal",
       "surface": "tv",
@@ -554,7 +554,7 @@
       "semitones": 0
     },
     {
-      "t": 22729,
+      "t": 22648,
       "kind": "cue",
       "cue": "phase",
       "surface": "tv",
@@ -563,7 +563,7 @@
       "semitones": 0
     },
     {
-      "t": 22886,
+      "t": 22806,
       "kind": "cue",
       "cue": "reveal",
       "surface": "tv",
@@ -572,7 +572,7 @@
       "semitones": 0
     },
     {
-      "t": 23041,
+      "t": 22963,
       "kind": "cue",
       "cue": "phase",
       "surface": "tv",
@@ -581,7 +581,7 @@
       "semitones": 0
     },
     {
-      "t": 23197,
+      "t": 23119,
       "kind": "cue",
       "cue": "reveal",
       "surface": "tv",
@@ -590,7 +590,7 @@
       "semitones": 0
     },
     {
-      "t": 23355,
+      "t": 23249,
       "kind": "cue",
       "cue": "phase",
       "surface": "tv",
@@ -599,7 +599,7 @@
       "semitones": 0
     },
     {
-      "t": 23511,
+      "t": 23402,
       "kind": "cue",
       "cue": "reveal",
       "surface": "tv",
@@ -608,7 +608,7 @@
       "semitones": 0
     },
     {
-      "t": 23667,
+      "t": 23560,
       "kind": "cue",
       "cue": "phase",
       "surface": "tv",
@@ -617,7 +617,7 @@
       "semitones": 0
     },
     {
-      "t": 23825,
+      "t": 23700,
       "kind": "cue",
       "cue": "reveal",
       "surface": "tv",
@@ -626,7 +626,7 @@
       "semitones": 0
     },
     {
-      "t": 23982,
+      "t": 23854,
       "kind": "cue",
       "cue": "phase",
       "surface": "tv",
@@ -635,7 +635,7 @@
       "semitones": 0
     },
     {
-      "t": 24137,
+      "t": 24010,
       "kind": "cue",
       "cue": "reveal",
       "surface": "tv",
@@ -644,7 +644,7 @@
       "semitones": 0
     },
     {
-      "t": 24292,
+      "t": 24168,
       "kind": "cue",
       "cue": "phase",
       "surface": "tv",
@@ -653,7 +653,7 @@
       "semitones": 0
     },
     {
-      "t": 24450,
+      "t": 24321,
       "kind": "cue",
       "cue": "reveal",
       "surface": "tv",
@@ -662,7 +662,7 @@
       "semitones": 0
     },
     {
-      "t": 24606,
+      "t": 24479,
       "kind": "cue",
       "cue": "phase",
       "surface": "tv",
@@ -671,7 +671,7 @@
       "semitones": 0
     },
     {
-      "t": 24762,
+      "t": 24636,
       "kind": "cue",
       "cue": "reveal",
       "surface": "tv",
@@ -680,7 +680,7 @@
       "semitones": 0
     },
     {
-      "t": 24920,
+      "t": 24793,
       "kind": "cue",
       "cue": "wager",
       "surface": "tv",
@@ -689,14 +689,14 @@
       "semitones": 0
     },
     {
-      "t": 25773,
+      "t": 25646,
       "kind": "mark",
       "label": "B5",
       "status": "playing",
       "phase": "wager"
     },
     {
-      "t": 25793,
+      "t": 25667,
       "kind": "cue",
       "cue": "phase",
       "surface": "tv",
@@ -705,7 +705,7 @@
       "semitones": 0
     },
     {
-      "t": 26126,
+      "t": 26002,
       "kind": "cue",
       "cue": "silence",
       "surface": "tv",
@@ -714,7 +714,7 @@
       "semitones": 0
     },
     {
-      "t": 27934,
+      "t": 27806,
       "kind": "cue",
       "cue": "bust",
       "surface": "tv",
@@ -723,20 +723,20 @@
       "semitones": 0
     },
     {
-      "t": 29635,
+      "t": 29518,
       "kind": "mark",
       "label": "B6",
       "status": "playing",
       "phase": "reveal"
     },
     {
-      "t": 29653,
+      "t": 29535,
       "kind": "ss:cancel",
       "speaking": false,
       "pending": false
     },
     {
-      "t": 29653,
+      "t": 29535,
       "kind": "cue",
       "cue": "cheer",
       "surface": "tv",
@@ -745,14 +745,14 @@
       "semitones": 0
     },
     {
-      "t": 31168,
+      "t": 31059,
       "kind": "mark",
       "label": "B7",
       "status": "results",
       "phase": null
     },
     {
-      "t": 31193,
+      "t": 31093,
       "kind": "cue",
       "cue": "start",
       "surface": "tv",
@@ -761,20 +761,20 @@
       "semitones": 0
     },
     {
-      "t": 32718,
+      "t": 32608,
       "kind": "mark",
       "label": "C1",
       "status": "playing",
       "phase": "intro"
     },
     {
-      "t": 33343,
+      "t": 33243,
       "kind": "ss:cancel",
       "speaking": false,
       "pending": false
     },
     {
-      "t": 33343,
+      "t": 33243,
       "kind": "cue",
       "cue": "cheer",
       "surface": "tv",
@@ -783,26 +783,26 @@
       "semitones": 0
     },
     {
-      "t": 34861,
+      "t": 34773,
       "kind": "mark",
       "label": "C2",
       "status": "results",
       "phase": null
     },
     {
-      "t": 34877,
+      "t": 34793,
       "kind": "ss:cancel",
       "speaking": false,
       "pending": false
     },
     {
-      "t": 34877,
+      "t": 34793,
       "kind": "music:plan",
       "from": null,
       "to": "lobby"
     },
     {
-      "t": 34877,
+      "t": 34793,
       "kind": "music:start",
       "plan": "lobby",
       "track": "bossa-antigua",
@@ -810,20 +810,20 @@
       "volume": 0.35
     },
     {
-      "t": 36406,
+      "t": 36321,
       "kind": "mark",
       "label": "C3",
       "status": "selecting",
       "phase": null
     },
     {
-      "t": 36444,
+      "t": 36360,
       "kind": "music:plan",
       "from": "lobby",
       "to": "game:bingo"
     },
     {
-      "t": 36444,
+      "t": 36360,
       "kind": "music:start",
       "plan": "game:bingo",
       "track": "wallpaper",
@@ -831,7 +831,7 @@
       "volume": 0.2
     },
     {
-      "t": 36444,
+      "t": 36360,
       "kind": "cue",
       "cue": "start",
       "surface": "tv",
@@ -840,43 +840,27 @@
       "semitones": 0
     },
     {
-      "t": 36750,
-      "kind": "hush",
-      "speaking": false,
-      "pending": false
+      "t": 36672,
+      "kind": "hush"
     },
     {
-      "t": 36750,
-      "kind": "ss:cancel",
-      "speaking": false,
-      "pending": false
+      "t": 36672,
+      "kind": "hush"
     },
     {
-      "t": 36750,
-      "kind": "hush",
-      "speaking": false,
-      "pending": false
-    },
-    {
-      "t": 36750,
-      "kind": "ss:cancel",
-      "speaking": false,
-      "pending": false
-    },
-    {
-      "t": 37252,
+      "t": 37171,
       "kind": "music:stop",
       "track": "bossa-antigua.mp3"
     },
     {
-      "t": 37969,
+      "t": 37884,
       "kind": "mark",
       "label": "D1",
       "status": "playing",
       "phase": "intro"
     },
     {
-      "t": 39503,
+      "t": 39418,
       "kind": "cue",
       "cue": "call",
       "surface": "tv",
@@ -885,24 +869,20 @@
       "semitones": 0
     },
     {
-      "t": 39804,
-      "kind": "ss:cancel",
-      "speaking": false,
-      "pending": false
+      "t": 39418,
+      "kind": "clip",
+      "src": "b9.wav",
+      "muted": false,
+      "ready": true
     },
     {
-      "t": 39887,
+      "t": 39418,
       "kind": "speak",
-      "text": "B, 9.",
-      "voice": "Microsoft Zira - English (United States)"
+      "text": "b9.wav",
+      "voice": "clip"
     },
     {
-      "t": 39887,
-      "kind": "ss:speak",
-      "text": "B, 9."
-    },
-    {
-      "t": 41320,
+      "t": 41241,
       "kind": "cue",
       "cue": "call",
       "surface": "tv",
@@ -911,43 +891,31 @@
       "semitones": 0
     },
     {
-      "t": 41621,
-      "kind": "ss:cancel",
-      "speaking": true,
-      "pending": false
+      "t": 41241,
+      "kind": "clip",
+      "src": "b8.wav",
+      "muted": false,
+      "ready": true
     },
     {
-      "t": 41705,
+      "t": 41241,
       "kind": "speak",
-      "text": "B, 8.",
-      "voice": "Microsoft Zira - English (United States)"
+      "text": "b8.wav",
+      "voice": "clip"
     },
     {
-      "t": 41705,
-      "kind": "ss:speak",
-      "text": "B, 8."
-    },
-    {
-      "t": 43138,
+      "t": 43056,
       "kind": "mark",
       "label": "D2",
       "status": "playing",
       "phase": "play"
     },
     {
-      "t": 43181,
-      "kind": "hush",
-      "speaking": true,
-      "pending": false
+      "t": 43101,
+      "kind": "hush"
     },
     {
-      "t": 43181,
-      "kind": "ss:cancel",
-      "speaking": true,
-      "pending": false
-    },
-    {
-      "t": 43182,
+      "t": 43102,
       "kind": "cue",
       "cue": "silence",
       "surface": "tv",
@@ -956,19 +924,11 @@
       "semitones": 0
     },
     {
-      "t": 43182,
-      "kind": "hush",
-      "speaking": false,
-      "pending": false
+      "t": 43102,
+      "kind": "hush"
     },
     {
-      "t": 43182,
-      "kind": "ss:cancel",
-      "speaking": false,
-      "pending": false
-    },
-    {
-      "t": 44482,
+      "t": 45532,
       "kind": "cue",
       "cue": "wrong",
       "surface": "tv",
@@ -977,14 +937,14 @@
       "semitones": 0
     },
     {
-      "t": 45390,
+      "t": 46922,
       "kind": "mark",
       "label": "D3",
       "status": "playing",
       "phase": "check"
     },
     {
-      "t": 45409,
+      "t": 46945,
       "kind": "cue",
       "cue": "call",
       "surface": "tv",
@@ -993,36 +953,32 @@
       "semitones": 0
     },
     {
-      "t": 45715,
-      "kind": "ss:cancel",
-      "speaking": false,
-      "pending": false
+      "t": 46945,
+      "kind": "clip",
+      "src": "n34.wav",
+      "muted": false,
+      "ready": true
     },
     {
-      "t": 45804,
+      "t": 46945,
       "kind": "speak",
-      "text": "N, 34.",
-      "voice": "Microsoft Zira - English (United States)"
+      "text": "n34.wav",
+      "voice": "clip"
     },
     {
-      "t": 45804,
-      "kind": "ss:speak",
-      "text": "N, 34."
-    },
-    {
-      "t": 47235,
+      "t": 48758,
       "kind": "mark",
       "label": "D4",
       "status": "playing",
       "phase": "play"
     },
     {
-      "t": 47628,
+      "t": 49145,
       "kind": "music:paused",
       "paused": true
     },
     {
-      "t": 47629,
+      "t": 49145,
       "kind": "cue",
       "cue": "pause",
       "surface": "tv",
@@ -1031,19 +987,19 @@
       "semitones": 0
     },
     {
-      "t": 48847,
+      "t": 50357,
       "kind": "mark",
       "label": "D5",
       "status": "playing",
       "phase": "play"
     },
     {
-      "t": 48879,
+      "t": 50380,
       "kind": "music:paused",
       "paused": false
     },
     {
-      "t": 48879,
+      "t": 50380,
       "kind": "cue",
       "cue": "phase",
       "surface": "tv",
@@ -1052,14 +1008,14 @@
       "semitones": 0
     },
     {
-      "t": 50114,
+      "t": 51609,
       "kind": "mark",
       "label": "D6",
       "status": "playing",
       "phase": "play"
     },
     {
-      "t": 50151,
+      "t": 51659,
       "kind": "cue",
       "cue": "call",
       "surface": "tv",
@@ -1068,7 +1024,20 @@
       "semitones": 0
     },
     {
-      "t": 50243,
+      "t": 51659,
+      "kind": "clip",
+      "src": "n35.wav",
+      "muted": false,
+      "ready": true
+    },
+    {
+      "t": 51659,
+      "kind": "speak",
+      "text": "n35.wav",
+      "voice": "clip"
+    },
+    {
+      "t": 51753,
       "kind": "cue",
       "cue": "call",
       "surface": "tv",
@@ -1077,7 +1046,20 @@
       "semitones": 0
     },
     {
-      "t": 50338,
+      "t": 51753,
+      "kind": "clip",
+      "src": "i25.wav",
+      "muted": false,
+      "ready": true
+    },
+    {
+      "t": 51753,
+      "kind": "speak",
+      "text": "i25.wav",
+      "voice": "clip"
+    },
+    {
+      "t": 51848,
       "kind": "cue",
       "cue": "call",
       "surface": "tv",
@@ -1086,7 +1068,20 @@
       "semitones": 0
     },
     {
-      "t": 50433,
+      "t": 51848,
+      "kind": "clip",
+      "src": "n45.wav",
+      "muted": false,
+      "ready": true
+    },
+    {
+      "t": 51848,
+      "kind": "speak",
+      "text": "n45.wav",
+      "voice": "clip"
+    },
+    {
+      "t": 51942,
       "kind": "cue",
       "cue": "call",
       "surface": "tv",
@@ -1095,7 +1090,20 @@
       "semitones": 0
     },
     {
-      "t": 50524,
+      "t": 51942,
+      "kind": "clip",
+      "src": "n33.wav",
+      "muted": false,
+      "ready": true
+    },
+    {
+      "t": 51942,
+      "kind": "speak",
+      "text": "n33.wav",
+      "voice": "clip"
+    },
+    {
+      "t": 52037,
       "kind": "cue",
       "cue": "call",
       "surface": "tv",
@@ -1104,7 +1112,20 @@
       "semitones": 0
     },
     {
-      "t": 50619,
+      "t": 52037,
+      "kind": "clip",
+      "src": "g49.wav",
+      "muted": false,
+      "ready": true
+    },
+    {
+      "t": 52037,
+      "kind": "speak",
+      "text": "g49.wav",
+      "voice": "clip"
+    },
+    {
+      "t": 52131,
       "kind": "cue",
       "cue": "call",
       "surface": "tv",
@@ -1113,7 +1134,20 @@
       "semitones": 0
     },
     {
-      "t": 50713,
+      "t": 52131,
+      "kind": "clip",
+      "src": "b4.wav",
+      "muted": false,
+      "ready": true
+    },
+    {
+      "t": 52131,
+      "kind": "speak",
+      "text": "b4.wav",
+      "voice": "clip"
+    },
+    {
+      "t": 52225,
       "kind": "cue",
       "cue": "call",
       "surface": "tv",
@@ -1122,7 +1156,20 @@
       "semitones": 0
     },
     {
-      "t": 50807,
+      "t": 52225,
+      "kind": "clip",
+      "src": "i20.wav",
+      "muted": false,
+      "ready": true
+    },
+    {
+      "t": 52225,
+      "kind": "speak",
+      "text": "i20.wav",
+      "voice": "clip"
+    },
+    {
+      "t": 52319,
       "kind": "cue",
       "cue": "call",
       "surface": "tv",
@@ -1131,7 +1178,20 @@
       "semitones": 0
     },
     {
-      "t": 50901,
+      "t": 52319,
+      "kind": "clip",
+      "src": "o69.wav",
+      "muted": false,
+      "ready": true
+    },
+    {
+      "t": 52319,
+      "kind": "speak",
+      "text": "o69.wav",
+      "voice": "clip"
+    },
+    {
+      "t": 52413,
       "kind": "cue",
       "cue": "call",
       "surface": "tv",
@@ -1140,7 +1200,20 @@
       "semitones": 0
     },
     {
-      "t": 50997,
+      "t": 52413,
+      "kind": "clip",
+      "src": "o67.wav",
+      "muted": false,
+      "ready": true
+    },
+    {
+      "t": 52413,
+      "kind": "speak",
+      "text": "o67.wav",
+      "voice": "clip"
+    },
+    {
+      "t": 52508,
       "kind": "cue",
       "cue": "call",
       "surface": "tv",
@@ -1149,7 +1222,20 @@
       "semitones": 0
     },
     {
-      "t": 51092,
+      "t": 52509,
+      "kind": "clip",
+      "src": "o65.wav",
+      "muted": false,
+      "ready": true
+    },
+    {
+      "t": 52509,
+      "kind": "speak",
+      "text": "o65.wav",
+      "voice": "clip"
+    },
+    {
+      "t": 52604,
       "kind": "cue",
       "cue": "call",
       "surface": "tv",
@@ -1158,7 +1244,20 @@
       "semitones": 0
     },
     {
-      "t": 51198,
+      "t": 52604,
+      "kind": "clip",
+      "src": "o73.wav",
+      "muted": false,
+      "ready": true
+    },
+    {
+      "t": 52604,
+      "kind": "speak",
+      "text": "o73.wav",
+      "voice": "clip"
+    },
+    {
+      "t": 52682,
       "kind": "cue",
       "cue": "call",
       "surface": "tv",
@@ -1167,7 +1266,20 @@
       "semitones": 0
     },
     {
-      "t": 51292,
+      "t": 52682,
+      "kind": "clip",
+      "src": "i21.wav",
+      "muted": false,
+      "ready": true
+    },
+    {
+      "t": 52682,
+      "kind": "speak",
+      "text": "i21.wav",
+      "voice": "clip"
+    },
+    {
+      "t": 52761,
       "kind": "cue",
       "cue": "call",
       "surface": "tv",
@@ -1176,7 +1288,20 @@
       "semitones": 0
     },
     {
-      "t": 51384,
+      "t": 52761,
+      "kind": "clip",
+      "src": "i18.wav",
+      "muted": false,
+      "ready": true
+    },
+    {
+      "t": 52761,
+      "kind": "speak",
+      "text": "i18.wav",
+      "voice": "clip"
+    },
+    {
+      "t": 52869,
       "kind": "cue",
       "cue": "call",
       "surface": "tv",
@@ -1185,7 +1310,20 @@
       "semitones": 0
     },
     {
-      "t": 51478,
+      "t": 52869,
+      "kind": "clip",
+      "src": "g58.wav",
+      "muted": false,
+      "ready": true
+    },
+    {
+      "t": 52869,
+      "kind": "speak",
+      "text": "g58.wav",
+      "voice": "clip"
+    },
+    {
+      "t": 52966,
       "kind": "cue",
       "cue": "call",
       "surface": "tv",
@@ -1194,7 +1332,20 @@
       "semitones": 0
     },
     {
-      "t": 51571,
+      "t": 52966,
+      "kind": "clip",
+      "src": "n36.wav",
+      "muted": false,
+      "ready": true
+    },
+    {
+      "t": 52966,
+      "kind": "speak",
+      "text": "n36.wav",
+      "voice": "clip"
+    },
+    {
+      "t": 53058,
       "kind": "cue",
       "cue": "call",
       "surface": "tv",
@@ -1203,7 +1354,20 @@
       "semitones": 0
     },
     {
-      "t": 51665,
+      "t": 53058,
+      "kind": "clip",
+      "src": "o61.wav",
+      "muted": false,
+      "ready": true
+    },
+    {
+      "t": 53058,
+      "kind": "speak",
+      "text": "o61.wav",
+      "voice": "clip"
+    },
+    {
+      "t": 53152,
       "kind": "cue",
       "cue": "call",
       "surface": "tv",
@@ -1212,148 +1376,17 @@
       "semitones": 0
     },
     {
-      "t": 51759,
-      "kind": "cue",
-      "cue": "call",
-      "surface": "tv",
+      "t": 53152,
+      "kind": "clip",
+      "src": "n37.wav",
       "muted": false,
-      "ready": true,
-      "semitones": 0
+      "ready": true
     },
     {
-      "t": 51854,
-      "kind": "cue",
-      "cue": "call",
-      "surface": "tv",
-      "muted": false,
-      "ready": true,
-      "semitones": 0
-    },
-    {
-      "t": 51948,
-      "kind": "cue",
-      "cue": "call",
-      "surface": "tv",
-      "muted": false,
-      "ready": true,
-      "semitones": 0
-    },
-    {
-      "t": 52044,
-      "kind": "cue",
-      "cue": "call",
-      "surface": "tv",
-      "muted": false,
-      "ready": true,
-      "semitones": 0
-    },
-    {
-      "t": 52137,
-      "kind": "cue",
-      "cue": "call",
-      "surface": "tv",
-      "muted": false,
-      "ready": true,
-      "semitones": 0
-    },
-    {
-      "t": 52230,
-      "kind": "cue",
-      "cue": "call",
-      "surface": "tv",
-      "muted": false,
-      "ready": true,
-      "semitones": 0
-    },
-    {
-      "t": 52324,
-      "kind": "cue",
-      "cue": "call",
-      "surface": "tv",
-      "muted": false,
-      "ready": true,
-      "semitones": 0
-    },
-    {
-      "t": 52418,
-      "kind": "cue",
-      "cue": "call",
-      "surface": "tv",
-      "muted": false,
-      "ready": true,
-      "semitones": 0
-    },
-    {
-      "t": 52513,
-      "kind": "cue",
-      "cue": "call",
-      "surface": "tv",
-      "muted": false,
-      "ready": true,
-      "semitones": 0
-    },
-    {
-      "t": 52607,
-      "kind": "cue",
-      "cue": "call",
-      "surface": "tv",
-      "muted": false,
-      "ready": true,
-      "semitones": 0
-    },
-    {
-      "t": 52701,
-      "kind": "cue",
-      "cue": "call",
-      "surface": "tv",
-      "muted": false,
-      "ready": true,
-      "semitones": 0
-    },
-    {
-      "t": 52795,
-      "kind": "cue",
-      "cue": "call",
-      "surface": "tv",
-      "muted": false,
-      "ready": true,
-      "semitones": 0
-    },
-    {
-      "t": 52890,
-      "kind": "cue",
-      "cue": "call",
-      "surface": "tv",
-      "muted": false,
-      "ready": true,
-      "semitones": 0
-    },
-    {
-      "t": 52968,
-      "kind": "cue",
-      "cue": "call",
-      "surface": "tv",
-      "muted": false,
-      "ready": true,
-      "semitones": 0
-    },
-    {
-      "t": 53076,
-      "kind": "cue",
-      "cue": "call",
-      "surface": "tv",
-      "muted": false,
-      "ready": true,
-      "semitones": 0
-    },
-    {
-      "t": 53170,
-      "kind": "cue",
-      "cue": "call",
-      "surface": "tv",
-      "muted": false,
-      "ready": true,
-      "semitones": 0
+      "t": 53152,
+      "kind": "speak",
+      "text": "n37.wav",
+      "voice": "clip"
     },
     {
       "t": 53250,
@@ -1365,79 +1398,471 @@
       "semitones": 0
     },
     {
-      "t": 53357,
-      "kind": "cue",
-      "cue": "call",
-      "surface": "tv",
+      "t": 53250,
+      "kind": "clip",
+      "src": "i16.wav",
       "muted": false,
-      "ready": true,
-      "semitones": 0
+      "ready": true
     },
     {
-      "t": 53452,
-      "kind": "cue",
-      "cue": "call",
-      "surface": "tv",
-      "muted": false,
-      "ready": true,
-      "semitones": 0
-    },
-    {
-      "t": 53547,
-      "kind": "cue",
-      "cue": "call",
-      "surface": "tv",
-      "muted": false,
-      "ready": true,
-      "semitones": 0
-    },
-    {
-      "t": 53640,
-      "kind": "cue",
-      "cue": "call",
-      "surface": "tv",
-      "muted": false,
-      "ready": true,
-      "semitones": 0
-    },
-    {
-      "t": 53949,
-      "kind": "ss:cancel",
-      "speaking": false,
-      "pending": false
-    },
-    {
-      "t": 54037,
+      "t": 53250,
       "kind": "speak",
-      "text": "G, 46.",
-      "voice": "Microsoft Zira - English (United States)"
+      "text": "i16.wav",
+      "voice": "clip"
     },
     {
-      "t": 54037,
-      "kind": "ss:speak",
-      "text": "G, 46."
+      "t": 53342,
+      "kind": "cue",
+      "cue": "call",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
     },
     {
-      "t": 54172,
+      "t": 53342,
+      "kind": "clip",
+      "src": "g47.wav",
+      "muted": false,
+      "ready": true
+    },
+    {
+      "t": 53342,
+      "kind": "speak",
+      "text": "g47.wav",
+      "voice": "clip"
+    },
+    {
+      "t": 53434,
+      "kind": "cue",
+      "cue": "call",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 53435,
+      "kind": "clip",
+      "src": "n41.wav",
+      "muted": false,
+      "ready": true
+    },
+    {
+      "t": 53435,
+      "kind": "speak",
+      "text": "n41.wav",
+      "voice": "clip"
+    },
+    {
+      "t": 53530,
+      "kind": "cue",
+      "cue": "call",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 53530,
+      "kind": "clip",
+      "src": "b6.wav",
+      "muted": false,
+      "ready": true
+    },
+    {
+      "t": 53530,
+      "kind": "speak",
+      "text": "b6.wav",
+      "voice": "clip"
+    },
+    {
+      "t": 53623,
+      "kind": "cue",
+      "cue": "call",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 53623,
+      "kind": "clip",
+      "src": "o72.wav",
+      "muted": false,
+      "ready": true
+    },
+    {
+      "t": 53623,
+      "kind": "speak",
+      "text": "o72.wav",
+      "voice": "clip"
+    },
+    {
+      "t": 53701,
+      "kind": "cue",
+      "cue": "call",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 53701,
+      "kind": "clip",
+      "src": "b3.wav",
+      "muted": false,
+      "ready": true
+    },
+    {
+      "t": 53701,
+      "kind": "speak",
+      "text": "b3.wav",
+      "voice": "clip"
+    },
+    {
+      "t": 53795,
+      "kind": "cue",
+      "cue": "call",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 53795,
+      "kind": "clip",
+      "src": "i30.wav",
+      "muted": false,
+      "ready": true
+    },
+    {
+      "t": 53795,
+      "kind": "speak",
+      "text": "i30.wav",
+      "voice": "clip"
+    },
+    {
+      "t": 53888,
+      "kind": "cue",
+      "cue": "call",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 53888,
+      "kind": "clip",
+      "src": "g56.wav",
+      "muted": false,
+      "ready": true
+    },
+    {
+      "t": 53888,
+      "kind": "speak",
+      "text": "g56.wav",
+      "voice": "clip"
+    },
+    {
+      "t": 53983,
+      "kind": "cue",
+      "cue": "call",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 53983,
+      "kind": "clip",
+      "src": "o75.wav",
+      "muted": false,
+      "ready": true
+    },
+    {
+      "t": 53983,
+      "kind": "speak",
+      "text": "o75.wav",
+      "voice": "clip"
+    },
+    {
+      "t": 54077,
+      "kind": "cue",
+      "cue": "call",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 54077,
+      "kind": "clip",
+      "src": "b1.wav",
+      "muted": false,
+      "ready": true
+    },
+    {
+      "t": 54077,
+      "kind": "speak",
+      "text": "b1.wav",
+      "voice": "clip"
+    },
+    {
+      "t": 54171,
+      "kind": "cue",
+      "cue": "call",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 54171,
+      "kind": "clip",
+      "src": "b2.wav",
+      "muted": false,
+      "ready": true
+    },
+    {
+      "t": 54171,
+      "kind": "speak",
+      "text": "b2.wav",
+      "voice": "clip"
+    },
+    {
+      "t": 54265,
+      "kind": "cue",
+      "cue": "call",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 54265,
+      "kind": "clip",
+      "src": "n32.wav",
+      "muted": false,
+      "ready": true
+    },
+    {
+      "t": 54265,
+      "kind": "speak",
+      "text": "n32.wav",
+      "voice": "clip"
+    },
+    {
+      "t": 54360,
+      "kind": "cue",
+      "cue": "call",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 54360,
+      "kind": "clip",
+      "src": "g48.wav",
+      "muted": false,
+      "ready": true
+    },
+    {
+      "t": 54360,
+      "kind": "speak",
+      "text": "g48.wav",
+      "voice": "clip"
+    },
+    {
+      "t": 54454,
+      "kind": "cue",
+      "cue": "call",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 54454,
+      "kind": "clip",
+      "src": "i23.wav",
+      "muted": false,
+      "ready": true
+    },
+    {
+      "t": 54454,
+      "kind": "speak",
+      "text": "i23.wav",
+      "voice": "clip"
+    },
+    {
+      "t": 54547,
+      "kind": "cue",
+      "cue": "call",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 54547,
+      "kind": "clip",
+      "src": "i26.wav",
+      "muted": false,
+      "ready": true
+    },
+    {
+      "t": 54547,
+      "kind": "speak",
+      "text": "i26.wav",
+      "voice": "clip"
+    },
+    {
+      "t": 54640,
+      "kind": "cue",
+      "cue": "call",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 54641,
+      "kind": "clip",
+      "src": "o66.wav",
+      "muted": false,
+      "ready": true
+    },
+    {
+      "t": 54641,
+      "kind": "speak",
+      "text": "o66.wav",
+      "voice": "clip"
+    },
+    {
+      "t": 54721,
+      "kind": "cue",
+      "cue": "call",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 54722,
+      "kind": "clip",
+      "src": "i19.wav",
+      "muted": false,
+      "ready": true
+    },
+    {
+      "t": 54722,
+      "kind": "speak",
+      "text": "i19.wav",
+      "voice": "clip"
+    },
+    {
+      "t": 54815,
+      "kind": "cue",
+      "cue": "call",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 54815,
+      "kind": "clip",
+      "src": "n42.wav",
+      "muted": false,
+      "ready": true
+    },
+    {
+      "t": 54815,
+      "kind": "speak",
+      "text": "n42.wav",
+      "voice": "clip"
+    },
+    {
+      "t": 54905,
+      "kind": "cue",
+      "cue": "call",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 54905,
+      "kind": "clip",
+      "src": "i24.wav",
+      "muted": false,
+      "ready": true
+    },
+    {
+      "t": 54905,
+      "kind": "speak",
+      "text": "i24.wav",
+      "voice": "clip"
+    },
+    {
+      "t": 55000,
+      "kind": "cue",
+      "cue": "call",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 55000,
+      "kind": "clip",
+      "src": "n39.wav",
+      "muted": false,
+      "ready": true
+    },
+    {
+      "t": 55000,
+      "kind": "speak",
+      "text": "n39.wav",
+      "voice": "clip"
+    },
+    {
+      "t": 55094,
+      "kind": "cue",
+      "cue": "call",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 55094,
+      "kind": "clip",
+      "src": "g46.wav",
+      "muted": false,
+      "ready": true
+    },
+    {
+      "t": 55094,
+      "kind": "speak",
+      "text": "g46.wav",
+      "voice": "clip"
+    },
+    {
+      "t": 55635,
       "kind": "mark",
       "label": "D7",
       "status": "playing",
       "phase": "play"
     },
     {
-      "t": 54214,
-      "kind": "hush",
-      "speaking": true,
-      "pending": false
+      "t": 55679,
+      "kind": "hush"
     },
     {
-      "t": 54214,
-      "kind": "ss:cancel",
-      "speaking": true,
-      "pending": false
-    },
-    {
-      "t": 54214,
+      "t": 55679,
       "kind": "cue",
       "cue": "silence",
       "surface": "tv",
@@ -1446,19 +1871,16 @@
       "semitones": 0
     },
     {
-      "t": 54214,
-      "kind": "hush",
-      "speaking": false,
-      "pending": false
+      "t": 55679,
+      "kind": "hush"
     },
     {
-      "t": 54214,
-      "kind": "ss:cancel",
-      "speaking": false,
-      "pending": false
+      "t": 58990,
+      "kind": "music:duck",
+      "ms": 9000
     },
     {
-      "t": 55520,
+      "t": 58990,
       "kind": "cue",
       "cue": "cheer",
       "surface": "tv",
@@ -1467,14 +1889,14 @@
       "semitones": 0
     },
     {
-      "t": 56732,
+      "t": 60192,
       "kind": "mark",
       "label": "D8",
       "status": "playing",
       "phase": "bingo"
     },
     {
-      "t": 58313,
+      "t": 61778,
       "kind": "cue",
       "cue": "lock",
       "surface": "tv",
@@ -1483,7 +1905,7 @@
       "semitones": 0
     },
     {
-      "t": 58316,
+      "t": 61780,
       "kind": "cue",
       "cue": "call",
       "surface": "tv",
@@ -1492,43 +1914,39 @@
       "semitones": 0
     },
     {
-      "t": 58621,
-      "kind": "ss:cancel",
-      "speaking": false,
-      "pending": false
+      "t": 61780,
+      "kind": "clip",
+      "src": "n44.wav",
+      "muted": false,
+      "ready": true
     },
     {
-      "t": 58703,
+      "t": 61780,
       "kind": "speak",
-      "text": "N, 44.",
-      "voice": "Microsoft Zira - English (United States)"
+      "text": "n44.wav",
+      "voice": "clip"
     },
     {
-      "t": 58703,
-      "kind": "ss:speak",
-      "text": "N, 44."
-    },
-    {
-      "t": 60138,
+      "t": 63590,
       "kind": "mark",
       "label": "D9",
       "status": "playing",
       "phase": "play"
     },
     {
-      "t": 60741,
+      "t": 64208,
       "kind": "ss:cancel",
-      "speaking": true,
+      "speaking": false,
       "pending": false
     },
     {
-      "t": 60741,
+      "t": 64208,
       "kind": "music:plan",
       "from": "game:bingo",
       "to": null
     },
     {
-      "t": 60741,
+      "t": 64208,
       "kind": "cue",
       "cue": "cheer",
       "surface": "tv",
@@ -1537,31 +1955,31 @@
       "semitones": 0
     },
     {
-      "t": 62245,
+      "t": 65720,
       "kind": "music:stop",
       "track": "wallpaper.mp3"
     },
     {
-      "t": 62763,
+      "t": 66224,
       "kind": "mark",
       "label": "D10",
       "status": "results",
       "phase": null
     },
     {
-      "t": 62839,
+      "t": 66306,
       "kind": "ss:cancel",
       "speaking": false,
       "pending": false
     },
     {
-      "t": 62839,
+      "t": 66306,
       "kind": "music:plan",
       "from": null,
       "to": "lobby"
     },
     {
-      "t": 62839,
+      "t": 66306,
       "kind": "music:start",
       "plan": "lobby",
       "track": "george-street-shuffle",
@@ -1569,14 +1987,14 @@
       "volume": 0.35
     },
     {
-      "t": 65357,
+      "t": 68813,
       "kind": "mark",
       "label": "E1",
       "status": "lobby",
       "phase": null
     },
     {
-      "t": 66186,
+      "t": 69647,
       "kind": "cue",
       "cue": "join",
       "surface": "tv",
@@ -1585,19 +2003,19 @@
       "semitones": 5
     },
     {
-      "t": 66196,
+      "t": 69655,
       "kind": "ss:cancel",
       "speaking": false,
       "pending": false
     },
     {
-      "t": 66197,
+      "t": 69660,
       "kind": "music:plan",
       "from": "lobby",
       "to": "game:bingo"
     },
     {
-      "t": 66197,
+      "t": 69660,
       "kind": "music:start",
       "plan": "game:bingo",
       "track": "cool-vibes",
@@ -1605,7 +2023,7 @@
       "volume": 0.2
     },
     {
-      "t": 66197,
+      "t": 69660,
       "kind": "cue",
       "cue": "start",
       "surface": "tv",
@@ -1614,31 +2032,15 @@
       "semitones": 0
     },
     {
-      "t": 66202,
-      "kind": "hush",
-      "speaking": false,
-      "pending": false
+      "t": 69665,
+      "kind": "hush"
     },
     {
-      "t": 66202,
-      "kind": "ss:cancel",
-      "speaking": false,
-      "pending": false
+      "t": 69665,
+      "kind": "hush"
     },
     {
-      "t": 66202,
-      "kind": "hush",
-      "speaking": false,
-      "pending": false
-    },
-    {
-      "t": 66202,
-      "kind": "ss:cancel",
-      "speaking": false,
-      "pending": false
-    },
-    {
-      "t": 66626,
+      "t": 70088,
       "kind": "cue",
       "cue": "call",
       "surface": "tv",
@@ -1647,80 +2049,76 @@
       "semitones": 0
     },
     {
-      "t": 66933,
-      "kind": "ss:cancel",
-      "speaking": false,
-      "pending": false
+      "t": 70088,
+      "kind": "clip",
+      "src": "i21.wav",
+      "muted": false,
+      "ready": true
     },
     {
-      "t": 67003,
+      "t": 70088,
+      "kind": "speak",
+      "text": "i21.wav",
+      "voice": "clip"
+    },
+    {
+      "t": 70466,
       "kind": "music:stop",
       "track": "george-street-shuffle.mp3"
     },
     {
-      "t": 67020,
-      "kind": "speak",
-      "text": "I, 21.",
-      "voice": "Microsoft Zira - English (United States)"
-    },
-    {
-      "t": 67020,
-      "kind": "ss:speak",
-      "text": "I, 21."
-    },
-    {
-      "t": 67046,
+      "t": 70508,
       "kind": "mark",
       "label": "E2",
       "status": "playing",
       "phase": "play"
     },
     {
-      "t": 67123,
-      "kind": "ss:cancel",
-      "speaking": true,
-      "pending": false
-    },
-    {
-      "t": 67123,
-      "kind": "music:plan",
-      "from": "game:bingo",
-      "to": null
-    },
-    {
-      "t": 67126,
+      "t": 70588,
       "kind": "ss:cancel",
       "speaking": false,
       "pending": false
     },
     {
-      "t": 67126,
+      "t": 70588,
+      "kind": "music:plan",
+      "from": "game:bingo",
+      "to": null
+    },
+    {
+      "t": 70591,
+      "kind": "ss:cancel",
+      "speaking": false,
+      "pending": false
+    },
+    {
+      "t": 70591,
       "kind": "music:plan",
       "from": null,
       "to": "lobby"
     },
     {
-      "t": 67126,
+      "t": 70591,
       "kind": "music:start",
       "plan": "lobby",
-      "track": "local-forecast-elevator",
+      "track": "bossa-antigua",
       "mode": "rotate",
       "volume": 0.35
     },
     {
-      "t": 67934,
+      "t": 71399,
       "kind": "music:stop",
       "track": "cool-vibes.mp3"
     },
     {
-      "t": 69640,
+      "t": 73106,
       "kind": "mark",
       "label": "E3",
       "status": "lobby",
       "phase": null
     },
     {
-      "t": 72695,
+      "t": 76159,
       "kind": "cue",
       "cue": "leave",
       "surface": "tv",
@@ -1729,7 +2127,7 @@
       "semitones": 0
     },
     {
-      "t": 73111,
+      "t": 76577,
       "kind": "cue",
       "cue": "leave",
       "surface": "tv",
@@ -1738,7 +2136,7 @@
       "semitones": 0
     },
     {
-      "t": 73543,
+      "t": 76993,
       "kind": "cue",
       "cue": "leave",
       "surface": "tv",
@@ -1747,7 +2145,7 @@
       "semitones": 0
     },
     {
-      "t": 74626,
+      "t": 78090,
       "kind": "cue",
       "cue": "join",
       "surface": "tv",
@@ -1756,19 +2154,19 @@
       "semitones": 4
     },
     {
-      "t": 75221,
+      "t": 78678,
       "kind": "ss:cancel",
       "speaking": false,
       "pending": false
     },
     {
-      "t": 75224,
+      "t": 78682,
       "kind": "music:plan",
       "from": "lobby",
       "to": null
     },
     {
-      "t": 75224,
+      "t": 78682,
       "kind": "cue",
       "cue": "start",
       "surface": "tv",
@@ -1777,14 +2175,14 @@
       "semitones": 0
     },
     {
-      "t": 76441,
+      "t": 79900,
       "kind": "mark",
       "label": "F1",
       "status": "playing",
       "phase": "intro"
     },
     {
-      "t": 76462,
+      "t": 79919,
       "kind": "cue",
       "cue": "phase",
       "surface": "tv",
@@ -1793,12 +2191,12 @@
       "semitones": 0
     },
     {
-      "t": 76736,
+      "t": 80185,
       "kind": "music:stop",
-      "track": "local-forecast-elevator.mp3"
+      "track": "bossa-antigua.mp3"
     },
     {
-      "t": 78061,
+      "t": 81512,
       "kind": "cue",
       "cue": "lock",
       "surface": "tv",
@@ -1807,7 +2205,7 @@
       "semitones": 0
     },
     {
-      "t": 79362,
+      "t": 82792,
       "kind": "cue",
       "cue": "lock",
       "surface": "tv",
@@ -1816,7 +2214,7 @@
       "semitones": 2
     },
     {
-      "t": 80661,
+      "t": 84077,
       "kind": "cue",
       "cue": "phase",
       "surface": "tv",
@@ -1825,14 +2223,14 @@
       "semitones": 0
     },
     {
-      "t": 81642,
+      "t": 85061,
       "kind": "mark",
       "label": "F2",
       "status": "playing",
       "phase": "vote"
     },
     {
-      "t": 81663,
+      "t": 85081,
       "kind": "cue",
       "cue": "reveal",
       "surface": "tv",
@@ -1841,7 +2239,7 @@
       "semitones": 0
     },
     {
-      "t": 82714,
+      "t": 86132,
       "kind": "cue",
       "cue": "phase",
       "surface": "tv",
@@ -1850,14 +2248,14 @@
       "semitones": 0
     },
     {
-      "t": 85243,
+      "t": 88652,
       "kind": "mark",
       "label": "F3",
       "status": "playing",
       "phase": "vote"
     },
     {
-      "t": 85279,
+      "t": 88688,
       "kind": "cue",
       "cue": "reveal",
       "surface": "tv",
@@ -1866,7 +2264,7 @@
       "semitones": 0
     },
     {
-      "t": 85466,
+      "t": 88879,
       "kind": "cue",
       "cue": "phase",
       "surface": "tv",
@@ -1875,7 +2273,7 @@
       "semitones": 0
     },
     {
-      "t": 85653,
+      "t": 89066,
       "kind": "cue",
       "cue": "reveal",
       "surface": "tv",
@@ -1884,7 +2282,7 @@
       "semitones": 0
     },
     {
-      "t": 85844,
+      "t": 89254,
       "kind": "cue",
       "cue": "tally",
       "surface": "tv",
@@ -1893,40 +2291,40 @@
       "semitones": 0
     },
     {
-      "t": 86832,
+      "t": 90239,
       "kind": "mark",
       "label": "F4",
       "status": "playing",
       "phase": "scores"
     },
     {
-      "t": 86938,
+      "t": 90338,
       "kind": "ss:cancel",
       "speaking": false,
       "pending": false
     },
     {
-      "t": 86940,
+      "t": 90340,
       "kind": "ss:cancel",
       "speaking": false,
       "pending": false
     },
     {
-      "t": 86940,
+      "t": 90340,
       "kind": "music:plan",
       "from": null,
       "to": "lobby"
     },
     {
-      "t": 86940,
+      "t": 90340,
       "kind": "music:start",
       "plan": "lobby",
-      "track": "bossa-antigua",
+      "track": "local-forecast-elevator",
       "mode": "rotate",
       "volume": 0.35
     },
     {
-      "t": 88956,
+      "t": 92358,
       "kind": "cue",
       "cue": "join",
       "surface": "tv",
@@ -1935,19 +2333,19 @@
       "semitones": 5
     },
     {
-      "t": 88961,
+      "t": 92363,
       "kind": "ss:cancel",
       "speaking": false,
       "pending": false
     },
     {
-      "t": 88962,
+      "t": 92365,
       "kind": "music:plan",
       "from": "lobby",
       "to": null
     },
     {
-      "t": 88962,
+      "t": 92365,
       "kind": "cue",
       "cue": "start",
       "surface": "tv",
@@ -1956,33 +2354,33 @@
       "semitones": 0
     },
     {
-      "t": 90465,
+      "t": 93868,
       "kind": "music:stop",
-      "track": "bossa-antigua.mp3"
+      "track": "local-forecast-elevator.mp3"
     },
     {
-      "t": 90466,
+      "t": 93876,
       "kind": "mark",
       "label": "G1",
       "status": "playing",
       "phase": "pick"
     },
     {
-      "t": 90502,
+      "t": 93913,
       "kind": "music:plan",
       "from": null,
       "to": "game:broken-pencil"
     },
     {
-      "t": 90502,
+      "t": 93913,
       "kind": "music:start",
       "plan": "game:broken-pencil",
-      "track": "lobby-time",
+      "track": "hep-cats",
       "mode": "chain",
       "volume": 0.2
     },
     {
-      "t": 90502,
+      "t": 93913,
       "kind": "cue",
       "cue": "phase",
       "surface": "tv",
@@ -1991,14 +2389,14 @@
       "semitones": 0
     },
     {
-      "t": 91940,
+      "t": 95359,
       "kind": "mark",
       "label": "G2",
       "status": "playing",
       "phase": "draw"
     },
     {
-      "t": 91978,
+      "t": 95395,
       "kind": "cue",
       "cue": "phase",
       "surface": "tv",
@@ -2007,7 +2405,7 @@
       "semitones": 0
     },
     {
-      "t": 92433,
+      "t": 95873,
       "kind": "cue",
       "cue": "phase",
       "surface": "tv",
@@ -2016,13 +2414,13 @@
       "semitones": 0
     },
     {
-      "t": 92591,
+      "t": 96020,
       "kind": "music:plan",
       "from": "game:broken-pencil",
       "to": null
     },
     {
-      "t": 92591,
+      "t": 96020,
       "kind": "cue",
       "cue": "reveal",
       "surface": "tv",
@@ -2031,12 +2429,12 @@
       "semitones": 0
     },
     {
-      "t": 94096,
+      "t": 97531,
       "kind": "music:stop",
-      "track": "lobby-time.mp3"
+      "track": "hep-cats.mp3"
     },
     {
-      "t": 94255,
+      "t": 97674,
       "kind": "mark",
       "label": "G3",
       "status": "playing",
@@ -2045,76 +2443,76 @@
   ],
   "vip": [
     {
-      "t": 485,
+      "t": 450,
       "kind": "mark",
       "label": "A0",
       "status": "lobby",
       "phase": null
     },
     {
-      "t": 2586,
+      "t": 2541,
       "kind": "mark",
       "label": "A1",
       "status": "lobby",
       "phase": null
     },
     {
-      "t": 3475,
+      "t": 3433,
       "kind": "mark",
       "label": "A2",
       "status": "lobby",
       "phase": null
     },
     {
-      "t": 4945,
+      "t": 4886,
       "kind": "mark",
       "label": "A3",
       "status": "lobby",
       "phase": null
     },
     {
-      "t": 5789,
+      "t": 5718,
       "kind": "mark",
       "label": "A4",
       "status": "selecting",
       "phase": null
     },
     {
-      "t": 7333,
+      "t": 7251,
       "kind": "mark",
       "label": "B1",
       "status": "playing",
       "phase": "intro"
     },
     {
-      "t": 7757,
+      "t": 7682,
       "kind": "buzz",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 7757,
+      "t": 7682,
       "kind": "vibrate",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 8674,
+      "t": 8607,
       "kind": "mark",
       "label": "B2",
       "status": "playing",
       "phase": "question"
     },
     {
-      "t": 9028,
+      "t": 8966,
       "kind": "buzz",
       "pattern": 15
     },
     {
-      "t": 9028,
+      "t": 8966,
       "kind": "vibrate",
       "pattern": 15
     },
     {
-      "t": 9047,
+      "t": 8984,
       "kind": "cue",
       "cue": "submit",
       "surface": "phone",
@@ -2123,279 +2521,279 @@
       "semitones": 0
     },
     {
-      "t": 9047,
+      "t": 8985,
       "kind": "buzz",
       "pattern": 20
     },
     {
-      "t": 9047,
+      "t": 8985,
       "kind": "vibrate",
       "pattern": 20
     },
     {
-      "t": 9958,
+      "t": 9890,
       "kind": "mark",
       "label": "B3",
       "status": "playing",
       "phase": "question"
     },
     {
-      "t": 15323,
+      "t": 15259,
       "kind": "mark",
       "label": "B3b",
       "status": "playing",
       "phase": "question"
     },
     {
-      "t": 21119,
+      "t": 21057,
       "kind": "buzz",
       "pattern": [30, 40, 30]
     },
     {
-      "t": 21119,
+      "t": 21057,
       "kind": "vibrate",
       "pattern": [30, 40, 30]
     },
     {
-      "t": 21542,
+      "t": 21481,
       "kind": "mark",
       "label": "B4",
       "status": "playing",
       "phase": "reveal"
     },
     {
-      "t": 21606,
+      "t": 21546,
       "kind": "buzz",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 21606,
+      "t": 21546,
       "kind": "vibrate",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 21919,
+      "t": 21857,
       "kind": "buzz",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 21919,
+      "t": 21857,
       "kind": "vibrate",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 22230,
+      "t": 22171,
       "kind": "buzz",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 22230,
+      "t": 22171,
       "kind": "vibrate",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 22542,
+      "t": 22486,
       "kind": "buzz",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 22542,
+      "t": 22486,
       "kind": "vibrate",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 22856,
+      "t": 22772,
       "kind": "buzz",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 22856,
+      "t": 22772,
       "kind": "vibrate",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 23169,
+      "t": 23083,
       "kind": "buzz",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 23169,
+      "t": 23083,
       "kind": "vibrate",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 23483,
+      "t": 23377,
       "kind": "buzz",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 23483,
+      "t": 23377,
       "kind": "vibrate",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 23794,
+      "t": 23690,
       "kind": "buzz",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 23794,
+      "t": 23690,
       "kind": "vibrate",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 24108,
+      "t": 24002,
       "kind": "buzz",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 24108,
+      "t": 24002,
       "kind": "vibrate",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 24421,
+      "t": 24317,
       "kind": "buzz",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 24421,
+      "t": 24317,
       "kind": "vibrate",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 25277,
+      "t": 25173,
       "kind": "mark",
       "label": "B5",
       "status": "playing",
       "phase": "wager"
     },
     {
-      "t": 25295,
+      "t": 25190,
       "kind": "buzz",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 25295,
+      "t": 25190,
       "kind": "vibrate",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 26827,
+      "t": 26726,
       "kind": "buzz",
       "pattern": 120
     },
     {
-      "t": 26827,
+      "t": 26726,
       "kind": "vibrate",
       "pattern": 120
     },
     {
-      "t": 29140,
+      "t": 29044,
       "kind": "mark",
       "label": "B6",
       "status": "playing",
       "phase": "reveal"
     },
     {
-      "t": 29157,
+      "t": 29061,
       "kind": "buzz",
       "pattern": [60, 60, 60, 60, 160]
     },
     {
-      "t": 29157,
+      "t": 29061,
       "kind": "vibrate",
       "pattern": [60, 60, 60, 60, 160]
     },
     {
-      "t": 30672,
+      "t": 30585,
       "kind": "mark",
       "label": "B7",
       "status": "results",
       "phase": null
     },
     {
-      "t": 32222,
+      "t": 32135,
       "kind": "mark",
       "label": "C1",
       "status": "playing",
       "phase": "intro"
     },
     {
-      "t": 32860,
+      "t": 32781,
       "kind": "buzz",
       "pattern": [60, 60, 60, 60, 160]
     },
     {
-      "t": 32860,
+      "t": 32781,
       "kind": "vibrate",
       "pattern": [60, 60, 60, 60, 160]
     },
     {
-      "t": 34366,
+      "t": 34300,
       "kind": "mark",
       "label": "C2",
       "status": "results",
       "phase": null
     },
     {
-      "t": 35910,
+      "t": 35848,
       "kind": "mark",
       "label": "C3",
       "status": "selecting",
       "phase": null
     },
     {
-      "t": 37474,
+      "t": 37410,
       "kind": "mark",
       "label": "D1",
       "status": "playing",
       "phase": "intro"
     },
     {
-      "t": 42643,
+      "t": 42582,
       "kind": "mark",
       "label": "D2",
       "status": "playing",
       "phase": "play"
     },
     {
-      "t": 44895,
+      "t": 46449,
       "kind": "mark",
       "label": "D3",
       "status": "playing",
       "phase": "check"
     },
     {
-      "t": 46739,
+      "t": 48284,
       "kind": "mark",
       "label": "D4",
       "status": "playing",
       "phase": "play"
     },
     {
-      "t": 48351,
+      "t": 49883,
       "kind": "mark",
       "label": "D5",
       "status": "playing",
       "phase": "play"
     },
     {
-      "t": 49619,
+      "t": 51135,
       "kind": "mark",
       "label": "D6",
       "status": "playing",
       "phase": "play"
     },
     {
-      "t": 53677,
+      "t": 55162,
       "kind": "mark",
       "label": "D7",
       "status": "playing",
       "phase": "play"
     },
     {
-      "t": 53729,
+      "t": 55217,
       "kind": "cue",
       "cue": "submit",
       "surface": "phone",
@@ -2404,96 +2802,96 @@
       "semitones": 0
     },
     {
-      "t": 53729,
+      "t": 55217,
       "kind": "buzz",
       "pattern": 20
     },
     {
-      "t": 53729,
+      "t": 55217,
       "kind": "vibrate",
       "pattern": 20
     },
     {
-      "t": 56236,
+      "t": 59719,
       "kind": "mark",
       "label": "D8",
       "status": "playing",
       "phase": "bingo"
     },
     {
-      "t": 59643,
+      "t": 63117,
       "kind": "mark",
       "label": "D9",
       "status": "playing",
       "phase": "play"
     },
     {
-      "t": 60258,
+      "t": 63747,
       "kind": "buzz",
       "pattern": [60, 60, 60, 60, 160]
     },
     {
-      "t": 60258,
+      "t": 63747,
       "kind": "vibrate",
       "pattern": [60, 60, 60, 60, 160]
     },
     {
-      "t": 62268,
+      "t": 65751,
       "kind": "mark",
       "label": "D10",
       "status": "results",
       "phase": null
     },
     {
-      "t": 64862,
+      "t": 68339,
       "kind": "mark",
       "label": "E1",
       "status": "lobby",
       "phase": null
     },
     {
-      "t": 66550,
+      "t": 70034,
       "kind": "mark",
       "label": "E2",
       "status": "playing",
       "phase": "play"
     },
     {
-      "t": 66612,
+      "t": 70099,
       "kind": "buzz",
       "pattern": [60, 60, 60, 60, 160]
     },
     {
-      "t": 66612,
+      "t": 70099,
       "kind": "vibrate",
       "pattern": [60, 60, 60, 60, 160]
     },
     {
-      "t": 69144,
+      "t": 72632,
       "kind": "mark",
       "label": "E3",
       "status": "lobby",
       "phase": null
     },
     {
-      "t": 75946,
+      "t": 79426,
       "kind": "mark",
       "label": "F1",
       "status": "playing",
       "phase": "intro"
     },
     {
-      "t": 75964,
+      "t": 79443,
       "kind": "buzz",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 75964,
+      "t": 79443,
       "kind": "vibrate",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 77575,
+      "t": 81046,
       "kind": "cue",
       "cue": "submit",
       "surface": "phone",
@@ -2502,142 +2900,142 @@
       "semitones": 0
     },
     {
-      "t": 77575,
+      "t": 81046,
       "kind": "buzz",
       "pattern": 20
     },
     {
-      "t": 77575,
+      "t": 81046,
       "kind": "vibrate",
       "pattern": 20
     },
     {
-      "t": 81146,
+      "t": 84588,
       "kind": "mark",
       "label": "F2",
       "status": "playing",
       "phase": "vote"
     },
     {
-      "t": 81163,
+      "t": 84604,
       "kind": "buzz",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 81163,
+      "t": 84604,
       "kind": "vibrate",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 84749,
+      "t": 88178,
       "kind": "mark",
       "label": "F3",
       "status": "playing",
       "phase": "vote"
     },
     {
-      "t": 84778,
+      "t": 88212,
       "kind": "buzz",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 84778,
+      "t": 88212,
       "kind": "vibrate",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 84969,
+      "t": 88401,
       "kind": "buzz",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 84969,
+      "t": 88401,
       "kind": "vibrate",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 85154,
+      "t": 88588,
       "kind": "buzz",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 85154,
+      "t": 88588,
       "kind": "vibrate",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 85342,
+      "t": 88776,
       "kind": "buzz",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 85342,
+      "t": 88776,
       "kind": "vibrate",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 86337,
+      "t": 89765,
       "kind": "mark",
       "label": "F4",
       "status": "playing",
       "phase": "scores"
     },
     {
-      "t": 86428,
+      "t": 89848,
       "kind": "buzz",
       "pattern": [60, 60, 60, 60, 160]
     },
     {
-      "t": 86428,
+      "t": 89848,
       "kind": "vibrate",
       "pattern": [60, 60, 60, 60, 160]
     },
     {
-      "t": 89971,
+      "t": 93402,
       "kind": "mark",
       "label": "G1",
       "status": "playing",
       "phase": "pick"
     },
     {
-      "t": 90008,
+      "t": 93443,
       "kind": "buzz",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 90008,
+      "t": 93443,
       "kind": "vibrate",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 91445,
+      "t": 94885,
       "kind": "mark",
       "label": "G2",
       "status": "playing",
       "phase": "draw"
     },
     {
-      "t": 91479,
+      "t": 94917,
       "kind": "buzz",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 91479,
+      "t": 94917,
       "kind": "vibrate",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 91933,
+      "t": 95392,
       "kind": "buzz",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 91933,
+      "t": 95392,
       "kind": "vibrate",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 93759,
+      "t": 97200,
       "kind": "mark",
       "label": "G3",
       "status": "playing",
@@ -2646,80 +3044,80 @@
   ],
   "p2": [
     {
-      "t": 232,
+      "t": 212,
       "kind": "mark",
       "label": "A0",
       "status": "lobby",
       "phase": null
     },
     {
-      "t": 2333,
+      "t": 2301,
       "kind": "mark",
       "label": "A1",
       "status": "lobby",
       "phase": null
     },
     {
-      "t": 3222,
+      "t": 3193,
       "kind": "mark",
       "label": "A2",
       "status": "lobby",
       "phase": null
     },
     {
-      "t": 4692,
+      "t": 4646,
       "kind": "mark",
       "label": "A3",
       "status": "lobby",
       "phase": null
     },
     {
-      "t": 5535,
+      "t": 5478,
       "kind": "mark",
       "label": "A4",
       "status": "selecting",
       "phase": null
     },
     {
-      "t": 7079,
+      "t": 7011,
       "kind": "mark",
       "label": "B1",
       "status": "playing",
       "phase": "intro"
     },
     {
-      "t": 7503,
+      "t": 7442,
       "kind": "buzz",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 7503,
+      "t": 7442,
       "kind": "vibrate",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 8421,
+      "t": 8368,
       "kind": "mark",
       "label": "B2",
       "status": "playing",
       "phase": "question"
     },
     {
-      "t": 9704,
+      "t": 9650,
       "kind": "mark",
       "label": "B3",
       "status": "playing",
       "phase": "question"
     },
     {
-      "t": 15070,
+      "t": 15019,
       "kind": "mark",
       "label": "B3b",
       "status": "playing",
       "phase": "question"
     },
     {
-      "t": 15723,
+      "t": 15686,
       "kind": "cue",
       "cue": "tick",
       "surface": "phone",
@@ -2728,384 +3126,384 @@
       "semitones": 0
     },
     {
-      "t": 15724,
+      "t": 15687,
       "kind": "buzz",
       "pattern": 30
     },
     {
-      "t": 15724,
+      "t": 15687,
       "kind": "vibrate",
       "pattern": 30
     },
     {
-      "t": 16723,
+      "t": 16685,
       "kind": "buzz",
       "pattern": 30
     },
     {
-      "t": 16723,
+      "t": 16685,
       "kind": "vibrate",
       "pattern": 30
     },
     {
-      "t": 17713,
+      "t": 17689,
       "kind": "buzz",
       "pattern": 30
     },
     {
-      "t": 17713,
+      "t": 17689,
       "kind": "vibrate",
       "pattern": 30
     },
     {
-      "t": 18714,
+      "t": 18690,
       "kind": "buzz",
       "pattern": 30
     },
     {
-      "t": 18714,
+      "t": 18690,
       "kind": "vibrate",
       "pattern": 30
     },
     {
-      "t": 19721,
+      "t": 19690,
       "kind": "buzz",
       "pattern": 30
     },
     {
-      "t": 19721,
+      "t": 19690,
       "kind": "vibrate",
       "pattern": 30
     },
     {
-      "t": 20865,
+      "t": 20817,
       "kind": "buzz",
       "pattern": 120
     },
     {
-      "t": 20865,
+      "t": 20817,
       "kind": "vibrate",
       "pattern": 120
     },
     {
-      "t": 21288,
+      "t": 21241,
       "kind": "mark",
       "label": "B4",
       "status": "playing",
       "phase": "reveal"
     },
     {
-      "t": 21352,
+      "t": 21305,
       "kind": "buzz",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 21352,
+      "t": 21305,
       "kind": "vibrate",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 21665,
+      "t": 21617,
       "kind": "buzz",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 21665,
+      "t": 21617,
       "kind": "vibrate",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 21976,
+      "t": 21931,
       "kind": "buzz",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 21976,
+      "t": 21931,
       "kind": "vibrate",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 22288,
+      "t": 22246,
       "kind": "buzz",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 22288,
+      "t": 22246,
       "kind": "vibrate",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 22602,
+      "t": 22532,
       "kind": "buzz",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 22602,
+      "t": 22532,
       "kind": "vibrate",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 22914,
+      "t": 22843,
       "kind": "buzz",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 22914,
+      "t": 22843,
       "kind": "vibrate",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 23229,
+      "t": 23137,
       "kind": "buzz",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 23229,
+      "t": 23137,
       "kind": "vibrate",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 23540,
+      "t": 23450,
       "kind": "buzz",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 23540,
+      "t": 23450,
       "kind": "vibrate",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 23854,
+      "t": 23762,
       "kind": "buzz",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 23854,
+      "t": 23762,
       "kind": "vibrate",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 24166,
+      "t": 24076,
       "kind": "buzz",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 24166,
+      "t": 24076,
       "kind": "vibrate",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 25024,
+      "t": 24933,
       "kind": "mark",
       "label": "B5",
       "status": "playing",
       "phase": "wager"
     },
     {
-      "t": 25041,
+      "t": 24950,
       "kind": "buzz",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 25041,
+      "t": 24950,
       "kind": "vibrate",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 26573,
+      "t": 26486,
       "kind": "buzz",
       "pattern": 120
     },
     {
-      "t": 26573,
+      "t": 26486,
       "kind": "vibrate",
       "pattern": 120
     },
     {
-      "t": 28887,
+      "t": 28804,
       "kind": "mark",
       "label": "B6",
       "status": "playing",
       "phase": "reveal"
     },
     {
-      "t": 28903,
+      "t": 28821,
       "kind": "buzz",
       "pattern": 40
     },
     {
-      "t": 28903,
+      "t": 28821,
       "kind": "vibrate",
       "pattern": 40
     },
     {
-      "t": 30419,
+      "t": 30346,
       "kind": "mark",
       "label": "B7",
       "status": "results",
       "phase": null
     },
     {
-      "t": 31968,
+      "t": 31895,
       "kind": "mark",
       "label": "C1",
       "status": "playing",
       "phase": "intro"
     },
     {
-      "t": 32592,
+      "t": 32528,
       "kind": "buzz",
       "pattern": [60, 60, 60, 60, 160]
     },
     {
-      "t": 32592,
+      "t": 32528,
       "kind": "vibrate",
       "pattern": [60, 60, 60, 60, 160]
     },
     {
-      "t": 34113,
+      "t": 34060,
       "kind": "mark",
       "label": "C2",
       "status": "results",
       "phase": null
     },
     {
-      "t": 35657,
+      "t": 35608,
       "kind": "mark",
       "label": "C3",
       "status": "selecting",
       "phase": null
     },
     {
-      "t": 37221,
+      "t": 37171,
       "kind": "mark",
       "label": "D1",
       "status": "playing",
       "phase": "intro"
     },
     {
-      "t": 42390,
+      "t": 42342,
       "kind": "mark",
       "label": "D2",
       "status": "playing",
       "phase": "play"
     },
     {
-      "t": 44641,
+      "t": 46209,
       "kind": "mark",
       "label": "D3",
       "status": "playing",
       "phase": "check"
     },
     {
-      "t": 46486,
+      "t": 48045,
       "kind": "mark",
       "label": "D4",
       "status": "playing",
       "phase": "play"
     },
     {
-      "t": 48098,
+      "t": 49643,
       "kind": "mark",
       "label": "D5",
       "status": "playing",
       "phase": "play"
     },
     {
-      "t": 49365,
+      "t": 50895,
       "kind": "mark",
       "label": "D6",
       "status": "playing",
       "phase": "play"
     },
     {
-      "t": 53423,
+      "t": 54922,
       "kind": "mark",
       "label": "D7",
       "status": "playing",
       "phase": "play"
     },
     {
-      "t": 55983,
+      "t": 59479,
       "kind": "mark",
       "label": "D8",
       "status": "playing",
       "phase": "bingo"
     },
     {
-      "t": 59390,
+      "t": 62877,
       "kind": "mark",
       "label": "D9",
       "status": "playing",
       "phase": "play"
     },
     {
-      "t": 59990,
+      "t": 63492,
       "kind": "buzz",
       "pattern": 40
     },
     {
-      "t": 59990,
+      "t": 63492,
       "kind": "vibrate",
       "pattern": 40
     },
     {
-      "t": 62014,
+      "t": 65511,
       "kind": "mark",
       "label": "D10",
       "status": "results",
       "phase": null
     },
     {
-      "t": 64608,
+      "t": 68099,
       "kind": "mark",
       "label": "E1",
       "status": "lobby",
       "phase": null
     },
     {
-      "t": 66297,
+      "t": 69794,
       "kind": "mark",
       "label": "E2",
       "status": "playing",
       "phase": "play"
     },
     {
-      "t": 66358,
+      "t": 69859,
       "kind": "buzz",
       "pattern": [60, 60, 60, 60, 160]
     },
     {
-      "t": 66358,
+      "t": 69859,
       "kind": "vibrate",
       "pattern": [60, 60, 60, 60, 160]
     },
     {
-      "t": 68891,
+      "t": 72393,
       "kind": "mark",
       "label": "E3",
       "status": "lobby",
       "phase": null
     },
     {
-      "t": 75692,
+      "t": 79186,
       "kind": "mark",
       "label": "F1",
       "status": "playing",
       "phase": "intro"
     },
     {
-      "t": 75710,
+      "t": 79202,
       "kind": "buzz",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 75710,
+      "t": 79202,
       "kind": "vibrate",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 78621,
+      "t": 82090,
       "kind": "cue",
       "cue": "submit",
       "surface": "phone",
@@ -3114,142 +3512,142 @@
       "semitones": 0
     },
     {
-      "t": 78621,
+      "t": 82090,
       "kind": "buzz",
       "pattern": 20
     },
     {
-      "t": 78621,
+      "t": 82090,
       "kind": "vibrate",
       "pattern": 20
     },
     {
-      "t": 79908,
+      "t": 83361,
       "kind": "buzz",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 79908,
+      "t": 83361,
       "kind": "vibrate",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 80893,
+      "t": 84348,
       "kind": "mark",
       "label": "F2",
       "status": "playing",
       "phase": "vote"
     },
     {
-      "t": 80909,
+      "t": 84363,
       "kind": "buzz",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 80909,
+      "t": 84363,
       "kind": "vibrate",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 84496,
+      "t": 87939,
       "kind": "mark",
       "label": "F3",
       "status": "playing",
       "phase": "vote"
     },
     {
-      "t": 84524,
+      "t": 87972,
       "kind": "buzz",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 84524,
+      "t": 87972,
       "kind": "vibrate",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 84900,
+      "t": 88347,
       "kind": "buzz",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 84900,
+      "t": 88347,
       "kind": "vibrate",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 85090,
+      "t": 88536,
       "kind": "buzz",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 85090,
+      "t": 88536,
       "kind": "vibrate",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 86083,
+      "t": 89525,
       "kind": "mark",
       "label": "F4",
       "status": "playing",
       "phase": "scores"
     },
     {
-      "t": 86175,
+      "t": 89607,
       "kind": "buzz",
       "pattern": [60, 60, 60, 60, 160]
     },
     {
-      "t": 86175,
+      "t": 89607,
       "kind": "vibrate",
       "pattern": [60, 60, 60, 60, 160]
     },
     {
-      "t": 89717,
+      "t": 93163,
       "kind": "mark",
       "label": "G1",
       "status": "playing",
       "phase": "pick"
     },
     {
-      "t": 89753,
+      "t": 93202,
       "kind": "buzz",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 89753,
+      "t": 93202,
       "kind": "vibrate",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 91192,
+      "t": 94646,
       "kind": "mark",
       "label": "G2",
       "status": "playing",
       "phase": "draw"
     },
     {
-      "t": 91226,
+      "t": 94677,
       "kind": "buzz",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 91226,
+      "t": 94677,
       "kind": "vibrate",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 91679,
+      "t": 95152,
       "kind": "buzz",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 91679,
+      "t": 95152,
       "kind": "vibrate",
       "pattern": [30, 50, 30]
     },
     {
-      "t": 93505,
+      "t": 96960,
       "kind": "mark",
       "label": "G3",
       "status": "playing",

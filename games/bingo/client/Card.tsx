@@ -28,6 +28,14 @@ export interface CardProps {
   verdict?: boolean;
   /** Cells pop in one after another (a card landing on the TV for everyone to check). */
   reveal?: boolean;
+  /**
+   * A claim being checked: these daubed cells turn over one at a time, in this order, from a
+   * plain daub to green (called) or red (never called); cells not listed show at once.
+   */
+  revealOrder?: readonly number[];
+  revealStepMs?: number;
+  /** After the reveal: misses outlined, the marks settled. */
+  settled?: boolean;
 }
 
 /** Stagger between cells during a reveal; 25 cells ≈ 1 s before the verdict may land. */
@@ -47,7 +55,12 @@ export function Card({
   size = 'phone',
   verdict = false,
   reveal = false,
+  revealOrder,
+  revealStepMs = 200,
+  settled = true,
 }: CardProps): JSX.Element {
+  const turnAt = new Map((revealOrder ?? []).map((i, k) => [i, k * revealStepMs]));
+  const turning = revealOrder !== undefined;
   const daubed = new Set(daubs);
   const patternSet = new Set(pattern);
   const greenSet = new Set(green);
@@ -71,22 +84,31 @@ export function Card({
         {numbers.map((n, i) => {
           const isFree = i === FREE;
           const isDaubed = isFree ? freeDaubed : daubed.has(i);
+          // A turning cell keeps its plain daub until its beat, then flips to its colour; a
+          // daubed cell whose beat has not been scheduled yet is still just a daub.
+          const coloured = greenSet.has(i) || redSet.has(i);
+          const turns = turning && turnAt.has(i) && coloured;
+          const waits = turning && isDaubed && !isFree && !turnAt.has(i);
+          const showColour = !turning || turnAt.has(i);
           const cls = [
             styles.cell,
             isDaubed ? styles.daubed : '',
-            verdict && isDaubed && !isFree && !greenSet.has(i) && !redSet.has(i) ? styles.dim : '',
-            greenSet.has(i) ? styles.green : '',
-            redSet.has(i) ? styles.red : '',
-            missingSet.has(i) ? styles.missing : '',
+            verdict && isDaubed && !isFree && !coloured && !waits ? styles.dim : '',
+            greenSet.has(i) && showColour ? (turns ? styles.turnGreen : styles.green) : '',
+            redSet.has(i) && showColour ? (turns ? styles.turnRed : styles.red) : '',
+            missingSet.has(i) && settled ? styles.missing : '',
             patternSet.has(i) && !isDaubed ? styles.pattern : '',
             isFree ? styles.free : '',
+            waits ? styles.waiting : '',
           ].join(' ');
-          const mark = greenSet.has(i) ? '✓' : redSet.has(i) ? '✕' : null;
+          const mark = !showColour ? null : greenSet.has(i) ? '✓' : redSet.has(i) ? '✕' : null;
           const label = isFree ? 'FREE' : String(n);
           const Tag = interactive && (!isFree || onTapFree) ? 'button' : 'div';
           const style = reveal
             ? ({ animationDelay: `${i * REVEAL_STEP_MS}ms` } as CSSProperties)
-            : undefined;
+            : turns
+              ? ({ animationDelay: `${turnAt.get(i) ?? 0}ms` } as CSSProperties)
+              : undefined;
           return (
             <Tag
               key={i}

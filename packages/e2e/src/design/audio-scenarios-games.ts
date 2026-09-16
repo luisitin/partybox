@@ -64,10 +64,10 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
   const speaks = evs.filter((e) => e.kind === 'speak');
   T.ok(
     'D',
-    'two calls → two boings and two spoken calls in Zira',
+    'two calls → two boings and two recorded calls',
     T.cues(evs).filter((c) => c === 'call').length === 2 &&
       speaks.length === 2 &&
-      speaks.every((s) => String(s['voice']).includes('Zira')),
+      speaks.every((s) => String(s['voice']) === 'clip'),
     `cues=${T.cues(evs).join(',')}; spoken=${speaks.map((s) => s['text']).join(' | ')} voice=${speaks[0]?.['voice']}`,
   );
   T.ok(
@@ -79,14 +79,15 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
   );
   // wrong claim from p2
   await p2.page.getByRole('button', { name: /^bingo!$/i }).click();
-  await settle(2200);
+  // The reveal: land 0.9 s, one turn per daubed cell (220 ms), 0.7 s hold, 0.6 s settle, verdict.
+  await settle(3800);
   await T.mark('D3');
   evs = await T.between(tv, 'D2', 'D3');
   const hushIdx = evs.findIndex((e) => e.kind === 'hush' || e.kind === 'ss:cancel');
   const wrongIdx = evs.findIndex((e) => e.kind === 'cue' && e['cue'] === 'wrong');
   T.ok(
     'D',
-    'wrong claim → caller hushed at once, buzzer after the card lands, no chime on entry, nothing spoken',
+    'wrong claim → caller hushed at once, buzzer at the verdict (after the reveal), no chime on entry, nothing spoken',
     hushIdx >= 0 &&
       wrongIdx >= 0 &&
       !evs.some((e) => e.kind === 'speak') &&
@@ -155,14 +156,14 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
   await settle(300);
   await T.mark('D7');
   await vip.page.getByRole('button', { name: /^bingo!$/i }).click();
-  await settle(2500);
+  await settle(4500);
   await T.mark('D8');
   evs = await T.between(tv, 'D7', 'D8');
   const cheerAt = evs.find((e) => e.kind === 'cue' && e['cue'] === 'cheer');
   const claimT = evs[0]?.t ?? 0;
   T.ok(
     'D',
-    'BINGO → caller hushed, cheer once after the card lands (~1.3 s), no chime on entry, music continues',
+    'BINGO → caller hushed, cheer once at the verdict (~3.3 s, after every cell has turned), no chime on entry, music continues',
     Boolean(cheerAt) &&
       T.cues(evs).filter((c) => c === 'cheer').length === 1 &&
       !T.cues(evs).some((c) => ['phase', 'win', 'fanfare'].includes(c)) &&

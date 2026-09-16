@@ -2,7 +2,7 @@
 // the Web Audio synth and provides `play` through this context, so a game's Tv component can cue
 // its own moments — a new bingo call, a wrong-answer buzzer, a fanfare — without knowing about
 // audio at all. Outside a provider (previews, tests) every cue is silent.
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useMemo } from 'react';
 import type { JSX, ReactNode } from 'react';
 
 export const SOUND_CUES = [
@@ -41,19 +41,52 @@ export function isSoundCue(value: string): value is SoundCue {
 
 export type PlayCue = (cue: SoundCue) => void;
 
-const SoundContext = createContext<PlayCue>(() => undefined);
+export interface ClipOptions {
+  /** 0..1, default 1. */
+  gain?: number;
+  /** Start this many ms after the call (a cue may lead). */
+  delayMs?: number;
+}
+
+/**
+ * What a game's Tv gets from the shell: `play` a design-system cue; `clip` a recorded file under
+ * /sfx (a bingo call), through the same graph — mute, master level; `hush` stops every clip.
+ */
+export interface SoundApi {
+  play: PlayCue;
+  clip: (src: string, opts?: ClipOptions) => void;
+  hush: () => void;
+}
+
+const SILENT: SoundApi = { play: () => undefined, clip: () => undefined, hush: () => undefined };
+const SoundContext = createContext<SoundApi>(SILENT);
 
 export function SoundProvider({
   play,
+  clip,
+  hush,
   children,
 }: {
   play: PlayCue;
+  clip?: SoundApi['clip'];
+  hush?: SoundApi['hush'];
   children: ReactNode;
 }): JSX.Element {
-  return <SoundContext.Provider value={play}>{children}</SoundContext.Provider>;
+  // One stable object per set of functions: consumers key effects on it (a new object every
+  // render would replay a game's "new call" effect on every push).
+  const value = useMemo<SoundApi>(
+    () => ({ play, clip: clip ?? SILENT.clip, hush: hush ?? SILENT.hush }),
+    [play, clip, hush],
+  );
+  return <SoundContext.Provider value={value}>{children}</SoundContext.Provider>;
 }
 
 /** The shell's `play(cue)`; a no-op when no shell provides one. */
 export function useSound(): PlayCue {
+  return useContext(SoundContext).play;
+}
+
+/** The whole shell audio API (cues + recorded clips). */
+export function useSoundApi(): SoundApi {
   return useContext(SoundContext);
 }

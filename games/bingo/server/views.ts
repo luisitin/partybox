@@ -50,7 +50,10 @@ interface Common {
   bingosThisRound: number;
 }
 
-export interface BingoTvView extends TvView, Common {}
+export interface BingoTvView extends TvView, Common {
+  /** Numbers called so far this round (the check turns the claimed cells over in call order). */
+  called: number[];
+}
 
 export interface BingoControllerView extends ControllerView, Common {
   /** null for spectators. */
@@ -119,6 +122,7 @@ export function tvView(state: State, gameId: string): BingoTvView {
     ...envelope(state, gameId, { statusOf: statusOf(state), scores: state.wins }),
     timerMode: 'quiet',
     ...common(state),
+    called: calledNumbers(state),
   };
 }
 

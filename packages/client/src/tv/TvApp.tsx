@@ -97,8 +97,11 @@ export function TvApp(): JSX.Element {
     // A game begins: a held G-major arpeggio (the intro itself never chimes — p.phase is null);
     // a TV that reloads mid-game (p.status === '') stays quiet, like the join rule.
     if (room.status === 'playing' && p.status !== 'playing' && p.status !== '') audio.play('start');
-    // The winner moment (owner pick): a party horn with a crowd cheer under it.
-    if (room.status === 'results' && p.status !== 'results' && !homing) audio.play('cheer');
+    // The winner moment (owner pick): a party horn with a crowd cheer under it (music ducked).
+    if (room.status === 'results' && p.status !== 'results' && !homing) {
+      music.duck(9000);
+      audio.play('cheer');
+    }
     // A game that cued this phase itself (useSound, child effects run first) keeps the stage's
     // generic chime out of its way. `clientModule.sounds` maps a phase id to its own cue (reveal,
     // wager, tally…); unmapped phases play `phase`, reserved for "your phone needs you".
@@ -134,13 +137,14 @@ export function TvApp(): JSX.Element {
       code: room.code,
       locked: view && view.phaseId === p.phase ? locked : 0,
     };
-  }, [room, view, audio, homing]);
+  }, [room, view, audio, music, homing]);
 
   let content: JSX.Element;
   if (!room) content = <TvLobby room={null} />;
   else if (room.status === 'lobby') content = <TvLobby room={room} />;
   else if (room.status === 'selecting') content = <TvSelecting room={room} client={client} />;
-  else if (room.status === 'playing') content = <TvPlaying room={room} view={view} audio={audio} />;
+  else if (room.status === 'playing')
+    content = <TvPlaying room={room} view={view} audio={audio} music={music} />;
   else content = <TvResults room={room} lastView={lastView} />;
 
   return (

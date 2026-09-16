@@ -85,7 +85,8 @@ export const inputSchema = z.discriminatedUnion('type', [
 export type Input = z.infer<typeof inputSchema>;
 
 export const INTRO_MS = 5_000;
-export const CHECK_MS = 5_000;
+/** Long enough for the cell-by-cell reveal of a full card (≈ 0.9 + 24 × 0.22 + 0.7 s) plus reading. */
+export const CHECK_MS = 9_000;
 export const BINGO_MS = 10_000;
 /** With a winner the celebration waits for the VIP's decision (keep going / next round). */
 export const BINGO_DECIDE_MS = 90_000;

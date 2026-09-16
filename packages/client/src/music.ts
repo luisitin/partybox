@@ -35,6 +35,8 @@ export interface MusicEngine {
   setMuted(muted: boolean): void;
   /** A paused game holds the music where it is. */
   setPaused(paused: boolean): void;
+  /** Drop to a third of the level for `ms` (a cheer on top), then come back. */
+  duck(ms: number): void;
   current(): string | null;
 }
 
@@ -225,6 +227,16 @@ export function createMusicEngine(): MusicEngine {
     setMuted(value) {
       muted = value;
       if (audio) audio.muted = value;
+    },
+    duck(ms) {
+      const el = audio;
+      if (!el || !plan) return;
+      trace('music:duck', { ms });
+      const level = plan.volume;
+      rampTo(el, level * 0.3, 400);
+      setTimeout(() => {
+        if (audio === el && !el.paused) rampTo(el, level, 1500);
+      }, ms);
     },
     setPaused(value) {
       if (paused === value) return;

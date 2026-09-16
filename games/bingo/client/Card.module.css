@@ -81,6 +81,66 @@ button.cell:focus-visible {
   color: var(--pb-on-accent-2-fill);
 }
 
+/* A claim being checked: each daubed cell keeps its plain daub, then turns over on its beat —
+   green for a called number, red for one that never was — with its mark; misses are outlined
+   only once the verdict is in. Zero-length under reduced motion via the tokens. */
+.turnGreen,
+.turnRed {
+  animation: cell-turn var(--pb-motion-slow) var(--pb-ease) both;
+}
+
+.turnGreen {
+  --pb-cell-to: var(--pb-accent-3);
+  --pb-cell-to-text: var(--pb-on-accent);
+}
+
+.turnRed {
+  --pb-cell-to: var(--pb-danger);
+  --pb-cell-to-text: var(--pb-on-accent);
+}
+
+.turnGreen .mark,
+.turnRed .mark {
+  animation: mark-in var(--pb-motion-base) var(--pb-ease) both;
+  animation-delay: inherit;
+}
+
+@keyframes cell-turn {
+  0% {
+    transform: scale(1);
+    background: var(--pb-accent);
+    border-color: var(--pb-border);
+    color: var(--pb-on-accent);
+  }
+  45% {
+    transform: scale(0.82) rotate(-4deg);
+    background: var(--pb-accent);
+    color: var(--pb-on-accent);
+  }
+  100% {
+    transform: scale(1);
+    background: var(--pb-cell-to);
+    border-color: var(--pb-cell-to);
+    color: var(--pb-cell-to-text);
+  }
+}
+
+@keyframes mark-in {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Daubed cells whose turn has not come (never in the pattern) simply stay plain. */
+.waiting {
+  opacity: 0.8;
+}
+
 /* A card landing on the TV: every cell pops in with its own delay (Card sets animation-delay),
    the never-called reds jolt once they are up. Zero-length under reduced motion via the tokens. */
 .reveal .cell {
