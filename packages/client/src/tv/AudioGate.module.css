@@ -14,7 +14,7 @@
   font-size: var(--pb-font-caption);
   font-weight: 800;
   z-index: 20;
-  animation: pb-rise var(--pb-motion-base) var(--pb-ease) both;
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
 }
 
 .pillHint {
@@ -58,5 +58,5 @@
   padding: var(--pb-space-2);
   border-radius: var(--pb-radius);
   background: var(--pb-surface-2);
-  animation: pb-rise var(--pb-motion-base) var(--pb-ease) both;
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
 }

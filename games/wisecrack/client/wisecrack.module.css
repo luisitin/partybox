@@ -26,7 +26,7 @@
   border-radius: var(--pb-radius-lg);
   background: var(--pb-surface);
   min-height: 12em;
-  animation: pb-rise var(--pb-motion-base) var(--pb-ease) both;
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
 }
 
 .card:nth-child(2) {

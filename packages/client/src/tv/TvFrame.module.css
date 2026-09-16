@@ -166,5 +166,5 @@
   background: var(--pb-surface-2);
   font-size: var(--pb-font-caption);
   font-weight: 700;
-  animation: pb-rise var(--pb-motion-base) var(--pb-ease) both;
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
 }

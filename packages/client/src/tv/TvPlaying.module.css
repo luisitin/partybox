@@ -43,7 +43,7 @@
   min-height: 0;
   display: flex;
   flex-direction: column;
-  animation: pb-rise var(--pb-motion-base) var(--pb-ease) both;
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
 }
 
 /* Light enough that the prompt stays readable underneath (transitions never hide information). */

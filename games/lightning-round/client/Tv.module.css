@@ -120,7 +120,7 @@
   border-radius: var(--pb-radius);
   background: var(--pb-surface);
   font-size: var(--pb-font-body);
-  animation: pb-rise var(--pb-motion-base) var(--pb-ease) both;
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
 }
 
 .rowCorrect {
