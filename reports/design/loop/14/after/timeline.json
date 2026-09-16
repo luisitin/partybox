@@ -1,0 +1,33 @@
+{
+  "pass": "14",
+  "game": "bingo",
+  "players": 6,
+  "scenario": "vip-leaves",
+  "focus": "tv",
+  "started": "20:53:11.305",
+  "tvVideoT0": "20:53:06.578",
+  "changes": [
+    {
+      "t": 1789591991306,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789591996303,
+      "at": "20:53:11.306",
+      "sinceStartS": 0,
+      "videoS": 4.7
+    },
+    {
+      "t": 1789591996319,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789592000317,
+      "at": "20:53:16.319",
+      "sinceStartS": 5,
+      "videoS": 9.7
+    }
+  ],
+  "notes": [
+    "vip-leaves: Sam (VIP) closed the page in play",
+    "budget reached while playing; skipped to results"
+  ]
+}
