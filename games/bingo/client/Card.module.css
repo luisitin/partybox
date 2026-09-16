@@ -1,0 +1,173 @@
+/* The bingo card. Tokens only (docs/DESIGN_SYSTEM.md). Sizes: phone (fills the width, ≥ 56 px
+   cells), tv (one big card during a check), mini (intro card list on the TV). */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-1);
+  width: 100%;
+  max-width: 100%;
+  user-select: none;
+}
+
+.head {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--pb-space-1);
+}
+
+.letter {
+  text-align: center;
+  font-weight: 900;
+  color: var(--pb-accent-2);
+  letter-spacing: 0.04em;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--pb-space-1);
+}
+
+.cell {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  min-width: 0;
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface-2);
+  border: 3px solid var(--pb-border);
+  color: var(--pb-text);
+  font-family: inherit;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  padding: 0;
+  transition:
+    background var(--pb-motion-fast) var(--pb-ease),
+    transform var(--pb-motion-fast) var(--pb-ease);
+}
+
+button.cell {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button.cell:active {
+  transform: scale(0.94);
+}
+
+button.cell:focus-visible {
+  outline: 3px solid var(--pb-focus);
+  outline-offset: 2px;
+}
+
+.daubed {
+  background: var(--pb-accent);
+  color: var(--pb-on-accent);
+}
+
+.dim {
+  opacity: 0.45;
+}
+
+.free {
+  background: var(--pb-accent-2-fill);
+  color: var(--pb-on-accent-2-fill);
+}
+
+.pattern {
+  border-color: var(--pb-accent-2);
+  border-style: dotted;
+}
+
+.green {
+  background: var(--pb-accent-3);
+  color: var(--pb-on-accent);
+  border-color: var(--pb-accent-3);
+}
+
+.red {
+  background: var(--pb-danger);
+  color: var(--pb-on-accent);
+  border-color: var(--pb-danger);
+}
+
+.missing {
+  background: var(--pb-surface);
+  border: 3px dashed var(--pb-accent-2);
+}
+
+.mark {
+  position: absolute;
+  right: 4px;
+  bottom: 2px;
+  font-size: 0.7em;
+  font-weight: 900;
+  line-height: 1;
+}
+
+/* ── sizes ── */
+.phone .letter {
+  font-size: var(--pb-font-h2);
+}
+.phone .number {
+  font-size: var(--pb-font-h2);
+}
+.phone .free .number {
+  font-size: var(--pb-font-caption);
+}
+
+.tv {
+  max-width: 560px;
+}
+.tv .letter {
+  font-size: var(--pb-font-body);
+}
+.tv .number {
+  font-size: var(--pb-font-body);
+}
+.tv .free .number {
+  font-size: var(--pb-font-caption);
+}
+.tv .cell {
+  border-radius: var(--pb-radius);
+}
+
+.mini {
+  max-width: 220px;
+  gap: 2px;
+}
+.mini .head,
+.mini .grid {
+  gap: 2px;
+}
+.mini .letter {
+  font-size: 14px;
+}
+.mini .number {
+  font-size: 14px;
+}
+.mini .free .number {
+  font-size: 9px;
+}
+.mini .cell {
+  border-radius: 4px;
+  border-width: 1px;
+}
+
+/* ── pattern icon ── */
+.icon {
+  display: inline-grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 2px;
+  vertical-align: middle;
+}
+
+.iconCell {
+  background: var(--pb-surface-2);
+  border-radius: 2px;
+}
+
+.iconOn {
+  background: var(--pb-accent-2-fill);
+}

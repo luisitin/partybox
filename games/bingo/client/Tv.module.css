@@ -1,0 +1,154 @@
+/* TV layout for Bingo: the current call is the only thing on the stage during play. Tokens only. */
+.kicker {
+  margin: 0;
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--pb-text-muted);
+  text-align: center;
+}
+
+.callBig {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pb-space-5);
+  line-height: 1;
+}
+
+.callBig .letter {
+  display: grid;
+  place-items: center;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: var(--pb-accent-2-fill);
+  color: var(--pb-on-accent-2-fill);
+  font-size: 150px;
+  font-weight: 900;
+  align-self: center;
+}
+
+.callBig .number {
+  font-size: 320px;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+}
+
+.previousRow {
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-4);
+  min-height: 80px;
+}
+
+.previousLabel {
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+}
+
+.callSmall {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+  padding: var(--pb-space-1) var(--pb-space-4);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  line-height: 1;
+}
+
+.callSmall .letter {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--pb-accent-2-fill);
+  color: var(--pb-on-accent-2-fill);
+  font-size: var(--pb-font-body);
+  font-weight: 900;
+  align-self: center;
+}
+
+.callSmall .number {
+  font-size: var(--pb-font-h1);
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+}
+
+.patternRow {
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-6);
+}
+
+.programme {
+  display: flex;
+  gap: var(--pb-space-5);
+  margin: 0;
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+  text-transform: capitalize;
+}
+
+.programmeNow {
+  color: var(--pb-accent-2);
+  font-weight: 800;
+}
+
+.checkHead {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pb-space-2);
+  text-align: center;
+}
+
+.checkBody {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: var(--pb-space-7);
+  flex: 1;
+  min-height: 0;
+}
+
+.claim {
+  width: 460px;
+  max-width: 40vw;
+}
+
+.verdict {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-4);
+  align-items: flex-start;
+}
+
+.no {
+  color: var(--pb-danger);
+}
+
+.legend {
+  display: flex;
+  gap: var(--pb-space-5);
+  margin: 0;
+  font-size: var(--pb-font-body);
+  font-weight: 700;
+}
+
+.legendGreen {
+  color: var(--pb-accent-3);
+}
+
+.legendRed {
+  color: var(--pb-danger);
+}
+
+.legendMissing {
+  color: var(--pb-accent-2);
+}
