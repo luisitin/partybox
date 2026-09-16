@@ -36,7 +36,12 @@ export function PlayerChips({
   seats = 0,
 }: PlayerChipsProps): JSX.Element {
   // Same rule as Scoreboard's 🏆: no leader mark when nobody has scored or everyone is tied.
-  const scored = showScores ? players.filter((p) => p.score !== undefined) : [];
+  // Alphabetical everywhere chips appear (lobby, selecting, game strip), so a player finds their
+  // chip in the same place on every screen; numeric-aware so Bot 2 precedes Bot 10 (review-loop #3).
+  const ordered = [...players].sort((a, b) =>
+    a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' }),
+  );
+  const scored = showScores ? ordered.filter((p) => p.score !== undefined) : [];
   const top = Math.max(0, ...scored.map((p) => p.score as number));
   const leaders =
     top > 0 && scored.some((p) => p.score !== top)
@@ -47,7 +52,7 @@ export function PlayerChips({
       className={`${styles.list} ${styles[layout]} ${align === 'start' ? styles.start : ''}`}
       aria-label="players"
     >
-      {players.map((p) => (
+      {ordered.map((p) => (
         <li key={p.id} className={`${styles.item} ${enter ? styles.enter : ''}`}>
           <PlayerChip
             name={p.name}
