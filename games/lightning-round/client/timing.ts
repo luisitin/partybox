@@ -7,3 +7,10 @@
  * rows finish their pb-rise at --pb-motion-base (300 ms), so the phone flips just after that.
  */
 export const REVEAL_BEAT_MS = 300;
+
+/**
+ * Final reveal only: the phone shows "The bets are in — look at the TV" this long before its
+ * outcome card, matching the TV's first verdict beat (R-051: rows at 0, ✓ on the answer at 900,
+ * verdicts + deltas from 1200 ms). Tv.tsx must import this when that choreography lands.
+ */
+export const FINAL_REVEAL_HOLD_MS = 1200;

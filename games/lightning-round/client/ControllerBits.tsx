@@ -78,12 +78,11 @@ export function Outcome({ view, streakBefore, spare = null }: OutcomeProps): JSX
     !outcome.correct && view.correctIndex !== undefined && view.question
       ? `It was ${'ABCDEFGH'[view.correctIndex] ?? view.correctIndex + 1} · ${view.question.choices[view.correctIndex] ?? ''}`
       : null;
+  const bet = view.myWagerAmount ?? 0;
   const detail = final
-    ? outcome.correct
-      ? `Won the wager · final score ${view.myScore}`
-      : (view.myWagerAmount ?? 0) === 0
-        ? `Wagered nothing · final score ${view.myScore}`
-        : `Lost the wager · final score ${view.myScore}`
+    ? bet === 0
+      ? `Wagered nothing · final score ${view.myScore}`
+      : `${outcome.correct ? 'Won' : 'Lost'} the wager · you bet ${bet} · final score ${view.myScore}`
     : outcome.correct
       ? `${view.myStreak >= 2 ? `🔥 streak ${view.myStreak} · ` : ''}${spare !== null ? `${spare} s to spare · ` : ''}${view.myScore} points`
       : streakBefore >= 2

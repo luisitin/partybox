@@ -8,7 +8,7 @@ import type { LightningControllerView } from '../server/index';
 import type { Input } from '../server/types';
 import { Outcome, Stake, wagerLabel } from './ControllerBits';
 import styles from './Controller.module.css';
-import { REVEAL_BEAT_MS } from './timing';
+import { FINAL_REVEAL_HOLD_MS, REVEAL_BEAT_MS } from './timing';
 
 function roundKicker(view: LightningControllerView): string {
   const round = view.round;
@@ -34,8 +34,10 @@ export function Controller({
   const [lockedAt, setLockedAt] = useState<{ questionId: string; seconds: number } | null>(null);
   if (phaseId === 'question' && streakBefore !== view.myStreak) setStreakBefore(view.myStreak);
   // The phone never spoils the TV: ✓/✗ and the outcome card wait for the TV's reveal beat.
-  // `deadline` is unique per phase entry, so it keys the hold.
-  const shown = useHold(view.deadline, REVEAL_BEAT_MS);
+  // `deadline` is unique per phase entry, so it keys the hold. The final reveal waits for the
+  // TV's verdict beat (not collapsed under reduced motion: the TV is another device).
+  const isFinal = view.round?.final === true;
+  const shown = useHold(view.deadline, isFinal ? FINAL_REVEAL_HOLD_MS : REVEAL_BEAT_MS);
   // Haptic verdict (Android; iOS ignores it): once per reveal, alongside the card.
   const correct = view.outcome?.correct;
   useEffect(() => {
@@ -90,6 +92,10 @@ export function Controller({
         footer={
           revealed && shown ? (
             <Outcome view={view} streakBefore={streakBefore} spare={spare} />
+          ) : revealed && finalQ ? (
+            <div className={styles.stake} role="status">
+              🎲 The bets are in — look at the TV
+            </div>
           ) : stake !== null ? (
             <Stake amount={stake} />
           ) : null
