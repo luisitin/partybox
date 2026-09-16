@@ -27,7 +27,7 @@ export interface PhoneUrgencyInput {
 }
 
 export interface PhoneUrgency {
-  /** Render-side half: the "Pick now" cue is mounted while true (CSS shows it under `data-urgent`). */
+  /** Render-side half: the "Hurry!" cue is mounted while true (one word for pick, type and draw — review-loop #31) (CSS shows it under `data-urgent`). */
   candidate: boolean;
   shellRef: RefObject<HTMLDivElement | null>;
   mainRef: RefObject<HTMLElement | null>;

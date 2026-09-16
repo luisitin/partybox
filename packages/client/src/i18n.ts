@@ -108,7 +108,7 @@ export const t = {
     lostServer: 'Lost the PartyBox server — reconnecting…',
     seconds: (n: number) => `${n} s`,
     secondsLeft: (n: number) => `${n} seconds left`,
-    pickNow: 'Pick now',
+    hurry: 'Hurry!',
   },
   theme: {
     title: 'Theme',

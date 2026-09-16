@@ -201,7 +201,7 @@ export function ControllerShell({
           />
           {candidate ? (
             <span className={styles.cue} aria-hidden>
-              {t.connection.pickNow}
+              {t.connection.hurry}
             </span>
           ) : null}
           {view.timerMode !== 'quiet' || view.paused ? (
