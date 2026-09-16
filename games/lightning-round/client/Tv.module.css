@@ -378,3 +378,9 @@
   font-variant-numeric: tabular-nums;
   animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
 }
+
+/* Reveal beat (review-loop #24): the answer card pops at 0 ms; the player rows follow 150 ms later,
+   60 ms apart (--i is set inline per row). Final-wager rows keep their own slower stagger. */
+.rows:not(.rowsFinal) > .row {
+  animation-delay: calc(var(--pb-motion-fast) + var(--pb-motion-fast) * 0.4 * var(--i, 0));
+}
