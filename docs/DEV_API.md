@@ -3,7 +3,9 @@
 HTTP endpoints so tools and AI sessions can drive the app deterministically. All JSON. On in `pnpm dev`;
 off in `pnpm start` unless `--dev-api` is passed (then every endpoint answers `403 { error: 'dev api off' }`
 when disabled). Implemented in `packages/server/src/dev-api.ts`. All endpoints act on the house room
-unless `?room=CODE` is given.
+unless `?room=CODE` is given. `start-partybox.bat` runs `pnpm start --dev-api` so the TV's 🏠 Home
+button (`POST /api/dev/reset`) works at a party; the API is unauthenticated, so this is a LAN-only trade-off
+(`PARTYBOX_NO_DEV_API=1` turns it off, and Home then explains itself instead of resetting).
 
 | Method + path                                  | Body                                | Effect                                                                                                                                                                                                                                   |
 | ---------------------------------------------- | ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

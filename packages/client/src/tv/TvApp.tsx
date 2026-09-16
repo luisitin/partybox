@@ -62,6 +62,7 @@ export function TvApp(): JSX.Element {
         connected={state.connected}
         toasts={state.toasts}
         compact={room?.status === 'playing'}
+        onHome={client.home}
       >
         {content}
       </TvFrame>

@@ -51,6 +51,48 @@
   letter-spacing: 0.02em;
 }
 
+/* Home: the 🏠 disc matches the corner controls (AudioGate.control); the brand is its label. */
+.home {
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-3);
+  margin-left: calc(-1 * var(--pb-space-2));
+  padding: 0 var(--pb-space-3) 0 var(--pb-space-2);
+  border-radius: 999px;
+  transition: background var(--pb-motion-fast) var(--pb-ease);
+}
+
+.home:hover,
+.home:focus-visible {
+  background: var(--pb-surface);
+}
+
+.homeGlyph {
+  width: var(--pb-space-7);
+  height: var(--pb-space-7);
+  border-radius: 50%;
+  background: var(--pb-surface);
+  font-size: var(--pb-font-caption);
+  display: grid;
+  place-items: center;
+  opacity: 0.6;
+}
+
+.home:hover .homeGlyph,
+.home:focus-visible .homeGlyph,
+.homeArmed .homeGlyph {
+  opacity: 1;
+}
+
+.homeArmed .brand {
+  color: var(--pb-danger);
+}
+
+.homeNote .brand {
+  color: var(--pb-accent-2);
+  font-size: var(--pb-font-body);
+}
+
 .code {
   font-family: var(--pb-font-mono);
   font-size: var(--pb-font-h2);

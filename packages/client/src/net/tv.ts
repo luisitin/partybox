@@ -21,8 +21,13 @@ export interface TvState {
   toasts: Toast[];
 }
 
+/** Outcome of the stage's Home button: `off` = the server runs without `--dev-api`. */
+export type HomeResult = 'ok' | 'off' | 'error';
+
 export interface TvClient {
   store: Store<TvState>;
+  /** Start over: a fresh house room, everyone rejoins (TvFrame's 🏠). */
+  home(): Promise<HomeResult>;
 }
 
 export function createTvClient(roomCode?: string, url?: string): TvClient {
@@ -71,5 +76,21 @@ export function createTvClient(roomCode?: string, url?: string): TvClient {
     );
   });
 
-  return { store };
+  // The TV is a pure observer with no authority of its own (docs/PROTOCOL.md), so Home goes
+  // through the dev API's reset (start-partybox.bat runs `pnpm start --dev-api`): the server drops
+  // every player and mints a fresh house room; re-joining picks up the new code.
+  const home = async (): Promise<HomeResult> => {
+    try {
+      const res = await fetch(`${url ?? ''}/api/dev/reset`, { method: 'POST' });
+      if (res.status === 403) return 'off';
+      if (!res.ok) return 'error';
+      store.set({ toasts: [] });
+      socket.emit('tv:join', { roomCode });
+      return 'ok';
+    } catch {
+      return 'error';
+    }
+  };
+
+  return { store, home };
 }

@@ -50,11 +50,11 @@ pnpm exec tsx packages/e2e/src/design/measure.ts                                
 pnpm exec tsx packages/e2e/src/design/capture-preview.ts --out <dir> [--games a,b] [--themes night,daylight] [--phones iphone,iphone-se]
 pnpm exec tsx packages/e2e/src/design/capture-game.ts --game <id> --out <dir>         # live run, every phase, 4 phones + 2 bots
 pnpm exec tsx packages/e2e/src/design/capture-themes.ts --out <dir>                    # TV lobby + phone join/lobby per theme
-pnpm exec tsx packages/e2e/src/design/capture-fit.ts --out <dir>                       # TV lobby + a phase at 1080p, 1280×720, 1440×900, 4K (fit zoom)
+pnpm exec tsx packages/e2e/src/design/capture-{fit,home}.ts --out <dir>                # TV at 4 viewport sizes (fit zoom) · TV 🏠 flow
 ```
 
-`devices.ts` = tv, tv4k, iphone, iphone-se, pixel, galaxy, font200 (CSS-emulated 200 % scale),
-landscape. `session.ts` = dev-API client + join-through-the-form helpers. `shooter.ts` records every
+`devices.ts` = tv, tv4k, pc720, laptop, tv4kcss, iphone, iphone-se, pixel, galaxy, font200 (CSS-emulated
+200 % scale), landscape. `session.ts` = dev-API client + join-through-the-form helpers. `shooter.ts` records every
 still in `manifest.json` (game / phase / device / role) for the contact sheet. `capture-core.ts` walks
 join errors, lobby 1/6/16, selecting, every game phase with active/submitted/VIP/spectator/reconnecting
 phones, results, play-again, end, kick, server restart. `capture-video.ts` records one unfrozen round.

@@ -8,8 +8,9 @@ Games are plugins; two ship with v0.1: **Wisecrack** (write answers, vote for th
 ## Quickstart (Windows 11, macOS or Linux)
 
 Windows: double-click **`start-partybox.bat`** — it enables pnpm if needed, adds the firewall rule (one
-UAC prompt, first time only), installs, builds, starts the server and opens the TV page. Close the window
-to stop. Everything else below is the manual equivalent.
+UAC prompt, first time only), installs, builds, starts the server (`pnpm start --dev-api`, which powers
+the TV's Home button) and opens the TV page. Close the window to stop. Everything else below is the
+manual equivalent.
 
 ```bash
 corepack enable            # gives you pnpm (Node >= 24 required)
@@ -42,6 +43,10 @@ Any of these works — the TV only needs a browser that can open one URL:
 Then everyone opens `http://<lan-ip>:42069` on their phone (or scans the QR on the TV). The first person
 in is the VIP and picks the game. Several TVs can open `/tv` at once; each has its own mute toggle.
 Short on players? Anyone can tap **Add a bot** in the lobby (games marked 🤖 _Bots welcome_).
+
+The stage fits any screen (a PC at 150 % scaling, a 4K TV) — no browser zoom needed. The 🏠 top-left
+of the TV starts the party over (click it twice: fresh lobby, new code, everyone taps Join again);
+it needs the server started with `--dev-api`, which the Windows launcher does.
 
 ## Commands
 
