@@ -128,10 +128,39 @@ export function createController(url?: string): Controller {
     return rev > s.rev;
   };
 
+  let lastPushAt = Date.now();
   const measure = (at: number): void => {
     // Trust the newest sample; pushes are frequent enough that a moving average buys little.
     store.set({ offsetMs: at - Date.now() });
+    lastPushAt = Date.now();
+    // Any push proves the link: a stale-watchdog 'reconnecting' (below) ends here.
+    if (store.get().connection === 'reconnecting' && socket.connected)
+      store.set({ connection: 'connected' });
   };
+
+  // A dead link is invisible for up to the 20 s ping timeout (review-loop #4): the phone kept a
+  // green dot and a stale call for a whole 8 s drop. Two earlier signals flip it to reconnecting
+  // and kick the transport so socket.io's reconnect loop starts now: the browser's own offline
+  // event, and a deadline that passed more than 2 s ago with no push since (the server always
+  // pushes when a timer fires).
+  const goStale = (): void => {
+    if (!store.get().joined) return;
+    store.set({ connection: 'reconnecting' });
+    socket.io.engine?.close();
+  };
+  if (typeof window !== 'undefined') {
+    window.addEventListener('offline', goStale);
+    window.addEventListener('online', () => {
+      if (!socket.connected) socket.connect();
+    });
+  }
+  setInterval(() => {
+    const s = store.get();
+    const deadline = s.view?.deadline ?? null;
+    if (s.connection !== 'connected' || !s.view || s.view.paused || deadline === null) return;
+    const serverNow = Date.now() + s.offsetMs;
+    if (serverNow > deadline + 2000 && lastPushAt + 2000 < Date.now()) goStale();
+  }, 1000);
 
   const sendJoin = (session: Session, token?: string): void => {
     socket.emit('join', {
@@ -167,17 +196,24 @@ export function createController(url?: string): Controller {
     }
     pending = null;
     measure(payload.at);
-    store.set({
+    store.set((prev) => ({
       joined: true,
       resuming: false,
       playerId: payload.playerId,
       room: payload.room,
       rev: -1,
-      view: null,
+      // Resuming into the same game keeps the last view until the fresh push lands a tick later:
+      // the game screen stays mounted (no blank flash, and it can see what it missed — loop #4).
+      view:
+        prev.playerId === payload.playerId &&
+        prev.room?.code === payload.room.code &&
+        payload.room.status === 'playing'
+          ? prev.view
+          : null,
       error: null,
       kicked: null,
       restarted: false,
-    });
+    }));
   });
   socket.on('room', (push: RoomPush) => {
     if (!accept(push.rev, push.room.code)) return;
