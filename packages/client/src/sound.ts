@@ -27,15 +27,19 @@ const CUES: Record<SoundCue, Note[]> = {
   phase: [
     { freq: 392, at: 0, dur: 0.1, type: 'triangle' },
     { freq: 523, at: 0.1, dur: 0.1, type: 'triangle' },
-    { freq: 784, at: 0.2, dur: 0.18, type: 'triangle' },
+    { freq: 784, at: 0.2, dur: 0.12, type: 'triangle' },
   ],
   countdown: [{ freq: 880, at: 0, dur: 0.05, type: 'square', gain: 0.12 }],
   // Half-gain countdown for the phone's 5 s edge.
   tick: [{ freq: 880, at: 0, dur: 0.05, type: 'square', gain: 0.06 }],
+  // Pickup, then resolve (~0.7 s): two soft E4 taps, a B4+E5 lift, a held B5+E6 chord.
   reveal: [
-    { freq: 440, at: 0, dur: 0.12, type: 'sawtooth', gain: 0.1 },
-    { freq: 554, at: 0.12, dur: 0.12, type: 'sawtooth', gain: 0.1 },
-    { freq: 659, at: 0.24, dur: 0.3, type: 'sawtooth', gain: 0.1 },
+    { freq: 330, at: 0, dur: 0.09, type: 'triangle', gain: 0.14 },
+    { freq: 330, at: 0.11, dur: 0.09, type: 'triangle', gain: 0.14 },
+    { freq: 494, at: 0.3, dur: 0.14, type: 'sawtooth', gain: 0.09 },
+    { freq: 659, at: 0.3, dur: 0.14, type: 'triangle', gain: 0.1 },
+    { freq: 988, at: 0.44, dur: 0.26, type: 'sawtooth', gain: 0.08 },
+    { freq: 1319, at: 0.44, dur: 0.26, type: 'sine', gain: 0.1 },
   ],
   win: [
     { freq: 523, at: 0, dur: 0.12 },

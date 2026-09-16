@@ -70,17 +70,21 @@ Timer: in the last 5 s it switches to `--pb-danger`, scales 1.15×, pulses once 
 
 ## Sound cues (Web Audio, synthesized — no files)
 
-| Cue         | Moment                         | Where triggered                |
-| ----------- | ------------------------------ | ------------------------------ |
-| `join`      | a player joins the lobby       | TV shell                       |
-| `phase`     | phase changes                  | TV shell                       |
-| `countdown` | each of the last 5 seconds     | TV shell (Timer)               |
-| `reveal`    | an answer / result is revealed | game via `clientModule.sounds` |
-| `win`       | results screen winner          | TV shell                       |
-| `submit`    | own input accepted             | controller shell (phone)       |
-| `error`     | rejected input / error toast   | controller shell (phone)       |
-| `correct`   | the phone's own verdict card   | game via `useSound` (phone)    |
+| Cue         | Moment                         | Where triggered                                |
+| ----------- | ------------------------------ | ---------------------------------------------- |
+| `join`      | a player joins the lobby       | TV shell                                       |
+| `phase`     | phase changes                  | TV shell                                       |
+| `countdown` | each of the last 5 seconds     | TV shell (Timer)                               |
+| `reveal`    | an answer / result is revealed | TV shell via `clientModule.sounds[phaseId]`    |
+| `wager`     | the final-question wager opens | TV shell via `clientModule.sounds` (Lightning) |
+| `tally`     | a scores / leaderboard phase   | TV shell via `clientModule.sounds` (Wisecrack) |
+| `win`       | results screen winner          | TV shell                                       |
+| `submit`    | own input accepted             | controller shell (phone)                       |
+| `error`     | rejected input / error toast   | controller shell (phone)                       |
+| `correct`   | the phone's own verdict card   | game via `useSound` (phone)                    |
 
+`clientModule.sounds` maps phase ids to cues; unmapped phases play `phase`, reserved for moments where the phone needs
+the player (so 'pick up your phone' and 'look at the TV' never sound the same).
 TV has a mute toggle (persisted in `localStorage`) and a "tap to start" overlay for the autoplay policy.
 The phone has its own engine (`createSoundEngine({ master: 0.35 })`, mute under `partybox:phone-sound`, default on,
 toggled from the theme sheet) that plays only what happened in the player's hand — never `phase`, `join`, `win` or

@@ -19,7 +19,11 @@ export interface GameClientModule {
   id: string;
   Tv: LazyExoticComponent<ComponentType<GameTvProps<any>>>;
   Controller: LazyExoticComponent<ComponentType<GameControllerProps<any, any>>>;
-  /** Optional map from game moments to design-system sound cue names (docs/DESIGN_SYSTEM.md). */
+  /**
+   * Optional map from TV phase id (`view.phaseId`) to a design-system cue name
+   * (docs/DESIGN_SYSTEM.md): the TV shell plays it when that phase begins. Unmapped phases play
+   * `phase`, which is reserved for "your phone needs you"; unknown cue names fall back to it too.
+   */
   sounds?: Record<string, string>;
 }
 /* eslint-enable @typescript-eslint/no-explicit-any */

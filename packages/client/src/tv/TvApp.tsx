@@ -2,7 +2,8 @@
 // transitions, and never sends player events. `?room=CODE` watches a specific room.
 import { useEffect, useMemo, useRef } from 'react';
 import type { JSX } from 'react';
-import { ServerClockProvider } from '@partybox/game-sdk/ui';
+import { ServerClockProvider, isSoundCue } from '@partybox/game-sdk/ui';
+import { clientGames } from '../games.generated';
 import { useStore } from '../net/store';
 import { createTvClient } from '../net/tv';
 import { createSoundEngine } from '../sound';
@@ -41,9 +42,15 @@ export function TvApp(): JSX.Element {
     if (room.players.length > p.players && p.status !== '') audio.play('join');
     if (room.status === 'results' && p.status !== 'results') audio.play('win');
     // A game that cued this phase itself (useSound, child effects run first) keeps the stage's
-    // generic chime out of its way.
+    // generic chime out of its way. `clientModule.sounds` maps a phase id to its own cue (reveal,
+    // wager, tally…); unmapped phases play `phase`, reserved for "your phone needs you".
     if (view && view.phaseId !== p.phase && p.phase !== null && room.status === 'playing')
-      if (performance.now() - audio.lastPlayedAt() > 50) audio.play('phase');
+      if (performance.now() - audio.lastPlayedAt() > 50) {
+        const mapped = room.selectedGameId
+          ? clientGames[room.selectedGameId]?.sounds?.[view.phaseId]
+          : undefined;
+        audio.play(mapped && isSoundCue(mapped) ? mapped : 'phase');
+      }
     prev.current = {
       players: room.players.length,
       status: room.status,

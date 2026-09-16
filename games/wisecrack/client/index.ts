@@ -6,5 +6,5 @@ export const clientModule: GameClientModule = {
   id: 'wisecrack',
   Tv: lazy(() => import('./Tv').then((m) => ({ default: m.Tv }))),
   Controller: lazy(() => import('./Controller').then((m) => ({ default: m.Controller }))),
-  sounds: { reveal: 'reveal' },
+  sounds: { reveal: 'reveal', scores: 'tally' },
 };
