@@ -47,16 +47,6 @@
   color: var(--pb-danger);
 }
 
-.patternLine {
-  display: flex;
-  align-items: center;
-  gap: var(--pb-space-2);
-  margin: var(--pb-space-3) 0 0;
-  font-size: var(--pb-font-caption);
-  color: var(--pb-text-muted);
-  font-weight: 700;
-}
-
 .intro {
   display: flex;
   align-items: center;
@@ -66,7 +56,7 @@
 
 .patternLabel {
   margin: 0;
-  font-size: var(--pb-font-h1);
+  font-size: var(--pb-font-h2);
   font-weight: 900;
   color: var(--pb-accent-2);
 }
