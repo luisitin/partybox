@@ -1,0 +1,102 @@
+{
+  "pass": "31",
+  "game": "wisecrack",
+  "players": 3,
+  "scenario": "normal",
+  "focus": "phone",
+  "started": "23:06:50.974",
+  "tvVideoT0": "23:06:47.096",
+  "changes": [
+    {
+      "t": 1789600010977,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789600015971,
+      "at": "23:06:50.977",
+      "sinceStartS": 0,
+      "videoS": 3.9
+    },
+    {
+      "t": 1789600016078,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789600045971,
+      "at": "23:06:56.078",
+      "sinceStartS": 5.1,
+      "videoS": 9
+    },
+    {
+      "t": 1789600046026,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789600065978,
+      "at": "23:07:26.026",
+      "sinceStartS": 35.1,
+      "videoS": 38.9
+    },
+    {
+      "t": 1789600047278,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789600052597,
+      "at": "23:07:27.278",
+      "sinceStartS": 36.3,
+      "videoS": 40.2
+    },
+    {
+      "t": 1789600052653,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789600072612,
+      "at": "23:07:32.653",
+      "sinceStartS": 41.7,
+      "videoS": 45.6
+    },
+    {
+      "t": 1789600054139,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789600060025,
+      "at": "23:07:34.139",
+      "sinceStartS": 43.2,
+      "videoS": 47
+    },
+    {
+      "t": 1789600060099,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789600080028,
+      "at": "23:07:40.099",
+      "sinceStartS": 49.1,
+      "videoS": 53
+    },
+    {
+      "t": 1789600064229,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789600070118,
+      "at": "23:07:44.229",
+      "sinceStartS": 53.3,
+      "videoS": 57.1
+    },
+    {
+      "t": 1789600070148,
+      "status": "playing",
+      "phase": "scores",
+      "deadline": 1789600078120,
+      "at": "23:07:50.148",
+      "sinceStartS": 59.2,
+      "videoS": 63.1
+    },
+    {
+      "t": 1789600078160,
+      "status": "results",
+      "phase": "results",
+      "deadline": null,
+      "at": "23:07:58.160",
+      "sinceStartS": 67.2,
+      "videoS": 71.1
+    }
+  ],
+  "notes": ["1 extra phones instead of bots (manifest.supportsBots is not true)"]
+}
