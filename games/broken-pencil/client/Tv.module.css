@@ -150,6 +150,17 @@
   gap: var(--pb-space-3);
 }
 
+/* Staggered entrance of a book's first page (review-loop #17). */
+.beat2 {
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+  animation-delay: var(--pb-motion-fast);
+}
+
+.beat3 {
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+  animation-delay: var(--pb-motion-base);
+}
+
 .pageWho {
   margin: 0;
   font-size: var(--pb-font-body);

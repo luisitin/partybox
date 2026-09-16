@@ -104,9 +104,12 @@ function Thumb({ page }: { page: PageView }): JSX.Element {
 function CurrentPage({ page }: { page: PageView }): JSX.Element {
   if (page.kind === 'word')
     return (
-      <div className={`${styles.page} pb-enter`}>
-        <p className={styles.pageWho}>{page.authorName}'s secret word</p>
-        <BigText level="display">“{page.text}”</BigText>
+      // Three beats (review-loop #17): the kicker follows the title, then the word pops.
+      <div className={styles.page}>
+        <p className={`${styles.pageWho} ${styles.beat2}`}>{page.authorName}'s secret word</p>
+        <div className={styles.beat3}>
+          <BigText level="display">“{page.text}”</BigText>
+        </div>
       </div>
     );
   if (page.kind === 'draw')
