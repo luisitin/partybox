@@ -20,6 +20,8 @@ export const t = {
     code: 'Room code',
     codePlaceholder: 'ABCD',
     submit: 'Join',
+    needName: 'Enter a name to join',
+    needCode: 'Enter the 4-letter code',
     joining: 'Joining…',
     tryAgain: 'Try another.',
     resuming: 'Reconnecting…',

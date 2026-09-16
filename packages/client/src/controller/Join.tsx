@@ -106,7 +106,11 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
               ? t.join.joining
               : state.connection !== 'connected'
                 ? t.join.offline
-                : t.join.submit}
+                : name.trim().length === 0
+                  ? t.join.needName
+                  : needsCode && code.trim().length !== 4
+                    ? t.join.needCode
+                    : t.join.submit}
           </PrimaryButton>
         }
       >
