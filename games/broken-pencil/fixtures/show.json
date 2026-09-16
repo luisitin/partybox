@@ -1,8 +1,8 @@
 {
   "phase": {
     "id": "show",
-    "startedAt": 1700000021881,
-    "deadline": 1700000033881
+    "startedAt": 1700000035031,
+    "deadline": 1700000055031
   },
   "rng": {
     "seed": 2,
@@ -49,9 +49,8 @@
   },
   "seats": ["p2", "p1", "p4", "p5", "p3"],
   "passes": 4,
-  "ownerDraws": 0,
-  "pageCount": 5,
-  "step": 5,
+  "pageCount": 9,
+  "step": 6,
   "books": [
     {
       "ownerId": "p2",
@@ -60,6 +59,158 @@
           "kind": "word",
           "authorId": "p2",
           "text": "rainbow"
+        },
+        {
+          "kind": "draw",
+          "authorId": "p2",
+          "drawing": {
+            "strokes": [
+              {
+                "c": 6,
+                "w": 0,
+                "p": "04bZhuKC53vrePF49HX3bvdp9GTzYe9f6V3hW9dW0FDLSchFyEHGQMJCwkA="
+              },
+              {
+                "c": 7,
+                "w": 2,
+                "p": "p0iqULFZuF+/ZcVvynvMh8+T1p/cq+a18r77x/vR+9j73vvk++v78w=="
+              },
+              {
+                "c": 0,
+                "w": 2,
+                "p": "kz2NO4Y6gjd9N3Qzay1fI1cXUQtLBEMENwQvBCsEKQQjBCAEGgQSBAwEBQQEBAQEBAQEBAQEBAQEBAQEBAQEBA=="
+              }
+            ]
+          }
+        },
+        {
+          "kind": "guess",
+          "authorId": "p1",
+          "text": "cat"
+        },
+        {
+          "kind": "draw",
+          "authorId": "p1",
+          "drawing": {
+            "strokes": [
+              {
+                "c": 3,
+                "w": 1,
+                "p": "h6WDoX+dfZV6iXd9eHN4Zw=="
+              },
+              {
+                "c": 2,
+                "w": 0,
+                "p": "llKbTZxImUGWN5ItjSGMF40NkQSVBJsEnQSiBKYEqAQ="
+              },
+              {
+                "c": 6,
+                "w": 2,
+                "p": "d8NvxmfLYc1Z007WQtU60TbRMdItzyjLJMQkuyWwIqkephelEKYKpASeBJUEjQSCBHY="
+              }
+            ]
+          }
+        },
+        {
+          "kind": "guess",
+          "authorId": "p4",
+          "text": "shoe"
+        },
+        {
+          "kind": "draw",
+          "authorId": "p4",
+          "drawing": {
+            "strokes": [
+              {
+                "c": 1,
+                "w": 0,
+                "p": "3ZLfkuWR7oz2hPt++3z7fPt8+3j7cg=="
+              },
+              {
+                "c": 3,
+                "w": 1,
+                "p": "KDsjOh08GjwWPBQ+FkQcTR5ZHmIfZyBqHWoYbRB0DH4MiA2SEp4Wqh6yIr0iySPVJN0="
+              },
+              {
+                "c": 2,
+                "w": 2,
+                "p": "gjqAN3oxcilqIV8WUwpHBDsEMgQmBBoEDwQEBA=="
+              },
+              {
+                "c": 4,
+                "w": 1,
+                "p": "e66BsIW0h7uFv4bDhcaGyobPhtCFz4TMgM19yn3Der5zum2yY6lXnUuVP4s3hDF+L3UxcDFsLWQnXCNUIksjQCE3IiskIycYKgwxBDwERgQ="
+              },
+              {
+                "c": 3,
+                "w": 2,
+                "p": "kliWUZdGljyVMJMojiGFFnkKbQQ="
+              },
+              {
+                "c": 0,
+                "w": 1,
+                "p": "aX9jdF1qW2JVVk1OQ0Y8OjkuMyIrGCYMJQQgBB4EGwQcBB4EHwQ="
+              }
+            ]
+          }
+        },
+        {
+          "kind": "guess",
+          "authorId": "p5",
+          "text": "bone"
+        },
+        {
+          "kind": "draw",
+          "authorId": "p5",
+          "drawing": {
+            "strokes": [
+              {
+                "c": 4,
+                "w": 1,
+                "p": "qWukcJ10k3aMe4eEf410k2yWZppcolCrRLE4tiy/IMoY1hHiDO4L9gr7BfsE+wT7BPsE+wT7BPsE+wT7Bvs="
+              },
+              {
+                "c": 2,
+                "w": 1,
+                "p": "UTxTPlU8WT5dQ15HXEpWS09OSVRCXD1mOGwvcSlyIHYUfgiIBJAElgSdBKAEpQ=="
+              },
+              {
+                "c": 0,
+                "w": 0,
+                "p": "Obg0tCy0JbQetxi6FbwWuxq2H7EhryGvJbAnsiq2LbcvvA=="
+              },
+              {
+                "c": 1,
+                "w": 1,
+                "p": "rjq1Qr1MxlbRYt1s6XjyhPuQ+5v7o/us+7j7w/vO+9j73/fn9uz59Pv4+/v7+/r69ff09PDt6uc="
+              },
+              {
+                "c": 1,
+                "w": 2,
+                "p": "UahOoUmZQJA5izCIJ4EbdhJuC2UIWQRRBEsEQQQ4BCwEIAQUBAkEBAUEBgQIBAcEBAQEBAcECAQGBAYEBwQ="
+              },
+              {
+                "c": 2,
+                "w": 2,
+                "p": "rtSx27jmvfK++7/7vvvA+8H7wvvD+8b7yPvI+8v7y/vM+8770/fX9tvy3+/k7+nv8PD18Prz+/b79fv4+/r7+/v7+/v79w=="
+              }
+            ]
+          }
+        },
+        {
+          "kind": "guess",
+          "authorId": "p3",
+          "text": "spider"
+        }
+      ]
+    },
+    {
+      "ownerId": "p1",
+      "pages": [
+        {
+          "kind": "word",
+          "authorId": "p1",
+          "text": "a ninja babysitter"
         },
         {
           "kind": "draw",
@@ -101,43 +252,61 @@
         },
         {
           "kind": "draw",
+          "authorId": "p4",
+          "drawing": {
+            "strokes": [
+              {
+                "c": 5,
+                "w": 1,
+                "p": "2NrO2sLZttaq06HRmNOO1YTYft9242rmYuxW8Ur3P/oz+yf7HvsY+hb2EfUP8QvwCvEF8wT3BPkE+QT4BPgE9wT2BPkE+w=="
+              },
+              {
+                "c": 0,
+                "w": 1,
+                "p": "trmvuKizoKycpJeZj42KgYd3hXCAaX9hfF13XXRddF9yZW1sZW9hdV16WYJUjUyZQaE1qiyv"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "guess",
+          "authorId": "p5",
+          "text": "banana"
+        },
+        {
+          "kind": "draw",
           "authorId": "p5",
           "drawing": {
             "strokes": [
               {
+                "c": 2,
+                "w": 0,
+                "p": "yN7B573ztvur+5/7k/uK+w=="
+              },
+              {
                 "c": 1,
                 "w": 0,
-                "p": "goqEg4l/j3yVfZuAo4KoiKqMr464k76YxJ7HpcetyrbNvc3BycLExsPOvtW92w=="
+                "p": "v9G/3MLjyefN7NHv1PbZ+dr71/vS+9H71PvZ+9v73Pva+9n73Pvc++D75/vq+/D78/v5+/v7+/v7+/v7+/s="
               },
               {
-                "c": 0,
+                "c": 1,
                 "w": 1,
-                "p": "ws7AzbzMu8m7xL+9wLLEpsiayY7IhMh8"
-              },
-              {
-                "c": 4,
-                "w": 1,
-                "p": "IlwkWCVQJkUrOTMwPitKIlMXWA5gBGwEdQR8BIYEkgSeBKoEtQS9BMQExwTOBA=="
+                "p": "qyywJrEisRuwF7EQrgWoBKQEogSgBJ8EmwSWBI0EhwSCBHsEdgR1BHEEawRoBGQEYwRmBGgEaARmBGgE"
               },
               {
                 "c": 2,
-                "w": 2,
-                "p": "iMqD1n/ieu139Hf7dPtz+w=="
+                "w": 1,
+                "p": "oymlJasgsxu3Gr4WyBDUDeAJ6Qn0C/sP+xL7Gfsi+yz7Mvs8+0X7Uftd+2n7c/t/"
               },
               {
-                "c": 5,
-                "w": 0,
-                "p": "k7uSuJK5j7uOuYu7i8CIwoPEgcSDxYTHgct6zXHPbNRp12feYuda7U/xRfI98TXxLu0j7BftD+sE6wTnBOME4ATcBNgE0ATGBLwEtASqB6A="
+                "c": 1,
+                "w": 1,
+                "p": "IoUghh+FHoUZiRWOEpMPlgidBKEEogSkBKYEqwSxBLcFvAjFCMoG0gTXBtkL1xPVGNMZ0hzU"
               },
               {
                 "c": 0,
-                "w": 1,
-                "p": "c59slWGMWoJPeEdsQ2A8VA=="
-              },
-              {
-                "c": 6,
-                "w": 2,
-                "p": "c8lyw3C8ardjtF6yWrFTrEqoPqAylyiRIY8Xjg+NCYwEigSMBIwEkASRBI4EiwSIBIYEgAR5"
+                "w": 0,
+                "p": "l1iVVJFTkE6SRpE6jjGKJ4kfhhaBCoAEggSGBIsElAScBKQEqASvBLYE"
               }
             ]
           }
@@ -145,17 +314,45 @@
         {
           "kind": "guess",
           "authorId": "p3",
-          "text": "bell"
+          "text": "apple"
+        },
+        {
+          "kind": "draw",
+          "authorId": "p3",
+          "drawing": {
+            "strokes": [
+              {
+                "c": 7,
+                "w": 1,
+                "p": "HjUdPB9HIk8nWy9nOHBCeU6FVpBgnGyoeLKAuYnBkciZ06Xfruu29rz7v/vG+8z71Pvg++z79/s="
+              },
+              {
+                "c": 4,
+                "w": 0,
+                "p": "QTtGNUcrRiFGFkIMOgYyBC0EJQQZBA4EBwQEBAQEBAQEBAQEBQQHBAcEBAQEBAQEBAQGBAcECQQIBAQEBAQEBAQEBwQHBAUEBAc="
+              },
+              {
+                "c": 3,
+                "w": 2,
+                "p": "M34+gUqBU4JchWSLb457koeYkJ6bqKSur7O7usTF0M7a0+Da4+Dl6ub05Pvm++b75Pvj+9/72PvR+8n7"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "guess",
+          "authorId": "p2",
+          "text": "banana"
         }
       ]
     },
     {
-      "ownerId": "p1",
+      "ownerId": "p4",
       "pages": [
         {
           "kind": "word",
-          "authorId": "p1",
-          "text": "a ninja babysitter"
+          "authorId": "p4",
+          "text": "sunburn"
         },
         {
           "kind": "draw",
@@ -188,7 +385,55 @@
         {
           "kind": "guess",
           "authorId": "p5",
-          "text": "tree"
+          "text": "spider"
+        },
+        {
+          "kind": "draw",
+          "authorId": "p5",
+          "drawing": {
+            "strokes": [
+              {
+                "c": 7,
+                "w": 2,
+                "p": "dd966YH1iPuM+4z7j/uQ+5X7nvuk+6j7sPu2+8D7yfvT+9v75Pvr++/78vv4+/v7+/v7+w=="
+              },
+              {
+                "c": 0,
+                "w": 2,
+                "p": "dOBq1WLNV8ROvkK8OrYurCSkGZkNjQSDBHcEawRgBFgEUARFBDkELwQkBBwEEAQEBAQEBAQEBAQEBAQE"
+              },
+              {
+                "c": 3,
+                "w": 2,
+                "p": "g32Cf36DeoN4f3l+d4F2g3KGcIpwjW+UbZk="
+              },
+              {
+                "c": 6,
+                "w": 2,
+                "p": "QYJBgEN9SH1OflSDWopikGeaaaJuqA=="
+              },
+              {
+                "c": 1,
+                "w": 1,
+                "p": "lDyYOp04oDOgKp0gnRqhEKQKpgWsBLIEuwTCBMsE0gTcBOcE8wT7BPsE+wT7BA=="
+              },
+              {
+                "c": 5,
+                "w": 2,
+                "p": "1ofShc6DzH3Jc8Znx1vLUtJN3UTlOekw8Cb7GvsO+wT7BPsE+wT7BPsE+wT7BPsE+wT7BPsE+wT7BPsE+wT7BPsE+wT7BPsE+wT7BA=="
+              },
+              {
+                "c": 4,
+                "w": 2,
+                "p": "XXRic2h0anNwdXl0f3GFcYl1jniUd5xyomuoaLFnuGfDZM9e2FXfTeNH5UHoPOcz"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "guess",
+          "authorId": "p3",
+          "text": "sock"
         },
         {
           "kind": "draw",
@@ -196,14 +441,39 @@
           "drawing": {
             "strokes": [
               {
-                "c": 3,
-                "w": 0,
-                "p": "eER1QXZAeT9/P4U8jTmRNpgwniaiHqIWpBGnDK0EswS8BA=="
+                "c": 6,
+                "w": 1,
+                "p": "Yh5iImIqZTFpN2w9bkFvQXJEdEt6VX9hh22MdY1+joSLjoaZgaB/q363fL97x3nOetd54nzq"
               },
               {
-                "c": 0,
+                "c": 7,
                 "w": 0,
-                "p": "PDc7LD4lQB9DFUUKSARPBFcEWwReBF4EXgRfBF0EVwRUBFUEVARVBFIEUwRYBFwEYQRmBG8EdgR8BIYEjwSVBJ8EqwS0BLsEwgTFBMYE"
+                "p": "T35Td1htXGFcWFhPUkpQSEtGSEFEOEAwPCw1KjIlMiI1ITsdQxhOF1oSZg8="
+              },
+              {
+                "c": 7,
+                "w": 1,
+                "p": "nJCUko+RipGJkYSOfo53j3KSa5RmlGSU"
+              },
+              {
+                "c": 2,
+                "w": 1,
+                "p": "btFk0F7PXNBY0lLUSdJA0zvU"
+              },
+              {
+                "c": 5,
+                "w": 2,
+                "p": "dot6h36HhoSKfpB4lHSadJ52n3WieKd/qomtkrSev6fIss2+1crg0uvd9+f78Pv2+/v7+/v7+/v7+/v6+/n79Pvu++r75fvg+9773/vg+90="
+              },
+              {
+                "c": 7,
+                "w": 0,
+                "p": "voe7fLhwtme2XLpVwlDNSNZA3DbjKuwf9BM="
+              },
+              {
+                "c": 6,
+                "w": 0,
+                "p": "Ny03MjQ4NTw3RD1MRFhNYlRoW3FefV+JXZFbllyeXKJdpFumW6tdrGOxarhtvw=="
               }
             ]
           }
@@ -211,17 +481,65 @@
         {
           "kind": "guess",
           "authorId": "p2",
-          "text": "hat"
+          "text": "door"
+        },
+        {
+          "kind": "draw",
+          "authorId": "p2",
+          "drawing": {
+            "strokes": [
+              {
+                "c": 4,
+                "w": 0,
+                "p": "wpXKk86N04nbg+B+5Hzne+1+8oH5gfuC+4X7ivuQ+5n7pfuv+7b7uvvA+8b7zw=="
+              },
+              {
+                "c": 4,
+                "w": 1,
+                "p": "Z7BquWvCasloz2XTZNln3Gvcbd1w4nLjd+B633nae9h914Laht2J44rriu+L9I/4"
+              },
+              {
+                "c": 4,
+                "w": 0,
+                "p": "OKc8qT6oQ6pMr1a4X75nwWzGc8x30njVedh83X/jgOqD8IT6gvuD+4j7jPuN+477"
+              },
+              {
+                "c": 1,
+                "w": 0,
+                "p": "sXisbKhgolSeSJo8mTCZJJwbohGmBQ=="
+              },
+              {
+                "c": 4,
+                "w": 1,
+                "p": "VjxZRl9SY1tkYWJlXW1ZdVR/UYtNl0yjTKs="
+              },
+              {
+                "c": 1,
+                "w": 0,
+                "p": "Va1MrEOtO7A1siuzIbMZshWuEKkIowSdBJUEiQR9BHEEZQRbBFIESAQ+BDUEKQQdBBQECgQEBAQEBAcEBwQHBAYECQQ="
+              },
+              {
+                "c": 6,
+                "w": 1,
+                "p": "Zh5iJ1wvUjZGOTo7"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "guess",
+          "authorId": "p1",
+          "text": "king"
         }
       ]
     },
     {
-      "ownerId": "p4",
+      "ownerId": "p5",
       "pages": [
         {
           "kind": "word",
-          "authorId": "p4",
-          "text": "sunburn"
+          "authorId": "p5",
+          "text": "a snail race"
         },
         {
           "kind": "draw",
@@ -248,18 +566,66 @@
         },
         {
           "kind": "draw",
+          "authorId": "p3",
+          "drawing": {
+            "strokes": [
+              {
+                "c": 1,
+                "w": 0,
+                "p": "jSmQKpAqkCqMJokgiRqNFpUQoAqqBLAEsgS1BLQEsAStBKkEpQSfBJYEiwR/BHcEbgZlB1oETgRCBDYE"
+              },
+              {
+                "c": 4,
+                "w": 1,
+                "p": "LlMsSylFKUItPDI4NzY8NEAuSCs="
+              },
+              {
+                "c": 7,
+                "w": 0,
+                "p": "JiYlJiAnFyQLIAQeBB4EGwQaBBoEGQQbBBs="
+              },
+              {
+                "c": 7,
+                "w": 1,
+                "p": "rsepy6TSm9aR1onSg9J50W7RZNA="
+              },
+              {
+                "c": 4,
+                "w": 0,
+                "p": "WmdXbVN2UIJKjkGaN6UwsSu9Jcke1RXeCuYE7wT7BPsE+wT7BPsE+wT7BPsE+wT7BPsE+wT7BPsE+w=="
+              },
+              {
+                "c": 4,
+                "w": 0,
+                "p": "eSWBKoYrjyuWJ50kpyWwKA=="
+              },
+              {
+                "c": 4,
+                "w": 1,
+                "p": "gKqBrIWsiqiOpo+nkamUrZmvmq2ar5uzmrqWwI7KhNZ74nLravFj+lv7VvtT+1T7U/tS+1X7WPtX+1n7X/ti+2f7bPtt+w=="
+              }
+            ]
+          }
+        },
+        {
+          "kind": "guess",
+          "authorId": "p2",
+          "text": "star"
+        },
+        {
+          "kind": "draw",
           "authorId": "p2",
           "drawing": {
             "strokes": [
               {
-                "c": 5,
+                "c": 1,
                 "w": 0,
-                "p": "TXNJcEhuR3BFckN1RXxFgEGDQYk9jjWU"
+                "p": "d8Z1wnPCdcJ4xHzJfc16z3nRd9Z43Xrgf+CA333gd95w3WbbYNxX2k3aRNk61TDP"
               },
               {
-                "c": 1,
-                "w": 1,
-                "p": "Pck80zjaN+Qz7DL3M/s1+zn7O/s7+zr7Ovs5+zj7O/s/+0L7RvtN+w=="
+                "c": 7,
+                "w": 0,
+                "p": "f0p8T3VRa09lTF9KW0haQlc6UjFNJUsZRg1DBD8ENwQ="
               }
             ]
           }
@@ -267,17 +633,55 @@
         {
           "kind": "guess",
           "authorId": "p1",
-          "text": "spider"
+          "text": "cat"
+        },
+        {
+          "kind": "draw",
+          "authorId": "p1",
+          "drawing": {
+            "strokes": [
+              {
+                "c": 3,
+                "w": 1,
+                "p": "ZjplQGVEaExtU3ZWflaKWZZdol6uXrhdv13EYMhhyGLKZtBs2XU="
+              },
+              {
+                "c": 0,
+                "w": 0,
+                "p": "e3uBcoRsimKUW59Uq0+3TcFIyEPLPM8z1yzfKA=="
+              },
+              {
+                "c": 5,
+                "w": 2,
+                "p": "VVRTV01YRFY7UjVPMEgtPig3IC4aIxMaDQ4GBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAUEBwQLBBME"
+              },
+              {
+                "c": 4,
+                "w": 2,
+                "p": "3CbVLdEy0DrLQMRCvkW0SKtIoEmWSY9Ji0c="
+              },
+              {
+                "c": 4,
+                "w": 1,
+                "p": "LY0wiTGDM3w2eD12QnRFdEVwR2pJZkhmSWdGakBrO200aylmImA="
+              }
+            ]
+          }
+        },
+        {
+          "kind": "guess",
+          "authorId": "p4",
+          "text": "leaf"
         }
       ]
     },
     {
-      "ownerId": "p5",
+      "ownerId": "p3",
       "pages": [
         {
           "kind": "word",
-          "authorId": "p5",
-          "text": "a snail race"
+          "authorId": "p3",
+          "text": "bubble bath"
         },
         {
           "kind": "draw",
@@ -319,61 +723,18 @@
         },
         {
           "kind": "draw",
-          "authorId": "p1",
-          "drawing": {
-            "strokes": [
-              {
-                "c": 4,
-                "w": 0,
-                "p": "V9lT1E3SQ9I70zbRMdMr0ynRK9Et1DHVOdNCzkfNT8xWy2DJbMR4vA=="
-              },
-              {
-                "c": 5,
-                "w": 2,
-                "p": "mTiTNYwzgTF4L2wqYSU="
-              },
-              {
-                "c": 0,
-                "w": 1,
-                "p": "gGeHZ4pni2WKZIdk"
-              }
-            ]
-          }
-        },
-        {
-          "kind": "guess",
-          "authorId": "p4",
-          "text": "shoe"
-        }
-      ]
-    },
-    {
-      "ownerId": "p3",
-      "pages": [
-        {
-          "kind": "word",
-          "authorId": "p3",
-          "text": "bubble bath"
-        },
-        {
-          "kind": "draw",
           "authorId": "p2",
           "drawing": {
             "strokes": [
               {
-                "c": 6,
-                "w": 0,
-                "p": "04bZhuKC53vrePF49HX3bvdp9GTzYe9f6V3hW9dW0FDLSchFyEHGQMJCwkA="
-              },
-              {
                 "c": 7,
-                "w": 2,
-                "p": "p0iqULFZuF+/ZcVvynvMh8+T1p/cq+a18r77x/vR+9j73vvk++v78w=="
+                "w": 0,
+                "p": "h2+PcZp3pXuwfreFuou6jriVup67pL2owKzHrNGq2qXhnuia8JP5jfuD+3f7a/tg+1T7SvtD+zn7Lvsi+xb7CvsE+wT7BPsH+wn4CvgH"
               },
               {
-                "c": 0,
-                "w": 2,
-                "p": "kz2NO4Y6gjd9N3Qzay1fI1cXUQtLBEMENwQvBCsEKQQjBCAEGgQSBAwEBQQEBAQEBAQEBAQEBAQEBAQEBAQEBA=="
+                "c": 3,
+                "w": 0,
+                "p": "nGehZKpktWLBYcxc"
               }
             ]
           }
@@ -381,7 +742,50 @@
         {
           "kind": "guess",
           "authorId": "p1",
-          "text": "cat"
+          "text": "king"
+        },
+        {
+          "kind": "draw",
+          "authorId": "p1",
+          "drawing": {
+            "strokes": [
+              {
+                "c": 7,
+                "w": 0,
+                "p": "TERGS0NTRFlJYE5kVmhgamxtdW+Ab4xt"
+              },
+              {
+                "c": 6,
+                "w": 0,
+                "p": "j12RVpRPlEmWQ5hBmTuYOZc2mjOhNKk2sDq5Or45wjvEPsRBxUfFTsVRx1jNXtRj12w="
+              },
+              {
+                "c": 2,
+                "w": 2,
+                "p": "0z7SPtQ/2D3eP+I95jjqNA=="
+              },
+              {
+                "c": 6,
+                "w": 0,
+                "p": "oGyeaJ9ooWWkZatns2q5cL10wnzJgtOJ34/rkvaS+5T7lvuV+5X7mPuY+5b7mPua+537oPig+KD1nvag9J7xnvCd"
+              },
+              {
+                "c": 5,
+                "w": 1,
+                "p": "ll+XZJdsmHSceKOArou6k8Odz6nbsee98Mn70/ve++r79vv7+/v7+/v7+/v7+/v7+/v7+vv7+/v7+vv2+/L77/vv+vP2+u/7"
+              },
+              {
+                "c": 2,
+                "w": 0,
+                "p": "xCnDIsUewxrBGb4Vug61BQ=="
+              }
+            ]
+          }
+        },
+        {
+          "kind": "guess",
+          "authorId": "p4",
+          "text": "door"
         },
         {
           "kind": "draw",
@@ -389,29 +793,34 @@
           "drawing": {
             "strokes": [
               {
-                "c": 6,
-                "w": 1,
-                "p": "ko6cg6V3rGy3YMFWzU/ZReI66y7zIvsW"
+                "c": 3,
+                "w": 2,
+                "p": "LVgzXzlnQHNKfFGHWpJgm2SgZqJpommlbKpwq3epgKeLpZSgnZw="
               },
               {
-                "c": 4,
+                "c": 2,
                 "w": 2,
-                "p": "uzzBMcYpxyXIIMUX"
+                "p": "ijaEO31DdkxtWGVkYHBcfFeHUZNOn0erQrM7uTi/N8g2zzLYMeQx8DL7N/s9+0b7TvtX+2P7b/t6+4b7kvs="
+              },
+              {
+                "c": 6,
+                "w": 1,
+                "p": "Xp9on3KjequAsom6kL+Ux5TTkt+O64n3hPt7+3H7Zvtf+1f7TvtC+zf7Lvsn+yH7Hvsd+x/7"
               },
               {
                 "c": 5,
                 "w": 0,
-                "p": "29bf3uTl5e/l++n78fv5+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/s="
+                "p": "j52NmY6XjpeSl5SWmpOekKKQqo+1kcGXzZnZmuKe6573n/ui+6X7qfup+6b7o/ui+6T7pPuh+5z7lfuK+377c/tr+2P7W/tP+0P7N/sr"
               },
               {
-                "c": 0,
-                "w": 2,
-                "p": "dOBq1WLNV8ROvkK8OrYurCSkGZkNjQSDBHcEawRgBFgEUARFBDkELwQkBBwEEAQEBAQEBAQEBAQEBAQE"
+                "c": 7,
+                "w": 1,
+                "p": "bWN1ZX1lgWKDXIZUiU6ORpY8mjWiLacmqB2nEaoFrASvBLUEuQS5BL0EwwTIBMkExgTBBMAEwgTEBMQF"
               },
               {
-                "c": 3,
-                "w": 2,
-                "p": "g32Cf36DeoN4f3l+d4F2g3KGcIpwjW+UbZk="
+                "c": 7,
+                "w": 0,
+                "p": "iXqSepl2n3OmcK5qt2bCX8pZ01bfV+ta92D7Z/tu+3P7evuC+437lvuf+6X7r/u7+8f70/vd++P76fvw"
               }
             ]
           }
@@ -419,7 +828,7 @@
         {
           "kind": "guess",
           "authorId": "p5",
-          "text": "cup"
+          "text": "moon"
         }
       ]
     }

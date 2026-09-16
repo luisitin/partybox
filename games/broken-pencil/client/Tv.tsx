@@ -8,23 +8,29 @@ import type { PageView, PencilTvView } from '../server/views';
 import { DrawingView } from './DrawingView';
 import styles from './Tv.module.css';
 
+const STAGE_MARK = { guess: '💬', draw: '✏️', done: '✓' } as const;
+
 function Progress({ view }: { view: PencilTvView }): JSX.Element {
-  const done = view.progress.filter((p) => p.done).length;
+  const done = view.progress.filter((p) => p.stage === 'done').length;
   return (
     <>
       <ul className={styles.cards} aria-label="who is done">
         {view.progress.map((p) => {
           const player = view.players.find((x) => x.id === p.playerId);
+          const finished = p.stage === 'done';
           return (
-            <li key={p.playerId} className={`${styles.card} ${p.done ? styles.cardDone : ''}`}>
+            <li key={p.playerId} className={`${styles.card} ${finished ? styles.cardDone : ''}`}>
               <Avatar
                 avatarId={player?.avatarId ?? ''}
                 size={72}
                 dim={player?.connected === false}
               />
               <span className={styles.cardName}>{player?.name ?? '?'}</span>
-              <span className={styles.cardMark} aria-label={p.done ? 'done' : 'working'}>
-                {p.done ? '✓' : '✏️'}
+              <span
+                className={styles.cardMark}
+                aria-label={finished ? 'done' : p.stage === 'draw' ? 'drawing' : 'guessing'}
+              >
+                {STAGE_MARK[p.stage]}
               </span>
             </li>
           );
@@ -79,7 +85,7 @@ function CurrentPage({ page }: { page: PageView }): JSX.Element {
 
 export function Tv({ view }: GameTvProps<PencilTvView>): JSX.Element {
   if (view.phaseId === 'pick') {
-    const picked = view.progress.filter((p) => p.done).length;
+    const picked = view.progress.filter((p) => p.stage === 'done').length;
     return (
       <Stage center>
         <BigText level="display" tone="accent">
@@ -87,10 +93,10 @@ export function Tv({ view }: GameTvProps<PencilTvView>): JSX.Element {
         </BigText>
         <BigText level="h2">Pick a secret word on your phone.</BigText>
         <ol className={styles.howto}>
-          <li>Draw your word.</li>
-          <li>Pass the book on — the next player guesses what it is.</li>
-          <li>The next one draws that guess… all the way round.</li>
-          <li>Then we read every book, page by page.</li>
+          <li>Everyone draws their word.</li>
+          <li>Your drawing goes to the next player: they guess it, then draw their guess.</li>
+          <li>That goes on round the circle; the last player only guesses.</li>
+          <li>Then everyone presents their own book on the TV, page by page.</li>
         </ol>
         <p className={styles.count} role="status">
           {picked} of {view.progress.length} picked
@@ -99,15 +105,19 @@ export function Tv({ view }: GameTvProps<PencilTvView>): JSX.Element {
     );
   }
 
-  if (view.phaseId === 'draw' || view.phaseId === 'guess') {
+  if (view.phaseId === 'draw' || view.phaseId === 'pass' || view.phaseId === 'guess') {
+    const title =
+      view.phaseId === 'draw'
+        ? 'Everyone is drawing their word…'
+        : view.phaseId === 'pass'
+          ? 'Guess the drawing, then draw your guess…'
+          : 'Last guesses…';
     return (
       <Stage>
         <div className={styles.head}>
-          <BigText level="h1">
-            {view.phaseId === 'draw' ? 'Everyone is drawing…' : 'Everyone is guessing…'}
-          </BigText>
+          <BigText level="h1">{title}</BigText>
           <p className={styles.kicker}>
-            page {view.step + 1} of {view.pageCount}
+            round {view.step} of {view.stepCount}
           </p>
         </div>
         <Progress view={view} />
@@ -126,7 +136,8 @@ export function Tv({ view }: GameTvProps<PencilTvView>): JSX.Element {
             {s.ownerName}'s book
           </BigText>
           <p className={styles.kicker}>
-            book {s.book + 1} of {view.bookCount} · page {s.page + 1} of {view.pageCount}
+            {s.ownerName} turns the pages · book {s.book + 1} of {view.bookCount} · page{' '}
+            {s.page + 1} of {view.pageCount}
           </p>
         </div>
         <div className={styles.showBody}>

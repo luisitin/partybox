@@ -1,5 +1,5 @@
-// Phase "guess" (`guessSeconds`): look at the previous page's drawing and write what it is.
-// Mirrors phases/draw.ts; the shared step logic is in ../step.ts.
+// Phase "guess" (the last step, `guessSeconds`): the final holder of each book only guesses — a
+// drawing here would come back to the owner. Mirrors phases/draw.ts; step logic in ../step.ts.
 import { isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { applyStepInput, closeStep, enterStep } from '../step';

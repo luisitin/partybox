@@ -5,9 +5,12 @@ const TABLE = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
 const LOOKUP: Record<string, number> = Object.fromEntries([...TABLE].map((c, i) => [c, i]));
 
 export const CANVAS = 256;
-/** Total base64 characters of points allowed per drawing (≈ 1 125 points). */
-export const INK_CHARS = 3000;
-export const MAX_STROKES = 80;
+/**
+ * Total base64 characters of points allowed per drawing (≈ 975 points) and the stroke cap: sized so
+ * 8 books × 7 drawings at the limit stay under the 256 KB state cap (≈ 235 KB worst case).
+ */
+export const INK_CHARS = 2600;
+export const MAX_STROKES = 64;
 export const COLORS = 8;
 export const WIDTHS = 3;
 

@@ -1,6 +1,6 @@
-// Phase "show": the TV turns the pages of every book, first to last, one page at a time. No
-// inputs exist here — the VIP's skip is "Next ▸", pause is "hold this page"; without either a
-// page auto-turns after SHOW_MS for its kind. The verdict is computed when a last page comes up.
+// Phase "show": each owner presents their book from their phone — `turn` from the presenter is
+// the page control; the VIP's skip (the TV's Skip) turns too; a page auto-turns after SHOW_MS as a
+// fallback so a dawdling presenter never stalls the room. The verdict is computed on a last page.
 import { enterPhase, isTimerFor, pick } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { isIntact } from '../books';
@@ -46,7 +46,19 @@ export function turnPage(state: State, now: number, next: Transition): State {
   return next(state, now);
 }
 
+/** The player whose book is on the TV (they hold the Next button). */
+export function presenterOf(state: State): string | null {
+  const showing = state.showing;
+  if (state.phase.id !== 'show' || !showing) return null;
+  return state.books[showing.book]?.ownerId ?? null;
+}
+
 export function reduceShow(state: State, event: GameEvent<Input>, next: Transition): State {
+  if (event.type === 'input') {
+    if (event.input.type === 'turn' && event.playerId === presenterOf(state))
+      return turnPage(state, event.now, next);
+    return state;
+  }
   if (isTimerFor(state, event)) return turnPage(state, event.now, next);
   return state;
 }

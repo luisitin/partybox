@@ -13,6 +13,7 @@ import { sampleInput } from './bot';
 import { dealOffers } from './content';
 import { enterDraw, reduceDraw } from './phases/draw';
 import { enterGuess, reduceGuess } from './phases/guess';
+import { enterPass, reducePass } from './phases/pass';
 import { closePick, enterPick, reducePick } from './phases/pick';
 import {
   enterDone,
@@ -23,7 +24,7 @@ import {
   turnPage,
 } from './phases/show';
 import { results } from './scoring';
-import { closeStep } from './step';
+import { closeStep, phaseOfStep } from './step';
 import { EVERYONE, PHASES, inputSchema } from './types';
 import type { Book, Input, Settings, State } from './types';
 import { controllerView, tvView } from './views';
@@ -47,9 +48,9 @@ function init(ctx: InitContext): State {
   const players: State['players'] = {};
   for (const p of ctx.players) players[p.id] = p;
   const N = ctx.players.length;
-  // Others per book: "everyone" is the whole circle; a smaller number shortens the game.
+  // Others per book: "everyone" is the whole circle (the book comes home after the last guess);
+  // a smaller number shortens the game.
   const passes = Math.max(1, Math.min(settings.passes, N - 1));
-  const ownerDraws: 0 | 1 = passes % 2 === 1 ? 1 : 0; // keeps every book ending on a guess
   let rng = seedRng(ctx.seed);
   const [seats, afterSeats] = shuffle(rng, Object.keys(players).sort());
   rng = afterSeats;
@@ -63,8 +64,7 @@ function init(ctx: InitContext): State {
     settings,
     seats,
     passes,
-    ownerDraws,
-    pageCount: passes + 1 + ownerDraws,
+    pageCount: 2 * passes + 1,
     step: 0,
     books,
     offers,
@@ -74,10 +74,17 @@ function init(ctx: InitContext): State {
   return enterPick(base, ctx.now);
 }
 
-/** After a step closes: the next step (draw/guess alternate) or the show after the last page. */
+/** After a step closes: the next step (draw → pass… → guess) or the show after the last one. */
 function afterStep(state: State, now: number): State {
-  if (state.step >= state.pageCount) return enterShow(state, now);
-  return state.step % 2 === 1 ? enterDraw(state, now) : enterGuess(state, now);
+  if (state.step > state.passes + 1) return enterShow(state, now);
+  switch (phaseOfStep(state, state.step)) {
+    case 'draw':
+      return enterDraw(state, now);
+    case 'pass':
+      return enterPass(state, now);
+    default:
+      return enterGuess(state, now);
+  }
 }
 
 /** The phase order. What a deadline does — and what a VIP skip does (docs/GAME_CONTRACT.md). */
@@ -86,6 +93,7 @@ export function advance(state: State, now: number): State {
     case 'pick':
       return closePick(state, now, afterStep);
     case 'draw':
+    case 'pass':
     case 'guess':
       return closeStep(state, now, afterStep);
     case 'show': // skip = "Next page"
@@ -108,6 +116,8 @@ function reduce(state: State, event: GameEvent<Input>): State {
       return reducePick(state, event, afterStep);
     case 'draw':
       return reduceDraw(state, event, afterStep);
+    case 'pass':
+      return reducePass(state, event, afterStep);
     case 'guess':
       return reduceGuess(state, event, afterStep);
     case 'show':

@@ -70,23 +70,37 @@ function Pick({ view, send }: GameControllerProps<PencilControllerView, Input>):
   );
 }
 
+function stepKicker(view: PencilControllerView): string {
+  const who = view.bookOwnerName ?? 'Someone';
+  return `${who}'s book · round ${view.step} of ${view.stepCount}`;
+}
+
+/** After both pages of a step are in: what I sent, and who gets the book next. */
+function Sent({ view }: { view: PencilControllerView }): JSX.Element {
+  return (
+    <Screen title="Sent!">
+      <p className={styles.kicker}>{stepKicker(view)}</p>
+      {view.mine?.text ? (
+        <p className={styles.bookLine}>
+          You guessed <strong>“{view.mine.text}”</strong>
+        </p>
+      ) : null}
+      {view.mine?.drawing ? <DrawingView drawing={view.mine.drawing} label="your drawing" /> : null}
+      <p className={styles.hint}>
+        {view.nextName
+          ? `${view.nextName} gets this next. Good luck, ${view.nextName}.`
+          : 'That was the last page of this book.'}
+      </p>
+    </Screen>
+  );
+}
+
+/** Draw the text in `prompt`: your own word (round 1) or the guess you just wrote (a pass). */
 function Draw({ view, send }: GameControllerProps<PencilControllerView, Input>): JSX.Element {
   const strokes = useRef<Stroke[]>([]);
   const [count, setCount] = useState(0);
   const text = view.prompt?.kind === 'text' ? view.prompt.text : '???';
-  const kicker = `${view.bookOwnerName ?? 'Someone'}'s book · page ${view.step + 1} of ${view.pageCount}`;
-  if (view.submitted)
-    return (
-      <Screen title="Sent!">
-        <p className={styles.kicker}>{kicker}</p>
-        <DrawingView drawing={view.mine?.drawing ?? null} label="your drawing" />
-        <p className={styles.hint}>
-          {view.nextName
-            ? `${view.nextName} gets this next. Good luck, ${view.nextName}.`
-            : 'That was the last page.'}
-        </p>
-      </Screen>
-    );
+  const own = view.step === 1;
   return (
     <Screen
       footer={
@@ -98,8 +112,10 @@ function Draw({ view, send }: GameControllerProps<PencilControllerView, Input>):
         </PrimaryButton>
       }
     >
-      <p className={styles.kicker}>{kicker}</p>
-      <h2 className={styles.prompt}>Draw: “{text}”</h2>
+      <p className={styles.kicker}>{stepKicker(view)}</p>
+      <h2 className={styles.prompt}>
+        {own ? 'Draw your word: ' : 'Now draw your guess: '}“{text}”
+      </h2>
       <DrawPad
         onChange={(s) => {
           strokes.current = s;
@@ -110,25 +126,61 @@ function Draw({ view, send }: GameControllerProps<PencilControllerView, Input>):
   );
 }
 
+/** Guess the drawing that reached you; in a pass the DrawPad follows right after. */
 function Guess({ view, send }: GameControllerProps<PencilControllerView, Input>): JSX.Element {
   const drawing = view.prompt?.kind === 'drawing' ? view.prompt.drawing : null;
-  const kicker = `${view.bookOwnerName ?? 'Someone'}'s book · page ${view.step + 1} of ${view.pageCount}`;
+  const last = view.phaseId === 'guess';
   return (
     <TextAnswer
-      kicker={kicker}
+      kicker={stepKicker(view)}
       prompt={
         <span className={styles.guessPrompt}>
           <DrawingView drawing={drawing} label="the drawing to guess" />
-          <span>What is this?</span>
+          <span>{last ? 'Last guess — what is this?' : 'What is this? (you draw it next)'}</span>
         </span>
       }
       placeholder="Your best guess…"
       maxLength={40}
-      submitted={view.submitted}
-      submitLabel="Send guess"
+      submitted={false}
+      submitLabel={last ? 'Send guess' : 'Guess, then draw it'}
       promptKey={`${view.step}:${view.deadline ?? ''}`}
       onSubmit={(text) => send({ type: 'guess', text })}
     />
+  );
+}
+
+/** The show: the presenter turns the pages of their own book; everyone else watches the TV. */
+function Show({ view, send }: GameControllerProps<PencilControllerView, Input>): JSX.Element {
+  const s = view.showing;
+  if (!s) return <WaitingScreen title="Watch the TV" mood="watch" />;
+  const where = `page ${s.page + 1} of ${view.pageCount}`;
+  if (!s.presenting)
+    return (
+      <WaitingScreen
+        title={`${s.ownerName} is presenting`}
+        hint={`${s.ownerName}'s book · ${where}. Your turn comes when your book is up.`}
+        mood="watch"
+      />
+    );
+  const label = !s.lastPage ? 'Next page ▸' : s.lastBook ? 'Finish ▸' : 'Next book ▸';
+  return (
+    <Screen
+      title="Your book is on the TV"
+      footer={
+        <PrimaryButton onClick={() => send({ type: 'turn' })} disabled={view.paused}>
+          {label}
+        </PrimaryButton>
+      }
+    >
+      <p className={styles.kicker}>
+        {where} ·{' '}
+        {s.pageKind === 'word' ? 'your word' : s.pageKind === 'draw' ? 'a drawing' : 'a guess'}
+      </p>
+      <p className={styles.hint}>
+        Read it out, let everyone look, then turn the page. The TV turns it for you if you take too
+        long.
+      </p>
+    </Screen>
   );
 }
 
@@ -147,23 +199,13 @@ export function Controller(props: GameControllerProps<PencilControllerView, Inpu
     case 'pick':
       return <Pick {...props} />;
     case 'draw':
-      return <Draw {...props} key={view.step} />;
+    case 'pass':
     case 'guess':
-      return <Guess {...props} />;
-    case 'show': {
-      const s = view.showing;
-      return (
-        <WaitingScreen
-          title="Watch the TV"
-          hint={
-            s
-              ? `${s.ownerName}'s book · page ${s.page + 1} of ${view.pageCount}${s.myPageAt !== null ? ` · your page is ${s.myPageAt === s.page + 1 ? 'next' : 'coming up'}` : ''}`
-              : undefined
-          }
-          mood="watch"
-        />
-      );
-    }
+      if (view.stage === 'guess') return <Guess {...props} key={`g${view.step}`} />;
+      if (view.stage === 'draw') return <Draw {...props} key={`d${view.step}`} />;
+      return <Sent view={view} />;
+    case 'show':
+      return <Show {...props} />;
     default: {
       const mine = view.myBook;
       return (

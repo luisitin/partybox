@@ -1,9 +1,17 @@
-// Pins the README rules with hand-built events: routing for every N × passes, the parity rule,
-// never-spoil views, placeholders at the deadline, the show's page turns, verdicts and results.
+// Pins the README rules with hand-built events: the draw → pass… → guess routing for every
+// N × passes, guess-then-draw inside a pass, never-spoil views, placeholders at the deadline, the
+// presenter's page turns, verdicts and results.
 import { describe, expect, it } from 'vitest';
 import { createRng } from '@partybox/game-sdk';
 import { game } from '../server/index';
-import { authorOfPage, bookInHands, isIntact, normalizeText } from '../server/books';
+import {
+  authorOfPage,
+  bookInHands,
+  isIntact,
+  normalizeText,
+  owedNow,
+  pagesOfStep,
+} from '../server/books';
 import { decodePoints, encodePoints, inkCost } from '../server/encoding';
 import type { Input, State } from '../server/types';
 
@@ -59,17 +67,17 @@ function vip(state: State, action: 'skip' | 'pause' | 'resume' | 'end', now?: nu
 
 const DOT: Input = { type: 'draw', strokes: [{ c: 0, w: 1, p: encodePoints([10, 10]) }] };
 
-/** Everyone picks option 1, then plays every step with a dot / the given guess. Ends in `show`. */
+/** Everyone picks option 1, then plays every step (dots, and `guessFor` for guesses). Ends in `show`. */
 function playThrough(state: State, guessFor: (playerId: string, step: number) => string): State {
   let s = state;
   for (const id of s.seats) s = input(s, id, { type: 'pick', option: 1 });
-  expect(s.phase.id).toBe(s.pageCount > 1 ? (s.ownerDraws === 1 ? 'draw' : 'draw') : 'show');
+  expect(s.phase.id).toBe('draw');
   let guard = 0;
-  while ((s.phase.id === 'draw' || s.phase.id === 'guess') && guard++ < 40) {
+  while (s.phase.id !== 'show' && guard++ < 60) {
     for (const id of s.seats) {
-      if (s.phase.id === 'draw') s = input(s, id, DOT);
-      else if (s.phase.id === 'guess')
-        s = input(s, id, { type: 'guess', text: guessFor(id, s.step) });
+      const owed = owedNow(s, id);
+      if (owed === 'guess') s = input(s, id, { type: 'guess', text: guessFor(id, s.step) });
+      if (owedNow(s, id) === 'draw') s = input(s, id, DOT);
     }
   }
   expect(s.phase.id).toBe('show');
@@ -87,20 +95,25 @@ describe('setup and routing', () => {
     expect(s.books.map((b) => b.ownerId)).toEqual(s.seats);
   });
 
-  it('caps passes at N − 1 and keeps every book ending on a guess (parity rule)', () => {
-    expect(start(8)).toMatchObject({ passes: 7, ownerDraws: 1, pageCount: 9 });
-    expect(start(3)).toMatchObject({ passes: 2, ownerDraws: 0, pageCount: 3 });
-    expect(start(8, { passes: 3 })).toMatchObject({ passes: 3, ownerDraws: 1, pageCount: 5 });
-    expect(start(8, { passes: 4 })).toMatchObject({ passes: 4, ownerDraws: 0, pageCount: 5 });
-    expect(start(2)).toMatchObject({ passes: 1, ownerDraws: 1, pageCount: 3 });
+  it('caps passes at N − 1; pages = 2P + 1; the last holder only guesses', () => {
+    expect(start(4)).toMatchObject({ passes: 3, pageCount: 7 });
+    expect(start(8)).toMatchObject({ passes: 7, pageCount: 15 });
+    expect(start(3)).toMatchObject({ passes: 2, pageCount: 5 });
+    expect(start(2)).toMatchObject({ passes: 1, pageCount: 3 });
+    expect(start(8, { passes: 3 })).toMatchObject({ passes: 3, pageCount: 7 });
+    const s = start(4);
+    expect(pagesOfStep(s, 1)).toEqual([1]);
+    expect(pagesOfStep(s, 2)).toEqual([2, 3]);
+    expect(pagesOfStep(s, 3)).toEqual([4, 5]);
+    expect(pagesOfStep(s, 4)).toEqual([6]);
   });
 
-  it('every player holds exactly one book per step and never the same book twice (N 2–8 × passes 1–15)', () => {
+  it('every player holds exactly one book per step, their own first, never the same book twice (N 2–8 × passes 1–15)', () => {
     for (let n = 2; n <= 8; n++)
       for (let passes = 1; passes <= 15; passes++) {
         const s0 = start(n, { passes }, n * 100 + passes);
         const seen = new Map<string, Set<number>>();
-        for (let step = 1; step < s0.pageCount; step++) {
+        for (let step = 1; step <= s0.passes + 1; step++) {
           const s = { ...s0, step };
           const held = s.seats.map((id) => bookInHands(s, id));
           expect(
@@ -109,16 +122,14 @@ describe('setup and routing', () => {
           ).toEqual(Array.from({ length: n }, (_, i) => i));
           s.seats.forEach((id, k) => {
             const b = held[k] as number;
-            expect(authorOfPage(s, b, step)).toBe(id);
+            for (const i of pagesOfStep(s, step)) expect(authorOfPage(s, b, i)).toBe(id);
+            if (step === 1) expect(b).toBe(k); // your own word first
             const books = seen.get(id) ?? new Set<number>();
             expect(books.has(b), `${id} touches book ${b} twice`).toBe(false);
             books.add(b);
             seen.set(id, books);
           });
         }
-        // The owner's own page 1 iff the owner draws first.
-        const s1 = { ...s0, step: 1 };
-        expect(bookInHands(s1, s0.seats[0] as string) === 0).toBe(s0.ownerDraws === 1);
       }
   });
 });
@@ -146,13 +157,14 @@ describe('pick', () => {
   });
 });
 
-describe('draw and guess steps', () => {
-  it('a phone sees only the previous page of the book in its hands; the TV sees no page at all', () => {
+describe('draw, pass, guess', () => {
+  it('step 1: everyone draws their own word; the phone shows only that word', () => {
     let s = start(4);
     for (const id of s.seats) s = input(s, id, { type: 'pick', option: 0 });
-    expect(s.phase.id).toBe('draw'); // 4 players → P = 3 (odd) → owners draw their own word first
+    expect(s.phase.id).toBe('draw');
     const a = s.seats[0] as string;
     const mine = game.controllerView(s, a);
+    expect(mine.stage).toBe('draw');
     expect(mine.prompt).toEqual({ kind: 'text', text: s.offers[a]?.[0] });
     expect(mine.bookOwnerName).toBe('P' + a.slice(1));
     const json = JSON.stringify(mine);
@@ -161,48 +173,85 @@ describe('draw and guess steps', () => {
     const tv = JSON.stringify(game.tvView(s));
     for (const id of s.seats) expect(tv).not.toContain(JSON.stringify(s.offers[id]?.[0]));
     expect(game.tvView(s).showing).toBeNull();
+    expect(input(s, a, { type: 'guess', text: 'not now' })).toBe(s);
   });
 
-  it('accepts one page per player per step, closes on all-sent, and hands the book to the next seat', () => {
-    let s = start(3); // P = 2, owner writes the word, seat+1 draws, seat+2 guesses
+  it('a pass: the next seat guesses the drawing, then draws that guess; the step closes on all done', () => {
+    let s = start(3); // P = 2: draw · pass · guess
     for (const id of s.seats) s = input(s, id, { type: 'pick', option: 0 });
-    expect(s.phase.id).toBe('draw');
-    const [a, b, c] = s.seats as [string, string, string];
-    expect(bookInHands(s, b)).toBe(0); // b draws a's word
-    s = input(s, b, DOT);
-    expect(s.books[0]?.pages[1]).toEqual({
-      kind: 'draw',
-      authorId: b,
-      drawing: { strokes: DOT.type === 'draw' ? DOT.strokes : [] },
-    });
-    expect(input(s, b, DOT)).toBe(s); // once per step
-    expect(game.controllerView(s, b).submitted).toBe(true);
-    expect(game.controllerView(s, b).nextName).toBe('P' + c.slice(1));
-    expect(input(s, a, { type: 'guess', text: 'wrong phase' })).toBe(s);
-    s = input(s, c, DOT);
-    s = input(s, a, DOT);
-    expect(s.phase.id).toBe('guess');
+    for (const id of s.seats) s = input(s, id, DOT);
+    expect(s.phase.id).toBe('pass');
     expect(s.step).toBe(2);
-    expect(bookInHands(s, c)).toBe(0); // c guesses b's drawing of a's word
-    expect(game.controllerView(s, c).prompt).toEqual({
+    expect(s.phase.deadline).toBe(s.phase.startedAt + 90_000); // guess + draw
+    const [a, b, c] = s.seats as [string, string, string];
+    expect(bookInHands(s, b)).toBe(0); // b holds a's book
+    let view = game.controllerView(s, b);
+    expect(view.stage).toBe('guess');
+    expect(view.prompt).toEqual({
       kind: 'drawing',
       drawing: { strokes: DOT.type === 'draw' ? DOT.strokes : [] },
     });
+    expect(JSON.stringify(view)).not.toContain(JSON.stringify(s.offers[a]?.[0]));
+    expect(input(s, b, DOT)).toBe(s); // must guess first
+    s = input(s, b, { type: 'guess', text: 'a hat' });
+    expect(s.books[0]?.pages[2]).toEqual({ kind: 'guess', authorId: b, text: 'a hat' });
+    view = game.controllerView(s, b);
+    expect(view.stage).toBe('draw');
+    expect(view.prompt).toEqual({ kind: 'text', text: 'a hat' });
+    expect(view.submitted).toBe(false);
+    expect(input(s, b, { type: 'guess', text: 'twice' })).toBe(s);
+    s = input(s, b, DOT);
+    expect(s.books[0]?.pages[3]).toMatchObject({ kind: 'draw', authorId: b });
+    view = game.controllerView(s, b);
+    expect(view.stage).toBeNull();
+    expect(view.submitted).toBe(true);
+    expect(view.mine).toEqual({
+      text: 'a hat',
+      drawing: { strokes: DOT.type === 'draw' ? DOT.strokes : [] },
+    });
+    expect(view.nextName).toBe('P' + c.slice(1));
+    // The other two finish → the last step: guess only.
+    for (const id of [c, a]) {
+      s = input(s, id, { type: 'guess', text: 'x' });
+      s = input(s, id, DOT);
+    }
+    expect(s.phase.id).toBe('guess');
+    expect(s.step).toBe(3);
+    expect(bookInHands(s, c)).toBe(0);
+    expect(game.controllerView(s, c).stage).toBe('guess');
+    s = input(s, c, { type: 'guess', text: 'a cap' });
+    expect(game.controllerView(s, c).stage).toBeNull();
+    expect(input(s, c, DOT)).toBe(s); // no drawing after the last guess
+    for (const id of [a, b]) s = input(s, id, { type: 'guess', text: 'y' });
+    expect(s.phase.id).toBe('show');
+    expect(s.books[0]?.pages.map((p) => p.kind)).toEqual([
+      'word',
+      'draw',
+      'guess',
+      'draw',
+      'guess',
+    ]);
   });
 
-  it('the deadline fills missing pages with placeholders authored by whoever owed them', () => {
+  it('the deadline fills whatever is missing — a guess, a drawing, or both — by whoever owed it', () => {
     let s = start(3);
     for (const id of s.seats) s = input(s, id, { type: 'pick', option: 0 });
     const [a, b, c] = s.seats as [string, string, string];
     s = input(s, b, DOT);
+    s = timer(s); // a and c never drew
+    expect(s.phase.id).toBe('pass');
+    expect(s.books[0]?.pages[1]).toMatchObject({ kind: 'draw', authorId: a, drawing: null });
+    expect(s.books[2]?.pages[1]).toMatchObject({ kind: 'draw', authorId: c, drawing: null });
+    s = input(s, c, { type: 'guess', text: 'half done' }); // c guesses b's book but never draws
     s = timer(s);
     expect(s.phase.id).toBe('guess');
-    expect(s.books[1]?.pages[1]).toEqual({ kind: 'draw', authorId: c, drawing: null });
-    expect(s.books[2]?.pages[1]).toEqual({ kind: 'draw', authorId: a, drawing: null });
+    expect(s.books[1]?.pages[2]).toEqual({ kind: 'guess', authorId: c, text: 'half done' });
+    expect(s.books[1]?.pages[3]).toEqual({ kind: 'draw', authorId: c, drawing: null });
+    expect(s.books[0]?.pages[2]).toEqual({ kind: 'guess', authorId: b, text: null });
+    expect(s.books[0]?.pages[3]).toEqual({ kind: 'draw', authorId: b, drawing: null });
     s = timer(s);
     expect(s.phase.id).toBe('show');
-    expect(s.books[0]?.pages[2]).toEqual({ kind: 'guess', authorId: c, text: null });
-    expect(game.controllerView(s, c).prompt).toBeNull();
+    expect(s.books[0]?.pages[4]).toEqual({ kind: 'guess', authorId: c, text: null });
   });
 
   it('disconnected players are not waited for', () => {
@@ -217,28 +266,27 @@ describe('draw and guess steps', () => {
 });
 
 describe('the show', () => {
-  it('turns pages on the timer and on VIP skip, book by book, and shows only pages up to the current one', () => {
+  it('the presenter turns pages with `turn`; others cannot; the TV shows only pages up to the current one', () => {
     let s = playThrough(start(3), () => 'a thing');
     expect(s.showing).toEqual({ book: 0, page: 0, verdict: null, line: null });
-    expect(s.phase.deadline).toBe(s.phase.startedAt + 6000);
-    let tv = game.tvView(s);
-    expect(tv.showing?.pages).toHaveLength(1);
-    const later = JSON.stringify(tv);
-    expect(later).not.toContain('a thing');
-    s = vip(s, 'skip'); // Next ▸
+    const [a, b] = s.seats as [string, string];
+    expect(game.controllerView(s, a).showing?.presenting).toBe(true);
+    expect(game.controllerView(s, b).showing?.presenting).toBe(false);
+    expect(input(s, b, { type: 'turn' })).toBe(s); // not their book
+    expect(JSON.stringify(game.tvView(s))).not.toContain('a thing');
+    s = input(s, a, { type: 'turn' });
     expect(s.showing).toMatchObject({ book: 0, page: 1 });
-    expect(s.phase.deadline).toBe(s.phase.startedAt + 12000);
+    expect(game.tvView(s).showing?.pages).toHaveLength(2);
+    s = vip(s, 'skip'); // the TV's Skip / the VIP still work
+    expect(s.showing).toMatchObject({ book: 0, page: 2 });
+    s = timer(s); // the fallback auto-turn
     s = timer(s);
-    expect(s.showing).toMatchObject({ book: 0, page: 2, verdict: 'broken' });
-    tv = game.tvView(s);
-    expect(tv.showing?.pages).toHaveLength(3);
-    expect(tv.showing?.verdictLine).toBeTruthy();
-    s = timer(s);
+    expect(s.showing).toMatchObject({ book: 0, page: 4, verdict: 'broken' });
+    expect(game.controllerView(s, a).showing).toMatchObject({ lastPage: true, lastBook: false });
+    s = input(s, a, { type: 'turn' });
     expect(s.showing).toMatchObject({ book: 1, page: 0 });
-    for (let i = 0; i < 5; i++) s = timer(s);
-    expect(s.phase.id).toBe('show');
-    expect(s.showing).toMatchObject({ book: 2, page: 2 });
-    s = timer(s);
+    expect(game.controllerView(s, b).showing?.presenting).toBe(true);
+    while (s.phase.id === 'show') s = vip(s, 'skip');
     expect(s.phase.id).toBe('summary');
     expect(game.tvView(s).summary).toHaveLength(3);
     expect(game.results(s)).toBeNull();
@@ -250,11 +298,11 @@ describe('the show', () => {
     let s = start(3);
     const words: Record<string, string> = {};
     for (const id of s.seats) words[id] = s.offers[id]?.[1] as string;
-    // Seat k guesses the book of seat (k − 2) mod 3 at step 2: answer with that owner's word.
+    // The last holder of book 1 (seat 0 at step 3) guesses its word exactly.
     s = playThrough(s, (id, step) => {
       const b = bookInHands({ ...s, step }, id);
       const owner = s.seats[b] as string;
-      return id === s.seats[0] ? `The ${words[owner]}!` : 'nonsense';
+      return step === 3 && b === 1 ? `The ${words[owner]}!` : 'nonsense';
     });
     while (s.phase.id === 'show' || s.phase.id === 'summary') s = vip(s, 'skip');
     const results = game.results(s);
@@ -283,6 +331,7 @@ describe('the show', () => {
     const deadline = s.phase.deadline as number;
     s = vip(s, 'pause', s.phase.startedAt + 1000);
     expect(timer(s)).toBe(s);
+    expect(input(s, s.seats[0] as string, { type: 'turn' })).toBe(s);
     s = vip(s, 'resume', s.phase.startedAt + 5000);
     expect(s.phase.deadline).toBe(deadline + 4000);
   });
@@ -310,7 +359,7 @@ describe('encoding and bot', () => {
     ).toBe(false);
   });
 
-  it('the bot picks, draws varied doodles and guesses from its list; never acts twice or in the show', () => {
+  it('the bot picks, draws, guesses then draws in a pass, presents its own book, and never acts twice', () => {
     const rng = createRng(9);
     let s = start(3);
     const a = s.seats[0] as string;
@@ -324,13 +373,19 @@ describe('encoding and bot', () => {
     expect(d1?.type).toBe('draw');
     expect(JSON.stringify(d1)).not.toBe(JSON.stringify(d2));
     expect(game.inputSchema.safeParse(d1).success).toBe(true);
-    s = input(s, a, d1 as Input);
-    expect(game.bot.sampleInput(s, a, rng)).toBeNull();
-    for (const id of s.seats.slice(1)) s = input(s, id, DOT);
+    for (const id of s.seats) s = input(s, id, DOT);
+    expect(s.phase.id).toBe('pass');
     const g = game.bot.sampleInput(s, a, rng);
     expect(g?.type).toBe('guess');
-    for (const id of s.seats) s = input(s, id, { type: 'guess', text: 'x' });
-    expect(s.phase.id).toBe('show');
+    s = input(s, a, g as Input);
+    expect(game.bot.sampleInput(s, a, rng)?.type).toBe('draw');
+    s = input(s, a, DOT);
     expect(game.bot.sampleInput(s, a, rng)).toBeNull();
+    s = playThrough(start(3), () => 'x');
+    const presenter = s.seats[0] as string;
+    const other = s.seats[1] as string;
+    expect(game.bot.sampleInput(s, other, rng)).toBeNull();
+    const turns = Array.from({ length: 30 }, () => game.bot.sampleInput(s, presenter, rng));
+    expect(turns.some((t) => t?.type === 'turn')).toBe(true);
   });
 });
