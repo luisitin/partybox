@@ -53,7 +53,9 @@
   width: var(--pb-touch);
   height: var(--pb-touch);
   border-radius: 50%;
-  background: var(--pb-surface-2);
+  /* gold, like the TV's vote-card discs (the phone's A is the TV's A) */
+  background: var(--pb-accent-2-fill);
+  color: var(--pb-on-accent-2-fill);
   font-size: var(--pb-font-body);
   font-weight: 900;
   transition:
@@ -118,12 +120,18 @@
   animation: pb-vote-settle var(--pb-motion-base) var(--pb-ease) both;
 }
 
-.mine {
-  opacity: 0.6;
+/* Dimmed by token, not opacity: muted text on the page bg keeps >= 6.4:1 in every theme (R-070);
+   opacity fell to ~2.2:1 in Daylight. .mine is disabled and can never be .voted. */
+.mine,
+.dim {
+  color: var(--pb-text-muted);
+  background: var(--pb-bg);
 }
 
-.dim {
-  opacity: 0.5;
+.mine .letter,
+.dim .letter {
+  background: var(--pb-surface);
+  color: var(--pb-text-muted);
 }
 
 .locked {

@@ -120,8 +120,16 @@
   color: var(--pb-danger);
 }
 
+/* Dimmed by token, not opacity: muted text on the page bg keeps >= 6.4:1 in every theme (R-070);
+   opacity fell to ~3.5:1 in Daylight. Never co-occurs with .selected/.correct/.wrong. */
 .dim {
-  opacity: 0.5;
+  color: var(--pb-text-muted);
+  background: var(--pb-bg);
+}
+
+.dim .letter {
+  background: var(--pb-surface);
+  color: var(--pb-text-muted);
 }
 
 .locked {
