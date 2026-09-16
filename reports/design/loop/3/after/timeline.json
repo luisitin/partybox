@@ -1,0 +1,30 @@
+{
+  "pass": "3",
+  "game": "bingo",
+  "players": 12,
+  "scenario": "normal",
+  "focus": "tv",
+  "started": "16:38:58.822",
+  "tvVideoT0": "16:38:55.540",
+  "changes": [
+    {
+      "t": 1789576738824,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789576743819,
+      "at": "16:38:58.824",
+      "sinceStartS": 0,
+      "videoS": 3.3
+    },
+    {
+      "t": 1789576743903,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789576749823,
+      "at": "16:39:03.903",
+      "sinceStartS": 5.1,
+      "videoS": 8.4
+    }
+  ],
+  "notes": ["budget reached while playing; skipped to results"]
+}
