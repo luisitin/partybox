@@ -103,6 +103,12 @@
   align-items: center;
   gap: var(--pb-space-2);
   min-width: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
 }
 
 .meName {
@@ -277,4 +283,11 @@
   font-size: 20px;
   display: grid;
   place-items: center;
+}
+
+/* ≤ 359 px: the avatar opens the theme sheet; this button only clipped the room code (loop #7). */
+@media (max-width: 359px) {
+  .iconButton {
+    display: none;
+  }
 }

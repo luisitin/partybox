@@ -162,10 +162,18 @@ export function ControllerShell({
                   ★ {t.vip.badge}
                 </button>
               ) : null}
-              <span className={styles.me}>
+              {/* The avatar opens the theme / phone-settings sheet too: on a 320 px phone the 🎨
+                  button is hidden so the room code is not clipped (review-loop #7). */}
+              <button
+                type="button"
+                className={styles.me}
+                onClick={() => setThemeOpen(true)}
+                aria-haspopup="dialog"
+                aria-label={`${me.name} — ${t.theme.title}`}
+              >
                 <Avatar avatarId={me.avatarId} size={32} />
                 <span className={styles.meName}>{me.name}</span>
-              </span>
+              </button>
             </>
           ) : null}
         </div>
