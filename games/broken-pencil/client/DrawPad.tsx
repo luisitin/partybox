@@ -2,7 +2,7 @@
 // meter. Strokes are kept locally until "Done" encodes them into the wire format. Pointer events
 // cover finger, mouse and pen. While the VIP pauses, the shell freezes the pad (the phone's <main>
 // goes inert) and the deadline is shifted on resume, so no drawing time is lost.
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import type { JSX, PointerEvent as ReactPointerEvent } from 'react';
 import { CANVAS, INK_CHARS, MAX_STROKES, encodePoints, inkCost } from '../server/encoding';
 import type { Stroke } from '../server/types';
@@ -46,8 +46,9 @@ export function DrawPad({ onChange, disabled }: DrawPadProps): JSX.Element {
   // Point count of the stroke being drawn (state, so the meter re-renders without reading the ref).
   const [livePoints, setLivePoints] = useState(0);
 
-  // Fit the sheet to its box (square), crisp on retina.
-  useEffect(() => {
+  // Fit the sheet to its box (square), crisp on retina — before the first paint, so the sheet is
+  // never drawn at a placeholder size and then re-laid out (review-loop #18).
+  useLayoutEffect(() => {
     const box = boxRef.current;
     if (!box) return;
     // Never taller than the space left above the sticky footer (review-loop #9): on an iPhone 15
