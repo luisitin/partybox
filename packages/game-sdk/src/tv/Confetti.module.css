@@ -1,0 +1,36 @@
+/* Full-screen, behind nothing interactive: fixed to the viewport (the TV surface is a zoomed
+   1920×1080 design, so px, never vh). The fall is transform + opacity only. */
+.confetti {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.piece {
+  position: absolute;
+  top: -32px;
+  width: 16px;
+  height: 26px;
+  border-radius: 3px;
+  opacity: 0.95;
+  animation: global(pb-confetti) var(--pb-motion-confetti, 3000ms) linear infinite;
+  will-change: transform;
+}
+
+.c0 {
+  background: var(--pb-accent);
+}
+
+.c1 {
+  background: var(--pb-accent-2);
+}
+
+.c2 {
+  background: var(--pb-accent-3);
+}
+
+.c3 {
+  background: var(--pb-info);
+}

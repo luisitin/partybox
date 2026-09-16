@@ -21,6 +21,8 @@ export { ServerClockProvider, useSecondsLeft, useServerNow } from './ui/clock';
 export { DeadlineBar } from './ui/DeadlineBar';
 export { usePrefersReducedMotion } from './ui/motion';
 export type { DeadlineBarProps } from './ui/DeadlineBar';
+export { SoundProvider, useSound } from './ui/sound';
+export type { PlayCue, SoundCue } from './ui/sound';
 
 // ── TV ───────────────────────────────────────────────────────────────────────────────────────
 export { Stage } from './tv/Stage';
@@ -35,6 +37,8 @@ export { Scoreboard } from './tv/Scoreboard';
 export type { ScoreboardProps, ScoreboardRow } from './tv/Scoreboard';
 export { Reveal } from './tv/Reveal';
 export type { RevealItem, RevealProps } from './tv/Reveal';
+export { Confetti } from './tv/Confetti';
+export type { ConfettiProps } from './tv/Confetti';
 
 // ── controller ───────────────────────────────────────────────────────────────────────────────
 export { Screen } from './controller/Screen';

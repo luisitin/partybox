@@ -3,11 +3,11 @@
 import { Suspense, useCallback } from 'react';
 import type { JSX } from 'react';
 import type { PushedView, RoomSnapshot, TvView } from '@partybox/shared';
-import { BigText, DeadlineBar, PlayerChips, Timer } from '@partybox/game-sdk/ui';
+import { BigText, DeadlineBar, PlayerChips, SoundProvider, Timer } from '@partybox/game-sdk/ui';
 import { GameErrorBoundary } from '../controller/GameErrorBoundary';
 import { clientGames } from '../games.generated';
 import { t } from '../i18n';
-import type { SoundEngine } from '../sound';
+import type { SoundCue, SoundEngine } from '../sound';
 import styles from './TvPlaying.module.css';
 
 export interface TvPlayingProps {
@@ -18,6 +18,7 @@ export interface TvPlayingProps {
 
 export function TvPlaying({ room, view, audio }: TvPlayingProps): JSX.Element {
   const onTick = useCallback(() => audio.play('countdown'), [audio]);
+  const play = useCallback((cue: SoundCue) => audio.play(cue), [audio]);
   const module = room.selectedGameId ? clientGames[room.selectedGameId] : undefined;
   const vip = room.players.find((p) => p.id === (view?.vip ?? room.vip));
   if (!view) {
@@ -74,7 +75,9 @@ export function TvPlaying({ room, view, audio }: TvPlayingProps): JSX.Element {
         {GameTv ? (
           <GameErrorBoundary surface="tv">
             <Suspense fallback={<BigText tone="muted">…</BigText>}>
-              <GameTv view={view} />
+              <SoundProvider play={play}>
+                <GameTv view={view} />
+              </SoundProvider>
             </Suspense>
           </GameErrorBoundary>
         ) : (

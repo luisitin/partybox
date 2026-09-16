@@ -40,8 +40,10 @@ export function TvApp(): JSX.Element {
     const p = prev.current;
     if (room.players.length > p.players && p.status !== '') audio.play('join');
     if (room.status === 'results' && p.status !== 'results') audio.play('win');
+    // A game that cued this phase itself (useSound, child effects run first) keeps the stage's
+    // generic chime out of its way.
     if (view && view.phaseId !== p.phase && p.phase !== null && room.status === 'playing')
-      audio.play('phase');
+      if (performance.now() - audio.lastPlayedAt() > 50) audio.play('phase');
     prev.current = {
       players: room.players.length,
       status: room.status,

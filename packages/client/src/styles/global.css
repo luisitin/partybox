@@ -109,6 +109,57 @@ button {
   animation: pb-rise var(--pb-motion-base) var(--pb-ease) both;
 }
 
+/* A bouncy arrival: scale up past 1 and settle (new bingo call, a card landing on the stage). */
+@keyframes pb-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.pb-pop {
+  animation: pb-pop var(--pb-motion-base) var(--pb-ease) both;
+}
+
+/* A "no": three quick sideways jolts. */
+@keyframes pb-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-10px);
+  }
+  40% {
+    transform: translateX(10px);
+  }
+  60% {
+    transform: translateX(-6px);
+  }
+  80% {
+    transform: translateX(6px);
+  }
+}
+
+/* Confetti fall (Confetti primitive): the TV surface is a zoomed 1920×1080 design, so px. */
+@keyframes pb-confetti {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(var(--pb-confetti-scale, 1));
+  }
+  100% {
+    transform: translate3d(var(--pb-confetti-drift, 0px), 1180px, 0)
+      rotate(var(--pb-confetti-spin, 720deg)) scale(var(--pb-confetti-scale, 1));
+  }
+}
+
 /* Each surface sets its own base size so em-based sizing inside primitives follows the TV or phone
    type scale (body itself sits outside the surface element). */
 [data-surface] {
