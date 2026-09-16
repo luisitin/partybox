@@ -1,6 +1,8 @@
 # dependencies / build
 node_modules/
 dist/
+# background music (scripts/fetch-music.ts downloads it; CC BY 4.0, credited in README)
+packages/client/public/music/
 *.tsbuildinfo
 coverage/
 

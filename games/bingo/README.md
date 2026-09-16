@@ -2,6 +2,14 @@
 
 Plain 75-ball bingo with free daubing and a public check. Design doc: `docs/game-ideas/001-bingo.html`.
 
+## Sound (TV only)
+
+Each call bounces in with a "boing", then the caller says it — "B, 12" — through the
+Web Speech API (`client/caller.ts`: Windows "Zira", rate 1.15, pitch 1.1, falls back to the
+browser's default English voice; silent when the TV is muted). Background music: "Wallpaper" with
+the occasional "Cool Vibes", quiet, back to back (`music` on the client module; Kevin MacLeod,
+CC BY 4.0, see the root README). A failed claim's buzzer and a bingo's fanfare come from the synth.
+
 ## Overview
 
 The TV calls one number every `callSeconds`; every player daubs their own 5×5 card on their phone

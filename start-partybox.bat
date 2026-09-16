@@ -56,6 +56,10 @@ if errorlevel 1 (
   pause
   exit /b 1
 )
+rem Background music for the TV (Kevin MacLeod, CC BY 4.0): fetched once into
+rem packages\client\public\music; a failed download only means a silent lobby.
+echo  [i] Checking background music...
+call pnpm fetch-music
 
 rem --- 4. Open the TV page once the server is up, then run the server here ----------
 rem --dev-api powers the TV's Home button (start over). It is an unauthenticated LAN control API,

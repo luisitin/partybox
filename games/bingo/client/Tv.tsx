@@ -8,6 +8,7 @@ import type { CSSProperties, JSX } from 'react';
 import { BigText, Confetti, Scoreboard, Stage, useSound } from '@partybox/game-sdk/ui';
 import type { GameTvProps, ScoreboardRow } from '@partybox/game-sdk/ui';
 import type { BingoTvView, CallView, ClaimView } from '../server/views';
+import { hushCaller, speakCall } from './caller';
 import { Card, PatternIcon, REVEAL_STEP_MS } from './Card';
 import styles from './Tv.module.css';
 
@@ -60,10 +61,17 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
   const play = useSound();
   const phaseId = view.phaseId;
   const number = view.current?.number ?? null;
-  // Every new number bounces in with a "boing" (no per-second ticking: the timer is quiet).
+  const letter = view.current?.letter ?? null;
+  // Every new number bounces in with a "boing", then the caller says it ("Under the B, 12");
+  // no per-second ticking — the timer is quiet. A claim hushes the caller mid-word.
   useEffect(() => {
-    if (phaseId === 'play' && number !== null) play('call');
-  }, [phaseId, number, play]);
+    if (phaseId !== 'play' || number === null || letter === null) {
+      hushCaller();
+      return;
+    }
+    play('call');
+    return speakCall(letter, number);
+  }, [phaseId, number, letter, play]);
   // The verdict sounds once the card has landed: buzzer for a failed claim, fanfare for a bingo.
   const winner = view.winnerId;
   useEffect(() => {

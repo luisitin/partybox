@@ -48,6 +48,14 @@ The stage fits any screen (a PC at 150 % scaling, a 4K TV) — no browser zoom n
 of the TV starts the party over (click it twice: fresh lobby, new code, everyone taps Join again);
 it needs the server started with `--dev-api`, which the Windows launcher does.
 
+## Music and the Bingo caller
+
+The TV plays background music (lobby, Bingo, Broken Pencil) from `packages/client/public/music/`,
+fetched once by `pnpm fetch-music` (the Windows launcher does it after the build; no internet →
+silence, nothing else changes). Tracks: Kevin MacLeod (incompetech.com), licensed under Creative
+Commons: By Attribution 4.0 — https://creativecommons.org/licenses/by/4.0/. Bingo's caller speaks
+each number through the browser's speech voices (Windows "Zira" preferred); phones stay silent.
+
 ## Commands
 
 | Command                                       | What                                              |

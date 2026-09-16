@@ -28,7 +28,8 @@
     "new-game": "tsx scripts/new-game.ts",
     "gen-registry": "tsx scripts/gen-registry.ts",
     "check-drift": "tsx scripts/check-drift.ts",
-    "lan-ip": "tsx scripts/lan-ip.ts"
+    "lan-ip": "tsx scripts/lan-ip.ts",
+    "fetch-music": "tsx scripts/fetch-music.ts"
   },
   "devDependencies": {
     "@types/node": "catalog:",
