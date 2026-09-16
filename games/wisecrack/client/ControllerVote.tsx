@@ -105,7 +105,11 @@ export function ControllerReveal({
         </h2>
         <p className={styles.quote}>{mine.text}</p>
         <p className="pb-caption pb-muted">
-          {scored ? 'Nice one.' : 'Better luck on the next prompt.'}
+          {scored
+            ? 'Nice one.'
+            : mine.last
+              ? 'That was the last one — scores are next.'
+              : 'Better luck on the next prompt.'}
         </p>
       </div>
     </Screen>

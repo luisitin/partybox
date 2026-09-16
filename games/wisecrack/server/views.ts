@@ -3,7 +3,7 @@
 import { controllerEnvelope, envelope } from '@partybox/game-sdk';
 import type { ControllerView, GameAward, PlayerStatus, TvView } from '@partybox/game-sdk';
 import { answeredCount, answersExpected, playersDone } from './phases/answer';
-import { answerOf, currentPrompt, eligibleVoters, hasVoted } from './round';
+import { answerOf, currentPrompt, eligibleVoters, hasVoted, isLastRound } from './round';
 import { awardsFor, multiplierFor, standings, tallyPrompt } from './scoring';
 import { NO_ANSWER } from './types';
 import type { RoundPrompt, State } from './types';
@@ -69,8 +69,8 @@ export interface WisecrackControllerView extends ControllerView {
     votedSlot: number | null;
     myAnswer: string | null;
   } | null;
-  /** reveal: my result when I wrote for the prompt on stage. */
-  myReveal: { text: string; votes: number; points: number; sweep: boolean } | null;
+  /** reveal: my result when I wrote for the prompt on stage; `last` = no prompt follows. */
+  myReveal: { text: string; votes: number; points: number; sweep: boolean; last: boolean } | null;
   myScore: number;
   myRank: number;
   myDelta: number;
@@ -176,6 +176,7 @@ function myRevealFor(state: State, playerId: string): WisecrackControllerView['m
     votes: mine.votes,
     points: mine.points,
     sweep: mine.sweep,
+    last: isLastRound(state) && state.promptIndex >= state.prompts.length - 1,
   };
 }
 
