@@ -25,6 +25,24 @@
   line-height: 1.5;
 }
 
+/* Draw / pass / guess: the tile block sits in the vertical middle of a long wait (review-loop #8). */
+.waiting {
+  justify-content: center;
+}
+
+.waitBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-5);
+}
+
+.hint {
+  margin: 0;
+  text-align: center;
+  font-size: var(--pb-font-body);
+  color: var(--pb-text-muted);
+}
+
 .count {
   margin: 0;
   font-size: var(--pb-font-h2);
