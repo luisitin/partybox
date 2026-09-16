@@ -1,0 +1,48 @@
+{
+  "pass": "6",
+  "game": "bingo",
+  "players": 6,
+  "scenario": "tie",
+  "focus": "phone",
+  "started": "17:18:22.696",
+  "tvVideoT0": "17:18:19.427",
+  "changes": [
+    {
+      "t": 1789579102699,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789579107693,
+      "at": "17:18:22.699",
+      "sinceStartS": 0,
+      "videoS": 3.3
+    },
+    {
+      "t": 1789579107808,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789579110698,
+      "at": "17:18:27.808",
+      "sinceStartS": 5.1,
+      "videoS": 8.4
+    },
+    {
+      "t": 1789579333282,
+      "status": "playing",
+      "phase": "bingo",
+      "deadline": 1789579343264,
+      "at": "17:22:13.282",
+      "sinceStartS": 230.6,
+      "videoS": 233.9
+    },
+    {
+      "t": 1789579343360,
+      "status": "results",
+      "phase": "results",
+      "deadline": null,
+      "at": "17:22:23.360",
+      "sinceStartS": 240.7,
+      "videoS": 243.9
+    }
+  ],
+  "notes": []
+}
