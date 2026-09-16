@@ -136,7 +136,11 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
 
   if (view.phaseId === 'play') {
     return (
-      <Stage center className={`${styles.playStage} ${view.showBoard ? '' : styles.roomy}`}>
+      // Two chip rows (9+ players) eat ~70 px of stage: everything below tightens a notch (loop #3).
+      <Stage
+        center
+        className={`${styles.playStage} ${view.showBoard ? '' : styles.roomy} ${view.players.length > 8 ? styles.crowded : ''}`}
+      >
         <p className={styles.kicker}>
           {roundLabel} · {view.patternLabel} · call {view.callIndex} of 75
         </p>
@@ -147,10 +151,11 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
             <BigText level="h1">{view.current.call}</BigText>
           </div>
         ) : null}
-        {view.showPrevious ? (
+        {/* No reserved slot on the first call (review-loop #3): the row arrives with number two. */}
+        {view.showPrevious && view.previous ? (
           <div className={styles.previousRow}>
-            <span className={styles.previousLabel}>{view.previous ? 'Before that' : ' '}</span>
-            {view.previous ? <Call call={view.previous} /> : null}
+            <span className={styles.previousLabel}>Before that</span>
+            <Call call={view.previous} />
           </div>
         ) : null}
         {view.showBoard ? (
