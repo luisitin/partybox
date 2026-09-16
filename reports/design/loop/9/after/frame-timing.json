@@ -1,0 +1,30 @@
+{
+  "tv": {
+    "frames": 3948,
+    "longFrames": 2,
+    "worstMs": 67,
+    "long": [
+      {
+        "t": 1789581345416,
+        "ms": 67,
+        "phase": "lobby"
+      },
+      {
+        "t": 1789581408453,
+        "ms": 67,
+        "phase": "show"
+      }
+    ]
+  },
+  "phone": {
+    "longFrames": 1,
+    "worstMs": 67,
+    "long": [
+      {
+        "t": 1789581346101,
+        "ms": 67,
+        "phase": "lobby"
+      }
+    ]
+  }
+}
