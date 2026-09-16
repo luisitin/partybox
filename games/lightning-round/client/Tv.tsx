@@ -55,7 +55,7 @@ export function Tv({ view }: GameTvProps<LightningTvView>): JSX.Element {
         {view.question && view.correctIndex !== undefined ? (
           <AnswerCard question={view.question} correctIndex={view.correctIndex} />
         ) : null}
-        <RevealRows rows={view.rows ?? []} final={view.round?.final ?? false} />
+        <RevealRows rows={view.rows ?? []} />
       </Stage>
     );
   }

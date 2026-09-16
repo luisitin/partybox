@@ -7,7 +7,7 @@ import { useEffect, useRef } from 'react';
 import type { CSSProperties, JSX } from 'react';
 import { Avatar, useBeats, useSound } from '@partybox/game-sdk/ui';
 import type { QuestionView, RevealRow } from '../server/views';
-import { AnswerCard, deltaText, verdictOf } from './TvQuestion';
+import { AnswerCard, deltaText, rowsClass, verdictOf } from './TvQuestion';
 import styles from './Tv.module.css';
 
 const T_ANSWER_MS = 900;
@@ -68,7 +68,11 @@ export function FinalReveal({
       </div>
       <p className={styles.asked}>{question.text}</p>
       <AnswerCard question={question} correctIndex={correctIndex} hidden={!answered} />
-      <ol className={`${styles.rows} ${styles.rowsFinal}`} style={listStyle} aria-label="results">
+      <ol
+        className={`${styles.rows} ${rowsClass(n)} ${styles.rowsFinal}`}
+        style={listStyle}
+        aria-label="results"
+      >
         {rows.map((row, index) => {
           const verdict = verdictOf(row);
           const bet = row.wagerAmount ?? 0;
@@ -96,7 +100,9 @@ export function FinalReveal({
                     </span>
                   ) : null}
                   {bet > 0 ? `bet ${bet}` : 'no bet'}
-                  {totals ? <span className={styles.pop}>&nbsp;· {row.score} pts</span> : null}
+                  {totals ? (
+                    <span className={`${styles.pop} ${styles.total}`}>&nbsp;· {row.score} pts</span>
+                  ) : null}
                 </span>
               </span>
               <span className={`${styles.delta} ${styles.deltaFinal} ${deltaClass}`}>

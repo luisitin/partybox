@@ -124,42 +124,58 @@ export function TvQuestion({
   );
 }
 
+/** Verdict glyph with the pick folded in — "A✓", "D✗" or "–" — so the room sees who picked what. */
 export function verdictOf(row: RevealRow): { glyph: string; label: string } {
-  if (row.correct) return { glyph: '✓', label: 'correct' };
   if (row.pickIndex === null) return { glyph: '–', label: 'no answer' };
-  return { glyph: '✗', label: 'wrong' };
+  const letter = LETTERS[row.pickIndex] ?? '';
+  if (row.correct) return { glyph: `${letter}✓`, label: `picked ${letter}, correct` };
+  return { glyph: `${letter}✗`, label: `picked ${letter}, wrong` };
 }
 
 export function deltaText(delta: number): string {
   if (delta > 0) return `+${delta}`;
   if (delta < 0) return `−${-delta}`;
-  return '+0';
+  return '0';
 }
 
-export function RevealRows({ rows, final }: { rows: RevealRow[]; final: boolean }): JSX.Element {
+/** Explicit columns by player count (never auto-fit): every count stays within four 60 px rows. */
+export function rowsClass(count: number): string {
+  return (count <= 8 ? styles.rows2 : count <= 12 ? styles.rows3 : styles.rows4) ?? '';
+}
+
+export function RevealRows({ rows }: { rows: RevealRow[] }): JSX.Element {
+  const wide = rows.length <= 8;
+  const crowned = rows.length <= 12;
+  const top = Math.max(0, ...rows.map((r) => r.score));
   return (
-    <ol className={styles.rows} aria-label="results">
+    <ol className={`${styles.rows} ${rowsClass(rows.length)}`} aria-label="results">
       {rows.map((row) => {
         const verdict = verdictOf(row);
+        const quiet = row.delta === 0;
         const deltaClass = row.delta > 0 ? styles.deltaUp : row.delta < 0 ? styles.deltaDown : '';
+        const verdictClass = row.correct
+          ? styles.verdictOk
+          : row.pickIndex !== null
+            ? styles.verdictNo
+            : '';
         return (
           <li
             key={row.playerId}
-            className={`${styles.row} ${row.correct ? styles.rowCorrect : ''}`}
+            className={`${styles.row} ${row.correct ? styles.rowCorrect : ''} ${quiet ? styles.rowQuiet : ''}`}
           >
             <Avatar avatarId={row.avatarId} size={48} dim={!row.connected} />
-            <span className={styles.name}>{row.name}</span>
-            {final ? <span className={styles.wager}>bet {row.wagerAmount ?? 0}</span> : null}
-            {!final && row.streak >= 2 ? (
-              <span className={styles.streak}>🔥 {row.streak}</span>
+            {crowned && top > 0 && row.score === top ? (
+              <span className={styles.crown} aria-label="leader">
+                👑
+              </span>
             ) : null}
-            <span
-              className={`${styles.verdict} ${row.correct ? styles.verdictOk : styles.verdictNo}`}
-              aria-label={verdict.label}
-            >
+            <span className={styles.name}>{row.name}</span>
+            {row.streak >= 2 ? <span className={styles.streak}>🔥{row.streak}</span> : null}
+            <span className={`${styles.verdict} ${verdictClass}`} aria-label={verdict.label}>
               {verdict.glyph}
             </span>
             <span className={`${styles.delta} ${deltaClass}`}>{deltaText(row.delta)}</span>
+            {wide ? <span className={styles.score}>{row.score}</span> : null}
           </li>
         );
       })}

@@ -88,6 +88,7 @@
 /* Reveal: the question, already known, steps back to a muted body line… */
 .asked {
   margin: 0;
+  flex-shrink: 0;
   font-size: var(--pb-font-body);
   font-weight: 700;
   color: var(--pb-text-muted);
@@ -97,6 +98,7 @@
 /* …and the correct answer is the biggest thing on the stage: one full-width card, letter disc
    filled, ✓ at the end (shape + glyph, never colour alone). */
 .answer {
+  flex-shrink: 0;
   min-height: 0;
   padding: var(--pb-space-2) var(--pb-space-5);
   font-size: var(--pb-font-h1);
@@ -133,11 +135,33 @@
   list-style: none;
   margin: 0;
   padding: 0;
+  flex-shrink: 0;
   display: grid;
-  /* two columns up to ~8 players, three beyond (16 players = 6 rows of 60 px) */
-  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  /* columns by player count (rowsClass): 2 up to 8, 3 up to 12, 4 up to 16 — never more than 4 rows */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--pb-space-2) var(--pb-space-3);
   width: 100%;
+}
+
+.rows2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.rows3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.rows4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+/* Four 420 px cells: tighter gaps and no reserved verdict width so five-letter names survive. */
+.rows4 .row {
+  gap: var(--pb-space-2);
+}
+
+.rows4 .verdict {
+  min-width: 0;
 }
 
 .row {
@@ -156,6 +180,16 @@
   outline: 3px solid var(--pb-accent-3);
 }
 
+/* Nothing happened here: no points, so the row (name, glyph, 0) steps back. */
+.rowQuiet {
+  color: var(--pb-text-muted);
+}
+
+.crown {
+  flex-shrink: 0;
+  font-size: var(--pb-font-caption);
+}
+
 .name {
   flex: 1;
   min-width: 0;
@@ -167,7 +201,7 @@
 
 .verdict {
   font-weight: 900;
-  min-width: 1.2em;
+  min-width: 2.2em;
   text-align: center;
 }
 
@@ -192,15 +226,19 @@
   color: var(--pb-danger);
 }
 
+/* Running total (two-column boards only, where there is room). */
+.score {
+  color: var(--pb-text-muted);
+  font-size: var(--pb-font-caption);
+  font-variant-numeric: tabular-nums;
+  min-width: 3ch;
+  text-align: right;
+}
+
 .streak {
   color: var(--pb-accent-2);
   font-size: var(--pb-font-caption);
   font-weight: 700;
-}
-
-.wager {
-  color: var(--pb-text-muted);
-  font-size: var(--pb-font-caption);
 }
 
 /* ── Final-wager reveal (TvFinal.tsx): name over "✓ bet 3150 · 2340 pts", h2 delta, 80 px rows ── */
@@ -239,6 +277,17 @@
   font-size: var(--pb-font-h2);
   min-width: 3ch;
   text-align: right;
+}
+
+/* Three and four columns cannot spare h2 deltas next to "✓ bet 3150 · 2340 pts"; four cannot spare
+   the total either (the results board follows). */
+.rows3 .deltaFinal,
+.rows4 .deltaFinal {
+  font-size: var(--pb-font-body);
+}
+
+.rows4 .total {
+  display: none;
 }
 
 .deltaZero {
