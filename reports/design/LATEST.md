@@ -1,5 +1,7 @@
 # Design review — LATEST (2026-09-15, round 3)
 
+- **Round 4 pass (play-feel: motion, visual, sound, pacing)**: `reports/design/2026-09-15-1930/` — 12 finders played every screen, 159 raw → 59 merged → 45 kept (14 refuted). **All 44 applied** (R-046 already fixed; R-047 … R-090 by five parallel lanes, 51 commits) — `CHANGES.md` describes every change for the owner; `after/contact-sheet.html` has 397 after-shots. Highlights: phone sound engine + haptics, TV cue routing per phase, press states + optimistic lock-in, last-5-seconds urgency, Lightning final-wager choreography + answer card, Wisecrack four-beat reveal, Scoreboard tiers + stagger + count-up, running scores in the strip, phone screens rise, curtain/scrim tokens, lobby chip entrance.
+- Owner requests (evening): **background music** (lobby rotation; Bingo + Broken Pencil sets; `pnpm fetch-music`, CC BY 4.0), **Bingo caller** speaks every number (Zira, "B, 12"), **Lightning final board stays** on the results stage (`clientModule.finale`/`Finale`), Bingo: nickname-only phone, claim choreography with buzzer/fanfare + confetti, FREE daubable, card fits every phone. Hand-off for the designer session: `for-designer-session.md` (Broken Pencil passes cap).
 - Owner requests (evening, after round 3): TV **fits any viewport** (`tv/fit.ts` zooms the 1920×1080 design; overscan/widths in px, `capture-fit.ts` checks 1280×720 / 1440×900 / 4K) · **🏠 Home** top-left on the TV (click twice → fresh lobby via `/api/dev/reset`; launcher passes `--dev-api`; dropped phones land on a prefilled join form; `capture-home.ts`) · `start-partybox.bat` at the repo root. Bingo: still being written in the game-designer worktree (no manifest yet) — the launcher rebuilds the registry every start, so it appears as soon as it lands on `main`.
 - Round 3 pass: `reports/design/2026-09-15-1810/` — bots-as-players (ADR-028) + core regression; 5 recommendations, **all applied** (TV lobby fits 16 tagged chips; '＋ Add a bot' chip + ✕ on own bots; muted 'No bots'; glyph-only bot tag; hint copy).
 - Round 2 pass: `reports/design/2026-09-15-1730/` — Wisecrack, Lightning Round, five themes (383 stills, `contact-sheet.html`; re-capture in `after/`).
@@ -11,4 +13,4 @@
 - Capture tooling: `packages/e2e/src/design/` (capture-core, -video, -preview, -game, -themes, -fit, -home, sheet, measure).
 - Not verifiable headless: iOS keyboard vs sticky footer; real 200 % OS text.
 - Next round triggers: a new game or core UI change on `main` (say "go", or `/loop 30m` "check main and run the next design round if it changed").
-- Tally: open 0 / applied 44 / declined 0 (R-044 chip order → stress session).
+- Tally: open 0 / applied 88 / declined 0 (R-044 chip order → stress session).
