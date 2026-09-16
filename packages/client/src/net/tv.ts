@@ -12,6 +12,7 @@ import type {
   ViewPush,
   VipAction,
 } from '@partybox/shared';
+import { createRestartWatch } from './stale';
 import { createStore, nextToastId } from './store';
 import type { Store, Toast } from './store';
 
@@ -55,9 +56,11 @@ export function createTvClient(roomCode?: string, url?: string): TvClient {
     return (s.room !== null && s.room.code !== code) || rev > s.rev;
   };
 
+  const restarts = createRestartWatch();
   socket.on('connect', () => {
     store.set({ connected: true });
     socket.emit('tv:join', { roomCode });
+    restarts.onConnect();
   });
   socket.on('disconnect', () => store.set({ connected: false }));
   socket.on('room', (push: RoomPush) => {

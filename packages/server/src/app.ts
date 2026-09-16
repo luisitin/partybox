@@ -121,6 +121,8 @@ export async function createApp(options: AppOptions): Promise<App> {
     const { tv, join: joinUrl } = app.urls();
     return {
       version: PARTYBOX_VERSION,
+      /** Boot time: a client that reconnects to a different value reloads (stale bundle guard). */
+      startedAt,
       publicHost: app.publicHost,
       port: app.port,
       tvUrl: tv,

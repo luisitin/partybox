@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 
 export interface ServerInfo {
   version: string;
+  /** Server boot time (ms); changes when it restarts. */
+  startedAt: number;
   publicHost: string;
   port: number;
   tvUrl: string;

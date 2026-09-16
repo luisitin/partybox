@@ -4,6 +4,7 @@ import { StrictMode } from 'react';
 import type { JSX } from 'react';
 import { createRoot } from 'react-dom/client';
 import { ControllerApp } from './controller/ControllerApp';
+import { guardStaleChunks } from './net/stale';
 import { Preview } from './preview/Preview';
 // Bundled OFL font (ADR-012, BL-001): only the upright weight axis; unicode-range keeps downloads small.
 import '@fontsource-variable/nunito/wght.css';
@@ -37,6 +38,7 @@ function route(pathname: string): JSX.Element {
   return <ControllerApp />;
 }
 
+guardStaleChunks();
 const rootEl = document.getElementById('root');
 if (!rootEl) throw new Error('missing #root');
 createRoot(rootEl).render(<StrictMode>{route(location.pathname)}</StrictMode>);

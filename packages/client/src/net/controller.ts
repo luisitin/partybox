@@ -15,6 +15,7 @@ import type {
   WelcomePayload,
   BotAction,
 } from '@partybox/shared';
+import { createRestartWatch } from './stale';
 import { createStore, nextToastId } from './store';
 import type { Store, Toast } from './store';
 
@@ -141,7 +142,9 @@ export function createController(url?: string): Controller {
     });
   };
 
+  const restarts = createRestartWatch();
   socket.on('connect', () => {
+    restarts.onConnect();
     const wasJoined = store.get().joined;
     store.set({ connection: 'connected' });
     const session = loadSession();
