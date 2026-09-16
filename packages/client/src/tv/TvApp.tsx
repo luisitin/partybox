@@ -1,11 +1,13 @@
 // Route `/tv` — the stage. Renders pushed snapshots/views, plays sound cues on
 // transitions, and never sends player events. `?room=CODE` watches a specific room.
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import type { JSX } from 'react';
 import { ServerClockProvider, isSoundCue } from '@partybox/game-sdk/ui';
 import { clientGames } from '../games.generated';
 import { useStore } from '../net/store';
 import { createTvClient } from '../net/tv';
+import { createMusicEngine, planFor } from '../music';
+import type { MusicEngine } from '../music';
 import { createSoundEngine, joinSemitones, lockSemitones } from '../sound';
 import type { SoundEngine } from '../sound';
 import { AudioGate } from './AudioGate';
@@ -22,14 +24,35 @@ function soundInstance(): SoundEngine {
   sound = sound ?? createSoundEngine();
   return sound;
 }
+let musicEngine: MusicEngine | null = null;
+function musicInstance(muted: boolean): MusicEngine {
+  if (!musicEngine) {
+    musicEngine = createMusicEngine();
+    musicEngine.setMuted(muted);
+  }
+  return musicEngine;
+}
 
 export function TvApp(): JSX.Element {
   const roomCode = new URLSearchParams(location.search).get('room') ?? undefined;
   const client = useMemo(() => createTvClient(roomCode), [roomCode]);
   const audio = useMemo(() => soundInstance(), []);
+  const music = useMemo(() => musicInstance(audio.muted()), [audio]);
   const state = useStore(client.store, (s) => s);
   const room = state.room;
   const view = state.view;
+  // The last board of the game, kept for the results stage ("adjust state when a prop changes").
+  const [lastView, setLastView] = useState<typeof view>(null);
+  if (room?.status === 'playing' && view && view !== lastView) setLastView(view);
+
+  // Background music follows the room (owner picks 2026-09-15): the lobby set while people gather
+  // or the host picks a game, a game's own set while it plays, silence on results; a paused game
+  // holds the track. It starts on the audio gate's first tap like the cues.
+  useEffect(() => {
+    const gameMusic = room?.selectedGameId ? clientGames[room.selectedGameId]?.music : undefined;
+    music.play(planFor(room, view, gameMusic));
+    music.setPaused(room?.status === 'playing' && (view?.paused ?? false));
+  }, [room, view, music]);
 
   // Sound cues from state transitions (docs/DESIGN_SYSTEM.md).
   const prev = useRef<{
@@ -109,7 +132,7 @@ export function TvApp(): JSX.Element {
   else if (room.status === 'lobby') content = <TvLobby room={room} />;
   else if (room.status === 'selecting') content = <TvSelecting room={room} client={client} />;
   else if (room.status === 'playing') content = <TvPlaying room={room} view={view} audio={audio} />;
-  else content = <TvResults room={room} />;
+  else content = <TvResults room={room} lastView={lastView} />;
 
   return (
     <ServerClockProvider offsetMs={state.offsetMs}>
@@ -125,7 +148,7 @@ export function TvApp(): JSX.Element {
           {content}
         </div>
       </TvFrame>
-      <AudioGate audio={audio} />
+      <AudioGate audio={audio} music={music} />
     </ServerClockProvider>
   );
 }

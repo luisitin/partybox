@@ -2,7 +2,13 @@
 // Kept separate from the pure entry point (ADR-023) because these import CSS modules.
 
 // Types client code needs (also available from the pure entry point).
-export type { GameClientModule, GameControllerProps, GameTvProps } from './client-module';
+export type {
+  GameClientModule,
+  GameControllerProps,
+  GameFinaleProps,
+  GameMusic,
+  GameTvProps,
+} from './client-module';
 export type {
   ControllerView,
   PlayerStatus,

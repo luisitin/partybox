@@ -5,7 +5,9 @@
 //   chain  — whole tracks back to back with no gap, weighted pick (Bingo, Broken Pencil).
 // One <audio> element, JS fades, level via `volume`; the TV's mute toggle mutes it too. `play()`
 // needs a user gesture on the page (the TV's audio gate); until then it retries on `enable()`.
-import type { TRACK_IDS } from './music-tracks';
+import type { PushedView, RoomSnapshot, TvView } from '@partybox/shared';
+import type { GameMusic } from '@partybox/game-sdk/ui';
+import { TRACK_IDS } from './music-tracks';
 
 export type TrackId = (typeof TRACK_IDS)[number];
 
@@ -30,6 +32,8 @@ export interface MusicEngine {
   /** Call after a user gesture: starts a plan that could not autoplay. */
   enable(): void;
   setMuted(muted: boolean): void;
+  /** A paused game holds the music where it is. */
+  setPaused(paused: boolean): void;
   current(): string | null;
 }
 
@@ -42,6 +46,32 @@ export const LOBBY_MUSIC: MusicPlan = {
   gapMs: 1000,
   fadeMs: 2500,
 };
+
+const isTrackId = (id: string): id is TrackId => (TRACK_IDS as readonly string[]).includes(id);
+
+/**
+ * What the TV should play for this room state: the lobby set while people gather or pick a game,
+ * the game's own `music` (limited to its `phases`) while playing, nothing on results.
+ */
+export function planFor(
+  room: RoomSnapshot | null,
+  view: PushedView<TvView> | null,
+  gameMusic: GameMusic | undefined,
+): MusicPlan | null {
+  if (!room) return null;
+  if (room.status === 'lobby' || room.status === 'selecting') return LOBBY_MUSIC;
+  if (room.status !== 'playing' || !gameMusic || !room.selectedGameId) return null;
+  if (gameMusic.phases && (!view || !gameMusic.phases.includes(view.phaseId))) return null;
+  const tracks = gameMusic.tracks.filter(isTrackId);
+  if (tracks.length === 0) return null;
+  return {
+    id: `game:${room.selectedGameId}`,
+    tracks,
+    weights: gameMusic.weights,
+    volume: gameMusic.volume,
+    mode: gameMusic.mode,
+  };
+}
 
 function pick(plan: MusicPlan, avoid: TrackId | null): TrackId {
   const candidates = plan.tracks.length > 1 ? plan.tracks.filter((t) => t !== avoid) : plan.tracks;
@@ -59,6 +89,7 @@ export function createMusicEngine(): MusicEngine {
   let audio: HTMLAudioElement | null = null;
   let last: TrackId | null = null;
   let muted = false;
+  let paused = false;
   let unlocked = false;
   let timer: ReturnType<typeof setTimeout> | null = null;
   // One ramp per element: an outgoing track keeps fading while the next one fades in.
@@ -173,6 +204,13 @@ export function createMusicEngine(): MusicEngine {
     setMuted(value) {
       muted = value;
       if (audio) audio.muted = value;
+    },
+    setPaused(value) {
+      if (paused === value) return;
+      paused = value;
+      if (!audio) return;
+      if (value) audio.pause();
+      else void audio.play().catch(() => undefined);
     },
     current: () => (audio ? (last ?? null) : null),
   };

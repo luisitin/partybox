@@ -8,15 +8,18 @@ import { useEffect, useRef, useState } from 'react';
 import type { JSX } from 'react';
 import { usePrefersReducedMotion } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
+import type { MusicEngine } from '../music';
 import type { SoundEngine } from '../sound';
 import { ThemePicker } from '../ThemePicker';
 import styles from './AudioGate.module.css';
 
 export interface AudioGateProps {
   audio: SoundEngine;
+  /** The stage's background music: starts on the gate tap, follows the mute toggle. */
+  music?: MusicEngine;
 }
 
-export function AudioGate({ audio }: AudioGateProps): JSX.Element {
+export function AudioGate({ audio, music }: AudioGateProps): JSX.Element {
   const [started, setStarted] = useState(false);
   const [pillGone, setPillGone] = useState(false);
   const [muted, setMuted] = useState(audio.muted());
@@ -32,6 +35,7 @@ export function AudioGate({ audio }: AudioGateProps): JSX.Element {
       void audio.enable().then((ok) => {
         if (!ok) return;
         setStarted(true);
+        music?.enable();
         if (!readyPlayed.current) {
           readyPlayed.current = true;
           audio.play('ready'); // silent when the persisted mute is on
@@ -44,7 +48,7 @@ export function AudioGate({ audio }: AudioGateProps): JSX.Element {
       document.removeEventListener('pointerdown', start);
       document.removeEventListener('keydown', start);
     };
-  }, [audio, started]);
+  }, [audio, music, started]);
   // The pill fades out on start; under reduced motion (0 ms) it leaves at once. A 400 ms fallback
   // covers a browser that never fires animationend.
   useEffect(() => {
@@ -79,6 +83,7 @@ export function AudioGate({ audio }: AudioGateProps): JSX.Element {
     if (!started) return;
     const next = !muted;
     audio.setMuted(next);
+    music?.setMuted(next);
     setMuted(next);
     setPop(true);
     if (!next) audio.play('ready');

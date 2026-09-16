@@ -30,24 +30,28 @@ export function FinalReveal({
   question,
   correctIndex,
   rows: unsorted,
+  settled = false,
 }: {
   question: QuestionView;
   correctIndex: number;
   rows: RevealRow[];
+  /** The results stage: everything shown at once, no cue (the reveal already played). */
+  settled?: boolean;
 }): JSX.Element {
   const rows = [...unsorted].sort(byWager);
   const n = rows.length;
   const stepMs = n > 1 ? Math.min(STEP_MAX_MS, STEP_SPAN_MS / (n - 1)) : 0;
   const lastMs = T_VERDICT_MS + stepMs * (n - 1);
   // The schedule is fixed for this mount: the row count cannot change inside one reveal.
-  const beat = useBeats([0, T_ANSWER_MS, T_VERDICT_MS, lastMs, lastMs + T_TOTALS_GAP_MS]);
+  const beats = useBeats([0, T_ANSWER_MS, T_VERDICT_MS, lastMs, lastMs + T_TOTALS_GAP_MS]);
+  const beat = settled ? 4 : beats;
   const answered = beat >= 1;
   const judged = beat >= 2;
   const totals = beat >= 4;
 
   const play = useSound();
   const jackpot = rows.some((r) => r.delta > 0);
-  const cued = useRef(false);
+  const cued = useRef(settled);
   useEffect(() => {
     if (beat < 3 || cued.current) return;
     cued.current = true;
