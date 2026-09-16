@@ -5,7 +5,17 @@ import { devices } from 'playwright';
 import type { BrowserContextOptions } from 'playwright';
 
 export type DeviceId =
-  'tv' | 'tv4k' | 'iphone' | 'iphone-se' | 'pixel' | 'galaxy' | 'font200' | 'landscape';
+  | 'tv'
+  | 'tv4k'
+  | 'pc720'
+  | 'laptop'
+  | 'tv4kcss'
+  | 'iphone'
+  | 'iphone-se'
+  | 'pixel'
+  | 'galaxy'
+  | 'font200'
+  | 'landscape';
 
 export interface DeviceSpec {
   id: DeviceId;
@@ -52,6 +62,23 @@ export const DEVICES: Record<DeviceId, DeviceSpec> = {
     id: 'tv4k',
     label: 'TV 4K (2× DPR)',
     options: { viewport: { width: 1920, height: 1080 }, deviceScaleFactor: 2 },
+  },
+  // Viewports the fit zoom (packages/client/src/tv/fit.ts) has to handle: a PC at 150 % display
+  // scaling casting its tab, a 16:10 laptop, and a 4K TV browser that reports CSS px 1:1.
+  pc720: {
+    id: 'pc720',
+    label: 'PC 1280×720 (150 % scaling)',
+    options: { viewport: { width: 1280, height: 720 } },
+  },
+  laptop: {
+    id: 'laptop',
+    label: 'Laptop 1440×900 (16:10)',
+    options: { viewport: { width: 1440, height: 900 } },
+  },
+  tv4kcss: {
+    id: 'tv4kcss',
+    label: 'TV 3840×2160 (1× DPR)',
+    options: { viewport: { width: 3840, height: 2160 } },
   },
   iphone: { id: 'iphone', label: 'iPhone 15', options: iphone },
   'iphone-se': { id: 'iphone-se', label: 'iPhone SE', options: iphoneSe },

@@ -65,6 +65,28 @@ function saveSession(session: Session | null): void {
   }
 }
 
+// Name + avatar outlive the session: after a kick, a server restart or the TV's Home the join form
+// is prefilled and getting back in is one tap.
+const IDENTITY_KEY = 'partybox:identity';
+export type Identity = Pick<Session, 'name' | 'avatarId'>;
+
+function loadIdentity(): Identity | null {
+  try {
+    const raw = localStorage.getItem(IDENTITY_KEY);
+    return raw ? (JSON.parse(raw) as Identity) : null;
+  } catch {
+    return null;
+  }
+}
+
+function saveIdentity(identity: Identity): void {
+  try {
+    localStorage.setItem(IDENTITY_KEY, JSON.stringify(identity));
+  } catch {
+    /* private mode */
+  }
+}
+
 export interface Controller {
   store: Store<ControllerState>;
   join(input: { name: string; avatarId: string; roomCode?: string }): void;
@@ -76,6 +98,8 @@ export interface Controller {
   dismissError(): void;
   dismissToast(id: number): void;
   session(): Session | null;
+  /** Last name + avatar this phone joined with (survives the session). */
+  identity(): Identity | null;
 }
 
 export function createController(url?: string): Controller {
@@ -134,7 +158,10 @@ export function createController(url?: string): Controller {
   });
   socket.on('welcome', (payload: WelcomePayload) => {
     const session = pending ?? loadSession();
-    if (session) saveSession({ ...session, token: payload.token, roomCode: payload.room.code });
+    if (session) {
+      saveSession({ ...session, token: payload.token, roomCode: payload.room.code });
+      saveIdentity({ name: session.name, avatarId: session.avatarId });
+    }
     pending = null;
     measure(payload.at);
     store.set({
@@ -175,13 +202,30 @@ export function createController(url?: string): Controller {
     );
   });
   socket.on('error', (error: ErrorPayload) => {
-    if (store.get().resuming) {
-      // The stored session is stale (server restarted, room gone): show the join form instead.
+    const s = store.get();
+    // A stored session the server no longer knows — resuming after a reload, or auto-rejoining
+    // after a reconnect once the server restarted or the TV's Home reset the room — goes back to
+    // the join form with the "started over" hint instead of an error banner over a stale screen.
+    const staleSession =
+      pending === null &&
+      (s.resuming || (s.joined && (error.code === 'room_not_found' || error.code === 'bad_token')));
+    if (staleSession) {
       saveSession(null);
-      store.set({ resuming: false, error: null, restarted: true });
+      store.set({
+        joined: false,
+        resuming: false,
+        playerId: null,
+        room: null,
+        view: null,
+        rev: -1,
+        error: null,
+        toasts: [],
+        restarted: true,
+      });
       return;
     }
     if (error.code === 'rate_limited') return;
+    pending = null;
     store.set({ error });
   });
   socket.on('kicked', (payload: KickedPayload) => {
@@ -220,5 +264,6 @@ export function createController(url?: string): Controller {
     dismissError: () => store.set({ error: null }),
     dismissToast: (id) => store.set((prev) => ({ toasts: prev.toasts.filter((t) => t.id !== id) })),
     session: loadSession,
+    identity: loadIdentity,
   };
 }

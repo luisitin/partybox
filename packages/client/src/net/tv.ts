@@ -24,11 +24,19 @@ export interface TvState {
   toasts: Toast[];
 }
 
+/** Outcome of the stage's Home button: `off` = the server runs without `--dev-api`. */
+export type HomeResult = 'ok' | 'off' | 'error';
+
 export interface TvClient {
   store: Store<TvState>;
-  /** Host control: any VIP action, applied as the room's VIP (the server enforces every rule). */
+  /** Host control (ADR-031): any VIP action, applied with the engine's host flag. */
   act(action: VipAction): void;
   bot(action: BotAction): void;
+  /**
+   * TvFrame's 🏠. With a game running or over: end it and go back to the lobby, everyone stays.
+   * Already in the lobby: start the party over (a fresh house room via the dev API; everyone rejoins).
+   */
+  home(): Promise<HomeResult>;
 }
 
 export function createTvClient(roomCode?: string, url?: string): TvClient {
@@ -82,9 +90,31 @@ export function createTvClient(roomCode?: string, url?: string): TvClient {
   // Refusals of host actions (a game that cannot start, nobody in the room) come back as errors.
   socket.on('error', (error: ErrorPayload) => showToast({ kind: 'warning', text: error.message }));
 
-  return {
-    store,
-    act: (action) => socket.emit('tv:vip', action),
-    bot: (action) => socket.emit('tv:bot', action),
+  const act = (action: VipAction): void => {
+    socket.emit('tv:vip', action);
   };
+
+  // Home from a game: the host channel (ADR-031) ends it and returns to the lobby with everyone
+  // still in. Home from the lobby: start over through the dev API's reset (start-partybox.bat runs
+  // `pnpm start --dev-api`) — the server drops every player and mints a fresh house room.
+  const home = async (): Promise<HomeResult> => {
+    const status = store.get().room?.status;
+    if (status && status !== 'lobby') {
+      if (status === 'playing') act({ action: 'end' });
+      act({ action: 'toLobby' });
+      return 'ok';
+    }
+    try {
+      const res = await fetch(`${url ?? ''}/api/dev/reset`, { method: 'POST' });
+      if (res.status === 403) return 'off';
+      if (!res.ok) return 'error';
+      store.set({ toasts: [] });
+      socket.emit('tv:join', { roomCode });
+      return 'ok';
+    } catch {
+      return 'error';
+    }
+  };
+
+  return { store, act, bot: (action) => socket.emit('tv:bot', action), home };
 }

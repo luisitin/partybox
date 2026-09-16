@@ -1,6 +1,6 @@
 /* Host controls (ADR-031): a small toolbar in the bottom-right corner of the stage, inside the
    overscan margins (toasts live bottom-left). Caption size: it is for the person at the PC, not
-   the couch. The ⌂ home button sits in the frame's top-left corner. */
+   the couch. */
 .bar {
   display: flex;
   align-items: center;
@@ -42,8 +42,7 @@
   cursor: default;
 }
 
-.button:focus-visible,
-.home:focus-visible {
+.button:focus-visible {
   outline: 3px solid var(--pb-focus);
   outline-offset: 2px;
 }
@@ -63,23 +62,4 @@
   background: var(--pb-danger);
   border-color: var(--pb-danger);
   color: var(--pb-on-accent);
-}
-
-.home {
-  min-width: var(--pb-touch);
-  min-height: var(--pb-touch);
-  padding: 0 var(--pb-space-3);
-  border-radius: var(--pb-radius);
-  border: 2px solid var(--pb-surface-2);
-  background: var(--pb-surface);
-  color: var(--pb-text);
-  font: inherit;
-  font-size: 28px;
-  font-weight: 900;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.home:hover {
-  background: var(--pb-surface-2);
 }

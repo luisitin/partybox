@@ -58,14 +58,19 @@ if errorlevel 1 (
 )
 
 rem --- 4. Open the TV page once the server is up, then run the server here ----------
+rem --dev-api powers the TV's Home button (start over). It is an unauthenticated LAN control API,
+rem fine for a living room; set PARTYBOX_NO_DEV_API=1 to run without it.
+set DEVAPI=--dev-api
+if "%PARTYBOX_NO_DEV_API%"=="1" set DEVAPI=
 rem (full path: a Unix "timeout" on PATH would shadow the Windows one)
 start "" /b cmd /c "%SystemRoot%\System32\timeout.exe /t 4 /nobreak >nul & start "" http://localhost:%PORT%/tv"
 echo.
 echo  The TV page opens in your browser in a moment (F11 for full screen, or cast the tab).
 echo  Phones scan the QR on the TV, or open the http://LAN-IP:%PORT% address printed below.
+echo  The house icon top-left on the TV (click it twice) starts over with a fresh lobby.
 echo  Close this window (or press Ctrl+C) to stop the party.
 echo.
-call pnpm start --port %PORT%
+call pnpm start --port %PORT% %DEVAPI%
 echo.
 echo  PartyBox stopped.
 pause

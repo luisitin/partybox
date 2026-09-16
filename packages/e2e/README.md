@@ -38,22 +38,22 @@ device preset, `pixel-spectator.png` (a late joiner), and a `-after` set once ha
 
 Anything another package imports. Game knowledge beyond the dev API and `bot.sampleInput`.
 
-## Design capture (`src/design/`, added by the design session)
-
-Standalone until the Phase 7 harness lands; each script boots its own server on **42071**.
+## Design capture (`src/design/`, added by the design session; each script boots its own server on 42071)
 
 ```
-pnpm exec tsx packages/e2e/src/design/capture-core.ts  --out reports/design/<stamp> [--game quickpoll]
-pnpm exec tsx packages/e2e/src/design/capture-video.ts --out reports/design/<stamp> [--game quickpoll]
-pnpm exec tsx packages/e2e/src/design/sheet.ts         --dir reports/design/<stamp>   # contact-sheet.html
-pnpm exec tsx packages/e2e/src/design/measure.ts                                     # computed sizes → stdout
+pnpm exec tsx packages/e2e/src/design/capture-{core,video}.ts --out reports/design/<stamp> [--game quickpoll]
+pnpm exec tsx packages/e2e/src/design/sheet.ts --dir reports/design/<stamp>            # contact-sheet.html
+pnpm exec tsx packages/e2e/src/design/measure.ts                                       # computed sizes → stdout
 pnpm exec tsx packages/e2e/src/design/capture-preview.ts --out <dir> [--games a,b] [--themes night,daylight] [--phones iphone,iphone-se]
 pnpm exec tsx packages/e2e/src/design/capture-game.ts --game <id> --out <dir>         # live run, every phase, 4 phones + 2 bots
 pnpm exec tsx packages/e2e/src/design/capture-themes.ts --out <dir>                    # TV lobby + phone join/lobby per theme
+pnpm exec tsx packages/e2e/src/design/capture-{fit,home}.ts --out <dir>                # TV at 4 viewport sizes (fit zoom) · TV 🏠 flow
 ```
 
-`devices.ts` = tv, tv4k, iphone, iphone-se, pixel, galaxy, font200 (CSS-emulated 200 % scale),
-landscape. `session.ts` = dev-API client + join-through-the-form helpers. `shooter.ts` records every
-still in `manifest.json` (game / phase / device / role) for the contact sheet. `capture-core.ts` walks
-join errors, lobby 1/6/16, selecting, every game phase with active/submitted/VIP/spectator/reconnecting
-phones, results, play-again, end, kick, server restart. `capture-video.ts` records one unfrozen round.
+`quickpoll` is a throwaway `pnpm new-game quickpoll` scaffold of `_template` (text answer + bots welcome)
+that `capture-core`, `-video`, `-bots` and `measure` drive: create it locally, never commit it (nor the
+`games.generated.ts` it adds itself to). `devices.ts` = tv, tv4k, pc720, laptop, tv4kcss, iphone,
+iphone-se, pixel, galaxy, font200 (CSS-emulated 200 % scale), landscape. `session.ts` = dev-API client +
+join-through-the-form helpers. `shooter.ts` records every still in `manifest.json` for the contact sheet.
+`capture-core.ts` walks join errors, lobby 1/6/16, selecting, every phase with every phone role, results,
+play-again, end, kick, server restart; `capture-video.ts` records one unfrozen round.

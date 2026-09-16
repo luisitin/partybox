@@ -3,7 +3,7 @@
   flex-direction: column;
   gap: var(--pb-space-5);
   min-height: 100%;
-  padding: var(--pb-overscan-y, 5vh) var(--pb-overscan-x, 5vw);
+  padding: var(--pb-overscan-y, 54px) var(--pb-overscan-x, 96px);
 }
 
 .center {

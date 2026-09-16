@@ -1,6 +1,7 @@
 // Host controls on the TV/PC (ADR-031): the screen the party is run from has every VIP power —
-// pick and start games, add bots, pause / skip / end, play again, go home. Bottom-right, small,
-// out of the stage's focal point; destructive actions ask once (click again within 4 s).
+// pick and start games, add bots, pause / skip / end, play again. The frame's bottom row, so the
+// stage never has to dodge it; destructive actions ask once (click again within 4 s). Home is
+// the frame's 🏠 (TvFrame).
 import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
 import type { PushedView, RoomSnapshot, TvView } from '@partybox/shared';
@@ -157,43 +158,5 @@ export function HostBar({ client, room, view }: HostBarProps): JSX.Element | nul
       <span className={styles.label}>{t.host.title}</span>
       {buttons}
     </div>
-  );
-}
-
-/** The ⌂ button in the frame's top-left corner: back to the lobby (ending a running game first). */
-export function HomeButton({
-  client,
-  room,
-}: {
-  client: TvClient;
-  room: RoomSnapshot;
-}): JSX.Element | null {
-  const [confirm, setConfirm] = useState(false);
-  useEffect(() => {
-    if (!confirm) return;
-    const handle = setTimeout(() => setConfirm(false), CONFIRM_MS);
-    return () => clearTimeout(handle);
-  }, [confirm]);
-  if (room.status === 'lobby') return null;
-  const playing = room.status === 'playing';
-  return (
-    <button
-      type="button"
-      className={`${styles.home} ${confirm ? styles.danger : ''}`}
-      aria-label={t.host.home}
-      title={playing ? t.host.homeEnds : t.host.home}
-      onClick={() => {
-        if (playing && !confirm) {
-          setConfirm(true);
-          return;
-        }
-        setConfirm(false);
-        // A running game must end first; the server applies both in order.
-        if (playing) client.act({ action: 'end' });
-        client.act({ action: 'toLobby' });
-      }}
-    >
-      ⌂{confirm ? ` ${t.host.homeConfirm}` : ''}
-    </button>
   );
 }

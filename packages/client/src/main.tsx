@@ -11,6 +11,7 @@ import './styles/tokens.css';
 import './styles/global.css';
 import { THEMES, applyTheme } from './theme';
 import type { ThemeId } from './theme';
+import { fitTvToViewport } from './tv/fit';
 import { TvApp } from './tv/TvApp';
 
 const THEME_IDS = new Set<string>(THEMES.map((t) => t.id));
@@ -23,11 +24,13 @@ function route(pathname: string): JSX.Element {
   applyTheme(forced && THEME_IDS.has(forced) ? (forced as ThemeId) : undefined);
   if (pathname === '/tv' || pathname === '/tv/') {
     document.documentElement.dataset['surface'] = 'tv';
+    fitTvToViewport();
     return <TvApp />;
   }
   if (pathname.startsWith('/preview/')) {
-    document.documentElement.dataset['surface'] =
-      new URLSearchParams(location.search).get('view') === 'controller' ? 'controller' : 'tv';
+    const tv = new URLSearchParams(location.search).get('view') !== 'controller';
+    document.documentElement.dataset['surface'] = tv ? 'tv' : 'controller';
+    if (tv) fitTvToViewport();
     return <Preview />;
   }
   document.documentElement.dataset['surface'] = 'controller';

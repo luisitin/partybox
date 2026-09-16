@@ -1,12 +1,13 @@
-// The stage chrome: brand + room code on the left, the join URL on the right (the lobby shows the
-// big QR; during play a 120 px QR only crowded the timer), connection state and toasts.
-// Overscan-safe padding is on the Stage.
+// The stage chrome: 🏠 + brand (Home: click twice to start over) + room code on the left, the join
+// URL on the right (the lobby shows the big QR; during play a 120 px QR only crowded the timer),
+// connection state and toasts. Overscan-safe padding is on the Stage.
 import { useEffect, useState } from 'react';
 import type { JSX, ReactNode } from 'react';
 import type { RoomSnapshot } from '@partybox/shared';
 import { t } from '../i18n';
 import { useServerInfo } from '../net/info';
 import type { Toast } from '../net/store';
+import type { HomeResult } from '../net/tv';
 import styles from './TvFrame.module.css';
 
 export interface TvFrameProps {
@@ -14,23 +15,55 @@ export interface TvFrameProps {
   connected: boolean;
   toasts: Toast[];
   compact: boolean;
-  /** Top-left corner: the host's ⌂ button (ADR-031). */
-  corner?: ReactNode;
+  /** 🏠: back to the lobby from a game, start over from the lobby. Absent in previews. */
+  onHome?: () => Promise<HomeResult>;
   /** Bottom row, in the flow (never over the stage): the host toolbar (ADR-031). */
   footer?: ReactNode;
   children: ReactNode;
 }
+
+/** A misclick on the TV must not end the party: the first click arms, the second acts. */
+const HOME_ARM_MS = 4000;
+
+type HomeState = { kind: 'idle' } | { kind: 'armed' } | { kind: 'note'; text: string };
 
 export function TvFrame({
   room,
   connected,
   toasts,
   compact,
-  corner,
+  onHome,
   footer,
   children,
 }: TvFrameProps): JSX.Element {
   const info = useServerInfo();
+  const [home, setHome] = useState<HomeState>({ kind: 'idle' });
+  useEffect(() => {
+    if (home.kind === 'idle') return;
+    const handle = setTimeout(() => setHome({ kind: 'idle' }), HOME_ARM_MS);
+    return () => clearTimeout(handle);
+  }, [home]);
+  const clickHome = (): void => {
+    if (!onHome) return;
+    if (home.kind !== 'armed') {
+      setHome({ kind: 'armed' });
+      return;
+    }
+    setHome({ kind: 'idle' });
+    void onHome().then((result) => {
+      if (result === 'off') setHome({ kind: 'note', text: t.tv.homeOff });
+      else if (result === 'error') setHome({ kind: 'note', text: t.tv.homeFailed });
+    });
+  };
+  const inLobby = room === null || room.status === 'lobby';
+  const brandText =
+    home.kind === 'armed'
+      ? inLobby
+        ? t.tv.homeConfirmReset
+        : t.tv.homeConfirm
+      : home.kind === 'note'
+        ? home.text
+        : t.appName;
   // A blip stays a header caption; after 3 s the whole stage says so (a lit lobby + QR would keep
   // inviting people to scan a dead server).
   const [lostAt, setLostAt] = useState(false);
@@ -45,8 +78,24 @@ export function TvFrame({
     <div className={`${styles.frame} ${lost ? styles.lost : ''}`} data-surface="tv">
       <header className={`${styles.header} ${compact ? styles.compact : ''}`}>
         <div className={styles.brandBlock}>
-          {corner}
-          <span className={styles.brand}>{t.appName}</span>
+          {onHome ? (
+            <button
+              type="button"
+              className={`${styles.home} ${home.kind === 'armed' ? styles.homeArmed : ''} ${home.kind === 'note' ? styles.homeNote : ''}`}
+              onClick={clickHome}
+              aria-label={t.tv.home}
+              title={t.tv.homeTitle}
+            >
+              <span className={styles.homeGlyph} aria-hidden>
+                🏠
+              </span>
+              <span className={styles.brand} aria-live="polite">
+                {brandText}
+              </span>
+            </button>
+          ) : (
+            <span className={styles.brand}>{t.appName}</span>
+          )}
           {room ? (
             <span className={styles.code}>
               <span className={styles.codeLabel}>{t.lobby.room}</span> {room.code}

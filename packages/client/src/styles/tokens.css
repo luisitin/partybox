@@ -145,8 +145,9 @@ ight is the :root default above) ────────
   --pb-font-caption: 28px;
   --pb-font-button: 36px;
   --pb-chip-size: 72px;
-  --pb-overscan-x: 5vw;
-  --pb-overscan-y: 5vh;
+  /* 5 % of 1920×1080 in px: viewport units ignore the fit zoom (src/tv/fit.ts). */
+  --pb-overscan-x: 96px;
+  --pb-overscan-y: 54px;
 }
 
 @media (prefers-reduced-motion: reduce) {

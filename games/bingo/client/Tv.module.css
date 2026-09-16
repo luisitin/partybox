@@ -118,8 +118,7 @@
 }
 
 .claim {
-  width: 460px;
-  max-width: 40vw;
+  width: 460px; /* px, not vw: the stage is a zoomed 1920×1080 design */
 }
 
 .verdict {

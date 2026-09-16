@@ -16,7 +16,7 @@ export const t = {
     resuming: 'Reconnecting…',
     offline: 'Connecting…',
     kicked: 'The VIP removed you from the room. You can join again.',
-    restarted: 'The party restarted — tap Join to get back in.',
+    restarted: 'The party started over — tap Join to get back in.',
     noRooms: 'No room is open right now. Start the server and open /tv on the big screen.',
   },
   lobby: {
@@ -91,9 +91,6 @@ export const t = {
   },
   host: {
     title: 'Host',
-    home: 'Home',
-    homeEnds: 'Home — ends the running game',
-    homeConfirm: 'End & go home?',
     pickGame: 'Pick a game',
     skip: 'Skip / Next',
     removeBots: (n: number) => (n === 1 ? 'Remove bot' : `Remove ${n} bots`),
@@ -107,5 +104,11 @@ export const t = {
     fullscreen: 'Fullscreen',
     paused: 'Paused',
     pausedHint: (name: string) => `${name} can resume from the VIP menu`,
+    home: 'Home',
+    homeTitle: 'Home: back to the lobby (from the lobby: start over, everyone rejoins)',
+    homeConfirm: 'Click again to go home',
+    homeConfirmReset: 'Click again to start over',
+    homeOff: 'Home needs the server started with --dev-api',
+    homeFailed: 'Could not reach the server',
   },
 } as const;

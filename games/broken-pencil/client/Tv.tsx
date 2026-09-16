@@ -64,11 +64,7 @@ function CurrentPage({ page }: { page: PageView }): JSX.Element {
     return (
       <div className={`${styles.page} pb-enter`}>
         <p className={styles.pageWho}>{page.authorName} drew</p>
-        <DrawingView
-          drawing={page.drawing}
-          size="min(62vh, 560px)"
-          label={`${page.authorName}'s drawing`}
-        />
+        <DrawingView drawing={page.drawing} size={560} label={`${page.authorName}'s drawing`} />
       </div>
     );
   return (

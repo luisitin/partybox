@@ -143,6 +143,7 @@ export function Preview(): JSX.Element {
     dismissError: () => undefined,
     dismissToast: () => undefined,
     session: () => null,
+    identity: () => null,
   };
   return (
     <ServerClockProvider offsetMs={0}>

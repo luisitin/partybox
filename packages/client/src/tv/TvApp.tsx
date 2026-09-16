@@ -8,7 +8,7 @@ import { createTvClient } from '../net/tv';
 import { createSoundEngine } from '../sound';
 import type { SoundEngine } from '../sound';
 import { AudioGate } from './AudioGate';
-import { HomeButton, HostBar } from './HostBar';
+import { HostBar } from './HostBar';
 import { TvFrame } from './TvFrame';
 import { TvLobby } from './TvLobby';
 import { TvPlaying } from './TvPlaying';
@@ -63,7 +63,7 @@ export function TvApp(): JSX.Element {
         connected={state.connected}
         toasts={state.toasts}
         compact={room?.status === 'playing'}
-        corner={room ? <HomeButton client={client} room={room} /> : null}
+        onHome={client.home}
         footer={room ? <HostBar client={client} room={room} view={view} /> : null}
       >
         {content}

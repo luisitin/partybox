@@ -16,7 +16,7 @@ export interface JoinProps {
 
 export function Join({ controller, state }: JoinProps): JSX.Element {
   const info = useServerInfo();
-  const session = controller.session();
+  const session = controller.session() ?? controller.identity();
   const [name, setName] = useState(session?.name ?? '');
   // A random default (instead of always the fox) so two phones joining together rarely match.
   const [avatarId, setAvatarId] = useState<string>(
