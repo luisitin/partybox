@@ -1,6 +1,6 @@
 // Join form: name, avatar grid, room code (only when more than one room exists), and the
 // resume/kicked states. The submit button lives in the sticky footer so the keyboard never hides it.
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { FormEvent, JSX } from 'react';
 import { AVATAR_IDS, PLAYER_NAME_MAX } from '@partybox/shared';
 import { Avatar, PrimaryButton, Screen } from '@partybox/game-sdk/ui';
@@ -28,6 +28,36 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
   const [code, setCode] = useState('');
   const [submittedAt, setSubmittedAt] = useState<number | null>(null);
   const needsCode = info !== null && info.rooms.length !== 1;
+  // A rejected join shakes the name field and hands the taken/invalid name back selected (or the
+  // code, for a room that does not exist) so the retry is one keystroke away. "Adjust state when
+  // a prop changes": every new error object shakes once; the one already on screen at mount (a
+  // stale error left by leave()) does not. The shell plays `error` and buzzes for it.
+  const nameRef = useRef<HTMLInputElement>(null);
+  const codeRef = useRef<HTMLInputElement>(null);
+  const [shaking, setShaking] = useState(false);
+  const [seenError, setSeenError] = useState(state.error);
+  if (state.error !== seenError) {
+    setSeenError(state.error);
+    if (state.error && !state.joined) setShaking(true);
+  }
+  useEffect(() => {
+    if (!shaking) return;
+    const code = state.error?.code;
+    const target =
+      code === 'name_taken' || code === 'name_invalid'
+        ? nameRef.current
+        : code === 'room_not_found' && needsCode
+          ? codeRef.current
+          : null;
+    if (target) {
+      target.focus();
+      // setSelectionRange, not select(): iOS ignores select().
+      target.setSelectionRange(0, target.value.length);
+    }
+    // Reduced motion runs the animation at 0 ms and may never fire animationend.
+    const fallback = setTimeout(() => setShaking(false), 400);
+    return () => clearTimeout(fallback);
+  }, [shaking, state.error, needsCode]);
   // "Joining…" until the server answers: a welcome unmounts this screen, an error (or a 6 s safety
   // timeout, for a server that never answers) re-enables the button.
   const submitting = submittedAt !== null;
@@ -94,7 +124,9 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
         <label className={styles.field}>
           <span className={styles.label}>{t.join.name}</span>
           <input
-            className={`${styles.input} ${state.error ? styles.inputError : ''}`}
+            ref={nameRef}
+            className={`${styles.input} ${state.error ? styles.inputError : ''} ${shaking ? styles.shake : ''}`}
+            onAnimationEnd={() => setShaking(false)}
             value={name}
             onChange={(e) => setName(e.target.value)}
             aria-invalid={state.error !== null}
@@ -108,6 +140,7 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
           />
           {state.error ? (
             <span id="join-error" className={styles.error} role="alert">
+              <span aria-hidden>⚠ </span>
               {state.error.message} {t.join.tryAgain}
             </span>
           ) : null}
@@ -116,6 +149,7 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
           <label className={styles.field}>
             <span className={styles.label}>{t.join.code}</span>
             <input
+              ref={codeRef}
               className={`${styles.input} ${styles.code}`}
               value={code}
               onChange={(e) => setCode(e.target.value.toUpperCase())}

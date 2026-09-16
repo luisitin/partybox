@@ -213,6 +213,11 @@
   text-align: left;
 }
 
+/* A rejected input: three sideways jolts (global keyframe; 0 ms under reduced motion). */
+.shake {
+  animation: global(pb-shake) var(--pb-motion-base) var(--pb-ease) both;
+}
+
 .main {
   flex: 1;
   min-height: 0;

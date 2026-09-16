@@ -6,20 +6,14 @@
 import { useEffect, useRef, useState } from 'react';
 import type { JSX, ReactNode } from 'react';
 import type { PlayerPublic } from '@partybox/shared';
-import {
-  Avatar,
-  DeadlineBar,
-  buzz,
-  hapticsEnabled,
-  setHapticsEnabled,
-  useSecondsLeft,
-} from '@partybox/game-sdk/ui';
+import { Avatar, DeadlineBar, buzz, useSecondsLeft } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import type { Controller, ControllerState } from '../net/controller';
 import type { SoundEngine } from '../sound';
 import { ThemePicker } from '../ThemePicker';
-import pickerStyles from '../ThemePicker.module.css';
 import styles from './ControllerShell.module.css';
+import { PhoneSettings } from './PhoneSettings';
+import { usePhoneUrgency } from './urgency';
 import { VipMenu } from './VipMenu';
 
 export interface ControllerShellProps {
@@ -31,23 +25,13 @@ export interface ControllerShellProps {
   children: ReactNode;
 }
 
-/** "Something to press": what makes the last 5 s urgent on this screen (see `candidate`). */
-const ACTIONABLE =
-  'textarea:not(:disabled), input:not(:disabled), select:not(:disabled), ' +
-  'button:not(:disabled):not([aria-disabled="true"]), [role="button"]:not([aria-disabled="true"])';
-
 /** Haptic patterns (ms on/off) — docs/DESIGN_SYSTEM.md → Haptics. */
-const BUZZ: Record<
-  'submit' | 'error' | 'prompt' | 'winner' | 'results' | 'tick' | 'timeup',
-  number | number[]
-> = {
+const BUZZ: Record<'submit' | 'error' | 'prompt' | 'winner' | 'results', number | number[]> = {
   submit: 20,
   error: [40, 60, 40],
   prompt: [30, 50, 30],
   winner: [60, 60, 60, 60, 160],
   results: 40,
-  tick: 30,
-  timeup: [60, 40, 60],
 };
 
 export function ControllerShell({
@@ -59,72 +43,53 @@ export function ControllerShell({
 }: ControllerShellProps): JSX.Element {
   const [menuOpen, setMenuOpen] = useState(false);
   const [themeOpen, setThemeOpen] = useState(false);
-  const [soundOn, setSoundOn] = useState(() => !(audio?.muted() ?? true));
-  const [haptics, setHaptics] = useState(() => hapticsEnabled());
   const room = state.room;
   const showBanner = state.connection !== 'connected' && state.joined;
   // A pause freezes the phone too: the screen dims and goes inert (no taps, no focus, out of the
   // a11y tree — the server would drop the input anyway), and a banner says who resumes it. The
   // reconnect banner wins when both apply.
   const paused = room?.status === 'playing' && (state.view?.paused ?? false);
+  // The in-game error strip shakes once per new error object ("adjust state when a prop changes";
+  // Join owns the un-joined case). The cue + buzz for it live in the transition effect below.
+  const [stripShaking, setStripShaking] = useState(false);
+  const [seenError, setSeenError] = useState(state.error);
+  if (state.error !== seenError) {
+    setSeenError(state.error);
+    if (state.error && state.joined) setStripShaking(true);
+  }
+  useEffect(() => {
+    if (!stripShaking) return;
+    const fallback = setTimeout(() => setStripShaking(false), 400);
+    return () => clearTimeout(fallback);
+  }, [stripShaking]);
   const vipName = room?.players.find((p) => p.isVip)?.name ?? t.vip.badge;
   const view = room?.status === 'playing' ? state.view : null;
   const seconds = useSecondsLeft(view?.deadline ?? null, view?.paused ?? false);
 
   // Cues from state transitions, mirroring the TV's (TvApp). One `prev` snapshot per push.
   const myStatus = state.view?.players.find((p) => p.id === state.playerId)?.status ?? null;
-  // The last 5 s of a real input phase for a player who has not answered: the phone (not the TV
-  // 3 m away) is what they are staring at, so it is the phone that gets urgent. `data-urgent` on
-  // the shell lets the SDK primitives (letters, the primary button) join in without a prop. A
-  // game marks nobody 'submitted' in a passive phase (intro, reveal, scores), so the shell also
-  // checks that the screen actually offers something to press — a WaitingScreen never panics.
-  const timed = view !== null && view.timerMode !== 'quiet' && view.timerMode !== 'hidden';
-  const acting = myStatus === 'active';
-  const candidate =
-    timed && !view.paused && seconds !== null && seconds >= 1 && seconds <= 5 && acting;
-  const shellRef = useRef<HTMLDivElement>(null);
-  const mainRef = useRef<HTMLElement>(null);
-  // One haptic per second at 5…1, a soft tick at the 5 s edge, a thud at 0 for a phone that was
-  // counting and still has not answered (Timer.tsx's `lastTicked` pattern, keyed per phase
-  // instance; per-second is haptic-only so N phones never flam against the TV's countdown).
-  const lastTicked = useRef<{ key: string; seconds: number } | null>(null);
-  useEffect(() => {
-    const canAct = timed && !view.paused && acting && !!mainRef.current?.querySelector(ACTIONABLE);
-    shellRef.current?.toggleAttribute('data-urgent', candidate && canAct);
-    if (!canAct || seconds === null || seconds > 5) return;
-    const key = `${view.phaseId}:${view.deadline ?? ''}`;
-    const last = lastTicked.current?.key === key ? lastTicked.current.seconds : null;
-    if (last === seconds) return;
-    lastTicked.current = { key, seconds };
-    if (seconds === 0) {
-      if (last === null) return;
-      audio?.play('error');
-      buzz(BUZZ.timeup);
-      return;
-    }
-    if (seconds === 5) audio?.play('tick');
-    buzz(BUZZ.tick);
-  }, [timed, view, seconds, acting, candidate, audio]);
+  const { candidate, shellRef, mainRef } = usePhoneUrgency({ view, seconds, myStatus, audio });
 
   const prev = useRef<{
     status: string | null;
     phase: string | null;
     roomStatus: string;
-    error: boolean;
-  }>({ status: null, phase: null, roomStatus: '', error: false });
+    error: ControllerState['error'];
+  }>({ status: null, phase: null, roomStatus: '', error: null });
   useEffect(() => {
     const p = prev.current;
     const roomStatus = room?.status ?? '';
     const phase = state.view?.phaseId ?? null;
-    const error = state.error !== null;
+    const error = state.error;
     const playing = roomStatus === 'playing';
     // Locked in: the phone's own confirmation (a game that just cued its verdict wins the beat).
     if (playing && myStatus === 'submitted' && p.status !== 'submitted' && p.status !== null) {
       if (audio && performance.now() - audio.lastPlayedAt() > 50) audio.play('submit');
       buzz(BUZZ.submit);
     }
-    // A rejected join or input: the strip goes red (Join renders the same error inline).
-    if (error && !p.error) {
+    // A rejected join or input, once per error object: the strip goes red (Join renders the
+    // same error inline).
+    if (error && error !== p.error) {
       audio?.play('error');
       buzz(BUZZ.error);
     }
@@ -152,19 +117,6 @@ export function ControllerShell({
     };
   }, [room, state.view, state.error, state.playerId, myStatus, audio]);
 
-  const toggleSound = (): void => {
-    if (!audio) return;
-    const next = !soundOn;
-    audio.setMuted(!next);
-    setSoundOn(next);
-    if (next) void audio.enable().then((ok) => ok && audio.play('submit'));
-  };
-  const toggleHaptics = (): void => {
-    const next = !haptics;
-    setHapticsEnabled(next);
-    setHaptics(next);
-    if (next) buzz(BUZZ.submit);
-  };
   return (
     <div ref={shellRef} className={styles.shell} data-surface="controller">
       <header className={styles.header}>
@@ -248,8 +200,16 @@ export function ControllerShell({
         </div>
       ) : null}
       {state.error && state.joined ? (
-        <button type="button" className={styles.error} onClick={controller.dismissError}>
-          {state.error.message}
+        <button
+          type="button"
+          className={`${styles.error} ${stripShaking ? styles.shake : ''}`}
+          onAnimationEnd={() => setStripShaking(false)}
+          onClick={controller.dismissError}
+        >
+          <span role="alert">
+            <span aria-hidden>⚠ </span>
+            {state.error.message}
+          </span>
         </button>
       ) : null}
       <main
@@ -286,39 +246,7 @@ export function ControllerShell({
         <ThemePicker
           variant="sheet"
           onClose={() => setThemeOpen(false)}
-          footer={
-            <>
-              <button
-                type="button"
-                className={pickerStyles.toggle}
-                aria-pressed={soundOn}
-                onClick={toggleSound}
-                disabled={!audio}
-              >
-                <span className={pickerStyles.toggleGlyph} aria-hidden>
-                  {soundOn ? '🔊' : '🔇'}
-                </span>
-                {t.controller.phoneSound}
-                <span className={pickerStyles.toggleState}>
-                  {soundOn ? t.controller.on : t.controller.off}
-                </span>
-              </button>
-              <button
-                type="button"
-                className={pickerStyles.toggle}
-                aria-pressed={haptics}
-                onClick={toggleHaptics}
-              >
-                <span className={pickerStyles.toggleGlyph} aria-hidden>
-                  📳
-                </span>
-                {t.controller.vibration}
-                <span className={pickerStyles.toggleState}>
-                  {haptics ? t.controller.on : t.controller.off}
-                </span>
-              </button>
-            </>
-          }
+          footer={<PhoneSettings audio={audio} />}
         />
       ) : null}
     </div>
