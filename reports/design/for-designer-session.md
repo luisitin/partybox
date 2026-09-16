@@ -3,7 +3,7 @@
 Relayed by the design-review session. Two items need game/server-side changes that live in your
 lane (`games/*/server`, manifests, settings validation); the client side is ready to follow.
 
-## 1. Broken Pencil: the "passes" setting must be capped by the room size
+## 1. Broken Pencil: the "passes" setting must be capped by the room size — DONE by the design session 2026-09-16 (owner asked twice): `maxFromPlayers: -1` on the number spec (shared contract, additive), SettingField caps the stepper and the shown value by the roster on the phone and the TV; your server-side `min(passes, N-1)` is unchanged. Below: the original note.
 
 Owner: "the settings should not allow more people to see pictures than players. If there are 4
 players in the lobby and a bot then it should only allow 4 other players to touch the book, and as

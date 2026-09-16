@@ -8,6 +8,13 @@ const PREFERRED = ['Zira', 'Google US English', 'Samantha'];
 const RATE = 1.15;
 const PITCH = 1.1;
 
+// Chrome garbage-collects an utterance nobody references and the voice stops mid-word ("N…
+// seven", or just "G"); it also drops the start of an utterance spoken in the same tick as
+// `cancel()`. So: keep the current utterance here until it ends, and only cancel when something
+// is actually speaking, a breath before the next call.
+let current: SpeechSynthesisUtterance | null = null;
+const CANCEL_GAP_MS = 80;
+
 function muted(): boolean {
   try {
     return localStorage.getItem(MUTE_KEY) === '1';
@@ -38,10 +45,8 @@ export function speakCall(letter: string, number: number, delayMs = 300): () => 
   if (typeof speechSynthesis === 'undefined' || muted()) return () => undefined;
   let cancelled = false;
   let spoken = false;
-  const say = (): void => {
-    if (cancelled || spoken) return;
-    spoken = true;
-    speechSynthesis.cancel();
+  const speak = (): void => {
+    if (cancelled) return;
     const utterance = new SpeechSynthesisUtterance(callText(letter, number));
     const voice = pickVoice();
     if (voice) {
@@ -51,7 +56,21 @@ export function speakCall(letter: string, number: number, delayMs = 300): () => 
     utterance.rate = RATE;
     utterance.pitch = PITCH;
     utterance.volume = 1;
+    const release = (): void => {
+      if (current === utterance) current = null;
+    };
+    utterance.addEventListener('end', release);
+    utterance.addEventListener('error', release);
+    current = utterance;
     speechSynthesis.speak(utterance);
+  };
+  const say = (): void => {
+    if (cancelled || spoken) return;
+    spoken = true;
+    if (speechSynthesis.speaking || speechSynthesis.pending) {
+      speechSynthesis.cancel();
+      setTimeout(speak, CANCEL_GAP_MS);
+    } else speak();
   };
   const handle = setTimeout(() => {
     // Chrome loads its voice list asynchronously; wait for it once rather than speak in the
@@ -69,5 +88,7 @@ export function speakCall(letter: string, number: number, delayMs = 300): () => 
 
 /** Stop talking (a phase change, a claim). */
 export function hushCaller(): void {
-  if (typeof speechSynthesis !== 'undefined') speechSynthesis.cancel();
+  if (typeof speechSynthesis === 'undefined') return;
+  current = null;
+  if (speechSynthesis.speaking || speechSynthesis.pending) speechSynthesis.cancel();
 }

@@ -97,6 +97,7 @@ export function Selecting({ controller, room, me }: SelectingProps): JSX.Element
               key={spec.key}
               spec={spec}
               value={room.settings[spec.key]}
+              players={room.players.length}
               onChange={(v) =>
                 controller.vip({ action: 'updateSettings', settings: { [spec.key]: v } })
               }

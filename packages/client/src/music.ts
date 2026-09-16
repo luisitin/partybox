@@ -94,6 +94,9 @@ export function createMusicEngine(): MusicEngine {
   let timer: ReturnType<typeof setTimeout> | null = null;
   // One ramp per element: an outgoing track keeps fading while the next one fades in.
   const fades = new Map<HTMLAudioElement, ReturnType<typeof setInterval>>();
+  // Every element that ever started; `stop()` retires them all, so a switch can never leave an
+  // orphan playing underneath the next track.
+  const live = new Set<HTMLAudioElement>();
   let generation = 0;
 
   const clearTimer = (): void => {
@@ -126,9 +129,15 @@ export function createMusicEngine(): MusicEngine {
 
   const stopElement = (el: HTMLAudioElement): void => {
     clearFade(el);
+    live.delete(el);
+    // Retired first: clearing `src` fires `error` on the element, which must not read as a
+    // missing file (that is what started a second track underneath the first).
+    el.dataset['retired'] = '1';
     el.pause();
-    el.src = '';
+    el.removeAttribute('src');
+    el.load();
   };
+  const retired = (el: HTMLAudioElement): boolean => el.dataset['retired'] === '1';
 
   const start = (p: MusicPlan, gen: number): void => {
     if (gen !== generation) return;
@@ -139,8 +148,9 @@ export function createMusicEngine(): MusicEngine {
     el.muted = muted;
     el.volume = p.mode === 'rotate' ? 0 : p.volume;
     audio = el;
+    live.add(el);
     el.addEventListener('ended', () => {
-      if (gen !== generation || audio !== el) return;
+      if (retired(el) || gen !== generation || audio !== el) return;
       // chain: straight into the next one; rotate: the segment timer usually wins, but a short
       // track can end first — treat it like a segment end without the fade.
       if (p.mode === 'chain') start(p, gen);
@@ -148,8 +158,10 @@ export function createMusicEngine(): MusicEngine {
     });
     el.addEventListener('error', () => {
       // A missing file (fetch-music never ran) must not loop forever: try the next track once,
-      // then give up quietly.
-      if (gen !== generation || audio !== el) return;
+      // then give up quietly. A retired element's error is just its source being cleared.
+      if (retired(el) || gen !== generation || audio !== el) return;
+      stopElement(el);
+      audio = null;
       if (p.tracks.length > 1 && !el.dataset['retried']) {
         el.dataset['retried'] = '1';
         timer = setTimeout(() => start(p, gen), 500);
@@ -184,11 +196,11 @@ export function createMusicEngine(): MusicEngine {
   const stop = (fadeMs: number): void => {
     clearTimer();
     generation += 1;
-    const el = audio;
     audio = null;
-    if (!el) return;
-    if (fadeMs > 0 && !el.paused) rampTo(el, 0, fadeMs, () => stopElement(el));
-    else stopElement(el);
+    for (const el of [...live]) {
+      if (fadeMs > 0 && !el.paused) rampTo(el, 0, fadeMs, () => stopElement(el));
+      else stopElement(el);
+    }
   };
 
   return {

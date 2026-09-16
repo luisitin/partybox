@@ -1,5 +1,5 @@
 // Lobby on the stage: the join instructions (big) and everyone who is in. First player = VIP.
-// An empty lobby breathes (heading + waiting dots) and shows six dashed seats; a join pops its chip
+// An empty lobby breathes (heading + waiting dots); a join pops its chip
 // into the first seat and bumps the count — so the eye lands on the chip, not a toast.
 import type { JSX } from 'react';
 import type { RoomSnapshot } from '@partybox/shared';
@@ -18,7 +18,6 @@ export function TvLobby({ room }: TvLobbyProps): JSX.Element {
   const vip = players.find((p) => p.isVip);
   const full = room !== null && players.length >= room.capacity;
   const empty = players.length === 0;
-  const seats = room ? Math.max(0, Math.min(6, room.capacity) - players.length) : 0;
   return (
     <Stage>
       <div className={styles.split}>
@@ -66,7 +65,6 @@ export function TvLobby({ room }: TvLobbyProps): JSX.Element {
             size={players.length > 8 ? 'md' : 'lg'}
             align="start"
             enter
-            seats={seats}
           />
           {empty ? (
             <p className="pb-muted">

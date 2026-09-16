@@ -13,11 +13,12 @@
     {
       "key": "passes",
       "label": "Players per book",
-      "description": "How many other players touch each book. 15 = everyone (the full circle).",
+      "description": "How many other players touch each book (everyone in the room by default).",
       "type": "number",
       "default": 15,
       "min": 1,
       "max": 15,
+      "maxFromPlayers": -1,
       "step": 1
     },
     {

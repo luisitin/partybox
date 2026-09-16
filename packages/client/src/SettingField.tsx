@@ -10,6 +10,8 @@ export interface SettingFieldProps {
   onChange: (v: Settings[string]) => void;
   /** Distinguishes the TV's and the phone's ids when both render (previews, tests). */
   idPrefix?: string;
+  /** Players in the room — a spec with `maxFromPlayers` caps itself to the roster. */
+  players?: number;
 }
 
 export function SettingField({
@@ -17,8 +19,18 @@ export function SettingField({
   value,
   onChange,
   idPrefix = 'setting',
+  players,
 }: SettingFieldProps): JSX.Element {
   const id = `${idPrefix}-${spec.key}`;
+  // A roster-capped number: the ceiling (and a stored value above it) follow the player count, so
+  // "players per book" reads 4 with five people in and grows as bots or friends join.
+  const max =
+    spec.type === 'number' && spec.maxFromPlayers !== undefined && players !== undefined
+      ? Math.max(spec.min, Math.min(spec.max, players + spec.maxFromPlayers))
+      : spec.type === 'number'
+        ? spec.max
+        : 0;
+  const shown = spec.type === 'number' ? Math.min(max, Number(value ?? spec.default)) : 0;
   switch (spec.type) {
     case 'boolean':
       return (
@@ -47,19 +59,16 @@ export function SettingField({
             <button
               type="button"
               aria-label={`less ${spec.label}`}
-              onClick={() =>
-                onChange(Math.max(spec.min, Number(value ?? spec.default) - (spec.step ?? 1)))
-              }
+              onClick={() => onChange(Math.max(spec.min, shown - (spec.step ?? 1)))}
             >
               −
             </button>
-            <output id={id}>{String(value ?? spec.default)}</output>
+            <output id={id}>{String(shown)}</output>
             <button
               type="button"
               aria-label={`more ${spec.label}`}
-              onClick={() =>
-                onChange(Math.min(spec.max, Number(value ?? spec.default) + (spec.step ?? 1)))
-              }
+              disabled={shown >= max}
+              onClick={() => onChange(Math.min(max, shown + (spec.step ?? 1)))}
             >
               +
             </button>

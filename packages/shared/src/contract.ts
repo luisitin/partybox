@@ -21,6 +21,12 @@ export const settingSpecSchema = z.discriminatedUnion('type', [
     min: z.number(),
     max: z.number(),
     step: z.number().positive().optional(),
+    /**
+     * The ceiling follows the roster: effective max = min(max, players + maxFromPlayers), and a
+     * stored value above it displays and starts as that ceiling ("players per book" = −1: everyone
+     * else). The game's own start logic keeps the same cap (games/broken-pencil/server/index.ts).
+     */
+    maxFromPlayers: z.number().int().optional(),
   }),
   z.object({ ...settingBase, type: z.literal('boolean'), default: z.boolean() }),
   z.object({
