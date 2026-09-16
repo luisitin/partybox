@@ -295,3 +295,33 @@
     transform: none;
   }
 }
+
+/* TV "answer": one pip per expected answer; the newest filled pip pops (class toggle on a
+   persistent node, so it fires once per new answer). 16 pips fit one row of the safe width. */
+.pips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--pb-space-3);
+}
+
+.pip {
+  display: grid;
+  place-items: center;
+  width: var(--pb-space-7);
+  height: var(--pb-space-7);
+  border-radius: 50%;
+  background: var(--pb-surface-2);
+  color: var(--pb-on-accent);
+  font-size: var(--pb-font-body);
+  font-weight: 900;
+  line-height: 1;
+}
+
+.pipDone {
+  background: var(--pb-accent-3);
+}
+
+.pipPop {
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
