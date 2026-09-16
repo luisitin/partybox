@@ -30,7 +30,8 @@ export function nobodyScored(room: RoomSnapshot): boolean {
 export function winnerLine(room: RoomSnapshot): string {
   const results = room.results;
   if (!results) return '';
-  if (nobodyScored(room)) return t.results.over;
+  // Everyone on zero is still a tie (review-loop #6): the headline says so; the screens add why.
+  if (nobodyScored(room)) return results.players.length > 1 ? t.results.tie : t.results.over;
   const ids = results.results.winnerIds;
   if (ids.length === 0) return '';
   if (ids.length >= results.players.length && ids.length > 1) return t.results.tie;
@@ -49,7 +50,7 @@ export function myRow(room: RoomSnapshot, meId: string): ScoreboardRow | undefin
 export function winnerLineFor(room: RoomSnapshot, meId: string): string {
   const results = room.results;
   if (!results) return '';
-  if (nobodyScored(room)) return t.results.over;
+  if (nobodyScored(room)) return winnerLine(room);
   const ids = results.results.winnerIds;
   if (!ids.includes(meId)) return winnerLine(room);
   if (ids.length === 1) return t.results.youWin;

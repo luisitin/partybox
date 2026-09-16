@@ -33,6 +33,7 @@ export function TvResults({ room, lastView = null }: TvResultsProps): JSX.Elemen
         <BigText level={many || keepBoard ? 'h1' : 'display'} tone="accent">
           {winnerLine(room) || t.results.title}
         </BigText>
+        {nobodyScored(room) ? <p className="pb-muted">{t.results.nobodyScored}</p> : null}
       </div>
       {keepBoard && Finale && lastView ? (
         <GameErrorBoundary surface="tv">

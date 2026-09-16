@@ -60,6 +60,7 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
       }
     >
       <p className={styles.winner}>{winnerLineFor(room, me.id)}</p>
+      {over ? <p className="pb-muted pb-caption">{t.results.nobodyScored}</p> : null}
       {mine && !over ? (
         <p className={`pb-muted pb-caption ${styles.place}`}>
           {t.results.yourPlace(mine.rank, mine.score)}
