@@ -5,18 +5,33 @@
 import { createContext, useContext } from 'react';
 import type { JSX, ReactNode } from 'react';
 
-export type SoundCue =
-  | 'join'
-  | 'phase'
-  | 'countdown'
-  | 'reveal'
-  | 'win'
-  | 'fanfare'
-  | 'submit'
-  | 'error'
-  | 'wrong'
-  | 'call'
-  | 'daub';
+export const SOUND_CUES = [
+  'join',
+  'phase',
+  'countdown',
+  'tick',
+  'reveal',
+  'win',
+  'fanfare',
+  'jackpot',
+  'bust',
+  'sweep',
+  'wager',
+  'tally',
+  'submit',
+  'lock',
+  'correct',
+  'error',
+  'wrong',
+  'call',
+  'daub',
+] as const;
+
+export type SoundCue = (typeof SOUND_CUES)[number];
+
+export function isSoundCue(value: string): value is SoundCue {
+  return (SOUND_CUES as readonly string[]).includes(value);
+}
 
 export type PlayCue = (cue: SoundCue) => void;
 

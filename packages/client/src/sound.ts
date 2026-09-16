@@ -28,6 +28,8 @@ const CUES: Record<SoundCue, Note[]> = {
     { freq: 784, at: 0.2, dur: 0.18, type: 'triangle' },
   ],
   countdown: [{ freq: 880, at: 0, dur: 0.05, type: 'square', gain: 0.12 }],
+  // Half-gain countdown for the phone's 5 s edge.
+  tick: [{ freq: 880, at: 0, dur: 0.05, type: 'square', gain: 0.06 }],
   reveal: [
     { freq: 440, at: 0, dur: 0.12, type: 'sawtooth', gain: 0.1 },
     { freq: 554, at: 0.12, dur: 0.12, type: 'sawtooth', gain: 0.1 },
@@ -50,9 +52,45 @@ const CUES: Record<SoundCue, Note[]> = {
     { freq: 1568, at: 1.18, dur: 0.6, type: 'triangle' },
     { freq: 784, at: 1.18, dur: 0.6, gain: 0.1 },
   ],
+  // Final-wager reveal (Lightning): G-major so it does not duplicate the C-major 'win' that follows.
+  jackpot: [
+    { freq: 784, at: 0, dur: 0.06 },
+    { freq: 988, at: 0.07, dur: 0.06 },
+    { freq: 1175, at: 0.14, dur: 0.06 },
+    { freq: 1568, at: 0.21, dur: 0.35, type: 'triangle', gain: 0.16 },
+  ],
+  bust: [
+    { freq: 196, at: 0, dur: 0.3, type: 'triangle', gain: 0.14 },
+    { freq: 185, at: 0.3, dur: 0.45, type: 'triangle', gain: 0.12 },
+  ],
+  // A faster cousin of 'win' for a Wisecrack sweep; never on plain wins.
+  sweep: [
+    { freq: 523, at: 0, dur: 0.09 },
+    { freq: 659, at: 0.1, dur: 0.09 },
+    { freq: 784, at: 0.2, dur: 0.09 },
+    { freq: 1047, at: 0.3, dur: 0.35 },
+  ],
+  // The wager phase opens (Lightning).
+  wager: [
+    { freq: 330, at: 0, dur: 0.12, type: 'triangle' },
+    { freq: 392, at: 0.13, dur: 0.12, type: 'triangle' },
+    { freq: 494, at: 0.26, dur: 0.3, type: 'triangle', gain: 0.14 },
+  ],
+  // A scores / leaderboard phase (Wisecrack).
+  tally: [
+    { freq: 1319, at: 0, dur: 0.05, type: 'square', gain: 0.08 },
+    { freq: 1760, at: 0.06, dur: 0.18, type: 'sine', gain: 0.14 },
+  ],
   submit: [
     { freq: 660, at: 0, dur: 0.05 },
     { freq: 880, at: 0.05, dur: 0.07 },
+  ],
+  // A player locked in (TV strip): one soft high tick.
+  lock: [{ freq: 1568, at: 0, dur: 0.04, type: 'triangle', gain: 0.08 }],
+  // The phone's own verdict card: right.
+  correct: [
+    { freq: 880, at: 0, dur: 0.07, type: 'triangle', gain: 0.12 },
+    { freq: 1175, at: 0.08, dur: 0.16, type: 'triangle', gain: 0.12 },
   ],
   error: [{ freq: 150, at: 0, dur: 0.15, type: 'square', gain: 0.12 }],
   // A bouncy "boing-boing" for a new bingo call: two sine slides up, the second higher.
