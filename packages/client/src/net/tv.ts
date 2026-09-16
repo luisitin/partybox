@@ -1,13 +1,16 @@
-// The TV's store: a pure observer. Joins the house room (or ?room=CODE), applies pushes in rev
-// order, tracks the clock offset, and buffers toasts.
+// The TV's store: an observer that renders pushes (room snapshots, views, toasts) — plus the host
+// controls (ADR-031): `act` runs a VIP action as the room's VIP, `bot` adds/removes house bots.
 import { io } from 'socket.io-client';
 import type {
+  BotAction,
+  ErrorPayload,
   PushedView,
   RoomPush,
   RoomSnapshot,
   ToastPayload,
   TvView,
   ViewPush,
+  VipAction,
 } from '@partybox/shared';
 import { createStore, nextToastId } from './store';
 import type { Store, Toast } from './store';
@@ -26,7 +29,13 @@ export type HomeResult = 'ok' | 'off' | 'error';
 
 export interface TvClient {
   store: Store<TvState>;
-  /** Start over: a fresh house room, everyone rejoins (TvFrame's 🏠). */
+  /** Host control (ADR-031): any VIP action, applied with the engine's host flag. */
+  act(action: VipAction): void;
+  bot(action: BotAction): void;
+  /**
+   * TvFrame's 🏠. With a game running or over: end it and go back to the lobby, everyone stays.
+   * Already in the lobby: start the party over (a fresh house room via the dev API; everyone rejoins).
+   */
   home(): Promise<HomeResult>;
 }
 
@@ -64,22 +73,37 @@ export function createTvClient(roomCode?: string, url?: string): TvClient {
     if (push.rev < store.get().rev) return;
     store.set({ rev: push.rev, view: push.view, offsetMs: push.at - Date.now() });
   });
-  socket.on('toast', (toast: ToastPayload) => {
-    // During play the chips already show who joined; a join toast would only cover the stage.
-    // (Payloads carry no category yet, so this matches the engine's "<name> joined…" text.)
-    if (store.get().room?.status === 'playing' && /\bjoined\b/.test(toast.text)) return;
+  const showToast = (toast: ToastPayload): void => {
     const id = nextToastId();
     store.set((prev) => ({ toasts: [...prev.toasts.slice(-1), { id, ...toast }] }));
     setTimeout(
       () => store.set((prev) => ({ toasts: prev.toasts.filter((t) => t.id !== id) })),
       3000,
     );
+  };
+  socket.on('toast', (toast: ToastPayload) => {
+    // During play the chips already show who joined; a join toast would only cover the stage.
+    // (Payloads carry no category yet, so this matches the engine's "<name> joined…" text.)
+    if (store.get().room?.status === 'playing' && /joined/.test(toast.text)) return;
+    showToast(toast);
   });
+  // Refusals of host actions (a game that cannot start, nobody in the room) come back as errors.
+  socket.on('error', (error: ErrorPayload) => showToast({ kind: 'warning', text: error.message }));
 
-  // The TV is a pure observer with no authority of its own (docs/PROTOCOL.md), so Home goes
-  // through the dev API's reset (start-partybox.bat runs `pnpm start --dev-api`): the server drops
-  // every player and mints a fresh house room; re-joining picks up the new code.
+  const act = (action: VipAction): void => {
+    socket.emit('tv:vip', action);
+  };
+
+  // Home from a game: the host channel (ADR-031) ends it and returns to the lobby with everyone
+  // still in. Home from the lobby: start over through the dev API's reset (start-partybox.bat runs
+  // `pnpm start --dev-api`) — the server drops every player and mints a fresh house room.
   const home = async (): Promise<HomeResult> => {
+    const status = store.get().room?.status;
+    if (status && status !== 'lobby') {
+      if (status === 'playing') act({ action: 'end' });
+      act({ action: 'toLobby' });
+      return 'ok';
+    }
     try {
       const res = await fetch(`${url ?? ''}/api/dev/reset`, { method: 'POST' });
       if (res.status === 403) return 'off';
@@ -92,5 +116,5 @@ export function createTvClient(roomCode?: string, url?: string): TvClient {
     }
   };
 
-  return { store, home };
+  return { store, act, bot: (action) => socket.emit('tv:bot', action), home };
 }

@@ -89,6 +89,13 @@ export const t = {
   theme: {
     title: 'Theme',
   },
+  host: {
+    title: 'Host',
+    pickGame: 'Pick a game',
+    skip: 'Skip / Next',
+    removeBots: (n: number) => (n === 1 ? 'Remove bot' : `Remove ${n} bots`),
+    choosing: 'Pick a game and its settings here, or from the VIP phone.',
+  },
   tv: {
     tapToStart: 'Tap anywhere for sound',
     tapHint: 'the party works without it',
@@ -98,8 +105,9 @@ export const t = {
     paused: 'Paused',
     pausedHint: (name: string) => `${name} can resume from the VIP menu`,
     home: 'Home',
-    homeTitle: 'Start over: a fresh lobby, everyone rejoins',
-    homeConfirm: 'Click again to start over',
+    homeTitle: 'Home: back to the lobby (from the lobby: start over, everyone rejoins)',
+    homeConfirm: 'Click again to go home',
+    homeConfirmReset: 'Click again to start over',
     homeOff: 'Home needs the server started with --dev-api',
     homeFailed: 'Could not reach the server',
   },

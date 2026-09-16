@@ -15,12 +15,14 @@ export interface TvFrameProps {
   connected: boolean;
   toasts: Toast[];
   compact: boolean;
-  /** Start over (fresh lobby). Absent in previews: the brand is plain text. */
+  /** 🏠: back to the lobby from a game, start over from the lobby. Absent in previews. */
   onHome?: () => Promise<HomeResult>;
+  /** Bottom row, in the flow (never over the stage): the host toolbar (ADR-031). */
+  footer?: ReactNode;
   children: ReactNode;
 }
 
-/** A misclick on the TV must not end the party: the first click arms, the second resets. */
+/** A misclick on the TV must not end the party: the first click arms, the second acts. */
 const HOME_ARM_MS = 4000;
 
 type HomeState = { kind: 'idle' } | { kind: 'armed' } | { kind: 'note'; text: string };
@@ -31,6 +33,7 @@ export function TvFrame({
   toasts,
   compact,
   onHome,
+  footer,
   children,
 }: TvFrameProps): JSX.Element {
   const info = useServerInfo();
@@ -52,8 +55,15 @@ export function TvFrame({
       else if (result === 'error') setHome({ kind: 'note', text: t.tv.homeFailed });
     });
   };
+  const inLobby = room === null || room.status === 'lobby';
   const brandText =
-    home.kind === 'armed' ? t.tv.homeConfirm : home.kind === 'note' ? home.text : t.appName;
+    home.kind === 'armed'
+      ? inLobby
+        ? t.tv.homeConfirmReset
+        : t.tv.homeConfirm
+      : home.kind === 'note'
+        ? home.text
+        : t.appName;
   // A blip stays a header caption; after 3 s the whole stage says so (a lit lobby + QR would keep
   // inviting people to scan a dead server).
   const [lostAt, setLostAt] = useState(false);
@@ -103,6 +113,7 @@ export function TvFrame({
         ) : null}
       </header>
       <main className={styles.main}>{children}</main>
+      {footer ? <div className={styles.footer}>{footer}</div> : null}
       {lost ? (
         <div className={styles.lostBanner} role="status">
           {t.connection.lostServer}

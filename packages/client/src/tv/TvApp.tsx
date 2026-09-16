@@ -1,4 +1,4 @@
-// Route `/tv` — the stage. A pure observer: renders pushed snapshots/views, plays sound cues on
+// Route `/tv` — the stage. Renders pushed snapshots/views, plays sound cues on
 // transitions, and never sends player events. `?room=CODE` watches a specific room.
 import { useEffect, useMemo, useRef } from 'react';
 import type { JSX } from 'react';
@@ -8,6 +8,7 @@ import { createTvClient } from '../net/tv';
 import { createSoundEngine } from '../sound';
 import type { SoundEngine } from '../sound';
 import { AudioGate } from './AudioGate';
+import { HostBar } from './HostBar';
 import { TvFrame } from './TvFrame';
 import { TvLobby } from './TvLobby';
 import { TvPlaying } from './TvPlaying';
@@ -51,7 +52,7 @@ export function TvApp(): JSX.Element {
   let content: JSX.Element;
   if (!room) content = <TvLobby room={null} />;
   else if (room.status === 'lobby') content = <TvLobby room={room} />;
-  else if (room.status === 'selecting') content = <TvSelecting room={room} />;
+  else if (room.status === 'selecting') content = <TvSelecting room={room} client={client} />;
   else if (room.status === 'playing') content = <TvPlaying room={room} view={view} audio={audio} />;
   else content = <TvResults room={room} />;
 
@@ -63,6 +64,7 @@ export function TvApp(): JSX.Element {
         toasts={state.toasts}
         compact={room?.status === 'playing'}
         onHome={client.home}
+        footer={room ? <HostBar client={client} room={room} view={view} /> : null}
       >
         {content}
       </TvFrame>

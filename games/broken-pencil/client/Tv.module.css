@@ -1,0 +1,218 @@
+/* TV layout for Broken Pencil: progress cards while playing, filmstrip + big page in the show. */
+.head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--pb-space-5);
+}
+
+.kicker {
+  margin: 0;
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--pb-text-muted);
+  white-space: nowrap;
+}
+
+.howto {
+  margin: 0;
+  padding-left: 1.2em;
+  font-size: var(--pb-font-body);
+  color: var(--pb-text-muted);
+  text-align: left;
+  line-height: 1.5;
+}
+
+.count {
+  margin: 0;
+  font-size: var(--pb-font-h2);
+  color: var(--pb-text-muted);
+  text-align: center;
+}
+
+.cards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--pb-space-4);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pb-space-2);
+  padding: var(--pb-space-4);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface);
+  border: 3px solid var(--pb-border);
+  font-size: var(--pb-font-body);
+}
+
+.cardDone {
+  border-color: var(--pb-accent-3);
+}
+
+.cardName {
+  font-weight: 700;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cardMark {
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+}
+
+.cardDone .cardMark {
+  color: var(--pb-accent-3);
+}
+
+.showBody {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: var(--pb-space-6);
+  flex: 1;
+  min-height: 0;
+}
+
+.strip {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-3);
+  overflow: hidden;
+  align-content: flex-start;
+}
+
+.thumb {
+  flex-shrink: 0;
+}
+
+.thumbText {
+  display: flex;
+  flex-direction: column;
+  padding: var(--pb-space-2) var(--pb-space-4);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.thumbWho {
+  font-size: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--pb-text-muted);
+}
+
+.current {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pb-space-4);
+  min-height: 0;
+  text-align: center;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pb-space-3);
+}
+
+.pageWho {
+  margin: 0;
+  font-size: var(--pb-font-body);
+  color: var(--pb-accent-2);
+  font-weight: 700;
+}
+
+.verdict {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pb-space-1);
+  padding: var(--pb-space-3) var(--pb-space-6);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface);
+  border: 4px solid var(--pb-border);
+}
+
+.intact {
+  border-color: var(--pb-accent-3);
+}
+
+.broken {
+  border-color: var(--pb-danger);
+}
+
+.verdictLine {
+  font-size: var(--pb-font-h1);
+  font-weight: 900;
+}
+
+.intact .verdictLine {
+  color: var(--pb-accent-3);
+}
+
+.broken .verdictLine {
+  color: var(--pb-danger);
+}
+
+.verdictPair {
+  font-size: var(--pb-font-body);
+  color: var(--pb-text-muted);
+}
+
+.summary {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(560px, 1fr));
+  gap: var(--pb-space-3);
+}
+
+.summaryRow {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--pb-space-4);
+  padding: var(--pb-space-3) var(--pb-space-5);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  font-size: var(--pb-font-body);
+}
+
+.summaryOwner {
+  font-weight: 800;
+  color: var(--pb-accent-2);
+}
+
+.summaryPair {
+  overflow-wrap: anywhere;
+}
+
+.intactMark {
+  color: var(--pb-accent-3);
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.brokenMark {
+  color: var(--pb-danger);
+  font-weight: 900;
+  white-space: nowrap;
+}

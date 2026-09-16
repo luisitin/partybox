@@ -1,9 +1,10 @@
 // Game selection. VIP: browse game cards, tweak settings from the manifest spec, start (disabled
 // with the server's reason). Everyone else: a calm "X is choosing…" with the current pick.
 import type { JSX } from 'react';
-import type { PlayerPublic, RoomSnapshot, SettingSpec, Settings } from '@partybox/shared';
+import type { PlayerPublic, RoomSnapshot } from '@partybox/shared';
 import { PrimaryButton, Screen, WaitingScreen } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
+import { SettingField } from '../SettingField';
 import type { Controller } from '../net/controller';
 import styles from './Selecting.module.css';
 
@@ -11,87 +12,6 @@ export interface SelectingProps {
   controller: Controller;
   room: RoomSnapshot;
   me: PlayerPublic;
-}
-
-function SettingField({
-  spec,
-  value,
-  onChange,
-}: {
-  spec: SettingSpec;
-  value: Settings[string] | undefined;
-  onChange: (v: Settings[string]) => void;
-}): JSX.Element {
-  const id = `setting-${spec.key}`;
-  switch (spec.type) {
-    case 'boolean':
-      return (
-        <label className={styles.setting} htmlFor={id}>
-          <span className={styles.settingLabel}>
-            {spec.label}
-            {spec.description ? <small>{spec.description}</small> : null}
-          </span>
-          <input
-            id={id}
-            type="checkbox"
-            className={styles.checkbox}
-            checked={value === true}
-            onChange={(e) => onChange(e.target.checked)}
-          />
-        </label>
-      );
-    case 'number':
-      return (
-        <label className={styles.setting} htmlFor={id}>
-          <span className={styles.settingLabel}>
-            {spec.label}
-            {spec.description ? <small>{spec.description}</small> : null}
-          </span>
-          <span className={styles.stepper}>
-            <button
-              type="button"
-              aria-label={`less ${spec.label}`}
-              onClick={() =>
-                onChange(Math.max(spec.min, Number(value ?? spec.default) - (spec.step ?? 1)))
-              }
-            >
-              −
-            </button>
-            <output id={id}>{String(value ?? spec.default)}</output>
-            <button
-              type="button"
-              aria-label={`more ${spec.label}`}
-              onClick={() =>
-                onChange(Math.min(spec.max, Number(value ?? spec.default) + (spec.step ?? 1)))
-              }
-            >
-              +
-            </button>
-          </span>
-        </label>
-      );
-    case 'select':
-      return (
-        <label className={styles.setting} htmlFor={id}>
-          <span className={styles.settingLabel}>
-            {spec.label}
-            {spec.description ? <small>{spec.description}</small> : null}
-          </span>
-          <select
-            id={id}
-            className={styles.select}
-            value={String(value ?? spec.default)}
-            onChange={(e) => onChange(e.target.value)}
-          >
-            {spec.options.map((o) => (
-              <option key={o.value} value={o.value}>
-                {o.label}
-              </option>
-            ))}
-          </select>
-        </label>
-      );
-  }
 }
 
 export function Selecting({ controller, room, me }: SelectingProps): JSX.Element {

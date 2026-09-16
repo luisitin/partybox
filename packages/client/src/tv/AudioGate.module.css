@@ -1,8 +1,8 @@
-/* Non-blocking prompt, bottom-centre inside the overscan margin. */
+/* Non-blocking prompt, bottom-centre just above the host toolbar row; gone after the first click. */
 .pill {
   position: fixed;
   left: 50%;
-  bottom: var(--pb-overscan-y);
+  bottom: calc(var(--pb-overscan-y) + var(--pb-space-6));
   transform: translateX(-50%);
   display: flex;
   align-items: baseline;

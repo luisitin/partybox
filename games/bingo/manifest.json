@@ -1,0 +1,103 @@
+{
+  "id": "bingo",
+  "name": "Bingo",
+  "tagline": "Daub what you hear. Press BINGO! Everyone checks.",
+  "description": "Plain 75-ball bingo. The TV calls a number every few seconds; you daub your own card however you like. Press BINGO! and the caller stops while your card goes on the TV for everyone to check: the pattern in green, every square you daubed that was never called in red. Right — you win the round. Wrong — your whole card is wiped blank, and the caller carries on.",
+  "version": "1.0.0",
+  "minPlayers": 1,
+  "maxPlayers": 16,
+  "estimatedMinutes": 10,
+  "tags": ["classic", "luck", "tap", "family"],
+  "settings": [
+    {
+      "key": "rounds",
+      "label": "Rounds",
+      "description": "Each round deals fresh cards and a fresh deck",
+      "type": "number",
+      "default": 3,
+      "min": 1,
+      "max": 5,
+      "step": 1
+    },
+    {
+      "key": "round1",
+      "label": "Round 1 pattern",
+      "type": "select",
+      "default": "line",
+      "options": [
+        { "value": "line", "label": "Any line" },
+        { "value": "corners", "label": "Four corners" },
+        { "value": "x", "label": "The X" },
+        { "value": "blackout", "label": "Blackout" }
+      ]
+    },
+    {
+      "key": "round2",
+      "label": "Round 2 pattern",
+      "type": "select",
+      "default": "corners",
+      "options": [
+        { "value": "line", "label": "Any line" },
+        { "value": "corners", "label": "Four corners" },
+        { "value": "x", "label": "The X" },
+        { "value": "blackout", "label": "Blackout" }
+      ]
+    },
+    {
+      "key": "round3",
+      "label": "Round 3 pattern",
+      "type": "select",
+      "default": "x",
+      "options": [
+        { "value": "line", "label": "Any line" },
+        { "value": "corners", "label": "Four corners" },
+        { "value": "x", "label": "The X" },
+        { "value": "blackout", "label": "Blackout" }
+      ]
+    },
+    {
+      "key": "round4",
+      "label": "Round 4 pattern",
+      "description": "Only used when Rounds is 4 or more",
+      "type": "select",
+      "default": "line",
+      "options": [
+        { "value": "line", "label": "Any line" },
+        { "value": "corners", "label": "Four corners" },
+        { "value": "x", "label": "The X" },
+        { "value": "blackout", "label": "Blackout" }
+      ]
+    },
+    {
+      "key": "round5",
+      "label": "Round 5 pattern",
+      "description": "Only used when Rounds is 5",
+      "type": "select",
+      "default": "blackout",
+      "options": [
+        { "value": "line", "label": "Any line" },
+        { "value": "corners", "label": "Four corners" },
+        { "value": "x", "label": "The X" },
+        { "value": "blackout", "label": "Blackout" }
+      ]
+    },
+    {
+      "key": "callSeconds",
+      "label": "Seconds per number",
+      "description": "How long each number stays up before the next one is called",
+      "type": "number",
+      "default": 6,
+      "min": 3,
+      "max": 12,
+      "step": 1
+    },
+    {
+      "key": "spicy",
+      "label": "Cheeky caller",
+      "description": "Cheekier nicknames for some numbers (PG-13)",
+      "type": "boolean",
+      "default": false
+    }
+  ],
+  "supportsBots": true
+}

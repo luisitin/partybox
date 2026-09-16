@@ -1,0 +1,10 @@
+# Game design — LATEST
+
+- 2026-09-15 · **001 Bingo v0.4** (`001-bingo.html`): plain 75-ball bingo. TV shows only the current letter + number (and the one before); daubing is free (tap toggles, nothing validated); pressing BINGO! **pauses the caller** and puts the card on the TV — pattern green ✓, never-called daubs red ✕ — right → round won; wrong → **the whole card is wiped blank** (memory is the penalty) and you wait one number. 1 point per round, no awards. **Bots welcome** (`supportsBots: true`). Size S.
+- 2026-09-15 · **002 Broken Pencil v0.3** (`002-broken-pencil.html`): Telestrations-style word → draw → guess books. **Default: every other player touches every book once** (full circle; `passes` setting shortens it; parity rule keeps every book ending on a guess). Then the TV shows every book first page to last, one page at a time, **the VIP turns the pages** (skip = Next, pause = hold). No scoring. **Bots not supported** (a bot's scribble would break every chain). maxPlayers 8 (state cap). Size L.
+- ADR-028 retrofit done: Bots field in every header card, per-phase bot tables in §7, bot scoring in §8, bot edge cases in §10, manifest/README lines in §13; INDEX has a Bots column/axis and 🤖 tags.
+- Both designs re-simulated after the rule changes (`_tools/sim-001-bingo.mjs`, `_tools/sim-002-broken-pencil.mjs`): ~1 400 games, 0 violations; Broken Pencil routing verified for every N 2–8 × passes 1–15; state ≤ 148 KB.
+- **Both built** (branch `designer`, 2026-09-15): `games/bingo` and `games/broken-pencil`, plus ADR-030 (`timerMode`, was R-1) and ADR-031 (TV host controls). R-4's DrawPad lives in `games/broken-pencil/client/` for now.
+- SDK gaps (`sdk-requests.md`): R-1 quiet timer (blocks both), R-2 game sound cues, R-4 DrawPad/DrawingView, R-6 VIP back + page-friendly pause, R-7 per-phase skip label. The design review's open `phaseStartedAt` decision would also satisfy R-1's interim heuristic.
+- Tooling: `_tools/build.mjs` builds `_src/*.mjs` → HTML + INDEX; run prettier after building (the verify gate formats `docs/`).
+- Next: 003 far from these on the matrix — hidden roles / deception / text or choice, 2–3 players or < 5 min.

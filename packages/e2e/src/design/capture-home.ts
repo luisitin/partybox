@@ -1,5 +1,6 @@
-// The TV's Home button (TvFrame 🏠): mid-game, hover → armed ("Click again to start over") →
-// fresh lobby with a new room code; the phone that was playing lands wherever the drop leaves it.
+// The TV's Home button (TvFrame 🏠): mid-game, hover → armed ("Click again to go home") → the game
+// ends and the SAME room is back in the lobby with everyone still in (ADR-031). From the lobby a
+// second Home starts over with a fresh room code (dev-API reset).
 // Usage: tsx packages/e2e/src/design/capture-home.ts --out reports/design/<stamp> [--game lightning-round]
 import { join } from 'node:path';
 import { parseArgs } from 'node:util';
@@ -42,6 +43,28 @@ async function main(): Promise<void> {
     await shots.shot(tv, { group: 'home', phase: 'armed', device: 'tv', role: 'stage' });
     await home.click();
     await settle(1200);
+    const afterHome = (await api.state()).room;
+    await shots.shot(tv, {
+      group: 'home',
+      phase: 'lobby-again',
+      device: 'tv',
+      role: 'stage',
+      note: `room ${before} stays, status ${afterHome?.status}`,
+    });
+    await shots.shot(vip.page, {
+      group: 'home',
+      phase: 'lobby-again',
+      device: 'iphone',
+      role: 'kept',
+    });
+    if (!afterHome || afterHome.code !== before || afterHome.status !== 'lobby')
+      throw new Error(
+        `Home did not return the room to its lobby (${before} → ${afterHome?.code} ${afterHome?.status})`,
+      );
+    // From the lobby, Home starts over: a fresh room code.
+    await home.click();
+    await home.click();
+    await settle(1200);
     const after = (await api.state()).room?.code;
     await shots.shot(tv, {
       group: 'home',
@@ -50,14 +73,8 @@ async function main(): Promise<void> {
       role: 'stage',
       note: `room ${before} → ${after}`,
     });
-    await shots.shot(vip.page, {
-      group: 'home',
-      phase: 'fresh-lobby',
-      device: 'iphone',
-      role: 'dropped',
-    });
     if (!after || after === before)
-      throw new Error(`Home did not mint a new room (${before} → ${after})`);
+      throw new Error(`Home from the lobby did not mint a new room (${before} → ${after})`);
     console.log(`captured ${shots.shots.length} stills → ${OUT} (room ${before} → ${after})`);
     await vip.context.close();
     await tv.context().close();

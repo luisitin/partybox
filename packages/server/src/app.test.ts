@@ -176,6 +176,42 @@ describe('sockets', () => {
     expect(resumed.room.players[0]).toMatchObject({ name: 'Ana', connected: true, isVip: true });
   });
 
+  it('the TV is the host (ADR-031): tv:bot adds bots, tv:vip picks, starts and ends a game with no VIP phone', async () => {
+    await fetch(`${url}/api/dev/reset`, { method: 'POST' });
+    const tv = client();
+    const joined = once<RoomPush>(tv, 'room');
+    tv.emit('tv:join', {});
+    await joined;
+    // A phone-less room: three bots from the TV, then Bingo (bots welcome) from the TV.
+    for (let i = 0; i < 3; i++) tv.emit('tv:bot', { action: 'add' });
+    await new Promise((r) => setTimeout(r, 80));
+    expect(Object.values(app.host.house().players).filter((p) => p.bot)).toHaveLength(3);
+    expect(app.host.house().vipId).toBeNull();
+    tv.emit('tv:vip', { action: 'selectGame', gameId: 'bingo' });
+    tv.emit('tv:vip', { action: 'updateSettings', settings: { rounds: 1, callSeconds: 3 } });
+    tv.emit('tv:vip', { action: 'start' });
+    await new Promise((r) => setTimeout(r, 120));
+    expect(app.host.house().status).toBe('playing');
+    expect(app.host.house().settings['rounds']).toBe(1);
+    // Refusals come back to the TV as errors (a TV cannot start twice).
+    const refused = once<ErrorPayload>(tv, 'error');
+    tv.emit('tv:vip', { action: 'start' });
+    expect((await refused).code).toBe('cannot_start');
+    tv.emit('tv:vip', { action: 'end' });
+    tv.emit('tv:vip', { action: 'toLobby' });
+    await new Promise((r) => setTimeout(r, 120));
+    expect(app.host.house().status).toBe('lobby');
+    // A phone that is not the VIP still cannot use the host channel.
+    const phone = client();
+    await join(phone, 'Ana');
+    const b = client();
+    await join(b, 'Ben');
+    const denied = once<ErrorPayload>(b, 'error');
+    b.emit('tv:vip', { action: 'lock' });
+    expect((await denied).code).toBe('not_in_room');
+    expect(app.host.house().locked).toBe(false);
+  });
+
   it('kick disconnects the target and leave removes immediately', async () => {
     await fetch(`${url}/api/dev/reset`, { method: 'POST' });
     const a = client();

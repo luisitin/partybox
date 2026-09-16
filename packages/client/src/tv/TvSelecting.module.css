@@ -1,47 +1,125 @@
-.card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--pb-space-4);
-  width: min(100%, 1152px); /* 60 % of the 1920 px design (no vw: fit zoom) */
-  margin-inline: auto;
-  padding: var(--pb-space-6);
-  border-radius: var(--pb-radius-lg);
-  background: var(--pb-surface);
-  text-align: center;
-}
-
-.description {
-  max-width: 30em;
-  text-wrap: balance;
-}
-
+/* Game picking on the TV (ADR-031): clickable game list on the left, the highlighted game with its
+   editable settings on the right. Body-size text: the person at the PC reads it, the couch sees
+   the game name and tagline big. */
 .choosing {
   text-align: center;
 }
 
-.meta {
-  color: var(--pb-accent-2);
-  font-weight: 700;
+.columns {
+  display: grid;
+  grid-template-columns: minmax(280px, 1fr) 2fr;
+  grid-template-rows: minmax(0, 1fr);
+  gap: var(--pb-space-6);
+  align-items: stretch;
+  flex: 1;
+  min-height: 0;
 }
 
-.settings {
+.left {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-5);
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.games {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
-  gap: var(--pb-space-6);
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-direction: column;
+  gap: var(--pb-space-3);
 }
 
-.settingHint {
-  display: block;
-  font-size: var(--pb-font-caption);
+.gameButton {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--pb-space-1);
+  padding: var(--pb-space-3) var(--pb-space-4);
+  border-radius: var(--pb-radius);
+  border: 3px solid var(--pb-border);
+  background: var(--pb-surface);
+  color: var(--pb-text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.gameButton:hover {
+  background: var(--pb-surface-2);
+}
+
+.gameButton:focus-visible {
+  outline: 3px solid var(--pb-focus);
+  outline-offset: 2px;
+}
+
+.gameSelected {
+  border-color: var(--pb-accent);
+  background: var(--pb-surface-2);
+}
+
+.gameName {
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+}
+
+.gameMeta {
+  font-size: 22px;
   color: var(--pb-text-muted);
+  font-weight: 700;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-3);
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--pb-space-4) var(--pb-space-6);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface);
+}
+
+.tagline {
+  margin: 0;
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  color: var(--pb-accent-2);
+  text-wrap: balance;
+}
+
+.description {
+  margin: 0;
+  font-size: 22px;
+  line-height: 1.3;
+  color: var(--pb-text-muted);
+  text-wrap: pretty;
+}
+
+.meta {
+  margin: 0;
+  color: var(--pb-accent-2);
+  font-weight: 700;
+  font-size: var(--pb-font-caption);
+}
+
+/* Settings render at phone scale on purpose: eight rows must fit under the description at 1080p. */
+.settings {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  gap: var(--pb-space-1) var(--pb-space-4);
+  font-size: 22px;
+  --pb-font-caption: 18px;
+  --pb-font-h2: 26px;
 }
 
 .reason {
+  margin: 0;
   color: var(--pb-accent-2);
   font-size: var(--pb-font-caption);
+  font-weight: 700;
 }

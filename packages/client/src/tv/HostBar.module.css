@@ -1,0 +1,65 @@
+/* Host controls (ADR-031): a small toolbar in the bottom-right corner of the stage, inside the
+   overscan margins (toasts live bottom-left). Caption size: it is for the person at the PC, not
+   the couch. */
+.bar {
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+  padding: var(--pb-space-2);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+}
+
+.label {
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--pb-text-muted);
+  padding: 0 var(--pb-space-2);
+}
+
+.button {
+  min-height: var(--pb-touch);
+  padding: 0 var(--pb-space-4);
+  border-radius: var(--pb-radius);
+  border: 2px solid var(--pb-surface-2);
+  background: var(--pb-surface);
+  color: var(--pb-text);
+  font: inherit;
+  font-size: 22px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.button:hover:not(:disabled) {
+  background: var(--pb-surface-2);
+}
+
+.button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.button:focus-visible {
+  outline: 3px solid var(--pb-focus);
+  outline-offset: 2px;
+}
+
+.primary {
+  background: var(--pb-accent);
+  border-color: var(--pb-accent);
+  color: var(--pb-on-accent);
+}
+
+.primary:hover:not(:disabled) {
+  background: var(--pb-accent);
+  filter: brightness(1.1);
+}
+
+.danger {
+  background: var(--pb-danger);
+  border-color: var(--pb-danger);
+  color: var(--pb-on-accent);
+}
