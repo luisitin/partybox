@@ -16,7 +16,7 @@
 
 .prompt {
   margin: 0;
-  font-size: var(--pb-font-h1);
+  font-size: var(--pb-font-h2); /* was h1: two lines of it cost the sheet 60 px (loop #9) */
   line-height: 1.15;
   text-wrap: balance;
 }
@@ -94,7 +94,17 @@
 .guessPrompt {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: var(--pb-space-3);
+}
+
+/* The drawing to guess is capped at 40 % of the viewport so the field and button stay in view. */
+.guessDrawing {
+  width: min(100%, 40dvh);
+}
+
+.guessText {
+  align-self: stretch;
 }
 
 .bookLine {

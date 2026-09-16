@@ -104,7 +104,9 @@ function Draw({ view, send }: GameControllerProps<PencilControllerView, Input>):
   return (
     <Screen
       footer={
+        // Quiet until the first stroke: an empty sheet is a shrug, not the primary action (loop #9).
         <PrimaryButton
+          tone={count === 0 ? 'neutral' : 'accent'}
           onClick={() => send({ type: 'draw', strokes: strokes.current })}
           disabled={view.paused}
         >
@@ -135,8 +137,12 @@ function Guess({ view, send }: GameControllerProps<PencilControllerView, Input>)
       kicker={stepKicker(view)}
       prompt={
         <span className={styles.guessPrompt}>
-          <DrawingView drawing={drawing} label="the drawing to guess" />
-          <span>{last ? 'Last guess — what is this?' : 'What is this? (you draw it next)'}</span>
+          <span className={styles.guessDrawing}>
+            <DrawingView drawing={drawing} label="the drawing to guess" />
+          </span>
+          <span className={styles.guessText}>
+            {last ? 'Last guess — what is this?' : 'What is this? (you draw it next)'}
+          </span>
         </span>
       }
       placeholder="Your best guess…"
