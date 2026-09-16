@@ -164,6 +164,13 @@ async function main(): Promise<void> {
           await settle(1500);
           await still(tv, `${String(n).padStart(2, '0')}-${phase}-tv-vip-gone`);
           await still(priya.page, `${String(n).padStart(2, '0')}-${phase}-phone-priya-vip-gone`);
+          // The engine hands the VIP over after 30 s away: catch the toast and the new badge.
+          await settle(30_000);
+          await still(tv, `${String(n).padStart(2, '0')}-${phase}-tv-vip-handover`);
+          await still(
+            priya.page,
+            `${String(n).padStart(2, '0')}-${phase}-phone-priya-vip-handover`,
+          );
         } else if (SCENARIO !== 'tie' && !sam.page.isClosed())
           await api.post('/api/dev/act', { playerId: sam.playerId });
       }
