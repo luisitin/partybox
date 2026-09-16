@@ -66,13 +66,14 @@
   animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
 }
 
-/* Theme strip drops down from the corner controls; the header leaves room for three buttons. */
+/* Theme menu hangs from the corner controls: 640 px clears the "16 / 16 players" heading and keeps
+   every hint on one line; ~600 px tall, well inside the overscan floor. */
 .themes {
   position: absolute;
   right: 0;
   top: calc(var(--pb-space-7) + var(--pb-space-2));
-  width: max-content;
-  max-width: 1152px; /* 60 % of the 1920 px design (no vw: fit zoom) */
+  width: 640px; /* no vw: fit zoom */
+  border: 1px solid var(--pb-border);
   padding: var(--pb-space-2);
   border-radius: var(--pb-radius);
   background: var(--pb-surface-2);

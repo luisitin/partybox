@@ -44,6 +44,22 @@
   background: var(--pb-surface-2);
 }
 
+/* menu variant (the TV corner): 36 px labels on a 72 px row; the em-sized swatch grows with it. */
+.menu .option {
+  font-size: var(--pb-font-body);
+  min-height: 72px;
+}
+
+.menu .label {
+  line-height: 1.2;
+}
+
+.menu .label small {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /* Three stripes: background, accent, accent-2 — a preview that does not depend on the current theme. */
 .swatch {
   display: inline-grid;

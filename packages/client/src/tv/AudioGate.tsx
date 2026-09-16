@@ -23,6 +23,8 @@ export function AudioGate({ audio }: AudioGateProps): JSX.Element {
   const [themes, setThemes] = useState(false);
   const [pop, setPop] = useState(false);
   const readyPlayed = useRef(false);
+  const controlsRef = useRef<HTMLDivElement>(null);
+  const themeButtonRef = useRef<HTMLButtonElement>(null);
   const reduced = usePrefersReducedMotion();
   useEffect(() => {
     if (started) return;
@@ -51,6 +53,26 @@ export function AudioGate({ audio }: AudioGateProps): JSX.Element {
     return () => clearTimeout(handle);
   }, [started, pillGone]);
   const showPill = !pillGone && !(started && reduced);
+  // The theme menu closes on a pointerdown outside the corner controls (the 🎨 button still
+  // toggles it) and on Escape, which hands focus back to the 🎨 button.
+  useEffect(() => {
+    if (!themes) return;
+    const onPointerDown = (e: PointerEvent): void => {
+      if (controlsRef.current?.contains(e.target as Node)) return;
+      setThemes(false);
+    };
+    const onKeyDown = (e: KeyboardEvent): void => {
+      if (e.key !== 'Escape') return;
+      setThemes(false);
+      themeButtonRef.current?.focus();
+    };
+    document.addEventListener('pointerdown', onPointerDown);
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('pointerdown', onPointerDown);
+      document.removeEventListener('keydown', onKeyDown);
+    };
+  }, [themes]);
   const toggleMute = (): void => {
     // Before the gate the document listener has just enabled audio from this same pointerdown;
     // the click only ever toggles the persisted mute once sound is really on.
@@ -86,14 +108,15 @@ export function AudioGate({ audio }: AudioGateProps): JSX.Element {
           )}
         </button>
       ) : null}
-      <div className={styles.controls}>
+      <div className={styles.controls} ref={controlsRef}>
         {themes ? (
           <div className={styles.themes}>
-            <ThemePicker variant="row" />
+            <ThemePicker variant="menu" onClose={() => setThemes(false)} />
           </div>
         ) : null}
         <button
           type="button"
+          ref={themeButtonRef}
           className={styles.control}
           onClick={() => setThemes((open) => !open)}
           aria-expanded={themes}

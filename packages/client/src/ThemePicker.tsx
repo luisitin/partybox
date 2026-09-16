@@ -1,5 +1,6 @@
-// Theme choice for one device. `row`: an inline strip of swatches (the TV corner); `sheet`: a
-// bottom sheet with big rows (phones). Both mark the current theme with ✓, never colour alone.
+// Theme choice for one device. `row`: an inline strip of swatches; `menu`: a vertical list with
+// hints hanging from the TV corner 🎨 (closes on select); `sheet`: a bottom sheet with big rows
+// (phones). All mark the current theme with ✓, never colour alone.
 import type { JSX, ReactNode } from 'react';
 import { t } from './i18n';
 import { THEMES, setTheme, useTheme } from './theme';
@@ -17,7 +18,7 @@ function Swatch({ theme }: { theme: ThemeSpec }): JSX.Element {
 }
 
 export interface ThemePickerProps {
-  variant: 'row' | 'sheet';
+  variant: 'row' | 'sheet' | 'menu';
   onClose?: () => void;
   /** Sheet only: extra rows under the themes (the phone's sound and vibration toggles). */
   footer?: ReactNode;
@@ -26,7 +27,16 @@ export interface ThemePickerProps {
 export function ThemePicker({ variant, onClose, footer }: ThemePickerProps): JSX.Element {
   const current = useTheme();
   const list = (
-    <ul className={variant === 'row' ? styles.row : styles.list} aria-label={t.theme.title}>
+    <ul
+      className={
+        variant === 'row'
+          ? styles.row
+          : variant === 'menu'
+            ? `${styles.list} ${styles.menu}`
+            : styles.list
+      }
+      aria-label={t.theme.title}
+    >
       {THEMES.map((theme) => {
         const active = theme.id === current;
         return (
@@ -37,13 +47,14 @@ export function ThemePicker({ variant, onClose, footer }: ThemePickerProps): JSX
               aria-pressed={active}
               onClick={() => {
                 setTheme(theme.id);
-                if (variant === 'sheet') onClose?.();
+                // The whole screen recolours, so the menu / sheet has done its job.
+                if (variant !== 'row') onClose?.();
               }}
             >
               <Swatch theme={theme} />
               <span className={styles.label}>
                 {theme.label}
-                {variant === 'sheet' ? <small>{theme.hint}</small> : null}
+                {variant !== 'row' ? <small>{theme.hint}</small> : null}
               </span>
               <span className={styles.mark} aria-hidden>
                 {active ? '✓' : ''}
@@ -54,7 +65,7 @@ export function ThemePicker({ variant, onClose, footer }: ThemePickerProps): JSX
       })}
     </ul>
   );
-  if (variant === 'row') return list;
+  if (variant !== 'sheet') return list;
   return (
     <div
       className={styles.backdrop}
