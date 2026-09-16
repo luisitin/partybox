@@ -1,5 +1,7 @@
 // A thin bar that drains towards the deadline (TV strip and phone header). Transform-only so it stays
-// cheap; turns danger-coloured in the last 5 seconds. The phase start is not in the view envelope, so
+// cheap; turns danger-coloured in the last 5 seconds of a phase that lasts at least URGENCY_MIN_MS (a
+// 6 s bingo call that went red half the time, 75 times a round, made red meaningless — review-loop #1).
+// The phase start is not in the view envelope, so
 // it is taken from the moment this bar first sees a given `phaseKey` + `deadline` (a late joiner sees
 // the bar start full from then — acceptable, and exact once `phaseStartedAt` exists on the wire).
 // The track is keyed on that phase instance so a new phase mounts a fresh full bar instead of
@@ -8,6 +10,9 @@ import { useState } from 'react';
 import type { JSX } from 'react';
 import { useSecondsLeft, useServerNow } from './clock';
 import styles from './DeadlineBar.module.css';
+
+/** Shorter phases (a call, a beat) just drain: no danger colour, no urgency to cry wolf with. */
+export const URGENCY_MIN_MS = 15_000;
 
 export interface DeadlineBarProps {
   deadline: number | null;
@@ -35,7 +40,7 @@ export function DeadlineBar({
   if (deadline === null || seconds === null) return null;
   const total = Math.max(1, deadline - (start.key === key ? start.at : now));
   const fraction = Math.min(1, Math.max(0, (deadline - now) / total));
-  const urgent = !paused && seconds <= urgentAt && seconds > 0;
+  const urgent = !paused && seconds <= urgentAt && seconds > 0 && total >= URGENCY_MIN_MS;
   return (
     <div
       key={key}
