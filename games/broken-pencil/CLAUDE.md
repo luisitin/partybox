@@ -5,8 +5,8 @@
   N 2–8 × passes 1–15 in **tests**; change it there first.
 - Never spoil: views carry only the previous page of the book in a phone's hands and, on the TV, pages
   up to the one on screen. **tests**/contract.config.ts encodes that for the contract suite.
-- Drawings are base64 strokes (server/encoding.ts is pure and shared with the client). Keep INK_CHARS
-  and maxPlayers in step with the 256 KB state cap (8 players × 4 drawings ≈ 150 KB).
+- Drawings are base64 strokes (server/encoding.ts is pure and shared with the client). Keep INK_CHARS /
+  MAX_STROKES and maxPlayers in step with the 256 KB state cap (8 players × 7 drawings ≈ 235 KB worst case).
 - Imports: only @partybox/game-sdk (+ react in client/). server/ is pure.
 - Regenerate fixtures after changing state shape: pnpm sim --game broken-pencil --dump-fixtures --players 5
 - Test: pnpm vitest --project games games/broken-pencil · pnpm vitest --project contract -t broken-pencil ·

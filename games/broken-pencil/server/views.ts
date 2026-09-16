@@ -1,10 +1,12 @@
-// Views for Broken Pencil. The rule is "never spoil": while playing, a phone sees only the single
-// previous page of the book in its hands (and what it wrote itself); the TV sees only progress.
-// During the show the TV carries the pages shown so far and nothing beyond the current one.
+// Views for Broken Pencil. The rule is "never spoil": while playing, a phone sees only the page it
+// must work from (the last drawing of the book in its hands, or its own guess to draw) and what it
+// wrote itself; the TV sees only progress. During the show the TV carries the pages shown so far
+// and nothing beyond the current one; the presenter's phone carries the page controls.
 import { controllerEnvelope, envelope, hasPlayer } from '@partybox/game-sdk';
 import type { ControllerView, PlayerStatus, TvView } from '@partybox/game-sdk';
-import { bookInHands, nextAuthor, submittedThisStep } from './books';
+import { bookInHands, owedNow, pagesOfStep, submittedThisStep } from './books';
 import { hasPicked } from './phases/pick';
+import { presenterOf } from './phases/show';
 import { summary } from './scoring';
 import type { BookSummary } from './scoring';
 import { EVERYONE } from './types';
@@ -13,8 +15,10 @@ import type { Drawing, Page, State } from './types';
 export type PageView = Page & { authorName: string };
 
 interface Common {
-  /** 1..L−1 while playing; 0 during pick. */
+  /** 1..P+1 while playing; 0 during pick. */
   step: number;
+  /** P + 1: draw, then the passes, then the last guess. */
+  stepCount: number;
   pageCount: number;
   bookCount: number;
   passes: number;
@@ -24,8 +28,8 @@ interface Common {
 }
 
 export interface PencilTvView extends TvView, Common {
-  /** pick / draw / guess: who has handed in this step. */
-  progress: { playerId: string; done: boolean }[];
+  /** pick / draw / pass / guess: where everyone is. */
+  progress: { playerId: string; stage: 'guess' | 'draw' | 'done' }[];
   showing: null | {
     book: number;
     ownerId: string;
@@ -36,7 +40,7 @@ export interface PencilTvView extends TvView, Common {
     verdict: 'intact' | 'broken' | null;
     verdictLine: string | null;
   };
-  /** done only. */
+  /** summary / done. */
   summary: BookSummary[] | null;
 }
 
@@ -47,13 +51,15 @@ export interface PencilControllerView extends ControllerView, Common {
   /** pick: my three words. */
   offers: string[] | null;
   customWords: boolean;
-  /** draw / guess: the previous page of the book in my hands — and nothing else. */
+  /** What I owe right now: a guess of `prompt`, a drawing of `prompt`, or nothing (sent / watching). */
+  stage: 'guess' | 'draw' | null;
+  /** The one page I work from — and nothing else. */
   prompt: Prompt;
   /** Whose book is in my hands. */
   bookOwnerName: string | null;
   submitted: boolean;
   /** What I handed in this step (so the phone can show it after sending). */
-  mine: { drawing?: Drawing; text?: string } | null;
+  mine: { text?: string; drawing?: Drawing } | null;
   /** Who gets this book next (null after the last page). */
   nextName: string | null;
   showing: null | {
@@ -61,8 +67,11 @@ export interface PencilControllerView extends ControllerView, Common {
     ownerName: string;
     page: number;
     pageKind: Page['kind'];
-    /** Index of my page in the book on screen, when it is still to come. */
-    myPageAt: number | null;
+    /** I hold the Next button. */
+    presenting: boolean;
+    /** True on the last page of the book / the last book. */
+    lastPage: boolean;
+    lastBook: boolean;
   };
   summary: BookSummary[] | null;
   myBook: BookSummary | null;
@@ -73,7 +82,7 @@ function nameOf(state: State, id: string): string {
 }
 
 function playing(state: State): boolean {
-  return state.phase.id === 'draw' || state.phase.id === 'guess';
+  return state.phase.id === 'draw' || state.phase.id === 'pass' || state.phase.id === 'guess';
 }
 
 /** The closing screens, where every book is public. */
@@ -81,17 +90,18 @@ function closing(state: State): boolean {
   return state.phase.id === 'summary' || state.phase.id === 'done';
 }
 
-function doneThisPhase(state: State, id: string): boolean {
-  if (state.phase.id === 'pick') return hasPicked(state, id);
-  if (playing(state)) return submittedThisStep(state, id);
-  return false;
+function stageOf(state: State, id: string): 'guess' | 'draw' | 'done' {
+  if (state.phase.id === 'pick') return hasPicked(state, id) ? 'done' : 'guess';
+  if (!playing(state)) return 'done';
+  return owedNow(state, id) ?? 'done';
 }
 
 function statusOf(state: State): (id: string) => PlayerStatus {
   return (id) => {
     if (!state.seats.includes(id)) return 'spectator';
     if (state.phase.id === 'pick' || playing(state))
-      return doneThisPhase(state, id) ? 'submitted' : 'active';
+      return stageOf(state, id) === 'done' ? 'submitted' : 'active';
+    if (state.phase.id === 'show') return presenterOf(state) === id ? 'active' : 'waiting';
     return 'waiting';
   };
 }
@@ -99,6 +109,7 @@ function statusOf(state: State): (id: string) => PlayerStatus {
 function common(state: State): Common {
   return {
     step: state.step,
+    stepCount: state.passes + 1,
     pageCount: state.pageCount,
     bookCount: state.books.length,
     passes: state.passes,
@@ -107,14 +118,18 @@ function common(state: State): Common {
   };
 }
 
+function quiet(state: State): 'quiet' | 'normal' {
+  return state.phase.id === 'show' || state.phase.id === 'summary' ? 'quiet' : 'normal';
+}
+
 export function tvView(state: State, gameId: string): PencilTvView {
   const showing = state.showing;
   const book = showing ? state.books[showing.book] : undefined;
   return {
     ...envelope(state, gameId, { statusOf: statusOf(state) }),
-    timerMode: state.phase.id === 'show' || state.phase.id === 'summary' ? 'quiet' : 'normal',
+    timerMode: quiet(state),
     ...common(state),
-    progress: state.seats.map((playerId) => ({ playerId, done: doneThisPhase(state, playerId) })),
+    progress: state.seats.map((playerId) => ({ playerId, stage: stageOf(state, playerId) })),
     showing:
       state.phase.id === 'show' && showing && book
         ? {
@@ -133,6 +148,22 @@ export function tvView(state: State, gameId: string): PencilTvView {
   };
 }
 
+/** What I handed in this step, from the pages I authored among this step's pages. */
+function mineOf(
+  state: State,
+  playerId: string,
+  book: State['books'][number],
+): PencilControllerView['mine'] {
+  const out: { text?: string; drawing?: Drawing } = {};
+  for (const i of pagesOfStep(state, state.step)) {
+    const page = book.pages[i];
+    if (!page || page.authorId !== playerId) continue;
+    if (page.kind === 'guess') out.text = page.text ?? '???';
+    if (page.kind === 'draw') out.drawing = page.drawing ?? { strokes: [] };
+  }
+  return Object.keys(out).length > 0 ? out : null;
+}
+
 export function controllerView(
   state: State,
   gameId: string,
@@ -141,38 +172,45 @@ export function controllerView(
   const seated = hasPlayer(state, playerId) && state.seats.includes(playerId);
   const b = seated && playing(state) ? bookInHands(state, playerId) : -1;
   const book = b >= 0 ? state.books[b] : undefined;
-  const previous = book?.pages[state.step - 1];
-  const minePage = book?.pages[state.step];
+  const stage = b >= 0 ? owedNow(state, playerId) : null;
+  const firstOfStep = pagesOfStep(state, state.step)[0] ?? 0;
+  // What I work from: the page before this step's first page (the word I picked, or the drawing
+  // that reached me); when I owe a drawing of my own guess, that guess.
   let prompt: Prompt = null;
-  if (previous?.kind === 'word' || previous?.kind === 'guess')
-    prompt = { kind: 'text', text: previous.text ?? '???' };
-  else if (previous?.kind === 'draw') prompt = { kind: 'drawing', drawing: previous.drawing };
+  if (book && stage === 'guess') {
+    const previous = book.pages[firstOfStep - 1];
+    if (previous?.kind === 'draw') prompt = { kind: 'drawing', drawing: previous.drawing };
+    else if (previous) prompt = { kind: 'text', text: previous.text ?? '???' };
+  } else if (book && stage === 'draw') {
+    const source = book.pages[book.pages.length - 1];
+    prompt = {
+      kind: 'text',
+      text: (source && source.kind !== 'draw' ? source.text : null) ?? '???',
+    };
+  }
+  const nextSeat =
+    b >= 0 && state.step <= state.passes
+      ? state.seats[(b + state.step) % state.seats.length]
+      : undefined;
   const showing = state.showing;
   const shownBook = showing ? state.books[showing.book] : undefined;
-  const myPageIndex = shownBook ? shownBook.pages.findIndex((p) => p.authorId === playerId) : -1;
   const all = closing(state) ? summary(state) : null;
   return {
     ...controllerEnvelope(state, gameId, playerId, { statusOf: statusOf(state) }),
-    timerMode: state.phase.id === 'show' || state.phase.id === 'summary' ? 'quiet' : 'normal',
+    timerMode: quiet(state),
     ...common(state),
     offers: seated && state.phase.id === 'pick' ? (state.offers[playerId] ?? null) : null,
     customWords: state.settings.customWords,
+    stage,
     prompt,
     bookOwnerName: book ? nameOf(state, book.ownerId) : null,
-    submitted: seated ? doneThisPhase(state, playerId) : false,
-    mine:
-      minePage?.kind === 'draw'
-        ? { drawing: minePage.drawing ?? { strokes: [] } }
-        : minePage?.kind === 'guess'
-          ? { text: minePage.text ?? '???' }
-          : null,
-    nextName:
-      b >= 0
-        ? (() => {
-            const id = nextAuthor(state, b, state.step);
-            return id ? nameOf(state, id) : null;
-          })()
-        : null,
+    submitted: seated
+      ? state.phase.id === 'pick'
+        ? hasPicked(state, playerId)
+        : playing(state) && submittedThisStep(state, playerId)
+      : false,
+    mine: book ? mineOf(state, playerId, book) : null,
+    nextName: nextSeat ? nameOf(state, nextSeat) : null,
     showing:
       state.phase.id === 'show' && showing && shownBook
         ? {
@@ -180,7 +218,9 @@ export function controllerView(
             ownerName: nameOf(state, shownBook.ownerId),
             page: showing.page,
             pageKind: shownBook.pages[showing.page]?.kind ?? 'word',
-            myPageAt: myPageIndex > showing.page ? myPageIndex : null,
+            presenting: shownBook.ownerId === playerId,
+            lastPage: showing.page >= shownBook.pages.length - 1,
+            lastBook: showing.book >= state.books.length - 1,
           }
         : null,
     summary: all,

@@ -4,45 +4,50 @@ Telephone with a pencil (Telestrations-style). Design doc: `docs/game-ideas/002-
 
 ## Overview
 
-Everyone picks a secret word and owns a **book**. Books pass round a circle: draw the previous page's
-text, guess the previous page's drawing, draw that guess… until every book has its pages. Then the TV
-turns the pages of every book one at a time, first to last, with the VIP holding **Next**. A book whose
-last guess matches its word is **UNBROKEN**; otherwise **CHAIN BROKEN**. No points — the show is the game.
+Everyone picks a secret word and owns a **book**. Round 1: everyone draws their own word. Then the
+book moves one seat: the holder looks at the drawing, writes a guess, and **draws that guess** for
+the next seat — round after round until the last player, who only guesses (a drawing there would
+come straight back to the owner). Then every owner **presents their own book** on the TV from their
+phone, page by page. A book whose last guess matches its word is **UNBROKEN**; otherwise **CHAIN
+BROKEN**. No points — the show is the game.
 
 ## Players
 
-3–8 (state cap: 8 × 4 drawings ≈ 150 KB). Late joiners spectate. Disconnected players are not waited
-for; their pages become placeholders (empty sheet / "???"). **Bots: welcome** (`supportsBots: true`) —
-a bot cannot see, so it scribbles a doodle and guesses a noun from a 40-word list; its pages break
-chains, which is honest and fine for filling seats or testing. It only reads what its phone shows.
+3–8 (state cap: drawings are ≤ 2 600 ink chars / 64 strokes each; 8 books × 7 drawings stays under 256 KB). Late
+joiners spectate. Disconnected players are not waited for; their pages become placeholders (empty
+sheet / "???"). **Bots: welcome** (`supportsBots: true`) — a bot cannot see, so it scribbles a doodle
+and guesses a noun from a 40-word list; its books always break, which is honest and fine for filling
+seats or testing. It presents its own book too (Next every few seconds). It only reads what its phone shows.
 
 ## Phases
 
-| Phase     | What happens                                                                                                                                                                     | Exit                                                                                | Timer                               |
-| --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------- |
-| `pick`    | Each player gets three words (easy / medium / hard, no repeats) and may type their own (`customWords`). Seats are shuffled at init.                                              | all connected picked · deadline · VIP skip (unpicked → the medium word)             | 20 s                                |
-| `draw`    | Draw the text on the previous page of the book in your hands (8 colours, 3 pens, undo, clear, limited ink). "Done" sends; no send by the deadline → empty sheet.                 | all connected sent · deadline · VIP skip → next step                                | `drawSeconds` (30–120)              |
-| `guess`   | Write what the previous page's drawing is (1–40 chars). No send → "???".                                                                                                         | all connected sent · deadline · VIP skip → next step, or `show` after the last page | `guessSeconds` (15–60)              |
-| `show`    | The TV shows book by book, page by page: pages shown so far as a filmstrip, the current page big. The last page adds the verdict (intact / broken) and a line from `lines.json`. | timer · **VIP skip = Next page** · after the last page of the last book → `done`    | 6 s word / 12 s drawing / 8 s guess |
-| `summary` | "k of N books survived" + every book's word → last guess.                                                                                                                        | deadline · VIP skip → `done`                                                        | 15 s                                |
-| `done`    | Terminal. `results()` non-null (the engine's results screen shows the Unbroken awards).                                                                                          | terminal                                                                            | —                                   |
+| Phase     | What happens                                                                                                                                                                                                                                                                                                           | Exit                                                                                                       | Timer                                          |
+| --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| `pick`    | Each player gets three words (easy / medium / hard, no repeats) and may type their own (`customWords`). Seats are shuffled at init.                                                                                                                                                                                    | all connected picked · deadline · VIP skip (unpicked → the medium word)                                    | 20 s                                           |
+| `draw`    | Round 1: draw your own word (8 colours, 3 pens, undo, clear, limited ink). "Done" sends; nothing by the deadline → empty sheet.                                                                                                                                                                                        | all connected sent · deadline · VIP skip → the first pass                                                  | `drawSeconds` (30–120)                         |
+| `pass`    | Rounds 2..P: the book moved one seat. Look at the last drawing, write a guess (1–40 chars), then draw that guess — two pages, in that order, on one phone. Missing guess → "???", missing drawing → empty sheet.                                                                                                       | all connected done (both pages) · deadline · VIP skip → next pass, or `guess` after the last               | `guessSeconds + drawSeconds`                   |
+| `guess`   | Round P+1: the last holder only guesses.                                                                                                                                                                                                                                                                               | all connected sent · deadline · VIP skip → `show`                                                          | `guessSeconds` (15–60)                         |
+| `show`    | Book by book in seat order, first page to last: the pages shown so far as a filmstrip, the current page big. **The book's owner turns the pages from their phone** (`turn`); the TV's Skip / VIP skip turn too; a page auto-turns after a fallback delay. The last page adds the verdict and a line from `lines.json`. | `turn` from the presenter · VIP skip · timer → next page; after the last page of the last book → `summary` | fallback 12 s word / 20 s drawing / 12 s guess |
+| `summary` | "k of N books survived" + every book's word → last guess.                                                                                                                                                                                                                                                              | deadline · VIP skip → `done`                                                                               | 15 s                                           |
+| `done`    | Terminal. `results()` non-null (the engine's results screen shows the Unbroken awards).                                                                                                                                                                                                                                | terminal                                                                                                   | —                                              |
 
-**Routing.** `P = max(1, min(passes, N − 1))` other players touch each book (default: everyone). If `P`
-is odd the owner draws their own word first (`ownerDraws = 1`); if even the next seat draws it. Pages:
-`L = P + 1 + ownerDraws`; page `i ≥ 1` is a drawing when `i` is odd, a guess when even, so every book
-ends on a guess. Page `i` of the book at seat `b` is written by seat `(b + i − ownerDraws) mod N`; at
-step `i` seat `k` holds book `(k − i + ownerDraws) mod N`. Every player writes one page per step and
-never touches the same book twice. VIP `end` → `done` from anywhere (books may be short; views cope).
-Pause holds the step (or the page on screen); phones keep drawing locally, sending waits.
+**Routing.** `P = max(1, min(passes, N − 1))` other players touch each book (default: everyone, so
+the book would come home next). Pages: `L = 2P + 1` — word, the owner's drawing, then (guess,
+drawing) × (P − 1), then the last guess; page `i ≥ 1` is a drawing when `i` is odd, a guess when even.
+Page `i` is written at round `⌊i/2⌋ + 1`; at round `k` seat `s` holds book `(s − k + 1) mod N`, so
+everyone works one book per round, their own first, and never the same book twice. VIP `end` → `done`
+from anywhere (books may be short; views cope). Pause holds the round (or the page on screen).
 
 ## Inputs
 
 - `{ type: 'pick', option: 0..2 }` / `{ type: 'pickCustom', text }` (1–30 chars, only if `customWords`) —
   `pick` phase, players only, once.
-- `{ type: 'draw', strokes }` — `draw` phase; ≤ 80 strokes, each `{ c: 0..7, w: 0..2, p: base64 }`, ≤ 3 000
-  point characters in total (≈ 1 125 points). Once per step; a second send is ignored. Empty list = empty sheet.
-- `{ type: 'guess', text }` — `guess` phase; 1–40 chars, once per step.
-- No inputs in `show` (VIP skip / pause turn and hold pages) or `done`.
+- `{ type: 'guess', text }` — 1–40 chars; accepted in `pass` (first page of the round) and `guess`, from
+  the holder of a book that owes a guess. Once per round.
+- `{ type: 'draw', strokes }` — ≤ 64 strokes, each `{ c: 0..7, w: 0..2, p: base64 }`, ≤ 2 600 point chars in
+  total (≈ 975 points); accepted in `draw`, and in `pass` only after that player's guess. Empty list = empty sheet.
+- `{ type: 'turn' }` — `show`, from the owner of the book on the TV only: next page / next book / finish.
+- Anything else (a drawing after the last guess, a guess before drawing, a turn from a spectator) → ignored.
 
 ## Scoring
 
@@ -52,14 +57,14 @@ punctuation and extra spaces removed, a leading a/an/the dropped) equals the wor
 
 ## Edge cases
 
-- **3 players**: `P = 2`, 3 pages (word, drawing, guess). **8 players**: `P = 7`, 9 pages, 4 drawings each.
-- **`passes` lowered** (e.g. 3 with 8 players): each book is seen by the next 3 seats only; the pick
-  screen says so. **2 players** (below `minPlayers`, defensive): `P = 1`, owner draws, the other guesses.
-- **Everyone idle**: medium words, empty sheets, "???" guesses, every book broken; the show still runs
-  on its timers. 8 players ≈ 14 min < `estimatedMinutes × 3`.
+- **3 players**: `P = 2`, 5 pages (word, drawing, guess, drawing, guess). **8 players**: `P = 7`, 15 pages, 7 drawings each.
+- **`passes` lowered** (e.g. 3 with 8 players): each book is seen by the next 3 seats only (7 pages); the
+  pick screen says so. **2 players** (below `minPlayers`, defensive): `P = 1`, owner draws, the other guesses.
+- **Everyone idle**: medium words, empty sheets, "???" guesses, every book broken; the show runs on its
+  fallback timers. 8 players ≈ 11 min play + 31 min show < `estimatedMinutes × 3` (60).
 - **Duplicate send** in a step → ignored. **Oversized drawing** → rejected by the schema (socket cap 6 144 B).
-- **VIP leaves during the show** → the engine reassigns the VIP; auto-turn timers carry the show meanwhile.
-- **Skip mashing** in `show` flips pages fast — intended. **VIP end mid-show** → `done` with every book.
+- **Presenter asleep or gone** → the fallback timer turns the page; the TV's Skip does too.
+- **Next mashing** in `show` flips pages fast — intended. **VIP end mid-show** → `done` with every book.
 - **A guess equal to the word mid-book** changes nothing; only the last page decides.
 - **Bot added mid-game** → spectator (no book) until the next game.
 

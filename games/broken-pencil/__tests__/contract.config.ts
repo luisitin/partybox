@@ -5,7 +5,7 @@
 // The suite matches substrings, so a text that is ALSO legitimately visible (the same guess in two
 // books, my own word picked by someone else) is excluded rather than reported.
 import type { GameStateBase } from '@partybox/game-sdk';
-import { bookInHands } from '../server/books';
+import { bookInHands, pagesOfStep } from '../server/books';
 import type { Page, State } from '../server/types';
 
 function textOf(page: Page): string | null {
@@ -44,14 +44,16 @@ export const contractConfig = {
     const state = base as State;
     if (state.phase.id === 'summary' || state.phase.id === 'done') return [];
     const mine = new Set([...(state.offers[playerId] ?? []), playerId]);
-    const inHands =
-      state.phase.id === 'draw' || state.phase.id === 'guess' ? bookInHands(state, playerId) : -1;
+    const playing =
+      state.phase.id === 'draw' || state.phase.id === 'pass' || state.phase.id === 'guess';
+    const inHands = playing ? bookInHands(state, playerId) : -1;
+    const promptPage = (pagesOfStep(state, state.step)[0] ?? 0) - 1;
     return split(
       state,
       (b, i, page) =>
         page.authorId === playerId ||
         mine.has(textOf(page) ?? '') ||
-        (b === inHands && i === state.step - 1),
+        (b === inHands && i === promptPage),
     );
   },
   settingsVariants: [

@@ -3,10 +3,11 @@
 // is fine for a test run and honest about what a bot is. It only reads what its phone would show.
 import { hasPlayer } from '@partybox/game-sdk';
 import type { Rng } from '@partybox/game-sdk';
-import { submittedThisStep } from './books';
+import { owedNow } from './books';
 import { LINES } from './content';
 import { COLORS, WIDTHS, encodePoints } from './encoding';
 import { hasPicked } from './phases/pick';
+import { presenterOf } from './phases/show';
 import type { Input, State, Stroke } from './types';
 
 const CUSTOM_WORDS = ['a confused robot', 'my left shoe', 'a very tired cat', 'soup', 'the moon'];
@@ -36,8 +37,13 @@ export function sampleInput(state: State, playerId: string, rng: Rng): Input | n
       if (state.settings.customWords && rng.chance(0.2))
         return { type: 'pickCustom', text: rng.pick(CUSTOM_WORDS) };
       return { type: 'pick', option: rng.int(0, 2) };
-    case 'draw': {
-      if (submittedThisStep(state, playerId)) return null;
+    case 'draw':
+    case 'pass':
+    case 'guess': {
+      // Whatever the step asks for next: a guess, then (in a pass) a drawing of it.
+      const owed = owedNow(state, playerId);
+      if (owed === 'guess') return { type: 'guess', text: rng.pick(LINES.botGuesses) };
+      if (owed !== 'draw') return null;
       const strokes: Stroke[] = [];
       const n = rng.int(2, 7);
       for (let i = 0; i < n; i++)
@@ -48,9 +54,9 @@ export function sampleInput(state: State, playerId: string, rng: Rng): Input | n
         });
       return { type: 'draw', strokes };
     }
-    case 'guess':
-      if (submittedThisStep(state, playerId)) return null;
-      return { type: 'guess', text: rng.pick(LINES.botGuesses) };
+    case 'show':
+      // The presenter turns pages at a human pace: about one call in three sends Next.
+      return presenterOf(state) === playerId && rng.chance(0.35) ? { type: 'turn' } : null;
     default:
       return null;
   }

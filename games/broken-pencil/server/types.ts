@@ -4,7 +4,11 @@ import { z } from '@partybox/game-sdk';
 import type { GameStateBase } from '@partybox/game-sdk';
 import { COLORS, INK_CHARS, MAX_STROKES, WIDTHS } from './encoding';
 
-export const PHASES = ['pick', 'draw', 'guess', 'show', 'summary', 'done'] as const;
+/**
+ * pick → draw (your own word) → pass × (P − 1) (guess the drawing you got, then draw your guess) →
+ * guess (the last player only guesses) → show (each owner presents their book) → summary → done.
+ */
+export const PHASES = ['pick', 'draw', 'pass', 'guess', 'show', 'summary', 'done'] as const;
 export type PhaseId = (typeof PHASES)[number];
 
 export interface Settings {
@@ -49,13 +53,15 @@ export interface State extends GameStateBase {
   settings: Settings;
   /** Seat index → playerId, shuffled at init. `books[b].ownerId === seats[b]`. */
   seats: string[];
-  /** P after the cap. */
+  /** P after the cap: how many other players touch each book. */
   passes: number;
-  /** 1 when P is odd (the owner draws page 1), else 0 — keeps every book ending on a guess. */
-  ownerDraws: 0 | 1;
-  /** L = P + 1 + ownerDraws. */
+  /** L = 2P + 1: word, the owner's drawing, then (guess, drawing) × (P − 1), then the last guess. */
   pageCount: number;
-  /** Index of the page being written this step (1..L−1); 0 during pick. */
+  /**
+   * 1..P+1 while playing (0 during pick). Step 1: everyone draws their own word. Steps 2..P: the
+   * book moves one seat; its holder guesses the last drawing, then draws that guess. Step P+1: the
+   * last holder only guesses. At step k seat s holds book (s − k + 1) mod N.
+   */
   step: number;
   books: Book[];
   /** playerId → the three offered words. */
@@ -84,6 +90,8 @@ const strokeSchema = z.object({
 
 export const inputSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('pick'), option: z.number().int().min(0).max(2) }),
+  /** show: the book's owner turns the page from their phone. */
+  z.object({ type: z.literal('turn') }),
   z.object({ type: z.literal('pickCustom'), text: z.string().trim().min(1).max(30) }),
   z.object({
     type: z.literal('draw'),
@@ -97,7 +105,8 @@ export const inputSchema = z.discriminatedUnion('type', [
 export type Input = z.infer<typeof inputSchema>;
 
 export const PICK_MS = 20_000;
-export const SHOW_MS = { word: 6_000, draw: 12_000, guess: 8_000 } as const;
+/** Fallback auto-turn while a presenter dawdles (their phone's Next is the real control). */
+export const SHOW_MS = { word: 12_000, draw: 20_000, guess: 12_000 } as const;
 /** The closing screen (every word → last guess) before the engine's results take over. */
 export const SUMMARY_MS = 15_000;
 /** `passes` at this value (the manifest max) means "everyone" — always capped to N − 1. */

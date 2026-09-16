@@ -12,7 +12,7 @@ import type {
   ViewPush,
   VipAction,
 } from '@partybox/shared';
-import { reloadIfNewBuild } from './build';
+import { createRestartWatch } from './stale';
 import { createStore, nextToastId } from './store';
 import type { Store, Toast } from './store';
 
@@ -56,13 +56,11 @@ export function createTvClient(roomCode?: string, url?: string): TvClient {
     return (s.room !== null && s.room.code !== code) || rev > s.rev;
   };
 
-  let connectedBefore = false;
+  const restarts = createRestartWatch();
   socket.on('connect', () => {
-    // A reconnect may follow a restart with a new build: this page would then be stale.
-    if (connectedBefore) void reloadIfNewBuild();
-    connectedBefore = true;
     store.set({ connected: true });
     socket.emit('tv:join', { roomCode });
+    restarts.onConnect();
   });
   socket.on('disconnect', () => store.set({ connected: false }));
   socket.on('room', (push: RoomPush) => {
