@@ -4,7 +4,7 @@
 // log (cue, time, phase) and the TV's long-frame numbers.
 // Usage: tsx packages/e2e/src/design/capture-loop.ts --pass 1 --game bingo --players 6
 //        [--scenario normal|reconnect|vip-leaves|tie|spicy] [--focus tv|phone] [--budget 150] [--port 42071]
-import { mkdirSync, readdirSync, renameSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, readdirSync, renameSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { parseArgs } from 'node:util';
 import { chromium } from 'playwright';
@@ -36,6 +36,9 @@ const BUDGET_MS = Number(values.budget) * 1000;
 const OUT = values.out ?? join(REPO_ROOT, 'reports', 'design', 'loop', PASS);
 
 async function main(): Promise<void> {
+  // A previous aborted run must not leave a stale video that pick() would mistake for this one.
+  rmSync(join(OUT, 'video'), { recursive: true, force: true });
+  rmSync(join(OUT, 'strips'), { recursive: true, force: true });
   mkdirSync(join(OUT, 'stills'), { recursive: true });
   const server = await startServer(Number(values.port));
   const api = new DevApi(server.url);
@@ -84,7 +87,25 @@ async function main(): Promise<void> {
     await priya.context.addInitScript(HOOKS);
     await joinViaForm(priya, api, { avatarIndex: 6 });
     const bots = Math.max(0, PLAYERS - 2);
-    if (bots > 0) await api.bots(bots, SCENARIO === 'tie' ? 'idle' : 'random');
+    // Games without bot support (Wisecrack) get real extra phones, driven through /api/dev/act.
+    const extras: Phone[] = [];
+    const supportsBots =
+      (
+        JSON.parse(readFileSync(join(REPO_ROOT, 'games', GAME, 'manifest.json'), 'utf8')) as {
+          supportsBots?: boolean;
+        }
+      ).supportsBots === true;
+    if (bots > 0 && supportsBots) await api.bots(bots, SCENARIO === 'tie' ? 'idle' : 'random');
+    else if (bots > 0) {
+      for (let i = 0; i < bots; i += 1) {
+        const extra = await openPhone(browser, server.url, 'pixel', `Extra ${i + 1}`);
+        await joinViaForm(extra, api, { avatarIndex: 8 + i });
+        extras.push(extra);
+      }
+      notes.push(`${bots} extra phones instead of bots (manifest.supportsBots is not true)`);
+    }
+    // Extras answer 1–3 s into every phase instance (or never, for a tie).
+    let extrasActedFor = '';
     await settle(800);
 
     const still = async (page: Page, name: string): Promise<void> => {
@@ -137,6 +158,17 @@ async function main(): Promise<void> {
           await still(tv, `${tag}-tv-settled`);
           break;
         }
+      }
+      if (
+        status === 'playing' &&
+        extras.length > 0 &&
+        SCENARIO !== 'tie' &&
+        extrasActedFor !== key &&
+        Date.now() - (changes.at(-1)?.t ?? 0) > 1000 + Math.random() * 2000
+      ) {
+        extrasActedFor = key;
+        for (const extra of extras)
+          if (extra.playerId) await api.post('/api/dev/act', { playerId: extra.playerId });
       }
       // Sam acts a few seconds into each phase so phases end on "all submitted" like a real room.
       if (
@@ -207,6 +239,7 @@ async function main(): Promise<void> {
     await tvContext.close();
     await sam.context.close();
     await priya.context.close();
+    for (const extra of extras) await extra.context.close();
 
     const pick = (dir: string): string | null => {
       const f = readdirSync(dir).find((x) => x.endsWith('.webm'));
