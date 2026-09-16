@@ -1,12 +1,18 @@
 // TV view for Bingo. Dumb component: renders `view`, composes game-sdk primitives, never touches
 // sockets or game logic. During play the stage shows ONE thing: the current call — plus the one
-// before it, small. A check puts the claimant's card up for the whole room.
-import type { JSX } from 'react';
-import { BigText, Scoreboard, Stage } from '@partybox/game-sdk/ui';
+// before it, small. A claim stops the caller at once (server); the stage then lands the
+// claimant's card cell by cell for the whole room, and only then delivers the verdict: a buzzer
+// and "NOT A BINGO", or a fanfare with confetti.
+import { useEffect } from 'react';
+import type { CSSProperties, JSX } from 'react';
+import { BigText, Confetti, Scoreboard, Stage, useSound } from '@partybox/game-sdk/ui';
 import type { GameTvProps, ScoreboardRow } from '@partybox/game-sdk/ui';
 import type { BingoTvView, CallView, ClaimView } from '../server/views';
-import { Card, PatternIcon } from './Card';
+import { Card, PatternIcon, REVEAL_STEP_MS } from './Card';
 import styles from './Tv.module.css';
+
+/** The verdict waits for the last cell to land (25 cells × step + the pop itself). */
+const VERDICT_DELAY: CSSProperties = { animationDelay: `${25 * REVEAL_STEP_MS + 300}ms` };
 
 function rows(view: BingoTvView): ScoreboardRow[] {
   const avatar = (id: string): string => view.players.find((p) => p.id === id)?.avatarId ?? '';
@@ -22,7 +28,10 @@ function rows(view: BingoTvView): ScoreboardRow[] {
 
 function Call({ call, big }: { call: CallView; big?: boolean }): JSX.Element {
   return (
-    <div className={`${big ? styles.callBig : styles.callSmall} pb-enter`} key={call.number}>
+    <div
+      className={`${big ? styles.callBig : styles.callSmall} ${big ? 'pb-pop' : 'pb-enter'}`}
+      key={call.number}
+    >
       <span className={styles.letter}>{call.letter}</span>
       <span className={styles.number}>{call.number}</span>
     </div>
@@ -31,7 +40,7 @@ function Call({ call, big }: { call: CallView; big?: boolean }): JSX.Element {
 
 function ClaimCard({ claim, celebrate }: { claim: ClaimView; celebrate: boolean }): JSX.Element {
   return (
-    <div className={styles.claim}>
+    <div className={`${styles.claim} pb-pop`}>
       <Card
         numbers={claim.card}
         daubs={claim.daubs}
@@ -40,6 +49,7 @@ function ClaimCard({ claim, celebrate }: { claim: ClaimView; celebrate: boolean 
         missing={celebrate ? [] : claim.missing}
         size="tv"
         verdict
+        reveal
       />
     </div>
   );
@@ -47,6 +57,23 @@ function ClaimCard({ claim, celebrate }: { claim: ClaimView; celebrate: boolean 
 
 export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
   const roundLabel = `Round ${view.round} of ${view.totalRounds}`;
+  const play = useSound();
+  const phaseId = view.phaseId;
+  const number = view.current?.number ?? null;
+  // Every new number bounces in with a "boing" (no per-second ticking: the timer is quiet).
+  useEffect(() => {
+    if (phaseId === 'play' && number !== null) play('call');
+  }, [phaseId, number, play]);
+  // The verdict sounds once the card has landed: buzzer for a failed claim, fanfare for a bingo.
+  const winner = view.winnerId;
+  useEffect(() => {
+    if (phaseId !== 'check' && !(phaseId === 'bingo' && winner)) return;
+    const handle = setTimeout(
+      () => play(phaseId === 'check' ? 'wrong' : 'fanfare'),
+      25 * REVEAL_STEP_MS + 300,
+    );
+    return () => clearTimeout(handle);
+  }, [phaseId, winner, play]);
 
   if (view.phaseId === 'intro') {
     return (
@@ -101,7 +128,7 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
         </div>
         <div className={styles.checkBody}>
           <ClaimCard claim={view.claim} celebrate={false} />
-          <div className={styles.verdict}>
+          <div className={`${styles.verdict} pb-pop`} style={VERDICT_DELAY}>
             <BigText level="h1" className={styles.no}>
               NOT A BINGO
             </BigText>
@@ -123,14 +150,18 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
     if (view.claim && view.winnerName) {
       return (
         <Stage>
-          <div className={styles.checkHead}>
-            <BigText level="h1" tone="accent">
-              BINGO! {view.winnerName} wins round {view.round}
+          <Confetti />
+          <div className={`${styles.checkHead} pb-pop`} style={VERDICT_DELAY}>
+            <BigText level="display" tone="accent" className={styles.bingoTitle}>
+              BINGO!
+            </BigText>
+            <BigText level="h1">
+              {view.winnerName} wins round {view.round}
             </BigText>
           </div>
           <div className={styles.checkBody}>
             <ClaimCard claim={view.claim} celebrate />
-            <div className={styles.verdict}>
+            <div className={`${styles.verdict} pb-pop`} style={VERDICT_DELAY}>
               <PatternIcon cells={view.patternCells} size={120} />
               <BigText level="h2" tone="muted">
                 {view.patternLabel} on call {view.callIndex}

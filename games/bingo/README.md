@@ -12,7 +12,8 @@ penalty; re-daub from memory) and the caller carries on. One point per round won
 
 ## Players
 
-1–16. Late joiners spectate (their phone shows the current call and the called list) and get a card
+1–16. The phone shows the call's nickname only ("Feeling fine"); the number is on the TV, so the room
+has to listen to the caller. Late joiners spectate (their phone shows the current call and the called list) and get a card
 next game. A disconnected player's card and daubs persist; calls never wait for anyone.
 **Bots: welcome** (`supportsBots: true`) — the bot daubs what it hears on its own card, mis-taps about
 1 in 20, and presses BINGO! when its card looks complete, so it wins rounds and sometimes gets checked

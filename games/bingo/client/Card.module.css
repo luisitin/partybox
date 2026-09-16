@@ -70,9 +70,27 @@ button.cell:focus-visible {
   opacity: 0.45;
 }
 
+/* FREE: gold outline until it is daubed (phones), gold fill once it is (and always on the TV). */
 .free {
+  border-color: var(--pb-accent-2);
+  color: var(--pb-accent-2);
+}
+
+.free.daubed {
   background: var(--pb-accent-2-fill);
   color: var(--pb-on-accent-2-fill);
+}
+
+/* A card landing on the TV: every cell pops in with its own delay (Card sets animation-delay),
+   the never-called reds jolt once they are up. Zero-length under reduced motion via the tokens. */
+.reveal .cell {
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.reveal .red {
+  animation:
+    global(pb-pop) var(--pb-motion-base) var(--pb-ease) both,
+    global(pb-shake) var(--pb-motion-slow) var(--pb-ease) calc(var(--pb-motion-base) + 1000ms) both;
 }
 
 .pattern {
@@ -107,6 +125,13 @@ button.cell:focus-visible {
 }
 
 /* ── sizes ── */
+/* Five rows must fit above the sticky BINGO! button without scrolling: cap the card by what is
+   left of the viewport after the shell header, the call header and the footer (~330 px), never
+   below 5 × 44 px cells (an iPhone SE lands exactly there). */
+.phone {
+  max-width: min(100%, max(236px, calc(100dvh - 330px)));
+  margin-inline: auto;
+}
 .phone .letter {
   font-size: var(--pb-font-h2);
 }

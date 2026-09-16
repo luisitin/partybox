@@ -1,6 +1,8 @@
-// Controller (phone) view for Bingo: the current call on top, your tappable card in the middle,
-// the BINGO! button pinned to the bottom. `send` is the only way out; the server accepts every
-// daub (no validation — that is the game) and judges only the claim.
+// Controller (phone) view for Bingo: the current call's NICKNAME on top (the number itself is on
+// the TV — the phone never spoils the stage, and the room has to listen to the caller), your
+// tappable card in the middle, the BINGO! button pinned to the bottom. `send` is the only way out;
+// the server accepts every daub (no validation — that is the game) and judges only the claim.
+import { useState } from 'react';
 import type { JSX } from 'react';
 import { PrimaryButton, Scoreboard, Screen, WaitingScreen } from '@partybox/game-sdk/ui';
 import type { GameControllerProps, ScoreboardRow } from '@partybox/game-sdk/ui';
@@ -33,18 +35,11 @@ function CallHeader({
   return (
     <div className={styles.header} role="status" aria-live="polite">
       <div className={styles.now} key={current.number}>
-        <span className={styles.letter}>{current.letter}</span>
-        <span className={styles.number}>{current.number}</span>
         <span className={styles.phrase}>{current.call}</span>
       </div>
-      <div className={styles.meta}>
-        <span>call {index}</span>
-        {previous ? (
-          <span>
-            before: {previous.letter} {previous.number}
-          </span>
-        ) : null}
-      </div>
+      <p className={styles.meta}>
+        Call {index} · {previous ? `before: ${previous.call}` : 'the number is on the TV'}
+      </p>
     </div>
   );
 }
@@ -55,6 +50,14 @@ export function Controller({
   send,
 }: GameControllerProps<BingoControllerView, Input>): JSX.Element {
   const card = view.card;
+  // FREE always counts (server); daubing it is pure satisfaction, so it lives on the phone only
+  // and resets with every fresh card (round) — "adjust state when a prop changes", in render.
+  const [freeDaubed, setFreeDaubed] = useState(false);
+  const [freeRound, setFreeRound] = useState(view.round);
+  if (freeRound !== view.round) {
+    setFreeRound(view.round);
+    setFreeDaubed(false);
+  }
   if (!card) {
     return (
       <WaitingScreen
@@ -94,12 +97,13 @@ export function Controller({
     const checking = view.phaseId === 'check';
     const claim = view.claim;
     const mine = checking && claim?.playerId === me.id;
+    // Short: the footer is one line even on a 320 px phone (the TV carries the story).
     const label = mine
-      ? 'Not a bingo — card wiped'
+      ? 'Not a bingo'
       : checking
-        ? `${claim?.name ?? 'Someone'} says BINGO! — look at the TV`
+        ? 'Look at the TV'
         : view.waitingForCall
-          ? 'Wait for the next number…'
+          ? 'Next number soon…'
           : 'BINGO!';
     return (
       <Screen
@@ -115,9 +119,34 @@ export function Controller({
         }
       >
         <CallHeader current={view.current} previous={view.previous} index={view.callIndex} />
-        <Card numbers={card} daubs={view.daubs} onTap={(index) => send({ type: 'daub', index })} />
+        {mine && claim ? (
+          // Your failed claim, exactly as the room sees it: the wipe lands when play resumes.
+          <div className="pb-pop">
+            <p className={styles.wipeNote}>Card wiped — re-daub from memory when play resumes.</p>
+            <Card
+              numbers={claim.card}
+              daubs={claim.daubs}
+              green={claim.green}
+              red={claim.red}
+              missing={claim.missing}
+              verdict
+              disabled
+            />
+          </div>
+        ) : (
+          <div key={view.waitingForCall ? 'wiped' : 'card'} className="pb-enter">
+            <Card
+              numbers={card}
+              daubs={view.daubs}
+              freeDaubed={freeDaubed}
+              onTapFree={() => setFreeDaubed((v) => !v)}
+              onTap={(index) => send({ type: 'daub', index })}
+            />
+          </div>
+        )}
         <p className={styles.patternLine}>
-          <PatternIcon cells={view.patternCells} size={28} /> {view.patternLabel}
+          <PatternIcon cells={view.patternCells} size={28} />
+          {view.patternLabel}
         </p>
       </Screen>
     );

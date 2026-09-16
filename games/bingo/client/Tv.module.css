@@ -130,6 +130,22 @@
 
 .no {
   color: var(--pb-danger);
+  animation: global(pb-shake) var(--pb-motion-slow) var(--pb-ease)
+    calc(var(--pb-motion-base) + 1300ms) both;
+}
+
+/* The winner's title pulses for the whole celebration (scale only; 0 ms under reduced motion). */
+.bingoTitle {
+  animation: pb-bingo-pulse var(--pb-motion-pulse) var(--pb-ease) infinite alternate;
+}
+
+@keyframes pb-bingo-pulse {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.06);
+  }
 }
 
 .legend {

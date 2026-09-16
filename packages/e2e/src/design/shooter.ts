@@ -54,6 +54,11 @@ export class Shooter {
   }
 
   save(): void {
-    writeFileSync(join(this.out, 'manifest.json'), JSON.stringify(this.shots, null, 2));
+    // Trailing newline: prettier-clean, so a capture folder never fails `pnpm verify`.
+    writeFileSync(
+      join(this.out, 'manifest.json'),
+      `${JSON.stringify(this.shots, null, 2)}
+`,
+    );
   }
 }

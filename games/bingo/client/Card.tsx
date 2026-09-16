@@ -1,7 +1,7 @@
 // The 5×5 card, used by both surfaces: tappable on the phone, read-only on the TV. Marks are
 // never carried by colour alone — green cells get ✓, red cells ✕, missed pattern cells a dashed
 // outline — so a check reads the same in every theme and for every viewer.
-import type { JSX } from 'react';
+import type { CSSProperties, JSX } from 'react';
 import styles from './Card.module.css';
 
 const LETTERS = ['B', 'I', 'N', 'G', 'O'];
@@ -18,11 +18,20 @@ export interface CardProps {
   missing?: number[];
   /** Phone only: tap to toggle. */
   onTap?: (index: number) => void;
+  /** Phone only: the FREE square is tappable too (it always counts; daubing it is the fun part). */
+  onTapFree?: () => void;
+  /** Whether FREE shows as daubed (the TV and verdict cards: always). */
+  freeDaubed?: boolean;
   disabled?: boolean;
   size?: 'phone' | 'tv' | 'mini';
   /** A check or celebration: plain daubs step back so green / red / missing carry the story. */
   verdict?: boolean;
+  /** Cells pop in one after another (a card landing on the TV for everyone to check). */
+  reveal?: boolean;
 }
+
+/** Stagger between cells during a reveal; 25 cells ≈ 1 s before the verdict may land. */
+export const REVEAL_STEP_MS = 40;
 
 export function Card({
   numbers,
@@ -32,9 +41,12 @@ export function Card({
   red = [],
   missing = [],
   onTap,
+  onTapFree,
+  freeDaubed = true,
   disabled,
   size = 'phone',
   verdict = false,
+  reveal = false,
 }: CardProps): JSX.Element {
   const daubed = new Set(daubs);
   const patternSet = new Set(pattern);
@@ -43,7 +55,11 @@ export function Card({
   const missingSet = new Set(missing);
   const interactive = onTap !== undefined && !disabled;
   return (
-    <div className={`${styles.card} ${styles[size]}`} role="grid" aria-label="bingo card">
+    <div
+      className={`${styles.card} ${styles[size]} ${reveal ? styles.reveal : ''}`}
+      role="grid"
+      aria-label="bingo card"
+    >
       <div className={styles.head} role="row">
         {LETTERS.map((l) => (
           <span key={l} className={styles.letter} role="columnheader">
@@ -54,7 +70,7 @@ export function Card({
       <div className={styles.grid}>
         {numbers.map((n, i) => {
           const isFree = i === FREE;
-          const isDaubed = isFree || daubed.has(i);
+          const isDaubed = isFree ? freeDaubed : daubed.has(i);
           const cls = [
             styles.cell,
             isDaubed ? styles.daubed : '',
@@ -67,16 +83,20 @@ export function Card({
           ].join(' ');
           const mark = greenSet.has(i) ? '✓' : redSet.has(i) ? '✕' : null;
           const label = isFree ? 'FREE' : String(n);
-          const Tag = interactive && !isFree ? 'button' : 'div';
+          const Tag = interactive && (!isFree || onTapFree) ? 'button' : 'div';
+          const style = reveal
+            ? ({ animationDelay: `${i * REVEAL_STEP_MS}ms` } as CSSProperties)
+            : undefined;
           return (
             <Tag
               key={i}
               type={Tag === 'button' ? 'button' : undefined}
               className={cls}
+              style={style}
               role="gridcell"
               aria-pressed={Tag === 'button' ? isDaubed : undefined}
               aria-label={`${LETTERS[i % 5]} ${label}${isDaubed ? ', daubed' : ''}`}
-              onClick={Tag === 'button' ? () => onTap?.(i) : undefined}
+              onClick={Tag === 'button' ? () => (isFree ? onTapFree?.() : onTap?.(i)) : undefined}
             >
               <span className={styles.number}>{label}</span>
               {mark ? (
