@@ -32,6 +32,7 @@ export function canClaim(state: State, playerId: string): boolean {
     state.phase.id === 'play' &&
     hasPlayer(state, playerId) &&
     Object.hasOwn(round.cards, playerId) &&
+    !round.settled.includes(playerId) &&
     round.drawn >= (round.waitForCall[playerId] ?? 0)
   );
 }

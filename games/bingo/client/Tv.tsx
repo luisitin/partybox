@@ -6,7 +6,7 @@
 import { useEffect } from 'react';
 import type { CSSProperties, JSX } from 'react';
 import { BigText, Confetti, Scoreboard, Stage, useSound } from '@partybox/game-sdk/ui';
-import type { GameTvProps, ScoreboardRow } from '@partybox/game-sdk/ui';
+import type { GameTvProps, PushedView, ScoreboardRow } from '@partybox/game-sdk/ui';
 import type { BingoTvView, CallView, ClaimView } from '../server/views';
 import { hushCaller, speakCall } from './caller';
 import { Card, PatternIcon, REVEAL_STEP_MS } from './Card';
@@ -14,6 +14,12 @@ import styles from './Tv.module.css';
 
 /** The verdict waits for the last cell to land (25 cells × step + the pop itself). */
 const VERDICT_DELAY: CSSProperties = { animationDelay: `${25 * REVEAL_STEP_MS + 300}ms` };
+/** The VIP's choice line arrives after the celebration has had its moment. */
+const DECIDE_DELAY: CSSProperties = { animationDelay: `${25 * REVEAL_STEP_MS + 2800}ms` };
+
+function vipName(view: PushedView<BingoTvView>): string {
+  return view.players.find((p) => p.id === view.vip)?.name ?? 'The VIP';
+}
 
 function rows(view: BingoTvView): ScoreboardRow[] {
   const avatar = (id: string): string => view.players.find((p) => p.id === id)?.avatarId ?? '';
@@ -173,7 +179,15 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
               <PatternIcon cells={view.patternCells} size={120} />
               <BigText level="h2" tone="muted">
                 {view.patternLabel} on call {view.callIndex}
+                {view.bingosThisRound > 1 ? ` · bingo #${view.bingosThisRound} this round` : ''}
               </BigText>
+              {view.decide && (view.decide.same || view.decide.blackout) ? (
+                <p className={`${styles.decideLine} pb-rise`} style={DECIDE_DELAY}>
+                  <span className={styles.decideWho}>{vipName(view)}</span> decides on their phone:
+                  keep going {view.decide.blackout ? '(same pattern or blackout)' : ''} or{' '}
+                  {view.round < view.totalRounds ? 'next round' : 'finish'} — the caller waits.
+                </p>
+              ) : null}
             </div>
           </div>
         </Stage>

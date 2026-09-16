@@ -63,6 +63,7 @@ function init(ctx: InitContext): State {
       claim: null,
       waitForCall: {},
       winnerId: null,
+      settled: [],
     },
     wins,
     history: [],
@@ -116,7 +117,7 @@ function reduce(state: State, event: GameEvent<Input>): State {
     case 'check':
       return reduceCheck(state, event, nextCallOrEnd);
     case 'bingo':
-      return reduceBingo(state, event, afterBingo);
+      return reduceBingo(state, event, { next: afterBingo, resume: nextCallOrEnd });
     case 'scoreboard':
       return reduceScoreboard(state, event, nextRound);
     default:

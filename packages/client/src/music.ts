@@ -1,7 +1,7 @@
 // Background music on the TV (owner request 2026-09-15; the tracks are Kevin MacLeod, CC BY 4.0,
 // fetched by scripts/fetch-music.ts into /music/<id>.mp3 — never bundled, never on phones).
 // A plan says which tracks, how loud, and how they follow each other:
-//   rotate — play 30–60 s of a track, fade out, a second of silence, start another (the lobby);
+//   rotate — play a few minutes of a track, fade out, a second of silence, start another (lobby);
 //   chain  — whole tracks back to back with no gap, weighted pick (Bingo, Broken Pencil).
 // One <audio> element, JS fades, level via `volume`; the TV's mute toggle mutes it too. `play()`
 // needs a user gesture on the page (the TV's audio gate); until then it retries on `enable()`.
@@ -19,7 +19,7 @@ export interface MusicPlan {
   /** Steady level 0..1. */
   volume: number;
   mode: 'rotate' | 'chain';
-  /** rotate: how long a track plays before fading, [min, max] ms. */
+  /** rotate: how long a track plays before fading, [min, max] ms (default 30–60 s). */
   segmentMs?: readonly [number, number];
   /** rotate: silence between tracks. */
   gapMs?: number;
@@ -42,7 +42,8 @@ export const LOBBY_MUSIC: MusicPlan = {
   tracks: ['airport-lounge', 'bossa-antigua', 'local-forecast-elevator', 'george-street-shuffle'],
   volume: 0.35,
   mode: 'rotate',
-  segmentMs: [30_000, 60_000],
+  // A few minutes per track (owner: "go on longer before fading"), then a fade and a breath.
+  segmentMs: [150_000, 240_000],
   gapMs: 1000,
   fadeMs: 2500,
 };

@@ -107,6 +107,16 @@ async function main(): Promise<void> {
     await shots.shot(tv, { group: G, phase: 'bingo', device: 'tv', role: 'stage' });
     await shots.shot(vip.page, { group: G, phase: 'bingo', device: 'iphone', role: 'winner' });
     await shots.shot(p2.page, { group: G, phase: 'bingo', device: 'iphone-se', role: 'p2' });
+    // The VIP (the winner here) keeps the round going on the same cards; the caller resumes and
+    // the winner's BINGO! button says the pattern is already theirs.
+    await settle(3500);
+    await shots.shot(tv, { group: G, phase: 'bingo-decide', device: 'tv', role: 'stage' });
+    await shots.shot(vip.page, { group: G, phase: 'bingo-decide', device: 'iphone', role: 'vip' });
+    await vip.page.getByRole('button', { name: /keep going — same pattern/i }).click();
+    await settle(1200);
+    await shots.shot(tv, { group: G, phase: 'continued', device: 'tv', role: 'stage' });
+    await shots.shot(vip.page, { group: G, phase: 'continued', device: 'iphone', role: 'winner' });
+    await shots.shot(p2.page, { group: G, phase: 'continued', device: 'iphone-se', role: 'p2' });
     console.log(`captured ${shots.shots.length} stills → ${OUT}`);
   } finally {
     await browser.close();

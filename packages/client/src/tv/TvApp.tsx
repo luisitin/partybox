@@ -45,6 +45,13 @@ export function TvApp(): JSX.Element {
   const [lastView, setLastView] = useState<typeof view>(null);
   if (room?.status === 'playing' && view && view !== lastView) setLastView(view);
 
+  // Nothing speaks outside play: a game's caller (Bingo) can leave Chrome's speech queue stuck,
+  // and a stuck queue plays back later — in the lobby. The shell clears it on every status change.
+  const status = room?.status ?? null;
+  useEffect(() => {
+    if (status !== 'playing' && typeof speechSynthesis !== 'undefined') speechSynthesis.cancel();
+  }, [status]);
+
   // Background music follows the room (owner picks 2026-09-15): the lobby set while people gather
   // or the host picks a game, a game's own set while it plays, silence on results; a paused game
   // holds the track. It starts on the audio gate's first tap like the cues.

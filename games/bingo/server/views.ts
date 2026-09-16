@@ -7,6 +7,7 @@ import { calledNumbers, letterOf } from './cards';
 import type { Letter } from './cards';
 import { callFor } from './content';
 import { PATTERN_HINT, PATTERN_LABEL, patternCells } from './patterns';
+import { canContinue } from './phases/bingo';
 import { canClaim } from './phases/play';
 import { standings } from './scoring';
 import type { StandingRow } from './scoring';
@@ -43,6 +44,10 @@ interface Common {
   winnerId: string | null;
   winnerName: string | null;
   standings: StandingRow[];
+  /** bingo: whether the round can keep going (same pattern / for a blackout); the VIP decides. */
+  decide: { same: boolean; blackout: boolean } | null;
+  /** How many bingos this round has had so far (a continued round celebrates more than one). */
+  bingosThisRound: number;
 }
 
 export interface BingoTvView extends TvView, Common {}
@@ -104,6 +109,8 @@ function common(state: State): Common {
     winnerId,
     winnerName: winnerId ? (state.players[winnerId]?.name ?? '?') : null,
     standings: standings(state),
+    decide: state.phase.id === 'bingo' ? canContinue(state) : null,
+    bingosThisRound: round.settled.length,
   };
 }
 

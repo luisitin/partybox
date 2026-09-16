@@ -128,6 +128,18 @@
   align-items: flex-start;
 }
 
+.decideLine {
+  margin: var(--pb-space-3) 0 0;
+  font-size: var(--pb-font-body);
+  color: var(--pb-text-muted);
+  max-width: 22em;
+}
+
+.decideWho {
+  color: var(--pb-accent-2);
+  font-weight: 800;
+}
+
 .no {
   color: var(--pb-danger);
   animation: global(pb-shake) var(--pb-motion-slow) var(--pb-ease)

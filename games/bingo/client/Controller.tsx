@@ -104,7 +104,9 @@ export function Controller({
         ? 'Look at the TV'
         : view.waitingForCall
           ? 'Next number soon…'
-          : 'BINGO!';
+          : !view.canClaim
+            ? 'Yours already'
+            : 'BINGO!';
     return (
       // One node for play + check: a claim check must not re-animate the card (freeDaubed lives
       // in this Controller, above the Screen, so it survives either way).
@@ -158,6 +160,11 @@ export function Controller({
   if (view.phaseId === 'bingo') {
     const iWon = view.winnerId === me.id;
     const claim = view.claim;
+    const decide = view.decide;
+    const iDecide = view.vip === me.id && decide !== null && (decide.same || decide.blackout);
+    const vipName = view.players.find((p) => p.id === view.vip)?.name ?? 'The VIP';
+    const nextLabel =
+      view.round < view.totalRounds ? 'Next round — fresh cards' : 'Finish the game';
     return (
       <Screen
         key="bingo"
@@ -168,6 +175,28 @@ export function Controller({
               ? `${view.winnerName} has bingo`
               : 'No bingo this round'
         }
+        footer={
+          iDecide ? (
+            <div className={styles.decide}>
+              {decide.same ? (
+                <PrimaryButton onClick={() => send({ type: 'continue', pattern: 'same' })}>
+                  Keep going — same pattern
+                </PrimaryButton>
+              ) : null}
+              {decide.blackout ? (
+                <PrimaryButton
+                  tone="neutral"
+                  onClick={() => send({ type: 'continue', pattern: 'blackout' })}
+                >
+                  Keep going — blackout
+                </PrimaryButton>
+              ) : null}
+              <PrimaryButton tone="neutral" onClick={() => send({ type: 'next' })}>
+                {nextLabel}
+              </PrimaryButton>
+            </div>
+          ) : undefined
+        }
       >
         {iWon && claim ? (
           <Card numbers={claim.card} daubs={claim.daubs} green={claim.green} disabled />
@@ -175,7 +204,13 @@ export function Controller({
           <Card numbers={card} daubs={view.daubs} disabled />
         )}
         <p className={styles.hint}>
-          {view.round < view.totalRounds ? 'Fresh cards next round.' : 'That was the last round.'}
+          {iDecide
+            ? 'Keep these cards and carry on calling, or deal fresh ones?'
+            : decide && (decide.same || decide.blackout)
+              ? `${vipName} decides: keep going or next round.`
+              : view.round < view.totalRounds
+                ? 'Fresh cards next round.'
+                : 'That was the last round.'}
         </p>
       </Screen>
     );

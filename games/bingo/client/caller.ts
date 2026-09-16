@@ -8,12 +8,17 @@ const PREFERRED = ['Zira', 'Google US English', 'Samantha'];
 const RATE = 1.15;
 const PITCH = 1.1;
 
-// Chrome garbage-collects an utterance nobody references and the voice stops mid-word ("N…
-// seven", or just "G"); it also drops the start of an utterance spoken in the same tick as
-// `cancel()`. So: keep the current utterance here until it ends, and only cancel when something
-// is actually speaking, a breath before the next call.
+// Chrome's speech synthesis needs babysitting: it garbage-collects an utterance nobody references
+// and the voice stops mid-word ("N… seven", or just "G"); it drops the start of an utterance
+// spoken in the same tick as `cancel()`; and its queue can stick after an interrupted utterance,
+// after which every later call is queued silently and played back much later — a lobby that
+// suddenly says "B, 9". So: keep the current utterance here until it ends, always clear the queue
+// (a breath) before speaking, never let a call outlive its window, and let the shell cancel
+// everything outside play.
 let current: SpeechSynthesisUtterance | null = null;
 const CANCEL_GAP_MS = 80;
+/** A call is ~1.5 s; anything still "speaking" after this is a stuck queue. */
+const WATCHDOG_MS = 4000;
 
 function muted(): boolean {
   try {
@@ -62,15 +67,22 @@ export function speakCall(letter: string, number: number, delayMs = 300): () => 
     utterance.addEventListener('end', release);
     utterance.addEventListener('error', release);
     current = utterance;
+    if (speechSynthesis.paused) speechSynthesis.resume();
     speechSynthesis.speak(utterance);
+    setTimeout(() => {
+      if (current === utterance) {
+        current = null;
+        speechSynthesis.cancel(); // stuck: clear it so the next call is not queued behind it
+      }
+    }, WATCHDOG_MS);
   };
   const say = (): void => {
     if (cancelled || spoken) return;
     spoken = true;
-    if (speechSynthesis.speaking || speechSynthesis.pending) {
-      speechSynthesis.cancel();
-      setTimeout(speak, CANCEL_GAP_MS);
-    } else speak();
+    // Always clear the queue first (even when nothing reports as speaking — that is exactly the
+    // stuck state), then a breath so the new call's first syllable is not swallowed.
+    speechSynthesis.cancel();
+    setTimeout(speak, CANCEL_GAP_MS);
   };
   const handle = setTimeout(() => {
     // Chrome loads its voice list asynchronously; wait for it once rather than speak in the
@@ -90,5 +102,5 @@ export function speakCall(letter: string, number: number, delayMs = 300): () => 
 export function hushCaller(): void {
   if (typeof speechSynthesis === 'undefined') return;
   current = null;
-  if (speechSynthesis.speaking || speechSynthesis.pending) speechSynthesis.cancel();
+  speechSynthesis.cancel();
 }
