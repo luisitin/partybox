@@ -94,7 +94,7 @@ export function CrossfadeSwap({
           }}
         />
       ) : null}
-      <Screen key={swapKey} className={className} onLeave={onLeave}>
+      <Screen key={swapKey} className={className ?? styles.live} onLeave={onLeave}>
         {children}
       </Screen>
     </div>

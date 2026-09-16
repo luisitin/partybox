@@ -13,7 +13,7 @@ import type { SoundEngine } from '../sound';
 import { AudioGate } from './AudioGate';
 import { HostBar } from './HostBar';
 import { TvFrame } from './TvFrame';
-import { CrossfadeSwap } from './CrossfadeSwap';
+import { CrossfadeSwap } from '../CrossfadeSwap';
 import { TvLobby } from './TvLobby';
 import { TvPlaying } from './TvPlaying';
 import { TvResults } from './TvResults';

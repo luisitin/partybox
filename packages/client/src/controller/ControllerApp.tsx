@@ -1,6 +1,6 @@
 // Route `/` — the phone. Owns the singleton controller connection and switches screens on the room
 // status. Game components are loaded lazily from the generated registry.
-import { useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { JSX } from 'react';
 import { ServerClockProvider } from '@partybox/game-sdk/ui';
 import { createController } from '../net/controller';
@@ -9,6 +9,7 @@ import { useStore } from '../net/store';
 import { PHONE_MUTE_KEY, createSoundEngine } from '../sound';
 import type { SoundEngine } from '../sound';
 import { ControllerShell } from './ControllerShell';
+import { CrossfadeSwap } from '../CrossfadeSwap';
 import { Join } from './Join';
 import { Lobby } from './Lobby';
 import { Playing } from './Playing';
@@ -43,6 +44,11 @@ export function ControllerApp(): JSX.Element {
     return () => document.removeEventListener('pointerdown', start);
   }, [audio]);
   const me = state.room?.players.find((p) => p.id === state.playerId) ?? null;
+  // Game start holds the previous screen until the game component has painted (review-loop #11):
+  // no "Getting the game ready…" flash on a LAN. Reset whenever a game is not running.
+  const [gameReady, setGameReady] = useState(false);
+  if (state.room?.status !== 'playing' && gameReady) setGameReady(false);
+  const markGameReady = useCallback(() => setGameReady(true), []);
 
   let screen: JSX.Element;
   if (!state.joined || !state.room || !me) {
@@ -63,6 +69,7 @@ export function ControllerApp(): JSX.Element {
             me={me}
             view={state.view}
             audio={audio}
+            onGameReady={markGameReady}
           />
         );
         break;
@@ -75,7 +82,12 @@ export function ControllerApp(): JSX.Element {
   return (
     <ServerClockProvider offsetMs={state.offsetMs}>
       <ControllerShell controller={controller} state={state} me={me} audio={audio}>
-        {screen}
+        <CrossfadeSwap
+          swapKey={!state.joined || !state.room || !me ? 'join' : state.room.status}
+          hold={state.room?.status === 'playing' && !gameReady}
+        >
+          {screen}
+        </CrossfadeSwap>
       </ControllerShell>
     </ServerClockProvider>
   );

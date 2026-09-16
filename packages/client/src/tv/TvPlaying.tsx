@@ -16,7 +16,7 @@ import { clientGames } from '../games.generated';
 import { t } from '../i18n';
 import { countdownSemitones } from '../sound';
 import type { SoundCue, SoundEngine } from '../sound';
-import { CrossfadeSwap } from './CrossfadeSwap';
+import { CrossfadeSwap } from '../CrossfadeSwap';
 import styles from './TvPlaying.module.css';
 
 export interface TvPlayingProps {
