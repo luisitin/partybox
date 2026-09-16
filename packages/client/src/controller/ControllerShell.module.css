@@ -126,6 +126,11 @@
   }
 }
 
+/* Offline: the countdown is a guess, not a demand (review-loop #27). */
+.stale {
+  opacity: 0.55;
+}
+
 /* Countdown line during play: bar + seconds, danger-coloured in the last 5 s. */
 .deadline {
   position: relative;

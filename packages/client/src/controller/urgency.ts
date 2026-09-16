@@ -22,6 +22,8 @@ export interface PhoneUrgencyInput {
   seconds: number | null;
   myStatus: PlayerStatus | null;
   audio?: SoundEngine;
+  /** False while the socket is down: a phone that cannot answer is never urged (review-loop #27). */
+  online?: boolean;
 }
 
 export interface PhoneUrgency {
@@ -36,8 +38,10 @@ export function usePhoneUrgency({
   seconds,
   myStatus,
   audio,
+  online = true,
 }: PhoneUrgencyInput): PhoneUrgency {
-  const timed = view !== null && view.timerMode !== 'quiet' && view.timerMode !== 'hidden';
+  const timed =
+    online && view !== null && view.timerMode !== 'quiet' && view.timerMode !== 'hidden';
   const acting = myStatus === 'active';
   const candidate =
     timed && !view.paused && seconds !== null && seconds >= 1 && seconds <= 5 && acting;

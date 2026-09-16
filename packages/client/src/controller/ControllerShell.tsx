@@ -68,7 +68,15 @@ export function ControllerShell({
 
   // Cues from state transitions, mirroring the TV's (TvApp). One `prev` snapshot per push.
   const myStatus = state.view?.players.find((p) => p.id === state.playerId)?.status ?? null;
-  const { candidate, shellRef, mainRef } = usePhoneUrgency({ view, seconds, myStatus, audio });
+  // Offline, the local countdown still runs (and parks at 0): show it muted, never urgent.
+  const online = state.connection === 'connected';
+  const { candidate, shellRef, mainRef } = usePhoneUrgency({
+    view,
+    seconds,
+    myStatus,
+    audio,
+    online,
+  });
 
   const prev = useRef<{
     status: string | null;
@@ -181,11 +189,16 @@ export function ControllerShell({
       {view && seconds !== null && view.timerMode !== 'hidden' ? (
         // ADR-030: a quiet timer keeps the bar (a rhythm) but drops the digits and the urgency.
         <div
-          className={`${styles.deadline} ${seconds <= 5 && !view.paused && view.timerMode !== 'quiet' ? styles.urgent : ''}`}
+          className={`${styles.deadline} ${online && seconds <= 5 && !view.paused && view.timerMode !== 'quiet' ? styles.urgent : ''} ${online ? '' : styles.stale}`}
           role="timer"
           aria-label={view.paused ? t.tv.paused : t.connection.secondsLeft(seconds)}
         >
-          <DeadlineBar deadline={view.deadline} phaseKey={view.phaseId} paused={view.paused} />
+          <DeadlineBar
+            deadline={view.deadline}
+            phaseKey={view.phaseId}
+            paused={view.paused}
+            urgentAt={online ? 5 : 0}
+          />
           {candidate ? (
             <span className={styles.cue} aria-hidden>
               {t.connection.pickNow}
