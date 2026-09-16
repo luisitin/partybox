@@ -98,7 +98,7 @@ Timer: in the last 5 s it switches to `--pb-danger`, scales 1.15×, pulses once 
 
 `play(cue, { semitones, quiet })` transposes a cue (the engine multiplies every note by 2^(n/12)); `quiet` leaves
 `lastPlayedAt` alone so the cue never suppresses the shell's next chime.
-`clientModule.sounds` maps phase ids to cues; unmapped phases play `phase`, reserved for moments where the phone needs
+`clientModule.sounds` maps phase ids to cues; unmapped phases play `phase`, reserved for moments where the phone needs `silence` is a valid cue for a phase the game cues itself later; `cheer` (results, a bingo) is the one sampled cue — a party horn + crowd from `packages/client/public/sfx/` (Mixkit licence).
 the player (so 'pick up your phone' and 'look at the TV' never sound the same).
 TV has a mute toggle (persisted in `localStorage`) and a "tap to start" overlay for the autoplay policy.
 The phone has its own engine (`createSoundEngine({ master: 0.35 })`, mute under `partybox:phone-sound`, default on,

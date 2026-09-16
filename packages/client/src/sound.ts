@@ -6,6 +6,28 @@ import type { SoundCue } from '@partybox/game-sdk/ui';
 export type { SoundCue };
 
 const MUTE_KEY = 'partybox:muted';
+
+/**
+ * A recorded clip inside a cue (the one exception to "no audio files", owner pick 2026-09-16: a
+ * real "hooray"). Files live in packages/client/public/sfx (Mixkit licence, credited in the
+ * README); decoded once per engine and played through the same graph as the notes.
+ */
+interface Sample {
+  src: string;
+  at: number;
+  gain: number;
+  /** Fade to silence from `fadeAt` over `fadeMs` (the crowd tails off under the next screen). */
+  fadeAt?: number;
+  fadeMs?: number;
+}
+
+const SAMPLES: Partial<Record<SoundCue, Sample[]>> = {
+  // The winner moment: the horn leads, the crowd (10 s) comes in under it and tails off.
+  cheer: [
+    { src: '/sfx/party-horn.mp3', at: 0, gain: 0.9 },
+    { src: '/sfx/crowd-cheer.mp3', at: 0.15, gain: 0.7, fadeAt: 6.5, fadeMs: 3000 },
+  ],
+};
 /** The phone remembers its own mute (default on) separately from the TV's. */
 export const PHONE_MUTE_KEY = 'partybox:phone-sound';
 
@@ -132,6 +154,10 @@ const CUES: Record<SoundCue, Note[]> = {
     { freq: 220, to: 110, at: 0, dur: 0.26, type: 'sawtooth', gain: 0.13 },
     { freq: 196, to: 82, at: 0.3, dur: 0.45, type: 'sawtooth', gain: 0.13 },
   ],
+  // Sampled (see SAMPLES) — the note list is empty so the synth has nothing to add.
+  cheer: [],
+  // A game maps a phase to this when it cues that phase itself later (no chime on entry).
+  silence: [],
   // A soft tick for a daub on a phone (no phone plays sound yet; here for the vocabulary).
   daub: [{ freq: 1200, at: 0, dur: 0.03, type: 'triangle', gain: 0.1 }],
 };
@@ -186,6 +212,37 @@ export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine
   let master: GainNode | null = null;
   let muted = false;
   let lastPlayedAt = -Infinity;
+  const buffers = new Map<string, Promise<AudioBuffer | null>>();
+  const buffer = (src: string): Promise<AudioBuffer | null> => {
+    let pending = buffers.get(src);
+    if (!pending) {
+      pending = fetch(src)
+        .then((res) => (res.ok ? res.arrayBuffer() : Promise.reject(new Error(res.statusText))))
+        .then((bytes) => (ctx ? ctx.decodeAudioData(bytes) : null))
+        .catch(() => null); // a missing clip is a silent cue, never an error
+      buffers.set(src, pending);
+    }
+    return pending;
+  };
+  const playSample = (sample: Sample, t0: number): void => {
+    void buffer(sample.src).then((buf) => {
+      if (!buf || !ctx || muted || ctx.state !== 'running') return;
+      const source = ctx.createBufferSource();
+      const gain = ctx.createGain();
+      source.buffer = buf;
+      const start = Math.max(ctx.currentTime, t0 + sample.at);
+      gain.gain.setValueAtTime(sample.gain, start);
+      if (sample.fadeAt !== undefined) {
+        gain.gain.setValueAtTime(sample.gain, start + sample.fadeAt);
+        gain.gain.exponentialRampToValueAtTime(
+          0.0001,
+          start + sample.fadeAt + (sample.fadeMs ?? 2000) / 1000,
+        );
+      }
+      source.connect(gain).connect(master ?? ctx.destination);
+      source.start(start);
+    });
+  };
   try {
     muted = localStorage.getItem(muteKey) === '1';
   } catch {
@@ -208,6 +265,8 @@ export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine
         // Not only 'suspended': iOS Safari reports 'interrupted' after a lock or a background
         // tab, which a phone does far more often than a TV.
         if (ctx.state !== 'running') await ctx.resume();
+        // Decode the clips now so the first cheer is instant.
+        for (const samples of Object.values(SAMPLES)) for (const s of samples) void buffer(s.src);
         return ctx.state === 'running';
       } catch {
         return false;
@@ -218,6 +277,7 @@ export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine
       if (!opts?.quiet) lastPlayedAt = performance.now();
       if (!ctx || muted || ctx.state !== 'running') return;
       const t0 = ctx.currentTime;
+      for (const sample of SAMPLES[cue] ?? []) playSample(sample, t0);
       const k = 2 ** ((opts?.semitones ?? 0) / 12);
       for (const note of CUES[cue]) {
         const osc = ctx.createOscillator();

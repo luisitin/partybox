@@ -55,6 +55,8 @@ fetched once by `pnpm fetch-music` (the Windows launcher does it after the build
 silence, nothing else changes). Tracks: Kevin MacLeod (incompetech.com), licensed under Creative
 Commons: By Attribution 4.0 — https://creativecommons.org/licenses/by/4.0/. Bingo's caller speaks
 each number through the browser's speech voices (Windows "Zira" preferred); phones stay silent.
+The winner moment (`cheer`) is a party horn and a crowd cheer from Mixkit (mixkit.co/license),
+bundled under `packages/client/public/sfx/`.
 
 ## Commands
 

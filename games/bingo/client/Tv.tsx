@@ -83,7 +83,7 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
   useEffect(() => {
     if (phaseId !== 'check' && !(phaseId === 'bingo' && winner)) return;
     const handle = setTimeout(
-      () => play(phaseId === 'check' ? 'wrong' : 'fanfare'),
+      () => play(phaseId === 'check' ? 'wrong' : 'cheer'),
       25 * REVEAL_STEP_MS + 300,
     );
     return () => clearTimeout(handle);

@@ -96,7 +96,8 @@ export function TvApp(): JSX.Element {
     // A game begins: a held G-major arpeggio (the intro itself never chimes — p.phase is null);
     // a TV that reloads mid-game (p.status === '') stays quiet, like the join rule.
     if (room.status === 'playing' && p.status !== 'playing' && p.status !== '') audio.play('start');
-    if (room.status === 'results' && p.status !== 'results') audio.play('win');
+    // The winner moment (owner pick): a party horn with a crowd cheer under it.
+    if (room.status === 'results' && p.status !== 'results') audio.play('cheer');
     // A game that cued this phase itself (useSound, child effects run first) keeps the stage's
     // generic chime out of its way. `clientModule.sounds` maps a phase id to its own cue (reveal,
     // wager, tally…); unmapped phases play `phase`, reserved for "your phone needs you".

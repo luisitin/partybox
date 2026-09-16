@@ -8,7 +8,7 @@ Each call bounces in with a "boing", then the caller says it — "B, 12" — thr
 Web Speech API (`client/caller.ts`: Windows "Zira", rate 1.15, pitch 1.1, falls back to the
 browser's default English voice; silent when the TV is muted). Background music: "Wallpaper" with
 the occasional "Cool Vibes", quiet, back to back (`music` on the client module; Kevin MacLeod,
-CC BY 4.0, see the root README). A failed claim's buzzer and a bingo's fanfare come from the synth.
+CC BY 4.0, see the root README). A failed claim's buzzer comes from the synth; a bingo gets the party horn + crowd cheer (`cheer`).
 
 ## Overview
 
