@@ -23,6 +23,7 @@ const { values } = parseArgs({
     scenario: { type: 'string', default: 'normal' },
     focus: { type: 'string', default: 'tv' },
     budget: { type: 'string', default: '150' },
+    settings: { type: 'string' },
     port: { type: 'string', default: '42071' },
     out: { type: 'string' },
   },
@@ -92,6 +93,9 @@ async function main(): Promise<void> {
     await still(tv, '00-lobby-tv');
     await still(sam.page, '00-lobby-phone-sam');
     const settings: Record<string, unknown> = SCENARIO === 'spicy' ? { spicy: true } : {};
+    // Extra game settings for a variant capture, e.g. --settings '{"showBoard":false}'.
+    if (values.settings)
+      Object.assign(settings, JSON.parse(values.settings) as Record<string, unknown>);
     await api.post('/api/dev/start', { gameId: GAME, seed: Number(PASS) * 11, settings });
     const started = Date.now();
     let last = '';
@@ -143,10 +147,14 @@ async function main(): Promise<void> {
         if (SCENARIO === 'reconnect' && !scenarioDone && n >= 2) {
           scenarioDone = true;
           notes.push(`reconnect: Sam dropped for 8 s at ${new Date().toISOString()} in ${phase}`);
-          await api.disconnect(sam.playerId, 8);
+          await sam.context.setOffline(true);
           await settle(1200);
+          await still(sam.page, `${String(n).padStart(2, '0')}-${phase}-phone-sam-offline`);
           await still(tv, `${String(n).padStart(2, '0')}-${phase}-tv-sam-dropped`);
-          await settle(7500);
+          await settle(6500);
+          await still(sam.page, `${String(n).padStart(2, '0')}-${phase}-phone-sam-offline-late`);
+          await sam.context.setOffline(false);
+          await settle(7000); // socket.io backoff after ~8 s away can take a few seconds
           await still(tv, `${String(n).padStart(2, '0')}-${phase}-tv-sam-back`);
           await still(sam.page, `${String(n).padStart(2, '0')}-${phase}-phone-sam-back`);
         } else if (SCENARIO === 'vip-leaves' && !scenarioDone && n >= 2) {

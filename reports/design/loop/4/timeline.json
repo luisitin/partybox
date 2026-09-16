@@ -1,0 +1,33 @@
+{
+  "pass": "4",
+  "game": "bingo",
+  "players": 6,
+  "scenario": "reconnect",
+  "focus": "phone",
+  "started": "16:43:48.125",
+  "tvVideoT0": "16:43:44.861",
+  "changes": [
+    {
+      "t": 1789577028128,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789577033122,
+      "at": "16:43:48.128",
+      "sinceStartS": 0,
+      "videoS": 3.3
+    },
+    {
+      "t": 1789577033201,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789577039132,
+      "at": "16:43:53.201",
+      "sinceStartS": 5.1,
+      "videoS": 8.3
+    }
+  ],
+  "notes": [
+    "reconnect: Sam dropped for 8 s at 2026-09-16T16:43:57.277Z in play",
+    "budget reached while playing; skipped to results"
+  ]
+}
