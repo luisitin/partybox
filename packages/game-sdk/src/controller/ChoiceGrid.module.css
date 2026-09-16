@@ -6,6 +6,11 @@
   letter-spacing: 0.06em;
 }
 
+/* tone="final": the kicker matches the TV's accent "final question" kicker (R-064). */
+.kickerFinal {
+  color: var(--pb-accent);
+}
+
 .prompt {
   font-size: var(--pb-font-h2);
   font-weight: 800;
@@ -63,6 +68,11 @@
 
 .choice:disabled {
   cursor: default;
+}
+
+/* letters={false}: label + mark only. */
+.noLetters {
+  grid-template-columns: 1fr auto;
 }
 
 .letter {

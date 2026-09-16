@@ -5,7 +5,7 @@ import { ChoiceGrid, WaitingScreen } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { LightningControllerView } from '../server/index';
 import type { Input } from '../server/types';
-import { Outcome, wagerLabel } from './ControllerBits';
+import { Outcome, Stake, wagerLabel } from './ControllerBits';
 import styles from './Controller.module.css';
 
 function roundKicker(view: LightningControllerView): string {
@@ -39,10 +39,14 @@ export function Controller({
   if ((phaseId === 'question' || phaseId === 'reveal') && view.question) {
     const revealed = phaseId === 'reveal';
     const locked = view.myPickIndex !== null;
+    const finalQ = view.round?.final === true;
+    // A missing wager counts as 0 (server/phases/wager.ts); the key is only present once tapped.
+    const stake = finalQ && phaseId === 'question' ? (view.myWagerAmount ?? 0) : null;
     return (
       <ChoiceGrid
         fill
         promptKey={`${phaseId}:${view.round?.number ?? 0}`}
+        tone={finalQ ? 'final' : undefined}
         kicker={roundKicker(view)}
         prompt={view.question.text}
         choices={view.question.choices.map((label, index) => ({ id: String(index), label }))}
@@ -50,7 +54,9 @@ export function Controller({
         correctId={revealed && view.correctIndex !== undefined ? String(view.correctIndex) : null}
         disabled={revealed}
         onPick={(id) => send({ type: 'pick', index: Number(id) })}
-        footer={revealed ? <Outcome view={view} /> : null}
+        footer={
+          revealed ? <Outcome view={view} /> : stake !== null ? <Stake amount={stake} /> : null
+        }
       />
     );
   }
@@ -61,24 +67,28 @@ export function Controller({
     return (
       <ChoiceGrid
         fill
+        letters={false}
+        tone="final"
         promptKey="wager"
         kicker="Final question next"
         prompt={
-          view.myScore > 0
-            ? `Wager part of your ${view.myScore} points`
-            : 'No points yet — you can only wager 0'
+          <>
+            {view.myScore > 0
+              ? `Wager part of your ${view.myScore} points`
+              : 'No points yet — you can only wager 0'}
+            <span className={styles.rule}>Right answer: +wager. Wrong or no answer: −wager.</span>
+          </>
         }
-        choices={options.map((o) => ({ id: String(o.percent), label: wagerLabel(o) }))}
+        choices={options.map((o) => ({
+          id: String(o.percent),
+          label: wagerLabel(o, view.myScore),
+        }))}
         selectedId={selected ? String(selected.percent) : null}
         onPick={(id) => {
           const option = options.find((o) => String(o.percent) === id);
           if (option) send({ type: 'wager', percent: option.percent });
         }}
-        footer={
-          placed === undefined ? (
-            <p className={styles.footnote}>Right answer: +wager. Wrong or no answer: −wager.</p>
-          ) : null
-        }
+        footer={null}
       />
     );
   }

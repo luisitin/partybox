@@ -31,6 +31,10 @@ export interface ChoiceGridProps {
   promptKey?: string;
   /** Stretch the choices to fill the screen body — for speed games where reach and target size matter. */
   fill?: boolean;
+  /** `false` drops the A/B/C discs (a wager menu is not a quiz). Default true. */
+  letters?: boolean;
+  /** `final` paints the kicker in the accent colour, like the TV's "final question" kicker. */
+  tone?: 'default' | 'final';
 }
 
 const LETTERS = 'ABCDEFGH';
@@ -56,6 +60,8 @@ export function ChoiceGrid(props: ChoiceGridProps): JSX.Element {
     footer,
     promptKey,
     fill,
+    letters = true,
+    tone = 'default',
   } = props;
   const [pending, setPending] = useState<Pending | null>(null);
   // "Adjust state when a prop changes": a new prompt clears the optimistic lock.
@@ -79,7 +85,9 @@ export function ChoiceGrid(props: ChoiceGridProps): JSX.Element {
   };
   return (
     <Screen footer={footer}>
-      {kicker ? <p className={styles.kicker}>{kicker}</p> : null}
+      {kicker ? (
+        <p className={`${styles.kicker} ${tone === 'final' ? styles.kickerFinal : ''}`}>{kicker}</p>
+      ) : null}
       {prompt ? <p className={styles.prompt}>{prompt}</p> : null}
       <div
         className={`${styles.grid} ${fill ? styles.fill : ''}`}
@@ -93,6 +101,7 @@ export function ChoiceGrid(props: ChoiceGridProps): JSX.Element {
           const isWrongPick = revealed && isSelected && !isCorrect;
           const classes = [
             styles.choice,
+            letters ? '' : styles.noLetters,
             isSelected ? styles.selected : '',
             isCorrect ? styles.correct : '',
             isWrongPick ? styles.wrong : '',
@@ -108,9 +117,11 @@ export function ChoiceGrid(props: ChoiceGridProps): JSX.Element {
               disabled={locked}
               onClick={() => pick(choice.id)}
             >
-              <span className={styles.letter} aria-hidden>
-                {LETTERS[index] ?? index + 1}
-              </span>
+              {letters ? (
+                <span className={styles.letter} aria-hidden>
+                  {LETTERS[index] ?? index + 1}
+                </span>
+              ) : null}
               <span className={styles.label}>{choice.label}</span>
               <span className={styles.mark} aria-hidden>
                 {isCorrect ? '✓' : isWrongPick ? '✗' : isSelected ? '✓' : ''}

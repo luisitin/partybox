@@ -4,9 +4,37 @@ import type { WagerOption } from '../server/scoring';
 import type { LightningControllerView } from '../server/views';
 import styles from './Controller.module.css';
 
-export function wagerLabel(option: WagerOption): string {
-  if (option.percent === 0) return 'Nothing (0 points)';
-  return `${option.percent} % · ${option.amount} points`;
+// The amount is the decision, so it leads at h1; the share is the caption. Plain digits, no
+// thousands separator (matches every other number in the game).
+export function wagerLabel(option: WagerOption, score: number): JSX.Element {
+  const caption =
+    option.percent === 0
+      ? 'nothing at stake'
+      : option.percent === 100
+        ? 'All in · 100 %'
+        : `${option.percent} % of your ${score}`;
+  return (
+    <span className={styles.wagerRow}>
+      <span className={styles.amount}>{option.percent === 0 ? '0' : option.amount}</span>
+      <span className={styles.pct}>{caption}</span>
+    </span>
+  );
+}
+
+// During the final question the TV hides wagers, so the phone is the only place the stake shows.
+// Lives in Screen's sticky footer, persists after lock-in, and Outcome replaces it at reveal.
+export function Stake({ amount }: { amount: number }): JSX.Element {
+  return (
+    <div className={styles.stake}>
+      {amount > 0 ? (
+        <>
+          🎲 <b>Your bet: {amount}</b> · right +{amount} · wrong −{amount}
+        </>
+      ) : (
+        <>🎲 Nothing riding on this one — play for pride</>
+      )}
+    </div>
+  );
 }
 
 function deltaText(delta: number): string {

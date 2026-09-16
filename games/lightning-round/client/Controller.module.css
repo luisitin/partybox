@@ -51,3 +51,48 @@
 .footnote {
   text-align: center;
 }
+
+/* Wager screen (R-064): the rule under the prompt, the amount-led option rows, the stake card. */
+.rule {
+  display: block;
+  margin-top: var(--pb-space-2);
+  font-size: var(--pb-font-caption);
+  font-weight: 600;
+  color: var(--pb-text-muted);
+}
+
+.wagerRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: var(--pb-space-3);
+}
+
+.amount {
+  font-size: var(--pb-font-h1);
+  font-weight: 900;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.pct {
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  color: var(--pb-text-muted);
+}
+
+.stake {
+  text-align: center;
+  padding: var(--pb-space-3) var(--pb-space-4);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  border: 3px solid var(--pb-border);
+  font-size: var(--pb-font-body);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+/* only the number is pink: "✓ Locked in — look at the TV" (green, above) stays the strongest line */
+.stake b {
+  color: var(--pb-accent);
+}
