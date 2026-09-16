@@ -3,32 +3,39 @@
 // with inputSchema before reduce sees the input.
 import { useState } from 'react';
 import type { JSX } from 'react';
-import { Scoreboard, WaitingScreen } from '@partybox/game-sdk/ui';
+import { Scoreboard, Screen, WaitingScreen } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { WisecrackControllerView } from '../server/index';
 import type { Input } from '../server/types';
 import { ControllerAnswer } from './ControllerAnswer';
 import { ControllerReveal, ControllerVote } from './ControllerVote';
 import type { LastVote } from './ControllerVote';
+import styles from './wisecrack.module.css';
 
 type Props = GameControllerProps<WisecrackControllerView, Input>;
 
 // results() ends the game in the same dispatch that enters 'done'; the engine's results screen is
 // the ceremony — only the dev fixture preview renders that phase, as the final-scores screen.
+// The board is the point of this screen, so no mood disc: the round's delta is the hero, then my
+// rank, then the compact board with a numeric rank (the crown is the results screen's).
 function ControllerScores({ view, me }: Props): JSX.Element {
   const final = view.round >= view.rounds;
   return (
-    <WaitingScreen
-      title={final ? `Your final score: ${view.myScore}` : `You have ${view.myScore} points`}
-      hint={
-        final
-          ? `#${view.myRank} · +${view.myDelta} in the final round`
-          : `#${view.myRank} · +${view.myDelta} this round`
-      }
-      mood="watch"
-    >
-      <Scoreboard compact highlightId={me.id} rows={view.standings} />
-    </WaitingScreen>
+    <Screen>
+      <div className={styles.scoresHero} role="status" aria-live="polite">
+        <p
+          className={styles.deltaHero}
+          data-zero={view.myDelta === 0 || undefined}
+          aria-label={`+${view.myDelta} points ${final ? 'in the final round' : 'this round'}`}
+        >
+          +{view.myDelta}
+        </p>
+        <h2 className={styles.rankLine}>
+          {final ? 'Final: ' : ''}#{view.myRank} of {view.standings.length} · {view.myScore} points
+        </h2>
+      </div>
+      <Scoreboard compact highlightId={me.id} rows={view.standings} noTrophy />
+    </Screen>
   );
 }
 

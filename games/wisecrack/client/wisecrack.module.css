@@ -167,6 +167,32 @@
   text-wrap: balance;
 }
 
+/* Phone "scores": the round delta as the hero (quiet when +0), my rank under it, board below. */
+.scoresHero {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  text-align: center;
+}
+
+.deltaHero {
+  font-size: var(--pb-font-display);
+  font-weight: 900;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--pb-accent-3);
+}
+
+.deltaHero[data-zero] {
+  color: var(--pb-text-muted);
+}
+
+.rankLine {
+  margin: 0;
+  font-size: var(--pb-font-h2);
+  text-wrap: balance;
+}
+
 /* TV: centre the (self-capped) Scoreboard on the stage. */
 .board {
   width: 100%;
