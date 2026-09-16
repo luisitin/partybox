@@ -25,6 +25,13 @@ const CUES: Record<SoundCue, Note[]> = {
     { freq: 523, at: 0, dur: 0.08, type: 'triangle', gain: 0.12 },
     { freq: 784, at: 0.09, dur: 0.16, type: 'triangle', gain: 0.12 },
   ],
+  // A game begins (selecting → playing): a G-major arpeggio with the held tail `phase` lacks.
+  start: [
+    { freq: 392, at: 0, dur: 0.1, type: 'triangle' },
+    { freq: 523, at: 0.1, dur: 0.1, type: 'triangle' },
+    { freq: 659, at: 0.2, dur: 0.1, type: 'triangle' },
+    { freq: 784, at: 0.3, dur: 0.45, type: 'triangle', gain: 0.2 },
+  ],
   join: [
     { freq: 523, at: 0, dur: 0.08 },
     { freq: 659, at: 0.09, dur: 0.12 },

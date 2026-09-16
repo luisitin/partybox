@@ -66,23 +66,26 @@ The TV shell sets the TV column; the controller shell sets the phone column; tok
 | easing              | `cubic-bezier(0.2, 0.8, 0.2, 1)` | everything                            |
 
 `prefers-reduced-motion: reduce` sets every duration to 0. Transitions never hide information (no full-screen wipes).
+TV status swaps (lobby / selecting / playing / results) are keyed and rise (`pb-rise`, fill backwards); a game chunk that
+takes > 150 ms shows a centred "<game> — Getting the game ready…" card, never a stray glyph.
 Timer: in the last 5 s it switches to `--pb-danger`, scales 1.15×, pulses once per second (`--pb-motion-pulse`, 0 under reduced motion) and ticks (sound `countdown`).
 
 ## Sound cues (Web Audio, synthesized — no files)
 
-| Cue         | Moment                         | Where triggered                                                                |
-| ----------- | ------------------------------ | ------------------------------------------------------------------------------ |
-| `ready`     | sound enabled / unmuted        | TV shell (AudioGate)                                                           |
-| `join`      | a player joins the lobby       | TV shell — each join steps up a scale (`joinSemitones`, wraps at 5)            |
-| `phase`     | phase changes                  | TV shell                                                                       |
-| `countdown` | each of the last 5 seconds     | TV shell (Timer) — pitched up per second (`countdownSemitones`: 880 → 1319 Hz) |
-| `reveal`    | an answer / result is revealed | TV shell via `clientModule.sounds[phaseId]`                                    |
-| `wager`     | the final-question wager opens | TV shell via `clientModule.sounds` (Lightning)                                 |
-| `tally`     | a scores / leaderboard phase   | TV shell via `clientModule.sounds` (Wisecrack)                                 |
-| `win`       | results screen winner          | TV shell                                                                       |
-| `submit`    | own input accepted             | controller shell (phone)                                                       |
-| `error`     | rejected input / error toast   | controller shell (phone)                                                       |
-| `correct`   | the phone's own verdict card   | game via `useSound` (phone)                                                    |
+| Cue         | Moment                              | Where triggered                                                                |
+| ----------- | ----------------------------------- | ------------------------------------------------------------------------------ |
+| `ready`     | sound enabled / unmuted             | TV shell (AudioGate)                                                           |
+| `join`      | a player joins the lobby            | TV shell — each join steps up a scale (`joinSemitones`, wraps at 5)            |
+| `start`     | a game begins (selecting → playing) | TV shell                                                                       |
+| `phase`     | phase changes                       | TV shell                                                                       |
+| `countdown` | each of the last 5 seconds          | TV shell (Timer) — pitched up per second (`countdownSemitones`: 880 → 1319 Hz) |
+| `reveal`    | an answer / result is revealed      | TV shell via `clientModule.sounds[phaseId]`                                    |
+| `wager`     | the final-question wager opens      | TV shell via `clientModule.sounds` (Lightning)                                 |
+| `tally`     | a scores / leaderboard phase        | TV shell via `clientModule.sounds` (Wisecrack)                                 |
+| `win`       | results screen winner               | TV shell                                                                       |
+| `submit`    | own input accepted                  | controller shell (phone)                                                       |
+| `error`     | rejected input / error toast        | controller shell (phone)                                                       |
+| `correct`   | the phone's own verdict card        | game via `useSound` (phone)                                                    |
 
 `play(cue, { semitones })` transposes a cue (the engine multiplies every note by 2^(n/12)).
 `clientModule.sounds` maps phase ids to cues; unmapped phases play `phase`, reserved for moments where the phone needs

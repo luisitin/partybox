@@ -1,9 +1,16 @@
 // The envelope during play: chips + timer in a top strip (the VIP is marked on their chip), a
 // "Paused" curtain, and the game's lazy Tv component in the middle.
-import { Suspense, useCallback } from 'react';
-import type { JSX } from 'react';
+import { Suspense, useCallback, useEffect, useState } from 'react';
+import type { JSX, ReactNode } from 'react';
 import type { PushedView, RoomSnapshot, TvView } from '@partybox/shared';
-import { BigText, DeadlineBar, PlayerChips, SoundProvider, Timer } from '@partybox/game-sdk/ui';
+import {
+  BigText,
+  DeadlineBar,
+  PlayerChips,
+  SoundProvider,
+  Stage,
+  Timer,
+} from '@partybox/game-sdk/ui';
 import { GameErrorBoundary } from '../controller/GameErrorBoundary';
 import { clientGames } from '../games.generated';
 import { t } from '../i18n';
@@ -17,6 +24,18 @@ export interface TvPlayingProps {
   audio: SoundEngine;
 }
 
+/** Shows its children only after a short wait: a game chunk that loads fast never flashes a
+ *  placeholder; a slow one (a real TV browser over Wi-Fi) gets an on-brand card, not a stray "…".
+ *  150 ms is timing, not motion, so it does not read the reduced-motion tokens. */
+function DelayedFallback({ children }: { children: ReactNode }): JSX.Element | null {
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    const handle = setTimeout(() => setShow(true), 150);
+    return () => clearTimeout(handle);
+  }, []);
+  return show ? <>{children}</> : null;
+}
+
 export function TvPlaying({ room, view, audio }: TvPlayingProps): JSX.Element {
   // The last five seconds climb a scale (5 → 1), so the room hears the deadline coming.
   const onTick = useCallback(
@@ -25,6 +44,7 @@ export function TvPlaying({ room, view, audio }: TvPlayingProps): JSX.Element {
   );
   const play = useCallback((cue: SoundCue) => audio.play(cue), [audio]);
   const module = room.selectedGameId ? clientGames[room.selectedGameId] : undefined;
+  const gameName = room.games.find((g) => g.id === room.selectedGameId)?.name ?? '';
   const vip = room.players.find((p) => p.id === (view?.vip ?? room.vip));
   if (!view) {
     return (
@@ -79,7 +99,18 @@ export function TvPlaying({ room, view, audio }: TvPlayingProps): JSX.Element {
       <div className={styles.game} key={view.phaseId}>
         {GameTv ? (
           <GameErrorBoundary surface="tv">
-            <Suspense fallback={<BigText tone="muted">…</BigText>}>
+            <Suspense
+              fallback={
+                <DelayedFallback>
+                  <Stage center>
+                    <BigText level="h1" tone="muted">
+                      {gameName}
+                    </BigText>
+                    <p className="pb-muted">{t.connection.loadingGame}</p>
+                  </Stage>
+                </DelayedFallback>
+              }
+            >
               <SoundProvider play={play}>
                 <GameTv view={view} />
               </SoundProvider>

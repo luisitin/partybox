@@ -15,6 +15,7 @@ import { TvLobby } from './TvLobby';
 import { TvPlaying } from './TvPlaying';
 import { TvResults } from './TvResults';
 import { TvSelecting } from './TvSelecting';
+import styles from './TvApp.module.css';
 
 let sound: SoundEngine | null = null;
 function soundInstance(): SoundEngine {
@@ -41,6 +42,9 @@ export function TvApp(): JSX.Element {
     const p = prev.current;
     if (room.players.length > p.players && p.status !== '')
       audio.play('join', { semitones: joinSemitones(room.players.length) });
+    // A game begins: a held G-major arpeggio (the intro itself never chimes — p.phase is null);
+    // a TV that reloads mid-game (p.status === '') stays quiet, like the join rule.
+    if (room.status === 'playing' && p.status !== 'playing' && p.status !== '') audio.play('start');
     if (room.status === 'results' && p.status !== 'results') audio.play('win');
     // A game that cued this phase itself (useSound, child effects run first) keeps the stage's
     // generic chime out of its way. `clientModule.sounds` maps a phase id to its own cue (reveal,
@@ -76,7 +80,9 @@ export function TvApp(): JSX.Element {
         onHome={client.home}
         footer={room ? <HostBar client={client} room={room} view={view} /> : null}
       >
-        {content}
+        <div key={room?.status ?? 'none'} className={styles.swap}>
+          {content}
+        </div>
       </TvFrame>
       <AudioGate audio={audio} />
     </ServerClockProvider>

@@ -7,6 +7,7 @@ import type { JSX, ReactNode } from 'react';
 
 export const SOUND_CUES = [
   'ready',
+  'start',
   'join',
   'phase',
   'countdown',
