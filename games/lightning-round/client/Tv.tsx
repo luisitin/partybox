@@ -4,7 +4,7 @@ import type { JSX } from 'react';
 import { BigText, Scoreboard, Stage } from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
 import type { LightningTvView } from '../server/index';
-import { ChoiceBoard, RevealRows, RoundHeader, TvQuestion } from './TvQuestion';
+import { AnswerCard, RevealRows, RoundHeader, TvQuestion } from './TvQuestion';
 import styles from './Tv.module.css';
 
 export function Tv({ view }: GameTvProps<LightningTvView>): JSX.Element {
@@ -38,9 +38,9 @@ export function Tv({ view }: GameTvProps<LightningTvView>): JSX.Element {
     return (
       <Stage>
         <RoundHeader round={view.round} question={view.question} />
-        <BigText level="h2">{view.question?.text ?? '…'}</BigText>
-        {view.question ? (
-          <ChoiceBoard question={view.question} correctIndex={view.correctIndex} compact />
+        <p className={styles.asked}>{view.question?.text ?? '…'}</p>
+        {view.question && view.correctIndex !== undefined ? (
+          <AnswerCard question={view.question} correctIndex={view.correctIndex} />
         ) : null}
         <RevealRows rows={view.rows ?? []} final={view.round?.final ?? false} />
       </Stage>

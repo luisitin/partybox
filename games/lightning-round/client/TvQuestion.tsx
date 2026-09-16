@@ -36,21 +36,14 @@ export function RoundHeader({
 export function ChoiceBoard({
   question,
   correctIndex,
-  compact,
 }: {
   question: QuestionView;
   /** Undefined until the reveal. */
   correctIndex?: number;
-  /** One row of four (reveal: the player rows below need the space). */
-  compact?: boolean;
 }): JSX.Element {
   const revealed = correctIndex !== undefined;
   return (
-    <div
-      className={`${styles.grid} ${compact ? styles.gridCompact : ''}`}
-      role="list"
-      aria-label="choices"
-    >
+    <div className={styles.grid} role="list" aria-label="choices">
       {question.choices.map((text, index) => {
         const isCorrect = revealed && index === correctIndex;
         const classes = [
@@ -71,6 +64,28 @@ export function ChoiceBoard({
           </div>
         );
       })}
+    </div>
+  );
+}
+
+/** Reveal: the one fact the room wants — "it was A · Neil Armstrong" — as the biggest text on stage. */
+export function AnswerCard({
+  question,
+  correctIndex,
+}: {
+  question: QuestionView;
+  correctIndex: number;
+}): JSX.Element {
+  return (
+    <div className={`${styles.choice} ${styles.answer}`} role="status">
+      <span className={styles.letter} aria-hidden>
+        {LETTERS[correctIndex]}
+      </span>
+      <span>{question.choices[correctIndex]}</span>
+      <span className={styles.mark} aria-hidden>
+        ✓
+      </span>
+      <span className="pb-visually-hidden">correct answer: {LETTERS[correctIndex]}</span>
     </div>
   );
 }

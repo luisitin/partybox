@@ -95,3 +95,9 @@
   font-weight: 700;
   color: var(--pb-accent-3);
 }
+
+/* The revealed answer's disc is filled (shape + ✓, never colour alone), mirroring the TV card. */
+.correct .letter {
+  background: var(--pb-accent-3);
+  color: var(--pb-on-accent);
+}

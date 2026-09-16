@@ -41,20 +41,7 @@
   overflow-wrap: anywhere;
 }
 
-/* Reveal: the four choices become one row so up to 16 player rows fit underneath. */
-.gridCompact {
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--pb-space-3);
-}
-
-.gridCompact .choice {
-  min-height: 80px;
-  padding: var(--pb-space-3) var(--pb-space-4);
-  font-size: var(--pb-font-caption);
-  gap: var(--pb-space-3);
-}
-
-.gridCompact .letter {
+.letter {
   width: 48px;
   height: 48px;
   font-size: var(--pb-font-body);
@@ -91,6 +78,37 @@
 
 .dim {
   opacity: 0.45;
+}
+
+/* Reveal: the question, already known, steps back to a muted body line… */
+.asked {
+  margin: 0;
+  font-size: var(--pb-font-body);
+  font-weight: 700;
+  color: var(--pb-text-muted);
+  text-wrap: balance;
+}
+
+/* …and the correct answer is the biggest thing on the stage: one full-width card, letter disc
+   filled, ✓ at the end (shape + glyph, never colour alone). */
+.answer {
+  min-height: 0;
+  padding: var(--pb-space-2) var(--pb-space-5);
+  font-size: var(--pb-font-h1);
+  line-height: 1;
+  border-color: var(--pb-accent-3);
+  background: var(--pb-surface-2);
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.answer .letter {
+  background: var(--pb-accent-3);
+  color: var(--pb-on-accent);
+}
+
+.answer .mark {
+  font-size: var(--pb-font-h1);
+  color: var(--pb-accent-3);
 }
 
 .count {
