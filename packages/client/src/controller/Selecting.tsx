@@ -62,7 +62,12 @@ export function Selecting({ controller, room, me }: SelectingProps): JSX.Element
                 className={`${styles.card} ${isSelected ? styles.selected : ''}`}
                 onClick={() => controller.vip({ action: 'selectGame', gameId: g.id })}
               >
-                <span className={styles.cardTitle}>{g.name}</span>
+                <span className={styles.cardHead}>
+                  <span className={styles.cardTitle}>{g.name}</span>
+                  <span className={styles.check} aria-hidden>
+                    {isSelected ? '✓' : ''}
+                  </span>
+                </span>
                 <span className={styles.cardTagline}>{g.tagline}</span>
                 <span className={styles.cardMeta}>
                   {t.selecting.players(g.minPlayers, g.maxPlayers)} ·{' '}
