@@ -178,6 +178,7 @@ button.cell:focus-visible {
   animation-delay: inherit;
 }
 
+/* The colour lands at the squeeze (~0.2 s in), in step with the sting; the pop follows. */
 @keyframes cell-turn {
   0% {
     transform: scale(1);
@@ -185,11 +186,17 @@ button.cell:focus-visible {
     border-color: var(--pb-accent);
     color: var(--pb-text);
   }
-  45% {
+  28% {
     transform: scale(0.82) rotate(-4deg);
     background: var(--pb-surface-2);
     border-color: var(--pb-accent);
     color: var(--pb-text);
+  }
+  34% {
+    transform: scale(0.86) rotate(-3deg);
+    background: var(--pb-cell-to);
+    border-color: var(--pb-cell-to);
+    color: var(--pb-cell-to-text);
   }
   100% {
     transform: scale(1);

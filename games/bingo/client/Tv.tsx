@@ -39,6 +39,8 @@ const REST_MS = 900;
 const HOLD_MS = 700;
 /** The card settles into its column before the verdict pops beside it (= --pb-motion-slow). */
 const SETTLE_MS = 600;
+/** The sweep sting fires when the first cell's colour lands (≈ 30 % of a 600 ms turn). */
+const STING_LAG_MS = 170;
 
 function rows(view: BingoTvView): ScoreboardRow[] {
   const avatar = (id: string): string => view.players.find((p) => p.id === id)?.avatarId ?? '';
@@ -110,8 +112,11 @@ function ClaimStage({
   const shown = beat >= 4 || reduced; // the verdict pops beside it — and sounds
   const line = valid ? lineOf(order) : null;
   const sweeps = turning && line !== null && !reduced;
+  // The first cell's colour lands ~0.2 s into its turn (the squeeze): the sting waits for it.
   useEffect(() => {
-    if (sweeps) sound.play('sweep');
+    if (!sweeps) return;
+    const t = setTimeout(() => sound.play('sweep'), STING_LAG_MS);
+    return () => clearTimeout(t);
   }, [sweeps, sound]);
   // The verdict's sound lands on the verdict — cheer + confetti for a bingo, the buzzer otherwise.
   useEffect(() => {
