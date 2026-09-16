@@ -4,8 +4,10 @@
 // rows), dense (7–12, two h2 columns), tight3 (13+, three body columns); the multi-column tiers
 // flow column-major so ranks read down, not across.
 // Entrance (TV tiers; off on compact): rows rise one by one, each delta lands a beat after its
-// row and the total counts up from (score − delta); the leader's trophy pops last. Everything
-// runs on the motion tokens, so reduced motion renders the final board at once.
+// row, and once the last row is in every total counts up from (score − delta) together (counting
+// while rows were still arriving read as two competing motions — review-loop #32); the leader's
+// trophy pops last. Everything runs on the motion tokens, so reduced motion renders the final
+// board at once.
 import type { CSSProperties, JSX } from 'react';
 import { Avatar } from '../ui/Avatar';
 import { MOTION_BASE, MOTION_FAST, MOTION_SLOW, useCountUp } from '../ui/motion';
@@ -53,7 +55,7 @@ export function tierOf(count: number, compact?: boolean, dense?: boolean): Tier 
   return 'roomy';
 }
 
-/** The total, counting up from its pre-delta value once its row has landed. */
+/** The total, counting up from its pre-delta value once the board has landed. */
 function Score({ row, delayMs }: { row: ScoreboardRow; delayMs: number }): JSX.Element {
   const shown = useCountUp(row.score, row.score - (row.delta ?? 0), MOTION_SLOW, delayMs);
   return <span className={styles.score}>{shown}</span>;
@@ -77,6 +79,7 @@ export function Scoreboard({
   // mirrors --pb-stagger-step in the CSS.
   const stepMs = cols > 1 || stagger === 'down' ? MOTION_FAST / 2 : MOTION_FAST;
   const order = (index: number): number => (stagger === 'down' ? index : rows.length - 1 - index);
+  const countDelayMs = stepMs * Math.max(0, rows.length - 1) + MOTION_BASE;
   return (
     <ol
       className={`${styles.board} ${tier === 'roomy' ? '' : styles[tier]} ${staggered ? styles.staggered : ''} ${staggered && stagger === 'down' ? styles.down : ''}`}
@@ -107,7 +110,7 @@ export function Scoreboard({
             </span>
           ) : null}
           {staggered ? (
-            <Score row={row} delayMs={stepMs * order(index) + MOTION_BASE} />
+            <Score row={row} delayMs={countDelayMs} />
           ) : (
             <span className={styles.score}>{row.score}</span>
           )}
