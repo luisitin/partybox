@@ -60,6 +60,16 @@ const CUES: Record<SoundCue, Note[]> = {
     { freq: 784, at: 0.26, dur: 0.12 },
     { freq: 1047, at: 0.4, dur: 0.45 },
   ],
+  // The VIP pauses: A4 → E4 settling. Resume plays `phase` (the room is back on).
+  pause: [
+    { freq: 440, at: 0, dur: 0.12, type: 'triangle', gain: 0.12 },
+    { freq: 330, at: 0.14, dur: 0.24, type: 'triangle', gain: 0.12 },
+  ],
+  // A player is kicked, leaves, or a bot is removed: the mirror of `join`.
+  leave: [
+    { freq: 659, at: 0, dur: 0.08 },
+    { freq: 523, at: 0.09, dur: 0.14 },
+  ],
   fanfare: [
     { freq: 523, at: 0, dur: 0.12 },
     { freq: 659, at: 0.13, dur: 0.12 },

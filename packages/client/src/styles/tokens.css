@@ -20,6 +20,8 @@
   --pb-on-accent-2-fill: #1a0b12;
   /* optional edge for surfaces; only High Contrast sets it */
   --pb-border: transparent;
+  /* the veil behind a pause curtain or a phone sheet: the theme's own ink, never a baked-in night */
+  --pb-scrim: rgb(15 16 32 / 62%);
 
   --pb-player-1: #ff5d8f;
   --pb-player-2: #ffd166;
@@ -85,6 +87,7 @@ ight is the :root default above) ────────
   --pb-on-accent: #ffffff;
   --pb-accent-2-fill: #ffd166;
   --pb-on-accent-2-fill: #1a0b12;
+  --pb-scrim: rgb(23 22 51 / 45%);
 }
 
 [data-theme='arcade'] {
@@ -102,6 +105,7 @@ ight is the :root default above) ────────
   --pb-on-accent: #050014;
   --pb-accent-2-fill: #00f0ff;
   --pb-on-accent-2-fill: #050014;
+  --pb-scrim: rgb(5 0 20 / 62%);
 }
 
 [data-theme='cabin'] {
@@ -119,6 +123,7 @@ ight is the :root default above) ────────
   --pb-on-accent: #1d1410;
   --pb-accent-2-fill: #f2c14e;
   --pb-on-accent-2-fill: #1d1410;
+  --pb-scrim: rgb(29 20 16 / 62%);
 }
 
 [data-theme='contrast'] {
@@ -137,6 +142,7 @@ ight is the :root default above) ────────
   --pb-accent-2-fill: #ffff00;
   --pb-on-accent-2-fill: #000000;
   --pb-border: #ffffff;
+  --pb-scrim: rgb(0 0 0 / 78%);
 }
 [data-surface='tv'] {
   --pb-font-display: 128px;

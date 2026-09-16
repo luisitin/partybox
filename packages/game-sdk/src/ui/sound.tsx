@@ -14,6 +14,8 @@ export const SOUND_CUES = [
   'tick',
   'reveal',
   'win',
+  'pause',
+  'leave',
   'fanfare',
   'jackpot',
   'bust',

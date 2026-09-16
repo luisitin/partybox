@@ -1,7 +1,7 @@
 .backdrop {
   position: fixed;
   inset: 0;
-  background: rgb(0 0 0 / 60%);
+  background: var(--pb-scrim);
   display: flex;
   align-items: flex-end;
   z-index: 10;

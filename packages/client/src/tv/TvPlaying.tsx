@@ -37,6 +37,20 @@ function DelayedFallback({ children }: { children: ReactNode }): JSX.Element | n
 }
 
 export function TvPlaying({ room, view, audio }: TvPlayingProps): JSX.Element {
+  // The curtain stays mounted while it fades out after a resume ("adjust state during render":
+  // the paused flag flipping true → false starts the leave; animationend or 400 ms clears it).
+  const paused = view?.paused ?? false;
+  const [prevPaused, setPrevPaused] = useState(paused);
+  const [leaving, setLeaving] = useState(false);
+  if (paused !== prevPaused) {
+    setPrevPaused(paused);
+    setLeaving(!paused);
+  }
+  useEffect(() => {
+    if (!leaving) return;
+    const handle = setTimeout(() => setLeaving(false), 400);
+    return () => clearTimeout(handle);
+  }, [leaving]);
   // The last five seconds climb a scale (5 → 1), so the room hears the deadline coming.
   const onTick = useCallback(
     (s: number) => audio.play('countdown', { semitones: countdownSemitones(s) }),
@@ -120,8 +134,12 @@ export function TvPlaying({ room, view, audio }: TvPlayingProps): JSX.Element {
           <BigText tone="muted">Unknown game "{room.selectedGameId}"</BigText>
         )}
       </div>
-      {view.paused ? (
-        <div className={styles.curtain} role="status">
+      {view.paused || leaving ? (
+        <div
+          className={`${styles.curtain} ${!view.paused ? styles.leaving : ''}`}
+          role="status"
+          onAnimationEnd={() => !view.paused && setLeaving(false)}
+        >
           <div className={styles.pausedCard}>
             <BigText level="h1">⏸ {t.tv.paused}</BigText>
             {vip ? <p className="pb-muted">{t.tv.pausedHint(vip.name)}</p> : null}

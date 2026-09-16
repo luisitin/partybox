@@ -32,14 +32,33 @@ export function TvApp(): JSX.Element {
   const view = state.view;
 
   // Sound cues from state transitions (docs/DESIGN_SYSTEM.md).
-  const prev = useRef<{ players: number; status: string; phase: string | null }>({
-    players: 0,
-    status: '',
-    phase: null,
-  });
+  const prev = useRef<{
+    players: number;
+    ids: Set<string>;
+    status: string;
+    phase: string | null;
+    paused: boolean;
+    code: string;
+  }>({ players: 0, ids: new Set(), status: '', phase: null, paused: false, code: '' });
+  const lastLeaveAt = useRef(-Infinity);
   useEffect(() => {
     if (!room) return;
     const p = prev.current;
+    // One `leave` per snapshot (a human leaving takes their bots with them, ADR-028) and never
+    // more than one per 300 ms, so "Remove 4 bots" is one note, not four. A new room (Home reset)
+    // is not a departure.
+    if (p.status !== '' && p.code === room.code) {
+      const ids = new Set(room.players.map((pl) => pl.id));
+      const gone = [...p.ids].some((id) => !ids.has(id));
+      if (gone && performance.now() - lastLeaveAt.current >= 300) {
+        lastLeaveAt.current = performance.now();
+        audio.play('leave');
+      }
+    }
+    const paused = view?.paused ?? false;
+    if (room.status === 'playing' && paused && !p.paused) audio.play('pause');
+    else if (room.status === 'playing' && !paused && p.paused && p.status === 'playing')
+      if (performance.now() - audio.lastPlayedAt() > 50) audio.play('phase');
     if (room.players.length > p.players && p.status !== '')
       audio.play('join', { semitones: joinSemitones(room.players.length) });
     // A game begins: a held G-major arpeggio (the intro itself never chimes — p.phase is null);
@@ -58,8 +77,11 @@ export function TvApp(): JSX.Element {
       }
     prev.current = {
       players: room.players.length,
+      ids: new Set(room.players.map((pl) => pl.id)),
       status: room.status,
       phase: view?.phaseId ?? null,
+      paused,
+      code: room.code,
     };
   }, [room, view, audio]);
 

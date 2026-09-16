@@ -14,17 +14,18 @@ same primitives. Games must not hard-code colours, sizes or durations — use th
 
 ## Colour tokens (dark stage, fixed — TVs are in dim rooms; phones follow the same palette)
 
-| Token                             | Value                                                             | Use                                           |
-| --------------------------------- | ----------------------------------------------------------------- | --------------------------------------------- |
-| `--pb-bg`                         | `#0f1020`                                                         | page background                               |
-| `--pb-surface` / `--pb-surface-2` | `#1c1e3a` / `#272a52`                                             | cards, panels                                 |
-| `--pb-text` / `--pb-text-muted`   | `#f5f6ff` / `#b3b7d9`                                             | text (contrast ≥ 12:1 / 7:1 on bg)            |
-| `--pb-accent`                     | `#ff5d8f`                                                         | primary actions, current phase                |
-| `--pb-accent-2`                   | `#ffd166`                                                         | timers, highlights, focus ring                |
-| `--pb-accent-3`                   | `#06d6a0`                                                         | success, submitted                            |
-| `--pb-danger`                     | `#ef476f`                                                         | destructive VIP actions, last-5-seconds timer |
-| `--pb-info`                       | `#4cc9f0`                                                         | informational toasts                          |
-| `--pb-player-1…8`                 | `#ff5d8f #ffd166 #06d6a0 #4cc9f0 #b388ff #ff9f43 #48dbfb #f368e0` | per-player chip hues (avatar id % 8)          |
+| Token                             | Value                                                                                  | Use                                                |
+| --------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------- |
+| `--pb-bg`                         | `#0f1020`                                                                              | page background                                    |
+| `--pb-surface` / `--pb-surface-2` | `#1c1e3a` / `#272a52`                                                                  | cards, panels                                      |
+| `--pb-text` / `--pb-text-muted`   | `#f5f6ff` / `#b3b7d9`                                                                  | text (contrast ≥ 12:1 / 7:1 on bg)                 |
+| `--pb-accent`                     | `#ff5d8f`                                                                              | primary actions, current phase                     |
+| `--pb-accent-2`                   | `#ffd166`                                                                              | timers, highlights, focus ring                     |
+| `--pb-accent-3`                   | `#06d6a0`                                                                              | success, submitted                                 |
+| `--pb-danger`                     | `#ef476f`                                                                              | destructive VIP actions, last-5-seconds timer      |
+| `--pb-info`                       | `#4cc9f0`                                                                              | informational toasts                               |
+| `--pb-scrim`                      | `rgb(15 16 32 / 62%)` (per theme: the theme's ink, 45 % in Daylight, 78 % in Contrast) | the veil behind the pause curtain and phone sheets |
+| `--pb-player-1…8`                 | `#ff5d8f #ffd166 #06d6a0 #4cc9f0 #b388ff #ff9f43 #48dbfb #f368e0`                      | per-player chip hues (avatar id % 8)               |
 
 ## Themes
 
@@ -66,26 +67,30 @@ The TV shell sets the TV column; the controller shell sets the phone column; tok
 | easing              | `cubic-bezier(0.2, 0.8, 0.2, 1)` | everything                            |
 
 `prefers-reduced-motion: reduce` sets every duration to 0. Transitions never hide information (no full-screen wipes).
+Keyframes in global.css: `pb-rise`, `pb-pop`, `pb-shake`, `pb-fade-in` / `pb-fade-out` (the pause curtain and the
+server-lost dim arrive and leave over `--pb-motion-base`), `pb-confetti`.
 TV status swaps (lobby / selecting / playing / results) are keyed and rise (`pb-rise`, fill backwards); a game chunk that
 takes > 150 ms shows a centred "<game> — Getting the game ready…" card, never a stray glyph.
 Timer: in the last 5 s it switches to `--pb-danger`, scales 1.15×, pulses once per second (`--pb-motion-pulse`, 0 under reduced motion) and ticks (sound `countdown`).
 
 ## Sound cues (Web Audio, synthesized — no files)
 
-| Cue         | Moment                              | Where triggered                                                                |
-| ----------- | ----------------------------------- | ------------------------------------------------------------------------------ |
-| `ready`     | sound enabled / unmuted             | TV shell (AudioGate)                                                           |
-| `join`      | a player joins the lobby            | TV shell — each join steps up a scale (`joinSemitones`, wraps at 5)            |
-| `start`     | a game begins (selecting → playing) | TV shell                                                                       |
-| `phase`     | phase changes                       | TV shell                                                                       |
-| `countdown` | each of the last 5 seconds          | TV shell (Timer) — pitched up per second (`countdownSemitones`: 880 → 1319 Hz) |
-| `reveal`    | an answer / result is revealed      | TV shell via `clientModule.sounds[phaseId]`                                    |
-| `wager`     | the final-question wager opens      | TV shell via `clientModule.sounds` (Lightning)                                 |
-| `tally`     | a scores / leaderboard phase        | TV shell via `clientModule.sounds` (Wisecrack)                                 |
-| `win`       | results screen winner               | TV shell                                                                       |
-| `submit`    | own input accepted                  | controller shell (phone)                                                       |
-| `error`     | rejected input / error toast        | controller shell (phone)                                                       |
-| `correct`   | the phone's own verdict card        | game via `useSound` (phone)                                                    |
+| Cue         | Moment                                                                             | Where triggered                                                                |
+| ----------- | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| `ready`     | sound enabled / unmuted                                                            | TV shell (AudioGate)                                                           |
+| `join`      | a player joins the lobby                                                           | TV shell — each join steps up a scale (`joinSemitones`, wraps at 5)            |
+| `start`     | a game begins (selecting → playing)                                                | TV shell                                                                       |
+| `phase`     | phase changes                                                                      | TV shell                                                                       |
+| `countdown` | each of the last 5 seconds                                                         | TV shell (Timer) — pitched up per second (`countdownSemitones`: 880 → 1319 Hz) |
+| `reveal`    | an answer / result is revealed                                                     | TV shell via `clientModule.sounds[phaseId]`                                    |
+| `wager`     | the final-question wager opens                                                     | TV shell via `clientModule.sounds` (Lightning)                                 |
+| `tally`     | a scores / leaderboard phase                                                       | TV shell via `clientModule.sounds` (Wisecrack)                                 |
+| `win`       | results screen winner                                                              | TV shell                                                                       |
+| `pause`     | the VIP / host pauses (resume plays `phase`)                                       | TV shell                                                                       |
+| `leave`     | a player is kicked, leaves, or a bot is removed (one per snapshot, ≥ 300 ms apart) | TV shell                                                                       |
+| `submit`    | own input accepted                                                                 | controller shell (phone)                                                       |
+| `error`     | rejected input / error toast                                                       | controller shell (phone)                                                       |
+| `correct`   | the phone's own verdict card                                                       | game via `useSound` (phone)                                                    |
 
 `play(cue, { semitones })` transposes a cue (the engine multiplies every note by 2^(n/12)).
 `clientModule.sounds` maps phase ids to cues; unmapped phases play `phase`, reserved for moments where the phone needs

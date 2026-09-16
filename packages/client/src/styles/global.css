@@ -129,6 +129,25 @@ button {
   animation: pb-pop var(--pb-motion-base) var(--pb-ease) both;
 }
 
+/* A veil arriving / leaving (pause curtain, server-lost dim). */
+@keyframes pb-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pb-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
 /* A "no": three quick sideways jolts. */
 @keyframes pb-shake {
   0%,
