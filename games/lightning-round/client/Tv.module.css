@@ -250,9 +250,18 @@
 }
 
 .streak {
+  display: inline-block;
   color: var(--pb-accent-2);
   font-size: var(--pb-font-caption);
   font-weight: 700;
+}
+
+/* Three in a row and up pops in after the rows have landed, in row order. */
+.streakHot {
+  animation: global(pb-pop) var(--pb-motion-slow) var(--pb-ease) both;
+  animation-delay: calc(
+    var(--pb-motion-base) * 2 + var(--pb-motion-fast) * var(--i, 0) + var(--pb-motion-fast)
+  );
 }
 
 /* ── Final-wager reveal (TvFinal.tsx): name over "✓ bet 3150 · 2340 pts", h2 delta, 80 px rows ── */

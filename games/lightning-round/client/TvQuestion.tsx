@@ -195,7 +195,7 @@ export function RevealRows({ rows }: { rows: RevealRow[] }): JSX.Element {
   const top = Math.max(0, ...rows.map((r) => r.score));
   return (
     <ol className={`${styles.rows} ${rowsClass(rows.length)}`} aria-label="results">
-      {rows.map((row) => {
+      {rows.map((row, index) => {
         const verdict = verdictOf(row);
         const quiet = row.delta === 0;
         const deltaClass = row.delta > 0 ? styles.deltaUp : row.delta < 0 ? styles.deltaDown : '';
@@ -208,6 +208,7 @@ export function RevealRows({ rows }: { rows: RevealRow[] }): JSX.Element {
           <li
             key={row.playerId}
             className={`${styles.row} ${row.correct ? styles.rowCorrect : ''} ${quiet ? styles.rowQuiet : ''}`}
+            style={{ '--i': index } as CSSProperties}
           >
             <Avatar avatarId={row.avatarId} size={48} dim={!row.connected} />
             {crowned && top > 0 && row.score === top ? (
@@ -216,7 +217,14 @@ export function RevealRows({ rows }: { rows: RevealRow[] }): JSX.Element {
               </span>
             ) : null}
             <span className={styles.name}>{row.name}</span>
-            {row.streak >= 2 ? <span className={styles.streak}>🔥{row.streak}</span> : null}
+            {row.streak >= 2 ? (
+              <span
+                className={`${styles.streak} ${row.streak >= 3 ? styles.streakHot : ''}`}
+                aria-label={`streak ${row.streak}`}
+              >
+                🔥{row.streak}
+              </span>
+            ) : null}
             <span className={`${styles.verdict} ${verdictClass}`} aria-label={verdict.label}>
               {verdict.glyph}
             </span>
