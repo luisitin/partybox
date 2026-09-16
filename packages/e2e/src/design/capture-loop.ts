@@ -125,7 +125,8 @@ async function main(): Promise<void> {
         await still(tv, `${tag}-tv`);
         await still(sam.page, `${tag}-phone-active`);
         // Priya acts first: her phone is the "waiting" (submitted) state of this phase.
-        if (status === 'playing' && priya.playerId) {
+        // A tie needs everyone idle — Priya included (review-loop #29).
+        if (status === 'playing' && priya.playerId && SCENARIO !== 'tie') {
           await api.post('/api/dev/act', { playerId: priya.playerId });
           await settle(500);
           await still(priya.page, `${tag}-phone-waiting`);

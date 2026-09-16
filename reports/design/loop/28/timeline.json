@@ -1,0 +1,42 @@
+{
+  "pass": "28",
+  "game": "lightning-round",
+  "players": 6,
+  "scenario": "vip-leaves",
+  "focus": "tv",
+  "started": "22:41:26.047",
+  "tvVideoT0": "22:41:22.739",
+  "changes": [
+    {
+      "t": 1789598486048,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789598490044,
+      "at": "22:41:26.048",
+      "sinceStartS": 0,
+      "videoS": 3.3
+    },
+    {
+      "t": 1789598490093,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789598520044,
+      "at": "22:41:30.093",
+      "sinceStartS": 4,
+      "videoS": 7.4
+    },
+    {
+      "t": 1789598555135,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789598560071,
+      "at": "22:42:35.135",
+      "sinceStartS": 69.1,
+      "videoS": 72.4
+    }
+  ],
+  "notes": [
+    "vip-leaves: Sam (VIP) closed the page in question",
+    "budget reached while playing; skipped to results"
+  ]
+}
