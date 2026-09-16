@@ -103,7 +103,15 @@ export function Controller({
     );
   }
 
-  if (view.phaseId === 'intro' || view.phaseId === 'play' || view.phaseId === 'check') {
+  // The round's own screens: intro, play, check and a bingo phase without a winner's card to show
+  // (no bingo, or someone else won) all keep the same card mounted (review-loop #2, #15).
+  const roundOver = view.phaseId === 'bingo' && !(view.winnerId === me.id && view.claim);
+  if (
+    view.phaseId === 'intro' ||
+    view.phaseId === 'play' ||
+    view.phaseId === 'check' ||
+    roundOver
+  ) {
     const intro = view.phaseId === 'intro';
     const checking = view.phaseId === 'check';
     const claim = view.claim;
@@ -122,9 +130,17 @@ export function Controller({
       // lives in this Controller, above the Screen, so it survives either way).
       <Screen
         key="round"
-        title={intro ? `Round ${view.round} of ${view.totalRounds}` : undefined}
+        title={
+          intro
+            ? `Round ${view.round} of ${view.totalRounds}`
+            : roundOver
+              ? view.winnerName
+                ? `${view.winnerName} has bingo`
+                : 'No bingo this round'
+              : undefined
+        }
         footer={
-          intro ? undefined : (
+          intro || roundOver ? undefined : (
             <PrimaryButton
               tone={mine ? 'danger' : 'accent'}
               disabled={!view.canClaim}
@@ -137,7 +153,13 @@ export function Controller({
         }
       >
         <div className={styles.roundBody}>
-          {intro ? (
+          {roundOver ? (
+            <p className={styles.hint}>
+              {view.round < view.totalRounds
+                ? 'Fresh cards next round.'
+                : 'That was the last round.'}
+            </p>
+          ) : intro ? (
             // Compact on purpose: icon, name and hint in one block so the whole card fits a 659 px
             // viewport (iPhone 15 in Safari) without scrolling.
             <div className={styles.intro}>
@@ -191,7 +213,7 @@ export function Controller({
                 freeDaubed={freeDaubed}
                 onTapFree={() => setFreeDaubed((v) => !v)}
                 onTap={(index) => send({ type: 'daub', index })}
-                disabled={intro}
+                disabled={intro || roundOver}
               />
             </div>
           )}
