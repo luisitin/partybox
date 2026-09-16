@@ -56,6 +56,10 @@
   background: var(--pb-surface-2);
   font-size: var(--pb-font-body);
   font-weight: 900;
+  transition:
+    transform var(--pb-motion-fast) var(--pb-ease),
+    background-color var(--pb-motion-base) var(--pb-ease),
+    color var(--pb-motion-base) var(--pb-ease);
 }
 
 .voted .letter {
@@ -90,11 +94,28 @@
 .mark {
   color: var(--pb-accent-3);
   font-weight: 900;
+  animation: global(pb-pop) var(--pb-motion-fast) var(--pb-ease) both;
+}
+
+/* Lock-in: the chosen card settles with a small pop (0 ms under reduced motion via the token).
+   The global pb-pop starts from opacity 0, so the card uses a local settle that never hides an
+   already-visible button. */
+@keyframes pb-vote-settle {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.03);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .voted {
   border-color: var(--pb-accent);
   background: var(--pb-surface-2);
+  animation: pb-vote-settle var(--pb-motion-base) var(--pb-ease) both;
 }
 
 .mine {
@@ -110,4 +131,10 @@
   font-size: var(--pb-font-caption);
   font-weight: 700;
   color: var(--pb-accent-3);
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+/* The tap never reached the server: the list is live again and the line says so (not colour-only). */
+.failed {
+  color: var(--pb-danger);
 }

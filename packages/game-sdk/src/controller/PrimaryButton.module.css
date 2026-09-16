@@ -13,6 +13,8 @@
 
 .button:active:not(:disabled) {
   transform: scale(0.97);
+  /* brightens accent, danger, success and the neutral surface-2 fill in every theme (R-049) */
+  filter: brightness(1.12);
 }
 
 /* Disabled reads as "not yet", not as a dimmer version of the action (label contrast 6.9:1). */

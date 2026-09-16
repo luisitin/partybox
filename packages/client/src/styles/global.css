@@ -70,6 +70,14 @@ button {
   outline-offset: 2px;
 }
 
+/* Phone press state (R-049): every enabled button squeezes the instant the finger is down; the
+   release eases out through whatever `transition: transform` the button already declares. No
+   colour here — that would out-specify PrimaryButton's tones; cards add their own edge/fill. */
+[data-surface='controller'] button:active:not(:disabled) {
+  transform: scale(0.97);
+  transition-duration: 0ms;
+}
+
 .pb-muted {
   color: var(--pb-text-muted);
 }
