@@ -29,8 +29,15 @@
   animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
 }
 
+/* Vote beat: the prompt alone for one beat, then A, then B, then the progress line — the room reads
+   the prompt before the answers. --pb-motion-pulse doubles as the 1 s beat; every token is 0 under
+   reduced motion, so everything lands at once. The reveal's `.cardStill` cancels the rise. */
+.card:nth-child(1) {
+  animation-delay: var(--pb-motion-pulse); /* 1000 ms */
+}
+
 .card:nth-child(2) {
-  animation-delay: var(--pb-motion-fast);
+  animation-delay: calc(var(--pb-motion-pulse) + var(--pb-motion-slow)); /* 1600 ms */
 }
 
 .letter {
@@ -61,6 +68,10 @@
   margin-top: auto;
   color: var(--pb-text-muted);
   font-size: var(--pb-font-body);
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+  animation-delay: calc(
+    var(--pb-motion-pulse) + var(--pb-motion-slow) + var(--pb-motion-base)
+  ); /* 1900 ms: once both answers are in */
 }
 
 /* TV "done": awards under the scoreboard. */
