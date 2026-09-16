@@ -12,6 +12,7 @@
 /* No awards → the board gets the whole stage width (two dense columns for 7+ players). */
 .single {
   grid-template-columns: minmax(0, 1fr);
+  justify-items: center; /* the board has a max width; centred, not pinned left (review-loop #6) */
 }
 
 .awards {
