@@ -29,10 +29,7 @@ function rows(view: BingoTvView): ScoreboardRow[] {
 
 function Call({ call, big }: { call: CallView; big?: boolean }): JSX.Element {
   return (
-    <div
-      className={`${big ? styles.callBig : styles.callSmall} ${big ? 'pb-pop' : 'pb-enter'}`}
-      key={call.number}
-    >
+    <div className={big ? styles.callBig : `${styles.callSmall} pb-enter`} key={call.number}>
       <span className={styles.letter}>{call.letter}</span>
       <span className={styles.number}>{call.number}</span>
     </div>
@@ -114,7 +111,12 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
           {roundLabel} · {view.patternLabel} · call {view.callIndex} of 75
         </p>
         {view.current ? <Call call={view.current} big /> : null}
-        {view.current ? <BigText level="h1">{view.current.call}</BigText> : null}
+        {/* Ball first (180 ms pop), nickname 120 ms behind it: the number is the news (review-loop #1). */}
+        {view.current ? (
+          <div key={view.current.number} className={styles.caption}>
+            <BigText level="h1">{view.current.call}</BigText>
+          </div>
+        ) : null}
         <div className={styles.previousRow}>
           <span className={styles.previousLabel}>{view.previous ? 'Before that' : ' '}</span>
           {view.previous ? <Call call={view.previous} /> : null}

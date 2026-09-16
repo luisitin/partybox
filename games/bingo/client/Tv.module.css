@@ -10,6 +10,8 @@
 }
 
 .callBig {
+  /* The ball lands fast (180 ms, not the 300 ms base) so it is on screen before its caption. */
+  animation: global(pb-pop) calc(var(--pb-motion-base) * 0.6) var(--pb-ease) both;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -34,6 +36,14 @@
   font-size: 320px;
   font-weight: 900;
   font-variant-numeric: tabular-nums;
+}
+
+/* Caption trails the ball by 120 ms and fades over the fast token (no rise: it sits under a pop). */
+.caption {
+  animation-name: global(pb-fade-in);
+  animation-duration: var(--pb-motion-fast);
+  animation-delay: calc(var(--pb-motion-fast) * 0.8);
+  animation-fill-mode: both;
 }
 
 .previousRow {
