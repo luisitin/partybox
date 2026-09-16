@@ -35,6 +35,8 @@ export interface ChoiceGridProps {
   letters?: boolean;
   /** `final` paints the kicker in the accent colour, like the TV's "final question" kicker. */
   tone?: 'default' | 'final';
+  /** Replaces "✓ Locked in — look at the TV" once the server has echoed the pick (e.g. with the time to spare). */
+  lockedHint?: ReactNode;
 }
 
 const LETTERS = 'ABCDEFGH';
@@ -62,6 +64,7 @@ export function ChoiceGrid(props: ChoiceGridProps): JSX.Element {
     fill,
     letters = true,
     tone = 'default',
+    lockedHint,
   } = props;
   const [pending, setPending] = useState<Pending | null>(null);
   // "Adjust state when a prop changes": a new prompt clears the optimistic lock.
@@ -135,7 +138,7 @@ export function ChoiceGrid(props: ChoiceGridProps): JSX.Element {
       {correctId === null ? (
         selectedId !== null ? (
           <p className={styles.locked} role="status">
-            ✓ Locked in — look at the TV
+            {lockedHint ?? '✓ Locked in — look at the TV'}
           </p>
         ) : pendingId !== null ? (
           <p className={styles.locked} role="status">

@@ -47,12 +47,14 @@ export interface OutcomeProps {
   view: LightningControllerView;
   /** The streak this player carried into the question (myStreak is already reset at reveal). */
   streakBefore: number;
+  /** Seconds left on the clock when this player locked in (null: unknown, e.g. after a reconnect). */
+  spare?: number | null;
 }
 
 // The reveal is the best moment of the round: verdict as a headline, the delta at display size
 // toned by its sign (gold is not for losses), the right answer in words (the ✓ card can sit
 // below the fold), streak and running total as a caption.
-export function Outcome({ view, streakBefore }: OutcomeProps): JSX.Element {
+export function Outcome({ view, streakBefore, spare = null }: OutcomeProps): JSX.Element {
   const outcome = view.outcome;
   if (!outcome) {
     return (
@@ -83,7 +85,7 @@ export function Outcome({ view, streakBefore }: OutcomeProps): JSX.Element {
         ? `Wagered nothing · final score ${view.myScore}`
         : `Lost the wager · final score ${view.myScore}`
     : outcome.correct
-      ? `${view.myStreak >= 2 ? `🔥 streak ${view.myStreak} · ` : ''}${view.myScore} points`
+      ? `${view.myStreak >= 2 ? `🔥 streak ${view.myStreak} · ` : ''}${spare !== null ? `${spare} s to spare · ` : ''}${view.myScore} points`
       : streakBefore >= 2
         ? `Streak of ${streakBefore} over · ${view.myScore} points`
         : `${view.myScore} points`;

@@ -2,7 +2,7 @@
 // tap, ✓/✗ in reveal), a ChoiceGrid of wager options before the final, waiting screens otherwise.
 import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
-import { ChoiceGrid, WaitingScreen, buzz } from '@partybox/game-sdk/ui';
+import { ChoiceGrid, WaitingScreen, buzz, useSecondsLeft } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { LightningControllerView } from '../server/index';
 import type { Input } from '../server/types';
@@ -27,6 +27,10 @@ export function Controller({
   const { phaseId } = view;
   // The streak carried into the question: `myStreak` is already reset in the reveal view.
   const [streakBefore, setStreakBefore] = useState(0);
+  // Speed is the point: remember the header's seconds-left at the tap so the locked line can say
+  // how fast the pick was (same rounded number the shell prints, so hint and header agree).
+  const secondsLeft = useSecondsLeft(view.deadline, view.paused);
+  const [lockedAt, setLockedAt] = useState<{ questionId: string; seconds: number } | null>(null);
   if (phaseId === 'question' && streakBefore !== view.myStreak) setStreakBefore(view.myStreak);
   // Haptic verdict (Android; iOS ignores it): once per reveal, alongside the card.
   const correct = view.outcome?.correct;
@@ -52,6 +56,15 @@ export function Controller({
     const finalQ = view.round?.final === true;
     // A missing wager counts as 0 (server/phases/wager.ts); the key is only present once tapped.
     const stake = finalQ && phaseId === 'question' ? (view.myWagerAmount ?? 0) : null;
+    // Comparing the id at render is the reset; a reconnect after picking gets the default line.
+    const spare = locked && lockedAt?.questionId === view.question.id ? lockedAt.seconds : null;
+    const lockedHint =
+      spare === null
+        ? undefined
+        : spare <= 3
+          ? '✓ Just made it — look at the TV'
+          : `✓ Locked in with ${spare} s to spare — look at the TV`;
+    const questionId = view.question.id;
     return (
       <ChoiceGrid
         fill
@@ -63,10 +76,14 @@ export function Controller({
         selectedId={locked ? String(view.myPickIndex) : null}
         correctId={revealed && view.correctIndex !== undefined ? String(view.correctIndex) : null}
         disabled={revealed}
-        onPick={(id) => send({ type: 'pick', index: Number(id) })}
+        lockedHint={lockedHint}
+        onPick={(id) => {
+          if (secondsLeft !== null) setLockedAt({ questionId, seconds: secondsLeft });
+          send({ type: 'pick', index: Number(id) });
+        }}
         footer={
           revealed ? (
-            <Outcome view={view} streakBefore={streakBefore} />
+            <Outcome view={view} streakBefore={streakBefore} spare={spare} />
           ) : stake !== null ? (
             <Stake amount={stake} />
           ) : null
