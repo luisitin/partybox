@@ -27,19 +27,29 @@ function ControllerScores({ view, me }: Props): JSX.Element {
   // The delta counts up from 0 and the total from the previous score (one --pb-motion-slow).
   const delta = useCountUp(view.myDelta, 0, COUNT_MS);
   const score = useCountUp(view.myScore, view.myScore - view.myDelta, COUNT_MS);
+  const rankLine = `${final ? 'Final: ' : ''}#${view.myRank} of ${view.standings.length} · ${score} points`;
   return (
     <Screen>
       <div className={styles.scoresHero} role="status" aria-live="polite">
-        <p
-          className={styles.deltaHero}
-          data-zero={view.myDelta === 0 || undefined}
-          aria-label={`+${view.myDelta} points ${final ? 'in the final round' : 'this round'}`}
-        >
-          +{delta}
-        </p>
-        <h2 className={styles.rankLine}>
-          {final ? 'Final: ' : ''}#{view.myRank} of {view.standings.length} · {score} points
-        </h2>
+        {view.myDelta === 0 ? (
+          // Nothing to count up: the rank is the news, and a giant grey "+0" is not (review-loop #31).
+          <>
+            <h2 className={styles.rankHero}>{rankLine}</h2>
+            <p className="pb-caption pb-muted">
+              {final ? 'No points in the final round' : 'No points this round'}
+            </p>
+          </>
+        ) : (
+          <>
+            <p
+              className={styles.deltaHero}
+              aria-label={`+${view.myDelta} points ${final ? 'in the final round' : 'this round'}`}
+            >
+              +{delta}
+            </p>
+            <h2 className={styles.rankLine}>{rankLine}</h2>
+          </>
+        )}
       </div>
       <Scoreboard compact highlightId={me.id} rows={view.standings} noTrophy />
     </Screen>

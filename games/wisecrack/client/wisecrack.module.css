@@ -169,12 +169,20 @@
   text-wrap: balance;
 }
 
-/* Phone "scores": the round delta as the hero (quiet when +0), my rank under it, board below. */
+/* Phone "scores": the round delta as the hero, my rank under it, board below. At +0 there is no
+   delta to celebrate: the rank line takes the hero slot instead (review-loop #31). */
 .scoresHero {
   display: flex;
   flex-direction: column;
   gap: 0;
   text-align: center;
+}
+
+.rankHero {
+  margin: 0;
+  font-size: var(--pb-font-h1);
+  font-weight: 900;
+  text-wrap: balance;
 }
 
 .deltaHero {
@@ -183,10 +191,6 @@
   line-height: 1;
   font-variant-numeric: tabular-nums;
   color: var(--pb-accent-3);
-}
-
-.deltaHero[data-zero] {
-  color: var(--pb-text-muted);
 }
 
 .rankLine {
