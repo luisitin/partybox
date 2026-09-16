@@ -26,10 +26,12 @@ function CallHeader({
   current,
   previous,
   index,
+  pattern,
 }: {
   current: CallView | null;
   previous: CallView | null;
   index: number;
+  pattern: string;
 }): JSX.Element {
   if (!current) return <div className={styles.header} />;
   return (
@@ -117,10 +119,17 @@ export function Controller({
             </div>
           </div>
         ) : (
-          <CallHeader current={view.current} previous={view.previous} index={view.callIndex} />
+          <CallHeader
+            current={view.current}
+            previous={view.previous}
+            index={view.callIndex}
+            pattern={view.patternLabel}
+          />
         )}
         {intro ? (
-          <p className={styles.hint}>Your new card. Daub what you hear — FREE too — tap again to undo.</p>
+          <p className={styles.hint}>
+            Your new card. Daub what you hear — FREE too — tap again to undo.
+          </p>
         ) : null}
         {mine && claim ? (
           // Your failed claim, exactly as the room sees it: the wipe lands when play resumes.
