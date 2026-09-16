@@ -36,6 +36,22 @@
   max-width: none;
 }
 
+/* Large: the board owns the stage (results, 7–8 players in two columns of ≤ 4). 1.1× h2 with
+   roomier padding — h1 rows spilled their scores out of a 3/5-width column (review-loop #32). */
+.lg .row {
+  font-size: calc(var(--pb-font-h2) * 1.1);
+  padding: var(--pb-space-3) var(--pb-space-4);
+  --pb-chip-size: 1.4em;
+}
+
+.lg .name {
+  min-width: 4ch;
+}
+
+.lg {
+  gap: var(--pb-space-3) var(--pb-space-5);
+}
+
 /* Column-major: ranks read down the left column, then the next (--pb-board-rows is set inline). */
 .dense,
 .tight3 {

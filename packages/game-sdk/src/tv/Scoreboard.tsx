@@ -33,6 +33,8 @@ export interface ScoreboardProps {
   noTrophy?: boolean;
   /** Force (true) or suppress (false) the two-column tier; 13+ rows always go three-column. */
   dense?: boolean;
+  /** `lg`: large rows for a board that owns the stage (results at 7–8 players, review-loop #32). */
+  size?: 'md' | 'lg';
   /** Rows to mark with a ✓ in the delta slot when they carry no delta (e.g. "wager placed"). */
   markIds?: readonly string[];
   /**
@@ -67,6 +69,7 @@ export function Scoreboard({
   highlightId,
   noTrophy,
   dense,
+  size = 'md',
   markIds = [],
   stagger = 'up',
 }: ScoreboardProps): JSX.Element {
@@ -82,7 +85,7 @@ export function Scoreboard({
   const countDelayMs = stepMs * Math.max(0, rows.length - 1) + MOTION_BASE;
   return (
     <ol
-      className={`${styles.board} ${tier === 'roomy' ? '' : styles[tier]} ${staggered ? styles.staggered : ''} ${staggered && stagger === 'down' ? styles.down : ''}`}
+      className={`${styles.board} ${tier === 'roomy' ? '' : styles[tier]} ${size === 'lg' ? styles.lg : ''} ${staggered ? styles.staggered : ''} ${staggered && stagger === 'down' ? styles.down : ''}`}
       style={{ '--pb-board-rows': Math.ceil(rows.length / cols) } as CSSProperties}
       aria-label="scoreboard"
     >

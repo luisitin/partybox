@@ -27,6 +27,9 @@ export function TvResults({ room, lastView = null }: TvResultsProps): JSX.Elemen
   const module = room.results ? clientGames[room.results.gameId] : undefined;
   const Finale = module?.Finale;
   const keepBoard = Boolean(Finale && lastView && module?.finale?.(lastView));
+  // 7–8 rows sit in two columns of ≤ 4: large rows and a wider board column, or the lower half of
+  // the stage is bare (review-loop #32).
+  const large = many && rows.length <= 8;
   return (
     <Stage>
       <div className={`${styles.hero} pb-enter`}>
@@ -42,8 +45,10 @@ export function TvResults({ room, lastView = null }: TvResultsProps): JSX.Elemen
           </Suspense>
         </GameErrorBoundary>
       ) : (
-        <div className={`${styles.columns} ${awards.length === 0 ? styles.single : ''}`}>
-          <Scoreboard rows={rows} noTrophy={nobodyScored(room)} />
+        <div
+          className={`${styles.columns} ${awards.length === 0 ? styles.single : ''} ${large ? styles.wide : ''}`}
+        >
+          <Scoreboard rows={rows} noTrophy={nobodyScored(room)} size={large ? 'lg' : 'md'} />
           {awards.length > 0 ? (
             <ul className={styles.awards} aria-label="awards">
               {awards.map((a) => (

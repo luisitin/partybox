@@ -9,6 +9,11 @@
   align-items: start;
 }
 
+/* Large board tier (7–8 players): two thirds for the board, the awards keep a third. */
+.wide {
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+}
+
 /* No awards → the board gets the whole stage width (two dense columns for 7+ players). */
 .single {
   grid-template-columns: minmax(0, 1fr);
