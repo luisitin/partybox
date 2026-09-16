@@ -88,6 +88,7 @@ async function main(): Promise<void> {
     await settle(800);
 
     const still = async (page: Page, name: string): Promise<void> => {
+      if (page.isClosed()) return; // vip-leaves closes a phone mid-run
       await page.screenshot({ path: join(OUT, 'stills', `${name}.png`) });
     };
     await still(tv, '00-lobby-tv');
