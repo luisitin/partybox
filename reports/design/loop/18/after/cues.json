@@ -1,0 +1,209 @@
+[
+  {
+    "t": 1789594477646,
+    "surface": "tv",
+    "freqs": [523, 784],
+    "cue": "ready",
+    "phase": "lobby",
+    "at": "21:34:37.646",
+    "sinceStartS": -2.4
+  },
+  {
+    "t": 1789594478339,
+    "surface": "tv",
+    "freqs": [523, 659],
+    "cue": "join",
+    "phase": "lobby",
+    "at": "21:34:38.339",
+    "sinceStartS": -1.7
+  },
+  {
+    "t": 1789594479058,
+    "surface": "tv",
+    "freqs": [587, 740],
+    "cue": "join",
+    "phase": "lobby",
+    "at": "21:34:39.058",
+    "sinceStartS": -0.98
+  },
+  {
+    "t": 1789594479111,
+    "surface": "tv",
+    "freqs": [659, 830],
+    "cue": "join",
+    "phase": "lobby",
+    "at": "21:34:39.111",
+    "sinceStartS": -0.93
+  },
+  {
+    "t": 1789594480066,
+    "surface": "tv",
+    "freqs": [392, 523, 659, 784],
+    "cue": "start",
+    "phase": "pick",
+    "at": "21:34:40.066",
+    "sinceStartS": 0.02
+  },
+  {
+    "t": 1789594480706,
+    "surface": "tv",
+    "freqs": [1568],
+    "cue": "?",
+    "phase": "pick",
+    "at": "21:34:40.706",
+    "sinceStartS": 0.66
+  },
+  {
+    "t": 1789594480991,
+    "surface": "tv",
+    "freqs": [1760],
+    "cue": "?",
+    "phase": "pick",
+    "at": "21:34:40.991",
+    "sinceStartS": 0.95
+  },
+  {
+    "t": 1789594484069,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "cue": "phase",
+    "phase": "pick",
+    "at": "21:34:44.069",
+    "sinceStartS": 4.03
+  },
+  {
+    "t": 1789594484775,
+    "surface": "tv",
+    "freqs": [1568],
+    "cue": "?",
+    "phase": "draw",
+    "at": "21:34:44.775",
+    "sinceStartS": 4.73
+  },
+  {
+    "t": 1789594485843,
+    "surface": "tv",
+    "freqs": [1760],
+    "cue": "?",
+    "phase": "draw",
+    "at": "21:34:45.843",
+    "sinceStartS": 5.8
+  },
+  {
+    "t": 1789594488280,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "cue": "phase",
+    "phase": "draw",
+    "at": "21:34:48.280",
+    "sinceStartS": 8.24
+  },
+  {
+    "t": 1789594493676,
+    "surface": "tv",
+    "freqs": [1568],
+    "cue": "?",
+    "phase": "pass",
+    "at": "21:34:53.676",
+    "sinceStartS": 13.63
+  },
+  {
+    "t": 1789594528324,
+    "surface": "tv",
+    "freqs": [880],
+    "cue": "?",
+    "phase": "pass",
+    "at": "21:35:28.324",
+    "sinceStartS": 48.28
+  },
+  {
+    "t": 1789594528385,
+    "surface": "phone",
+    "freqs": [880],
+    "cue": "?",
+    "phase": "pass",
+    "at": "21:35:28.385",
+    "sinceStartS": 48.34
+  },
+  {
+    "t": 1789594529329,
+    "surface": "tv",
+    "freqs": [988],
+    "cue": "?",
+    "phase": "pass",
+    "at": "21:35:29.329",
+    "sinceStartS": 49.29
+  },
+  {
+    "t": 1789594530328,
+    "surface": "tv",
+    "freqs": [1109],
+    "cue": "?",
+    "phase": "pass",
+    "at": "21:35:30.328",
+    "sinceStartS": 50.29
+  },
+  {
+    "t": 1789594531326,
+    "surface": "tv",
+    "freqs": [1175],
+    "cue": "?",
+    "phase": "pass",
+    "at": "21:35:31.326",
+    "sinceStartS": 51.28
+  },
+  {
+    "t": 1789594532329,
+    "surface": "tv",
+    "freqs": [1319],
+    "cue": "?",
+    "phase": "pass",
+    "at": "21:35:32.329",
+    "sinceStartS": 52.29
+  },
+  {
+    "t": 1789594533278,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "cue": "phase",
+    "phase": "pass",
+    "at": "21:35:33.278",
+    "sinceStartS": 53.24
+  },
+  {
+    "t": 1789594533902,
+    "surface": "tv",
+    "freqs": [1568],
+    "cue": "?",
+    "phase": "guess",
+    "at": "21:35:33.902",
+    "sinceStartS": 53.86
+  },
+  {
+    "t": 1789594534572,
+    "surface": "tv",
+    "freqs": [1760],
+    "cue": "?",
+    "phase": "guess",
+    "at": "21:35:34.572",
+    "sinceStartS": 54.53
+  },
+  {
+    "t": 1789594537438,
+    "surface": "tv",
+    "freqs": [330, 330, 494, 659, 988, 1319],
+    "cue": "?",
+    "phase": "guess",
+    "at": "21:35:37.438",
+    "sinceStartS": 57.4
+  },
+  {
+    "t": 1789594610191,
+    "surface": "tv",
+    "freqs": [392, 523, 523, 659, 784, 784, 1047],
+    "cue": "?",
+    "phase": "show",
+    "at": "21:36:50.191",
+    "sinceStartS": 130.15
+  }
+]
