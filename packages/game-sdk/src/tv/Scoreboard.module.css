@@ -113,3 +113,33 @@
   color: var(--pb-accent-2);
   font-weight: 900;
 }
+
+/* Entrance (R-056): rows rise one per --pb-stagger-step in --pb-i order; each delta lands a beat
+   after its row; the leader's trophy pops last. Tokens only, so reduced motion = instant. */
+.staggered {
+  --pb-stagger-step: var(--pb-motion-fast);
+}
+
+.staggered.dense,
+.staggered.tight3,
+.staggered.down {
+  --pb-stagger-step: calc(var(--pb-motion-fast) / 2);
+}
+
+.staggered .row {
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+  animation-delay: calc(var(--pb-i, 0) * var(--pb-stagger-step));
+}
+
+.staggered .delta {
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+  animation-delay: calc(var(--pb-i, 0) * var(--pb-stagger-step) + var(--pb-motion-base));
+}
+
+.staggered .top .rank {
+  display: inline-block;
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+  animation-delay: calc(
+    var(--pb-i, 0) * var(--pb-stagger-step) + var(--pb-motion-base) + var(--pb-motion-slow)
+  );
+}

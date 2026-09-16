@@ -61,3 +61,39 @@ export function useHold(key: string | number | null, ms: number): boolean {
   }, [key, ms]);
   return ms <= 0 || (held.key === key && held.done);
 }
+
+/** The motion tokens in ms (tokens.css), for JS-driven sequences that must line up with CSS. */
+export const MOTION_FAST = 150;
+export const MOTION_BASE = 300;
+export const MOTION_SLOW = 600;
+
+/**
+ * Counts from `from` to `target` over `ms` (cubic ease-out, requestAnimationFrame) after
+ * `delayMs`; returns `target` at once when from === target, ms <= 0 or the viewer prefers
+ * reduced motion. Restarts when any argument changes.
+ */
+export function useCountUp(target: number, from: number, ms: number, delayMs = 0): number {
+  const reduced = usePrefersReducedMotion();
+  const still = reduced || ms <= 0 || from === target;
+  const [value, setValue] = useState(from);
+  useEffect(() => {
+    if (still) return;
+    let raf = 0;
+    let startedAt = 0;
+    const tick = (t: number): void => {
+      if (!startedAt) startedAt = t;
+      const p = Math.min(1, (t - startedAt) / ms);
+      const eased = 1 - (1 - p) ** 3;
+      setValue(Math.round(from + (target - from) * eased));
+      if (p < 1) raf = requestAnimationFrame(tick);
+    };
+    const timer = setTimeout(() => {
+      raf = requestAnimationFrame(tick);
+    }, delayMs);
+    return () => {
+      clearTimeout(timer);
+      cancelAnimationFrame(raf);
+    };
+  }, [target, from, ms, delayMs, still]);
+  return still ? target : value;
+}

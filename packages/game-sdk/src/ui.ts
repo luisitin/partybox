@@ -24,7 +24,15 @@ export type { DeadlineBarProps } from './ui/DeadlineBar';
 export { SOUND_CUES, SoundProvider, isSoundCue, useSound } from './ui/sound';
 export type { PlayCue, SoundCue } from './ui/sound';
 export { buzz, hapticsEnabled, setHapticsEnabled } from './ui/haptics';
-export { useBeats, useHold, usePrefersReducedMotion as useReducedMotion } from './ui/motion';
+export {
+  MOTION_BASE,
+  MOTION_FAST,
+  MOTION_SLOW,
+  useBeats,
+  useCountUp,
+  useHold,
+  usePrefersReducedMotion as useReducedMotion,
+} from './ui/motion';
 
 // ── TV ───────────────────────────────────────────────────────────────────────────────────────
 export { Stage } from './tv/Stage';
