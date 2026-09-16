@@ -87,7 +87,7 @@ async function act(page: Page, seed: number): Promise<string | null> {
     const input = page.getByLabel('your answer');
     if (!(await input.isEditable({ timeout: 1000 }).catch(() => false))) return null;
     await input.fill(text, { timeout: 3000 });
-    const btn = page.getByRole('button', { name: /^(Submit|Next prompt)$/ });
+    const btn = page.getByRole('button', { name: /^(Submit( \d+ of \d+)?|Next prompt)$/ });
     if ((await btn.count()) === 0) return null;
     if (
       !(await btn

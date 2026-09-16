@@ -20,6 +20,10 @@ export interface TextAnswerProps {
   onSubmit: (text: string) => void;
   /** Distinguishes prompts so the draft resets when the prompt changes. */
   promptKey?: string;
+  /** Forwarded to the Screen (e.g. `pb-enter` so a new prompt arrives as a new card). */
+  className?: string;
+  /** Under "You said …" once submitted; default points at the TV. */
+  submittedHint?: ReactNode;
 }
 
 export function TextAnswer(props: TextAnswerProps): JSX.Element {
@@ -33,6 +37,8 @@ export function TextAnswer(props: TextAnswerProps): JSX.Element {
     submitLabel = 'Submit',
     onSubmit,
     promptKey,
+    className,
+    submittedHint = 'Waiting for the others — look at the TV',
   } = props;
   const [text, setText] = useState('');
   const lastKey = useRef(promptKey);
@@ -48,6 +54,7 @@ export function TextAnswer(props: TextAnswerProps): JSX.Element {
     // The dead textarea + counter added nothing once the answer was in; show what was sent instead.
     return (
       <Screen
+        className={className}
         footer={
           <PrimaryButton done onClick={() => undefined}>
             Submitted
@@ -65,13 +72,14 @@ export function TextAnswer(props: TextAnswerProps): JSX.Element {
           ) : (
             <span className={styles.sentLabel}>Your answer is in</span>
           )}
-          <span className={styles.sentHint}>Waiting for the others — look at the TV</span>
+          <span className={styles.sentHint}>{submittedHint}</span>
         </div>
       </Screen>
     );
   }
   return (
     <Screen
+      className={className}
       footer={
         <PrimaryButton
           onClick={() => canSubmit && onSubmit(trimmed)}
