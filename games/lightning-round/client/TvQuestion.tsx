@@ -2,6 +2,7 @@
 // marked with ✓ (never colour-only) plus one row per player with verdict, points and streak.
 import type { CSSProperties, JSX } from 'react';
 import { Avatar, BigText } from '@partybox/game-sdk/ui';
+import type { ViewPlayer } from '@partybox/game-sdk/ui';
 import type { QuestionView, RevealRow, RoundView } from '../server/views';
 import styles from './Tv.module.css';
 
@@ -101,25 +102,70 @@ export function AnswerCard({
   );
 }
 
+/** "Sam", "Sam and Priya", "Sam, Priya and Kenji". */
+export function joinNames(names: string[]): string {
+  if (names.length <= 1) return names[0] ?? '';
+  return `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}`;
+}
+
+/**
+ * Who the room is waiting for: connected players who have not locked in. Not derived from
+ * m − n — the count includes picks from players who have since dropped.
+ */
+export function holdoutsOf(players: ViewPlayer[]): string[] {
+  return players.filter((p) => p.connected && p.status === 'active').map((p) => p.name);
+}
+
+/** "3 / 6 locked in · waiting for Sam and Priya" — the number pops on every change. */
+export function CountLine({
+  answeredCount,
+  totalCount,
+  players,
+  verb,
+}: {
+  answeredCount: number;
+  totalCount: number;
+  players: ViewPlayer[];
+  verb: string;
+}): JSX.Element {
+  const holdouts = holdoutsOf(players);
+  return (
+    <p className={styles.count} role="status">
+      <span key={answeredCount} className={styles.countNum}>
+        {answeredCount} / {totalCount}
+      </span>{' '}
+      {verb}
+      {holdouts.length >= 1 && holdouts.length <= 3 ? (
+        <span className={styles.holdouts}> · waiting for {joinNames(holdouts)}</span>
+      ) : null}
+    </p>
+  );
+}
+
 export function TvQuestion({
   round,
   question,
   answeredCount,
   totalCount,
+  players,
 }: {
   round: RoundView | null;
   question: QuestionView | null;
   answeredCount: number;
   totalCount: number;
+  players: ViewPlayer[];
 }): JSX.Element {
   return (
     <>
       <RoundHeader round={round} question={question} />
       <BigText level="h1">{question?.text ?? '…'}</BigText>
       {question ? <ChoiceBoard question={question} /> : null}
-      <p className={styles.count} role="status">
-        {answeredCount} / {totalCount} answered
-      </p>
+      <CountLine
+        answeredCount={answeredCount}
+        totalCount={totalCount}
+        players={players}
+        verb="locked in"
+      />
     </>
   );
 }

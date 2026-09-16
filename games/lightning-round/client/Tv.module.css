@@ -131,6 +131,20 @@
   margin: 0;
 }
 
+/* The number is keyed on its value so every lock-in remounts it and it pops. */
+.countNum {
+  display: inline-block;
+  color: var(--pb-text);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.holdouts {
+  color: var(--pb-text-muted);
+  font-weight: 400;
+}
+
 .rows {
   list-style: none;
   margin: 0;

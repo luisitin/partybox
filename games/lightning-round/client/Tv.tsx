@@ -5,7 +5,7 @@ import { BigText, Scoreboard, Stage } from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
 import type { LightningTvView } from '../server/index';
 import { FinalReveal } from './TvFinal';
-import { AnswerCard, RevealRows, RoundHeader, TvQuestion } from './TvQuestion';
+import { AnswerCard, CountLine, RevealRows, RoundHeader, TvQuestion } from './TvQuestion';
 import styles from './Tv.module.css';
 
 export function Tv({ view }: GameTvProps<LightningTvView>): JSX.Element {
@@ -31,6 +31,7 @@ export function Tv({ view }: GameTvProps<LightningTvView>): JSX.Element {
           question={view.question}
           answeredCount={view.answeredCount}
           totalCount={view.totalCount}
+          players={view.players}
         />
       </Stage>
     );
@@ -66,10 +67,12 @@ export function Tv({ view }: GameTvProps<LightningTvView>): JSX.Element {
           <span className={`${styles.kicker} ${styles.final}`}>Final question next</span>
         </div>
         <BigText level="h1">Place your wagers</BigText>
-        <p className={styles.count} role="status">
-          {view.answeredCount} / {view.totalCount} placed · right answer wins it, wrong answer loses
-          it
-        </p>
+        <CountLine
+          answeredCount={view.answeredCount}
+          totalCount={view.totalCount}
+          players={view.players}
+          verb="placed · right answer wins it, wrong answer loses it"
+        />
         <Scoreboard rows={standings} noTrophy />
       </Stage>
     );
