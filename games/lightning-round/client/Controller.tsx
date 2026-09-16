@@ -40,7 +40,9 @@ export function Controller({
     const revealed = phaseId === 'reveal';
     const locked = view.myPickIndex !== null;
     return (
+      // A new question rises as a new screen; question → reveal keeps the same node.
       <ChoiceGrid
+        key={`q${view.round?.number ?? 0}`}
         kicker={roundKicker(view)}
         prompt={view.question.text}
         choices={view.question.choices.map((label, index) => ({ id: String(index), label }))}
@@ -58,6 +60,7 @@ export function Controller({
     const selected = placed === undefined ? null : options.find((o) => o.amount === placed);
     return (
       <ChoiceGrid
+        key="wager"
         kicker="Final question next"
         prompt={
           view.myScore > 0
