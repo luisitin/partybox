@@ -1,0 +1,41 @@
+{
+  "pass": "23",
+  "game": "broken-pencil",
+  "players": 6,
+  "scenario": "spicy",
+  "focus": "tv",
+  "started": "22:05:38.631",
+  "tvVideoT0": "22:05:35.484",
+  "changes": [
+    {
+      "t": 1789596338633,
+      "status": "playing",
+      "phase": "pick",
+      "deadline": 1789596358630,
+      "at": "22:05:38.633",
+      "sinceStartS": 0,
+      "videoS": 3.1
+    },
+    {
+      "t": 1789596342785,
+      "status": "playing",
+      "phase": "draw",
+      "deadline": 1789596372738,
+      "at": "22:05:42.785",
+      "sinceStartS": 4.2,
+      "videoS": 7.3
+    },
+    {
+      "t": 1789596346995,
+      "status": "playing",
+      "phase": "pass",
+      "deadline": 1789596391887,
+      "at": "22:05:46.995",
+      "sinceStartS": 8.4,
+      "videoS": 11.5
+    }
+  ],
+  "notes": [
+    "budget reached while playing; skipped to results"
+  ]
+}
