@@ -40,7 +40,11 @@ function CallHeader({
   return (
     <div className={styles.header} role="status" aria-live="polite">
       <div className={styles.now} key={current.number}>
-        <span className={styles.phrase}>{current.call}</span>
+        {/* Spicy nicknames run long ("Doctor's orders — take two and call me"): over ~20 characters
+            the phrase steps down a size so a 320 px phone keeps the call line below it (loop #7). */}
+        <span className={`${styles.phrase} ${current.call.length > 20 ? styles.phraseLong : ''}`}>
+          {current.call}
+        </span>
       </div>
       <p className={styles.meta}>
         Call {index} · {pattern} ·{' '}
