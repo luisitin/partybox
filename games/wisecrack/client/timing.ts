@@ -3,6 +3,7 @@
 // rule 5: the phone never spoils). CSS tokens are not readable from JS, so the beats mirror
 // --pb-motion-base / -slow the way Reveal.tsx's stepMs does.
 import { useEffect, useState } from 'react';
+import { usePrefersReducedMotion } from '@partybox/game-sdk/ui';
 
 /** TvReveal: voters at 300 ms, authors at 900 ms, points + outline + pill at 1500 ms. */
 export const REVEAL_BEATS_MS = [0, 300, 900, 1500] as const;
@@ -23,4 +24,28 @@ export function useHold(ms: number): boolean {
     return () => clearTimeout(handle);
   }, [ms]);
   return shown;
+}
+
+/**
+ * A number that counts from `from` to `target` over `ms` (cubic ease-out, requestAnimationFrame).
+ * Returns `target` at once under reduced motion, when ms <= 0, or when nothing changes. Local to
+ * Wisecrack until the SDK's useCountUp lands (R-056); same signature minus the delay.
+ */
+export function useCountUp(target: number, from: number, ms: number): number {
+  const reduced = usePrefersReducedMotion();
+  const [progress, setProgress] = useState(0);
+  const still = reduced || ms <= 0 || from === target;
+  useEffect(() => {
+    if (still) return;
+    const t0 = performance.now();
+    let raf = requestAnimationFrame(function tick(now) {
+      const p = Math.min(1, (now - t0) / ms);
+      setProgress(p);
+      if (p < 1) raf = requestAnimationFrame(tick);
+    });
+    return () => cancelAnimationFrame(raf);
+  }, [still, target, from, ms]);
+  if (still) return target;
+  const eased = 1 - (1 - progress) ** 3;
+  return Math.round(from + (target - from) * eased);
 }

@@ -10,9 +10,13 @@ import type { Input } from '../server/types';
 import { ControllerAnswer } from './ControllerAnswer';
 import { ControllerReveal, ControllerVote } from './ControllerVote';
 import type { LastVote } from './ControllerVote';
+import { useCountUp } from './timing';
 import styles from './wisecrack.module.css';
 
 type Props = GameControllerProps<WisecrackControllerView, Input>;
+
+/** Mirrors --pb-motion-slow (CSS tokens are not readable from JS). */
+const COUNT_MS = 600;
 
 // results() ends the game in the same dispatch that enters 'done'; the engine's results screen is
 // the ceremony — only the dev fixture preview renders that phase, as the final-scores screen.
@@ -20,6 +24,9 @@ type Props = GameControllerProps<WisecrackControllerView, Input>;
 // rank, then the compact board with a numeric rank (the crown is the results screen's).
 function ControllerScores({ view, me }: Props): JSX.Element {
   const final = view.round >= view.rounds;
+  // The delta counts up from 0 and the total from the previous score (one --pb-motion-slow).
+  const delta = useCountUp(view.myDelta, 0, COUNT_MS);
+  const score = useCountUp(view.myScore, view.myScore - view.myDelta, COUNT_MS);
   return (
     <Screen>
       <div className={styles.scoresHero} role="status" aria-live="polite">
@@ -28,10 +35,10 @@ function ControllerScores({ view, me }: Props): JSX.Element {
           data-zero={view.myDelta === 0 || undefined}
           aria-label={`+${view.myDelta} points ${final ? 'in the final round' : 'this round'}`}
         >
-          +{view.myDelta}
+          +{delta}
         </p>
         <h2 className={styles.rankLine}>
-          {final ? 'Final: ' : ''}#{view.myRank} of {view.standings.length} · {view.myScore} points
+          {final ? 'Final: ' : ''}#{view.myRank} of {view.standings.length} · {score} points
         </h2>
       </div>
       <Scoreboard compact highlightId={me.id} rows={view.standings} noTrophy />

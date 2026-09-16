@@ -27,7 +27,7 @@ export function TvScores({ view }: Props): JSX.Element {
         </BigText>
       ) : null}
       <div className={styles.board}>
-        <Scoreboard rows={view.standings} noTrophy />
+        <Scoreboard rows={view.standings} noTrophy stagger="up" />
       </div>
       {final ? (
         <BigText level="h2" tone="accent">
