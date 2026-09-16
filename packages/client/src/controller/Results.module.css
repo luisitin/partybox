@@ -44,3 +44,10 @@
   flex-direction: column;
   gap: var(--pb-space-2);
 }
+
+/* Title + name on one line, the description as a caption under it (review-loop #31). */
+.award {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-1);
+}

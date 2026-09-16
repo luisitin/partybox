@@ -78,10 +78,12 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
       {room.results?.results.awards.length ? (
         <ul className={styles.awards}>
           {room.results.results.awards.map((a) => (
-            <li key={a.id}>
-              <strong>{a.title}</strong> —{' '}
-              {room.results?.players.find((p) => p.id === a.playerId)?.name ?? '?'}
-              <span className="pb-muted pb-caption"> {a.description}</span>
+            <li key={a.id} className={styles.award}>
+              <span>
+                <strong>{a.title}</strong> ·{' '}
+                {room.results?.players.find((p) => p.id === a.playerId)?.name ?? '?'}
+              </span>
+              <span className="pb-muted pb-caption">{a.description}</span>
             </li>
           ))}
         </ul>
