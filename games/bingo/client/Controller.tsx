@@ -136,64 +136,66 @@ export function Controller({
           )
         }
       >
-        {intro ? (
-          // Compact on purpose: icon, name and hint in one block so the whole card fits a 659 px
-          // viewport (iPhone 15 in Safari) without scrolling.
-          <div className={styles.intro}>
-            <PatternIcon cells={view.patternCells} size={48} />
-            <div>
-              <p className={styles.patternLabel}>{view.patternLabel}</p>
-              <p className={styles.hint}>{view.patternHint}</p>
+        <div className={styles.roundBody}>
+          {intro ? (
+            // Compact on purpose: icon, name and hint in one block so the whole card fits a 659 px
+            // viewport (iPhone 15 in Safari) without scrolling.
+            <div className={styles.intro}>
+              <PatternIcon cells={view.patternCells} size={48} />
+              <div>
+                <p className={styles.patternLabel}>{view.patternLabel}</p>
+                <p className={styles.hint}>{view.patternHint}</p>
+              </div>
             </div>
-          </div>
-        ) : (
-          <CallHeader
-            current={view.current}
-            previous={view.previous}
-            index={view.callIndex}
-            pattern={view.patternLabel}
-            missed={missed && !view.showBoard ? missed.names : null}
-          />
-        )}
-        {missed && view.showBoard ? (
-          <p className={`${styles.missedToast} pb-pop`} role="status">
-            {missed.count === 1
-              ? 'Back — you missed a number. It is on the TV board.'
-              : `Back — you missed ${missed.count} numbers. They are on the TV board.`}
-          </p>
-        ) : null}
-        {intro ? (
-          <p className={styles.hint}>
-            Your new card. Daub what you hear — FREE too — tap again to undo.
-          </p>
-        ) : null}
-        {mine && claim ? (
-          // Your failed claim, exactly as the room sees it: the wipe lands when play resumes.
-          <div className="pb-pop">
-            <p className={styles.wipeNote}>Card wiped — re-daub from memory when play resumes.</p>
-            <Card
-              numbers={claim.card}
-              daubs={claim.daubs}
-              green={claim.green}
-              red={claim.red}
-              missing={claim.missing}
-              verdict
-              disabled
+          ) : (
+            <CallHeader
+              current={view.current}
+              previous={view.previous}
+              index={view.callIndex}
+              pattern={view.patternLabel}
+              missed={missed && !view.showBoard ? missed.names : null}
             />
-          </div>
-        ) : (
-          <div key={view.waitingForCall ? 'wiped' : 'card'} className="pb-enter">
-            <Card
-              numbers={card}
-              daubs={intro ? [] : view.daubs}
-              pattern={intro && view.pattern !== 'line' ? view.patternCells : []}
-              freeDaubed={freeDaubed}
-              onTapFree={() => setFreeDaubed((v) => !v)}
-              onTap={(index) => send({ type: 'daub', index })}
-              disabled={intro}
-            />
-          </div>
-        )}
+          )}
+          {missed && view.showBoard ? (
+            <p className={styles.missedToast} role="status">
+              {missed.count === 1
+                ? 'Back — you missed a number. It is on the TV board.'
+                : `Back — you missed ${missed.count} numbers. They are on the TV board.`}
+            </p>
+          ) : null}
+          {intro ? (
+            <p className={styles.hint}>
+              Your new card. Daub what you hear — FREE too — tap again to undo.
+            </p>
+          ) : null}
+          {mine && claim ? (
+            // Your failed claim, exactly as the room sees it: the wipe lands when play resumes.
+            <div className="pb-pop">
+              <p className={styles.wipeNote}>Card wiped — re-daub from memory when play resumes.</p>
+              <Card
+                numbers={claim.card}
+                daubs={claim.daubs}
+                green={claim.green}
+                red={claim.red}
+                missing={claim.missing}
+                verdict
+                disabled
+              />
+            </div>
+          ) : (
+            <div key={view.waitingForCall ? 'wiped' : 'card'} className="pb-enter">
+              <Card
+                numbers={card}
+                daubs={intro ? [] : view.daubs}
+                pattern={intro && view.pattern !== 'line' ? view.patternCells : []}
+                freeDaubed={freeDaubed}
+                onTapFree={() => setFreeDaubed((v) => !v)}
+                onTap={(index) => send({ type: 'daub', index })}
+                disabled={intro}
+              />
+            </div>
+          )}
+        </div>
       </Screen>
     );
   }

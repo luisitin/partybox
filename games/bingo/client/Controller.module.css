@@ -44,22 +44,50 @@
   min-height: 72px;
 }
 
-/* Reconnect notice while the TV has the board (review-loop #4); the header names the misses otherwise. */
+/* The round screen's body: a positioning context for the reconnect notice (review-loop #13). */
+.roundBody {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-4);
+}
+
+/* Reconnect notice while the TV has the board (loop #4): overlays the top of the body, never the
+   card — slides down in, holds, fades out; the state clears when the animation ends (loop #13). */
 .missedToast {
-  /* Floats above the BINGO! footer instead of pushing the card down (nothing shifts). */
-  position: fixed;
-  left: var(--pb-space-4);
-  right: var(--pb-space-4);
-  bottom: 112px;
+  position: absolute;
+  top: calc(var(--pb-font-h1) * 1.25); /* below the nickname, over the meta line only */
+  left: 0;
+  right: 0;
   z-index: 2;
   margin: 0;
   padding: var(--pb-space-3) var(--pb-space-4);
-  box-shadow: 0 8px 24px rgb(0 0 0 / 0.35);
   border-radius: var(--pb-radius);
-  background: var(--pb-surface);
+  background: var(--pb-surface-2);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.35);
   font-size: var(--pb-font-caption);
   font-weight: 700;
   color: var(--pb-accent-2);
+  animation: missed-toast 5s var(--pb-ease) both;
+}
+
+@keyframes missed-toast {
+  0% {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  6% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  88% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 .wipeNote {
