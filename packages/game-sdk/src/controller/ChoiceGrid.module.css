@@ -179,3 +179,9 @@
   background: var(--pb-danger);
   color: var(--pb-on-accent);
 }
+
+/* The revealed answer's disc is filled (shape + ✓, never colour alone), mirroring the TV card. */
+.correct .letter {
+  background: var(--pb-accent-3);
+  color: var(--pb-on-accent);
+}

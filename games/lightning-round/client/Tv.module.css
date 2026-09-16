@@ -15,8 +15,10 @@
   color: var(--pb-accent-2);
 }
 
+/* Once-per-game stakes moments (wager kicker, final question, final reveal) pop instead of rise. */
 .final {
   color: var(--pb-accent);
+  animation: global(pb-pop) var(--pb-motion-slow) var(--pb-ease) both;
 }
 
 .grid {
@@ -39,22 +41,12 @@
   font-size: var(--pb-font-body);
   font-weight: 700;
   overflow-wrap: anywhere;
+  /* Beat two after the prompt (which rides the shell's .game rise): A, B, C, D in reading order. */
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+  animation-delay: calc(var(--pb-motion-fast) + var(--pb-motion-fast) * var(--i, 0) / 3);
 }
 
-/* Reveal: the four choices become one row so up to 16 player rows fit underneath. */
-.gridCompact {
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--pb-space-3);
-}
-
-.gridCompact .choice {
-  min-height: 80px;
-  padding: var(--pb-space-3) var(--pb-space-4);
-  font-size: var(--pb-font-caption);
-  gap: var(--pb-space-3);
-}
-
-.gridCompact .letter {
+.letter {
   width: 48px;
   height: 48px;
   font-size: var(--pb-font-body);
@@ -93,6 +85,86 @@
   opacity: 0.45;
 }
 
+/* Reveal: the question, already known, steps back to a muted body line… */
+.asked {
+  margin: 0;
+  flex-shrink: 0;
+  font-size: var(--pb-font-body);
+  font-weight: 700;
+  color: var(--pb-text-muted);
+  text-wrap: balance;
+}
+
+/* …and the correct answer is the biggest thing on the stage: one full-width card, letter disc
+   filled, ✓ at the end (shape + glyph, never colour alone). */
+.answer {
+  flex-shrink: 0;
+  min-height: 0;
+  padding: var(--pb-space-2) var(--pb-space-5);
+  font-size: var(--pb-font-h1);
+  line-height: 1;
+  border-color: var(--pb-accent-3);
+  background: var(--pb-surface-2);
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.answer .letter {
+  background: var(--pb-accent-3);
+  color: var(--pb-on-accent);
+}
+
+.answer .mark {
+  font-size: var(--pb-font-h1);
+  color: var(--pb-accent-3);
+}
+
+/* Final reveal holds the answer back (space kept) until its beat; removing the class replays the pop. */
+.answerHidden {
+  visibility: hidden;
+  animation: none;
+}
+
+/* ── Intro ── */
+.bolt {
+  width: var(--pb-font-display);
+  height: var(--pb-font-display);
+  color: var(--pb-accent-2);
+  flex-shrink: 0;
+}
+
+.introLine {
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+  animation-delay: calc(var(--pb-motion-base) * var(--i, 0));
+}
+
+.introPill {
+  display: inline-block;
+  padding: var(--pb-space-2) var(--pb-space-5);
+  border-radius: 999px;
+  background: var(--pb-surface-2);
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--pb-text-muted);
+}
+
+/* Wager header: "3 / 6 placed" opposite the kicker; the number pops (.countNum). */
+.placed {
+  color: var(--pb-accent-2);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.placed .countNum {
+  color: inherit;
+}
+
+.rules {
+  margin: 0;
+  text-align: center;
+}
+
 .count {
   font-size: var(--pb-font-h2);
   color: var(--pb-text-muted);
@@ -100,15 +172,51 @@
   margin: 0;
 }
 
+/* The number is keyed on its value so every lock-in remounts it and it pops. */
+.countNum {
+  display: inline-block;
+  color: var(--pb-text);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.holdouts {
+  color: var(--pb-text-muted);
+  font-weight: 400;
+}
+
 .rows {
   list-style: none;
   margin: 0;
   padding: 0;
+  flex-shrink: 0;
   display: grid;
-  /* two columns up to ~8 players, three beyond (16 players = 6 rows of 60 px) */
-  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  /* columns by player count (rowsClass): 2 up to 8, 3 up to 12, 4 up to 16 — never more than 4 rows */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--pb-space-2) var(--pb-space-3);
   width: 100%;
+}
+
+.rows2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.rows3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.rows4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+/* Four 420 px cells: tighter gaps and no reserved verdict width so five-letter names survive. */
+.rows4 .row {
+  gap: var(--pb-space-2);
+}
+
+.rows4 .verdict {
+  min-width: 0;
 }
 
 .row {
@@ -127,6 +235,16 @@
   outline: 3px solid var(--pb-accent-3);
 }
 
+/* Nothing happened here: no points, so the row (name, glyph, 0) steps back. */
+.rowQuiet {
+  color: var(--pb-text-muted);
+}
+
+.crown {
+  flex-shrink: 0;
+  font-size: var(--pb-font-caption);
+}
+
 .name {
   flex: 1;
   min-width: 0;
@@ -138,7 +256,7 @@
 
 .verdict {
   font-weight: 900;
-  min-width: 1.2em;
+  min-width: 2.2em;
   text-align: center;
 }
 
@@ -163,15 +281,93 @@
   color: var(--pb-danger);
 }
 
+/* Running total (two-column boards only, where there is room). */
+.score {
+  color: var(--pb-text-muted);
+  font-size: var(--pb-font-caption);
+  font-variant-numeric: tabular-nums;
+  min-width: 3ch;
+  text-align: right;
+}
+
 .streak {
+  display: inline-block;
   color: var(--pb-accent-2);
   font-size: var(--pb-font-caption);
   font-weight: 700;
 }
 
-.wager {
-  color: var(--pb-text-muted);
+/* Three in a row and up pops in after the rows have landed, in row order. */
+.streakHot {
+  animation: global(pb-pop) var(--pb-motion-slow) var(--pb-ease) both;
+  animation-delay: calc(
+    var(--pb-motion-base) * 2 + var(--pb-motion-fast) * var(--i, 0) + var(--pb-motion-fast)
+  );
+}
+
+/* ── Final-wager reveal (TvFinal.tsx): name over "✓ bet 3150 · 2340 pts", h2 delta, 80 px rows ── */
+.rowsFinal {
+  /* per-row stagger in --pb-motion-slow units (set inline as a unitless factor → 0 under reduced motion) */
+  --pb-final-step: 0ms;
+}
+
+.rowFinal {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  min-height: 80px;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.15;
+}
+
+.stack .name {
+  flex: none;
+}
+
+.bet {
   font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.deltaFinal {
+  font-size: var(--pb-font-h2);
+  min-width: 3ch;
+  text-align: right;
+}
+
+/* Three and four columns cannot spare h2 deltas next to "✓ bet 3150 · 2340 pts"; four cannot spare
+   the total either (the results board follows). */
+.rows3 .deltaFinal,
+.rows4 .deltaFinal {
+  font-size: var(--pb-font-body);
+}
+
+.rows4 .total {
+  display: none;
+}
+
+/* Totals land on every row at once (the per-row stagger is for verdicts and deltas only). */
+.pop.total {
+  animation-delay: 0ms;
+}
+
+.deltaZero {
+  color: var(--pb-text-muted);
+}
+
+/* Verdict, delta and total arrive per row, smallest bet first. */
+.pop {
+  display: inline-block;
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+  animation-delay: calc(var(--i, 0) * var(--pb-final-step, 0ms));
 }
 
 /* The leading number of "n / m" pops when it changes; min-width so 9 → 10 does not shift the text. */

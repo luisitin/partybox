@@ -1,0 +1,117 @@
+// TV: the final-wager reveal — the biggest beat of the game, so it is paced instead of dropped in
+// one frame. Bets first (smallest wager first, so the biggest bet flips last), then the answer,
+// then verdict + delta per row, then the totals and the leader's outline, with one cue (jackpot
+// if anyone won their bet, bust if nobody did). Under reduced motion every beat is 0 ms and the
+// stage shows settled. Mount with `key={round.number}` so a re-pushed view never restarts it.
+import { useEffect, useRef } from 'react';
+import type { CSSProperties, JSX } from 'react';
+import { Avatar, useBeats, useSound } from '@partybox/game-sdk/ui';
+import type { QuestionView, RevealRow } from '../server/views';
+import { AnswerCard, deltaText, rowsClass, verdictOf } from './TvQuestion';
+import styles from './Tv.module.css';
+
+const T_ANSWER_MS = 900;
+const T_VERDICT_MS = 1200;
+const T_TOTALS_GAP_MS = 600;
+const STEP_MAX_MS = 300;
+const STEP_SPAN_MS = 1500;
+/** `--pb-motion-slow` (600 ms) is the unit the per-row stagger is expressed in, so it scales to 0. */
+const SLOW_MS = 600;
+
+function byWager(a: RevealRow, b: RevealRow): number {
+  return (
+    (a.wagerAmount ?? 0) - (b.wagerAmount ?? 0) ||
+    a.score - a.delta - (b.score - b.delta) ||
+    a.playerId.localeCompare(b.playerId)
+  );
+}
+
+export function FinalReveal({
+  question,
+  correctIndex,
+  rows: unsorted,
+}: {
+  question: QuestionView;
+  correctIndex: number;
+  rows: RevealRow[];
+}): JSX.Element {
+  const rows = [...unsorted].sort(byWager);
+  const n = rows.length;
+  const stepMs = n > 1 ? Math.min(STEP_MAX_MS, STEP_SPAN_MS / (n - 1)) : 0;
+  const lastMs = T_VERDICT_MS + stepMs * (n - 1);
+  // The schedule is fixed for this mount: the row count cannot change inside one reveal.
+  const beat = useBeats([0, T_ANSWER_MS, T_VERDICT_MS, lastMs, lastMs + T_TOTALS_GAP_MS]);
+  const answered = beat >= 1;
+  const judged = beat >= 2;
+  const totals = beat >= 4;
+
+  const play = useSound();
+  const jackpot = rows.some((r) => r.delta > 0);
+  const cued = useRef(false);
+  useEffect(() => {
+    if (beat < 3 || cued.current) return;
+    cued.current = true;
+    play(jackpot ? 'jackpot' : 'bust');
+  }, [beat, jackpot, play]);
+
+  const top = Math.max(0, ...rows.map((r) => r.score));
+  const listStyle = {
+    '--pb-final-step': `calc(var(--pb-motion-slow) * ${(stepMs / SLOW_MS).toFixed(4)})`,
+  } as CSSProperties;
+  return (
+    <>
+      <div className={styles.header}>
+        <span className={`${styles.kicker} ${styles.final}`}>Final question · the bets are in</span>
+        <span>
+          {question.categoryLabel} · {question.difficulty}
+        </span>
+      </div>
+      <p className={styles.asked}>{question.text}</p>
+      <AnswerCard question={question} correctIndex={correctIndex} hidden={!answered} />
+      <ol
+        className={`${styles.rows} ${rowsClass(n)} ${styles.rowsFinal}`}
+        style={listStyle}
+        aria-label="results"
+      >
+        {rows.map((row, index) => {
+          const verdict = verdictOf(row);
+          const bet = row.wagerAmount ?? 0;
+          const deltaClass =
+            row.delta > 0 ? styles.deltaUp : row.delta < 0 ? styles.deltaDown : styles.deltaZero;
+          const verdictClass = row.correct
+            ? styles.verdictOk
+            : row.pickIndex !== null
+              ? styles.verdictNo
+              : '';
+          const leader = totals && top > 0 && row.score === top;
+          return (
+            <li
+              key={row.playerId}
+              className={`${styles.row} ${styles.rowFinal} ${leader ? styles.rowCorrect : ''}`}
+              style={{ '--i': index } as CSSProperties}
+            >
+              <Avatar avatarId={row.avatarId} size={48} dim={!row.connected} />
+              <span className={styles.stack}>
+                <span className={styles.name}>{row.name}</span>
+                <span className={styles.bet}>
+                  {judged ? (
+                    <span className={`${styles.pop} ${verdictClass}`} aria-label={verdict.label}>
+                      {verdict.glyph}&nbsp;
+                    </span>
+                  ) : null}
+                  {bet > 0 ? `bet ${bet}` : 'no bet'}
+                  {totals ? (
+                    <span className={`${styles.pop} ${styles.total}`}>&nbsp;· {row.score} pts</span>
+                  ) : null}
+                </span>
+              </span>
+              <span className={`${styles.delta} ${styles.deltaFinal} ${deltaClass}`}>
+                {judged ? <span className={styles.pop}>{deltaText(row.delta)}</span> : null}
+              </span>
+            </li>
+          );
+        })}
+      </ol>
+    </>
+  );
+}
