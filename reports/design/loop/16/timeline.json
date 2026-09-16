@@ -1,0 +1,30 @@
+{
+  "pass": "16",
+  "game": "bingo",
+  "players": 6,
+  "scenario": "spicy",
+  "focus": "tv",
+  "started": "21:09:11.784",
+  "tvVideoT0": "21:09:06.980",
+  "changes": [
+    {
+      "t": 1789592951786,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789592956781,
+      "at": "21:09:11.786",
+      "sinceStartS": 0,
+      "videoS": 4.8
+    },
+    {
+      "t": 1789592956842,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789592960794,
+      "at": "21:09:16.842",
+      "sinceStartS": 5.1,
+      "videoS": 9.9
+    }
+  ],
+  "notes": ["budget reached while playing; skipped to results"]
+}
