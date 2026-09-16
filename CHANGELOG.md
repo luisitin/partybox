@@ -5,6 +5,17 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Bingo** (`games/bingo`): 75-ball bingo with free daubing, a public check that pauses the caller
+  (green ✓ / red ✕ / missed squares), a wiped card as the penalty for a wrong BINGO!, a pattern per
+  round (line / four corners / X / blackout), cheeky caller phrases; bots welcome.
+- **Broken Pencil** (`games/broken-pencil`): Telestrations-style word → drawing → guess books with a
+  phone DrawPad (8 colours, 3 pens, undo, limited ink), the full circle by default (`passes` shortens
+  it), then a TV show that turns every page with the VIP on Next; Unbroken awards, no scores; bots
+  fill seats.
+- `ViewEnvelope.timerMode` (ADR-030): games can ask the shells for a quiet (bar only) or hidden timer.
+- Host controls on the TV (ADR-031): `tv:vip` / `tv:bot` socket events with the engine's `host`
+  flag, a Host toolbar (pick / start / bots / pause / skip / end / play again), a ⌂ Home button, and an
+  interactive game-picking screen with editable settings (`SettingField` shared with the phone).
 - Bots as room players (ADR-028): "Add a bot" in the lobby (max 4 per person, owner/VIP can remove,
   never VIP, leave with their owner), `supportsBots` manifest flag gates Start, contract check that a
   flagged bot acts with varied inputs, `bot` socket event, 🤖 chip tag, dev-API bots now go through the
