@@ -1,5 +1,6 @@
 // A player chip: avatar + name + state glyph. Shared by the TV envelope, lobby, results and games.
 // State is never colour-only: submitted shows ✓, disconnected shows ⟳ and dims, spectator shows 👁.
+import { useState } from 'react';
 import type { JSX } from 'react';
 import { Avatar } from './Avatar';
 import styles from './PlayerChip.module.css';
@@ -49,6 +50,14 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
     removeLabel = 'remove',
     size = 'md',
   } = props;
+  // The ★ VIP badge pops only when it arrives on a mounted chip (a handover), never on a screen
+  // swap — 'adjust state when a prop changes' (review-loop #5).
+  const [wasVip, setWasVip] = useState(isVip ?? false);
+  const [justVip, setJustVip] = useState(false);
+  if ((isVip ?? false) !== wasVip) {
+    setWasVip(isVip ?? false);
+    setJustVip(isVip === true);
+  }
   const glyph = connected ? GLYPH[status] : { text: '⟳', label: 'reconnecting' };
   const locked = status === 'submitted' && connected;
   const classes = [
@@ -79,7 +88,11 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
         </span>
       ) : null}
       {isVip ? (
-        <span className={styles.vip} aria-hidden>
+        <span
+          className={`${styles.vip} ${justVip ? styles.vipPop : ''}`}
+          aria-hidden
+          onAnimationEnd={() => setJustVip(false)}
+        >
           ★ VIP
         </span>
       ) : null}

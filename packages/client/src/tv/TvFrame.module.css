@@ -166,6 +166,15 @@
   pointer-events: none;
 }
 
+.toastVip {
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-3);
+  font-size: var(--pb-font-body);
+  background: var(--pb-accent-2);
+  color: var(--pb-bg);
+}
+
 .toast {
   padding: var(--pb-space-2) var(--pb-space-5);
   border-radius: var(--pb-radius);

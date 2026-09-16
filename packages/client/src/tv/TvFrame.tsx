@@ -4,6 +4,7 @@
 import { useEffect, useState } from 'react';
 import type { JSX, ReactNode } from 'react';
 import type { RoomSnapshot } from '@partybox/shared';
+import { Avatar } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import { useServerInfo } from '../net/info';
 import type { Toast } from '../net/store';
@@ -120,11 +121,17 @@ export function TvFrame({
         </div>
       ) : null}
       <div className={styles.toasts} aria-live="polite">
-        {toasts.map((toast) => (
-          <div key={toast.id} className={styles.toast}>
-            {toast.text}
-          </div>
-        ))}
+        {toasts.map((toast) => {
+          // A handover changes who runs the room: the toast carries the face (review-loop #5).
+          const handover = /^(.+) is now the VIP$/.exec(toast.text);
+          const who = handover ? room?.players.find((p) => p.name === handover[1]) : undefined;
+          return (
+            <div key={toast.id} className={`${styles.toast} ${who ? styles.toastVip : ''}`}>
+              {who ? <Avatar avatarId={who.avatarId} size={36} /> : null}
+              {who ? `👑 ${who.name} is the VIP now` : toast.text}
+            </div>
+          );
+        })}
       </div>
     </div>
   );

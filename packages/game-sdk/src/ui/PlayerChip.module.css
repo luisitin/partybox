@@ -70,6 +70,11 @@
 }
 
 /* Readable from the couch (the old 0.7em star over the avatar was 12–20 px on the TV strip). */
+/* A badge that just moved here pops (a handover), a badge that was always here does not. */
+.vipPop {
+  animation: global(pb-pop) var(--pb-motion-slow) var(--pb-ease) both;
+}
+
 .vip {
   flex-shrink: 0;
   padding: 0 0.45em;
