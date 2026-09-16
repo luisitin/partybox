@@ -1,6 +1,9 @@
 // Ranked score list. Ties share a rank; the top rank is celebrated. Used by the core results
 // screen and by games that show standings between rounds.
-import type { JSX } from 'react';
+// Tiers keep any count on a 1080p stage under a heading: roomy (≤ 4, h2 rows), tight (5–6, body
+// rows), dense (7–12, two h2 columns), tight3 (13+, three body columns); the multi-column tiers
+// flow column-major so ranks read down, not across.
+import type { CSSProperties, JSX } from 'react';
 import { Avatar } from '../ui/Avatar';
 import styles from './Scoreboard.module.css';
 
@@ -22,19 +25,40 @@ export interface ScoreboardProps {
   highlightId?: string | null;
   /** Hide the 🏆 (everyone tied, or nobody scored). */
   noTrophy?: boolean;
+  /** Force (true) or suppress (false) the two-column tier; 13+ rows always go three-column. */
+  dense?: boolean;
+  /** Rows to mark with a ✓ in the delta slot when they carry no delta (e.g. "wager placed"). */
+  markIds?: readonly string[];
 }
 
-// Past six rows the TV board would run off a 1080p stage at h2 size, so it drops to body size and
-// two columns (16 players = 8 rows ≈ 500 px).
-const DENSE_FROM = 7;
+type Tier = 'compact' | 'roomy' | 'tight' | 'dense' | 'tight3';
 
-export function Scoreboard({ rows, compact, highlightId, noTrophy }: ScoreboardProps): JSX.Element {
-  const dense = !compact && rows.length >= DENSE_FROM;
+const COLUMNS: Record<Tier, number> = { compact: 1, roomy: 1, tight: 1, dense: 2, tight3: 3 };
+
+export function tierOf(count: number, compact?: boolean, dense?: boolean): Tier {
+  if (compact) return 'compact';
+  if (count >= 13) return 'tight3';
+  if (dense ?? count >= 7) return 'dense';
+  if (count >= 5) return 'tight';
+  return 'roomy';
+}
+
+export function Scoreboard({
+  rows,
+  compact,
+  highlightId,
+  noTrophy,
+  dense,
+  markIds = [],
+}: ScoreboardProps): JSX.Element {
+  const tier = tierOf(rows.length, compact, dense);
+  const cols = COLUMNS[tier];
   const winners = rows.filter((r) => r.rank === 1).length;
   const trophy = !noTrophy && winners < rows.length;
   return (
     <ol
-      className={`${styles.board} ${compact ? styles.compact : ''} ${dense ? styles.dense : ''}`}
+      className={`${styles.board} ${tier === 'roomy' ? '' : styles[tier]}`}
+      style={{ '--pb-board-rows': Math.ceil(rows.length / cols) } as CSSProperties}
       aria-label="scoreboard"
     >
       {rows.map((row) => (
@@ -51,7 +75,13 @@ export function Scoreboard({ rows, compact, highlightId, noTrophy }: ScoreboardP
             size={compact ? 32 : 'var(--pb-chip-size)'}
           />
           <span className={styles.name}>{row.name}</span>
-          {row.delta ? <span className={styles.delta}>+{row.delta}</span> : null}
+          {row.delta ? (
+            <span className={styles.delta}>+{row.delta}</span>
+          ) : markIds.includes(row.playerId) ? (
+            <span className={styles.mark} aria-label="wager placed">
+              ✓
+            </span>
+          ) : null}
           <span className={styles.score}>{row.score}</span>
         </li>
       ))}

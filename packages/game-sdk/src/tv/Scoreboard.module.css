@@ -9,6 +9,14 @@
   max-width: 28em;
 }
 
+/* 5-6 rows under a heading: body-size rows (~60 px) so six fit in ≈ 400 px. */
+.tight .row,
+.tight3 .row {
+  font-size: var(--pb-font-body);
+  padding: var(--pb-space-1) var(--pb-space-3);
+  --pb-chip-size: 1.3em;
+}
+
 .dense {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--pb-space-2) var(--pb-space-4);
@@ -16,9 +24,23 @@
 }
 
 .dense .row {
-  /* h2 digits still read from the couch; 16 rows in two columns ≈ 620 px */
+  /* h2 digits still read from the couch (7-12 rows); 12 rows in two columns ≈ 470 px */
   padding: var(--pb-space-1) var(--pb-space-3);
   --pb-chip-size: 1.3em;
+}
+
+/* 13+ rows: three body-size columns (16 players = 6 rows ≈ 400 px). */
+.tight3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--pb-space-2) var(--pb-space-4);
+  max-width: none;
+}
+
+/* Column-major: ranks read down the left column, then the next (--pb-board-rows is set inline). */
+.dense,
+.tight3 {
+  grid-auto-flow: column;
+  grid-template-rows: repeat(var(--pb-board-rows, 1), auto);
 }
 
 .row {
@@ -63,14 +85,27 @@
   text-align: left;
 }
 
-/* 16-character names must not truncate before the score column gives way. */
+/* Names keep a floor so they do not vanish, but never so much that the score column is pushed out
+   of the cell (9ch clipped a 4-digit winner's score in the results' 3/5-width board). */
 .dense .name {
-  min-width: 9ch;
+  min-width: 5ch;
+}
+
+/* Three columns in a narrow results board leave ~100 px for the name: tighter rank + gaps. */
+.tight3 .row {
+  grid-template-columns: 1.2em auto 1fr auto auto;
+  gap: var(--pb-space-2);
 }
 
 .delta {
   color: var(--pb-accent-3);
   font-size: 0.8em;
+}
+
+/* A ✓ in the delta slot (markIds): this row has acted, e.g. its wager is placed. */
+.mark {
+  color: var(--pb-accent-3);
+  font-weight: 900;
 }
 
 .score {
