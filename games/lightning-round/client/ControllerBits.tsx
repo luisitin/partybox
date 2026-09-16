@@ -40,12 +40,19 @@ export function Stake({ amount }: { amount: number }): JSX.Element {
 function deltaText(delta: number): string {
   if (delta > 0) return `+${delta}`;
   if (delta < 0) return `−${-delta}`;
-  return '+0';
+  return '0';
 }
 
-// The reveal is the best moment of the round: verdict as a headline, the delta at display size,
-// the streak and running total as a caption — not an 18 px footer line.
-export function Outcome({ view }: { view: LightningControllerView }): JSX.Element {
+export interface OutcomeProps {
+  view: LightningControllerView;
+  /** The streak this player carried into the question (myStreak is already reset at reveal). */
+  streakBefore: number;
+}
+
+// The reveal is the best moment of the round: verdict as a headline, the delta at display size
+// toned by its sign (gold is not for losses), the right answer in words (the ✓ card can sit
+// below the fold), streak and running total as a caption.
+export function Outcome({ view, streakBefore }: OutcomeProps): JSX.Element {
   const outcome = view.outcome;
   if (!outcome) {
     return (
@@ -54,19 +61,39 @@ export function Outcome({ view }: { view: LightningControllerView }): JSX.Elemen
       </p>
     );
   }
-  const verdict = outcome.correct ? 'Correct!' : view.myPickIndex === null ? 'No answer' : 'Wrong';
+  const final = view.round?.final === true;
+  const noPick = view.myPickIndex === null;
+  const verdict = outcome.correct
+    ? 'Correct!'
+    : noPick
+      ? final
+        ? 'No answer'
+        : 'Too slow'
+      : 'Wrong';
   const tone = outcome.correct ? styles.good : styles.bad;
-  const detail = view.round?.final
-    ? `Final score ${view.myScore}`
+  const sign = outcome.delta > 0 ? styles.up : outcome.delta < 0 ? styles.down : styles.zero;
+  const answer =
+    !outcome.correct && view.correctIndex !== undefined && view.question
+      ? `It was ${'ABCDEFGH'[view.correctIndex] ?? view.correctIndex + 1} · ${view.question.choices[view.correctIndex] ?? ''}`
+      : null;
+  const detail = final
+    ? outcome.correct
+      ? `Won the wager · final score ${view.myScore}`
+      : (view.myWagerAmount ?? 0) === 0
+        ? `Wagered nothing · final score ${view.myScore}`
+        : `Lost the wager · final score ${view.myScore}`
     : outcome.correct
       ? `${view.myStreak >= 2 ? `🔥 streak ${view.myStreak} · ` : ''}${view.myScore} points`
-      : `streak reset · ${view.myScore} points`;
+      : streakBefore >= 2
+        ? `Streak of ${streakBefore} over · ${view.myScore} points`
+        : `${view.myScore} points`;
   return (
-    <div className={`${styles.outcome} ${tone}`} role="status">
+    <div className={`${styles.outcome} ${tone} ${sign}`} role="status">
       <span className={styles.verdict}>{verdict}</span>
       <span className={styles.delta} aria-label={`${deltaText(outcome.delta)} points`}>
         {deltaText(outcome.delta)}
       </span>
+      {answer ? <span className={styles.detail}>{answer}</span> : null}
       <span className={styles.detail}>{detail}</span>
     </div>
   );

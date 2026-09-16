@@ -50,8 +50,8 @@
   font-weight: 700;
   transition:
     transform var(--pb-motion-fast) var(--pb-ease),
-    border-color var(--pb-motion-fast) var(--pb-ease),
-    background-color var(--pb-motion-fast) var(--pb-ease),
+    border-color var(--pb-motion-base) var(--pb-ease),
+    background-color var(--pb-motion-base) var(--pb-ease),
     color var(--pb-motion-base) var(--pb-ease);
 }
 
@@ -132,6 +132,12 @@
 
 .correct .mark {
   color: var(--pb-accent-3);
+}
+
+/* Reveal: the glyph is what newly appears, so it pops (not the card — pb-pop starts at opacity 0). */
+.correct .mark,
+.wrong .mark {
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
 }
 
 .wrong {

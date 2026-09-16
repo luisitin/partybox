@@ -1,7 +1,8 @@
 // Controller (phone) view for Lightning Round: a ChoiceGrid for the question (locked after one
 // tap, ✓/✗ in reveal), a ChoiceGrid of wager options before the final, waiting screens otherwise.
+import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
-import { ChoiceGrid, WaitingScreen } from '@partybox/game-sdk/ui';
+import { ChoiceGrid, WaitingScreen, buzz } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { LightningControllerView } from '../server/index';
 import type { Input } from '../server/types';
@@ -24,6 +25,15 @@ export function Controller({
   send,
 }: GameControllerProps<LightningControllerView, Input>): JSX.Element {
   const { phaseId } = view;
+  // The streak carried into the question: `myStreak` is already reset in the reveal view.
+  const [streakBefore, setStreakBefore] = useState(0);
+  if (phaseId === 'question' && streakBefore !== view.myStreak) setStreakBefore(view.myStreak);
+  // Haptic verdict (Android; iOS ignores it): once per reveal, alongside the card.
+  const correct = view.outcome?.correct;
+  useEffect(() => {
+    if (phaseId !== 'reveal' || correct === undefined) return;
+    buzz(correct ? [30, 40, 30] : 120);
+  }, [phaseId, correct]);
   if (view.me.role === 'spectator') {
     return <WaitingScreen title="Spectating" hint="You are in for the next game." mood="watch" />;
   }
@@ -55,7 +65,11 @@ export function Controller({
         disabled={revealed}
         onPick={(id) => send({ type: 'pick', index: Number(id) })}
         footer={
-          revealed ? <Outcome view={view} /> : stake !== null ? <Stake amount={stake} /> : null
+          revealed ? (
+            <Outcome view={view} streakBefore={streakBefore} />
+          ) : stake !== null ? (
+            <Stake amount={stake} />
+          ) : null
         }
       />
     );
