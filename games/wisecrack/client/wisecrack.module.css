@@ -111,3 +111,137 @@
   display: flex;
   justify-content: center;
 }
+
+/* TV "reveal" (TvReveal.tsx): the vote cards stay put — no second rise — and the result lands
+   inside them beat by beat. `.pending` holds an element's place invisibly until its beat, so
+   nothing shifts when it arrives; the classes swap in place, so each animation fires once. */
+.cardStill {
+  animation: none;
+}
+
+.revealCard {
+  outline: 3px solid transparent;
+  transition:
+    outline-color var(--pb-motion-slow) var(--pb-ease),
+    background-color var(--pb-motion-slow) var(--pb-ease),
+    transform var(--pb-motion-slow) var(--pb-ease);
+}
+
+.winner {
+  outline-color: var(--pb-accent-2);
+  background: var(--pb-surface-2);
+  transform: scale(1.02);
+}
+
+.cardTop {
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-4);
+  min-width: 0;
+}
+
+.author {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-3);
+  min-width: 0;
+}
+
+.authorName {
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  color: var(--pb-text);
+  max-width: 10em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.footer {
+  margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--pb-space-3) var(--pb-space-5);
+}
+
+.voters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pb-space-2);
+}
+
+.voter {
+  display: inline-flex;
+}
+
+.payoff {
+  margin-left: auto;
+  display: flex;
+  align-items: baseline;
+  gap: var(--pb-space-3);
+  color: var(--pb-text);
+}
+
+.voteCount {
+  font-size: var(--pb-font-h1);
+  font-weight: 900;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.voteWord {
+  font-size: var(--pb-font-body);
+  font-weight: 700;
+}
+
+.zero {
+  color: var(--pb-text-muted);
+}
+
+.delta {
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  color: var(--pb-accent-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.pill {
+  display: inline-block;
+  align-self: center;
+  padding: 0 var(--pb-space-3);
+  border-radius: 999px;
+  background: var(--pb-accent-2-fill);
+  color: var(--pb-on-accent-2-fill);
+  font-size: var(--pb-font-caption);
+  font-weight: 900;
+  line-height: 1.6;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.pending {
+  opacity: 0;
+}
+
+.rise {
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+/* The winner's author lands one beat after the other's. */
+.late {
+  animation-delay: var(--pb-motion-base);
+}
+
+/* --pb-i is set inline per voter so the avatars arrive one after another (0 under reduced motion). */
+.pop {
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+  animation-delay: calc(var(--pb-i, 0) * var(--pb-motion-fast) / 2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .winner {
+    transform: none;
+  }
+}
