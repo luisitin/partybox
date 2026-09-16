@@ -1,17 +1,70 @@
-// TV: the prompt with its two anonymous answers ("vote"), then authors, voters and points
-// ("reveal"). Voter avatars and the winner outline carry the result, not colour alone.
+// TV: the prompt with its two anonymous answers ("vote"). The reveal (TvReveal.tsx) reuses the
+// same header and cards so the answers never move when the authors land. The only status is the
+// pill in the kicker row: how many voted, and who the room is waiting for (never a line below the
+// cards, which sat in the overscan band).
 import type { JSX } from 'react';
-import { Avatar, BigText, Reveal, Stage } from '@partybox/game-sdk/ui';
-import type { GameTvProps } from '@partybox/game-sdk/ui';
+import { Avatar, BigText, Stage } from '@partybox/game-sdk/ui';
+import type { GameTvProps, ViewPlayer } from '@partybox/game-sdk/ui';
 import type { WisecrackTvView } from '../server/index';
 import styles from './wisecrack.module.css';
 
 type Props = GameTvProps<WisecrackTvView>;
 
-const LETTERS = ['A', 'B'];
-const BLANK = '(no answer)';
+export const LETTERS = ['A', 'B'];
+export const BLANK = '(no answer)';
 
-function PromptHeader({ view }: Props): JSX.Element {
+export function answerClass(text: string): string {
+  return `${styles.answer} ${text === BLANK ? styles.blank : ''}`;
+}
+
+/** One line of 72 px Nunito 800 fits the 784 px inner card at this length: short answers go h1. */
+export function isShort(text: string): true | undefined {
+  return text.length <= 20 || undefined;
+}
+
+const NAMED_HOLDOUTS = 3;
+
+function Holdout({ player }: { player: ViewPlayer }): JSX.Element {
+  return (
+    <span className={styles.holdout}>
+      <Avatar avatarId={player.avatarId} size="var(--pb-space-7)" />
+      {player.name}
+    </span>
+  );
+}
+
+/** "n / m voted · waiting for …": authors are 'waiting', voters 'submitted', disconnected voters
+ *  never block the phase, so the holdouts are the connected 'active' players. */
+function Progress({ view }: Props): JSX.Element {
+  const n = view.votedCount;
+  const m = view.votersExpected;
+  const holdouts = view.players.filter((p) => p.status === 'active' && p.connected);
+  if (n === 0) return <>Vote on your phone · 0 / {m}</>;
+  if (holdouts.length === 1)
+    return (
+      <>
+        Just waiting for <Holdout player={holdouts[0]!} />…
+      </>
+    );
+  if (holdouts.length === 0)
+    return (
+      <>
+        {n} / {m} voted
+      </>
+    );
+  const rest = holdouts.length - NAMED_HOLDOUTS;
+  return (
+    <>
+      {n} / {m} voted · waiting for
+      {holdouts.slice(0, NAMED_HOLDOUTS).map((p) => (
+        <Holdout key={p.id} player={p} />
+      ))}
+      {rest > 0 ? `+${rest}` : null}
+    </>
+  );
+}
+
+export function PromptHeader({ view }: Props): JSX.Element {
   return (
     <>
       <p className={styles.kicker}>
@@ -26,7 +79,19 @@ function PromptHeader({ view }: Props): JSX.Element {
 export function TvVote({ view }: Props): JSX.Element {
   return (
     <Stage>
-      <PromptHeader view={view} />
+      <div className={styles.kickerRow}>
+        <p className={styles.kicker}>
+          Round {view.round} · Prompt {view.prompt?.number ?? 0} of {view.prompt?.count ?? 0}
+          {view.multiplier > 1 ? ' · double points' : ''}
+        </p>
+        {/* The slot waits for both answers (R-062); the pill inside re-rises with every vote. */}
+        <span className={styles.progressSlot} role="status" aria-live="polite">
+          <span key={view.votedCount} className={styles.progressPill}>
+            <Progress view={view} />
+          </span>
+        </span>
+      </div>
+      <BigText level="h1">{view.prompt?.text ?? ''}</BigText>
       <div className={styles.cards}>
         {view.options.map((option) => (
           <article
@@ -37,51 +102,12 @@ export function TvVote({ view }: Props): JSX.Element {
             <span className={styles.letter} aria-hidden>
               {LETTERS[option.slot]}
             </span>
-            <p className={`${styles.answer} ${option.text === BLANK ? styles.blank : ''}`}>
+            <p className={answerClass(option.text)} data-short={isShort(option.text)}>
               {option.text}
             </p>
           </article>
         ))}
       </div>
-      <p className={styles.progress} aria-live="polite">
-        <span key={view.votedCount} className={styles.countNum}>
-          {view.votedCount}
-        </span>{' '}
-        / {view.votersExpected} voted — pick the funnier one on your phone
-      </p>
-    </Stage>
-  );
-}
-
-export function TvReveal({ view }: Props): JSX.Element {
-  const players = new Map(view.players.map((p) => [p.id, p]));
-  const top = Math.max(0, ...view.revealed.map((r) => r.votes));
-  const items = view.revealed.map((r) => ({
-    id: r.playerId,
-    text: (
-      <>
-        <span aria-hidden>{LETTERS[r.slot]} · </span>
-        <span className={r.text === BLANK ? styles.blank : ''}>{r.text}</span>
-      </>
-    ),
-    detail: `${r.name} · ${r.votes} ${r.votes === 1 ? 'vote' : 'votes'} · +${r.points}${r.sweep ? ' · SWEEP!' : ''}`,
-    aside: (
-      <>
-        <Avatar avatarId={r.avatarId} />
-        {r.voterIds.map((id) => {
-          const voter = players.get(id);
-          return voter ? (
-            <Avatar key={id} avatarId={voter.avatarId} size="var(--pb-space-7)" />
-          ) : null;
-        })}
-      </>
-    ),
-    emphasis: top > 0 && r.votes === top,
-  }));
-  return (
-    <Stage>
-      <PromptHeader view={view} />
-      <Reveal items={items} stepMs={700} />
     </Stage>
   );
 }

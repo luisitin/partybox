@@ -8,29 +8,75 @@
   letter-spacing: 0.06em;
 }
 
-/* TV: the two anonymous answers side by side during "vote". */
+/* TV "vote": kicker + status pill on one row, then the prompt, then the two cards filling what is
+   left of the stage (nothing below them — a line there sat in the overscan band). */
+.kickerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--pb-space-5);
+}
+
+.progressSlot {
+  display: inline-flex;
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+  animation-delay: calc(
+    var(--pb-motion-pulse) + var(--pb-motion-slow) + var(--pb-motion-base)
+  ); /* 1900 ms: once both answers are in (R-062) */
+}
+
+.progressPill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-3);
+  padding: var(--pb-space-2) var(--pb-space-4);
+  border-radius: 999px;
+  background: var(--pb-surface-2);
+  color: var(--pb-text);
+  font-size: var(--pb-font-body);
+  font-weight: 700;
+  white-space: nowrap;
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.holdout {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+}
+
 .cards {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  align-items: stretch;
   gap: var(--pb-space-6);
   width: 100%;
-  margin-top: var(--pb-space-5);
+  flex: 1;
+  min-height: 0;
 }
 
 .card {
   border: 1px solid var(--pb-border);
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: var(--pb-space-4);
   padding: var(--pb-space-6);
   border-radius: var(--pb-radius-lg);
   background: var(--pb-surface);
-  min-height: 12em;
+  min-height: 6em;
   animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
 }
 
+/* Vote beat: the prompt alone for one beat, then A, then B, then the progress line — the room reads
+   the prompt before the answers. --pb-motion-pulse doubles as the 1 s beat; every token is 0 under
+   reduced motion, so everything lands at once. The reveal's `.cardStill` cancels the rise. */
+.card:nth-child(1) {
+  animation-delay: var(--pb-motion-pulse); /* 1000 ms */
+}
+
 .card:nth-child(2) {
-  animation-delay: var(--pb-motion-fast);
+  animation-delay: calc(var(--pb-motion-pulse) + var(--pb-motion-slow)); /* 1600 ms */
 }
 
 .letter {
@@ -52,40 +98,31 @@
   overflow-wrap: anywhere;
 }
 
+/* One line of 72 px in the 784 px inner card (TvVote.tsx isShort). */
+.answer[data-short] {
+  font-size: var(--pb-font-h1);
+}
+
 .blank {
   color: var(--pb-text-muted);
   font-style: italic;
 }
 
-.progress {
-  margin-top: auto;
-  color: var(--pb-text-muted);
-  font-size: var(--pb-font-body);
+/* TV "scores" after the last round: 'And the winner is…' — one pulse per second; the token is
+   0 ms under reduced motion, so the glyph simply stays. */
+.ellipsis {
+  display: inline-block;
+  animation: pb-wc-ellipsis var(--pb-motion-pulse) ease-in-out infinite;
 }
 
-/* TV "done": awards under the scoreboard. */
-.awards {
-  list-style: none;
-  margin: var(--pb-space-5) 0 0;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--pb-space-4);
-}
-
-.award {
-  display: flex;
-  align-items: center;
-  gap: var(--pb-space-3);
-  padding: var(--pb-space-3) var(--pb-space-5);
-  border-radius: var(--pb-radius);
-  background: var(--pb-surface);
-  font-size: var(--pb-font-body);
-}
-
-.awardTitle {
-  font-weight: 800;
-  color: var(--pb-accent-2);
+@keyframes pb-wc-ellipsis {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
 }
 
 /* Phone: my answer echoed back on the waiting screens. */
@@ -97,12 +134,65 @@
   overflow-wrap: anywhere;
 }
 
+/* Phone "reveal", author's card: points first (muted when 0 — never gold for nothing), the vote
+   count with an inline SWEEP pill, the answer, the hint last. */
+.result {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pb-space-3);
+  text-align: center;
+  padding: var(--pb-space-6) 0;
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
+
 .points {
   font-size: var(--pb-font-display);
   font-weight: 900;
   line-height: 1;
   color: var(--pb-accent-2);
   font-variant-numeric: tabular-nums;
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.pointsZero {
+  color: var(--pb-text-muted);
+}
+
+.votesLine {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-3);
+  margin: 0;
+  text-wrap: balance;
+}
+
+/* Phone "scores": the round delta as the hero (quiet when +0), my rank under it, board below. */
+.scoresHero {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  text-align: center;
+}
+
+.deltaHero {
+  font-size: var(--pb-font-display);
+  font-weight: 900;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--pb-accent-3);
+}
+
+.deltaHero[data-zero] {
+  color: var(--pb-text-muted);
+}
+
+.rankLine {
+  margin: 0;
+  font-size: var(--pb-font-h2);
+  text-wrap: balance;
 }
 
 /* TV: centre the (self-capped) Scoreboard on the stage. */
@@ -112,11 +202,171 @@
   justify-content: center;
 }
 
-/* The leading number of "n / m" pops when it changes; min-width so 9 → 10 does not shift the text. */
-.countNum {
-  display: inline-block;
-  min-width: 2ch;
-  text-align: right;
+/* TV "reveal" (TvReveal.tsx): the vote cards stay put — no second rise — and the result lands
+   inside them beat by beat. `.pending` holds an element's place invisibly until its beat, so
+   nothing shifts when it arrives; the classes swap in place, so each animation fires once. */
+.cardStill {
+  animation: none;
+}
+
+.revealCard {
+  outline: 3px solid transparent;
+  transition:
+    outline-color var(--pb-motion-slow) var(--pb-ease),
+    background-color var(--pb-motion-slow) var(--pb-ease),
+    transform var(--pb-motion-slow) var(--pb-ease);
+}
+
+/* The reveal keeps the letter row up, the answer centred in the free space, the footer down. */
+.revealCard .answer {
+  margin-block: auto;
+}
+
+.winner {
+  outline-color: var(--pb-accent-2);
+  background: var(--pb-surface-2);
+  transform: scale(1.02);
+}
+
+.cardTop {
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-4);
+  min-width: 0;
+}
+
+.author {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-3);
+  min-width: 0;
+}
+
+.authorName {
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  color: var(--pb-text);
+  max-width: 10em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.footer {
+  margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--pb-space-3) var(--pb-space-5);
+}
+
+.voters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pb-space-2);
+}
+
+.voter {
+  display: inline-flex;
+}
+
+.payoff {
+  margin-left: auto;
+  display: flex;
+  align-items: baseline;
+  gap: var(--pb-space-3);
+  color: var(--pb-text);
+}
+
+.voteCount {
+  font-size: var(--pb-font-h1);
+  font-weight: 900;
+  line-height: 1;
   font-variant-numeric: tabular-nums;
+}
+
+.voteWord {
+  font-size: var(--pb-font-body);
+  font-weight: 700;
+}
+
+.zero {
+  color: var(--pb-text-muted);
+}
+
+.delta {
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  color: var(--pb-accent-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.pill {
+  display: inline-block;
+  align-self: center;
+  padding: 0 var(--pb-space-3);
+  border-radius: 999px;
+  background: var(--pb-accent-2-fill);
+  color: var(--pb-on-accent-2-fill);
+  font-size: var(--pb-font-caption);
+  font-weight: 900;
+  line-height: 1.6;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.pending {
+  opacity: 0;
+}
+
+.rise {
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+/* The winner's author lands one beat after the other's. */
+.late {
+  animation-delay: var(--pb-motion-base);
+}
+
+/* --pb-i is set inline per voter so the avatars arrive one after another (0 under reduced motion). */
+.pop {
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+  animation-delay: calc(var(--pb-i, 0) * var(--pb-motion-fast) / 2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .winner {
+    transform: none;
+  }
+}
+
+/* TV "answer": one pip per expected answer; the newest filled pip pops (class toggle on a
+   persistent node, so it fires once per new answer). 16 pips fit one row of the safe width. */
+.pips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--pb-space-3);
+}
+
+.pip {
+  display: grid;
+  place-items: center;
+  width: var(--pb-space-7);
+  height: var(--pb-space-7);
+  border-radius: 50%;
+  background: var(--pb-surface-2);
+  color: var(--pb-on-accent);
+  font-size: var(--pb-font-body);
+  font-weight: 900;
+  line-height: 1;
+}
+
+.pipDone {
+  background: var(--pb-accent-3);
+}
+
+.pipPop {
   animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
 }

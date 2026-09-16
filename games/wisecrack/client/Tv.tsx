@@ -4,9 +4,10 @@ import type { JSX } from 'react';
 import { BigText, Stage } from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
 import type { WisecrackTvView } from '../server/index';
+import { TvReveal } from './TvReveal';
 import { TvAnswer, TvIntro } from './TvRound';
 import { TvScores } from './TvScores';
-import { TvReveal, TvVote } from './TvVote';
+import { TvVote } from './TvVote';
 
 export function Tv({ view }: GameTvProps<WisecrackTvView>): JSX.Element {
   switch (view.phaseId) {

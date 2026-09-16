@@ -68,7 +68,7 @@ async function snap(phone: Phone, label: string): Promise<void> {
   log('screenshot', { label, path: p });
 }
 
-// Wisecrack labels the first prompt's button "Next prompt" (games/wisecrack/client/ControllerAnswer.tsx:45);
+// Wisecrack labels its buttons "Submit 1 of 2" / "Submit 2 of 2" (games/wisecrack/client/ControllerAnswer.tsx);
 // lib.actOnce only looks for /^Submit/ and its isEnabled() then blocks for the default 30 s timeout.
 const PRIMARY = /Submit|Next prompt|Start/;
 
