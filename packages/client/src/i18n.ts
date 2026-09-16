@@ -107,6 +107,8 @@ export const t = {
     tapHint: 'the party works without it',
     mute: 'Mute',
     unmute: 'Unmute',
+    enableSound: 'Sound is off — tap to enable',
+    soundOn: 'Sound on',
     fullscreen: 'Fullscreen',
     paused: 'Paused',
     pausedHint: (name: string) => `${name} can resume from the VIP menu`,

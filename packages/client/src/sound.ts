@@ -20,6 +20,11 @@ interface Note {
 }
 
 const CUES: Record<SoundCue, Note[]> = {
+  // Sound enabled / unmuted (C5 → G5, ~250 ms): the TV proving its speakers work.
+  ready: [
+    { freq: 523, at: 0, dur: 0.08, type: 'triangle', gain: 0.12 },
+    { freq: 784, at: 0.09, dur: 0.16, type: 'triangle', gain: 0.12 },
+  ],
   join: [
     { freq: 523, at: 0, dur: 0.08 },
     { freq: 659, at: 0.09, dur: 0.12 },

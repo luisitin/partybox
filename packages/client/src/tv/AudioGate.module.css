@@ -3,7 +3,8 @@
   position: fixed;
   left: 50%;
   bottom: calc(var(--pb-overscan-y) + var(--pb-space-6));
-  transform: translateX(-50%);
+  /* `translate`, not `transform`: the pb-rise keyframes own `transform` and would cancel it. */
+  translate: -50% 0;
   display: flex;
   align-items: baseline;
   gap: var(--pb-space-3);
@@ -20,6 +21,18 @@
 .pillHint {
   color: var(--pb-text-muted);
   font-weight: 600;
+}
+
+/* Sound is on: the pill says so once, fades, and unmounts on animationend. */
+@keyframes pill-out {
+  to {
+    opacity: 0;
+  }
+}
+
+.pillLeaving {
+  animation: pill-out var(--pb-motion-base) var(--pb-ease) both;
+  pointer-events: none;
 }
 
 /* Corner controls, inside the safe area; the header leaves room for them (TvFrame.joinBlock). */
@@ -46,6 +59,11 @@
   font-size: var(--pb-font-caption);
   display: grid;
   place-items: center;
+}
+
+/* Mute/unmute acknowledgement: a pop on the same node (never a remount — keeps keyboard focus). */
+.controlPop {
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
 }
 
 /* Theme strip drops down from the corner controls; the header leaves room for three buttons. */

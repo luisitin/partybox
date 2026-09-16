@@ -72,6 +72,7 @@ Timer: in the last 5 s it switches to `--pb-danger`, scales 1.15×, pulses once 
 
 | Cue         | Moment                         | Where triggered                                                                |
 | ----------- | ------------------------------ | ------------------------------------------------------------------------------ |
+| `ready`     | sound enabled / unmuted        | TV shell (AudioGate)                                                           |
 | `join`      | a player joins the lobby       | TV shell — each join steps up a scale (`joinSemitones`, wraps at 5)            |
 | `phase`     | phase changes                  | TV shell                                                                       |
 | `countdown` | each of the last 5 seconds     | TV shell (Timer) — pitched up per second (`countdownSemitones`: 880 → 1319 Hz) |
