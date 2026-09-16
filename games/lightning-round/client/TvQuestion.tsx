@@ -72,12 +72,18 @@ export function ChoiceBoard({
 export function AnswerCard({
   question,
   correctIndex,
+  hidden,
 }: {
   question: QuestionView;
   correctIndex: number;
+  /** Held back (invisible, space reserved) until a choreographed beat; the pop plays on unhide. */
+  hidden?: boolean;
 }): JSX.Element {
   return (
-    <div className={`${styles.choice} ${styles.answer}`} role="status">
+    <div
+      className={`${styles.choice} ${styles.answer} ${hidden ? styles.answerHidden : ''}`}
+      role="status"
+    >
       <span className={styles.letter} aria-hidden>
         {LETTERS[correctIndex]}
       </span>
@@ -113,13 +119,13 @@ export function TvQuestion({
   );
 }
 
-function verdictOf(row: RevealRow): { glyph: string; label: string } {
+export function verdictOf(row: RevealRow): { glyph: string; label: string } {
   if (row.correct) return { glyph: '✓', label: 'correct' };
   if (row.pickIndex === null) return { glyph: '–', label: 'no answer' };
   return { glyph: '✗', label: 'wrong' };
 }
 
-function deltaText(delta: number): string {
+export function deltaText(delta: number): string {
   if (delta > 0) return `+${delta}`;
   if (delta < 0) return `−${-delta}`;
   return '+0';

@@ -111,6 +111,12 @@
   color: var(--pb-accent-3);
 }
 
+/* Final reveal holds the answer back (space kept) until its beat; removing the class replays the pop. */
+.answerHidden {
+  visibility: hidden;
+  animation: none;
+}
+
 .count {
   font-size: var(--pb-font-h2);
   color: var(--pb-text-muted);
@@ -190,4 +196,53 @@
 .wager {
   color: var(--pb-text-muted);
   font-size: var(--pb-font-caption);
+}
+
+/* ── Final-wager reveal (TvFinal.tsx): name over "✓ bet 3150 · 2340 pts", h2 delta, 80 px rows ── */
+.rowsFinal {
+  /* per-row stagger in --pb-motion-slow units (set inline as a unitless factor → 0 under reduced motion) */
+  --pb-final-step: 0ms;
+}
+
+.rowFinal {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  min-height: 80px;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.15;
+}
+
+.stack .name {
+  flex: none;
+}
+
+.bet {
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.deltaFinal {
+  font-size: var(--pb-font-h2);
+  min-width: 3ch;
+  text-align: right;
+}
+
+.deltaZero {
+  color: var(--pb-text-muted);
+}
+
+/* Verdict, delta and total arrive per row, smallest bet first. */
+.pop {
+  display: inline-block;
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+  animation-delay: calc(var(--i, 0) * var(--pb-final-step, 0ms));
 }

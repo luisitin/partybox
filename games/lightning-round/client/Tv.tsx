@@ -4,6 +4,7 @@ import type { JSX } from 'react';
 import { BigText, Scoreboard, Stage } from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
 import type { LightningTvView } from '../server/index';
+import { FinalReveal } from './TvFinal';
 import { AnswerCard, RevealRows, RoundHeader, TvQuestion } from './TvQuestion';
 import styles from './Tv.module.css';
 
@@ -35,6 +36,18 @@ export function Tv({ view }: GameTvProps<LightningTvView>): JSX.Element {
     );
   }
   if (view.phaseId === 'reveal') {
+    if (view.round?.final && view.question && view.correctIndex !== undefined) {
+      return (
+        <Stage>
+          <FinalReveal
+            key={view.round.number}
+            question={view.question}
+            correctIndex={view.correctIndex}
+            rows={view.rows ?? []}
+          />
+        </Stage>
+      );
+    }
     return (
       <Stage>
         <RoundHeader round={view.round} question={view.question} />
