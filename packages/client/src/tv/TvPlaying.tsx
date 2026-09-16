@@ -7,6 +7,7 @@ import { BigText, DeadlineBar, PlayerChips, SoundProvider, Timer } from '@partyb
 import { GameErrorBoundary } from '../controller/GameErrorBoundary';
 import { clientGames } from '../games.generated';
 import { t } from '../i18n';
+import { countdownSemitones } from '../sound';
 import type { SoundCue, SoundEngine } from '../sound';
 import styles from './TvPlaying.module.css';
 
@@ -17,7 +18,11 @@ export interface TvPlayingProps {
 }
 
 export function TvPlaying({ room, view, audio }: TvPlayingProps): JSX.Element {
-  const onTick = useCallback(() => audio.play('countdown'), [audio]);
+  // The last five seconds climb a scale (5 → 1), so the room hears the deadline coming.
+  const onTick = useCallback(
+    (s: number) => audio.play('countdown', { semitones: countdownSemitones(s) }),
+    [audio],
+  );
   const play = useCallback((cue: SoundCue) => audio.play(cue), [audio]);
   const module = room.selectedGameId ? clientGames[room.selectedGameId] : undefined;
   const vip = room.players.find((p) => p.id === (view?.vip ?? room.vip));

@@ -29,7 +29,8 @@ const CUES: Record<SoundCue, Note[]> = {
     { freq: 523, at: 0.1, dur: 0.1, type: 'triangle' },
     { freq: 784, at: 0.2, dur: 0.12, type: 'triangle' },
   ],
-  countdown: [{ freq: 880, at: 0, dur: 0.05, type: 'square', gain: 0.12 }],
+  // Pitched up per second via `countdownSemitones` (a major scale rising to the fifth).
+  countdown: [{ freq: 880, at: 0, dur: 0.06, type: 'triangle', gain: 0.12 }],
   // Half-gain countdown for the phone's 5 s edge.
   tick: [{ freq: 880, at: 0, dur: 0.05, type: 'square', gain: 0.06 }],
   // Pickup, then resolve (~0.7 s): two soft E4 taps, a B4+E5 lift, a held B5+E6 chord.
@@ -113,11 +114,28 @@ const CUES: Record<SoundCue, Note[]> = {
   daub: [{ freq: 1200, at: 0, dur: 0.03, type: 'triangle', gain: 0.1 }],
 };
 
+/** 5 s → 880 Hz, 4 → 988, 3 → 1109, 2 → 1175, 1 → 1319: A major up to the fifth. */
+export const COUNTDOWN_STEPS = [7, 5, 4, 2, 0] as const;
+export function countdownSemitones(secondsLeft: number): number {
+  return COUNTDOWN_STEPS[secondsLeft - 1] ?? 0;
+}
+
+/** Successive joins step up a scale and wrap (16 identical blips felt like a fault). */
+export const JOIN_STEPS = [0, 2, 4, 5, 7] as const;
+export function joinSemitones(playerCount: number): number {
+  return JOIN_STEPS[Math.max(0, playerCount - 1) % JOIN_STEPS.length] ?? 0;
+}
+
+export interface PlayOptions {
+  /** Transpose every note of the cue (12 = one octave up). */
+  semitones?: number;
+}
+
 export interface SoundEngine {
   /** Create/resume the AudioContext. Call from a click/tap handler. */
   enable(): Promise<boolean>;
   enabled(): boolean;
-  play(cue: SoundCue): void;
+  play(cue: SoundCue, opts?: PlayOptions): void;
   /** performance.now() of the last cue actually started — lets the shell skip a generic cue
    *  when the game just played a specific one in the same commit. */
   lastPlayedAt(): number;
@@ -167,16 +185,18 @@ export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine
       }
     },
     enabled: () => ctx?.state === 'running',
-    play(cue) {
+    play(cue, opts) {
       lastPlayedAt = performance.now();
       if (!ctx || muted || ctx.state !== 'running') return;
       const t0 = ctx.currentTime;
+      const k = 2 ** ((opts?.semitones ?? 0) / 12);
       for (const note of CUES[cue]) {
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
         osc.type = note.type ?? 'sine';
-        osc.frequency.setValueAtTime(note.freq, t0 + note.at);
-        if (note.to) osc.frequency.exponentialRampToValueAtTime(note.to, t0 + note.at + note.dur);
+        osc.frequency.setValueAtTime(note.freq * k, t0 + note.at);
+        if (note.to)
+          osc.frequency.exponentialRampToValueAtTime(note.to * k, t0 + note.at + note.dur);
         const level = note.gain ?? 0.18;
         gain.gain.setValueAtTime(0.0001, t0 + note.at);
         gain.gain.exponentialRampToValueAtTime(level, t0 + note.at + 0.01);

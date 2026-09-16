@@ -6,7 +6,7 @@ import { ServerClockProvider, isSoundCue } from '@partybox/game-sdk/ui';
 import { clientGames } from '../games.generated';
 import { useStore } from '../net/store';
 import { createTvClient } from '../net/tv';
-import { createSoundEngine } from '../sound';
+import { createSoundEngine, joinSemitones } from '../sound';
 import type { SoundEngine } from '../sound';
 import { AudioGate } from './AudioGate';
 import { HostBar } from './HostBar';
@@ -39,7 +39,8 @@ export function TvApp(): JSX.Element {
   useEffect(() => {
     if (!room) return;
     const p = prev.current;
-    if (room.players.length > p.players && p.status !== '') audio.play('join');
+    if (room.players.length > p.players && p.status !== '')
+      audio.play('join', { semitones: joinSemitones(room.players.length) });
     if (room.status === 'results' && p.status !== 'results') audio.play('win');
     // A game that cued this phase itself (useSound, child effects run first) keeps the stage's
     // generic chime out of its way. `clientModule.sounds` maps a phase id to its own cue (reveal,
