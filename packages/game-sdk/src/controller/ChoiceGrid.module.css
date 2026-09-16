@@ -95,3 +95,10 @@
   font-weight: 700;
   color: var(--pb-accent-3);
 }
+
+/* The last 5 s for an unanswered phone (`data-urgent` on the controller shell): the letters turn
+   danger so the thumb zone, not only the header, says "now". */
+[data-urgent] .choice:not(:disabled) .letter {
+  background: var(--pb-danger);
+  color: var(--pb-on-accent);
+}

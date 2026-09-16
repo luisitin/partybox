@@ -31,13 +31,23 @@ export interface ControllerShellProps {
   children: ReactNode;
 }
 
+/** "Something to press": what makes the last 5 s urgent on this screen (see `candidate`). */
+const ACTIONABLE =
+  'textarea:not(:disabled), input:not(:disabled), select:not(:disabled), ' +
+  'button:not(:disabled):not([aria-disabled="true"]), [role="button"]:not([aria-disabled="true"])';
+
 /** Haptic patterns (ms on/off) — docs/DESIGN_SYSTEM.md → Haptics. */
-const BUZZ: Record<'submit' | 'error' | 'prompt' | 'winner' | 'results', number | number[]> = {
+const BUZZ: Record<
+  'submit' | 'error' | 'prompt' | 'winner' | 'results' | 'tick' | 'timeup',
+  number | number[]
+> = {
   submit: 20,
   error: [40, 60, 40],
   prompt: [30, 50, 30],
   winner: [60, 60, 60, 60, 160],
   results: 40,
+  tick: 30,
+  timeup: [60, 40, 60],
 };
 
 export function ControllerShell({
@@ -58,6 +68,39 @@ export function ControllerShell({
 
   // Cues from state transitions, mirroring the TV's (TvApp). One `prev` snapshot per push.
   const myStatus = state.view?.players.find((p) => p.id === state.playerId)?.status ?? null;
+  // The last 5 s of a real input phase for a player who has not answered: the phone (not the TV
+  // 3 m away) is what they are staring at, so it is the phone that gets urgent. `data-urgent` on
+  // the shell lets the SDK primitives (letters, the primary button) join in without a prop. A
+  // game marks nobody 'submitted' in a passive phase (intro, reveal, scores), so the shell also
+  // checks that the screen actually offers something to press — a WaitingScreen never panics.
+  const timed = view !== null && view.timerMode !== 'quiet' && view.timerMode !== 'hidden';
+  const acting = myStatus === 'active';
+  const candidate =
+    timed && !view.paused && seconds !== null && seconds >= 1 && seconds <= 5 && acting;
+  const shellRef = useRef<HTMLDivElement>(null);
+  const mainRef = useRef<HTMLElement>(null);
+  // One haptic per second at 5…1, a soft tick at the 5 s edge, a thud at 0 for a phone that was
+  // counting and still has not answered (Timer.tsx's `lastTicked` pattern, keyed per phase
+  // instance; per-second is haptic-only so N phones never flam against the TV's countdown).
+  const lastTicked = useRef<{ key: string; seconds: number } | null>(null);
+  useEffect(() => {
+    const canAct = timed && !view.paused && acting && !!mainRef.current?.querySelector(ACTIONABLE);
+    shellRef.current?.toggleAttribute('data-urgent', candidate && canAct);
+    if (!canAct || seconds === null || seconds > 5) return;
+    const key = `${view.phaseId}:${view.deadline ?? ''}`;
+    const last = lastTicked.current?.key === key ? lastTicked.current.seconds : null;
+    if (last === seconds) return;
+    lastTicked.current = { key, seconds };
+    if (seconds === 0) {
+      if (last === null) return;
+      audio?.play('error');
+      buzz(BUZZ.timeup);
+      return;
+    }
+    if (seconds === 5) audio?.play('tick');
+    buzz(BUZZ.tick);
+  }, [timed, view, seconds, acting, candidate, audio]);
+
   const prev = useRef<{
     status: string | null;
     phase: string | null;
@@ -118,7 +161,7 @@ export function ControllerShell({
     if (next) buzz(BUZZ.submit);
   };
   return (
-    <div className={styles.shell} data-surface="controller">
+    <div ref={shellRef} className={styles.shell} data-surface="controller">
       <header className={styles.header}>
         <div className={styles.left}>
           <span className={styles.brand} aria-label={t.appName}>
@@ -178,6 +221,11 @@ export function ControllerShell({
           aria-label={view.paused ? t.tv.paused : t.connection.secondsLeft(seconds)}
         >
           <DeadlineBar deadline={view.deadline} phaseKey={view.phaseId} paused={view.paused} />
+          {candidate ? (
+            <span className={styles.cue} aria-hidden>
+              {t.connection.pickNow}
+            </span>
+          ) : null}
           {view.timerMode !== 'quiet' || view.paused ? (
             <span className={styles.seconds}>
               {view.paused ? `⏸ ${t.tv.paused}` : t.connection.seconds(seconds)}
@@ -195,7 +243,9 @@ export function ControllerShell({
           {state.error.message}
         </button>
       ) : null}
-      <main className={styles.main}>{children}</main>
+      <main ref={mainRef} className={styles.main}>
+        {children}
+      </main>
       <div className={styles.toasts} aria-live="polite">
         {state.toasts.map((toast) => (
           // A status line, not a button: screen readers announce it once and it never masquerades
