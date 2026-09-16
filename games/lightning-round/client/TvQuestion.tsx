@@ -1,6 +1,6 @@
 // TV: the question, its four lettered choices in a 2×2 grid, and — in reveal — the correct one
 // marked with ✓ (never colour-only) plus one row per player with verdict, points and streak.
-import type { JSX } from 'react';
+import type { CSSProperties, JSX } from 'react';
 import { Avatar, BigText } from '@partybox/game-sdk/ui';
 import type { QuestionView, RevealRow, RoundView } from '../server/views';
 import styles from './Tv.module.css';
@@ -52,7 +52,12 @@ export function ChoiceBoard({
           revealed && !isCorrect ? styles.dim : '',
         ].join(' ');
         return (
-          <div key={index} role="listitem" className={classes}>
+          <div
+            key={index}
+            role="listitem"
+            className={classes}
+            style={{ '--i': index } as CSSProperties}
+          >
             <span className={styles.letter} aria-hidden>
               {LETTERS[index]}
             </span>

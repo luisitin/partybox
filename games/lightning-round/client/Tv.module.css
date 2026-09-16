@@ -15,8 +15,10 @@
   color: var(--pb-accent-2);
 }
 
+/* Once-per-game stakes moments (wager kicker, final question, final reveal) pop instead of rise. */
 .final {
   color: var(--pb-accent);
+  animation: global(pb-pop) var(--pb-motion-slow) var(--pb-ease) both;
 }
 
 .grid {
@@ -39,6 +41,9 @@
   font-size: var(--pb-font-body);
   font-weight: 700;
   overflow-wrap: anywhere;
+  /* Beat two after the prompt (which rides the shell's .game rise): A, B, C, D in reading order. */
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+  animation-delay: calc(var(--pb-motion-fast) + var(--pb-motion-fast) * var(--i, 0) / 3);
 }
 
 .letter {
