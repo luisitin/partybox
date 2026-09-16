@@ -56,11 +56,22 @@ describe('scoring', () => {
     expect(t.stats.sweeps).toEqual({});
   });
 
-  it('doubles every vote and the sweep bonus in the last round', () => {
+  it('a one-round game never doubles (there is no "last" round to build up to)', () => {
     const { s, prompt } = firstVote({ rounds: 1 });
-    expect(tv(s)).toMatchObject({ multiplier: 2, round: 1, rounds: 1 });
+    expect(tv(s)).toMatchObject({ multiplier: 1, round: 1, rounds: 1 });
+    expect(voteAll(s, () => 0).scores[prompt.authors[0]]).toBe(250);
+  });
+
+  it('doubles every vote and the sweep bonus in the last round', () => {
+    // Round 2 of 2, first prompt on stage, everyone answered.
+    const s = answerAll(toAnswer(timer(playRound(start({ rounds: 2 })))));
+    expect(s.phase.id).toBe('vote');
+    const prompt = current(s);
+    if (!prompt) throw new Error('no prompt on stage');
+    expect(tv(s)).toMatchObject({ multiplier: 2, round: 2, rounds: 2 });
     const t = voteAll(s, () => 0);
-    expect(t.scores[prompt.authors[0]]).toBe(500); // 2 × 200 + 100 sweep
+    const before = s.scores[prompt.authors[0]] ?? 0;
+    expect(t.scores[prompt.authors[0]]).toBe(before + 500); // 2 × 200 + 100 sweep
     const second = timer(t); // reveal → next vote
     const [v1, v2] = voters(second);
     const u = vote(vote(second, v1 as string, 0), v2 as string, 1); // split → 200 each

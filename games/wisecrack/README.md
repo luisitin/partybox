@@ -4,7 +4,7 @@
 
 Every player writes a one-liner for two prompts; each prompt then goes on the TV with its two answers,
 anonymously, and everyone who did not write for it votes for the funnier one. Authors and votes are
-revealed, points awarded, round scoreboard, next round. The last round is worth double.
+revealed, points awarded, round scoreboard, next round. The last round of a multi-round game is worth double.
 
 ## Players
 
@@ -13,14 +13,14 @@ player's prompts stay blank). Late joiners spectate (engine behaviour). Bots: we
 
 ## Phases
 
-| Phase    | TV                                                | Phone                                                   | Exit                                                                                     |
-| -------- | ------------------------------------------------- | ------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `intro`  | "Round r of R"; "double points" on the last round | round card                                              | 5 s or VIP skip → `answer`                                                               |
-| `answer` | "n / 2·players answers in"; no answers shown      | `TextAnswer` for prompt 1 of 2, then 2 of 2 (80 chars)  | all connected players answered both, `answerSeconds`, or VIP skip → first votable `vote` |
-| `vote`   | prompt + anonymous answers A / B, "n / m voted"   | voters: `VoteList` A / B; authors: waiting + own answer | all connected eligible voters voted, 20 s, or VIP skip (votes so far count) → `reveal`   |
-| `reveal` | authors, voter avatars, points, "SWEEP!"          | authors: votes + points; others: "look at the TV"       | 6 s or VIP skip → next votable `vote`, or `scores` after the round's last prompt         |
-| `scores` | round scoreboard with +deltas                     | own score/rank + compact scoreboard                     | 8 s or VIP skip → next round's `intro`, or `done` after round `rounds`                   |
-| `done`   | final standings + awards                          | thanks + scoreboard                                     | terminal: `results()` non-null. VIP end from any phase → `done` with the scores so far   |
+| Phase    | TV                                                       | Phone                                                   | Exit                                                                                     |
+| -------- | -------------------------------------------------------- | ------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `intro`  | "Round r of R"; "double points" on the last of 2+ rounds | round card                                              | 5 s or VIP skip → `answer`                                                               |
+| `answer` | "n / 2·players answers in"; no answers shown             | `TextAnswer` for prompt 1 of 2, then 2 of 2 (80 chars)  | all connected players answered both, `answerSeconds`, or VIP skip → first votable `vote` |
+| `vote`   | prompt + anonymous answers A / B, "n / m voted"          | voters: `VoteList` A / B; authors: waiting + own answer | all connected eligible voters voted, 20 s, or VIP skip (votes so far count) → `reveal`   |
+| `reveal` | authors, voter avatars, points, "SWEEP!"                 | authors: votes + points; others: "look at the TV"       | 6 s or VIP skip → next votable `vote`, or `scores` after the round's last prompt         |
+| `scores` | round scoreboard with +deltas                            | own score/rank + compact scoreboard                     | 8 s or VIP skip → next round's `intro`, or `done` after round `rounds`                   |
+| `done`   | final standings + awards                                 | thanks + scoreboard                                     | terminal: `results()` non-null. VIP end from any phase → `done` with the scores so far   |
 
 Pairing: a seeded player cycle per round; prompt i → players i and i+1 (mod n): n prompts, two authors
 each, two per player, A / B slot shuffled. Deck shuffled once at `init` (+ spicy pack): no repeats.

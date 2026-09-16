@@ -2,7 +2,7 @@
   "id": "wisecrack",
   "name": "Wisecrack",
   "tagline": "Write the funniest answer. Win the room's votes.",
-  "description": "Everyone gets two prompts and writes a one-liner for each. Each prompt then goes on the TV with its two answers, anonymously; everyone else votes for the funnier one. 100 points per vote, a bonus for a clean sweep, and the last round counts double.",
+  "description": "Everyone gets two prompts and writes a one-liner for each. Each prompt then goes on the TV with its two answers, anonymously; everyone else votes for the funnier one. 100 points per vote, a bonus for a clean sweep, and with two or more rounds the last one counts double.",
   "version": "0.1.0",
   "minPlayers": 3,
   "maxPlayers": 8,
@@ -12,7 +12,7 @@
     {
       "key": "rounds",
       "label": "Rounds",
-      "description": "Rounds to play; the last one is worth double",
+      "description": "Rounds to play; with 2 or more, the last one is worth double",
       "type": "number",
       "default": 3,
       "min": 1,

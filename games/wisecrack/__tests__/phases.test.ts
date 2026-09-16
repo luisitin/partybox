@@ -202,7 +202,7 @@ describe('VIP', () => {
     s = vip(s, 'skip');
     expect(s.phase.id).toBe('reveal');
     const prompt = current(s);
-    expect(s.scores[prompt?.authors[0] ?? '']).toBe(200); // votes so far, doubled (last round)
+    expect(s.scores[prompt?.authors[0] ?? '']).toBe(100); // votes so far (one round: no doubling)
     s = vip(s, 'skip');
     expect(s.phase.id).toBe('vote');
     expect(s.promptIndex).toBe(1);

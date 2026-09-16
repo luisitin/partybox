@@ -17,8 +17,9 @@ export interface AuthorTally {
   sweep: boolean;
 }
 
+/** The last round of a multi-round game pays double; a one-round game has no "last" round. */
 export function multiplierFor(state: State): number {
-  return isLastRound(state) ? 2 : 1;
+  return state.settings.rounds > 1 && isLastRound(state) ? 2 : 1;
 }
 
 /** Votes, points and sweep per author of one prompt, from the votes cast so far. */
