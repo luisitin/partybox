@@ -85,9 +85,12 @@ export function createTvClient(roomCode?: string, url?: string): TvClient {
     );
   };
   socket.on('toast', (toast: ToastPayload) => {
-    // During play the chips already show who joined; a join toast would only cover the stage.
-    // (Payloads carry no category yet, so this matches the engine's "<name> joined…" text.)
-    if (store.get().room?.status === 'playing' && /joined/.test(toast.text)) return;
+    // The chips already show who joined — in the lobby the new chip pops in, during play the
+    // strip has it — so a join toast would only pull the eye to the wrong corner. Left / kicked /
+    // "is now the VIP" / "The game was ended." still show. (Payloads carry no category yet, so
+    // this matches the engine's "<name> joined…" text.)
+    const status = store.get().room?.status;
+    if ((status === 'lobby' || status === 'playing') && /\bjoined\b/.test(toast.text)) return;
     showToast(toast);
   });
   // Refusals of host actions (a game that cannot start, nobody in the room) come back as errors.

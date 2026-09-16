@@ -17,6 +17,10 @@ export interface PlayerChipsProps {
   align?: 'center' | 'start';
   /** Ids of bot players (they get a 🤖 tag). The room snapshot knows; the game view does not. */
   botIds?: readonly string[];
+  /** Newly mounted chips pop in (lobby joins). Off by default: no pop on screen transitions. */
+  enter?: boolean;
+  /** Empty dashed seats rendered after the players (an empty lobby shows where people go). */
+  seats?: number;
 }
 
 export function PlayerChips({
@@ -28,6 +32,8 @@ export function PlayerChips({
   layout = 'row',
   align = 'center',
   botIds = [],
+  enter = false,
+  seats = 0,
 }: PlayerChipsProps): JSX.Element {
   return (
     <ul
@@ -35,7 +41,7 @@ export function PlayerChips({
       aria-label="players"
     >
       {players.map((p) => (
-        <li key={p.id} className={styles.item}>
+        <li key={p.id} className={`${styles.item} ${enter ? styles.enter : ''}`}>
           <PlayerChip
             name={p.name}
             avatarId={p.avatarId}
@@ -47,6 +53,11 @@ export function PlayerChips({
             isBot={botIds.includes(p.id)}
             size={size}
           />
+        </li>
+      ))}
+      {Array.from({ length: Math.max(0, seats) }, (_, i) => (
+        <li key={`seat-${i}`} className={styles.seat} aria-hidden="true">
+          <span className={styles.seatDisc} />
         </li>
       ))}
     </ul>

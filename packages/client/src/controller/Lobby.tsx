@@ -46,7 +46,7 @@ export function Lobby({ controller, room, me }: LobbyProps): JSX.Element {
           // The owner or the VIP may remove a bot (ADR-028): one tap, no confirm — re-adding is one tap too.
           const removable = p.bot !== undefined && (p.bot.ownerId === me.id || me.isVip);
           return (
-            <li key={p.id}>
+            <li key={p.id} className={styles.item}>
               <PlayerChip
                 name={p.name}
                 avatarId={p.avatarId}
