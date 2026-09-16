@@ -2,6 +2,8 @@
 // cheap; turns danger-coloured in the last 5 seconds. The phase start is not in the view envelope, so
 // it is taken from the moment this bar first sees a given `phaseKey` + `deadline` (a late joiner sees
 // the bar start full from then — acceptable, and exact once `phaseStartedAt` exists on the wire).
+// The track is keyed on that phase instance so a new phase mounts a fresh full bar instead of
+// tweening the old fill back to full width (and its colour through orange) — R-069.
 import { useState } from 'react';
 import type { JSX } from 'react';
 import { useSecondsLeft, useServerNow } from './clock';
@@ -36,6 +38,7 @@ export function DeadlineBar({
   const urgent = !paused && seconds <= urgentAt && seconds > 0;
   return (
     <div
+      key={key}
       className={`${styles.track} ${urgent ? styles.urgent : ''} ${paused ? styles.paused : ''} ${className ?? ''}`}
       aria-hidden
     >

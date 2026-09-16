@@ -36,6 +36,8 @@
 .bar {
   width: auto;
   margin: 0 var(--pb-overscan-x) var(--pb-space-4);
+  /* remounts per phase (DeadlineBar keys its track), so it rises with .game — TV only (R-069) */
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
 }
 
 .game {
