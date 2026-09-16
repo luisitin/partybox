@@ -42,20 +42,19 @@ function ControllerScores({ view, me }: Props): JSX.Element {
 export function Controller(props: Props): JSX.Element {
   const { view } = props;
   // A voter's pick, remembered into the reveal (ControllerVote unmounts at the phase change).
-  // Server-confirmed (votedSlot), so a rejected or late tap never shows a stale pick; cleared the
-  // moment a new prompt's vote opens — "adjust state when a prop changes", in render.
+  // Set on the tap — the last vote ends the phase in the same reduce, so that phone never sees a
+  // confirmed votedSlot — overwritten by the server's confirmation when one arrives, and cleared
+  // the moment a new prompt's vote opens: "adjust state when a prop changes", in render.
   const [lastVote, setLastVote] = useState<LastVote | null>(null);
   const vote = view.vote;
   if (vote) {
-    const next: LastVote | null =
-      vote.votedSlot === null
-        ? null
-        : {
-            promptId: vote.promptId,
-            slot: vote.votedSlot,
-            text: vote.options[vote.votedSlot]?.text ?? '',
-          };
-    if (next?.promptId !== lastVote?.promptId || next?.slot !== lastVote?.slot) setLastVote(next);
+    if (lastVote && lastVote.promptId !== vote.promptId) setLastVote(null);
+    else if (vote.votedSlot !== null && lastVote?.slot !== vote.votedSlot)
+      setLastVote({
+        promptId: vote.promptId,
+        slot: vote.votedSlot,
+        text: vote.options[vote.votedSlot]?.text ?? '',
+      });
   }
   switch (view.phaseId) {
     case 'intro':
@@ -71,7 +70,7 @@ export function Controller(props: Props): JSX.Element {
     case 'answer':
       return <ControllerAnswer {...props} />;
     case 'vote':
-      return <ControllerVote {...props} />;
+      return <ControllerVote {...props} onPick={setLastVote} />;
     case 'reveal':
       return <ControllerReveal {...props} lastVote={lastVote} />;
     case 'scores':

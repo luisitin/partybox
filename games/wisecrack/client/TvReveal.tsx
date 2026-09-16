@@ -10,12 +10,11 @@ import { Avatar, Stage, useBeats, useSound } from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
 import type { WisecrackTvView } from '../server/index';
 import { LETTERS, PromptHeader, answerClass, isShort } from './TvVote';
+import { REVEAL_BEATS_MS } from './timing';
 import styles from './wisecrack.module.css';
 
 type Props = GameTvProps<WisecrackTvView>;
 
-/** Mirrors --pb-motion-base / -slow; CSS tokens are not readable from JS (same as Reveal.tsx). */
-export const REVEAL_BEATS_MS = [0, 300, 900, 1500] as const;
 const BEAT_VOTERS = 1;
 const BEAT_AUTHORS = 2;
 const BEAT_POINTS = 3;

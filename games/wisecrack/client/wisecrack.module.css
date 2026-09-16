@@ -145,6 +145,7 @@
   gap: var(--pb-space-3);
   text-align: center;
   padding: var(--pb-space-6) 0;
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
 }
 
 .points {
@@ -153,6 +154,7 @@
   line-height: 1;
   color: var(--pb-accent-2);
   font-variant-numeric: tabular-nums;
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
 }
 
 .pointsZero {

@@ -1,11 +1,13 @@
 // Phone during "vote" (voters pick A or B; authors wait, seeing only their own answer) and
 // "reveal" (authors see their votes and points; a voter sees what they picked; everyone else is
-// pointed at the TV). The phone never spoils the TV: a voter's own pick is the only thing shown.
+// pointed at the TV). The phone never spoils the TV: an author's result is held until the TV's last
+// reveal beat has landed (timing.ts), and a voter's own pick is the only thing shown to them.
 import type { JSX } from 'react';
 import { Screen, VoteList, WaitingScreen } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { WisecrackControllerView } from '../server/index';
 import type { Input } from '../server/types';
+import { REVEAL_HOLD_MS, useHold } from './timing';
 import styles from './wisecrack.module.css';
 
 type Props = GameControllerProps<WisecrackControllerView, Input>;
@@ -20,7 +22,11 @@ export interface LastVote {
   text: string;
 }
 
-export function ControllerVote({ view, send }: Props): JSX.Element {
+export function ControllerVote({
+  view,
+  send,
+  onPick,
+}: Props & { onPick: (pick: LastVote) => void }): JSX.Element {
   const vote = view.vote;
   if (!vote) return <WaitingScreen title="Look at the TV" mood="watch" />;
   if (vote.role === 'author') {
@@ -45,7 +51,11 @@ export function ControllerVote({ view, send }: Props): JSX.Element {
         muted: o.text === BLANK,
       }))}
       votedId={vote.votedSlot === null ? null : String(vote.votedSlot)}
-      onVote={(id) => send({ type: 'vote', promptId: vote.promptId, slot: Number(id) })}
+      onVote={(id) => {
+        const slot = Number(id);
+        onPick({ promptId: vote.promptId, slot, text: vote.options[slot]?.text ?? '' });
+        send({ type: 'vote', promptId: vote.promptId, slot });
+      }}
     />
   );
 }
@@ -55,6 +65,7 @@ export function ControllerReveal({
   lastVote,
 }: Props & { lastVote: LastVote | null }): JSX.Element {
   const mine = view.myReveal;
+  const shown = useHold(REVEAL_HOLD_MS);
   if (!mine) {
     if (lastVote) {
       return (
@@ -68,6 +79,13 @@ export function ControllerReveal({
       );
     }
     return <WaitingScreen title="Authors revealed!" hint="Look at the TV" mood="watch" />;
+  }
+  if (!shown) {
+    return (
+      <WaitingScreen title="Your answer is up" hint="Look at the TV" mood="watch">
+        <p className={styles.quote}>{mine.text}</p>
+      </WaitingScreen>
+    );
   }
   const scored = mine.points > 0;
   return (
