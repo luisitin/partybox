@@ -28,6 +28,11 @@
   justify-content: flex-end;
 }
 
+.pausedGlyph {
+  font-size: var(--pb-font-h1);
+  color: var(--pb-accent-2);
+}
+
 .bar {
   width: auto;
   margin: 0 var(--pb-overscan-x) var(--pb-space-4);

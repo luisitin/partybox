@@ -123,6 +123,12 @@ export interface ViewEnvelope {
   deadline: number | null;
   paused: boolean;
   players: ViewPlayer[];
+  /**
+   * How the shells present `deadline` (ADR-030). `normal` (default): digits, red + ticks in the last
+   * 5 s. `quiet`: the progress bar only — for phases whose timer is a rhythm, not a countdown
+   * (a bingo call, a page of a slideshow). `hidden`: nothing at all.
+   */
+  timerMode?: 'normal' | 'quiet' | 'hidden';
 }
 
 export type TvView = ViewEnvelope;

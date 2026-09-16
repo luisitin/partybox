@@ -83,16 +83,19 @@ export function ControllerShell({
           ) : null}
         </div>
       </header>
-      {view && seconds !== null ? (
+      {view && seconds !== null && view.timerMode !== 'hidden' ? (
+        // ADR-030: a quiet timer keeps the bar (a rhythm) but drops the digits and the urgency.
         <div
-          className={`${styles.deadline} ${seconds <= 5 && !view.paused ? styles.urgent : ''}`}
+          className={`${styles.deadline} ${seconds <= 5 && !view.paused && view.timerMode !== 'quiet' ? styles.urgent : ''}`}
           role="timer"
           aria-label={view.paused ? t.tv.paused : t.connection.secondsLeft(seconds)}
         >
           <DeadlineBar deadline={view.deadline} phaseKey={view.phaseId} paused={view.paused} />
-          <span className={styles.seconds}>
-            {view.paused ? `⏸ ${t.tv.paused}` : t.connection.seconds(seconds)}
-          </span>
+          {view.timerMode !== 'quiet' || view.paused ? (
+            <span className={styles.seconds}>
+              {view.paused ? `⏸ ${t.tv.paused}` : t.connection.seconds(seconds)}
+            </span>
+          ) : null}
         </div>
       ) : null}
       {showBanner ? (

@@ -119,6 +119,7 @@ interface ViewEnvelope {
   deadline: number | null;
   paused: boolean;
   players: ViewPlayer[]; // { id, name, avatarId, connected, status, score? }  status: 'active' | 'submitted' | 'waiting' | 'spectator'
+  timerMode?: 'normal' | 'quiet' | 'hidden'; // ADR-030: quiet = bar only (a rhythm, not a countdown); hidden = nothing
 }
 type TvView = ViewEnvelope & Record<string, JsonValue>; // + your fields
 type ControllerView = ViewEnvelope & { me: { id: string; role: 'player' | 'spectator' } } & Record<

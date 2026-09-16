@@ -29,6 +29,8 @@ export function TvPlaying({ room, view, audio }: TvPlayingProps): JSX.Element {
   }
   const GameTv = module?.Tv as unknown as
     ((props: { view: PushedView<TvView> }) => JSX.Element) | undefined;
+  // ADR-030: a game may ask for a quiet timer (bar only — a rhythm, not a countdown) or none.
+  const timerMode = view.timerMode ?? 'normal';
   return (
     <div className={styles.playing}>
       <div className={styles.strip}>
@@ -51,15 +53,23 @@ export function TvPlaying({ room, view, audio }: TvPlayingProps): JSX.Element {
           size="sm"
         />
         <div className={styles.timer}>
-          <Timer deadline={view.deadline} paused={view.paused} onTick={onTick} size="lg" />
+          {timerMode === 'normal' ? (
+            <Timer deadline={view.deadline} paused={view.paused} onTick={onTick} size="lg" />
+          ) : view.paused ? (
+            <span className={styles.pausedGlyph} aria-label={t.tv.paused}>
+              ⏸
+            </span>
+          ) : null}
         </div>
       </div>
-      <DeadlineBar
-        deadline={view.deadline}
-        phaseKey={view.phaseId}
-        paused={view.paused}
-        className={styles.bar}
-      />
+      {timerMode !== 'hidden' ? (
+        <DeadlineBar
+          deadline={view.deadline}
+          phaseKey={view.phaseId}
+          paused={view.paused}
+          className={styles.bar}
+        />
+      ) : null}
       <div className={styles.game} key={view.phaseId}>
         {GameTv ? (
           <GameErrorBoundary surface="tv">
