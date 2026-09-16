@@ -211,7 +211,7 @@ export function Controller({
         {iWon && claim ? (
           <Card numbers={claim.card} daubs={claim.daubs} green={claim.green} disabled />
         ) : (
-          <Card numbers={card} daubs={view.daubs} disabled />
+          <Card numbers={card} daubs={view.daubs} freeDaubed={freeDaubed} disabled />
         )}
         <p className={styles.hint}>
           {view.round < view.totalRounds ? 'Fresh cards next round.' : 'That was the last round.'}
