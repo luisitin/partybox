@@ -36,6 +36,36 @@ function Call({ call, big }: { call: CallView; big?: boolean }): JSX.Element {
   );
 }
 
+/** The hall board: 5 rows × 15 numbers, lit as called, the current one ringed (review-loop #1). */
+function CalledBoard({
+  called,
+  current,
+}: {
+  called: number[];
+  current: number | null;
+}): JSX.Element {
+  const lit = new Set(called);
+  return (
+    <div className={styles.board} aria-label={`${called.length} numbers called`}>
+      {BOARD_ROWS.map((letter, row) => (
+        <div key={letter} className={styles.boardRow}>
+          <span className={styles.boardLetter}>{letter}</span>
+          {Array.from({ length: 15 }, (_, i) => row * 15 + i + 1).map((n) => (
+            <span
+              key={n}
+              className={`${styles.cell} ${lit.has(n) ? styles.cellCalled : ''} ${n === current ? styles.cellCurrent : ''}`}
+            >
+              {n}
+            </span>
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+const BOARD_ROWS = ['B', 'I', 'N', 'G', 'O'] as const;
+
 function ClaimCard({ claim, celebrate }: { claim: ClaimView; celebrate: boolean }): JSX.Element {
   return (
     <div className={`${styles.claim} pb-pop`}>
@@ -106,7 +136,7 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
 
   if (view.phaseId === 'play') {
     return (
-      <Stage center>
+      <Stage center className={styles.playStage}>
         <p className={styles.kicker}>
           {roundLabel} · {view.patternLabel} · call {view.callIndex} of 75
         </p>
@@ -121,6 +151,7 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
           <span className={styles.previousLabel}>{view.previous ? 'Before that' : ' '}</span>
           {view.previous ? <Call call={view.previous} /> : null}
         </div>
+        <CalledBoard called={view.called} current={view.current?.number ?? null} />
       </Stage>
     );
   }

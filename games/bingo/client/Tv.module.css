@@ -22,18 +22,18 @@
 .callBig .letter {
   display: grid;
   place-items: center;
-  width: 220px;
-  height: 220px;
+  width: 180px;
+  height: 180px;
   border-radius: 50%;
   background: var(--pb-accent-2-fill);
   color: var(--pb-on-accent-2-fill);
-  font-size: 150px;
+  font-size: 124px;
   font-weight: 900;
   align-self: center;
 }
 
 .callBig .number {
-  font-size: 320px;
+  font-size: 260px;
   font-weight: 900;
   font-variant-numeric: tabular-nums;
 }
@@ -176,4 +176,55 @@
 
 .legendMissing {
   color: var(--pb-accent-2);
+}
+
+/* The hall board (review-loop #1): five rows of fifteen, dim until called, current ringed. Compact
+   enough (cells 36 px tall, caption-size digits) to sit under the previous-call row on a 1080p stage. */
+.board {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Ball + caption + previous + board have to share one 1080p stage: tighter rhythm than Stage's default. */
+.playStage {
+  gap: var(--pb-space-3);
+}
+
+.boardRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.boardLetter {
+  width: 32px;
+  font-weight: 900;
+  color: var(--pb-accent-2);
+  font-size: var(--pb-font-caption);
+}
+
+.cell {
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 36px;
+  border-radius: 6px;
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--pb-text-muted);
+  background: var(--pb-surface);
+  opacity: 0.45;
+}
+
+.cellCalled {
+  opacity: 1;
+  color: var(--pb-bg);
+  background: var(--pb-accent-2);
+}
+
+.cellCurrent {
+  box-shadow: 0 0 0 3px var(--pb-accent);
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
 }
