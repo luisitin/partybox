@@ -68,6 +68,7 @@
   border-radius: var(--pb-radius-lg);
   background: var(--pb-surface);
   border: 3px solid var(--pb-border);
+  transition: border-color var(--pb-motion-fast) var(--pb-ease); /* done: outline fades in */
   font-size: var(--pb-font-body);
 }
 
@@ -90,6 +91,8 @@
 
 .cardDone .cardMark {
   color: var(--pb-accent-3);
+  /* The mark is keyed on the stage, so the ✓ mounts fresh and pops like the strip chip (loop #19). */
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
 }
 
 .showBody {

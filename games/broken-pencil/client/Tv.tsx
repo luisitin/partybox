@@ -70,6 +70,8 @@ function Progress({ view }: { view: PencilTvView }): JSX.Element {
               />
               <span className={styles.cardName}>{player?.name ?? '?'}</span>
               <span
+                // Keyed on the stage so a flip to ✓ remounts and pops (review-loop #19).
+                key={p.stage}
                 className={styles.cardMark}
                 aria-label={finished ? 'done' : p.stage === 'draw' ? 'drawing' : 'guessing'}
               >
