@@ -98,7 +98,8 @@ export function TvPlaying({ room, view, audio }: TvPlayingProps): JSX.Element {
           showScores={showScores}
           size="sm"
         />
-        <div className={styles.timer}>
+        {/* Quiet/hidden timers free the column: six chips fit on one row instead of wrapping (loop #1). */}
+        <div className={timerMode === 'normal' ? styles.timer : styles.timerSlim}>
           {timerMode === 'normal' ? (
             <Timer deadline={view.deadline} paused={view.paused} onTick={onTick} size="lg" />
           ) : view.paused ? (

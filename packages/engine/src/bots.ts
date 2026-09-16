@@ -21,12 +21,15 @@ export function botsOf(room: RoomState, ownerId: string | null): RoomPlayer[] {
   return Object.values(room.players).filter((p) => p.bot && p.bot.ownerId === ownerId);
 }
 
-/** "<Owner>'s bot", "<Owner>'s bot 2", … — unique per room, case-insensitive like every name. */
+/**
+ * "<Owner>'s bot", "<Owner>'s bot 2", …; ownerless bots are "Bot 1", "Bot 2", … (a lone "Bot" next to
+ * "Bot 2" read as a typo on the TV strip — review-loop #1). Unique per room, case-insensitive.
+ */
 function botName(room: RoomState, owner: RoomPlayer | null): string {
   const base = owner ? `${owner.name}'s bot` : 'Bot';
   const taken = new Set(Object.values(room.players).map((p) => nameKey(p.name)));
   for (let n = 1; n < 100; n++) {
-    const candidate = n === 1 ? base : `${base} ${n}`;
+    const candidate = n === 1 && owner ? base : `${base} ${n}`;
     if (!taken.has(nameKey(candidate))) return candidate;
   }
   return `${base} ${Object.keys(room.players).length + 1}`;

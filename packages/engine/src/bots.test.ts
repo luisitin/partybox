@@ -51,9 +51,9 @@ describe('bots', () => {
     expect(errorsOf(addBot(withBot, 'bot1', 2).effects)).toEqual(['bot_limit']);
   });
 
-  it('dev bots are ownerless, named Bot, Bot 2, …', () => {
+  it('dev bots are ownerless, named Bot 1, Bot 2, …', () => {
     const r = addBot(roomWith(1), null, 1);
-    expect(r.room.players['bot1']).toMatchObject({ name: 'Bot', bot: { ownerId: null } });
+    expect(r.room.players['bot1']).toMatchObject({ name: 'Bot 1', bot: { ownerId: null } });
     expect(addBot(r.room, null, 2).room.players['bot2']?.name).toBe('Bot 2');
   });
 
