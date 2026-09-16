@@ -137,8 +137,8 @@
   justify-self: end;
   width: 500px; /* lands at 1:1 (≈ 550 px tall, clear of the host bar), settles to 0.92 */
   transform-origin: center;
-  /* Lands centred on the stage (half its width past the column edge), a size up. */
-  animation: claim-land var(--pb-motion-slow) var(--pb-ease) both;
+  /* Drops onto the centre of the stage (half its width past the column edge) with a bounce. */
+  animation: claim-drop calc(var(--pb-motion-slow) + 100ms) cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
 /* The verdict is in: the card settles left into its column, the verdict takes the right. */
@@ -146,14 +146,14 @@
   animation: claim-settle var(--pb-motion-slow) var(--pb-ease) both;
 }
 
-@keyframes claim-land {
+@keyframes claim-drop {
   from {
     opacity: 0;
-    transform: translateX(50%) scale(0.6);
+    transform: translateX(50%) translateY(-520px);
   }
   to {
     opacity: 1;
-    transform: translateX(50%) scale(1);
+    transform: translateX(50%) translateY(0);
   }
 }
 

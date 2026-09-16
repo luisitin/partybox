@@ -76,8 +76,8 @@ export const inputSchema = z.discriminatedUnion('type', [
   /**
    * After a bingo (phase `bingo`): keep the round going on the same cards and deck — for the same
    * pattern (the winner sits that pattern out) or for a blackout on the same cards. Or move on.
-   * The phones offer this to the VIP only (the view carries `vip`); the reducer accepts it from
-   * any player with a card, the way a table would.
+   * Every phone with a card offers it — first tap wins, the way a table would — and nothing
+   * moves on by itself: the celebration waits.
    */
   z.object({ type: z.literal('continue'), pattern: z.enum(['same', 'blackout']) }),
   z.object({ type: z.literal('next') }),
@@ -87,9 +87,13 @@ export type Input = z.infer<typeof inputSchema>;
 export const INTRO_MS = 5_000;
 /** Long enough for the cell-by-cell reveal of a full card (≈ 0.9 + 24 × 0.22 + 0.7 s) plus reading. */
 export const CHECK_MS = 9_000;
+/** No winner (the deck ran out): the TV says so for this long. */
 export const BINGO_MS = 10_000;
-/** With a winner the celebration waits for the VIP's decision (keep going / next round). */
-export const BINGO_DECIDE_MS = 90_000;
+/**
+ * With a winner the celebration is not paced: it waits for a phone. This is only a safety valve
+ * so an abandoned room (a bots-only game) does not sit on the verdict forever.
+ */
+export const BINGO_ABANDONED_MS = 5 * 60_000;
 export const SCOREBOARD_MS = 6_000;
 export const DECK = 75;
 export const FREE = 12;

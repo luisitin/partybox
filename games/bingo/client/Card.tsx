@@ -29,14 +29,28 @@ export interface CardProps {
   /** Cells pop in one after another (a card landing on the TV for everyone to check). */
   reveal?: boolean;
   /**
-   * A claim being checked: these daubed cells turn over one at a time, in this order, from a
-   * plain daub to green (called) or red (never called); cells not listed show at once.
+   * A claim being checked: every daub starts as a plain outline; these cells turn over one at a
+   * time, in this order — green (called), red (never called) or a dashed miss; the other tiles
+   * keep their outline until `restShown`.
    */
   revealOrder?: readonly number[];
   revealStepMs?: number;
+  /** After the ordered cells: every other tile takes its final look at once (a slow fade). */
+  restShown?: boolean;
   /** After the reveal: misses outlined, the marks settled. */
   settled?: boolean;
+  /** A gold sweep along a winning line while its cells turn (the TV). */
+  sweep?: { kind: SweepKind; index: number; ms: number } | null;
 }
+
+export type SweepKind = 'row' | 'col' | 'diagA' | 'diagB';
+
+const SWEEP_CLASS: Record<SweepKind, string> = {
+  row: styles.sweepRow ?? '',
+  col: styles.sweepCol ?? '',
+  diagA: styles.sweepDiagA ?? '',
+  diagB: styles.sweepDiagB ?? '',
+};
 
 /** Stagger between cells during a reveal; 25 cells ≈ 1 s before the verdict may land. */
 export const REVEAL_STEP_MS = 40;
@@ -57,7 +71,9 @@ export function Card({
   reveal = false,
   revealOrder,
   revealStepMs = 200,
+  restShown = false,
   settled = true,
+  sweep = null,
 }: CardProps): JSX.Element {
   const turnAt = new Map((revealOrder ?? []).map((i, k) => [i, k * revealStepMs]));
   const turning = revealOrder !== undefined;
@@ -81,25 +97,41 @@ export function Card({
         ))}
       </div>
       <div className={styles.grid}>
+        {sweep ? (
+          <span
+            className={`${styles.sweep} ${SWEEP_CLASS[sweep.kind]}`}
+            style={
+              { '--pb-sweep-i': sweep.index, '--pb-sweep-ms': `${sweep.ms}ms` } as CSSProperties
+            }
+            aria-hidden
+            data-testid="sweep"
+          />
+        ) : null}
         {numbers.map((n, i) => {
           const isFree = i === FREE;
           const isDaubed = isFree ? freeDaubed : daubed.has(i);
-          // A turning cell keeps its plain daub until its beat, then flips to its colour; a
-          // daubed cell whose beat has not been scheduled yet is still just a daub.
-          const coloured = greenSet.has(i) || redSet.has(i);
-          const turns = turning && turnAt.has(i) && coloured;
-          const waits = turning && isDaubed && !isFree && !turnAt.has(i);
-          const showColour = !turning || turnAt.has(i);
+          // During a reveal a daub is an outline until its beat (or until the rest is shown),
+          // then flips to its colour; tiles outside the order fade to their final look together.
+          const coloured = greenSet.has(i) || redSet.has(i) || missingSet.has(i);
+          const ordered = turnAt.has(i);
+          const showColour = !turning || ordered || restShown;
+          const turns = turning && ordered && coloured;
+          const pending = turning && isDaubed && !isFree && !showColour;
           const cls = [
             styles.cell,
             isDaubed ? styles.daubed : '',
-            verdict && isDaubed && !isFree && !coloured && !waits ? styles.dim : '',
+            pending ? styles.pending : '',
+            turning && !ordered && showColour ? styles.slowIn : '',
+            verdict && !turning && isDaubed && !isFree && !coloured ? styles.dim : '',
             greenSet.has(i) && showColour ? (turns ? styles.turnGreen : styles.green) : '',
             redSet.has(i) && showColour ? (turns ? styles.turnRed : styles.red) : '',
-            missingSet.has(i) && settled ? styles.missing : '',
+            missingSet.has(i) && (settled || turns)
+              ? turns
+                ? styles.turnMissing
+                : styles.missing
+              : '',
             patternSet.has(i) && !isDaubed ? styles.pattern : '',
             isFree ? styles.free : '',
-            waits ? styles.waiting : '',
           ].join(' ');
           const mark = !showColour ? null : greenSet.has(i) ? '✓' : redSet.has(i) ? '✕' : null;
           const label = isFree ? 'FREE' : String(n);

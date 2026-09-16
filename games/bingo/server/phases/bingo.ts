@@ -1,12 +1,13 @@
 // Phase "bingo": the round is over — or is it. With a winner, their green card is the celebration,
-// the win is recorded on entry, and the phase then waits (up to BINGO_DECIDE_MS) for the VIP's
-// choice: keep going on the same cards for the same pattern (the winner sits it out) or for a
-// blackout, or move on. With no winner (deck empty, VIP skipped through 75 calls) the TV says so
-// for BINGO_MS. The deadline and VIP skip exit via `next` (scoreboard, or done after the last
-// round); `continue` resumes calling via `resume`.
+// the win is recorded on entry, and the phase then waits for any player's choice: keep going on
+// the same cards for the same pattern (the winner sits it out) or for a blackout, or move on —
+// unpaced, save a long safety valve for abandoned rooms (BINGO_ABANDONED_MS). With no winner
+// (deck empty, VIP skipped through 75 calls) the TV says so for BINGO_MS. The deadlines, `next`
+// and the VIP skip exit (scoreboard, or done after the last round); `continue` resumes calling
+// via `resume`.
 import { enterPhase, hasPlayer, isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
-import { BINGO_DECIDE_MS, BINGO_MS, DECK } from '../types';
+import { BINGO_ABANDONED_MS, BINGO_MS, DECK } from '../types';
 import type { Claim, Input, State, Transition } from '../types';
 
 export interface BingoExits {
@@ -36,7 +37,7 @@ export function enterBingo(
     { ...state, wins, history, round: { ...state.round, winnerId, claim, settled } },
     'bingo',
     now,
-    winnerId ? BINGO_DECIDE_MS : BINGO_MS,
+    winnerId ? BINGO_ABANDONED_MS : BINGO_MS,
   );
 }
 

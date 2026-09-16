@@ -44,7 +44,7 @@ interface Common {
   winnerId: string | null;
   winnerName: string | null;
   standings: StandingRow[];
-  /** bingo: whether the round can keep going (same pattern / for a blackout); the VIP decides. */
+  /** bingo: whether the round can keep going (same pattern / for a blackout); any player decides. */
   decide: { same: boolean; blackout: boolean } | null;
   /** How many bingos this round has had so far (a continued round celebrates more than one). */
   bingosThisRound: number;

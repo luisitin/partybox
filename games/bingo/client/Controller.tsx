@@ -161,8 +161,7 @@ export function Controller({
     const iWon = view.winnerId === me.id;
     const claim = view.claim;
     const decide = view.decide;
-    const iDecide = view.vip === me.id && decide !== null && (decide.same || decide.blackout);
-    const vipName = view.players.find((p) => p.id === view.vip)?.name ?? 'The VIP';
+    const iDecide = view.card !== null && decide !== null && (decide.same || decide.blackout);
     const nextLabel =
       view.round < view.totalRounds ? 'Next round — fresh cards' : 'Finish the game';
     return (
@@ -205,9 +204,9 @@ export function Controller({
         )}
         <p className={styles.hint}>
           {iDecide
-            ? 'Keep these cards and carry on calling, or deal fresh ones?'
+            ? 'Keep these cards and carry on calling, or deal fresh ones? Anyone can pick.'
             : decide && (decide.same || decide.blackout)
-              ? `${vipName} decides: keep going or next round.`
+              ? 'The players decide: keep going or next round.'
               : view.round < view.totalRounds
                 ? 'Fresh cards next round.'
                 : 'That was the last round.'}

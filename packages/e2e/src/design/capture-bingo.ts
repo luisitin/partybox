@@ -69,7 +69,7 @@ async function main(): Promise<void> {
     await settle(300);
     await shots.shot(p2.page, { group: G, phase: 'play-daubed', device: 'iphone-se', role: 'p2' });
     await p2.page.getByRole('button', { name: /^bingo!$/i }).click();
-    await burst(shots, tv, 'check-lands', 14, 300);
+    await burst(shots, tv, 'check-lands', 18, 300);
     await settle(1200);
     await shots.shot(tv, { group: G, phase: 'check', device: 'tv', role: 'stage' });
     await shots.shot(p2.page, { group: G, phase: 'check', device: 'iphone-se', role: 'claimant' });
@@ -102,7 +102,7 @@ async function main(): Promise<void> {
     await settle(300);
     await shots.shot(vip.page, { group: G, phase: 'line-daubed', device: 'iphone', role: 'vip' });
     await vip.page.getByRole('button', { name: /^bingo!$/i }).click();
-    await burst(shots, tv, 'bingo-lands', 14, 300);
+    await burst(shots, tv, 'bingo-lands', 18, 300);
     await settle(1500);
     await shots.shot(tv, { group: G, phase: 'bingo', device: 'tv', role: 'stage' });
     await shots.shot(vip.page, { group: G, phase: 'bingo', device: 'iphone', role: 'winner' });

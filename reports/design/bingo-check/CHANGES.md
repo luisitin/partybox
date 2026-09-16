@@ -58,3 +58,24 @@ Trace timing (bingo scenario): `hush` at +41 ms of the claim push (caller stops 
 
 Not changed: nothing in `games/bingo/server` beyond `CHECK_MS` and the additive `called` list
 on the TV view (the reveal needs the call order).
+
+## Follow-up (owner pick, 2026-09-16 evening): option C — drop & line sweep, no red placeholders, no timer
+
+- **Placeholders are outlines.** During the reveal every daub starts as a plain outlined tile (no
+  pink, no red). Red appears only on a wrong claim, on the squares that were never called — the
+  one place it means "this is the mistake".
+- **The pattern first, in reading order.** The card drops in with a bounce (0.7 s); then the
+  pattern's cells turn one by one — a row left to right, a column top to bottom, a diagonal from
+  its top corner; four corners / the X / blackout top-left to bottom-right — 220 ms apart, with a
+  gold sweep travelling the line (and the `sweep` sting). Blackout steps at 120 ms so 25 cells
+  stay under 3 s.
+- **Then the rest, at once.** After a 0.4 s breath every other tile fades to its final look over
+  0.9 s together, so the room sees the whole card. (Skipped when the card has nothing beyond the
+  pattern.)
+- **Verdict.** 0.7 s of suspense, the card settles left (0.6 s), then BINGO! + cheer + confetti,
+  or NOT A BINGO + buzzer with the ✓ / ✕ / ▢ legend. Cheer at ≈ 4.4 s from the claim on a full
+  card, ≈ 3.5 s on a bare line.
+- **It stays there.** With a winner the `bingo` phase is **not paced** (only a 5-minute safety valve, so an abandoned or bots-only room does not sit on the verdict forever). Every player with a card
+  gets the buttons on their phone — same pattern · blackout · next round / finish — first tap
+  wins; the TV says so under the verdict. (A wrong claim still resumes calling by itself after
+  9 s.)
