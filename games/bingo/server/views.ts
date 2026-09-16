@@ -54,6 +54,10 @@ export interface BingoTvView extends TvView, Common {
 }
 
 export interface BingoControllerView extends ControllerView, Common {
+  /** Whether the TV shows the hall board — decides how a reconnecting phone reports missed calls. */
+  showBoard: boolean;
+  /** Nicknames of the last few calls, newest last (numbers stay on the TV). */
+  recent: string[];
   /** null for spectators. */
   card: number[] | null;
   daubs: number[];
@@ -70,6 +74,16 @@ function callView(state: State, index: number): CallView | null {
   const number = state.round.deck[index];
   if (index < 0 || number === undefined) return null;
   return { number, letter: letterOf(number), call: callFor(number, state.settings.spicy) };
+}
+
+/** Nicknames of the last n calls, oldest first (a reconnecting phone names what it missed). */
+function recentCalls(state: State, n: number): string[] {
+  const out: string[] = [];
+  for (let i = Math.max(0, state.round.drawn - n); i < state.round.drawn; i++) {
+    const view = callView(state, i);
+    if (view) out.push(view.call);
+  }
+  return out;
 }
 
 function claimView(state: State): ClaimView | null {
@@ -145,6 +159,8 @@ export function controllerView(
       (state.phase.id === 'play' || state.phase.id === 'check') &&
       state.round.drawn < (state.round.waitForCall[playerId] ?? 0),
     called: player ? [] : calledNumbers(state),
+    showBoard: state.settings.showBoard,
+    recent: recentCalls(state, 4),
     myWins: state.wins[playerId] ?? 0,
   };
 }

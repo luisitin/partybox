@@ -40,6 +40,24 @@
   min-height: 72px;
 }
 
+/* Reconnect notice while the TV has the board (review-loop #4); the header names the misses otherwise. */
+.missedToast {
+  /* Floats above the BINGO! footer instead of pushing the card down (nothing shifts). */
+  position: fixed;
+  left: var(--pb-space-4);
+  right: var(--pb-space-4);
+  bottom: 112px;
+  z-index: 2;
+  margin: 0;
+  padding: var(--pb-space-3) var(--pb-space-4);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.35);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  color: var(--pb-accent-2);
+}
+
 .wipeNote {
   margin: 0 0 var(--pb-space-2);
   font-size: var(--pb-font-caption);

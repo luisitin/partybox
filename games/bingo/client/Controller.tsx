@@ -2,7 +2,7 @@
 // the TV — the phone never spoils the stage, and the room has to listen to the caller), your
 // tappable card in the middle, the BINGO! button pinned to the bottom. `send` is the only way out;
 // the server accepts every daub (no validation — that is the game) and judges only the claim.
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
 import { PrimaryButton, Scoreboard, Screen, WaitingScreen } from '@partybox/game-sdk/ui';
 import type { GameControllerProps, ScoreboardRow } from '@partybox/game-sdk/ui';
@@ -27,11 +27,14 @@ function CallHeader({
   previous,
   index,
   pattern,
+  missed,
 }: {
   current: CallView | null;
   previous: CallView | null;
   index: number;
   pattern: string;
+  /** Nicknames this phone never saw (no hall board on the TV to catch up from). */
+  missed: string[] | null;
 }): JSX.Element {
   if (!current) return <div className={styles.header} />;
   return (
@@ -41,7 +44,11 @@ function CallHeader({
       </div>
       <p className={styles.meta}>
         Call {index} · {pattern} ·{' '}
-        {previous ? `before: ${previous.call}` : 'the number is on the TV'}
+        {missed && missed.length > 0
+          ? `missed: ${missed.join(', ')}`
+          : previous
+            ? `before: ${previous.call}`
+            : 'the number is on the TV'}
       </p>
     </div>
   );
@@ -56,6 +63,23 @@ export function Controller({
   // FREE always counts (server); daubing it is pure satisfaction, so it lives on the phone only
   // and resets with every fresh card (round) — "adjust state when a prop changes", in render.
   const [freeDaubed, setFreeDaubed] = useState(false);
+  // Calls that landed while this phone was away (review-loop #4): a jump of more than one in
+  // callIndex between two views means we missed some. With the hall board on the TV a toast points
+  // there; without it the header names the missed nicknames. "Adjust state when a prop changes".
+  const [seenCall, setSeenCall] = useState(view.callIndex);
+  const [missed, setMissed] = useState<{ count: number; names: string[] } | null>(null);
+  if (view.callIndex !== seenCall) {
+    const jumped = view.callIndex - seenCall;
+    setSeenCall(view.callIndex);
+    if (jumped > 1 && view.phaseId === 'play')
+      setMissed({ count: jumped - 1, names: view.recent.slice(-jumped, -1) });
+  }
+  useEffect(() => {
+    if (!missed) return;
+    // The toast goes after 5 s; the header note stays a couple of calls (no board to catch up from).
+    const handle = setTimeout(() => setMissed(null), view.showBoard ? 5000 : 12_000);
+    return () => clearTimeout(handle);
+  }, [missed, view.showBoard]);
   const [freeRound, setFreeRound] = useState(view.round);
   if (freeRound !== view.round) {
     setFreeRound(view.round);
@@ -124,8 +148,16 @@ export function Controller({
             previous={view.previous}
             index={view.callIndex}
             pattern={view.patternLabel}
+            missed={missed && !view.showBoard ? missed.names : null}
           />
         )}
+        {missed && view.showBoard ? (
+          <p className={`${styles.missedToast} pb-pop`} role="status">
+            {missed.count === 1
+              ? 'Back — you missed a number. It is on the TV board.'
+              : `Back — you missed ${missed.count} numbers. They are on the TV board.`}
+          </p>
+        ) : null}
         {intro ? (
           <p className={styles.hint}>
             Your new card. Daub what you hear — FREE too — tap again to undo.
