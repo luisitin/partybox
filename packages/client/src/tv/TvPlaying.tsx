@@ -23,6 +23,16 @@ export interface TvPlayingProps {
   room: RoomSnapshot;
   view: PushedView<TvView> | null;
   audio: SoundEngine;
+  /** Fires once the game's own component has mounted (module loaded, first view rendered). */
+  onGameReady?: () => void;
+}
+
+/** Mounts next to the game inside Suspense, so it reports exactly when the game painted. */
+function Ready({ onReady }: { onReady?: () => void }): null {
+  useEffect(() => {
+    onReady?.();
+  }, [onReady]);
+  return null;
 }
 
 /** Shows its children only after a short wait: a game chunk that loads fast never flashes a
@@ -31,13 +41,14 @@ export interface TvPlayingProps {
 function DelayedFallback({ children }: { children: ReactNode }): JSX.Element | null {
   const [show, setShow] = useState(false);
   useEffect(() => {
-    const handle = setTimeout(() => setShow(true), 150);
+    // 400 ms: a LAN load never shows this; only a genuinely slow module does (review-loop #10).
+    const handle = setTimeout(() => setShow(true), 400);
     return () => clearTimeout(handle);
   }, []);
   return show ? <>{children}</> : null;
 }
 
-export function TvPlaying({ room, view, audio }: TvPlayingProps): JSX.Element {
+export function TvPlaying({ room, view, audio, onGameReady }: TvPlayingProps): JSX.Element {
   // The curtain stays mounted while it fades out after a resume ("adjust state during render":
   // the paused flag flipping true → false starts the leave; animationend or 400 ms clears it).
   const paused = view?.paused ?? false;
@@ -134,6 +145,7 @@ export function TvPlaying({ room, view, audio }: TvPlayingProps): JSX.Element {
             >
               <SoundProvider play={play}>
                 <GameTv view={view} />
+                <Ready onReady={onGameReady} />
               </SoundProvider>
             </Suspense>
           </GameErrorBoundary>

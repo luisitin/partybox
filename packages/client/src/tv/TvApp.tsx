@@ -1,6 +1,6 @@
 // Route `/tv` — the stage. Renders pushed snapshots/views, plays sound cues on
 // transitions, and never sends player events. `?room=CODE` watches a specific room.
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { JSX } from 'react';
 import { ServerClockProvider, isSoundCue } from '@partybox/game-sdk/ui';
 import { clientGames } from '../games.generated';
@@ -45,6 +45,11 @@ export function TvApp(): JSX.Element {
   // The last board of the game, kept for the results stage ("adjust state when a prop changes").
   const [lastView, setLastView] = useState<typeof view>(null);
   if (room?.status === 'playing' && view && view !== lastView) setLastView(view);
+  // The lobby snapshot is held over the stage until the game component has painted (loop #10);
+  // reset whenever a game is not running, so the next start holds again.
+  const [gameReady, setGameReady] = useState(false);
+  if (room?.status !== 'playing' && gameReady) setGameReady(false);
+  const markGameReady = useCallback(() => setGameReady(true), []);
 
   // Background music follows the room (owner picks 2026-09-15): the lobby set while people gather
   // or the host picks a game, a game's own set while it plays, silence on results; a paused game
@@ -132,7 +137,8 @@ export function TvApp(): JSX.Element {
   if (!room) content = <TvLobby room={null} />;
   else if (room.status === 'lobby') content = <TvLobby room={room} />;
   else if (room.status === 'selecting') content = <TvSelecting room={room} client={client} />;
-  else if (room.status === 'playing') content = <TvPlaying room={room} view={view} audio={audio} />;
+  else if (room.status === 'playing')
+    content = <TvPlaying room={room} view={view} audio={audio} onGameReady={markGameReady} />;
   else content = <TvResults room={room} lastView={lastView} />;
 
   return (
@@ -145,7 +151,13 @@ export function TvApp(): JSX.Element {
         onHome={client.home}
         footer={room ? <HostBar client={client} room={room} view={view} /> : null}
       >
-        <CrossfadeSwap swapKey={room?.status ?? 'none'} className={styles.swap}>
+        {/* Game start: hold the lobby until the first game view has painted, so the stage never
+            flickers through "Connecting…" / empty / "Getting the game ready…" (review-loop #10). */}
+        <CrossfadeSwap
+          swapKey={room?.status ?? 'none'}
+          className={styles.swap}
+          hold={room?.status === 'playing' && !gameReady}
+        >
           {content}
         </CrossfadeSwap>
       </TvFrame>
