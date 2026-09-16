@@ -9,7 +9,7 @@ import type { CSSProperties, JSX } from 'react';
 import { Avatar, Stage, useBeats, useSound } from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
 import type { WisecrackTvView } from '../server/index';
-import { LETTERS, PromptHeader, answerClass } from './TvVote';
+import { LETTERS, PromptHeader, answerClass, isShort } from './TvVote';
 import styles from './wisecrack.module.css';
 
 type Props = GameTvProps<WisecrackTvView>;
@@ -64,7 +64,7 @@ export function TvReveal({ view }: Props): JSX.Element {
                   <span className={styles.authorName}>{r.name}</span>
                 </span>
               </div>
-              <p className={answerClass(r.text)} data-short={r.text.length <= 20 || undefined}>
+              <p className={answerClass(r.text)} data-short={isShort(r.text)}>
                 {r.text}
               </p>
               <div className={styles.footer}>
