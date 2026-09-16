@@ -37,3 +37,22 @@
 .hint {
   color: var(--pb-text-muted);
 }
+
+/* Waiting for others / watching the TV: the glyph breathes on a 2 s loop so a glance confirms the
+   phone is alive (review-loop #22). Reduced motion zeroes the pulse token → no loop. */
+.wait,
+.watch {
+  animation: pb-breathe calc(var(--pb-motion-pulse) * 2) ease-in-out infinite;
+}
+
+@keyframes pb-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.06);
+    opacity: 0.8;
+  }
+}
