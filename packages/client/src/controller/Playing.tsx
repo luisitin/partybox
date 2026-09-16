@@ -49,7 +49,13 @@ export function Playing({
 }: PlayingProps): JSX.Element {
   const play = useCallback((cue: SoundCue) => audio?.play(cue), [audio]);
   if (me.spectator || view?.me.role === 'spectator') {
-    return <WaitingScreen title={t.spectator.title} hint={t.spectator.hint} mood="watch" />;
+    // A spectator's screen is the game screen for them: release the game-start hold (loop #22).
+    return (
+      <>
+        <WaitingScreen title={t.spectator.title} hint={t.spectator.hint} mood="watch" />
+        <Ready onReady={onGameReady} />
+      </>
+    );
   }
   // The socket is up; we are waiting for the first view push or the lazy chunk — say so.
   if (!view) return <DelayedWaiting title={t.connection.loadingGame} />;
