@@ -1,12 +1,14 @@
 // Controller (phone) view for Lightning Round: a ChoiceGrid for the question (locked after one
 // tap, ✓/✗ in reveal), a ChoiceGrid of wager options before the final, waiting screens otherwise.
+import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
-import { ChoiceGrid, WaitingScreen } from '@partybox/game-sdk/ui';
+import { ChoiceGrid, WaitingScreen, buzz, useHold, useSecondsLeft } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { LightningControllerView } from '../server/index';
 import type { Input } from '../server/types';
-import { Outcome, wagerLabel } from './ControllerBits';
+import { Outcome, Stake, wagerLabel } from './ControllerBits';
 import styles from './Controller.module.css';
+import { FINAL_REVEAL_HOLD_MS, REVEAL_BEAT_MS } from './timing';
 
 function roundKicker(view: LightningControllerView): string {
   const round = view.round;
@@ -24,6 +26,24 @@ export function Controller({
   send,
 }: GameControllerProps<LightningControllerView, Input>): JSX.Element {
   const { phaseId } = view;
+  // The streak carried into the question: `myStreak` is already reset in the reveal view.
+  const [streakBefore, setStreakBefore] = useState(0);
+  // Speed is the point: remember the header's seconds-left at the tap so the locked line can say
+  // how fast the pick was (same rounded number the shell prints, so hint and header agree).
+  const secondsLeft = useSecondsLeft(view.deadline, view.paused);
+  const [lockedAt, setLockedAt] = useState<{ questionId: string; seconds: number } | null>(null);
+  if (phaseId === 'question' && streakBefore !== view.myStreak) setStreakBefore(view.myStreak);
+  // The phone never spoils the TV: ✓/✗ and the outcome card wait for the TV's reveal beat.
+  // `deadline` is unique per phase entry, so it keys the hold. The final reveal waits for the
+  // TV's verdict beat (not collapsed under reduced motion: the TV is another device).
+  const isFinal = view.round?.final === true;
+  const shown = useHold(view.deadline, isFinal ? FINAL_REVEAL_HOLD_MS : REVEAL_BEAT_MS);
+  // Haptic verdict (Android; iOS ignores it): once per reveal, alongside the card.
+  const correct = view.outcome?.correct;
+  useEffect(() => {
+    if (phaseId !== 'reveal' || !shown || correct === undefined) return;
+    buzz(correct ? [30, 40, 30] : 120);
+  }, [phaseId, shown, correct]);
   if (view.me.role === 'spectator') {
     return <WaitingScreen title="Spectating" hint="You are in for the next game." mood="watch" />;
   }
@@ -39,18 +59,49 @@ export function Controller({
   if ((phaseId === 'question' || phaseId === 'reveal') && view.question) {
     const revealed = phaseId === 'reveal';
     const locked = view.myPickIndex !== null;
+    const finalQ = view.round?.final === true;
+    // A missing wager counts as 0 (server/phases/wager.ts); the key is only present once tapped.
+    const stake = finalQ && phaseId === 'question' ? (view.myWagerAmount ?? 0) : null;
+    // Comparing the id at render is the reset; a reconnect after picking gets the default line.
+    const spare = locked && lockedAt?.questionId === view.question.id ? lockedAt.seconds : null;
+    const lockedHint =
+      spare === null
+        ? undefined
+        : spare <= 3
+          ? '✓ Just made it — look at the TV'
+          : `✓ Locked in with ${spare} s to spare — look at the TV`;
+    const questionId = view.question.id;
     return (
       // A new question rises as a new screen; question → reveal keeps the same node.
       <ChoiceGrid
         key={`q${view.round?.number ?? 0}`}
+        fill
+        promptKey={`${phaseId}:${view.round?.number ?? 0}`}
+        tone={finalQ ? 'final' : undefined}
         kicker={roundKicker(view)}
         prompt={view.question.text}
         choices={view.question.choices.map((label, index) => ({ id: String(index), label }))}
         selectedId={locked ? String(view.myPickIndex) : null}
-        correctId={revealed && view.correctIndex !== undefined ? String(view.correctIndex) : null}
+        correctId={
+          revealed && shown && view.correctIndex !== undefined ? String(view.correctIndex) : null
+        }
         disabled={revealed}
-        onPick={(id) => send({ type: 'pick', index: Number(id) })}
-        footer={revealed ? <Outcome view={view} /> : null}
+        lockedHint={lockedHint}
+        onPick={(id) => {
+          if (secondsLeft !== null) setLockedAt({ questionId, seconds: secondsLeft });
+          send({ type: 'pick', index: Number(id) });
+        }}
+        footer={
+          revealed && shown ? (
+            <Outcome view={view} streakBefore={streakBefore} spare={spare} />
+          ) : revealed && finalQ ? (
+            <div className={styles.stake} role="status">
+              🎲 The bets are in — look at the TV
+            </div>
+          ) : stake !== null ? (
+            <Stake amount={stake} />
+          ) : null
+        }
       />
     );
   }
@@ -61,23 +112,29 @@ export function Controller({
     return (
       <ChoiceGrid
         key="wager"
+        fill
+        letters={false}
+        tone="final"
+        promptKey="wager"
         kicker="Final question next"
         prompt={
-          view.myScore > 0
-            ? `Wager part of your ${view.myScore} points`
-            : 'No points yet — you can only wager 0'
+          <>
+            {view.myScore > 0
+              ? `Wager part of your ${view.myScore} points`
+              : 'No points yet — you can only wager 0'}
+            <span className={styles.rule}>Right answer: +wager. Wrong or no answer: −wager.</span>
+          </>
         }
-        choices={options.map((o) => ({ id: String(o.percent), label: wagerLabel(o) }))}
+        choices={options.map((o) => ({
+          id: String(o.percent),
+          label: wagerLabel(o, view.myScore),
+        }))}
         selectedId={selected ? String(selected.percent) : null}
         onPick={(id) => {
           const option = options.find((o) => String(o.percent) === id);
           if (option) send({ type: 'wager', percent: option.percent });
         }}
-        footer={
-          placed === undefined ? (
-            <p className={styles.footnote}>Right answer: +wager. Wrong or no answer: −wager.</p>
-          ) : null
-        }
+        footer={null}
       />
     );
   }

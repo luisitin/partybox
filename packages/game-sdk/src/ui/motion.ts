@@ -37,3 +37,63 @@ export function useBeats(atMs: readonly number[]): number {
   }, [reduced]);
   return reduced ? last : beat;
 }
+
+/**
+ * A phone-side hold: false on the first render for a given `key`, true `ms` later (cleared and
+ * restarted when the key changes; `ms <= 0` is true at once). Deliberately NOT gated on reduced
+ * motion — it is sequencing, not motion: the TV is another device with its own setting, and the
+ * phone must never show a result before the TV has (DESIGN_SYSTEM principle 5).
+ */
+export function useHold(key: string | number | null, ms: number): boolean {
+  const [held, setHeld] = useState<{ key: string | number | null; done: boolean }>({
+    key,
+    done: false,
+  });
+  // "Adjust state when a prop changes": a new key restarts the hold.
+  if (held.key !== key) setHeld({ key, done: false });
+  useEffect(() => {
+    if (ms <= 0) return;
+    const handle = setTimeout(
+      () => setHeld((s) => (s.key === key && !s.done ? { key, done: true } : s)),
+      ms,
+    );
+    return () => clearTimeout(handle);
+  }, [key, ms]);
+  return ms <= 0 || (held.key === key && held.done);
+}
+
+/** The motion tokens in ms (tokens.css), for JS-driven sequences that must line up with CSS. */
+export const MOTION_FAST = 150;
+export const MOTION_BASE = 300;
+export const MOTION_SLOW = 600;
+
+/**
+ * Counts from `from` to `target` over `ms` (cubic ease-out, requestAnimationFrame) after
+ * `delayMs`; returns `target` at once when from === target, ms <= 0 or the viewer prefers
+ * reduced motion. Restarts when any argument changes.
+ */
+export function useCountUp(target: number, from: number, ms: number, delayMs = 0): number {
+  const reduced = usePrefersReducedMotion();
+  const still = reduced || ms <= 0 || from === target;
+  const [value, setValue] = useState(from);
+  useEffect(() => {
+    if (still) return;
+    let raf = 0;
+    let startedAt = 0;
+    const tick = (t: number): void => {
+      if (!startedAt) startedAt = t;
+      const p = Math.min(1, (t - startedAt) / ms);
+      const eased = 1 - (1 - p) ** 3;
+      setValue(Math.round(from + (target - from) * eased));
+      if (p < 1) raf = requestAnimationFrame(tick);
+    };
+    const timer = setTimeout(() => {
+      raf = requestAnimationFrame(tick);
+    }, delayMs);
+    return () => {
+      clearTimeout(timer);
+      cancelAnimationFrame(raf);
+    };
+  }, [target, from, ms, delayMs, still]);
+  return still ? target : value;
+}

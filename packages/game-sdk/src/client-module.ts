@@ -25,5 +25,11 @@ export interface GameClientModule {
    * `phase`, which is reserved for "your phone needs you"; unknown cue names fall back to it too.
    */
   sounds?: Record<string, string>;
+  /**
+   * Whether the TV strip may show running scores for this view (default: yes whenever players
+   * carry a `score`). Return false for a phase whose stage reveals points beat by beat, so the
+   * strip never leads the stage (a reveal that applies points on entry but steps its rows).
+   */
+  stripScores?: (view: PushedView<TvView>) => boolean;
 }
 /* eslint-enable @typescript-eslint/no-explicit-any */

@@ -7,4 +7,7 @@ export const clientModule: GameClientModule = {
   Tv: lazy(() => import('./Tv').then((m) => ({ default: m.Tv }))),
   Controller: lazy(() => import('./Controller').then((m) => ({ default: m.Controller }))),
   sounds: { reveal: 'reveal', scores: 'tally' },
+  // Points land on reveal entry but the stage reveals authors 700 ms apart: the strip waits for
+  // the scores phase (R-068).
+  stripScores: (view) => view.phaseId !== 'reveal',
 };

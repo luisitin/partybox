@@ -13,6 +13,8 @@
 
 .button:active:not([aria-disabled='true']) {
   transform: scale(0.97);
+  /* brightens accent, danger, success and the neutral surface-2 fill in every theme (R-049) */
+  filter: brightness(1.12);
 }
 
 /* Disabled reads as "not yet", not as a dimmer version of the action (label contrast 6.9:1). */
@@ -71,4 +73,10 @@
   50% {
     transform: scale(1.03);
   }
+}
+
+/* The ✓ pops once each time a done button mounts (R-063); 0 ms under reduced motion. */
+.check {
+  display: inline-block;
+  animation: global(pb-pop) var(--pb-motion-fast) var(--pb-ease) both;
 }

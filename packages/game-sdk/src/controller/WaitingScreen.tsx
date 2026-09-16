@@ -10,6 +10,8 @@ export interface WaitingScreenProps {
   /** 'done' shows a big ✓ (you submitted), 'watch' an eye (spectator), 'wait' dots. */
   mood?: 'done' | 'watch' | 'wait';
   children?: ReactNode;
+  /** Forwarded to the Screen frame (e.g. `pb-enter` so the screen rises in as a new card). */
+  className?: string;
 }
 
 const GLYPH = { done: '✓', watch: '◎', wait: '…' } as const;
@@ -19,9 +21,10 @@ export function WaitingScreen({
   hint,
   mood = 'wait',
   children,
+  className,
 }: WaitingScreenProps): JSX.Element {
   return (
-    <Screen>
+    <Screen className={className}>
       <div className={styles.center} role="status" aria-live="polite">
         <span className={`${styles.glyph} ${styles[mood]}`} aria-hidden>
           {GLYPH[mood]}

@@ -47,7 +47,11 @@ export function PrimaryButton({
       }}
       {...rest}
     >
-      {done ? <span aria-hidden>✓ </span> : null}
+      {done ? (
+        <span className={styles.check} aria-hidden>
+          ✓{' '}
+        </span>
+      ) : null}
       {children}
     </button>
   );

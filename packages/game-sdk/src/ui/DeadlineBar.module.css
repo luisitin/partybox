@@ -10,8 +10,11 @@
   height: 100%;
   background: var(--pb-accent-2);
   transform-origin: left center;
+  /* Literal 300 ms (>= the 250 ms clock tick) so each retarget starts before the last one ends and
+     the drain is continuous; it stays literal under reduced motion because the drain is
+     information, not decoration. */
   transition:
-    transform 250ms linear,
+    transform 300ms linear,
     background-color var(--pb-motion-fast) var(--pb-ease);
 }
 

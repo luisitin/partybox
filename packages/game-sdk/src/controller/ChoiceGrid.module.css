@@ -6,6 +6,11 @@
   letter-spacing: 0.06em;
 }
 
+/* tone="final": the kicker matches the TV's accent "final question" kicker (R-064). */
+.kickerFinal {
+  color: var(--pb-accent);
+}
+
 .prompt {
   font-size: var(--pb-font-h2);
   font-weight: 800;
@@ -16,6 +21,18 @@
   display: flex;
   flex-direction: column;
   gap: var(--pb-space-3);
+}
+
+/* fill: grow into the Screen body so the last choice lands in the thumb zone (DESIGN_SYSTEM
+   Principle 2). min-height stays `auto` on purpose: the grid never shrinks below 4 x 64 px + gaps,
+   the Screen body scrolls instead, and rows never overflow onto the "Locked in" line. */
+.fill {
+  flex: 1;
+}
+
+.fill .choice {
+  flex: 1 1 0;
+  max-height: 22dvh; /* only guards a future 2-3-choice grid; 4 x 22dvh exceeds any phone body */
 }
 
 .choice {
@@ -31,15 +48,31 @@
   text-align: left;
   font-size: var(--pb-font-body);
   font-weight: 700;
-  transition: transform var(--pb-motion-fast) var(--pb-ease);
+  transition:
+    transform var(--pb-motion-fast) var(--pb-ease),
+    border-color var(--pb-motion-base) var(--pb-ease),
+    background-color var(--pb-motion-base) var(--pb-ease),
+    color var(--pb-motion-base) var(--pb-ease);
 }
 
+/* Press: the accent edge + darker fill land the instant the finger is down (R-049); the scale
+   comes from the controller-surface rule in global.css. */
 .choice:active:not(:disabled) {
-  transform: scale(0.98);
+  border-color: var(--pb-accent);
+  background: var(--pb-surface-2);
+}
+
+.choice:active:not(:disabled) .letter {
+  transform: scale(1.12);
 }
 
 .choice:disabled {
   cursor: default;
+}
+
+/* letters={false}: label + mark only. */
+.noLetters {
+  grid-template-columns: 1fr auto;
 }
 
 .letter {
@@ -50,6 +83,10 @@
   border-radius: 50%;
   background: var(--pb-surface-2);
   font-weight: 900;
+  transition:
+    transform var(--pb-motion-fast) var(--pb-ease),
+    background-color var(--pb-motion-base) var(--pb-ease),
+    color var(--pb-motion-base) var(--pb-ease);
 }
 
 .label {
@@ -63,9 +100,29 @@
   text-align: right;
 }
 
+/* Lock-in: the chosen card settles with a small pop and its ✓ pops in (both 0 ms under reduced
+   motion via the tokens; the border/fill/✓ state changes remain). The global pb-pop starts from
+   opacity 0, so the card itself uses a local settle that never hides an already-visible button. */
+@keyframes pb-choice-settle {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.03);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 .selected {
   border-color: var(--pb-accent);
   background: var(--pb-surface-2);
+  animation: pb-choice-settle var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.selected .mark {
+  animation: global(pb-pop) var(--pb-motion-fast) var(--pb-ease) both;
 }
 
 .correct {
@@ -77,6 +134,12 @@
   color: var(--pb-accent-3);
 }
 
+/* Reveal: the glyph is what newly appears, so it pops (not the card — pb-pop starts at opacity 0). */
+.correct .mark,
+.wrong .mark {
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
 .wrong {
   border-color: var(--pb-danger);
 }
@@ -85,8 +148,16 @@
   color: var(--pb-danger);
 }
 
+/* Dimmed by token, not opacity: muted text on the page bg keeps >= 6.4:1 in every theme (R-070);
+   opacity fell to ~3.5:1 in Daylight. Never co-occurs with .selected/.correct/.wrong. */
 .dim {
-  opacity: 0.5;
+  color: var(--pb-text-muted);
+  background: var(--pb-bg);
+}
+
+.dim .letter {
+  background: var(--pb-surface);
+  color: var(--pb-text-muted);
 }
 
 .locked {
@@ -94,6 +165,12 @@
   font-size: var(--pb-font-caption);
   font-weight: 700;
   color: var(--pb-accent-3);
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+/* The tap never reached the server: the grid is live again and the line says so (not colour-only). */
+.failed {
+  color: var(--pb-danger);
 }
 
 /* The last 5 s for an unanswered phone (`data-urgent` on the controller shell): the letters turn

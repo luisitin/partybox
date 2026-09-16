@@ -53,9 +53,15 @@
   width: var(--pb-touch);
   height: var(--pb-touch);
   border-radius: 50%;
-  background: var(--pb-surface-2);
+  /* gold, like the TV's vote-card discs (the phone's A is the TV's A) */
+  background: var(--pb-accent-2-fill);
+  color: var(--pb-on-accent-2-fill);
   font-size: var(--pb-font-body);
   font-weight: 900;
+  transition:
+    transform var(--pb-motion-fast) var(--pb-ease),
+    background-color var(--pb-motion-base) var(--pb-ease),
+    color var(--pb-motion-base) var(--pb-ease);
 }
 
 .voted .letter {
@@ -90,19 +96,42 @@
 .mark {
   color: var(--pb-accent-3);
   font-weight: 900;
+  animation: global(pb-pop) var(--pb-motion-fast) var(--pb-ease) both;
+}
+
+/* Lock-in: the chosen card settles with a small pop (0 ms under reduced motion via the token).
+   The global pb-pop starts from opacity 0, so the card uses a local settle that never hides an
+   already-visible button. */
+@keyframes pb-vote-settle {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.03);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .voted {
   border-color: var(--pb-accent);
   background: var(--pb-surface-2);
+  animation: pb-vote-settle var(--pb-motion-base) var(--pb-ease) both;
 }
 
-.mine {
-  opacity: 0.6;
-}
-
+/* Dimmed by token, not opacity: muted text on the page bg keeps >= 6.4:1 in every theme (R-070);
+   opacity fell to ~2.2:1 in Daylight. .mine is disabled and can never be .voted. */
+.mine,
 .dim {
-  opacity: 0.5;
+  color: var(--pb-text-muted);
+  background: var(--pb-bg);
+}
+
+.mine .letter,
+.dim .letter {
+  background: var(--pb-surface);
+  color: var(--pb-text-muted);
 }
 
 .locked {
@@ -110,6 +139,12 @@
   font-size: var(--pb-font-caption);
   font-weight: 700;
   color: var(--pb-accent-3);
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+/* The tap never reached the server: the list is live again and the line says so (not colour-only). */
+.failed {
+  color: var(--pb-danger);
 }
 
 /* The last 5 s for an unanswered phone (`data-urgent` on the controller shell): the letters turn

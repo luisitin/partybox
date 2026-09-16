@@ -11,6 +11,8 @@ export interface PlayerChipProps {
   status?: 'active' | 'submitted' | 'waiting' | 'spectator';
   isVip?: boolean;
   score?: number;
+  /** Currently leading on points: a ▲ before the score. */
+  leader?: boolean;
   /** Highlight (e.g. it is this player's turn). */
   active?: boolean;
   /** This chip is the viewer: a small "you" tag (not the turn outline). */
@@ -39,6 +41,7 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
     status = 'active',
     isVip,
     score,
+    leader,
     active,
     isMe,
     isBot,
@@ -59,7 +62,7 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
   return (
     <div
       className={classes}
-      aria-label={`${name}${isMe ? ' (you)' : ''}${isBot ? ' (bot)' : ''}${isVip ? ', VIP' : ''}${glyph.label ? `, ${glyph.label}` : ''}`}
+      aria-label={`${name}${isMe ? ' (you)' : ''}${isBot ? ' (bot)' : ''}${isVip ? ', VIP' : ''}${glyph.label ? `, ${glyph.label}` : ''}${leader ? ', leading' : ''}`}
     >
       <span className={styles.avatar}>
         <Avatar avatarId={avatarId} dim={!connected || status === 'spectator'} />
@@ -87,7 +90,17 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
       >
         {glyph.text}
       </span>
-      {score !== undefined ? <span className={styles.score}>{score}</span> : null}
+      {leader && score !== undefined ? (
+        <span className={styles.leader} role="img" aria-label="leading">
+          ▲
+        </span>
+      ) : null}
+      {score !== undefined ? (
+        // keyed on the value so a change re-mounts and pops in place
+        <span key={score} className={styles.score}>
+          {score}
+        </span>
+      ) : null}
       {onRemove ? (
         <button type="button" className={styles.remove} onClick={onRemove} aria-label={removeLabel}>
           ✕
