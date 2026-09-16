@@ -2,12 +2,13 @@
 // tap, ✓/✗ in reveal), a ChoiceGrid of wager options before the final, waiting screens otherwise.
 import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
-import { ChoiceGrid, WaitingScreen, buzz, useSecondsLeft } from '@partybox/game-sdk/ui';
+import { ChoiceGrid, WaitingScreen, buzz, useHold, useSecondsLeft } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { LightningControllerView } from '../server/index';
 import type { Input } from '../server/types';
 import { Outcome, Stake, wagerLabel } from './ControllerBits';
 import styles from './Controller.module.css';
+import { REVEAL_BEAT_MS } from './timing';
 
 function roundKicker(view: LightningControllerView): string {
   const round = view.round;
@@ -32,12 +33,15 @@ export function Controller({
   const secondsLeft = useSecondsLeft(view.deadline, view.paused);
   const [lockedAt, setLockedAt] = useState<{ questionId: string; seconds: number } | null>(null);
   if (phaseId === 'question' && streakBefore !== view.myStreak) setStreakBefore(view.myStreak);
+  // The phone never spoils the TV: ✓/✗ and the outcome card wait for the TV's reveal beat.
+  // `deadline` is unique per phase entry, so it keys the hold.
+  const shown = useHold(view.deadline, REVEAL_BEAT_MS);
   // Haptic verdict (Android; iOS ignores it): once per reveal, alongside the card.
   const correct = view.outcome?.correct;
   useEffect(() => {
-    if (phaseId !== 'reveal' || correct === undefined) return;
+    if (phaseId !== 'reveal' || !shown || correct === undefined) return;
     buzz(correct ? [30, 40, 30] : 120);
-  }, [phaseId, correct]);
+  }, [phaseId, shown, correct]);
   if (view.me.role === 'spectator') {
     return <WaitingScreen title="Spectating" hint="You are in for the next game." mood="watch" />;
   }
@@ -74,7 +78,9 @@ export function Controller({
         prompt={view.question.text}
         choices={view.question.choices.map((label, index) => ({ id: String(index), label }))}
         selectedId={locked ? String(view.myPickIndex) : null}
-        correctId={revealed && view.correctIndex !== undefined ? String(view.correctIndex) : null}
+        correctId={
+          revealed && shown && view.correctIndex !== undefined ? String(view.correctIndex) : null
+        }
         disabled={revealed}
         lockedHint={lockedHint}
         onPick={(id) => {
@@ -82,7 +88,7 @@ export function Controller({
           send({ type: 'pick', index: Number(id) });
         }}
         footer={
-          revealed ? (
+          revealed && shown ? (
             <Outcome view={view} streakBefore={streakBefore} spare={spare} />
           ) : stake !== null ? (
             <Stake amount={stake} />

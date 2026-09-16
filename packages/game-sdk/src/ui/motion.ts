@@ -37,3 +37,27 @@ export function useBeats(atMs: readonly number[]): number {
   }, [reduced]);
   return reduced ? last : beat;
 }
+
+/**
+ * A phone-side hold: false on the first render for a given `key`, true `ms` later (cleared and
+ * restarted when the key changes; `ms <= 0` is true at once). Deliberately NOT gated on reduced
+ * motion — it is sequencing, not motion: the TV is another device with its own setting, and the
+ * phone must never show a result before the TV has (DESIGN_SYSTEM principle 5).
+ */
+export function useHold(key: string | number | null, ms: number): boolean {
+  const [held, setHeld] = useState<{ key: string | number | null; done: boolean }>({
+    key,
+    done: false,
+  });
+  // "Adjust state when a prop changes": a new key restarts the hold.
+  if (held.key !== key) setHeld({ key, done: false });
+  useEffect(() => {
+    if (ms <= 0) return;
+    const handle = setTimeout(
+      () => setHeld((s) => (s.key === key && !s.done ? { key, done: true } : s)),
+      ms,
+    );
+    return () => clearTimeout(handle);
+  }, [key, ms]);
+  return ms <= 0 || (held.key === key && held.done);
+}
