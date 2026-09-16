@@ -50,7 +50,10 @@ export function DrawPad({ onChange, disabled }: DrawPadProps): JSX.Element {
   useEffect(() => {
     const box = boxRef.current;
     if (!box) return;
-    const measure = (): void => setSize(Math.max(120, Math.floor(box.clientWidth)));
+    // Never taller than the space left above the sticky footer (review-loop #9): on an iPhone 15
+    // a full-width square hid its bottom third under the button. Floor 220 px, then the body scrolls.
+    const measure = (): void =>
+      setSize(Math.max(220, Math.floor(Math.min(box.clientWidth, box.clientHeight || Infinity))));
     measure();
     const observer = new ResizeObserver(measure);
     observer.observe(box);
@@ -146,21 +149,6 @@ export function DrawPad({ onChange, disabled }: DrawPadProps): JSX.Element {
             />
           ))}
         </div>
-        <div className={styles.sizes}>
-          {WIDTHS.map((w, i) => (
-            <button
-              key={w}
-              type="button"
-              className={`${styles.size} ${i === width ? styles.sizeOn : ''}`}
-              aria-label={['thin', 'medium', 'thick'][i]}
-              aria-pressed={i === width}
-              onClick={() => setWidth(i)}
-              disabled={disabled}
-            >
-              <span style={{ width: 6 + i * 8, height: 6 + i * 8 }} />
-            </button>
-          ))}
-        </div>
       </div>
       <div ref={boxRef} className={styles.box}>
         <canvas
@@ -188,6 +176,23 @@ export function DrawPad({ onChange, disabled }: DrawPadProps): JSX.Element {
         <span className={styles.inkLabel}>
           {outOfInk ? 'Out of ink — undo to get some back' : tooMany ? 'Too many strokes' : 'ink'}
         </span>
+        {/* Pen sizes live down here so the colour row is a single line and the sheet gets the
+            height back (review-loop #9). */}
+        <div className={styles.sizes}>
+          {WIDTHS.map((w, i) => (
+            <button
+              key={w}
+              type="button"
+              className={`${styles.size} ${i === width ? styles.sizeOn : ''}`}
+              aria-label={['thin', 'medium', 'thick'][i]}
+              aria-pressed={i === width}
+              onClick={() => setWidth(i)}
+              disabled={disabled}
+            >
+              <span style={{ width: 6 + i * 8, height: 6 + i * 8 }} />
+            </button>
+          ))}
+        </div>
         <button
           type="button"
           className={styles.tool}
