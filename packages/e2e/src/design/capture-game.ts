@@ -1,8 +1,9 @@
-// Live capture of one game: 4 phones + 2 random bots, frozen clock, every phase via VIP skip. At
+// Live capture of one game: 4 phones (+ 2 random bots when the game welcomes them), frozen clock, every phase via VIP skip. At
 // each phase: TV + every phone before anyone acts, then one phone acts generically (textarea →
 // fill + submit; radios → first enabled) and TV + that phone again. Complements capture-preview
 // (fixtures) with real transitions, chip states and the results screen.
 // Usage: tsx packages/e2e/src/design/capture-game.ts --game wisecrack --out reports/design/<stamp> [--max 14]
+import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { parseArgs } from 'node:util';
 import { chromium } from 'playwright';
@@ -69,7 +70,11 @@ async function main(): Promise<void> {
       await joinViaForm(phone, api, { avatarIndex: i * 3 + 1 });
       phones.push(phone);
     }
-    await api.bots(2, 'random');
+    // Bots are room players (ADR-028); a game without bot support refuses to start with them.
+    const manifest = JSON.parse(
+      readFileSync(join(REPO_ROOT, 'games', GAME, 'manifest.json'), 'utf8'),
+    ) as { supportsBots?: boolean };
+    if (manifest.supportsBots) await api.bots(2, 'random');
     await api.clock(true);
     await api.start(GAME, Number(values.seed));
     await settle(900);
