@@ -191,6 +191,25 @@
   gap: var(--pb-space-3);
 }
 
+/* Nine or more players: the strip wraps to two rows, so the stage gives up ~70 px. */
+.crowded .callBig .letter {
+  width: 160px;
+  height: 160px;
+  font-size: 110px;
+}
+
+.crowded .callBig .number {
+  font-size: 220px;
+}
+
+.crowded .previousRow {
+  min-height: 56px;
+}
+
+.crowded .cell {
+  height: 32px;
+}
+
 /* No board (VIP toggle): the ball gets the stage back at full size. */
 .roomy .callBig .letter {
   width: 220px;
