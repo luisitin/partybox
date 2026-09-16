@@ -73,6 +73,7 @@ export function TvApp(): JSX.Element {
   }>({ players: 0, ids: new Set(), status: '', phase: null, paused: false, code: '', locked: 0 });
   const lastLeaveAt = useRef(-Infinity);
   const lastLockAt = useRef(-Infinity);
+  const homing = state.homing;
   useEffect(() => {
     if (!room) return;
     const p = prev.current;
@@ -97,7 +98,7 @@ export function TvApp(): JSX.Element {
     // a TV that reloads mid-game (p.status === '') stays quiet, like the join rule.
     if (room.status === 'playing' && p.status !== 'playing' && p.status !== '') audio.play('start');
     // The winner moment (owner pick): a party horn with a crowd cheer under it.
-    if (room.status === 'results' && p.status !== 'results') audio.play('cheer');
+    if (room.status === 'results' && p.status !== 'results' && !homing) audio.play('cheer');
     // A game that cued this phase itself (useSound, child effects run first) keeps the stage's
     // generic chime out of its way. `clientModule.sounds` maps a phase id to its own cue (reveal,
     // wager, tally…); unmapped phases play `phase`, reserved for "your phone needs you".
@@ -133,7 +134,7 @@ export function TvApp(): JSX.Element {
       code: room.code,
       locked: view && view.phaseId === p.phase ? locked : 0,
     };
-  }, [room, view, audio]);
+  }, [room, view, audio, homing]);
 
   let content: JSX.Element;
   if (!room) content = <TvLobby room={null} />;

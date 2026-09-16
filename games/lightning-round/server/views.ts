@@ -171,6 +171,9 @@ export function tvView(state: State, gameId: string): LightningTvView {
           ? Object.keys(state.wagers).length
           : 0,
     totalCount: connectedCount(state),
+    // Passive phases (nobody can act): a quiet bar instead of red digits and countdown ticks
+    // (ADR-030) — the reveal has its own beats and the intro is a title card.
+    timerMode: phase === 'intro' || phase === 'reveal' ? 'quiet' : 'normal',
   };
   if (phase === 'reveal') {
     const q = questionById(state.questionIds[state.index] ?? '');

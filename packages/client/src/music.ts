@@ -6,6 +6,7 @@
 // One <audio> element, JS fades, level via `volume`; the TV's mute toggle mutes it too. `play()`
 // needs a user gesture on the page (the TV's audio gate); until then it retries on `enable()`.
 import type { PushedView, RoomSnapshot, TvView } from '@partybox/shared';
+import { trace } from '@partybox/game-sdk/ui';
 import type { GameMusic } from '@partybox/game-sdk/ui';
 import { TRACK_IDS } from './music-tracks';
 
@@ -129,6 +130,7 @@ export function createMusicEngine(): MusicEngine {
   };
 
   const stopElement = (el: HTMLAudioElement): void => {
+    trace('music:stop', { track: (el.src || '').split('/').pop() ?? '' });
     clearFade(el);
     live.delete(el);
     // Retired first: clearing `src` fires `error` on the element, which must not read as a
@@ -144,6 +146,7 @@ export function createMusicEngine(): MusicEngine {
     if (gen !== generation) return;
     const id = pick(p, last);
     last = id;
+    trace('music:start', { plan: p.id, track: id, mode: p.mode, volume: p.volume });
     const el = new Audio(`/music/${id}.mp3`);
     el.preload = 'auto';
     el.muted = muted;
@@ -171,7 +174,6 @@ export function createMusicEngine(): MusicEngine {
     void el
       .play()
       .then(() => {
-        unlocked = true;
         if (p.mode === 'rotate') {
           rampTo(el, p.volume, Math.min(p.fadeMs ?? 2500, 1500));
           const [lo, hi] = p.segmentMs ?? [30_000, 60_000];
@@ -188,9 +190,10 @@ export function createMusicEngine(): MusicEngine {
         }
       })
       .catch(() => {
-        // No user activation yet: keep the plan, `enable()` retries.
+        // The browser refused (no activation after all): keep the plan for the next enable().
         stopElement(el);
         if (audio === el) audio = null;
+        unlocked = false;
       });
   };
 
@@ -207,12 +210,17 @@ export function createMusicEngine(): MusicEngine {
   return {
     play(next) {
       if ((next?.id ?? null) === (plan?.id ?? null)) return;
+      trace('music:plan', { from: plan?.id ?? null, to: next?.id ?? null });
       stop(next ? 800 : 1500);
       plan = next;
-      if (plan) start(plan, generation);
+      // Nothing before the audio gate's first tap, even where the browser would allow it: the
+      // gate is the one moment the room agrees to sound.
+      if (plan && unlocked) start(plan, generation);
     },
     enable() {
-      if (plan && !audio && !unlocked) start(plan, generation);
+      const first = !unlocked;
+      unlocked = true;
+      if (plan && !audio && first) start(plan, generation);
     },
     setMuted(value) {
       muted = value;
@@ -221,6 +229,7 @@ export function createMusicEngine(): MusicEngine {
     setPaused(value) {
       if (paused === value) return;
       paused = value;
+      trace('music:paused', { paused: value });
       if (!audio) return;
       if (value) audio.pause();
       else void audio.play().catch(() => undefined);

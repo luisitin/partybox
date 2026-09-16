@@ -51,9 +51,10 @@ export function TvPlaying({ room, view, audio }: TvPlayingProps): JSX.Element {
     const handle = setTimeout(() => setLeaving(false), 400);
     return () => clearTimeout(handle);
   }, [leaving]);
-  // The last five seconds climb a scale (5 → 1), so the room hears the deadline coming.
+  // The last five seconds climb a scale (5 → 1), so the room hears the deadline coming. Ticks
+  // are not game cues: `quiet` keeps them from suppressing the next phase's chime.
   const onTick = useCallback(
-    (s: number) => audio.play('countdown', { semitones: countdownSemitones(s) }),
+    (s: number) => audio.play('countdown', { semitones: countdownSemitones(s), quiet: true }),
     [audio],
   );
   const play = useCallback((cue: SoundCue) => audio.play(cue), [audio]);

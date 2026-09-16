@@ -50,6 +50,11 @@ export function FinalReveal({
   const totals = beat >= 4;
 
   const play = useSound();
+  // Claiming the phase on mount keeps the shell's mapped reveal sting out of the final: its own
+  // cue is the jackpot/bust at the last row (child effects run before the shell's).
+  useEffect(() => {
+    if (!settled) play('silence');
+  }, [play, settled]);
   const jackpot = rows.some((r) => r.delta > 0);
   const cued = useRef(settled);
   useEffect(() => {

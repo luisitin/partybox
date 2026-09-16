@@ -1,6 +1,7 @@
 // Web Audio sound cues, synthesized (ADR-012: no audio files). Cue names are the design-system
 // vocabulary (docs/DESIGN_SYSTEM.md; the type lives in the SDK so games can cue through
 // `useSound`). `enable()` must be called from a user gesture (autoplay policy).
+import { trace } from '@partybox/game-sdk/ui';
 import type { SoundCue } from '@partybox/game-sdk/ui';
 
 export type { SoundCue };
@@ -212,6 +213,7 @@ export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine
   let master: GainNode | null = null;
   let muted = false;
   let lastPlayedAt = -Infinity;
+  let lastCue: { cue: SoundCue; at: number } | null = null;
   const buffers = new Map<string, Promise<AudioBuffer | null>>();
   const buffer = (src: string): Promise<AudioBuffer | null> => {
     let pending = buffers.get(src);
@@ -274,7 +276,18 @@ export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine
     },
     enabled: () => ctx?.state === 'running',
     play(cue, opts) {
-      if (!opts?.quiet) lastPlayedAt = performance.now();
+      // The same cue twice inside 40 ms is one cue (a dev-mode double effect, an echoing push).
+      const now = performance.now();
+      if (lastCue && lastCue.cue === cue && now - lastCue.at < 40) return;
+      lastCue = { cue, at: now };
+      if (!opts?.quiet) lastPlayedAt = now;
+      trace('cue', {
+        cue,
+        surface: options.master === undefined ? 'tv' : 'phone',
+        muted,
+        ready: ctx?.state === 'running',
+        semitones: opts?.semitones ?? 0,
+      });
       if (!ctx || muted || ctx.state !== 'running') return;
       const t0 = ctx.currentTime;
       for (const sample of SAMPLES[cue] ?? []) playSample(sample, t0);

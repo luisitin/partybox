@@ -48,6 +48,7 @@ pnpm exec tsx packages/e2e/src/design/capture-preview.ts --out <dir> [--games a,
 pnpm exec tsx packages/e2e/src/design/capture-game.ts --game <id> --out <dir>         # live run, every phase, 4 phones + 2 bots
 pnpm exec tsx packages/e2e/src/design/capture-themes.ts --out <dir>                    # TV lobby + phone join/lobby per theme
 pnpm exec tsx packages/e2e/src/design/capture-{fit,home}.ts --out <dir>                # TV at 4 viewport sizes (fit zoom) · TV 🏠 flow
+pnpm exec tsx packages/e2e/src/design/audio-trace.ts --out <dir>                       # every sound across every screen: 45 checks → AUDIO-TRACE.md
 ```
 
 `quickpoll` is a throwaway `pnpm new-game quickpoll` scaffold of `_template` (text answer + bots welcome)

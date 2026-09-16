@@ -3,6 +3,8 @@
 // voices the TV's PC has; falls back to the browser's default English voice. Silent when the TV
 // is muted (the shell's 🔊 toggle) or when the browser has no speech at all. Never on phones —
 // only the Tv component calls this.
+import { trace } from '@partybox/game-sdk/ui';
+
 const MUTE_KEY = 'partybox:muted';
 const PREFERRED = ['Zira', 'Google US English', 'Samantha'];
 const RATE = 1.15;
@@ -68,6 +70,7 @@ export function speakCall(letter: string, number: number, delayMs = 300): () => 
     utterance.addEventListener('error', release);
     current = utterance;
     if (speechSynthesis.paused) speechSynthesis.resume();
+    trace('speak', { text: utterance.text, voice: voice?.name ?? null });
     speechSynthesis.speak(utterance);
     setTimeout(() => {
       if (current === utterance) {
@@ -101,6 +104,7 @@ export function speakCall(letter: string, number: number, delayMs = 300): () => 
 /** Stop talking (a phase change, a claim). */
 export function hushCaller(): void {
   if (typeof speechSynthesis === 'undefined') return;
+  trace('hush', { speaking: speechSynthesis.speaking, pending: speechSynthesis.pending });
   current = null;
   speechSynthesis.cancel();
 }

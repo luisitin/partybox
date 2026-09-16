@@ -3,6 +3,8 @@
 // user activation are dropped) — so the visual press state stays the load-bearing feedback and
 // every call here is fire-and-forget. Not gated on prefers-reduced-motion (a 20 ms buzz is not
 // animation); the player can switch it off (`partybox:haptics`, default on).
+import { trace } from './trace';
+
 const KEY = 'partybox:haptics';
 
 export function hapticsEnabled(): boolean {
@@ -23,6 +25,7 @@ export function setHapticsEnabled(on: boolean): void {
 
 /** Vibrate for `pattern` ms (or an on/off pattern); silently a no-op where unsupported. */
 export function buzz(pattern: number | number[]): void {
+  trace('buzz', { pattern });
   if (!hapticsEnabled()) return;
   try {
     navigator.vibrate?.(pattern);
