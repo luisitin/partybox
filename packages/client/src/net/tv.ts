@@ -12,6 +12,7 @@ import type {
   ViewPush,
   VipAction,
 } from '@partybox/shared';
+import { reloadIfNewBuild } from './build';
 import { createStore, nextToastId } from './store';
 import type { Store, Toast } from './store';
 
@@ -55,7 +56,11 @@ export function createTvClient(roomCode?: string, url?: string): TvClient {
     return (s.room !== null && s.room.code !== code) || rev > s.rev;
   };
 
+  let connectedBefore = false;
   socket.on('connect', () => {
+    // A reconnect may follow a restart with a new build: this page would then be stale.
+    if (connectedBefore) void reloadIfNewBuild();
+    connectedBefore = true;
     store.set({ connected: true });
     socket.emit('tv:join', { roomCode });
   });

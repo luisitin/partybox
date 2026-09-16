@@ -15,6 +15,7 @@ import type {
   WelcomePayload,
   BotAction,
 } from '@partybox/shared';
+import { reloadIfNewBuild } from './build';
 import { createStore, nextToastId } from './store';
 import type { Store, Toast } from './store';
 
@@ -141,7 +142,11 @@ export function createController(url?: string): Controller {
     });
   };
 
+  let connectedBefore = false;
   socket.on('connect', () => {
+    // A reconnect may follow a restart with a new build: this page would then be stale.
+    if (connectedBefore) void reloadIfNewBuild();
+    connectedBefore = true;
     const wasJoined = store.get().joined;
     store.set({ connection: 'connected' });
     const session = loadSession();
