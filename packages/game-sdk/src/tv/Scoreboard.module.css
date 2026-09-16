@@ -78,3 +78,9 @@
   color: var(--pb-accent-2);
   font-weight: 900;
 }
+
+/* A row's "done" mark (wager placed) in the delta slot. */
+.mark {
+  color: var(--pb-accent-3);
+  font-weight: 900;
+}

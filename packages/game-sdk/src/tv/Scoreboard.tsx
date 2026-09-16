@@ -22,14 +22,25 @@ export interface ScoreboardProps {
   highlightId?: string | null;
   /** Hide the 🏆 (everyone tied, or nobody scored). */
   noTrophy?: boolean;
+  /** Force (true) or suppress (false) the two-column tier; default: from 7 rows. */
+  dense?: boolean;
+  /** Rows whose id is listed and that carry no delta show a ✓ in the delta slot (e.g. wager placed). */
+  markIds?: string[];
 }
 
 // Past six rows the TV board would run off a 1080p stage at h2 size, so it drops to body size and
 // two columns (16 players = 8 rows ≈ 500 px).
 const DENSE_FROM = 7;
 
-export function Scoreboard({ rows, compact, highlightId, noTrophy }: ScoreboardProps): JSX.Element {
-  const dense = !compact && rows.length >= DENSE_FROM;
+export function Scoreboard({
+  rows,
+  compact,
+  highlightId,
+  noTrophy,
+  dense: denseProp,
+  markIds,
+}: ScoreboardProps): JSX.Element {
+  const dense = !compact && (denseProp ?? rows.length >= DENSE_FROM);
   const winners = rows.filter((r) => r.rank === 1).length;
   const trophy = !noTrophy && winners < rows.length;
   return (
@@ -51,7 +62,13 @@ export function Scoreboard({ rows, compact, highlightId, noTrophy }: ScoreboardP
             size={compact ? 32 : 'var(--pb-chip-size)'}
           />
           <span className={styles.name}>{row.name}</span>
-          {row.delta ? <span className={styles.delta}>+{row.delta}</span> : null}
+          {row.delta ? (
+            <span className={styles.delta}>+{row.delta}</span>
+          ) : markIds?.includes(row.playerId) ? (
+            <span className={styles.mark} aria-label="wager placed">
+              ✓
+            </span>
+          ) : null}
           <span className={styles.score}>{row.score}</span>
         </li>
       ))}

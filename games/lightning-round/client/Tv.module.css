@@ -149,6 +149,22 @@
   color: var(--pb-text-muted);
 }
 
+/* Wager header: "3 / 6 placed" opposite the kicker; the number pops (.countNum). */
+.placed {
+  color: var(--pb-accent-2);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.placed .countNum {
+  color: inherit;
+}
+
+.rules {
+  margin: 0;
+  text-align: center;
+}
+
 .count {
   font-size: var(--pb-font-h2);
   color: var(--pb-text-muted);

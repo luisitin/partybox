@@ -5,7 +5,7 @@ import { BigText, Scoreboard, Stage } from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
 import type { LightningTvView } from '../server/index';
 import { FinalReveal } from './TvFinal';
-import { AnswerCard, CountLine, RevealRows, RoundHeader, TvQuestion } from './TvQuestion';
+import { AnswerCard, RevealRows, RoundHeader, TvQuestion } from './TvQuestion';
 import styles from './Tv.module.css';
 
 /** Inline bolt (precedent: game-sdk Avatar), currentColor so every theme's accent-2 paints it. */
@@ -74,19 +74,29 @@ export function Tv({ view }: GameTvProps<LightningTvView>): JSX.Element {
     );
   }
   if (view.phaseId === 'wager') {
+    const gap = standings.length >= 2 ? standings[0]!.score - standings[1]!.score : 0;
     return (
       <Stage>
         <div className={styles.header}>
           <span className={`${styles.kicker} ${styles.final}`}>Final question next</span>
+          <span className={styles.placed} role="status">
+            <span key={view.answeredCount} className={styles.countNum}>
+              {view.answeredCount} / {view.totalCount}
+            </span>{' '}
+            placed
+          </span>
         </div>
-        <BigText level="h1">Place your wagers</BigText>
-        <CountLine
-          answeredCount={view.answeredCount}
-          totalCount={view.totalCount}
-          players={view.players}
-          verb="placed · right answer wins it, wrong answer loses it"
+        <BigText level="h2">Place your wagers</BigText>
+        <p className={`pb-muted pb-caption ${styles.rules}`}>
+          Right answer wins the bet · wrong answer loses it
+          {gap > 0 ? ` · ${standings[0]!.name} leads by ${gap}` : ''}
+        </p>
+        <Scoreboard
+          rows={standings}
+          noTrophy
+          dense={standings.length >= 5}
+          markIds={view.players.filter((p) => p.status === 'submitted').map((p) => p.id)}
         />
-        <Scoreboard rows={standings} noTrophy />
       </Stage>
     );
   }
