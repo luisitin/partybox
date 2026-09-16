@@ -74,6 +74,10 @@ export const t = {
     confirm: (action: string) => `Confirm: ${action}`,
     badge: 'VIP',
   },
+  paused: {
+    other: (name: string) => `Paused — ${name} will resume the game`,
+    vip: 'Paused — open ★ VIP and tap Resume',
+  },
   spectator: {
     title: 'Waiting for the next game',
     hint: 'You joined mid-game — you are in as soon as this one ends.',

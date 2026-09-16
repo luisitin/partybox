@@ -218,6 +218,13 @@
   min-height: 0;
   display: flex;
   flex-direction: column;
+  transition: opacity var(--pb-motion-base) var(--pb-ease);
+}
+
+/* Paused: the screen goes quiet like the TV curtain (0.5 still reads ≈ 9:1 for the question text);
+   the `inert` attribute on <main> does the real work (no taps, no focus). */
+.pausedMain {
+  opacity: 0.5;
 }
 
 .toasts {

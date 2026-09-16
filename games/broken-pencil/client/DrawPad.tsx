@@ -1,6 +1,7 @@
 // The phone's sheet of paper: a square canvas with 8 colours, 3 pen sizes, undo, clear and an ink
 // meter. Strokes are kept locally until "Done" encodes them into the wire format. Pointer events
-// cover finger, mouse and pen; drawing continues while paused (sending waits for the server).
+// cover finger, mouse and pen. While the VIP pauses, the shell freezes the pad (the phone's <main>
+// goes inert) and the deadline is shifted on resume, so no drawing time is lost.
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { JSX, PointerEvent as ReactPointerEvent } from 'react';
 import { CANVAS, INK_CHARS, MAX_STROKES, encodePoints, inkCost } from '../server/encoding';

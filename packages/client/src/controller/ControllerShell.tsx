@@ -63,6 +63,11 @@ export function ControllerShell({
   const [haptics, setHaptics] = useState(() => hapticsEnabled());
   const room = state.room;
   const showBanner = state.connection !== 'connected' && state.joined;
+  // A pause freezes the phone too: the screen dims and goes inert (no taps, no focus, out of the
+  // a11y tree — the server would drop the input anyway), and a banner says who resumes it. The
+  // reconnect banner wins when both apply.
+  const paused = room?.status === 'playing' && (state.view?.paused ?? false);
+  const vipName = room?.players.find((p) => p.isVip)?.name ?? t.vip.badge;
   const view = room?.status === 'playing' ? state.view : null;
   const seconds = useSecondsLeft(view?.deadline ?? null, view?.paused ?? false);
 
@@ -237,13 +242,21 @@ export function ControllerShell({
         <div className={styles.banner} role="status">
           {t.connection.reconnecting}
         </div>
+      ) : paused ? (
+        <div className={styles.banner} role="status">
+          {me?.isVip ? t.paused.vip : t.paused.other(vipName)}
+        </div>
       ) : null}
       {state.error && state.joined ? (
         <button type="button" className={styles.error} onClick={controller.dismissError}>
           {state.error.message}
         </button>
       ) : null}
-      <main ref={mainRef} className={styles.main}>
+      <main
+        ref={mainRef}
+        className={`${styles.main} ${paused ? styles.pausedMain : ''}`}
+        inert={paused}
+      >
         {children}
       </main>
       <div className={styles.toasts} aria-live="polite">
