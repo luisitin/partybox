@@ -168,6 +168,15 @@ button {
   }
 }
 
+/* A slow turn for a "reconnecting" glyph; absent under reduced motion (the glyph is static). */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes pb-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}
+
 /* Confetti fall (Confetti primitive): the TV surface is a zoomed 1920×1080 design, so px. */
 @keyframes pb-confetti {
   0% {

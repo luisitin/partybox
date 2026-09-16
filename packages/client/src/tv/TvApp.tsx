@@ -6,7 +6,7 @@ import { ServerClockProvider, isSoundCue } from '@partybox/game-sdk/ui';
 import { clientGames } from '../games.generated';
 import { useStore } from '../net/store';
 import { createTvClient } from '../net/tv';
-import { createSoundEngine, joinSemitones } from '../sound';
+import { createSoundEngine, joinSemitones, lockSemitones } from '../sound';
 import type { SoundEngine } from '../sound';
 import { AudioGate } from './AudioGate';
 import { HostBar } from './HostBar';
@@ -39,8 +39,10 @@ export function TvApp(): JSX.Element {
     phase: string | null;
     paused: boolean;
     code: string;
-  }>({ players: 0, ids: new Set(), status: '', phase: null, paused: false, code: '' });
+    locked: number;
+  }>({ players: 0, ids: new Set(), status: '', phase: null, paused: false, code: '', locked: 0 });
   const lastLeaveAt = useRef(-Infinity);
+  const lastLockAt = useRef(-Infinity);
   useEffect(() => {
     if (!room) return;
     const p = prev.current;
@@ -75,6 +77,22 @@ export function TvApp(): JSX.Element {
           : undefined;
         audio.play(mapped && isSoundCue(mapped) ? mapped : 'phase');
       }
+    // A lock-in: one soft tick per push, rising with the count (never queued; dropped inside
+    // 250 ms), quiet so it never suppresses the phase chime; the count resets with the phase.
+    const locked =
+      view && room.status === 'playing'
+        ? view.players.filter((pl) => pl.status === 'submitted').length
+        : 0;
+    if (
+      view &&
+      room.status === 'playing' &&
+      view.phaseId === p.phase &&
+      locked > p.locked &&
+      performance.now() - lastLockAt.current >= 250
+    ) {
+      lastLockAt.current = performance.now();
+      audio.play('lock', { semitones: lockSemitones(locked), quiet: true });
+    }
     prev.current = {
       players: room.players.length,
       ids: new Set(room.players.map((pl) => pl.id)),
@@ -82,6 +100,7 @@ export function TvApp(): JSX.Element {
       phase: view?.phaseId ?? null,
       paused,
       code: room.code,
+      locked: view && view.phaseId === p.phase ? locked : 0,
     };
   }, [room, view, audio]);
 

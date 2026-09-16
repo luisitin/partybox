@@ -151,6 +151,13 @@ export function joinSemitones(playerCount: number): number {
 export interface PlayOptions {
   /** Transpose every note of the cue (12 = one octave up). */
   semitones?: number;
+  /** Do not touch `lastPlayedAt`: a quiet cue must never suppress the shell's phase chime. */
+  quiet?: boolean;
+}
+
+/** One lock-in = one soft tick, each higher than the last (whole tones, capped at the 5th). */
+export function lockSemitones(lockedCount: number): number {
+  return Math.min(Math.max(lockedCount - 1, 0), 4) * 2;
 }
 
 export interface SoundEngine {
@@ -208,7 +215,7 @@ export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine
     },
     enabled: () => ctx?.state === 'running',
     play(cue, opts) {
-      lastPlayedAt = performance.now();
+      if (!opts?.quiet) lastPlayedAt = performance.now();
       if (!ctx || muted || ctx.state !== 'running') return;
       const t0 = ctx.currentTime;
       const k = 2 ** ((opts?.semitones ?? 0) / 12);

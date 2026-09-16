@@ -68,7 +68,8 @@ The TV shell sets the TV column; the controller shell sets the phone column; tok
 
 `prefers-reduced-motion: reduce` sets every duration to 0. Transitions never hide information (no full-screen wipes).
 Keyframes in global.css: `pb-rise`, `pb-pop`, `pb-shake`, `pb-fade-in` / `pb-fade-out` (the pause curtain and the
-server-lost dim arrive and leave over `--pb-motion-base`), `pb-confetti`.
+server-lost dim arrive and leave over `--pb-motion-base`), `pb-spin` (a reconnecting ⟳; only under no-preference),
+`pb-confetti`. PlayerChip reserves its glyph slot, so a ✓ landing pops in place and never shifts the row.
 Phone: every `Screen` rises on mount (`pb-rise`, `--pb-motion-base`, fill backwards); a game keys its Screen or grid
 when a phase should read as a new screen, and never keys the Controller itself (game-local state would reset).
 TV status swaps (lobby / selecting / playing / results) are keyed and rise (`pb-rise`, fill backwards); a game chunk that
@@ -77,24 +78,26 @@ Timer: in the last 5 s it switches to `--pb-danger`, scales 1.15×, pulses once 
 
 ## Sound cues (Web Audio, synthesized — no files)
 
-| Cue         | Moment                                                                             | Where triggered                                                                |
-| ----------- | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
-| `ready`     | sound enabled / unmuted                                                            | TV shell (AudioGate)                                                           |
-| `join`      | a player joins the lobby                                                           | TV shell — each join steps up a scale (`joinSemitones`, wraps at 5)            |
-| `start`     | a game begins (selecting → playing)                                                | TV shell                                                                       |
-| `phase`     | phase changes                                                                      | TV shell                                                                       |
-| `countdown` | each of the last 5 seconds                                                         | TV shell (Timer) — pitched up per second (`countdownSemitones`: 880 → 1319 Hz) |
-| `reveal`    | an answer / result is revealed                                                     | TV shell via `clientModule.sounds[phaseId]`                                    |
-| `wager`     | the final-question wager opens                                                     | TV shell via `clientModule.sounds` (Lightning)                                 |
-| `tally`     | a scores / leaderboard phase                                                       | TV shell via `clientModule.sounds` (Wisecrack)                                 |
-| `win`       | results screen winner                                                              | TV shell                                                                       |
-| `pause`     | the VIP / host pauses (resume plays `phase`)                                       | TV shell                                                                       |
-| `leave`     | a player is kicked, leaves, or a bot is removed (one per snapshot, ≥ 300 ms apart) | TV shell                                                                       |
-| `submit`    | own input accepted                                                                 | controller shell (phone)                                                       |
-| `error`     | rejected input / error toast                                                       | controller shell (phone)                                                       |
-| `correct`   | the phone's own verdict card                                                       | game via `useSound` (phone)                                                    |
+| Cue                       | Moment                                                                                                           | Where triggered                                                                |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| `ready`                   | sound enabled / unmuted                                                                                          | TV shell (AudioGate)                                                           |
+| `join`                    | a player joins the lobby                                                                                         | TV shell — each join steps up a scale (`joinSemitones`, wraps at 5)            |
+| `start`                   | a game begins (selecting → playing)                                                                              | TV shell                                                                       |
+| `phase`                   | phase changes                                                                                                    | TV shell                                                                       |
+| `countdown`               | each of the last 5 seconds                                                                                       | TV shell (Timer) — pitched up per second (`countdownSemitones`: 880 → 1319 Hz) |
+| `reveal`                  | an answer / result is revealed                                                                                   | TV shell via `clientModule.sounds[phaseId]`                                    |
+| `wager`                   | the final-question wager opens                                                                                   | TV shell via `clientModule.sounds` (Lightning)                                 |
+| `tally`                   | a scores / leaderboard phase                                                                                     | TV shell via `clientModule.sounds` (Wisecrack)                                 |
+| `win`                     | results screen winner                                                                                            | TV shell                                                                       |
+| `pause`                   | the VIP / host pauses (resume plays `phase`)                                                                     | TV shell                                                                       |
+| `leave`                   | a player is kicked, leaves, or a bot is removed (one per snapshot, ≥ 300 ms apart)                               | TV shell                                                                       |
+| `lock`                    | a player locks in (one soft tick per push, whole tones rising with the count, `quiet`: never suppresses `phase`) | TV shell                                                                       |
+|  controller shell (phone) |
+| `error`                   | rejected input / error toast                                                                                     | controller shell (phone)                                                       |
+| `correct`                 | the phone's own verdict card                                                                                     | game via `useSound` (phone)                                                    |
 
-`play(cue, { semitones })` transposes a cue (the engine multiplies every note by 2^(n/12)).
+`play(cue, { semitones, quiet })` transposes a cue (the engine multiplies every note by 2^(n/12)); `quiet` leaves
+`lastPlayedAt` alone so the cue never suppresses the shell's next chime.
 `clientModule.sounds` maps phase ids to cues; unmapped phases play `phase`, reserved for moments where the phone needs
 the player (so 'pick up your phone' and 'look at the TV' never sound the same).
 TV has a mute toggle (persisted in `localStorage`) and a "tap to start" overlay for the autoplay policy.

@@ -1,6 +1,6 @@
 // The cue mappings are pure so they can be pinned without an AudioContext.
 import { describe, expect, it } from 'vitest';
-import { countdownSemitones, joinSemitones } from './sound';
+import { countdownSemitones, joinSemitones, lockSemitones } from './sound';
 
 describe('countdownSemitones', () => {
   it('rises through a major scale from 5 s to 1 s', () => {
@@ -13,6 +13,12 @@ describe('countdownSemitones', () => {
   it('is flat outside the last five seconds', () => {
     expect(countdownSemitones(0)).toBe(0);
     expect(countdownSemitones(9)).toBe(0);
+  });
+});
+
+describe('lockSemitones', () => {
+  it('climbs whole tones per lock-in and caps at the fifth', () => {
+    expect([1, 2, 3, 4, 5, 6, 9].map(lockSemitones)).toEqual([0, 2, 4, 6, 8, 8, 8]);
   });
 });
 
