@@ -101,11 +101,26 @@
   color: var(--pb-accent-3);
 }
 
+/* Running total (R-068): keyed on the value, so a change pops in place ("value changed"). */
 .score {
   margin-left: var(--pb-space-2);
   font-variant-numeric: tabular-nums;
   font-weight: 800;
   color: var(--pb-accent-2);
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.leader {
+  flex-shrink: 0;
+  margin-left: var(--pb-space-2);
+  font-size: 0.8em;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--pb-accent-2);
+}
+
+.leader + .score {
+  margin-left: var(--pb-space-1);
 }
 
 .active {

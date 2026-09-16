@@ -32,6 +32,10 @@ export function TvPlaying({ room, view, audio }: TvPlayingProps): JSX.Element {
     ((props: { view: PushedView<TvView> }) => JSX.Element) | undefined;
   // ADR-030: a game may ask for a quiet timer (bar only — a rhythm, not a countdown) or none.
   const timerMode = view.timerMode ?? 'normal';
+  // Running totals on the strip (R-068): every ViewPlayer already carries `score`; spectators and
+  // score-less games (Broken Pencil) stay number-free; a game can hold the strip back per phase.
+  const showScores =
+    view.players.some((p) => p.score !== undefined) && (module?.stripScores?.(view) ?? true);
   return (
     <div className={styles.playing}>
       <div className={styles.strip}>
@@ -51,6 +55,7 @@ export function TvPlaying({ room, view, audio }: TvPlayingProps): JSX.Element {
           ]}
           vip={view.vip}
           botIds={room.players.filter((p) => p.bot).map((p) => p.id)}
+          showScores={showScores}
           size="sm"
         />
         <div className={styles.timer}>

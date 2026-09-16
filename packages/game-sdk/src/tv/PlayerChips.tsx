@@ -29,6 +29,13 @@ export function PlayerChips({
   align = 'center',
   botIds = [],
 }: PlayerChipsProps): JSX.Element {
+  // Same rule as Scoreboard's 🏆: no leader mark when nobody has scored or everyone is tied.
+  const scored = showScores ? players.filter((p) => p.score !== undefined) : [];
+  const top = Math.max(0, ...scored.map((p) => p.score as number));
+  const leaders =
+    top > 0 && scored.some((p) => p.score !== top)
+      ? new Set(scored.filter((p) => p.score === top).map((p) => p.id))
+      : new Set<string>();
   return (
     <ul
       className={`${styles.list} ${styles[layout]} ${align === 'start' ? styles.start : ''}`}
@@ -44,6 +51,7 @@ export function PlayerChips({
             isVip={vip === p.id}
             active={activeIds.includes(p.id)}
             score={showScores ? p.score : undefined}
+            leader={leaders.has(p.id)}
             isBot={botIds.includes(p.id)}
             size={size}
           />
