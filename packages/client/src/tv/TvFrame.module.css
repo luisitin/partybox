@@ -166,15 +166,6 @@
   pointer-events: none;
 }
 
-.toastVip {
-  display: flex;
-  align-items: center;
-  gap: var(--pb-space-3);
-  font-size: var(--pb-font-body);
-  background: var(--pb-accent-2);
-  color: var(--pb-bg);
-}
-
 .toast {
   padding: var(--pb-space-2) var(--pb-space-5);
   border-radius: var(--pb-radius);
@@ -182,4 +173,14 @@
   font-size: var(--pb-font-caption);
   font-weight: 700;
   animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+/* After .toast on purpose: a handover overrides its background and size (review-loop #14). */
+.toastVip {
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-3);
+  font-size: var(--pb-font-body);
+  background: var(--pb-accent-2);
+  color: var(--pb-bg);
 }
