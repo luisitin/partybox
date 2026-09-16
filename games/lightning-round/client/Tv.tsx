@@ -1,6 +1,6 @@
 // TV view for Lightning Round. Dumb component: renders `view`, composes game-sdk primitives, never
 // touches sockets or game logic. The shell already shows the timer, player chips and VIP overlay.
-import type { JSX } from 'react';
+import type { CSSProperties, JSX } from 'react';
 import { BigText, Scoreboard, Stage } from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
 import type { LightningTvView } from '../server/index';
@@ -8,18 +8,31 @@ import { FinalReveal } from './TvFinal';
 import { AnswerCard, CountLine, RevealRows, RoundHeader, TvQuestion } from './TvQuestion';
 import styles from './Tv.module.css';
 
+/** Inline bolt (precedent: game-sdk Avatar), currentColor so every theme's accent-2 paints it. */
+function Bolt(): JSX.Element {
+  return (
+    <svg className={styles.bolt} viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+      <path d="M37 3 12 37h17l-4 24 27-34H35z" fill="currentColor" />
+    </svg>
+  );
+}
+
 export function Tv({ view }: GameTvProps<LightningTvView>): JSX.Element {
   const standings = view.standings ?? [];
   if (view.phaseId === 'intro') {
+    // Bolt + title ride the shell's phase rise; the tagline and the pill follow one beat each.
     return (
       <Stage center>
+        <Bolt />
         <BigText level="display" tone="accent">
           Lightning Round
         </BigText>
-        <BigText level="h2" tone="muted">
-          Fast fingers, sharp minds. Bet big on the last one.
-        </BigText>
-        <p className={styles.count}>{view.categoryLabel} · answer fast for more points</p>
+        <div className={styles.introLine} style={{ '--i': 1 } as CSSProperties}>
+          <BigText level="h2">Fast fingers, sharp minds. Bet big on the last one.</BigText>
+        </div>
+        <div className={styles.introLine} style={{ '--i': 2 } as CSSProperties}>
+          <span className={styles.introPill}>{view.categoryLabel} · faster is worth more</span>
+        </div>
       </Stage>
     );
   }

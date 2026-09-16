@@ -124,6 +124,31 @@
   animation: none;
 }
 
+/* ── Intro ── */
+.bolt {
+  width: var(--pb-font-display);
+  height: var(--pb-font-display);
+  color: var(--pb-accent-2);
+  flex-shrink: 0;
+}
+
+.introLine {
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+  animation-delay: calc(var(--pb-motion-base) * var(--i, 0));
+}
+
+.introPill {
+  display: inline-block;
+  padding: var(--pb-space-2) var(--pb-space-5);
+  border-radius: 999px;
+  background: var(--pb-surface-2);
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--pb-text-muted);
+}
+
 .count {
   font-size: var(--pb-font-h2);
   color: var(--pb-text-muted);
