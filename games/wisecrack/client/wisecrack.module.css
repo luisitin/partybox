@@ -134,12 +134,37 @@
   overflow-wrap: anywhere;
 }
 
+/* Phone "reveal", author's card: points first (muted when 0 — never gold for nothing), the vote
+   count with an inline SWEEP pill, the answer, the hint last. */
+.result {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pb-space-3);
+  text-align: center;
+  padding: var(--pb-space-6) 0;
+}
+
 .points {
   font-size: var(--pb-font-display);
   font-weight: 900;
   line-height: 1;
   color: var(--pb-accent-2);
   font-variant-numeric: tabular-nums;
+}
+
+.pointsZero {
+  color: var(--pb-text-muted);
+}
+
+.votesLine {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-3);
+  margin: 0;
+  text-wrap: balance;
 }
 
 /* TV: centre the (self-capped) Scoreboard on the stage. */

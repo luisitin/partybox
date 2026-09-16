@@ -1,6 +1,7 @@
 // Controller (phone) view for Wisecrack: write during "answer", vote during "vote", otherwise a
 // calm waiting screen with your own result. `send` is the only way out; the server validates
 // with inputSchema before reduce sees the input.
+import { useState } from 'react';
 import type { JSX } from 'react';
 import { Scoreboard, WaitingScreen } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
@@ -8,6 +9,7 @@ import type { WisecrackControllerView } from '../server/index';
 import type { Input } from '../server/types';
 import { ControllerAnswer } from './ControllerAnswer';
 import { ControllerReveal, ControllerVote } from './ControllerVote';
+import type { LastVote } from './ControllerVote';
 
 type Props = GameControllerProps<WisecrackControllerView, Input>;
 
@@ -32,6 +34,22 @@ function ControllerScores({ view, me }: Props): JSX.Element {
 
 export function Controller(props: Props): JSX.Element {
   const { view } = props;
+  // A voter's pick, remembered into the reveal (ControllerVote unmounts at the phase change).
+  // Server-confirmed (votedSlot), so a rejected or late tap never shows a stale pick; cleared the
+  // moment a new prompt's vote opens — "adjust state when a prop changes", in render.
+  const [lastVote, setLastVote] = useState<LastVote | null>(null);
+  const vote = view.vote;
+  if (vote) {
+    const next: LastVote | null =
+      vote.votedSlot === null
+        ? null
+        : {
+            promptId: vote.promptId,
+            slot: vote.votedSlot,
+            text: vote.options[vote.votedSlot]?.text ?? '',
+          };
+    if (next?.promptId !== lastVote?.promptId || next?.slot !== lastVote?.slot) setLastVote(next);
+  }
   switch (view.phaseId) {
     case 'intro':
       return (
@@ -48,7 +66,7 @@ export function Controller(props: Props): JSX.Element {
     case 'vote':
       return <ControllerVote {...props} />;
     case 'reveal':
-      return <ControllerReveal {...props} />;
+      return <ControllerReveal {...props} lastVote={lastVote} />;
     case 'scores':
     case 'done':
       return <ControllerScores {...props} />;
