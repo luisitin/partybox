@@ -6,6 +6,12 @@
   text-wrap: balance;
 }
 
+/* My place, right under the winner line. */
+.place {
+  text-align: center;
+  margin-top: calc(-1 * var(--pb-space-2));
+}
+
 .actions {
   display: flex;
   flex-direction: column;

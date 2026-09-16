@@ -1,5 +1,14 @@
 // Every user-facing string in the core screens (BL-007 localisation hook). Keep the voice short,
 // friendly and consistent; games own their own copy.
+
+/** 1st, 2nd, 3rd, 4th … 11th–13th, 21st. */
+export function ordinal(n: number): string {
+  const mod100 = n % 100;
+  if (mod100 >= 11 && mod100 <= 13) return `${n}th`;
+  const suffix = { 1: 'st', 2: 'nd', 3: 'rd' }[n % 10] ?? 'th';
+  return `${n}${suffix}`;
+}
+
 export const t = {
   appName: 'PartyBox',
   appShort: 'PB',
@@ -59,6 +68,10 @@ export const t = {
     newGame: 'New game',
     lobby: 'Back to lobby',
     waitingForVip: 'Waiting for the VIP…',
+    waitingFor: (name: string) => `Waiting for ${name}…`,
+    youWin: 'You win! 🏆',
+    youTie: 'You tie for first! 🏆',
+    yourPlace: (rank: number, score: number) => `You finished ${ordinal(rank)} · ${score} pts`,
   },
   vip: {
     menu: 'VIP menu',
