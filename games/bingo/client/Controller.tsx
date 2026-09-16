@@ -120,7 +120,7 @@ export function Controller({
           <CallHeader current={view.current} previous={view.previous} index={view.callIndex} />
         )}
         {intro ? (
-          <p className={styles.hint}>Your new card. Daub what you hear — tap again to undo.</p>
+          <p className={styles.hint}>Your new card. Daub what you hear — FREE too — tap again to undo.</p>
         ) : null}
         {mine && claim ? (
           // Your failed claim, exactly as the room sees it: the wipe lands when play resumes.
@@ -142,7 +142,7 @@ export function Controller({
               numbers={card}
               daubs={intro ? [] : view.daubs}
               pattern={intro && view.pattern !== 'line' ? view.patternCells : []}
-              freeDaubed={intro ? true : freeDaubed}
+              freeDaubed={freeDaubed}
               onTapFree={() => setFreeDaubed((v) => !v)}
               onTap={(index) => send({ type: 'daub', index })}
               disabled={intro}
