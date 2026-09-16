@@ -84,3 +84,32 @@
   color: var(--pb-accent-3);
   font-weight: 900;
 }
+
+/* Staggered entrance (`stagger` prop): rows rise one step apart, each delta a beat after its row,
+   the trophy glyph pops last. Half steps for dense boards and rank-1-first boards so 16 rows still
+   finish inside ~1.2 s. Token multiples → 0 ms under reduced motion. */
+.staggered {
+  --pb-stagger-step: var(--pb-motion-fast);
+}
+
+.dense.staggered,
+.staggerDown {
+  --pb-stagger-step: calc(var(--pb-motion-fast) / 2);
+}
+
+.staggered .row {
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+  animation-delay: calc(var(--pb-i, 0) * var(--pb-stagger-step));
+}
+
+.staggered .delta {
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+  animation-delay: calc(var(--pb-i, 0) * var(--pb-stagger-step) + var(--pb-motion-base));
+}
+
+.staggered .top .rank {
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+  animation-delay: calc(
+    var(--pb-i, 0) * var(--pb-stagger-step) + var(--pb-motion-base) + var(--pb-motion-slow)
+  );
+}

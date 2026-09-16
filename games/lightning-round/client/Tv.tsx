@@ -96,6 +96,7 @@ export function Tv({ view }: GameTvProps<LightningTvView>): JSX.Element {
           noTrophy
           dense={standings.length >= 5}
           markIds={view.players.filter((p) => p.status === 'submitted').map((p) => p.id)}
+          stagger="down"
         />
       </Stage>
     );
@@ -105,7 +106,7 @@ export function Tv({ view }: GameTvProps<LightningTvView>): JSX.Element {
       <BigText level="h1" tone="accent">
         That's the round!
       </BigText>
-      <Scoreboard rows={standings} />
+      <Scoreboard rows={standings} stagger="up" />
     </Stage>
   );
 }
