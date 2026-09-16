@@ -1,0 +1,23 @@
+.wrap {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* The outgoing screen's snapshot: on top, inert, fading over the fast token. */
+.ghost {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+  animation: global(pb-fade-out) var(--pb-motion-fast) var(--pb-ease) both;
+}
+
+/* Cloned nodes would replay their entrance keyframes; freeze them at their settled state. */
+.ghost * {
+  animation: none !important;
+  transition: none !important;
+}

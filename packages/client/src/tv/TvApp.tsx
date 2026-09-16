@@ -13,6 +13,7 @@ import type { SoundEngine } from '../sound';
 import { AudioGate } from './AudioGate';
 import { HostBar } from './HostBar';
 import { TvFrame } from './TvFrame';
+import { CrossfadeSwap } from './CrossfadeSwap';
 import { TvLobby } from './TvLobby';
 import { TvPlaying } from './TvPlaying';
 import { TvResults } from './TvResults';
@@ -144,9 +145,9 @@ export function TvApp(): JSX.Element {
         onHome={client.home}
         footer={room ? <HostBar client={client} room={room} view={view} /> : null}
       >
-        <div key={room?.status ?? 'none'} className={styles.swap}>
+        <CrossfadeSwap swapKey={room?.status ?? 'none'} className={styles.swap}>
           {content}
-        </div>
+        </CrossfadeSwap>
       </TvFrame>
       <AudioGate audio={audio} music={music} />
     </ServerClockProvider>
