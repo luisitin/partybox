@@ -97,3 +97,32 @@ export function useCountUp(target: number, from: number, ms: number, delayMs = 0
   }, [target, from, ms, delayMs, still]);
   return still ? target : value;
 }
+
+/**
+ * Makes a DOM snapshot (cloneNode of a leaving screen) pure scenery: no ids, labels or names that a
+ * screen reader, a test locator or the keyboard could confuse with the live screen underneath.
+ */
+export function sanitizeSnapshot(node: HTMLElement): HTMLElement {
+  node.setAttribute('inert', '');
+  node.setAttribute('aria-hidden', 'true');
+  // Form controls become inert spans that keep the look (class + inline style + text): a wrapping
+  // <label> would otherwise still associate them, so screen readers and test locators found two
+  // "Your name" fields during the crossfade.
+  for (const el of node.querySelectorAll<HTMLElement>('input, textarea, select')) {
+    const span = node.ownerDocument.createElement('span');
+    span.className = el.className;
+    span.style.cssText = el.style.cssText;
+    span.textContent =
+      el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement
+        ? el.value
+        : el.textContent;
+    el.replaceWith(span);
+  }
+  for (const el of node.querySelectorAll<HTMLElement>('*')) {
+    for (const attr of ['id', 'for', 'name', 'aria-label', 'aria-labelledby', 'aria-live', 'role'])
+      el.removeAttribute(attr);
+    el.tabIndex = -1;
+    if (el instanceof HTMLButtonElement) el.disabled = true; // keeps its layout, loses its tap
+  }
+  return node;
+}

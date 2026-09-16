@@ -8,6 +8,7 @@
 
 /* Default live container (the phone shell): a flex column the Screen fills. */
 .live {
+  position: relative; /* a leaving Screen parks its snapshot here (game-sdk Screen) */
   flex: 1;
   min-height: 0;
   display: flex;

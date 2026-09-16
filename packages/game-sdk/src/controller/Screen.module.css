@@ -2,12 +2,30 @@
    not `both`: a retained transform would make this frame the containing block for any future
    position: fixed game element. Taps are never blocked (opacity does not gate pointer events). */
 .screen {
+  position: relative; /* the predecessor's snapshot overlays this frame (review-loop #18) */
   display: flex;
   flex-direction: column;
   flex: 1;
   min-height: 0;
   overscroll-behavior: none;
   animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) backwards;
+}
+
+/* A leaving screen's snapshot, parked in the parent: on top, inert, fading over the base token. */
+.ghost {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+  animation: global(pb-fade-out) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+/* Cloned nodes would replay their entrance keyframes; freeze them where they were. */
+.ghost * {
+  animation: none !important;
+  transition: none !important;
 }
 
 .title {

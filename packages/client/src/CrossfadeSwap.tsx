@@ -5,7 +5,7 @@
 // 0 ms anyway).
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import type { JSX, ReactNode } from 'react';
-import { usePrefersReducedMotion } from '@partybox/game-sdk/ui';
+import { sanitizeSnapshot, usePrefersReducedMotion } from '@partybox/game-sdk/ui';
 import styles from './CrossfadeSwap.module.css';
 
 export interface CrossfadeSwapProps {
@@ -40,7 +40,7 @@ function Screen({
       // removal has happened and a fake one has not (review-loop #10).
       const el = node.current;
       if (!el || el.childElementCount === 0) return;
-      const snapshot = el.cloneNode(true) as HTMLElement;
+      const snapshot = sanitizeSnapshot(el.cloneNode(true) as HTMLElement);
       queueMicrotask(() => {
         if (!el.isConnected) onLeave(snapshot);
       });
