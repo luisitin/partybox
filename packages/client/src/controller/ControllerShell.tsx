@@ -198,15 +198,6 @@ export function ControllerShell({
           ) : null}
         </div>
       ) : null}
-      {showBanner ? (
-        <div className={styles.banner} role="status">
-          {t.connection.reconnecting}
-        </div>
-      ) : paused ? (
-        <div className={styles.banner} role="status">
-          {me?.isVip ? t.paused.vip : t.paused.other(vipName)}
-        </div>
-      ) : null}
       {state.error && state.joined ? (
         <button
           type="button"
@@ -225,6 +216,17 @@ export function ControllerShell({
         className={`${styles.main} ${paused ? styles.pausedMain : ''}`}
         inert={paused}
       >
+        {/* Overlays the top of the body and slides in (review-loop #20): a banner in the flow shoved
+            the drawing sheet under a finger mid-stroke. */}
+        {showBanner ? (
+          <div className={styles.banner} role="status">
+            {t.connection.reconnecting}
+          </div>
+        ) : paused ? (
+          <div className={styles.banner} role="status">
+            {me?.isVip ? t.paused.vip : t.paused.other(vipName)}
+          </div>
+        ) : null}
         {children}
       </main>
       <div className={styles.toasts} aria-live="polite">

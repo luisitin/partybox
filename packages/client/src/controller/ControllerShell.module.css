@@ -203,6 +203,12 @@
 }
 
 .banner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  animation: global(pb-rise) var(--pb-motion-fast) var(--pb-ease) both; /* slides down in */
   padding: var(--pb-space-2) var(--pb-space-4);
   background: var(--pb-surface-2);
   color: var(--pb-text-muted);
@@ -225,6 +231,7 @@
 }
 
 .main {
+  position: relative; /* the reconnect / paused banner overlays its top (review-loop #20) */
   flex: 1;
   min-height: 0;
   display: flex;
