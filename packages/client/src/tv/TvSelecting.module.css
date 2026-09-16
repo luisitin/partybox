@@ -117,6 +117,28 @@
   --pb-font-h2: 26px;
 }
 
+/* Ten settings (bingo): three columns, smaller labels, description clamped to three lines. */
+.dense .settings {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 var(--pb-space-3);
+  font-size: 20px;
+  --pb-font-caption: 16px;
+  --pb-font-h2: 24px;
+}
+
+/* The hints live on the VIP phone; the TV overview keeps the labels only. */
+.dense .settings small {
+  display: none;
+}
+
+.dense .description {
+  flex-shrink: 0; /* overflow: hidden would otherwise let the flex column squash it to nothing */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 .reason {
   margin: 0;
   color: var(--pb-accent-2);

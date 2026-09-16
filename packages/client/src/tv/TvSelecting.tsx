@@ -63,7 +63,12 @@ export function TvSelecting({ room, client }: TvSelectingProps): JSX.Element {
           />
         </div>
         {game ? (
-          <div className={`${styles.card} pb-enter`} key={game.id}>
+          // Nobody scrolls a TV: a game with many settings (bingo's ten) packs three columns and a
+          // clamped description so every field stays above the host bar (review-loop #2).
+          <div
+            className={`${styles.card} ${game.settings.length > 8 ? styles.dense : ''} pb-enter`}
+            key={game.id}
+          >
             <BigText level="h1">{game.name}</BigText>
             <p className={styles.tagline}>{game.tagline}</p>
             <p className={styles.description}>{game.description}</p>
