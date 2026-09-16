@@ -1,6 +1,6 @@
 // Theme choice for one device. `row`: an inline strip of swatches (the TV corner); `sheet`: a
 // bottom sheet with big rows (phones). Both mark the current theme with ✓, never colour alone.
-import type { JSX } from 'react';
+import type { JSX, ReactNode } from 'react';
 import { t } from './i18n';
 import { THEMES, setTheme, useTheme } from './theme';
 import type { ThemeSpec } from './theme';
@@ -19,9 +19,11 @@ function Swatch({ theme }: { theme: ThemeSpec }): JSX.Element {
 export interface ThemePickerProps {
   variant: 'row' | 'sheet';
   onClose?: () => void;
+  /** Sheet only: extra rows under the themes (the phone's sound and vibration toggles). */
+  footer?: ReactNode;
 }
 
-export function ThemePicker({ variant, onClose }: ThemePickerProps): JSX.Element {
+export function ThemePicker({ variant, onClose, footer }: ThemePickerProps): JSX.Element {
   const current = useTheme();
   const list = (
     <ul className={variant === 'row' ? styles.row : styles.list} aria-label={t.theme.title}>
@@ -69,6 +71,7 @@ export function ThemePicker({ variant, onClose }: ThemePickerProps): JSX.Element
           </button>
         </div>
         {list}
+        {footer ? <div className={styles.footer}>{footer}</div> : null}
       </div>
     </div>
   );

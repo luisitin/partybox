@@ -89,6 +89,12 @@ export const t = {
   theme: {
     title: 'Theme',
   },
+  controller: {
+    phoneSound: 'Sounds on this phone',
+    vibration: 'Vibration',
+    on: 'On',
+    off: 'Off',
+  },
   host: {
     title: 'Host',
     pickGame: 'Pick a game',

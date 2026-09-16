@@ -1,11 +1,13 @@
 // Route `/` — the phone. Owns the singleton controller connection and switches screens on the room
 // status. Game components are loaded lazily from the generated registry.
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import type { JSX } from 'react';
 import { ServerClockProvider } from '@partybox/game-sdk/ui';
 import { createController } from '../net/controller';
 import type { Controller } from '../net/controller';
 import { useStore } from '../net/store';
+import { PHONE_MUTE_KEY, createSoundEngine } from '../sound';
+import type { SoundEngine } from '../sound';
 import { ControllerShell } from './ControllerShell';
 import { Join } from './Join';
 import { Lobby } from './Lobby';
@@ -19,14 +21,32 @@ function controllerInstance(): Controller {
   return singleton;
 }
 
+// The phone's own cues (submit, error, a game's verdict card) — quiet, so the TV stays the
+// audible focal point of the room; the phone never plays the TV's join/phase/win cues.
+let sound: SoundEngine | null = null;
+function soundInstance(): SoundEngine {
+  sound = sound ?? createSoundEngine({ master: 0.35, muteKey: PHONE_MUTE_KEY });
+  return sound;
+}
+
 export function ControllerApp(): JSX.Element {
   const controller = useMemo(() => controllerInstance(), []);
+  const audio = useMemo(() => soundInstance(), []);
   const state = useStore(controller.store, (s) => s);
+  // Autoplay policy: the AudioContext needs a gesture. Every tap re-checks (idempotent) so a
+  // context iOS suspended while the phone was locked comes back on the next touch.
+  useEffect(() => {
+    const start = (): void => {
+      void audio.enable();
+    };
+    document.addEventListener('pointerdown', start);
+    return () => document.removeEventListener('pointerdown', start);
+  }, [audio]);
   const me = state.room?.players.find((p) => p.id === state.playerId) ?? null;
 
   let screen: JSX.Element;
   if (!state.joined || !state.room || !me) {
-    screen = <Join controller={controller} state={state} />;
+    screen = <Join controller={controller} state={state} audio={audio} />;
   } else {
     switch (state.room.status) {
       case 'lobby':
@@ -36,7 +56,15 @@ export function ControllerApp(): JSX.Element {
         screen = <Selecting controller={controller} room={state.room} me={me} />;
         break;
       case 'playing':
-        screen = <Playing controller={controller} room={state.room} me={me} view={state.view} />;
+        screen = (
+          <Playing
+            controller={controller}
+            room={state.room}
+            me={me}
+            view={state.view}
+            audio={audio}
+          />
+        );
         break;
       case 'results':
         screen = <Results controller={controller} room={state.room} me={me} />;
@@ -46,7 +74,7 @@ export function ControllerApp(): JSX.Element {
 
   return (
     <ServerClockProvider offsetMs={state.offsetMs}>
-      <ControllerShell controller={controller} state={state} me={me}>
+      <ControllerShell controller={controller} state={state} me={me} audio={audio}>
         {screen}
       </ControllerShell>
     </ServerClockProvider>

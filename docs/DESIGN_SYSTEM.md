@@ -77,10 +77,29 @@ Timer: in the last 5 s it switches to `--pb-danger`, scales 1.15×, pulses once 
 | `countdown` | each of the last 5 seconds     | TV shell (Timer)               |
 | `reveal`    | an answer / result is revealed | game via `clientModule.sounds` |
 | `win`       | results screen winner          | TV shell                       |
-| `submit`    | own input accepted             | controller shell               |
-| `error`     | rejected input / error toast   | controller shell               |
+| `submit`    | own input accepted             | controller shell (phone)       |
+| `error`     | rejected input / error toast   | controller shell (phone)       |
+| `correct`   | the phone's own verdict card   | game via `useSound` (phone)    |
 
 TV has a mute toggle (persisted in `localStorage`) and a "tap to start" overlay for the autoplay policy.
+The phone has its own engine (`createSoundEngine({ master: 0.35 })`, mute under `partybox:phone-sound`, default on,
+toggled from the theme sheet) that plays only what happened in the player's hand — never `phase`, `join`, `win` or
+`countdown`, which are the TV's. `useSound()` inside a game's Controller reaches it; the shell skips `submit` when a
+game cued something in the same 50 ms.
+
+## Haptics (phone, `buzz()` from `@partybox/game-sdk/ui`)
+
+| Moment                                      | Pattern (ms on/off)  | Where triggered   |
+| ------------------------------------------- | -------------------- | ----------------- |
+| own input accepted (`submitted`)            | 20                   | controller shell  |
+| rejected input / join error                 | 40-60-40             | controller shell  |
+| a new prompt needs me (`active`, not quiet) | 30-50-30             | controller shell  |
+| results: I won / everyone else              | 60-60-60-60-160 / 40 | controller shell  |
+| verdict card: correct / wrong               | 30-40-30 / 120       | game (Controller) |
+
+Toggle `partybox:haptics` (default on, theme sheet); not gated on `prefers-reduced-motion` (a 20 ms buzz is not
+animation and is the most accessible non-visual confirmation). iOS Safari has no `navigator.vibrate`; Android Chrome
+drops calls until the page has had a user activation, so a resumed session's first buzz may be lost — acceptable.
 
 ## Primitives
 

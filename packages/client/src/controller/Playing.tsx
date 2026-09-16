@@ -1,12 +1,13 @@
 // During a game: spectators wait; players get the game's lazy Controller component with
 // `{ view, me, send }`. Unknown game ids (registry drift) show a plain message instead of crashing.
-import { Suspense } from 'react';
+import { Suspense, useCallback } from 'react';
 import type { JSX } from 'react';
 import type { ControllerView, PlayerPublic, PushedView, RoomSnapshot } from '@partybox/shared';
-import { WaitingScreen } from '@partybox/game-sdk/ui';
+import { SoundProvider, WaitingScreen } from '@partybox/game-sdk/ui';
 import { clientGames } from '../games.generated';
 import { t } from '../i18n';
 import type { Controller } from '../net/controller';
+import type { SoundCue, SoundEngine } from '../sound';
 import { GameErrorBoundary } from './GameErrorBoundary';
 
 export interface PlayingProps {
@@ -14,9 +15,12 @@ export interface PlayingProps {
   room: RoomSnapshot;
   me: PlayerPublic;
   view: PushedView<ControllerView> | null;
+  /** The phone's sound engine; absent in /preview, where every cue is silent. */
+  audio?: SoundEngine;
 }
 
-export function Playing({ controller, room, me, view }: PlayingProps): JSX.Element {
+export function Playing({ controller, room, me, view, audio }: PlayingProps): JSX.Element {
+  const play = useCallback((cue: SoundCue) => audio?.play(cue), [audio]);
   if (me.spectator || view?.me.role === 'spectator') {
     return <WaitingScreen title={t.spectator.title} hint={t.spectator.hint} mood="watch" />;
   }
@@ -39,11 +43,13 @@ export function Playing({ controller, room, me, view }: PlayingProps): JSX.Eleme
   return (
     <GameErrorBoundary key={view.gameId}>
       <Suspense fallback={<WaitingScreen title={t.connection.loadingGame} mood="wait" />}>
-        <GameController
-          view={view}
-          me={{ id: me.id, name: me.name, avatarId: me.avatarId }}
-          send={controller.sendInput}
-        />
+        <SoundProvider play={play}>
+          <GameController
+            view={view}
+            me={{ id: me.id, name: me.name, avatarId: me.avatarId }}
+            send={controller.sendInput}
+          />
+        </SoundProvider>
       </Suspense>
     </GameErrorBoundary>
   );

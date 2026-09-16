@@ -6,6 +6,8 @@ import type { SoundCue } from '@partybox/game-sdk/ui';
 export type { SoundCue };
 
 const MUTE_KEY = 'partybox:muted';
+/** The phone remembers its own mute (default on) separately from the TV's. */
+export const PHONE_MUTE_KEY = 'partybox:phone-sound';
 
 interface Note {
   freq: number;
@@ -119,12 +121,22 @@ export interface SoundEngine {
   setMuted(muted: boolean): void;
 }
 
-export function createSoundEngine(): SoundEngine {
+export interface SoundEngineOptions {
+  /** Overall level (0–1) applied to every cue: the phone sits at 0.35 so it never competes
+   *  with the TV. Omitted = unity (the TV and /preview). */
+  master?: number;
+  /** localStorage key for the persisted mute; the TV and the phone remember theirs separately. */
+  muteKey?: string;
+}
+
+export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine {
+  const muteKey = options.muteKey ?? MUTE_KEY;
   let ctx: AudioContext | null = null;
+  let master: GainNode | null = null;
   let muted = false;
   let lastPlayedAt = -Infinity;
   try {
-    muted = localStorage.getItem(MUTE_KEY) === '1';
+    muted = localStorage.getItem(muteKey) === '1';
   } catch {
     /* ignore */
   }
@@ -137,7 +149,14 @@ export function createSoundEngine(): SoundEngine {
           (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
         if (!Ctor) return false;
         ctx = ctx ?? new Ctor();
-        if (ctx.state === 'suspended') await ctx.resume();
+        if (options.master !== undefined && !master) {
+          master = ctx.createGain();
+          master.gain.value = options.master;
+          master.connect(ctx.destination);
+        }
+        // Not only 'suspended': iOS Safari reports 'interrupted' after a lock or a background
+        // tab, which a phone does far more often than a TV.
+        if (ctx.state !== 'running') await ctx.resume();
         return ctx.state === 'running';
       } catch {
         return false;
@@ -158,7 +177,7 @@ export function createSoundEngine(): SoundEngine {
         gain.gain.setValueAtTime(0.0001, t0 + note.at);
         gain.gain.exponentialRampToValueAtTime(level, t0 + note.at + 0.01);
         gain.gain.exponentialRampToValueAtTime(0.0001, t0 + note.at + note.dur);
-        osc.connect(gain).connect(ctx.destination);
+        osc.connect(gain).connect(master ?? ctx.destination);
         osc.start(t0 + note.at);
         osc.stop(t0 + note.at + note.dur + 0.02);
       }
@@ -168,7 +187,7 @@ export function createSoundEngine(): SoundEngine {
     setMuted(value) {
       muted = value;
       try {
-        localStorage.setItem(MUTE_KEY, value ? '1' : '0');
+        localStorage.setItem(muteKey, value ? '1' : '0');
       } catch {
         /* ignore */
       }

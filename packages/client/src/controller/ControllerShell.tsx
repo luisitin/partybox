@@ -1,13 +1,24 @@
 // Phone frame: header (room code, me, connection, VIP badge + menu), a countdown line during play
 // (the TV timer is 3 m away), calm reconnect banner, toasts and the error strip. Everything below
-// the header is the current screen.
-import { useState } from 'react';
+// the header is the current screen. The shell also turns state transitions into the phone's own
+// cues and haptics (docs/DESIGN_SYSTEM.md): the TV stays the audible focal point, so the phone
+// only sounds for what happened in the player's hand (submit, error) and buzzes for the rest.
+import { useEffect, useRef, useState } from 'react';
 import type { JSX, ReactNode } from 'react';
 import type { PlayerPublic } from '@partybox/shared';
-import { Avatar, DeadlineBar, useSecondsLeft } from '@partybox/game-sdk/ui';
+import {
+  Avatar,
+  DeadlineBar,
+  buzz,
+  hapticsEnabled,
+  setHapticsEnabled,
+  useSecondsLeft,
+} from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import type { Controller, ControllerState } from '../net/controller';
+import type { SoundEngine } from '../sound';
 import { ThemePicker } from '../ThemePicker';
+import pickerStyles from '../ThemePicker.module.css';
 import styles from './ControllerShell.module.css';
 import { VipMenu } from './VipMenu';
 
@@ -15,21 +26,97 @@ export interface ControllerShellProps {
   controller: Controller;
   state: ControllerState;
   me: PlayerPublic | null;
+  /** The phone's sound engine; absent in /preview (silent). */
+  audio?: SoundEngine;
   children: ReactNode;
 }
+
+/** Haptic patterns (ms on/off) — docs/DESIGN_SYSTEM.md → Haptics. */
+const BUZZ: Record<'submit' | 'error' | 'prompt' | 'winner' | 'results', number | number[]> = {
+  submit: 20,
+  error: [40, 60, 40],
+  prompt: [30, 50, 30],
+  winner: [60, 60, 60, 60, 160],
+  results: 40,
+};
 
 export function ControllerShell({
   controller,
   state,
   me,
+  audio,
   children,
 }: ControllerShellProps): JSX.Element {
   const [menuOpen, setMenuOpen] = useState(false);
   const [themeOpen, setThemeOpen] = useState(false);
+  const [soundOn, setSoundOn] = useState(() => !(audio?.muted() ?? true));
+  const [haptics, setHaptics] = useState(() => hapticsEnabled());
   const room = state.room;
   const showBanner = state.connection !== 'connected' && state.joined;
   const view = room?.status === 'playing' ? state.view : null;
   const seconds = useSecondsLeft(view?.deadline ?? null, view?.paused ?? false);
+
+  // Cues from state transitions, mirroring the TV's (TvApp). One `prev` snapshot per push.
+  const myStatus = state.view?.players.find((p) => p.id === state.playerId)?.status ?? null;
+  const prev = useRef<{
+    status: string | null;
+    phase: string | null;
+    roomStatus: string;
+    error: boolean;
+  }>({ status: null, phase: null, roomStatus: '', error: false });
+  useEffect(() => {
+    const p = prev.current;
+    const roomStatus = room?.status ?? '';
+    const phase = state.view?.phaseId ?? null;
+    const error = state.error !== null;
+    const playing = roomStatus === 'playing';
+    // Locked in: the phone's own confirmation (a game that just cued its verdict wins the beat).
+    if (playing && myStatus === 'submitted' && p.status !== 'submitted' && p.status !== null) {
+      if (audio && performance.now() - audio.lastPlayedAt() > 50) audio.play('submit');
+      buzz(BUZZ.submit);
+    }
+    // A rejected join or input: the strip goes red (Join renders the same error inline).
+    if (error && !p.error) {
+      audio?.play('error');
+      buzz(BUZZ.error);
+    }
+    // The phone needs the player (a new prompt): a buzz only — the TV plays `phase`.
+    if (
+      playing &&
+      phase !== null &&
+      p.phase !== null &&
+      phase !== p.phase &&
+      myStatus === 'active' &&
+      state.view?.timerMode !== 'quiet'
+    )
+      buzz(BUZZ.prompt);
+    // Results: a longer pattern for a winner, one nudge for everyone else — the TV plays `win`.
+    if (roomStatus === 'results' && p.roomStatus !== 'results' && p.roomStatus !== '') {
+      const won =
+        state.playerId !== null && room?.results?.results.winnerIds.includes(state.playerId);
+      buzz(won ? BUZZ.winner : BUZZ.results);
+    }
+    prev.current = {
+      status: playing ? myStatus : null,
+      phase: playing ? phase : null,
+      roomStatus,
+      error,
+    };
+  }, [room, state.view, state.error, state.playerId, myStatus, audio]);
+
+  const toggleSound = (): void => {
+    if (!audio) return;
+    const next = !soundOn;
+    audio.setMuted(!next);
+    setSoundOn(next);
+    if (next) void audio.enable().then((ok) => ok && audio.play('submit'));
+  };
+  const toggleHaptics = (): void => {
+    const next = !haptics;
+    setHapticsEnabled(next);
+    setHaptics(next);
+    if (next) buzz(BUZZ.submit);
+  };
   return (
     <div className={styles.shell} data-surface="controller">
       <header className={styles.header}>
@@ -132,7 +219,45 @@ export function ControllerShell({
           onClose={() => setMenuOpen(false)}
         />
       ) : null}
-      {themeOpen ? <ThemePicker variant="sheet" onClose={() => setThemeOpen(false)} /> : null}
+      {themeOpen ? (
+        <ThemePicker
+          variant="sheet"
+          onClose={() => setThemeOpen(false)}
+          footer={
+            <>
+              <button
+                type="button"
+                className={pickerStyles.toggle}
+                aria-pressed={soundOn}
+                onClick={toggleSound}
+                disabled={!audio}
+              >
+                <span className={pickerStyles.toggleGlyph} aria-hidden>
+                  {soundOn ? '🔊' : '🔇'}
+                </span>
+                {t.controller.phoneSound}
+                <span className={pickerStyles.toggleState}>
+                  {soundOn ? t.controller.on : t.controller.off}
+                </span>
+              </button>
+              <button
+                type="button"
+                className={pickerStyles.toggle}
+                aria-pressed={haptics}
+                onClick={toggleHaptics}
+              >
+                <span className={pickerStyles.toggleGlyph} aria-hidden>
+                  📳
+                </span>
+                {t.controller.vibration}
+                <span className={pickerStyles.toggleState}>
+                  {haptics ? t.controller.on : t.controller.off}
+                </span>
+              </button>
+            </>
+          }
+        />
+      ) : null}
     </div>
   );
 }

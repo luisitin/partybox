@@ -7,14 +7,17 @@ import { Avatar, PrimaryButton, Screen } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import type { Controller, ControllerState } from '../net/controller';
 import { useServerInfo } from '../net/info';
+import type { SoundEngine } from '../sound';
 import styles from './Join.module.css';
 
 export interface JoinProps {
   controller: Controller;
   state: ControllerState;
+  /** Enabled from the submit gesture (a keyboard "done" has no pointerdown for the shell to catch). */
+  audio?: SoundEngine;
 }
 
-export function Join({ controller, state }: JoinProps): JSX.Element {
+export function Join({ controller, state, audio }: JoinProps): JSX.Element {
   const info = useServerInfo();
   const session = controller.session() ?? controller.identity();
   const [name, setName] = useState(session?.name ?? '');
@@ -54,6 +57,7 @@ export function Join({ controller, state }: JoinProps): JSX.Element {
   const submit = (e: FormEvent): void => {
     e.preventDefault();
     if (!canSubmit) return;
+    void audio?.enable();
     setSubmittedAt(Date.now());
     controller.join({
       name: name.trim(),
