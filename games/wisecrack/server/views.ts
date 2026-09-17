@@ -3,7 +3,7 @@
 import { controllerEnvelope, envelope } from '@partybox/game-sdk';
 import type { ControllerView, GameAward, PlayerStatus, TvView } from '@partybox/game-sdk';
 import { answeredCount, answersExpected, playersDone } from './phases/answer';
-import { answerOf, currentPrompt, eligibleVoters, hasVoted, isLastRound } from './round';
+import { answerOf, bothBlank, currentPrompt, eligibleVoters, hasVoted, isLastRound } from './round';
 import { awardsFor, multiplierFor, standings, tallyPrompt } from './scoring';
 import { NO_ANSWER } from './types';
 import type { RoundPrompt, State } from './types';
@@ -42,6 +42,8 @@ export interface WisecrackTvView extends TvView {
   /** answer: progress. */
   answeredCount: number;
   answersExpected: number;
+  /** Prompts of this round that were (or will be) contested: both-blank ones do not count. */
+  promptsPlayed: number;
   /** vote + reveal: the prompt on stage and its position in the round. */
   prompt: { text: string; number: number; count: number } | null;
   /** vote only: the two answers, anonymous, in slot order. */
@@ -149,6 +151,7 @@ export function tvView(state: State, gameId: string): WisecrackTvView {
     multiplier: multiplierFor(state),
     answeredCount: answeredCount(state),
     answersExpected: answersExpected(state),
+    promptsPlayed: state.prompts.filter((p) => !bothBlank(state, p)).length,
     prompt: prompt
       ? { text: prompt.text, number: state.promptIndex + 1, count: state.prompts.length }
       : null,
