@@ -29,6 +29,7 @@ export interface PersonView {
   id: string;
   name: string;
   avatarId: string;
+  connected: boolean;
 }
 
 /** One anonymous submission on stage. */
@@ -128,7 +129,7 @@ function blackView(state: State): BlackView | null {
 
 function person(state: State, id: string | null): PersonView | null {
   const p = id ? state.players[id] : undefined;
-  return p ? { id: p.id, name: p.name, avatarId: p.avatarId } : null;
+  return p ? { id: p.id, name: p.name, avatarId: p.avatarId, connected: p.connected } : null;
 }
 
 function cardViews(state: State, upTo: number): CardView[] {

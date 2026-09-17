@@ -90,10 +90,13 @@ export function ControllerJudge({ view, send }: Props): JSX.Element {
     );
   }
   const judge = view.czar;
+  // A connected judge's pick is the phase: nobody skips it. A dropped judge (or vote mode, where
+  // this phone cannot vote) leaves Next to the room.
+  const judgeHolds = view.judgeMode === 'czar' && judge?.connected === true;
   return (
     <Screen
       title={<span className={styles.kicker}>{kicker}</span>}
-      footer={<NextButton send={send} timed={view.timed} label="Next" />}
+      footer={judgeHolds ? undefined : <NextButton send={send} timed={view.timed} label="Next" />}
     >
       <div className={styles.waitLine} role="status">
         {judge && view.judgeMode === 'czar' ? (

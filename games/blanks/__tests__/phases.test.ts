@@ -217,6 +217,19 @@ describe('untimed rounds (the default)', () => {
     expect(s.round).toBe(2);
   });
 
+  it('Next never skips a connected judge', () => {
+    let s = readAll(playAll(toAnswer(start({ timed: false, judge: 'czar', players: 4 }))));
+    expect(s.phase.id).toBe('judge');
+    const judge = s.czarId as string;
+    const other = s.order.find((id) => id !== judge) as string;
+    expect(next(s, other)).toBe(s);
+    expect(next(s, judge)).toBe(s);
+    // The judge dropping ends the phase on its own (no voter left), so Next never has to.
+    s = connect(s, judge, false);
+    expect(s.phase.id).toBe('result');
+    expect(s.winners).toEqual([]);
+  });
+
   it('Next is ignored in timed rounds', () => {
     const s = playAll(toAnswer(start({ timed: true, players: 4 })), ['dev']);
     expect(next(s, 'ana')).toBe(s);

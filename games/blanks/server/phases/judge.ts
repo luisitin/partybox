@@ -1,7 +1,8 @@
 // Phase "judge": every card is up, anonymous; the room votes (vote mode) or the judge picks
 // (czar mode). Nobody can vote for their own card. Exits when every connected eligible voter
-// has voted, on Next from any player (untimed rounds), on the deadline (30 s / 45 s for a judge,
-// a hidden 2 min fallback when untimed), or on VIP skip (votes so far count).
+// has voted, on Next from any player (untimed rounds — but never past a connected judge, whose
+// pick is the whole phase), on the deadline (30 s / 45 s for a judge, a hidden 2 min fallback
+// when untimed), or on VIP skip (votes so far count).
 import { allConnectedDone, enterPhase, hasPlayer, isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { canVote, votingDone } from '../round';
@@ -25,10 +26,16 @@ function applyVote(state: State, voterId: string, input: VoteInput): State {
   return { ...state, votes: { ...state.votes, [voterId]: input.slot } };
 }
 
+/** Untimed czar mode: only a dropped judge lets the room move on without a pick. */
+export function judgeBlocksNext(state: State): boolean {
+  if (state.settings.judge !== 'czar' || state.czarId === null) return false;
+  return state.players[state.czarId]?.connected === true;
+}
+
 export function reduceJudge(state: State, event: GameEvent<Input>, next: Transition): State {
   if (event.type === 'input') {
     if (event.input.type === 'next')
-      return !state.settings.timed && hasPlayer(state, event.playerId)
+      return !state.settings.timed && hasPlayer(state, event.playerId) && !judgeBlocksNext(state)
         ? next(state, event.now)
         : state;
     if (event.input.type !== 'vote') return state;
