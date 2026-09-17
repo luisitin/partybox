@@ -28,8 +28,9 @@ export function enterPlay(state: State, now: number): State {
     ...state,
     round: { ...round, drawn: round.drawn + 1, claim: null, resumeAt: null },
   };
+  // A window that is open survives the call: an armed player's second tap still claims.
   return enterPhase(
-    clearClaims(drawn),
+    drawn,
     'play',
     now,
     menusOpen(drawn) ? null : state.settings.callSeconds * 1000,

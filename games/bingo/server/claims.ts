@@ -12,14 +12,17 @@ import { hasPlayer } from '@partybox/game-sdk';
 import { ARM_MS } from './types';
 import type { State } from './types';
 
-/** Lapsed windows pass on: pop the queue until a live window (or nothing) remains. */
+/**
+ * A lapsed window passes on: the next in line gets a fresh ARM_MS from the moment it is noticed
+ * (the armed phone says so at once; a late notice must not eat the next player's window).
+ */
 export function settle(state: State, now: number): State {
   const round = state.round;
   let arm = round.arm;
   const queue = [...round.queue];
-  while (arm && now >= arm.until) {
+  if (arm && now >= arm.until) {
     const next = queue.shift();
-    arm = next ? { playerId: next.playerId, card: next.card, until: arm.until + ARM_MS } : null;
+    arm = next ? { playerId: next.playerId, card: next.card, until: now + ARM_MS } : null;
   }
   if (arm === round.arm && queue.length === round.queue.length) return state;
   return { ...state, round: { ...round, arm, queue } };

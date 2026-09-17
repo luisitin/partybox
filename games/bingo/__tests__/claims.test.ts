@@ -35,18 +35,20 @@ describe('two taps to claim, with dibs', () => {
     expect(game.controllerView(s, 'c').queuePlace).toBe(2);
     // Ana's second tap while Ben holds dibs does nothing (she is already queued).
     expect(input(s, 'a', { type: 'bingo', card: 0 }, t + 300)).toBe(s);
-    // Ben lets it lapse: his phone says so, Ana's window opens from the moment his ended.
-    s = input(s, 'b', { type: 'lapse' }, t + ARM_MS + 10);
-    expect(s.round.arm).toEqual({ playerId: 'a', card: 0, until: t + 2 * ARM_MS });
+    // Ben lets it lapse: his phone says so, and Ana gets a fresh 3 s from that moment.
+    const lapsed = t + ARM_MS + 10;
+    s = input(s, 'b', { type: 'lapse' }, lapsed);
+    expect(s.round.arm).toEqual({ playerId: 'a', card: 0, until: lapsed + ARM_MS });
     expect(s.round.queue.map((q) => q.playerId)).toEqual(['c']);
-    // Nobody says anything: the next call tick settles two lapsed windows at once.
+    // Nobody says anything: the next call tick notices Ana's lapse and it is Cleo's turn.
+    const tick = lapsed + ARM_MS + 500;
     const idle = game.reduce(s, {
       type: 'timer',
-      now: t + 3 * ARM_MS + 10,
+      now: tick,
       phaseId: 'play',
       startedAt: s.phase.startedAt,
     });
-    expect(idle.round.arm).toBeNull();
+    expect(idle.round.arm).toEqual({ playerId: 'c', card: 0, until: tick + ARM_MS });
     expect(idle.round.queue).toEqual([]);
     expect(idle.round.drawn).toBe(s.round.drawn + 1);
   });

@@ -67,7 +67,8 @@ Pause freezes the caller (and a running check); daubs and claims are ignored whi
   the current pattern, who is not waiting for the next number. **Two taps**: the first arms that card for
   3 s (`round.arm` — this player has dibs; a tap on another of their cards re-arms there), the second tap
   on the same card claims it. Other players' first taps queue (`round.queue`, in order); a lapsed window
-  passes to the next in line (the armed phone sends `lapse`; the next event settles it anyway). A claim
+  passes to the next in line with a fresh 3 s from that moment (the armed phone sends `lapse`; the next
+  event settles it anyway). A claim
   evaluates **that card only** against the pattern and the numbers called so far:
   - `red` = every daubed square whose number was never called (anywhere on the card);
   - the completion shown is the one with the most green squares; **valid iff it is entirely green**.

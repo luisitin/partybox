@@ -213,8 +213,11 @@
     max-width: min(100%, max(168px, calc((100dvh - 430px) / 1.15)));
   }
   .thumbs {
-    --pb-thumb: 84px;
+    --pb-thumb: 76px;
     gap: var(--pb-space-1);
+  }
+  .phrase {
+    font-size: var(--pb-font-h2);
   }
 }
 .thumbs {
@@ -290,6 +293,10 @@
 .layout_grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 4px 6px;
+}
+/* Two rows of card + label + BINGO! (≈ 1.45 × the card's width) must fit under the call row. */
+.layout_grid .slotWrap {
+  max-width: min(100%, max(150px, calc((100dvh - 250px) / 2 / 1.45)));
 }
 .layout_stack {
   grid-template-columns: 1fr;
@@ -469,8 +476,17 @@
   font-weight: 800;
 }
 .previewBar > span {
-  flex: 1;
-  padding-left: var(--pb-space-2);
+  flex: 1 1 100%;
+  padding: 0 var(--pb-space-2);
+  text-align: center;
+}
+.previewBar {
+  flex-wrap: wrap;
+}
+.previewBar > button {
+  flex: 1 1 40%;
+  min-height: 44px;
+  font-size: var(--pb-font-body);
 }
 
 /* Wrong way up for the chosen style: a little phone turns the way it should go. */
