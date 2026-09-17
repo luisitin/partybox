@@ -1,4 +1,5 @@
 .winner {
+  display: block;
   font-size: var(--pb-font-h1);
   font-weight: 900;
   color: var(--pb-accent-2);

@@ -31,7 +31,9 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
   const vipName = room.players.find((p) => p.id === room.vip)?.name;
   return (
     <Screen
-      title={t.results.title}
+      // The winner line is the sticky title: on a long board the body scrolls to your own row and a
+      // hero inside the body scrolled off the top (review-loop #76).
+      title={<span className={styles.winner}>{winnerLineFor(room, me.id, scoreless)}</span>}
       footer={
         me.isVip ? (
           <div className={styles.actions}>
@@ -67,7 +69,6 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
         )
       }
     >
-      <p className={styles.winner}>{winnerLineFor(room, me.id, scoreless)}</p>
       {over ? <p className="pb-muted pb-caption">{t.results.nobodyScored}</p> : null}
       {mine && !over && !scoreless ? (
         <p className={`pb-muted pb-caption ${styles.place}`}>
