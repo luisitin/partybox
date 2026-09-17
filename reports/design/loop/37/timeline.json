@@ -4,26 +4,26 @@
   "players": 6,
   "scenario": "normal",
   "focus": "tv",
-  "started": "02:38:26.417",
-  "tvVideoT0": "02:38:23.285",
+  "started": "03:04:16.473",
+  "tvVideoT0": "03:04:13.175",
   "changes": [
     {
-      "t": 1789612706421,
+      "t": 1789614256477,
       "status": "playing",
       "phase": "intro",
-      "deadline": 1789612711414,
-      "at": "02:38:26.421",
+      "deadline": 1789614261470,
+      "at": "03:04:16.477",
       "sinceStartS": 0,
-      "videoS": 3.1
+      "videoS": 3.3
     },
     {
-      "t": 1789612711511,
+      "t": 1789614261502,
       "status": "playing",
       "phase": "play",
-      "deadline": 1789612717430,
-      "at": "02:38:31.511",
-      "sinceStartS": 5.1,
-      "videoS": 8.2
+      "deadline": 1789614267474,
+      "at": "03:04:21.502",
+      "sinceStartS": 5,
+      "videoS": 8.3
     }
   ],
   "notes": ["budget reached while playing; skipped to results"]
