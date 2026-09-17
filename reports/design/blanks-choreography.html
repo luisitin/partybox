@@ -679,9 +679,9 @@
         <span class="eyebrow">2 · Reveal</span>
         <h2>One card at a time, read out loud</h2>
         <p>
-          Every card is its own beat: the <em>reveal</em> chime, then the card lands with a bounce
-          (600 ms) while the ones already read slide into a row underneath. Phones show the same
-          card at the same moment.
+          Every card is its own beat: the <em>card</em> chime (your pick, B: a two-note pluck), then
+          the card lands with a bounce (600 ms) while the ones already read slide into a row
+          underneath. Phones show the same card at the same moment.
         </p>
       </div>
       <button class="primary" data-play="reveal">▶ Play</button>
@@ -741,6 +741,76 @@
     </div>
   </section>
 
+  <section id="s-music">
+    <div class="head">
+      <div>
+        <span class="eyebrow">6 · Music by stage</span>
+        <h2>Relaxed beds, one per stage</h2>
+        <p>
+          Decided so far: the read-out chime is <strong>B (two-note pluck)</strong>, and judging
+          gets the <strong>marimba ostinato</strong>. Below is my recommendation for every other
+          stage, each with one alternative. All loops are synthesized in the browser at the level
+          the TV would use; the read-out chime plays over whichever bed is running (press ▶ Play on
+          stage 2 while a bed runs). Start one bed at a time.
+        </p>
+      </div>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Stage</th>
+            <th>Recommended</th>
+            <th>Alternative</th>
+            <th>Why</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Intro + picking a card</td>
+            <td>Warm groove</td>
+            <td>Soft bossa</td>
+            <td>
+              one bed across both so the music never restarts 5 s in; relaxed, a little motion for
+              thinking time
+            </td>
+          </tr>
+          <tr>
+            <td>Read-out</td>
+            <td>Late night</td>
+            <td>Warm groove at half level</td>
+            <td>sparse held chords, no drums: the room is listening to someone read</td>
+          </tr>
+          <tr>
+            <td>Judging</td>
+            <td>Marimba ostinato <em>(decided)</em></td>
+            <td>—</td>
+            <td>a patient pulse while people vote</td>
+          </tr>
+          <tr>
+            <td>Result</td>
+            <td>Warm groove (resumes where it left off)</td>
+            <td>silence under the tally + sweep chimes</td>
+            <td>the round closes on the same bed it opened with</td>
+          </tr>
+          <tr>
+            <td>Results screen</td>
+            <td>silent under the win fanfare</td>
+            <td>—</td>
+            <td>as every game</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="two" id="musicgrid"></div>
+    <p class="note">
+      Beds pause and resume rather than restart when a stage flips, cross-fade over 1.5 s, and duck
+      by half while a chime plays. Since you picked a synthesized bed, the plan is to generate all
+      beds in the browser the way the chimes are (no audio files, exact control over level and
+      tempo); say if you would rather have recorded tracks for the relaxed ones.
+    </p>
+  </section>
+
   <section id="s-cues">
     <div class="head">
       <div>
@@ -788,8 +858,8 @@
           <tr>
             <td>Each card read out</td>
             <td>TV</td>
-            <td>reveal</td>
-            <td>two E4 taps, a lift, a held chord (~0.7 s)</td>
+            <td>card</td>
+            <td>A5 → D6 triangle pluck, 160 ms (decided: candidate B)</td>
           </tr>
           <tr>
             <td>Vote opens</td>
@@ -891,9 +961,7 @@
         Are the three result beats (0 / 600 / 1200 ms) too slow for a room that already saw the
         cards?
       </li>
-      <li>
-        Should the read-out have no chime at all after the first card, or the soft one it has now?
-      </li>
+      <li>Music: which bed for intro + picking, and is "Late night" right under the read-out?</li>
     </ol>
   </section>
 </div>
@@ -906,6 +974,10 @@
         { f: 392, at: 0, d: 0.1, t: 'triangle' },
         { f: 523, at: 0.1, d: 0.1, t: 'triangle' },
         { f: 784, at: 0.2, d: 0.12, t: 'triangle' },
+      ],
+      card: [
+        { f: 880, at: 0, d: 0.06, t: 'triangle', g: 0.08 },
+        { f: 1175, at: 0.07, d: 0.09, t: 'triangle', g: 0.07 },
       ],
       reveal: [
         { f: 330, at: 0, d: 0.09, t: 'triangle', g: 0.14 },
@@ -956,6 +1028,7 @@
     soundBtn.addEventListener('click', enable);
     function play(name, semitones = 0) {
       if (!ctx || ctx.state !== 'running') return;
+      if (typeof duck === 'function') duck();
       const t0 = ctx.currentTime,
         k = 2 ** (semitones / 12);
       for (const n of CUES[name]) {
@@ -1082,10 +1155,10 @@
         tv.innerHTML = `${chips(4)}<div class="krow"><span class="kicker">Round 1 · Card ${i + 1}</span><span class="pill">Read it out loud</span></div><div style="flex:1;display:flex;align-items:center">${card(CARDS[i], 'hero', 'land')}</div>${read.length ? `<div class="strip">${read.map((c) => card(c, 'mini', 'rise')).join('')}</div>` : '<div class="h2 mutedt">The vote opens after the last card.</div>'}`;
       };
       return run('tl-reveal', [
-        { ms: 0, what: 'card A lands (600 ms bounce)', cue: 'reveal', do: () => draw(0) },
-        { ms: 2500, what: 'card B lands · A slides below', cue: 'reveal', do: () => draw(1) },
-        { ms: 5000, what: 'card C lands', cue: 'reveal', do: () => draw(2) },
-        { ms: 7500, what: 'card D lands', cue: 'reveal', do: () => draw(3) },
+        { ms: 0, what: 'card A lands (600 ms bounce)', cue: 'card', do: () => draw(0) },
+        { ms: 2500, what: 'card B lands · A slides below', cue: 'card', do: () => draw(1) },
+        { ms: 5000, what: 'card C lands', cue: 'card', do: () => draw(2) },
+        { ms: 7500, what: 'card D lands', cue: 'card', do: () => draw(3) },
       ]);
     }
 
@@ -1167,6 +1240,252 @@
         { ms: 6000, what: 'result · you won', cue: 'correct', do: () => drawWin() },
       ]);
     }
+
+    // ── 6 · Music beds: tiny sequenced loops, one at a time, under a master gain. ──
+    let music = null; // { key, stop() }
+    const musicGain = (level) => {
+      const g = ctx.createGain();
+      g.gain.value = level;
+      g.connect(ctx.destination);
+      return g;
+    };
+    const N = (n) => 440 * 2 ** ((n - 69) / 12); // midi → Hz
+    function voice(out, { f, at, d, t = 'sine', g = 0.1, a = 0.01, detune = 0 }) {
+      const osc = ctx.createOscillator(),
+        gain = ctx.createGain();
+      osc.type = t;
+      osc.frequency.value = f;
+      osc.detune.value = detune;
+      gain.gain.setValueAtTime(0.0001, at);
+      gain.gain.exponentialRampToValueAtTime(g, at + a);
+      gain.gain.exponentialRampToValueAtTime(0.0001, at + d);
+      osc.connect(gain).connect(out);
+      osc.start(at);
+      osc.stop(at + d + 0.05);
+    }
+    function hat(out, at, g = 0.03) {
+      const len = 0.03,
+        buf = ctx.createBuffer(1, ctx.sampleRate * len, ctx.sampleRate),
+        data = buf.getChannelData(0);
+      for (let i = 0; i < data.length; i += 1)
+        data[i] = (Math.random() * 2 - 1) * (1 - i / data.length);
+      const src = ctx.createBufferSource();
+      src.buffer = buf;
+      const hp = ctx.createBiquadFilter();
+      hp.type = 'highpass';
+      hp.frequency.value = 6000;
+      const gain = ctx.createGain();
+      gain.gain.value = g;
+      src.connect(hp).connect(gain).connect(out);
+      src.start(at);
+    }
+    // Each bed: level, bpm and a bar function (out, barStart, barIndex) scheduling one bar.
+    const BEDS = {
+      warm: {
+        title: 'Warm groove',
+        stage: 'intro · picking · result',
+        rec: true,
+        bpm: 92,
+        level: 0.22,
+        note: 'Electric-piano chords (Cmaj7 · Am7 · Fmaj7 · G7), a round bass on 1 and 3, brushed hats.',
+        bar(out, t, i) {
+          const beat = 60 / 92,
+            chords = [
+              [60, 64, 67, 71],
+              [57, 60, 64, 67],
+              [53, 57, 60, 64],
+              [55, 59, 62, 65],
+            ],
+            roots = [48, 45, 41, 43];
+          const c = chords[i % 4],
+            r = roots[i % 4];
+          c.forEach((m, k) =>
+            voice(out, {
+              f: N(m),
+              at: t + 0.02 * k,
+              d: beat * 1.8,
+              t: 'triangle',
+              g: 0.05,
+              a: 0.03,
+            }),
+          );
+          c.forEach((m, k) =>
+            voice(out, {
+              f: N(m),
+              at: t + beat * 2.5 + 0.02 * k,
+              d: beat * 1.2,
+              t: 'triangle',
+              g: 0.035,
+              a: 0.03,
+            }),
+          );
+          [0, 2].forEach((b) =>
+            voice(out, { f: N(r), at: t + beat * b, d: beat * 0.9, t: 'sine', g: 0.11, a: 0.02 }),
+          );
+          voice(out, { f: N(r + 7), at: t + beat * 3.5, d: beat * 0.4, t: 'sine', g: 0.07 });
+          for (let e = 0; e < 8; e += 1) hat(out, t + (beat * e) / 2, e % 2 ? 0.02 : 0.035);
+        },
+      },
+      bossa: {
+        title: 'Soft bossa',
+        stage: 'intro · picking (alternative)',
+        bpm: 100,
+        level: 0.2,
+        note: 'Nylon-string plucks in a bossa pattern over Dmaj7 · Bm7 · Em7 · A7, a walking bass, a shaker on the off-beats.',
+        bar(out, t, i) {
+          const beat = 60 / 100,
+            chords = [
+              [62, 66, 69, 73],
+              [59, 62, 66, 69],
+              [64, 67, 71, 74],
+              [57, 61, 64, 67],
+            ],
+            roots = [50, 47, 52, 45];
+          const c = chords[i % 4],
+            r = roots[i % 4];
+          [0, 0.75, 1.5, 2.5, 3.25].forEach((s, n) =>
+            c.forEach((m, k) =>
+              voice(out, {
+                f: N(m),
+                at: t + beat * s + k * 0.015,
+                d: 0.35,
+                t: 'triangle',
+                g: n % 2 ? 0.022 : 0.032,
+                a: 0.004,
+              }),
+            ),
+          );
+          [0, 1.5, 2, 3.5].forEach((s, n) =>
+            voice(out, {
+              f: N(n % 2 ? r + 7 : r),
+              at: t + beat * s,
+              d: beat * 0.7,
+              t: 'sine',
+              g: 0.09,
+              a: 0.015,
+            }),
+          );
+          for (let e = 1; e < 8; e += 2) hat(out, t + (beat * e) / 2, 0.018);
+        },
+      },
+      latenight: {
+        title: 'Late night',
+        stage: 'read-out',
+        rec: true,
+        bpm: 70,
+        level: 0.18,
+        note: 'Held Rhodes-like chords that swell in (Fmaj7 · Em7 · Dm7 · Cmaj7), a soft bass note per bar, no drums. Sits under a voice.',
+        bar(out, t, i) {
+          const beat = 60 / 70,
+            chords = [
+              [65, 69, 72, 76],
+              [64, 67, 71, 74],
+              [62, 65, 69, 72],
+              [60, 64, 67, 71],
+            ],
+            roots = [41, 40, 38, 36];
+          const c = chords[i % 4];
+          c.forEach((m, k) => {
+            voice(out, { f: N(m), at: t, d: beat * 4, t: 'triangle', g: 0.035, a: 0.5 });
+            voice(out, { f: N(m), at: t, d: beat * 4, t: 'sine', g: 0.03, a: 0.5, detune: 6 });
+          });
+          voice(out, { f: N(roots[i % 4]), at: t, d: beat * 3.5, t: 'sine', g: 0.09, a: 0.05 });
+          if (i % 2)
+            voice(out, { f: N(c[2] + 12), at: t + beat * 3, d: 0.8, t: 'sine', g: 0.03, a: 0.02 });
+        },
+      },
+      marimba: {
+        title: 'Marimba ostinato',
+        stage: 'judging · decided',
+        rec: true,
+        bpm: 112,
+        level: 0.2,
+        note: 'A rolling 16th-note marimba figure over Dm · B♭ · F · C with a light shaker.',
+        bar(out, t, i) {
+          const beat = 60 / 112,
+            sets = [
+              [62, 65, 69, 74],
+              [58, 62, 65, 70],
+              [65, 69, 72, 77],
+              [60, 64, 67, 72],
+            ],
+            s = sets[i % 4];
+          for (let n = 0; n < 16; n += 1)
+            voice(out, {
+              f: N(s[[0, 1, 2, 3, 2, 1][n % 6]]),
+              at: t + (beat * n) / 4,
+              d: 0.18,
+              t: 'triangle',
+              g: n % 4 === 0 ? 0.05 : 0.03,
+              a: 0.003,
+            });
+          for (let e = 0; e < 8; e += 1) hat(out, t + (beat * e) / 2, 0.015);
+          voice(out, { f: N(s[0] - 24), at: t, d: beat * 2, t: 'sine', g: 0.08 });
+        },
+      },
+    };
+    function startBed(key) {
+      stopBed();
+      if (!ctx || ctx.state !== 'running') return;
+      const bed = BEDS[key],
+        out = musicGain(bed.level),
+        barLen = (60 / bed.bpm) * 4;
+      let bar = 0,
+        next = ctx.currentTime + 0.05;
+      const tick = setInterval(() => {
+        while (next < ctx.currentTime + 0.6) {
+          bed.bar(out, next, bar);
+          bar += 1;
+          next += barLen;
+        }
+      }, 150);
+      music = {
+        key,
+        out,
+        level: bed.level,
+        stop() {
+          clearInterval(tick);
+          out.gain.setTargetAtTime(0.0001, ctx.currentTime, 0.4);
+          setTimeout(() => out.disconnect(), 2000);
+        },
+      };
+      document
+        .querySelectorAll('[data-bed]')
+        .forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.bed === key)));
+    }
+    function stopBed() {
+      if (music) {
+        music.stop();
+        music = null;
+      }
+      document
+        .querySelectorAll('[data-bed]')
+        .forEach((b) => b.setAttribute('aria-pressed', 'false'));
+    }
+    /** A chime ducks the bed by half for a second, the way the TV will. */
+    function duck() {
+      if (!music) return;
+      const g = music.out.gain,
+        now = ctx.currentTime;
+      g.cancelScheduledValues(now);
+      g.setTargetAtTime(music.level * 0.5, now, 0.05);
+      g.setTargetAtTime(music.level, now + 0.8, 0.3);
+    }
+    const grid = document.getElementById('musicgrid');
+    for (const [key, bed] of Object.entries(BEDS)) {
+      const card = document.createElement('div');
+      card.className = 'feedback';
+      card.innerHTML = `<span class="eyebrow">${bed.stage}${bed.rec ? ' · recommended' : ''}</span><h2 style="font-size:20px">${bed.title}</h2><p class="note">${bed.note}</p><div class="bar"><button data-bed="${key}" aria-pressed="false" class="${bed.rec ? 'gold' : ''}">▶ Start</button><button data-stop>■ Stop</button></div>`;
+      grid.appendChild(card);
+    }
+    grid
+      .querySelectorAll('[data-bed]')
+      .forEach((b) =>
+        b.addEventListener('click', () =>
+          music && music.key === b.dataset.bed ? stopBed() : startBed(b.dataset.bed),
+        ),
+      );
+    grid.querySelectorAll('[data-stop]').forEach((b) => b.addEventListener('click', stopBed));
 
     const stages = { answer, reveal, judge, result, phone };
     document.querySelectorAll('[data-play]').forEach((b) =>
