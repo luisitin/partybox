@@ -7,6 +7,7 @@ import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { BlanksControllerView } from '../server/index';
 import type { Input } from '../server/types';
 import { FilledCard, InlineFilled, LETTERS } from './Cards';
+import { NextButton } from './NextButton';
 import styles from './blanks.module.css';
 
 type Props = GameControllerProps<BlanksControllerView, Input>;
@@ -79,12 +80,21 @@ export function ControllerJudge({ view, send }: Props): JSX.Element {
         }))}
         votedId={vote.votedSlot === null ? null : String(vote.votedSlot)}
         onVote={(id) => send({ type: 'vote', slot: Number(id) })}
+        // Untimed rounds: once this phone has voted it may close the vote for the room.
+        footer={
+          vote.votedSlot !== null ? (
+            <NextButton send={send} timed={view.timed} label="Everyone's voted — Next" />
+          ) : undefined
+        }
       />
     );
   }
   const judge = view.czar;
   return (
-    <Screen title={<span className={styles.kicker}>{kicker}</span>}>
+    <Screen
+      title={<span className={styles.kicker}>{kicker}</span>}
+      footer={<NextButton send={send} timed={view.timed} label="Next" />}
+    >
       <div className={styles.waitLine} role="status">
         {judge && view.judgeMode === 'czar' ? (
           <>

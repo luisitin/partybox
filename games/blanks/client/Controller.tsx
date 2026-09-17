@@ -11,6 +11,7 @@ import type { Input } from '../server/types';
 import { FilledCard, LETTERS } from './Cards';
 import { ControllerHand } from './ControllerHand';
 import { ControllerJudge, ControllerReveal } from './ControllerJudge';
+import { NextButton } from './NextButton';
 import { winnerLine } from './TvResult';
 import styles from './blanks.module.css';
 
@@ -43,7 +44,7 @@ function ControllerIntro({ view, me }: Props): JSX.Element {
   );
 }
 
-function ControllerResult({ view, me }: Props): JSX.Element {
+function ControllerResult({ view, me, send }: Props): JSX.Element {
   const play = useSound();
   const final = view.phaseId === 'done';
   useEffect(() => {
@@ -53,7 +54,19 @@ function ControllerResult({ view, me }: Props): JSX.Element {
   const mine = view.revealed.find((r) => r.submitterId === me.id);
   const rankLine = `${final ? 'Final: ' : ''}#${view.myRank} of ${view.standings.length} · ${view.myScore} ${view.myScore === 1 ? 'point' : 'points'}`;
   return (
-    <Screen title={final ? 'Final scores' : `Round ${view.round} of ${view.rounds}`}>
+    <Screen
+      title={final ? 'Final scores' : `Round ${view.round} of ${view.rounds}`}
+      // Untimed rounds: the result stays up until someone in the room moves on.
+      footer={
+        final ? undefined : (
+          <NextButton
+            send={send}
+            timed={view.timed}
+            label={view.round < view.rounds ? 'Next round' : 'Final scores'}
+          />
+        )
+      }
+    >
       <div className={styles.resultHero} role="status" aria-live="polite">
         <h2 className={styles.resultLine}>
           {final ? rankLine : view.iWon ? 'You won the round!' : winnerLine(view)}

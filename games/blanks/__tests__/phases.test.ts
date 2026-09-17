@@ -6,6 +6,7 @@ import { RANDO } from '../server/types';
 import {
   connect,
   cv,
+  next,
   play,
   playAll,
   playRound,
@@ -179,6 +180,47 @@ describe('judge (czar mode)', () => {
     s = connect(s, 'ana', false, s.phase.startedAt + 100);
     expect(s.phase.id).toBe('result');
     expect(s.winners).toEqual([]);
+  });
+});
+
+describe('untimed rounds (the default)', () => {
+  it('hides the clock on picking, voting and the result and keeps a long fallback', () => {
+    let s = toAnswer(start({ timed: false, players: 4 }));
+    expect(s.phase.deadline).toBe(s.phase.startedAt + 180_000);
+    expect(tv(s).timerMode).toBe('hidden');
+    expect(cv(s, 'ana').timerMode).toBe('hidden');
+    s = readAll(playAll(s));
+    expect(s.phase.id).toBe('judge');
+    expect(s.phase.deadline).toBe(s.phase.startedAt + 120_000);
+    s = timer(s);
+    expect(s.phase.id).toBe('result');
+    expect(s.phase.deadline).toBe(s.phase.startedAt + 60_000);
+    expect(tv(s).timerMode).toBe('hidden');
+    // The reading keeps its own pace whatever the setting.
+    const read = readAll(playAll(toAnswer(start({ timed: false, players: 3 }))));
+    expect(tv(read).timerMode).toBe('hidden');
+    expect(tv(start({ timed: false })).timerMode).toBe('normal');
+  });
+
+  it('Next from any player ends picking, voting and the result like the deadline would', () => {
+    let s = playAll(toAnswer(start({ timed: false, players: 4 })), ['dev']);
+    expect(next(s, 'ghost', s.phase.startedAt + 1)).toBe(s);
+    s = next(s, 'ben');
+    expect(s.phase.id).toBe('reveal');
+    expect(s.slots).toHaveLength(3);
+    s = readAll(s);
+    s = next(s, 'dev');
+    expect(s.phase.id).toBe('result');
+    expect(s.winners).toEqual([]);
+    s = next(s, 'ana');
+    expect(s.phase.id).toBe('intro');
+    expect(s.round).toBe(2);
+  });
+
+  it('Next is ignored in timed rounds', () => {
+    const s = playAll(toAnswer(start({ timed: true, players: 4 })), ['dev']);
+    expect(next(s, 'ana')).toBe(s);
+    expect(tv(s).timerMode).toBe('normal');
   });
 });
 

@@ -10,6 +10,7 @@ import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { BlanksControllerView } from '../server/index';
 import type { Input } from '../server/types';
 import { FilledCard } from './Cards';
+import { NextButton } from './NextButton';
 import styles from './blanks.module.css';
 
 type Props = GameControllerProps<BlanksControllerView, Input>;
@@ -32,6 +33,7 @@ export function ControllerHand({ view, send }: Props): JSX.Element {
         mood="watch"
       >
         <FilledCard text={black.text} pick={black.pick} size="phone" />
+        <NextButton send={send} timed={view.timed} label="Everyone's in — Next" />
       </WaitingScreen>
     );
   }
@@ -40,10 +42,11 @@ export function ControllerHand({ view, send }: Props): JSX.Element {
       <WaitingScreen
         className="pb-enter"
         title="Played!"
-        hint={`${progressLine(view)} · the reading starts when everyone's in.`}
+        hint={`${progressLine(view)} · ${view.timed ? "the reading starts when everyone's in." : 'the reading starts when everyone is in, or when anyone taps Next.'}`}
         mood="done"
       >
         <FilledCard text={black.text} whites={view.myPlay} size="phone" />
+        <NextButton send={send} timed={view.timed} label="Everyone's in — Next" />
       </WaitingScreen>
     );
   }

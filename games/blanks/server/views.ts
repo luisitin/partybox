@@ -62,6 +62,8 @@ export interface BlanksTvView extends TvView {
   round: number;
   rounds: number;
   judgeMode: JudgeMode;
+  /** Clocks on picking, voting and the result; false = anyone taps Next (the shells hide the timer). */
+  timed: boolean;
   /** czar mode: this round's judge. */
   czar: PersonView | null;
   black: BlackView | null;
@@ -91,6 +93,7 @@ export interface BlanksControllerView extends ControllerView {
   round: number;
   rounds: number;
   judgeMode: JudgeMode;
+  timed: boolean;
   czar: PersonView | null;
   black: BlackView | null;
   /** 'judge' = this round's czar (plays no card, picks the winner). */
@@ -190,6 +193,13 @@ function standingsRows(state: State): StandingsRow[] {
   });
 }
 
+/** Untimed rounds keep a long hidden fallback on picking, voting and the result: no clock on screen. */
+function timerMode(state: State): 'normal' | 'hidden' {
+  const phase = state.phase.id;
+  const untimed = phase === 'answer' || phase === 'judge' || phase === 'result';
+  return !state.settings.timed && untimed ? 'hidden' : 'normal';
+}
+
 function votersExpected(state: State): number {
   return eligibleVoters(state).filter(
     (id) => state.players[id]?.connected && hasVotableSlot(state, id),
@@ -201,9 +211,11 @@ export function tvView(state: State, gameId: string): BlanksTvView {
   const onStage = phase === 'result' || phase === 'done';
   return {
     ...envelope(state, gameId, { statusOf: statusOf(state), scores: state.scores }),
+    timerMode: timerMode(state),
     round: state.round,
     rounds: state.settings.rounds,
     judgeMode: state.settings.judge,
+    timed: state.settings.timed,
     czar: person(state, state.czarId),
     black: blackView(state),
     playedCount: playedCount(state),
@@ -236,9 +248,11 @@ export function controllerView(
       statusOf: statusOf(state),
       scores: state.scores,
     }),
+    timerMode: timerMode(state),
     round: state.round,
     rounds: state.settings.rounds,
     judgeMode: state.settings.judge,
+    timed: state.settings.timed,
     czar: person(state, state.czarId),
     black: blackView(state),
     role: !player ? 'spectator' : isCzar(state, playerId) ? 'judge' : 'player',

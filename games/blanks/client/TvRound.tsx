@@ -95,6 +95,11 @@ export function TvAnswer({ view }: Props): JSX.Element {
           {nobodyDone ? ' · your cards are on your phone' : ` · ${waitingLine(outstanding)}`}
         </BigText>
       </div>
+      {!view.timed && !nobodyDone ? (
+        <BigText level="h2" tone="muted">
+          No clock — anyone taps Next when the room is ready.
+        </BigText>
+      ) : null}
     </Stage>
   );
 }

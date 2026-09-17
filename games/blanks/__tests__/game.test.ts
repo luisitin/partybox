@@ -53,6 +53,7 @@ describe('whole game', () => {
     expect(game.manifest.settings.map((s) => s.key)).toEqual([
       'decks',
       'judge',
+      'timed',
       'rounds',
       'answerSeconds',
       'rando',
@@ -72,6 +73,7 @@ describe('whole game', () => {
       judge: 'vote',
       decks: 'wild',
       rando: false,
+      timed: false,
     });
   });
 });

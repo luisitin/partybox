@@ -6,7 +6,7 @@
   "version": "0.1.0",
   "minPlayers": 3,
   "maxPlayers": 12,
-  "estimatedMinutes": 15,
+  "estimatedMinutes": 20,
   "tags": ["cards", "voting", "comedy", "adult"],
   "settings": [
     {
@@ -32,6 +32,13 @@
         { "value": "vote", "label": "Everyone votes" },
         { "value": "czar", "label": "A rotating judge" }
       ]
+    },
+    {
+      "key": "timed",
+      "label": "Timed rounds",
+      "description": "Put a clock on picking, voting and the result; off = play at your own pace, anyone taps Next",
+      "type": "boolean",
+      "default": false
     },
     {
       "key": "rounds",

@@ -15,14 +15,14 @@ welcome (`supportsBots`) — the bot plays random cards from its hand and votes 
 
 ## Phases
 
-| Phase    | TV                                                 | Phone                                                       | Exit                                                                                                               |
-| -------- | -------------------------------------------------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| `intro`  | "Round r of R" (+ the judge's name in czar mode)   | round card                                                  | 5 s or VIP skip → `answer`                                                                                         |
-| `answer` | the black card, "n / m in" + who is missing        | black card + hand; tap `pick` cards in order, play          | all connected answerers played, `answerSeconds` + 15 s per extra card, or VIP skip → first `reveal`                |
-| `reveal` | one filled card, big; the ones already read, small | the same card                                               | 3.5 s + 35 ms/char ≤ 8 s (past 8 cards: 3 s + 25 ms/char ≤ 5.5 s) → next `reveal` or `judge`; VIP skip → `judge`   |
-| `judge`  | every card with its letter, "n / m voted"          | voters: `VoteList`; the judge alone in czar mode; rest wait | all connected eligible voters voted, 30 s (45 s czar or past 8 cards), or VIP skip (votes so far count) → `result` |
-| `result` | winner card + author + votes, other authors, +1    | winner card, my score / rank, compact board                 | 8 s or VIP skip → next `intro`, or `done` after round `rounds`                                                     |
-| `done`   | final board                                        | final rank + board                                          | terminal: `results()` non-null. VIP end from any phase → `done` with the scores so far                             |
+| Phase    | TV                                                 | Phone                                                       | Exit                                                                                                                                                                       |
+| -------- | -------------------------------------------------- | ----------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `intro`  | "Round r of R" (+ the judge's name in czar mode)   | round card                                                  | 5 s or VIP skip → `answer`                                                                                                                                                 |
+| `answer` | the black card, "n / m in" + who is missing        | black card + hand; tap `pick` cards in order, play          | all connected answerers played, Next from any player (untimed), `answerSeconds` + 15 s per extra card (timed; hidden 3 min fallback untimed), or VIP skip → first `reveal` |
+| `reveal` | one filled card, big; the ones already read, small | the same card                                               | 3.5 s + 35 ms/char ≤ 8 s (past 8 cards: 3 s + 25 ms/char ≤ 5.5 s) → next `reveal` or `judge`; VIP skip → `judge`                                                           |
+| `judge`  | every card with its letter, "n / m voted"          | voters: `VoteList`; the judge alone in czar mode; rest wait | all connected eligible voters voted, Next (untimed), 30 s (45 s czar or past 8 cards; hidden 2 min fallback untimed), or VIP skip (votes so far count) → `result`          |
+| `result` | winner card + author + votes, other authors, +1    | winner card, my score / rank, compact board                 | Next (untimed; hidden 60 s fallback), 8 s (timed), or VIP skip → next `intro`, or `done` after round `rounds`                                                              |
+| `done`   | final board                                        | final rank + board                                          | terminal: `results()` non-null. VIP end from any phase → `done` with the scores so far                                                                                     |
 
 Round start (`intro` entry): last round's played cards to the discard, hands back to 10 (+ the black
 card's `draw`), a black card drawn, the judge chosen (czar mode: seat order by id, one per round,
@@ -35,7 +35,9 @@ when `answer` closes, so a letter never hints at who played it.
 `{ type: 'play', cards: string[1..3] }` — during `answer`, from a non-judge player, once: exactly the
 black card's `pick` ids, distinct, all in that player's hand, in blank order. `{ type: 'vote', slot }` —
 during `judge`, from an eligible voter (everyone in vote mode; the judge alone in czar mode), once, never
-on their own slot. Anything else leaves the state unchanged.
+on their own slot. `{ type: 'next' }` — from any player during `answer`, `judge` or `result` when
+`timed` is off: the phase ends as its deadline would (unplayed cards sit out, votes so far count).
+Anything else leaves the state unchanged.
 
 ## Scoring
 
@@ -60,8 +62,9 @@ any), **Quick draw** (most cards played before half the answer time, measured ag
 ## Settings
 
 `decks` select `wild` (`mild` · `adults` = mild + crude · `wild` = all three · `wild-only`) · `judge`
-select `vote` (`vote` = everyone votes, `czar` = a rotating judge) · `rounds` number 6 (3–15) ·
-`answerSeconds` number 60 (30–120, step 15) · `rando` boolean false.
+select `vote` (`vote` = everyone votes, `czar` = a rotating judge) · `timed` boolean false (off: no clock
+on picking, voting or the result, anyone taps Next; the screens hide the long fallback timers) · `rounds`
+number 6 (3–15) · `answerSeconds` number 60 (30–120, step 15; timed only) · `rando` boolean false.
 
 ## Content
 

@@ -24,7 +24,14 @@ export function start(options: StartOptions = {}): State {
   const { players, seed, ...settings } = options;
   return game.init({
     players: PLAYERS.slice(0, players ?? 4),
-    settings: { rounds: 3, answerSeconds: 60, judge: 'vote', decks: 'mild', ...settings },
+    settings: {
+      rounds: 3,
+      answerSeconds: 60,
+      judge: 'vote',
+      decks: 'mild',
+      timed: true,
+      ...settings,
+    },
     seed: seed ?? 1,
     now: T0,
   });
@@ -72,6 +79,10 @@ export function vote(
   now = state.phase.startedAt + 1000,
 ): State {
   return reduce(state, { type: 'input', now, playerId, input: { type: 'vote', slot } });
+}
+
+export function next(state: State, playerId: string, now = state.phase.startedAt + 1000): State {
+  return reduce(state, { type: 'input', now, playerId, input: { type: 'next' } });
 }
 
 /** The first `pick` cards of a player's hand. */

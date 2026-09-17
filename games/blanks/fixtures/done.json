@@ -1,7 +1,7 @@
 {
   "phase": {
     "id": "done",
-    "startedAt": 1700000270266,
+    "startedAt": 1700000582126,
     "deadline": null
   },
   "rng": {
@@ -39,7 +39,8 @@
     "judge": "vote",
     "rounds": 6,
     "answerSeconds": 60,
-    "rando": false
+    "rando": false,
+    "timed": false
   },
   "order": ["p1", "p2", "p3", "p4"],
   "blackDeck": [

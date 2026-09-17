@@ -1,10 +1,11 @@
 // Phase "judge": every card is up, anonymous; the room votes (vote mode) or the judge picks
 // (czar mode). Nobody can vote for their own card. Exits when every connected eligible voter
-// has voted, on the deadline (30 s / 45 s for a judge), or on VIP skip (votes so far count).
+// has voted, on Next from any player (untimed rounds), on the deadline (30 s / 45 s for a judge,
+// a hidden 2 min fallback when untimed), or on VIP skip (votes so far count).
 import { allConnectedDone, enterPhase, hasPlayer, isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { canVote, votingDone } from '../round';
-import { BIG_JUDGE_MS, BIG_ROOM, JUDGE_CZAR_MS, JUDGE_VOTE_MS } from '../types';
+import { BIG_JUDGE_MS, BIG_ROOM, JUDGE_CZAR_MS, JUDGE_VOTE_MS, UNTIMED_JUDGE_MS } from '../types';
 import type { Input, State, VoteInput } from '../types';
 import type { Transition } from './intro';
 
@@ -15,7 +16,7 @@ export function enterJudge(state: State, now: number): State {
       : state.slots.length > BIG_ROOM
         ? BIG_JUDGE_MS
         : JUDGE_VOTE_MS;
-  return enterPhase(state, 'judge', now, ms);
+  return enterPhase(state, 'judge', now, state.settings.timed ? ms : UNTIMED_JUDGE_MS);
 }
 
 function applyVote(state: State, voterId: string, input: VoteInput): State {
@@ -26,6 +27,10 @@ function applyVote(state: State, voterId: string, input: VoteInput): State {
 
 export function reduceJudge(state: State, event: GameEvent<Input>, next: Transition): State {
   if (event.type === 'input') {
+    if (event.input.type === 'next')
+      return !state.settings.timed && hasPlayer(state, event.playerId)
+        ? next(state, event.now)
+        : state;
     if (event.input.type !== 'vote') return state;
     const after = applyVote(state, event.playerId, event.input);
     if (after === state) return state;

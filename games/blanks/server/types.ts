@@ -16,6 +16,8 @@ export interface Settings {
   rounds: number;
   answerSeconds: number;
   rando: boolean;
+  /** Clocks on picking, voting and the result; off = the room moves itself along with Next. */
+  timed: boolean;
 }
 
 export interface Stats {
@@ -67,10 +69,13 @@ export const inputSchema = z.discriminatedUnion('type', [
     /** Anonymous slot (index into `slots`). */
     slot: z.number().int().min(0).max(15),
   }),
+  /** Anyone moves an untimed phase along (answer, judge, result); ignored in timed rounds. */
+  z.object({ type: z.literal('next') }),
 ]);
 export type Input = z.infer<typeof inputSchema>;
 export type PlayInput = Extract<Input, { type: 'play' }>;
 export type VoteInput = Extract<Input, { type: 'vote' }>;
+export type NextInput = Extract<Input, { type: 'next' }>;
 
 export const HAND_SIZE = 10;
 export const INTRO_MS = 5_000;
@@ -91,6 +96,10 @@ export const JUDGE_VOTE_MS = 30_000;
 export const JUDGE_CZAR_MS = 45_000;
 export const BIG_JUDGE_MS = 45_000;
 export const RESULT_MS = 8_000;
+/** Untimed rounds: no clock on the screens, but a long hidden fallback so an idle room still ends. */
+export const UNTIMED_ANSWER_MS = 180_000;
+export const UNTIMED_JUDGE_MS = 120_000;
+export const UNTIMED_RESULT_MS = 60_000;
 export const WIN_POINTS = 1;
 /** The phantom player's submitter id (the "rando" setting). */
 export const RANDO = 'rando';

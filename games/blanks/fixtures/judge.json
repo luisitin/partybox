@@ -2,7 +2,7 @@
   "phase": {
     "id": "judge",
     "startedAt": 1700000031957,
-    "deadline": 1700000061957
+    "deadline": 1700000151957
   },
   "rng": {
     "seed": 3,
@@ -39,7 +39,8 @@
     "judge": "vote",
     "rounds": 6,
     "answerSeconds": 60,
-    "rando": false
+    "rando": false,
+    "timed": false
   },
   "order": ["p1", "p2", "p3", "p4"],
   "blackDeck": [

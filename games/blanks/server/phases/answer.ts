@@ -1,11 +1,12 @@
 // Phase "answer": every player but the judge plays `pick` white cards from their hand, in blank
-// order. Exits when every connected answerer has played, on the deadline (answerSeconds + 15 s
-// per extra card), or on VIP skip; whoever has not played sits the round out.
+// order. Exits when every connected answerer has played, on Next from any player (untimed rounds),
+// on the deadline (answerSeconds + 15 s per extra card, or a hidden 3 min fallback when untimed),
+// or on VIP skip; whoever has not played sits the round out.
 import { allConnectedDone, enterPhase, hasPlayer, isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { blackCard } from '../content';
 import { hasPlayed, isCzar, playersDone } from '../round';
-import { EXTRA_PICK_S } from '../types';
+import { EXTRA_PICK_S, UNTIMED_ANSWER_MS } from '../types';
 import type { Input, PlayInput, State } from '../types';
 import type { Transition } from './intro';
 
@@ -15,7 +16,12 @@ export function answerMs(state: State): number {
 }
 
 export function enterAnswer(state: State, now: number): State {
-  return enterPhase(state, 'answer', now, answerMs(state));
+  return enterPhase(
+    state,
+    'answer',
+    now,
+    state.settings.timed ? answerMs(state) : UNTIMED_ANSWER_MS,
+  );
 }
 
 /** "Before half the answer time" is measured against the deadline so a pause does not cheat it. */
@@ -49,6 +55,10 @@ function applyPlay(state: State, playerId: string, input: PlayInput, now: number
 
 export function reduceAnswer(state: State, event: GameEvent<Input>, next: Transition): State {
   if (event.type === 'input') {
+    if (event.input.type === 'next')
+      return !state.settings.timed && hasPlayer(state, event.playerId)
+        ? next(state, event.now)
+        : state;
     if (event.input.type !== 'play') return state;
     const after = applyPlay(state, event.playerId, event.input, event.now);
     if (after === state) return state;

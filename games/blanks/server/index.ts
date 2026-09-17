@@ -44,6 +44,7 @@ export function readSettings(raw: RawSettings): Settings {
     rounds: numberSetting(raw, 'rounds'),
     answerSeconds: numberSetting(raw, 'answerSeconds'),
     rando: raw['rando'] === true,
+    timed: raw['timed'] === true,
   };
 }
 
@@ -98,6 +99,7 @@ export const game: GameDefinition<State, Input> = {
         if (hand.length < pick) return null;
         return { type: 'play', cards: rng.shuffle(hand).slice(0, pick) };
       }
+      // Bots never tap Next: an untimed result stays up for the humans (the hidden fallback ends it).
       if (state.phase.id === 'judge') {
         if (Object.hasOwn(state.votes, playerId)) return null;
         const slots = state.slots.map((_, slot) => slot).filter((s) => canVote(state, playerId, s));
