@@ -132,6 +132,9 @@
   min-height: 36px;
   padding: var(--pb-space-1) var(--pb-space-2);
 }
+.bingo.armed {
+  font-size: var(--pb-font-h2);
+}
 .armed {
   animation: armed-pulse 0.6s var(--pb-ease) infinite alternate;
 }
@@ -206,6 +209,13 @@
 }
 .focusMany .focusMain {
   max-width: min(100%, max(200px, calc((100dvh - 470px) / 1.15)));
+}
+/* A tablet: the intro card need not fill 1000 px; 520 px reads like a card, not a poster. */
+@media (min-width: 700px) {
+  .focusMain,
+  .focusMany .focusMain {
+    max-width: min(520px, calc((100dvh - 330px) / 1.15));
+  }
 }
 /* A short phone (an SE, 568 px): a smaller main card and thumbnails so both stay in view. */
 @media (max-height: 640px) {
@@ -330,9 +340,16 @@
 .layout_tablet {
   grid-template-columns: repeat(var(--n, 4), minmax(0, 1fr));
   gap: var(--pb-space-4);
+  justify-items: center;
 }
 .layout_tablet .slotWrap {
-  max-width: 320px;
+  max-width: 360px;
+}
+/* A tablet held upright: two by two, not four thin cards in a row over an empty screen. */
+@media (orientation: portrait) {
+  .layout_tablet {
+    grid-template-columns: repeat(min(var(--n, 4), 2), minmax(0, 1fr));
+  }
 }
 .slotWrap {
   display: grid;

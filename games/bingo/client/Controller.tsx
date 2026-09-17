@@ -217,7 +217,7 @@ export function Controller({
             ) : (
               <CallRow view={view} />
             )}
-            {inRound && !sheet ? (
+            {inRound && !sheet && kind !== 'tablet' ? (
               <button type="button" className={styles.stylePill} onClick={openMenu}>
                 🃏 style
               </button>
