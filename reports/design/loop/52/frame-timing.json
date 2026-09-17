@@ -1,0 +1,80 @@
+{
+  "tv": {
+    "frames": 6837,
+    "longFrames": 7,
+    "worstMs": 100,
+    "long": [
+      {
+        "t": 1789651151489,
+        "ms": 100,
+        "phase": "lobby"
+      },
+      {
+        "t": 1789651158687,
+        "ms": 50,
+        "phase": "question"
+      },
+      {
+        "t": 1789651162682,
+        "ms": 50,
+        "phase": "reveal"
+      },
+      {
+        "t": 1789651167637,
+        "ms": 50,
+        "phase": "question"
+      },
+      {
+        "t": 1789651231781,
+        "ms": 50,
+        "phase": "question"
+      },
+      {
+        "t": 1789651241413,
+        "ms": 50,
+        "phase": "question"
+      },
+      {
+        "t": 1789651258247,
+        "ms": 50,
+        "phase": "reveal"
+      }
+    ]
+  },
+  "phone": {
+    "longFrames": 6,
+    "worstMs": 50,
+    "long": [
+      {
+        "t": 1789651152178,
+        "ms": 50,
+        "phase": "lobby"
+      },
+      {
+        "t": 1789651154852,
+        "ms": 50,
+        "phase": "intro"
+      },
+      {
+        "t": 1789651171915,
+        "ms": 50,
+        "phase": "reveal"
+      },
+      {
+        "t": 1789651208479,
+        "ms": 50,
+        "phase": "reveal"
+      },
+      {
+        "t": 1789651217561,
+        "ms": 50,
+        "phase": "reveal"
+      },
+      {
+        "t": 1789651235994,
+        "ms": 50,
+        "phase": "reveal"
+      }
+    ]
+  }
+}

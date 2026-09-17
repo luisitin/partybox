@@ -63,18 +63,18 @@ describe('per-question scoring in play', () => {
 });
 
 describe('wagers', () => {
-  it('offers 0/25/50/75/100 % rounded down to tens, collapsing duplicates', () => {
+  it('offers 0/25/50/75 % rounded down to tens and all in, collapsing duplicates', () => {
     expect(wagerOptions(1234)).toEqual([
       { percent: 0, amount: 0 },
       { percent: 25, amount: 300 },
       { percent: 50, amount: 610 },
       { percent: 75, amount: 920 },
-      { percent: 100, amount: 1230 },
+      { percent: 100, amount: 1234 },
     ]);
     expect(wagerOptions(0)).toEqual([{ percent: 0, amount: 0 }]);
     expect(wagerOptions(12)).toEqual([
       { percent: 0, amount: 0 },
-      { percent: 100, amount: 10 },
+      { percent: 100, amount: 12 },
     ]);
     expect(wagerAmount(0, 100)).toBe(0);
     expect(wagerAmount(-5, 100)).toBe(0);
