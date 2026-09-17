@@ -1,0 +1,112 @@
+{
+  "pass": "105",
+  "game": "blanks",
+  "players": 4,
+  "scenario": "tie",
+  "focus": "phone",
+  "started": "18:16:01.934",
+  "tvVideoT0": "18:15:58.656",
+  "changes": [
+    {
+      "t": 1789668961938,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789668966931,
+      "bed": "warm",
+      "at": "18:16:01.938",
+      "sinceStartS": 0,
+      "videoS": 3.3
+    },
+    {
+      "t": 1789668967012,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789668996933,
+      "bed": "warm",
+      "at": "18:16:07.012",
+      "sinceStartS": 5.1,
+      "videoS": 8.4
+    },
+    {
+      "t": 1789668996940,
+      "status": "playing",
+      "phase": "result",
+      "deadline": 1789669004933,
+      "bed": "warm",
+      "at": "18:16:36.940",
+      "sinceStartS": 35,
+      "videoS": 38.3
+    },
+    {
+      "t": 1789669004968,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789669009933,
+      "bed": "warm",
+      "at": "18:16:44.968",
+      "sinceStartS": 43,
+      "videoS": 46.3
+    },
+    {
+      "t": 1789669009974,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789669039942,
+      "bed": "warm",
+      "at": "18:16:49.974",
+      "sinceStartS": 48,
+      "videoS": 51.3
+    },
+    {
+      "t": 1789669039986,
+      "status": "playing",
+      "phase": "result",
+      "deadline": 1789669047954,
+      "bed": "warm",
+      "at": "18:17:19.986",
+      "sinceStartS": 78.1,
+      "videoS": 81.3
+    },
+    {
+      "t": 1789669048013,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789669052964,
+      "bed": "warm",
+      "at": "18:17:28.013",
+      "sinceStartS": 86.1,
+      "videoS": 89.4
+    },
+    {
+      "t": 1789669052978,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789669082977,
+      "bed": "warm",
+      "at": "18:17:32.978",
+      "sinceStartS": 91,
+      "videoS": 94.3
+    },
+    {
+      "t": 1789669083003,
+      "status": "playing",
+      "phase": "result",
+      "deadline": 1789669090988,
+      "bed": "warm",
+      "at": "18:18:03.003",
+      "sinceStartS": 121.1,
+      "videoS": 124.3
+    },
+    {
+      "t": 1789669091097,
+      "status": "results",
+      "phase": "results",
+      "deadline": null,
+      "bed": null,
+      "at": "18:18:11.097",
+      "sinceStartS": 129.2,
+      "videoS": 132.4
+    }
+  ],
+  "notes": []
+}

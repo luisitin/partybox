@@ -1,7 +1,8 @@
 // The music-bed library (ADR-032): every bed is a tempo, a level and a bar function that schedules
 // one bar of notes on a Web Audio context; `beds.ts` owns the engine that plays them. Owner's picks
 // 2026-09-17 from the Blanks review page: warm (relaxed picking / result), latenight (under the
-// read-out), marimba (judging); bossa is the alternative kept for the next round of feedback.
+// read-out), marimba (judging), bossa (picking). Levels sit low on purpose: the owner asked for true
+// background ("lower its decibels", 2026-09-17) — roughly half the review-page sketches.
 export const BED_IDS = ['warm', 'bossa', 'latenight', 'marimba'] as const;
 export type BedId = (typeof BED_IDS)[number];
 
@@ -61,7 +62,7 @@ export const BEDS: Record<BedId, Bed> = {
   // Electric-piano chords (Cmaj7 · Am7 · Fmaj7 · G7), a round bass on 1 and 3, brushed hats.
   warm: {
     bpm: 92,
-    level: 0.22,
+    level: 0.12,
     bar(ctx, out, t, i) {
       const beat = 60 / 92;
       const chords = [
@@ -102,7 +103,7 @@ export const BEDS: Record<BedId, Bed> = {
   // Nylon-string plucks in a bossa pattern (Dmaj7 · Bm7 · Em7 · A7), walking bass, off-beat shaker.
   bossa: {
     bpm: 100,
-    level: 0.2,
+    level: 0.11,
     bar(ctx, out, t, i) {
       const beat = 60 / 100;
       const chords = [
@@ -141,7 +142,7 @@ export const BEDS: Record<BedId, Bed> = {
   // Held Rhodes-like chords that swell in (Fmaj7 · Em7 · Dm7 · Cmaj7), one bass note a bar, no drums.
   latenight: {
     bpm: 70,
-    level: 0.18,
+    level: 0.1,
     bar(ctx, out, t, i) {
       const beat = 60 / 70;
       const chords = [
@@ -170,7 +171,7 @@ export const BEDS: Record<BedId, Bed> = {
   // A rolling 16th-note marimba figure over Dm · B♭ · F · C with a light shaker.
   marimba: {
     bpm: 112,
-    level: 0.2,
+    level: 0.12,
     bar(ctx, out, t, i) {
       const beat = 60 / 112;
       const sets = [
