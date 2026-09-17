@@ -72,7 +72,7 @@ export function TvReveal({ view }: Props): JSX.Element {
     <Stage>
       <div className={styles.kickerRow}>
         <p className={styles.kicker}>
-          Round {view.round} · Card {view.revealIndex + 1}
+          Round {view.round} · Card {view.revealIndex + 1} of {view.cardCount}
         </p>
         <span className={styles.progressPill}>Read it out loud</span>
       </div>

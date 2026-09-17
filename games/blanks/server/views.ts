@@ -72,6 +72,8 @@ export interface BlanksTvView extends TvView {
   cards: CardView[];
   /** reveal: the slot on stage, else -1. */
   revealIndex: number;
+  /** reveal + judge + result: how many cards are in play this round ("Card 2 of 5"). */
+  cardCount: number;
   /** judge: progress. */
   votedCount: number;
   votersExpected: number;
@@ -101,6 +103,7 @@ export interface BlanksControllerView extends ControllerView {
   playersExpected: number;
   cards: CardView[];
   revealIndex: number;
+  cardCount: number;
   /** judge: what this phone may do. `mySlot` is my own card (not votable). */
   vote: { canVote: boolean; mySlot: number | null; votedSlot: number | null } | null;
   votedCount: number;
@@ -207,6 +210,7 @@ export function tvView(state: State, gameId: string): BlanksTvView {
     playersExpected: playersExpected(state),
     cards: stageCards(state),
     revealIndex: phase === 'reveal' ? state.revealIndex : -1,
+    cardCount: state.slots.length,
     votedCount: Object.keys(state.votes).length,
     votersExpected: votersExpected(state),
     revealed: revealedCards(state),
@@ -248,6 +252,7 @@ export function controllerView(
     playersExpected: playersExpected(state),
     cards: stageCards(state),
     revealIndex: phase === 'reveal' ? state.revealIndex : -1,
+    cardCount: state.slots.length,
     vote:
       phase === 'judge' && player
         ? {

@@ -22,7 +22,7 @@ export function ControllerReveal({ view }: Props): JSX.Element {
       className="pb-enter"
       title={
         <span className={styles.kicker}>
-          Round {view.round} · Card {view.revealIndex + 1}
+          Round {view.round} · Card {view.revealIndex + 1} of {view.cardCount}
         </span>
       }
     >
@@ -58,6 +58,8 @@ export function ControllerJudge({ view, send }: Props): JSX.Element {
         kicker={kicker}
         prompt={view.judgeMode === 'czar' ? 'Pick the winner' : 'Vote for the best'}
         promptKey={`${view.round}`}
+        // Two or three cards: tall lettered cards fill the thumb zone (as Wisecrack's A / B).
+        size={view.cards.length <= 3 ? 'large' : 'compact'}
         options={view.cards.map((c) => ({
           id: String(c.slot),
           text: (

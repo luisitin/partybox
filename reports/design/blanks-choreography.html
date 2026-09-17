@@ -1159,7 +1159,7 @@
       const tv = document.getElementById('tv-reveal');
       const draw = (i) => {
         const read = CARDS.slice(0, i);
-        tv.innerHTML = `${chips(4)}<div class="krow"><span class="kicker">Round 1 · Card ${i + 1}</span><span class="pill">Read it out loud</span></div><div style="flex:1;display:flex;align-items:center">${card(CARDS[i], 'hero', 'land')}</div>${read.length ? `<div class="strip">${read.map((c) => card(c, 'mini', 'rise')).join('')}</div>` : '<div class="h2 mutedt">The vote opens after the last card.</div>'}`;
+        tv.innerHTML = `${chips(4)}<div class="krow"><span class="kicker">Round 1 · Card ${i + 1} of 4</span><span class="pill">Read it out loud</span></div><div style="flex:1;display:flex;align-items:center">${card(CARDS[i], 'hero', 'land')}</div>${read.length ? `<div class="strip">${read.map((c) => card(c, 'mini', 'rise')).join('')}</div>` : '<div class="h2 mutedt">The vote opens after the last card.</div>'}`;
       };
       return run('tl-reveal', [
         { ms: 0, what: 'card A lands (600 ms bounce)', cue: 'card', do: () => draw(0) },

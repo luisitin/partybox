@@ -88,6 +88,7 @@ describe('reveal', () => {
       expect(s.phase.id).toBe('reveal');
       expect(s.revealIndex).toBe(i);
       expect(tv(s).cards).toHaveLength(i + 1);
+      expect(tv(s).cardCount).toBe(n);
       expect(cv(s, 'ana').cards).toHaveLength(i + 1);
       s = timer(s);
     }
