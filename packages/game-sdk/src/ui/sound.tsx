@@ -13,6 +13,7 @@ export const SOUND_CUES = [
   'countdown',
   'tick',
   'reveal',
+  'card',
   'win',
   'pause',
   'leave',

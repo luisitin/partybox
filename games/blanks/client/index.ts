@@ -6,8 +6,13 @@ export const clientModule: GameClientModule = {
   id: 'blanks',
   Tv: lazy(() => import('./Tv').then((m) => ({ default: m.Tv }))),
   Controller: lazy(() => import('./Controller').then((m) => ({ default: m.Controller }))),
-  // Every reveal step is its own phase instance: one 'reveal' chime per card read out.
-  sounds: { reveal: 'reveal', result: 'tally' },
+  // Every reveal step is its own phase instance: one soft 'card' pluck per card read out (the
+  // owner's pick over the fuller 'reveal', which was too much three cards in a row).
+  sounds: { reveal: 'card', result: 'tally' },
+  // Music beds (ADR-032, owner's picks): one relaxed bed across the round card, the picking and
+  // the result so it never restarts; sparse held chords under the read-out; a marimba pulse
+  // while the room judges. The results screen stays silent under the win fanfare.
+  beds: { intro: 'warm', answer: 'warm', reveal: 'latenight', judge: 'marimba', result: 'warm' },
   // The point lands on result entry but the stage names the winner on its last beat: the strip
   // waits for the next phase.
   stripScores: (view) => view.phaseId !== 'result',

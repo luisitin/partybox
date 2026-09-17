@@ -54,6 +54,11 @@ const CUES: Record<SoundCue, Note[]> = {
     { freq: 988, at: 0.44, dur: 0.26, type: 'sawtooth', gain: 0.08 },
     { freq: 1319, at: 0.44, dur: 0.26, type: 'sine', gain: 0.1 },
   ],
+  // One card read out (Blanks): a two-note triangle pluck, soft enough to repeat every few seconds.
+  card: [
+    { freq: 880, at: 0, dur: 0.06, type: 'triangle', gain: 0.08 },
+    { freq: 1175, at: 0.07, dur: 0.09, type: 'triangle', gain: 0.07 },
+  ],
   win: [
     { freq: 523, at: 0, dur: 0.12 },
     { freq: 659, at: 0.13, dur: 0.12 },
@@ -178,6 +183,8 @@ export interface SoundEngineOptions {
   master?: number;
   /** localStorage key for the persisted mute; the TV and the phone remember theirs separately. */
   muteKey?: string;
+  /** Called when a cue actually starts (not muted): the TV ducks its music bed under it. */
+  onPlay?: (cue: SoundCue) => void;
 }
 
 export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine {
@@ -217,6 +224,7 @@ export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine
     play(cue, opts) {
       if (!opts?.quiet) lastPlayedAt = performance.now();
       if (!ctx || muted || ctx.state !== 'running') return;
+      options.onPlay?.(cue);
       const t0 = ctx.currentTime;
       const k = 2 ** ((opts?.semitones ?? 0) / 12);
       for (const note of CUES[cue]) {

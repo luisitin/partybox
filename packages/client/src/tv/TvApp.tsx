@@ -6,6 +6,8 @@ import { ServerClockProvider, isSoundCue } from '@partybox/game-sdk/ui';
 import { clientGames } from '../games.generated';
 import { useStore } from '../net/store';
 import { createTvClient } from '../net/tv';
+import { bedFor, createBedEngine } from '../beds';
+import type { BedEngine } from '../beds';
 import { createMusicEngine, planFor } from '../music';
 import type { MusicEngine } from '../music';
 import { createSoundEngine, joinSemitones, lockSemitones } from '../sound';
@@ -20,9 +22,18 @@ import { TvResults } from './TvResults';
 import { TvSelecting } from './TvSelecting';
 import styles from './TvApp.module.css';
 
+let bedEngine: BedEngine | null = null;
+function bedsInstance(muted: boolean): BedEngine {
+  if (!bedEngine) {
+    bedEngine = createBedEngine();
+    bedEngine.setMuted(muted);
+  }
+  return bedEngine;
+}
 let sound: SoundEngine | null = null;
 function soundInstance(): SoundEngine {
-  sound = sound ?? createSoundEngine();
+  // Every cue ducks the music bed under it (ADR-032).
+  sound = sound ?? createSoundEngine({ onPlay: () => bedEngine?.duck() });
   return sound;
 }
 let musicEngine: MusicEngine | null = null;
@@ -39,6 +50,7 @@ export function TvApp(): JSX.Element {
   const client = useMemo(() => createTvClient(roomCode), [roomCode]);
   const audio = useMemo(() => soundInstance(), []);
   const music = useMemo(() => musicInstance(audio.muted()), [audio]);
+  const beds = useMemo(() => bedsInstance(audio.muted()), [audio]);
   const state = useStore(client.store, (s) => s);
   const room = state.room;
   const view = state.view;
@@ -58,7 +70,11 @@ export function TvApp(): JSX.Element {
     const gameMusic = room?.selectedGameId ? clientGames[room.selectedGameId]?.music : undefined;
     music.play(planFor(room, view, gameMusic));
     music.setPaused(room?.status === 'playing' && (view?.paused ?? false));
-  }, [room, view, music]);
+    // Synthesized beds by phase (ADR-032): same gate, same mute, same pause.
+    const gameBeds = room?.selectedGameId ? clientGames[room.selectedGameId]?.beds : undefined;
+    beds.play(bedFor(room, view, gameBeds));
+    beds.setPaused(room?.status === 'playing' && (view?.paused ?? false));
+  }, [room, view, music, beds]);
 
   // Sound cues from state transitions (docs/DESIGN_SYSTEM.md).
   const prev = useRef<{
@@ -180,7 +196,7 @@ export function TvApp(): JSX.Element {
           {content}
         </CrossfadeSwap>
       </TvFrame>
-      <AudioGate audio={audio} music={music} />
+      <AudioGate audio={audio} music={music} beds={beds} />
     </ServerClockProvider>
   );
 }

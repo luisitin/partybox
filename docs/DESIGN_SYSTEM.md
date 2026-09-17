@@ -86,6 +86,7 @@ Timer: in the last 5 s it switches to `--pb-danger`, scales 1.15×, pulses once 
 | `phase`                   | phase changes                                                                                                    | TV shell                                                                       |
 | `countdown`               | each of the last 5 seconds                                                                                       | TV shell (Timer) — pitched up per second (`countdownSemitones`: 880 → 1319 Hz) |
 | `reveal`                  | an answer / result is revealed                                                                                   | TV shell via `clientModule.sounds[phaseId]`                                    |
+| `card`                    | one card read out (Blanks): a soft two-note pluck that can repeat every few seconds                              | TV shell via `clientModule.sounds` (Blanks reveal)                             |
 | `wager`                   | the final-question wager opens                                                                                   | TV shell via `clientModule.sounds` (Lightning)                                 |
 | `tally`                   | a scores / leaderboard phase                                                                                     | TV shell via `clientModule.sounds` (Wisecrack)                                 |
 | `win`                     | results screen winner                                                                                            | TV shell                                                                       |
@@ -102,6 +103,11 @@ Timer: in the last 5 s it switches to `--pb-danger`, scales 1.15×, pulses once 
 the player (so 'pick up your phone' and 'look at the TV' never sound the same). A mapped phase that re-enters itself
 (a new deadline with the same id — Blanks reads one card per instance) chimes again; unmapped ones and pauses do not.
 TV has a mute toggle (persisted in `localStorage`) and a "tap to start" overlay for the autoplay policy.
+
+**Music beds** (ADR-032, `packages/client/src/beds.ts`): looping backgrounds synthesized like the cues, one per phase via
+`clientModule.beds[phaseId]` — `warm` (e-piano groove), `bossa`, `latenight` (held chords, no drums), `marimba` (16th-note
+pulse). The shell crossfades beds over 1.5 s as phases change, resumes a returning bed where it stopped, holds it on pause,
+ducks it to half under every cue for a second, and mutes it with the TV. Unmapped phases and the results screen are silent.
 The phone has its own engine (`createSoundEngine({ master: 0.35 })`, mute under `partybox:phone-sound`, default on,
 toggled from the theme sheet) that plays only what happened in the player's hand — never `phase`, `join`, `win` or
 `countdown`, which are the TV's. `useSound()` inside a game's Controller reaches it; the shell skips `submit` when a

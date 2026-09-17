@@ -44,6 +44,12 @@ export interface GameClientModule {
    */
   music?: GameMusic;
   /**
+   * Synthesized music beds on the TV, by phase id (ADR-032): a bed id per phase the shell should
+   * play under that phase; unmapped phases are silent. Bed ids live in the client ();
+   * unknown ids are ignored. A bed that returns resumes where it left off.
+   */
+  beds?: Readonly<Record<string, string>>;
+  /**
    * The results stage keeps the game's last board up instead of the generic scoreboard when
    * `finale(lastView)` says so — a Lightning final-wager board stays until Play again / Home.
    */

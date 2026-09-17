@@ -51,6 +51,7 @@ export const HOOKS = `
       const orig = proto.createOscillator;
       proto.createOscillator = function () {
         const osc = orig.call(this);
+        if (this.__pbBed) return osc; // a music bed's context: notes, not cues
         const set = osc.frequency.setValueAtTime.bind(osc.frequency);
         let freq = null;
         osc.frequency.setValueAtTime = (v, t) => { if (freq === null) freq = v; return set(v, t); };

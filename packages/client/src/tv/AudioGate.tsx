@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { JSX } from 'react';
 import { usePrefersReducedMotion } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
+import type { BedEngine } from '../beds';
 import type { MusicEngine } from '../music';
 import type { SoundEngine } from '../sound';
 import { ThemePicker } from '../ThemePicker';
@@ -17,9 +18,11 @@ export interface AudioGateProps {
   audio: SoundEngine;
   /** The stage's background music: starts on the gate tap, follows the mute toggle. */
   music?: MusicEngine;
+  /** The synthesized beds (ADR-032): same gate, same mute. */
+  beds?: BedEngine;
 }
 
-export function AudioGate({ audio, music }: AudioGateProps): JSX.Element {
+export function AudioGate({ audio, music, beds }: AudioGateProps): JSX.Element {
   const [started, setStarted] = useState(false);
   const [pillGone, setPillGone] = useState(false);
   const [muted, setMuted] = useState(audio.muted());
@@ -36,6 +39,7 @@ export function AudioGate({ audio, music }: AudioGateProps): JSX.Element {
         if (!ok) return;
         setStarted(true);
         music?.enable();
+        void beds?.enable();
         if (!readyPlayed.current) {
           readyPlayed.current = true;
           audio.play('ready'); // silent when the persisted mute is on
@@ -48,7 +52,7 @@ export function AudioGate({ audio, music }: AudioGateProps): JSX.Element {
       document.removeEventListener('pointerdown', start);
       document.removeEventListener('keydown', start);
     };
-  }, [audio, music, started]);
+  }, [audio, music, beds, started]);
   // The pill fades out on start; under reduced motion (0 ms) it leaves at once. A 400 ms fallback
   // covers a browser that never fires animationend.
   useEffect(() => {
@@ -84,6 +88,7 @@ export function AudioGate({ audio, music }: AudioGateProps): JSX.Element {
     const next = !muted;
     audio.setMuted(next);
     music?.setMuted(next);
+    beds?.setMuted(next);
     setMuted(next);
     setPop(true);
     if (!next) audio.play('ready');
