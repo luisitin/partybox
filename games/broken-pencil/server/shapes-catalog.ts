@@ -12,11 +12,12 @@ export const sun = (): Shape => {
   }
   return [circle(C, C, 50), ...rays];
 };
-export const moon = (): Shape => [
-  arc(C, C, 70, -Math.PI / 2, Math.PI / 2, 16).concat(
-    arc(C + 30, C, 52, Math.PI / 2, -Math.PI / 2, 16),
-  ),
-];
+// Crescent: the lit edge is the right half of a circle; the inner edge is an arc through the same
+// two tips on a circle centred 30 px to the left (r = √(30² + 70²)), so the tips meet.
+export const moon = (): Shape => {
+  const tip = Math.atan2(70, 30);
+  return [arc(C, C, 70, -Math.PI / 2, Math.PI / 2, 16).concat(arc(C - 30, C, 76, tip, -tip, 16))];
+};
 export const heart = (): Shape => [
   [
     ...arc(96, 100, 34, Math.PI, Math.PI * 2, 12),
