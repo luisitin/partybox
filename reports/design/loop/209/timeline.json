@@ -1,0 +1,135 @@
+{
+  "pass": "209",
+  "game": "bingo",
+  "players": 5,
+  "scenario": "reconnect",
+  "focus": "phone",
+  "started": "22:35:34.757",
+  "tvVideoT0": "22:35:31.554",
+  "changes": [
+    {
+      "t": 1789684534760,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789684539751,
+      "bed": null,
+      "at": "22:35:34.760",
+      "sinceStartS": 0,
+      "videoS": 3.2
+    },
+    {
+      "t": 1789684539838,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789684547757,
+      "bed": null,
+      "at": "22:35:39.838",
+      "sinceStartS": 5.1,
+      "videoS": 8.3
+    },
+    {
+      "t": 1789684559207,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789684563773,
+      "bed": null,
+      "at": "22:35:59.207",
+      "sinceStartS": 24.4,
+      "videoS": 27.7
+    },
+    {
+      "t": 1789684563842,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789684571776,
+      "bed": null,
+      "at": "22:36:03.842",
+      "sinceStartS": 29.1,
+      "videoS": 32.3
+    },
+    {
+      "t": 1789684571813,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789684579781,
+      "bed": null,
+      "at": "22:36:11.813",
+      "sinceStartS": 37.1,
+      "videoS": 40.3
+    },
+    {
+      "t": 1789684579812,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789684587782,
+      "bed": null,
+      "at": "22:36:19.812",
+      "sinceStartS": 45.1,
+      "videoS": 48.3
+    },
+    {
+      "t": 1789684587834,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789684595786,
+      "bed": null,
+      "at": "22:36:27.834",
+      "sinceStartS": 53.1,
+      "videoS": 56.3
+    },
+    {
+      "t": 1789684595804,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789684603794,
+      "bed": null,
+      "at": "22:36:35.804",
+      "sinceStartS": 61,
+      "videoS": 64.3
+    },
+    {
+      "t": 1789684603897,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789684611802,
+      "bed": null,
+      "at": "22:36:43.897",
+      "sinceStartS": 69.1,
+      "videoS": 72.3
+    },
+    {
+      "t": 1789684611874,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789684619811,
+      "bed": null,
+      "at": "22:36:51.874",
+      "sinceStartS": 77.1,
+      "videoS": 80.3
+    },
+    {
+      "t": 1789684619864,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789684627816,
+      "bed": null,
+      "at": "22:36:59.864",
+      "sinceStartS": 85.1,
+      "videoS": 88.3
+    },
+    {
+      "t": 1789684627882,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789684635818,
+      "bed": null,
+      "at": "22:37:07.882",
+      "sinceStartS": 93.1,
+      "videoS": 96.3
+    }
+  ],
+  "notes": [
+    "reconnect: Sam dropped for 8 s at 2026-09-17T22:35:43.901Z in play",
+    "budget reached while playing; skipped to results"
+  ]
+}

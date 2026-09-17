@@ -1,0 +1,632 @@
+[
+  {
+    "file": "bingo/bingo/tv-stage.png",
+    "group": "bingo",
+    "phase": "bingo",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "bingo/bingo/font200-p1-p1.png",
+    "group": "bingo",
+    "phase": "bingo",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p1-p1",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "bingo/bingo/font200-p2-p2.png",
+    "group": "bingo",
+    "phase": "bingo",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p2-p2",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "bingo/bingo/font200-p3-p3.png",
+    "group": "bingo",
+    "phase": "bingo",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p3-p3",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "bingo/bingo/galaxy-p1-p1.png",
+    "group": "bingo",
+    "phase": "bingo",
+    "device": "galaxy",
+    "deviceLabel": "Galaxy S9+",
+    "role": "p1-p1",
+    "width": 320,
+    "height": 658
+  },
+  {
+    "file": "bingo/bingo/galaxy-p2-p2.png",
+    "group": "bingo",
+    "phase": "bingo",
+    "device": "galaxy",
+    "deviceLabel": "Galaxy S9+",
+    "role": "p2-p2",
+    "width": 320,
+    "height": 658
+  },
+  {
+    "file": "bingo/bingo/galaxy-p3-p3.png",
+    "group": "bingo",
+    "phase": "bingo",
+    "device": "galaxy",
+    "deviceLabel": "Galaxy S9+",
+    "role": "p3-p3",
+    "width": 320,
+    "height": 658
+  },
+  {
+    "file": "bingo/check/tv-stage.png",
+    "group": "bingo",
+    "phase": "check",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "bingo/check/font200-p1-p1.png",
+    "group": "bingo",
+    "phase": "check",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p1-p1",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "bingo/check/font200-p2-p2.png",
+    "group": "bingo",
+    "phase": "check",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p2-p2",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "bingo/check/font200-p3-p3.png",
+    "group": "bingo",
+    "phase": "check",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p3-p3",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "bingo/check/galaxy-p1-p1.png",
+    "group": "bingo",
+    "phase": "check",
+    "device": "galaxy",
+    "deviceLabel": "Galaxy S9+",
+    "role": "p1-p1",
+    "width": 320,
+    "height": 658
+  },
+  {
+    "file": "bingo/check/galaxy-p2-p2.png",
+    "group": "bingo",
+    "phase": "check",
+    "device": "galaxy",
+    "deviceLabel": "Galaxy S9+",
+    "role": "p2-p2",
+    "width": 320,
+    "height": 658
+  },
+  {
+    "file": "bingo/check/galaxy-p3-p3.png",
+    "group": "bingo",
+    "phase": "check",
+    "device": "galaxy",
+    "deviceLabel": "Galaxy S9+",
+    "role": "p3-p3",
+    "width": 320,
+    "height": 658
+  },
+  {
+    "file": "bingo/done/tv-stage.png",
+    "group": "bingo",
+    "phase": "done",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "bingo/done/font200-p1-p1.png",
+    "group": "bingo",
+    "phase": "done",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p1-p1",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "bingo/done/font200-p2-p2.png",
+    "group": "bingo",
+    "phase": "done",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p2-p2",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "bingo/done/font200-p3-p3.png",
+    "group": "bingo",
+    "phase": "done",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p3-p3",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "bingo/done/galaxy-p1-p1.png",
+    "group": "bingo",
+    "phase": "done",
+    "device": "galaxy",
+    "deviceLabel": "Galaxy S9+",
+    "role": "p1-p1",
+    "width": 320,
+    "height": 658
+  },
+  {
+    "file": "bingo/done/galaxy-p2-p2.png",
+    "group": "bingo",
+    "phase": "done",
+    "device": "galaxy",
+    "deviceLabel": "Galaxy S9+",
+    "role": "p2-p2",
+    "width": 320,
+    "height": 658
+  },
+  {
+    "file": "bingo/done/galaxy-p3-p3.png",
+    "group": "bingo",
+    "phase": "done",
+    "device": "galaxy",
+    "deviceLabel": "Galaxy S9+",
+    "role": "p3-p3",
+    "width": 320,
+    "height": 658
+  },
+  {
+    "file": "bingo/intro/tv-stage.png",
+    "group": "bingo",
+    "phase": "intro",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "bingo/intro/font200-p1-p1.png",
+    "group": "bingo",
+    "phase": "intro",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p1-p1",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "bingo/intro/font200-p2-p2.png",
+    "group": "bingo",
+    "phase": "intro",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p2-p2",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "bingo/intro/font200-p3-p3.png",
+    "group": "bingo",
+    "phase": "intro",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p3-p3",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "bingo/intro/galaxy-p1-p1.png",
+    "group": "bingo",
+    "phase": "intro",
+    "device": "galaxy",
+    "deviceLabel": "Galaxy S9+",
+    "role": "p1-p1",
+    "width": 320,
+    "height": 658
+  },
+  {
+    "file": "bingo/intro/galaxy-p2-p2.png",
+    "group": "bingo",
+    "phase": "intro",
+    "device": "galaxy",
+    "deviceLabel": "Galaxy S9+",
+    "role": "p2-p2",
+    "width": 320,
+    "height": 658
+  },
+  {
+    "file": "bingo/intro/galaxy-p3-p3.png",
+    "group": "bingo",
+    "phase": "intro",
+    "device": "galaxy",
+    "deviceLabel": "Galaxy S9+",
+    "role": "p3-p3",
+    "width": 320,
+    "height": 658
+  },
+  {
+    "file": "bingo/play-four/tv-stage.png",
+    "group": "bingo",
+    "phase": "play-four",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "bingo/play-four/font200-p1-p1.png",
+    "group": "bingo",
+    "phase": "play-four",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p1-p1",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "bingo/play-four/font200-p2-p2.png",
+    "group": "bingo",
+    "phase": "play-four",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p2-p2",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "bingo/play-four/font200-p3-p3.png",
+    "group": "bingo",
+    "phase": "play-four",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p3-p3",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "bingo/play-four/galaxy-p1-p1.png",
+    "group": "bingo",
+    "phase": "play-four",
+    "device": "galaxy",
+    "deviceLabel": "Galaxy S9+",
+    "role": "p1-p1",
+    "width": 320,
+    "height": 658
+  },
+  {
+    "file": "bingo/play-four/galaxy-p2-p2.png",
+    "group": "bingo",
+    "phase": "play-four",
+    "device": "galaxy",
+    "deviceLabel": "Galaxy S9+",
+    "role": "p2-p2",
+    "width": 320,
+    "height": 658
+  },
+  {
+    "file": "bingo/play-four/galaxy-p3-p3.png",
+    "group": "bingo",
+    "phase": "play-four",
+    "device": "galaxy",
+    "deviceLabel": "Galaxy S9+",
+    "role": "p3-p3",
+    "width": 320,
+    "height": 658
+  },
+  {
+    "file": "bingo/play-locked/tv-stage.png",
+    "group": "bingo",
+    "phase": "play-locked",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "bingo/play-locked/font200-p1-p1.png",
+    "group": "bingo",
+    "phase": "play-locked",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p1-p1",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "bingo/play-locked/font200-p2-p2.png",
+    "group": "bingo",
+    "phase": "play-locked",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p2-p2",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "bingo/play-locked/font200-p3-p3.png",
+    "group": "bingo",
+    "phase": "play-locked",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p3-p3",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "bingo/play-locked/galaxy-p1-p1.png",
+    "group": "bingo",
+    "phase": "play-locked",
+    "device": "galaxy",
+    "deviceLabel": "Galaxy S9+",
+    "role": "p1-p1",
+    "width": 320,
+    "height": 658
+  },
+  {
+    "file": "bingo/play-locked/galaxy-p2-p2.png",
+    "group": "bingo",
+    "phase": "play-locked",
+    "device": "galaxy",
+    "deviceLabel": "Galaxy S9+",
+    "role": "p2-p2",
+    "width": 320,
+    "height": 658
+  },
+  {
+    "file": "bingo/play-locked/galaxy-p3-p3.png",
+    "group": "bingo",
+    "phase": "play-locked",
+    "device": "galaxy",
+    "deviceLabel": "Galaxy S9+",
+    "role": "p3-p3",
+    "width": 320,
+    "height": 658
+  },
+  {
+    "file": "bingo/play-two/tv-stage.png",
+    "group": "bingo",
+    "phase": "play-two",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "bingo/play-two/font200-p1-p1.png",
+    "group": "bingo",
+    "phase": "play-two",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p1-p1",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "bingo/play-two/font200-p2-p2.png",
+    "group": "bingo",
+    "phase": "play-two",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p2-p2",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "bingo/play-two/font200-p3-p3.png",
+    "group": "bingo",
+    "phase": "play-two",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p3-p3",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "bingo/play-two/galaxy-p1-p1.png",
+    "group": "bingo",
+    "phase": "play-two",
+    "device": "galaxy",
+    "deviceLabel": "Galaxy S9+",
+    "role": "p1-p1",
+    "width": 320,
+    "height": 658
+  },
+  {
+    "file": "bingo/play-two/galaxy-p2-p2.png",
+    "group": "bingo",
+    "phase": "play-two",
+    "device": "galaxy",
+    "deviceLabel": "Galaxy S9+",
+    "role": "p2-p2",
+    "width": 320,
+    "height": 658
+  },
+  {
+    "file": "bingo/play-two/galaxy-p3-p3.png",
+    "group": "bingo",
+    "phase": "play-two",
+    "device": "galaxy",
+    "deviceLabel": "Galaxy S9+",
+    "role": "p3-p3",
+    "width": 320,
+    "height": 658
+  },
+  {
+    "file": "bingo/play/tv-stage.png",
+    "group": "bingo",
+    "phase": "play",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "bingo/play/font200-p1-p1.png",
+    "group": "bingo",
+    "phase": "play",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p1-p1",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "bingo/play/font200-p2-p2.png",
+    "group": "bingo",
+    "phase": "play",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p2-p2",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "bingo/play/font200-p3-p3.png",
+    "group": "bingo",
+    "phase": "play",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p3-p3",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "bingo/play/galaxy-p1-p1.png",
+    "group": "bingo",
+    "phase": "play",
+    "device": "galaxy",
+    "deviceLabel": "Galaxy S9+",
+    "role": "p1-p1",
+    "width": 320,
+    "height": 658
+  },
+  {
+    "file": "bingo/play/galaxy-p2-p2.png",
+    "group": "bingo",
+    "phase": "play",
+    "device": "galaxy",
+    "deviceLabel": "Galaxy S9+",
+    "role": "p2-p2",
+    "width": 320,
+    "height": 658
+  },
+  {
+    "file": "bingo/play/galaxy-p3-p3.png",
+    "group": "bingo",
+    "phase": "play",
+    "device": "galaxy",
+    "deviceLabel": "Galaxy S9+",
+    "role": "p3-p3",
+    "width": 320,
+    "height": 658
+  },
+  {
+    "file": "bingo/scoreboard/tv-stage.png",
+    "group": "bingo",
+    "phase": "scoreboard",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "bingo/scoreboard/font200-p1-p1.png",
+    "group": "bingo",
+    "phase": "scoreboard",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p1-p1",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "bingo/scoreboard/font200-p2-p2.png",
+    "group": "bingo",
+    "phase": "scoreboard",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p2-p2",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "bingo/scoreboard/font200-p3-p3.png",
+    "group": "bingo",
+    "phase": "scoreboard",
+    "device": "font200",
+    "deviceLabel": "Pixel 7 · 200 % font",
+    "role": "p3-p3",
+    "width": 412,
+    "height": 839
+  },
+  {
+    "file": "bingo/scoreboard/galaxy-p1-p1.png",
+    "group": "bingo",
+    "phase": "scoreboard",
+    "device": "galaxy",
+    "deviceLabel": "Galaxy S9+",
+    "role": "p1-p1",
+    "width": 320,
+    "height": 658
+  },
+  {
+    "file": "bingo/scoreboard/galaxy-p2-p2.png",
+    "group": "bingo",
+    "phase": "scoreboard",
+    "device": "galaxy",
+    "deviceLabel": "Galaxy S9+",
+    "role": "p2-p2",
+    "width": 320,
+    "height": 658
+  },
+  {
+    "file": "bingo/scoreboard/galaxy-p3-p3.png",
+    "group": "bingo",
+    "phase": "scoreboard",
+    "device": "galaxy",
+    "deviceLabel": "Galaxy S9+",
+    "role": "p3-p3",
+    "width": 320,
+    "height": 658
+  }
+]
