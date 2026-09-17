@@ -90,7 +90,7 @@ export function groupCues(
         .map((x) => (x / (f[0] ?? 1)).toFixed(2))
         .join(',');
     // An exact match first: `submit` and `tally` share a ratio, so the ratio pass alone named
-    // every phone submit a tally (review-loop #113).
+    // every phone submit a tally (review-loop #115).
     const match =
       sigs.find((s) => s.freqs.join(',') === freqs.join(',')) ??
       sigs.find((s) => s.freqs.length === freqs.length && norm(s.freqs) === norm(freqs)) ??

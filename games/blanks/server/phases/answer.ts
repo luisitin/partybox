@@ -26,7 +26,7 @@ export function enterAnswer(state: State, now: number): State {
 
 /** "Before half the answer time" is measured against the deadline so a pause does not cheat it.
  *  An untimed round has no clock but the same yardstick: half of `answerSeconds` from the phase's
- *  (pause-shifted) start — before, its 3 min fallback made every play "fast" (review-loop #113). */
+ *  (pause-shifted) start — before, its 3 min fallback made every play "fast" (review-loop #115). */
 function isFast(state: State, now: number): boolean {
   const { deadline } = state.phase;
   if (deadline === null) return false;

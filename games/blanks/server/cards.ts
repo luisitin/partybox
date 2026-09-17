@@ -108,7 +108,7 @@ export function fill(
 }
 
 /** A white card's short first word ("A", "The", "My") stays on the line with its next word: a
- *  lone "A" in a paper mark at the end of a line read as its own card (review-loop #113).
+ *  lone "A" in a paper mark at the end of a line read as its own card (review-loop #115).
  *  Rendering only: `fillText` (labels, tests) keeps plain spaces. */
 export function glue(white: string): string {
   return white.replace(/^(\S{1,3}) (?=\S)/, '$1\u00A0');

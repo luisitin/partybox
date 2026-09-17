@@ -36,7 +36,7 @@ export function winnerLine(
 }
 
 /** The pill on a card with votes: "3 votes" — or, with a judge, whose pick it was ("1 vote" from a
- *  lone judge read as a poor turnout, review-loop #114). Null when nobody voted for it. */
+ *  lone judge read as a poor turnout, review-loop #116). Null when nobody voted for it. */
 export function votesLabel(
   view: Pick<BlanksTvView, 'judgeMode' | 'czar'>,
   votes: number,

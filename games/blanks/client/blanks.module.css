@@ -395,7 +395,7 @@
 
 /* A narrow phone (iPhone SE) has no room for avatar + name + votes on one line inside the
    lettered card: the votes pill drops under the name rather than the name losing its end
-   ("Play…", review-loop #113). */
+   ("Play…", review-loop #115). */
 .phone .author {
   flex-wrap: wrap;
 }
