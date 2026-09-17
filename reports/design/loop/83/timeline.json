@@ -1,0 +1,102 @@
+{
+  "pass": "83",
+  "game": "blanks",
+  "players": 4,
+  "scenario": "tie",
+  "focus": "phone",
+  "started": "16:08:52.347",
+  "tvVideoT0": "16:08:49.023",
+  "changes": [
+    {
+      "t": 1789661332350,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789661337340,
+      "at": "16:08:52.350",
+      "sinceStartS": 0,
+      "videoS": 3.3
+    },
+    {
+      "t": 1789661337372,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789661397351,
+      "at": "16:08:57.372",
+      "sinceStartS": 5,
+      "videoS": 8.3
+    },
+    {
+      "t": 1789661397409,
+      "status": "playing",
+      "phase": "result",
+      "deadline": 1789661405363,
+      "at": "16:09:57.409",
+      "sinceStartS": 65.1,
+      "videoS": 68.4
+    },
+    {
+      "t": 1789661405389,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789661410376,
+      "at": "16:10:05.389",
+      "sinceStartS": 73,
+      "videoS": 76.4
+    },
+    {
+      "t": 1789661410425,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789661470383,
+      "at": "16:10:10.425",
+      "sinceStartS": 78.1,
+      "videoS": 81.4
+    },
+    {
+      "t": 1789661470450,
+      "status": "playing",
+      "phase": "result",
+      "deadline": 1789661478384,
+      "at": "16:11:10.450",
+      "sinceStartS": 138.1,
+      "videoS": 141.4
+    },
+    {
+      "t": 1789661478450,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789661483392,
+      "at": "16:11:18.450",
+      "sinceStartS": 146.1,
+      "videoS": 149.4
+    },
+    {
+      "t": 1789661483490,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789661558404,
+      "at": "16:11:23.490",
+      "sinceStartS": 151.1,
+      "videoS": 154.5
+    },
+    {
+      "t": 1789661558479,
+      "status": "playing",
+      "phase": "result",
+      "deadline": 1789661566415,
+      "at": "16:12:38.479",
+      "sinceStartS": 226.1,
+      "videoS": 229.5
+    },
+    {
+      "t": 1789661566534,
+      "status": "results",
+      "phase": "results",
+      "deadline": null,
+      "at": "16:12:46.534",
+      "sinceStartS": 234.2,
+      "videoS": 237.5
+    }
+  ],
+  "notes": []
+}
