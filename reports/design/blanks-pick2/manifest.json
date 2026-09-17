@@ -1,0 +1,109 @@
+[
+  {
+    "file": "blanks/pick2-hand/iphone-vip.png",
+    "group": "blanks",
+    "phase": "pick2-hand",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "vip",
+    "note": "nothing picked",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "blanks/pick2-one/iphone-vip.png",
+    "group": "blanks",
+    "phase": "pick2-one",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "vip",
+    "note": "first card picked: badge 1, preview fills blank 1",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "blanks/pick2-two/iphone-vip.png",
+    "group": "blanks",
+    "phase": "pick2-two",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "vip",
+    "note": "second card picked: badge 2, button enabled",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "blanks/pick2-unpick/iphone-vip.png",
+    "group": "blanks",
+    "phase": "pick2-unpick",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "vip",
+    "note": "first card unpicked: the other becomes 1",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "blanks/pick2-played/iphone-vip.png",
+    "group": "blanks",
+    "phase": "pick2-played",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "vip",
+    "note": "played: both cards in the black card",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "blanks/pick2-answer/tv-stage.png",
+    "group": "blanks",
+    "phase": "pick2-answer",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "note": "one in",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "blanks/pick2-reveal/tv-stage.png",
+    "group": "blanks",
+    "phase": "pick2-reveal",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "note": "first read-out with two whites",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "blanks/pick2-reveal/iphone-vip.png",
+    "group": "blanks",
+    "phase": "pick2-reveal",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "vip",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "blanks/pick2-judge/tv-stage.png",
+    "group": "blanks",
+    "phase": "pick2-judge",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "blanks/pick2-judge/iphone-vip.png",
+    "group": "blanks",
+    "phase": "pick2-judge",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "vip",
+    "width": 393,
+    "height": 659
+  }
+]

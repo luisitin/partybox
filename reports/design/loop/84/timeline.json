@@ -1,0 +1,192 @@
+{
+  "pass": "84",
+  "game": "blanks",
+  "players": 6,
+  "scenario": "vip-leaves",
+  "focus": "tv",
+  "started": "16:14:52.069",
+  "tvVideoT0": "16:14:48.764",
+  "changes": [
+    {
+      "t": 1789661692071,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789661697062,
+      "at": "16:14:52.071",
+      "sinceStartS": 0,
+      "videoS": 3.3
+    },
+    {
+      "t": 1789661697135,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789661757072,
+      "at": "16:14:57.135",
+      "sinceStartS": 5.1,
+      "videoS": 8.4
+    },
+    {
+      "t": 1789661733339,
+      "status": "playing",
+      "phase": "result",
+      "deadline": 1789661736646,
+      "at": "16:15:33.339",
+      "sinceStartS": 41.3,
+      "videoS": 44.6
+    },
+    {
+      "t": 1789661736730,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789661741649,
+      "at": "16:15:36.730",
+      "sinceStartS": 44.7,
+      "videoS": 48
+    },
+    {
+      "t": 1789661741759,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789661801663,
+      "at": "16:15:41.759",
+      "sinceStartS": 49.7,
+      "videoS": 53
+    },
+    {
+      "t": 1789661744467,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789661750252,
+      "at": "16:15:44.467",
+      "sinceStartS": 52.4,
+      "videoS": 55.7
+    },
+    {
+      "t": 1789661750287,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789661756239,
+      "at": "16:15:50.287",
+      "sinceStartS": 58.2,
+      "videoS": 61.5
+    },
+    {
+      "t": 1789661756258,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789661761604,
+      "at": "16:15:56.258",
+      "sinceStartS": 64.2,
+      "videoS": 67.5
+    },
+    {
+      "t": 1789661761638,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789661767568,
+      "at": "16:16:01.638",
+      "sinceStartS": 69.6,
+      "videoS": 72.9
+    },
+    {
+      "t": 1789661767624,
+      "status": "playing",
+      "phase": "judge",
+      "deadline": 1789661812582,
+      "at": "16:16:07.624",
+      "sinceStartS": 75.6,
+      "videoS": 78.9
+    },
+    {
+      "t": 1789661771570,
+      "status": "playing",
+      "phase": "result",
+      "deadline": 1789661779471,
+      "at": "16:16:11.570",
+      "sinceStartS": 79.5,
+      "videoS": 82.8
+    },
+    {
+      "t": 1789661779570,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789661784480,
+      "at": "16:16:19.570",
+      "sinceStartS": 87.5,
+      "videoS": 90.8
+    },
+    {
+      "t": 1789661784519,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789661859484,
+      "at": "16:16:24.519",
+      "sinceStartS": 92.5,
+      "videoS": 95.8
+    },
+    {
+      "t": 1789661788515,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789661796374,
+      "at": "16:16:28.515",
+      "sinceStartS": 96.4,
+      "videoS": 99.8
+    },
+    {
+      "t": 1789661796454,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789661803495,
+      "at": "16:16:36.454",
+      "sinceStartS": 104.4,
+      "videoS": 107.7
+    },
+    {
+      "t": 1789661803571,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789661810120,
+      "at": "16:16:43.571",
+      "sinceStartS": 111.5,
+      "videoS": 114.8
+    },
+    {
+      "t": 1789661810128,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789661817613,
+      "at": "16:16:50.128",
+      "sinceStartS": 118.1,
+      "videoS": 121.4
+    },
+    {
+      "t": 1789661817711,
+      "status": "playing",
+      "phase": "judge",
+      "deadline": 1789661862628,
+      "at": "16:16:57.711",
+      "sinceStartS": 125.6,
+      "videoS": 128.9
+    },
+    {
+      "t": 1789661820945,
+      "status": "playing",
+      "phase": "result",
+      "deadline": 1789661828893,
+      "at": "16:17:00.945",
+      "sinceStartS": 128.9,
+      "videoS": 132.2
+    },
+    {
+      "t": 1789661828918,
+      "status": "results",
+      "phase": "results",
+      "deadline": null,
+      "at": "16:17:08.918",
+      "sinceStartS": 136.8,
+      "videoS": 140.2
+    }
+  ],
+  "notes": ["vip-leaves: Sam (VIP) closed the page in answer"]
+}
