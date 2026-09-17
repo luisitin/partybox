@@ -27,12 +27,20 @@ export function winnerLine(
       return `${view.czar?.name ?? 'The judge'} never picked — nobody wins this round`;
     return 'No votes — nobody wins this round';
   }
-  if (winners.some((w) => w.rando)) return 'Rando wins. Shame on all of you.';
-  const names = winners.map((w) => w.name);
+  const humans = winners.filter((w) => !w.rando).map((w) => w.name);
+  // Rando alone is the room's shame; a tie with Rando still names who scored (review-loop #124).
+  if (humans.length === 0) return 'Rando wins. Shame on all of you.';
+  if (humans.length < winners.length) return `${list(humans)} split it with Rando`;
+  const names = humans;
   if (view.walkover) return `Only ${names[0]} played — wins by default`;
   if (names.length === 1) return `${names[0]} wins the round!`;
-  if (names.length === 2) return `${names[0]} and ${names[1]} split it`;
-  return `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]} split it`;
+  return `${list(names)} split it`;
+}
+
+/** "Ana", "Ana and Ben", "Ana, Ben and Cleo". */
+function list(names: string[]): string {
+  if (names.length <= 1) return names[0] ?? '';
+  return `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}`;
 }
 
 /** The pill on a card with votes: "3 votes" — or, with a judge, whose pick it was ("1 vote" from a
