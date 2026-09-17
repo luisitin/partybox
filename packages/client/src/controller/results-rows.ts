@@ -7,7 +7,14 @@ export function scoreboardRows(room: RoomSnapshot): ScoreboardRow[] {
   const results = room.results;
   if (!results) return [];
   const byId = new Map(results.players.map((p) => [p.id, p]));
-  return results.results.ranking.map((r) => {
+  // Ties keep their rank but read alphabetically (numeric-aware), like every other player list.
+  const byName = (a: string, b: string): number =>
+    a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' });
+  const ranking = [...results.results.ranking].sort(
+    (a, b) =>
+      a.rank - b.rank || byName(byId.get(a.playerId)?.name ?? '', byId.get(b.playerId)?.name ?? ''),
+  );
+  return ranking.map((r) => {
     const info = byId.get(r.playerId);
     const live = room.players.find((p) => p.id === r.playerId);
     return {
