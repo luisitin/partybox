@@ -99,7 +99,10 @@ export function Thumbnails({
   spent?: number[];
 }): JSX.Element {
   return (
-    <div className={styles.thumbs} style={{ gridTemplateColumns: `repeat(${cards.length}, 1fr)` }}>
+    <div
+      className={styles.thumbs}
+      style={{ gridTemplateColumns: `repeat(${cards.length}, minmax(0, var(--pb-thumb)))` }}
+    >
       {cards.map((numbers, c) => {
         const won = view.phaseId !== 'intro' && view.won.includes(c);
         const cur = c === marked;

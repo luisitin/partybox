@@ -205,13 +205,15 @@
   margin-inline: auto;
 }
 .focusMany .focusMain {
-  max-width: min(100%, max(200px, calc((100dvh - 440px) / 1.15)));
+  max-width: min(100%, max(200px, calc((100dvh - 470px) / 1.15)));
 }
 .thumbs {
   display: grid;
   gap: var(--pb-space-2);
   width: 100%;
+  justify-content: center;
   padding-top: 10px; /* room for the tag on the corner */
+  --pb-thumb: 104px; /* a thumbnail never wider than this: ~125 px tall, so the row always fits */
 }
 .thumb {
   position: relative;

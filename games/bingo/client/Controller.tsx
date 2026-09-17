@@ -55,6 +55,9 @@ export function Controller({
   const [freeDaubed, setFreeDaubed] = useState<number[]>([]);
   const toggleFree = (c: number): void =>
     setFreeDaubed((v) => (v.includes(c) ? v.filter((i) => i !== c) : [...v, c]));
+  // The card up just won (or the pattern changed): bring a live card up instead.
+  const liveUp = cards?.findIndex((_, i) => !view.won.includes(i)) ?? -1;
+  if (cards && view.won.includes(up) && liveUp >= 0 && liveUp !== up) setUp(liveUp);
   const [round, setRound] = useState(view.round);
   if (round !== view.round) {
     setRound(view.round);
@@ -128,7 +131,8 @@ export function Controller({
             disabled={!left}
             onClick={() => send({ type: 'swap', card: pick })}
           >
-            🎲 Deal me another{n > 1 ? ` card ${pick + 1}` : ''} ({left ? 1 : 0} left)
+            🎲 {left ? 'Deal me another' : 'Swapped'}
+            {n > 1 ? ` (card ${pick + 1})` : ''}
           </PrimaryButton>
         }
       >
