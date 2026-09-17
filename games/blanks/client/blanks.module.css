@@ -301,6 +301,23 @@
   border: 1px solid var(--pb-border);
 }
 
+/* A big room's result (three chip rows, nine or more losers): smaller pills, five or six to a
+   row, so two winner cards, the pills and the host bar all keep their place (review-loop #130). */
+.losersDense {
+  gap: var(--pb-space-2) var(--pb-space-3);
+}
+
+.losersDense .loser {
+  --pb-chip-size: var(--pb-space-6);
+  gap: var(--pb-space-2);
+  padding: var(--pb-space-1) var(--pb-space-3) var(--pb-space-1) var(--pb-space-1);
+}
+
+.losersDense .loserLetter,
+.losersDense .authorName {
+  font-size: var(--pb-font-caption);
+}
+
 .loserLetter {
   display: grid;
   place-items: center;
@@ -350,7 +367,18 @@
   gap: var(--pb-space-5);
   width: 100%;
   flex: 1;
+  min-height: 0;
+  /* bounded and clipped, so TvJudge can measure what fits and page the rest: a page turn is a
+     smooth scroll to the next row that did not fit */
+  overflow: hidden;
+  scroll-behavior: smooth;
   align-content: start;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .judgeGrid {
+    scroll-behavior: auto;
+  }
 }
 
 .judgeGrid > li {

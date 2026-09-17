@@ -3,7 +3,7 @@
 // frame strips (10 fps) around each transition and over the last 5 s of every timer, the audio-cue
 // log (cue, time, phase) and the TV's long-frame numbers.
 // Usage: tsx packages/e2e/src/design/capture-loop.ts --pass 1 --game bingo --players 6
-//        [--scenario normal|reconnect|vip-leaves|tie|walkover|spicy|pause] [--focus tv|phone] [--budget 150] [--port 42071]
+//        [--scenario normal|reconnect|vip-leaves|tie|walkover|spicy|pause] [--focus tv|phone] [--budget 150] [--port 42071] [--fps 10] [--after 2.5]
 import { mkdirSync, readFileSync, readdirSync, renameSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { parseArgs } from 'node:util';
@@ -26,6 +26,10 @@ const { values } = parseArgs({
     settings: { type: 'string' },
     port: { type: 'string', default: '42071' },
     out: { type: 'string' },
+    // Frame strips: frames per second (default 10) and seconds after each transition (default 2.5,
+    // enough for a result stage's third beat at 1.2 s plus its rise).
+    fps: { type: 'string', default: '10' },
+    after: { type: 'string', default: '2.5' },
   },
 });
 const PASS = values.pass ?? '1';
@@ -33,6 +37,8 @@ const GAME = values.game ?? 'bingo';
 const PLAYERS = Number(values.players);
 const SCENARIO = values.scenario ?? 'normal';
 const BUDGET_MS = Number(values.budget) * 1000;
+const FPS = Number(values.fps);
+const AFTER_S = Number(values.after);
 // 'tie': nobody acts (an idle room). 'walkover': only Sam acts — bots and Priya sit out, so a
 // one-submission round (Blanks' walkover) plays every round.
 const OTHERS_IDLE = SCENARIO === 'tie' || SCENARIO === 'walkover';
@@ -309,13 +315,20 @@ async function main(): Promise<void> {
     if (tvVideo) {
       changes.forEach((c, i) => {
         const tag = `${String(i + 1).padStart(2, '0')}-${c.phase}`;
-        strip(tvVideo, join(OUT, 'strips', `${tag}-transition`), (c.t - tvVideoT0) / 1000 - 0.5, 2);
+        strip(
+          tvVideo,
+          join(OUT, 'strips', `${tag}-transition`),
+          (c.t - tvVideoT0) / 1000 - 0.5,
+          0.5 + AFTER_S,
+          FPS,
+        );
         if (phoneVideo)
           strip(
             phoneVideo,
             join(OUT, 'strips', `${tag}-transition-phone`),
             (c.t - phoneVideoT0) / 1000 - 0.5,
-            2,
+            0.5 + AFTER_S,
+            FPS,
           );
       });
       timerStrips.forEach((t, i) => {
@@ -333,6 +346,7 @@ async function main(): Promise<void> {
           join(OUT, 'strips', `${String(i + 1).padStart(2, '0')}-${t.phase}-last5s`),
           (t.deadline - tvVideoT0) / 1000 - 5.5,
           6,
+          FPS,
         );
         void next;
       });

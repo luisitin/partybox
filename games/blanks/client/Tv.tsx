@@ -4,7 +4,8 @@ import type { JSX } from 'react';
 import { BigText, Stage } from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
 import type { BlanksTvView } from '../server/index';
-import { TvJudge, TvReveal } from './TvReveal';
+import { TvJudge } from './TvJudge';
+import { TvReveal } from './TvReveal';
 import { TvResult } from './TvResult';
 import { TvAnswer, TvIntro } from './TvRound';
 

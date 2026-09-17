@@ -1,0 +1,402 @@
+{
+  "pass": "129",
+  "game": "blanks",
+  "players": 12,
+  "scenario": "normal",
+  "focus": "tv",
+  "started": "22:54:38.193",
+  "tvVideoT0": "22:54:34.871",
+  "changes": [
+    {
+      "t": 1789685678196,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789685683187,
+      "bed": "warm",
+      "at": "22:54:38.196",
+      "sinceStartS": 0,
+      "videoS": 3.3
+    },
+    {
+      "t": 1789685683199,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789685758196,
+      "bed": "bossa",
+      "at": "22:54:43.199",
+      "sinceStartS": 5,
+      "videoS": 8.3
+    },
+    {
+      "t": 1789685689175,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789685694327,
+      "bed": "warm",
+      "at": "22:54:49.175",
+      "sinceStartS": 11,
+      "videoS": 14.3
+    },
+    {
+      "t": 1789685694414,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789685699213,
+      "bed": "warm",
+      "at": "22:54:54.414",
+      "sinceStartS": 16.2,
+      "videoS": 19.5
+    },
+    {
+      "t": 1789685699331,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789685704717,
+      "bed": "warm",
+      "at": "22:54:59.331",
+      "sinceStartS": 21.1,
+      "videoS": 24.5
+    },
+    {
+      "t": 1789685704751,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789685709474,
+      "bed": "warm",
+      "at": "22:55:04.751",
+      "sinceStartS": 26.6,
+      "videoS": 29.9
+    },
+    {
+      "t": 1789685709533,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789685714825,
+      "bed": "warm",
+      "at": "22:55:09.533",
+      "sinceStartS": 31.3,
+      "videoS": 34.7
+    },
+    {
+      "t": 1789685714879,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789685719963,
+      "bed": "warm",
+      "at": "22:55:14.879",
+      "sinceStartS": 36.7,
+      "videoS": 40
+    },
+    {
+      "t": 1789685720030,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789685724996,
+      "bed": "warm",
+      "at": "22:55:20.030",
+      "sinceStartS": 41.8,
+      "videoS": 45.2
+    },
+    {
+      "t": 1789685725109,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789685730503,
+      "bed": "warm",
+      "at": "22:55:25.109",
+      "sinceStartS": 46.9,
+      "videoS": 50.2
+    },
+    {
+      "t": 1789685730521,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789685736008,
+      "bed": "warm",
+      "at": "22:55:30.521",
+      "sinceStartS": 52.3,
+      "videoS": 55.6
+    },
+    {
+      "t": 1789685736111,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789685740914,
+      "bed": "warm",
+      "at": "22:55:36.111",
+      "sinceStartS": 57.9,
+      "videoS": 61.2
+    },
+    {
+      "t": 1789685740994,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789685746215,
+      "bed": "warm",
+      "at": "22:55:40.994",
+      "sinceStartS": 62.8,
+      "videoS": 66.1
+    },
+    {
+      "t": 1789685746285,
+      "status": "playing",
+      "phase": "judge",
+      "deadline": 1789685791219,
+      "bed": "marimba",
+      "at": "22:55:46.285",
+      "sinceStartS": 68.1,
+      "videoS": 71.4
+    },
+    {
+      "t": 1789685747908,
+      "status": "playing",
+      "phase": "result",
+      "deadline": 1789685755112,
+      "bed": "warm",
+      "at": "22:55:47.908",
+      "sinceStartS": 69.7,
+      "videoS": 73
+    },
+    {
+      "t": 1789685755163,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789685760115,
+      "bed": "warm",
+      "at": "22:55:55.163",
+      "sinceStartS": 77,
+      "videoS": 80.3
+    },
+    {
+      "t": 1789685760227,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789685820124,
+      "bed": "bossa",
+      "at": "22:56:00.227",
+      "sinceStartS": 82,
+      "videoS": 85.4
+    },
+    {
+      "t": 1789685765834,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789685770551,
+      "bed": "warm",
+      "at": "22:56:05.834",
+      "sinceStartS": 87.6,
+      "videoS": 91
+    },
+    {
+      "t": 1789685770580,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789685775453,
+      "bed": "warm",
+      "at": "22:56:10.580",
+      "sinceStartS": 92.4,
+      "videoS": 95.7
+    },
+    {
+      "t": 1789685775516,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789685780665,
+      "bed": "warm",
+      "at": "22:56:15.516",
+      "sinceStartS": 97.3,
+      "videoS": 100.6
+    },
+    {
+      "t": 1789685780732,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789685785423,
+      "bed": "warm",
+      "at": "22:56:20.732",
+      "sinceStartS": 102.5,
+      "videoS": 105.9
+    },
+    {
+      "t": 1789685785474,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789685790186,
+      "bed": "warm",
+      "at": "22:56:25.474",
+      "sinceStartS": 107.3,
+      "videoS": 110.6
+    },
+    {
+      "t": 1789685790202,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789685795244,
+      "bed": "warm",
+      "at": "22:56:30.202",
+      "sinceStartS": 112,
+      "videoS": 115.3
+    },
+    {
+      "t": 1789685795338,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789685799957,
+      "bed": "warm",
+      "at": "22:56:35.338",
+      "sinceStartS": 117.1,
+      "videoS": 120.5
+    },
+    {
+      "t": 1789685800034,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789685804938,
+      "bed": "warm",
+      "at": "22:56:40.034",
+      "sinceStartS": 121.8,
+      "videoS": 125.2
+    },
+    {
+      "t": 1789685805019,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789685809940,
+      "bed": "warm",
+      "at": "22:56:45.019",
+      "sinceStartS": 126.8,
+      "videoS": 130.1
+    },
+    {
+      "t": 1789685810016,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789685814529,
+      "bed": "warm",
+      "at": "22:56:50.016",
+      "sinceStartS": 131.8,
+      "videoS": 135.1
+    },
+    {
+      "t": 1789685814568,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789685819141,
+      "bed": "warm",
+      "at": "22:56:54.568",
+      "sinceStartS": 136.4,
+      "videoS": 139.7
+    },
+    {
+      "t": 1789685819205,
+      "status": "playing",
+      "phase": "judge",
+      "deadline": 1789685864147,
+      "bed": "marimba",
+      "at": "22:56:59.205",
+      "sinceStartS": 141,
+      "videoS": 144.3
+    },
+    {
+      "t": 1789685821182,
+      "status": "playing",
+      "phase": "result",
+      "deadline": 1789685829165,
+      "bed": "warm",
+      "at": "22:57:01.182",
+      "sinceStartS": 143,
+      "videoS": 146.3
+    },
+    {
+      "t": 1789685829255,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789685834181,
+      "bed": "warm",
+      "at": "22:57:09.255",
+      "sinceStartS": 151.1,
+      "videoS": 154.4
+    },
+    {
+      "t": 1789685834264,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789685909184,
+      "bed": "bossa",
+      "at": "22:57:14.264",
+      "sinceStartS": 156.1,
+      "videoS": 159.4
+    },
+    {
+      "t": 1789685840128,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789685845542,
+      "bed": "warm",
+      "at": "22:57:20.128",
+      "sinceStartS": 161.9,
+      "videoS": 165.3
+    },
+    {
+      "t": 1789685845592,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789685850992,
+      "bed": "warm",
+      "at": "22:57:25.592",
+      "sinceStartS": 167.4,
+      "videoS": 170.7
+    },
+    {
+      "t": 1789685851014,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789685856499,
+      "bed": "warm",
+      "at": "22:57:31.014",
+      "sinceStartS": 172.8,
+      "videoS": 176.1
+    },
+    {
+      "t": 1789685856588,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789685862013,
+      "bed": "warm",
+      "at": "22:57:36.588",
+      "sinceStartS": 178.4,
+      "videoS": 181.7
+    },
+    {
+      "t": 1789685862080,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789685867522,
+      "bed": "warm",
+      "at": "22:57:42.080",
+      "sinceStartS": 183.9,
+      "videoS": 187.2
+    },
+    {
+      "t": 1789685867563,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789685872981,
+      "bed": "warm",
+      "at": "22:57:47.563",
+      "sinceStartS": 189.4,
+      "videoS": 192.7
+    },
+    {
+      "t": 1789685872996,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789685878483,
+      "bed": "warm",
+      "at": "22:57:52.996",
+      "sinceStartS": 194.8,
+      "videoS": 198.1
+    }
+  ],
+  "notes": ["budget reached while playing; skipped to results"]
+}

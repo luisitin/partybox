@@ -112,7 +112,13 @@ export function groupCues(
   return out;
 }
 
-export function strip(video: string, dir: string, fromSec: number, seconds: number): void {
+export function strip(
+  video: string,
+  dir: string,
+  fromSec: number,
+  seconds: number,
+  fps = 10,
+): void {
   if (!existsSync(FFMPEG) || fromSec < 0) return;
   mkdirSync(dir, { recursive: true });
   spawnSync(FFMPEG, [
@@ -126,7 +132,7 @@ export function strip(video: string, dir: string, fromSec: number, seconds: numb
     '-t',
     String(seconds),
     '-r',
-    '10',
+    String(fps),
     '-vf',
     'scale=640:-1',
     join(dir, 'f%02d.png'),
