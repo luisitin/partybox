@@ -1,12 +1,13 @@
 // Phase "answer": every player but the judge plays `pick` white cards from their hand, in blank
-// order. Exits when every connected answerer has played, on Next from any player (untimed rounds),
-// on the deadline (answerSeconds + 15 s per extra card, or a hidden 3 min fallback when untimed),
-// or on VIP skip; whoever has not played sits the round out.
+// order. Exits a beat after every connected answerer has played ("Everyone's in!" holds the stage
+// for ALL_IN_MS), on Next from any player (untimed rounds), on the deadline (answerSeconds + 15 s
+// per extra card, or a hidden 3 min fallback when untimed), or on VIP skip; whoever has not played
+// sits the round out.
 import { allConnectedDone, enterPhase, hasPlayer, isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { blackCard } from '../content';
 import { hasPlayed, isCzar, playersDone } from '../round';
-import { EXTRA_PICK_S, UNTIMED_ANSWER_MS } from '../types';
+import { ALL_IN_MS, EXTRA_PICK_S, UNTIMED_ANSWER_MS } from '../types';
 import type { Input, PlayInput, State } from '../types';
 import type { Transition } from './intro';
 
@@ -66,8 +67,21 @@ export function reduceAnswer(state: State, event: GameEvent<Input>, next: Transi
     if (event.input.type !== 'play') return state;
     const after = applyPlay(state, event.playerId, event.input, event.now);
     if (after === state) return state;
-    return allConnectedDone(after, playersDone(after)) ? next(after, event.now) : after;
+    return allConnectedDone(after, playersDone(after)) ? holdAllIn(after, event.now) : after;
   }
   if (isTimerFor(state, event)) return next(state, event.now);
   return state;
+}
+
+/** Everyone connected has played: the room gets a beat to see it before the first card — the
+ *  deadline moves up to now + ALL_IN_MS (never later than it already was) and the timer ends the
+ *  phase (review-loop #128). */
+export function holdAllIn(state: State, now: number): State {
+  const deadline = Math.min(state.phase.deadline ?? Infinity, now + ALL_IN_MS);
+  return { ...state, phase: { ...state.phase, deadline } };
+}
+
+/** The beat is on: everyone connected has played and the phase only waits for its timer. */
+export function allIn(state: State): boolean {
+  return state.phase.id === 'answer' && allConnectedDone(state, playersDone(state));
 }

@@ -4,6 +4,7 @@
 import { controllerEnvelope, envelope } from '@partybox/game-sdk';
 import type { ControllerView, GameAward, PlayerStatus, TvView } from '@partybox/game-sdk';
 import { blackCard, whiteText } from './content';
+import { allIn } from './phases/answer';
 import {
   canVote,
   eligibleVoters,
@@ -194,10 +195,12 @@ function standingsRows(state: State): StandingsRow[] {
   });
 }
 
-/** Untimed rounds keep a long hidden fallback on picking, voting and the result: no clock on screen. */
+/** Untimed rounds keep a long hidden fallback on picking, voting and the result: no clock on
+ *  screen. The "Everyone's in!" beat hides a timed round's clock too (it would jump to 1). */
 function timerMode(state: State): 'normal' | 'hidden' {
   const phase = state.phase.id;
   const untimed = phase === 'answer' || phase === 'judge' || phase === 'result';
+  if (allIn(state)) return 'hidden';
   return !state.settings.timed && untimed ? 'hidden' : 'normal';
 }
 
