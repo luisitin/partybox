@@ -409,29 +409,55 @@
     opacity: 0.45;
   }
   .thumb.won {
-    border-color: var(--green);
-    opacity: 0.6;
+    border-color: transparent;
+    opacity: 0.3;
   }
   .mini {
-    border: 1px dashed var(--phone-muted);
-    border-radius: 6px;
     display: grid;
     place-items: center;
+    align-content: center;
     text-align: center;
     font-size: 8px;
     color: var(--phone-muted);
-    padding: 6px 2px;
+    padding: 4px 2px;
+    gap: 4px;
   }
-  .mini b {
-    display: block;
-    font-size: 18px;
+  .ball {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .ball i {
+    font-style: normal;
+    display: inline-grid;
+    place-items: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: var(--on-accent);
+    font-weight: 900;
+    font-size: 10px;
+  }
+  .ball b {
+    font-size: 22px;
+    font-weight: 900;
     color: var(--phone-ink);
   }
-  .mini i {
-    display: block;
-    font-style: normal;
-    color: var(--gold);
-    font-size: 10px;
+  .ball.small i {
+    width: 11px;
+    height: 11px;
+    font-size: 7px;
+  }
+  .ball.small b {
+    font-size: 12px;
+  }
+  .callrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 4px 0 0;
   }
   .sheet {
     position: absolute;
@@ -579,7 +605,7 @@
   </div>
   <h1>Bingo Card Layouts</h1>
   <p class="lede">
-    Version 5 — every decision so far, drawn; the theme buttons above repaint every mock-up with
+    Version 6 — every decision so far, drawn; the theme buttons above repaint every mock-up with
     PartyBox's real palettes. Nothing here is coded yet beyond the baseline grid. Read top to
     bottom: the default ("Focus"), the card-style switcher and its pause, each style as you asked
     for it, then the confirmed picks. A few questions sit at the end.
@@ -650,6 +676,27 @@
         </td>
       </tr>
       <tr>
+        <td>Focus thumbnails</td>
+        <td>
+          Every card, bordered; the one up is greyed; a card that won loses its border and fades,
+          untappable.
+        </td>
+      </tr>
+      <tr>
+        <td>Style sheet</td>
+        <td>
+          Tap a style → see it behind the sheet with your real cards → Confirm or Change. Theme
+          picker lives in the same sheet.
+        </td>
+      </tr>
+      <tr>
+        <td>Grid call</td>
+        <td>
+          The call at the top (or in the spare slot with 3 cards) in the TV's ball style: letter,
+          number, the one before, call count. No nickname.
+        </td>
+      </tr>
+      <tr>
         <td>Style button</td>
         <td>
           In the top bar next to the theme palette. Per phone, remembered locally for the next game.
@@ -659,8 +706,9 @@
         <td>Pause</td>
         <td>
           Opening the sheet pauses the <b>calling only</b>; a running check or celebration finishes.
-          Everyone sees "Sam is changing card style…"; the notice clears when the last sheet closes;
-          then 3 · 2 · 1 with a tick each, and the next number.
+          Everyone sees "Sam is changing card style…" with a button to open their own style/theme
+          menu; the notice clears when the last sheet closes; then 3 · 2 · 1 ("get your thumbs
+          ready") on every phone and the TV, a tick each, and the next number.
         </td>
       </tr>
       <tr>
@@ -696,192 +744,76 @@
 </div>
 
 <script>
-  const nums = (seed) => {
-    let x = seed;
-    const r = () => (x = (x * 9301 + 49297) % 233280) / 233280;
-    return Array.from({ length: 25 }, (_, i) =>
-      i === 12 ? 0 : Math.floor(r() * 15) + 1 + (i % 5) * 15,
-    );
-  };
+  const nums = (seed) => { let x = seed; const r = () => (x = (x * 9301 + 49297) % 233280) / 233280;
+    return Array.from({ length: 25 }, (_, i) => i === 12 ? 0 : Math.floor(r() * 15) + 1 + (i % 5) * 15); };
   function card(seed, opts = {}) {
-    const n = nums(seed);
-    const size = opts.size || 10;
-    const free = opts.free ?? 'FREE';
+    const n = nums(seed); const size = opts.size || 10; const free = opts.free ?? 'FREE';
     const daubs = new Set(opts.daubs || [1, 7, 16, 22]);
     let h = `<div class="card ${opts.cls || ''}" style="font-size:${size}px;max-width:${opts.w || '100%'}">`;
-    if (opts.label !== undefined)
-      h += `<div class="lbl ${opts.won ? 'won' : ''}">${opts.label}</div>`;
-    h += `<div class="letters">${'BINGO'
-      .split('')
-      .map((l) => `<span>${l}</span>`)
-      .join('')}</div><div class="grid">`;
+    if (opts.label !== undefined) h += `<div class="lbl ${opts.won ? 'won' : ''}">${opts.label}</div>`;
+    h += `<div class="letters">${'BINGO'.split('').map(l => `<span>${l}</span>`).join('')}</div><div class="grid">`;
     n.forEach((v, i) => {
-      const isF = i === 12;
-      const cls = isF
-        ? 'f'
-        : opts.won && [10, 11, 13, 14].includes(i)
-          ? 'won'
-          : daubs.has(i)
-            ? 'd'
-            : '';
+      const isF = i === 12; const cls = isF ? 'f' : (opts.won && [10,11,13,14].includes(i)) ? 'won' : daubs.has(i) ? 'd' : '';
       h += `<span class="${cls}" style="${isF ? `font-size:${opts.freeSize || size * 0.7}px` : ''}">${isF ? free : v}</span>`;
     });
     return h + '</div></div>';
   }
-  const thumb = (seed, o = {}) =>
-    `<div class="thumb ${o.cur ? 'cur' : ''} ${o.won ? 'won' : ''}">${card(seed, { size: 3.6, free: '★', freeSize: 6, daubs: o.daubs || [3, 9], won: o.won })}</div>`;
-  const bar = (style = true) =>
-    `<div class="bar"><span><b>PB</b> RVKR</span><span>${style ? '<span class="style">🎨 · 🃏 style</span> ' : ''}★ Sam</span></div>`;
+  const thumb = (seed, o = {}) => `<div class="thumb ${o.cur ? 'cur' : ''} ${o.won ? 'won' : ''}">${card(seed, { size: 3.6, free: '★', freeSize: 6, daubs: o.daubs || [3, 9], won: o.won })}</div>`;
+  const bar = (style = true) => `<div class="bar"><span><b>PB</b> RVKR</span><span>${style ? '<span class="style">🎨 · 🃏 style</span> ' : ''}★ Sam</span></div>`;
   const head = `<div class="head"><div class="call">Fifty-six — pick up sticks</div><div class="meta">Call 19 · Any line</div></div>`;
-  const miniCall = `<div class="mini"><i>G</i><b>56</b>pick up sticks<br>call 19 · any line</div>`;
+  const ball = (l, n, small) => `<span class="ball ${small ? 'small' : ''}"><i>${l}</i><b>${n}</b></span>`;
+  const miniCall = `<div class="mini">${ball('G', 56)}<span>before that ${ball('I', 24, true)}</span><span>call 19 · any line</span></div>`;
+  const callRow = `<div class="callrow">${ball('G', 56)}<span style="font-size:8px;color:var(--phone-muted)">before that ${ball('I', 24, true)} · call 19</span></div>`;
   const opt = (rec, tag, title, body, stage, note = '') =>
     `<div class="opt ${rec ? 'rec' : ''}"><span class="tag ${rec ? '' : 'plain'}">${tag}${rec ? ' · default' : ''}</span><h3>${title}</h3><p>${body}</p><div class="stage">${stage}</div>${note ? `<div class="note">${note}</div>` : ''}</div>`;
   const focus = (n, extra = {}) => {
-    const thumbs =
-      n > 1
-        ? `<div class="thumbs" style="grid-template-columns:repeat(${n},1fr)">${[3, 4, 5, 6]
-            .slice(0, n)
-            .map((s, i) =>
-              thumb(s, {
-                cur: i === 0,
-                won: extra.wonThumb === i,
-                daubs: i === 0 ? [1, 7, 16, 22] : [3, 9],
-              }),
-            )
-            .join('')}</div>`
-        : '';
+    const thumbs = n > 1 ? `<div class="thumbs" style="grid-template-columns:repeat(${n},1fr)">${[3, 4, 5, 6].slice(0, n).map((s, i) => thumb(s, { cur: i === 0, won: extra.wonThumb === i, daubs: i === 0 ? [1, 7, 16, 22] : [3, 9] })).join('')}</div>` : '';
     return `<div class="phone port">${bar()}${head}<div class="body" style="grid-template-rows:auto auto;gap:8px;align-content:start">${card(3, { size: 9.5, w: '164px', daubs: [1, 7, 16, 22] })}${thumbs}</div><div class="foot small">BINGO!</div></div>`;
   };
 
   document.getElementById('S1').innerHTML = [
-    opt(
-      true,
-      'Focus · 1 card',
-      'As today',
-      'One card, the call above it, FREE spelled out. Nothing else changes for one-card games.',
-      focus(1),
-    ),
-    opt(
-      true,
-      'Focus · 2 cards',
-      'Main card + both thumbnails',
-      'Both cards sit below; the greyed one is the one you are looking at. Tap the other to swap.',
-      focus(2),
-    ),
-    opt(
-      true,
-      'Focus · 4 cards',
-      'Main card + all four thumbnails',
-      'Greyed = up now. A thumbnail that already won gets a green border and stays dim; it can be looked at, not claimed.',
-      focus(4, { wonThumb: 2 }),
-    ),
+    opt(true, 'Focus · 1 card', 'As today', 'One card, the call above it, FREE spelled out. Nothing else changes for one-card games.', focus(1)),
+    opt(true, 'Focus · 2 cards', 'Main card + both thumbnails', 'Both cards sit below; the greyed one is the one you are looking at. Tap the other to swap.', focus(2)),
+    opt(true, 'Focus · 4 cards', 'Main card + all four thumbnails', 'Greyed = up now. A thumbnail that already won loses its border and fades right out — it cannot be tapped or claimed.', focus(4, { wonThumb: 2 })),
   ].join('');
 
   document.getElementById('S2').innerHTML = [
-    opt(
-      false,
-      'The sheet',
-      'Card style — on this phone',
-      'Opens from the 🃏 in the top bar. Styles that need the phone sideways say so; picking one shows the D1 turn gate if needed.',
-      `<div class="phone port">${bar()}<div class="body">${card(3, { size: 8, w: '150px', cls: 'dim' })}</div><div class="sheet"><h4>Card style</h4><div class="row on"><span>Focus <small>· one big card + thumbnails</small></span><span>✓</span></div><div class="row"><span>Grid <small>· all cards at once</small></span><span></span></div><div class="row"><span>Stack <small>· two cards, upright</small></span><span></span></div><div class="row"><span>Side by side <small>· two cards, sideways</small></span><span>↻</span></div><div class="row"><span>Strip <small>· 3–4 cards, sideways</small></span><span>↻</span></div><div class="foot small neutral" style="margin:6px 0 0">Done</div></div></div>`,
-    ),
-    opt(
-      false,
-      'Everyone else',
-      'The room pauses',
-      'The caller stops mid-round. Phones show who is changing; daubing still works. Resumes the moment the sheet closes.',
-      `<div class="phone port">${bar()}<div class="body">${card(4, { size: 8, w: '150px' })}</div><div class="foot small">BINGO!</div><div class="curtain">⏸ Sam is changing card style…<small>the caller waits · you can keep daubing</small></div></div>`,
-    ),
-    opt(
-      false,
-      'Resume',
-      'Three, two, one',
-      'When the last sheet closes every screen counts down 3 · 2 · 1 (a tick each), then the caller carries on with the next number.',
-      `<div class="tv"><div class="sub">Sam is done · calling resumes in</div><div class="big" style="color:var(--gold)">3</div><div class="sub">get your thumbs ready</div></div>`,
-    ),
-    opt(
-      false,
-      'The TV',
-      'Same curtain on the stage',
-      'The call stays up, dimmed, with the pause line. Two people changing at once: "Sam and Priya are changing…".',
-      `<div class="tv"><div class="big" style="opacity:.35">G 56</div><div class="sub" style="opacity:.35">pick up sticks</div><div style="font-weight:900">⏸ Sam is changing card style…</div><div class="sub">calling resumes when they are done</div></div>`,
-    ),
+    opt(false, 'The sheet', 'Card style — on this phone', 'Opens from the 🃏 in the top bar. Tapping a style shows it behind the sheet at once, with your real cards; then Confirm keeps it or Change goes back to the list. Styles that need the phone sideways say so; confirming one shows the D1 turn gate if needed. The sheet also holds the theme picker.',
+      `<div class="phone port">${bar()}<div class="body">${card(3, { size: 8, w: '150px', cls: 'dim' })}</div><div class="sheet"><h4>Card style <small style="float:right;color:var(--phone-muted)">🎨 theme ›</small></h4><div class="row on"><span>Focus <small>· one big card + thumbnails</small></span><span>✓</span></div><div class="row"><span>Grid <small>· all cards at once</small></span><span></span></div><div class="row"><span>Stack <small>· two cards, upright</small></span><span></span></div><div class="row"><span>Side by side <small>· two cards, sideways</small></span><span>↻</span></div><div class="row"><span>Strip <small>· 3–4 cards, sideways</small></span><span>↻</span></div><div style="display:flex;gap:6px;margin-top:6px"><div class="foot small neutral" style="margin:0;flex:1">Change</div><div class="foot small" style="margin:0;flex:1">Confirm</div></div></div></div>`),
+    opt(false, 'Everyone else', 'The room pauses', 'The caller stops mid-round. Everyone else sees who is changing and gets the same menu — style and theme — since the room is paused anyway. Resumes when the last sheet closes.',
+      `<div class="phone port">${bar()}<div class="body">${card(4, { size: 8, w: '150px' })}</div><div class="foot small">BINGO!</div><div class="curtain"><div>⏸ Sam is changing card style…<div class="foot small neutral" style="margin:10px 0 0">Change my style or theme too</div></div></div></div>`),
+    opt(false, 'Resume', 'Three, two, one', 'When the last sheet closes every screen counts down 3 · 2 · 1 (a tick each), then the caller carries on with the next number.',
+      `<div class="tv"><div class="sub">Sam is done · calling resumes in</div><div class="big" style="color:var(--gold)">3</div><div class="sub">get your thumbs ready</div></div>`),
+    opt(false, 'The TV', 'Same curtain on the stage', 'The call stays up, dimmed, with the pause line. Two people changing at once: "Sam and Priya are changing…".',
+      `<div class="tv"><div class="big" style="opacity:.35">G 56</div><div class="sub" style="opacity:.35">pick up sticks</div><div style="font-weight:900">⏸ Sam is changing card style…</div><div class="sub">calling resumes when they are done</div></div>`),
   ].join('');
 
   document.getElementById('S3').innerHTML = [
-    opt(
-      false,
-      'Grid · 4 cards',
-      'Your B2, with the label rule',
-      'Labels stay put so the sizing never jumps: "CARD 2" becomes "BINGO ✓" and the card dims when it wins. Portrait.',
-      `<div class="phone port">${bar()}<div class="body" style="grid-template-columns:1fr 1fr;gap:4px 6px;padding:4px">${card(3, { size: 6.5, label: 'CARD 1' })}${card(4, { size: 6.5, label: 'BINGO ✓', won: true, cls: 'dim', daubs: [3, 9] })}${card(5, { size: 6.5, label: 'CARD 3', daubs: [0, 18] })}${card(6, { size: 6.5, label: 'CARD 4', daubs: [2] })}</div><div class="foot small">BINGO!</div></div>`,
-    ),
-    opt(
-      false,
-      'Grid · 3 cards',
-      'The spare slot shows the call',
-      'With three cards the fourth slot is a small TV: the letter, the number, the nickname and the call count — the whole game on the phone.',
-      `<div class="phone port">${bar()}<div class="body" style="grid-template-columns:1fr 1fr;gap:4px 6px;padding:4px">${card(3, { size: 6.5, label: 'CARD 1' })}${card(4, { size: 6.5, label: 'CARD 2', daubs: [3, 9] })}${card(5, { size: 6.5, label: 'CARD 3', daubs: [0, 18] })}${miniCall}</div><div class="foot small">BINGO!</div></div>`,
-    ),
-    opt(
-      false,
-      'Strip · 3–4 cards',
-      'Your B3',
-      'Sideways: the cards in a row with air above and below. Landscape only.',
-      `<div class="phone land">${bar()}<div class="body" style="grid-template-columns:repeat(4,1fr);gap:8px;padding:6px 12px">${card(3, { size: 5.6, label: 'CARD 1' })}${card(4, { size: 5.6, label: 'CARD 2', daubs: [3, 9] })}${card(5, { size: 5.6, label: 'CARD 3', daubs: [0, 18] })}${card(6, { size: 5.6, label: 'CARD 4', daubs: [2] })}</div><div class="foot small">BINGO!</div></div>`,
-    ),
-    opt(
-      false,
-      'Stack · 2 cards',
-      'Your A3 without the labels',
-      'Two cards upright, one above the other, no "CARD 1 / 2" — it is implied. Portrait only.',
-      `<div class="phone port">${bar()}<div class="body" style="gap:8px">${card(3, { size: 7.6, w: '132px' })}${card(4, { size: 7.6, w: '132px', daubs: [3, 9] })}</div><div class="foot small">BINGO!</div></div>`,
-    ),
-    opt(
-      false,
-      'Side by side · 2 cards',
-      'Your A1, loosened up',
-      'Cards a size smaller than before, with the same air above and below as the Strip, so both sit comfortably. Landscape only.',
-      `<div class="phone land">${bar()}<div class="body" style="grid-template-columns:1fr 1fr;gap:14px;padding:8px 40px">${card(3, { size: 6.4, w: '122px' })}${card(4, { size: 6.4, w: '122px', daubs: [3, 9] })}</div><div class="foot small">BINGO!</div></div>`,
-    ),
+    opt(false, 'Grid · 4 cards', 'Your B2, with the label rule', 'The call sits at the top in the TV's ball style — letter, number, the one before — no nickname. Labels stay put so the sizing never jumps: "CARD 2" becomes "BINGO ✓" and the card dims when it wins. Portrait.',
+      `<div class="phone port">${bar()}${callRow}<div class="body" style="grid-template-columns:1fr 1fr;gap:4px 6px;padding:4px">${card(3, { size: 6.5, label: 'CARD 1' })}${card(4, { size: 6.5, label: 'BINGO ✓', won: true, cls: 'dim', daubs: [3, 9] })}${card(5, { size: 6.5, label: 'CARD 3', daubs: [0, 18] })}${card(6, { size: 6.5, label: 'CARD 4', daubs: [2] })}</div><div class="foot small">BINGO!</div></div>`),
+    opt(false, 'Grid · 3 cards', 'The spare slot shows the call', 'With three cards the fourth slot shows the call the way the TV does — the ball, the number, the one before — no nickname, no box around it.',
+      `<div class="phone port">${bar()}<div class="body" style="grid-template-columns:1fr 1fr;gap:4px 6px;padding:4px">${card(3, { size: 6.5, label: 'CARD 1' })}${card(4, { size: 6.5, label: 'CARD 2', daubs: [3, 9] })}${card(5, { size: 6.5, label: 'CARD 3', daubs: [0, 18] })}${miniCall}</div><div class="foot small">BINGO!</div></div>`),
+    opt(false, 'Strip · 3–4 cards', 'Your B3', 'Sideways: the cards in a row with air above and below. Landscape only.',
+      `<div class="phone land">${bar()}<div class="body" style="grid-template-columns:repeat(4,1fr);gap:8px;padding:6px 12px">${card(3, { size: 5.6, label: 'CARD 1' })}${card(4, { size: 5.6, label: 'CARD 2', daubs: [3, 9] })}${card(5, { size: 5.6, label: 'CARD 3', daubs: [0, 18] })}${card(6, { size: 5.6, label: 'CARD 4', daubs: [2] })}</div><div class="foot small">BINGO!</div></div>`),
+    opt(false, 'Stack · 2 cards', 'Your A3 without the labels', 'Two cards upright, one above the other, no "CARD 1 / 2" — it is implied. Portrait only.',
+      `<div class="phone port">${bar()}<div class="body" style="gap:8px">${card(3, { size: 7.6, w: '132px' })}${card(4, { size: 7.6, w: '132px', daubs: [3, 9] })}</div><div class="foot small">BINGO!</div></div>`),
+    opt(false, 'Side by side · 2 cards', 'Your A1, loosened up', 'Cards a size smaller than before, with the same air above and below as the Strip, so both sit comfortably. Landscape only.',
+      `<div class="phone land">${bar()}<div class="body" style="grid-template-columns:1fr 1fr;gap:14px;padding:8px 40px">${card(3, { size: 6.4, w: '122px' })}${card(4, { size: 6.4, w: '122px', daubs: [3, 9] })}</div><div class="foot small">BINGO!</div></div>`),
   ].join('');
 
   document.getElementById('S4').innerHTML = [
-    opt(
-      true,
-      'D1',
-      'Little phone turns',
-      'Shown when the chosen style needs the other orientation. Lifts by itself when the phone turns, then asks the browser to lock (Android; iPhones ignore it).',
-      `<div class="phone port">${bar()}<div class="gate"><div class="ph"></div>Turn your phone sideways for Side by side.</div></div>`,
-    ),
-    opt(
-      true,
-      'E1',
-      'Tablets and computers',
-      'Four normal cards in a row, labels on, no orientation rule, no style sheet needed (it still works if opened).',
-      `<div class="phone tab">${bar()}<div class="body" style="grid-template-columns:repeat(4,1fr);gap:8px;padding:6px 10px">${card(3, { size: 6, label: 'CARD 1' })}${card(4, { size: 6, label: 'CARD 2', daubs: [3, 9] })}${card(5, { size: 6, label: 'CARD 3', daubs: [0, 18] })}${card(6, { size: 6, label: 'CARD 4', daubs: [2] })}</div><div class="foot small">BINGO!</div></div>`,
-    ),
-    opt(
-      true,
-      'F2',
-      'Swap once',
-      'During the intro every player gets one "Deal me another". The new card replaces the old one for good — a little gamble.',
-      `<div class="phone port">${bar()}<div class="head"><div class="call" style="font-size:11px">Round 1 of 3 · 5 s</div><div class="meta">Any line · your new card</div></div><div class="body">${card(3, { size: 9, w: '160px', daubs: [] })}</div><div class="foot small neutral">🎲 Deal me another (1 left)</div></div>`,
-    ),
+    opt(true, 'D1', 'Little phone turns', 'Shown when the chosen style needs the other orientation. Lifts by itself when the phone turns, then asks the browser to lock (Android; iPhones ignore it).',
+      `<div class="phone port">${bar()}<div class="gate"><div class="ph"></div>Turn your phone sideways for Side by side.</div></div>`),
+    opt(true, 'E1', 'Tablets and computers', 'Four normal cards in a row, labels on, no orientation rule, no style sheet needed (it still works if opened).',
+      `<div class="phone tab">${bar()}<div class="body" style="grid-template-columns:repeat(4,1fr);gap:8px;padding:6px 10px">${card(3, { size: 6, label: 'CARD 1' })}${card(4, { size: 6, label: 'CARD 2', daubs: [3, 9] })}${card(5, { size: 6, label: 'CARD 3', daubs: [0, 18] })}${card(6, { size: 6, label: 'CARD 4', daubs: [2] })}</div><div class="foot small">BINGO!</div></div>`),
+    opt(true, 'F2', 'Swap once', 'During the intro every player gets one "Deal me another". The new card replaces the old one for good — a little gamble.',
+      `<div class="phone port">${bar()}<div class="head"><div class="call" style="font-size:11px">Round 1 of 3 · 5 s</div><div class="meta">Any line · your new card</div></div><div class="body">${card(3, { size: 9, w: '160px', daubs: [] })}</div><div class="foot small neutral">🎲 Deal me another (1 left)</div></div>`),
   ].join('');
   const wrap = document.getElementById('wrap');
-  for (const b of document.querySelectorAll('.themes button'))
-    b.addEventListener('click', () => {
-      wrap.dataset.mock = b.dataset.t;
-      for (const o of document.querySelectorAll('.themes button'))
-        o.setAttribute('aria-pressed', String(o === b));
-      try {
-        localStorage.setItem('bingo-options-theme', b.dataset.t);
-      } catch {}
-    });
-  try {
-    const t = localStorage.getItem('bingo-options-theme');
-    const b = t && document.querySelector(`.themes button[data-t="${t}"]`);
-    if (b) b.click();
-  } catch {}
+  for (const b of document.querySelectorAll('.themes button')) b.addEventListener('click', () => {
+    wrap.dataset.mock = b.dataset.t;
+    for (const o of document.querySelectorAll('.themes button')) o.setAttribute('aria-pressed', String(o === b));
+    try { localStorage.setItem('bingo-options-theme', b.dataset.t); } catch {}
+  });
+  try { const t = localStorage.getItem('bingo-options-theme'); const b = t && document.querySelector(`.themes button[data-t="${t}"]`); if (b) b.click(); } catch {}
 </script>
