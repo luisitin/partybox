@@ -1,0 +1,183 @@
+{
+  "pass": "58",
+  "game": "wisecrack",
+  "players": 3,
+  "scenario": "spicy",
+  "focus": "phone",
+  "started": "13:41:20.496",
+  "tvVideoT0": "13:41:17.208",
+  "changes": [
+    {
+      "t": 1789652480499,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789652485492,
+      "at": "13:41:20.499",
+      "sinceStartS": 0,
+      "videoS": 3.3
+    },
+    {
+      "t": 1789652485546,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789652515494,
+      "at": "13:41:25.546",
+      "sinceStartS": 5,
+      "videoS": 8.3
+    },
+    {
+      "t": 1789652494772,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789652514666,
+      "at": "13:41:34.772",
+      "sinceStartS": 14.3,
+      "videoS": 17.6
+    },
+    {
+      "t": 1789652498964,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789652504842,
+      "at": "13:41:38.964",
+      "sinceStartS": 18.5,
+      "videoS": 21.8
+    },
+    {
+      "t": 1789652504850,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789652524844,
+      "at": "13:41:44.850",
+      "sinceStartS": 24.4,
+      "videoS": 27.6
+    },
+    {
+      "t": 1789652506184,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789652511465,
+      "at": "13:41:46.184",
+      "sinceStartS": 25.7,
+      "videoS": 29
+    },
+    {
+      "t": 1789652511551,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789652531468,
+      "at": "13:41:51.551",
+      "sinceStartS": 31.1,
+      "videoS": 34.3
+    },
+    {
+      "t": 1789652512955,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789652518588,
+      "at": "13:41:52.955",
+      "sinceStartS": 32.5,
+      "videoS": 35.7
+    },
+    {
+      "t": 1789652518642,
+      "status": "playing",
+      "phase": "scores",
+      "deadline": 1789652526593,
+      "at": "13:41:58.642",
+      "sinceStartS": 38.1,
+      "videoS": 41.4
+    },
+    {
+      "t": 1789652526610,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789652531595,
+      "at": "13:42:06.610",
+      "sinceStartS": 46.1,
+      "videoS": 49.4
+    },
+    {
+      "t": 1789652531617,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789652561604,
+      "at": "13:42:11.617",
+      "sinceStartS": 51.1,
+      "videoS": 54.4
+    },
+    {
+      "t": 1789652540873,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789652560762,
+      "at": "13:42:20.873",
+      "sinceStartS": 60.4,
+      "videoS": 63.7
+    },
+    {
+      "t": 1789652545044,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789652550925,
+      "at": "13:42:25.044",
+      "sinceStartS": 64.5,
+      "videoS": 67.8
+    },
+    {
+      "t": 1789652551044,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789652570932,
+      "at": "13:42:31.044",
+      "sinceStartS": 70.5,
+      "videoS": 73.8
+    },
+    {
+      "t": 1789652555392,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789652561379,
+      "at": "13:42:35.392",
+      "sinceStartS": 74.9,
+      "videoS": 78.2
+    },
+    {
+      "t": 1789652561467,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789652581394,
+      "at": "13:42:41.467",
+      "sinceStartS": 81,
+      "videoS": 84.3
+    },
+    {
+      "t": 1789652562808,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789652568092,
+      "at": "13:42:42.808",
+      "sinceStartS": 82.3,
+      "videoS": 85.6
+    },
+    {
+      "t": 1789652568155,
+      "status": "playing",
+      "phase": "scores",
+      "deadline": 1789652576101,
+      "at": "13:42:48.155",
+      "sinceStartS": 87.7,
+      "videoS": 90.9
+    },
+    {
+      "t": 1789652576164,
+      "status": "results",
+      "phase": "results",
+      "deadline": null,
+      "at": "13:42:56.164",
+      "sinceStartS": 95.7,
+      "videoS": 99
+    }
+  ],
+  "notes": []
+}
