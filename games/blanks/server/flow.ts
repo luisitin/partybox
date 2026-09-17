@@ -1,0 +1,89 @@
+// The phase graph: intro → answer → reveal (one instance per card) → judge → result → intro | done.
+// Phase files only know their own entry/exit; this file wires the loop so no phase imports
+// another (dependency-cruiser forbids cycles). VIP skip uses the same transitions as a deadline.
+import { allConnectedDone, applyVip, setConnected } from '@partybox/game-sdk';
+import type { GameEvent } from '@partybox/game-sdk';
+import { enterAnswer, reduceAnswer } from './phases/answer';
+import { enterIntro, reduceIntro } from './phases/intro';
+import { enterJudge, reduceJudge } from './phases/judge';
+import { enterReveal, reduceReveal } from './phases/reveal';
+import { enterDone, enterResult, reduceResult } from './phases/result';
+import { closeAnswers, playersDone, votingDone } from './round';
+import type { Input, State } from './types';
+
+export function afterIntro(state: State, now: number): State {
+  return enterAnswer(state, now);
+}
+
+/** Nothing played → straight to the (winnerless) result; one card → walkover, no reading, no
+ *  vote; otherwise the reading starts with the first slot. */
+export function afterAnswer(state: State, now: number): State {
+  const closed = closeAnswers(state);
+  if (closed.slots.length <= 1) return enterResult(closed, now);
+  return enterReveal(closed, now, 0);
+}
+
+export function afterReveal(state: State, now: number): State {
+  const index = state.revealIndex + 1;
+  return index < state.slots.length ? enterReveal(state, now, index) : enterJudge(state, now);
+}
+
+export function afterJudge(state: State, now: number): State {
+  return enterResult(state, now);
+}
+
+export function afterResult(state: State, now: number): State {
+  return state.round >= state.settings.rounds ? enterDone(state, now) : enterIntro(state, now);
+}
+
+/** "Skip" = what the current phase's deadline would do (reveal: skip the whole reading). */
+function skip(state: State, now: number): State {
+  switch (state.phase.id) {
+    case 'intro':
+      return afterIntro(state, now);
+    case 'answer':
+      return afterAnswer(state, now);
+    case 'reveal':
+      return enterJudge(state, now);
+    case 'judge':
+      return afterJudge(state, now);
+    case 'result':
+      return afterResult(state, now);
+    default:
+      return state;
+  }
+}
+
+/** The drop of the last outstanding player ends the phase like their input would have: the room
+ *  never sits out a full timer for someone who has gone. */
+function closeIfDone(state: State, now: number): State {
+  if (state.phase.id === 'answer' && allConnectedDone(state, playersDone(state)))
+    return afterAnswer(state, now);
+  if (state.phase.id === 'judge' && allConnectedDone(state, votingDone(state)))
+    return afterJudge(state, now);
+  return state;
+}
+
+export function reduce(state: State, event: GameEvent<Input>): State {
+  if (event.type === 'player') {
+    const after = setConnected(state, event);
+    return event.connected || after.phase.paused ? after : closeIfDone(after, event.now);
+  }
+  const vip = applyVip(state, event, { skip, end: enterDone });
+  if (vip) return vip;
+  if (state.phase.paused) return state; // inputs and timers wait while paused
+  switch (state.phase.id) {
+    case 'intro':
+      return reduceIntro(state, event, afterIntro);
+    case 'answer':
+      return reduceAnswer(state, event, afterAnswer);
+    case 'reveal':
+      return reduceReveal(state, event, afterReveal);
+    case 'judge':
+      return reduceJudge(state, event, afterJudge);
+    case 'result':
+      return reduceResult(state, event, afterResult);
+    default:
+      return state;
+  }
+}

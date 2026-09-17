@@ -1,0 +1,65 @@
+{
+  "id": "blanks",
+  "name": "Blanks",
+  "tagline": "Fill in the blank. The worst answer wins.",
+  "description": "A black card sets up the sentence; everyone plays the white card from their hand that finishes it best (or worst). The TV reads every combination out one at a time, then the room votes — or a rotating judge picks. One point per round won. Three decks from family-safe to fully explicit; the VIP chooses.",
+  "version": "0.1.0",
+  "minPlayers": 3,
+  "maxPlayers": 12,
+  "estimatedMinutes": 15,
+  "tags": ["cards", "voting", "comedy", "adult"],
+  "settings": [
+    {
+      "key": "decks",
+      "label": "Decks",
+      "description": "Which cards are in play: Mild is safe for anyone, Crude is R-rated, WILD is fully explicit",
+      "type": "select",
+      "default": "wild",
+      "options": [
+        { "value": "mild", "label": "Family night (Mild)" },
+        { "value": "adults", "label": "Adults (Mild + Crude)" },
+        { "value": "wild", "label": "WILD (all three decks)" },
+        { "value": "wild-only", "label": "WILD only" }
+      ]
+    },
+    {
+      "key": "judge",
+      "label": "Who picks the winner",
+      "description": "Everyone votes on the cards, or one player judges each round in turn",
+      "type": "select",
+      "default": "vote",
+      "options": [
+        { "value": "vote", "label": "Everyone votes" },
+        { "value": "czar", "label": "A rotating judge" }
+      ]
+    },
+    {
+      "key": "rounds",
+      "label": "Rounds",
+      "description": "Black cards to play; about two minutes each",
+      "type": "number",
+      "default": 6,
+      "min": 3,
+      "max": 15,
+      "step": 1
+    },
+    {
+      "key": "answerSeconds",
+      "label": "Answer time",
+      "description": "Seconds to pick a card (Pick 2 and Pick 3 cards get extra time)",
+      "type": "number",
+      "default": 60,
+      "min": 30,
+      "max": 120,
+      "step": 15
+    },
+    {
+      "key": "rando",
+      "label": "Rando",
+      "description": "A random card from the deck plays every round as a phantom player; if it wins, nobody scores",
+      "type": "boolean",
+      "default": false
+    }
+  ],
+  "supportsBots": true
+}

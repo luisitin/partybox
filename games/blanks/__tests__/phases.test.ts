@@ -1,0 +1,259 @@
+// Phase rules pinned from README "Phases", "Inputs", "Scoring" and "Edge cases": play validation,
+// walkover, ties, the judge (czar) mode, Rando, disconnects, VIP skip / end, hidden information.
+import { describe, expect, it } from 'vitest';
+import { blackCard } from '../server/content';
+import { RANDO } from '../server/types';
+import {
+  connect,
+  cv,
+  play,
+  playAll,
+  playRound,
+  readAll,
+  start,
+  timer,
+  toAnswer,
+  topCards,
+  tv,
+  vip,
+  vote,
+  voteAll,
+} from './helpers';
+
+describe('answer', () => {
+  it('accepts exactly pick distinct cards from the hand, once, and removes them from the hand', () => {
+    const s = toAnswer(start());
+    const pick = blackCard(s.blackId).pick;
+    const hand = s.hands['ana'] ?? [];
+    const cards = hand.slice(0, pick);
+    const ok = play(s, 'ana', cards);
+    expect(ok.submissions['ana']).toEqual(cards);
+    expect(ok.hands['ana']).toHaveLength(hand.length - pick);
+    // Wrong count, a card not in hand, a duplicate, a second play, a spectator: unchanged.
+    expect(play(s, 'ana', [...cards, hand[pick] as string])).toBe(s);
+    expect(play(s, 'ana', ['zzz'])).toBe(s);
+    if (pick > 1) expect(play(s, 'ana', Array(pick).fill(cards[0]))).toBe(s);
+    expect(play(ok, 'ana', hand.slice(pick, pick * 2))).toBe(ok);
+    expect(play(s, 'ghost', cards)).toBe(s);
+  });
+
+  it('closes when every connected player played; the slots are a shuffle of the submitters', () => {
+    let s = toAnswer(start({ players: 4 }));
+    s = playAll(s, ['dev']);
+    expect(s.phase.id).toBe('answer');
+    s = play(s, 'dev', topCards(s, 'dev'));
+    expect(s.phase.id).toBe('reveal');
+    expect(s.revealIndex).toBe(0);
+    expect([...s.slots].sort()).toEqual(['ana', 'ben', 'cleo', 'dev']);
+  });
+
+  it('a disconnected player is not waited for; nobody played → winnerless result', () => {
+    let s = connect(toAnswer(start({ players: 3 })), 'cleo', false);
+    s = playAll(s, ['cleo']);
+    expect(s.phase.id).toBe('reveal');
+    const idle = timer(toAnswer(start({ players: 3 })));
+    expect(idle.phase.id).toBe('result');
+    expect(idle.winners).toEqual([]);
+    expect(tv(idle).revealed).toEqual([]);
+  });
+
+  it('the drop of the last outstanding player closes the phase', () => {
+    let s = playAll(toAnswer(start({ players: 3 })), ['cleo']);
+    expect(s.phase.id).toBe('answer');
+    s = connect(s, 'cleo', false, s.phase.startedAt + 500);
+    expect(s.phase.id).toBe('reveal');
+  });
+
+  it('a single submission is a walkover: no reading, no vote, one point', () => {
+    let s = playAll(toAnswer(start({ players: 3 })), ['ben', 'cleo']);
+    s = timer(s);
+    expect(s.phase.id).toBe('result');
+    expect(s.winners).toEqual(['ana']);
+    expect(s.scores['ana']).toBe(1);
+    expect(tv(s).walkover).toBe(true);
+  });
+
+  it('the answer deadline stretches by 15 s per extra card', () => {
+    const s = toAnswer(start({ answerSeconds: 60 }));
+    const pick = blackCard(s.blackId).pick;
+    expect(s.phase.deadline).toBe(s.phase.startedAt + (60 + 15 * (pick - 1)) * 1000);
+  });
+});
+
+describe('reveal', () => {
+  it('reads one card per phase instance, then opens the vote; VIP skip jumps to the vote', () => {
+    let s = playAll(toAnswer(start({ players: 4 })));
+    const n = s.slots.length;
+    for (let i = 0; i < n; i++) {
+      expect(s.phase.id).toBe('reveal');
+      expect(s.revealIndex).toBe(i);
+      expect(tv(s).cards).toHaveLength(i + 1);
+      expect(cv(s, 'ana').cards).toHaveLength(i + 1);
+      s = timer(s);
+    }
+    expect(s.phase.id).toBe('judge');
+    expect(tv(s).cards).toHaveLength(n);
+    const skipped = vip(playAll(toAnswer(start({ players: 4 }))), 'skip');
+    expect(skipped.phase.id).toBe('judge');
+  });
+});
+
+describe('judge (vote mode)', () => {
+  it('nobody votes for their own slot; the most-voted card wins; ties share the point', () => {
+    let s = readAll(playAll(toAnswer(start({ players: 4 }))));
+    const mine = s.slots.indexOf('ana');
+    expect(vote(s, 'ana', mine)).toBe(s);
+    expect(vote(s, 'ana', 99)).toBe(s);
+    const target = s.slots.indexOf('ben');
+    s = voteAll(s, (id) => (id === 'ben' ? s.slots.indexOf('ana') : target));
+    expect(s.phase.id).toBe('result');
+    expect(s.winners).toEqual(['ben']);
+    expect(s.scores).toEqual({ ana: 0, ben: 1, cleo: 0, dev: 0 });
+    // A 2–2 split shares the point.
+    let t = readAll(playAll(toAnswer(start({ players: 4, seed: 5 }))));
+    const [a, b] = t.slots as [string, string, string, string];
+    t = voteAll(t, (id) =>
+      id === a || id === b ? t.slots.indexOf(t.slots[3] as string) : t.slots.indexOf(a),
+    );
+    expect(t.phase.id).toBe('result');
+    expect(t.winners.length).toBeGreaterThanOrEqual(1);
+    const total = Object.values(t.scores).reduce((x, y) => x + y, 0);
+    expect(total).toBe(t.winners.length);
+  });
+
+  it('the deadline counts the votes so far; no votes → nobody wins', () => {
+    const s = timer(readAll(playAll(toAnswer(start({ players: 4 })))));
+    expect(s.phase.id).toBe('result');
+    expect(s.winners).toEqual([]);
+    expect(Object.values(s.scores)).toEqual([0, 0, 0, 0]);
+  });
+
+  it('a voter whose card is the only one up is not waited for', () => {
+    // Two play, cleo lets the clock run out: three voters, two cards.
+    let s = playAll(toAnswer(start({ players: 3 })), ['cleo']);
+    s = readAll(timer(s));
+    expect(s.phase.id).toBe('judge');
+    // cleo (no card) may vote; ana and ben may vote for each other.
+    s = vote(s, 'cleo', s.slots.indexOf('ana'));
+    s = vote(s, 'ana', s.slots.indexOf('ben'));
+    expect(s.phase.id).toBe('judge');
+    s = vote(s, 'ben', s.slots.indexOf('ana'));
+    expect(s.phase.id).toBe('result');
+    expect(s.winners).toEqual(['ana']);
+  });
+});
+
+describe('judge (czar mode)', () => {
+  it('the judge rotates by seat, plays no card, and is the only voter', () => {
+    let s = start({ judge: 'czar', players: 4, rounds: 3 });
+    expect(s.czarId).toBe('ana');
+    s = toAnswer(s);
+    expect(play(s, 'ana', topCards(s, 'ana'))).toBe(s);
+    expect(cv(s, 'ana').role).toBe('judge');
+    expect(cv(s, 'ana').hand).toEqual([]);
+    s = playAll(s);
+    expect(s.phase.id).toBe('reveal');
+    expect(s.slots).not.toContain('ana');
+    s = readAll(s);
+    expect(vote(s, 'ben', 0)).toBe(s);
+    expect(cv(s, 'ben').vote?.canVote).toBe(false);
+    s = vote(s, 'ana', 1);
+    expect(s.phase.id).toBe('result');
+    expect(s.winners).toEqual([s.slots[1]]);
+    s = timer(s);
+    expect(s.czarId).toBe('ben');
+  });
+
+  it('skips a disconnected seat when choosing the judge', () => {
+    let s = start({ judge: 'czar', players: 4, rounds: 3 });
+    s = connect(s, 'ben', false);
+    s = timer(playRound(s)); // round 2 would be ben's
+    expect(s.round).toBe(2);
+    expect(s.czarId).toBe('cleo');
+  });
+
+  it('the judge dropping mid-vote ends the round without a winner', () => {
+    let s = readAll(playAll(toAnswer(start({ judge: 'czar', players: 4 }))));
+    expect(s.phase.id).toBe('judge');
+    s = connect(s, 'ana', false, s.phase.startedAt + 100);
+    expect(s.phase.id).toBe('result');
+    expect(s.winners).toEqual([]);
+  });
+});
+
+describe('rando', () => {
+  it('plays a card from the deck every round and pays nobody when it wins', () => {
+    let s = toAnswer(start({ rando: true, players: 3 }));
+    expect(s.submissions[RANDO]).toHaveLength(blackCard(s.blackId).pick);
+    expect(tv(s).playedCount).toBe(0);
+    s = readAll(playAll(s));
+    const randoSlot = s.slots.indexOf(RANDO);
+    s = voteAll(s, () => randoSlot);
+    expect(s.phase.id).toBe('result');
+    expect(s.winners).toEqual([RANDO]);
+    expect(Object.values(s.scores)).toEqual([0, 0, 0]);
+    const revealed = tv(s).revealed.find((r) => r.rando);
+    expect(revealed?.name).toBe('Rando');
+    expect(revealed?.winner).toBe(true);
+  });
+});
+
+describe('VIP', () => {
+  it('skip walks the phases; end jumps to done from anywhere with the scores so far', () => {
+    let s = start({ players: 4 });
+    s = vip(s, 'skip');
+    expect(s.phase.id).toBe('answer');
+    s = playAll(s, ['dev']);
+    s = vip(s, 'skip');
+    expect(s.phase.id).toBe('reveal');
+    expect(s.slots).toHaveLength(3);
+    s = vip(s, 'skip');
+    expect(s.phase.id).toBe('judge');
+    s = vip(s, 'skip');
+    expect(s.phase.id).toBe('result');
+    s = vip(s, 'skip');
+    expect(s.phase.id).toBe('intro');
+    expect(s.round).toBe(2);
+    const ended = vip(s, 'end');
+    expect(ended.phase.id).toBe('done');
+    expect(ended.scores).toEqual(s.scores);
+  });
+
+  it('pause holds inputs and shifts the deadline on resume', () => {
+    let s = toAnswer(start({ players: 3 }));
+    const deadline = s.phase.deadline as number;
+    s = vip(s, 'pause', s.phase.startedAt + 1000);
+    expect(play(s, 'ana', topCards(s, 'ana'))).toBe(s);
+    s = vip(s, 'resume', s.phase.startedAt + 6000);
+    expect(s.phase.deadline).toBe(deadline + 5000);
+  });
+});
+
+describe('views', () => {
+  it('the TV never shows a hand or a submission before the reveal; a phone sees only its own', () => {
+    const s = play(
+      toAnswer(start({ players: 3 })),
+      'ana',
+      topCards(toAnswer(start({ players: 3 })), 'ana'),
+    );
+    const mine = cv(s, 'ana');
+    expect(mine.myPlay).toHaveLength(blackCard(s.blackId).pick);
+    expect(mine.hand.length).toBeLessThan(10);
+    const other = cv(s, 'ben');
+    expect(other.myPlay).toBeNull();
+    expect(other.hand).toHaveLength(10);
+    const text = JSON.stringify(tv(s));
+    for (const card of mine.myPlay ?? [])
+      expect(text).not.toContain(JSON.stringify(card).slice(1, -1));
+    expect(tv(s).cards).toEqual([]);
+  });
+
+  it('the result names authors and votes; the phone knows whether it won', () => {
+    const s = playRound(start({ players: 4 }));
+    const view = tv(s);
+    expect(view.revealed).toHaveLength(4);
+    expect(view.revealed.filter((r) => r.winner).map((r) => r.submitterId)).toEqual(s.winners);
+    for (const w of s.winners) expect(cv(s, w).iWon).toBe(true);
+    expect(view.standings).toHaveLength(4);
+  });
+});

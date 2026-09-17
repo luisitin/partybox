@@ -1,0 +1,551 @@
+/* Blanks layout. Tokens only (docs/DESIGN_SYSTEM.md) except the two card inks: a black card is
+   black and a white card is white in every theme — the physical game's convention is the game's
+   identity, and the marks stay ≥ 4.5:1 on their card in every theme. */
+
+.kicker {
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  color: var(--pb-accent-2);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.kickerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--pb-space-5);
+  width: 100%;
+}
+
+/* ── The cards ─────────────────────────────────────────────────────────────────────────────── */
+
+.black {
+  --card-ink: #111;
+  --card-paper: #fff;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-3);
+  padding: var(--pb-space-5);
+  border-radius: var(--pb-radius-lg);
+  background: var(--card-ink);
+  color: var(--card-paper);
+  border: 3px solid var(--pb-border);
+  /* a hairline edge so the card reads as a card on a near-black stage, plus its drop shadow */
+  box-shadow:
+    0 0 0 1px rgb(255 255 255 / 18%),
+    0 8px 24px rgb(0 0 0 / 35%);
+  overflow-wrap: anywhere;
+}
+
+/* With a slot letter the disc sits inside the top-left corner and the text starts after it. */
+.lettered {
+  padding-left: calc(var(--pb-space-5) + 1.9em);
+}
+
+.sentence {
+  margin: 0;
+  font-size: inherit;
+  font-weight: 800;
+  line-height: 1.3;
+  text-wrap: pretty;
+}
+
+/* A played white card, dropped into the sentence: white paper, black ink, wraps as a run of text. */
+.fill {
+  background: var(--card-paper);
+  color: var(--card-ink);
+  padding: 0.02em 0.28em;
+  border-radius: 0.22em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  font-weight: 900;
+}
+
+/* A question card's answers, listed under it at the sentence's own size. */
+.extras {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--pb-space-2);
+  font-size: inherit;
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.letter {
+  position: absolute;
+  top: var(--pb-space-4);
+  left: var(--pb-space-4);
+  display: grid;
+  place-items: center;
+  width: 1.6em;
+  height: 1.6em;
+  border-radius: 50%;
+  font-size: var(--pb-font-body);
+  font-weight: 900;
+  background: var(--pb-accent-2-fill);
+  color: var(--pb-on-accent-2-fill);
+}
+
+.pickBadge {
+  align-self: flex-start;
+  padding: 0 var(--pb-space-3);
+  border-radius: 999px;
+  background: var(--card-paper);
+  color: var(--card-ink);
+  font-size: var(--pb-font-caption);
+  font-weight: 900;
+  line-height: 1.7;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Sizes: the phone column tokens are small, the TV shell's are large — both read from the tokens.
+   The size sits on the card so the sentence and a question card's answers agree. */
+.hero {
+  font-size: var(--pb-font-h1);
+}
+
+.hero.long {
+  font-size: var(--pb-font-h2);
+}
+
+.hero.veryLong {
+  font-size: var(--pb-font-body);
+}
+
+.grid {
+  font-size: var(--pb-font-body);
+}
+
+.phone {
+  font-size: var(--pb-font-h2);
+}
+
+.phone.long {
+  font-size: var(--pb-font-body);
+}
+
+.mini {
+  padding: var(--pb-space-3) var(--pb-space-4);
+  gap: var(--pb-space-2);
+  border-radius: var(--pb-radius);
+  font-size: var(--pb-font-caption);
+}
+
+.mini .sentence,
+.mini .extras {
+  font-weight: 700;
+}
+
+.mini.lettered {
+  padding-left: calc(var(--pb-space-4) + 1.9em);
+}
+
+.mini .letter {
+  top: var(--pb-space-3);
+  left: var(--pb-space-3);
+  width: 1.5em;
+  height: 1.5em;
+  font-size: var(--pb-font-caption);
+}
+
+.winner {
+  outline: 4px solid var(--pb-accent-2);
+  outline-offset: 2px;
+}
+
+/* ── TV stages ─────────────────────────────────────────────────────────────────────────────── */
+
+.stageCard {
+  width: min(100%, 1400px);
+  margin-inline: auto;
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+/* The card on stage floats in the free space; whatever sits under it hugs the bottom. */
+.stageMain {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 0;
+}
+
+/* The reveal card lands with a bounce (a new card on the table). */
+.landing {
+  animation: global(pb-pop) var(--pb-motion-slow) var(--pb-ease) both;
+}
+
+.judgeLine {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-4);
+}
+
+.pips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--pb-space-3);
+}
+
+.pip {
+  display: grid;
+  place-items: center;
+  width: var(--pb-space-7);
+  height: var(--pb-space-7);
+  border-radius: 50%;
+  background: var(--pb-surface-2);
+  color: var(--pb-on-accent);
+  font-size: var(--pb-font-body);
+  font-weight: 900;
+  line-height: 1;
+}
+
+.pipDone {
+  background: var(--pb-accent-3);
+}
+
+.pipPop {
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.progressSlot {
+  display: inline-flex;
+}
+
+.progressPill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-3);
+  padding: var(--pb-space-2) var(--pb-space-4);
+  border-radius: 999px;
+  background: var(--pb-surface-2);
+  color: var(--pb-text);
+  font-size: var(--pb-font-body);
+  font-weight: 700;
+  white-space: nowrap;
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.holdout {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+}
+
+/* The losing cards (result): a wrapping row of thumbnails. */
+.strip {
+  list-style: none;
+  margin: auto 0 0;
+  padding: var(--pb-space-3) 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pb-space-5) var(--pb-space-5);
+  width: 100%;
+}
+
+.strip > li {
+  flex: 1 1 380px;
+  max-width: 560px;
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+/* The losing cards (result): as many columns as fit, so twelve players stay on the stage. */
+.resultStrip {
+  list-style: none;
+  margin: auto 0 0;
+  padding: var(--pb-space-3) 0 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--pb-space-4);
+  width: 100%;
+}
+
+.resultStrip > li {
+  min-width: 0;
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+/* Cards already read (reveal): one row, the last four, never taller than the row. */
+.readRow {
+  flex-wrap: nowrap;
+}
+
+.readRow > li {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: none;
+}
+
+/* The judge grid: every card at once, columns by count (TvReveal.tsx gridClass). */
+.judgeGrid {
+  list-style: none;
+  margin: 0;
+  padding: var(--pb-space-3) 0 0;
+  display: grid;
+  gap: var(--pb-space-5);
+  width: 100%;
+  flex: 1;
+  align-content: start;
+}
+
+.judgeGrid > li {
+  min-width: 0;
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.grid2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grid3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.grid4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* Result: the winner card(s) in the middle, the rest in the strip below. */
+.headline {
+  min-height: 1.2em;
+}
+
+.winners {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.winnersSplit {
+  display: grid;
+  align-items: start;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  gap: var(--pb-space-5);
+}
+
+.author {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-3);
+  min-width: 0;
+  margin-top: var(--pb-space-2);
+}
+
+.authorName {
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  max-width: 12em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.voteCount {
+  padding: 0 var(--pb-space-3);
+  border-radius: 999px;
+  background: var(--pb-accent-2-fill);
+  color: var(--pb-on-accent-2-fill);
+  font-size: var(--pb-font-caption);
+  font-weight: 900;
+  line-height: 1.7;
+  white-space: nowrap;
+}
+
+.plusOne {
+  position: absolute;
+  top: calc(-1 * var(--pb-space-4));
+  right: var(--pb-space-5);
+  padding: 0 var(--pb-space-4);
+  border-radius: 999px;
+  background: var(--pb-accent-2-fill);
+  color: var(--pb-on-accent-2-fill);
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  line-height: 1.5;
+}
+
+.pending {
+  opacity: 0;
+}
+
+.rise {
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.pop {
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.board {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.ellipsis {
+  display: inline-block;
+  animation: pb-bl-ellipsis var(--pb-motion-pulse) ease-in-out infinite;
+}
+
+@keyframes pb-bl-ellipsis {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+/* ── Phone ─────────────────────────────────────────────────────────────────────────────────── */
+
+.hand {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-3);
+}
+
+/* A white card in the hand: white paper, black ink, a 3 px edge that turns accent when picked. */
+.white {
+  --card-ink: #111;
+  --card-paper: #fff;
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-3);
+  width: 100%;
+  min-height: 64px;
+  padding: var(--pb-space-3) var(--pb-space-4);
+  border-radius: var(--pb-radius);
+  background: var(--card-paper);
+  color: var(--card-ink);
+  border: 3px solid var(--pb-border);
+  text-align: left;
+  font: inherit;
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  line-height: 1.25;
+  cursor: pointer;
+  transition:
+    transform var(--pb-motion-fast) var(--pb-ease),
+    border-color var(--pb-motion-fast) var(--pb-ease);
+}
+
+.white:active {
+  transform: scale(0.98);
+}
+
+.whiteOn {
+  border-color: var(--pb-accent);
+  box-shadow: 0 0 0 3px var(--pb-accent);
+}
+
+.white:disabled {
+  cursor: default;
+  opacity: 0.7;
+}
+
+.whiteText {
+  flex: 1;
+  overflow-wrap: anywhere;
+}
+
+.order {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: var(--pb-space-6);
+  height: var(--pb-space-6);
+  border-radius: 50%;
+  background: var(--pb-accent);
+  color: var(--pb-on-accent);
+  font-size: var(--pb-font-body);
+  font-weight: 900;
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.judgeChip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-3);
+  padding: var(--pb-space-2) var(--pb-space-4) var(--pb-space-2) var(--pb-space-2);
+  border-radius: 999px;
+  background: var(--pb-surface);
+  font-weight: 800;
+}
+
+.voteRow {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--pb-space-3);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.voteLetter {
+  flex-shrink: 0;
+  font-weight: 900;
+  color: var(--pb-accent-2);
+}
+
+/* Vote rows repeat the black card's text: it goes quiet so the played words carry the row. */
+.inline > span {
+  color: var(--pb-text-muted);
+  font-weight: 600;
+}
+
+.inline .fill {
+  font-weight: 800;
+}
+
+.waitLine {
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-3);
+  font-weight: 700;
+}
+
+.cardList {
+  list-style: none;
+  margin: 0;
+  padding: var(--pb-space-3) 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-4);
+}
+
+.mineCard {
+  outline: 3px solid var(--pb-accent);
+  outline-offset: 2px;
+}
+
+.resultHero {
+  text-align: center;
+  padding: var(--pb-space-3) 0;
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.resultLine {
+  margin: 0;
+  font-size: var(--pb-font-h1);
+  font-weight: 900;
+  text-wrap: balance;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .white:active {
+    transform: none;
+  }
+}

@@ -1,0 +1,919 @@
+{
+  "id": "crude",
+  "name": "Crude",
+  "rating": "adult",
+  "black": [
+    {
+      "id": "cb1",
+      "text": "Nothing gets me out of bed like ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb2",
+      "text": "What's the one thing I'll never tell my mother?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb3",
+      "text": "My Tinder bio just says \"____.\"",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb4",
+      "text": "What did I wake up next to?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb5",
+      "text": "The bachelor party got out of hand after ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb6",
+      "text": "What's my signature move in bed?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb7",
+      "text": "I lost my virginity to ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb8",
+      "text": "My doctor says I have way too much ____ in my diet.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb9",
+      "text": "The strip club's new theme night: ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb10",
+      "text": "What's in my browser history?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb11",
+      "text": "I got kicked out of the family reunion for ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb12",
+      "text": "What did I find in my ex's nightstand?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb13",
+      "text": "The tattoo I regret most: ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb14",
+      "text": "My safe word is \"____.\"",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb15",
+      "text": "My dad walked in on me and ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb16",
+      "text": "What's the worst thing to yell during sex?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb17",
+      "text": "What did I do on the walk of shame?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb18",
+      "text": "The dating app for people who love ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb19",
+      "text": "My roommate keeps ____ in the freezer.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb20",
+      "text": "What's the real reason the club bathroom line is so long?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb21",
+      "text": "My therapist says I use ____ to cope.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb22",
+      "text": "What ruined the honeymoon?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb23",
+      "text": "Grandpa's last words: \"____.\"",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb24",
+      "text": "The cop pulled me over for ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb25",
+      "text": "What got me fired from the nursing home?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb26",
+      "text": "What's my dog's favorite thing to hump?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb27",
+      "text": "The only hangover cure that works: ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb28",
+      "text": "Why am I banned from the gym?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb29",
+      "text": "What's my mom's new boyfriend into?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb30",
+      "text": "I just found out my parents are into ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb31",
+      "text": "What's the new fragrance from the gas station?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb32",
+      "text": "What did I see at the nude beach?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb33",
+      "text": "My OnlyFans is just videos of ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb34",
+      "text": "What's the least sexy thing to say during a lap dance?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb35",
+      "text": "The wedding DJ got fired for ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb36",
+      "text": "What's my weird uncle's \"business\"?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb37",
+      "text": "What did the bridesmaids do with the stripper?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb38",
+      "text": "The bar's signature cocktail: two shots of ____ and a splash of ____.",
+      "pick": 2,
+      "draw": 0
+    },
+    {
+      "id": "cb39",
+      "text": "I'd rather ____ than ____.",
+      "pick": 2,
+      "draw": 0
+    },
+    {
+      "id": "cb40",
+      "text": "My love language is ____ and ____.",
+      "pick": 2,
+      "draw": 0
+    },
+    {
+      "id": "cb41",
+      "text": "A night out in three words: ____, ____, ____.",
+      "pick": 3,
+      "draw": 2
+    }
+  ],
+  "white": [
+    {
+      "id": "cw1",
+      "text": "Drunk-texting your dentist."
+    },
+    {
+      "id": "cw2",
+      "text": "A butt tattoo of a smaller butt."
+    },
+    {
+      "id": "cw3",
+      "text": "Peeing in the shower and calling it multitasking."
+    },
+    {
+      "id": "cw4",
+      "text": "A one-night stand who won't leave."
+    },
+    {
+      "id": "cw5",
+      "text": "My ex's new boyfriend's abs."
+    },
+    {
+      "id": "cw6",
+      "text": "Beer for breakfast."
+    },
+    {
+      "id": "cw7",
+      "text": "A sneeze that turned into something else."
+    },
+    {
+      "id": "cw8",
+      "text": "The strip club buffet."
+    },
+    {
+      "id": "cw9",
+      "text": "Farting in an elevator and blaming the dog."
+    },
+    {
+      "id": "cw10",
+      "text": "Puking in a Lyft."
+    },
+    {
+      "id": "cw11",
+      "text": "A public bathroom with no lock."
+    },
+    {
+      "id": "cw12",
+      "text": "Gas station Viagra."
+    },
+    {
+      "id": "cw13",
+      "text": "Mom's \"wine o'clock.\""
+    },
+    {
+      "id": "cw14",
+      "text": "A very hairy back."
+    },
+    {
+      "id": "cw15",
+      "text": "Dry-humping the couch."
+    },
+    {
+      "id": "cw16",
+      "text": "The neighbor's leaked nudes."
+    },
+    {
+      "id": "cw17",
+      "text": "Nipples in the wrong place."
+    },
+    {
+      "id": "cw18",
+      "text": "Weed brownies at a baby shower."
+    },
+    {
+      "id": "cw19",
+      "text": "Boob sweat."
+    },
+    {
+      "id": "cw20",
+      "text": "Waking up in a stranger's bathtub."
+    },
+    {
+      "id": "cw21",
+      "text": "A dick pic sent to the group chat."
+    },
+    {
+      "id": "cw22",
+      "text": "The walk of shame past a church group."
+    },
+    {
+      "id": "cw23",
+      "text": "Getting a boner at a funeral."
+    },
+    {
+      "id": "cw24",
+      "text": "A tramp stamp that says \"Mom.\""
+    },
+    {
+      "id": "cw25",
+      "text": "Grandma's thong."
+    },
+    {
+      "id": "cw26",
+      "text": "Vodka in a water bottle."
+    },
+    {
+      "id": "cw27",
+      "text": "A guy named Chad."
+    },
+    {
+      "id": "cw28",
+      "text": "Skinny-dipping in the neighbor's pool."
+    },
+    {
+      "id": "cw29",
+      "text": "My uncle's third divorce."
+    },
+    {
+      "id": "cw30",
+      "text": "Sexting the wrong Amanda."
+    },
+    {
+      "id": "cw31",
+      "text": "A hot tub that's mostly pee."
+    },
+    {
+      "id": "cw32",
+      "text": "Shaving your own butt."
+    },
+    {
+      "id": "cw33",
+      "text": "Erectile dysfunction ads during the big game."
+    },
+    {
+      "id": "cw34",
+      "text": "Hooking up in a Waffle House parking lot."
+    },
+    {
+      "id": "cw35",
+      "text": "A strip search at the airport."
+    },
+    {
+      "id": "cw36",
+      "text": "Tequila decisions."
+    },
+    {
+      "id": "cw37",
+      "text": "A yeast infection."
+    },
+    {
+      "id": "cw38",
+      "text": "A five-hour boner."
+    },
+    {
+      "id": "cw39",
+      "text": "Vaping in the shower."
+    },
+    {
+      "id": "cw40",
+      "text": "My mom finding my vibrator."
+    },
+    {
+      "id": "cw41",
+      "text": "A bidet set to \"punish.\""
+    },
+    {
+      "id": "cw42",
+      "text": "A dad bod."
+    },
+    {
+      "id": "cw43",
+      "text": "Moaning during a massage."
+    },
+    {
+      "id": "cw44",
+      "text": "Pooping at work."
+    },
+    {
+      "id": "cw45",
+      "text": "Crying during sex."
+    },
+    {
+      "id": "cw46",
+      "text": "The clap."
+    },
+    {
+      "id": "cw47",
+      "text": "A sugar daddy named Gary."
+    },
+    {
+      "id": "cw48",
+      "text": "A bra full of dollar bills."
+    },
+    {
+      "id": "cw49",
+      "text": "Losing your underwear at a wedding."
+    },
+    {
+      "id": "cw50",
+      "text": "Vomit-flavored vodka."
+    },
+    {
+      "id": "cw51",
+      "text": "A stranger's pube on the hotel soap."
+    },
+    {
+      "id": "cw52",
+      "text": "A bong made out of a pumpkin."
+    },
+    {
+      "id": "cw53",
+      "text": "My aunt after two margaritas."
+    },
+    {
+      "id": "cw54",
+      "text": "Faking it."
+    },
+    {
+      "id": "cw55",
+      "text": "A used condom in the pool."
+    },
+    {
+      "id": "cw56",
+      "text": "Naked karaoke."
+    },
+    {
+      "id": "cw57",
+      "text": "Ball sweat."
+    },
+    {
+      "id": "cw58",
+      "text": "A hickey the size of a pancake."
+    },
+    {
+      "id": "cw59",
+      "text": "A three-day hangover."
+    },
+    {
+      "id": "cw60",
+      "text": "A sex toy that takes eight batteries."
+    },
+    {
+      "id": "cw61",
+      "text": "Getting caught peeing behind a Denny's."
+    },
+    {
+      "id": "cw62",
+      "text": "The morning-after pill."
+    },
+    {
+      "id": "cw63",
+      "text": "Wine mom energy."
+    },
+    {
+      "id": "cw64",
+      "text": "Sneaking a fart in yoga class."
+    },
+    {
+      "id": "cw65",
+      "text": "Truck nuts."
+    },
+    {
+      "id": "cw66",
+      "text": "A pity handjob."
+    },
+    {
+      "id": "cw67",
+      "text": "Nudes with the toilet in the background."
+    },
+    {
+      "id": "cw68",
+      "text": "A tiny, apologetic penis."
+    },
+    {
+      "id": "cw69",
+      "text": "A blind date who brought his mom."
+    },
+    {
+      "id": "cw70",
+      "text": "Wet farts."
+    },
+    {
+      "id": "cw71",
+      "text": "A wedgie from God."
+    },
+    {
+      "id": "cw72",
+      "text": "Doing it in your childhood bed."
+    },
+    {
+      "id": "cw73",
+      "text": "The \"we need to talk\" text."
+    },
+    {
+      "id": "cw74",
+      "text": "Dropping your phone in the toilet mid-poop."
+    },
+    {
+      "id": "cw75",
+      "text": "A prostate exam."
+    },
+    {
+      "id": "cw76",
+      "text": "A stripper named Destiny."
+    },
+    {
+      "id": "cw77",
+      "text": "Getting drunk at a baby shower."
+    },
+    {
+      "id": "cw78",
+      "text": "Swiping on Tinder at a funeral."
+    },
+    {
+      "id": "cw79",
+      "text": "A boob job that went sideways."
+    },
+    {
+      "id": "cw80",
+      "text": "A threesome with a lava lamp."
+    },
+    {
+      "id": "cw81",
+      "text": "Sharting at the gym."
+    },
+    {
+      "id": "cw82",
+      "text": "Losing a bet and getting a mustache tattoo."
+    },
+    {
+      "id": "cw83",
+      "text": "My roommate's sex noises."
+    },
+    {
+      "id": "cw84",
+      "text": "A very sticky floor."
+    },
+    {
+      "id": "cw85",
+      "text": "Hair in unexpected places."
+    },
+    {
+      "id": "cw86",
+      "text": "Butt-dialing your mom during sex."
+    },
+    {
+      "id": "cw87",
+      "text": "Mom's boyfriend's Camaro."
+    },
+    {
+      "id": "cw88",
+      "text": "A lap dance from a guy named Dale."
+    },
+    {
+      "id": "cw89",
+      "text": "Sex with the lights on."
+    },
+    {
+      "id": "cw90",
+      "text": "Beer pong with wine."
+    },
+    {
+      "id": "cw91",
+      "text": "The condom aisle at Walmart."
+    },
+    {
+      "id": "cw92",
+      "text": "Crabs."
+    },
+    {
+      "id": "cw93",
+      "text": "A shower beer."
+    },
+    {
+      "id": "cw94",
+      "text": "Half a Xanax and a nap."
+    },
+    {
+      "id": "cw95",
+      "text": "A dick-shaped cake."
+    },
+    {
+      "id": "cw96",
+      "text": "The smell of a college dorm."
+    },
+    {
+      "id": "cw97",
+      "text": "Nipple clamps from the dollar store."
+    },
+    {
+      "id": "cw98",
+      "text": "Puking on a cop."
+    },
+    {
+      "id": "cw99",
+      "text": "A sad, sexy voicemail."
+    },
+    {
+      "id": "cw100",
+      "text": "Naked Twister."
+    },
+    {
+      "id": "cw101",
+      "text": "Blacking out at your cousin's wedding."
+    },
+    {
+      "id": "cw102",
+      "text": "A butt plug in the lost and found."
+    },
+    {
+      "id": "cw103",
+      "text": "Grandpa's Viagra."
+    },
+    {
+      "id": "cw104",
+      "text": "The pull-out method."
+    },
+    {
+      "id": "cw105",
+      "text": "Peeing your pants a little."
+    },
+    {
+      "id": "cw106",
+      "text": "A sexy Halloween costume for a pumpkin."
+    },
+    {
+      "id": "cw107",
+      "text": "Getting spanked by a lifeguard."
+    },
+    {
+      "id": "cw108",
+      "text": "Explosive diarrhea."
+    },
+    {
+      "id": "cw109",
+      "text": "Old people making out."
+    },
+    {
+      "id": "cw110",
+      "text": "Waking up with a stranger's teeth marks."
+    },
+    {
+      "id": "cw111",
+      "text": "Strip poker with your in-laws."
+    },
+    {
+      "id": "cw112",
+      "text": "Dropping a deuce at your girlfriend's parents' house."
+    },
+    {
+      "id": "cw113",
+      "text": "Gas station condoms."
+    },
+    {
+      "id": "cw114",
+      "text": "A porn addiction."
+    },
+    {
+      "id": "cw115",
+      "text": "Doing it with the TV on."
+    },
+    {
+      "id": "cw116",
+      "text": "Sweatpants boners."
+    },
+    {
+      "id": "cw117",
+      "text": "A cheating scandal at the retirement home."
+    },
+    {
+      "id": "cw118",
+      "text": "A monkey in heat."
+    },
+    {
+      "id": "cw119",
+      "text": "Butt stuff."
+    },
+    {
+      "id": "cw120",
+      "text": "Being too drunk to get it up."
+    },
+    {
+      "id": "cw121",
+      "text": "My dad's porn stash."
+    },
+    {
+      "id": "cw122",
+      "text": "A rash from the hot tub."
+    },
+    {
+      "id": "cw123",
+      "text": "Divorce lawyers."
+    },
+    {
+      "id": "cw124",
+      "text": "A bachelorette party with one stripper for twelve women."
+    },
+    {
+      "id": "cw125",
+      "text": "The clitoris."
+    },
+    {
+      "id": "cw126",
+      "text": "Ball hair on the toilet seat."
+    },
+    {
+      "id": "cw127",
+      "text": "Getting felt up at the DMV."
+    },
+    {
+      "id": "cw128",
+      "text": "Skidmarks."
+    },
+    {
+      "id": "cw129",
+      "text": "A drunk uncle with a karaoke mic."
+    },
+    {
+      "id": "cw130",
+      "text": "Menstrual cramps."
+    },
+    {
+      "id": "cw131",
+      "text": "Underboob."
+    },
+    {
+      "id": "cw132",
+      "text": "The smell of a strip club at noon."
+    },
+    {
+      "id": "cw133",
+      "text": "A wet dream about your boss."
+    },
+    {
+      "id": "cw134",
+      "text": "Regrettable eyebrow decisions."
+    },
+    {
+      "id": "cw135",
+      "text": "Doing body shots off a stranger."
+    },
+    {
+      "id": "cw136",
+      "text": "A \"back massage\" that was clearly not a back massage."
+    },
+    {
+      "id": "cw137",
+      "text": "Puberty."
+    },
+    {
+      "id": "cw138",
+      "text": "Sitting in someone else's pee."
+    },
+    {
+      "id": "cw139",
+      "text": "Hitting on a mannequin."
+    },
+    {
+      "id": "cw140",
+      "text": "The shirtless guy at the grocery store."
+    },
+    {
+      "id": "cw141",
+      "text": "Drunk-crying in a Denny's."
+    },
+    {
+      "id": "cw142",
+      "text": "Herpes."
+    },
+    {
+      "id": "cw143",
+      "text": "A leaked group chat."
+    },
+    {
+      "id": "cw144",
+      "text": "A hookup who quotes movies during sex."
+    },
+    {
+      "id": "cw145",
+      "text": "A urinal cake."
+    },
+    {
+      "id": "cw146",
+      "text": "Nude yoga for seniors."
+    },
+    {
+      "id": "cw147",
+      "text": "Making out with a stranger at a wake."
+    },
+    {
+      "id": "cw148",
+      "text": "A boner at the worst possible moment."
+    },
+    {
+      "id": "cw149",
+      "text": "A vibrating toothbrush."
+    },
+    {
+      "id": "cw150",
+      "text": "Pubes in the butter."
+    },
+    {
+      "id": "cw151",
+      "text": "The worst pickup line ever."
+    },
+    {
+      "id": "cw152",
+      "text": "Twerking at the company retreat."
+    },
+    {
+      "id": "cw153",
+      "text": "A sad handful of belly button lint."
+    },
+    {
+      "id": "cw154",
+      "text": "Getting dumped by text."
+    },
+    {
+      "id": "cw155",
+      "text": "Sex in a Porta-Potty."
+    },
+    {
+      "id": "cw156",
+      "text": "Cheap tequila and worse decisions."
+    },
+    {
+      "id": "cw157",
+      "text": "A sex tape shot vertically."
+    },
+    {
+      "id": "cw158",
+      "text": "A hangover poop."
+    },
+    {
+      "id": "cw159",
+      "text": "Motorboating."
+    },
+    {
+      "id": "cw160",
+      "text": "Peeing on the electric fence."
+    },
+    {
+      "id": "cw161",
+      "text": "A condom that expired in 2009."
+    },
+    {
+      "id": "cw162",
+      "text": "An erection in the frozen foods aisle."
+    },
+    {
+      "id": "cw163",
+      "text": "A period stain on the couch."
+    },
+    {
+      "id": "cw164",
+      "text": "Boob hair."
+    },
+    {
+      "id": "cw165",
+      "text": "Someone's dad on Grindr."
+    },
+    {
+      "id": "cw166",
+      "text": "A nip slip."
+    }
+  ]
+}

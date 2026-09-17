@@ -1,0 +1,89 @@
+// State and input types for Blanks. Everything is JSON-serializable (docs/GAME_CONTRACT.md).
+import { z } from '@partybox/game-sdk';
+import type { GameStateBase } from '@partybox/game-sdk';
+
+export const PHASES = ['intro', 'answer', 'reveal', 'judge', 'result', 'done'] as const;
+export type PhaseId = (typeof PHASES)[number];
+
+export const DECK_PRESETS = ['mild', 'adults', 'wild', 'wild-only'] as const;
+export type DeckPreset = (typeof DECK_PRESETS)[number];
+export const JUDGE_MODES = ['vote', 'czar'] as const;
+export type JudgeMode = (typeof JUDGE_MODES)[number];
+
+export interface Settings {
+  decks: DeckPreset;
+  judge: JudgeMode;
+  rounds: number;
+  answerSeconds: number;
+  rando: boolean;
+}
+
+export interface Stats {
+  /** playerId → votes received over the game (Crowd favourite). */
+  votesReceived: Record<string, number>;
+  /** playerId → cards played before half the answer time (Quick draw). */
+  fastPlays: Record<string, number>;
+}
+
+export interface State extends GameStateBase {
+  settings: Settings;
+  /** Seat order (ids sorted): the judge rotates through it. */
+  order: string[];
+  /** Shuffled card ids not yet drawn; `discard` is reshuffled in when a deck runs dry. */
+  blackDeck: string[];
+  whiteDeck: string[];
+  discard: string[];
+  /** playerId → white card ids in hand (HAND_SIZE, fewer only when the decks run out). */
+  hands: Record<string, string[]>;
+  /** 1-based; 0 before the first intro. */
+  round: number;
+  /** The black card on stage (id into the content); null before round 1. */
+  blackId: string | null;
+  /** The judge this round (czar mode), else null. */
+  czarId: string | null;
+  /** submitterId (a player or RANDO) → white card ids in blank order. */
+  submissions: Record<string, string[]>;
+  /** Submitter ids in reveal / vote order (shuffled when the answer phase closes); the index is
+   *  the anonymous slot the views and the vote input use. Empty until then. */
+  slots: string[];
+  /** reveal: which slot is being read. */
+  revealIndex: number;
+  /** voterId → slot voted for. */
+  votes: Record<string, number>;
+  /** result: the submitter ids that won the round (may be RANDO; empty = no winner). */
+  winners: string[];
+  scores: Record<string, number>;
+  stats: Stats;
+}
+
+export const inputSchema = z.discriminatedUnion('type', [
+  z.object({
+    type: z.literal('play'),
+    /** White card ids from the hand, in blank order; exactly the black card's pick. */
+    cards: z.array(z.string().min(1).max(8)).min(1).max(3),
+  }),
+  z.object({
+    type: z.literal('vote'),
+    /** Anonymous slot (index into `slots`). */
+    slot: z.number().int().min(0).max(15),
+  }),
+]);
+export type Input = z.infer<typeof inputSchema>;
+export type PlayInput = Extract<Input, { type: 'play' }>;
+export type VoteInput = Extract<Input, { type: 'vote' }>;
+
+export const HAND_SIZE = 10;
+export const INTRO_MS = 5_000;
+/** Extra answer seconds per white card beyond the first. */
+export const EXTRA_PICK_S = 15;
+/** A reveal card stays up 3.5 s plus 35 ms per character, capped at 8 s. */
+export const REVEAL_MIN_MS = 3_500;
+export const REVEAL_PER_CHAR_MS = 35;
+export const REVEAL_MAX_MS = 8_000;
+export const JUDGE_VOTE_MS = 30_000;
+export const JUDGE_CZAR_MS = 45_000;
+export const RESULT_MS = 8_000;
+export const WIN_POINTS = 1;
+/** The phantom player's submitter id (the "rando" setting). */
+export const RANDO = 'rando';
+export const RANDO_NAME = 'Rando';

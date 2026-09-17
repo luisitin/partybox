@@ -1,0 +1,917 @@
+{
+  "id": "mild",
+  "name": "Mild",
+  "rating": "clean",
+  "black": [
+    {
+      "id": "mb1",
+      "text": "Coming soon to a theme park near you: ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb2",
+      "text": "Grandpa's secret to a long life? ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb3",
+      "text": "The real reason I was late to work: ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb4",
+      "text": "Instead of a wedding cake, we had ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb5",
+      "text": "What's in the mystery box?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb6",
+      "text": "What did I find in the couch cushions?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb7",
+      "text": "My new startup is basically Uber for ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb8",
+      "text": "The school play this year is about ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb9",
+      "text": "What's the worst thing to hear from your dentist?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb10",
+      "text": "This Thanksgiving, Grandma outdid herself with ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb11",
+      "text": "After the power went out, we survived on ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb12",
+      "text": "The neighbors called the police over ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb13",
+      "text": "What's the hot new fitness trend?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb14",
+      "text": "Scientists have finally explained ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb15",
+      "text": "What's the secret ingredient in Mom's famous chili?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb16",
+      "text": "In the year 3000, historians will remember us for ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb17",
+      "text": "What do I dream about every single night?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb18",
+      "text": "The cruise ship's entertainment tonight: ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb19",
+      "text": "What did the dog eat this time?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb20",
+      "text": "Our new team mascot is ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb21",
+      "text": "The museum's most popular exhibit: ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb22",
+      "text": "What did I get for my birthday?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb23",
+      "text": "Nothing says \"I love you\" like ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb24",
+      "text": "What is the airline charging extra for now?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb25",
+      "text": "The HOA has officially banned ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb26",
+      "text": "What's the best part of waking up?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb27",
+      "text": "The world's most boring podcast is about ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb28",
+      "text": "What do I collect that worries my family?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb29",
+      "text": "The new phone's killer feature: ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb30",
+      "text": "What did I trade my brother for?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb31",
+      "text": "What's the name of my garage band?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb32",
+      "text": "This year's best-selling children's book: \"Goodnight, ____.\"",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb33",
+      "text": "What's the weirdest thing on my pizza?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb34",
+      "text": "The zoo's newest attraction: ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb35",
+      "text": "What did my roommate leave in the fridge?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb36",
+      "text": "What does my cat do while I'm at work?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb37",
+      "text": "____ is just ____ for grown-ups.",
+      "pick": 2,
+      "draw": 0
+    },
+    {
+      "id": "mb38",
+      "text": "I tried to fix ____ with ____.",
+      "pick": 2,
+      "draw": 0
+    },
+    {
+      "id": "mb39",
+      "text": "Grandma's advice: \"Never trust ____, and always carry ____.\"",
+      "pick": 2,
+      "draw": 0
+    },
+    {
+      "id": "mb40",
+      "text": "My three-step morning routine: ____, ____, ____.",
+      "pick": 3,
+      "draw": 2
+    }
+  ],
+  "white": [
+    {
+      "id": "mw1",
+      "text": "A raccoon in a tiny sweater."
+    },
+    {
+      "id": "mw2",
+      "text": "Forty pounds of expired coupons."
+    },
+    {
+      "id": "mw3",
+      "text": "The smell of a new tennis ball."
+    },
+    {
+      "id": "mw4",
+      "text": "My uncle's timeshare presentation."
+    },
+    {
+      "id": "mw5",
+      "text": "A hot tub full of pudding."
+    },
+    {
+      "id": "mw6",
+      "text": "The last slice of pizza."
+    },
+    {
+      "id": "mw7",
+      "text": "Losing a staring contest with a goat."
+    },
+    {
+      "id": "mw8",
+      "text": "A very confident pigeon."
+    },
+    {
+      "id": "mw9",
+      "text": "Bagpipes at 6 a.m."
+    },
+    {
+      "id": "mw10",
+      "text": "Grandma's Facebook comments."
+    },
+    {
+      "id": "mw11",
+      "text": "The wrong kind of glue."
+    },
+    {
+      "id": "mw12",
+      "text": "A cardboard cutout of my dentist."
+    },
+    {
+      "id": "mw13",
+      "text": "Extremely aggressive mini-golf."
+    },
+    {
+      "id": "mw14",
+      "text": "Twelve geese with an agenda."
+    },
+    {
+      "id": "mw15",
+      "text": "Pretending to understand cricket."
+    },
+    {
+      "id": "mw16",
+      "text": "A haunted vending machine."
+    },
+    {
+      "id": "mw17",
+      "text": "The DMV waiting room."
+    },
+    {
+      "id": "mw18",
+      "text": "Naming a goldfish \"Doug.\""
+    },
+    {
+      "id": "mw19",
+      "text": "A motivational poster in the bathroom."
+    },
+    {
+      "id": "mw20",
+      "text": "Toddler logic."
+    },
+    {
+      "id": "mw21",
+      "text": "My dad's \"famous\" burgers."
+    },
+    {
+      "id": "mw22",
+      "text": "Yodeling."
+    },
+    {
+      "id": "mw23",
+      "text": "A sock full of quarters."
+    },
+    {
+      "id": "mw24",
+      "text": "The world's largest ball of twine."
+    },
+    {
+      "id": "mw25",
+      "text": "Mall walkers."
+    },
+    {
+      "id": "mw26",
+      "text": "The velociraptor from the museum gift shop."
+    },
+    {
+      "id": "mw27",
+      "text": "Interpretive dance."
+    },
+    {
+      "id": "mw28",
+      "text": "A suspiciously friendly squirrel."
+    },
+    {
+      "id": "mw29",
+      "text": "Parallel parking on the first try."
+    },
+    {
+      "id": "mw30",
+      "text": "A lifetime supply of pickles."
+    },
+    {
+      "id": "mw31",
+      "text": "The face my mom makes at my haircut."
+    },
+    {
+      "id": "mw32",
+      "text": "Reheated fish in the office microwave."
+    },
+    {
+      "id": "mw33",
+      "text": "Getting picked last in gym class."
+    },
+    {
+      "id": "mw34",
+      "text": "A karaoke machine with only one song."
+    },
+    {
+      "id": "mw35",
+      "text": "Sneezing on a roller coaster."
+    },
+    {
+      "id": "mw36",
+      "text": "A fully armed snowman."
+    },
+    {
+      "id": "mw37",
+      "text": "A mattress store that never closes."
+    },
+    {
+      "id": "mw38",
+      "text": "A moose on a Jet Ski."
+    },
+    {
+      "id": "mw39",
+      "text": "Chewing very loudly."
+    },
+    {
+      "id": "mw40",
+      "text": "The guy who claps when the plane lands."
+    },
+    {
+      "id": "mw41",
+      "text": "Slightly damp socks."
+    },
+    {
+      "id": "mw42",
+      "text": "A trampoline park for seniors."
+    },
+    {
+      "id": "mw43",
+      "text": "Grandpa's war stories about a lawnmower."
+    },
+    {
+      "id": "mw44",
+      "text": "Free samples."
+    },
+    {
+      "id": "mw45",
+      "text": "An unsupervised Roomba."
+    },
+    {
+      "id": "mw46",
+      "text": "A dog wearing sunglasses."
+    },
+    {
+      "id": "mw47",
+      "text": "Screaming into a canyon."
+    },
+    {
+      "id": "mw48",
+      "text": "The smell of the school bus."
+    },
+    {
+      "id": "mw49",
+      "text": "Learning the accordion."
+    },
+    {
+      "id": "mw50",
+      "text": "A llama with a grudge."
+    },
+    {
+      "id": "mw51",
+      "text": "Losing the remote inside the couch."
+    },
+    {
+      "id": "mw52",
+      "text": "Gas station sushi."
+    },
+    {
+      "id": "mw53",
+      "text": "A Renaissance fair turkey leg."
+    },
+    {
+      "id": "mw54",
+      "text": "Whispering \"good luck\" to a houseplant."
+    },
+    {
+      "id": "mw55",
+      "text": "The middle seat."
+    },
+    {
+      "id": "mw56",
+      "text": "A very small horse."
+    },
+    {
+      "id": "mw57",
+      "text": "A sandwich with too much mayonnaise."
+    },
+    {
+      "id": "mw58",
+      "text": "Two raccoons in a trench coat."
+    },
+    {
+      "id": "mw59",
+      "text": "A tax refund of four dollars."
+    },
+    {
+      "id": "mw60",
+      "text": "Rollerblading to a job interview."
+    },
+    {
+      "id": "mw61",
+      "text": "The Loch Ness Monster's less famous cousin."
+    },
+    {
+      "id": "mw62",
+      "text": "A grandma who deadlifts."
+    },
+    {
+      "id": "mw63",
+      "text": "Deviled eggs at a funeral."
+    },
+    {
+      "id": "mw64",
+      "text": "Grown men playing laser tag."
+    },
+    {
+      "id": "mw65",
+      "text": "A whale."
+    },
+    {
+      "id": "mw66",
+      "text": "A kazoo solo."
+    },
+    {
+      "id": "mw67",
+      "text": "Hiding in a Costco overnight."
+    },
+    {
+      "id": "mw68",
+      "text": "The one uncle who does magic tricks."
+    },
+    {
+      "id": "mw69",
+      "text": "A pool noodle."
+    },
+    {
+      "id": "mw70",
+      "text": "Cheese."
+    },
+    {
+      "id": "mw71",
+      "text": "Tiny, furious birds."
+    },
+    {
+      "id": "mw72",
+      "text": "Naps."
+    },
+    {
+      "id": "mw73",
+      "text": "The thing under the bed."
+    },
+    {
+      "id": "mw74",
+      "text": "A tie-dye tuxedo."
+    },
+    {
+      "id": "mw75",
+      "text": "Beans."
+    },
+    {
+      "id": "mw76",
+      "text": "Bringing a ladder to a picnic."
+    },
+    {
+      "id": "mw77",
+      "text": "An emotional support cactus."
+    },
+    {
+      "id": "mw78",
+      "text": "A duck with a job."
+    },
+    {
+      "id": "mw79",
+      "text": "Falling asleep in a movie theater."
+    },
+    {
+      "id": "mw80",
+      "text": "A treehouse with a doorbell."
+    },
+    {
+      "id": "mw81",
+      "text": "Talking to the self-checkout machine."
+    },
+    {
+      "id": "mw82",
+      "text": "Extreme couponing."
+    },
+    {
+      "id": "mw83",
+      "text": "A jar of buttons."
+    },
+    {
+      "id": "mw84",
+      "text": "Being forty minutes early to everything."
+    },
+    {
+      "id": "mw85",
+      "text": "My old flip phone."
+    },
+    {
+      "id": "mw86",
+      "text": "The Tooth Fairy's expense report."
+    },
+    {
+      "id": "mw87",
+      "text": "A weather app that just says \"maybe.\""
+    },
+    {
+      "id": "mw88",
+      "text": "Someone else's Wi-Fi."
+    },
+    {
+      "id": "mw89",
+      "text": "A hedgehog in a party hat."
+    },
+    {
+      "id": "mw90",
+      "text": "Elevator music."
+    },
+    {
+      "id": "mw91",
+      "text": "A slide made of ice."
+    },
+    {
+      "id": "mw92",
+      "text": "The neighbor's Christmas lights in April."
+    },
+    {
+      "id": "mw93",
+      "text": "Bubble wrap."
+    },
+    {
+      "id": "mw94",
+      "text": "A recipe that just says \"season to taste.\""
+    },
+    {
+      "id": "mw95",
+      "text": "A hamster on a tiny treadmill."
+    },
+    {
+      "id": "mw96",
+      "text": "Quietly winning Monopoly."
+    },
+    {
+      "id": "mw97",
+      "text": "Getting hit by a foul ball."
+    },
+    {
+      "id": "mw98",
+      "text": "A very long escalator."
+    },
+    {
+      "id": "mw99",
+      "text": "Forgetting your own phone number."
+    },
+    {
+      "id": "mw100",
+      "text": "A gorilla."
+    },
+    {
+      "id": "mw101",
+      "text": "Wearing a cape to the grocery store."
+    },
+    {
+      "id": "mw102",
+      "text": "A bucket of hail."
+    },
+    {
+      "id": "mw103",
+      "text": "Dad jokes."
+    },
+    {
+      "id": "mw104",
+      "text": "A yard sale with one item."
+    },
+    {
+      "id": "mw105",
+      "text": "A juice box."
+    },
+    {
+      "id": "mw106",
+      "text": "The wrong bus."
+    },
+    {
+      "id": "mw107",
+      "text": "A snake that just wants a hug."
+    },
+    {
+      "id": "mw108",
+      "text": "Dropping the cake."
+    },
+    {
+      "id": "mw109",
+      "text": "Camping in the backyard."
+    },
+    {
+      "id": "mw110",
+      "text": "A grandma hug that cracks your back."
+    },
+    {
+      "id": "mw111",
+      "text": "A canoe in the living room."
+    },
+    {
+      "id": "mw112",
+      "text": "A goat on the roof."
+    },
+    {
+      "id": "mw113",
+      "text": "Doing the robot at a wedding."
+    },
+    {
+      "id": "mw114",
+      "text": "Marshmallows."
+    },
+    {
+      "id": "mw115",
+      "text": "My gym teacher's whistle."
+    },
+    {
+      "id": "mw116",
+      "text": "Naming a hurricane after your ex."
+    },
+    {
+      "id": "mw117",
+      "text": "A giant inflatable flamingo."
+    },
+    {
+      "id": "mw118",
+      "text": "A sneeze that hits three people."
+    },
+    {
+      "id": "mw119",
+      "text": "The Great Wall of China's gift shop."
+    },
+    {
+      "id": "mw120",
+      "text": "Waffles for dinner."
+    },
+    {
+      "id": "mw121",
+      "text": "Getting lost in IKEA."
+    },
+    {
+      "id": "mw122",
+      "text": "Wind."
+    },
+    {
+      "id": "mw123",
+      "text": "A cow with an attitude."
+    },
+    {
+      "id": "mw124",
+      "text": "The Bermuda Triangle."
+    },
+    {
+      "id": "mw125",
+      "text": "A mime who won't stop talking."
+    },
+    {
+      "id": "mw126",
+      "text": "A soggy sandwich."
+    },
+    {
+      "id": "mw127",
+      "text": "Forgetting where you parked."
+    },
+    {
+      "id": "mw128",
+      "text": "The world's saddest clown."
+    },
+    {
+      "id": "mw129",
+      "text": "Airport carpet."
+    },
+    {
+      "id": "mw130",
+      "text": "A helicopter parent."
+    },
+    {
+      "id": "mw131",
+      "text": "The 4 a.m. garbage truck."
+    },
+    {
+      "id": "mw132",
+      "text": "A puppy that won't stop sneezing."
+    },
+    {
+      "id": "mw133",
+      "text": "Mildly spicy salsa."
+    },
+    {
+      "id": "mw134",
+      "text": "A pillow fort with a security system."
+    },
+    {
+      "id": "mw135",
+      "text": "Jazz hands."
+    },
+    {
+      "id": "mw136",
+      "text": "A rotary phone."
+    },
+    {
+      "id": "mw137",
+      "text": "A field trip to the water treatment plant."
+    },
+    {
+      "id": "mw138",
+      "text": "My aunt's potato salad."
+    },
+    {
+      "id": "mw139",
+      "text": "A koala with strong opinions."
+    },
+    {
+      "id": "mw140",
+      "text": "Bird poop on a brand-new car."
+    },
+    {
+      "id": "mw141",
+      "text": "A jigsaw puzzle with one piece missing."
+    },
+    {
+      "id": "mw142",
+      "text": "Eating cereal with a fork."
+    },
+    {
+      "id": "mw143",
+      "text": "An owl who works nights."
+    },
+    {
+      "id": "mw144",
+      "text": "My fifth-grade science fair volcano."
+    },
+    {
+      "id": "mw145",
+      "text": "A hot air balloon with no brakes."
+    },
+    {
+      "id": "mw146",
+      "text": "A pirate with excellent manners."
+    },
+    {
+      "id": "mw147",
+      "text": "Elbow macaroni."
+    },
+    {
+      "id": "mw148",
+      "text": "The lint trap."
+    },
+    {
+      "id": "mw149",
+      "text": "A room full of golden retrievers."
+    },
+    {
+      "id": "mw150",
+      "text": "Somebody else's toothbrush."
+    },
+    {
+      "id": "mw151",
+      "text": "A bake sale gone wrong."
+    },
+    {
+      "id": "mw152",
+      "text": "Lawn flamingos."
+    },
+    {
+      "id": "mw153",
+      "text": "A wizard with a day job."
+    },
+    {
+      "id": "mw154",
+      "text": "Not washing the strawberries."
+    },
+    {
+      "id": "mw155",
+      "text": "A Tuesday."
+    },
+    {
+      "id": "mw156",
+      "text": "A picnic in the rain."
+    },
+    {
+      "id": "mw157",
+      "text": "A choir of cats."
+    },
+    {
+      "id": "mw158",
+      "text": "A babysitter who's afraid of the dark."
+    },
+    {
+      "id": "mw159",
+      "text": "Whatever is in the church basement."
+    },
+    {
+      "id": "mw160",
+      "text": "A parade for no reason."
+    },
+    {
+      "id": "mw161",
+      "text": "Sea monkeys."
+    },
+    {
+      "id": "mw162",
+      "text": "The floor being lava."
+    },
+    {
+      "id": "mw163",
+      "text": "A trombone."
+    },
+    {
+      "id": "mw164",
+      "text": "Socks with sandals."
+    },
+    {
+      "id": "mw165",
+      "text": "A bee that means business."
+    },
+    {
+      "id": "mw166",
+      "text": "Chocolate milk."
+    },
+    {
+      "id": "mw167",
+      "text": "A Zamboni."
+    }
+  ]
+}

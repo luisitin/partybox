@@ -5,6 +5,10 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Blanks** (`games/blanks`): fill-in-the-blank card comedy — a black card, a hand of ten white
+  cards, one-at-a-time read-outs on the TV (and on every phone, so it plays without a TV), everyone
+  votes or a rotating judge picks, one point per round; three decks (Mild / Crude / WILD) chosen by
+  the VIP, optional Rando phantom player; bots welcome.
 - **Bingo** (`games/bingo`): 75-ball bingo with free daubing, a public check that pauses the caller
   (green ✓ / red ✕ / missed squares), a wiped card as the penalty for a wrong BINGO!, a pattern per
   round (line / four corners / X / blackout), cheeky caller phrases; bots welcome.

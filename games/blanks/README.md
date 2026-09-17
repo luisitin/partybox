@@ -1,0 +1,71 @@
+# Blanks — the spec (tests and the stress session treat it as the truth; original content only)
+
+## Overview
+
+A black card sets up a sentence with a blank (or asks a question); every player but the judge plays
+white cards from a hand of ten to finish it. The TV — and every phone — reads each combination out one
+at a time, anonymously; then the room votes (or a rotating judge picks). The winner's author is revealed
+and takes one point. Playable with no TV in the room: from the reveal on, the phones carry the same cards.
+
+## Players
+
+3–12; ≈ 15 min by default (6 rounds). Every `init` player plays every round, connected or not (a
+disconnected player's card is simply not played). Late joiners spectate (engine behaviour). Bots:
+welcome (`supportsBots`) — the bot plays random cards from its hand and votes at random.
+
+## Phases
+
+| Phase    | TV                                                 | Phone                                                       | Exit                                                                                                |
+| -------- | -------------------------------------------------- | ----------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| `intro`  | "Round r of R" (+ the judge's name in czar mode)   | round card                                                  | 5 s or VIP skip → `answer`                                                                          |
+| `answer` | the black card, "n / m in" + who is missing        | black card + hand; tap `pick` cards in order, play          | all connected answerers played, `answerSeconds` + 15 s per extra card, or VIP skip → first `reveal` |
+| `reveal` | one filled card, big; the ones already read, small | the same card                                               | 3.5 s + 35 ms/char (≤ 8 s) → next `reveal` or `judge`; VIP skip → `judge`                           |
+| `judge`  | every card with its letter, "n / m voted"          | voters: `VoteList`; the judge alone in czar mode; rest wait | all connected eligible voters voted, 30 s (45 s czar), or VIP skip (votes so far count) → `result`  |
+| `result` | winner card + author + votes, other authors, +1    | winner card, my score / rank, compact board                 | 8 s or VIP skip → next `intro`, or `done` after round `rounds`                                      |
+| `done`   | final board                                        | final rank + board                                          | terminal: `results()` non-null. VIP end from any phase → `done` with the scores so far              |
+
+Round start (`intro` entry): last round's played cards to the discard, hands back to 10 (+ the black
+card's `draw`), a black card drawn, the judge chosen (czar mode: seat order by id, one per round,
+disconnected seats skipped), Rando's cards taken (setting). Decks shuffled once at `init`; a dry white deck
+reshuffles the discard, a dry black deck reshuffles its pool. Slots (reveal / vote order) are shuffled
+when `answer` closes, so a letter never hints at who played it.
+
+## Inputs
+
+`{ type: 'play', cards: string[1..3] }` — during `answer`, from a non-judge player, once: exactly the
+black card's `pick` ids, distinct, all in that player's hand, in blank order. `{ type: 'vote', slot }` —
+during `judge`, from an eligible voter (everyone in vote mode; the judge alone in czar mode), once, never
+on their own slot. Anything else leaves the state unchanged.
+
+## Scoring
+
+One point per round to the most-voted card's author; a tie shares the point. One submission is a
+**walkover** (no reading, no vote, one point). No votes → nobody scores. Rando's wins pay nobody. Points
+lock in when `result` starts, once per round. Ties share a rank; winners = every rank-1 player. Awards
+(a real player each; ties → higher score, then lower id): **Crowd favourite** (most votes received, if
+any), **Quick draw** (most cards played before half the answer time, measured against the deadline).
+
+## Edge cases
+
+- Nobody played: `answer` → `result` ("Nobody played a card"), no reveal, no vote.
+- A voter whose card is the only one up (everyone else sat out) is not waited for and cannot vote.
+- Disconnected players never block "all played" / "all voted"; the judge dropping during `judge` ends
+  it with no winner. A reconnect before the deadline can act. VIP skip: `intro` → `answer`; `answer` →
+  reveal with the cards so far; `reveal` → `judge` (rest of the reading skipped); `judge` → `result`
+  with the votes so far; `result` → next `intro` or `done`. VIP end → `done` from anywhere (a round
+  whose `result` never ran scores nothing). Pause holds the deadline. Every phase but `done` has a
+  deadline, so an idle room finishes on timers alone.
+- A hand short of `pick` (only with a tiny deck) sits the round out; the phone says so.
+
+## Settings
+
+`decks` select `wild` (`mild` · `adults` = mild + crude · `wild` = all three · `wild-only`) · `judge`
+select `vote` (`vote` = everyone votes, `czar` = a rotating judge) · `rounds` number 6 (3–15) ·
+`answerSeconds` number 60 (30–120, step 15) · `rando` boolean false.
+
+## Content
+
+Three decks, `mild.json` (clean, 40 black / 167 white), `crude.json` (adult, 41 / 166) and `wild.json`
+(explicit, 111 / 503): `{ id, name, rating, black: [{ id, text, pick, draw }], white: [{ id, text }] }`,
+blanks written `____`, `pick` ≥ blanks (a question card has none), `draw` 2 on Pick 3 cards. Generic
+names only, no real people; no slurs or hate, nothing sexual involving minors, no non-consent.

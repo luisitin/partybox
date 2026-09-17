@@ -1,0 +1,31 @@
+// TV view for Blanks: one small component per phase. Dumb by design: renders `view`, never
+// touches sockets or game logic. The shell already shows the timer, player chips and VIP overlay.
+import type { JSX } from 'react';
+import { BigText, Stage } from '@partybox/game-sdk/ui';
+import type { GameTvProps } from '@partybox/game-sdk/ui';
+import type { BlanksTvView } from '../server/index';
+import { TvJudge, TvReveal } from './TvReveal';
+import { TvResult } from './TvResult';
+import { TvAnswer, TvIntro } from './TvRound';
+
+export function Tv({ view }: GameTvProps<BlanksTvView>): JSX.Element {
+  switch (view.phaseId) {
+    case 'intro':
+      return <TvIntro view={view} />;
+    case 'answer':
+      return <TvAnswer view={view} />;
+    case 'reveal':
+      return <TvReveal view={view} />;
+    case 'judge':
+      return <TvJudge view={view} />;
+    case 'result':
+    case 'done':
+      return <TvResult view={view} />;
+    default:
+      return (
+        <Stage center>
+          <BigText tone="muted">…</BigText>
+        </Stage>
+      );
+  }
+}
