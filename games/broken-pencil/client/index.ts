@@ -6,6 +6,10 @@ export const clientModule: GameClientModule = {
   id: 'broken-pencil',
   Tv: lazy(() => import('./Tv').then((m) => ({ default: m.Tv }))),
   Controller: lazy(() => import('./Controller').then((m) => ({ default: m.Controller }))),
+  // No points: the results headline says the show is over, and the summary stays up there.
+  scoreless: true,
+  finale: (view) => view.phaseId === 'summary' || view.phaseId === 'done',
+  Finale: lazy(() => import('./Finale').then((m) => ({ default: m.Finale }))),
   sounds: { show: 'reveal' },
   // Owner pick: lounge tracks, quiet, only while people draw and guess (never over the reveal).
   music: {

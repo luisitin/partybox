@@ -6,6 +6,7 @@ import { useEffect, useRef } from 'react';
 import type { JSX } from 'react';
 import type { PlayerPublic, RoomSnapshot } from '@partybox/shared';
 import { PrimaryButton, Scoreboard, Screen } from '@partybox/game-sdk/ui';
+import { clientGames } from '../games.generated';
 import { t } from '../i18n';
 import type { Controller } from '../net/controller';
 import { myRow, nobodyScored, scoreboardRows, winnerLineFor } from './results-rows';
@@ -25,7 +26,8 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
   }, []);
   const rows = scoreboardRows(room);
   const mine = myRow(room, me.id);
-  const over = nobodyScored(room);
+  const scoreless = room.results ? clientGames[room.results.gameId]?.scoreless === true : false;
+  const over = nobodyScored(room) && !scoreless;
   const vipName = room.players.find((p) => p.id === room.vip)?.name;
   return (
     <Screen
@@ -65,15 +67,15 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
         )
       }
     >
-      <p className={styles.winner}>{winnerLineFor(room, me.id)}</p>
+      <p className={styles.winner}>{winnerLineFor(room, me.id, scoreless)}</p>
       {over ? <p className="pb-muted pb-caption">{t.results.nobodyScored}</p> : null}
-      {mine && !over ? (
+      {mine && !over && !scoreless ? (
         <p className={`pb-muted pb-caption ${styles.place}`}>
           {t.results.yourPlace(mine.rank, mine.score)}
         </p>
       ) : null}
       <div ref={list}>
-        <Scoreboard rows={rows} compact highlightId={me.id} noTrophy={over} />
+        <Scoreboard rows={rows} compact highlightId={me.id} noTrophy={over || scoreless} />
       </div>
       {room.results?.results.awards.length ? (
         <ul className={styles.awards}>

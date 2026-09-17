@@ -66,6 +66,7 @@ export const t = {
     tieAmong: (names: string, others: number) => `${names} & ${others} others tie!`,
     tie: "It's a tie!",
     over: 'Game over',
+    show: "That's the show!",
     nobodyScored: 'Nobody scored this time — everyone ties.',
     playAgain: 'Play again',
     newGame: 'New game',

@@ -7,6 +7,7 @@ import { Avatar, BigText, Stage } from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
 import type { PageView, PencilTvView } from '../server/views';
 import { DrawingView } from './DrawingView';
+import { Summary } from './Finale';
 import styles from './Tv.module.css';
 
 const STAGE_MARK = { guess: '💬', draw: '✏️', done: '✓' } as const;
@@ -216,26 +217,9 @@ export function Tv({ view }: GameTvProps<PencilTvView>): JSX.Element {
     );
   }
 
-  const summary = view.summary ?? [];
   return (
     <Stage>
-      <BigText level="h1" tone="accent">
-        {view.intactBooks} of {view.bookCount} books survived
-      </BigText>
-      <p className={styles.kicker}>every book, first word → last guess</p>
-      <ul className={styles.summary}>
-        {summary.map((b) => (
-          <li key={b.ownerId} className={styles.summaryRow}>
-            <span className={styles.summaryOwner}>{b.ownerName}</span>
-            <span className={styles.summaryPair}>
-              {b.word} → {b.last}
-            </span>
-            <span className={b.intact ? styles.intactMark : styles.brokenMark}>
-              {b.intact ? '✓ unbroken' : '✕ broken'}
-            </span>
-          </li>
-        ))}
-      </ul>
+      <Summary view={view} />
     </Stage>
   );
 }

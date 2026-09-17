@@ -34,9 +34,11 @@ export function nobodyScored(room: RoomSnapshot): boolean {
   return scores.length > 0 && scores.every((s) => s <= 0);
 }
 
-export function winnerLine(room: RoomSnapshot): string {
+export function winnerLine(room: RoomSnapshot, scoreless = false): string {
   const results = room.results;
   if (!results) return '';
+  // A game without points (Broken Pencil) is a show, not a tie (review-loop #63).
+  if (scoreless) return t.results.show;
   // Everyone on zero is still a tie (review-loop #6): the headline says so; the screens add why.
   if (nobodyScored(room)) return results.players.length > 1 ? t.results.tie : t.results.over;
   const ids = results.results.winnerIds;
@@ -57,10 +59,10 @@ export function myRow(room: RoomSnapshot, meId: string): ScoreboardRow | undefin
 }
 
 /** The winner sentence in the first person: "You win!" on the winner's own phone. */
-export function winnerLineFor(room: RoomSnapshot, meId: string): string {
+export function winnerLineFor(room: RoomSnapshot, meId: string, scoreless = false): string {
   const results = room.results;
   if (!results) return '';
-  if (nobodyScored(room)) return winnerLine(room);
+  if (scoreless || nobodyScored(room)) return winnerLine(room, scoreless);
   const ids = results.results.winnerIds;
   if (!ids.includes(meId)) return winnerLine(room);
   if (ids.length === 1) return t.results.youWin;

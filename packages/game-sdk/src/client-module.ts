@@ -49,6 +49,9 @@ export interface GameClientModule {
    */
   finale?: (lastView: PushedView<any>) => boolean;
   Finale?: LazyExoticComponent<ComponentType<GameFinaleProps<any>>>;
+  /** No points in this game: the results headline says the show is over instead of calling an
+   *  all-zero scoreboard a tie (review-loop #63). */
+  scoreless?: boolean;
 }
 /* eslint-enable @typescript-eslint/no-explicit-any */
 
