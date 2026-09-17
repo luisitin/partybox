@@ -70,6 +70,9 @@ export function ControllerShell({
   const myStatus = state.view?.players.find((p) => p.id === state.playerId)?.status ?? null;
   // Offline, the local countdown still runs (and parks at 0): show it muted, never urgent.
   const online = state.connection === 'connected';
+  // With a countdown row on screen, "Reconnecting…" takes its cue slot (review-loop #33): the
+  // overlay banner hid the first content line for the whole outage. No row → the banner.
+  const countdownRow = view !== null && seconds !== null && view.timerMode !== 'hidden';
   const { candidate, shellRef, mainRef } = usePhoneUrgency({
     view,
     seconds,
@@ -186,7 +189,7 @@ export function ControllerShell({
           ) : null}
         </div>
       </header>
-      {view && seconds !== null && view.timerMode !== 'hidden' ? (
+      {countdownRow ? (
         // ADR-030: a quiet timer keeps the bar (a rhythm) but drops the digits and the urgency.
         <div
           className={`${styles.deadline} ${online && seconds <= 5 && !view.paused && view.timerMode !== 'quiet' ? styles.urgent : ''} ${online ? '' : styles.stale}`}
@@ -199,7 +202,11 @@ export function ControllerShell({
             paused={view.paused}
             urgentAt={online ? 5 : 0}
           />
-          {candidate ? (
+          {!online ? (
+            <span className={`${styles.cue} ${styles.cueStale}`} role="status">
+              {t.connection.reconnecting}
+            </span>
+          ) : candidate ? (
             <span className={styles.cue} aria-hidden>
               {t.connection.hurry}
             </span>
@@ -231,7 +238,7 @@ export function ControllerShell({
       >
         {/* Overlays the top of the body and slides in (review-loop #20): a banner in the flow shoved
             the drawing sheet under a finger mid-stroke. */}
-        {showBanner ? (
+        {showBanner && !countdownRow ? (
           <div className={styles.banner} role="status">
             {t.connection.reconnecting}
           </div>

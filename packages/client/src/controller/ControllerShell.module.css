@@ -190,6 +190,16 @@
   display: block;
 }
 
+/* The cue slot carrying "Reconnecting…" while the link is down (review-loop #33): quiet, sentence
+   case, always shown. */
+.cueStale {
+  display: block;
+  color: var(--pb-text-muted);
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
 /* One beat per second (≤ 1 flash/s); reduced motion sets --pb-motion-pulse to 0 → no pulse. */
 @keyframes pb-pulse {
   0%,
