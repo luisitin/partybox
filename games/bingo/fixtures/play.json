@@ -41,7 +41,8 @@
     "spicy": false,
     "showBoard": true,
     "showPrevious": true,
-    "cards": 1
+    "cards": 1,
+    "winners": 1
   },
   "round": {
     "number": 1,
@@ -87,7 +88,9 @@
     },
     "claim": null,
     "waitForCall": {},
-    "winnerId": null
+    "winnerId": null,
+    "winnerIds": [],
+    "won": {}
   },
   "wins": {
     "p1": 0,

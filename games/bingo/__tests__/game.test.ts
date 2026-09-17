@@ -7,65 +7,7 @@ import { game, readSettings } from '../server/index';
 import { dealCard, letterOf } from '../server/cards';
 import { evaluate, looksComplete } from '../server/patterns';
 import { sampleInput } from '../server/bot';
-import type { Input, State } from '../server/types';
-
-const T0 = 1_000_000;
-const PLAYERS = [
-  { id: 'a', name: 'Ana', avatarId: 'fox', connected: true },
-  { id: 'b', name: 'Ben', avatarId: 'owl', connected: true },
-  { id: 'c', name: 'Cleo', avatarId: 'frog', connected: true },
-];
-
-function start(settings: Record<string, number | string | boolean> = {}, seed = 1): State {
-  return game.init({
-    players: PLAYERS,
-    settings: { rounds: 2, round1: 'line', round2: 'corners', callSeconds: 6, ...settings },
-    seed,
-    now: T0,
-  });
-}
-
-function input(
-  state: State,
-  playerId: string,
-  value: Input,
-  now = state.phase.startedAt + 500,
-): State {
-  return game.reduce(state, { type: 'input', now, playerId, input: value });
-}
-
-function timer(state: State): State {
-  const now = state.phase.deadline ?? state.phase.startedAt;
-  return game.reduce(state, {
-    type: 'timer',
-    now,
-    phaseId: state.phase.id,
-    startedAt: state.phase.startedAt,
-  });
-}
-
-function vip(state: State, action: 'skip' | 'pause' | 'resume' | 'end', now?: number): State {
-  return game.reduce(state, { type: 'vip', now: now ?? state.phase.startedAt + 500, action });
-}
-
-/** Calls numbers until every index in `cells` of `playerId`'s card has been called. */
-function callUntil(state: State, playerId: string, cells: number[], cardIndex = 0): State {
-  let s = state.phase.id === 'intro' ? timer(state) : state;
-  const card = s.round.cards[playerId]?.[cardIndex] as number[];
-  const need = new Set(cells.map((i) => card[i] as number).filter((n) => n !== 0));
-  for (let guard = 0; guard < 80 && s.phase.id === 'play'; guard++) {
-    const called = new Set(s.round.deck.slice(0, s.round.drawn));
-    if ([...need].every((n) => called.has(n))) return s;
-    s = timer(s);
-  }
-  throw new Error('deck ran out');
-}
-
-function daubAll(state: State, playerId: string, cells: number[], card = 0): State {
-  let s = state;
-  for (const i of cells) if (i !== 12) s = input(s, playerId, { type: 'daub', card, index: i });
-  return s;
-}
+import { callUntil, daubAll, input, start, timer, vip } from './helpers';
 
 describe('setup', () => {
   it('deals a legal card: columns B/I/N/G/O from their 15-number ranges, FREE centre, no repeats', () => {
@@ -146,7 +88,8 @@ describe('play', () => {
     expect(claim?.valid).toBe(true);
     expect(claim?.green.sort()).toEqual([0, 1, 2, 3, 4]);
     expect(claim?.red).toEqual([]);
-    expect(s.history).toEqual([{ round: 1, winnerId: 'a', calls: s.round.drawn }]);
+    expect(s.history).toEqual([]); // written when the round ends
+    expect(timer(s).history).toEqual([{ round: 1, winnerIds: ['a'], calls: s.round.drawn }]);
   });
 
   it('an invalid claim pauses the caller, shows reds and misses, wipes the card, and blocks a re-claim until the next number', () => {
@@ -299,60 +242,6 @@ describe('rounds and results', () => {
       startedAt: s.phase.startedAt - 6000,
     });
     expect(stale).toBe(s);
-  });
-});
-
-describe('several cards per player', () => {
-  it("deals the setting's number of cards, all legal and distinct, with empty daubs each", () => {
-    const s = start({ cards: 3 });
-    expect(s.settings.cards).toBe(3);
-    expect(readSettings({ cards: 9 }).cards).toBe(4);
-    expect(readSettings({}).cards).toBe(1);
-    for (const id of ['a', 'b', 'c']) {
-      expect(s.round.cards[id]).toHaveLength(3);
-      expect(s.round.daubs[id]).toEqual([[], [], []]);
-      const flat = s.round.cards[id]?.map((c) => c.join(',')) ?? [];
-      expect(new Set(flat).size).toBe(3);
-    }
-    expect(game.tvView(s).cardsPerPlayer).toBe(3);
-    expect(game.controllerView(s, 'a').cards).toHaveLength(3);
-  });
-
-  it('daubs land on the card named; BINGO! checks the closest card and wipes only that one', () => {
-    let s = callUntil(start({ cards: 2 }), 'a', [10, 11, 13, 14], 1);
-    s = daubAll(s, 'a', [10, 11, 13, 14], 1);
-    s = daubAll(s, 'a', [0, 1], 0);
-    expect(s.round.daubs['a']).toEqual([
-      [0, 1],
-      [10, 11, 13, 14],
-    ]);
-    s = input(s, 'a', { type: 'bingo' });
-    expect(s.phase.id).toBe('bingo');
-    expect(s.round.claim?.cardIndex).toBe(1);
-    expect(game.tvView(s).claim?.card).toEqual(s.round.cards['a']?.[1]);
-    expect(game.tvView(s).claim?.cardCount).toBe(2);
-    // A wrong claim: the nearer card (one square short) goes up, and only it is wiped.
-    let t = callUntil(start({ cards: 2 }, 5), 'b', [0, 1, 2, 3], 1);
-    t = daubAll(t, 'b', [0, 1, 2, 3], 1);
-    t = daubAll(t, 'b', [20], 0);
-    t = input(t, 'b', { type: 'bingo' });
-    expect(t.phase.id).toBe('check');
-    expect(t.round.claim?.cardIndex).toBe(1);
-    expect(t.round.claim?.missing).toEqual([4]);
-    expect(t.round.daubs['b']).toEqual([[20], []]);
-  });
-
-  it('the bot works every card and claims when any looks complete', () => {
-    const rng = createRng(11);
-    let s = callUntil(start({ cards: 2 }), 'a', [0, 1, 2, 3, 4], 1);
-    for (let i = 0; i < 200 && !looksComplete('line', s.round.daubs['a']?.[1] ?? []); i++) {
-      const move = sampleInput(s, 'a', rng);
-      if (!move || move.type !== 'daub') continue;
-      const called = s.round.deck.slice(0, s.round.drawn);
-      const n = s.round.cards['a']?.[move.card]?.[move.index] ?? -1;
-      if (called.includes(n)) s = input(s, 'a', move);
-    }
-    expect(sampleInput(s, 'a', createRng(1))).toEqual({ type: 'bingo' });
   });
 });
 

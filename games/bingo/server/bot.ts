@@ -6,6 +6,7 @@ import { hasPlayer } from '@partybox/game-sdk';
 import type { Rng } from '@partybox/game-sdk';
 import { calledNumbers } from './cards';
 import { looksComplete } from './patterns';
+import { liveCards } from './phases/bingo';
 import { canClaim } from './phases/play';
 import { FREE } from './types';
 import type { Input, State } from './types';
@@ -19,21 +20,24 @@ export function sampleInput(state: State, playerId: string, rng: Rng): Input | n
   const cards = round.cards[playerId];
   if (!hasPlayer(state, playerId) || !cards || cards.length === 0) return null;
   const daubsOf = (i: number): number[] => round.daubs[playerId]?.[i] ?? [];
-  const done = cards.some((_, i) => looksComplete(round.pattern, daubsOf(i)));
+  // A card that already won is done for the round: nothing to daub or claim there.
+  const live = liveCards(state, playerId);
+  if (live.length === 0) return null;
+  const done = live.some((i) => looksComplete(round.pattern, daubsOf(i)));
   if (done && canClaim(state, playerId)) return { type: 'bingo' };
   const called = new Set(calledNumbers(state));
-  // Every called, un-daubed square across all cards; the bot works them one tap at a time.
+  // Every called, un-daubed square across the live cards; the bot works them one tap at a time.
   const todo: { card: number; index: number }[] = [];
-  cards.forEach((card, c) => {
+  for (const c of live) {
     const daubs = daubsOf(c);
-    card.forEach((n, i) => {
+    (cards[c] ?? []).forEach((n, i) => {
       if (i !== FREE && called.has(n) && !daubs.includes(i)) todo.push({ card: c, index: i });
     });
-  });
+  }
   if (todo.length > 0 && rng.chance(BOT_DAUB_PROBABILITY))
     return { type: 'daub', ...rng.pick(todo) };
   // A stray tap now and then → red squares when it claims. Never while it already looks done.
   if (!done && rng.chance(BOT_MISTAP_PROBABILITY))
-    return { type: 'daub', card: rng.int(0, cards.length - 1), index: rng.int(0, 24) };
+    return { type: 'daub', card: rng.pick(live), index: rng.int(0, 24) };
   return null;
 }

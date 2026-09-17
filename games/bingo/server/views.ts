@@ -8,6 +8,7 @@ import { calledNumbers, letterOf } from './cards';
 import type { Letter } from './cards';
 import { callFor } from './content';
 import { PATTERN_HINT, PATTERN_LABEL, patternCells } from './patterns';
+import { liveCards, roundContinues } from './phases/bingo';
 import { canClaim } from './phases/play';
 import { standings } from './scoring';
 import type { StandingRow } from './scoring';
@@ -37,6 +38,13 @@ interface Common {
   patterns: Pattern[];
   /** Cards dealt to every player each round (the `cards` setting). */
   cardsPerPlayer: number;
+  /** Bingos that end the round (the `winners` setting) and how many have landed so far. */
+  winnersNeeded: number;
+  bingosSoFar: number;
+  /** Names of this round's bingos so far, in order (a name twice = two of their cards). */
+  roundWinners: string[];
+  /** bingo: the caller carries on after this celebration (more bingos to come). */
+  roundContinues: boolean;
   current: CallView | null;
   /** Just the one before — no history beyond that, on purpose. */
   previous: CallView | null;
@@ -67,8 +75,12 @@ export interface BingoControllerView extends ControllerView, Common {
   cards: number[][] | null;
   /** Per card, in the same order. */
   daubs: number[][];
-  /** play: true unless waiting for the next number after a failed claim. */
+  /** play: true unless waiting for the next number after a failed claim (or every card won). */
   canClaim: boolean;
+  /** My cards that already won this round (locked). */
+  won: number[];
+  /** Every one of my cards has won: nothing left to claim until the next round. */
+  doneForRound: boolean;
   /** The phone says why the button is off right after your own failed claim. */
   waitingForCall: boolean;
   /** Spectators only (players must remember). */
@@ -107,8 +119,10 @@ function claimView(state: State): ClaimView | null {
 function statusOf(state: State): (id: string) => PlayerStatus {
   return (id) => {
     if (!Object.hasOwn(state.round.cards, id)) return 'spectator';
-    if (state.phase.id === 'play' || state.phase.id === 'check') return 'active';
-    if (state.phase.id === 'bingo' && state.round.winnerId === id) return 'submitted';
+    // Every card won: done for the round (the chip shows it while the others keep daubing).
+    if (state.phase.id === 'play' || state.phase.id === 'check')
+      return liveCards(state, id).length === 0 ? 'submitted' : 'active';
+    if (state.phase.id === 'bingo' && state.round.winnerIds.includes(id)) return 'submitted';
     return 'waiting';
   };
 }
@@ -126,6 +140,10 @@ function common(state: State): Common {
     patternCells: patternCells(round.pattern),
     patterns: state.settings.patterns,
     cardsPerPlayer: state.settings.cards,
+    winnersNeeded: state.settings.winners,
+    bingosSoFar: round.winnerIds.length,
+    roundWinners: round.winnerIds.map((id) => state.players[id]?.name ?? '?'),
+    roundContinues: state.phase.id === 'bingo' && roundContinues(state),
     current: state.phase.id === 'intro' ? null : callView(state, round.drawn - 1),
     previous: state.phase.id === 'intro' ? null : callView(state, round.drawn - 2),
     callIndex: round.drawn,
@@ -163,6 +181,8 @@ export function controllerView(
     cards: player ? (state.round.cards[playerId] ?? null) : null,
     daubs: player ? (state.round.daubs[playerId] ?? []) : [],
     canClaim: canClaim(state, playerId),
+    won: player ? (state.round.won[playerId] ?? []) : [],
+    doneForRound: player && liveCards(state, playerId).length === 0,
     waitingForCall:
       player &&
       (state.phase.id === 'play' || state.phase.id === 'check') &&

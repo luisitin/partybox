@@ -32,6 +32,8 @@ export function enterIntro(state: State, number: number, now: number): State {
     claim: null,
     waitForCall: {},
     winnerId: null,
+    winnerIds: [],
+    won: {},
   };
   return enterPhase({ ...state, rng, round }, 'intro', now, INTRO_MS);
 }

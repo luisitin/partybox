@@ -7,6 +7,7 @@ import { enterPhase, hasPlayer, isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { calledNumbers, toggleDaub } from '../cards';
 import { evaluate } from '../patterns';
+import { liveCards } from './bingo';
 import type { Claim, Input, State, Transition } from '../types';
 
 export interface PlayExits {
@@ -33,6 +34,7 @@ export function canClaim(state: State, playerId: string): boolean {
     state.phase.id === 'play' &&
     hasPlayer(state, playerId) &&
     Object.hasOwn(round.cards, playerId) &&
+    liveCards(state, playerId).length > 0 &&
     round.drawn >= (round.waitForCall[playerId] ?? 0)
   );
 }
@@ -47,17 +49,18 @@ function closer(a: Claim, b: Claim | null): boolean {
 
 /**
  * The claim BINGO! puts on the TV: the first valid card, else the card nearest the pattern —
- * one press, whichever card the player was looking at.
+ * one press, whichever card the player was looking at. Cards that already won sit this out.
  */
 export function bestClaim(state: State, playerId: string): Claim | null {
   const round = state.round;
   const called = calledNumbers(state);
   let best: Claim | null = null;
-  (round.cards[playerId] ?? []).forEach((card, i) => {
+  for (const i of liveCards(state, playerId)) {
+    const card = round.cards[playerId]?.[i] ?? [];
     const daubs = round.daubs[playerId]?.[i] ?? [];
     const claim = evaluate(playerId, i, card, daubs, called, round.pattern);
     if (closer(claim, best)) best = claim;
-  });
+  }
   return best;
 }
 

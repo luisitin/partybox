@@ -1,0 +1,66 @@
+// Shared helpers for the Bingo tests: a three-player game, hand-built events, and the two
+// shortcuts every rule needs — call numbers until a card's cells are all out, daub a set of cells.
+import { game } from '../server/index';
+import type { Input, State } from '../server/types';
+
+export const T0 = 1_000_000;
+export const PLAYERS = [
+  { id: 'a', name: 'Ana', avatarId: 'fox', connected: true },
+  { id: 'b', name: 'Ben', avatarId: 'owl', connected: true },
+  { id: 'c', name: 'Cleo', avatarId: 'frog', connected: true },
+];
+
+export function start(settings: Record<string, number | string | boolean> = {}, seed = 1): State {
+  return game.init({
+    players: PLAYERS,
+    settings: { rounds: 2, round1: 'line', round2: 'corners', callSeconds: 6, ...settings },
+    seed,
+    now: T0,
+  });
+}
+
+export function input(
+  state: State,
+  playerId: string,
+  value: Input,
+  now = state.phase.startedAt + 500,
+): State {
+  return game.reduce(state, { type: 'input', now, playerId, input: value });
+}
+
+export function timer(state: State): State {
+  const now = state.phase.deadline ?? state.phase.startedAt;
+  return game.reduce(state, {
+    type: 'timer',
+    now,
+    phaseId: state.phase.id,
+    startedAt: state.phase.startedAt,
+  });
+}
+
+export function vip(
+  state: State,
+  action: 'skip' | 'pause' | 'resume' | 'end',
+  now?: number,
+): State {
+  return game.reduce(state, { type: 'vip', now: now ?? state.phase.startedAt + 500, action });
+}
+
+/** Calls numbers until every index in `cells` of `playerId`'s card has been called. */
+export function callUntil(state: State, playerId: string, cells: number[], cardIndex = 0): State {
+  let s = state.phase.id === 'intro' ? timer(state) : state;
+  const card = s.round.cards[playerId]?.[cardIndex] as number[];
+  const need = new Set(cells.map((i) => card[i] as number).filter((n) => n !== 0));
+  for (let guard = 0; guard < 80 && s.phase.id === 'play'; guard++) {
+    const called = new Set(s.round.deck.slice(0, s.round.drawn));
+    if ([...need].every((n) => called.has(n))) return s;
+    s = timer(s);
+  }
+  throw new Error('deck ran out');
+}
+
+export function daubAll(state: State, playerId: string, cells: number[], card = 0): State {
+  let s = state;
+  for (const i of cells) if (i !== 12) s = input(s, playerId, { type: 'daub', card, index: i });
+  return s;
+}

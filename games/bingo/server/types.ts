@@ -13,6 +13,8 @@ export type Pattern = (typeof PATTERNS)[number];
 export const MAX_ROUNDS = 5;
 /** Cards per player per round (`cards` setting): one is classic, four is a hall regular's table. */
 export const MAX_CARDS = 4;
+/** Bingos that end a round (`winners` setting): one is classic; more keeps the caller going. */
+export const MAX_WINNERS = 4;
 
 export interface Settings {
   rounds: number;
@@ -20,6 +22,8 @@ export interface Settings {
   patterns: Pattern[];
   /** Cards dealt to every player each round (1–4). */
   cards: number;
+  /** Bingos that end the round (1–4). After each one the caller carries on, same pattern. */
+  winners: number;
   callSeconds: number;
   spicy: boolean;
   /** TV extras the VIP can switch off at game selection (review-loop #2, owner request). */
@@ -61,7 +65,12 @@ export interface RoundState {
   claim: Claim | null;
   /** playerId → may claim again once `drawn >= this` (set after a failed claim). */
   waitForCall: Record<string, number>;
+  /** The latest bingo's owner (the celebration); null while nobody has, or when the deck ran out. */
   winnerId: string | null;
+  /** Every bingo this round, in order (a player twice when two of their cards won). */
+  winnerIds: string[];
+  /** playerId → card indices that already won this round: locked, no second bingo on them. */
+  won: Record<string, number[]>;
 }
 
 export interface State extends GameStateBase {
@@ -69,7 +78,7 @@ export interface State extends GameStateBase {
   round: RoundState;
   /** Rounds won. */
   wins: Record<string, number>;
-  history: { round: number; winnerId: string | null; calls: number }[];
+  history: { round: number; winnerIds: string[]; calls: number }[];
 }
 
 export const inputSchema = z.discriminatedUnion('type', [

@@ -41,7 +41,8 @@
     "spicy": false,
     "showBoard": true,
     "showPrevious": true,
-    "cards": 1
+    "cards": 1,
+    "winners": 1
   },
   "round": {
     "number": 3,
@@ -96,7 +97,11 @@
       "valid": true
     },
     "waitForCall": {},
-    "winnerId": "p1"
+    "winnerId": "p1",
+    "winnerIds": ["p1"],
+    "won": {
+      "p1": [0]
+    }
   },
   "wins": {
     "p1": 2,
@@ -107,17 +112,17 @@
   "history": [
     {
       "round": 1,
-      "winnerId": "p1",
+      "winnerIds": ["p1"],
       "calls": 32
     },
     {
       "round": 2,
-      "winnerId": "p2",
+      "winnerIds": ["p2"],
       "calls": 46
     },
     {
       "round": 3,
-      "winnerId": "p1",
+      "winnerIds": ["p1"],
       "calls": 70
     }
   ]

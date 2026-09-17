@@ -92,6 +92,16 @@
       "step": 1
     },
     {
+      "key": "winners",
+      "label": "Bingos per round",
+      "description": "Keep calling after a bingo until this many cards have won — a card that won is done for the round",
+      "type": "number",
+      "default": 1,
+      "min": 1,
+      "max": 4,
+      "step": 1
+    },
+    {
       "key": "callSeconds",
       "label": "Seconds per number",
       "description": "How long each number stays up before the next one is called",

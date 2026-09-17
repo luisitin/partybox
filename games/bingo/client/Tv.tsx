@@ -123,9 +123,15 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
           </BigText>
         </div>
         <BigText level="h2">{view.patternHint}</BigText>
-        {view.cardsPerPlayer > 1 ? (
+        {view.cardsPerPlayer > 1 || view.winnersNeeded > 1 ? (
           <BigText level="h2" tone="muted">
-            {view.cardsPerPlayer} cards each — BINGO! checks your best one.
+            {view.cardsPerPlayer > 1
+              ? `${view.cardsPerPlayer} cards each — BINGO! checks your best one.`
+              : ''}
+            {view.cardsPerPlayer > 1 && view.winnersNeeded > 1 ? ' ' : ''}
+            {view.winnersNeeded > 1
+              ? `The round runs to ${view.winnersNeeded} bingos — a card that wins sits out.`
+              : ''}
           </BigText>
         ) : null}
         <p className={styles.programme}>
@@ -148,6 +154,9 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
       >
         <p className={styles.kicker}>
           {roundLabel} · {view.patternLabel} · call {view.callIndex} of 75
+          {view.winnersNeeded > 1
+            ? ` · bingo ${view.bingosSoFar + 1} of ${view.winnersNeeded}${view.roundWinners.length > 0 ? ` (${view.roundWinners.join(', ')} so far)` : ''}`
+            : ''}
         </p>
         {view.current ? <Call call={view.current} big /> : null}
         {/* Ball first (180 ms pop), nickname 120 ms behind it: the number is the news (review-loop #1). */}
@@ -215,7 +224,11 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
               BINGO!
             </BigText>
             <BigText level="h1">
-              {view.winnerName} wins round {view.round}
+              {view.roundContinues
+                ? `${view.winnerName} has bingo — ${view.bingosSoFar} of ${view.winnersNeeded}`
+                : view.winnersNeeded > 1
+                  ? `${view.winnerName} takes the last bingo of round ${view.round}`
+                  : `${view.winnerName} wins round ${view.round}`}
             </BigText>
           </div>
           <div className={styles.checkBody}>
@@ -228,6 +241,11 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
                   ? ` · card ${view.claim.cardIndex + 1} of ${view.claim.cardCount}`
                   : ''}
               </BigText>
+              {view.roundContinues ? (
+                <BigText level="h2" tone="accent">
+                  That card sits out — the caller carries on.
+                </BigText>
+              ) : null}
             </div>
           </div>
         </Stage>
@@ -236,9 +254,13 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
     return (
       <Stage center>
         <BigText level="display" tone="muted">
-          No bingo
+          {view.bingosSoFar > 0 ? 'Deck empty' : 'No bingo'}
         </BigText>
-        <BigText level="h1">The deck's empty — nobody wins round {view.round}.</BigText>
+        <BigText level="h1">
+          {view.bingosSoFar > 0
+            ? `That's every number — round ${view.round} goes to ${view.roundWinners.join(', ')}.`
+            : `The deck's empty — nobody wins round ${view.round}.`}
+        </BigText>
       </Stage>
     );
   }

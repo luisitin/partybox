@@ -106,6 +106,14 @@
   color: var(--pb-text-muted);
 }
 
+/* A card that won this round: gold label, the card itself steps back (still readable). */
+.cardLabelWon {
+  color: var(--pb-accent-2);
+}
+.locked > :last-child {
+  opacity: 0.55;
+}
+
 .wipeNote {
   margin: 0 0 var(--pb-space-2);
   font-size: var(--pb-font-caption);

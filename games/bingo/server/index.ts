@@ -10,13 +10,13 @@ import type {
 } from '@partybox/game-sdk';
 import manifestJson from '../manifest.json' with { type: 'json' };
 import { sampleInput } from './bot';
-import { enterBingo, reduceBingo } from './phases/bingo';
+import { enterBingo, reduceBingo, roundContinues } from './phases/bingo';
 import { enterCheck, reduceCheck } from './phases/check';
 import { enterIntro, reduceIntro } from './phases/intro';
 import { enterPlay, reducePlay } from './phases/play';
 import { enterDone, enterScoreboard, reduceScoreboard } from './phases/scoreboard';
 import { results } from './scoring';
-import { DECK, MAX_CARDS, MAX_ROUNDS, PATTERNS, PHASES, inputSchema } from './types';
+import { DECK, MAX_CARDS, MAX_ROUNDS, MAX_WINNERS, PATTERNS, PHASES, inputSchema } from './types';
 import type { Input, Pattern, Settings, State } from './types';
 import { controllerView, tvView } from './views';
 import type { BingoControllerView, BingoTvView } from './views';
@@ -37,6 +37,7 @@ export function readSettings(raw: RawSettings): Settings {
     rounds,
     patterns,
     cards: Math.min(MAX_CARDS, Math.max(1, Math.round(Number(raw['cards'] ?? 1)))),
+    winners: Math.min(MAX_WINNERS, Math.max(1, Math.round(Number(raw['winners'] ?? 1)))),
     callSeconds: Math.min(12, Math.max(3, Number(raw['callSeconds'] ?? 6))),
     spicy: raw['spicy'] === true,
     showBoard: raw['showBoard'] !== false,
@@ -66,6 +67,8 @@ function init(ctx: InitContext): State {
       claim: null,
       waitForCall: {},
       winnerId: null,
+      winnerIds: [],
+      won: {},
     },
     wins,
     history: [],
@@ -78,10 +81,20 @@ function nextCallOrEnd(state: State, now: number): State {
   return state.round.drawn >= DECK ? enterBingo(state, now, null, null) : enterPlay(state, now);
 }
 
+/** The round is over: it goes into the history, then the scoreboard (or done after the last). */
+function finishRound(state: State, now: number): State {
+  const round = state.round;
+  const history = [
+    ...state.history,
+    { round: round.number, winnerIds: round.winnerIds, calls: round.drawn },
+  ];
+  const next = { ...state, history };
+  return round.number < state.settings.rounds ? enterScoreboard(next, now) : enterDone(next, now);
+}
+
+/** After the celebration: more bingos to come → the next number; else the round is over. */
 function afterBingo(state: State, now: number): State {
-  return state.round.number < state.settings.rounds
-    ? enterScoreboard(state, now)
-    : enterDone(state, now);
+  return roundContinues(state) ? enterPlay(state, now) : finishRound(state, now);
 }
 
 function nextRound(state: State, now: number): State {
