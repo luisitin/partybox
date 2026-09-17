@@ -1,7 +1,7 @@
 // TV "judge": every card up at once with its letter, and the vote progress in the kicker row.
 // A grid the stage cannot hold — eleven Pick 2 cards under three rows of chips ran its third row
-// under the host bar (review-loop #129) — is measured once and shown in pages that turn every
-// few seconds, so every card gets its time on the TV while the phones carry the whole list.
+// under the host bar (review-loop #129) — is measured and shown in pages that turn every few
+// seconds, so every card gets its time on the TV while the phones carry the whole list.
 import { useEffect, useRef, useState } from 'react';
 import type { JSX } from 'react';
 import { Avatar, Stage } from '@partybox/game-sdk/ui';
@@ -74,49 +74,63 @@ function gridClass(count: number): string {
   return styles.grid4 ?? '';
 }
 
+/** Where each page starts: a card whose bottom would pass the grid's edge opens the next page. */
+function pageStarts(grid: HTMLElement): number[] {
+  const items = [...grid.children] as HTMLElement[];
+  const starts: number[] = [];
+  let top = 0;
+  items.forEach((el, i) => {
+    if (i === 0 || el.offsetTop + el.offsetHeight - top > grid.clientHeight + 1) {
+      top = el.offsetTop;
+      starts.push(i);
+    }
+  });
+  return starts;
+}
+
 /**
- * The grid, measured by a ResizeObserver once it has laid out with every card: how many fit
- * above the stage's bottom edge is the page size (`count` when they all do), and while pages are
- * needed the page on show turns every PAGE_MS. Mounted under a per-round key so it starts over
- * with every new set of cards.
+ * Every card stays in the (clipped) grid; a ResizeObserver recomputes the page starts whenever
+ * the grid's box settles or changes — the stage is still crossfading in when it first lays out —
+ * and, while more than one page is needed, the grid scrolls to the next page every PAGE_MS.
+ * Mounted under a per-round key so the page count starts over with every new set of cards.
  */
 function JudgeGrid({ view }: Props): JSX.Element {
   const count = view.cards.length;
   const dense = count > 6;
   const ref = useRef<HTMLUListElement>(null);
-  const [pageSize, setPageSize] = useState(count);
+  const [starts, setStarts] = useState<number[]>([0]);
   const [page, setPage] = useState(0);
   useEffect(() => {
     const grid = ref.current;
     if (!grid) return undefined;
     const observer = new ResizeObserver(() => {
-      const bottom = grid.clientHeight;
-      const items = [...grid.children] as HTMLElement[];
-      // Full cards only: the first card whose bottom passes the edge starts the next page.
-      const fits = items.filter((el) => el.offsetTop + el.offsetHeight <= bottom + 1).length;
-      if (fits < items.length) setPageSize(Math.max(1, fits));
+      const next = pageStarts(grid);
+      setStarts((prev) => (prev.join(',') === next.join(',') ? prev : next));
     });
     observer.observe(grid);
     return () => observer.disconnect();
   }, []);
-  const pages = Math.ceil(count / pageSize);
+  const pages = starts.length;
   useEffect(() => {
     if (pages <= 1) return undefined;
     const id = window.setInterval(() => setPage((p) => (p + 1) % pages), PAGE_MS);
     return () => window.clearInterval(id);
   }, [pages]);
-  const paged = pageSize < count;
-  const shown = paged ? view.cards.slice(page * pageSize, (page + 1) * pageSize) : view.cards;
-  const first = shown[0];
-  const last = shown[shown.length - 1];
+  const current = Math.min(page, pages - 1);
+  useEffect(() => {
+    const grid = ref.current;
+    const first = grid?.children[starts[current] ?? 0] as HTMLElement | undefined;
+    if (grid && first)
+      grid.scrollTop = first.offsetTop - (grid.children[0] as HTMLElement).offsetTop;
+  }, [starts, current]);
+  const from = starts[current] ?? 0;
+  const to = (starts[current + 1] ?? count) - 1;
   return (
     <>
       <div className={styles.kickerRow}>
         <p className={styles.kicker}>
           Round {view.round} · {view.judgeMode === 'czar' ? 'The judge decides' : 'Vote'}
-          {paged && first && last
-            ? ` · cards ${LETTERS[first.slot]}–${LETTERS[last.slot]} (${page + 1} of ${pages})`
-            : ''}
+          {pages > 1 ? ` · cards ${LETTERS[from]}–${LETTERS[to]} (${current + 1} of ${pages})` : ''}
         </p>
         <span className={styles.progressSlot} role="status" aria-live="polite">
           <span key={view.votedCount} className={styles.progressPill}>
@@ -127,14 +141,10 @@ function JudgeGrid({ view }: Props): JSX.Element {
       <ul
         ref={ref}
         className={`${styles.judgeGrid} ${gridClass(count)}`}
-        aria-label={paged ? `the cards, page ${page + 1} of ${pages}` : 'the cards'}
+        aria-label={pages > 1 ? `the cards, page ${current + 1} of ${pages}` : 'the cards'}
       >
-        {shown.map((c, i) => (
-          // Keyed by slot and page: a page turn rises like a fresh grid.
-          <li
-            key={`${page}:${c.slot}`}
-            style={{ animationDelay: `calc(${i} * var(--pb-motion-fast) / 2)` }}
-          >
+        {view.cards.map((c, i) => (
+          <li key={c.slot} style={{ animationDelay: `calc(${i} * var(--pb-motion-fast) / 2)` }}>
             <FilledCard
               text={view.black?.text ?? ''}
               whites={c.whites}

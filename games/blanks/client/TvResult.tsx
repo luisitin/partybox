@@ -16,6 +16,8 @@ type Props = GameTvProps<BlanksTvView>;
 export const RESULT_BEATS_MS = [0, 600, 1200] as const;
 const BEAT_AUTHORS = 1;
 const BEAT_WINNER = 2;
+/** Past this many players the chip strip takes three rows beside the timer. */
+const BIG_CHIP_ROOM = 10;
 
 export function winnerLine(
   view: Pick<BlanksTvView, 'revealed' | 'winnerIds' | 'walkover' | 'judgeMode' | 'czar'>,
@@ -129,6 +131,9 @@ export function TvResult({ view }: Props): JSX.Element {
     );
   }
   const named = beat >= BEAT_WINNER;
+  // Three chip rows or nine-plus losers: the stage is short and the pills many — everything a
+  // size down (measured live at 838 px of content for a 630 px stage, review-loop #130).
+  const dense = view.players.length > BIG_CHIP_ROOM || others.length > 8;
   return (
     <Stage>
       <div className={styles.kickerRow}>
@@ -156,7 +161,13 @@ export function TvResult({ view }: Props): JSX.Element {
               key={w.slot}
               text={view.black?.text ?? ''}
               whites={w.whites}
-              size={winners.length > 2 ? 'mini' : winners.length > 1 ? 'grid' : 'medium'}
+              size={
+                winners.length > 2 || (winners.length > 1 && dense)
+                  ? 'mini'
+                  : winners.length > 1 || dense
+                    ? 'grid'
+                    : 'medium'
+              }
               letter={LETTERS[w.slot]}
               winner={named}
               className={styles.stageCard}
@@ -174,7 +185,10 @@ export function TvResult({ view }: Props): JSX.Element {
       {/* The other cards were all up on the judge stage a moment ago: here only who played
           which letter, and their votes — twelve players fit in two rows of pills. */}
       {others.length > 0 ? (
-        <ul className={styles.losers} aria-label="the other cards">
+        <ul
+          className={`${styles.losers} ${dense ? styles.losersDense : ''}`}
+          aria-label="the other cards"
+        >
           {others.map((c) => (
             <li
               key={c.slot}
