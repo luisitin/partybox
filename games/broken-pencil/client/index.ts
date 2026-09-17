@@ -10,7 +10,9 @@ export const clientModule: GameClientModule = {
   scoreless: true,
   finale: (view) => view.phaseId === 'summary' || view.phaseId === 'done',
   Finale: lazy(() => import('./Finale').then((m) => ({ default: m.Finale }))),
-  sounds: { show: 'reveal' },
+  // Every page of the show is its own phase instance and the shell chimes each one (review-loop
+  // #93): the soft 'card' pluck turns a page; the full 'reveal' was too much twenty-five times.
+  sounds: { show: 'card' },
   // Owner pick: lounge tracks, quiet, only while people draw and guess (never over the reveal).
   music: {
     tracks: ['backbay-lounge', 'lobby-time', 'hep-cats'],
