@@ -45,3 +45,8 @@
 .awardWho {
   font-weight: 700;
 }
+
+/* No awards → the board is centred, so the VIP hint under it is too (loop #217). */
+.centredHint {
+  text-align: center;
+}
