@@ -196,11 +196,14 @@ function standingsRows(state: State): StandingsRow[] {
 }
 
 /** Untimed rounds keep a long hidden fallback on picking, voting and the result: no clock on
- *  screen. The "Everyone's in!" beat hides a timed round's clock too (it would jump to 1). */
-function timerMode(state: State): 'normal' | 'hidden' {
+ *  screen. The "Everyone's in!" beat hides a timed round's clock too (it would jump to 1). The
+ *  round card and each read-out are a rhythm, not a countdown: a draining bar, no number
+ *  (review-loop #133 — a "6 s" clock on every card read nothing but urgency). */
+function timerMode(state: State): 'normal' | 'quiet' | 'hidden' {
   const phase = state.phase.id;
   const untimed = phase === 'answer' || phase === 'judge' || phase === 'result';
   if (allIn(state)) return 'hidden';
+  if (phase === 'intro' || phase === 'reveal') return 'quiet';
   return !state.settings.timed && untimed ? 'hidden' : 'normal';
 }
 
