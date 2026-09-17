@@ -360,6 +360,7 @@
     aspect-ratio: 1;
     display: grid;
     place-items: center;
+    line-height: 1;
     background: var(--cell);
     border: 1px solid var(--cell-line);
     border-radius: 4px;
@@ -405,6 +406,7 @@
   }
   .thumb.cur {
     border-color: var(--gold);
+    opacity: 0.45;
   }
   .thumb.won {
     border-color: var(--green);
@@ -577,7 +579,7 @@
   </div>
   <h1>Bingo Card Layouts</h1>
   <p class="lede">
-    Version 3, redrawn from your notes; the theme buttons above repaint every mock-up with
+    Version 4 — every decision so far, drawn; the theme buttons above repaint every mock-up with
     PartyBox's real palettes. Nothing here is coded yet beyond the baseline grid. Read top to
     bottom: the default ("Focus"), the card-style switcher and its pause, each style as you asked
     for it, then the confirmed picks. A few questions sit at the end.
@@ -585,16 +587,19 @@
 
   <h2>1 · The default: Focus <small>your B4, for one, two, three or four cards</small></h2>
   <p class="q">
-    One main card, big, with FREE spelled out. The other cards are bordered thumbnails under it —
-    tap one and it swaps up. Thumbnails use the ★. One card means no thumbnails. Portrait only.
+    One main card, big, with FREE spelled out and the call above it. <b>Every</b> card is a bordered
+    thumbnail under it — the one that is up is greyed, tap another and it comes up in a quick slide
+    (~150 ms), no shuffling of positions. Thumbnails are not daubable and use the ★. One card means
+    no thumbnails. Portrait only.
   </p>
   <div class="opts" id="S1"></div>
 
   <h2>2 · Changing card style <small>a button next to the theme palette</small></h2>
   <p class="q">
-    Every phone has a "Card style" button in the top bar. Opening it pauses the room for everyone —
-    the caller stops, the TV and every phone say who is changing — and the game resumes when nobody
-    has the sheet open. Each phone keeps its own style.
+    Every phone has a "Card style" button in the top bar. Opening it pauses the calling only (a
+    check or celebration already on the TV finishes first). Everyone else sees who is changing; that
+    notice clears when the last sheet closes, then a 3 · 2 · 1 countdown and the caller resumes.
+    Each phone keeps its own style and remembers it for the next game, like the theme.
   </p>
   <div class="opts" id="S2"></div>
 
@@ -608,36 +613,72 @@
   <h2>4 · Confirmed as drawn <small>D1 gate · E1 tablets · F2 swap once</small></h2>
   <div class="opts" id="S4"></div>
 
-  <h2>5 · Questions before I build</h2>
+  <h2>5 · Decisions so far</h2>
   <div class="opt">
-    <ul class="qs">
-      <li>
-        <b>Pause on style change:</b> should it also pause a check or a celebration already on the
-        TV, or only the calling? I assume only the calling (a check finishes first).
-      </li>
-      <li>
-        <b>Focus with one card:</b> the current call still shows above the card as today (nickname +
-        "Call 19"), yes? With two or more cards the top stays clear and the calls live on the TV —
-        or in the Grid's spare slot.
-      </li>
-      <li>
-        <b>Thumbnail taps:</b> tapping a thumbnail only swaps it up; daubing happens on the main
-        card. Fine?
-      </li>
-      <li>
-        <b>F2 swap once:</b> one swap per round for every player, during the 5 s intro, and the
-        swapped-away card is gone for good. Yes?
-      </li>
-      <li>
-        <b>Remember the style:</b> the phone remembers your last card style for the next game (like
-        the theme).
-      </li>
-    </ul>
+    <table>
+      <tr>
+        <th>Topic</th>
+        <th>Decision</th>
+      </tr>
+      <tr>
+        <td>Default style</td>
+        <td>
+          <b>Focus</b>: one big card with FREE and the call above it; every card as a bordered
+          thumbnail below, the one up greyed; tap to swap, quick (~150 ms); thumbnails not daubable,
+          ★ for FREE; portrait only.
+        </td>
+      </tr>
+      <tr>
+        <td>Other styles</td>
+        <td>
+          Grid (portrait; "CARD n" → "BINGO ✓" + dim when won, card stays where it is; with 3 cards
+          the spare slot is a mini call), Strip (landscape), Stack (portrait, no labels), Side by
+          side (landscape, smaller cards, air above and below).
+        </td>
+      </tr>
+      <tr>
+        <td>Style button</td>
+        <td>
+          In the top bar next to the theme palette. Per phone, remembered locally for the next game.
+        </td>
+      </tr>
+      <tr>
+        <td>Pause</td>
+        <td>
+          Opening the sheet pauses the <b>calling only</b>; a running check or celebration finishes.
+          Everyone sees "Sam is changing card style…"; the notice clears when the last sheet closes;
+          then 3 · 2 · 1 with a tick each, and the next number.
+        </td>
+      </tr>
+      <tr>
+        <td>Orientation</td>
+        <td>
+          Focus, Grid, Stack = portrait only; Strip, Side by side = landscape only. Wrong way = the
+          D1 turning-phone gate; it lifts when the phone turns and asks the browser to lock
+          (Android; iPhones ignore).
+        </td>
+      </tr>
+      <tr>
+        <td>Tablets / computers</td>
+        <td>E1: four normal cards in a row, labels on, no orientation rule.</td>
+      </tr>
+      <tr>
+        <td>Swap once (F2)</td>
+        <td>
+          One "Deal me another" per player per round during the 5 s intro; the old card is gone for
+          good; no tap in time = no swap.
+        </td>
+      </tr>
+      <tr>
+        <td>Called board</td>
+        <td>Off by default; toggle in Bingo's settings at game selection.</td>
+      </tr>
+    </table>
   </div>
 
   <div class="reply">
-    <b>How to reply:</b> "build it" plus any changes, or answers to the questions above. I will
-    implement, re-run the headless captures on Bingo, and refresh this page with real screenshots.
+    <b>How to reply:</b> "build it" or any changes to the table above. I will implement, re-run the
+    headless captures on Bingo, and refresh this page with real screenshots.
   </div>
 </div>
 
@@ -685,12 +726,18 @@
   const focus = (n, extra = {}) => {
     const thumbs =
       n > 1
-        ? `<div class="thumbs">${[4, 5, 6]
-            .slice(0, n - 1)
-            .map((s, i) => thumb(s, { won: extra.wonThumb === i }))
+        ? `<div class="thumbs" style="grid-template-columns:repeat(${n},1fr)">${[3, 4, 5, 6]
+            .slice(0, n)
+            .map((s, i) =>
+              thumb(s, {
+                cur: i === 0,
+                won: extra.wonThumb === i,
+                daubs: i === 0 ? [1, 7, 16, 22] : [3, 9],
+              }),
+            )
             .join('')}</div>`
         : '';
-    return `<div class="phone port">${bar()}${n === 1 ? head : ''}<div class="body" style="grid-template-rows:auto auto;gap:8px;align-content:start">${card(3, { size: 10, w: '172px', daubs: [1, 7, 16, 22] })}${thumbs}</div><div class="foot small">BINGO!</div></div>`;
+    return `<div class="phone port">${bar()}${head}<div class="body" style="grid-template-rows:auto auto;gap:8px;align-content:start">${card(3, { size: 9.5, w: '164px', daubs: [1, 7, 16, 22] })}${thumbs}</div><div class="foot small">BINGO!</div></div>`;
   };
 
   document.getElementById('S1').innerHTML = [
@@ -704,16 +751,16 @@
     opt(
       true,
       'Focus · 2 cards',
-      'Main card + one thumbnail',
-      'The top stays clear; the TV carries the call. Tap the thumbnail to bring that card up.',
+      'Main card + both thumbnails',
+      'Both cards sit below; the greyed one is the one you are looking at. Tap the other to swap.',
       focus(2),
     ),
     opt(
       true,
       'Focus · 4 cards',
-      'Main card + three thumbnails',
-      'Gold border = the card that is up. A thumbnail that already won goes green-bordered and dim; it can still be looked at, not claimed.',
-      focus(4, { wonThumb: 1 }),
+      'Main card + all four thumbnails',
+      'Greyed = up now. A thumbnail that already won gets a green border and stays dim; it can be looked at, not claimed.',
+      focus(4, { wonThumb: 2 }),
     ),
   ].join('');
 
@@ -731,6 +778,13 @@
       'The room pauses',
       'The caller stops mid-round. Phones show who is changing; daubing still works. Resumes the moment the sheet closes.',
       `<div class="phone port">${bar()}<div class="body">${card(4, { size: 8, w: '150px' })}</div><div class="foot small">BINGO!</div><div class="curtain">⏸ Sam is changing card style…<small>the caller waits · you can keep daubing</small></div></div>`,
+    ),
+    opt(
+      false,
+      'Resume',
+      'Three, two, one',
+      'When the last sheet closes every screen counts down 3 · 2 · 1 (a tick each), then the caller carries on with the next number.',
+      `<div class="tv"><div class="sub">Sam is done · calling resumes in</div><div class="big" style="color:var(--gold)">3</div><div class="sub">get your thumbs ready</div></div>`,
     ),
     opt(
       false,
