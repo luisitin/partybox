@@ -219,6 +219,9 @@
   height: var(--pb-space-7);
   border-radius: 50%;
   background: var(--pb-surface-2);
+  /* an empty pip has to read as a slot on a light stage too: Daylight's surface-2 sits a hair
+     off its background (review-loop #127) */
+  border: 2px solid color-mix(in srgb, var(--pb-text-muted) 45%, transparent);
   color: var(--pb-on-accent);
   font-size: var(--pb-font-body);
   font-weight: 900;
@@ -227,6 +230,7 @@
 
 .pipDone {
   background: var(--pb-accent-3);
+  border-color: var(--pb-accent-3);
 }
 
 .pipPop {

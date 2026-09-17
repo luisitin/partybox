@@ -3,7 +3,7 @@
 // frame strips (10 fps) around each transition and over the last 5 s of every timer, the audio-cue
 // log (cue, time, phase) and the TV's long-frame numbers.
 // Usage: tsx packages/e2e/src/design/capture-loop.ts --pass 1 --game bingo --players 6
-//        [--scenario normal|reconnect|vip-leaves|tie|spicy|pause] [--focus tv|phone] [--budget 150] [--port 42071]
+//        [--scenario normal|reconnect|vip-leaves|tie|walkover|spicy|pause] [--focus tv|phone] [--budget 150] [--port 42071]
 import { mkdirSync, readFileSync, readdirSync, renameSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { parseArgs } from 'node:util';
@@ -33,6 +33,9 @@ const GAME = values.game ?? 'bingo';
 const PLAYERS = Number(values.players);
 const SCENARIO = values.scenario ?? 'normal';
 const BUDGET_MS = Number(values.budget) * 1000;
+// 'tie': nobody acts (an idle room). 'walkover': only Sam acts — bots and Priya sit out, so a
+// one-submission round (Blanks' walkover) plays every round.
+const OTHERS_IDLE = SCENARIO === 'tie' || SCENARIO === 'walkover';
 const OUT = values.out ?? join(REPO_ROOT, 'reports', 'design', 'loop', PASS);
 
 async function main(): Promise<void> {
@@ -95,7 +98,7 @@ async function main(): Promise<void> {
           supportsBots?: boolean;
         }
       ).supportsBots === true;
-    if (bots > 0 && supportsBots) await api.bots(bots, SCENARIO === 'tie' ? 'idle' : 'random');
+    if (bots > 0 && supportsBots) await api.bots(bots, OTHERS_IDLE ? 'idle' : 'random');
     else if (bots > 0) {
       for (let i = 0; i < bots; i += 1) {
         const extra = await openPhone(browser, server.url, 'pixel', `Extra ${i + 1}`);
@@ -152,7 +155,7 @@ async function main(): Promise<void> {
         await still(sam.page, `${tag}-phone-active`);
         // Priya acts first: her phone is the "waiting" (submitted) state of this phase.
         // A tie needs everyone idle — Priya included (review-loop #29).
-        if (status === 'playing' && priya.playerId && SCENARIO !== 'tie') {
+        if (status === 'playing' && priya.playerId && !OTHERS_IDLE) {
           await api.post('/api/dev/act', { playerId: priya.playerId });
           await settle(500);
           await still(priya.page, `${tag}-phone-waiting`);
@@ -168,7 +171,7 @@ async function main(): Promise<void> {
       if (
         status === 'playing' &&
         extras.length > 0 &&
-        SCENARIO !== 'tie' &&
+        !OTHERS_IDLE &&
         extrasActedFor !== key &&
         Date.now() - (changes.at(-1)?.t ?? 0) > 1000 + Math.random() * 2000
       ) {
@@ -244,7 +247,9 @@ async function main(): Promise<void> {
         // A phase still up 9 s in has settled (Blanks' result lands its beats at 1.2 s; the
         // 450 ms still catches only the first): one late TV still per such phase.
         await still(tv, `${String(n).padStart(2, '0')}-${phase}-tv-late`);
-        const again = [sam, priya, ...extras].filter((p) => p.playerId && !p.page.isClosed());
+        const again = (OTHERS_IDLE ? [sam] : [sam, priya, ...extras]).filter(
+          (p) => p.playerId && !p.page.isClosed(),
+        );
         for (const p of again) await api.post('/api/dev/act', { playerId: p.playerId });
         // An untimed phase (Blanks) waits for the room: Sam taps the phone's Next if it offers one.
         if (!sam.page.isClosed()) {
