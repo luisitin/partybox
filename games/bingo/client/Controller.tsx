@@ -51,7 +51,8 @@ function CallHeader({
         {missed && missed.length > 0
           ? `missed: ${missed.join(', ')}`
           : previous
-            ? `before: ${previous.call}`
+            ? // Nicknames are "Number — pun" (review-loop #40): the meta line keeps the short half.
+              `before: ${previous.call.split(' — ')[0]}`
             : 'the number is on the TV'}
       </p>
     </div>
