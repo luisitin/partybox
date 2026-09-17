@@ -83,7 +83,7 @@ export function ControllerJudge({ view, send }: Props): JSX.Element {
         // Untimed rounds: once this phone has voted it may close the vote for the room.
         footer={
           vote.votedSlot !== null ? (
-            <NextButton send={send} timed={view.timed} label="Everyone's voted — Next" />
+            <NextButton send={send} timed={view.timed} label="Don't wait — close the vote" />
           ) : undefined
         }
       />
