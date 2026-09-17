@@ -1,0 +1,48 @@
+{
+  "pass": "38",
+  "game": "bingo",
+  "players": 3,
+  "scenario": "normal",
+  "focus": "phone",
+  "started": "03:12:21.252",
+  "tvVideoT0": "03:12:18.083",
+  "changes": [
+    {
+      "t": 1789614741257,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789614746250,
+      "at": "03:12:21.257",
+      "sinceStartS": 0,
+      "videoS": 3.2
+    },
+    {
+      "t": 1789614746277,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789614749265,
+      "at": "03:12:26.277",
+      "sinceStartS": 5,
+      "videoS": 8.2
+    },
+    {
+      "t": 1789614843171,
+      "status": "playing",
+      "phase": "bingo",
+      "deadline": 1789614853081,
+      "at": "03:14:03.171",
+      "sinceStartS": 101.9,
+      "videoS": 105.1
+    },
+    {
+      "t": 1789614853174,
+      "status": "results",
+      "phase": "results",
+      "deadline": null,
+      "at": "03:14:13.174",
+      "sinceStartS": 111.9,
+      "videoS": 115.1
+    }
+  ],
+  "notes": []
+}
