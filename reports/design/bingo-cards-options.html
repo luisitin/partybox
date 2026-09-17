@@ -11,16 +11,122 @@
     --muted: #5d5b73;
     --line: #d9d5cc;
     --card: #ffffff;
-    --accent: #ff5c8a;
-    --gold: #f2c14e;
-    --green: #19c37d;
-    --phone: #0f1020;
-    --phone-ink: #f4f2ff;
-    --phone-muted: #a9a6c9;
-    --cell: #21233d;
-    --cell-line: #33365a;
     --pick: #2a5bd7;
+    /* The phone mock-ups take PartyBox's real theme tokens (packages/client/src/styles/tokens.css). */
+    --phone: #0f1020;
+    --phone-ink: #f5f6ff;
+    --phone-muted: #b3b7d9;
+    --cell: #272a52;
+    --cell-line: transparent;
+    --accent: #ff5d8f;
+    --on-accent: #1a0b12;
+    --gold: #ffd166;
+    --green: #06d6a0;
+    --sheet: #1c1e3a;
+    --frame: #2b2a3f;
     color-scheme: light dark;
+  }
+  [data-mock='daylight'] {
+    --phone: #f6f5ff;
+    --phone-ink: #171633;
+    --phone-muted: #55577a;
+    --cell: #e9e7fb;
+    --cell-line: transparent;
+    --accent: #d81b60;
+    --on-accent: #ffffff;
+    --gold: #7a4b00;
+    --green: #0f7a5a;
+    --sheet: #ffffff;
+    --frame: #c9c6e6;
+  }
+  [data-mock='arcade'] {
+    --phone: #050014;
+    --phone-ink: #f0f6ff;
+    --phone-muted: #a8b3d6;
+    --cell: #23064a;
+    --cell-line: transparent;
+    --accent: #ff2bd6;
+    --on-accent: #050014;
+    --gold: #00f0ff;
+    --green: #39ff14;
+    --sheet: #14002e;
+    --frame: #2a0a55;
+  }
+  [data-mock='cabin'] {
+    --phone: #1d1410;
+    --phone-ink: #fbf3e8;
+    --phone-muted: #cbb8a6;
+    --cell: #3d2e26;
+    --cell-line: transparent;
+    --accent: #e8743b;
+    --on-accent: #1d1410;
+    --gold: #f2c14e;
+    --green: #8fbf5a;
+    --sheet: #2c211b;
+    --frame: #4a3a30;
+  }
+  [data-mock='contrast'] {
+    --phone: #000000;
+    --phone-ink: #ffffff;
+    --phone-muted: #e6e6e6;
+    --cell: #242424;
+    --cell-line: #ffffff;
+    --accent: #ff4fa3;
+    --on-accent: #000000;
+    --gold: #ffff00;
+    --green: #00ff88;
+    --sheet: #111111;
+    --frame: #555555;
+  }
+  .themes {
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    z-index: 5;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    background: var(--bg);
+    padding: 10px 0 12px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 18px;
+  }
+  .themes span {
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-right: 4px;
+  }
+  .themes button {
+    font: inherit;
+    font-weight: 800;
+    font-size: 13px;
+    border: 2px solid var(--line);
+    background: var(--card);
+    color: var(--ink);
+    border-radius: 999px;
+    padding: 6px 12px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .themes button i {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    display: inline-block;
+    border: 1px solid #0003;
+  }
+  .themes button[aria-pressed='true'] {
+    border-color: var(--pick);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--pick) 30%, transparent);
+  }
+  .themes button:focus-visible {
+    outline: 3px solid var(--pick);
+    outline-offset: 2px;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme='light']) {
@@ -59,8 +165,8 @@
   }
   .lede {
     color: var(--muted);
-    margin: 0 0 28px;
-    max-width: 68ch;
+    margin: 0 0 20px;
+    max-width: 70ch;
     line-height: 1.5;
   }
   h2 {
@@ -76,12 +182,12 @@
   .q {
     color: var(--muted);
     margin: 0 0 16px;
-    max-width: 70ch;
+    max-width: 72ch;
     line-height: 1.5;
   }
   .opts {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 18px;
     align-items: start;
   }
@@ -123,13 +229,12 @@
     align-items: center;
     padding: 10px 0 4px;
   }
-  /* phone frames */
   .phone {
     position: relative;
     background: var(--phone);
     color: var(--phone-ink);
     border-radius: 22px;
-    border: 6px solid #2b2a3f;
+    border: 6px solid var(--frame);
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -149,6 +254,31 @@
     max-width: 100%;
     border-radius: 14px;
   }
+  .tv {
+    width: 100%;
+    max-width: 420px;
+    aspect-ratio: 16/9;
+    background: var(--phone);
+    border-radius: 8px;
+    border: 4px solid var(--frame);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    color: var(--phone-ink);
+    text-align: center;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  .tv .big {
+    font-size: 34px;
+    font-weight: 900;
+  }
+  .tv .sub {
+    font-size: 12px;
+    color: var(--phone-muted);
+  }
   .bar {
     display: flex;
     align-items: center;
@@ -157,10 +287,16 @@
     font-size: 9px;
     font-weight: 900;
     color: var(--phone-muted);
-    border-bottom: 2px solid #f2c14e55;
+    border-bottom: 2px solid var(--gold);
   }
   .bar b {
-    color: #ff5c8a;
+    color: var(--accent);
+  }
+  .bar .style {
+    background: var(--sheet);
+    color: var(--phone-ink);
+    border-radius: 8px;
+    padding: 2px 6px;
   }
   .head {
     padding: 6px 10px 2px;
@@ -187,7 +323,7 @@
   .foot {
     margin: 0 8px 8px;
     background: var(--accent);
-    color: #1b1a2e;
+    color: var(--on-accent);
     border-radius: 10px;
     text-align: center;
     font-weight: 900;
@@ -197,6 +333,10 @@
   .foot.small {
     font-size: 10px;
     padding: 5px;
+  }
+  .foot.neutral {
+    background: var(--sheet);
+    color: var(--phone-ink);
   }
   .card {
     display: grid;
@@ -229,7 +369,7 @@
   }
   .grid .d {
     background: var(--accent);
-    color: #1b1a2e;
+    color: var(--on-accent);
   }
   .grid .f {
     color: var(--gold);
@@ -237,7 +377,7 @@
   }
   .grid .won {
     background: var(--green);
-    color: #103;
+    color: var(--on-accent);
   }
   .lbl {
     font-size: 8px;
@@ -252,12 +392,95 @@
   .dim {
     opacity: 0.5;
   }
-  .note {
-    font-size: 12px;
-    color: var(--muted);
-    margin-top: 8px;
+  .thumbs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    width: 100%;
   }
-  /* turn gate */
+  .thumb {
+    border: 2px solid var(--phone-muted);
+    border-radius: 6px;
+    padding: 3px;
+  }
+  .thumb.cur {
+    border-color: var(--gold);
+  }
+  .thumb.won {
+    border-color: var(--green);
+    opacity: 0.6;
+  }
+  .mini {
+    border: 1px dashed var(--phone-muted);
+    border-radius: 6px;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    font-size: 8px;
+    color: var(--phone-muted);
+    padding: 6px 2px;
+  }
+  .mini b {
+    display: block;
+    font-size: 18px;
+    color: var(--phone-ink);
+  }
+  .mini i {
+    display: block;
+    font-style: normal;
+    color: var(--gold);
+    font-size: 10px;
+  }
+  .sheet {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--sheet);
+    border-radius: 14px 14px 0 0;
+    padding: 8px 10px 10px;
+    font-size: 9px;
+  }
+  .sheet h4 {
+    margin: 0 0 6px;
+    font-size: 10px;
+  }
+  .sheet .row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 6px;
+    border: 1px solid var(--phone-muted);
+    border-radius: 6px;
+    margin-bottom: 4px;
+  }
+  .sheet .row.on {
+    border-color: var(--gold);
+  }
+  .sheet .row small {
+    color: var(--phone-muted);
+  }
+  .curtain {
+    position: absolute;
+    inset: 0;
+    background: color-mix(in srgb, var(--phone) 82%, transparent);
+    display: grid;
+    place-items: center;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 20px;
+  }
+  .curtain small {
+    display: block;
+    color: var(--phone-muted);
+    font-weight: 600;
+    margin-top: 4px;
+  }
+  .sheet,
+  .curtain {
+    color: var(--phone-ink);
+  }
   .gate {
     flex: 1;
     display: flex;
@@ -276,8 +499,6 @@
     border: 3px solid var(--gold);
     border-radius: 6px;
     box-shadow: inset 0 -6px 0 -3px var(--gold);
-  }
-  .spin {
     animation: spin 1.8s ease-in-out infinite;
   }
   @keyframes spin {
@@ -294,104 +515,16 @@
       opacity: 0.4;
     }
   }
-  .arrow {
-    font-size: 34px;
-    color: var(--gold);
-    animation: nudge 1.2s ease-in-out infinite;
-  }
-  @keyframes nudge {
-    0%,
-    100% {
-      transform: translateX(0);
-    }
-    50% {
-      transform: translateX(10px);
-    }
-  }
-  .tilt {
-    width: 60px;
-    height: 110px;
-    border: 3px solid var(--gold);
-    border-radius: 8px;
-    transform-origin: 50% 80%;
-    animation: tilt 2.4s ease-in-out infinite;
-    position: relative;
-  }
-  .tilt::after {
-    content: '✓';
-    position: absolute;
-    inset: 0;
-    display: grid;
-    place-items: center;
-    color: var(--green);
-    font-size: 28px;
-    opacity: 0;
-    animation: tick 2.4s ease-in-out infinite;
-  }
-  @keyframes tilt {
-    0%,
-    25% {
-      transform: rotate(0);
-    }
-    55%,
-    100% {
+  @media (prefers-reduced-motion: reduce) {
+    .ph {
+      animation: none;
       transform: rotate(-90deg);
     }
   }
-  @keyframes tick {
-    0%,
-    60% {
-      opacity: 0;
-    }
-    75%,
-    95% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-    }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .spin,
-    .arrow,
-    .tilt,
-    .tilt::after {
-      animation: none;
-    }
-  }
-  .pickgrid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 4px;
-    width: 100%;
-  }
-  .pickgrid .card {
-    border: 2px solid transparent;
-    border-radius: 6px;
-    padding: 2px;
-  }
-  .pickgrid .card.sel {
-    border-color: var(--green);
-  }
-  .cta {
-    font-size: 9px;
-    text-align: center;
-    color: var(--phone-muted);
-  }
-  .free-row {
-    display: flex;
-    gap: 14px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  .free-row .grid {
-    width: 96px;
-  }
-  .free-row figure {
-    margin: 0;
-    text-align: center;
+  .note {
     font-size: 12px;
     color: var(--muted);
+    margin-top: 8px;
   }
   table {
     border-collapse: collapse;
@@ -412,10 +545,6 @@
     letter-spacing: 0.06em;
     color: var(--muted);
   }
-  code {
-    font-family: ui-monospace, Consolas, monospace;
-    font-size: 0.92em;
-  }
   .reply {
     background: var(--card);
     border: 1px dashed var(--line);
@@ -425,95 +554,90 @@
     font-size: 14px;
     line-height: 1.5;
   }
+  ul.qs {
+    margin: 0;
+    padding-left: 18px;
+    line-height: 1.55;
+    font-size: 14px;
+  }
 </style>
 
-<div class="wrap">
+<div class="wrap" id="wrap" data-mock="night">
+  <div class="themes" role="group" aria-label="Preview theme">
+    <span>Theme</span>
+    <button type="button" data-t="night" aria-pressed="true">
+      <i style="background: #0f1020"></i>Neon Night
+    </button>
+    <button type="button" data-t="daylight"><i style="background: #f6f5ff"></i>Daylight</button>
+    <button type="button" data-t="arcade"><i style="background: #ff2bd6"></i>Retro Arcade</button>
+    <button type="button" data-t="cabin"><i style="background: #e8743b"></i>Cozy Cabin</button>
+    <button type="button" data-t="contrast">
+      <i style="background: #ffff00"></i>High Contrast
+    </button>
+  </div>
   <h1>Bingo Card Layouts</h1>
   <p class="lede">
-    Options for playing with several cards on one phone, the FREE square on small cards, the "turn
-    your phone" gate, and the card-picker idea. Every option has a letter — reply with your picks
-    (for example "A1, B1, C-star, D1, E1, F-no") or tell me what to change. The blue-outlined ones
-    are my recommendations. Cards below are drawings, not the real component, but the proportions
-    are true to an iPhone 15.
+    Version 3, redrawn from your notes; the theme buttons above repaint every mock-up with
+    PartyBox's real palettes. Nothing here is coded yet beyond the baseline grid. Read top to
+    bottom: the default ("Focus"), the card-style switcher and its pause, each style as you asked
+    for it, then the confirmed picks. A few questions sit at the end.
   </p>
 
-  <h2>A · Two cards <small>your rule: landscape only</small></h2>
+  <h2>1 · The default: Focus <small>your B4, for one, two, three or four cards</small></h2>
   <p class="q">
-    Two cards side by side in landscape. The question is what happens to the call header.
+    One main card, big, with FREE spelled out. The other cards are bordered thumbnails under it —
+    tap one and it swaps up. Thumbnails use the ★. One card means no thumbnails. Portrait only.
   </p>
-  <div class="opts" id="A"></div>
+  <div class="opts" id="S1"></div>
 
-  <h2>B · Three or four cards on a phone <small>portrait or landscape</small></h2>
+  <h2>2 · Changing card style <small>a button next to the theme palette</small></h2>
   <p class="q">
-    Each card fills its quadrant. Gaps tight, digits a notch smaller, no labels, no call header —
-    the TV carries the call.
+    Every phone has a "Card style" button in the top bar. Opening it pauses the room for everyone —
+    the caller stops, the TV and every phone say who is changing — and the game resumes when nobody
+    has the sheet open. Each phone keeps its own style.
   </p>
-  <div class="opts" id="B"></div>
+  <div class="opts" id="S2"></div>
 
-  <h2>C · The FREE square on a small card</h2>
+  <h2>3 · The other styles <small>picked from the sheet</small></h2>
   <p class="q">
-    "FREE" does not fit a 30 px cell. Pick the mark. (It still reads as "FREE" to a screen reader.)
+    Each style says which way the phone must be held. Focus is portrait only; Side by side and Strip
+    are landscape only; Stack and Grid are portrait only.
   </p>
+  <div class="opts" id="S3"></div>
+
+  <h2>4 · Confirmed as drawn <small>D1 gate · E1 tablets · F2 swap once</small></h2>
+  <div class="opts" id="S4"></div>
+
+  <h2>5 · Questions before I build</h2>
   <div class="opt">
-    <div class="stage free-row" id="C"></div>
-  </div>
-
-  <h2>D · The "turn your phone" gate</h2>
-  <p class="q">
-    Shown when the phone is held the wrong way for the card count: one card = upright only, two
-    cards = sideways only, three or four = either. The gate lifts by itself the moment the phone
-    turns, then asks the browser to lock the orientation (works on Android Chrome; iPhones ignore
-    the lock, so the gate simply comes back if the phone is turned).
-  </p>
-  <div class="opts" id="D"></div>
-
-  <h2>E · Tablets and computers</h2>
-  <p class="q">A wide screen is never asked to turn, and there is room for normal-sized cards.</p>
-  <div class="opts" id="E"></div>
-
-  <h2>F · Pick your card at the start <small>one-card games</small></h2>
-  <p class="q">
-    Your idea: instead of waiting through the intro, players with one card choose from up to four
-    dealt cards. Cards chosen this way are still random — nobody sees the deck — so it is pure fun,
-    not an edge.
-  </p>
-  <div class="opts" id="F"></div>
-
-  <h2>G · Where the called-board toggle lives</h2>
-  <div class="opt">
-    <p>
-      On the game-selection screen, under Bingo's settings, next to "Previous number" and "Cheeky
-      caller": <b>Called board — off / on</b>. It was never on the main branch before this week's
-      merge, which is why it is not in your build yet; the snapshots you saw came from my branch.
-      Default is now <b>off</b>, as you asked.
-    </p>
-    <table>
-      <tr>
-        <th>Setting</th>
-        <th>Default</th>
-        <th>What it does</th>
-      </tr>
-      <tr>
-        <td>Cards per player</td>
-        <td>1</td>
-        <td>1–4 cards each; one BINGO! button checks your best card</td>
-      </tr>
-      <tr>
-        <td>Called board</td>
-        <td>off</td>
-        <td>TV keeps the 75-number hall board lit as numbers are called</td>
-      </tr>
-      <tr>
-        <td>Previous number</td>
-        <td>on</td>
-        <td>TV shows the one before under the current call</td>
-      </tr>
-    </table>
+    <ul class="qs">
+      <li>
+        <b>Pause on style change:</b> should it also pause a check or a celebration already on the
+        TV, or only the calling? I assume only the calling (a check finishes first).
+      </li>
+      <li>
+        <b>Focus with one card:</b> the current call still shows above the card as today (nickname +
+        "Call 19"), yes? With two or more cards the top stays clear and the calls live on the TV —
+        or in the Grid's spare slot.
+      </li>
+      <li>
+        <b>Thumbnail taps:</b> tapping a thumbnail only swaps it up; daubing happens on the main
+        card. Fine?
+      </li>
+      <li>
+        <b>F2 swap once:</b> one swap per round for every player, during the 5 s intro, and the
+        swapped-away card is gone for good. Yes?
+      </li>
+      <li>
+        <b>Remember the style:</b> the phone remembers your last card style for the next game (like
+        the theme).
+      </li>
+    </ul>
   </div>
 
   <div class="reply">
-    <b>How to reply:</b> letters and notes are enough — "A1, B1 but bigger gaps, C star, D1, E1, F2
-    at 10 s". I will build exactly those and re-run the headless captures on them.
+    <b>How to reply:</b> "build it" plus any changes, or answers to the questions above. I will
+    implement, re-run the headless captures on Bingo, and refresh this page with real screenshots.
   </div>
 </div>
 
@@ -531,7 +655,8 @@
     const free = opts.free ?? 'FREE';
     const daubs = new Set(opts.daubs || [1, 7, 16, 22]);
     let h = `<div class="card ${opts.cls || ''}" style="font-size:${size}px;max-width:${opts.w || '100%'}">`;
-    if (opts.label) h += `<div class="lbl ${opts.won ? 'won' : ''}">${opts.label}</div>`;
+    if (opts.label !== undefined)
+      h += `<div class="lbl ${opts.won ? 'won' : ''}">${opts.label}</div>`;
     h += `<div class="letters">${'BINGO'
       .split('')
       .map((l) => `<span>${l}</span>`)
@@ -549,138 +674,147 @@
     });
     return h + '</div></div>';
   }
-  const bar = `<div class="bar"><span><b>PB</b> RVKR</span><span>★ VIP · Sam</span></div>`;
-  const head = `<div class="head"><div class="call">Fifty-six — pick up sticks</div><div class="meta">Call 19 · Any line · before: Four dozen</div></div>`;
-  const head1 = `<div class="head"><div class="meta">Call 19 · Any line</div></div>`;
+  const thumb = (seed, o = {}) =>
+    `<div class="thumb ${o.cur ? 'cur' : ''} ${o.won ? 'won' : ''}">${card(seed, { size: 3.6, free: '★', freeSize: 6, daubs: o.daubs || [3, 9], won: o.won })}</div>`;
+  const bar = (style = true) =>
+    `<div class="bar"><span><b>PB</b> RVKR</span><span>${style ? '<span class="style">🎨 · 🃏 style</span> ' : ''}★ Sam</span></div>`;
+  const head = `<div class="head"><div class="call">Fifty-six — pick up sticks</div><div class="meta">Call 19 · Any line</div></div>`;
+  const miniCall = `<div class="mini"><i>G</i><b>56</b>pick up sticks<br>call 19 · any line</div>`;
   const opt = (rec, tag, title, body, stage, note = '') =>
-    `<div class="opt ${rec ? 'rec' : ''}"><span class="tag ${rec ? '' : 'plain'}">${tag}${rec ? ' · recommended' : ''}</span><h3>${title}</h3><p>${body}</p><div class="stage">${stage}</div>${note ? `<div class="note">${note}</div>` : ''}</div>`;
+    `<div class="opt ${rec ? 'rec' : ''}"><span class="tag ${rec ? '' : 'plain'}">${tag}${rec ? ' · default' : ''}</span><h3>${title}</h3><p>${body}</p><div class="stage">${stage}</div>${note ? `<div class="note">${note}</div>` : ''}</div>`;
+  const focus = (n, extra = {}) => {
+    const thumbs =
+      n > 1
+        ? `<div class="thumbs">${[4, 5, 6]
+            .slice(0, n - 1)
+            .map((s, i) => thumb(s, { won: extra.wonThumb === i }))
+            .join('')}</div>`
+        : '';
+    return `<div class="phone port">${bar()}${n === 1 ? head : ''}<div class="body" style="grid-template-rows:auto auto;gap:8px;align-content:start">${card(3, { size: 10, w: '172px', daubs: [1, 7, 16, 22] })}${thumbs}</div><div class="foot small">BINGO!</div></div>`;
+  };
 
-  document.getElementById('A').innerHTML = [
+  document.getElementById('S1').innerHTML = [
     opt(
       true,
-      'A1',
-      'Cards only, side by side',
-      'No header at all: the phone is two cards and BINGO!. Calls come from the TV.',
-      `<div class="phone land">${bar}<div class="body" style="grid-template-columns:1fr 1fr;gap:8px;padding:6px 12px">${card(3, { size: 8, w: '150px' })}${card(4, { size: 8, w: '150px', daubs: [3, 9] })}</div><div class="foot small">BINGO!</div></div>`,
+      'Focus · 1 card',
+      'As today',
+      'One card, the call above it, FREE spelled out. Nothing else changes for one-card games.',
+      focus(1),
     ),
-    opt(
-      false,
-      'A2',
-      'One thin line above',
-      'Just "Call 19 · Any line" — no nickname. Costs ~10 px.',
-      `<div class="phone land">${bar}${head1}<div class="body" style="grid-template-columns:1fr 1fr;gap:8px;padding:4px 12px">${card(3, { size: 7.5, w: '140px' })}${card(4, { size: 7.5, w: '140px', daubs: [3, 9] })}</div><div class="foot small">BINGO!</div></div>`,
-    ),
-    opt(
-      false,
-      'A3',
-      'Portrait, stacked (no gate)',
-      'What it looks like if we do NOT force landscape: two cards stacked, each smaller.',
-      `<div class="phone port">${bar}<div class="body" style="gap:6px">${card(3, { size: 8, w: '140px', label: 'CARD 1' })}${card(4, { size: 8, w: '140px', label: 'CARD 2', daubs: [3, 9] })}</div><div class="foot small">BINGO!</div></div>`,
-    ),
-  ].join('');
-
-  document.getElementById('B').innerHTML = [
     opt(
       true,
-      'B1',
-      'Quadrants, tight',
-      'Each card nearly fills its quarter: 4 px gaps, no labels, digits ~11 px. A card that has won gets a gold ✓ line and dims.',
-      `<div class="phone port">${bar}<div class="body" style="grid-template-columns:1fr 1fr;gap:4px;padding:4px">${card(3, { size: 7 })}${card(4, { size: 7, daubs: [3, 9] })}${card(5, { size: 7, daubs: [0, 18, 24], cls: 'dim', label: 'BINGO ✓', won: true })}${card(6, { size: 7, daubs: [2] })}</div><div class="foot small">BINGO!</div></div>`,
+      'Focus · 2 cards',
+      'Main card + one thumbnail',
+      'The top stays clear; the TV carries the call. Tap the thumbnail to bring that card up.',
+      focus(2),
     ),
     opt(
-      false,
-      'B2',
-      'Quadrants with labels',
-      'Same grid, "CARD 1…4" over each. Clearer when someone says "card three", costs a row of digits.',
-      `<div class="phone port">${bar}<div class="body" style="grid-template-columns:1fr 1fr;gap:4px 6px;padding:4px">${card(3, { size: 6.5, label: 'CARD 1' })}${card(4, { size: 6.5, label: 'CARD 2', daubs: [3, 9] })}${card(5, { size: 6.5, label: 'CARD 3', daubs: [0, 18] })}${card(6, { size: 6.5, label: 'CARD 4', daubs: [2] })}</div><div class="foot small">BINGO!</div></div>`,
-    ),
-    opt(
-      false,
-      'B3',
-      'Landscape strip',
-      'Sideways: four in a row. Each card is about the same size as a quadrant in portrait.',
-      `<div class="phone land">${bar}<div class="body" style="grid-template-columns:repeat(4,1fr);gap:6px;padding:4px 10px">${card(3, { size: 6 })}${card(4, { size: 6, daubs: [3, 9] })}${card(5, { size: 6, daubs: [0, 18] })}${card(6, { size: 6, daubs: [2] })}</div><div class="foot small">BINGO!</div></div>`,
-    ),
-    opt(
-      false,
-      'B4',
-      'One big, three thumbnails',
-      'Tap a thumbnail to bring it up front. Bigger digits, but you only ever daub one card at a time.',
-      `<div class="phone port">${bar}<div class="body" style="grid-template-rows:auto auto;gap:6px">${card(3, { size: 11, w: '170px' })}<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;width:170px">${card(4, { size: 3.5, daubs: [3, 9] })}${card(5, { size: 3.5, daubs: [0, 18] })}${card(6, { size: 3.5, daubs: [2] })}</div></div><div class="foot small">BINGO!</div></div>`,
+      true,
+      'Focus · 4 cards',
+      'Main card + three thumbnails',
+      'Gold border = the card that is up. A thumbnail that already won goes green-bordered and dim; it can still be looked at, not claimed.',
+      focus(4, { wonThumb: 1 }),
     ),
   ].join('');
 
-  const freeCell = (mark, label, sz) =>
-    `<figure>${card(9, { size: 7, free: mark, freeSize: sz, daubs: [] }).replace('class="card', 'class="card" data-x="')}<figcaption>${label}</figcaption></figure>`;
-  document.getElementById('C').innerHTML = [
-    freeCell('★', 'C-star — a gold star (my pick)', 9),
-    freeCell('F', 'C-F — a gold F', 8),
-    freeCell('●', 'C-dot — a gold dot', 8),
-    freeCell('', 'C-blank — gold outline, nothing in it', 7),
+  document.getElementById('S2').innerHTML = [
+    opt(
+      false,
+      'The sheet',
+      'Card style — on this phone',
+      'Opens from the 🃏 in the top bar. Styles that need the phone sideways say so; picking one shows the D1 turn gate if needed.',
+      `<div class="phone port">${bar()}<div class="body">${card(3, { size: 8, w: '150px', cls: 'dim' })}</div><div class="sheet"><h4>Card style</h4><div class="row on"><span>Focus <small>· one big card + thumbnails</small></span><span>✓</span></div><div class="row"><span>Grid <small>· all cards at once</small></span><span></span></div><div class="row"><span>Stack <small>· two cards, upright</small></span><span></span></div><div class="row"><span>Side by side <small>· two cards, sideways</small></span><span>↻</span></div><div class="row"><span>Strip <small>· 3–4 cards, sideways</small></span><span>↻</span></div><div class="foot small neutral" style="margin:6px 0 0">Done</div></div></div>`,
+    ),
+    opt(
+      false,
+      'Everyone else',
+      'The room pauses',
+      'The caller stops mid-round. Phones show who is changing; daubing still works. Resumes the moment the sheet closes.',
+      `<div class="phone port">${bar()}<div class="body">${card(4, { size: 8, w: '150px' })}</div><div class="foot small">BINGO!</div><div class="curtain">⏸ Sam is changing card style…<small>the caller waits · you can keep daubing</small></div></div>`,
+    ),
+    opt(
+      false,
+      'The TV',
+      'Same curtain on the stage',
+      'The call stays up, dimmed, with the pause line. Two people changing at once: "Sam and Priya are changing…".',
+      `<div class="tv"><div class="big" style="opacity:.35">G 56</div><div class="sub" style="opacity:.35">pick up sticks</div><div style="font-weight:900">⏸ Sam is changing card style…</div><div class="sub">calling resumes when they are done</div></div>`,
+    ),
   ].join('');
 
-  document.getElementById('D').innerHTML = [
+  document.getElementById('S3').innerHTML = [
+    opt(
+      false,
+      'Grid · 4 cards',
+      'Your B2, with the label rule',
+      'Labels stay put so the sizing never jumps: "CARD 2" becomes "BINGO ✓" and the card dims when it wins. Portrait.',
+      `<div class="phone port">${bar()}<div class="body" style="grid-template-columns:1fr 1fr;gap:4px 6px;padding:4px">${card(3, { size: 6.5, label: 'CARD 1' })}${card(4, { size: 6.5, label: 'BINGO ✓', won: true, cls: 'dim', daubs: [3, 9] })}${card(5, { size: 6.5, label: 'CARD 3', daubs: [0, 18] })}${card(6, { size: 6.5, label: 'CARD 4', daubs: [2] })}</div><div class="foot small">BINGO!</div></div>`,
+    ),
+    opt(
+      false,
+      'Grid · 3 cards',
+      'The spare slot shows the call',
+      'With three cards the fourth slot is a small TV: the letter, the number, the nickname and the call count — the whole game on the phone.',
+      `<div class="phone port">${bar()}<div class="body" style="grid-template-columns:1fr 1fr;gap:4px 6px;padding:4px">${card(3, { size: 6.5, label: 'CARD 1' })}${card(4, { size: 6.5, label: 'CARD 2', daubs: [3, 9] })}${card(5, { size: 6.5, label: 'CARD 3', daubs: [0, 18] })}${miniCall}</div><div class="foot small">BINGO!</div></div>`,
+    ),
+    opt(
+      false,
+      'Strip · 3–4 cards',
+      'Your B3',
+      'Sideways: the cards in a row with air above and below. Landscape only.',
+      `<div class="phone land">${bar()}<div class="body" style="grid-template-columns:repeat(4,1fr);gap:8px;padding:6px 12px">${card(3, { size: 5.6, label: 'CARD 1' })}${card(4, { size: 5.6, label: 'CARD 2', daubs: [3, 9] })}${card(5, { size: 5.6, label: 'CARD 3', daubs: [0, 18] })}${card(6, { size: 5.6, label: 'CARD 4', daubs: [2] })}</div><div class="foot small">BINGO!</div></div>`,
+    ),
+    opt(
+      false,
+      'Stack · 2 cards',
+      'Your A3 without the labels',
+      'Two cards upright, one above the other, no "CARD 1 / 2" — it is implied. Portrait only.',
+      `<div class="phone port">${bar()}<div class="body" style="gap:8px">${card(3, { size: 7.6, w: '132px' })}${card(4, { size: 7.6, w: '132px', daubs: [3, 9] })}</div><div class="foot small">BINGO!</div></div>`,
+    ),
+    opt(
+      false,
+      'Side by side · 2 cards',
+      'Your A1, loosened up',
+      'Cards a size smaller than before, with the same air above and below as the Strip, so both sit comfortably. Landscape only.',
+      `<div class="phone land">${bar()}<div class="body" style="grid-template-columns:1fr 1fr;gap:14px;padding:8px 40px">${card(3, { size: 6.4, w: '122px' })}${card(4, { size: 6.4, w: '122px', daubs: [3, 9] })}</div><div class="foot small">BINGO!</div></div>`,
+    ),
+  ].join('');
+
+  document.getElementById('S4').innerHTML = [
     opt(
       true,
       'D1',
       'Little phone turns',
-      'A phone outline rotates to the way it should go, over and over, with the ask under it. The moment the real phone turns, the cards appear.',
-      `<div class="phone port">${bar}<div class="gate"><div class="ph spin"></div>Turn your phone sideways — your two cards sit side by side.</div></div>`,
+      'Shown when the chosen style needs the other orientation. Lifts by itself when the phone turns, then asks the browser to lock (Android; iPhones ignore it).',
+      `<div class="phone port">${bar()}<div class="gate"><div class="ph"></div>Turn your phone sideways for Side by side.</div></div>`,
     ),
-    opt(
-      false,
-      'D2',
-      'Arrow nudge',
-      'A curved arrow nudging sideways and one line of text. Simplest.',
-      `<div class="phone port">${bar}<div class="gate"><div class="arrow">↻</div>Turn your phone sideways</div></div>`,
-    ),
-    opt(
-      false,
-      'D3',
-      'Turn, then a tick',
-      'The outline turns, a green ✓ lands when the phone is detected sideways, then "locked" — a small ceremony before the cards slide in.',
-      `<div class="phone port">${bar}<div class="gate"><div class="tilt"></div>Turn sideways… <span style="color:#19c37d">✓ locked</span></div></div>`,
-    ),
-  ].join('');
-
-  document.getElementById('E').innerHTML = [
     opt(
       true,
       'E1',
-      'Four normal cards in a row',
-      'On anything wider than a phone: full-size cards side by side, labels on, no orientation rule.',
-      `<div class="phone tab">${bar}${head1}<div class="body" style="grid-template-columns:repeat(4,1fr);gap:8px;padding:6px 10px">${card(3, { size: 6, label: 'CARD 1' })}${card(4, { size: 6, label: 'CARD 2', daubs: [3, 9] })}${card(5, { size: 6, label: 'CARD 3', daubs: [0, 18] })}${card(6, { size: 6, label: 'CARD 4', daubs: [2] })}</div><div class="foot small">BINGO!</div></div>`,
-    ),
-    opt(
-      false,
-      'E2',
-      'Same as the phone',
-      'Treat every screen like a phone: quadrants and the turn rule. Simpler code, wastes a tablet.',
-      `<div class="phone tab">${bar}<div class="body" style="grid-template-columns:1fr 1fr;gap:4px;padding:4px 80px">${card(3, { size: 5 })}${card(4, { size: 5, daubs: [3, 9] })}${card(5, { size: 5, daubs: [0, 18] })}${card(6, { size: 5, daubs: [2] })}</div><div class="foot small">BINGO!</div></div>`,
-    ),
-  ].join('');
-
-  document.getElementById('F').innerHTML = [
-    opt(
-      false,
-      'F1',
-      'Pick one of four',
-      'The intro deals four; tap the one you like within 10 s (or it keeps the first). The TV says "picking cards…".',
-      `<div class="phone port">${bar}<div class="head"><div class="call" style="font-size:11px">Pick your card · 7 s</div></div><div class="body"><div class="pickgrid">${card(3, { size: 5, cls: 'sel', daubs: [] })}${card(4, { size: 5, daubs: [] })}${card(5, { size: 5, daubs: [] })}${card(6, { size: 5, daubs: [] })}</div><div class="cta">Tap the one you like</div></div><div class="foot small">Play this card</div></div>`,
-    ),
-    opt(
-      false,
-      'F2',
-      'Swap once',
-      'You get one card as now, plus a "Deal me another" button during the intro — one swap, no second look.',
-      `<div class="phone port">${bar}<div class="head"><div class="call" style="font-size:11px">Round 1 of 3 · 5 s</div></div><div class="body">${card(3, { size: 9, w: '160px', daubs: [] })}</div><div class="foot small" style="background:#2b2a3f;color:#f4f2ff">Deal me another (1 left)</div></div>`,
+      'Tablets and computers',
+      'Four normal cards in a row, labels on, no orientation rule, no style sheet needed (it still works if opened).',
+      `<div class="phone tab">${bar()}<div class="body" style="grid-template-columns:repeat(4,1fr);gap:8px;padding:6px 10px">${card(3, { size: 6, label: 'CARD 1' })}${card(4, { size: 6, label: 'CARD 2', daubs: [3, 9] })}${card(5, { size: 6, label: 'CARD 3', daubs: [0, 18] })}${card(6, { size: 6, label: 'CARD 4', daubs: [2] })}</div><div class="foot small">BINGO!</div></div>`,
     ),
     opt(
       true,
-      'F-no',
-      'Not now',
-      'Keep the intro as it is. My reason: a picked card feels chosen but is not any luckier, and the 10 s costs every round.',
-      `<div class="phone port">${bar}<div class="head"><div class="call" style="font-size:11px">Round 1 of 3</div><div class="meta">Any line · your new card</div></div><div class="body">${card(3, { size: 9, w: '160px', daubs: [] })}</div></div>`,
+      'F2',
+      'Swap once',
+      'During the intro every player gets one "Deal me another". The new card replaces the old one for good — a little gamble.',
+      `<div class="phone port">${bar()}<div class="head"><div class="call" style="font-size:11px">Round 1 of 3 · 5 s</div><div class="meta">Any line · your new card</div></div><div class="body">${card(3, { size: 9, w: '160px', daubs: [] })}</div><div class="foot small neutral">🎲 Deal me another (1 left)</div></div>`,
     ),
   ].join('');
+  const wrap = document.getElementById('wrap');
+  for (const b of document.querySelectorAll('.themes button'))
+    b.addEventListener('click', () => {
+      wrap.dataset.mock = b.dataset.t;
+      for (const o of document.querySelectorAll('.themes button'))
+        o.setAttribute('aria-pressed', String(o === b));
+      try {
+        localStorage.setItem('bingo-options-theme', b.dataset.t);
+      } catch {}
+    });
+  try {
+    const t = localStorage.getItem('bingo-options-theme');
+    const b = t && document.querySelector(`.themes button[data-t="${t}"]`);
+    if (b) b.click();
+  } catch {}
 </script>
