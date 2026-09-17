@@ -21,9 +21,9 @@ const gap = Number(values.gap);
 const cols = Number(values.cols);
 const width = Number(values.width);
 const frames = readdirSync(dir)
-  .filter((f) => /^tv-t\d+\.png$/.test(f))
+  .filter((f) => /^(tv-t|f)\d+\.png$/.test(f)) // burst stills, or 10 fps video frames (loop-tools strip)
   .sort((a, b) => Number(/\d+/.exec(a)?.[0]) - Number(/\d+/.exec(b)?.[0]));
-if (frames.length === 0) throw new Error(`no tv-tN.png frames in ${dir}`);
+if (frames.length === 0) throw new Error(`no tv-tN.png / fNN.png frames in ${dir}`);
 const out = values.out ?? join(dir, 'filmstrip.png');
 
 const cells = frames

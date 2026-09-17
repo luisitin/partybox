@@ -7,7 +7,15 @@ import { join } from 'node:path';
 import { parseArgs } from 'node:util';
 import { chromium } from 'playwright';
 import { REPO_ROOT, startServer } from './server';
-import { DevApi, joinViaForm, openPhone, openTv, passAudioGate, settle } from './session';
+import {
+  DevApi,
+  cutStrips,
+  joinViaForm,
+  openPhone,
+  openTvRecorded,
+  passAudioGate,
+  settle,
+} from './session';
 import { Shooter } from './shooter';
 
 const { values } = parseArgs({
@@ -24,7 +32,9 @@ async function main(): Promise<void> {
   const browser = await chromium.launch();
   try {
     await api.reset();
-    const tv = await openTv(browser, server.url);
+    const rec = await openTvRecorded(browser, server.url, join(OUT, 'video'));
+    const tv = rec.page;
+    const marks: { name: string; at: number; before?: number; seconds?: number }[] = [];
     await passAudioGate(tv);
     const vip = await openPhone(browser, server.url, 'iphone', 'Sam');
     await joinViaForm(vip, api, { avatarIndex: 1 });
@@ -53,6 +63,7 @@ async function main(): Promise<void> {
     await shots.shot(vip.page, { group: G, phase: 'focus', device: 'iphone', role: 'vip' });
     await shots.shot(p3.page, { group: G, phase: 'focus-gate', device: 'landscape', role: 'p3' });
     // The style sheet: open (the room holds), preview Grid (the bar), confirm (3 · 2 · 1).
+    marks.push({ name: 'tv-hold-curtain', at: Date.now(), before: 0.2, seconds: 2 });
     await vip.page
       .getByRole('button', { name: /card style|style/i })
       .first()
@@ -64,6 +75,7 @@ async function main(): Promise<void> {
     await vip.page.getByRole('button', { name: /^Grid/ }).click();
     await settle(400);
     await shots.shot(vip.page, { group: G, phase: 'preview-grid', device: 'iphone', role: 'vip' });
+    marks.push({ name: 'tv-resume-321', at: Date.now(), before: 0.2, seconds: 5 });
     await vip.page.getByRole('button', { name: /^Confirm$/ }).click();
     await settle(700);
     await shots.shot(tv, { group: G, phase: 'resume-3', device: 'tv', role: 'stage' });
@@ -72,6 +84,7 @@ async function main(): Promise<void> {
     await shots.shot(vip.page, { group: G, phase: 'grid', device: 'iphone', role: 'vip' });
     await shots.shot(tv, { group: G, phase: 'resumed', device: 'tv', role: 'stage' });
     // Two taps: Sam arms card 2; Priya's tap queues behind; the TV says who is calling it.
+    marks.push({ name: 'tv-armed', at: Date.now(), before: 0.2, seconds: 4.5 });
     await vip.page.getByRole('button', { name: /^BINGO! card 2$/i }).click();
     await settle(300);
     await p2.page.getByRole('button', { name: /^BINGO! card 1$/i }).click();
@@ -93,7 +106,10 @@ async function main(): Promise<void> {
     await p3.page.getByRole('button', { name: /^Confirm$/ }).click();
     await settle(3600);
     await shots.shot(p3.page, { group: G, phase: 'strip', device: 'landscape', role: 'p3' });
-    console.log(`captured ${shots.shots.length} stills → ${OUT}`);
+    const video = await cutStrips(rec, join(OUT, 'strips'), marks);
+    console.log(
+      `captured ${shots.shots.length} stills → ${OUT}; strips from ${video ?? '(no video)'}`,
+    );
   } finally {
     await browser.close();
     await server.stop();

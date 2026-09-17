@@ -127,14 +127,16 @@ export function BingoButton({
   }, [armedHere, left, send]);
   const won = view.won.includes(card);
   const checking = view.phaseId === 'check';
+  // The check is about one card: only that button says "Not a bingo".
+  const myCheck = checking && view.claim?.playerId === meId && view.claim.cardIndex === card;
   const canTap = view.claimable.includes(card) && !checking;
   let label = 'BINGO!';
   let tone: 'accent' | 'neutral' | 'danger' | 'success' = 'accent';
   if (won) label = 'Yours already';
-  else if (checking) label = view.claim?.playerId === meId ? 'Not a bingo' : 'Look at the TV';
+  else if (checking) label = myCheck ? 'Not a bingo' : 'Look at the TV';
   else if (view.waitingForCall) label = 'Next number soon…';
   else if (armedHere) {
-    label = `Tap again for BINGO! · ${left ?? 0}`;
+    label = `Tap again for BINGO! · ${Math.min(3, left ?? 0)}`; // a clock a hair behind can say 4
     tone = 'success';
   } else if (mine) label = 'BINGO!';
   else if (arm) {
@@ -149,7 +151,7 @@ export function BingoButton({
   }
   return (
     <PrimaryButton
-      tone={checking && view.claim?.playerId === meId ? 'danger' : tone}
+      tone={myCheck ? 'danger' : tone}
       disabled={!canTap && !(arm && !mine && canTap)}
       onClick={() => send({ type: 'bingo', card })}
       className={`${small ? styles.bingoSmall : styles.bingo} ${armedHere ? styles.armed : ''}`}

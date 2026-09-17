@@ -245,8 +245,9 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
 
   if (view.phaseId === 'scoreboard') {
     const next = view.patterns[view.round] ?? null;
+    // Centred like the game-end board (loop 6 pick 2A): the rounds-won table sat in the left half.
     return (
-      <Stage>
+      <Stage center>
         <BigText level="h1">Rounds won</BigText>
         <Scoreboard rows={rows(view)} noTrophy />
         {next ? (
@@ -259,7 +260,7 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
   }
 
   return (
-    <Stage>
+    <Stage center>
       <BigText level="h1" tone="accent">
         That's bingo!
       </BigText>

@@ -128,3 +128,72 @@ export async function joinViaForm(
 export async function settle(ms = 400): Promise<void> {
   await new Promise((resolve) => setTimeout(resolve, ms));
 }
+
+/**
+ * A TV whose whole session is recorded (Playwright video, 1080p), so a transition can be cut into
+ * 10 fps frames afterwards (`cutStrips`): the owner wants at least ten frames a second whenever an
+ * animation is examined, and sequential stills cannot deliver that.
+ */
+export async function openTvRecorded(
+  browser: Browser,
+  url: string,
+  videoDir: string,
+): Promise<{ page: Page; context: BrowserContext; t0: number; videoDir: string }> {
+  const context = await browser.newContext({
+    ...DEVICES.tv.options,
+    colorScheme: 'dark',
+    recordVideo: { dir: videoDir, size: { width: 1920, height: 1080 } },
+  });
+  const t0 = Date.now();
+  const page = await context.newPage();
+  await page.goto(`${url}/tv`);
+  await page.waitForSelector('[data-surface="tv"]');
+  return { page, context, t0, videoDir };
+}
+
+/** Close the recorded TV and cut each marked window (`at` = Date.now() of the moment) to 10 fps frames. */
+export async function cutStrips(
+  tv: { context: BrowserContext; t0: number; videoDir: string },
+  stripsDir: string,
+  marks: { name: string; at: number; before?: number; seconds?: number }[],
+): Promise<string | null> {
+  await tv.context.close();
+  const { readdirSync, renameSync } = await import('node:fs');
+  const { join } = await import('node:path');
+  const { strip } = await import('./loop-tools');
+  const file = readdirSync(tv.videoDir).find((x) => x.endsWith('.webm'));
+  if (!file) return null;
+  const video = join(tv.videoDir, 'tv.webm');
+  if (file !== 'tv.webm') renameSync(join(tv.videoDir, file), video);
+  for (const m of marks) {
+    strip(
+      video,
+      join(stripsDir, m.name),
+      (m.at - tv.t0) / 1000 - (m.before ?? 0.3),
+      m.seconds ?? 2.5,
+    );
+  }
+  return video;
+}
+
+/** A phone whose whole session is recorded, for 10 fps strips of its own animations (`cutStrips`). */
+export async function openPhoneRecorded(
+  browser: Browser,
+  url: string,
+  device: DeviceId,
+  name: string,
+  videoDir: string,
+): Promise<Phone & { t0: number; videoDir: string }> {
+  const spec = DEVICES[device];
+  const context = await browser.newContext({
+    ...spec.options,
+    colorScheme: 'dark',
+    recordVideo: { dir: videoDir, size: spec.options.viewport ?? { width: 390, height: 844 } },
+  });
+  const t0 = Date.now();
+  const page = await context.newPage();
+  await page.goto(`${url}/`);
+  await page.waitForSelector('[data-surface="controller"]');
+  await applyDeviceCss(page, device);
+  return { device, context, page, name, playerId: null, t0, videoDir };
+}
