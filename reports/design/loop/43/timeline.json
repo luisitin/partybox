@@ -1,0 +1,48 @@
+{
+  "pass": "43",
+  "game": "bingo",
+  "players": 6,
+  "scenario": "spicy",
+  "focus": "tv",
+  "started": "04:09:32.795",
+  "tvVideoT0": "04:09:29.610",
+  "changes": [
+    {
+      "t": 1789618172798,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789618177791,
+      "at": "04:09:32.798",
+      "sinceStartS": 0,
+      "videoS": 3.2
+    },
+    {
+      "t": 1789618177828,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789618180804,
+      "at": "04:09:37.828",
+      "sinceStartS": 5,
+      "videoS": 8.2
+    },
+    {
+      "t": 1789618262268,
+      "status": "playing",
+      "phase": "bingo",
+      "deadline": 1789618272218,
+      "at": "04:11:02.268",
+      "sinceStartS": 89.5,
+      "videoS": 92.7
+    },
+    {
+      "t": 1789618272307,
+      "status": "results",
+      "phase": "results",
+      "deadline": null,
+      "at": "04:11:12.307",
+      "sinceStartS": 99.5,
+      "videoS": 102.7
+    }
+  ],
+  "notes": []
+}
