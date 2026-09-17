@@ -40,9 +40,9 @@
     "height": 659
   },
   {
-    "file": "blanks/answer-arcade/tv-stage.png",
+    "file": "blanks/answer-contrast/tv-stage.png",
     "group": "blanks",
-    "phase": "answer-arcade",
+    "phase": "answer-contrast",
     "device": "tv",
     "deviceLabel": "TV 1080p",
     "role": "stage",
@@ -50,9 +50,9 @@
     "height": 1080
   },
   {
-    "file": "blanks/answer-arcade/iphone-p1-p1.png",
+    "file": "blanks/answer-contrast/iphone-p1-p1.png",
     "group": "blanks",
-    "phase": "answer-arcade",
+    "phase": "answer-contrast",
     "device": "iphone",
     "deviceLabel": "iPhone 15",
     "role": "p1-p1",
@@ -60,9 +60,9 @@
     "height": 659
   },
   {
-    "file": "blanks/answer-arcade/iphone-p2-p2.png",
+    "file": "blanks/answer-contrast/iphone-p2-p2.png",
     "group": "blanks",
-    "phase": "answer-arcade",
+    "phase": "answer-contrast",
     "device": "iphone",
     "deviceLabel": "iPhone 15",
     "role": "p2-p2",
@@ -70,9 +70,9 @@
     "height": 659
   },
   {
-    "file": "blanks/answer-arcade/iphone-p3-p3.png",
+    "file": "blanks/answer-contrast/iphone-p3-p3.png",
     "group": "blanks",
-    "phase": "answer-arcade",
+    "phase": "answer-contrast",
     "device": "iphone",
     "deviceLabel": "iPhone 15",
     "role": "p3-p3",
@@ -120,46 +120,6 @@
     "height": 659
   },
   {
-    "file": "blanks/answer-contrast/tv-stage.png",
-    "group": "blanks",
-    "phase": "answer-contrast",
-    "device": "tv",
-    "deviceLabel": "TV 1080p",
-    "role": "stage",
-    "width": 1920,
-    "height": 1080
-  },
-  {
-    "file": "blanks/answer-contrast/iphone-p1-p1.png",
-    "group": "blanks",
-    "phase": "answer-contrast",
-    "device": "iphone",
-    "deviceLabel": "iPhone 15",
-    "role": "p1-p1",
-    "width": 393,
-    "height": 659
-  },
-  {
-    "file": "blanks/answer-contrast/iphone-p2-p2.png",
-    "group": "blanks",
-    "phase": "answer-contrast",
-    "device": "iphone",
-    "deviceLabel": "iPhone 15",
-    "role": "p2-p2",
-    "width": 393,
-    "height": 659
-  },
-  {
-    "file": "blanks/answer-contrast/iphone-p3-p3.png",
-    "group": "blanks",
-    "phase": "answer-contrast",
-    "device": "iphone",
-    "deviceLabel": "iPhone 15",
-    "role": "p3-p3",
-    "width": 393,
-    "height": 659
-  },
-  {
     "file": "blanks/done-daylight/tv-stage.png",
     "group": "blanks",
     "phase": "done-daylight",
@@ -193,86 +153,6 @@
     "file": "blanks/done-daylight/iphone-p3-p3.png",
     "group": "blanks",
     "phase": "done-daylight",
-    "device": "iphone",
-    "deviceLabel": "iPhone 15",
-    "role": "p3-p3",
-    "width": 393,
-    "height": 659
-  },
-  {
-    "file": "blanks/done-arcade/tv-stage.png",
-    "group": "blanks",
-    "phase": "done-arcade",
-    "device": "tv",
-    "deviceLabel": "TV 1080p",
-    "role": "stage",
-    "width": 1920,
-    "height": 1080
-  },
-  {
-    "file": "blanks/done-arcade/iphone-p1-p1.png",
-    "group": "blanks",
-    "phase": "done-arcade",
-    "device": "iphone",
-    "deviceLabel": "iPhone 15",
-    "role": "p1-p1",
-    "width": 393,
-    "height": 659
-  },
-  {
-    "file": "blanks/done-arcade/iphone-p2-p2.png",
-    "group": "blanks",
-    "phase": "done-arcade",
-    "device": "iphone",
-    "deviceLabel": "iPhone 15",
-    "role": "p2-p2",
-    "width": 393,
-    "height": 659
-  },
-  {
-    "file": "blanks/done-arcade/iphone-p3-p3.png",
-    "group": "blanks",
-    "phase": "done-arcade",
-    "device": "iphone",
-    "deviceLabel": "iPhone 15",
-    "role": "p3-p3",
-    "width": 393,
-    "height": 659
-  },
-  {
-    "file": "blanks/done-cabin/tv-stage.png",
-    "group": "blanks",
-    "phase": "done-cabin",
-    "device": "tv",
-    "deviceLabel": "TV 1080p",
-    "role": "stage",
-    "width": 1920,
-    "height": 1080
-  },
-  {
-    "file": "blanks/done-cabin/iphone-p1-p1.png",
-    "group": "blanks",
-    "phase": "done-cabin",
-    "device": "iphone",
-    "deviceLabel": "iPhone 15",
-    "role": "p1-p1",
-    "width": 393,
-    "height": 659
-  },
-  {
-    "file": "blanks/done-cabin/iphone-p2-p2.png",
-    "group": "blanks",
-    "phase": "done-cabin",
-    "device": "iphone",
-    "deviceLabel": "iPhone 15",
-    "role": "p2-p2",
-    "width": 393,
-    "height": 659
-  },
-  {
-    "file": "blanks/done-cabin/iphone-p3-p3.png",
-    "group": "blanks",
-    "phase": "done-cabin",
     "device": "iphone",
     "deviceLabel": "iPhone 15",
     "role": "p3-p3",
@@ -320,6 +200,46 @@
     "height": 659
   },
   {
+    "file": "blanks/done-cabin/tv-stage.png",
+    "group": "blanks",
+    "phase": "done-cabin",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "blanks/done-cabin/iphone-p1-p1.png",
+    "group": "blanks",
+    "phase": "done-cabin",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p1-p1",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "blanks/done-cabin/iphone-p2-p2.png",
+    "group": "blanks",
+    "phase": "done-cabin",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p2-p2",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "blanks/done-cabin/iphone-p3-p3.png",
+    "group": "blanks",
+    "phase": "done-cabin",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p3-p3",
+    "width": 393,
+    "height": 659
+  },
+  {
     "file": "blanks/intro-daylight/tv-stage.png",
     "group": "blanks",
     "phase": "intro-daylight",
@@ -353,86 +273,6 @@
     "file": "blanks/intro-daylight/iphone-p3-p3.png",
     "group": "blanks",
     "phase": "intro-daylight",
-    "device": "iphone",
-    "deviceLabel": "iPhone 15",
-    "role": "p3-p3",
-    "width": 393,
-    "height": 659
-  },
-  {
-    "file": "blanks/intro-arcade/tv-stage.png",
-    "group": "blanks",
-    "phase": "intro-arcade",
-    "device": "tv",
-    "deviceLabel": "TV 1080p",
-    "role": "stage",
-    "width": 1920,
-    "height": 1080
-  },
-  {
-    "file": "blanks/intro-arcade/iphone-p1-p1.png",
-    "group": "blanks",
-    "phase": "intro-arcade",
-    "device": "iphone",
-    "deviceLabel": "iPhone 15",
-    "role": "p1-p1",
-    "width": 393,
-    "height": 659
-  },
-  {
-    "file": "blanks/intro-arcade/iphone-p2-p2.png",
-    "group": "blanks",
-    "phase": "intro-arcade",
-    "device": "iphone",
-    "deviceLabel": "iPhone 15",
-    "role": "p2-p2",
-    "width": 393,
-    "height": 659
-  },
-  {
-    "file": "blanks/intro-arcade/iphone-p3-p3.png",
-    "group": "blanks",
-    "phase": "intro-arcade",
-    "device": "iphone",
-    "deviceLabel": "iPhone 15",
-    "role": "p3-p3",
-    "width": 393,
-    "height": 659
-  },
-  {
-    "file": "blanks/intro-cabin/tv-stage.png",
-    "group": "blanks",
-    "phase": "intro-cabin",
-    "device": "tv",
-    "deviceLabel": "TV 1080p",
-    "role": "stage",
-    "width": 1920,
-    "height": 1080
-  },
-  {
-    "file": "blanks/intro-cabin/iphone-p1-p1.png",
-    "group": "blanks",
-    "phase": "intro-cabin",
-    "device": "iphone",
-    "deviceLabel": "iPhone 15",
-    "role": "p1-p1",
-    "width": 393,
-    "height": 659
-  },
-  {
-    "file": "blanks/intro-cabin/iphone-p2-p2.png",
-    "group": "blanks",
-    "phase": "intro-cabin",
-    "device": "iphone",
-    "deviceLabel": "iPhone 15",
-    "role": "p2-p2",
-    "width": 393,
-    "height": 659
-  },
-  {
-    "file": "blanks/intro-cabin/iphone-p3-p3.png",
-    "group": "blanks",
-    "phase": "intro-cabin",
     "device": "iphone",
     "deviceLabel": "iPhone 15",
     "role": "p3-p3",
@@ -480,6 +320,46 @@
     "height": 659
   },
   {
+    "file": "blanks/intro-cabin/tv-stage.png",
+    "group": "blanks",
+    "phase": "intro-cabin",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "blanks/intro-cabin/iphone-p1-p1.png",
+    "group": "blanks",
+    "phase": "intro-cabin",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p1-p1",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "blanks/intro-cabin/iphone-p2-p2.png",
+    "group": "blanks",
+    "phase": "intro-cabin",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p2-p2",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "blanks/intro-cabin/iphone-p3-p3.png",
+    "group": "blanks",
+    "phase": "intro-cabin",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p3-p3",
+    "width": 393,
+    "height": 659
+  },
+  {
     "file": "blanks/judge-daylight/tv-stage.png",
     "group": "blanks",
     "phase": "judge-daylight",
@@ -513,86 +393,6 @@
     "file": "blanks/judge-daylight/iphone-p3-p3.png",
     "group": "blanks",
     "phase": "judge-daylight",
-    "device": "iphone",
-    "deviceLabel": "iPhone 15",
-    "role": "p3-p3",
-    "width": 393,
-    "height": 659
-  },
-  {
-    "file": "blanks/judge-arcade/tv-stage.png",
-    "group": "blanks",
-    "phase": "judge-arcade",
-    "device": "tv",
-    "deviceLabel": "TV 1080p",
-    "role": "stage",
-    "width": 1920,
-    "height": 1080
-  },
-  {
-    "file": "blanks/judge-arcade/iphone-p1-p1.png",
-    "group": "blanks",
-    "phase": "judge-arcade",
-    "device": "iphone",
-    "deviceLabel": "iPhone 15",
-    "role": "p1-p1",
-    "width": 393,
-    "height": 659
-  },
-  {
-    "file": "blanks/judge-arcade/iphone-p2-p2.png",
-    "group": "blanks",
-    "phase": "judge-arcade",
-    "device": "iphone",
-    "deviceLabel": "iPhone 15",
-    "role": "p2-p2",
-    "width": 393,
-    "height": 659
-  },
-  {
-    "file": "blanks/judge-arcade/iphone-p3-p3.png",
-    "group": "blanks",
-    "phase": "judge-arcade",
-    "device": "iphone",
-    "deviceLabel": "iPhone 15",
-    "role": "p3-p3",
-    "width": 393,
-    "height": 659
-  },
-  {
-    "file": "blanks/judge-cabin/tv-stage.png",
-    "group": "blanks",
-    "phase": "judge-cabin",
-    "device": "tv",
-    "deviceLabel": "TV 1080p",
-    "role": "stage",
-    "width": 1920,
-    "height": 1080
-  },
-  {
-    "file": "blanks/judge-cabin/iphone-p1-p1.png",
-    "group": "blanks",
-    "phase": "judge-cabin",
-    "device": "iphone",
-    "deviceLabel": "iPhone 15",
-    "role": "p1-p1",
-    "width": 393,
-    "height": 659
-  },
-  {
-    "file": "blanks/judge-cabin/iphone-p2-p2.png",
-    "group": "blanks",
-    "phase": "judge-cabin",
-    "device": "iphone",
-    "deviceLabel": "iPhone 15",
-    "role": "p2-p2",
-    "width": 393,
-    "height": 659
-  },
-  {
-    "file": "blanks/judge-cabin/iphone-p3-p3.png",
-    "group": "blanks",
-    "phase": "judge-cabin",
     "device": "iphone",
     "deviceLabel": "iPhone 15",
     "role": "p3-p3",
@@ -640,6 +440,166 @@
     "height": 659
   },
   {
+    "file": "blanks/judge-cabin/tv-stage.png",
+    "group": "blanks",
+    "phase": "judge-cabin",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "blanks/judge-cabin/iphone-p1-p1.png",
+    "group": "blanks",
+    "phase": "judge-cabin",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p1-p1",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "blanks/judge-cabin/iphone-p2-p2.png",
+    "group": "blanks",
+    "phase": "judge-cabin",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p2-p2",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "blanks/judge-cabin/iphone-p3-p3.png",
+    "group": "blanks",
+    "phase": "judge-cabin",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p3-p3",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "blanks/pick2-daylight/tv-stage.png",
+    "group": "blanks",
+    "phase": "pick2-daylight",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "blanks/pick2-daylight/iphone-p1-p1.png",
+    "group": "blanks",
+    "phase": "pick2-daylight",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p1-p1",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "blanks/pick2-daylight/iphone-p2-p2.png",
+    "group": "blanks",
+    "phase": "pick2-daylight",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p2-p2",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "blanks/pick2-daylight/iphone-p3-p3.png",
+    "group": "blanks",
+    "phase": "pick2-daylight",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p3-p3",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "blanks/pick2-contrast/tv-stage.png",
+    "group": "blanks",
+    "phase": "pick2-contrast",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "blanks/pick2-contrast/iphone-p1-p1.png",
+    "group": "blanks",
+    "phase": "pick2-contrast",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p1-p1",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "blanks/pick2-contrast/iphone-p2-p2.png",
+    "group": "blanks",
+    "phase": "pick2-contrast",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p2-p2",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "blanks/pick2-contrast/iphone-p3-p3.png",
+    "group": "blanks",
+    "phase": "pick2-contrast",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p3-p3",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "blanks/pick2-cabin/tv-stage.png",
+    "group": "blanks",
+    "phase": "pick2-cabin",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "blanks/pick2-cabin/iphone-p1-p1.png",
+    "group": "blanks",
+    "phase": "pick2-cabin",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p1-p1",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "blanks/pick2-cabin/iphone-p2-p2.png",
+    "group": "blanks",
+    "phase": "pick2-cabin",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p2-p2",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "blanks/pick2-cabin/iphone-p3-p3.png",
+    "group": "blanks",
+    "phase": "pick2-cabin",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p3-p3",
+    "width": 393,
+    "height": 659
+  },
+  {
     "file": "blanks/result-daylight/tv-stage.png",
     "group": "blanks",
     "phase": "result-daylight",
@@ -673,86 +633,6 @@
     "file": "blanks/result-daylight/iphone-p3-p3.png",
     "group": "blanks",
     "phase": "result-daylight",
-    "device": "iphone",
-    "deviceLabel": "iPhone 15",
-    "role": "p3-p3",
-    "width": 393,
-    "height": 659
-  },
-  {
-    "file": "blanks/result-arcade/tv-stage.png",
-    "group": "blanks",
-    "phase": "result-arcade",
-    "device": "tv",
-    "deviceLabel": "TV 1080p",
-    "role": "stage",
-    "width": 1920,
-    "height": 1080
-  },
-  {
-    "file": "blanks/result-arcade/iphone-p1-p1.png",
-    "group": "blanks",
-    "phase": "result-arcade",
-    "device": "iphone",
-    "deviceLabel": "iPhone 15",
-    "role": "p1-p1",
-    "width": 393,
-    "height": 659
-  },
-  {
-    "file": "blanks/result-arcade/iphone-p2-p2.png",
-    "group": "blanks",
-    "phase": "result-arcade",
-    "device": "iphone",
-    "deviceLabel": "iPhone 15",
-    "role": "p2-p2",
-    "width": 393,
-    "height": 659
-  },
-  {
-    "file": "blanks/result-arcade/iphone-p3-p3.png",
-    "group": "blanks",
-    "phase": "result-arcade",
-    "device": "iphone",
-    "deviceLabel": "iPhone 15",
-    "role": "p3-p3",
-    "width": 393,
-    "height": 659
-  },
-  {
-    "file": "blanks/result-cabin/tv-stage.png",
-    "group": "blanks",
-    "phase": "result-cabin",
-    "device": "tv",
-    "deviceLabel": "TV 1080p",
-    "role": "stage",
-    "width": 1920,
-    "height": 1080
-  },
-  {
-    "file": "blanks/result-cabin/iphone-p1-p1.png",
-    "group": "blanks",
-    "phase": "result-cabin",
-    "device": "iphone",
-    "deviceLabel": "iPhone 15",
-    "role": "p1-p1",
-    "width": 393,
-    "height": 659
-  },
-  {
-    "file": "blanks/result-cabin/iphone-p2-p2.png",
-    "group": "blanks",
-    "phase": "result-cabin",
-    "device": "iphone",
-    "deviceLabel": "iPhone 15",
-    "role": "p2-p2",
-    "width": 393,
-    "height": 659
-  },
-  {
-    "file": "blanks/result-cabin/iphone-p3-p3.png",
-    "group": "blanks",
-    "phase": "result-cabin",
     "device": "iphone",
     "deviceLabel": "iPhone 15",
     "role": "p3-p3",
@@ -800,6 +680,46 @@
     "height": 659
   },
   {
+    "file": "blanks/result-cabin/tv-stage.png",
+    "group": "blanks",
+    "phase": "result-cabin",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "blanks/result-cabin/iphone-p1-p1.png",
+    "group": "blanks",
+    "phase": "result-cabin",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p1-p1",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "blanks/result-cabin/iphone-p2-p2.png",
+    "group": "blanks",
+    "phase": "result-cabin",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p2-p2",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "blanks/result-cabin/iphone-p3-p3.png",
+    "group": "blanks",
+    "phase": "result-cabin",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p3-p3",
+    "width": 393,
+    "height": 659
+  },
+  {
     "file": "blanks/reveal-daylight/tv-stage.png",
     "group": "blanks",
     "phase": "reveal-daylight",
@@ -840,9 +760,9 @@
     "height": 659
   },
   {
-    "file": "blanks/reveal-arcade/tv-stage.png",
+    "file": "blanks/reveal-contrast/tv-stage.png",
     "group": "blanks",
-    "phase": "reveal-arcade",
+    "phase": "reveal-contrast",
     "device": "tv",
     "deviceLabel": "TV 1080p",
     "role": "stage",
@@ -850,9 +770,9 @@
     "height": 1080
   },
   {
-    "file": "blanks/reveal-arcade/iphone-p1-p1.png",
+    "file": "blanks/reveal-contrast/iphone-p1-p1.png",
     "group": "blanks",
-    "phase": "reveal-arcade",
+    "phase": "reveal-contrast",
     "device": "iphone",
     "deviceLabel": "iPhone 15",
     "role": "p1-p1",
@@ -860,9 +780,9 @@
     "height": 659
   },
   {
-    "file": "blanks/reveal-arcade/iphone-p2-p2.png",
+    "file": "blanks/reveal-contrast/iphone-p2-p2.png",
     "group": "blanks",
-    "phase": "reveal-arcade",
+    "phase": "reveal-contrast",
     "device": "iphone",
     "deviceLabel": "iPhone 15",
     "role": "p2-p2",
@@ -870,9 +790,9 @@
     "height": 659
   },
   {
-    "file": "blanks/reveal-arcade/iphone-p3-p3.png",
+    "file": "blanks/reveal-contrast/iphone-p3-p3.png",
     "group": "blanks",
-    "phase": "reveal-arcade",
+    "phase": "reveal-contrast",
     "device": "iphone",
     "deviceLabel": "iPhone 15",
     "role": "p3-p3",
@@ -913,46 +833,6 @@
     "file": "blanks/reveal-cabin/iphone-p3-p3.png",
     "group": "blanks",
     "phase": "reveal-cabin",
-    "device": "iphone",
-    "deviceLabel": "iPhone 15",
-    "role": "p3-p3",
-    "width": 393,
-    "height": 659
-  },
-  {
-    "file": "blanks/reveal-contrast/tv-stage.png",
-    "group": "blanks",
-    "phase": "reveal-contrast",
-    "device": "tv",
-    "deviceLabel": "TV 1080p",
-    "role": "stage",
-    "width": 1920,
-    "height": 1080
-  },
-  {
-    "file": "blanks/reveal-contrast/iphone-p1-p1.png",
-    "group": "blanks",
-    "phase": "reveal-contrast",
-    "device": "iphone",
-    "deviceLabel": "iPhone 15",
-    "role": "p1-p1",
-    "width": 393,
-    "height": 659
-  },
-  {
-    "file": "blanks/reveal-contrast/iphone-p2-p2.png",
-    "group": "blanks",
-    "phase": "reveal-contrast",
-    "device": "iphone",
-    "deviceLabel": "iPhone 15",
-    "role": "p2-p2",
-    "width": 393,
-    "height": 659
-  },
-  {
-    "file": "blanks/reveal-contrast/iphone-p3-p3.png",
-    "group": "blanks",
-    "phase": "reveal-contrast",
     "device": "iphone",
     "deviceLabel": "iPhone 15",
     "role": "p3-p3",

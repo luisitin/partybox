@@ -1,0 +1,202 @@
+{
+  "pass": "92",
+  "game": "blanks",
+  "players": 3,
+  "scenario": "normal",
+  "focus": "phone",
+  "started": "17:13:49.283",
+  "tvVideoT0": "17:13:45.984",
+  "changes": [
+    {
+      "t": 1789665229285,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789665234281,
+      "bed": "warm",
+      "at": "17:13:49.285",
+      "sinceStartS": 0,
+      "videoS": 3.3
+    },
+    {
+      "t": 1789665234298,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789665264293,
+      "bed": "warm",
+      "at": "17:13:54.298",
+      "sinceStartS": 5,
+      "videoS": 8.3
+    },
+    {
+      "t": 1789665238435,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789665243531,
+      "bed": "latenight",
+      "at": "17:13:58.435",
+      "sinceStartS": 9.2,
+      "videoS": 12.5
+    },
+    {
+      "t": 1789665243538,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789665249907,
+      "bed": "latenight",
+      "at": "17:14:03.538",
+      "sinceStartS": 14.3,
+      "videoS": 17.6
+    },
+    {
+      "t": 1789665249931,
+      "status": "playing",
+      "phase": "judge",
+      "deadline": 1789665294922,
+      "bed": "marimba",
+      "at": "17:14:09.931",
+      "sinceStartS": 20.6,
+      "videoS": 23.9
+    },
+    {
+      "t": 1789665251188,
+      "status": "playing",
+      "phase": "result",
+      "deadline": 1789665258514,
+      "bed": "warm",
+      "at": "17:14:11.188",
+      "sinceStartS": 21.9,
+      "videoS": 25.2
+    },
+    {
+      "t": 1789665258568,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789665263522,
+      "bed": "warm",
+      "at": "17:14:18.568",
+      "sinceStartS": 29.3,
+      "videoS": 32.6
+    },
+    {
+      "t": 1789665263572,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789665293523,
+      "bed": "warm",
+      "at": "17:14:23.572",
+      "sinceStartS": 34.3,
+      "videoS": 37.6
+    },
+    {
+      "t": 1789665267767,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789665273082,
+      "bed": "latenight",
+      "at": "17:14:27.767",
+      "sinceStartS": 38.5,
+      "videoS": 41.8
+    },
+    {
+      "t": 1789665273101,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789665279078,
+      "bed": "latenight",
+      "at": "17:14:33.101",
+      "sinceStartS": 43.8,
+      "videoS": 47.1
+    },
+    {
+      "t": 1789665279178,
+      "status": "playing",
+      "phase": "judge",
+      "deadline": 1789665324082,
+      "bed": "marimba",
+      "at": "17:14:39.178",
+      "sinceStartS": 49.9,
+      "videoS": 53.2
+    },
+    {
+      "t": 1789665280990,
+      "status": "playing",
+      "phase": "result",
+      "deadline": 1789665288987,
+      "bed": "warm",
+      "at": "17:14:40.990",
+      "sinceStartS": 51.7,
+      "videoS": 55
+    },
+    {
+      "t": 1789665289066,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789665294001,
+      "bed": "warm",
+      "at": "17:14:49.066",
+      "sinceStartS": 59.8,
+      "videoS": 63.1
+    },
+    {
+      "t": 1789665294041,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789665324009,
+      "bed": "warm",
+      "at": "17:14:54.041",
+      "sinceStartS": 64.8,
+      "videoS": 68.1
+    },
+    {
+      "t": 1789665298370,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789665304773,
+      "bed": "latenight",
+      "at": "17:14:58.370",
+      "sinceStartS": 69.1,
+      "videoS": 72.4
+    },
+    {
+      "t": 1789665304898,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789665310805,
+      "bed": "latenight",
+      "at": "17:15:04.898",
+      "sinceStartS": 75.6,
+      "videoS": 78.9
+    },
+    {
+      "t": 1789665310883,
+      "status": "playing",
+      "phase": "judge",
+      "deadline": 1789665355820,
+      "bed": "marimba",
+      "at": "17:15:10.883",
+      "sinceStartS": 81.6,
+      "videoS": 84.9
+    },
+    {
+      "t": 1789665315004,
+      "status": "playing",
+      "phase": "result",
+      "deadline": 1789665322902,
+      "bed": "warm",
+      "at": "17:15:15.004",
+      "sinceStartS": 85.7,
+      "videoS": 89
+    },
+    {
+      "t": 1789665322942,
+      "status": "results",
+      "phase": "results",
+      "deadline": null,
+      "bed": null,
+      "at": "17:15:22.942",
+      "sinceStartS": 93.7,
+      "videoS": 97
+    }
+  ],
+  "notes": []
+}
