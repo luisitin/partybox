@@ -1,9 +1,10 @@
-// Phase "intro" (5 s): the TV announces the round and its pattern; phones show their new card.
-// Entering it deals the round: one deck shuffle, then one card per player in sorted-id order so
-// the same seed always deals the same cards. Exits on the deadline (or VIP skip) via `next`.
+// Phase "intro" (5 s): the TV announces the round and its pattern; phones show their new cards.
+// Entering it deals the round: one deck shuffle, then `settings.cards` cards per player in
+// sorted-id order so the same seed always deals the same cards. Exits on the deadline (or VIP
+// skip) via `next`.
 import { enterPhase, isTimerFor, shuffle } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
-import { dealCard, range } from '../cards';
+import { dealCards, range } from '../cards';
 import { DECK, INTRO_MS } from '../types';
 import type { Input, Pattern, RoundState, State, Transition } from '../types';
 
@@ -11,12 +12,12 @@ export function enterIntro(state: State, number: number, now: number): State {
   let rng = state.rng;
   const [deck, afterDeck] = shuffle(rng, range(1, DECK));
   rng = afterDeck;
-  const cards: Record<string, number[]> = {};
-  const daubs: Record<string, number[]> = {};
+  const cards: Record<string, number[][]> = {};
+  const daubs: Record<string, number[][]> = {};
   for (const id of Object.keys(state.players).sort()) {
-    const [card, next] = dealCard(rng);
-    cards[id] = card;
-    daubs[id] = [];
+    const [dealt, next] = dealCards(rng, state.settings.cards);
+    cards[id] = dealt;
+    daubs[id] = dealt.map(() => []);
     rng = next;
   }
   const pattern: Pattern =

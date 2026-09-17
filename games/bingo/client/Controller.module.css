@@ -90,6 +90,22 @@
   }
 }
 
+/* Several cards stack down the phone; the BINGO! footer stays pinned below the scroll. */
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-4);
+}
+
+.cardLabel {
+  margin: 0 0 var(--pb-space-1);
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--pb-text-muted);
+}
+
 .wipeNote {
   margin: 0 0 var(--pb-space-2);
   font-size: var(--pb-font-caption);

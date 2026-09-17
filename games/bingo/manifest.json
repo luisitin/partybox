@@ -82,6 +82,16 @@
       ]
     },
     {
+      "key": "cards",
+      "label": "Cards per player",
+      "description": "How many cards everyone plays each round — one BINGO! button checks your best card",
+      "type": "number",
+      "default": 1,
+      "min": 1,
+      "max": 4,
+      "step": 1
+    },
+    {
       "key": "callSeconds",
       "label": "Seconds per number",
       "description": "How long each number stays up before the next one is called",

@@ -1,6 +1,7 @@
 // Views for Bingo. Nothing in this game is secret: a card only reaches the TV when its owner
 // presses BINGO!, and then everyone is meant to see it. Phones get their own card and daubs; the
 // spectator phone gets the called list instead (players must remember — that is the design).
+// With several cards per player the phone gets them all; a claim carries the one card checked.
 import { controllerEnvelope, envelope, hasPlayer } from '@partybox/game-sdk';
 import type { ControllerView, PlayerStatus, TvView } from '@partybox/game-sdk';
 import { calledNumbers, letterOf } from './cards';
@@ -20,7 +21,9 @@ export interface CallView {
 
 export interface ClaimView extends Claim {
   name: string;
+  /** The card that was checked (`cardIndex` of the claimant's `cardCount`). */
   card: number[];
+  cardCount: number;
 }
 
 interface Common {
@@ -32,6 +35,8 @@ interface Common {
   patternCells: number[];
   /** Every round's pattern, in order (the intro lists the programme). */
   patterns: Pattern[];
+  /** Cards dealt to every player each round (the `cards` setting). */
+  cardsPerPlayer: number;
   current: CallView | null;
   /** Just the one before — no history beyond that, on purpose. */
   previous: CallView | null;
@@ -58,9 +63,10 @@ export interface BingoControllerView extends ControllerView, Common {
   showBoard: boolean;
   /** Nicknames of the last few calls, newest last (numbers stay on the TV). */
   recent: string[];
-  /** null for spectators. */
-  card: number[] | null;
-  daubs: number[];
+  /** My cards this round; null for spectators. */
+  cards: number[][] | null;
+  /** Per card, in the same order. */
+  daubs: number[][];
   /** play: true unless waiting for the next number after a failed claim. */
   canClaim: boolean;
   /** The phone says why the button is off right after your own failed claim. */
@@ -89,10 +95,12 @@ function recentCalls(state: State, n: number): string[] {
 function claimView(state: State): ClaimView | null {
   const claim = state.round.claim;
   if (!claim) return null;
+  const cards = state.round.cards[claim.playerId] ?? [];
   return {
     ...claim,
     name: state.players[claim.playerId]?.name ?? '?',
-    card: state.round.cards[claim.playerId] ?? [],
+    card: cards[claim.cardIndex] ?? [],
+    cardCount: cards.length,
   };
 }
 
@@ -117,6 +125,7 @@ function common(state: State): Common {
     patternHint: PATTERN_HINT[round.pattern],
     patternCells: patternCells(round.pattern),
     patterns: state.settings.patterns,
+    cardsPerPlayer: state.settings.cards,
     current: state.phase.id === 'intro' ? null : callView(state, round.drawn - 1),
     previous: state.phase.id === 'intro' ? null : callView(state, round.drawn - 2),
     callIndex: round.drawn,
@@ -151,7 +160,7 @@ export function controllerView(
     }),
     timerMode: 'quiet',
     ...common(state),
-    card: player ? (state.round.cards[playerId] ?? null) : null,
+    cards: player ? (state.round.cards[playerId] ?? null) : null,
     daubs: player ? (state.round.daubs[playerId] ?? []) : [],
     canClaim: canClaim(state, playerId),
     waitingForCall:

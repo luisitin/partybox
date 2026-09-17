@@ -123,6 +123,11 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
           </BigText>
         </div>
         <BigText level="h2">{view.patternHint}</BigText>
+        {view.cardsPerPlayer > 1 ? (
+          <BigText level="h2" tone="muted">
+            {view.cardsPerPlayer} cards each — BINGO! checks your best one.
+          </BigText>
+        ) : null}
         <p className={styles.programme}>
           {view.patterns.map((p, i) => (
             <span key={i} className={i + 1 === view.round ? styles.programmeNow : ''}>
@@ -173,7 +178,11 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
             {view.claim.name} says BINGO!
           </BigText>
           <p className={styles.kicker}>
-            {view.patternLabel} · checking against {view.callIndex} calls
+            {view.patternLabel}
+            {view.claim.cardCount > 1
+              ? ` · card ${view.claim.cardIndex + 1} of ${view.claim.cardCount}`
+              : ''}{' '}
+            · checking against {view.callIndex} calls
           </p>
         </div>
         <div className={styles.checkBody}>
@@ -215,6 +224,9 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
               <PatternIcon cells={view.patternCells} size={120} />
               <BigText level="h2" tone="muted">
                 {view.patternLabel} on call {view.callIndex}
+                {view.claim.cardCount > 1
+                  ? ` · card ${view.claim.cardIndex + 1} of ${view.claim.cardCount}`
+                  : ''}
               </BigText>
             </div>
           </div>

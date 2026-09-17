@@ -142,6 +142,22 @@ button.cell:focus-visible {
   font-size: var(--pb-font-caption);
 }
 
+/* Three or four cards on one phone: full width, but cells no taller than they need (loop: multi-card). */
+.compact {
+  max-width: 100%;
+  margin-inline: auto;
+}
+.compact .letter,
+.compact .number {
+  font-size: var(--pb-font-body);
+}
+.compact .free .number {
+  font-size: var(--pb-font-caption);
+}
+.compact .cell {
+  min-height: 40px;
+}
+
 .tv {
   max-width: 560px;
 }

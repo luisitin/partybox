@@ -16,7 +16,7 @@ import { enterIntro, reduceIntro } from './phases/intro';
 import { enterPlay, reducePlay } from './phases/play';
 import { enterDone, enterScoreboard, reduceScoreboard } from './phases/scoreboard';
 import { results } from './scoring';
-import { DECK, MAX_ROUNDS, PATTERNS, PHASES, inputSchema } from './types';
+import { DECK, MAX_CARDS, MAX_ROUNDS, PATTERNS, PHASES, inputSchema } from './types';
 import type { Input, Pattern, Settings, State } from './types';
 import { controllerView, tvView } from './views';
 import type { BingoControllerView, BingoTvView } from './views';
@@ -36,6 +36,7 @@ export function readSettings(raw: RawSettings): Settings {
   return {
     rounds,
     patterns,
+    cards: Math.min(MAX_CARDS, Math.max(1, Math.round(Number(raw['cards'] ?? 1)))),
     callSeconds: Math.min(12, Math.max(3, Number(raw['callSeconds'] ?? 6))),
     spicy: raw['spicy'] === true,
     showBoard: raw['showBoard'] !== false,

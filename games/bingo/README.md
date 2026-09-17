@@ -12,11 +12,13 @@ CC BY 4.0, see the root README). A failed claim's buzzer and a bingo's fanfare c
 
 ## Overview
 
-The TV calls one number every `callSeconds`; every player daubs their own 5×5 card on their phone
-however they like (the server accepts every tap, called or not). Press **BINGO!** and the caller stops:
-your card goes on the TV, the pattern in green ✓, every daub that was never called in red ✕, missed
-pattern squares outlined. Right → you win the round. Wrong → **your whole card is wiped blank** (the
-penalty; re-daub from memory) and the caller carries on. One point per round won.
+The TV calls one number every `callSeconds`; every player daubs their own 5×5 card (or cards — the
+`cards` setting deals 1–4 per player) on their phone however they like (the server accepts every tap,
+called or not). Press **BINGO!** and the caller stops: your card goes on the TV — with several cards,
+the one nearest the pattern — the pattern in green ✓, every daub that was never called in red ✕,
+missed pattern squares outlined. Right → you win the round. Wrong → **that card is wiped blank** (the
+penalty; re-daub from memory; your other cards keep their daubs) and the caller carries on. One point
+per round won.
 
 ## Players
 
@@ -29,28 +31,31 @@ in public like anyone else. It only reads what its phone shows (own card, own da
 
 ## Phases
 
-| Phase        | What happens                                                                                                                      | Exit                                                                                                                                                    | Timer                |
-| ------------ | --------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
-| `intro`      | Deals the round: fresh deck (1–75 shuffled), a fresh card per player. TV: round number + pattern. Phones: pattern + the new card. | deadline · VIP skip → `play`                                                                                                                            | 5 s                  |
-| `play`       | One number on the TV (huge) with its caller nickname, plus the previous one small. Daub freely; press BINGO! to claim.            | valid claim → `bingo` · invalid claim → `check` · timer → next number (`play` again) · 75th call's timer → `bingo` (no winner) · VIP skip → next number | `callSeconds` (3–12) |
-| `check`      | The caller is paused. TV shows the invalid claim: green ✓ / red ✕ / outlined misses, "NOT A BINGO". Claimant's card is wiped.     | deadline · VIP skip → next number (or `bingo` with no winner if the deck is empty)                                                                      | 5 s                  |
-| `bingo`      | Round over: the winner's green card ("BINGO! X wins round n") or "No bingo — the deck's empty". The win is recorded on entry.     | deadline · VIP skip → `scoreboard` (more rounds) or `done`                                                                                              | 10 s                 |
-| `scoreboard` | Rounds won so far + the next round's pattern.                                                                                     | deadline · VIP skip → next round's `intro`                                                                                                              | 6 s                  |
-| `done`       | Final standings. `results()` non-null.                                                                                            | terminal                                                                                                                                                | —                    |
+| Phase        | What happens                                                                                                                              | Exit                                                                                                                                                    | Timer                |
+| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
+| `intro`      | Deals the round: fresh deck (1–75 shuffled), `cards` fresh cards per player. TV: round number + pattern. Phones: pattern + the new cards. | deadline · VIP skip → `play`                                                                                                                            | 5 s                  |
+| `play`       | One number on the TV (huge) with its caller nickname, plus the previous one small. Daub freely; press BINGO! to claim.                    | valid claim → `bingo` · invalid claim → `check` · timer → next number (`play` again) · 75th call's timer → `bingo` (no winner) · VIP skip → next number | `callSeconds` (3–12) |
+| `check`      | The caller is paused. TV shows the invalid claim: green ✓ / red ✕ / outlined misses, "NOT A BINGO". The checked card is wiped.            | deadline · VIP skip → next number (or `bingo` with no winner if the deck is empty)                                                                      | 5 s                  |
+| `bingo`      | Round over: the winner's green card ("BINGO! X wins round n") or "No bingo — the deck's empty". The win is recorded on entry.             | deadline · VIP skip → `scoreboard` (more rounds) or `done`                                                                                              | 10 s                 |
+| `scoreboard` | Rounds won so far + the next round's pattern.                                                                                             | deadline · VIP skip → next round's `intro`                                                                                                              | 6 s                  |
+| `done`       | Final standings. `results()` non-null.                                                                                                    | terminal                                                                                                                                                | —                    |
 
 VIP `end` from any phase → `done` with rounds won as they stand (an unfinished round has no winner).
 Pause freezes the caller (and a running check); daubs and claims are ignored while paused.
 
 ## Inputs
 
-- `{ type: 'daub', index: 0..24 }` — toggles that square on your own card (tap again = undo). Accepted in
-  `play` and `check`, from players with a card. Index 12 (FREE) is ignored. No validation against calls.
+- `{ type: 'daub', card?: 0..3, index: 0..24 }` — toggles that square on your card `card` (default the
+  first; tap again = undo). Accepted in `play` and `check`, from players with that card. Index 12 (FREE)
+  is ignored. No validation against calls.
 - `{ type: 'bingo' }` — accepted in `play` only, from a player with a card who is not waiting for the
-  next number. Evaluates the card against the pattern and the numbers called so far:
+  next number. Evaluates every card and checks the closest one (a valid card first, else the most green,
+  then the fewest red) against the pattern and the numbers called so far:
   - `red` = every daubed square whose number was never called (anywhere on the card);
   - the completion shown is the one with the most green squares; **valid iff it is entirely green**.
-  - Valid → `bingo` (round won). Invalid → `check`: daubs wiped, `waitForCall = drawn + 1` (you may claim
-    again once the next number is called). A `bingo` during a check is ignored (one check at a time).
+  - Valid → `bingo` (round won). Invalid → `check`: that card's daubs wiped (other cards keep theirs),
+    `waitForCall = drawn + 1` (you may claim again once the next number is called). A `bingo` during a
+    check is ignored (one check at a time).
 
 ## Scoring
 
@@ -70,7 +75,10 @@ exactly like humans.
   checks ignored.
 - **Bot owner leaves / bot added mid-game**: the bot's card persists like any disconnected player's; a
   bot added mid-game is a spectator (card `null`, bot returns `null`) and is dealt in next game.
-- `daub` with index 12, from a spectator, or in any other phase → ignored. Stale timers → ignored.
+- `daub` with index 12, a card index you were not dealt, from a spectator, or in any other phase →
+  ignored. Stale timers → ignored.
+- **Several cards, one press**: BINGO! checks whichever of your cards is closest; a failed claim wipes
+  only that card.
 
 ## Settings
 
@@ -78,6 +86,7 @@ exactly like humans.
 | ----------------- | ------- | -------------------------------- | ----------------------------- | ----------------------------------------------------------- |
 | `rounds`          | number  | 3                                | 1–5                           | Rounds played; fresh cards and deck each round.             |
 | `round1`…`round5` | select  | line, corners, x, line, blackout | line / corners / x / blackout | The pattern for that round (only the first `rounds` apply). |
+| `cards`           | number  | 1                                | 1–4                           | Cards dealt to every player each round.                     |
 | `callSeconds`     | number  | 6                                | 3–12                          | Seconds each number stays up before the next call.          |
 | `showBoard`       | boolean | true                             | —                             | TV shows the hall board of every number called so far.      |
 | `showPrevious`    | boolean | true                             | —                             | TV shows the previous number under the current call.        |

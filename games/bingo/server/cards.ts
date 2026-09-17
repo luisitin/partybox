@@ -32,16 +32,31 @@ export function dealCard(rng: RngState): [number[], RngState] {
   return [card, r];
 }
 
-/** Tap = daub, tap again = undo. FREE and spectators are ignored. No validation against calls. */
-export function toggleDaub(state: State, playerId: string, index: number): State {
+/** `count` cards for one player, dealt one after another from the rng. */
+export function dealCards(rng: RngState, count: number): [number[][], RngState] {
+  const cards: number[][] = [];
+  let r = rng;
+  for (let i = 0; i < count; i++) {
+    const [card, next] = dealCard(r);
+    cards.push(card);
+    r = next;
+  }
+  return [cards, r];
+}
+
+/** Tap = daub, tap again = undo. FREE, spectators and a card index you were not dealt are ignored. */
+export function toggleDaub(state: State, playerId: string, card: number, index: number): State {
   const round = state.round;
-  if (index === FREE || !hasPlayer(state, playerId) || !Object.hasOwn(round.cards, playerId))
-    return state;
-  const mine = round.daubs[playerId] ?? [];
+  if (index === FREE || !hasPlayer(state, playerId)) return state;
+  const cards = round.cards[playerId];
+  if (!cards || card < 0 || card >= cards.length) return state;
+  const all = round.daubs[playerId] ?? cards.map(() => []);
+  const mine = all[card] ?? [];
   const next = mine.includes(index)
     ? mine.filter((i) => i !== index)
     : [...mine, index].sort((a, b) => a - b);
-  return { ...state, round: { ...round, daubs: { ...round.daubs, [playerId]: next } } };
+  const daubs = all.map((d, i) => (i === card ? next : d));
+  return { ...state, round: { ...round, daubs: { ...round.daubs, [playerId]: daubs } } };
 }
 
 /** Numbers called so far this round (the deck is public once drawn). */

@@ -1,7 +1,8 @@
 // Controller (phone) view for Bingo: the current call's NICKNAME on top (the number itself is on
 // the TV — the phone never spoils the stage, and the room has to listen to the caller), your
-// tappable card in the middle, the BINGO! button pinned to the bottom. `send` is the only way out;
-// the server accepts every daub (no validation — that is the game) and judges only the claim.
+// tappable card (or cards, stacked and labelled) in the middle, the BINGO! button pinned to the
+// bottom. `send` is the only way out; the server accepts every daub (no validation — that is the
+// game) and judges only the claim — checking whichever card is closest, so one button serves all.
 import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
 import { PrimaryButton, Scoreboard, Screen, WaitingScreen } from '@partybox/game-sdk/ui';
@@ -64,10 +65,12 @@ export function Controller({
   me,
   send,
 }: GameControllerProps<BingoControllerView, Input>): JSX.Element {
-  const card = view.card;
+  const cards = view.cards;
   // FREE always counts (server); daubing it is pure satisfaction, so it lives on the phone only
-  // and resets with every fresh card (round) — "adjust state when a prop changes", in render.
-  const [freeDaubed, setFreeDaubed] = useState(false);
+  // (per card) and resets with every fresh deal (round) — "adjust state when a prop changes".
+  const [freeDaubed, setFreeDaubed] = useState<number[]>([]);
+  const toggleFree = (c: number): void =>
+    setFreeDaubed((v) => (v.includes(c) ? v.filter((i) => i !== c) : [...v, c]));
   // Calls that landed while this phone was away (review-loop #4): a jump of more than one in
   // callIndex between two views means we missed some. With the hall board on the TV a toast points
   // there; without it the header names the missed nicknames. "Adjust state when a prop changes".
@@ -88,9 +91,9 @@ export function Controller({
   const [freeRound, setFreeRound] = useState(view.round);
   if (freeRound !== view.round) {
     setFreeRound(view.round);
-    setFreeDaubed(false);
+    setFreeDaubed([]);
   }
-  if (!card) {
+  if (!cards) {
     return (
       <WaitingScreen
         title="You're watching this one"
@@ -188,36 +191,47 @@ export function Controller({
           ) : null}
           {intro ? (
             <p className={styles.hint}>
-              Your new card. Daub what you hear — FREE too — tap again to undo.
+              {cards.length > 1
+                ? `Your ${cards.length} new cards. Daub what you hear — FREE too — tap again to undo. BINGO! checks your best card.`
+                : 'Your new card. Daub what you hear — FREE too — tap again to undo.'}
             </p>
           ) : null}
-          {mine && claim ? (
-            // Your failed claim, exactly as the room sees it: the wipe lands when play resumes.
-            <div className="pb-pop">
-              <p className={styles.wipeNote}>Card wiped — re-daub from memory when play resumes.</p>
-              <Card
-                numbers={claim.card}
-                daubs={claim.daubs}
-                green={claim.green}
-                red={claim.red}
-                missing={claim.missing}
-                verdict
-                disabled
-              />
-            </div>
-          ) : (
-            <div key={view.waitingForCall ? 'wiped' : 'card'} className="pb-enter">
-              <Card
-                numbers={card}
-                daubs={intro ? [] : view.daubs}
-                pattern={intro && view.pattern !== 'line' ? view.patternCells : []}
-                freeDaubed={freeDaubed}
-                onTapFree={() => setFreeDaubed((v) => !v)}
-                onTap={(index) => send({ type: 'daub', index })}
-                disabled={intro || roundOver}
-              />
-            </div>
-          )}
+          <div className={styles.cards}>
+            {cards.map((card, c) =>
+              mine && claim && claim.cardIndex === c ? (
+                // Your failed claim, exactly as the room sees it: the wipe lands when play resumes.
+                <div key={`claim-${c}`} className="pb-pop">
+                  <p className={styles.wipeNote}>
+                    {cards.length > 1 ? `Card ${c + 1} wiped` : 'Card wiped'} — re-daub from memory
+                    when play resumes.
+                  </p>
+                  <Card
+                    numbers={claim.card}
+                    daubs={claim.daubs}
+                    green={claim.green}
+                    red={claim.red}
+                    missing={claim.missing}
+                    verdict
+                    disabled
+                  />
+                </div>
+              ) : (
+                <div key={`${c}-${view.waitingForCall ? 'wiped' : 'card'}`} className="pb-enter">
+                  {cards.length > 1 ? <p className={styles.cardLabel}>Card {c + 1}</p> : null}
+                  <Card
+                    numbers={card}
+                    daubs={intro ? [] : (view.daubs[c] ?? [])}
+                    pattern={intro && view.pattern !== 'line' ? view.patternCells : []}
+                    freeDaubed={freeDaubed.includes(c)}
+                    onTapFree={() => toggleFree(c)}
+                    onTap={(index) => send({ type: 'daub', card: c, index })}
+                    disabled={intro || roundOver}
+                    size={cards.length > 2 ? 'compact' : 'phone'}
+                  />
+                </div>
+              ),
+            )}
+          </div>
         </div>
       </Screen>
     );
@@ -240,7 +254,18 @@ export function Controller({
         {iWon && claim ? (
           <Card numbers={claim.card} daubs={claim.daubs} green={claim.green} disabled />
         ) : (
-          <Card numbers={card} daubs={view.daubs} freeDaubed={freeDaubed} disabled />
+          <div className={styles.cards}>
+            {cards.map((card, c) => (
+              <Card
+                key={c}
+                numbers={card}
+                daubs={view.daubs[c] ?? []}
+                freeDaubed={freeDaubed.includes(c)}
+                disabled
+                size={cards.length > 2 ? 'compact' : 'phone'}
+              />
+            ))}
+          </div>
         )}
         <p className={styles.hint}>
           {view.round < view.totalRounds ? 'Fresh cards next round.' : 'That was the last round.'}

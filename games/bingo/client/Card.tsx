@@ -23,7 +23,8 @@ export interface CardProps {
   /** Whether FREE shows as daubed (the TV and verdict cards: always). */
   freeDaubed?: boolean;
   disabled?: boolean;
-  size?: 'phone' | 'tv' | 'mini';
+  /** compact: three or four cards stacked on a phone — the same width, tighter cells. */
+  size?: 'phone' | 'tv' | 'mini' | 'compact';
   /** A check or celebration: plain daubs step back so green / red / missing carry the story. */
   verdict?: boolean;
   /** Cells pop in one after another (a card landing on the TV for everyone to check). */

@@ -11,11 +11,15 @@ export type Pattern = (typeof PATTERNS)[number];
 
 /** The VIP picks a pattern per round in the lobby (`round1` … `round5` settings). */
 export const MAX_ROUNDS = 5;
+/** Cards per player per round (`cards` setting): one is classic, four is a hall regular's table. */
+export const MAX_CARDS = 4;
 
 export interface Settings {
   rounds: number;
   /** One pattern per round, `patterns.length === rounds`. */
   patterns: Pattern[];
+  /** Cards dealt to every player each round (1–4). */
+  cards: number;
   callSeconds: number;
   spicy: boolean;
   /** TV extras the VIP can switch off at game selection (review-loop #2, owner request). */
@@ -26,6 +30,8 @@ export interface Settings {
 /** What the TV shows while a claim is checked (or celebrated). Computed once, never re-evaluated. */
 export interface Claim {
   playerId: string;
+  /** Which of the claimant's cards was checked (the closest one to the pattern). */
+  cardIndex: number;
   /** The daubs the claim was evaluated with (the card itself is wiped on an invalid claim). */
   daubs: number[];
   /** The best completion of the pattern (most green cells). */
@@ -47,10 +53,10 @@ export interface RoundState {
   deck: number[];
   /** `deck.slice(0, drawn)` has been called; the current call is `deck[drawn - 1]`. */
   drawn: number;
-  /** playerId → 25 numbers row-major; index 12 is 0 (FREE). */
-  cards: Record<string, number[]>;
-  /** playerId → sorted daubed indices (never 12; FREE is implicit). */
-  daubs: Record<string, number[]>;
+  /** playerId → their cards; each is 25 numbers row-major, index 12 is 0 (FREE). */
+  cards: Record<string, number[][]>;
+  /** playerId → per card, sorted daubed indices (never 12; FREE is implicit). */
+  daubs: Record<string, number[][]>;
   /** check: the invalid claim on the TV; bingo: the winner's card (null when the deck ran out). */
   claim: Claim | null;
   /** playerId → may claim again once `drawn >= this` (set after a failed claim). */
@@ -67,8 +73,18 @@ export interface State extends GameStateBase {
 }
 
 export const inputSchema = z.discriminatedUnion('type', [
-  /** Toggles the square; index 12 (FREE) is ignored. */
-  z.object({ type: z.literal('daub'), index: z.number().int().min(0).max(24) }),
+  /** Toggles the square on card `card` (default the first); index 12 (FREE) is ignored. */
+  z.object({
+    type: z.literal('daub'),
+    card: z
+      .number()
+      .int()
+      .min(0)
+      .max(MAX_CARDS - 1)
+      .default(0),
+    index: z.number().int().min(0).max(24),
+  }),
+  /** Checks the claimant's closest card to the pattern. */
   z.object({ type: z.literal('bingo') }),
 ]);
 export type Input = z.infer<typeof inputSchema>;

@@ -57,6 +57,7 @@ export function looksComplete(pattern: Pattern, daubs: readonly number[]): boole
  */
 export function evaluate(
   playerId: string,
+  cardIndex: number,
   card: readonly number[],
   daubs: readonly number[],
   called: readonly number[],
@@ -77,6 +78,7 @@ export function evaluate(
   const missing = best.cells.filter((i) => !d.has(i));
   return {
     playerId,
+    cardIndex,
     daubs: [...daubs],
     cells: [...best.cells],
     green: best.green,

@@ -49,9 +49,9 @@ function vip(state: State, action: 'skip' | 'pause' | 'resume' | 'end', now?: nu
 }
 
 /** Calls numbers until every index in `cells` of `playerId`'s card has been called. */
-function callUntil(state: State, playerId: string, cells: number[]): State {
+function callUntil(state: State, playerId: string, cells: number[], cardIndex = 0): State {
   let s = state.phase.id === 'intro' ? timer(state) : state;
-  const card = s.round.cards[playerId] as number[];
+  const card = s.round.cards[playerId]?.[cardIndex] as number[];
   const need = new Set(cells.map((i) => card[i] as number).filter((n) => n !== 0));
   for (let guard = 0; guard < 80 && s.phase.id === 'play'; guard++) {
     const called = new Set(s.round.deck.slice(0, s.round.drawn));
@@ -61,9 +61,9 @@ function callUntil(state: State, playerId: string, cells: number[]): State {
   throw new Error('deck ran out');
 }
 
-function daubAll(state: State, playerId: string, cells: number[]): State {
+function daubAll(state: State, playerId: string, cells: number[], card = 0): State {
   let s = state;
-  for (const i of cells) if (i !== 12) s = input(s, playerId, { type: 'daub', index: i });
+  for (const i of cells) if (i !== 12) s = input(s, playerId, { type: 'daub', card, index: i });
   return s;
 }
 
@@ -124,14 +124,15 @@ describe('play', () => {
 
   it('daubs toggle freely, called or not; FREE and spectators are ignored', () => {
     let s = timer(start());
-    s = input(s, 'a', { type: 'daub', index: 3 });
-    expect(s.round.daubs['a']).toEqual([3]);
-    s = input(s, 'a', { type: 'daub', index: 0 });
-    expect(s.round.daubs['a']).toEqual([0, 3]);
-    s = input(s, 'a', { type: 'daub', index: 3 });
-    expect(s.round.daubs['a']).toEqual([0]);
-    expect(input(s, 'a', { type: 'daub', index: 12 })).toBe(s);
-    expect(input(s, 'ghost', { type: 'daub', index: 1 })).toBe(s);
+    s = input(s, 'a', { type: 'daub', card: 0, index: 3 });
+    expect(s.round.daubs['a']).toEqual([[3]]);
+    s = input(s, 'a', { type: 'daub', card: 0, index: 0 });
+    expect(s.round.daubs['a']).toEqual([[0, 3]]);
+    s = input(s, 'a', { type: 'daub', card: 0, index: 3 });
+    expect(s.round.daubs['a']).toEqual([[0]]);
+    expect(input(s, 'a', { type: 'daub', card: 0, index: 12 })).toBe(s);
+    expect(input(s, 'a', { type: 'daub', card: 1, index: 1 })).toBe(s); // not dealt a second card
+    expect(input(s, 'ghost', { type: 'daub', card: 0, index: 1 })).toBe(s);
   });
 
   it('a valid line claim wins the round: bingo phase, +1, the card on the TV all green', () => {
@@ -150,7 +151,7 @@ describe('play', () => {
 
   it('an invalid claim pauses the caller, shows reds and misses, wipes the card, and blocks a re-claim until the next number', () => {
     let s = callUntil(start(), 'b', [5, 6, 7, 8]); // row 2 minus one square
-    const card = s.round.cards['b'] as number[];
+    const card = s.round.cards['b']?.[0] as number[];
     const uncalled = card.findIndex(
       (n, i) => i !== 12 && !s.round.deck.slice(0, s.round.drawn).includes(n),
     );
@@ -165,11 +166,11 @@ describe('play', () => {
     expect(claim?.red).toEqual([uncalled]);
     expect(claim?.cells).toEqual([5, 6, 7, 8, 9]);
     expect(claim?.missing).toEqual([9]);
-    expect(s.round.daubs['b']).toEqual([]); // wiped
+    expect(s.round.daubs['b']).toEqual([[]]); // wiped
     expect(s.round.waitForCall['b']).toBe(before + 1);
     // Daubing continues during the check; claims do not.
-    s = input(s, 'b', { type: 'daub', index: 5 });
-    expect(s.round.daubs['b']).toEqual([5]);
+    s = input(s, 'b', { type: 'daub', card: 0, index: 5 });
+    expect(s.round.daubs['b']).toEqual([[5]]);
     expect(input(s, 'a', { type: 'bingo' }).phase.id).toBe('check');
     // The check's timer resumes the caller with the next number.
     s = timer(s);
@@ -212,15 +213,15 @@ describe('patterns', () => {
   const card = Array.from({ length: 25 }, (_, i) => (i === 12 ? 0 : i + 1));
   it('corners, x and blackout need exactly their squares; stray reds do not spoil a valid pattern', () => {
     const called = card.filter((n) => n !== 0);
-    expect(evaluate('p', card, [0, 4, 20, 24], called, 'corners').valid).toBe(true);
-    expect(evaluate('p', card, [0, 4, 20], called, 'corners').valid).toBe(false);
-    expect(evaluate('p', card, [0, 6, 18, 24, 4, 8, 16, 20], called, 'x').valid).toBe(true);
-    expect(evaluate('p', card, [0, 6, 18, 24, 4, 8, 16], called, 'x').missing).toEqual([20]);
+    expect(evaluate('p', 0, card, [0, 4, 20, 24], called, 'corners').valid).toBe(true);
+    expect(evaluate('p', 0, card, [0, 4, 20], called, 'corners').valid).toBe(false);
+    expect(evaluate('p', 0, card, [0, 6, 18, 24, 4, 8, 16, 20], called, 'x').valid).toBe(true);
+    expect(evaluate('p', 0, card, [0, 6, 18, 24, 4, 8, 16], called, 'x').missing).toEqual([20]);
     const all = card.map((_, i) => i).filter((i) => i !== 12);
-    expect(evaluate('p', card, all, called, 'blackout').valid).toBe(true);
+    expect(evaluate('p', 0, card, all, called, 'blackout').valid).toBe(true);
     // A full row plus two daubs that were never called: still a line, with two reds shown.
     const partial = called.filter((n) => n !== 22 && n !== 23);
-    const claim = evaluate('p', card, [0, 1, 2, 3, 4, 21, 22], partial, 'line');
+    const claim = evaluate('p', 0, card, [0, 1, 2, 3, 4, 21, 22], partial, 'line');
     expect(claim.valid).toBe(true);
     expect(claim.red).toEqual([21, 22]);
   });
@@ -251,7 +252,7 @@ describe('rounds and results', () => {
     expect(s.round.number).toBe(2);
     expect(s.round.pattern).toBe('corners');
     expect(s.round.cards['a']).not.toEqual(oldCard);
-    expect(s.round.daubs['c']).toEqual([]);
+    expect(s.round.daubs['c']).toEqual([[]]);
     s = callUntil(s, 'a', [0, 4, 20, 24]);
     s = daubAll(s, 'a', [0, 4, 20, 24]);
     s = input(s, 'a', { type: 'bingo' });
@@ -281,7 +282,7 @@ describe('rounds and results', () => {
     let s = timer(start());
     const deadline = s.phase.deadline as number;
     s = vip(s, 'pause', s.phase.startedAt + 1000);
-    expect(input(s, 'a', { type: 'daub', index: 0 })).toBe(s);
+    expect(input(s, 'a', { type: 'daub', card: 0, index: 0 })).toBe(s);
     expect(timer(s)).toBe(s);
     s = vip(s, 'resume', s.phase.startedAt + 4000);
     expect(s.phase.deadline).toBe(deadline + 3000);
@@ -301,6 +302,60 @@ describe('rounds and results', () => {
   });
 });
 
+describe('several cards per player', () => {
+  it("deals the setting's number of cards, all legal and distinct, with empty daubs each", () => {
+    const s = start({ cards: 3 });
+    expect(s.settings.cards).toBe(3);
+    expect(readSettings({ cards: 9 }).cards).toBe(4);
+    expect(readSettings({}).cards).toBe(1);
+    for (const id of ['a', 'b', 'c']) {
+      expect(s.round.cards[id]).toHaveLength(3);
+      expect(s.round.daubs[id]).toEqual([[], [], []]);
+      const flat = s.round.cards[id]?.map((c) => c.join(',')) ?? [];
+      expect(new Set(flat).size).toBe(3);
+    }
+    expect(game.tvView(s).cardsPerPlayer).toBe(3);
+    expect(game.controllerView(s, 'a').cards).toHaveLength(3);
+  });
+
+  it('daubs land on the card named; BINGO! checks the closest card and wipes only that one', () => {
+    let s = callUntil(start({ cards: 2 }), 'a', [10, 11, 13, 14], 1);
+    s = daubAll(s, 'a', [10, 11, 13, 14], 1);
+    s = daubAll(s, 'a', [0, 1], 0);
+    expect(s.round.daubs['a']).toEqual([
+      [0, 1],
+      [10, 11, 13, 14],
+    ]);
+    s = input(s, 'a', { type: 'bingo' });
+    expect(s.phase.id).toBe('bingo');
+    expect(s.round.claim?.cardIndex).toBe(1);
+    expect(game.tvView(s).claim?.card).toEqual(s.round.cards['a']?.[1]);
+    expect(game.tvView(s).claim?.cardCount).toBe(2);
+    // A wrong claim: the nearer card (one square short) goes up, and only it is wiped.
+    let t = callUntil(start({ cards: 2 }, 5), 'b', [0, 1, 2, 3], 1);
+    t = daubAll(t, 'b', [0, 1, 2, 3], 1);
+    t = daubAll(t, 'b', [20], 0);
+    t = input(t, 'b', { type: 'bingo' });
+    expect(t.phase.id).toBe('check');
+    expect(t.round.claim?.cardIndex).toBe(1);
+    expect(t.round.claim?.missing).toEqual([4]);
+    expect(t.round.daubs['b']).toEqual([[20], []]);
+  });
+
+  it('the bot works every card and claims when any looks complete', () => {
+    const rng = createRng(11);
+    let s = callUntil(start({ cards: 2 }), 'a', [0, 1, 2, 3, 4], 1);
+    for (let i = 0; i < 200 && !looksComplete('line', s.round.daubs['a']?.[1] ?? []); i++) {
+      const move = sampleInput(s, 'a', rng);
+      if (!move || move.type !== 'daub') continue;
+      const called = s.round.deck.slice(0, s.round.drawn);
+      const n = s.round.cards['a']?.[move.card]?.[move.index] ?? -1;
+      if (called.includes(n)) s = input(s, 'a', move);
+    }
+    expect(sampleInput(s, 'a', createRng(1))).toEqual({ type: 'bingo' });
+  });
+});
+
 describe('views and bot', () => {
   it('the TV never shows the deck ahead of the current call; phones get only their own card', () => {
     let s = timer(start());
@@ -309,11 +364,11 @@ describe('views and bot', () => {
     expect(tv).not.toContain('"deck"');
     expect(tv).not.toContain('"cards"');
     const mine = game.controllerView(s, 'a');
-    expect(mine.card).toEqual(s.round.cards['a']);
-    expect(JSON.stringify(mine)).not.toContain(JSON.stringify(s.round.cards['b']));
+    expect(mine.cards).toEqual(s.round.cards['a']);
+    expect(JSON.stringify(mine)).not.toContain(JSON.stringify(s.round.cards['b']?.[0]));
     expect(mine.called).toEqual([]);
     const spectator = game.controllerView(s, 'ghost');
-    expect(spectator.card).toBeNull();
+    expect(spectator.cards).toBeNull();
     expect(spectator.called).toEqual(s.round.deck.slice(0, 2));
   });
 
@@ -321,7 +376,7 @@ describe('views and bot', () => {
     const rng = createRng(3);
     let s = callUntil(start(), 'a', [10, 11, 13, 14]);
     // Only called squares get daubed (a mis-tap is possible but rare; force the honest path).
-    for (let i = 0; i < 40 && !looksComplete('line', s.round.daubs['a'] ?? []); i++) {
+    for (let i = 0; i < 40 && !looksComplete('line', s.round.daubs['a']?.[0] ?? []); i++) {
       const move = sampleInput(s, 'a', rng);
       if (!move) continue;
       expect(move.type).toBe('daub');
