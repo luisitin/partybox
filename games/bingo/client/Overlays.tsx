@@ -27,7 +27,7 @@ export function StyleSheet({
   if (preview)
     return (
       <div className={styles.previewBar} role="dialog" aria-label="Card style preview">
-        <span>{STYLES.find((s) => s.id === preview)?.label} — like it?</span>
+        <span>{STYLES.find((s) => s.id === preview)?.label}: like it?</span>
         <PrimaryButton tone="neutral" onClick={() => onPreview(current)}>
           Keep changing
         </PrimaryButton>
