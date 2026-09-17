@@ -1,6 +1,7 @@
 // Pieces of the Bingo phone: the call header (nickname only — the number is on the TV), the
 // scoreboard rows, the card stack (one card, or several labelled, a won card locked in gold) and
 // the choice after a bingo (keep going or move on — any phone with a card, first tap wins).
+import { useSyncExternalStore } from 'react';
 import type { JSX } from 'react';
 import { PrimaryButton } from '@partybox/game-sdk/ui';
 import type { ScoreboardRow } from '@partybox/game-sdk/ui';
@@ -8,6 +9,33 @@ import type { Input } from '../server/types';
 import type { BingoControllerView, CallView } from '../server/views';
 import { Card } from './Card';
 import styles from './Controller.module.css';
+
+const LANDSCAPE = '(orientation: landscape)';
+function subscribeOrientation(cb: () => void): () => void {
+  if (typeof matchMedia !== 'function') return () => undefined;
+  const mq = matchMedia(LANDSCAPE);
+  mq.addEventListener('change', cb);
+  return () => mq.removeEventListener('change', cb);
+}
+/** True when the phone is held sideways. */
+export function useLandscape(): boolean {
+  return useSyncExternalStore(
+    subscribeOrientation,
+    () => typeof matchMedia === 'function' && matchMedia(LANDSCAPE).matches,
+    () => false,
+  );
+}
+
+/**
+ * How the phone must be held for this many cards (owner rule): one card upright, two sideways
+ * (side by side), three or four either way. Null = fine as it is.
+ */
+export function turnPrompt(cards: number, landscape: boolean): string | null {
+  if (cards === 1 && landscape) return 'Turn your phone upright for your card.';
+  if (cards === 2 && !landscape)
+    return 'Turn your phone sideways — your two cards sit side by side.';
+  return null;
+}
 
 export function rows(view: BingoControllerView): ScoreboardRow[] {
   const avatar = (id: string): string => view.players.find((p) => p.id === id)?.avatarId ?? '';
@@ -117,7 +145,8 @@ export function CardStack({
 }: CardStackProps): JSX.Element {
   const claim = view.claim;
   const many = cards.length > 1;
-  const size = cards.length > 2 ? 'compact' : 'phone';
+  const size = many ? 'compact' : 'phone';
+  const gridClass = styles[`cards${Math.min(4, cards.length)}`] ?? '';
   // Live cards first: the one you can still play stays in view, a card that won drops below.
   const order = cards
     .map((_, c) => c)
@@ -125,16 +154,16 @@ export function CardStack({
       (a, b) => Number(!intro && view.won.includes(a)) - Number(!intro && view.won.includes(b)),
     );
   return (
-    <div className={styles.cards}>
+    <div className={`${styles.cards} ${gridClass}`}>
       {order.map((c) => {
         const card = cards[c] ?? [];
         if (showClaim && claim && claim.cardIndex === c)
           return (
             // Your failed claim, exactly as the room sees it: the wipe lands when play resumes.
-            <div key={`claim-${c}`} className="pb-pop">
+            <div key={`claim-${c}`} className={`${styles.cardSlot} pb-pop`}>
               <p className={styles.wipeNote}>
-                {many ? `Card ${c + 1} wiped` : 'Card wiped'} — re-daub from memory when play
-                resumes.
+                {many ? `Card ${c + 1} wiped` : 'Card wiped'}
+                {many ? '' : ' — re-daub from memory when play resumes.'}
               </p>
               <Card
                 numbers={claim.card}
@@ -152,14 +181,12 @@ export function CardStack({
         return (
           <div
             key={`${c}-${view.waitingForCall ? 'wiped' : 'card'}`}
-            className={`pb-enter ${locked ? styles.locked : ''}`}
+            className={`${styles.cardSlot} pb-enter ${locked ? styles.locked : ''}`}
           >
             {many || locked ? (
               <p className={`${styles.cardLabel} ${locked ? styles.cardLabelWon : ''}`}>
                 {many ? `Card ${c + 1}` : ''}
-                {locked
-                  ? `${many ? ' · ' : ''}BINGO ✓ — ${many ? 'sits this pattern out' : "yours already — you're done till the pattern changes"}`
-                  : ''}
+                {locked ? `${many ? ' · ' : ''}BINGO ✓${many ? '' : ' — yours already'}` : ''}
               </p>
             ) : null}
             <Card

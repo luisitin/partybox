@@ -136,6 +136,7 @@ export function Card({
           ].join(' ');
           const mark = !showColour ? null : greenSet.has(i) ? '✓' : redSet.has(i) ? '✕' : null;
           const label = isFree ? 'FREE' : String(n);
+          const shown = isFree && size === 'compact' ? '★' : label;
           const Tag = interactive && (!isFree || onTapFree) ? 'button' : 'div';
           const style = reveal
             ? ({ animationDelay: `${i * REVEAL_STEP_MS}ms` } as CSSProperties)
@@ -153,7 +154,7 @@ export function Card({
               aria-label={`${LETTERS[i % 5]} ${label}${isDaubed ? ', daubed' : ''}`}
               onClick={Tag === 'button' ? () => (isFree ? onTapFree?.() : onTap?.(i)) : undefined}
             >
-              <span className={styles.number}>{label}</span>
+              <span className={styles.number}>{shown}</span>
               {mark ? (
                 <span className={styles.mark} aria-hidden>
                   {mark}

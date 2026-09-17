@@ -279,19 +279,40 @@ button.cell:focus-visible {
 }
 
 /* Three or four cards on one phone: full width, but cells no taller than they need (loop: multi-card). */
+/* Several cards on one screen: the card is a container and its text scales with its width, so a
+   half-width card in a 2 × 2 grid stays legible and FREE never clips (cells ≈ 18 % of the card). */
 .compact {
   max-width: 100%;
   margin-inline: auto;
+  container-type: inline-size;
+  gap: 2px;
 }
-.compact .letter,
+.compact .head,
+.compact .grid {
+  gap: 2px;
+}
+.compact .letter {
+  font-size: clamp(11px, 7cqw, 20px);
+}
 .compact .number {
-  font-size: var(--pb-font-body);
+  font-size: clamp(11px, 8cqw, 22px);
 }
 .compact .free .number {
-  font-size: var(--pb-font-caption);
+  font-size: clamp(7px, 4.2cqw, 12px);
+  letter-spacing: 0;
 }
 .compact .cell {
-  min-height: 40px;
+  min-height: 0;
+  border-width: 2px;
+  border-radius: calc(var(--pb-radius) * 0.6);
+}
+.compact .mark {
+  font-size: clamp(8px, 5cqw, 14px);
+  right: 2px;
+  bottom: 0;
+}
+.compact .mark {
+  font-size: var(--pb-font-caption);
 }
 
 .tv {

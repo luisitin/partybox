@@ -246,7 +246,9 @@ async function main(): Promise<void> {
         // An untimed phase (Blanks) waits for the room: Sam taps the phone's Next if it offers one.
         if (!sam.page.isClosed()) {
           const nextButton = sam.page
-            .getByRole('button', { name: /next|final scores|start the reading|close the vote/i })
+            .getByRole('button', {
+              name: /next|final scores|start the reading|close the vote|finish the game/i,
+            })
             .first();
           if (await nextButton.isVisible().catch(() => false)) {
             await still(sam.page, `${String(n).padStart(2, '0')}-${phase}-phone-next`);

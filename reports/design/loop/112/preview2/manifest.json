@@ -1,0 +1,902 @@
+[
+  {
+    "file": "bingo/bingo-daylight/tv-stage.png",
+    "group": "bingo",
+    "phase": "bingo-daylight",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "bingo/bingo-daylight/iphone-p1-p1.png",
+    "group": "bingo",
+    "phase": "bingo-daylight",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p1-p1",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "bingo/bingo-daylight/iphone-p2-p2.png",
+    "group": "bingo",
+    "phase": "bingo-daylight",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p2-p2",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "bingo/bingo-daylight/iphone-p3-p3.png",
+    "group": "bingo",
+    "phase": "bingo-daylight",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p3-p3",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "bingo/bingo-daylight/iphone-se-p1-p1.png",
+    "group": "bingo",
+    "phase": "bingo-daylight",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p1-p1",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "bingo/bingo-daylight/iphone-se-p2-p2.png",
+    "group": "bingo",
+    "phase": "bingo-daylight",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p2-p2",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "bingo/bingo-daylight/iphone-se-p3-p3.png",
+    "group": "bingo",
+    "phase": "bingo-daylight",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p3-p3",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "bingo/bingo-daylight/landscape-p1-p1.png",
+    "group": "bingo",
+    "phase": "bingo-daylight",
+    "device": "landscape",
+    "deviceLabel": "iPhone 15 landscape",
+    "role": "p1-p1",
+    "width": 659,
+    "height": 393
+  },
+  {
+    "file": "bingo/bingo-daylight/landscape-p2-p2.png",
+    "group": "bingo",
+    "phase": "bingo-daylight",
+    "device": "landscape",
+    "deviceLabel": "iPhone 15 landscape",
+    "role": "p2-p2",
+    "width": 659,
+    "height": 393
+  },
+  {
+    "file": "bingo/bingo-daylight/landscape-p3-p3.png",
+    "group": "bingo",
+    "phase": "bingo-daylight",
+    "device": "landscape",
+    "deviceLabel": "iPhone 15 landscape",
+    "role": "p3-p3",
+    "width": 659,
+    "height": 393
+  },
+  {
+    "file": "bingo/check-daylight/tv-stage.png",
+    "group": "bingo",
+    "phase": "check-daylight",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "bingo/check-daylight/iphone-p1-p1.png",
+    "group": "bingo",
+    "phase": "check-daylight",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p1-p1",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "bingo/check-daylight/iphone-p2-p2.png",
+    "group": "bingo",
+    "phase": "check-daylight",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p2-p2",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "bingo/check-daylight/iphone-p3-p3.png",
+    "group": "bingo",
+    "phase": "check-daylight",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p3-p3",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "bingo/check-daylight/iphone-se-p1-p1.png",
+    "group": "bingo",
+    "phase": "check-daylight",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p1-p1",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "bingo/check-daylight/iphone-se-p2-p2.png",
+    "group": "bingo",
+    "phase": "check-daylight",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p2-p2",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "bingo/check-daylight/iphone-se-p3-p3.png",
+    "group": "bingo",
+    "phase": "check-daylight",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p3-p3",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "bingo/check-daylight/landscape-p1-p1.png",
+    "group": "bingo",
+    "phase": "check-daylight",
+    "device": "landscape",
+    "deviceLabel": "iPhone 15 landscape",
+    "role": "p1-p1",
+    "width": 659,
+    "height": 393
+  },
+  {
+    "file": "bingo/check-daylight/landscape-p2-p2.png",
+    "group": "bingo",
+    "phase": "check-daylight",
+    "device": "landscape",
+    "deviceLabel": "iPhone 15 landscape",
+    "role": "p2-p2",
+    "width": 659,
+    "height": 393
+  },
+  {
+    "file": "bingo/check-daylight/landscape-p3-p3.png",
+    "group": "bingo",
+    "phase": "check-daylight",
+    "device": "landscape",
+    "deviceLabel": "iPhone 15 landscape",
+    "role": "p3-p3",
+    "width": 659,
+    "height": 393
+  },
+  {
+    "file": "bingo/done-daylight/tv-stage.png",
+    "group": "bingo",
+    "phase": "done-daylight",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "bingo/done-daylight/iphone-p1-p1.png",
+    "group": "bingo",
+    "phase": "done-daylight",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p1-p1",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "bingo/done-daylight/iphone-p2-p2.png",
+    "group": "bingo",
+    "phase": "done-daylight",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p2-p2",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "bingo/done-daylight/iphone-p3-p3.png",
+    "group": "bingo",
+    "phase": "done-daylight",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p3-p3",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "bingo/done-daylight/iphone-se-p1-p1.png",
+    "group": "bingo",
+    "phase": "done-daylight",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p1-p1",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "bingo/done-daylight/iphone-se-p2-p2.png",
+    "group": "bingo",
+    "phase": "done-daylight",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p2-p2",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "bingo/done-daylight/iphone-se-p3-p3.png",
+    "group": "bingo",
+    "phase": "done-daylight",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p3-p3",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "bingo/done-daylight/landscape-p1-p1.png",
+    "group": "bingo",
+    "phase": "done-daylight",
+    "device": "landscape",
+    "deviceLabel": "iPhone 15 landscape",
+    "role": "p1-p1",
+    "width": 659,
+    "height": 393
+  },
+  {
+    "file": "bingo/done-daylight/landscape-p2-p2.png",
+    "group": "bingo",
+    "phase": "done-daylight",
+    "device": "landscape",
+    "deviceLabel": "iPhone 15 landscape",
+    "role": "p2-p2",
+    "width": 659,
+    "height": 393
+  },
+  {
+    "file": "bingo/done-daylight/landscape-p3-p3.png",
+    "group": "bingo",
+    "phase": "done-daylight",
+    "device": "landscape",
+    "deviceLabel": "iPhone 15 landscape",
+    "role": "p3-p3",
+    "width": 659,
+    "height": 393
+  },
+  {
+    "file": "bingo/intro-daylight/tv-stage.png",
+    "group": "bingo",
+    "phase": "intro-daylight",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "bingo/intro-daylight/iphone-p1-p1.png",
+    "group": "bingo",
+    "phase": "intro-daylight",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p1-p1",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "bingo/intro-daylight/iphone-p2-p2.png",
+    "group": "bingo",
+    "phase": "intro-daylight",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p2-p2",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "bingo/intro-daylight/iphone-p3-p3.png",
+    "group": "bingo",
+    "phase": "intro-daylight",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p3-p3",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "bingo/intro-daylight/iphone-se-p1-p1.png",
+    "group": "bingo",
+    "phase": "intro-daylight",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p1-p1",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "bingo/intro-daylight/iphone-se-p2-p2.png",
+    "group": "bingo",
+    "phase": "intro-daylight",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p2-p2",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "bingo/intro-daylight/iphone-se-p3-p3.png",
+    "group": "bingo",
+    "phase": "intro-daylight",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p3-p3",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "bingo/intro-daylight/landscape-p1-p1.png",
+    "group": "bingo",
+    "phase": "intro-daylight",
+    "device": "landscape",
+    "deviceLabel": "iPhone 15 landscape",
+    "role": "p1-p1",
+    "width": 659,
+    "height": 393
+  },
+  {
+    "file": "bingo/intro-daylight/landscape-p2-p2.png",
+    "group": "bingo",
+    "phase": "intro-daylight",
+    "device": "landscape",
+    "deviceLabel": "iPhone 15 landscape",
+    "role": "p2-p2",
+    "width": 659,
+    "height": 393
+  },
+  {
+    "file": "bingo/intro-daylight/landscape-p3-p3.png",
+    "group": "bingo",
+    "phase": "intro-daylight",
+    "device": "landscape",
+    "deviceLabel": "iPhone 15 landscape",
+    "role": "p3-p3",
+    "width": 659,
+    "height": 393
+  },
+  {
+    "file": "bingo/play-four-daylight/tv-stage.png",
+    "group": "bingo",
+    "phase": "play-four-daylight",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "bingo/play-four-daylight/iphone-p1-p1.png",
+    "group": "bingo",
+    "phase": "play-four-daylight",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p1-p1",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "bingo/play-four-daylight/iphone-p2-p2.png",
+    "group": "bingo",
+    "phase": "play-four-daylight",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p2-p2",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "bingo/play-four-daylight/iphone-p3-p3.png",
+    "group": "bingo",
+    "phase": "play-four-daylight",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p3-p3",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "bingo/play-four-daylight/iphone-se-p1-p1.png",
+    "group": "bingo",
+    "phase": "play-four-daylight",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p1-p1",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "bingo/play-four-daylight/iphone-se-p2-p2.png",
+    "group": "bingo",
+    "phase": "play-four-daylight",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p2-p2",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "bingo/play-four-daylight/iphone-se-p3-p3.png",
+    "group": "bingo",
+    "phase": "play-four-daylight",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p3-p3",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "bingo/play-four-daylight/landscape-p1-p1.png",
+    "group": "bingo",
+    "phase": "play-four-daylight",
+    "device": "landscape",
+    "deviceLabel": "iPhone 15 landscape",
+    "role": "p1-p1",
+    "width": 659,
+    "height": 393
+  },
+  {
+    "file": "bingo/play-four-daylight/landscape-p2-p2.png",
+    "group": "bingo",
+    "phase": "play-four-daylight",
+    "device": "landscape",
+    "deviceLabel": "iPhone 15 landscape",
+    "role": "p2-p2",
+    "width": 659,
+    "height": 393
+  },
+  {
+    "file": "bingo/play-four-daylight/landscape-p3-p3.png",
+    "group": "bingo",
+    "phase": "play-four-daylight",
+    "device": "landscape",
+    "deviceLabel": "iPhone 15 landscape",
+    "role": "p3-p3",
+    "width": 659,
+    "height": 393
+  },
+  {
+    "file": "bingo/play-locked-daylight/tv-stage.png",
+    "group": "bingo",
+    "phase": "play-locked-daylight",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "bingo/play-locked-daylight/iphone-p1-p1.png",
+    "group": "bingo",
+    "phase": "play-locked-daylight",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p1-p1",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "bingo/play-locked-daylight/iphone-p2-p2.png",
+    "group": "bingo",
+    "phase": "play-locked-daylight",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p2-p2",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "bingo/play-locked-daylight/iphone-p3-p3.png",
+    "group": "bingo",
+    "phase": "play-locked-daylight",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p3-p3",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "bingo/play-locked-daylight/iphone-se-p1-p1.png",
+    "group": "bingo",
+    "phase": "play-locked-daylight",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p1-p1",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "bingo/play-locked-daylight/iphone-se-p2-p2.png",
+    "group": "bingo",
+    "phase": "play-locked-daylight",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p2-p2",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "bingo/play-locked-daylight/iphone-se-p3-p3.png",
+    "group": "bingo",
+    "phase": "play-locked-daylight",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p3-p3",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "bingo/play-locked-daylight/landscape-p1-p1.png",
+    "group": "bingo",
+    "phase": "play-locked-daylight",
+    "device": "landscape",
+    "deviceLabel": "iPhone 15 landscape",
+    "role": "p1-p1",
+    "width": 659,
+    "height": 393
+  },
+  {
+    "file": "bingo/play-locked-daylight/landscape-p2-p2.png",
+    "group": "bingo",
+    "phase": "play-locked-daylight",
+    "device": "landscape",
+    "deviceLabel": "iPhone 15 landscape",
+    "role": "p2-p2",
+    "width": 659,
+    "height": 393
+  },
+  {
+    "file": "bingo/play-locked-daylight/landscape-p3-p3.png",
+    "group": "bingo",
+    "phase": "play-locked-daylight",
+    "device": "landscape",
+    "deviceLabel": "iPhone 15 landscape",
+    "role": "p3-p3",
+    "width": 659,
+    "height": 393
+  },
+  {
+    "file": "bingo/play-two-daylight/tv-stage.png",
+    "group": "bingo",
+    "phase": "play-two-daylight",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "bingo/play-two-daylight/iphone-p1-p1.png",
+    "group": "bingo",
+    "phase": "play-two-daylight",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p1-p1",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "bingo/play-two-daylight/iphone-p2-p2.png",
+    "group": "bingo",
+    "phase": "play-two-daylight",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p2-p2",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "bingo/play-two-daylight/iphone-p3-p3.png",
+    "group": "bingo",
+    "phase": "play-two-daylight",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p3-p3",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "bingo/play-two-daylight/iphone-se-p1-p1.png",
+    "group": "bingo",
+    "phase": "play-two-daylight",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p1-p1",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "bingo/play-two-daylight/iphone-se-p2-p2.png",
+    "group": "bingo",
+    "phase": "play-two-daylight",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p2-p2",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "bingo/play-two-daylight/iphone-se-p3-p3.png",
+    "group": "bingo",
+    "phase": "play-two-daylight",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p3-p3",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "bingo/play-two-daylight/landscape-p1-p1.png",
+    "group": "bingo",
+    "phase": "play-two-daylight",
+    "device": "landscape",
+    "deviceLabel": "iPhone 15 landscape",
+    "role": "p1-p1",
+    "width": 659,
+    "height": 393
+  },
+  {
+    "file": "bingo/play-two-daylight/landscape-p2-p2.png",
+    "group": "bingo",
+    "phase": "play-two-daylight",
+    "device": "landscape",
+    "deviceLabel": "iPhone 15 landscape",
+    "role": "p2-p2",
+    "width": 659,
+    "height": 393
+  },
+  {
+    "file": "bingo/play-two-daylight/landscape-p3-p3.png",
+    "group": "bingo",
+    "phase": "play-two-daylight",
+    "device": "landscape",
+    "deviceLabel": "iPhone 15 landscape",
+    "role": "p3-p3",
+    "width": 659,
+    "height": 393
+  },
+  {
+    "file": "bingo/play-daylight/tv-stage.png",
+    "group": "bingo",
+    "phase": "play-daylight",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "bingo/play-daylight/iphone-p1-p1.png",
+    "group": "bingo",
+    "phase": "play-daylight",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p1-p1",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "bingo/play-daylight/iphone-p2-p2.png",
+    "group": "bingo",
+    "phase": "play-daylight",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p2-p2",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "bingo/play-daylight/iphone-p3-p3.png",
+    "group": "bingo",
+    "phase": "play-daylight",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p3-p3",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "bingo/play-daylight/iphone-se-p1-p1.png",
+    "group": "bingo",
+    "phase": "play-daylight",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p1-p1",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "bingo/play-daylight/iphone-se-p2-p2.png",
+    "group": "bingo",
+    "phase": "play-daylight",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p2-p2",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "bingo/play-daylight/iphone-se-p3-p3.png",
+    "group": "bingo",
+    "phase": "play-daylight",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p3-p3",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "bingo/play-daylight/landscape-p1-p1.png",
+    "group": "bingo",
+    "phase": "play-daylight",
+    "device": "landscape",
+    "deviceLabel": "iPhone 15 landscape",
+    "role": "p1-p1",
+    "width": 659,
+    "height": 393
+  },
+  {
+    "file": "bingo/play-daylight/landscape-p2-p2.png",
+    "group": "bingo",
+    "phase": "play-daylight",
+    "device": "landscape",
+    "deviceLabel": "iPhone 15 landscape",
+    "role": "p2-p2",
+    "width": 659,
+    "height": 393
+  },
+  {
+    "file": "bingo/play-daylight/landscape-p3-p3.png",
+    "group": "bingo",
+    "phase": "play-daylight",
+    "device": "landscape",
+    "deviceLabel": "iPhone 15 landscape",
+    "role": "p3-p3",
+    "width": 659,
+    "height": 393
+  },
+  {
+    "file": "bingo/scoreboard-daylight/tv-stage.png",
+    "group": "bingo",
+    "phase": "scoreboard-daylight",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "bingo/scoreboard-daylight/iphone-p1-p1.png",
+    "group": "bingo",
+    "phase": "scoreboard-daylight",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p1-p1",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "bingo/scoreboard-daylight/iphone-p2-p2.png",
+    "group": "bingo",
+    "phase": "scoreboard-daylight",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p2-p2",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "bingo/scoreboard-daylight/iphone-p3-p3.png",
+    "group": "bingo",
+    "phase": "scoreboard-daylight",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "p3-p3",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "bingo/scoreboard-daylight/iphone-se-p1-p1.png",
+    "group": "bingo",
+    "phase": "scoreboard-daylight",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p1-p1",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "bingo/scoreboard-daylight/iphone-se-p2-p2.png",
+    "group": "bingo",
+    "phase": "scoreboard-daylight",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p2-p2",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "bingo/scoreboard-daylight/iphone-se-p3-p3.png",
+    "group": "bingo",
+    "phase": "scoreboard-daylight",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p3-p3",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "bingo/scoreboard-daylight/landscape-p1-p1.png",
+    "group": "bingo",
+    "phase": "scoreboard-daylight",
+    "device": "landscape",
+    "deviceLabel": "iPhone 15 landscape",
+    "role": "p1-p1",
+    "width": 659,
+    "height": 393
+  },
+  {
+    "file": "bingo/scoreboard-daylight/landscape-p2-p2.png",
+    "group": "bingo",
+    "phase": "scoreboard-daylight",
+    "device": "landscape",
+    "deviceLabel": "iPhone 15 landscape",
+    "role": "p2-p2",
+    "width": 659,
+    "height": 393
+  },
+  {
+    "file": "bingo/scoreboard-daylight/landscape-p3-p3.png",
+    "group": "bingo",
+    "phase": "scoreboard-daylight",
+    "device": "landscape",
+    "deviceLabel": "iPhone 15 landscape",
+    "role": "p3-p3",
+    "width": 659,
+    "height": 393
+  }
+]

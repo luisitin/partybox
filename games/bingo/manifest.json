@@ -106,7 +106,7 @@
       "label": "Called board",
       "description": "Show every number called so far on the TV",
       "type": "boolean",
-      "default": true
+      "default": false
     },
     {
       "key": "showPrevious",

@@ -12,7 +12,14 @@ import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { Input } from '../server/types';
 import type { BingoControllerView } from '../server/views';
 import { Card, PatternIcon } from './Card';
-import { CallHeader, CardStack, DecideFooter, rows } from './ControllerParts';
+import {
+  CallHeader,
+  CardStack,
+  DecideFooter,
+  rows,
+  turnPrompt,
+  useLandscape,
+} from './ControllerParts';
 import styles from './Controller.module.css';
 
 /** What happens after this bingo: the room decides, fresh cards, or the final board. */
@@ -29,6 +36,7 @@ export function Controller({
   send,
 }: GameControllerProps<BingoControllerView, Input>): JSX.Element {
   const cards = view.cards;
+  const landscape = useLandscape();
   // FREE always counts (server); daubing it is pure satisfaction, so it lives on the phone only
   // (per card) and resets with every fresh deal (round) — "adjust state when a prop changes".
   const [freeDaubed, setFreeDaubed] = useState<number[]>([]);
@@ -83,6 +91,9 @@ export function Controller({
     const intro = view.phaseId === 'intro';
     const checking = view.phaseId === 'check';
     const mine = checking && view.claim?.playerId === me.id;
+    // Several cards fill the phone: no call header — the room listens to the TV (owner rule).
+    const many = cards.length > 1;
+    const turn = intro ? null : turnPrompt(cards.length, landscape);
     // Short: the footer is one line even on a 320 px phone (the TV carries the story).
     const label = mine
       ? 'Not a bingo'
@@ -124,6 +135,14 @@ export function Controller({
         }
       >
         <div className={styles.roundBody}>
+          {turn ? (
+            <div className={styles.turn} role="status">
+              <span className={styles.turnGlyph} aria-hidden>
+                ⟳
+              </span>
+              <p className={styles.turnLine}>{turn}</p>
+            </div>
+          ) : null}
           {roundOver ? (
             <p className={styles.hint}>{afterLine(view, iDecide)}</p>
           ) : intro ? (
@@ -136,7 +155,7 @@ export function Controller({
                 <p className={styles.hint}>{view.patternHint}</p>
               </div>
             </div>
-          ) : (
+          ) : many || turn ? null : (
             <CallHeader
               current={view.current}
               previous={view.previous}
@@ -155,20 +174,22 @@ export function Controller({
           {intro ? (
             <p className={styles.hint}>
               {cards.length > 1
-                ? `Your ${cards.length} new cards. Daub what you hear — FREE too — tap again to undo. BINGO! checks your best card.`
+                ? `Your ${cards.length} new cards${cards.length === 2 ? ' — hold your phone sideways' : ''}. Watch the TV for the calls; tap what you hear. BINGO! checks your best card.`
                 : 'Your new card. Daub what you hear — FREE too — tap again to undo.'}
             </p>
           ) : null}
-          <CardStack
-            view={view}
-            cards={cards}
-            freeDaubed={freeDaubed}
-            onTapFree={toggleFree}
-            onTap={(card, index) => send({ type: 'daub', card, index })}
-            intro={intro}
-            disabled={intro || roundOver}
-            showClaim={mine}
-          />
+          {turn ? null : (
+            <CardStack
+              view={view}
+              cards={cards}
+              freeDaubed={freeDaubed}
+              onTapFree={toggleFree}
+              onTap={(card, index) => send({ type: 'daub', card, index })}
+              intro={intro}
+              disabled={intro || roundOver}
+              showClaim={mine}
+            />
+          )}
         </div>
       </Screen>
     );

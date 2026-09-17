@@ -97,7 +97,7 @@ exactly like humans.
 | `round1`…`round5` | select  | line, corners, x, line, blackout | line / corners / x / blackout | The pattern for that round (only the first `rounds` apply). |
 | `cards`           | number  | 1                                | 1–4                           | Cards dealt to every player each round.                     |
 | `callSeconds`     | number  | 6                                | 3–12                          | Seconds each number stays up before the next call.          |
-| `showBoard`       | boolean | true                             | —                             | TV shows the hall board of every number called so far.      |
+| `showBoard`       | boolean | false                            | —                             | TV shows the hall board of every number called so far.      |
 | `showPrevious`    | boolean | true                             | —                             | TV shows the previous number under the current call.        |
 | `spicy`           | boolean | false                            | —                             | Cheekier caller nicknames for some numbers (PG-13).         |
 

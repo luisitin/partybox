@@ -39,7 +39,7 @@ export function readSettings(raw: RawSettings): Settings {
     cards: Math.min(MAX_CARDS, Math.max(1, Math.round(Number(raw['cards'] ?? 1)))),
     callSeconds: Math.min(12, Math.max(3, Number(raw['callSeconds'] ?? 6))),
     spicy: raw['spicy'] === true,
-    showBoard: raw['showBoard'] !== false,
+    showBoard: raw['showBoard'] === true,
     showPrevious: raw['showPrevious'] !== false,
   };
 }

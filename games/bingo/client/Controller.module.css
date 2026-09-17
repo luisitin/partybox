@@ -91,10 +91,77 @@
 }
 
 /* Several cards stack down the phone; the BINGO! footer stays pinned below the scroll. */
+/* Several cards share ONE screen (owner request): two stack in portrait and sit side by side in
+   landscape; three or four make a 2 × 2 grid. Each slot is capped by the height left for the stack
+   (viewport minus the shell header, the call header and the BINGO! footer ≈ 320 px), so nothing
+   scrolls — small, but every card is in view. */
 .cards {
+  --pb-card-cols: 1;
+  --pb-card-rows: 1;
+  display: grid;
+  grid-template-columns: repeat(var(--pb-card-cols), minmax(0, 1fr));
+  gap: var(--pb-space-2) var(--pb-space-3);
+  align-items: start;
+  justify-items: center;
+}
+.cards2 {
+  --pb-card-rows: 2;
+}
+.cards3,
+.cards4 {
+  --pb-card-cols: 2;
+  --pb-card-rows: 2;
+}
+@media (orientation: landscape) {
+  .cards2 {
+    --pb-card-cols: 2;
+    --pb-card-rows: 1;
+  }
+  .cards3,
+  .cards4 {
+    --pb-card-rows: 1;
+    --pb-card-cols: 4;
+  }
+}
+.cardSlot {
+  width: 100%;
+  min-width: 0;
+}
+/* A card is ~1.2× taller than wide (letters + five rows): cap the width so `rows` of them fit —
+   never below 150 px (cells ≈ 28 px), where a short viewport (landscape, an SE) scrolls a little
+   instead of shrinking the numbers out of legibility. */
+.cards2 .cardSlot,
+.cards3 .cardSlot,
+.cards4 .cardSlot {
+  /* No call header with several cards: the shell header + the footer leave ≈ 100dvh − 230 px. */
+  max-width: min(100%, max(150px, calc((100dvh - 230px) / var(--pb-card-rows) / 1.2)));
+}
+
+/* Wrong way up for this many cards: a plain ask, the cards wait behind it. */
+.turn {
   display: flex;
   flex-direction: column;
-  gap: var(--pb-space-4);
+  align-items: center;
+  gap: var(--pb-space-3);
+  padding: var(--pb-space-6) var(--pb-space-4);
+  text-align: center;
+}
+.turnGlyph {
+  font-size: 56px;
+  line-height: 1;
+  color: var(--pb-accent-2);
+}
+.turnLine {
+  margin: 0;
+  font-size: var(--pb-font-h2);
+  font-weight: 800;
+}
+.cards2 .cardLabel,
+.cards3 .cardLabel,
+.cards4 .cardLabel {
+  margin-bottom: 0;
+  font-size: 11px;
+  text-align: center;
 }
 
 .cardLabel {
