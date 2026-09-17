@@ -259,6 +259,40 @@
   animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
 }
 
+/* The losing cards (result): who played which letter, as pills — twelve fit in two rows. */
+.losers {
+  list-style: none;
+  margin: auto 0 0;
+  padding: var(--pb-space-3) 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--pb-space-3) var(--pb-space-4);
+  width: 100%;
+}
+
+.loser {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-3);
+  padding: var(--pb-space-2) var(--pb-space-4) var(--pb-space-2) var(--pb-space-2);
+  border-radius: 999px;
+  background: var(--pb-surface);
+  border: 1px solid var(--pb-border);
+}
+
+.loserLetter {
+  display: grid;
+  place-items: center;
+  width: var(--pb-chip-size);
+  height: var(--pb-chip-size);
+  border-radius: 50%;
+  background: var(--pb-accent-2-fill);
+  color: var(--pb-on-accent-2-fill);
+  font-size: var(--pb-font-body);
+  font-weight: 900;
+}
+
 /* The losing cards (result): as many columns as fit, so twelve players stay on the stage. */
 .resultStrip {
   list-style: none;

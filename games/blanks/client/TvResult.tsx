@@ -79,6 +79,30 @@ export function TvResult({ view }: Props): JSX.Element {
     if (beat >= BEAT_WINNER && humanWin) play('sweep');
   }, [beat, humanWin, play]);
   if (view.phaseId === 'done') return <TvFinal view={view} />;
+  // Nobody played: nothing to reveal beat by beat — say so at once, with the card that got no takers.
+  if (view.revealed.length === 0) {
+    return (
+      <Stage center>
+        <p className={styles.kicker}>
+          Round {view.round} of {view.rounds} · result
+        </p>
+        <BigText level="h1" tone="accent" className="pb-enter">
+          {winnerLine(view)}
+        </BigText>
+        {view.black ? (
+          <FilledCard
+            text={view.black.text}
+            pick={view.black.pick}
+            size="hero"
+            className={styles.stageCard}
+          />
+        ) : null}
+        <BigText level="h2" tone="muted">
+          {view.round < view.rounds ? 'Next card coming up…' : 'That was the last card.'}
+        </BigText>
+      </Stage>
+    );
+  }
   const named = beat >= BEAT_WINNER;
   return (
     <Stage>
@@ -117,18 +141,26 @@ export function TvResult({ view }: Props): JSX.Element {
           ))}
         </div>
       ) : null}
+      {/* The other cards were all up on the judge stage a moment ago: here only who played
+          which letter, and their votes — twelve players fit in two rows of pills. */}
       {others.length > 0 ? (
-        <ul className={styles.resultStrip} aria-label="the other cards">
+        <ul className={styles.losers} aria-label="the other cards">
           {others.map((c) => (
-            <li key={c.slot}>
-              <FilledCard
-                text={view.black?.text ?? ''}
-                whites={c.whites}
-                size="mini"
-                letter={LETTERS[c.slot]}
-              >
-                <Author card={c} shown={beat >= BEAT_AUTHORS} />
-              </FilledCard>
+            <li
+              key={c.slot}
+              className={`${styles.loser} ${beat >= BEAT_AUTHORS ? styles.rise : styles.pending}`}
+              aria-hidden={beat < BEAT_AUTHORS}
+            >
+              <span className={styles.loserLetter} aria-hidden>
+                {LETTERS[c.slot]}
+              </span>
+              <Avatar avatarId={c.avatarId} size="var(--pb-chip-size)" />
+              <span className={styles.authorName}>{c.name}</span>
+              {c.votes > 0 ? (
+                <span className={styles.voteCount}>
+                  {c.votes} {c.votes === 1 ? 'vote' : 'votes'}
+                </span>
+              ) : null}
             </li>
           ))}
         </ul>
