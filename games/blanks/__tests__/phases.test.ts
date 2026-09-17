@@ -230,6 +230,21 @@ describe('untimed rounds (the default)', () => {
     expect(s.winners).toEqual([]);
   });
 
+  it('Quick draw counts a play within half the answer time of the start, not of the fallback', () => {
+    const s = toAnswer(start({ timed: false, players: 4 }));
+    const t0 = s.phase.startedAt;
+    // Untimed: the 3 min fallback is the deadline, but "fast" is still 30 s (answerSeconds / 2).
+    expect(play(s, 'ana', topCards(s, 'ana'), t0 + 29_000).stats.fastPlays['ana']).toBe(1);
+    expect(play(s, 'ana', topCards(s, 'ana'), t0 + 31_000).stats.fastPlays['ana']).toBe(0);
+    // A pause shifts the deadline, and the yardstick with it.
+    const paused = vip(vip(s, 'pause', t0 + 1000), 'resume', t0 + 11_000);
+    expect(play(paused, 'ana', topCards(s, 'ana'), t0 + 39_000).stats.fastPlays['ana']).toBe(1);
+    expect(play(paused, 'ana', topCards(s, 'ana'), t0 + 41_000).stats.fastPlays['ana']).toBe(0);
+    const timed = toAnswer(start({ timed: true, players: 4 }));
+    expect(play(timed, 'ana', topCards(timed, 'ana'), t0 + 29_000).stats.fastPlays['ana']).toBe(1);
+    expect(play(timed, 'ana', topCards(timed, 'ana'), t0 + 31_000).stats.fastPlays['ana']).toBe(0);
+  });
+
   it('Next is ignored in timed rounds', () => {
     const s = playAll(toAnswer(start({ timed: true, players: 4 })), ['dev']);
     expect(next(s, 'ana')).toBe(s);

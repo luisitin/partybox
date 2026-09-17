@@ -45,7 +45,8 @@ One point per round to the most-voted card's author; a tie shares the point. One
 **walkover** (no reading, no vote, one point). No votes → nobody scores. Rando's wins pay nobody. Points
 lock in when `result` starts, once per round. Ties share a rank; winners = every rank-1 player. Awards
 (a real player each; ties → higher score, then lower id): **Crowd favourite** (most votes received, if
-any), **Quick draw** (most cards played before half the answer time, measured against the deadline).
+any), **Quick draw** (most cards played within half the answer time — `answerSeconds` / 2 from the phase's start,
+measured against the deadline so a pause never cheats it; the same yardstick when untimed).
 
 ## Edge cases
 
