@@ -1,0 +1,129 @@
+{
+  "pass": "65",
+  "game": "wisecrack",
+  "players": 5,
+  "scenario": "reconnect",
+  "focus": "tv",
+  "started": "14:13:25.275",
+  "tvVideoT0": "14:13:21.983",
+  "changes": [
+    {
+      "t": 1789654405278,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789654410269,
+      "at": "14:13:25.278",
+      "sinceStartS": 0,
+      "videoS": 3.3
+    },
+    {
+      "t": 1789654410381,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789654450276,
+      "at": "14:13:30.381",
+      "sinceStartS": 5.1,
+      "videoS": 8.4
+    },
+    {
+      "t": 1789654450342,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789654470278,
+      "at": "14:14:10.342",
+      "sinceStartS": 45.1,
+      "videoS": 48.4
+    },
+    {
+      "t": 1789654454547,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789654460482,
+      "at": "14:14:14.547",
+      "sinceStartS": 49.3,
+      "videoS": 52.6
+    },
+    {
+      "t": 1789654460576,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789654480489,
+      "at": "14:14:20.576",
+      "sinceStartS": 55.3,
+      "videoS": 58.6
+    },
+    {
+      "t": 1789654464730,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789654470619,
+      "at": "14:14:24.730",
+      "sinceStartS": 59.5,
+      "videoS": 62.7
+    },
+    {
+      "t": 1789654470723,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789654476622,
+      "at": "14:14:30.723",
+      "sinceStartS": 65.4,
+      "videoS": 68.7
+    },
+    {
+      "t": 1789654476638,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789654496633,
+      "at": "14:14:36.638",
+      "sinceStartS": 71.4,
+      "videoS": 74.7
+    },
+    {
+      "t": 1789654480846,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789654486839,
+      "at": "14:14:40.846",
+      "sinceStartS": 75.6,
+      "videoS": 78.9
+    },
+    {
+      "t": 1789654486944,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789654506848,
+      "at": "14:14:46.944",
+      "sinceStartS": 81.7,
+      "videoS": 85
+    },
+    {
+      "t": 1789654491087,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789654496970,
+      "at": "14:14:51.087",
+      "sinceStartS": 85.8,
+      "videoS": 89.1
+    },
+    {
+      "t": 1789654497071,
+      "status": "playing",
+      "phase": "scores",
+      "deadline": 1789654504975,
+      "at": "14:14:57.071",
+      "sinceStartS": 91.8,
+      "videoS": 95.1
+    },
+    {
+      "t": 1789654505039,
+      "status": "results",
+      "phase": "results",
+      "deadline": null,
+      "at": "14:15:05.039",
+      "sinceStartS": 99.8,
+      "videoS": 103.1
+    }
+  ],
+  "notes": ["reconnect: Sam dropped for 8 s at 2026-09-17T14:13:34.425Z in answer"]
+}
