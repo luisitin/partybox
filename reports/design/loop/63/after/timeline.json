@@ -1,0 +1,201 @@
+{
+  "pass": "63",
+  "game": "broken-pencil",
+  "players": 3,
+  "scenario": "spicy",
+  "focus": "tv",
+  "started": "14:05:15.015",
+  "tvVideoT0": "14:05:11.688",
+  "changes": [
+    {
+      "t": 1789653915016,
+      "status": "playing",
+      "phase": "pick",
+      "deadline": 1789653935011,
+      "at": "14:05:15.016",
+      "sinceStartS": 0,
+      "videoS": 3.3
+    },
+    {
+      "t": 1789653919160,
+      "status": "playing",
+      "phase": "draw",
+      "deadline": 1789653979054,
+      "at": "14:05:19.160",
+      "sinceStartS": 4.1,
+      "videoS": 7.5
+    },
+    {
+      "t": 1789653923376,
+      "status": "playing",
+      "phase": "pass",
+      "deadline": 1789654013264,
+      "at": "14:05:23.376",
+      "sinceStartS": 8.4,
+      "videoS": 11.7
+    },
+    {
+      "t": 1789653932585,
+      "status": "playing",
+      "phase": "guess",
+      "deadline": 1789653962473,
+      "at": "14:05:32.585",
+      "sinceStartS": 17.6,
+      "videoS": 20.9
+    },
+    {
+      "t": 1789653936735,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789653948621,
+      "at": "14:05:36.735",
+      "sinceStartS": 21.7,
+      "videoS": 25
+    },
+    {
+      "t": 1789653946013,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789653965882,
+      "at": "14:05:46.013",
+      "sinceStartS": 31,
+      "videoS": 34.3
+    },
+    {
+      "t": 1789653965957,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789653977884,
+      "at": "14:06:05.957",
+      "sinceStartS": 50.9,
+      "videoS": 54.3
+    },
+    {
+      "t": 1789653977993,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789653997898,
+      "at": "14:06:17.993",
+      "sinceStartS": 63,
+      "videoS": 66.3
+    },
+    {
+      "t": 1789653987262,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789653999148,
+      "at": "14:06:27.262",
+      "sinceStartS": 72.2,
+      "videoS": 75.6
+    },
+    {
+      "t": 1789653991382,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789654003273,
+      "at": "14:06:31.382",
+      "sinceStartS": 76.4,
+      "videoS": 79.7
+    },
+    {
+      "t": 1789654003326,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789654023278,
+      "at": "14:06:43.326",
+      "sinceStartS": 88.3,
+      "videoS": 91.6
+    },
+    {
+      "t": 1789654023355,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789654035286,
+      "at": "14:07:03.355",
+      "sinceStartS": 108.3,
+      "videoS": 111.7
+    },
+    {
+      "t": 1789654035328,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789654055295,
+      "at": "14:07:15.328",
+      "sinceStartS": 120.3,
+      "videoS": 123.6
+    },
+    {
+      "t": 1789654044531,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789654056422,
+      "at": "14:07:24.531",
+      "sinceStartS": 129.5,
+      "videoS": 132.8
+    },
+    {
+      "t": 1789654053761,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789654065653,
+      "at": "14:07:33.761",
+      "sinceStartS": 138.7,
+      "videoS": 142.1
+    },
+    {
+      "t": 1789654056715,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789654076667,
+      "at": "14:07:36.715",
+      "sinceStartS": 141.7,
+      "videoS": 145
+    },
+    {
+      "t": 1789654076701,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789654088669,
+      "at": "14:07:56.701",
+      "sinceStartS": 161.7,
+      "videoS": 165
+    },
+    {
+      "t": 1789654088731,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789654108680,
+      "at": "14:08:08.731",
+      "sinceStartS": 173.7,
+      "videoS": 177
+    },
+    {
+      "t": 1789654108760,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789654120690,
+      "at": "14:08:28.760",
+      "sinceStartS": 193.7,
+      "videoS": 197.1
+    },
+    {
+      "t": 1789654120771,
+      "status": "playing",
+      "phase": "summary",
+      "deadline": 1789654135702,
+      "at": "14:08:40.771",
+      "sinceStartS": 205.8,
+      "videoS": 209.1
+    },
+    {
+      "t": 1789654135809,
+      "status": "results",
+      "phase": "results",
+      "deadline": null,
+      "at": "14:08:55.809",
+      "sinceStartS": 220.8,
+      "videoS": 224.1
+    }
+  ],
+  "notes": []
+}

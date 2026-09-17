@@ -74,9 +74,14 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
           {t.results.yourPlace(mine.rank, mine.score)}
         </p>
       ) : null}
-      <div ref={list}>
-        <Scoreboard rows={rows} compact highlightId={me.id} noTrophy={over || scoreless} />
-      </div>
+      {scoreless ? (
+        // No points: a board of zeros says nothing; the TV holds the show's summary.
+        <p className="pb-muted pb-caption">{t.results.scorelessHint}</p>
+      ) : (
+        <div ref={list}>
+          <Scoreboard rows={rows} compact highlightId={me.id} noTrophy={over} />
+        </div>
+      )}
       {room.results?.results.awards.length ? (
         <ul className={styles.awards}>
           {room.results.results.awards.map((a) => (

@@ -67,6 +67,7 @@ export const t = {
     tie: "It's a tie!",
     over: 'Game over',
     show: "That's the show!",
+    scorelessHint: 'No points in this game — the books on the TV are the result.',
     nobodyScored: 'Nobody scored this time — everyone ties.',
     playAgain: 'Play again',
     newGame: 'New game',
