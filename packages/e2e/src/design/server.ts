@@ -11,6 +11,8 @@ export interface DevServer {
   url: string;
   port: number;
   stop(): Promise<void>;
+  /** Everything the server printed so far (stdout + stderr). */
+  log(): string;
 }
 
 export async function startServer(port: number): Promise<DevServer> {
@@ -38,6 +40,7 @@ export async function startServer(port: number): Promise<DevServer> {
   return {
     url,
     port,
+    log: () => log.join(''),
     stop: () =>
       new Promise<void>((resolve) => {
         if (child.exitCode !== null || child.pid === undefined) return resolve();

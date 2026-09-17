@@ -105,12 +105,15 @@ export function createBotManager(host: Host, deps: EngineDeps, clock: Clock): Bo
       let wants: unknown = null;
       try {
         // Peek with a throwaway rng so the real one only advances when the bot actually acts.
+        // Seeded by the clock too: a seed that only changes when the bot acts gave a probabilistic
+        // sampler (Bingo daubs 70 % of the time) the same "no" on every peek — the bot never played.
         wants = game.bot.sampleInput(
           room.game.state,
           driver.id,
-          createRng(driver.rng.state().step),
+          createRng(driver.rng.state().step + clock.now()),
         );
-      } catch {
+      } catch (err) {
+        console.warn(`[bots] peek threw for ${driver.id}: ${String(err)}`);
         continue;
       }
       if (wants === null) continue;
