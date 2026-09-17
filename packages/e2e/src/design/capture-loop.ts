@@ -243,6 +243,14 @@ async function main(): Promise<void> {
         followedUp.add(key);
         const again = [sam, priya, ...extras].filter((p) => p.playerId && !p.page.isClosed());
         for (const p of again) await api.post('/api/dev/act', { playerId: p.playerId });
+        // An untimed phase (Blanks) waits for the room: Sam taps the phone's Next if it offers one.
+        if (!sam.page.isClosed()) {
+          const nextButton = sam.page.getByRole('button', { name: /next|final scores/i }).first();
+          if (await nextButton.isVisible().catch(() => false)) {
+            await still(sam.page, `${String(n).padStart(2, '0')}-${phase}-phone-next`);
+            await nextButton.click().catch(() => undefined);
+          }
+        }
       }
       await settle(100);
     }
