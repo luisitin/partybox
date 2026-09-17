@@ -532,8 +532,22 @@
   .pop {
     animation: pop var(--base) var(--ease) both;
   }
+  @keyframes land {
+    0% {
+      opacity: 0.5;
+      transform: scale(0.92);
+    }
+    60% {
+      opacity: 1;
+      transform: scale(1.04);
+    }
+    100% {
+      opacity: 1;
+      transform: none;
+    }
+  }
   .land {
-    animation: pop var(--slow) var(--ease) both;
+    animation: land var(--slow) var(--ease) both;
   }
   .pending {
     opacity: 0;
@@ -681,7 +695,8 @@
         <h2>One card at a time, read out loud</h2>
         <p>
           Every card is its own beat: the <em>card</em> chime (your pick, B: a two-note pluck), then
-          the card lands with a bounce (600 ms) while the ones already read slide into a row
+          the card lands with a bounce (600 ms, from half opacity — never from nothing, so the stage
+          does not blink between two cards; loop #131) while the ones already read slide into a row
           underneath. Phones show the same card at the same moment.
         </p>
       </div>
