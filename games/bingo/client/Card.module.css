@@ -390,3 +390,16 @@ button.cell:focus-visible {
     border-width: 1px;
   }
 }
+
+/* A phone card squeezed under a tall footer (≤ 260 px): numbers and marks scale with the card so
+   the ✓ never sits on top of the digits. */
+@container (max-width: 260px) {
+  .phone .number {
+    font-size: clamp(12px, 8.5cqw, 22px);
+  }
+  .phone .mark {
+    font-size: clamp(7px, 4cqw, 12px);
+    right: 2px;
+    bottom: 1px;
+  }
+}
