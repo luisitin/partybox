@@ -138,13 +138,17 @@ export function TvResult({ view }: Props): JSX.Element {
         </BigText>
       </div>
       {winners.length > 0 && view.black ? (
-        <div className={`${styles.winners} ${winners.length > 1 ? styles.winnersSplit : ''}`}>
+        <div
+          className={`${styles.winners} ${winners.length > 1 ? styles.winnersSplit : ''} ${winners.length > 2 ? styles.winnersMany : ''}`}
+        >
+          {/* One winner gets the big card, two share the row; three or more (a big room's
+              four-way tie) are thumbnails so the row never wraps under the host bar (#123). */}
           {winners.map((w) => (
             <FilledCard
               key={w.slot}
               text={view.black?.text ?? ''}
               whites={w.whites}
-              size={winners.length > 1 ? 'grid' : 'medium'}
+              size={winners.length > 2 ? 'mini' : winners.length > 1 ? 'grid' : 'medium'}
               letter={LETTERS[w.slot]}
               winner={named}
               className={styles.stageCard}

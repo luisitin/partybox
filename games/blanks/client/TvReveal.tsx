@@ -15,6 +15,8 @@ type Props = GameTvProps<BlanksTvView>;
 const NAMED_HOLDOUTS = 3;
 /** A filled sentence past this many characters wraps to four lines in a quarter-width mini. */
 const STRIP_LONG = 75;
+/** Past this many players the chip strip takes three rows next to the timer. */
+const BIG_CHIP_ROOM = 10;
 
 function Holdout({ player }: { player: ViewPlayer }): JSX.Element {
   return (
@@ -92,7 +94,9 @@ export function TvReveal({ view }: Props): JSX.Element {
             whites={current.whites}
             size="hero"
             letter={LETTERS[current.slot]}
-            className={`${styles.stageCard} ${styles.landing}`}
+            // Eleven or twelve chips wrap to a third row beside the timer: the hero card steps
+            // down a size so it and the strip both fit above the host bar (review-loop #123).
+            className={`${styles.stageCard} ${styles.landing} ${view.players.length > BIG_CHIP_ROOM ? styles.long : ''}`}
           />
         ) : null}
       </div>
