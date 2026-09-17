@@ -89,7 +89,9 @@ function ControllerResult({ view, me, send }: Props): JSX.Element {
               key={w.slot}
               text={view.black?.text ?? ''}
               whites={w.whites}
-              size="phone"
+              // A split shows every winner: thumbnails, so two or three fit an 8 s timed result without
+              // scrolling (review-loop #120).
+              size={winners.length > 1 ? 'mini' : 'phone'}
               letter={LETTERS[w.slot]}
               winner
             >

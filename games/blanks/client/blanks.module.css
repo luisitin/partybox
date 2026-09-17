@@ -403,8 +403,20 @@
 /* A narrow phone (iPhone SE) has no room for avatar + name + votes on one line inside the
    lettered card: the votes pill drops under the name rather than the name losing its end
    ("Play…", review-loop #115). */
-.phone .author {
+.phone .author,
+.mini .author,
+.grid .author {
   flex-wrap: wrap;
+}
+
+/* A thumbnail's author row is a thumbnail too (a split result on a phone lists two or three). */
+.mini .author {
+  --pb-chip-size: var(--pb-space-6);
+  gap: var(--pb-space-2);
+}
+
+.mini .authorName {
+  font-size: var(--pb-font-caption);
 }
 
 .authorName {
