@@ -118,6 +118,12 @@
   flex-shrink: 0;
 }
 
+.thumbMore {
+  flex-shrink: 0;
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+}
+
 .thumbText {
   display: flex;
   flex-direction: column;

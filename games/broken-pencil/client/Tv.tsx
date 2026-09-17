@@ -89,6 +89,9 @@ function Progress({ view }: { view: PencilTvView }): JSX.Element {
   );
 }
 
+/** Thumbnails the 1080 px stage fits beside the current page. */
+const STRIP_MAX = 6;
+
 function Thumb({ page }: { page: PageView }): JSX.Element {
   if (page.kind === 'draw')
     return (
@@ -194,9 +197,17 @@ export function Tv({ view }: GameTvProps<PencilTvView>): JSX.Element {
         </div>
         <div className={styles.showBody}>
           <ul className={styles.strip} aria-label="pages so far">
-            {s.pages.slice(0, -1).map((p, i) => (
-              <Thumb key={i} page={p} />
-            ))}
+            {/* The stage fits about six thumbnails; a long chain keeps its newest pages (the context
+                for the current one) and folds the rest into a count (review-loop #67). */}
+            {s.pages.length - 1 > STRIP_MAX ? (
+              <li className={styles.thumbMore}>{s.pages.length - 1 - STRIP_MAX} earlier pages…</li>
+            ) : null}
+            {s.pages
+              .slice(0, -1)
+              .slice(-STRIP_MAX)
+              .map((p, i) => (
+                <Thumb key={i} page={p} />
+              ))}
           </ul>
           <div className={styles.current}>
             {current ? <CurrentPage page={current} /> : null}

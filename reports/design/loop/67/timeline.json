@@ -1,0 +1,267 @@
+{
+  "pass": "67",
+  "game": "broken-pencil",
+  "players": 6,
+  "scenario": "reconnect",
+  "focus": "tv",
+  "started": "14:22:16.755",
+  "tvVideoT0": "14:22:13.534",
+  "changes": [
+    {
+      "t": 1789654936757,
+      "status": "playing",
+      "phase": "pick",
+      "deadline": 1789654956750,
+      "at": "14:22:16.757",
+      "sinceStartS": 0,
+      "videoS": 3.2
+    },
+    {
+      "t": 1789654941288,
+      "status": "playing",
+      "phase": "draw",
+      "deadline": 1789655001219,
+      "at": "14:22:21.288",
+      "sinceStartS": 4.5,
+      "videoS": 7.8
+    },
+    {
+      "t": 1789654960646,
+      "status": "playing",
+      "phase": "pass",
+      "deadline": 1789655035357,
+      "at": "14:22:40.646",
+      "sinceStartS": 23.9,
+      "videoS": 27.1
+    },
+    {
+      "t": 1789654969880,
+      "status": "playing",
+      "phase": "pass",
+      "deadline": 1789655059773,
+      "at": "14:22:49.880",
+      "sinceStartS": 33.1,
+      "videoS": 36.3
+    },
+    {
+      "t": 1789654979153,
+      "status": "playing",
+      "phase": "pass",
+      "deadline": 1789655069039,
+      "at": "14:22:59.153",
+      "sinceStartS": 42.4,
+      "videoS": 45.6
+    },
+    {
+      "t": 1789654988367,
+      "status": "playing",
+      "phase": "pass",
+      "deadline": 1789655078258,
+      "at": "14:23:08.367",
+      "sinceStartS": 51.6,
+      "videoS": 54.8
+    },
+    {
+      "t": 1789654997673,
+      "status": "playing",
+      "phase": "guess",
+      "deadline": 1789655027553,
+      "at": "14:23:17.673",
+      "sinceStartS": 60.9,
+      "videoS": 64.1
+    },
+    {
+      "t": 1789655001842,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789655013725,
+      "at": "14:23:21.842",
+      "sinceStartS": 65.1,
+      "videoS": 68.3
+    },
+    {
+      "t": 1789655013778,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789655033728,
+      "at": "14:23:33.778",
+      "sinceStartS": 77,
+      "videoS": 80.2
+    },
+    {
+      "t": 1789655017968,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789655029938,
+      "at": "14:23:37.968",
+      "sinceStartS": 81.2,
+      "videoS": 84.4
+    },
+    {
+      "t": 1789655029986,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789655049940,
+      "at": "14:23:49.986",
+      "sinceStartS": 93.2,
+      "videoS": 96.5
+    },
+    {
+      "t": 1789655050037,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789655061941,
+      "at": "14:24:10.037",
+      "sinceStartS": 113.3,
+      "videoS": 116.5
+    },
+    {
+      "t": 1789655061990,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789655081942,
+      "at": "14:24:21.990",
+      "sinceStartS": 125.2,
+      "videoS": 128.5
+    },
+    {
+      "t": 1789655081994,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789655093953,
+      "at": "14:24:41.994",
+      "sinceStartS": 145.2,
+      "videoS": 148.5
+    },
+    {
+      "t": 1789655093989,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789655113961,
+      "at": "14:24:53.989",
+      "sinceStartS": 157.2,
+      "videoS": 160.5
+    },
+    {
+      "t": 1789655114056,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789655125968,
+      "at": "14:25:14.056",
+      "sinceStartS": 177.3,
+      "videoS": 180.5
+    },
+    {
+      "t": 1789655126005,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789655145977,
+      "at": "14:25:26.005",
+      "sinceStartS": 189.3,
+      "videoS": 192.5
+    },
+    {
+      "t": 1789655145985,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789655157978,
+      "at": "14:25:45.985",
+      "sinceStartS": 209.2,
+      "videoS": 212.5
+    },
+    {
+      "t": 1789655157985,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789655169982,
+      "at": "14:25:57.985",
+      "sinceStartS": 221.2,
+      "videoS": 224.5
+    },
+    {
+      "t": 1789655162183,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789655182071,
+      "at": "14:26:02.183",
+      "sinceStartS": 225.4,
+      "videoS": 228.6
+    },
+    {
+      "t": 1789655166353,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789655178237,
+      "at": "14:26:06.353",
+      "sinceStartS": 229.6,
+      "videoS": 232.8
+    },
+    {
+      "t": 1789655175601,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789655195479,
+      "at": "14:26:15.601",
+      "sinceStartS": 238.8,
+      "videoS": 242.1
+    },
+    {
+      "t": 1789655179814,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789655191710,
+      "at": "14:26:19.814",
+      "sinceStartS": 243.1,
+      "videoS": 246.3
+    },
+    {
+      "t": 1789655191797,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789655211710,
+      "at": "14:26:31.797",
+      "sinceStartS": 255,
+      "videoS": 258.3
+    },
+    {
+      "t": 1789655196000,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789655207889,
+      "at": "14:26:36.000",
+      "sinceStartS": 259.2,
+      "videoS": 262.5
+    },
+    {
+      "t": 1789655207916,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789655227895,
+      "at": "14:26:47.916",
+      "sinceStartS": 271.2,
+      "videoS": 274.4
+    },
+    {
+      "t": 1789655212097,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789655223984,
+      "at": "14:26:52.097",
+      "sinceStartS": 275.3,
+      "videoS": 278.6
+    },
+    {
+      "t": 1789655221295,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789655241181,
+      "at": "14:27:01.295",
+      "sinceStartS": 284.5,
+      "videoS": 287.8
+    }
+  ],
+  "notes": [
+    "reconnect: Sam dropped for 8 s at 2026-09-17T14:22:25.354Z in draw",
+    "budget reached while playing; skipped to results"
+  ]
+}
