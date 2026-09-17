@@ -1,0 +1,156 @@
+{
+  "pass": "72",
+  "game": "lightning-round",
+  "players": 3,
+  "scenario": "reconnect",
+  "focus": "tv",
+  "started": "14:43:14.848",
+  "tvVideoT0": "14:43:11.660",
+  "changes": [
+    {
+      "t": 1789656194851,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789656198845,
+      "at": "14:43:14.851",
+      "sinceStartS": 0,
+      "videoS": 3.2
+    },
+    {
+      "t": 1789656198881,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789656213848,
+      "at": "14:43:18.881",
+      "sinceStartS": 4,
+      "videoS": 7.2
+    },
+    {
+      "t": 1789656218170,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789656222892,
+      "at": "14:43:38.170",
+      "sinceStartS": 23.3,
+      "videoS": 26.5
+    },
+    {
+      "t": 1789656222389,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789656227284,
+      "at": "14:43:42.389",
+      "sinceStartS": 27.5,
+      "videoS": 30.7
+    },
+    {
+      "t": 1789656227360,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789656242291,
+      "at": "14:43:47.360",
+      "sinceStartS": 32.5,
+      "videoS": 35.7
+    },
+    {
+      "t": 1789656231539,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789656236430,
+      "at": "14:43:51.539",
+      "sinceStartS": 36.7,
+      "videoS": 39.9
+    },
+    {
+      "t": 1789656236476,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789656251434,
+      "at": "14:43:56.476",
+      "sinceStartS": 41.6,
+      "videoS": 44.8
+    },
+    {
+      "t": 1789656240670,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789656245622,
+      "at": "14:44:00.670",
+      "sinceStartS": 45.8,
+      "videoS": 49
+    },
+    {
+      "t": 1789656245680,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789656260635,
+      "at": "14:44:05.680",
+      "sinceStartS": 50.8,
+      "videoS": 54
+    },
+    {
+      "t": 1789656249891,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789656254770,
+      "at": "14:44:09.891",
+      "sinceStartS": 55,
+      "videoS": 58.2
+    },
+    {
+      "t": 1789656254810,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789656269778,
+      "at": "14:44:14.810",
+      "sinceStartS": 60,
+      "videoS": 63.1
+    },
+    {
+      "t": 1789656259006,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789656263895,
+      "at": "14:44:19.006",
+      "sinceStartS": 64.2,
+      "videoS": 67.3
+    },
+    {
+      "t": 1789656263989,
+      "status": "playing",
+      "phase": "wager",
+      "deadline": 1789656278905,
+      "at": "14:44:23.989",
+      "sinceStartS": 69.1,
+      "videoS": 72.3
+    },
+    {
+      "t": 1789656268167,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789656283059,
+      "at": "14:44:28.167",
+      "sinceStartS": 73.3,
+      "videoS": 76.5
+    },
+    {
+      "t": 1789656272393,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789656277282,
+      "at": "14:44:32.393",
+      "sinceStartS": 77.5,
+      "videoS": 80.7
+    },
+    {
+      "t": 1789656277322,
+      "status": "results",
+      "phase": "results",
+      "deadline": null,
+      "at": "14:44:37.322",
+      "sinceStartS": 82.5,
+      "videoS": 85.7
+    }
+  ],
+  "notes": ["reconnect: Sam dropped for 8 s at 2026-09-17T14:43:22.885Z in question"]
+}
