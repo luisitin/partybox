@@ -14,8 +14,9 @@ export interface FilledCardProps {
   whites?: readonly string[];
   /** Shown as a PICK n badge when > 1 and nothing is filled in yet. */
   pick?: number;
-  /** Type size: `hero` (the card on stage), `grid` (many on stage), `phone`, `mini` (thumbnails). */
-  size?: 'hero' | 'grid' | 'phone' | 'mini';
+  /** Type size: `hero` (the card on stage), `medium` (the result winner), `grid` (many on stage),
+   *  `phone`, `mini` (thumbnails). */
+  size?: 'hero' | 'medium' | 'grid' | 'phone' | 'mini';
   /** Slot letter disc in the corner (reveal / judge). */
   letter?: string;
   /** Extra chrome inside the card (author row, votes). */

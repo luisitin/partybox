@@ -263,7 +263,8 @@
 .losers {
   list-style: none;
   margin: auto 0 0;
-  padding: var(--pb-space-3) 0 0;
+  /* the host bar sits in the bottom overscan band: the pills end above it */
+  padding: var(--pb-space-3) 0 var(--pb-space-6);
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -312,6 +313,7 @@
 /* Cards already read (reveal): one row, the last four, never taller than the row. */
 .readRow {
   flex-wrap: nowrap;
+  padding-bottom: var(--pb-space-6);
 }
 
 .readRow > li {
@@ -350,8 +352,16 @@
 }
 
 /* Result: the winner card(s) in the middle, the rest in the strip below. */
+/* Nothing above the winner card gives way to it: the headline keeps its line. */
 .headline {
   min-height: 1.2em;
+  flex-shrink: 0;
+}
+
+/* The result winner: one size under the reveal hero, so a four-line card plus its author row
+   still leaves room for the headline above and the pills below. */
+.medium {
+  font-size: var(--pb-font-h2);
 }
 
 .winners {

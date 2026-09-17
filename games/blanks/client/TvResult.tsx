@@ -126,7 +126,7 @@ export function TvResult({ view }: Props): JSX.Element {
               key={w.slot}
               text={view.black?.text ?? ''}
               whites={w.whites}
-              size={winners.length > 1 || others.length > 4 ? 'grid' : 'hero'}
+              size={winners.length > 1 || others.length > 4 ? 'grid' : 'medium'}
               letter={LETTERS[w.slot]}
               winner={named}
               className={styles.stageCard}

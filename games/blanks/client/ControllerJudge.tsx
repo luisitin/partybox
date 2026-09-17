@@ -36,9 +36,11 @@ export function ControllerReveal({ view }: Props): JSX.Element {
       <p className="pb-caption pb-muted">
         {mine
           ? "This one's yours — keep a straight face."
-          : view.judgeMode === 'czar' && view.czar
-            ? `Read along. ${view.czar.name} decides after the last card.`
-            : 'Read along. The vote is next.'}
+          : view.role === 'judge'
+            ? 'Read along. You pick the winner after the last card.'
+            : view.judgeMode === 'czar' && view.czar
+              ? `Read along. ${view.czar.name} decides after the last card.`
+              : 'Read along. The vote is next.'}
       </p>
     </Screen>
   );
