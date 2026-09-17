@@ -152,6 +152,18 @@ describe('fill', () => {
     );
   });
 
+  it('keeps a comma between two adjacent blanks in the black text', () => {
+    const { segments } = fill('Regrets: ____, ____, and ____.', ['A.', 'B.', 'C.']);
+    expect(segments.map((s) => `${s.kind}:${s.text}`)).toEqual([
+      'text:Regrets: ',
+      'fill:A',
+      'text:, ',
+      'fill:B,',
+      'text: and ',
+      'fill:C.',
+    ]);
+  });
+
   it('a question card lists the whites underneath (extra)', () => {
     const { segments, extra } = fill("What's that smell?", ['Grandma.', 'The Force.']);
     expect(segments).toEqual([{ kind: 'text', text: "What's that smell?" }]);

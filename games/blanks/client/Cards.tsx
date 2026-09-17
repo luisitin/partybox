@@ -27,8 +27,10 @@ export interface FilledCardProps {
   ariaLabel?: string;
 }
 
-const HERO_LONG = 80;
-const HERO_VERY_LONG = 130;
+// A Pick 3 with three long whites runs past 190 characters: h2 still fits the stage in five
+// lines; body size is for the very rare longer one (review-loop #99).
+const HERO_LONG = 90;
+const HERO_VERY_LONG = 210;
 
 /** Long sentences step down a size so they still fit the stage / the phone width. */
 function lengthClass(

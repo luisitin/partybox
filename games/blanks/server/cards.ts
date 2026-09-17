@@ -94,7 +94,12 @@ export function fill(
     // Anything after the blank (a comma, the black card's own full stop) supplies the punctuation.
     const rest = parts.slice(i + 1).join('');
     const atEnd = rest.trim() === '';
-    const punctuation = /^[.,!?;:]+/.exec(parts[i + 1] ?? '')?.[0] ?? '';
+    const nextPart = parts[i + 1] ?? '';
+    let punctuation = /^[.,!?;:]+/.exec(nextPart)?.[0] ?? '';
+    // Between two blanks with only a comma and a space ("____, ____"), the comma stays in the
+    // black text: two paper marks touching read as one slab (review-loop #99).
+    const between = nextPart.slice(punctuation.length);
+    if (between.length > 0 && between.trim() === '') punctuation = '';
     carried = punctuation.length;
     segments.push({
       kind: 'fill',

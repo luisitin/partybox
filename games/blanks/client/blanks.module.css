@@ -57,6 +57,8 @@
   background: var(--card-paper);
   color: var(--card-ink);
   padding: 0.02em 0.28em;
+  /* two whites in a row (a Pick 2 "____, ____") stay two pieces of paper, never one grey slab */
+  margin-inline: 0.06em;
   border-radius: 0.22em;
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
