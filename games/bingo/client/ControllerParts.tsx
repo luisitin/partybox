@@ -82,9 +82,16 @@ export function CardStack({
   const claim = view.claim;
   const many = cards.length > 1;
   const size = cards.length > 2 ? 'compact' : 'phone';
+  // Live cards first: the one you can still play stays in view, a card that won drops below.
+  const order = cards
+    .map((_, c) => c)
+    .sort(
+      (a, b) => Number(!intro && view.won.includes(a)) - Number(!intro && view.won.includes(b)),
+    );
   return (
     <div className={styles.cards}>
-      {cards.map((card, c) => {
+      {order.map((c) => {
+        const card = cards[c] ?? [];
         if (showClaim && claim && claim.cardIndex === c)
           return (
             // Your failed claim, exactly as the room sees it: the wipe lands when play resumes.
