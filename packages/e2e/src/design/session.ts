@@ -18,7 +18,7 @@ export interface DevState {
     status: string;
     vipId?: string | null;
     players: Record<string, { id: string; name: string; connected: boolean }>;
-    game?: { state: { phase: { id: string; deadline: number | null } } } | null;
+    game?: { state: { phase: { id: string; deadline: number | null; startedAt?: number } } } | null;
   } | null;
   clock: { now: number; frozen: boolean };
   bots: string[];
