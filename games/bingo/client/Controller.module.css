@@ -207,6 +207,16 @@
 .focusMany .focusMain {
   max-width: min(100%, max(200px, calc((100dvh - 470px) / 1.15)));
 }
+/* A short phone (an SE, 568 px): a smaller main card and thumbnails so both stay in view. */
+@media (max-height: 640px) {
+  .focusMany .focusMain {
+    max-width: min(100%, max(168px, calc((100dvh - 430px) / 1.15)));
+  }
+  .thumbs {
+    --pb-thumb: 84px;
+    gap: var(--pb-space-1);
+  }
+}
 .thumbs {
   display: grid;
   gap: var(--pb-space-2);

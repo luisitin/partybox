@@ -275,7 +275,8 @@ button.cell:focus-visible {
   font-size: var(--pb-font-h2);
 }
 .phone .free .number {
-  font-size: var(--pb-font-caption);
+  font-size: 11px;
+  letter-spacing: 0;
 }
 
 /* Three or four cards on one phone: full width, but cells no taller than they need (loop: multi-card). */
