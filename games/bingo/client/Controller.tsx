@@ -217,13 +217,18 @@ export function Controller({
             ) : (
               <CallRow view={view} />
             )}
-            {inRound && !sheet ? (
+            {inRound && !sheet && kind !== 'tablet' ? (
               <button type="button" className={styles.stylePill} onClick={openMenu}>
                 🃏 style
               </button>
             ) : null}
           </div>
           {missed ? <MissedToast view={view} count={missed} /> : null}
+          {view.phaseId === 'check' && view.claim?.playerId === me.id ? (
+            <p className={styles.wipeNote}>
+              Card {(view.claim.cardIndex ?? 0) + 1} wiped — re-daub from memory when play resumes.
+            </p>
+          ) : null}
           {body}
           {view.pausedBy.length > 0 && !view.menuOpen && !sheet ? (
             <HoldCurtain names={view.pausedBy} onOpen={openMenu} />

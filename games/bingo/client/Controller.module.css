@@ -132,6 +132,9 @@
   min-height: 36px;
   padding: var(--pb-space-1) var(--pb-space-2);
 }
+.bingo.armed {
+  font-size: var(--pb-font-h2);
+}
 .armed {
   animation: armed-pulse 0.6s var(--pb-ease) infinite alternate;
 }
@@ -207,17 +210,28 @@
 .focusMany .focusMain {
   max-width: min(100%, max(200px, calc((100dvh - 470px) / 1.15)));
 }
+/* A tablet: the intro card need not fill 1000 px; 520 px reads like a card, not a poster. */
+@media (min-width: 700px) {
+  .focusMain,
+  .focusMany .focusMain {
+    max-width: min(520px, calc((100dvh - 330px) / 1.15));
+  }
+}
 /* A short phone (an SE, 568 px): a smaller main card and thumbnails so both stay in view. */
 @media (max-height: 640px) {
   .focusMany .focusMain {
     max-width: min(100%, max(168px, calc((100dvh - 430px) / 1.15)));
   }
-  .thumbs {
-    --pb-thumb: 76px;
-    gap: var(--pb-space-1);
-  }
+  /* One line for the nickname, no wrap: the meta line under it carries the rest. */
+  .focusMany ~ * .phrase,
   .phrase {
-    font-size: var(--pb-font-h2);
+    font-size: var(--pb-font-body);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .header {
+    min-height: 40px;
   }
 }
 .thumbs {
@@ -227,6 +241,12 @@
   justify-content: center;
   padding-top: 10px; /* room for the tag on the corner */
   --pb-thumb: 104px; /* a thumbnail never wider than this: ~125 px tall, so the row always fits */
+}
+@media (max-height: 640px) {
+  .thumbs {
+    --pb-thumb: 68px;
+    gap: var(--pb-space-1);
+  }
 }
 .thumb {
   position: relative;
@@ -320,9 +340,16 @@
 .layout_tablet {
   grid-template-columns: repeat(var(--n, 4), minmax(0, 1fr));
   gap: var(--pb-space-4);
+  justify-items: center;
 }
 .layout_tablet .slotWrap {
-  max-width: 320px;
+  max-width: 360px;
+}
+/* A tablet held upright: two by two, not four thin cards in a row over an empty screen. */
+@media (orientation: portrait) {
+  .layout_tablet {
+    grid-template-columns: repeat(min(var(--n, 4), 2), minmax(0, 1fr));
+  }
 }
 .slotWrap {
   display: grid;
@@ -365,6 +392,7 @@
 
 .wipeNote {
   margin: 0 0 var(--pb-space-1);
+  line-height: 1.2;
   font-size: var(--pb-font-caption);
   font-weight: 700;
   color: var(--pb-danger);

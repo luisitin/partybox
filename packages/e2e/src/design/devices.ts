@@ -15,7 +15,8 @@ export type DeviceId =
   | 'pixel'
   | 'galaxy'
   | 'font200'
-  | 'landscape';
+  | 'landscape'
+  | 'ipad';
 
 export interface DeviceSpec {
   id: DeviceId;
@@ -42,6 +43,12 @@ const iphoneSe = phone('iPhone SE', {
 const pixel = phone('Pixel 7', {
   viewport: { width: 412, height: 915 },
   deviceScaleFactor: 2.625,
+  isMobile: true,
+  hasTouch: true,
+});
+const ipad = phone('iPad (10th gen)', {
+  viewport: { width: 820, height: 1180 },
+  deviceScaleFactor: 2,
   isMobile: true,
   hasTouch: true,
 });
@@ -85,6 +92,7 @@ export const DEVICES: Record<DeviceId, DeviceSpec> = {
   pixel: { id: 'pixel', label: 'Pixel 7', options: pixel },
   galaxy: { id: 'galaxy', label: 'Galaxy S9+', options: galaxy },
   font200: { id: 'font200', label: 'Pixel 7 · 200 % font', options: pixel, css: FONT200_CSS },
+  ipad: { id: 'ipad', label: 'iPad 10.9 in', options: ipad },
   landscape: {
     id: 'landscape',
     label: 'iPhone 15 landscape',

@@ -23,7 +23,10 @@ export async function startServer(port: number): Promise<DevServer> {
     env: { ...process.env, PARTYBOX_DESIGN_CAPTURE: '1' },
   });
   const log: string[] = [];
-  child.stdout?.on('data', (d: Buffer) => log.push(d.toString()));
+  child.stdout?.on('data', (d: Buffer) => {
+    log.push(d.toString());
+    if (process.env.PROBE_LOG) process.stdout.write(d);
+  });
   child.stderr?.on('data', (d: Buffer) => log.push(d.toString()));
   const url = `http://localhost:${port}`;
   const deadline = Date.now() + 60_000;

@@ -138,10 +138,11 @@ export function BingoButton({
     tone = 'success';
   } else if (mine) label = 'BINGO!';
   else if (arm) {
+    const queuedHere = view.queuedCard === card;
     label =
-      view.queuePlace === 1
+      queuedHere && view.queuePlace === 1
         ? `${arm.name} is calling it… you're next`
-        : view.queuePlace > 1
+        : queuedHere && view.queuePlace > 1
           ? `${arm.name} is calling it… #${view.queuePlace} in line`
           : `${arm.name} is calling it…`;
     tone = 'neutral';

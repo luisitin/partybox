@@ -48,7 +48,6 @@ function PlayCard({
     return (
       <div className={`${styles.slot} pb-pop`}>
         {heading}
-        <p className={styles.wipeNote}>Card wiped — re-daub from memory when play resumes.</p>
         <Card
           numbers={claim.card}
           daubs={claim.daubs}
@@ -106,7 +105,7 @@ export function Thumbnails({
       {cards.map((numbers, c) => {
         const won = view.phaseId !== 'intro' && view.won.includes(c);
         const cur = c === marked;
-        const tag = cur ? markLabel : spent.includes(c) ? 'swapped' : null;
+        const tag = won ? 'BINGO ✓' : cur ? markLabel : spent.includes(c) ? 'swapped' : null;
         return (
           <button
             type="button"

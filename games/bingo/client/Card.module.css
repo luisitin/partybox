@@ -373,3 +373,20 @@ button.cell:focus-visible {
 .iconOn {
   background: var(--pb-accent-2-fill);
 }
+
+/* A thumbnail-sized card (a short phone's Focus thumbnails, ≤ 80 px): the cells stay square and the
+   numbers shrink to fit rather than pushing the rows taller than they are wide. */
+@container (max-width: 80px) {
+  .compact .letter {
+    font-size: 7px;
+  }
+  .compact .number {
+    font-size: 6px;
+  }
+  .compact .free .number {
+    font-size: 5px;
+  }
+  .compact .cell {
+    border-width: 1px;
+  }
+}

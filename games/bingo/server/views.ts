@@ -94,6 +94,8 @@ export interface BingoControllerView extends ControllerView, Common {
   menuOpen: boolean;
   /** I tapped BINGO! while someone else had dibs: my place in the queue (1 = next), 0 = not queued. */
   queuePlace: number;
+  /** The card I queued with (null when not queued): only its button says "you're next". */
+  queuedCard: number | null;
   /** The phone says why the button is off right after your own failed claim. */
   waitingForCall: boolean;
   /** Spectators only (players must remember). */
@@ -216,6 +218,7 @@ export function controllerView(
         : [],
     menuOpen: state.round.menus.includes(playerId),
     queuePlace: state.round.queue.findIndex((q) => q.playerId === playerId) + 1,
+    queuedCard: state.round.queue.find((q) => q.playerId === playerId)?.card ?? null,
     waitingForCall:
       player &&
       (state.phase.id === 'play' || state.phase.id === 'check') &&
