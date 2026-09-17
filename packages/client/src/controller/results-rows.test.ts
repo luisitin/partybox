@@ -49,7 +49,7 @@ describe('winnerLineFor', () => {
       ],
     );
     expect(winnerLineFor(shared, 'Sam')).toBe('You tie for first! 🏆');
-    expect(winnerLineFor(shared, 'Kenji')).toBe('Sam & Priya win!');
+    expect(winnerLineFor(shared, 'Kenji')).toBe('Priya & Sam win!');
   });
   it('calls an all-way tie a tie for everyone', () => {
     const all = room(
