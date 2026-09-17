@@ -109,10 +109,10 @@ export async function bingoLine(
   for (let i = 0; i < 70; i += 1) {
     const s = (await api.state()).room?.game?.state as unknown as {
       phase: { id: string };
-      round: { deck: number[]; drawn: number; cards: Record<string, number[]> };
+      round: { deck: number[]; drawn: number; cards: Record<string, number[][]> };
     };
     if (s.phase.id !== 'play') break;
-    const card = s.round.cards[vipId] ?? [];
+    const card = s.round.cards[vipId]?.[0] ?? [];
     const called = new Set(s.round.deck.slice(0, s.round.drawn));
     const line = LINES.find((l) => l.every((k) => k === 12 || called.has(card[k] ?? -1)));
     if (line) return { line, card };

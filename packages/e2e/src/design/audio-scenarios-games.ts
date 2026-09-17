@@ -24,7 +24,7 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
   void pev;
   void bingoLine;
   void joinViaForm;
-  void settle;
+
   void pages;
   // ── D. Bingo ────────────────────────────────────────────────────────────────────────
   T.section('D · Bingo: music set, the caller, a wrong claim, a bingo, keep going, results');
@@ -77,8 +77,10 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
       !(await T.between(vip.page, 'D1', 'D2')).some((e) => e.kind === 'speak'),
     '',
   );
-  // wrong claim from p2
-  await p2.page.getByRole('button', { name: /^bingo!$/i }).click();
+  // wrong claim from p2: two taps (arm, then claim)
+  await p2.page.getByRole('button', { name: /^bingo! card 1$/i }).click();
+  await settle(250);
+  await p2.page.getByRole('button', { name: /tap again to claim/i }).dispatchEvent('click');
   // The reveal: drop 0.7 s, five turns (220 ms), 0.4 s, the rest 0.9 s, 0.7 s hold, 0.6 s settle.
   await settle(6000);
   await T.mark('D3');
@@ -154,8 +156,10 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
       .click();
   }
   await settle(300);
+  await vip.page.getByRole('button', { name: /^bingo! card 1$/i }).click();
+  await settle(250);
   await T.mark('D7');
-  await vip.page.getByRole('button', { name: /^bingo!$/i }).click();
+  await vip.page.getByRole('button', { name: /tap again to claim/i }).dispatchEvent('click');
   await settle(6000);
   await T.mark('D8');
   evs = await T.between(tv, 'D7', 'D8');

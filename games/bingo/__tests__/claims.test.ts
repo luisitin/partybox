@@ -32,6 +32,7 @@ describe('two taps to claim, with dibs', () => {
     expect(s.round.arm?.playerId).toBe('b');
     expect(s.round.queue.map((q) => q.playerId)).toEqual(['a', 'c']);
     expect(game.controllerView(s, 'a').queuePlace).toBe(1);
+    expect(game.controllerView(s, 'a').queuedCard).toBe(0);
     expect(game.controllerView(s, 'c').queuePlace).toBe(2);
     // Ana's second tap while Ben holds dibs does nothing (she is already queued).
     expect(input(s, 'a', { type: 'bingo', card: 0 }, t + 300)).toBe(s);
