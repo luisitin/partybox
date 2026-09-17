@@ -747,11 +747,13 @@
         <span class="eyebrow">6 · Music by stage</span>
         <h2>Relaxed beds, one per stage</h2>
         <p>
-          Decided so far: the read-out chime is <strong>B (two-note pluck)</strong>, and judging
-          gets the <strong>marimba ostinato</strong>. Below is my recommendation for every other
-          stage, each with one alternative. All loops are synthesized in the browser at the level
-          the TV would use; the read-out chime plays over whichever bed is running (press ▶ Play on
-          stage 2 while a bed runs). Start one bed at a time.
+          <strong>Now live on the TV:</strong> the read-out chime is B (two-note pluck), and the
+          beds play by stage exactly as the table says — warm groove across the round card, the
+          picking and the result; Late night under the read-out; the marimba ostinato while the room
+          judges; silence on the results screen. Soft bossa stays here as the alternative for the
+          picking stage. All loops are synthesized in the browser at the level the TV would use; the
+          read-out chime plays over whichever bed is running (press ▶ Play on stage 2 while a bed
+          runs). Start one bed at a time.
         </p>
       </div>
     </div>
@@ -804,10 +806,10 @@
     </div>
     <div class="two" id="musicgrid"></div>
     <p class="note">
-      Beds pause and resume rather than restart when a stage flips, cross-fade over 1.5 s, and duck
-      by half while a chime plays. Since you picked a synthesized bed, the plan is to generate all
-      beds in the browser the way the chimes are (no audio files, exact control over level and
-      tempo); say if you would rather have recorded tracks for the relaxed ones.
+      Implemented as heard here: beds are generated on the TV in the browser (no audio files),
+      cross-fade over 1.5 s, resume where they left off when a stage comes back, hold during a
+      pause, duck by half under every chime, and follow the TV mute. Levels: warm 22 %, late night
+      18 %, marimba 20 %. Say if any bed should be louder, quieter, faster or swapped for the bossa.
     </p>
   </section>
 
@@ -961,7 +963,10 @@
         Are the three result beats (0 / 600 / 1200 ms) too slow for a room that already saw the
         cards?
       </li>
-      <li>Music: which bed for intro + picking, and is "Late night" right under the read-out?</li>
+      <li>
+        Music: keep the warm groove for intro + picking, or switch to the soft bossa? Is "Late
+        night" right under the read-out?
+      </li>
     </ol>
   </section>
 </div>
