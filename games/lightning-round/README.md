@@ -54,7 +54,7 @@ player id): **Lightning fingers** = lowest average time over correct answers (�
 
 ## Content
 
-`content/questions.json` — 216 original questions, 27 per category (geography, science, history,
+`content/questions.json` — 256 original questions, 32 per category (geography, science, history,
 arts-and-literature, sports, food-and-drink, nature, language), 88 easy / 80 medium / 48 hard: `id`,
 `category`, `difficulty`, `question`, four distinct `choices`, `answerIndex`, `source`. Widely documented,
 non-time-sensitive, family-friendly. `content/schema.ts` enforces ≥ 200 items, ≥ 6 categories, unique ids.

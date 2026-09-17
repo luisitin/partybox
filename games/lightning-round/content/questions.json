@@ -1998,6 +1998,366 @@
       "choices": ["Onomatopoeia", "Assonance", "Euphemism", "Alliteration"],
       "answerIndex": 0,
       "source": "Widely documented; e.g. Merriam-Webster dictionary entry on onomatopoeia"
+    },
+    {
+      "id": "geo-028",
+      "category": "geography",
+      "difficulty": "easy",
+      "question": "Which country has the largest population in South America?",
+      "choices": ["Argentina", "Colombia", "Brazil", "Peru"],
+      "answerIndex": 2,
+      "source": "Widely documented; e.g. Encyclopaedia Britannica entry on Brazil"
+    },
+    {
+      "id": "geo-029",
+      "category": "geography",
+      "difficulty": "easy",
+      "question": "Rome is the capital of which country?",
+      "choices": ["Spain", "Greece", "Italy", "Portugal"],
+      "answerIndex": 2,
+      "source": "Widely documented; e.g. Encyclopaedia Britannica entry on Rome"
+    },
+    {
+      "id": "geo-030",
+      "category": "geography",
+      "difficulty": "medium",
+      "question": "Which mountain range separates France from Spain?",
+      "choices": ["The Alps", "The Pyrenees", "The Apennines", "The Carpathians"],
+      "answerIndex": 1,
+      "source": "Widely documented; e.g. Encyclopaedia Britannica entry on the Pyrenees"
+    },
+    {
+      "id": "geo-031",
+      "category": "geography",
+      "difficulty": "medium",
+      "question": "Which country has the most islands in the world?",
+      "choices": ["Indonesia", "Philippines", "Sweden", "Canada"],
+      "answerIndex": 2,
+      "source": "Widely documented; e.g. national statistics of Sweden (≈ 267,000 islands)"
+    },
+    {
+      "id": "geo-032",
+      "category": "geography",
+      "difficulty": "hard",
+      "question": "Which is the only capital city located on the equator?",
+      "choices": ["Nairobi", "Quito", "Singapore", "Kampala"],
+      "answerIndex": 1,
+      "source": "Widely documented; e.g. Encyclopaedia Britannica entry on Quito"
+    },
+    {
+      "id": "sci-028",
+      "category": "science",
+      "difficulty": "easy",
+      "question": "What is the centre of an atom called?",
+      "choices": ["Electron", "Nucleus", "Proton", "Orbit"],
+      "answerIndex": 1,
+      "source": "Widely documented; e.g. Encyclopaedia Britannica entry on the atomic nucleus"
+    },
+    {
+      "id": "sci-029",
+      "category": "science",
+      "difficulty": "easy",
+      "question": "Which vitamin does the skin make when exposed to sunlight?",
+      "choices": ["Vitamin A", "Vitamin C", "Vitamin D", "Vitamin K"],
+      "answerIndex": 2,
+      "source": "Widely documented; e.g. Encyclopaedia Britannica entry on vitamin D"
+    },
+    {
+      "id": "sci-030",
+      "category": "science",
+      "difficulty": "medium",
+      "question": "What is the most abundant element in the universe?",
+      "choices": ["Oxygen", "Carbon", "Helium", "Hydrogen"],
+      "answerIndex": 3,
+      "source": "Widely documented; e.g. Encyclopaedia Britannica entry on hydrogen"
+    },
+    {
+      "id": "sci-031",
+      "category": "science",
+      "difficulty": "medium",
+      "question": "Sound cannot travel through which of these?",
+      "choices": ["Water", "Steel", "A vacuum", "Air"],
+      "answerIndex": 2,
+      "source": "Widely documented; e.g. Encyclopaedia Britannica entry on sound waves"
+    },
+    {
+      "id": "sci-032",
+      "category": "science",
+      "difficulty": "hard",
+      "question": "What is the half-life of carbon-14, to the nearest thousand years?",
+      "choices": ["1,000 years", "6,000 years", "12,000 years", "50,000 years"],
+      "answerIndex": 1,
+      "source": "Widely documented; carbon-14 half-life ≈ 5,730 years (e.g. Encyclopaedia Britannica)"
+    },
+    {
+      "id": "his-028",
+      "category": "history",
+      "difficulty": "easy",
+      "question": "Which country was the first to send a human into space?",
+      "choices": ["United States", "Soviet Union", "China", "Germany"],
+      "answerIndex": 1,
+      "source": "Widely documented; e.g. Encyclopaedia Britannica entry on Yuri Gagarin (1961)"
+    },
+    {
+      "id": "his-029",
+      "category": "history",
+      "difficulty": "easy",
+      "question": "The ancient Olympic Games were held in which country?",
+      "choices": ["Italy", "Egypt", "Greece", "Turkey"],
+      "answerIndex": 2,
+      "source": "Widely documented; e.g. Encyclopaedia Britannica entry on the ancient Olympic Games"
+    },
+    {
+      "id": "his-030",
+      "category": "history",
+      "difficulty": "medium",
+      "question": "Which empire was ruled by Suleiman the Magnificent?",
+      "choices": ["Mughal Empire", "Ottoman Empire", "Safavid Empire", "Byzantine Empire"],
+      "answerIndex": 1,
+      "source": "Widely documented; e.g. Encyclopaedia Britannica entry on Süleyman I"
+    },
+    {
+      "id": "his-031",
+      "category": "history",
+      "difficulty": "medium",
+      "question": "In which year did the Chernobyl nuclear disaster occur?",
+      "choices": ["1979", "1986", "1991", "1974"],
+      "answerIndex": 1,
+      "source": "Widely documented; e.g. Encyclopaedia Britannica entry on the Chernobyl disaster"
+    },
+    {
+      "id": "his-032",
+      "category": "history",
+      "difficulty": "hard",
+      "question": "Who was the first emperor of a unified China?",
+      "choices": ["Kublai Khan", "Qin Shi Huang", "Sun Yat-sen", "Wu Zetian"],
+      "answerIndex": 1,
+      "source": "Widely documented; e.g. Encyclopaedia Britannica entry on Qin Shi Huang"
+    },
+    {
+      "id": "art-028",
+      "category": "arts-and-literature",
+      "difficulty": "easy",
+      "question": "Which fictional detective lives at 221B Baker Street?",
+      "choices": ["Hercule Poirot", "Sherlock Holmes", "Philip Marlowe", "Sam Spade"],
+      "answerIndex": 1,
+      "source": "Widely documented; e.g. Encyclopaedia Britannica entry on Sherlock Holmes"
+    },
+    {
+      "id": "art-029",
+      "category": "arts-and-literature",
+      "difficulty": "easy",
+      "question": "How many musicians play in a string quartet?",
+      "choices": ["Two", "Three", "Four", "Five"],
+      "answerIndex": 2,
+      "source": "Widely documented; e.g. Encyclopaedia Britannica entry on the string quartet"
+    },
+    {
+      "id": "art-030",
+      "category": "arts-and-literature",
+      "difficulty": "medium",
+      "question": "Which artist is famous for painting soup cans in the 1960s?",
+      "choices": ["Jackson Pollock", "Andy Warhol", "Roy Lichtenstein", "Mark Rothko"],
+      "answerIndex": 1,
+      "source": "Widely documented; e.g. Encyclopaedia Britannica entry on Andy Warhol"
+    },
+    {
+      "id": "art-031",
+      "category": "arts-and-literature",
+      "difficulty": "medium",
+      "question": "Who wrote \"The Great Gatsby\"?",
+      "choices": ["Ernest Hemingway", "F. Scott Fitzgerald", "John Steinbeck", "William Faulkner"],
+      "answerIndex": 1,
+      "source": "Widely documented; e.g. Encyclopaedia Britannica entry on F. Scott Fitzgerald"
+    },
+    {
+      "id": "art-032",
+      "category": "arts-and-literature",
+      "difficulty": "hard",
+      "question": "Which novel opens with the line \"Call me Ishmael\"?",
+      "choices": ["The Old Man and the Sea", "Moby-Dick", "Treasure Island", "Robinson Crusoe"],
+      "answerIndex": 1,
+      "source": "Widely documented; the opening line of Moby-Dick (Herman Melville, 1851)"
+    },
+    {
+      "id": "spo-028",
+      "category": "sports",
+      "difficulty": "easy",
+      "question": "How many players are on a basketball team on court at once?",
+      "choices": ["Four", "Five", "Six", "Seven"],
+      "answerIndex": 1,
+      "source": "Widely documented; e.g. FIBA official basketball rules"
+    },
+    {
+      "id": "spo-029",
+      "category": "sports",
+      "difficulty": "easy",
+      "question": "In which sport do competitors use a pommel horse?",
+      "choices": ["Equestrian", "Gymnastics", "Fencing", "Weightlifting"],
+      "answerIndex": 1,
+      "source": "Widely documented; e.g. Encyclopaedia Britannica entry on gymnastics"
+    },
+    {
+      "id": "spo-030",
+      "category": "sports",
+      "difficulty": "medium",
+      "question": "How many minutes is a regulation soccer match, excluding stoppage time?",
+      "choices": ["80", "90", "100", "120"],
+      "answerIndex": 1,
+      "source": "Widely documented; e.g. FIFA Laws of the Game"
+    },
+    {
+      "id": "spo-031",
+      "category": "sports",
+      "difficulty": "medium",
+      "question": "Which country has won the most FIFA World Cup titles?",
+      "choices": ["Germany", "Italy", "Argentina", "Brazil"],
+      "answerIndex": 3,
+      "source": "Widely documented; e.g. FIFA World Cup records (Brazil, five titles)"
+    },
+    {
+      "id": "spo-032",
+      "category": "sports",
+      "difficulty": "hard",
+      "question": "In golf, what is a score of two under par on a single hole called?",
+      "choices": ["Birdie", "Eagle", "Albatross", "Bogey"],
+      "answerIndex": 1,
+      "source": "Widely documented; e.g. The R&A rules and glossary of golf"
+    },
+    {
+      "id": "foo-028",
+      "category": "food-and-drink",
+      "difficulty": "easy",
+      "question": "Which drink is made from fermented grapes?",
+      "choices": ["Beer", "Cider", "Wine", "Mead"],
+      "answerIndex": 2,
+      "source": "Widely documented; e.g. Encyclopaedia Britannica entry on wine"
+    },
+    {
+      "id": "foo-029",
+      "category": "food-and-drink",
+      "difficulty": "easy",
+      "question": "Which vegetable is the main ingredient of coleslaw?",
+      "choices": ["Lettuce", "Cabbage", "Spinach", "Celery"],
+      "answerIndex": 1,
+      "source": "Widely documented; e.g. Encyclopaedia Britannica entry on coleslaw"
+    },
+    {
+      "id": "foo-030",
+      "category": "food-and-drink",
+      "difficulty": "medium",
+      "question": "Which country is the origin of the dish pad thai?",
+      "choices": ["Vietnam", "Thailand", "Malaysia", "Laos"],
+      "answerIndex": 1,
+      "source": "Widely documented; e.g. Encyclopaedia Britannica entry on Thai cuisine"
+    },
+    {
+      "id": "foo-031",
+      "category": "food-and-drink",
+      "difficulty": "medium",
+      "question": "What is the main flavouring of pesto alla genovese?",
+      "choices": ["Parsley", "Mint", "Basil", "Coriander"],
+      "answerIndex": 2,
+      "source": "Widely documented; e.g. Encyclopaedia Britannica entry on pesto"
+    },
+    {
+      "id": "foo-032",
+      "category": "food-and-drink",
+      "difficulty": "hard",
+      "question": "Which country produces the most coffee in the world?",
+      "choices": ["Colombia", "Vietnam", "Ethiopia", "Brazil"],
+      "answerIndex": 3,
+      "source": "Widely documented; e.g. International Coffee Organization production statistics"
+    },
+    {
+      "id": "nat-028",
+      "category": "nature",
+      "difficulty": "easy",
+      "question": "Which season comes after winter?",
+      "choices": ["Summer", "Autumn", "Spring", "Monsoon"],
+      "answerIndex": 2,
+      "source": "Widely documented; the order of the temperate seasons"
+    },
+    {
+      "id": "nat-029",
+      "category": "nature",
+      "difficulty": "easy",
+      "question": "What do bees make from nectar?",
+      "choices": ["Wax", "Honey", "Pollen", "Royal jelly"],
+      "answerIndex": 1,
+      "source": "Widely documented; e.g. Encyclopaedia Britannica entry on honey"
+    },
+    {
+      "id": "nat-030",
+      "category": "nature",
+      "difficulty": "medium",
+      "question": "Which big cat is the largest living species?",
+      "choices": ["Lion", "Jaguar", "Tiger", "Leopard"],
+      "answerIndex": 2,
+      "source": "Widely documented; e.g. Encyclopaedia Britannica entry on the tiger"
+    },
+    {
+      "id": "nat-031",
+      "category": "nature",
+      "difficulty": "medium",
+      "question": "What is the largest type of shark?",
+      "choices": ["Great white shark", "Hammerhead shark", "Whale shark", "Tiger shark"],
+      "answerIndex": 2,
+      "source": "Widely documented; e.g. Encyclopaedia Britannica entry on the whale shark"
+    },
+    {
+      "id": "nat-032",
+      "category": "nature",
+      "difficulty": "hard",
+      "question": "Which bird is known for the longest annual migration, pole to pole?",
+      "choices": ["Bar-tailed godwit", "Arctic tern", "Swift", "Albatross"],
+      "answerIndex": 1,
+      "source": "Widely documented; e.g. Encyclopaedia Britannica entry on the Arctic tern"
+    },
+    {
+      "id": "lan-028",
+      "category": "language",
+      "difficulty": "easy",
+      "question": "What is the opposite of the word \"generous\"?",
+      "choices": ["Kind", "Stingy", "Warm", "Open"],
+      "answerIndex": 1,
+      "source": "Widely documented; e.g. Merriam-Webster thesaurus entry on generous"
+    },
+    {
+      "id": "lan-029",
+      "category": "language",
+      "difficulty": "easy",
+      "question": "What is the German word for \"yes\"?",
+      "choices": ["Nein", "Ja", "Oui", "Sí"],
+      "answerIndex": 1,
+      "source": "Widely documented; e.g. any German–English dictionary"
+    },
+    {
+      "id": "lan-030",
+      "category": "language",
+      "difficulty": "medium",
+      "question": "Which language is the official language of Brazil?",
+      "choices": ["Spanish", "Portuguese", "French", "Italian"],
+      "answerIndex": 1,
+      "source": "Widely documented; e.g. Encyclopaedia Britannica entry on Brazil"
+    },
+    {
+      "id": "lan-031",
+      "category": "language",
+      "difficulty": "medium",
+      "question": "What is the study of the origin of words called?",
+      "choices": ["Phonetics", "Etymology", "Syntax", "Semantics"],
+      "answerIndex": 1,
+      "source": "Widely documented; e.g. Merriam-Webster dictionary entry on etymology"
+    },
+    {
+      "id": "lan-032",
+      "category": "language",
+      "difficulty": "hard",
+      "question": "Which of these is a word borrowed into English from Arabic?",
+      "choices": ["Algebra", "Piano", "Ballet", "Kayak"],
+      "answerIndex": 0,
+      "source": "Widely documented; e.g. Merriam-Webster dictionary entry on algebra (from Arabic al-jabr)"
     }
   ]
 }
