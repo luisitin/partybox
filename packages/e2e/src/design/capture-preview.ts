@@ -60,12 +60,13 @@ async function main(): Promise<void> {
           const suffix = theme === 'night' ? '' : `-${theme}`;
           await tv.goto(`${server.url}/preview/${game}/${fixture}?view=tv&theme=${theme}`);
           await tv.waitForSelector('[data-surface="tv"]');
-          await shots.shot(tv, {
-            group: game,
-            phase: `${fixture}${suffix}`,
-            device: 'tv',
-            role: 'stage',
-          });
+          // The TV stage settles longer than a phone: a result lands in beats (Blanks names the
+          // winner at 1.2 s) and a staggered grid is still arriving at 350 ms (review-loop #117).
+          await shots.shot(
+            tv,
+            { group: game, phase: `${fixture}${suffix}`, device: 'tv', role: 'stage' },
+            { settleMs: 1500 },
+          );
           for (const [device, page] of phonePages) {
             for (const [i, playerId] of playerIds.entries()) {
               await page.goto(
