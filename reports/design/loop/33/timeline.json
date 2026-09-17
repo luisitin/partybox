@@ -1,0 +1,105 @@
+{
+  "pass": "33",
+  "game": "wisecrack",
+  "players": 4,
+  "scenario": "reconnect",
+  "focus": "phone",
+  "started": "23:56:22.469",
+  "tvVideoT0": "23:56:17.786",
+  "changes": [
+    {
+      "t": 1789602982476,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789602987467,
+      "at": "23:56:22.476",
+      "sinceStartS": 0,
+      "videoS": 4.7
+    },
+    {
+      "t": 1789602987489,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789603027471,
+      "at": "23:56:27.489",
+      "sinceStartS": 5,
+      "videoS": 9.7
+    },
+    {
+      "t": 1789603027572,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789603047477,
+      "at": "23:57:07.572",
+      "sinceStartS": 45.1,
+      "videoS": 49.8
+    },
+    {
+      "t": 1789603031778,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789603037668,
+      "at": "23:57:11.778",
+      "sinceStartS": 49.3,
+      "videoS": 54
+    },
+    {
+      "t": 1789603037731,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789603057672,
+      "at": "23:57:17.731",
+      "sinceStartS": 55.3,
+      "videoS": 59.9
+    },
+    {
+      "t": 1789603039224,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789603045120,
+      "at": "23:57:19.224",
+      "sinceStartS": 56.8,
+      "videoS": 61.4
+    },
+    {
+      "t": 1789603045136,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789603065132,
+      "at": "23:57:25.136",
+      "sinceStartS": 62.7,
+      "videoS": 67.3
+    },
+    {
+      "t": 1789603047379,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789603053274,
+      "at": "23:57:27.379",
+      "sinceStartS": 64.9,
+      "videoS": 69.6
+    },
+    {
+      "t": 1789603053325,
+      "status": "playing",
+      "phase": "scores",
+      "deadline": 1789603061278,
+      "at": "23:57:33.325",
+      "sinceStartS": 70.9,
+      "videoS": 75.5
+    },
+    {
+      "t": 1789603061381,
+      "status": "results",
+      "phase": "results",
+      "deadline": null,
+      "at": "23:57:41.381",
+      "sinceStartS": 78.9,
+      "videoS": 83.6
+    }
+  ],
+  "notes": [
+    "2 extra phones instead of bots (manifest.supportsBots is not true)",
+    "reconnect: Sam dropped for 8 s at 2026-09-16T23:56:31.588Z in answer"
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "pass": "33",
+  "game": "wisecrack",
+  "players": 4,
+  "scenario": "reconnect",
+  "focus": "phone",
+  "started": "00:02:05.622",
+  "tvVideoT0": "00:02:00.781",
+  "changes": [
+    {
+      "t": 1789603325625,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789603330618,
+      "at": "00:02:05.625",
+      "sinceStartS": 0,
+      "videoS": 4.8
+    },
+    {
+      "t": 1789603330647,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789603370619,
+      "at": "00:02:10.647",
+      "sinceStartS": 5,
+      "videoS": 9.9
+    },
+    {
+      "t": 1789603370716,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789603390620,
+      "at": "00:02:50.716",
+      "sinceStartS": 45.1,
+      "videoS": 49.9
+    },
+    {
+      "t": 1789603372096,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789603377983,
+      "at": "00:02:52.096",
+      "sinceStartS": 46.5,
+      "videoS": 51.3
+    },
+    {
+      "t": 1789603378030,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789603397992,
+      "at": "00:02:58.030",
+      "sinceStartS": 52.4,
+      "videoS": 57.2
+    },
+    {
+      "t": 1789603382213,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789603388108,
+      "at": "00:03:02.213",
+      "sinceStartS": 56.6,
+      "videoS": 61.4
+    },
+    {
+      "t": 1789603388180,
+      "status": "playing",
+      "phase": "scores",
+      "deadline": 1789603396115,
+      "at": "00:03:08.180",
+      "sinceStartS": 62.6,
+      "videoS": 67.4
+    },
+    {
+      "t": 1789603396175,
+      "status": "results",
+      "phase": "results",
+      "deadline": null,
+      "at": "00:03:16.175",
+      "sinceStartS": 70.6,
+      "videoS": 75.4
+    }
+  ],
+  "notes": [
+    "2 extra phones instead of bots (manifest.supportsBots is not true)",
+    "reconnect: Sam dropped for 8 s at 2026-09-17T00:02:14.754Z in answer"
+  ]
+}
