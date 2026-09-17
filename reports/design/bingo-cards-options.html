@@ -605,7 +605,7 @@
   </div>
   <h1>Bingo Card Layouts</h1>
   <p class="lede">
-    Version 6 — every decision so far, drawn; the theme buttons above repaint every mock-up with
+    Version 7 — every decision so far, drawn; the theme buttons above repaint every mock-up with
     PartyBox's real palettes. Nothing here is coded yet beyond the baseline grid. Read top to
     bottom: the default ("Focus"), the card-style switcher and its pause, each style as you asked
     for it, then the confirmed picks. A few questions sit at the end.
@@ -657,14 +657,25 @@
       <tr>
         <td>BINGO! checks</td>
         <td>
-          <b>Only the card that is up</b> (the main card in Focus), never "your best card". The
-          server sends the up card's index with the claim; if the wrong card is up, that is on the
-          player.
-          <i
-            >Open point for Grid / Strip / Stack / Side by side, where no card is "up": I propose
-            the last card you tapped, marked with a gold border — say if you want each card to carry
-            its own small BINGO! button instead.</i
-          >
+          <b>Only the card the button belongs to</b>, never "your best card". Focus: the one BINGO!
+          button checks the card that is up; wrong card up is on the player. Grid / Strip / Stack /
+          Side by side: <b>every card carries its own small BINGO! button</b>.
+        </td>
+      </tr>
+      <tr>
+        <td>Two taps to claim</td>
+        <td>
+          First tap arms the button: it turns into "Tap again for BINGO!" for <b>3 seconds</b>, then
+          relaxes. The second tap is the claim. No accidental claims.
+        </td>
+      </tr>
+      <tr>
+        <td>Dibs</td>
+        <td>
+          The first player to arm has dibs: while their 3 s window is open, other players' first
+          taps queue behind them ("Sam is calling it… you're next"). If the first player lets it
+          lapse, the next in line gets their own 3 s window. A completed claim clears the queue; the
+          caller keeps calling during the window.
         </td>
       </tr>
       <tr>
@@ -793,6 +804,8 @@
       `<div class="phone port">${bar()}${callRow}<div class="body" style="grid-template-columns:1fr 1fr;gap:4px 6px;padding:4px">${card(3, { size: 6.5, label: 'CARD 1' })}${card(4, { size: 6.5, label: 'BINGO ✓', won: true, cls: 'dim', daubs: [3, 9] })}${card(5, { size: 6.5, label: 'CARD 3', daubs: [0, 18] })}${card(6, { size: 6.5, label: 'CARD 4', daubs: [2] })}</div><div class="foot small">BINGO!</div></div>`),
     opt(false, 'Grid · 3 cards', 'The spare slot shows the call', 'With three cards the fourth slot shows the call the way the TV does — the ball, the number, the one before — no nickname, no box around it.',
       `<div class="phone port">${bar()}<div class="body" style="grid-template-columns:1fr 1fr;gap:4px 6px;padding:4px">${card(3, { size: 6.5, label: 'CARD 1' })}${card(4, { size: 6.5, label: 'CARD 2', daubs: [3, 9] })}${card(5, { size: 6.5, label: 'CARD 3', daubs: [0, 18] })}${miniCall}</div><div class="foot small">BINGO!</div></div>`),
+    opt(false, 'Grid · claiming', 'A BINGO! under every card', 'Each card has its own small button. The first tap arms it — "Tap again for BINGO!" for 3 s — the second tap claims. While one player is armed, everyone else who taps queues behind them.',
+      `<div class="phone port">${bar()}${callRow}<div class="body" style="grid-template-columns:1fr 1fr;gap:4px 6px;padding:4px">${card(3, { size: 6.2, label: 'CARD 1' })}<div class="foot small" style="margin:0;font-size:7px;padding:3px">BINGO!</div>${card(4, { size: 6.2, label: 'CARD 2', daubs: [3, 9, 10, 11, 13, 14] })}<div class="foot small" style="margin:0;font-size:7px;padding:3px;background:var(--gold)">Tap again for BINGO! · 3</div>${card(5, { size: 6.2, label: 'CARD 3', daubs: [0, 18] })}<div class="foot small" style="margin:0;font-size:7px;padding:3px">BINGO!</div>${card(6, { size: 6.2, label: 'CARD 4', daubs: [2] })}<div class="foot small" style="margin:0;font-size:7px;padding:3px">BINGO!</div></div></div>`),
     opt(false, 'Strip · 3–4 cards', 'Your B3', 'Sideways: the cards in a row with air above and below. Landscape only.',
       `<div class="phone land">${bar()}<div class="body" style="grid-template-columns:repeat(4,1fr);gap:8px;padding:6px 12px">${card(3, { size: 5.6, label: 'CARD 1' })}${card(4, { size: 5.6, label: 'CARD 2', daubs: [3, 9] })}${card(5, { size: 5.6, label: 'CARD 3', daubs: [0, 18] })}${card(6, { size: 5.6, label: 'CARD 4', daubs: [2] })}</div><div class="foot small">BINGO!</div></div>`),
     opt(false, 'Stack · 2 cards', 'Your A3 without the labels', 'Two cards upright, one above the other, no "CARD 1 / 2" — it is implied. Portrait only.',
