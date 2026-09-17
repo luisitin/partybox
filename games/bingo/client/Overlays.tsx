@@ -95,11 +95,12 @@ export function HoldCurtain({
 export function Countdown({ resumeAt }: { resumeAt: number }): JSX.Element | null {
   const left = useSecondsLeft(resumeAt);
   if (left === null || left <= 0) return null;
+  const shown = Math.min(3, left); // a phone clock a hair behind the server would say 4 first
   return (
     <div className={styles.curtain} role="status" aria-live="assertive">
       <div>
-        <div key={left} className={`${styles.count} pb-pop`}>
-          {left}
+        <div key={shown} className={`${styles.count} pb-pop`}>
+          {shown}
         </div>
         <p className={styles.curtainLine}>get your thumbs ready</p>
       </div>
