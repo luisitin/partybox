@@ -98,6 +98,11 @@
   font-size: min(var(--pb-font-caption), 16px);
 }
 
+/* Offline: the badge may be stale and its menu cannot act; it keeps its place. */
+.vipBadgeStale {
+  opacity: 0.45;
+}
+
 .me {
   display: inline-flex;
   align-items: center;

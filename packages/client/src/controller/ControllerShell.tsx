@@ -162,13 +162,15 @@ export function ControllerShell({
           {me ? (
             <>
               {/* Offline, the badge may already be stale (the server hands the VIP over after 30 s):
-                  hide it until the connection is back and the snapshot is fresh. */}
-              {me.isVip && state.connection === 'connected' ? (
+                  it stays put but dimmed and disabled until the snapshot is fresh — unmounting it
+                  shoved the dot and avatar on every drop and return (review-loop #33). */}
+              {me.isVip ? (
                 <button
                   type="button"
-                  className={styles.vipBadge}
+                  className={`${styles.vipBadge} ${online ? '' : styles.vipBadgeStale}`}
                   onClick={() => setMenuOpen(true)}
                   aria-haspopup="dialog"
+                  disabled={!online}
                 >
                   ★ {t.vip.badge}
                 </button>
