@@ -18,13 +18,15 @@ const BEAT_AUTHORS = 1;
 const BEAT_WINNER = 2;
 
 export function winnerLine(
-  view: Pick<BlanksTvView, 'revealed' | 'winnerIds' | 'walkover'>,
+  view: Pick<BlanksTvView, 'revealed' | 'winnerIds' | 'walkover' | 'judgeMode' | 'czar'>,
 ): string {
   const winners = view.revealed.filter((r) => r.winner);
-  if (winners.length === 0)
-    return view.revealed.length === 0
-      ? 'Nobody played a card'
-      : 'No votes — nobody wins this round';
+  if (winners.length === 0) {
+    if (view.revealed.length === 0) return 'Nobody played a card';
+    if (view.judgeMode === 'czar')
+      return `${view.czar?.name ?? 'The judge'} never picked — nobody wins this round`;
+    return 'No votes — nobody wins this round';
+  }
   if (winners.some((w) => w.rando)) return 'Rando wins. Shame on all of you.';
   const names = winners.map((w) => w.name);
   if (view.walkover) return `Only ${names[0]} played — wins by default`;
@@ -33,7 +35,26 @@ export function winnerLine(
   return `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]} split it`;
 }
 
-function Author({ card, shown }: { card: RevealedCard; shown: boolean }): JSX.Element {
+/** The pill on a card with votes: "3 votes" — or, with a judge, whose pick it was ("1 vote" from a
+ *  lone judge read as a poor turnout, review-loop #114). Null when nobody voted for it. */
+export function votesLabel(
+  view: Pick<BlanksTvView, 'judgeMode' | 'czar'>,
+  votes: number,
+): string | null {
+  if (votes === 0) return null;
+  if (view.judgeMode === 'czar') return view.czar ? `${view.czar.name}'s pick` : "Judge's pick";
+  return `${votes} ${votes === 1 ? 'vote' : 'votes'}`;
+}
+
+function Author({
+  card,
+  shown,
+  label,
+}: {
+  card: RevealedCard;
+  shown: boolean;
+  label: string | null;
+}): JSX.Element {
   return (
     <span
       className={`${styles.author} ${shown ? styles.rise : styles.pending}`}
@@ -41,11 +62,7 @@ function Author({ card, shown }: { card: RevealedCard; shown: boolean }): JSX.El
     >
       <Avatar avatarId={card.avatarId} size="var(--pb-chip-size)" />
       <span className={styles.authorName}>{card.name}</span>
-      {card.votes > 0 ? (
-        <span className={styles.voteCount}>
-          {card.votes} {card.votes === 1 ? 'vote' : 'votes'}
-        </span>
-      ) : null}
+      {label ? <span className={styles.voteCount}>{label}</span> : null}
     </span>
   );
 }
@@ -132,7 +149,7 @@ export function TvResult({ view }: Props): JSX.Element {
               winner={named}
               className={styles.stageCard}
             >
-              <Author card={w} shown={beat >= BEAT_AUTHORS} />
+              <Author card={w} shown={beat >= BEAT_AUTHORS} label={votesLabel(view, w.votes)} />
               <span
                 className={`${styles.plusOne} ${named && !w.rando ? styles.pop : styles.pending}`}
               >
@@ -157,10 +174,8 @@ export function TvResult({ view }: Props): JSX.Element {
               </span>
               <Avatar avatarId={c.avatarId} size="var(--pb-chip-size)" />
               <span className={styles.authorName}>{c.name}</span>
-              {c.votes > 0 ? (
-                <span className={styles.voteCount}>
-                  {c.votes} {c.votes === 1 ? 'vote' : 'votes'}
-                </span>
+              {votesLabel(view, c.votes) ? (
+                <span className={styles.voteCount}>{votesLabel(view, c.votes)}</span>
               ) : null}
             </li>
           ))}
