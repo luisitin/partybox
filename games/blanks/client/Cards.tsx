@@ -75,7 +75,11 @@ export function FilledCard({
               {s.text}
             </mark>
           ) : (
-            <span key={i}>{s.text}</span>
+            // A bare space between two whites ("____, ____") becomes a visible gap, so two
+            // paper marks never read as one slab (review-loop #99).
+            <span key={i} className={s.text.trim() === '' ? styles.gap : undefined}>
+              {s.text}
+            </span>
           ),
         )}
       </p>

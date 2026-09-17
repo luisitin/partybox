@@ -152,12 +152,12 @@ describe('fill', () => {
     );
   });
 
-  it('keeps a comma between two adjacent blanks in the black text', () => {
+  it('two adjacent blanks each carry their comma and leave a bare space between them', () => {
     const { segments } = fill('Regrets: ____, ____, and ____.', ['A.', 'B.', 'C.']);
     expect(segments.map((s) => `${s.kind}:${s.text}`)).toEqual([
       'text:Regrets: ',
-      'fill:A',
-      'text:, ',
+      'fill:A,',
+      'text: ',
       'fill:B,',
       'text: and ',
       'fill:C.',

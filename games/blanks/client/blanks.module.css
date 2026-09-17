@@ -66,6 +66,12 @@
 }
 
 /* A question card's answers, listed under it at the sentence's own size. */
+/* The bare space between two adjacent whites, made wide enough to see. */
+.gap {
+  display: inline-block;
+  width: 0.5em;
+}
+
 .extras {
   list-style: none;
   margin: 0;
