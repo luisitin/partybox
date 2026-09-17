@@ -73,6 +73,7 @@ From pass 35 the loop runs autonomously (owner 2026-09-16: keep simulating, fix 
 
 Cycle 4 (from pass 57): the rotation restarts with setting variants (board off, spicy phones, 2+ rounds) so the same cells show different states.
 
-| Pass | Date       | Game  | Scenario             | Focus | Evidence                  | Proposed  | Chosen | Declined |
-| ---- | ---------- | ----- | -------------------- | ----- | ------------------------- | --------- | ------ | -------- |
-| 57   | 2026-09-17 | bingo | normal-6 · board off | phone | `reports/design/loop/57/` | (pending) |        |          |
+| Pass | Date       | Game      | Scenario              | Focus | Evidence                  | Proposed          | Chosen | Declined |
+| ---- | ---------- | --------- | --------------------- | ----- | ------------------------- | ----------------- | ------ | -------- |
+| 57   | 2026-09-17 | bingo     | normal-6 · board off  | phone | `reports/design/loop/57/` | none (empty pass) | —      | —        |
+| 58   | 2026-09-17 | wisecrack | 3p · spicy · 2 rounds | phone | `reports/design/loop/58/` | (pending)         |        |          |
