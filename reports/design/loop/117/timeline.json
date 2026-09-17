@@ -1,0 +1,175 @@
+{
+  "pass": "117",
+  "game": "blanks",
+  "players": 3,
+  "scenario": "vip-leaves",
+  "focus": "tv",
+  "started": "21:11:11.104",
+  "tvVideoT0": "21:11:07.829",
+  "changes": [
+    {
+      "t": 1789679471107,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789679476098,
+      "bed": "warm",
+      "at": "21:11:11.107",
+      "sinceStartS": 0,
+      "videoS": 3.3
+    },
+    {
+      "t": 1789679476148,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789679656100,
+      "bed": "bossa",
+      "at": "21:11:16.148",
+      "sinceStartS": 5,
+      "videoS": 8.3
+    },
+    {
+      "t": 1789679512224,
+      "status": "playing",
+      "phase": "judge",
+      "deadline": 1789679611654,
+      "bed": "marimba",
+      "at": "21:11:52.224",
+      "sinceStartS": 41.1,
+      "videoS": 44.4
+    },
+    {
+      "t": 1789679513508,
+      "status": "playing",
+      "phase": "result",
+      "deadline": 1789679572762,
+      "bed": "warm",
+      "at": "21:11:53.508",
+      "sinceStartS": 42.4,
+      "videoS": 45.7
+    },
+    {
+      "t": 1789679572862,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789679577778,
+      "bed": "warm",
+      "at": "21:12:52.862",
+      "sinceStartS": 101.8,
+      "videoS": 105
+    },
+    {
+      "t": 1789679577861,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789679757778,
+      "bed": "bossa",
+      "at": "21:12:57.861",
+      "sinceStartS": 106.8,
+      "videoS": 110
+    },
+    {
+      "t": 1789679579558,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789679585233,
+      "bed": "warm",
+      "at": "21:12:59.558",
+      "sinceStartS": 108.5,
+      "videoS": 111.7
+    },
+    {
+      "t": 1789679585342,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789679590661,
+      "bed": "warm",
+      "at": "21:13:05.342",
+      "sinceStartS": 114.2,
+      "videoS": 117.5
+    },
+    {
+      "t": 1789679590695,
+      "status": "playing",
+      "phase": "judge",
+      "deadline": 1789679710669,
+      "bed": "marimba",
+      "at": "21:13:10.695",
+      "sinceStartS": 119.6,
+      "videoS": 122.9
+    },
+    {
+      "t": 1789679592400,
+      "status": "playing",
+      "phase": "result",
+      "deadline": 1789679652304,
+      "bed": "warm",
+      "at": "21:13:12.400",
+      "sinceStartS": 121.3,
+      "videoS": 124.6
+    },
+    {
+      "t": 1789679652392,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789679657319,
+      "bed": "warm",
+      "at": "21:14:12.392",
+      "sinceStartS": 181.3,
+      "videoS": 184.6
+    },
+    {
+      "t": 1789679657369,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789679837330,
+      "bed": "bossa",
+      "at": "21:14:17.369",
+      "sinceStartS": 186.3,
+      "videoS": 189.5
+    },
+    {
+      "t": 1789679659365,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789679664478,
+      "bed": "warm",
+      "at": "21:14:19.365",
+      "sinceStartS": 188.3,
+      "videoS": 191.5
+    },
+    {
+      "t": 1789679664501,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789679670234,
+      "bed": "warm",
+      "at": "21:14:24.501",
+      "sinceStartS": 193.4,
+      "videoS": 196.7
+    },
+    {
+      "t": 1789679670336,
+      "status": "playing",
+      "phase": "judge",
+      "deadline": 1789679790248,
+      "bed": "marimba",
+      "at": "21:14:30.336",
+      "sinceStartS": 199.2,
+      "videoS": 202.5
+    },
+    {
+      "t": 1789679672374,
+      "status": "playing",
+      "phase": "result",
+      "deadline": 1789679732332,
+      "bed": "warm",
+      "at": "21:14:32.374",
+      "sinceStartS": 201.3,
+      "videoS": 204.5
+    }
+  ],
+  "notes": [
+    "vip-leaves: Sam (VIP) closed the page in answer",
+    "budget reached while playing; skipped to results"
+  ]
+}
