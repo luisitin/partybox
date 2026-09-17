@@ -6,6 +6,7 @@
 import { enterPhase, isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { toggleDaub } from '../cards';
+import { clearClaims, setMenu } from '../claims';
 import { CHECK_MS } from '../types';
 import type { Claim, Input, State, Transition } from '../types';
 
@@ -14,7 +15,7 @@ export function enterCheck(state: State, now: number, claim: Claim): State {
   const mine = round.daubs[claim.playerId] ?? [];
   const wiped = mine.map((d, i) => (i === claim.cardIndex ? [] : d));
   return enterPhase(
-    {
+    clearClaims({
       ...state,
       round: {
         ...round,
@@ -22,7 +23,7 @@ export function enterCheck(state: State, now: number, claim: Claim): State {
         daubs: { ...round.daubs, [claim.playerId]: wiped },
         waitForCall: { ...round.waitForCall, [claim.playerId]: round.drawn + 1 },
       },
-    },
+    }),
     'check',
     now,
     CHECK_MS,
@@ -34,6 +35,7 @@ export function reduceCheck(state: State, event: GameEvent<Input>, next: Transit
     // Daubing stays open; a second BINGO! during a check is ignored (one check at a time).
     if (event.input.type === 'daub')
       return toggleDaub(state, event.playerId, event.input.card, event.input.index);
+    if (event.input.type === 'menu') return setMenu(state, event.playerId, event.input.open);
     return state;
   }
   if (isTimerFor(state, event)) return next(state, event.now);

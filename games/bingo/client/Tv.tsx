@@ -4,15 +4,42 @@
 // (server); the stage then drops the claimant's card, turns the pattern's cells in reading order
 // for the whole room, shows the rest of the card, and only then delivers the verdict: a buzzer
 // and "NOT A BINGO", or the cheer with confetti — and waits for a phone to move on.
-import { useLayoutEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 import type { JSX } from 'react';
-import { BigText, Scoreboard, Stage, useSoundApi } from '@partybox/game-sdk/ui';
+import { BigText, Scoreboard, Stage, useSecondsLeft, useSoundApi } from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
 import type { BingoTvView } from '../server/views';
 import { hushCaller, speakCall } from './caller';
 import { PatternIcon } from './Card';
 import { Call, CalledBoard, ClaimStage, rows, whichCard } from './TvParts';
 import styles from './Tv.module.css';
+
+/** "Sam is" / "Sam and Priya are" / "Sam and 2 others are". */
+function joinNames(names: string[]): string {
+  if (names.length === 1) return `${names[0]} is`;
+  if (names.length === 2) return `${names[0]} and ${names[1]} are`;
+  return `${names[0]} and ${names.length - 1} others are`;
+}
+
+/** The 3 · 2 · 1 after the last card-style menu closes: one tick per second, then the next number. */
+function Resume({ roundLabel, resumeAt }: { roundLabel: string; resumeAt: number }): JSX.Element {
+  const left = useSecondsLeft(resumeAt) ?? 0;
+  const sound = useSoundApi();
+  useEffect(() => {
+    if (left > 0) sound.play('tick');
+  }, [left, sound]);
+  return (
+    <Stage center>
+      <p className={styles.kicker}>{roundLabel} · calling resumes in</p>
+      <BigText key={left} level="display" tone="accent" className="pb-pop">
+        {Math.max(1, left)}
+      </BigText>
+      <BigText level="h2" tone="muted">
+        get your thumbs ready
+      </BigText>
+    </Stage>
+  );
+}
 
 export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
   const roundLabel = `Round ${view.round} of ${view.totalRounds}`;
@@ -47,7 +74,7 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
         <BigText level="h2">{view.patternHint}</BigText>
         {view.cardsPerPlayer > 1 ? (
           <BigText level="h2" tone="muted">
-            {view.cardsPerPlayer} cards each — BINGO! checks your best one.
+            {view.cardsPerPlayer} cards each — BINGO! checks the card you press it on.
           </BigText>
         ) : null}
         <p className={styles.programme}>
@@ -62,6 +89,25 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
   }
 
   if (view.phaseId === 'play') {
+    // A menu open somewhere holds the caller; the last one closing runs a 3 · 2 · 1 on the stage.
+    if (view.resumeAt !== null) return <Resume roundLabel={roundLabel} resumeAt={view.resumeAt} />;
+    if (view.pausedBy.length > 0)
+      return (
+        <Stage center className={styles.held}>
+          <p className={styles.kicker}>
+            {roundLabel} · call {view.callIndex} of 75
+          </p>
+          {view.current ? (
+            <div className={styles.heldCall}>
+              <Call call={view.current} big />
+            </div>
+          ) : null}
+          <BigText level="h1">⏸ {joinNames(view.pausedBy)} changing card style…</BigText>
+          <BigText level="h2" tone="muted">
+            calling resumes when they are done
+          </BigText>
+        </Stage>
+      );
     return (
       // Two chip rows (9+ players) eat ~70 px of stage: everything below tightens a notch (loop #3).
       <Stage
@@ -90,6 +136,11 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
         ) : null}
         {view.showBoard ? (
           <CalledBoard called={view.called} current={view.current?.number ?? null} />
+        ) : null}
+        {view.arm ? (
+          <BigText level="h2" tone="accent" className="pb-pop">
+            {view.arm.name} says BINGO?…
+          </BigText>
         ) : null}
       </Stage>
     );

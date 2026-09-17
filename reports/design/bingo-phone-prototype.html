@@ -1,0 +1,1482 @@
+<title>Bingo Phone Prototype</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap"
+/>
+<style>
+  :root {
+    --bg: #f6f4ef;
+    --ink: #1b1a2e;
+    --muted: #5d5b73;
+    --line: #d9d5cc;
+    --card: #ffffff;
+    --pick: #2a5bd7;
+    --phone: #0f1020;
+    --surface: #1c1e3a;
+    --ink2: #f5f6ff;
+    --muted2: #b3b7d9;
+    --cell: #272a52;
+    --cell-line: transparent;
+    --accent: #ff5d8f;
+    --on-accent: #1a0b12;
+    --gold: #ffd166;
+    --green: #06d6a0;
+    --danger: #ef476f;
+    --frame: #2b2a3f;
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) {
+      --bg: #14131f;
+      --ink: #f1efff;
+      --muted: #a8a5c4;
+      --line: #2c2b40;
+      --card: #1d1c2e;
+      --pick: #8fb0ff;
+    }
+  }
+  :root[data-theme='dark'] {
+    --bg: #14131f;
+    --ink: #f1efff;
+    --muted: #a8a5c4;
+    --line: #2c2b40;
+    --card: #1d1c2e;
+    --pick: #8fb0ff;
+  }
+  [data-mock='daylight'] {
+    --phone: #f6f5ff;
+    --surface: #ffffff;
+    --ink2: #171633;
+    --muted2: #55577a;
+    --cell: #e9e7fb;
+    --accent: #d81b60;
+    --on-accent: #ffffff;
+    --gold: #7a4b00;
+    --green: #0f7a5a;
+    --danger: #c0143c;
+    --frame: #c9c6e6;
+  }
+  [data-mock='arcade'] {
+    --phone: #050014;
+    --surface: #14002e;
+    --ink2: #f0f6ff;
+    --muted2: #a8b3d6;
+    --cell: #23064a;
+    --accent: #ff2bd6;
+    --on-accent: #050014;
+    --gold: #00f0ff;
+    --green: #39ff14;
+    --danger: #ff3860;
+    --frame: #2a0a55;
+  }
+  [data-mock='cabin'] {
+    --phone: #1d1410;
+    --surface: #2c211b;
+    --ink2: #fbf3e8;
+    --muted2: #cbb8a6;
+    --cell: #3d2e26;
+    --accent: #e8743b;
+    --on-accent: #1d1410;
+    --gold: #f2c14e;
+    --green: #8fbf5a;
+    --danger: #f07070;
+    --frame: #4a3a30;
+  }
+  [data-mock='contrast'] {
+    --phone: #000000;
+    --surface: #111111;
+    --ink2: #ffffff;
+    --muted2: #e6e6e6;
+    --cell: #242424;
+    --cell-line: #ffffff;
+    --accent: #ff4fa3;
+    --on-accent: #000000;
+    --gold: #ffff00;
+    --green: #00ff88;
+    --danger: #ff5555;
+    --frame: #555555;
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: Nunito, 'Segoe UI', system-ui, sans-serif;
+  }
+  .wrap {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding-block: 20px 60px;
+    padding-inline: 16px;
+  }
+  h1 {
+    font-size: 26px;
+    margin: 0 0 4px;
+  }
+  .lede {
+    color: var(--muted);
+    margin: 0 0 14px;
+    max-width: 78ch;
+    line-height: 1.5;
+    font-size: 14px;
+  }
+  .toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 14px;
+    align-items: center;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 10px 12px;
+    margin-bottom: 16px;
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    z-index: 5;
+  }
+  .toolbar .group {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .toolbar label {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .toolbar button,
+  .toolbar select {
+    font: inherit;
+    font-weight: 800;
+    font-size: 13px;
+    border: 2px solid var(--line);
+    background: var(--card);
+    color: var(--ink);
+    border-radius: 999px;
+    padding: 5px 11px;
+    cursor: pointer;
+  }
+  .toolbar button[aria-pressed='true'] {
+    border-color: var(--pick);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--pick) 30%, transparent);
+  }
+  .toolbar button.act {
+    background: var(--pick);
+    color: #fff;
+    border-color: var(--pick);
+  }
+  .toolbar button:focus-visible,
+  .toolbar select:focus-visible {
+    outline: 3px solid var(--pick);
+    outline-offset: 2px;
+  }
+  .stage {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 18px;
+    align-items: start;
+  }
+  @media (max-width: 900px) {
+    .stage {
+      grid-template-columns: 1fr;
+    }
+  }
+  .side {
+    display: grid;
+    gap: 14px;
+  }
+  .panel {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 12px;
+  }
+  .panel h3 {
+    margin: 0 0 8px;
+    font-size: 14px;
+  }
+  .log {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+    max-height: 200px;
+    overflow: auto;
+    margin: 0;
+    padding-left: 26px;
+  }
+
+  /* ---- the phone ---- */
+  .phone {
+    position: relative;
+    background: var(--phone);
+    color: var(--ink2);
+    border-radius: 30px;
+    border: 8px solid var(--frame);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-sizing: content-box;
+    transition:
+      width 0.3s,
+      height 0.3s;
+  }
+  .phone[data-dev='portrait'] {
+    width: 320px;
+    height: 660px;
+  }
+  .phone[data-dev='landscape'] {
+    width: 660px;
+    height: 320px;
+    max-width: 100%;
+  }
+  .phone[data-dev='tablet'] {
+    width: 700px;
+    height: 480px;
+    max-width: 100%;
+    border-radius: 18px;
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 900;
+    color: var(--muted2);
+    border-bottom: 3px solid var(--gold);
+    flex: none;
+  }
+  .bar b {
+    color: var(--accent);
+  }
+  .bar button {
+    font: inherit;
+    font-weight: 900;
+    font-size: 11px;
+    background: var(--surface);
+    color: var(--ink2);
+    border: 0;
+    border-radius: 8px;
+    padding: 4px 8px;
+    cursor: pointer;
+  }
+  .bar button:focus-visible {
+    outline: 2px solid var(--gold);
+  }
+  .screen {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 8px 10px;
+    gap: 6px;
+  }
+  .content {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    align-content: start;
+    gap: 6px;
+    overflow: hidden;
+  }
+  .foot {
+    flex: none;
+    display: grid;
+    gap: 6px;
+  }
+  .btn {
+    font: inherit;
+    font-weight: 900;
+    border: 0;
+    border-radius: 12px;
+    padding: 12px;
+    font-size: 18px;
+    background: var(--accent);
+    color: var(--on-accent);
+    cursor: pointer;
+    transition:
+      transform 0.1s,
+      background 0.15s;
+  }
+  .btn:active {
+    transform: scale(0.97);
+  }
+  .btn:focus-visible {
+    outline: 3px solid var(--gold);
+    outline-offset: 2px;
+  }
+  .btn.armed {
+    background: var(--gold);
+    animation: pulse 0.6s ease-in-out infinite alternate;
+  }
+  .btn.queued {
+    background: var(--surface);
+    color: var(--muted2);
+  }
+  .btn.neutral {
+    background: var(--surface);
+    color: var(--ink2);
+  }
+  .btn.small {
+    font-size: 11px;
+    padding: 6px 4px;
+    border-radius: 8px;
+  }
+  .btn:disabled {
+    opacity: 0.45;
+    cursor: default;
+  }
+  @keyframes pulse {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(1.03);
+    }
+  }
+  .callhead {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex: none;
+  }
+  .callhead .nick {
+    font-size: 15px;
+    font-weight: 900;
+    color: var(--gold);
+    line-height: 1.1;
+  }
+  .callhead .meta {
+    font-size: 10px;
+    color: var(--muted2);
+    font-weight: 700;
+  }
+  .ball {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .ball i {
+    font-style: normal;
+    display: inline-grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: var(--on-accent);
+    font-weight: 900;
+    font-size: 13px;
+  }
+  .ball b {
+    font-size: 26px;
+    font-weight: 900;
+    line-height: 1;
+  }
+  .ball.sm i {
+    width: 14px;
+    height: 14px;
+    font-size: 8px;
+  }
+  .ball.sm b {
+    font-size: 14px;
+  }
+  .ball.lg i {
+    width: 44px;
+    height: 44px;
+    font-size: 22px;
+  }
+  .ball.lg b {
+    font-size: 46px;
+  }
+  .callrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex: none;
+    font-size: 10px;
+    color: var(--muted2);
+    font-weight: 700;
+    padding: 2px 0;
+  }
+  .pop {
+    animation: pop 0.25s ease-out;
+  }
+  @keyframes pop {
+    from {
+      transform: scale(0.7);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  /* cards */
+  .card {
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+    gap: 3px;
+    width: 100%;
+    container-type: inline-size;
+  }
+  .card .label {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    font-weight: 800;
+    color: var(--muted2);
+    text-align: center;
+    text-transform: uppercase;
+    min-height: 12px;
+  }
+  .card .label.won {
+    color: var(--gold);
+  }
+  .card .letters,
+  .card .cells {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 3px;
+  }
+  .card .letters span {
+    text-align: center;
+    color: var(--gold);
+    font-weight: 900;
+    font-size: clamp(9px, 7cqw, 20px);
+  }
+  .cell {
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
+    background: var(--cell);
+    border: 2px solid var(--cell-line);
+    border-radius: 15%;
+    font-weight: 800;
+    color: var(--ink2);
+    font-size: clamp(9px, 7.5cqw, 22px);
+    line-height: 1;
+    cursor: pointer;
+    user-select: none;
+    padding: 0;
+    font-family: inherit;
+    transition:
+      background 0.12s,
+      transform 0.1s;
+  }
+  .cell:active {
+    transform: scale(0.93);
+  }
+  .cell:focus-visible {
+    outline: 2px solid var(--gold);
+  }
+  .cell.d {
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+  .cell.free {
+    color: var(--gold);
+    border-color: var(--gold);
+    font-size: clamp(7px, 4.2cqw, 12px);
+  }
+  .cell.free.d {
+    background: var(--gold);
+    color: var(--on-accent);
+  }
+  .cell.star {
+    font-size: clamp(9px, 8cqw, 22px);
+  }
+  .cell.g {
+    background: var(--green);
+    color: var(--on-accent);
+  }
+  .cell.r {
+    background: var(--danger);
+    color: #fff;
+  }
+  .card.locked {
+    opacity: 0.45;
+    pointer-events: none;
+  }
+  .card.static .cell {
+    cursor: default;
+  }
+
+  /* Focus */
+  .focus {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: 8px;
+    height: 100%;
+    min-height: 0;
+  }
+  .focus .main {
+    max-width: min(100%, 300px);
+    margin: 0 auto;
+    width: 100%;
+  }
+  .thumbs {
+    display: grid;
+    gap: 6px;
+    align-self: end;
+    padding-top: 8px;
+  }
+  .thumb {
+    border: 2px solid var(--muted2);
+    border-radius: 8px;
+    padding: 3px;
+    background: none;
+    cursor: pointer;
+    transition:
+      opacity 0.15s,
+      transform 0.15s;
+  }
+  .thumb:focus-visible {
+    outline: 2px solid var(--gold);
+  }
+  .thumb {
+    position: relative;
+  }
+  .thumb::after {
+    content: none;
+    position: absolute;
+    top: -8px;
+    right: -4px;
+    background: var(--gold);
+    color: var(--on-accent);
+    font-size: 8px;
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    padding: 1px 5px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .thumb.cur {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 2px var(--gold);
+    cursor: default;
+  }
+  .thumb.cur::after {
+    content: 'UP';
+  }
+  .thumb:not(.cur):not(.won) {
+    opacity: 0.75;
+  }
+  .thumb.pick {
+    border-color: var(--green);
+    box-shadow: 0 0 0 2px var(--green);
+  }
+  .thumb.pick::after {
+    content: 'SWAP THIS';
+    background: var(--green);
+  }
+  .thumb.spent::after {
+    content: 'SWAPPED';
+    background: var(--muted2);
+  }
+  .thumb.won {
+    border-color: transparent;
+    opacity: 0.22;
+    cursor: default;
+  }
+  .thumb .card {
+    pointer-events: none;
+  }
+  .thumb .card .cell {
+    font-size: clamp(6px, 8cqw, 14px);
+  }
+
+  /* Grid / strip / stack / side */
+  .layout {
+    display: grid;
+    gap: 6px 8px;
+    height: 100%;
+    min-height: 0;
+    align-content: center;
+    justify-items: center;
+  }
+  .slot {
+    display: grid;
+    gap: 4px;
+    width: 100%;
+    min-width: 0;
+  }
+  .layout.grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .layout.stack {
+    grid-template-columns: 1fr;
+  }
+  .layout.stack .slot {
+    max-width: 220px;
+  }
+  .layout.side {
+    grid-template-columns: 1fr 1fr;
+    padding: 0 40px;
+    gap: 20px;
+  }
+  .layout.side .slot {
+    max-width: 210px;
+  }
+  .layout.strip {
+    grid-template-columns: repeat(var(--n, 4), 1fr);
+    gap: 10px;
+    padding: 0 6px;
+  }
+  .layout.tablet {
+    grid-template-columns: repeat(var(--n, 4), 1fr);
+    gap: 12px;
+    padding: 0 8px;
+  }
+  .layout.tablet .slot {
+    max-width: 220px;
+  }
+  .minitv {
+    display: grid;
+    place-items: center;
+    align-content: center;
+    gap: 8px;
+    text-align: center;
+    font-size: 10px;
+    color: var(--muted2);
+    font-weight: 700;
+  }
+
+  /* overlays */
+  .overlay {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    padding: 20px;
+    background: color-mix(in srgb, var(--phone) 84%, transparent);
+    font-weight: 800;
+    font-size: 15px;
+    z-index: 3;
+  }
+  .overlay small {
+    display: block;
+    color: var(--muted2);
+    font-weight: 600;
+    margin-top: 6px;
+    font-size: 12px;
+  }
+  .overlay .btn {
+    margin-top: 14px;
+    font-size: 14px;
+  }
+  .count {
+    font-size: 72px;
+    font-weight: 900;
+    color: var(--gold);
+    line-height: 1;
+    animation: pop 0.35s ease-out;
+  }
+  .ph {
+    width: 40px;
+    height: 76px;
+    border: 5px solid var(--gold);
+    border-radius: 9px;
+    box-shadow: inset 0 -9px 0 -5px var(--gold);
+    animation: turnL 1.8s ease-in-out infinite;
+    margin: 0 auto 14px;
+  }
+  .ph.toP {
+    animation-name: turnP;
+  }
+  @keyframes turnL {
+    0%,
+    20% {
+      transform: rotate(0);
+    }
+    60%,
+    85% {
+      transform: rotate(-90deg);
+    }
+    100% {
+      transform: rotate(-90deg);
+      opacity: 0.4;
+    }
+  }
+  @keyframes turnP {
+    0%,
+    20% {
+      transform: rotate(-90deg);
+    }
+    60%,
+    85% {
+      transform: rotate(0);
+    }
+    100% {
+      transform: rotate(0);
+      opacity: 0.4;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ph,
+    .btn.armed {
+      animation: none;
+    }
+  }
+  .sheet {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--surface);
+    color: var(--ink2);
+    border-radius: 18px 18px 0 0;
+    padding: 12px 14px 14px;
+    z-index: 4;
+    box-shadow: 0 -10px 30px #0006;
+    animation: up 0.2s ease-out;
+  }
+  @keyframes up {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+  }
+  .sheet h4 {
+    margin: 0 0 8px;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .sheet .row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 10px;
+    border: 2px solid var(--muted2);
+    border-radius: 10px;
+    margin-bottom: 6px;
+    font-size: 13px;
+    font-weight: 800;
+    cursor: pointer;
+    background: none;
+    color: inherit;
+    width: 100%;
+    font-family: inherit;
+    text-align: left;
+  }
+  .sheet .row small {
+    color: var(--muted2);
+    font-weight: 600;
+  }
+  .sheet .row.on {
+    border-color: var(--gold);
+  }
+  .sheet .row:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+  .sheet .actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .sheet .actions .btn {
+    flex: 1;
+    font-size: 14px;
+    padding: 10px;
+  }
+  .swatches {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+  .swatches button {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    cursor: pointer;
+  }
+  .swatches button.on {
+    border-color: var(--gold);
+  }
+  .previewbar {
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    z-index: 4;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    background: var(--surface);
+    border-radius: 12px;
+    padding: 8px;
+    box-shadow: 0 8px 24px #0006;
+    animation: up 0.2s ease-out;
+  }
+  .previewbar span {
+    flex: 1;
+    font-size: 11px;
+    font-weight: 800;
+    padding-left: 4px;
+  }
+  .previewbar .btn {
+    font-size: 12px;
+    padding: 8px 10px;
+  }
+  .verdict {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    display: grid;
+    place-items: center;
+    align-content: center;
+    gap: 10px;
+    background: color-mix(in srgb, var(--phone) 90%, transparent);
+    text-align: center;
+    padding: 20px;
+  }
+  .verdict .big {
+    font-size: 34px;
+    font-weight: 900;
+    color: var(--gold);
+  }
+  .verdict .no {
+    color: var(--danger);
+  }
+  .verdict .card {
+    max-width: 240px;
+  }
+
+  /* TV + other phone */
+  .tv {
+    background: var(--phone);
+    color: var(--ink2);
+    border: 5px solid var(--frame);
+    border-radius: 10px;
+    aspect-ratio: 16/9;
+    position: relative;
+    display: grid;
+    place-items: center;
+    align-content: center;
+    gap: 8px;
+    text-align: center;
+    padding: 12px;
+    overflow: hidden;
+  }
+  .tv .nick {
+    font-size: 18px;
+    font-weight: 900;
+  }
+  .tv .kick {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 800;
+  }
+  .tv .prev {
+    font-size: 10px;
+    color: var(--muted2);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .tv .chips {
+    position: absolute;
+    top: 8px;
+    left: 10px;
+    display: flex;
+    gap: 6px;
+    font-size: 10px;
+    font-weight: 800;
+  }
+  .tv .chips span {
+    background: var(--surface);
+    border-radius: 999px;
+    padding: 2px 8px;
+  }
+  .other {
+    width: 180px;
+    height: 360px;
+    border-width: 5px;
+    border-radius: 22px;
+    font-size: 11px;
+  }
+  .other .bar {
+    font-size: 9px;
+    padding: 6px 8px;
+  }
+  .other .overlay {
+    font-size: 11px;
+    padding: 12px;
+  }
+  .other .overlay .btn {
+    font-size: 10px;
+    padding: 8px;
+  }
+  .other .thumb .card .cell {
+    font-size: 5px;
+  }
+  .dim {
+    opacity: 0.35;
+  }
+</style>
+
+<div class="wrap">
+  <h1>Bingo Phone Prototype</h1>
+  <p class="lede">
+    A working model of everything on the decisions list. Sam's phone is live: tap cells to daub, tap
+    thumbnails to swap, use 🃏 for the style sheet (it pauses the room — watch the TV and Priya's
+    phone), claim with two taps, and see what Priya's taps do to your dibs. Nothing here touches the
+    real game yet.
+  </p>
+
+  <div class="toolbar">
+    <div class="group">
+      <label>Theme</label>
+      <button type="button" data-t="night" aria-pressed="true">Neon Night</button
+      ><button type="button" data-t="daylight">Daylight</button
+      ><button type="button" data-t="arcade">Arcade</button
+      ><button type="button" data-t="cabin">Cabin</button
+      ><button type="button" data-t="contrast">Contrast</button>
+    </div>
+    <div class="group">
+      <label>Cards</label> <button type="button" data-n="1">1</button
+      ><button type="button" data-n="2" aria-pressed="true">2</button
+      ><button type="button" data-n="3">3</button><button type="button" data-n="4">4</button>
+    </div>
+    <div class="group">
+      <label>Device</label>
+      <button type="button" data-dev="portrait" aria-pressed="true">Phone ↑</button
+      ><button type="button" data-dev="landscape">Phone ↔</button
+      ><button type="button" data-dev="tablet">Tablet</button>
+    </div>
+    <div class="group">
+      <label>Priya</label> <button type="button" id="priyaArm">Priya taps BINGO!</button
+      ><button type="button" id="priyaSheet">Priya opens her menu</button>
+    </div>
+    <div class="group"><button type="button" class="act" id="restart">New round</button></div>
+  </div>
+
+  <div class="stage" id="mock" data-mock="night">
+    <div class="phone" id="sam" data-dev="portrait"></div>
+    <div class="side">
+      <div class="panel">
+        <h3>The TV</h3>
+        <div class="tv" id="tv"></div>
+      </div>
+      <div class="panel" style="display: flex; gap: 14px; align-items: flex-start; flex-wrap: wrap">
+        <div>
+          <h3>Priya's phone</h3>
+          <div class="phone other" id="priya" data-dev="portrait"></div>
+        </div>
+        <div style="flex: 1; min-width: 200px">
+          <h3>What just happened</h3>
+          <ol class="log" id="log"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (() => {
+    const $ = (s, r = document) => r.querySelector(s);
+    const LETTERS = 'BINGO';
+    const NICK = {
+      1: "Kelly's eye",
+      7: 'Lucky seven',
+      11: 'Legs eleven',
+      17: 'Dancing queen',
+      22: 'Two little ducks',
+      24: 'Two dozen',
+      30: 'Dirty Gertie',
+      36: 'Three dozen',
+      44: 'Droopy drawers',
+      48: 'Four dozen',
+      56: 'Pick up sticks',
+      64: 'Almost retired',
+      69: 'Any way up',
+      75: 'Strive and strive',
+    };
+    const nick = (n) => NICK[n] || (n % 2 ? 'Odd one out' : 'Even Stevens');
+    const shuffle = (a) => {
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    };
+    const dealCard = () => {
+      const c = [];
+      for (let col = 0; col < 5; col++) {
+        const pool = shuffle(Array.from({ length: 15 }, (_, i) => col * 15 + i + 1)).slice(0, 5);
+        for (let r = 0; r < 5; r++) c[r * 5 + col] = pool[r];
+      }
+      c[12] = 0;
+      return c;
+    };
+    const LINES = [
+      ...Array.from({ length: 5 }, (_, r) => [0, 1, 2, 3, 4].map((c) => r * 5 + c)),
+      ...Array.from({ length: 5 }, (_, c) => [0, 1, 2, 3, 4].map((r) => r * 5 + c)),
+      [0, 6, 12, 18, 24],
+      [4, 8, 12, 16, 20],
+    ];
+    const STYLES = {
+      focus: {
+        label: 'Focus',
+        hint: 'one big card + thumbnails',
+        orient: 'portrait',
+        cards: [1, 2, 3, 4],
+      },
+      grid: { label: 'Grid', hint: 'all cards at once', orient: 'portrait', cards: [3, 4] },
+      stack: { label: 'Stack', hint: 'two cards, upright', orient: 'portrait', cards: [2] },
+      side: { label: 'Side by side', hint: 'two cards, sideways', orient: 'landscape', cards: [2] },
+      strip: { label: 'Strip', hint: '3–4 cards, sideways', orient: 'landscape', cards: [3, 4] },
+    };
+
+    const S = {
+      n: 2,
+      dev: 'portrait',
+      theme: 'night',
+      style: 'focus',
+      preview: null,
+      sheet: false,
+      priyaSheet: false,
+      phase: 'intro',
+      introLeft: 5,
+      swapLeft: 1,
+      deck: [],
+      called: [],
+      cards: [],
+      daubs: [],
+      won: [],
+      up: 0,
+      arm: null,
+      queue: [],
+      armTick: null,
+      paused: false,
+      countdown: 0,
+      verdict: null,
+      timer: null,
+      log: [],
+    };
+    try {
+      const st = localStorage.getItem('proto-style');
+      if (st && STYLES[st]) S.style = st;
+    } catch {}
+    const log = (m) => {
+      S.log.unshift(m);
+      S.log = S.log.slice(0, 12);
+      $('#log').innerHTML = S.log.map((x) => `<li>${x}</li>`).join('');
+    };
+
+    function newRound() {
+      clearInterval(S.timer);
+      clearInterval(S.armTick);
+      S.deck = shuffle(Array.from({ length: 75 }, (_, i) => i + 1));
+      S.called = [];
+      S.cards = Array.from({ length: S.n }, dealCard);
+      S.daubs = S.cards.map(() => new Set());
+      S.won = [];
+      S.up = 0;
+      S.arm = null;
+      S.queue = [];
+      S.paused = false;
+      S.countdown = 0;
+      S.verdict = null;
+      S.sheet = false;
+      S.priyaSheet = false;
+      S.preview = null;
+      if (!STYLES[S.style].cards.includes(S.n)) S.style = 'focus';
+      S.phase = 'intro';
+      S.introLeft = 5;
+      S.swapLeft = S.cards.map(() => 1);
+      S.pick = 0;
+      log(`New round — ${S.n} card${S.n > 1 ? 's' : ''}, style ${STYLES[S.style].label}.`);
+      S.timer = setInterval(tick, 1000);
+      render();
+    }
+    function tick() {
+      if (S.phase === 'intro') {
+        S.introLeft--;
+        if (S.introLeft <= 0) {
+          S.phase = 'play';
+          call();
+        }
+        render();
+        return;
+      }
+      if (S.phase !== 'play' || S.paused || S.verdict) return;
+      if (S.countdown > 0) {
+        S.countdown--;
+        if (S.countdown === 0) {
+          log('Calling resumes.');
+          call();
+        }
+        render();
+        return;
+      }
+      S.tickN = (S.tickN || 0) + 1;
+      if (S.tickN % 4 === 0) call();
+    }
+    function call() {
+      if (S.called.length >= 75) return;
+      S.called.push(S.deck[S.called.length]);
+      render();
+    }
+    const cur = () => S.called[S.called.length - 1];
+    const prev = () => S.called[S.called.length - 2];
+    const letter = (n) => LETTERS[Math.floor((n - 1) / 15)];
+
+    // pause when anyone has a sheet open
+    function setPaused() {
+      const p = S.sheet || S.priyaSheet;
+      if (p && !S.paused) {
+        S.paused = true;
+        log(`${S.sheet ? 'Sam' : 'Priya'} opened the style menu — the caller waits.`);
+      }
+      if (!p && S.paused) {
+        S.paused = false;
+        S.countdown = 3;
+        log('Everyone is done — 3 · 2 · 1.');
+      }
+    }
+    // claims
+    function tapBingo(who, card) {
+      if (S.phase !== 'play' || S.verdict) return;
+      if (S.won.includes(card) && who === 'Sam') return;
+      if (S.arm && S.arm.who === who && S.arm.card === card) {
+        claim(who, card);
+        return;
+      }
+      if (S.arm && S.arm.who !== who) {
+        if (!S.queue.some((q) => q.who === who)) {
+          S.queue.push({ who, card });
+          log(`${who} tapped BINGO! while ${S.arm.who} has dibs — queued.`);
+        }
+        render();
+        return;
+      }
+      startArm(who, card);
+    }
+    function startArm(who, card) {
+      S.arm = { who, card, left: 3 };
+      log(`${who} armed BINGO! on card ${card + 1} — 3 s to tap again.`);
+      clearInterval(S.armTick);
+      S.armTick = setInterval(() => {
+        if (!S.arm) return clearInterval(S.armTick);
+        S.arm.left--;
+        if (S.arm.left <= 0) {
+          log(`${S.arm.who} let it lapse.`);
+          S.arm = null;
+          const nx = S.queue.shift();
+          if (nx) startArm(nx.who, nx.card);
+          else clearInterval(S.armTick);
+        }
+        render();
+      }, 1000);
+      render();
+    }
+    function claim(who, card) {
+      clearInterval(S.armTick);
+      S.arm = null;
+      S.queue = [];
+      if (who !== 'Sam') {
+        log("Priya claims — (Priya's card is not simulated; her window just clears).");
+        render();
+        return;
+      }
+      const c = S.cards[card],
+        d = S.daubs[card],
+        calledSet = new Set(S.called);
+      const green = (i) => i === 12 || (d.has(i) && calledSet.has(c[i]));
+      const line = LINES.find((l) => l.every(green));
+      const red = [...d].filter((i) => !calledSet.has(c[i]));
+      if (line) {
+        S.won.push(card);
+        S.verdict = { ok: true, card, line, red };
+        log(`BINGO! Card ${card + 1} wins — it now sits the pattern out; the caller carries on.`);
+      } else {
+        S.verdict = { ok: false, card, red, line: [] };
+        log(`Not a bingo — card ${card + 1} is wiped.`);
+        S.daubs[card] = new Set();
+      }
+      render();
+      setTimeout(() => {
+        S.verdict = null;
+        if (S.won.length === S.n) log('Every card has won — nothing left to claim this pattern.');
+        render();
+      }, 2600);
+    }
+
+    // ---- rendering ----
+    const ball = (n, cls = '') =>
+      n ? `<span class="ball ${cls} pop"><i>${letter(n)}</i><b>${n}</b></span>` : '';
+    function cardHtml(ci, o = {}) {
+      const c = S.cards[ci],
+        d = S.daubs[ci],
+        v = S.verdict && S.verdict.card === ci ? S.verdict : null;
+      const won = S.won.includes(ci);
+      const cells = c
+        .map((n, i) => {
+          const isF = i === 12;
+          let cls = 'cell';
+          if (isF) cls += o.star ? ' free star' : ' free';
+          if (d.has(i) || isF) cls += ' d';
+          if (v) {
+            if (v.line.includes(i)) cls += ' g';
+            if (v.red.includes(i)) cls += ' r';
+          }
+          const txt = isF ? (o.star ? '★' : 'FREE') : n;
+          return o.static
+            ? `<span class="${cls}">${txt}</span>`
+            : `<button type="button" class="${cls}" data-c="${ci}" data-i="${i}" aria-label="${LETTERS[i % 5]} ${isF ? 'FREE' : n}${d.has(i) ? ', daubed' : ''}">${txt}</button>`;
+        })
+        .join('');
+      const label =
+        o.label === undefined
+          ? ''
+          : `<div class="label ${won ? 'won' : ''}">${won ? 'BINGO ✓' : o.label}</div>`;
+      return `<div class="card ${won && !o.thumb ? 'locked' : ''} ${o.static ? 'static' : ''}" style="${o.w ? `max-width:${o.w}` : ''}">${label}<div class="letters">${[...LETTERS].map((l) => `<span>${l}</span>`).join('')}</div><div class="cells">${cells}</div></div>`;
+    }
+    function bingoBtn(ci, small) {
+      const won = S.won.includes(ci);
+      const a = S.arm;
+      const mineArmed = a && a.who === 'Sam' && a.card === ci;
+      const queued = a && a.who !== 'Sam' && S.queue.some((q) => q.who === 'Sam');
+      let txt = 'BINGO!',
+        cls = 'btn' + (small ? ' small' : '');
+      if (won) txt = 'Yours already';
+      else if (mineArmed) {
+        txt = `Tap again for BINGO! · ${a.left}`;
+        cls += ' armed';
+      } else if (a && a.who !== 'Sam') {
+        txt = queued ? `${a.who} is calling it… you're next` : `${a.who} is calling it…`;
+        cls += ' queued';
+      }
+      return `<button type="button" class="${cls}" data-bingo="${ci}" ${won || S.phase !== 'play' ? 'disabled' : ''}>${txt}</button>`;
+    }
+    const callHead = () =>
+      cur()
+        ? `<div class="callhead"><div><div class="nick">${nick(cur())}</div><div class="meta">Call ${S.called.length} · Any line${prev() ? ` · before: ${nick(prev())}` : ''}</div></div>${S.n === 1 ? '' : ball(cur())}</div>`
+        : `<div class="callhead"><div class="meta">First number coming…</div></div>`;
+    const callRow = () =>
+      cur()
+        ? `<div class="callrow">${ball(cur())}<span>before that ${ball(prev(), 'sm') || '—'} · call ${S.called.length}</span></div>`
+        : `<div class="callrow">First number coming…</div>`;
+    const miniTv = () =>
+      `<div class="slot"><div class="minitv">${ball(cur(), 'lg') || 'first number…'}<span>before that ${ball(prev(), 'sm') || '—'}</span><span>call ${S.called.length} · any line</span></div></div>`;
+
+    function effectiveStyle() {
+      return S.preview || S.style;
+    }
+    function bodyHtml() {
+      const st = S.dev === 'tablet' ? 'tablet' : effectiveStyle();
+      if (S.phase === 'intro') {
+        const left = S.swapLeft[S.pick];
+        if (S.n === 1)
+          return `<div class="content" style="align-content:start"><div class="callhead"><div><div class="nick">Round 1 of 3 · ${S.introLeft} s</div><div class="meta">Any line · your new card</div></div></div><div class="layout stack" style="align-content:start"><div class="slot">${cardHtml(0, { static: true, w: '260px' })}</div></div></div><div class="foot"><button type="button" class="btn neutral" id="swap" ${left ? '' : 'disabled'}>🎲 Deal me another (${left} left)</button></div>`;
+        const thumbs = `<div class="thumbs" style="grid-template-columns:repeat(${S.n},1fr)">${S.cards.map((_, i) => `<button type="button" class="thumb ${i === S.pick ? 'pick' : ''} ${S.swapLeft[i] ? '' : 'spent'}" data-pick="${i}" aria-label="Card ${i + 1}${S.swapLeft[i] ? '' : ', already swapped'}">${cardHtml(i, { static: true, star: true, thumb: true })}</button>`).join('')}</div>`;
+        return `<div class="callhead"><div><div class="nick">Round 1 of 3 · ${S.introLeft} s</div><div class="meta">Any line · your ${S.n} new cards · pick one to swap</div></div></div><div class="content"><div class="focus"><div class="main">${cardHtml(S.pick, { static: true })}</div>${thumbs}</div></div><div class="foot"><button type="button" class="btn neutral" id="swap" ${left ? '' : 'disabled'}>🎲 Deal me another card ${S.pick + 1} (${left} left)</button></div>`;
+      }
+      const gate = S.dev !== 'tablet' && STYLES[st] && STYLES[st].orient !== S.dev;
+      if (gate)
+        return `<div class="overlay"><div><div class="ph ${STYLES[st].orient === 'portrait' ? 'toP' : ''}"></div>Turn your phone ${STYLES[st].orient === 'landscape' ? 'sideways' : 'upright'} for ${STYLES[st].label}.<small>the cards appear the moment you do</small></div></div>`;
+      if (st === 'focus') {
+        const thumbs =
+          S.n > 1
+            ? `<div class="thumbs" style="grid-template-columns:repeat(${S.n},1fr)">${S.cards.map((_, i) => `<button type="button" class="thumb ${i === S.up ? 'cur' : ''} ${S.won.includes(i) ? 'won' : ''}" data-up="${i}" ${i === S.up || S.won.includes(i) ? 'disabled' : ''} aria-label="Card ${i + 1}${S.won.includes(i) ? ', won' : ''}">${cardHtml(i, { static: true, star: true, thumb: true })}</button>`).join('')}</div>`
+            : '';
+        return `${callHead()}<div class="content"><div class="focus"><div class="main">${cardHtml(S.up)}</div>${thumbs}</div></div><div class="foot">${bingoBtn(S.up)}</div>`;
+      }
+      const n = S.n;
+      const slots = S.cards.map(
+        (_, i) =>
+          `<div class="slot">${cardHtml(i, { label: `Card ${i + 1}`, star: st !== 'stack' && st !== 'side' && st !== 'tablet' })}${bingoBtn(i, true)}</div>`,
+      );
+      if (st === 'grid' && n === 3) slots.push(miniTv());
+      const head = st === 'grid' ? callRow() : st === 'tablet' ? callHead() : '';
+      return `${head}<div class="content"><div class="layout ${st}" style="--n:${n}">${slots.join('')}</div></div>`;
+    }
+    function sheetHtml(who) {
+      const cur = who === 'Sam' ? effectiveStyle() : 'focus';
+      const why = (s) =>
+        s.cards.includes(S.n)
+          ? ''
+          : s.cards.length === 1
+            ? `${s.cards[0]} cards only`
+            : `${s.cards[0]}–${s.cards[s.cards.length - 1]} cards only`;
+      const rows = Object.entries(STYLES)
+        .map(
+          ([id, s]) =>
+            `<button type="button" class="row ${cur === id ? 'on' : ''}" data-style="${id}" ${s.cards.includes(S.n) ? '' : 'disabled'}><span>${s.label} <small>· ${s.hint}</small></span><small>${why(s) || (s.orient === 'landscape' ? 'sideways' : 'upright')}${cur === id ? ' ✓' : ''}</small></button>`,
+        )
+        .join('');
+      const sw = ['night', 'daylight', 'arcade', 'cabin', 'contrast']
+        .map(
+          (t) =>
+            `<button type="button" data-theme="${t}" class="${S.theme === t ? 'on' : ''}" style="background:${{ night: '#0f1020', daylight: '#f6f5ff', arcade: '#ff2bd6', cabin: '#e8743b', contrast: '#ffff00' }[t]}" aria-label="${t}"></button>`,
+        )
+        .join('');
+      return `<div class="sheet"><h4>Card style <span style="font-size:11px;color:var(--muted2)">the room is paused</span></h4>${rows}<h4 style="margin-top:10px">Theme</h4><div class="swatches">${sw}</div><div class="actions"><button type="button" class="btn neutral" data-sheet="change">Close</button></div></div>`;
+    }
+    function render() {
+      const sam = $('#sam');
+      sam.dataset.dev = S.dev;
+      $('#mock').dataset.mock = S.theme;
+      let over = '';
+      if (S.verdict) {
+        const v = S.verdict;
+        over = `<div class="verdict"><div class="big ${v.ok ? '' : 'no'}">${v.ok ? 'BINGO!' : 'NOT A BINGO'}</div>${cardHtml(v.card, { static: true })}<div style="font-size:12px;color:var(--muted2)">${v.ok ? 'That card sits the pattern out — the caller carries on.' : 'Card wiped — re-daub from memory.'}</div></div>`;
+      } else if (S.countdown > 0)
+        over = `<div class="overlay"><div><div class="count">${S.countdown}</div>get your thumbs ready</div></div>`;
+      else if (S.priyaSheet && !S.sheet)
+        over = `<div class="overlay"><div>⏸ Priya is changing card style…<button type="button" class="btn neutral" id="openSheet">Change my style or theme too</button></div></div>`;
+      const sheetOrBar = !S.sheet
+        ? ''
+        : S.preview
+          ? `<div class="previewbar"><span>${STYLES[S.preview].label} — like it?</span><button type="button" class="btn neutral" data-sheet="change">Keep changing</button><button type="button" class="btn" data-sheet="confirm">Confirm</button></div>`
+          : sheetHtml('Sam');
+      sam.innerHTML = `<div class="bar"><span><b>PB</b> RVKR</span><span>★ Sam</span><button type="button" id="styleBtn" aria-label="Card style">🃏 style</button></div><div class="screen ${S.sheet && !S.preview ? 'dim' : ''}">${bodyHtml()}</div>${over}${sheetOrBar}`;
+      // TV
+      const pausedBy = [S.sheet && 'Sam', S.priyaSheet && 'Priya'].filter(Boolean);
+      $('#tv').innerHTML =
+        `<div class="chips"><span>Sam ★${S.won.length ? ' ▲' + S.won.length : ''}</span><span>Priya</span><span>Bot 1</span></div>` +
+        (S.phase === 'intro'
+          ? `<div class="kick">Round 1 of 3</div><div class="nick" style="font-size:26px;color:var(--gold)">Any line</div><div class="prev">${S.n > 1 ? `${S.n} cards each` : 'one card each'} · ${S.introLeft} s</div>`
+          : S.countdown
+            ? `<div class="prev">calling resumes in</div><div class="count">${S.countdown}</div><div class="prev">get your thumbs ready</div>`
+            : pausedBy.length
+              ? `<div class="dim">${ball(cur(), 'lg')}</div><div class="nick">⏸ ${pausedBy.join(' and ')} ${pausedBy.length > 1 ? 'are' : 'is'} changing card style…</div><div class="prev">calling resumes when they are done</div>`
+              : S.arm
+                ? `<div class="kick">Round 1 · any line · call ${S.called.length} of 75</div>${ball(cur(), 'lg')}<div class="nick" style="color:var(--gold)">${S.arm.who} says BINGO?…</div>`
+                : `<div class="kick">Round 1 · any line · call ${S.called.length} of 75${S.won.length ? ` · ${S.won.length} bingo${S.won.length > 1 ? 's' : ''} so far` : ''}</div>${ball(cur(), 'lg')}<div class="nick">${cur() ? nick(cur()) : ''}</div><div class="prev">${prev() ? `before that ${ball(prev(), 'sm')}` : ''}</div>`);
+      // Priya
+      const pOver =
+        S.sheet && !S.priyaSheet
+          ? `<div class="overlay"><div>⏸ Sam is changing card style…<button type="button" class="btn neutral" id="priyaOpen">Change my style or theme too</button></div></div>`
+          : S.priyaSheet
+            ? `<div class="overlay"><div>Priya is in her style menu<button type="button" class="btn neutral" id="priyaClose">Priya taps Confirm</button></div></div>`
+            : S.countdown
+              ? `<div class="overlay"><div><div class="count" style="font-size:44px">${S.countdown}</div>get your thumbs ready</div></div>`
+              : '';
+      const pArm =
+        S.arm && S.arm.who === 'Priya'
+          ? `Tap again for BINGO! · ${S.arm.left}`
+          : S.arm && S.queue.some((q) => q.who === 'Priya')
+            ? `Sam is calling it… you're next`
+            : S.arm
+              ? 'Sam is calling it…'
+              : 'BINGO!';
+      $('#priya').innerHTML =
+        `<div class="bar"><span><b>PB</b> RVKR</span><span>Priya</span></div><div class="screen"><div class="content"><div class="focus"><div class="main">${S.cards[0] ? cardHtml(0, { static: true }) : ''}</div></div></div><div class="foot"><button type="button" class="btn small ${S.arm && S.arm.who === 'Priya' ? 'armed' : S.arm ? 'queued' : ''}" disabled>${pArm}</button></div></div>${pOver}`;
+    }
+
+    // ---- events ----
+    document.addEventListener('click', (e) => {
+      const t = e.target.closest('button');
+      if (!t) return;
+      if (t.dataset.t) {
+        S.theme = t.dataset.t;
+        document
+          .querySelectorAll('[data-t]')
+          .forEach((b) => b.setAttribute('aria-pressed', String(b === t)));
+        render();
+      } else if (t.dataset.n) {
+        S.n = Number(t.dataset.n);
+        document
+          .querySelectorAll('[data-n]')
+          .forEach((b) => b.setAttribute('aria-pressed', String(b === t)));
+        newRound();
+      } else if (t.dataset.dev) {
+        S.dev = t.dataset.dev;
+        document
+          .querySelectorAll('[data-dev]')
+          .forEach((b) => b.setAttribute('aria-pressed', String(b === t)));
+        log(`Device: ${t.textContent}.`);
+        render();
+      } else if (t.id === 'restart') newRound();
+      else if (t.id === 'priyaArm') tapBingo('Priya', 0);
+      else if (t.id === 'priyaSheet' || t.id === 'priyaOpen') {
+        S.priyaSheet = true;
+        setPaused();
+        render();
+      } else if (t.id === 'priyaClose') {
+        S.priyaSheet = false;
+        setPaused();
+        render();
+      } else if (t.id === 'styleBtn' || t.id === 'openSheet') {
+        if (S.phase === 'play') {
+          S.sheet = true;
+          S.preview = null;
+          setPaused();
+          render();
+        }
+      } else if (t.dataset.style) {
+        S.preview = t.dataset.style;
+        log(
+          `Sam previews ${STYLES[t.dataset.style].label} — the sheet folds away so the whole screen shows.`,
+        );
+        render();
+      } else if (t.dataset.theme) {
+        S.theme = t.dataset.theme;
+        document
+          .querySelectorAll('[data-t]')
+          .forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.t === S.theme)));
+        render();
+      } else if (t.dataset.sheet === 'confirm') {
+        S.style = S.preview;
+        try {
+          localStorage.setItem('proto-style', S.style);
+        } catch {}
+        S.preview = null;
+        S.sheet = false;
+        log(`Sam confirmed ${STYLES[S.style].label} (remembered for next game).`);
+        setPaused();
+        render();
+      } else if (t.dataset.sheet === 'change') {
+        if (S.preview) {
+          S.preview = null;
+          render();
+        } else {
+          S.sheet = false;
+          setPaused();
+          render();
+        }
+      } else if (t.id === 'swap') {
+        const k = S.n === 1 ? 0 : S.pick;
+        if (S.swapLeft[k]) {
+          S.swapLeft[k] = 0;
+          S.cards[k] = dealCard();
+          log(`Sam swapped card ${k + 1} for a new one — no way back.`);
+          render();
+        }
+      } else if (t.dataset.pick !== undefined) {
+        S.pick = Number(t.dataset.pick);
+        render();
+      } else if (t.dataset.up !== undefined) {
+        S.up = Number(t.dataset.up);
+        render();
+      } else if (t.dataset.bingo !== undefined) tapBingo('Sam', Number(t.dataset.bingo));
+      else if (t.dataset.c !== undefined) {
+        const c = Number(t.dataset.c),
+          i = Number(t.dataset.i);
+        if (S.phase !== 'play' || S.won.includes(c) || S.verdict) return;
+        const d = S.daubs[c];
+        d.has(i) ? d.delete(i) : d.add(i);
+        render();
+      }
+    });
+    newRound();
+  })();
+</script>

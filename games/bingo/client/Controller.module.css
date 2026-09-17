@@ -1,11 +1,12 @@
-/* Phone layout for Bingo: call header (nickname only — the number lives on the TV), card, sticky
-   BINGO! footer. Tokens only. */
+/* Phone layout for Bingo: the call header (nickname only — the number lives on the TV), the
+   cards in the chosen style, a sticky BINGO! footer (Focus) or one BINGO! per card. Tokens only. */
 .header {
   display: flex;
   flex-direction: column;
   gap: var(--pb-space-1);
-  min-height: 64px; /* a floor, never a cap: a two-line nickname grows the header (loop #7) */
-  margin-bottom: var(--pb-space-3);
+  min-height: 56px; /* a floor, never a cap: a two-line nickname grows the header (loop #7) */
+  min-width: 0;
+  flex: 1;
 }
 
 .now {
@@ -39,26 +40,127 @@
   text-overflow: ellipsis;
 }
 
+/* The top row: the call on the left, the 🃏 style pill on the right. */
+.topRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--pb-space-2);
+}
+
+.stylePill {
+  flex: none;
+  font: inherit;
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  color: var(--pb-text);
+  background: var(--pb-surface-2);
+  border: 0;
+  border-radius: 999px;
+  padding: var(--pb-space-1) var(--pb-space-3);
+  min-height: 32px;
+  cursor: pointer;
+}
+.stylePill:focus-visible {
+  outline: 3px solid var(--pb-focus);
+  outline-offset: 2px;
+}
+
+/* The call in the TV's ball style (grids): letter in a disc, the number beside, the one before. */
+.callRow {
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-3);
+  flex-wrap: wrap;
+  min-height: 40px;
+}
+.callMeta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-1);
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  color: var(--pb-text-muted);
+}
+.ball {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+.ball i {
+  font-style: normal;
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--pb-accent-2);
+  color: var(--pb-on-accent);
+  font-weight: 900;
+  font-size: 14px;
+}
+.ball b {
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.ball_sm i {
+  width: 16px;
+  height: 16px;
+  font-size: 9px;
+}
+.ball_sm b {
+  font-size: 16px;
+}
+.ball_lg i {
+  width: 44px;
+  height: 44px;
+  font-size: 22px;
+}
+.ball_lg b {
+  font-size: 44px;
+}
+
 .bingo {
   font-size: var(--pb-font-h1);
   min-height: 72px;
 }
+.bingoSmall {
+  font-size: var(--pb-font-caption);
+  min-height: 36px;
+  padding: var(--pb-space-1) var(--pb-space-2);
+}
+.armed {
+  animation: armed-pulse 0.6s var(--pb-ease) infinite alternate;
+}
+@keyframes armed-pulse {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.03);
+  }
+}
 
-/* The round screen's body: a positioning context for the reconnect notice (review-loop #13). */
+/* The round screen's body: a positioning context for the overlays. */
 .roundBody {
   position: relative;
   flex: 1;
   min-height: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--pb-space-4);
+  gap: var(--pb-space-3);
+}
+.dimmed > :not(:last-child) {
+  opacity: 0.35;
 }
 
-/* Reconnect notice while the TV has the board (loop #4): overlays the top of the body, never the
-   card — slides down in, holds, fades out; the state clears when the animation ends (loop #13). */
+/* Reconnect notice while the TV has the board (loop #4). */
 .missedToast {
   position: absolute;
-  top: calc(var(--pb-font-h1) * 1.25); /* below the nickname, over the meta line only */
+  top: calc(var(--pb-font-h1) * 1.25);
   left: 0;
   right: 0;
   z-index: 2;
@@ -72,7 +174,6 @@
   color: var(--pb-accent-2);
   animation: missed-toast 5s var(--pb-ease) both;
 }
-
 @keyframes missed-toast {
   0% {
     opacity: 0;
@@ -90,111 +191,360 @@
   }
 }
 
-/* Several cards stack down the phone; the BINGO! footer stays pinned below the scroll. */
-/* Several cards share ONE screen (owner request): two stack in portrait and sit side by side in
-   landscape; three or four make a 2 × 2 grid. Each slot is capped by the height left for the stack
-   (viewport minus the shell header, the call header and the BINGO! footer ≈ 320 px), so nothing
-   scrolls — small, but every card is in view. */
-.cards {
-  --pb-card-cols: 1;
-  --pb-card-rows: 1;
+/* ── Focus: the card up, big; every card as a thumbnail below ── */
+.focus {
   display: grid;
-  grid-template-columns: repeat(var(--pb-card-cols), minmax(0, 1fr));
-  gap: var(--pb-space-2) var(--pb-space-3);
-  align-items: start;
+  grid-template-rows: auto auto;
+  gap: var(--pb-space-3);
   justify-items: center;
 }
-.cards2 {
-  --pb-card-rows: 2;
+.focusMain {
+  width: 100%;
+  /* One card: the Card's own phone cap. Several: leave ~110 px for the thumbnails. */
+  max-width: min(100%, calc((100dvh - 330px) / 1.15));
+  margin-inline: auto;
 }
-.cards3,
-.cards4 {
-  --pb-card-cols: 2;
-  --pb-card-rows: 2;
+.focusMany .focusMain {
+  max-width: min(100%, max(200px, calc((100dvh - 470px) / 1.15)));
 }
-@media (orientation: landscape) {
-  .cards2 {
-    --pb-card-cols: 2;
-    --pb-card-rows: 1;
+/* A short phone (an SE, 568 px): a smaller main card and thumbnails so both stay in view. */
+@media (max-height: 640px) {
+  .focusMany .focusMain {
+    max-width: min(100%, max(168px, calc((100dvh - 430px) / 1.15)));
   }
-  .cards3,
-  .cards4 {
-    --pb-card-rows: 1;
-    --pb-card-cols: 4;
+  .thumbs {
+    --pb-thumb: 84px;
+    gap: var(--pb-space-1);
   }
 }
-.cardSlot {
+.thumbs {
+  display: grid;
+  gap: var(--pb-space-2);
+  width: 100%;
+  justify-content: center;
+  padding-top: 10px; /* room for the tag on the corner */
+  --pb-thumb: 104px; /* a thumbnail never wider than this: ~125 px tall, so the row always fits */
+}
+.thumb {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-width: 0;
+  padding: 3px;
+  border: 2px solid var(--pb-text-muted);
+  border-radius: var(--pb-radius);
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  opacity: 0.8;
+  transition:
+    opacity var(--pb-motion-fast) var(--pb-ease),
+    transform var(--pb-motion-fast) var(--pb-ease);
+}
+.thumb:active {
+  transform: scale(0.96);
+}
+.thumb:focus-visible {
+  outline: 3px solid var(--pb-focus);
+  outline-offset: 2px;
+}
+.thumb[data-tag]::after {
+  content: attr(data-tag);
+  position: absolute;
+  top: -10px;
+  right: -4px;
+  background: var(--pb-text-muted);
+  color: var(--pb-bg);
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 1px 6px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.thumbCur {
+  opacity: 1;
+  border-color: var(--pb-accent-2);
+  box-shadow: 0 0 0 2px var(--pb-accent-2);
+  cursor: default;
+}
+.thumbCur[data-tag]::after {
+  background: var(--pb-accent-2);
+  color: var(--pb-on-accent);
+}
+.thumbWon {
+  border-color: transparent;
+  box-shadow: none;
+  opacity: 0.22;
+  cursor: default;
+}
+
+/* ── every card at once ── */
+.layout {
+  display: grid;
+  gap: var(--pb-space-2) var(--pb-space-3);
+  align-content: start;
+  justify-items: center;
+}
+.layout_grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px 6px;
+}
+.layout_stack {
+  grid-template-columns: 1fr;
+}
+.layout_stack .slotWrap {
+  max-width: min(100%, calc((100dvh - 260px) / 2 / 1.3));
+}
+.layout_side {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  padding: 0 var(--pb-space-6);
+  gap: var(--pb-space-5);
+}
+.layout_side .slotWrap,
+.layout_strip .slotWrap {
+  max-width: min(100%, calc((100dvh - 200px) / 1.3));
+}
+.layout_strip {
+  grid-template-columns: repeat(var(--n, 4), minmax(0, 1fr));
+  gap: var(--pb-space-3);
+}
+.layout_tablet {
+  grid-template-columns: repeat(var(--n, 4), minmax(0, 1fr));
+  gap: var(--pb-space-4);
+}
+.layout_tablet .slotWrap {
+  max-width: 320px;
+}
+.slotWrap {
+  display: grid;
+  gap: 4px;
   width: 100%;
   min-width: 0;
 }
-/* A card is ~1.2× taller than wide (letters + five rows): cap the width so `rows` of them fit —
-   never below 150 px (cells ≈ 28 px), where a short viewport (landscape, an SE) scrolls a little
-   instead of shrinking the numbers out of legibility. */
-.cards2 .cardSlot,
-.cards3 .cardSlot,
-.cards4 .cardSlot {
-  /* No call header with several cards: the shell header + the footer leave ≈ 100dvh − 230 px. */
-  max-width: min(100%, max(150px, calc((100dvh - 230px) / var(--pb-card-rows) / 1.2)));
+.slot {
+  width: 100%;
+  min-width: 0;
+}
+.slot.won {
+  opacity: 0.45;
+}
+.miniCall {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: var(--pb-space-2);
+  text-align: center;
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  color: var(--pb-text-muted);
+  min-height: 120px;
 }
 
-/* Wrong way up for this many cards: a plain ask, the cards wait behind it. */
+.cardLabel {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--pb-text-muted);
+  text-align: center;
+  min-height: 14px;
+}
+.cardLabelWon {
+  color: var(--pb-accent-2);
+}
+
+.wipeNote {
+  margin: 0 0 var(--pb-space-1);
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  color: var(--pb-danger);
+  text-align: center;
+}
+
+/* ── overlays ── */
+.curtain {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: var(--pb-space-5);
+  background: color-mix(in srgb, var(--pb-bg) 86%, transparent);
+  border-radius: var(--pb-radius);
+}
+.curtainLine {
+  margin: 0 0 var(--pb-space-4);
+  font-size: var(--pb-font-h2);
+  font-weight: 800;
+}
+.count {
+  font-size: 88px;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--pb-accent-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.sheet {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 4;
+  display: grid;
+  gap: var(--pb-space-2);
+  padding: var(--pb-space-4);
+  border-radius: var(--pb-radius) var(--pb-radius) 0 0;
+  background: var(--pb-surface);
+  box-shadow: 0 -10px 30px rgb(0 0 0 / 0.35);
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
+.sheetTitle {
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: var(--pb-font-body);
+}
+.sheetTitle small,
+.sheetNote {
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+  font-weight: 600;
+}
+.sheetNote {
+  margin: 0;
+}
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--pb-space-2);
+  width: 100%;
+  min-height: 44px;
+  padding: var(--pb-space-2) var(--pb-space-3);
+  border: 2px solid var(--pb-text-muted);
+  border-radius: var(--pb-radius);
+  background: none;
+  color: var(--pb-text);
+  font: inherit;
+  font-weight: 800;
+  text-align: left;
+  cursor: pointer;
+}
+.row small {
+  color: var(--pb-text-muted);
+  font-weight: 600;
+  font-size: var(--pb-font-caption);
+}
+.rowOn {
+  border-color: var(--pb-accent-2);
+}
+.row:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+.row:focus-visible {
+  outline: 3px solid var(--pb-focus);
+  outline-offset: 2px;
+}
+.previewBar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+  padding: var(--pb-space-2);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.35);
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+}
+.previewBar > span {
+  flex: 1;
+  padding-left: var(--pb-space-2);
+}
+
+/* Wrong way up for the chosen style: a little phone turns the way it should go. */
 .turn {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--pb-space-3);
+  gap: var(--pb-space-4);
   padding: var(--pb-space-6) var(--pb-space-4);
   text-align: center;
 }
-.turnGlyph {
-  font-size: 56px;
-  line-height: 1;
-  color: var(--pb-accent-2);
+.turnPhone {
+  display: block;
+  width: 44px;
+  height: 84px;
+  border: 4px solid var(--pb-accent-2);
+  border-radius: 10px;
+  box-shadow: inset 0 -10px 0 -6px var(--pb-accent-2);
+}
+.turnToLandscape {
+  animation: turn-to-landscape 1.8s var(--pb-ease) infinite;
+}
+.turnToPortrait {
+  animation: turn-to-portrait 1.8s var(--pb-ease) infinite;
+}
+@keyframes turn-to-landscape {
+  0%,
+  20% {
+    transform: rotate(0deg);
+  }
+  60%,
+  85% {
+    transform: rotate(-90deg);
+  }
+  100% {
+    transform: rotate(-90deg);
+    opacity: 0.4;
+  }
+}
+@keyframes turn-to-portrait {
+  0%,
+  20% {
+    transform: rotate(-90deg);
+  }
+  60%,
+  85% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(0deg);
+    opacity: 0.4;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .turnToLandscape {
+    animation: none;
+    transform: rotate(-90deg);
+  }
+  .turnToPortrait,
+  .armed {
+    animation: none;
+  }
 }
 .turnLine {
   margin: 0;
   font-size: var(--pb-font-h2);
   font-weight: 800;
 }
-.cards2 .cardLabel,
-.cards3 .cardLabel,
-.cards4 .cardLabel {
-  margin-bottom: 0;
-  font-size: 11px;
-  text-align: center;
-}
-
-.cardLabel {
-  margin: 0 0 var(--pb-space-1);
-  font-size: var(--pb-font-caption);
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--pb-text-muted);
-}
-
-/* A card that won this round: gold label, the card itself steps back (still readable). */
-.cardLabelWon {
-  color: var(--pb-accent-2);
-}
-.locked > :last-child {
-  opacity: 0.55;
-}
-
-.wipeNote {
-  margin: 0 0 var(--pb-space-2);
-  font-size: var(--pb-font-caption);
-  font-weight: 700;
-  color: var(--pb-danger);
-}
 
 .intro {
   display: flex;
   align-items: center;
   gap: var(--pb-space-4);
-  margin-bottom: var(--pb-space-3);
 }
-
 .patternLabel {
   margin: 0;
   font-size: var(--pb-font-h2);
@@ -202,7 +552,7 @@
   color: var(--pb-accent-2);
 }
 
-/* The VIP's choice after a bingo: three stacked 44 px+ buttons in the sticky footer. */
+/* The choice after a bingo: three stacked 44 px+ buttons in the sticky footer. */
 .decide {
   display: flex;
   flex-direction: column;
@@ -210,7 +560,7 @@
 }
 
 .hint {
-  margin: 0 0 var(--pb-space-3);
+  margin: 0;
   font-size: var(--pb-font-caption);
   color: var(--pb-text-muted);
 }

@@ -236,6 +236,13 @@ export function registerDevApi(app: FastifyInstance, options: DevApiOptions): vo
       if (input === null) continue;
       host.dispatch(code, { type: 'input', playerId, input });
       acted.push(playerId);
+      // A two-tap input (Bingo's BINGO!): the bot taps again straight away when it would repeat.
+      const after = host.get(code);
+      if (after?.game && after.status === 'playing') {
+        const again = game.bot.sampleInput(after.game.state, playerId, rng);
+        if (again !== null && JSON.stringify(again) === JSON.stringify(input))
+          host.dispatch(code, { type: 'input', playerId, input: again });
+      }
     }
     return {
       ok: true,

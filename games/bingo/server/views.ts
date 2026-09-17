@@ -8,8 +8,9 @@ import { calledNumbers, letterOf } from './cards';
 import type { Letter } from './cards';
 import { callFor } from './content';
 import { PATTERN_HINT, PATTERN_LABEL, patternCells } from './patterns';
+import { menusOpen } from './claims';
 import { canContinue, liveCards } from './phases/bingo';
-import { canClaim } from './phases/play';
+import { canClaim, isHeld } from './phases/play';
 import { standings } from './scoring';
 import type { StandingRow } from './scoring';
 import type { Claim, Pattern, State } from './types';
@@ -53,6 +54,13 @@ interface Common {
   decide: { same: boolean; blackout: boolean } | null;
   /** How many bingos this round has had so far (a continued round celebrates more than one). */
   bingosThisRound: number;
+  /** play: whose BINGO! is armed (dibs), until when (server clock), and who waits behind. */
+  arm: { playerId: string; name: string; card: number; until: number } | null;
+  queue: string[];
+  /** play: the caller is held — these players have the card-style menu open. */
+  pausedBy: string[];
+  /** play: the last menu closed; calling resumes at this time (3 · 2 · 1 on every screen). */
+  resumeAt: number | null;
 }
 
 export interface BingoTvView extends TvView, Common {
@@ -78,6 +86,14 @@ export interface BingoControllerView extends ControllerView, Common {
   won: number[];
   /** Every one of my cards has won: nothing left to claim until the pattern or round changes. */
   doneForRound: boolean;
+  /** My cards that may claim right now (live, and no wait after a failed claim). */
+  claimable: number[];
+  /** intro: my cards that can still be swapped once ("deal me another"). */
+  swappable: number[];
+  /** My card-style menu is open (the server's view of it — the phone mirrors this). */
+  menuOpen: boolean;
+  /** I tapped BINGO! while someone else had dibs: my place in the queue (1 = next), 0 = not queued. */
+  queuePlace: number;
   /** The phone says why the button is off right after your own failed claim. */
   waitingForCall: boolean;
   /** Spectators only (players must remember). */
@@ -146,6 +162,19 @@ function common(state: State): Common {
     standings: standings(state),
     decide: state.phase.id === 'bingo' ? canContinue(state) : null,
     bingosThisRound: round.bingos,
+    arm:
+      state.phase.id === 'play' && round.arm
+        ? { ...round.arm, name: state.players[round.arm.playerId]?.name ?? '?' }
+        : null,
+    queue:
+      state.phase.id === 'play'
+        ? round.queue.map((q) => state.players[q.playerId]?.name ?? '?')
+        : [],
+    pausedBy:
+      isHeld(state) && menusOpen(state)
+        ? round.menus.map((id) => state.players[id]?.name ?? '?')
+        : [],
+    resumeAt: state.phase.id === 'play' ? round.resumeAt : null,
   };
 }
 
@@ -178,6 +207,15 @@ export function controllerView(
     canClaim: canClaim(state, playerId),
     won: player ? (state.round.won[playerId] ?? []) : [],
     doneForRound: player && liveCards(state, playerId).length === 0,
+    claimable: player ? liveCards(state, playerId).filter((c) => canClaim(state, playerId, c)) : [],
+    swappable:
+      player && state.phase.id === 'intro'
+        ? (state.round.cards[playerId] ?? [])
+            .map((_, i) => i)
+            .filter((i) => !(state.round.swapped[playerId] ?? []).includes(i))
+        : [],
+    menuOpen: state.round.menus.includes(playerId),
+    queuePlace: state.round.queue.findIndex((q) => q.playerId === playerId) + 1,
     waitingForCall:
       player &&
       (state.phase.id === 'play' || state.phase.id === 'check') &&

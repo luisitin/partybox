@@ -23,8 +23,11 @@ export function sampleInput(state: State, playerId: string, rng: Rng): Input | n
   // A card that already won is done for the round: nothing to daub or claim there.
   const live = liveCards(state, playerId);
   if (live.length === 0) return null;
-  const done = live.some((i) => looksComplete(round.pattern, daubsOf(i)));
-  if (done && canClaim(state, playerId)) return { type: 'bingo' };
+  // Two taps: the same input twice arms, then claims, the first card that looks complete.
+  const ready = live.find((i) => looksComplete(round.pattern, daubsOf(i)));
+  const done = ready !== undefined;
+  if (ready !== undefined && canClaim(state, playerId, ready))
+    return { type: 'bingo', card: ready };
   const called = new Set(calledNumbers(state));
   // Every called, un-daubed square across the live cards; the bot works them one tap at a time.
   const todo: { card: number; index: number }[] = [];

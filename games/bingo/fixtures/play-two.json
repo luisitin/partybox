@@ -105,7 +105,12 @@
     "waitForCall": {},
     "winnerId": null,
     "won": {},
-    "bingos": 0
+    "bingos": 0,
+    "arm": null,
+    "queue": [],
+    "menus": [],
+    "resumeAt": null,
+    "swapped": {}
   },
   "wins": {
     "p1": 0,

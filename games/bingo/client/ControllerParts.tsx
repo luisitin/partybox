@@ -1,41 +1,16 @@
-// Pieces of the Bingo phone: the call header (nickname only — the number is on the TV), the
-// scoreboard rows, the card stack (one card, or several labelled, a won card locked in gold) and
-// the choice after a bingo (keep going or move on — any phone with a card, first tap wins).
-import { useSyncExternalStore } from 'react';
+// Pieces of the Bingo phone: the call header (nickname only — the number is on the TV), the call
+// row in the TV's ball style (for the grids), the scoreboard rows, the BINGO! button with its two
+// taps, and the choice after a bingo (keep going or move on — any phone with a card, first tap
+// wins).
+import { useEffect } from 'react';
 import type { JSX } from 'react';
-import { PrimaryButton } from '@partybox/game-sdk/ui';
+import { PrimaryButton, useSecondsLeft } from '@partybox/game-sdk/ui';
 import type { ScoreboardRow } from '@partybox/game-sdk/ui';
 import type { Input } from '../server/types';
 import type { BingoControllerView, CallView } from '../server/views';
-import { Card } from './Card';
 import styles from './Controller.module.css';
 
-const LANDSCAPE = '(orientation: landscape)';
-function subscribeOrientation(cb: () => void): () => void {
-  if (typeof matchMedia !== 'function') return () => undefined;
-  const mq = matchMedia(LANDSCAPE);
-  mq.addEventListener('change', cb);
-  return () => mq.removeEventListener('change', cb);
-}
-/** True when the phone is held sideways. */
-export function useLandscape(): boolean {
-  return useSyncExternalStore(
-    subscribeOrientation,
-    () => typeof matchMedia === 'function' && matchMedia(LANDSCAPE).matches,
-    () => false,
-  );
-}
-
-/**
- * How the phone must be held for this many cards (owner rule): one card upright, two sideways
- * (side by side), three or four either way. Null = fine as it is.
- */
-export function turnPrompt(cards: number, landscape: boolean): string | null {
-  if (cards === 1 && landscape) return 'Turn your phone upright for your card.';
-  if (cards === 2 && !landscape)
-    return 'Turn your phone sideways — your two cards sit side by side.';
-  return null;
-}
+export type Send = (input: Input) => void;
 
 export function rows(view: BingoControllerView): ScoreboardRow[] {
   const avatar = (id: string): string => view.players.find((p) => p.id === id)?.avatarId ?? '';
@@ -85,13 +60,112 @@ export function CallHeader({
   );
 }
 
+/** A call the way the TV shows it: the letter in a ball, the number beside it. */
+export function Ball({
+  call,
+  size = 'md',
+}: {
+  call: CallView;
+  size?: 'sm' | 'md' | 'lg';
+}): JSX.Element {
+  return (
+    <span
+      className={`${styles.ball} ${styles[`ball_${size}`] ?? ''}`}
+      key={call.number}
+      role="img"
+      aria-label={`${call.letter} ${call.number}`}
+    >
+      <i aria-hidden>{call.letter}</i>
+      <b aria-hidden>{call.number}</b>
+    </span>
+  );
+}
+
+/** The grids' call line: this ball, the one before, the count — no nickname (owner rule). */
+export function CallRow({ view }: { view: BingoControllerView }): JSX.Element {
+  return (
+    <div className={styles.callRow} role="status" aria-live="polite">
+      {view.current ? <Ball call={view.current} /> : <span>First number coming…</span>}
+      {view.current ? (
+        <span className={styles.callMeta}>
+          {view.previous ? (
+            <>
+              before that <Ball call={view.previous} size="sm" />
+            </>
+          ) : null}
+          {' · '}call {view.callIndex}
+        </span>
+      ) : null}
+    </div>
+  );
+}
+
+/**
+ * BINGO! for one card. First tap arms it (the button turns gold: "Tap again for BINGO! · 3"),
+ * the second tap claims. Someone else armed: the button says who is calling it, and whether you
+ * are next. The armed phone reports its own lapse so dibs pass on at once.
+ */
+export function BingoButton({
+  view,
+  card,
+  send,
+  small,
+  meId,
+}: {
+  view: BingoControllerView;
+  card: number;
+  send: Send;
+  small?: boolean;
+  meId: string;
+}): JSX.Element {
+  const arm = view.arm;
+  const mine = arm !== null && arm.playerId === meId;
+  const armedHere = mine && arm.card === card;
+  const left = useSecondsLeft(armedHere ? arm.until : null);
+  useEffect(() => {
+    if (armedHere && left === 0) send({ type: 'lapse' });
+  }, [armedHere, left, send]);
+  const won = view.won.includes(card);
+  const checking = view.phaseId === 'check';
+  const canTap = view.claimable.includes(card) && !checking;
+  let label = 'BINGO!';
+  let tone: 'accent' | 'neutral' | 'danger' | 'success' = 'accent';
+  if (won) label = 'Yours already';
+  else if (checking) label = view.claim?.playerId === meId ? 'Not a bingo' : 'Look at the TV';
+  else if (view.waitingForCall) label = 'Next number soon…';
+  else if (armedHere) {
+    label = `Tap again for BINGO! · ${left ?? 0}`;
+    tone = 'success';
+  } else if (mine) label = 'BINGO!';
+  else if (arm) {
+    label =
+      view.queuePlace === 1
+        ? `${arm.name} is calling it… you're next`
+        : view.queuePlace > 1
+          ? `${arm.name} is calling it… #${view.queuePlace} in line`
+          : `${arm.name} is calling it…`;
+    tone = 'neutral';
+  }
+  return (
+    <PrimaryButton
+      tone={checking && view.claim?.playerId === meId ? 'danger' : tone}
+      disabled={!canTap && !(arm && !mine && canTap)}
+      onClick={() => send({ type: 'bingo', card })}
+      className={`${small ? styles.bingoSmall : styles.bingo} ${armedHere ? styles.armed : ''}`}
+      aria-label={`BINGO! card ${card + 1}${armedHere ? ', armed, tap again to claim' : ''}`}
+    >
+      {label}
+    </PrimaryButton>
+  );
+}
+
 /** After a bingo: keep going on the same cards (same pattern / blackout) or move on. */
 export function DecideFooter({
   view,
   send,
 }: {
   view: BingoControllerView;
-  send: (input: Input) => void;
+  send: Send;
 }): JSX.Element | null {
   const decide = view.decide;
   if (!decide || !(decide.same || decide.blackout)) return null;
@@ -114,94 +188,6 @@ export function DecideFooter({
       <PrimaryButton tone="neutral" onClick={() => send({ type: 'next' })}>
         {nextLabel}
       </PrimaryButton>
-    </div>
-  );
-}
-
-export interface CardStackProps {
-  view: BingoControllerView;
-  cards: number[][];
-  /** Phone-only FREE daubs, per card index. */
-  freeDaubed: number[];
-  onTapFree: (card: number) => void;
-  onTap: (card: number, index: number) => void;
-  /** intro: fresh cards, no daubs, the pattern outlined. */
-  intro: boolean;
-  disabled: boolean;
-  /** check: my own failed claim is shown as the room sees it, in place of that card. */
-  showClaim: boolean;
-}
-
-/** Every card this phone holds; a card that won this round is locked and says so. */
-export function CardStack({
-  view,
-  cards,
-  freeDaubed,
-  onTapFree,
-  onTap,
-  intro,
-  disabled,
-  showClaim,
-}: CardStackProps): JSX.Element {
-  const claim = view.claim;
-  const many = cards.length > 1;
-  const size = many ? 'compact' : 'phone';
-  const gridClass = styles[`cards${Math.min(4, cards.length)}`] ?? '';
-  // Live cards first: the one you can still play stays in view, a card that won drops below.
-  const order = cards
-    .map((_, c) => c)
-    .sort(
-      (a, b) => Number(!intro && view.won.includes(a)) - Number(!intro && view.won.includes(b)),
-    );
-  return (
-    <div className={`${styles.cards} ${gridClass}`}>
-      {order.map((c) => {
-        const card = cards[c] ?? [];
-        if (showClaim && claim && claim.cardIndex === c)
-          return (
-            // Your failed claim, exactly as the room sees it: the wipe lands when play resumes.
-            <div key={`claim-${c}`} className={`${styles.cardSlot} pb-pop`}>
-              <p className={styles.wipeNote}>
-                {many ? `Card ${c + 1} wiped` : 'Card wiped'}
-                {many ? '' : ' — re-daub from memory when play resumes.'}
-              </p>
-              <Card
-                numbers={claim.card}
-                daubs={claim.daubs}
-                green={claim.green}
-                red={claim.red}
-                missing={claim.missing}
-                verdict
-                disabled
-                size={size}
-              />
-            </div>
-          );
-        const locked = !intro && view.won.includes(c);
-        return (
-          <div
-            key={`${c}-${view.waitingForCall ? 'wiped' : 'card'}`}
-            className={`${styles.cardSlot} pb-enter ${locked ? styles.locked : ''}`}
-          >
-            {many || locked ? (
-              <p className={`${styles.cardLabel} ${locked ? styles.cardLabelWon : ''}`}>
-                {many ? `Card ${c + 1}` : ''}
-                {locked ? `${many ? ' · ' : ''}BINGO ✓${many ? '' : ' — yours already'}` : ''}
-              </p>
-            ) : null}
-            <Card
-              numbers={card}
-              daubs={intro ? [] : (view.daubs[c] ?? [])}
-              pattern={intro && view.pattern !== 'line' ? view.patternCells : []}
-              freeDaubed={locked || freeDaubed.includes(c)}
-              onTapFree={() => onTapFree(c)}
-              onTap={(index) => onTap(c, index)}
-              disabled={disabled || locked}
-              size={size}
-            />
-          </div>
-        );
-      })}
     </div>
   );
 }
