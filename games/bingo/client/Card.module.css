@@ -274,8 +274,11 @@ button.cell:focus-visible {
 .phone .number {
   font-size: var(--pb-font-h2);
 }
+.phone {
+  container-type: inline-size;
+}
 .phone .free .number {
-  font-size: 11px;
+  font-size: clamp(7px, 4.2cqw, 12px);
   letter-spacing: 0;
 }
 

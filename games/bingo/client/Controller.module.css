@@ -213,8 +213,11 @@
     max-width: min(100%, max(168px, calc((100dvh - 430px) / 1.15)));
   }
   .thumbs {
-    --pb-thumb: 84px;
+    --pb-thumb: 76px;
     gap: var(--pb-space-1);
+  }
+  .phrase {
+    font-size: var(--pb-font-h2);
   }
 }
 .thumbs {
