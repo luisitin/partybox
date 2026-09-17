@@ -3,7 +3,9 @@
 // "paper" marks — the physical game's convention, kept in every theme so the game is its own
 // thing. `fill` (server/cards.ts) is the one rule for where the text goes.
 import type { JSX, ReactNode } from 'react';
+import { BLANK } from '../content/schema';
 import { fill, fillText, glue } from '../server/cards';
+import type { Segment } from '../server/cards';
 import styles from './blanks.module.css';
 
 export const LETTERS = 'ABCDEFGHIJKLMNOP';
@@ -45,6 +47,17 @@ function lengthClass(
   return '';
 }
 
+/** An unfilled blank stays on the line with the word before it: "exhibit: ____." wrapped the
+ *  blank alone onto its own line on the TV's answer stage (review-loop #121). */
+function glueBlanks(segments: readonly Segment[]): Segment[] {
+  return segments.map((s, i) => {
+    const next = segments[i + 1];
+    if (s.kind === 'text' && next?.kind === 'text' && next.text === BLANK && s.text.endsWith(' '))
+      return { ...s, text: `${s.text.slice(0, -1)}\u00A0` };
+    return s;
+  });
+}
+
 export function FilledCard({
   text,
   whites = [],
@@ -58,6 +71,7 @@ export function FilledCard({
 }: FilledCardProps): JSX.Element {
   const { segments, extra } = fill(text, whites);
   const sizeClass = styles[size] ?? '';
+  const parts = glueBlanks(segments);
   return (
     <article
       className={`${styles.black} ${sizeClass} ${lengthClass(size, text, whites)} ${letter ? styles.lettered : ''} ${winner ? styles.winner : ''} ${className ?? ''}`}
@@ -69,7 +83,7 @@ export function FilledCard({
         </span>
       ) : null}
       <p className={styles.sentence}>
-        {segments.map((s, i) =>
+        {parts.map((s, i) =>
           s.kind === 'fill' ? (
             <mark key={i} className={styles.fill}>
               {glue(s.text)}
