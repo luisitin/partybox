@@ -7,7 +7,15 @@ import { parseArgs } from 'node:util';
 import { chromium } from 'playwright';
 import type { Page } from 'playwright';
 import { REPO_ROOT, startServer } from './server';
-import { DevApi, joinViaForm, openPhone, openTv, passAudioGate, settle } from './session';
+import {
+  DevApi,
+  cutStrips,
+  joinViaForm,
+  openPhone,
+  openTvRecorded,
+  passAudioGate,
+  settle,
+} from './session';
 import { Shooter } from './shooter';
 
 const { values } = parseArgs({
@@ -73,7 +81,9 @@ async function main(): Promise<void> {
     (await api.state()).room?.game?.state as unknown as BingoState;
   try {
     await api.reset();
-    const tv = await openTv(browser, server.url);
+    const rec = await openTvRecorded(browser, server.url, join(OUT, 'video'));
+    const tv = rec.page;
+    const marks: { name: string; at: number; before?: number; seconds?: number }[] = [];
     await passAudioGate(tv);
     const vip = await openPhone(browser, server.url, 'iphone', 'Sam');
     await joinViaForm(vip, api, { avatarIndex: 1 });
@@ -87,6 +97,7 @@ async function main(): Promise<void> {
     await shots.shot(vip.page, { group: G, phase: 'intro', device: 'iphone', role: 'vip' });
     // intro → play: the first call bounces in.
     await api.skip();
+    marks.push({ name: 'call-lands', at: Date.now(), before: 0.2, seconds: 2 });
     await burst(shots, tv, 'call-lands', 5, 70);
     await settle(500);
     await shots.shot(vip.page, { group: G, phase: 'play', device: 'iphone', role: 'vip' });
@@ -101,6 +112,7 @@ async function main(): Promise<void> {
     await settle(300);
     await shots.shot(p2.page, { group: G, phase: 'armed', device: 'iphone-se', role: 'p2' });
     await p2.page.getByRole('button', { name: /tap again to claim/i }).dispatchEvent('click'); // claims
+    marks.push({ name: 'check-reveal', at: Date.now(), seconds: 6 });
     await burst(shots, tv, 'check-lands', 18, 300);
     await settle(1200);
     await shots.shot(tv, { group: G, phase: 'check', device: 'tv', role: 'stage' });
@@ -138,6 +150,7 @@ async function main(): Promise<void> {
     await vip.page.getByRole('button', { name: /tap again to claim/i }).dispatchEvent('click');
     // Sound-to-colour sync: the sting fires STING_LAG_MS after the sweep band mounts; the first
     // cell must be visibly green (closer to accent-3 than to its outline) by then.
+    marks.push({ name: 'bingo-reveal', at: Date.now(), seconds: 6 });
     const sync = tv.evaluate<{ sweepAt: number | null; greenAt: number | null }>(SYNC_PROBE);
     await burst(shots, tv, 'bingo-lands', 18, 300);
     const { sweepAt, greenAt } = await sync;
@@ -155,11 +168,15 @@ async function main(): Promise<void> {
     await shots.shot(tv, { group: G, phase: 'bingo-decide', device: 'tv', role: 'stage' });
     await shots.shot(vip.page, { group: G, phase: 'bingo-decide', device: 'iphone', role: 'vip' });
     await vip.page.getByRole('button', { name: /keep going — same pattern/i }).click();
+    marks.push({ name: 'continued', at: Date.now(), seconds: 3 });
     await settle(1200);
     await shots.shot(tv, { group: G, phase: 'continued', device: 'tv', role: 'stage' });
     await shots.shot(vip.page, { group: G, phase: 'continued', device: 'iphone', role: 'winner' });
     await shots.shot(p2.page, { group: G, phase: 'continued', device: 'iphone-se', role: 'p2' });
-    console.log(`captured ${shots.shots.length} stills → ${OUT}`);
+    const video = await cutStrips(rec, join(OUT, 'strips'), marks);
+    console.log(
+      `captured ${shots.shots.length} stills → ${OUT}; 10 fps strips from ${video ?? '(no video)'}`,
+    );
   } finally {
     await browser.close();
     await server.stop();
