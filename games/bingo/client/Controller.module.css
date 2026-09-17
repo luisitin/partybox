@@ -643,3 +643,19 @@
     gap: var(--pb-space-1);
   }
 }
+/* Deciding on a phone: the thumbnails go (the pick needs no second card) and the main card
+   takes the single-card cap. */
+@media (max-width: 700px) {
+  .deciding .thumbs {
+    display: none;
+  }
+  .deciding .focusMany .focusMain {
+    max-width: min(100%, max(200px, calc((100dvh - 500px) / 1.15)));
+  }
+}
+/* The winner's own card above the three keep-going buttons: same cap as the deciding screen. */
+.winCard {
+  width: 100%;
+  max-width: min(100%, max(200px, calc((100dvh - 500px) / 1.15)));
+  margin-inline: auto;
+}

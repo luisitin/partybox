@@ -264,7 +264,9 @@ export function Controller({
         footer={<DecideFooter view={view} send={send} />}
       >
         {claim ? (
-          <Card numbers={claim.card} daubs={claim.daubs} green={claim.green} disabled />
+          <div className={styles.winCard}>
+            <Card numbers={claim.card} daubs={claim.daubs} green={claim.green} disabled />
+          </div>
         ) : null}
         <p className={styles.hint}>
           {iDecide && n > 1
