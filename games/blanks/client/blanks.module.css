@@ -392,6 +392,13 @@
   gap: var(--pb-space-5);
 }
 
+/* Three or more winners: thumbnails, up to five in the row; a step down so the +1 badges hang
+   between the headline and the cards, not over the headline. */
+.winnersMany {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  margin-top: var(--pb-space-4);
+}
+
 .author {
   display: inline-flex;
   align-items: center;
