@@ -176,15 +176,22 @@
   animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
 }
 
-/* The card on stage floats in the free space; whatever sits under it hugs the bottom. */
+/* The card on stage floats in the free space; whatever sits under it hugs the bottom. Centred
+   with auto margins, not justify-content: when the read strip leaves less room than the card
+   needs, auto margins collapse to zero and the card stays under the kicker instead of spilling
+   over it (a 6-card wild-only reading covered "Read it out loud", review-loop #119). */
 .stageMain {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   width: 100%;
   min-height: 0;
+}
+
+.stageMain > .stageCard {
+  margin-block: auto;
 }
 
 /* The reveal card lands with a bounce (a new card on the table). */
@@ -420,15 +427,18 @@
   white-space: nowrap;
 }
 
+/* Hangs off the card's top-right edge and never reaches the first line of text: at body size it
+   is 54 px tall with 32 px above the card, inside the 24 px padding (the h2 badge sat over "A
+   canoe" on a split winner, review-loop #117). */
 .plusOne {
   position: absolute;
-  top: calc(-1 * var(--pb-space-4));
+  top: calc(-1 * var(--pb-space-6));
   right: var(--pb-space-5);
   padding: 0 var(--pb-space-4);
   border-radius: 999px;
   background: var(--pb-accent-2-fill);
   color: var(--pb-on-accent-2-fill);
-  font-size: var(--pb-font-h2);
+  font-size: var(--pb-font-body);
   font-weight: 900;
   line-height: 1.5;
 }

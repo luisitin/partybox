@@ -6,12 +6,15 @@ import type { JSX } from 'react';
 import { Avatar, BigText, Stage } from '@partybox/game-sdk/ui';
 import type { GameTvProps, ViewPlayer } from '@partybox/game-sdk/ui';
 import type { BlanksTvView } from '../server/index';
+import { fillText } from '../server/cards';
 import { FilledCard, LETTERS } from './Cards';
 import styles from './blanks.module.css';
 
 type Props = GameTvProps<BlanksTvView>;
 
 const NAMED_HOLDOUTS = 3;
+/** A filled sentence past this many characters wraps to four lines in a quarter-width mini. */
+const STRIP_LONG = 75;
 
 function Holdout({ player }: { player: ViewPlayer }): JSX.Element {
   return (
@@ -66,8 +69,13 @@ function Progress({ view }: Props): JSX.Element {
 
 export function TvReveal({ view }: Props): JSX.Element {
   const current = view.cards[view.revealIndex];
-  // The last four read (the judge grid shows them all); one row, never pushing the card up.
-  const read = view.cards.slice(0, view.revealIndex).slice(-4);
+  // The last four read (the judge grid shows them all) in one row — three when the sentences run
+  // long, so the minis stay at three lines and the hero card keeps its room (review-loop #119).
+  const before = view.cards.slice(0, view.revealIndex);
+  const long =
+    view.black !== null &&
+    before.some((c) => fillText(view.black?.text ?? '', c.whites).length > STRIP_LONG);
+  const read = before.slice(long ? -3 : -4);
   return (
     <Stage>
       <div className={styles.kickerRow}>
