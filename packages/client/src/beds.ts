@@ -49,6 +49,9 @@ interface Running {
 
 export function createBedEngine(): BedEngine {
   let ctx: AudioContext | null = null;
+  // The design harness reads which bed plays under each phase (evidence, never a control).
+  const probe = window as unknown as { __pbBeds?: { current(): BedId | null } };
+  probe.__pbBeds = { current: () => running?.id ?? null };
   let master: GainNode | null = null;
   let muted = false;
   let paused = false;

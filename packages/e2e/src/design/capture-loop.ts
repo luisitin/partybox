@@ -147,6 +147,7 @@ async function main(): Promise<void> {
         if (change.deadline) timerStrips.push({ phase, deadline: change.deadline });
         const tag = `${String(n).padStart(2, '0')}-${phase}`;
         await settle(450);
+        change.bed = (await tv.evaluate('window.__pbBeds?.current() ?? null')) as string | null;
         await still(tv, `${tag}-tv`);
         await still(sam.page, `${tag}-phone-active`);
         // Priya acts first: her phone is the "waiting" (submitted) state of this phase.

@@ -24,6 +24,8 @@ export interface PhaseChange {
   status: string;
   phase: string;
   deadline: number | null;
+  /** The music bed the TV reports under this phase (ADR-032), once it has settled. */
+  bed?: string | null;
 }
 
 /** Cue signatures (first notes' frequencies) parsed from the client's sound table. */

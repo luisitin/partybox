@@ -74,7 +74,7 @@ describe('bedFor', () => {
       deadline: null,
       paused: false,
       players: [],
-    }) as PushedView<TvView>;
+    }) as unknown as PushedView<TvView>;
   const room = (status: RoomSnapshot['status']): RoomSnapshot =>
     ({ status, selectedGameId: 'blanks', players: [], code: 'ABCD' }) as unknown as RoomSnapshot;
   const beds = { intro: 'warm', judge: 'marimba', bogus: 'not-a-bed' };
