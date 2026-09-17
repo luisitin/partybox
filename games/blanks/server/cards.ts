@@ -107,6 +107,13 @@ export function fill(
   return { segments, extra: whites.slice(blanksIn(text)) };
 }
 
+/** A white card's short first word ("A", "The", "My") stays on the line with its next word: a
+ *  lone "A" in a paper mark at the end of a line read as its own card (review-loop #113).
+ *  Rendering only: `fillText` (labels, tests) keeps plain spaces. */
+export function glue(white: string): string {
+  return white.replace(/^(\S{1,3}) (?=\S)/, '$1\u00A0');
+}
+
 /** The filled sentence as plain text (a11y labels, tests, bots). */
 export function fillText(text: string, whites: readonly string[]): string {
   const { segments, extra } = fill(text, whites);

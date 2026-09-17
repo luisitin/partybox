@@ -3,7 +3,7 @@
 // "paper" marks — the physical game's convention, kept in every theme so the game is its own
 // thing. `fill` (server/cards.ts) is the one rule for where the text goes.
 import type { JSX, ReactNode } from 'react';
-import { fill, fillText } from '../server/cards';
+import { fill, fillText, glue } from '../server/cards';
 import styles from './blanks.module.css';
 
 export const LETTERS = 'ABCDEFGHIJKLMNOP';
@@ -72,7 +72,7 @@ export function FilledCard({
         {segments.map((s, i) =>
           s.kind === 'fill' ? (
             <mark key={i} className={styles.fill}>
-              {s.text}
+              {glue(s.text)}
             </mark>
           ) : (
             // A bare space between two whites ("____, ____") becomes a visible gap, so two
@@ -87,7 +87,7 @@ export function FilledCard({
         <ul className={styles.extras}>
           {extra.map((w, i) => (
             <li key={i}>
-              <mark className={styles.fill}>{w}</mark>
+              <mark className={styles.fill}>{glue(w)}</mark>
             </li>
           ))}
         </ul>
@@ -114,7 +114,7 @@ export function InlineFilled({
       {segments.map((s, i) =>
         s.kind === 'fill' ? (
           <mark key={i} className={styles.fill}>
-            {s.text}
+            {glue(s.text)}
           </mark>
         ) : (
           <span key={i}>{s.text}</span>
@@ -122,7 +122,7 @@ export function InlineFilled({
       )}
       {extra.map((w, i) => (
         <mark key={`x${i}`} className={styles.fill}>
-          {w}
+          {glue(w)}
         </mark>
       ))}
     </span>
