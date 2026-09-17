@@ -135,6 +135,12 @@
 .bingo.armed {
   font-size: var(--pb-font-h2);
 }
+/* A narrow phone (an SE, 320 px): "Tap again for BINGO! · 3" stays on one line. */
+@media (max-width: 360px) {
+  .bingo.armed {
+    font-size: var(--pb-font-button);
+  }
+}
 .armed {
   animation: armed-pulse 0.6s var(--pb-ease) infinite alternate;
 }
@@ -607,4 +613,33 @@
   margin: 0;
   font-size: var(--pb-font-caption);
   color: var(--pb-text-muted);
+}
+
+/* The keep-going screen: three footer buttons take ~150 px more than one BINGO!, so the card
+   gives that back rather than losing its bottom row under them. */
+.deciding .focusMain,
+.deciding .focusMany .focusMain {
+  max-width: min(100%, max(200px, calc((100dvh - 500px) / 1.15)));
+}
+.deciding .focusMany .focusMain {
+  max-width: min(100%, max(168px, calc((100dvh - 600px) / 1.15)));
+}
+/* A short phone: the three keep-going buttons drop to body size so the card keeps its rows. */
+@media (max-height: 640px) {
+  .decide > button {
+    min-height: 44px;
+    padding: 6px var(--pb-space-3);
+    font-size: var(--pb-font-body);
+  }
+  /* The buttons say it all: the hint under the title goes, and the card takes its 60 px. */
+  .deciding .topRow .hint {
+    display: none;
+  }
+  .deciding .focusMain,
+  .deciding .focusMany .focusMain {
+    max-width: min(100%, max(200px, calc((100dvh - 330px) / 1.15)));
+  }
+  .decide {
+    gap: var(--pb-space-1);
+  }
 }
