@@ -1,0 +1,105 @@
+{
+  "pass": "34",
+  "game": "wisecrack",
+  "players": 5,
+  "scenario": "vip-leaves",
+  "focus": "tv",
+  "started": "00:05:00.697",
+  "tvVideoT0": "00:04:55.229",
+  "changes": [
+    {
+      "t": 1789603500701,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789603505695,
+      "at": "00:05:00.701",
+      "sinceStartS": 0,
+      "videoS": 5.5
+    },
+    {
+      "t": 1789603505701,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789603545697,
+      "at": "00:05:05.701",
+      "sinceStartS": 5,
+      "videoS": 10.5
+    },
+    {
+      "t": 1789603545758,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789603565711,
+      "at": "00:05:45.758",
+      "sinceStartS": 45.1,
+      "videoS": 50.5
+    },
+    {
+      "t": 1789603547391,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789603553284,
+      "at": "00:05:47.391",
+      "sinceStartS": 46.7,
+      "videoS": 52.2
+    },
+    {
+      "t": 1789603553336,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789603573287,
+      "at": "00:05:53.336",
+      "sinceStartS": 52.6,
+      "videoS": 58.1
+    },
+    {
+      "t": 1789603554653,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789603560536,
+      "at": "00:05:54.653",
+      "sinceStartS": 54,
+      "videoS": 59.4
+    },
+    {
+      "t": 1789603560631,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789603580537,
+      "at": "00:06:00.631",
+      "sinceStartS": 59.9,
+      "videoS": 65.4
+    },
+    {
+      "t": 1789603562739,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789603568628,
+      "at": "00:06:02.739",
+      "sinceStartS": 62,
+      "videoS": 67.5
+    },
+    {
+      "t": 1789603568722,
+      "status": "playing",
+      "phase": "scores",
+      "deadline": 1789603576630,
+      "at": "00:06:08.722",
+      "sinceStartS": 68,
+      "videoS": 73.5
+    },
+    {
+      "t": 1789603576675,
+      "status": "results",
+      "phase": "results",
+      "deadline": null,
+      "at": "00:06:16.675",
+      "sinceStartS": 76,
+      "videoS": 81.4
+    }
+  ],
+  "notes": [
+    "3 extra phones instead of bots (manifest.supportsBots is not true)",
+    "vip-leaves: Sam (VIP) closed the page in answer"
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "pass": "34",
+  "game": "wisecrack",
+  "players": 5,
+  "scenario": "vip-leaves",
+  "focus": "tv",
+  "started": "00:21:47.819",
+  "tvVideoT0": "00:21:42.511",
+  "changes": [
+    {
+      "t": 1789604507823,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789604512814,
+      "at": "00:21:47.823",
+      "sinceStartS": 0,
+      "videoS": 5.3
+    },
+    {
+      "t": 1789604512885,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789604552825,
+      "at": "00:21:52.885",
+      "sinceStartS": 5.1,
+      "videoS": 10.4
+    },
+    {
+      "t": 1789604552832,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789604558825,
+      "at": "00:22:32.832",
+      "sinceStartS": 45,
+      "videoS": 50.3
+    },
+    {
+      "t": 1789604576900,
+      "status": "playing",
+      "phase": "scores",
+      "deadline": 1789604584857,
+      "at": "00:22:56.900",
+      "sinceStartS": 69.1,
+      "videoS": 74.4
+    },
+    {
+      "t": 1789604584877,
+      "status": "results",
+      "phase": "results",
+      "deadline": null,
+      "at": "00:23:04.877",
+      "sinceStartS": 77.1,
+      "videoS": 82.4
+    }
+  ],
+  "notes": [
+    "3 extra phones instead of bots (manifest.supportsBots is not true)",
+    "vip-leaves: Sam (VIP) closed the page in answer"
+  ]
+}
