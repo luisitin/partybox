@@ -19,6 +19,16 @@
   padding: 0 var(--pb-space-2);
 }
 
+/* The VIP's phone is gone: who inherits, and when (review-loop #34). */
+.away {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--pb-text-muted);
+  padding: 0 var(--pb-space-2);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
 .button {
   min-height: var(--pb-touch);
   padding: 0 var(--pb-space-4);

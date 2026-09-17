@@ -4,6 +4,7 @@
 // the frame's 🏠 (TvFrame).
 import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
+import { LIMITS } from '@partybox/shared';
 import type { PushedView, RoomSnapshot, TvView } from '@partybox/shared';
 import { t } from '../i18n';
 import type { TvClient } from '../net/tv';
@@ -16,6 +17,38 @@ export interface HostBarProps {
 }
 
 const CONFIRM_MS = 4000;
+
+/** Who the engine hands the VIP to: the longest-joined connected person (players.ts promoteVip). */
+function nextVipName(room: RoomSnapshot): string | null {
+  const next = room.players
+    .filter((p) => p.connected && p.id !== room.vip && !p.bot && !p.spectator)
+    .sort((a, b) => a.joinedAt - b.joinedAt)[0];
+  return next?.name ?? null;
+}
+
+/**
+ * While the VIP's phone is disconnected the engine hands the role over after LIMITS.vipHandoverMs;
+ * the room only saw a spinner on a chip for that half minute (review-loop #34). Counted locally
+ * from the first snapshot that shows the VIP offline (the server flips `connected` on socket
+ * close, so this trails the engine's clock by a push at most); a 1 s tick keeps the digits moving.
+ */
+function useVipAway(room: RoomSnapshot): { next: string | null; seconds: number } | null {
+  const vip = room.players.find((p) => p.id === room.vip);
+  const away = vip !== undefined && !vip.connected;
+  const [tick, setTick] = useState<{ now: number; since: number | null }>({ now: 0, since: null });
+  useEffect(() => {
+    if (!away) return;
+    const update = (): void => setTick((t) => ({ now: Date.now(), since: t.since ?? Date.now() }));
+    const handle = setInterval(update, 1000);
+    return () => {
+      clearInterval(handle);
+      setTick({ now: 0, since: null });
+    };
+  }, [away]);
+  if (!away || tick.since === null) return null;
+  const seconds = Math.max(0, Math.ceil((tick.since + LIMITS.vipHandoverMs - tick.now) / 1000));
+  return { next: nextVipName(room), seconds };
+}
 
 export function HostBar({ client, room, view }: HostBarProps): JSX.Element | null {
   const [confirm, setConfirm] = useState<string | null>(null);
@@ -33,6 +66,7 @@ export function HostBar({ client, room, view }: HostBarProps): JSX.Element | nul
     run();
   };
   const label = (key: string, text: string): string => (confirm === key ? `Sure? ${text}` : text);
+  const vipAway = useVipAway(room);
   const bots = room.players.filter((p) => p.bot);
   const full = room.players.length >= room.capacity;
   const firstGame = room.games[0];
@@ -156,6 +190,11 @@ export function HostBar({ client, room, view }: HostBarProps): JSX.Element | nul
   return (
     <div className={styles.bar} role="toolbar" aria-label={t.host.title}>
       <span className={styles.label}>{t.host.title}</span>
+      {vipAway ? (
+        <span className={styles.away} role="status">
+          {vipAway.next ? t.host.vipAway(vipAway.next, vipAway.seconds) : t.host.vipAwayNobody}
+        </span>
+      ) : null}
       {buttons}
     </div>
   );

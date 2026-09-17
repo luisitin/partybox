@@ -125,6 +125,8 @@ export const t = {
     skip: 'Skip / Next',
     removeBots: (n: number) => (n === 1 ? 'Remove bot' : `Remove ${n} bots`),
     choosing: 'Pick a game and its settings here, or from the VIP phone.',
+    vipAway: (next: string, seconds: number) => `VIP away — passes to ${next} in ${seconds} s`,
+    vipAwayNobody: 'VIP away — nobody else to hand over to',
   },
   tv: {
     tapToStart: 'Tap anywhere for sound',
