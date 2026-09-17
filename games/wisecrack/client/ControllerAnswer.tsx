@@ -32,8 +32,10 @@ export function ControllerAnswer({
   const total = view.myPrompts.length;
   const index = view.myPrompts.findIndex((p) => p.answer === null);
   const current = index === -1 ? null : view.myPrompts[index];
-  const kickerFor = (i: number): string =>
-    `Round ${view.round} · Prompt ${i + 1} of ${total}${i > 0 ? ` · ✓ ${i} sent` : ''}`;
+  // Counted, not positional: a phone can answer prompt 2 first (review-loop #69).
+  const sent = view.myPrompts.filter((p) => p.answer !== null).length;
+  const kickerFor = (i: number, done: number): string =>
+    `Round ${view.round} · Prompt ${i + 1} of ${total}${done > 0 ? ` · ✓ ${done} sent` : ''}`;
   // The card that was just sent stays up (same key → same instance → 'You said …') until the beat.
   const heldIndex =
     held && held.id !== current?.id ? view.myPrompts.findIndex((p) => p.id === held.id) : -1;
@@ -42,11 +44,11 @@ export function ControllerAnswer({
     return (
       <TextAnswer
         key={heldPrompt.id}
-        kicker={kickerFor(heldIndex)}
+        kicker={kickerFor(heldIndex, sent - 1)}
         prompt={heldPrompt.text}
         submitted
         promptKey={heldPrompt.id}
-        submittedHint={heldIndex + 1 < total ? 'One more…' : undefined}
+        submittedHint={sent < total ? 'One more…' : undefined}
         onSubmit={() => undefined}
       />
     );
@@ -71,14 +73,14 @@ export function ControllerAnswer({
     <TextAnswer
       key={current.id}
       className="pb-enter"
-      kicker={kickerFor(index)}
+      kicker={kickerFor(index, sent)}
       prompt={current.text}
       placeholder="Your funniest answer…"
       maxLength={MAX_CHARS}
       submitted={sentId === current.id}
       promptKey={current.id}
-      submitLabel={total > 1 ? `Submit ${index + 1} of ${total}` : 'Submit'}
-      submittedHint={index + 1 < total ? 'One more…' : undefined}
+      submitLabel={total > 1 ? `Submit ${sent + 1} of ${total}` : 'Submit'}
+      submittedHint={sent + 1 < total ? 'One more…' : undefined}
       onSubmit={(text) => {
         setSentId(current.id);
         if (holdMs > 0) setHeld({ id: current.id });
