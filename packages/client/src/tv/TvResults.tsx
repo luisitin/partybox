@@ -65,7 +65,7 @@ export function TvResults({ room, lastView = null }: TvResultsProps): JSX.Elemen
           ) : null}
         </div>
       )}
-      <p className="pb-muted pb-caption">
+      <p className={`pb-muted pb-caption ${awards.length === 0 ? styles.centredHint : ''}`}>
         {t.vip.badge}: {t.results.playAgain} · {t.results.newGame} · {t.results.lobby}
       </p>
     </Stage>
