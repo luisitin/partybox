@@ -1,0 +1,85 @@
+{
+  "tv": {
+    "frames": 4081,
+    "longFrames": 9,
+    "worstMs": 50,
+    "long": [
+      {
+        "t": 1789654275278,
+        "ms": 50,
+        "phase": "lobby"
+      },
+      {
+        "t": 1789654278236,
+        "ms": 50,
+        "phase": "intro"
+      },
+      {
+        "t": 1789654282276,
+        "ms": 50,
+        "phase": "question"
+      },
+      {
+        "t": 1789654282393,
+        "ms": 50,
+        "phase": "question"
+      },
+      {
+        "t": 1789654286591,
+        "ms": 50,
+        "phase": "reveal"
+      },
+      {
+        "t": 1789654304707,
+        "ms": 50,
+        "phase": "reveal"
+      },
+      {
+        "t": 1789654313938,
+        "ms": 50,
+        "phase": "reveal"
+      },
+      {
+        "t": 1789654327910,
+        "ms": 50,
+        "phase": "wager"
+      },
+      {
+        "t": 1789654332061,
+        "ms": 50,
+        "phase": "question"
+      }
+    ]
+  },
+  "phone": {
+    "longFrames": 5,
+    "worstMs": 67,
+    "long": [
+      {
+        "t": 1789654275949,
+        "ms": 67,
+        "phase": "lobby"
+      },
+      {
+        "t": 1789654300611,
+        "ms": 50,
+        "phase": "question"
+      },
+      {
+        "t": 1789654318975,
+        "ms": 50,
+        "phase": "question"
+      },
+      {
+        "t": 1789654328072,
+        "ms": 50,
+        "phase": "wager"
+      },
+      {
+        "t": 1789654341393,
+        "ms": 50,
+        "phase": "results"
+      }
+    ]
+  }
+}

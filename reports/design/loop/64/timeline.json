@@ -1,0 +1,147 @@
+{
+  "pass": "64",
+  "game": "lightning-round",
+  "players": 4,
+  "scenario": "normal",
+  "focus": "phone",
+  "started": "14:11:18.154",
+  "tvVideoT0": "14:11:14.832",
+  "changes": [
+    {
+      "t": 1789654278156,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789654282145,
+      "at": "14:11:18.156",
+      "sinceStartS": 0,
+      "videoS": 3.3
+    },
+    {
+      "t": 1789654282258,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789654297145,
+      "at": "14:11:22.258",
+      "sinceStartS": 4.1,
+      "videoS": 7.4
+    },
+    {
+      "t": 1789654286445,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789654291329,
+      "at": "14:11:26.445",
+      "sinceStartS": 8.3,
+      "videoS": 11.6
+    },
+    {
+      "t": 1789654291354,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789654306343,
+      "at": "14:11:31.354",
+      "sinceStartS": 13.2,
+      "videoS": 16.5
+    },
+    {
+      "t": 1789654295486,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789654300374,
+      "at": "14:11:35.486",
+      "sinceStartS": 17.3,
+      "videoS": 20.7
+    },
+    {
+      "t": 1789654300398,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789654315388,
+      "at": "14:11:40.398",
+      "sinceStartS": 22.2,
+      "videoS": 25.6
+    },
+    {
+      "t": 1789654304578,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789654309474,
+      "at": "14:11:44.578",
+      "sinceStartS": 26.4,
+      "videoS": 29.7
+    },
+    {
+      "t": 1789654309538,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789654324483,
+      "at": "14:11:49.538",
+      "sinceStartS": 31.4,
+      "videoS": 34.7
+    },
+    {
+      "t": 1789654313737,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789654318625,
+      "at": "14:11:53.737",
+      "sinceStartS": 35.6,
+      "videoS": 38.9
+    },
+    {
+      "t": 1789654318670,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789654333636,
+      "at": "14:11:58.670",
+      "sinceStartS": 40.5,
+      "videoS": 43.8
+    },
+    {
+      "t": 1789654322846,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789654327738,
+      "at": "14:12:02.846",
+      "sinceStartS": 44.7,
+      "videoS": 48
+    },
+    {
+      "t": 1789654327821,
+      "status": "playing",
+      "phase": "wager",
+      "deadline": 1789654342742,
+      "at": "14:12:07.821",
+      "sinceStartS": 49.7,
+      "videoS": 53
+    },
+    {
+      "t": 1789654332030,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789654346910,
+      "at": "14:12:12.030",
+      "sinceStartS": 53.9,
+      "videoS": 57.2
+    },
+    {
+      "t": 1789654336223,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789654341111,
+      "at": "14:12:16.223",
+      "sinceStartS": 58.1,
+      "videoS": 61.4
+    },
+    {
+      "t": 1789654341123,
+      "status": "results",
+      "phase": "results",
+      "deadline": null,
+      "at": "14:12:21.123",
+      "sinceStartS": 63,
+      "videoS": 66.3
+    }
+  ],
+  "notes": []
+}
