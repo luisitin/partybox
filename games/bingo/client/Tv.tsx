@@ -23,7 +23,7 @@ function joinNames(names: string[]): string {
 
 /** The 3 · 2 · 1 after the last card-style menu closes: one tick per second, then the next number. */
 function Resume({ roundLabel, resumeAt }: { roundLabel: string; resumeAt: number }): JSX.Element {
-  const left = useSecondsLeft(resumeAt) ?? 0;
+  const left = Math.min(3, useSecondsLeft(resumeAt) ?? 0); // a 4 would tick four times on a 3 s hold
   const sound = useSoundApi();
   useEffect(() => {
     if (left > 0) sound.play('tick');
