@@ -3,7 +3,7 @@
 // frame strips (10 fps) around each transition and over the last 5 s of every timer, the audio-cue
 // log (cue, time, phase) and the TV's long-frame numbers.
 // Usage: tsx packages/e2e/src/design/capture-loop.ts --pass 1 --game bingo --players 6
-//        [--scenario normal|reconnect|vip-leaves|tie|spicy] [--focus tv|phone] [--budget 150] [--port 42071]
+//        [--scenario normal|reconnect|vip-leaves|tie|spicy|pause] [--focus tv|phone] [--budget 150] [--port 42071]
 import { mkdirSync, readFileSync, readdirSync, renameSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { parseArgs } from 'node:util';
@@ -197,6 +197,21 @@ async function main(): Promise<void> {
           await settle(7000); // socket.io backoff after ~8 s away can take a few seconds
           await still(tv, `${String(n).padStart(2, '0')}-${phase}-tv-sam-back`);
           await still(sam.page, `${String(n).padStart(2, '0')}-${phase}-phone-sam-back`);
+        } else if (SCENARIO === 'pause' && !scenarioDone && n >= 3) {
+          // The VIP pauses mid-phase for 6 s: the curtain, the held timer, the held music bed;
+          // then resumes — no second phase chime, the bed picks up where it stopped.
+          scenarioDone = true;
+          notes.push(`pause: VIP paused 6 s at ${new Date().toISOString()} in ${phase}`);
+          await api.vip('pause');
+          await settle(1500);
+          await still(tv, `${String(n).padStart(2, '0')}-${phase}-tv-paused`);
+          await still(sam.page, `${String(n).padStart(2, '0')}-${phase}-phone-paused`);
+          await settle(4500);
+          await api.vip('resume');
+          await settle(1200);
+          await still(tv, `${String(n).padStart(2, '0')}-${phase}-tv-resumed`);
+          await still(sam.page, `${String(n).padStart(2, '0')}-${phase}-phone-resumed`);
+          await api.post('/api/dev/act', { playerId: sam.playerId });
         } else if (SCENARIO === 'vip-leaves' && !scenarioDone && n >= 2) {
           scenarioDone = true;
           notes.push(`vip-leaves: Sam (VIP) closed the page in ${phase}`);

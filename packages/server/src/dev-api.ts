@@ -37,6 +37,7 @@ const loadStateBody = z.object({
   settings: z.record(z.string(), z.union([z.number(), z.boolean(), z.string()])).optional(),
 });
 const actBody = z.object({ playerId: z.string().optional(), seed: z.number().int().optional() });
+const vipBody = z.object({ action: z.enum(['pause', 'resume', 'skip', 'end']) });
 const clockBody = z.object({ freeze: z.boolean(), now: z.number().optional() });
 const disconnectBody = z.object({ playerId: z.string(), seconds: z.number().min(0).max(3600) });
 const previewQuery = z.object({
@@ -120,6 +121,22 @@ export function registerDevApi(app: FastifyInstance, options: DevApiOptions): vo
     const result = host.dispatch(roomOf(req.query), {
       type: 'dev:gameEvent',
       event: body.data.event,
+    });
+    return { ok: true, effects: result?.effects ?? [] };
+  });
+
+  // Any VIP game action as the room's VIP (the design harness pauses and resumes mid-phase).
+  app.post('/api/dev/vip', async (req, reply) => {
+    const body = vipBody.safeParse(req.body);
+    if (!body.success) return reply.code(400).send({ error: body.error.message });
+    const code = roomOf(req.query);
+    const room = host.get(code);
+    const vip = room?.vipId ?? Object.keys(room?.players ?? {})[0];
+    if (!room || !vip) return reply.code(409).send({ error: 'no players' });
+    const result = host.dispatch(code, {
+      type: 'vip',
+      playerId: vip,
+      action: { action: body.data.action },
     });
     return { ok: true, effects: result?.effects ?? [] };
   });

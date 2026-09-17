@@ -42,6 +42,8 @@ export class DevApi {
   start = (gameId: string, seed = 1): Promise<unknown> =>
     this.post('/api/dev/start', { gameId, seed });
   skip = (): Promise<{ phase: string | null; status: string }> => this.post('/api/dev/skip');
+  vip = (action: 'pause' | 'resume' | 'skip' | 'end'): Promise<unknown> =>
+    this.post('/api/dev/vip', { action });
   clock = (freeze: boolean, now?: number): Promise<{ now: number }> =>
     this.post('/api/dev/clock', { freeze, now });
   disconnect = (playerId: string, seconds: number): Promise<unknown> =>
