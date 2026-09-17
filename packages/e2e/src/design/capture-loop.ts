@@ -123,13 +123,17 @@ async function main(): Promise<void> {
     let last = '';
     let n = 0;
     let acted = new Set<string>();
+    let followedUp = new Set<string>();
+    let actedAt = 0;
     let scenarioDone = false;
     const timerStrips: { phase: string; deadline: number }[] = [];
     while (Date.now() - started < BUDGET_MS) {
       const s = await api.state();
       const status = s.room?.status ?? 'none';
       const phase = s.room?.game?.state.phase.id ?? status;
-      const key = `${status}:${phase}`;
+      // Keyed by the phase instance, not just its id: Broken Pencil repeats 'pass' once per step
+      // and the phones must act in every one (review-loop #44).
+      const key = `${status}:${phase}:${s.room?.game?.state.phase.startedAt ?? 0}`;
       if (key !== last) {
         last = key;
         n += 1;
@@ -153,6 +157,7 @@ async function main(): Promise<void> {
           await still(priya.page, `${tag}-phone-waiting`);
         }
         acted = new Set();
+        followedUp = new Set();
         if (status === 'results') {
           await settle(2500);
           await still(tv, `${tag}-tv-settled`);
@@ -207,6 +212,21 @@ async function main(): Promise<void> {
           );
         } else if (SCENARIO !== 'tie' && !sam.page.isClosed())
           await api.post('/api/dev/act', { playerId: sam.playerId });
+        actedAt = Date.now();
+      }
+      // A phase can owe a phone two actions (Broken Pencil's pass: guess, then draw): every real
+      // phone acts again 5 s after the first act while the phase instance is still the same, so
+      // the room does not wait a full timer on a half-done step (review-loop #44).
+      if (
+        status === 'playing' &&
+        SCENARIO !== 'tie' &&
+        acted.has(key) &&
+        !followedUp.has(key) &&
+        Date.now() - actedAt > 5000
+      ) {
+        followedUp.add(key);
+        const again = [sam, priya, ...extras].filter((p) => p.playerId && !p.page.isClosed());
+        for (const p of again) await api.post('/api/dev/act', { playerId: p.playerId });
       }
       await settle(100);
     }

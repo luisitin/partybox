@@ -5,6 +5,7 @@
 // question mark, which is honest about what a bot can see.
 import type { Rng } from '@partybox/game-sdk';
 import * as pic from './shapes-catalog';
+import * as more from './shapes-more';
 import { C, star } from './shapes-draw';
 import type { Shape } from './shapes-draw';
 
@@ -44,6 +45,19 @@ const LIBRARY: [string[], () => Shape][] = [
   [['key'], pic.key],
   [['egg'], pic.egg],
   [['clock', 'time', 'watch'], pic.clock],
+  [['cake', 'birthday'], more.cake],
+  [['king', 'queen', 'crown'], more.crown],
+  [['chair', 'seat'], more.chair],
+  [['dragon', 'dinosaur', 'lizard'], more.dragon],
+  [['sock'], more.sock],
+  [['frog', 'toad'], more.frog],
+  [['bell'], more.bell],
+  [['door'], more.door],
+  [['kite'], more.kite],
+  [['bone', 'skeleton'], more.bone],
+  [['lamp', 'light'], more.lamp],
+  [['ring'], more.ring],
+  [['leaf', 'plant'], more.leaf],
 ];
 
 /** The shape for a phrase (the bot draws the first thing it recognises), or a shrug. */
