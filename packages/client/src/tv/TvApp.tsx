@@ -63,6 +63,13 @@ export function TvApp(): JSX.Element {
   if (room?.status !== 'playing' && gameReady) setGameReady(false);
   const markGameReady = useCallback(() => setGameReady(true), []);
 
+  // Nothing speaks outside play: a game's caller (Bingo) can leave Chrome's speech queue stuck,
+  // and a stuck queue plays back later — in the lobby. The shell clears it on every status change.
+  const status = room?.status ?? null;
+  useEffect(() => {
+    if (status !== 'playing' && typeof speechSynthesis !== 'undefined') speechSynthesis.cancel();
+  }, [status]);
+
   // Background music follows the room (owner picks 2026-09-15): the lobby set while people gather
   // or the host picks a game, a game's own set while it plays, silence on results; a paused game
   // holds the track. It starts on the audio gate's first tap like the cues.
@@ -98,6 +105,7 @@ export function TvApp(): JSX.Element {
   });
   const lastLeaveAt = useRef(-Infinity);
   const lastLockAt = useRef(-Infinity);
+  const homing = state.homing;
   useEffect(() => {
     if (!room) return;
     const p = prev.current;
@@ -121,7 +129,11 @@ export function TvApp(): JSX.Element {
     // A game begins: a held G-major arpeggio (the intro itself never chimes — p.phase is null);
     // a TV that reloads mid-game (p.status === '') stays quiet, like the join rule.
     if (room.status === 'playing' && p.status !== 'playing' && p.status !== '') audio.play('start');
-    if (room.status === 'results' && p.status !== 'results') audio.play('win');
+    // The winner moment (owner pick): a party horn with a crowd cheer under it (music ducked).
+    if (room.status === 'results' && p.status !== 'results' && !homing) {
+      music.duck(9000);
+      audio.play('cheer');
+    }
     // A game that cued this phase itself (useSound, child effects run first) keeps the stage's
     // generic chime out of its way. `clientModule.sounds` maps a phase id to its own cue (reveal,
     // wager, tally…); unmapped phases play `phase`, reserved for "your phone needs you".
@@ -166,14 +178,16 @@ export function TvApp(): JSX.Element {
       code: room.code,
       locked: view && view.phaseId === p.phase ? locked : 0,
     };
-  }, [room, view, audio]);
+  }, [room, view, audio, music, homing]);
 
   let content: JSX.Element;
   if (!room) content = <TvLobby room={null} />;
   else if (room.status === 'lobby') content = <TvLobby room={room} />;
   else if (room.status === 'selecting') content = <TvSelecting room={room} client={client} />;
   else if (room.status === 'playing')
-    content = <TvPlaying room={room} view={view} audio={audio} onGameReady={markGameReady} />;
+    content = (
+      <TvPlaying room={room} view={view} audio={audio} onGameReady={markGameReady} music={music} />
+    );
   else content = <TvResults room={room} lastView={lastView} />;
 
   return (

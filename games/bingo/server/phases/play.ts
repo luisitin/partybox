@@ -1,7 +1,7 @@
 // Phase "play": one number is on the TV; every `callSeconds` the timer draws the next one by
 // re-entering this phase (a new `startedAt` ⇒ a new timer instance). Daubs are free — the server
-// accepts every tap. BINGO! evaluates the claimant's cards and checks the closest one: valid → the
-// round is won (`exits.win`), invalid → the check (`exits.check`). The deck running out ends the
+// accepts every tap. BINGO! evaluates the claimant's live cards and checks the closest one: valid
+// → a bingo (`exits.win`), invalid → the check (`exits.check`). The deck running out ends the
 // round via `exits.next`.
 import { enterPhase, hasPlayer, isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
@@ -28,6 +28,7 @@ export function enterPlay(state: State, now: number): State {
   );
 }
 
+/** A card that has not won the pattern, and no wait after a failed claim. */
 export function canClaim(state: State, playerId: string): boolean {
   const round = state.round;
   return (
@@ -68,7 +69,7 @@ export function reducePlay(state: State, event: GameEvent<Input>, exits: PlayExi
   if (event.type === 'input') {
     if (event.input.type === 'daub')
       return toggleDaub(state, event.playerId, event.input.card, event.input.index);
-    if (!canClaim(state, event.playerId)) return state;
+    if (event.input.type !== 'bingo' || !canClaim(state, event.playerId)) return state;
     const claim = bestClaim(state, event.playerId);
     if (!claim) return state;
     return claim.valid

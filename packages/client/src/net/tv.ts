@@ -23,6 +23,8 @@ export interface TvState {
   rev: number;
   offsetMs: number;
   toasts: Toast[];
+  /** Home pressed mid-game: the results status it passes through is not a celebration. */
+  homing: boolean;
 }
 
 /** Outcome of the stage's Home button: `off` = the server runs without `--dev-api`. */
@@ -48,6 +50,7 @@ export function createTvClient(roomCode?: string, url?: string): TvClient {
     rev: -1,
     offsetMs: 0,
     toasts: [],
+    homing: false,
   });
   const socket = io(url ?? '/', { transports: ['websocket', 'polling'] });
 
@@ -70,6 +73,7 @@ export function createTvClient(roomCode?: string, url?: string): TvClient {
       room: push.room,
       offsetMs: push.at - Date.now(),
       view: push.room.status === 'playing' ? prev.view : null,
+      homing: prev.homing && push.room.status !== 'lobby',
     }));
   });
   socket.on('view', (push: ViewPush<PushedView<TvView>>) => {
@@ -106,7 +110,10 @@ export function createTvClient(roomCode?: string, url?: string): TvClient {
   const home = async (): Promise<HomeResult> => {
     const status = store.get().room?.status;
     if (status && status !== 'lobby') {
-      if (status === 'playing') act({ action: 'end' });
+      if (status === 'playing') {
+        store.set({ homing: true });
+        act({ action: 'end' });
+      }
       act({ action: 'toLobby' });
       return 'ok';
     }

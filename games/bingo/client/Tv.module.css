@@ -143,8 +143,75 @@
   min-height: 0;
 }
 
+/* The claim, in beats: the card lands big in the middle of the stage; when the verdict comes
+   the card slides left and the verdict takes the right half (transform + opacity only). */
+.claimStage {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: var(--pb-space-7);
+  flex: 1;
+  min-height: 0;
+}
+
 .claim {
   width: 460px; /* px, not vw: the stage is a zoomed 1920×1080 design */
+}
+
+.claimLand {
+  justify-self: end;
+  width: 500px; /* lands at 1:1 (≈ 550 px tall, clear of the host bar), settles to 0.92 */
+  transform-origin: center;
+  /* Drops onto the centre of the stage (half its width past the column edge) with a bounce. */
+  animation: claim-drop calc(var(--pb-motion-slow) + 100ms) cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* The verdict is in: the card settles left into its column, the verdict takes the right. */
+.decided .claimLand {
+  animation: claim-settle var(--pb-motion-slow) var(--pb-ease) both;
+}
+
+@keyframes claim-drop {
+  from {
+    opacity: 0;
+    transform: translateX(50%) translateY(-520px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(50%) translateY(0);
+  }
+}
+
+@keyframes claim-settle {
+  from {
+    transform: translateX(50%) scale(1);
+  }
+  to {
+    transform: translateX(0) scale(0.92);
+  }
+}
+
+.verdictPending {
+  opacity: 0;
+}
+
+.winLine {
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-4);
+  margin: var(--pb-space-3) 0 0;
+  font-size: var(--pb-font-h2);
+  font-weight: 700;
+  color: var(--pb-text-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .claimLand,
+  .decided .claimLand {
+    animation: none;
+    transform: none;
+  }
 }
 
 .verdict {
@@ -152,6 +219,18 @@
   flex-direction: column;
   gap: var(--pb-space-4);
   align-items: flex-start;
+}
+
+.decideLine {
+  margin: var(--pb-space-3) 0 0;
+  font-size: var(--pb-font-body);
+  color: var(--pb-text-muted);
+  max-width: 22em;
+}
+
+.decideWho {
+  color: var(--pb-accent-2);
+  font-weight: 800;
 }
 
 .no {

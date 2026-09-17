@@ -12,6 +12,5 @@ export const contractConfig = {
     { rounds: 2, round1: 'corners', round2: 'x', callSeconds: 4, spicy: true },
     { rounds: 1, showBoard: false, showPrevious: false },
     { rounds: 1, cards: 3, callSeconds: 3 },
-    { rounds: 2, cards: 2, winners: 2 },
   ],
 };

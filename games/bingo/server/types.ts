@@ -13,8 +13,6 @@ export type Pattern = (typeof PATTERNS)[number];
 export const MAX_ROUNDS = 5;
 /** Cards per player per round (`cards` setting): one is classic, four is a hall regular's table. */
 export const MAX_CARDS = 4;
-/** Bingos that end a round (`winners` setting): one is classic; more keeps the caller going. */
-export const MAX_WINNERS = 4;
 
 export interface Settings {
   rounds: number;
@@ -22,8 +20,6 @@ export interface Settings {
   patterns: Pattern[];
   /** Cards dealt to every player each round (1–4). */
   cards: number;
-  /** Bingos that end the round (1–4). After each one the caller carries on, same pattern. */
-  winners: number;
   callSeconds: number;
   spicy: boolean;
   /** TV extras the VIP can switch off at game selection (review-loop #2, owner request). */
@@ -65,20 +61,25 @@ export interface RoundState {
   claim: Claim | null;
   /** playerId → may claim again once `drawn >= this` (set after a failed claim). */
   waitForCall: Record<string, number>;
-  /** The latest bingo's owner (the celebration); null while nobody has, or when the deck ran out. */
+  /** The latest bingo's owner (the celebration); null when the deck ran out. */
   winnerId: string | null;
-  /** Every bingo this round, in order (a player twice when two of their cards won). */
-  winnerIds: string[];
-  /** playerId → card indices that already won this round: locked, no second bingo on them. */
+  /**
+   * playerId → card indices that already won the current pattern this round. The round may keep
+   * going after a bingo (same cards, same deck, calling resumes): a card that won sits that
+   * pattern out while the player's other cards play on. Cleared when the pattern changes
+   * (continue for blackout). A one-card player who won is done until the next round.
+   */
   won: Record<string, number[]>;
+  /** Bingos this round so far (a continued round celebrates more than one). */
+  bingos: number;
 }
 
 export interface State extends GameStateBase {
   settings: Settings;
   round: RoundState;
-  /** Rounds won. */
+  /** Bingos won. */
   wins: Record<string, number>;
-  history: { round: number; winnerIds: string[]; calls: number }[];
+  history: { round: number; winnerId: string | null; calls: number }[];
 }
 
 export const inputSchema = z.discriminatedUnion('type', [
@@ -93,14 +94,29 @@ export const inputSchema = z.discriminatedUnion('type', [
       .default(0),
     index: z.number().int().min(0).max(24),
   }),
-  /** Checks the claimant's closest card to the pattern. */
+  /** Checks the claimant's closest live card to the pattern. */
   z.object({ type: z.literal('bingo') }),
+  /**
+   * After a bingo (phase `bingo`): keep the round going on the same cards and deck — for the same
+   * pattern (the card that won sits it out) or for a blackout on the same cards. Or move on.
+   * Every phone with a card offers it — first tap wins, the way a table would — and nothing
+   * moves on by itself: the celebration waits.
+   */
+  z.object({ type: z.literal('continue'), pattern: z.enum(['same', 'blackout']) }),
+  z.object({ type: z.literal('next') }),
 ]);
 export type Input = z.infer<typeof inputSchema>;
 
 export const INTRO_MS = 5_000;
-export const CHECK_MS = 5_000;
+/** Long enough for the cell-by-cell reveal of a full card (≈ 0.9 + 24 × 0.22 + 0.7 s) plus reading. */
+export const CHECK_MS = 9_000;
+/** No winner (the deck ran out): the TV says so for this long. */
 export const BINGO_MS = 10_000;
+/**
+ * With a winner the celebration is not paced: it waits for a phone. This is only a safety valve
+ * so an abandoned room (a bots-only game) does not sit on the verdict forever.
+ */
+export const BINGO_ABANDONED_MS = 5 * 60_000;
 export const SCOREBOARD_MS = 6_000;
 export const DECK = 75;
 export const FREE = 12;

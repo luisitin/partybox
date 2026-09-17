@@ -15,6 +15,7 @@ import { GameErrorBoundary } from '../controller/GameErrorBoundary';
 import { clientGames } from '../games.generated';
 import { t } from '../i18n';
 import { countdownSemitones } from '../sound';
+import type { MusicEngine } from '../music';
 import type { SoundCue, SoundEngine } from '../sound';
 import { CrossfadeSwap } from '../CrossfadeSwap';
 import styles from './TvPlaying.module.css';
@@ -23,6 +24,8 @@ export interface TvPlayingProps {
   room: RoomSnapshot;
   view: PushedView<TvView> | null;
   audio: SoundEngine;
+  /** The stage's background music: a cheer ducks it. */
+  music?: MusicEngine;
   /** Fires once the game's own component has mounted (module loaded, first view rendered). */
   onGameReady?: () => void;
 }
@@ -48,7 +51,7 @@ function DelayedFallback({ children }: { children: ReactNode }): JSX.Element | n
   return show ? <>{children}</> : null;
 }
 
-export function TvPlaying({ room, view, audio, onGameReady }: TvPlayingProps): JSX.Element {
+export function TvPlaying({ room, view, audio, onGameReady, music }: TvPlayingProps): JSX.Element {
   // The curtain stays mounted while it fades out after a resume ("adjust state during render":
   // the paused flag flipping true → false starts the leave; animationend or 400 ms clears it).
   const paused = view?.paused ?? false;
@@ -63,12 +66,25 @@ export function TvPlaying({ room, view, audio, onGameReady }: TvPlayingProps): J
     const handle = setTimeout(() => setLeaving(false), 400);
     return () => clearTimeout(handle);
   }, [leaving]);
-  // The last five seconds climb a scale (5 → 1), so the room hears the deadline coming.
+  // The last five seconds climb a scale (5 → 1), so the room hears the deadline coming. Ticks
+  // are not game cues: `quiet` keeps them from suppressing the next phase's chime.
   const onTick = useCallback(
-    (s: number) => audio.play('countdown', { semitones: countdownSemitones(s) }),
+    (s: number) => audio.play('countdown', { semitones: countdownSemitones(s), quiet: true }),
     [audio],
   );
-  const play = useCallback((cue: SoundCue) => audio.play(cue), [audio]);
+  const play = useCallback(
+    (cue: SoundCue) => {
+      // The winner moment sits on top of the music, not inside it.
+      if (cue === 'cheer') music?.duck(9000);
+      audio.play(cue);
+    },
+    [audio, music],
+  );
+  const clip = useCallback(
+    (src: string, opts?: { gain?: number; delayMs?: number }) => audio.clip(src, opts),
+    [audio],
+  );
+  const hush = useCallback(() => audio.hushClips(), [audio]);
   const module = room.selectedGameId ? clientGames[room.selectedGameId] : undefined;
   const gameName = room.games.find((g) => g.id === room.selectedGameId)?.name ?? '';
   const vip = room.players.find((p) => p.id === (view?.vip ?? room.vip));
@@ -154,7 +170,7 @@ export function TvPlaying({ room, view, audio, onGameReady }: TvPlayingProps): J
                 </DelayedFallback>
               }
             >
-              <SoundProvider play={play}>
+              <SoundProvider play={play} clip={clip} hush={hush}>
                 <GameTv view={view} />
                 <Ready onReady={onGameReady} />
               </SoundProvider>

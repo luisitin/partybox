@@ -17,6 +17,9 @@ export interface PhoneSettingsProps {
 export function PhoneSettings({ audio }: PhoneSettingsProps): JSX.Element {
   const [soundOn, setSoundOn] = useState(() => !(audio?.muted() ?? true));
   const [haptics, setHaptics] = useState(() => hapticsEnabled());
+  // iOS Safari has no navigator.vibrate at all: say so instead of offering a switch that does
+  // nothing (Android Chrome has it, after the page's first tap).
+  const canVibrate = typeof navigator !== 'undefined' && 'vibrate' in navigator;
   const toggleSound = (): void => {
     if (!audio) return;
     const next = !soundOn;
@@ -47,20 +50,26 @@ export function PhoneSettings({ audio }: PhoneSettingsProps): JSX.Element {
           {soundOn ? t.controller.on : t.controller.off}
         </span>
       </button>
-      <button
-        type="button"
-        className={pickerStyles.toggle}
-        aria-pressed={haptics}
-        onClick={toggleHaptics}
-      >
-        <span className={pickerStyles.toggleGlyph} aria-hidden>
-          📳
-        </span>
-        {t.controller.vibration}
-        <span className={pickerStyles.toggleState}>
-          {haptics ? t.controller.on : t.controller.off}
-        </span>
-      </button>
+      {canVibrate ? (
+        <button
+          type="button"
+          className={pickerStyles.toggle}
+          aria-pressed={haptics}
+          onClick={toggleHaptics}
+        >
+          <span className={pickerStyles.toggleGlyph} aria-hidden>
+            📳
+          </span>
+          {t.controller.vibration}
+          <span className={pickerStyles.toggleState}>
+            {haptics ? t.controller.on : t.controller.off}
+          </span>
+        </button>
+      ) : (
+        <p className={pickerStyles.toggleNote}>
+          <span aria-hidden>📳</span> {t.controller.noVibration}
+        </p>
+      )}
     </>
   );
 }

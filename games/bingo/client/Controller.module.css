@@ -135,6 +135,13 @@
   color: var(--pb-accent-2);
 }
 
+/* The VIP's choice after a bingo: three stacked 44 px+ buttons in the sticky footer. */
+.decide {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-2);
+}
+
 .hint {
   margin: 0 0 var(--pb-space-3);
   font-size: var(--pb-font-caption);

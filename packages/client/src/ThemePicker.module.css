@@ -173,6 +173,13 @@
   border-color: var(--pb-accent-2);
 }
 
+.toggleNote {
+  margin: 0;
+  padding: var(--pb-space-2) var(--pb-space-3);
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+}
+
 .toggleGlyph {
   flex-shrink: 0;
   width: 2em;

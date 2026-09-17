@@ -3,7 +3,8 @@
 // tappable card (or cards, stacked and labelled) in the middle, the BINGO! button pinned to the
 // bottom. `send` is the only way out; the server accepts every daub (no validation — that is the
 // game) and judges only the claim — checking whichever live card is closest, so one button serves
-// all. A card that won is locked for the round; with more bingos to come the caller carries on.
+// all. After a bingo any phone decides: keep going on the same cards (the card that won sits the
+// pattern out) or move on.
 import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
 import { PrimaryButton, Scoreboard, Screen, WaitingScreen } from '@partybox/game-sdk/ui';
@@ -11,15 +12,14 @@ import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { Input } from '../server/types';
 import type { BingoControllerView } from '../server/views';
 import { Card, PatternIcon } from './Card';
-import { CallHeader, CardStack, rows } from './ControllerParts';
+import { CallHeader, CardStack, DecideFooter, rows } from './ControllerParts';
 import styles from './Controller.module.css';
 
-/** What happens after this bingo: the caller carries on, fresh cards, or the final board. */
-function afterLine(view: BingoControllerView): string {
-  if (view.roundContinues) {
-    const left = view.winnersNeeded - view.bingosSoFar;
-    return `The caller carries on — ${left} more ${left === 1 ? 'bingo ends' : 'bingos end'} the round.`;
-  }
+/** What happens after this bingo: the room decides, fresh cards, or the final board. */
+function afterLine(view: BingoControllerView, iDecide: boolean): string {
+  if (iDecide) return 'Keep these cards and carry on calling, or deal fresh ones? Anyone can pick.';
+  if (view.decide && (view.decide.same || view.decide.blackout))
+    return 'The players decide: keep going or next round.';
   return view.round < view.totalRounds ? 'Fresh cards next round.' : 'That was the last round.';
 }
 
@@ -69,6 +69,7 @@ export function Controller({
       />
     );
   }
+  const iDecide = view.decide !== null && (view.decide.same || view.decide.blackout);
 
   // The round's own screens: intro, play, check and a bingo phase without a winner's card to show
   // (no bingo, or someone else won) all keep the same cards mounted (review-loop #2, #15).
@@ -88,7 +89,7 @@ export function Controller({
       : checking
         ? 'Look at the TV'
         : view.doneForRound
-          ? 'Done this round'
+          ? 'Yours already'
           : view.waitingForCall
             ? 'Next number soon…'
             : 'BINGO!';
@@ -104,13 +105,13 @@ export function Controller({
             : roundOver
               ? view.winnerName
                 ? `${view.winnerName} has bingo`
-                : view.bingosSoFar > 0
-                  ? 'Deck empty — round over'
-                  : 'No bingo this round'
+                : 'No bingo this round'
               : undefined
         }
         footer={
-          intro || roundOver ? undefined : (
+          roundOver ? (
+            <DecideFooter view={view} send={send} />
+          ) : intro ? undefined : (
             <PrimaryButton
               tone={mine ? 'danger' : 'accent'}
               disabled={!view.canClaim}
@@ -124,7 +125,7 @@ export function Controller({
       >
         <div className={styles.roundBody}>
           {roundOver ? (
-            <p className={styles.hint}>{afterLine(view)}</p>
+            <p className={styles.hint}>{afterLine(view, iDecide)}</p>
           ) : intro ? (
             // Compact on purpose: icon, name and hint in one block so the whole card fits a 659 px
             // viewport (iPhone 15 in Safari) without scrolling.
@@ -156,9 +157,6 @@ export function Controller({
               {cards.length > 1
                 ? `Your ${cards.length} new cards. Daub what you hear — FREE too — tap again to undo. BINGO! checks your best card.`
                 : 'Your new card. Daub what you hear — FREE too — tap again to undo.'}
-              {view.winnersNeeded > 1
-                ? ` The round runs to ${view.winnersNeeded} bingos; a card that wins sits out.`
-                : ''}
             </p>
           ) : null}
           <CardStack
@@ -182,17 +180,17 @@ export function Controller({
     return (
       <Screen
         key="bingo"
-        title={
-          view.roundContinues ? `BINGO! +1${which}` : `BINGO! You win round ${view.round}${which}`
-        }
+        title={`BINGO! You win round ${view.round}${which}`}
+        footer={<DecideFooter view={view} send={send} />}
       >
         {claim ? (
           <Card numbers={claim.card} daubs={claim.daubs} green={claim.green} disabled />
         ) : null}
         <p className={styles.hint}>
-          {view.roundContinues
-            ? `${view.doneForRound ? "That card's done — you're out until the next round." : 'That card sits out; your other cards play on.'} ${afterLine(view)}`
-            : afterLine(view)}
+          {iDecide && cards.length > 1
+            ? 'Keep going and that card sits the pattern out; your other cards play on. '
+            : ''}
+          {afterLine(view, iDecide)}
         </p>
       </Screen>
     );

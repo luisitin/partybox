@@ -18,7 +18,7 @@ const PORT = Number(values.port);
 const G = 'bingo';
 
 interface BingoState {
-  round: { deck: number[]; drawn: number; cards: Record<string, number[]> };
+  round: { deck: number[]; drawn: number; cards: Record<string, number[][]> };
   phase: { id: string };
 }
 const LINES: number[][] = [
@@ -27,6 +27,35 @@ const LINES: number[][] = [
   [0, 6, 12, 18, 24],
   [4, 8, 12, 16, 20],
 ];
+
+// Polls every frame from the claim: when the sweep band mounts and when the first cell turns
+// visibly green. A string probe (tsx keepNames breaks evaluate arrow bodies).
+const SYNC_PROBE = `new Promise((resolve) => {
+  const t0 = performance.now();
+  const probe = document.createElement('span');
+  probe.style.background = 'var(--pb-accent-3)';
+  document.body.appendChild(probe);
+  const rgb = (s) => (s.match(/[\\d.]+/g) || []).slice(0, 3).map(Number);
+  const green = rgb(getComputedStyle(probe).backgroundColor);
+  probe.style.background = 'var(--pb-surface-2)';
+  const plain = rgb(getComputedStyle(probe).backgroundColor);
+  probe.remove();
+  const dist = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]);
+  let sweepAt = null;
+  const tick = () => {
+    const now = performance.now() - t0;
+    if (sweepAt === null && document.querySelector('[data-testid="sweep"]')) sweepAt = now;
+    const cells = document.querySelectorAll('[aria-label="bingo card"] [role="gridcell"]');
+    for (const c of cells) {
+      const bg = rgb(getComputedStyle(c).backgroundColor);
+      if (bg.length === 3 && dist(bg, green) < dist(bg, plain) && dist(bg, green) < 60)
+        return resolve({ sweepAt, greenAt: now });
+    }
+    if (now > 8000) return resolve({ sweepAt, greenAt: null });
+    requestAnimationFrame(tick);
+  };
+  tick();
+})`;
 
 async function burst(shots: Shooter, page: Page, phase: string, n: number, gap: number) {
   for (let i = 0; i < n; i += 1) {
@@ -69,7 +98,7 @@ async function main(): Promise<void> {
     await settle(300);
     await shots.shot(p2.page, { group: G, phase: 'play-daubed', device: 'iphone-se', role: 'p2' });
     await p2.page.getByRole('button', { name: /^bingo!$/i }).click();
-    await burst(shots, tv, 'check-lands', 8, 200);
+    await burst(shots, tv, 'check-lands', 18, 300);
     await settle(1200);
     await shots.shot(tv, { group: G, phase: 'check', device: 'tv', role: 'stage' });
     await shots.shot(p2.page, { group: G, phase: 'check', device: 'iphone-se', role: 'claimant' });
@@ -83,7 +112,7 @@ async function main(): Promise<void> {
     for (let i = 0; i < 60 && !line; i += 1) {
       const s = await state();
       if (s.phase.id !== 'play') break;
-      const card = s.round.cards[vipId] ?? [];
+      const card = s.round.cards[vipId]?.[0] ?? [];
       const called = new Set(s.round.deck.slice(0, s.round.drawn));
       line = LINES.find((l) => l.every((i) => i === 12 || called.has(card[i] ?? -1))) ?? null;
       if (!line) {
@@ -93,7 +122,7 @@ async function main(): Promise<void> {
     }
     if (!line) throw new Error('no line got called within 60 numbers');
     const s = await state();
-    const card = s.round.cards[vipId] ?? [];
+    const card = s.round.cards[vipId]?.[0] ?? [];
     for (const i of line) {
       if (i === 12) continue;
       const letter = 'BINGO'[i % 5];
@@ -102,11 +131,29 @@ async function main(): Promise<void> {
     await settle(300);
     await shots.shot(vip.page, { group: G, phase: 'line-daubed', device: 'iphone', role: 'vip' });
     await vip.page.getByRole('button', { name: /^bingo!$/i }).click();
-    await burst(shots, tv, 'bingo-lands', 8, 200);
+    // Sound-to-colour sync: the sting fires STING_LAG_MS after the sweep band mounts; the first
+    // cell must be visibly green (closer to accent-3 than to its outline) by then.
+    const sync = tv.evaluate<{ sweepAt: number | null; greenAt: number | null }>(SYNC_PROBE);
+    await burst(shots, tv, 'bingo-lands', 18, 300);
+    const { sweepAt, greenAt } = await sync;
+    const lag = sweepAt !== null && greenAt !== null ? Math.round(greenAt - sweepAt) : null;
+    console.log(
+      `sync: first green ${lag === null ? 'not seen' : `+${lag} ms`} after the sweep band mounts (sting at +170 ms)`,
+    );
     await settle(1500);
     await shots.shot(tv, { group: G, phase: 'bingo', device: 'tv', role: 'stage' });
     await shots.shot(vip.page, { group: G, phase: 'bingo', device: 'iphone', role: 'winner' });
     await shots.shot(p2.page, { group: G, phase: 'bingo', device: 'iphone-se', role: 'p2' });
+    // The VIP (the winner here) keeps the round going on the same cards; the caller resumes and
+    // the winner's BINGO! button says the pattern is already theirs.
+    await settle(3500);
+    await shots.shot(tv, { group: G, phase: 'bingo-decide', device: 'tv', role: 'stage' });
+    await shots.shot(vip.page, { group: G, phase: 'bingo-decide', device: 'iphone', role: 'vip' });
+    await vip.page.getByRole('button', { name: /keep going — same pattern/i }).click();
+    await settle(1200);
+    await shots.shot(tv, { group: G, phase: 'continued', device: 'tv', role: 'stage' });
+    await shots.shot(vip.page, { group: G, phase: 'continued', device: 'iphone', role: 'winner' });
+    await shots.shot(p2.page, { group: G, phase: 'continued', device: 'iphone-se', role: 'p2' });
     console.log(`captured ${shots.shots.length} stills → ${OUT}`);
   } finally {
     await browser.close();

@@ -6,7 +6,7 @@
   "version": "1.0.0",
   "minPlayers": 1,
   "maxPlayers": 16,
-  "estimatedMinutes": 10,
+  "estimatedMinutes": 15,
   "tags": ["classic", "luck", "tap", "family"],
   "settings": [
     {
@@ -85,16 +85,6 @@
       "key": "cards",
       "label": "Cards per player",
       "description": "How many cards everyone plays each round — one BINGO! button checks your best card",
-      "type": "number",
-      "default": 1,
-      "min": 1,
-      "max": 4,
-      "step": 1
-    },
-    {
-      "key": "winners",
-      "label": "Bingos per round",
-      "description": "Keep calling after a bingo until this many cards have won — a card that won is done for the round",
       "type": "number",
       "default": 1,
       "min": 1,

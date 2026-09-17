@@ -1,5 +1,5 @@
 // Views for Bingo. Nothing in this game is secret: a card only reaches the TV when its owner
-// presses BINGO!, and then everyone is meant to see it. Phones get their own card and daubs; the
+// presses BINGO!, and then everyone is meant to see it. Phones get their own cards and daubs; the
 // spectator phone gets the called list instead (players must remember — that is the design).
 // With several cards per player the phone gets them all; a claim carries the one card checked.
 import { controllerEnvelope, envelope, hasPlayer } from '@partybox/game-sdk';
@@ -8,7 +8,7 @@ import { calledNumbers, letterOf } from './cards';
 import type { Letter } from './cards';
 import { callFor } from './content';
 import { PATTERN_HINT, PATTERN_LABEL, patternCells } from './patterns';
-import { liveCards, roundContinues } from './phases/bingo';
+import { canContinue, liveCards } from './phases/bingo';
 import { canClaim } from './phases/play';
 import { standings } from './scoring';
 import type { StandingRow } from './scoring';
@@ -38,13 +38,6 @@ interface Common {
   patterns: Pattern[];
   /** Cards dealt to every player each round (the `cards` setting). */
   cardsPerPlayer: number;
-  /** Bingos that end the round (the `winners` setting) and how many have landed so far. */
-  winnersNeeded: number;
-  bingosSoFar: number;
-  /** Names of this round's bingos so far, in order (a name twice = two of their cards). */
-  roundWinners: string[];
-  /** bingo: the caller carries on after this celebration (more bingos to come). */
-  roundContinues: boolean;
   current: CallView | null;
   /** Just the one before — no history beyond that, on purpose. */
   previous: CallView | null;
@@ -52,10 +45,14 @@ interface Common {
   callIndex: number;
   /** check: the card being checked; bingo: the winner's card. */
   claim: ClaimView | null;
-  /** bingo / scoreboard: the last round's winner (null = the deck ran out). */
+  /** bingo / scoreboard: the last bingo's winner (null = the deck ran out). */
   winnerId: string | null;
   winnerName: string | null;
   standings: StandingRow[];
+  /** bingo: whether the round can keep going (same pattern / for a blackout); any player decides. */
+  decide: { same: boolean; blackout: boolean } | null;
+  /** How many bingos this round has had so far (a continued round celebrates more than one). */
+  bingosThisRound: number;
 }
 
 export interface BingoTvView extends TvView, Common {
@@ -77,9 +74,9 @@ export interface BingoControllerView extends ControllerView, Common {
   daubs: number[][];
   /** play: true unless waiting for the next number after a failed claim (or every card won). */
   canClaim: boolean;
-  /** My cards that already won this round (locked). */
+  /** My cards that already won the current pattern this round (locked). */
   won: number[];
-  /** Every one of my cards has won: nothing left to claim until the next round. */
+  /** Every one of my cards has won: nothing left to claim until the pattern or round changes. */
   doneForRound: boolean;
   /** The phone says why the button is off right after your own failed claim. */
   waitingForCall: boolean;
@@ -119,10 +116,10 @@ function claimView(state: State): ClaimView | null {
 function statusOf(state: State): (id: string) => PlayerStatus {
   return (id) => {
     if (!Object.hasOwn(state.round.cards, id)) return 'spectator';
-    // Every card won: done for the round (the chip shows it while the others keep daubing).
+    // Every card won: done for the pattern (the chip shows it while the others keep daubing).
     if (state.phase.id === 'play' || state.phase.id === 'check')
       return liveCards(state, id).length === 0 ? 'submitted' : 'active';
-    if (state.phase.id === 'bingo' && state.round.winnerIds.includes(id)) return 'submitted';
+    if (state.phase.id === 'bingo' && state.round.winnerId === id) return 'submitted';
     return 'waiting';
   };
 }
@@ -140,10 +137,6 @@ function common(state: State): Common {
     patternCells: patternCells(round.pattern),
     patterns: state.settings.patterns,
     cardsPerPlayer: state.settings.cards,
-    winnersNeeded: state.settings.winners,
-    bingosSoFar: round.winnerIds.length,
-    roundWinners: round.winnerIds.map((id) => state.players[id]?.name ?? '?'),
-    roundContinues: state.phase.id === 'bingo' && roundContinues(state),
     current: state.phase.id === 'intro' ? null : callView(state, round.drawn - 1),
     previous: state.phase.id === 'intro' ? null : callView(state, round.drawn - 2),
     callIndex: round.drawn,
@@ -151,6 +144,8 @@ function common(state: State): Common {
     winnerId,
     winnerName: winnerId ? (state.players[winnerId]?.name ?? '?') : null,
     standings: standings(state),
+    decide: state.phase.id === 'bingo' ? canContinue(state) : null,
+    bingosThisRound: round.bingos,
   };
 }
 

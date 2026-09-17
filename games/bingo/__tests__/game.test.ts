@@ -88,8 +88,43 @@ describe('play', () => {
     expect(claim?.valid).toBe(true);
     expect(claim?.green.sort()).toEqual([0, 1, 2, 3, 4]);
     expect(claim?.red).toEqual([]);
-    expect(s.history).toEqual([]); // written when the round ends
-    expect(timer(s).history).toEqual([{ round: 1, winnerIds: ['a'], calls: s.round.drawn }]);
+    expect(s.history).toEqual([{ round: 1, winnerId: 'a', calls: s.round.drawn }]);
+  });
+
+  it('after a bingo the round can keep going: same pattern (winner sits it out) or blackout (everyone back in), same cards and deck', () => {
+    let s = callUntil(start(), 'a', [0, 1, 2, 3, 4]);
+    s = daubAll(s, 'a', [0, 1, 2, 3, 4]);
+    s = input(s, 'a', { type: 'bingo' });
+    expect(s.phase.id).toBe('bingo');
+    expect(game.tvView(s).decide).toEqual({ same: true, blackout: true });
+    const drawnAtBingo = s.round.drawn;
+    const cardsAtBingo = s.round.cards;
+    // same pattern: calling resumes on the same deck, cards and daubs survive, the winner cannot re-claim
+    let same = input(s, 'b', { type: 'continue', pattern: 'same' });
+    expect(same.phase.id).toBe('play');
+    expect(same.round.drawn).toBe(drawnAtBingo + 1);
+    expect(same.round.cards).toBe(cardsAtBingo);
+    expect(same.round.daubs['a']).toEqual([[0, 1, 2, 3, 4]]);
+    expect(same.round.pattern).toBe('line');
+    expect(same.round.won).toEqual({ a: [0] });
+    expect(input(same, 'a', { type: 'bingo' }).phase.id).toBe('play'); // ignored: already won it
+    expect(game.controllerView(same, 'a').canClaim).toBe(false);
+    expect(game.controllerView(same, 'b').canClaim).toBe(true);
+    // blackout: the pattern changes for everyone and the winner is back in
+    let black = input(s, 'b', { type: 'continue', pattern: 'blackout' });
+    expect(black.phase.id).toBe('play');
+    expect(black.round.pattern).toBe('blackout');
+    expect(black.round.won).toEqual({});
+    expect(game.controllerView(black, 'a').canClaim).toBe(true);
+    // a second bingo in the same round is another point; a spectator cannot decide
+    expect(input(s, 'zz', { type: 'continue', pattern: 'same' })).toBe(s);
+    // next → scoreboard (more rounds) exactly like the deadline
+    expect(input(s, 'a', { type: 'next' }).phase.id).toBe('scoreboard');
+    expect(timer(s).phase.id).toBe('scoreboard');
+    same = timer(same); // one more call, nobody claims
+    black = timer(black);
+    expect(same.phase.id).toBe('play');
+    expect(black.phase.id).toBe('play');
   });
 
   it('an invalid claim pauses the caller, shows reds and misses, wipes the card, and blocks a re-claim until the next number', () => {

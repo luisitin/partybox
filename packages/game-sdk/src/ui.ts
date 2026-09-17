@@ -27,9 +27,11 @@ export { ServerClockProvider, useSecondsLeft, useServerNow } from './ui/clock';
 export { DeadlineBar } from './ui/DeadlineBar';
 export { sanitizeSnapshot, usePrefersReducedMotion } from './ui/motion';
 export type { DeadlineBarProps } from './ui/DeadlineBar';
-export { SOUND_CUES, SoundProvider, isSoundCue, useSound } from './ui/sound';
-export type { PlayCue, SoundCue } from './ui/sound';
+export { SOUND_CUES, SoundProvider, isSoundCue, useSound, useSoundApi } from './ui/sound';
+export type { ClipOptions, PlayCue, SoundApi, SoundCue } from './ui/sound';
 export { buzz, hapticsEnabled, setHapticsEnabled } from './ui/haptics';
+export { trace } from './ui/trace';
+export type { TraceEvent } from './ui/trace';
 export {
   MOTION_BASE,
   MOTION_FAST,

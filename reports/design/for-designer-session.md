@@ -41,3 +41,13 @@ generic results hero. Client-side fix by the design session: an optional `Result
 `GameClientModule` rendered inside `TvResults` with the last playing view, so Lightning keeps its
 final board (bets, answer, deltas, totals) on the stage until Play again / New game / Home. No
 server change needed; noting it so you do not also reach for the phase deadline.
+
+## 4. Bingo: "keep going" after a bingo — DONE by the design session 2026-09-16 (owner request)
+
+`games/bingo/server`: the `bingo` phase now waits (90 s) for `{ type: 'continue', pattern: 'same' |
+'blackout' }` or `{ type: 'next' }` from any player with a card (the phones offer it to the VIP; the
+game state cannot know the VIP). Same cards, daubs and deck carry on; `round.settled` keeps a winner
+from re-claiming the pattern they already won; a continue for blackout reopens the round for everyone;
+each bingo is another point. Fixtures regenerated, README updated, test added. The TV host bar's
+"Skip / Next" still means next round; a TV-side "Keep going" would need a `tv:input` on the protocol —
+yours if you want it.

@@ -1,11 +1,34 @@
 // Web Audio sound cues, synthesized (ADR-012: no audio files). Cue names are the design-system
 // vocabulary (docs/DESIGN_SYSTEM.md; the type lives in the SDK so games can cue through
 // `useSound`). `enable()` must be called from a user gesture (autoplay policy).
+import { trace } from '@partybox/game-sdk/ui';
 import type { SoundCue } from '@partybox/game-sdk/ui';
 
 export type { SoundCue };
 
 const MUTE_KEY = 'partybox:muted';
+
+/**
+ * A recorded clip inside a cue (the one exception to "no audio files", owner pick 2026-09-16: a
+ * real "hooray"). Files live in packages/client/public/sfx (Mixkit licence, credited in the
+ * README); decoded once per engine and played through the same graph as the notes.
+ */
+interface Sample {
+  src: string;
+  at: number;
+  gain: number;
+  /** Fade to silence from `fadeAt` over `fadeMs` (the crowd tails off under the next screen). */
+  fadeAt?: number;
+  fadeMs?: number;
+}
+
+const SAMPLES: Partial<Record<SoundCue, Sample[]>> = {
+  // The winner moment: the horn leads, the crowd (10 s) comes in under it and tails off.
+  cheer: [
+    { src: '/sfx/party-horn.mp3', at: 0, gain: 0.9 },
+    { src: '/sfx/crowd-cheer.mp3', at: 0.15, gain: 0.7, fadeAt: 6.5, fadeMs: 3000 },
+  ],
+};
 /** The phone remembers its own mute (default on) separately from the TV's. */
 export const PHONE_MUTE_KEY = 'partybox:phone-sound';
 
@@ -137,6 +160,10 @@ const CUES: Record<SoundCue, Note[]> = {
     { freq: 220, to: 110, at: 0, dur: 0.26, type: 'sawtooth', gain: 0.13 },
     { freq: 196, to: 82, at: 0.3, dur: 0.45, type: 'sawtooth', gain: 0.13 },
   ],
+  // Sampled (see SAMPLES) — the note list is empty so the synth has nothing to add.
+  cheer: [],
+  // A game maps a phase to this when it cues that phase itself later (no chime on entry).
+  silence: [],
   // A soft tick for a daub on a phone (no phone plays sound yet; here for the vocabulary).
   daub: [{ freq: 1200, at: 0, dur: 0.03, type: 'triangle', gain: 0.1 }],
 };
@@ -173,6 +200,10 @@ export interface SoundEngine {
   /** performance.now() of the last cue actually started — lets the shell skip a generic cue
    *  when the game just played a specific one in the same commit. */
   lastPlayedAt(): number;
+  /** A recorded clip under /sfx (a bingo call): decoded once, scheduled exactly, mute-aware. */
+  clip(src: string, opts?: { gain?: number; delayMs?: number }): void;
+  /** Stop every clip now (a claim interrupts the caller). */
+  hushClips(): void;
   muted(): boolean;
   setMuted(muted: boolean): void;
 }
@@ -193,6 +224,44 @@ export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine
   let master: GainNode | null = null;
   let muted = false;
   let lastPlayedAt = -Infinity;
+  let lastCue: { cue: SoundCue; at: number } | null = null;
+  let lastClip: { src: string; at: number } | null = null;
+  const buffers = new Map<string, Promise<AudioBuffer | null>>();
+  const buffer = (src: string): Promise<AudioBuffer | null> => {
+    let pending = buffers.get(src);
+    if (!pending) {
+      pending = fetch(src)
+        .then((res) => (res.ok ? res.arrayBuffer() : Promise.reject(new Error(res.statusText))))
+        .then((bytes) => (ctx ? ctx.decodeAudioData(bytes) : null))
+        .catch(() => null); // a missing clip is a silent cue, never an error
+      buffers.set(src, pending);
+    }
+    return pending;
+  };
+  const clips = new Set<AudioBufferSourceNode>();
+  const playSample = (sample: Sample, t0: number, track = false): void => {
+    void buffer(sample.src).then((buf) => {
+      if (!buf || !ctx || muted || ctx.state !== 'running') return;
+      const source = ctx.createBufferSource();
+      const gain = ctx.createGain();
+      source.buffer = buf;
+      if (track) {
+        clips.add(source);
+        source.addEventListener('ended', () => clips.delete(source));
+      }
+      const start = Math.max(ctx.currentTime, t0 + sample.at);
+      gain.gain.setValueAtTime(sample.gain, start);
+      if (sample.fadeAt !== undefined) {
+        gain.gain.setValueAtTime(sample.gain, start + sample.fadeAt);
+        gain.gain.exponentialRampToValueAtTime(
+          0.0001,
+          start + sample.fadeAt + (sample.fadeMs ?? 2000) / 1000,
+        );
+      }
+      source.connect(gain).connect(master ?? ctx.destination);
+      source.start(start);
+    });
+  };
   try {
     muted = localStorage.getItem(muteKey) === '1';
   } catch {
@@ -215,6 +284,8 @@ export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine
         // Not only 'suspended': iOS Safari reports 'interrupted' after a lock or a background
         // tab, which a phone does far more often than a TV.
         if (ctx.state !== 'running') await ctx.resume();
+        // Decode the clips now so the first cheer is instant.
+        for (const samples of Object.values(SAMPLES)) for (const s of samples) void buffer(s.src);
         return ctx.state === 'running';
       } catch {
         return false;
@@ -222,10 +293,22 @@ export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine
     },
     enabled: () => ctx?.state === 'running',
     play(cue, opts) {
-      if (!opts?.quiet) lastPlayedAt = performance.now();
+      // The same cue twice inside 40 ms is one cue (a dev-mode double effect, an echoing push).
+      const now = performance.now();
+      if (lastCue && lastCue.cue === cue && now - lastCue.at < 40) return;
+      lastCue = { cue, at: now };
+      if (!opts?.quiet) lastPlayedAt = now;
+      trace('cue', {
+        cue,
+        surface: options.master === undefined ? 'tv' : 'phone',
+        muted,
+        ready: ctx?.state === 'running',
+        semitones: opts?.semitones ?? 0,
+      });
       if (!ctx || muted || ctx.state !== 'running') return;
       options.onPlay?.(cue);
       const t0 = ctx.currentTime;
+      for (const sample of SAMPLES[cue] ?? []) playSample(sample, t0);
       const k = 2 ** ((opts?.semitones ?? 0) / 12);
       for (const note of CUES[cue]) {
         const osc = ctx.createOscillator();
@@ -244,6 +327,31 @@ export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine
       }
     },
     lastPlayedAt: () => lastPlayedAt,
+    clip(src, opts) {
+      const now = performance.now();
+      if (lastClip && lastClip.src === src && now - lastClip.at < 40) return;
+      lastClip = { src, at: now };
+      const name = src.split('/').pop() ?? src;
+      trace('clip', { src: name, muted, ready: ctx?.state === 'running' });
+      // The audio trace reads calls as `speak` events (what the caller used to emit).
+      if (name.match(/^[bingo]\d+\.wav$/)) trace('speak', { text: name, voice: 'clip' });
+      if (!ctx || muted || ctx.state !== 'running') return;
+      playSample(
+        { src, at: (opts?.delayMs ?? 0) / 1000, gain: opts?.gain ?? 1 },
+        ctx.currentTime,
+        true,
+      );
+    },
+    hushClips() {
+      for (const s of clips) {
+        try {
+          s.stop();
+        } catch {
+          /* already ended */
+        }
+      }
+      clips.clear();
+    },
     muted: () => muted,
     setMuted(value) {
       muted = value;

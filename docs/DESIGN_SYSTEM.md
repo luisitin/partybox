@@ -102,6 +102,8 @@ Timer: in the last 5 s it switches to `--pb-danger`, scales 1.15×, pulses once 
 `clientModule.sounds` maps phase ids to cues; unmapped phases play `phase`, reserved for moments where the phone needs
 the player (so 'pick up your phone' and 'look at the TV' never sound the same). A mapped phase that re-enters itself
 (a new deadline with the same id — Blanks reads one card per instance) chimes again; unmapped ones and pauses do not.
+`silence` is a valid cue for a phase the game cues itself later; `cheer` (results, a bingo) is the one sampled cue — a
+party horn + crowd from `packages/client/public/sfx/` (Mixkit licence).
 TV has a mute toggle (persisted in `localStorage`) and a "tap to start" overlay for the autoplay policy.
 
 **Music beds** (ADR-032, `packages/client/src/beds.ts`): looping backgrounds synthesized like the cues, one per phase via

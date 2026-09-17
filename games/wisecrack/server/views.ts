@@ -146,6 +146,9 @@ export function tvView(state: State, gameId: string): WisecrackTvView {
   const onStage = phase === 'scores' || phase === 'done';
   return {
     ...envelope(state, gameId, { statusOf: statusOf(state), scores: state.scores }),
+    // Passive phases (nobody can act): a quiet bar instead of red digits and countdown ticks
+    // (ADR-030) — the reveal has its own beats, intro and scores are title cards.
+    timerMode: phase === 'answer' || phase === 'vote' ? 'normal' : 'quiet',
     round: state.round,
     rounds: state.settings.rounds,
     multiplier: multiplierFor(state),

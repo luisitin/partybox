@@ -118,6 +118,7 @@ export const t = {
   controller: {
     phoneSound: 'Sounds on this phone',
     vibration: 'Vibration',
+    noVibration: 'Vibration is not available in this browser (iPhones have no vibration API).',
     on: 'On',
     off: 'Off',
   },

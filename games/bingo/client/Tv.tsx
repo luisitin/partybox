@@ -1,114 +1,36 @@
 // TV view for Bingo. Dumb component: renders `view`, composes game-sdk primitives, never touches
 // sockets or game logic. During play the stage shows ONE thing: the current call — plus the one
-// before it, small. A claim stops the caller at once (server); the stage then lands the
-// claimant's card cell by cell for the whole room, and only then delivers the verdict: a buzzer
-// and "NOT A BINGO", or a fanfare with confetti.
-import { useEffect } from 'react';
-import type { CSSProperties, JSX } from 'react';
-import { BigText, Confetti, Scoreboard, Stage, useSound } from '@partybox/game-sdk/ui';
-import type { GameTvProps, ScoreboardRow } from '@partybox/game-sdk/ui';
-import type { BingoTvView, CallView, ClaimView } from '../server/views';
+// before it, small, and the hall board when the VIP left it on. A claim stops the caller at once
+// (server); the stage then drops the claimant's card, turns the pattern's cells in reading order
+// for the whole room, shows the rest of the card, and only then delivers the verdict: a buzzer
+// and "NOT A BINGO", or the cheer with confetti — and waits for a phone to move on.
+import { useLayoutEffect } from 'react';
+import type { JSX } from 'react';
+import { BigText, Scoreboard, Stage, useSoundApi } from '@partybox/game-sdk/ui';
+import type { GameTvProps } from '@partybox/game-sdk/ui';
+import type { BingoTvView } from '../server/views';
 import { hushCaller, speakCall } from './caller';
-import { Card, PatternIcon, REVEAL_STEP_MS } from './Card';
+import { PatternIcon } from './Card';
+import { Call, CalledBoard, ClaimStage, rows, whichCard } from './TvParts';
 import styles from './Tv.module.css';
-
-/** The verdict waits for the last cell to land (25 cells × step + the pop itself). */
-const VERDICT_DELAY: CSSProperties = { animationDelay: `${25 * REVEAL_STEP_MS + 300}ms` };
-
-function rows(view: BingoTvView): ScoreboardRow[] {
-  const avatar = (id: string): string => view.players.find((p) => p.id === id)?.avatarId ?? '';
-  return view.standings.map((s) => ({
-    playerId: s.playerId,
-    name: s.name,
-    avatarId: avatar(s.playerId),
-    score: s.wins,
-    rank: s.rank,
-    connected: view.players.find((p) => p.id === s.playerId)?.connected,
-  }));
-}
-
-function Call({ call, big }: { call: CallView; big?: boolean }): JSX.Element {
-  return (
-    <div className={big ? styles.callBig : `${styles.callSmall} pb-enter`} key={call.number}>
-      <span className={styles.letter}>{call.letter}</span>
-      <span className={styles.number}>{call.number}</span>
-    </div>
-  );
-}
-
-/** The hall board: 5 rows × 15 numbers, lit as called, the current one ringed (review-loop #1). */
-function CalledBoard({
-  called,
-  current,
-}: {
-  called: number[];
-  current: number | null;
-}): JSX.Element {
-  const lit = new Set(called);
-  return (
-    <div className={styles.board} aria-label={`${called.length} numbers called`}>
-      {BOARD_ROWS.map((letter, row) => (
-        <div key={letter} className={styles.boardRow}>
-          <span className={styles.boardLetter}>{letter}</span>
-          {Array.from({ length: 15 }, (_, i) => row * 15 + i + 1).map((n) => (
-            <span
-              key={n}
-              className={`${styles.cell} ${lit.has(n) ? styles.cellCalled : ''} ${n === current ? styles.cellCurrent : ''}`}
-            >
-              {n}
-            </span>
-          ))}
-        </div>
-      ))}
-    </div>
-  );
-}
-
-const BOARD_ROWS = ['B', 'I', 'N', 'G', 'O'] as const;
-
-function ClaimCard({ claim, celebrate }: { claim: ClaimView; celebrate: boolean }): JSX.Element {
-  return (
-    <div className={`${styles.claim} pb-pop`}>
-      <Card
-        numbers={claim.card}
-        daubs={claim.daubs}
-        green={claim.green}
-        red={celebrate ? [] : claim.red}
-        missing={celebrate ? [] : claim.missing}
-        size="tv"
-        verdict
-        reveal
-      />
-    </div>
-  );
-}
 
 export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
   const roundLabel = `Round ${view.round} of ${view.totalRounds}`;
-  const play = useSound();
+  const sound = useSoundApi();
   const phaseId = view.phaseId;
   const number = view.current?.number ?? null;
   const letter = view.current?.letter ?? null;
-  // Every new number bounces in with a "boing", then the caller says it ("Under the B, 12");
-  // no per-second ticking — the timer is quiet. A claim hushes the caller mid-word.
-  useEffect(() => {
+  // Every new number: the "boing" the instant the push lands (a layout effect, before paint), the
+  // recorded call 120 ms behind it; no per-second ticking — the timer is quiet. Leaving play (a
+  // claim, a check) hushes the caller mid-word.
+  useLayoutEffect(() => {
     if (phaseId !== 'play' || number === null || letter === null) {
-      hushCaller();
+      hushCaller(sound);
       return;
     }
-    play('call');
-    return speakCall(letter, number);
-  }, [phaseId, number, letter, play]);
-  // The verdict sounds once the card has landed: buzzer for a failed claim, fanfare for a bingo.
-  const winner = view.winnerId;
-  useEffect(() => {
-    if (phaseId !== 'check' && !(phaseId === 'bingo' && winner)) return;
-    const handle = setTimeout(
-      () => play(phaseId === 'check' ? 'wrong' : 'fanfare'),
-      25 * REVEAL_STEP_MS + 300,
-    );
-    return () => clearTimeout(handle);
-  }, [phaseId, winner, play]);
+    sound.play('call');
+    speakCall(sound, letter, number);
+  }, [phaseId, number, letter, sound]);
 
   if (view.phaseId === 'intro') {
     return (
@@ -123,15 +45,9 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
           </BigText>
         </div>
         <BigText level="h2">{view.patternHint}</BigText>
-        {view.cardsPerPlayer > 1 || view.winnersNeeded > 1 ? (
+        {view.cardsPerPlayer > 1 ? (
           <BigText level="h2" tone="muted">
-            {view.cardsPerPlayer > 1
-              ? `${view.cardsPerPlayer} cards each — BINGO! checks your best one.`
-              : ''}
-            {view.cardsPerPlayer > 1 && view.winnersNeeded > 1 ? ' ' : ''}
-            {view.winnersNeeded > 1
-              ? `The round runs to ${view.winnersNeeded} bingos — a card that wins sits out.`
-              : ''}
+            {view.cardsPerPlayer} cards each — BINGO! checks your best one.
           </BigText>
         ) : null}
         <p className={styles.programme}>
@@ -154,8 +70,8 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
       >
         <p className={styles.kicker}>
           {roundLabel} · {view.patternLabel} · call {view.callIndex} of 75
-          {view.winnersNeeded > 1
-            ? ` · bingo ${view.bingosSoFar + 1} of ${view.winnersNeeded}${view.roundWinners.length > 0 ? ` (${view.roundWinners.join(', ')} so far)` : ''}`
+          {view.bingosThisRound > 0
+            ? ` · ${view.bingosThisRound} bingo${view.bingosThisRound === 1 ? '' : 's'} so far`
             : ''}
         </p>
         {view.current ? <Call call={view.current} big /> : null}
@@ -182,34 +98,35 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
   if (view.phaseId === 'check' && view.claim) {
     return (
       <Stage>
-        <div className={styles.checkHead}>
+        <div className={`${styles.checkHead} pb-enter`}>
           <BigText level="h2" tone="accent">
             {view.claim.name} says BINGO!
           </BigText>
           <p className={styles.kicker}>
             {view.patternLabel}
-            {view.claim.cardCount > 1
-              ? ` · card ${view.claim.cardIndex + 1} of ${view.claim.cardCount}`
-              : ''}{' '}
-            · checking against {view.callIndex} calls
+            {whichCard(view.claim)} · checking against {view.callIndex} calls
           </p>
         </div>
-        <div className={styles.checkBody}>
-          <ClaimCard claim={view.claim} celebrate={false} />
-          <div className={`${styles.verdict} pb-pop`} style={VERDICT_DELAY}>
-            <BigText level="h1" className={styles.no}>
-              NOT A BINGO
-            </BigText>
-            <p className={styles.legend}>
-              <span className={styles.legendGreen}>✓ right</span>
-              <span className={styles.legendRed}>✕ never called</span>
-              <span className={styles.legendMissing}>▢ missed</span>
-            </p>
-            <BigText level="h2" tone="muted">
-              Card wiped. Next number in a moment…
-            </BigText>
-          </div>
-        </div>
+        <ClaimStage
+          key={`${view.claim.playerId}:${view.callIndex}`}
+          claim={view.claim}
+          valid={false}
+          verdict={
+            <>
+              <BigText level="h1" className={styles.no}>
+                NOT A BINGO
+              </BigText>
+              <p className={styles.legend}>
+                <span className={styles.legendGreen}>✓ right</span>
+                <span className={styles.legendRed}>✕ never called</span>
+                <span className={styles.legendMissing}>▢ missed</span>
+              </p>
+              <BigText level="h2" tone="muted">
+                Card wiped. Next number in a moment…
+              </BigText>
+            </>
+          }
+        />
       </Stage>
     );
   }
@@ -218,49 +135,59 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
     if (view.claim && view.winnerName) {
       return (
         <Stage>
-          <Confetti />
-          <div className={`${styles.checkHead} pb-pop`} style={VERDICT_DELAY}>
-            <BigText level="display" tone="accent" className={styles.bingoTitle}>
-              BINGO!
+          <div className={`${styles.checkHead} pb-enter`}>
+            <BigText level="h2" tone="accent">
+              {view.winnerName} says BINGO!
             </BigText>
-            <BigText level="h1">
-              {view.roundContinues
-                ? `${view.winnerName} has bingo — ${view.bingosSoFar} of ${view.winnersNeeded}`
-                : view.winnersNeeded > 1
-                  ? `${view.winnerName} takes the last bingo of round ${view.round}`
-                  : `${view.winnerName} wins round ${view.round}`}
-            </BigText>
+            <p className={styles.kicker}>
+              {view.patternLabel}
+              {whichCard(view.claim)} · checking against {view.callIndex} calls
+            </p>
           </div>
-          <div className={styles.checkBody}>
-            <ClaimCard claim={view.claim} celebrate />
-            <div className={`${styles.verdict} pb-pop`} style={VERDICT_DELAY}>
-              <PatternIcon cells={view.patternCells} size={120} />
-              <BigText level="h2" tone="muted">
-                {view.patternLabel} on call {view.callIndex}
-                {view.claim.cardCount > 1
-                  ? ` · card ${view.claim.cardIndex + 1} of ${view.claim.cardCount}`
-                  : ''}
-              </BigText>
-              {view.roundContinues ? (
-                <BigText level="h2" tone="accent">
-                  That card sits out — the caller carries on.
+          <ClaimStage
+            key={`${view.claim.playerId}:${view.callIndex}`}
+            claim={view.claim}
+            valid
+            verdict={
+              <>
+                <BigText level="display" tone="accent" className={styles.bingoTitle}>
+                  BINGO!
                 </BigText>
-              ) : null}
-            </div>
-          </div>
+                <BigText level="h1">
+                  {view.winnerName} wins round {view.round}
+                </BigText>
+                <p className={styles.winLine}>
+                  <PatternIcon cells={view.patternCells} size={72} />
+                  <span>
+                    {view.patternLabel} on call {view.callIndex}
+                    {whichCard(view.claim)}
+                    {view.bingosThisRound > 1 ? ` · bingo #${view.bingosThisRound} this round` : ''}
+                  </span>
+                </p>
+              </>
+            }
+            aside={
+              view.decide && (view.decide.same || view.decide.blackout) ? (
+                <p className={`${styles.decideLine} pb-enter`}>
+                  <span className={styles.decideWho}>Anyone</span> picks on their phone: keep going
+                  {view.decide.blackout ? ' (same pattern or blackout)' : ''} or{' '}
+                  {view.round < view.totalRounds ? 'next round' : 'finish'}. The caller waits.
+                  {view.decide.same && view.claim.cardCount > 1
+                    ? ' The winning card sits the pattern out; the rest play on.'
+                    : ''}
+                </p>
+              ) : null
+            }
+          />
         </Stage>
       );
     }
     return (
       <Stage center>
         <BigText level="display" tone="muted">
-          {view.bingosSoFar > 0 ? 'Deck empty' : 'No bingo'}
+          No bingo
         </BigText>
-        <BigText level="h1">
-          {view.bingosSoFar > 0
-            ? `That's every number — round ${view.round} goes to ${view.roundWinners.join(', ')}.`
-            : `The deck's empty — nobody wins round ${view.round}.`}
-        </BigText>
+        <BigText level="h1">The deck's empty — nobody wins round {view.round}.</BigText>
       </Stage>
     );
   }

@@ -41,8 +41,7 @@
     "spicy": false,
     "showBoard": true,
     "showPrevious": true,
-    "cards": 2,
-    "winners": 2
+    "cards": 2
   },
   "round": {
     "number": 1,
@@ -117,10 +116,10 @@
     "claim": null,
     "waitForCall": {},
     "winnerId": null,
-    "winnerIds": ["p1"],
     "won": {
       "p1": [0]
-    }
+    },
+    "bingos": 1
   },
   "wins": {
     "p1": 1,
@@ -128,5 +127,11 @@
     "p3": 0,
     "p4": 0
   },
-  "history": []
+  "history": [
+    {
+      "round": 1,
+      "winnerId": "p1",
+      "calls": 29
+    }
+  ]
 }

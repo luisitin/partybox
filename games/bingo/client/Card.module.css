@@ -23,6 +23,7 @@
 }
 
 .grid {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: var(--pb-space-1);
@@ -79,6 +80,141 @@ button.cell:focus-visible {
 .free.daubed {
   background: var(--pb-accent-2-fill);
   color: var(--pb-on-accent-2-fill);
+}
+
+/* A claim being checked: every daub is an outline first (no colour tells the story yet); the
+   pattern's cells then turn over on their beat — green for a called number, red for one that
+   never was, a dashed miss — with their mark; the other tiles fade to their final look together
+   once the line has turned. Zero-length under reduced motion via the tokens. */
+.pending {
+  background: var(--pb-surface-2);
+  color: var(--pb-text);
+  border-color: var(--pb-accent);
+}
+
+.slowIn {
+  transition:
+    background calc(var(--pb-motion-slow) * 1.5) var(--pb-ease),
+    border-color calc(var(--pb-motion-slow) * 1.5) var(--pb-ease),
+    color calc(var(--pb-motion-slow) * 1.5) var(--pb-ease),
+    opacity calc(var(--pb-motion-slow) * 1.5) var(--pb-ease);
+}
+
+.turnGreen,
+.turnRed {
+  animation: cell-turn var(--pb-motion-slow) var(--pb-ease) both;
+}
+
+.turnMissing {
+  background: var(--pb-surface);
+  border: 3px dashed var(--pb-accent-2);
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+/* The gold sweep along a winning line: a soft band that travels the line while its cells turn
+   (reading order — the row left to right, the column top down, a diagonal from its top). */
+.sweep {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 100%;
+  height: 20%;
+  transform: translate(-50%, -50%) rotate(var(--pb-sweep-rot, 0deg));
+  border-radius: var(--pb-radius);
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent 15%,
+    color-mix(in srgb, var(--pb-accent-2) 70%, transparent) 50%,
+    transparent 85%
+  );
+  background-size: 45% 100%;
+  background-repeat: no-repeat;
+  animation: sweep var(--pb-sweep-ms, 1100ms) linear both;
+}
+
+.sweepRow {
+  top: calc((var(--pb-sweep-i) + 0.5) * 20%);
+}
+
+.sweepCol {
+  left: calc((var(--pb-sweep-i) + 0.5) * 20%);
+  --pb-sweep-rot: 90deg;
+}
+
+.sweepDiagA {
+  width: 141%;
+  --pb-sweep-rot: 45deg;
+}
+
+.sweepDiagB {
+  width: 141%;
+  --pb-sweep-rot: -45deg;
+  animation-direction: reverse;
+}
+
+@keyframes sweep {
+  from {
+    background-position: -45% 0;
+  }
+  to {
+    background-position: 145% 0;
+  }
+}
+
+.turnGreen {
+  --pb-cell-to: var(--pb-accent-3);
+  --pb-cell-to-text: var(--pb-on-accent);
+}
+
+.turnRed {
+  --pb-cell-to: var(--pb-danger);
+  --pb-cell-to-text: var(--pb-on-accent);
+}
+
+.turnGreen .mark,
+.turnRed .mark {
+  animation: mark-in var(--pb-motion-base) var(--pb-ease) both;
+  animation-delay: inherit;
+}
+
+/* The colour lands at the squeeze (~0.2 s in), in step with the sting; the pop follows. */
+@keyframes cell-turn {
+  0% {
+    transform: scale(1);
+    background: var(--pb-surface-2);
+    border-color: var(--pb-accent);
+    color: var(--pb-text);
+  }
+  28% {
+    transform: scale(0.82) rotate(-4deg);
+    background: var(--pb-surface-2);
+    border-color: var(--pb-accent);
+    color: var(--pb-text);
+  }
+  34% {
+    transform: scale(0.86) rotate(-3deg);
+    background: var(--pb-cell-to);
+    border-color: var(--pb-cell-to);
+    color: var(--pb-cell-to-text);
+  }
+  100% {
+    transform: scale(1);
+    background: var(--pb-cell-to);
+    border-color: var(--pb-cell-to);
+    color: var(--pb-cell-to-text);
+  }
+}
+
+@keyframes mark-in {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 /* A card landing on the TV: every cell pops in with its own delay (Card sets animation-delay),
