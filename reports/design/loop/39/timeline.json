@@ -1,0 +1,66 @@
+{
+  "pass": "39",
+  "game": "bingo",
+  "players": 12,
+  "scenario": "normal",
+  "focus": "tv",
+  "started": "03:43:51.803",
+  "tvVideoT0": "03:43:47.632",
+  "changes": [
+    {
+      "t": 1789616631807,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789616636797,
+      "at": "03:43:51.807",
+      "sinceStartS": 0,
+      "videoS": 4.2
+    },
+    {
+      "t": 1789616636845,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789616639798,
+      "at": "03:43:56.845",
+      "sinceStartS": 5,
+      "videoS": 9.2
+    },
+    {
+      "t": 1789616754684,
+      "status": "playing",
+      "phase": "bingo",
+      "deadline": 1789616764679,
+      "at": "03:45:54.684",
+      "sinceStartS": 122.9,
+      "videoS": 127.1
+    },
+    {
+      "t": 1789616764783,
+      "status": "playing",
+      "phase": "scoreboard",
+      "deadline": 1789616770685,
+      "at": "03:46:04.783",
+      "sinceStartS": 133,
+      "videoS": 137.2
+    },
+    {
+      "t": 1789616770776,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789616775687,
+      "at": "03:46:10.776",
+      "sinceStartS": 139,
+      "videoS": 143.1
+    },
+    {
+      "t": 1789616775757,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789616778700,
+      "at": "03:46:15.757",
+      "sinceStartS": 144,
+      "videoS": 148.1
+    }
+  ],
+  "notes": ["budget reached while playing; skipped to results"]
+}
