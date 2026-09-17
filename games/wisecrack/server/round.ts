@@ -81,6 +81,16 @@ export function bothBlank(state: State, prompt: RoundPrompt): boolean {
   return prompt.authors.every((id) => answerOf(state, prompt.id, id) === null);
 }
 
+/** Exactly one of two authors answered: no contest, the real answer wins by default
+ *  (a blank used to be votable and could win — review-loop #34). */
+export function isWalkover(state: State, prompt: RoundPrompt): boolean {
+  const authors = [...new Set(prompt.authors)];
+  return (
+    authors.length > 1 &&
+    authors.filter((id) => answerOf(state, prompt.id, id) === null).length === 1
+  );
+}
+
 /** Index of the first votable prompt at or after `from`, or -1 when the round's voting is over. */
 export function nextVotableIndex(state: State, from: number): number {
   for (let i = Math.max(0, from); i < state.prompts.length; i++) {

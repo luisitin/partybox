@@ -1,8 +1,9 @@
 // Scoring for Wisecrack: 100 x multiplier per vote, +50 x multiplier for a unanimous win with at
-// least two votes cast ("sweep"); the last round doubles. Awards and results() live here too.
+// least two votes cast ("sweep"); the last round doubles. A walkover (the other answer is blank)
+// pays one vote's worth without a vote. Awards and results() live here too.
 import { buildResults, rank } from '@partybox/game-sdk';
 import type { GameAward, GameResults } from '@partybox/game-sdk';
-import { answerOf, isLastRound } from './round';
+import { answerOf, isLastRound, isWalkover } from './round';
 import { SWEEP_BONUS, VOTE_POINTS } from './types';
 import type { RoundPrompt, State } from './types';
 
@@ -15,6 +16,8 @@ export interface AuthorTally {
   votes: number;
   points: number;
   sweep: boolean;
+  /** Won without a vote: the other answer was blank. */
+  walkover: boolean;
 }
 
 /** The last round of a multi-round game pays double; a one-round game has no "last" round. */
@@ -29,21 +32,26 @@ export function tallyPrompt(state: State, prompt: RoundPrompt): AuthorTally[] {
   const cast = Object.keys(votes).length;
   // A single-player pairing (never in a real game) would list the same author twice.
   const authors = [...new Set(prompt.authors)];
+  const contest = !isWalkover(state, prompt);
   return authors.map((playerId) => {
+    const text = answerOf(state, prompt.id, playerId);
     const voterIds = Object.keys(votes)
       .filter((voterId) => votes[voterId] === playerId)
       .sort();
-    const sweep = cast >= 2 && voterIds.length === cast;
-    const points =
-      voterIds.length * VOTE_POINTS * multiplier + (sweep ? SWEEP_BONUS * multiplier : 0);
+    const sweep = contest && cast >= 2 && voterIds.length === cast;
+    const walkover = !contest && text !== null;
+    const points = walkover
+      ? VOTE_POINTS * multiplier
+      : voterIds.length * VOTE_POINTS * multiplier + (sweep ? SWEEP_BONUS * multiplier : 0);
     return {
       slot: prompt.authors.indexOf(playerId),
       playerId,
-      text: answerOf(state, prompt.id, playerId),
+      text,
       voterIds,
       votes: voterIds.length,
       points,
       sweep,
+      walkover,
     };
   });
 }

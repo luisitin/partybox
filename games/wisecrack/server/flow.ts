@@ -8,13 +8,17 @@ import { enterIntro, reduceIntro } from './phases/intro';
 import { enterReveal, reduceReveal } from './phases/reveal';
 import { enterDone, enterScores, reduceScores } from './phases/scores';
 import { enterVote, reduceVote } from './phases/vote';
-import { isLastRound, nextVotableIndex } from './round';
-import type { Input, State } from './types';
+import { isLastRound, isWalkover, nextVotableIndex } from './round';
+import type { Input, RoundPrompt, State } from './types';
 
-/** First votable prompt at or after `from`, else the round scoreboard. */
+/** First votable prompt at or after `from`, else the round scoreboard. A prompt with one blank
+ *  answer skips its vote: straight to the reveal, where the real answer wins by default. */
 function voteFrom(state: State, now: number, from: number): State {
   const index = nextVotableIndex(state, from);
-  return index === -1 ? enterScores(state, now) : enterVote(state, now, index);
+  if (index === -1) return enterScores(state, now);
+  const prompt = state.prompts[index] as RoundPrompt;
+  if (isWalkover(state, prompt)) return enterReveal({ ...state, promptIndex: index }, now);
+  return enterVote(state, now, index);
 }
 
 export function afterIntro(state: State, now: number): State {

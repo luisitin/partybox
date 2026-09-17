@@ -42,8 +42,9 @@ measured against the deadline; if > 0).
 
 ## Edge cases
 
-- A never-answered prompt shows "(no answer)" and can still be voted on; if **both** answers are blank
-  its `vote` and `reveal` are skipped (an all-blank round goes straight to `scores`).
+- A never-answered prompt shows "(no answer)". With **one** blank there is no contest: the `vote` is
+  skipped and the `reveal` pays the real answer one vote's worth (100 × multiplier, "wins by default").
+  With **both** blank the `vote` and `reveal` are skipped (an all-blank round goes straight to `scores`).
 - Disconnected players never block "all answered" / "all voted"; a reconnect before the deadline can
   act. VIP skip: `intro` → `answer`; `answer` → first votable `vote` (unanswered = blank); `vote` → its
   `reveal` with the votes so far; `reveal` → next `vote` or `scores`; `scores` → next `intro` or `done`.

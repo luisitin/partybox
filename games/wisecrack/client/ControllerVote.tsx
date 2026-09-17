@@ -88,6 +88,23 @@ export function ControllerReveal({
     );
   }
   const scored = mine.points > 0;
+  const blank = mine.text === BLANK;
+  const headline = mine.walkover
+    ? 'Wins by default'
+    : blank
+      ? 'No answer sent'
+      : mine.votes === 0
+        ? 'No votes this time'
+        : `${mine.votes} ${mine.votes === 1 ? 'vote' : 'votes'}`;
+  const caption = mine.walkover
+    ? 'The other answer was blank.'
+    : blank
+      ? 'The other answer wins by default.'
+      : scored
+        ? 'Nice one.'
+        : mine.last
+          ? 'That was the last one — scores are next.'
+          : 'Better luck on the next prompt.';
   return (
     <Screen>
       <div className={styles.result} role="status" aria-live="polite">
@@ -98,19 +115,11 @@ export function ControllerReveal({
           +{mine.points}
         </p>
         <h2 className={styles.votesLine}>
-          {mine.votes === 0
-            ? 'No votes this time'
-            : `${mine.votes} ${mine.votes === 1 ? 'vote' : 'votes'}`}
+          {headline}
           {mine.sweep ? <span className={styles.pill}>Sweep</span> : null}
         </h2>
         <p className={styles.quote}>{mine.text}</p>
-        <p className="pb-caption pb-muted">
-          {scored
-            ? 'Nice one.'
-            : mine.last
-              ? 'That was the last one — scores are next.'
-              : 'Better luck on the next prompt.'}
-        </p>
+        <p className="pb-caption pb-muted">{caption}</p>
       </div>
     </Screen>
   );

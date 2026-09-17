@@ -21,6 +21,8 @@ export interface RevealedAuthor extends AnonymousOption {
   voterIds: string[];
   points: number;
   sweep: boolean;
+  /** Won without a vote: the other answer was blank. */
+  walkover: boolean;
 }
 
 export interface StandingsRow {
@@ -69,8 +71,16 @@ export interface WisecrackControllerView extends ControllerView {
     votedSlot: number | null;
     myAnswer: string | null;
   } | null;
-  /** reveal: my result when I wrote for the prompt on stage; `last` = no prompt follows. */
-  myReveal: { text: string; votes: number; points: number; sweep: boolean; last: boolean } | null;
+  /** reveal: my result when I wrote for the prompt on stage; `last` = no prompt follows;
+   *  `walkover` = won without a vote because the other answer was blank. */
+  myReveal: {
+    text: string;
+    votes: number;
+    points: number;
+    sweep: boolean;
+    walkover: boolean;
+    last: boolean;
+  } | null;
   myScore: number;
   myRank: number;
   myDelta: number;
@@ -123,6 +133,7 @@ function revealedAuthors(state: State, prompt: RoundPrompt): RevealedAuthor[] {
       voterIds: t.voterIds,
       points: t.points,
       sweep: t.sweep,
+      walkover: t.walkover,
     };
   });
 }
@@ -176,6 +187,7 @@ function myRevealFor(state: State, playerId: string): WisecrackControllerView['m
     votes: mine.votes,
     points: mine.points,
     sweep: mine.sweep,
+    walkover: mine.walkover,
     last: isLastRound(state) && state.promptIndex >= state.prompts.length - 1,
   };
 }

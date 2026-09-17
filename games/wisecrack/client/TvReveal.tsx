@@ -3,13 +3,14 @@
 // (900 ms, the winner's name last), then the vote count, points, the winner outline and a SWEEP /
 // TIE pill (1500 ms). The count, the outline and the pill all carry the result, never colour alone.
 // Sound: 'reveal' at t=0 (a game cue keeps the shell's generic phase chime quiet), 'sweep' on the
-// last beat only when a card swept — never more than two cues per reveal.
+// last beat only when a card swept — never more than two cues per reveal. A walkover (the other
+// answer was blank, no vote ran) lands the same way: the real answer's card wins "by default".
 import { useEffect } from 'react';
 import type { CSSProperties, JSX } from 'react';
 import { Avatar, Stage, useBeats, useSound } from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
 import type { WisecrackTvView } from '../server/index';
-import { LETTERS, PromptHeader, answerClass, isShort } from './TvVote';
+import { BLANK, LETTERS, PromptHeader, answerClass, isShort } from './TvVote';
 import { REVEAL_BEATS_MS } from './timing';
 import styles from './wisecrack.module.css';
 
@@ -38,7 +39,8 @@ export function TvReveal({ view }: Props): JSX.Element {
       <PromptHeader view={view} />
       <div className={styles.cards}>
         {view.revealed.map((r) => {
-          const winner = top > 0 && r.votes === top;
+          const winner = r.walkover || (top > 0 && r.votes === top);
+          const blankLoser = r.text === BLANK && view.revealed.some((o) => o.walkover);
           // The lower-voted author lands first; a clear winner's name is the last thing to arrive.
           const last = winner && !tie;
           const voters = r.voterIds
@@ -86,15 +88,23 @@ export function TvReveal({ view }: Props): JSX.Element {
                     ))}
                   </span>
                 ) : null}
-                <span
-                  className={`${styles.payoff} ${r.votes === 0 ? styles.zero : ''} ${beat >= BEAT_POINTS ? styles.pop : styles.pending}`}
-                  aria-hidden={beat < BEAT_POINTS}
-                >
-                  <span className={styles.voteCount}>{r.votes}</span>
-                  <span className={styles.voteWord}>{r.votes === 1 ? 'vote' : 'votes'}</span>
-                  {r.votes > 0 ? <span className={styles.delta}>+{r.points}</span> : null}
-                  {pill ? <span className={styles.pill}>{pill}</span> : null}
-                </span>
+                {blankLoser ? null : (
+                  <span
+                    className={`${styles.payoff} ${r.votes === 0 && !r.walkover ? styles.zero : ''} ${beat >= BEAT_POINTS ? styles.pop : styles.pending}`}
+                    aria-hidden={beat < BEAT_POINTS}
+                  >
+                    {r.walkover ? (
+                      <span className={styles.voteWord}>wins by default</span>
+                    ) : (
+                      <>
+                        <span className={styles.voteCount}>{r.votes}</span>
+                        <span className={styles.voteWord}>{r.votes === 1 ? 'vote' : 'votes'}</span>
+                      </>
+                    )}
+                    {r.points > 0 ? <span className={styles.delta}>+{r.points}</span> : null}
+                    {pill ? <span className={styles.pill}>{pill}</span> : null}
+                  </span>
+                )}
               </div>
             </article>
           );

@@ -2,6 +2,7 @@
 // blank answers, vote eligibility, reconnects, VIP skip/end/pause, hidden information.
 import { describe, expect, it } from 'vitest';
 import { game } from '../server/index';
+import type { State } from '../server/types';
 import { INTRO_MS, REVEAL_MS, SCORES_MS, VOTE_MS } from '../server/types';
 import {
   answer,
@@ -90,25 +91,36 @@ describe('phase flow', () => {
 });
 
 describe('blank answers', () => {
-  it('shows "(no answer)" for an unanswered prompt, which can still be voted on', () => {
+  it('a prompt with one blank answer skips its vote: the real answer wins by default', () => {
     let s = toAnswer(start());
-    s = answerAll(s, (id, p) => (id === 'ana' && p === promptsOf(s, 'ana')[0] ? null : 'text'));
+    const blank = promptsOf(s, 'ana')[0];
+    if (!blank) throw new Error('no prompt');
+    s = answerAll(s, (id, p) => (id === 'ana' && p.id === blank.id ? null : 'text'));
     s = timer(s); // deadline: Ana's first prompt stays blank
-    expect(s.phase.id).toBe('vote');
-    // Find the prompt with the blank and put it on stage via timers.
+    const voted: string[] = [];
+    let reveal: State | null = null;
     let guard = 0;
-    while (!current(s)?.authors.includes('ana') || s.answers[current(s)?.id ?? '']?.['ana']) {
-      s = timer(timer(s));
-      if (guard++ > 10) throw new Error('blank prompt never came up');
+    while (s.phase.id !== 'scores') {
+      if (s.phase.id === 'vote') voted.push(current(s)?.id ?? '');
+      if (s.phase.id === 'reveal' && current(s)?.id === blank.id) reveal = s;
+      s = timer(s);
+      if (guard++ > 20) throw new Error('round did not end');
     }
-    const prompt = current(s);
-    if (!prompt) throw new Error('no prompt');
-    const slot = prompt.authors.indexOf('ana');
-    const view = tv(s);
-    expect(view.options.find((o) => o.slot === slot)?.text).toBe('(no answer)');
-    const t = voteAll(s, () => slot);
-    expect(t.phase.id).toBe('reveal');
-    expect(t.scores['ana']).toBe(250);
+    expect(voted).not.toContain(blank.id);
+    if (!reveal) throw new Error('blank prompt never revealed');
+    const other = blank.authors.find((id) => id !== 'ana') ?? '';
+    const revealed = tv(reveal).revealed;
+    expect(revealed.find((r) => r.playerId === other)).toMatchObject({
+      walkover: true,
+      votes: 0,
+      points: 100,
+    });
+    expect(revealed.find((r) => r.playerId === 'ana')).toMatchObject({
+      text: '(no answer)',
+      walkover: false,
+      points: 0,
+    });
+    expect(reveal.votes[blank.id]).toBeUndefined();
   });
 
   it('skips vote and reveal for a prompt where both answers are blank', () => {
@@ -193,10 +205,11 @@ describe('VIP', () => {
     let s = start({ rounds: 1 });
     s = vip(s, 'skip');
     expect(s.phase.id).toBe('answer');
-    s = answerAll(s, (id, p) => (p === promptsOf(s, id)[0] ? 'only one' : null));
-    s = vip(s, 'skip'); // unanswered prompts become blank
+    // Everyone answers both (a lone blank would make the first prompt a walkover, not a vote), so
+    // the answer phase ends on its own; the skip-from-answer path is covered by the blank tests.
+    s = answerAll(s, () => 'text');
     expect(s.phase.id).toBe('vote');
-    expect(Object.values(s.answers).flatMap((a) => Object.keys(a))).toHaveLength(4);
+    expect(Object.values(s.answers).flatMap((a) => Object.keys(a))).toHaveLength(8);
     const [v1] = voters(s);
     s = vote(s, v1 as string, 0);
     s = vip(s, 'skip');
