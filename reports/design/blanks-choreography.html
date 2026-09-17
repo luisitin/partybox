@@ -747,13 +747,12 @@
         <span class="eyebrow">6 · Music by stage</span>
         <h2>Relaxed beds, one per stage</h2>
         <p>
-          <strong>Now live on the TV:</strong> the read-out chime is B (two-note pluck), and the
-          beds play by stage exactly as the table says — warm groove across the round card, the
-          picking and the result; Late night under the read-out; the marimba ostinato while the room
-          judges; silence on the results screen. Soft bossa stays here as the alternative for the
-          picking stage. All loops are synthesized in the browser at the level the TV would use; the
-          read-out chime plays over whichever bed is running (press ▶ Play on stage 2 while a bed
-          runs). Start one bed at a time.
+          <strong>Now live on the TV (your picks):</strong> the read-out chime is B (two-note
+          pluck); the <strong>warm groove</strong> is the general background (round card, read-out,
+          result — it resumes where it left off), the <strong>soft bossa</strong> plays while people
+          pick a card, the <strong>marimba ostinato</strong> while the room judges, silence on the
+          results screen. Every bed now sits at true background level — about half of what this page
+          played before.
         </p>
       </div>
     </div>
@@ -769,31 +768,22 @@
         </thead>
         <tbody>
           <tr>
-            <td>Intro + picking a card</td>
-            <td>Warm groove</td>
-            <td>Soft bossa</td>
-            <td>
-              one bed across both so the music never restarts 5 s in; relaxed, a little motion for
-              thinking time
-            </td>
+            <td>Picking a card</td>
+            <td>Soft bossa <em>(decided)</em></td>
+            <td>—</td>
+            <td>a little motion for thinking time</td>
           </tr>
           <tr>
-            <td>Read-out</td>
-            <td>Late night</td>
-            <td>Warm groove at half level</td>
-            <td>sparse held chords, no drums: the room is listening to someone read</td>
+            <td>Round card, read-out, result</td>
+            <td>Warm groove <em>(decided)</em></td>
+            <td>Late night (kept for reference)</td>
+            <td>the general background; it resumes where it left off between stages</td>
           </tr>
           <tr>
             <td>Judging</td>
             <td>Marimba ostinato <em>(decided)</em></td>
             <td>—</td>
             <td>a patient pulse while people vote</td>
-          </tr>
-          <tr>
-            <td>Result</td>
-            <td>Warm groove (resumes where it left off)</td>
-            <td>silence under the tally + sweep chimes</td>
-            <td>the round closes on the same bed it opened with</td>
           </tr>
           <tr>
             <td>Results screen</td>
@@ -808,8 +798,8 @@
     <p class="note">
       Implemented as heard here: beds are generated on the TV in the browser (no audio files),
       cross-fade over 1.5 s, resume where they left off when a stage comes back, hold during a
-      pause, duck by half under every chime, and follow the TV mute. Levels: warm 22 %, late night
-      18 %, marimba 20 %. Say if any bed should be louder, quieter, faster or swapped for the bossa.
+      pause, duck by half under every chime, and follow the TV mute. Levels: warm 12 %, bossa 11 %,
+      marimba 12 %. Say if any bed should be louder, quieter or faster.
     </p>
   </section>
 
@@ -909,6 +899,11 @@
       <div>
         <span class="eyebrow">Reference</span>
         <h2>Phase lengths</h2>
+        <p>
+          Your pick: rounds are untimed by default — picking, voting and the result wait for the
+          room and anyone taps Next on their phone. A "Timed rounds" toggle in the game settings
+          brings the clocks back.
+        </p>
       </div>
     </div>
     <div class="tablewrap">
@@ -928,7 +923,10 @@
           </tr>
           <tr>
             <td>Answer</td>
-            <td class="n">60 s (+15 s per extra card)</td>
+            <td class="n">
+              no clock by default (anyone taps Next; a hidden 3 min fallback) · timed rounds: 60 s
+              (+15 s per extra card)
+            </td>
             <td>everyone connected has played</td>
           </tr>
           <tr>
@@ -940,13 +938,16 @@
           </tr>
           <tr>
             <td>Judge</td>
-            <td class="n">30 s (45 s with a rotating judge or past 8 cards)</td>
+            <td class="n">
+              no clock by default (Next; hidden 2 min fallback) · timed: 30 s (45 s with a rotating
+              judge or past 8 cards)
+            </td>
             <td>every voter has voted</td>
           </tr>
           <tr>
             <td>Result</td>
-            <td class="n">8 s</td>
-            <td>—</td>
+            <td class="n">no clock by default (Next; hidden 60 s fallback) · timed: 8 s</td>
+            <td>anyone taps Next</td>
           </tr>
         </tbody>
       </table>
@@ -965,10 +966,7 @@
         Are the three result beats (0 / 600 / 1200 ms) too slow for a room that already saw the
         cards?
       </li>
-      <li>
-        Music: keep the warm groove for intro + picking, or switch to the soft bossa? Is "Late
-        night" right under the read-out?
-      </li>
+      <li>Music: at the new background level, is the marimba still clear enough while judging?</li>
     </ol>
   </section>
 </div>
@@ -1290,10 +1288,10 @@
     const BEDS = {
       warm: {
         title: 'Warm groove',
-        stage: 'intro · picking · result',
+        stage: 'round card · read-out · result · decided',
         rec: true,
         bpm: 92,
-        level: 0.22,
+        level: 0.12,
         note: 'Electric-piano chords (Cmaj7 · Am7 · Fmaj7 · G7), a round bass on 1 and 3, brushed hats.',
         bar(out, t, i) {
           const beat = 60 / 92,
@@ -1335,9 +1333,10 @@
       },
       bossa: {
         title: 'Soft bossa',
-        stage: 'intro · picking (alternative)',
+        stage: 'picking a card · decided',
+        rec: true,
         bpm: 100,
-        level: 0.2,
+        level: 0.11,
         note: 'Nylon-string plucks in a bossa pattern over Dmaj7 · Bm7 · Em7 · A7, a walking bass, a shaker on the off-beats.',
         bar(out, t, i) {
           const beat = 60 / 100,
@@ -1377,10 +1376,9 @@
       },
       latenight: {
         title: 'Late night',
-        stage: 'read-out',
-        rec: true,
+        stage: 'kept for reference',
         bpm: 70,
-        level: 0.18,
+        level: 0.1,
         note: 'Held Rhodes-like chords that swell in (Fmaj7 · Em7 · Dm7 · Cmaj7), a soft bass note per bar, no drums. Sits under a voice.',
         bar(out, t, i) {
           const beat = 60 / 70,
@@ -1406,7 +1404,7 @@
         stage: 'judging · decided',
         rec: true,
         bpm: 112,
-        level: 0.2,
+        level: 0.12,
         note: 'A rolling 16th-note marimba figure over Dm · B♭ · F · C with a light shaker.',
         bar(out, t, i) {
           const beat = 60 / 112,
