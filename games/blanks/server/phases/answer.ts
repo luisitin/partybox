@@ -24,10 +24,14 @@ export function enterAnswer(state: State, now: number): State {
   );
 }
 
-/** "Before half the answer time" is measured against the deadline so a pause does not cheat it. */
+/** "Before half the answer time" is measured against the deadline so a pause does not cheat it.
+ *  An untimed round has no clock but the same yardstick: half of `answerSeconds` from the phase's
+ *  (pause-shifted) start — before, its 3 min fallback made every play "fast" (review-loop #115). */
 function isFast(state: State, now: number): boolean {
   const { deadline } = state.phase;
-  return deadline !== null && now < deadline - answerMs(state) / 2;
+  if (deadline === null) return false;
+  const phaseMs = state.settings.timed ? answerMs(state) : UNTIMED_ANSWER_MS;
+  return now < deadline - phaseMs + answerMs(state) / 2;
 }
 
 function applyPlay(state: State, playerId: string, input: PlayInput, now: number): State {

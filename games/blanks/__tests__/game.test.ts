@@ -1,7 +1,7 @@
 // Unit tests for Blanks: a whole game on timers alone, dealing, the fill rule and content
 // (README "Phases" + "Content"). Phase and scoring edge cases live in phases.test.ts.
 import { describe, expect, it } from 'vitest';
-import { fill, fillText, revealMs } from '../server/cards';
+import { fill, fillText, glue, revealMs } from '../server/cards';
 import { DECKS, blackCard, blackPool, whitePool } from '../server/content';
 import { game } from '../server/index';
 import {
@@ -175,6 +175,14 @@ describe('fill', () => {
       'Bob',
       "'s big day.",
     ]);
+  });
+
+  it('glues a short first word to its neighbour for rendering; labels keep plain spaces', () => {
+    expect(glue('A soggy sandwich.')).toBe('A soggy sandwich.');
+    expect(glue('The pull-out method.')).toBe('The pull-out method.');
+    expect(glue('Naps.')).toBe('Naps.');
+    expect(glue('Being too drunk.')).toBe('Being too drunk.');
+    expect(fillText('I love ____.', ['A nap'])).toBe('I love A nap.');
   });
 
   it('a question card lists the whites underneath (extra)', () => {

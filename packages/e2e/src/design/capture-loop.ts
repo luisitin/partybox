@@ -241,6 +241,9 @@ async function main(): Promise<void> {
         Date.now() - actedAt > 5000
       ) {
         followedUp.add(key);
+        // A phase still up 9 s in has settled (Blanks' result lands its beats at 1.2 s; the
+        // 450 ms still catches only the first): one late TV still per such phase.
+        await still(tv, `${String(n).padStart(2, '0')}-${phase}-tv-late`);
         const again = [sam, priya, ...extras].filter((p) => p.playerId && !p.page.isClosed());
         for (const p of again) await api.post('/api/dev/act', { playerId: p.playerId });
         // An untimed phase (Blanks) waits for the room: Sam taps the phone's Next if it offers one.

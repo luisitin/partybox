@@ -393,6 +393,13 @@
   margin-top: var(--pb-space-2);
 }
 
+/* A narrow phone (iPhone SE) has no room for avatar + name + votes on one line inside the
+   lettered card: the votes pill drops under the name rather than the name losing its end
+   ("Play…", review-loop #115). */
+.phone .author {
+  flex-wrap: wrap;
+}
+
 .authorName {
   font-size: var(--pb-font-body);
   font-weight: 800;

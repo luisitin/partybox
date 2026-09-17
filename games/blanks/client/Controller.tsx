@@ -12,7 +12,7 @@ import { FilledCard, LETTERS } from './Cards';
 import { ControllerHand } from './ControllerHand';
 import { ControllerJudge, ControllerReveal } from './ControllerJudge';
 import { NextButton } from './NextButton';
-import { winnerLine } from './TvResult';
+import { votesLabel, winnerLine } from './TvResult';
 import styles from './blanks.module.css';
 
 type Props = GameControllerProps<BlanksControllerView, Input>;
@@ -52,6 +52,11 @@ function ControllerResult({ view, me, send }: Props): JSX.Element {
   }, [view.iWon, play]);
   const winners = view.revealed.filter((r) => r.winner);
   const mine = view.revealed.find((r) => r.submitterId === me.id);
+  // The judge's own phone: their pick, by name (they had no card in the round).
+  const iPicked =
+    view.role === 'judge' && winners.length === 1 && !winners[0]?.rando
+      ? `You picked ${winners[0]?.name}`
+      : null;
   const rankLine = `${final ? 'Final: ' : ''}#${view.myRank} of ${view.standings.length} · ${view.myScore} ${view.myScore === 1 ? 'point' : 'points'}`;
   return (
     <Screen
@@ -69,7 +74,7 @@ function ControllerResult({ view, me, send }: Props): JSX.Element {
     >
       <div className={styles.resultHero} role="status" aria-live="polite">
         <h2 className={styles.resultLine}>
-          {final ? rankLine : view.iWon ? 'You won the round!' : winnerLine(view)}
+          {final ? rankLine : view.iWon ? 'You won the round!' : (iPicked ?? winnerLine(view))}
         </h2>
         {!final ? (
           <p className="pb-caption pb-muted">
@@ -91,10 +96,8 @@ function ControllerResult({ view, me, send }: Props): JSX.Element {
               <span className={styles.author}>
                 <Avatar avatarId={w.avatarId} size="var(--pb-chip-size)" />
                 <span className={styles.authorName}>{w.name}</span>
-                {w.votes > 0 ? (
-                  <span className={styles.voteCount}>
-                    {w.votes} {w.votes === 1 ? 'vote' : 'votes'}
-                  </span>
+                {votesLabel(view, w.votes) ? (
+                  <span className={styles.voteCount}>{votesLabel(view, w.votes)}</span>
                 ) : null}
               </span>
             </FilledCard>
@@ -102,7 +105,9 @@ function ControllerResult({ view, me, send }: Props): JSX.Element {
         : null}
       {!final && mine && !mine.winner ? (
         <p className="pb-caption pb-muted">
-          Yours ({LETTERS[mine.slot]}) got {mine.votes} {mine.votes === 1 ? 'vote' : 'votes'}.
+          {view.judgeMode === 'czar'
+            ? `Yours (${LETTERS[mine.slot]}) wasn't picked.`
+            : `Yours (${LETTERS[mine.slot]}) got ${mine.votes} ${mine.votes === 1 ? 'vote' : 'votes'}.`}
         </p>
       ) : null}
       <Scoreboard compact highlightId={me.id} rows={view.standings} noTrophy />
