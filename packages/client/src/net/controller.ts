@@ -134,8 +134,7 @@ export function createController(url?: string): Controller {
     store.set({ offsetMs: at - Date.now() });
     lastPushAt = Date.now();
     // Any push proves the link: a stale-watchdog 'reconnecting' (below) ends here.
-    if (store.get().connection === 'reconnecting' && socket.connected)
-      store.set({ connection: 'connected' });
+    if (socket.connected) backOnline();
   };
 
   // A dead link is invisible for up to the 20 s ping timeout (review-loop #4): the phone kept a
@@ -175,6 +174,7 @@ export function createController(url?: string): Controller {
   socket.on('connect', () => {
     restarts.onConnect();
     const wasJoined = store.get().joined;
+    backOnline();
     store.set({ connection: 'connected' });
     const session = loadSession();
     if (session) {
@@ -230,22 +230,31 @@ export function createController(url?: string): Controller {
     measure(push.at);
     store.set({ rev: push.rev, view: push.view });
   });
+  const showToast = (shown: ToastPayload): void => {
+    const id = nextToastId();
+    store.set(() => ({ toasts: [{ id, ...shown }] }));
+    setTimeout(
+      () => store.set((prev) => ({ toasts: prev.toasts.filter((t) => t.id !== id) })),
+      2500,
+    );
+  };
+  // Reconnecting → connected while in a room: say so, or the banner just vanishes (review-loop #33).
+  const backOnline = (): void => {
+    const s = store.get();
+    if (s.connection !== 'reconnecting' || !s.joined) return;
+    store.set({ connection: 'connected' });
+    showToast({ kind: 'success', text: 'Back online' });
+  };
   socket.on('toast', (toast: ToastPayload) => {
     // "<name> joined" is TV information; on a phone it only piles up over the primary button.
     if (/\bjoined\b/.test(toast.text)) return;
-    const id = nextToastId();
     // "<name> is now the VIP" lands on every phone; on the new VIP's own it should speak to them
     // and point at the badge that just appeared (review-loop #5). Names are unique per room.
     const s = store.get();
     const handover = /^(.+) is now the VIP$/.exec(toast.text);
     const mine = handover && s.room?.players.find((p) => p.id === s.playerId)?.name === handover[1];
-    const shown: ToastPayload = mine
-      ? { kind: 'success', text: "You're the VIP now — tap ★ VIP for host controls" }
-      : toast;
-    store.set(() => ({ toasts: [{ id, ...shown }] }));
-    setTimeout(
-      () => store.set((prev) => ({ toasts: prev.toasts.filter((t) => t.id !== id) })),
-      2500,
+    showToast(
+      mine ? { kind: 'success', text: "You're the VIP now — tap ★ VIP for host controls" } : toast,
     );
   });
   socket.on('error', (error: ErrorPayload) => {
