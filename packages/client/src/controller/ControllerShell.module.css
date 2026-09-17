@@ -269,8 +269,11 @@
   position: fixed;
   left: var(--pb-space-4);
   right: var(--pb-space-4);
-  /* above the sticky footer (56 px button + padding), never over the thumb */
-  bottom: calc(var(--pb-space-8) + var(--pb-space-7) + env(safe-area-inset-bottom));
+  /* above the sticky footer — the primary button plus the results screen's row of links under
+     it (a VIP toast used to land on Play again, review-loop #75) — never over the thumb */
+  bottom: calc(
+    var(--pb-space-8) + var(--pb-space-7) + var(--pb-touch) + env(safe-area-inset-bottom)
+  );
   display: flex;
   flex-direction: column;
   gap: var(--pb-space-2);
