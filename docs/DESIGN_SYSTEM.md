@@ -69,7 +69,7 @@ The TV shell sets the TV column; the controller shell sets the phone column; tok
 `prefers-reduced-motion: reduce` sets every duration to 0. Transitions never hide information (no full-screen wipes).
 Keyframes in global.css: `pb-rise`, `pb-pop`, `pb-shake`, `pb-fade-in` / `pb-fade-out` (the pause curtain and the
 server-lost dim arrive and leave over `--pb-motion-base`), `pb-spin` (a reconnecting ⟳; only under no-preference),
-`pb-confetti`. PlayerChip reserves its glyph slot, so a ✓ landing pops in place and never shifts the row.
+`pb-confetti`, `pb-land` (a card replacing a card: a bounce from half opacity, never from transparent, so a stage never blinks empty between two). PlayerChip reserves its glyph slot, so a ✓ landing pops in place and never shifts the row.
 Phone: every `Screen` rises on mount (`pb-rise`, `--pb-motion-base`, fill backwards); a game keys its Screen or grid
 when a phase should read as a new screen, and never keys the Controller itself (game-local state would reset).
 TV status swaps (lobby / selecting / playing / results) are keyed and rise (`pb-rise`, fill backwards); a game chunk that

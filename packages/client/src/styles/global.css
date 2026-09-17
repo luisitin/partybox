@@ -118,6 +118,23 @@ button {
 }
 
 /* A bouncy arrival: scale up past 1 and settle (new bingo call, a card landing on the stage). */
+/* A card replacing a card (Blanks reads one after another): lands with a bounce but is never
+   transparent, so the stage does not blink empty between two of them (review-loop #131). */
+@keyframes pb-land {
+  0% {
+    opacity: 0.5;
+    transform: scale(0.92);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 @keyframes pb-pop {
   0% {
     opacity: 0;

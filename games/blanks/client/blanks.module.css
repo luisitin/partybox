@@ -194,9 +194,10 @@
   margin-block: auto;
 }
 
-/* The reveal card lands with a bounce (a new card on the table). */
+/* The reveal card lands with a bounce (a new card on the table) — from half opacity, not from
+   nothing: at 20 fps the stage sat empty for two frames between two read-outs (review-loop #131). */
 .landing {
-  animation: global(pb-pop) var(--pb-motion-slow) var(--pb-ease) both;
+  animation: global(pb-land) var(--pb-motion-slow) var(--pb-ease) both;
 }
 
 .judgeLine {
