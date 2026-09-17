@@ -1,0 +1,502 @@
+{
+  "pass": "90",
+  "game": "blanks",
+  "players": 12,
+  "scenario": "normal",
+  "focus": "phone",
+  "started": "17:02:20.596",
+  "tvVideoT0": "17:02:17.321",
+  "changes": [
+    {
+      "t": 1789664540601,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789664545593,
+      "bed": "warm",
+      "at": "17:02:20.601",
+      "sinceStartS": 0,
+      "videoS": 3.3
+    },
+    {
+      "t": 1789664545596,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789664605593,
+      "bed": "warm",
+      "at": "17:02:25.596",
+      "sinceStartS": 5,
+      "videoS": 8.3
+    },
+    {
+      "t": 1789664549795,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789664554262,
+      "bed": "latenight",
+      "at": "17:02:29.795",
+      "sinceStartS": 9.2,
+      "videoS": 12.5
+    },
+    {
+      "t": 1789664554315,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789664558942,
+      "bed": "latenight",
+      "at": "17:02:34.315",
+      "sinceStartS": 13.7,
+      "videoS": 17
+    },
+    {
+      "t": 1789664558969,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789664563618,
+      "bed": "latenight",
+      "at": "17:02:38.969",
+      "sinceStartS": 18.4,
+      "videoS": 21.6
+    },
+    {
+      "t": 1789664563712,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789664567880,
+      "bed": "latenight",
+      "at": "17:02:43.712",
+      "sinceStartS": 23.1,
+      "videoS": 26.4
+    },
+    {
+      "t": 1789664567915,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789664572131,
+      "bed": "latenight",
+      "at": "17:02:47.915",
+      "sinceStartS": 27.3,
+      "videoS": 30.6
+    },
+    {
+      "t": 1789664572211,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789664576640,
+      "bed": "latenight",
+      "at": "17:02:52.211",
+      "sinceStartS": 31.6,
+      "videoS": 34.9
+    },
+    {
+      "t": 1789664576728,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789664581217,
+      "bed": "latenight",
+      "at": "17:02:56.728",
+      "sinceStartS": 36.1,
+      "videoS": 39.4
+    },
+    {
+      "t": 1789664581235,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789664585374,
+      "bed": "latenight",
+      "at": "17:03:01.235",
+      "sinceStartS": 40.6,
+      "videoS": 43.9
+    },
+    {
+      "t": 1789664585443,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789664589774,
+      "bed": "latenight",
+      "at": "17:03:05.443",
+      "sinceStartS": 44.8,
+      "videoS": 48.1
+    },
+    {
+      "t": 1789664589878,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789664594678,
+      "bed": "latenight",
+      "at": "17:03:09.878",
+      "sinceStartS": 49.3,
+      "videoS": 52.6
+    },
+    {
+      "t": 1789664594729,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789664599181,
+      "bed": "latenight",
+      "at": "17:03:14.729",
+      "sinceStartS": 54.1,
+      "videoS": 57.4
+    },
+    {
+      "t": 1789664599277,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789664603884,
+      "bed": "latenight",
+      "at": "17:03:19.277",
+      "sinceStartS": 58.7,
+      "videoS": 62
+    },
+    {
+      "t": 1789664603981,
+      "status": "playing",
+      "phase": "judge",
+      "deadline": 1789664648890,
+      "bed": "marimba",
+      "at": "17:03:23.981",
+      "sinceStartS": 63.4,
+      "videoS": 66.7
+    },
+    {
+      "t": 1789664608303,
+      "status": "playing",
+      "phase": "result",
+      "deadline": 1789664616197,
+      "bed": "warm",
+      "at": "17:03:28.303",
+      "sinceStartS": 67.7,
+      "videoS": 71
+    },
+    {
+      "t": 1789664616269,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789664621210,
+      "bed": "warm",
+      "at": "17:03:36.269",
+      "sinceStartS": 75.7,
+      "videoS": 78.9
+    },
+    {
+      "t": 1789664621267,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789664681220,
+      "bed": "warm",
+      "at": "17:03:41.267",
+      "sinceStartS": 80.7,
+      "videoS": 83.9
+    },
+    {
+      "t": 1789664625450,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789664629567,
+      "bed": "latenight",
+      "at": "17:03:45.450",
+      "sinceStartS": 84.9,
+      "videoS": 88.1
+    },
+    {
+      "t": 1789664629662,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789664634074,
+      "bed": "latenight",
+      "at": "17:03:49.662",
+      "sinceStartS": 89.1,
+      "videoS": 92.3
+    },
+    {
+      "t": 1789664634161,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789664638725,
+      "bed": "latenight",
+      "at": "17:03:54.161",
+      "sinceStartS": 93.6,
+      "videoS": 96.8
+    },
+    {
+      "t": 1789664638824,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789664643288,
+      "bed": "latenight",
+      "at": "17:03:58.824",
+      "sinceStartS": 98.2,
+      "videoS": 101.5
+    },
+    {
+      "t": 1789664643298,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789664647670,
+      "bed": "latenight",
+      "at": "17:04:03.298",
+      "sinceStartS": 102.7,
+      "videoS": 106
+    },
+    {
+      "t": 1789664647763,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789664652282,
+      "bed": "latenight",
+      "at": "17:04:07.763",
+      "sinceStartS": 107.2,
+      "videoS": 110.4
+    },
+    {
+      "t": 1789664652309,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789664656643,
+      "bed": "latenight",
+      "at": "17:04:12.309",
+      "sinceStartS": 111.7,
+      "videoS": 115
+    },
+    {
+      "t": 1789664656708,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789664661231,
+      "bed": "latenight",
+      "at": "17:04:16.708",
+      "sinceStartS": 116.1,
+      "videoS": 119.4
+    },
+    {
+      "t": 1789664661291,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789664665747,
+      "bed": "latenight",
+      "at": "17:04:21.291",
+      "sinceStartS": 120.7,
+      "videoS": 124
+    },
+    {
+      "t": 1789664665811,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789664670498,
+      "bed": "latenight",
+      "at": "17:04:25.811",
+      "sinceStartS": 125.2,
+      "videoS": 128.5
+    },
+    {
+      "t": 1789664670545,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789664674888,
+      "bed": "latenight",
+      "at": "17:04:30.545",
+      "sinceStartS": 129.9,
+      "videoS": 133.2
+    },
+    {
+      "t": 1789664674974,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789664679267,
+      "bed": "latenight",
+      "at": "17:04:34.974",
+      "sinceStartS": 134.4,
+      "videoS": 137.7
+    },
+    {
+      "t": 1789664679279,
+      "status": "playing",
+      "phase": "judge",
+      "deadline": 1789664724277,
+      "bed": "marimba",
+      "at": "17:04:39.279",
+      "sinceStartS": 138.7,
+      "videoS": 142
+    },
+    {
+      "t": 1789664683802,
+      "status": "playing",
+      "phase": "result",
+      "deadline": 1789664691692,
+      "bed": "warm",
+      "at": "17:04:43.802",
+      "sinceStartS": 143.2,
+      "videoS": 146.5
+    },
+    {
+      "t": 1789664691694,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789664696692,
+      "bed": "warm",
+      "at": "17:04:51.694",
+      "sinceStartS": 151.1,
+      "videoS": 154.4
+    },
+    {
+      "t": 1789664696755,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789664756707,
+      "bed": "warm",
+      "at": "17:04:56.755",
+      "sinceStartS": 156.2,
+      "videoS": 159.4
+    },
+    {
+      "t": 1789664700872,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789664705234,
+      "bed": "latenight",
+      "at": "17:05:00.872",
+      "sinceStartS": 160.3,
+      "videoS": 163.6
+    },
+    {
+      "t": 1789664705280,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789664709998,
+      "bed": "latenight",
+      "at": "17:05:05.280",
+      "sinceStartS": 164.7,
+      "videoS": 168
+    },
+    {
+      "t": 1789664710069,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789664714704,
+      "bed": "latenight",
+      "at": "17:05:10.069",
+      "sinceStartS": 169.5,
+      "videoS": 172.7
+    },
+    {
+      "t": 1789664714711,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789664719408,
+      "bed": "latenight",
+      "at": "17:05:14.711",
+      "sinceStartS": 174.1,
+      "videoS": 177.4
+    },
+    {
+      "t": 1789664719464,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789664723816,
+      "bed": "latenight",
+      "at": "17:05:19.464",
+      "sinceStartS": 178.9,
+      "videoS": 182.1
+    },
+    {
+      "t": 1789664723885,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789664728721,
+      "bed": "latenight",
+      "at": "17:05:23.885",
+      "sinceStartS": 183.3,
+      "videoS": 186.6
+    },
+    {
+      "t": 1789664728841,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789664733177,
+      "bed": "latenight",
+      "at": "17:05:28.841",
+      "sinceStartS": 188.2,
+      "videoS": 191.5
+    },
+    {
+      "t": 1789664733272,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789664737766,
+      "bed": "latenight",
+      "at": "17:05:33.272",
+      "sinceStartS": 192.7,
+      "videoS": 196
+    },
+    {
+      "t": 1789664737801,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789664742370,
+      "bed": "latenight",
+      "at": "17:05:37.801",
+      "sinceStartS": 197.2,
+      "videoS": 200.5
+    },
+    {
+      "t": 1789664742417,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789664747210,
+      "bed": "latenight",
+      "at": "17:05:42.417",
+      "sinceStartS": 201.8,
+      "videoS": 205.1
+    },
+    {
+      "t": 1789664747255,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789664751622,
+      "bed": "latenight",
+      "at": "17:05:47.255",
+      "sinceStartS": 206.7,
+      "videoS": 209.9
+    },
+    {
+      "t": 1789664751642,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789664756498,
+      "bed": "latenight",
+      "at": "17:05:51.642",
+      "sinceStartS": 211,
+      "videoS": 214.3
+    },
+    {
+      "t": 1789664756568,
+      "status": "playing",
+      "phase": "judge",
+      "deadline": 1789664801504,
+      "bed": "marimba",
+      "at": "17:05:56.568",
+      "sinceStartS": 216,
+      "videoS": 219.2
+    },
+    {
+      "t": 1789664760784,
+      "status": "playing",
+      "phase": "result",
+      "deadline": 1789664768677,
+      "bed": "warm",
+      "at": "17:06:00.784",
+      "sinceStartS": 220.2,
+      "videoS": 223.5
+    },
+    {
+      "t": 1789664768782,
+      "status": "results",
+      "phase": "results",
+      "deadline": null,
+      "bed": null,
+      "at": "17:06:08.782",
+      "sinceStartS": 228.2,
+      "videoS": 231.5
+    }
+  ],
+  "notes": []
+}
