@@ -350,6 +350,9 @@
   gap: var(--pb-space-5);
   width: 100%;
   flex: 1;
+  min-height: 0;
+  /* bounded and clipped, so TvJudge can measure what fits and page the rest */
+  overflow: hidden;
   align-content: start;
 }
 
