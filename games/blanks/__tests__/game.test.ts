@@ -164,6 +164,17 @@ describe('fill', () => {
     ]);
   });
 
+  it('carries a closing quote inside the paper but never a possessive', () => {
+    expect(fill('"Goodnight, ____."', ['A cow.']).segments.map((s) => s.text)).toEqual([
+      '"Goodnight, ',
+      'A cow."',
+    ]);
+    expect(fill("____'s big day.", ['Bob.']).segments.map((s) => s.text)).toEqual([
+      'Bob',
+      "'s big day.",
+    ]);
+  });
+
   it('a question card lists the whites underneath (extra)', () => {
     const { segments, extra } = fill("What's that smell?", ['Grandma.', 'The Force.']);
     expect(segments).toEqual([{ kind: 'text', text: "What's that smell?" }]);

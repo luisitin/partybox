@@ -95,7 +95,9 @@ export function fill(
     const rest = parts.slice(i + 1).join('');
     const atEnd = rest.trim() === '';
     const nextPart = parts[i + 1] ?? '';
-    const punctuation = /^[.,!?;:]+/.exec(nextPart)?.[0] ?? '';
+    // Closing quotes and brackets ride along too ('"Goodnight, ____."' ends inside the paper), but
+    // never a letter's apostrophe: "____'s" keeps its 's in the black text (review-loop #101).
+    const punctuation = /^[.,!?;:"”’')\]]+(?![A-Za-z])/.exec(nextPart)?.[0] ?? '';
     carried = punctuation.length;
     segments.push({
       kind: 'fill',
