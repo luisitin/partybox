@@ -12,7 +12,7 @@ import type { Transition } from './intro';
 export function enterReveal(state: State, now: number, index: number): State {
   const submitter = state.slots[index];
   const whites = (submitter ? state.submissions[submitter] : []) ?? [];
-  const ms = revealMs(blackCard(state.blackId).text, whites.map(whiteText));
+  const ms = revealMs(blackCard(state.blackId).text, whites.map(whiteText), state.slots.length);
   return enterPhase({ ...state, revealIndex: index }, 'reveal', now, ms);
 }
 

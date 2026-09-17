@@ -4,7 +4,16 @@
 import { shuffle } from '@partybox/game-sdk';
 import type { RngState } from '@partybox/game-sdk';
 import { BLANK, blanksIn } from '../content/schema';
-import { HAND_SIZE, REVEAL_MAX_MS, REVEAL_MIN_MS, REVEAL_PER_CHAR_MS } from './types';
+import {
+  BIG_REVEAL_MAX_MS,
+  BIG_REVEAL_MIN_MS,
+  BIG_REVEAL_PER_CHAR_MS,
+  BIG_ROOM,
+  HAND_SIZE,
+  REVEAL_MAX_MS,
+  REVEAL_MIN_MS,
+  REVEAL_PER_CHAR_MS,
+} from './types';
 import type { State } from './types';
 
 /**
@@ -102,8 +111,11 @@ export function fillText(text: string, whites: readonly string[]): string {
   return extra.length > 0 ? `${line} ${extra.join(' / ')}` : line;
 }
 
-/** How long a reveal card stays up: long enough to read it out loud. */
-export function revealMs(text: string, whites: readonly string[]): number {
+/** How long a reveal card stays up: long enough to read it out loud; a room with more than
+ *  BIG_ROOM cards to get through reads each one a little faster. */
+export function revealMs(text: string, whites: readonly string[], cards = 1): number {
   const length = fillText(text, whites).length;
+  if (cards > BIG_ROOM)
+    return Math.min(BIG_REVEAL_MAX_MS, BIG_REVEAL_MIN_MS + length * BIG_REVEAL_PER_CHAR_MS);
   return Math.min(REVEAL_MAX_MS, REVEAL_MIN_MS + length * REVEAL_PER_CHAR_MS);
 }

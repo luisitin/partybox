@@ -4,7 +4,13 @@ import { describe, expect, it } from 'vitest';
 import { fill, fillText, revealMs } from '../server/cards';
 import { DECKS, blackCard, blackPool, whitePool } from '../server/content';
 import { game } from '../server/index';
-import { HAND_SIZE, REVEAL_MAX_MS, REVEAL_MIN_MS } from '../server/types';
+import {
+  BIG_REVEAL_MAX_MS,
+  BIG_REVEAL_MIN_MS,
+  HAND_SIZE,
+  REVEAL_MAX_MS,
+  REVEAL_MIN_MS,
+} from '../server/types';
 import { PLAYERS, T0, playRound, start, timer } from './helpers';
 
 describe('whole game', () => {
@@ -156,6 +162,10 @@ describe('fill', () => {
   it('reveal time grows with length and is clamped', () => {
     expect(revealMs('Hi ____.', ['Yo.'])).toBe(REVEAL_MIN_MS + 'Hi Yo.'.length * 35);
     expect(revealMs('x'.repeat(200), ['y'.repeat(100)])).toBe(REVEAL_MAX_MS);
+    // A big room reads faster: twelve cards stay under a minute.
+    expect(revealMs('Hi ____.', ['Yo.'], 12)).toBe(BIG_REVEAL_MIN_MS + 'Hi Yo.'.length * 25);
+    expect(revealMs('x'.repeat(200), ['y'.repeat(100)], 12)).toBe(BIG_REVEAL_MAX_MS);
+    expect(revealMs('x'.repeat(200), ['y'.repeat(100)], 8)).toBe(REVEAL_MAX_MS);
   });
 });
 

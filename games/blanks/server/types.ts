@@ -76,12 +76,20 @@ export const HAND_SIZE = 10;
 export const INTRO_MS = 5_000;
 /** Extra answer seconds per white card beyond the first. */
 export const EXTRA_PICK_S = 15;
-/** A reveal card stays up 3.5 s plus 35 ms per character, capped at 8 s. */
+/** A reveal card stays up 3.5 s plus 35 ms per character, capped at 8 s — a big room (more than
+ *  BIG_ROOM cards) reads faster: 3 s + 25 ms/char, capped at 5.5 s, so twelve cards stay under a
+ *  minute (review-loop #89). */
 export const REVEAL_MIN_MS = 3_500;
 export const REVEAL_PER_CHAR_MS = 35;
 export const REVEAL_MAX_MS = 8_000;
+export const BIG_ROOM = 8;
+export const BIG_REVEAL_MIN_MS = 3_000;
+export const BIG_REVEAL_PER_CHAR_MS = 25;
+export const BIG_REVEAL_MAX_MS = 5_500;
+/** Voting: 30 s, 45 s for a lone judge; a big room gets 45 s to scan its cards. */
 export const JUDGE_VOTE_MS = 30_000;
 export const JUDGE_CZAR_MS = 45_000;
+export const BIG_JUDGE_MS = 45_000;
 export const RESULT_MS = 8_000;
 export const WIN_POINTS = 1;
 /** The phantom player's submitter id (the "rando" setting). */

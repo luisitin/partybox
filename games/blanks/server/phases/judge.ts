@@ -4,12 +4,17 @@
 import { allConnectedDone, enterPhase, hasPlayer, isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { canVote, votingDone } from '../round';
-import { JUDGE_CZAR_MS, JUDGE_VOTE_MS } from '../types';
+import { BIG_JUDGE_MS, BIG_ROOM, JUDGE_CZAR_MS, JUDGE_VOTE_MS } from '../types';
 import type { Input, State, VoteInput } from '../types';
 import type { Transition } from './intro';
 
 export function enterJudge(state: State, now: number): State {
-  const ms = state.settings.judge === 'czar' ? JUDGE_CZAR_MS : JUDGE_VOTE_MS;
+  const ms =
+    state.settings.judge === 'czar'
+      ? JUDGE_CZAR_MS
+      : state.slots.length > BIG_ROOM
+        ? BIG_JUDGE_MS
+        : JUDGE_VOTE_MS;
   return enterPhase(state, 'judge', now, ms);
 }
 
