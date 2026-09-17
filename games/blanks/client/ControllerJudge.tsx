@@ -53,20 +53,25 @@ export function ControllerJudge({ view, send }: Props): JSX.Element {
     return <WaitingScreen title="Look at the TV" mood="watch" />;
   const kicker = `Round ${view.round} · ${view.judgeMode === 'czar' ? 'the judge decides' : 'vote'}`;
   if (vote?.canVote) {
+    // Two or three cards get VoteList's tall lettered cards (it draws the disc); more get compact
+    // rows, where the letter is ours.
+    const large = view.cards.length <= 3;
     return (
       <VoteList
         kicker={kicker}
         prompt={view.judgeMode === 'czar' ? 'Pick the winner' : 'Vote for the best'}
         promptKey={`${view.round}`}
         // Two or three cards: tall lettered cards fill the thumb zone (as Wisecrack's A / B).
-        size={view.cards.length <= 3 ? 'large' : 'compact'}
+        size={large ? 'large' : 'compact'}
         options={view.cards.map((c) => ({
           id: String(c.slot),
           text: (
             <span className={styles.voteRow}>
-              <span className={styles.voteLetter} aria-hidden>
-                {LETTERS[c.slot]}
-              </span>
+              {large ? null : (
+                <span className={styles.voteLetter} aria-hidden>
+                  {LETTERS[c.slot]}
+                </span>
+              )}
               <InlineFilled text={black.text} whites={c.whites} />
             </span>
           ),
