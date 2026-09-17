@@ -79,6 +79,8 @@ export type NextInput = Extract<Input, { type: 'next' }>;
 
 export const HAND_SIZE = 10;
 export const INTRO_MS = 5_000;
+/** The last card in holds the stage for a beat ("Everyone's in!") before the reading starts. */
+export const ALL_IN_MS = 1_500;
 /** Extra answer seconds per white card beyond the first. */
 export const EXTRA_PICK_S = 15;
 /** A reveal card stays up 3.5 s plus 35 ms per character, capped at 8 s — a big room (more than

@@ -38,15 +38,23 @@ export function ControllerHand({ view, send }: Props): JSX.Element {
     );
   }
   if (view.myPlay) {
+    // Everyone's in: the reading is a beat away, nothing left to hurry.
+    const allIn = view.playedCount >= view.playersExpected;
     return (
       <WaitingScreen
         className="pb-enter"
         title="Played!"
-        hint={`${progressLine(view)} · ${view.timed ? "the reading starts when everyone's in." : 'the reading starts when everyone is in, or when anyone taps Next.'}`}
+        hint={
+          allIn
+            ? "Everyone's in — here comes the reading."
+            : `${progressLine(view)} · ${view.timed ? "the reading starts when everyone's in." : 'the reading starts when everyone is in, or when anyone taps Next.'}`
+        }
         mood="done"
       >
         <FilledCard text={black.text} whites={view.myPlay} size="phone" />
-        <NextButton send={send} timed={view.timed} label="Don't wait — start the reading" />
+        {allIn ? null : (
+          <NextButton send={send} timed={view.timed} label="Don't wait — start the reading" />
+        )}
       </WaitingScreen>
     );
   }

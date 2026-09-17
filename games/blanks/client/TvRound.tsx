@@ -41,7 +41,7 @@ const NAMED = 4;
 /** Who the room is waiting for. Disconnected players never block the phase, so they are not named. */
 function waitingLine(outstanding: ViewPlayer[]): string {
   const names = outstanding.map((p) => p.name);
-  if (names.length === 0) return "Everyone's in!";
+  if (names.length === 0) return 'here comes the reading…';
   if (names.length === 1) return `Just waiting for ${names[0]}…`;
   if (names.length <= NAMED)
     return `Waiting for ${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}…`;
@@ -50,16 +50,20 @@ function waitingLine(outstanding: ViewPlayer[]): string {
 
 export function TvAnswer({ view }: Props): JSX.Element {
   const left = useSecondsLeft(view.deadline, view.paused);
-  const lastChance = left !== null && left <= LAST_CHANCE_S && !view.paused;
   const connected = view.players.filter((p) => p.connected && p.status !== 'waiting');
   const outstanding = connected.filter((p) => p.status !== 'submitted');
+  // The "Everyone's in!" beat is a short deadline too: no last chance once nobody is missing.
+  const lastChance =
+    left !== null && left <= LAST_CHANCE_S && !view.paused && outstanding.length > 0;
   const nobodyDone = view.playedCount === 0;
   const pick = view.black?.pick ?? 1;
   const headline = lastChance
     ? 'Last chance!'
-    : pick > 1
-      ? `Play ${pick} cards from your hand`
-      : 'Play a card from your hand';
+    : !nobodyDone && outstanding.length === 0
+      ? "Everyone's in!"
+      : pick > 1
+        ? `Play ${pick} cards from your hand`
+        : 'Play a card from your hand';
   return (
     <Stage center>
       <div className={styles.kickerRow}>
@@ -95,7 +99,7 @@ export function TvAnswer({ view }: Props): JSX.Element {
           {nobodyDone ? ' · your cards are on your phone' : ` · ${waitingLine(outstanding)}`}
         </BigText>
       </div>
-      {!view.timed && !nobodyDone ? (
+      {!view.timed && !nobodyDone && outstanding.length > 0 ? (
         <BigText level="h2" tone="muted">
           No clock — anyone taps Next when the room is ready.
         </BigText>

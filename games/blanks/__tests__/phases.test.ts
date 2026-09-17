@@ -2,7 +2,8 @@
 // walkover, ties, the judge (czar) mode, Rando, disconnects, VIP skip / end, hidden information.
 import { describe, expect, it } from 'vitest';
 import { blackCard } from '../server/content';
-import { RANDO } from '../server/types';
+import { allIn } from '../server/phases/answer';
+import { ALL_IN_MS, RANDO } from '../server/types';
 import {
   connect,
   cv,
@@ -38,14 +39,29 @@ describe('answer', () => {
     expect(play(s, 'ghost', cards)).toBe(s);
   });
 
-  it('closes when every connected player played; the slots are a shuffle of the submitters', () => {
-    let s = toAnswer(start({ players: 4 }));
+  it('the last card in holds the stage for a beat, then the reading starts with shuffled slots', () => {
+    let s = toAnswer(start({ players: 4, timed: false }));
     s = playAll(s, ['dev']);
     expect(s.phase.id).toBe('answer');
-    s = play(s, 'dev', topCards(s, 'dev'));
+    expect(allIn(s)).toBe(false);
+    const t = s.phase.startedAt + 20_000;
+    s = play(s, 'dev', topCards(s, 'dev'), t);
+    // Everyone's in: still "answer", the clock hidden, the deadline moved up to the beat.
+    expect(s.phase.id).toBe('answer');
+    expect(allIn(s)).toBe(true);
+    expect(s.phase.deadline).toBe(t + ALL_IN_MS);
+    expect(tv(s).timerMode).toBe('hidden');
+    expect(next(s, 'ana', t + 100).phase.id).toBe('reveal'); // Next still cuts it short (untimed)
+    s = timer(s);
     expect(s.phase.id).toBe('reveal');
     expect(s.revealIndex).toBe(0);
     expect([...s.slots].sort()).toEqual(['ana', 'ben', 'cleo', 'dev']);
+    // The beat never pushes a deadline later than it was.
+    let late = toAnswer(start({ players: 3, timed: true }));
+    late = playAll(late, ['cleo']);
+    const end = late.phase.deadline as number;
+    late = play(late, 'cleo', topCards(late, 'cleo'), end - 500);
+    expect(late.phase.deadline).toBe(end);
   });
 
   it('a disconnected player is not waited for; nobody played → winnerless result', () => {
@@ -58,7 +74,7 @@ describe('answer', () => {
     expect(tv(idle).revealed).toEqual([]);
   });
 
-  it('the drop of the last outstanding player closes the phase', () => {
+  it('the drop of the last outstanding player closes the phase at once (no beat)', () => {
     let s = playAll(toAnswer(start({ players: 3 })), ['cleo']);
     expect(s.phase.id).toBe('answer');
     s = connect(s, 'cleo', false, s.phase.startedAt + 500);

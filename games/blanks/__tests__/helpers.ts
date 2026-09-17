@@ -1,6 +1,7 @@
 // Shared helpers for the Blanks unit tests: hand-built events against the real reducer.
 import type { GameEvent, VipGameAction } from '@partybox/game-sdk';
 import { blackCard } from '../server/content';
+import { allIn } from '../server/phases/answer';
 import { game } from '../server/index';
 import type { BlanksControllerView, BlanksTvView } from '../server/index';
 import type { Input, Settings, State } from '../server/types';
@@ -95,13 +96,15 @@ export function toAnswer(state: State): State {
   return state.phase.id === 'intro' ? timer(state) : state;
 }
 
-/** Every non-judge player plays the top of their hand, in id order (skipping `skip`). */
+/** Every non-judge player plays the top of their hand, in id order (skipping `skip`); when that
+ *  was everyone, the "Everyone's in!" beat is played out too (its timer fires). */
 export function playAll(state: State, skip: readonly string[] = [], now?: number): State {
   let s = state;
   for (const id of Object.keys(state.players).sort()) {
     if (skip.includes(id) || id === s.czarId || s.phase.id !== 'answer') continue;
     s = play(s, id, topCards(s, id), now);
   }
+  if (s !== state && s.phase.id === 'answer' && allIn(s)) s = timer(s);
   return s;
 }
 
