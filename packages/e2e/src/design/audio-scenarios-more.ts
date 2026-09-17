@@ -198,8 +198,8 @@ export async function runMoreScenarios({ T, tv, vip, p2, api, pages, out }: Ctx)
   phase = (await api.state()).room?.game?.state.phase.id;
   T.ok(
     'G',
-    `show → reveal sting (mapped), music stops (${phase})`,
-    T.cues(evs).includes('reveal') && (await T.playing(tv)).length === 0,
+    `show → the soft 'card' page-turn pluck (mapped since loop 93), music stops (${phase})`,
+    T.cues(evs).includes('card') && (await T.playing(tv)).length === 0,
     `cues=${T.cues(evs).join(',')} playing=${JSON.stringify(await T.playing(tv))}`,
   );
   T.timeline(await T.between(tv, 'F4', 'G3'), 'tv');
