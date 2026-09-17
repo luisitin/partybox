@@ -353,3 +353,8 @@
   box-shadow: 0 0 0 3px var(--pb-accent);
   animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
 }
+
+/* The caller is held (a card-style menu is open somewhere): the number stays up, dimmed. */
+.held .heldCall {
+  opacity: 0.35;
+}

@@ -2,9 +2,10 @@
 // Entering it deals the round: one deck shuffle, then `settings.cards` cards per player in
 // sorted-id order so the same seed always deals the same cards. Exits on the deadline (or VIP
 // skip) via `next`.
-import { enterPhase, isTimerFor, shuffle } from '@partybox/game-sdk';
+import { enterPhase, hasPlayer, isTimerFor, shuffle } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
-import { dealCards, range } from '../cards';
+import { dealCard, dealCards, range } from '../cards';
+import { setMenu } from '../claims';
 import { DECK, INTRO_MS } from '../types';
 import type { Input, Pattern, RoundState, State, Transition } from '../types';
 
@@ -34,11 +35,40 @@ export function enterIntro(state: State, number: number, now: number): State {
     winnerId: null,
     won: {},
     bingos: 0,
+    arm: null,
+    queue: [],
+    menus: state.round.menus,
+    resumeAt: null,
+    swapped: {},
   };
   return enterPhase({ ...state, rng, round }, 'intro', now, INTRO_MS);
 }
 
+/** "Deal me another": one fresh card per slot, during the intro only; the old one is gone. */
+function swapCard(state: State, playerId: string, card: number): State {
+  const round = state.round;
+  const cards = round.cards[playerId];
+  if (!hasPlayer(state, playerId) || !cards || card < 0 || card >= cards.length) return state;
+  const done = round.swapped[playerId] ?? [];
+  if (done.includes(card)) return state;
+  const [fresh, rng] = dealCard(state.rng);
+  return {
+    ...state,
+    rng,
+    round: {
+      ...round,
+      cards: { ...round.cards, [playerId]: cards.map((c, i) => (i === card ? fresh : c)) },
+      swapped: { ...round.swapped, [playerId]: [...done, card] },
+    },
+  };
+}
+
 export function reduceIntro(state: State, event: GameEvent<Input>, next: Transition): State {
+  if (event.type === 'input') {
+    if (event.input.type === 'swap') return swapCard(state, event.playerId, event.input.card);
+    if (event.input.type === 'menu') return setMenu(state, event.playerId, event.input.open);
+    return state;
+  }
   if (isTimerFor(state, event)) return next(state, event.now);
   return state;
 }

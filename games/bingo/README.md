@@ -35,8 +35,8 @@ in public like anyone else. It only reads what its phone shows (own card, own da
 
 | Phase        | What happens                                                                                                                                                                                                                                                                                      | Exit                                                                                                                                                    | Timer                                                                        |
 | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| `intro`      | Deals the round: fresh deck (1–75 shuffled), a fresh card per player. TV: round number + pattern. Phones: pattern + the new card.                                                                                                                                                                 | deadline · VIP skip → `play`                                                                                                                            | 5 s                                                                          |
-| `play`       | One number on the TV (huge) with its caller nickname, plus the previous one small. Daub freely; press BINGO! to claim.                                                                                                                                                                            | valid claim → `bingo` · invalid claim → `check` · timer → next number (`play` again) · 75th call's timer → `bingo` (no winner) · VIP skip → next number | `callSeconds` (3–12)                                                         |
+| `intro`      | Deals the round: fresh deck (1–75 shuffled), `cards` fresh cards per player. TV: round number + pattern. Phones: pattern + the new cards, and one "deal me another" per card (`swap`).                                                                                                            | deadline · VIP skip → `play`                                                                                                                            | 5 s                                                                          |
+| `play`       | One number on the TV (huge) with its caller nickname, plus the previous one small. Daub freely; BINGO! on a card takes two taps (arm, then claim; dibs for 3 s). A card-style menu open on any phone holds the caller (no deadline); the last one closing runs a 3 s countdown (`resumeAt`).      | valid claim → `bingo` · invalid claim → `check` · timer → next number (`play` again) · 75th call's timer → `bingo` (no winner) · VIP skip → next number | `callSeconds` (3–12), none while held, 3 s resuming                          |
 | `check`      | The caller is paused. TV shows the invalid claim: green ✓ / red ✕ / outlined misses, "NOT A BINGO". Claimant's card is wiped.                                                                                                                                                                     | deadline · VIP skip → next number (or `bingo` with no winner if the deck is empty)                                                                      | 9 s                                                                          |
 | `bingo`      | The winner's card, revealed on the TV ("BINGO! X wins round n") — then any player chooses on their phone: keep going on the same cards (same pattern, the winner sits it out — or for a blackout), or move on. "No bingo — the deck's empty" when the deck ran out. The win is recorded on entry. | `continue` → `play` (next number, same deck) · `next` / deadline / VIP skip → `scoreboard` (more rounds) or `done`                                      | unpaced with a winner (5-min safety valve for abandoned rooms), 10 s without |
 | `scoreboard` | Rounds won so far + the next round's pattern.                                                                                                                                                                                                                                                     | deadline · VIP skip → next round's `intro`                                                                                                              | 6 s                                                                          |
@@ -50,6 +50,12 @@ Pause freezes the caller (and a running check); daubs and claims are ignored whi
 - `{ type: 'daub', card?: 0..3, index: 0..24 }` — toggles that square on your card `card` (default the
   first; tap again = undo). Accepted in `play` and `check`, from players with that card. Index 12 (FREE)
   is ignored. No validation against calls.
+- `{ type: 'menu', open }` — any phase: this phone's card-style menu opened/closed. In `play` an open menu
+  anywhere holds the caller (the deadline is dropped; daubs still land); when the last one closes the
+  phase re-enters with a 3 s deadline (`round.resumeAt`, a 3 · 2 · 1 on every screen), then the next
+  number. A menu open through a check holds the caller as play resumes.
+- `{ type: 'swap', card? }` — `intro` only: one fresh deal per card ("deal me another"); the old card is
+  gone for good (`round.swapped`).
 - `{ type: 'continue', pattern: 'same' | 'blackout' }` / `{ type: 'next' }` — accepted in `bingo`
   from any player with a card (every phone with a card shows the buttons; first tap wins). `same`
   keeps the pattern and the card that won cannot claim it again (`round.won`, per card — the winner's
@@ -57,10 +63,12 @@ Pause freezes the caller (and a running check); daubs and claims are ignored whi
   every card in the room locked `same` is off); `blackout` switches the round to blackout on the same
   cards and reopens every card. Cards, daubs and the deck carry on; each
   bingo in a continued round is another point.
-- `{ type: 'bingo' }` — accepted in `play` only, from a player with a card that has not won the current
-  pattern who is not waiting for the next number. Evaluates every live card and checks the closest one
-  (a valid card first, else the most green, then the fewest red) against the pattern and the numbers
-  called so far:
+- `{ type: 'bingo', card?: 0..3 }` — accepted in `play` only, from a player whose card `card` has not won
+  the current pattern, who is not waiting for the next number. **Two taps**: the first arms that card for
+  3 s (`round.arm` — this player has dibs; a tap on another of their cards re-arms there), the second tap
+  on the same card claims it. Other players' first taps queue (`round.queue`, in order); a lapsed window
+  passes to the next in line (the armed phone sends `lapse`; the next event settles it anyway). A claim
+  evaluates **that card only** against the pattern and the numbers called so far:
   - `red` = every daubed square whose number was never called (anywhere on the card);
   - the completion shown is the one with the most green squares; **valid iff it is entirely green**.
   - Valid → `bingo` (+1, that card locked). Invalid → `check`: that card's daubs wiped (other cards keep

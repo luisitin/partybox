@@ -2,6 +2,7 @@
 // Exits on the deadline via `next` (the next round's intro). `done` is the terminal phase.
 import { enterPhase, isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
+import { setMenu } from '../claims';
 import { SCOREBOARD_MS } from '../types';
 import type { Input, State, Transition } from '../types';
 
@@ -14,6 +15,8 @@ export function enterDone(state: State, now: number): State {
 }
 
 export function reduceScoreboard(state: State, event: GameEvent<Input>, next: Transition): State {
+  if (event.type === 'input' && event.input.type === 'menu')
+    return setMenu(state, event.playerId, event.input.open);
   if (isTimerFor(state, event)) return next(state, event.now);
   return state;
 }

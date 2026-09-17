@@ -7,6 +7,7 @@
 // done after the last round); `continue` resumes calling via `resume`.
 import { enterPhase, hasPlayer, isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
+import { clearClaims, setMenu } from '../claims';
 import { BINGO_ABANDONED_MS, BINGO_MS, DECK } from '../types';
 import type { Claim, Input, State, Transition } from '../types';
 
@@ -33,7 +34,7 @@ export function enterBingo(
       : round.won;
   const bingos = winnerId ? round.bingos + 1 : round.bingos;
   return enterPhase(
-    { ...state, wins, history, round: { ...round, winnerId, claim, won, bingos } },
+    clearClaims({ ...state, wins, history, round: { ...round, winnerId, claim, won, bingos } }),
     'bingo',
     now,
     winnerId ? BINGO_ABANDONED_MS : BINGO_MS,
@@ -63,6 +64,7 @@ export function reduceBingo(state: State, event: GameEvent<Input>, exits: BingoE
   if (!hasPlayer(state, event.playerId) || !Object.hasOwn(state.round.cards, event.playerId))
     return state;
   if (event.input.type === 'next') return exits.next(state, event.now);
+  if (event.input.type === 'menu') return setMenu(state, event.playerId, event.input.open);
   if (event.input.type !== 'continue') return state;
   const can = canContinue(state);
   const blackout = event.input.pattern === 'blackout' && can.blackout;

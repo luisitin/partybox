@@ -97,7 +97,10 @@ async function main(): Promise<void> {
     await p2.page.getByRole('gridcell').nth(1).click();
     await settle(300);
     await shots.shot(p2.page, { group: G, phase: 'play-daubed', device: 'iphone-se', role: 'p2' });
-    await p2.page.getByRole('button', { name: /^bingo!$/i }).click();
+    await p2.page.getByRole('button', { name: /^bingo! card 1$/i }).click(); // arms (dibs)
+    await settle(300);
+    await shots.shot(p2.page, { group: G, phase: 'armed', device: 'iphone-se', role: 'p2' });
+    await p2.page.getByRole('button', { name: /tap again to claim/i }).click(); // claims
     await burst(shots, tv, 'check-lands', 18, 300);
     await settle(1200);
     await shots.shot(tv, { group: G, phase: 'check', device: 'tv', role: 'stage' });
@@ -130,7 +133,9 @@ async function main(): Promise<void> {
     }
     await settle(300);
     await shots.shot(vip.page, { group: G, phase: 'line-daubed', device: 'iphone', role: 'vip' });
-    await vip.page.getByRole('button', { name: /^bingo!$/i }).click();
+    await vip.page.getByRole('button', { name: /^bingo! card 1$/i }).click();
+    await settle(250);
+    await vip.page.getByRole('button', { name: /tap again to claim/i }).click();
     // Sound-to-colour sync: the sting fires STING_LAG_MS after the sweep band mounts; the first
     // cell must be visibly green (closer to accent-3 than to its outline) by then.
     const sync = tv.evaluate<{ sweepAt: number | null; greenAt: number | null }>(SYNC_PROBE);

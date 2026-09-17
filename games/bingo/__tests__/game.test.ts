@@ -7,7 +7,7 @@ import { game, readSettings } from '../server/index';
 import { dealCard, letterOf } from '../server/cards';
 import { evaluate, looksComplete } from '../server/patterns';
 import { sampleInput } from '../server/bot';
-import { callUntil, daubAll, input, start, timer, vip } from './helpers';
+import { callUntil, claim, daubAll, input, start, timer, vip } from './helpers';
 
 describe('setup', () => {
   it('deals a legal card: columns B/I/N/G/O from their 15-number ranges, FREE centre, no repeats', () => {
@@ -80,21 +80,21 @@ describe('play', () => {
   it('a valid line claim wins the round: bingo phase, +1, the card on the TV all green', () => {
     let s = callUntil(start(), 'a', [0, 1, 2, 3, 4]);
     s = daubAll(s, 'a', [0, 1, 2, 3, 4]);
-    s = input(s, 'a', { type: 'bingo' });
+    s = claim(s, 'a');
     expect(s.phase.id).toBe('bingo');
     expect(s.round.winnerId).toBe('a');
     expect(s.wins['a']).toBe(1);
-    const claim = game.tvView(s).claim;
-    expect(claim?.valid).toBe(true);
-    expect(claim?.green.sort()).toEqual([0, 1, 2, 3, 4]);
-    expect(claim?.red).toEqual([]);
+    const shown = game.tvView(s).claim;
+    expect(shown?.valid).toBe(true);
+    expect(shown?.green.sort()).toEqual([0, 1, 2, 3, 4]);
+    expect(shown?.red).toEqual([]);
     expect(s.history).toEqual([{ round: 1, winnerId: 'a', calls: s.round.drawn }]);
   });
 
   it('after a bingo the round can keep going: same pattern (winner sits it out) or blackout (everyone back in), same cards and deck', () => {
     let s = callUntil(start(), 'a', [0, 1, 2, 3, 4]);
     s = daubAll(s, 'a', [0, 1, 2, 3, 4]);
-    s = input(s, 'a', { type: 'bingo' });
+    s = claim(s, 'a');
     expect(s.phase.id).toBe('bingo');
     expect(game.tvView(s).decide).toEqual({ same: true, blackout: true });
     const drawnAtBingo = s.round.drawn;
@@ -107,7 +107,7 @@ describe('play', () => {
     expect(same.round.daubs['a']).toEqual([[0, 1, 2, 3, 4]]);
     expect(same.round.pattern).toBe('line');
     expect(same.round.won).toEqual({ a: [0] });
-    expect(input(same, 'a', { type: 'bingo' }).phase.id).toBe('play'); // ignored: already won it
+    expect(claim(same, 'a').phase.id).toBe('play'); // ignored: already won it
     expect(game.controllerView(same, 'a').canClaim).toBe(false);
     expect(game.controllerView(same, 'b').canClaim).toBe(true);
     // blackout: the pattern changes for everyone and the winner is back in
@@ -135,21 +135,21 @@ describe('play', () => {
     );
     s = daubAll(s, 'b', [5, 6, 7, 8, uncalled]);
     const before = s.round.drawn;
-    s = input(s, 'b', { type: 'bingo' });
+    s = claim(s, 'b');
     expect(s.phase.id).toBe('check');
     expect(s.round.drawn).toBe(before); // the caller stopped
-    const claim = s.round.claim;
-    expect(claim?.valid).toBe(false);
-    expect(claim?.playerId).toBe('b');
-    expect(claim?.red).toEqual([uncalled]);
-    expect(claim?.cells).toEqual([5, 6, 7, 8, 9]);
-    expect(claim?.missing).toEqual([9]);
+    const shown = s.round.claim;
+    expect(shown?.valid).toBe(false);
+    expect(shown?.playerId).toBe('b');
+    expect(shown?.red).toEqual([uncalled]);
+    expect(shown?.cells).toEqual([5, 6, 7, 8, 9]);
+    expect(shown?.missing).toEqual([9]);
     expect(s.round.daubs['b']).toEqual([[]]); // wiped
     expect(s.round.waitForCall['b']).toBe(before + 1);
     // Daubing continues during the check; claims do not.
     s = input(s, 'b', { type: 'daub', card: 0, index: 5 });
     expect(s.round.daubs['b']).toEqual([[5]]);
-    expect(input(s, 'a', { type: 'bingo' }).phase.id).toBe('check');
+    expect(claim(s, 'a').phase.id).toBe('check');
     // The check's timer resumes the caller with the next number.
     s = timer(s);
     expect(s.phase.id).toBe('play');
@@ -160,7 +160,7 @@ describe('play', () => {
   it('right after your own failed claim you cannot claim again until the next number', () => {
     let s = callUntil(start(), 'a', [0, 1]);
     s = daubAll(s, 'a', [0, 1]);
-    s = input(s, 'a', { type: 'bingo' }); // invalid
+    s = claim(s, 'a'); // invalid
     expect(s.phase.id).toBe('check');
     const view = game.controllerView(s, 'a');
     expect(view.canClaim).toBe(false);
@@ -219,7 +219,7 @@ describe('rounds and results', () => {
       [20, 21, 22, 23, 24],
     );
     s = daubAll(s, 'c', [20, 21, 22, 23, 24]);
-    s = input(s, 'c', { type: 'bingo' });
+    s = claim(s, 'c');
     expect(s.phase.id).toBe('bingo');
     const oldCard = s.round.cards['a'];
     s = timer(s);
@@ -233,7 +233,7 @@ describe('rounds and results', () => {
     expect(s.round.daubs['c']).toEqual([[]]);
     s = callUntil(s, 'a', [0, 4, 20, 24]);
     s = daubAll(s, 'a', [0, 4, 20, 24]);
-    s = input(s, 'a', { type: 'bingo' });
+    s = claim(s, 'a');
     expect(s.phase.id).toBe('bingo');
     s = timer(s);
     expect(s.phase.id).toBe('done');
@@ -306,8 +306,7 @@ describe('views and bot', () => {
       expect(move.type).toBe('daub');
       s = input(s, 'a', move);
     }
-    const claim = sampleInput(s, 'a', createRng(1));
-    expect(claim).toEqual({ type: 'bingo' });
+    expect(sampleInput(s, 'a', createRng(1))).toEqual({ type: 'bingo', card: 0 });
     expect(sampleInput(start(), 'a', rng)).toBeNull(); // intro
     expect(sampleInput(s, 'ghost', rng)).toBeNull();
   });

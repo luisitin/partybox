@@ -5,7 +5,7 @@ import { createRng } from '@partybox/game-sdk';
 import { game, readSettings } from '../server/index';
 import { looksComplete } from '../server/patterns';
 import { sampleInput } from '../server/bot';
-import { callUntil, daubAll, input, start, timer } from './helpers';
+import { callUntil, claim, daubAll, input, start, timer } from './helpers';
 
 describe('several cards per player', () => {
   it("deals the setting's number of cards, all legal and distinct, with empty daubs each", () => {
@@ -23,7 +23,7 @@ describe('several cards per player', () => {
     expect(game.controllerView(s, 'a').cards).toHaveLength(3);
   });
 
-  it('daubs land on the card named; BINGO! checks the closest card and wipes only that one', () => {
+  it('daubs land on the card named; BINGO! checks the card named and wipes only that one', () => {
     let s = callUntil(start({ cards: 2 }), 'a', [10, 11, 13, 14], 1);
     s = daubAll(s, 'a', [10, 11, 13, 14], 1);
     s = daubAll(s, 'a', [0, 1], 0);
@@ -31,7 +31,8 @@ describe('several cards per player', () => {
       [0, 1],
       [10, 11, 13, 14],
     ]);
-    s = input(s, 'a', { type: 'bingo' });
+    expect(claim(s, 'a', 0).phase.id).toBe('check'); // the card you name, never your best one
+    s = claim(s, 'a', 1);
     expect(s.phase.id).toBe('bingo');
     expect(s.round.claim?.cardIndex).toBe(1);
     expect(game.tvView(s).claim?.card).toEqual(s.round.cards['a']?.[1]);
@@ -40,7 +41,7 @@ describe('several cards per player', () => {
     let t = callUntil(start({ cards: 2 }, 5), 'b', [0, 1, 2, 3], 1);
     t = daubAll(t, 'b', [0, 1, 2, 3], 1);
     t = daubAll(t, 'b', [20], 0);
-    t = input(t, 'b', { type: 'bingo' });
+    t = claim(t, 'b', 1);
     expect(t.phase.id).toBe('check');
     expect(t.round.claim?.cardIndex).toBe(1);
     expect(t.round.claim?.missing).toEqual([4]);
@@ -57,7 +58,7 @@ describe('several cards per player', () => {
       const n = s.round.cards['a']?.[move.card]?.[move.index] ?? -1;
       if (called.includes(n)) s = input(s, 'a', move);
     }
-    expect(sampleInput(s, 'a', createRng(1))).toEqual({ type: 'bingo' });
+    expect(sampleInput(s, 'a', createRng(1))).toEqual({ type: 'bingo', card: 1 });
   });
 });
 
@@ -65,7 +66,7 @@ describe('keep going with several cards', () => {
   it('after a bingo the round carries on for the same pattern: the card that won is locked, the rest play on', () => {
     let s = callUntil(start({ cards: 2, rounds: 1 }), 'a', [0, 1, 2, 3, 4], 0);
     s = daubAll(s, 'a', [0, 1, 2, 3, 4], 0);
-    s = input(s, 'a', { type: 'bingo' });
+    s = claim(s, 'a');
     expect(s.phase.id).toBe('bingo');
     expect(s.wins['a']).toBe(1);
     expect(s.round.won['a']).toEqual([0]);
@@ -80,8 +81,9 @@ describe('keep going with several cards', () => {
     expect(a.won).toEqual([0]);
     expect(a.doneForRound).toBe(false);
     expect(a.canClaim).toBe(true); // ...but card 2 is live, so the button stays on
-    // ...and BINGO! now checks card 2 (nothing daubed: a check, not a second win).
-    s = input(s, 'a', { type: 'bingo' });
+    // ...and BINGO! on card 2 (nothing daubed) is a check, not a second win; card 1 is ignored.
+    expect(claim(s, 'a', 0)).toBe(s);
+    s = claim(s, 'a', 1);
     expect(s.phase.id).toBe('check');
     expect(s.round.claim?.cardIndex).toBe(1);
     expect(s.round.daubs['a']?.[0]).toEqual([0, 1, 2, 3, 4]); // the winning card keeps its daubs
@@ -89,7 +91,7 @@ describe('keep going with several cards', () => {
     // Another bingo in the continued round is another point; the history lists each.
     s = callUntil(s, 'b', [0, 4, 20, 24, 6, 8, 16, 18], 0);
     s = daubAll(s, 'b', [0, 6, 18, 24], 0);
-    s = input(s, 'b', { type: 'bingo' });
+    s = claim(s, 'b');
     expect(s.phase.id).toBe('bingo');
     expect(game.tvView(s).bingosThisRound).toBe(2);
     expect(s.history.map((h) => h.winnerId)).toEqual(['a', 'b']);
@@ -101,14 +103,14 @@ describe('keep going with several cards', () => {
   it('a one-card player who won is done for the pattern: no claim, status submitted, bot idle; blackout reopens the card', () => {
     let s = callUntil(start({ rounds: 1 }), 'c', [20, 21, 22, 23, 24]);
     s = daubAll(s, 'c', [20, 21, 22, 23, 24]);
-    s = input(s, 'c', { type: 'bingo' });
+    s = claim(s, 'c');
     const atBingo = s;
     s = input(s, 'a', { type: 'continue', pattern: 'same' });
     expect(s.phase.id).toBe('play');
     const c = game.controllerView(s, 'c');
     expect(c.doneForRound).toBe(true);
     expect(c.canClaim).toBe(false);
-    expect(input(s, 'c', { type: 'bingo' })).toBe(s);
+    expect(claim(s, 'c')).toBe(s);
     expect(game.tvView(s).players.find((p) => p.id === 'c')?.status).toBe('submitted');
     expect(sampleInput(s, 'c', createRng(2))).toBeNull();
     // A blackout on the same cards puts every card back in.

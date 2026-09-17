@@ -1,0 +1,194 @@
+// The card layouts of the Bingo phone. Focus: one big card with every card as a bordered
+// thumbnail below (the one up is marked, a card that won fades); tap a thumbnail to bring it up.
+// Grid / Strip / Stack / Side by side / tablet: every card at once with its own BINGO! button; the
+// grid's spare slot (three cards) shows the call the way the TV does.
+import type { JSX } from 'react';
+import type { BingoControllerView } from '../server/views';
+import { Card } from './Card';
+import { Ball, BingoButton } from './ControllerParts';
+import type { Send } from './ControllerParts';
+import styles from './Controller.module.css';
+
+export interface LayoutProps {
+  view: BingoControllerView;
+  cards: number[][];
+  meId: string;
+  send: Send;
+  /** Phone-only FREE daubs, per card index. */
+  freeDaubed: number[];
+  onTapFree: (card: number) => void;
+  /** intro: fresh cards, no daubs, the pattern outlined, nothing tappable. */
+  intro: boolean;
+  disabled: boolean;
+}
+
+/** One card, as it plays: my own failed claim shows as the room sees it until play resumes. */
+function PlayCard({
+  p,
+  c,
+  size,
+  label,
+}: {
+  p: LayoutProps;
+  c: number;
+  size: 'phone' | 'compact';
+  label?: string;
+}): JSX.Element {
+  const { view } = p;
+  const claim = view.claim;
+  const mine = view.phaseId === 'check' && claim?.playerId === p.meId && claim.cardIndex === c;
+  const won = view.won.includes(c);
+  const heading =
+    label === undefined ? null : (
+      <p className={`${styles.cardLabel} ${won ? styles.cardLabelWon : ''}`}>
+        {won ? 'BINGO ✓' : label}
+      </p>
+    );
+  if (mine && claim)
+    return (
+      <div className={`${styles.slot} pb-pop`}>
+        {heading}
+        <p className={styles.wipeNote}>Card wiped — re-daub from memory when play resumes.</p>
+        <Card
+          numbers={claim.card}
+          daubs={claim.daubs}
+          green={claim.green}
+          red={claim.red}
+          missing={claim.missing}
+          verdict
+          disabled
+          size={size}
+        />
+      </div>
+    );
+  return (
+    <div
+      key={view.waitingForCall ? 'wiped' : 'card'}
+      className={`${styles.slot} pb-enter ${won ? styles.won : ''}`}
+    >
+      {heading}
+      <Card
+        numbers={p.cards[c] ?? []}
+        daubs={p.intro ? [] : (view.daubs[c] ?? [])}
+        pattern={p.intro && view.pattern !== 'line' ? view.patternCells : []}
+        freeDaubed={won || p.freeDaubed.includes(c)}
+        onTapFree={() => p.onTapFree(c)}
+        onTap={(index) => p.send({ type: 'daub', card: c, index })}
+        disabled={p.disabled || won}
+        size={size}
+      />
+    </div>
+  );
+}
+
+/** Every card as a small bordered picture; `marked` is the one up (or picked at the intro). */
+export function Thumbnails({
+  view,
+  cards,
+  marked,
+  markLabel,
+  onPick,
+  spent = [],
+}: {
+  view: BingoControllerView;
+  cards: number[][];
+  marked: number;
+  markLabel: string;
+  onPick: (card: number) => void;
+  /** intro: cards already swapped (a "swapped" tag instead of a border). */
+  spent?: number[];
+}): JSX.Element {
+  return (
+    <div className={styles.thumbs} style={{ gridTemplateColumns: `repeat(${cards.length}, 1fr)` }}>
+      {cards.map((numbers, c) => {
+        const won = view.phaseId !== 'intro' && view.won.includes(c);
+        const cur = c === marked;
+        const tag = cur ? markLabel : spent.includes(c) ? 'swapped' : null;
+        return (
+          <button
+            type="button"
+            key={c}
+            className={`${styles.thumb} ${cur ? styles.thumbCur : ''} ${won ? styles.thumbWon : ''}`}
+            disabled={cur || won}
+            onClick={() => onPick(c)}
+            aria-label={`Card ${c + 1}${cur ? `, ${markLabel}` : ''}${won ? ', won' : ''}`}
+            data-tag={tag ?? undefined}
+          >
+            <Card
+              numbers={numbers}
+              daubs={view.daubs[c] ?? []}
+              freeDaubed
+              disabled
+              size="compact"
+            />
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+/** Focus: the card that is up, big, with the thumbnails under it. One BINGO! in the footer. */
+export function FocusLayout(
+  p: LayoutProps & { up: number; onUp: (c: number) => void },
+): JSX.Element {
+  const many = p.cards.length > 1;
+  return (
+    <div className={`${styles.focus} ${many ? styles.focusMany : ''}`}>
+      <div className={styles.focusMain}>
+        <PlayCard p={p} c={p.up} size="phone" />
+      </div>
+      {many ? (
+        <Thumbnails view={p.view} cards={p.cards} marked={p.up} markLabel="up" onPick={p.onUp} />
+      ) : null}
+    </div>
+  );
+}
+
+/** The spare slot in a three-card grid: the call, the way the TV shows it. */
+function MiniCall({ view }: { view: BingoControllerView }): JSX.Element {
+  return (
+    <div className={`${styles.slot} ${styles.miniCall}`} role="status">
+      {view.current ? <Ball call={view.current} size="lg" /> : <span>first number…</span>}
+      <span>
+        {view.previous ? (
+          <>
+            before that <Ball call={view.previous} size="sm" />
+          </>
+        ) : (
+          '—'
+        )}
+      </span>
+      <span>
+        call {view.callIndex} · {view.patternLabel.toLowerCase()}
+      </span>
+    </div>
+  );
+}
+
+/** Grid, Strip, Stack, Side by side and the tablet row: every card with its own BINGO!. */
+export function AllCardsLayout(
+  p: LayoutProps & { kind: 'grid' | 'strip' | 'stack' | 'side' | 'tablet' },
+): JSX.Element {
+  const n = p.cards.length;
+  const size = p.kind === 'tablet' ? 'phone' : 'compact';
+  const kindClass = styles[`layout_${p.kind}`] ?? '';
+  return (
+    <div className={`${styles.layout} ${kindClass}`} style={{ ['--n' as string]: n }}>
+      {p.cards.map((_, c) => (
+        <div key={c} className={styles.slotWrap}>
+          <PlayCard
+            p={p}
+            c={c}
+            size={size}
+            label={p.kind === 'stack' || p.kind === 'side' ? undefined : `Card ${c + 1}`}
+          />
+          {p.intro ? null : (
+            <BingoButton view={p.view} card={c} send={p.send} meId={p.meId} small />
+          )}
+        </div>
+      ))}
+      {p.kind === 'grid' && n === 3 && !p.intro ? <MiniCall view={p.view} /> : null}
+    </div>
+  );
+}

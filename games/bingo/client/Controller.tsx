@@ -1,10 +1,8 @@
-// Controller (phone) view for Bingo: the current call's NICKNAME on top (the number itself is on
-// the TV — the phone never spoils the stage, and the room has to listen to the caller), your
-// tappable card (or cards, stacked and labelled) in the middle, the BINGO! button pinned to the
-// bottom. `send` is the only way out; the server accepts every daub (no validation — that is the
-// game) and judges only the claim — checking whichever live card is closest, so one button serves
-// all. After a bingo any phone decides: keep going on the same cards (the card that won sits the
-// pattern out) or move on.
+// Controller (phone) view for Bingo. Focus by default: the card that is up, big, the call above
+// it, every card as a thumbnail below; other styles put every card on screen with its own BINGO!.
+// A 🃏 button opens the style sheet — which holds the caller for the whole room until it closes.
+// BINGO! takes two taps (dibs for 3 s). `send` is the only way out; the server accepts every daub
+// and judges only the claim, on the card named.
 import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
 import { PrimaryButton, Scoreboard, Screen, WaitingScreen } from '@partybox/game-sdk/ui';
@@ -12,14 +10,18 @@ import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { Input } from '../server/types';
 import type { BingoControllerView } from '../server/views';
 import { Card, PatternIcon } from './Card';
+import { BingoButton, CallHeader, CallRow, DecideFooter, rows } from './ControllerParts';
+import { AllCardsLayout, FocusLayout, Thumbnails } from './Layouts';
+import { Countdown, HoldCurtain, MissedToast, StyleSheet, TurnGate } from './Overlays';
 import {
-  CallHeader,
-  CardStack,
-  DecideFooter,
-  rows,
-  turnPrompt,
-  useLandscape,
-} from './ControllerParts';
+  setCardStyle,
+  styleSpec,
+  turnNeeded,
+  useCardStyle,
+  useHeld,
+  useOrientationLock,
+} from './styles';
+import type { CardStyle } from './styles';
 import styles from './Controller.module.css';
 
 /** What happens after this bingo: the room decides, fresh cards, or the final board. */
@@ -36,34 +38,59 @@ export function Controller({
   send,
 }: GameControllerProps<BingoControllerView, Input>): JSX.Element {
   const cards = view.cards;
-  const landscape = useLandscape();
+  const n = cards?.length ?? 1;
+  const style = useCardStyle(n);
+  const held = useHeld();
+  const [sheet, setSheet] = useState(false);
+  const [preview, setPreview] = useState<CardStyle | null>(null);
+  const shown = preview ?? style;
+  const inRound = view.phaseId === 'play' || view.phaseId === 'check';
+  const turn = inRound ? turnNeeded(shown, held) : null;
+  useOrientationLock(inRound && held !== 'wide' && !turn ? styleSpec(shown).orient : null);
+  // The card that is up (Focus) and the card picked to swap (intro): per round.
+  const [up, setUp] = useState(0);
+  const [pick, setPick] = useState(0);
   // FREE always counts (server); daubing it is pure satisfaction, so it lives on the phone only
   // (per card) and resets with every fresh deal (round) — "adjust state when a prop changes".
   const [freeDaubed, setFreeDaubed] = useState<number[]>([]);
   const toggleFree = (c: number): void =>
     setFreeDaubed((v) => (v.includes(c) ? v.filter((i) => i !== c) : [...v, c]));
-  // Calls that landed while this phone was away (review-loop #4): a jump of more than one in
-  // callIndex between two views means we missed some. With the hall board on the TV a toast points
-  // there; without it the header names the missed nicknames. "Adjust state when a prop changes".
+  const [round, setRound] = useState(view.round);
+  if (round !== view.round) {
+    setRound(view.round);
+    setFreeDaubed([]);
+    setUp(0);
+    setPick(0);
+  }
+  // Calls that landed while this phone was away (review-loop #4).
   const [seenCall, setSeenCall] = useState(view.callIndex);
-  const [missed, setMissed] = useState<{ count: number; names: string[] } | null>(null);
+  const [missed, setMissed] = useState(0);
   if (view.callIndex !== seenCall) {
     const jumped = view.callIndex - seenCall;
     setSeenCall(view.callIndex);
-    if (jumped > 1 && view.phaseId === 'play')
-      setMissed({ count: jumped - 1, names: view.recent.slice(-jumped, -1) });
+    if (jumped > 1 && view.phaseId === 'play') setMissed(jumped - 1);
   }
   useEffect(() => {
     if (!missed) return;
-    // The toast goes after 5 s; the header note stays a couple of calls (no board to catch up from).
-    const handle = setTimeout(() => setMissed(null), view.showBoard ? 5000 : 12_000);
+    const handle = setTimeout(() => setMissed(0), 5000);
     return () => clearTimeout(handle);
-  }, [missed, view.showBoard]);
-  const [freeRound, setFreeRound] = useState(view.round);
-  if (freeRound !== view.round) {
-    setFreeRound(view.round);
-    setFreeDaubed([]);
-  }
+  }, [missed]);
+  // The sheet holds the caller for everyone: the server hears it open and close.
+  const openMenu = (): void => {
+    setSheet(true);
+    setPreview(null);
+    send({ type: 'menu', open: true });
+  };
+  const closeMenu = (): void => {
+    setSheet(false);
+    setPreview(null);
+    send({ type: 'menu', open: false });
+  };
+  useEffect(() => {
+    if (!sheet) return;
+    return () => send({ type: 'menu', open: false });
+  }, [sheet, send]);
+
   if (!cards) {
     return (
       <WaitingScreen
@@ -78,118 +105,139 @@ export function Controller({
     );
   }
   const iDecide = view.decide !== null && (view.decide.same || view.decide.blackout);
+  const layoutProps = {
+    view,
+    cards,
+    meId: me.id,
+    send,
+    freeDaubed,
+    onTapFree: toggleFree,
+    intro: false,
+    disabled: false,
+  };
 
-  // The round's own screens: intro, play, check and a bingo phase without a winner's card to show
-  // (no bingo, or someone else won) all keep the same cards mounted (review-loop #2, #15).
-  const roundOver = view.phaseId === 'bingo' && !(view.winnerId === me.id && view.claim);
-  if (
-    view.phaseId === 'intro' ||
-    view.phaseId === 'play' ||
-    view.phaseId === 'check' ||
-    roundOver
-  ) {
-    const intro = view.phaseId === 'intro';
-    const checking = view.phaseId === 'check';
-    const mine = checking && view.claim?.playerId === me.id;
-    // Several cards fill the phone: no call header — the room listens to the TV (owner rule).
-    const many = cards.length > 1;
-    const turn = intro ? null : turnPrompt(cards.length, landscape);
-    // Short: the footer is one line even on a 320 px phone (the TV carries the story).
-    const label = mine
-      ? 'Not a bingo'
-      : checking
-        ? 'Look at the TV'
-        : view.doneForRound
-          ? 'Yours already'
-          : view.waitingForCall
-            ? 'Next number soon…'
-            : 'BINGO!';
+  if (view.phaseId === 'intro') {
+    const left = view.swappable.includes(pick);
     return (
-      // One node for intro + play + check (review-loop #2): the card a player just got must not
-      // blank and rise again when the first call lands, nor when a claim is checked (freeDaubed
-      // lives in this Controller, above the Screen, so it survives either way).
+      <Screen
+        key="round"
+        title={`Round ${view.round} of ${view.totalRounds}`}
+        footer={
+          <PrimaryButton
+            tone="neutral"
+            disabled={!left}
+            onClick={() => send({ type: 'swap', card: pick })}
+          >
+            🎲 Deal me another{n > 1 ? ` card ${pick + 1}` : ''} ({left ? 1 : 0} left)
+          </PrimaryButton>
+        }
+      >
+        <div className={styles.roundBody}>
+          <div className={styles.intro}>
+            <PatternIcon cells={view.patternCells} size={48} />
+            <div>
+              <p className={styles.patternLabel}>{view.patternLabel}</p>
+              <p className={styles.hint}>
+                {view.patternHint}
+                {n > 1 ? ' Pick a card below to swap it.' : ''}
+              </p>
+            </div>
+          </div>
+          <div className={`${styles.focus} ${n > 1 ? styles.focusMany : ''}`}>
+            <div className={styles.focusMain}>
+              <Card
+                numbers={cards[pick] ?? []}
+                daubs={[]}
+                pattern={view.pattern === 'line' ? [] : view.patternCells}
+                disabled
+              />
+            </div>
+            {n > 1 ? (
+              <Thumbnails
+                view={view}
+                cards={cards}
+                marked={pick}
+                markLabel="swap this"
+                onPick={setPick}
+                spent={cards.map((_, i) => i).filter((i) => !view.swappable.includes(i))}
+              />
+            ) : null}
+          </div>
+        </div>
+      </Screen>
+    );
+  }
+
+  // Play, check and a bingo phase without my winning card keep the same cards mounted.
+  const roundOver = view.phaseId === 'bingo' && !(view.winnerId === me.id && view.claim);
+  if (inRound || roundOver) {
+    const kind = held === 'wide' ? 'tablet' : shown;
+    const focus = kind === 'focus';
+    const body = turn ? (
+      <TurnGate to={turn} style={styleSpec(shown).label} />
+    ) : focus ? (
+      <FocusLayout {...layoutProps} disabled={roundOver} up={up} onUp={setUp} />
+    ) : (
+      <AllCardsLayout {...layoutProps} disabled={roundOver} kind={kind} />
+    );
+    return (
       <Screen
         key="round"
         title={
-          intro
-            ? `Round ${view.round} of ${view.totalRounds}`
-            : roundOver
-              ? view.winnerName
-                ? `${view.winnerName} has bingo`
-                : 'No bingo this round'
-              : undefined
+          roundOver
+            ? view.winnerName
+              ? `${view.winnerName} has bingo`
+              : 'No bingo this round'
+            : undefined
         }
         footer={
           roundOver ? (
             <DecideFooter view={view} send={send} />
-          ) : intro ? undefined : (
-            <PrimaryButton
-              tone={mine ? 'danger' : 'accent'}
-              disabled={!view.canClaim}
-              onClick={() => send({ type: 'bingo' })}
-              className={styles.bingo}
-            >
-              {label}
-            </PrimaryButton>
-          )
+          ) : focus && !turn ? (
+            <BingoButton view={view} card={up} send={send} meId={me.id} />
+          ) : undefined
         }
       >
-        <div className={styles.roundBody}>
-          {turn ? (
-            <div className={styles.turn} role="status">
-              <span className={styles.turnGlyph} aria-hidden>
-                ⟳
-              </span>
-              <p className={styles.turnLine}>{turn}</p>
-            </div>
+        <div className={`${styles.roundBody} ${sheet && !preview ? styles.dimmed : ''}`}>
+          <div className={styles.topRow}>
+            {roundOver ? (
+              <p className={styles.hint}>{afterLine(view, iDecide)}</p>
+            ) : focus || kind === 'tablet' ? (
+              <CallHeader
+                current={view.current}
+                previous={view.previous}
+                index={view.callIndex}
+                pattern={view.patternLabel}
+                missed={missed && !view.showBoard ? view.recent.slice(-missed - 1, -1) : null}
+              />
+            ) : (
+              <CallRow view={view} />
+            )}
+            {inRound && !sheet ? (
+              <button type="button" className={styles.stylePill} onClick={openMenu}>
+                🃏 style
+              </button>
+            ) : null}
+          </div>
+          {missed ? <MissedToast view={view} count={missed} /> : null}
+          {body}
+          {view.pausedBy.length > 0 && !view.menuOpen && !sheet ? (
+            <HoldCurtain names={view.pausedBy} onOpen={openMenu} />
           ) : null}
-          {roundOver ? (
-            <p className={styles.hint}>{afterLine(view, iDecide)}</p>
-          ) : intro ? (
-            // Compact on purpose: icon, name and hint in one block so the whole card fits a 659 px
-            // viewport (iPhone 15 in Safari) without scrolling.
-            <div className={styles.intro}>
-              <PatternIcon cells={view.patternCells} size={48} />
-              <div>
-                <p className={styles.patternLabel}>{view.patternLabel}</p>
-                <p className={styles.hint}>{view.patternHint}</p>
-              </div>
-            </div>
-          ) : many || turn ? null : (
-            <CallHeader
-              current={view.current}
-              previous={view.previous}
-              index={view.callIndex}
-              pattern={view.patternLabel}
-              missed={missed && !view.showBoard ? missed.names : null}
+          {view.resumeAt !== null ? <Countdown resumeAt={view.resumeAt} /> : null}
+          {sheet ? (
+            <StyleSheet
+              cards={n}
+              current={style}
+              preview={preview}
+              onPreview={(id) => setPreview(id === style ? null : id)}
+              onConfirm={() => {
+                if (preview) setCardStyle(preview);
+                closeMenu();
+              }}
+              onClose={closeMenu}
             />
-          )}
-          {missed && view.showBoard ? (
-            <p className={styles.missedToast} role="status">
-              {missed.count === 1
-                ? 'Back — you missed a number. It is on the TV board.'
-                : `Back — you missed ${missed.count} numbers. They are on the TV board.`}
-            </p>
           ) : null}
-          {intro ? (
-            <p className={styles.hint}>
-              {cards.length > 1
-                ? `Your ${cards.length} new cards${cards.length === 2 ? ' — hold your phone sideways' : ''}. Watch the TV for the calls; tap what you hear. BINGO! checks your best card.`
-                : 'Your new card. Daub what you hear — FREE too — tap again to undo.'}
-            </p>
-          ) : null}
-          {turn ? null : (
-            <CardStack
-              view={view}
-              cards={cards}
-              freeDaubed={freeDaubed}
-              onTapFree={toggleFree}
-              onTap={(card, index) => send({ type: 'daub', card, index })}
-              intro={intro}
-              disabled={intro || roundOver}
-              showClaim={mine}
-            />
-          )}
         </div>
       </Screen>
     );
@@ -197,7 +245,7 @@ export function Controller({
 
   if (view.phaseId === 'bingo') {
     const claim = view.claim;
-    const which = cards.length > 1 && claim ? ` — card ${claim.cardIndex + 1}` : '';
+    const which = n > 1 && claim ? ` — card ${claim.cardIndex + 1}` : '';
     return (
       <Screen
         key="bingo"
@@ -208,7 +256,7 @@ export function Controller({
           <Card numbers={claim.card} daubs={claim.daubs} green={claim.green} disabled />
         ) : null}
         <p className={styles.hint}>
-          {iDecide && cards.length > 1
+          {iDecide && n > 1
             ? 'Keep going and that card sits the pattern out; your other cards play on. '
             : ''}
           {afterLine(view, iDecide)}

@@ -72,6 +72,19 @@ export interface RoundState {
   won: Record<string, number[]>;
   /** Bingos this round so far (a continued round celebrates more than one). */
   bingos: number;
+  /**
+   * A claim takes two taps. The first arms one card for ARM_MS: the player has dibs, and a second
+   * tap on that card claims it. Other players' first taps queue behind; a lapsed window passes to
+   * the next in line (`queue`, in order). Cleared by a claim or the end of the phase.
+   */
+  arm: { playerId: string; card: number; until: number } | null;
+  queue: { playerId: string; card: number }[];
+  /** Players with the card-style menu open: the caller holds while any phone has it open. */
+  menus: string[];
+  /** After the last menu closes: calling resumes at this time (a 3 · 2 · 1 on every screen). */
+  resumeAt: number | null;
+  /** playerId → card indices already swapped at the intro (one "deal me another" per card). */
+  swapped: Record<string, number[]>;
 }
 
 export interface State extends GameStateBase {
@@ -94,8 +107,33 @@ export const inputSchema = z.discriminatedUnion('type', [
       .default(0),
     index: z.number().int().min(0).max(24),
   }),
-  /** Checks the claimant's closest live card to the pattern. */
-  z.object({ type: z.literal('bingo') }),
+  /**
+   * BINGO! on one card: the first tap arms it (dibs for ARM_MS), the second tap on the same card
+   * claims it. A tap on another of your cards re-arms there. Never "your best card".
+   */
+  z.object({
+    type: z.literal('bingo'),
+    card: z
+      .number()
+      .int()
+      .min(0)
+      .max(MAX_CARDS - 1)
+      .default(0),
+  }),
+  /** The armed phone's own countdown ran out: pass dibs on (the next call tick would too). */
+  z.object({ type: z.literal('lapse') }),
+  /** The card-style menu opened or closed on this phone; the caller holds while any is open. */
+  z.object({ type: z.literal('menu'), open: z.boolean() }),
+  /** Intro only: one fresh deal per card ("deal me another"); the old card is gone for good. */
+  z.object({
+    type: z.literal('swap'),
+    card: z
+      .number()
+      .int()
+      .min(0)
+      .max(MAX_CARDS - 1)
+      .default(0),
+  }),
   /**
    * After a bingo (phase `bingo`): keep the round going on the same cards and deck — for the same
    * pattern (the card that won sits it out) or for a blackout on the same cards. Or move on.
@@ -108,6 +146,10 @@ export const inputSchema = z.discriminatedUnion('type', [
 export type Input = z.infer<typeof inputSchema>;
 
 export const INTRO_MS = 5_000;
+/** The dibs window after the first BINGO! tap. */
+export const ARM_MS = 3_000;
+/** The 3 · 2 · 1 after the last card-style menu closes. */
+export const RESUME_MS = 3_000;
 /** Long enough for the cell-by-cell reveal of a full card (≈ 0.9 + 24 × 0.22 + 0.7 s) plus reading. */
 export const CHECK_MS = 9_000;
 /** No winner (the deck ran out): the TV says so for this long. */

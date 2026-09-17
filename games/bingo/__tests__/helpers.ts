@@ -64,3 +64,10 @@ export function daubAll(state: State, playerId: string, cells: number[], card = 
   for (const i of cells) if (i !== 12) s = input(s, playerId, { type: 'daub', card, index: i });
   return s;
 }
+
+/** BINGO! takes two taps on the same card: arm, then claim 100 ms later. */
+export function claim(state: State, playerId: string, card = 0): State {
+  const t = state.phase.startedAt + 500;
+  const armed = input(state, playerId, { type: 'bingo', card }, t);
+  return input(armed, playerId, { type: 'bingo', card }, t + 100);
+}
