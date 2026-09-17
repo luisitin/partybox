@@ -175,3 +175,25 @@ export async function cutStrips(
   }
   return video;
 }
+
+/** A phone whose whole session is recorded, for 10 fps strips of its own animations (`cutStrips`). */
+export async function openPhoneRecorded(
+  browser: Browser,
+  url: string,
+  device: DeviceId,
+  name: string,
+  videoDir: string,
+): Promise<Phone & { t0: number; videoDir: string }> {
+  const spec = DEVICES[device];
+  const context = await browser.newContext({
+    ...spec.options,
+    colorScheme: 'dark',
+    recordVideo: { dir: videoDir, size: spec.options.viewport ?? { width: 390, height: 844 } },
+  });
+  const t0 = Date.now();
+  const page = await context.newPage();
+  await page.goto(`${url}/`);
+  await page.waitForSelector('[data-surface="controller"]');
+  await applyDeviceCss(page, device);
+  return { device, context, page, name, playerId: null, t0, videoDir };
+}
