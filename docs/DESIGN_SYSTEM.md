@@ -99,7 +99,8 @@ Timer: in the last 5 s it switches to `--pb-danger`, scales 1.15×, pulses once 
 `play(cue, { semitones, quiet })` transposes a cue (the engine multiplies every note by 2^(n/12)); `quiet` leaves
 `lastPlayedAt` alone so the cue never suppresses the shell's next chime.
 `clientModule.sounds` maps phase ids to cues; unmapped phases play `phase`, reserved for moments where the phone needs
-the player (so 'pick up your phone' and 'look at the TV' never sound the same).
+the player (so 'pick up your phone' and 'look at the TV' never sound the same). A mapped phase that re-enters itself
+(a new deadline with the same id — Blanks reads one card per instance) chimes again; unmapped ones and pauses do not.
 TV has a mute toggle (persisted in `localStorage`) and a "tap to start" overlay for the autoplay policy.
 The phone has its own engine (`createSoundEngine({ master: 0.35 })`, mute under `partybox:phone-sound`, default on,
 toggled from the theme sheet) that plays only what happened in the player's hand — never `phase`, `join`, `win` or

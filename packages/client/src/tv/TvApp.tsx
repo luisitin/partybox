@@ -66,10 +66,20 @@ export function TvApp(): JSX.Element {
     ids: Set<string>;
     status: string;
     phase: string | null;
+    deadline: number | null;
     paused: boolean;
     code: string;
     locked: number;
-  }>({ players: 0, ids: new Set(), status: '', phase: null, paused: false, code: '', locked: 0 });
+  }>({
+    players: 0,
+    ids: new Set(),
+    status: '',
+    phase: null,
+    deadline: null,
+    paused: false,
+    code: '',
+    locked: 0,
+  });
   const lastLeaveAt = useRef(-Infinity);
   const lastLockAt = useRef(-Infinity);
   useEffect(() => {
@@ -99,13 +109,21 @@ export function TvApp(): JSX.Element {
     // A game that cued this phase itself (useSound, child effects run first) keeps the stage's
     // generic chime out of its way. `clientModule.sounds` maps a phase id to its own cue (reveal,
     // wager, tally…); unmapped phases play `phase`, reserved for "your phone needs you".
-    if (view && view.phaseId !== p.phase && p.phase !== null && room.status === 'playing')
-      if (performance.now() - audio.lastPlayedAt() > 50) {
-        const mapped = room.selectedGameId
-          ? clientGames[room.selectedGameId]?.sounds?.[view.phaseId]
-          : undefined;
+    if (view && p.phase !== null && room.status === 'playing') {
+      const mapped = room.selectedGameId
+        ? clientGames[room.selectedGameId]?.sounds?.[view.phaseId]
+        : undefined;
+      // A phase that re-enters itself (Blanks reads one card per instance) chimes again, but only
+      // when the game mapped a cue for it: the deadline moves with the instance, never on a pause.
+      const reentered =
+        view.phaseId === p.phase &&
+        mapped !== undefined &&
+        view.deadline !== p.deadline &&
+        !paused &&
+        !p.paused;
+      if ((view.phaseId !== p.phase || reentered) && performance.now() - audio.lastPlayedAt() > 50)
         audio.play(mapped && isSoundCue(mapped) ? mapped : 'phase');
-      }
+    }
     // A lock-in: one soft tick per push, rising with the count (never queued; dropped inside
     // 250 ms), quiet so it never suppresses the phase chime; the count resets with the phase.
     const locked =
@@ -127,6 +145,7 @@ export function TvApp(): JSX.Element {
       ids: new Set(room.players.map((pl) => pl.id)),
       status: room.status,
       phase: view?.phaseId ?? null,
+      deadline: view?.deadline ?? null,
       paused,
       code: room.code,
       locked: view && view.phaseId === p.phase ? locked : 0,
