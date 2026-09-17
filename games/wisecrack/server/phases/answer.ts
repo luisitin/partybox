@@ -22,8 +22,10 @@ export function answeredCount(state: State): number {
   return Object.values(state.answers).reduce((n, byAuthor) => n + Object.keys(byAuthor).length, 0);
 }
 
+/** Answers that can still arrive: a disconnected player's prompts are not counted (they never
+ *  block the phase either), so the TV's target is one the room can reach (review-loop #34). */
 export function answersExpected(state: State): number {
-  return Object.keys(state.players).length * PROMPTS_PER_PLAYER;
+  return Object.values(state.players).filter((p) => p.connected).length * PROMPTS_PER_PLAYER;
 }
 
 /** "Before half the answer time" is measured against the deadline so a pause does not cheat it. */
