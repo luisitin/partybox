@@ -1,0 +1,60 @@
+{
+  "tv": {
+    "frames": 7398,
+    "longFrames": 5,
+    "worstMs": 67,
+    "long": [
+      {
+        "t": 1789651678355,
+        "ms": 67,
+        "phase": "lobby"
+      },
+      {
+        "t": 1789651690094,
+        "ms": 50,
+        "phase": "question"
+      },
+      {
+        "t": 1789651727242,
+        "ms": 50,
+        "phase": "reveal"
+      },
+      {
+        "t": 1789651791015,
+        "ms": 50,
+        "phase": "question"
+      },
+      {
+        "t": 1789651800342,
+        "ms": 50,
+        "phase": "results"
+      }
+    ]
+  },
+  "phone": {
+    "longFrames": 4,
+    "worstMs": 50,
+    "long": [
+      {
+        "t": 1789651679027,
+        "ms": 50,
+        "phase": "lobby"
+      },
+      {
+        "t": 1789651695031,
+        "ms": 50,
+        "phase": "question"
+      },
+      {
+        "t": 1789651713947,
+        "ms": 50,
+        "phase": "question"
+      },
+      {
+        "t": 1789651732129,
+        "ms": 50,
+        "phase": "question"
+      }
+    ]
+  }
+}
