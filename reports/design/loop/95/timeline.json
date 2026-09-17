@@ -1,0 +1,182 @@
+{
+  "pass": "95",
+  "game": "blanks",
+  "players": 3,
+  "scenario": "normal",
+  "focus": "phone",
+  "started": "17:36:52.810",
+  "tvVideoT0": "17:36:49.546",
+  "changes": [
+    {
+      "t": 1789666612814,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789666617807,
+      "bed": "warm",
+      "at": "17:36:52.814",
+      "sinceStartS": 0,
+      "videoS": 3.3
+    },
+    {
+      "t": 1789666617881,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789666647816,
+      "bed": "warm",
+      "at": "17:36:57.881",
+      "sinceStartS": 5.1,
+      "videoS": 8.3
+    },
+    {
+      "t": 1789666622011,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789666628096,
+      "bed": "latenight",
+      "at": "17:37:02.011",
+      "sinceStartS": 9.2,
+      "videoS": 12.5
+    },
+    {
+      "t": 1789666628163,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789666633805,
+      "bed": "latenight",
+      "at": "17:37:08.163",
+      "sinceStartS": 15.4,
+      "videoS": 18.6
+    },
+    {
+      "t": 1789666633882,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789666639693,
+      "bed": "latenight",
+      "at": "17:37:13.882",
+      "sinceStartS": 21.1,
+      "videoS": 24.3
+    },
+    {
+      "t": 1789666639710,
+      "status": "playing",
+      "phase": "judge",
+      "deadline": 1789666669697,
+      "bed": "marimba",
+      "at": "17:37:19.710",
+      "sinceStartS": 26.9,
+      "videoS": 30.2
+    },
+    {
+      "t": 1789666643849,
+      "status": "playing",
+      "phase": "result",
+      "deadline": 1789666651734,
+      "bed": "warm",
+      "at": "17:37:23.849",
+      "sinceStartS": 31,
+      "videoS": 34.3
+    },
+    {
+      "t": 1789666651743,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789666656742,
+      "bed": "warm",
+      "at": "17:37:31.743",
+      "sinceStartS": 38.9,
+      "videoS": 42.2
+    },
+    {
+      "t": 1789666656759,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789666686754,
+      "bed": "warm",
+      "at": "17:37:36.759",
+      "sinceStartS": 43.9,
+      "videoS": 47.2
+    },
+    {
+      "t": 1789666660890,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789666665925,
+      "bed": "latenight",
+      "at": "17:37:40.890",
+      "sinceStartS": 48.1,
+      "videoS": 51.3
+    },
+    {
+      "t": 1789666666009,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789666671561,
+      "bed": "latenight",
+      "at": "17:37:46.009",
+      "sinceStartS": 53.2,
+      "videoS": 56.5
+    },
+    {
+      "t": 1789666671647,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789666677030,
+      "bed": "latenight",
+      "at": "17:37:51.647",
+      "sinceStartS": 58.8,
+      "videoS": 62.1
+    },
+    {
+      "t": 1789666677040,
+      "status": "playing",
+      "phase": "judge",
+      "deadline": 1789666707037,
+      "bed": "marimba",
+      "at": "17:37:57.040",
+      "sinceStartS": 64.2,
+      "videoS": 67.5
+    },
+    {
+      "t": 1789666681448,
+      "status": "playing",
+      "phase": "result",
+      "deadline": 1789666689337,
+      "bed": "warm",
+      "at": "17:38:01.448",
+      "sinceStartS": 68.6,
+      "videoS": 71.9
+    },
+    {
+      "t": 1789666689408,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789666694345,
+      "bed": "warm",
+      "at": "17:38:09.408",
+      "sinceStartS": 76.6,
+      "videoS": 79.9
+    },
+    {
+      "t": 1789666694384,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789666724352,
+      "bed": "warm",
+      "at": "17:38:14.384",
+      "sinceStartS": 81.6,
+      "videoS": 84.8
+    },
+    {
+      "t": 1789666698502,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789666704939,
+      "bed": "latenight",
+      "at": "17:38:18.502",
+      "sinceStartS": 85.7,
+      "videoS": 89
+    }
+  ],
+  "notes": ["budget reached while playing; skipped to results"]
+}
