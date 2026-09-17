@@ -1,0 +1,75 @@
+{
+  "pass": "36",
+  "game": "wisecrack",
+  "players": 6,
+  "scenario": "spicy",
+  "focus": "tv",
+  "started": "02:35:40.911",
+  "tvVideoT0": "02:35:34.684",
+  "changes": [
+    {
+      "t": 1789612540916,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789612545905,
+      "at": "02:35:40.916",
+      "sinceStartS": 0,
+      "videoS": 6.2
+    },
+    {
+      "t": 1789612545917,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789612575911,
+      "at": "02:35:45.917",
+      "sinceStartS": 5,
+      "videoS": 11.2
+    },
+    {
+      "t": 1789612575957,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789612581916,
+      "at": "02:36:15.957",
+      "sinceStartS": 35,
+      "videoS": 41.3
+    },
+    {
+      "t": 1789612594021,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789612613943,
+      "at": "02:36:34.021",
+      "sinceStartS": 53.1,
+      "videoS": 59.3
+    },
+    {
+      "t": 1789612598237,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789612604119,
+      "at": "02:36:38.237",
+      "sinceStartS": 57.3,
+      "videoS": 63.6
+    },
+    {
+      "t": 1789612610232,
+      "status": "playing",
+      "phase": "scores",
+      "deadline": 1789612618136,
+      "at": "02:36:50.232",
+      "sinceStartS": 69.3,
+      "videoS": 75.5
+    },
+    {
+      "t": 1789612618255,
+      "status": "results",
+      "phase": "results",
+      "deadline": null,
+      "at": "02:36:58.255",
+      "sinceStartS": 77.3,
+      "videoS": 83.6
+    }
+  ],
+  "notes": ["4 extra phones instead of bots (manifest.supportsBots is not true)"]
+}

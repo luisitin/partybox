@@ -35,7 +35,10 @@ export function winnerLine(room: RoomSnapshot): string {
   const ids = results.results.winnerIds;
   if (ids.length === 0) return '';
   if (ids.length >= results.players.length && ids.length > 1) return t.results.tie;
-  const names = ids.map((id) => results.players.find((p) => p.id === id)?.name ?? '?');
+  // Tied winners read alphabetically (numeric-aware), like every other player list (review-loop #36).
+  const names = ids
+    .map((id) => results.players.find((p) => p.id === id)?.name ?? '?')
+    .sort((x, y) => x.localeCompare(y, undefined, { numeric: true, sensitivity: 'base' }));
   if (names.length === 1) return t.results.winner(names[0] as string);
   if (names.length === 2) return t.results.winners(`${names[0]} & ${names[1]}`);
   return t.results.tieAmong(`${names[0]}, ${names[1]}`, names.length - 2);
