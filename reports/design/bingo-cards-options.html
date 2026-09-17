@@ -579,7 +579,7 @@
   </div>
   <h1>Bingo Card Layouts</h1>
   <p class="lede">
-    Version 4 — every decision so far, drawn; the theme buttons above repaint every mock-up with
+    Version 5 — every decision so far, drawn; the theme buttons above repaint every mock-up with
     PartyBox's real palettes. Nothing here is coded yet beyond the baseline grid. Read top to
     bottom: the default ("Focus"), the card-style switcher and its pause, each style as you asked
     for it, then the confirmed picks. A few questions sit at the end.
@@ -625,7 +625,20 @@
         <td>
           <b>Focus</b>: one big card with FREE and the call above it; every card as a bordered
           thumbnail below, the one up greyed; tap to swap, quick (~150 ms); thumbnails not daubable,
-          ★ for FREE; portrait only.
+          ★ for FREE; portrait only. BINGO! checks the card that is up.
+        </td>
+      </tr>
+      <tr>
+        <td>BINGO! checks</td>
+        <td>
+          <b>Only the card that is up</b> (the main card in Focus), never "your best card". The
+          server sends the up card's index with the claim; if the wrong card is up, that is on the
+          player.
+          <i
+            >Open point for Grid / Strip / Stack / Side by side, where no card is "up": I propose
+            the last card you tapped, marked with a gold border — say if you want each card to carry
+            its own small BINGO! button instead.</i
+          >
         </td>
       </tr>
       <tr>
