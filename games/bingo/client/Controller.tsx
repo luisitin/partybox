@@ -202,7 +202,9 @@ export function Controller({
           ) : undefined
         }
       >
-        <div className={`${styles.roundBody} ${sheet && !preview ? styles.dimmed : ''}`}>
+        <div
+          className={`${styles.roundBody} ${sheet && !preview ? styles.dimmed : ''} ${roundOver ? styles.deciding : ''}`}
+        >
           <div className={styles.topRow}>
             {roundOver ? (
               <p className={styles.hint}>{afterLine(view, iDecide)}</p>
