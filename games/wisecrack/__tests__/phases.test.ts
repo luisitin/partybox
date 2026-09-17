@@ -292,3 +292,13 @@ describe('hidden information', () => {
     );
   });
 });
+
+describe('disconnects', () => {
+  it('the drop of the last outstanding player ends the phase like their answer would have', () => {
+    let s = toAnswer(start());
+    s = answerAll(s, (id) => (id === 'dev' ? null : 'text'));
+    expect(s.phase.id).toBe('answer'); // Dev still owes two answers
+    s = connect(s, 'dev', false, s.phase.startedAt + 1000);
+    expect(s.phase.id).not.toBe('answer'); // nobody connected is outstanding → the vote starts
+  });
+});

@@ -389,3 +389,22 @@ describe('encoding and bot', () => {
     expect(turns.some((t) => t?.type === 'turn')).toBe(true);
   });
 });
+
+describe('disconnects', () => {
+  it('the drop of the last outstanding player closes the step like their page would have', () => {
+    let s = start(3);
+    for (const id of s.seats) s = input(s, id, { type: 'pick', option: 0 });
+    expect(s.phase.id).toBe('draw');
+    const [a, b, c] = s.seats as [string, string, string];
+    s = input(s, a, DOT);
+    s = input(s, b, DOT);
+    expect(s.phase.id).toBe('draw'); // c still owes a drawing
+    s = game.reduce(s, {
+      type: 'player',
+      now: s.phase.startedAt + 1000,
+      playerId: c,
+      connected: false,
+    });
+    expect(s.phase.id).toBe('pass');
+  });
+});

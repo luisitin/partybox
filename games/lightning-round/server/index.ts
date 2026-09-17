@@ -1,7 +1,13 @@
 // Lightning Round — speed trivia. `game` is what the registry imports. One file per phase under
 // ./phases; this file wires init / reduce / views / results / bot together and owns the phase
 // order (`advance`), which is also what a VIP skip does.
-import { applyVip, gameManifestSchema, seedRng, setConnected } from '@partybox/game-sdk';
+import {
+  allConnectedDone,
+  applyVip,
+  gameManifestSchema,
+  seedRng,
+  setConnected,
+} from '@partybox/game-sdk';
 import type { GameDefinition, GameEvent, InitContext } from '@partybox/game-sdk';
 import manifestJson from '../manifest.json' with { type: 'json' };
 import { sampleInput } from './bot';
@@ -87,8 +93,23 @@ export function advance(state: State, now: number): State {
   }
 }
 
+/** The drop of the last outstanding player ends the phase like their input would have
+ *  (review-loop #48): the room never sits out a full timer for someone who has gone. */
+function closeIfDone(state: State, now: number): State {
+  const done =
+    state.phase.id === 'question'
+      ? Object.keys(state.picks)
+      : state.phase.id === 'wager'
+        ? Object.keys(state.wagers)
+        : null;
+  return done && allConnectedDone(state, done) ? advance(state, now) : state;
+}
+
 function reduce(state: State, event: GameEvent<Input>): State {
-  if (event.type === 'player') return setConnected(state, event);
+  if (event.type === 'player') {
+    const after = setConnected(state, event);
+    return event.connected || after.phase.paused ? after : closeIfDone(after, event.now);
+  }
   const vip = applyVip(state, event, { skip: advance, end: enterDone });
   if (vip) return vip;
   if (state.phase.paused) return state; // inputs and timers wait while paused
