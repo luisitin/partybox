@@ -80,4 +80,5 @@ Cycle 4 (from pass 57): the rotation restarts with setting variants (board off, 
 | 59   | 2026-09-17 | lightning-round | 6p · one category     | phone | `reports/design/loop/59/` | none (empty pass; all-in wager now the whole score) | —      | —        |
 | 60   | 2026-09-17 | broken-pencil   | 5p · custom words off | phone | `reports/design/loop/60/` | none (empty pass)                                   | —      | —        |
 | 61   | 2026-09-17 | wisecrack       | 8p · bots             | tv    | `reports/design/loop/61/` | none (empty pass — bots carry a full 8-player game) | —      | —        |
-| 62   | 2026-09-17 | bingo           | 12p · previous off    | tv    | `reports/design/loop/62/` | (pending)                                           |        |          |
+| 62   | 2026-09-17 | bingo           | 12p · previous off    | tv    | `reports/design/loop/62/` | none (empty pass)                                   | —      | —        |
+| 63   | 2026-09-17 | broken-pencil   | 3p · spicy words      | tv    | `reports/design/loop/63/` | (pending)                                           |        |          |
