@@ -27,7 +27,10 @@ function ControllerScores({ view, me }: Props): JSX.Element {
   // The delta counts up from 0 and the total from the previous score (one --pb-motion-slow).
   const delta = useCountUp(view.myDelta, 0, COUNT_MS);
   const score = useCountUp(view.myScore, view.myScore - view.myDelta, COUNT_MS);
-  const rankLine = `${final ? 'Final: ' : ''}#${view.myRank} of ${view.standings.length} · ${score} points`;
+  // Everyone level (a 0–0 round, say) is not "#1 of 4": say tied (review-loop #35).
+  const allTied =
+    view.standings.length > 1 && view.standings.every((s) => s.score === view.standings[0]?.score);
+  const rankLine = `${final ? 'Final: ' : ''}${allTied ? 'all tied' : `#${view.myRank} of ${view.standings.length}`} · ${score} points`;
   return (
     <Screen>
       <div className={styles.scoresHero} role="status" aria-live="polite">
@@ -36,7 +39,11 @@ function ControllerScores({ view, me }: Props): JSX.Element {
           <>
             <h2 className={styles.rankHero}>{rankLine}</h2>
             <p className="pb-caption pb-muted">
-              {final ? 'No points in the final round' : 'No points this round'}
+              {view.rounds === 1
+                ? 'No points this game'
+                : final
+                  ? 'No points in the final round'
+                  : 'No points this round'}
             </p>
           </>
         ) : (
