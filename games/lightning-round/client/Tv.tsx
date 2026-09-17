@@ -95,6 +95,8 @@ export function Tv({ view }: GameTvProps<LightningTvView>): JSX.Element {
           rows={standings}
           noTrophy
           dense={standings.length >= 5}
+          // Six h2 rows per column plus this header overflow 1080 px (review-loop #53).
+          size={standings.length >= 9 ? 'sm' : 'md'}
           markIds={view.players.filter((p) => p.status === 'submitted').map((p) => p.id)}
           stagger="down"
         />

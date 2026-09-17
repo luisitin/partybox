@@ -36,6 +36,13 @@
   max-width: none;
 }
 
+/* Small: body-size rows for a dense board that shares the stage with a tall header. */
+.sm .row {
+  font-size: var(--pb-font-body);
+  padding: var(--pb-space-1) var(--pb-space-3);
+  --pb-chip-size: 1.3em;
+}
+
 /* Large: the board owns the stage (results, 7–8 players in two columns of ≤ 4). 1.1× h2 with
    roomier padding — h1 rows spilled their scores out of a 3/5-width column (review-loop #32). */
 .lg .row {
