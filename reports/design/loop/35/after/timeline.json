@@ -1,0 +1,48 @@
+{
+  "pass": "35",
+  "game": "wisecrack",
+  "players": 4,
+  "scenario": "tie",
+  "focus": "phone",
+  "started": "02:34:29.456",
+  "tvVideoT0": "02:34:24.736",
+  "changes": [
+    {
+      "t": 1789612469460,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789612474454,
+      "at": "02:34:29.460",
+      "sinceStartS": 0,
+      "videoS": 4.7
+    },
+    {
+      "t": 1789612474553,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789612504457,
+      "at": "02:34:34.553",
+      "sinceStartS": 5.1,
+      "videoS": 9.8
+    },
+    {
+      "t": 1789612504567,
+      "status": "playing",
+      "phase": "scores",
+      "deadline": 1789612512466,
+      "at": "02:35:04.567",
+      "sinceStartS": 35.1,
+      "videoS": 39.8
+    },
+    {
+      "t": 1789612512513,
+      "status": "results",
+      "phase": "results",
+      "deadline": null,
+      "at": "02:35:12.513",
+      "sinceStartS": 43.1,
+      "videoS": 47.8
+    }
+  ],
+  "notes": ["2 extra phones instead of bots (manifest.supportsBots is not true)"]
+}
