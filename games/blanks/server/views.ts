@@ -87,7 +87,7 @@ export interface BlanksTvView extends TvView {
   revealed: RevealedCard[];
   winnerIds: string[];
   walkover: boolean;
-  /** result + final + done. */
+  /** intro (round 2 on) + result + final + done. */
   standings: StandingsRow[];
   /** final + done. */
   awards: GameAward[];
@@ -227,7 +227,13 @@ function votersExpected(state: State): number {
 
 export function tvView(state: State, gameId: string): BlanksTvView {
   const phase = state.phase.id;
-  const onStage = phase === 'result' || phase === 'final' || phase === 'done';
+  // The round card carries the standings from round 2 on, so the room sees where it stands
+  // between rounds (review-loop #164).
+  const onStage =
+    phase === 'result' ||
+    phase === 'final' ||
+    phase === 'done' ||
+    (phase === 'intro' && state.round > 1);
   return {
     ...envelope(state, gameId, { statusOf: statusOf(state), scores: state.scores }),
     timerMode: timerMode(state),
@@ -305,6 +311,11 @@ export function controllerView(
     myScore: me?.score ?? 0,
     myRank: me?.rank ?? 0,
     standings:
-      phase === 'result' || phase === 'final' || phase === 'done' ? standingsRows(state) : [],
+      phase === 'result' ||
+      phase === 'final' ||
+      phase === 'done' ||
+      (phase === 'intro' && state.round > 1)
+        ? standingsRows(state)
+        : [],
   };
 }

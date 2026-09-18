@@ -355,6 +355,27 @@
   margin-block: auto;
 }
 
+/* The round card's leader line: who is ahead, under the title. */
+.introLead {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: var(--pb-space-4);
+}
+
+.leadChip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-3);
+  padding: var(--pb-space-2) var(--pb-space-5) var(--pb-space-2) var(--pb-space-2);
+  border-radius: 999px;
+  background: var(--pb-surface);
+  border: 1px solid var(--pb-border);
+  font-size: var(--pb-font-h2);
+  font-weight: 800;
+}
+
 /* The winning card, on the beat the room is told who won: it lifts off the table, the gold ring
    brightens and a warm halo blooms behind it — one beat, then it holds (review-loop #162). */
 .crowned {
