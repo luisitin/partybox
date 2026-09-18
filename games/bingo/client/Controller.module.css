@@ -766,3 +766,50 @@
 .wiped {
   animation: global(pb-shake) var(--pb-motion-slow) var(--pb-ease) both;
 }
+
+/* The 3 · 2 · 1 (loop 242): a gold ring drains clockwise over the hold while the digit pops in
+   its middle. A 52 px radius has a 326.7 px circumference; the dash offset runs from 0 to that. */
+.countWrap {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto var(--pb-space-3);
+}
+.ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+.ringTrack,
+.ringFill {
+  fill: none;
+  stroke-width: 8;
+  stroke-linecap: round;
+}
+.ringTrack {
+  stroke: var(--pb-surface-2);
+}
+.ringFill {
+  stroke: var(--pb-accent-2);
+  stroke-dasharray: 326.7;
+  stroke-dashoffset: 0;
+  animation: ring-drain linear both;
+}
+@keyframes ring-drain {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: 326.7;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ringFill {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+}
