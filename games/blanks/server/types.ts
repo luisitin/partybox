@@ -99,6 +99,8 @@ export const INTRO_MS = 5_000;
 export const BLACK_CHOICES = 3;
 export const PICK_MS = 20_000;
 export const UNTIMED_PICK_MS = 60_000;
+/** After the judge chooses, the choice holds the stage for a beat before picking opens. */
+export const PICK_HOLD_MS = 1_400;
 /** The last card in holds the stage for a beat ("Everyone's in!") before the reading starts. */
 export const ALL_IN_MS = 1_500;
 /** Extra answer seconds per white card beyond the first. */

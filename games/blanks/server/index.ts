@@ -95,6 +95,7 @@ export const game: GameDefinition<State, Input> = {
       if (!Object.hasOwn(state.players, playerId)) return null;
       if (state.phase.id === 'pick') {
         if (!isCzar(state, playerId) || state.blackChoices.length < 2) return null;
+        if (state.blackId !== null) return null; // already chosen; the beat is running
         return { type: 'choose', index: rng.int(0, state.blackChoices.length - 1) };
       }
       if (state.phase.id === 'answer') {

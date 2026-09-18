@@ -1,6 +1,6 @@
 // The judge's pick (czar mode): three black cards, one chosen — README "Phases" (pick).
 import { describe, expect, it } from 'vitest';
-import { PICK_MS, UNTIMED_PICK_MS } from '../server/types';
+import { PICK_HOLD_MS, PICK_MS, UNTIMED_PICK_MS } from '../server/types';
 import { T0, connect, cv, reduce, start, timer, tv } from './helpers';
 
 describe('pick (czar mode)', () => {
@@ -28,11 +28,26 @@ describe('pick (czar mode)', () => {
       playerId: judge,
       input: { type: 'choose', index: 1 },
     });
-    expect(chosen.phase.id).toBe('answer');
+    // The choice holds the stage for a beat with the taken card lit, then picking opens.
+    expect(chosen.phase.id).toBe('pick');
     expect(chosen.blackId).toBe(b);
-    expect(chosen.blackChoices).toEqual([]);
-    expect(chosen.blackDeck.slice(-2)).toEqual([a, c]);
-    expect(chosen.blackDeck.length).toBe(before + 2);
+    expect(chosen.phase.deadline).toBe(T0 + PICK_HOLD_MS);
+    expect(tv(chosen).blackChoices.map((x) => x.chosen)).toEqual([false, true, false]);
+    // A second tap cannot push the beat out again.
+    expect(
+      reduce(chosen, {
+        type: 'input',
+        now: T0 + 100,
+        playerId: judge,
+        input: { type: 'choose', index: 2 },
+      }),
+    ).toBe(chosen);
+    const open = timer(chosen);
+    expect(open.phase.id).toBe('answer');
+    expect(open.blackId).toBe(b);
+    expect(open.blackChoices).toEqual([]);
+    expect(open.blackDeck.slice(-2)).toEqual([a, c]);
+    expect(open.blackDeck.length).toBe(before + 2);
     // The deadline defaults to the first card; a dropped judge defaults at once.
     expect(timer(s).blackId).toBe(a);
     expect(timer(s).phase.id).toBe('answer');
