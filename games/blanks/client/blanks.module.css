@@ -430,6 +430,35 @@
   white-space: nowrap;
 }
 
+/* The waiting phone's peek at the three questions (loop #204): the one the judge takes keeps
+   its colour, the other two step back on the same beat the TV dims them. */
+.peekList {
+  list-style: none;
+  margin: var(--pb-space-4) 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-3);
+  width: 100%;
+  max-width: 34rem;
+  text-align: left;
+}
+
+.peekOn,
+.peekOff {
+  transition:
+    opacity var(--pb-motion-base) var(--pb-ease),
+    transform var(--pb-motion-base) var(--pb-ease);
+}
+
+.peekOff {
+  opacity: 0.45;
+}
+
+.peekOn {
+  transform: scale(1.02);
+}
+
 /* A line that has been dealt its place on the stage but has not had its beat yet. */
 .beatWait {
   opacity: 0;
