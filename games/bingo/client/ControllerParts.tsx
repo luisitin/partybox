@@ -86,7 +86,11 @@ export function Ball({
   );
 }
 
-/** The grids' call line: this ball, the one before, the count — no nickname (owner rule). */
+/**
+ * The grids' call line: this ball, the one before, the count — no nickname (owner rule), and no
+ * pattern either (loop 330: "· four corners" wrapped the line on a 360 px phone and the cards
+ * dropped 20 px at call 2). Call 1 has no "before that", and no stray "·" in front of it.
+ */
 export function CallRow({ view }: { view: BingoControllerView }): JSX.Element {
   return (
     <div className={styles.callRow} role="status" aria-live="polite">
@@ -96,9 +100,10 @@ export function CallRow({ view }: { view: BingoControllerView }): JSX.Element {
           {view.previous ? (
             <>
               before that <Ball call={view.previous} size="sm" />
+              {' · '}
             </>
           ) : null}
-          {' · '}call {view.callIndex}
+          call {view.callIndex}
         </span>
       ) : null}
     </div>
