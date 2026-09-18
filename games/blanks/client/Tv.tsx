@@ -20,6 +20,7 @@ export function Tv({ view }: GameTvProps<BlanksTvView>): JSX.Element {
     case 'judge':
       return <TvJudge view={view} />;
     case 'result':
+    case 'final':
     case 'done':
       return <TvResult view={view} />;
     default:

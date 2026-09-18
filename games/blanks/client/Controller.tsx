@@ -46,7 +46,7 @@ function ControllerIntro({ view, me }: Props): JSX.Element {
 
 function ControllerResult({ view, me, send }: Props): JSX.Element {
   const play = useSound();
-  const final = view.phaseId === 'done';
+  const final = view.phaseId === 'final' || view.phaseId === 'done';
   useEffect(() => {
     if (view.iWon) play('correct');
   }, [view.iWon, play]);
@@ -129,6 +129,7 @@ export function Controller(props: Props): JSX.Element {
     case 'judge':
       return <ControllerJudge {...props} />;
     case 'result':
+    case 'final':
     case 'done':
       return <ControllerResult {...props} />;
     default:

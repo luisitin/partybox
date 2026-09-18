@@ -8,7 +8,8 @@ export const clientModule: GameClientModule = {
   Controller: lazy(() => import('./Controller').then((m) => ({ default: m.Controller }))),
   // Every reveal step is its own phase instance: one soft 'card' pluck per card read out (the
   // owner's pick over the fuller 'reveal', which was too much three cards in a row).
-  sounds: { reveal: 'card', result: 'tally' },
+  // The final board is a scores moment too; the results fanfare follows it.
+  sounds: { reveal: 'card', result: 'tally', final: 'tally' },
   // Music beds (ADR-032, owner's picks 2026-09-17): the warm groove is the general background
   // (round card, read-out, result — it resumes where it left off), the soft bossa plays while
   // people pick a card, the marimba pulse while the room judges. Results stay silent under the

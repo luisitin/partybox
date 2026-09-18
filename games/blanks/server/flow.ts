@@ -1,4 +1,5 @@
-// The phase graph: intro → answer → reveal (one instance per card) → judge → result → intro | done.
+// The phase graph: intro → answer → reveal (one instance per card) → judge → result → intro |
+// final → done.
 // Phase files only know their own entry/exit; this file wires the loop so no phase imports
 // another (dependency-cruiser forbids cycles). VIP skip uses the same transitions as a deadline.
 import { allConnectedDone, applyVip, setConnected } from '@partybox/game-sdk';
@@ -7,7 +8,7 @@ import { enterAnswer, reduceAnswer } from './phases/answer';
 import { enterIntro, reduceIntro } from './phases/intro';
 import { enterJudge, reduceJudge } from './phases/judge';
 import { enterReveal, reduceReveal } from './phases/reveal';
-import { enterDone, enterResult, reduceResult } from './phases/result';
+import { enterDone, enterFinal, enterResult, reduceFinal, reduceResult } from './phases/result';
 import { closeAnswers, playersDone, votingDone } from './round';
 import type { Input, State } from './types';
 
@@ -33,7 +34,7 @@ export function afterJudge(state: State, now: number): State {
 }
 
 export function afterResult(state: State, now: number): State {
-  return state.round >= state.settings.rounds ? enterDone(state, now) : enterIntro(state, now);
+  return state.round >= state.settings.rounds ? enterFinal(state, now) : enterIntro(state, now);
 }
 
 /** "Skip" = what the current phase's deadline would do (reveal: skip the whole reading). */
@@ -49,6 +50,8 @@ function skip(state: State, now: number): State {
       return afterJudge(state, now);
     case 'result':
       return afterResult(state, now);
+    case 'final':
+      return enterDone(state, now);
     default:
       return state;
   }
@@ -83,6 +86,8 @@ export function reduce(state: State, event: GameEvent<Input>): State {
       return reduceJudge(state, event, afterJudge);
     case 'result':
       return reduceResult(state, event, afterResult);
+    case 'final':
+      return reduceFinal(state, event, enterDone);
     default:
       return state;
   }

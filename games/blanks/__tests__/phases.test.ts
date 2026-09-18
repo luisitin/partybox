@@ -212,10 +212,14 @@ describe('untimed rounds (the default)', () => {
     expect(s.phase.id).toBe('result');
     expect(s.phase.deadline).toBe(s.phase.startedAt + 60_000);
     expect(tv(s).timerMode).toBe('hidden');
-    // The reading keeps its own pace whatever the setting.
-    const read = readAll(playAll(toAnswer(start({ timed: false, players: 3 }))));
-    expect(tv(read).timerMode).toBe('hidden');
-    expect(tv(start({ timed: false })).timerMode).toBe('normal');
+    // The reading keeps its own pace whatever the setting — a bar, no countdown; so does the
+    // round card.
+    const reading = playAll(toAnswer(start({ timed: false, players: 3 })));
+    expect(reading.phase.id).toBe('reveal');
+    expect(tv(reading).timerMode).toBe('quiet');
+    expect(tv(readAll(reading)).timerMode).toBe('hidden');
+    expect(tv(start({ timed: false })).timerMode).toBe('quiet');
+    expect(tv(start({ timed: true })).timerMode).toBe('quiet');
   });
 
   it('Next from any player ends picking, voting and the result like the deadline would', () => {
