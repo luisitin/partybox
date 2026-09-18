@@ -1,0 +1,29 @@
+/* The pattern demo (loop 243): a cell pops to gold as it lights (a quick scale-in), and fades
+   back when its shape wipes. Transform + opacity only. */
+.demo {
+  display: inline-grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
+  vertical-align: middle;
+}
+.cell {
+  position: relative;
+  background: var(--pb-surface-2);
+  border-radius: 6px;
+}
+.cell::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--pb-accent-2-fill);
+  opacity: 0;
+  transform: scale(0.6);
+  transition:
+    opacity var(--pb-motion-fast) var(--pb-ease),
+    transform var(--pb-motion-fast) cubic-bezier(0.2, 0.9, 0.3, 1.3);
+}
+.on::after {
+  opacity: 1;
+  transform: scale(1);
+}

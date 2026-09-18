@@ -12,6 +12,7 @@ import type { BingoTvView } from '../server/views';
 import { RESUME_MS } from '../server/types';
 import { BALL_LAND_MS, hushCaller, speakCall } from './caller';
 import { PatternIcon } from './Card';
+import { PatternDemo } from './PatternDemo';
 import { pendingLine, winHeadline } from './copy';
 import { Call, CalledBoard, ClaimStage, rows, whichCard } from './TvParts';
 import styles from './Tv.module.css';
@@ -85,7 +86,7 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
           {roundLabel}
         </BigText>
         <div className={styles.patternRow}>
-          <PatternIcon cells={view.patternCells} size={140} />
+          <PatternDemo pattern={view.pattern} cells={view.patternCells} size={200} />
           <BigText level="display" tone="accent">
             {view.patternLabel}
           </BigText>
