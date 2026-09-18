@@ -38,7 +38,16 @@ async function main(): Promise<void> {
     await passAudioGate(rec.page);
     const sam = await openPhoneRecorded(browser, server.url, 'iphone', 'Sam', join(OUT, 'video'));
     await joinViaForm(sam, api, { avatarIndex: 1 });
-    await api.bots(2, 'idle');
+    // Priya's SE too (loop 306): the phone that is NOT claiming, on the same clock.
+    const priya = await openPhoneRecorded(
+      browser,
+      server.url,
+      'iphone-se',
+      'Priya',
+      join(OUT, 'video-priya'),
+    );
+    await joinViaForm(priya, api, { avatarIndex: 5 });
+    await api.bots(1, 'idle');
     const marks: { name: string; at: number; before?: number; seconds?: number }[] = [];
     // 1. The intro, live: the deal, the demo, the 3 · 2 · 1, the first ball.
     marks.push({ name: '1-intro', at: Date.now(), before: 0, seconds: 7 });
@@ -98,6 +107,7 @@ async function main(): Promise<void> {
     marks.push({ name: '7-final', at: Date.now(), before: 0.1, seconds: 6 });
     await api.vip('end');
     await settle(5500);
+    await cutStrips(priya, join(OUT, 'strips-priya'), marks);
     await cutStrips(sam, join(OUT, 'strips-phone'), marks);
     const video = await cutStrips(rec, join(OUT, 'strips-tv'), marks);
     console.log(`10 fps strips (tv + phone, same marks) from ${video ?? '(no video)'}`);
