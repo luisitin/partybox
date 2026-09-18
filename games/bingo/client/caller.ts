@@ -11,6 +11,9 @@ export function callClip(letter: string, number: number): string {
   return `/sfx/calls/${letter.toLowerCase()}${number}.wav`;
 }
 
+/** The ball's drop lands (the squash) this long after the push: the boing waits for it. */
+export const BALL_LAND_MS = 190;
+
 /** Say a call `delayMs` after the boing (the boing leads; the voice follows). */
 export function speakCall(sound: SoundApi, letter: string, number: number, delayMs = 120): void {
   sound.clip(callClip(letter, number), { delayMs, gain: 1 });

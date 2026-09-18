@@ -9,7 +9,7 @@ import type { JSX } from 'react';
 import { BigText, Scoreboard, Stage, useSecondsLeft, useSoundApi } from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
 import type { BingoTvView } from '../server/views';
-import { hushCaller, speakCall } from './caller';
+import { BALL_LAND_MS, hushCaller, speakCall } from './caller';
 import { PatternIcon } from './Card';
 import { pendingLine, winHeadline } from './copy';
 import { Call, CalledBoard, ClaimStage, rows, whichCard } from './TvParts';
@@ -48,16 +48,20 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
   const phaseId = view.phaseId;
   const number = view.current?.number ?? null;
   const letter = view.current?.letter ?? null;
-  // Every new number: the "boing" the instant the push lands (a layout effect, before paint), the
-  // recorded call 120 ms behind it; no per-second ticking — the timer is quiet. Leaving play (a
-  // claim, a check) hushes the caller mid-word.
+  // Every new number: the ball drops out of the cage (Tv.module.css, 420 ms) and the "boing"
+  // fires as it squashes on landing (BALL_LAND_MS after the push), the recorded call 120 ms behind
+  // the boing; no per-second ticking — the timer is quiet. Leaving play (a claim, a check) hushes
+  // the caller mid-word and cancels a boing still in the air.
   useLayoutEffect(() => {
     if (phaseId !== 'play' || number === null || letter === null) {
       hushCaller(sound);
       return;
     }
-    sound.play('call');
-    speakCall(sound, letter, number);
+    const t = setTimeout(() => {
+      sound.play('call');
+      speakCall(sound, letter, number);
+    }, BALL_LAND_MS);
+    return () => clearTimeout(t);
   }, [phaseId, number, letter, sound]);
 
   if (view.phaseId === 'intro') {
