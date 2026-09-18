@@ -167,7 +167,7 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
   const claimT = evs[0]?.t ?? 0;
   T.ok(
     'D',
-    'BINGO → caller hushed, sweep as the line turns, cheer once at the verdict (~6.4 s), no chime on entry, music continues',
+    'BINGO → caller hushed, the reveal lift on the announce, sweep as the line turns, cheer once at the verdict (~6.4 s), no chime on entry, music continues',
     Boolean(cheerAt) &&
       T.cues(evs).filter((c) => c === 'cheer').length === 1 &&
       !T.cues(evs).some((c) => ['phase', 'win', 'fanfare'].includes(c)) &&

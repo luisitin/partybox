@@ -129,7 +129,8 @@ export function BingoButton({
     if (armedHere && left === 0) send({ type: 'lapse' });
   }, [armedHere, left, send]);
   const won = view.won.includes(card);
-  const checking = view.phaseId === 'check';
+  // A check, or a win the TV is still revealing: the phone says nothing conclusive yet.
+  const checking = view.phaseId === 'check' || (view.phaseId === 'bingo' && !verdictShown);
   // The check is about one card: only that button says "Not a bingo".
   const myClaim = checking && view.claim?.playerId === meId && view.claim.cardIndex === card;
   const myCheck = myClaim && verdictShown;

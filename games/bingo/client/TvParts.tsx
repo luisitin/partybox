@@ -29,7 +29,7 @@ import {
   STEP_MANY_MS,
   STEP_MS,
   STING_LAG_MS,
-} from './reveal';
+} from '../server/reveal';
 
 const BOARD_ROWS = ['B', 'I', 'N', 'G', 'O'] as const;
 
@@ -138,6 +138,11 @@ export function ClaimStage({
   const shown = beat >= 5; // the verdict pops beside it — and sounds
   const line = valid ? lineOf(order) : null;
   const sweeps = turning && line !== null && !reduced;
+  // The announce beat has a sound of its own: the caller is hushed, so a lift ("someone has a
+  // bingo!") fills the second before the card drops (the resolve lands ~0.7 s in, drop at 1 s).
+  useEffect(() => {
+    sound.play('reveal');
+  }, [sound]);
   // The first cell's colour lands ~0.2 s into its turn (the squeeze): the sting waits for it.
   useEffect(() => {
     if (!sweeps) return;

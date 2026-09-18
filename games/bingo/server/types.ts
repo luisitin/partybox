@@ -150,8 +150,6 @@ export const INTRO_MS = 5_000;
 export const ARM_MS = 3_000;
 /** The 3 · 2 · 1 after the last card-style menu closes. */
 export const RESUME_MS = 3_000;
-/** Long enough for the cell-by-cell reveal of a full card (≈ 0.9 + 24 × 0.22 + 0.7 s) plus reading. */
-export const CHECK_MS = 11_000; // the reveal takes ~6.4 s; the verdict stays up a few seconds
 /** No winner (the deck ran out): the TV says so for this long. */
 export const BINGO_MS = 10_000;
 /**
