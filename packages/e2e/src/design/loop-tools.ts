@@ -38,10 +38,26 @@ export function cueSignatures(): { name: string; freqs: number[] }[] {
     text.indexOf('const CUES'),
     text.indexOf('\n};', text.indexOf('const CUES')),
   );
+  // Bracket-aware (loop 312): one-line entries (`tick: [{…}],`) and multi-line ones sit side by
+  // side, and a lazy regex swallowed several cues into their neighbours — `call`, `dibs`, `claim`,
+  // `reveal` and `tick` were never in the table, so every Bingo call was logged as `ready`.
   const out: { name: string; freqs: number[] }[] = [];
-  for (const m of block.matchAll(/^\s{2}(\w+): \[([\s\S]*?)^\s{2}\],?$/gm)) {
-    const freqs = [...(m[2] ?? '').matchAll(/freq: (\d+)/g)].map((x) => Number(x[1]));
+  const re = /^\s{2}(\w+): \[/gm;
+  for (let m = re.exec(block); m; m = re.exec(block)) {
+    let depth = 0;
+    let end = m.index + m[0].length - 1;
+    for (; end < block.length; end += 1) {
+      const ch = block[end];
+      if (ch === '[') depth += 1;
+      else if (ch === ']') {
+        depth -= 1;
+        if (depth === 0) break;
+      }
+    }
+    const body = block.slice(m.index + m[0].length, end);
+    const freqs = [...body.matchAll(/freq: (\d+)/g)].map((x) => Number(x[1]));
     out.push({ name: m[1] as string, freqs });
+    re.lastIndex = end;
   }
   return out;
 }

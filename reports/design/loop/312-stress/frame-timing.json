@@ -1,79 +1,74 @@
 {
   "tv": {
-    "frames": 7529,
-    "longFrames": 7,
-    "worstMs": 83,
+    "frames": 7518,
+    "longFrames": 8,
+    "worstMs": 100,
     "long": [
       {
-        "t": 1789749575647,
-        "ms": 67,
+        "t": 1789749890473,
+        "ms": 83,
         "phase": "lobby"
       },
       {
-        "t": 1789749579279,
+        "t": 1789749894001,
         "ms": 50,
         "phase": "intro"
       },
       {
-        "t": 1789749680231,
+        "t": 1789749894152,
+        "ms": 100,
+        "phase": "intro"
+      },
+      {
+        "t": 1789750003663,
         "ms": 50,
         "phase": "scoreboard"
       },
       {
-        "t": 1789749680343,
+        "t": 1789750013589,
         "ms": 50,
-        "phase": "scoreboard"
+        "phase": "intro"
       },
       {
-        "t": 1789749698861,
-        "ms": 83,
-        "phase": "play"
+        "t": 1789750013636,
+        "ms": 50,
+        "phase": "intro"
       },
       {
-        "t": 1789749698905,
+        "t": 1789750013678,
         "ms": 50,
-        "phase": "play"
+        "phase": "intro"
       },
       {
-        "t": 1789749698908,
+        "t": 1789750013684,
         "ms": 50,
-        "phase": "play"
+        "phase": "intro"
       }
     ]
   },
   "phone": {
-    "longFrames": 6,
-    "worstMs": 100,
+    "longFrames": 4,
+    "worstMs": 67,
     "long": [
       {
-        "t": 1789749576393,
-        "ms": 67,
+        "t": 1789749891197,
+        "ms": 50,
         "phase": "lobby"
       },
       {
-        "t": 1789749579279,
+        "t": 1789749894116,
         "ms": 50,
         "phase": "intro"
       },
       {
-        "t": 1789749680022,
+        "t": 1789750013597,
         "ms": 50,
-        "phase": "bingo"
+        "phase": "intro"
       },
       {
-        "t": 1789749698855,
+        "t": 1789750013638,
         "ms": 67,
-        "phase": "play"
-      },
-      {
-        "t": 1789749698907,
-        "ms": 100,
-        "phase": "play"
-      },
-      {
-        "t": 1789749698931,
-        "ms": 50,
-        "phase": "play"
+        "phase": "intro"
       }
     ]
   }
