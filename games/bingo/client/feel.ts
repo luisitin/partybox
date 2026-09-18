@@ -1,6 +1,7 @@
-// What the claimant's phone does the moment the TV's verdict lands on their claim (loop 241): a
-// win pops with a buzz and the 'correct' cue, a miss shakes (Controller.module.css .wiped) with
-// a sad buzz and the 'error' cue. Once per claim; a ref, not state, so no render is scheduled.
+// What a phone does the moment the TV's verdict lands (loop 241): the claimant's win pops with a
+// buzz and the 'correct' cue, their miss shakes (Controller.module.css .wiped) with a sad buzz and
+// the 'error' cue; every other phone gets one soft tap on a win (loop 260). Once per claim; a
+// ref, not state, so no render is scheduled.
 import { useEffect, useRef } from 'react';
 import { buzz } from '@partybox/game-sdk/ui';
 import type { PlayCue } from '@partybox/game-sdk/ui';
@@ -18,8 +19,14 @@ export function useVerdictFeel(
   const mine = view.claim?.playerId === meId;
   const phaseId = view.phaseId;
   useEffect(() => {
-    if (!verdictShown || !claimKey || !mine || answered.current === claimKey) return;
+    if (!verdictShown || !claimKey || answered.current === claimKey) return;
     answered.current = claimKey;
+    if (!mine) {
+      // Everyone else feels a bingo land too — one soft tap as the TV's sting fires, no sound
+      // (the TV carries the celebration; loop 260). A miss is the claimant's alone.
+      if (phaseId === 'bingo') buzz(30);
+      return;
+    }
     if (phaseId === 'bingo') {
       buzz([40, 60, 40, 60, 120]);
       play('correct');
