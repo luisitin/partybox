@@ -6,14 +6,14 @@
 // and "NOT A BINGO", or the cheer with confetti — and waits for a phone to move on.
 import { useEffect, useLayoutEffect } from 'react';
 import type { JSX } from 'react';
-import { BigText, Scoreboard, Stage, useSecondsLeft, useSoundApi } from '@partybox/game-sdk/ui';
+import { BigText, Scoreboard, Stage, useSoundApi } from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
 import type { BingoTvView } from '../server/views';
-import { RESUME_MS } from '../server/types';
 import { BALL_LAND_MS, hushCaller, speakCall } from './caller';
 import { PatternIcon } from './Card';
 import { PatternDemo } from './PatternDemo';
 import { pendingLine, winHeadline } from './copy';
+import { IntroCountdown, Resume } from './TvCountdown';
 import { Call, CalledBoard, ClaimStage, DibsLine, rows, whichCard } from './TvParts';
 import styles from './Tv.module.css';
 
@@ -22,39 +22,6 @@ function joinNames(names: string[]): string {
   if (names.length === 1) return `${names[0]} is`;
   if (names.length === 2) return `${names[0]} and ${names[1]} are`;
   return `${names[0]} and ${names.length - 1} others are`;
-}
-
-/** The 3 · 2 · 1 after the last card-style menu closes: one tick per second, then the next number. */
-function Resume({ roundLabel, resumeAt }: { roundLabel: string; resumeAt: number }): JSX.Element {
-  const left = Math.min(3, useSecondsLeft(resumeAt) ?? 0); // a 4 would tick four times on a 3 s hold
-  const sound = useSoundApi();
-  useEffect(() => {
-    if (left > 0) sound.play('tick');
-  }, [left, sound]);
-  return (
-    <Stage center>
-      <p className={styles.kicker}>{roundLabel} · calling resumes in</p>
-      <div className={styles.resumeWrap}>
-        <svg className={styles.ring} viewBox="0 0 120 120" aria-hidden>
-          <circle className={styles.ringTrack} cx="60" cy="60" r="52" />
-          <circle
-            key={resumeAt}
-            className={styles.ringFill}
-            cx="60"
-            cy="60"
-            r="52"
-            style={{ animationDuration: `${RESUME_MS}ms` }}
-          />
-        </svg>
-        <BigText key={left} level="display" tone="accent" className="pb-pop">
-          {Math.max(1, left)}
-        </BigText>
-      </div>
-      <BigText level="h2" tone="muted">
-        get your thumbs ready
-      </BigText>
-    </Stage>
-  );
 }
 
 export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
@@ -110,6 +77,7 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
             </span>
           ))}
         </p>
+        <IntroCountdown deadline={view.deadline} />
       </Stage>
     );
   }
