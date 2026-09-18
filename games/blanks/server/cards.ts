@@ -166,6 +166,9 @@ export interface Segment {
  * Blanks beyond the whites played stay as blanks; whites beyond the blanks (a question card, a
  * "make a haiku") come back in `extra` for the caller to list underneath.
  */
+/** A card that ends in an abbreviation, not in a sentence's full stop: "2 a.m.", "O.J.", "Jr.". */
+const ABBREVIATION = /(?:\b[A-Za-z]\.){2}$|\b(?:Jr|Sr|St|Dr|Mr|Mrs|Ms|Inc|Ltd|vs|etc)\.$/;
+
 export function fill(
   text: string,
   whites: readonly string[],
@@ -193,9 +196,13 @@ export function fill(
     // never a letter's apostrophe: "____'s" keeps its 's in the black text (review-loop #101).
     const punctuation = /^[.,!?;:"”’')\]]+(?![A-Za-z])/.exec(nextPart)?.[0] ?? '';
     carried = punctuation.length;
+    // "Dancing in the kitchen at 2 a.m." keeps the abbreviation's own period mid-sentence — it
+    // came out as "2 a.m," before (review-loop #201) — but gives it up when the black card supplies
+    // a full stop of its own, which would read "2 a.m..".
+    const keepDot = ABBREVIATION.test(white) && !punctuation.startsWith('.');
     segments.push({
       kind: 'fill',
-      text: (atEnd ? white : white.replace(/\.$/, '')) + punctuation,
+      text: (atEnd || keepDot ? white : white.replace(/\.$/, '')) + punctuation,
     });
   });
   return { segments, extra: whites.slice(blanksIn(text)) };
