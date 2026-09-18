@@ -41,6 +41,12 @@ function PlayCard({
   const { view } = p;
   const claim = view.claim;
   const mine = view.phaseId === 'check' && claim?.playerId === p.meId && claim.cardIndex === c;
+  // My claim is on the TV (a check or a win still being revealed): the card flashes once as it goes.
+  const sent =
+    (view.phaseId === 'check' || view.phaseId === 'bingo') &&
+    claim?.playerId === p.meId &&
+    claim.cardIndex === c &&
+    !p.verdictShown;
   const won = view.won.includes(c);
   const heading =
     label === undefined ? null : (
@@ -79,6 +85,7 @@ function PlayCard({
         onTap={(index) => p.onDaub(c, index)}
         disabled={p.disabled}
         size={size}
+        sent={sent}
       />
     </div>
   );

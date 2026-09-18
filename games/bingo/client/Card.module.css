@@ -473,3 +473,28 @@ button.cell:focus-visible {
     display: none;
   }
 }
+
+/* The claim went up (loop 240): every daubed square flashes white and lifts once, in reading
+   order 18 ms apart — the card "goes to the TV". */
+.sent {
+  animation: sent-flash 420ms var(--pb-ease) both;
+}
+@keyframes sent-flash {
+  0% {
+    transform: none;
+    filter: none;
+  }
+  30% {
+    transform: translateY(-4px) scale(1.06);
+    filter: brightness(1.7);
+  }
+  100% {
+    transform: none;
+    filter: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sent {
+    animation: none;
+  }
+}

@@ -95,6 +95,8 @@ Timer: in the last 5 s it switches to `--pb-danger`, scales 1.15×, pulses once 
 | `lock`                    | a player locks in (one soft tick per push, whole tones rising with the count, `quiet`: never suppresses `phase`) | TV shell                                                                       |
 |  controller shell (phone) |
 | `error`                   | rejected input / error toast                                                                                     | controller shell (phone)                                                       |
+| `daub`                    | a square daubed on a phone: a dauber landing (with a buzz)                                                       | game via `useSound` (phone)                                                    |
+| `claim`                   | BINGO! sent from a phone: a rising "sent!" (with a long buzz)                                                    | game via `useSound` (phone)                                                    |
 | `correct`                 | the phone's own verdict card                                                                                     | game via `useSound` (phone)                                                    |
 
 `play(cue, { semitones, quiet })` transposes a cue (the engine multiplies every note by 2^(n/12)); `quiet` leaves
