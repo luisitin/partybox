@@ -17,8 +17,8 @@ import type { Claim, Decision, Input, State, Transition } from '../types';
 
 export interface BingoExits {
   next: Transition;
-  /** Back into `play` on the same number (the call repeats). */
-  resume: Transition;
+  /** Back into `play` on the same number (the call repeats), naming who chose to. */
+  resume: (state: State, now: number, by: string) => State;
 }
 
 export function enterBingo(
@@ -128,6 +128,7 @@ function decide(state: State, decision: Decision, now: number, exits: BingoExits
       },
     },
     now,
+    decision.by,
   );
 }
 

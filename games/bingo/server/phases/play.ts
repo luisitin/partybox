@@ -37,6 +37,7 @@ export function enterPlay(state: State, now: number, again = false): State {
       claim: null,
       resumeAt: null,
       resumeAgain: false, // a VIP skip through the countdown must not repeat a number later
+      resumeBy: null,
       calledAt: now, // the stamp the TV speaks and the phones buzz on (a repeat is a new call)
     },
   };
@@ -53,11 +54,17 @@ export function enterPlay(state: State, now: number, again = false): State {
  * Back into play after a bingo (loop 276): a 3 · 2 · 1 on every screen first (`resumeAt`, the
  * same countdown the card-style menu uses), then the number that was up is called again.
  */
-export function enterResume(state: State, now: number): State {
+export function enterResume(state: State, now: number, by: string | null = null): State {
   return enterPhase(
     {
       ...state,
-      round: { ...state.round, claim: null, resumeAt: now + RESUME_MS, resumeAgain: true },
+      round: {
+        ...state.round,
+        claim: null,
+        resumeAt: now + RESUME_MS,
+        resumeAgain: true,
+        resumeBy: by,
+      },
     },
     'play',
     now,

@@ -255,11 +255,13 @@ describe('the resume countdown (loop 276)', () => {
     expect(s.phase.deadline).toBe(s.phase.startedAt + RESUME_MS);
     expect(game.tvView(s).resumeAt).toBe(s.round.resumeAt);
     expect(game.tvView(s).patternLabel.toLowerCase()).toContain('blackout');
+    expect(game.tvView(s).resumeBy).toBe('Ben'); // the TV names who chose (loop 325)
     const again = timer(s);
     expect(again.phase.id).toBe('play');
     expect(again.round.drawn).toBe(drawn); // the same number
     expect(again.round.resumeAt).toBeNull();
     expect(again.round.resumeAgain).toBe(false);
+    expect(game.tvView(again).resumeBy).toBeNull();
     expect(again.phase.deadline).toBe(again.phase.startedAt + 6_000); // a normal call's clock
     expect(timer(again).round.drawn).toBe(drawn + 1); // and then the next one
   });

@@ -76,6 +76,8 @@ interface Common {
   pausedBy: string[];
   /** play: the last menu closed; calling resumes at this time (3 · 2 · 1 on every screen). */
   resumeAt: number | null;
+  /** play, during the 3 · 2 · 1 after "keep going": who picked it (their name) — loop 325. */
+  resumeBy: string | null;
   /** play: when the number up was called (server clock). A new stamp is a call to speak and feel;
    * a hold or a countdown does not change it, so nothing re-calls a number (loop 294). */
   calledAt: number | null;
@@ -225,6 +227,10 @@ function common(state: State): Common {
         : [],
     resumeAt: state.phase.id === 'play' ? round.resumeAt : null,
     calledAt: state.phase.id === 'play' ? round.calledAt : null,
+    resumeBy:
+      state.phase.id === 'play' && round.resumeAt !== null && round.resumeBy
+        ? (state.players[round.resumeBy]?.name ?? null)
+        : null,
   };
 }
 
