@@ -56,7 +56,7 @@ function PlayCard({
     );
   if (mine && claim && p.verdictShown)
     return (
-      <div className={`${styles.slot} pb-pop`}>
+      <div className={`${styles.slot} ${styles.wiped}`}>
         {heading}
         <Card
           numbers={claim.card}

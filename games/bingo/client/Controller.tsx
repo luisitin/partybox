@@ -25,6 +25,7 @@ import type { CardStyle } from './styles';
 import { verdictAtMs } from '../server/reveal';
 import { otherTitle } from './copy';
 import { EndScreens, afterLine, WinScreen } from './WinScreen';
+import { useVerdictFeel } from './feel';
 import styles from './Controller.module.css';
 
 export function Controller({
@@ -46,9 +47,10 @@ export function Controller({
       )
     : 0;
   const verdictShown = useHold(claimKey, revealMs);
+  const play = useSound();
+  useVerdictFeel(view, me.id, claimKey, verdictShown, play);
   // The deal's plucks: one soft 'card' as each thumbnail lands (owner's pick, options B + C);
   // the timings mirror .dealing in the stylesheet, the pluck on the bounce (~250 ms in).
-  const play = useSound();
   const dealing = view.phaseId === 'intro';
   useEffect(() => {
     if (!dealing || n <= 1) return;
