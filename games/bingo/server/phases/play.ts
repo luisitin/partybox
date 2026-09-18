@@ -37,6 +37,7 @@ export function enterPlay(state: State, now: number, again = false): State {
       claim: null,
       resumeAt: null,
       resumeAgain: false, // a VIP skip through the countdown must not repeat a number later
+      calledAt: now, // the stamp the TV speaks and the phones buzz on (a repeat is a new call)
     },
   };
   // A window that is open survives the call: an armed player's second tap still claims.

@@ -76,6 +76,9 @@ interface Common {
   pausedBy: string[];
   /** play: the last menu closed; calling resumes at this time (3 · 2 · 1 on every screen). */
   resumeAt: number | null;
+  /** play: when the number up was called (server clock). A new stamp is a call to speak and feel;
+   * a hold or a countdown does not change it, so nothing re-calls a number (loop 294). */
+  calledAt: number | null;
 }
 
 export interface BingoTvView extends TvView, Common {
@@ -209,6 +212,7 @@ function common(state: State): Common {
         ? round.menus.map((id) => state.players[id]?.name ?? '?')
         : [],
     resumeAt: state.phase.id === 'play' ? round.resumeAt : null,
+    calledAt: state.phase.id === 'play' ? round.calledAt : null,
   };
 }
 

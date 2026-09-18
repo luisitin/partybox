@@ -276,3 +276,87 @@ describe('the resume countdown (loop 276)', () => {
     expect(timer(skipped).round.drawn).toBe(drawn + 2);
   });
 });
+
+describe('a VIP pause through a bingo (loop 294 — the review)', () => {
+  it('pausing mid-reveal does not score the win or show the verdict; after the resume the verdict tick still offers the choice', () => {
+    let s = callUntil(start(), 'a', LINE);
+    s = daubAll(s, 'a', LINE);
+    s = claimRaw(s, 'a');
+    const paused = vip(s, 'pause', s.phase.startedAt + 1000);
+    expect(paused.round.judged).toBe(false);
+    expect(paused.wins['a'] ?? 0).toBe(0);
+    expect(game.controllerView(paused, 'b').verdictShown).toBe(false);
+    const resumed = vip(paused, 'resume', s.phase.startedAt + 5000); // a 4 s pause
+    expect(resumed.phase.deadline).toBe((s.phase.deadline ?? 0) + 4000);
+    const judged = timer(resumed);
+    expect(judged.phase.id).toBe('bingo');
+    expect(judged.wins['a']).toBe(3);
+    expect(judged.round.judgedAt).toBe(resumed.phase.deadline);
+    expect(game.tvView(judged).decide).toEqual({ same: true, blackout: true });
+    // The read runs from the verdict, not from the phase's start: a choice now is held 3 s.
+    const choice = input(
+      judged,
+      'b',
+      { type: 'continue', pattern: 'same' },
+      judged.round.judgedAt ?? 0,
+    );
+    expect(choice.phase.id).toBe('bingo');
+    expect(choice.phase.deadline).toBe((judged.round.judgedAt ?? 0) + VERDICT_READ_MS);
+    expect(timer(choice).phase.id).toBe('play');
+  });
+
+  it('a choice held before the verdict, then a long pause: the verdict tick arms a later deadline and the choice lands', () => {
+    let s = callUntil(start(), 'a', LINE);
+    s = daubAll(s, 'a', LINE);
+    s = claimRaw(s, 'a');
+    s = input(s, 'b', { type: 'continue', pattern: 'same' }, s.phase.startedAt + 400);
+    const paused = vip(s, 'pause', s.phase.startedAt + 1000);
+    const resumed = vip(paused, 'resume', s.phase.startedAt + 20_000); // a 19 s pause
+    const judged = timer(resumed);
+    expect(judged.phase.id).toBe('bingo');
+    expect(judged.phase.deadline).toBeGreaterThan(resumed.phase.deadline ?? 0); // re-armed (ADR-033)
+    expect(timer(judged).phase.id).toBe('play');
+  });
+
+  it('a pause during a resume countdown shifts the ring with the deadline', () => {
+    let s = callUntil(start(), 'a', LINE);
+    s = daubAll(s, 'a', LINE);
+    s = claim(s, 'a');
+    s = input(s, 'b', { type: 'continue', pattern: 'same' }, after(s));
+    expect(s.round.resumeAt).toBe(s.phase.deadline);
+    const paused = vip(s, 'pause', s.phase.startedAt + 1000);
+    const resumed = vip(paused, 'resume', s.phase.startedAt + 3000);
+    expect(resumed.round.resumeAt).toBe(resumed.phase.deadline);
+  });
+
+  it('the player holding the caller with an open menu drops out: calling resumes with a 3 · 2 · 1', () => {
+    let s = callUntil(start(), 'a', [0]);
+    s = input(s, 'b', { type: 'menu', open: true });
+    expect(s.phase.deadline).toBeNull();
+    const gone = game.reduce(s, {
+      type: 'player',
+      now: s.phase.startedAt + 2000,
+      playerId: 'b',
+      connected: false,
+    });
+    expect(gone.phase.id).toBe('play');
+    expect(gone.phase.deadline).toBe(gone.phase.startedAt + RESUME_MS);
+    expect(gone.round.resumeAt).toBe(gone.phase.deadline);
+  });
+
+  it('a call is a stamp: a countdown or a hold keeps it, the repeat after keep going is a new one', () => {
+    let s = callUntil(start(), 'a', LINE);
+    const stamp = s.round.calledAt;
+    expect(stamp).toBe(s.phase.startedAt);
+    const held = input(s, 'b', { type: 'menu', open: true });
+    expect(held.round.calledAt).toBe(stamp);
+    expect(game.tvView(held).calledAt).toBe(stamp);
+    s = daubAll(s, 'a', LINE);
+    s = claim(s, 'a');
+    s = input(s, 'b', { type: 'continue', pattern: 'same' }, after(s));
+    expect(game.tvView(s).calledAt).toBe(stamp); // the countdown: not a call
+    const again = timer(s);
+    expect(again.round.calledAt).toBe(again.phase.startedAt); // the repeat: a new stamp
+    expect(again.round.calledAt).not.toBe(stamp);
+  });
+});
