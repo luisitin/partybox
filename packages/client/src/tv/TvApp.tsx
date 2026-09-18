@@ -51,6 +51,8 @@ export function TvApp(): JSX.Element {
   const audio = useMemo(() => soundInstance(), []);
   const music = useMemo(() => musicInstance(audio.muted()), [audio]);
   const beds = useMemo(() => bedsInstance(audio.muted()), [audio]);
+  const bedTurns = useRef<Record<string, number>>({});
+  const bedPhase = useRef<string | null>(null);
   const state = useStore(client.store, (s) => s);
   const room = state.room;
   const view = state.view;
@@ -79,7 +81,15 @@ export function TvApp(): JSX.Element {
     music.setPaused(room?.status === 'playing' && (view?.paused ?? false));
     // Synthesized beds by phase (ADR-032): same gate, same mute, same pause.
     const gameBeds = room?.selectedGameId ? clientGames[room.selectedGameId]?.beds : undefined;
-    beds.play(bedFor(room, view, gameBeds));
+    // How often each phase has begun, so a phase that names several beds rotates through them
+    // instead of replaying one bed every round (loop #197).
+    const phase = room?.status === 'playing' ? (view?.phaseId ?? null) : null;
+    if (phase !== bedPhase.current) {
+      if (bedPhase.current !== null)
+        bedTurns.current[bedPhase.current] = (bedTurns.current[bedPhase.current] ?? 0) + 1;
+      bedPhase.current = phase;
+    }
+    beds.play(bedFor(room, view, gameBeds, bedTurns.current));
     beds.setPaused(room?.status === 'playing' && (view?.paused ?? false));
   }, [room, view, music, beds]);
 

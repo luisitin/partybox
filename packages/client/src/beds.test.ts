@@ -86,6 +86,12 @@ describe('bedFor', () => {
     expect(bedFor(room('playing'), view('bogus'), beds)).toBeNull();
     expect(bedFor(room('results'), view('intro'), beds)).toBeNull();
     expect(bedFor(room('lobby'), null, beds)).toBeNull();
+    // A phase that names several beds takes the next one each time it begins (loop #197).
+    const rota = { judge: ['marimba', 'lofi'] };
+    expect(bedFor(room('playing'), view('judge'), rota, {})).toBe('marimba');
+    expect(bedFor(room('playing'), view('judge'), rota, { judge: 1 })).toBe('lofi');
+    expect(bedFor(room('playing'), view('judge'), rota, { judge: 2 })).toBe('marimba');
+    expect(bedFor(room('playing'), view('judge'), { judge: [] }, {})).toBeNull();
     expect(bedFor(room('playing'), view('intro'), undefined)).toBeNull();
     expect(bedFor(null, view('intro'), beds)).toBeNull();
   });
