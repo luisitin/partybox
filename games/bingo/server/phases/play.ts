@@ -52,23 +52,26 @@ export function enterPlay(state: State, now: number, again = false): State {
 
 /**
  * Back into play after a bingo (loop 276): a 3 · 2 · 1 on every screen first (`resumeAt`, the
- * same countdown the card-style menu uses), then the number that was up is called again.
+ * same countdown the card-style menu uses), then the number that was up is called again. A menu
+ * open somewhere holds first (no clock, no ring), as the check's way back does; the countdown
+ * runs when it closes and the repeat is still owed (loop 329).
  */
 export function enterResume(state: State, now: number, by: string | null = null): State {
+  const held = menusOpen(state);
   return enterPhase(
     {
       ...state,
       round: {
         ...state.round,
         claim: null,
-        resumeAt: now + RESUME_MS,
+        resumeAt: held ? null : now + RESUME_MS,
         resumeAgain: true,
         resumeBy: by,
       },
     },
     'play',
     now,
-    RESUME_MS,
+    held ? null : RESUME_MS,
   );
 }
 

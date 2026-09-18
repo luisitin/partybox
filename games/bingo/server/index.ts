@@ -136,7 +136,8 @@ export function advance(state: State, now: number): State {
 }
 
 function reduce(state: State, event: GameEvent<Input>): State {
-  if (event.type === 'player') return afterPlayerChange(state, setConnected(state, event));
+  if (event.type === 'player')
+    return afterPlayerChange(state, setConnected(state, event), event.now);
   // VIP skip = the phase's normal exit; VIP end always jumps to done (bingos as they stand).
   // A win the TV has not scored yet (the VIP cut the reveal short) still counts — on skip and end
   // only: a pause must not score it (the phones would show the verdict mid-reveal — loop 294).
@@ -204,13 +205,15 @@ function shiftResume(before: State, after: State, event: GameEvent<Input>): Stat
  * (`menusOpen` ignores the disconnected): the last open menu going away resumes calling with the
  * usual 3 · 2 · 1 (loop 294).
  */
-function afterPlayerChange(before: State, after: State): State {
+function afterPlayerChange(before: State, after: State, now: number): State {
   const held = after.phase.id === 'play' && after.phase.deadline === null;
   if (!held || !menusOpen(before) || menusOpen(after)) return after;
+  // From the drop, not the hold's start (loop 329): a hold longer than the ring left the deadline
+  // in the past — the next number fired at once, no 3 · 2 · 1.
   return enterPhase(
-    { ...after, round: { ...after.round, resumeAt: after.phase.startedAt + RESUME_MS } },
+    { ...after, round: { ...after.round, resumeAt: now + RESUME_MS } },
     'play',
-    after.phase.startedAt,
+    now,
     RESUME_MS,
   );
 }

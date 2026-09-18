@@ -266,6 +266,26 @@ describe('the resume countdown (loop 276)', () => {
     expect(timer(again).round.drawn).toBe(drawn + 1); // and then the next one
   });
 
+  it('keep going while a card-style menu is open: held first, the 3 · 2 · 1 when it closes, then the repeat (loop 329)', () => {
+    let s = callUntil(start(), 'a', LINE);
+    s = daubAll(s, 'a', LINE);
+    s = claim(s, 'a');
+    const drawn = s.round.drawn;
+    s = input(s, 'c', { type: 'menu', open: true }, after(s));
+    s = input(s, 'b', { type: 'continue', pattern: 'same' }, after(s));
+    expect(s.phase.id).toBe('play');
+    expect(s.phase.deadline).toBeNull(); // held, as the check's way back is (no ring that leads nowhere)
+    expect(s.round.resumeAt).toBeNull();
+    expect(s.round.resumeAgain).toBe(true); // the repeat is still owed
+    expect(game.tvView(s).pausedBy).toEqual(['Cleo']);
+    const closed = input(s, 'c', { type: 'menu', open: false }, s.phase.startedAt + 4000);
+    expect(closed.phase.deadline).toBe(closed.phase.startedAt + RESUME_MS);
+    expect(closed.round.resumeAt).toBe(closed.phase.deadline);
+    const again = timer(closed);
+    expect(again.round.drawn).toBe(drawn); // the same number, called again
+    expect(again.round.resumeAgain).toBe(false);
+  });
+
   it('a VIP skip through the countdown calls the next number and never repeats one later', () => {
     let s = callUntil(start(), 'a', LINE);
     s = daubAll(s, 'a', LINE);
@@ -335,14 +355,11 @@ describe('a VIP pause through a bingo (loop 294 — the review)', () => {
     let s = callUntil(start(), 'a', [0]);
     s = input(s, 'b', { type: 'menu', open: true });
     expect(s.phase.deadline).toBeNull();
-    const gone = game.reduce(s, {
-      type: 'player',
-      now: s.phase.startedAt + 2000,
-      playerId: 'b',
-      connected: false,
-    });
+    const at = s.phase.startedAt + 10_000; // a long hold: the ring runs from the drop, not the hold
+    const gone = game.reduce(s, { type: 'player', now: at, playerId: 'b', connected: false });
     expect(gone.phase.id).toBe('play');
-    expect(gone.phase.deadline).toBe(gone.phase.startedAt + RESUME_MS);
+    expect(gone.phase.startedAt).toBe(at); // (loop 329: it ran from the hold's start — already over)
+    expect(gone.phase.deadline).toBe(at + RESUME_MS);
     expect(gone.round.resumeAt).toBe(gone.phase.deadline);
   });
 
