@@ -36,6 +36,12 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
   // the owner, loop 310: a listener must be as fast as a watcher); no per-second ticking — the
   // timer is quiet. Leaving play (a claim, a check) hushes the caller mid-word and cancels a
   // boing or a voice still in the air.
+  // Dibs (loop 252): the "says BINGO?…" line pops with a soft rising "hm?"; a window passing on
+  // to the next in line is a new window, so it sounds again.
+  const armWindow = view.arm?.until ?? null;
+  useEffect(() => {
+    if (armWindow !== null) sound.play('dibs');
+  }, [armWindow, sound]);
   // A call is the server's stamp (`calledAt`, loop 294): a resume countdown or a card-style hold
   // shows the same number without re-calling it, and the repeat after "keep going" is a new stamp.
   const calledAt = view.calledAt;
