@@ -19,6 +19,8 @@ const { values } = parseArgs({
     player: { type: 'string', default: 'p1' },
     /** ms to wait before the shot: 700 for play; a claim needs ~2500 (announce, drop). */
     wait: { type: 'string', default: '700' },
+    /** Emulate prefers-reduced-motion: every animated thing must still land in its final state. */
+    reduced: { type: 'boolean', default: false },
     port: { type: 'string', default: '42161' },
   },
 });
@@ -35,11 +37,15 @@ async function main(): Promise<void> {
       ? (await openPhone(browser, server.url, values.device as DeviceId, 'Preview')).page
       : await openTv(browser, server.url);
     const query = phone ? `view=controller&player=${values.player}` : 'view=tv';
+    if (values.reduced) await page.emulateMedia({ reducedMotion: 'reduce' });
     for (const theme of THEMES) {
       await page.goto(`${server.url}/preview/bingo/${values.phase}?${query}&theme=${theme}`);
       await page.waitForSelector(`[data-surface="${phone ? 'controller' : 'tv'}"]`);
       await page.waitForTimeout(Number(values.wait)); // the ball has landed, the card has dropped
-      await page.screenshot({ path: join(OUT, `${values.phase}-${values.view}-${theme}.png`) });
+      const tag = values.reduced ? '-reduced' : '';
+      await page.screenshot({
+        path: join(OUT, `${values.phase}-${values.view}-${theme}${tag}.png`),
+      });
     }
     console.log(`${THEMES.length} themes → ${OUT}`);
   } finally {
