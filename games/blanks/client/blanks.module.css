@@ -360,13 +360,15 @@
    Then its whites drop in one by one (300 ms apart, from 450 ms) — a presentation, not a pop
    (owner, review-loop #151). The phone's read-along does the same. */
 .landing {
-  animation: global(pb-land) var(--pb-motion-slow) var(--pb-ease) both;
+  /* 300 ms, not 600: the pluck is 160 ms long and the card should be down by the time it ends
+     (owner: "sounds not perfectly synced", review-loop #155); the whites then follow the beat */
+  animation: global(pb-land) var(--pb-motion-base) var(--pb-ease) both;
 }
 
 .landing .fill,
 .readCard .fill {
   animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
-  animation-delay: calc(450ms + var(--fill-index, 0) * 300ms);
+  animation-delay: calc(350ms + var(--fill-index, 0) * 300ms);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -731,7 +733,7 @@
 /* A card replacing a card, on the phone too: lands with the same bounce as the TV's. */
 .readCard {
   text-align: left;
-  animation: global(pb-land) var(--pb-motion-slow) var(--pb-ease) both;
+  animation: global(pb-land) var(--pb-motion-base) var(--pb-ease) both;
 }
 
 /* "✓ Vote in · 3 / 6 voted" above the footer button. */
