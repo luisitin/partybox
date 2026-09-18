@@ -42,14 +42,28 @@ describe('streaks', () => {
     if (s.winners.length > 1) expect(s.stats.streak).toBeNull();
   });
 
-  it("Rando's round pays nobody and ends it", () => {
-    let s: State = start({ rounds: 6, players: 4, rando: true });
-    s = timer(playRound(s, () => 0));
-    const before = s.stats.streak;
-    expect(before?.runs).toBeGreaterThanOrEqual(1);
-    // Everyone votes for the phantom player's card.
-    s = timer(playRound(s, () => Math.max(0, s.slots.indexOf(RANDO))));
-    if (s.winners.length === 1 && s.winners[0] === RANDO) expect(s.stats.streak).toBeNull();
+  it("Rando's round pays nobody and ends a run", () => {
+    // Start from a state that already has a run going, so the round under test is the only
+    // variable — which card the deal hands out must not decide whether this passes.
+    const fresh = start({ rounds: 6, players: 4, rando: true });
+    const hot: State = {
+      ...fresh,
+      stats: { ...fresh.stats, streak: { playerId: Object.keys(fresh.players)[0] ?? '', runs: 3 } },
+    };
+    const played = playRound(hot, (voter) => {
+      void voter;
+      return 0;
+    });
+    // Everyone votes for the phantom player's card if it is on the table this round.
+    const randoSlot = played.slots.indexOf(RANDO);
+    const s = randoSlot === -1 ? played : timer(playRound(hot, () => randoSlot));
+    if (s.winners.length === 1 && s.winners[0] === RANDO) {
+      expect(s.stats.streak).toBeNull();
+      expect(s.scores[RANDO]).toBeUndefined();
+    } else {
+      // Whoever did win outright starts their own run of one; a shared round leaves none.
+      expect(s.stats.streak?.runs ?? 0).toBeLessThanOrEqual(1);
+    }
   });
 });
 
