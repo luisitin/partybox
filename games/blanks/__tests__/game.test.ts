@@ -121,6 +121,24 @@ describe('dealing', () => {
     expect(blackPool('adults')).toHaveLength(DECKS.mild.black.length + DECKS.crude.black.length);
   });
 
+  it('the top of every hand carries one of each kind (the first screenful on a phone)', () => {
+    // A phone shows about four cards without scrolling: every kind has to be up there, not just
+    // somewhere in the ten (review-loop #195).
+    for (const decks of ['mild', 'adults', 'wild'] as const) {
+      let s = start({ players: 6, decks, seed: 3, rounds: 6 });
+      for (let round = 1; round <= 6; round++) {
+        for (const id of Object.keys(s.players)) {
+          const top = (s.hands[id] ?? []).slice(0, WHITE_KINDS.length).map(whiteKind);
+          expect(new Set(top).size, `${decks} r${round} ${id} ${top.join()}`).toBe(
+            WHITE_KINDS.length,
+          );
+        }
+        s = timer(playRound(s));
+        if (s.phase.id === 'final' || s.phase.id === 'done') break;
+      }
+    }
+  });
+
   it('a hand always holds at least two things, two doings and two combos while the deck has them', () => {
     // A hand loses a card a round, so the refill also swaps a surplus kind out when a hand has
     // fallen short of one (review-loop #175) — checked here over eight rounds of every preset.
