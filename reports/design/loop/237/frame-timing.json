@@ -1,164 +1,144 @@
 {
   "tv": {
-    "frames": 13480,
-    "longFrames": 15,
-    "worstMs": 67,
+    "frames": 12625,
+    "longFrames": 17,
+    "worstMs": 83,
     "long": [
       {
-        "t": 1789697211301,
+        "t": 1789753655492,
         "ms": 67,
         "phase": "lobby"
       },
       {
-        "t": 1789697214565,
+        "t": 1789753658996,
         "ms": 50,
         "phase": "intro"
       },
       {
-        "t": 1789697303484,
+        "t": 1789753663621,
         "ms": 50,
-        "phase": "play"
+        "phase": "answer"
       },
       {
-        "t": 1789697320300,
+        "t": 1789753693427,
         "ms": 50,
-        "phase": "bingo"
+        "phase": "result"
       },
       {
-        "t": 1789697321069,
+        "t": 1789753693592,
         "ms": 50,
-        "phase": "bingo"
+        "phase": "result"
       },
       {
-        "t": 1789697321701,
-        "ms": 50,
-        "phase": "bingo"
+        "t": 1789753766608,
+        "ms": 83,
+        "phase": "result"
       },
       {
-        "t": 1789697322017,
+        "t": 1789753774495,
         "ms": 50,
-        "phase": "bingo"
+        "phase": "intro"
       },
       {
-        "t": 1789697322335,
+        "t": 1789753779666,
         "ms": 50,
-        "phase": "bingo"
+        "phase": "answer"
       },
       {
-        "t": 1789697322684,
+        "t": 1789753779825,
         "ms": 50,
-        "phase": "bingo"
+        "phase": "answer"
       },
       {
-        "t": 1789697323012,
+        "t": 1789753809670,
         "ms": 50,
-        "phase": "bingo"
+        "phase": "result"
       },
       {
-        "t": 1789697323089,
+        "t": 1789753817664,
         "ms": 50,
-        "phase": "bingo"
+        "phase": "intro"
       },
       {
-        "t": 1789697323389,
+        "t": 1789753822758,
         "ms": 50,
-        "phase": "scoreboard"
+        "phase": "answer"
       },
       {
-        "t": 1789697434356,
+        "t": 1789753852586,
         "ms": 50,
-        "phase": "play"
+        "phase": "result"
       },
       {
-        "t": 1789697434406,
+        "t": 1789753853676,
         "ms": 50,
-        "phase": "play"
+        "phase": "result"
       },
       {
-        "t": 1789697434419,
+        "t": 1789753853896,
         "ms": 50,
-        "phase": "play"
+        "phase": "result"
+      },
+      {
+        "t": 1789753854295,
+        "ms": 50,
+        "phase": "result"
+      },
+      {
+        "t": 1789753854673,
+        "ms": 50,
+        "phase": "result"
       }
     ]
   },
   "phone": {
-    "longFrames": 15,
-    "worstMs": 83,
+    "longFrames": 9,
+    "worstMs": 50,
     "long": [
       {
-        "t": 1789697211872,
+        "t": 1789753656171,
         "ms": 50,
         "phase": "lobby"
       },
       {
-        "t": 1789697316484,
+        "t": 1789753693557,
         "ms": 50,
-        "phase": "bingo"
+        "phase": "result"
       },
       {
-        "t": 1789697316684,
+        "t": 1789753706745,
         "ms": 50,
-        "phase": "bingo"
+        "phase": "answer"
       },
       {
-        "t": 1789697320151,
+        "t": 1789753706898,
         "ms": 50,
-        "phase": "bingo"
+        "phase": "answer"
       },
       {
-        "t": 1789697320484,
+        "t": 1789753809473,
         "ms": 50,
-        "phase": "bingo"
+        "phase": "result"
       },
       {
-        "t": 1789697321318,
+        "t": 1789753853607,
         "ms": 50,
-        "phase": "bingo"
+        "phase": "result"
       },
       {
-        "t": 1789697321885,
+        "t": 1789753853843,
         "ms": 50,
-        "phase": "bingo"
+        "phase": "result"
       },
       {
-        "t": 1789697322168,
+        "t": 1789753854896,
         "ms": 50,
-        "phase": "bingo"
+        "phase": "result"
       },
       {
-        "t": 1789697322517,
+        "t": 1789753855039,
         "ms": 50,
-        "phase": "bingo"
-      },
-      {
-        "t": 1789697323089,
-        "ms": 50,
-        "phase": "bingo"
-      },
-      {
-        "t": 1789697329188,
-        "ms": 50,
-        "phase": "intro"
-      },
-      {
-        "t": 1789697334285,
-        "ms": 50,
-        "phase": "play"
-      },
-      {
-        "t": 1789697434349,
-        "ms": 50,
-        "phase": "play"
-      },
-      {
-        "t": 1789697434428,
-        "ms": 83,
-        "phase": "play"
-      },
-      {
-        "t": 1789697434452,
-        "ms": 83,
-        "phase": "play"
+        "phase": "result"
       }
     ]
   }

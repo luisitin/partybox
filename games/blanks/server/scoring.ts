@@ -40,7 +40,15 @@ export function applyRound(state: State): State {
           playerId: sole,
           runs: state.stats.streak?.playerId === sole ? state.stats.streak.runs + 1 : 1,
         };
-  return { ...state, winners, scores, stats: { ...state.stats, votesReceived, best, streak } };
+  // The longest run of the night is kept for the results screen, even after the run itself ends.
+  const bestRun =
+    streak && streak.runs > (state.stats.bestRun?.runs ?? 0) ? streak : state.stats.bestRun;
+  return {
+    ...state,
+    winners,
+    scores,
+    stats: { ...state.stats, votesReceived, best, streak, bestRun },
+  };
 }
 
 /** Player with the highest stat (> 0); ties go to the higher total score, then the lower id. */
@@ -86,6 +94,15 @@ export function awardsFor(state: State): GameAward[] {
       title: 'Crowd favourite',
       description: `Most votes received: ${state.stats.votesReceived[crowd] ?? 0}`,
       playerId: crowd,
+    });
+  // "On a roll" only exists if somebody actually strung rounds together (review-loop #237).
+  const run = state.stats.bestRun;
+  if (run && run.runs >= 2 && Object.hasOwn(state.players, run.playerId))
+    out.push({
+      id: 'on-a-roll',
+      title: 'On a roll',
+      description: `${run.runs} rounds in a row`,
+      playerId: run.playerId,
     });
   const quick = leader(state, state.stats.fastPlays);
   if (quick)
