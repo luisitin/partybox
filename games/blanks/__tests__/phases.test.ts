@@ -212,6 +212,25 @@ describe('judge (czar mode)', () => {
     expect(s.czarId).toBe('cleo');
   });
 
+  it('a judge who dropped during the reading never holds the vote: it ends on entry', () => {
+    let s = readAll(playAll(toAnswer(start({ judge: 'czar', players: 4 }))));
+    expect(s.phase.id).toBe('judge');
+    // Replay: drop the judge one card before the end of the reading.
+    let r = playAll(toAnswer(start({ judge: 'czar', players: 4 })));
+    r = connect(r, r.czarId as string, false, r.phase.startedAt + 100);
+    expect(r.phase.id).toBe('reveal');
+    r = readAll(r);
+    expect(r.phase.id).toBe('result');
+    expect(r.winners).toEqual([]);
+    expect(tv(r).czar?.connected).toBe(false);
+    // Nobody left to answer: the answer phase ends on entry too (winnerless result).
+    let a = start({ judge: 'czar', players: 3 });
+    for (const id of a.order) if (id !== a.czarId) a = connect(a, id, false, a.phase.startedAt + 1);
+    a = timer(a);
+    expect(a.phase.id).toBe('result');
+    expect(tv(a).revealed).toEqual([]);
+  });
+
   it('the judge dropping mid-vote ends the round without a winner', () => {
     let s = readAll(playAll(toAnswer(start({ judge: 'czar', players: 4 }))));
     expect(s.phase.id).toBe('judge');

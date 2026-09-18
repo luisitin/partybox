@@ -12,8 +12,10 @@ import { enterDone, enterFinal, enterResult, reduceFinal, reduceResult } from '.
 import { closeAnswers, playersDone, voteIsFormality, votingDone } from './round';
 import type { Input, State } from './types';
 
+/** A phase nobody connected can act in ends at once — the judge who dropped during the reading
+ *  left the room on "Sam is choosing…" for the whole 2 min fallback (review-loop #142). */
 export function afterIntro(state: State, now: number): State {
-  return enterAnswer(state, now);
+  return closeIfDone(enterAnswer(state, now), now);
 }
 
 /** Nothing played → straight to the (winnerless) result; one card → walkover, no reading, no
@@ -27,7 +29,9 @@ export function afterAnswer(state: State, now: number): State {
 export function afterReveal(state: State, now: number): State {
   const index = state.revealIndex + 1;
   if (index < state.slots.length) return enterReveal(state, now, index);
-  return voteIsFormality(state) ? enterResult(state, now) : enterJudge(state, now);
+  return voteIsFormality(state)
+    ? enterResult(state, now)
+    : closeIfDone(enterJudge(state, now), now);
 }
 
 export function afterJudge(state: State, now: number): State {
@@ -46,7 +50,9 @@ function skip(state: State, now: number): State {
     case 'answer':
       return afterAnswer(state, now);
     case 'reveal':
-      return voteIsFormality(state) ? enterResult(state, now) : enterJudge(state, now);
+      return voteIsFormality(state)
+        ? enterResult(state, now)
+        : closeIfDone(enterJudge(state, now), now);
     case 'judge':
       return afterJudge(state, now);
     case 'result':

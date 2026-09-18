@@ -26,8 +26,12 @@ export function winnerLine(
   const winners = view.revealed.filter((r) => r.winner);
   if (winners.length === 0) {
     if (view.revealed.length === 0) return 'Nobody played a card';
-    if (view.judgeMode === 'czar')
-      return `${view.czar?.name ?? 'The judge'} never picked — nobody wins this round`;
+    if (view.judgeMode === 'czar') {
+      const judge = view.czar?.name ?? 'The judge';
+      return view.czar?.connected === false
+        ? `${judge} dropped — no judge, nobody wins this round`
+        : `${judge} never picked — nobody wins this round`;
+    }
     return 'No votes — nobody wins this round';
   }
   const humans = winners.filter((w) => !w.rando).map((w) => w.name);
