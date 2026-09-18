@@ -6,7 +6,7 @@
   "version": "0.1.0",
   "minPlayers": 3,
   "maxPlayers": 12,
-  "estimatedMinutes": 20,
+  "estimatedMinutes": 15,
   "tags": ["cards", "voting", "comedy", "adult"],
   "settings": [
     {
@@ -54,7 +54,7 @@
     {
       "key": "rounds",
       "label": "Rounds",
-      "description": "Black cards to play; about two minutes each",
+      "description": "Black cards to play; about a minute each in a small room, closer to two with a full one",
       "type": "number",
       "default": 6,
       "min": 3,
