@@ -57,7 +57,16 @@ async function main(): Promise<void> {
     );
     const phoneMarks: { name: string; at: number; before?: number; seconds?: number }[] = [];
     await joinViaForm(sam, api, { avatarIndex: 1 });
-    await api.bots(2, 'idle');
+    const priya = await openPhoneRecorded(
+      browser,
+      server.url,
+      'iphone-se',
+      'Priya',
+      join(OUT, 'video-priya'),
+    );
+    await joinViaForm(priya, api, { avatarIndex: 5 });
+    const priyaMarks: { name: string; at: number; before?: number; seconds?: number }[] = [];
+    await api.bots(1, 'idle');
     await api.post('/api/dev/start', {
       gameId: G,
       seed: 5,
@@ -90,6 +99,7 @@ async function main(): Promise<void> {
     }
     await settle(300);
     phoneMarks.push({ name: 'phone-claim-hold', at: Date.now(), before: 0.2, seconds: 8.5 });
+    priyaMarks.push({ name: 'other-phone-hold', at: Date.now(), before: 0.2, seconds: 8.5 });
     await sam.page.getByRole('button', { name: /^bingo! card 1$/i }).click();
     await sam.page.getByRole('button', { name: /tap again to claim/i }).dispatchEvent('click');
     await settle(8000);
@@ -110,6 +120,7 @@ async function main(): Promise<void> {
     await shots.shot(tv, { group: G, phase: 'blackout-call', device: 'tv', role: 'stage' });
     console.log('pattern now:', (await state()).round.pattern);
     await cutStrips(sam, join(OUT, 'strips'), phoneMarks);
+    await cutStrips(priya, join(OUT, 'strips'), priyaMarks);
     const video = await cutStrips(rec, join(OUT, 'strips'), marks);
     console.log(`captured ${shots.shots.length} stills; strips from ${video ?? '(no video)'}`);
   } finally {
