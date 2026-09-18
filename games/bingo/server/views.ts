@@ -67,6 +67,8 @@ interface Common {
   patternBingos: number;
   /** bingo: a choice already made mid-celebration, applied when the reveal is done. */
   pendingDecision: 'same' | 'blackout' | 'next' | null;
+  /** bingo: who made the held choice (their name), for "Priya picked: …". */
+  pendingBy: string | null;
   /** play: whose BINGO! is armed (dibs), until when (server clock), and who waits behind. */
   arm: { playerId: string; name: string; card: number; until: number } | null;
   queue: string[];
@@ -193,6 +195,7 @@ function common(state: State): Common {
         : round.decision.type === 'next'
           ? 'next'
           : round.decision.pattern,
+    pendingBy: round.decision ? (state.players[round.decision.by]?.name ?? null) : null,
     arm:
       state.phase.id === 'play' && round.arm
         ? { ...round.arm, name: state.players[round.arm.playerId]?.name ?? '?' }

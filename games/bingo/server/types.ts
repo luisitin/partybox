@@ -29,7 +29,10 @@ export interface Settings {
 
 /** What the TV shows while a claim is checked (or celebrated). Computed once, never re-evaluated. */
 /** How the room moves on after a bingo: keep going (same pattern / blackout) or next. */
-export type Decision = { type: 'continue'; pattern: 'same' | 'blackout' } | { type: 'next' };
+/** A room choice after a bingo, and whose phone it came from (the TV names them — loop 261). */
+export type Decision = ({ type: 'continue'; pattern: 'same' | 'blackout' } | { type: 'next' }) & {
+  by: string;
+};
 
 export interface Claim {
   playerId: string;

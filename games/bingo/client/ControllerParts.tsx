@@ -206,7 +206,7 @@ export function DecideFooter({
   const decide = view.decide;
   if (!decide) return null;
   // A choice already made mid-celebration: the buttons go, the phone says what starts when.
-  const pending = pendingLine(view.pendingDecision, view.round >= view.totalRounds);
+  const pending = pendingLine(view.pendingDecision, view.round >= view.totalRounds, view.pendingBy);
   if (pending) return <p className={styles.hint}>{pending}</p>;
   const nextLabel = view.round < view.totalRounds ? 'Next round — fresh cards' : 'Finish the game';
   return (

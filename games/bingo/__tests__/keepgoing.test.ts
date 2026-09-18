@@ -101,9 +101,10 @@ describe('keeping the round going', () => {
     const endsAt = after(s) - 10;
     const early = input(s, 'b', { type: 'continue', pattern: 'same' }, s.phase.startedAt + 400);
     expect(early.phase.id).toBe('bingo');
-    expect(early.round.decision).toEqual({ type: 'continue', pattern: 'same' });
+    expect(early.round.decision).toEqual({ type: 'continue', pattern: 'same', by: 'b' });
     expect(early.phase.deadline).toBe(endsAt);
     expect(game.tvView(early).pendingDecision).toBe('same');
+    expect(game.tvView(early).pendingBy).toBe('Ben'); // the TV names who picked (loop 261)
     // A second, different choice while one is held changes nothing.
     expect(input(early, 'c', { type: 'next' }, s.phase.startedAt + 800)).toBe(early);
     const applied = timer(early);
@@ -192,7 +193,7 @@ describe('the points land with the verdict (loop 257)', () => {
     s = claimRaw(s, 'a');
     const verdictAt = s.phase.deadline ?? 0;
     const early = input(s, 'b', { type: 'continue', pattern: 'same' }, s.phase.startedAt + 400);
-    expect(early.round.decision).toEqual({ type: 'continue', pattern: 'same' });
+    expect(early.round.decision).toEqual({ type: 'continue', pattern: 'same', by: 'b' });
     expect(early.phase.deadline).toBe(verdictAt); // the verdict tick is still due
     const scored = timer(early);
     expect(scored.phase.id).toBe('bingo');
