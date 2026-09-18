@@ -59,6 +59,8 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
     JSON.stringify(await T.playing(tv)),
   );
   T.ok('D', 'intro: nothing spoken', !evs.some((e) => e.kind === 'speak'), '');
+  // "Deal me another" 3 s in: the new card flips in with a 20 ms tap and a 'card' pluck (loop 268).
+  await vip.page.getByRole('button', { name: /deal me another/i }).click();
   await settle(3500); // 6.5 s in: the intro (5 s) has run out and the first ball has dropped
   await api.clock(true); // hold the caller from here
   await T.mark('D1b');
@@ -76,8 +78,10 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
   const introTaps = introPhone.filter((e) => e.kind === 'buzz' && Number(e['pattern']) === 15);
   T.ok(
     'D',
-    'the phone taps 3 · 2 · 1 with the TV, silently',
-    introTaps.length === 3 && T.cues(introPhone, 'phone').length === 0,
+    'the phone taps 3 · 2 · 1 with the TV; "deal me another" is a 20 ms tap and one card pluck',
+    introTaps.length === 3 &&
+      introPhone.filter((e) => e.kind === 'buzz' && Number(e['pattern']) === 20).length === 1 &&
+      T.cues(introPhone, 'phone').join(',') === 'card',
     `taps=${introTaps.length} cues=${T.cues(introPhone, 'phone').join(',')}`,
   );
   await api.skip();
@@ -98,8 +102,8 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
   T.ok(
     'D',
     'the phones stay silent during calls',
-    T.cues(await T.between(vip.page, 'D1', 'D2'), 'phone').length === 0 &&
-      !(await T.between(vip.page, 'D1', 'D2')).some((e) => e.kind === 'speak'),
+    T.cues(await T.between(vip.page, 'D1b', 'D2'), 'phone').length === 0 &&
+      !(await T.between(vip.page, 'D1b', 'D2')).some((e) => e.kind === 'speak'),
     '',
   );
   // wrong claim from p2: two taps (arm, then claim)

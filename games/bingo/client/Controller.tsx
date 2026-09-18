@@ -5,7 +5,7 @@
 // and judges only the claim, on the card named.
 import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
-import { PrimaryButton, Screen, WaitingScreen, useSound } from '@partybox/game-sdk/ui';
+import { PrimaryButton, Screen, WaitingScreen, buzz, useSound } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { Input } from '../server/types';
 import type { BingoControllerView } from '../server/views';
@@ -65,6 +65,7 @@ export function Controller({
   // The card that is up (Focus) and the card picked to swap (intro): per round.
   const [up, setUp] = useState(0);
   const [pick, setPick] = useState(0);
+  const [swaps, setSwaps] = useState(0); // "deal me another" taps this round: keys the flip
   // FREE always counts (server); daubing it is pure satisfaction, so it lives on the phone only
   // (per card) and resets with every fresh deal (round) — "adjust state when a prop changes".
   const [freeDaubed, setFreeDaubed] = useState<number[]>([]);
@@ -86,6 +87,7 @@ export function Controller({
     setFreeDaubed([]);
     setUp(0);
     setPick(0);
+    setSwaps(0);
   }
   // Calls that landed while this phone was away (review-loop #4).
   const [seenCall, setSeenCall] = useState(view.callIndex);
@@ -153,7 +155,14 @@ export function Controller({
           <PrimaryButton
             tone="neutral"
             disabled={!left}
-            onClick={() => send({ type: 'swap', card: pick })}
+            onClick={() => {
+              // The old card flips away and the new one flips in (loop 268): the flip is the
+              // card's key; the pluck lands as the new face turns to the eye (~200 ms in).
+              send({ type: 'swap', card: pick });
+              setSwaps((s) => s + 1);
+              buzz(20);
+              setTimeout(() => play('card'), 200);
+            }}
           >
             🎲 {left ? 'Deal me another' : 'Swapped'}
             {n > 1 ? ` (card ${pick + 1})` : ''}
@@ -174,12 +183,14 @@ export function Controller({
           <IntroCount deadline={view.deadline} />
           <div className={`${styles.focus} ${styles.dealing} ${n > 1 ? styles.focusMany : ''}`}>
             <div className={styles.focusMain}>
-              <Card
-                numbers={cards[pick] ?? []}
-                daubs={[]}
-                pattern={view.pattern === 'line' ? [] : view.patternCells}
-                disabled
-              />
+              <div key={swaps} className={swaps > 0 ? styles.swapIn : undefined}>
+                <Card
+                  numbers={cards[pick] ?? []}
+                  daubs={[]}
+                  pattern={view.pattern === 'line' ? [] : view.patternCells}
+                  disabled
+                />
+              </div>
             </div>
             {n > 1 ? (
               <Thumbnails

@@ -52,7 +52,12 @@ async function main(): Promise<void> {
       seed: 9,
       settings: { rounds: 2, round1: 'line', round2: 'corners', cards: 1, callSeconds: 60 },
     });
-    await settle(values.live ? 7500 : 5200);
+    if (values.live) {
+      // "Deal me another" 1.8 s in (the deal has landed): the flip and its pluck (loop 268).
+      await settle(1800);
+      await sam.page.getByRole('button', { name: /deal me another/i }).click();
+      await settle(5700);
+    } else await settle(5200);
     if (!values.live) {
       await rec.page.goto(`${server.url}/preview/bingo/intro?view=tv&theme=night`);
       await rec.page.waitForSelector('[data-surface="tv"]');

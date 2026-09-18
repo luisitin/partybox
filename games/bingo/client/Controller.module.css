@@ -909,3 +909,29 @@
   font-weight: 900;
   color: var(--pb-accent-2);
 }
+
+/* "Deal me another" (loop 268): the new card turns in on its vertical axis, as a card dealt face
+   down and flipped — 360 ms, a touch of overshoot; transform + opacity only. */
+.swapIn {
+  animation: swap-in 360ms cubic-bezier(0.2, 0.9, 0.3, 1.1) both;
+  transform-origin: 50% 50%;
+  backface-visibility: hidden;
+}
+@keyframes swap-in {
+  from {
+    opacity: 0;
+    transform: perspective(900px) rotateY(-90deg);
+  }
+  40% {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+    transform: perspective(900px) rotateY(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .swapIn {
+    animation: none;
+  }
+}
