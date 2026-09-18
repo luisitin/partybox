@@ -198,6 +198,10 @@ export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine
       const now = performance.now();
       if (lastClip && lastClip.src === src && now - lastClip.at < 40) return;
       lastClip = { src, at: now };
+      // A clip is the game cueing the moment itself: the shell's phase chime yields to it as it
+      // does to a cue (the first number of a Bingo round used to get a chime under its voice —
+      // loop 332).
+      lastPlayedAt = now;
       const name = src.split('/').pop() ?? src;
       // The trace records when the sound STARTS (its scheduled delay), not when it was asked for.
       const at = opts?.delayMs ?? 0;

@@ -56,17 +56,19 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
   await settle(3500); // 6.5 s in: the intro (5 s) has run out and the first ball has dropped
   await api.clock(true); // hold the caller from here
   await T.mark('D1b');
-  // From the start (the deal's pluck lands 0.6 s in, before D1) to the first call.
-  const intro = T.cues(await T.between(tv, 'C3', 'D1b')).filter((c) => c !== 'phase');
+  // From the start (the deal's pluck lands 0.6 s in, before D1) to the first call. No phase chime
+  // anywhere in it: the shell's chime used to land under the first number's voice (loop 332).
+  const intro = T.cues(await T.between(tv, 'C3', 'D1b'));
   T.ok(
     'D',
-    'the intro: one card pluck on the deal (one card each), three ticks (3 · 2 · 1), then the first call',
+    'the intro: one card pluck on the deal (one card each), three ticks (3 · 2 · 1), then the first call — no phase chime',
     intro.filter((c) => c === 'card').length === 1 &&
       intro.indexOf('card') < intro.indexOf('tick') &&
       intro.indexOf('card') > intro.indexOf('start') &&
       intro.filter((c) => c === 'tick').length === 3 &&
       intro.indexOf('call') > intro.lastIndexOf('tick') &&
-      intro.filter((c) => c === 'call').length === 1,
+      intro.filter((c) => c === 'call').length === 1 &&
+      !intro.includes('phase'),
     `cues=${intro.join(',')}`,
   );
   // The deal's pluck lands on the same beat on the TV and in the hand (loop 278): offsets from
