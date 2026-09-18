@@ -81,3 +81,21 @@ describe('count awards', () => {
     );
   });
 });
+
+describe('awards with a judge (czar mode)', () => {
+  it('names the round on the card of the night and hands out no crowd favourite', () => {
+    const s = playRound(start({ rounds: 3, judge: 'czar' }), () => 0);
+    const best = s.stats.best;
+    expect(best?.votes).toBe(1);
+    const awards = awardsFor(s);
+    expect(awards.find((a) => a.id === 'card-of-the-night')?.description).toMatch(
+      /^“.+” · round 1$/,
+    );
+    expect(awards.some((a) => a.id === 'crowd-favourite')).toBe(false);
+    // The vote-mode line keeps its count.
+    const v = playRound(start({ rounds: 3 }), () => 0);
+    expect(awardsFor(v).find((a) => a.id === 'card-of-the-night')?.description).toMatch(
+      /^“.+” · \d+ votes?$/,
+    );
+  });
+});

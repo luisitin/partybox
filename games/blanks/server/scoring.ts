@@ -82,15 +82,19 @@ export function awardsFor(state: State): GameAward[] {
   // above the sticky button (review-loop #215). Rando's wins pay nobody, and a player who has left
   // keeps no award. Curly quotes around the sentence: plenty of cards carry straight quotes of
   // their own, and "a chapter called "this."" reads as a typo.
+  // A judge's pick is one "vote" every round: "· 1 vote" reads as a poor turnout (review-loop
+  // #116) and the crowd favourite would only restate the score, so czar mode names the round
+  // instead and hands out no crowd award (review-loop #346).
+  const czar = state.settings.judge === 'czar';
   const best = state.stats.best;
   if (best && Object.hasOwn(state.players, best.submitterId))
     out.push({
       id: 'card-of-the-night',
       title: 'Card of the night',
-      description: `“${shorten(fillText(blackCard(best.blackId).text, best.cards.map(whiteText)))}” · ${count(best.votes, 'vote')}`,
+      description: `“${shorten(fillText(blackCard(best.blackId).text, best.cards.map(whiteText)))}” · ${czar ? `round ${best.round}` : count(best.votes, 'vote')}`,
       playerId: best.submitterId,
     });
-  const crowd = leader(state, state.stats.votesReceived);
+  const crowd = czar ? null : leader(state, state.stats.votesReceived);
   if (crowd)
     out.push({
       id: 'crowd-favourite',

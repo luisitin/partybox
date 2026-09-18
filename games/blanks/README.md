@@ -55,8 +55,9 @@ One point per round to the most-voted card's author; a tie shares the point. One
 vote too (each could only vote for the other): both take the point. No votes → nobody scores. Rando's wins pay nobody. Points
 lock in when `result` starts, once per round. Ties share a rank; winners = every rank-1 player. Awards
 (a real player each; ties → higher score, then lower id): **Card of the night** (the night’s best-liked
-card, quoted with its vote count — never Rando’s), **Crowd favourite** (most votes received, if
-any), **On a roll** (the longest run of rounds won outright, two or more), **Quick draw** (most cards played within half the answer time — `answerSeconds` / 2 from the phase's start,
+card, quoted with its vote count — never Rando’s; with a judge, its round instead: every pick is one
+"vote"), **Crowd favourite** (most votes received, if any; not in judge mode, where it would only
+restate the score), **On a roll** (the longest run of rounds won outright, two or more), **Quick draw** (most cards played within half the answer time — `answerSeconds` / 2 from the phase's start,
 measured against the deadline so a pause never cheats it; the same yardstick when untimed).
 
 A **streak** — one player winning outright round after round — is kept in `stats.streak` and named on the round card from the second win (“Sam is on a 2-round streak”, TV and phones); a shared point, a Rando win or a round nobody won ends it.
