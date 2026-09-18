@@ -103,6 +103,8 @@ export interface State extends GameStateBase {
   /** Bingos won. */
   wins: Record<string, number>;
   history: { round: number; winnerId: string | null; calls: number }[];
+  /** Points at the start of the current round: the scoreboard shows each row's gain as a delta. */
+  winsAtRoundStart: Record<string, number>;
 }
 
 export const inputSchema = z.discriminatedUnion('type', [

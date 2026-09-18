@@ -43,7 +43,12 @@ export function enterIntro(state: State, number: number, now: number): State {
     resumeAt: null,
     swapped: {},
   };
-  return enterPhase({ ...state, rng, round }, 'intro', now, INTRO_MS);
+  return enterPhase(
+    { ...state, rng, round, winsAtRoundStart: { ...state.wins } },
+    'intro',
+    now,
+    INTRO_MS,
+  );
 }
 
 /** "Deal me another": one fresh card per slot, during the intro only; the old one is gone. */
