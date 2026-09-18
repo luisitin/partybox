@@ -63,9 +63,16 @@ export function ControllerJudge({ view, send }: Props): JSX.Element {
     // Two or three cards get VoteList's tall lettered cards (it draws the disc); more get compact
     // rows, where the letter is ours.
     const large = view.cards.length <= 3;
+    // A Pick 1 round repeats the question in every row: six rows of the same setup is a long
+    // scroll on a phone. The question goes above the list once and the rows carry the answers
+    // (review-loop #173). A Pick 2 or 3 keeps the whole sentence — the order is the joke.
+    const answersOnly = black.pick === 1;
     return (
       <VoteList
         kicker={kicker}
+        header={
+          answersOnly ? <FilledCard text={black.text} pick={black.pick} size="phone" /> : null
+        }
         prompt={view.judgeMode === 'czar' ? 'Pick the winner' : 'Vote for the best'}
         promptKey={`${view.round}`}
         // Two or three cards: tall lettered cards fill the thumb zone (as Wisecrack's A / B).
@@ -79,7 +86,11 @@ export function ControllerJudge({ view, send }: Props): JSX.Element {
                   {LETTERS[c.slot]}
                 </span>
               )}
-              <InlineFilled text={black.text} whites={c.whites} />
+              {answersOnly ? (
+                <span className={styles.voteAnswer}>{c.whites.join(' ')}</span>
+              ) : (
+                <InlineFilled text={black.text} whites={c.whites} />
+              )}
             </span>
           ),
           mine: c.slot === vote.mySlot,

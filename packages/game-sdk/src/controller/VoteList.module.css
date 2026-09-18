@@ -18,6 +18,16 @@
   gap: var(--pb-space-3);
 }
 
+/* The thing being voted on, above the prompt: it stays put while the options scroll under it. */
+.header {
+  position: sticky;
+  top: calc(-1 * var(--pb-space-4));
+  z-index: 1;
+  margin: calc(-1 * var(--pb-space-4)) calc(-1 * var(--pb-space-4)) 0;
+  padding: var(--pb-space-4) var(--pb-space-4) var(--pb-space-2);
+  background: var(--pb-bg);
+}
+
 .option {
   display: flex;
   align-items: center;
