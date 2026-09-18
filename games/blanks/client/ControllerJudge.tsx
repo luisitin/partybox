@@ -80,10 +80,19 @@ export function ControllerJudge({ view, send }: Props): JSX.Element {
         }))}
         votedId={vote.votedSlot === null ? null : String(vote.votedSlot)}
         onVote={(id) => send({ type: 'vote', slot: Number(id) })}
+        // The confirmation rides in the footer, above the Next button: a long list pushed the
+        // list's own line under the sticky bar. The result lands on this phone too (Blanks plays
+        // without a TV), so it counts the room, not the screen across it (review-loop #138).
+        lockedLabel={null}
         // Untimed rounds: once this phone has voted it may close the vote for the room.
         footer={
           vote.votedSlot !== null ? (
-            <NextButton send={send} timed={view.timed} label="Don't wait — close the vote" />
+            <>
+              <p className={styles.voteIn} role="status">
+                ✓ Vote in · {view.votedCount} / {view.votersExpected} voted
+              </p>
+              <NextButton send={send} timed={view.timed} label="Close the vote now" />
+            </>
           ) : undefined
         }
       />

@@ -33,7 +33,7 @@ export function ControllerHand({ view, send }: Props): JSX.Element {
         mood="watch"
       >
         <FilledCard text={black.text} pick={black.pick} size="phone" />
-        <NextButton send={send} timed={view.timed} label="Don't wait — start the reading" />
+        <NextButton send={send} timed={view.timed} label="Start the reading now" />
       </WaitingScreen>
     );
   }
@@ -52,9 +52,7 @@ export function ControllerHand({ view, send }: Props): JSX.Element {
         mood="done"
       >
         <FilledCard text={black.text} whites={view.myPlay} size="phone" />
-        {allIn ? null : (
-          <NextButton send={send} timed={view.timed} label="Don't wait — start the reading" />
-        )}
+        {allIn ? null : <NextButton send={send} timed={view.timed} label="Start the reading now" />}
       </WaitingScreen>
     );
   }
