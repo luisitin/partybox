@@ -330,6 +330,32 @@
       background: var(--surface);
       border-radius: 18px;
       padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .picks {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 10px;
+    }
+    .picks label {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .picks select,
+    .picks input {
+      font: inherit;
+      font-weight: 700;
+      color: var(--text);
+      background: var(--surface-2);
+      border: 0;
+      border-radius: 10px;
+      padding: 10px;
+      min-height: 44px;
     }
     @media (prefers-reduced-motion: reduce) {
       * {
@@ -384,7 +410,42 @@
     </section>
 
     <section class="feedback">
-      <span class="eyebrow">How to answer</span>
+      <span class="eyebrow">Your picks</span>
+      <h3>Tick what you want; it saves as you go</h3>
+      <div id="picks" class="picks">
+        <label
+          >Round card
+          <select data-pick="intro"></select
+        ></label>
+        <label
+          >Picking a card
+          <select data-pick="answer"></select
+        ></label>
+        <label
+          >Read-out
+          <select data-pick="reveal"></select
+        ></label>
+        <label
+          >Judging
+          <select data-pick="judge"></select
+        ></label>
+        <label
+          >Result
+          <select data-pick="result"></select
+        ></label>
+        <label
+          >Presentation
+          <select data-pick="presentation">
+            <option value="">keep A</option>
+            <option value="A">A · land + pop</option>
+            <option value="B">B · slide + flip in</option>
+            <option value="C">C · card flip</option>
+          </select></label
+        >
+        <label>Notes <input data-pick="notes" placeholder="anything else" /></label>
+        <p class="note" id="picks-status">Not saved yet.</p>
+      </div>
+      <span class="eyebrow">Or answer in a reply</span>
       <p>
         "Music: W1 round card, B2 picking, L1 read-out, M1 judging, W1 result. Presentation: B." —
         or "keep A" for anything. Anything not named stays as it is on main.
@@ -888,5 +949,57 @@
       const b = e.target.closest('button[data-pres]');
       if (b) playPres(b.dataset.pres);
     });
+
+    // ── Picks: saved to the artifact's shared store so the session can read them back ──────────
+    (async () => {
+      const opts = ['<option value="">keep current</option>'];
+      for (const [id, bed] of Object.entries(BEDS))
+        for (let l = 1; l <= 3; l++)
+          opts.push(
+            `<option value="${bed.key}${l}">${bed.key}${l} · ${bed.title} · level ${l}</option>`,
+          );
+      opts.push('<option value="silent">silent</option>');
+      document.querySelectorAll('select[data-pick]:not([data-pick=presentation])').forEach((s) => {
+        s.innerHTML = opts.join('');
+      });
+      const status = document.getElementById('picks-status');
+      const db = window.claude ? await window.claude.use('db') : null;
+      if (!db) {
+        status.textContent = 'Saving is not available here — reply with the letters instead.';
+        return;
+      }
+      const ref = db.doc('picks/owner');
+      try {
+        const snap = await ref.get();
+        const data = snap && snap.exists ? snap.data() : null;
+        if (data) {
+          document.querySelectorAll('[data-pick]').forEach((el) => {
+            if (data[el.dataset.pick] !== undefined) el.value = data[el.dataset.pick];
+          });
+          status.textContent = 'Saved ' + (data.savedAt || '');
+        }
+      } catch (e) {
+        /* first visit */
+      }
+      let t = null;
+      const save = () => {
+        clearTimeout(t);
+        t = setTimeout(async () => {
+          const data = { savedAt: new Date().toISOString() };
+          document.querySelectorAll('[data-pick]').forEach((el) => {
+            data[el.dataset.pick] = el.value;
+          });
+          try {
+            await ref.set(data);
+            status.textContent = 'Saved ' + data.savedAt;
+          } catch (e) {
+            status.textContent =
+              'Could not save (' + (e && e.code) + ') — reply with the letters instead.';
+          }
+        }, 400);
+      };
+      document.querySelectorAll('[data-pick]').forEach((el) => el.addEventListener('change', save));
+      document.querySelector('[data-pick=notes]').addEventListener('input', save);
+    })();
   </script>
 </html>
