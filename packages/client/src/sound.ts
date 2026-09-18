@@ -22,6 +22,8 @@ interface Sample {
   /** Fade to silence from `fadeAt` over `fadeMs` (the crowd tails off under the next screen). */
   fadeAt?: number;
   fadeMs?: number;
+  /** Start this far into the buffer (a recording's leading silence skipped) — seconds. */
+  offset?: number;
 }
 
 const SAMPLES: Partial<Record<SoundCue, Sample[]>> = {
@@ -66,7 +68,7 @@ export interface SoundEngine {
    *  when the game just played a specific one in the same commit. */
   lastPlayedAt(): number;
   /** A recorded clip under /sfx (a bingo call): decoded once, scheduled exactly, mute-aware. */
-  clip(src: string, opts?: { gain?: number; delayMs?: number }): void;
+  clip(src: string, opts?: { gain?: number; delayMs?: number; offsetS?: number }): void;
   /** Stop every clip now (a claim interrupts the caller). */
   hushClips(): void;
   muted(): boolean;
@@ -124,7 +126,7 @@ export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine
         );
       }
       source.connect(gain).connect(master ?? ctx.destination);
-      source.start(start);
+      source.start(start, sample.offset ?? 0);
     });
   };
   try {
@@ -197,12 +199,20 @@ export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine
       if (lastClip && lastClip.src === src && now - lastClip.at < 40) return;
       lastClip = { src, at: now };
       const name = src.split('/').pop() ?? src;
-      trace('clip', { src: name, muted, ready: ctx?.state === 'running' });
+      // The trace records when the sound STARTS (its scheduled delay), not when it was asked for.
+      const at = opts?.delayMs ?? 0;
+      trace('clip', { src: name, muted, ready: ctx?.state === 'running', delayMs: at });
       // The audio trace reads calls as `speak` events (what the caller used to emit).
-      if (name.match(/^[bingo]\d+\.wav$/)) trace('speak', { text: name, voice: 'clip' });
+      if (name.match(/^[bingo]\d+\.wav$/))
+        trace('speak', { text: name, voice: 'clip', delayMs: at });
       if (!ctx || muted || ctx.state !== 'running') return;
       playSample(
-        { src, at: (opts?.delayMs ?? 0) / 1000, gain: opts?.gain ?? 1 },
+        {
+          src,
+          at: (opts?.delayMs ?? 0) / 1000,
+          gain: opts?.gain ?? 1,
+          offset: opts?.offsetS,
+        },
         ctx.currentTime,
         true,
       );

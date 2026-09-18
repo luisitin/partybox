@@ -14,9 +14,25 @@ export function callClip(letter: string, number: number): string {
 /** The ball's drop lands (the squash) this long after the push: the boing waits for it. */
 export const BALL_LAND_MS = 190;
 
-/** Say a call `delayMs` after the boing (the boing leads; the voice follows). */
-export function speakCall(sound: SoundApi, letter: string, number: number, delayMs = 120): void {
-  sound.clip(callClip(letter, number), { delayMs, gain: 1 });
+/**
+ * Every recorded call opens with ~90–140 ms of silence (measured across the 75 clips, loop 310);
+ * the caller skips it, so the first syllable starts where the clip is scheduled.
+ */
+export const CLIP_LEAD_S = 0.09;
+
+/**
+ * Say a call so the voice starts AS the ball lands (the owner, 2026-09-18: a listener must be as
+ * fast as a watcher). Scheduled on the push, `delayMs` = BALL_LAND_MS by default: the boing and
+ * the first syllable share the squash frame; before, the voice trailed the number by ~450 ms
+ * (190 to the boing, 120 after it, 140 of silence in the clip).
+ */
+export function speakCall(
+  sound: SoundApi,
+  letter: string,
+  number: number,
+  delayMs = BALL_LAND_MS,
+): void {
+  sound.clip(callClip(letter, number), { delayMs, gain: 1, offsetS: CLIP_LEAD_S });
 }
 
 /** Stop talking (a claim, a phase change). */
