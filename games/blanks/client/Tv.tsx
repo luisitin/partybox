@@ -7,13 +7,15 @@ import type { BlanksTvView } from '../server/index';
 import { TvJudge } from './TvJudge';
 import { TvReveal } from './TvReveal';
 import { TvResult } from './TvResult';
-import { TvAnswer, TvIntro } from './TvRound';
+import { TvAnswer, TvIntro, TvPick } from './TvRound';
 import styles from './blanks.module.css';
 
 export function Tv({ view }: GameTvProps<BlanksTvView>): JSX.Element {
   switch (view.phaseId) {
     case 'intro':
       return <TvIntro view={view} />;
+    case 'pick':
+      return <TvPick view={view} />;
     case 'answer':
       return <TvAnswer view={view} />;
     case 'reveal':

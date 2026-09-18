@@ -37,6 +37,39 @@ export function TvIntro({ view }: Props): JSX.Element {
   );
 }
 
+/** czar mode: the judge chooses the round's black card from three (review-loop #154). */
+export function TvPick({ view }: Props): JSX.Element {
+  return (
+    <Stage className={styles.table}>
+      <div className={styles.kickerRow}>
+        <p className={styles.kicker}>
+          Round {view.round} of {view.rounds} · {view.czar?.name ?? 'The judge'} judges
+        </p>
+        <span className={styles.progressPill}>
+          {view.czar ? (
+            <>
+              <Avatar avatarId={view.czar.avatarId} size="var(--pb-space-7)" />
+              {view.czar.name} is picking the question…
+            </>
+          ) : (
+            'Picking the question…'
+          )}
+        </span>
+      </div>
+      <ul className={styles.choices} aria-label="the black cards to choose from">
+        {view.blackChoices.map((b, i) => (
+          <li key={i} style={{ animationDelay: `calc(${i} * 160ms)` }}>
+            <FilledCard text={b.text} pick={b.pick} size="medium" />
+          </li>
+        ))}
+      </ul>
+      <BigText level="h2" tone="muted">
+        One of these is this round's card.
+      </BigText>
+    </Stage>
+  );
+}
+
 const LAST_CHANCE_S = 10;
 const NAMED = 4;
 

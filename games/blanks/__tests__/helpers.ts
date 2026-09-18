@@ -91,9 +91,11 @@ export function topCards(state: State, playerId: string): string[] {
   return (state.hands[playerId] ?? []).slice(0, blackCard(state.blackId).pick);
 }
 
-/** intro → answer. */
+/** intro → answer (through the judge's pick, on its timer, in czar mode). */
 export function toAnswer(state: State): State {
-  return state.phase.id === 'intro' ? timer(state) : state;
+  let s = state.phase.id === 'intro' ? timer(state) : state;
+  if (s.phase.id === 'pick') s = timer(s);
+  return s;
 }
 
 /** Every non-judge player plays the top of their hand, in id order (skipping `skip`); when that

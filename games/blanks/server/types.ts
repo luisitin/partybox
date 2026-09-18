@@ -2,7 +2,16 @@
 import { z } from '@partybox/game-sdk';
 import type { GameStateBase } from '@partybox/game-sdk';
 
-export const PHASES = ['intro', 'answer', 'reveal', 'judge', 'result', 'final', 'done'] as const;
+export const PHASES = [
+  'intro',
+  'pick',
+  'answer',
+  'reveal',
+  'judge',
+  'result',
+  'final',
+  'done',
+] as const;
 export type PhaseId = (typeof PHASES)[number];
 
 export const DECK_PRESETS = ['mild', 'adults', 'wild', 'wild-only'] as const;
@@ -41,6 +50,9 @@ export interface State extends GameStateBase {
   round: number;
   /** The black card on stage (id into the content); null before round 1. */
   blackId: string | null;
+  /** czar mode: the black cards the judge chooses between this round (the first is the default);
+   *  empty in vote mode and once the round is under way. */
+  blackChoices: string[];
   /** The judge this round (czar mode), else null. */
   czarId: string | null;
   /** submitterId (a player or RANDO) → white card ids in blank order. */
@@ -71,14 +83,22 @@ export const inputSchema = z.discriminatedUnion('type', [
   }),
   /** Anyone moves an untimed phase along (answer, judge, result); ignored in timed rounds. */
   z.object({ type: z.literal('next') }),
+  /** The judge picks the round's black card (czar mode, "pick" phase). */
+  z.object({ type: z.literal('choose'), index: z.number().int().min(0).max(4) }),
 ]);
 export type Input = z.infer<typeof inputSchema>;
 export type PlayInput = Extract<Input, { type: 'play' }>;
 export type VoteInput = Extract<Input, { type: 'vote' }>;
 export type NextInput = Extract<Input, { type: 'next' }>;
+export type ChooseInput = Extract<Input, { type: 'choose' }>;
 
 export const HAND_SIZE = 10;
 export const INTRO_MS = 5_000;
+/** czar mode: how many black cards the judge chooses between, and how long they get (timed; a
+ *  hidden 60 s fallback untimed — the default is the first card, so an idle judge never stalls). */
+export const BLACK_CHOICES = 3;
+export const PICK_MS = 20_000;
+export const UNTIMED_PICK_MS = 60_000;
 /** The last card in holds the stage for a beat ("Everyone's in!") before the reading starts. */
 export const ALL_IN_MS = 1_500;
 /** Extra answer seconds per white card beyond the first. */

@@ -20,7 +20,7 @@ import {
   REVEAL_MAX_MS,
   REVEAL_MIN_MS,
 } from '../server/types';
-import { PLAYERS, T0, playRound, start, timer, tv } from './helpers';
+import { PLAYERS, T0, playRound, start, timer, toAnswer, tv } from './helpers';
 
 describe('whole game', () => {
   it('finishes on timers alone (idle room): nobody plays, every round is winnerless', () => {
@@ -63,9 +63,18 @@ describe('whole game', () => {
     expect(game.results(s)).not.toBeNull();
   });
 
-  it('manifest matches manifest.json and declares the seven phases in order', () => {
+  it('manifest matches manifest.json and declares the eight phases in order', () => {
     expect(game.manifest.id).toBe('blanks');
-    expect(game.phases).toEqual(['intro', 'answer', 'reveal', 'judge', 'result', 'final', 'done']);
+    expect(game.phases).toEqual([
+      'intro',
+      'pick',
+      'answer',
+      'reveal',
+      'judge',
+      'result',
+      'final',
+      'done',
+    ]);
     expect(game.manifest.settings.map((s) => s.key)).toEqual([
       'decks',
       'judge',
@@ -161,7 +170,10 @@ describe('dealing', () => {
     });
     for (let round = 1; round <= 15; round++) {
       expect(s.round).toBe(round);
-      // Ten, plus the black card's draw (Pick 3 cards say "draw 2").
+      // Ten on the round card; plus the black card's draw once picking opens (Pick 3 cards say
+      // "draw 2" — the card is only final then, in czar mode).
+      for (const id of Object.keys(s.players)) expect(s.hands[id]?.length).toBe(HAND_SIZE);
+      s = toAnswer(s);
       for (const id of Object.keys(s.players))
         expect(s.hands[id]?.length).toBe(HAND_SIZE + blackCard(s.blackId).draw);
       s = playRound(s);

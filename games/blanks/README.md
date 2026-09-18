@@ -17,7 +17,8 @@ welcome (`supportsBots`) — the bot plays random cards from its hand and votes 
 
 | Phase    | TV                                                                                                                     | Phone                                                       | Exit                                                                                                                                                                                                                                                            |
 | -------- | ---------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `intro`  | "Round r of R" (+ the judge's name in czar mode); a quiet bar, no countdown                                            | round card                                                  | 5 s or VIP skip → `answer`                                                                                                                                                                                                                                      |
+| `intro`  | "Round r of R" (+ the judge's name in czar mode); a quiet bar, no countdown                                            | round card                                                  | 5 s or VIP skip → `pick` (czar mode) or `answer`                                                                                                                                                                                                                |
+| `pick`   | czar mode only: the three black cards the judge chooses between                                                        | judge: tap one; others: "Sam is picking the question"       | the judge's choice, 20 s (timed; hidden 60 s fallback untimed) or VIP skip → the first card by default → `answer`; a judge who is gone → `answer` at once                                                                                                       |
 | `answer` | the black card, "n / m in" + who is missing                                                                            | black card + hand; tap `pick` cards in order, play          | a 1.5 s beat after all connected answerers played ("Everyone's in!"; a drop that completes the room skips the beat), Next from any player (untimed), `answerSeconds` + 15 s per extra card (timed; hidden 3 min fallback untimed), or VIP skip → first `reveal` |
 | `reveal` | one filled card, big; the ones already read, small; a quiet bar                                                        | the same card                                               | 2.2 s + 18 ms/char ≤ 4 s (past 8 cards: 2 s + 14 ms/char ≤ 3.2 s) → next `reveal` or `judge`; VIP skip → `judge`                                                                                                                                                |
 | `judge`  | every card with its letter (pages of what fits, turning every 6 s, when the stage cannot hold them all), "n / m voted" | voters: `VoteList`; the judge alone in czar mode; rest wait | all connected eligible voters voted, Next (untimed; not past a connected judge), 30 s (45 s czar or past 8 cards; hidden 2 min fallback untimed), or VIP skip (votes so far count) → `result`                                                                   |
@@ -27,8 +28,10 @@ welcome (`supportsBots`) — the bot plays random cards from its hand and votes 
 
 Round start (`intro` entry): last round's played cards to the discard, hands back to 10 (+ the black
 card's `draw`) — topping up first so every hand holds at least 2 things, 2 doings and 2 combos (a
-heuristic on the card text: gerund / linking word / the rest) while the deck has them — a black card drawn, the judge chosen (czar mode: seat order by id, one per round,
-disconnected seats skipped), Rando's cards taken (setting). Decks shuffled once at `init`; a dry white deck
+heuristic on the card text: gerund / linking word / the rest) while the deck has them — the judge chosen (czar mode: seat order by id, one per round,
+disconnected seats skipped), a black card drawn — three in czar mode, for the judge to choose between in
+`pick` (the two not chosen go under the deck); its extra draws and Rando's cards (setting) follow once the
+card is final, on `answer` entry. Decks shuffled once at `init`; a dry white deck
 reshuffles the discard, a dry black deck reshuffles its pool. Slots (reveal / vote order) are shuffled
 when `answer` closes, so a letter never hints at who played it.
 
@@ -39,6 +42,7 @@ black card's `pick` ids, distinct, all in that player's hand, in blank order. `{
 during `judge`, from an eligible voter (everyone in vote mode; the judge alone in czar mode), once, never
 on their own slot. `{ type: 'next' }` — from any player during `answer`, `judge` or `result` when
 `timed` is off: the phase ends as its deadline would (unplayed cards sit out, votes so far count).
+`{ type: 'choose', index }` — during `pick`, from the judge: `index` into the three black cards.
 Anything else leaves the state unchanged.
 
 ## Scoring

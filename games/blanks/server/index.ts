@@ -68,6 +68,7 @@ function init(ctx: InitContext): State {
     hands: {},
     round: 0,
     blackId: null,
+    blackChoices: [],
     czarId: null,
     submissions: {},
     slots: [],
@@ -92,6 +93,10 @@ export const game: GameDefinition<State, Input> = {
   bot: {
     sampleInput(state, playerId, rng) {
       if (!Object.hasOwn(state.players, playerId)) return null;
+      if (state.phase.id === 'pick') {
+        if (!isCzar(state, playerId) || state.blackChoices.length < 2) return null;
+        return { type: 'choose', index: rng.int(0, state.blackChoices.length - 1) };
+      }
       if (state.phase.id === 'answer') {
         if (isCzar(state, playerId) || hasPlayed(state, playerId)) return null;
         const { pick } = blackCard(state.blackId);

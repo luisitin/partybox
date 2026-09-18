@@ -237,6 +237,75 @@
   animation-delay: var(--pb-motion-fast);
 }
 
+/* ── The judge's pick (czar mode) ──────────────────────────────────────────────────────────── */
+
+/* TV: three black cards dealt side by side. */
+.choices {
+  list-style: none;
+  margin: 0;
+  padding: var(--pb-space-3) 0 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--pb-space-5);
+  width: 100%;
+  flex: 1;
+  align-content: center;
+}
+
+.choices > li {
+  min-width: 0;
+  display: flex;
+  animation: global(pb-deal) var(--pb-motion-slow) var(--pb-ease) both;
+}
+
+/* three tall cards side by side, the sentence at hero size inside each */
+.choices > li > * {
+  flex: 1;
+  min-height: 320px;
+  justify-content: center;
+  font-size: var(--pb-font-h2);
+}
+
+/* Phone: the same three, tappable — the card is the button. */
+.choiceList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-3);
+}
+
+.choice {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: var(--pb-radius-lg);
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: transform var(--pb-motion-fast) var(--pb-ease);
+}
+
+.choice:active {
+  transform: scale(0.98);
+}
+
+.choice:disabled {
+  cursor: default;
+  opacity: 0.55;
+}
+
+.choiceOn,
+.choiceOn:disabled {
+  opacity: 1;
+  outline: 3px solid var(--pb-accent);
+  outline-offset: 2px;
+}
+
 /* ── TV stages ─────────────────────────────────────────────────────────────────────────────── */
 
 /* The table: a soft pool of the theme's surface colour under the middle of the stage, darker

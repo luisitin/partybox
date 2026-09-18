@@ -1,96 +1,48 @@
 {
   "phase": {
-    "id": "judge",
-    "startedAt": 1700000036043,
-    "deadline": 1700000081043
+    "id": "pick",
+    "startedAt": 1700000000000,
+    "deadline": 1700000020000
   },
   "rng": {
     "seed": 3,
-    "step": 1029
+    "step": 1026
   },
   "players": {
     "p1": {
       "id": "p1",
-      "name": "Priya",
+      "name": "Player 1",
       "avatarId": "fox",
       "connected": true
     },
     "p2": {
       "id": "p2",
-      "name": "Sam",
+      "name": "Player 2",
       "avatarId": "owl",
       "connected": true
     },
     "p3": {
       "id": "p3",
-      "name": "Bot 1",
+      "name": "Player 3",
       "avatarId": "frog",
       "connected": true
     },
     "p4": {
       "id": "p4",
-      "name": "Bot 2",
+      "name": "Player 4",
       "avatarId": "cat",
-      "connected": true
-    },
-    "p5": {
-      "id": "p5",
-      "name": "Bot 3",
-      "avatarId": "panda",
-      "connected": true
-    },
-    "p6": {
-      "id": "p6",
-      "name": "Bot 4",
-      "avatarId": "bear",
-      "connected": true
-    },
-    "p7": {
-      "id": "p7",
-      "name": "Bot 5",
-      "avatarId": "fox",
-      "connected": true
-    },
-    "p8": {
-      "id": "p8",
-      "name": "Bot 6",
-      "avatarId": "owl",
-      "connected": true
-    },
-    "p9": {
-      "id": "p9",
-      "name": "Bot 7",
-      "avatarId": "frog",
-      "connected": true
-    },
-    "p10": {
-      "id": "p10",
-      "name": "Bot 8",
-      "avatarId": "cat",
-      "connected": true
-    },
-    "p11": {
-      "id": "p11",
-      "name": "Bot 9",
-      "avatarId": "panda",
-      "connected": true
-    },
-    "p12": {
-      "id": "p12",
-      "name": "Bot 10",
-      "avatarId": "bear",
       "connected": true
     }
   },
   "settings": {
     "decks": "wild",
-    "judge": "vote",
+    "judge": "czar",
     "rounds": 6,
     "answerSeconds": 60,
-    "rando": true,
+    "rando": false,
     "timed": true
   },
-  "order": ["p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8", "p9", "p10", "p11", "p12"],
+  "order": ["p1", "p2", "p3", "p4"],
   "blackDeck": [
     "mb17",
     "cb37",
@@ -1084,58 +1036,28 @@
   ],
   "discard": [],
   "hands": {
-    "p1": ["mw68", "ww463", "ww384", "ww383", "ww176", "cw124", "ww111", "ww435", "ww4"],
-    "p2": ["mw68", "ww463", "ww384", "ww383", "ww176", "cw124", "ww111", "ww435", "ww4"],
-    "p3": ["mw68", "ww463", "ww384", "ww383", "ww176", "cw124", "ww111", "ww435", "ww4"],
-    "p4": ["mw68", "ww463", "ww384", "ww383", "ww176", "cw124", "ww111", "ww435", "ww4"],
-    "p5": ["mw68", "ww463", "ww384", "ww383", "ww176", "cw124", "ww111", "ww435", "ww4"],
-    "p6": ["mw68", "ww463", "ww384", "ww383", "ww176", "cw124", "ww111", "ww435", "ww4"],
-    "p7": ["mw68", "ww463", "ww384", "ww383", "ww176", "cw124", "ww111", "ww435", "ww4"],
-    "p8": ["mw68", "ww463", "ww384", "ww383", "ww176", "cw124", "ww111", "ww435", "ww4"],
-    "p9": ["mw68", "ww463", "ww384", "ww383", "ww176", "cw124", "ww111", "ww435", "ww4"],
-    "p10": ["mw68", "ww463", "ww384", "ww383", "ww176", "cw124", "ww111", "ww435", "ww4"],
-    "p11": ["mw68", "ww463", "ww384", "ww383", "ww176", "cw124", "ww111", "ww435", "ww4"],
-    "p12": ["mw68", "ww463", "ww384", "ww383", "ww176", "cw124", "ww111", "ww435", "ww4"]
+    "p1": ["mw68", "ww463", "ww384", "ww383", "ww176", "cw124", "ww248", "ww111", "ww435", "ww4"],
+    "p2": ["mw50", "ww60", "ww163", "ww199", "ww449", "cw155", "mw162", "mw95", "mw14", "ww489"],
+    "p3": ["mw144", "ww40", "ww30", "ww278", "ww430", "ww239", "mw123", "ww186", "ww252", "cw132"],
+    "p4": ["ww268", "ww3", "mw159", "ww329", "cw121", "ww14", "ww224", "ww171", "ww25", "cw153"]
   },
   "round": 1,
-  "blackId": "wb108",
-  "czarId": null,
-  "submissions": {
-    "p1": ["ww1", "ww3"],
-    "p2": ["ww4", "ww8"],
-    "p3": ["ww9", "ww11"],
-    "p4": ["ww14", "ww16"],
-    "p5": ["ww18", "ww20"],
-    "p6": ["ww22", "ww23"],
-    "p7": ["ww25", "ww28"],
-    "p8": ["ww31", "ww32"],
-    "p9": ["ww33", "ww34"],
-    "p10": ["ww36", "ww37"],
-    "p11": ["ww40", "ww41"],
-    "p12": ["ww42", "ww43"],
-    "rando": ["ww45", "ww46"]
-  },
-  "slots": ["p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8", "p9", "p10", "p11", "p12", "rando"],
-  "revealIndex": 12,
+  "blackId": "wb1",
+  "czarId": "p2",
+  "submissions": {},
+  "slots": [],
+  "revealIndex": 0,
   "votes": {},
   "winners": [],
   "scores": {
     "p1": 0,
     "p2": 0,
     "p3": 0,
-    "p4": 0,
-    "p5": 0,
-    "p6": 0,
-    "p7": 0,
-    "p8": 0,
-    "p9": 0,
-    "p10": 0,
-    "p11": 0,
-    "p12": 0
+    "p4": 0
   },
   "stats": {
     "votesReceived": {},
     "fastPlays": {}
   },
-  "blackChoices": []
+  "blackChoices": ["wb1", "wb2", "wb3"]
 }

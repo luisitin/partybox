@@ -9,7 +9,7 @@ import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { BlanksControllerView } from '../server/index';
 import type { Input } from '../server/types';
 import { FilledCard, LETTERS } from './Cards';
-import { ControllerHand } from './ControllerHand';
+import { ControllerHand, ControllerPick } from './ControllerHand';
 import { ControllerJudge, ControllerReveal } from './ControllerJudge';
 import { NextButton } from './NextButton';
 import { list, votesLabel, winnerLine } from './TvResult';
@@ -131,6 +131,8 @@ export function Controller(props: Props): JSX.Element {
   switch (view.phaseId) {
     case 'intro':
       return <ControllerIntro {...props} />;
+    case 'pick':
+      return <ControllerPick {...props} />;
     case 'answer':
       return <ControllerHand {...props} />;
     case 'reveal':

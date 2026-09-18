@@ -69,6 +69,8 @@ export interface BlanksTvView extends TvView {
   /** czar mode: this round's judge. */
   czar: PersonView | null;
   black: BlackView | null;
+  /** pick (czar mode): the black cards the judge chooses between. */
+  blackChoices: BlackView[];
   /** answer: progress. */
   playedCount: number;
   playersExpected: number;
@@ -98,6 +100,7 @@ export interface BlanksControllerView extends ControllerView {
   timed: boolean;
   czar: PersonView | null;
   black: BlackView | null;
+  blackChoices: BlackView[];
   /** 'judge' = this round's czar (plays no card, picks the winner). */
   role: 'player' | 'judge' | 'spectator';
   /** answer: my hand. Empty in every other phase (the TV never needs it, the phone only then). */
@@ -126,6 +129,14 @@ function blackView(state: State): BlackView | null {
   if (state.round === 0) return null;
   const { text, pick, draw } = blackCard(state.blackId);
   return { text, pick, draw };
+}
+
+function blackChoices(state: State): BlackView[] {
+  if (state.phase.id !== 'pick') return [];
+  return state.blackChoices.map((id) => {
+    const { text, pick, draw } = blackCard(id);
+    return { text, pick, draw };
+  });
 }
 
 function person(state: State, id: string | null): PersonView | null {
@@ -171,6 +182,7 @@ function revealedCards(state: State): RevealedCard[] {
 function statusOf(state: State): (id: string) => PlayerStatus {
   const phase = state.phase.id;
   return (id) => {
+    if (phase === 'pick') return isCzar(state, id) ? 'active' : 'waiting';
     if (phase === 'answer') {
       if (isCzar(state, id)) return 'waiting';
       return hasPlayed(state, id) ? 'submitted' : 'active';
@@ -201,7 +213,7 @@ function standingsRows(state: State): StandingsRow[] {
  *  no number (review-loop #133 — a "6 s" clock on every card read nothing but urgency). */
 function timerMode(state: State): 'normal' | 'quiet' | 'hidden' {
   const phase = state.phase.id;
-  const untimed = phase === 'answer' || phase === 'judge' || phase === 'result';
+  const untimed = phase === 'pick' || phase === 'answer' || phase === 'judge' || phase === 'result';
   if (allIn(state)) return 'hidden';
   if (phase === 'intro' || phase === 'reveal' || phase === 'final') return 'quiet';
   return !state.settings.timed && untimed ? 'hidden' : 'normal';
@@ -225,6 +237,7 @@ export function tvView(state: State, gameId: string): BlanksTvView {
     timed: state.settings.timed,
     czar: person(state, state.czarId),
     black: blackView(state),
+    blackChoices: blackChoices(state),
     playedCount: playedCount(state),
     playersExpected: playersExpected(state),
     cards: stageCards(state),
@@ -262,6 +275,7 @@ export function controllerView(
     timed: state.settings.timed,
     czar: person(state, state.czarId),
     black: blackView(state),
+    blackChoices: blackChoices(state),
     role: !player ? 'spectator' : isCzar(state, playerId) ? 'judge' : 'player',
     // The judge keeps their hand for later rounds but has nothing to play now: no list.
     hand:
