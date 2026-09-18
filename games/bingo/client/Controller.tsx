@@ -279,7 +279,9 @@ export function Controller({
           {view.pausedBy.length > 0 && !view.menuOpen && !sheet ? (
             <HoldCurtain names={view.pausedBy} onOpen={openMenu} />
           ) : null}
-          {view.resumeAt !== null ? <Countdown resumeAt={view.resumeAt} /> : null}
+          {view.resumeAt !== null ? (
+            <Countdown resumeAt={view.resumeAt} pattern={view.patternLabel} />
+          ) : null}
           {sheet ? (
             <StyleSheet
               cards={n}

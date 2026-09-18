@@ -102,6 +102,7 @@ async function main(): Promise<void> {
     const drawnAtClaim = (await state()).round.drawn;
     await settle(300);
     tvMarks.push({ name: 'bingo-1-held-choice', at: Date.now(), before: 0.2, seconds: 14 });
+    samMarks.push({ name: 'win-to-resume', at: Date.now(), before: 0.2, seconds: 14 }); // loop 277
     await sam.page.getByRole('button', { name: /^bingo! card 1$/i }).click();
     await sam.page.getByRole('button', { name: /tap again to claim/i }).dispatchEvent('click');
     await settle(600);
