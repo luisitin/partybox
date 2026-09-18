@@ -122,7 +122,8 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
           </div>
         ) : null}
         {/* No reserved slot on the first call (review-loop #3): the row arrives with number two. */}
-        {view.showPrevious && view.previous ? (
+        {/* Crowded and the board on: the board is the history, the tray row gives its 80 px back. */}
+        {view.showPrevious && view.previous && !(view.players.length > 8 && view.showBoard) ? (
           <div className={styles.previousRow}>
             <span className={styles.previousLabel}>Before that</span>
             <Call call={view.previous} />
