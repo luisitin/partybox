@@ -198,13 +198,14 @@ async function main(): Promise<void> {
         status === 'playing' &&
         sam.playerId &&
         !acted.has(key) &&
-        // A read-out holds under three seconds since Blanks loop #216, so a phone acting "a few
-        // seconds in" never acts in `reveal` at all — a pause aimed there (--pause-in reveal) could
-        // not fire. Short phases get a shorter wait (review-loop #336).
+        // a read-out holds < 3 s (Blanks #216): short phases get a shorter wait (loop #336)
         Date.now() - (changes.at(-1)?.t ?? 0) > (phase === 'reveal' ? 1200 : 4000)
       ) {
         acted.add(key);
-        if (SCENARIO === 'reconnect' && !scenarioDone && n >= 2) {
+        // --pause-in names the phase a scenario acts in; otherwise the nth phase change
+        const at = (min: number): boolean =>
+          values['pause-in'] ? phase === values['pause-in'] : n >= min;
+        if (SCENARIO === 'reconnect' && !scenarioDone && at(2)) {
           scenarioDone = true;
           notes.push(`reconnect: Sam dropped for 8 s at ${new Date().toISOString()} in ${phase}`);
           await sam.context.setOffline(true);
@@ -217,11 +218,7 @@ async function main(): Promise<void> {
           await settle(7000); // socket.io backoff after ~8 s away can take a few seconds
           await still(tv, `${String(n).padStart(2, '0')}-${phase}-tv-sam-back`);
           await still(sam.page, `${String(n).padStart(2, '0')}-${phase}-phone-sam-back`);
-        } else if (
-          SCENARIO === 'pause' &&
-          !scenarioDone &&
-          (values['pause-in'] ? phase === values['pause-in'] : n >= 3)
-        ) {
+        } else if (SCENARIO === 'pause' && !scenarioDone && at(3)) {
           // The VIP pauses mid-phase for 6 s: the curtain, the held timer, the held music bed;
           // then resumes — the shell chimes `phase` on the way back (DESIGN_SYSTEM) and the bed
           // picks up where it stopped, never restarting.
