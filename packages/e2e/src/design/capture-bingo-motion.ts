@@ -11,7 +11,6 @@ import {
   DevApi,
   cutStrips,
   joinViaForm,
-  openPhone,
   openPhoneRecorded,
   openTv,
   passAudioGate,
@@ -35,7 +34,14 @@ async function main(): Promise<void> {
     await passAudioGate(tv);
     const sam = await openPhoneRecorded(browser, server.url, 'iphone', 'Sam', join(OUT, 'video'));
     await joinViaForm(sam, api, { avatarIndex: 1 });
-    const priya = await openPhone(browser, server.url, 'iphone-se', 'Priya');
+    // Priya's phone on the same clock too (loop 304): the dibs pass is a two-phone moment.
+    const priya = await openPhoneRecorded(
+      browser,
+      server.url,
+      'iphone-se',
+      'Priya',
+      join(OUT, 'video-priya'),
+    );
     await joinViaForm(priya, api, { avatarIndex: 5 });
     await api.bots(1, 'idle');
     await api.post('/api/dev/start', {
@@ -72,6 +78,7 @@ async function main(): Promise<void> {
     await sam.page.getByRole('button', { name: /^bingo! card 1$/i }).click();
     await sam.page.getByRole('button', { name: /tap again to claim/i }).dispatchEvent('click');
     await settle(13500);
+    await cutStrips(priya, join(OUT, 'strips-priya'), marks);
     const video = await cutStrips(sam, join(OUT, 'strips'), marks);
     console.log(`10 fps strips from ${video ?? '(no video)'} → ${join(OUT, 'strips')}`);
   } finally {

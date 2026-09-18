@@ -770,6 +770,9 @@
    intro leaves well over the 500 ms the owner wants before the first call. */
 .dealing .focusMain {
   animation: deal-drop 420ms var(--pb-ease) both;
+  /* The first card's beat (loop 305): the TV's first card back and the first pluck land at 360 ms
+     (+250 on the bounce); the big card dropped at 0 and was down before anything sounded. */
+  animation-delay: 360ms;
 }
 .dealing .thumb {
   animation: deal-fan 380ms var(--pb-ease) both;
