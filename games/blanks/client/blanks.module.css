@@ -286,32 +286,30 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: var(--pb-space-3);
+  gap: var(--pb-space-4);
+  margin-block: var(--pb-space-3);
 }
 
+/* One slot per expected card: an outlined space on the table until a face-down cream card lands
+   in it (review-loop #145 — the ✓ pips became cards, the table fills up as the room plays). */
 .pip {
-  display: grid;
-  place-items: center;
-  width: var(--pb-space-7);
-  height: var(--pb-space-7);
-  border-radius: 50%;
-  background: var(--pb-surface-2);
-  /* an empty pip has to read as a slot on a light stage too: Daylight's surface-2 sits a hair
-     off its background (review-loop #127) */
-  border: 2px solid color-mix(in srgb, var(--pb-text-muted) 45%, transparent);
-  color: var(--pb-on-accent);
-  font-size: var(--pb-font-body);
-  font-weight: 900;
-  line-height: 1;
+  --card-paper: #f6f1e6;
+  --card-paper-2: #ebe4d4;
+  width: 76px;
+  height: 106px;
+  border-radius: var(--pb-space-3);
+  border: 3px dashed color-mix(in srgb, var(--pb-text-muted) 55%, transparent);
+  background: transparent;
 }
 
 .pipDone {
-  background: var(--pb-accent-3);
-  border-color: var(--pb-accent-3);
+  border: 0;
+  background: linear-gradient(180deg, var(--card-paper), var(--card-paper-2));
+  box-shadow: 0 6px 16px rgb(0 0 0 / 35%);
 }
 
 .pipPop {
-  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+  animation: global(pb-land) var(--pb-motion-slow) var(--pb-ease) both;
 }
 
 .progressSlot {

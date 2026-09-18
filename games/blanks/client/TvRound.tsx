@@ -1,6 +1,7 @@
 // TV: the round card ("intro") and the black card while the phones pick ("answer"). Nothing
 // played is shown here: white cards stay off the TV until "reveal". The answer stage keeps one
-// focal point — the black card — with a row of pips (one per expected card, the newest pops), the
+// focal point — the black card — with a row of face-down cards on the table (one slot per expected
+// card; a played card lands in its slot, the newest with a bounce), the
 // count re-entering on every change, and a line naming who the room is waiting for.
 import type { JSX } from 'react';
 import { Avatar, BigText, Stage, useSecondsLeft } from '@partybox/game-sdk/ui';
@@ -89,9 +90,7 @@ export function TvAnswer({ view }: Props): JSX.Element {
           <span
             key={i}
             className={`${styles.pip} ${i < view.playedCount ? styles.pipDone : ''} ${i === view.playedCount - 1 ? styles.pipPop : ''}`}
-          >
-            {i < view.playedCount ? '✓' : ''}
-          </span>
+          />
         ))}
       </div>
       <div key={view.playedCount} className="pb-enter" role="status">
