@@ -102,14 +102,15 @@ function ControllerResult({ view, me, send }: Props): JSX.Element {
       }
     >
       <div className={styles.resultHero} role="status" aria-live="polite">
-        <h2 className={styles.resultLine}>
-          {final
-            ? rankLine
-            : named
-              ? view.iWon
-                ? wonLine
-                : (iPicked ?? winnerLine(view))
-              : `Round ${view.round} of ${view.rounds}`}
+        {/* The line keeps its place and fades in on the winner beat, the way the TV's headline
+            does: writing "Round n of m" here instead repeated the screen's own title (loop #229),
+            and rendering nothing made the card jump when the line arrived. Hidden from screen
+            readers until it is true, or the room hears the winner before the TV names them. */}
+        <h2
+          className={`${styles.resultLine} ${final || named ? '' : styles.beatWait}`.trim()}
+          aria-hidden={!final && !named}
+        >
+          {final ? rankLine : view.iWon ? wonLine : (iPicked ?? winnerLine(view))}
         </h2>
         {/* The "+1" and your new place belong to the same reveal: before the winner beat they give
             the headline away (review-loop #222). */}
