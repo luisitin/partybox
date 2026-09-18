@@ -20,6 +20,8 @@ export interface LayoutProps {
   /** intro: fresh cards, no daubs, the pattern outlined, nothing tappable. */
   intro: boolean;
   disabled: boolean;
+  /** The TV has reached its verdict: my checked card may show its colours. */
+  verdictShown: boolean;
 }
 
 /** One card, as it plays: my own failed claim shows as the room sees it until play resumes. */
@@ -44,7 +46,7 @@ function PlayCard({
         {won ? 'BINGO ✓' : label}
       </p>
     );
-  if (mine && claim)
+  if (mine && claim && p.verdictShown)
     return (
       <div className={`${styles.slot} pb-pop`}>
         {heading}
@@ -186,7 +188,14 @@ export function AllCardsLayout(
             label={p.kind === 'stack' || p.kind === 'side' ? undefined : `Card ${c + 1}`}
           />
           {p.intro ? null : (
-            <BingoButton view={p.view} card={c} send={p.send} meId={p.meId} small />
+            <BingoButton
+              view={p.view}
+              card={c}
+              send={p.send}
+              meId={p.meId}
+              small
+              verdictShown={p.verdictShown}
+            />
           )}
         </div>
       ))}

@@ -60,7 +60,7 @@ async function main(): Promise<void> {
     marks.push({ name: 'wrong-claim-card2', at: Date.now(), before: 0.2, seconds: 8 });
     await pad.page.getByRole('button', { name: /^bingo! card 2$/i }).click();
     await pad.page.getByRole('button', { name: /tap again to claim/i }).dispatchEvent('click');
-    await settle(6000);
+    await settle(8000);
     await api.skip();
     await settle(1800);
     // A real bingo on card 1: skip calls until a line of card 1 is out, daub it, claim.

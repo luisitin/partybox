@@ -70,7 +70,7 @@ async function main(): Promise<void> {
     marks.push({ name: 'claim-check-wipe', at: Date.now(), before: 0.2, seconds: 8 });
     await sam.page.getByRole('button', { name: /^bingo! card 1$/i }).click();
     await sam.page.getByRole('button', { name: /tap again to claim/i }).dispatchEvent('click');
-    await settle(6000);
+    await settle(8000);
     await api.skip(); // check → play: the wiped card comes back
     await settle(1800);
     const video = await cutStrips(sam, join(OUT, 'strips'), marks);

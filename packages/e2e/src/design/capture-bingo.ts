@@ -113,7 +113,7 @@ async function main(): Promise<void> {
     await shots.shot(p2.page, { group: G, phase: 'armed', device: 'iphone-se', role: 'p2' });
     await p2.page.getByRole('button', { name: /tap again to claim/i }).dispatchEvent('click'); // claims
     marks.push({ name: 'check-reveal', at: Date.now(), seconds: 6 });
-    await burst(shots, tv, 'check-lands', 18, 300);
+    await burst(shots, tv, 'check-lands', 24, 300);
     await settle(1200);
     await shots.shot(tv, { group: G, phase: 'check', device: 'tv', role: 'stage' });
     await shots.shot(p2.page, { group: G, phase: 'check', device: 'iphone-se', role: 'claimant' });
@@ -152,7 +152,7 @@ async function main(): Promise<void> {
     // cell must be visibly green (closer to accent-3 than to its outline) by then.
     marks.push({ name: 'bingo-reveal', at: Date.now(), seconds: 6 });
     const sync = tv.evaluate<{ sweepAt: number | null; greenAt: number | null }>(SYNC_PROBE);
-    await burst(shots, tv, 'bingo-lands', 18, 300);
+    await burst(shots, tv, 'bingo-lands', 24, 300);
     const { sweepAt, greenAt } = await sync;
     const lag = sweepAt !== null && greenAt !== null ? Math.round(greenAt - sweepAt) : null;
     console.log(

@@ -37,6 +37,7 @@ export {
   MOTION_FAST,
   MOTION_SLOW,
   useBeats,
+  useSequence,
   useCountUp,
   useHold,
   usePrefersReducedMotion as useReducedMotion,

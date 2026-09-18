@@ -75,7 +75,7 @@ async function main(): Promise<void> {
     );
     // Leo's second tap must land inside his 3 s window: no more stills before it.
     await side.page.getByRole('button', { name: /tap again to claim/i }).dispatchEvent('click');
-    await settle(1500);
+    await settle(7500); // the reveal: verdict at ≈ 6.4 s
     await shots.shot(tv, { group: G, phase: 'check-2', device: 'tv', role: 'stage' });
     await shots.shot(side.page, { group: G, phase: 'check-2', device: 'landscape', role: 'leo' });
     await shots.shot(vip.page, { group: G, phase: 'check-2', device: 'iphone', role: 'vip' });

@@ -39,6 +39,24 @@ export function useBeats(atMs: readonly number[]): number {
 }
 
 /**
+ * Beats that are sequencing, not decoration (a claim reveal: announce, card, cells, verdict): the
+ * schedule runs under reduced motion too, only the movement between beats is dropped there.
+ */
+export function useSequence(atMs: readonly number[]): number {
+  const [beat, setBeat] = useState(atMs[0] === 0 ? 0 : -1);
+  // The schedule is fixed per mount (callers pass a literal array; remount to restart), so the
+  // effect keys on its serialised form rather than the array identity.
+  const key = atMs.join(',');
+  useEffect(() => {
+    const handles = key
+      .split(',')
+      .map((ms, i) => setTimeout(() => setBeat((b) => Math.max(b, i)), Number(ms)));
+    return () => handles.forEach((h) => clearTimeout(h));
+  }, [key]);
+  return beat;
+}
+
+/**
  * A phone-side hold: false on the first render for a given `key`, true `ms` later (cleared and
  * restarted when the key changes; `ms <= 0` is true at once). Deliberately NOT gated on reduced
  * motion — it is sequencing, not motion: the TV is another device with its own setting, and the

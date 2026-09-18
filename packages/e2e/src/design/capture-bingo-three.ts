@@ -142,7 +142,7 @@ async function main(): Promise<void> {
     await settle(300);
     await p.page.getByRole('button', { name: /^bingo! card 1$/i }).click();
     await p.page.getByRole('button', { name: /tap again to claim/i }).dispatchEvent('click');
-    await settle(5500);
+    await settle(8000);
     await shots.shot(tv2, { group: G, phase: 'bingo-1of2', device: 'tv', role: 'stage' });
     await shots.shot(p.page, { group: G, phase: 'bingo-1of2', device: 'iphone', role: 'winner' });
     await p.page.getByRole('button', { name: /keep going — same pattern/i }).click();
