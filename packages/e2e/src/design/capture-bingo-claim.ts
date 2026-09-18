@@ -26,6 +26,8 @@ const { values } = parseArgs({
     port: { type: 'string', default: '42131' },
     tv: { type: 'boolean', default: false },
     reveal: { type: 'boolean', default: false },
+    /** Phone only: no second tap — the window drains on the button and lapses (loop 256). */
+    lapse: { type: 'boolean', default: false },
   },
 });
 const OUT = values.out ?? join(REPO_ROOT, 'reports', 'design', 'latest');
@@ -71,9 +73,14 @@ async function main(): Promise<void> {
       await sam.context.close();
       return;
     }
-    await settle(900);
-    await sam.page.getByRole('button', { name: /tap again to claim/i }).dispatchEvent('click');
-    await settle(2100);
+    if (values.lapse) {
+      marks[0] = { name: 'lapse', at: marks[0]?.at ?? 0, before: 0.1, seconds: 4 };
+      await settle(4200);
+    } else {
+      await settle(900);
+      await sam.page.getByRole('button', { name: /tap again to claim/i }).dispatchEvent('click');
+      await settle(2100);
+    }
     const video = await cutStrips(sam, join(OUT, 'strips'), marks);
     console.log(`10 fps strips from ${video ?? '(no video)'} → ${join(OUT, 'strips')}`);
   } finally {
