@@ -144,7 +144,7 @@ function JudgeGrid({ view }: Props): JSX.Element {
         aria-label={pages > 1 ? `the cards, page ${current + 1} of ${pages}` : 'the cards'}
       >
         {view.cards.map((c, i) => (
-          <li key={c.slot} style={{ animationDelay: `calc(${i} * var(--pb-motion-fast) / 2)` }}>
+          <li key={c.slot} style={{ animationDelay: `calc(${i} * 120ms)` }}>
             <FilledCard
               text={view.black?.text ?? ''}
               whites={c.whites}

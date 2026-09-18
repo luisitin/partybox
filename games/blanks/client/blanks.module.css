@@ -287,9 +287,24 @@
 }
 
 /* The reveal card lands with a bounce (a new card on the table) — from half opacity, not from
-   nothing: at 20 fps the stage sat empty for two frames between two read-outs (review-loop #131). */
+   nothing: at 20 fps the stage sat empty for two frames between two read-outs (review-loop #131).
+   Then its whites drop in one by one (300 ms apart, from 450 ms) — a presentation, not a pop
+   (owner, review-loop #151). The phone's read-along does the same. */
 .landing {
   animation: global(pb-land) var(--pb-motion-slow) var(--pb-ease) both;
+}
+
+.landing .fill,
+.readCard .fill {
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+  animation-delay: calc(450ms + var(--fill-index, 0) * 300ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing .fill,
+  .readCard .fill {
+    animation-delay: 0s;
+  }
 }
 
 .judgeLine {
@@ -379,7 +394,7 @@
 .strip > li {
   flex: 1 1 380px;
   max-width: 560px;
-  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+  animation: global(pb-deal) var(--pb-motion-base) var(--pb-ease) both;
 }
 
 /* The losing cards (result): who played which letter, as pills — twelve fit in two rows. */
@@ -487,7 +502,8 @@
 
 .judgeGrid > li {
   min-width: 0;
-  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+  /* dealt onto the table, 120 ms apart (TvJudge sets the delay) */
+  animation: global(pb-deal) var(--pb-motion-slow) var(--pb-ease) both;
 }
 
 .grid2 {

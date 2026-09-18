@@ -135,6 +135,23 @@ button {
   }
 }
 
+/* A card dealt onto the table (Blanks' judge grid): slides in from below with a small tilt that
+   settles, like a card tossed onto felt (review-loop #153). */
+@keyframes pb-deal {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) rotate(-3deg) scale(0.96);
+  }
+  70% {
+    opacity: 1;
+    transform: translateY(-4px) rotate(0.6deg) scale(1.01);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 @keyframes pb-pop {
   0% {
     opacity: 0;

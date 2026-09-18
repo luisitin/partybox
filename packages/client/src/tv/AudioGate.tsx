@@ -35,11 +35,14 @@ export function AudioGate({ audio, music, beds }: AudioGateProps): JSX.Element {
   useEffect(() => {
     if (started) return;
     const start = (): void => {
+      // Every engine wakes inside the gesture itself: Safari refuses an AudioContext created or
+      // resumed after an await, so the music beds started only on Chrome (the owner heard no
+      // music on Blanks, review-loop #151). The cue engine's own enable already ran in-gesture.
+      music?.enable();
+      void beds?.enable();
       void audio.enable().then((ok) => {
         if (!ok) return;
         setStarted(true);
-        music?.enable();
-        void beds?.enable();
         if (!readyPlayed.current) {
           readyPlayed.current = true;
           audio.play('ready'); // silent when the persisted mute is on

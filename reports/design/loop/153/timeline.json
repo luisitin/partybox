@@ -1,0 +1,182 @@
+{
+  "pass": "153",
+  "game": "blanks",
+  "players": 6,
+  "scenario": "normal",
+  "focus": "tv",
+  "started": "02:26:32.548",
+  "tvVideoT0": "02:26:29.164",
+  "changes": [
+    {
+      "t": 1789698392551,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789698397542,
+      "bed": "warm",
+      "at": "02:26:32.551",
+      "sinceStartS": 0,
+      "videoS": 3.4
+    },
+    {
+      "t": 1789698397616,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789698457549,
+      "bed": "bossa",
+      "at": "02:26:37.616",
+      "sinceStartS": 5.1,
+      "videoS": 8.5
+    },
+    {
+      "t": 1789698403169,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789698406654,
+      "bed": "warm",
+      "at": "02:26:43.169",
+      "sinceStartS": 10.6,
+      "videoS": 14
+    },
+    {
+      "t": 1789698406734,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789698410172,
+      "bed": "warm",
+      "at": "02:26:46.734",
+      "sinceStartS": 14.2,
+      "videoS": 17.6
+    },
+    {
+      "t": 1789698410178,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789698413742,
+      "bed": "warm",
+      "at": "02:26:50.178",
+      "sinceStartS": 17.6,
+      "videoS": 21
+    },
+    {
+      "t": 1789698413841,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789698417033,
+      "bed": "warm",
+      "at": "02:26:53.841",
+      "sinceStartS": 21.3,
+      "videoS": 24.7
+    },
+    {
+      "t": 1789698417101,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789698419994,
+      "bed": "warm",
+      "at": "02:26:57.101",
+      "sinceStartS": 24.6,
+      "videoS": 27.9
+    },
+    {
+      "t": 1789698420032,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789698423063,
+      "bed": "warm",
+      "at": "02:27:00.032",
+      "sinceStartS": 27.5,
+      "videoS": 30.9
+    },
+    {
+      "t": 1789698423112,
+      "status": "playing",
+      "phase": "judge",
+      "deadline": 1789698453064,
+      "bed": "marimba",
+      "at": "02:27:03.112",
+      "sinceStartS": 30.6,
+      "videoS": 33.9
+    },
+    {
+      "t": 1789698427317,
+      "status": "playing",
+      "phase": "result",
+      "deadline": 1789698435192,
+      "bed": "warm",
+      "at": "02:27:07.317",
+      "sinceStartS": 34.8,
+      "videoS": 38.2
+    },
+    {
+      "t": 1789698435216,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789698440206,
+      "bed": "warm",
+      "at": "02:27:15.216",
+      "sinceStartS": 42.7,
+      "videoS": 46.1
+    },
+    {
+      "t": 1789698440287,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789698500210,
+      "bed": "bossa",
+      "at": "02:27:20.287",
+      "sinceStartS": 47.7,
+      "videoS": 51.1
+    },
+    {
+      "t": 1789698445862,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789698449581,
+      "bed": "warm",
+      "at": "02:27:25.862",
+      "sinceStartS": 53.3,
+      "videoS": 56.7
+    },
+    {
+      "t": 1789698449623,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789698453195,
+      "bed": "warm",
+      "at": "02:27:29.623",
+      "sinceStartS": 57.1,
+      "videoS": 60.5
+    },
+    {
+      "t": 1789698453217,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789698456777,
+      "bed": "warm",
+      "at": "02:27:33.217",
+      "sinceStartS": 60.7,
+      "videoS": 64.1
+    },
+    {
+      "t": 1789698456823,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789698460478,
+      "bed": "warm",
+      "at": "02:27:36.823",
+      "sinceStartS": 64.3,
+      "videoS": 67.7
+    },
+    {
+      "t": 1789698460576,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789698463930,
+      "bed": "warm",
+      "at": "02:27:40.576",
+      "sinceStartS": 68,
+      "videoS": 71.4
+    }
+  ],
+  "notes": ["budget reached while playing; skipped to results"]
+}

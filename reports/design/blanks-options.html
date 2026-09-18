@@ -1,0 +1,1005 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Blanks Options</title>
+  <meta
+    name="description"
+    content="Owner's pick page for Blanks: the music beds by stage and level, and three card-presentation choreographies. Tap ▶, pick by letter."
+  />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap"
+  />
+  <style>
+    :root {
+      --bg: #0f1020;
+      --surface: #1c1e3a;
+      --surface-2: #272a52;
+      --text: #f5f6ff;
+      --muted: #b3b7d9;
+      --accent: #ff5d8f;
+      --gold: #ffd166;
+      --green: #06d6a0;
+      --ink: #16171c;
+      --ink-2: #1f2027;
+      --paper: #f6f1e6;
+      --paper-2: #ebe4d4;
+      --on-gold: #1a0b12;
+      --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    html {
+      color-scheme: dark;
+    }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Nunito', 'Segoe UI', system-ui, sans-serif;
+      font-weight: 600;
+      line-height: 1.45;
+    }
+    .wrap {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 32px 16px 96px;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+    h1 {
+      font-size: clamp(30px, 5vw, 44px);
+      font-weight: 900;
+      margin: 0;
+      line-height: 1.05;
+    }
+    h2 {
+      font-size: 24px;
+      font-weight: 900;
+      margin: 0;
+    }
+    h3 {
+      font-size: 18px;
+      font-weight: 900;
+      margin: 0;
+    }
+    p {
+      margin: 0;
+    }
+    .eyebrow {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .note {
+      color: var(--muted);
+    }
+    section {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .card {
+      background: var(--surface);
+      border-radius: 18px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .card.live {
+      outline: 2px solid var(--green);
+    }
+    .letter {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--gold);
+      color: var(--on-gold);
+      font-weight: 900;
+      margin-right: 8px;
+    }
+    .bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: auto;
+    }
+    button {
+      font: inherit;
+      font-weight: 800;
+      border: 0;
+      border-radius: 999px;
+      padding: 10px 16px;
+      background: var(--surface-2);
+      color: var(--text);
+      cursor: pointer;
+      min-height: 44px;
+    }
+    button.primary {
+      background: var(--accent);
+      color: #1a0b12;
+    }
+    button[aria-pressed='true'] {
+      background: var(--green);
+      color: #062a20;
+    }
+    .levels {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .levels button {
+      min-height: 40px;
+      padding: 6px 14px;
+    }
+    .tag {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--green);
+    }
+    /* the stage mock: 16:9, scaled with container units */
+    .tvbox {
+      background: var(--bg);
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgb(255 255 255 / 10%);
+    }
+    .tv {
+      container-type: inline-size;
+      aspect-ratio: 16 / 9;
+      padding: 4cqw 5cqw;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 2cqw;
+      background: radial-gradient(
+        ellipse 70% 60% at 50% 55%,
+        rgb(39 42 82 / 55%),
+        transparent 100%
+      );
+      perspective: 1200px;
+    }
+    .kicker {
+      align-self: flex-start;
+      font-size: 1.6cqw;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .black {
+      position: relative;
+      width: 70cqw;
+      padding: 2.4cqw 2.6cqw 2.4cqw 5.4cqw;
+      border-radius: 2cqw;
+      background: linear-gradient(180deg, var(--ink-2), var(--ink) 38%);
+      color: var(--paper);
+      font-size: 3.6cqw;
+      font-weight: 800;
+      line-height: 1.3;
+      box-shadow:
+        0 0 0 1px rgb(255 255 255 / 14%),
+        0 12px 32px rgb(0 0 0 / 40%),
+        0 0 12cqw 2cqw rgb(255 209 102 / 11%);
+      transform-style: preserve-3d;
+    }
+    .black .disc {
+      position: absolute;
+      top: 1.6cqw;
+      left: 1.6cqw;
+      width: 3cqw;
+      height: 3cqw;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--gold);
+      color: var(--on-gold);
+      font-size: 1.9cqw;
+      font-weight: 900;
+    }
+    mark {
+      background: var(--paper);
+      color: var(--ink);
+      padding: 0.02em 0.28em;
+      margin-inline: 0.06em;
+      border-radius: 0.22em;
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
+      font-weight: 900;
+      display: inline-block;
+    }
+    .hidden {
+      opacity: 0;
+    }
+    @keyframes land {
+      0% {
+        opacity: 0.5;
+        transform: scale(0.92);
+      }
+      60% {
+        opacity: 1;
+        transform: scale(1.04);
+      }
+      100% {
+        opacity: 1;
+        transform: none;
+      }
+    }
+    @keyframes pop {
+      0% {
+        opacity: 0;
+        transform: scale(0.6);
+      }
+      60% {
+        opacity: 1;
+        transform: scale(1.08);
+      }
+      100% {
+        opacity: 1;
+        transform: none;
+      }
+    }
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(6cqw);
+      }
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+    @keyframes flipIn {
+      from {
+        opacity: 0;
+        transform: rotateX(-90deg);
+      }
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+    @keyframes cardFlip {
+      from {
+        transform: rotateY(180deg);
+      }
+      to {
+        transform: none;
+      }
+    }
+    .a-land {
+      animation: land 600ms var(--ease) both;
+    }
+    .a-pop {
+      animation: pop 300ms var(--ease) both;
+    }
+    .a-slide {
+      animation: slideUp 400ms var(--ease) both;
+    }
+    .a-flipword {
+      animation: flipIn 450ms var(--ease) both;
+      transform-origin: 50% 100%;
+    }
+    .a-flip {
+      animation: cardFlip 600ms var(--ease) both;
+      backface-visibility: hidden;
+    }
+    .back {
+      position: absolute;
+      inset: 0;
+      border-radius: 2cqw;
+      background: linear-gradient(180deg, var(--paper), var(--paper-2));
+      transform: rotateY(180deg);
+      backface-visibility: hidden;
+      display: grid;
+      place-items: center;
+      color: var(--ink);
+      font-size: 3cqw;
+      letter-spacing: 0.1em;
+    }
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .timeline b {
+      color: var(--gold);
+      display: inline-block;
+      width: 64px;
+    }
+    .timeline .now {
+      color: var(--text);
+    }
+    .feedback {
+      background: var(--surface);
+      border-radius: 18px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .picks {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 10px;
+    }
+    .picks label {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .picks select,
+    .picks input {
+      font: inherit;
+      font-weight: 700;
+      color: var(--text);
+      background: var(--surface-2);
+      border: 0;
+      border-radius: 10px;
+      padding: 10px;
+      min-height: 44px;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 1ms !important;
+      }
+    }
+  </style>
+  <div class="wrap">
+    <header>
+      <span class="eyebrow">Blanks · options · 2026-09-17</span>
+      <h1>Music beds and the card presentation — pick by letter</h1>
+      <p class="note">
+        Tap ▶ on anything; one sound plays at a time. Reply with letters, e.g. "music: W2 while
+        picking, L1 during the reading, M2 judging · presentation: B". Everything on this page is
+        synthesized in the browser exactly as the TV does it — what you hear here is what the room
+        gets.
+      </p>
+      <p class="note">
+        <strong>Why you heard no music:</strong> the TV started the beds a moment
+        <em>after</em> your tap on the "tap for sound" pill; Safari only lets sound start
+        <em>inside</em> the tap. Fixed on main (loop #151) — the beds and the cues now wake in the
+        same tap.
+      </p>
+    </header>
+
+    <section id="music">
+      <span class="eyebrow">1 · Music beds</span>
+      <h2>One bed per stage, at a level you choose</h2>
+      <p class="note">
+        Your earlier picks are marked <span class="tag">live</span>. Each card has three levels: 1 =
+        what plays now (true background), 2 = a touch louder, 3 = present. New candidates below the
+        live ones.
+      </p>
+      <div class="cards" id="beds"></div>
+      <div class="feedback">
+        <h3>Stages to fill</h3>
+        <p class="note">
+          Round card · picking a card · the read-out · judging · result. The results screen stays
+          silent under the win fanfare. A bed that returns resumes where it left off.
+        </p>
+      </div>
+    </section>
+
+    <section id="presentation">
+      <span class="eyebrow">2 · The card presentation (read-out)</span>
+      <h2>How each card arrives, and how long it stays</h2>
+      <p class="note">
+        Each ▶ plays three cards in a row with the read-out pluck, at the real pace. Times are per
+        card; the sentence's length adds a little (18–20 ms per character), capped.
+      </p>
+      <div class="cards" id="pres"></div>
+    </section>
+
+    <section class="feedback">
+      <span class="eyebrow">Your picks</span>
+      <h3>Tick what you want; it saves as you go</h3>
+      <div id="picks" class="picks">
+        <label
+          >Round card
+          <select data-pick="intro"></select
+        ></label>
+        <label
+          >Picking a card
+          <select data-pick="answer"></select
+        ></label>
+        <label
+          >Read-out
+          <select data-pick="reveal"></select
+        ></label>
+        <label
+          >Judging
+          <select data-pick="judge"></select
+        ></label>
+        <label
+          >Result
+          <select data-pick="result"></select
+        ></label>
+        <label
+          >Presentation
+          <select data-pick="presentation">
+            <option value="">keep A</option>
+            <option value="A">A · land + pop</option>
+            <option value="B">B · slide + flip in</option>
+            <option value="C">C · card flip</option>
+          </select></label
+        >
+        <label>Notes <input data-pick="notes" placeholder="anything else" /></label>
+        <p class="note" id="picks-status">Not saved yet.</p>
+      </div>
+      <span class="eyebrow">Or answer in a reply</span>
+      <p>
+        "Music: W1 round card, B2 picking, L1 read-out, M1 judging, W1 result. Presentation: B." —
+        or "keep A" for anything. Anything not named stays as it is on main.
+      </p>
+    </section>
+  </div>
+  <script>
+    // ── Audio ──────────────────────────────────────────────────────────────────────────────────
+    let ctx = null;
+    let master = null;
+    const ac = () => {
+      if (!ctx) {
+        ctx = new (window.AudioContext || window.webkitAudioContext)();
+        master = ctx.createGain();
+        master.gain.value = 1;
+        master.connect(ctx.destination);
+      }
+      if (ctx.state !== 'running') ctx.resume();
+      return ctx;
+    };
+    const hz = (m) => 440 * 2 ** ((m - 69) / 12);
+    function voice(c, out, v) {
+      const o = c.createOscillator();
+      const g = c.createGain();
+      o.type = v.t || 'sine';
+      o.frequency.value = v.f;
+      o.detune.value = v.detune || 0;
+      g.gain.setValueAtTime(0.0001, v.at);
+      g.gain.exponentialRampToValueAtTime(v.g ?? 0.1, v.at + (v.a ?? 0.01));
+      g.gain.exponentialRampToValueAtTime(0.0001, v.at + v.d);
+      o.connect(g).connect(out);
+      o.start(v.at);
+      o.stop(v.at + v.d + 0.05);
+    }
+    function noise(c, out, at, g, len, hpf, lpf) {
+      const buf = c.createBuffer(1, Math.ceil(c.sampleRate * len), c.sampleRate);
+      const d = buf.getChannelData(0);
+      for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / d.length);
+      const s = c.createBufferSource();
+      s.buffer = buf;
+      let n = s;
+      if (hpf) {
+        const f = c.createBiquadFilter();
+        f.type = 'highpass';
+        f.frequency.value = hpf;
+        n.connect(f);
+        n = f;
+      }
+      if (lpf) {
+        const f = c.createBiquadFilter();
+        f.type = 'lowpass';
+        f.frequency.value = lpf;
+        n.connect(f);
+        n = f;
+      }
+      const gg = c.createGain();
+      gg.gain.value = g;
+      n.connect(gg).connect(out);
+      s.start(at);
+    }
+    const hat = (c, out, at, g) => noise(c, out, at, g, 0.03, 6000, 0);
+    function kick(c, out, at, g) {
+      const o = c.createOscillator();
+      const gn = c.createGain();
+      o.frequency.setValueAtTime(120, at);
+      o.frequency.exponentialRampToValueAtTime(45, at + 0.12);
+      gn.gain.setValueAtTime(g, at);
+      gn.gain.exponentialRampToValueAtTime(0.0001, at + 0.22);
+      o.connect(gn).connect(out);
+      o.start(at);
+      o.stop(at + 0.25);
+    }
+    const BEDS = {
+      warm: {
+        key: 'W',
+        title: 'Warm groove',
+        live: 'round card · read-out · result',
+        note: 'Electric-piano chords (Cmaj7 · Am7 · Fmaj7 · G7), a round bass on 1 and 3, brushed hats.',
+        bpm: 92,
+        level: 0.12,
+        bar(c, out, t, i) {
+          const beat = 60 / 92;
+          const chords = [
+            [60, 64, 67, 71],
+            [57, 60, 64, 67],
+            [53, 57, 60, 64],
+            [55, 59, 62, 65],
+          ];
+          const roots = [48, 45, 41, 43];
+          const ch = chords[i % 4],
+            r = roots[i % 4];
+          ch.forEach((m, k) =>
+            voice(c, out, {
+              f: hz(m),
+              at: t + 0.02 * k,
+              d: beat * 1.8,
+              t: 'triangle',
+              g: 0.05,
+              a: 0.03,
+            }),
+          );
+          ch.forEach((m, k) =>
+            voice(c, out, {
+              f: hz(m),
+              at: t + beat * 2.5 + 0.02 * k,
+              d: beat * 1.2,
+              t: 'triangle',
+              g: 0.035,
+              a: 0.03,
+            }),
+          );
+          for (const b of [0, 2])
+            voice(c, out, { f: hz(r), at: t + beat * b, d: beat * 0.9, g: 0.11, a: 0.02 });
+          voice(c, out, { f: hz(r + 7), at: t + beat * 3.5, d: beat * 0.4, g: 0.07 });
+          for (let e = 0; e < 8; e++) hat(c, out, t + (beat * e) / 2, e % 2 ? 0.02 : 0.035);
+        },
+      },
+      bossa: {
+        key: 'B',
+        title: 'Soft bossa',
+        live: 'picking a card',
+        note: 'Nylon-string plucks in a bossa pattern over Dmaj7 · Bm7 · Em7 · A7, a walking bass, a shaker on the off-beats.',
+        bpm: 100,
+        level: 0.11,
+        bar(c, out, t, i) {
+          const beat = 60 / 100;
+          const chords = [
+            [62, 66, 69, 73],
+            [59, 62, 66, 69],
+            [64, 67, 71, 74],
+            [57, 61, 64, 67],
+          ];
+          const roots = [50, 47, 52, 45];
+          const ch = chords[i % 4],
+            r = roots[i % 4];
+          [0, 0.75, 1.5, 2.5, 3.25].forEach((s, n) =>
+            ch.forEach((m, k) =>
+              voice(c, out, {
+                f: hz(m),
+                at: t + beat * s + k * 0.015,
+                d: 0.35,
+                t: 'triangle',
+                g: n % 2 ? 0.022 : 0.032,
+                a: 0.004,
+              }),
+            ),
+          );
+          [0, 1.5, 2, 3.5].forEach((s, n) =>
+            voice(c, out, {
+              f: hz(n % 2 ? r + 7 : r),
+              at: t + beat * s,
+              d: beat * 0.7,
+              g: 0.09,
+              a: 0.015,
+            }),
+          );
+          for (let e = 1; e < 8; e += 2) hat(c, out, t + (beat * e) / 2, 0.018);
+        },
+      },
+      latenight: {
+        key: 'L',
+        title: 'Late night',
+        live: '',
+        note: 'Held Rhodes-like chords that swell in (Fmaj7 · Em7 · Dm7 · Cmaj7), one bass note a bar, no drums. Sits under a voice — a candidate for the read-out.',
+        bpm: 70,
+        level: 0.1,
+        bar(c, out, t, i) {
+          const beat = 60 / 70;
+          const chords = [
+            [65, 69, 72, 76],
+            [64, 67, 71, 74],
+            [62, 65, 69, 72],
+            [60, 64, 67, 71],
+          ];
+          const roots = [41, 40, 38, 36];
+          const ch = chords[i % 4];
+          for (const m of ch) {
+            voice(c, out, { f: hz(m), at: t, d: beat * 4, t: 'triangle', g: 0.035, a: 0.5 });
+            voice(c, out, { f: hz(m), at: t, d: beat * 4, g: 0.03, a: 0.5, detune: 6 });
+          }
+          voice(c, out, { f: hz(roots[i % 4]), at: t, d: beat * 3.5, g: 0.09, a: 0.05 });
+          if (i % 2)
+            voice(c, out, { f: hz(ch[2] + 12), at: t + beat * 3, d: 0.8, g: 0.03, a: 0.02 });
+        },
+      },
+      marimba: {
+        key: 'M',
+        title: 'Marimba ostinato',
+        live: 'judging',
+        note: 'A rolling 16th-note marimba figure over Dm · B♭ · F · C with a light shaker.',
+        bpm: 112,
+        level: 0.12,
+        bar(c, out, t, i) {
+          const beat = 60 / 112;
+          const sets = [
+            [62, 65, 69, 74],
+            [58, 62, 65, 70],
+            [65, 69, 72, 77],
+            [60, 64, 67, 72],
+          ];
+          const s = sets[i % 4],
+            order = [0, 1, 2, 3, 2, 1];
+          for (let n = 0; n < 16; n++)
+            voice(c, out, {
+              f: hz(s[order[n % 6]]),
+              at: t + (beat * n) / 4,
+              d: 0.18,
+              t: 'triangle',
+              g: n % 4 === 0 ? 0.05 : 0.03,
+              a: 0.003,
+            });
+          for (let e = 0; e < 8; e++) hat(c, out, t + (beat * e) / 2, 0.015);
+          voice(c, out, { f: hz(s[0] - 24), at: t, d: beat * 2, g: 0.08 });
+        },
+      },
+      lofi: {
+        key: 'F',
+        title: 'Lo-fi hip hop (new)',
+        live: '',
+        note: 'Dusty swung beat at 78: a soft kick, a brushed snare, hats behind the beat, muted Rhodes chords (Am9 · Dm9 · Gmaj9 · Cmaj7). The "study beats" feel — candidate for picking or the read-out.',
+        bpm: 78,
+        level: 0.13,
+        bar(c, out, t, i) {
+          const beat = 60 / 78,
+            sw = (beat / 4) * 0.33;
+          const chords = [
+            [57, 60, 64, 67, 71],
+            [50, 53, 57, 60, 64],
+            [55, 59, 62, 66, 69],
+            [48, 52, 55, 59],
+          ];
+          const roots = [45, 38, 43, 36];
+          const ch = chords[i % 4];
+          ch.forEach((m, k) =>
+            voice(c, out, {
+              f: hz(m),
+              at: t + 0.03 * k,
+              d: beat * 2.2,
+              t: 'triangle',
+              g: 0.04,
+              a: 0.06,
+            }),
+          );
+          ch.forEach((m, k) =>
+            voice(c, out, {
+              f: hz(m),
+              at: t + beat * 2 + sw + 0.03 * k,
+              d: beat * 1.6,
+              t: 'triangle',
+              g: 0.03,
+              a: 0.06,
+            }),
+          );
+          voice(c, out, { f: hz(roots[i % 4]), at: t, d: beat * 1.5, g: 0.1, a: 0.02 });
+          voice(c, out, { f: hz(roots[i % 4]), at: t + beat * 2.5, d: beat, g: 0.08, a: 0.02 });
+          kick(c, out, t, 0.22);
+          kick(c, out, t + beat * 2.5, 0.16);
+          noise(c, out, t + beat, 0.05, 0.12, 1200, 5000);
+          noise(c, out, t + beat * 3, 0.05, 0.12, 1200, 5000);
+          for (let e = 0; e < 8; e++)
+            hat(c, out, t + (beat * e) / 2 + (e % 2 ? sw : 0), e % 2 ? 0.014 : 0.024);
+        },
+      },
+      lounge: {
+        key: 'S',
+        title: 'Slow swing lounge (new)',
+        live: '',
+        note: 'A lazy swing at 84: vibraphone chords with a slow tremolo (Fmaj7 · Bbmaj7 · Gm7 · C7), a walking upright bass, brushed ride. Cocktail-hour — a candidate for the result and the round card.',
+        bpm: 84,
+        level: 0.12,
+        bar(c, out, t, i) {
+          const beat = 60 / 84,
+            sw = beat / 3;
+          const chords = [
+            [65, 69, 72, 76],
+            [58, 62, 65, 69],
+            [55, 58, 62, 65],
+            [60, 64, 67, 70],
+          ];
+          const walks = [
+            [41, 43, 45, 47],
+            [46, 45, 43, 41],
+            [43, 46, 48, 50],
+            [48, 47, 46, 43],
+          ];
+          const ch = chords[i % 4],
+            w = walks[i % 4];
+          [0, 2].forEach((b, n) =>
+            ch.forEach((m, k) => {
+              voice(c, out, {
+                f: hz(m),
+                at: t + beat * b + 0.02 * k,
+                d: beat * 1.9,
+                g: n ? 0.03 : 0.045,
+                a: 0.01,
+              });
+              voice(c, out, {
+                f: hz(m),
+                at: t + beat * b + 0.02 * k + 0.09,
+                d: beat * 1.7,
+                g: n ? 0.012 : 0.02,
+                a: 0.01,
+                detune: 4,
+              });
+            }),
+          );
+          w.forEach((m, n) =>
+            voice(c, out, {
+              f: hz(m),
+              at: t + beat * n,
+              d: beat * 0.8,
+              t: 'triangle',
+              g: 0.1,
+              a: 0.015,
+            }),
+          );
+          for (let e = 0; e < 4; e++) {
+            hat(c, out, t + beat * e, 0.02);
+            hat(c, out, t + beat * e + sw * 2, 0.012);
+          }
+        },
+      },
+    };
+    const LEVELS = [1, 1.6, 2.5];
+    let running = null;
+    function stopBed() {
+      if (!running) return;
+      clearInterval(running.timer);
+      const c = ac();
+      running.out.gain.setTargetAtTime(0.0001, c.currentTime, 0.25);
+      const out = running.out;
+      setTimeout(() => out.disconnect(), 1200);
+      running = null;
+      document
+        .querySelectorAll('[data-bed]')
+        .forEach((b) => b.setAttribute('aria-pressed', 'false'));
+    }
+    function playBed(id, lvl) {
+      const c = ac();
+      stopBed();
+      const bed = BEDS[id];
+      const out = c.createGain();
+      out.gain.setValueAtTime(0.0001, c.currentTime);
+      out.gain.exponentialRampToValueAtTime(bed.level * LEVELS[lvl], c.currentTime + 1.2);
+      out.connect(master);
+      let next = c.currentTime + 0.1,
+        i = 0;
+      const barLen = (60 / bed.bpm) * 4;
+      const tick = () => {
+        while (next < c.currentTime + 0.6) {
+          bed.bar(c, out, next, i++);
+          next += barLen;
+        }
+      };
+      tick();
+      running = { out, timer: setInterval(tick, 200) };
+      document
+        .querySelectorAll('[data-bed]')
+        .forEach((b) =>
+          b.setAttribute(
+            'aria-pressed',
+            String(b.dataset.bed === id && Number(b.dataset.lvl) === lvl),
+          ),
+        );
+    }
+    const bedsEl = document.getElementById('beds');
+    for (const [id, bed] of Object.entries(BEDS)) {
+      const card = document.createElement('div');
+      card.className = 'card' + (bed.live ? ' live' : '');
+      card.innerHTML = `<div><span class="letter">${bed.key}</span><strong>${bed.title}</strong>${bed.live ? ` <span class="tag">live · ${bed.live}</span>` : ''}</div><p class="note">${bed.note}</p><div class="levels"><span class="note">Level</span>${LEVELS.map((_, l) => `<button data-bed="${id}" data-lvl="${l}" aria-pressed="false">▶ ${bed.key}${l + 1}</button>`).join('')}<button data-stop>■</button></div>`;
+      bedsEl.appendChild(card);
+    }
+    bedsEl.addEventListener('click', (e) => {
+      const b = e.target.closest('button');
+      if (!b) return;
+      if (b.dataset.stop !== undefined) return stopBed();
+      if (b.dataset.bed) playBed(b.dataset.bed, Number(b.dataset.lvl));
+    });
+    // the read-out pluck (the TV's 'card' cue)
+    function pluck() {
+      const c = ac();
+      voice(c, master, { f: 880, at: c.currentTime, d: 0.06, t: 'triangle', g: 0.08 });
+      voice(c, master, { f: 1175, at: c.currentTime + 0.07, d: 0.09, t: 'triangle', g: 0.07 });
+    }
+
+    // ── Presentation variants ───────────────────────────────────────────────────────────────────
+    const CARDS = [
+      ['A', 'What did I shove up there this time? ', ['A finger in the wrong hole.']],
+      ['B', 'My new startup is basically Uber for ', ['A sock full of quarters.']],
+      [
+        'C',
+        '',
+        ['Grandma’s Facebook comments'],
+        ' is just ',
+        ['A very confident pigeon'],
+        ' for grown-ups.',
+      ],
+    ];
+    const esc = (s) => s.replace(/</g, '&lt;');
+    function cardHtml(card, markClass) {
+      const [L, ...rest] = card;
+      let html = `<span class="disc">${L}</span>`;
+      for (const part of rest)
+        html += Array.isArray(part)
+          ? `<mark class="${markClass}">${esc(part[0])}</mark>`
+          : `<span>${esc(part)}</span>`;
+      return html;
+    }
+    const PRES = {
+      A: {
+        title: 'Land, then the whites drop in',
+        live: true,
+        note: 'What plays on main now: the card lands with a bounce (600 ms), the pluck sounds, each white pops into its blank from 450 ms on, 300 ms apart. Holds 2.2 s + 18 ms/char, max 4 s (≈ 3 s for a normal card).',
+        hold: 2900,
+        draw(tv, card) {
+          tv.innerHTML = `<span class="kicker">Round 1 · Card ${card[0]} of 3 · Read it out loud</span><div class="black a-land">${cardHtml(card, 'a-pop hidden')}</div>`;
+          tv.querySelectorAll('mark').forEach((m, i) => {
+            m.style.animationDelay = `${450 + i * 300}ms`;
+          });
+          return [
+            [0, 'card lands (600 ms) · pluck'],
+            [450, 'first white pops in'],
+            [750, 'second white (Pick 2)'],
+            [2900, 'next card'],
+          ];
+        },
+      },
+      B: {
+        title: 'Slide up, breathe, flip the whites in',
+        live: false,
+        note: 'Slower and more deliberate: the black sentence slides up from the table (400 ms), a 500 ms breath, then each white flips up into its blank (450 ms, 600 ms apart) with the pluck on the first. Holds 3 s + 20 ms/char, max 5 s (≈ 3.8 s for a normal card).',
+        hold: 3800,
+        draw(tv, card) {
+          tv.innerHTML = `<span class="kicker">Round 1 · Card ${card[0]} of 3 · Read it out loud</span><div class="black a-slide">${cardHtml(card, 'a-flipword hidden')}</div>`;
+          tv.querySelectorAll('mark').forEach((m, i) => {
+            m.style.animationDelay = `${900 + i * 600}ms`;
+          });
+          setTimeout(pluck, 900);
+          return [
+            [0, 'sentence slides up (400 ms)'],
+            [900, 'first white flips in · pluck'],
+            [1500, 'second white (Pick 2)'],
+            [3800, 'next card'],
+          ];
+        },
+      },
+      C: {
+        title: 'A face-down card flips over',
+        live: false,
+        note: 'The physical move: a cream card back sits on the table, then flips over (600 ms) to show the whole sentence at once, whites in; the pluck lands on the turn. Holds 2.5 s + 18 ms/char, max 4 s (≈ 3.2 s).',
+        hold: 3200,
+        draw(tv, card) {
+          tv.innerHTML = `<span class="kicker">Round 1 · Card ${card[0]} of 3 · Read it out loud</span><div class="black a-flip"><div class="back">BLANKS</div>${cardHtml(card, '')}</div>`;
+          setTimeout(pluck, 300);
+          return [
+            [0, 'card back on the table'],
+            [300, 'flip (600 ms) · pluck'],
+            [900, 'sentence readable'],
+            [3200, 'next card'],
+          ];
+        },
+      },
+    };
+    const presEl = document.getElementById('pres');
+    for (const [k, v] of Object.entries(PRES)) {
+      const card = document.createElement('div');
+      card.className = 'card' + (v.live ? ' live' : '');
+      card.style.gridColumn = '1 / -1';
+      card.innerHTML = `<div><span class="letter">${k}</span><strong>${v.title}</strong>${v.live ? ' <span class="tag">live on main</span>' : ''}</div><p class="note">${v.note}</p><div class="tvbox"><div class="tv" id="tv-${k}"><span class="note">▶ plays three cards</span></div></div><div class="timeline" id="tl-${k}"></div><div class="bar"><button class="primary" data-pres="${k}">▶ Play ${k}</button></div>`;
+      presEl.appendChild(card);
+    }
+    let presTimers = [];
+    function playPres(k) {
+      ac();
+      presTimers.forEach(clearTimeout);
+      presTimers = [];
+      const v = PRES[k],
+        tv = document.getElementById('tv-' + k),
+        tl = document.getElementById('tl-' + k);
+      let at = 0;
+      CARDS.forEach((card, n) => {
+        presTimers.push(
+          setTimeout(() => {
+            if (k !== 'B') pluck();
+            const beats = v.draw(tv, card);
+            tl.innerHTML = beats.map((b) => `<span><b>${b[0]} ms</b> ${b[1]}</span>`).join('');
+            beats.forEach((b, i) =>
+              presTimers.push(
+                setTimeout(() => {
+                  [...tl.children].forEach((r) => r.classList.remove('now'));
+                  tl.children[i].classList.add('now');
+                }, b[0]),
+              ),
+            );
+          }, at),
+        );
+        at += v.hold + (n === 2 ? 600 : 0);
+      });
+    }
+    presEl.addEventListener('click', (e) => {
+      const b = e.target.closest('button[data-pres]');
+      if (b) playPres(b.dataset.pres);
+    });
+
+    // ── Picks: saved to the artifact's shared store so the session can read them back ──────────
+    (async () => {
+      const opts = ['<option value="">keep current</option>'];
+      for (const [id, bed] of Object.entries(BEDS))
+        for (let l = 1; l <= 3; l++)
+          opts.push(
+            `<option value="${bed.key}${l}">${bed.key}${l} · ${bed.title} · level ${l}</option>`,
+          );
+      opts.push('<option value="silent">silent</option>');
+      document.querySelectorAll('select[data-pick]:not([data-pick=presentation])').forEach((s) => {
+        s.innerHTML = opts.join('');
+      });
+      const status = document.getElementById('picks-status');
+      const db = window.claude ? await window.claude.use('db') : null;
+      if (!db) {
+        status.textContent = 'Saving is not available here — reply with the letters instead.';
+        return;
+      }
+      const ref = db.doc('picks/owner');
+      try {
+        const snap = await ref.get();
+        const data = snap && snap.exists ? snap.data() : null;
+        if (data) {
+          document.querySelectorAll('[data-pick]').forEach((el) => {
+            if (data[el.dataset.pick] !== undefined) el.value = data[el.dataset.pick];
+          });
+          status.textContent = 'Saved ' + (data.savedAt || '');
+        }
+      } catch (e) {
+        /* first visit */
+      }
+      let t = null;
+      const save = () => {
+        clearTimeout(t);
+        t = setTimeout(async () => {
+          const data = { savedAt: new Date().toISOString() };
+          document.querySelectorAll('[data-pick]').forEach((el) => {
+            data[el.dataset.pick] = el.value;
+          });
+          try {
+            await ref.set(data);
+            status.textContent = 'Saved ' + data.savedAt;
+          } catch (e) {
+            status.textContent =
+              'Could not save (' + (e && e.code) + ') — reply with the letters instead.';
+          }
+        }, 400);
+      };
+      document.querySelectorAll('[data-pick]').forEach((el) => el.addEventListener('change', save));
+      document.querySelector('[data-pick=notes]').addEventListener('input', save);
+    })();
+  </script>
+</html>
