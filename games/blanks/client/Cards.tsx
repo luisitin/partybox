@@ -3,6 +3,7 @@
 // "paper" marks — the physical game's convention, kept in every theme so the game is its own
 // thing. `fill` (server/cards.ts) is the one rule for where the text goes.
 import type { CSSProperties, JSX, ReactNode } from 'react';
+import { usePrefersReducedMotion } from '@partybox/game-sdk/ui';
 import { BLANK } from '../content/schema';
 import { fill, fillText, glue } from '../server/cards';
 import type { Segment } from '../server/cards';
@@ -127,6 +128,29 @@ export function FilledCard({
       ) : null}
       {children}
     </article>
+  );
+}
+
+/**
+ * The read-out card, dealt face-down and turned over (review-loop #159, the owner's "I love
+ * choreography and 3D visuals"): the back is a cream card with the wordmark, the front is the
+ * filled sentence. One element flips in 3D — the `card` pluck sounds as it is tossed, the face
+ * is readable by ~320 ms, and the whites pop into their blanks after it settles. Under reduced
+ * motion the front is simply there.
+ */
+export function FlipCard(props: FilledCardProps & { flipKey: string }): JSX.Element {
+  const { flipKey, className, ...card } = props;
+  const reduced = usePrefersReducedMotion();
+  if (reduced) return <FilledCard {...card} className={className} />;
+  return (
+    <div className={styles.flipScene}>
+      <div key={flipKey} className={styles.flipper}>
+        <FilledCard {...card} className={`${styles.flipFront} ${className ?? ''}`} />
+        <span className={styles.flipBack} aria-hidden>
+          Blanks
+        </span>
+      </div>
+    </div>
   );
 }
 

@@ -6,7 +6,7 @@ import { Avatar, Screen, VoteList, WaitingScreen } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { BlanksControllerView } from '../server/index';
 import type { Input } from '../server/types';
-import { FilledCard, InlineFilled, LETTERS } from './Cards';
+import { FilledCard, FlipCard, InlineFilled, LETTERS } from './Cards';
 import { NextButton } from './NextButton';
 import styles from './blanks.module.css';
 
@@ -30,7 +30,8 @@ export function ControllerReveal({ view }: Props): JSX.Element {
       {/* The card is the whole screen in a phone-only room: centred in the free space, the
           caption under it (it sat in the top third over a blank two-thirds, review-loop #139). */}
       <div className={styles.readAlong}>
-        <FilledCard
+        <FlipCard
+          flipKey={String(current.slot)}
           key={current.slot}
           text={black.text}
           whites={current.whites}

@@ -355,6 +355,52 @@
   margin-block: auto;
 }
 
+/* ── The read-out card's turn ──────────────────────────────────────────────────────────────── */
+
+/* The scene gives the flip its depth; the flipper carries the whole card, the back is the cream
+   side you see until it is halfway over (review-loop #159). */
+.flipScene {
+  perspective: 1600px;
+  width: min(100%, 1400px);
+  margin-inline: auto;
+}
+
+.flipper {
+  position: relative;
+  transform-style: preserve-3d;
+  animation: global(pb-flip) 520ms var(--pb-ease) both;
+}
+
+.flipFront {
+  backface-visibility: hidden;
+}
+
+/* The back of the card: cream, with the wordmark, filling the front's box. */
+.flipBack {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border-radius: var(--pb-radius-lg);
+  background: linear-gradient(180deg, #f6f1e6, #ebe4d4);
+  color: #16171c;
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  box-shadow:
+    0 0 0 1px rgb(255 255 255 / 14%),
+    0 12px 32px rgb(0 0 0 / 40%);
+  transform: rotateY(180deg);
+  backface-visibility: hidden;
+}
+
+/* The whites land after the card has settled (the flip ends at 520 ms). */
+.flipper .fill {
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+  animation-delay: calc(560ms + var(--fill-index, 0) * 260ms);
+}
+
 /* The reveal card lands with a bounce (a new card on the table) — from half opacity, not from
    nothing: at 20 fps the stage sat empty for two frames between two read-outs (review-loop #131).
    Then its whites drop in one by one (300 ms apart, from 450 ms) — a presentation, not a pop
