@@ -213,7 +213,7 @@ describe('judge (czar mode)', () => {
   });
 
   it('a judge who dropped during the reading never holds the vote: it ends on entry', () => {
-    let s = readAll(playAll(toAnswer(start({ judge: 'czar', players: 4 }))));
+    const s = readAll(playAll(toAnswer(start({ judge: 'czar', players: 4 }))));
     expect(s.phase.id).toBe('judge');
     // Replay: drop the judge one card before the end of the reading.
     let r = playAll(toAnswer(start({ judge: 'czar', players: 4 })));
