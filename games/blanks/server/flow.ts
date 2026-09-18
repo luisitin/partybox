@@ -9,7 +9,7 @@ import { enterIntro, reduceIntro } from './phases/intro';
 import { enterJudge, reduceJudge } from './phases/judge';
 import { enterReveal, reduceReveal } from './phases/reveal';
 import { enterDone, enterFinal, enterResult, reduceFinal, reduceResult } from './phases/result';
-import { closeAnswers, playersDone, votingDone } from './round';
+import { closeAnswers, playersDone, voteIsFormality, votingDone } from './round';
 import type { Input, State } from './types';
 
 export function afterIntro(state: State, now: number): State {
@@ -26,7 +26,8 @@ export function afterAnswer(state: State, now: number): State {
 
 export function afterReveal(state: State, now: number): State {
   const index = state.revealIndex + 1;
-  return index < state.slots.length ? enterReveal(state, now, index) : enterJudge(state, now);
+  if (index < state.slots.length) return enterReveal(state, now, index);
+  return voteIsFormality(state) ? enterResult(state, now) : enterJudge(state, now);
 }
 
 export function afterJudge(state: State, now: number): State {
@@ -45,7 +46,7 @@ function skip(state: State, now: number): State {
     case 'answer':
       return afterAnswer(state, now);
     case 'reveal':
-      return enterJudge(state, now);
+      return voteIsFormality(state) ? enterResult(state, now) : enterJudge(state, now);
     case 'judge':
       return afterJudge(state, now);
     case 'result':

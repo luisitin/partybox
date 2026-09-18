@@ -148,6 +148,7 @@ export function tally(state: State): SlotTally[] {
  */
 export function roundWinners(state: State): string[] {
   if (state.slots.length === 1) return [...state.slots];
+  if (voteIsFormality(state) && Object.keys(state.votes).length === 0) return [...state.slots];
   const rows = tally(state);
   const top = Math.max(0, ...rows.map((r) => r.votes));
   if (top === 0) return [];
@@ -156,4 +157,14 @@ export function roundWinners(state: State): string[] {
 
 export function isWalkover(state: State): boolean {
   return state.slots.length === 1;
+}
+
+/** Two cards whose authors are the only connected voters: each could only vote for the other,
+ *  so the vote decides nothing — the round skips it and both take the point (review-loop #135). */
+export function voteIsFormality(state: State): boolean {
+  if (state.slots.length !== 2) return false;
+  const voters = eligibleVoters(state).filter(
+    (id) => state.players[id]?.connected && hasVotableSlot(state, id),
+  );
+  return voters.length > 0 && voters.every((id) => state.slots.includes(id));
 }

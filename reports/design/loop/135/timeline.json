@@ -1,0 +1,142 @@
+{
+  "pass": "135",
+  "game": "blanks",
+  "players": 3,
+  "scenario": "vip-leaves",
+  "focus": "phone",
+  "started": "00:07:08.096",
+  "tvVideoT0": "00:07:04.731",
+  "changes": [
+    {
+      "t": 1789690028099,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789690033092,
+      "bed": "warm",
+      "at": "00:07:08.099",
+      "sinceStartS": 0,
+      "videoS": 3.4
+    },
+    {
+      "t": 1789690033196,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789690093099,
+      "bed": "bossa",
+      "at": "00:07:13.196",
+      "sinceStartS": 5.1,
+      "videoS": 8.5
+    },
+    {
+      "t": 1789690069287,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789690122493,
+      "bed": "bossa",
+      "at": "00:07:49.287",
+      "sinceStartS": 41.2,
+      "videoS": 44.6
+    },
+    {
+      "t": 1789690071416,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789690076717,
+      "bed": "warm",
+      "at": "00:07:51.416",
+      "sinceStartS": 43.3,
+      "videoS": 46.7
+    },
+    {
+      "t": 1789690076761,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789690082178,
+      "bed": "warm",
+      "at": "00:07:56.761",
+      "sinceStartS": 48.7,
+      "videoS": 52
+    },
+    {
+      "t": 1789690082282,
+      "status": "playing",
+      "phase": "result",
+      "deadline": 1789690090183,
+      "bed": "warm",
+      "at": "00:08:02.282",
+      "sinceStartS": 54.2,
+      "videoS": 57.6
+    },
+    {
+      "t": 1789690090258,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789690095186,
+      "bed": "warm",
+      "at": "00:08:10.258",
+      "sinceStartS": 62.2,
+      "videoS": 65.5
+    },
+    {
+      "t": 1789690095189,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789690185187,
+      "bed": "bossa",
+      "at": "00:08:15.189",
+      "sinceStartS": 67.1,
+      "videoS": 70.5
+    },
+    {
+      "t": 1789690100850,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789690107655,
+      "bed": "warm",
+      "at": "00:08:20.850",
+      "sinceStartS": 72.8,
+      "videoS": 76.1
+    },
+    {
+      "t": 1789690107737,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789690114458,
+      "bed": "warm",
+      "at": "00:08:27.737",
+      "sinceStartS": 79.6,
+      "videoS": 83
+    },
+    {
+      "t": 1789690114527,
+      "status": "playing",
+      "phase": "result",
+      "deadline": 1789690122466,
+      "bed": "warm",
+      "at": "00:08:34.527",
+      "sinceStartS": 86.4,
+      "videoS": 89.8
+    },
+    {
+      "t": 1789690122561,
+      "status": "playing",
+      "phase": "final",
+      "deadline": 1789690126478,
+      "bed": null,
+      "at": "00:08:42.561",
+      "sinceStartS": 94.5,
+      "videoS": 97.8
+    },
+    {
+      "t": 1789690126561,
+      "status": "results",
+      "phase": "results",
+      "deadline": null,
+      "bed": null,
+      "at": "00:08:46.561",
+      "sinceStartS": 98.5,
+      "videoS": 101.8
+    }
+  ],
+  "notes": ["vip-leaves: Sam (VIP) closed the page in answer"]
+}

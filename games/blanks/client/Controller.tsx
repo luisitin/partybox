@@ -57,6 +57,15 @@ function ControllerResult({ view, me, send }: Props): JSX.Element {
     view.role === 'judge' && winners.length === 1 && !winners[0]?.rando
       ? `You picked ${winners[0]?.name}`
       : null;
+  const others = winners.filter((w) => w.submitterId !== me.id).map((w) => w.name);
+  const noVotes = view.revealed.every((r) => r.votes === 0);
+  // A shared point says so: a formality split (two cards, no one else to vote) or a tie.
+  const wonLine =
+    winners.length === 1
+      ? 'You won the round!'
+      : winners.length === 2 && noVotes
+        ? 'Only two cards — you both score'
+        : `You split it with ${others.join(' and ')}`;
   const rankLine = `${final ? 'Final: ' : ''}#${view.myRank} of ${view.standings.length} · ${view.myScore} ${view.myScore === 1 ? 'point' : 'points'}`;
   return (
     <Screen
@@ -74,7 +83,7 @@ function ControllerResult({ view, me, send }: Props): JSX.Element {
     >
       <div className={styles.resultHero} role="status" aria-live="polite">
         <h2 className={styles.resultLine}>
-          {final ? rankLine : view.iWon ? 'You won the round!' : (iPicked ?? winnerLine(view))}
+          {final ? rankLine : view.iWon ? wonLine : (iPicked ?? winnerLine(view))}
         </h2>
         {!final ? (
           <p className="pb-caption pb-muted">
