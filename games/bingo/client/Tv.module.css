@@ -351,6 +351,13 @@
   opacity: 0;
 }
 
+.winWho {
+  --pb-win-avatar: 72px;
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-3);
+}
+
 .winLine {
   display: flex;
   align-items: center;
@@ -576,6 +583,9 @@
 }
 .crowdedClaim .bingoTitle {
   font-size: 96px;
+}
+.crowdedClaim .winWho {
+  --pb-win-avatar: 48px;
 }
 .crowdedClaim .winLine {
   font-size: 26px;

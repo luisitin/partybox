@@ -28,6 +28,8 @@ const { values } = parseArgs({
     reveal: { type: 'boolean', default: false },
     /** Phone only: no second tap — the window drains on the button and lapses (loop 256). */
     lapse: { type: 'boolean', default: false },
+    /** Idle bots in the room: 2 (default) or a crowd for the .crowdedClaim layout (loop 331). */
+    bots: { type: 'string', default: '2' },
   },
 });
 const OUT = values.out ?? join(REPO_ROOT, 'reports', 'design', 'latest');
@@ -44,7 +46,7 @@ async function main(): Promise<void> {
     await passAudioGate(tv);
     const sam = await openPhoneRecorded(browser, server.url, 'iphone', 'Sam', join(OUT, 'video'));
     await joinViaForm(sam, api, { avatarIndex: 1 });
-    await api.bots(2, 'idle');
+    await api.bots(Number(values.bots), 'idle');
     await api.post('/api/dev/start', {
       gameId: 'bingo',
       seed: 9,
