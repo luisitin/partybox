@@ -198,7 +198,10 @@ async function main(): Promise<void> {
         status === 'playing' &&
         sam.playerId &&
         !acted.has(key) &&
-        Date.now() - (changes.at(-1)?.t ?? 0) > 4000
+        // A read-out holds under three seconds since Blanks loop #216, so a phone acting "a few
+        // seconds in" never acts in `reveal` at all — a pause aimed there (--pause-in reveal) could
+        // not fire. Short phases get a shorter wait (review-loop #336).
+        Date.now() - (changes.at(-1)?.t ?? 0) > (phase === 'reveal' ? 1200 : 4000)
       ) {
         acted.add(key);
         if (SCENARIO === 'reconnect' && !scenarioDone && n >= 2) {
