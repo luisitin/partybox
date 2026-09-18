@@ -6,6 +6,7 @@ import { useEffect, useRef } from 'react';
 import { buzz } from '@partybox/game-sdk/ui';
 import type { PlayCue } from '@partybox/game-sdk/ui';
 import type { BingoControllerView } from '../server/views';
+import { DEAL_BOUNCE_MS, DEAL_START_MS, DEAL_STEP_MS } from '../server/types';
 import { BALL_LAND_MS } from './caller';
 
 export function useVerdictFeel(
@@ -53,4 +54,19 @@ export function useCallFeel(view: BingoControllerView): void {
     const t = setTimeout(() => buzz(12), BALL_LAND_MS);
     return () => clearTimeout(t);
   }, [stamp]);
+}
+
+/**
+ * The deal's plucks: one soft 'card' as each card lands (owner's pick, options B + C), about a
+ * second apart (loop 345); the timings mirror .dealing in the stylesheet, the pluck on the bounce.
+ * One card plucks too (loop 278: the TV plucks the same beats).
+ */
+export function useDealFeel(dealing: boolean, cards: number, round: number, play: PlayCue): void {
+  useEffect(() => {
+    if (!dealing) return;
+    const handles = Array.from({ length: cards }, (_, i) =>
+      setTimeout(() => play('card'), DEAL_START_MS + i * DEAL_STEP_MS + DEAL_BOUNCE_MS),
+    );
+    return () => handles.forEach((h) => clearTimeout(h));
+  }, [dealing, cards, play, round]);
 }

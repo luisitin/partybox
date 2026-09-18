@@ -3,7 +3,13 @@
 import { useEffect } from 'react';
 import type { JSX } from 'react';
 import { BigText, Stage, useHold, useSecondsLeft, useSoundApi } from '@partybox/game-sdk/ui';
-import { RESUME_MS } from '../server/types';
+import {
+  DEAL_BOUNCE_MS,
+  DEAL_START_MS,
+  DEAL_STEP_MS,
+  RESUME_MS,
+  dealDoneMs,
+} from '../server/types';
 import styles from './Tv.module.css';
 
 /**
@@ -29,12 +35,12 @@ export function IntroCountdown({
     if (counting) sound.play('tick');
   }, [counting, left, sound]);
   // Once the last card back has landed the caption stops saying "dealing" (loop 302).
-  const dealt = useHold('deal', 700 + cards * 110);
-  // The deal, heard from the sofa: the same 360 + i × 110 (+250 on the bounce) the phones use
-  // (Controller.tsx), so the room's plucks and the TV's land together.
+  const dealt = useHold('deal', dealDoneMs(cards));
+  // The deal, heard from the sofa: the same beats the phones use (Controller.tsx — a second a
+  // card, loop 345; the pluck on the bounce), so the room's plucks and the TV's land together.
   useEffect(() => {
     const handles = Array.from({ length: cards }, (_, i) =>
-      setTimeout(() => sound.play('card'), 360 + i * 110 + 250),
+      setTimeout(() => sound.play('card'), DEAL_START_MS + i * DEAL_STEP_MS + DEAL_BOUNCE_MS),
     );
     return () => handles.forEach((h) => clearTimeout(h));
   }, [cards, sound]);
@@ -75,7 +81,7 @@ export function IntroCountdown({
                 >
                   <span
                     className={styles.dealCard}
-                    style={{ animationDelay: `${360 + i * 110}ms` }}
+                    style={{ animationDelay: `${DEAL_START_MS + i * DEAL_STEP_MS}ms` }}
                   />
                 </span>
               ))}

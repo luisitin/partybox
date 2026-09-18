@@ -25,7 +25,7 @@ import {
 import type { CardStyle } from './styles';
 import { otherTitle, whyNot } from './copy';
 import { EndScreens, afterLine, WinScreen } from './WinScreen';
-import { useCallFeel, useVerdictFeel } from './feel';
+import { useCallFeel, useDealFeel, useVerdictFeel } from './feel';
 import styles from './Controller.module.css';
 
 export function Controller({
@@ -49,16 +49,7 @@ export function Controller({
   const verdictShown = view.verdictShown;
   const play = useSound();
   useVerdictFeel(view, me.id, claimKey, verdictShown, play);
-  // The deal's plucks: one soft 'card' as each thumbnail lands (owner's pick, options B + C);
-  // the timings mirror .dealing in the stylesheet, the pluck on the bounce (~250 ms in).
-  const dealing = view.phaseId === 'intro';
-  useEffect(() => {
-    if (!dealing) return; // one card plucks too (loop 278: the TV plucks the same beats)
-    const handles = Array.from({ length: n }, (_, i) =>
-      setTimeout(() => play('card'), 360 + i * 110 + 250),
-    );
-    return () => handles.forEach((h) => clearTimeout(h));
-  }, [dealing, n, play, view.round]);
+  useDealFeel(view.phaseId === 'intro', n, view.round, play);
   // A valid claim too: the room learns who won from the TV, not from a phone flipping first.
   const pending = view.phaseId === 'bingo' && view.claim !== null && !verdictShown;
   const [sheet, setSheet] = useState(false);
