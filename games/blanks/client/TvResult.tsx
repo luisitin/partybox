@@ -36,6 +36,9 @@ export function winnerLine(
   if (humans.length < winners.length) return `${list(humans)} split it with Rando`;
   const names = humans;
   if (view.walkover) return `Only ${names[0]} played — wins by default`;
+  // Two cards, no one else to vote: the round skipped the vote and both take the point.
+  if (names.length === 2 && view.revealed.every((r) => r.votes === 0))
+    return `Only two cards — ${names[0]} and ${names[1]} split it`;
   if (names.length === 1) return `${names[0]} wins the round!`;
   return `${list(names)} split it`;
 }

@@ -161,6 +161,28 @@ describe('judge (vote mode)', () => {
   });
 });
 
+describe('two cards, no one else to vote', () => {
+  it('skips the vote after the reading and splits the point', () => {
+    // Three players, one dropped: the two who played are the only voters.
+    let s = connect(toAnswer(start({ players: 3, timed: true })), 'cleo', false);
+    s = playAll(s, ['cleo']);
+    expect(s.slots).toHaveLength(2);
+    s = readAll(s);
+    expect(s.phase.id).toBe('result');
+    expect([...s.winners].sort()).toEqual(['ana', 'ben']);
+    expect(s.scores).toEqual({ ana: 1, ben: 1, cleo: 0 });
+    expect(tv(s).walkover).toBe(false);
+    // A third voter (Cleo connected, sitting the round out) makes the vote real again.
+    let t = playAll(toAnswer(start({ players: 3, timed: true })), ['cleo']);
+    t = readAll(timer(t));
+    expect(t.phase.id).toBe('judge');
+    expect(timer(t).winners).toEqual([]);
+    // A judge in czar mode is that third voter too.
+    const c = readAll(playAll(toAnswer(start({ players: 3, judge: 'czar', timed: true }))));
+    expect(c.phase.id).toBe('judge');
+  });
+});
+
 describe('judge (czar mode)', () => {
   it('the judge rotates by seat, plays no card, and is the only voter', () => {
     let s = start({ judge: 'czar', players: 4, rounds: 3 });
