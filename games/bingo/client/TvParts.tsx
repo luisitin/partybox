@@ -1,7 +1,7 @@
 // The pieces of the Bingo TV: scoreboard rows, a call (big or small), the hall board, and the
 // claim stage — a card dropping in, the pattern's cells turning in reading order with a gold
 // sweep, the rest fading in, the verdict popping beside the settled card.
-import { useEffect } from 'react';
+import { memo, useEffect } from 'react';
 import type { JSX } from 'react';
 import {
   BigText,
@@ -89,8 +89,17 @@ export function DibsLine({ arm }: { arm: BingoTvView['arm'] }): JSX.Element {
   );
 }
 
-/** The hall board: 5 rows × 15 numbers, lit as called, the current one ringed (review-loop #1). */
-export function CalledBoard({
+/**
+ * The hall board: 5 rows × 15 numbers, lit as called, the current one ringed (review-loop #1).
+ * Memoised on the numbers themselves (loop 267): the TV re-renders on every push — a dibs, a
+ * menu, a score — and 75 cells diffed each time cost 0.66 long frames per 1000 in a 12-player run
+ * (0 with the board off). The `called` array is new on every push; its join is the identity.
+ */
+export const CalledBoard = memo(CalledBoardView, (a, b) => {
+  return a.current === b.current && a.called.join(',') === b.called.join(',');
+});
+
+function CalledBoardView({
   called,
   current,
 }: {
