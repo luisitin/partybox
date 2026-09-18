@@ -2,14 +2,15 @@
 // pattern was right, red where a daub was never called, outlined where a square was missed. The
 // checked card is wiped blank on entry (the penalty: re-daub from memory; the claimant's other
 // cards keep their daubs) and they may not claim again until the next number. Everyone may keep
-// daubing. Two beats (ADR-033): the reveal, then the verdict is read (`round.judged`); exits on
-// the second deadline via `next`.
+// daubing. Two beats (ADR-033): the reveal, then the verdict is read (`round.judged`); the second
+// deadline goes back to play with a 3 · 2 · 1 (loop 282), whose tick calls the next number.
 import { enterPhase, isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { toggleDaub } from '../cards';
-import { clearClaims, setMenu } from '../claims';
+import { clearClaims, menusOpen, setMenu } from '../claims';
 import { VERDICT_READ_MS, claimRevealMs } from '../reveal';
-import type { Claim, Input, State, Transition } from '../types';
+import { RESUME_MS } from '../types';
+import type { Claim, Input, State } from '../types';
 
 export function enterCheck(state: State, now: number, claim: Claim): State {
   const round = state.round;
@@ -32,7 +33,7 @@ export function enterCheck(state: State, now: number, claim: Claim): State {
   );
 }
 
-export function reduceCheck(state: State, event: GameEvent<Input>, next: Transition): State {
+export function reduceCheck(state: State, event: GameEvent<Input>): State {
   if (event.type === 'input') {
     // Daubing stays open; a second BINGO! during a check is ignored (one check at a time).
     if (event.input.type === 'daub')
@@ -41,7 +42,19 @@ export function reduceCheck(state: State, event: GameEvent<Input>, next: Transit
     return state;
   }
   if (!isTimerFor(state, event)) return state;
-  if (state.round.judged) return next(state, event.now);
+  // Read: back to play through the same 3 · 2 · 1 every stop in calling ends with (loop 282);
+  // the countdown's own tick then calls the next number (`next`, via reducePlay).
+  if (state.round.judged) {
+    const cleared = { ...state, round: { ...state.round, claim: null } };
+    // A card-style menu still open: play is held (no clock) until it closes, as ever.
+    if (menusOpen(cleared)) return enterPhase(cleared, 'play', event.now, null);
+    return enterPhase(
+      { ...cleared, round: { ...cleared.round, resumeAt: event.now + RESUME_MS } },
+      'play',
+      event.now,
+      RESUME_MS,
+    );
+  }
   // The verdict: the phones may show it now; a moment to read it, then the caller resumes.
   return {
     ...state,

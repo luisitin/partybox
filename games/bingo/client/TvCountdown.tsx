@@ -11,13 +11,28 @@ import styles from './Tv.module.css';
  * tick per second — the cards are dealt on the phones in the first second or so, then the room
  * knows exactly when the first ball drops. Before that the slot says the cards are being dealt.
  */
-export function IntroCountdown({ deadline }: { deadline: number | null }): JSX.Element {
+export function IntroCountdown({
+  deadline,
+  cards,
+}: {
+  deadline: number | null;
+  /** Cards per player: the TV plucks once per card on the phones' deal beats (loop 278). */
+  cards: number;
+}): JSX.Element {
   const left = useSecondsLeft(deadline);
   const counting = left !== null && left <= 3 && left > 0;
   const sound = useSoundApi();
   useEffect(() => {
     if (counting) sound.play('tick');
   }, [counting, left, sound]);
+  // The deal, heard from the sofa: the same 360 + i × 110 (+250 on the bounce) the phones use
+  // (Controller.tsx), so the room's plucks and the TV's land together.
+  useEffect(() => {
+    const handles = Array.from({ length: cards }, (_, i) =>
+      setTimeout(() => sound.play('card'), 360 + i * 110 + 250),
+    );
+    return () => handles.forEach((h) => clearTimeout(h));
+  }, [cards, sound]);
   return (
     <div className={styles.introSlot}>
       {counting ? (
@@ -40,7 +55,27 @@ export function IntroCountdown({ deadline }: { deadline: number | null }): JSX.E
           </span>
         </>
       ) : (
-        <span className={styles.introLead}>dealing the cards…</span>
+        <>
+          {/* The deal itself (loop 279): one card back per card, dealt out of a deck on the
+              plucks' beats, each turning face-up as it lands in the fan. */}
+          <span className={styles.dealWrap}>
+            <span className={styles.dealFan} aria-hidden>
+              {Array.from({ length: cards }, (_, i) => (
+                <span
+                  key={i}
+                  className={styles.dealSlot}
+                  style={{ transform: `rotate(${(i - (cards - 1) / 2) * 9}deg)` }}
+                >
+                  <span
+                    className={styles.dealCard}
+                    style={{ animationDelay: `${360 + i * 110}ms` }}
+                  />
+                </span>
+              ))}
+            </span>
+            <span className={styles.introLead}>dealing the cards…</span>
+          </span>
+        </>
       )}
     </div>
   );
@@ -50,9 +85,12 @@ export function IntroCountdown({ deadline }: { deadline: number | null }): JSX.E
 export function Resume({
   roundLabel,
   resumeAt,
+  pattern,
 }: {
   roundLabel: string;
   resumeAt: number;
+  /** The pattern in play — after "keep going — blackout" the room reads the new goal here. */
+  pattern?: string;
 }): JSX.Element {
   const left = Math.min(3, useSecondsLeft(resumeAt) ?? 0); // a 4 would tick four times on a 3 s hold
   const sound = useSoundApi();
@@ -61,7 +99,10 @@ export function Resume({
   }, [left, sound]);
   return (
     <Stage center>
-      <p className={styles.kicker}>{roundLabel} · calling resumes in</p>
+      <p className={styles.kicker}>
+        {roundLabel}
+        {pattern ? ` · ${pattern}` : ''} · calling resumes in
+      </p>
       <div className={styles.resumeWrap}>
         <svg className={styles.ring} viewBox="0 0 120 120" aria-hidden>
           <circle className={styles.ringTrack} cx="60" cy="60" r="52" />

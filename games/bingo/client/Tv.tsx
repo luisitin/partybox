@@ -10,9 +10,10 @@ import { BigText, Scoreboard, Stage, useSoundApi } from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
 import type { BingoTvView } from '../server/views';
 import { BALL_LAND_MS, hushCaller, speakCall } from './caller';
+import { PATTERN_LABEL, patternCells } from '../server/patterns';
 import { PatternIcon } from './Card';
 import { PatternDemo } from './PatternDemo';
-import { pendingLine, winHeadline } from './copy';
+import { pendingLine, whyNot, winHeadline } from './copy';
 import { IntroCountdown, Resume } from './TvCountdown';
 import { Call, CalledBoard, ClaimStage, DibsLine, rows, whichCard } from './TvParts';
 import styles from './Tv.module.css';
@@ -40,8 +41,11 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
   useEffect(() => {
     if (armWindow !== null) sound.play('dibs');
   }, [armWindow, sound]);
+  // A resume countdown (a menu closed, or "keep going" — loop 276) is not a call: the number is
+  // said when the ring runs out and the ball drops, not when the ring appears.
+  const counting = view.resumeAt !== null;
   useLayoutEffect(() => {
-    if (phaseId !== 'play' || number === null || letter === null) {
+    if (phaseId !== 'play' || number === null || letter === null || counting) {
       hushCaller(sound);
       return;
     }
@@ -50,7 +54,7 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
       speakCall(sound, letter, number);
     }, BALL_LAND_MS);
     return () => clearTimeout(t);
-  }, [phaseId, number, letter, sound]);
+  }, [phaseId, number, letter, counting, sound]);
 
   if (view.phaseId === 'intro') {
     return (
@@ -77,14 +81,17 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
             </span>
           ))}
         </p>
-        <IntroCountdown deadline={view.deadline} />
+        <IntroCountdown deadline={view.deadline} cards={view.cardsPerPlayer} />
       </Stage>
     );
   }
 
   if (view.phaseId === 'play') {
     // A menu open somewhere holds the caller; the last one closing runs a 3 · 2 · 1 on the stage.
-    if (view.resumeAt !== null) return <Resume roundLabel={roundLabel} resumeAt={view.resumeAt} />;
+    if (view.resumeAt !== null)
+      return (
+        <Resume roundLabel={roundLabel} resumeAt={view.resumeAt} pattern={view.patternLabel} />
+      );
     if (view.pausedBy.length > 0)
       return (
         <Stage center className={styles.held}>
@@ -132,7 +139,7 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
         {view.showBoard ? (
           <CalledBoard called={view.called} current={view.current?.number ?? null} />
         ) : null}
-        <DibsLine arm={view.arm} />
+        <DibsLine arm={view.arm} queue={view.queue} />
       </Stage>
     );
   }
@@ -165,6 +172,7 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
                 <span className={styles.legendRed}>✕ never called</span>
                 <span className={styles.legendMissing}>▢ missed</span>
               </p>
+              {whyNot(view.claim) ? <BigText level="h2">{whyNot(view.claim)}</BigText> : null}
               <BigText level="h2" tone="muted">
                 Card wiped. Next number in a moment…
               </BigText>
@@ -275,9 +283,13 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
         <BigText level="h1">Points</BigText>
         <Scoreboard rows={rows(view)} noTrophy />
         {next ? (
-          <BigText level="h2" tone="accent">
-            Next: round {view.round + 1} — {next}
-          </BigText>
+          // The next pattern's shape beside its name (loop 287): the room sees the goal early.
+          <div className={styles.nextUp}>
+            <PatternIcon cells={patternCells(next)} size={56} />
+            <BigText level="h2" tone="accent">
+              Next: round {view.round + 1} — {PATTERN_LABEL[next]}
+            </BigText>
+          </div>
         ) : null}
       </Stage>
     );

@@ -172,6 +172,13 @@
     transform: scaleX(0);
   }
 }
+/* The short button (a landscape strip, four cards): a hairline under the label, not through it. */
+.bingoWrapSmall .armDrain {
+  left: 8px;
+  right: 8px;
+  bottom: 2px;
+  height: 3px;
+}
 @keyframes armed-pulse {
   from {
     transform: scale(1);
@@ -684,9 +691,41 @@
 }
 /* The winner's own card above the three keep-going buttons: same cap as the deciding screen. */
 .winCard {
+  position: relative;
   width: 100%;
   max-width: min(100%, max(200px, calc((100dvh - 500px) / 1.15)));
   margin-inline: auto;
+  overflow: hidden;
+  border-radius: var(--pb-radius);
+}
+/* The win lands (loop 285): one light sweeps across the card, top-left to bottom-right, 900 ms
+   after the verdict's pop has settled — transform only, a static gradient moving. */
+.winCard::after {
+  content: '';
+  position: absolute;
+  inset: -40%;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 42%,
+    color-mix(in oklab, white 30%, transparent) 50%,
+    transparent 58%
+  );
+  transform: translateX(-120%);
+  animation: card-shine 900ms ease-out 250ms both;
+}
+@keyframes card-shine {
+  from {
+    transform: translateX(-120%);
+  }
+  to {
+    transform: translateX(120%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .winCard::after {
+    display: none;
+  }
 }
 
 /* A sideways phone in Safari (the tab bar leaves ~330 px): the call row, the rows' gaps and the
@@ -934,4 +973,12 @@
   .swapIn {
     animation: none;
   }
+}
+
+/* "Next: round 2 — Four corners" with the shape (loop 288). */
+.nextUp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pb-space-2);
 }

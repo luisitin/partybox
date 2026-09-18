@@ -64,14 +64,36 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
   await settle(3500); // 6.5 s in: the intro (5 s) has run out and the first ball has dropped
   await api.clock(true); // hold the caller from here
   await T.mark('D1b');
-  const intro = T.cues(await T.between(tv, 'D1', 'D1b'));
+  // From the start (the deal's pluck lands 0.6 s in, before D1) to the first call.
+  const intro = T.cues(await T.between(tv, 'C3', 'D1b')).filter((c) => c !== 'phase');
   T.ok(
     'D',
-    'the intro counts down: three ticks (3 · 2 · 1), then the first call',
-    intro.filter((c) => c === 'tick').length === 3 &&
+    'the intro: one card pluck on the deal (one card each), three ticks (3 · 2 · 1), then the first call',
+    intro.filter((c) => c === 'card').length === 1 &&
+      intro.indexOf('card') < intro.indexOf('tick') &&
+      intro.indexOf('card') > intro.indexOf('start') &&
+      intro.filter((c) => c === 'tick').length === 3 &&
       intro.indexOf('call') > intro.lastIndexOf('tick') &&
       intro.filter((c) => c === 'call').length === 1,
     `cues=${intro.join(',')}`,
+  );
+  // The deal's pluck lands on the same beat on the TV and in the hand (loop 278): offsets from
+  // each page's own C3 mark, within 150 ms.
+  const markAt = async (page: Page, label: string): Promise<number> =>
+    (await T.trace(page)).filter((e) => e.kind === 'mark' && e['label'] === label).at(-1)?.t ?? 0;
+  const tvCard = (await T.between(tv, 'C3', 'D1')).find(
+    (e) => e.kind === 'cue' && e['cue'] === 'card',
+  );
+  const phoneCard = (await T.between(vip.page, 'C3', 'D1')).find(
+    (e) => e.kind === 'cue' && e['cue'] === 'card',
+  );
+  const tvCardAt = tvCard ? tvCard.t - (await markAt(tv, 'C3')) : null;
+  const phoneCardAt = phoneCard ? phoneCard.t - (await markAt(vip.page, 'C3')) : null;
+  T.ok(
+    'D',
+    "the deal's pluck: TV and phone within 150 ms of each other",
+    tvCardAt !== null && phoneCardAt !== null && Math.abs(tvCardAt - phoneCardAt) < 150,
+    `tv@+${tvCardAt}ms phone@+${phoneCardAt}ms`,
   );
   // The hand counts the same three seconds: one 15 ms tap each, no sound (loop 263).
   const introPhone = await T.between(vip.page, 'D1', 'D1b');
@@ -81,7 +103,7 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
     'the phone taps 3 · 2 · 1 with the TV; "deal me another" is a 20 ms tap and one card pluck',
     introTaps.length === 3 &&
       introPhone.filter((e) => e.kind === 'buzz' && Number(e['pattern']) === 20).length === 1 &&
-      T.cues(introPhone, 'phone').join(',') === 'card',
+      T.cues(introPhone, 'phone').join(',') === 'card', // the deal's own pluck lands before D1
     `taps=${introTaps.length} cues=${T.cues(introPhone, 'phone').join(',')}`,
   );
   await api.skip();
@@ -106,12 +128,15 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
       !(await T.between(vip.page, 'D1b', 'D2')).some((e) => e.kind === 'speak'),
     '',
   );
-  // wrong claim from p2: two taps (arm, then claim)
+  // wrong claim from p2: two taps (arm, then claim). Real time from here (loop 283): the card has
+  // no daubs, so an extra call cannot make it right, and the whole way back — verdict, read,
+  // 3 · 2 · 1, the next number — runs as it does in a room.
+  await api.clock(false);
   await p2.page.getByRole('button', { name: /^bingo! card 1$/i }).click();
   await settle(250);
   await p2.page.getByRole('button', { name: /tap again to claim/i }).dispatchEvent('click');
   // The reveal: drop 0.7 s, five turns (220 ms), 0.4 s, the rest 0.9 s, 0.7 s hold, 0.6 s settle.
-  await settle(8500); // the reveal: 1 s announce, 0.7 s drop, five turns (350 ms), 0.5 s, the rest 1 s, 0.8 s hold, 0.6 s settle → verdict ≈ 6.4 s
+  await settle(7500); // the reveal: 1 s announce, 0.7 s drop, five turns (350 ms), 0.5 s, 0.8 s hold, 0.6 s settle → verdict at 5.35 s (no rests on an empty card); the read ends at 8.35 s
   await T.mark('D3');
   evs = await T.between(tv, 'D2', 'D3');
   const hushIdx = evs.findIndex((e) => e.kind === 'hush' || e.kind === 'ss:cancel');
@@ -141,15 +166,20 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
     (await T.playing(tv)).length === 1,
     JSON.stringify(await T.playing(tv)),
   );
-  await api.skip(); // check → play
-  await settle(1800);
+  // The way back from a wrong claim (loop 282): the verdict tick, the 3 s read, then a 3 · 2 · 1
+  // whose tick calls the next number.
+  await settle(5200); // the read ends at ≈ 8.4 s, the ring runs to ≈ 11.4 s, the next number drops
   await T.mark('D4');
+  await api.clock(true); // hold the caller again for what follows
   evs = await T.between(tv, 'D3', 'D4');
+  const back = T.cues(evs);
   T.ok(
     'D',
-    'play resumes → the next number is spoken',
-    evs.some((e) => e.kind === 'speak'),
-    `spoken=${evs
+    'after the verdict: 3 · 2 · 1 ticks, then the next number is spoken (no call before the ticks)',
+    evs.some((e) => e.kind === 'speak') &&
+      back.filter((c) => c === 'tick').length === 3 &&
+      back.indexOf('call') > back.lastIndexOf('tick'),
+    `cues=${back.join(',')} spoken=${evs
       .filter((e) => e.kind === 'speak')
       .map((e) => e['text'])
       .join(' | ')}`,
@@ -271,19 +301,33 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
   await vip.page.getByRole('button', { name: /keep going — blackout/i }).click();
   await settle(300);
   await api.clock(false);
-  await settle(3500); // the verdict was read 3 s after the reveal: the call repeats
+  await settle(5200); // the held choice lands, a 3 s countdown ticks on every screen, the call repeats (loop 276)
   await T.mark('D9');
   evs = await T.between(tv, 'D8', 'D9');
   T.ok(
     'D',
-    'keep going (blackout) → play resumes, the number that was up is called again, no start/phase chime',
+    'keep going (blackout) → 3 · 2 · 1 ticks, then the number that was up is called again, no start/phase chime',
     evs.some((e) => e.kind === 'speak') &&
-      T.cues(evs).includes('call') &&
+      T.cues(evs).filter((c) => c === 'tick').length === 3 &&
+      T.cues(evs).indexOf('call') > T.cues(evs).lastIndexOf('tick') &&
       !T.cues(evs).includes('start'),
     `cues=${T.cues(evs).join(',')} spoken=${evs
       .filter((e) => e.kind === 'speak')
       .map((e) => e['text'])
       .join(' | ')}`,
+  );
+  // The phones run the same 3 · 2 · 1 (ticks) and feel the repeated call after it (loop 276).
+  const resumePhone = await T.between(vip.page, 'D8', 'D9');
+  const phoneTicks = T.cues(resumePhone, 'phone').filter((c) => c === 'tick').length;
+  const lastTick = resumePhone
+    .map((e) => e.kind === 'cue' && e['cue'] === 'tick')
+    .lastIndexOf(true);
+  const callBuzz = resumePhone.findIndex((e) => e.kind === 'buzz' && Number(e['pattern']) === 12);
+  T.ok(
+    'D',
+    'the phone ticks 3 · 2 · 1 with the TV, then feels the repeated call (a 12 ms buzz after the last tick)',
+    phoneTicks === 3 && callBuzz > lastTick,
+    `ticks=${phoneTicks} buzzIdx=${callBuzz} lastTickIdx=${lastTick}`,
   );
   // A game that ends on its own (one round): the bingo → the drumroll ("and the winner is…",
   // the final board, the tally chime, no fanfare yet) → 4 s later the results cheer (loop 246).

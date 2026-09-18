@@ -43,6 +43,26 @@ export function otherTitle(view: Win, name: string): string {
   return phrase.startsWith('wins') ? `${name} has bingo` : `${name} — ${phrase}`;
 }
 
+/**
+ * Why a claim failed, by the numbers (loop 272): "19 was never called · 3 was missed", "19 and 44
+ * were never called", or nothing when the card is simply short of the pattern.
+ */
+export function whyNot(claim: { card: number[]; red: number[]; missing: number[] }): string {
+  const num = (i: number): string => (i === 12 ? 'FREE' : String(claim.card[i] ?? '?'));
+  const list = (cells: number[]): string => {
+    const names = cells.map(num);
+    if (names.length <= 2) return names.join(' and ');
+    return `${names.slice(0, 2).join(', ')} and ${names.length - 2} more`;
+  };
+  const parts: string[] = [];
+  if (claim.red.length > 0)
+    parts.push(`${list(claim.red)} ${claim.red.length === 1 ? 'was' : 'were'} never called`);
+  const missed = claim.missing.filter((i) => i !== 12);
+  if (missed.length > 0)
+    parts.push(`${list(missed)} ${missed.length === 1 ? 'was' : 'were'} missed`);
+  return parts.join(' · ');
+}
+
 /** A choice made mid-celebration, as the room reads it: who picked what, and when it starts. */
 export function pendingLine(
   pending: 'same' | 'blackout' | 'next' | null,

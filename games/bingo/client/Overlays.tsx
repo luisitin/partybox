@@ -94,7 +94,14 @@ export function HoldCurtain({
 }
 
 /** The last menu closed: 3 · 2 · 1 on every screen, then the next number. */
-export function Countdown({ resumeAt }: { resumeAt: number }): JSX.Element | null {
+export function Countdown({
+  resumeAt,
+  pattern,
+}: {
+  resumeAt: number;
+  /** The pattern in play: after "keep going — blackout" the hand reads the new goal (loop 277). */
+  pattern?: string;
+}): JSX.Element | null {
   const left = useSecondsLeft(resumeAt);
   const play = useSound();
   const shown = left === null ? 0 : Math.min(3, left); // a clock a hair behind would say 4 first
@@ -122,7 +129,7 @@ export function Countdown({ resumeAt }: { resumeAt: number }): JSX.Element | nul
           {shown}
         </div>
       </div>
-      <p className={styles.curtainLine}>get your thumbs ready</p>
+      <p className={styles.curtainLine}>{pattern ? `${pattern} · ` : ''}get your thumbs ready</p>
     </div>
   );
 }

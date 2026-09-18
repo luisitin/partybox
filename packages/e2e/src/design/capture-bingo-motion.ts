@@ -67,12 +67,11 @@ async function main(): Promise<void> {
     await settle(2500); // Sam's window lapses at ~3 s: Priya's phone takes over
     await settle(3500); // Priya's lapses too; the queue is empty again
     // A wrong claim from Sam on card 1: the phone during the check, then the wipe.
-    marks.push({ name: 'claim-check-wipe', at: Date.now(), before: 0.2, seconds: 8 });
+    // 13 s: the reveal (5.35 s), the verdict read (3 s), the 3 · 2 · 1 (loop 282), the next call.
+    marks.push({ name: 'claim-check-wipe', at: Date.now(), before: 0.2, seconds: 13 });
     await sam.page.getByRole('button', { name: /^bingo! card 1$/i }).click();
     await sam.page.getByRole('button', { name: /tap again to claim/i }).dispatchEvent('click');
-    await settle(8000);
-    await api.skip(); // check → play: the wiped card comes back
-    await settle(1800);
+    await settle(13500);
     const video = await cutStrips(sam, join(OUT, 'strips'), marks);
     console.log(`10 fps strips from ${video ?? '(no video)'} → ${join(OUT, 'strips')}`);
   } finally {

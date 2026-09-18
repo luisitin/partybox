@@ -714,3 +714,112 @@
 .introRing .ringFill {
   stroke-width: 8;
 }
+
+/* Who is next in line behind the dibs (loop 271): quieter, on the same line. */
+.armThen {
+  color: var(--pb-text-muted);
+  font-weight: 700;
+}
+
+/* The deal on the TV (loop 279): card backs fan out of a deck above the caption, one per card,
+   on the phones' beats (360 + i × 110 ms, the pluck 250 ms later on the bounce). Each comes in
+   edge-on from above and turns face-up as it lands: transform + opacity, no shadows. */
+.dealWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pb-space-2);
+}
+
+.dealFan {
+  display: flex;
+  gap: 6px;
+  height: 88px;
+  align-items: flex-end;
+  perspective: 800px;
+}
+
+.dealSlot {
+  display: block;
+  transform-origin: 50% 120%; /* the fan pivots below the cards, like a hand of cards */
+}
+
+.dealCard {
+  display: block;
+  width: 62px;
+  height: 84px;
+  border-radius: 6px;
+  border: 2px solid var(--pb-accent-2);
+  background: repeating-linear-gradient(
+    45deg,
+    color-mix(in oklab, var(--pb-accent-2) 35%, var(--pb-surface)) 0 4px,
+    var(--pb-surface) 4px 8px
+  );
+  transform-origin: 50% 100%;
+  animation: tv-deal 420ms cubic-bezier(0.2, 0.9, 0.3, 1.15) both;
+}
+
+@keyframes tv-deal {
+  from {
+    opacity: 0;
+    transform: translateY(-60px) rotateY(90deg) scale(0.8);
+  }
+  35% {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dealCard {
+    animation: none;
+  }
+}
+
+/* The verdict lands on a bingo (loop 286): one light sweeps the card as it settles into its
+   column — the phone's card does the same (Controller.module.css). Transform only. */
+.shine {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--pb-radius);
+}
+
+.shine::after {
+  content: '';
+  position: absolute;
+  inset: -40%;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 42%,
+    color-mix(in oklab, white 30%, transparent) 50%,
+    transparent 58%
+  );
+  transform: translateX(-120%);
+  animation: card-shine 900ms ease-out 350ms both;
+}
+
+@keyframes card-shine {
+  from {
+    transform: translateX(-120%);
+  }
+  to {
+    transform: translateX(120%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shine::after {
+    display: none;
+  }
+}
+
+/* "Next: round 2 — corners" with the pattern's shape (loop 287). */
+.nextUp {
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-4);
+}

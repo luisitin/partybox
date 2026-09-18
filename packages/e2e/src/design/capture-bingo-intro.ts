@@ -23,6 +23,7 @@ const { values } = parseArgs({
     out: { type: 'string' },
     port: { type: 'string', default: '42140' },
     live: { type: 'boolean', default: false },
+    cards: { type: 'string', default: '1' },
   },
 });
 const OUT = values.out ?? join(REPO_ROOT, 'reports', 'design', 'latest');
@@ -50,7 +51,13 @@ async function main(): Promise<void> {
     await api.post('/api/dev/start', {
       gameId: 'bingo',
       seed: 9,
-      settings: { rounds: 2, round1: 'line', round2: 'corners', cards: 1, callSeconds: 60 },
+      settings: {
+        rounds: 2,
+        round1: 'line',
+        round2: 'corners',
+        cards: Number(values.cards),
+        callSeconds: 60,
+      },
     });
     if (values.live) {
       // "Deal me another" 1.8 s in (the deal has landed): the flip and its pluck (loop 268).

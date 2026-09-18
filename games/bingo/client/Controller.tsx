@@ -22,7 +22,7 @@ import {
   useOrientationLock,
 } from './styles';
 import type { CardStyle } from './styles';
-import { otherTitle } from './copy';
+import { otherTitle, whyNot } from './copy';
 import { EndScreens, afterLine, WinScreen } from './WinScreen';
 import { useCallFeel, useVerdictFeel } from './feel';
 import styles from './Controller.module.css';
@@ -48,7 +48,7 @@ export function Controller({
   // the timings mirror .dealing in the stylesheet, the pluck on the bounce (~250 ms in).
   const dealing = view.phaseId === 'intro';
   useEffect(() => {
-    if (!dealing || n <= 1) return;
+    if (!dealing) return; // one card plucks too (loop 278: the TV plucks the same beats)
     const handles = Array.from({ length: n }, (_, i) =>
       setTimeout(() => play('card'), 360 + i * 110 + 250),
     );
@@ -271,14 +271,17 @@ export function Controller({
           {missed ? <MissedToast view={view} count={missed} /> : null}
           {view.phaseId === 'check' && view.claim?.playerId === me.id && verdictShown ? (
             <p className={styles.wipeNote}>
-              Card {(view.claim.cardIndex ?? 0) + 1} wiped — re-daub from memory when play resumes.
+              {whyNot(view.claim) ? `${whyNot(view.claim)}. ` : ''}Card{' '}
+              {(view.claim.cardIndex ?? 0) + 1} wiped — re-daub from memory when play resumes.
             </p>
           ) : null}
           {body}
           {view.pausedBy.length > 0 && !view.menuOpen && !sheet ? (
             <HoldCurtain names={view.pausedBy} onOpen={openMenu} />
           ) : null}
-          {view.resumeAt !== null ? <Countdown resumeAt={view.resumeAt} /> : null}
+          {view.resumeAt !== null ? (
+            <Countdown resumeAt={view.resumeAt} pattern={view.patternLabel} />
+          ) : null}
           {sheet ? (
             <StyleSheet
               cards={n}
