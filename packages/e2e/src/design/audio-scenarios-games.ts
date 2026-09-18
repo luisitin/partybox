@@ -55,12 +55,14 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
   );
   T.ok('D', 'intro: nothing spoken', !evs.some((e) => e.kind === 'speak'), '');
   // "Another" 3 s in: the new card flips in with a 20 ms tap and a 'card' pluck (loop 268); then
-  // Ready — a 'submit' cue and a 20 ms tap of its own (loop 344).
+  // Ready — a 'submit' cue and a 20 ms tap of its own (loop 344). P2 readies through the dev
+  // API a moment later; the ring starts a breath after that (loop 349).
   await vip.page.getByRole('button', { name: /^🎲 another/i }).click();
   await settle(200);
   await vip.page.getByRole('button', { name: /^ready$/i }).click();
+  await settle(250);
   await api.readyAll();
-  await settle(3300); // 6.5 s in: the intro (5 s floor) has run out and the first ball has dropped
+  await settle(3900); // ~7 s in: the last Ready (3.4 s) + a breath + the 3 · 2 · 1 → the first ball
   await api.clock(true); // hold the caller from here
   await T.mark('D1b');
   // From the start (the deal's pluck lands 0.6 s in, before D1) to the first call. No phase chime
@@ -77,6 +79,20 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
       intro.filter((c) => c === 'call').length === 1 &&
       !intro.includes('phase'),
     `cues=${intro.join(',')}`,
+  );
+  // Ready-ups tick (the shell's lock tick, rising with the count); the ring's first tick waits a
+  // breath after the last one (loop 349: they were 30 ms apart).
+  const introEvs = await T.between(tv, 'C3', 'D1b');
+  const locks = introEvs.filter((e) => e.kind === 'cue' && e['cue'] === 'lock');
+  const firstTick = introEvs.find((e) => e.kind === 'cue' && e['cue'] === 'tick');
+  const lastLock = locks.at(-1);
+  T.ok(
+    'D',
+    "each Ready ticks (lock, rising); the 3 · 2 · 1's first tick comes a breath (≥ 300 ms) after the last",
+    locks.length >= 1 &&
+      Boolean(firstTick && lastLock) &&
+      (firstTick?.t ?? 0) - (lastLock?.t ?? 0) >= 300,
+    `locks=${locks.length} last lock→first tick=${firstTick && lastLock ? firstTick.t - lastLock.t : '-'}ms`,
   );
   // The deal's pluck lands on the same beat on the TV and in the hand (loop 278): offsets from
   // each page's own C3 mark, within 150 ms.

@@ -90,6 +90,7 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
           deadline={view.deadline}
           cards={view.cardsPerPlayer}
           waitingOn={view.waitingOn}
+          players={view.players}
         />
       </Stage>
     );

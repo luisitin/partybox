@@ -7,7 +7,7 @@ import { enterPhase, hasPlayer, isTimerFor, shuffle } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { dealCard, dealCards, range } from '../cards';
 import { setMenu } from '../claims';
-import { DECK, INTRO_MS, INTRO_READY_MS, introMinMs } from '../types';
+import { DECK, INTRO_BREATH_MS, INTRO_MS, INTRO_READY_MS, introMinMs } from '../types';
 import type { Input, Pattern, RoundState, State, Transition } from '../types';
 
 export function enterIntro(state: State, number: number, now: number): State {
@@ -97,7 +97,7 @@ export function waitingOn(state: State): string[] {
 export function settleIntro(state: State, now: number): State {
   if (state.phase.id !== 'intro' || waitingOn(state).length > 0) return state;
   const at = Math.max(
-    now + INTRO_READY_MS,
+    now + INTRO_BREATH_MS + INTRO_READY_MS,
     state.phase.startedAt + introMinMs(state.settings.cards),
   );
   if (state.phase.deadline !== null && at >= state.phase.deadline) return state;
