@@ -161,6 +161,7 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
         <ClaimStage
           key={`${view.claim.playerId}:${view.callIndex}`}
           claim={view.claim}
+          judged={view.verdictShown}
           valid={false}
           verdict={
             <>
@@ -199,6 +200,7 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
           <ClaimStage
             key={`${view.claim.playerId}:${view.callIndex}`}
             claim={view.claim}
+            judged={view.verdictShown}
             valid
             verdict={
               <>
