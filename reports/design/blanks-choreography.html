@@ -698,8 +698,11 @@
         <p>
           Every card is its own beat: the <em>card</em> chime (your pick, B: a two-note pluck), then
           the card lands with a bounce (600 ms, from half opacity — never from nothing, so the stage
-          does not blink between two cards; loop #131) while the ones already read slide into a row
-          underneath. Phones show the same card at the same moment.
+          does not blink between two cards; loop #131) and its whites pop into their blanks one by
+          one from 450 ms, 300 ms apart (loop #151), while the ones already read slide into a row
+          underneath. Each card holds 2.2 s + 18 ms per character, max 4 s — a 2–3 s presentation,
+          not a 5 s pop (your note). Alternatives are on <code>blanks-options.html</code>. Phones
+          show the same card at the same moment.
         </p>
       </div>
       <button class="primary" data-play="reveal">▶ Play</button>
@@ -952,7 +955,7 @@
           <tr>
             <td>Reveal, per card (a draining bar, no countdown — like the round card)</td>
             <td class="n">
-              3.5 s + 35 ms per character, max 8 s · past 8 cards: 3 s + 25 ms, max 5.5 s
+              2.2 s + 18 ms per character, max 4 s · past 8 cards: 2 s + 14 ms, max 3.2 s
             </td>
             <td>VIP skip jumps to the vote</td>
           </tr>
