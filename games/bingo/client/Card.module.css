@@ -15,11 +15,31 @@
   gap: var(--pb-space-1);
 }
 
+/* Column letters wear the ball's colour (loop 255; the hues are the TV's, Tv.module.css): B blue,
+   I red, N white, G green, O the theme's accent — pulled toward the text colour so a white or
+   yellow letter still reads by daylight. */
 .letter {
+  --ball-fill: var(--pb-accent-2-fill);
   text-align: center;
   font-weight: 900;
-  color: var(--pb-accent-2);
+  color: color-mix(in oklab, var(--ball-fill) 65%, var(--pb-text));
   letter-spacing: 0.04em;
+}
+
+.letter[data-letter='B'] {
+  --ball-fill: color-mix(in oklab, var(--pb-accent-2-fill) 20%, #4f8bff);
+}
+
+.letter[data-letter='I'] {
+  --ball-fill: color-mix(in oklab, var(--pb-accent-2-fill) 20%, #ff5c5c);
+}
+
+.letter[data-letter='N'] {
+  --ball-fill: color-mix(in oklab, var(--pb-text) 25%, #f3f3f3);
+}
+
+.letter[data-letter='G'] {
+  --ball-fill: color-mix(in oklab, var(--pb-accent-2-fill) 20%, #3ecf6e);
 }
 
 .grid {

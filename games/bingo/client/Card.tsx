@@ -109,7 +109,7 @@ export function Card({
     >
       <div className={styles.head} role="row">
         {LETTERS.map((l) => (
-          <span key={l} className={styles.letter} role="columnheader">
+          <span key={l} className={styles.letter} role="columnheader" data-letter={l}>
             {l}
           </span>
         ))}

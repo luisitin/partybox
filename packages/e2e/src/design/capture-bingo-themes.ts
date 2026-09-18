@@ -1,17 +1,24 @@
 // A Bingo TV fixture in every theme (loop 253): the ball and the hall board wear their column's
 // colour, and each theme must still read as itself. Stills only — the fixture is a frozen state.
-// Usage: tsx packages/e2e/src/design/capture-bingo-themes.ts --out <dir> [--phase play] [--port 42161]
+// With --view controller the phone is shot instead (--device iphone|se|ipad, --player p1).
+// Usage: tsx packages/e2e/src/design/capture-bingo-themes.ts --out <dir> [--phase play] [--view tv] [--port 42161]
 import { mkdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { parseArgs } from 'node:util';
 import { chromium } from 'playwright';
 import { REPO_ROOT, startServer } from './server';
-import { openTv } from './session';
+import { openPhone, openTv } from './session';
+import type { DeviceId } from './devices';
 
 const { values } = parseArgs({
   options: {
     out: { type: 'string' },
     phase: { type: 'string', default: 'play' },
+    view: { type: 'string', default: 'tv' },
+    device: { type: 'string', default: 'iphone' },
+    player: { type: 'string', default: 'p1' },
+    /** ms to wait before the shot: 700 for play; a claim needs ~2500 (announce, drop). */
+    wait: { type: 'string', default: '700' },
     port: { type: 'string', default: '42161' },
   },
 });
@@ -23,12 +30,16 @@ async function main(): Promise<void> {
   const browser = await chromium.launch();
   try {
     mkdirSync(OUT, { recursive: true });
-    const tv = await openTv(browser, server.url);
+    const phone = values.view === 'controller';
+    const page = phone
+      ? (await openPhone(browser, server.url, values.device as DeviceId, 'Preview')).page
+      : await openTv(browser, server.url);
+    const query = phone ? `view=controller&player=${values.player}` : 'view=tv';
     for (const theme of THEMES) {
-      await tv.goto(`${server.url}/preview/bingo/${values.phase}?view=tv&theme=${theme}`);
-      await tv.waitForSelector('[data-surface="tv"]');
-      await tv.waitForTimeout(700); // the ball has landed, the cell has lit
-      await tv.screenshot({ path: join(OUT, `${values.phase}-${theme}.png`) });
+      await page.goto(`${server.url}/preview/bingo/${values.phase}?${query}&theme=${theme}`);
+      await page.waitForSelector(`[data-surface="${phone ? 'controller' : 'tv'}"]`);
+      await page.waitForTimeout(Number(values.wait)); // the ball has landed, the card has dropped
+      await page.screenshot({ path: join(OUT, `${values.phase}-${values.view}-${theme}.png`) });
     }
     console.log(`${THEMES.length} themes → ${OUT}`);
   } finally {
