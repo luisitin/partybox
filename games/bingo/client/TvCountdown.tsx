@@ -2,7 +2,7 @@
 // 3 · 2 · 1 after the last card-style menu closes (loop 242). One tick per second on both.
 import { useEffect } from 'react';
 import type { JSX } from 'react';
-import { BigText, Stage, useSecondsLeft, useSoundApi } from '@partybox/game-sdk/ui';
+import { BigText, Stage, useHold, useSecondsLeft, useSoundApi } from '@partybox/game-sdk/ui';
 import { RESUME_MS } from '../server/types';
 import styles from './Tv.module.css';
 
@@ -19,12 +19,14 @@ export function IntroCountdown({
   /** Cards per player: the TV plucks once per card on the phones' deal beats (loop 278). */
   cards: number;
 }): JSX.Element {
-  const left = useSecondsLeft(deadline);
+  const left = useSecondsLeft(deadline, false, 50);
   const counting = left !== null && left <= 3 && left > 0;
   const sound = useSoundApi();
   useEffect(() => {
     if (counting) sound.play('tick');
   }, [counting, left, sound]);
+  // Once the last card back has landed the caption stops saying "dealing" (loop 302).
+  const dealt = useHold('deal', 700 + cards * 110);
   // The deal, heard from the sofa: the same 360 + i × 110 (+250 on the bounce) the phones use
   // (Controller.tsx), so the room's plucks and the TV's land together.
   useEffect(() => {
@@ -40,7 +42,7 @@ export function IntroCountdown({
           <span className={styles.introLead}>first number in</span>
           {/* The ring pops in whole; only a CHANGE of digit pops the digit (loop 299: the
               first frame showed an empty ring while the digit's own pop was still invisible). */}
-          <span className={`${styles.introRing} pb-pop`}>
+          <span className={`${styles.introRing} pb-tick`}>
             <svg className={styles.ring} viewBox="0 0 120 120" aria-hidden>
               <circle className={styles.ringTrack} cx="60" cy="60" r="52" />
               <circle
@@ -51,7 +53,7 @@ export function IntroCountdown({
                 style={{ animationDuration: '3000ms' }}
               />
             </svg>
-            <BigText key={left} level="h1" tone="accent" className={left < 3 ? 'pb-pop' : ''}>
+            <BigText key={left} level="h1" tone="accent" className="pb-tick">
               {left}
             </BigText>
           </span>
@@ -75,7 +77,9 @@ export function IntroCountdown({
                 </span>
               ))}
             </span>
-            <span className={styles.introLead}>dealing the cards…</span>
+            <span className={styles.introLead}>
+              {dealt ? 'cards dealt — first number soon' : 'dealing the cards…'}
+            </span>
           </span>
         </>
       )}
@@ -94,7 +98,7 @@ export function Resume({
   /** The pattern in play — after "keep going — blackout" the room reads the new goal here. */
   pattern?: string;
 }): JSX.Element {
-  const left = Math.min(3, useSecondsLeft(resumeAt) ?? 0); // a 4 would tick four times on a 3 s hold
+  const left = Math.min(3, useSecondsLeft(resumeAt, false, 50) ?? 0); // a 4 would tick four times on a 3 s hold
   const sound = useSoundApi();
   useEffect(() => {
     if (left > 0) sound.play('tick');
@@ -118,7 +122,7 @@ export function Resume({
           />
         </svg>
         {/* The ring and its 3 arrive together; a change of digit pops (loop 300). */}
-        <BigText key={left} level="display" tone="accent" className={left < 3 ? 'pb-pop' : ''}>
+        <BigText key={left} level="display" tone="accent" className="pb-tick">
           {Math.max(1, left)}
         </BigText>
       </div>

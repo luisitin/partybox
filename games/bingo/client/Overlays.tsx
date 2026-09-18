@@ -3,7 +3,7 @@
 // menu), the 3 · 2 · 1 before calling resumes, and the turn-your-phone gate.
 import { useEffect } from 'react';
 import type { JSX } from 'react';
-import { PrimaryButton, buzz, useSecondsLeft, useSound } from '@partybox/game-sdk/ui';
+import { PrimaryButton, buzz, useHold, useSecondsLeft, useSound } from '@partybox/game-sdk/ui';
 import { RESUME_MS } from '../server/types';
 import type { BingoControllerView } from '../server/views';
 import { STYLES, styleReason } from './styles';
@@ -102,7 +102,7 @@ export function Countdown({
   /** The pattern in play: after "keep going — blackout" the hand reads the new goal (loop 277). */
   pattern?: string;
 }): JSX.Element | null {
-  const left = useSecondsLeft(resumeAt);
+  const left = useSecondsLeft(resumeAt, false, 50);
   const play = useSound();
   const shown = left === null ? 0 : Math.min(3, left); // a clock a hair behind would say 4 first
   // Each digit lands with a tick (the TV ticks too, at its own clock); the last one is the call.
@@ -126,7 +126,7 @@ export function Countdown({
           />
         </svg>
         {/* The curtain and its 3 arrive together; a change of digit pops (loop 300). */}
-        <div key={shown} className={`${styles.count} ${shown < 3 ? 'pb-pop' : ''}`}>
+        <div key={shown} className={`${styles.count} pb-tick`}>
           {shown}
         </div>
       </div>
@@ -139,21 +139,36 @@ export function Countdown({
  * The intro's last three seconds in the hand (loop 263): "first number in 3 · 2 · 1" with one
  * light tap per second — the TV ticks, the phones tap, one clock. Before that: the deal.
  */
-export function IntroCount({ deadline }: { deadline: number | null }): JSX.Element {
-  const left = useSecondsLeft(deadline);
+export function IntroCount({
+  deadline,
+  cards,
+}: {
+  deadline: number | null;
+  /** Cards dealt: the caption says "dealing" only while the deal is on (loop 302). */
+  cards: number;
+}): JSX.Element {
+  const left = useSecondsLeft(deadline, false, 50);
   const shown = left !== null && left <= 3 && left > 0 ? left : 0;
   useEffect(() => {
     if (shown > 0) buzz(15);
   }, [shown]);
+  // The deal takes 360 + n × 110 + 250 ms; once it is down the caption says so.
+  const dealt = useHold('deal', 700 + cards * 110);
   return (
     <p className={styles.introCount} aria-live="polite">
       {shown > 0 ? (
         <>
           first number in{' '}
-          <b key={shown} className={shown < 3 ? 'pb-pop' : ''}>
+          <b key={shown} className="pb-tick">
             {shown}
           </b>
         </>
+      ) : dealt ? (
+        cards > 1 ? (
+          'your cards — first number soon'
+        ) : (
+          'your card — first number soon'
+        )
       ) : (
         'dealing the cards…'
       )}
