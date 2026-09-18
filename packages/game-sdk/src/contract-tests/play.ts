@@ -1,5 +1,5 @@
 // A minimal headless runner that drives a GameDefinition the way the engine does: inputs from
-// bots, one timer per phase instance, optional VIP skips. Used by the contract suite; the sim
+// bots, one timer per deadline (ADR-033), optional VIP skips. Used by the contract suite; the sim
 // package builds its richer strategies on top of it.
 import type {
   AnyGameDefinition,
@@ -79,8 +79,12 @@ export function playGame(game: AnyGameDefinition, options: PlayOptions): PlayRes
     const { deadline } = state.phase;
     if (deadline === null || state.phase.paused || firedFor === phaseKey(state)) return false;
     if (now < deadline) return false;
-    firedFor = phaseKey(state);
+    const key = phaseKey(state);
+    firedFor = key;
     apply({ type: 'timer', now, phaseId: state.phase.id, startedAt: state.phase.startedAt });
+    // ADR-033: staying in the phase with a later deadline is a second beat, and it fires too.
+    if (phaseKey(state) === key && state.phase.deadline !== null && state.phase.deadline > deadline)
+      firedFor = null;
     return true;
   };
 

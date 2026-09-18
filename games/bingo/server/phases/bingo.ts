@@ -30,10 +30,6 @@ export function enterBingo(
   const round = state.round;
   const bingos = winnerId ? round.bingos + 1 : round.bingos;
   const patternBingos = winnerId ? round.patternBingos + 1 : round.patternBingos;
-  // 3, 2, 1, then ½ under a pattern; a blackout starts the ladder again (scoring.ts).
-  const wins = winnerId
-    ? { ...state.wins, [winnerId]: (state.wins[winnerId] ?? 0) + pointsFor(patternBingos) }
-    : state.wins;
   const history = [...state.history, { round: round.number, winnerId, calls: round.drawn }];
   const won =
     winnerId && claim
@@ -41,25 +37,56 @@ export function enterBingo(
       : round.won;
   const next = clearClaims({
     ...state,
-    wins,
     history,
-    round: { ...round, winnerId, claim, won, bingos, patternBingos, decision: null },
+    round: {
+      ...round,
+      winnerId,
+      claim,
+      won,
+      bingos,
+      patternBingos,
+      decision: null,
+      credited: false,
+    },
   });
-  // Nothing left to play for (every card full, or no contest left): the round ends by itself
-  // once the verdict has been read — the phones need not tap anything.
-  const can = canContinue(next);
-  const ms = !winnerId
-    ? BINGO_MS
-    : can.same || can.blackout || !claim
-      ? BINGO_ABANDONED_MS
-      : claimRevealMs(claim.cells, claim.daubs) + VERDICT_READ_MS + AUTO_END_MS;
+  // The points land when the TV's verdict does (loop 257): the phase's first tick, at the end of
+  // the reveal, credits them (`credit`) and arms the real deadline. Scoring on entry put the
+  // winner's new score and check mark on every strip while the card was still being swept.
+  const ms = !winnerId || !claim ? BINGO_MS : claimRevealMs(claim.cells, claim.daubs);
   return enterPhase(next, 'bingo', now, ms);
+}
+
+/** The verdict has landed: score the win (3, 2, 1, then ½ under a pattern — scoring.ts). */
+export function credit(state: State): State {
+  const round = state.round;
+  if (round.credited || !round.winnerId) return state;
+  const points = pointsFor(round.patternBingos);
+  return {
+    ...state,
+    wins: { ...state.wins, [round.winnerId]: (state.wins[round.winnerId] ?? 0) + points },
+    round: { ...round, credited: true },
+  };
+}
+
+/**
+ * How long the phase waits after the verdict: unpaced when the room has a choice to make
+ * (BINGO_ABANDONED_MS is only a valve for abandoned rooms), or a moment to read the verdict and
+ * then out by itself when nothing is left to play for. A choice already held ends it on the read.
+ */
+function deadlineAfterVerdict(state: State, verdictAt: number): number {
+  if (state.round.decision) return verdictAt + VERDICT_READ_MS;
+  const can = canContinue(state);
+  if (can.same || can.blackout) return state.phase.startedAt + BINGO_ABANDONED_MS;
+  return verdictAt + VERDICT_READ_MS + AUTO_END_MS;
 }
 
 /** Cards of `playerId` that have not won the current pattern (the ones BINGO! may still check). */
 export function liveCards(state: State, playerId: string): number[] {
-  const locked = new Set(state.round.won[playerId] ?? []);
-  return (state.round.cards[playerId] ?? []).map((_, i) => i).filter((i) => !locked.has(i));
+  // Own keys only: a fuzzed "__proto__" would read Object.prototype (the sim found it, loop 257).
+  const own = <T>(rec: Record<string, T>): T | undefined =>
+    Object.hasOwn(rec, playerId) ? rec[playerId] : undefined;
+  const locked = new Set(own(state.round.won) ?? []);
+  return (own(state.round.cards) ?? []).map((_, i) => i).filter((i) => !locked.has(i));
 }
 
 /**
@@ -102,15 +129,26 @@ function decide(state: State, decision: Decision, now: number, exits: BingoExits
   );
 }
 
-/** When the room has seen the verdict: the TV's reveal of this claim, then a moment to read it. */
-function celebrationEndsAt(state: State): number {
+/** When the verdict lands: the end of the TV's reveal of this claim. */
+function verdictAt(state: State): number {
   const claim = state.round.claim;
-  if (!claim) return 0;
-  return state.phase.startedAt + claimRevealMs(claim.cells, claim.daubs) + VERDICT_READ_MS;
+  if (!claim) return state.phase.startedAt;
+  return state.phase.startedAt + claimRevealMs(claim.cells, claim.daubs);
+}
+
+/** When the room has seen the verdict: a moment to read it after it lands. */
+function celebrationEndsAt(state: State): number {
+  return verdictAt(state) + (state.round.claim ? VERDICT_READ_MS : 0);
 }
 
 export function reduceBingo(state: State, event: GameEvent<Input>, exits: BingoExits): State {
   if (isTimerFor(state, event)) {
+    // The first tick of a won round is the verdict: score it, then wait for the room.
+    if (state.round.winnerId && !state.round.credited) {
+      const scored = credit(state);
+      const at = verdictAt(state);
+      return { ...scored, phase: { ...scored.phase, deadline: deadlineAfterVerdict(scored, at) } };
+    }
     const held = state.round.decision;
     return held ? decide(state, held, event.now, exits) : exits.next(state, event.now);
   }
@@ -126,11 +164,9 @@ export function reduceBingo(state: State, event: GameEvent<Input>, exits: BingoE
   }
   if (state.round.decision) return state; // the first choice counts
   const endsAt = celebrationEndsAt(state);
-  if (event.now >= endsAt) return decide(state, input, event.now, exits);
-  // Mid-celebration: hold it, and bring the deadline forward to the end of the reveal.
-  return {
-    ...state,
-    round: { ...state.round, decision: input },
-    phase: { ...state.phase, deadline: endsAt },
-  };
+  if (event.now >= endsAt) return decide(credit(state), input, event.now, exits);
+  // Mid-celebration: hold it. Once the verdict is scored the deadline comes forward to the end
+  // of the read; before that the verdict tick sets it (`deadlineAfterVerdict`).
+  const held = { ...state, round: { ...state.round, decision: input } };
+  return state.round.credited ? { ...held, phase: { ...held.phase, deadline: endsAt } } : held;
 }

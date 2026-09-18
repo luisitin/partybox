@@ -1,0 +1,1 @@
+21 dev-API assertions passed (capture-bingo-rules, loop 257): the score lands at the verdict, the held choice, the repeat, the daubable won card, 2nd bingo = 2, the two-player lockout, the blackout ladder restart, the auto-end through the drumroll.

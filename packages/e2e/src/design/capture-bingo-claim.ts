@@ -62,12 +62,13 @@ async function main(): Promise<void> {
       const tvMarks = [{ name: 'dibs', at: marks[0]?.at ?? 0, before: 0.1, seconds: 4 }];
       if (values.reveal) {
         await settle(400);
-        tvMarks[0] = { name: 'reveal', at: Date.now(), before: 0.1, seconds: 4 };
+        // The whole reveal, to the verdict (~6.4 s for a line with rests) and the strip's score.
+        tvMarks[0] = { name: 'reveal', at: Date.now(), before: 0.1, seconds: 8 };
         await sam.page.getByRole('button', { name: /tap again to claim/i }).dispatchEvent('click');
       }
       // Let the window lapse (the line pops, the bar drains over 3 s, the line goes) — or the
-      // reveal run: 1 s announce, the 0.7 s drop, the first turns of the sweep.
-      await settle(4200);
+      // reveal run: 1 s announce, the 0.7 s drop, the sweep, the verdict.
+      await settle(values.reveal ? 8500 : 4200);
       const video = await cutStrips(rec, join(OUT, 'strips-tv'), tvMarks);
       console.log(`10 fps TV strips from ${video ?? '(no video)'}`);
       await sam.context.close();

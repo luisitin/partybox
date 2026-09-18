@@ -145,7 +145,9 @@ function statusOf(state: State): (id: string) => PlayerStatus {
     // Every card won: done for the pattern (the chip shows it while the others keep daubing).
     if (state.phase.id === 'play' || state.phase.id === 'check')
       return liveCards(state, id).length === 0 ? 'submitted' : 'active';
-    if (state.phase.id === 'bingo' && state.round.winnerId === id) return 'submitted';
+    // The winner's check mark waits for the TV's verdict (loop 257).
+    if (state.phase.id === 'bingo' && state.round.winnerId === id && state.round.credited)
+      return 'submitted';
     return 'waiting';
   };
 }
