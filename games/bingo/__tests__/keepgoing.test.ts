@@ -4,6 +4,8 @@
 // made mid-celebration waits for the reveal.
 import { describe, expect, it } from 'vitest';
 import { game } from '../server/index';
+import { AUTO_END_MS } from '../server/reveal';
+import { pointsFor } from '../server/scoring';
 import { PLAYERS, T0, after, callUntil, claim, daubAll, input, start, timer } from './helpers';
 
 const LINE = [0, 1, 2, 3, 4];
@@ -96,6 +98,56 @@ describe('keeping the round going', () => {
     expect(applied.phase.id).toBe('play');
     expect(applied.round.decision).toBeNull();
     // With nothing held, the long deadline still means "abandoned": on to the scoreboard.
+    expect(timer(s).phase.id).toBe('scoreboard');
+  });
+});
+
+describe('points and the end of a round', () => {
+  it('scores 3, 2, 1, then ½ under a pattern; a blackout starts the ladder again', () => {
+    let s = callUntil(start({ cards: 4 }), 'a', LINE);
+    s = daubAll(s, 'a', LINE);
+    s = claim(s, 'a', 0);
+    expect(s.wins['a']).toBe(3);
+    expect(game.tvView(s).claimPoints).toBe(3);
+    s = input(s, 'b', { type: 'continue', pattern: 'same' }, after(s));
+    for (const [card, points] of [
+      [1, 2],
+      [2, 1],
+      [3, 0.5],
+    ] as const) {
+      s = callUntil(s, 'a', LINE, card);
+      s = daubAll(s, 'a', LINE, card);
+      s = claim(s, 'a', card);
+      expect(s.phase.id).toBe('bingo');
+      expect(game.tvView(s).claimPoints).toBe(points);
+      if (card < 3) s = input(s, 'b', { type: 'continue', pattern: 'same' }, after(s));
+    }
+    expect(s.wins['a']).toBe(6.5);
+    expect(game.tvView(s).standings[0]).toMatchObject({ playerId: 'a', wins: 6.5, rank: 1 });
+    // Every card of Ana's has won the line: in a three-player game the others still contest.
+    expect(game.tvView(s).decide).toEqual({ same: true, blackout: true });
+    s = input(s, 'b', { type: 'continue', pattern: 'blackout' }, after(s));
+    // The ladder starts again for the blackout: the next bingo would be worth 3.
+    expect(s.round.patternBingos).toBe(0);
+    expect(pointsFor(s.round.patternBingos + 1)).toBe(3);
+  });
+
+  it('two players, a blackout on every card: the round ends by itself once the verdict is read', () => {
+    let s = game.init({
+      players: PLAYERS.slice(0, 2),
+      settings: { rounds: 2, round1: 'blackout', round2: 'line', callSeconds: 6 },
+      seed: 5,
+      now: T0,
+    });
+    s = timer(s);
+    const all = Array.from({ length: 25 }, (_, i) => i).filter((i) => i !== 12);
+    s = callUntil(s, 'a', all);
+    s = daubAll(s, 'a', all);
+    s = claim(s, 'a');
+    expect(s.phase.id).toBe('bingo');
+    expect(game.tvView(s).autoEnd).toBe(true);
+    expect(game.tvView(s).decide).toEqual({ same: false, blackout: false });
+    expect(s.phase.deadline).toBe(after(s) - 10 + AUTO_END_MS);
     expect(timer(s).phase.id).toBe('scoreboard');
   });
 });

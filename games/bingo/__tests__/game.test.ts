@@ -83,7 +83,7 @@ describe('play', () => {
     s = claim(s, 'a');
     expect(s.phase.id).toBe('bingo');
     expect(s.round.winnerId).toBe('a');
-    expect(s.wins['a']).toBe(1);
+    expect(s.wins['a']).toBe(3);
     const shown = game.tvView(s).claim;
     expect(shown?.valid).toBe(true);
     expect(shown?.green.sort()).toEqual([0, 1, 2, 3, 4]);
@@ -224,7 +224,7 @@ describe('rounds and results', () => {
     const oldCard = s.round.cards['a'];
     s = timer(s);
     expect(s.phase.id).toBe('scoreboard');
-    expect(game.tvView(s).standings.find((r) => r.playerId === 'c')?.wins).toBe(1);
+    expect(game.tvView(s).standings.find((r) => r.playerId === 'c')?.wins).toBe(3);
     s = timer(s);
     expect(s.phase.id).toBe('intro');
     expect(s.round.number).toBe(2);
@@ -238,7 +238,7 @@ describe('rounds and results', () => {
     s = timer(s);
     expect(s.phase.id).toBe('done');
     const results = game.results(s);
-    expect(results?.scores).toEqual({ a: 1, b: 0, c: 1 });
+    expect(results?.scores).toEqual({ a: 3, b: 0, c: 3 }); // a first bingo in each round;
     expect(results?.winnerIds.sort()).toEqual(['a', 'c']);
     expect(results?.awards).toEqual([]);
   });

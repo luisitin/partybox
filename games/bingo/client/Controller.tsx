@@ -5,19 +5,12 @@
 // and judges only the claim, on the card named.
 import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
-import {
-  PrimaryButton,
-  Scoreboard,
-  Screen,
-  WaitingScreen,
-  useHold,
-  useSound,
-} from '@partybox/game-sdk/ui';
+import { PrimaryButton, Screen, WaitingScreen, useHold, useSound } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { Input } from '../server/types';
 import type { BingoControllerView } from '../server/views';
 import { Card, PatternIcon } from './Card';
-import { BingoButton, CallHeader, CallRow, DecideFooter, rows } from './ControllerParts';
+import { BingoButton, CallHeader, CallRow, DecideFooter, daubWithFeel } from './ControllerParts';
 import { AllCardsLayout, FocusLayout, Thumbnails } from './Layouts';
 import { Countdown, HoldCurtain, MissedToast, StyleSheet, TurnGate } from './Overlays';
 import {
@@ -31,7 +24,7 @@ import {
 import type { CardStyle } from './styles';
 import { verdictAtMs } from '../server/reveal';
 import { otherTitle } from './copy';
-import { afterLine, WinScreen } from './WinScreen';
+import { EndScreens, afterLine, WinScreen } from './WinScreen';
 import styles from './Controller.module.css';
 
 export function Controller({
@@ -80,6 +73,7 @@ export function Controller({
   const [freeDaubed, setFreeDaubed] = useState<number[]>([]);
   const toggleFree = (c: number): void =>
     setFreeDaubed((v) => (v.includes(c) ? v.filter((i) => i !== c) : [...v, c]));
+  const daub = (c: number, index: number): void => daubWithFeel(view, send, play, c, index);
   // The card up just won: bring a live card up instead — once, at the moment it wins, so a won
   // card picked on purpose later (to daub towards a blackout) stays up.
   const liveUp = cards?.findIndex((_, i) => !view.won.includes(i)) ?? -1;
@@ -145,6 +139,7 @@ export function Controller({
     send,
     freeDaubed,
     onTapFree: toggleFree,
+    onDaub: daub,
     intro: false,
     disabled: false,
     verdictShown,
@@ -295,24 +290,5 @@ export function Controller({
   if (view.phaseId === 'bingo')
     return <WinScreen view={view} send={send} cards={n} iDecide={iDecide} />;
 
-  if (view.phaseId === 'scoreboard') {
-    return (
-      <Screen key="scoreboard" title="Rounds won">
-        <Scoreboard rows={rows(view)} compact highlightId={me.id} noTrophy />
-        <p className={styles.hint}>
-          Next: round {view.round + 1} — {view.patterns[view.round] ?? ''}
-        </p>
-      </Screen>
-    );
-  }
-
-  const myRank = view.standings.find((s) => s.playerId === me.id)?.rank ?? null;
-  return (
-    <Screen
-      key="done"
-      title={myRank === 1 ? 'You won!' : myRank ? `You finished #${myRank}` : 'Thanks for playing'}
-    >
-      <Scoreboard rows={rows(view)} compact highlightId={me.id} />
-    </Screen>
-  );
+  return <EndScreens view={view} meId={me.id} />;
 }

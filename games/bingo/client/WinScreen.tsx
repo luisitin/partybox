@@ -1,10 +1,10 @@
 // The winner's own phone after a bingo: the card that won, what happens next, and the choice
 // (keep going or move on) once the TV's verdict has landed.
 import type { JSX } from 'react';
-import { Screen } from '@partybox/game-sdk/ui';
+import { Scoreboard, Screen } from '@partybox/game-sdk/ui';
 import type { BingoControllerView } from '../server/views';
 import { Card } from './Card';
-import { DecideFooter } from './ControllerParts';
+import { DecideFooter, rows } from './ControllerParts';
 import type { Send } from './ControllerParts';
 import { winTitle } from './copy';
 import styles from './Controller.module.css';
@@ -43,10 +43,42 @@ export function WinScreen({
         </div>
       ) : null}
       <p className={styles.hint}>
-        {iDecide && cards > 1
-          ? 'Keep going and this card sits the pattern out; your other cards play on. Anyone can pick.'
-          : afterLine(view, iDecide)}
+        +{view.claimPoints} {view.claimPoints === 1 ? 'point' : 'points'}.{' '}
+        {view.autoEnd
+          ? 'Nothing left to play for on these cards — the scores in a moment.'
+          : iDecide && cards > 1
+            ? 'Keep going and this card sits the pattern out; your other cards play on. Anyone can pick.'
+            : afterLine(view, iDecide)}
       </p>
+    </Screen>
+  );
+}
+
+/** Between rounds ("Points so far") and after the last one (your place). */
+export function EndScreens({
+  view,
+  meId,
+}: {
+  view: BingoControllerView;
+  meId: string;
+}): JSX.Element {
+  if (view.phaseId === 'scoreboard') {
+    return (
+      <Screen key="scoreboard" title="Points so far">
+        <Scoreboard rows={rows(view)} compact highlightId={meId} noTrophy />
+        <p className={styles.hint}>
+          Next: round {view.round + 1} — {view.patterns[view.round] ?? ''}
+        </p>
+      </Screen>
+    );
+  }
+  const myRank = view.standings.find((s) => s.playerId === meId)?.rank ?? null;
+  return (
+    <Screen
+      key="done"
+      title={myRank === 1 ? 'You won!' : myRank ? `You finished #${myRank}` : 'Thanks for playing'}
+    >
+      <Scoreboard rows={rows(view)} compact highlightId={meId} />
     </Screen>
   );
 }

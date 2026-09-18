@@ -1,6 +1,7 @@
 // The 5×5 card, used by both surfaces: tappable on the phone, read-only on the TV. Marks are
 // never carried by colour alone — green cells get ✓, red cells ✕, missed pattern cells a dashed
 // outline — so a check reads the same in every theme and for every viewer.
+import { useState } from 'react';
 import type { CSSProperties, JSX } from 'react';
 import styles from './Card.module.css';
 
@@ -84,6 +85,19 @@ export function Card({
   const redSet = new Set(red);
   const missingSet = new Set(missing);
   const interactive = onTap !== undefined && !disabled;
+  // Which cells changed since the last daubs the card was given (the stamp plays on the one just
+  // daubed, the lift on the one just cleared): "adjust state when a prop changes". A fresh card or
+  // a reveal never stamps.
+  const key = daubs.join(',');
+  const [seen, setSeen] = useState({ key, was: daubs });
+  if (seen.key !== key) setSeen({ key, was: daubs });
+  const stamped = new Set<number>();
+  const lifted = new Set<number>();
+  if (interactive && seen.key !== key) {
+    const before = new Set(seen.was);
+    for (const i of daubed) if (!before.has(i)) stamped.add(i);
+    for (const i of before) if (!daubed.has(i)) lifted.add(i);
+  }
   return (
     <div
       className={`${styles.card} ${styles[size]} ${reveal ? styles.reveal : ''}`}
@@ -133,6 +147,8 @@ export function Card({
               : '',
             patternSet.has(i) && !isDaubed ? styles.pattern : '',
             isFree ? styles.free : '',
+            stamped.has(i) ? styles.stamp : '',
+            lifted.has(i) ? styles.unstamp : '',
           ].join(' ');
           const mark = !showColour ? null : greenSet.has(i) ? '✓' : redSet.has(i) ? '✕' : null;
           const label = isFree ? 'FREE' : String(n);

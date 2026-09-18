@@ -39,3 +39,6 @@ export function claimRevealMs(cells: readonly number[], daubs: readonly number[]
     daubs.some((i) => !cells.includes(i)),
   );
 }
+
+/** With nothing left to play for, the celebration ends by itself this long after it was read. */
+export const AUTO_END_MS = 2_000;

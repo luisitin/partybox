@@ -11,7 +11,7 @@ import { PATTERN_HINT, PATTERN_LABEL, patternCells } from './patterns';
 import { menusOpen } from './claims';
 import { canContinue, liveCards } from './phases/bingo';
 import { canClaim, isHeld } from './phases/play';
-import { standings } from './scoring';
+import { pointsFor, standings } from './scoring';
 import type { StandingRow } from './scoring';
 import type { Claim, Pattern, State } from './types';
 
@@ -54,6 +54,10 @@ interface Common {
   decide: { same: boolean; blackout: boolean } | null;
   /** How many bingos this round has had so far (a continued round celebrates more than one). */
   bingosThisRound: number;
+  /** bingo: what this bingo was worth (3, 2, 1, then ½ under a pattern). */
+  claimPoints: number;
+  /** bingo: nothing can continue (every card full, or no contest left): on to the scores by itself. */
+  autoEnd: boolean;
   /** Bingos under the current pattern this round ("2nd bingo", "1st blackout"). */
   patternBingos: number;
   /** bingo: a choice already made mid-celebration, applied when the reveal is done. */
@@ -168,6 +172,12 @@ function common(state: State): Common {
     standings: standings(state),
     decide: state.phase.id === 'bingo' ? canContinue(state) : null,
     bingosThisRound: round.bingos,
+    claimPoints: winnerId ? pointsFor(round.patternBingos) : 0,
+    autoEnd:
+      state.phase.id === 'bingo' &&
+      winnerId !== null &&
+      !canContinue(state).same &&
+      !canContinue(state).blackout,
     patternBingos: round.patternBingos,
     pendingDecision:
       round.decision === null

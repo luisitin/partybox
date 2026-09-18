@@ -17,6 +17,8 @@ export interface LayoutProps {
   /** Phone-only FREE daubs, per card index. */
   freeDaubed: number[];
   onTapFree: (card: number) => void;
+  /** A square tapped: the server toggles it; the phone thumps and sounds the dauber at once. */
+  onDaub: (card: number, index: number) => void;
   /** intro: fresh cards, no daubs, the pattern outlined, nothing tappable. */
   intro: boolean;
   disabled: boolean;
@@ -74,7 +76,7 @@ function PlayCard({
         pattern={p.intro && view.pattern !== 'line' ? view.patternCells : []}
         freeDaubed={won || p.freeDaubed.includes(c)}
         onTapFree={() => p.onTapFree(c)}
-        onTap={(index) => p.send({ type: 'daub', card: c, index })}
+        onTap={(index) => p.onDaub(c, index)}
         disabled={p.disabled}
         size={size}
       />
