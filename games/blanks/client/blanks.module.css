@@ -703,6 +703,30 @@
   margin-top: var(--pb-space-2);
 }
 
+/* Who voted for the winning card: small chips under the author row. */
+.voters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--pb-space-2) var(--pb-space-3);
+  margin-top: var(--pb-space-2);
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.voters .authorName {
+  font-size: var(--pb-font-caption);
+}
+
+.voter {
+  --pb-chip-size: var(--pb-space-6);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+  padding: 2px var(--pb-space-3) 2px 2px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--pb-surface) 70%, transparent);
+}
+
 /* A narrow phone (iPhone SE) has no room for avatar + name + votes on one line inside the
    lettered card: the votes pill drops under the name rather than the name losing its end
    ("Play…", review-loop #115). */

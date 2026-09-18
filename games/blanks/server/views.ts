@@ -48,6 +48,8 @@ export interface RevealedCard extends CardView {
   rando: boolean;
   votes: number;
   voterIds: string[];
+  /** Who voted for this card, in id order (result only) — the room sees who liked what. */
+  voters: PersonView[];
   winner: boolean;
 }
 
@@ -174,6 +176,7 @@ function revealedCards(state: State): RevealedCard[] {
       rando,
       votes: t.votes,
       voterIds: t.voterIds,
+      voters: t.voterIds.map((id) => person(state, id)).filter((p): p is PersonView => p !== null),
       winner: winners.has(t.submitterId),
     };
   });

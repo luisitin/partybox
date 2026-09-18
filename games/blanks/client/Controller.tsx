@@ -118,6 +118,12 @@ function ControllerResult({ view, me, send }: Props): JSX.Element {
                   <span className={styles.voteCount}>{votesLabel(view, w.votes)}</span>
                 ) : null}
               </span>
+              {/* A phone-only room sees the social payoff too (review-loop #170). */}
+              {view.judgeMode === 'vote' && w.voters.length > 0 ? (
+                <span className={`${styles.voters} pb-caption`}>
+                  Voted by {list(w.voters.map((v) => v.name))}
+                </span>
+              ) : null}
             </FilledCard>
           ))
         : null}
