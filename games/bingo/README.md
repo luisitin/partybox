@@ -19,7 +19,7 @@ the one nearest the pattern — the pattern in green ✓, every daub that was ne
 missed pattern squares outlined. Right → a bingo: +1, and any phone may keep the round going on the
 same cards (that card sits the pattern out; your other cards play on) or move on. Wrong → **that card
 is wiped blank** (the penalty; re-daub from memory; your other cards keep their daubs) and the caller
-carries on. One point per bingo.
+carries on. Points: 3, 2, 1, then ½ per bingo under a pattern (a blackout restarts the ladder).
 
 ## Players
 
@@ -62,7 +62,7 @@ Pause freezes the caller (and a running check); daubs and claims are ignored whi
   cannot claim it again (`round.won`, per card) but still takes daubs, the winner's other cards play
   on. `same` needs a contest (two players — everyone, in a two-player game — with an unwon card, nobody
   blacked out on every card), else only `blackout` (new pattern, every card reopens) or `next`. Cards,
-  daubs and the deck carry on; the number that was up is called again; each bingo is another point.
+  daubs and the deck carry on; the number that was up is called again; each bingo scores its rung (3, 2, 1, ½; blackout restarts).
 - `{ type: 'bingo', card?: 0..3 }` — accepted in `play` only, from a player whose card `card` has not won
   the current pattern, who is not waiting for the next number. **Two taps**: the first arms that card for
   3 s (`round.arm` — this player has dibs; a tap on another of their cards re-arms there), the second tap

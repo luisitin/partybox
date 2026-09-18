@@ -297,7 +297,7 @@ export function Controller({
 
   if (view.phaseId === 'scoreboard') {
     return (
-      <Screen key="scoreboard" title="Rounds won">
+      <Screen key="scoreboard" title="Points so far">
         <Scoreboard rows={rows(view)} compact highlightId={me.id} noTrophy />
         <p className={styles.hint}>
           Next: round {view.round + 1} — {view.patterns[view.round] ?? ''}

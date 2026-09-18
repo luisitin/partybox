@@ -32,6 +32,7 @@ const G = 'bingo';
 
 interface RoundState {
   drawn: number;
+  bingos: number;
   pattern: string;
   won: Record<string, number[]>;
   daubs: Record<string, number[][]>;
@@ -52,12 +53,17 @@ async function main(): Promise<void> {
   const api = new DevApi(server.url);
   const shots = new Shooter(OUT);
   const browser: Browser = await chromium.launch();
-  const state = async (): Promise<{ phase: string; round: RoundState }> => {
+  const state = async (): Promise<{
+    phase: string;
+    round: RoundState;
+    wins: Record<string, number>;
+  }> => {
     const s = (await api.state()).room?.game?.state as unknown as {
       phase: { id: string };
       round: RoundState;
+      wins: Record<string, number>;
     };
-    return { phase: s.phase.id, round: s.round };
+    return { phase: s.phase.id, round: s.round, wins: s.wins };
   };
   const post = (playerId: string, input: unknown) =>
     api.post('/api/dev/event', { event: { type: 'input', now: Date.now(), playerId, input } });
@@ -100,6 +106,7 @@ async function main(): Promise<void> {
     await sam.page.getByRole('button', { name: /tap again to claim/i }).dispatchEvent('click');
     await settle(600);
     expect((await state()).phase === 'bingo', 'a valid line is a bingo');
+    expect((await state()).wins[samId] === 3, 'the first bingo of the pattern scores 3');
     // Priya's phone (a clock ahead, say) sends "keep going — same" 0.6 s into the celebration.
     await post(priyaId, { type: 'continue', pattern: 'same' });
     await settle(300);
@@ -150,6 +157,8 @@ async function main(): Promise<void> {
     await settle(8000);
     s = await state();
     expect(s.phase === 'bingo' && s.round.patternBingos === 2, 'the second bingo of the pattern');
+    expect(s.wins[samId] === 5, 'the second scores 2 (5 in all)');
+    expect((await tv.getByText(/[+]2 points/).count()) === 1, 'the TV says +2 points');
     await shots.shot(tv, { group: G, phase: 'second-bingo', device: 'tv', role: 'stage' });
     await shots.shot(sam.page, { group: G, phase: 'second-bingo', device: 'iphone', role: 'sam' });
     await shots.shot(priya.page, {
@@ -246,6 +255,14 @@ async function main(): Promise<void> {
       (await b.page.getByRole('button', { name: /keep going/i }).count()) === 0 &&
         (await b.page.getByRole('button', { name: /finish the game/i }).count()) === 1,
       'a blackout on every card: only the end',
+    );
+    expect(s.wins[aId] === 6, 'a blackout after a line: 3 + 3');
+    tv2Marks.push({ name: 'auto-end', at: Date.now(), before: 0.2, seconds: 8 });
+    await settle(7000); // verdict at ≈ 9.4 s, read 3 s, then 2 s: the round ends by itself
+    const room = (await api.state()).room;
+    expect(
+      room?.status === 'results' || room?.game?.state.phase.id === 'done',
+      'a blackout on every card ends the round by itself',
     );
     await shots.shot(tv2.page, { group: G, phase: 'blackout-win', device: 'tv', role: 'stage' });
     await shots.shot(a.page, { group: G, phase: 'blackout-win', device: 'iphone', role: 'sam' });

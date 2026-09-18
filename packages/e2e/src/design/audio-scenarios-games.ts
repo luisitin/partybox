@@ -183,13 +183,18 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
       !(await T.between(tv, 'D8', null)).some((e) => e.kind === 'speak'),
     '',
   );
-  await vip.page.getByRole('button', { name: /keep going — same pattern/i }).click();
-  await settle(1800);
+  // Two players, one card each: Sam's only card won, so the room may only go for a blackout. The
+  // clock is frozen here (the reveal never "ends" on its own), so the choice is held: unfreeze
+  // the clock past the reading time and the held choice lands on the phase deadline.
+  await vip.page.getByRole('button', { name: /keep going — blackout/i }).click();
+  await settle(300);
+  await api.clock(false);
+  await settle(3500); // the verdict was read 3 s after the reveal: the call repeats
   await T.mark('D9');
   evs = await T.between(tv, 'D8', 'D9');
   T.ok(
     'D',
-    'keep going → play resumes, next number spoken, no start/phase chime',
+    'keep going (blackout) → play resumes, the number that was up is called again, no start/phase chime',
     evs.some((e) => e.kind === 'speak') &&
       T.cues(evs).includes('call') &&
       !T.cues(evs).includes('start'),

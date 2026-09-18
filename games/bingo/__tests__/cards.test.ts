@@ -68,7 +68,7 @@ describe('keep going with several cards', () => {
     s = daubAll(s, 'a', [0, 1, 2, 3, 4], 0);
     s = claim(s, 'a');
     expect(s.phase.id).toBe('bingo');
-    expect(s.wins['a']).toBe(1);
+    expect(s.wins['a']).toBe(3); // the first bingo of a pattern
     expect(s.round.won['a']).toEqual([0]);
     expect(game.tvView(s).bingosThisRound).toBe(1);
     expect(game.tvView(s).decide).toEqual({ same: true, blackout: true });
@@ -97,7 +97,7 @@ describe('keep going with several cards', () => {
     expect(s.history.map((h) => h.winnerId)).toEqual(['a', 'b']);
     s = input(s, 'a', { type: 'next' }, after(s));
     expect(s.phase.id).toBe('done');
-    expect(game.results(s)?.scores).toEqual({ a: 1, b: 1, c: 0 });
+    expect(game.results(s)?.scores).toEqual({ a: 3, b: 2, c: 0 }); // 1st and 2nd bingo of the pattern;
   });
 
   it('a one-card player who won is done for the pattern: no claim, status submitted, bot idle; blackout reopens the card', () => {

@@ -43,9 +43,12 @@ export function WinScreen({
         </div>
       ) : null}
       <p className={styles.hint}>
-        {iDecide && cards > 1
-          ? 'Keep going and this card sits the pattern out; your other cards play on. Anyone can pick.'
-          : afterLine(view, iDecide)}
+        +{view.claimPoints} {view.claimPoints === 1 ? 'point' : 'points'}.{' '}
+        {view.autoEnd
+          ? 'Nothing left to play for on these cards — the scores in a moment.'
+          : iDecide && cards > 1
+            ? 'Keep going and this card sits the pattern out; your other cards play on. Anyone can pick.'
+            : afterLine(view, iDecide)}
       </p>
     </Screen>
   );

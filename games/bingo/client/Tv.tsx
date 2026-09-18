@@ -211,14 +211,19 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
                 <p className={styles.winLine}>
                   <PatternIcon cells={view.patternCells} size={72} />
                   <span>
-                    {view.patternLabel} on call {view.callIndex} · round {view.round}
+                    {view.patternLabel} on call {view.callIndex} · round {view.round} · +
+                    {view.claimPoints} {view.claimPoints === 1 ? 'point' : 'points'}
                     {whichCard(view.claim)}
                   </span>
                 </p>
               </>
             }
             aside={
-              view.pendingDecision ? (
+              view.autoEnd ? (
+                <p className={`${styles.decideLine} pb-enter`}>
+                  Nothing left to play for on these cards — the scores in a moment.
+                </p>
+              ) : view.pendingDecision ? (
                 <p className={`${styles.decideLine} pb-enter`}>
                   {pendingLine(view.pendingDecision, view.round >= view.totalRounds)}
                 </p>
@@ -252,7 +257,7 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
     // Centred like the game-end board (loop 6 pick 2A): the rounds-won table sat in the left half.
     return (
       <Stage center>
-        <BigText level="h1">Rounds won</BigText>
+        <BigText level="h1">Points</BigText>
         <Scoreboard rows={rows(view)} noTrophy />
         {next ? (
           <BigText level="h2" tone="accent">

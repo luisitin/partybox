@@ -10,7 +10,8 @@
 import { enterPhase, hasPlayer, isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { clearClaims, setMenu } from '../claims';
-import { VERDICT_READ_MS, claimRevealMs } from '../reveal';
+import { AUTO_END_MS, VERDICT_READ_MS, claimRevealMs } from '../reveal';
+import { pointsFor } from '../scoring';
 import { BINGO_ABANDONED_MS, BINGO_MS, DECK } from '../types';
 import type { Claim, Decision, Input, State, Transition } from '../types';
 
@@ -27,27 +28,32 @@ export function enterBingo(
   claim: Claim | null,
 ): State {
   const round = state.round;
+  const bingos = winnerId ? round.bingos + 1 : round.bingos;
+  const patternBingos = winnerId ? round.patternBingos + 1 : round.patternBingos;
+  // 3, 2, 1, then ½ under a pattern; a blackout starts the ladder again (scoring.ts).
   const wins = winnerId
-    ? { ...state.wins, [winnerId]: (state.wins[winnerId] ?? 0) + 1 }
+    ? { ...state.wins, [winnerId]: (state.wins[winnerId] ?? 0) + pointsFor(patternBingos) }
     : state.wins;
   const history = [...state.history, { round: round.number, winnerId, calls: round.drawn }];
   const won =
     winnerId && claim
       ? { ...round.won, [winnerId]: [...(round.won[winnerId] ?? []), claim.cardIndex] }
       : round.won;
-  const bingos = winnerId ? round.bingos + 1 : round.bingos;
-  const patternBingos = winnerId ? round.patternBingos + 1 : round.patternBingos;
-  return enterPhase(
-    clearClaims({
-      ...state,
-      wins,
-      history,
-      round: { ...round, winnerId, claim, won, bingos, patternBingos, decision: null },
-    }),
-    'bingo',
-    now,
-    winnerId ? BINGO_ABANDONED_MS : BINGO_MS,
-  );
+  const next = clearClaims({
+    ...state,
+    wins,
+    history,
+    round: { ...round, winnerId, claim, won, bingos, patternBingos, decision: null },
+  });
+  // Nothing left to play for (every card full, or no contest left): the round ends by itself
+  // once the verdict has been read — the phones need not tap anything.
+  const can = canContinue(next);
+  const ms = !winnerId
+    ? BINGO_MS
+    : can.same || can.blackout || !claim
+      ? BINGO_ABANDONED_MS
+      : claimRevealMs(claim.cells, claim.daubs) + VERDICT_READ_MS + AUTO_END_MS;
+  return enterPhase(next, 'bingo', now, ms);
 }
 
 /** Cards of `playerId` that have not won the current pattern (the ones BINGO! may still check). */
