@@ -3,8 +3,9 @@
 // focal point — the black card — with a row of face-down cards on the table (one slot per expected
 // card; a played card lands in its slot, the newest with a bounce), the
 // count re-entering on every change, and a line naming who the room is waiting for.
+import { useEffect } from 'react';
 import type { JSX } from 'react';
-import { Avatar, BigText, Stage, useBeats, useSecondsLeft } from '@partybox/game-sdk/ui';
+import { Avatar, BigText, Stage, useBeats, useSecondsLeft, useSound } from '@partybox/game-sdk/ui';
 import type { GameTvProps, ViewPlayer } from '@partybox/game-sdk/ui';
 import type { BlanksTvView } from '../server/index';
 import { CardFan, FilledCard, FlipCard } from './Cards';
@@ -70,6 +71,13 @@ export function TvIntro({ view }: Props): JSX.Element {
 /** czar mode: the judge chooses the round's black card from three (review-loop #154). */
 export function TvPick({ view }: Props): JSX.Element {
   const taken = view.blackChoices.some((b) => b.chosen);
+  // The judge's choice is a real beat — the card lifts and rings gold while the other two step
+  // back — and it was the one beat in the round the room heard nothing for (review-loop #221).
+  // A single lock tick, the same note a played card makes, on the frame the ring appears.
+  const play = useSound();
+  useEffect(() => {
+    if (taken) play('lock');
+  }, [taken, play]);
   return (
     <Stage className={styles.table}>
       <div className={styles.kickerRow}>
