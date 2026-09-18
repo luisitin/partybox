@@ -6,7 +6,7 @@
 // and "NOT A BINGO", or the cheer with confetti — and waits for a phone to move on.
 import { useEffect, useLayoutEffect } from 'react';
 import type { JSX } from 'react';
-import { BigText, Scoreboard, Stage, useSoundApi } from '@partybox/game-sdk/ui';
+import { Avatar, BigText, Scoreboard, Stage, useSoundApi } from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
 import type { BingoTvView } from '../server/views';
 import { BALL_LAND_MS, hushCaller, speakCall } from './caller';
@@ -196,6 +196,7 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
 
   if (view.phaseId === 'bingo') {
     if (view.claim && view.winnerName) {
+      const winnerAvatar = view.players.find((p) => p.id === view.claim?.playerId)?.avatarId ?? '';
       return (
         <Stage className={crowd}>
           <div className={`${styles.checkHead} pb-enter`}>
@@ -217,7 +218,12 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
                 <BigText level="display" tone="accent" className={styles.bingoTitle}>
                   BINGO!
                 </BigText>
-                <BigText level="h1">{winHeadline(view, view.winnerName)}</BigText>
+                {/* The winner's face beside their name (loop 331): the room looks up from the
+                    phones and sees who, not just a name in the roster. */}
+                <div className={styles.winWho}>
+                  <Avatar avatarId={winnerAvatar} size="var(--pb-win-avatar)" />
+                  <BigText level="h1">{winHeadline(view, view.winnerName)}</BigText>
+                </div>
                 <p className={styles.winLine}>
                   <PatternIcon cells={view.patternCells} size={72} />
                   <span>

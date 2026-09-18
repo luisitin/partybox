@@ -56,17 +56,19 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
   await settle(3500); // 6.5 s in: the intro (5 s) has run out and the first ball has dropped
   await api.clock(true); // hold the caller from here
   await T.mark('D1b');
-  // From the start (the deal's pluck lands 0.6 s in, before D1) to the first call.
-  const intro = T.cues(await T.between(tv, 'C3', 'D1b')).filter((c) => c !== 'phase');
+  // From the start (the deal's pluck lands 0.6 s in, before D1) to the first call. No phase chime
+  // anywhere in it: the shell's chime used to land under the first number's voice (loop 332).
+  const intro = T.cues(await T.between(tv, 'C3', 'D1b'));
   T.ok(
     'D',
-    'the intro: one card pluck on the deal (one card each), three ticks (3 · 2 · 1), then the first call',
+    'the intro: one card pluck on the deal (one card each), three ticks (3 · 2 · 1), then the first call — no phase chime',
     intro.filter((c) => c === 'card').length === 1 &&
       intro.indexOf('card') < intro.indexOf('tick') &&
       intro.indexOf('card') > intro.indexOf('start') &&
       intro.filter((c) => c === 'tick').length === 3 &&
       intro.indexOf('call') > intro.lastIndexOf('tick') &&
-      intro.filter((c) => c === 'call').length === 1,
+      intro.filter((c) => c === 'call').length === 1 &&
+      !intro.includes('phase'),
     `cues=${intro.join(',')}`,
   );
   // The deal's pluck lands on the same beat on the TV and in the hand (loop 278): offsets from
@@ -214,6 +216,17 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
       .click();
   }
   await settle(300);
+  // The way to the line skipped through dozens of numbers in a few seconds: one voice at a time —
+  // every clip after the first came with a hush before it, never two calls talking (loop 333).
+  const skipped = await T.between(tv, 'D6', null);
+  const clipsN = skipped.filter((e) => e.kind === 'clip').length;
+  const hushN = skipped.filter((e) => e.kind === 'hush').length;
+  T.ok(
+    'D',
+    'skipping through the deck: a hush before every call, one voice at a time',
+    clipsN > 5 && hushN >= clipsN,
+    `clips=${clipsN} hushes=${hushN}`,
+  );
   await vip.page.getByRole('button', { name: /^bingo! card 1$/i }).click();
   await settle(250);
   await T.mark('D7');
@@ -258,6 +271,21 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
       );
     })(),
     `phone cues=${T.cues(phoneCues, 'phone').join(',')}`,
+  );
+  // The celebration buzz is the last one the winner's phone runs at the verdict: the shell's
+  // 20 ms "locked in" tick used to replace it on the same tick (loop 334).
+  const winBuzzes = phoneCues.filter((e) => e.kind === 'buzz' || e.kind === 'buzz:dropped');
+  const celebrationAt = winBuzzes.findIndex(
+    (e) => e.kind === 'buzz' && JSON.stringify(e['pattern']) === '[40,60,40,60,120]',
+  );
+  const cutBy = winBuzzes
+    .slice(celebrationAt + 1)
+    .filter((e) => e.kind === 'buzz' && e.t - winBuzzes[celebrationAt]!.t < 320);
+  T.ok(
+    'D',
+    "the winner's celebration buzz (320 ms) runs whole — nothing shorter cuts it",
+    celebrationAt >= 0 && cutBy.length === 0,
+    `celebration@${celebrationAt >= 0 ? winBuzzes[celebrationAt]!.t : '-'} cut by=${JSON.stringify(cutBy.map((e) => e['pattern']))}`,
   );
   // Every other phone feels the win land: one 30 ms tap on the TV's cheer beat (loop 260).
   // Offsets from each page's own D7 mark (`between` drops the mark; clocks are per page).

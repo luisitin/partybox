@@ -107,7 +107,8 @@ Timer: in the last 5 s it switches to `--pb-danger`, scales 1.15×, pulses once 
 | `submit`                  | a player's own choice sent — a Blanks card, Bingo's "keep going / next round" pick (loop 322)                                                        | game via `useSound` (phone)                                                    |
 
 `play(cue, { semitones, quiet })` transposes a cue (the engine multiplies every note by 2^(n/12)); `quiet` leaves
-`lastPlayedAt` alone so the cue never suppresses the shell's next chime.
+`lastPlayedAt` alone so the cue never suppresses the shell's next chime. A `clip` counts like a cue: a game that speaks
+into a phase (Bingo's first number) keeps the chime off its voice.
 `clientModule.sounds` maps phase ids to cues; unmapped phases play `phase`, reserved for moments where the phone needs
 the player (so 'pick up your phone' and 'look at the TV' never sound the same). A mapped phase that re-enters itself
 (a new deadline with the same id — Blanks reads one card per instance) chimes again; unmapped ones and pauses do not.
@@ -138,6 +139,9 @@ game cued something in the same 50 ms.
 Toggle `partybox:haptics` (default on, theme sheet); not gated on `prefers-reduced-motion` (a 20 ms buzz is not
 animation and is the most accessible non-visual confirmation). iOS Safari has no `navigator.vibrate`; Android Chrome
 drops calls until the page has had a user activation, so a resumed session's first buzz may be lost — acceptable.
+`navigator.vibrate` replaces, never queues: `buzz()` drops a pattern shorter than what is left of the one running (the
+shell's 20 ms "submitted" tick on the same tick as a Bingo winner's 320 ms celebration), and a pattern at least as long
+takes over. Dropped ones trace as `buzz:dropped`.
 
 ## Primitives
 

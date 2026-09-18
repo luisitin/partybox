@@ -32,6 +32,9 @@ export function speakCall(
   number: number,
   delayMs = BALL_LAND_MS,
 ): void {
+  // Never two voices: a call that comes while the last one is still being said (a VIP pressing
+  // Skip twice, a 3 s caller) cuts it off first (loop 333).
+  hushCaller(sound);
   sound.clip(callClip(letter, number), { delayMs, gain: 1, offsetS: CLIP_LEAD_S });
 }
 

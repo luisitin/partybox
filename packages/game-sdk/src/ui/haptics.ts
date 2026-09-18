@@ -23,8 +23,23 @@ export function setHapticsEnabled(on: boolean): void {
   }
 }
 
-/** Vibrate for `pattern` ms (or an on/off pattern); silently a no-op where unsupported. */
+/** When the pattern now running ends (`navigator.vibrate` replaces, it never queues). */
+let busyUntil = 0;
+
+/**
+ * Vibrate for `pattern` ms (or an on/off pattern); silently a no-op where unsupported. A shorter
+ * buzz never cuts a longer one still running: the shell's 20 ms "locked in" tick used to land on
+ * the same tick as a winner's 320 ms celebration and replace it (loop 334). A pattern at least as
+ * long as what is left takes over (an error over a tap).
+ */
 export function buzz(pattern: number | number[]): void {
+  const total = Array.isArray(pattern) ? pattern.reduce((a, b) => a + b, 0) : pattern;
+  const now = performance.now();
+  if (now < busyUntil && total < busyUntil - now) {
+    trace('buzz:dropped', { pattern });
+    return;
+  }
+  busyUntil = now + total;
   trace('buzz', { pattern });
   if (!hapticsEnabled()) return;
   try {

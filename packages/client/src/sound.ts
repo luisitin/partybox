@@ -106,9 +106,14 @@ export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine
     return pending;
   };
   const clips = new Set<AudioBufferSourceNode>();
+  // A hush also cancels clips still decoding (a first-time call fetched after the hush), so a
+  // caller hushed mid-fetch never speaks late (loop 333).
+  let hushGen = 0;
   const playSample = (sample: Sample, t0: number, track = false): void => {
+    const gen = hushGen;
     void buffer(sample.src).then((buf) => {
       if (!buf || !ctx || muted || ctx.state !== 'running') return;
+      if (track && gen !== hushGen) return;
       const source = ctx.createBufferSource();
       const gain = ctx.createGain();
       source.buffer = buf;
@@ -198,6 +203,10 @@ export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine
       const now = performance.now();
       if (lastClip && lastClip.src === src && now - lastClip.at < 40) return;
       lastClip = { src, at: now };
+      // A clip is the game cueing the moment itself: the shell's phase chime yields to it as it
+      // does to a cue (the first number of a Bingo round used to get a chime under its voice —
+      // loop 332).
+      lastPlayedAt = now;
       const name = src.split('/').pop() ?? src;
       // The trace records when the sound STARTS (its scheduled delay), not when it was asked for.
       const at = opts?.delayMs ?? 0;
@@ -218,6 +227,7 @@ export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine
       );
     },
     hushClips() {
+      hushGen += 1;
       for (const s of clips) {
         try {
           s.stop();
