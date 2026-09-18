@@ -1,0 +1,8753 @@
+{
+  "checks": [
+    {
+      "scenario": "A",
+      "check": "before the gate tap nothing is audible",
+      "pass": true,
+      "detail": "cues=none, playing=[]"
+    },
+    {
+      "scenario": "A",
+      "check": "gate tap → ready chime + lobby music starts",
+      "pass": true,
+      "detail": "cues=ready; music=music:start:local-forecast-elevator"
+    },
+    {
+      "scenario": "A",
+      "check": "two joins → two join cues, rising",
+      "pass": true,
+      "detail": "semitones=0,2"
+    },
+    {
+      "scenario": "A",
+      "check": "add 2 bots (one push = one join note) + remove 1 → a join, a leave",
+      "pass": true,
+      "detail": "cues=join,leave"
+    },
+    {
+      "scenario": "A",
+      "check": "selecting keeps the lobby music (no plan change), a status-swap cue only",
+      "pass": true,
+      "detail": "cues=none; playing=[{\"track\":\"local-forecast-elevator.mp3\",\"vol\":0.35,\"t\":4.4}]"
+    },
+    {
+      "scenario": "B",
+      "check": "game start → start cue, lobby music fades to none (Lightning has no music)",
+      "pass": true,
+      "detail": "cues=start; plan=lobby→null"
+    },
+    {
+      "scenario": "B",
+      "check": "no track audible during Lightning",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "scenario": "B",
+      "check": "question phase → the generic phase chime (unmapped)",
+      "pass": true,
+      "detail": "cues=phase"
+    },
+    {
+      "scenario": "B",
+      "check": "lock-in → TV lock tick; phone submit cue + 20 ms buzz",
+      "pass": true,
+      "detail": "tv=lock; phone=submit buzz=15 20"
+    },
+    {
+      "scenario": "B",
+      "check": "the phone never plays TV cues (phase/start/win/lock/countdown)",
+      "pass": true,
+      "detail": "phone cues=submit"
+    },
+    {
+      "scenario": "B",
+      "check": "last 5 s → five countdown ticks on the TV, climbing",
+      "pass": true,
+      "detail": "ticks=5 semitones=0,2,4,5,7"
+    },
+    {
+      "scenario": "B",
+      "check": "an unanswered phone buzzes each second, ticks once at 5 s, buzzes at time-up",
+      "pass": true,
+      "detail": "buzz=6 phone cues=tick"
+    },
+    {
+      "scenario": "B",
+      "check": "the deadline fired → reveal phase, reveal cue, and NO phase chime on top",
+      "pass": true,
+      "detail": "phase=reveal cues=countdown,countdown,countdown,countdown,countdown,reveal"
+    },
+    {
+      "scenario": "B",
+      "check": "wager phase → wager cue (mapped), no phase chime for it",
+      "pass": true,
+      "detail": "cues=phase,reveal,phase,reveal,phase,reveal,phase,reveal,phase,reveal,phase,reveal,phase,reveal,phase,reveal,phase,reveal,wager"
+    },
+    {
+      "scenario": "B",
+      "check": "final reveal → jackpot or bust cue from the game, no reveal sting on top",
+      "pass": true,
+      "detail": "cues=phase,silence,bust"
+    },
+    {
+      "scenario": "B",
+      "check": "results → one cheer (horn + crowd), no synth win, no music",
+      "pass": true,
+      "detail": "cues=cheer; playing=[]"
+    },
+    {
+      "scenario": "B",
+      "check": "results on the phones → a buzz only (no cue)",
+      "pass": true,
+      "detail": "phone cues=none buzz=[60,60,60,60,160]"
+    },
+    {
+      "scenario": "C",
+      "check": "play again → start cue, still no music, no second cheer",
+      "pass": true,
+      "detail": "cues=start"
+    },
+    {
+      "scenario": "C",
+      "check": "VIP ends the game → results → one cheer",
+      "pass": true,
+      "detail": "cues=cheer"
+    },
+    {
+      "scenario": "C",
+      "check": "new game → selecting → lobby music comes back (plan null→lobby)",
+      "pass": true,
+      "detail": "plan=null→lobby; playing=[{\"track\":\"bossa-antigua.mp3\",\"vol\":0.35,\"t\":1.5}]"
+    },
+    {
+      "scenario": "D",
+      "check": "Bingo start → lobby music fades out, the Bingo set starts (wallpaper or cool-vibes at 0.2)",
+      "pass": true,
+      "detail": "music=music:plan:lobby→game:bingo music:start:cool-vibes music:stop:bossa-antigua.mp3"
+    },
+    {
+      "scenario": "D",
+      "check": "exactly one track audible after the switch",
+      "pass": true,
+      "detail": "[{\"track\":\"cool-vibes.mp3\",\"vol\":0.2,\"t\":3}]"
+    },
+    {
+      "scenario": "D",
+      "check": "intro: nothing spoken",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "scenario": "D",
+      "check": "the intro: one card pluck on the deal (one card each), three ticks (3 · 2 · 1), then the first call — no phase chime",
+      "pass": true,
+      "detail": "cues=start,card,tick,tick,tick,call"
+    },
+    {
+      "scenario": "D",
+      "check": "the deal's pluck: TV and phone within 150 ms of each other",
+      "pass": true,
+      "detail": "tv@+955ms phone@+958ms"
+    },
+    {
+      "scenario": "D",
+      "check": "the phone taps 3 · 2 · 1 with the TV; \"deal me another\" is a 20 ms tap and one card pluck",
+      "pass": true,
+      "detail": "taps=3 cues=card"
+    },
+    {
+      "scenario": "D",
+      "check": "two calls → two boings and two recorded calls",
+      "pass": true,
+      "detail": "cues=call,call; spoken=b8.wav | n34.wav voice=clip"
+    },
+    {
+      "scenario": "D",
+      "check": "each voice starts on the push (no delay); its boing lands on the squash, 170–230 ms later",
+      "pass": true,
+      "detail": "delays=0,0 boing lags=191,192ms"
+    },
+    {
+      "scenario": "D",
+      "check": "the phones stay silent during calls",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "scenario": "D",
+      "check": "the first tap → the TV says \"hm?\" (dibs) once, before the verdict",
+      "pass": true,
+      "detail": "cues=dibs,reveal,wrong"
+    },
+    {
+      "scenario": "D",
+      "check": "wrong claim → caller hushed at once, buzzer at the verdict (after the reveal), no chime on entry, nothing spoken",
+      "pass": true,
+      "detail": "events=dibs,hush,reveal,hush,wrong"
+    },
+    {
+      "scenario": "D",
+      "check": "music keeps playing through the check",
+      "pass": true,
+      "detail": "[{\"track\":\"cool-vibes.mp3\",\"vol\":0.2,\"t\":18.1}]"
+    },
+    {
+      "scenario": "D",
+      "check": "after the verdict: 3 · 2 · 1 ticks, then the next number is spoken (no call before the ticks)",
+      "pass": true,
+      "detail": "cues=tick,tick,tick,call spoken=n35.wav"
+    },
+    {
+      "scenario": "D",
+      "check": "pause → pause cue, music holds, no new call",
+      "pass": true,
+      "detail": "cues=pause playing=[]"
+    },
+    {
+      "scenario": "D",
+      "check": "resume → phase chime, music resumes",
+      "pass": true,
+      "detail": "cues=phase playing=[{\"track\":\"cool-vibes.mp3\",\"vol\":0.2,\"t\":24.9}]"
+    },
+    {
+      "scenario": "D",
+      "check": "skipping through the deck: a hush before every call, one voice at a time",
+      "pass": true,
+      "detail": "clips=41 hushes=41"
+    },
+    {
+      "scenario": "D",
+      "check": "BINGO → caller hushed, the reveal lift on the announce, sweep as the line turns, cheer once at the verdict (~6.4 s), no chime on entry, no lock tick under the cheer, music continues",
+      "pass": true,
+      "detail": "cues=reveal,sweep,cheer cheer@+5362ms playing=[{\"track\":\"cool-vibes.mp3\",\"vol\":0.06,\"t\":39.5}]"
+    },
+    {
+      "scenario": "D",
+      "check": "the winner's phone: a dauber per daub, the claim cue on the tap, 'correct' when the verdict lands",
+      "pass": true,
+      "detail": "phone cues=daub,daub,daub,claim,correct"
+    },
+    {
+      "scenario": "D",
+      "check": "the winner's celebration buzz (320 ms) runs whole — nothing shorter cuts it",
+      "pass": true,
+      "detail": "celebration@73559 cut by=[]"
+    },
+    {
+      "scenario": "D",
+      "check": "the other phone: one soft tap as the win lands, within 400 ms of the TV's cheer, no sound",
+      "pass": true,
+      "detail": "taps=30 tap@+5408ms cheer@+5373ms cues="
+    },
+    {
+      "scenario": "D",
+      "check": "celebration waits: still in the bingo phase, nothing spoken",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "scenario": "D",
+      "check": "keep going (blackout) → 3 · 2 · 1 ticks, then the number that was up is called again, no start/phase chime",
+      "pass": true,
+      "detail": "cues=silence,tick,tick,tick,call spoken=g57.wav"
+    },
+    {
+      "scenario": "D",
+      "check": "the pick lands in the picker's hand: a 'submit' cue and a 20 ms buzz, before the ticks",
+      "pass": true,
+      "detail": "cues=submit,tick,tick,tick"
+    },
+    {
+      "scenario": "D",
+      "check": "the phone ticks 3 · 2 · 1 with the TV, then feels the repeated call (a 12 ms buzz after the last tick)",
+      "pass": true,
+      "detail": "ticks=3 buzzIdx=6 lastTickIdx=5"
+    },
+    {
+      "scenario": "D",
+      "check": "the last bingo → the drumroll: the final board with the tally chime, no cheer or fanfare yet",
+      "pass": true,
+      "detail": "phase=final cues=tally"
+    },
+    {
+      "scenario": "D",
+      "check": "4 s on → the results cheer, once",
+      "pass": true,
+      "detail": "status=results cues=cheer"
+    },
+    {
+      "scenario": "D",
+      "check": "between rounds → the scoreboard plays tally, not the phase chime",
+      "pass": true,
+      "detail": "phase=scoreboard cues=tally"
+    },
+    {
+      "scenario": "D",
+      "check": "VIP ends Bingo → results cheer once; Bingo music stops; no speech after leaving play",
+      "pass": true,
+      "detail": "cues=tick,cheer playing=[]"
+    },
+    {
+      "scenario": "E",
+      "check": "Home → fresh lobby → lobby music again, no cheer, speech cancelled",
+      "pass": true,
+      "detail": "plan=null→lobby playing=[{\"track\":\"airport-lounge.mp3\",\"vol\":0.35,\"t\":2.5}]"
+    },
+    {
+      "scenario": "E",
+      "check": "Home mid-call → speech cancelled, Bingo music out, lobby music in, one track audible",
+      "pass": true,
+      "detail": "events=ss:cancel,music:plan,ss:cancel,music:plan,music:start,music:stop playing=[{\"track\":\"airport-lounge.mp3\",\"vol\":0.35,\"t\":2.5}]"
+    },
+    {
+      "scenario": "E",
+      "check": "nothing spoken in the lobby afterwards",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "scenario": "F",
+      "check": "Wisecrack start → start cue, no music (none configured; the lobby track only fading out)",
+      "pass": true,
+      "detail": "cues=leave,leave,leave,leave,leave,join,start playing=[{\"track\":\"airport-lounge.mp3\",\"vol\":0.07,\"t\":10.1}]"
+    },
+    {
+      "scenario": "F",
+      "check": "answers → lock ticks on the TV as phones submit",
+      "pass": true,
+      "detail": "cues=phase,lock,lock,phase"
+    },
+    {
+      "scenario": "F",
+      "check": "submitting on the phone → submit cue + buzz",
+      "pass": true,
+      "detail": "phone cues=submit"
+    },
+    {
+      "scenario": "F",
+      "check": "reveal → the reveal sting from the game, no phase chime within it",
+      "pass": true,
+      "detail": "cues=reveal,phase"
+    },
+    {
+      "scenario": "F",
+      "check": "scores phase → tally ping (mapped)",
+      "pass": true,
+      "detail": "cues=reveal,phase,reveal,tally"
+    },
+    {
+      "scenario": "G",
+      "check": "first phase (pick) → no game music yet unless it is draw/guess/pass",
+      "pass": true,
+      "detail": "phase=pick playing=[] plan=null→lobby lobby→null"
+    },
+    {
+      "scenario": "G",
+      "check": "draw/guess/pass (draw) → the Broken Pencil set at 0.2, one track",
+      "pass": true,
+      "detail": "[{\"track\":\"lobby-time.mp3\",\"vol\":0.2,\"t\":1.4}]"
+    },
+    {
+      "scenario": "G",
+      "check": "show → the soft 'card' page-turn pluck (mapped since loop 93), music stops (show)",
+      "pass": true,
+      "detail": "cues=phase,phase,card playing=[]"
+    }
+  ],
+  "tv": [
+    {
+      "t": 408,
+      "kind": "ss:cancel",
+      "speaking": false,
+      "pending": false
+    },
+    {
+      "t": 409,
+      "kind": "ss:cancel",
+      "speaking": false,
+      "pending": false
+    },
+    {
+      "t": 422,
+      "kind": "ss:cancel",
+      "speaking": false,
+      "pending": false
+    },
+    {
+      "t": 422,
+      "kind": "music:plan",
+      "from": null,
+      "to": "lobby"
+    },
+    {
+      "t": 896,
+      "kind": "mark",
+      "label": "A0",
+      "status": "lobby",
+      "phase": null
+    },
+    {
+      "t": 1735,
+      "kind": "music:start",
+      "plan": "lobby",
+      "track": "local-forecast-elevator",
+      "mode": "rotate",
+      "volume": 0.35
+    },
+    {
+      "t": 1759,
+      "kind": "cue",
+      "cue": "ready",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 2995,
+      "kind": "mark",
+      "label": "A1",
+      "status": "lobby",
+      "phase": null
+    },
+    {
+      "t": 3072,
+      "kind": "cue",
+      "cue": "join",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 3208,
+      "kind": "cue",
+      "cue": "join",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 2
+    },
+    {
+      "t": 3895,
+      "kind": "mark",
+      "label": "A2",
+      "status": "lobby",
+      "phase": null
+    },
+    {
+      "t": 3914,
+      "kind": "cue",
+      "cue": "join",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 4
+    },
+    {
+      "t": 4540,
+      "kind": "cue",
+      "cue": "leave",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 5351,
+      "kind": "mark",
+      "label": "A3",
+      "status": "lobby",
+      "phase": null
+    },
+    {
+      "t": 5375,
+      "kind": "ss:cancel",
+      "speaking": false,
+      "pending": false
+    },
+    {
+      "t": 6186,
+      "kind": "mark",
+      "label": "A4",
+      "status": "selecting",
+      "phase": null
+    },
+    {
+      "t": 6213,
+      "kind": "music:plan",
+      "from": "lobby",
+      "to": null
+    },
+    {
+      "t": 6213,
+      "kind": "cue",
+      "cue": "start",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 7713,
+      "kind": "music:stop",
+      "track": "local-forecast-elevator.mp3"
+    },
+    {
+      "t": 7717,
+      "kind": "mark",
+      "label": "B1",
+      "status": "playing",
+      "phase": "intro"
+    },
+    {
+      "t": 8149,
+      "kind": "cue",
+      "cue": "phase",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 9069,
+      "kind": "mark",
+      "label": "B2",
+      "status": "playing",
+      "phase": "question"
+    },
+    {
+      "t": 9442,
+      "kind": "cue",
+      "cue": "lock",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 10362,
+      "kind": "mark",
+      "label": "B3",
+      "status": "playing",
+      "phase": "question"
+    },
+    {
+      "t": 15724,
+      "kind": "mark",
+      "label": "B3b",
+      "status": "playing",
+      "phase": "question"
+    },
+    {
+      "t": 16403,
+      "kind": "cue",
+      "cue": "countdown",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 17412,
+      "kind": "cue",
+      "cue": "countdown",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 2
+    },
+    {
+      "t": 18403,
+      "kind": "cue",
+      "cue": "countdown",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 4
+    },
+    {
+      "t": 19413,
+      "kind": "cue",
+      "cue": "countdown",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 5
+    },
+    {
+      "t": 20413,
+      "kind": "cue",
+      "cue": "countdown",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 7
+    },
+    {
+      "t": 21211,
+      "kind": "cue",
+      "cue": "reveal",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 21949,
+      "kind": "mark",
+      "label": "B4",
+      "status": "playing",
+      "phase": "reveal"
+    },
+    {
+      "t": 22019,
+      "kind": "cue",
+      "cue": "phase",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 22177,
+      "kind": "cue",
+      "cue": "reveal",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 22334,
+      "kind": "cue",
+      "cue": "phase",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 22491,
+      "kind": "cue",
+      "cue": "reveal",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 22649,
+      "kind": "cue",
+      "cue": "phase",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 22806,
+      "kind": "cue",
+      "cue": "reveal",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 22964,
+      "kind": "cue",
+      "cue": "phase",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 23123,
+      "kind": "cue",
+      "cue": "reveal",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 23280,
+      "kind": "cue",
+      "cue": "phase",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 23437,
+      "kind": "cue",
+      "cue": "reveal",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 23592,
+      "kind": "cue",
+      "cue": "phase",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 23751,
+      "kind": "cue",
+      "cue": "reveal",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 23907,
+      "kind": "cue",
+      "cue": "phase",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 24066,
+      "kind": "cue",
+      "cue": "reveal",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 24224,
+      "kind": "cue",
+      "cue": "phase",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 24379,
+      "kind": "cue",
+      "cue": "reveal",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 24536,
+      "kind": "cue",
+      "cue": "phase",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 24694,
+      "kind": "cue",
+      "cue": "reveal",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 24852,
+      "kind": "cue",
+      "cue": "wager",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 25719,
+      "kind": "mark",
+      "label": "B5",
+      "status": "playing",
+      "phase": "wager"
+    },
+    {
+      "t": 25739,
+      "kind": "cue",
+      "cue": "phase",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 26072,
+      "kind": "cue",
+      "cue": "silence",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 27881,
+      "kind": "cue",
+      "cue": "bust",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 29586,
+      "kind": "mark",
+      "label": "B6",
+      "status": "playing",
+      "phase": "reveal"
+    },
+    {
+      "t": 29604,
+      "kind": "ss:cancel",
+      "speaking": false,
+      "pending": false
+    },
+    {
+      "t": 29604,
+      "kind": "cue",
+      "cue": "cheer",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 31121,
+      "kind": "mark",
+      "label": "B7",
+      "status": "results",
+      "phase": null
+    },
+    {
+      "t": 31151,
+      "kind": "cue",
+      "cue": "start",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 32674,
+      "kind": "mark",
+      "label": "C1",
+      "status": "playing",
+      "phase": "intro"
+    },
+    {
+      "t": 33286,
+      "kind": "ss:cancel",
+      "speaking": false,
+      "pending": false
+    },
+    {
+      "t": 33286,
+      "kind": "cue",
+      "cue": "cheer",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 34804,
+      "kind": "mark",
+      "label": "C2",
+      "status": "results",
+      "phase": null
+    },
+    {
+      "t": 34820,
+      "kind": "ss:cancel",
+      "speaking": false,
+      "pending": false
+    },
+    {
+      "t": 34820,
+      "kind": "music:plan",
+      "from": null,
+      "to": "lobby"
+    },
+    {
+      "t": 34820,
+      "kind": "music:start",
+      "plan": "lobby",
+      "track": "bossa-antigua",
+      "mode": "rotate",
+      "volume": 0.35
+    },
+    {
+      "t": 36339,
+      "kind": "mark",
+      "label": "C3",
+      "status": "selecting",
+      "phase": null
+    },
+    {
+      "t": 36379,
+      "kind": "music:plan",
+      "from": "lobby",
+      "to": "game:bingo"
+    },
+    {
+      "t": 36379,
+      "kind": "music:start",
+      "plan": "game:bingo",
+      "track": "cool-vibes",
+      "mode": "chain",
+      "volume": 0.2
+    },
+    {
+      "t": 36379,
+      "kind": "cue",
+      "cue": "start",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 36683,
+      "kind": "hush"
+    },
+    {
+      "t": 36683,
+      "kind": "hush"
+    },
+    {
+      "t": 37180,
+      "kind": "music:stop",
+      "track": "bossa-antigua.mp3"
+    },
+    {
+      "t": 37294,
+      "kind": "cue",
+      "cue": "card",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 37900,
+      "kind": "mark",
+      "label": "D1",
+      "status": "playing",
+      "phase": "intro"
+    },
+    {
+      "t": 38388,
+      "kind": "cue",
+      "cue": "tick",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 39385,
+      "kind": "cue",
+      "cue": "tick",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 40385,
+      "kind": "cue",
+      "cue": "tick",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 41381,
+      "kind": "hush"
+    },
+    {
+      "t": 41381,
+      "kind": "clip",
+      "src": "b9.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 41381,
+      "kind": "speak",
+      "text": "b9.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 41382,
+      "kind": "hush"
+    },
+    {
+      "t": 41572,
+      "kind": "cue",
+      "cue": "call",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 43001,
+      "kind": "mark",
+      "label": "D1b",
+      "status": "playing",
+      "phase": "play"
+    },
+    {
+      "t": 43037,
+      "kind": "hush"
+    },
+    {
+      "t": 43037,
+      "kind": "clip",
+      "src": "b8.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 43037,
+      "kind": "speak",
+      "text": "b8.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 43228,
+      "kind": "cue",
+      "cue": "call",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 44856,
+      "kind": "hush"
+    },
+    {
+      "t": 44856,
+      "kind": "clip",
+      "src": "n34.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 44856,
+      "kind": "speak",
+      "text": "n34.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 45048,
+      "kind": "cue",
+      "cue": "call",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 46668,
+      "kind": "mark",
+      "label": "D2",
+      "status": "playing",
+      "phase": "play"
+    },
+    {
+      "t": 46724,
+      "kind": "cue",
+      "cue": "dibs",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 46995,
+      "kind": "hush"
+    },
+    {
+      "t": 46995,
+      "kind": "cue",
+      "cue": "reveal",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 46996,
+      "kind": "hush"
+    },
+    {
+      "t": 52348,
+      "kind": "cue",
+      "cue": "wrong",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 54511,
+      "kind": "mark",
+      "label": "D3",
+      "status": "playing",
+      "phase": "check"
+    },
+    {
+      "t": 55358,
+      "kind": "cue",
+      "cue": "tick",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 56360,
+      "kind": "cue",
+      "cue": "tick",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 57359,
+      "kind": "cue",
+      "cue": "tick",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 58364,
+      "kind": "hush"
+    },
+    {
+      "t": 58365,
+      "kind": "clip",
+      "src": "n35.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 58365,
+      "kind": "speak",
+      "text": "n35.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 58556,
+      "kind": "cue",
+      "cue": "call",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 59746,
+      "kind": "mark",
+      "label": "D4",
+      "status": "playing",
+      "phase": "play"
+    },
+    {
+      "t": 60155,
+      "kind": "music:paused",
+      "paused": true
+    },
+    {
+      "t": 60155,
+      "kind": "cue",
+      "cue": "pause",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 61375,
+      "kind": "mark",
+      "label": "D5",
+      "status": "playing",
+      "phase": "play"
+    },
+    {
+      "t": 61405,
+      "kind": "music:paused",
+      "paused": false
+    },
+    {
+      "t": 61405,
+      "kind": "cue",
+      "cue": "phase",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 62658,
+      "kind": "mark",
+      "label": "D6",
+      "status": "playing",
+      "phase": "play"
+    },
+    {
+      "t": 62710,
+      "kind": "hush"
+    },
+    {
+      "t": 62710,
+      "kind": "clip",
+      "src": "i25.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 62710,
+      "kind": "speak",
+      "text": "i25.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 62837,
+      "kind": "hush"
+    },
+    {
+      "t": 62837,
+      "kind": "clip",
+      "src": "n45.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 62837,
+      "kind": "speak",
+      "text": "n45.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 62963,
+      "kind": "hush"
+    },
+    {
+      "t": 62963,
+      "kind": "clip",
+      "src": "n33.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 62963,
+      "kind": "speak",
+      "text": "n33.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 63091,
+      "kind": "hush"
+    },
+    {
+      "t": 63091,
+      "kind": "clip",
+      "src": "g49.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 63091,
+      "kind": "speak",
+      "text": "g49.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 63216,
+      "kind": "hush"
+    },
+    {
+      "t": 63216,
+      "kind": "clip",
+      "src": "b4.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 63216,
+      "kind": "speak",
+      "text": "b4.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 63342,
+      "kind": "hush"
+    },
+    {
+      "t": 63342,
+      "kind": "clip",
+      "src": "i20.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 63342,
+      "kind": "speak",
+      "text": "i20.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 63467,
+      "kind": "hush"
+    },
+    {
+      "t": 63467,
+      "kind": "clip",
+      "src": "o69.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 63467,
+      "kind": "speak",
+      "text": "o69.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 63595,
+      "kind": "hush"
+    },
+    {
+      "t": 63595,
+      "kind": "clip",
+      "src": "o67.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 63595,
+      "kind": "speak",
+      "text": "o67.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 63720,
+      "kind": "hush"
+    },
+    {
+      "t": 63720,
+      "kind": "clip",
+      "src": "o65.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 63720,
+      "kind": "speak",
+      "text": "o65.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 63849,
+      "kind": "hush"
+    },
+    {
+      "t": 63849,
+      "kind": "clip",
+      "src": "o73.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 63849,
+      "kind": "speak",
+      "text": "o73.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 63980,
+      "kind": "hush"
+    },
+    {
+      "t": 63980,
+      "kind": "clip",
+      "src": "i21.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 63980,
+      "kind": "speak",
+      "text": "i21.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 64102,
+      "kind": "hush"
+    },
+    {
+      "t": 64102,
+      "kind": "clip",
+      "src": "i18.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 64102,
+      "kind": "speak",
+      "text": "i18.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 64214,
+      "kind": "hush"
+    },
+    {
+      "t": 64214,
+      "kind": "clip",
+      "src": "g58.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 64214,
+      "kind": "speak",
+      "text": "g58.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 64338,
+      "kind": "hush"
+    },
+    {
+      "t": 64338,
+      "kind": "clip",
+      "src": "n36.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 64338,
+      "kind": "speak",
+      "text": "n36.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 64465,
+      "kind": "hush"
+    },
+    {
+      "t": 64465,
+      "kind": "clip",
+      "src": "o61.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 64465,
+      "kind": "speak",
+      "text": "o61.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 64592,
+      "kind": "hush"
+    },
+    {
+      "t": 64593,
+      "kind": "clip",
+      "src": "n37.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 64593,
+      "kind": "speak",
+      "text": "n37.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 64716,
+      "kind": "hush"
+    },
+    {
+      "t": 64716,
+      "kind": "clip",
+      "src": "i16.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 64716,
+      "kind": "speak",
+      "text": "i16.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 64843,
+      "kind": "hush"
+    },
+    {
+      "t": 64843,
+      "kind": "clip",
+      "src": "g47.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 64843,
+      "kind": "speak",
+      "text": "g47.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 64975,
+      "kind": "hush"
+    },
+    {
+      "t": 64975,
+      "kind": "clip",
+      "src": "n41.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 64975,
+      "kind": "speak",
+      "text": "n41.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 65096,
+      "kind": "hush"
+    },
+    {
+      "t": 65096,
+      "kind": "clip",
+      "src": "b6.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 65096,
+      "kind": "speak",
+      "text": "b6.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 65225,
+      "kind": "hush"
+    },
+    {
+      "t": 65225,
+      "kind": "clip",
+      "src": "o72.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 65225,
+      "kind": "speak",
+      "text": "o72.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 65349,
+      "kind": "hush"
+    },
+    {
+      "t": 65349,
+      "kind": "clip",
+      "src": "b3.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 65349,
+      "kind": "speak",
+      "text": "b3.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 65480,
+      "kind": "hush"
+    },
+    {
+      "t": 65480,
+      "kind": "clip",
+      "src": "i30.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 65480,
+      "kind": "speak",
+      "text": "i30.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 65605,
+      "kind": "hush"
+    },
+    {
+      "t": 65605,
+      "kind": "clip",
+      "src": "g56.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 65605,
+      "kind": "speak",
+      "text": "g56.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 65728,
+      "kind": "hush"
+    },
+    {
+      "t": 65728,
+      "kind": "clip",
+      "src": "o75.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 65728,
+      "kind": "speak",
+      "text": "o75.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 65855,
+      "kind": "hush"
+    },
+    {
+      "t": 65855,
+      "kind": "clip",
+      "src": "b1.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 65855,
+      "kind": "speak",
+      "text": "b1.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 65982,
+      "kind": "hush"
+    },
+    {
+      "t": 65982,
+      "kind": "clip",
+      "src": "b2.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 65982,
+      "kind": "speak",
+      "text": "b2.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 66107,
+      "kind": "hush"
+    },
+    {
+      "t": 66107,
+      "kind": "clip",
+      "src": "n32.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 66107,
+      "kind": "speak",
+      "text": "n32.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 66234,
+      "kind": "hush"
+    },
+    {
+      "t": 66234,
+      "kind": "clip",
+      "src": "g48.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 66234,
+      "kind": "speak",
+      "text": "g48.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 66363,
+      "kind": "hush"
+    },
+    {
+      "t": 66363,
+      "kind": "clip",
+      "src": "i23.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 66363,
+      "kind": "speak",
+      "text": "i23.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 66484,
+      "kind": "hush"
+    },
+    {
+      "t": 66484,
+      "kind": "clip",
+      "src": "i26.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 66484,
+      "kind": "speak",
+      "text": "i26.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 66613,
+      "kind": "hush"
+    },
+    {
+      "t": 66613,
+      "kind": "clip",
+      "src": "o66.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 66613,
+      "kind": "speak",
+      "text": "o66.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 66739,
+      "kind": "hush"
+    },
+    {
+      "t": 66739,
+      "kind": "clip",
+      "src": "i19.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 66739,
+      "kind": "speak",
+      "text": "i19.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 66865,
+      "kind": "hush"
+    },
+    {
+      "t": 66865,
+      "kind": "clip",
+      "src": "n42.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 66865,
+      "kind": "speak",
+      "text": "n42.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 66978,
+      "kind": "hush"
+    },
+    {
+      "t": 66978,
+      "kind": "clip",
+      "src": "i24.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 66978,
+      "kind": "speak",
+      "text": "i24.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 67102,
+      "kind": "hush"
+    },
+    {
+      "t": 67102,
+      "kind": "clip",
+      "src": "n39.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 67102,
+      "kind": "speak",
+      "text": "n39.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 67230,
+      "kind": "hush"
+    },
+    {
+      "t": 67230,
+      "kind": "clip",
+      "src": "g46.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 67230,
+      "kind": "speak",
+      "text": "g46.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 67355,
+      "kind": "hush"
+    },
+    {
+      "t": 67355,
+      "kind": "clip",
+      "src": "n44.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 67355,
+      "kind": "speak",
+      "text": "n44.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 67482,
+      "kind": "hush"
+    },
+    {
+      "t": 67482,
+      "kind": "clip",
+      "src": "b15.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 67482,
+      "kind": "speak",
+      "text": "b15.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 67610,
+      "kind": "hush"
+    },
+    {
+      "t": 67610,
+      "kind": "clip",
+      "src": "b11.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 67610,
+      "kind": "speak",
+      "text": "b11.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 67732,
+      "kind": "hush"
+    },
+    {
+      "t": 67732,
+      "kind": "clip",
+      "src": "g57.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 67732,
+      "kind": "speak",
+      "text": "g57.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 67923,
+      "kind": "cue",
+      "cue": "call",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 68353,
+      "kind": "cue",
+      "cue": "dibs",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 68612,
+      "kind": "mark",
+      "label": "D7",
+      "status": "playing",
+      "phase": "play"
+    },
+    {
+      "t": 68623,
+      "kind": "hush"
+    },
+    {
+      "t": 68623,
+      "kind": "cue",
+      "cue": "reveal",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 68623,
+      "kind": "hush"
+    },
+    {
+      "t": 70497,
+      "kind": "cue",
+      "cue": "sweep",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 73985,
+      "kind": "music:duck",
+      "ms": 9000
+    },
+    {
+      "t": 73985,
+      "kind": "cue",
+      "cue": "cheer",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 77186,
+      "kind": "mark",
+      "label": "D8",
+      "status": "playing",
+      "phase": "bingo"
+    },
+    {
+      "t": 78791,
+      "kind": "cue",
+      "cue": "silence",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 79119,
+      "kind": "cue",
+      "cue": "tick",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 80123,
+      "kind": "cue",
+      "cue": "tick",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 81128,
+      "kind": "cue",
+      "cue": "tick",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 82129,
+      "kind": "hush"
+    },
+    {
+      "t": 82129,
+      "kind": "clip",
+      "src": "g57.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 82129,
+      "kind": "speak",
+      "text": "g57.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 82320,
+      "kind": "cue",
+      "cue": "call",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 84330,
+      "kind": "mark",
+      "label": "D9",
+      "status": "playing",
+      "phase": "play"
+    },
+    {
+      "t": 84430,
+      "kind": "ss:cancel",
+      "speaking": false,
+      "pending": false
+    },
+    {
+      "t": 84430,
+      "kind": "music:plan",
+      "from": "game:bingo",
+      "to": null
+    },
+    {
+      "t": 84433,
+      "kind": "ss:cancel",
+      "speaking": false,
+      "pending": false
+    },
+    {
+      "t": 84433,
+      "kind": "music:plan",
+      "from": null,
+      "to": "lobby"
+    },
+    {
+      "t": 84433,
+      "kind": "music:start",
+      "plan": "lobby",
+      "track": "george-street-shuffle",
+      "mode": "rotate",
+      "volume": 0.35
+    },
+    {
+      "t": 85234,
+      "kind": "music:stop",
+      "track": "cool-vibes.mp3"
+    },
+    {
+      "t": 86945,
+      "kind": "ss:cancel",
+      "speaking": false,
+      "pending": false
+    },
+    {
+      "t": 86950,
+      "kind": "music:plan",
+      "from": "lobby",
+      "to": "game:bingo"
+    },
+    {
+      "t": 86950,
+      "kind": "music:start",
+      "plan": "game:bingo",
+      "track": "wallpaper",
+      "mode": "chain",
+      "volume": 0.2
+    },
+    {
+      "t": 86950,
+      "kind": "cue",
+      "cue": "start",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 86953,
+      "kind": "hush"
+    },
+    {
+      "t": 86953,
+      "kind": "hush"
+    },
+    {
+      "t": 87564,
+      "kind": "cue",
+      "cue": "card",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 87572,
+      "kind": "hush"
+    },
+    {
+      "t": 87572,
+      "kind": "clip",
+      "src": "i21.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 87572,
+      "kind": "speak",
+      "text": "i21.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 87572,
+      "kind": "hush"
+    },
+    {
+      "t": 87602,
+      "kind": "hush"
+    },
+    {
+      "t": 87602,
+      "kind": "clip",
+      "src": "n32.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 87602,
+      "kind": "speak",
+      "text": "n32.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 87697,
+      "kind": "hush"
+    },
+    {
+      "t": 87697,
+      "kind": "clip",
+      "src": "i18.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 87697,
+      "kind": "speak",
+      "text": "i18.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 87750,
+      "kind": "music:stop",
+      "track": "george-street-shuffle.mp3"
+    },
+    {
+      "t": 87775,
+      "kind": "hush"
+    },
+    {
+      "t": 87775,
+      "kind": "clip",
+      "src": "n40.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 87775,
+      "kind": "speak",
+      "text": "n40.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 87869,
+      "kind": "hush"
+    },
+    {
+      "t": 87869,
+      "kind": "clip",
+      "src": "i30.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 87869,
+      "kind": "speak",
+      "text": "i30.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 87963,
+      "kind": "hush"
+    },
+    {
+      "t": 87963,
+      "kind": "clip",
+      "src": "o69.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 87963,
+      "kind": "speak",
+      "text": "o69.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 88046,
+      "kind": "hush"
+    },
+    {
+      "t": 88046,
+      "kind": "clip",
+      "src": "o61.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 88046,
+      "kind": "speak",
+      "text": "o61.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 88142,
+      "kind": "hush"
+    },
+    {
+      "t": 88142,
+      "kind": "clip",
+      "src": "n34.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 88142,
+      "kind": "speak",
+      "text": "n34.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 88236,
+      "kind": "hush"
+    },
+    {
+      "t": 88236,
+      "kind": "clip",
+      "src": "n35.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 88236,
+      "kind": "speak",
+      "text": "n35.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 88338,
+      "kind": "hush"
+    },
+    {
+      "t": 88338,
+      "kind": "clip",
+      "src": "o67.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 88338,
+      "kind": "speak",
+      "text": "o67.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 88430,
+      "kind": "hush"
+    },
+    {
+      "t": 88430,
+      "kind": "clip",
+      "src": "g55.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 88430,
+      "kind": "speak",
+      "text": "g55.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 88543,
+      "kind": "hush"
+    },
+    {
+      "t": 88543,
+      "kind": "clip",
+      "src": "i26.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 88543,
+      "kind": "speak",
+      "text": "i26.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 88630,
+      "kind": "hush"
+    },
+    {
+      "t": 88630,
+      "kind": "clip",
+      "src": "i22.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 88630,
+      "kind": "speak",
+      "text": "i22.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 88725,
+      "kind": "hush"
+    },
+    {
+      "t": 88725,
+      "kind": "clip",
+      "src": "i29.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 88725,
+      "kind": "speak",
+      "text": "i29.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 88821,
+      "kind": "hush"
+    },
+    {
+      "t": 88821,
+      "kind": "clip",
+      "src": "o66.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 88821,
+      "kind": "speak",
+      "text": "o66.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 88916,
+      "kind": "hush"
+    },
+    {
+      "t": 88916,
+      "kind": "clip",
+      "src": "g51.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 88916,
+      "kind": "speak",
+      "text": "g51.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 89010,
+      "kind": "hush"
+    },
+    {
+      "t": 89010,
+      "kind": "clip",
+      "src": "g53.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 89010,
+      "kind": "speak",
+      "text": "g53.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 89104,
+      "kind": "hush"
+    },
+    {
+      "t": 89104,
+      "kind": "clip",
+      "src": "b9.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 89104,
+      "kind": "speak",
+      "text": "b9.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 89199,
+      "kind": "hush"
+    },
+    {
+      "t": 89199,
+      "kind": "clip",
+      "src": "n36.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 89199,
+      "kind": "speak",
+      "text": "n36.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 89292,
+      "kind": "hush"
+    },
+    {
+      "t": 89292,
+      "kind": "clip",
+      "src": "g52.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 89292,
+      "kind": "speak",
+      "text": "g52.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 89393,
+      "kind": "hush"
+    },
+    {
+      "t": 89393,
+      "kind": "clip",
+      "src": "b1.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 89393,
+      "kind": "speak",
+      "text": "b1.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 89480,
+      "kind": "hush"
+    },
+    {
+      "t": 89480,
+      "kind": "clip",
+      "src": "b13.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 89480,
+      "kind": "speak",
+      "text": "b13.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 89580,
+      "kind": "hush"
+    },
+    {
+      "t": 89580,
+      "kind": "clip",
+      "src": "n37.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 89580,
+      "kind": "speak",
+      "text": "n37.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 89675,
+      "kind": "hush"
+    },
+    {
+      "t": 89675,
+      "kind": "clip",
+      "src": "o71.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 89675,
+      "kind": "speak",
+      "text": "o71.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 89765,
+      "kind": "hush"
+    },
+    {
+      "t": 89765,
+      "kind": "clip",
+      "src": "b8.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 89765,
+      "kind": "speak",
+      "text": "b8.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 89859,
+      "kind": "hush"
+    },
+    {
+      "t": 89859,
+      "kind": "clip",
+      "src": "b5.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 89859,
+      "kind": "speak",
+      "text": "b5.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 89951,
+      "kind": "hush"
+    },
+    {
+      "t": 89951,
+      "kind": "clip",
+      "src": "b7.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 89951,
+      "kind": "speak",
+      "text": "b7.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 90049,
+      "kind": "hush"
+    },
+    {
+      "t": 90049,
+      "kind": "clip",
+      "src": "n42.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 90049,
+      "kind": "speak",
+      "text": "n42.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 90140,
+      "kind": "hush"
+    },
+    {
+      "t": 90140,
+      "kind": "clip",
+      "src": "i28.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 90140,
+      "kind": "speak",
+      "text": "i28.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 90240,
+      "kind": "hush"
+    },
+    {
+      "t": 90240,
+      "kind": "clip",
+      "src": "i27.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 90240,
+      "kind": "speak",
+      "text": "i27.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 90332,
+      "kind": "hush"
+    },
+    {
+      "t": 90332,
+      "kind": "clip",
+      "src": "o63.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 90332,
+      "kind": "speak",
+      "text": "o63.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 90418,
+      "kind": "hush"
+    },
+    {
+      "t": 90418,
+      "kind": "clip",
+      "src": "o64.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 90418,
+      "kind": "speak",
+      "text": "o64.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 90508,
+      "kind": "hush"
+    },
+    {
+      "t": 90508,
+      "kind": "clip",
+      "src": "o73.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 90508,
+      "kind": "speak",
+      "text": "o73.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 90600,
+      "kind": "hush"
+    },
+    {
+      "t": 90600,
+      "kind": "clip",
+      "src": "g50.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 90600,
+      "kind": "speak",
+      "text": "g50.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 90694,
+      "kind": "hush"
+    },
+    {
+      "t": 90694,
+      "kind": "clip",
+      "src": "g48.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 90694,
+      "kind": "speak",
+      "text": "g48.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 90789,
+      "kind": "hush"
+    },
+    {
+      "t": 90789,
+      "kind": "clip",
+      "src": "b12.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 90789,
+      "kind": "speak",
+      "text": "b12.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 90879,
+      "kind": "hush"
+    },
+    {
+      "t": 90879,
+      "kind": "clip",
+      "src": "n45.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 90879,
+      "kind": "speak",
+      "text": "n45.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 90974,
+      "kind": "hush"
+    },
+    {
+      "t": 90974,
+      "kind": "clip",
+      "src": "b4.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 90974,
+      "kind": "speak",
+      "text": "b4.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 91067,
+      "kind": "hush"
+    },
+    {
+      "t": 91067,
+      "kind": "clip",
+      "src": "g46.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 91067,
+      "kind": "speak",
+      "text": "g46.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 91155,
+      "kind": "hush"
+    },
+    {
+      "t": 91155,
+      "kind": "clip",
+      "src": "o74.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 91155,
+      "kind": "speak",
+      "text": "o74.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 91244,
+      "kind": "hush"
+    },
+    {
+      "t": 91244,
+      "kind": "clip",
+      "src": "g47.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 91244,
+      "kind": "speak",
+      "text": "g47.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 91338,
+      "kind": "hush"
+    },
+    {
+      "t": 91338,
+      "kind": "clip",
+      "src": "n31.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 91338,
+      "kind": "speak",
+      "text": "n31.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 91430,
+      "kind": "hush"
+    },
+    {
+      "t": 91430,
+      "kind": "clip",
+      "src": "o62.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 91430,
+      "kind": "speak",
+      "text": "o62.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 91526,
+      "kind": "hush"
+    },
+    {
+      "t": 91526,
+      "kind": "clip",
+      "src": "b10.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 91526,
+      "kind": "speak",
+      "text": "b10.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 91620,
+      "kind": "hush"
+    },
+    {
+      "t": 91620,
+      "kind": "clip",
+      "src": "g60.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 91620,
+      "kind": "speak",
+      "text": "g60.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 91717,
+      "kind": "hush"
+    },
+    {
+      "t": 91717,
+      "kind": "clip",
+      "src": "n38.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 91717,
+      "kind": "speak",
+      "text": "n38.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 91809,
+      "kind": "hush"
+    },
+    {
+      "t": 91809,
+      "kind": "clip",
+      "src": "n39.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 91809,
+      "kind": "speak",
+      "text": "n39.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 91901,
+      "kind": "hush"
+    },
+    {
+      "t": 91901,
+      "kind": "clip",
+      "src": "o70.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 91901,
+      "kind": "speak",
+      "text": "o70.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 92000,
+      "kind": "hush"
+    },
+    {
+      "t": 92000,
+      "kind": "clip",
+      "src": "b11.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 92000,
+      "kind": "speak",
+      "text": "b11.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 92088,
+      "kind": "hush"
+    },
+    {
+      "t": 92088,
+      "kind": "clip",
+      "src": "o75.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 92088,
+      "kind": "speak",
+      "text": "o75.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 92188,
+      "kind": "hush"
+    },
+    {
+      "t": 92188,
+      "kind": "clip",
+      "src": "g58.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 92188,
+      "kind": "speak",
+      "text": "g58.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 92284,
+      "kind": "hush"
+    },
+    {
+      "t": 92284,
+      "kind": "clip",
+      "src": "b15.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 92284,
+      "kind": "speak",
+      "text": "b15.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 92376,
+      "kind": "hush"
+    },
+    {
+      "t": 92376,
+      "kind": "clip",
+      "src": "i24.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 92376,
+      "kind": "speak",
+      "text": "i24.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 92466,
+      "kind": "hush"
+    },
+    {
+      "t": 92466,
+      "kind": "clip",
+      "src": "o72.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 92466,
+      "kind": "speak",
+      "text": "o72.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 92562,
+      "kind": "hush"
+    },
+    {
+      "t": 92562,
+      "kind": "clip",
+      "src": "g56.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 92562,
+      "kind": "speak",
+      "text": "g56.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 92658,
+      "kind": "hush"
+    },
+    {
+      "t": 92658,
+      "kind": "clip",
+      "src": "i20.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 92658,
+      "kind": "speak",
+      "text": "i20.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 92751,
+      "kind": "hush"
+    },
+    {
+      "t": 92751,
+      "kind": "clip",
+      "src": "n44.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 92751,
+      "kind": "speak",
+      "text": "n44.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 92847,
+      "kind": "hush"
+    },
+    {
+      "t": 92847,
+      "kind": "clip",
+      "src": "b3.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 92847,
+      "kind": "speak",
+      "text": "b3.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 92937,
+      "kind": "hush"
+    },
+    {
+      "t": 92937,
+      "kind": "clip",
+      "src": "o68.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 92937,
+      "kind": "speak",
+      "text": "o68.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 93037,
+      "kind": "hush"
+    },
+    {
+      "t": 93037,
+      "kind": "clip",
+      "src": "b2.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 93037,
+      "kind": "speak",
+      "text": "b2.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 93142,
+      "kind": "hush"
+    },
+    {
+      "t": 93142,
+      "kind": "clip",
+      "src": "n41.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 93142,
+      "kind": "speak",
+      "text": "n41.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 93236,
+      "kind": "hush"
+    },
+    {
+      "t": 93236,
+      "kind": "clip",
+      "src": "o65.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 93236,
+      "kind": "speak",
+      "text": "o65.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 93331,
+      "kind": "hush"
+    },
+    {
+      "t": 93331,
+      "kind": "clip",
+      "src": "i17.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 93331,
+      "kind": "speak",
+      "text": "i17.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 93424,
+      "kind": "hush"
+    },
+    {
+      "t": 93424,
+      "kind": "clip",
+      "src": "i25.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 93424,
+      "kind": "speak",
+      "text": "i25.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 93518,
+      "kind": "hush"
+    },
+    {
+      "t": 93518,
+      "kind": "clip",
+      "src": "i19.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 93518,
+      "kind": "speak",
+      "text": "i19.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 93615,
+      "kind": "hush"
+    },
+    {
+      "t": 93615,
+      "kind": "clip",
+      "src": "g57.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 93615,
+      "kind": "speak",
+      "text": "g57.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 93706,
+      "kind": "hush"
+    },
+    {
+      "t": 93706,
+      "kind": "clip",
+      "src": "g59.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 93706,
+      "kind": "speak",
+      "text": "g59.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 93802,
+      "kind": "hush"
+    },
+    {
+      "t": 93802,
+      "kind": "clip",
+      "src": "g49.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 93802,
+      "kind": "speak",
+      "text": "g49.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 93898,
+      "kind": "hush"
+    },
+    {
+      "t": 93898,
+      "kind": "clip",
+      "src": "n43.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 93898,
+      "kind": "speak",
+      "text": "n43.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 93988,
+      "kind": "hush"
+    },
+    {
+      "t": 93988,
+      "kind": "clip",
+      "src": "i16.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 93988,
+      "kind": "speak",
+      "text": "i16.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 94083,
+      "kind": "hush"
+    },
+    {
+      "t": 94083,
+      "kind": "clip",
+      "src": "n33.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 94083,
+      "kind": "speak",
+      "text": "n33.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 94178,
+      "kind": "hush"
+    },
+    {
+      "t": 94178,
+      "kind": "clip",
+      "src": "i23.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 94178,
+      "kind": "speak",
+      "text": "i23.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 94273,
+      "kind": "hush"
+    },
+    {
+      "t": 94273,
+      "kind": "clip",
+      "src": "g54.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 94273,
+      "kind": "speak",
+      "text": "g54.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 94370,
+      "kind": "hush"
+    },
+    {
+      "t": 94370,
+      "kind": "clip",
+      "src": "b14.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 94370,
+      "kind": "speak",
+      "text": "b14.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 94561,
+      "kind": "cue",
+      "cue": "call",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 95589,
+      "kind": "cue",
+      "cue": "dibs",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 95855,
+      "kind": "hush"
+    },
+    {
+      "t": 95855,
+      "kind": "cue",
+      "cue": "reveal",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 95855,
+      "kind": "hush"
+    },
+    {
+      "t": 103465,
+      "kind": "music:duck",
+      "ms": 9000
+    },
+    {
+      "t": 103465,
+      "kind": "cue",
+      "cue": "cheer",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 108386,
+      "kind": "mark",
+      "label": "D9b",
+      "status": "playing",
+      "phase": "bingo"
+    },
+    {
+      "t": 108476,
+      "kind": "hush"
+    },
+    {
+      "t": 108477,
+      "kind": "cue",
+      "cue": "tally",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 108477,
+      "kind": "hush"
+    },
+    {
+      "t": 110415,
+      "kind": "mark",
+      "label": "D9c",
+      "status": "playing",
+      "phase": "final"
+    },
+    {
+      "t": 112478,
+      "kind": "ss:cancel",
+      "speaking": false,
+      "pending": false
+    },
+    {
+      "t": 112478,
+      "kind": "music:plan",
+      "from": "game:bingo",
+      "to": null
+    },
+    {
+      "t": 112479,
+      "kind": "cue",
+      "cue": "cheer",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 113979,
+      "kind": "music:stop",
+      "track": "wallpaper.mp3"
+    },
+    {
+      "t": 113983,
+      "kind": "mark",
+      "label": "D9d",
+      "status": "results",
+      "phase": null
+    },
+    {
+      "t": 114096,
+      "kind": "ss:cancel",
+      "speaking": false,
+      "pending": false
+    },
+    {
+      "t": 114096,
+      "kind": "music:plan",
+      "from": null,
+      "to": "lobby"
+    },
+    {
+      "t": 114096,
+      "kind": "music:start",
+      "plan": "lobby",
+      "track": "george-street-shuffle",
+      "mode": "rotate",
+      "volume": 0.35
+    },
+    {
+      "t": 116614,
+      "kind": "ss:cancel",
+      "speaking": false,
+      "pending": false
+    },
+    {
+      "t": 116621,
+      "kind": "music:plan",
+      "from": "lobby",
+      "to": "game:bingo"
+    },
+    {
+      "t": 116621,
+      "kind": "music:start",
+      "plan": "game:bingo",
+      "track": "wallpaper",
+      "mode": "chain",
+      "volume": 0.2
+    },
+    {
+      "t": 116621,
+      "kind": "cue",
+      "cue": "start",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 116624,
+      "kind": "hush"
+    },
+    {
+      "t": 116625,
+      "kind": "hush"
+    },
+    {
+      "t": 117239,
+      "kind": "hush"
+    },
+    {
+      "t": 117239,
+      "kind": "clip",
+      "src": "i21.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 117239,
+      "kind": "speak",
+      "text": "i21.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 117239,
+      "kind": "hush"
+    },
+    {
+      "t": 117247,
+      "kind": "hush"
+    },
+    {
+      "t": 117247,
+      "kind": "clip",
+      "src": "n32.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 117247,
+      "kind": "speak",
+      "text": "n32.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 117349,
+      "kind": "hush"
+    },
+    {
+      "t": 117349,
+      "kind": "clip",
+      "src": "i18.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 117349,
+      "kind": "speak",
+      "text": "i18.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 117424,
+      "kind": "music:stop",
+      "track": "george-street-shuffle.mp3"
+    },
+    {
+      "t": 117442,
+      "kind": "hush"
+    },
+    {
+      "t": 117442,
+      "kind": "clip",
+      "src": "n40.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 117442,
+      "kind": "speak",
+      "text": "n40.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 117537,
+      "kind": "hush"
+    },
+    {
+      "t": 117537,
+      "kind": "clip",
+      "src": "i30.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 117537,
+      "kind": "speak",
+      "text": "i30.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 117629,
+      "kind": "hush"
+    },
+    {
+      "t": 117629,
+      "kind": "clip",
+      "src": "o69.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 117629,
+      "kind": "speak",
+      "text": "o69.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 117724,
+      "kind": "hush"
+    },
+    {
+      "t": 117724,
+      "kind": "clip",
+      "src": "o61.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 117724,
+      "kind": "speak",
+      "text": "o61.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 117805,
+      "kind": "hush"
+    },
+    {
+      "t": 117805,
+      "kind": "clip",
+      "src": "n34.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 117805,
+      "kind": "speak",
+      "text": "n34.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 117894,
+      "kind": "hush"
+    },
+    {
+      "t": 117894,
+      "kind": "clip",
+      "src": "n35.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 117894,
+      "kind": "speak",
+      "text": "n35.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 117975,
+      "kind": "hush"
+    },
+    {
+      "t": 117975,
+      "kind": "clip",
+      "src": "o67.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 117975,
+      "kind": "speak",
+      "text": "o67.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 118068,
+      "kind": "hush"
+    },
+    {
+      "t": 118068,
+      "kind": "clip",
+      "src": "g55.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 118068,
+      "kind": "speak",
+      "text": "g55.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 118147,
+      "kind": "hush"
+    },
+    {
+      "t": 118147,
+      "kind": "clip",
+      "src": "i26.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 118147,
+      "kind": "speak",
+      "text": "i26.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 118242,
+      "kind": "hush"
+    },
+    {
+      "t": 118242,
+      "kind": "clip",
+      "src": "i22.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 118242,
+      "kind": "speak",
+      "text": "i22.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 118335,
+      "kind": "hush"
+    },
+    {
+      "t": 118335,
+      "kind": "clip",
+      "src": "i29.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 118335,
+      "kind": "speak",
+      "text": "i29.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 118432,
+      "kind": "hush"
+    },
+    {
+      "t": 118432,
+      "kind": "clip",
+      "src": "o66.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 118432,
+      "kind": "speak",
+      "text": "o66.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 118535,
+      "kind": "hush"
+    },
+    {
+      "t": 118535,
+      "kind": "clip",
+      "src": "g51.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 118535,
+      "kind": "speak",
+      "text": "g51.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 118626,
+      "kind": "hush"
+    },
+    {
+      "t": 118626,
+      "kind": "clip",
+      "src": "g53.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 118626,
+      "kind": "speak",
+      "text": "g53.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 118714,
+      "kind": "hush"
+    },
+    {
+      "t": 118714,
+      "kind": "clip",
+      "src": "b9.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 118714,
+      "kind": "speak",
+      "text": "b9.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 118808,
+      "kind": "hush"
+    },
+    {
+      "t": 118808,
+      "kind": "clip",
+      "src": "n36.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 118808,
+      "kind": "speak",
+      "text": "n36.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 118894,
+      "kind": "hush"
+    },
+    {
+      "t": 118894,
+      "kind": "clip",
+      "src": "g52.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 118894,
+      "kind": "speak",
+      "text": "g52.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 118984,
+      "kind": "hush"
+    },
+    {
+      "t": 118984,
+      "kind": "clip",
+      "src": "b1.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 118984,
+      "kind": "speak",
+      "text": "b1.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 119078,
+      "kind": "hush"
+    },
+    {
+      "t": 119078,
+      "kind": "clip",
+      "src": "b13.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 119078,
+      "kind": "speak",
+      "text": "b13.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 119173,
+      "kind": "hush"
+    },
+    {
+      "t": 119173,
+      "kind": "clip",
+      "src": "n37.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 119173,
+      "kind": "speak",
+      "text": "n37.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 119254,
+      "kind": "hush"
+    },
+    {
+      "t": 119254,
+      "kind": "clip",
+      "src": "o71.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 119254,
+      "kind": "speak",
+      "text": "o71.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 119362,
+      "kind": "hush"
+    },
+    {
+      "t": 119362,
+      "kind": "clip",
+      "src": "b8.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 119362,
+      "kind": "speak",
+      "text": "b8.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 119454,
+      "kind": "hush"
+    },
+    {
+      "t": 119454,
+      "kind": "clip",
+      "src": "b5.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 119454,
+      "kind": "speak",
+      "text": "b5.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 119549,
+      "kind": "hush"
+    },
+    {
+      "t": 119549,
+      "kind": "clip",
+      "src": "b7.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 119549,
+      "kind": "speak",
+      "text": "b7.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 119645,
+      "kind": "hush"
+    },
+    {
+      "t": 119645,
+      "kind": "clip",
+      "src": "n42.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 119645,
+      "kind": "speak",
+      "text": "n42.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 119756,
+      "kind": "hush"
+    },
+    {
+      "t": 119756,
+      "kind": "clip",
+      "src": "i28.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 119756,
+      "kind": "speak",
+      "text": "i28.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 119847,
+      "kind": "hush"
+    },
+    {
+      "t": 119847,
+      "kind": "clip",
+      "src": "i27.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 119847,
+      "kind": "speak",
+      "text": "i27.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 119941,
+      "kind": "hush"
+    },
+    {
+      "t": 119941,
+      "kind": "clip",
+      "src": "o63.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 119941,
+      "kind": "speak",
+      "text": "o63.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 120034,
+      "kind": "hush"
+    },
+    {
+      "t": 120034,
+      "kind": "clip",
+      "src": "o64.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 120034,
+      "kind": "speak",
+      "text": "o64.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 120130,
+      "kind": "hush"
+    },
+    {
+      "t": 120130,
+      "kind": "clip",
+      "src": "o73.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 120130,
+      "kind": "speak",
+      "text": "o73.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 120229,
+      "kind": "hush"
+    },
+    {
+      "t": 120229,
+      "kind": "clip",
+      "src": "g50.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 120229,
+      "kind": "speak",
+      "text": "g50.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 120319,
+      "kind": "hush"
+    },
+    {
+      "t": 120319,
+      "kind": "clip",
+      "src": "g48.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 120319,
+      "kind": "speak",
+      "text": "g48.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 120399,
+      "kind": "hush"
+    },
+    {
+      "t": 120399,
+      "kind": "clip",
+      "src": "b12.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 120399,
+      "kind": "speak",
+      "text": "b12.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 120493,
+      "kind": "hush"
+    },
+    {
+      "t": 120493,
+      "kind": "clip",
+      "src": "n45.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 120493,
+      "kind": "speak",
+      "text": "n45.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 120591,
+      "kind": "hush"
+    },
+    {
+      "t": 120591,
+      "kind": "clip",
+      "src": "b4.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 120591,
+      "kind": "speak",
+      "text": "b4.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 120680,
+      "kind": "hush"
+    },
+    {
+      "t": 120680,
+      "kind": "clip",
+      "src": "g46.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 120680,
+      "kind": "speak",
+      "text": "g46.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 120760,
+      "kind": "hush"
+    },
+    {
+      "t": 120760,
+      "kind": "clip",
+      "src": "o74.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 120760,
+      "kind": "speak",
+      "text": "o74.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 120855,
+      "kind": "hush"
+    },
+    {
+      "t": 120855,
+      "kind": "clip",
+      "src": "g47.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 120855,
+      "kind": "speak",
+      "text": "g47.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 120950,
+      "kind": "hush"
+    },
+    {
+      "t": 120950,
+      "kind": "clip",
+      "src": "n31.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 120950,
+      "kind": "speak",
+      "text": "n31.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 121058,
+      "kind": "hush"
+    },
+    {
+      "t": 121058,
+      "kind": "clip",
+      "src": "o62.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 121058,
+      "kind": "speak",
+      "text": "o62.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 121139,
+      "kind": "hush"
+    },
+    {
+      "t": 121139,
+      "kind": "clip",
+      "src": "b10.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 121139,
+      "kind": "speak",
+      "text": "b10.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 121229,
+      "kind": "hush"
+    },
+    {
+      "t": 121229,
+      "kind": "clip",
+      "src": "g60.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 121229,
+      "kind": "speak",
+      "text": "g60.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 121322,
+      "kind": "hush"
+    },
+    {
+      "t": 121322,
+      "kind": "clip",
+      "src": "n38.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 121322,
+      "kind": "speak",
+      "text": "n38.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 121400,
+      "kind": "hush"
+    },
+    {
+      "t": 121400,
+      "kind": "clip",
+      "src": "n39.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 121400,
+      "kind": "speak",
+      "text": "n39.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 121496,
+      "kind": "hush"
+    },
+    {
+      "t": 121496,
+      "kind": "clip",
+      "src": "o70.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 121496,
+      "kind": "speak",
+      "text": "o70.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 121593,
+      "kind": "hush"
+    },
+    {
+      "t": 121593,
+      "kind": "clip",
+      "src": "b11.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 121593,
+      "kind": "speak",
+      "text": "b11.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 121684,
+      "kind": "hush"
+    },
+    {
+      "t": 121684,
+      "kind": "clip",
+      "src": "o75.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 121684,
+      "kind": "speak",
+      "text": "o75.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 121777,
+      "kind": "hush"
+    },
+    {
+      "t": 121778,
+      "kind": "clip",
+      "src": "g58.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 121778,
+      "kind": "speak",
+      "text": "g58.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 121874,
+      "kind": "hush"
+    },
+    {
+      "t": 121874,
+      "kind": "clip",
+      "src": "b15.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 121874,
+      "kind": "speak",
+      "text": "b15.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 121966,
+      "kind": "hush"
+    },
+    {
+      "t": 121966,
+      "kind": "clip",
+      "src": "i24.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 121966,
+      "kind": "speak",
+      "text": "i24.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 122060,
+      "kind": "hush"
+    },
+    {
+      "t": 122060,
+      "kind": "clip",
+      "src": "o72.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 122060,
+      "kind": "speak",
+      "text": "o72.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 122170,
+      "kind": "hush"
+    },
+    {
+      "t": 122170,
+      "kind": "clip",
+      "src": "g56.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 122170,
+      "kind": "speak",
+      "text": "g56.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 122267,
+      "kind": "hush"
+    },
+    {
+      "t": 122267,
+      "kind": "clip",
+      "src": "i20.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 122267,
+      "kind": "speak",
+      "text": "i20.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 122363,
+      "kind": "hush"
+    },
+    {
+      "t": 122363,
+      "kind": "clip",
+      "src": "n44.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 122363,
+      "kind": "speak",
+      "text": "n44.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 122461,
+      "kind": "hush"
+    },
+    {
+      "t": 122461,
+      "kind": "clip",
+      "src": "b3.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 122461,
+      "kind": "speak",
+      "text": "b3.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 122550,
+      "kind": "hush"
+    },
+    {
+      "t": 122550,
+      "kind": "clip",
+      "src": "o68.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 122550,
+      "kind": "speak",
+      "text": "o68.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 122644,
+      "kind": "hush"
+    },
+    {
+      "t": 122644,
+      "kind": "clip",
+      "src": "b2.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 122644,
+      "kind": "speak",
+      "text": "b2.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 122738,
+      "kind": "hush"
+    },
+    {
+      "t": 122738,
+      "kind": "clip",
+      "src": "n41.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 122738,
+      "kind": "speak",
+      "text": "n41.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 122841,
+      "kind": "hush"
+    },
+    {
+      "t": 122841,
+      "kind": "clip",
+      "src": "o65.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 122841,
+      "kind": "speak",
+      "text": "o65.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 122929,
+      "kind": "hush"
+    },
+    {
+      "t": 122929,
+      "kind": "clip",
+      "src": "i17.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 122929,
+      "kind": "speak",
+      "text": "i17.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 123021,
+      "kind": "hush"
+    },
+    {
+      "t": 123021,
+      "kind": "clip",
+      "src": "i25.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 123021,
+      "kind": "speak",
+      "text": "i25.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 123116,
+      "kind": "hush"
+    },
+    {
+      "t": 123116,
+      "kind": "clip",
+      "src": "i19.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 123116,
+      "kind": "speak",
+      "text": "i19.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 123215,
+      "kind": "hush"
+    },
+    {
+      "t": 123215,
+      "kind": "clip",
+      "src": "g57.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 123215,
+      "kind": "speak",
+      "text": "g57.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 123289,
+      "kind": "hush"
+    },
+    {
+      "t": 123289,
+      "kind": "clip",
+      "src": "g59.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 123289,
+      "kind": "speak",
+      "text": "g59.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 123387,
+      "kind": "hush"
+    },
+    {
+      "t": 123387,
+      "kind": "clip",
+      "src": "g49.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 123387,
+      "kind": "speak",
+      "text": "g49.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 123476,
+      "kind": "hush"
+    },
+    {
+      "t": 123476,
+      "kind": "clip",
+      "src": "n43.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 123476,
+      "kind": "speak",
+      "text": "n43.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 123569,
+      "kind": "hush"
+    },
+    {
+      "t": 123569,
+      "kind": "clip",
+      "src": "i16.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 123569,
+      "kind": "speak",
+      "text": "i16.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 123664,
+      "kind": "hush"
+    },
+    {
+      "t": 123664,
+      "kind": "clip",
+      "src": "n33.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 123664,
+      "kind": "speak",
+      "text": "n33.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 123761,
+      "kind": "hush"
+    },
+    {
+      "t": 123761,
+      "kind": "clip",
+      "src": "i23.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 123761,
+      "kind": "speak",
+      "text": "i23.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 123860,
+      "kind": "hush"
+    },
+    {
+      "t": 123860,
+      "kind": "clip",
+      "src": "g54.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 123860,
+      "kind": "speak",
+      "text": "g54.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 123948,
+      "kind": "hush"
+    },
+    {
+      "t": 123948,
+      "kind": "clip",
+      "src": "b14.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 123948,
+      "kind": "speak",
+      "text": "b14.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 124139,
+      "kind": "cue",
+      "cue": "call",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 125183,
+      "kind": "cue",
+      "cue": "dibs",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 125445,
+      "kind": "hush"
+    },
+    {
+      "t": 125445,
+      "kind": "cue",
+      "cue": "reveal",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 125445,
+      "kind": "hush"
+    },
+    {
+      "t": 133049,
+      "kind": "cue",
+      "cue": "silence",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 133053,
+      "kind": "music:duck",
+      "ms": 9000
+    },
+    {
+      "t": 133053,
+      "kind": "cue",
+      "cue": "cheer",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 137963,
+      "kind": "mark",
+      "label": "D9f",
+      "status": "playing",
+      "phase": "bingo"
+    },
+    {
+      "t": 138067,
+      "kind": "hush"
+    },
+    {
+      "t": 138067,
+      "kind": "cue",
+      "cue": "tally",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 138068,
+      "kind": "hush"
+    },
+    {
+      "t": 139492,
+      "kind": "mark",
+      "label": "D9g",
+      "status": "playing",
+      "phase": "scoreboard"
+    },
+    {
+      "t": 139612,
+      "kind": "ss:cancel",
+      "speaking": false,
+      "pending": false
+    },
+    {
+      "t": 139612,
+      "kind": "music:plan",
+      "from": "game:bingo",
+      "to": null
+    },
+    {
+      "t": 139614,
+      "kind": "ss:cancel",
+      "speaking": false,
+      "pending": false
+    },
+    {
+      "t": 139614,
+      "kind": "music:plan",
+      "from": null,
+      "to": "lobby"
+    },
+    {
+      "t": 139614,
+      "kind": "music:start",
+      "plan": "lobby",
+      "track": "local-forecast-elevator",
+      "mode": "rotate",
+      "volume": 0.35
+    },
+    {
+      "t": 140414,
+      "kind": "music:stop",
+      "track": "wallpaper.mp3"
+    },
+    {
+      "t": 142120,
+      "kind": "cue",
+      "cue": "join",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 5
+    },
+    {
+      "t": 142129,
+      "kind": "ss:cancel",
+      "speaking": false,
+      "pending": false
+    },
+    {
+      "t": 142131,
+      "kind": "music:plan",
+      "from": "lobby",
+      "to": "game:bingo"
+    },
+    {
+      "t": 142131,
+      "kind": "music:start",
+      "plan": "game:bingo",
+      "track": "cool-vibes",
+      "mode": "chain",
+      "volume": 0.2
+    },
+    {
+      "t": 142131,
+      "kind": "cue",
+      "cue": "start",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 142135,
+      "kind": "hush"
+    },
+    {
+      "t": 142135,
+      "kind": "hush"
+    },
+    {
+      "t": 142746,
+      "kind": "cue",
+      "cue": "card",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 142933,
+      "kind": "music:stop",
+      "track": "local-forecast-elevator.mp3"
+    },
+    {
+      "t": 143644,
+      "kind": "mark",
+      "label": "D9e",
+      "status": "playing",
+      "phase": "intro"
+    },
+    {
+      "t": 144136,
+      "kind": "cue",
+      "cue": "tick",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 144264,
+      "kind": "ss:cancel",
+      "speaking": false,
+      "pending": false
+    },
+    {
+      "t": 144264,
+      "kind": "music:plan",
+      "from": "game:bingo",
+      "to": null
+    },
+    {
+      "t": 144264,
+      "kind": "cue",
+      "cue": "cheer",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 145765,
+      "kind": "music:stop",
+      "track": "cool-vibes.mp3"
+    },
+    {
+      "t": 146285,
+      "kind": "mark",
+      "label": "D10",
+      "status": "results",
+      "phase": null
+    },
+    {
+      "t": 146396,
+      "kind": "ss:cancel",
+      "speaking": false,
+      "pending": false
+    },
+    {
+      "t": 146396,
+      "kind": "music:plan",
+      "from": null,
+      "to": "lobby"
+    },
+    {
+      "t": 146396,
+      "kind": "music:start",
+      "plan": "lobby",
+      "track": "airport-lounge",
+      "mode": "rotate",
+      "volume": 0.35
+    },
+    {
+      "t": 148897,
+      "kind": "mark",
+      "label": "E1",
+      "status": "lobby",
+      "phase": null
+    },
+    {
+      "t": 149751,
+      "kind": "cue",
+      "cue": "join",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 149767,
+      "kind": "ss:cancel",
+      "speaking": false,
+      "pending": false
+    },
+    {
+      "t": 149770,
+      "kind": "music:plan",
+      "from": "lobby",
+      "to": "game:bingo"
+    },
+    {
+      "t": 149770,
+      "kind": "music:start",
+      "plan": "game:bingo",
+      "track": "wallpaper",
+      "mode": "chain",
+      "volume": 0.2
+    },
+    {
+      "t": 149770,
+      "kind": "cue",
+      "cue": "start",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 149773,
+      "kind": "hush"
+    },
+    {
+      "t": 149773,
+      "kind": "hush"
+    },
+    {
+      "t": 150193,
+      "kind": "hush"
+    },
+    {
+      "t": 150193,
+      "kind": "clip",
+      "src": "i21.wav",
+      "muted": false,
+      "ready": true,
+      "delayMs": 0
+    },
+    {
+      "t": 150193,
+      "kind": "speak",
+      "text": "i21.wav",
+      "voice": "clip",
+      "delayMs": 0
+    },
+    {
+      "t": 150194,
+      "kind": "hush"
+    },
+    {
+      "t": 150384,
+      "kind": "cue",
+      "cue": "call",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 150575,
+      "kind": "music:stop",
+      "track": "airport-lounge.mp3"
+    },
+    {
+      "t": 150611,
+      "kind": "mark",
+      "label": "E2",
+      "status": "playing",
+      "phase": "play"
+    },
+    {
+      "t": 150695,
+      "kind": "ss:cancel",
+      "speaking": false,
+      "pending": false
+    },
+    {
+      "t": 150695,
+      "kind": "music:plan",
+      "from": "game:bingo",
+      "to": null
+    },
+    {
+      "t": 150699,
+      "kind": "ss:cancel",
+      "speaking": false,
+      "pending": false
+    },
+    {
+      "t": 150699,
+      "kind": "music:plan",
+      "from": null,
+      "to": "lobby"
+    },
+    {
+      "t": 150699,
+      "kind": "music:start",
+      "plan": "lobby",
+      "track": "airport-lounge",
+      "mode": "rotate",
+      "volume": 0.35
+    },
+    {
+      "t": 151499,
+      "kind": "music:stop",
+      "track": "wallpaper.mp3"
+    },
+    {
+      "t": 153205,
+      "kind": "mark",
+      "label": "E3",
+      "status": "lobby",
+      "phase": null
+    },
+    {
+      "t": 156281,
+      "kind": "cue",
+      "cue": "leave",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 156699,
+      "kind": "cue",
+      "cue": "leave",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 157134,
+      "kind": "cue",
+      "cue": "leave",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 157552,
+      "kind": "cue",
+      "cue": "leave",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 157981,
+      "kind": "cue",
+      "cue": "leave",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 159048,
+      "kind": "cue",
+      "cue": "join",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 4
+    },
+    {
+      "t": 159638,
+      "kind": "ss:cancel",
+      "speaking": false,
+      "pending": false
+    },
+    {
+      "t": 159642,
+      "kind": "music:plan",
+      "from": "lobby",
+      "to": null
+    },
+    {
+      "t": 159642,
+      "kind": "cue",
+      "cue": "start",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 160862,
+      "kind": "mark",
+      "label": "F1",
+      "status": "playing",
+      "phase": "intro"
+    },
+    {
+      "t": 160898,
+      "kind": "cue",
+      "cue": "phase",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 161143,
+      "kind": "music:stop",
+      "track": "airport-lounge.mp3"
+    },
+    {
+      "t": 162505,
+      "kind": "cue",
+      "cue": "lock",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 163782,
+      "kind": "cue",
+      "cue": "lock",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 2
+    },
+    {
+      "t": 165085,
+      "kind": "cue",
+      "cue": "phase",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 166075,
+      "kind": "mark",
+      "label": "F2",
+      "status": "playing",
+      "phase": "vote"
+    },
+    {
+      "t": 166112,
+      "kind": "cue",
+      "cue": "reveal",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 167173,
+      "kind": "cue",
+      "cue": "phase",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 169695,
+      "kind": "mark",
+      "label": "F3",
+      "status": "playing",
+      "phase": "vote"
+    },
+    {
+      "t": 169731,
+      "kind": "cue",
+      "cue": "reveal",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 169920,
+      "kind": "cue",
+      "cue": "phase",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 170091,
+      "kind": "cue",
+      "cue": "reveal",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 170281,
+      "kind": "cue",
+      "cue": "tally",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 171279,
+      "kind": "mark",
+      "label": "F4",
+      "status": "playing",
+      "phase": "scores"
+    },
+    {
+      "t": 171411,
+      "kind": "ss:cancel",
+      "speaking": false,
+      "pending": false
+    },
+    {
+      "t": 171414,
+      "kind": "ss:cancel",
+      "speaking": false,
+      "pending": false
+    },
+    {
+      "t": 171414,
+      "kind": "music:plan",
+      "from": null,
+      "to": "lobby"
+    },
+    {
+      "t": 171414,
+      "kind": "music:start",
+      "plan": "lobby",
+      "track": "bossa-antigua",
+      "mode": "rotate",
+      "volume": 0.35
+    },
+    {
+      "t": 173419,
+      "kind": "cue",
+      "cue": "join",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 5
+    },
+    {
+      "t": 173425,
+      "kind": "ss:cancel",
+      "speaking": false,
+      "pending": false
+    },
+    {
+      "t": 173433,
+      "kind": "music:plan",
+      "from": "lobby",
+      "to": null
+    },
+    {
+      "t": 173433,
+      "kind": "cue",
+      "cue": "start",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 174935,
+      "kind": "music:stop",
+      "track": "bossa-antigua.mp3"
+    },
+    {
+      "t": 174952,
+      "kind": "mark",
+      "label": "G1",
+      "status": "playing",
+      "phase": "pick"
+    },
+    {
+      "t": 175005,
+      "kind": "music:plan",
+      "from": null,
+      "to": "game:broken-pencil"
+    },
+    {
+      "t": 175005,
+      "kind": "music:start",
+      "plan": "game:broken-pencil",
+      "track": "lobby-time",
+      "mode": "chain",
+      "volume": 0.2
+    },
+    {
+      "t": 175005,
+      "kind": "cue",
+      "cue": "phase",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 176447,
+      "kind": "mark",
+      "label": "G2",
+      "status": "playing",
+      "phase": "draw"
+    },
+    {
+      "t": 176485,
+      "kind": "cue",
+      "cue": "phase",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 176956,
+      "kind": "cue",
+      "cue": "phase",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 177115,
+      "kind": "music:plan",
+      "from": "game:broken-pencil",
+      "to": null
+    },
+    {
+      "t": 177115,
+      "kind": "cue",
+      "cue": "card",
+      "surface": "tv",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 178615,
+      "kind": "music:stop",
+      "track": "lobby-time.mp3"
+    },
+    {
+      "t": 178775,
+      "kind": "mark",
+      "label": "G3",
+      "status": "playing",
+      "phase": "show"
+    }
+  ],
+  "vip": [
+    {
+      "t": 433,
+      "kind": "mark",
+      "label": "A0",
+      "status": "lobby",
+      "phase": null
+    },
+    {
+      "t": 2533,
+      "kind": "mark",
+      "label": "A1",
+      "status": "lobby",
+      "phase": null
+    },
+    {
+      "t": 3432,
+      "kind": "mark",
+      "label": "A2",
+      "status": "lobby",
+      "phase": null
+    },
+    {
+      "t": 4889,
+      "kind": "mark",
+      "label": "A3",
+      "status": "lobby",
+      "phase": null
+    },
+    {
+      "t": 5723,
+      "kind": "mark",
+      "label": "A4",
+      "status": "selecting",
+      "phase": null
+    },
+    {
+      "t": 7255,
+      "kind": "mark",
+      "label": "B1",
+      "status": "playing",
+      "phase": "intro"
+    },
+    {
+      "t": 7682,
+      "kind": "buzz",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 7682,
+      "kind": "vibrate",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 8607,
+      "kind": "mark",
+      "label": "B2",
+      "status": "playing",
+      "phase": "question"
+    },
+    {
+      "t": 8969,
+      "kind": "buzz",
+      "pattern": 15
+    },
+    {
+      "t": 8969,
+      "kind": "vibrate",
+      "pattern": 15
+    },
+    {
+      "t": 8988,
+      "kind": "cue",
+      "cue": "submit",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 8988,
+      "kind": "buzz",
+      "pattern": 20
+    },
+    {
+      "t": 8988,
+      "kind": "vibrate",
+      "pattern": 20
+    },
+    {
+      "t": 9899,
+      "kind": "mark",
+      "label": "B3",
+      "status": "playing",
+      "phase": "question"
+    },
+    {
+      "t": 15262,
+      "kind": "mark",
+      "label": "B3b",
+      "status": "playing",
+      "phase": "question"
+    },
+    {
+      "t": 21051,
+      "kind": "buzz",
+      "pattern": 120
+    },
+    {
+      "t": 21051,
+      "kind": "vibrate",
+      "pattern": 120
+    },
+    {
+      "t": 21486,
+      "kind": "mark",
+      "label": "B4",
+      "status": "playing",
+      "phase": "reveal"
+    },
+    {
+      "t": 21551,
+      "kind": "buzz",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 21551,
+      "kind": "vibrate",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 21867,
+      "kind": "buzz",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 21867,
+      "kind": "vibrate",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 22183,
+      "kind": "buzz",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 22183,
+      "kind": "vibrate",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 22497,
+      "kind": "buzz",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 22497,
+      "kind": "vibrate",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 22814,
+      "kind": "buzz",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 22814,
+      "kind": "vibrate",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 23126,
+      "kind": "buzz",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 23126,
+      "kind": "vibrate",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 23441,
+      "kind": "buzz",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 23441,
+      "kind": "vibrate",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 23758,
+      "kind": "buzz",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 23758,
+      "kind": "vibrate",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 24071,
+      "kind": "buzz",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 24071,
+      "kind": "vibrate",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 24385,
+      "kind": "buzz",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 24385,
+      "kind": "vibrate",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 25256,
+      "kind": "mark",
+      "label": "B5",
+      "status": "playing",
+      "phase": "wager"
+    },
+    {
+      "t": 25274,
+      "kind": "buzz",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 25274,
+      "kind": "vibrate",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 26817,
+      "kind": "buzz",
+      "pattern": 120
+    },
+    {
+      "t": 26817,
+      "kind": "vibrate",
+      "pattern": 120
+    },
+    {
+      "t": 29124,
+      "kind": "mark",
+      "label": "B6",
+      "status": "playing",
+      "phase": "reveal"
+    },
+    {
+      "t": 29146,
+      "kind": "buzz",
+      "pattern": [60, 60, 60, 60, 160]
+    },
+    {
+      "t": 29146,
+      "kind": "vibrate",
+      "pattern": [60, 60, 60, 60, 160]
+    },
+    {
+      "t": 30659,
+      "kind": "mark",
+      "label": "B7",
+      "status": "results",
+      "phase": null
+    },
+    {
+      "t": 32211,
+      "kind": "mark",
+      "label": "C1",
+      "status": "playing",
+      "phase": "intro"
+    },
+    {
+      "t": 32836,
+      "kind": "buzz",
+      "pattern": [60, 60, 60, 60, 160]
+    },
+    {
+      "t": 32836,
+      "kind": "vibrate",
+      "pattern": [60, 60, 60, 60, 160]
+    },
+    {
+      "t": 34342,
+      "kind": "mark",
+      "label": "C2",
+      "status": "results",
+      "phase": null
+    },
+    {
+      "t": 35876,
+      "kind": "mark",
+      "label": "C3",
+      "status": "selecting",
+      "phase": null
+    },
+    {
+      "t": 36834,
+      "kind": "cue",
+      "cue": "card",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 37437,
+      "kind": "mark",
+      "label": "D1",
+      "status": "playing",
+      "phase": "intro"
+    },
+    {
+      "t": 37924,
+      "kind": "buzz",
+      "pattern": 15
+    },
+    {
+      "t": 37924,
+      "kind": "vibrate",
+      "pattern": 15
+    },
+    {
+      "t": 38935,
+      "kind": "buzz",
+      "pattern": 15
+    },
+    {
+      "t": 38935,
+      "kind": "vibrate",
+      "pattern": 15
+    },
+    {
+      "t": 38985,
+      "kind": "buzz",
+      "pattern": 20
+    },
+    {
+      "t": 38985,
+      "kind": "vibrate",
+      "pattern": 20
+    },
+    {
+      "t": 39189,
+      "kind": "cue",
+      "cue": "card",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 39931,
+      "kind": "buzz",
+      "pattern": 15
+    },
+    {
+      "t": 39931,
+      "kind": "vibrate",
+      "pattern": 15
+    },
+    {
+      "t": 41116,
+      "kind": "buzz",
+      "pattern": 12
+    },
+    {
+      "t": 41116,
+      "kind": "vibrate",
+      "pattern": 12
+    },
+    {
+      "t": 42538,
+      "kind": "mark",
+      "label": "D1b",
+      "status": "playing",
+      "phase": "play"
+    },
+    {
+      "t": 42765,
+      "kind": "buzz",
+      "pattern": 12
+    },
+    {
+      "t": 42765,
+      "kind": "vibrate",
+      "pattern": 12
+    },
+    {
+      "t": 46205,
+      "kind": "mark",
+      "label": "D2",
+      "status": "playing",
+      "phase": "play"
+    },
+    {
+      "t": 54049,
+      "kind": "mark",
+      "label": "D3",
+      "status": "playing",
+      "phase": "check"
+    },
+    {
+      "t": 54894,
+      "kind": "cue",
+      "cue": "tick",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 55895,
+      "kind": "cue",
+      "cue": "tick",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 56900,
+      "kind": "cue",
+      "cue": "tick",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 58098,
+      "kind": "buzz",
+      "pattern": 12
+    },
+    {
+      "t": 58098,
+      "kind": "vibrate",
+      "pattern": 12
+    },
+    {
+      "t": 59284,
+      "kind": "mark",
+      "label": "D4",
+      "status": "playing",
+      "phase": "play"
+    },
+    {
+      "t": 60912,
+      "kind": "mark",
+      "label": "D5",
+      "status": "playing",
+      "phase": "play"
+    },
+    {
+      "t": 62195,
+      "kind": "mark",
+      "label": "D6",
+      "status": "playing",
+      "phase": "play"
+    },
+    {
+      "t": 62446,
+      "kind": "buzz",
+      "pattern": 12
+    },
+    {
+      "t": 62446,
+      "kind": "vibrate",
+      "pattern": 12
+    },
+    {
+      "t": 67400,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 67400,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 67400,
+      "kind": "cue",
+      "cue": "daub",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 67434,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 67434,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 67468,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 67468,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 67468,
+      "kind": "cue",
+      "cue": "daub",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 67500,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 67500,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 67535,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 67535,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 67535,
+      "kind": "cue",
+      "cue": "daub",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 68149,
+      "kind": "mark",
+      "label": "D7",
+      "status": "playing",
+      "phase": "play"
+    },
+    {
+      "t": 68152,
+      "kind": "buzz",
+      "pattern": [30, 40, 60]
+    },
+    {
+      "t": 68152,
+      "kind": "vibrate",
+      "pattern": [30, 40, 60]
+    },
+    {
+      "t": 68152,
+      "kind": "cue",
+      "cue": "claim",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 73559,
+      "kind": "buzz",
+      "pattern": [40, 60, 40, 60, 120]
+    },
+    {
+      "t": 73559,
+      "kind": "vibrate",
+      "pattern": [40, 60, 40, 60, 120]
+    },
+    {
+      "t": 73559,
+      "kind": "cue",
+      "cue": "correct",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 73559,
+      "kind": "buzz:dropped",
+      "pattern": 20
+    },
+    {
+      "t": 76723,
+      "kind": "mark",
+      "label": "D8",
+      "status": "playing",
+      "phase": "bingo"
+    },
+    {
+      "t": 78316,
+      "kind": "buzz",
+      "pattern": 20
+    },
+    {
+      "t": 78316,
+      "kind": "vibrate",
+      "pattern": 20
+    },
+    {
+      "t": 78316,
+      "kind": "cue",
+      "cue": "submit",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 78655,
+      "kind": "cue",
+      "cue": "tick",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 79659,
+      "kind": "cue",
+      "cue": "tick",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 80664,
+      "kind": "cue",
+      "cue": "tick",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 81859,
+      "kind": "buzz",
+      "pattern": 12
+    },
+    {
+      "t": 81859,
+      "kind": "vibrate",
+      "pattern": 12
+    },
+    {
+      "t": 83868,
+      "kind": "mark",
+      "label": "D9",
+      "status": "playing",
+      "phase": "play"
+    },
+    {
+      "t": 83960,
+      "kind": "buzz",
+      "pattern": [60, 60, 60, 60, 160]
+    },
+    {
+      "t": 83960,
+      "kind": "vibrate",
+      "pattern": [60, 60, 60, 60, 160]
+    },
+    {
+      "t": 87103,
+      "kind": "cue",
+      "cue": "card",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 94017,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 94017,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 94017,
+      "kind": "cue",
+      "cue": "daub",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 94051,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 94051,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 94083,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 94083,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 94083,
+      "kind": "cue",
+      "cue": "daub",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 94102,
+      "kind": "buzz",
+      "pattern": 12
+    },
+    {
+      "t": 94102,
+      "kind": "vibrate",
+      "pattern": 12
+    },
+    {
+      "t": 94117,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 94117,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 94150,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 94150,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 94150,
+      "kind": "cue",
+      "cue": "daub",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 94183,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 94183,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 94217,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 94217,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 94217,
+      "kind": "cue",
+      "cue": "daub",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 94250,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 94250,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 94283,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 94283,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 94283,
+      "kind": "cue",
+      "cue": "daub",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 94316,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 94316,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 94350,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 94350,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 94350,
+      "kind": "cue",
+      "cue": "daub",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 94383,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 94383,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 94415,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 94415,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 94415,
+      "kind": "cue",
+      "cue": "daub",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 94448,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 94448,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 94482,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 94482,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 94482,
+      "kind": "cue",
+      "cue": "daub",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 94516,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 94516,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 94548,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 94548,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 94549,
+      "kind": "cue",
+      "cue": "daub",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 94582,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 94582,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 94616,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 94616,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 94616,
+      "kind": "cue",
+      "cue": "daub",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 94649,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 94649,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 94682,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 94682,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 94682,
+      "kind": "cue",
+      "cue": "daub",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 94716,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 94716,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 94749,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 94749,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 94749,
+      "kind": "cue",
+      "cue": "daub",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 94782,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 94782,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 95384,
+      "kind": "buzz",
+      "pattern": [30, 40, 60]
+    },
+    {
+      "t": 95384,
+      "kind": "vibrate",
+      "pattern": [30, 40, 60]
+    },
+    {
+      "t": 95384,
+      "kind": "cue",
+      "cue": "claim",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 103003,
+      "kind": "buzz",
+      "pattern": [40, 60, 40, 60, 120]
+    },
+    {
+      "t": 103003,
+      "kind": "vibrate",
+      "pattern": [40, 60, 40, 60, 120]
+    },
+    {
+      "t": 103003,
+      "kind": "cue",
+      "cue": "correct",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 103003,
+      "kind": "buzz:dropped",
+      "pattern": 20
+    },
+    {
+      "t": 107923,
+      "kind": "mark",
+      "label": "D9b",
+      "status": "playing",
+      "phase": "bingo"
+    },
+    {
+      "t": 109952,
+      "kind": "mark",
+      "label": "D9c",
+      "status": "playing",
+      "phase": "final"
+    },
+    {
+      "t": 112013,
+      "kind": "buzz",
+      "pattern": [60, 60, 60, 60, 160]
+    },
+    {
+      "t": 112013,
+      "kind": "vibrate",
+      "pattern": [60, 60, 60, 60, 160]
+    },
+    {
+      "t": 113521,
+      "kind": "mark",
+      "label": "D9d",
+      "status": "results",
+      "phase": null
+    },
+    {
+      "t": 116770,
+      "kind": "cue",
+      "cue": "card",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 123615,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 123615,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 123615,
+      "kind": "cue",
+      "cue": "daub",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 123648,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 123648,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 123680,
+      "kind": "buzz",
+      "pattern": 12
+    },
+    {
+      "t": 123680,
+      "kind": "vibrate",
+      "pattern": 12
+    },
+    {
+      "t": 123682,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 123682,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 123682,
+      "kind": "cue",
+      "cue": "daub",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 123715,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 123715,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 123749,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 123749,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 123749,
+      "kind": "cue",
+      "cue": "daub",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 123781,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 123781,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 123815,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 123815,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 123815,
+      "kind": "cue",
+      "cue": "daub",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 123849,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 123849,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 123881,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 123881,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 123882,
+      "kind": "cue",
+      "cue": "daub",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 123915,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 123915,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 123948,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 123948,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 123948,
+      "kind": "cue",
+      "cue": "daub",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 123983,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 123983,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 124015,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 124015,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 124015,
+      "kind": "cue",
+      "cue": "daub",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 124048,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 124048,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 124081,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 124081,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 124081,
+      "kind": "cue",
+      "cue": "daub",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 124114,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 124114,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 124149,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 124149,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 124149,
+      "kind": "cue",
+      "cue": "daub",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 124181,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 124181,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 124214,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 124214,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 124214,
+      "kind": "cue",
+      "cue": "daub",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 124248,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 124248,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 124281,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 124281,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 124281,
+      "kind": "cue",
+      "cue": "daub",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 124314,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 124314,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 124347,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 124347,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 124347,
+      "kind": "cue",
+      "cue": "daub",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 124383,
+      "kind": "buzz",
+      "pattern": 18
+    },
+    {
+      "t": 124383,
+      "kind": "vibrate",
+      "pattern": 18
+    },
+    {
+      "t": 124975,
+      "kind": "buzz",
+      "pattern": [30, 40, 60]
+    },
+    {
+      "t": 124975,
+      "kind": "vibrate",
+      "pattern": [30, 40, 60]
+    },
+    {
+      "t": 124975,
+      "kind": "cue",
+      "cue": "claim",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 132583,
+      "kind": "buzz",
+      "pattern": [40, 60, 40, 60, 120]
+    },
+    {
+      "t": 132583,
+      "kind": "vibrate",
+      "pattern": [40, 60, 40, 60, 120]
+    },
+    {
+      "t": 132583,
+      "kind": "cue",
+      "cue": "correct",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 132583,
+      "kind": "buzz:dropped",
+      "pattern": 20
+    },
+    {
+      "t": 137500,
+      "kind": "mark",
+      "label": "D9f",
+      "status": "playing",
+      "phase": "bingo"
+    },
+    {
+      "t": 139029,
+      "kind": "mark",
+      "label": "D9g",
+      "status": "playing",
+      "phase": "scoreboard"
+    },
+    {
+      "t": 139135,
+      "kind": "buzz",
+      "pattern": [60, 60, 60, 60, 160]
+    },
+    {
+      "t": 139135,
+      "kind": "vibrate",
+      "pattern": [60, 60, 60, 60, 160]
+    },
+    {
+      "t": 142284,
+      "kind": "cue",
+      "cue": "card",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 143181,
+      "kind": "mark",
+      "label": "D9e",
+      "status": "playing",
+      "phase": "intro"
+    },
+    {
+      "t": 143679,
+      "kind": "buzz",
+      "pattern": 15
+    },
+    {
+      "t": 143679,
+      "kind": "vibrate",
+      "pattern": 15
+    },
+    {
+      "t": 143815,
+      "kind": "buzz",
+      "pattern": [60, 60, 60, 60, 160]
+    },
+    {
+      "t": 143815,
+      "kind": "vibrate",
+      "pattern": [60, 60, 60, 60, 160]
+    },
+    {
+      "t": 145823,
+      "kind": "mark",
+      "label": "D10",
+      "status": "results",
+      "phase": null
+    },
+    {
+      "t": 148435,
+      "kind": "mark",
+      "label": "E1",
+      "status": "lobby",
+      "phase": null
+    },
+    {
+      "t": 149928,
+      "kind": "buzz",
+      "pattern": 12
+    },
+    {
+      "t": 149928,
+      "kind": "vibrate",
+      "pattern": 12
+    },
+    {
+      "t": 150148,
+      "kind": "mark",
+      "label": "E2",
+      "status": "playing",
+      "phase": "play"
+    },
+    {
+      "t": 150218,
+      "kind": "buzz",
+      "pattern": [60, 60, 60, 60, 160]
+    },
+    {
+      "t": 150218,
+      "kind": "vibrate",
+      "pattern": [60, 60, 60, 60, 160]
+    },
+    {
+      "t": 152742,
+      "kind": "mark",
+      "label": "E3",
+      "status": "lobby",
+      "phase": null
+    },
+    {
+      "t": 160399,
+      "kind": "mark",
+      "label": "F1",
+      "status": "playing",
+      "phase": "intro"
+    },
+    {
+      "t": 160432,
+      "kind": "buzz",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 160432,
+      "kind": "vibrate",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 162047,
+      "kind": "cue",
+      "cue": "submit",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 162047,
+      "kind": "buzz",
+      "pattern": 20
+    },
+    {
+      "t": 162047,
+      "kind": "vibrate",
+      "pattern": 20
+    },
+    {
+      "t": 165612,
+      "kind": "mark",
+      "label": "F2",
+      "status": "playing",
+      "phase": "vote"
+    },
+    {
+      "t": 165644,
+      "kind": "buzz",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 165644,
+      "kind": "vibrate",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 169232,
+      "kind": "mark",
+      "label": "F3",
+      "status": "playing",
+      "phase": "vote"
+    },
+    {
+      "t": 169265,
+      "kind": "buzz",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 169265,
+      "kind": "vibrate",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 169452,
+      "kind": "buzz",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 169452,
+      "kind": "vibrate",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 169625,
+      "kind": "buzz",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 169625,
+      "kind": "vibrate",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 169814,
+      "kind": "buzz",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 169814,
+      "kind": "vibrate",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 170817,
+      "kind": "mark",
+      "label": "F4",
+      "status": "playing",
+      "phase": "scores"
+    },
+    {
+      "t": 170933,
+      "kind": "buzz",
+      "pattern": [60, 60, 60, 60, 160]
+    },
+    {
+      "t": 170933,
+      "kind": "vibrate",
+      "pattern": [60, 60, 60, 60, 160]
+    },
+    {
+      "t": 174489,
+      "kind": "mark",
+      "label": "G1",
+      "status": "playing",
+      "phase": "pick"
+    },
+    {
+      "t": 174542,
+      "kind": "buzz",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 174542,
+      "kind": "vibrate",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 175984,
+      "kind": "mark",
+      "label": "G2",
+      "status": "playing",
+      "phase": "draw"
+    },
+    {
+      "t": 176018,
+      "kind": "buzz",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 176018,
+      "kind": "vibrate",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 176490,
+      "kind": "buzz",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 176490,
+      "kind": "vibrate",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 178313,
+      "kind": "mark",
+      "label": "G3",
+      "status": "playing",
+      "phase": "show"
+    }
+  ],
+  "p2": [
+    {
+      "t": 205,
+      "kind": "mark",
+      "label": "A0",
+      "status": "lobby",
+      "phase": null
+    },
+    {
+      "t": 2304,
+      "kind": "mark",
+      "label": "A1",
+      "status": "lobby",
+      "phase": null
+    },
+    {
+      "t": 3204,
+      "kind": "mark",
+      "label": "A2",
+      "status": "lobby",
+      "phase": null
+    },
+    {
+      "t": 4660,
+      "kind": "mark",
+      "label": "A3",
+      "status": "lobby",
+      "phase": null
+    },
+    {
+      "t": 5495,
+      "kind": "mark",
+      "label": "A4",
+      "status": "selecting",
+      "phase": null
+    },
+    {
+      "t": 7026,
+      "kind": "mark",
+      "label": "B1",
+      "status": "playing",
+      "phase": "intro"
+    },
+    {
+      "t": 7453,
+      "kind": "buzz",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 7453,
+      "kind": "vibrate",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 8378,
+      "kind": "mark",
+      "label": "B2",
+      "status": "playing",
+      "phase": "question"
+    },
+    {
+      "t": 9671,
+      "kind": "mark",
+      "label": "B3",
+      "status": "playing",
+      "phase": "question"
+    },
+    {
+      "t": 15034,
+      "kind": "mark",
+      "label": "B3b",
+      "status": "playing",
+      "phase": "question"
+    },
+    {
+      "t": 15689,
+      "kind": "cue",
+      "cue": "tick",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 15690,
+      "kind": "buzz",
+      "pattern": 30
+    },
+    {
+      "t": 15690,
+      "kind": "vibrate",
+      "pattern": 30
+    },
+    {
+      "t": 16688,
+      "kind": "buzz",
+      "pattern": 30
+    },
+    {
+      "t": 16688,
+      "kind": "vibrate",
+      "pattern": 30
+    },
+    {
+      "t": 17681,
+      "kind": "buzz",
+      "pattern": 30
+    },
+    {
+      "t": 17681,
+      "kind": "vibrate",
+      "pattern": 30
+    },
+    {
+      "t": 18689,
+      "kind": "buzz",
+      "pattern": 30
+    },
+    {
+      "t": 18689,
+      "kind": "vibrate",
+      "pattern": 30
+    },
+    {
+      "t": 19689,
+      "kind": "buzz",
+      "pattern": 30
+    },
+    {
+      "t": 19689,
+      "kind": "vibrate",
+      "pattern": 30
+    },
+    {
+      "t": 20823,
+      "kind": "buzz",
+      "pattern": 120
+    },
+    {
+      "t": 20823,
+      "kind": "vibrate",
+      "pattern": 120
+    },
+    {
+      "t": 21257,
+      "kind": "mark",
+      "label": "B4",
+      "status": "playing",
+      "phase": "reveal"
+    },
+    {
+      "t": 21323,
+      "kind": "buzz",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 21323,
+      "kind": "vibrate",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 21638,
+      "kind": "buzz",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 21638,
+      "kind": "vibrate",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 21955,
+      "kind": "buzz",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 21955,
+      "kind": "vibrate",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 22268,
+      "kind": "buzz",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 22268,
+      "kind": "vibrate",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 22585,
+      "kind": "buzz",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 22585,
+      "kind": "vibrate",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 22897,
+      "kind": "buzz",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 22897,
+      "kind": "vibrate",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 23213,
+      "kind": "buzz",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 23213,
+      "kind": "vibrate",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 23529,
+      "kind": "buzz",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 23529,
+      "kind": "vibrate",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 23842,
+      "kind": "buzz",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 23842,
+      "kind": "vibrate",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 24156,
+      "kind": "buzz",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 24156,
+      "kind": "vibrate",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 25028,
+      "kind": "mark",
+      "label": "B5",
+      "status": "playing",
+      "phase": "wager"
+    },
+    {
+      "t": 25045,
+      "kind": "buzz",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 25045,
+      "kind": "vibrate",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 26589,
+      "kind": "buzz",
+      "pattern": 120
+    },
+    {
+      "t": 26589,
+      "kind": "vibrate",
+      "pattern": 120
+    },
+    {
+      "t": 28895,
+      "kind": "mark",
+      "label": "B6",
+      "status": "playing",
+      "phase": "reveal"
+    },
+    {
+      "t": 28916,
+      "kind": "buzz",
+      "pattern": [60, 60, 60, 60, 160]
+    },
+    {
+      "t": 28916,
+      "kind": "vibrate",
+      "pattern": [60, 60, 60, 60, 160]
+    },
+    {
+      "t": 30431,
+      "kind": "mark",
+      "label": "B7",
+      "status": "results",
+      "phase": null
+    },
+    {
+      "t": 31983,
+      "kind": "mark",
+      "label": "C1",
+      "status": "playing",
+      "phase": "intro"
+    },
+    {
+      "t": 32595,
+      "kind": "buzz",
+      "pattern": [60, 60, 60, 60, 160]
+    },
+    {
+      "t": 32595,
+      "kind": "vibrate",
+      "pattern": [60, 60, 60, 60, 160]
+    },
+    {
+      "t": 34113,
+      "kind": "mark",
+      "label": "C2",
+      "status": "results",
+      "phase": null
+    },
+    {
+      "t": 35647,
+      "kind": "mark",
+      "label": "C3",
+      "status": "selecting",
+      "phase": null
+    },
+    {
+      "t": 36621,
+      "kind": "cue",
+      "cue": "card",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 37209,
+      "kind": "mark",
+      "label": "D1",
+      "status": "playing",
+      "phase": "intro"
+    },
+    {
+      "t": 37705,
+      "kind": "buzz",
+      "pattern": 15
+    },
+    {
+      "t": 37705,
+      "kind": "vibrate",
+      "pattern": 15
+    },
+    {
+      "t": 38706,
+      "kind": "buzz",
+      "pattern": 15
+    },
+    {
+      "t": 38706,
+      "kind": "vibrate",
+      "pattern": 15
+    },
+    {
+      "t": 39702,
+      "kind": "buzz",
+      "pattern": 15
+    },
+    {
+      "t": 39702,
+      "kind": "vibrate",
+      "pattern": 15
+    },
+    {
+      "t": 40887,
+      "kind": "buzz",
+      "pattern": 12
+    },
+    {
+      "t": 40887,
+      "kind": "vibrate",
+      "pattern": 12
+    },
+    {
+      "t": 42310,
+      "kind": "mark",
+      "label": "D1b",
+      "status": "playing",
+      "phase": "play"
+    },
+    {
+      "t": 42536,
+      "kind": "buzz",
+      "pattern": 12
+    },
+    {
+      "t": 42536,
+      "kind": "vibrate",
+      "pattern": 12
+    },
+    {
+      "t": 45977,
+      "kind": "mark",
+      "label": "D2",
+      "status": "playing",
+      "phase": "play"
+    },
+    {
+      "t": 46296,
+      "kind": "buzz",
+      "pattern": [30, 40, 60]
+    },
+    {
+      "t": 46296,
+      "kind": "vibrate",
+      "pattern": [30, 40, 60]
+    },
+    {
+      "t": 46296,
+      "kind": "cue",
+      "cue": "claim",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 51663,
+      "kind": "buzz",
+      "pattern": [120, 80, 120]
+    },
+    {
+      "t": 51663,
+      "kind": "vibrate",
+      "pattern": [120, 80, 120]
+    },
+    {
+      "t": 51663,
+      "kind": "cue",
+      "cue": "error",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 53820,
+      "kind": "mark",
+      "label": "D3",
+      "status": "playing",
+      "phase": "check"
+    },
+    {
+      "t": 54662,
+      "kind": "cue",
+      "cue": "tick",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 55666,
+      "kind": "cue",
+      "cue": "tick",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 56671,
+      "kind": "cue",
+      "cue": "tick",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 57870,
+      "kind": "buzz",
+      "pattern": 12
+    },
+    {
+      "t": 57870,
+      "kind": "vibrate",
+      "pattern": 12
+    },
+    {
+      "t": 59055,
+      "kind": "mark",
+      "label": "D4",
+      "status": "playing",
+      "phase": "play"
+    },
+    {
+      "t": 60684,
+      "kind": "mark",
+      "label": "D5",
+      "status": "playing",
+      "phase": "play"
+    },
+    {
+      "t": 61966,
+      "kind": "mark",
+      "label": "D6",
+      "status": "playing",
+      "phase": "play"
+    },
+    {
+      "t": 62217,
+      "kind": "buzz",
+      "pattern": 12
+    },
+    {
+      "t": 62217,
+      "kind": "vibrate",
+      "pattern": 12
+    },
+    {
+      "t": 67921,
+      "kind": "mark",
+      "label": "D7",
+      "status": "playing",
+      "phase": "play"
+    },
+    {
+      "t": 73329,
+      "kind": "buzz",
+      "pattern": 30
+    },
+    {
+      "t": 73329,
+      "kind": "vibrate",
+      "pattern": 30
+    },
+    {
+      "t": 76495,
+      "kind": "mark",
+      "label": "D8",
+      "status": "playing",
+      "phase": "bingo"
+    },
+    {
+      "t": 78427,
+      "kind": "cue",
+      "cue": "tick",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 79430,
+      "kind": "cue",
+      "cue": "tick",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 80436,
+      "kind": "cue",
+      "cue": "tick",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 81630,
+      "kind": "buzz",
+      "pattern": 12
+    },
+    {
+      "t": 81630,
+      "kind": "vibrate",
+      "pattern": 12
+    },
+    {
+      "t": 83639,
+      "kind": "mark",
+      "label": "D9",
+      "status": "playing",
+      "phase": "play"
+    },
+    {
+      "t": 83725,
+      "kind": "buzz",
+      "pattern": 40
+    },
+    {
+      "t": 83725,
+      "kind": "vibrate",
+      "pattern": 40
+    },
+    {
+      "t": 86870,
+      "kind": "cue",
+      "cue": "card",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 93885,
+      "kind": "buzz",
+      "pattern": 12
+    },
+    {
+      "t": 93885,
+      "kind": "vibrate",
+      "pattern": 12
+    },
+    {
+      "t": 102774,
+      "kind": "buzz",
+      "pattern": 30
+    },
+    {
+      "t": 102774,
+      "kind": "vibrate",
+      "pattern": 30
+    },
+    {
+      "t": 107695,
+      "kind": "mark",
+      "label": "D9b",
+      "status": "playing",
+      "phase": "bingo"
+    },
+    {
+      "t": 109724,
+      "kind": "mark",
+      "label": "D9c",
+      "status": "playing",
+      "phase": "final"
+    },
+    {
+      "t": 111784,
+      "kind": "buzz",
+      "pattern": 40
+    },
+    {
+      "t": 111784,
+      "kind": "vibrate",
+      "pattern": 40
+    },
+    {
+      "t": 113293,
+      "kind": "mark",
+      "label": "D9d",
+      "status": "results",
+      "phase": null
+    },
+    {
+      "t": 116541,
+      "kind": "cue",
+      "cue": "card",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 123450,
+      "kind": "buzz",
+      "pattern": 12
+    },
+    {
+      "t": 123450,
+      "kind": "vibrate",
+      "pattern": 12
+    },
+    {
+      "t": 132354,
+      "kind": "buzz",
+      "pattern": 30
+    },
+    {
+      "t": 132354,
+      "kind": "vibrate",
+      "pattern": 30
+    },
+    {
+      "t": 137272,
+      "kind": "mark",
+      "label": "D9f",
+      "status": "playing",
+      "phase": "bingo"
+    },
+    {
+      "t": 138801,
+      "kind": "mark",
+      "label": "D9g",
+      "status": "playing",
+      "phase": "scoreboard"
+    },
+    {
+      "t": 138905,
+      "kind": "buzz",
+      "pattern": 40
+    },
+    {
+      "t": 138905,
+      "kind": "vibrate",
+      "pattern": 40
+    },
+    {
+      "t": 142050,
+      "kind": "cue",
+      "cue": "card",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 142953,
+      "kind": "mark",
+      "label": "D9e",
+      "status": "playing",
+      "phase": "intro"
+    },
+    {
+      "t": 143450,
+      "kind": "buzz",
+      "pattern": 15
+    },
+    {
+      "t": 143450,
+      "kind": "vibrate",
+      "pattern": 15
+    },
+    {
+      "t": 143572,
+      "kind": "buzz",
+      "pattern": [60, 60, 60, 60, 160]
+    },
+    {
+      "t": 143572,
+      "kind": "vibrate",
+      "pattern": [60, 60, 60, 60, 160]
+    },
+    {
+      "t": 145594,
+      "kind": "mark",
+      "label": "D10",
+      "status": "results",
+      "phase": null
+    },
+    {
+      "t": 148206,
+      "kind": "mark",
+      "label": "E1",
+      "status": "lobby",
+      "phase": null
+    },
+    {
+      "t": 149699,
+      "kind": "buzz",
+      "pattern": 12
+    },
+    {
+      "t": 149699,
+      "kind": "vibrate",
+      "pattern": 12
+    },
+    {
+      "t": 149920,
+      "kind": "mark",
+      "label": "E2",
+      "status": "playing",
+      "phase": "play"
+    },
+    {
+      "t": 149989,
+      "kind": "buzz",
+      "pattern": [60, 60, 60, 60, 160]
+    },
+    {
+      "t": 149989,
+      "kind": "vibrate",
+      "pattern": [60, 60, 60, 60, 160]
+    },
+    {
+      "t": 152514,
+      "kind": "mark",
+      "label": "E3",
+      "status": "lobby",
+      "phase": null
+    },
+    {
+      "t": 160171,
+      "kind": "mark",
+      "label": "F1",
+      "status": "playing",
+      "phase": "intro"
+    },
+    {
+      "t": 160204,
+      "kind": "buzz",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 160204,
+      "kind": "vibrate",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 163102,
+      "kind": "cue",
+      "cue": "submit",
+      "surface": "phone",
+      "muted": false,
+      "ready": true,
+      "semitones": 0
+    },
+    {
+      "t": 163102,
+      "kind": "buzz",
+      "pattern": 20
+    },
+    {
+      "t": 163102,
+      "kind": "vibrate",
+      "pattern": 20
+    },
+    {
+      "t": 164389,
+      "kind": "buzz",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 164389,
+      "kind": "vibrate",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 165383,
+      "kind": "mark",
+      "label": "F2",
+      "status": "playing",
+      "phase": "vote"
+    },
+    {
+      "t": 165415,
+      "kind": "buzz",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 165415,
+      "kind": "vibrate",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 169004,
+      "kind": "mark",
+      "label": "F3",
+      "status": "playing",
+      "phase": "vote"
+    },
+    {
+      "t": 169036,
+      "kind": "buzz",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 169036,
+      "kind": "vibrate",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 169396,
+      "kind": "buzz",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 169396,
+      "kind": "vibrate",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 169588,
+      "kind": "buzz",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 169588,
+      "kind": "vibrate",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 170588,
+      "kind": "mark",
+      "label": "F4",
+      "status": "playing",
+      "phase": "scores"
+    },
+    {
+      "t": 170704,
+      "kind": "buzz",
+      "pattern": [60, 60, 60, 60, 160]
+    },
+    {
+      "t": 170704,
+      "kind": "vibrate",
+      "pattern": [60, 60, 60, 60, 160]
+    },
+    {
+      "t": 174261,
+      "kind": "mark",
+      "label": "G1",
+      "status": "playing",
+      "phase": "pick"
+    },
+    {
+      "t": 174313,
+      "kind": "buzz",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 174313,
+      "kind": "vibrate",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 175756,
+      "kind": "mark",
+      "label": "G2",
+      "status": "playing",
+      "phase": "draw"
+    },
+    {
+      "t": 175790,
+      "kind": "buzz",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 175790,
+      "kind": "vibrate",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 176261,
+      "kind": "buzz",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 176261,
+      "kind": "vibrate",
+      "pattern": [30, 50, 30]
+    },
+    {
+      "t": 178085,
+      "kind": "mark",
+      "label": "G3",
+      "status": "playing",
+      "phase": "show"
+    }
+  ]
+}

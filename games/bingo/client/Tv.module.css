@@ -303,15 +303,21 @@
   gap: var(--pb-space-7);
   flex: 1;
   min-height: 0;
+  /* The card is sized by the height the stage actually has (loop 337 — the owner: "cut off at
+     the bottom"): two roster rows at 5–8 players left ~650 px, the 500 px-wide card is 550 px
+     tall, and its bottom row and the decide line went under the host bar. A card is 1.1× as
+     tall as wide; it keeps 40 px clear of the stage's edges (one row: ~530 px → a 446 px card). */
+  container: claim / size;
+  --pb-claim-w: min(460px, calc((100cqh - 40px) / 1.1));
 }
 
 .claim {
-  width: 460px; /* px, not vw: the stage is a zoomed 1920×1080 design */
+  width: var(--pb-claim-w); /* px, not vw: the stage is a zoomed 1920×1080 design */
 }
 
 .claimLand {
   justify-self: end;
-  width: 500px; /* lands at 1:1 (≈ 550 px tall, clear of the host bar), settles to 0.92 */
+  width: calc(var(--pb-claim-w) * 1.087); /* lands at 1:1, settles to 0.92 */
   transform-origin: center;
   /* Drops onto the centre of the stage (half its width past the column edge) with a bounce. */
   animation: claim-drop calc(var(--pb-motion-slow) + 100ms) cubic-bezier(0.34, 1.56, 0.64, 1) both;
@@ -570,30 +576,36 @@
   opacity: 0.35;
 }
 
-/* Nine or more players: the roster takes two or three rows (~130 px), so the claim card lands
-   smaller and its bottom row stays above the host bar (loop 221, 16 players). */
-.crowdedClaim .claim {
-  width: 400px;
-}
-.crowdedClaim .claimLand {
-  width: 420px;
-}
+/* Nine or more players: the roster takes two or three rows (~130 px), so the heading tightens
+   (loop 221, 16 players). The card sizes itself by the stage's height (above). */
 .crowdedClaim .checkHead {
   gap: 0;
 }
-.crowdedClaim .bingoTitle {
-  font-size: 96px;
-}
-.crowdedClaim .winWho {
-  --pb-win-avatar: 48px;
-}
-.crowdedClaim .winLine {
-  font-size: 26px;
-  margin-top: var(--pb-space-2);
-}
-.crowdedClaim .decideLine {
-  font-size: var(--pb-font-caption);
-  margin-top: var(--pb-space-2);
+/* A short stage (two roster rows at 5+ players: the claim stage measures ~465 px, one row
+   ~530, three ~405 — loop 337): the verdict column steps down a size with the card, so its
+   last line stays above the host bar. */
+@container claim (max-height: 500px) {
+  .bingoTitle {
+    font-size: 96px;
+  }
+  .winWho {
+    --pb-win-avatar: 48px;
+  }
+  .winLine {
+    font-size: 26px;
+    margin-top: var(--pb-space-2);
+  }
+  .decideLine {
+    font-size: var(--pb-font-caption);
+    margin-top: var(--pb-space-2);
+  }
+  /* The wrong verdict's four lines tighten the same way. */
+  .verdict {
+    gap: var(--pb-space-2);
+  }
+  .legend {
+    font-size: var(--pb-font-caption);
+  }
 }
 
 /* The 3 · 2 · 1 ring (loop 242), the phone's at TV scale: 360 px, a 12 px gold stroke draining

@@ -227,8 +227,9 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
                 <p className={styles.winLine}>
                   <PatternIcon cells={view.patternCells} size={72} />
                   <span>
-                    {view.patternLabel} on call {view.callIndex} · round {view.round} · +
-                    {view.claimPoints} {view.claimPoints === 1 ? 'point' : 'points'}
+                    {/* No "round N" here: the kicker above the card says it (loop 337). */}
+                    {view.patternLabel} on call {view.callIndex} · +{view.claimPoints}{' '}
+                    {view.claimPoints === 1 ? 'point' : 'points'}
                     {whichCard(view.claim)}
                   </span>
                 </p>
