@@ -80,7 +80,7 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
             </span>
           ))}
         </p>
-        <IntroCountdown deadline={view.deadline} />
+        <IntroCountdown deadline={view.deadline} cards={view.cardsPerPlayer} />
       </Stage>
     );
   }

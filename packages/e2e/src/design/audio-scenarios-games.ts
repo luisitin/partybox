@@ -64,14 +64,36 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
   await settle(3500); // 6.5 s in: the intro (5 s) has run out and the first ball has dropped
   await api.clock(true); // hold the caller from here
   await T.mark('D1b');
-  const intro = T.cues(await T.between(tv, 'D1', 'D1b'));
+  // From the start (the deal's pluck lands 0.6 s in, before D1) to the first call.
+  const intro = T.cues(await T.between(tv, 'C3', 'D1b')).filter((c) => c !== 'phase');
   T.ok(
     'D',
-    'the intro counts down: three ticks (3 · 2 · 1), then the first call',
-    intro.filter((c) => c === 'tick').length === 3 &&
+    'the intro: one card pluck on the deal (one card each), three ticks (3 · 2 · 1), then the first call',
+    intro.filter((c) => c === 'card').length === 1 &&
+      intro.indexOf('card') < intro.indexOf('tick') &&
+      intro.indexOf('card') > intro.indexOf('start') &&
+      intro.filter((c) => c === 'tick').length === 3 &&
       intro.indexOf('call') > intro.lastIndexOf('tick') &&
       intro.filter((c) => c === 'call').length === 1,
     `cues=${intro.join(',')}`,
+  );
+  // The deal's pluck lands on the same beat on the TV and in the hand (loop 278): offsets from
+  // each page's own C3 mark, within 150 ms.
+  const markAt = async (page: Page, label: string): Promise<number> =>
+    (await T.trace(page)).filter((e) => e.kind === 'mark' && e['label'] === label).at(-1)?.t ?? 0;
+  const tvCard = (await T.between(tv, 'C3', 'D1')).find(
+    (e) => e.kind === 'cue' && e['cue'] === 'card',
+  );
+  const phoneCard = (await T.between(vip.page, 'C3', 'D1')).find(
+    (e) => e.kind === 'cue' && e['cue'] === 'card',
+  );
+  const tvCardAt = tvCard ? tvCard.t - (await markAt(tv, 'C3')) : null;
+  const phoneCardAt = phoneCard ? phoneCard.t - (await markAt(vip.page, 'C3')) : null;
+  T.ok(
+    'D',
+    "the deal's pluck: TV and phone within 150 ms of each other",
+    tvCardAt !== null && phoneCardAt !== null && Math.abs(tvCardAt - phoneCardAt) < 150,
+    `tv@+${tvCardAt}ms phone@+${phoneCardAt}ms`,
   );
   // The hand counts the same three seconds: one 15 ms tap each, no sound (loop 263).
   const introPhone = await T.between(vip.page, 'D1', 'D1b');
@@ -81,7 +103,7 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
     'the phone taps 3 · 2 · 1 with the TV; "deal me another" is a 20 ms tap and one card pluck',
     introTaps.length === 3 &&
       introPhone.filter((e) => e.kind === 'buzz' && Number(e['pattern']) === 20).length === 1 &&
-      T.cues(introPhone, 'phone').join(',') === 'card',
+      T.cues(introPhone, 'phone').join(',') === 'card', // the deal's own pluck lands before D1
     `taps=${introTaps.length} cues=${T.cues(introPhone, 'phone').join(',')}`,
   );
   await api.skip();

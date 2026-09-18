@@ -48,7 +48,7 @@ export function Controller({
   // the timings mirror .dealing in the stylesheet, the pluck on the bounce (~250 ms in).
   const dealing = view.phaseId === 'intro';
   useEffect(() => {
-    if (!dealing || n <= 1) return;
+    if (!dealing) return; // one card plucks too (loop 278: the TV plucks the same beats)
     const handles = Array.from({ length: n }, (_, i) =>
       setTimeout(() => play('card'), 360 + i * 110 + 250),
     );

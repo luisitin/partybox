@@ -11,13 +11,28 @@ import styles from './Tv.module.css';
  * tick per second — the cards are dealt on the phones in the first second or so, then the room
  * knows exactly when the first ball drops. Before that the slot says the cards are being dealt.
  */
-export function IntroCountdown({ deadline }: { deadline: number | null }): JSX.Element {
+export function IntroCountdown({
+  deadline,
+  cards,
+}: {
+  deadline: number | null;
+  /** Cards per player: the TV plucks once per card on the phones' deal beats (loop 278). */
+  cards: number;
+}): JSX.Element {
   const left = useSecondsLeft(deadline);
   const counting = left !== null && left <= 3 && left > 0;
   const sound = useSoundApi();
   useEffect(() => {
     if (counting) sound.play('tick');
   }, [counting, left, sound]);
+  // The deal, heard from the sofa: the same 360 + i × 110 (+250 on the bounce) the phones use
+  // (Controller.tsx), so the room's plucks and the TV's land together.
+  useEffect(() => {
+    const handles = Array.from({ length: cards }, (_, i) =>
+      setTimeout(() => sound.play('card'), 360 + i * 110 + 250),
+    );
+    return () => handles.forEach((h) => clearTimeout(h));
+  }, [cards, sound]);
   return (
     <div className={styles.introSlot}>
       {counting ? (
