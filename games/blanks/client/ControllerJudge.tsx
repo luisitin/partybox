@@ -106,7 +106,9 @@ export function ControllerJudge({ view, send }: Props): JSX.Element {
           vote.votedSlot !== null ? (
             <>
               <p className={styles.voteIn} role="status">
-                ✓ Vote in · {view.votedCount} / {view.votersExpected} voted
+                {view.votedCount >= view.votersExpected
+                  ? '✓ That’s everyone — here comes the result…'
+                  : `✓ Vote in · ${view.votedCount} / ${view.votersExpected} voted`}
               </p>
               <NextButton send={send} timed={view.timed} label="Close the vote now" />
             </>

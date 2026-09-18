@@ -6,7 +6,14 @@
 import { allConnectedDone, enterPhase, hasPlayer, isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { canVote, votingDone } from '../round';
-import { BIG_JUDGE_MS, BIG_ROOM, JUDGE_CZAR_MS, JUDGE_VOTE_MS, UNTIMED_JUDGE_MS } from '../types';
+import {
+  BIG_JUDGE_MS,
+  BIG_ROOM,
+  JUDGE_CZAR_MS,
+  JUDGE_VOTE_MS,
+  UNTIMED_JUDGE_MS,
+  VOTES_IN_MS,
+} from '../types';
 import type { Input, State, VoteInput } from '../types';
 import type { Transition } from './intro';
 
@@ -32,6 +39,19 @@ export function judgeBlocksNext(state: State): boolean {
   return state.players[state.czarId]?.connected === true;
 }
 
+/** Every eligible voter has voted: the stage holds for a beat before the result, the same way the
+ *  answer stage holds on "Everyone's in!" — the deadline moves up to now + VOTES_IN_MS (never later
+ *  than it already was) and the timer ends the phase (review-loop #228). */
+export function holdVotesIn(state: State, now: number): State {
+  const deadline = Math.min(state.phase.deadline ?? Infinity, now + VOTES_IN_MS);
+  return { ...state, phase: { ...state.phase, deadline } };
+}
+
+/** The beat is on: everyone who could vote has, and the phase only waits for its timer. */
+export function votesIn(state: State): boolean {
+  return state.phase.id === 'judge' && allConnectedDone(state, votingDone(state));
+}
+
 export function reduceJudge(state: State, event: GameEvent<Input>, next: Transition): State {
   if (event.type === 'input') {
     if (event.input.type === 'next')
@@ -41,7 +61,7 @@ export function reduceJudge(state: State, event: GameEvent<Input>, next: Transit
     if (event.input.type !== 'vote') return state;
     const after = applyVote(state, event.playerId, event.input);
     if (after === state) return state;
-    return allConnectedDone(after, votingDone(after)) ? next(after, event.now) : after;
+    return allConnectedDone(after, votingDone(after)) ? holdVotesIn(after, event.now) : after;
   }
   if (isTimerFor(state, event)) return next(state, event.now);
   return state;
