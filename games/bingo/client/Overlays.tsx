@@ -3,7 +3,15 @@
 // menu), the 3 · 2 · 1 before calling resumes, and the turn-your-phone gate.
 import { useEffect } from 'react';
 import type { JSX } from 'react';
-import { PrimaryButton, buzz, useHold, useSecondsLeft, useSound } from '@partybox/game-sdk/ui';
+import {
+  PrimaryButton,
+  buzz,
+  setMotionOff,
+  useHold,
+  useMotionOff,
+  useSecondsLeft,
+  useSound,
+} from '@partybox/game-sdk/ui';
 import { RESUME_MS } from '../server/types';
 import type { BingoControllerView } from '../server/views';
 import { STYLES, styleReason } from './styles';
@@ -25,6 +33,7 @@ export function StyleSheet({
   onConfirm: () => void;
   onClose: () => void;
 }): JSX.Element {
+  const motionOff = useMotionOff();
   // Previewing: the sheet folds to a bar so the whole screen shows the style with the real cards.
   if (preview)
     return (
@@ -62,6 +71,19 @@ export function StyleSheet({
           </button>
         );
       })}
+      {/* Motion on / off (the owner, loop 311): off, a card comes up without the rise and every
+          other animation on this phone collapses — for eyes that would rather not. Per device. */}
+      <button
+        type="button"
+        className={`${styles.row} ${motionOff ? '' : styles.rowOn}`}
+        onClick={() => setMotionOff(!motionOff)}
+        aria-pressed={!motionOff}
+      >
+        <span>
+          Motion <small>· cards rise, numbers pop</small>
+        </span>
+        <small>{motionOff ? 'off' : 'on ✓'}</small>
+      </button>
       <p className={styles.sheetNote}>Theme: the 🎨 in the top bar, any time.</p>
       <PrimaryButton tone="neutral" onClick={onClose}>
         Close

@@ -10,6 +10,7 @@ import { Preview } from './preview/Preview';
 import '@fontsource-variable/nunito/wght.css';
 import './styles/tokens.css';
 import './styles/global.css';
+import { applyMotionPreference } from '@partybox/game-sdk/ui';
 import { THEMES, applyTheme } from './theme';
 import type { ThemeId } from './theme';
 import { fitTvToViewport } from './tv/fit';
@@ -23,6 +24,7 @@ const THEME_IDS = new Set<string>(THEMES.map((t) => t.id));
 function route(pathname: string): JSX.Element {
   const forced = new URLSearchParams(location.search).get('theme');
   applyTheme(forced && THEME_IDS.has(forced) ? (forced as ThemeId) : undefined);
+  applyMotionPreference();
   if (pathname === '/tv' || pathname === '/tv/') {
     document.documentElement.dataset['surface'] = 'tv';
     fitTvToViewport();

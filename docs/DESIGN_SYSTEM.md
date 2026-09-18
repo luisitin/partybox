@@ -67,6 +67,11 @@ The TV shell sets the TV column; the controller shell sets the phone column; tok
 | easing              | `cubic-bezier(0.2, 0.8, 0.2, 1)` | everything                            |
 
 `prefers-reduced-motion: reduce` sets every duration to 0. Transitions never hide information (no full-screen wipes).
+Motion has two off switches that behave the same: the OS's `prefers-reduced-motion` and an
+in-app choice (`<html data-motion="off">`, `setMotionOff` / `useMotionOff` in the game-sdk, stored
+per device; Bingo's card-style sheet has the row). Both collapse the `--pb-motion-*` tokens, and
+`usePrefersReducedMotion()` reports either, so JS-driven motion follows. A CSS module's
+`@media (prefers-reduced-motion: reduce)` block needs a `:global(:root[data-motion='off'])` twin.
 Keyframes in global.css: `pb-rise`, `pb-pop`, `pb-tick` (a keyed change that must never blank a frame — a countdown digit — squeezes from 1.3× and is visible from its first frame), `pb-shake`, `pb-fade-in` / `pb-fade-out` (the pause curtain and the
 server-lost dim arrive and leave over `--pb-motion-base`), `pb-spin` (a reconnecting ⟳; only under no-preference),
 `pb-confetti`, `pb-land` (a card replacing a card: a bounce from half opacity, never from transparent, so a stage never blinks empty between two), `pb-deal` (a card dealt onto a table: up from below with a small tilt that settles), `pb-flip` (a card turned face-up in 3D — transform only: animating opacity alongside it flattens Chromium's 3D context and shows the face mirrored), `pb-crown` (a winning card lifts off the table with a warm bloom). PlayerChip reserves its glyph slot, so a ✓ landing pops in place and never shifts the row.
