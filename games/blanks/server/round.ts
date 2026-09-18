@@ -85,17 +85,20 @@ export function startRound(state: State): State {
   return refillHands(next);
 }
 
-/** The judge's choice (czar mode): `index` into `blackChoices`; the rest go under the deck. */
+/** The judge's choice (czar mode): `index` into `blackChoices`. The three stay on the stage for a
+ *  beat — the room watches the chosen one light up — and `settleBlack` clears them. */
 export function chooseBlack(state: State, index: number): State {
   const id = state.blackChoices[index];
   if (id === undefined) return state;
-  const rest = state.blackChoices.filter((c) => c !== id);
-  return { ...state, blackId: id, blackChoices: [], blackDeck: [...state.blackDeck, ...rest] };
+  return { ...state, blackId: id };
 }
 
 /** The black card is final: its extra draws to the answerers' hands, and Rando's play. */
 export function settleBlack(state: State): State {
-  let next = state.blackChoices.length > 1 ? chooseBlack(state, 0) : state;
+  let next = state.blackId === null ? chooseBlack(state, 0) : state;
+  // The questions not taken go under the deck for a later round.
+  const rest = next.blackChoices.filter((id) => id !== next.blackId);
+  next = { ...next, blackChoices: [], blackDeck: [...next.blackDeck, ...rest] };
   const black = blackCard(next.blackId);
   next = refillHands(next, black.draw, answerers(next));
   if (state.settings.rando) {

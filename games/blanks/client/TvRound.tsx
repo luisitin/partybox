@@ -60,6 +60,7 @@ export function TvIntro({ view }: Props): JSX.Element {
 
 /** czar mode: the judge chooses the round's black card from three (review-loop #154). */
 export function TvPick({ view }: Props): JSX.Element {
+  const taken = view.blackChoices.some((b) => b.chosen);
   return (
     <Stage className={styles.table}>
       <div className={styles.kickerRow}>
@@ -70,7 +71,9 @@ export function TvPick({ view }: Props): JSX.Element {
           {view.czar ? (
             <>
               <Avatar avatarId={view.czar.avatarId} size="var(--pb-space-7)" />
-              {view.czar.name} is picking the question…
+              {taken
+                ? `${view.czar.name} picked this one`
+                : `${view.czar.name} is picking the question…`}
             </>
           ) : (
             'Picking the question…'
@@ -79,13 +82,22 @@ export function TvPick({ view }: Props): JSX.Element {
       </div>
       <ul className={styles.choices} aria-label="the black cards to choose from">
         {view.blackChoices.map((b, i) => (
-          <li key={i} style={{ animationDelay: `calc(${i} * 160ms)` }}>
-            <FilledCard text={b.text} pick={b.pick} size="medium" />
+          <li
+            key={i}
+            className={taken && !b.chosen ? styles.notChosen : ''}
+            style={{ animationDelay: `calc(${i} * 160ms)` }}
+          >
+            <FilledCard
+              text={b.text}
+              pick={b.pick}
+              size="medium"
+              className={b.chosen ? styles.chosenCard : ''}
+            />
           </li>
         ))}
       </ul>
       <BigText level="h2" tone="muted">
-        One of these is this round's card.
+        {taken ? "That's the round's card." : "One of these is this round's card."}
       </BigText>
     </Stage>
   );

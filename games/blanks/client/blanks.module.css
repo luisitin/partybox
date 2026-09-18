@@ -266,6 +266,18 @@
   font-size: var(--pb-font-h2);
 }
 
+/* The beat after the judge chooses: the two they passed over step back, the taken one lifts. */
+.notChosen {
+  opacity: 0.35;
+  transition: opacity var(--pb-motion-base) var(--pb-ease);
+}
+
+.chosenCard {
+  outline: 3px solid var(--pb-accent-2);
+  outline-offset: 2px;
+  animation: global(pb-crown) var(--pb-motion-slow) var(--pb-ease) both;
+}
+
 /* Phone: the same three, tappable — the card is the button. */
 .choiceList {
   list-style: none;

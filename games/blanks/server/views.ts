@@ -24,6 +24,8 @@ export interface BlackView {
   text: string;
   pick: number;
   draw: number;
+  /** pick: the one the judge took (the others dim for a beat before the round starts). */
+  chosen?: boolean;
 }
 
 export interface PersonView {
@@ -137,7 +139,7 @@ function blackChoices(state: State): BlackView[] {
   if (state.phase.id !== 'pick') return [];
   return state.blackChoices.map((id) => {
     const { text, pick, draw } = blackCard(id);
-    return { text, pick, draw };
+    return { text, pick, draw, chosen: id === state.blackId };
   });
 }
 
