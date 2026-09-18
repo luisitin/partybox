@@ -3,15 +3,8 @@
 import type { Browser, BrowserContext, Page } from 'playwright';
 import { DEVICES } from './devices';
 import type { DeviceId } from './devices';
-import { settle } from './session';
+import { skipToLine } from './bingo-lines';
 import type { Phone, DevApi } from './session';
-
-export const LINES: number[][] = [
-  ...Array.from({ length: 5 }, (_, r) => [0, 1, 2, 3, 4].map((c) => r * 5 + c)),
-  ...Array.from({ length: 5 }, (_, c) => [0, 1, 2, 3, 4].map((r) => r * 5 + c)),
-  [0, 6, 12, 18, 24],
-  [4, 8, 12, 16, 20],
-];
 
 export interface Ev {
   t: number;
@@ -106,20 +99,7 @@ export async function bingoLine(
   api: DevApi,
   vipId: string,
 ): Promise<{ line: number[]; card: number[] }> {
-  for (let i = 0; i < 70; i += 1) {
-    const s = (await api.state()).room?.game?.state as unknown as {
-      phase: { id: string };
-      round: { deck: number[]; drawn: number; cards: Record<string, number[][]> };
-    };
-    if (s.phase.id !== 'play') break;
-    const card = s.round.cards[vipId]?.[0] ?? [];
-    const called = new Set(s.round.deck.slice(0, s.round.drawn));
-    const line = LINES.find((l) => l.every((k) => k === 12 || called.has(card[k] ?? -1)));
-    if (line) return { line, card };
-    await api.skip();
-    await settle(60);
-  }
-  throw new Error('no line called within 70 numbers');
+  return skipToLine(api, vipId);
 }
 
 export interface Pages {

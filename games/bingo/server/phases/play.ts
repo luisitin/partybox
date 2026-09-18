@@ -21,12 +21,17 @@ export interface PlayExits {
   check: (state: State, now: number, claim: Claim) => State;
 }
 
-/** Draws the next number and (re)starts the call timer — or holds, with a menu open somewhere. */
-export function enterPlay(state: State, now: number): State {
+/**
+ * Draws the next number and (re)starts the call timer — or holds, with a menu open somewhere.
+ * `again` repeats the number that was up (the room keeps going after a bingo: whoever was halfway
+ * through daubing it gets it back, owner 2026-09-17) — the phase still restarts, so the TV calls
+ * it again.
+ */
+export function enterPlay(state: State, now: number, again = false): State {
   const round = state.round;
   const drawn = {
     ...state,
-    round: { ...round, drawn: round.drawn + 1, claim: null, resumeAt: null },
+    round: { ...round, drawn: again ? round.drawn : round.drawn + 1, claim: null, resumeAt: null },
   };
   // A window that is open survives the call: an armed player's second tap still claims.
   return enterPhase(

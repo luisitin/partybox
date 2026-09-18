@@ -75,7 +75,7 @@ function PlayCard({
         freeDaubed={won || p.freeDaubed.includes(c)}
         onTapFree={() => p.onTapFree(c)}
         onTap={(index) => p.send({ type: 'daub', card: c, index })}
-        disabled={p.disabled || won}
+        disabled={p.disabled}
         size={size}
       />
     </div>
@@ -113,7 +113,8 @@ export function Thumbnails({
             type="button"
             key={c}
             className={`${styles.thumb} ${cur ? styles.thumbCur : ''} ${won ? styles.thumbWon : ''}`}
-            disabled={cur || won}
+            style={{ ['--i' as string]: c }}
+            disabled={cur}
             onClick={() => onPick(c)}
             aria-label={`Card ${c + 1}${cur ? `, ${markLabel}` : ''}${won ? ', won' : ''}`}
             data-tag={tag ?? undefined}

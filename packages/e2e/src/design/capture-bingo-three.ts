@@ -5,6 +5,7 @@
 import { join } from 'node:path';
 import { parseArgs } from 'node:util';
 import { chromium } from 'playwright';
+import { daubLine, skipToLine } from './bingo-lines';
 import { REPO_ROOT, startServer } from './server';
 import {
   DevApi,
@@ -34,12 +35,6 @@ interface BingoState {
   };
   phase: { id: string };
 }
-const LINES: number[][] = [
-  ...Array.from({ length: 5 }, (_, r) => [0, 1, 2, 3, 4].map((c) => r * 5 + c)),
-  ...Array.from({ length: 5 }, (_, c) => [0, 1, 2, 3, 4].map((r) => r * 5 + c)),
-  [0, 6, 12, 18, 24],
-  [4, 8, 12, 16, 20],
-];
 
 async function main(): Promise<void> {
   const server = await startServer(PORT);
@@ -117,28 +112,8 @@ async function main(): Promise<void> {
     await settle(500);
     await api.skip();
     const me = (await api.playerId('Sam')) ?? '';
-    let line: number[] | null = null;
-    for (let i = 0; i < 60 && !line; i += 1) {
-      const s = await state();
-      if (s.phase.id !== 'play') break;
-      const card = s.round.cards[me]?.[0] ?? [];
-      const called = new Set(s.round.deck.slice(0, s.round.drawn));
-      line = LINES.find((l) => l.every((i) => i === 12 || called.has(card[i] ?? -1))) ?? null;
-      if (!line) {
-        await api.skip();
-        await settle(120);
-      }
-    }
-    if (!line) throw new Error('no line got called within 60 numbers');
-    const card = (await state()).round.cards[me]?.[0] ?? [];
-    for (const i of line) {
-      if (i === 12) continue;
-      const letter = 'BINGO'[i % 5];
-      await p.page
-        .getByRole('gridcell', { name: new RegExp(`^${letter} ${card[i]}$`) })
-        .first()
-        .click();
-    }
+    const { line, card } = await skipToLine(api, me);
+    await daubLine(p.page, line, card);
     await settle(300);
     await p.page.getByRole('button', { name: /^bingo! card 1$/i }).click();
     await p.page.getByRole('button', { name: /tap again to claim/i }).dispatchEvent('click');

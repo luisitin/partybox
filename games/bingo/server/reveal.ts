@@ -32,7 +32,10 @@ export function verdictAtMs(patternCells: number, hasRest: boolean): number {
 /** After the verdict lands the room reads it: the check phase ends this long after. */
 export const VERDICT_READ_MS = 3_000;
 
-/** How long a check runs for this claim: its reveal, then the reading margin. */
-export function checkMs(patternCells: number, hasRest: boolean): number {
-  return verdictAtMs(patternCells, hasRest) + VERDICT_READ_MS;
+/** The reveal's length for one claim: its pattern cells, and whether other daubs rest in. */
+export function claimRevealMs(cells: readonly number[], daubs: readonly number[]): number {
+  return verdictAtMs(
+    cells.length,
+    daubs.some((i) => !cells.includes(i)),
+  );
 }

@@ -6,6 +6,7 @@ import { join } from 'node:path';
 import { parseArgs } from 'node:util';
 import { chromium } from 'playwright';
 import type { Page } from 'playwright';
+import { daubLine, skipToLine } from './bingo-lines';
 import { REPO_ROOT, startServer } from './server';
 import {
   DevApi,
@@ -24,17 +25,6 @@ const { values } = parseArgs({
 const OUT = values.out ?? join(REPO_ROOT, 'reports', 'design', 'latest');
 const PORT = Number(values.port);
 const G = 'bingo';
-
-interface BingoState {
-  round: { deck: number[]; drawn: number; cards: Record<string, number[][]> };
-  phase: { id: string };
-}
-const LINES: number[][] = [
-  ...Array.from({ length: 5 }, (_, r) => [0, 1, 2, 3, 4].map((c) => r * 5 + c)),
-  ...Array.from({ length: 5 }, (_, c) => [0, 1, 2, 3, 4].map((r) => r * 5 + c)),
-  [0, 6, 12, 18, 24],
-  [4, 8, 12, 16, 20],
-];
 
 // Polls every frame from the claim: when the sweep band mounts and when the first cell turns
 // visibly green. A string probe (tsx keepNames breaks evaluate arrow bodies).
@@ -77,8 +67,6 @@ async function main(): Promise<void> {
   const api = new DevApi(server.url);
   const shots = new Shooter(OUT);
   const browser = await chromium.launch();
-  const state = async (): Promise<BingoState> =>
-    (await api.state()).room?.game?.state as unknown as BingoState;
   try {
     await api.reset();
     const rec = await openTvRecorded(browser, server.url, join(OUT, 'video'));
@@ -123,26 +111,8 @@ async function main(): Promise<void> {
     await shots.shot(p2.page, { group: G, phase: 'wiped', device: 'iphone-se', role: 'claimant' });
     // A real bingo: skip numbers until a line of the VIP's card is fully called, daub it, claim.
     const vipId = (await api.playerId('Sam')) ?? '';
-    let line: number[] | null = null;
-    for (let i = 0; i < 60 && !line; i += 1) {
-      const s = await state();
-      if (s.phase.id !== 'play') break;
-      const card = s.round.cards[vipId]?.[0] ?? [];
-      const called = new Set(s.round.deck.slice(0, s.round.drawn));
-      line = LINES.find((l) => l.every((i) => i === 12 || called.has(card[i] ?? -1))) ?? null;
-      if (!line) {
-        await api.skip();
-        await settle(120);
-      }
-    }
-    if (!line) throw new Error('no line got called within 60 numbers');
-    const s = await state();
-    const card = s.round.cards[vipId]?.[0] ?? [];
-    for (const i of line) {
-      if (i === 12) continue;
-      const letter = 'BINGO'[i % 5];
-      await vip.page.getByRole('gridcell', { name: new RegExp(`^${letter} ${card[i]}$`) }).click();
-    }
+    const { line, card } = await skipToLine(api, vipId);
+    await daubLine(vip.page, line, card);
     await settle(300);
     await shots.shot(vip.page, { group: G, phase: 'line-daubed', device: 'iphone', role: 'vip' });
     await vip.page.getByRole('button', { name: /^bingo! card 1$/i }).click();

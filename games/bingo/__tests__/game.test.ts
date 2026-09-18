@@ -7,7 +7,7 @@ import { game, readSettings } from '../server/index';
 import { dealCard, letterOf } from '../server/cards';
 import { evaluate, looksComplete } from '../server/patterns';
 import { sampleInput } from '../server/bot';
-import { callUntil, claim, daubAll, input, start, timer, vip } from './helpers';
+import { after, callUntil, claim, daubAll, input, start, timer, vip } from './helpers';
 
 describe('setup', () => {
   it('deals a legal card: columns B/I/N/G/O from their 15-number ranges, FREE centre, no repeats', () => {
@@ -100,9 +100,9 @@ describe('play', () => {
     const drawnAtBingo = s.round.drawn;
     const cardsAtBingo = s.round.cards;
     // same pattern: calling resumes on the same deck, cards and daubs survive, the winner cannot re-claim
-    let same = input(s, 'b', { type: 'continue', pattern: 'same' });
+    let same = input(s, 'b', { type: 'continue', pattern: 'same' }, after(s));
     expect(same.phase.id).toBe('play');
-    expect(same.round.drawn).toBe(drawnAtBingo + 1);
+    expect(same.round.drawn).toBe(drawnAtBingo); // the number that was up repeats
     expect(same.round.cards).toBe(cardsAtBingo);
     expect(same.round.daubs['a']).toEqual([[0, 1, 2, 3, 4]]);
     expect(same.round.pattern).toBe('line');
@@ -111,15 +111,15 @@ describe('play', () => {
     expect(game.controllerView(same, 'a').canClaim).toBe(false);
     expect(game.controllerView(same, 'b').canClaim).toBe(true);
     // blackout: the pattern changes for everyone and the winner is back in
-    let black = input(s, 'b', { type: 'continue', pattern: 'blackout' });
+    let black = input(s, 'b', { type: 'continue', pattern: 'blackout' }, after(s));
     expect(black.phase.id).toBe('play');
     expect(black.round.pattern).toBe('blackout');
     expect(black.round.won).toEqual({});
     expect(game.controllerView(black, 'a').canClaim).toBe(true);
     // a second bingo in the same round is another point; a spectator cannot decide
-    expect(input(s, 'zz', { type: 'continue', pattern: 'same' })).toBe(s);
+    expect(input(s, 'zz', { type: 'continue', pattern: 'same' }, after(s))).toBe(s);
     // next → scoreboard (more rounds) exactly like the deadline
-    expect(input(s, 'a', { type: 'next' }).phase.id).toBe('scoreboard');
+    expect(input(s, 'a', { type: 'next' }, after(s)).phase.id).toBe('scoreboard');
     expect(timer(s).phase.id).toBe('scoreboard');
     same = timer(same); // one more call, nobody claims
     black = timer(black);
