@@ -671,6 +671,29 @@
     </div>
   </header>
 
+  <section id="s-pick">
+    <div class="head">
+      <div>
+        <span class="eyebrow">0 · The judge picks (judge mode)</span>
+        <h2>Three questions, one chosen</h2>
+        <p>
+          In judge mode the round opens with three black cards dealt onto the table (120 ms apart)
+          while the lo-fi bed plays. The judge taps one on their phone; the card they took lifts and
+          rings gold, the other two step back, and the pill says "Sam picked this one" for 1.4 s
+          (loop #180). Then that card is turned face-up onto the answer stage (loop #166). With no
+          judge — vote mode — the round simply opens with the question turning over.
+        </p>
+      </div>
+    </div>
+    <div class="timeline" id="tl-pick">
+      <span
+        ><b>0 ms</b> three questions are dealt, 120 ms apart <span class="cue">♪ phase</span></span
+      >
+      <span><b>judge taps</b> the taken card lifts and rings gold, the others fade to 35 %</span>
+      <span><b>+1400 ms</b> the chosen question turns face-up on the answer stage</span>
+    </div>
+  </section>
+
   <section id="s-answer">
     <div class="head">
       <div>
@@ -823,10 +846,22 @@
             <td>the general background; it resumes where it left off between stages</td>
           </tr>
           <tr>
+            <td>The judge picks the question</td>
+            <td>Lo-fi hip hop <em>(live, loop #161)</em></td>
+            <td>—</td>
+            <td>a beat of its own while one person decides</td>
+          </tr>
+          <tr>
             <td>Judging</td>
             <td>Marimba ostinato <em>(decided)</em></td>
             <td>—</td>
             <td>a patient pulse while people vote</td>
+          </tr>
+          <tr>
+            <td>The result</td>
+            <td>Lounge swing <em>(live, loop #161)</em></td>
+            <td>Warm groove</td>
+            <td>cocktail hour under the winner</td>
           </tr>
           <tr>
             <td>Results screen</td>
@@ -1317,6 +1352,35 @@
       osc.start(at);
       osc.stop(at + d + 0.05);
     }
+    function kick(out, at, g) {
+      const o = ctx.createOscillator(),
+        gn = ctx.createGain();
+      o.frequency.setValueAtTime(120, at);
+      o.frequency.exponentialRampToValueAtTime(45, at + 0.12);
+      gn.gain.setValueAtTime(g, at);
+      gn.gain.exponentialRampToValueAtTime(0.0001, at + 0.22);
+      o.connect(gn).connect(out);
+      o.start(at);
+      o.stop(at + 0.25);
+    }
+    function snare(out, at, g) {
+      const len = 0.12,
+        buf = ctx.createBuffer(1, Math.ceil(ctx.sampleRate * len), ctx.sampleRate),
+        d = buf.getChannelData(0);
+      for (let i = 0; i < d.length; i += 1) d[i] = (Math.random() * 2 - 1) * (1 - i / d.length);
+      const src = ctx.createBufferSource();
+      src.buffer = buf;
+      const hp = ctx.createBiquadFilter();
+      hp.type = 'highpass';
+      hp.frequency.value = 1200;
+      const lp = ctx.createBiquadFilter();
+      lp.type = 'lowpass';
+      lp.frequency.value = 5000;
+      const g2 = ctx.createGain();
+      g2.gain.value = g;
+      src.connect(hp).connect(lp).connect(g2).connect(out);
+      src.start(at);
+    }
     function hat(out, at, g = 0.03) {
       const len = 0.03,
         buf = ctx.createBuffer(1, ctx.sampleRate * len, ctx.sampleRate),
@@ -1475,6 +1539,114 @@
             });
           for (let e = 0; e < 8; e += 1) hat(out, t + (beat * e) / 2, 0.015);
           voice(out, { f: N(s[0] - 24), at: t, d: beat * 2, t: 'sine', g: 0.08 });
+        },
+      },
+      lofi: {
+        title: 'Lo-fi hip hop',
+        stage: "the judge's pick",
+        rec: true,
+        bpm: 78,
+        level: 0.12,
+        note: 'A dusty swung beat: soft kick, brushed snare, hats behind the beat, muted Rhodes over Am9 · Dm9 · Gmaj9 · Cmaj7.',
+        bar(out, t, i) {
+          const beat = 60 / 78,
+            sw = (beat / 4) * 0.33,
+            chords = [
+              [57, 60, 64, 67, 71],
+              [50, 53, 57, 60, 64],
+              [55, 59, 62, 66, 69],
+              [48, 52, 55, 59],
+            ],
+            roots = [45, 38, 43, 36],
+            c = chords[i % 4],
+            r = roots[i % 4];
+          c.forEach((m, k) =>
+            voice(out, {
+              f: N(m),
+              at: t + 0.03 * k,
+              d: beat * 2.2,
+              t: 'triangle',
+              g: 0.035,
+              a: 0.06,
+            }),
+          );
+          c.forEach((m, k) =>
+            voice(out, {
+              f: N(m),
+              at: t + beat * 2 + sw + 0.03 * k,
+              d: beat * 1.6,
+              t: 'triangle',
+              g: 0.026,
+              a: 0.06,
+            }),
+          );
+          voice(out, { f: N(r), at: t, d: beat * 1.5, g: 0.095, a: 0.02 });
+          voice(out, { f: N(r), at: t + beat * 2.5, d: beat, g: 0.075, a: 0.02 });
+          kick(out, t, 0.2);
+          kick(out, t + beat * 2.5, 0.15);
+          snare(out, t + beat, 0.045);
+          snare(out, t + beat * 3, 0.045);
+          for (let e = 0; e < 8; e += 1)
+            hat(out, t + (beat * e) / 2 + (e % 2 ? sw : 0), e % 2 ? 0.013 : 0.022);
+        },
+      },
+      lounge: {
+        title: 'Lounge swing',
+        stage: 'the result',
+        rec: true,
+        bpm: 84,
+        level: 0.12,
+        note: 'Vibraphone chords with a slow tremolo (Fmaj7 · B♭maj7 · Gm7 · C7), a walking upright bass, a brushed ride.',
+        bar(out, t, i) {
+          const beat = 60 / 84,
+            sw = beat / 3,
+            chords = [
+              [65, 69, 72, 76],
+              [58, 62, 65, 69],
+              [55, 58, 62, 65],
+              [60, 64, 67, 70],
+            ],
+            walks = [
+              [41, 43, 45, 47],
+              [46, 45, 43, 41],
+              [43, 46, 48, 50],
+              [48, 47, 46, 43],
+            ],
+            c = chords[i % 4],
+            w = walks[i % 4];
+          [0, 2].forEach((b, n) =>
+            c.forEach((m, k) => {
+              voice(out, {
+                f: N(m),
+                at: t + beat * b + 0.02 * k,
+                d: beat * 1.9,
+                g: n ? 0.026 : 0.04,
+                a: 0.01,
+              });
+              voice(out, {
+                f: N(m),
+                at: t + beat * b + 0.02 * k + 0.09,
+                d: beat * 1.7,
+                g: n ? 0.011 : 0.018,
+                a: 0.01,
+                detune: 4,
+              });
+            }),
+          );
+          w.forEach((m, n) =>
+            voice(out, {
+              f: N(m),
+              at: t + beat * n,
+              d: beat * 0.8,
+              t: 'triangle',
+              g: 0.09,
+              a: 0.015,
+            }),
+          );
+          for (let e = 0; e < 4; e += 1) {
+            hat(out, t + beat * e, 0.018);
+            hat(out, t + beat * e + sw * 2, 0.011);
+          }
         },
       },
     };
