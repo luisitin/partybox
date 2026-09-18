@@ -149,3 +149,17 @@
   color: var(--pb-danger);
   font-weight: 900;
 }
+
+/* A sideways phone in Safari (≈ 330 px tall): the sheet needs every row, so the kicker goes and
+   the prompt is a single body-size line (loop 228). */
+@media (orientation: landscape) and (max-height: 420px) {
+  .kicker {
+    display: none;
+  }
+  .prompt {
+    font-size: var(--pb-font-body);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

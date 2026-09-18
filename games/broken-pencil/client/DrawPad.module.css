@@ -149,3 +149,57 @@
   opacity: 0.4;
   cursor: default;
 }
+
+/* A sideways phone in Safari (≈ 330 px tall): the pad turns into a row — colours down the left,
+   the sheet in the middle taking the height, ink and the pen tools stacked on the right — so the
+   sheet is a square worth drawing on instead of a sliver under the palette (loop 228). */
+@media (orientation: landscape) and (max-height: 420px) {
+  .pad {
+    flex-direction: row;
+    align-items: stretch;
+    gap: var(--pb-space-3);
+  }
+  .tools {
+    flex: none;
+  }
+  .swatches {
+    display: grid;
+    grid-template-columns: repeat(2, 28px);
+    gap: 4px;
+    align-content: center;
+  }
+  .swatch {
+    width: 28px;
+    height: 28px;
+  }
+  .box {
+    flex: 1;
+    max-width: none;
+    align-items: center;
+    /* The sheet must not size its own box (the 300 px placeholder fed the measurement and
+       the pad grew to fit it): the box takes the row height, the sheet fits inside. */
+    contain: size;
+    overflow: hidden;
+    align-self: stretch; /* the base rule centres it, which is a 0 px box in a row */
+  }
+  .bottom {
+    flex: none;
+    width: 132px;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      'ink ink'
+      'label label'
+      'sizes sizes'
+      'undo clear';
+    align-content: center;
+    gap: 4px;
+  }
+  .tool {
+    min-height: 32px;
+    padding: 0 var(--pb-space-2);
+  }
+  .size {
+    width: 28px;
+    height: 28px;
+  }
+}

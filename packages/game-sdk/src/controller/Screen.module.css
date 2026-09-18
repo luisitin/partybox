@@ -56,4 +56,7 @@
   .body {
     padding: var(--pb-space-2) var(--pb-space-4);
   }
+  .footer {
+    padding: 4px var(--pb-space-4) calc(4px + env(safe-area-inset-bottom));
+  }
 }
