@@ -102,6 +102,17 @@ export async function bingoLine(
   return skipToLine(api, vipId);
 }
 
+/** What every scenario file gets: the tracer, the pages and the dev API (loop 322). */
+export interface ScenarioCtx {
+  T: Tracer;
+  tv: Page;
+  vip: Phone;
+  p2: Phone;
+  api: DevApi;
+  pages: Pages;
+  out: string;
+}
+
 export interface Pages {
   browser: Browser;
   url: string;

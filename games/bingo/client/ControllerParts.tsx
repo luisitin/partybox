@@ -218,27 +218,35 @@ export function DecideFooter({
   send: Send;
 }): JSX.Element | null {
   const decide = view.decide;
+  const play = useSound();
   if (!decide) return null;
   // A choice already made mid-celebration: the buttons go, the phone says what starts when.
   const pending = pendingLine(view.pendingDecision, view.round >= view.totalRounds, view.pendingBy);
   if (pending) return <p className={styles.hint}>{pending}</p>;
   const nextLabel = view.round < view.totalRounds ? 'Next round — fresh cards' : 'Finish the game';
+  // The pick lands in the hand (loop 322): a 'submit' cue and a short buzz on the tap itself —
+  // every other tap in the game sounds; the room's choice did not.
+  const pick = (input: Input): void => {
+    buzz(20);
+    play('submit');
+    send(input);
+  };
   return (
     <div className={styles.decide}>
       {decide.same ? (
-        <PrimaryButton onClick={() => send({ type: 'continue', pattern: 'same' })}>
+        <PrimaryButton onClick={() => pick({ type: 'continue', pattern: 'same' })}>
           Keep going — same pattern
         </PrimaryButton>
       ) : null}
       {decide.blackout ? (
         <PrimaryButton
           tone="neutral"
-          onClick={() => send({ type: 'continue', pattern: 'blackout' })}
+          onClick={() => pick({ type: 'continue', pattern: 'blackout' })}
         >
           Keep going — blackout
         </PrimaryButton>
       ) : null}
-      <PrimaryButton tone="neutral" onClick={() => send({ type: 'next' })}>
+      <PrimaryButton tone="neutral" onClick={() => pick({ type: 'next' })}>
         {nextLabel}
       </PrimaryButton>
     </div>
