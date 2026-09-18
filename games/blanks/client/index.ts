@@ -19,12 +19,16 @@ export const clientModule: GameClientModule = {
   // #161): the warm groove frames the round, the judge's pick gets lo-fi, picking a card the
   // bossa, the reading the warm groove again (it resumes where it left off), judging the marimba
   // pulse, the result the lounge swing. Results stay silent under the win fanfare.
+  // Where the room sits every round, the bed changes with the round (loop #197 — the owner heard
+  // the same thirty seconds under every vote): picking a card alternates bossa / marimba, judging
+  // marimba / lo-fi, the judge's own pick lo-fi / late night. The shell takes the next one each
+  // time the phase begins, and each bed resumes where it left off.
   beds: {
     intro: 'warm',
-    pick: 'lofi',
-    answer: 'bossa',
+    pick: ['lofi', 'latenight'],
+    answer: ['bossa', 'marimba'],
     reveal: 'warm',
-    judge: 'marimba',
+    judge: ['marimba', 'lofi'],
     result: 'lounge',
   },
   // The point lands on result entry but the stage names the winner on its last beat: the strip

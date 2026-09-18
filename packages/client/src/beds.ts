@@ -13,14 +13,23 @@ export type { BedId } from './beds-library';
 
 export const isBedId = (id: string): id is BedId => (BED_IDS as readonly string[]).includes(id);
 
-/** The bed for this room state: a game's `beds[phaseId]` while playing, nothing otherwise. */
+/**
+ * The bed for this room state: a game's `beds[phaseId]` while playing, nothing otherwise. A phase
+ * may name several beds; the shell takes the next one each time that phase begins, so a stage the
+ * room sits through every round does not play the same thirty seconds all game (loop #197).
+ * `turns[phaseId]` is how many times that phase has begun so far (0 on the first).
+ */
 export function bedFor(
   room: RoomSnapshot | null,
   view: PushedView<TvView> | null,
-  beds: Readonly<Record<string, string>> | undefined,
+  beds: Readonly<Record<string, string | readonly string[]>> | undefined,
+  turns: Readonly<Record<string, number>> = {},
 ): BedId | null {
   if (!room || room.status !== 'playing' || !view || !beds) return null;
-  const id = beds[view.phaseId];
+  const entry = beds[view.phaseId];
+  const list = entry === undefined ? [] : typeof entry === 'string' ? [entry] : entry;
+  if (list.length === 0) return null;
+  const id = list[(turns[view.phaseId] ?? 0) % list.length];
   return id !== undefined && isBedId(id) ? id : null;
 }
 

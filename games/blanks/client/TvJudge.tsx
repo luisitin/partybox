@@ -104,20 +104,34 @@ function JudgeGrid({ view }: Props): JSX.Element {
     0,
     ...view.cards.map((c) => fillText(view.black?.text ?? '', c.whites).length),
   );
-  const dense = count > 6 || (count > 4 && longest > 110);
+  // A small room never pages: six cards or fewer that do not fit step down to the small card and
+  // stay there for the round (latched, so measuring the smaller cards cannot bounce them back —
+  // loop #196; a four-card round was turning pages with A–C up and D alone behind them).
+  const [tight, setTight] = useState(false);
+  const dense = tight || count > 6 || (count > 4 && longest > 110);
   const ref = useRef<HTMLUListElement>(null);
   const [starts, setStarts] = useState<number[]>([0]);
   const [page, setPage] = useState(0);
   useEffect(() => {
     const grid = ref.current;
     if (!grid) return undefined;
-    const observer = new ResizeObserver(() => {
+    const measure = (): void => {
       const next = pageStarts(grid);
       setStarts((prev) => (prev.join(',') === next.join(',') ? prev : next));
-    });
+      if (next.length > 1 && count <= 6) setTight(true);
+    };
+    // The grid and every card: the stage grows into its final height while the phase crossfades,
+    // and a measurement taken in that first frame paged a four-card round that fits (loop #196).
+    // The 600 ms re-measure is the backstop for a layout that settles without resizing the grid.
+    const observer = new ResizeObserver(measure);
     observer.observe(grid);
-    return () => observer.disconnect();
-  }, []);
+    for (const li of grid.children) observer.observe(li);
+    const late = window.setTimeout(measure, 600);
+    return () => {
+      observer.disconnect();
+      window.clearTimeout(late);
+    };
+  }, [dense, count]);
   const pages = starts.length;
   useEffect(() => {
     if (pages <= 1) return undefined;
@@ -153,12 +167,17 @@ function JudgeGrid({ view }: Props): JSX.Element {
       >
         {view.cards.map((c, i) => (
           <li key={c.slot} style={{ animationDelay: `calc(${i} * 120ms)` }}>
-            <FilledCard
-              text={view.black?.text ?? ''}
-              whites={c.whites}
-              size={dense ? 'mini' : 'grid'}
-              letter={LETTERS[c.slot]}
-            />
+            {/* Only the current page is lit: the row below used to hang into the stage as a card
+                sliced through its own last line (loop #196). The fade sits on this wrapper, not on
+                the <li>, whose deal animation fills `both` and would win. */}
+            <span className={i >= from && i <= to ? styles.onPage : styles.offPage}>
+              <FilledCard
+                text={view.black?.text ?? ''}
+                whites={c.whites}
+                size={dense ? 'mini' : 'grid'}
+                letter={LETTERS[c.slot]}
+              />
+            </span>
           </li>
         ))}
       </ul>

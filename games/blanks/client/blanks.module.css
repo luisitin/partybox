@@ -734,6 +734,17 @@
   }
 }
 
+/* A card on the page the room is reading, and one waiting for its turn (loop #196). */
+.onPage,
+.offPage {
+  display: block;
+  transition: opacity var(--pb-motion-base) var(--pb-ease);
+}
+
+.offPage {
+  opacity: 0;
+}
+
 .judgeGrid > li {
   min-width: 0;
   /* dealt onto the table, 120 ms apart (TvJudge sets the delay) */
