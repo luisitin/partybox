@@ -2,7 +2,7 @@
 // text) that reads as one sentence with the played white cards dropped into its blanks as light
 // "paper" marks — the physical game's convention, kept in every theme so the game is its own
 // thing. `fill` (server/cards.ts) is the one rule for where the text goes.
-import type { JSX, ReactNode } from 'react';
+import type { CSSProperties, JSX, ReactNode } from 'react';
 import { BLANK } from '../content/schema';
 import { fill, fillText, glue } from '../server/cards';
 import type { Segment } from '../server/cards';
@@ -72,6 +72,7 @@ export function FilledCard({
   const { segments, extra } = fill(text, whites);
   const sizeClass = styles[size] ?? '';
   const parts = glueBlanks(segments);
+  let fills = 0;
   return (
     <article
       className={`${styles.black} ${sizeClass} ${lengthClass(size, text, whites)} ${letter ? styles.lettered : ''} ${winner ? styles.winner : ''} ${className ?? ''}`}
@@ -87,7 +88,11 @@ export function FilledCard({
           s.kind === 'fill' ? (
             // Keyed by text as well: a new white dropped into the phone's preview mounts fresh
             // and pops into place (review-loop #146).
-            <mark key={`${i}:${s.text}`} className={styles.fill}>
+            <mark
+              key={`${i}:${s.text}`}
+              className={styles.fill}
+              style={{ '--fill-index': fills++ } as CSSProperties}
+            >
               {glue(s.text)}
             </mark>
           ) : (
@@ -103,7 +108,16 @@ export function FilledCard({
         <ul className={styles.extras}>
           {extra.map((w, i) => (
             <li key={i}>
-              <mark className={styles.fill}>{glue(w)}</mark>
+              <mark
+                className={styles.fill}
+                style={
+                  {
+                    '--fill-index': segments.filter((s) => s.kind === 'fill').length + i,
+                  } as CSSProperties
+                }
+              >
+                {glue(w)}
+              </mark>
             </li>
           ))}
         </ul>

@@ -53,3 +53,35 @@ export function blackCard(id: string | null): BlackCard {
 export function whiteText(id: string): string {
   return WHITE_BY_ID[id]?.text ?? '(missing card)';
 }
+
+/** What shape a white card is, so a hand always holds a few of each (owner, review-loop #151:
+ *  "at least 2 nouns, 2 verbs, 2 combinations, so you always have options"). Heuristic on the
+ *  text: a card that starts with a gerund ("Yodeling.", "Quietly winning Monopoly.") is a `doing`;
+ *  one with a linking word ("Bird poop on a brand-new car." — "with", "in", "who", "and"…) is a
+ *  `combo`; the rest are plain `thing`s ("Beans.", "A very small horse."). */
+export type WhiteKind = 'thing' | 'doing' | 'combo';
+export const WHITE_KINDS: readonly WhiteKind[] = ['thing', 'doing', 'combo'];
+
+const NOT_GERUND =
+  /^(thing|something|nothing|everything|anything|ring|king|wing|string|spring|bling|morning|evening|wedding|building|feeling|ceiling|pudding|stocking|clothing|sibling|darling|during)$/i;
+const ADVERB =
+  /^(not|quietly|slowly|loudly|secretly|aggressively|extremely|slightly|accidentally|finally|casually|barely|openly|silently|gently|violently|briefly|nearly|almost|never|always|just|still|only|really|very|too|softly|angrily|politely|deliberately|repeatedly|calmly|suddenly|passive)$/i;
+const LINK =
+  /\b(with|in|on|at|for|of|from|to|and|who|that|about|after|before|under|over|into|without|during|behind|near|by|inside|outside|through|like|as)\b/i;
+
+export function whiteKindOf(text: string): WhiteKind {
+  const words = text.replace(/[^A-Za-z' ]/g, '').split(/\s+/);
+  const gerund = (w: string | undefined): boolean =>
+    w !== undefined && /ing$/i.test(w) && !NOT_GERUND.test(w);
+  if (gerund(words[0]) || (ADVERB.test(words[0] ?? '') && gerund(words[1]))) return 'doing';
+  if (LINK.test(text)) return 'combo';
+  return 'thing';
+}
+
+const WHITE_KIND: Readonly<Record<string, WhiteKind>> = Object.fromEntries(
+  ALL.flatMap((d) => d.white.map((c) => [c.id, whiteKindOf(c.text)])),
+);
+
+export function whiteKind(id: string): WhiteKind {
+  return WHITE_KIND[id] ?? 'thing';
+}

@@ -4,6 +4,7 @@
 import { shuffle } from '@partybox/game-sdk';
 import type { RngState } from '@partybox/game-sdk';
 import { BLANK, blanksIn } from '../content/schema';
+import { WHITE_KINDS, whiteKind } from './content';
 import {
   BIG_REVEAL_MAX_MS,
   BIG_REVEAL_MIN_MS,
@@ -46,14 +47,38 @@ export function drawBlack(state: State, pool: readonly string[]): [string | null
   return [id, { ...state, rng, blackDeck: deck.slice(1) }];
 }
 
-/** Every player's hand back up to HAND_SIZE (+ `extra` for the ids in `extraFor`). */
+/** A hand always holds at least this many cards of each kind (thing / doing / combo). */
+export const KIND_FLOOR = 2;
+
+/** The first card of `kind` in the white deck, taken out of its place (null when the deck holds
+ *  none — the discard is not searched; a plain draw covers the rest). */
+function takeKind(state: State, kind: string): [string | null, State] {
+  const i = state.whiteDeck.findIndex((id) => whiteKind(id) === kind);
+  if (i === -1) return [null, state];
+  const id = state.whiteDeck[i] as string;
+  return [id, { ...state, whiteDeck: state.whiteDeck.filter((_, j) => j !== i) }];
+}
+
+/** Every player's hand back up to HAND_SIZE (+ `extra` for the ids in `extraFor`). The refill
+ *  first tops up any kind below KIND_FLOOR from the deck, then draws the rest off the top, so a
+ *  hand of ten always offers a few things, a few doings and a few combos (owner, loop #151). */
 export function refillHands(state: State, extra = 0, extraFor: readonly string[] = []): State {
   let next = state;
   const hands = { ...state.hands };
   for (const id of Object.keys(state.players).sort()) {
     const target = HAND_SIZE + (extraFor.includes(id) ? extra : 0);
-    const hand = hands[id] ?? [];
+    let hand = hands[id] ?? [];
     if (hand.length >= target) continue;
+    for (const kind of WHITE_KINDS) {
+      let have = hand.filter((c) => whiteKind(c) === kind).length;
+      while (have < KIND_FLOOR && hand.length < target) {
+        const [card, after] = takeKind(next, kind);
+        if (card === null) break;
+        next = after;
+        hand = [...hand, card];
+        have += 1;
+      }
+    }
     const [drawn, after] = drawWhite(next, target - hand.length);
     next = after;
     hands[id] = [...hand, ...drawn];

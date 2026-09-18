@@ -1,8 +1,16 @@
 // Unit tests for Blanks: a whole game on timers alone, dealing, the fill rule and content
 // (README "Phases" + "Content"). Phase and scoring edge cases live in phases.test.ts.
 import { describe, expect, it } from 'vitest';
-import { fill, fillText, glue, revealMs } from '../server/cards';
-import { DECKS, blackCard, blackPool, whitePool } from '../server/content';
+import { KIND_FLOOR, fill, fillText, glue, revealMs } from '../server/cards';
+import {
+  DECKS,
+  WHITE_KINDS,
+  blackCard,
+  blackPool,
+  whiteKind,
+  whiteKindOf,
+  whitePool,
+} from '../server/content';
 import { game } from '../server/index';
 import {
   BIG_REVEAL_MAX_MS,
@@ -104,6 +112,30 @@ describe('dealing', () => {
     expect(blackPool('adults')).toHaveLength(DECKS.mild.black.length + DECKS.crude.black.length);
   });
 
+  it('a hand always holds at least two things, two doings and two combos while the deck has them', () => {
+    const counts = (hand: string[]): Record<string, number> => {
+      const c: Record<string, number> = { thing: 0, doing: 0, combo: 0 };
+      for (const id of hand) c[whiteKind(id)] = (c[whiteKind(id)] ?? 0) + 1;
+      return c;
+    };
+    for (const decks of ['mild', 'adults', 'wild', 'wild-only'] as const) {
+      let s = start({ players: 6, decks, seed: 7 });
+      for (let round = 1; round <= 3; round++) {
+        for (const id of Object.keys(s.players)) {
+          const c = counts(s.hands[id] ?? []);
+          for (const kind of WHITE_KINDS)
+            expect(c[kind], `${decks} r${round} ${kind}`).toBeGreaterThanOrEqual(KIND_FLOOR);
+        }
+        s = timer(playRound(s));
+      }
+    }
+    expect(whiteKindOf('Yodeling.')).toBe('doing');
+    expect(whiteKindOf('Quietly winning Monopoly.')).toBe('doing');
+    expect(whiteKindOf('Bird poop on a brand-new car.')).toBe('combo');
+    expect(whiteKindOf('Beans.')).toBe('thing');
+    expect(whiteKindOf('The wedding.')).toBe('thing');
+  });
+
   it('refills hands to ten after a round and never re-deals a played card before the discard turns', () => {
     let s = playRound(start({ players: 4 }));
     const played = new Set(Object.values(s.submissions).flat());
@@ -201,10 +233,10 @@ describe('fill', () => {
   });
 
   it('reveal time grows with length and is clamped', () => {
-    expect(revealMs('Hi ____.', ['Yo.'])).toBe(REVEAL_MIN_MS + 'Hi Yo.'.length * 35);
+    expect(revealMs('Hi ____.', ['Yo.'])).toBe(REVEAL_MIN_MS + 'Hi Yo.'.length * 18);
     expect(revealMs('x'.repeat(200), ['y'.repeat(100)])).toBe(REVEAL_MAX_MS);
     // A big room reads faster: twelve cards stay under a minute.
-    expect(revealMs('Hi ____.', ['Yo.'], 12)).toBe(BIG_REVEAL_MIN_MS + 'Hi Yo.'.length * 25);
+    expect(revealMs('Hi ____.', ['Yo.'], 12)).toBe(BIG_REVEAL_MIN_MS + 'Hi Yo.'.length * 14);
     expect(revealMs('x'.repeat(200), ['y'.repeat(100)], 12)).toBe(BIG_REVEAL_MAX_MS);
     expect(revealMs('x'.repeat(200), ['y'.repeat(100)], 8)).toBe(REVEAL_MAX_MS);
   });
