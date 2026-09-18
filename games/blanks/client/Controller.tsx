@@ -192,9 +192,11 @@ function ControllerResult({ view, me, send }: Props): JSX.Element {
             <span className={styles.author}>
               <Avatar avatarId={view.bestCard.avatarId} size="var(--pb-chip-size)" />
               <span className={styles.authorName}>{view.bestCard.name}</span>
-              <span className={styles.voteCount}>
-                {view.bestCard.votes} {view.bestCard.votes === 1 ? 'vote' : 'votes'}
-              </span>
+              {view.judgeMode === 'czar' ? null : (
+                <span className={styles.voteCount}>
+                  {view.bestCard.votes} {view.bestCard.votes === 1 ? 'vote' : 'votes'}
+                </span>
+              )}
               <span className={styles.bestRound}>round {view.bestCard.round}</span>
             </span>
           </FilledCard>

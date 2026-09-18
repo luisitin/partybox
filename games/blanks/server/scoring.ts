@@ -51,6 +51,9 @@ export function applyRound(state: State): State {
   };
 }
 
+/** "1 card", "3 cards": a three-round night can hand out an award for a single one (review-loop #345). */
+const count = (n: number, noun: string): string => `${n} ${noun}${n === 1 ? '' : 's'}`;
+
 /** Player with the highest stat (> 0); ties go to the higher total score, then the lower id. */
 function leader(state: State, stat: Record<string, number>): string | null {
   const ids = Object.keys(state.players).filter((id) => (stat[id] ?? 0) > 0);
@@ -79,20 +82,24 @@ export function awardsFor(state: State): GameAward[] {
   // above the sticky button (review-loop #215). Rando's wins pay nobody, and a player who has left
   // keeps no award. Curly quotes around the sentence: plenty of cards carry straight quotes of
   // their own, and "a chapter called "this."" reads as a typo.
+  // A judge's pick is one "vote" every round: "· 1 vote" reads as a poor turnout (review-loop
+  // #116) and the crowd favourite would only restate the score, so czar mode names the round
+  // instead and hands out no crowd award (review-loop #346).
+  const czar = state.settings.judge === 'czar';
   const best = state.stats.best;
   if (best && Object.hasOwn(state.players, best.submitterId))
     out.push({
       id: 'card-of-the-night',
       title: 'Card of the night',
-      description: `“${shorten(fillText(blackCard(best.blackId).text, best.cards.map(whiteText)))}” · ${best.votes} ${best.votes === 1 ? 'vote' : 'votes'}`,
+      description: `“${shorten(fillText(blackCard(best.blackId).text, best.cards.map(whiteText)))}” · ${czar ? `round ${best.round}` : count(best.votes, 'vote')}`,
       playerId: best.submitterId,
     });
-  const crowd = leader(state, state.stats.votesReceived);
+  const crowd = czar ? null : leader(state, state.stats.votesReceived);
   if (crowd)
     out.push({
       id: 'crowd-favourite',
       title: 'Crowd favourite',
-      description: `${state.stats.votesReceived[crowd] ?? 0} votes across the night`,
+      description: `${count(state.stats.votesReceived[crowd] ?? 0, 'vote')} across the night`,
       playerId: crowd,
     });
   // "On a roll" only exists if somebody actually strung rounds together (review-loop #237).
@@ -109,7 +116,7 @@ export function awardsFor(state: State): GameAward[] {
     out.push({
       id: 'quick-draw',
       title: 'Quick draw',
-      description: `${state.stats.fastPlays[quick] ?? 0} cards in before half time`,
+      description: `${count(state.stats.fastPlays[quick] ?? 0, 'card')} in before half time`,
       playerId: quick,
     });
   return out;

@@ -53,3 +53,49 @@ describe('card of the night award', () => {
     expect(awardsFor(rando).some((a) => a.id === 'card-of-the-night')).toBe(false);
   });
 });
+
+describe('count awards', () => {
+  it('say "1 card" and "1 vote", not "1 cards" (seen on a three-round walkover night, #345)', () => {
+    const fresh = start({ rounds: 3 });
+    const [a, b] = Object.keys(fresh.players) as [string, string];
+    const one: State = {
+      ...fresh,
+      stats: { ...fresh.stats, fastPlays: { [a]: 1 }, votesReceived: { [b]: 1 } },
+    };
+    const awards = awardsFor(one);
+    expect(awards.find((x) => x.id === 'quick-draw')?.description).toBe(
+      '1 card in before half time',
+    );
+    expect(awards.find((x) => x.id === 'crowd-favourite')?.description).toBe(
+      '1 vote across the night',
+    );
+    const three: State = {
+      ...fresh,
+      stats: { ...fresh.stats, fastPlays: { [a]: 3 }, votesReceived: { [b]: 4 } },
+    };
+    expect(awardsFor(three).find((x) => x.id === 'quick-draw')?.description).toBe(
+      '3 cards in before half time',
+    );
+    expect(awardsFor(three).find((x) => x.id === 'crowd-favourite')?.description).toBe(
+      '4 votes across the night',
+    );
+  });
+});
+
+describe('awards with a judge (czar mode)', () => {
+  it('names the round on the card of the night and hands out no crowd favourite', () => {
+    const s = playRound(start({ rounds: 3, judge: 'czar' }), () => 0);
+    const best = s.stats.best;
+    expect(best?.votes).toBe(1);
+    const awards = awardsFor(s);
+    expect(awards.find((a) => a.id === 'card-of-the-night')?.description).toMatch(
+      /^“.+” · round 1$/,
+    );
+    expect(awards.some((a) => a.id === 'crowd-favourite')).toBe(false);
+    // The vote-mode line keeps its count.
+    const v = playRound(start({ rounds: 3 }), () => 0);
+    expect(awardsFor(v).find((a) => a.id === 'card-of-the-night')?.description).toMatch(
+      /^“.+” · \d+ votes?$/,
+    );
+  });
+});

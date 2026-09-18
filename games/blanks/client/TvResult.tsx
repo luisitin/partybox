@@ -139,9 +139,11 @@ function TvFinal({ view }: Props): JSX.Element {
               <span className={styles.author}>
                 <Avatar avatarId={best.avatarId} size="var(--pb-chip-size)" />
                 <span className={styles.authorName}>{best.name}</span>
-                <span className={styles.voteCount}>
-                  {best.votes} {best.votes === 1 ? 'vote' : 'votes'}
-                </span>
+                {view.judgeMode === 'czar' ? null : (
+                  <span className={styles.voteCount}>
+                    {best.votes} {best.votes === 1 ? 'vote' : 'votes'}
+                  </span>
+                )}
                 <span className={styles.bestRound}>round {best.round}</span>
               </span>
             </FilledCard>

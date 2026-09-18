@@ -1,7 +1,7 @@
 // Appends cards to a Blanks deck from two plain-text lists (one card per line): the black cards
 // get `pick` from their blank count (a question card = pick 1) and `draw` 2 on Pick 3, every card
-// gets the next id in the deck's sequence, and lines already in the deck (case-insensitive, after
-// trimming) are skipped, so the same list can be re-run. Validates the result with the schema.
+// gets the next id in the deck's sequence, and lines already in any deck (ignoring case, punctuation
+// and articles) are skipped, so the same list can be re-run. Validates the result with the schema.
 // Usage: tsx scripts/blanks-add-cards.ts <mild|crude|wild> <black.txt> <white.txt>
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -23,7 +23,21 @@ const others = ['mild', 'crude', 'wild']
   .filter((d) => d !== deckId)
   .map((d) => deckSchema.parse(JSON.parse(readFileSync(join(contentDir, `${d}.json`), 'utf8'))));
 const prefix = deckId[0] as string;
-const norm = (s: string): string => s.trim().toLowerCase().replace(/\s+/g, ' ');
+// Two cards are the same card once articles, pronouns and punctuation are ignored ("The middle
+// seat." / "A middle seat.", "Your dad's porn stash." / "My dad's porn stash."): fifteen such pairs
+// slipped past an exact match before review-loop #344 retired them, so the match is loose now.
+const STOP = new Set(
+  'a an the my your our his her their of in at on with for to and that who from by is it its'.split(
+    ' ',
+  ),
+);
+const norm = (s: string): string =>
+  s
+    .toLowerCase()
+    .replace(/[^a-z0-9 ]/g, ' ')
+    .split(/\s+/)
+    .filter((w) => w && !STOP.has(w))
+    .join(' ');
 const lines = (p: string): string[] =>
   readFileSync(p, 'utf8')
     .split(/\r?\n/)
