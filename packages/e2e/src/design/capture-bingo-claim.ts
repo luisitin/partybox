@@ -71,6 +71,9 @@ async function main(): Promise<void> {
       // Let the window lapse (the line pops, the bar drains over 3 s, the line goes) — or the
       // reveal run: 1 s announce, the 0.7 s drop, the sweep, the verdict.
       await settle(values.reveal ? 8500 : 4200);
+      // The verdict at full resolution (loop 337): the recording is 640×360 — too small to see a
+      // line clipped under the host bar.
+      if (values.reveal) await tv.screenshot({ path: join(OUT, 'tv-verdict.png') });
       const video = await cutStrips(rec, join(OUT, 'strips-tv'), tvMarks);
       console.log(`10 fps TV strips from ${video ?? '(no video)'}`);
       // The phone from the same clock: the two verdicts must land on the same frame (loop 258).
