@@ -32,12 +32,15 @@ export function TvReveal({ view }: Props): JSX.Element {
         <p className={styles.kicker}>
           Round {view.round} · Card {view.revealIndex + 1} of {view.cardCount}
         </p>
-        {/* Somebody has to say it: in judge mode that is the judge, so the TV names them
-            (review-loop #172). */}
+        {/* Somebody has to say it. In judge mode that is the judge (review-loop #172); in vote
+            mode a seat is asked by name, rotating round by round, because “read it out loud”
+            addressed to a room gets read by nobody (review-loop #248). */}
         <span className={styles.progressPill}>
           {view.judgeMode === 'czar' && view.czar
             ? `${view.czar.name} reads it out`
-            : 'Read it out loud'}
+            : view.reader
+              ? `${view.reader.name}, read it out loud`
+              : 'Read it out loud'}
         </span>
       </div>
       <div className={styles.stageMain}>

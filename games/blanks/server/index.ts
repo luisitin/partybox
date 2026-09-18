@@ -70,6 +70,7 @@ function init(ctx: InitContext): State {
     blackId: null,
     blackChoices: [],
     czarId: null,
+    readerId: null,
     submissions: {},
     slots: [],
     revealIndex: 0,

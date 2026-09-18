@@ -12,7 +12,7 @@ import styles from './blanks.module.css';
 
 type Props = GameControllerProps<BlanksControllerView, Input>;
 
-export function ControllerReveal({ view }: Props): JSX.Element {
+export function ControllerReveal({ view, me }: Props): JSX.Element {
   const black = view.black;
   const current = view.cards[view.revealIndex];
   if (!black || !current) return <WaitingScreen title="Look at the TV" mood="watch" />;
@@ -39,14 +39,21 @@ export function ControllerReveal({ view }: Props): JSX.Element {
           letter={LETTERS[current.slot]}
           className={styles.readCard}
         />
+        {/* The reader is told it is them; everyone else reads along (review-loop #248). */}
         <p className="pb-caption pb-muted">
-          {mine
-            ? "This one's yours — keep a straight face."
-            : view.role === 'judge'
-              ? 'Read along. You pick the winner after the last card.'
-              : view.judgeMode === 'czar' && view.czar
-                ? `Read along. ${view.czar.name} decides after the last card.`
-                : 'Read along. The vote is next.'}
+          {view.reader?.id === me.id
+            ? mine
+              ? "You're reading them out — and this one is yours. Good luck."
+              : "You're reading them out. Take your time."
+            : mine
+              ? "This one's yours — keep a straight face."
+              : view.role === 'judge'
+                ? 'Read along. You pick the winner after the last card.'
+                : view.judgeMode === 'czar' && view.czar
+                  ? `Read along. ${view.czar.name} decides after the last card.`
+                  : view.reader
+                    ? `Read along. ${view.reader.name} is reading.`
+                    : 'Read along. The vote is next.'}
         </p>
       </div>
     </Screen>

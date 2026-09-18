@@ -18,6 +18,20 @@ export function czarFor(state: State, round: number): string | null {
   return state.order[from] as string;
 }
 
+/** Vote mode: the seat asked to read this round's cards out loud — the same rotation the judge
+ *  uses, so over a game everyone gets a turn; a disconnected seat is skipped. Null in czar mode,
+ *  where the judge is already the reader (review-loop #248). */
+export function readerFor(state: State, round: number): string | null {
+  if (state.settings.judge === 'czar' || state.order.length === 0) return null;
+  const n = state.order.length;
+  const from = (round - 1) % n;
+  for (let i = 0; i < n; i++) {
+    const id = state.order[(from + i) % n] as string;
+    if (state.players[id]?.connected) return id;
+  }
+  return state.order[from] as string;
+}
+
 /** Players who play a card this round: everyone but the judge. */
 export function answerers(state: State): string[] {
   return Object.keys(state.players)
@@ -71,7 +85,7 @@ export function startRound(state: State): State {
     winners: [],
     blackChoices: [],
   };
-  next = { ...next, czarId: czarFor(next, round) };
+  next = { ...next, czarId: czarFor(next, round), readerId: readerFor(next, round) };
   const pool = blackPool(state.settings.decks);
   const choices: string[] = [];
   const wanted = next.czarId ? BLACK_CHOICES : 1;

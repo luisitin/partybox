@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { awardsFor } from '../server/scoring';
 import { RANDO } from '../server/types';
 import type { State } from '../server/types';
-import { playRound, start, timer, tv } from './helpers';
+import { connect, playRound, start, timer, tv } from './helpers';
 
 describe('streaks', () => {
   it('counts rounds won in a row, and the round card says so from the second', () => {
@@ -81,5 +81,27 @@ describe('the run award', () => {
     } else {
       expect(awardsFor(s).some((a) => a.id === 'on-a-roll')).toBe(false);
     }
+  });
+});
+
+describe('the reader (vote mode)', () => {
+  it('rotates by seat and is nobody in czar mode', () => {
+    let s: State = start({ rounds: 6, players: 4 });
+    const first = s.readerId;
+    expect(first).not.toBeNull();
+    // The reveal names them; the round card does not (it is not their moment yet).
+    s = timer(playRound(s, () => 0));
+    expect(s.readerId).not.toBeNull();
+    expect(s.readerId).not.toBe(first);
+    const czar = start({ rounds: 6, players: 4, judge: 'czar' });
+    expect(czar.readerId).toBeNull();
+  });
+
+  it('skips a seat that has dropped', () => {
+    const s: State = start({ rounds: 6, players: 4 });
+    const seat = s.order[(s.round - 1) % s.order.length] ?? '';
+    const gone = connect(s, seat, false);
+    const after = timer(playRound(gone, () => 0));
+    expect(after.readerId).not.toBe(seat);
   });
 });

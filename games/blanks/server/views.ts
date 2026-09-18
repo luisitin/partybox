@@ -34,6 +34,8 @@ export interface BlanksTvView extends TvView {
   timed: boolean;
   /** czar mode: this round's judge. */
   czar: PersonView | null;
+  /** vote mode, reveal only: the seat asked to read the cards out loud (review-loop #248). */
+  reader: PersonView | null;
   black: BlackView | null;
   /** pick (czar mode): the black cards the judge chooses between. */
   blackChoices: BlackView[];
@@ -69,6 +71,8 @@ export interface BlanksControllerView extends ControllerView {
   judgeMode: JudgeMode;
   timed: boolean;
   czar: PersonView | null;
+  /** vote mode, reveal only: whoever is reading this round's cards out. */
+  reader: PersonView | null;
   black: BlackView | null;
   blackChoices: BlackView[];
   /** 'judge' = this round's czar (plays no card, picks the winner). */
@@ -150,6 +154,7 @@ export function tvView(state: State, gameId: string): BlanksTvView {
     judgeMode: state.settings.judge,
     timed: state.settings.timed,
     czar: person(state, state.czarId),
+    reader: phase === 'reveal' ? person(state, state.readerId) : null,
     black: blackView(state),
     blackChoices: blackChoices(state),
     playedCount: playedCount(state),
@@ -190,6 +195,7 @@ export function controllerView(
     judgeMode: state.settings.judge,
     timed: state.settings.timed,
     czar: person(state, state.czarId),
+    reader: phase === 'reveal' ? person(state, state.readerId) : null,
     black: blackView(state),
     blackChoices: blackChoices(state),
     role: !player ? 'spectator' : isCzar(state, playerId) ? 'judge' : 'player',
