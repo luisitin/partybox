@@ -118,7 +118,10 @@ export function ControllerHand({ view, send }: Props): JSX.Element {
       >
         <Table view={view} />
         <FilledCard text={black.text} whites={view.myPlay} size="phone" />
-        {allIn ? null : <NextButton send={send} timed={view.timed} label="Start the reading now" />}
+        {/* Nothing to read yet, or everyone is in: no "don't wait" (review-loop #165). */}
+        {allIn || view.playedCount === 0 ? null : (
+          <NextButton send={send} timed={view.timed} label="Start the reading now" />
+        )}
       </WaitingScreen>
     );
   }

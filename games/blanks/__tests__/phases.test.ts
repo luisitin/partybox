@@ -263,6 +263,18 @@ describe('untimed rounds (the default)', () => {
     expect(tv(start({ timed: true })).timerMode).toBe('quiet');
   });
 
+  it('Next is ignored while nothing is on the table', () => {
+    const s = toAnswer(start({ timed: false, players: 4 }));
+    expect(s.phase.id).toBe('answer');
+    expect(next(s, 'ana')).toBe(s);
+    // One card in: Next works and the round is a walkover (no reading, no vote).
+    const one = play(s, 'ana', topCards(s, 'ana'));
+    expect(next(one, 'ben').phase.id).toBe('result');
+    // Two in: the reading starts.
+    const two = play(one, 'ben', topCards(one, 'ben'));
+    expect(next(two, 'cleo').phase.id).toBe('reveal');
+  });
+
   it('Next from any player ends picking, voting and the result like the deadline would', () => {
     let s = playAll(toAnswer(start({ timed: false, players: 4 })), ['dev']);
     expect(next(s, 'ghost', s.phase.startedAt + 1)).toBe(s);

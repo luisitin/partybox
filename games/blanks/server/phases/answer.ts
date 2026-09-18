@@ -6,7 +6,7 @@
 import { allConnectedDone, enterPhase, hasPlayer, isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { blackCard } from '../content';
-import { hasPlayed, isCzar, playersDone } from '../round';
+import { hasPlayed, isCzar, playedCount, playersDone } from '../round';
 import { ALL_IN_MS, EXTRA_PICK_S, UNTIMED_ANSWER_MS } from '../types';
 import type { Input, PlayInput, State } from '../types';
 import type { Transition } from './intro';
@@ -60,8 +60,10 @@ function applyPlay(state: State, playerId: string, input: PlayInput, now: number
 
 export function reduceAnswer(state: State, event: GameEvent<Input>, next: Transition): State {
   if (event.type === 'input') {
+    // Next with nothing on the table would open an empty reading ("Nobody played a card"): the
+    // room can only move picking along once at least one card is in (review-loop #165).
     if (event.input.type === 'next')
-      return !state.settings.timed && hasPlayer(state, event.playerId)
+      return !state.settings.timed && hasPlayer(state, event.playerId) && playedCount(state) > 0
         ? next(state, event.now)
         : state;
     if (event.input.type !== 'play') return state;

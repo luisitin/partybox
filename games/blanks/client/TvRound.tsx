@@ -7,13 +7,19 @@ import type { JSX } from 'react';
 import { Avatar, BigText, Stage, useSecondsLeft } from '@partybox/game-sdk/ui';
 import type { GameTvProps, ViewPlayer } from '@partybox/game-sdk/ui';
 import type { BlanksTvView } from '../server/index';
-import { CardFan, FilledCard } from './Cards';
+import { CardFan, FilledCard, FlipCard } from './Cards';
 import styles from './blanks.module.css';
 
 type Props = GameTvProps<BlanksTvView>;
 
 export function TvIntro({ view }: Props): JSX.Element {
   const last = view.round === view.rounds;
+  // Nobody has scored yet → no leader line (every rank-1 row would be the whole room).
+  const top = view.standings.filter((r) => r.rank === 1);
+  const leaders =
+    top.length > 0 && (top[0]?.score ?? 0) > 0 && top.length < view.standings.length
+      ? top.slice(0, 3)
+      : [];
   return (
     <Stage center className={styles.table}>
       <CardFan />
@@ -33,6 +39,21 @@ export function TvIntro({ view }: Props): JSX.Element {
           {last ? 'Last round. Make it count.' : 'Everyone votes. Play your worst.'}
         </BigText>
       )}
+      {/* From round 2 the card says who is ahead — one line, because the chip strip above already
+          carries every score (review-loop #164). */}
+      {leaders.length > 0 ? (
+        <div className={`${styles.introLead} pb-enter`}>
+          {leaders.map((row) => (
+            <span key={row.playerId} className={styles.leadChip}>
+              <Avatar avatarId={row.avatarId} size="var(--pb-space-7)" />
+              {row.name}
+            </span>
+          ))}
+          <BigText level="h2" tone="accent">
+            {leaders.length > 1 ? 'lead with' : 'leads with'} {leaders[0]?.score}
+          </BigText>
+        </div>
+      ) : null}
     </Stage>
   );
 }
@@ -107,8 +128,11 @@ export function TvAnswer({ view }: Props): JSX.Element {
           {view.czar ? ` · ${view.czar.name} judges` : ''}
         </p>
       </div>
+      {/* The round's question is turned face-up for the room — the same move the read-out uses,
+          so the judge's pick lands as a card on the table (review-loop #166). */}
       {view.black ? (
-        <FilledCard
+        <FlipCard
+          flipKey={view.black.text}
           text={view.black.text}
           pick={view.black.pick}
           size="hero"

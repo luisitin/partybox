@@ -40,6 +40,13 @@ function ControllerIntro({ view, me }: Props): JSX.Element {
           {judge.name}
         </span>
       ) : null}
+      {/* Round 2 on: where I stand, on the same beat as the TV's board (review-loop #164). */}
+      {view.standings.length > 0 ? (
+        <p className="pb-caption pb-muted">
+          You&apos;re #{view.myRank} of {view.standings.length} · {view.myScore}{' '}
+          {view.myScore === 1 ? 'point' : 'points'}
+        </p>
+      ) : null}
     </WaitingScreen>
   );
 }
