@@ -16,6 +16,14 @@ export interface DevServer {
 }
 
 export async function startServer(port: number): Promise<DevServer> {
+  // A server already answering on this port is someone else's (a stale `pnpm dev`, another
+  // session): the capture would silently run against its code (loop 258 hit one a day old).
+  const url = `http://localhost:${port}`;
+  const taken = await fetch(`${url}/healthz`).then(
+    (r) => r.ok,
+    () => false,
+  );
+  if (taken) throw new Error(`port ${port} already has a server: stop it or pick another --port`);
   const child: ChildProcess = spawn('pnpm', ['dev', '--port', String(port)], {
     cwd: REPO_ROOT,
     shell: true,
@@ -28,7 +36,6 @@ export async function startServer(port: number): Promise<DevServer> {
     if (process.env.PROBE_LOG) process.stdout.write(d);
   });
   child.stderr?.on('data', (d: Buffer) => log.push(d.toString()));
-  const url = `http://localhost:${port}`;
   const deadline = Date.now() + 60_000;
   while (Date.now() < deadline) {
     try {

@@ -46,7 +46,7 @@ export function enterBingo(
       bingos,
       patternBingos,
       decision: null,
-      credited: false,
+      judged: false,
     },
   });
   // The points land when the TV's verdict does (loop 257): the phase's first tick, at the end of
@@ -59,12 +59,12 @@ export function enterBingo(
 /** The verdict has landed: score the win (3, 2, 1, then ½ under a pattern — scoring.ts). */
 export function credit(state: State): State {
   const round = state.round;
-  if (round.credited || !round.winnerId) return state;
+  if (round.judged || !round.winnerId) return state;
   const points = pointsFor(round.patternBingos);
   return {
     ...state,
     wins: { ...state.wins, [round.winnerId]: (state.wins[round.winnerId] ?? 0) + points },
-    round: { ...round, credited: true },
+    round: { ...round, judged: true },
   };
 }
 
@@ -144,7 +144,7 @@ function celebrationEndsAt(state: State): number {
 export function reduceBingo(state: State, event: GameEvent<Input>, exits: BingoExits): State {
   if (isTimerFor(state, event)) {
     // The first tick of a won round is the verdict: score it, then wait for the room.
-    if (state.round.winnerId && !state.round.credited) {
+    if (state.round.winnerId && !state.round.judged) {
       const scored = credit(state);
       const at = verdictAt(state);
       return { ...scored, phase: { ...scored.phase, deadline: deadlineAfterVerdict(scored, at) } };
@@ -168,5 +168,5 @@ export function reduceBingo(state: State, event: GameEvent<Input>, exits: BingoE
   // Mid-celebration: hold it. Once the verdict is scored the deadline comes forward to the end
   // of the read; before that the verdict tick sets it (`deadlineAfterVerdict`).
   const held = { ...state, round: { ...state.round, decision: input } };
-  return state.round.credited ? { ...held, phase: { ...held.phase, deadline: endsAt } } : held;
+  return state.round.judged ? { ...held, phase: { ...held.phase, deadline: endsAt } } : held;
 }

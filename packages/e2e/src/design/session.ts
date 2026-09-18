@@ -46,6 +46,15 @@ export class DevApi {
     this.post('/api/dev/vip', { action });
   clock = (freeze: boolean, now?: number): Promise<{ now: number }> =>
     this.post('/api/dev/clock', { freeze, now });
+  /**
+   * Frozen clock only: moves `now` forward by `ms`, so a deadline that is due fires — the way to
+   * reach a server beat (Bingo's verdict tick, loop 258) at a chosen real moment without the jump
+   * that unfreezing makes (`now` leaps to real time and every pending deadline fires at once).
+   */
+  advance = async (ms: number): Promise<void> => {
+    const s = await this.state();
+    await this.clock(true, s.clock.now + ms);
+  };
   disconnect = (playerId: string, seconds: number): Promise<unknown> =>
     this.post('/api/dev/disconnect', { playerId, seconds });
   event = (event: unknown): Promise<unknown> => this.post('/api/dev/event', { event });

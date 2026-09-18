@@ -5,7 +5,7 @@
 // and judges only the claim, on the card named.
 import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
-import { PrimaryButton, Screen, WaitingScreen, useHold, useSound } from '@partybox/game-sdk/ui';
+import { PrimaryButton, Screen, WaitingScreen, useSound } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { Input } from '../server/types';
 import type { BingoControllerView } from '../server/views';
@@ -22,7 +22,6 @@ import {
   useOrientationLock,
 } from './styles';
 import type { CardStyle } from './styles';
-import { verdictAtMs } from '../server/reveal';
 import { otherTitle } from './copy';
 import { EndScreens, afterLine, WinScreen } from './WinScreen';
 import { useCallFeel, useVerdictFeel } from './feel';
@@ -38,15 +37,11 @@ export function Controller({
   const style = useCardStyle(n);
   const held = useHeld();
   // The TV plays the claim reveal in beats; this phone shows nothing conclusive (colours, "Not a
-  // bingo", the wipe note) until the TV has (DESIGN_SYSTEM principle 5).
+  // bingo", the wipe note) until the TV has (DESIGN_SYSTEM principle 5). The verdict is the
+  // server's word (`verdictShown`, its tick at the end of the reveal — loop 258): one push turns
+  // the phone, no local clock to drift from the TV.
   const claimKey = view.claim ? `${view.claim.playerId}:${view.callIndex}` : null;
-  const revealMs = view.claim
-    ? verdictAtMs(
-        view.claim.cells.length,
-        view.claim.daubs.some((i) => !view.claim?.cells.includes(i)),
-      )
-    : 0;
-  const verdictShown = useHold(claimKey, revealMs);
+  const verdictShown = view.verdictShown;
   const play = useSound();
   useVerdictFeel(view, me.id, claimKey, verdictShown, play);
   // The deal's plucks: one soft 'card' as each thumbnail lands (owner's pick, options B + C);

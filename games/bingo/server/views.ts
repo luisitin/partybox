@@ -54,6 +54,11 @@ interface Common {
   decide: { same: boolean; blackout: boolean } | null;
   /** How many bingos this round has had so far (a continued round celebrates more than one). */
   bingosThisRound: number;
+  /**
+   * check / bingo: the TV's verdict has landed (the server's first tick of the phase, ADR-033).
+   * The phones show nothing conclusive before this — no local clock (loop 258).
+   */
+  verdictShown: boolean;
   /** bingo: what this bingo was worth (3, 2, 1, then ½ under a pattern). */
   claimPoints: number;
   /** bingo: nothing can continue (every card full, or no contest left): on to the scores by itself. */
@@ -146,7 +151,7 @@ function statusOf(state: State): (id: string) => PlayerStatus {
     if (state.phase.id === 'play' || state.phase.id === 'check')
       return liveCards(state, id).length === 0 ? 'submitted' : 'active';
     // The winner's check mark waits for the TV's verdict (loop 257).
-    if (state.phase.id === 'bingo' && state.round.winnerId === id && state.round.credited)
+    if (state.phase.id === 'bingo' && state.round.winnerId === id && state.round.judged)
       return 'submitted';
     return 'waiting';
   };
@@ -175,6 +180,7 @@ function common(state: State): Common {
     decide: state.phase.id === 'bingo' ? canContinue(state) : null,
     bingosThisRound: round.bingos,
     claimPoints: winnerId ? pointsFor(round.patternBingos) : 0,
+    verdictShown: (state.phase.id === 'check' || state.phase.id === 'bingo') && round.judged,
     autoEnd:
       state.phase.id === 'bingo' &&
       winnerId !== null &&

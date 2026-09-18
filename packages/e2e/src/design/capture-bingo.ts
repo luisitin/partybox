@@ -103,6 +103,10 @@ async function main(): Promise<void> {
     marks.push({ name: 'check-reveal', at: Date.now(), seconds: 6 });
     await burst(shots, tv, 'check-lands', 24, 300);
     await settle(1200);
+    // The verdict is the server's tick at the end of the reveal (loop 258): on a frozen clock,
+    // step past it (the verdict lands 5.35–6.35 s in; the read ends 3 s later) for the stills.
+    await api.advance(7_000);
+    await settle(400);
     await shots.shot(tv, { group: G, phase: 'check', device: 'tv', role: 'stage' });
     await shots.shot(p2.page, { group: G, phase: 'check', device: 'iphone-se', role: 'claimant' });
     await shots.shot(vip.page, { group: G, phase: 'check', device: 'iphone', role: 'vip' });
@@ -129,6 +133,8 @@ async function main(): Promise<void> {
       `sync: first green ${lag === null ? 'not seen' : `+${lag} ms`} after the sweep band mounts (sting at +170 ms)`,
     );
     await settle(1500);
+    await api.advance(7_000); // the verdict tick (loop 258): the winner's phone turns
+    await settle(400);
     await shots.shot(tv, { group: G, phase: 'bingo', device: 'tv', role: 'stage' });
     await shots.shot(vip.page, { group: G, phase: 'bingo', device: 'iphone', role: 'winner' });
     await shots.shot(p2.page, { group: G, phase: 'bingo', device: 'iphone-se', role: 'p2' });
@@ -138,6 +144,7 @@ async function main(): Promise<void> {
     await shots.shot(tv, { group: G, phase: 'bingo-decide', device: 'tv', role: 'stage' });
     await shots.shot(vip.page, { group: G, phase: 'bingo-decide', device: 'iphone', role: 'vip' });
     await vip.page.getByRole('button', { name: /keep going — same pattern/i }).click();
+    await api.advance(3_000); // the choice is held until the verdict has been read: step past it
     marks.push({ name: 'continued', at: Date.now(), seconds: 3 });
     await settle(1200);
     await shots.shot(tv, { group: G, phase: 'continued', device: 'tv', role: 'stage' });
