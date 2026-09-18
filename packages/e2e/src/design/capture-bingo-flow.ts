@@ -114,7 +114,11 @@ async function main(): Promise<void> {
     await settle(9600);
     marks.push({ name: '6-next-round', at: Date.now(), before: 0.1, seconds: 12 });
     await sam.page.getByRole('button', { name: /next round/i }).click();
-    await settle(11500);
+    // Round 2's card-pick step (loop 344): the auto-ready only covers the start, so the phones
+    // pick here by hand 1.5 s after the second deal begins (loop 350).
+    await settle(7500);
+    await api.readyAll();
+    await settle(4000);
     // 7. The end of the game: the VIP ends it → the results.
     marks.push({ name: '7-final', at: Date.now(), before: 0.1, seconds: 6 });
     await api.vip('end');
