@@ -77,10 +77,12 @@
 }
 
 /* A question card's answers, listed under it at the sentence's own size. */
-/* The bare space between two adjacent whites, made wide enough to see. */
+/* The bare space between two adjacent whites: wide enough that two papers never read as one
+   slab (loop #99), narrow enough that it reads as a space rather than a black tile wedged between
+   them — at hero size half an em is a domino (review-loop #333). */
 .gap {
   display: inline-block;
-  width: 0.5em;
+  width: 0.28em;
 }
 
 .extras {
