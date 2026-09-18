@@ -295,6 +295,7 @@
    the card slides left and the verdict takes the right half (transform + opacity only). */
 .claimStage {
   position: relative;
+  perspective: 1400px; /* the card lands in 3D (loop 254): tilted away, flat on the table by the end */
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
@@ -320,14 +321,19 @@
   animation: claim-settle var(--pb-motion-slow) var(--pb-ease) both;
 }
 
+/* Laid down like a card on a table: it comes in leaning back 40°, top edge away, and the bounce
+   curve overshoots the rotation the other way for a small flap before it lies flat. */
 @keyframes claim-drop {
   from {
     opacity: 0;
-    transform: translateX(50%) translateY(-520px);
+    transform: translateX(50%) translateY(-520px) rotateX(40deg);
+  }
+  30% {
+    opacity: 1;
   }
   to {
     opacity: 1;
-    transform: translateX(50%) translateY(0);
+    transform: translateX(50%) translateY(0) rotateX(0);
   }
 }
 
