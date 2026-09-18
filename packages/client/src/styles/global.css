@@ -135,6 +135,23 @@ button {
   }
 }
 
+/* The winning card is crowned (Blanks' result): it lifts off the table and settles a touch
+   larger, with a warm bloom behind it. Transform and filter only — the card keeps its own ring. */
+@keyframes pb-crown {
+  0% {
+    transform: none;
+    filter: none;
+  }
+  45% {
+    transform: translateY(-14px) scale(1.06);
+    filter: drop-shadow(0 0 28px rgb(255 209 102 / 55%));
+  }
+  100% {
+    transform: translateY(-6px) scale(1.03);
+    filter: drop-shadow(0 0 18px rgb(255 209 102 / 35%));
+  }
+}
+
 /* A card turned over on the table (Blanks' read-out): tossed in from slightly back and above,
    face-down, turning to its face — the tilt keeps the turn readable rather than a flat spin.
    Transform only: animating opacity here would flatten the 3D context in Chromium and show the

@@ -3,18 +3,10 @@
 // 2026-09-17 from the Blanks review page: warm (relaxed picking / result), latenight (under the
 // read-out), marimba (judging), bossa (picking). Levels sit low on purpose: the owner asked for true
 // background ("lower its decibels", 2026-09-17) — roughly half the review-page sketches.
-export const BED_IDS = ['warm', 'bossa', 'latenight', 'marimba'] as const;
-export type BedId = (typeof BED_IDS)[number];
+import { hat, hz, kick, snare, voice } from './beds-voices';
 
-interface Voice {
-  f: number;
-  at: number;
-  d: number;
-  t?: OscillatorType;
-  g?: number;
-  a?: number;
-  detune?: number;
-}
+export const BED_IDS = ['warm', 'bossa', 'latenight', 'marimba', 'lofi', 'lounge'] as const;
+export type BedId = (typeof BED_IDS)[number];
 
 export interface Bed {
   bpm: number;
@@ -22,40 +14,6 @@ export interface Bed {
   level: number;
   /** Schedule one bar starting at `t` (seconds on the context clock); `i` counts bars. */
   bar(ctx: AudioContext, out: GainNode, t: number, i: number): void;
-}
-
-const hz = (midi: number): number => 440 * 2 ** ((midi - 69) / 12);
-
-function voice(ctx: AudioContext, out: GainNode, v: Voice): void {
-  const osc = ctx.createOscillator();
-  const gain = ctx.createGain();
-  osc.type = v.t ?? 'sine';
-  osc.frequency.value = v.f;
-  osc.detune.value = v.detune ?? 0;
-  gain.gain.setValueAtTime(0.0001, v.at);
-  gain.gain.exponentialRampToValueAtTime(v.g ?? 0.1, v.at + (v.a ?? 0.01));
-  gain.gain.exponentialRampToValueAtTime(0.0001, v.at + v.d);
-  osc.connect(gain).connect(out);
-  osc.start(v.at);
-  osc.stop(v.at + v.d + 0.05);
-}
-
-/** A 30 ms burst of high-passed noise: a brushed hat or a shaker. */
-function hat(ctx: AudioContext, out: GainNode, at: number, g: number): void {
-  const len = 0.03;
-  const buf = ctx.createBuffer(1, Math.ceil(ctx.sampleRate * len), ctx.sampleRate);
-  const data = buf.getChannelData(0);
-  for (let i = 0; i < data.length; i += 1)
-    data[i] = (Math.random() * 2 - 1) * (1 - i / data.length);
-  const src = ctx.createBufferSource();
-  src.buffer = buf;
-  const hp = ctx.createBiquadFilter();
-  hp.type = 'highpass';
-  hp.frequency.value = 6000;
-  const gain = ctx.createGain();
-  gain.gain.value = g;
-  src.connect(hp).connect(gain).connect(out);
-  src.start(at);
 }
 
 export const BEDS: Record<BedId, Bed> = {
@@ -166,6 +124,110 @@ export const BEDS: Record<BedId, Bed> = {
           g: 0.03,
           a: 0.02,
         });
+    },
+  },
+  // Lo-fi hip hop (owner asked for more variety per stage, review-loop #161): a dusty swung beat
+  // at 78 — soft kick, brushed snare, hats behind the beat, muted Rhodes over Am9 · Dm9 · Gmaj9 ·
+  // Cmaj7. The "study beats" feel, for the judge's pick.
+  lofi: {
+    bpm: 78,
+    level: 0.12,
+    bar(ctx, out, t, i) {
+      const beat = 60 / 78;
+      const swing = (beat / 4) * 0.33;
+      const chords = [
+        [57, 60, 64, 67, 71],
+        [50, 53, 57, 60, 64],
+        [55, 59, 62, 66, 69],
+        [48, 52, 55, 59],
+      ];
+      const roots = [45, 38, 43, 36];
+      const c = chords[i % 4] as number[];
+      const r = roots[i % 4] as number;
+      c.forEach((m, k) =>
+        voice(ctx, out, {
+          f: hz(m),
+          at: t + 0.03 * k,
+          d: beat * 2.2,
+          t: 'triangle',
+          g: 0.035,
+          a: 0.06,
+        }),
+      );
+      c.forEach((m, k) =>
+        voice(ctx, out, {
+          f: hz(m),
+          at: t + beat * 2 + swing + 0.03 * k,
+          d: beat * 1.6,
+          t: 'triangle',
+          g: 0.026,
+          a: 0.06,
+        }),
+      );
+      voice(ctx, out, { f: hz(r), at: t, d: beat * 1.5, g: 0.095, a: 0.02 });
+      voice(ctx, out, { f: hz(r), at: t + beat * 2.5, d: beat, g: 0.075, a: 0.02 });
+      kick(ctx, out, t, 0.2);
+      kick(ctx, out, t + beat * 2.5, 0.15);
+      snare(ctx, out, t + beat, 0.045);
+      snare(ctx, out, t + beat * 3, 0.045);
+      for (let e = 0; e < 8; e += 1)
+        hat(ctx, out, t + (beat * e) / 2 + (e % 2 ? swing : 0), e % 2 ? 0.013 : 0.022);
+    },
+  },
+  // A lazy swing lounge at 84: vibraphone chords with a slow tremolo (Fmaj7 · B♭maj7 · Gm7 · C7),
+  // a walking upright bass, a brushed ride — cocktail hour, for the result.
+  lounge: {
+    bpm: 84,
+    level: 0.12,
+    bar(ctx, out, t, i) {
+      const beat = 60 / 84;
+      const swing = beat / 3;
+      const chords = [
+        [65, 69, 72, 76],
+        [58, 62, 65, 69],
+        [55, 58, 62, 65],
+        [60, 64, 67, 70],
+      ];
+      const walks = [
+        [41, 43, 45, 47],
+        [46, 45, 43, 41],
+        [43, 46, 48, 50],
+        [48, 47, 46, 43],
+      ];
+      const c = chords[i % 4] as number[];
+      const walk = walks[i % 4] as number[];
+      for (const [n, b] of [0, 2].entries())
+        c.forEach((m, k) => {
+          voice(ctx, out, {
+            f: hz(m),
+            at: t + beat * b + 0.02 * k,
+            d: beat * 1.9,
+            g: n ? 0.026 : 0.04,
+            a: 0.01,
+          });
+          voice(ctx, out, {
+            f: hz(m),
+            at: t + beat * b + 0.02 * k + 0.09,
+            d: beat * 1.7,
+            g: n ? 0.011 : 0.018,
+            a: 0.01,
+            detune: 4,
+          });
+        });
+      walk.forEach((m, n) =>
+        voice(ctx, out, {
+          f: hz(m),
+          at: t + beat * n,
+          d: beat * 0.8,
+          t: 'triangle',
+          g: 0.09,
+          a: 0.015,
+        }),
+      );
+      for (let e = 0; e < 4; e += 1) {
+        hat(ctx, out, t + beat * e, 0.018);
+        hat(ctx, out, t + beat * e + swing * 2, 0.011);
+      }
     },
   },
   // A rolling 16th-note marimba figure over Dm · B♭ · F · C with a light shaker.

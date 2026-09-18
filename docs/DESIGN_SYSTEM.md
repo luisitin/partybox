@@ -69,7 +69,7 @@ The TV shell sets the TV column; the controller shell sets the phone column; tok
 `prefers-reduced-motion: reduce` sets every duration to 0. Transitions never hide information (no full-screen wipes).
 Keyframes in global.css: `pb-rise`, `pb-pop`, `pb-shake`, `pb-fade-in` / `pb-fade-out` (the pause curtain and the
 server-lost dim arrive and leave over `--pb-motion-base`), `pb-spin` (a reconnecting ⟳; only under no-preference),
-`pb-confetti`, `pb-land` (a card replacing a card: a bounce from half opacity, never from transparent, so a stage never blinks empty between two), `pb-deal` (a card dealt onto a table: up from below with a small tilt that settles), `pb-flip` (a card turned face-up in 3D — transform only: animating opacity alongside it flattens Chromium's 3D context and shows the face mirrored). PlayerChip reserves its glyph slot, so a ✓ landing pops in place and never shifts the row.
+`pb-confetti`, `pb-land` (a card replacing a card: a bounce from half opacity, never from transparent, so a stage never blinks empty between two), `pb-deal` (a card dealt onto a table: up from below with a small tilt that settles), `pb-flip` (a card turned face-up in 3D — transform only: animating opacity alongside it flattens Chromium's 3D context and shows the face mirrored), `pb-crown` (a winning card lifts off the table with a warm bloom). PlayerChip reserves its glyph slot, so a ✓ landing pops in place and never shifts the row.
 Phone: every `Screen` rises on mount (`pb-rise`, `--pb-motion-base`, fill backwards); a game keys its Screen or grid
 when a phase should read as a new screen, and never keys the Controller itself (game-local state would reset).
 TV status swaps (lobby / selecting / playing / results) are keyed and rise (`pb-rise`, fill backwards); a game chunk that
@@ -110,7 +110,8 @@ TV has a mute toggle (persisted in `localStorage`) and a "tap to start" overlay 
 
 **Music beds** (ADR-032, `packages/client/src/beds.ts`): looping backgrounds synthesized like the cues, one per phase via
 `clientModule.beds[phaseId]` — `warm` (e-piano groove), `bossa`, `latenight` (held chords, no drums), `marimba` (16th-note
-pulse). The shell crossfades beds over 1.5 s as phases change, resumes a returning bed where it stopped, holds it on pause,
+pulse), `lofi` (swung dusty beat, soft kick + brushed snare) and `lounge` (vibraphone swing with a
+walking bass). The voices they are built from live in `beds-voices.ts`. The shell crossfades beds over 1.5 s as phases change, resumes a returning bed where it stopped, holds it on pause,
 ducks it to half under every cue for a second, and mutes it with the TV. Unmapped phases and the results screen are silent.
 The phone has its own engine (`createSoundEngine({ master: 0.35 })`, mute under `partybox:phone-sound`, default on,
 toggled from the theme sheet) that plays only what happened in the player's hand — never `phase`, `join`, `win` or
