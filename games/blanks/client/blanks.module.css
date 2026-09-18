@@ -539,6 +539,35 @@
   gap: var(--pb-space-3);
 }
 
+/* The black card pins to the top of the scrolling body while the hand passes under it: the
+   wrapper bleeds into the body's padding on an opaque band, so no white card (nor a picked
+   card's ring) peeks around it. The band's bottom edge clears the ring's 3 px. */
+.handBlack {
+  position: sticky;
+  top: calc(-1 * var(--pb-space-4));
+  z-index: 1;
+  margin: calc(-1 * var(--pb-space-4)) calc(-1 * var(--pb-space-4)) 0;
+  padding: var(--pb-space-4) var(--pb-space-4) var(--pb-space-3);
+  background: var(--pb-bg);
+}
+
+/* A short phone (iPhone SE: 386 px of body) keeps the pinned card a size down, so a filled
+   Pick 2 preview leaves room for more than one card of the hand. */
+@media (max-height: 620px) {
+  .handBlack .phone {
+    font-size: var(--pb-font-body);
+  }
+}
+
+/* A phone on its side has no height to spare: the card scrolls with the hand. */
+@media (max-height: 500px) {
+  .handBlack {
+    position: static;
+    margin: 0;
+    padding: 0;
+  }
+}
+
 /* A white card in the hand: white paper, black ink, a 3 px edge that turns accent when picked. */
 .white {
   --card-ink: #111;
@@ -571,6 +600,9 @@
 .whiteOn {
   border-color: var(--pb-accent);
   box-shadow: 0 0 0 3px var(--pb-accent);
+  /* a picked card near the top stays behind the sticky black card's band, ring included */
+  position: relative;
+  z-index: 0;
 }
 
 .white:disabled {

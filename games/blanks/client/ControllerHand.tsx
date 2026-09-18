@@ -104,12 +104,16 @@ export function ControllerHand({ view, send }: Props): JSX.Element {
         </PrimaryButton>
       }
     >
-      <FilledCard
-        text={black.text}
-        pick={black.pick}
-        whites={picked.map((id) => view.hand.find((c) => c.id === id)?.text ?? '')}
-        size="phone"
-      />
+      {/* Sticky: the sentence (and the live preview of the pick) stays in view while the hand
+          scrolls under it — ten cards run past a phone's screen (review-loop #136). */}
+      <div className={styles.handBlack}>
+        <FilledCard
+          text={black.text}
+          pick={black.pick}
+          whites={picked.map((id) => view.hand.find((c) => c.id === id)?.text ?? '')}
+          size="phone"
+        />
+      </div>
       <ul className={styles.hand} aria-label="your hand">
         {view.hand.map((card) => {
           const order = picked.indexOf(card.id);
