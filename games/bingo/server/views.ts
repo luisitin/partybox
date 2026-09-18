@@ -149,6 +149,18 @@ function claimView(state: State): ClaimView | null {
   };
 }
 
+/** A win the TV is still revealing: `round.won` has it, the phones must not yet. */
+function underReveal(state: State, playerId: string, card: number): boolean {
+  const c = state.round.claim;
+  return (
+    state.phase.id === 'bingo' &&
+    !state.round.judged &&
+    c !== null &&
+    c.playerId === playerId &&
+    c.cardIndex === card
+  );
+}
+
 function statusOf(state: State): (id: string) => PlayerStatus {
   return (id) => {
     if (!Object.hasOwn(state.round.cards, id)) return 'spectator';
@@ -243,8 +255,15 @@ export function controllerView(
     cards: player ? (state.round.cards[playerId] ?? null) : null,
     daubs: player ? (state.round.daubs[playerId] ?? []) : [],
     canClaim: canClaim(state, playerId),
-    won: player ? (state.round.won[playerId] ?? []) : [],
-    doneForRound: player && liveCards(state, playerId).length === 0,
+    // The card under the TV's reveal is not "won" on any phone until the verdict lands (loop
+    // 302: the winner's thumbnail read "BINGO ✓" and the next card came up mid-sweep).
+    won: player
+      ? (state.round.won[playerId] ?? []).filter((c) => !underReveal(state, playerId, c))
+      : [],
+    doneForRound:
+      player &&
+      liveCards(state, playerId).length === 0 &&
+      !(state.phase.id === 'bingo' && !state.round.judged && state.round.winnerId === playerId),
     claimable: player ? liveCards(state, playerId).filter((c) => canClaim(state, playerId, c)) : [],
     swappable:
       player && state.phase.id === 'intro'

@@ -19,6 +19,9 @@
 .phrase {
   flex: 1;
   min-width: 0;
+  /* Two lines reserved (loop 302): a nickname that wraps no longer pushes the card and the
+     thumbnails 30 px down and back on the next call — the card holds still under every name. */
+  min-height: calc(var(--pb-font-h1) * 2.2);
   font-size: var(--pb-font-h1);
   font-weight: 900;
   color: var(--pb-accent-2);
@@ -732,6 +735,9 @@
    card labels all give something back, the cards take the height that is left, and an armed
    button keeps to one line so nothing runs under the bottom edge (loop 227). */
 @media (orientation: landscape) and (max-height: 420px) {
+  .phrase {
+    min-height: 0; /* one line there; the height is the scarce thing */
+  }
   .roundBody {
     gap: var(--pb-space-1);
   }

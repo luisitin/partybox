@@ -186,7 +186,7 @@ export function Controller({
               </p>
             </div>
           </div>
-          <IntroCount deadline={view.deadline} />
+          <IntroCount deadline={view.deadline} cards={n} />
           <div className={`${styles.focus} ${styles.dealing} ${n > 1 ? styles.focusMany : ''}`}>
             <div className={styles.focusMain}>
               <div key={swaps} className={swaps > 0 ? styles.swapIn : undefined}>

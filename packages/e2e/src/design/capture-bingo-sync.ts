@@ -5,6 +5,7 @@
 // Usage: tsx packages/e2e/src/design/capture-bingo-sync.ts [--port 42195]
 import { parseArgs } from 'node:util';
 import { chromium } from 'playwright';
+const NL = String.fromCharCode(10);
 const { values } = parseArgs({ options: { port: { type: 'string', default: '42195' } } });
 import { startServer } from './server';
 import { DevApi, joinViaForm, openPhone, openTv, passAudioGate, settle } from './session';
@@ -24,9 +25,29 @@ async function main(): Promise<void> {
       seed: 9,
       settings: { rounds: 1, round1: 'line', cards: 2, callSeconds: 60 },
     });
-    await settle(600);
-    await api.skip();
-    await settle(800);
+    // The first ball: the intro runs out on its own (5 s) — poll from the start (loop 302).
+    const t00 = Date.now();
+    let lastA = '';
+    let lastB = '';
+    const first: string[] = [];
+    while (Date.now() - t00 < 6500) {
+      const [a, b] = await Promise.all([
+        tv.evaluate(() => (/CALL 1 OF 75/.test(document.body.innerText) ? 'ball' : 'intro')),
+        sam.page.evaluate(() => (document.body.innerText.includes('Call 1 ·') ? 'ball' : 'intro')),
+      ]);
+      const ms = Date.now() - t00;
+      if (a !== lastA) {
+        first.push(`${ms} tv → ${a}`);
+        lastA = a;
+      }
+      if (b !== lastB) {
+        first.push(`${ms} phone → ${b}`);
+        lastB = b;
+      }
+      await settle(25);
+    }
+    console.log(first.join(NL));
+    await settle(400);
     // a wrong claim on card 1 (bare)
     await sam.page.getByRole('button', { name: /^bingo! card 1$/i }).click();
     await settle(300);

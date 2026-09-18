@@ -219,34 +219,38 @@ export function ClaimStage({
     sound.play(valid ? 'cheer' : 'wrong');
   }, [shown, late, valid, sound]);
   return (
-    <div className={`${styles.claimStage} ${decided ? styles.decided : ''}`}>
+    <>
+      {/* Outside the stage: the stage clips (the card drops in from under the heading, loop 302),
+          and a fixed confetti inside a perspective box is clipped with it. */}
       {shown && valid ? <Confetti /> : null}
-      {landed ? (
-        <div
-          className={`${styles.claim} ${styles.claimLand} ${shown && valid ? styles.shine : ''}`}
-        >
-          <Card
-            numbers={claim.card}
-            daubs={claim.daubs}
-            green={claim.green}
-            red={valid ? [] : claim.red}
-            missing={claim.missing}
-            size="tv"
-            verdict
-            revealOrder={turning ? order : []}
-            revealStepMs={step}
-            restShown={restShown}
-            settled={decided}
-            sweep={turning && line && !reduced ? { ...line, ms: lineMs } : null}
-          />
+      <div className={`${styles.claimStage} ${decided ? styles.decided : ''}`}>
+        {landed ? (
+          <div
+            className={`${styles.claim} ${styles.claimLand} ${shown && valid ? styles.shine : ''}`}
+          >
+            <Card
+              numbers={claim.card}
+              daubs={claim.daubs}
+              green={claim.green}
+              red={valid ? [] : claim.red}
+              missing={claim.missing}
+              size="tv"
+              verdict
+              revealOrder={turning ? order : []}
+              revealStepMs={step}
+              restShown={restShown}
+              settled={decided}
+              sweep={turning && line && !reduced ? { ...line, ms: lineMs } : null}
+            />
+          </div>
+        ) : (
+          <div className={styles.claim} aria-hidden />
+        )}
+        <div className={`${styles.verdict} ${shown ? 'pb-pop' : styles.verdictPending}`}>
+          {shown ? verdict : null}
+          {shown ? aside : null}
         </div>
-      ) : (
-        <div className={styles.claim} aria-hidden />
-      )}
-      <div className={`${styles.verdict} ${shown ? 'pb-pop' : styles.verdictPending}`}>
-        {shown ? verdict : null}
-        {shown ? aside : null}
       </div>
-    </div>
+    </>
   );
 }

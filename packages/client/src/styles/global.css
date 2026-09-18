@@ -203,6 +203,21 @@ button {
   animation: pb-pop var(--pb-motion-base) var(--pb-ease) both;
 }
 
+/* A change that must never blank a frame (a countdown's digit, keyed so it re-pops): visible from
+   the first frame, a squeeze out of scale rather than in from nothing (loop 302). */
+@keyframes pb-tick {
+  0% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.pb-tick {
+  animation: pb-tick var(--pb-motion-fast) var(--pb-ease) both;
+}
+
 /* A veil arriving / leaving (pause curtain, server-lost dim). */
 @keyframes pb-fade-in {
   from {

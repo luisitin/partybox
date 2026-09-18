@@ -26,9 +26,17 @@ export function useServerNow(intervalMs = 250): number {
   return tick + offset;
 }
 
-/** Whole seconds left until `deadline` (never negative); null when there is no deadline. */
-export function useSecondsLeft(deadline: number | null, paused = false): number | null {
-  const now = useServerNow(paused ? 60_000 : 250);
+/**
+ * Whole seconds left until `deadline` (never negative); null when there is no deadline.
+ * `intervalMs`: how often to look — a countdown two screens show together polls finer (50 ms), so
+ * their digits flip within a frame of each other instead of up to 250 ms apart (Bingo, loop 302).
+ */
+export function useSecondsLeft(
+  deadline: number | null,
+  paused = false,
+  intervalMs = 250,
+): number | null {
+  const now = useServerNow(paused ? 60_000 : intervalMs);
   if (deadline === null) return null;
   return Math.max(0, Math.ceil((deadline - now) / 1000));
 }

@@ -42,6 +42,16 @@ function PlayCard({
   const { view } = p;
   const claim = view.claim;
   const mine = view.phaseId === 'check' && claim?.playerId === p.meId && claim.cardIndex === c;
+  // The card rises in only when it comes BACK after a wipe (loop 302): rising on its first mount
+  // left the round's first frame with an empty slot while the TV's ball was already up.
+  const [wasWiped, setWasWiped] = useState(false);
+  if (view.waitingForCall && !wasWiped) setWasWiped(true);
+  const rounds = view.round;
+  const [seenRound, setSeenRound] = useState(rounds);
+  if (seenRound !== rounds) {
+    setSeenRound(rounds);
+    setWasWiped(false);
+  }
   // My claim is on the TV (a check or a win still being revealed): the card flashes once as it goes.
   const sent =
     (view.phaseId === 'check' || view.phaseId === 'bingo') &&
@@ -74,7 +84,7 @@ function PlayCard({
   return (
     <div
       key={view.waitingForCall ? 'wiped' : 'card'}
-      className={`${styles.slot} pb-enter ${won ? styles.won : ''}`}
+      className={`${styles.slot} ${wasWiped && !view.waitingForCall ? 'pb-enter' : ''} ${won ? styles.won : ''}`}
     >
       {heading}
       <Card

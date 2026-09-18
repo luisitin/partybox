@@ -295,6 +295,7 @@
    the card slides left and the verdict takes the right half (transform + opacity only). */
 .claimStage {
   position: relative;
+  overflow: hidden; /* the card drops in from under the heading, not through it (loop 302) */
   perspective: 1400px; /* the card lands in 3D (loop 254): tilted away, flat on the table by the end */
   display: grid;
   grid-template-columns: 1fr 1fr;
