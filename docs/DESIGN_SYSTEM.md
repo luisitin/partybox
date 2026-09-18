@@ -143,6 +143,7 @@ Shared: `Avatar`, `Chip`. Each primitive's props are documented in its file head
 ## Performance budget
 
 `/tv` stays smooth in Chromium at 4× CPU throttling: no box-shadows on animated elements, no blur filters,
-animate `transform`/`opacity` only, ≤ 60 DOM nodes per player chip list, no per-frame JS.
+animate `transform`/`opacity` only (measured 2026-09-18: one `filter: drop-shadow` in a keyframe took Blanks'
+result stage from 60 fps to 11 once confetti repainted over it — each was harmless alone), ≤ 60 DOM nodes per player chip list, no per-frame JS.
 
 Filled in during Phase 2 (tokens + core screens) and Phase 8 (polish pass).

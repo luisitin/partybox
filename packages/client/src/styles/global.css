@@ -136,19 +136,18 @@ button {
 }
 
 /* The winning card is crowned (Blanks' result): it lifts off the table and settles a touch
-   larger, with a warm bloom behind it. Transform and filter only — the card keeps its own ring. */
+   larger. Transform only — an animated drop-shadow repainted the card under every confetti frame
+   and took the stage from 60 fps to 11 at 4x CPU (review-loop #178). The bloom is a static
+   box-shadow on the card itself. */
 @keyframes pb-crown {
   0% {
     transform: none;
-    filter: none;
   }
   45% {
     transform: translateY(-14px) scale(1.06);
-    filter: drop-shadow(0 0 28px rgb(255 209 102 / 55%));
   }
   100% {
     transform: translateY(-6px) scale(1.03);
-    filter: drop-shadow(0 0 18px rgb(255 209 102 / 35%));
   }
 }
 
