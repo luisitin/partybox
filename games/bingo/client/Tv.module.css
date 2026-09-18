@@ -17,6 +17,36 @@
   line-height: 1;
 }
 
+/* Every column has its colour (loop 253), as the balls in a real cage do: B blue, I red, N white,
+   G green, O the theme's own accent. Each is the theme's fill mixed with the hue, so the arcade
+   stays neon and the cabin warm; the disc's shading below reads `--ball-fill`. The board's rows
+   wear the same tint on their called cells. */
+.letter,
+.boardRow {
+  --ball-fill: var(--pb-accent-2-fill);
+}
+
+.letter[data-letter='B'],
+.boardRow[data-letter='B'] {
+  --ball-fill: color-mix(in oklab, var(--pb-accent-2-fill) 20%, #4f8bff);
+}
+
+.letter[data-letter='I'],
+.boardRow[data-letter='I'] {
+  --ball-fill: color-mix(in oklab, var(--pb-accent-2-fill) 20%, #ff5c5c);
+}
+
+.letter[data-letter='N'],
+.boardRow[data-letter='N'] {
+  /* White, with a quarter of the theme's text colour: still white at night, grey by daylight. */
+  --ball-fill: color-mix(in oklab, var(--pb-text) 25%, #f3f3f3);
+}
+
+.letter[data-letter='G'],
+.boardRow[data-letter='G'] {
+  --ball-fill: color-mix(in oklab, var(--pb-accent-2-fill) 20%, #3ecf6e);
+}
+
 /* The ball is a thing (loop 239): a sphere lit from the top left with a soft rim, dropping out of
    the cage from above, squashing as it lands and settling with one small bounce (~420 ms; the
    boing waits BALL_LAND_MS for the squash, caller.ts). The number rolls in beside it a beat later.
@@ -36,8 +66,8 @@
     radial-gradient(circle at 68% 78%, rgb(0 0 0 / 0.28) 0, rgb(0 0 0 / 0) 48%),
     radial-gradient(
       circle at 50% 50%,
-      var(--pb-accent-2-fill) 58%,
-      color-mix(in oklab, var(--pb-accent-2-fill) 72%, black) 100%
+      var(--ball-fill) 58%,
+      color-mix(in oklab, var(--ball-fill) 72%, black) 100%
     );
   color: var(--pb-on-accent-2-fill);
   font-size: 124px;
@@ -157,8 +187,8 @@
     radial-gradient(circle at 68% 78%, rgb(0 0 0 / 0.26) 0, rgb(0 0 0 / 0) 48%),
     radial-gradient(
       circle at 50% 50%,
-      var(--pb-accent-2-fill) 58%,
-      color-mix(in oklab, var(--pb-accent-2-fill) 72%, black) 100%
+      var(--ball-fill) 58%,
+      color-mix(in oklab, var(--ball-fill) 72%, black) 100%
     );
   color: var(--pb-on-accent-2-fill);
   font-size: var(--pb-font-body);
@@ -443,7 +473,8 @@
 .boardLetter {
   width: 32px;
   font-weight: 900;
-  color: var(--pb-accent-2);
+  /* The tint pulled toward the text colour: a white or yellow ball's letter still reads by daylight. */
+  color: color-mix(in oklab, var(--ball-fill) 65%, var(--pb-text));
   font-size: var(--pb-font-caption);
 }
 
@@ -463,8 +494,8 @@
 
 .cellCalled {
   opacity: 1;
-  color: var(--pb-bg);
-  background: var(--pb-accent-2);
+  color: var(--pb-on-accent-2-fill);
+  background: var(--ball-fill);
 }
 
 /* The current cell ignites when the ball lands (BALL_LAND_MS, caller.ts — the same 190 ms the
@@ -494,8 +525,8 @@
   }
   to {
     opacity: 1;
-    color: var(--pb-bg);
-    background: var(--pb-accent-2);
+    color: var(--pb-on-accent-2-fill);
+    background: var(--ball-fill);
     box-shadow: 0 0 0 3px var(--pb-accent);
     transform: scale(1);
   }
