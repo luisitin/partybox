@@ -12,7 +12,7 @@ import type { BingoTvView } from '../server/views';
 import { BALL_LAND_MS, hushCaller, speakCall } from './caller';
 import { PatternIcon } from './Card';
 import { PatternDemo } from './PatternDemo';
-import { pendingLine, winHeadline } from './copy';
+import { pendingLine, whyNot, winHeadline } from './copy';
 import { IntroCountdown, Resume } from './TvCountdown';
 import { Call, CalledBoard, ClaimStage, DibsLine, rows, whichCard } from './TvParts';
 import styles from './Tv.module.css';
@@ -165,6 +165,7 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
                 <span className={styles.legendRed}>✕ never called</span>
                 <span className={styles.legendMissing}>▢ missed</span>
               </p>
+              {whyNot(view.claim) ? <BigText level="h2">{whyNot(view.claim)}</BigText> : null}
               <BigText level="h2" tone="muted">
                 Card wiped. Next number in a moment…
               </BigText>
