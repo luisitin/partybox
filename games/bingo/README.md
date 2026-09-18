@@ -4,9 +4,9 @@ Plain 75-ball bingo with free daubing and a public check. Design doc: `docs/game
 
 ## Sound (TV only)
 
-Each call bounces in with a "boing", then the caller says it — "B, 12" — through the
-Web Speech API (`client/caller.ts`: Windows "Zira", rate 1.15, pitch 1.1, falls back to the
-browser's default English voice; silent when the TV is muted). Background music: "Wallpaper" with
+Each call is a recorded clip — "B, 12" — that starts on the frame the ball enters (its
+letter's lead-in silence skipped, `client/caller.ts`), with a "boing" as the ball squashes; a
+new call cuts off the one being said; silent when the TV is muted. Background music: "Wallpaper" with
 the occasional "Cool Vibes", quiet, back to back (`music` on the client module; Kevin MacLeod,
 CC BY 4.0, see the root README). A failed claim's buzzer comes from the synth; a bingo gets the party horn + crowd cheer (`cheer`).
 

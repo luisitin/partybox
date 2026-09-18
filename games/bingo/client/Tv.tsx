@@ -31,10 +31,10 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
   const phaseId = view.phaseId;
   const number = view.current?.number ?? null;
   const letter = view.current?.letter ?? null;
-  // Every new number: the ball drops out of the cage (Tv.module.css, 420 ms); the "boing" and the
-  // recorded call's first syllable land together as it squashes (BALL_LAND_MS after the push —
-  // the owner, loop 310: a listener must be as fast as a watcher); no per-second ticking — the
-  // timer is quiet. Leaving play (a claim, a check) hushes the caller mid-word and cancels a
+  // Every new number: the ball drops out of the cage (Tv.module.css, 420 ms); the recorded call's
+  // first syllable starts on the frame it enters (loop 335 — the owner, twice: a listener must be
+  // as fast as a watcher) and the "boing" lands as it squashes (BALL_LAND_MS after the push); no
+  // per-second ticking — the timer is quiet. Leaving play (a claim, a check) hushes the caller mid-word and cancels a
   // boing or a voice still in the air.
   // Dibs (loop 252): the "says BINGO?…" line pops with a soft rising "hm?"; a window passing on
   // to the next in line is a new window, so it sounds again.
@@ -52,8 +52,8 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
       return;
     }
     if (quiet || calledAt === null) return;
-    // Both scheduled now on the audio clock (no timer between push and sound, loop 310): the boing
-    // and the voice's first syllable land together on the ball's squash, BALL_LAND_MS in.
+    // The voice starts now — its first syllable on the frame the ball enters (loop 335, the owner
+    // twice); the boing waits for the squash, BALL_LAND_MS in.
     speakCall(sound, letter, number);
     const t = setTimeout(() => sound.play('call'), BALL_LAND_MS);
     return () => {

@@ -115,6 +115,18 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
       speaks.every((s) => String(s['voice']) === 'clip'),
     `cues=${T.cues(evs).join(',')}; spoken=${speaks.map((s) => s['text']).join(' | ')} voice=${speaks[0]?.['voice']}`,
   );
+  // The voice on the ball's frame (loop 335, the owner twice): the clip is scheduled with no
+  // delay on the push; the boing waits for the squash, 190 ms later.
+  const boings = evs.filter((e) => e.kind === 'cue' && e['cue'] === 'call');
+  const lags = boings.map((b, i) => b.t - (speaks[i]?.t ?? b.t));
+  T.ok(
+    'D',
+    'each voice starts on the push (no delay); its boing lands on the squash, 170–230 ms later',
+    speaks.every((s) => Number(s['delayMs']) === 0) &&
+      lags.length === 2 &&
+      lags.every((l) => l >= 170 && l <= 230),
+    `delays=${speaks.map((s) => s['delayMs']).join(',')} boing lags=${lags.join(',')}ms`,
+  );
   T.ok(
     'D',
     'the phones stay silent during calls',

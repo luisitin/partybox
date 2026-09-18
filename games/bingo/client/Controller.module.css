@@ -293,16 +293,17 @@
   .focusMany .focusMain {
     max-width: min(100%, max(168px, calc((100dvh - 430px) / 1.15)));
   }
-  /* Body size, two lines, the number in front (loop 313): the two-line reservation above is
-     h1-sized, so the whole pun fits where one clipped line sat ("48 Four dozen — for…", loop
-     327); only the longest nicknames lose their last word to the clamp. */
+  /* Body size, up to three lines, the number in front (loop 313): the two-line reservation above
+     is h1-sized — three body lines fit inside it, so the whole pun sits where one clipped line
+     sat ("48 Four dozen — for…", loop 327); a clamp of two left a third line showing under its
+     own ellipsis (the box is taller than two lines — loop 335). */
   .focusMany ~ * .phrase,
   .phrase {
     font-size: var(--pb-font-body);
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
     overflow: hidden;
   }
   .phraseNumber {
