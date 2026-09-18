@@ -216,7 +216,7 @@ describe('TV view pushes', () => {
     expect(host.house().game?.state).toMatchObject({ hits: 1 });
     expect(tvViews()).toBe(1);
     // A late TV still gets the full view on demand.
-    host.resend(code, null);
+    host.resend(code);
     expect(tvViews()).toBe(2);
     host.close();
   });
