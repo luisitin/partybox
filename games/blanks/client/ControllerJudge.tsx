@@ -27,22 +27,27 @@ export function ControllerReveal({ view }: Props): JSX.Element {
         </span>
       }
     >
-      <FilledCard
-        key={current.slot}
-        text={black.text}
-        whites={current.whites}
-        size="phone"
-        letter={LETTERS[current.slot]}
-      />
-      <p className="pb-caption pb-muted">
-        {mine
-          ? "This one's yours — keep a straight face."
-          : view.role === 'judge'
-            ? 'Read along. You pick the winner after the last card.'
-            : view.judgeMode === 'czar' && view.czar
-              ? `Read along. ${view.czar.name} decides after the last card.`
-              : 'Read along. The vote is next.'}
-      </p>
+      {/* The card is the whole screen in a phone-only room: centred in the free space, the
+          caption under it (it sat in the top third over a blank two-thirds, review-loop #139). */}
+      <div className={styles.readAlong}>
+        <FilledCard
+          key={current.slot}
+          text={black.text}
+          whites={current.whites}
+          size="phone"
+          letter={LETTERS[current.slot]}
+          className={styles.readCard}
+        />
+        <p className="pb-caption pb-muted">
+          {mine
+            ? "This one's yours — keep a straight face."
+            : view.role === 'judge'
+              ? 'Read along. You pick the winner after the last card.'
+              : view.judgeMode === 'czar' && view.czar
+                ? `Read along. ${view.czar.name} decides after the last card.`
+                : 'Read along. The vote is next.'}
+        </p>
+      </div>
     </Screen>
   );
 }

@@ -530,6 +530,22 @@
 
 /* ── Phone ─────────────────────────────────────────────────────────────────────────────────── */
 
+/* The phone's read-along: the card floats in the middle of the screen, the caption under it. */
+.readAlong {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--pb-space-4);
+  text-align: center;
+}
+
+/* A card replacing a card, on the phone too: lands with the same bounce as the TV's. */
+.readCard {
+  text-align: left;
+  animation: global(pb-land) var(--pb-motion-slow) var(--pb-ease) both;
+}
+
 /* "✓ Vote in · 3 / 6 voted" above the footer button. */
 .voteIn {
   margin: 0 0 var(--pb-space-3);
