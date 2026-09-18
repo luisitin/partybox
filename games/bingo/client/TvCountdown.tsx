@@ -38,7 +38,9 @@ export function IntroCountdown({
       {counting ? (
         <>
           <span className={styles.introLead}>first number in</span>
-          <span className={styles.introRing}>
+          {/* The ring pops in whole; only a CHANGE of digit pops the digit (loop 299: the
+              first frame showed an empty ring while the digit's own pop was still invisible). */}
+          <span className={`${styles.introRing} pb-pop`}>
             <svg className={styles.ring} viewBox="0 0 120 120" aria-hidden>
               <circle className={styles.ringTrack} cx="60" cy="60" r="52" />
               <circle
@@ -49,7 +51,7 @@ export function IntroCountdown({
                 style={{ animationDuration: '3000ms' }}
               />
             </svg>
-            <BigText key={left} level="h1" tone="accent" className="pb-pop">
+            <BigText key={left} level="h1" tone="accent" className={left < 3 ? 'pb-pop' : ''}>
               {left}
             </BigText>
           </span>
