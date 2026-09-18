@@ -79,6 +79,9 @@ export interface State extends GameStateBase {
   blackChoices: string[];
   /** The judge this round (czar mode), else null. */
   czarId: string | null;
+  /** Vote mode: the seat asked to read the cards out this round, rotating like the judge's does.
+   *  Null in czar mode, where the judge reads (review-loop #248). */
+  readerId: string | null;
   /** submitterId (a player or RANDO) → white card ids in blank order. */
   submissions: Record<string, string[]>;
   /** Submitter ids in reveal / vote order (shuffled when the answer phase closes); the index is
