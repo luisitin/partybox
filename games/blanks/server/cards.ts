@@ -200,12 +200,32 @@ export function fill(
     // came out as "2 a.m," before (review-loop #201) — but gives it up when the black card supplies
     // a full stop of its own, which would read "2 a.m..".
     const keepDot = ABBREVIATION.test(white) && !punctuation.startsWith('.');
+    // An opening quote or bracket immediately before the blank joins the card too, so a quoted
+    // answer reads as one piece of paper: `says "____."` becomes `says` + `"The moist part of the
+    // sandwich."`, not an orphan quote against the black text (review-loop #330).
+    const opener = /(?:^|[\s(])(["“'‘(\[])$/.exec(lastText(segments))?.[1] ?? '';
+    if (opener) trimLastText(segments, opener.length);
     segments.push({
       kind: 'fill',
-      text: (atEnd || keepDot ? white : white.replace(/\.$/, '')) + punctuation,
+      text: opener + (atEnd || keepDot ? white : white.replace(/\.$/, '')) + punctuation,
     });
   });
   return { segments, extra: whites.slice(blanksIn(text)) };
+}
+
+/** The text of the segment a fill is about to follow (empty when the blank opens the card). */
+function lastText(segments: readonly Segment[]): string {
+  const last = segments[segments.length - 1];
+  return last?.kind === 'text' ? last.text : '';
+}
+
+/** Drops `n` characters from the end of the last text segment, removing it when nothing is left. */
+function trimLastText(segments: Segment[], n: number): void {
+  const last = segments[segments.length - 1];
+  if (!last || last.kind !== 'text') return;
+  const text = last.text.slice(0, -n);
+  if (text === '') segments.pop();
+  else segments[segments.length - 1] = { ...last, text };
 }
 
 /** A white card's short first word ("A", "The", "My") stays on the line with its next word: a
