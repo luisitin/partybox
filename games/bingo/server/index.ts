@@ -142,7 +142,7 @@ function reduce(state: State, event: GameEvent<Input>): State {
     case 'play':
       return reducePlay(state, event, { next: nextCallOrEnd, win: enterBingo, check: enterCheck });
     case 'check':
-      return reduceCheck(state, event, nextCallOrEnd);
+      return reduceCheck(state, event);
     case 'bingo':
       return reduceBingo(state, event, {
         next: afterBingo,

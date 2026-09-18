@@ -7,6 +7,7 @@ import { game, readSettings } from '../server/index';
 import { dealCard, letterOf } from '../server/cards';
 import { evaluate, looksComplete } from '../server/patterns';
 import { sampleInput } from '../server/bot';
+import { RESUME_MS } from '../server/types';
 import { after, callUntil, claim, claimRaw, daubAll, input, start, timer, vip } from './helpers';
 
 describe('setup', () => {
@@ -150,9 +151,14 @@ describe('play', () => {
     s = input(s, 'b', { type: 'daub', card: 0, index: 5 });
     expect(s.round.daubs['b']).toEqual([[5]]);
     expect(claimRaw(s, 'a').phase.id).toBe('check'); // a second BINGO! during a check is ignored
-    // The check's second timer (the verdict has been read) resumes the caller with the next number.
+    // The check's second timer (the verdict has been read) goes back to play through a 3 · 2 · 1
+    // (loop 282); its tick then calls the next number.
     s = timer(s);
     expect(s.phase.id).toBe('play');
+    expect(s.round.resumeAt).toBe(s.phase.startedAt + RESUME_MS);
+    expect(s.round.drawn).toBe(before);
+    s = timer(s);
+    expect(s.round.resumeAt).toBeNull();
     expect(s.round.drawn).toBe(before + 1);
     expect(game.controllerView(s, 'b').canClaim).toBe(true);
   });
