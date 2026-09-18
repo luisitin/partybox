@@ -139,6 +139,9 @@ game cued something in the same 50 ms.
 Toggle `partybox:haptics` (default on, theme sheet); not gated on `prefers-reduced-motion` (a 20 ms buzz is not
 animation and is the most accessible non-visual confirmation). iOS Safari has no `navigator.vibrate`; Android Chrome
 drops calls until the page has had a user activation, so a resumed session's first buzz may be lost — acceptable.
+`navigator.vibrate` replaces, never queues: `buzz()` drops a pattern shorter than what is left of the one running (the
+shell's 20 ms "submitted" tick on the same tick as a Bingo winner's 320 ms celebration), and a pattern at least as long
+takes over. Dropped ones trace as `buzz:dropped`.
 
 ## Primitives
 

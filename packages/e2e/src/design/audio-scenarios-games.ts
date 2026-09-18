@@ -272,6 +272,21 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
     })(),
     `phone cues=${T.cues(phoneCues, 'phone').join(',')}`,
   );
+  // The celebration buzz is the last one the winner's phone runs at the verdict: the shell's
+  // 20 ms "locked in" tick used to replace it on the same tick (loop 334).
+  const winBuzzes = phoneCues.filter((e) => e.kind === 'buzz' || e.kind === 'buzz:dropped');
+  const celebrationAt = winBuzzes.findIndex(
+    (e) => e.kind === 'buzz' && JSON.stringify(e['pattern']) === '[40,60,40,60,120]',
+  );
+  const cutBy = winBuzzes
+    .slice(celebrationAt + 1)
+    .filter((e) => e.kind === 'buzz' && e.t - winBuzzes[celebrationAt]!.t < 320);
+  T.ok(
+    'D',
+    "the winner's celebration buzz (320 ms) runs whole — nothing shorter cuts it",
+    celebrationAt >= 0 && cutBy.length === 0,
+    `celebration@${celebrationAt >= 0 ? winBuzzes[celebrationAt]!.t : '-'} cut by=${JSON.stringify(cutBy.map((e) => e['pattern']))}`,
+  );
   // Every other phone feels the win land: one 30 ms tap on the TV's cheer beat (loop 260).
   // Offsets from each page's own D7 mark (`between` drops the mark; clocks are per page).
   const markT = async (page: Page): Promise<number> =>
