@@ -57,20 +57,32 @@ async function main(): Promise<void> {
     const boardMark = async (): Promise<void> => {
       if (!values.board) return;
       // The ball and the board together, source pixels, so a 60 px cell reads in a 640 px strip.
-      const box = await rec.page.evaluate(() => {
-        const el = document.querySelector('[aria-label$="numbers called"]');
-        const r = el?.getBoundingClientRect();
-        return r ? { x: r.x, y: r.y, w: r.width, h: r.height } : null;
+      // The "Before that" tray too (loop 251): the outgoing ball must fall into it on the beat.
+      // No inner function declarations here: tsx's `__name` helper does not exist in the page.
+      const boxes = await rec.page.evaluate(() => {
+        const board = document.querySelector('[aria-label$="numbers called"]');
+        const label = [...document.querySelectorAll('span')].find(
+          (el) => el.textContent === 'Before that',
+        );
+        const previous = label?.parentElement;
+        const rb = board?.getBoundingClientRect();
+        const rp = previous?.getBoundingClientRect();
+        return {
+          board: rb ? [rb.x, rb.y, rb.width, rb.height].map(Math.round) : null,
+          previous: rp ? [rp.x, rp.y, rp.width, rp.height].map(Math.round) : null,
+        };
       });
-      if (box) {
-        const x = Math.max(0, Math.round(box.x));
-        const w = Math.round(box.w);
+      for (const [name, box] of Object.entries(boxes)) {
+        if (!box) continue;
+        const [x, y, w, h] = box as [number, number, number, number];
+        // A little air above the tray: the ball starts 48 px up and 1.5× — the lip clips the rest.
+        const pad = name === 'previous' ? 24 : 0;
         marks.push({
-          name: 'board',
+          name,
           at: Date.now(),
           before: 0.1,
           seconds: 1.2,
-          crop: `${w}:${Math.round(box.h)}:${x}:${Math.round(box.y)}`,
+          crop: `${w + pad * 2}:${h + pad}:${Math.max(0, x - pad)}:${Math.max(0, y - pad)}`,
         });
       }
     };
@@ -80,6 +92,7 @@ async function main(): Promise<void> {
       await api.skip();
       await settle(1200);
     }
+    await settle(1500); // the recorder trails the page: let the last call land on tape
     await cutStrips(sam, join(OUT, 'strips-phone'), marks);
     const video = await cutStrips(rec, join(OUT, 'strips'), marks);
     console.log(`10 fps strips from ${video ?? '(no video)'}`);
