@@ -7,7 +7,7 @@ import { BigText, Stage } from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
 import type { BlanksTvView } from '../server/index';
 import { fillText } from '../server/cards';
-import { FilledCard, LETTERS } from './Cards';
+import { FilledCard, FlipCard, LETTERS } from './Cards';
 import styles from './blanks.module.css';
 
 type Props = GameTvProps<BlanksTvView>;
@@ -36,7 +36,8 @@ export function TvReveal({ view }: Props): JSX.Element {
       </div>
       <div className={styles.stageMain}>
         {view.black && current ? (
-          <FilledCard
+          <FlipCard
+            flipKey={String(current.slot)}
             key={current.slot}
             text={view.black.text}
             whites={current.whites}

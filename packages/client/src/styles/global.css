@@ -135,6 +135,22 @@ button {
   }
 }
 
+/* A card turned over on the table (Blanks' read-out): tossed in from slightly back and above,
+   face-down, turning to its face — the tilt keeps the turn readable rather than a flat spin.
+   Transform only: animating opacity here would flatten the 3D context in Chromium and show the
+   face mirrored instead of the card's back (review-loop #159). */
+@keyframes pb-flip {
+  0% {
+    transform: translateY(-14px) rotateY(180deg) rotateX(8deg) scale(0.93);
+  }
+  70% {
+    transform: translateY(0) rotateY(0deg) rotateX(0deg) scale(1.02);
+  }
+  100% {
+    transform: none;
+  }
+}
+
 /* A card dealt onto the table (Blanks' judge grid): slides in from below with a small tilt that
    settles, like a card tossed onto felt (review-loop #153). */
 @keyframes pb-deal {
