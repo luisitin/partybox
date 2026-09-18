@@ -2,7 +2,7 @@
 import { z } from '@partybox/game-sdk';
 import type { GameStateBase } from '@partybox/game-sdk';
 
-export const PHASES = ['intro', 'answer', 'reveal', 'judge', 'result', 'done'] as const;
+export const PHASES = ['intro', 'answer', 'reveal', 'judge', 'result', 'final', 'done'] as const;
 export type PhaseId = (typeof PHASES)[number];
 
 export const DECK_PRESETS = ['mild', 'adults', 'wild', 'wild-only'] as const;
@@ -98,6 +98,8 @@ export const JUDGE_VOTE_MS = 30_000;
 export const JUDGE_CZAR_MS = 45_000;
 export const BIG_JUDGE_MS = 45_000;
 export const RESULT_MS = 8_000;
+/** The final board's drumroll ("And the winner is…") before the engine's results screen. */
+export const FINAL_MS = 4_000;
 /** Untimed rounds: no clock on the screens, but a long hidden fallback so an idle room still ends. */
 export const UNTIMED_ANSWER_MS = 180_000;
 export const UNTIMED_JUDGE_MS = 120_000;

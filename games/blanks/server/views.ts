@@ -85,9 +85,9 @@ export interface BlanksTvView extends TvView {
   revealed: RevealedCard[];
   winnerIds: string[];
   walkover: boolean;
-  /** result + done. */
+  /** result + final + done. */
   standings: StandingsRow[];
-  /** done only. */
+  /** final + done. */
   awards: GameAward[];
 }
 
@@ -179,7 +179,7 @@ function statusOf(state: State): (id: string) => PlayerStatus {
       if (!eligibleVoters(state).includes(id) || !hasVotableSlot(state, id)) return 'waiting';
       return Object.hasOwn(state.votes, id) ? 'submitted' : 'active';
     }
-    return 'active'; // nothing to do in intro / reveal / result / done: plain chips
+    return 'active'; // nothing to do in intro / reveal / result / final / done: plain chips
   };
 }
 
@@ -197,13 +197,13 @@ function standingsRows(state: State): StandingsRow[] {
 
 /** Untimed rounds keep a long hidden fallback on picking, voting and the result: no clock on
  *  screen. The "Everyone's in!" beat hides a timed round's clock too (it would jump to 1). The
- *  round card and each read-out are a rhythm, not a countdown: a draining bar, no number
- *  (review-loop #133 — a "6 s" clock on every card read nothing but urgency). */
+ *  round card, each read-out and the final board are a rhythm, not a countdown: a draining bar,
+ *  no number (review-loop #133 — a "6 s" clock on every card read nothing but urgency). */
 function timerMode(state: State): 'normal' | 'quiet' | 'hidden' {
   const phase = state.phase.id;
   const untimed = phase === 'answer' || phase === 'judge' || phase === 'result';
   if (allIn(state)) return 'hidden';
-  if (phase === 'intro' || phase === 'reveal') return 'quiet';
+  if (phase === 'intro' || phase === 'reveal' || phase === 'final') return 'quiet';
   return !state.settings.timed && untimed ? 'hidden' : 'normal';
 }
 
@@ -215,7 +215,7 @@ function votersExpected(state: State): number {
 
 export function tvView(state: State, gameId: string): BlanksTvView {
   const phase = state.phase.id;
-  const onStage = phase === 'result' || phase === 'done';
+  const onStage = phase === 'result' || phase === 'final' || phase === 'done';
   return {
     ...envelope(state, gameId, { statusOf: statusOf(state), scores: state.scores }),
     timerMode: timerMode(state),
@@ -236,7 +236,7 @@ export function tvView(state: State, gameId: string): BlanksTvView {
     winnerIds: phase === 'result' ? [...state.winners] : [],
     walkover: phase === 'result' && isWalkover(state),
     standings: onStage ? standingsRows(state) : [],
-    awards: phase === 'done' ? awardsFor(state) : [],
+    awards: phase === 'final' || phase === 'done' ? awardsFor(state) : [],
   };
 }
 
@@ -290,6 +290,7 @@ export function controllerView(
     iWon: phase === 'result' && state.winners.includes(playerId),
     myScore: me?.score ?? 0,
     myRank: me?.rank ?? 0,
-    standings: phase === 'result' || phase === 'done' ? standingsRows(state) : [],
+    standings:
+      phase === 'result' || phase === 'final' || phase === 'done' ? standingsRows(state) : [],
   };
 }

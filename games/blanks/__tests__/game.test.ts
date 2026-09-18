@@ -7,11 +7,12 @@ import { game } from '../server/index';
 import {
   BIG_REVEAL_MAX_MS,
   BIG_REVEAL_MIN_MS,
+  FINAL_MS,
   HAND_SIZE,
   REVEAL_MAX_MS,
   REVEAL_MIN_MS,
 } from '../server/types';
-import { PLAYERS, T0, playRound, start, timer } from './helpers';
+import { PLAYERS, T0, playRound, start, timer, tv } from './helpers';
 
 describe('whole game', () => {
   it('finishes on timers alone (idle room): nobody plays, every round is winnerless', () => {
@@ -25,7 +26,7 @@ describe('whole game', () => {
       s = timer(s);
     }
     const round = ['intro', 'answer', 'result'];
-    expect(phases).toEqual([...round, ...round, ...round]);
+    expect(phases).toEqual([...round, ...round, ...round, 'final']);
     expect(game.results(s)?.scores).toEqual({ ana: 0, ben: 0, cleo: 0, dev: 0 });
   });
 
@@ -43,13 +44,20 @@ describe('whole game', () => {
     s = timer(playRound(s));
     expect(s.round).toBe(3);
     s = timer(playRound(s));
+    // The last result goes to the final board (4 s drumroll, results still null), then done.
+    expect(s.phase.id).toBe('final');
+    expect(s.phase.deadline).toBe(s.phase.startedAt + FINAL_MS);
+    expect(game.results(s)).toBeNull();
+    expect(tv(s).standings).toHaveLength(4);
+    expect(tv(s).timerMode).toBe('quiet');
+    s = timer(s);
     expect(s.phase.id).toBe('done');
     expect(game.results(s)).not.toBeNull();
   });
 
-  it('manifest matches manifest.json and declares the six phases in order', () => {
+  it('manifest matches manifest.json and declares the seven phases in order', () => {
     expect(game.manifest.id).toBe('blanks');
-    expect(game.phases).toEqual(['intro', 'answer', 'reveal', 'judge', 'result', 'done']);
+    expect(game.phases).toEqual(['intro', 'answer', 'reveal', 'judge', 'result', 'final', 'done']);
     expect(game.manifest.settings.map((s) => s.key)).toEqual([
       'decks',
       'judge',
@@ -127,7 +135,7 @@ describe('dealing', () => {
       s = playRound(s);
       s = timer(s);
     }
-    expect(s.phase.id).toBe('done');
+    expect(s.phase.id).toBe('final');
   });
 });
 

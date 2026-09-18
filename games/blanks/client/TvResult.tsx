@@ -1,7 +1,8 @@
 // TV "result": the winning card grows out of the grid with its author, every other card gets its
 // author and vote count, in three beats — cards (0), authors (600 ms), the winner named (1200 ms).
-// The headline, the outline and the +1 all carry the result, never colour alone. "done" is the
-// drumroll for the engine's results screen: the final board, crown withheld.
+// The headline, the outline and the +1 all carry the result, never colour alone. "final" is the
+// drumroll for the engine's results screen: the final board, crown withheld, for 4 s ("done" is
+// terminal and never on screen — the engine's results take over at once).
 import { useEffect } from 'react';
 import type { JSX } from 'react';
 import { Avatar, BigText, Scoreboard, Stage, useBeats, useSound } from '@partybox/game-sdk/ui';
@@ -105,7 +106,7 @@ export function TvResult({ view }: Props): JSX.Element {
   useEffect(() => {
     if (beat >= BEAT_WINNER && humanWin) play('sweep');
   }, [beat, humanWin, play]);
-  if (view.phaseId === 'done') return <TvFinal view={view} />;
+  if (view.phaseId === 'final' || view.phaseId === 'done') return <TvFinal view={view} />;
   // Nobody played: nothing to reveal beat by beat — say so at once, with the card that got no takers.
   if (view.revealed.length === 0) {
     return (
