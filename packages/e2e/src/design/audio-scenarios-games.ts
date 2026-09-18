@@ -176,6 +176,20 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
     `cues=${T.cues(evs).join(',')} cheer@+${cheerAt ? cheerAt.t - claimT : '-'}ms playing=${JSON.stringify(await T.playing(tv))}`,
   );
   await settle(1500);
+  const phoneCues = await T.between(vip.page, 'D6', null);
+  T.ok(
+    'D',
+    "the winner's phone: a dauber per daub, the claim cue on the tap, 'correct' when the verdict lands",
+    (() => {
+      const c = T.cues(phoneCues, 'phone');
+      return (
+        c.includes('daub') &&
+        c.indexOf('claim') > c.lastIndexOf('daub') &&
+        c.indexOf('correct') > c.indexOf('claim')
+      );
+    })(),
+    `phone cues=${T.cues(phoneCues, 'phone').join(',')}`,
+  );
   T.ok(
     'D',
     'celebration waits: still in the bingo phase, nothing spoken',

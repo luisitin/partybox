@@ -760,3 +760,9 @@
     animation: none;
   }
 }
+
+/* The verdict on MY claim is a miss (loop 241): the card shakes "no" as the red squares show,
+   then settles — the shell's three sideways jolts, at the phone's base pace. */
+.wiped {
+  animation: global(pb-shake) var(--pb-motion-slow) var(--pb-ease) both;
+}
