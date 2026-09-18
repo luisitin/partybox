@@ -11,6 +11,7 @@ Captured 2026-09-18T16:14:13.054Z on port 42172. Every cue, music event, speech 
 - ✅ **two joins → two join cues, rising** — semitones=0,2
 - ✅ **add 2 bots (one push = one join note) + remove 1 → a join, a leave** — cues=join,leave
 - ✅ **selecting keeps the lobby music (no plan change), a status-swap cue only** — cues=none; playing=[{"track":"local-forecast-elevator.mp3","vol":0.35,"t":4.4}]
+
 ```
    1773 tv    music:start  plan=lobby track=local-forecast-elevator mode=rotate volume=0.35
    1802 tv    cue          cue=ready surface=tv muted=false ready=true semitones=0
@@ -35,6 +36,7 @@ Captured 2026-09-18T16:14:13.054Z on port 42172. Every cue, music event, speech 
 - ✅ **final reveal → jackpot or bust cue from the game, no reveal sting on top** — cues=phase,silence,bust
 - ✅ **results → one cheer (horn + crowd), no synth win, no music** — cues=cheer; playing=[]
 - ✅ **results on the phones → a buzz only (no cue)** — phone cues=none buzz=[60,60,60,60,160]
+
 ```
    6271 tv    music:plan   from=lobby to=null
    6271 tv    cue          cue=start surface=tv muted=false ready=true semitones=0
@@ -78,6 +80,7 @@ Captured 2026-09-18T16:14:13.054Z on port 42172. Every cue, music event, speech 
 - ✅ **play again → start cue, still no music, no second cheer** — cues=start
 - ✅ **VIP ends the game → results → one cheer** — cues=cheer
 - ✅ **new game → selecting → lobby music comes back (plan null→lobby)** — plan=null→lobby; playing=[{"track":"bossa-antigua.mp3","vol":0.35,"t":1.5}]
+
 ```
   31156 tv    cue          cue=start surface=tv muted=false ready=true semitones=0
   33325 tv    ss:cancel    speaking=false pending=false
@@ -91,12 +94,12 @@ Captured 2026-09-18T16:14:13.054Z on port 42172. Every cue, music event, speech 
 
 - ✅ **Bingo start → lobby music fades out, the Bingo set starts (wallpaper or cool-vibes at 0.2)** — music=music:plan:lobby→game:bingo music:start:wallpaper music:stop:bossa-antigua.mp3
 - ✅ **exactly one track audible after the switch** — [{"track":"wallpaper.mp3","vol":0.2,"t":2.9}]
-- ✅ **intro: nothing spoken** 
+- ✅ **intro: nothing spoken**
 - ✅ **the intro: one card pluck on the deal (one card each), three ticks (3 · 2 · 1), then the first call** — cues=start,card,tick,tick,tick,call
 - ✅ **the deal's pluck: TV and phone within 150 ms of each other** — tv@+959ms phone@+963ms
 - ✅ **the phone taps 3 · 2 · 1 with the TV; "deal me another" is a 20 ms tap and one card pluck** — taps=3 cues=card
 - ✅ **two calls → two boings and two recorded calls** — cues=call,call; spoken=b8.wav | n34.wav voice=clip
-- ✅ **the phones stay silent during calls** 
+- ✅ **the phones stay silent during calls**
 - ✅ **the first tap → the TV says "hm?" (dibs) once, before the verdict** — cues=dibs,reveal,silence,wrong
 - ✅ **wrong claim → caller hushed at once, buzzer at the verdict (after the reveal), no chime on entry, nothing spoken** — events=dibs,hush,reveal,hush,silence,wrong
 - ✅ **music keeps playing through the check** — [{"track":"wallpaper.mp3","vol":0.2,"t":18.1}]
@@ -106,18 +109,19 @@ Captured 2026-09-18T16:14:13.054Z on port 42172. Every cue, music event, speech 
 - ✅ **BINGO → caller hushed, the reveal lift on the announce, sweep as the line turns, cheer once at the verdict (~6.4 s), no chime on entry, no lock tick under the cheer, music continues** — cues=reveal,sweep,cheer cheer@+5358ms playing=[{"track":"wallpaper.mp3","vol":0.06,"t":39.4}]
 - ✅ **the winner's phone: a dauber per daub, the claim cue on the tap, 'correct' when the verdict lands** — phone cues=daub,daub,daub,claim,correct
 - ✅ **the other phone: one soft tap as the win lands, within 400 ms of the TV's cheer, no sound** — taps=30 tap@+5404ms cheer@+5368ms cues=
-- ✅ **celebration waits: still in the bingo phase, nothing spoken** 
+- ✅ **celebration waits: still in the bingo phase, nothing spoken**
 - ✅ **keep going (blackout) → 3 · 2 · 1 ticks, then the number that was up is called again, no start/phase chime** — cues=silence,tick,tick,tick,call spoken=g57.wav
 - ✅ **the phone ticks 3 · 2 · 1 with the TV, then feels the repeated call (a 12 ms buzz after the last tick)** — ticks=3 buzzIdx=3 lastTickIdx=2
 - ✅ **the last bingo → the drumroll: the final board with the tally chime, no cheer or fanfare yet** — phase=final cues=tally
 - ✅ **4 s on → the results cheer, once** — status=results cues=cheer
 - ✅ **VIP ends Bingo → results cheer once; Bingo music stops; no speech after leaving play** — cues=tick,cheer playing=[]
+
 ```
   36447 tv    music:plan   from=lobby to=game:bingo
   36447 tv    music:start  plan=game:bingo track=wallpaper mode=chain volume=0.2
   36447 tv    cue          cue=start surface=tv muted=false ready=true semitones=0
-  36750 tv    hush         
-  36752 tv    hush         
+  36750 tv    hush
+  36752 tv    hush
   37248 tv    music:stop   track=bossa-antigua.mp3
   37364 tv    cue          cue=card surface=tv muted=false ready=true semitones=0
   38455 tv    cue          cue=tick surface=tv muted=false ready=true semitones=0
@@ -134,9 +138,9 @@ Captured 2026-09-18T16:14:13.054Z on port 42172. Every cue, music event, speech 
   44935 tv    speak        text=n34.wav voice=clip delayMs=190
   45125 tv    cue          cue=call surface=tv muted=false ready=true semitones=0
   46810 tv    cue          cue=dibs surface=tv muted=false ready=true semitones=0
-  47089 tv    hush         
+  47089 tv    hush
   47089 tv    cue          cue=reveal surface=tv muted=false ready=true semitones=0
-  47090 tv    hush         
+  47090 tv    hush
   52445 tv    cue          cue=silence surface=tv muted=false ready=true semitones=0
   52447 tv    cue          cue=wrong surface=tv muted=false ready=true semitones=0
   55452 tv    cue          cue=tick surface=tv muted=false ready=true semitones=0
@@ -233,9 +237,9 @@ Captured 2026-09-18T16:14:13.054Z on port 42172. Every cue, music event, speech 
   67723 tv    speak        text=g57.wav voice=clip delayMs=190
   67913 tv    cue          cue=call surface=tv muted=false ready=true semitones=0
   68343 tv    cue          cue=dibs surface=tv muted=false ready=true semitones=0
-  68629 tv    hush         
+  68629 tv    hush
   68629 tv    cue          cue=reveal surface=tv muted=false ready=true semitones=0
-  68629 tv    hush         
+  68629 tv    hush
   70503 tv    cue          cue=sweep surface=tv muted=false ready=true semitones=0
   73987 tv    music:duck   ms=9000
   73987 tv    cue          cue=cheer surface=tv muted=false ready=true semitones=0
@@ -256,8 +260,8 @@ Captured 2026-09-18T16:14:13.054Z on port 42172. Every cue, music event, speech 
   86935 tv    music:plan   from=lobby to=game:bingo
   86935 tv    music:start  plan=game:bingo track=cool-vibes mode=chain volume=0.2
   86935 tv    cue          cue=start surface=tv muted=false ready=true semitones=0
-  86938 tv    hush         
-  86938 tv    hush         
+  86938 tv    hush
+  86938 tv    hush
   87550 tv    clip         src=i21.wav muted=false ready=true delayMs=190
   87550 tv    speak        text=i21.wav voice=clip delayMs=190
   87551 tv    cue          cue=phase surface=tv muted=false ready=true semitones=0
@@ -410,14 +414,14 @@ Captured 2026-09-18T16:14:13.054Z on port 42172. Every cue, music event, speech 
   94363 tv    speak        text=b14.wav voice=clip delayMs=190
   94555 tv    cue          cue=call surface=tv muted=false ready=true semitones=0
   95606 tv    cue          cue=dibs surface=tv muted=false ready=true semitones=0
-  95870 tv    hush         
+  95870 tv    hush
   95870 tv    cue          cue=reveal surface=tv muted=false ready=true semitones=0
-  95871 tv    hush         
+  95871 tv    hush
  103474 tv    music:duck   ms=9000
  103474 tv    cue          cue=cheer surface=tv muted=false ready=true semitones=0
- 108498 tv    hush         
+ 108498 tv    hush
  108498 tv    cue          cue=tally surface=tv muted=false ready=true semitones=0
- 108498 tv    hush         
+ 108498 tv    hush
  112504 tv    ss:cancel    speaking=false pending=false
  112504 tv    music:plan   from=game:bingo to=null
  112504 tv    cue          cue=cheer surface=tv muted=false ready=true semitones=0
@@ -430,8 +434,8 @@ Captured 2026-09-18T16:14:13.054Z on port 42172. Every cue, music event, speech 
  116612 tv    music:plan   from=lobby to=game:bingo
  116612 tv    music:start  plan=game:bingo track=wallpaper mode=chain volume=0.2
  116612 tv    cue          cue=start surface=tv muted=false ready=true semitones=0
- 116616 tv    hush         
- 116616 tv    hush         
+ 116616 tv    hush
+ 116616 tv    hush
  117230 tv    cue          cue=card surface=tv muted=false ready=true semitones=0
  117414 tv    music:stop   track=george-street-shuffle.mp3
  118618 tv    cue          cue=tick surface=tv muted=false ready=true semitones=0
@@ -445,7 +449,8 @@ Captured 2026-09-18T16:14:13.054Z on port 42172. Every cue, music event, speech 
 
 - ✅ **Home → fresh lobby → lobby music again, no cheer, speech cancelled** — plan=null→lobby playing=[{"track":"george-street-shuffle.mp3","vol":0.35,"t":2.5}]
 - ✅ **Home mid-call → speech cancelled, Bingo music out, lobby music in, one track audible** — events=ss:cancel,music:plan,ss:cancel,music:plan,music:start,music:stop playing=[{"track":"bossa-antigua.mp3","vol":0.35,"t":2.5}]
-- ✅ **nothing spoken in the lobby afterwards** 
+- ✅ **nothing spoken in the lobby afterwards**
+
 ```
  120884 tv    ss:cancel    speaking=false pending=false
  120884 tv    music:plan   from=null to=lobby
@@ -455,8 +460,8 @@ Captured 2026-09-18T16:14:13.054Z on port 42172. Every cue, music event, speech 
  124247 tv    music:plan   from=lobby to=game:bingo
  124247 tv    music:start  plan=game:bingo track=wallpaper mode=chain volume=0.2
  124247 tv    cue          cue=start surface=tv muted=false ready=true semitones=0
- 124251 tv    hush         
- 124252 tv    hush         
+ 124251 tv    hush
+ 124252 tv    hush
  124666 tv    clip         src=i21.wav muted=false ready=true delayMs=190
  124666 tv    speak        text=i21.wav voice=clip delayMs=190
  124666 tv    cue          cue=phase surface=tv muted=false ready=true semitones=0
@@ -477,6 +482,7 @@ Captured 2026-09-18T16:14:13.054Z on port 42172. Every cue, music event, speech 
 - ✅ **submitting on the phone → submit cue + buzz** — phone cues=submit
 - ✅ **reveal → the reveal sting from the game, no phase chime within it** — cues=reveal,phase
 - ✅ **scores phase → tally ping (mapped)** — cues=reveal,phase,reveal,tally
+
 ```
  130755 tv    cue          cue=leave surface=tv muted=false ready=true semitones=0
  131189 tv    cue          cue=leave surface=tv muted=false ready=true semitones=0
@@ -505,6 +511,7 @@ Captured 2026-09-18T16:14:13.054Z on port 42172. Every cue, music event, speech 
 - ✅ **first phase (pick) → no game music yet unless it is draw/guess/pass** — phase=pick playing=[] plan=null→lobby lobby→null
 - ✅ **draw/guess/pass (draw) → the Broken Pencil set at 0.2, one track** — [{"track":"backbay-lounge.mp3","vol":0.2,"t":1.4}]
 - ✅ **show → the soft 'card' page-turn pluck (mapped since loop 93), music stops (show)** — cues=phase,phase,card playing=[]
+
 ```
  145866 tv    ss:cancel    speaking=false pending=false
  145869 tv    ss:cancel    speaking=false pending=false
