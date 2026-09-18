@@ -55,7 +55,8 @@ measured against the deadline so a pause never cheats it; the same yardstick whe
 - Nobody played: `answer` → `result` ("Nobody played a card"), no reveal, no vote.
 - A voter whose card is the only one up (everyone else sat out) is not waited for and cannot vote.
 - Disconnected players never block "all played" / "all voted"; the judge dropping during `judge` ends
-  it with no winner. A reconnect before the deadline can act. VIP skip: `intro` → `answer`; `answer` →
+  it with no winner, and a phase nobody connected can act in (the judge already gone, every answerer
+  gone) ends the moment it starts. A reconnect before the deadline can act. VIP skip: `intro` → `answer`; `answer` →
   reveal with the cards so far; `reveal` → `judge` (rest of the reading skipped); `judge` → `result`
   with the votes so far; `result` → next `intro` or `final`; `final` → `done`. VIP end → `done` from anywhere (a round
   whose `result` never ran scores nothing). Pause holds the deadline. Every phase but `done` has a
