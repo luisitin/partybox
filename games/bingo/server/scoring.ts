@@ -10,6 +10,8 @@ export interface StandingRow {
   name: string;
   /** Points (the name is older than the ladder: one bingo was one point once). */
   wins: number;
+  /** Points gained this round (the scoreboard lands them as a delta, then counts up). */
+  delta: number;
   rank: number;
 }
 
@@ -26,6 +28,7 @@ export function standings(state: State): StandingRow[] {
     playerId: row.playerId,
     name: state.players[row.playerId]?.name ?? '?',
     wins: row.score,
+    delta: row.score - (state.winsAtRoundStart[row.playerId] ?? 0),
     rank: row.rank,
   }));
 }

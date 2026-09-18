@@ -40,6 +40,7 @@ export function rows(view: BingoTvView): ScoreboardRow[] {
     name: s.name,
     avatarId: avatar(s.playerId),
     score: s.wins,
+    delta: s.delta > 0 ? s.delta : undefined,
     rank: s.rank,
     connected: view.players.find((p) => p.id === s.playerId)?.connected,
   }));

@@ -78,6 +78,7 @@ function init(ctx: InitContext): State {
     },
     wins,
     history: [],
+    winsAtRoundStart: { ...wins },
   };
   return enterIntro(base, 1, ctx.now);
 }
