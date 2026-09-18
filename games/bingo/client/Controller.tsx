@@ -22,7 +22,7 @@ import {
   useOrientationLock,
 } from './styles';
 import type { CardStyle } from './styles';
-import { otherTitle } from './copy';
+import { otherTitle, whyNot } from './copy';
 import { EndScreens, afterLine, WinScreen } from './WinScreen';
 import { useCallFeel, useVerdictFeel } from './feel';
 import styles from './Controller.module.css';
@@ -271,7 +271,8 @@ export function Controller({
           {missed ? <MissedToast view={view} count={missed} /> : null}
           {view.phaseId === 'check' && view.claim?.playerId === me.id && verdictShown ? (
             <p className={styles.wipeNote}>
-              Card {(view.claim.cardIndex ?? 0) + 1} wiped — re-daub from memory when play resumes.
+              {whyNot(view.claim) ? `${whyNot(view.claim)}. ` : ''}Card{' '}
+              {(view.claim.cardIndex ?? 0) + 1} wiped — re-daub from memory when play resumes.
             </p>
           ) : null}
           {body}
