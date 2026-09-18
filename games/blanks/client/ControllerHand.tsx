@@ -36,6 +36,9 @@ function Table({ view }: { view: BlanksControllerView }): JSX.Element {
 /** czar mode: the judge taps one of three black cards; everyone else sees who is choosing. */
 export function ControllerPick({ view, send }: Props): JSX.Element {
   const [sent, setSent] = useState<number | null>(null);
+  // Until the judge has taken one, all three read the same: dimming them before that made the
+  // waiting screen look disabled (loop #204).
+  const taken = view.blackChoices.some((b) => b.chosen);
   if (view.role !== 'judge') {
     return (
       <WaitingScreen
@@ -48,6 +51,18 @@ export function ControllerPick({ view, send }: Props): JSX.Element {
             <Avatar avatarId={view.czar.avatarId} size="var(--pb-chip-size)" />
             {view.czar.name}
           </span>
+        ) : null}
+        {/* The three questions are on the TV for everyone anyway: a phone-only room sees them
+            here too, and the one the judge takes lights up while the others step back (loop
+            #204). */}
+        {view.blackChoices.length > 0 ? (
+          <ul className={styles.peekList} aria-label="the questions on the table">
+            {view.blackChoices.map((b, i) => (
+              <li key={i} className={b.chosen ? styles.peekOn : taken ? styles.peekOff : undefined}>
+                <FilledCard text={b.text} pick={b.pick} size="mini" winner={b.chosen} />
+              </li>
+            ))}
+          </ul>
         ) : null}
       </WaitingScreen>
     );
