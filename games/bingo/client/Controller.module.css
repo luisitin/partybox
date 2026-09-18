@@ -90,13 +90,26 @@
   flex-wrap: wrap;
   min-height: 40px;
 }
+/* Text that flows (loop 330): if a narrow phone ever wraps the line, it wraps at a word, not as
+   flex boxes that split "before" from "that". */
 .callMeta {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--pb-space-1);
+  display: block;
+  min-width: 0;
+  line-height: 1.5;
   font-size: var(--pb-font-caption);
   font-weight: 700;
   color: var(--pb-text-muted);
+}
+.callMeta .ball {
+  vertical-align: middle;
+}
+/* A narrow phone (an SE, a 360 px Android) fits "call 1" beside the ball but not "before that
+   ⓖ 48 · call 2": the meta takes its own line from call 1, so the cards do not drop a line at
+   call 2 (loop 330). */
+@media (max-width: 379px) {
+  .callMeta {
+    flex-basis: 100%;
+  }
 }
 .ball {
   display: inline-flex;
