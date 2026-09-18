@@ -106,9 +106,14 @@ export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine
     return pending;
   };
   const clips = new Set<AudioBufferSourceNode>();
+  // A hush also cancels clips still decoding (a first-time call fetched after the hush), so a
+  // caller hushed mid-fetch never speaks late (loop 333).
+  let hushGen = 0;
   const playSample = (sample: Sample, t0: number, track = false): void => {
+    const gen = hushGen;
     void buffer(sample.src).then((buf) => {
       if (!buf || !ctx || muted || ctx.state !== 'running') return;
+      if (track && gen !== hushGen) return;
       const source = ctx.createBufferSource();
       const gain = ctx.createGain();
       source.buffer = buf;
@@ -222,6 +227,7 @@ export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine
       );
     },
     hushClips() {
+      hushGen += 1;
       for (const s of clips) {
         try {
           s.stop();

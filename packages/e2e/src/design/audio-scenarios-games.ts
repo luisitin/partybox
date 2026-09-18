@@ -216,6 +216,17 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
       .click();
   }
   await settle(300);
+  // The way to the line skipped through dozens of numbers in a few seconds: one voice at a time —
+  // every clip after the first came with a hush before it, never two calls talking (loop 333).
+  const skipped = await T.between(tv, 'D6', null);
+  const clipsN = skipped.filter((e) => e.kind === 'clip').length;
+  const hushN = skipped.filter((e) => e.kind === 'hush').length;
+  T.ok(
+    'D',
+    'skipping through the deck: a hush before every call, one voice at a time',
+    clipsN > 5 && hushN >= clipsN,
+    `clips=${clipsN} hushes=${hushN}`,
+  );
   await vip.page.getByRole('button', { name: /^bingo! card 1$/i }).click();
   await settle(250);
   await T.mark('D7');
