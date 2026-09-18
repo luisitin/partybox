@@ -629,6 +629,16 @@
     animation: none;
   }
 }
+/* The in-app motion switch (loop 311): the same as reduced motion. */
+:global(:root[data-motion='off']) .turnToLandscape {
+  animation: none;
+  transform: rotate(-90deg);
+}
+:global(:root[data-motion='off']) .turnToPortrait,
+:global(:root[data-motion='off']) .armed,
+:global(:root[data-motion='off']) .armDrain {
+  animation: none;
+}
 .turnLine {
   margin: 0;
   font-size: var(--pb-font-h2);
@@ -736,6 +746,10 @@
     display: none;
   }
 }
+/* The in-app motion switch (loop 311): the same as reduced motion. */
+:global(:root[data-motion='off']) .winCard::after {
+  display: none;
+}
 
 /* A sideways phone in Safari (the tab bar leaves ~330 px): the call row, the rows' gaps and the
    card labels all give something back, the cards take the height that is left, and an armed
@@ -819,6 +833,11 @@
     animation: none;
   }
 }
+/* The in-app motion switch (loop 311): the same as reduced motion. */
+:global(:root[data-motion='off']) .dealing .focusMain,
+:global(:root[data-motion='off']) .dealing .thumb {
+  animation: none;
+}
 
 /* The claim tap (loop 240): the button slams — a hard press in, a flash of white, and it springs
    back over 320 ms while the server takes the card to the TV. */
@@ -842,6 +861,10 @@
   .slam {
     animation: none;
   }
+}
+/* The in-app motion switch (loop 311): the same as reduced motion. */
+:global(:root[data-motion='off']) .slam {
+  animation: none;
 }
 
 /* The verdict on MY claim is a miss (loop 241): the card shakes "no" as the red squares show,
@@ -896,6 +919,11 @@
     stroke-dashoffset: 0;
   }
 }
+/* The in-app motion switch (loop 311): the same as reduced motion. */
+:global(:root[data-motion='off']) .ringFill {
+  animation: none;
+  stroke-dashoffset: 0;
+}
 
 /* Bringing a card up (loop 244): the big card rises from its thumbnail's slot — small, low and
    offset to that column — and swings into place with a slight overshoot; the PlayCard inside
@@ -922,6 +950,10 @@
     animation: none;
   }
 }
+/* The in-app motion switch (loop 311): the same as reduced motion. */
+:global(:root[data-motion='off']) .focusRise {
+  animation: none;
+}
 
 /* A new call on the phone (loop 248): the nickname drops in and settles on the same beat as the
    TV's ball (the squash ~190 ms in), so the room's phones and TV land together. */
@@ -946,6 +978,10 @@
   .now {
     animation: none;
   }
+}
+/* The in-app motion switch (loop 311): the same as reduced motion. */
+:global(:root[data-motion='off']) .now {
+  animation: none;
 }
 
 /* The intro's count in the hand (loop 263): one line, a fixed height so the deal never jumps. */
@@ -988,6 +1024,10 @@
   .swapIn {
     animation: none;
   }
+}
+/* The in-app motion switch (loop 311): the same as reduced motion. */
+:global(:root[data-motion='off']) .swapIn {
+  animation: none;
 }
 
 /* "Next: round 2 — Four corners" with the shape (loop 288). */

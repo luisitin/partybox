@@ -493,6 +493,14 @@ button.cell:focus-visible {
     display: none;
   }
 }
+/* The in-app motion switch (loop 311): the same as reduced motion. */
+:global(:root[data-motion='off']) .stamp,
+:global(:root[data-motion='off']) .unstamp {
+  animation: none;
+}
+:global(:root[data-motion='off']) .stamp::before {
+  display: none;
+}
 
 /* The claim went up (loop 240): every daubed square flashes white and lifts once, in reading
    order 18 ms apart — the card "goes to the TV". */
@@ -517,4 +525,8 @@ button.cell:focus-visible {
   .sent {
     animation: none;
   }
+}
+/* The in-app motion switch (loop 311): the same as reduced motion. */
+:global(:root[data-motion='off']) .sent {
+  animation: none;
 }

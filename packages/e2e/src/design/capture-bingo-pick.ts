@@ -45,6 +45,22 @@ async function main(): Promise<void> {
     await settle(1200);
     await sam.page.getByRole('button', { name: /^Card 2$/ }).click();
     await settle(1300);
+    // Motion off (loop 311, the owner): the sheet's switch, then the same two picks — instant.
+    await sam.page
+      .getByRole('button', { name: /card style|style/i })
+      .first()
+      .click();
+    await settle(500);
+    marks.push({ name: 'sheet', at: Date.now(), before: 0, seconds: 1 });
+    await sam.page.getByRole('button', { name: /^Motion/ }).click();
+    await settle(400);
+    await sam.page.getByRole('button', { name: /^Close$/ }).click();
+    await settle(4200); // the 3 · 2 · 1 (the room was held) and a moment
+    marks.push({ name: 'pick-motion-off', at: Date.now(), before: 0.1, seconds: 2.8 });
+    await sam.page.getByRole('button', { name: /^Card 4$/ }).click();
+    await settle(1200);
+    await sam.page.getByRole('button', { name: /^Card 3$/ }).click();
+    await settle(1300);
     const video = await cutStrips(sam, join(OUT, 'strips'), marks);
     console.log(`10 fps strips from ${video ?? '(no video)'} → ${join(OUT, 'strips')}`);
   } finally {

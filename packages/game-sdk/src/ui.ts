@@ -25,7 +25,13 @@ export { PlayerChip } from './ui/PlayerChip';
 export type { PlayerChipProps } from './ui/PlayerChip';
 export { ServerClockProvider, useSecondsLeft, useServerNow } from './ui/clock';
 export { DeadlineBar } from './ui/DeadlineBar';
-export { sanitizeSnapshot, usePrefersReducedMotion } from './ui/motion';
+export {
+  applyMotionPreference,
+  sanitizeSnapshot,
+  setMotionOff,
+  useMotionOff,
+  usePrefersReducedMotion,
+} from './ui/motion';
 export type { DeadlineBarProps } from './ui/DeadlineBar';
 export { SOUND_CUES, SoundProvider, isSoundCue, useSound, useSoundApi } from './ui/sound';
 export type { ClipOptions, PlayCue, SoundApi, SoundCue } from './ui/sound';

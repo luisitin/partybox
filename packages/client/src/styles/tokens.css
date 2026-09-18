@@ -166,3 +166,12 @@ ight is the :root default above) ────────
     --pb-motion-confetti: 0ms;
   }
 }
+
+/* The in-app motion switch (a phone's card-style sheet, loop 311): the same collapse. */
+:root[data-motion='off'] {
+  --pb-motion-fast: 0ms;
+  --pb-motion-base: 0ms;
+  --pb-motion-slow: 0ms;
+  --pb-motion-pulse: 0ms;
+  --pb-motion-confetti: 0ms;
+}

@@ -15,9 +15,62 @@ function snapshot(): boolean {
   return typeof matchMedia === 'function' && matchMedia(QUERY).matches;
 }
 
-/** True when the viewer asked the OS for less motion; sequences should then show at once. */
+// ── the in-app motion switch (loop 311, the owner) ──────────────────────────────────────────
+// A viewer may turn motion off in the app — a phone's card-style sheet — without touching the OS
+// setting. Stored per device; stamped on <html data-motion="off"> so tokens.css collapses the
+// motion durations the way it does for prefers-reduced-motion; read here so JS-driven motion
+// (rises, sequences, keyed pops) follows too.
+const MOTION_KEY = 'partybox:motion';
+const motionListeners = new Set<() => void>();
+let motionOff: boolean | null = null;
+
+function readMotionOff(): boolean {
+  if (motionOff !== null) return motionOff;
+  try {
+    motionOff = localStorage.getItem(MOTION_KEY) === 'off';
+  } catch {
+    motionOff = false;
+  }
+  return motionOff;
+}
+
+/** Stamp the stored choice on <html>; call once at boot, before the first render. */
+export function applyMotionPreference(): void {
+  if (typeof document === 'undefined') return;
+  if (readMotionOff()) document.documentElement.dataset['motion'] = 'off';
+  else delete document.documentElement.dataset['motion'];
+}
+
+export function setMotionOff(off: boolean): void {
+  motionOff = off;
+  try {
+    if (off) localStorage.setItem(MOTION_KEY, 'off');
+    else localStorage.removeItem(MOTION_KEY);
+  } catch {
+    /* private mode: the choice lasts the session */
+  }
+  applyMotionPreference();
+  for (const l of motionListeners) l();
+}
+
+function subscribeMotion(cb: () => void): () => void {
+  motionListeners.add(cb);
+  return () => motionListeners.delete(cb);
+}
+
+/** The in-app switch alone (the sheet shows it); `usePrefersReducedMotion` folds it in. */
+export function useMotionOff(): boolean {
+  return useSyncExternalStore(subscribeMotion, readMotionOff, () => false);
+}
+
+/**
+ * True when the viewer wants less motion — the OS setting OR the in-app switch; sequences should
+ * then show at once and cards switch without a rise.
+ */
 export function usePrefersReducedMotion(): boolean {
-  return useSyncExternalStore(subscribe, snapshot, () => false);
+  const os = useSyncExternalStore(subscribe, snapshot, () => false);
+  const app = useMotionOff();
+  return os || app;
 }
 
 /**
