@@ -1,0 +1,55 @@
+// The end-of-game awards (README "Scoring"): Crowd favourite, Card of the night, Quick draw.
+import { describe, expect, it } from 'vitest';
+import { awardsFor } from '../server/scoring';
+import { RANDO } from '../server/types';
+import type { State } from '../server/types';
+import { playRound, start } from './helpers';
+
+describe('card of the night award', () => {
+  it('names the author and quotes the card', () => {
+    // Everyone piles onto the first slot, so that card is the night's best by a mile.
+    const s = playRound(start({ rounds: 3 }), () => 0);
+    const best = s.stats.best;
+    expect(best).not.toBeNull();
+    const award = awardsFor(s).find((a) => a.id === 'card-of-the-night');
+    expect(award?.playerId).toBe(best?.submitterId);
+    expect(award?.title).toBe('Card of the night');
+    // `“<the filled sentence>” · n votes`, short enough for one line of the results screen.
+    expect(award?.description).toMatch(/^“.+” · \d+ votes?$/);
+    expect((award?.description ?? '').length).toBeLessThan(140);
+  });
+
+  it('cuts a long sentence on a word boundary', () => {
+    const s = playRound(start({ rounds: 3, decks: 'wild', seed: 9 }), () => 0);
+    const long: State = {
+      ...s,
+      stats: {
+        ...s.stats,
+        best: {
+          submitterId: Object.keys(s.players)[0] ?? '',
+          blackId: 'wb361',
+          cards: ['ww287', 'ww108', 'ww1211'],
+          votes: 4,
+          round: 1,
+        },
+      },
+    };
+    const award = awardsFor(long).find((a) => a.id === 'card-of-the-night');
+    expect(award?.description).toContain('…');
+    expect((award?.description ?? '').length).toBeLessThan(140);
+    expect(award?.description).not.toMatch(/ …/); // trimmed before the ellipsis
+  });
+
+  it('is absent before anyone is voted for, and for Rando', () => {
+    const fresh = start({ rounds: 3 });
+    expect(awardsFor(fresh).some((a) => a.id === 'card-of-the-night')).toBe(false);
+    const rando: State = {
+      ...fresh,
+      stats: {
+        ...fresh.stats,
+        best: { submitterId: RANDO, blackId: fresh.blackId, cards: [], votes: 3, round: 1 },
+      },
+    };
+    expect(awardsFor(rando).some((a) => a.id === 'card-of-the-night')).toBe(false);
+  });
+});

@@ -63,7 +63,8 @@ export const t = {
     title: 'Results',
     winner: (name: string) => `${name} wins!`,
     winners: (names: string) => `${names} win!`,
-    tieAmong: (names: string, others: number) => `${names} & ${others} others tie!`,
+    tieAmong: (names: string, others: number) =>
+      `${names} & ${others} ${others === 1 ? 'other' : 'others'} tie!`,
     tie: "It's a tie!",
     over: 'Game over',
     show: "That's the show!",

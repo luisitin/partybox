@@ -2,6 +2,8 @@
 // in when the result phase starts. Awards and results() live here too.
 import { buildResults, rank } from '@partybox/game-sdk';
 import type { GameAward, GameResults } from '@partybox/game-sdk';
+import { fillText } from './cards';
+import { blackCard, whiteText } from './content';
 import { roundWinners, tally } from './round';
 import { RANDO, WIN_POINTS } from './types';
 import type { State } from './types';
@@ -43,8 +45,30 @@ function leader(state: State, stat: Record<string, number>): string | null {
   return ids[0] ?? null;
 }
 
+/** An award line is one or two lines on the results screen: a long Pick 3 sentence is cut on a
+ *  word boundary rather than wrapping the card off the stage. */
+function shorten(text: string, max = 96): string {
+  if (text.length <= max) return text;
+  const cut = text.slice(0, max);
+  const space = cut.lastIndexOf(' ');
+  return `${(space > max - 24 ? cut.slice(0, space) : cut).trimEnd()}…`;
+}
+
 export function awardsFor(state: State): GameAward[] {
   const out: GameAward[] = [];
+  // The card of the night leads: it rides the results screen so the funniest thing anyone played
+  // is still on the TV while the room talks about it, and on a phone the first award is the one
+  // above the sticky button (review-loop #215). Rando's wins pay nobody, and a player who has left
+  // keeps no award. Curly quotes around the sentence: plenty of cards carry straight quotes of
+  // their own, and "a chapter called "this."" reads as a typo.
+  const best = state.stats.best;
+  if (best && Object.hasOwn(state.players, best.submitterId))
+    out.push({
+      id: 'card-of-the-night',
+      title: 'Card of the night',
+      description: `“${shorten(fillText(blackCard(best.blackId).text, best.cards.map(whiteText)))}” · ${best.votes} ${best.votes === 1 ? 'vote' : 'votes'}`,
+      playerId: best.submitterId,
+    });
   const crowd = leader(state, state.stats.votesReceived);
   if (crowd)
     out.push({
