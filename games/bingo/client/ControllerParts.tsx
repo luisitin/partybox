@@ -111,12 +111,15 @@ export function BingoButton({
   send,
   small,
   meId,
+  verdictShown = true,
 }: {
   view: BingoControllerView;
   card: number;
   send: Send;
   small?: boolean;
   meId: string;
+  /** The TV has reached its verdict (default true: fixtures and the TV-less preview). */
+  verdictShown?: boolean;
 }): JSX.Element {
   const arm = view.arm;
   const mine = arm !== null && arm.playerId === meId;
@@ -128,12 +131,14 @@ export function BingoButton({
   const won = view.won.includes(card);
   const checking = view.phaseId === 'check';
   // The check is about one card: only that button says "Not a bingo".
-  const myCheck = checking && view.claim?.playerId === meId && view.claim.cardIndex === card;
+  const myClaim = checking && view.claim?.playerId === meId && view.claim.cardIndex === card;
+  const myCheck = myClaim && verdictShown;
   const canTap = view.claimable.includes(card) && !checking;
   let label = 'BINGO!';
   let tone: 'accent' | 'neutral' | 'danger' | 'success' = 'accent';
   if (won) label = 'Yours already';
-  else if (checking) label = myCheck ? 'Not a bingo' : 'Look at the TV';
+  else if (checking)
+    label = myCheck ? 'Not a bingo' : myClaim ? 'Checking on the TV…' : 'Look at the TV';
   else if (view.waitingForCall) label = 'Next number soon…';
   else if (armedHere) {
     label = `Tap again for BINGO! · ${Math.min(3, left ?? 0)}`; // a clock a hair behind can say 4

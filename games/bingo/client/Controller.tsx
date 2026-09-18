@@ -5,7 +5,7 @@
 // and judges only the claim, on the card named.
 import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
-import { PrimaryButton, Scoreboard, Screen, WaitingScreen } from '@partybox/game-sdk/ui';
+import { PrimaryButton, Scoreboard, Screen, WaitingScreen, useHold } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { Input } from '../server/types';
 import type { BingoControllerView } from '../server/views';
@@ -22,6 +22,7 @@ import {
   useOrientationLock,
 } from './styles';
 import type { CardStyle } from './styles';
+import { verdictAtMs } from './reveal';
 import styles from './Controller.module.css';
 
 /** What happens after this bingo: the room decides, fresh cards, or the final board. */
@@ -41,6 +42,16 @@ export function Controller({
   const n = cards?.length ?? 1;
   const style = useCardStyle(n);
   const held = useHeld();
+  // The TV plays the claim reveal in beats; this phone shows nothing conclusive (colours, "Not a
+  // bingo", the wipe note) until the TV has (DESIGN_SYSTEM principle 5).
+  const claimKey = view.claim ? `${view.claim.playerId}:${view.callIndex}` : null;
+  const revealMs = view.claim
+    ? verdictAtMs(
+        view.claim.cells.length,
+        view.claim.daubs.some((i) => !view.claim?.cells.includes(i)),
+      )
+    : 0;
+  const verdictShown = useHold(claimKey, revealMs);
   const [sheet, setSheet] = useState(false);
   const [preview, setPreview] = useState<CardStyle | null>(null);
   const shown = preview ?? style;
@@ -117,6 +128,7 @@ export function Controller({
     onTapFree: toggleFree,
     intro: false,
     disabled: false,
+    verdictShown,
   };
 
   if (view.phaseId === 'intro') {
@@ -198,7 +210,13 @@ export function Controller({
           roundOver ? (
             <DecideFooter view={view} send={send} />
           ) : focus && !turn ? (
-            <BingoButton view={view} card={up} send={send} meId={me.id} />
+            <BingoButton
+              view={view}
+              card={up}
+              send={send}
+              meId={me.id}
+              verdictShown={verdictShown}
+            />
           ) : undefined
         }
       >
@@ -226,7 +244,7 @@ export function Controller({
             ) : null}
           </div>
           {missed ? <MissedToast view={view} count={missed} /> : null}
-          {view.phaseId === 'check' && view.claim?.playerId === me.id ? (
+          {view.phaseId === 'check' && view.claim?.playerId === me.id && verdictShown ? (
             <p className={styles.wipeNote}>
               Card {(view.claim.cardIndex ?? 0) + 1} wiped — re-daub from memory when play resumes.
             </p>

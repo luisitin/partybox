@@ -84,7 +84,7 @@ async function main(): Promise<void> {
     await settle(300);
     await sam.page.getByRole('button', { name: /^bingo! card 1$/i }).click();
     await sam.page.getByRole('button', { name: /tap again to claim/i }).dispatchEvent('click');
-    await settle(5500);
+    await settle(8000);
     await shots.shot(sam.page, { group: G, phase: 'won-line', device: 'iphone', role: 'winner' });
     marks.push({ name: 'blackout-resume', at: Date.now(), before: 0.3, seconds: 4 });
     await sam.page.getByRole('button', { name: /keep going — blackout/i }).click();

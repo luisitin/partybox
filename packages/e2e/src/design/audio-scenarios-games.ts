@@ -82,7 +82,7 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
   await settle(250);
   await p2.page.getByRole('button', { name: /tap again to claim/i }).dispatchEvent('click');
   // The reveal: drop 0.7 s, five turns (220 ms), 0.4 s, the rest 0.9 s, 0.7 s hold, 0.6 s settle.
-  await settle(6000);
+  await settle(8500); // the reveal: 1 s announce, 0.7 s drop, five turns (350 ms), 0.5 s, the rest 1 s, 0.8 s hold, 0.6 s settle → verdict ≈ 6.4 s
   await T.mark('D3');
   evs = await T.between(tv, 'D2', 'D3');
   const hushIdx = evs.findIndex((e) => e.kind === 'hush' || e.kind === 'ss:cancel');
@@ -160,14 +160,14 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
   await settle(250);
   await T.mark('D7');
   await vip.page.getByRole('button', { name: /tap again to claim/i }).dispatchEvent('click');
-  await settle(6000);
+  await settle(8500); // the reveal: 1 s announce, 0.7 s drop, five turns (350 ms), 0.5 s, the rest 1 s, 0.8 s hold, 0.6 s settle → verdict ≈ 6.4 s
   await T.mark('D8');
   evs = await T.between(tv, 'D7', 'D8');
   const cheerAt = evs.find((e) => e.kind === 'cue' && e['cue'] === 'cheer');
   const claimT = evs[0]?.t ?? 0;
   T.ok(
     'D',
-    'BINGO → caller hushed, sweep as the line turns, cheer once at the verdict (~4.4 s), no chime on entry, music continues',
+    'BINGO → caller hushed, sweep as the line turns, cheer once at the verdict (~6.4 s), no chime on entry, music continues',
     Boolean(cheerAt) &&
       T.cues(evs).filter((c) => c === 'cheer').length === 1 &&
       !T.cues(evs).some((c) => ['phase', 'win', 'fanfare'].includes(c)) &&
