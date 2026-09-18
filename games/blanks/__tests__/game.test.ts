@@ -214,6 +214,24 @@ describe('fill', () => {
     expect(fillText('Nothing beats ____', ['Bees?'])).toBe('Nothing beats Bees?');
   });
 
+  it('keeps an abbreviation’s own period inside the sentence', () => {
+    // "2 a.m." lost its period mid-sentence and read "2 a.m," (review-loop #201); at the end of the
+    // sentence the black card's own full stop still wins, so it never doubles up.
+    expect(fillText('My routine: ____, ____.', ['Dancing at 2 a.m.', 'Coffee.'])).toBe(
+      'My routine: Dancing at 2 a.m., Coffee.',
+    );
+    expect(fillText('I heard ____ and left.', ['The stairs at 2 a.m.'])).toBe(
+      'I heard The stairs at 2 a.m. and left.',
+    );
+    expect(fillText('What woke me? ____.', ['Bagpipes at 6 a.m.'])).toBe(
+      'What woke me? Bagpipes at 6 a.m.',
+    );
+    // A word that merely ends in "st." is not an abbreviation.
+    expect(fillText('I trust ____ with this.', ['A dentist.'])).toBe(
+      'I trust A dentist with this.',
+    );
+  });
+
   it('two blanks take two whites in order; missing whites stay blank', () => {
     const { segments, extra } = fill('____ is just ____ for adults.', ['Naps.', 'Wine.']);
     expect(segments.map((s) => `${s.kind}:${s.text}`)).toEqual([
