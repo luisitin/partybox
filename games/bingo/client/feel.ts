@@ -42,13 +42,15 @@ export function useVerdictFeel(
  * the TV's ball squashes on — so every phone in the room feels the call together (loop 248).
  */
 export function useCallFeel(view: BingoControllerView): void {
-  // During a resume countdown the number is not "called" yet (loop 276): the buzz waits for the
-  // ring to run out, when the TV drops the ball again.
-  const callNumber =
-    view.phaseId === 'play' && view.resumeAt === null ? (view.current?.number ?? null) : null;
+  // A call is the server's stamp (loop 294): a countdown or a hold shows the number without
+  // calling it, and the repeat after "keep going" is a new stamp — one buzz per real call.
+  const stamp =
+    view.phaseId === 'play' && view.resumeAt === null && view.pausedBy.length === 0
+      ? view.calledAt
+      : null;
   useEffect(() => {
-    if (callNumber === null) return;
+    if (stamp === null) return;
     const t = setTimeout(() => buzz(12), BALL_LAND_MS);
     return () => clearTimeout(t);
-  }, [callNumber]);
+  }, [stamp]);
 }

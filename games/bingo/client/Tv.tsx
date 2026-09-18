@@ -41,20 +41,22 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
   useEffect(() => {
     if (armWindow !== null) sound.play('dibs');
   }, [armWindow, sound]);
-  // A resume countdown (a menu closed, or "keep going" — loop 276) is not a call: the number is
-  // said when the ring runs out and the ball drops, not when the ring appears.
-  const counting = view.resumeAt !== null;
+  // A call is the server's stamp (`calledAt`, loop 294): a resume countdown or a card-style hold
+  // shows the same number without re-calling it, and the repeat after "keep going" is a new stamp.
+  const calledAt = view.calledAt;
+  const quiet = view.resumeAt !== null || view.pausedBy.length > 0;
   useLayoutEffect(() => {
-    if (phaseId !== 'play' || number === null || letter === null || counting) {
+    if (phaseId !== 'play' || number === null || letter === null) {
       hushCaller(sound);
       return;
     }
+    if (quiet || calledAt === null) return;
     const t = setTimeout(() => {
       sound.play('call');
       speakCall(sound, letter, number);
     }, BALL_LAND_MS);
     return () => clearTimeout(t);
-  }, [phaseId, number, letter, counting, sound]);
+  }, [phaseId, number, letter, quiet, calledAt, sound]);
 
   if (view.phaseId === 'intro') {
     return (
@@ -159,7 +161,7 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
           </p>
         </div>
         <ClaimStage
-          key={`${view.claim.playerId}:${view.callIndex}`}
+          key={`${view.claim.playerId}:${view.claim.cardIndex}:${view.callIndex}`}
           claim={view.claim}
           judged={view.verdictShown}
           valid={false}
@@ -198,7 +200,7 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
             </p>
           </div>
           <ClaimStage
-            key={`${view.claim.playerId}:${view.callIndex}`}
+            key={`${view.claim.playerId}:${view.claim.cardIndex}:${view.callIndex}:${view.bingosThisRound}`}
             claim={view.claim}
             judged={view.verdictShown}
             valid

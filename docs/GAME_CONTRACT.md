@@ -171,6 +171,7 @@ export const clientModule: GameClientModule = {
   Tv: lazy(() => import('./Tv').then((m) => ({ default: m.Tv }))),
   Controller: lazy(() => import('./Controller').then((m) => ({ default: m.Controller }))),
   sounds: { reveal: 'reveal' }, // optional: map your moments to design-system cue names
+  quickInto: ['play'], // optional: phases the TV cuts into (their own entrance is the choreography)
 };
 ```
 

@@ -90,6 +90,12 @@ export interface RoundState {
    * ADR-033). A win is scored as it flips; the phones show nothing conclusive before it.
    */
   judged: boolean;
+  /** When the verdict landed (the tick's `now`): the read and the choice are timed from it, not
+   * from `phase.startedAt` — a VIP pause shifts deadlines, never the start (loop 294). */
+  judgedAt: number | null;
+  /** When the current number was called (a real call, not a countdown): the TV speaks and the
+   * phones buzz on this stamp, so a menu hold or a countdown never re-calls it (loop 294). */
+  calledAt: number | null;
   /**
    * A claim takes two taps. The first arms one card for ARM_MS: the player has dibs, and a second
    * tap on that card claims it. Other players' first taps queue behind; a lapsed window passes to

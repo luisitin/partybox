@@ -31,6 +31,10 @@
      layouts no longer read as double text mid-dissolve — one is plainly leaving (loop 212). */
   animation: ghost-out var(--pb-motion-base) var(--pb-ease) both;
 }
+/* A quick cut (loop 296): the newcomer's own entrance is the choreography. */
+.ghostQuick.ghostFade {
+  animation-duration: var(--pb-motion-fast);
+}
 @keyframes ghost-out {
   from {
     opacity: 1;

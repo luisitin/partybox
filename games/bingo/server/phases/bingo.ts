@@ -47,6 +47,7 @@ export function enterBingo(
       patternBingos,
       decision: null,
       judged: false,
+      judgedAt: null,
     },
   });
   // The points land when the TV's verdict does (loop 257): the phase's first tick, at the end of
@@ -56,28 +57,29 @@ export function enterBingo(
   return enterPhase(next, 'bingo', now, ms);
 }
 
-/** The verdict has landed: score the win (3, 2, 1, then ½ under a pattern — scoring.ts). */
-export function credit(state: State): State {
+/** The verdict has landed (at `now`): score the win (3, 2, 1, then ½ under a pattern — scoring.ts). */
+export function credit(state: State, now: number): State {
   const round = state.round;
   if (round.judged || !round.winnerId) return state;
   const points = pointsFor(round.patternBingos);
   return {
     ...state,
     wins: { ...state.wins, [round.winnerId]: (state.wins[round.winnerId] ?? 0) + points },
-    round: { ...round, judged: true },
+    round: { ...round, judged: true, judgedAt: now },
   };
 }
 
 /**
- * How long the phase waits after the verdict: unpaced when the room has a choice to make
- * (BINGO_ABANDONED_MS is only a valve for abandoned rooms), or a moment to read the verdict and
- * then out by itself when nothing is left to play for. A choice already held ends it on the read.
+ * How long the phase waits after the verdict (which landed at `now`): unpaced when the room has a
+ * choice to make (BINGO_ABANDONED_MS is only a valve for abandoned rooms), or a moment to read the
+ * verdict and then out by itself when nothing is left to play for. A choice already held ends it
+ * on the read. All from `now`, never `startedAt`: a VIP pause shifts the deadline, not the start.
  */
-function deadlineAfterVerdict(state: State, verdictAt: number): number {
-  if (state.round.decision) return verdictAt + VERDICT_READ_MS;
+function deadlineAfterVerdict(state: State, now: number): number {
+  if (state.round.decision) return now + VERDICT_READ_MS;
   const can = canContinue(state);
-  if (can.same || can.blackout) return state.phase.startedAt + BINGO_ABANDONED_MS;
-  return verdictAt + VERDICT_READ_MS + AUTO_END_MS;
+  if (can.same || can.blackout) return now + BINGO_ABANDONED_MS;
+  return now + VERDICT_READ_MS + AUTO_END_MS;
 }
 
 /** Cards of `playerId` that have not won the current pattern (the ones BINGO! may still check). */
@@ -129,25 +131,21 @@ function decide(state: State, decision: Decision, now: number, exits: BingoExits
   );
 }
 
-/** When the verdict lands: the end of the TV's reveal of this claim. */
-function verdictAt(state: State): number {
-  const claim = state.round.claim;
-  if (!claim) return state.phase.startedAt;
-  return state.phase.startedAt + claimRevealMs(claim.cells, claim.daubs);
-}
-
-/** When the room has seen the verdict: a moment to read it after it lands. */
-function celebrationEndsAt(state: State): number {
-  return verdictAt(state) + (state.round.claim ? VERDICT_READ_MS : 0);
+/** When the room has seen the verdict: a moment to read it after it landed (null until it has). */
+function celebrationEndsAt(state: State): number | null {
+  const at = state.round.judgedAt;
+  return at === null ? null : at + VERDICT_READ_MS;
 }
 
 export function reduceBingo(state: State, event: GameEvent<Input>, exits: BingoExits): State {
   if (isTimerFor(state, event)) {
     // The first tick of a won round is the verdict: score it, then wait for the room.
     if (state.round.winnerId && !state.round.judged) {
-      const scored = credit(state);
-      const at = verdictAt(state);
-      return { ...scored, phase: { ...scored.phase, deadline: deadlineAfterVerdict(scored, at) } };
+      const scored = credit(state, event.now);
+      return {
+        ...scored,
+        phase: { ...scored.phase, deadline: deadlineAfterVerdict(scored, event.now) },
+      };
     }
     const held = state.round.decision;
     return held ? decide(state, held, event.now, exits) : exits.next(state, event.now);
@@ -164,10 +162,10 @@ export function reduceBingo(state: State, event: GameEvent<Input>, exits: BingoE
   }
   if (state.round.decision) return state; // the first choice counts
   const endsAt = celebrationEndsAt(state);
-  if (event.now >= endsAt)
-    return decide(credit(state), { ...input, by: event.playerId }, event.now, exits);
-  // Mid-celebration: hold it. Once the verdict is scored the deadline comes forward to the end
-  // of the read; before that the verdict tick sets it (`deadlineAfterVerdict`).
-  const held = { ...state, round: { ...state.round, decision: { ...input, by: event.playerId } } };
-  return state.round.judged ? { ...held, phase: { ...held.phase, deadline: endsAt } } : held;
+  const decision = { ...input, by: event.playerId };
+  if (endsAt !== null && event.now >= endsAt) return decide(state, decision, event.now, exits);
+  // Mid-celebration (or before the verdict has even landed): hold it. Once the verdict is in, the
+  // deadline comes forward to the end of the read; before that the verdict tick sets it.
+  const held = { ...state, round: { ...state.round, decision } };
+  return endsAt !== null ? { ...held, phase: { ...held.phase, deadline: endsAt } } : held;
 }

@@ -33,6 +33,14 @@ export interface GameClientModule {
    */
   sounds?: Record<string, string>;
   /**
+   * TV phase ids the shell should cut INTO quickly (loop 296): the outgoing screen's ghost fades
+   * over `--pb-motion-fast` instead of `--pb-motion-base` and the incoming screen does not rise,
+   * for a phase whose own entrance is the choreography (Bingo's ball dropping out of the cage:
+   * under a 300 ms ghost the thud landed on a ball the room could not yet see, and the phones,
+   * which cut, showed the number two frames before the TV).
+   */
+  quickInto?: readonly string[];
+  /**
    * Whether the TV strip may show running scores for this view (default: yes whenever players
    * carry a `score`). Return false for a phase whose stage reveals points beat by beat, so the
    * strip never leads the stage (a reveal that applies points on entry but steps its rows).

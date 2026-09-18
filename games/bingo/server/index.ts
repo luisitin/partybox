@@ -1,7 +1,13 @@
 // Bingo — 75-ball bingo with free daubing and a public check. `game` is what the registry
 // imports. One file per phase under ./phases; this file wires init / reduce / views / results /
 // bot together and owns the phase ORDER (docs/GAME_CONTRACT.md).
-import { applyVip, gameManifestSchema, seedRng, setConnected } from '@partybox/game-sdk';
+import {
+  applyVip,
+  enterPhase,
+  gameManifestSchema,
+  seedRng,
+  setConnected,
+} from '@partybox/game-sdk';
 import type {
   GameDefinition,
   GameEvent,
@@ -22,7 +28,8 @@ import {
   reduceScoreboard,
 } from './phases/scoreboard';
 import { results } from './scoring';
-import { DECK, MAX_CARDS, MAX_ROUNDS, PATTERNS, PHASES, inputSchema } from './types';
+import { menusOpen } from './claims';
+import { DECK, MAX_CARDS, MAX_ROUNDS, PATTERNS, PHASES, RESUME_MS, inputSchema } from './types';
 import type { Input, Pattern, Settings, State } from './types';
 import { controllerView, tvView } from './views';
 import type { BingoControllerView, BingoTvView } from './views';
@@ -77,6 +84,8 @@ function init(ctx: InitContext): State {
       patternBingos: 0,
       decision: null,
       judged: false,
+      judgedAt: null,
+      calledAt: null,
       arm: null,
       queue: [],
       menus: [],
@@ -126,15 +135,19 @@ export function advance(state: State, now: number): State {
 }
 
 function reduce(state: State, event: GameEvent<Input>): State {
-  if (event.type === 'player') return setConnected(state, event);
+  if (event.type === 'player') return afterPlayerChange(state, setConnected(state, event));
   // VIP skip = the phase's normal exit; VIP end always jumps to done (bingos as they stand).
-  // A win the TV has not scored yet (the VIP cut the reveal short) still counts.
-  const vip = applyVip(
-    state.phase.id === 'bingo' && event.type === 'vip' ? credit(state) : state,
-    event,
-    { skip: advance, end: enterDone },
-  );
-  if (vip) return vip;
+  // A win the TV has not scored yet (the VIP cut the reveal short) still counts — on skip and end
+  // only: a pause must not score it (the phones would show the verdict mid-reveal — loop 294).
+  const cutShort =
+    state.phase.id === 'bingo' &&
+    event.type === 'vip' &&
+    (event.action === 'skip' || event.action === 'end');
+  const vip = applyVip(cutShort ? credit(state, event.now) : state, event, {
+    skip: advance,
+    end: enterDone,
+  });
+  if (vip) return shiftResume(state, vip, event);
   if (state.phase.paused) return state; // inputs and timers wait while paused
   switch (state.phase.id) {
     case 'intro':
@@ -155,6 +168,50 @@ function reduce(state: State, event: GameEvent<Input>): State {
     default:
       return state;
   }
+}
+
+/**
+ * A VIP resume shifts `phase.deadline` by the pause (game-sdk); the game's own clocks that run to
+ * that deadline — the 3 · 2 · 1's `resumeAt` — shift with it, or the ring would end early and the
+ * number drop with no ring (loop 294).
+ */
+function shiftResume(before: State, after: State, event: GameEvent<Input>): State {
+  if (event.type !== 'vip' || event.action !== 'resume') return after;
+  // The pause's length: the deadline's shift, or the pause itself when the phase had no deadline
+  // (a held caller — the dibs window still needs it).
+  const shift =
+    before.phase.deadline !== null && after.phase.deadline !== null
+      ? after.phase.deadline - before.phase.deadline
+      : before.phase.paused
+        ? event.now - before.phase.paused.at
+        : 0;
+  if (shift <= 0) return after;
+  const round = after.round;
+  return {
+    ...after,
+    round: {
+      ...round,
+      resumeAt: round.resumeAt === null ? null : round.resumeAt + shift,
+      // Dibs (a 3 s window to tap again) survive a pause whole (loop 295).
+      arm: round.arm === null ? null : { ...round.arm, until: round.arm.until + shift },
+    },
+  };
+}
+
+/**
+ * A player with the card-style menu open who drops out would leave the caller held for good
+ * (`menusOpen` ignores the disconnected): the last open menu going away resumes calling with the
+ * usual 3 · 2 · 1 (loop 294).
+ */
+function afterPlayerChange(before: State, after: State): State {
+  const held = after.phase.id === 'play' && after.phase.deadline === null;
+  if (!held || !menusOpen(before) || menusOpen(after)) return after;
+  return enterPhase(
+    { ...after, round: { ...after.round, resumeAt: after.phase.startedAt + RESUME_MS } },
+    'play',
+    after.phase.startedAt,
+    RESUME_MS,
+  );
 }
 
 export const game: GameDefinition<State, Input, BingoTvView, BingoControllerView> = {

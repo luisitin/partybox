@@ -41,7 +41,11 @@ export function Controller({
   // bingo", the wipe note) until the TV has (DESIGN_SYSTEM principle 5). The verdict is the
   // server's word (`verdictShown`, its tick at the end of the reveal — loop 258): one push turns
   // the phone, no local clock to drift from the TV.
-  const claimKey = view.claim ? `${view.claim.playerId}:${view.callIndex}` : null;
+  // A second bingo on the repeated number (same player, another card) is a new claim: the card
+  // and the count are in the key, not only the call (loop 294).
+  const claimKey = view.claim
+    ? `${view.claim.playerId}:${view.claim.cardIndex}:${view.callIndex}:${view.bingosThisRound}`
+    : null;
   const verdictShown = view.verdictShown;
   const play = useSound();
   useVerdictFeel(view, me.id, claimKey, verdictShown, play);
