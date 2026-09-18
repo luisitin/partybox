@@ -10,6 +10,8 @@ export const clientModule: GameClientModule = {
   // nothing on entry.
   // The final board is a scores moment (the drumroll); the results fanfare follows it.
   sounds: { bingo: 'silence', check: 'silence', final: 'tally' },
+  // The ball dropping out of the cage is the entrance into play: cut, don't dissolve (loop 296).
+  quickInto: ['play'],
   // Owner pick: "Wallpaper" with the occasional "Cool Vibes", quiet under the caller, back to back.
   music: { tracks: ['wallpaper', 'cool-vibes'], weights: [3, 1], volume: 0.2, mode: 'chain' },
 };

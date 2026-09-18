@@ -17,6 +17,8 @@ export interface CrossfadeSwapProps {
   /** Keep the outgoing snapshot fully opaque while true (the incoming screen has nothing to show
    *  yet); the fade starts when it turns false. Capped at HOLD_MAX_MS (review-loop #10). */
   hold?: boolean;
+  /** The ghost fades over `--pb-motion-fast` (the incoming screen brings its own entrance). */
+  quick?: boolean;
   children: ReactNode;
 }
 
@@ -25,6 +27,7 @@ const GHOST_MS = 350;
 const HOLD_MAX_MS = 1500;
 const GHOST = styles['ghost'] ?? 'ghost';
 const GHOST_FADE = styles['ghostFade'] ?? 'ghostFade';
+const GHOST_QUICK = styles['ghostQuick'] ?? 'ghostQuick';
 
 /** The live screen; hands a clone of its DOM to the parent the moment it really unmounts. */
 function Screen({
@@ -67,16 +70,19 @@ export function CrossfadeSwap({
   swapKey,
   className = styles.live,
   hold = false,
+  quick = false,
   children,
 }: CrossfadeSwapProps): JSX.Element {
   const wrap = useRef<HTMLDivElement>(null);
   const reduced = usePrefersReducedMotion();
   const reducedRef = useRef(reduced);
   const holdRef = useRef(hold);
+  const quickRef = useRef(quick);
   useEffect(() => {
     reducedRef.current = reduced;
     holdRef.current = hold;
-  }, [reduced, hold]);
+    quickRef.current = quick;
+  }, [reduced, hold, quick]);
   /** The current ghost host and its timer; one ghost at a time (a new swap replaces it). */
   const ghost = useRef<Ghost | null>(null);
 
@@ -101,7 +107,7 @@ export function CrossfadeSwap({
         ghost.current.host.remove();
       }
       const host = parent.ownerDocument.createElement('div');
-      host.className = GHOST;
+      host.className = quickRef.current ? `${GHOST} ${GHOST_QUICK}` : GHOST;
       host.setAttribute('aria-hidden', 'true');
       host.appendChild(snapshot);
       parent.appendChild(host);

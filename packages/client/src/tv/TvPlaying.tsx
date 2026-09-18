@@ -100,6 +100,8 @@ export function TvPlaying({ room, view, audio, onGameReady, music }: TvPlayingPr
   }
   const GameTv = module?.Tv as unknown as
     ((props: { view: PushedView<TvView> }) => JSX.Element) | undefined;
+  // A phase the game cuts into (its own entrance is the choreography — loop 296).
+  const quick = module?.quickInto?.includes(view.phaseId) === true;
   // ADR-030: a game may ask for a quiet timer (bar only — a rhythm, not a countdown) or none.
   const timerMode = view.timerMode ?? 'normal';
   // Running totals on the strip (R-068): every ViewPlayer already carries `score`; spectators and
@@ -155,7 +157,11 @@ export function TvPlaying({ room, view, audio, onGameReady, music }: TvPlayingPr
           className={styles.bar}
         />
       ) : null}
-      <CrossfadeSwap swapKey={view.phaseId} className={styles.game}>
+      <CrossfadeSwap
+        swapKey={view.phaseId}
+        className={quick ? styles.gameQuick : styles.game}
+        quick={quick}
+      >
         {GameTv ? (
           <GameErrorBoundary surface="tv">
             <Suspense

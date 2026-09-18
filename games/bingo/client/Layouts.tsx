@@ -2,6 +2,7 @@
 // thumbnail below (the one up is marked, a card that won fades); tap a thumbnail to bring it up.
 // Grid / Strip / Stack / Side by side / tablet: every card at once with its own BINGO! button; the
 // grid's spare slot (three cards) shows the call the way the TV does.
+import { useState } from 'react';
 import type { JSX } from 'react';
 import type { BingoControllerView } from '../server/views';
 import { Card } from './Card';
@@ -152,11 +153,19 @@ export function FocusLayout(
   // the rise starts under that thumbnail and swings into the middle.
   const n = p.cards.length;
   const from = n > 1 ? (p.up - (n - 1) / 2) / ((n - 1) / 2) : 0;
+  // Only a pick rises (loop 296): the layout's first card — the intro's card carrying into play,
+  // a reconnect — is already where it belongs, and a rise there collided with the phase swap.
+  const [picked, setPicked] = useState(false);
+  const [seen, setSeen] = useState(p.up);
+  if (seen !== p.up) {
+    setSeen(p.up);
+    setPicked(true);
+  }
   return (
     <div className={`${styles.focus} ${many ? styles.focusMany : ''}`}>
       <div
         key={p.up}
-        className={`${styles.focusMain} ${many ? styles.focusRise : ''}`}
+        className={`${styles.focusMain} ${many && picked ? styles.focusRise : ''}`}
         style={{ ['--from' as string]: from }}
       >
         <PlayCard p={p} c={p.up} size="phone" />

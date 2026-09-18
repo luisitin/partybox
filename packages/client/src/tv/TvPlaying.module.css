@@ -48,6 +48,14 @@
   animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
 }
 
+/* A quick cut into a phase with its own entrance (loop 296): no rise, the ghost fades fast. */
+.gameQuick {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
 /* Light enough that the prompt stays readable underneath (transitions never hide information).
    Fixed, so the header dims with the stage; the HostBar and toasts sit above it (TvFrame z 6). */
 .curtain {
