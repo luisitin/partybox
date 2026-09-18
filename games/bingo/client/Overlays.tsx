@@ -12,7 +12,7 @@ import {
   useSecondsLeft,
   useSound,
 } from '@partybox/game-sdk/ui';
-import { RESUME_MS } from '../server/types';
+import { RESUME_MS, dealDoneMs } from '../server/types';
 import type { BingoControllerView } from '../server/views';
 import { STYLES, styleReason } from './styles';
 import type { CardStyle, Orientation } from './styles';
@@ -185,8 +185,8 @@ export function IntroCount({
   useEffect(() => {
     if (shown > 0) buzz(15);
   }, [shown]);
-  // The deal takes 360 + n × 110 + 250 ms; once it is down the caption says so.
-  const dealt = useHold('deal', 700 + cards * 110);
+  // Once the last card is down the caption stops saying "dealing" (loop 302; a second a card, 345).
+  const dealt = useHold('deal', dealDoneMs(cards));
   return (
     <p className={styles.introCount} aria-live="polite">
       {shown > 0 ? (

@@ -745,7 +745,7 @@
 }
 
 /* The deal on the TV (loop 279): card backs fan out of a deck above the caption, one per card,
-   on the phones' beats (360 + i × 110 ms, the pluck 250 ms later on the bounce). Each comes in
+   on the phones' beats (DEAL_START_MS + i × DEAL_STEP_MS, the pluck on the bounce). Each comes in
    edge-on from above and turns face-up as it lands: transform + opacity, no shadows. */
 .dealWrap {
   display: flex;

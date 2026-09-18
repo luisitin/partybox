@@ -119,7 +119,7 @@ export interface RoundState {
   /**
    * intro: who has tapped Ready (loop 344 — the owner: a real card-pick step). Once every
    * connected person with cards has (bots and the disconnected count as ready), the first
-   * number is INTRO_READY_MS away — never before INTRO_MIN_MS from the deal.
+   * number is INTRO_READY_MS away — never before the deal plus the 3 · 2 · 1 (`introMinMs`).
    */
   ready: string[];
 }
@@ -188,8 +188,22 @@ export type Input = z.infer<typeof inputSchema>;
 
 /** The card-pick step's longest wait (loop 344); everyone ready ends it sooner. */
 export const INTRO_MS = 15_000;
-/** The deal and the pattern need at least this long, whoever is ready. */
-export const INTRO_MIN_MS = 5_000;
+/**
+ * The deal (loop 345 — the owner: "slow it down, about a second a card"): the first card lands
+ * DEAL_START_MS in, each next one DEAL_STEP_MS later, the pluck DEAL_BOUNCE_MS after each landing.
+ * Mirrored by the phones' and the TV's animations (Controller.module.css, TvCountdown.tsx).
+ */
+export const DEAL_START_MS = 400;
+export const DEAL_STEP_MS = 1_000;
+export const DEAL_BOUNCE_MS = 250;
+/** When the last card is down, for `cards` per player. */
+export function dealDoneMs(cards: number): number {
+  return DEAL_START_MS + Math.max(0, cards - 1) * DEAL_STEP_MS + DEAL_BOUNCE_MS + 300;
+}
+/** The first number is never sooner than the deal plus the 3 · 2 · 1, whoever is ready. */
+export function introMinMs(cards: number): number {
+  return dealDoneMs(cards) + INTRO_READY_MS + 1_000;
+}
 /** Everyone ready: the first number is this far away (the 3 · 2 · 1). */
 export const INTRO_READY_MS = 3_000;
 /** The dibs window after the first BINGO! tap. */
