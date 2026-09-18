@@ -12,7 +12,7 @@ import type { BingoControllerView } from '../server/views';
 import { Card, PatternIcon } from './Card';
 import { BingoButton, CallHeader, CallRow, DecideFooter, daubWithFeel } from './ControllerParts';
 import { AllCardsLayout, FocusLayout, Thumbnails } from './Layouts';
-import { Countdown, HoldCurtain, MissedToast, StyleSheet, TurnGate } from './Overlays';
+import { Countdown, HoldCurtain, IntroCount, MissedToast, StyleSheet, TurnGate } from './Overlays';
 import {
   setCardStyle,
   styleSpec,
@@ -171,6 +171,7 @@ export function Controller({
               </p>
             </div>
           </div>
+          <IntroCount deadline={view.deadline} />
           <div className={`${styles.focus} ${styles.dealing} ${n > 1 ? styles.focusMany : ''}`}>
             <div className={styles.focusMain}>
               <Card

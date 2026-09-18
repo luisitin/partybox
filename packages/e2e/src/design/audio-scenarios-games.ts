@@ -71,6 +71,15 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
       intro.filter((c) => c === 'call').length === 1,
     `cues=${intro.join(',')}`,
   );
+  // The hand counts the same three seconds: one 15 ms tap each, no sound (loop 263).
+  const introPhone = await T.between(vip.page, 'D1', 'D1b');
+  const introTaps = introPhone.filter((e) => e.kind === 'buzz' && Number(e['pattern']) === 15);
+  T.ok(
+    'D',
+    'the phone taps 3 · 2 · 1 with the TV, silently',
+    introTaps.length === 3 && T.cues(introPhone, 'phone').length === 0,
+    `taps=${introTaps.length} cues=${T.cues(introPhone, 'phone').join(',')}`,
+  );
   await api.skip();
   await settle(1800);
   await api.skip();
@@ -371,58 +380,4 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
     `cues=${T.cues(evs).join(',')} playing=${JSON.stringify(await T.playing(tv))}`,
   );
   T.timeline(await T.between(tv, 'C3', 'D10'), 'tv');
-
-  // ── E. Home from results, then Home mid-game ────────────────────────────────────────
-  T.section('E · Home (reset) from results and mid-game');
-  // `home` is declared with section D (the drumroll check uses it first).
-  await home.click();
-  await home.click();
-  await settle(2500);
-  await T.mark('E1');
-  evs = await T.between(tv, 'D10', 'E1');
-  T.ok(
-    'E',
-    'Home → fresh lobby → lobby music again, no cheer, speech cancelled',
-    evs.some((e) => e.kind === 'music:plan' && e['to'] === 'lobby') &&
-      !T.cues(evs).includes('cheer') &&
-      (await T.playing(tv)).length === 1,
-    `plan=${evs
-      .filter((e) => e.kind === 'music:plan')
-      .map((e) => `${e['from']}→${e['to']}`)
-      .join(' ')} playing=${JSON.stringify(await T.playing(tv))}`,
-  );
-  // start a bingo, then Home mid-call
-  // Home keeps everyone in the room (end + back to lobby): no rejoin needed.
-  await settle(800);
-  await api.bots(2, 'idle');
-  await api.clock(true);
-  await api.start('bingo', 5);
-  await settle(400);
-  await api.skip();
-  await settle(400);
-  await T.mark('E2');
-  await home.click();
-  await home.click();
-  await settle(2500);
-  await T.mark('E3');
-  evs = await T.between(tv, 'E2', 'E3');
-  T.ok(
-    'E',
-    'Home mid-call → speech cancelled, Bingo music out, lobby music in, one track audible',
-    evs.some((e) => e.kind === 'ss:cancel' || e.kind === 'hush') &&
-      evs.some((e) => e.kind === 'music:plan' && e['to'] === 'lobby') &&
-      (await T.playing(tv)).length === 1,
-    `events=${evs
-      .filter((e) => e.kind !== 'mark')
-      .map((e) => (e.kind === 'cue' ? e['cue'] : e.kind))
-      .join(',')} playing=${JSON.stringify(await T.playing(tv))}`,
-  );
-  await settle(3000);
-  T.ok(
-    'E',
-    'nothing spoken in the lobby afterwards',
-    !(await T.between(tv, 'E3', null)).some((e) => e.kind === 'speak' || e.kind === 'ss:speak'),
-    '',
-  );
-  T.timeline(await T.between(tv, 'D10', 'E3'), 'tv');
 }
