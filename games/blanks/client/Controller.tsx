@@ -47,6 +47,12 @@ function ControllerIntro({ view, me }: Props): JSX.Element {
           {judge.name}
         </span>
       ) : null}
+      {/* Somebody is on a run — the same line the TV's round card carries (review-loop #236). */}
+      {view.streak ? (
+        <p className="pb-caption">
+          {view.streak.name} is on a {view.streak.runs}-round streak
+        </p>
+      ) : null}
       {/* Round 2 on: where I stand, on the same beat as the TV's board (review-loop #164). */}
       {view.standings.length > 0 ? (
         <p className="pb-caption pb-muted">

@@ -59,6 +59,8 @@ card, quoted with its vote count — never Rando’s), **Crowd favourite** (most
 any), **Quick draw** (most cards played within half the answer time — `answerSeconds` / 2 from the phase's start,
 measured against the deadline so a pause never cheats it; the same yardstick when untimed).
 
+A **streak** — one player winning outright round after round — is kept in `stats.streak` and named on the round card from the second win (“Sam is on a 2-round streak”, TV and phones); a shared point, a Rando win or a round nobody won ends it.
+
 The **card of the night** — the single card that took the most votes all game (ties keep the earlier
 round) — is kept in `stats.best` and stands beside the final board, filled in and credited, on `final`
 and `done` — on the TV beside the board and on every phone under its own (a phone-only room sees it

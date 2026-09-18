@@ -30,7 +30,17 @@ export function applyRound(state: State): State {
   for (const row of tally(state))
     if (row.submitterId !== RANDO && Object.hasOwn(state.players, row.submitterId))
       votesReceived[row.submitterId] = (votesReceived[row.submitterId] ?? 0) + row.votes;
-  return { ...state, winners, scores, stats: { ...state.stats, votesReceived, best } };
+  // A streak is one human winning outright, round after round: a shared point, a Rando win or a
+  // round nobody won ends it (review-loop #236).
+  const sole = winners.length === 1 && winners[0] !== RANDO ? winners[0] : null;
+  const streak =
+    sole === undefined || sole === null
+      ? null
+      : {
+          playerId: sole,
+          runs: state.stats.streak?.playerId === sole ? state.stats.streak.runs + 1 : 1,
+        };
+  return { ...state, winners, scores, stats: { ...state.stats, votesReceived, best, streak } };
 }
 
 /** Player with the highest stat (> 0); ties go to the higher total score, then the lower id. */
