@@ -235,8 +235,18 @@ async function main(): Promise<void> {
             priya.page,
             `${String(n).padStart(2, '0')}-${phase}-phone-priya-vip-handover`,
           );
-        } else if (SCENARIO !== 'tie' && !sam.page.isClosed())
-          await api.post('/api/dev/act', { playerId: sam.playerId });
+        } else if (SCENARIO !== 'tie' && !sam.page.isClosed()) {
+          // Blanks' judge picks the round's question by tapping one of three black cards: the dev
+          // API's bot input covers a bot judge, a real phone's tap only this (loop #165). Tap
+          // first; the dev act is the fallback for every other phase.
+          const choice = sam.page.locator('ul[aria-label="the black cards"] button').first();
+          if (await choice.isVisible().catch(() => false)) {
+            await still(sam.page, `${String(n).padStart(2, '0')}-${phase}-phone-choosing`);
+            await choice.click().catch(() => undefined);
+            await settle(600);
+            await still(sam.page, `${String(n).padStart(2, '0')}-${phase}-phone-chosen`);
+          } else await api.post('/api/dev/act', { playerId: sam.playerId });
+        }
         actedAt = Date.now();
       }
       // A phase can owe a phone two actions (Broken Pencil's pass: guess, then draw): every real
