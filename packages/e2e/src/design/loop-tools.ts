@@ -30,7 +30,10 @@ export interface PhaseChange {
 
 /** Cue signatures (first notes' frequencies) parsed from the client's sound table. */
 export function cueSignatures(): { name: string; freqs: number[] }[] {
-  const text = readFileSync(join(REPO_ROOT, 'packages', 'client', 'src', 'sound.ts'), 'utf8');
+  // The table moved to sound-cues.ts (bingo loop #238); read whichever file holds it.
+  const src = join(REPO_ROOT, 'packages', 'client', 'src');
+  let text = readFileSync(join(src, 'sound-cues.ts'), 'utf8');
+  if (!text.includes('const CUES')) text = readFileSync(join(src, 'sound.ts'), 'utf8');
   const block = text.slice(
     text.indexOf('const CUES'),
     text.indexOf('\n};', text.indexOf('const CUES')),

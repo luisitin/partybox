@@ -1,5 +1,5 @@
-// The phase graph: intro → answer → reveal (one instance per card) → judge → result → intro |
-// final → done.
+// The phase graph: intro → (pick, czar mode) → answer → reveal (one instance per card) → judge →
+// result → intro | final → done.
 // Phase files only know their own entry/exit; this file wires the loop so no phase imports
 // another (dependency-cruiser forbids cycles). VIP skip uses the same transitions as a deadline.
 import { allConnectedDone, applyVip, setConnected } from '@partybox/game-sdk';
@@ -7,15 +7,22 @@ import type { GameEvent } from '@partybox/game-sdk';
 import { enterAnswer, reduceAnswer } from './phases/answer';
 import { enterIntro, reduceIntro } from './phases/intro';
 import { enterJudge, reduceJudge } from './phases/judge';
+import { enterPick, reducePick } from './phases/pick';
 import { enterReveal, reduceReveal } from './phases/reveal';
 import { enterDone, enterFinal, enterResult, reduceFinal, reduceResult } from './phases/result';
-import { closeAnswers, playersDone, voteIsFormality, votingDone } from './round';
+import { closeAnswers, playersDone, settleBlack, voteIsFormality, votingDone } from './round';
 import type { Input, State } from './types';
 
 /** A phase nobody connected can act in ends at once — the judge who dropped during the reading
  *  left the room on "Sam is choosing…" for the whole 2 min fallback (review-loop #142). */
 export function afterIntro(state: State, now: number): State {
-  return closeIfDone(enterAnswer(state, now), now);
+  if (state.blackChoices.length > 1) return closeIfDone(enterPick(state, now), now);
+  return afterPick(state, now);
+}
+
+/** The black card is settled (chosen, defaulted or the only one): picking opens. */
+export function afterPick(state: State, now: number): State {
+  return closeIfDone(enterAnswer(settleBlack(state), now), now);
 }
 
 /** Nothing played → straight to the (winnerless) result; one card → walkover, no reading, no
@@ -47,6 +54,8 @@ function skip(state: State, now: number): State {
   switch (state.phase.id) {
     case 'intro':
       return afterIntro(state, now);
+    case 'pick':
+      return afterPick(state, now);
     case 'answer':
       return afterAnswer(state, now);
     case 'reveal':
@@ -67,6 +76,9 @@ function skip(state: State, now: number): State {
 /** The drop of the last outstanding player ends the phase like their input would have: the room
  *  never sits out a full timer for someone who has gone. */
 function closeIfDone(state: State, now: number): State {
+  // The judge gone: the default card, at once.
+  if (state.phase.id === 'pick' && state.czarId !== null && !state.players[state.czarId]?.connected)
+    return afterPick(state, now);
   if (state.phase.id === 'answer' && allConnectedDone(state, playersDone(state)))
     return afterAnswer(state, now);
   if (state.phase.id === 'judge' && allConnectedDone(state, votingDone(state)))
@@ -85,6 +97,8 @@ export function reduce(state: State, event: GameEvent<Input>): State {
   switch (state.phase.id) {
     case 'intro':
       return reduceIntro(state, event, afterIntro);
+    case 'pick':
+      return reducePick(state, event, afterPick);
     case 'answer':
       return reduceAnswer(state, event, afterAnswer);
     case 'reveal':

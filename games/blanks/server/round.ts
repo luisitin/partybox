@@ -3,7 +3,7 @@
 import { shuffle } from '@partybox/game-sdk';
 import { drawBlack, drawWhite, refillHands } from './cards';
 import { blackCard, blackPool } from './content';
-import { RANDO } from './types';
+import { BLACK_CHOICES, RANDO } from './types';
 import type { State } from './types';
 
 /** The judge for `round` (czar mode): seats rotate; a disconnected seat is skipped. */
@@ -51,9 +51,11 @@ export function playersExpected(state: State): number {
 }
 
 /**
- * Starts round `state.round + 1`: last round's cards to the discard, hands refilled, a black card
- * drawn (plus its extra draws), the judge chosen, and — with Rando on — the phantom's cards
- * taken off the deck. Submissions, slots and votes are cleared.
+ * Starts round `state.round + 1`: last round's cards to the discard, hands refilled to ten, the
+ * judge chosen, and the black card drawn — in czar mode BLACK_CHOICES of them for the judge to
+ * choose between (the first is the default). Submissions, slots and votes are cleared. The
+ * card's extra draws and Rando's play wait for `settleBlack` (answer entry), once the card is
+ * known.
  */
 export function startRound(state: State): State {
   const round = state.round + 1;
@@ -67,11 +69,34 @@ export function startRound(state: State): State {
     revealIndex: 0,
     votes: {},
     winners: [],
+    blackChoices: [],
   };
-  const [blackId, drawn] = drawBlack(next, blackPool(state.settings.decks));
-  next = { ...drawn, blackId };
   next = { ...next, czarId: czarFor(next, round) };
-  const black = blackCard(blackId);
+  const pool = blackPool(state.settings.decks);
+  const choices: string[] = [];
+  const wanted = next.czarId ? BLACK_CHOICES : 1;
+  while (choices.length < wanted) {
+    const [id, drawn] = drawBlack(next, pool);
+    next = drawn;
+    if (id === null || choices.includes(id)) break;
+    choices.push(id);
+  }
+  next = { ...next, blackId: choices[0] ?? null, blackChoices: choices.length > 1 ? choices : [] };
+  return refillHands(next);
+}
+
+/** The judge's choice (czar mode): `index` into `blackChoices`; the rest go under the deck. */
+export function chooseBlack(state: State, index: number): State {
+  const id = state.blackChoices[index];
+  if (id === undefined) return state;
+  const rest = state.blackChoices.filter((c) => c !== id);
+  return { ...state, blackId: id, blackChoices: [], blackDeck: [...state.blackDeck, ...rest] };
+}
+
+/** The black card is final: its extra draws to the answerers' hands, and Rando's play. */
+export function settleBlack(state: State): State {
+  let next = state.blackChoices.length > 1 ? chooseBlack(state, 0) : state;
+  const black = blackCard(next.blackId);
   next = refillHands(next, black.draw, answerers(next));
   if (state.settings.rando) {
     const [cards, after] = drawWhite(next, black.pick);

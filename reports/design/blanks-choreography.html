@@ -548,7 +548,7 @@
     }
   }
   .land {
-    animation: land var(--slow) var(--ease) both;
+    animation: land var(--base) var(--ease) both;
   }
   .pending {
     opacity: 0;
@@ -697,12 +697,12 @@
         <h2>One card at a time, read out loud</h2>
         <p>
           Every card is its own beat: the <em>card</em> chime (your pick, B: a two-note pluck), then
-          the card lands with a bounce (600 ms, from half opacity — never from nothing, so the stage
-          does not blink between two cards; loop #131) and its whites pop into their blanks one by
-          one from 450 ms, 300 ms apart (loop #151), while the ones already read slide into a row
-          underneath. Each card holds 2.2 s + 18 ms per character, max 4 s — a 2–3 s presentation,
-          not a 5 s pop (your note). Alternatives are on <code>blanks-options.html</code>. Phones
-          show the same card at the same moment.
+          the card lands with a bounce (300 ms — down as the pluck ends; from half opacity — never
+          from nothing, so the stage does not blink between two cards; loop #131) and its whites pop
+          into their blanks one by one from 350 ms, 300 ms apart (loop #151, #155), while the ones
+          already read slide into a row underneath. Each card holds 2.2 s + 18 ms per character, max
+          4 s — a 2–3 s presentation, not a 5 s pop (your note). Alternatives are on
+          <code>blanks-options.html</code>. Phones show the same card at the same moment.
         </p>
       </div>
       <button class="primary" data-play="reveal">▶ Play</button>
@@ -1190,7 +1190,7 @@
         tv.innerHTML = `${chips(4)}<div class="krow"><span class="kicker">Round 1 · Card ${i + 1} of 4</span><span class="pill">Read it out loud</span></div><div style="flex:1;display:flex;align-items:center">${card(CARDS[i], 'hero', 'land')}</div>${read.length ? `<div class="strip">${read.map((c) => card(c, 'mini', 'rise')).join('')}</div>` : '<div class="h2 mutedt">The vote opens after the last card.</div>'}`;
       };
       return run('tl-reveal', [
-        { ms: 0, what: 'card A lands (600 ms bounce)', cue: 'card', do: () => draw(0) },
+        { ms: 0, what: 'card A lands (300 ms bounce)', cue: 'card', do: () => draw(0) },
         { ms: 2500, what: 'card B lands · A slides below', cue: 'card', do: () => draw(1) },
         { ms: 5000, what: 'card C lands', cue: 'card', do: () => draw(2) },
         { ms: 7500, what: 'card D lands', cue: 'card', do: () => draw(3) },

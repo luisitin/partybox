@@ -5,7 +5,7 @@
 // sees the black card and the count instead of a hand.
 import { useState } from 'react';
 import type { JSX } from 'react';
-import { PrimaryButton, Screen, WaitingScreen } from '@partybox/game-sdk/ui';
+import { Avatar, PrimaryButton, Screen, WaitingScreen } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { BlanksControllerView } from '../server/index';
 import type { Input } from '../server/types';
@@ -30,6 +30,56 @@ function Table({ view }: { view: BlanksControllerView }): JSX.Element {
         />
       ))}
     </div>
+  );
+}
+
+/** czar mode: the judge taps one of three black cards; everyone else sees who is choosing. */
+export function ControllerPick({ view, send }: Props): JSX.Element {
+  const [sent, setSent] = useState<number | null>(null);
+  if (view.role !== 'judge') {
+    return (
+      <WaitingScreen
+        title={`${view.czar?.name ?? 'The judge'} is picking the question`}
+        hint="Your hand is next — the card they choose is the one you play on."
+        mood="watch"
+      >
+        {view.czar ? (
+          <span className={styles.judgeChip}>
+            <Avatar avatarId={view.czar.avatarId} size="var(--pb-chip-size)" />
+            {view.czar.name}
+          </span>
+        ) : null}
+      </WaitingScreen>
+    );
+  }
+  return (
+    <Screen
+      className="pb-enter"
+      title={
+        <span className={styles.kicker}>Round {view.round} · you judge — pick the question</span>
+      }
+    >
+      <ul className={styles.choiceList} aria-label="the black cards">
+        {view.blackChoices.map((b, i) => (
+          <li key={i}>
+            <button
+              type="button"
+              className={`${styles.choice} ${sent === i ? styles.choiceOn : ''}`}
+              disabled={sent !== null}
+              aria-pressed={sent === i}
+              onClick={() => {
+                if (sent !== null) return;
+                setSent(i);
+                send({ type: 'choose', index: i });
+              }}
+            >
+              <FilledCard text={b.text} pick={b.pick} size="phone" />
+            </button>
+          </li>
+        ))}
+      </ul>
+      <p className="pb-caption pb-muted">Tap the one the room should answer.</p>
+    </Screen>
   );
 }
 

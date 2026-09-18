@@ -226,7 +226,7 @@ describe('judge (czar mode)', () => {
     // Nobody left to answer: the answer phase ends on entry too (winnerless result).
     let a = start({ judge: 'czar', players: 3 });
     for (const id of a.order) if (id !== a.czarId) a = connect(a, id, false, a.phase.startedAt + 1);
-    a = timer(a);
+    a = toAnswer(a);
     expect(a.phase.id).toBe('result');
     expect(tv(a).revealed).toEqual([]);
   });

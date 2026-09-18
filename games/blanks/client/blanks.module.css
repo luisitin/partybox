@@ -237,6 +237,75 @@
   animation-delay: var(--pb-motion-fast);
 }
 
+/* ── The judge's pick (czar mode) ──────────────────────────────────────────────────────────── */
+
+/* TV: three black cards dealt side by side. */
+.choices {
+  list-style: none;
+  margin: 0;
+  padding: var(--pb-space-3) 0 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--pb-space-5);
+  width: 100%;
+  flex: 1;
+  align-content: center;
+}
+
+.choices > li {
+  min-width: 0;
+  display: flex;
+  animation: global(pb-deal) var(--pb-motion-slow) var(--pb-ease) both;
+}
+
+/* three tall cards side by side, the sentence at hero size inside each */
+.choices > li > * {
+  flex: 1;
+  min-height: 320px;
+  justify-content: center;
+  font-size: var(--pb-font-h2);
+}
+
+/* Phone: the same three, tappable — the card is the button. */
+.choiceList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-3);
+}
+
+.choice {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: var(--pb-radius-lg);
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: transform var(--pb-motion-fast) var(--pb-ease);
+}
+
+.choice:active {
+  transform: scale(0.98);
+}
+
+.choice:disabled {
+  cursor: default;
+  opacity: 0.55;
+}
+
+.choiceOn,
+.choiceOn:disabled {
+  opacity: 1;
+  outline: 3px solid var(--pb-accent);
+  outline-offset: 2px;
+}
+
 /* ── TV stages ─────────────────────────────────────────────────────────────────────────────── */
 
 /* The table: a soft pool of the theme's surface colour under the middle of the stage, darker
@@ -291,13 +360,15 @@
    Then its whites drop in one by one (300 ms apart, from 450 ms) — a presentation, not a pop
    (owner, review-loop #151). The phone's read-along does the same. */
 .landing {
-  animation: global(pb-land) var(--pb-motion-slow) var(--pb-ease) both;
+  /* 300 ms, not 600: the pluck is 160 ms long and the card should be down by the time it ends
+     (owner: "sounds not perfectly synced", review-loop #155); the whites then follow the beat */
+  animation: global(pb-land) var(--pb-motion-base) var(--pb-ease) both;
 }
 
 .landing .fill,
 .readCard .fill {
   animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
-  animation-delay: calc(450ms + var(--fill-index, 0) * 300ms);
+  animation-delay: calc(350ms + var(--fill-index, 0) * 300ms);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -662,7 +733,7 @@
 /* A card replacing a card, on the phone too: lands with the same bounce as the TV's. */
 .readCard {
   text-align: left;
-  animation: global(pb-land) var(--pb-motion-slow) var(--pb-ease) both;
+  animation: global(pb-land) var(--pb-motion-base) var(--pb-ease) both;
 }
 
 /* "✓ Vote in · 3 / 6 voted" above the footer button. */
