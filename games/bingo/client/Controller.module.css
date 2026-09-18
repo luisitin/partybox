@@ -143,6 +143,35 @@
 .armed {
   animation: armed-pulse 0.6s var(--pb-ease) infinite alternate;
 }
+
+/* Dibs on this phone (loop 256): the 3 s window drains along the foot of the armed button, the
+   same ARM_MS the TV's bar drains — one clock on both screens. Keyed on the window. */
+.bingoWrap {
+  position: relative;
+}
+
+.armDrain {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 6px;
+  height: 5px;
+  border-radius: 3px;
+  background: var(--pb-bg);
+  opacity: 0.75;
+  pointer-events: none;
+  transform-origin: 50% 50%;
+  animation: arm-drain linear both;
+}
+
+@keyframes arm-drain {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
 @keyframes armed-pulse {
   from {
     transform: scale(1);
@@ -579,7 +608,8 @@
     transform: rotate(-90deg);
   }
   .turnToPortrait,
-  .armed {
+  .armed,
+  .armDrain {
     animation: none;
   }
 }

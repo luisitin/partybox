@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
 import { PrimaryButton, buzz, useSecondsLeft, useSound } from '@partybox/game-sdk/ui';
 import type { PlayCue, ScoreboardRow } from '@partybox/game-sdk/ui';
+import { ARM_MS } from '../server/types';
 import type { Input } from '../server/types';
 import type { BingoControllerView, CallView } from '../server/views';
 import { pendingLine } from './copy';
@@ -159,7 +160,10 @@ export function BingoButton({
     tone = 'neutral';
   }
   return (
-    <div className={slam ? styles.slam : undefined} onAnimationEnd={() => setSlam(false)}>
+    <div
+      className={`${styles.bingoWrap} ${slam ? styles.slam : ''}`}
+      onAnimationEnd={() => setSlam(false)}
+    >
       <PrimaryButton
         tone={myCheck ? 'danger' : tone}
         disabled={!canTap && !(arm && !mine && canTap)}
@@ -177,6 +181,15 @@ export function BingoButton({
       >
         {label}
       </PrimaryButton>
+      {/* The window, draining along the button's foot in step with the TV's bar (loop 256). */}
+      {armedHere && arm ? (
+        <span
+          key={arm.until}
+          className={styles.armDrain}
+          style={{ animationDuration: `${ARM_MS}ms` }}
+          aria-hidden
+        />
+      ) : null}
     </div>
   );
 }
