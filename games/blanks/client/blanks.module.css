@@ -71,6 +71,11 @@
   font-weight: 900;
 }
 
+/* On the phone a white dropped into the preview pops into its blank. */
+.phone .fill {
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
 /* A question card's answers, listed under it at the sentence's own size. */
 /* The bare space between two adjacent whites, made wide enough to see. */
 .gap {
@@ -234,6 +239,17 @@
 
 /* ── TV stages ─────────────────────────────────────────────────────────────────────────────── */
 
+/* The table: a soft pool of the theme's surface colour under the middle of the stage, darker
+   toward the edges, so the cards sit on something and the eye rests in the centre (review-loop
+   #147). Tokens only, so every theme keeps its own felt. */
+.table {
+  background: radial-gradient(
+    ellipse 70% 60% at 50% 55%,
+    color-mix(in srgb, var(--pb-surface-2) 55%, transparent),
+    transparent 100%
+  );
+}
+
 .stageCard {
   width: min(100%, 1400px);
   margin-inline: auto;
@@ -300,6 +316,19 @@
   border-radius: var(--pb-space-3);
   border: 3px dashed color-mix(in srgb, var(--pb-text-muted) 55%, transparent);
   background: transparent;
+}
+
+/* The phone's copy of the table (the played screen): smaller slots, same cards. */
+.pipsPhone {
+  gap: var(--pb-space-2);
+  margin-block: 0;
+}
+
+.pipsPhone .pip {
+  width: 30px;
+  height: 42px;
+  border-radius: var(--pb-space-1);
+  border-width: 2px;
 }
 
 .pipDone {
@@ -693,6 +722,8 @@
   cursor: pointer;
   transition:
     transform var(--pb-motion-fast) var(--pb-ease),
+    translate var(--pb-motion-fast) var(--pb-ease),
+    box-shadow var(--pb-motion-fast) var(--pb-ease),
     border-color var(--pb-motion-fast) var(--pb-ease);
 }
 
@@ -702,7 +733,11 @@
 
 .whiteOn {
   border-color: var(--pb-accent);
-  box-shadow: 0 0 0 3px var(--pb-accent);
+  /* a picked card lifts off the pile */
+  translate: 0 -3px;
+  box-shadow:
+    0 0 0 3px var(--pb-accent),
+    0 10px 20px rgb(0 0 0 / 35%);
   /* a picked card near the top stays behind the sticky black card's band, ring included */
   position: relative;
   z-index: 0;

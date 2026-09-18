@@ -160,7 +160,7 @@ function JudgeGrid({ view }: Props): JSX.Element {
 
 export function TvJudge({ view }: Props): JSX.Element {
   return (
-    <Stage>
+    <Stage className={styles.table}>
       <JudgeGrid key={`${view.round}:${view.cards.length}`} view={view} />
     </Stage>
   );

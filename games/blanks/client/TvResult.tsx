@@ -88,7 +88,7 @@ function Author({
 function TvFinal({ view }: Props): JSX.Element {
   const tied = view.standings.filter((r) => r.rank === 1).length > 1;
   return (
-    <Stage center>
+    <Stage center className={styles.table}>
       <p className={styles.kicker}>Final round played</p>
       <BigText level="h1">Final scores</BigText>
       <div className={styles.board}>
@@ -117,7 +117,7 @@ export function TvResult({ view }: Props): JSX.Element {
   // Nobody played: nothing to reveal beat by beat — say so at once, with the card that got no takers.
   if (view.revealed.length === 0) {
     return (
-      <Stage center>
+      <Stage center className={styles.table}>
         <p className={styles.kicker}>
           Round {view.round} of {view.rounds} · result
         </p>
@@ -143,7 +143,7 @@ export function TvResult({ view }: Props): JSX.Element {
   // size down (measured live at 838 px of content for a 630 px stage, review-loop #130).
   const dense = view.players.length > BIG_CHIP_ROOM || others.length > 8;
   return (
-    <Stage>
+    <Stage className={styles.table}>
       <div className={styles.kickerRow}>
         <p className={styles.kicker}>
           Round {view.round} of {view.rounds} · result
