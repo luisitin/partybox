@@ -101,7 +101,7 @@ async function main(): Promise<void> {
     await daubLine(sam.page, first.line, first.card);
     const drawnAtClaim = (await state()).round.drawn;
     await settle(300);
-    tvMarks.push({ name: 'bingo-1-held-choice', at: Date.now(), before: 0.2, seconds: 12 });
+    tvMarks.push({ name: 'bingo-1-held-choice', at: Date.now(), before: 0.2, seconds: 14 });
     await sam.page.getByRole('button', { name: /^bingo! card 1$/i }).click();
     await sam.page.getByRole('button', { name: /tap again to claim/i }).dispatchEvent('click');
     await settle(600);
@@ -121,7 +121,7 @@ async function main(): Promise<void> {
       device: 'iphone-se',
       role: 'priya',
     });
-    await settle(6000); // the reveal ends at ≈ 5.4–6.4 s, then 3 s to read it: the held choice lands
+    await settle(6000); // the reveal ends at ≈ 5.4–6.4 s, then 3 s to read it: the held choice lands (a 3 s countdown follows)
     s = await state();
     expect(s.phase === 'play', 'the held choice was applied when the celebration ended');
     expect(s.wins[samId] === 3, 'the first bingo of the pattern scored 3 — at the verdict');

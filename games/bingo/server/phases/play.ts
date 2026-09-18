@@ -31,7 +31,13 @@ export function enterPlay(state: State, now: number, again = false): State {
   const round = state.round;
   const drawn = {
     ...state,
-    round: { ...round, drawn: again ? round.drawn : round.drawn + 1, claim: null, resumeAt: null },
+    round: {
+      ...round,
+      drawn: again ? round.drawn : round.drawn + 1,
+      claim: null,
+      resumeAt: null,
+      resumeAgain: false, // a VIP skip through the countdown must not repeat a number later
+    },
   };
   // A window that is open survives the call: an armed player's second tap still claims.
   return enterPhase(
@@ -39,6 +45,22 @@ export function enterPlay(state: State, now: number, again = false): State {
     'play',
     now,
     menusOpen(drawn) ? null : state.settings.callSeconds * 1000,
+  );
+}
+
+/**
+ * Back into play after a bingo (loop 276): a 3 · 2 · 1 on every screen first (`resumeAt`, the
+ * same countdown the card-style menu uses), then the number that was up is called again.
+ */
+export function enterResume(state: State, now: number): State {
+  return enterPhase(
+    {
+      ...state,
+      round: { ...state.round, claim: null, resumeAt: now + RESUME_MS, resumeAgain: true },
+    },
+    'play',
+    now,
+    RESUME_MS,
   );
 }
 
@@ -101,6 +123,9 @@ export function reducePlay(state: State, event: GameEvent<Input>, exits: PlayExi
       ? exits.win(cleared, event.now, event.playerId, claim)
       : exits.check(cleared, event.now, claim);
   }
-  if (isTimerFor(state, event)) return exits.next(settle(state, event.now), event.now);
-  return state;
+  if (!isTimerFor(state, event)) return state;
+  // The countdown after "keep going" ends: the same number, called again.
+  if (state.round.resumeAgain)
+    return enterPlay({ ...state, round: { ...state.round, resumeAgain: false } }, event.now, true);
+  return exits.next(settle(state, event.now), event.now);
 }

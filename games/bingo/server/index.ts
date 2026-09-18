@@ -13,7 +13,7 @@ import { sampleInput } from './bot';
 import { credit, enterBingo, reduceBingo } from './phases/bingo';
 import { enterCheck, reduceCheck } from './phases/check';
 import { enterIntro, reduceIntro } from './phases/intro';
-import { enterPlay, reducePlay } from './phases/play';
+import { enterPlay, enterResume, reducePlay } from './phases/play';
 import {
   enterDone,
   enterFinal,
@@ -81,6 +81,7 @@ function init(ctx: InitContext): State {
       queue: [],
       menus: [],
       resumeAt: null,
+      resumeAgain: false,
       swapped: {},
     },
     wins,
@@ -145,7 +146,7 @@ function reduce(state: State, event: GameEvent<Input>): State {
     case 'bingo':
       return reduceBingo(state, event, {
         next: afterBingo,
-        resume: (s, now) => enterPlay(s, now, true),
+        resume: enterResume,
       });
     case 'scoreboard':
       return reduceScoreboard(state, event, nextRound);

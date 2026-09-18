@@ -42,6 +42,7 @@ export function enterIntro(state: State, number: number, now: number): State {
     queue: [],
     menus: state.round.menus,
     resumeAt: null,
+    resumeAgain: false,
     swapped: {},
   };
   return enterPhase(

@@ -271,14 +271,15 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
   await vip.page.getByRole('button', { name: /keep going — blackout/i }).click();
   await settle(300);
   await api.clock(false);
-  await settle(3500); // the verdict was read 3 s after the reveal: the call repeats
+  await settle(5200); // the held choice lands, a 3 s countdown ticks on every screen, the call repeats (loop 276)
   await T.mark('D9');
   evs = await T.between(tv, 'D8', 'D9');
   T.ok(
     'D',
-    'keep going (blackout) → play resumes, the number that was up is called again, no start/phase chime',
+    'keep going (blackout) → 3 · 2 · 1 ticks, then the number that was up is called again, no start/phase chime',
     evs.some((e) => e.kind === 'speak') &&
-      T.cues(evs).includes('call') &&
+      T.cues(evs).filter((c) => c === 'tick').length === 3 &&
+      T.cues(evs).indexOf('call') > T.cues(evs).lastIndexOf('tick') &&
       !T.cues(evs).includes('start'),
     `cues=${T.cues(evs).join(',')} spoken=${evs
       .filter((e) => e.kind === 'speak')

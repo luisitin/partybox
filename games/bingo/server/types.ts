@@ -101,6 +101,11 @@ export interface RoundState {
   menus: string[];
   /** After the last menu closes: calling resumes at this time (a 3 · 2 · 1 on every screen). */
   resumeAt: number | null;
+  /**
+   * play, during a resume countdown after "keep going" (loop 276): when the 3 · 2 · 1 ends the
+   * number that was up is called again (`enterPlay(…, true)`), not the next one.
+   */
+  resumeAgain: boolean;
   /** playerId → card indices already swapped at the intro (one "deal me another" per card). */
   swapped: Record<string, number[]>;
 }

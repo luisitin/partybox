@@ -40,8 +40,11 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
   useEffect(() => {
     if (armWindow !== null) sound.play('dibs');
   }, [armWindow, sound]);
+  // A resume countdown (a menu closed, or "keep going" — loop 276) is not a call: the number is
+  // said when the ring runs out and the ball drops, not when the ring appears.
+  const counting = view.resumeAt !== null;
   useLayoutEffect(() => {
-    if (phaseId !== 'play' || number === null || letter === null) {
+    if (phaseId !== 'play' || number === null || letter === null || counting) {
       hushCaller(sound);
       return;
     }
@@ -50,7 +53,7 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
       speakCall(sound, letter, number);
     }, BALL_LAND_MS);
     return () => clearTimeout(t);
-  }, [phaseId, number, letter, sound]);
+  }, [phaseId, number, letter, counting, sound]);
 
   if (view.phaseId === 'intro') {
     return (
@@ -84,7 +87,10 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
 
   if (view.phaseId === 'play') {
     // A menu open somewhere holds the caller; the last one closing runs a 3 · 2 · 1 on the stage.
-    if (view.resumeAt !== null) return <Resume roundLabel={roundLabel} resumeAt={view.resumeAt} />;
+    if (view.resumeAt !== null)
+      return (
+        <Resume roundLabel={roundLabel} resumeAt={view.resumeAt} pattern={view.patternLabel} />
+      );
     if (view.pausedBy.length > 0)
       return (
         <Stage center className={styles.held}>

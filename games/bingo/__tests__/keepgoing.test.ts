@@ -5,6 +5,7 @@
 import { describe, expect, it } from 'vitest';
 import { game } from '../server/index';
 import { AUTO_END_MS, VERDICT_READ_MS, claimRevealMs } from '../server/reveal';
+import { RESUME_MS } from '../server/types';
 import { pointsFor } from '../server/scoring';
 import {
   PLAYERS,
@@ -238,5 +239,40 @@ describe('the verdict is the server’s word (loop 258)', () => {
     const judged = timer(s);
     expect(game.controllerView(judged, 'b').verdictShown).toBe(true);
     expect(judged.wins['a']).toBe(3);
+  });
+});
+
+describe('the resume countdown (loop 276)', () => {
+  it('keep going → a 3 s countdown on every screen, then the number that was up is called again', () => {
+    let s = callUntil(start(), 'a', LINE);
+    s = daubAll(s, 'a', LINE);
+    s = claim(s, 'a');
+    const drawn = s.round.drawn;
+    s = input(s, 'b', { type: 'continue', pattern: 'blackout' }, after(s));
+    expect(s.phase.id).toBe('play');
+    expect(s.round.resumeAgain).toBe(true);
+    expect(s.round.resumeAt).toBe(s.phase.startedAt + RESUME_MS);
+    expect(s.phase.deadline).toBe(s.phase.startedAt + RESUME_MS);
+    expect(game.tvView(s).resumeAt).toBe(s.round.resumeAt);
+    expect(game.tvView(s).patternLabel.toLowerCase()).toContain('blackout');
+    const again = timer(s);
+    expect(again.phase.id).toBe('play');
+    expect(again.round.drawn).toBe(drawn); // the same number
+    expect(again.round.resumeAt).toBeNull();
+    expect(again.round.resumeAgain).toBe(false);
+    expect(again.phase.deadline).toBe(again.phase.startedAt + 6_000); // a normal call's clock
+    expect(timer(again).round.drawn).toBe(drawn + 1); // and then the next one
+  });
+
+  it('a VIP skip through the countdown calls the next number and never repeats one later', () => {
+    let s = callUntil(start(), 'a', LINE);
+    s = daubAll(s, 'a', LINE);
+    s = claim(s, 'a');
+    const drawn = s.round.drawn;
+    s = input(s, 'b', { type: 'continue', pattern: 'same' }, after(s));
+    const skipped = vip(s, 'skip');
+    expect(skipped.round.drawn).toBe(drawn + 1);
+    expect(skipped.round.resumeAgain).toBe(false);
+    expect(timer(skipped).round.drawn).toBe(drawn + 2);
   });
 });

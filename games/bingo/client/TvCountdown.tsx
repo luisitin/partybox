@@ -50,9 +50,12 @@ export function IntroCountdown({ deadline }: { deadline: number | null }): JSX.E
 export function Resume({
   roundLabel,
   resumeAt,
+  pattern,
 }: {
   roundLabel: string;
   resumeAt: number;
+  /** The pattern in play — after "keep going — blackout" the room reads the new goal here. */
+  pattern?: string;
 }): JSX.Element {
   const left = Math.min(3, useSecondsLeft(resumeAt) ?? 0); // a 4 would tick four times on a 3 s hold
   const sound = useSoundApi();
@@ -61,7 +64,10 @@ export function Resume({
   }, [left, sound]);
   return (
     <Stage center>
-      <p className={styles.kicker}>{roundLabel} · calling resumes in</p>
+      <p className={styles.kicker}>
+        {roundLabel}
+        {pattern ? ` · ${pattern}` : ''} · calling resumes in
+      </p>
       <div className={styles.resumeWrap}>
         <svg className={styles.ring} viewBox="0 0 120 120" aria-hidden>
           <circle className={styles.ringTrack} cx="60" cy="60" r="52" />
