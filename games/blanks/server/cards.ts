@@ -123,8 +123,12 @@ export function refillHands(state: State, extra = 0, extraFor: readonly string[]
     const hand = hands[id] ?? [];
     if (hand.length >= target && countsMeetFloor(hand)) continue;
     const [filled, after] = fillHand(next, hand, Math.max(target, hand.length));
-    next = after;
-    hands[id] = filled;
+    // A fresh shuffle every round: cards were appended to the end, so the top of the hand never
+    // changed and a phone showed the same four cards round after round while the new ones sat
+    // below the fold (review-loop #177).
+    const [shuffled, rng] = shuffle(after.rng, filled);
+    next = { ...after, rng };
+    hands[id] = shuffled;
   }
   return { ...next, hands };
 }
