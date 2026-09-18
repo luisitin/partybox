@@ -6,7 +6,7 @@ import type { JSX } from 'react';
 import { Avatar, BigText, Stage, useSecondsLeft } from '@partybox/game-sdk/ui';
 import type { GameTvProps, ViewPlayer } from '@partybox/game-sdk/ui';
 import type { BlanksTvView } from '../server/index';
-import { FilledCard } from './Cards';
+import { CardFan, FilledCard } from './Cards';
 import styles from './blanks.module.css';
 
 type Props = GameTvProps<BlanksTvView>;
@@ -15,6 +15,7 @@ export function TvIntro({ view }: Props): JSX.Element {
   const last = view.round === view.rounds;
   return (
     <Stage center>
+      <CardFan />
       <p className={styles.kicker}>Blanks</p>
       <BigText level="display">
         Round {view.round} of {view.rounds}

@@ -114,6 +114,18 @@ export function FilledCard({
   );
 }
 
+/** A fan of three face-down cards — a black one between two whites — for the round card, so the
+ *  screen between rounds carries the game's look and not just a number (review-loop #144). */
+export function CardFan(): JSX.Element {
+  return (
+    <div className={styles.fan} aria-hidden>
+      <span className={`${styles.fanCard} ${styles.fanWhite}`} />
+      <span className={`${styles.fanCard} ${styles.fanBlack}`}>____</span>
+      <span className={`${styles.fanCard} ${styles.fanWhite}`} />
+    </div>
+  );
+}
+
 /** The filled sentence as inline text with the whites marked — for vote rows and captions. */
 export function InlineFilled({
   text,

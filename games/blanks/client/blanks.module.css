@@ -179,6 +179,59 @@
     0 0 48px color-mix(in srgb, var(--pb-accent-2) 45%, transparent);
 }
 
+/* ── The round card's fan of cards ─────────────────────────────────────────────────────────── */
+
+.fan {
+  --card-ink: #16171c;
+  --card-ink-2: #1f2027;
+  --card-paper: #f6f1e6;
+  --card-paper-2: #ebe4d4;
+  --fan-w: 168px;
+  --fan-h: 232px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: calc(var(--fan-h) + var(--pb-space-5));
+  margin-bottom: var(--pb-space-3);
+}
+
+.fanCard {
+  display: grid;
+  place-items: center;
+  width: var(--fan-w);
+  height: var(--fan-h);
+  margin-inline: calc(-1 * var(--fan-w) / 6);
+  border-radius: var(--pb-radius);
+  box-shadow: 0 10px 28px rgb(0 0 0 / 40%);
+  transform-origin: 50% 110%;
+  animation: global(pb-rise) var(--pb-motion-slow) var(--pb-ease) both;
+}
+
+.fanWhite {
+  background: linear-gradient(180deg, var(--card-paper), var(--card-paper-2));
+  /* the individual properties compose with the rise animation's transform */
+  rotate: -9deg;
+  translate: 0 10px;
+}
+
+.fanWhite:last-child {
+  rotate: 9deg;
+  animation-delay: calc(var(--pb-motion-fast) / 2);
+}
+
+.fanBlack {
+  z-index: 1;
+  background: linear-gradient(180deg, var(--card-ink-2), var(--card-ink) 38%);
+  color: var(--card-paper);
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  box-shadow:
+    0 0 0 1px rgb(255 255 255 / 14%),
+    0 12px 32px rgb(0 0 0 / 45%);
+  animation-delay: var(--pb-motion-fast);
+}
+
 /* ── TV stages ─────────────────────────────────────────────────────────────────────────────── */
 
 .stageCard {
