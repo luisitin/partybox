@@ -288,6 +288,7 @@ button.cell:focus-visible {
   max-width: min(100%, max(236px, calc(100dvh - 330px)));
   margin-inline: auto;
 }
+
 .phone .letter {
   font-size: var(--pb-font-h2);
 }
