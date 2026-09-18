@@ -162,7 +162,7 @@ export function BingoButton({
   }
   return (
     <div
-      className={`${styles.bingoWrap} ${slam ? styles.slam : ''}`}
+      className={`${styles.bingoWrap} ${small ? styles.bingoWrapSmall : ''} ${slam ? styles.slam : ''}`}
       onAnimationEnd={() => setSlam(false)}
     >
       <PrimaryButton

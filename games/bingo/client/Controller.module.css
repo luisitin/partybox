@@ -172,6 +172,13 @@
     transform: scaleX(0);
   }
 }
+/* The short button (a landscape strip, four cards): a hairline under the label, not through it. */
+.bingoWrapSmall .armDrain {
+  left: 8px;
+  right: 8px;
+  bottom: 2px;
+  height: 3px;
+}
 @keyframes armed-pulse {
   from {
     transform: scale(1);
