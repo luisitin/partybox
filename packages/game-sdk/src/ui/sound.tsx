@@ -45,6 +45,8 @@ export function isSoundCue(value: string): value is SoundCue {
 export type PlayCue = (cue: SoundCue) => void;
 
 export interface ClipOptions {
+  /** Start this far into the clip (skip a recording's leading silence) — seconds. */
+  offsetS?: number;
   /** 0..1, default 1. */
   gain?: number;
   /** Start this many ms after the call (a cue may lead). */

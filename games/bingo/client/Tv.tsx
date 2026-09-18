@@ -31,16 +31,11 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
   const phaseId = view.phaseId;
   const number = view.current?.number ?? null;
   const letter = view.current?.letter ?? null;
-  // Every new number: the ball drops out of the cage (Tv.module.css, 420 ms) and the "boing"
-  // fires as it squashes on landing (BALL_LAND_MS after the push), the recorded call 120 ms behind
-  // the boing; no per-second ticking — the timer is quiet. Leaving play (a claim, a check) hushes
-  // the caller mid-word and cancels a boing still in the air.
-  // Dibs (loop 252): the "says BINGO?…" line pops with a soft rising "hm?"; a window passing on
-  // to the next in line is a new window, so it sounds again.
-  const armWindow = view.arm?.until ?? null;
-  useEffect(() => {
-    if (armWindow !== null) sound.play('dibs');
-  }, [armWindow, sound]);
+  // Every new number: the ball drops out of the cage (Tv.module.css, 420 ms); the "boing" and the
+  // recorded call's first syllable land together as it squashes (BALL_LAND_MS after the push —
+  // the owner, loop 310: a listener must be as fast as a watcher); no per-second ticking — the
+  // timer is quiet. Leaving play (a claim, a check) hushes the caller mid-word and cancels a
+  // boing or a voice still in the air.
   // A call is the server's stamp (`calledAt`, loop 294): a resume countdown or a card-style hold
   // shows the same number without re-calling it, and the repeat after "keep going" is a new stamp.
   const calledAt = view.calledAt;
@@ -51,11 +46,13 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
       return;
     }
     if (quiet || calledAt === null) return;
-    const t = setTimeout(() => {
-      sound.play('call');
-      speakCall(sound, letter, number);
-    }, BALL_LAND_MS);
-    return () => clearTimeout(t);
+    // Both scheduled now on the audio clock (no timer between push and sound, loop 310): the boing
+    // and the voice's first syllable land together on the ball's squash, BALL_LAND_MS in.
+    speakCall(sound, letter, number);
+    const t = setTimeout(() => sound.play('call'), BALL_LAND_MS);
+    return () => {
+      clearTimeout(t);
+    };
   }, [phaseId, number, letter, quiet, calledAt, sound]);
 
   if (view.phaseId === 'intro') {
