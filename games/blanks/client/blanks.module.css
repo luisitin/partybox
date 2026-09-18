@@ -614,6 +614,35 @@
   animation: global(pb-land) var(--pb-motion-slow) var(--pb-ease) both;
 }
 
+/* A played card is dealt onto the table rather than appearing in its slot: it falls from above,
+   turned away from the room, and settles flat (loop #205 — the owner's "I love choreography and
+   even 3d looking visuals"). Transform and opacity only, on one element, so nothing composites
+   badly; without the motion preference it keeps the old land. */
+@media (prefers-reduced-motion: no-preference) {
+  .pips {
+    perspective: 800px;
+  }
+
+  .pipPop {
+    animation-name: pb-bl-drop;
+  }
+
+  @keyframes pb-bl-drop {
+    0% {
+      opacity: 0;
+      transform: translateY(-58px) rotateX(-74deg) scale(0.92);
+    }
+    55% {
+      opacity: 1;
+      transform: translateY(5px) rotateX(9deg) scale(1.03);
+    }
+    100% {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
 .progressSlot {
   display: inline-flex;
 }
