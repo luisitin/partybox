@@ -5,7 +5,15 @@
 // terminal and never on screen — the engine's results take over at once).
 import { useEffect } from 'react';
 import type { JSX } from 'react';
-import { Avatar, BigText, Scoreboard, Stage, useBeats, useSound } from '@partybox/game-sdk/ui';
+import {
+  Avatar,
+  BigText,
+  Confetti,
+  Scoreboard,
+  Stage,
+  useBeats,
+  useSound,
+} from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
 import type { BlanksTvView, RevealedCard } from '../server/index';
 import { FilledCard, LETTERS } from './Cards';
@@ -178,7 +186,7 @@ export function TvResult({ view }: Props): JSX.Element {
               }
               letter={LETTERS[w.slot]}
               winner={named}
-              className={styles.stageCard}
+              className={`${styles.stageCard} ${named ? styles.crowned : ''}`}
             >
               <Author card={w} shown={beat >= BEAT_AUTHORS} label={votesLabel(view, w.votes)} />
               <span
@@ -190,6 +198,9 @@ export function TvResult({ view }: Props): JSX.Element {
           ))}
         </div>
       ) : null}
+      {/* The winner beat (1200 ms) is the loud one: the card lifts and glows as the `sweep` cue
+          sounds, and confetti falls behind it — only for a human win (review-loop #162). */}
+      {named && humanWin ? <Confetti pieces={48} /> : null}
       {/* The other cards were all up on the judge stage a moment ago: here only who played
           which letter, and their votes — twelve players fit in two rows of pills. */}
       {others.length > 0 ? (

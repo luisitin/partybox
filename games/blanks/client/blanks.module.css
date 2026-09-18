@@ -355,6 +355,12 @@
   margin-block: auto;
 }
 
+/* The winning card, on the beat the room is told who won: it lifts off the table, the gold ring
+   brightens and a warm halo blooms behind it — one beat, then it holds (review-loop #162). */
+.crowned {
+  animation: global(pb-crown) var(--pb-motion-slow) var(--pb-ease) both;
+}
+
 /* ── The read-out card's turn ──────────────────────────────────────────────────────────────── */
 
 /* The scene gives the flip its depth; the flipper carries the whole card, the back is the cream
