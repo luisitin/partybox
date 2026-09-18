@@ -370,7 +370,7 @@ describe('card of the night', () => {
     }
     const view = tv(s);
     expect(view.bestCard?.votes).toBe(3);
-    expect(view.bestCard?.black).toContain('_');
+    expect(view.bestCard?.black).toMatch(/____|\?$/); // a blank, or a question card
     expect(view.bestCard?.name).toBeTruthy();
   });
 
