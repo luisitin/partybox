@@ -2,7 +2,10 @@
 
 Three Claude Code sessions run next to the main one, each in its own git worktree and branch
 (`claude --worktree <name>` → `.claude/worktrees/<name>`, gitignored). Each runs `git merge main` at the
-start of every loop, commits to its own branch, and the owner merges branches into `main`.
+start of every loop, commits to its own branch, and the owner merges branches into `main`. When
+`reports/design/loop-log.md` conflicts (it always does — both sessions append rows), run
+`pnpm resolve-loop-log`, then `pnpm format` and commit: never take both sides of the conflict,
+which duplicates the whole table (it reached four copies once).
 
 | Session          | Branch     | Owns (writes only here)                                  | Port           | Digest                      |
 | ---------------- | ---------- | -------------------------------------------------------- | -------------- | --------------------------- |
