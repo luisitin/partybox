@@ -295,14 +295,16 @@ button.cell:focus-visible {
 .compact .grid {
   gap: 2px;
 }
+/* Floors of 5 px, not 11: a thumbnail cell is ~15 px, and an 11 px digit spilled out of the
+   round cells of the contrast/arcade themes (owner, 2026-09-17). Text scales with the cell. */
 .compact .letter {
-  font-size: clamp(11px, 7cqw, 20px);
+  font-size: clamp(5px, 7cqw, 20px);
 }
 .compact .number {
-  font-size: clamp(11px, 8cqw, 22px);
+  font-size: clamp(5px, 8cqw, 22px);
 }
 .compact .free .number {
-  font-size: clamp(7px, 4.2cqw, 12px);
+  font-size: clamp(4px, 4.2cqw, 12px);
   letter-spacing: 0;
 }
 .compact .cell {
@@ -311,12 +313,9 @@ button.cell:focus-visible {
   border-radius: calc(var(--pb-radius) * 0.6);
 }
 .compact .mark {
-  font-size: clamp(8px, 5cqw, 14px);
+  font-size: clamp(4px, 5cqw, 14px);
   right: 2px;
   bottom: 0;
-}
-.compact .mark {
-  font-size: var(--pb-font-caption);
 }
 
 .tv {
