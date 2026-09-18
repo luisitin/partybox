@@ -21,6 +21,9 @@ export interface VoteOption {
 
 export interface VoteListProps {
   prompt?: ReactNode;
+  /** Block content above the prompt — what the room is voting ON (Blanks' black card). Rendered
+   *  in its own element, so a card or an image is valid markup (the prompt is a paragraph). */
+  header?: ReactNode;
   kicker?: string;
   options: VoteOption[];
   votedId?: string | null;
@@ -54,6 +57,7 @@ interface Pending {
 export function VoteList(props: VoteListProps): JSX.Element {
   const {
     prompt,
+    header,
     kicker,
     options,
     votedId = null,
@@ -88,6 +92,7 @@ export function VoteList(props: VoteListProps): JSX.Element {
   return (
     <Screen footer={footer}>
       {kicker ? <p className={styles.kicker}>{kicker}</p> : null}
+      {header ? <div className={styles.header}>{header}</div> : null}
       {prompt ? <p className={styles.prompt}>{prompt}</p> : null}
       <div
         className={`${styles.list} ${large ? styles.large : ''}`}

@@ -838,6 +838,11 @@
   animation: global(pb-land) var(--pb-motion-base) var(--pb-ease) both;
 }
 
+/* A Pick 1 row carries just the answer, in the paper style of a white card. */
+.voteAnswer {
+  font-weight: 800;
+}
+
 /* "✓ Vote in · 3 / 6 voted" above the footer button. */
 .voteIn {
   margin: 0 0 var(--pb-space-3);

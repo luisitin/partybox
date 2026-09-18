@@ -136,7 +136,7 @@ drops calls until the page has had a user activation, so a resumed session's fir
 
 TV (`@partybox/game-sdk` → `tv/`): `Timer`, `PlayerChips`, `Scoreboard`, `Reveal`, `Stage` (overscan frame), `BigText`.
 Shared (`ui/`): `DeadlineBar` (draining bar; danger in the last 5 s only when the phase lasts ≥ 15 s — a 6 s bingo call just drains — the TV strip and the phone header both use it), `usePrefersReducedMotion` (for JS-driven sequences).
-Controller (`controller/`): `TextAnswer`, `ChoiceGrid`, `VoteList`, `WaitingScreen`, `Screen` (safe-area frame), `PrimaryButton`.
+Controller (`controller/`): `TextAnswer`, `ChoiceGrid`, `VoteList` (with a sticky `header` slot for what is being voted on), `WaitingScreen`, `Screen` (safe-area frame), `PrimaryButton`.
 Shared: `Avatar`, `Chip`. Each primitive's props are documented in its file header.
 
 ## Performance budget
