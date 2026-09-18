@@ -593,3 +593,45 @@
     opacity: 0.4;
   }
 }
+
+/* Dibs (loop 252): "Sam says BINGO?…" with the 3 s window draining under it — the room can see
+   how long the tap has to come. Keyed on the window, so a pass to the next in line restarts it. */
+.armSlot {
+  min-height: 84px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.armLine {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pb-space-2);
+}
+
+.armDrain {
+  display: block;
+  width: 360px;
+  height: 10px;
+  border-radius: 5px;
+  background: var(--pb-accent);
+  transform-origin: 50% 50%;
+  animation: arm-drain linear both;
+}
+
+@keyframes arm-drain {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .armDrain {
+    animation: none;
+    opacity: 0.6;
+  }
+}

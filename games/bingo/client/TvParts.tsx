@@ -3,11 +3,18 @@
 // sweep, the rest fading in, the verdict popping beside the settled card.
 import { useEffect } from 'react';
 import type { JSX } from 'react';
-import { Confetti, usePrefersReducedMotion, useSequence, useSoundApi } from '@partybox/game-sdk/ui';
+import {
+  BigText,
+  Confetti,
+  usePrefersReducedMotion,
+  useSequence,
+  useSoundApi,
+} from '@partybox/game-sdk/ui';
 import type { ScoreboardRow } from '@partybox/game-sdk/ui';
 import type { BingoTvView, CallView, ClaimView } from '../server/views';
 import { Card } from './Card';
 import type { SweepKind } from './Card';
+import { ARM_MS } from '../server/types';
 import styles from './Tv.module.css';
 
 // A claim on the stage, in beats. The card drops in with a bounce (DROP), every daub an outline,
@@ -58,6 +65,26 @@ export function Call({ call, big }: { call: CallView; big?: boolean }): JSX.Elem
       <span key={`n${call.number}`} className={styles.number}>
         {call.number}
       </span>
+    </div>
+  );
+}
+
+/**
+ * Dibs (loop 252): "Sam says BINGO?…" with the 3 s window draining under it. The slot is always
+ * there — the stage is centred, so nothing jumps when the line lands or leaves. Keyed on the
+ * window, so dibs passing on re-pops the line and restarts the drain.
+ */
+export function DibsLine({ arm }: { arm: BingoTvView['arm'] }): JSX.Element {
+  return (
+    <div className={styles.armSlot}>
+      {arm ? (
+        <div key={arm.until} className={`${styles.armLine} pb-pop`}>
+          <BigText level="h2" tone="accent">
+            {arm.name} says BINGO?…
+          </BigText>
+          <span className={styles.armDrain} style={{ animationDuration: `${ARM_MS}ms` }} />
+        </div>
+      ) : null}
     </div>
   );
 }

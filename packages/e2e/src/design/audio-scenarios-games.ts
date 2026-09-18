@@ -88,6 +88,13 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
   evs = await T.between(tv, 'D2', 'D3');
   const hushIdx = evs.findIndex((e) => e.kind === 'hush' || e.kind === 'ss:cancel');
   const wrongIdx = evs.findIndex((e) => e.kind === 'cue' && e['cue'] === 'wrong');
+  const dibsIdx = evs.findIndex((e) => e.kind === 'cue' && e['cue'] === 'dibs');
+  T.ok(
+    'D',
+    'the first tap → the TV says "hm?" (dibs) once, before the verdict',
+    dibsIdx >= 0 && dibsIdx < wrongIdx && T.cues(evs).filter((c) => c === 'dibs').length === 1,
+    `cues=${T.cues(evs).join(',')}`,
+  );
   T.ok(
     'D',
     'wrong claim → caller hushed at once, buzzer at the verdict (after the reveal), no chime on entry, nothing spoken',
