@@ -811,6 +811,35 @@
   animation: global(pb-deal) var(--pb-motion-slow) var(--pb-ease) both;
 }
 
+/* The vote grid is the same table the answers were played onto, so its cards are dealt the same
+   way: from above, turned away from the room, settling flat (loop #233 — the played card got this
+   in #205). One transform per card, no filters, and the keyframes only exist when motion is
+   welcome; a reduced-motion TV keeps the flat deal above. */
+@media (prefers-reduced-motion: no-preference) {
+  .judgeGrid {
+    perspective: 1200px;
+  }
+
+  .judgeGrid > li {
+    animation-name: pb-bl-griddrop;
+  }
+
+  @keyframes pb-bl-griddrop {
+    0% {
+      opacity: 0;
+      transform: translateY(-34px) rotateX(-58deg) scale(0.96);
+    }
+    65% {
+      opacity: 1;
+      transform: translateY(4px) rotateX(7deg) scale(1.01);
+    }
+    100% {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
 .grid2 {
   grid-template-columns: repeat(2, 1fr);
 }
