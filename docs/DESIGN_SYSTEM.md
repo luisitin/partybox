@@ -110,7 +110,8 @@ TV has a mute toggle (persisted in `localStorage`) and a "tap to start" overlay 
 
 **Music beds** (ADR-032, `packages/client/src/beds.ts`): looping backgrounds synthesized like the cues, one per phase via
 `clientModule.beds[phaseId]` — `warm` (e-piano groove), `bossa`, `latenight` (held chords, no drums), `marimba` (16th-note
-pulse). The shell crossfades beds over 1.5 s as phases change, resumes a returning bed where it stopped, holds it on pause,
+pulse), `lofi` (swung dusty beat, soft kick + brushed snare) and `lounge` (vibraphone swing with a
+walking bass). The voices they are built from live in `beds-voices.ts`. The shell crossfades beds over 1.5 s as phases change, resumes a returning bed where it stopped, holds it on pause,
 ducks it to half under every cue for a second, and mutes it with the TV. Unmapped phases and the results screen are silent.
 The phone has its own engine (`createSoundEngine({ master: 0.35 })`, mute under `partybox:phone-sound`, default on,
 toggled from the theme sheet) that plays only what happened in the player's hand — never `phase`, `join`, `win` or

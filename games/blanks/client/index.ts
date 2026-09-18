@@ -15,13 +15,17 @@ export const clientModule: GameClientModule = {
   // (round card, read-out, result — it resumes where it left off), the soft bossa plays while
   // people pick a card, the marimba pulse while the room judges. Results stay silent under the
   // win fanfare.
+  // One bed per stage, each with its own character (the owner heard no variety, review-loop
+  // #161): the warm groove frames the round, the judge's pick gets lo-fi, picking a card the
+  // bossa, the reading the warm groove again (it resumes where it left off), judging the marimba
+  // pulse, the result the lounge swing. Results stay silent under the win fanfare.
   beds: {
     intro: 'warm',
-    pick: 'marimba',
+    pick: 'lofi',
     answer: 'bossa',
     reveal: 'warm',
     judge: 'marimba',
-    result: 'warm',
+    result: 'lounge',
   },
   // The point lands on result entry but the stage names the winner on its last beat: the strip
   // waits for the next phase.
