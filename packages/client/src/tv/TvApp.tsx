@@ -164,6 +164,8 @@ export function TvApp(): JSX.Element {
     }
     // A lock-in: one soft tick per push, rising with the count (never queued; dropped inside
     // 250 ms), quiet so it never suppresses the phase chime; the count resets with the phase.
+    // A detail, so it yields: nothing within 300 ms of any other cue the TV played (Bingo's
+    // winner ticks in as the cheer starts — the tick sat 46 ms under it, loop 298).
     const locked =
       view && room.status === 'playing'
         ? view.players.filter((pl) => pl.status === 'submitted').length
@@ -173,7 +175,8 @@ export function TvApp(): JSX.Element {
       room.status === 'playing' &&
       view.phaseId === p.phase &&
       locked > p.locked &&
-      performance.now() - lastLockAt.current >= 250
+      performance.now() - lastLockAt.current >= 250 &&
+      performance.now() - audio.lastPlayedAt() > 300
     ) {
       lastLockAt.current = performance.now();
       audio.play('lock', { semitones: lockSemitones(locked), quiet: true });

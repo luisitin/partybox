@@ -244,10 +244,10 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
   const claimT = evs[0]?.t ?? 0;
   T.ok(
     'D',
-    'BINGO → caller hushed, the reveal lift on the announce, sweep as the line turns, cheer once at the verdict (~6.4 s), no chime on entry, music continues',
+    'BINGO → caller hushed, the reveal lift on the announce, sweep as the line turns, cheer once at the verdict (~6.4 s), no chime on entry, no lock tick under the cheer, music continues',
     Boolean(cheerAt) &&
       T.cues(evs).filter((c) => c === 'cheer').length === 1 &&
-      !T.cues(evs).some((c) => ['phase', 'win', 'fanfare'].includes(c)) &&
+      !T.cues(evs).some((c) => ['phase', 'win', 'fanfare', 'lock'].includes(c)) &&
       evs.some((e) => e.kind === 'hush' || e.kind === 'ss:cancel') &&
       (await T.playing(tv)).length === 1,
     `cues=${T.cues(evs).join(',')} cheer@+${cheerAt ? cheerAt.t - claimT : '-'}ms playing=${JSON.stringify(await T.playing(tv))}`,
