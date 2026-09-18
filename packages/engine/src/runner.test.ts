@@ -99,6 +99,34 @@ describe('runner', () => {
     expect(twice.room).toBe(once.room);
   });
 
+  it('a timer that re-arms a later deadline in its own phase fires again (ADR-033)', () => {
+    // A reducer that takes two beats in one phase: the first tick moves the deadline 2 s on.
+    const game = deps.games['fake']!;
+    const beats = {
+      games: {
+        fake: {
+          ...game,
+          reduce: (s: ReturnType<typeof game.init>, e: Parameters<typeof game.reduce>[1]) =>
+            e.type === 'timer' && s.phase.deadline === T0 + 101 + PLAY_MS // the first beat only
+              ? { ...s, phase: { ...s.phase, deadline: s.phase.deadline + 2000 } }
+              : game.reduce(s, e),
+        },
+      },
+    };
+    const room = playingRoom(2);
+    const deadline = room.game!.state.phase.deadline!;
+    const once = applyRoomEvent(room, { type: 'tick', now: deadline }, beats);
+    expect(once.room.status).toBe('playing');
+    expect(once.room.game?.firedTimer).toBeNull();
+    expect(nextWakeAt(once.room)).toBe(deadline + 2000);
+    // Not due yet: nothing; due: the second beat ends the phase as the timer normally would.
+    expect(applyRoomEvent(once.room, { type: 'tick', now: deadline + 1999 }, beats).room).toBe(
+      once.room,
+    );
+    const twice = applyRoomEvent(once.room, { type: 'tick', now: deadline + 2000 }, beats);
+    expect(twice.room.status).toBe('results');
+  });
+
   it('pause stops the clock and the wake; resume shifts the deadline', () => {
     const room = playingRoom(2);
     const deadline = room.game!.state.phase.deadline!;

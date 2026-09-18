@@ -66,11 +66,18 @@ export function daubAll(state: State, playerId: string, cells: number[], card = 
   return s;
 }
 
-/** BINGO! takes two taps on the same card: arm, then claim 100 ms later. */
-export function claim(state: State, playerId: string, card = 0): State {
+/** BINGO! takes two taps on the same card: arm, then claim 100 ms later — the state as the TV
+ * starts its reveal (a win is not scored yet: that is the verdict tick, `claim`). */
+export function claimRaw(state: State, playerId: string, card = 0): State {
   const t = state.phase.startedAt + 500;
   const armed = input(state, playerId, { type: 'bingo', card }, t);
   return input(armed, playerId, { type: 'bingo', card }, t + 100);
+}
+
+/** A claim, and — for a win — the TV's verdict (the bingo phase's first tick, which scores it). */
+export function claim(state: State, playerId: string, card = 0): State {
+  const s = claimRaw(state, playerId, card);
+  return s.phase.id === 'bingo' && s.round.winnerId ? timer(s) : s;
 }
 
 /** A moment after the TV's reveal of the current claim: when the room may decide. */

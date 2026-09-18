@@ -4,9 +4,21 @@
 // made mid-celebration waits for the reveal.
 import { describe, expect, it } from 'vitest';
 import { game } from '../server/index';
-import { AUTO_END_MS } from '../server/reveal';
+import { AUTO_END_MS, VERDICT_READ_MS, claimRevealMs } from '../server/reveal';
 import { pointsFor } from '../server/scoring';
-import { PLAYERS, T0, after, callUntil, claim, daubAll, input, start, timer } from './helpers';
+import {
+  PLAYERS,
+  T0,
+  after,
+  callUntil,
+  claim,
+  claimRaw,
+  daubAll,
+  input,
+  start,
+  timer,
+  vip,
+} from './helpers';
 
 const LINE = [0, 1, 2, 3, 4];
 
@@ -149,5 +161,51 @@ describe('points and the end of a round', () => {
     expect(game.tvView(s).decide).toEqual({ same: false, blackout: false });
     expect(s.phase.deadline).toBe(after(s) - 10 + AUTO_END_MS);
     expect(timer(s).phase.id).toBe('scoreboard');
+  });
+});
+
+describe('the points land with the verdict (loop 257)', () => {
+  it('a win is not scored, and the winner not ticked, until the reveal ends; the first tick scores it', () => {
+    let s = callUntil(start(), 'a', LINE);
+    s = daubAll(s, 'a', LINE);
+    s = claimRaw(s, 'a');
+    expect(s.phase.id).toBe('bingo');
+    expect(s.round.winnerId).toBe('a');
+    expect(s.round.credited).toBe(false);
+    expect(s.wins['a'] ?? 0).toBe(0);
+    expect(game.tvView(s).players.find((p) => p.id === 'a')?.status).toBe('waiting');
+    const claim0 = s.round.claim;
+    const verdictAt = s.phase.startedAt + claimRevealMs(claim0?.cells ?? [], claim0?.daubs ?? []);
+    expect(s.phase.deadline).toBe(verdictAt);
+    const scored = timer(s);
+    expect(scored.phase.id).toBe('bingo');
+    expect(scored.round.credited).toBe(true);
+    expect(scored.wins['a']).toBe(3);
+    expect(game.tvView(scored).players.find((p) => p.id === 'a')?.status).toBe('submitted');
+    // With a choice to make, the room is unpaced after the verdict (the abandoned valve only).
+    expect(scored.phase.deadline).toBeGreaterThan(verdictAt + VERDICT_READ_MS + AUTO_END_MS);
+  });
+
+  it('a choice made before the verdict waits for it, then a moment to read, then applies', () => {
+    let s = callUntil(start(), 'a', LINE);
+    s = daubAll(s, 'a', LINE);
+    s = claimRaw(s, 'a');
+    const verdictAt = s.phase.deadline ?? 0;
+    const early = input(s, 'b', { type: 'continue', pattern: 'same' }, s.phase.startedAt + 400);
+    expect(early.round.decision).toEqual({ type: 'continue', pattern: 'same' });
+    expect(early.phase.deadline).toBe(verdictAt); // the verdict tick is still due
+    const scored = timer(early);
+    expect(scored.phase.id).toBe('bingo');
+    expect(scored.wins['a']).toBe(3);
+    expect(scored.phase.deadline).toBe(verdictAt + VERDICT_READ_MS);
+    expect(timer(scored).phase.id).toBe('play');
+  });
+
+  it('a VIP skip or end mid-reveal still scores the win', () => {
+    let s = callUntil(start(), 'a', LINE);
+    s = daubAll(s, 'a', LINE);
+    s = claimRaw(s, 'a');
+    expect(vip(s, 'skip').wins['a']).toBe(3);
+    expect(vip(s, 'end').wins['a']).toBe(3);
   });
 });

@@ -247,6 +247,14 @@ export function runGame(game: AnyGameDefinition, options: RunOptions): RunResult
       now = Math.max(now, timerAt);
       firedFor = key;
       apply({ type: 'timer', now, phaseId: state.phase.id, startedAt: state.phase.startedAt });
+      // ADR-033: a reducer that stays in the phase with a later deadline has armed a second beat.
+      if (
+        keyOf(state) === key &&
+        state.phase.deadline !== null &&
+        deadline !== null &&
+        state.phase.deadline > deadline
+      )
+        firedFor = null;
       continue;
     }
 

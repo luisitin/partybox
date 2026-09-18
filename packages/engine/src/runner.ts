@@ -122,7 +122,12 @@ function deadlineDue(running: RunningGame, now: number): boolean {
   return now >= phase.deadline;
 }
 
-/** Fires the phase timer when its deadline has passed — exactly once per phase instance. */
+/**
+ * Fires the phase timer when its deadline has passed — once per phase instance, with one
+ * exception (ADR-033): a reducer that answers the timer by staying in the phase and moving its
+ * deadline later has armed a new one, and that fires too. Ignoring the timer, or a pause that
+ * shifts the deadline, does not re-arm.
+ */
 export function fireDueTimer(room: RoomState, now: number, deps: EngineDeps): ApplyResult {
   const running = room.game;
   if (!running || room.status !== 'playing' || !deadlineDue(running, now))
@@ -132,11 +137,22 @@ export function fireDueTimer(room: RoomState, now: number, deps: EngineDeps): Ap
     ...room,
     game: { ...running, firedTimer: { phaseId: phase.id, startedAt: phase.startedAt } },
   };
-  return applyGameEvent(
+  const result = applyGameEvent(
     armed,
     { type: 'timer', now, phaseId: phase.id, startedAt: phase.startedAt },
     deps,
   );
+  const after = result.room.game;
+  const rearmed =
+    after !== null &&
+    after.state.phase.id === phase.id &&
+    after.state.phase.startedAt === phase.startedAt &&
+    after.state.phase.deadline !== null &&
+    phase.deadline !== null &&
+    after.state.phase.deadline > phase.deadline;
+  return rearmed
+    ? { ...result, room: { ...result.room, game: { ...after, firedTimer: null } } }
+    : result;
 }
 
 /** When the host should next send a `tick`, or null when nothing is pending. */

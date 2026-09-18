@@ -106,7 +106,8 @@ async function main(): Promise<void> {
     await sam.page.getByRole('button', { name: /tap again to claim/i }).dispatchEvent('click');
     await settle(600);
     expect((await state()).phase === 'bingo', 'a valid line is a bingo');
-    expect((await state()).wins[samId] === 3, 'the first bingo of the pattern scores 3');
+    // The points wait for the TV's verdict (loop 257): nothing on the strip spoils the sweep.
+    expect(((await state()).wins[samId] ?? 0) === 0, 'not scored while the card is being swept');
     // Priya's phone (a clock ahead, say) sends "keep going — same" 0.6 s into the celebration.
     await post(priyaId, { type: 'continue', pattern: 'same' });
     await settle(300);
@@ -123,6 +124,7 @@ async function main(): Promise<void> {
     await settle(6000); // the reveal ends at ≈ 5.4–6.4 s, then 3 s to read it: the held choice lands
     s = await state();
     expect(s.phase === 'play', 'the held choice was applied when the celebration ended');
+    expect(s.wins[samId] === 3, 'the first bingo of the pattern scored 3 — at the verdict');
     expect(s.round.drawn === drawnAtClaim, 'the number that was up repeats');
     expect(s.round.decision === null, 'nothing left held');
     await shots.shot(tv, { group: G, phase: 'resumed-same-call', device: 'tv', role: 'stage' });
@@ -256,12 +258,15 @@ async function main(): Promise<void> {
         (await b.page.getByRole('button', { name: /finish the game/i }).count()) === 1,
       'a blackout on every card: only the end',
     );
-    expect(s.wins[aId] === 6, 'a blackout after a line: 3 + 3');
+    // Scored at the verdict (loop 257), ≈ 9.4 s into a 24-cell sweep: a moment more, then check.
+    await settle(2000);
+    expect((await state()).wins[aId] === 6, 'a blackout after a line: 3 + 3 — at the verdict');
     tv2Marks.push({ name: 'auto-end', at: Date.now(), before: 0.2, seconds: 8 });
-    await settle(7000); // verdict at ≈ 9.4 s, read 3 s, then 2 s: the round ends by itself
+    await settle(5500); // read 3 s, then 2 s: the round ends by itself
     const room = (await api.state()).room;
+    // The last round: the drumroll (`final`, 4 s) then the results.
     expect(
-      room?.status === 'results' || room?.game?.state.phase.id === 'done',
+      room?.status === 'results' || ['final', 'done'].includes(room?.game?.state.phase.id ?? ''),
       'a blackout on every card ends the round by itself',
     );
     await shots.shot(tv2.page, { group: G, phase: 'blackout-win', device: 'tv', role: 'stage' });

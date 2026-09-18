@@ -45,12 +45,15 @@ interface GameStateBase {
 ```ts
 type GameEvent<I> =
   | { type: 'input'; now: number; playerId: string; input: I } // schema-valid input
-  | { type: 'timer'; now: number; phaseId: string; startedAt: number } // once per phase instance
+  | { type: 'timer'; now: number; phaseId: string; startedAt: number } // once per deadline (ADR-033)
   | { type: 'player'; now: number; playerId: string; connected: boolean } // (re)connect / leave
   | { type: 'vip'; now: number; action: 'skip' | 'pause' | 'resume' | 'end' };
 ```
 
-`reduce` must handle every event in every phase. The usual shape:
+`reduce` must handle every event in every phase. A timer fires once per phase instance — unless
+the reducer answers it by staying in the phase with a _later_ `deadline`, which is a second beat
+and fires too (ADR-033; Bingo scores a win at the TV's verdict, then waits for the room). Ignoring
+a timer, or a pause shifting the deadline, never re-arms it. The usual shape:
 
 ```ts
 // server/index.ts owns the phase ORDER; phase files never import each other (no import cycles).

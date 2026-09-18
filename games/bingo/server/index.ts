@@ -10,7 +10,7 @@ import type {
 } from '@partybox/game-sdk';
 import manifestJson from '../manifest.json' with { type: 'json' };
 import { sampleInput } from './bot';
-import { enterBingo, reduceBingo } from './phases/bingo';
+import { credit, enterBingo, reduceBingo } from './phases/bingo';
 import { enterCheck, reduceCheck } from './phases/check';
 import { enterIntro, reduceIntro } from './phases/intro';
 import { enterPlay, reducePlay } from './phases/play';
@@ -76,6 +76,7 @@ function init(ctx: InitContext): State {
       bingos: 0,
       patternBingos: 0,
       decision: null,
+      credited: false,
       arm: null,
       queue: [],
       menus: [],
@@ -126,7 +127,12 @@ export function advance(state: State, now: number): State {
 function reduce(state: State, event: GameEvent<Input>): State {
   if (event.type === 'player') return setConnected(state, event);
   // VIP skip = the phase's normal exit; VIP end always jumps to done (bingos as they stand).
-  const vip = applyVip(state, event, { skip: advance, end: enterDone });
+  // A win the TV has not scored yet (the VIP cut the reveal short) still counts.
+  const vip = applyVip(
+    state.phase.id === 'bingo' && event.type === 'vip' ? credit(state) : state,
+    event,
+    { skip: advance, end: enterDone },
+  );
   if (vip) return vip;
   if (state.phase.paused) return state; // inputs and timers wait while paused
   switch (state.phase.id) {
