@@ -85,7 +85,9 @@ export function FilledCard({
       <p className={styles.sentence}>
         {parts.map((s, i) =>
           s.kind === 'fill' ? (
-            <mark key={i} className={styles.fill}>
+            // Keyed by text as well: a new white dropped into the phone's preview mounts fresh
+            // and pops into place (review-loop #146).
+            <mark key={`${i}:${s.text}`} className={styles.fill}>
               {glue(s.text)}
             </mark>
           ) : (
