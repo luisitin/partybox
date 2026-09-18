@@ -4,7 +4,14 @@
 // validates with inputSchema before reduce sees the input.
 import { useEffect } from 'react';
 import type { JSX } from 'react';
-import { Avatar, Scoreboard, Screen, WaitingScreen, useSound } from '@partybox/game-sdk/ui';
+import {
+  Avatar,
+  Scoreboard,
+  Screen,
+  WaitingScreen,
+  useBeats,
+  useSound,
+} from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { BlanksControllerView } from '../server/index';
 import type { Input } from '../server/types';
@@ -12,7 +19,7 @@ import { FilledCard, LETTERS } from './Cards';
 import { ControllerHand, ControllerPick } from './ControllerHand';
 import { ControllerJudge, ControllerReveal } from './ControllerJudge';
 import { NextButton } from './NextButton';
-import { list, votesLabel, winnerLine } from './TvResult';
+import { RESULT_BEATS_MS, list, votesLabel, winnerLine } from './TvResult';
 import styles from './blanks.module.css';
 
 type Props = GameControllerProps<BlanksControllerView, Input>;
@@ -54,9 +61,15 @@ function ControllerIntro({ view, me }: Props): JSX.Element {
 function ControllerResult({ view, me, send }: Props): JSX.Element {
   const play = useSound();
   const final = view.phaseId === 'final' || view.phaseId === 'done';
+  // The TV names the winner on its third beat (1.2 s). The phone used to say "You won the round!"
+  // and chime the moment the result opened, which spoiled the TV's crown by more than a second for
+  // anyone holding a phone (review-loop #222). Both now wait for the same beat; with no TV in the
+  // room it is simply a beat.
+  const beat = useBeats(RESULT_BEATS_MS);
+  const named = final || beat >= 2;
   useEffect(() => {
-    if (view.iWon) play('correct');
-  }, [view.iWon, play]);
+    if (view.iWon && named) play('correct');
+  }, [view.iWon, named, play]);
   const winners = view.revealed.filter((r) => r.winner);
   const mine = view.revealed.find((r) => r.submitterId === me.id);
   // The judge's own phone: their pick, by name (they had no card in the round).
@@ -90,9 +103,17 @@ function ControllerResult({ view, me, send }: Props): JSX.Element {
     >
       <div className={styles.resultHero} role="status" aria-live="polite">
         <h2 className={styles.resultLine}>
-          {final ? rankLine : view.iWon ? wonLine : (iPicked ?? winnerLine(view))}
+          {final
+            ? rankLine
+            : named
+              ? view.iWon
+                ? wonLine
+                : (iPicked ?? winnerLine(view))
+              : `Round ${view.round} of ${view.rounds}`}
         </h2>
-        {!final ? (
+        {/* The "+1" and your new place belong to the same reveal: before the winner beat they give
+            the headline away (review-loop #222). */}
+        {!final && named ? (
           <p className="pb-caption pb-muted">
             {view.iWon ? '+1 · ' : ''}
             {rankLine}
@@ -134,7 +155,12 @@ function ControllerResult({ view, me, send }: Props): JSX.Element {
             : `Yours (${LETTERS[mine.slot]}) got ${mine.votes} ${mine.votes === 1 ? 'vote' : 'votes'}.`}
         </p>
       ) : null}
-      <Scoreboard compact highlightId={me.id} rows={view.standings} noTrophy />
+      {/* The point is already in the standings when the result opens, and the TV holds its own
+          strip back until the winner is named (`stripScores`). The phone's board keeps its place
+          and fades in on the same beat, so nothing counts up before the reveal (loop #222). */}
+      <div className={named ? undefined : styles.beatWait}>
+        <Scoreboard compact highlightId={me.id} rows={view.standings} noTrophy />
+      </div>
       {/* The night's best-liked card, on the phone too (review-loop #193). */}
       {final && view.bestCard ? (
         <div className={styles.bestCard}>
