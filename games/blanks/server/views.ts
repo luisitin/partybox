@@ -3,7 +3,7 @@
 // "reveal" on, TV and phones carry the same cards so the game is playable without the TV.
 import { controllerEnvelope, envelope } from '@partybox/game-sdk';
 import type { ControllerView, GameAward, PlayerStatus, TvView } from '@partybox/game-sdk';
-import { blackCard, whiteText } from './content';
+import { whiteText } from './content';
 import { allIn } from './phases/answer';
 import {
   canVote,
@@ -14,55 +14,16 @@ import {
   isWalkover,
   playedCount,
   playersExpected,
-  tally,
 } from './round';
 import { awardsFor, standings } from './scoring';
-import { RANDO, RANDO_NAME } from './types';
+import { bestCardView, standingsRows } from './views-board';
+import { blackChoices, blackView, person, revealedCards, stageCards } from './views-table';
+import type { BlackView, CardView, PersonView, RevealedCard } from './views-table';
+export type { BlackView, CardView, PersonView, RevealedCard } from './views-table';
+import type { BestCardView, StandingsRow } from './views-board';
+export type { BestCardView, StandingsRow } from './views-board';
+
 import type { JudgeMode, State } from './types';
-
-export interface BlackView {
-  text: string;
-  pick: number;
-  draw: number;
-  /** pick: the one the judge took (the others dim for a beat before the round starts). */
-  chosen?: boolean;
-}
-
-export interface PersonView {
-  id: string;
-  name: string;
-  avatarId: string;
-  connected: boolean;
-}
-
-/** One anonymous submission on stage. */
-export interface CardView {
-  slot: number;
-  whites: string[];
-}
-
-/** A submission once authors are public (result). */
-export interface RevealedCard extends CardView {
-  submitterId: string;
-  name: string;
-  avatarId: string;
-  /** The phantom player (Rando setting). */
-  rando: boolean;
-  votes: number;
-  voterIds: string[];
-  /** Who voted for this card, in id order (result only) — the room sees who liked what. */
-  voters: PersonView[];
-  winner: boolean;
-}
-
-export interface StandingsRow {
-  playerId: string;
-  name: string;
-  avatarId: string;
-  connected: boolean;
-  score: number;
-  rank: number;
-}
 
 export interface BlanksTvView extends TvView {
   round: number;
@@ -95,6 +56,8 @@ export interface BlanksTvView extends TvView {
   standings: StandingsRow[];
   /** final + done. */
   awards: GameAward[];
+  /** final + done: the card that took the most votes all night, if any took one. */
+  bestCard: BestCardView | null;
 }
 
 export interface BlanksControllerView extends ControllerView {
@@ -127,61 +90,8 @@ export interface BlanksControllerView extends ControllerView {
   myScore: number;
   myRank: number;
   standings: StandingsRow[];
-}
-
-function blackView(state: State): BlackView | null {
-  if (state.round === 0) return null;
-  const { text, pick, draw } = blackCard(state.blackId);
-  return { text, pick, draw };
-}
-
-function blackChoices(state: State): BlackView[] {
-  if (state.phase.id !== 'pick') return [];
-  return state.blackChoices.map((id) => {
-    const { text, pick, draw } = blackCard(id);
-    return { text, pick, draw, chosen: id === state.blackId };
-  });
-}
-
-function person(state: State, id: string | null): PersonView | null {
-  const p = id ? state.players[id] : undefined;
-  return p ? { id: p.id, name: p.name, avatarId: p.avatarId, connected: p.connected } : null;
-}
-
-function cardViews(state: State, upTo: number): CardView[] {
-  return state.slots.slice(0, upTo).map((submitter, slot) => ({
-    slot,
-    whites: (state.submissions[submitter] ?? []).map(whiteText),
-  }));
-}
-
-/** Cards on stage for this phase: none until reveal, one more per reveal step, all from judge on. */
-function stageCards(state: State): CardView[] {
-  const phase = state.phase.id;
-  if (phase === 'reveal') return cardViews(state, state.revealIndex + 1);
-  if (phase === 'judge' || phase === 'result') return cardViews(state, state.slots.length);
-  return [];
-}
-
-function revealedCards(state: State): RevealedCard[] {
-  if (state.phase.id !== 'result') return [];
-  const winners = new Set(state.winners);
-  return tally(state).map((t) => {
-    const p = state.players[t.submitterId];
-    const rando = t.submitterId === RANDO;
-    return {
-      slot: t.slot,
-      whites: t.cards.map(whiteText),
-      submitterId: t.submitterId,
-      name: rando ? RANDO_NAME : (p?.name ?? '?'),
-      avatarId: rando ? 'robot' : (p?.avatarId ?? 'ghost'),
-      rando,
-      votes: t.votes,
-      voterIds: t.voterIds,
-      voters: t.voterIds.map((id) => person(state, id)).filter((p): p is PersonView => p !== null),
-      winner: winners.has(t.submitterId),
-    };
-  });
+  /** final + done: the card of the night, so a phone sees the payoff the TV shows. */
+  bestCard: BestCardView | null;
 }
 
 function statusOf(state: State): (id: string) => PlayerStatus {
@@ -198,18 +108,6 @@ function statusOf(state: State): (id: string) => PlayerStatus {
     }
     return 'active'; // nothing to do in intro / reveal / result / final / done: plain chips
   };
-}
-
-function standingsRows(state: State): StandingsRow[] {
-  return standings(state).map((row) => {
-    const p = state.players[row.playerId];
-    return {
-      ...row,
-      name: p?.name ?? '?',
-      avatarId: p?.avatarId ?? 'ghost',
-      connected: !!p?.connected,
-    };
-  });
 }
 
 /** Untimed rounds keep a long hidden fallback on picking, voting and the result: no clock on
@@ -261,6 +159,7 @@ export function tvView(state: State, gameId: string): BlanksTvView {
     walkover: phase === 'result' && isWalkover(state),
     standings: onStage ? standingsRows(state) : [],
     awards: phase === 'final' || phase === 'done' ? awardsFor(state) : [],
+    bestCard: phase === 'final' || phase === 'done' ? bestCardView(state) : null,
   };
 }
 
@@ -322,5 +221,6 @@ export function controllerView(
       (phase === 'intro' && state.round > 1)
         ? standingsRows(state)
         : [],
+    bestCard: phase === 'final' || phase === 'done' ? bestCardView(state) : null,
   };
 }

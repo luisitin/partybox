@@ -286,3 +286,35 @@ describe('content', () => {
     expect(new Set(all).size).toBe(all.length);
   });
 });
+
+describe('card of the night', () => {
+  // The best-liked card of the game is kept for the final board: the most votes any one card took.
+  it('keeps the round with the most votes and shows it on the final board', () => {
+    let s = start({ rounds: 2 });
+    s = playRound(s, () => 0); // everyone piles onto the first slot
+    const best = s.stats.best;
+    expect(best?.round).toBe(1);
+    expect(best?.votes).toBe(3);
+    expect(best?.cards.length).toBeGreaterThan(0);
+
+    s = timer(s); // result → intro of round 2
+    s = playRound(s, (id) => Object.keys(s.players).sort().indexOf(id) % 2); // votes split
+    expect(s.stats.best?.round).toBe(1); // round 2 never beat it
+    expect(s.stats.best?.votes).toBe(3);
+
+    while (s.phase.id !== 'final') {
+      s = timer(s); // result → intro of the next round, or the final board
+      if (s.phase.id === 'intro') s = playRound(s, () => 1);
+    }
+    const view = tv(s);
+    expect(view.bestCard?.votes).toBe(3);
+    expect(view.bestCard?.black).toContain('_');
+    expect(view.bestCard?.name).toBeTruthy();
+  });
+
+  it('has no card of the night when nobody was voted for', () => {
+    const s = start({ rounds: 1 });
+    expect(s.stats.best).toBeNull();
+    expect(tv(s).bestCard).toBeNull();
+  });
+});

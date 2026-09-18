@@ -34,6 +34,19 @@ export interface Stats {
   votesReceived: Record<string, number>;
   /** playerId → cards played before half the answer time (Quick draw). */
   fastPlays: Record<string, number>;
+  /** The night's best-liked card: the most votes any one card took, kept for the final board.
+   *  Null until a card takes at least one vote (a judge's pick counts as one). */
+  best: BestCard | null;
+}
+
+export interface BestCard {
+  /** The submitter (a player id, or RANDO). */
+  submitterId: string;
+  /** The black card it answered and the whites played on it. */
+  blackId: string | null;
+  cards: string[];
+  votes: number;
+  round: number;
 }
 
 export interface State extends GameStateBase {
