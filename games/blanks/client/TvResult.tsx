@@ -23,6 +23,10 @@ type Props = GameTvProps<BlanksTvView>;
 
 /** Authors at 600 ms, the winner at 1200 ms. */
 export const RESULT_BEATS_MS = [0, 600, 1200] as const;
+/** The final board: the scores land, then the card of the night is dealt beside them (loop #192 —
+ *  the same 420 ms the `.bestCard` rise starts on, so the pluck and the card arrive together). */
+export const FINAL_BEATS_MS = [0, 420] as const;
+const BEAT_BEST = 1;
 const BEAT_AUTHORS = 1;
 const BEAT_WINNER = 2;
 /** Past this many players the chip strip takes three rows beside the timer. */
@@ -114,6 +118,11 @@ function Author({
 function TvFinal({ view }: Props): JSX.Element {
   const tied = view.standings.filter((r) => r.rank === 1).length > 1;
   const best = view.bestCard;
+  const play = useSound();
+  const beat = useBeats(FINAL_BEATS_MS);
+  useEffect(() => {
+    if (beat >= BEAT_BEST && best) play('card');
+  }, [beat, best, play]);
   return (
     <Stage center className={styles.table}>
       <p className={styles.kicker}>Final round played</p>
