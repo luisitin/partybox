@@ -34,6 +34,11 @@ export interface VoteListProps {
    * arrives — never keyed on `options`, which callers rebuild every render.
    */
   promptKey?: string;
+  /** What the phone says once the vote is echoed (default "✓ Vote in — look at the TV"); a game
+   *  that plays without a TV, or whose result comes to the phone, says so instead. `null` hides
+   *  the line (the caller carries the confirmation in its footer, where a long list cannot push
+   *  it under the sticky bar — review-loop #138). */
+  lockedLabel?: ReactNode;
 }
 
 const LETTERS = 'ABCDEFGH';
@@ -57,6 +62,7 @@ export function VoteList(props: VoteListProps): JSX.Element {
     footer,
     size = 'compact',
     promptKey,
+    lockedLabel,
   } = props;
   const [pending, setPending] = useState<Pending | null>(null);
   // "Adjust state when a prop changes": a new vote clears the optimistic lock.
@@ -124,9 +130,11 @@ export function VoteList(props: VoteListProps): JSX.Element {
         })}
       </div>
       {votedId !== null ? (
-        <p className={styles.locked} role="status">
-          ✓ Vote in — look at the TV
-        </p>
+        lockedLabel === null ? null : (
+          <p className={styles.locked} role="status">
+            {lockedLabel ?? '✓ Vote in — look at the TV'}
+          </p>
+        )
       ) : pendingId !== null ? (
         <p className={styles.locked} role="status">
           ✓ Locking in…

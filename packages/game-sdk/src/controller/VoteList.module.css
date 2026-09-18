@@ -93,6 +93,20 @@
   letter-spacing: 0.06em;
 }
 
+/* A row's text keeps its width: the tag sits at the end of the last line instead of squeezing
+   a wrapped sentence into a narrow column (a Blanks card on an iPhone SE, review-loop #138). */
+.option:has(.tag) {
+  flex-wrap: wrap;
+}
+
+.option:has(.tag) .text {
+  flex-basis: 100%;
+}
+
+.option:has(.tag) .tag {
+  margin-left: auto;
+}
+
 .mark {
   color: var(--pb-accent-3);
   font-weight: 900;

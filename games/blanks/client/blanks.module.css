@@ -530,6 +530,16 @@
 
 /* ── Phone ─────────────────────────────────────────────────────────────────────────────────── */
 
+/* "✓ Vote in · 3 / 6 voted" above the footer button. */
+.voteIn {
+  margin: 0 0 var(--pb-space-3);
+  text-align: center;
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  color: var(--pb-accent-3);
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
+
 .hand {
   list-style: none;
   margin: 0;
