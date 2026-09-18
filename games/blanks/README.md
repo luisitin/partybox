@@ -9,7 +9,7 @@ and takes one point. Playable with no TV in the room: from the reveal on, the ph
 
 ## Players
 
-3–12; ≈ 20 min by default (6 rounds). Every `init` player plays every round, connected or not (a
+3–12; ≈ 15 min by default (6 rounds — a round runs about a minute in a small room and closer to two with a full one; measured over live captures in review-loop #219). Every `init` player plays every round, connected or not (a
 disconnected player's card is simply not played). Late joiners spectate (engine behaviour). Bots:
 welcome (`supportsBots`) — the bot plays random cards from its hand and votes at random.
 
