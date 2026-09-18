@@ -17,7 +17,7 @@ export function blanksIn(text: string): number {
 
 export const blackCardSchema = z
   .object({
-    id: z.string().regex(/^[mcw]b\d{1,3}$/),
+    id: z.string().regex(/^[mcw]b\d{1,4}$/),
     text: z.string().min(1).max(BLACK_MAX_CHARS),
     /** White cards the prompt takes (1–3); at least as many as it has blanks. */
     pick: z.number().int().min(1).max(3),
@@ -28,7 +28,7 @@ export const blackCardSchema = z
 export type BlackCard = z.infer<typeof blackCardSchema>;
 
 export const whiteCardSchema = z.object({
-  id: z.string().regex(/^[mcw]w\d{1,3}$/),
+  id: z.string().regex(/^[mcw]w\d{1,4}$/),
   text: z.string().min(1).max(WHITE_MAX_CHARS),
 });
 export type WhiteCard = z.infer<typeof whiteCardSchema>;

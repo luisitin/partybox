@@ -256,14 +256,25 @@ describe('fill', () => {
 
 describe('content', () => {
   it('every deck has the promised counts and pick ≥ blanks on every black card', () => {
-    expect(DECKS.mild.black.length).toBeGreaterThanOrEqual(40);
-    expect(DECKS.mild.white.length).toBeGreaterThanOrEqual(160);
-    expect(DECKS.crude.black.length).toBeGreaterThanOrEqual(40);
-    expect(DECKS.wild.black.length).toBeGreaterThanOrEqual(100);
-    expect(DECKS.wild.white.length).toBeGreaterThanOrEqual(500);
+    expect(DECKS.mild.black.length).toBeGreaterThanOrEqual(140);
+    expect(DECKS.mild.white.length).toBeGreaterThanOrEqual(390);
+    expect(DECKS.crude.black.length).toBeGreaterThanOrEqual(120);
+    expect(DECKS.crude.white.length).toBeGreaterThanOrEqual(320);
+    expect(DECKS.wild.black.length).toBeGreaterThanOrEqual(190);
+    expect(DECKS.wild.white.length).toBeGreaterThanOrEqual(640);
     for (const deck of Object.values(DECKS))
       for (const card of deck.black)
         expect(card.pick, card.text).toBeGreaterThanOrEqual(card.text.split('____').length - 1);
+  });
+
+  it('no text appears twice across the three decks (the same string in two hands would leak)', () => {
+    const seen = new Map<string, string>();
+    for (const deck of Object.values(DECKS))
+      for (const card of [...deck.black, ...deck.white]) {
+        const key = card.text.trim().toLowerCase().replace(/\s+/g, ' ');
+        expect(seen.get(key), `${card.id} duplicates ${seen.get(key)}`).toBeUndefined();
+        seen.set(key, card.id);
+      }
   });
 
   it('white ids are unique across all three decks', () => {

@@ -77,7 +77,10 @@ number 6 (3–15) · `answerSeconds` number 60 (30–120, step 15; timed only) �
 
 ## Content
 
-Three decks, `mild.json` (clean, 40 black / 167 white), `crude.json` (adult, 41 / 166) and `wild.json`
-(explicit, 111 / 503): `{ id, name, rating, black: [{ id, text, pick, draw }], white: [{ id, text }] }`,
-blanks written `____`, `pick` ≥ blanks (a question card has none), `draw` 2 on Pick 3 cards. Generic
-names only, no real people; no slurs or hate, nothing sexual involving minors, no non-consent.
+Three decks, `mild.json` (clean, 141 black / 397 white), `crude.json` (adult, 127 / 325) and `wild.json`
+(explicit, 197 / 647): `{ id, name, rating, black: [{ id, text, pick, draw }], white: [{ id, text }] }`,
+blanks written `____`, `pick` ≥ blanks (a question card has none), `draw` 2 on Pick 3 cards. Mainstream
+real-world references are fine in crude and wild (heads of state past and present, well-known events);
+no obscure ones; no slurs or hate, nothing sexual involving minors, no non-consent. Add cards with
+`pnpm exec tsx scripts/blanks-add-cards.ts <deck> black.txt white.txt` (ids, pick/draw and dedupe are
+automatic).
