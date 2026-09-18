@@ -3,7 +3,8 @@
 import type { JSX } from 'react';
 import { Scoreboard, Screen } from '@partybox/game-sdk/ui';
 import type { BingoControllerView } from '../server/views';
-import { Card } from './Card';
+import { PATTERN_LABEL, patternCells } from '../server/patterns';
+import { Card, PatternIcon } from './Card';
 import { DecideFooter, rows } from './ControllerParts';
 import type { Send } from './ControllerParts';
 import { winTitle } from './copy';
@@ -71,12 +72,16 @@ export function EndScreens({
     );
   }
   if (view.phaseId === 'scoreboard') {
+    const next = view.patterns[view.round] ?? null; // the shape and the name, as the TV (loop 288)
     return (
       <Screen key="scoreboard" title="Points so far">
         <Scoreboard rows={rows(view)} compact highlightId={meId} noTrophy />
-        <p className={styles.hint}>
-          Next: round {view.round + 1} — {view.patterns[view.round] ?? ''}
-        </p>
+        {next ? (
+          <p className={`${styles.hint} ${styles.nextUp}`}>
+            <PatternIcon cells={patternCells(next)} size={28} />
+            Next: round {view.round + 1} — {PATTERN_LABEL[next]}
+          </p>
+        ) : null}
       </Screen>
     );
   }

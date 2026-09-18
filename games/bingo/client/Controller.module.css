@@ -974,3 +974,11 @@
     animation: none;
   }
 }
+
+/* "Next: round 2 — Four corners" with the shape (loop 288). */
+.nextUp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pb-space-2);
+}
