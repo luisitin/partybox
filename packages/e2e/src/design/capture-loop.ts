@@ -97,9 +97,9 @@ async function main(): Promise<void> {
       await page.waitForSelector('[data-surface="controller"]');
       return { device: 'iphone', context, page, name, playerId: null };
     };
-    const sam = await openRecorded('Sam');
+    const sam = await openRecorded(process.env.PB_NAME_A ?? 'Sam'); // long-name stress: env
     await joinViaForm(sam, api, { avatarIndex: 3 });
-    const priya = await openPhone(browser, server.url, 'pixel', 'Priya');
+    const priya = await openPhone(browser, server.url, 'pixel', process.env.PB_NAME_B ?? 'Priya');
     await priya.context.addInitScript(HOOKS);
     await joinViaForm(priya, api, { avatarIndex: 6 });
     const bots = Math.max(0, PLAYERS - 2);
