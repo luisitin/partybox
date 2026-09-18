@@ -141,9 +141,17 @@ export function BingoButton({
   const canTap = view.claimable.includes(card) && !checking;
   let label = 'BINGO!';
   let tone: 'accent' | 'neutral' | 'danger' | 'success' = 'accent';
-  // The check first: a card under review says so, never "Yours already" before the verdict.
+  // The check first: a card under review says so, never "Yours already" before the verdict. The
+  // other phones read the verdict too (loop 308): "Sam's card: not a bingo" once it lands.
+  const who = view.claim?.name ?? 'Their';
   if (checking)
-    label = myCheck ? 'Not a bingo' : myClaim ? 'Checking on the TV…' : 'Look at the TV';
+    label = myCheck
+      ? 'Not a bingo'
+      : myClaim
+        ? 'Checking on the TV…'
+        : view.phaseId === 'check' && verdictShown
+          ? `${who}'s card: not a bingo`
+          : 'Look at the TV';
   else if (won) label = 'Yours already';
   else if (view.waitingForCall) label = 'Next number soon…';
   else if (armedHere) {
