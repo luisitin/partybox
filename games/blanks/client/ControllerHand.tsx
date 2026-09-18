@@ -160,9 +160,14 @@ export function ControllerHand({ view, send }: Props): JSX.Element {
         : `Pick ${pick - picked.length} more`;
   const toggle = (id: string): void => {
     if (sent) return;
-    setPicked((p) =>
-      p.includes(id) ? p.filter((x) => x !== id) : p.length < pick ? [...p, id] : p,
-    );
+    setPicked((p) => {
+      if (p.includes(id)) return p.filter((x) => x !== id);
+      if (p.length < pick) return [...p, id];
+      // A Pick 1 round is a choice, not a checklist: tapping another card moves the pick to it,
+      // instead of doing nothing until the first is untapped (review-loop #240). With two or three
+      // blanks the order is the joke, so a full pick still has to be undone deliberately.
+      return pick === 1 ? [id] : p;
+    });
   };
   return (
     <Screen
