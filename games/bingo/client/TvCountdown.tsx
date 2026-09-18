@@ -117,7 +117,8 @@ export function Resume({
             style={{ animationDuration: `${RESUME_MS}ms` }}
           />
         </svg>
-        <BigText key={left} level="display" tone="accent" className="pb-pop">
+        {/* The ring and its 3 arrive together; a change of digit pops (loop 300). */}
+        <BigText key={left} level="display" tone="accent" className={left < 3 ? 'pb-pop' : ''}>
           {Math.max(1, left)}
         </BigText>
       </div>

@@ -125,7 +125,8 @@ export function Countdown({
             style={{ animationDuration: `${RESUME_MS}ms` }}
           />
         </svg>
-        <div key={shown} className={`${styles.count} pb-pop`}>
+        {/* The curtain and its 3 arrive together; a change of digit pops (loop 300). */}
+        <div key={shown} className={`${styles.count} ${shown < 3 ? 'pb-pop' : ''}`}>
           {shown}
         </div>
       </div>
@@ -149,7 +150,7 @@ export function IntroCount({ deadline }: { deadline: number | null }): JSX.Eleme
       {shown > 0 ? (
         <>
           first number in{' '}
-          <b key={shown} className="pb-pop">
+          <b key={shown} className={shown < 3 ? 'pb-pop' : ''}>
             {shown}
           </b>
         </>
