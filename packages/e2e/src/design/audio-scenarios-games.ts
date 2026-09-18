@@ -28,6 +28,7 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
   void pages;
   // ── D. Bingo ────────────────────────────────────────────────────────────────────────
   T.section('D · Bingo: music set, the caller, a wrong claim, a bingo, keep going, results');
+  const home = tv.getByRole('button', { name: /^home$/i });
   await api.clock(true);
   await api.start('bingo', 11);
   await settle(1500);
@@ -217,6 +218,82 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
       .map((e) => e['text'])
       .join(' | ')}`,
   );
+  // A game that ends on its own (one round): the bingo → the drumroll ("and the winner is…",
+  // the final board, the tally chime, no fanfare yet) → 4 s later the results cheer (loop 246).
+  await home.click();
+  await home.click();
+  await settle(2500);
+  // A blackout round: the first full card ends the round by itself (nothing can continue), so
+  // the drumroll follows without a tap.
+  await api.post('/api/dev/start', {
+    gameId: 'bingo',
+    seed: 5,
+    settings: { rounds: 1, round1: 'blackout', cards: 1, callSeconds: 60 },
+  });
+  await settle(600);
+  await api.skip();
+  await api.clock(false); // the auto-end and the drumroll run on real time
+  for (let i = 0; i < 80; i += 1) {
+    const s = (await api.state()).room?.game?.state as unknown as {
+      phase: { id: string };
+      round: { deck: number[]; drawn: number; cards: Record<string, number[][]> };
+    };
+    if (s.phase.id !== 'play') break;
+    const called = new Set(s.round.deck.slice(0, s.round.drawn));
+    const card = s.round.cards[vipId]?.[0] ?? [];
+    if (card.every((n, k) => k === 12 || called.has(n))) break;
+    await api.skip();
+    await settle(60);
+  }
+  const full =
+    (
+      (await api.state()).room?.game?.state as unknown as {
+        round: { cards: Record<string, number[][]> };
+      }
+    ).round.cards[vipId]?.[0] ?? [];
+  for (let i = 0; i < 25; i += 1) {
+    if (i === 12) continue;
+    const letter = 'BINGO'[i % 5];
+    await vip.page
+      .getByRole('gridcell', { name: new RegExp(`^${letter} ${full[i]}$`) })
+      .first()
+      .click();
+  }
+  await settle(300);
+  await vip.page.getByRole('button', { name: /^bingo! card 1$/i }).click();
+  await settle(250);
+  await vip.page.getByRole('button', { name: /tap again to claim/i }).dispatchEvent('click');
+  await settle(12500); // a 25-cell reveal (≈ 9.4 s), the verdict read (3 s), then 2 s: the round ends itself
+  await T.mark('D9b');
+  await settle(2000);
+  await T.mark('D9c');
+  const drum = await T.between(tv, 'D9b', 'D9c');
+  T.ok(
+    'D',
+    'the last bingo → the drumroll: the final board with the tally chime, no cheer or fanfare yet',
+    (await api.state()).room?.game?.state.phase.id === 'final' &&
+      T.cues(drum).includes('tally') &&
+      !T.cues(drum).some((c) => ['cheer', 'fanfare', 'win'].includes(c)),
+    `phase=${(await api.state()).room?.game?.state.phase.id} cues=${T.cues(drum).join(',')}`,
+  );
+  await settle(3500);
+  await T.mark('D9d');
+  const fan = await T.between(tv, 'D9c', 'D9d');
+  T.ok(
+    'D',
+    '4 s on → the results cheer, once',
+    (await api.state()).room?.status === 'results' &&
+      T.cues(fan).filter((c) => c === 'cheer').length === 1,
+    `status=${(await api.state()).room?.status} cues=${T.cues(fan).join(',')}`,
+  );
+  await home.click();
+  await home.click();
+  await settle(2500);
+  await api.bots(2, 'idle');
+  await api.clock(true);
+  await api.start('bingo', 11);
+  await settle(1500);
+  await T.mark('D9e');
   // the VIP ends the game from the phone menu: results
   await vip.page.getByRole('button', { name: /vip/i }).click();
   await settle(300);
@@ -225,7 +302,7 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
   await vip.page.getByRole('button', { name: /end game/i }).click();
   await settle(2000);
   await T.mark('D10');
-  evs = await T.between(tv, 'D9', 'D10');
+  evs = await T.between(tv, 'D9e', 'D10');
   T.ok(
     'D',
     'VIP ends Bingo → results cheer once; Bingo music stops; no speech after leaving play',
@@ -243,7 +320,7 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
 
   // ── E. Home from results, then Home mid-game ────────────────────────────────────────
   T.section('E · Home (reset) from results and mid-game');
-  const home = tv.getByRole('button', { name: /^home$/i });
+  // `home` is declared with section D (the drumroll check uses it first).
   await home.click();
   await home.click();
   await settle(2500);

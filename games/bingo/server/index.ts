@@ -14,7 +14,13 @@ import { enterBingo, reduceBingo } from './phases/bingo';
 import { enterCheck, reduceCheck } from './phases/check';
 import { enterIntro, reduceIntro } from './phases/intro';
 import { enterPlay, reducePlay } from './phases/play';
-import { enterDone, enterScoreboard, reduceScoreboard } from './phases/scoreboard';
+import {
+  enterDone,
+  enterFinal,
+  enterScoreboard,
+  reduceFinal,
+  reduceScoreboard,
+} from './phases/scoreboard';
 import { results } from './scoring';
 import { DECK, MAX_CARDS, MAX_ROUNDS, PATTERNS, PHASES, inputSchema } from './types';
 import type { Input, Pattern, Settings, State } from './types';
@@ -91,7 +97,7 @@ function nextCallOrEnd(state: State, now: number): State {
 function afterBingo(state: State, now: number): State {
   return state.round.number < state.settings.rounds
     ? enterScoreboard(state, now)
-    : enterDone(state, now);
+    : enterFinal(state, now);
 }
 
 function nextRound(state: State, now: number): State {
@@ -110,6 +116,8 @@ export function advance(state: State, now: number): State {
       return afterBingo(state, now);
     case 'scoreboard':
       return nextRound(state, now);
+    case 'final': // skip = straight to the results
+      return enterDone(state, now);
     default:
       return state;
   }
@@ -135,6 +143,8 @@ function reduce(state: State, event: GameEvent<Input>): State {
       });
     case 'scoreboard':
       return reduceScoreboard(state, event, nextRound);
+    case 'final':
+      return reduceFinal(state, event);
     default:
       return state;
   }

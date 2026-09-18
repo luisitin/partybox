@@ -62,6 +62,14 @@ export function EndScreens({
   view: BingoControllerView;
   meId: string;
 }): JSX.Element {
+  if (view.phaseId === 'final') {
+    return (
+      <Screen key="final" title="Final points">
+        <Scoreboard rows={rows(view)} compact highlightId={meId} noTrophy />
+        <p className={styles.hint}>And the winner is… look at the TV.</p>
+      </Screen>
+    );
+  }
   if (view.phaseId === 'scoreboard') {
     return (
       <Screen key="scoreboard" title="Points so far">

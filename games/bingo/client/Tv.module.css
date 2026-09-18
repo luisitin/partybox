@@ -483,3 +483,18 @@
     animation: none;
   }
 }
+
+/* "And the winner is…" (loop 246): the dots breathe while the room waits for the fanfare. */
+.ellipsis {
+  display: inline-block;
+  animation: ellipsis-breathe var(--pb-motion-pulse) ease-in-out infinite;
+}
+@keyframes ellipsis-breathe {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
