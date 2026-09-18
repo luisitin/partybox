@@ -265,6 +265,9 @@ export function Controller({
                 pattern={view.patternLabel}
                 missed={missed && !view.showBoard ? view.recent.slice(-missed - 1, -1) : null}
               />
+            ) : kind === 'grid' && n === 3 ? (
+              // Three cards: the call sits in the grid's spare slot — not twice (owner, loop 309).
+              <span className={styles.topSpacer} aria-hidden />
             ) : (
               <CallRow view={view} />
             )}
