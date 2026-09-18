@@ -1,0 +1,123 @@
+{
+  "pass": "345",
+  "game": "blanks",
+  "players": 5,
+  "scenario": "walkover",
+  "focus": "tv",
+  "started": "22:46:59.865",
+  "tvVideoT0": "22:46:56.567",
+  "phoneVideoT0": "22:46:57.484",
+  "changes": [
+    {
+      "t": 1789771619869,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789771624859,
+      "bed": "warm",
+      "at": "22:46:59.869",
+      "sinceStartS": 0,
+      "videoS": 3.3,
+      "phoneVideoS": 2.4
+    },
+    {
+      "t": 1789771624889,
+      "status": "playing",
+      "phase": "pick",
+      "deadline": 1789771644874,
+      "bed": "lofi",
+      "at": "22:47:04.889",
+      "sinceStartS": 5,
+      "videoS": 8.3,
+      "phoneVideoS": 7.4
+    },
+    {
+      "t": 1789771630519,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789771660479,
+      "bed": "bossa",
+      "at": "22:47:10.519",
+      "sinceStartS": 10.7,
+      "videoS": 14,
+      "phoneVideoS": 13
+    },
+    {
+      "t": 1789771660585,
+      "status": "playing",
+      "phase": "result",
+      "deadline": 1789771668487,
+      "bed": "lounge",
+      "at": "22:47:40.585",
+      "sinceStartS": 40.7,
+      "videoS": 44,
+      "phoneVideoS": 43.1
+    },
+    {
+      "t": 1789771668543,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789771673489,
+      "bed": "warm",
+      "at": "22:47:48.543",
+      "sinceStartS": 48.7,
+      "videoS": 52,
+      "phoneVideoS": 51.1
+    },
+    {
+      "t": 1789771673598,
+      "status": "playing",
+      "phase": "pick",
+      "deadline": 1789771693497,
+      "bed": "latenight",
+      "at": "22:47:53.598",
+      "sinceStartS": 53.7,
+      "videoS": 57,
+      "phoneVideoS": 56.1
+    },
+    {
+      "t": 1789771693516,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789771723510,
+      "bed": "marimba",
+      "at": "22:48:13.516",
+      "sinceStartS": 73.7,
+      "videoS": 76.9,
+      "phoneVideoS": 76
+    },
+    {
+      "t": 1789771723612,
+      "status": "playing",
+      "phase": "result",
+      "deadline": 1789771731516,
+      "bed": "lounge",
+      "at": "22:48:43.612",
+      "sinceStartS": 103.7,
+      "videoS": 107,
+      "phoneVideoS": 106.1
+    },
+    {
+      "t": 1789771731526,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789771736521,
+      "bed": "warm",
+      "at": "22:48:51.526",
+      "sinceStartS": 111.7,
+      "videoS": 115,
+      "phoneVideoS": 114
+    },
+    {
+      "t": 1789771736591,
+      "status": "playing",
+      "phase": "pick",
+      "deadline": 1789771756526,
+      "bed": "lofi",
+      "at": "22:48:56.591",
+      "sinceStartS": 116.7,
+      "videoS": 120,
+      "phoneVideoS": 119.1
+    }
+  ],
+  "notes": ["budget reached while playing; skipped to results"]
+}
