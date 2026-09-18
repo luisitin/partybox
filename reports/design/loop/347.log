@@ -1,0 +1,14 @@
+(node:11880) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+pass 347: blanks walkover 5p — 10 phase changes, 41 cues, tv long frames 10 (worst 67 ms), 138 s → C:\dev\partybox\.claude\worktrees\blanks-loop\reports\design\loop\347
+  +0.0s playing/intro (timer 5 s)
+  +5.1s playing/answer (timer 30 s)
+  +35.0s playing/result (timer 8 s)
+  +43.1s playing/intro (timer 5 s)
+  +48.1s playing/answer (timer 30 s)
+  +78.1s playing/result (timer 8 s)
+  +86.1s playing/intro (timer 5 s)
+  +91.1s playing/answer (timer 30 s)
+  +121.1s playing/result (timer 8 s)
+  +129.2s playing/final (timer 4 s)
+  note: budget reached while playing; skipped to results
