@@ -1,5 +1,6 @@
-// The claim reveal's beats, shared by the TV (which plays them) and the phone (which holds its
-// verdict until the TV has shown it — DESIGN_SYSTEM principle 5). Owner, 2026-09-17: "wait a
+// The claim reveal's beats: pure numbers the TV plays, the phone holds its verdict by (until
+// the TV has shown it — DESIGN_SYSTEM principle 5) and the server sizes the check phase with,
+// so all three agree from one file. Owner, 2026-09-17: "wait a
 // second and say someone has a bingo, then display the card, then do the sweep slowly".
 export const ANNOUNCE_MS = 1000; // "Sam says BINGO!" alone on the stage
 export const DROP_MS = 700; // the card drops in with a bounce
@@ -26,4 +27,12 @@ export function verdictAtMs(patternCells: number, hasRest: boolean): number {
     HOLD_MS +
     SETTLE_MS
   );
+}
+
+/** After the verdict lands the room reads it: the check phase ends this long after. */
+export const VERDICT_READ_MS = 3_000;
+
+/** How long a check runs for this claim: its reveal, then the reading margin. */
+export function checkMs(patternCells: number, hasRest: boolean): number {
+  return verdictAtMs(patternCells, hasRest) + VERDICT_READ_MS;
 }

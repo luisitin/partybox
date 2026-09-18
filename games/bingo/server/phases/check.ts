@@ -7,7 +7,7 @@ import { enterPhase, isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { toggleDaub } from '../cards';
 import { clearClaims, setMenu } from '../claims';
-import { CHECK_MS } from '../types';
+import { checkMs } from '../reveal';
 import type { Claim, Input, State, Transition } from '../types';
 
 export function enterCheck(state: State, now: number, claim: Claim): State {
@@ -26,7 +26,10 @@ export function enterCheck(state: State, now: number, claim: Claim): State {
     }),
     'check',
     now,
-    CHECK_MS,
+    checkMs(
+      claim.cells.length,
+      claim.daubs.some((i) => !claim.cells.includes(i)),
+    ),
   );
 }
 

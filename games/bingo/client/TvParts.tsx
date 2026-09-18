@@ -29,7 +29,7 @@ import {
   STEP_MANY_MS,
   STEP_MS,
   STING_LAG_MS,
-} from './reveal';
+} from '../server/reveal';
 
 const BOARD_ROWS = ['B', 'I', 'N', 'G', 'O'] as const;
 

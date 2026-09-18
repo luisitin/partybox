@@ -22,7 +22,7 @@ import {
   useOrientationLock,
 } from './styles';
 import type { CardStyle } from './styles';
-import { verdictAtMs } from './reveal';
+import { verdictAtMs } from '../server/reveal';
 import styles from './Controller.module.css';
 
 /** What happens after this bingo: the room decides, fresh cards, or the final board. */
