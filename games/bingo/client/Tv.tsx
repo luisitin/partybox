@@ -126,10 +126,10 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
             ? ` · ${view.bingosThisRound} bingo${view.bingosThisRound === 1 ? '' : 's'} so far`
             : ''}
         </p>
-        {view.current ? <Call call={view.current} big /> : null}
+        {view.current ? <Call call={view.current} big stamp={view.calledAt} /> : null}
         {/* Ball first (180 ms pop), nickname 120 ms behind it: the number is the news (review-loop #1). */}
         {view.current ? (
-          <div key={view.current.number} className={styles.caption}>
+          <div key={`${view.current.number}:${view.calledAt ?? ''}`} className={styles.caption}>
             <BigText level="h1">{view.current.call}</BigText>
           </div>
         ) : null}

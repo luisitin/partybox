@@ -44,8 +44,11 @@ export function CallHeader({
     <div className={styles.header} role="status" aria-live="polite">
       <div className={styles.now} key={current.number}>
         {/* Spicy nicknames run long ("Doctor's orders — take two and call me"): over ~20 characters
-            the phrase steps down a size so a 320 px phone keeps the call line below it (loop #7). */}
+            the phrase steps down a size so a 320 px phone keeps the call line below it (loop #7).
+            The number itself can never be the part that is cut: on a short phone the phrase is one
+            line with an ellipsis, so the digits lead it there (loop 313 — an SE lost "seventy-five"). */}
         <span className={`${styles.phrase} ${current.call.length > 20 ? styles.phraseLong : ''}`}>
+          <b className={styles.phraseNumber}>{current.number}</b>
           {current.call}
         </span>
       </div>
@@ -143,6 +146,7 @@ export function BingoButton({
   let tone: 'accent' | 'neutral' | 'danger' | 'success' = 'accent';
   // The check first: a card under review says so, never "Yours already" before the verdict. The
   // other phones read the verdict too (loop 308): "Sam's card: not a bingo" once it lands.
+  const mineChecking = view.claim?.playerId === meId; // any of my cards: my claim, my verdict
   const who = view.claim?.name ?? 'Their';
   if (checking)
     label = myCheck
@@ -150,7 +154,9 @@ export function BingoButton({
       : myClaim
         ? 'Checking on the TV…'
         : view.phaseId === 'check' && verdictShown
-          ? `${who}'s card: not a bingo`
+          ? mineChecking
+            ? 'Not a bingo — see card ' + ((view.claim?.cardIndex ?? 0) + 1)
+            : `${who}'s card: not a bingo`
           : 'Look at the TV';
   else if (won) label = 'Yours already';
   else if (view.waitingForCall) label = 'Next number soon…';

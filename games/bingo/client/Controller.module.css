@@ -31,6 +31,11 @@
 .phraseLong {
   font-size: var(--pb-font-h2);
 }
+/* The digits inside the phrase: hidden where the phrase wraps (the TV carries the number and the
+   ball sits in the row); shown on a short phone where the phrase is one clipped line. */
+.phraseNumber {
+  display: none;
+}
 
 .meta {
   margin: 0;
@@ -266,13 +271,18 @@
   .focusMany .focusMain {
     max-width: min(100%, max(168px, calc((100dvh - 430px) / 1.15)));
   }
-  /* One line for the nickname, no wrap: the meta line under it carries the rest. */
+  /* One line for the nickname, no wrap: the meta line under it carries the rest — with the
+     number in front, so the ellipsis only ever eats the pun (loop 313). */
   .focusMany ~ * .phrase,
   .phrase {
     font-size: var(--pb-font-body);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+  .phraseNumber {
+    display: inline;
+    margin-right: 0.4em;
   }
   .header {
     min-height: 40px;
@@ -408,6 +418,12 @@
 .slot.won {
   opacity: 0.45;
 }
+/* Before the verdict the note is a quiet line, the same height: the card does not move. */
+.wipeNote.wipeNotePending {
+  color: var(--pb-text-muted);
+  font-weight: 600;
+}
+
 /* The three-card grid's top row holds only the style pill: the call lives in the spare slot. */
 .topSpacer {
   flex: 1;
@@ -442,6 +458,7 @@
 
 .wipeNote {
   margin: 0 0 var(--pb-space-1);
+  min-height: calc(var(--pb-font-caption) * 1.2 * 2); /* two lines, held from the claim */
   line-height: 1.2;
   font-size: var(--pb-font-caption);
   font-weight: 700;
@@ -681,6 +698,19 @@
 }
 /* A short phone: the three keep-going buttons drop to body size so the card keeps its rows. */
 @media (max-height: 640px) {
+  /* The intro on a short phone (an SE, loop 313): there is no room for a big card AND the
+     thumbnails above the button (a cell's height is its digits', so the card cannot shrink past
+     ~150 px), and the thumbnails were sitting under the button. Several cards: the big card goes
+     and the dealt cards are the row, at a size that reads — the pick to swap is the tap on one. */
+  .intro .hint {
+    display: none;
+  }
+  .focus.dealing.focusMany .focusMain {
+    display: none;
+  }
+  .focus.dealing .thumbs {
+    --pb-thumb: 118px;
+  }
   .decide > button {
     min-height: 44px;
     padding: 6px var(--pb-space-3);

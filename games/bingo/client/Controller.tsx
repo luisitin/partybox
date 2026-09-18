@@ -170,7 +170,7 @@ export function Controller({
             }}
           >
             🎲 {left ? 'Deal me another' : 'Swapped'}
-            {n > 1 ? ` (card ${pick + 1})` : ''}
+            {n > 1 ? ` · card ${pick + 1}` : ''}
           </PrimaryButton>
         }
       >
@@ -278,10 +278,13 @@ export function Controller({
             ) : null}
           </div>
           {missed ? <MissedToast view={view} count={missed} /> : null}
-          {view.phaseId === 'check' && view.claim?.playerId === me.id && verdictShown ? (
-            <p className={styles.wipeNote}>
-              {whyNot(view.claim) ? `${whyNot(view.claim)}. ` : ''}Card{' '}
-              {(view.claim.cardIndex ?? 0) + 1} wiped — re-daub from memory when play resumes.
+          {view.phaseId === 'check' && view.claim?.playerId === me.id ? (
+            // The note's lines are reserved from the claim (loop 313): filling them at the verdict
+            // used to drop the card 25 px in one frame. Before the verdict they say what is on.
+            <p className={`${styles.wipeNote} ${verdictShown ? '' : styles.wipeNotePending}`}>
+              {verdictShown
+                ? `${whyNot(view.claim) ? `${whyNot(view.claim)}. ` : ''}Card ${(view.claim.cardIndex ?? 0) + 1} wiped — re-daub from memory when play resumes.`
+                : `Card ${(view.claim.cardIndex ?? 0) + 1} is on the TV — everyone is checking it.`}
             </p>
           ) : null}
           {body}

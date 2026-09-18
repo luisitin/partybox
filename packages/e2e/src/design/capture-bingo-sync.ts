@@ -19,7 +19,10 @@ async function main(): Promise<void> {
     await passAudioGate(tv);
     const sam = await openPhone(browser, server.url, 'iphone', 'Sam');
     await joinViaForm(sam, api, { avatarIndex: 1 });
-    await api.bots(2, 'idle');
+    // Priya's SE too (loop 313): the non-claimant's phone must not lead the TV on a verdict.
+    const priya = await openPhone(browser, server.url, 'iphone-se', 'Priya');
+    await joinViaForm(priya, api, { avatarIndex: 5 });
+    await api.bots(1, 'idle');
     await api.post('/api/dev/start', {
       gameId: 'bingo',
       seed: 9,
@@ -57,10 +60,11 @@ async function main(): Promise<void> {
     const rows: string[] = [];
     let lastTv = '',
       lastPh = '';
-    while (Date.now() - t0 < 14000) {
-      const [a, b] = await Promise.all([
-        tv.evaluate(() => {
-          const t = document.body.innerText;
+    let lastP = '';
+    const read = (page: typeof tv, kind: 'tv' | 'phone'): Promise<string> =>
+      page.evaluate((k) => {
+        const t = document.body.innerText;
+        if (k === 'tv')
           return t.includes('CALLING RESUMES IN')
             ? 'ring'
             : t.includes('NOT A BINGO')
@@ -68,19 +72,21 @@ async function main(): Promise<void> {
               : /BEFORE THAT|CALL \d+ OF 75/.test(t)
                 ? 'play'
                 : 'other';
-        }),
-        sam.page.evaluate(() => {
-          const t = document.body.innerText;
-          return t.includes('get your thumbs ready')
-            ? 'ring'
-            : t.includes('Not a bingo')
-              ? 'verdict'
-              : t.includes('Look at the TV') || t.includes('Checking')
-                ? 'check'
-                : t.includes('BINGO!')
-                  ? 'play'
-                  : 'other';
-        }),
+        return t.includes('get your thumbs ready')
+          ? 'ring'
+          : /[Nn]ot a bingo/.test(t)
+            ? 'verdict'
+            : t.includes('Look at the TV') || t.includes('Checking')
+              ? 'check'
+              : t.includes('BINGO!')
+                ? 'play'
+                : 'other';
+      }, kind);
+    while (Date.now() - t0 < 14000) {
+      const [a, b, c] = await Promise.all([
+        read(tv, 'tv'),
+        read(sam.page, 'phone'),
+        read(priya.page, 'phone'),
       ]);
       const ms = Date.now() - t0;
       if (a !== lastTv) {
@@ -88,8 +94,12 @@ async function main(): Promise<void> {
         lastTv = a;
       }
       if (b !== lastPh) {
-        rows.push(`${ms} phone → ${b}`);
+        rows.push(`${ms} sam → ${b}`);
         lastPh = b;
+      }
+      if (c !== lastP) {
+        rows.push(`${ms} priya → ${c}`);
+        lastP = c;
       }
       await settle(25);
     }
