@@ -1,4 +1,5 @@
-// Three consecutive calls on the TV at 10 fps (loop 247): every ball must drop, not only the first.
+// Three consecutive calls at 10 fps, the TV and Sam's phone recorded together (loop 247/248): every
+// ball must drop, and the phone's nickname must land on the same beat.
 // Usage: tsx packages/e2e/src/design/capture-bingo-calls.ts --out <dir> [--port 42155]
 import { join } from 'node:path';
 import { parseArgs } from 'node:util';
@@ -8,7 +9,7 @@ import {
   DevApi,
   cutStrips,
   joinViaForm,
-  openPhone,
+  openPhoneRecorded,
   openTvRecorded,
   passAudioGate,
   settle,
@@ -28,7 +29,13 @@ async function main(): Promise<void> {
     await api.reset();
     const rec = await openTvRecorded(browser, server.url, join(OUT, 'video'));
     await passAudioGate(rec.page);
-    const sam = await openPhone(browser, server.url, 'iphone', 'Sam');
+    const sam = await openPhoneRecorded(
+      browser,
+      server.url,
+      'iphone',
+      'Sam',
+      join(OUT, 'video-phone'),
+    );
     await joinViaForm(sam, api, { avatarIndex: 1 });
     await api.bots(2, 'idle');
     await api.post('/api/dev/start', {
@@ -44,6 +51,7 @@ async function main(): Promise<void> {
       await api.skip();
       await settle(1200);
     }
+    await cutStrips(sam, join(OUT, 'strips-phone'), marks);
     const video = await cutStrips(rec, join(OUT, 'strips'), marks);
     console.log(`10 fps strips from ${video ?? '(no video)'}`);
   } finally {

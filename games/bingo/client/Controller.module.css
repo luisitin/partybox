@@ -14,7 +14,6 @@
   align-items: baseline;
   gap: var(--pb-space-2);
   line-height: 1.1;
-  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
 }
 
 .phrase {
@@ -836,6 +835,31 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .focusRise {
+    animation: none;
+  }
+}
+
+/* A new call on the phone (loop 248): the nickname drops in and settles on the same beat as the
+   TV's ball (the squash ~190 ms in), so the room's phones and TV land together. */
+.now {
+  animation: call-land 380ms cubic-bezier(0.2, 0.9, 0.3, 1.1) both;
+}
+@keyframes call-land {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.96);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(2px) scale(1.01);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .now {
     animation: none;
   }
 }
