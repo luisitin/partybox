@@ -68,6 +68,18 @@ async function main(): Promise<void> {
     marks.push({ name: '4-keep-going', at: Date.now(), before: 0.1, seconds: 6 });
     await sam.page.getByRole('button', { name: /keep going — same pattern/i }).click();
     await settle(5500);
+    // 5. A wrong claim on card 2 (bare): the check's reveal, the verdict, the 3 · 2 · 1, the next
+    // number — the way back on both screens.
+    // (card 2 is already up: the phone brought it up when card 1 won).
+    marks.push({ name: '5-wrong-claim', at: Date.now(), before: 0.1, seconds: 13 });
+    await sam.page.getByRole('button', { name: /^bingo! card 2$/i }).click();
+    await settle(400);
+    await sam.page.getByRole('button', { name: /tap again to claim/i }).dispatchEvent('click');
+    await settle(12800);
+    // 6. The end of the game: the VIP ends it → the drumroll (final, 4 s) → the results.
+    marks.push({ name: '6-final', at: Date.now(), before: 0.1, seconds: 8 });
+    await api.vip('end');
+    await settle(7500);
     await cutStrips(sam, join(OUT, 'strips-phone'), marks);
     const video = await cutStrips(rec, join(OUT, 'strips-tv'), marks);
     console.log(`10 fps strips (tv + phone, same marks) from ${video ?? '(no video)'}`);
