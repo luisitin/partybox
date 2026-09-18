@@ -147,15 +147,15 @@ async function playOne(
     for (const screen of session.screens) {
       if (screen.label === 'tv') {
         await screen.page
-          .getByLabel('scoreboard')
+          .locator('[data-screen="results"]')
           .waitFor({ timeout: 5000 })
-          .catch(() => report.failures.push('tv: no scoreboard on results'));
+          .catch(() => report.failures.push('tv: no results screen'));
         continue;
       }
       // The results screen's title is the winner line ("You win!", "You finished 3rd", …, review-loop
-      // #76): the board under it is the stable hook.
+      // #76) and a game with its own finale has no scoreboard, so the screen marks itself.
       const ok = await screen.page
-        .getByLabel('scoreboard')
+        .locator('[data-screen="results"]')
         .waitFor({ timeout: 5000 })
         .then(() => true)
         .catch(() => false);
