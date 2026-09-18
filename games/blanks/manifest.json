@@ -16,10 +16,22 @@
       "type": "select",
       "default": "wild",
       "options": [
-        { "value": "mild", "label": "Family night (Mild)" },
-        { "value": "adults", "label": "Adults (Mild + Crude)" },
-        { "value": "wild", "label": "WILD (all three decks)" },
-        { "value": "wild-only", "label": "WILD only" }
+        {
+          "value": "mild",
+          "label": "Family night (Mild)"
+        },
+        {
+          "value": "adults",
+          "label": "Adults (Mild + Crude)"
+        },
+        {
+          "value": "wild",
+          "label": "WILD (all three decks)"
+        },
+        {
+          "value": "wild-only",
+          "label": "WILD only"
+        }
       ]
     },
     {
@@ -29,16 +41,15 @@
       "type": "select",
       "default": "vote",
       "options": [
-        { "value": "vote", "label": "Everyone votes" },
-        { "value": "czar", "label": "A rotating judge" }
+        {
+          "value": "vote",
+          "label": "Everyone votes"
+        },
+        {
+          "value": "czar",
+          "label": "A rotating judge"
+        }
       ]
-    },
-    {
-      "key": "timed",
-      "label": "Timed rounds",
-      "description": "Put a clock on picking, voting and the result; off = play at your own pace, anyone taps Next",
-      "type": "boolean",
-      "default": false
     },
     {
       "key": "rounds",
@@ -51,9 +62,16 @@
       "step": 1
     },
     {
+      "key": "timed",
+      "label": "Timed rounds",
+      "description": "Put a clock on picking, voting and the result; off = play at your own pace, anyone taps Next",
+      "type": "boolean",
+      "default": false
+    },
+    {
       "key": "answerSeconds",
-      "label": "Answer time",
-      "description": "Seconds to pick a card (Pick 2 and Pick 3 cards get extra time)",
+      "label": "Answer time (timed rounds)",
+      "description": "Seconds to pick a card when rounds are timed; Pick 2 and Pick 3 cards get 15 s more each",
       "type": "number",
       "default": 60,
       "min": 30,

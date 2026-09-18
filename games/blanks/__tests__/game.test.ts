@@ -61,8 +61,8 @@ describe('whole game', () => {
     expect(game.manifest.settings.map((s) => s.key)).toEqual([
       'decks',
       'judge',
-      'timed',
       'rounds',
+      'timed',
       'answerSeconds',
       'rando',
     ]);
