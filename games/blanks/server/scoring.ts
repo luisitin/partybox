@@ -92,7 +92,7 @@ export function awardsFor(state: State): GameAward[] {
     out.push({
       id: 'crowd-favourite',
       title: 'Crowd favourite',
-      description: `Most votes received: ${state.stats.votesReceived[crowd] ?? 0}`,
+      description: `${state.stats.votesReceived[crowd] ?? 0} votes across the night`,
       playerId: crowd,
     });
   // "On a roll" only exists if somebody actually strung rounds together (review-loop #237).
@@ -109,7 +109,7 @@ export function awardsFor(state: State): GameAward[] {
     out.push({
       id: 'quick-draw',
       title: 'Quick draw',
-      description: `Cards played before half time: ${state.stats.fastPlays[quick] ?? 0}`,
+      description: `${state.stats.fastPlays[quick] ?? 0} cards in before half time`,
       playerId: quick,
     });
   return out;
