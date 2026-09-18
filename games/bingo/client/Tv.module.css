@@ -714,3 +714,9 @@
 .introRing .ringFill {
   stroke-width: 8;
 }
+
+/* Who is next in line behind the dibs (loop 271): quieter, on the same line. */
+.armThen {
+  color: var(--pb-text-muted);
+  font-weight: 700;
+}

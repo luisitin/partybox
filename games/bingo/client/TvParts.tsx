@@ -74,13 +74,27 @@ export function Call({ call, big }: { call: CallView; big?: boolean }): JSX.Elem
  * there — the stage is centred, so nothing jumps when the line lands or leaves. Keyed on the
  * window, so dibs passing on re-pops the line and restarts the drain.
  */
-export function DibsLine({ arm }: { arm: BingoTvView['arm'] }): JSX.Element {
+export function DibsLine({
+  arm,
+  queue,
+}: {
+  arm: BingoTvView['arm'];
+  /** Who is waiting behind the armed player, in order (loop 271: the room sees the queue). */
+  queue: string[];
+}): JSX.Element {
+  const then =
+    queue.length === 0
+      ? ''
+      : queue.length === 1
+        ? ` · then ${queue[0]}`
+        : ` · then ${queue[0]} and ${queue.length - 1} more`;
   return (
     <div className={styles.armSlot}>
       {arm ? (
         <div key={arm.until} className={`${styles.armLine} pb-pop`}>
           <BigText level="h2" tone="accent">
             {arm.name} says BINGO?…
+            {then ? <span className={styles.armThen}>{then}</span> : null}
           </BigText>
           <span className={styles.armDrain} style={{ animationDuration: `${ARM_MS}ms` }} />
         </div>

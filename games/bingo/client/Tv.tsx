@@ -132,7 +132,7 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
         {view.showBoard ? (
           <CalledBoard called={view.called} current={view.current?.number ?? null} />
         ) : null}
-        <DibsLine arm={view.arm} />
+        <DibsLine arm={view.arm} queue={view.queue} />
       </Stage>
     );
   }
