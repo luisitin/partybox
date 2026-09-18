@@ -1,7 +1,7 @@
 // The pieces of the Bingo TV: scoreboard rows, a call (big or small), the hall board, and the
 // claim stage — a card dropping in, the pattern's cells turning in reading order with a gold
 // sweep, the rest fading in, the verdict popping beside the settled card.
-import { memo, useEffect } from 'react';
+import { memo, useEffect, useState } from 'react';
 import type { JSX } from 'react';
 import {
   BigText,
@@ -167,6 +167,7 @@ export function ClaimStage({
   valid,
   verdict,
   aside,
+  judged,
 }: {
   claim: ClaimView;
   valid: boolean;
@@ -174,6 +175,12 @@ export function ClaimStage({
   verdict: JSX.Element;
   /** Anything that belongs with the verdict (how the room moves on). */
   aside?: JSX.Element | null;
+  /**
+   * The server has already delivered the verdict (`verdictShown`): a TV that mounts now — a
+   * reload, a late TV — shows the settled card and the verdict at once, silently, instead of
+   * replaying a reveal the room has already seen (loop 293).
+   */
+  judged?: boolean;
 }): JSX.Element {
   const order = patternOrder(claim);
   const step = order.length > 9 ? STEP_MANY_MS : STEP_MS;
@@ -183,7 +190,9 @@ export function ClaimStage({
   // A card with nothing beyond the pattern has no "rest" to show: straight on to the suspense.
   const restMs = claim.daubs.some((i) => !order.includes(i)) ? REST_MS : 0;
   const settleAt = restAt + restMs + HOLD_MS;
-  const beat = useSequence([0, cardAt, cardAt + DROP_MS, restAt, settleAt, settleAt + SETTLE_MS]);
+  const seq = useSequence([0, cardAt, cardAt + DROP_MS, restAt, settleAt, settleAt + SETTLE_MS]);
+  const [late] = useState(judged === true); // judged at mount: straight to the end, no sounds
+  const beat = late ? 5 : seq;
   const reduced = usePrefersReducedMotion();
   const sound = useSoundApi();
   const landed = beat >= 1; // the card is on stage (dropping in)
@@ -192,12 +201,12 @@ export function ClaimStage({
   const decided = beat >= 4; // the card settles into its column
   const shown = beat >= 5; // the verdict pops beside it — and sounds
   const line = valid ? lineOf(order) : null;
-  const sweeps = turning && line !== null && !reduced;
+  const sweeps = turning && line !== null && !reduced && !late;
   // The announce beat has a sound of its own: the caller is hushed, so a lift ("someone has a
   // bingo!") fills the second before the card drops (the resolve lands ~0.7 s in, drop at 1 s).
   useEffect(() => {
-    sound.play('reveal');
-  }, [sound]);
+    if (!late) sound.play('reveal');
+  }, [late, sound]);
   // The first cell's colour lands ~0.2 s into its turn (the squeeze): the sting waits for it.
   useEffect(() => {
     if (!sweeps) return;
@@ -206,9 +215,9 @@ export function ClaimStage({
   }, [sweeps, sound]);
   // The verdict's sound lands on the verdict — cheer + confetti for a bingo, the buzzer otherwise.
   useEffect(() => {
-    if (!shown) return;
+    if (!shown || late) return;
     sound.play(valid ? 'cheer' : 'wrong');
-  }, [shown, valid, sound]);
+  }, [shown, late, valid, sound]);
   return (
     <div className={`${styles.claimStage} ${decided ? styles.decided : ''}`}>
       {shown && valid ? <Confetti /> : null}
