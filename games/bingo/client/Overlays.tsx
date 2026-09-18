@@ -3,7 +3,7 @@
 // menu), the 3 · 2 · 1 before calling resumes, and the turn-your-phone gate.
 import { useEffect } from 'react';
 import type { JSX } from 'react';
-import { PrimaryButton, useSecondsLeft, useSound } from '@partybox/game-sdk/ui';
+import { PrimaryButton, buzz, useSecondsLeft, useSound } from '@partybox/game-sdk/ui';
 import { RESUME_MS } from '../server/types';
 import type { BingoControllerView } from '../server/views';
 import { STYLES, styleReason } from './styles';
@@ -124,6 +124,32 @@ export function Countdown({ resumeAt }: { resumeAt: number }): JSX.Element | nul
       </div>
       <p className={styles.curtainLine}>get your thumbs ready</p>
     </div>
+  );
+}
+
+/**
+ * The intro's last three seconds in the hand (loop 263): "first number in 3 · 2 · 1" with one
+ * light tap per second — the TV ticks, the phones tap, one clock. Before that: the deal.
+ */
+export function IntroCount({ deadline }: { deadline: number | null }): JSX.Element {
+  const left = useSecondsLeft(deadline);
+  const shown = left !== null && left <= 3 && left > 0 ? left : 0;
+  useEffect(() => {
+    if (shown > 0) buzz(15);
+  }, [shown]);
+  return (
+    <p className={styles.introCount} aria-live="polite">
+      {shown > 0 ? (
+        <>
+          first number in{' '}
+          <b key={shown} className="pb-pop">
+            {shown}
+          </b>
+        </>
+      ) : (
+        'dealing the cards…'
+      )}
+    </p>
   );
 }
 

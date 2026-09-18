@@ -12,6 +12,7 @@ import {
   cutStrips,
   joinViaForm,
   openPhone,
+  openPhoneRecorded,
   openTvRecorded,
   passAudioGate,
   settle,
@@ -35,7 +36,11 @@ async function main(): Promise<void> {
     await api.reset();
     const rec = await openTvRecorded(browser, server.url, join(OUT, 'video'));
     await passAudioGate(rec.page);
-    const sam = await openPhone(browser, server.url, 'iphone', 'Sam');
+    // --live records Sam's phone too: its count must land on the TV's beats (loop 263).
+    const samRec = values.live
+      ? await openPhoneRecorded(browser, server.url, 'iphone', 'Sam', join(OUT, 'video-phone'))
+      : null;
+    const sam = samRec ?? (await openPhone(browser, server.url, 'iphone', 'Sam'));
     await joinViaForm(sam, api, { avatarIndex: 1 });
     await api.bots(2, 'idle');
     // --live: the clock runs, so the intro's last three seconds count down to the first ball
@@ -53,6 +58,7 @@ async function main(): Promise<void> {
       await rec.page.waitForSelector('[data-surface="tv"]');
       await settle(500);
     }
+    if (samRec) await cutStrips(samRec, join(OUT, 'strips-phone'), marks);
     await cutStrips(rec, join(OUT, 'strips'), marks);
     console.log(`10 fps strips → ${join(OUT, 'strips')}`);
   } finally {

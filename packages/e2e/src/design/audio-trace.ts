@@ -11,6 +11,7 @@ import { parseArgs } from 'node:util';
 import { chromium } from 'playwright';
 import { runCoreScenarios } from './audio-scenarios-core';
 import { runGameScenarios } from './audio-scenarios-games';
+import { runHomeScenarios } from './audio-scenarios-home';
 import { runMoreScenarios } from './audio-scenarios-more';
 import { Tracer, openPhoneTraced, openTvTraced } from './audio-tracer';
 import type { Pages } from './audio-tracer';
@@ -42,7 +43,7 @@ async function main(): Promise<void> {
     );
     const ctx = { T, tv, vip, p2, api, pages, out: OUT };
     // A scenario that throws still leaves its trace and checks behind (plus a still of each page).
-    for (const run of [runCoreScenarios, runGameScenarios, runMoreScenarios]) {
+    for (const run of [runCoreScenarios, runGameScenarios, runHomeScenarios, runMoreScenarios]) {
       try {
         await run(ctx);
       } catch (err) {
