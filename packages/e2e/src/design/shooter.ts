@@ -34,6 +34,23 @@ export class Shooter {
     options: { fullPage?: boolean; settleMs?: number } = {},
   ): Promise<string> {
     await page.waitForTimeout(options.settleMs ?? 350);
+    // An entrance that starts late (the phone's card of the night rises 420 ms after the board)
+    // was being shot mid-fade or not at all (review-loop #349): wait for every finite animation
+    // to finish, capped so a pulse that never ends cannot hold the sweep.
+    await page
+      .evaluate(
+        () =>
+          new Promise<void>((resolve) => {
+            const finite = document
+              .getAnimations()
+              .filter((a) => a.effect?.getTiming().iterations !== Infinity);
+            window.setTimeout(resolve, 2500);
+            void Promise.all(finite.map((a) => a.finished.catch(() => undefined))).then(() =>
+              resolve(),
+            );
+          }),
+      )
+      .catch(() => undefined);
     const file = join(this.out, meta.group, meta.phase, `${meta.device}-${meta.role}.png`);
     mkdirSync(dirname(file), { recursive: true });
     await page.screenshot({ path: file, fullPage: options.fullPage ?? false });
