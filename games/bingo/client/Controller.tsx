@@ -52,10 +52,12 @@ export function Controller({
       )
     : 0;
   const verdictShown = useHold(claimKey, revealMs);
+  // A valid claim too: the room learns who won from the TV, not from a phone flipping first.
+  const pending = view.phaseId === 'bingo' && view.claim !== null && !verdictShown;
   const [sheet, setSheet] = useState(false);
   const [preview, setPreview] = useState<CardStyle | null>(null);
   const shown = preview ?? style;
-  const inRound = view.phaseId === 'play' || view.phaseId === 'check';
+  const inRound = view.phaseId === 'play' || view.phaseId === 'check' || pending;
   const turn = inRound ? turnNeeded(shown, held) : null;
   useOrientationLock(inRound && held !== 'wide' && !turn ? styleSpec(shown).orient : null);
   // The card that is up (Focus) and the card picked to swap (intro): per round.
@@ -185,7 +187,8 @@ export function Controller({
   }
 
   // Play, check and a bingo phase without my winning card keep the same cards mounted.
-  const roundOver = view.phaseId === 'bingo' && !(view.winnerId === me.id && view.claim);
+  const roundOver =
+    view.phaseId === 'bingo' && !pending && !(view.winnerId === me.id && view.claim);
   if (inRound || roundOver) {
     const kind = held === 'wide' ? 'tablet' : shown;
     const focus = kind === 'focus';
