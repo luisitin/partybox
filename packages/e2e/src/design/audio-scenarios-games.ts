@@ -30,7 +30,9 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
   // ── D. Bingo ────────────────────────────────────────────────────────────────────────
   T.section('D · Bingo: music set, the caller, a wrong claim, a bingo, keep going, results');
   const home = tv.getByRole('button', { name: /^home$/i });
-  await api.clock(true);
+  // The clock runs through the intro (loop 262): its last three seconds tick down to the first
+  // ball, which then drops on its own; the caller is frozen after that, as before.
+  await api.clock(false);
   await api.start('bingo', 11);
   await settle(1500);
   await T.mark('D1');
@@ -57,12 +59,24 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
     JSON.stringify(await T.playing(tv)),
   );
   T.ok('D', 'intro: nothing spoken', !evs.some((e) => e.kind === 'speak'), '');
-  await api.skip(); // intro → play
+  await settle(3500); // 6.5 s in: the intro (5 s) has run out and the first ball has dropped
+  await api.clock(true); // hold the caller from here
+  await T.mark('D1b');
+  const intro = T.cues(await T.between(tv, 'D1', 'D1b'));
+  T.ok(
+    'D',
+    'the intro counts down: three ticks (3 · 2 · 1), then the first call',
+    intro.filter((c) => c === 'tick').length === 3 &&
+      intro.indexOf('call') > intro.lastIndexOf('tick') &&
+      intro.filter((c) => c === 'call').length === 1,
+    `cues=${intro.join(',')}`,
+  );
+  await api.skip();
   await settle(1800);
   await api.skip();
   await settle(1800);
   await T.mark('D2');
-  evs = await T.between(tv, 'D1', 'D2');
+  evs = await T.between(tv, 'D1b', 'D2');
   const speaks = evs.filter((e) => e.kind === 'speak');
   T.ok(
     'D',

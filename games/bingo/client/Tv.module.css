@@ -672,3 +672,32 @@
     opacity: 0.6;
   }
 }
+
+/* The intro's countdown slot (loop 262): a fixed 120 px so the stage never jumps when "dealing
+   the cards…" becomes the ring; the ring is the resume ring at a third of the size. */
+.introSlot {
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pb-space-4);
+}
+
+.introLead {
+  font-size: var(--pb-font-h2);
+  font-weight: 700;
+  color: var(--pb-text-muted);
+}
+
+.introRing {
+  position: relative;
+  width: 112px;
+  height: 112px;
+  display: grid;
+  place-items: center;
+}
+
+.introRing .ringTrack,
+.introRing .ringFill {
+  stroke-width: 8;
+}

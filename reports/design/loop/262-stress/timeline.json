@@ -1,0 +1,372 @@
+{
+  "pass": "262",
+  "game": "bingo",
+  "players": 12,
+  "scenario": "normal",
+  "focus": "tv",
+  "started": "08:58:47.085",
+  "tvVideoT0": "08:58:43.616",
+  "changes": [
+    {
+      "t": 1789721927088,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789721932078,
+      "bed": null,
+      "at": "08:58:47.088",
+      "sinceStartS": 0,
+      "videoS": 3.5
+    },
+    {
+      "t": 1789721932202,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789721935081,
+      "bed": null,
+      "at": "08:58:52.202",
+      "sinceStartS": 5.1,
+      "videoS": 8.6
+    },
+    {
+      "t": 1789721935121,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789721938087,
+      "bed": null,
+      "at": "08:58:55.121",
+      "sinceStartS": 8,
+      "videoS": 11.5
+    },
+    {
+      "t": 1789721938112,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789721941092,
+      "bed": null,
+      "at": "08:58:58.112",
+      "sinceStartS": 11,
+      "videoS": 14.5
+    },
+    {
+      "t": 1789721941200,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789721944105,
+      "bed": null,
+      "at": "08:59:01.200",
+      "sinceStartS": 14.1,
+      "videoS": 17.6
+    },
+    {
+      "t": 1789721944144,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789721947113,
+      "bed": null,
+      "at": "08:59:04.144",
+      "sinceStartS": 17.1,
+      "videoS": 20.5
+    },
+    {
+      "t": 1789721947223,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789721950119,
+      "bed": null,
+      "at": "08:59:07.223",
+      "sinceStartS": 20.1,
+      "videoS": 23.6
+    },
+    {
+      "t": 1789721950237,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789721953125,
+      "bed": null,
+      "at": "08:59:10.237",
+      "sinceStartS": 23.2,
+      "videoS": 26.6
+    },
+    {
+      "t": 1789721953170,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789721956136,
+      "bed": null,
+      "at": "08:59:13.170",
+      "sinceStartS": 26.1,
+      "videoS": 29.6
+    },
+    {
+      "t": 1789721956206,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789721959144,
+      "bed": null,
+      "at": "08:59:16.206",
+      "sinceStartS": 29.1,
+      "videoS": 32.6
+    },
+    {
+      "t": 1789721959178,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789721962149,
+      "bed": null,
+      "at": "08:59:19.178",
+      "sinceStartS": 32.1,
+      "videoS": 35.6
+    },
+    {
+      "t": 1789721962233,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789721965152,
+      "bed": null,
+      "at": "08:59:22.233",
+      "sinceStartS": 35.1,
+      "videoS": 38.6
+    },
+    {
+      "t": 1789721965233,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789721968163,
+      "bed": null,
+      "at": "08:59:25.233",
+      "sinceStartS": 38.1,
+      "videoS": 41.6
+    },
+    {
+      "t": 1789721968202,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789721971175,
+      "bed": null,
+      "at": "08:59:28.202",
+      "sinceStartS": 41.1,
+      "videoS": 44.6
+    },
+    {
+      "t": 1789721971272,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789721974176,
+      "bed": null,
+      "at": "08:59:31.272",
+      "sinceStartS": 44.2,
+      "videoS": 47.7
+    },
+    {
+      "t": 1789721974221,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789721977181,
+      "bed": null,
+      "at": "08:59:34.221",
+      "sinceStartS": 47.1,
+      "videoS": 50.6
+    },
+    {
+      "t": 1789721977270,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789721980184,
+      "bed": null,
+      "at": "08:59:37.270",
+      "sinceStartS": 50.2,
+      "videoS": 53.7
+    },
+    {
+      "t": 1789721980274,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789721983195,
+      "bed": null,
+      "at": "08:59:40.274",
+      "sinceStartS": 53.2,
+      "videoS": 56.7
+    },
+    {
+      "t": 1789721983283,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789721986202,
+      "bed": null,
+      "at": "08:59:43.283",
+      "sinceStartS": 56.2,
+      "videoS": 59.7
+    },
+    {
+      "t": 1789721986261,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789721989202,
+      "bed": null,
+      "at": "08:59:46.261",
+      "sinceStartS": 59.2,
+      "videoS": 62.6
+    },
+    {
+      "t": 1789721989276,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789721992212,
+      "bed": null,
+      "at": "08:59:49.276",
+      "sinceStartS": 62.2,
+      "videoS": 65.7
+    },
+    {
+      "t": 1789721992260,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789721995215,
+      "bed": null,
+      "at": "08:59:52.260",
+      "sinceStartS": 65.2,
+      "videoS": 68.6
+    },
+    {
+      "t": 1789721995327,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789721998220,
+      "bed": null,
+      "at": "08:59:55.327",
+      "sinceStartS": 68.2,
+      "videoS": 71.7
+    },
+    {
+      "t": 1789721998285,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789722001223,
+      "bed": null,
+      "at": "08:59:58.285",
+      "sinceStartS": 71.2,
+      "videoS": 74.7
+    },
+    {
+      "t": 1789721999655,
+      "status": "playing",
+      "phase": "bingo",
+      "deadline": 1789722005173,
+      "bed": null,
+      "at": "08:59:59.655",
+      "sinceStartS": 72.6,
+      "videoS": 76
+    },
+    {
+      "t": 1789722009182,
+      "status": "playing",
+      "phase": "scoreboard",
+      "deadline": 1789722015063,
+      "bed": null,
+      "at": "09:00:09.182",
+      "sinceStartS": 82.1,
+      "videoS": 85.6
+    },
+    {
+      "t": 1789722015084,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789722020073,
+      "bed": null,
+      "at": "09:00:15.084",
+      "sinceStartS": 88,
+      "videoS": 91.5
+    },
+    {
+      "t": 1789722020127,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789722023076,
+      "bed": null,
+      "at": "09:00:20.127",
+      "sinceStartS": 93,
+      "videoS": 96.5
+    },
+    {
+      "t": 1789722023187,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789722026084,
+      "bed": null,
+      "at": "09:00:23.187",
+      "sinceStartS": 96.1,
+      "videoS": 99.6
+    },
+    {
+      "t": 1789722026116,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789722029093,
+      "bed": null,
+      "at": "09:00:26.116",
+      "sinceStartS": 99,
+      "videoS": 102.5
+    },
+    {
+      "t": 1789722029139,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789722032101,
+      "bed": null,
+      "at": "09:00:29.139",
+      "sinceStartS": 102.1,
+      "videoS": 105.5
+    },
+    {
+      "t": 1789722032164,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789722035102,
+      "bed": null,
+      "at": "09:00:32.164",
+      "sinceStartS": 105.1,
+      "videoS": 108.5
+    },
+    {
+      "t": 1789722035177,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789722038108,
+      "bed": null,
+      "at": "09:00:35.177",
+      "sinceStartS": 108.1,
+      "videoS": 111.6
+    },
+    {
+      "t": 1789722038165,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789722041119,
+      "bed": null,
+      "at": "09:00:38.165",
+      "sinceStartS": 111.1,
+      "videoS": 114.5
+    },
+    {
+      "t": 1789722041167,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789722044127,
+      "bed": null,
+      "at": "09:00:41.167",
+      "sinceStartS": 114.1,
+      "videoS": 117.6
+    },
+    {
+      "t": 1789722044159,
+      "status": "playing",
+      "phase": "play",
+      "deadline": 1789722047138,
+      "bed": null,
+      "at": "09:00:44.159",
+      "sinceStartS": 117.1,
+      "videoS": 120.5
+    }
+  ],
+  "notes": ["budget reached while playing; skipped to results"]
+}
