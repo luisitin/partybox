@@ -177,11 +177,25 @@ function reduce(state: State, event: GameEvent<Input>): State {
  */
 function shiftResume(before: State, after: State, event: GameEvent<Input>): State {
   if (event.type !== 'vip' || event.action !== 'resume') return after;
-  const resumeAt = after.round.resumeAt;
-  if (resumeAt === null || before.phase.deadline === null || after.phase.deadline === null)
-    return after;
-  const shift = after.phase.deadline - before.phase.deadline;
-  return shift > 0 ? { ...after, round: { ...after.round, resumeAt: resumeAt + shift } } : after;
+  // The pause's length: the deadline's shift, or the pause itself when the phase had no deadline
+  // (a held caller — the dibs window still needs it).
+  const shift =
+    before.phase.deadline !== null && after.phase.deadline !== null
+      ? after.phase.deadline - before.phase.deadline
+      : before.phase.paused
+        ? event.now - before.phase.paused.at
+        : 0;
+  if (shift <= 0) return after;
+  const round = after.round;
+  return {
+    ...after,
+    round: {
+      ...round,
+      resumeAt: round.resumeAt === null ? null : round.resumeAt + shift,
+      // Dibs (a 3 s window to tap again) survive a pause whole (loop 295).
+      arm: round.arm === null ? null : { ...round.arm, until: round.arm.until + shift },
+    },
+  };
 }
 
 /**

@@ -360,3 +360,19 @@ describe('a VIP pause through a bingo (loop 294 — the review)', () => {
     expect(again.round.calledAt).not.toBe(stamp);
   });
 });
+
+describe('a pause during dibs (loop 295)', () => {
+  it('the 3 s window survives the pause whole', () => {
+    let s = callUntil(start(), 'a', LINE);
+    s = daubAll(s, 'a', LINE);
+    const t = s.phase.startedAt + 500;
+    s = input(s, 'a', { type: 'bingo', card: 0 }, t); // armed: dibs until t + 3 s
+    expect(s.round.arm?.until).toBe(t + 3000);
+    const paused = vip(s, 'pause', t + 1000);
+    const resumed = vip(paused, 'resume', t + 11_000); // a 10 s pause
+    expect(resumed.round.arm?.until).toBe(t + 13_000);
+    // The second tap right after the resume still claims (the window did not lapse in the pause).
+    const claimed = input(resumed, 'a', { type: 'bingo', card: 0 }, t + 11_100);
+    expect(claimed.phase.id).toBe('bingo');
+  });
+});
