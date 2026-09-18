@@ -18,6 +18,8 @@ interface Driver {
   pending: NodeJS.Timeout | null;
   /** Fixed reaction time (dev API), else strategy-based. */
   reactionMs: number | null;
+  /** `phase.startedAt` of the last input it sent: a follow-up tap in the same phase comes quicker. */
+  actedIn: number | null;
 }
 
 export interface BotManager {
@@ -42,7 +44,11 @@ function delayFor(driver: Driver, room: RoomState, now: number): number | null {
     case 'chaos':
       return driver.rng.int(100, 2500);
     case 'random':
-      return driver.rng.int(800, 4500);
+      // A thumb already on the screen taps again sooner than it first reacted: a bot with four
+      // Bingo cards under 3 s calls otherwise fell behind and never completed a line (loop 221).
+      return room.game?.state.phase.startedAt === driver.actedIn
+        ? driver.rng.int(300, 1200)
+        : driver.rng.int(800, 4500);
   }
 }
 
@@ -64,6 +70,7 @@ export function createBotManager(host: Host, deps: EngineDeps, clock: Clock): Bo
           rng: createRng(hashString(p.id)),
           pending: null,
           reactionMs: reactionOverride.get(p.id) ?? null,
+          actedIn: null,
         });
     }
     for (const [id, driver] of drivers) {
@@ -91,6 +98,7 @@ export function createBotManager(host: Host, deps: EngineDeps, clock: Clock): Bo
       return;
     }
     if (input === null) return;
+    driver.actedIn = room.game.state.phase.startedAt;
     host.dispatch(driver.code, { type: 'input', playerId: driver.id, input });
   }
 
