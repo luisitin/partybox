@@ -397,11 +397,15 @@ async function main(): Promise<void> {
           focus: values.focus,
           started: iso(started),
           tvVideoT0: iso(tvVideoT0),
+          // Both clocks, so a pass can line the phone video up with the TV video and the cue log
+          // (review-loop #224 — cross-surface sync could only be eyeballed before).
+          phoneVideoT0: phoneVideoT0 ? iso(phoneVideoT0) : null,
           changes: changes.map((c) => ({
             ...c,
             at: iso(c.t),
             sinceStartS: +((c.t - started) / 1000).toFixed(1),
             videoS: +((c.t - tvVideoT0) / 1000).toFixed(1),
+            phoneVideoS: phoneVideoT0 ? +((c.t - phoneVideoT0) / 1000).toFixed(1) : null,
           })),
           notes,
         },
