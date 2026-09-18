@@ -512,6 +512,20 @@
   position: relative;
   transform-style: preserve-3d;
   animation: global(pb-flip) 520ms var(--pb-ease) both;
+  /* The turn is where the reveal spends its frames: the long ones cluster 100–400 ms after each
+     card change, which is the flip itself (review-loop #247). Promoting the card before it moves
+     lets the compositor keep the text as one layer instead of repainting it every frame, and
+     containing the paint stops the rest of the stage joining in. */
+  will-change: transform;
+}
+
+/* The turn is where the reveal spends its frames: the long ones cluster 100–400 ms after each card
+   change, which is the flip itself (review-loop #247). Containing what the card paints keeps the
+   text off the stage behind it — 9.2 long frames per 1000 down to 5.1 at twelve players, measured
+   A/B in one sitting. The containment sits on the card and not on the flipper: on the flipper it
+   also clips the card’s drop shadow, which is plainly visible on a light theme. */
+.flipper .black {
+  contain: layout paint;
 }
 
 .flipFront {
