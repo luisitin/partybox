@@ -113,12 +113,31 @@ function Author({
 
 function TvFinal({ view }: Props): JSX.Element {
   const tied = view.standings.filter((r) => r.rank === 1).length > 1;
+  const best = view.bestCard;
   return (
     <Stage center className={styles.table}>
       <p className={styles.kicker}>Final round played</p>
       <BigText level="h1">Final scores</BigText>
-      <div className={styles.board}>
-        <Scoreboard rows={view.standings} noTrophy stagger="up" />
+      <div className={styles.finalRow}>
+        <div className={styles.board}>
+          <Scoreboard rows={view.standings} noTrophy stagger="up" />
+        </div>
+        {/* The night's best-liked card, back on the table one last time (review-loop #191). */}
+        {best ? (
+          <div className={styles.bestCard}>
+            <p className={styles.kicker}>Card of the night</p>
+            <FilledCard text={best.black} whites={best.whites} size="mini" winner>
+              <span className={styles.author}>
+                <Avatar avatarId={best.avatarId} size="var(--pb-chip-size)" />
+                <span className={styles.authorName}>{best.name}</span>
+                <span className={styles.voteCount}>
+                  {best.votes} {best.votes === 1 ? 'vote' : 'votes'}
+                </span>
+                <span className={styles.bestRound}>round {best.round}</span>
+              </span>
+            </FilledCard>
+          </div>
+        ) : null}
       </div>
       <BigText level="h2" tone="accent">
         {tied ? "It's a tie" : 'And the winner is'}

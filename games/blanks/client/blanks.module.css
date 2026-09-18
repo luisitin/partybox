@@ -367,6 +367,46 @@
   margin-block: auto;
 }
 
+/* The final board sits beside the night's best card when there is one (a column under 1100px). */
+.finalRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  align-items: center;
+  gap: var(--pb-space-5);
+  width: 100%;
+  min-height: 0;
+}
+
+@media (min-width: 1100px) {
+  .finalRow:has(.bestCard) {
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  }
+}
+
+/* It arrives after the board has stacked up, so the eye reads the scores first (loop #191). */
+.bestCard {
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) 420ms both;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-2);
+  width: 100%;
+  max-width: 460px;
+  text-align: left;
+}
+
+.bestCard .kicker {
+  margin: 0;
+}
+
+/* Which round it came from, quieter than the vote count beside it. The card's face is light in
+   some themes and dark in others, so this inherits the card's own ink rather than naming one. */
+.bestRound {
+  opacity: 0.65;
+  font-size: var(--pb-font-caption);
+  white-space: nowrap;
+}
+
 /* The round card's leader line: who is ahead, under the title. */
 .introLead {
   display: inline-flex;

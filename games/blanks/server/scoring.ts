@@ -11,13 +11,24 @@ export function applyRound(state: State): State {
   const winners = roundWinners(state);
   const scores = { ...state.scores };
   const votesReceived = { ...state.stats.votesReceived };
+  // The night's best-liked card: the most votes any single card has taken (ties keep the first).
+  let best = state.stats.best;
+  for (const row of tally(state))
+    if (row.votes > 0 && row.votes > (best?.votes ?? 0))
+      best = {
+        submitterId: row.submitterId,
+        blackId: state.blackId,
+        cards: [...row.cards],
+        votes: row.votes,
+        round: state.round,
+      };
   for (const id of winners)
     if (id !== RANDO && Object.hasOwn(state.players, id))
       scores[id] = (scores[id] ?? 0) + WIN_POINTS;
   for (const row of tally(state))
     if (row.submitterId !== RANDO && Object.hasOwn(state.players, row.submitterId))
       votesReceived[row.submitterId] = (votesReceived[row.submitterId] ?? 0) + row.votes;
-  return { ...state, winners, scores, stats: { ...state.stats, votesReceived } };
+  return { ...state, winners, scores, stats: { ...state.stats, votesReceived, best } };
 }
 
 /** Player with the highest stat (> 0); ties go to the higher total score, then the lower id. */
