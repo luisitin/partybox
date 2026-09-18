@@ -50,3 +50,10 @@
   padding: var(--pb-space-3) var(--pb-space-4) calc(var(--pb-space-3) + env(safe-area-inset-bottom));
   background: linear-gradient(to top, var(--pb-bg) 70%, transparent);
 }
+
+/* A sideways phone in Safari (≈ 330 px tall): tighter body padding, the height goes to the game. */
+@media (orientation: landscape) and (max-height: 420px) {
+  .body {
+    padding: var(--pb-space-2) var(--pb-space-4);
+  }
+}
