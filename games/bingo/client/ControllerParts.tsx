@@ -25,46 +25,6 @@ export function rows(view: BingoControllerView): ScoreboardRow[] {
   }));
 }
 
-export function CallHeader({
-  current,
-  previous,
-  index,
-  pattern,
-  missed,
-}: {
-  current: CallView | null;
-  previous: CallView | null;
-  index: number;
-  pattern: string;
-  /** Nicknames this phone never saw (no hall board on the TV to catch up from). */
-  missed: string[] | null;
-}): JSX.Element {
-  if (!current) return <div className={styles.header} />;
-  return (
-    <div className={styles.header} role="status" aria-live="polite">
-      <div className={styles.now} key={current.number}>
-        {/* Spicy nicknames run long ("Doctor's orders — take two and call me"): over ~20 characters
-            the phrase steps down a size so a 320 px phone keeps the call line below it (loop #7).
-            The number itself can never be the part that is cut: on a short phone the phrase is two
-            clamped body-size lines led by the digits (loop 313 — an SE lost "seventy-five"; 327). */}
-        <span className={`${styles.phrase} ${current.call.length > 20 ? styles.phraseLong : ''}`}>
-          <b className={styles.phraseNumber}>{current.number}</b>
-          {current.call}
-        </span>
-      </div>
-      <p className={styles.meta}>
-        Call {index} · {pattern} ·{' '}
-        {missed && missed.length > 0
-          ? `missed: ${missed.join(', ')}`
-          : previous
-            ? // Nicknames are "Number — pun" (review-loop #40): the meta line keeps the short half.
-              `before: ${previous.call.split(' — ')[0]}`
-            : 'the number is on the TV'}
-      </p>
-    </div>
-  );
-}
-
 /** A call the way the TV shows it: the letter in a ball, the number beside it. */
 export function Ball({
   call,

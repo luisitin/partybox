@@ -11,7 +11,7 @@ import type { Input } from '../server/types';
 import type { BingoControllerView } from '../server/views';
 import { Card } from './Card';
 import { PatternDemo } from './PatternDemo';
-import { BingoButton, CallHeader, CallRow, DecideFooter, daubWithFeel } from './ControllerParts';
+import { BingoButton, CallRow, DecideFooter, daubWithFeel } from './ControllerParts';
 import { AllCardsLayout, FocusLayout, Thumbnails } from './Layouts';
 import { Countdown, HoldCurtain, IntroCount, MissedToast, StyleSheet, TurnGate } from './Overlays';
 import {
@@ -257,18 +257,12 @@ export function Controller({
           <div className={styles.topRow}>
             {roundOver ? (
               <p className={styles.hint}>{afterLine(view, iDecide)}</p>
-            ) : focus || kind === 'tablet' ? (
-              <CallHeader
-                current={view.current}
-                previous={view.previous}
-                index={view.callIndex}
-                pattern={view.patternLabel}
-                missed={missed && !view.showBoard ? view.recent.slice(-missed - 1, -1) : null}
-              />
             ) : kind === 'grid' && n === 3 ? (
               // Three cards: the call sits in the grid's spare slot — not twice (owner, loop 309).
               <span className={styles.topSpacer} aria-hidden />
             ) : (
+              // The ball row on every style (owner, play-test 2: "the way the calls look at the
+              // top" of the grids); the nickname is the TV's and the caller's — loop 338.
               <CallRow view={view} />
             )}
             {inRound && !sheet && kind !== 'tablet' ? (

@@ -23,8 +23,8 @@ carries on. Points: 3, 2, 1, then ½ per bingo under a pattern (a blackout resta
 
 ## Players
 
-1–16. The phone shows the call's nickname only ("Feeling fine"); the number is on the TV, so the room
-has to listen to the caller — the TV can also keep a hall board of every number called (`showBoard`)
+1–16. The phone shows the call the way the TV's ball does (letter, number, the one before, the
+count); the nickname is the TV's and the caller's — the TV can also keep a hall board of every number called (`showBoard`)
 and the previous call (`showPrevious`); a phone that was away says how many calls it missed. Late joiners spectate (their phone shows the current call and the called list) and get a card
 next game. A disconnected player's card and daubs persist; calls never wait for anyone.
 **Bots: welcome** (`supportsBots: true`) — the bot daubs what it hears on its own cards, mis-taps about
