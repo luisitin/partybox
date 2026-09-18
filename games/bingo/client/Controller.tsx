@@ -9,7 +9,8 @@ import { PrimaryButton, Screen, WaitingScreen, buzz, useSound } from '@partybox/
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { Input } from '../server/types';
 import type { BingoControllerView } from '../server/views';
-import { Card, PatternIcon } from './Card';
+import { Card } from './Card';
+import { PatternDemo } from './PatternDemo';
 import { BingoButton, CallHeader, CallRow, DecideFooter, daubWithFeel } from './ControllerParts';
 import { AllCardsLayout, FocusLayout, Thumbnails } from './Layouts';
 import { Countdown, HoldCurtain, IntroCount, MissedToast, StyleSheet, TurnGate } from './Overlays';
@@ -171,7 +172,8 @@ export function Controller({
       >
         <div className={styles.roundBody}>
           <div className={styles.intro}>
-            <PatternIcon cells={view.patternCells} size={48} />
+            {/* The same demo the TV runs, small, in step with it (loop 290). */}
+            <PatternDemo pattern={view.pattern} cells={view.patternCells} size={56} />
             <div>
               <p className={styles.patternLabel}>{view.patternLabel}</p>
               <p className={styles.hint}>
