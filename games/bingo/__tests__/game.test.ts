@@ -7,7 +7,7 @@ import { game, readSettings } from '../server/index';
 import { dealCard, letterOf } from '../server/cards';
 import { evaluate, looksComplete } from '../server/patterns';
 import { sampleInput } from '../server/bot';
-import { after, callUntil, claim, daubAll, input, start, timer, vip } from './helpers';
+import { after, callUntil, claim, claimRaw, daubAll, input, start, timer, vip } from './helpers';
 
 describe('setup', () => {
   it('deals a legal card: columns B/I/N/G/O from their 15-number ranges, FREE centre, no repeats', () => {
@@ -149,8 +149,8 @@ describe('play', () => {
     // Daubing continues during the check; claims do not.
     s = input(s, 'b', { type: 'daub', card: 0, index: 5 });
     expect(s.round.daubs['b']).toEqual([[5]]);
-    expect(claim(s, 'a').phase.id).toBe('check');
-    // The check's timer resumes the caller with the next number.
+    expect(claimRaw(s, 'a').phase.id).toBe('check'); // a second BINGO! during a check is ignored
+    // The check's second timer (the verdict has been read) resumes the caller with the next number.
     s = timer(s);
     expect(s.phase.id).toBe('play');
     expect(s.round.drawn).toBe(before + 1);

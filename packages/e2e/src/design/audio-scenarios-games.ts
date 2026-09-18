@@ -168,7 +168,12 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
   await settle(250);
   await T.mark('D7');
   await vip.page.getByRole('button', { name: /tap again to claim/i }).dispatchEvent('click');
-  await settle(8500); // the reveal: 1 s announce, 0.7 s drop, five turns (350 ms), 0.5 s, the rest 1 s, 0.8 s hold, 0.6 s settle → verdict ≈ 6.4 s
+  // The reveal: 1 s announce, 0.7 s drop, five turns (350 ms), 0.5 s, the rest 1 s, 0.8 s hold,
+  // 0.6 s settle → verdict ≈ 6.4 s. The phone's verdict is the server's tick (loop 258): on this
+  // frozen clock, step to it at the real moment the TV gets there.
+  await settle(6400);
+  await api.advance(6400);
+  await settle(2100);
   await T.mark('D8');
   evs = await T.between(tv, 'D7', 'D8');
   const cheerAt = evs.find((e) => e.kind === 'cue' && e['cue'] === 'cheer');

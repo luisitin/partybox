@@ -76,7 +76,7 @@ function init(ctx: InitContext): State {
       bingos: 0,
       patternBingos: 0,
       decision: null,
-      credited: false,
+      judged: false,
       arm: null,
       queue: [],
       menus: [],

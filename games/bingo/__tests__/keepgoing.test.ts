@@ -171,7 +171,7 @@ describe('the points land with the verdict (loop 257)', () => {
     s = claimRaw(s, 'a');
     expect(s.phase.id).toBe('bingo');
     expect(s.round.winnerId).toBe('a');
-    expect(s.round.credited).toBe(false);
+    expect(s.round.judged).toBe(false);
     expect(s.wins['a'] ?? 0).toBe(0);
     expect(game.tvView(s).players.find((p) => p.id === 'a')?.status).toBe('waiting');
     const claim0 = s.round.claim;
@@ -179,7 +179,7 @@ describe('the points land with the verdict (loop 257)', () => {
     expect(s.phase.deadline).toBe(verdictAt);
     const scored = timer(s);
     expect(scored.phase.id).toBe('bingo');
-    expect(scored.round.credited).toBe(true);
+    expect(scored.round.judged).toBe(true);
     expect(scored.wins['a']).toBe(3);
     expect(game.tvView(scored).players.find((p) => p.id === 'a')?.status).toBe('submitted');
     // With a choice to make, the room is unpaced after the verdict (the abandoned valve only).
@@ -207,5 +207,35 @@ describe('the points land with the verdict (loop 257)', () => {
     s = claimRaw(s, 'a');
     expect(vip(s, 'skip').wins['a']).toBe(3);
     expect(vip(s, 'end').wins['a']).toBe(3);
+  });
+});
+
+describe('the verdict is the server’s word (loop 258)', () => {
+  it('a wrong claim: the check phase takes two beats — the reveal, then the verdict is read', () => {
+    let s = callUntil(start(), 'a', LINE);
+    s = daubAll(s, 'a', [0, 1, 2, 3, 7]); // not a line
+    s = claimRaw(s, 'a');
+    expect(s.phase.id).toBe('check');
+    expect(s.round.judged).toBe(false);
+    expect(game.controllerView(s, 'a').verdictShown).toBe(false);
+    const c = s.round.claim;
+    const verdictAt = s.phase.startedAt + claimRevealMs(c?.cells ?? [], c?.daubs ?? []);
+    expect(s.phase.deadline).toBe(verdictAt);
+    const judged = timer(s);
+    expect(judged.phase.id).toBe('check');
+    expect(judged.round.judged).toBe(true);
+    expect(game.controllerView(judged, 'a').verdictShown).toBe(true);
+    expect(judged.phase.deadline).toBe(verdictAt + VERDICT_READ_MS);
+    expect(timer(judged).phase.id).toBe('play');
+  });
+
+  it('a win: verdictShown flips with the score, on the same tick', () => {
+    let s = callUntil(start(), 'a', LINE);
+    s = daubAll(s, 'a', LINE);
+    s = claimRaw(s, 'a');
+    expect(game.controllerView(s, 'b').verdictShown).toBe(false);
+    const judged = timer(s);
+    expect(game.controllerView(judged, 'b').verdictShown).toBe(true);
+    expect(judged.wins['a']).toBe(3);
   });
 });

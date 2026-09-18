@@ -82,8 +82,11 @@ export interface RoundState {
    * celebration is done (the phase deadline), then applied. Never two: the first one counts.
    */
   decision: Decision | null;
-  /** bingo: the win has been scored — at the TV's verdict (the phase's first tick), not before. */
-  credited: boolean;
+  /**
+   * check / bingo: the TV's verdict has landed (the phase's first tick, at the end of the reveal —
+   * ADR-033). A win is scored as it flips; the phones show nothing conclusive before it.
+   */
+  judged: boolean;
   /**
    * A claim takes two taps. The first arms one card for ARM_MS: the player has dibs, and a second
    * tap on that card claims it. Other players' first taps queue behind; a lapsed window passes to

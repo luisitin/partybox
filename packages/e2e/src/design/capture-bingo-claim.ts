@@ -71,16 +71,20 @@ async function main(): Promise<void> {
       await settle(values.reveal ? 8500 : 4200);
       const video = await cutStrips(rec, join(OUT, 'strips-tv'), tvMarks);
       console.log(`10 fps TV strips from ${video ?? '(no video)'}`);
-      await sam.context.close();
+      // The phone from the same clock: the two verdicts must land on the same frame (loop 258).
+      await cutStrips(sam, join(OUT, 'strips'), tvMarks);
       return;
     }
     if (values.lapse) {
       marks[0] = { name: 'lapse', at: marks[0]?.at ?? 0, before: 0.1, seconds: 4 };
       await settle(4200);
     } else {
+      // --reveal on the phone: stay on tape through the verdict (≈ 6.4 s) and the win screen.
+      if (values.reveal)
+        marks[0] = { name: 'claim', at: marks[0]?.at ?? 0, before: 0.1, seconds: 8 };
       await settle(900);
       await sam.page.getByRole('button', { name: /tap again to claim/i }).dispatchEvent('click');
-      await settle(2100);
+      await settle(values.reveal ? 7500 : 2100);
     }
     const video = await cutStrips(sam, join(OUT, 'strips'), marks);
     console.log(`10 fps strips from ${video ?? '(no video)'} → ${join(OUT, 'strips')}`);

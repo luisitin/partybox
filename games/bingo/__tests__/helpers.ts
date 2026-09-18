@@ -74,10 +74,10 @@ export function claimRaw(state: State, playerId: string, card = 0): State {
   return input(armed, playerId, { type: 'bingo', card }, t + 100);
 }
 
-/** A claim, and — for a win — the TV's verdict (the bingo phase's first tick, which scores it). */
+/** A claim and the TV's verdict: the check's or the bingo phase's first tick (which scores a win). */
 export function claim(state: State, playerId: string, card = 0): State {
   const s = claimRaw(state, playerId, card);
-  return s.phase.id === 'bingo' && s.round.winnerId ? timer(s) : s;
+  return s.phase.id === 'check' || (s.phase.id === 'bingo' && s.round.winnerId) ? timer(s) : s;
 }
 
 /** A moment after the TV's reveal of the current claim: when the room may decide. */

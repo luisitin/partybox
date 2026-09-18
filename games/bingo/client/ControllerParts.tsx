@@ -141,9 +141,10 @@ export function BingoButton({
   const canTap = view.claimable.includes(card) && !checking;
   let label = 'BINGO!';
   let tone: 'accent' | 'neutral' | 'danger' | 'success' = 'accent';
-  if (won) label = 'Yours already';
-  else if (checking)
+  // The check first: a card under review says so, never "Yours already" before the verdict.
+  if (checking)
     label = myCheck ? 'Not a bingo' : myClaim ? 'Checking on the TV…' : 'Look at the TV';
+  else if (won) label = 'Yours already';
   else if (view.waitingForCall) label = 'Next number soon…';
   else if (armedHere) {
     label = `Tap again for BINGO! · ${Math.min(3, left ?? 0)}`; // a clock a hair behind can say 4
