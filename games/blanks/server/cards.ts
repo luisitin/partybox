@@ -5,6 +5,7 @@ import { shuffle } from '@partybox/game-sdk';
 import type { RngState } from '@partybox/game-sdk';
 import { BLANK, blanksIn } from '../content/schema';
 import { WHITE_KINDS, whiteKind } from './content';
+import type { WhiteKind } from './content';
 import {
   BIG_REVEAL_MAX_MS,
   BIG_REVEAL_MIN_MS,
@@ -49,41 +50,87 @@ export function drawBlack(state: State, pool: readonly string[]): [string | null
 
 /** A hand always holds at least this many cards of each kind (thing / doing / combo). */
 export const KIND_FLOOR = 2;
+/** How many cards a round may swap out of one hand to meet the floor: a hand loses one card a
+ *  round, so a top-up alone can never climb from none of a kind to two (review-loop #175). */
+const MAX_SWAPS = 2;
 
-/** The first card of `kind` in the white deck, taken out of its place (null when the deck holds
- *  none — the discard is not searched; a plain draw covers the rest). */
-function takeKind(state: State, kind: string): [string | null, State] {
-  const i = state.whiteDeck.findIndex((id) => whiteKind(id) === kind);
-  if (i === -1) return [null, state];
-  const id = state.whiteDeck[i] as string;
-  return [id, { ...state, whiteDeck: state.whiteDeck.filter((_, j) => j !== i) }];
+function countKind(hand: readonly string[], kind: WhiteKind): number {
+  return hand.filter((id) => whiteKind(id) === kind).length;
 }
 
-/** Every player's hand back up to HAND_SIZE (+ `extra` for the ids in `extraFor`). The refill
- *  first tops up any kind below KIND_FLOOR from the deck, then draws the rest off the top, so a
- *  hand of ten always offers a few things, a few doings and a few combos (owner, loop #151). */
+/** The first card of `kind` in the white deck, taken out of its place. A deck with none left
+ *  shuffles the discard back in and looks again — without that, a long game on a deck thin in one
+ *  kind (mild holds 45 gerunds) left hands with none of it at all. Null only when neither pile
+ *  holds one. */
+function takeKind(state: State, kind: WhiteKind): [string | null, State] {
+  let next = state;
+  let i = next.whiteDeck.findIndex((id) => whiteKind(id) === kind);
+  if (i === -1 && next.discard.length > 0) {
+    const [refill, rng] = shuffle(next.rng, next.discard);
+    next = { ...next, rng, whiteDeck: [...next.whiteDeck, ...refill], discard: [] };
+    i = next.whiteDeck.findIndex((id) => whiteKind(id) === kind);
+  }
+  if (i === -1) return [null, next];
+  const id = next.whiteDeck[i] as string;
+  return [id, { ...next, whiteDeck: next.whiteDeck.filter((_, j) => j !== i) }];
+}
+
+/**
+ * One hand back up to `target`, with something of every kind to play: the missing kinds are drawn
+ * first, then the rest off the top, and finally — when the hand is full and still short of a kind
+ * — up to MAX_SWAPS cards of the most plentiful kind go to the discard and are replaced. So a
+ * player always has a noun, an action and a phrase to work with (the owner's ask, loop #175).
+ */
+function fillHand(state: State, hand: readonly string[], target: number): [string[], State] {
+  let next = state;
+  let out = [...hand];
+  for (const kind of WHITE_KINDS) {
+    while (countKind(out, kind) < KIND_FLOOR && out.length < target) {
+      const [card, after] = takeKind(next, kind);
+      if (card === null) break;
+      next = after;
+      out.push(card);
+    }
+  }
+  if (out.length < target) {
+    const [drawn, after] = drawWhite(next, target - out.length);
+    next = after;
+    out = [...out, ...drawn];
+  }
+  for (const kind of WHITE_KINDS) {
+    let swaps = 0;
+    while (countKind(out, kind) < KIND_FLOOR && swaps < MAX_SWAPS) {
+      const surplus = [...WHITE_KINDS].sort((a, b) => countKind(out, b) - countKind(out, a))[0];
+      if (surplus === undefined || countKind(out, surplus) <= KIND_FLOOR) break;
+      const [card, after] = takeKind(next, kind);
+      if (card === null) break;
+      const i = out.findIndex((id) => whiteKind(id) === surplus);
+      const dropped = out[i] as string;
+      out = [...out.slice(0, i), ...out.slice(i + 1), card];
+      next = { ...after, discard: [...after.discard, dropped] };
+      swaps += 1;
+    }
+  }
+  return [out, next];
+}
+
+/** Every player's hand back up to HAND_SIZE (+ `extra` for the ids in `extraFor`). */
 export function refillHands(state: State, extra = 0, extraFor: readonly string[] = []): State {
   let next = state;
   const hands = { ...state.hands };
   for (const id of Object.keys(state.players).sort()) {
     const target = HAND_SIZE + (extraFor.includes(id) ? extra : 0);
-    let hand = hands[id] ?? [];
-    if (hand.length >= target) continue;
-    for (const kind of WHITE_KINDS) {
-      let have = hand.filter((c) => whiteKind(c) === kind).length;
-      while (have < KIND_FLOOR && hand.length < target) {
-        const [card, after] = takeKind(next, kind);
-        if (card === null) break;
-        next = after;
-        hand = [...hand, card];
-        have += 1;
-      }
-    }
-    const [drawn, after] = drawWhite(next, target - hand.length);
+    const hand = hands[id] ?? [];
+    if (hand.length >= target && countsMeetFloor(hand)) continue;
+    const [filled, after] = fillHand(next, hand, Math.max(target, hand.length));
     next = after;
-    hands[id] = [...hand, ...drawn];
+    hands[id] = filled;
   }
   return { ...next, hands };
+}
+
+function countsMeetFloor(hand: readonly string[]): boolean {
+  return WHITE_KINDS.every((kind) => countKind(hand, kind) >= KIND_FLOOR);
 }
 
 export interface Segment {

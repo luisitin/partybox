@@ -122,20 +122,24 @@ describe('dealing', () => {
   });
 
   it('a hand always holds at least two things, two doings and two combos while the deck has them', () => {
+    // A hand loses a card a round, so the refill also swaps a surplus kind out when a hand has
+    // fallen short of one (review-loop #175) — checked here over eight rounds of every preset.
     const counts = (hand: string[]): Record<string, number> => {
       const c: Record<string, number> = { thing: 0, doing: 0, combo: 0 };
       for (const id of hand) c[whiteKind(id)] = (c[whiteKind(id)] ?? 0) + 1;
       return c;
     };
     for (const decks of ['mild', 'adults', 'wild', 'wild-only'] as const) {
-      let s = start({ players: 6, decks, seed: 7 });
-      for (let round = 1; round <= 3; round++) {
+      let s = start({ players: 6, decks, seed: 7, rounds: 8 });
+      for (let round = 1; round <= 8; round++) {
         for (const id of Object.keys(s.players)) {
           const c = counts(s.hands[id] ?? []);
           for (const kind of WHITE_KINDS)
             expect(c[kind], `${decks} r${round} ${kind}`).toBeGreaterThanOrEqual(KIND_FLOOR);
         }
         s = timer(playRound(s));
+        // Past the last round the hands are spent and never refilled again — nothing to assert.
+        if (s.phase.id === 'final' || s.phase.id === 'done') break;
       }
     }
     expect(whiteKindOf('Yodeling.')).toBe('doing');

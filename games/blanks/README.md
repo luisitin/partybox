@@ -27,8 +27,9 @@ welcome (`supportsBots`) — the bot plays random cards from its hand and votes 
 | `done`   | final board                                                                                                                                              | final rank + board                                          | terminal: `results()` non-null. VIP end from any phase → `done` with the scores so far                                                                                                                                                                          |
 
 Round start (`intro` entry): last round's played cards to the discard, hands back to 10 (+ the black
-card's `draw`) — topping up first so every hand holds at least 2 things, 2 doings and 2 combos (a
-heuristic on the card text: gerund / linking word / the rest) while the deck has them — the judge chosen (czar mode: seat order by id, one per round,
+card's `draw`) — the missing kinds drawn first, and up to two cards of the most plentiful kind
+swapped out when a hand is still short, so every hand holds at least 2 things, 2 doings and 2 combos
+(a heuristic on the card text: gerund / linking word / the rest) while the decks can supply them — the judge chosen (czar mode: seat order by id, one per round,
 disconnected seats skipped), a black card drawn — three in czar mode, for the judge to choose between in
 `pick` (the two not chosen go under the deck); its extra draws and Rando's cards (setting) follow once the
 card is final, on `answer` entry. Decks shuffled once at `init`; a dry white deck
