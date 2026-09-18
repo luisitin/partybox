@@ -376,10 +376,15 @@
   font-weight: 800;
 }
 
-/* The winning card, on the beat the room is told who won: it lifts off the table, the gold ring
-   brightens and a warm halo blooms behind it — one beat, then it holds (review-loop #162). */
+/* The winning card, on the beat the room is told who won: it lifts off the table and a warm halo
+   blooms behind it — one beat, then it holds (review-loop #162). The halo is a static shadow: an
+   animated filter cost the stage 49 of every 60 frames (#178). */
 .crowned {
   animation: global(pb-crown) var(--pb-motion-slow) var(--pb-ease) both;
+  box-shadow:
+    0 0 0 1px rgb(255 255 255 / 14%),
+    0 18px 40px rgb(0 0 0 / 45%),
+    0 0 60px 6px color-mix(in srgb, var(--pb-accent-2) 40%, transparent);
 }
 
 /* ── The read-out card's turn ──────────────────────────────────────────────────────────────── */
