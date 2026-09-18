@@ -10,6 +10,7 @@ import { BigText, Scoreboard, Stage, useSoundApi } from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
 import type { BingoTvView } from '../server/views';
 import { BALL_LAND_MS, hushCaller, speakCall } from './caller';
+import { PATTERN_LABEL, patternCells } from '../server/patterns';
 import { PatternIcon } from './Card';
 import { PatternDemo } from './PatternDemo';
 import { pendingLine, whyNot, winHeadline } from './copy';
@@ -282,9 +283,13 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
         <BigText level="h1">Points</BigText>
         <Scoreboard rows={rows(view)} noTrophy />
         {next ? (
-          <BigText level="h2" tone="accent">
-            Next: round {view.round + 1} — {next}
-          </BigText>
+          // The next pattern's shape beside its name (loop 287): the room sees the goal early.
+          <div className={styles.nextUp}>
+            <PatternIcon cells={patternCells(next)} size={56} />
+            <BigText level="h2" tone="accent">
+              Next: round {view.round + 1} — {PATTERN_LABEL[next]}
+            </BigText>
+          </div>
         ) : null}
       </Stage>
     );

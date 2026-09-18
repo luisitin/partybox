@@ -816,3 +816,10 @@
     display: none;
   }
 }
+
+/* "Next: round 2 — corners" with the pattern's shape (loop 287). */
+.nextUp {
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-4);
+}
