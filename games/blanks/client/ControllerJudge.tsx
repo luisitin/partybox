@@ -136,11 +136,17 @@ export function ControllerJudge({ view, send }: Props): JSX.Element {
           </span>
         )}
       </div>
+      {/* The question once, then the answers — the same shape as the vote list (review-loop #181). */}
+      {black.pick === 1 ? (
+        <div className={styles.handBlack}>
+          <FilledCard text={black.text} pick={black.pick} size="phone" />
+        </div>
+      ) : null}
       <ul className={styles.cardList} aria-label="the cards">
         {view.cards.map((c) => (
           <li key={c.slot}>
             <FilledCard
-              text={black.text}
+              text={black.pick === 1 ? '____' : black.text}
               whites={c.whites}
               size="mini"
               letter={LETTERS[c.slot]}
