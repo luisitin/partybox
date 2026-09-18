@@ -218,7 +218,8 @@ async function main(): Promise<void> {
           (values['pause-in'] ? phase === values['pause-in'] : n >= 3)
         ) {
           // The VIP pauses mid-phase for 6 s: the curtain, the held timer, the held music bed;
-          // then resumes — no second phase chime, the bed picks up where it stopped.
+          // then resumes — the shell chimes `phase` on the way back (DESIGN_SYSTEM) and the bed
+          // picks up where it stopped, never restarting.
           scenarioDone = true;
           notes.push(`pause: VIP paused 6 s at ${new Date().toISOString()} in ${phase}`);
           await api.vip('pause');

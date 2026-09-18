@@ -1,0 +1,272 @@
+{
+  "pass": "211",
+  "game": "blanks",
+  "players": 4,
+  "scenario": "pause",
+  "focus": "tv",
+  "started": "13:14:44.633",
+  "tvVideoT0": "13:14:41.466",
+  "changes": [
+    {
+      "t": 1789737284637,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789737289629,
+      "bed": "warm",
+      "at": "13:14:44.637",
+      "sinceStartS": 0,
+      "videoS": 3.2
+    },
+    {
+      "t": 1789737289683,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789737319642,
+      "bed": "bossa",
+      "at": "13:14:49.683",
+      "sinceStartS": 5,
+      "videoS": 8.2
+    },
+    {
+      "t": 1789737295345,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789737298398,
+      "bed": "warm",
+      "at": "13:14:55.345",
+      "sinceStartS": 10.7,
+      "videoS": 13.9
+    },
+    {
+      "t": 1789737298515,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789737301541,
+      "bed": "warm",
+      "at": "13:14:58.515",
+      "sinceStartS": 13.9,
+      "videoS": 17
+    },
+    {
+      "t": 1789737301559,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789737304829,
+      "bed": "warm",
+      "at": "13:15:01.559",
+      "sinceStartS": 16.9,
+      "videoS": 20.1
+    },
+    {
+      "t": 1789737304875,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789737307952,
+      "bed": "warm",
+      "at": "13:15:04.875",
+      "sinceStartS": 20.2,
+      "videoS": 23.4
+    },
+    {
+      "t": 1789737308020,
+      "status": "playing",
+      "phase": "judge",
+      "deadline": 1789737337964,
+      "bed": "marimba",
+      "at": "13:15:08.020",
+      "sinceStartS": 23.4,
+      "videoS": 26.6
+    },
+    {
+      "t": 1789737319782,
+      "status": "playing",
+      "phase": "result",
+      "deadline": 1789737327664,
+      "bed": "lounge",
+      "at": "13:15:19.782",
+      "sinceStartS": 35.1,
+      "videoS": 38.3
+    },
+    {
+      "t": 1789737327769,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789737332674,
+      "bed": "warm",
+      "at": "13:15:27.769",
+      "sinceStartS": 43.1,
+      "videoS": 46.3
+    },
+    {
+      "t": 1789737332765,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789737362685,
+      "bed": "marimba",
+      "at": "13:15:32.765",
+      "sinceStartS": 48.1,
+      "videoS": 51.3
+    },
+    {
+      "t": 1789737338357,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789737341946,
+      "bed": "warm",
+      "at": "13:15:38.357",
+      "sinceStartS": 53.7,
+      "videoS": 56.9
+    },
+    {
+      "t": 1789737342057,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789737345384,
+      "bed": "warm",
+      "at": "13:15:42.057",
+      "sinceStartS": 57.4,
+      "videoS": 60.6
+    },
+    {
+      "t": 1789737345427,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789737349268,
+      "bed": "warm",
+      "at": "13:15:45.427",
+      "sinceStartS": 60.8,
+      "videoS": 64
+    },
+    {
+      "t": 1789737349340,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789737352633,
+      "bed": "warm",
+      "at": "13:15:49.340",
+      "sinceStartS": 64.7,
+      "videoS": 67.9
+    },
+    {
+      "t": 1789737352719,
+      "status": "playing",
+      "phase": "judge",
+      "deadline": 1789737382645,
+      "bed": "lofi",
+      "at": "13:15:52.719",
+      "sinceStartS": 68.1,
+      "videoS": 71.3
+    },
+    {
+      "t": 1789737356920,
+      "status": "playing",
+      "phase": "result",
+      "deadline": 1789737364808,
+      "bed": "lounge",
+      "at": "13:15:56.920",
+      "sinceStartS": 72.3,
+      "videoS": 75.5
+    },
+    {
+      "t": 1789737364821,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789737369809,
+      "bed": "warm",
+      "at": "13:16:04.821",
+      "sinceStartS": 80.2,
+      "videoS": 83.4
+    },
+    {
+      "t": 1789737369820,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789737399812,
+      "bed": "bossa",
+      "at": "13:16:09.820",
+      "sinceStartS": 85.2,
+      "videoS": 88.4
+    },
+    {
+      "t": 1789737375406,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789737378899,
+      "bed": "warm",
+      "at": "13:16:15.406",
+      "sinceStartS": 90.8,
+      "videoS": 93.9
+    },
+    {
+      "t": 1789737378971,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789737382161,
+      "bed": "warm",
+      "at": "13:16:18.971",
+      "sinceStartS": 94.3,
+      "videoS": 97.5
+    },
+    {
+      "t": 1789737382228,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789737385624,
+      "bed": "warm",
+      "at": "13:16:22.228",
+      "sinceStartS": 97.6,
+      "videoS": 100.8
+    },
+    {
+      "t": 1789737385638,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789737389084,
+      "bed": "warm",
+      "at": "13:16:25.638",
+      "sinceStartS": 101,
+      "videoS": 104.2
+    },
+    {
+      "t": 1789737389106,
+      "status": "playing",
+      "phase": "judge",
+      "deadline": 1789737419090,
+      "bed": "marimba",
+      "at": "13:16:29.106",
+      "sinceStartS": 104.5,
+      "videoS": 107.6
+    },
+    {
+      "t": 1789737393314,
+      "status": "playing",
+      "phase": "result",
+      "deadline": 1789737401205,
+      "bed": "lounge",
+      "at": "13:16:33.314",
+      "sinceStartS": 108.7,
+      "videoS": 111.8
+    },
+    {
+      "t": 1789737401218,
+      "status": "playing",
+      "phase": "final",
+      "deadline": 1789737405216,
+      "bed": null,
+      "at": "13:16:41.218",
+      "sinceStartS": 116.6,
+      "videoS": 119.8
+    },
+    {
+      "t": 1789737405254,
+      "status": "results",
+      "phase": "results",
+      "deadline": null,
+      "bed": null,
+      "at": "13:16:45.254",
+      "sinceStartS": 120.6,
+      "videoS": 123.8
+    }
+  ],
+  "notes": ["pause: VIP paused 6 s at 2026-09-18T13:15:12.081Z in judge"]
+}
