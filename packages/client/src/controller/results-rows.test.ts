@@ -51,6 +51,32 @@ describe('winnerLineFor', () => {
     expect(winnerLineFor(shared, 'Sam')).toBe('You tie for first! 🏆');
     expect(winnerLineFor(shared, 'Kenji')).toBe('Priya & Sam win!');
   });
+  it('counts the rest of a three-way tie in the singular (review-loop #215)', () => {
+    const tied = room(
+      { Sam: 20, Priya: 20, Kenji: 20, Dev: 10 },
+      ['Sam', 'Priya', 'Kenji'],
+      [
+        { playerId: 'Sam', score: 20, rank: 1 },
+        { playerId: 'Priya', score: 20, rank: 1 },
+        { playerId: 'Kenji', score: 20, rank: 1 },
+        { playerId: 'Dev', score: 10, rank: 4 },
+      ],
+    );
+    expect(winnerLineFor(tied, 'Dev')).toBe('Kenji, Priya & 1 other tie!');
+    const four = room(
+      { Sam: 20, Priya: 20, Kenji: 20, Dev: 20, Ana: 10 },
+      ['Sam', 'Priya', 'Kenji', 'Dev'],
+      [
+        { playerId: 'Sam', score: 20, rank: 1 },
+        { playerId: 'Priya', score: 20, rank: 1 },
+        { playerId: 'Kenji', score: 20, rank: 1 },
+        { playerId: 'Dev', score: 20, rank: 1 },
+        { playerId: 'Ana', score: 10, rank: 5 },
+      ],
+    );
+    expect(winnerLineFor(four, 'Ana')).toBe('Dev, Kenji & 2 others tie!');
+  });
+
   it('calls an all-way tie a tie for everyone', () => {
     const all = room(
       { Sam: 10, Priya: 10 },
