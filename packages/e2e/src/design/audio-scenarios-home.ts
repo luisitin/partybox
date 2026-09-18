@@ -1,7 +1,7 @@
 // Section E of the audio trace: Home (reset) from the results and mid-game — the lobby music
 // returns, speech is cancelled, one track audible. Split from audio-scenarios-games (loop 263).
 import type { Ev } from './audio-tracer';
-import type { Ctx } from './audio-scenarios-games';
+import type { ScenarioCtx as Ctx } from './audio-tracer';
 import { settle } from './session';
 
 export async function runHomeScenarios({ T, tv, api }: Ctx): Promise<void> {

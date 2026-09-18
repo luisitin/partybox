@@ -104,6 +104,7 @@ Timer: in the last 5 s it switches to `--pb-danger`, scales 1.15×, pulses once 
 | `claim`                   | BINGO! sent from a phone: a rising "sent!" (with a long buzz)                                                                                        | game via `useSound` (phone)                                                    |
 | `dibs`                    | someone tapped BINGO! once (the 3 s window): a soft rising "hm?" on the TV                                                                           | game via `useSound` (TV)                                                       |
 | `correct`                 | the phone's own verdict card                                                                                                                         | game via `useSound` (phone)                                                    |
+| `submit`                  | a player's own choice sent — a Blanks card, Bingo's "keep going / next round" pick (loop 322)                                                        | game via `useSound` (phone)                                                    |
 
 `play(cue, { semitones, quiet })` transposes a cue (the engine multiplies every note by 2^(n/12)); `quiet` leaves
 `lastPlayedAt` alone so the cue never suppresses the shell's next chime.
