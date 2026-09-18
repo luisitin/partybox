@@ -7,7 +7,9 @@
 }
 
 .center {
-  justify-content: center;
-  align-items: center;
+  /* `safe`: a stage taller than its box overflows downward, never up under the roster (a 16-player
+     Bingo with the hall board on put its kicker through the third chip row — loop 265). */
+  justify-content: safe center;
+  align-items: safe center;
   text-align: center;
 }
