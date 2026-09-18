@@ -451,8 +451,10 @@
     transform var(--pb-motion-base) var(--pb-ease);
 }
 
+/* Far enough back to read as “not this one”, still legible on a light theme, where a dimmed
+   black card sits grey on grey (loop #206). */
 .peekOff {
-  opacity: 0.45;
+  opacity: 0.6;
 }
 
 .peekOn {
