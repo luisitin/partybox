@@ -147,9 +147,18 @@ export function FocusLayout(
   p: LayoutProps & { up: number; onUp: (c: number) => void },
 ): JSX.Element {
   const many = p.cards.length > 1;
+  // Bringing a card up (loop 244): the big card rises out of the thumbnail it came from — keyed
+  // on the card so it remounts, `--from` the picked thumbnail's column (-1..1 across the row) so
+  // the rise starts under that thumbnail and swings into the middle.
+  const n = p.cards.length;
+  const from = n > 1 ? (p.up - (n - 1) / 2) / ((n - 1) / 2) : 0;
   return (
     <div className={`${styles.focus} ${many ? styles.focusMany : ''}`}>
-      <div className={styles.focusMain}>
+      <div
+        key={p.up}
+        className={`${styles.focusMain} ${many ? styles.focusRise : ''}`}
+        style={{ ['--from' as string]: from }}
+      >
         <PlayCard p={p} c={p.up} size="phone" />
       </div>
       {many ? (

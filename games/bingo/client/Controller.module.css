@@ -813,3 +813,29 @@
     stroke-dashoffset: 0;
   }
 }
+
+/* Bringing a card up (loop 244): the big card rises from its thumbnail's slot — small, low and
+   offset to that column — and swings into place with a slight overshoot; the PlayCard inside
+   would rise a second time (pb-enter), so that is switched off here. ~360 ms, transform + opacity. */
+.focusRise {
+  animation: focus-rise 360ms cubic-bezier(0.2, 0.9, 0.3, 1.15) both;
+  transform-origin: 50% 100%;
+}
+.focusRise :global(.pb-enter) {
+  animation: none;
+}
+@keyframes focus-rise {
+  0% {
+    opacity: 0.4;
+    transform: translate(calc(var(--from, 0) * 34%), 62%) scale(0.32);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .focusRise {
+    animation: none;
+  }
+}
