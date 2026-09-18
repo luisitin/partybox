@@ -659,3 +659,33 @@
   max-width: min(100%, max(200px, calc((100dvh - 500px) / 1.15)));
   margin-inline: auto;
 }
+
+/* A sideways phone in Safari (the tab bar leaves ~330 px): the call row, the rows' gaps and the
+   card labels all give something back, the cards take the height that is left, and an armed
+   button keeps to one line so nothing runs under the bottom edge (loop 227). */
+@media (orientation: landscape) and (max-height: 420px) {
+  .roundBody {
+    gap: var(--pb-space-1);
+  }
+  .callRow {
+    min-height: 32px;
+  }
+  .layout_side .slotWrap,
+  .layout_strip .slotWrap {
+    max-width: min(100%, max(150px, calc((100dvh - 150px) / 1.3)));
+  }
+  .layout_stack .slotWrap {
+    max-width: min(100%, max(120px, calc((100dvh - 190px) / 2 / 1.3)));
+  }
+  .cardLabel {
+    display: none;
+  }
+  .bingoSmall {
+    min-height: 30px;
+    padding: 2px var(--pb-space-2);
+  }
+  .bingoSmall.armed {
+    font-size: 11px;
+    white-space: nowrap;
+  }
+}

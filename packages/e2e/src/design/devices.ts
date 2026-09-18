@@ -16,7 +16,8 @@ export type DeviceId =
   | 'galaxy'
   | 'font200'
   | 'landscape'
-  | 'ipad';
+  | 'ipad'
+  | 'landscape-safari';
 
 export interface DeviceSpec {
   id: DeviceId;
@@ -92,6 +93,11 @@ export const DEVICES: Record<DeviceId, DeviceSpec> = {
   pixel: { id: 'pixel', label: 'Pixel 7', options: pixel },
   galaxy: { id: 'galaxy', label: 'Galaxy S9+', options: galaxy },
   font200: { id: 'font200', label: 'Pixel 7 · 200 % font', options: pixel, css: FONT200_CSS },
+  'landscape-safari': {
+    id: 'landscape-safari',
+    label: 'iPhone 15 landscape, Safari tab bar',
+    options: { ...iphone, viewport: { width: 852, height: 330 } },
+  },
   ipad: { id: 'ipad', label: 'iPad 10.9 in', options: ipad },
   landscape: {
     id: 'landscape',

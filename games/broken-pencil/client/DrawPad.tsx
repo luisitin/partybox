@@ -1,4 +1,3 @@
-// The phone's sheet of paper: a square canvas with 8 colours, 3 pen sizes, undo, clear and an ink
 // meter. Strokes are kept locally until "Done" encodes them into the wire format. Pointer events
 // cover finger, mouse and pen. While the VIP pauses, the shell freezes the pad (the phone's <main>
 // goes inert) and the deadline is shifted on resume, so no drawing time is lost.
@@ -53,8 +52,11 @@ export function DrawPad({ onChange, disabled }: DrawPadProps): JSX.Element {
     if (!box) return;
     // Never taller than the space left above the sticky footer (review-loop #9): on an iPhone 15
     // a full-width square hid its bottom third under the button. Floor 220 px, then the body scrolls.
-    const measure = (): void =>
-      setSize(Math.max(220, Math.floor(Math.min(box.clientWidth, box.clientHeight || Infinity))));
+    const measure = (): void => {
+      // A sideways phone in Safari leaves the box under 220 px tall: the floor is the box then.
+      const floor = Math.min(220, box.clientHeight || 220);
+      setSize(Math.max(floor, Math.floor(Math.min(box.clientWidth, box.clientHeight || Infinity))));
+    };
     measure();
     const observer = new ResizeObserver(measure);
     observer.observe(box);
