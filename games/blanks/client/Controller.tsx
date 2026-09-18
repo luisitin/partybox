@@ -132,7 +132,11 @@ function ControllerResult({ view, me, send }: Props): JSX.Element {
               letter={LETTERS[w.slot]}
               winner
             >
-              <span className={styles.author}>
+              {/* The TV lands the authors on its second beat (600 ms) and the phone now waits with
+                  it, keeping its place so the card does not resize (review-loop #226). */}
+              <span
+                className={`${styles.author} ${final || beat >= 1 ? '' : styles.beatWait}`.trim()}
+              >
                 <Avatar avatarId={w.avatarId} size="var(--pb-chip-size)" />
                 <span className={styles.authorName}>{w.name}</span>
                 {votesLabel(view, w.votes) ? (
@@ -141,18 +145,27 @@ function ControllerResult({ view, me, send }: Props): JSX.Element {
               </span>
               {/* A phone-only room sees the social payoff too (review-loop #170). */}
               {view.judgeMode === 'vote' && w.voters.length > 0 ? (
-                <span className={`${styles.voters} pb-caption`}>
-                  Voted by {list(w.voters.map((v) => v.name))}
+                // The gate sits on a wrapper: `.voters` runs pb-rise with fill `both`, and an
+                // animation's own opacity beats a class's (the trap from loop #196).
+                <span className={final || beat >= 1 ? '' : styles.beatWait}>
+                  <span className={`${styles.voters} pb-caption`}>
+                    Voted by {list(w.voters.map((v) => v.name))}
+                  </span>
                 </span>
               ) : null}
             </FilledCard>
           ))
         : null}
-      {!final && mine && !mine.winner ? (
+      {/* Your own card's line, on the winner's beat with everything else. Votes you did get are
+          worth a name: "got 2 votes — Priya and Sam" is the thing people lean over to say out loud
+          (review-loop #226); a judge's round has no votes to name. */}
+      {!final && named && mine && !mine.winner ? (
         <p className="pb-caption pb-muted">
           {view.judgeMode === 'czar'
             ? `Yours (${LETTERS[mine.slot]}) wasn't picked.`
-            : `Yours (${LETTERS[mine.slot]}) got ${mine.votes} ${mine.votes === 1 ? 'vote' : 'votes'}.`}
+            : `Yours (${LETTERS[mine.slot]}) got ${mine.votes} ${mine.votes === 1 ? 'vote' : 'votes'}${
+                mine.voters.length > 0 ? ` — ${list(mine.voters.map((v) => v.name))}` : ''
+              }.`}
         </p>
       ) : null}
       {/* The point is already in the standings when the result opens, and the TV holds its own
