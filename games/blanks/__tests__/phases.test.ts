@@ -3,7 +3,7 @@
 import { describe, expect, it } from 'vitest';
 import { blackCard } from '../server/content';
 import { allIn } from '../server/phases/answer';
-import { ALL_IN_MS, RANDO } from '../server/types';
+import { ALL_IN_MS, RANDO, VOTES_IN_MS } from '../server/types';
 import {
   connect,
   cv,
@@ -156,6 +156,11 @@ describe('judge (vote mode)', () => {
     s = vote(s, 'ana', s.slots.indexOf('ben'));
     expect(s.phase.id).toBe('judge');
     s = vote(s, 'ben', s.slots.indexOf('ana'));
+    // The last vote starts the "That's everyone" beat; its timer ends the phase (loop #228).
+    expect(s.phase.id).toBe('judge');
+    // the vote landed a second into the phase, so the beat ends 900 ms after that
+    expect(s.phase.deadline).toBe(s.phase.startedAt + 1000 + VOTES_IN_MS);
+    s = timer(s);
     expect(s.phase.id).toBe('result');
     expect(s.winners).toEqual(['ana']);
   });
@@ -198,6 +203,9 @@ describe('judge (czar mode)', () => {
     expect(vote(s, 'ben', 0)).toBe(s);
     expect(cv(s, 'ben').vote?.canVote).toBe(false);
     s = vote(s, 'ana', 1);
+    // A judge's single pick gets the same beat as a room's last vote (loop #228).
+    expect(s.phase.id).toBe('judge');
+    s = timer(s);
     expect(s.phase.id).toBe('result');
     expect(s.winners).toEqual([s.slots[1]]);
     s = timer(s);

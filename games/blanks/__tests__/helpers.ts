@@ -2,6 +2,7 @@
 import type { GameEvent, VipGameAction } from '@partybox/game-sdk';
 import { blackCard } from '../server/content';
 import { allIn } from '../server/phases/answer';
+import { votesIn } from '../server/phases/judge';
 import { game } from '../server/index';
 import type { BlanksControllerView, BlanksTvView } from '../server/index';
 import type { Input, Settings, State } from '../server/types';
@@ -121,7 +122,9 @@ export function readAll(state: State): State {
   return s;
 }
 
-/** Everyone eligible votes for `slotFor(voterId)` (default: the first slot that is not theirs). */
+/** Everyone eligible votes for `slotFor(voterId)` (default: the first slot that is not theirs);
+ *  when that was everyone, the "That’s everyone" beat is played out too (its timer fires), the way
+ *  playAll plays out "Everyone’s in!" (review-loop #228). */
 export function voteAll(state: State, slotFor?: (voterId: string) => number): State {
   let s = state;
   for (const id of Object.keys(state.players).sort()) {
@@ -129,6 +132,7 @@ export function voteAll(state: State, slotFor?: (voterId: string) => number): St
     const slot = slotFor ? slotFor(id) : s.slots.findIndex((x) => x !== id);
     if (slot !== -1) s = vote(s, id, slot);
   }
+  if (s !== state && s.phase.id === 'judge' && votesIn(s)) s = timer(s);
   return s;
 }
 

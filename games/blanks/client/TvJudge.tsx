@@ -32,7 +32,8 @@ function Progress({ view }: Props): JSX.Element {
     const judge = view.czar;
     if (!judge) return <>Judging…</>;
     return view.votedCount > 0 ? (
-      <>{judge.name} has decided</>
+      // The pick is in and the stage holds a beat before the result (loop #228).
+      <>{judge.name} has decided — here it comes…</>
     ) : (
       <>
         <Avatar avatarId={judge.avatarId} size="var(--pb-space-7)" />
@@ -50,12 +51,9 @@ function Progress({ view }: Props): JSX.Element {
         Just waiting for <Holdout player={holdouts[0]!} />…
       </>
     );
-  if (holdouts.length === 0)
-    return (
-      <>
-        {n} / {m} voted
-      </>
-    );
+  // Every vote is in: the stage holds "That's everyone" for a beat, the way the answer stage
+  // holds "Everyone's in!", instead of cutting straight to the result (loop #228).
+  if (holdouts.length === 0) return <>That&rsquo;s everyone — here comes the result…</>;
   const rest = holdouts.length - NAMED_HOLDOUTS;
   return (
     <>
