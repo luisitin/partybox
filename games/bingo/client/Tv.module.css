@@ -440,3 +440,47 @@
   font-size: var(--pb-font-caption);
   margin-top: var(--pb-space-2);
 }
+
+/* The 3 · 2 · 1 ring (loop 242), the phone's at TV scale: 360 px, a 12 px gold stroke draining
+   clockwise over the hold, the digit in its middle. */
+.resumeWrap {
+  position: relative;
+  width: 360px;
+  height: 360px;
+  display: grid;
+  place-items: center;
+}
+.ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+.ringTrack,
+.ringFill {
+  fill: none;
+  stroke-width: 6;
+  stroke-linecap: round;
+}
+.ringTrack {
+  stroke: var(--pb-surface-2);
+}
+.ringFill {
+  stroke: var(--pb-accent-2);
+  stroke-dasharray: 326.7;
+  animation: ring-drain linear both;
+}
+@keyframes ring-drain {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: 326.7;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ringFill {
+    animation: none;
+  }
+}

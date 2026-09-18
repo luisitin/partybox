@@ -9,6 +9,7 @@ import type { JSX } from 'react';
 import { BigText, Scoreboard, Stage, useSecondsLeft, useSoundApi } from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
 import type { BingoTvView } from '../server/views';
+import { RESUME_MS } from '../server/types';
 import { BALL_LAND_MS, hushCaller, speakCall } from './caller';
 import { PatternIcon } from './Card';
 import { pendingLine, winHeadline } from './copy';
@@ -32,9 +33,22 @@ function Resume({ roundLabel, resumeAt }: { roundLabel: string; resumeAt: number
   return (
     <Stage center>
       <p className={styles.kicker}>{roundLabel} · calling resumes in</p>
-      <BigText key={left} level="display" tone="accent" className="pb-pop">
-        {Math.max(1, left)}
-      </BigText>
+      <div className={styles.resumeWrap}>
+        <svg className={styles.ring} viewBox="0 0 120 120" aria-hidden>
+          <circle className={styles.ringTrack} cx="60" cy="60" r="52" />
+          <circle
+            key={resumeAt}
+            className={styles.ringFill}
+            cx="60"
+            cy="60"
+            r="52"
+            style={{ animationDuration: `${RESUME_MS}ms` }}
+          />
+        </svg>
+        <BigText key={left} level="display" tone="accent" className="pb-pop">
+          {Math.max(1, left)}
+        </BigText>
+      </div>
       <BigText level="h2" tone="muted">
         get your thumbs ready
       </BigText>

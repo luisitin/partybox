@@ -1,8 +1,10 @@
 // The Bingo phone's overlays: the card-style sheet (tap a style to see it behind the sheet, then
 // Confirm or Keep changing), the curtain while someone else is changing (with a way into your own
 // menu), the 3 · 2 · 1 before calling resumes, and the turn-your-phone gate.
+import { useEffect } from 'react';
 import type { JSX } from 'react';
-import { PrimaryButton, useSecondsLeft } from '@partybox/game-sdk/ui';
+import { PrimaryButton, useSecondsLeft, useSound } from '@partybox/game-sdk/ui';
+import { RESUME_MS } from '../server/types';
 import type { BingoControllerView } from '../server/views';
 import { STYLES, styleReason } from './styles';
 import type { CardStyle, Orientation } from './styles';
@@ -94,16 +96,33 @@ export function HoldCurtain({
 /** The last menu closed: 3 · 2 · 1 on every screen, then the next number. */
 export function Countdown({ resumeAt }: { resumeAt: number }): JSX.Element | null {
   const left = useSecondsLeft(resumeAt);
+  const play = useSound();
+  const shown = left === null ? 0 : Math.min(3, left); // a clock a hair behind would say 4 first
+  // Each digit lands with a tick (the TV ticks too, at its own clock); the last one is the call.
+  useEffect(() => {
+    if (shown > 0) play('tick');
+  }, [shown, play]);
   if (left === null || left <= 0) return null;
-  const shown = Math.min(3, left); // a phone clock a hair behind the server would say 4 first
   return (
     <div className={styles.curtain} role="status" aria-live="assertive">
-      <div>
+      <div className={styles.countWrap}>
+        {/* A ring that drains over the three seconds: the thumb can see how long is left. */}
+        <svg className={styles.ring} viewBox="0 0 120 120" aria-hidden>
+          <circle className={styles.ringTrack} cx="60" cy="60" r="52" />
+          <circle
+            key={resumeAt}
+            className={styles.ringFill}
+            cx="60"
+            cy="60"
+            r="52"
+            style={{ animationDuration: `${RESUME_MS}ms` }}
+          />
+        </svg>
         <div key={shown} className={`${styles.count} pb-pop`}>
           {shown}
         </div>
-        <p className={styles.curtainLine}>get your thumbs ready</p>
       </div>
+      <p className={styles.curtainLine}>get your thumbs ready</p>
     </div>
   );
 }
