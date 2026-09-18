@@ -4,8 +4,8 @@
 // wins).
 import { useEffect } from 'react';
 import type { JSX } from 'react';
-import { PrimaryButton, useSecondsLeft } from '@partybox/game-sdk/ui';
-import type { ScoreboardRow } from '@partybox/game-sdk/ui';
+import { PrimaryButton, buzz, useSecondsLeft } from '@partybox/game-sdk/ui';
+import type { PlayCue, ScoreboardRow } from '@partybox/game-sdk/ui';
 import type { Input } from '../server/types';
 import type { BingoControllerView, CallView } from '../server/views';
 import { pendingLine } from './copy';
@@ -203,4 +203,22 @@ export function DecideFooter({
       </PrimaryButton>
     </div>
   );
+}
+
+/**
+ * A daub is the most-tapped moment of the game: the thump and the dauber sound land on the tap
+ * itself (not on the server's echo), so the hand feels it at once. Un-daubing is silent.
+ */
+export function daubWithFeel(
+  view: BingoControllerView,
+  send: Send,
+  play: PlayCue,
+  card: number,
+  index: number,
+): void {
+  if (!(view.daubs[card] ?? []).includes(index)) {
+    buzz(18);
+    play('daub');
+  }
+  send({ type: 'daub', card, index });
 }
