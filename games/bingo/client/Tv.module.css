@@ -778,3 +778,41 @@
     animation: none;
   }
 }
+
+/* The verdict lands on a bingo (loop 286): one light sweeps the card as it settles into its
+   column — the phone's card does the same (Controller.module.css). Transform only. */
+.shine {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--pb-radius);
+}
+
+.shine::after {
+  content: '';
+  position: absolute;
+  inset: -40%;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 42%,
+    color-mix(in oklab, white 30%, transparent) 50%,
+    transparent 58%
+  );
+  transform: translateX(-120%);
+  animation: card-shine 900ms ease-out 350ms both;
+}
+
+@keyframes card-shine {
+  from {
+    transform: translateX(-120%);
+  }
+  to {
+    transform: translateX(120%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shine::after {
+    display: none;
+  }
+}
