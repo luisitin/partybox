@@ -53,7 +53,7 @@ async function main(): Promise<void> {
     await vip.page.getByRole('button', { name: /^Card 3$/ }).click();
     await settle(200);
     await shots.shot(vip.page, { group: G, phase: 'intro-pick', device: 'iphone', role: 'vip' });
-    await vip.page.getByRole('button', { name: /deal me another/i }).click();
+    await vip.page.getByRole('button', { name: /^🎲 another/i }).click();
     await settle(300);
     await shots.shot(vip.page, { group: G, phase: 'intro-swapped', device: 'iphone', role: 'vip' });
     await api.skip(); // → play, call 1

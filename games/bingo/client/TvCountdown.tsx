@@ -14,10 +14,13 @@ import styles from './Tv.module.css';
 export function IntroCountdown({
   deadline,
   cards,
+  waitingOn,
 }: {
   deadline: number | null;
   /** Cards per player: the TV plucks once per card on the phones' deal beats (loop 278). */
   cards: number;
+  /** Who is still picking their cards (loop 344): the slot names them until the 3 · 2 · 1. */
+  waitingOn: string[];
 }): JSX.Element {
   const left = useSecondsLeft(deadline, false, 50);
   const counting = left !== null && left <= 3 && left > 0;
@@ -78,7 +81,13 @@ export function IntroCountdown({
               ))}
             </span>
             <span className={styles.introLead}>
-              {dealt ? 'cards dealt — first number soon' : 'dealing the cards…'}
+              {!dealt
+                ? 'dealing the cards…'
+                : waitingOn.length === 0
+                  ? 'everyone is ready'
+                  : waitingOn.length > 3
+                    ? `pick your cards on your phone — ${waitingOn.length} still picking`
+                    : `pick your cards on your phone — waiting for ${waitingOn.join(', ')}`}
             </span>
           </span>
         </>

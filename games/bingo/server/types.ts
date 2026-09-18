@@ -116,6 +116,12 @@ export interface RoundState {
   resumeBy: string | null;
   /** playerId → card indices already swapped at the intro (one "deal me another" per card). */
   swapped: Record<string, number[]>;
+  /**
+   * intro: who has tapped Ready (loop 344 — the owner: a real card-pick step). Once every
+   * connected person with cards has (bots and the disconnected count as ready), the first
+   * number is INTRO_READY_MS away — never before INTRO_MIN_MS from the deal.
+   */
+  ready: string[];
 }
 
 export interface State extends GameStateBase {
@@ -175,10 +181,17 @@ export const inputSchema = z.discriminatedUnion('type', [
    */
   z.object({ type: z.literal('continue'), pattern: z.enum(['same', 'blackout']) }),
   z.object({ type: z.literal('next') }),
+  /** intro: my cards are picked — start when everyone is. */
+  z.object({ type: z.literal('ready') }),
 ]);
 export type Input = z.infer<typeof inputSchema>;
 
-export const INTRO_MS = 5_000;
+/** The card-pick step's longest wait (loop 344); everyone ready ends it sooner. */
+export const INTRO_MS = 15_000;
+/** The deal and the pattern need at least this long, whoever is ready. */
+export const INTRO_MIN_MS = 5_000;
+/** Everyone ready: the first number is this far away (the 3 · 2 · 1). */
+export const INTRO_READY_MS = 3_000;
 /** The dibs window after the first BINGO! tap. */
 export const ARM_MS = 3_000;
 /** The 3 · 2 · 1 after the last card-style menu closes. */

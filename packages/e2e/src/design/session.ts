@@ -27,15 +27,31 @@ export interface DevState {
 export class DevApi {
   constructor(readonly url: string) {}
   async post<T = unknown>(path: string, body?: unknown): Promise<T> {
+    // Bingo's card-pick step (loop 344) waits up to 15 s for every person to tap Ready. The
+    // harness's phones never tap, so a Bingo start readies them 1.2 s in (after the deal) through
+    // the dev API's act — only while the intro is still on — which keeps the first number at the
+    // 5 s every script was written for. `readyUp: false` on the start body leaves them picking.
+    const b = (body ?? {}) as { gameId?: string; readyUp?: boolean };
+    const bingo = path === '/api/dev/start' && b.gameId === 'bingo';
+    const { readyUp, ...clean } = b;
     const res = await fetch(`${this.url}${path}`, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: body === undefined ? undefined : JSON.stringify(body),
+      body: body === undefined ? undefined : JSON.stringify(bingo ? clean : body),
     });
     const json = (await res.json()) as T;
     if (!res.ok) throw new Error(`${path} → ${res.status} ${JSON.stringify(json)}`);
+    if (bingo && readyUp !== false)
+      setTimeout(() => {
+        void this.readyAll().catch(() => undefined);
+      }, 1200);
     return json;
   }
+  /** Every person taps Ready at the card-pick step — a no-op once the intro is over. */
+  readyAll = async (): Promise<void> => {
+    const s = await this.state();
+    if (s.room?.game?.state.phase.id === 'intro') await this.post('/api/dev/act', {});
+  };
   reset = (): Promise<unknown> => this.post('/api/dev/reset');
   bots = (count: number, strategy = 'idle'): Promise<{ playerIds: string[] }> =>
     this.post('/api/dev/bots', { count, strategy });

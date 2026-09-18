@@ -10,6 +10,7 @@ import { callFor } from './content';
 import { PATTERN_HINT, PATTERN_LABEL, patternCells } from './patterns';
 import { menusOpen } from './claims';
 import { canContinue, liveCards } from './phases/bingo';
+import { waitingOn } from './phases/intro';
 import { canClaim, isHeld } from './phases/play';
 import { pointsFor, standings } from './scoring';
 import type { StandingRow } from './scoring';
@@ -37,6 +38,8 @@ interface Common {
   patternCells: number[];
   /** Every round's pattern, in order (the intro lists the programme). */
   patterns: Pattern[];
+  /** intro (loop 344): people still picking their cards (names) — empty once the 3 · 2 · 1 runs. */
+  waitingOn: string[];
   /** Cards dealt to every player each round (the `cards` setting). */
   cardsPerPlayer: number;
   current: CallView | null;
@@ -92,6 +95,8 @@ export interface BingoTvView extends TvView, Common {
 }
 
 export interface BingoControllerView extends ControllerView, Common {
+  /** intro: this phone has tapped Ready (its cards are picked; no more swaps). */
+  ready: boolean;
   /** play, during the 3 · 2 · 1 after "keep going": this phone made the choice (loop 326). */
   resumeMine: boolean;
   /** Whether the TV shows the hall board — decides how a reconnecting phone reports missed calls. */
@@ -168,6 +173,9 @@ function underReveal(state: State, playerId: string, card: number): boolean {
 function statusOf(state: State): (id: string) => PlayerStatus {
   return (id) => {
     if (!Object.hasOwn(state.round.cards, id)) return 'spectator';
+    // The card-pick step (loop 344): a ✓ for everyone who is ready (bots count as ready).
+    if (state.phase.id === 'intro')
+      return state.round.ready.includes(id) || state.players[id]?.bot ? 'submitted' : 'active';
     // Every card won: done for the pattern (the chip shows it while the others keep daubing).
     if (state.phase.id === 'play' || state.phase.id === 'check')
       return liveCards(state, id).length === 0 ? 'submitted' : 'active';
@@ -190,6 +198,10 @@ function common(state: State): Common {
     patternHint: PATTERN_HINT[round.pattern],
     patternCells: patternCells(round.pattern),
     patterns: state.settings.patterns,
+    waitingOn:
+      state.phase.id === 'intro'
+        ? waitingOn(state).map((id) => state.players[id]?.name ?? '?')
+        : [],
     cardsPerPlayer: state.settings.cards,
     current: state.phase.id === 'intro' ? null : callView(state, round.drawn - 1),
     previous: state.phase.id === 'intro' ? null : callView(state, round.drawn - 2),
@@ -287,6 +299,7 @@ export function controllerView(
       (state.phase.id === 'play' || state.phase.id === 'check') &&
       state.round.drawn < (state.round.waitForCall[playerId] ?? 0),
     called: player ? [] : calledNumbers(state),
+    ready: state.phase.id === 'intro' && state.round.ready.includes(playerId),
     resumeMine:
       state.phase.id === 'play' &&
       state.round.resumeAt !== null &&

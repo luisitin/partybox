@@ -151,27 +151,42 @@ export function Controller({
   };
 
   if (view.phaseId === 'intro') {
-    const left = view.swappable.includes(pick);
+    const left = view.swappable.includes(pick) && !view.ready;
     return (
       <Screen
         key="round"
         title={`Round ${view.round} of ${view.totalRounds}`}
         footer={
-          <PrimaryButton
-            tone="neutral"
-            disabled={!left}
-            onClick={() => {
-              // The old card flips away and the new one flips in (loop 268): the flip is the
-              // card's key; the pluck lands as the new face turns to the eye (~200 ms in).
-              send({ type: 'swap', card: pick });
-              setSwaps((s) => s + 1);
-              buzz(20);
-              setTimeout(() => play('card'), 200);
-            }}
-          >
-            🎲 {left ? 'Deal me another' : 'Swapped'}
-            {n > 1 ? ` · card ${pick + 1}` : ''}
-          </PrimaryButton>
+          // The card-pick step (loop 344, the owner): swap, then Ready — the round starts when
+          // everyone is (or 15 s in). Two buttons on one row so a short phone keeps its cards.
+          <div className={styles.introActions}>
+            <PrimaryButton
+              tone="neutral"
+              disabled={!left}
+              onClick={() => {
+                // The old card flips away and the new one flips in (loop 268): the flip is the
+                // card's key; the pluck lands as the new face turns to the eye (~200 ms in).
+                send({ type: 'swap', card: pick });
+                setSwaps((s) => s + 1);
+                buzz(20);
+                setTimeout(() => play('card'), 200);
+              }}
+            >
+              🎲 {left ? 'Another' : view.ready ? 'Picked' : 'Swapped'}
+              {n > 1 ? ` · card ${pick + 1}` : ''}
+            </PrimaryButton>
+            <PrimaryButton
+              tone={view.ready ? 'success' : 'accent'}
+              disabled={view.ready}
+              onClick={() => {
+                buzz(20);
+                play('submit');
+                send({ type: 'ready' });
+              }}
+            >
+              {view.ready ? '✓ Ready' : 'Ready'}
+            </PrimaryButton>
+          </div>
         }
       >
         <div className={styles.roundBody}>
@@ -186,7 +201,12 @@ export function Controller({
               </p>
             </div>
           </div>
-          <IntroCount deadline={view.deadline} cards={n} />
+          <IntroCount
+            deadline={view.deadline}
+            cards={n}
+            ready={view.ready}
+            waitingOn={view.waitingOn}
+          />
           <div className={`${styles.focus} ${styles.dealing} ${n > 1 ? styles.focusMany : ''}`}>
             <div className={styles.focusMain}>
               <div key={swaps} className={swaps > 0 ? styles.swapIn : undefined}>

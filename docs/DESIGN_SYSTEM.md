@@ -141,7 +141,8 @@ animation and is the most accessible non-visual confirmation). iOS Safari has no
 drops calls until the page has had a user activation, so a resumed session's first buzz may be lost — acceptable.
 `navigator.vibrate` replaces, never queues: `buzz()` drops a pattern shorter than what is left of the one running (the
 shell's 20 ms "submitted" tick on the same tick as a Bingo winner's 320 ms celebration), and a pattern at least as long
-takes over. Dropped ones trace as `buzz:dropped`.
+takes over; the same pattern twice inside 30 ms is one buzz (a tap's own and the shell's lock-in). Dropped ones trace
+as `buzz:dropped`.
 
 ## Primitives
 
