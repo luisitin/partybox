@@ -10,8 +10,6 @@
 }
 
 .callBig {
-  /* The ball lands fast (180 ms, not the 300 ms base) so it is on screen before its caption. */
-  animation: global(pb-pop) calc(var(--pb-motion-base) * 0.6) var(--pb-ease) both;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -19,23 +17,84 @@
   line-height: 1;
 }
 
+/* The ball is a thing (loop 239): a sphere lit from the top left with a soft rim, dropping out of
+   the cage from above, squashing as it lands and settling with one small bounce (~420 ms; the
+   boing waits BALL_LAND_MS for the squash, caller.ts). The number rolls in beside it a beat later.
+   The caption trails as before. Reduced motion: both simply appear. */
 .callBig .letter {
   display: grid;
   place-items: center;
   width: 180px;
   height: 180px;
   border-radius: 50%;
-  background: var(--pb-accent-2-fill);
+  /* Three gradients and no shadows: a highlight, a dark crescent for the underside, the body
+     shading into its rim — one static paint on a promoted layer, so the drop only composites
+     (the inset + drop shadows repainted every frame: 143 long frames in 112 s, loop 239). */
+  background:
+    radial-gradient(circle at 32% 28%, rgb(255 255 255 / 0.55) 0, rgb(255 255 255 / 0) 34%),
+    radial-gradient(circle at 68% 78%, rgb(0 0 0 / 0.28) 0, rgb(0 0 0 / 0) 48%),
+    radial-gradient(
+      circle at 50% 50%,
+      var(--pb-accent-2-fill) 58%,
+      color-mix(in oklab, var(--pb-accent-2-fill) 72%, black) 100%
+    );
   color: var(--pb-on-accent-2-fill);
   font-size: 124px;
   font-weight: 900;
   align-self: center;
+  animation: ball-drop 420ms cubic-bezier(0.2, 0.9, 0.3, 1) both;
+  transform-origin: 50% 100%;
+  will-change: transform;
 }
 
 .callBig .number {
   font-size: 260px;
   font-weight: 900;
   font-variant-numeric: tabular-nums;
+  animation: number-roll 360ms var(--pb-ease) both;
+  animation-delay: 120ms;
+  will-change: transform, opacity;
+}
+
+@keyframes ball-drop {
+  0% {
+    opacity: 0;
+    transform: translateY(-160px) scale(0.92);
+  }
+  18% {
+    opacity: 1;
+  }
+  46% {
+    transform: translateY(0) scale(1.14, 0.84);
+  }
+  64% {
+    transform: translateY(-22px) scale(0.96, 1.05);
+  }
+  82% {
+    transform: translateY(0) scale(1.04, 0.97);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes number-roll {
+  from {
+    opacity: 0;
+    transform: translateX(-28px) rotate(-6deg);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .callBig .letter,
+  .callBig .number {
+    animation: none;
+  }
 }
 
 /* Caption trails the ball by 120 ms and fades over the fast token (no rise: it sits under a pop). */
