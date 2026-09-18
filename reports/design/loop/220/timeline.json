@@ -1,0 +1,122 @@
+{
+  "pass": "220",
+  "game": "blanks",
+  "players": 4,
+  "scenario": "walkover",
+  "focus": "tv",
+  "started": "14:36:53.101",
+  "tvVideoT0": "14:36:49.829",
+  "changes": [
+    {
+      "t": 1789742213103,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789742218096,
+      "bed": "warm",
+      "at": "14:36:53.103",
+      "sinceStartS": 0,
+      "videoS": 3.3
+    },
+    {
+      "t": 1789742218199,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789742248103,
+      "bed": "bossa",
+      "at": "14:36:58.199",
+      "sinceStartS": 5.1,
+      "videoS": 8.4
+    },
+    {
+      "t": 1789742248130,
+      "status": "playing",
+      "phase": "result",
+      "deadline": 1789742256104,
+      "bed": "lounge",
+      "at": "14:37:28.130",
+      "sinceStartS": 35,
+      "videoS": 38.3
+    },
+    {
+      "t": 1789742256216,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789742261118,
+      "bed": "warm",
+      "at": "14:37:36.216",
+      "sinceStartS": 43.1,
+      "videoS": 46.4
+    },
+    {
+      "t": 1789742261161,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789742291119,
+      "bed": "marimba",
+      "at": "14:37:41.161",
+      "sinceStartS": 48.1,
+      "videoS": 51.3
+    },
+    {
+      "t": 1789742291172,
+      "status": "playing",
+      "phase": "result",
+      "deadline": 1789742299130,
+      "bed": "lounge",
+      "at": "14:38:11.172",
+      "sinceStartS": 78.1,
+      "videoS": 81.3
+    },
+    {
+      "t": 1789742299190,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789742304141,
+      "bed": "warm",
+      "at": "14:38:19.190",
+      "sinceStartS": 86.1,
+      "videoS": 89.4
+    },
+    {
+      "t": 1789742304154,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789742334149,
+      "bed": "bossa",
+      "at": "14:38:24.154",
+      "sinceStartS": 91.1,
+      "videoS": 94.3
+    },
+    {
+      "t": 1789742334220,
+      "status": "playing",
+      "phase": "result",
+      "deadline": 1789742342149,
+      "bed": "lounge",
+      "at": "14:38:54.220",
+      "sinceStartS": 121.1,
+      "videoS": 124.4
+    },
+    {
+      "t": 1789742342245,
+      "status": "playing",
+      "phase": "final",
+      "deadline": 1789742346149,
+      "bed": null,
+      "at": "14:39:02.245",
+      "sinceStartS": 129.1,
+      "videoS": 132.4
+    },
+    {
+      "t": 1789742346244,
+      "status": "results",
+      "phase": "results",
+      "deadline": null,
+      "bed": null,
+      "at": "14:39:06.244",
+      "sinceStartS": 133.1,
+      "videoS": 136.4
+    }
+  ],
+  "notes": []
+}
