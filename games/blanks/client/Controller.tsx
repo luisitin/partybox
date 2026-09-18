@@ -12,7 +12,7 @@ import { FilledCard, LETTERS } from './Cards';
 import { ControllerHand } from './ControllerHand';
 import { ControllerJudge, ControllerReveal } from './ControllerJudge';
 import { NextButton } from './NextButton';
-import { votesLabel, winnerLine } from './TvResult';
+import { list, votesLabel, winnerLine } from './TvResult';
 import styles from './blanks.module.css';
 
 type Props = GameControllerProps<BlanksControllerView, Input>;
@@ -65,7 +65,7 @@ function ControllerResult({ view, me, send }: Props): JSX.Element {
       ? 'You won the round!'
       : winners.length === 2 && noVotes
         ? 'Only two cards — you both score'
-        : `You split it with ${others.join(' and ')}`;
+        : `You split it with ${list(others)}`;
   const rankLine = `${final ? 'Final: ' : ''}#${view.myRank} of ${view.standings.length} · ${view.myScore} ${view.myScore === 1 ? 'point' : 'points'}`;
   return (
     <Screen
