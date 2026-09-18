@@ -4,7 +4,7 @@
 // card; a played card lands in its slot, the newest with a bounce), the
 // count re-entering on every change, and a line naming who the room is waiting for.
 import type { JSX } from 'react';
-import { Avatar, BigText, Stage, useSecondsLeft } from '@partybox/game-sdk/ui';
+import { Avatar, BigText, Stage, useBeats, useSecondsLeft } from '@partybox/game-sdk/ui';
 import type { GameTvProps, ViewPlayer } from '@partybox/game-sdk/ui';
 import type { BlanksTvView } from '../server/index';
 import { CardFan, FilledCard, FlipCard } from './Cards';
@@ -12,8 +12,13 @@ import styles from './blanks.module.css';
 
 type Props = GameTvProps<BlanksTvView>;
 
+/** The round card's three beats: the fan and the round (0), who is judging (400), who is ahead
+ *  (800) — the hold used to land as one pop and then sit still for four seconds (loop #194). */
+export const INTRO_BEATS_MS = [0, 400, 800] as const;
+
 export function TvIntro({ view }: Props): JSX.Element {
   const last = view.round === view.rounds;
+  const beat = useBeats(INTRO_BEATS_MS);
   // Nobody has scored yet → no leader line (every rank-1 row would be the whole room).
   const top = view.standings.filter((r) => r.rank === 1);
   const leaders =
@@ -27,22 +32,26 @@ export function TvIntro({ view }: Props): JSX.Element {
       <BigText level="display">
         Round {view.round} of {view.rounds}
       </BigText>
+      {/* Both lines stay mounted and fade in on their beat: mounting them late re-centred the
+          stage and the fan jumped (loop #194). */}
       {view.czar ? (
-        <div className={`${styles.judgeLine} pb-enter`}>
+        <div className={`${styles.judgeLine} ${beat >= 1 ? 'pb-enter' : styles.beatWait}`}>
           <Avatar avatarId={view.czar.avatarId} size="var(--pb-chip-size)" />
           <BigText level="h2" tone="accent">
             {view.czar.name} judges this round
           </BigText>
         </div>
       ) : (
-        <BigText level="h2" tone="muted">
-          {last ? 'Last round. Make it count.' : 'Everyone votes. Play your worst.'}
-        </BigText>
+        <div className={beat >= 1 ? 'pb-enter' : styles.beatWait}>
+          <BigText level="h2" tone="muted">
+            {last ? 'Last round. Make it count.' : 'Everyone votes. Play your worst.'}
+          </BigText>
+        </div>
       )}
       {/* From round 2 the card says who is ahead — one line, because the chip strip above already
           carries every score (review-loop #164). */}
       {leaders.length > 0 ? (
-        <div className={`${styles.introLead} pb-enter`}>
+        <div className={`${styles.introLead} ${beat >= 2 ? 'pb-enter' : styles.beatWait}`}>
           {leaders.map((row) => (
             <span key={row.playerId} className={styles.leadChip}>
               <Avatar avatarId={row.avatarId} size="var(--pb-space-7)" />

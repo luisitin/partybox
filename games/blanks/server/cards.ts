@@ -128,9 +128,27 @@ export function refillHands(state: State, extra = 0, extraFor: readonly string[]
     // below the fold (review-loop #177).
     const [shuffled, rng] = shuffle(after.rng, filled);
     next = { ...after, rng };
-    hands[id] = shuffled;
+    hands[id] = frontLoadKinds(shuffled);
   }
   return { ...next, hands };
+}
+
+/** One of each kind at the top of the hand, the shuffle's order kept otherwise. A phone shows
+ *  about four cards without scrolling, so a hand whose every noun is on screen and whose every
+ *  action sits below the fold reads as "no options" even when the floor is met (loop #195). */
+function frontLoadKinds(hand: readonly string[]): string[] {
+  const seen = new Set<string>();
+  const front: string[] = [];
+  const rest: string[] = [];
+  for (const id of hand) {
+    const kind = whiteKind(id);
+    if (seen.has(kind)) rest.push(id);
+    else {
+      seen.add(kind);
+      front.push(id);
+    }
+  }
+  return [...front, ...rest];
 }
 
 function countsMeetFloor(hand: readonly string[]): boolean {
