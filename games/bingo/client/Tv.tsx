@@ -14,7 +14,7 @@ import { BALL_LAND_MS, hushCaller, speakCall } from './caller';
 import { PatternIcon } from './Card';
 import { PatternDemo } from './PatternDemo';
 import { pendingLine, winHeadline } from './copy';
-import { Call, CalledBoard, ClaimStage, rows, whichCard } from './TvParts';
+import { Call, CalledBoard, ClaimStage, DibsLine, rows, whichCard } from './TvParts';
 import styles from './Tv.module.css';
 
 /** "Sam is" / "Sam and Priya are" / "Sam and 2 others are". */
@@ -67,6 +67,12 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
   // fires as it squashes on landing (BALL_LAND_MS after the push), the recorded call 120 ms behind
   // the boing; no per-second ticking — the timer is quiet. Leaving play (a claim, a check) hushes
   // the caller mid-word and cancels a boing still in the air.
+  // Dibs (loop 252): the "says BINGO?…" line pops with a soft rising "hm?"; a window passing on
+  // to the next in line is a new window, so it sounds again.
+  const armWindow = view.arm?.until ?? null;
+  useEffect(() => {
+    if (armWindow !== null) sound.play('dibs');
+  }, [armWindow, sound]);
   useLayoutEffect(() => {
     if (phaseId !== 'play' || number === null || letter === null) {
       hushCaller(sound);
@@ -157,11 +163,7 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
         {view.showBoard ? (
           <CalledBoard called={view.called} current={view.current?.number ?? null} />
         ) : null}
-        {view.arm ? (
-          <BigText level="h2" tone="accent" className="pb-pop">
-            {view.arm.name} says BINGO?…
-          </BigText>
-        ) : null}
+        <DibsLine arm={view.arm} />
       </Stage>
     );
   }
