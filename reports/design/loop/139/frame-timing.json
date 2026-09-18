@@ -1,0 +1,50 @@
+{
+  "tv": {
+    "frames": 9643,
+    "longFrames": 4,
+    "worstMs": 67,
+    "long": [
+      {
+        "t": 1789692431098,
+        "ms": 67,
+        "phase": "lobby"
+      },
+      {
+        "t": 1789692434435,
+        "ms": 50,
+        "phase": "intro"
+      },
+      {
+        "t": 1789692485126,
+        "ms": 50,
+        "phase": "intro"
+      },
+      {
+        "t": 1789692524928,
+        "ms": 50,
+        "phase": "judge"
+      }
+    ]
+  },
+  "phone": {
+    "longFrames": 3,
+    "worstMs": 50,
+    "long": [
+      {
+        "t": 1789692431667,
+        "ms": 50,
+        "phase": "lobby"
+      },
+      {
+        "t": 1789692434435,
+        "ms": 50,
+        "phase": "intro"
+      },
+      {
+        "t": 1789692534966,
+        "ms": 50,
+        "phase": "intro"
+      }
+    ]
+  }
+}
