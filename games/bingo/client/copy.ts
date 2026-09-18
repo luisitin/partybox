@@ -43,10 +43,11 @@ export function otherTitle(view: Win, name: string): string {
   return phrase.startsWith('wins') ? `${name} has bingo` : `${name} — ${phrase}`;
 }
 
-/** A choice made mid-celebration, as the room reads it. */
+/** A choice made mid-celebration, as the room reads it: who picked what, and when it starts. */
 export function pendingLine(
   pending: 'same' | 'blackout' | 'next' | null,
   lastRound: boolean,
+  by: string | null = null,
 ): string | null {
   if (!pending) return null;
   const what =
@@ -57,5 +58,5 @@ export function pendingLine(
         : lastRound
           ? 'finish the game'
           : 'next round';
-  return `Picked: ${what}. It starts when the celebration is done.`;
+  return `${by ? `${by} picked` : 'Picked'}: ${what}. It starts when the celebration is done.`;
 }

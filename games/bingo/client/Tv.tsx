@@ -246,7 +246,11 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
                 </p>
               ) : view.pendingDecision ? (
                 <p className={`${styles.decideLine} pb-enter`}>
-                  {pendingLine(view.pendingDecision, view.round >= view.totalRounds)}
+                  {pendingLine(
+                    view.pendingDecision,
+                    view.round >= view.totalRounds,
+                    view.pendingBy,
+                  )}
                 </p>
               ) : view.decide && (view.decide.same || view.decide.blackout) ? (
                 <p className={`${styles.decideLine} pb-enter`}>

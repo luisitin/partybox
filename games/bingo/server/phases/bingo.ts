@@ -164,9 +164,10 @@ export function reduceBingo(state: State, event: GameEvent<Input>, exits: BingoE
   }
   if (state.round.decision) return state; // the first choice counts
   const endsAt = celebrationEndsAt(state);
-  if (event.now >= endsAt) return decide(credit(state), input, event.now, exits);
+  if (event.now >= endsAt)
+    return decide(credit(state), { ...input, by: event.playerId }, event.now, exits);
   // Mid-celebration: hold it. Once the verdict is scored the deadline comes forward to the end
   // of the read; before that the verdict tick sets it (`deadlineAfterVerdict`).
-  const held = { ...state, round: { ...state.round, decision: input } };
+  const held = { ...state, round: { ...state.round, decision: { ...input, by: event.playerId } } };
   return state.round.judged ? { ...held, phase: { ...held.phase, deadline: endsAt } } : held;
 }
