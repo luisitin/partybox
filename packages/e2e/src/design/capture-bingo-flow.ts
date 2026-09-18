@@ -71,6 +71,16 @@ async function main(): Promise<void> {
       await api.skip();
       await settle(1400);
     }
+    // 2b. Sam opens the card-style sheet: the room holds (a curtain on Priya, the TV's hold), then
+    // closes it: the 3 · 2 · 1 on every screen and the next number (loop 319).
+    marks.push({ name: '2b-hold', at: Date.now(), before: 0.1, seconds: 8 });
+    await sam.page
+      .getByRole('button', { name: /card style|style/i })
+      .first()
+      .click();
+    await settle(2500);
+    await sam.page.getByRole('button', { name: /^Close$/ }).click();
+    await settle(5200);
     // 3. Sam's claim: dibs, the tap, the reveal to the verdict and its read.
     const me = (await api.playerId('Sam')) ?? '';
     const { line, card } = await skipToLine(api, me);
