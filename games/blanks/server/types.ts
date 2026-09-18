@@ -40,6 +40,8 @@ export interface Stats {
   /** One player winning round after round — the thing a room starts shouting about. Null the
    *  moment a round is shared, won by Rando or won by nobody (review-loop #236). */
   streak: Streak | null;
+  /** The longest run anyone put together all night, for the results screen (review-loop #237). */
+  bestRun: Streak | null;
 }
 
 export interface Streak {

@@ -76,7 +76,7 @@ function init(ctx: InitContext): State {
     votes: {},
     winners: [],
     scores: zero,
-    stats: { votesReceived: {}, fastPlays: {}, best: null, streak: null },
+    stats: { votesReceived: {}, fastPlays: {}, best: null, streak: null, bestRun: null },
   };
   return enterIntro(refillHands(base), ctx.now);
 }

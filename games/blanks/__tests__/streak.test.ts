@@ -1,5 +1,6 @@
 // The streak on the round card (README "Scoring"): one player winning outright, round after round.
 import { describe, expect, it } from 'vitest';
+import { awardsFor } from '../server/scoring';
 import { RANDO } from '../server/types';
 import type { State } from '../server/types';
 import { playRound, start, timer, tv } from './helpers';
@@ -49,5 +50,22 @@ describe('streaks', () => {
     // Everyone votes for the phantom player's card.
     s = timer(playRound(s, () => Math.max(0, s.slots.indexOf(RANDO))));
     if (s.winners.length === 1 && s.winners[0] === RANDO) expect(s.stats.streak).toBeNull();
+  });
+});
+
+describe('the run award', () => {
+  it('keeps the longest run of the night, even after it ends', () => {
+    let s: State = start({ rounds: 6, players: 4 });
+    for (let i = 0; i < 3; i += 1) s = timer(playRound(s, () => 0));
+    const best = s.stats.bestRun;
+    expect(best).not.toBeNull();
+    expect(best?.runs).toBeGreaterThanOrEqual(s.stats.streak?.runs ?? 0);
+    if ((best?.runs ?? 0) >= 2) {
+      const award = awardsFor(s).find((a) => a.id === 'on-a-roll');
+      expect(award?.playerId).toBe(best?.playerId);
+      expect(award?.description).toBe(`${best?.runs} rounds in a row`);
+    } else {
+      expect(awardsFor(s).some((a) => a.id === 'on-a-roll')).toBe(false);
+    }
   });
 });
