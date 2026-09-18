@@ -9,6 +9,7 @@ import { join } from 'node:path';
 import { parseArgs } from 'node:util';
 import { chromium } from 'playwright';
 import type { Page } from 'playwright';
+import { rashTap } from './loop-rash';
 import { REPO_ROOT, startServer } from './server';
 import { DevApi, joinViaForm, openPhone, passAudioGate, settle } from './session';
 import type { Phone } from './session';
@@ -46,7 +47,7 @@ const AFTER_S = Number(values.after);
  *  already played (review-loop #166). */
 const PRE_S = 1.5;
 // 'tie': nobody acts (an idle room). 'walkover': only Sam acts — bots and Priya sit out, so a
-// one-submission round (Blanks' walkover) plays every round.
+// one-submission round (Blanks' walkover) plays every round. 'rash': see loop-rash.ts.
 const OTHERS_IDLE = SCENARIO === 'tie' || SCENARIO === 'walkover';
 const OUT = values.out ?? join(REPO_ROOT, 'reports', 'design', 'loop', PASS);
 
@@ -146,6 +147,7 @@ async function main(): Promise<void> {
       const s = await api.state();
       const status = s.room?.status ?? 'none';
       const phase = s.room?.game?.state.phase.id ?? status;
+      if (SCENARIO === 'rash' && status === 'playing') await rashTap(api, s.bots);
       // Keyed by the phase instance, not just its id: Broken Pencil repeats 'pass' once per step
       // and the phones must act in every one (review-loop #44).
       const key = `${status}:${phase}:${s.room?.game?.state.phase.startedAt ?? 0}`;

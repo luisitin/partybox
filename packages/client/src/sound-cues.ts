@@ -143,8 +143,8 @@ export const CUES: Record<SoundCue, Note[]> = {
   silence: [],
   // Someone has dibs on BINGO! (the TV, loop 252): a soft rising "hm?" — expectant, not a verdict.
   dibs: [
-    { freq: 523, to: 659, at: 0, dur: 0.11, type: 'triangle', gain: 0.1 },
-    { freq: 784, at: 0.12, dur: 0.1, type: 'sine', gain: 0.07 },
+    { freq: 494, to: 659, at: 0, dur: 0.11, type: 'triangle', gain: 0.1 },
+    { freq: 740, at: 0.12, dur: 0.1, type: 'sine', gain: 0.07 },
   ],
   // A dauber landing on paper (Bingo phones): a low damped thump with a click of body on top.
   daub: [
