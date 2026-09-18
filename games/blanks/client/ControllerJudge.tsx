@@ -137,7 +137,11 @@ export function ControllerJudge({ view, send }: Props): JSX.Element {
         {judge && view.judgeMode === 'czar' ? (
           <>
             <Avatar avatarId={judge.avatarId} size="var(--pb-chip-size)" />
-            <span>{judge.name} is choosing…</span>
+            <span>
+              {judge.connected
+                ? `${judge.name} is choosing…`
+                : `${judge.name} dropped — waiting a moment for them…`}
+            </span>
           </>
         ) : (
           <span>

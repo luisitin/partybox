@@ -10,6 +10,7 @@ import {
   BIG_JUDGE_MS,
   BIG_ROOM,
   JUDGE_CZAR_MS,
+  JUDGE_GRACE_MS,
   JUDGE_VOTE_MS,
   UNTIMED_JUDGE_MS,
   VOTES_IN_MS,
@@ -49,7 +50,35 @@ export function holdVotesIn(state: State, now: number): State {
 
 /** The beat is on: everyone who could vote has, and the phase only waits for its timer. */
 export function votesIn(state: State): boolean {
-  return state.phase.id === 'judge' && allConnectedDone(state, votingDone(state));
+  return (
+    state.phase.id === 'judge' && !judgeAway(state) && allConnectedDone(state, votingDone(state))
+  );
+}
+
+/** Czar mode with the judge dropped before picking: the vote is theirs alone, so the room waits. */
+export function judgeAway(state: State): boolean {
+  if (state.settings.judge !== 'czar' || state.czarId === null) return false;
+  return (
+    state.players[state.czarId]?.connected === false && !Object.hasOwn(state.votes, state.czarId)
+  );
+}
+
+/** The judge dropped: the round used to end at once with no winner, which a locked screen or a
+ *  Wi-Fi blip could do to every round (review-loop #351). Now the deadline moves up to now +
+ *  JUDGE_GRACE_MS (never later than it already was) and the timer ends the phase if they are
+ *  still gone. */
+export function holdForJudge(state: State, now: number): State {
+  const deadline = Math.min(state.phase.deadline ?? Infinity, now + JUDGE_GRACE_MS);
+  return { ...state, phase: { ...state.phase, deadline } };
+}
+
+/** The judge is back inside the grace, pick still open: a fresh judge window, as if they had
+ *  never left. Anyone else reconnecting, or a judge who already picked, changes nothing. */
+export function judgeReturns(state: State, playerId: string, now: number): State {
+  if (state.phase.id !== 'judge' || state.settings.judge !== 'czar') return state;
+  if (playerId !== state.czarId || Object.hasOwn(state.votes, playerId)) return state;
+  const ms = state.settings.timed ? JUDGE_CZAR_MS : UNTIMED_JUDGE_MS;
+  return { ...state, phase: { ...state.phase, deadline: now + ms } };
 }
 
 export function reduceJudge(state: State, event: GameEvent<Input>, next: Transition): State {
