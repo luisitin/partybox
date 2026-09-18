@@ -8,6 +8,7 @@ import { TvJudge } from './TvJudge';
 import { TvReveal } from './TvReveal';
 import { TvResult } from './TvResult';
 import { TvAnswer, TvIntro } from './TvRound';
+import styles from './blanks.module.css';
 
 export function Tv({ view }: GameTvProps<BlanksTvView>): JSX.Element {
   switch (view.phaseId) {
@@ -25,7 +26,7 @@ export function Tv({ view }: GameTvProps<BlanksTvView>): JSX.Element {
       return <TvResult view={view} />;
     default:
       return (
-        <Stage center>
+        <Stage center className={styles.table}>
           <BigText tone="muted">…</BigText>
         </Stage>
       );

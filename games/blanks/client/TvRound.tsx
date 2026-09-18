@@ -15,7 +15,7 @@ type Props = GameTvProps<BlanksTvView>;
 export function TvIntro({ view }: Props): JSX.Element {
   const last = view.round === view.rounds;
   return (
-    <Stage center>
+    <Stage center className={styles.table}>
       <CardFan />
       <p className={styles.kicker}>Blanks</p>
       <BigText level="display">
@@ -67,7 +67,7 @@ export function TvAnswer({ view }: Props): JSX.Element {
         ? `Play ${pick} cards from your hand`
         : 'Play a card from your hand';
   return (
-    <Stage center>
+    <Stage center className={styles.table}>
       <div className={styles.kickerRow}>
         <p className={styles.kicker}>
           Round {view.round} of {view.rounds}

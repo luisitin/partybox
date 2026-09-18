@@ -239,6 +239,17 @@
 
 /* ── TV stages ─────────────────────────────────────────────────────────────────────────────── */
 
+/* The table: a soft pool of the theme's surface colour under the middle of the stage, darker
+   toward the edges, so the cards sit on something and the eye rests in the centre (review-loop
+   #147). Tokens only, so every theme keeps its own felt. */
+.table {
+  background: radial-gradient(
+    ellipse 70% 60% at 50% 55%,
+    color-mix(in srgb, var(--pb-surface-2) 55%, transparent),
+    transparent 100%
+  );
+}
+
 .stageCard {
   width: min(100%, 1400px);
   margin-inline: auto;

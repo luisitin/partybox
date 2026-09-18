@@ -27,7 +27,7 @@ export function TvReveal({ view }: Props): JSX.Element {
     before.some((c) => fillText(view.black?.text ?? '', c.whites).length > STRIP_LONG);
   const read = before.slice(long ? -3 : -4);
   return (
-    <Stage>
+    <Stage className={styles.table}>
       <div className={styles.kickerRow}>
         <p className={styles.kicker}>
           Round {view.round} · Card {view.revealIndex + 1} of {view.cardCount}
