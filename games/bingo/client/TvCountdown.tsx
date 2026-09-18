@@ -2,7 +2,15 @@
 // 3 · 2 · 1 after the last card-style menu closes (loop 242). One tick per second on both.
 import { useEffect } from 'react';
 import type { JSX } from 'react';
-import { BigText, Stage, useHold, useSecondsLeft, useSoundApi } from '@partybox/game-sdk/ui';
+import {
+  Avatar,
+  BigText,
+  Stage,
+  useHold,
+  useSecondsLeft,
+  useSoundApi,
+} from '@partybox/game-sdk/ui';
+import type { ViewPlayer } from '@partybox/game-sdk/ui';
 import {
   DEAL_BOUNCE_MS,
   DEAL_START_MS,
@@ -21,12 +29,15 @@ export function IntroCountdown({
   deadline,
   cards,
   waitingOn,
+  players,
 }: {
   deadline: number | null;
   /** Cards per player: the TV plucks once per card on the phones' deal beats (loop 278). */
   cards: number;
   /** Who is still picking their cards (loop 344): the slot names them until the 3 · 2 · 1. */
   waitingOn: string[];
+  /** Everyone with cards: a row of faces, each lighting up as its player taps Ready (loop 349). */
+  players: ViewPlayer[];
 }): JSX.Element {
   const left = useSecondsLeft(deadline, false, 50);
   const counting = left !== null && left <= 3 && left > 0;
@@ -72,20 +83,38 @@ export function IntroCountdown({
           {/* The deal itself (loop 279): one card back per card, dealt out of a deck on the
               plucks' beats, each turning face-up as it lands in the fan. */}
           <span className={styles.dealWrap}>
-            <span className={styles.dealFan} aria-hidden>
-              {Array.from({ length: cards }, (_, i) => (
-                <span
-                  key={i}
-                  className={styles.dealSlot}
-                  style={{ transform: `rotate(${(i - (cards - 1) / 2) * 9}deg)` }}
-                >
+            {dealt ? (
+              // The faces take the fan's place once the deal is down (loop 349): dim while
+              // picking, lit with a ✓ as each Ready lands — who the room waits for, at a glance.
+              <span className={`${styles.dealFan} ${styles.readyRow}`} aria-hidden>
+                {players
+                  .filter((p) => p.status !== 'spectator')
+                  .map((p) => (
+                    <span
+                      key={p.id}
+                      className={`${styles.readyFace} ${p.status === 'submitted' ? `${styles.readyDone} pb-pop` : ''}`}
+                    >
+                      <Avatar avatarId={p.avatarId} size="72px" />
+                      <b className={styles.readyTick}>✓</b>
+                    </span>
+                  ))}
+              </span>
+            ) : (
+              <span className={styles.dealFan} aria-hidden>
+                {Array.from({ length: cards }, (_, i) => (
                   <span
-                    className={styles.dealCard}
-                    style={{ animationDelay: `${DEAL_START_MS + i * DEAL_STEP_MS}ms` }}
-                  />
-                </span>
-              ))}
-            </span>
+                    key={i}
+                    className={styles.dealSlot}
+                    style={{ transform: `rotate(${(i - (cards - 1) / 2) * 9}deg)` }}
+                  >
+                    <span
+                      className={styles.dealCard}
+                      style={{ animationDelay: `${DEAL_START_MS + i * DEAL_STEP_MS}ms` }}
+                    />
+                  </span>
+                ))}
+              </span>
+            )}
             <span className={styles.introLead}>
               {!dealt
                 ? 'dealing the cards…'

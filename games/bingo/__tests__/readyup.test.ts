@@ -4,7 +4,7 @@
 // count as ready; a swap after Ready is refused.
 import { describe, expect, it } from 'vitest';
 import { game } from '../server/index';
-import { INTRO_MS, INTRO_READY_MS, introMinMs } from '../server/types';
+import { INTRO_BREATH_MS, INTRO_MS, INTRO_READY_MS, introMinMs } from '../server/types';
 import { PLAYERS, T0, input, start, timer } from './helpers';
 
 const ready = (s: ReturnType<typeof start>, id: string, now: number) =>
@@ -38,7 +38,7 @@ describe('the card-pick step', () => {
     let s = ready(start(), 'a', T0 + 9000);
     s = ready(s, 'b', T0 + 9000);
     s = ready(s, 'c', T0 + 10_000);
-    expect(s.phase.deadline).toBe(T0 + 10_000 + INTRO_READY_MS);
+    expect(s.phase.deadline).toBe(T0 + 10_000 + INTRO_BREATH_MS + INTRO_READY_MS);
   });
 
   it('a ready phone can no longer swap; a spectator or a stranger cannot be ready', () => {
@@ -72,7 +72,7 @@ describe('the card-pick step', () => {
       connected: false,
     });
     expect(game.tvView(gone).waitingOn).toEqual([]);
-    expect(gone.phase.deadline).toBe(T0 + 7000 + INTRO_READY_MS);
+    expect(gone.phase.deadline).toBe(T0 + 7000 + INTRO_BREATH_MS + INTRO_READY_MS);
   });
 
   it('the roster: ready players carry the ✓, the rest are active', () => {

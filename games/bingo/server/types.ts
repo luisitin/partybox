@@ -202,10 +202,15 @@ export function dealDoneMs(cards: number): number {
 }
 /** The first number is never sooner than the deal plus the 3 · 2 · 1, whoever is ready. */
 export function introMinMs(cards: number): number {
-  return dealDoneMs(cards) + INTRO_READY_MS + 1_000;
+  return dealDoneMs(cards) + INTRO_BREATH_MS + INTRO_READY_MS + 600;
 }
-/** Everyone ready: the first number is this far away (the 3 · 2 · 1). */
+/** Everyone ready: the first number is this far away (the 3 · 2 · 1)… */
 export const INTRO_READY_MS = 3_000;
+/**
+ * …after a breath: the last Ready's lock tick and the ring's first tick were 30 ms apart (loop
+ * 349); "everyone is ready" holds this long before the 3 · 2 · 1 starts.
+ */
+export const INTRO_BREATH_MS = 400;
 /** The dibs window after the first BINGO! tap. */
 export const ARM_MS = 3_000;
 /** The 3 · 2 · 1 after the last card-style menu closes. */
