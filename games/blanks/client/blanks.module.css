@@ -638,6 +638,11 @@
   align-content: start;
 }
 
+/* Every card on one page: centre them in the stage instead of hanging from the top. */
+.judgeGridFits {
+  align-content: center;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .judgeGrid {
     scroll-behavior: auto;

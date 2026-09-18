@@ -7,6 +7,7 @@ import type { JSX } from 'react';
 import { Avatar, Stage } from '@partybox/game-sdk/ui';
 import type { GameTvProps, ViewPlayer } from '@partybox/game-sdk/ui';
 import type { BlanksTvView } from '../server/index';
+import { fillText } from '../server/cards';
 import { FilledCard, LETTERS } from './Cards';
 import styles from './blanks.module.css';
 
@@ -96,7 +97,14 @@ function pageStarts(grid: HTMLElement): number[] {
  */
 function JudgeGrid({ view }: Props): JSX.Element {
   const count = view.cards.length;
-  const dense = count > 6;
+  // Five or six long cards need three lines each at grid size, which is two rows the stage cannot
+  // hold — and the room would rather read six small cards than page through them (review-loop
+  // #171). Measured: a 560 px column fits ~110 characters in two rows of the grid size.
+  const longest = Math.max(
+    0,
+    ...view.cards.map((c) => fillText(view.black?.text ?? '', c.whites).length),
+  );
+  const dense = count > 6 || (count > 4 && longest > 110);
   const ref = useRef<HTMLUListElement>(null);
   const [starts, setStarts] = useState<number[]>([0]);
   const [page, setPage] = useState(0);
@@ -140,7 +148,7 @@ function JudgeGrid({ view }: Props): JSX.Element {
       </div>
       <ul
         ref={ref}
-        className={`${styles.judgeGrid} ${gridClass(count)}`}
+        className={`${styles.judgeGrid} ${gridClass(count)} ${pages > 1 ? '' : styles.judgeGridFits}`}
         aria-label={pages > 1 ? `the cards, page ${current + 1} of ${pages}` : 'the cards'}
       >
         {view.cards.map((c, i) => (
