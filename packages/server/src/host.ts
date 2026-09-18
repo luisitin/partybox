@@ -70,6 +70,13 @@ export function createHost(options: HostOptions): Host {
   const codeRng = createRng(randomBytes(4).readUInt32LE(0));
   const listeners = new Set<(room: RoomState) => void>();
   let houseCode = '';
+  /**
+   * The last TV view sent per room, serialised. A push whose TV view is unchanged (most phone
+   * inputs — a Bingo daub — touch nothing the TV shows) skips the TV, so the stage is not
+   * re-rendered for every tap in a busy room (Bingo loop 249). A TV that joins late gets a full
+   * push through `resend`, which never consults this.
+   */
+  const lastTvView = new Map<string, string>();
 
   function push(room: RoomState): void {
     const roomPush: RoomPush = { rev: room.rev, room: snapshot(room, deps), at: clock.now() };
@@ -89,13 +96,18 @@ export function createHost(options: HostOptions): Host {
     transport.toTvs(room.code, 'room', roomPush);
     if (playing) {
       const view = tvView(room, deps);
-      if (view)
-        transport.toTvs(room.code, 'view', {
-          rev: room.rev,
-          view,
-          at: clock.now(),
-        } satisfies ViewPush<unknown>);
-    }
+      if (view) {
+        const wire = JSON.stringify(view);
+        if (lastTvView.get(room.code) !== wire) {
+          lastTvView.set(room.code, wire);
+          transport.toTvs(room.code, 'view', {
+            rev: room.rev,
+            view,
+            at: clock.now(),
+          } satisfies ViewPush<unknown>);
+        }
+      }
+    } else lastTvView.delete(room.code);
   }
 
   function interpret(room: RoomState, result: ApplyResult): void {
