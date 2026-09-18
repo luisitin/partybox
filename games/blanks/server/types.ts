@@ -119,15 +119,18 @@ export const ALL_IN_MS = 1_500;
 /** Extra answer seconds per white card beyond the first. */
 export const EXTRA_PICK_S = 15;
 /** A reveal card is a 2–3 s presentation (owner, review-loop #151: "they abruptly pop and take
- *  5 seconds"): the sentence lands, its whites pop in over the first 0.9 s, then it holds — 2.2 s
- *  plus 18 ms per character, capped at 4 s. A big room (more than BIG_ROOM cards) reads faster:
- *  2 s + 14 ms/char, capped at 3.2 s, so twelve cards stay well under a minute. */
-export const REVEAL_MIN_MS = 2_200;
-export const REVEAL_PER_CHAR_MS = 18;
+ *  5 seconds"): the sentence lands, its whites pop in over the first 0.9 s, then it holds — 1.9 s
+ *  plus 16 ms per character, capped at 4 s. Measured over live games at 2.2 s + 18 ms the median
+ *  card held 3.5 s, past the 2–3 s that was asked for, so the floor and the slope came down while
+ *  the cap stayed: a 200-character Pick 3 still gets its four seconds (review-loop #216). A big
+ *  room (more than BIG_ROOM cards) reads faster: 1.7 s + 12 ms/char, capped at 3.2 s, so twelve
+ *  cards stay well under a minute. */
+export const REVEAL_MIN_MS = 1_900;
+export const REVEAL_PER_CHAR_MS = 16;
 export const REVEAL_MAX_MS = 4_000;
 export const BIG_ROOM = 8;
-export const BIG_REVEAL_MIN_MS = 2_000;
-export const BIG_REVEAL_PER_CHAR_MS = 14;
+export const BIG_REVEAL_MIN_MS = 1_700;
+export const BIG_REVEAL_PER_CHAR_MS = 12;
 export const BIG_REVEAL_MAX_MS = 3_200;
 /** Voting: 30 s, 45 s for a lone judge; a big room gets 45 s to scan its cards. */
 export const JUDGE_VOTE_MS = 30_000;

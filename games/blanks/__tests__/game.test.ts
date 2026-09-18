@@ -15,10 +15,12 @@ import { game } from '../server/index';
 import {
   BIG_REVEAL_MAX_MS,
   BIG_REVEAL_MIN_MS,
+  BIG_REVEAL_PER_CHAR_MS,
   FINAL_MS,
   HAND_SIZE,
   REVEAL_MAX_MS,
   REVEAL_MIN_MS,
+  REVEAL_PER_CHAR_MS,
 } from '../server/types';
 import { PLAYERS, T0, playRound, start, timer, toAnswer, tv } from './helpers';
 
@@ -285,10 +287,14 @@ describe('fill', () => {
   });
 
   it('reveal time grows with length and is clamped', () => {
-    expect(revealMs('Hi ____.', ['Yo.'])).toBe(REVEAL_MIN_MS + 'Hi Yo.'.length * 18);
+    expect(revealMs('Hi ____.', ['Yo.'])).toBe(
+      REVEAL_MIN_MS + 'Hi Yo.'.length * REVEAL_PER_CHAR_MS,
+    );
     expect(revealMs('x'.repeat(200), ['y'.repeat(100)])).toBe(REVEAL_MAX_MS);
     // A big room reads faster: twelve cards stay under a minute.
-    expect(revealMs('Hi ____.', ['Yo.'], 12)).toBe(BIG_REVEAL_MIN_MS + 'Hi Yo.'.length * 14);
+    expect(revealMs('Hi ____.', ['Yo.'], 12)).toBe(
+      BIG_REVEAL_MIN_MS + 'Hi Yo.'.length * BIG_REVEAL_PER_CHAR_MS,
+    );
     expect(revealMs('x'.repeat(200), ['y'.repeat(100)], 12)).toBe(BIG_REVEAL_MAX_MS);
     expect(revealMs('x'.repeat(200), ['y'.repeat(100)], 8)).toBe(REVEAL_MAX_MS);
   });
