@@ -5,6 +5,13 @@ import { standings } from './scoring';
 import { RANDO, RANDO_NAME } from './types';
 import type { State } from './types';
 
+/** Somebody is on a run: the round card says so from two rounds on (review-loop #236). */
+export interface StreakView {
+  name: string;
+  avatarId: string;
+  runs: number;
+}
+
 export interface StandingsRow {
   playerId: string;
   name: string;
@@ -23,6 +30,15 @@ export interface BestCardView {
   rando: boolean;
   votes: number;
   round: number;
+}
+
+/** The streak, only once it is worth saying out loud (two rounds) and only for a player still
+ *  in the room. */
+export function streakView(state: State): StreakView | null {
+  const streak = state.stats.streak;
+  if (!streak || streak.runs < 2) return null;
+  const p = state.players[streak.playerId];
+  return p ? { name: p.name, avatarId: p.avatarId, runs: streak.runs } : null;
 }
 
 export function standingsRows(state: State): StandingsRow[] {

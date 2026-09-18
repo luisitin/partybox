@@ -51,7 +51,19 @@ export function TvIntro({ view }: Props): JSX.Element {
       )}
       {/* From round 2 the card says who is ahead — one line, because the chip strip above already
           carries every score (review-loop #164). */}
-      {leaders.length > 0 ? (
+      {/* A run is the better story: while someone is on one, the third beat says that instead of
+          who leads (review-loop #236). */}
+      {view.streak ? (
+        <div className={`${styles.introLead} ${beat >= 2 ? 'pb-enter' : styles.beatWait}`}>
+          <span className={styles.leadChip}>
+            <Avatar avatarId={view.streak.avatarId} size="var(--pb-space-7)" />
+            {view.streak.name}
+          </span>
+          <BigText level="h2" tone="accent">
+            is on a {view.streak.runs}-round streak
+          </BigText>
+        </div>
+      ) : leaders.length > 0 ? (
         <div className={`${styles.introLead} ${beat >= 2 ? 'pb-enter' : styles.beatWait}`}>
           {leaders.map((row) => (
             <span key={row.playerId} className={styles.leadChip}>

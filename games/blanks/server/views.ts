@@ -17,12 +17,12 @@ import {
   playersExpected,
 } from './round';
 import { awardsFor, standings } from './scoring';
-import { bestCardView, standingsRows } from './views-board';
+import { bestCardView, standingsRows, streakView } from './views-board';
 import { blackChoices, blackView, person, revealedCards, stageCards } from './views-table';
 import type { BlackView, CardView, PersonView, RevealedCard } from './views-table';
 export type { BlackView, CardView, PersonView, RevealedCard } from './views-table';
-import type { BestCardView, StandingsRow } from './views-board';
-export type { BestCardView, StandingsRow } from './views-board';
+import type { BestCardView, StandingsRow, StreakView } from './views-board';
+export type { BestCardView, StandingsRow, StreakView } from './views-board';
 
 import type { JudgeMode, State } from './types';
 
@@ -55,6 +55,8 @@ export interface BlanksTvView extends TvView {
   walkover: boolean;
   /** intro (round 2 on) + result + final + done. */
   standings: StandingsRow[];
+  /** intro: somebody has won two or more rounds in a row. */
+  streak: StreakView | null;
   /** final + done. */
   awards: GameAward[];
   /** final + done: the card that took the most votes all night, if any took one. */
@@ -91,6 +93,8 @@ export interface BlanksControllerView extends ControllerView {
   myScore: number;
   myRank: number;
   standings: StandingsRow[];
+  /** intro: somebody has won two or more rounds in a row. */
+  streak: StreakView | null;
   /** final + done: the card of the night, so a phone sees the payoff the TV shows. */
   bestCard: BestCardView | null;
 }
@@ -159,6 +163,7 @@ export function tvView(state: State, gameId: string): BlanksTvView {
     winnerIds: phase === 'result' ? [...state.winners] : [],
     walkover: phase === 'result' && isWalkover(state),
     standings: onStage ? standingsRows(state) : [],
+    streak: phase === 'intro' ? streakView(state) : null,
     awards: phase === 'final' || phase === 'done' ? awardsFor(state) : [],
     bestCard: phase === 'final' || phase === 'done' ? bestCardView(state) : null,
   };
@@ -222,6 +227,7 @@ export function controllerView(
       (phase === 'intro' && state.round > 1)
         ? standingsRows(state)
         : [],
+    streak: phase === 'intro' ? streakView(state) : null,
     bestCard: phase === 'final' || phase === 'done' ? bestCardView(state) : null,
   };
 }

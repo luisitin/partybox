@@ -37,6 +37,15 @@ export interface Stats {
   /** The night's best-liked card: the most votes any one card took, kept for the final board.
    *  Null until a card takes at least one vote (a judge's pick counts as one). */
   best: BestCard | null;
+  /** One player winning round after round — the thing a room starts shouting about. Null the
+   *  moment a round is shared, won by Rando or won by nobody (review-loop #236). */
+  streak: Streak | null;
+}
+
+export interface Streak {
+  playerId: string;
+  /** Rounds won in a row, counting the one just played. */
+  runs: number;
 }
 
 export interface BestCard {
