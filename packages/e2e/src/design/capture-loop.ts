@@ -39,6 +39,10 @@ const SCENARIO = values.scenario ?? 'normal';
 const BUDGET_MS = Number(values.budget) * 1000;
 const FPS = Number(values.fps);
 const AFTER_S = Number(values.after);
+/** Pre-roll before a phase change. The poll detects a change up to ~350 ms after the push and the
+ *  still costs another 450 ms, so half a second of lead used to start after the entrance had
+ *  already played (review-loop #166). */
+const PRE_S = 1.5;
 // 'tie': nobody acts (an idle room). 'walkover': only Sam acts — bots and Priya sit out, so a
 // one-submission round (Blanks' walkover) plays every round.
 const OTHERS_IDLE = SCENARIO === 'tie' || SCENARIO === 'walkover';
@@ -328,16 +332,16 @@ async function main(): Promise<void> {
         strip(
           tvVideo,
           join(OUT, 'strips', `${tag}-transition`),
-          (c.t - tvVideoT0) / 1000 - 0.5,
-          0.5 + AFTER_S,
+          (c.t - tvVideoT0) / 1000 - PRE_S,
+          PRE_S + AFTER_S,
           FPS,
         );
         if (phoneVideo)
           strip(
             phoneVideo,
             join(OUT, 'strips', `${tag}-transition-phone`),
-            (c.t - phoneVideoT0) / 1000 - 0.5,
-            0.5 + AFTER_S,
+            (c.t - phoneVideoT0) / 1000 - PRE_S,
+            PRE_S + AFTER_S,
             FPS,
           );
       });

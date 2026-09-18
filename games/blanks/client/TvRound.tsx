@@ -7,7 +7,7 @@ import type { JSX } from 'react';
 import { Avatar, BigText, Stage, useSecondsLeft } from '@partybox/game-sdk/ui';
 import type { GameTvProps, ViewPlayer } from '@partybox/game-sdk/ui';
 import type { BlanksTvView } from '../server/index';
-import { CardFan, FilledCard } from './Cards';
+import { CardFan, FilledCard, FlipCard } from './Cards';
 import styles from './blanks.module.css';
 
 type Props = GameTvProps<BlanksTvView>;
@@ -128,8 +128,11 @@ export function TvAnswer({ view }: Props): JSX.Element {
           {view.czar ? ` · ${view.czar.name} judges` : ''}
         </p>
       </div>
+      {/* The round's question is turned face-up for the room — the same move the read-out uses,
+          so the judge's pick lands as a card on the table (review-loop #166). */}
       {view.black ? (
-        <FilledCard
+        <FlipCard
+          flipKey={view.black.text}
           text={view.black.text}
           pick={view.black.pick}
           size="hero"
