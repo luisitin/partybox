@@ -152,8 +152,10 @@ async function playOne(
           .catch(() => report.failures.push('tv: no scoreboard on results'));
         continue;
       }
+      // The results screen's title is the winner line ("You win!", "You finished 3rd", …, review-loop
+      // #76): the board under it is the stable hook.
       const ok = await screen.page
-        .getByRole('heading', { name: 'Results' })
+        .getByLabel('scoreboard')
         .waitFor({ timeout: 5000 })
         .then(() => true)
         .catch(() => false);
