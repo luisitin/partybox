@@ -94,10 +94,19 @@ export function groupCues(
         .join(',');
     // An exact match first: `submit` and `tally` share a ratio, so the ratio pass alone named
     // every phone submit a tally (review-loop #115).
+    // Among ratio matches, the one whose first note is nearest: `call` (392→784, 587) and
+    // `ready` (523, 784) share 2:3 ratios, and every Bingo call read as "ready" (loop 312).
+    const first = freqs[0] ?? 0;
+    const nearest = (cands: typeof sigs): (typeof sigs)[number] | undefined =>
+      [...cands].sort(
+        (a, b) => Math.abs((a.freqs[0] ?? 0) - first) - Math.abs((b.freqs[0] ?? 0) - first),
+      )[0];
     const match =
       sigs.find((s) => s.freqs.join(',') === freqs.join(',')) ??
-      sigs.find((s) => s.freqs.length === freqs.length && norm(s.freqs) === norm(freqs)) ??
-      sigs.find((s) => norm(s.freqs) === norm(freqs));
+      nearest(
+        sigs.filter((s) => s.freqs.length === freqs.length && norm(s.freqs) === norm(freqs)),
+      ) ??
+      nearest(sigs.filter((s) => norm(s.freqs) === norm(freqs)));
     out.push({
       t: group[0]?.t ?? 0,
       surface,
