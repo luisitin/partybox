@@ -216,6 +216,26 @@ describe('fill', () => {
     expect(fillText('Nothing beats ____', ['Bees?'])).toBe('Nothing beats Bees?');
   });
 
+  it('takes an opening quote or bracket onto the card with the answer', () => {
+    // A quoted answer should read as one piece of paper, not an orphan quote against the black
+    // text (review-loop #330).
+    const quoted = fill('The lawn sign says "____."', ['A raccoon in a tiny sweater.']);
+    expect(quoted.segments.map((x) => `${x.kind}:${x.text}`)).toEqual([
+      'text:The lawn sign says ',
+      'fill:"A raccoon in a tiny sweater."',
+    ]);
+    // Brackets behave the same, and a card that opens on the blank keeps its quote too.
+    expect(fillText('She said (____) and left.', ['A hot mic at a funeral.'])).toBe(
+      'She said (A hot mic at a funeral) and left.',
+    );
+    const opening = fill('"____" is my ringtone.', ['Yodeling.']);
+    expect(opening.segments[0]).toEqual({ kind: 'fill', text: '"Yodeling"' });
+    // An apostrophe in the middle of a word is not an opening quote.
+    expect(fillText('I got 99 problems but ____ ain’t one.', ['Puppies.'])).toBe(
+      'I got 99 problems but Puppies ain’t one.',
+    );
+  });
+
   it('keeps an abbreviation’s own period inside the sentence', () => {
     // "2 a.m." lost its period mid-sentence and read "2 a.m," (review-loop #201); at the end of the
     // sentence the black card's own full stop still wins, so it never doubles up.
