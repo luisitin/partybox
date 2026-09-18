@@ -394,7 +394,7 @@
 .strip > li {
   flex: 1 1 380px;
   max-width: 560px;
-  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+  animation: global(pb-deal) var(--pb-motion-base) var(--pb-ease) both;
 }
 
 /* The losing cards (result): who played which letter, as pills — twelve fit in two rows. */
@@ -502,7 +502,8 @@
 
 .judgeGrid > li {
   min-width: 0;
-  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+  /* dealt onto the table, 120 ms apart (TvJudge sets the delay) */
+  animation: global(pb-deal) var(--pb-motion-slow) var(--pb-ease) both;
 }
 
 .grid2 {
