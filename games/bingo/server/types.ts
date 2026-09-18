@@ -112,6 +112,8 @@ export interface RoundState {
    * number that was up is called again (`enterPlay(…, true)`), not the next one.
    */
   resumeAgain: boolean;
+  /** play, during that countdown: who chose to keep going (their id), for the TV's line. */
+  resumeBy: string | null;
   /** playerId → card indices already swapped at the intro (one "deal me another" per card). */
   swapped: Record<string, number[]>;
 }

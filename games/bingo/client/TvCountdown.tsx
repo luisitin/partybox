@@ -92,11 +92,14 @@ export function Resume({
   roundLabel,
   resumeAt,
   pattern,
+  by,
 }: {
   roundLabel: string;
   resumeAt: number;
   /** The pattern in play — after "keep going — blackout" the room reads the new goal here. */
   pattern?: string;
+  /** Who chose to keep going (loop 325): the 3 s screen says why the room is counting. */
+  by?: string | null;
 }): JSX.Element {
   const left = Math.min(3, useSecondsLeft(resumeAt, false, 50) ?? 0); // a 4 would tick four times on a 3 s hold
   const sound = useSoundApi();
@@ -127,7 +130,7 @@ export function Resume({
         </BigText>
       </div>
       <BigText level="h2" tone="muted">
-        get your thumbs ready
+        {by ? `${by} said keep going — thumbs ready` : 'get your thumbs ready'}
       </BigText>
     </Stage>
   );

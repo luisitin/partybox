@@ -91,6 +91,7 @@ function init(ctx: InitContext): State {
       menus: [],
       resumeAt: null,
       resumeAgain: false,
+      resumeBy: null,
       swapped: {},
     },
     wins,

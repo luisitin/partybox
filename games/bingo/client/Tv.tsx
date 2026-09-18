@@ -95,7 +95,12 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
     // A menu open somewhere holds the caller; the last one closing runs a 3 · 2 · 1 on the stage.
     if (view.resumeAt !== null)
       return (
-        <Resume roundLabel={roundLabel} resumeAt={view.resumeAt} pattern={view.patternLabel} />
+        <Resume
+          roundLabel={roundLabel}
+          resumeAt={view.resumeAt}
+          pattern={view.patternLabel}
+          by={view.resumeBy}
+        />
       );
     if (view.pausedBy.length > 0)
       return (
