@@ -1,7 +1,7 @@
 // The caller is one voice: a new call cuts the last one off before it speaks (loop 333).
 import { describe, expect, it } from 'vitest';
 import type { SoundApi } from '@partybox/game-sdk/ui';
-import { BALL_LAND_MS, CLIP_LEAD_S, callClip, speakCall } from '../client/caller';
+import { callClip, clipLeadS, speakCall } from '../client/caller';
 
 function fakeSound(): { api: SoundApi; log: string[] } {
   const log: string[] = [];
@@ -20,10 +20,17 @@ function fakeSound(): { api: SoundApi; log: string[] } {
 }
 
 describe('speakCall', () => {
-  it("hushes the caller, then schedules the clip on the ball's landing with the lead-in skipped", () => {
+  it("hushes the caller, then starts the clip at once with the letter's lead-in skipped", () => {
     const { api, log } = fakeSound();
     speakCall(api, 'B', 12);
-    expect(log).toEqual(['hush', `clip:${callClip('B', 12)}@${BALL_LAND_MS}+${CLIP_LEAD_S}`]);
+    expect(log).toEqual(['hush', `clip:${callClip('B', 12)}@0+${clipLeadS('B')}`]);
+  });
+
+  it("skips each letter's own silence (B has the longest, I the shortest)", () => {
+    expect(clipLeadS('B')).toBeGreaterThan(clipLeadS('G'));
+    expect(clipLeadS('G')).toBeGreaterThan(clipLeadS('N'));
+    expect(clipLeadS('I')).toBeLessThan(clipLeadS('O'));
+    expect(clipLeadS('?')).toBe(clipLeadS('I'));
   });
 
   it('two calls in a row: the second hushes the first before it speaks — never two voices', () => {
