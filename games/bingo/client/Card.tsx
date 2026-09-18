@@ -41,6 +41,8 @@ export interface CardProps {
   restShown?: boolean;
   /** After the reveal: misses outlined, the marks settled. */
   settled?: boolean;
+  /** The claim just went up from this phone: the daubs flash once in a wave (loop 240). */
+  sent?: boolean;
   /** A gold sweep along a winning line while its cells turn (the TV). */
   sweep?: { kind: SweepKind; index: number; ms: number } | null;
 }
@@ -76,6 +78,7 @@ export function Card({
   restShown = false,
   settled = true,
   sweep = null,
+  sent = false,
 }: CardProps): JSX.Element {
   const turnAt = new Map((revealOrder ?? []).map((i, k) => [i, k * revealStepMs]));
   const turning = revealOrder !== undefined;
@@ -148,6 +151,7 @@ export function Card({
             patternSet.has(i) && !isDaubed ? styles.pattern : '',
             isFree ? styles.free : '',
             stamped.has(i) ? styles.stamp : '',
+            sent && isDaubed ? styles.sent : '',
             lifted.has(i) ? styles.unstamp : '',
           ].join(' ');
           const mark = !showColour ? null : greenSet.has(i) ? '✓' : redSet.has(i) ? '✕' : null;
@@ -158,7 +162,9 @@ export function Card({
             ? ({ animationDelay: `${i * REVEAL_STEP_MS}ms` } as CSSProperties)
             : turns
               ? ({ animationDelay: `${turnAt.get(i) ?? 0}ms` } as CSSProperties)
-              : undefined;
+              : sent && isDaubed
+                ? ({ animationDelay: `${i * 18}ms` } as CSSProperties)
+                : undefined;
           return (
             <Tag
               key={i}

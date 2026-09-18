@@ -2,9 +2,9 @@
 // row in the TV's ball style (for the grids), the scoreboard rows, the BINGO! button with its two
 // taps, and the choice after a bingo (keep going or move on — any phone with a card, first tap
 // wins).
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
-import { PrimaryButton, buzz, useSecondsLeft } from '@partybox/game-sdk/ui';
+import { PrimaryButton, buzz, useSecondsLeft, useSound } from '@partybox/game-sdk/ui';
 import type { PlayCue, ScoreboardRow } from '@partybox/game-sdk/ui';
 import type { Input } from '../server/types';
 import type { BingoControllerView, CallView } from '../server/views';
@@ -126,6 +126,8 @@ export function BingoButton({
   const mine = arm !== null && arm.playerId === meId;
   const armedHere = mine && arm.card === card;
   const left = useSecondsLeft(armedHere ? arm.until : null);
+  const play = useSound();
+  const [slam, setSlam] = useState(false);
   useEffect(() => {
     if (armedHere && left === 0) send({ type: 'lapse' });
   }, [armedHere, left, send]);
@@ -157,15 +159,25 @@ export function BingoButton({
     tone = 'neutral';
   }
   return (
-    <PrimaryButton
-      tone={myCheck ? 'danger' : tone}
-      disabled={!canTap && !(arm && !mine && canTap)}
-      onClick={() => send({ type: 'bingo', card })}
-      className={`${small ? styles.bingoSmall : styles.bingo} ${armedHere ? styles.armed : ''}`}
-      aria-label={`BINGO! card ${card + 1}${armedHere ? ', armed, tap again to claim' : ''}`}
-    >
-      {label}
-    </PrimaryButton>
+    <div className={slam ? styles.slam : undefined} onAnimationEnd={() => setSlam(false)}>
+      <PrimaryButton
+        tone={myCheck ? 'danger' : tone}
+        disabled={!canTap && !(arm && !mine && canTap)}
+        onClick={() => {
+          // The second tap is the claim: a slam, a "sent!" cue and a long buzz on the tap itself.
+          if (armedHere) {
+            buzz([30, 40, 60]);
+            play('claim');
+            setSlam(true);
+          }
+          send({ type: 'bingo', card });
+        }}
+        className={`${small ? styles.bingoSmall : styles.bingo} ${armedHere ? styles.armed : ''}`}
+        aria-label={`BINGO! card ${card + 1}${armedHere ? ', armed, tap again to claim' : ''}`}
+      >
+        {label}
+      </PrimaryButton>
+    </div>
   );
 }
 

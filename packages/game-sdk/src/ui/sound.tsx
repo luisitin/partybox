@@ -32,6 +32,7 @@ export const SOUND_CUES = [
   'wrong',
   'call',
   'daub',
+  'claim',
 ] as const;
 
 export type SoundCue = (typeof SOUND_CUES)[number];

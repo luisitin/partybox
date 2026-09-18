@@ -115,6 +115,12 @@ export const CUES: Record<SoundCue, Note[]> = {
   ],
   // A player locked in (TV strip): one soft high tick.
   lock: [{ freq: 1568, at: 0, dur: 0.04, type: 'triangle', gain: 0.08 }],
+  // The claim went up (the phone, loop 240): a rising two-note "sent!" with a short body.
+  claim: [
+    { freq: 440, to: 660, at: 0, dur: 0.09, type: 'triangle', gain: 0.18 },
+    { freq: 880, at: 0.1, dur: 0.14, type: 'triangle', gain: 0.16 },
+    { freq: 120, at: 0, dur: 0.06, type: 'sine', gain: 0.14 },
+  ],
   // The phone's own verdict card: right.
   correct: [
     { freq: 880, at: 0, dur: 0.07, type: 'triangle', gain: 0.12 },
