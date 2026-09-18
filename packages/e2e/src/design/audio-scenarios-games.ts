@@ -128,12 +128,15 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
       !(await T.between(vip.page, 'D1b', 'D2')).some((e) => e.kind === 'speak'),
     '',
   );
-  // wrong claim from p2: two taps (arm, then claim)
+  // wrong claim from p2: two taps (arm, then claim). Real time from here (loop 283): the card has
+  // no daubs, so an extra call cannot make it right, and the whole way back — verdict, read,
+  // 3 · 2 · 1, the next number — runs as it does in a room.
+  await api.clock(false);
   await p2.page.getByRole('button', { name: /^bingo! card 1$/i }).click();
   await settle(250);
   await p2.page.getByRole('button', { name: /tap again to claim/i }).dispatchEvent('click');
   // The reveal: drop 0.7 s, five turns (220 ms), 0.4 s, the rest 0.9 s, 0.7 s hold, 0.6 s settle.
-  await settle(8500); // the reveal: 1 s announce, 0.7 s drop, five turns (350 ms), 0.5 s, the rest 1 s, 0.8 s hold, 0.6 s settle → verdict ≈ 6.4 s
+  await settle(7500); // the reveal: 1 s announce, 0.7 s drop, five turns (350 ms), 0.5 s, 0.8 s hold, 0.6 s settle → verdict at 5.35 s (no rests on an empty card); the read ends at 8.35 s
   await T.mark('D3');
   evs = await T.between(tv, 'D2', 'D3');
   const hushIdx = evs.findIndex((e) => e.kind === 'hush' || e.kind === 'ss:cancel');
@@ -163,15 +166,20 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
     (await T.playing(tv)).length === 1,
     JSON.stringify(await T.playing(tv)),
   );
-  await api.skip(); // check → play
-  await settle(1800);
+  // The way back from a wrong claim (loop 282): the verdict tick, the 3 s read, then a 3 · 2 · 1
+  // whose tick calls the next number.
+  await settle(5200); // the read ends at ≈ 8.4 s, the ring runs to ≈ 11.4 s, the next number drops
   await T.mark('D4');
+  await api.clock(true); // hold the caller again for what follows
   evs = await T.between(tv, 'D3', 'D4');
+  const back = T.cues(evs);
   T.ok(
     'D',
-    'play resumes → the next number is spoken',
-    evs.some((e) => e.kind === 'speak'),
-    `spoken=${evs
+    'after the verdict: 3 · 2 · 1 ticks, then the next number is spoken (no call before the ticks)',
+    evs.some((e) => e.kind === 'speak') &&
+      back.filter((c) => c === 'tick').length === 3 &&
+      back.indexOf('call') > back.lastIndexOf('tick'),
+    `cues=${back.join(',')} spoken=${evs
       .filter((e) => e.kind === 'speak')
       .map((e) => e['text'])
       .join(' | ')}`,
