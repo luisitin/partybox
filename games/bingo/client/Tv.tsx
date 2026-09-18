@@ -271,6 +271,27 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
     );
   }
 
+  if (view.phaseId === 'final') {
+    // The drumroll (loop 246): the final board with the crown withheld, "and the winner is…" —
+    // the engine's results screen names them with the fanfare 4 s later.
+    const tied = view.standings.filter((r) => r.rank === 1).length > 1;
+    return (
+      <Stage center>
+        <BigText level="h2" tone="muted">
+          Final round played
+        </BigText>
+        <BigText level="h1">Final points</BigText>
+        <Scoreboard rows={rows(view)} noTrophy stagger="up" />
+        <BigText level="h2" tone="accent">
+          {tied ? "It's a tie" : 'And the winner is'}
+          <span className={styles.ellipsis} aria-hidden>
+            …
+          </span>
+        </BigText>
+      </Stage>
+    );
+  }
+
   if (view.phaseId === 'scoreboard') {
     const next = view.patterns[view.round] ?? null;
     // Centred like the game-end board (loop 6 pick 2A): the rounds-won table sat in the left half.

@@ -181,6 +181,8 @@ describe('play', () => {
     expect(s.round.winnerId).toBeNull();
     expect(game.tvView(s).claim).toBeNull();
     s = timer(s);
+    expect(s.phase.id).toBe('final');
+    s = timer(s);
     expect(s.phase.id).toBe('done');
     expect(game.results(s)?.scores).toEqual({ a: 0, b: 0, c: 0 });
     expect(game.results(s)?.winnerIds.sort()).toEqual(['a', 'b', 'c']);
@@ -235,6 +237,12 @@ describe('rounds and results', () => {
     s = daubAll(s, 'a', [0, 4, 20, 24]);
     s = claim(s, 'a');
     expect(s.phase.id).toBe('bingo');
+    s = timer(s);
+    // The drumroll: the final board, crown withheld, 4 s; results are not up yet.
+    expect(s.phase.id).toBe('final');
+    expect(game.results(s)).toBeNull();
+    expect(game.tvView(s).standings[0]?.wins).toBe(3);
+    expect(vip(s, 'skip').phase.id).toBe('done'); // a skip goes straight to the results
     s = timer(s);
     expect(s.phase.id).toBe('done');
     const results = game.results(s);

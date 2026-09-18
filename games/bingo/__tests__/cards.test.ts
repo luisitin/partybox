@@ -96,6 +96,8 @@ describe('keep going with several cards', () => {
     expect(game.tvView(s).bingosThisRound).toBe(2);
     expect(s.history.map((h) => h.winnerId)).toEqual(['a', 'b']);
     s = input(s, 'a', { type: 'next' }, after(s));
+    expect(s.phase.id).toBe('final'); // the drumroll, then done
+    s = timer(s);
     expect(s.phase.id).toBe('done');
     expect(game.results(s)?.scores).toEqual({ a: 3, b: 2, c: 0 }); // 1st and 2nd bingo of the pattern;
   });

@@ -3,15 +3,27 @@
 import { enterPhase, isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { setMenu } from '../claims';
-import { SCOREBOARD_MS } from '../types';
+import { FINAL_MS, SCOREBOARD_MS } from '../types';
 import type { Input, State, Transition } from '../types';
 
 export function enterScoreboard(state: State, now: number): State {
   return enterPhase(state, 'scoreboard', now, SCOREBOARD_MS);
 }
 
+/** After the last round: the final board with the crown withheld for FINAL_MS, then done. */
+export function enterFinal(state: State, now: number): State {
+  return enterPhase(state, 'final', now, FINAL_MS);
+}
+
 export function enterDone(state: State, now: number): State {
   return enterPhase(state, 'done', now, null);
+}
+
+export function reduceFinal(state: State, event: GameEvent<Input>): State {
+  if (event.type === 'input' && event.input.type === 'menu')
+    return setMenu(state, event.playerId, event.input.open);
+  if (isTimerFor(state, event)) return enterDone(state, event.now);
+  return state;
 }
 
 export function reduceScoreboard(state: State, event: GameEvent<Input>, next: Transition): State {

@@ -8,7 +8,8 @@ export const clientModule: GameClientModule = {
   Controller: lazy(() => import('./Controller').then((m) => ({ default: m.Controller }))),
   // Both phases cue themselves once the claimed card has landed (a cheer or the buzzer, Tv.tsx):
   // nothing on entry.
-  sounds: { bingo: 'silence', check: 'silence' },
+  // The final board is a scores moment (the drumroll); the results fanfare follows it.
+  sounds: { bingo: 'silence', check: 'silence', final: 'tally' },
   // Owner pick: "Wallpaper" with the occasional "Cool Vibes", quiet under the caller, back to back.
   music: { tracks: ['wallpaper', 'cool-vibes'], weights: [3, 1], volume: 0.2, mode: 'chain' },
 };

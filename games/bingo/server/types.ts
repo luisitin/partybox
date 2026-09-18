@@ -3,7 +3,7 @@
 import { z } from '@partybox/game-sdk';
 import type { GameStateBase } from '@partybox/game-sdk';
 
-export const PHASES = ['intro', 'play', 'check', 'bingo', 'scoreboard', 'done'] as const;
+export const PHASES = ['intro', 'play', 'check', 'bingo', 'scoreboard', 'final', 'done'] as const;
 export type PhaseId = (typeof PHASES)[number];
 
 export const PATTERNS = ['line', 'corners', 'x', 'blackout'] as const;
@@ -175,3 +175,5 @@ export const FREE = 12;
 
 /** "Leave the current phase now" — injected into phase reducers by server/index.ts. */
 export type Transition = (state: State, now: number) => State;
+/** The final board with the crown withheld ("and the winner is…") before the results fanfare. */
+export const FINAL_MS = 4_000;
