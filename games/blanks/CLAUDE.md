@@ -5,7 +5,7 @@
 - Imports: only @partybox/game-sdk (+ react in client/). server/ is pure (no Date.now, Math.random, timers, I/O).
 - `server/cards.ts` `fill()` is the one rule for how a black card reads with whites in it — TV, phones
   and tests all go through it; `client/Cards.tsx` renders it (black and white stay black and white in
-  every theme).
+  every theme — warm charcoal `#16171c` and cream `#f6f1e6`, never pure, so a dark TV does not glare).
 - Content: three decks under content/ (mild / crude / wild); the `decks` setting picks the mix.
   Ids `<m|c|w>b<n>` / `<m|c|w>w<n>`; regenerate from a cards.json with the converter in the loop notes.
 - Regenerate fixtures after changing state shape: pnpm sim --game blanks --dump-fixtures --players 4

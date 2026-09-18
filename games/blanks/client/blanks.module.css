@@ -1,6 +1,8 @@
 /* Blanks layout. Tokens only (docs/DESIGN_SYSTEM.md) except the two card inks: a black card is
    black and a white card is white in every theme — the physical game's convention is the game's
-   identity, and the marks stay ≥ 4.5:1 on their card in every theme. */
+   identity, and the marks stay ≥ 4.5:1 on their card in every theme. Both are warm rather than
+   pure: charcoal ink and cream paper (review-loop #143 — full-white paper on a dark TV in a dim
+   room is glare; #f6f1e6 on #16171c still reads at 15:1). */
 
 .kicker {
   font-size: var(--pb-font-caption);
@@ -21,21 +23,24 @@
 /* ── The cards ─────────────────────────────────────────────────────────────────────────────── */
 
 .black {
-  --card-ink: #111;
-  --card-paper: #fff;
+  --card-ink: #16171c;
+  --card-ink-2: #1f2027;
+  --card-paper: #f6f1e6;
+  --card-paper-2: #ebe4d4;
   position: relative;
   display: flex;
   flex-direction: column;
   gap: var(--pb-space-3);
   padding: var(--pb-space-5);
   border-radius: var(--pb-radius-lg);
-  background: var(--card-ink);
+  /* lit from above: a touch lighter at the top edge, like a card under a lamp */
+  background: linear-gradient(180deg, var(--card-ink-2), var(--card-ink) 38%);
   color: var(--card-paper);
   border: 3px solid var(--pb-border);
-  /* a hairline edge so the card reads as a card on a near-black stage, plus its drop shadow */
+  /* a hairline edge so the card reads as a card on a near-black stage, plus a soft drop shadow */
   box-shadow:
-    0 0 0 1px rgb(255 255 255 / 18%),
-    0 8px 24px rgb(0 0 0 / 35%);
+    0 0 0 1px rgb(255 255 255 / 14%),
+    0 12px 32px rgb(0 0 0 / 40%);
   overflow-wrap: anywhere;
 }
 
@@ -52,7 +57,8 @@
   text-wrap: pretty;
 }
 
-/* A played white card, dropped into the sentence: white paper, black ink, wraps as a run of text. */
+/* A played white card, dropped into the sentence: cream paper, charcoal ink, wraps as a run of
+   text. */
 .fill {
   background: var(--card-paper);
   color: var(--card-ink);
@@ -164,8 +170,13 @@
 }
 
 .winner {
-  outline: 4px solid var(--pb-accent-2);
+  /* a ring with a soft halo rather than a hard outline: the card glows, it is not boxed in */
+  outline: 3px solid var(--pb-accent-2);
   outline-offset: 2px;
+  box-shadow:
+    0 0 0 1px rgb(255 255 255 / 14%),
+    0 12px 32px rgb(0 0 0 / 40%),
+    0 0 48px color-mix(in srgb, var(--pb-accent-2) 45%, transparent);
 }
 
 /* ── TV stages ─────────────────────────────────────────────────────────────────────────────── */
@@ -174,6 +185,18 @@
   width: min(100%, 1400px);
   margin-inline: auto;
   animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+  /* a pool of warm light behind the card on stage (the room's one focal point) */
+  box-shadow:
+    0 0 0 1px rgb(255 255 255 / 14%),
+    0 12px 32px rgb(0 0 0 / 40%),
+    0 0 160px 24px color-mix(in srgb, var(--pb-accent-2) 11%, transparent);
+}
+
+.stageCard.winner {
+  box-shadow:
+    0 0 0 1px rgb(255 255 255 / 14%),
+    0 12px 32px rgb(0 0 0 / 40%),
+    0 0 160px 24px color-mix(in srgb, var(--pb-accent-2) 22%, transparent);
 }
 
 /* The card on stage floats in the free space; whatever sits under it hugs the bottom. Centred
@@ -596,8 +619,10 @@
 
 /* A white card in the hand: white paper, black ink, a 3 px edge that turns accent when picked. */
 .white {
-  --card-ink: #111;
-  --card-paper: #fff;
+  --card-ink: #16171c;
+  --card-ink-2: #1f2027;
+  --card-paper: #f6f1e6;
+  --card-paper-2: #ebe4d4;
   display: flex;
   align-items: center;
   gap: var(--pb-space-3);
@@ -605,9 +630,10 @@
   min-height: 64px;
   padding: var(--pb-space-3) var(--pb-space-4);
   border-radius: var(--pb-radius);
-  background: var(--card-paper);
+  background: linear-gradient(180deg, var(--card-paper), var(--card-paper-2));
   color: var(--card-ink);
   border: 3px solid var(--pb-border);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 25%);
   text-align: left;
   font: inherit;
   font-size: var(--pb-font-body);
