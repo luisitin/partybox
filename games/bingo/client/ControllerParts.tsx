@@ -45,8 +45,8 @@ export function CallHeader({
       <div className={styles.now} key={current.number}>
         {/* Spicy nicknames run long ("Doctor's orders — take two and call me"): over ~20 characters
             the phrase steps down a size so a 320 px phone keeps the call line below it (loop #7).
-            The number itself can never be the part that is cut: on a short phone the phrase is one
-            line with an ellipsis, so the digits lead it there (loop 313 — an SE lost "seventy-five"). */}
+            The number itself can never be the part that is cut: on a short phone the phrase is two
+            clamped body-size lines led by the digits (loop 313 — an SE lost "seventy-five"; 327). */}
         <span className={`${styles.phrase} ${current.call.length > 20 ? styles.phraseLong : ''}`}>
           <b className={styles.phraseNumber}>{current.number}</b>
           {current.call}

@@ -271,14 +271,17 @@
   .focusMany .focusMain {
     max-width: min(100%, max(168px, calc((100dvh - 430px) / 1.15)));
   }
-  /* One line for the nickname, no wrap: the meta line under it carries the rest — with the
-     number in front, so the ellipsis only ever eats the pun (loop 313). */
+  /* Body size, two lines, the number in front (loop 313): the two-line reservation above is
+     h1-sized, so the whole pun fits where one clipped line sat ("48 Four dozen — for…", loop
+     327); only the longest nicknames lose their last word to the clamp. */
   .focusMany ~ * .phrase,
   .phrase {
     font-size: var(--pb-font-body);
-    white-space: nowrap;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
     overflow: hidden;
-    text-overflow: ellipsis;
   }
   .phraseNumber {
     display: inline;
