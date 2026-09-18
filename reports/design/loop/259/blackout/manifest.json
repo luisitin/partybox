@@ -1,0 +1,52 @@
+[
+  {
+    "file": "bingo/won-line/iphone-winner.png",
+    "group": "bingo",
+    "phase": "won-line",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "winner",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "bingo/blackout/iphone-winner.png",
+    "group": "bingo",
+    "phase": "blackout",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "winner",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "bingo/blackout/tv-stage.png",
+    "group": "bingo",
+    "phase": "blackout",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "bingo/blackout-call/iphone-winner.png",
+    "group": "bingo",
+    "phase": "blackout-call",
+    "device": "iphone",
+    "deviceLabel": "iPhone 15",
+    "role": "winner",
+    "width": 393,
+    "height": 659
+  },
+  {
+    "file": "bingo/blackout-call/tv-stage.png",
+    "group": "bingo",
+    "phase": "blackout-call",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  }
+]
