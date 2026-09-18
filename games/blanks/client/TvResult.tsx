@@ -72,6 +72,24 @@ export function votesLabel(
   return `${votes} ${votes === 1 ? 'vote' : 'votes'}`;
 }
 
+/** Who voted for this card: up to six avatars with names, then "+n" (review-loop #170). */
+function Voters({ card }: { card: RevealedCard }): JSX.Element | null {
+  if (card.voters.length === 0) return null;
+  const shown = card.voters.slice(0, 6);
+  const rest = card.voters.length - shown.length;
+  return (
+    <span className={styles.voters}>
+      {shown.map((v) => (
+        <span key={v.id} className={styles.voter}>
+          <Avatar avatarId={v.avatarId} size="var(--pb-chip-size)" />
+          <span className={styles.authorName}>{v.name}</span>
+        </span>
+      ))}
+      {rest > 0 ? <span className={styles.authorName}>+{rest}</span> : null}
+    </span>
+  );
+}
+
 function Author({
   card,
   shown,
@@ -189,6 +207,8 @@ export function TvResult({ view }: Props): JSX.Element {
               className={`${styles.stageCard} ${named ? styles.crowned : ''}`}
             >
               <Author card={w} shown={beat >= BEAT_AUTHORS} label={votesLabel(view, w.votes)} />
+              {/* Who voted for it, on the same beat the authors land. */}
+              {beat >= BEAT_AUTHORS && view.judgeMode === 'vote' ? <Voters card={w} /> : null}
               <span
                 className={`${styles.plusOne} ${named && !w.rando ? styles.pop : styles.pending}`}
               >
