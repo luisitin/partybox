@@ -1,0 +1,85 @@
+{
+  "pass": "142",
+  "game": "blanks",
+  "players": 4,
+  "scenario": "vip-leaves",
+  "focus": "phone",
+  "started": "01:01:58.191",
+  "tvVideoT0": "01:01:54.898",
+  "changes": [
+    {
+      "t": 1789693318196,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789693323189,
+      "bed": "warm",
+      "at": "01:01:58.196",
+      "sinceStartS": 0,
+      "videoS": 3.3
+    },
+    {
+      "t": 1789693323236,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789693503204,
+      "bed": "bossa",
+      "at": "01:02:03.236",
+      "sinceStartS": 5,
+      "videoS": 8.3
+    },
+    {
+      "t": 1789693326686,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789693332763,
+      "bed": "warm",
+      "at": "01:02:06.686",
+      "sinceStartS": 8.5,
+      "videoS": 11.8
+    },
+    {
+      "t": 1789693362573,
+      "status": "playing",
+      "phase": "judge",
+      "deadline": 1789693464290,
+      "bed": "marimba",
+      "at": "01:02:42.573",
+      "sinceStartS": 44.4,
+      "videoS": 47.7
+    },
+    {
+      "t": 1789693450793,
+      "status": "playing",
+      "phase": "result",
+      "deadline": 1789693510740,
+      "bed": "warm",
+      "at": "01:04:10.793",
+      "sinceStartS": 132.6,
+      "videoS": 135.9
+    },
+    {
+      "t": 1789693510781,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789693515748,
+      "bed": "warm",
+      "at": "01:05:10.781",
+      "sinceStartS": 192.6,
+      "videoS": 195.9
+    },
+    {
+      "t": 1789693515787,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789693695756,
+      "bed": "bossa",
+      "at": "01:05:15.787",
+      "sinceStartS": 197.6,
+      "videoS": 200.9
+    }
+  ],
+  "notes": [
+    "vip-leaves: Sam (VIP) closed the page in reveal",
+    "budget reached while playing; skipped to results"
+  ]
+}
