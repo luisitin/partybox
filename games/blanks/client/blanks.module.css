@@ -318,6 +318,19 @@
   background: transparent;
 }
 
+/* The phone's copy of the table (the played screen): smaller slots, same cards. */
+.pipsPhone {
+  gap: var(--pb-space-2);
+  margin-block: 0;
+}
+
+.pipsPhone .pip {
+  width: 30px;
+  height: 42px;
+  border-radius: var(--pb-space-1);
+  border-width: 2px;
+}
+
 .pipDone {
   border: 0;
   background: linear-gradient(180deg, var(--card-paper), var(--card-paper-2));

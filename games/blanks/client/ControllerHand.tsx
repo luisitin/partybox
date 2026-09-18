@@ -19,6 +19,20 @@ function progressLine(view: BlanksControllerView): string {
   return `${view.playedCount} / ${view.playersExpected} in`;
 }
 
+/** The table as the TV shows it: one slot per expected card, the played ones face-down. */
+function Table({ view }: { view: BlanksControllerView }): JSX.Element {
+  return (
+    <div className={`${styles.pips} ${styles.pipsPhone}`} aria-hidden>
+      {Array.from({ length: view.playersExpected }, (_, i) => (
+        <span
+          key={i}
+          className={`${styles.pip} ${i < view.playedCount ? styles.pipDone : ''} ${i === view.playedCount - 1 ? styles.pipPop : ''}`}
+        />
+      ))}
+    </div>
+  );
+}
+
 export function ControllerHand({ view, send }: Props): JSX.Element {
   const [picked, setPicked] = useState<string[]>([]);
   const [sent, setSent] = useState(false);
@@ -32,6 +46,7 @@ export function ControllerHand({ view, send }: Props): JSX.Element {
         hint={`${progressLine(view)} · you pick the winner after the reading.`}
         mood="watch"
       >
+        <Table view={view} />
         <FilledCard text={black.text} pick={black.pick} size="phone" />
         <NextButton send={send} timed={view.timed} label="Start the reading now" />
       </WaitingScreen>
@@ -51,6 +66,7 @@ export function ControllerHand({ view, send }: Props): JSX.Element {
         }
         mood="done"
       >
+        <Table view={view} />
         <FilledCard text={black.text} whites={view.myPlay} size="phone" />
         {allIn ? null : <NextButton send={send} timed={view.timed} label="Start the reading now" />}
       </WaitingScreen>
