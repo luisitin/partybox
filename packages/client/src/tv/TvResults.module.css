@@ -24,9 +24,22 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: start;
   gap: var(--pb-space-3);
+}
+
+/* Four or more awards do not fit the stage in one column — the last one ran under the host bar
+   (review-loop #244, Blanks' fourth award). They pair up instead, which the awards column is wide
+   enough for, and each box tightens a little. */
+.awards:has(> :nth-child(4)) {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--pb-space-2) var(--pb-space-3);
+}
+
+.awards:has(> :nth-child(4)) .award {
+  padding: var(--pb-space-2) var(--pb-space-4);
 }
 
 .award {
