@@ -408,6 +408,12 @@
 .slot.won {
   opacity: 0.45;
 }
+/* The three-card grid's top row holds only the style pill: the call lives in the spare slot. */
+.topSpacer {
+  flex: 1;
+  min-height: 0;
+}
+
 .miniCall {
   display: grid;
   place-items: center;
