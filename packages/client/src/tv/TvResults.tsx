@@ -32,8 +32,11 @@ export function TvResults({ room, lastView = null }: TvResultsProps): JSX.Elemen
   // the stage is bare (review-loop #32).
   const large = many && rows.length <= 8;
   return (
+    // `data-screen` marks the end of a game for the e2e harness: a scoreboard is not a reliable
+    // hook, since a game with its own finale (Bingo's board, Lightning's totals) replaces it
+    // (review-loop #184).
     <Stage>
-      <div className={`${styles.hero} pb-enter`}>
+      <div className={`${styles.hero} pb-enter`} data-screen="results">
         <BigText level={many || keepBoard ? 'h1' : 'display'} tone="accent">
           {winnerLine(room, scoreless) || t.results.title}
         </BigText>

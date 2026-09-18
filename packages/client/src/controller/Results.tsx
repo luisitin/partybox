@@ -33,7 +33,11 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
     <Screen
       // The winner line is the sticky title: on a long board the body scrolls to your own row and a
       // hero inside the body scrolled off the top (review-loop #76).
-      title={<span className={styles.winner}>{winnerLineFor(room, me.id, scoreless)}</span>}
+      title={
+        <span className={styles.winner} data-screen="results">
+          {winnerLineFor(room, me.id, scoreless)}
+        </span>
+      }
       footer={
         me.isVip ? (
           <div className={styles.actions}>
