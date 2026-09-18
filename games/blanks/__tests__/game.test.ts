@@ -261,9 +261,9 @@ describe('fill', () => {
 describe('content', () => {
   it('every deck has the promised counts and pick ≥ blanks on every black card', () => {
     expect(DECKS.mild.black.length).toBeGreaterThanOrEqual(240);
-    expect(DECKS.mild.white.length).toBeGreaterThanOrEqual(865);
+    expect(DECKS.mild.white.length).toBeGreaterThanOrEqual(990);
     expect(DECKS.crude.black.length).toBeGreaterThanOrEqual(170);
-    expect(DECKS.crude.white.length).toBeGreaterThanOrEqual(745);
+    expect(DECKS.crude.white.length).toBeGreaterThanOrEqual(830);
     expect(DECKS.wild.black.length).toBeGreaterThanOrEqual(235);
     expect(DECKS.wild.white.length).toBeGreaterThanOrEqual(1115);
     for (const deck of Object.values(DECKS))

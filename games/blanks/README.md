@@ -78,7 +78,7 @@ number 6 (3–15) · `answerSeconds` number 60 (30–120, step 15; timed only) �
 
 ## Content
 
-Three decks, `mild.json` (clean, 241 black / 869 white), `crude.json` (adult, 172 / 748) and `wild.json`
+Three decks, `mild.json` (clean, 241 black / 993 white), `crude.json` (adult, 172 / 835) and `wild.json`
 (explicit, 237 / 1121): `{ id, name, rating, black: [{ id, text, pick, draw }], white: [{ id, text }] }`,
 blanks written `____`, `pick` ≥ blanks (a question card has none), `draw` 2 on Pick 3 cards. Mainstream
 real-world references are fine in crude and wild (heads of state past and present, well-known events);
