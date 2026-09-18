@@ -92,6 +92,8 @@ export interface BingoTvView extends TvView, Common {
 }
 
 export interface BingoControllerView extends ControllerView, Common {
+  /** play, during the 3 · 2 · 1 after "keep going": this phone made the choice (loop 326). */
+  resumeMine: boolean;
   /** Whether the TV shows the hall board — decides how a reconnecting phone reports missed calls. */
   showBoard: boolean;
   /** Nicknames of the last few calls, newest last (numbers stay on the TV). */
@@ -285,6 +287,10 @@ export function controllerView(
       (state.phase.id === 'play' || state.phase.id === 'check') &&
       state.round.drawn < (state.round.waitForCall[playerId] ?? 0),
     called: player ? [] : calledNumbers(state),
+    resumeMine:
+      state.phase.id === 'play' &&
+      state.round.resumeAt !== null &&
+      state.round.resumeBy === playerId,
     showBoard: state.settings.showBoard,
     recent: recentCalls(state, 4),
     myWins: state.wins[playerId] ?? 0,

@@ -119,10 +119,13 @@ export function HoldCurtain({
 export function Countdown({
   resumeAt,
   pattern,
+  by,
 }: {
   resumeAt: number;
   /** The pattern in play: after "keep going — blackout" the hand reads the new goal (loop 277). */
   pattern?: string;
+  /** Who chose to keep going (loop 326) — "you", on their own phone. */
+  by?: string | null;
 }): JSX.Element | null {
   const left = useSecondsLeft(resumeAt, false, 50);
   const play = useSound();
@@ -152,7 +155,10 @@ export function Countdown({
           {shown}
         </div>
       </div>
-      <p className={styles.curtainLine}>{pattern ? `${pattern} · ` : ''}get your thumbs ready</p>
+      <p className={styles.curtainLine}>
+        {pattern ? `${pattern} · ` : ''}
+        {by ? `${by} said keep going` : 'get your thumbs ready'}
+      </p>
     </div>
   );
 }
