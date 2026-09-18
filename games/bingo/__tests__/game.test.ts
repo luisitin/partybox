@@ -321,7 +321,8 @@ describe('views and bot', () => {
       s = input(s, 'a', move);
     }
     expect(sampleInput(s, 'a', createRng(1))).toEqual({ type: 'bingo', card: 0 });
-    expect(sampleInput(start(), 'a', rng)).toBeNull(); // intro
+    expect(sampleInput(start(), 'a', rng)).toEqual({ type: 'ready' }); // intro: picked at once
+    expect(sampleInput(input(start(), 'a', { type: 'ready' }), 'a', rng)).toBeNull(); // once
     expect(sampleInput(s, 'ghost', rng)).toBeNull();
   });
 });

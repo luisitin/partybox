@@ -76,6 +76,8 @@ export interface PlayerInfo {
   name: string;
   avatarId: string;
   connected: boolean;
+  /** A bot (ADR-028): a game may act for it where a person would tap (Bingo's ready-up). */
+  bot?: boolean;
 }
 
 export interface PhaseInfo {

@@ -7,7 +7,13 @@ import type { ApplyResult, Effect, EngineDeps, RoomState, RunningGame } from './
 export function playerInfos(room: RoomState): PlayerInfo[] {
   return Object.values(room.players)
     .sort((a, b) => a.joinedAt - b.joinedAt)
-    .map((p) => ({ id: p.id, name: p.name, avatarId: p.avatarId, connected: p.connected }));
+    .map((p) => ({
+      id: p.id,
+      name: p.name,
+      avatarId: p.avatarId,
+      connected: p.connected,
+      ...(p.bot ? { bot: true } : {}),
+    }));
 }
 
 /** Everyone in the room plays the next game; spectators are promoted. */

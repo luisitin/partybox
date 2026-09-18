@@ -18,7 +18,7 @@ import manifestJson from '../manifest.json' with { type: 'json' };
 import { sampleInput } from './bot';
 import { credit, enterBingo, reduceBingo } from './phases/bingo';
 import { enterCheck, reduceCheck } from './phases/check';
-import { enterIntro, reduceIntro } from './phases/intro';
+import { enterIntro, reduceIntro, settleIntro } from './phases/intro';
 import { enterPlay, enterResume, reducePlay } from './phases/play';
 import {
   enterDone,
@@ -93,6 +93,7 @@ function init(ctx: InitContext): State {
       resumeAgain: false,
       resumeBy: null,
       swapped: {},
+      ready: [],
     },
     wins,
     history: [],
@@ -206,6 +207,8 @@ function shiftResume(before: State, after: State, event: GameEvent<Input>): Stat
  * usual 3 · 2 · 1 (loop 294).
  */
 function afterPlayerChange(before: State, after: State, now: number): State {
+  // A straggler leaving the card-pick step: everyone left is ready → the 3 · 2 · 1 (loop 344).
+  if (after.phase.id === 'intro') return settleIntro(after, now);
   const held = after.phase.id === 'play' && after.phase.deadline === null;
   if (!held || !menusOpen(before) || menusOpen(after)) return after;
   // From the drop, not the hold's start (loop 329): a hold longer than the ring left the deadline

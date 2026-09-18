@@ -32,7 +32,7 @@ export interface GameDefinition<
 interface GameStateBase {
   phase: { id: string; startedAt: number; deadline: number | null; paused?: { at: number } };
   rng: RngState; // { seed, step } — pure PRNG state lives IN the state
-  players: Record<string, PlayerInfo>; // { id, name, avatarId, connected } — who is playing
+  players: Record<string, PlayerInfo>; // { id, name, avatarId, connected, bot? } — who is playing; bot: true for a bot (ADR-028) so a game can act for it where a person taps (Bingo's ready-up)
 }
 ```
 

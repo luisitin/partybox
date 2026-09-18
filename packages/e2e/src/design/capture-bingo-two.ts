@@ -37,7 +37,7 @@ async function main(): Promise<void> {
     });
     await settle(500);
     await vip.page.getByRole('button', { name: /^Card 2$/ }).click();
-    await vip.page.getByRole('button', { name: /deal me another/i }).click();
+    await vip.page.getByRole('button', { name: /^🎲 another/i }).click();
     await settle(300);
     await shots.shot(vip.page, {
       group: G,

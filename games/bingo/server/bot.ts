@@ -15,6 +15,11 @@ export const BOT_DAUB_PROBABILITY = 0.7;
 export const BOT_MISTAP_PROBABILITY = 0.05;
 
 export function sampleInput(state: State, playerId: string, rng: Rng): Input | null {
+  // The card-pick step: a bot (or a harness phone acting through the dev API) is ready at once.
+  if (state.phase.id === 'intro')
+    return Object.hasOwn(state.round.cards, playerId) && !state.round.ready.includes(playerId)
+      ? { type: 'ready' }
+      : null;
   if (state.phase.id !== 'play' && state.phase.id !== 'check') return null;
   const round = state.round;
   const cards = round.cards[playerId];

@@ -25,6 +25,9 @@ export function setHapticsEnabled(on: boolean): void {
 
 /** When the pattern now running ends (`navigator.vibrate` replaces, it never queues). */
 let busyUntil = 0;
+/** The last pattern and when: the same one twice inside 30 ms is one buzz (loop 344 — a Ready
+ * tap's own 20 ms and the shell's "locked in" 20 ms, 22 ms apart). */
+let last: { key: string; at: number } | null = null;
 
 /**
  * Vibrate for `pattern` ms (or an on/off pattern); silently a no-op where unsupported. A shorter
@@ -35,10 +38,12 @@ let busyUntil = 0;
 export function buzz(pattern: number | number[]): void {
   const total = Array.isArray(pattern) ? pattern.reduce((a, b) => a + b, 0) : pattern;
   const now = performance.now();
-  if (now < busyUntil && total < busyUntil - now) {
+  const key = JSON.stringify(pattern);
+  if ((now < busyUntil && total < busyUntil - now) || (last?.key === key && now - last.at < 30)) {
     trace('buzz:dropped', { pattern });
     return;
   }
+  last = { key, at: now };
   busyUntil = now + total;
   trace('buzz', { pattern });
   if (!hapticsEnabled()) return;

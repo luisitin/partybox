@@ -170,10 +170,15 @@ export function Countdown({
 export function IntroCount({
   deadline,
   cards,
+  ready,
+  waitingOn,
 }: {
   deadline: number | null;
   /** Cards dealt: the caption says "dealing" only while the deal is on (loop 302). */
   cards: number;
+  /** This phone tapped Ready; who has not yet (the card-pick step, loop 344). */
+  ready: boolean;
+  waitingOn: string[];
 }): JSX.Element {
   const left = useSecondsLeft(deadline, false, 50);
   const shown = left !== null && left <= 3 && left > 0 ? left : 0;
@@ -192,10 +197,16 @@ export function IntroCount({
           </b>
         </>
       ) : dealt ? (
-        cards > 1 ? (
-          'your cards — first number soon'
+        ready ? (
+          waitingOn.length > 0 ? (
+            `ready — waiting for ${waitingOn.length > 2 ? `${waitingOn.length} more` : waitingOn.join(' and ')}`
+          ) : (
+            'everyone is ready'
+          )
+        ) : cards > 1 ? (
+          'swap a card, or tap Ready'
         ) : (
-          'your card — first number soon'
+          'swap it, or tap Ready'
         )
       ) : (
         'dealing the cards…'

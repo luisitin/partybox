@@ -58,12 +58,17 @@ async function main(): Promise<void> {
         cards: Number(values.cards),
         callSeconds: 60,
       },
+      readyUp: false, // Sam picks by hand below (loop 344)
     });
     if (values.live) {
-      // "Deal me another" 1.8 s in (the deal has landed): the flip and its pluck (loop 268).
+      // "Another" 1.8 s in (the deal has landed): the flip and its pluck (loop 268); then Ready
+      // on Sam's phone and for the rest (loop 344) — the 3 · 2 · 1 from the 5 s floor.
       await settle(1800);
-      await sam.page.getByRole('button', { name: /deal me another/i }).click();
-      await settle(5700);
+      await sam.page.getByRole('button', { name: /^🎲 another/i }).click();
+      await settle(400);
+      await sam.page.getByRole('button', { name: /^ready$/i }).click();
+      await api.readyAll();
+      await settle(5300);
     } else await settle(5200);
     if (!values.live) {
       await rec.page.goto(`${server.url}/preview/bingo/intro?view=tv&theme=night`);

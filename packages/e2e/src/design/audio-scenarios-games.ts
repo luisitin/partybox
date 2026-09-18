@@ -25,7 +25,10 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
   // The clock runs through the intro (loop 262): its last three seconds tick down to the first
   // ball, which then drops on its own; the caller is frozen after that, as before.
   await api.clock(false);
-  await api.start('bingo', 11);
+  // The harness phones stay at the card-pick step (no auto-ready): Sam swaps a card and taps
+  // Ready by hand 3 s in, P2 through the dev API — everyone ready at ~3.2 s → the first number
+  // at the 5 s floor (loop 344).
+  await api.post('/api/dev/start', { gameId: 'bingo', seed: 11, readyUp: false });
   await settle(1500);
   await T.mark('D1');
   evs = await T.between(tv, 'C3', 'D1');
@@ -51,9 +54,13 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
     JSON.stringify(await T.playing(tv)),
   );
   T.ok('D', 'intro: nothing spoken', !evs.some((e) => e.kind === 'speak'), '');
-  // "Deal me another" 3 s in: the new card flips in with a 20 ms tap and a 'card' pluck (loop 268).
-  await vip.page.getByRole('button', { name: /deal me another/i }).click();
-  await settle(3500); // 6.5 s in: the intro (5 s) has run out and the first ball has dropped
+  // "Another" 3 s in: the new card flips in with a 20 ms tap and a 'card' pluck (loop 268); then
+  // Ready — a 'submit' cue and a 20 ms tap of its own (loop 344).
+  await vip.page.getByRole('button', { name: /^🎲 another/i }).click();
+  await settle(200);
+  await vip.page.getByRole('button', { name: /^ready$/i }).click();
+  await api.readyAll();
+  await settle(3300); // 6.5 s in: the intro (5 s floor) has run out and the first ball has dropped
   await api.clock(true); // hold the caller from here
   await T.mark('D1b');
   // From the start (the deal's pluck lands 0.6 s in, before D1) to the first call. No phase chime
@@ -94,10 +101,10 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
   const introTaps = introPhone.filter((e) => e.kind === 'buzz' && Number(e['pattern']) === 15);
   T.ok(
     'D',
-    'the phone taps 3 · 2 · 1 with the TV; "deal me another" is a 20 ms tap and one card pluck',
+    'the phone taps 3 · 2 · 1 with the TV; "another" is a 20 ms tap and one card pluck; Ready a 20 ms tap and the submit cue',
     introTaps.length === 3 &&
-      introPhone.filter((e) => e.kind === 'buzz' && Number(e['pattern']) === 20).length === 1 &&
-      T.cues(introPhone, 'phone').join(',') === 'card', // the deal's own pluck lands before D1
+      introPhone.filter((e) => e.kind === 'buzz' && Number(e['pattern']) === 20).length === 2 &&
+      T.cues(introPhone, 'phone').join(',') === 'card,submit', // the deal's own pluck lands before D1
     `taps=${introTaps.length} cues=${T.cues(introPhone, 'phone').join(',')}`,
   );
   await api.skip();

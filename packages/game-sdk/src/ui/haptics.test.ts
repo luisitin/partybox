@@ -34,6 +34,15 @@ describe('buzz', () => {
     expect(calls).toEqual([20, [40, 60, 40], 12]);
   });
 
+  it("the same pattern twice inside 30 ms is one buzz (a tap and the shell's lock-in)", () => {
+    buzz(20);
+    now += 22;
+    buzz(20);
+    now += 30;
+    buzz(20); // 52 ms after the first: its own
+    expect(calls).toEqual([20, 20]);
+  });
+
   it('daubs 33 ms apart each buzz (18 ms, the last is over)', () => {
     buzz(18);
     now += 33;
