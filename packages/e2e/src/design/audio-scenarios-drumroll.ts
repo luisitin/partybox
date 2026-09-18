@@ -82,6 +82,61 @@ export async function runDrumrollScenario({
       T.cues(fan).filter((c) => c === 'cheer').length === 1,
     `status=${(await api.state()).room?.status} cues=${T.cues(fan).join(',')}`,
   );
+  // Between rounds (loop 323): a two-round game's first blackout ends by itself → the scoreboard
+  // plays `tally` (the points sound), never `phase` — nothing needs the phone there.
+  await home.click();
+  await home.click();
+  await settle(2500);
+  await api.post('/api/dev/start', {
+    gameId: 'bingo',
+    seed: 5,
+    settings: { rounds: 2, round1: 'blackout', round2: 'line', cards: 1, callSeconds: 60 },
+  });
+  await settle(600);
+  await api.skip();
+  await api.clock(false);
+  for (let i = 0; i < 80; i += 1) {
+    const s = (await api.state()).room?.game?.state as unknown as {
+      phase: { id: string };
+      round: { deck: number[]; drawn: number; cards: Record<string, number[][]> };
+    };
+    if (s.phase.id !== 'play') break;
+    const called = new Set(s.round.deck.slice(0, s.round.drawn));
+    const card = s.round.cards[vipId]?.[0] ?? [];
+    if (card.every((n, k) => k === 12 || called.has(n))) break;
+    await api.skip();
+    await settle(60);
+  }
+  const again =
+    (
+      (await api.state()).room?.game?.state as unknown as {
+        round: { cards: Record<string, number[][]> };
+      }
+    ).round.cards[vipId]?.[0] ?? [];
+  for (let i = 0; i < 25; i += 1) {
+    if (i === 12) continue;
+    await vip.page
+      .getByRole('gridcell', { name: new RegExp(`^${'BINGO'[i % 5]} ${again[i]}$`) })
+      .first()
+      .click();
+  }
+  await settle(300);
+  await vip.page.getByRole('button', { name: /^bingo! card 1$/i }).click();
+  await settle(250);
+  await vip.page.getByRole('button', { name: /tap again to claim/i }).dispatchEvent('click');
+  await settle(12500);
+  await T.mark('D9f');
+  await settle(1500);
+  await T.mark('D9g');
+  const board = await T.between(tv, 'D9f', 'D9g');
+  T.ok(
+    'D',
+    'between rounds → the scoreboard plays tally, not the phase chime',
+    (await api.state()).room?.game?.state.phase.id === 'scoreboard' &&
+      T.cues(board).includes('tally') &&
+      !T.cues(board).includes('phase'),
+    `phase=${(await api.state()).room?.game?.state.phase.id} cues=${T.cues(board).join(',')}`,
+  );
   await home.click();
   await home.click();
   await settle(2500);
