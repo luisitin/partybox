@@ -24,6 +24,8 @@ const { values } = parseArgs({
     out: { type: 'string' },
     port: { type: 'string', default: '42163' },
     cards: { type: 'string', default: '2' },
+    /** Extra idle bots: a crowded roster (the TV's rows, the phones' chips) — loop 307. */
+    bots: { type: 'string', default: '1' },
   },
 });
 const OUT = values.out ?? join(REPO_ROOT, 'reports', 'design', 'latest');
@@ -47,7 +49,7 @@ async function main(): Promise<void> {
       join(OUT, 'video-priya'),
     );
     await joinViaForm(priya, api, { avatarIndex: 5 });
-    await api.bots(1, 'idle');
+    await api.bots(Number(values.bots), 'idle');
     const marks: { name: string; at: number; before?: number; seconds?: number }[] = [];
     // 1. The intro, live: the deal, the demo, the 3 · 2 · 1, the first ball.
     marks.push({ name: '1-intro', at: Date.now(), before: 0, seconds: 7 });
