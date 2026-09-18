@@ -358,3 +358,26 @@
 .held .heldCall {
   opacity: 0.35;
 }
+
+/* Nine or more players: the roster takes two or three rows (~130 px), so the claim card lands
+   smaller and its bottom row stays above the host bar (loop 221, 16 players). */
+.crowdedClaim .claim {
+  width: 400px;
+}
+.crowdedClaim .claimLand {
+  width: 420px;
+}
+.crowdedClaim .checkHead {
+  gap: 0;
+}
+.crowdedClaim .bingoTitle {
+  font-size: 96px;
+}
+.crowdedClaim .winLine {
+  font-size: 26px;
+  margin-top: var(--pb-space-2);
+}
+.crowdedClaim .decideLine {
+  font-size: var(--pb-font-caption);
+  margin-top: var(--pb-space-2);
+}

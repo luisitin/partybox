@@ -146,9 +146,11 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
     );
   }
 
+  // Nine or more players wrap the roster to two or three rows: the claim card lands smaller.
+  const crowd = view.players.length > 8 ? styles.crowdedClaim : '';
   if (view.phaseId === 'check' && view.claim) {
     return (
-      <Stage>
+      <Stage className={crowd}>
         <div className={`${styles.checkHead} pb-enter`}>
           <BigText level="h2" tone="accent">
             {view.claim.name} says BINGO!
@@ -185,7 +187,7 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
   if (view.phaseId === 'bingo') {
     if (view.claim && view.winnerName) {
       return (
-        <Stage>
+        <Stage className={crowd}>
           <div className={`${styles.checkHead} pb-enter`}>
             <BigText level="h2" tone="accent">
               {view.winnerName} says BINGO!
