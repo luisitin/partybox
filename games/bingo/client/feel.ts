@@ -5,6 +5,7 @@ import { useEffect, useRef } from 'react';
 import { buzz } from '@partybox/game-sdk/ui';
 import type { PlayCue } from '@partybox/game-sdk/ui';
 import type { BingoControllerView } from '../server/views';
+import { BALL_LAND_MS } from './caller';
 
 export function useVerdictFeel(
   view: BingoControllerView,
@@ -27,4 +28,17 @@ export function useVerdictFeel(
       play('error');
     }
   }, [verdictShown, claimKey, mine, phaseId, play]);
+}
+
+/**
+ * Every new number: a short buzz as the nickname lands — BALL_LAND_MS after the push, the beat
+ * the TV's ball squashes on — so every phone in the room feels the call together (loop 248).
+ */
+export function useCallFeel(view: BingoControllerView): void {
+  const callNumber = view.phaseId === 'play' ? (view.current?.number ?? null) : null;
+  useEffect(() => {
+    if (callNumber === null) return;
+    const t = setTimeout(() => buzz(12), BALL_LAND_MS);
+    return () => clearTimeout(t);
+  }, [callNumber]);
 }

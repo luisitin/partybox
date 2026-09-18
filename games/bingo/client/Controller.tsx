@@ -25,7 +25,7 @@ import type { CardStyle } from './styles';
 import { verdictAtMs } from '../server/reveal';
 import { otherTitle } from './copy';
 import { EndScreens, afterLine, WinScreen } from './WinScreen';
-import { useVerdictFeel } from './feel';
+import { useCallFeel, useVerdictFeel } from './feel';
 import styles from './Controller.module.css';
 
 export function Controller({
@@ -76,6 +76,7 @@ export function Controller({
   const toggleFree = (c: number): void =>
     setFreeDaubed((v) => (v.includes(c) ? v.filter((i) => i !== c) : [...v, c]));
   const daub = (c: number, index: number): void => daubWithFeel(view, send, play, c, index);
+  useCallFeel(view);
   // The card up just won: bring a live card up instead — once, at the moment it wins, so a won
   // card picked on purpose later (to daub towards a blackout) stays up.
   const liveUp = cards?.findIndex((_, i) => !view.won.includes(i)) ?? -1;
