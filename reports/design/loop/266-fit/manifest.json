@@ -1,0 +1,82 @@
+[
+  {
+    "file": "fit/lobby/tv-stage.png",
+    "group": "fit",
+    "phase": "lobby",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "fit/lobby/pc720-stage.png",
+    "group": "fit",
+    "phase": "lobby",
+    "device": "pc720",
+    "deviceLabel": "PC 1280×720 (150 % scaling)",
+    "role": "stage",
+    "width": 1280,
+    "height": 720
+  },
+  {
+    "file": "fit/lobby/laptop-stage.png",
+    "group": "fit",
+    "phase": "lobby",
+    "device": "laptop",
+    "deviceLabel": "Laptop 1440×900 (16:10)",
+    "role": "stage",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "fit/lobby/tv4kcss-stage.png",
+    "group": "fit",
+    "phase": "lobby",
+    "device": "tv4kcss",
+    "deviceLabel": "TV 3840×2160 (1× DPR)",
+    "role": "stage",
+    "width": 3840,
+    "height": 2160
+  },
+  {
+    "file": "fit/intro/tv-stage.png",
+    "group": "fit",
+    "phase": "intro",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "fit/intro/pc720-stage.png",
+    "group": "fit",
+    "phase": "intro",
+    "device": "pc720",
+    "deviceLabel": "PC 1280×720 (150 % scaling)",
+    "role": "stage",
+    "width": 1280,
+    "height": 720
+  },
+  {
+    "file": "fit/intro/laptop-stage.png",
+    "group": "fit",
+    "phase": "intro",
+    "device": "laptop",
+    "deviceLabel": "Laptop 1440×900 (16:10)",
+    "role": "stage",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "file": "fit/intro/tv4kcss-stage.png",
+    "group": "fit",
+    "phase": "intro",
+    "device": "tv4kcss",
+    "deviceLabel": "TV 3840×2160 (1× DPR)",
+    "role": "stage",
+    "width": 3840,
+    "height": 2160
+  }
+]
