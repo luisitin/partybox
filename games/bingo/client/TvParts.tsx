@@ -46,14 +46,18 @@ export function rows(view: BingoTvView): ScoreboardRow[] {
   }));
 }
 
+/** The disc and the number are keyed on the call so they remount (and drop) for every number; the
+ * container is not, so the stage never snapshots a leaving call (a key on the container made
+ * every call a crossfade: stacked ghosts and 6.7 long frames per 1000 — loop 247). */
 export function Call({ call, big }: { call: CallView; big?: boolean }): JSX.Element {
   return (
-    <div
-      className={`${big ? styles.callBig : styles.callSmall} ${big ? 'pb-pop' : 'pb-enter'}`}
-      key={call.number}
-    >
-      <span className={styles.letter}>{call.letter}</span>
-      <span className={styles.number}>{call.number}</span>
+    <div className={`${big ? styles.callBig : styles.callSmall} ${big ? '' : 'pb-enter'}`}>
+      <span key={`l${call.number}`} className={styles.letter}>
+        {call.letter}
+      </span>
+      <span key={`n${call.number}`} className={styles.number}>
+        {call.number}
+      </span>
     </div>
   );
 }
