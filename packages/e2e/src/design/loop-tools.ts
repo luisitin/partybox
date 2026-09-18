@@ -121,6 +121,8 @@ export function strip(
   fromSec: number,
   seconds: number,
   fps = 10,
+  /** An ffmpeg crop (`w:h:x:y`, source pixels) for a small region — a board cell, a button. */
+  crop?: string,
 ): void {
   if (!existsSync(FFMPEG) || fromSec < 0) return;
   mkdirSync(dir, { recursive: true });
@@ -137,7 +139,7 @@ export function strip(
     '-r',
     String(fps),
     '-vf',
-    'scale=640:-1',
+    crop ? `crop=${crop},scale=640:-1` : 'scale=640:-1',
     join(dir, 'f%02d.png'),
   ]);
 }

@@ -407,9 +407,44 @@
   background: var(--pb-accent-2);
 }
 
+/* The current cell ignites when the ball lands (BALL_LAND_MS, caller.ts — the same 190 ms the
+   phone's boing waits): dim until the thud, a bright overshoot, then it settles to called. */
 .cellCurrent {
+  position: relative;
+  z-index: 1; /* the overshoot rides over its neighbours */
   box-shadow: 0 0 0 3px var(--pb-accent);
-  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+  animation: cell-light 320ms var(--pb-ease) both;
+  animation-delay: 190ms;
+}
+
+@keyframes cell-light {
+  from {
+    opacity: 0.45;
+    color: var(--pb-text-muted);
+    background: var(--pb-surface);
+    box-shadow: 0 0 0 0 var(--pb-accent);
+    transform: scale(1);
+  }
+  40% {
+    opacity: 1;
+    color: var(--pb-bg);
+    background: var(--pb-accent);
+    box-shadow: 0 0 0 4px var(--pb-accent);
+    transform: scale(1.3);
+  }
+  to {
+    opacity: 1;
+    color: var(--pb-bg);
+    background: var(--pb-accent-2);
+    box-shadow: 0 0 0 3px var(--pb-accent);
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cellCurrent {
+    animation: none;
+  }
 }
 
 /* The caller is held (a card-style menu is open somewhere): the number stays up, dimmed. */

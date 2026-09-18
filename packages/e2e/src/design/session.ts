@@ -155,7 +155,7 @@ export async function openTvRecorded(
 export async function cutStrips(
   tv: { context: BrowserContext; t0: number; videoDir: string },
   stripsDir: string,
-  marks: { name: string; at: number; before?: number; seconds?: number }[],
+  marks: { name: string; at: number; before?: number; seconds?: number; crop?: string }[],
 ): Promise<string | null> {
   await tv.context.close();
   const { readdirSync, renameSync } = await import('node:fs');
@@ -171,6 +171,8 @@ export async function cutStrips(
       join(stripsDir, m.name),
       (m.at - tv.t0) / 1000 - (m.before ?? 0.3),
       m.seconds ?? 2.5,
+      10,
+      m.crop,
     );
   }
   return video;
