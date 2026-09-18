@@ -2,6 +2,7 @@
 import type { Page } from 'playwright';
 import { bingoLine } from './audio-tracer';
 import type { Ev, Pages, Tracer } from './audio-tracer';
+import { claimRevealMs } from '../../../../games/bingo/server/reveal';
 import { joinViaForm, settle } from './session';
 import type { Phone, DevApi } from './session';
 
@@ -168,12 +169,18 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
   await settle(250);
   await T.mark('D7');
   await vip.page.getByRole('button', { name: /tap again to claim/i }).dispatchEvent('click');
-  // The reveal: 1 s announce, 0.7 s drop, five turns (350 ms), 0.5 s, the rest 1 s, 0.8 s hold,
-  // 0.6 s settle → verdict ≈ 6.4 s. The phone's verdict is the server's tick (loop 258): on this
-  // frozen clock, step to it at the real moment the TV gets there.
-  await settle(6400);
-  await api.advance(6400);
-  await settle(2100);
+  // The reveal: 1 s announce, 0.7 s drop, five turns (350 ms), 0.5 s, the rest 1 s (only with
+  // daubs outside the line), 0.8 s hold, 0.6 s settle → verdict at 5.35 or 6.35 s. The phones'
+  // verdict is the server's tick (loop 258): on this frozen clock, step to it at the real moment
+  // the TV gets there — the length is this claim's own (reveal.ts), read from the state.
+  const claimed = (await api.state()).room?.game?.state as unknown as {
+    round: { claim: { cells: number[]; daubs: number[] } | null };
+  };
+  const c = claimed.round.claim;
+  const revealMs = c ? claimRevealMs(c.cells, c.daubs) : 6350;
+  await settle(revealMs);
+  await api.advance(revealMs);
+  await settle(8500 - revealMs);
   await T.mark('D8');
   evs = await T.between(tv, 'D7', 'D8');
   const cheerAt = evs.find((e) => e.kind === 'cue' && e['cue'] === 'cheer');
@@ -202,6 +209,27 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
       );
     })(),
     `phone cues=${T.cues(phoneCues, 'phone').join(',')}`,
+  );
+  // Every other phone feels the win land: one 30 ms tap on the TV's cheer beat (loop 260).
+  // Offsets from each page's own D7 mark (`between` drops the mark; clocks are per page).
+  const markT = async (page: Page): Promise<number> =>
+    (await T.trace(page)).filter((e) => e.kind === 'mark' && e['label'] === 'D7').at(-1)?.t ?? 0;
+  const p2Evs = await T.between(p2.page, 'D7', 'D8');
+  const p2Mark = await markT(p2.page);
+  const tvMark = await markT(tv);
+  const taps = p2Evs.filter((e) => e.kind === 'buzz');
+  const tapAt = taps[0] ? taps[0].t - p2Mark : null;
+  const cheerAtMs = cheerAt ? cheerAt.t - tvMark : null;
+  T.ok(
+    'D',
+    "the other phone: one soft tap as the win lands, within 400 ms of the TV's cheer, no sound",
+    taps.length === 1 &&
+      Number(taps[0]?.['pattern']) === 30 &&
+      tapAt !== null &&
+      cheerAtMs !== null &&
+      Math.abs(tapAt - cheerAtMs) < 400 &&
+      T.cues(p2Evs, 'phone').length === 0,
+    `taps=${taps.map((e) => JSON.stringify(e['pattern'])).join(',')} tap@+${tapAt}ms cheer@+${cheerAtMs}ms cues=${T.cues(p2Evs, 'phone').join(',')}`,
   );
   T.ok(
     'D',
