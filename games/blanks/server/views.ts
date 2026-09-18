@@ -90,6 +90,8 @@ export interface BlanksControllerView extends ControllerView {
   myScore: number;
   myRank: number;
   standings: StandingsRow[];
+  /** final + done: the card of the night, so a phone sees the payoff the TV shows. */
+  bestCard: BestCardView | null;
 }
 
 function statusOf(state: State): (id: string) => PlayerStatus {
@@ -219,5 +221,6 @@ export function controllerView(
       (phase === 'intro' && state.round > 1)
         ? standingsRows(state)
         : [],
+    bestCard: phase === 'final' || phase === 'done' ? bestCardView(state) : null,
   };
 }

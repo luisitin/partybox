@@ -392,7 +392,13 @@
   gap: var(--pb-space-2);
   width: 100%;
   max-width: 460px;
+  margin-top: var(--pb-space-4);
   text-align: left;
+}
+
+/* Beside the TV's board the grid's own gap spaces it. */
+.finalRow .bestCard {
+  margin-top: 0;
 }
 
 .bestCard .kicker {

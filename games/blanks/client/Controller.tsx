@@ -135,6 +135,22 @@ function ControllerResult({ view, me, send }: Props): JSX.Element {
         </p>
       ) : null}
       <Scoreboard compact highlightId={me.id} rows={view.standings} noTrophy />
+      {/* The night's best-liked card, on the phone too (review-loop #193). */}
+      {final && view.bestCard ? (
+        <div className={styles.bestCard}>
+          <p className={styles.kicker}>Card of the night</p>
+          <FilledCard text={view.bestCard.black} whites={view.bestCard.whites} size="mini" winner>
+            <span className={styles.author}>
+              <Avatar avatarId={view.bestCard.avatarId} size="var(--pb-chip-size)" />
+              <span className={styles.authorName}>{view.bestCard.name}</span>
+              <span className={styles.voteCount}>
+                {view.bestCard.votes} {view.bestCard.votes === 1 ? 'vote' : 'votes'}
+              </span>
+              <span className={styles.bestRound}>round {view.bestCard.round}</span>
+            </span>
+          </FilledCard>
+        </div>
+      ) : null}
     </Screen>
   );
 }

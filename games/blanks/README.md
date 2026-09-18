@@ -59,7 +59,8 @@ measured against the deadline so a pause never cheats it; the same yardstick whe
 
 The **card of the night** — the single card that took the most votes all game (ties keep the earlier
 round) — is kept in `stats.best` and stands beside the final board, filled in and credited, on `final`
-and `done`. No card ever took a vote → no card of the night.
+and `done` — on the TV beside the board and on every phone under its own (a phone-only room sees it
+too). No card ever took a vote → no card of the night.
 
 ## Edge cases
 
