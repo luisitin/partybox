@@ -689,3 +689,50 @@
     white-space: nowrap;
   }
 }
+
+/* ── the deal (intro) ── owner's pick 2026-09-17, options B + C: the big card drops onto the
+   table from above with a small bounce, then the thumbnails follow one by one from the top right,
+   110 ms apart, tilting as they arrive and settling flat. ~1.1 s for four cards; the round's 5 s
+   intro leaves well over the 500 ms the owner wants before the first call. */
+.dealing .focusMain {
+  animation: deal-drop 420ms var(--pb-ease) both;
+}
+.dealing .thumb {
+  animation: deal-fan 380ms var(--pb-ease) both;
+  animation-delay: calc(360ms + var(--i, 0) * 110ms);
+  transform-origin: bottom right;
+}
+@keyframes deal-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-140px) rotate(-6deg) scale(0.92);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(6px) rotate(1deg) scale(1.01);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes deal-fan {
+  from {
+    opacity: 0;
+    transform: translate(90px, -110px) rotate(12deg);
+  }
+  70% {
+    opacity: 1;
+    transform: translate(-3px, 3px) rotate(-2deg);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dealing .focusMain,
+  .dealing .thumb {
+    animation: none;
+  }
+}

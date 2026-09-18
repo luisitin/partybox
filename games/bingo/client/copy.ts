@@ -1,0 +1,61 @@
+// Words both surfaces share for a bingo: the headline counts bingos under the current pattern
+// ("2nd bingo in round 1", "1st blackout in round 1"), the first bingo of a round is plainly a
+// win. Owner, 2026-09-17: "it always says person won round 1".
+import type { BingoTvView } from '../server/views';
+
+export function ordinal(n: number): string {
+  const rem100 = n % 100;
+  if (rem100 >= 11 && rem100 <= 13) return `${n}th`;
+  const rem10 = n % 10;
+  return `${n}${rem10 === 1 ? 'st' : rem10 === 2 ? 'nd' : rem10 === 3 ? 'rd' : 'th'}`;
+}
+
+type Win = Pick<BingoTvView, 'pattern' | 'patternBingos' | 'round'>;
+
+/** What this bingo is: "wins round 1", "2nd bingo in round 1", "1st blackout in round 1". */
+export function winPhrase(view: Win): string {
+  const n = Math.max(1, view.patternBingos);
+  if (view.pattern === 'blackout') return `${ordinal(n)} blackout in round ${view.round}`;
+  return n === 1 ? `wins round ${view.round}` : `${ordinal(n)} bingo in round ${view.round}`;
+}
+
+/** The TV's headline under BINGO!, one line: "Sam wins round 1" / "Sam's 2nd bingo" (the line
+ * under it carries the round). */
+export function winHeadline(view: Win, name: string): string {
+  const n = Math.max(1, view.patternBingos);
+  if (view.pattern === 'blackout') return `${name}'s ${ordinal(n)} blackout`;
+  return n === 1 ? `${name} wins round ${view.round}` : `${name}'s ${ordinal(n)} bingo`;
+}
+
+/** The winner's own phone title. */
+export function winTitle(view: Win, which: string): string {
+  const phrase = winPhrase(view);
+  const head = view.pattern === 'blackout' ? 'BLACKOUT!' : 'BINGO!';
+  return phrase.startsWith('wins')
+    ? `${head} You win round ${view.round}${which}`
+    : `${head} Your ${phrase}${which}`;
+}
+
+/** Everyone else's phone title. */
+export function otherTitle(view: Win, name: string): string {
+  const phrase = winPhrase(view);
+  if (view.pattern === 'blackout') return `${name} has a blackout`;
+  return phrase.startsWith('wins') ? `${name} has bingo` : `${name} — ${phrase}`;
+}
+
+/** A choice made mid-celebration, as the room reads it. */
+export function pendingLine(
+  pending: 'same' | 'blackout' | 'next' | null,
+  lastRound: boolean,
+): string | null {
+  if (!pending) return null;
+  const what =
+    pending === 'same'
+      ? 'keep going — same pattern'
+      : pending === 'blackout'
+        ? 'keep going — blackout'
+        : lastRound
+          ? 'finish the game'
+          : 'next round';
+  return `Picked: ${what}. It starts when the celebration is done.`;
+}

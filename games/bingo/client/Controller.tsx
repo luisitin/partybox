@@ -5,7 +5,14 @@
 // and judges only the claim, on the card named.
 import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
-import { PrimaryButton, Scoreboard, Screen, WaitingScreen, useHold } from '@partybox/game-sdk/ui';
+import {
+  PrimaryButton,
+  Scoreboard,
+  Screen,
+  WaitingScreen,
+  useHold,
+  useSound,
+} from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { Input } from '../server/types';
 import type { BingoControllerView } from '../server/views';
@@ -23,15 +30,9 @@ import {
 } from './styles';
 import type { CardStyle } from './styles';
 import { verdictAtMs } from '../server/reveal';
+import { otherTitle } from './copy';
+import { afterLine, WinScreen } from './WinScreen';
 import styles from './Controller.module.css';
-
-/** What happens after this bingo: the room decides, fresh cards, or the final board. */
-function afterLine(view: BingoControllerView, iDecide: boolean): string {
-  if (iDecide) return 'Keep these cards and carry on calling, or deal fresh ones? Anyone can pick.';
-  if (view.decide && (view.decide.same || view.decide.blackout))
-    return 'The players decide: keep going or next round.';
-  return view.round < view.totalRounds ? 'Fresh cards next round.' : 'That was the last round.';
-}
 
 export function Controller({
   view,
@@ -52,6 +53,17 @@ export function Controller({
       )
     : 0;
   const verdictShown = useHold(claimKey, revealMs);
+  // The deal's plucks: one soft 'card' as each thumbnail lands (owner's pick, options B + C);
+  // the timings mirror .dealing in the stylesheet, the pluck on the bounce (~250 ms in).
+  const play = useSound();
+  const dealing = view.phaseId === 'intro';
+  useEffect(() => {
+    if (!dealing || n <= 1) return;
+    const handles = Array.from({ length: n }, (_, i) =>
+      setTimeout(() => play('card'), 360 + i * 110 + 250),
+    );
+    return () => handles.forEach((h) => clearTimeout(h));
+  }, [dealing, n, play, view.round]);
   // A valid claim too: the room learns who won from the TV, not from a phone flipping first.
   const pending = view.phaseId === 'bingo' && view.claim !== null && !verdictShown;
   const [sheet, setSheet] = useState(false);
@@ -68,9 +80,14 @@ export function Controller({
   const [freeDaubed, setFreeDaubed] = useState<number[]>([]);
   const toggleFree = (c: number): void =>
     setFreeDaubed((v) => (v.includes(c) ? v.filter((i) => i !== c) : [...v, c]));
-  // The card up just won (or the pattern changed): bring a live card up instead.
+  // The card up just won: bring a live card up instead — once, at the moment it wins, so a won
+  // card picked on purpose later (to daub towards a blackout) stays up.
   const liveUp = cards?.findIndex((_, i) => !view.won.includes(i)) ?? -1;
-  if (cards && view.won.includes(up) && liveUp >= 0 && liveUp !== up) setUp(liveUp);
+  const [wonSeen, setWonSeen] = useState(view.won.length);
+  if (view.won.length !== wonSeen) {
+    setWonSeen(view.won.length);
+    if (cards && view.won.includes(up) && liveUp >= 0 && liveUp !== up) setUp(liveUp);
+  }
   const [round, setRound] = useState(view.round);
   if (round !== view.round) {
     setRound(view.round);
@@ -161,7 +178,7 @@ export function Controller({
               </p>
             </div>
           </div>
-          <div className={`${styles.focus} ${n > 1 ? styles.focusMany : ''}`}>
+          <div className={`${styles.focus} ${styles.dealing} ${n > 1 ? styles.focusMany : ''}`}>
             <div className={styles.focusMain}>
               <Card
                 numbers={cards[pick] ?? []}
@@ -205,7 +222,7 @@ export function Controller({
         title={
           roundOver
             ? view.winnerName
-              ? `${view.winnerName} has bingo`
+              ? otherTitle(view, view.winnerName)
               : 'No bingo this round'
             : undefined
         }
@@ -275,29 +292,8 @@ export function Controller({
     );
   }
 
-  if (view.phaseId === 'bingo') {
-    const claim = view.claim;
-    const which = n > 1 && claim ? ` — card ${claim.cardIndex + 1}` : '';
-    return (
-      <Screen
-        key="bingo"
-        title={`BINGO! You win round ${view.round}${which}`}
-        footer={<DecideFooter view={view} send={send} />}
-      >
-        {claim ? (
-          <div className={styles.winCard}>
-            <Card numbers={claim.card} daubs={claim.daubs} green={claim.green} disabled />
-          </div>
-        ) : null}
-        <p className={styles.hint}>
-          {iDecide && n > 1
-            ? 'Keep going and that card sits the pattern out; your other cards play on. '
-            : ''}
-          {afterLine(view, iDecide)}
-        </p>
-      </Screen>
-    );
-  }
+  if (view.phaseId === 'bingo')
+    return <WinScreen view={view} send={send} cards={n} iDecide={iDecide} />;
 
   if (view.phaseId === 'scoreboard') {
     return (

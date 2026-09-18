@@ -68,6 +68,8 @@ function init(ctx: InitContext): State {
       winnerId: null,
       won: {},
       bingos: 0,
+      patternBingos: 0,
+      decision: null,
       arm: null,
       queue: [],
       menus: [],
@@ -126,7 +128,10 @@ function reduce(state: State, event: GameEvent<Input>): State {
     case 'check':
       return reduceCheck(state, event, nextCallOrEnd);
     case 'bingo':
-      return reduceBingo(state, event, { next: afterBingo, resume: nextCallOrEnd });
+      return reduceBingo(state, event, {
+        next: afterBingo,
+        resume: (s, now) => enterPlay(s, now, true),
+      });
     case 'scoreboard':
       return reduceScoreboard(state, event, nextRound);
     default:

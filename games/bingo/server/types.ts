@@ -28,6 +28,9 @@ export interface Settings {
 }
 
 /** What the TV shows while a claim is checked (or celebrated). Computed once, never re-evaluated. */
+/** How the room moves on after a bingo: keep going (same pattern / blackout) or next. */
+export type Decision = { type: 'continue'; pattern: 'same' | 'blackout' } | { type: 'next' };
+
 export interface Claim {
   playerId: string;
   /** Which of the claimant's cards was checked (the closest one to the pattern). */
@@ -72,6 +75,13 @@ export interface RoundState {
   won: Record<string, number[]>;
   /** Bingos this round so far (a continued round celebrates more than one). */
   bingos: number;
+  /** Bingos under the current pattern (reset when the round switches to blackout): "2nd bingo". */
+  patternBingos: number;
+  /**
+   * bingo: a choice that arrived while the TV was still revealing the card — held until the
+   * celebration is done (the phase deadline), then applied. Never two: the first one counts.
+   */
+  decision: Decision | null;
   /**
    * A claim takes two taps. The first arms one card for ARM_MS: the player has dibs, and a second
    * tap on that card claims it. Other players' first taps queue behind; a lapsed window passes to

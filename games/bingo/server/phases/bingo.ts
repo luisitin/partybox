@@ -2,18 +2,21 @@
 // the win is recorded and that card locked on entry, and the phase then waits for any player's
 // choice: keep going on the same cards for the same pattern (the card that won sits it out; the
 // winner's other cards play on) or for a blackout, or move on — unpaced, save a long safety valve
-// for abandoned rooms (BINGO_ABANDONED_MS). With no winner (deck empty, VIP skipped through 75
-// calls) the TV says so for BINGO_MS. The deadlines, `next` and the VIP skip exit (scoreboard, or
-// done after the last round); `continue` resumes calling via `resume`.
+// for abandoned rooms (BINGO_ABANDONED_MS). A choice that arrives while the TV is still revealing
+// the card is held (`round.decision`) and applied when the celebration ends. With no winner (deck
+// empty, VIP skipped through 75 calls) the TV says so for BINGO_MS. `next` and the VIP skip exit
+// (scoreboard, or done after the last round); `continue` resumes calling via `resume`, which
+// repeats the number that was up.
 import { enterPhase, hasPlayer, isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { clearClaims, setMenu } from '../claims';
+import { VERDICT_READ_MS, claimRevealMs } from '../reveal';
 import { BINGO_ABANDONED_MS, BINGO_MS, DECK } from '../types';
-import type { Claim, Input, State, Transition } from '../types';
+import type { Claim, Decision, Input, State, Transition } from '../types';
 
 export interface BingoExits {
   next: Transition;
-  /** Back into `play`: the next number on the same deck. */
+  /** Back into `play` on the same number (the call repeats). */
   resume: Transition;
 }
 
@@ -33,8 +36,14 @@ export function enterBingo(
       ? { ...round.won, [winnerId]: [...(round.won[winnerId] ?? []), claim.cardIndex] }
       : round.won;
   const bingos = winnerId ? round.bingos + 1 : round.bingos;
+  const patternBingos = winnerId ? round.patternBingos + 1 : round.patternBingos;
   return enterPhase(
-    clearClaims({ ...state, wins, history, round: { ...round, winnerId, claim, won, bingos } }),
+    clearClaims({
+      ...state,
+      wins,
+      history,
+      round: { ...round, winnerId, claim, won, bingos, patternBingos, decision: null },
+    }),
     'bingo',
     now,
     winnerId ? BINGO_ABANDONED_MS : BINGO_MS,
@@ -48,28 +57,27 @@ export function liveCards(state: State, playerId: string): number[] {
 }
 
 /**
- * Whether the round can go on: a winner, numbers left, and — for the same pattern — a card in
- * the room that has not won it yet; for a blackout, not one already.
+ * Whether the round can go on. Same pattern: a winner, numbers left, and a contest — at least
+ * two players (or everyone, in a two-player game) still hold a card that has not won it, and
+ * nobody has blacked out every card they hold. Blackout: a winner, numbers left, and not that
+ * pattern already.
  */
 export function canContinue(state: State): { same: boolean; blackout: boolean } {
   const round = state.round;
   const more = round.winnerId !== null && round.drawn < DECK;
-  const anyLive = Object.keys(round.cards).some((id) => liveCards(state, id).length > 0);
-  return { same: more && anyLive, blackout: more && round.pattern !== 'blackout' };
+  const ids = Object.keys(round.cards).filter((id) => (round.cards[id]?.length ?? 0) > 0);
+  const competing = ids.filter((id) => liveCards(state, id).length > 0).length;
+  const contest = competing >= Math.min(2, ids.length);
+  const blackedOut =
+    round.pattern === 'blackout' && ids.some((id) => liveCards(state, id).length === 0);
+  return { same: more && contest && !blackedOut, blackout: more && round.pattern !== 'blackout' };
 }
 
-export function reduceBingo(state: State, event: GameEvent<Input>, exits: BingoExits): State {
-  if (isTimerFor(state, event)) return exits.next(state, event.now);
-  if (event.type !== 'input') return state;
-  if (!hasPlayer(state, event.playerId) || !Object.hasOwn(state.round.cards, event.playerId))
-    return state;
-  if (event.input.type === 'next') return exits.next(state, event.now);
-  if (event.input.type === 'menu') return setMenu(state, event.playerId, event.input.open);
-  if (event.input.type !== 'continue') return state;
-  const can = canContinue(state);
-  const blackout = event.input.pattern === 'blackout' && can.blackout;
-  if (!blackout && !(event.input.pattern === 'same' && can.same)) return state;
+/** The room's choice, once the celebration is done. */
+function decide(state: State, decision: Decision, now: number, exits: BingoExits): State {
+  if (decision.type === 'next') return exits.next(state, now);
   const round = state.round;
+  const blackout = decision.pattern === 'blackout';
   return exits.resume(
     {
       ...state,
@@ -78,10 +86,45 @@ export function reduceBingo(state: State, event: GameEvent<Input>, exits: BingoE
         // A new pattern reopens the round for every card; the same one keeps its winners locked.
         pattern: blackout ? 'blackout' : round.pattern,
         won: blackout ? {} : round.won,
+        patternBingos: blackout ? 0 : round.patternBingos,
+        decision: null,
         claim: null,
         waitForCall: {},
       },
     },
-    event.now,
+    now,
   );
+}
+
+/** When the room has seen the verdict: the TV's reveal of this claim, then a moment to read it. */
+function celebrationEndsAt(state: State): number {
+  const claim = state.round.claim;
+  if (!claim) return 0;
+  return state.phase.startedAt + claimRevealMs(claim.cells, claim.daubs) + VERDICT_READ_MS;
+}
+
+export function reduceBingo(state: State, event: GameEvent<Input>, exits: BingoExits): State {
+  if (isTimerFor(state, event)) {
+    const held = state.round.decision;
+    return held ? decide(state, held, event.now, exits) : exits.next(state, event.now);
+  }
+  if (event.type !== 'input') return state;
+  if (!hasPlayer(state, event.playerId) || !Object.hasOwn(state.round.cards, event.playerId))
+    return state;
+  const input = event.input;
+  if (input.type === 'menu') return setMenu(state, event.playerId, input.open);
+  if (input.type !== 'next' && input.type !== 'continue') return state;
+  if (input.type === 'continue') {
+    const can = canContinue(state);
+    if (!(input.pattern === 'blackout' ? can.blackout : can.same)) return state;
+  }
+  if (state.round.decision) return state; // the first choice counts
+  const endsAt = celebrationEndsAt(state);
+  if (event.now >= endsAt) return decide(state, input, event.now, exits);
+  // Mid-celebration: hold it, and bring the deadline forward to the end of the reveal.
+  return {
+    ...state,
+    round: { ...state.round, decision: input },
+    phase: { ...state.phase, deadline: endsAt },
+  };
 }

@@ -34,6 +34,8 @@ export function enterIntro(state: State, number: number, now: number): State {
     waitForCall: {},
     winnerId: null,
     won: {},
+    patternBingos: 0,
+    decision: null,
     bingos: 0,
     arm: null,
     queue: [],

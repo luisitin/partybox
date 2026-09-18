@@ -11,6 +11,7 @@ import type { GameTvProps } from '@partybox/game-sdk/ui';
 import type { BingoTvView } from '../server/views';
 import { hushCaller, speakCall } from './caller';
 import { PatternIcon } from './Card';
+import { pendingLine, winHeadline } from './copy';
 import { Call, CalledBoard, ClaimStage, rows, whichCard } from './TvParts';
 import styles from './Tv.module.css';
 
@@ -206,21 +207,22 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
                 <BigText level="display" tone="accent" className={styles.bingoTitle}>
                   BINGO!
                 </BigText>
-                <BigText level="h1">
-                  {view.winnerName} wins round {view.round}
-                </BigText>
+                <BigText level="h1">{winHeadline(view, view.winnerName)}</BigText>
                 <p className={styles.winLine}>
                   <PatternIcon cells={view.patternCells} size={72} />
                   <span>
-                    {view.patternLabel} on call {view.callIndex}
+                    {view.patternLabel} on call {view.callIndex} · round {view.round}
                     {whichCard(view.claim)}
-                    {view.bingosThisRound > 1 ? ` · bingo #${view.bingosThisRound} this round` : ''}
                   </span>
                 </p>
               </>
             }
             aside={
-              view.decide && (view.decide.same || view.decide.blackout) ? (
+              view.pendingDecision ? (
+                <p className={`${styles.decideLine} pb-enter`}>
+                  {pendingLine(view.pendingDecision, view.round >= view.totalRounds)}
+                </p>
+              ) : view.decide && (view.decide.same || view.decide.blackout) ? (
                 <p className={`${styles.decideLine} pb-enter`}>
                   <span className={styles.decideWho}>Anyone</span> picks on their phone: keep going
                   {view.decide.blackout ? ' (same pattern or blackout)' : ''} or{' '}

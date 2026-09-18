@@ -8,6 +8,7 @@ import { PrimaryButton, useSecondsLeft } from '@partybox/game-sdk/ui';
 import type { ScoreboardRow } from '@partybox/game-sdk/ui';
 import type { Input } from '../server/types';
 import type { BingoControllerView, CallView } from '../server/views';
+import { pendingLine } from './copy';
 import styles from './Controller.module.css';
 
 export type Send = (input: Input) => void;
@@ -177,7 +178,10 @@ export function DecideFooter({
   send: Send;
 }): JSX.Element | null {
   const decide = view.decide;
-  if (!decide || !(decide.same || decide.blackout)) return null;
+  if (!decide) return null;
+  // A choice already made mid-celebration: the buttons go, the phone says what starts when.
+  const pending = pendingLine(view.pendingDecision, view.round >= view.totalRounds);
+  if (pending) return <p className={styles.hint}>{pending}</p>;
   const nextLabel = view.round < view.totalRounds ? 'Next round — fresh cards' : 'Finish the game';
   return (
     <div className={styles.decide}>

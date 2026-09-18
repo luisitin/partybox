@@ -1,6 +1,7 @@
 // Shared helpers for the Bingo tests: a three-player game, hand-built events, and the two
 // shortcuts every rule needs — call numbers until a card's cells are all out, daub a set of cells.
 import { game } from '../server/index';
+import { VERDICT_READ_MS, claimRevealMs } from '../server/reveal';
 import type { Input, State } from '../server/types';
 
 export const T0 = 1_000_000;
@@ -70,4 +71,10 @@ export function claim(state: State, playerId: string, card = 0): State {
   const t = state.phase.startedAt + 500;
   const armed = input(state, playerId, { type: 'bingo', card }, t);
   return input(armed, playerId, { type: 'bingo', card }, t + 100);
+}
+
+/** A moment after the TV's reveal of the current claim: when the room may decide. */
+export function after(state: State): number {
+  const c = state.round.claim;
+  return state.phase.startedAt + (c ? claimRevealMs(c.cells, c.daubs) + VERDICT_READ_MS : 0) + 10;
 }

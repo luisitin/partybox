@@ -1,0 +1,481 @@
+<title>Bingo Deal Options</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap"
+/>
+<style>
+  :root {
+    --bg: #f6f4ef;
+    --ink: #1b1a2e;
+    --muted: #5d5b73;
+    --line: #d9d5cc;
+    --card: #ffffff;
+    --pick: #2a5bd7;
+    /* The phone mock-ups take PartyBox's real night tokens (packages/client/src/styles/tokens.css). */
+    --phone: #0f1020;
+    --phone-ink: #f5f6ff;
+    --phone-muted: #b3b7d9;
+    --cell: #272a52;
+    --accent: #ff5d8f;
+    --on-accent: #1a0b12;
+    --gold: #ffd166;
+    --green: #06d6a0;
+    --sheet: #1c1e3a;
+    --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) {
+      --bg: #17161f;
+      --ink: #f2f1f7;
+      --muted: #a9a7ba;
+      --line: #34323f;
+      --card: #201f2a;
+      --pick: #8fb0ff;
+    }
+  }
+  :root[data-theme='dark'] {
+    --bg: #17161f;
+    --ink: #f2f1f7;
+    --muted: #a9a7ba;
+    --line: #34323f;
+    --card: #201f2a;
+    --pick: #8fb0ff;
+  }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: Nunito, system-ui, sans-serif;
+    padding-inline: 16px;
+    padding-block: 24px 48px;
+  }
+  main {
+    max-width: 1100px;
+    margin-inline: auto;
+  }
+  h1 {
+    font-size: 28px;
+    margin: 0 0 4px;
+    text-wrap: balance;
+  }
+  h2 {
+    font-size: 20px;
+    margin: 0;
+  }
+  .lede {
+    color: var(--muted);
+    margin: 0 0 24px;
+    max-width: 62ch;
+  }
+  .options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  .option {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .option header {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .letter {
+    font-weight: 900;
+    font-size: 22px;
+    color: var(--pick);
+  }
+  .option p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.45;
+  }
+  .replay {
+    align-self: flex-start;
+    font: inherit;
+    font-weight: 800;
+    font-size: 14px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .replay:focus-visible {
+    outline: 3px solid var(--pick);
+    outline-offset: 2px;
+  }
+  /* ── the phone ── */
+  .phone {
+    background: var(--phone);
+    color: var(--phone-ink);
+    border-radius: 22px;
+    padding: 12px 12px 14px;
+    width: 100%;
+    max-width: 300px;
+    margin-inline: auto;
+    box-sizing: border-box;
+    overflow: hidden;
+    position: relative;
+  }
+  .round {
+    font-weight: 800;
+    font-size: 13px;
+    color: var(--phone-muted);
+    margin: 0 0 2px;
+  }
+  .pattern {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 10px;
+  }
+  .pattern b {
+    font-size: 15px;
+    display: block;
+  }
+  .pattern small {
+    color: var(--phone-muted);
+    font-size: 11px;
+  }
+  .icon {
+    width: 28px;
+    height: 28px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1px;
+  }
+  .icon i {
+    background: var(--cell);
+    border-radius: 1px;
+  }
+  .icon i.on {
+    background: var(--gold);
+  }
+  .card {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    min-width: 0;
+    gap: 3px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .card span {
+    aspect-ratio: 1;
+    min-width: 0;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    background: var(--cell);
+    border-radius: 7px;
+    font-weight: 800;
+    font-size: 13px;
+    color: var(--phone-ink);
+  }
+  .card .h {
+    aspect-ratio: auto;
+    background: none;
+    color: var(--gold);
+    font-weight: 900;
+    font-size: 12px;
+  }
+  .card .free {
+    background: var(--cell);
+    border: 2px solid var(--gold);
+    color: var(--gold);
+    font-size: 7px;
+    box-sizing: border-box;
+  }
+  .main {
+    width: 78%;
+    margin: 0 auto 10px;
+  }
+  .thumbs {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 6px;
+    padding-top: 8px;
+  }
+  .thumb {
+    min-width: 0;
+    border: 2px solid var(--phone-muted);
+    border-radius: 8px;
+    padding: 2px;
+    position: relative;
+    opacity: 0.85;
+  }
+  .thumb .card {
+    gap: 1px;
+  }
+  .thumb .card span {
+    font-size: 5px;
+    border-radius: 2px;
+  }
+  .thumb .card .h {
+    font-size: 5px;
+  }
+  .thumb .card .free {
+    border-width: 1px;
+    font-size: 4px;
+  }
+  .thumb.up {
+    border-color: var(--gold);
+    opacity: 1;
+  }
+  .thumb.up::after {
+    content: 'UP';
+    position: absolute;
+    top: -8px;
+    right: -4px;
+    background: var(--gold);
+    color: var(--on-accent);
+    font-size: 8px;
+    font-weight: 900;
+    padding: 1px 5px;
+    border-radius: 999px;
+  }
+  .deal {
+    margin-top: 12px;
+    background: var(--sheet);
+    color: var(--phone-ink);
+    border-radius: 12px;
+    padding: 10px;
+    text-align: center;
+    font-weight: 800;
+    font-size: 13px;
+  }
+  /* ── A · today: one dissolve ── */
+  .a .main,
+  .a .thumb {
+    animation: rise 300ms var(--ease) both;
+  }
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  /* ── B · dealt from the deck: main card first, thumbnails one by one ── */
+  .b .main {
+    animation: dealt 420ms var(--ease) both;
+  }
+  .b .thumb {
+    animation: dealt 380ms var(--ease) both;
+    animation-delay: calc(360ms + var(--i) * 110ms);
+  }
+  @keyframes dealt {
+    from {
+      opacity: 0;
+      transform: translateY(-140px) rotate(-6deg) scale(0.92);
+    }
+    60% {
+      opacity: 1;
+      transform: translateY(6px) rotate(1deg) scale(1.01);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  /* ── C · fanned in from the right, settling flat ── */
+  .c .main {
+    animation: fan 500ms var(--ease) both;
+  }
+  .c .thumb {
+    animation: fan 420ms var(--ease) both;
+    animation-delay: calc(300ms + var(--i) * 90ms);
+    transform-origin: bottom right;
+  }
+  @keyframes fan {
+    from {
+      opacity: 0;
+      transform: translateX(120px) rotate(14deg);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  /* ── D · face-down flip: cards land, then turn over together ── */
+  .d .main,
+  .d .thumb {
+    animation:
+      land 260ms var(--ease) both,
+      flip 500ms var(--ease) both;
+    animation-delay: calc(var(--i, 0) * 80ms), calc(520ms + var(--i, 0) * 60ms);
+    transform-style: preserve-3d;
+    backface-visibility: visible;
+  }
+  @keyframes land {
+    from {
+      opacity: 0;
+      transform: translateY(-40px) rotateY(180deg);
+    }
+    to {
+      opacity: 1;
+      transform: rotateY(180deg);
+    }
+  }
+  @keyframes flip {
+    from {
+      transform: rotateY(180deg);
+    }
+    to {
+      transform: rotateY(0);
+    }
+  }
+  .d .back {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(45deg, var(--sheet) 0 6px, var(--cell) 6px 12px);
+    border-radius: 8px;
+    backface-visibility: hidden;
+    transform: rotateY(180deg);
+  }
+  .d .main,
+  .d .thumb {
+    position: relative;
+  }
+  .d .card {
+    backface-visibility: hidden;
+  }
+  .paused .main,
+  .paused .thumb {
+    animation-play-state: paused;
+  }
+  .notes {
+    margin-top: 28px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 14px;
+    max-width: 70ch;
+  }
+  .notes b {
+    color: var(--ink);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .a .main,
+    .a .thumb,
+    .b .main,
+    .b .thumb,
+    .c .main,
+    .c .thumb,
+    .d .main,
+    .d .thumb {
+      animation: none;
+    }
+    .d .back {
+      display: none;
+    }
+  }
+</style>
+<main>
+  <h1>Bingo Deal Options</h1>
+  <p class="lede">
+    How the four cards arrive on a phone at the round intro (5 s, before the first call). Every
+    option is a live mock-up: tap Replay to watch it again. Today the whole screen dissolves in as
+    one block (A). The later options treat the intro as a deal.
+  </p>
+  <div class="options" id="options"></div>
+  <div class="notes">
+    <p>
+      <b>Sound.</b> B and C would play the soft <i>card</i> pluck once per thumbnail as it lands
+      (the same pluck Broken Pencil's pages use), the main card silent; D plays the pluck once on
+      the flip. A stays silent. All three run under reduced motion as a plain dissolve.
+    </p>
+    <p>
+      <b>Where it lives.</b> Only the phone's intro screen; the TV's intro (pattern + programme) is
+      untouched. "Deal me another" would reuse the same entrance for the swapped card alone.
+    </p>
+  </div>
+</main>
+<script>
+  const NUMS = [
+    [14, 25, 34, 60, 64, 6, 17, 39, 57, 70, 9, 26, 0, 55, 67, 5, 30, 41, 50, 69, 7, 23, 44, 47, 61],
+    [
+      11, 25, 36, 50, 74, 15, 21, 41, 58, 75, 4, 30, 0, 46, 72, 7, 18, 42, 56, 64, 1, 23, 37, 59,
+      65,
+    ],
+    [
+      13, 23, 37, 55, 66, 6, 18, 33, 54, 67, 2, 21, 0, 46, 63, 10, 29, 31, 53, 68, 12, 17, 38, 59,
+      71,
+    ],
+    [3, 26, 37, 49, 68, 2, 30, 40, 53, 75, 12, 29, 0, 54, 72, 7, 16, 35, 58, 70, 8, 24, 39, 51, 65],
+  ];
+  const OPTIONS = [
+    {
+      id: 'a',
+      title: 'As it is: one dissolve',
+      text: 'The card, the thumbnails and the button rise together in 300 ms. Nothing says "dealt".',
+    },
+    {
+      id: 'b',
+      title: 'Dealt from the top',
+      text: 'The big card drops onto the table first; the four thumbnails follow one at a time, 110 ms apart, each with a small bounce. ~0.9 s in all. A pluck per thumbnail.',
+    },
+    {
+      id: 'c',
+      title: 'Fanned in from the side',
+      text: 'The big card slides in from the right and settles flat; the thumbnails fan in behind it, 90 ms apart, tilting as they arrive. ~0.7 s. A pluck per thumbnail.',
+    },
+    {
+      id: 'd',
+      title: 'Face down, then the flip',
+      text: 'All five land face down in a quick stagger, then turn over together, the big card first. ~1.1 s. One pluck on the flip. The most "card game" of the four, and the longest.',
+    },
+  ];
+  const card = (nums, cls) => {
+    const cells = ['B', 'I', 'N', 'G', 'O'].map((l) => `<span class="h">${l}</span>`);
+    nums.forEach((n, i) => {
+      cells.push(i === 12 ? '<span class="free">FREE</span>' : `<span>${n}</span>`);
+    });
+    return `<div class="card ${cls || ''}">${cells.join('')}</div>`;
+  };
+  const icon = () => {
+    let s = '';
+    for (let i = 0; i < 25; i += 1) s += `<i class="${Math.floor(i / 5) === 2 ? 'on' : ''}"></i>`;
+    return `<div class="icon" aria-hidden="true">${s}</div>`;
+  };
+  const phone = (id) => `
+    <div class="phone ${id}" id="phone-${id}" aria-label="phone mock-up, option ${id.toUpperCase()}">
+      <p class="round">Round 1 of 3</p>
+      <div class="pattern">${icon()}<div><b>Any line</b><small>Five in a row, any direction. Pick a card below to swap it.</small></div></div>
+      <div class="main" style="--i:0">${id === 'd' ? '<div class="back"></div>' : ''}${card(NUMS[0])}</div>
+      <div class="thumbs">
+        ${NUMS.map((n, i) => `<div class="thumb ${i === 0 ? 'up' : ''}" style="--i:${i + (id === 'd' ? 1 : 0)}">${id === 'd' ? '<div class="back"></div>' : ''}${card(n)}</div>`).join('')}
+      </div>
+      <div class="deal">🎲 Deal me another (card 1)</div>
+    </div>`;
+  const root = document.getElementById('options');
+  root.innerHTML = OPTIONS.map(
+    (o) => `
+    <section class="option">
+      <header><span class="letter">${o.id.toUpperCase()}</span><h2>${o.title}</h2></header>
+      ${phone(o.id)}
+      <p>${o.text}</p>
+      <button type="button" class="replay" data-replay="${o.id}">Replay ${o.id.toUpperCase()}</button>
+    </section>`,
+  ).join('');
+  root.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-replay]');
+    if (!btn) return;
+    const el = document.getElementById(`phone-${btn.dataset.replay}`);
+    const clone = el.cloneNode(true);
+    el.replaceWith(clone);
+  });
+</script>

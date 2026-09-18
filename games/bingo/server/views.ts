@@ -54,6 +54,10 @@ interface Common {
   decide: { same: boolean; blackout: boolean } | null;
   /** How many bingos this round has had so far (a continued round celebrates more than one). */
   bingosThisRound: number;
+  /** Bingos under the current pattern this round ("2nd bingo", "1st blackout"). */
+  patternBingos: number;
+  /** bingo: a choice already made mid-celebration, applied when the reveal is done. */
+  pendingDecision: 'same' | 'blackout' | 'next' | null;
   /** play: whose BINGO! is armed (dibs), until when (server clock), and who waits behind. */
   arm: { playerId: string; name: string; card: number; until: number } | null;
   queue: string[];
@@ -164,6 +168,13 @@ function common(state: State): Common {
     standings: standings(state),
     decide: state.phase.id === 'bingo' ? canContinue(state) : null,
     bingosThisRound: round.bingos,
+    patternBingos: round.patternBingos,
+    pendingDecision:
+      round.decision === null
+        ? null
+        : round.decision.type === 'next'
+          ? 'next'
+          : round.decision.pattern,
     arm:
       state.phase.id === 'play' && round.arm
         ? { ...round.arm, name: state.players[round.arm.playerId]?.name ?? '?' }

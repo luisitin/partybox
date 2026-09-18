@@ -5,7 +5,7 @@ import { createRng } from '@partybox/game-sdk';
 import { game, readSettings } from '../server/index';
 import { looksComplete } from '../server/patterns';
 import { sampleInput } from '../server/bot';
-import { callUntil, claim, daubAll, input, start, timer } from './helpers';
+import { after, callUntil, claim, daubAll, input, start, timer } from './helpers';
 
 describe('several cards per player', () => {
   it("deals the setting's number of cards, all legal and distinct, with empty daubs each", () => {
@@ -73,9 +73,9 @@ describe('keep going with several cards', () => {
     expect(game.tvView(s).bingosThisRound).toBe(1);
     expect(game.tvView(s).decide).toEqual({ same: true, blackout: true });
     const drawn = s.round.drawn;
-    s = input(s, 'b', { type: 'continue', pattern: 'same' });
+    s = input(s, 'b', { type: 'continue', pattern: 'same' }, after(s));
     expect(s.phase.id).toBe('play');
-    expect(s.round.drawn).toBe(drawn + 1);
+    expect(s.round.drawn).toBe(drawn); // the number that was up repeats
     // The locked card cannot claim again even though it still completes the line...
     const a = game.controllerView(s, 'a');
     expect(a.won).toEqual([0]);
@@ -95,7 +95,7 @@ describe('keep going with several cards', () => {
     expect(s.phase.id).toBe('bingo');
     expect(game.tvView(s).bingosThisRound).toBe(2);
     expect(s.history.map((h) => h.winnerId)).toEqual(['a', 'b']);
-    s = input(s, 'a', { type: 'next' });
+    s = input(s, 'a', { type: 'next' }, after(s));
     expect(s.phase.id).toBe('done');
     expect(game.results(s)?.scores).toEqual({ a: 1, b: 1, c: 0 });
   });
@@ -105,7 +105,7 @@ describe('keep going with several cards', () => {
     s = daubAll(s, 'c', [20, 21, 22, 23, 24]);
     s = claim(s, 'c');
     const atBingo = s;
-    s = input(s, 'a', { type: 'continue', pattern: 'same' });
+    s = input(s, 'a', { type: 'continue', pattern: 'same' }, after(s));
     expect(s.phase.id).toBe('play');
     const c = game.controllerView(s, 'c');
     expect(c.doneForRound).toBe(true);
@@ -114,7 +114,7 @@ describe('keep going with several cards', () => {
     expect(game.tvView(s).players.find((p) => p.id === 'c')?.status).toBe('submitted');
     expect(sampleInput(s, 'c', createRng(2))).toBeNull();
     // A blackout on the same cards puts every card back in.
-    const black = input(atBingo, 'a', { type: 'continue', pattern: 'blackout' });
+    const black = input(atBingo, 'a', { type: 'continue', pattern: 'blackout' }, after(atBingo));
     expect(black.round.won).toEqual({});
     expect(game.controllerView(black, 'c').canClaim).toBe(true);
     // With every card in the room locked there is nothing left to win for the same pattern.
@@ -122,6 +122,6 @@ describe('keep going with several cards', () => {
     for (const id of ['a', 'b'])
       all = { ...all, round: { ...all.round, won: { ...all.round.won, [id]: [0] } } };
     expect(game.tvView(all).decide).toEqual({ same: false, blackout: true });
-    expect(input(all, 'a', { type: 'continue', pattern: 'same' })).toBe(all);
+    expect(input(all, 'a', { type: 'continue', pattern: 'same' }, after(all))).toBe(all);
   });
 });
