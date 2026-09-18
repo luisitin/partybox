@@ -308,6 +308,19 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
       .map((e) => e['text'])
       .join(' | ')}`,
   );
+  // The phones run the same 3 · 2 · 1 (ticks) and feel the repeated call after it (loop 276).
+  const resumePhone = await T.between(vip.page, 'D8', 'D9');
+  const phoneTicks = T.cues(resumePhone, 'phone').filter((c) => c === 'tick').length;
+  const lastTick = resumePhone
+    .map((e) => e.kind === 'cue' && e['cue'] === 'tick')
+    .lastIndexOf(true);
+  const callBuzz = resumePhone.findIndex((e) => e.kind === 'buzz' && Number(e['pattern']) === 12);
+  T.ok(
+    'D',
+    'the phone ticks 3 · 2 · 1 with the TV, then feels the repeated call (a 12 ms buzz after the last tick)',
+    phoneTicks === 3 && callBuzz > lastTick,
+    `ticks=${phoneTicks} buzzIdx=${callBuzz} lastTickIdx=${lastTick}`,
+  );
   // A game that ends on its own (one round): the bingo → the drumroll ("and the winner is…",
   // the final board, the tally chime, no fanfare yet) → 4 s later the results cheer (loop 246).
   await home.click();
