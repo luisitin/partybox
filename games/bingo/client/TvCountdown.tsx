@@ -55,7 +55,27 @@ export function IntroCountdown({
           </span>
         </>
       ) : (
-        <span className={styles.introLead}>dealing the cards…</span>
+        <>
+          {/* The deal itself (loop 279): one card back per card, dealt out of a deck on the
+              plucks' beats, each turning face-up as it lands in the fan. */}
+          <span className={styles.dealWrap}>
+            <span className={styles.dealFan} aria-hidden>
+              {Array.from({ length: cards }, (_, i) => (
+                <span
+                  key={i}
+                  className={styles.dealSlot}
+                  style={{ transform: `rotate(${(i - (cards - 1) / 2) * 9}deg)` }}
+                >
+                  <span
+                    className={styles.dealCard}
+                    style={{ animationDelay: `${360 + i * 110}ms` }}
+                  />
+                </span>
+              ))}
+            </span>
+            <span className={styles.introLead}>dealing the cards…</span>
+          </span>
+        </>
       )}
     </div>
   );
