@@ -198,6 +198,23 @@
   align-items: flex-end;
   height: calc(var(--fan-h) + var(--pb-space-5));
   margin-bottom: var(--pb-space-3);
+  /* after the deal has landed */
+  animation: pb-bl-fanfloat 6s ease-in-out 900ms infinite;
+}
+
+/* The round card holds for five seconds; the fan breathes through it rather than freezing on the
+   landing frame (review-loop #194). Transform only — the cards' own rotate/translate compose with
+   it — and the keyframes only exist when motion is welcome. */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes pb-bl-fanfloat {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-9px);
+    }
+  }
 }
 
 .fanCard {
@@ -411,6 +428,11 @@
   opacity: 0.65;
   font-size: var(--pb-font-caption);
   white-space: nowrap;
+}
+
+/* A line that has been dealt its place on the stage but has not had its beat yet. */
+.beatWait {
+  opacity: 0;
 }
 
 /* The round card's leader line: who is ahead, under the title. */
