@@ -59,7 +59,7 @@ export function rows(view: BingoTvView): ScoreboardRow[] {
 export function Call({ call, big }: { call: CallView; big?: boolean }): JSX.Element {
   return (
     <div className={`${big ? styles.callBig : styles.callSmall} ${big ? '' : 'pb-enter'}`}>
-      <span key={`l${call.number}`} className={styles.letter}>
+      <span key={`l${call.number}`} className={styles.letter} data-letter={call.letter}>
         {call.letter}
       </span>
       <span key={`n${call.number}`} className={styles.number}>
@@ -101,7 +101,7 @@ export function CalledBoard({
   return (
     <div className={styles.board} aria-label={`${called.length} numbers called`}>
       {BOARD_ROWS.map((letter, row) => (
-        <div key={letter} className={styles.boardRow}>
+        <div key={letter} className={styles.boardRow} data-letter={letter}>
           <span className={styles.boardLetter}>{letter}</span>
           {Array.from({ length: 15 }, (_, i) => row * 15 + i + 1).map((n) => (
             <span
