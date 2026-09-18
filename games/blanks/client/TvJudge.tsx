@@ -31,6 +31,9 @@ function Progress({ view }: Props): JSX.Element {
   if (view.judgeMode === 'czar') {
     const judge = view.czar;
     if (!judge) return <>Judging…</>;
+    // Their phone dropped: the round holds a grace for them (review-loop #351).
+    if (judge.connected === false && view.votedCount === 0)
+      return <>{judge.name} dropped — a moment for them to come back…</>;
     return view.votedCount > 0 ? (
       // The pick is in and the stage holds a beat before the result (loop #228).
       <>{judge.name} has decided — here it comes…</>

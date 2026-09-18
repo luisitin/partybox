@@ -3,7 +3,7 @@
 import { describe, expect, it } from 'vitest';
 import { blackCard } from '../server/content';
 import { allIn } from '../server/phases/answer';
-import { ALL_IN_MS, RANDO, VOTES_IN_MS } from '../server/types';
+import { ALL_IN_MS, RANDO, VOTES_IN_MS, JUDGE_GRACE_MS } from '../server/types';
 import {
   connect,
   cv,
@@ -220,7 +220,7 @@ describe('judge (czar mode)', () => {
     expect(s.czarId).toBe('cleo');
   });
 
-  it('a judge who dropped during the reading never holds the vote: it ends on entry', () => {
+  it('a judge who dropped during the reading gets the grace on entry, then no winner', () => {
     const s = readAll(playAll(toAnswer(start({ judge: 'czar', players: 4 }))));
     expect(s.phase.id).toBe('judge');
     // Replay: drop the judge one card before the end of the reading.
@@ -228,6 +228,9 @@ describe('judge (czar mode)', () => {
     r = connect(r, r.czarId as string, false, r.phase.startedAt + 100);
     expect(r.phase.id).toBe('reveal');
     r = readAll(r);
+    expect(r.phase.id).toBe('judge');
+    expect(r.phase.deadline).toBe(r.phase.startedAt + JUDGE_GRACE_MS);
+    r = timer(r);
     expect(r.phase.id).toBe('result');
     expect(r.winners).toEqual([]);
     expect(tv(r).czar?.connected).toBe(false);
@@ -239,10 +242,13 @@ describe('judge (czar mode)', () => {
     expect(tv(a).revealed).toEqual([]);
   });
 
-  it('the judge dropping mid-vote ends the round without a winner', () => {
+  it('the judge dropping mid-vote holds 20 s for them, then ends without a winner', () => {
     let s = readAll(playAll(toAnswer(start({ judge: 'czar', players: 4 }))));
     expect(s.phase.id).toBe('judge');
     s = connect(s, 'ana', false, s.phase.startedAt + 100);
+    expect(s.phase.id).toBe('judge');
+    expect(s.phase.deadline).toBe(s.phase.startedAt + 100 + JUDGE_GRACE_MS);
+    s = timer(s);
     expect(s.phase.id).toBe('result');
     expect(s.winners).toEqual([]);
   });
@@ -305,8 +311,10 @@ describe('untimed rounds (the default)', () => {
     const other = s.order.find((id) => id !== judge) as string;
     expect(next(s, other)).toBe(s);
     expect(next(s, judge)).toBe(s);
-    // The judge dropping ends the phase on its own (no voter left), so Next never has to.
+    // The judge dropping opens the grace (review-loop #351); Next from anyone can end it then.
     s = connect(s, judge, false);
+    expect(s.phase.id).toBe('judge');
+    s = next(s, other);
     expect(s.phase.id).toBe('result');
     expect(s.winners).toEqual([]);
   });

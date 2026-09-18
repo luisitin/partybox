@@ -153,6 +153,9 @@ export const BIG_REVEAL_MAX_MS = 3_200;
 /** Voting: 30 s, 45 s for a lone judge; a big room gets 45 s to scan its cards. */
 export const JUDGE_VOTE_MS = 30_000;
 export const JUDGE_CZAR_MS = 45_000;
+/** A judge whose phone drops mid-vote (a locked screen, a Wi-Fi blip) gets this long to come back
+ *  before the round ends without a winner — instead of at once (review-loop #351). */
+export const JUDGE_GRACE_MS = 20_000;
 export const BIG_JUDGE_MS = 45_000;
 export const RESULT_MS = 8_000;
 /** The final board's drumroll ("And the winner is…") before the engine's results screen. */

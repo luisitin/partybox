@@ -6,7 +6,7 @@ import { allConnectedDone, applyVip, setConnected } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { enterAnswer, reduceAnswer } from './phases/answer';
 import { enterIntro, reduceIntro } from './phases/intro';
-import { enterJudge, reduceJudge } from './phases/judge';
+import { enterJudge, holdForJudge, judgeAway, judgeReturns, reduceJudge } from './phases/judge';
 import { enterPick, reducePick } from './phases/pick';
 import { enterReveal, reduceReveal } from './phases/reveal';
 import { enterDone, enterFinal, enterResult, reduceFinal, reduceResult } from './phases/result';
@@ -81,6 +81,8 @@ function closeIfDone(state: State, now: number): State {
     return afterPick(state, now);
   if (state.phase.id === 'answer' && allConnectedDone(state, playersDone(state)))
     return afterAnswer(state, now);
+  // The judge gone mid-vote: a grace to come back, not an instant no-winner (review-loop #351).
+  if (state.phase.id === 'judge' && judgeAway(state)) return holdForJudge(state, now);
   if (state.phase.id === 'judge' && allConnectedDone(state, votingDone(state)))
     return afterJudge(state, now);
   return state;
@@ -89,7 +91,10 @@ function closeIfDone(state: State, now: number): State {
 export function reduce(state: State, event: GameEvent<Input>): State {
   if (event.type === 'player') {
     const after = setConnected(state, event);
-    return event.connected || after.phase.paused ? after : closeIfDone(after, event.now);
+    if (after.phase.paused) return after;
+    return event.connected
+      ? judgeReturns(after, event.playerId, event.now)
+      : closeIfDone(after, event.now);
   }
   const vip = applyVip(state, event, { skip, end: enterDone });
   if (vip) return vip;
