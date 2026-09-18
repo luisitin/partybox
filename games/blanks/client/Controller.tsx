@@ -72,7 +72,10 @@ function ControllerResult({ view, me, send }: Props): JSX.Element {
   // anyone holding a phone (review-loop #222). Both now wait for the same beat; with no TV in the
   // room it is simply a beat.
   const beat = useBeats(RESULT_BEATS_MS);
-  const named = final || beat >= 2;
+  // A round nobody won has no crown to spoil, so the phone says so at once instead of holding a
+  // near-empty screen for a beat and a bit (review-loop #332).
+  const nothingToReveal = view.revealed.every((r) => !r.winner);
+  const named = final || nothingToReveal || beat >= 2;
   useEffect(() => {
     if (view.iWon && named) play('correct');
   }, [view.iWon, named, play]);
