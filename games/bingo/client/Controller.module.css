@@ -340,11 +340,21 @@
   border-radius: 999px;
   white-space: nowrap;
 }
+/* A hand of cards (loop 320): the one that is up sits lifted and the rest lie a little back — a
+   static lift (transform + the motion-fast transition, off with the switch), no per-frame cost. */
 .thumbCur {
   opacity: 1;
   border-color: var(--pb-accent-2);
   box-shadow: 0 0 0 2px var(--pb-accent-2);
   cursor: default;
+  transform: translateY(-6px) scale(1.04);
+  z-index: 1;
+}
+.thumbs .thumb:not(.thumbCur) {
+  transform: translateY(2px) scale(0.96);
+}
+.thumbs .thumb:not(.thumbCur):active {
+  transform: translateY(2px) scale(0.92);
 }
 .thumbCur[data-tag]::after {
   background: var(--pb-accent-2);
