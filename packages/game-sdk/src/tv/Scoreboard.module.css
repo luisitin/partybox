@@ -11,7 +11,8 @@
 
 /* 5-6 rows under a heading: body-size rows (~60 px) so six fit in ≈ 400 px. */
 .tight .row,
-.tight3 .row {
+.tight3 .row,
+.tight4 .row {
   font-size: var(--pb-font-body);
   padding: var(--pb-space-1) var(--pb-space-3);
   --pb-chip-size: 1.3em;
@@ -33,6 +34,14 @@
 .tight3 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--pb-space-2) var(--pb-space-4);
+  max-width: none;
+}
+
+/* Four columns on request (`columns={4}`): 16 rows in four ≈ 270 px, for a board under a four-row
+   roster. ~420 px cells, so the gaps tighten like the three-column rows. */
+.tight4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--pb-space-2) var(--pb-space-3);
   max-width: none;
 }
 
@@ -61,7 +70,8 @@
 
 /* Column-major: ranks read down the left column, then the next (--pb-board-rows is set inline). */
 .dense,
-.tight3 {
+.tight3,
+.tight4 {
   grid-auto-flow: column;
   grid-template-rows: repeat(var(--pb-board-rows, 1), auto);
 }
@@ -125,7 +135,8 @@
 }
 
 /* Three columns in a narrow results board leave ~100 px for the name: tighter rank + gaps. */
-.tight3 .row {
+.tight3 .row,
+.tight4 .row {
   grid-template-columns: 1.2em auto 1fr auto auto;
   gap: var(--pb-space-2);
 }
@@ -155,6 +166,7 @@
 
 .staggered.dense,
 .staggered.tight3,
+.staggered.tight4,
 .staggered.down {
   --pb-stagger-step: calc(var(--pb-motion-fast) / 2);
 }

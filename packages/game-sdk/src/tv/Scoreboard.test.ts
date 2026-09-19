@@ -19,6 +19,8 @@ describe('boardLandedMs', () => {
 
   it('takes the three-column tier from any count when asked (a board under a tall roster)', () => {
     expect(tierOf(12, false, true, 3)).toBe('tight3');
+    expect(tierOf(16, false, undefined, 4)).toBe('tight4');
+    expect(boardLandedMs(16, { columns: 4 })).toBe(boardLandedMs(16));
     expect(tierOf(9, false, undefined, 3)).toBe('tight3');
     expect(tierOf(9, false, undefined, 2)).toBe('dense');
     // Compact still wins, and the landing time follows the column count.

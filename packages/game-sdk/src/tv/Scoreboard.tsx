@@ -37,9 +37,10 @@ export interface ScoreboardProps {
    *  `sm`: body-size rows for a two-column board under a tall header (a 12-player wager screen,
    *  review-loop #53). */
   size?: 'sm' | 'md' | 'lg';
-  /** `3`: the three-column tier from any count — a board under a three-row roster (Lightning's
-   *  12-player wager page: two columns of six rows ran into the host bar). */
-  columns?: 2 | 3;
+  /** `3` / `4`: that many body-size columns from any count — a board under a three- or four-row
+   *  roster (Lightning's wager page: two columns of six rows ran into the host bar at 12 players,
+   *  and three columns of six clipped at 16). */
+  columns?: 2 | 3 | 4;
   /** Rows to mark with a ✓ in the delta slot when they carry no delta (e.g. "wager placed"). */
   markIds?: readonly string[];
   /**
@@ -50,12 +51,25 @@ export interface ScoreboardProps {
   stagger?: 'up' | 'down' | false;
 }
 
-type Tier = 'compact' | 'roomy' | 'tight' | 'dense' | 'tight3';
+type Tier = 'compact' | 'roomy' | 'tight' | 'dense' | 'tight3' | 'tight4';
 
-const COLUMNS: Record<Tier, number> = { compact: 1, roomy: 1, tight: 1, dense: 2, tight3: 3 };
+const COLUMNS: Record<Tier, number> = {
+  compact: 1,
+  roomy: 1,
+  tight: 1,
+  dense: 2,
+  tight3: 3,
+  tight4: 4,
+};
 
-export function tierOf(count: number, compact?: boolean, dense?: boolean, columns?: 2 | 3): Tier {
+export function tierOf(
+  count: number,
+  compact?: boolean,
+  dense?: boolean,
+  columns?: 2 | 3 | 4,
+): Tier {
   if (compact) return 'compact';
+  if (columns === 4) return 'tight4';
   if (count >= 13 || columns === 3) return 'tight3';
   if (dense ?? count >= 7) return 'dense';
   if (count >= 5) return 'tight';
@@ -70,7 +84,7 @@ export function boardLandedMs(
   opts: {
     compact?: boolean;
     dense?: boolean;
-    columns?: 2 | 3;
+    columns?: 2 | 3 | 4;
     stagger?: 'up' | 'down' | false;
   } = {},
 ): number {
