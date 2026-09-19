@@ -22,7 +22,11 @@ const DOING_PROMPT = [
   /\b(?:does|did|caught (?:me|him|her|them|us)|busy|instead of|after|before|while|spent (?:the \w+|\w+ years?))\s+____/i,
   /\b(?:what happened|what went wrong|walk(?:ed)? in on\?|catch (?:\w+ )+doing|am I doing|are you doing|^how did)\b/i,
   /\b(?:ruined|interrupted|cancelled|canceled|delayed|caused|started|ended|followed|triggered|brought on) by ____/i,
-  /\b(?:led to|ended (?:with|in)|started with|began with) ____\.?$/i,
+  /\b(?:led to|ended (?:\w+ )?(?:with|in)|started with|began with) ____\.?$/i,
+  // "What got me banned…?", "What ended the marriage?", "the secret to a happy marriage", "the
+  // CIA's new interrogation technique": what someone did, or does.
+  /^What (?:got|ended|finally ended|killed|ruined|started|caused|broke up)\b/i,
+  /\b(?:technique|trick|secret to|real reason for|reason the [\w' ]+ ended)\b/i,
   /\b(?:done|did|loved|dare (?:was|is)|ritual (?:was|is)): ____|doing what \w+ loved/i,
   /\b(?:arrested|fired|executed|burned|shut down|raided|resigned|banned|expelled|sued|jailed|convicted|dumped|put (?:\w+ ){1,2}down|quit|walked out|kicked out)\b[^.]* (?:for|over) ____/i,
   // A ritual, a dare, an activity, a way to get something: what someone does.
