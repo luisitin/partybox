@@ -1,0 +1,178 @@
+{
+  "pass": "606",
+  "game": "lightning-round",
+  "players": 6,
+  "scenario": "normal",
+  "focus": "phone",
+  "started": "11:49:20.399",
+  "tvVideoT0": "11:49:17.092",
+  "phoneVideoT0": "11:49:17.908",
+  "changes": [
+    {
+      "t": 1789818560402,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789818564395,
+      "bed": "marimba",
+      "at": "11:49:20.402",
+      "sinceStartS": 0,
+      "videoS": 3.3,
+      "phoneVideoS": 2.5
+    },
+    {
+      "t": 1789818564449,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789818579399,
+      "bed": "pulse",
+      "at": "11:49:24.449",
+      "sinceStartS": 4,
+      "videoS": 7.4,
+      "phoneVideoS": 6.5
+    },
+    {
+      "t": 1789818568646,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789818573529,
+      "bed": "pulse",
+      "at": "11:49:28.646",
+      "sinceStartS": 8.2,
+      "videoS": 11.6,
+      "phoneVideoS": 10.7
+    },
+    {
+      "t": 1789818573537,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789818588530,
+      "bed": "pulse",
+      "at": "11:49:33.537",
+      "sinceStartS": 13.1,
+      "videoS": 16.4,
+      "phoneVideoS": 15.6
+    },
+    {
+      "t": 1789818577659,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789818582555,
+      "bed": "pulse",
+      "at": "11:49:37.659",
+      "sinceStartS": 17.3,
+      "videoS": 20.6,
+      "phoneVideoS": 19.8
+    },
+    {
+      "t": 1789818582608,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789818597556,
+      "bed": "pulse",
+      "at": "11:49:42.608",
+      "sinceStartS": 22.2,
+      "videoS": 25.5,
+      "phoneVideoS": 24.7
+    },
+    {
+      "t": 1789818586747,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789818591629,
+      "bed": "pulse",
+      "at": "11:49:46.747",
+      "sinceStartS": 26.3,
+      "videoS": 29.7,
+      "phoneVideoS": 28.8
+    },
+    {
+      "t": 1789818591698,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789818606644,
+      "bed": "pulse",
+      "at": "11:49:51.698",
+      "sinceStartS": 31.3,
+      "videoS": 34.6,
+      "phoneVideoS": 33.8
+    },
+    {
+      "t": 1789818596193,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789818601106,
+      "bed": "pulse",
+      "at": "11:49:56.193",
+      "sinceStartS": 35.8,
+      "videoS": 39.1,
+      "phoneVideoS": 38.3
+    },
+    {
+      "t": 1789818601208,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789818616109,
+      "bed": "pulse",
+      "at": "11:50:01.208",
+      "sinceStartS": 40.8,
+      "videoS": 44.1,
+      "phoneVideoS": 43.3
+    },
+    {
+      "t": 1789818605348,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789818610324,
+      "bed": "pulse",
+      "at": "11:50:05.348",
+      "sinceStartS": 44.9,
+      "videoS": 48.3,
+      "phoneVideoS": 47.4
+    },
+    {
+      "t": 1789818610401,
+      "status": "playing",
+      "phase": "wager",
+      "deadline": 1789818625337,
+      "bed": "latenight",
+      "at": "11:50:10.401",
+      "sinceStartS": 50,
+      "videoS": 53.3,
+      "phoneVideoS": 52.5
+    },
+    {
+      "t": 1789818614854,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789818629807,
+      "bed": "pulse",
+      "at": "11:50:14.854",
+      "sinceStartS": 54.5,
+      "videoS": 57.8,
+      "phoneVideoS": 56.9
+    },
+    {
+      "t": 1789818619233,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789818624172,
+      "bed": "pulse",
+      "at": "11:50:19.233",
+      "sinceStartS": 58.8,
+      "videoS": 62.1,
+      "phoneVideoS": 61.3
+    },
+    {
+      "t": 1789818624206,
+      "status": "results",
+      "phase": "results",
+      "deadline": null,
+      "bed": null,
+      "at": "11:50:24.206",
+      "sinceStartS": 63.8,
+      "videoS": 67.1,
+      "phoneVideoS": 66.3
+    }
+  ],
+  "notes": []
+}
