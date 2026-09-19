@@ -36,8 +36,8 @@ card's `draw`) — the missing kinds drawn first, and up to two cards of the mos
 swapped out when a hand is still short, so every hand holds at least 2 answers for each kind of
 question — 2 things, 3 doings (gerund and event cards: a "…do?" round is one in seven), 2 people and 2 names (short cards, for a quoted blank, a
 nickname, a line someone says — one of them a WORD of one or two, for the safe-word and password blanks; `server/fit.ts` reads the kind off the
-card's text; a card's own `serves` in the deck JSON overrides it) and at least 5 great cards, 2 of them amazing (`tier` in the deck JSON: 1 filler, 2 good, 3 great, 4 amazing —
-every deck carries tiers throughout; up to three spare cards a round are swapped for great ones and two for
+card's text; a card's own `serves` in the deck JSON overrides it) and at least 5 great cards, 3 of them amazing (`tier` in the deck JSON: 1 filler, 2 good, 3 great, 4 amazing —
+every deck carries tiers throughout; up to three spare cards a round are swapped for great ones and three for
 amazing ones, keeping every kind floor; at most 2 filler cards, the rest swapped out likewise; a hand with
 four cards on one subject — the deck mix's own aside: the topic on most of its cards — trades the weakest for a card off it, never a weaker
 one) — while the decks can supply them; the

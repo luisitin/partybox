@@ -141,7 +141,7 @@ describe('dealing', () => {
     expect(hand.filter((c) => whiteTier(c) === 4).length).toBeGreaterThanOrEqual(BEST_FLOOR);
   });
 
-  it('a wild hand holds at least five great and two amazing cards, round after round (the quality floors)', () => {
+  it('a wild hand holds at least five great and three amazing cards, round after round (the quality floors)', () => {
     let s = start({ players: 8, decks: 'wild-only', seed: 11, rounds: 8 });
     for (let round = 1; round <= 8; round++) {
       for (const id of Object.keys(s.players)) {
