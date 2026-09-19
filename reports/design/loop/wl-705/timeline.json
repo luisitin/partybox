@@ -1,0 +1,90 @@
+{
+  "pass": "629",
+  "game": "lightning-round",
+  "players": 7,
+  "scenario": "walkover",
+  "focus": "phone",
+  "started": "12:58:58.825",
+  "tvVideoT0": "12:58:55.332",
+  "phoneVideoT0": "12:58:56.274",
+  "changes": [
+    {
+      "t": 1789822738828,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789822742817,
+      "bed": "marimba",
+      "at": "12:58:58.828",
+      "sinceStartS": 0,
+      "videoS": 3.5,
+      "phoneVideoS": 2.6
+    },
+    {
+      "t": 1789822742926,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789822757830,
+      "bed": "pulse",
+      "at": "12:59:02.926",
+      "sinceStartS": 4.1,
+      "videoS": 7.6,
+      "phoneVideoS": 6.7
+    },
+    {
+      "t": 1789822757855,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789822762843,
+      "bed": "pulse",
+      "at": "12:59:17.855",
+      "sinceStartS": 19,
+      "videoS": 22.5,
+      "phoneVideoS": 21.6
+    },
+    {
+      "t": 1789822762911,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789822777847,
+      "bed": "pulse",
+      "at": "12:59:22.911",
+      "sinceStartS": 24.1,
+      "videoS": 27.6,
+      "phoneVideoS": 26.6
+    },
+    {
+      "t": 1789822777922,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789822782847,
+      "bed": "pulse",
+      "at": "12:59:37.922",
+      "sinceStartS": 39.1,
+      "videoS": 42.6,
+      "phoneVideoS": 41.6
+    },
+    {
+      "t": 1789822782881,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789822797848,
+      "bed": "pulse",
+      "at": "12:59:42.881",
+      "sinceStartS": 44.1,
+      "videoS": 47.5,
+      "phoneVideoS": 46.6
+    },
+    {
+      "t": 1789822797892,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789822802862,
+      "bed": "pulse",
+      "at": "12:59:57.892",
+      "sinceStartS": 59.1,
+      "videoS": 62.6,
+      "phoneVideoS": 61.6
+    }
+  ],
+  "notes": ["budget reached while playing; skipped to results"]
+}
