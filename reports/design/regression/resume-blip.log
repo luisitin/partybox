@@ -1,0 +1,6 @@
+(node:27840) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ok   paused: the TV shows the pause glyph, no seconds — label=paused
+ok   TV resumes at the held 28 s — never a higher reading — readings=27,26
+ok   phone resumes at the held 28 s — never a higher reading — readings=27,26
+3/3 checks passed
