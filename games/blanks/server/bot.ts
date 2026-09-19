@@ -5,7 +5,15 @@
 // yardstick. A Pick 2 / Pick 3 takes the best cards in hand order of fit; the czar picks the
 // best-rated prompt on offer (ties at random).
 import type { Rng } from '@partybox/game-sdk';
-import { blackCard, blackSlots, blackTier, whiteServes, whiteText, whiteTier } from './content';
+import {
+  blackCard,
+  blackSlots,
+  blackTier,
+  deckSubject,
+  whiteServes,
+  whiteText,
+  whiteTier,
+} from './content';
 import { fitScore } from './fit';
 import type { Slot } from './fit';
 import { pairBonus, punch, topicsOf } from './topics';
@@ -54,6 +62,7 @@ export function bestCards(
   hand: readonly string[],
   rng: Rng,
   blackText = '',
+  subject: Topic = 'sex',
 ): string[] {
   const left = [...hand];
   const out: string[] = [];
@@ -61,7 +70,7 @@ export function bestCards(
     // The second card of a Pick 2 steps off the first one's subject (the deck's own aside): two
     // church cards in "____ and ____" read as one joke told twice.
     const taken = new Set<Topic>(
-      out.flatMap((id) => topicsOf(whiteText(id))).filter((t) => t !== 'sex'),
+      out.flatMap((id) => topicsOf(whiteText(id))).filter((t) => t !== subject),
     );
     const best = left
       .map((id) => ({
@@ -111,7 +120,13 @@ export function botInput(state: State, playerId: string, rng: Rng): Input | null
     const { pick } = blackCard(state.blackId);
     const hand = state.hands[playerId] ?? [];
     if (hand.length < pick) return null;
-    const cards = bestCards(blackSlots(state.blackId), hand, rng, blackCard(state.blackId).text);
+    const cards = bestCards(
+      blackSlots(state.blackId),
+      hand,
+      rng,
+      blackCard(state.blackId).text,
+      deckSubject(state.settings.decks),
+    );
     return cards.length === pick ? { type: 'play', cards } : null;
   }
   // Bots never tap Next: an untimed result stays up for the humans (the hidden fallback ends it).
