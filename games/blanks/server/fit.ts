@@ -22,9 +22,10 @@ const DOING_PROMPT = [
   /\b(?:real|hidden|secret|true) talent\b|\bpunishment (?:for|is|was)\b|\bpunishment\?$/i,
   /\b(?:cut short by|ends? (?:\w+ )?(?:with|in)) ____/i, // "The bedtime story ends with ____.", "cut short by ____"
   /^____ and ____: what\b/, // "____ and ____: what the Airbnb's two hidden cameras caught."
+  /\b(?:resolutions?|bucket list|routine|to-do list|guilty pleasures?|hobby|hobbies|habits?)\b[^.?]*(?::| is| was| starts with| ends with) ____/i, // "New Year's resolution, abandoned by January 3rd: ____.", "The nun's guilty pleasure is ____."
   /\bdo (?:at|in|on|to|with|for|instead|before|after|during|while|when|all day|every)\b/i, // "What did Lincoln do at…", "…do while I'm at work?"
   /\b(?:was|is|were) actually (?:[A-Z][\w']+ ){1,3}____/, // "The moonwalk was actually Michael Jackson ____."
-  /\b(?:does|did|caught (?:me|him|her|them|us|the \w+)|busy|instead of|after|before|while|during|in the middle of|conceived during|spent (?:the \w+|\w+ years?)|most likely to|made (?:me|us|them|him|her) do|performed|opened with|threw a flag for|flag for)\s+____/i,
+  /\b(?:does|did|caught (?:me|him|her|them|us|the \w+)|busy|instead of|after|before|while|during|until|in the middle of|conceived during|spent (?:the \w+|\w+ years?)|most likely to|made (?:me|us|them|him|her) do|performed|opened with|threw a flag for|flag for)\s+____/i,
   /["“]Most Likely To["”] was ____/i, // the yearbook's
   /\b(?:best|worst|favou?rite|only|fastest|quickest) way to \w+/i, // "The best way to annoy a sibling: ____."
   // (No trailing \b: after "on?" the end of the text is no word boundary — "What did the kids walk
@@ -180,8 +181,43 @@ export function fitScore(
 ): number {
   if (slot === 'name' && text !== undefined)
     return nameFit(text, blackText !== undefined && WORD_PROMPT.test(blackText));
-  return Math.max(0, ...serves.map((s) => FIT[slot][s] ?? 0));
+  const best = Math.max(0, ...serves.map((s) => FIT[slot][s] ?? 0));
+  // "My uncle's garage is full of ____" wants a plural or a mass noun: "A crop circle shaped like
+  // a bagel" reads a beat off, "Cum-stained love letters" and "The wet spot" land (loop 758).
+  if (
+    slot === 'thing' &&
+    text !== undefined &&
+    blackText !== undefined &&
+    MASS_PROMPT.test(blackText) &&
+    /^(?:A|An) /.test(text)
+  )
+    return best * ONE_OF_MANY;
+  // "The Ring doorbell caught the neighbor ____" wants a verb: an event noun serves a doing blank
+  // after "for" or "after" ("arrested for A Labor Day gangbang") but not straight after its
+  // subject ("caught the neighbor A Labor Day gangbang"), where only a gerund reads (loop 762).
+  if (
+    slot === 'doing' &&
+    blackText !== undefined &&
+    serves[0] !== 'doing' &&
+    serves.includes('doing') &&
+    GERUND_PROMPT.test(blackText)
+  )
+    return best * EVENT_AFTER_SUBJECT;
+  return best;
 }
+
+/** A doing blank right after its subject — a pronoun, "the neighbor", a name, "busy" — where
+ *  the card is the verb of the sentence. (Checked only once the blank is known to be a doing.) */
+const GERUND_PROMPT =
+  /\b(?:me|him|her|them|us|you|busy|the \w+|my \w+|(?!The\b|An?\b|Was\b|Is\b)[A-Z][\w']+) ____/;
+/** What an event noun ("A bachelor party") keeps of its doing fit there. */
+const EVENT_AFTER_SUBJECT = 0.6;
+
+/** Blanks that want a quantity — a plural, a mass noun — rather than one thing with an article. */
+const MASS_PROMPT =
+  /\b(?:full of|made (?:entirely |mostly )?of|covered in|mostly|out of everything but|a side of|stuffed with|filled with|packed with|a bag of|a box of|a pile of|a drawer full of|plenty of|lots of|enough) ____/i;
+/** What a one-of-something card keeps of its fit in such a blank. */
+const ONE_OF_MANY = 0.85;
 
 /** A name blank that wants a WORD — a safe word, a nickname, a handle, a password, a first
  *  word, a hurricane's name — lands hardest on one or two words; a title or a line takes six. */
