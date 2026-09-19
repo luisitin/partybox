@@ -1,0 +1,68 @@
+{
+  "pass": "534",
+  "game": "wisecrack",
+  "players": 4,
+  "scenario": "tie",
+  "focus": "phone",
+  "started": "08:35:21.878",
+  "tvVideoT0": "08:35:18.608",
+  "phoneVideoT0": "08:35:19.421",
+  "changes": [
+    {
+      "t": 1789806921880,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789806926873,
+      "bed": "warm",
+      "at": "08:35:21.880",
+      "sinceStartS": 0,
+      "videoS": 3.3,
+      "phoneVideoS": 2.5
+    },
+    {
+      "t": 1789806926985,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789806986874,
+      "bed": null,
+      "at": "08:35:26.985",
+      "sinceStartS": 5.1,
+      "videoS": 8.4,
+      "phoneVideoS": 7.6
+    },
+    {
+      "t": 1789806986925,
+      "status": "playing",
+      "phase": "scores",
+      "deadline": 1789806994884,
+      "bed": "lounge",
+      "at": "08:36:26.925",
+      "sinceStartS": 65,
+      "videoS": 68.3,
+      "phoneVideoS": 67.5
+    },
+    {
+      "t": 1789806994955,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789806999890,
+      "bed": "warm",
+      "at": "08:36:34.955",
+      "sinceStartS": 73.1,
+      "videoS": 76.3,
+      "phoneVideoS": 75.5
+    },
+    {
+      "t": 1789806999920,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789807059899,
+      "bed": null,
+      "at": "08:36:39.920",
+      "sinceStartS": 78,
+      "videoS": 81.3,
+      "phoneVideoS": 80.5
+    }
+  ],
+  "notes": ["budget reached while playing; skipped to results"]
+}
