@@ -8,6 +8,7 @@ import { parseArgs } from 'node:util';
 import { runGame } from '../packages/sim/src/runner';
 import { DECKS, blackCard, blackTier, decksFor, whiteText } from '../games/blanks/server/content';
 import { fillText } from '../games/blanks/server/cards';
+import { TOPIC_HIT, WORD_ECHO, pairBonus } from '../games/blanks/server/topics';
 import { game } from '../games/blanks/server/index';
 import { fitScore, servesOf, slotOf, slotsOf, SLOTS } from '../games/blanks/server/fit';
 import type { Slot } from '../games/blanks/server/fit';
@@ -71,6 +72,8 @@ let goodCards = 0; // tier 3 cards across hands
 let handsHalfGood = 0; // ≥ half the hand tier 3
 let serveCards = 0; // cards serving the round's slot across hands
 let plays = 0;
+let hits = 0; // plays on the prompt's topic in other words
+let echoes = 0; // plays that repeat the prompt's own word
 let playFit = 0; // sum of fit scores of the cards bots played
 let playTier = 0;
 let bestFit = 0; // the best fit the hand offered
@@ -120,7 +123,11 @@ for (let r = 0; r < runs; r += 1) {
         const slotAt = (i: number): Slot => blankSlots[i] ?? slot;
         if (samples.length < sampleN * players) {
           const black = blackCard(state.blackId);
-          const line = `[${blankSlots.join('+')}${'★'.repeat(blackTier(state.blackId))}] ${fillText(black.text, ev.input.cards.map(whiteText))}  ← ${ev.input.cards.map((c, i) => `${tiers.get(c) ?? 2}/${fitScore(slotAt(i), serves.get(c) ?? []).toFixed(2)}`).join(' ')}`;
+          const mark = (c: string): string => {
+            const b = pairBonus(black.text, whiteText(c));
+            return b === TOPIC_HIT ? '†' : b === WORD_ECHO ? '↩' : '';
+          };
+          const line = `[${blankSlots.join('+')}${'★'.repeat(blackTier(state.blackId))}] ${fillText(black.text, ev.input.cards.map(whiteText))}  ← ${ev.input.cards.map((c, i) => `${tiers.get(c) ?? 2}/${fitScore(slotAt(i), serves.get(c) ?? []).toFixed(2)}${mark(c)}`).join(' ')}`;
           samples.push(line);
         }
         ev.input.cards.forEach((c, i) => {
@@ -131,6 +138,9 @@ for (let r = 0; r < runs; r += 1) {
           playTier += tiers.get(c) ?? 2;
           bestFit += best;
           if ((serves.get(c) ?? []).includes(s)) playServes += 1;
+          const b = pairBonus(blackCard(state.blackId).text, whiteText(c));
+          if (b === TOPIC_HIT) hits += 1;
+          else if (b === WORD_ECHO) echoes += 1;
         });
       }
     }
@@ -149,6 +159,9 @@ console.log(
 );
 console.log(
   `  cards serving the slot per hand: ${(serveCards / Math.max(1, hands)).toFixed(2)}; tier-3 per hand: ${(goodCards / Math.max(1, hands)).toFixed(2)}; hands at least half tier-3: ${pct(handsHalfGood, hands)}`,
+);
+console.log(
+  `  bot plays on the prompt's topic (other words): ${pct(hits, plays)}; echoing its word: ${pct(echoes, plays)}`,
 );
 console.log(
   `  bot plays: ${plays}; mean fit ${(playFit / Math.max(1, plays)).toFixed(3)} (best on offer ${(bestFit / Math.max(1, plays)).toFixed(3)}); serving the slot ${pct(playServes, plays)}; mean tier ${(playTier / Math.max(1, plays)).toFixed(2)}`,
