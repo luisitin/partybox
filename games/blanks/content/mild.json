@@ -3045,8 +3045,8 @@
       "text": "My therapist says I use ____ to avoid ____.",
       "pick": 2,
       "draw": 0,
-      "tier": 3,
-      "slots": ["thing", "doing"]
+      "slots": ["thing", "doing"],
+      "tier": 3
     },
     {
       "id": "mb437",
@@ -3074,8 +3074,8 @@
       "text": "Saturday chores: ____, then ____, then a nap.",
       "pick": 2,
       "draw": 0,
-      "tier": 1,
-      "slots": ["doing", "doing"]
+      "slots": ["doing", "doing"],
+      "tier": 1
     },
     {
       "id": "mb441",
@@ -4037,8 +4037,8 @@
       "text": "The Olympics added ____ and ____ as events.",
       "pick": 2,
       "draw": 0,
-      "tier": 1,
-      "slots": ["doing", "doing"]
+      "slots": ["doing", "doing"],
+      "tier": 1
     },
     {
       "id": "mb578",
@@ -7572,6 +7572,144 @@
     {
       "id": "mb1103",
       "text": "What did the ghost leave on the pillow?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb1104",
+      "text": "The Florida theme park's newest ride is ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb1105",
+      "text": "The hurricane party ran out of ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb1106",
+      "text": "The alligator in the pool was holding ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb1107",
+      "text": "The Florida retirement community's biggest scandal: ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb1108",
+      "text": "Everything's bigger in Texas, especially ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb1109",
+      "text": "The Texas barbecue's secret ingredient was ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb1110",
+      "text": "The rodeo's halftime show featured ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb1111",
+      "text": "The Texas high school football budget went to ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb1112",
+      "text": "\"Don't mess with Texas\" now applies to ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb1113",
+      "text": "The New York subway car smelled like ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb1114",
+      "text": "The Broadway show's second act was just ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb1115",
+      "text": "A New Yorker will wait in line for ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb1116",
+      "text": "The bodega cat's job title is ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb1117",
+      "text": "The rent in New York now includes ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb1118",
+      "text": "California's newest wellness trend is ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb1119",
+      "text": "The Hollywood premiere was interrupted by ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb1120",
+      "text": "The Silicon Valley startup's product is ____ as a service.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb1121",
+      "text": "The earthquake kit contained ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb1122",
+      "text": "The LA traffic jam was caused by ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb1123",
+      "text": "What did Florida Man do this time?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb1124",
+      "text": "What's really in the Texas chili?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb1125",
+      "text": "What did the New Yorker yell at the tourist?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb1126",
+      "text": "What did the Californian put in the smoothie?",
       "pick": 1,
       "draw": 0
     }
@@ -19359,6 +19497,186 @@
     {
       "id": "mw2361",
       "text": "Bigfoot's blurry cousin, the ghost.",
+      "tier": 3
+    },
+    {
+      "id": "mw2362",
+      "text": "Florida Man, unsupervised.",
+      "tier": 4
+    },
+    {
+      "id": "mw2363",
+      "text": "An alligator in the drive-thru line.",
+      "tier": 4
+    },
+    {
+      "id": "mw2364",
+      "text": "A hurricane party with a Jimmy Buffett playlist.",
+      "tier": 3
+    },
+    {
+      "id": "mw2365",
+      "text": "A retirement community golf cart race.",
+      "tier": 3
+    },
+    {
+      "id": "mw2366",
+      "text": "A Florida license plate with a full paragraph.",
+      "tier": 4
+    },
+    {
+      "id": "mw2367",
+      "text": "A Disney adult with a lanyard collection.",
+      "tier": 4
+    },
+    {
+      "id": "mw2368",
+      "text": "A Publix sub, treated like a religion.",
+      "tier": 4
+    },
+    {
+      "id": "mw2369",
+      "text": "An iguana falling out of a tree, frozen.",
+      "tier": 4
+    },
+    {
+      "id": "mw2370",
+      "text": "A boat with more flags than the marina.",
+      "tier": 3
+    },
+    {
+      "id": "mw2371",
+      "text": "A Texas belt buckle that doubles as a plate.",
+      "tier": 4
+    },
+    {
+      "id": "mw2372",
+      "text": "Brisket that took eighteen hours and a marriage.",
+      "tier": 4
+    },
+    {
+      "id": "mw2373",
+      "text": "A pickup truck taller than the house.",
+      "tier": 4
+    },
+    {
+      "id": "mw2374",
+      "text": "A high school football stadium with a jumbotron.",
+      "tier": 3
+    },
+    {
+      "id": "mw2375",
+      "text": "A Whataburger at 3 a.m., honey butter chicken biscuit.",
+      "tier": 3
+    },
+    {
+      "id": "mw2376",
+      "text": "A Texan explaining that it's a dry heat.",
+      "tier": 3
+    },
+    {
+      "id": "mw2377",
+      "text": "A cowboy hat in a Zoom meeting.",
+      "tier": 3
+    },
+    {
+      "id": "mw2378",
+      "text": "A Buc-ee's the size of an airport.",
+      "tier": 4
+    },
+    {
+      "id": "mw2379",
+      "text": "A rodeo clown with a pension.",
+      "tier": 3
+    },
+    {
+      "id": "mw2380",
+      "text": "A subway rat carrying a whole slice.",
+      "tier": 4
+    },
+    {
+      "id": "mw2381",
+      "text": "A bodega cat with seniority.",
+      "tier": 4
+    },
+    {
+      "id": "mw2382",
+      "text": "A New York apartment the size of a closet, for $4,000.",
+      "tier": 4
+    },
+    {
+      "id": "mw2383",
+      "text": "A Broadway ticket that cost a kidney.",
+      "tier": 3
+    },
+    {
+      "id": "mw2384",
+      "text": "Jaywalking as a birthright.",
+      "tier": 3
+    },
+    {
+      "id": "mw2385",
+      "text": "A hot dog cart with a Michelin star.",
+      "tier": 4
+    },
+    {
+      "id": "mw2386",
+      "text": "A New Yorker who's \"walking here.\"",
+      "tier": 3
+    },
+    {
+      "id": "mw2387",
+      "text": "A pigeon that owns the block.",
+      "tier": 4
+    },
+    {
+      "id": "mw2388",
+      "text": "A Californian who's never seen snow.",
+      "tier": 3
+    },
+    {
+      "id": "mw2389",
+      "text": "An avocado toast that cost $19.",
+      "tier": 4
+    },
+    {
+      "id": "mw2390",
+      "text": "An LA traffic jam at 2 a.m.",
+      "tier": 3
+    },
+    {
+      "id": "mw2391",
+      "text": "A Silicon Valley app for something you can already do.",
+      "tier": 4
+    },
+    {
+      "id": "mw2392",
+      "text": "A Hollywood agent who says \"let's do lunch.\"",
+      "tier": 3
+    },
+    {
+      "id": "mw2393",
+      "text": "A wildfire evacuation with the surfboard.",
+      "tier": 4
+    },
+    {
+      "id": "mw2394",
+      "text": "A Whole Foods parking lot standoff.",
+      "tier": 3
+    },
+    {
+      "id": "mw2395",
+      "text": "An In-N-Out secret menu order, pronounced wrong.",
+      "tier": 3
+    },
+    {
+      "id": "mw2396",
+      "text": "A yoga instructor named Sage, of course.",
+      "tier": 4
+    },
+    {
+      "id": "mw2397",
+      "text": "A San Francisco rent that's a second mortgage.",
       "tier": 3
     }
   ]
