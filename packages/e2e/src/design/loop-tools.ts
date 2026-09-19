@@ -16,6 +16,8 @@ export interface CueEvent {
   t: number;
   surface: 'tv' | 'phone';
   freqs: number[];
+  /** The first note's length in ms as the oscillator was scheduled (0 when never stopped). */
+  dur?: number;
   cue: string;
   phase: string;
 }
@@ -29,7 +31,7 @@ export interface PhaseChange {
 }
 
 /** Cue signatures (first notes' frequencies) parsed from the client's sound table. */
-export function cueSignatures(): { name: string; freqs: number[]; type: string }[] {
+export function cueSignatures(): { name: string; freqs: number[]; type: string; dur: number }[] {
   // The table moved to sound-cues.ts (bingo loop #238); read whichever file holds it.
   const src = join(REPO_ROOT, 'packages', 'client', 'src');
   let text = readFileSync(join(src, 'sound-cues.ts'), 'utf8');
@@ -43,7 +45,10 @@ export function cueSignatures(): { name: string; freqs: number[]; type: string }
   // `reveal` and `tick` were never in the table, so every Bingo call was logged as `ready`.
   // The first note's waveform too (loop 373): `countdown` (880 triangle) and Bingo's `tick`
   // (880 square) share a frequency, and every 3 · 2 · 1 tick was logged as a countdown.
-  const out: { name: string; freqs: number[]; type: string }[] = [];
+  // The first note's length too (loop 482): the fifth countdown tick (E6, 1319 Hz) is also a lock
+  // at −3 semitones, and every idle room's "1" was logged as a lock — a countdown tick is 60 ms,
+  // a lock 40 ms.
+  const out: { name: string; freqs: number[]; type: string; dur: number }[] = [];
   const re = /^\s{2}(\w+): \[/gm;
   for (let m = re.exec(block); m; m = re.exec(block)) {
     let depth = 0;
@@ -59,7 +64,8 @@ export function cueSignatures(): { name: string; freqs: number[]; type: string }
     const body = block.slice(m.index + m[0].length, end);
     const freqs = [...body.matchAll(/freq: (\d+)/g)].map((x) => Number(x[1]));
     const type = /type: '(\w+)'/.exec(body)?.[1] ?? 'sine';
-    out.push({ name: m[1] as string, freqs, type });
+    const dur = Number(/dur: ([\d.]+)/.exec(body)?.[1] ?? 0);
+    out.push({ name: m[1] as string, freqs, type, dur });
     re.lastIndex = end;
   }
   return out;
@@ -80,7 +86,10 @@ export const HOOKS = `
         let freq = null;
         osc.frequency.setValueAtTime = (v, t) => { if (freq === null) freq = v; return set(v, t); };
         const start = osc.start.bind(osc);
-        osc.start = (when) => { log.push({ t: Date.now(), freq, when: when - this.currentTime, type: osc.type }); return start(when); };
+        const entry = { t: 0, freq: null, when: 0, type: osc.type, dur: 0 };
+        osc.start = (when) => { entry.t = Date.now(); entry.freq = freq; entry.when = when - this.currentTime; entry.type = osc.type; log.push(entry); return start(when); };
+        const stop = osc.stop.bind(osc);
+        osc.stop = (when) => { entry.dur = when - this.currentTime - entry.when; return stop(when); };
         return osc;
       };
     }
@@ -91,7 +100,7 @@ export const HOOKS = `
 `;
 
 export function groupCues(
-  raw: { t: number; freq: number | null; when: number; type?: string }[],
+  raw: { t: number; freq: number | null; when: number; type?: string; dur?: number }[],
   surface: 'tv' | 'phone',
   phaseAt: (t: number) => string,
 ): CueEvent[] {
@@ -120,10 +129,21 @@ export function groupCues(
       [...cands].sort(
         (a, b) => Math.abs((a.freqs[0] ?? 0) - first) - Math.abs((b.freqs[0] ?? 0) - first),
       )[0];
-    const type = [...group].sort((a, b) => a.when - b.when)[0]?.type ?? 'sine';
+    const head = [...group].sort((a, b) => a.when - b.when)[0];
+    const type = head?.type ?? 'sine';
+    const dur = head?.dur ?? 0;
+    // Same length (± 5 ms) and waveform beats the nearest pitch: a pitch-shifted single note can
+    // land on another cue's frequency (countdown "1" vs lock).
+    const sameLength = (s: { type: string; dur: number }): boolean =>
+      dur > 0 && s.dur > 0 && Math.abs(s.dur + 0.02 - dur) <= 0.008 && s.type === type; // the engine stops 20 ms after the note
     const match =
       sigs.find((s) => s.freqs.join(',') === freqs.join(',') && s.type === type) ??
       sigs.find((s) => s.freqs.join(',') === freqs.join(',')) ??
+      nearest(
+        sigs.filter(
+          (s) => s.freqs.length === freqs.length && norm(s.freqs) === norm(freqs) && sameLength(s),
+        ),
+      ) ??
       nearest(
         sigs.filter((s) => s.freqs.length === freqs.length && norm(s.freqs) === norm(freqs)),
       ) ??
@@ -132,6 +152,7 @@ export function groupCues(
       t: group[0]?.t ?? 0,
       surface,
       freqs,
+      dur: Math.round(dur * 1000),
       cue: match?.name ?? '?',
       phase: phaseAt(group[0]?.t ?? 0),
     });
