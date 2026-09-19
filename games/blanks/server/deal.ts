@@ -3,7 +3,15 @@
 // one subject — and, once the prompt is known, the best-fitting cards on top. Pure data, like
 // cards.ts, which it draws from.
 import { shuffle } from '@partybox/game-sdk';
-import { WHITE_KINDS, blackSlot, whiteKind, whiteServes, whiteText, whiteTier } from './content';
+import {
+  WHITE_KINDS,
+  blackCard,
+  blackSlot,
+  whiteKind,
+  whiteServes,
+  whiteText,
+  whiteTier,
+} from './content';
 import type { WhiteKind } from './content';
 import { drawWhite } from './cards';
 import { fitScore } from './fit';
@@ -264,7 +272,7 @@ export function leadWithFit(state: State, playerIds: readonly string[]): State {
       .map((card, i) => ({
         card,
         i,
-        fit: fitScore(slot, whiteServes(card), whiteText(card)),
+        fit: fitScore(slot, whiteServes(card), whiteText(card), blackCard(state.blackId).text),
         tier: whiteTier(card),
       }))
       .sort((a, b) => b.fit - a.fit || b.tier - a.tier || a.i - b.i)

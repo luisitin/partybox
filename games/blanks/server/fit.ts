@@ -159,14 +159,35 @@ const FIT: Readonly<Record<Slot, Readonly<Record<Slot, number>>>> = {
 /** 0–1: the best reading the white card offers the black card's slot. With the card's text, a
  *  name blank grades by length instead of the four-word line: a slogan or a loading-screen tip
  *  takes six words happily, a safe word wants one, and a twelve-word card is a wall either way. */
-export function fitScore(slot: Slot, serves: readonly Slot[], text?: string): number {
-  if (slot === 'name' && text !== undefined) return nameFit(text);
+export function fitScore(
+  slot: Slot,
+  serves: readonly Slot[],
+  text?: string,
+  blackText?: string,
+): number {
+  if (slot === 'name' && text !== undefined)
+    return nameFit(text, blackText !== undefined && WORD_PROMPT.test(blackText));
   return Math.max(0, ...serves.map((s) => FIT[slot][s] ?? 0));
 }
 
-/** How a card of this length reads as a name, a title, a line: 1 up to four words, then down. */
-export function nameFit(text: string): number {
+/** A name blank that wants a WORD — a safe word, a nickname, a handle, a password, a first
+ *  word, a hurricane's name — lands hardest on one or two words; a title or a line takes six. */
+const WORD_PROMPT =
+  /\b(?:safe ?word|nickname|handle|password|first word|drag name|stage name|porn name|code ?word|call sign|username|gamer ?tag|named ____|was named|wi-?fi (?:network|password))\b/i;
+
+/** How a card of this length reads as a name, a title, a line: 1 up to four words, then down —
+ *  and for a blank that wants a word, 1 up to two. */
+export function nameFit(text: string, word = false): number {
   const words = text.split(/\s+/).filter(Boolean).length;
+  if (word) {
+    // Steep: the one-word cards are mostly filler-tier, and the tier weight must not carry a
+    // six-word amazing card past "Smegma." as a safe word.
+    if (words <= 2) return 1;
+    if (words === 3) return 0.85;
+    if (words === 4) return 0.6;
+    if (words <= 6) return 0.3;
+    return 0.15;
+  }
   if (words <= NAME_MAX_WORDS) return 1;
   if (words <= 6) return 0.8;
   if (words <= 8) return 0.6;
