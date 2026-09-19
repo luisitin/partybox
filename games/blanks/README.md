@@ -39,7 +39,7 @@ nickname, a line someone says; `server/fit.ts` reads the kind off the
 card's text; a card's own `serves` in the deck JSON overrides it) and at least 5 great cards, 2 of them amazing (`tier` in the deck JSON: 1 filler, 2 good, 3 great, 4 amazing —
 every deck carries tiers throughout; up to three spare cards a round are swapped for great ones and two for
 amazing ones, keeping every kind floor; at most 2 filler cards, the rest swapped out likewise; a hand with
-four cards on one subject — the deck's own aside — trades the weakest for a card off it, never a weaker
+four cards on one subject — the deck mix's own aside: the topic on most of its cards — trades the weakest for a card off it, never a weaker
 one) — while the decks can supply them; the
 hand is shuffled each round, so the same cards never sit at the top, and one card of each kind is
 moved to the front of it so the first screenful on a phone always offers all three; once the black card
