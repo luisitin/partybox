@@ -13,6 +13,9 @@ export const clientModule: GameClientModule = {
   // Every page of the show is its own phase instance and the shell chimes each one (review-loop
   // #93): the soft 'card' pluck turns a page; the full 'reveal' was too much twenty-five times.
   sounds: { show: 'card' },
+  // A page turn is a cut, like flipping a book: the 300 ms dissolve blended the dark page over
+  // the white sheet (a grey flash on every drawing, loop 412).
+  quickInto: ['show'],
   // Owner pick: lounge tracks, quiet, only while people draw and guess (never over the reveal).
   music: {
     tracks: ['backbay-lounge', 'lobby-time', 'hep-cats'],

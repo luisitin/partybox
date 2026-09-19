@@ -40,6 +40,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 - Multi-persona live-play harness (`packages/e2e/live/`) and the 2026-09-15 session report.
 
 ### Fixed
+- **Broken Pencil** show: a bot's book turns itself at a presenter's pace (5 / 8 / 5 s) instead of
+  the room's 12–20 s fallbacks; page turns are a cut (no dissolve) and every page is visible from its
+  first frame.
 - **Broken Pencil**: a drawing the timer cuts off keeps what was drawn — the phone sends the sheet as a
   `draft` while drawing, and the deadline uses it instead of a blank page (the phone also gets its draft
   back after a reload mid-drawing).
