@@ -1,0 +1,137 @@
+{
+  "pass": "603",
+  "game": "lightning-round",
+  "players": 16,
+  "scenario": "reconnect",
+  "focus": "phone",
+  "started": "11:42:40.043",
+  "tvVideoT0": "11:42:36.633",
+  "phoneVideoT0": "11:42:37.574",
+  "changes": [
+    {
+      "t": 1789818160046,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789818164039,
+      "bed": "marimba",
+      "at": "11:42:40.046",
+      "sinceStartS": 0,
+      "videoS": 3.4,
+      "phoneVideoS": 2.5
+    },
+    {
+      "t": 1789818164120,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789818179045,
+      "bed": "pulse",
+      "at": "11:42:44.120",
+      "sinceStartS": 4.1,
+      "videoS": 7.5,
+      "phoneVideoS": 6.5
+    },
+    {
+      "t": 1789818168541,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789818173432,
+      "bed": "pulse",
+      "at": "11:42:48.541",
+      "sinceStartS": 8.5,
+      "videoS": 11.9,
+      "phoneVideoS": 11
+    },
+    {
+      "t": 1789818185281,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789818188443,
+      "bed": "pulse",
+      "at": "11:43:05.281",
+      "sinceStartS": 25.2,
+      "videoS": 28.6,
+      "phoneVideoS": 27.7
+    },
+    {
+      "t": 1789818188464,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789818193455,
+      "bed": "pulse",
+      "at": "11:43:08.464",
+      "sinceStartS": 28.4,
+      "videoS": 31.8,
+      "phoneVideoS": 30.9
+    },
+    {
+      "t": 1789818193487,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789818208471,
+      "bed": "pulse",
+      "at": "11:43:13.487",
+      "sinceStartS": 33.4,
+      "videoS": 36.9,
+      "phoneVideoS": 35.9
+    },
+    {
+      "t": 1789818197769,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789818202721,
+      "bed": "pulse",
+      "at": "11:43:17.769",
+      "sinceStartS": 37.7,
+      "videoS": 41.1,
+      "phoneVideoS": 40.2
+    },
+    {
+      "t": 1789818202783,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789818217738,
+      "bed": "pulse",
+      "at": "11:43:22.783",
+      "sinceStartS": 42.7,
+      "videoS": 46.1,
+      "phoneVideoS": 45.2
+    },
+    {
+      "t": 1789818207005,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789818211910,
+      "bed": "pulse",
+      "at": "11:43:27.005",
+      "sinceStartS": 47,
+      "videoS": 50.4,
+      "phoneVideoS": 49.4
+    },
+    {
+      "t": 1789818212020,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789818226916,
+      "bed": "pulse",
+      "at": "11:43:32.020",
+      "sinceStartS": 52,
+      "videoS": 55.4,
+      "phoneVideoS": 54.4
+    },
+    {
+      "t": 1789818216486,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789818221418,
+      "bed": "pulse",
+      "at": "11:43:36.486",
+      "sinceStartS": 56.4,
+      "videoS": 59.9,
+      "phoneVideoS": 58.9
+    }
+  ],
+  "notes": [
+    "reconnect: Sam dropped for 8 s at 2026-09-19T11:42:49.869Z in reveal",
+    "budget reached while playing; skipped to results"
+  ]
+}
