@@ -271,8 +271,8 @@
       "text": "A night out in three words: ____, ____, ____.",
       "pick": 3,
       "draw": 2,
-      "tier": 3,
-      "slots": ["name", "name", "name"]
+      "slots": ["name", "name", "name"],
+      "tier": 3
     },
     {
       "id": "cb42",
@@ -2654,8 +2654,8 @@
       "text": "Reddit's most-upvoted confession: \"I ____.\"",
       "pick": 1,
       "draw": 0,
-      "tier": 1,
-      "slot": "doing"
+      "slot": "doing",
+      "tier": 1
     },
     {
       "id": "cb391",
@@ -4475,6 +4475,132 @@
     {
       "id": "cb664",
       "text": "What did the pirate bury besides gold?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb665",
+      "text": "The theme park's after-dark event featured ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb666",
+      "text": "The mascot's costume smelled like ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb667",
+      "text": "The circus's ringmaster whipped out ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb668",
+      "text": "The Tunnel of Love ride ended with ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb669",
+      "text": "The library's back shelf had ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb670",
+      "text": "The book club's wine night turned into ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb671",
+      "text": "My erotic novel's working title is \"____.\"",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb672",
+      "text": "The librarian's late fee was paid in ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb673",
+      "text": "The dentist said I'd been grinding on ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb674",
+      "text": "The doctor asked how often I ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb675",
+      "text": "The prostate exam was interrupted by ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb676",
+      "text": "The urologist's waiting room magazine was about ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb677",
+      "text": "The campsite's neighbors were loudly ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb678",
+      "text": "The tent zipper got stuck during ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb679",
+      "text": "The road trip playlist was interrupted by ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb680",
+      "text": "The rest stop's bathroom wall said \"____.\"",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb681",
+      "text": "The trucker at the diner offered ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb682",
+      "text": "What did they find on the roller coaster camera?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb683",
+      "text": "What was the book club really reading?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb684",
+      "text": "What did the nurse find during the physical?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb685",
+      "text": "What happened in the back seat at mile 300?",
       "pick": 1,
       "draw": 0
     }
@@ -11866,8 +11992,8 @@
     {
       "id": "cw1529",
       "text": "Sweaty Dave.",
-      "tier": 3,
-      "serves": ["person", "name"]
+      "serves": ["person", "name"],
+      "tier": 3
     },
     {
       "id": "cw1530",
@@ -11876,14 +12002,14 @@
     {
       "id": "cw1531",
       "text": "Extra crispy.",
-      "tier": 3,
-      "serves": ["name"]
+      "serves": ["name"],
+      "tier": 3
     },
     {
       "id": "cw1532",
       "text": "Discount Elvis.",
-      "tier": 3,
-      "serves": ["person", "name"]
+      "serves": ["person", "name"],
+      "tier": 3
     },
     {
       "id": "cw1533",
@@ -11916,8 +12042,8 @@
     {
       "id": "cw1539",
       "text": "Slightly damp.",
-      "tier": 3,
-      "serves": ["name"]
+      "serves": ["name"],
+      "tier": 3
     },
     {
       "id": "cw1540",
@@ -11951,8 +12077,8 @@
     {
       "id": "cw1547",
       "text": "Clammy.",
-      "tier": 3,
-      "serves": ["name"]
+      "serves": ["name"],
+      "tier": 3
     },
     {
       "id": "cw1548",
@@ -11997,8 +12123,8 @@
     {
       "id": "cw1558",
       "text": "Crusty.",
-      "tier": 3,
-      "serves": ["name"]
+      "serves": ["name"],
+      "tier": 3
     },
     {
       "id": "cw1559",
@@ -12194,6 +12320,166 @@
     {
       "id": "cw1598",
       "text": "A ghost town's only business: the brothel.",
+      "tier": 4
+    },
+    {
+      "id": "cw1599",
+      "text": "A roller coaster photo mid-orgasm.",
+      "tier": 4
+    },
+    {
+      "id": "cw1600",
+      "text": "A mascot with a boner in the suit.",
+      "tier": 4
+    },
+    {
+      "id": "cw1601",
+      "text": "A Ferris wheel handjob, stuck at the top.",
+      "tier": 4
+    },
+    {
+      "id": "cw1602",
+      "text": "A carnival barker who guesses your kink.",
+      "tier": 3
+    },
+    {
+      "id": "cw1603",
+      "text": "A clown with a very honest balloon animal.",
+      "tier": 4
+    },
+    {
+      "id": "cw1604",
+      "text": "A Tunnel of Love with a lifeguard.",
+      "tier": 3
+    },
+    {
+      "id": "cw1605",
+      "text": "A cotton candy pube.",
+      "tier": 4
+    },
+    {
+      "id": "cw1606",
+      "text": "The strongman's other muscle.",
+      "tier": 3
+    },
+    {
+      "id": "cw1607",
+      "text": "A library book with the good pages stuck together.",
+      "tier": 4
+    },
+    {
+      "id": "cw1608",
+      "text": "A book club that's a front for a swingers club.",
+      "tier": 4
+    },
+    {
+      "id": "cw1609",
+      "text": "A librarian who shushes during sex.",
+      "tier": 4
+    },
+    {
+      "id": "cw1610",
+      "text": "Fifty Shades, in the church library.",
+      "tier": 3
+    },
+    {
+      "id": "cw1611",
+      "text": "A dictionary open to \"cunnilingus\" for a week.",
+      "tier": 4
+    },
+    {
+      "id": "cw1612",
+      "text": "An audiobook of your own sex tape.",
+      "tier": 3
+    },
+    {
+      "id": "cw1613",
+      "text": "A dentist who says \"open wider\" with intent.",
+      "tier": 4
+    },
+    {
+      "id": "cw1614",
+      "text": "A hygienist's chest in your face for forty minutes.",
+      "tier": 3
+    },
+    {
+      "id": "cw1615",
+      "text": "A doctor who does the prostate exam with a wink.",
+      "tier": 4
+    },
+    {
+      "id": "cw1616",
+      "text": "The gynecologist's small talk.",
+      "tier": 3
+    },
+    {
+      "id": "cw1617",
+      "text": "A waiting room boner.",
+      "tier": 4
+    },
+    {
+      "id": "cw1618",
+      "text": "A rectal thermometer, warmed up.",
+      "tier": 3
+    },
+    {
+      "id": "cw1619",
+      "text": "\"Turn your head and cough,\" on a first date.",
+      "tier": 4
+    },
+    {
+      "id": "cw1620",
+      "text": "A nurse who's seen it, and it's small.",
+      "tier": 4
+    },
+    {
+      "id": "cw1621",
+      "text": "Tent sex with the flashlight on.",
+      "tier": 3
+    },
+    {
+      "id": "cw1622",
+      "text": "A campfire striptease with the marshmallows.",
+      "tier": 3
+    },
+    {
+      "id": "cw1623",
+      "text": "A sleeping bag built for one, used for two.",
+      "tier": 3
+    },
+    {
+      "id": "cw1624",
+      "text": "Road head at a toll booth.",
+      "tier": 4
+    },
+    {
+      "id": "cw1625",
+      "text": "A rest stop glory hole with a Yelp rating.",
+      "tier": 4
+    },
+    {
+      "id": "cw1626",
+      "text": "A trucker's \"sleeper cab.\"",
+      "tier": 3
+    },
+    {
+      "id": "cw1627",
+      "text": "A car seat with a suspicious stain, ours.",
+      "tier": 3
+    },
+    {
+      "id": "cw1628",
+      "text": "Skinny-dipping with the park ranger.",
+      "tier": 3
+    },
+    {
+      "id": "cw1629",
+      "text": "A hitchhiker who paid in kind.",
+      "tier": 3
+    },
+    {
+      "id": "cw1630",
+      "text": "A minivan with fogged windows and a family inside.",
       "tier": 4
     }
   ]

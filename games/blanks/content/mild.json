@@ -3716,8 +3716,8 @@
       "text": "The Wordle answer that broke the internet: ____.",
       "pick": 1,
       "draw": 0,
-      "tier": 3,
-      "slot": "name"
+      "slot": "name",
+      "tier": 3
     },
     {
       "id": "mb534",
@@ -3794,8 +3794,8 @@
       "text": "Today's top Reddit post: \"AITA for ____?\"",
       "pick": 1,
       "draw": 0,
-      "tier": 1,
-      "slot": "doing"
+      "slot": "doing",
+      "tier": 1
     },
     {
       "id": "mb545",
@@ -6079,6 +6079,144 @@
     {
       "id": "mb886",
       "text": "What's buried under the X?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb887",
+      "text": "The theme park's newest ride is called \"____.\"",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb888",
+      "text": "The roller coaster's safety video warns about ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb889",
+      "text": "The circus's strongman lifted ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb890",
+      "text": "The clown car held ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb891",
+      "text": "The mascot got fired for ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb892",
+      "text": "The book club argued for an hour about ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb893",
+      "text": "The librarian shushed ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb894",
+      "text": "The bestseller's plot twist: ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb895",
+      "text": "My autobiography's title is \"____.\"",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb896",
+      "text": "The dentist found ____ between my teeth.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb897",
+      "text": "The waiting room's TV was stuck on ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb898",
+      "text": "The doctor prescribed ____ twice daily.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb899",
+      "text": "The eye chart's bottom line said \"____.\"",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb900",
+      "text": "The receptionist asked if I was here for ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb901",
+      "text": "The campfire story was about ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb902",
+      "text": "The tent's instructions were written by ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb903",
+      "text": "The road trip's only rule was no ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb904",
+      "text": "The rest stop's vending machine sold ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb905",
+      "text": "The GPS rerouted us through ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb906",
+      "text": "The s'mores were ruined by ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb907",
+      "text": "What did the carnival game's prize turn out to be?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb908",
+      "text": "What was in the book return slot?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb909",
+      "text": "What did the X-ray show?",
       "pick": 1,
       "draw": 0
     }
@@ -15683,8 +15821,8 @@
     {
       "id": "mw2018",
       "text": "Big Dave.",
-      "tier": 3,
-      "serves": ["person", "name"]
+      "serves": ["person", "name"],
+      "tier": 3
     },
     {
       "id": "mw2019",
@@ -15694,8 +15832,8 @@
     {
       "id": "mw2020",
       "text": "Discount Santa.",
-      "tier": 3,
-      "serves": ["person", "name"]
+      "serves": ["person", "name"],
+      "tier": 3
     },
     {
       "id": "mw2021",
@@ -15709,8 +15847,8 @@
     {
       "id": "mw2023",
       "text": "Refurbished.",
-      "tier": 3,
-      "serves": ["name"]
+      "serves": ["name"],
+      "tier": 3
     },
     {
       "id": "mw2024",
@@ -15735,8 +15873,8 @@
     {
       "id": "mw2028",
       "text": "Gluten-adjacent.",
-      "tier": 3,
-      "serves": ["name"]
+      "serves": ["name"],
+      "tier": 3
     },
     {
       "id": "mw2029",
@@ -15785,8 +15923,8 @@
     {
       "id": "mw2039",
       "text": "Kevin from accounting.",
-      "tier": 3,
-      "serves": ["person", "name"]
+      "serves": ["person", "name"],
+      "tier": 3
     },
     {
       "id": "mw2040",
@@ -15796,8 +15934,8 @@
     {
       "id": "mw2041",
       "text": "Assistant to the.",
-      "tier": 3,
-      "serves": ["name"]
+      "serves": ["name"],
+      "tier": 3
     },
     {
       "id": "mw2042",
@@ -15807,18 +15945,223 @@
     {
       "id": "mw2043",
       "text": "Partly nachos.",
-      "tier": 3,
-      "serves": ["name"]
+      "serves": ["name"],
+      "tier": 3
     },
     {
       "id": "mw2044",
       "text": "Lukewarm applause.",
-      "tier": 3,
-      "serves": ["name"]
+      "serves": ["name"],
+      "tier": 3
     },
     {
       "id": "mw2045",
       "text": "Corduroy."
+    },
+    {
+      "id": "mw2046",
+      "text": "A roller coaster with one loop and a nap.",
+      "tier": 4
+    },
+    {
+      "id": "mw2047",
+      "text": "A funnel cake the size of a hubcap.",
+      "tier": 4
+    },
+    {
+      "id": "mw2048",
+      "text": "A mascot with a cigarette break.",
+      "tier": 3
+    },
+    {
+      "id": "mw2049",
+      "text": "A carnival goldfish that outlived the marriage.",
+      "tier": 4
+    },
+    {
+      "id": "mw2050",
+      "text": "A Ferris wheel that stops at the top, on purpose.",
+      "tier": 4
+    },
+    {
+      "id": "mw2051",
+      "text": "A clown who's over it.",
+      "tier": 4
+    },
+    {
+      "id": "mw2052",
+      "text": "A tightrope walker with a fear of heights.",
+      "tier": 3
+    },
+    {
+      "id": "mw2053",
+      "text": "A bumper car with a grudge.",
+      "tier": 4
+    },
+    {
+      "id": "mw2054",
+      "text": "A lion tamer with a very small lion.",
+      "tier": 4
+    },
+    {
+      "id": "mw2055",
+      "text": "A corn dog at 9 a.m.",
+      "tier": 3
+    },
+    {
+      "id": "mw2056",
+      "text": "A library book due in 1994.",
+      "tier": 4
+    },
+    {
+      "id": "mw2057",
+      "text": "A book club that only drinks.",
+      "tier": 4
+    },
+    {
+      "id": "mw2058",
+      "text": "A memoir by a golden retriever.",
+      "tier": 4
+    },
+    {
+      "id": "mw2059",
+      "text": "A cookbook with one recipe.",
+      "tier": 3
+    },
+    {
+      "id": "mw2060",
+      "text": "A bookmark that's a slice of cheese.",
+      "tier": 4
+    },
+    {
+      "id": "mw2061",
+      "text": "A children's book with a twist ending.",
+      "tier": 3
+    },
+    {
+      "id": "mw2062",
+      "text": "A romance novel in the church lobby.",
+      "tier": 4
+    },
+    {
+      "id": "mw2063",
+      "text": "A dictionary with the swear words underlined.",
+      "tier": 4
+    },
+    {
+      "id": "mw2064",
+      "text": "An audiobook read by the author's mom.",
+      "tier": 3
+    },
+    {
+      "id": "mw2065",
+      "text": "A dentist who narrates the drilling.",
+      "tier": 4
+    },
+    {
+      "id": "mw2066",
+      "text": "A waiting room magazine from 2009.",
+      "tier": 3
+    },
+    {
+      "id": "mw2067",
+      "text": "A blood pressure cuff with opinions.",
+      "tier": 4
+    },
+    {
+      "id": "mw2068",
+      "text": "A tongue depressor, reused.",
+      "tier": 3
+    },
+    {
+      "id": "mw2069",
+      "text": "A lollipop from the dentist, ironically.",
+      "tier": 4
+    },
+    {
+      "id": "mw2070",
+      "text": "A doctor who Googles it in front of you.",
+      "tier": 4
+    },
+    {
+      "id": "mw2071",
+      "text": "A paper gown in a breeze.",
+      "tier": 3
+    },
+    {
+      "id": "mw2072",
+      "text": "A stethoscope, cold on purpose.",
+      "tier": 4
+    },
+    {
+      "id": "mw2073",
+      "text": "An eye chart that's just \"E.\"",
+      "tier": 4
+    },
+    {
+      "id": "mw2074",
+      "text": "A pharmacy line behind a man with questions.",
+      "tier": 3
+    },
+    {
+      "id": "mw2075",
+      "text": "A tent that sleeps two, badly.",
+      "tier": 3
+    },
+    {
+      "id": "mw2076",
+      "text": "A campfire that only smokes.",
+      "tier": 3
+    },
+    {
+      "id": "mw2077",
+      "text": "A cooler full of warm soda.",
+      "tier": 3
+    },
+    {
+      "id": "mw2078",
+      "text": "A sleeping bag with a raccoon in it.",
+      "tier": 4
+    },
+    {
+      "id": "mw2079",
+      "text": "A road trip with no bathroom breaks.",
+      "tier": 3
+    },
+    {
+      "id": "mw2080",
+      "text": "A GPS that says \"you have arrived\" in a lake.",
+      "tier": 4
+    },
+    {
+      "id": "mw2081",
+      "text": "A car game that ends in tears.",
+      "tier": 3
+    },
+    {
+      "id": "mw2082",
+      "text": "A rest stop with one working stall.",
+      "tier": 3
+    },
+    {
+      "id": "mw2083",
+      "text": "A trunk packed by a dad.",
+      "tier": 4
+    },
+    {
+      "id": "mw2084",
+      "text": "S'mores with a hair in them.",
+      "tier": 4
+    },
+    {
+      "id": "mw2085",
+      "text": "A hike that was \"mostly flat.\"",
+      "tier": 4
+    },
+    {
+      "id": "mw2086",
+      "text": "A minivan singalong, nine hours in.",
+      "tier": 3
     }
   ]
 }
