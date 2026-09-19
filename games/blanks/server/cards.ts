@@ -63,6 +63,9 @@ export interface Segment {
  * Blanks beyond the whites played stay as blanks; whites beyond the blanks (a question card, a
  * "make a haiku") come back in `extra` for the caller to list underneath.
  */
+/** The black text right before a blank ends in an article or a possessive: "a happy little ____". */
+const LEADS_WITH_ARTICLE =
+  /\b(?:a|an|the|my|your|his|her|their|our|little|new|sexy|favou?rite)\s*$/i;
 /** A card that ends in an abbreviation, not in a sentence's full stop: "2 a.m.", "O.J.", "Jr.". */
 const ABBREVIATION = /(?:\b[A-Za-z]\.){2}$|\b(?:Jr|Sr|St|Dr|Mr|Mrs|Ms|Inc|Ltd|vs|etc)\.$/;
 
@@ -109,12 +112,21 @@ export function fill(
     const closed = /\.["”'’)\]]+$/.test(white);
     const ownStop = closed && punctuation.startsWith('.');
     const tail = ownStop ? punctuation.slice(1) : punctuation;
-    const body =
+    let body =
       atEnd || keepDot || ownStop
         ? white
         : closed
           ? white.replace(/\.(["”'’)\]]+)$/, '$1')
           : white.replace(/\.$/, '');
+    // The black card already put an article or a possessive before the blank ("a happy little
+    // ____", "my ____", '"The ____ Murders"'): the white card's own leading article goes, so the
+    // room hears "a happy little dentist who keeps the teeth", not "a happy little A dentist".
+    // (The next word stays as the card has it: "dentist", or "Epstein".)
+    if (
+      LEADS_WITH_ARTICLE.test(lastText(segments)) &&
+      /^(?:A|An|The|My|Your|Our) [a-zA-Z]/.test(body)
+    )
+      body = body.replace(/^(?:A|An|The|My|Your|Our) /, '');
     segments.push({ kind: 'fill', text: opener + body + tail });
   });
   return { segments, extra: whites.slice(blanksIn(text)) };

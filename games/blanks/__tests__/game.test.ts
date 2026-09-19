@@ -204,6 +204,27 @@ describe('fill', () => {
     expect(fillText('I love ____.', ['A nap'])).toBe('I love A nap.');
   });
 
+  it("drops the white card's own article after the black card's article or possessive (the next word as the card has it)", () => {
+    expect(
+      fillText('Bob Ross painted a happy little ____.', ['A dentist who keeps the teeth.']),
+    ).toBe('Bob Ross painted a happy little dentist who keeps the teeth.');
+    expect(
+      fillText('My mom found my ____ and asked what it was for.', ['A vibrator in the lasagna.']),
+    ).toBe('My mom found my vibrator in the lasagna and asked what it was for.');
+    expect(
+      fillText(`Netflix's next true-crime documentary: "The ____ Murders."`, [
+        'The Epstein files.',
+      ]),
+    ).toBe(`Netflix's next true-crime documentary: "The Epstein files Murders."`);
+    // No article before the blank: the card keeps its own.
+    expect(fillText('I woke up covered in ____.', ['A gallon of cum.'])).toBe(
+      'I woke up covered in A gallon of cum.',
+    );
+    expect(fillText('A little ____ never hurt anyone.', ["The Kardashians' shared dildo."])).toBe(
+      "A little Kardashians' shared dildo never hurt anyone.",
+    );
+  });
+
   it('a question card lists the whites underneath (extra)', () => {
     const { segments, extra } = fill("What's that smell?", ['Grandma.', 'The Force.']);
     expect(segments).toEqual([{ kind: 'text', text: "What's that smell?" }]);
