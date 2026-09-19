@@ -37,21 +37,23 @@ docs for your task. Every doc is short; every folder has a `README.md`; every pa
 
 ## Design review
 
-1. `docs/DESIGN_SYSTEM.md`, `docs/DEV_API.md`, `packages/e2e/README.md`, `reports/README.md`.
+1. `docs/DESIGN_REVIEW_LOOP.md` — how a pass runs, where captures land, when it is done.
+2. `docs/DESIGN_SYSTEM.md`, `docs/DEV_API.md`, `packages/e2e/README.md`, `reports/README.md`.
 
 ## Every doc, one line each
 
-| Doc                | Purpose                                                                      |
-| ------------------ | ---------------------------------------------------------------------------- |
-| `ARCHITECTURE.md`  | Packages, data flow diagram, dependency direction, runtime topology.         |
-| `GAME_CONTRACT.md` | `GameDefinition`, events, views, rules the engine enforces, worked example.  |
-| `ADDING_A_GAME.md` | Numbered recipe from `pnpm new-game` to `pnpm verify`, with checklist.       |
-| `PROTOCOL.md`      | Socket.IO events, payload schemas, `rev` ordering, limits.                   |
-| `DEV_API.md`       | Dev-only HTTP endpoints that drive the app deterministically.                |
-| `DESIGN_SYSTEM.md` | Tokens, TV vs phone type scales, primitives, motion, sound cues.             |
-| `TESTING.md`       | Layers (unit, contract, sim, e2e), `pnpm verify`, how to reproduce failures. |
-| `CONVENTIONS.md`   | Code + commit conventions, file size limits, naming.                         |
-| `DECISIONS.md`     | ADRs: Context → Decision → Consequences.                                     |
-| `DEPENDENCIES.md`  | One line per dependency and why it exists.                                   |
-| `BACKLOG.md`       | Known gaps and next items (`BL-nnn`).                                        |
-| `GLOSSARY.md`      | Room, VIP, spectator, phase, view, fixture, rev, seed…                       |
+| Doc                     | Purpose                                                                      |
+| ----------------------- | ---------------------------------------------------------------------------- |
+| `ARCHITECTURE.md`       | Packages, data flow diagram, dependency direction, runtime topology.         |
+| `GAME_CONTRACT.md`      | `GameDefinition`, events, views, rules the engine enforces, worked example.  |
+| `ADDING_A_GAME.md`      | Numbered recipe from `pnpm new-game` to `pnpm verify`, with checklist.       |
+| `PROTOCOL.md`           | Socket.IO events, payload schemas, `rev` ordering, limits.                   |
+| `DEV_API.md`            | Dev-only HTTP endpoints that drive the app deterministically.                |
+| `DESIGN_SYSTEM.md`      | Tokens, TV vs phone type scales, primitives, motion, sound cues.             |
+| `DESIGN_REVIEW_LOOP.md` | The design pass loop: worktree, one capture, evidence, definition of done.   |
+| `TESTING.md`            | Layers (unit, contract, sim, e2e), `pnpm verify`, how to reproduce failures. |
+| `CONVENTIONS.md`        | Code + commit conventions, file size limits, naming.                         |
+| `DECISIONS.md`          | ADRs: Context → Decision → Consequences.                                     |
+| `DEPENDENCIES.md`       | One line per dependency and why it exists.                                   |
+| `BACKLOG.md`            | Known gaps and next items (`BL-nnn`).                                        |
+| `GLOSSARY.md`           | Room, VIP, spectator, phase, view, fixture, rev, seed…                       |
