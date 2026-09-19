@@ -79,8 +79,15 @@ describe('servesOf — what the white card is', () => {
       'A therapist who takes notes with a shudder.',
       'MySpace Tom, who saw everything.',
       'A cop with a podcast.',
+      'A wine mom with a tumbler that says "mama needs."',
+      'A crossing guard who flashed the school bus.',
     ])
       expect(servesOf({ text }), text).toEqual(['person']);
+    // A who-clause deep in the card is not about its head.
+    expect(servesOf({ text: "A funeral for someone who's at the funeral." })).toEqual([
+      'thing',
+      'doing',
+    ]);
     expect(servesOf({ text: 'Grandma.' })).toEqual(['person', 'name']);
   });
   it('a possessive or a compound noun is the thing it names, not the person in it', () => {

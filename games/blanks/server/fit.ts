@@ -89,8 +89,15 @@ const ADVERB =
   /^(not|quietly|slowly|loudly|secretly|aggressively|extremely|slightly|accidentally|finally|casually|barely|openly|silently|gently|violently|briefly|nearly|almost|never|always|just|still|only|really|very|too|softly|angrily|politely|deliberately|repeatedly|calmly|suddenly|passive)$/i;
 const PERSON_WORD =
   /\b(?:man|woman|guy|girl|boy|kid|child|baby|mom|mother|dad|father|grandma|grandpa|grandmother|grandfather|uncle|aunt|cousin|nephew|niece|son|daughter|brother|sister|wife|husband|boyfriend|girlfriend|ex|priest|pastor|nun|rabbi|doctor|nurse|dentist|therapist|lawyer|cop|officer|teacher|coach|principal|boss|coworker|neighbor|roommate|stranger|clown|stripper|hooker|escort|dominatrix|plumber|mailman|pilot|senator|president|king|queen|prince|princess|pope|santa|jesus|god|satan|devil|ghost|robot|celebrity|star|actor|singer|rapper|influencer|streamer|twin|toddler|teen|teenager|virgin|widow|orphan|intern|barista|waiter|waitress|bartender|babysitter|landlord|dealer|pimp|nurse|surgeon|proctologist|gynecologist|monk|bishop|cardinal|soldier|marine|veteran|cowboy|farmer|trucker|biker|hitler|putin|trump|biden|obama|epstein|musk|kanye|oprah|beyonc[eé]|drake|bieber|swift|cage|keanu)s?\b/i;
-/** A relative clause is about someone: "A masseuse who goes too far.", "MySpace Tom, who saw everything." */
-const WHO_CLAUSE = /\bwho\b/i;
+/** Two-word roles the first word alone would miss. */
+const PERSON_PHRASE =
+  /^(?:wine mom|mall santa|flower girl|best man|youth pastor|gym crush|one-night stand|florida man|sugar (?:daddy|baby|mama)|cam girl|pool boy|pizza guy|delivery guy|crossing guard|substitute teacher|school nurse|team doctor|parole officer|police officer|night-shift nurse|hit man|drunk uncle|creepy uncle|stage mom|soccer mom|dance mom|helicopter parent|gym teacher|lunch lady|bus driver|uber driver|lyft driver|cab driver|truck driver|flight attendant|tour guide|bar bathroom attendant|security guard|mall cop|dog walker|wedding planner|wedding dj|dental hygienist|party clown|birthday clown|drill sergeant|border agent|tsa agent|hr rep|customer service rep|reddit moderator|linkedin influencer|karen|chad|boomers?|crypto bro|tech bro|frat (?:boy|bro)|sorority girl|gamer girl|e-?girl|stunt double|body double|method actor|child star|porn star|rock star|drag queen|sex worker|sex robot|ai girlfriend)$/i;
+
+/** A relative clause on the head is about someone: "A masseuse who goes too far.", "MySpace Tom,
+ *  who saw everything." — but "A funeral for someone who's at the funeral." is a funeral, so the
+ *  "who" must come within four words of the start. */
+const WHO_CLAUSE =
+  /^(?:A |An |The |My |Your |Our )?(?!.*\b(?:someone|somebody|anyone) who)(?:[\w'’-]+,? ){1,4}who\b/i;
 /** What may follow the person word for it to be the head of the phrase. */
 const LINK_AFTER =
   /^(?:with|who|whose|that|named|called|at|in|on|from|and|of|for|without|under|behind|during|after|before|as|to|dressed|covered|wearing|holding|doing|having|being|selling|giving|getting|taking)$/i;
@@ -117,10 +124,18 @@ export function servesOf(card: Pick<WhiteCard, 'text'> & { serves?: Slot[] }): S
     // corpse (a possessive head names the owner, not the card); "A clown car full of dildos." is a
     // car (the person word must end the noun phrase: a link word, a comma or the full stop after it).
     const rest = card.text.replace(/^(?:A |An |The |My |Your |Our )/, '');
-    const [head = '', after = ''] = rest.split(/[ ,.]/);
+    const [head = '', after = '', third = ''] = rest.split(/[ ,.]/);
     const possessive = /['’]s$|s['’]$/.test(head);
     const ends = after === '' || LINK_AFTER.test(after);
-    if ((!possessive && ends && PERSON_WORD.test(head)) || WHO_CLAUSE.test(card.text))
+    // A two-word role ("wine mom", "mall Santa", "crossing guard") is the head when the phrase
+    // ends after it — the first word alone would read "wine" as a thing.
+    const pair = `${head} ${after}`;
+    const pairEnds = third === '' || LINK_AFTER.test(third);
+    if (
+      (!possessive && ends && PERSON_WORD.test(head)) ||
+      (pairEnds && PERSON_PHRASE.test(pair)) ||
+      WHO_CLAUSE.test(card.text)
+    )
       kind = 'person';
     // An event named as a noun ("A threesome with a mime.", "Anal in a canoe.") is a thing that
     // also reads as something that happened — the best answer to "…was ruined by ____".
