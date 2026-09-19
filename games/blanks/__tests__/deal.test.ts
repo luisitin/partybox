@@ -103,7 +103,11 @@ describe('dealing', () => {
     // weaker card, with every floor kept.
     const s0 = start({ players: 4, decks: 'wild-only', seed: 21 });
     const clumped = ['ww305', 'ww369', 'ww347', 'ww315', 'ww12', 'ww2', 'ww383', 'ww484', 'ww77'];
-    const deck = s0.whiteDeck.filter((id) => !clumped.includes(id));
+    // The deck under the hand holds no death card of its own, so the tenth card the top-up draws
+    // cannot be a fifth one (it was, once the wild deck grew past 2 000 whites — loop 712).
+    const deck = s0.whiteDeck.filter(
+      (id) => !clumped.includes(id) && !topicsOf(whiteText(id)).includes('death'),
+    );
     const s1 = refillHands({ ...s0, whiteDeck: deck, hands: { ...s0.hands, ana: clumped } });
     const hand = s1.hands['ana'] ?? [];
     expect(hand).toHaveLength(10);

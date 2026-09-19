@@ -4502,6 +4502,102 @@
       "text": "What was in the trunk at the border?",
       "pick": 1,
       "draw": 0
+    },
+    {
+      "id": "wb687",
+      "text": "The flight went down because of ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb688",
+      "text": "The airline's lost luggage turned out to be ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb689",
+      "text": "TSA found ____ and let it through.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb690",
+      "text": "The gym's missing members were traced to ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb691",
+      "text": "The locker room's smell was finally explained by ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb692",
+      "text": "The hotel's basement level held ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb693",
+      "text": "Housekeeping stopped cleaning room 237 after ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb694",
+      "text": "The hotel's five-star review was written by ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb695",
+      "text": "The birthday party's cake was made of ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb696",
+      "text": "The piñata was filled with ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb697",
+      "text": "The party ended when the guests found ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb698",
+      "text": "The birthday clown's van held ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb699",
+      "text": "What did the black box record?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb700",
+      "text": "What was in the hotel's walk-in freezer?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb701",
+      "text": "What did the birthday boy find under the wrapping?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb702",
+      "text": "What did the party's magician saw in half, actually?",
+      "pick": 1,
+      "draw": 0
     }
   ],
   "white": [
@@ -14386,6 +14482,136 @@
     {
       "id": "ww2050",
       "text": "A cooler that isn't for drinks.",
+      "tier": 4
+    },
+    {
+      "id": "ww2051",
+      "text": "A flight where the passenger count drops mid-air.",
+      "tier": 4
+    },
+    {
+      "id": "ww2052",
+      "text": "An airline that loses luggage and passengers at the same rate.",
+      "tier": 3
+    },
+    {
+      "id": "ww2053",
+      "text": "A pilot who took the scenic route into a mountain.",
+      "tier": 3
+    },
+    {
+      "id": "ww2054",
+      "text": "A carry-on with a heartbeat.",
+      "tier": 4
+    },
+    {
+      "id": "ww2055",
+      "text": "A seatmate who's been dead since Denver.",
+      "tier": 4
+    },
+    {
+      "id": "ww2056",
+      "text": "An airport lounge with an exit only for the staff.",
+      "tier": 3
+    },
+    {
+      "id": "ww2057",
+      "text": "A TSA agent who keeps what he finds, including the finder.",
+      "tier": 4
+    },
+    {
+      "id": "ww2058",
+      "text": "A gym where the missing members are the protein.",
+      "tier": 4
+    },
+    {
+      "id": "ww2059",
+      "text": "A locker that's been locked since the member disappeared.",
+      "tier": 3
+    },
+    {
+      "id": "ww2060",
+      "text": "A treadmill wired to the wall, and the walls to the door.",
+      "tier": 3
+    },
+    {
+      "id": "ww2061",
+      "text": "A sauna that only opens from the outside.",
+      "tier": 3
+    },
+    {
+      "id": "ww2062",
+      "text": "A hotel with more guests checked in than out, ever.",
+      "tier": 4
+    },
+    {
+      "id": "ww2063",
+      "text": "A hotel room with a fresh carpet patch and a smell.",
+      "tier": 3
+    },
+    {
+      "id": "ww2064",
+      "text": "Housekeeping that turns down the bed and the guest.",
+      "tier": 4
+    },
+    {
+      "id": "ww2065",
+      "text": "A minibar stocked from the last guest.",
+      "tier": 4
+    },
+    {
+      "id": "ww2066",
+      "text": "A hotel pool that's been drained for a reason nobody says.",
+      "tier": 3
+    },
+    {
+      "id": "ww2067",
+      "text": "A birthday cake with the last party's candles still in it.",
+      "tier": 3
+    },
+    {
+      "id": "ww2068",
+      "text": "A piñata that bleeds.",
+      "tier": 4
+    },
+    {
+      "id": "ww2069",
+      "text": "A birthday clown who counts the guests in, and not out.",
+      "tier": 4
+    },
+    {
+      "id": "ww2070",
+      "text": "A magician whose assistant is still in two boxes.",
+      "tier": 4
+    },
+    {
+      "id": "ww2071",
+      "text": "A surprise party where the surprise is who's missing.",
+      "tier": 4
+    },
+    {
+      "id": "ww2072",
+      "text": "A bounce house that deflates with the uncles inside, quietly.",
+      "tier": 3
+    },
+    {
+      "id": "ww2073",
+      "text": "A birthday wish that took someone.",
+      "tier": 3
+    },
+    {
+      "id": "ww2074",
+      "text": "A party where the guest of honor is in the cake.",
+      "tier": 4
+    },
+    {
+      "id": "ww2075",
+      "text": "A goodie bag with a tooth in it.",
+      "tier": 3
+    },
+    {
+      "id": "ww2076",
+      "text": "A candle that's a finger.",
       "tier": 4
     }
   ]
