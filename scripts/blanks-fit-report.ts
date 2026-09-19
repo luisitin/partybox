@@ -26,9 +26,13 @@ const { values } = parseArgs({
     sample: { type: 'string', default: '0' },
     /** Also write a Markdown review of the deck (prompts by kind, whites by kind and tier) here. */
     md: { type: 'string' },
+    /** Print this many hands as a player sees them: the prompt, then the first four cards. */
+    hands: { type: 'string', default: '0' },
   },
 });
 const sampleN = Number(values.sample);
+const handsN = Number(values.hands);
+const handSamples: string[] = [];
 const preset = values.decks as DeckPreset;
 const players = Number(values.players);
 const runs = Number(values.runs);
@@ -118,6 +122,13 @@ for (let r = 0; r < runs; r += 1) {
           const serving = hand.filter((c) => (serves.get(c) ?? []).includes(slot)).length;
           serveCards += serving;
           const top = hand.slice(0, 4);
+          if (handSamples.length < handsN)
+            handSamples.push(
+              [
+                `[${slot}] ${blackCard(state.blackId).text}`,
+                ...top.map((c) => `      ${'★'.repeat(tiers.get(c) ?? 2)} ${whiteText(c)}`),
+              ].join(String.fromCharCode(10)),
+            );
           topFit +=
             top.reduce((sum, c) => sum + fitScore(slot, serves.get(c) ?? []), 0) /
             Math.max(1, top.length);
@@ -201,6 +212,10 @@ console.log(
 console.log(
   `  bot plays: ${plays}; mean fit ${(playFit / Math.max(1, plays)).toFixed(3)} (best on offer ${(bestFit / Math.max(1, plays)).toFixed(3)}); serving the slot ${pct(playServes, plays)}; mean tier ${(playTier / Math.max(1, plays)).toFixed(2)}`,
 );
+if (handSamples.length > 0) {
+  console.log("hands as a player sees them — the prompt, then the phone's first four cards:");
+  for (const line of handSamples) console.log(`  ${line}`);
+}
 if (samples.length > 0) {
   console.log('sample plays — [kind, prompt tier] filled prompt ← card tier / fit:');
   for (const line of samples) console.log(`  ${line}`);

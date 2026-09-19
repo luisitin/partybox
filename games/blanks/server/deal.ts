@@ -12,8 +12,17 @@ import type { Topic } from './topics';
 import { HAND_SIZE } from './types';
 import type { State } from './types';
 
-/** A hand always holds at least this many cards of each kind (thing / doing / person). */
+/** A hand always holds at least this many cards of each kind (thing / doing / person / name)… */
 export const KIND_FLOOR = 2;
+/** …and more of a kind the prompts ask for often: a "…do?" round is one in seven, and a hand of
+ *  two gerunds is a choice of two (loop 536). The floor per kind, never under KIND_FLOOR. */
+export const KIND_FLOORS: Readonly<Record<WhiteKind, number>> = {
+  thing: KIND_FLOOR,
+  doing: 3,
+  person: KIND_FLOOR,
+  name: KIND_FLOOR,
+};
+const floorOf = (kind: WhiteKind): number => KIND_FLOORS[kind];
 /** …and at least this many great cards (tier 3 or 4) — half the hand (owner, 2026-09-18: "at
  *  least half of their cards as really good cards")… */
 export const GOOD_FLOOR = HAND_SIZE / 2;
@@ -91,7 +100,7 @@ function fillHand(state: State, hand: readonly string[], target: number): [strin
   let next = state;
   let out = [...hand];
   for (const kind of WHITE_KINDS) {
-    while ((countKind(out, kind) < KIND_FLOOR || !leads(out, kind)) && out.length < target) {
+    while ((countKind(out, kind) < floorOf(kind) || !leads(out, kind)) && out.length < target) {
       const [card, after] = takeKind(next, kind, out);
       if (card === null) break;
       next = after;
@@ -117,9 +126,9 @@ function fillHand(state: State, hand: readonly string[], target: number): [strin
   }
   for (const kind of WHITE_KINDS) {
     let swaps = 0;
-    while (countKind(out, kind) < KIND_FLOOR && swaps < MAX_SWAPS) {
+    while (countKind(out, kind) < floorOf(kind) && swaps < MAX_SWAPS) {
       const surplus = [...WHITE_KINDS].sort((a, b) => countKind(out, b) - countKind(out, a))[0];
-      if (surplus === undefined || countKind(out, surplus) <= KIND_FLOOR) break;
+      if (surplus === undefined || countKind(out, surplus) <= floorOf(surplus)) break;
       const [card, after] = takeKind(next, kind, out);
       if (card === null) break;
       // The weakest card of the surplus kind goes (a great one went first before loop #500).
@@ -129,7 +138,7 @@ function fillHand(state: State, hand: readonly string[], target: number): [strin
           .filter(
             ({ id }) =>
               whiteKind(id) === surplus &&
-              !whiteServes(id).some((k) => k !== surplus && countKind(out, k) <= KIND_FLOOR) &&
+              !whiteServes(id).some((k) => k !== surplus && countKind(out, k) <= floorOf(k)) &&
               out.filter((x) => whiteKind(x) === surplus).length > 1,
           )
           .sort((a, b) => whiteTier(a.id) - whiteTier(b.id))[0]?.j ?? -1;
@@ -179,7 +188,7 @@ function swapForGood(
     // Kinds the rest would fall short of — by any reading for the floor, and by first reading for
     // the spare's own kind, so the top of the hand can still lead with one of each (loop #488: a
     // spare gerund swapped for a great noun left a hand with no card that reads as a doing first).
-    const needs = WHITE_KINDS.filter((k) => countKind(rest, k) < KIND_FLOOR);
+    const needs = WHITE_KINDS.filter((k) => countKind(rest, k) < floorOf(k));
     const lead = leads(rest, whiteKind(dropped)) ? null : whiteKind(dropped);
     const [card, after] = takeWhere(
       state,
@@ -284,5 +293,5 @@ function frontLoadKinds(hand: readonly string[]): string[] {
 }
 
 function countsMeetFloor(hand: readonly string[]): boolean {
-  return WHITE_KINDS.every((kind) => countKind(hand, kind) >= KIND_FLOOR);
+  return WHITE_KINDS.every((kind) => countKind(hand, kind) >= floorOf(kind));
 }

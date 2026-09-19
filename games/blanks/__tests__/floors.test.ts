@@ -2,7 +2,7 @@
 // the quality floor could be missed on one seed; this keeps the sweep in the suite). Since loop
 // 521 every pool is tiered, so the quality floors apply to mild and adults rooms too.
 import { describe, expect, it } from 'vitest';
-import { BEST_FLOOR, GOOD_FLOOR, KIND_FLOOR } from '../server/deal';
+import { BEST_FLOOR, GOOD_FLOOR, KIND_FLOORS } from '../server/deal';
 import { WHITE_KINDS, whiteKind, whiteServes, whiteTier } from '../server/content';
 import { playRound, start, timer } from './helpers';
 
@@ -29,7 +29,7 @@ describe('hand floors', () => {
     sweep((hand, where) => {
       for (const k of WHITE_KINDS) {
         const n = hand.filter((c) => whiteServes(c).includes(k)).length;
-        expect(n, `${where} ${k}`).toBeGreaterThanOrEqual(KIND_FLOOR);
+        expect(n, `${where} ${k}`).toBeGreaterThanOrEqual(KIND_FLOORS[k]);
       }
     });
   });
