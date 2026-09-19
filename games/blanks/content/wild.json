@@ -5160,7 +5160,8 @@
       "id": "wb743",
       "text": "The podcast's true-crime episode was about ____, and hosted by ____.",
       "pick": 2,
-      "draw": 0
+      "draw": 0,
+      "slots": ["thing", "person"]
     },
     {
       "id": "wb744",
