@@ -59,13 +59,20 @@ export function useCallFeel(view: BingoControllerView): void {
 /**
  * The deal's plucks: one soft 'card' as each card lands (owner's pick, options B + C), about a
  * second apart (loop 345); the timings mirror .dealing in the stylesheet, the pluck on the bounce.
- * One card plucks too (loop 278: the TV plucks the same beats).
+ * One card plucks too (loop 278: the TV plucks the same beats). The hand feels each landing as
+ * well — the same 12 ms tap a call gets (loop 380).
  */
 export function useDealFeel(dealing: boolean, cards: number, round: number, play: PlayCue): void {
   useEffect(() => {
     if (!dealing) return;
     const handles = Array.from({ length: cards }, (_, i) =>
-      setTimeout(() => play('card'), DEAL_START_MS + i * DEAL_STEP_MS + DEAL_BOUNCE_MS),
+      setTimeout(
+        () => {
+          play('card');
+          buzz(12);
+        },
+        DEAL_START_MS + i * DEAL_STEP_MS + DEAL_BOUNCE_MS,
+      ),
     );
     return () => handles.forEach((h) => clearTimeout(h));
   }, [dealing, cards, play, round]);
