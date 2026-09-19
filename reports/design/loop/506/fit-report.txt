@@ -1,0 +1,24 @@
+decks wild: 1902 black, 4988 white
+  black slots: thing 1612 (84.8 %) · doing 161 (8.5 %) · person 19 (1.0 %) · name 110 (5.8 %)
+  white serves: thing 3699 (74.2 %) · doing 1424 (28.5 %) · person 192 (3.8 %) · name 1122 (22.5 %)
+  white tiers: 1: 721 (14.5 %) · 2: 1973 (39.6 %) · 3: 1444 (28.9 %) · 4: 850 (17.0 %)
+  black tiers: 1: 202 (10.6 %) · 2: 1038 (54.6 %) · 3: 662 (34.8 %)
+20 games × 6 players, 960 hands at answer; prompts played: mean tier 3.00
+  rounds by slot: thing 126 · doing 19 · person 3 · name 12; hands with < 2 cards serving the round's slot: 0 (0.0 %) — thing 0 · doing 0 · person 0 · name 0
+  the phone's first four cards: mean fit 0.959 (whole hand 0.825), great among them 2.75
+  cards serving the slot per hand: 4.95; great (tier 3+) per hand: 5.35, amazing (tier 4) 2.16; hands at least half great: 99.4 %
+  bot plays on the prompt's topic (other words): 10.9 %; echoing its word: 0.8 %
+  bot plays: 1020; mean fit 0.974 (best on offer 1.000); serving the slot 87.5 %; mean tier 3.71
+sample plays — [kind, prompt tier] filled prompt ← card tier / fit:
+  [thing★★★] What did the drug-sniffing dog find? A sponge count that came up one short, again.  ← 4/1.00
+  [thing★★★] What did the drug-sniffing dog find? A baptism in a hot tub.  ← 4/1.00
+  [thing★★★] What did the drug-sniffing dog find? An orgy with a spreadsheet and a facilitator.  ← 4/1.00
+  [thing★★★] What did the drug-sniffing dog find? Van Gogh's other missing part.  ← 4/1.00
+  [thing★★★] What did the drug-sniffing dog find? An AI girlfriend with boundaries.  ← 4/1.00
+  [thing★★★] What did the drug-sniffing dog find? A sex robot with a drinking problem.  ← 4/1.00
+  [thing+thing+thing★★★] Confession: A motel bed that glows under UV, A pillow that's too cold on both sides, and A séance for your dead libido.  ← 4/1.00 3/1.00 2/1.00†
+  [thing+thing+thing★★★] Confession: A dominatrix who does your taxes, A boss who says "circle back", and An ice cream truck with one working song.  ← 4/0.85 4/0.85 3/1.00
+  [thing+thing+thing★★★] Confession: An STD test result read out loud, Canada's politest dominatrix, and A nervous giraffe.  ← 4/1.00 4/1.00 3/1.00
+  [thing+thing+thing★★★] Confession: A doorbell camera that caught the pool boy, Sex that ends in a high five, and A bag of marbles in the dryer.  ← 4/1.00 4/1.00 3/1.00
+  [thing+thing+thing★★★] Confession: A body count that needs a spreadsheet, A stripper with a real estate license, and A Denny's at 4 a.m.  ← 4/1.00 4/0.85 3/1.00
+  [thing+thing+thing★★★] Confession: The Titanic's Wi-Fi, Whatever is in the church basement, and A zookeeper's special relationship with the otter.  ← 4/1.00 3/1.00† 4/1.00
