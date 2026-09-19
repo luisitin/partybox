@@ -134,9 +134,11 @@ describe('dealing', () => {
       let s = start({ players: 6, decks, seed: 3, rounds: 6 });
       for (let round = 1; round <= 6; round++) {
         for (const id of Object.keys(s.players)) {
-          // `name` is only ever a card's second reading, so three kinds lead the hand.
-          const top = (s.hands[id] ?? []).slice(0, 3).map(whiteKind);
-          expect(new Set(top).size, `${decks} r${round} ${id} ${top.join()}`).toBe(3);
+          // `name` is only ever a card's second reading, so three kinds lead the hand — an
+          // event card covers thing and doing at once, so the top three serve all three kinds.
+          const top = new Set((s.hands[id] ?? []).slice(0, 3).flatMap((c) => [...whiteServes(c)]));
+          for (const kind of ['thing', 'doing', 'person'] as const)
+            expect(top.has(kind), `${decks} r${round} ${id} ${[...top].join()}`).toBe(true);
         }
         s = timer(playRound(s));
         if (s.phase.id === 'final' || s.phase.id === 'done') break;

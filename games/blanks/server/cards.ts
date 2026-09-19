@@ -225,16 +225,17 @@ export function leadWithFit(state: State, playerIds: readonly string[]): State {
  *  about four cards without scrolling, so a hand whose every noun is on screen and whose every
  *  action sits below the fold reads as "no options" even when the floor is met (loop #195). */
 function frontLoadKinds(hand: readonly string[]): string[] {
-  const seen = new Set<string>();
+  // A card can serve two kinds (an event is a thing and a doing): the front covers every kind
+  // with as few cards as it takes, first card of each kind in hand order.
   const front: string[] = [];
-  const rest: string[] = [];
-  for (const id of hand) {
-    const kind = whiteKind(id);
-    if (seen.has(kind)) rest.push(id);
-    else {
-      seen.add(kind);
-      front.push(id);
-    }
+  const rest = [...hand];
+  for (const kind of WHITE_KINDS) {
+    if (kind === 'name') continue; // only ever a second reading
+    if (front.some((id) => whiteServes(id).includes(kind))) continue;
+    const i = rest.findIndex((id) => whiteServes(id).includes(kind));
+    if (i === -1) continue;
+    front.push(rest[i] as string);
+    rest.splice(i, 1);
   }
   return [...front, ...rest];
 }
