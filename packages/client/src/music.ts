@@ -2,7 +2,8 @@
 // fetched by scripts/fetch-music.ts into /music/<id>.mp3 — never bundled, never on phones).
 // A plan says which tracks, how loud, and how they follow each other:
 //   rotate — play a few minutes of a track, fade out, a second of silence, start another (lobby);
-//   chain  — whole tracks back to back with no gap, weighted pick (Bingo, Broken Pencil, Wisecrack).
+//   chain  — whole tracks back to back with no gap, weighted pick (Bingo, Broken Pencil, Wisecrack);
+//            the first track of a plan eases in over 0.8 s under the outgoing plan's fade.
 // One <audio> element, JS fades, level via `volume`; the TV's mute toggle mutes it too. `play()`
 // needs a user gesture on the page (the TV's audio gate); until then it retries on `enable()`.
 import type { PushedView, RoomSnapshot, TvView } from '@partybox/shared';
@@ -144,7 +145,10 @@ export function createMusicEngine(): MusicEngine {
   };
   const retired = (el: HTMLAudioElement): boolean => el.dataset['retired'] === '1';
 
-  const start = (p: MusicPlan, gen: number): void => {
+  /** Level ramp for a plan's first chained track: it lands while the last plan is still fading. */
+  const CHAIN_IN_MS = 800;
+
+  const start = (p: MusicPlan, gen: number, first = false): void => {
     if (gen !== generation) return;
     const id = pick(p, last);
     last = id;
@@ -152,7 +156,9 @@ export function createMusicEngine(): MusicEngine {
     const el = new Audio(`/music/${id}.mp3`);
     el.preload = 'auto';
     el.muted = muted;
-    el.volume = p.mode === 'rotate' ? 0 : p.volume;
+    // rotate fades every segment in; chain starts hard track to track but eases the first one in
+    // under the outgoing plan's fade (loop 402: the writing tune jumped in at full level).
+    el.volume = p.mode === 'rotate' || first ? 0 : p.volume;
     audio = el;
     live.add(el);
     el.addEventListener('ended', () => {
@@ -176,6 +182,7 @@ export function createMusicEngine(): MusicEngine {
     void el
       .play()
       .then(() => {
+        if (p.mode === 'chain' && first) rampTo(el, p.volume, CHAIN_IN_MS);
         if (p.mode === 'rotate') {
           rampTo(el, p.volume, Math.min(p.fadeMs ?? 2500, 1500));
           const [lo, hi] = p.segmentMs ?? [30_000, 60_000];
@@ -217,12 +224,12 @@ export function createMusicEngine(): MusicEngine {
       plan = next;
       // Nothing before the audio gate's first tap, even where the browser would allow it: the
       // gate is the one moment the room agrees to sound.
-      if (plan && unlocked) start(plan, generation);
+      if (plan && unlocked) start(plan, generation, true);
     },
     enable() {
       const first = !unlocked;
       unlocked = true;
-      if (plan && !audio && first) start(plan, generation);
+      if (plan && !audio && first) start(plan, generation, true);
     },
     setMuted(value) {
       muted = value;
