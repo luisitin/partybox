@@ -24,7 +24,9 @@ const DOING_PROMPT = [
   /\b(?:was|is|were) actually (?:[A-Z][\w']+ ){1,3}____/, // "The moonwalk was actually Michael Jackson ____."
   /\b(?:does|did|caught (?:me|him|her|them|us)|busy|instead of|after|before|while|during|conceived during|spent (?:the \w+|\w+ years?)|most likely to)\s+____/i,
   /["“]Most Likely To["”] was ____/i, // the yearbook's
-  /\b(?:what happened|what went wrong|walk(?:ed)? in on\?|catch (?:\w+ )+doing|am I doing|are you doing|^how did|^why\b)\b/i,
+  // (No trailing \b: after "on?" the end of the text is no word boundary — "What did the kids walk
+  // in on?" read as a thing for twenty passes.)
+  /\b(?:what happened|what went wrong|walk(?:ed)? in on\?|catch (?:\w+ )+doing\b|am I doing\b|are you doing\b|^how did\b|^why\b)/i,
   /\b(?:pulled (?:me|us|him|her) over|in trouble|grounded|detention|suspended|deported|excommunicated|disqualified|demonetized|cancel(?:l)?ed) (?:\w+ )?for ____/i,
   /\b(?:ruined|interrupted|cancelled|canceled|delayed|caused|started|ended|followed|triggered|brought on) by ____/i,
   /\b(?:led to|ended (?:\w+ )?(?:with|in)|started with|began with) ____\.?$/i,
