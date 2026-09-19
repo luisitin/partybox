@@ -7,4 +7,4 @@
 - ✅ switching to STEM drops the sports picks — subcategories=""
 - ✅ the game draws from the two topics — drawnFrom=sports drawnSubs=["basketball","soccer"] settings={"questions":10,"answerSeconds":15,"category":"sports","subcategories":["basketball","soccer"]}
 - ✅ the TV intro pill names the category and the topics — text has "Sports · Basketball, Soccer": true
-- ✅ the question header names the topic — SPORTS · SOCCER · EASY
+- ✅ the question header names the topic — SPORTS · SOCCER · MEDIUM

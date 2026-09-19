@@ -1,0 +1,104 @@
+{
+  "pass": "547",
+  "game": "broken-pencil",
+  "players": 6,
+  "scenario": "pause",
+  "focus": "phone",
+  "started": "09:15:54.743",
+  "tvVideoT0": "09:15:51.345",
+  "phoneVideoT0": "09:15:52.292",
+  "changes": [
+    {
+      "t": 1789809354746,
+      "status": "playing",
+      "phase": "pick",
+      "deadline": 1789809374739,
+      "bed": null,
+      "at": "09:15:54.746",
+      "sinceStartS": 0,
+      "videoS": 3.4,
+      "phoneVideoS": 2.5
+    },
+    {
+      "t": 1789809366570,
+      "status": "playing",
+      "phase": "draw",
+      "deadline": 1789809426432,
+      "bed": null,
+      "at": "09:16:06.570",
+      "sinceStartS": 11.8,
+      "videoS": 15.2,
+      "phoneVideoS": 14.3
+    },
+    {
+      "t": 1789809370725,
+      "status": "playing",
+      "phase": "pass",
+      "deadline": 1789809460617,
+      "bed": null,
+      "at": "09:16:10.725",
+      "sinceStartS": 16,
+      "videoS": 19.4,
+      "phoneVideoS": 18.4
+    },
+    {
+      "t": 1789809380160,
+      "status": "playing",
+      "phase": "pass",
+      "deadline": 1789809470027,
+      "bed": null,
+      "at": "09:16:20.160",
+      "sinceStartS": 25.4,
+      "videoS": 28.8,
+      "phoneVideoS": 27.9
+    },
+    {
+      "t": 1789809389448,
+      "status": "playing",
+      "phase": "pass",
+      "deadline": 1789809479329,
+      "bed": null,
+      "at": "09:16:29.448",
+      "sinceStartS": 34.7,
+      "videoS": 38.1,
+      "phoneVideoS": 37.2
+    },
+    {
+      "t": 1789809398820,
+      "status": "playing",
+      "phase": "pass",
+      "deadline": 1789809488701,
+      "bed": null,
+      "at": "09:16:38.820",
+      "sinceStartS": 44.1,
+      "videoS": 47.5,
+      "phoneVideoS": 46.5
+    },
+    {
+      "t": 1789809408257,
+      "status": "playing",
+      "phase": "guess",
+      "deadline": 1789809438108,
+      "bed": null,
+      "at": "09:16:48.257",
+      "sinceStartS": 53.5,
+      "videoS": 56.9,
+      "phoneVideoS": 56
+    },
+    {
+      "t": 1789809412383,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789809417272,
+      "bed": null,
+      "at": "09:16:52.383",
+      "sinceStartS": 57.6,
+      "videoS": 61,
+      "phoneVideoS": 60.1
+    }
+  ],
+  "notes": [
+    "pause: VIP paused 6 s at 2026-09-19T09:15:58.821Z in pick",
+    "budget reached while playing; skipped to results"
+  ]
+}

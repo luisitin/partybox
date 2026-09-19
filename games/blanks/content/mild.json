@@ -2895,8 +2895,8 @@
       "text": "Thanksgiving is ____ pretending to be ____.",
       "pick": 2,
       "draw": 0,
-      "tier": 3,
-      "slots": ["person", "thing"]
+      "slots": ["person", "thing"],
+      "tier": 3
     },
     {
       "id": "mb417",
@@ -3015,8 +3015,8 @@
       "text": "Adulthood is ____ paying for ____.",
       "pick": 2,
       "draw": 0,
-      "tier": 3,
-      "slots": ["person", "thing"]
+      "slots": ["person", "thing"],
+      "tier": 3
     },
     {
       "id": "mb434",
@@ -5765,6 +5765,156 @@
     {
       "id": "mb834",
       "text": "What did the waffle iron cook this time?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb835",
+      "text": "The spy's cover was blown by ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb836",
+      "text": "James Bond's newest gadget is ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb837",
+      "text": "The secret password was \"____.\"",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb838",
+      "text": "Boot camp's hardest drill was ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb839",
+      "text": "The general's battle plan hinged on ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb840",
+      "text": "The museum's most-visited exhibit is ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb841",
+      "text": "The art critic called it \"____.\"",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb842",
+      "text": "The sculpture was made entirely of ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb843",
+      "text": "The Mona Lisa is smiling about ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb844",
+      "text": "The kindergarten art show's masterpiece: ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb845",
+      "text": "The reality show's twist: everyone is ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb846",
+      "text": "The game show's grand prize was ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb847",
+      "text": "Survivor's next season takes place at ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb848",
+      "text": "The Bachelor sent home the contestant who brought ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb849",
+      "text": "The judges gave ten points for ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb850",
+      "text": "The Wheel of Fortune puzzle was \"____.\"",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb851",
+      "text": "The farmer's almanac predicts ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb852",
+      "text": "The barn was full of ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb853",
+      "text": "Country music's next hit is about ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb854",
+      "text": "The tractor pull was won by ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb855",
+      "text": "The rooster crowed at ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb856",
+      "text": "What did the spy hide in the hollow tooth?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb857",
+      "text": "What did the museum guard catch someone doing?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb858",
+      "text": "What's the final round of the game show?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb859",
+      "text": "What did the scarecrow scare off?",
       "pick": 1,
       "draw": 0
     }
@@ -14949,6 +15099,211 @@
     {
       "id": "mw1934",
       "text": "Cereal milk, the best part.",
+      "tier": 4
+    },
+    {
+      "id": "mw1935",
+      "text": "A spy with a very loud trench coat.",
+      "tier": 3
+    },
+    {
+      "id": "mw1936",
+      "text": "A secret agent who can't parallel park.",
+      "tier": 3
+    },
+    {
+      "id": "mw1937",
+      "text": "A code name that's just his real name.",
+      "tier": 4
+    },
+    {
+      "id": "mw1938",
+      "text": "Invisible ink that's also regular ink.",
+      "tier": 4
+    },
+    {
+      "id": "mw1939",
+      "text": "A drone with stage fright.",
+      "tier": 3
+    },
+    {
+      "id": "mw1940",
+      "text": "A drill sergeant who says \"please.\"",
+      "tier": 4
+    },
+    {
+      "id": "mw1941",
+      "text": "A tank in the carpool lane.",
+      "tier": 4
+    },
+    {
+      "id": "mw1942",
+      "text": "A submarine with a sunroof.",
+      "tier": 3
+    },
+    {
+      "id": "mw1943",
+      "text": "Camouflage that only works in a Walmart.",
+      "tier": 4
+    },
+    {
+      "id": "mw1944",
+      "text": "A general with a rubber duck.",
+      "tier": 4
+    },
+    {
+      "id": "mw1945",
+      "text": "A painting of a painting.",
+      "tier": 4
+    },
+    {
+      "id": "mw1946",
+      "text": "A museum gift shop bigger than the museum.",
+      "tier": 3
+    },
+    {
+      "id": "mw1947",
+      "text": "A sculpture that's mostly a chair.",
+      "tier": 3
+    },
+    {
+      "id": "mw1948",
+      "text": "A finger painting, framed, at auction.",
+      "tier": 4
+    },
+    {
+      "id": "mw1949",
+      "text": "An art heist for a velvet Elvis.",
+      "tier": 4
+    },
+    {
+      "id": "mw1950",
+      "text": "A statue with a traffic cone hat.",
+      "tier": 4
+    },
+    {
+      "id": "mw1951",
+      "text": "A macaroni portrait of the dog.",
+      "tier": 4
+    },
+    {
+      "id": "mw1952",
+      "text": "Bob Ross's happy little mistakes.",
+      "tier": 4
+    },
+    {
+      "id": "mw1953",
+      "text": "A gallery opening with free cheese and no art.",
+      "tier": 3
+    },
+    {
+      "id": "mw1954",
+      "text": "A reality show about a laundromat.",
+      "tier": 3
+    },
+    {
+      "id": "mw1955",
+      "text": "The contestant who came \"for the right reasons.\"",
+      "tier": 3
+    },
+    {
+      "id": "mw1956",
+      "text": "A rose ceremony at Applebee's.",
+      "tier": 4
+    },
+    {
+      "id": "mw1957",
+      "text": "A game show buzzer that sticks.",
+      "tier": 3
+    },
+    {
+      "id": "mw1958",
+      "text": "Wheel of Fortune, one vowel short.",
+      "tier": 4
+    },
+    {
+      "id": "mw1959",
+      "text": "A talent show act that's just juggling badly.",
+      "tier": 3
+    },
+    {
+      "id": "mw1960",
+      "text": "The judge who cries at everything.",
+      "tier": 3
+    },
+    {
+      "id": "mw1961",
+      "text": "A tribal council at a PTA meeting.",
+      "tier": 4
+    },
+    {
+      "id": "mw1962",
+      "text": "A million-dollar prize, taxed to $400.",
+      "tier": 4
+    },
+    {
+      "id": "mw1963",
+      "text": "An audience that claps when told.",
+      "tier": 1
+    },
+    {
+      "id": "mw1964",
+      "text": "A cow with a Yelp page.",
+      "tier": 4
+    },
+    {
+      "id": "mw1965",
+      "text": "A tractor in the fast lane.",
+      "tier": 3
+    },
+    {
+      "id": "mw1966",
+      "text": "A scarecrow that's better dressed than me.",
+      "tier": 4
+    },
+    {
+      "id": "mw1967",
+      "text": "A barn cat with seniority.",
+      "tier": 4
+    },
+    {
+      "id": "mw1968",
+      "text": "A county fair funnel cake at 9 a.m.",
+      "tier": 3
+    },
+    {
+      "id": "mw1969",
+      "text": "A rooster with a snooze button.",
+      "tier": 4
+    },
+    {
+      "id": "mw1970",
+      "text": "A goat that ate the mortgage.",
+      "tier": 4
+    },
+    {
+      "id": "mw1971",
+      "text": "A hay bale maze with no exit.",
+      "tier": 3
+    },
+    {
+      "id": "mw1972",
+      "text": "A pickup truck full of pumpkins.",
+      "tier": 3
+    },
+    {
+      "id": "mw1973",
+      "text": "Line dancing at a gas station.",
+      "tier": 3
+    },
+    {
+      "id": "mw1974",
+      "text": "A farmer's tan in February.",
+      "tier": 4
+    },
+    {
+      "id": "mw1975",
+      "text": "A chicken coop with a doorbell.",
       "tier": 4
     }
   ]
