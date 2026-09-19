@@ -2895,7 +2895,8 @@
       "text": "Thanksgiving is ____ pretending to be ____.",
       "pick": 2,
       "draw": 0,
-      "tier": 3
+      "tier": 3,
+      "slots": ["person", "thing"]
     },
     {
       "id": "mb417",
@@ -3014,7 +3015,8 @@
       "text": "Adulthood is ____ paying for ____.",
       "pick": 2,
       "draw": 0,
-      "tier": 3
+      "tier": 3,
+      "slots": ["person", "thing"]
     },
     {
       "id": "mb434",

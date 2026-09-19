@@ -1,0 +1,253 @@
+decks adults: 1402 black, 3327 white
+  black slots: thing 1176 (83.9 %) · doing 137 (9.8 %) · person 10 (0.7 %) · name 79 (5.6 %)
+  white serves: thing 2490 (74.8 %) · doing 843 (25.3 %) · person 122 (3.7 %) · name 780 (23.4 %)
+  white tiers: 1: 565 (17.0 %) · 2: 611 (18.4 %) · 3: 1121 (33.7 %) · 4: 1030 (31.0 %)
+  black tiers: 1: 460 (32.8 %) · 2: 137 (9.8 %) · 3: 805 (57.4 %)
+6 games × 6 players, 288 hands at answer; prompts played: mean tier 3.00
+  rounds by slot: thing 33 · doing 6 · person 3 · name 6; hands with < 2 cards serving the round's slot: 0 (0.0 %) — thing 0 · doing 0 · person 0 · name 0
+  the phone's first four cards: mean fit 0.943 (whole hand 0.785), great among them 2.75
+  topic clumps (sex aside): hands with four or more cards on one topic 0.7 %; largest group per hand 1.67
+  cards serving the slot per hand: 4.28; great (tier 3+) per hand: 6.58, amazing (tier 4) 2.72; hands at least half great: 100.0 %
+  bot plays on the prompt's topic (other words): 6.7 %; echoing its word: 0.3 %
+  bot plays: 300; mean fit 0.976 (best on offer 1.000); serving the slot 85.7 %; mean tier 3.71
+sample plays — [kind, prompt tier] filled prompt ← card tier / fit:
+  [thing★★★] What did the dog eat this time? Alexa laughing at 3 a.m.  ← 4/1.00
+  [thing★★★] What did the dog eat this time? A homemade rollercoaster.  ← 4/1.00
+  [thing★★★] What did the dog eat this time? A tramp stamp that says "Mom."  ← 4/1.00
+  [thing★★★] What did the dog eat this time? Ring footage of your dad at 2 a.m.  ← 4/1.00
+  [thing★★★] What did the dog eat this time? Guy Fieri's flame shirt.  ← 3/1.00
+  [thing★★★] What did the dog eat this time? Quiet quitting, loudly.  ← 4/1.00
+  [doing★★★] The bedtime story ends with Jogging past the house three times.  ← 4/1.00
+  [doing★★★] The bedtime story ends with Doing body shots off a stranger.  ← 3/1.00
+  [doing★★★] The bedtime story ends with Calling the dog by the kid's name.  ← 4/1.00
+  [doing★★★] The bedtime story ends with Day-drinking at a kid's birthday party.  ← 3/1.00
+  [doing★★★] The bedtime story ends with A eulogy that roasted the deceased.  ← 4/1.00
+  [doing★★★] The bedtime story ends with Saying "you too" to a waiter.  ← 4/1.00
+  [thing★★★] Wikipedia's most-edited article this year: Astronauts arguing over the thermostat.  ← 4/1.00
+  [thing★★★] Wikipedia's most-edited article this year: An Airbnb with 41 house rules.  ← 4/1.00
+  [thing★★★] Wikipedia's most-edited article this year: A car wash on the day it rains.  ← 3/1.00
+  [thing★★★] Wikipedia's most-edited article this year: Fake tits at a funeral.  ← 4/1.00
+  [thing★★★] Wikipedia's most-edited article this year: A donkey that says no.  ← 4/1.00
+  [thing★★★] Wikipedia's most-edited article this year: An HOA president with a clipboard.  ← 3/1.00†
+  [thing★★★] My hangover's origin story starts with Pantsless Founding Fathers.  ← 4/1.00
+  [thing★★★] My hangover's origin story starts with A drunk uncle with a karaoke mic.  ← 3/1.00†
+  [thing★★★] My hangover's origin story starts with A LinkedIn "I'm humbled" post.  ← 3/1.00
+  [thing★★★] My hangover's origin story starts with The kid who eats glue.  ← 4/0.85
+  [thing★★★] My hangover's origin story starts with Meatloaf shaped like a heart.  ← 4/1.00
+  [thing★★★] My hangover's origin story starts with A gym selfie in the mirror, with the whole gym behind it.  ← 4/1.00
+  [thing★★★] What's under the tarp in the backyard? A moose at the drive-thru.  ← 4/1.00
+  [thing★★★] What's under the tarp in the backyard? A seal that applauds.  ← 4/1.00
+  [thing★★★] What's under the tarp in the backyard? A rideshare with a 2.1 rating.  ← 4/1.00
+  [thing★★★] What's under the tarp in the backyard? A DJ who only plays the one song.  ← 4/0.85
+  [thing★★★] What's under the tarp in the backyard? Your grandparents' sex life.  ← 3/1.00
+  [thing★★★] What's under the tarp in the backyard? An open bar at a baby shower.  ← 4/1.00
+  [thing★★★] The Vatican has finally approved A cocaine-fueled PTA meeting.  ← 4/1.00
+  [thing★★★] The Vatican has finally approved A best man who slept with the bride, and the groom.  ← 4/0.85
+  [thing★★★] The Vatican has finally approved A kegstand at a wake.  ← 4/1.00
+  [thing★★★] The Vatican has finally approved Ozempic at a buffet.  ← 4/1.00
+  [thing★★★] The Vatican has finally approved A parole officer with a Facebook page.  ← 4/1.00
+  [thing★★★] The Vatican has finally approved A scooter left in a lake.  ← 4/1.00
+  [doing★★★] What's the one thing the babysitter won't do again? Getting a text from your own number.  ← 4/1.00
+  [doing★★★] What's the one thing the babysitter won't do again? Drunk-dialing your therapist.  ← 3/1.00
+  [doing★★★] What's the one thing the babysitter won't do again? Picking the scab off a story.  ← 4/1.00
+  [doing★★★] What's the one thing the babysitter won't do again? Venmo-requesting your date for gas.  ← 4/1.00
+  [doing★★★] What's the one thing the babysitter won't do again? Falling asleep in the dentist's chair.  ← 4/1.00
+  [doing★★★] What's the one thing the babysitter won't do again? Getting attached to a rental car.  ← 3/1.00
+  [thing★★★] IKEA's newest product is a shelf for A bachelorette party with one stripper for twelve women.  ← 4/1.00
+  [thing★★★] IKEA's newest product is a shelf for A trip to the ER for a "bike accident."  ← 4/1.00
+  [thing★★★] IKEA's newest product is a shelf for A ball boy who's seen too much.  ← 4/0.85
+  [thing★★★] IKEA's newest product is a shelf for A Secret Santa vibrator.  ← 4/1.00
+  [thing★★★] IKEA's newest product is a shelf for A shark in the kiddie pool.  ← 4/1.00†
+  [thing★★★] IKEA's newest product is a shelf for A pub quiz team named after a pun.  ← 4/1.00
+  [thing★★★] What do dads think about in the shower? Extra-strength grandma perfume.  ← 4/1.00
+  [thing★★★] What do dads think about in the shower? An Uber pool with a couple who couldn't wait.  ← 4/0.85†
+  [thing★★★] What do dads think about in the shower? A charging cable that only works at an angle.  ← 4/1.00
+  [thing★★★] What do dads think about in the shower? A Renaissance painter who only painted his cat.  ← 4/0.85
+  [thing★★★] What do dads think about in the shower? A conspiracy board with red string.  ← 4/1.00
+  [thing★★★] What do dads think about in the shower? The Chicken Dance, unprompted.  ← 4/1.00
+  [thing★★★] The song's real lyrics are about A bee with a briefcase.  ← 4/1.00
+  [thing★★★] The song's real lyrics are about A room-temperature Capri Sun.  ← 4/1.00
+  [thing★★★] The song's real lyrics are about A badger with boundaries.  ← 4/1.00
+  [thing★★★] The song's real lyrics are about A magician who forgot the trick.  ← 4/0.85
+  [thing★★★] The song's real lyrics are about A car seat installed wrong.  ← 4/1.00
+  [thing★★★] The song's real lyrics are about A personal trainer who counts wrong on purpose.  ← 4/0.85
+  [thing★★★] The office Christmas party ended with A boss fight with a health bar on the screen in the copy room.  ← 3/1.00†
+  [thing★★★] The office Christmas party ended with A wizard who lost his wand in the couch in the copy room.  ← 4/0.85
+  [thing★★★] The office Christmas party ended with A seal that applauds in the copy room.  ← 4/1.00
+  [thing★★★] The office Christmas party ended with A guardian angel on a smoke break in the copy room.  ← 4/1.00
+  [thing★★★] The office Christmas party ended with A sheepdog herding children in the copy room.  ← 4/1.00
+  [thing★★★] The office Christmas party ended with A best man who slept with the bride, and the groom in the copy room.  ← 4/0.85
+  [thing★★★] My last-ditch effort to get out of jury duty: The kid who brought a snake for show-and-tell.  ← 4/0.85†
+  [thing★★★] My last-ditch effort to get out of jury duty: A hammock built for one, used by two.  ← 3/1.00
+  [thing★★★] My last-ditch effort to get out of jury duty: A rental car that smells like old fries.  ← 4/1.00
+  [thing★★★] My last-ditch effort to get out of jury duty: A bachelor party in a minivan.  ← 4/1.00
+  [thing★★★] My last-ditch effort to get out of jury duty: The kid who ate the play-doh.  ← 4/0.85†
+  [thing★★★] My last-ditch effort to get out of jury duty: The Salem witch trials for women who own vibrators.  ← 4/0.85
+  [thing★★★] The teacher's last straw was A guy named Chad.  ← 4/0.85
+  [thing★★★] The teacher's last straw was Mercury in retrograde, blamed again.  ← 4/1.00
+  [thing★★★] The teacher's last straw was Grandma's driving.  ← 4/1.00
+  [thing★★★] The teacher's last straw was A robot that only folds towels.  ← 4/0.85
+  [thing★★★] The teacher's last straw was A lizard doing push-ups.  ← 3/1.00
+  [thing★★★] The teacher's last straw was A perp walk in a bathrobe.  ← 4/1.00
+  [name★★★] The group chat renamed itself "A phone at 1% battery."  ← 3/1.00†
+  [name★★★] The group chat renamed itself "Twerking at a funeral."  ← 3/1.00
+  [name★★★] The group chat renamed itself "Losing the Monopoly money."  ← 2/1.00
+  [name★★★] The group chat renamed itself "Shaking a gift box."  ← 4/1.00
+  [name★★★] The group chat renamed itself "A biker named Tiny."  ← 4/1.00
+  [name★★★] The group chat renamed itself "Cheating at bingo."  ← 3/1.00
+  [thing★★★] What did the Founding Fathers argue about most? A robot vacuum with anxiety.  ← 4/1.00
+  [thing★★★] What did the Founding Fathers argue about most? A blind date who brought his mom.  ← 4/0.85
+  [thing★★★] What did the Founding Fathers argue about most? A smoke detector that chirps only at 3 a.m.  ← 4/1.00
+  [thing★★★] What did the Founding Fathers argue about most? A delivery driver who's seen you naked twice.  ← 4/0.85
+  [thing★★★] What did the Founding Fathers argue about most? Pantsless Founding Fathers.  ← 4/1.00↩
+  [thing★★★] What did the Founding Fathers argue about most? An intern who slept his way to the bottom.  ← 4/0.85
+  [thing★★★] What did the dog dig up in the yard? A dad who reads the sex scenes aloud.  ← 4/0.85
+  [thing★★★] What did the dog dig up in the yard? A GoFundMe for a headstone.  ← 3/1.00
+  [thing★★★] What did the dog dig up in the yard? Hogwarts' student loan office.  ← 4/1.00
+  [thing★★★] What did the dog dig up in the yard? Alexa laughing at 3 a.m.  ← 4/1.00
+  [thing★★★] What did the dog dig up in the yard? A donkey piñata that fought back.  ← 3/1.00†
+  [thing★★★] What did the dog dig up in the yard? The Game of Thrones family tree, in a mirror.  ← 4/1.00
+  [person★★★] The Bachelor's final rose went to A dad who reads the sex scenes aloud.  ← 4/1.00
+  [person★★★] The Bachelor's final rose went to A DoorDash driver who took a bite.  ← 4/1.00
+  [person★★★] The Bachelor's final rose went to A liquor store clerk who knows my order.  ← 3/1.00
+  [person★★★] The Bachelor's final rose went to A nun with a Tinder.  ← 4/1.00†
+  [person★★★] The Bachelor's final rose went to An intern who slept his way to the bottom.  ← 4/1.00
+  [person★★★] The Bachelor's final rose went to A delivery driver who's seen you naked twice.  ← 4/1.00
+  [thing★★★] The retirement speech was about Fake eyelashes in a windstorm.  ← 4/1.00
+  [thing★★★] The retirement speech was about A club with a two-hour line and no music inside.  ← 4/1.00
+  [thing★★★] The retirement speech was about A hangover that files taxes.  ← 4/1.00†
+  [thing★★★] The retirement speech was about My grandmother's Tupperware collection.  ← 4/1.00
+  [thing★★★] The retirement speech was about The bus that never comes, then three at once.  ← 4/1.00
+  [thing★★★] The retirement speech was about Twelve geese with an agenda.  ← 4/1.00
+  [thing★★★] This Thanksgiving, Grandma outdid herself with A lawyer who advertises on a bus bench.  ← 4/0.85
+  [thing★★★] This Thanksgiving, Grandma outdid herself with A Renaissance painter who only painted his cat.  ← 4/0.85
+  [thing★★★] This Thanksgiving, Grandma outdid herself with The kid who brought a snake for show-and-tell.  ← 4/0.85
+  [thing★★★] This Thanksgiving, Grandma outdid herself with A Dunkin' order with nine modifications.  ← 3/1.00
+  [thing★★★] This Thanksgiving, Grandma outdid herself with Tiny, furious birds.  ← 3/1.00
+  [thing★★★] This Thanksgiving, Grandma outdid herself with "Per my last email."  ← 4/1.00
+  [thing★★★] The prophecy foretold A hummingbird on espresso.  ← 4/1.00
+  [thing★★★] The prophecy foretold A wedding toast that named names.  ← 3/1.00
+  [thing★★★] The prophecy foretold A hedgehog in a hamster ball.  ← 3/1.00
+  [thing★★★] The prophecy foretold The friend who always has a guy for that, and the guy is a pimp.  ← 4/0.85
+  [thing★★★] The prophecy foretold A casket with cup holders.  ← 4/1.00
+  [thing★★★] The prophecy foretold A hedge shaped like Elvis.  ← 4/1.00
+  [thing★★★] My grandma's last words were about A lightsaber for opening Amazon packages.  ← 4/1.00
+  [thing★★★] My grandma's last words were about Batman's utility belt, bedroom edition.  ← 3/1.00
+  [thing★★★] My grandma's last words were about A very confident toddler.  ← 3/1.00
+  [thing★★★] My grandma's last words were about An elf with a real estate license.  ← 4/1.00
+  [thing★★★] My grandma's last words were about A colonoscopy prep milkshake.  ← 3/1.00
+  [thing★★★] My grandma's last words were about An escalator that's just stairs now.  ← 3/1.00
+  [thing★★★] The Marvel post-credits scene teased A hoverboard in the grocery store.  ← 3/1.00
+  [thing★★★] The Marvel post-credits scene teased A fitting room with a glory hole.  ← 3/1.00
+  [thing★★★] The Marvel post-credits scene teased A goose that goes for the crotch.  ← 4/1.00
+  [thing★★★] The Marvel post-credits scene teased A chiropractor who cracked something new.  ← 4/0.85
+  [thing★★★] The Marvel post-credits scene teased A guitar solo that lasts through dinner.  ← 4/1.00
+  [thing★★★] The Marvel post-credits scene teased A pharmacist who knows too much.  ← 4/0.85
+  [thing★★★] The Olympics added a new event: A hangover during a job interview.  ← 3/1.00
+  [thing★★★] The Olympics added a new event: A goat on the roof.  ← 4/1.00
+  [thing★★★] The Olympics added a new event: A goose with a personal vendetta.  ← 4/1.00
+  [thing★★★] The Olympics added a new event: A study on how many licks it takes.  ← 3/1.00
+  [thing★★★] The Olympics added a new event: A couple that shares a toothbrush.  ← 4/1.00
+  [thing★★★] The Olympics added a new event: A blind date who brought his mom.  ← 4/0.85
+  [thing★★★] The detective's only clue was The last cookie, split unevenly.  ← 4/1.00
+  [thing★★★] The detective's only clue was The one friend who screen-cheats at Mario Kart.  ← 4/0.85
+  [thing★★★] The detective's only clue was A moth with main character energy.  ← 4/1.00
+  [thing★★★] The detective's only clue was A fertility idol that works too well.  ← 4/1.00
+  [thing★★★] The detective's only clue was The neighbors' trampoline, in our yard.  ← 3/1.00
+  [thing★★★] The detective's only clue was Spring break, in a body cast.  ← 3/1.00
+  [name★★★] The tattoo I got in Vegas says "The mascot's contract dispute."  ← 3/1.00
+  [name★★★] The tattoo I got in Vegas says "Columbus's syphilis souvenir."  ← 4/1.00
+  [name★★★] The tattoo I got in Vegas says "A best man who slept with the bride, and the groom."  ← 4/0.60
+  [name★★★] The tattoo I got in Vegas says "Untangling the Christmas lights."  ← 2/1.00
+  [name★★★] The tattoo I got in Vegas says "Tipping in casino chips."  ← 4/1.00
+  [name★★★] The tattoo I got in Vegas says "A pity handjob."  ← 4/1.00
+  [thing★★★] The real cause of the housing crisis: A towel that is technically a rag.  ← 3/1.00
+  [thing★★★] The real cause of the housing crisis: Fake tits at a funeral.  ← 4/1.00
+  [thing★★★] The real cause of the housing crisis: An executive order about hot dogs.  ← 4/1.00
+  [thing★★★] The real cause of the housing crisis: A blind date who brought his mom.  ← 4/0.85
+  [thing★★★] The real cause of the housing crisis: Detention for a hickey.  ← 4/1.00
+  [thing★★★] The real cause of the housing crisis: Elf on the Shelf, watching.  ← 3/1.00
+  [doing+doing★★★] A diet that starts Monday, every Monday and Testing a mattress in a showroom: what the Airbnb's two hidden cameras caught.  ← 3/1.00 3/1.00
+  [doing+doing★★★] Unmatching after one message and Holding the ladder and nothing else: what the Airbnb's two hidden cameras caught.  ← 3/1.00 3/1.00
+  [doing+doing★★★] Calling your ex to settle a bet and Honking at a green light: what the Airbnb's two hidden cameras caught.  ← 4/1.00 4/1.00
+  [doing+doing★★★] Missing a flight for a Cinnabon and Asking for the manager by name: what the Airbnb's two hidden cameras caught.  ← 4/1.00† 3/1.00
+  [doing+doing★★★] Cutting your own bangs at midnight and Getting canceled for a 2009 tweet: what the Airbnb's two hidden cameras caught.  ← 4/1.00 4/1.00
+  [doing+doing★★★] Fighting a vending machine and losing and A trip to the hardware store that takes four hours: what the Airbnb's two hidden cameras caught.  ← 4/1.00 3/1.00
+  [thing★★★] The dentist found A Renaissance painter who only painted his cat.  ← 4/0.85
+  [thing★★★] The dentist found A mother-in-law with a vibrator in her clutch.  ← 4/0.85
+  [thing★★★] The dentist found A Renaissance fair turkey leg.  ← 3/1.00
+  [thing★★★] The dentist found A bag of marbles in the dryer.  ← 4/1.00
+  [thing★★★] The dentist found A vibrating toothbrush.  ← 4/1.00
+  [thing★★★] The dentist found Dr. Phil's divorce, live on air.  ← 3/1.00
+  [doing★★★] What got the substitute teacher fired? Catching feelings on a one-night stand.  ← 3/1.00
+  [doing★★★] What got the substitute teacher fired? Screaming at a video game.  ← 4/1.00
+  [doing★★★] What got the substitute teacher fired? Grinding on grandma at the wedding.  ← 4/1.00
+  [doing★★★] What got the substitute teacher fired? Ignoring a Duolingo notification for a year.  ← 3/1.00
+  [doing★★★] What got the substitute teacher fired? Explaining TikTok to my dad.  ← 3/1.00
+  [doing★★★] What got the substitute teacher fired? Twerking at the company retreat.  ← 4/1.00
+  [person★★★] Disney's next princess is A DoorDash driver who took a bite.  ← 4/1.00
+  [person★★★] Disney's next princess is The one relative who comments "who is this?".  ← 4/1.00
+  [person★★★] Disney's next princess is An Uber pool with a couple who couldn't wait.  ← 4/1.00
+  [person★★★] Disney's next princess is A one-night stand who won't leave.  ← 3/1.00
+  [person★★★] Disney's next princess is A pharmacist who knows too much.  ← 4/1.00
+  [person★★★] Disney's next princess is A dad who reads the sex scenes aloud.  ← 4/1.00
+  [thing★★★] Grandma's cookie recipe calls for a pinch of A family tree with a loop in it.  ← 4/1.00†
+  [thing★★★] Grandma's cookie recipe calls for a pinch of The friend who always has a guy for that, and the guy is a pimp.  ← 4/0.85
+  [thing★★★] Grandma's cookie recipe calls for a pinch of A smoke alarm at 3 a.m. only.  ← 4/1.00
+  [thing★★★] Grandma's cookie recipe calls for a pinch of Ben Franklin's French period.  ← 4/1.00
+  [thing★★★] Grandma's cookie recipe calls for a pinch of A canoe in the living room.  ← 4/1.00
+  [thing★★★] Grandma's cookie recipe calls for a pinch of A screaming goat.  ← 3/1.00
+  [thing★★★] Kamala's laugh means she just saw A telescope aimed at the nudist colony.  ← 4/1.00
+  [thing★★★] Kamala's laugh means she just saw Gordon Ramsay yelling at a child.  ← 4/1.00
+  [thing★★★] Kamala's laugh means she just saw The last cookie, split unevenly.  ← 4/1.00
+  [thing★★★] Kamala's laugh means she just saw An NPC who says the same thing forever.  ← 4/0.85
+  [thing★★★] Kamala's laugh means she just saw A mime who won't stop talking.  ← 4/0.85
+  [thing★★★] Kamala's laugh means she just saw A parrot that moans.  ← 4/1.00
+  [name★★★] The gym's motivational poster says "An emotional support pigeon."  ← 3/1.00
+  [name★★★] The gym's motivational poster says "A wedgie from God."  ← 4/1.00
+  [name★★★] The gym's motivational poster says "Genghis Khan's family tree."  ← 4/1.00
+  [name★★★] The gym's motivational poster says "A merkin, custom."  ← 4/1.00
+  [name★★★] The gym's motivational poster says "A misplaced retainer."  ← 3/1.00
+  [name★★★] The gym's motivational poster says "Sexting the wrong Amanda."  ← 4/1.00
+  [thing★★★] The Brazilian wax revealed The blood pressure cuff that squeezes with intent.  ← 4/1.00
+  [thing★★★] The Brazilian wax revealed A toddler negotiating bedtime like a lawyer.  ← 4/1.00
+  [thing★★★] The Brazilian wax revealed A superhero cape in a revolving door.  ← 3/1.00
+  [thing★★★] The Brazilian wax revealed A barn dance with one fiddle.  ← 3/1.00
+  [thing★★★] The Brazilian wax revealed Michael Jackson's sleepover rules.  ← 4/1.00
+  [thing★★★] The Brazilian wax revealed A she-shed with better Wi-Fi.  ← 4/1.00
+  [name★★★] The horoscope for Gemini is just "A jar of buttons."  ← 2/1.00
+  [name★★★] The horoscope for Gemini is just "Blaming the dog."  ← 4/1.00
+  [name★★★] The horoscope for Gemini is just "A layover in Newark."  ← 4/1.00
+  [name★★★] The horoscope for Gemini is just "Your mother's browser history."  ← 3/1.00
+  [name★★★] The horoscope for Gemini is just "A Tiger King rerun."  ← 3/1.00
+  [name★★★] The horoscope for Gemini is just "A snowboard in April."  ← 2/1.00
+  [thing★★★] What's my one-star review about? Humidity that feels like a hug from a stranger.  ← 4/1.00
+  [thing★★★] What's my one-star review about? A Best Buy Geek Squad diagnosis.  ← 3/1.00
+  [thing★★★] What's my one-star review about? A conspiracy board with red string.  ← 4/1.00
+  [thing★★★] What's my one-star review about? A rowboat with one oar.  ← 3/1.00
+  [thing★★★] What's my one-star review about? A chiropractor who cracked something new.  ← 4/0.85
+  [thing★★★] What's my one-star review about? A cocaine-fueled PTA meeting.  ← 4/1.00†
+  [person+thing★★★] The group chat is A hooker with a heart of gold arguing about Chernobyl souvenirs.  ← 3/1.00 3/1.00
+  [person+thing★★★] The group chat is A kid who only eats beige food arguing about A haunted vending machine.  ← 4/1.00 3/1.00†
+  [person+thing★★★] The group chat is A hookup who quotes movies during sex arguing about An unlicensed lemonade stand.  ← 4/1.00 3/1.00
+  [person+thing★★★] The group chat is A Lowe's employee who vanishes arguing about A Star Wars fan explaining the timeline.  ← 3/1.00 4/1.00
+  [person+thing★★★] The group chat is An ex who still has the Netflix password arguing about A crossing guard with a whistle and a grudge.  ← 4/1.00† 4/1.00
+  [person+thing★★★] The group chat is A plumber who found the toy arguing about A DMV number in the four hundreds.  ← 4/1.00 3/1.00
+  [doing★★★] The field trip was cut short by Losing rent money on a parlay.  ← 4/1.00
+  [doing★★★] The field trip was cut short by Weeping during a car commercial.  ← 4/1.00
+  [doing★★★] The field trip was cut short by Bringing a ladder to a picnic.  ← 4/1.00
+  [doing★★★] The field trip was cut short by Honking at a green light.  ← 4/1.00
+  [doing★★★] The field trip was cut short by Losing your virginity to a Nickelback song.  ← 4/1.00
+  [doing★★★] The field trip was cut short by Sneaking a flask into a kids' movie.  ← 2/1.00†
+  [name★★★] My Tinder bio just says "My neighbor's cover band."  ← 3/1.00
+  [name★★★] My Tinder bio just says "A boat named "Boaty.""  ← 4/1.00
+  [name★★★] My Tinder bio just says "Pablo Escobar's hippos."  ← 4/1.00
+  [name★★★] My Tinder bio just says "A nephew who bites."  ← 4/1.00
+  [name★★★] My Tinder bio just says "Ice skating to Nickelback."  ← 4/1.00
+  [name★★★] My Tinder bio just says "Tipping in casino chips."  ← 4/1.00
+  [thing★★★] What did the bouncer take off me? Elvis, alive and working at a Costco.  ← 4/1.00
+  [thing★★★] What did the bouncer take off me? A space heater with a smell.  ← 3/1.00
+  [thing★★★] What did the bouncer take off me? A confused mailman.  ← 3/1.00
+  [thing★★★] What did the bouncer take off me? A flat tire on a unicycle.  ← 4/1.00
+  [thing★★★] What did the bouncer take off me? A glow stick in the freezer.  ← 3/1.00
+  [thing★★★] What did the bouncer take off me? A goose chasing a toddler.  ← 4/1.00

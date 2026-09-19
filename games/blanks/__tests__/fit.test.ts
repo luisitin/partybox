@@ -27,6 +27,9 @@ describe('slotOf — what the blank wants', () => {
       'How did the neighbors find out?',
       "What got me banned from the swingers' club?",
       "What does my cat do while I'm at work?",
+      "What's the one thing the babysitter won't do again?",
+      'The bedtime story ends with ____.',
+      'The field trip was cut short by ____.',
       'The moonwalk was actually Michael Jackson ____.',
       "What's the secret to a happy marriage?",
       'The livestream ended abruptly with ____.',
@@ -40,6 +43,7 @@ describe('slotOf — what the blank wants', () => {
       'The morning after, I woke up next to ____.',
       'Squid Game, hosted by ____.',
       'I lost my virginity to ____.',
+      "Disney's next princess is ____.",
     ])
       expect(slotOf({ text }), text).toBe('person');
   });

@@ -1936,7 +1936,8 @@
       "text": "Vegas is ____ wearing ____.",
       "pick": 2,
       "draw": 0,
-      "tier": 3
+      "tier": 3,
+      "slots": ["person", "thing"]
     },
     {
       "id": "cb288",
@@ -1978,14 +1979,16 @@
       "text": "The group chat is ____ arguing about ____.",
       "pick": 2,
       "draw": 0,
-      "tier": 3
+      "tier": 3,
+      "slots": ["person", "thing"]
     },
     {
       "id": "cb294",
       "text": "Tinder is ____ pretending to be ____.",
       "pick": 2,
       "draw": 0,
-      "tier": 3
+      "tier": 3,
+      "slots": ["person", "person"]
     },
     {
       "id": "cb295",
@@ -2525,7 +2528,8 @@
       "id": "cb372",
       "text": "The group chat is ____ pretending to care about ____.",
       "pick": 2,
-      "draw": 0
+      "draw": 0,
+      "slots": ["person", "thing"]
     },
     {
       "id": "cb373",
