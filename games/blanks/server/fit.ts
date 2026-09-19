@@ -17,7 +17,9 @@ export type Slot = (typeof SLOTS)[number];
 
 /** Prompts whose blank wants an action or an event. */
 const DOING_PROMPT = [
-  /\b(?:do|doing|done)\?["”]?$/i, // "What did the sex robot refuse to do?"
+  /\b(?:do|doing|done)(?: again| anymore| twice| for money)?\?["”]?$/i, // "What did the sex robot refuse to do?", "…won't do again?"
+  /\b(?:cut short by|ends? (?:\w+ )?(?:with|in)) ____/i, // "The bedtime story ends with ____.", "cut short by ____"
+  /^____ and ____: what\b/, // "____ and ____: what the Airbnb's two hidden cameras caught."
   /\bdo (?:at|in|on|to|with|for|instead|before|after|during|while|when|all day|every)\b/i, // "What did Lincoln do at…", "…do while I'm at work?"
   /\b(?:was|is|were) actually (?:[A-Z][\w']+ ){1,3}____/, // "The moonwalk was actually Michael Jackson ____."
   /\b(?:does|did|caught (?:me|him|her|them|us)|busy|instead of|after|before|while|spent (?:the \w+|\w+ years?))\s+____/i,
@@ -43,6 +45,8 @@ const PERSON_PROMPT = [
   /\b(?:goes to|went to|awarded to|belongs to|married|marry|dating|date with|hired|fired|elected|best man|maid of honor|godfather|babysitter|sponsored by|hosted by|played by|voiced by|replaced by|starring|cast as|roommate|in bed with|woke up next to|wake up next to|lying next to|virginity to|a threesome with|threesome with|swiped right on|matched with|proposed to|engaged to|left me for|guest of honor was|body count includes|tell-all names)\s+____/i,
   /\bmy (?:new )?(?:boyfriend|girlfriend|husband|wife|partner|therapist|doctor|lawyer|dealer|roommate|sponsor) is ____/i,
   /____ (?:walks|walked|is|was|got|gets) (?:into|in|arrested|elected|fired|hired|pregnant)/i,
+  // "Disney's next princess is ____.", "The Bachelor's final rose went to ____."
+  /\b(?:princess|prince|villain|hero|superhero|host|judge|contestant|headliner|bachelor|bachelorette|winner|champion|mvp|nominee|role model|spokesperson) (?:is|was|will be) ____/i,
 ];
 /** Prompts whose blank is a name: a title, a nickname, a safe word, a line someone says. */
 const NAME_PROMPT = [
