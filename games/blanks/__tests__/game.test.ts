@@ -8,8 +8,10 @@ import {
   fill,
   fillText,
   glue,
+  refillHands,
   revealMs,
 } from '../server/cards';
+import { topicsOf } from '../server/topics';
 import { fitScore, servesOf } from '../server/fit';
 import {
   DECKS,
@@ -19,6 +21,7 @@ import {
   blackTier,
   whitePool,
   whiteServes,
+  whiteText,
   whiteTier,
 } from '../server/content';
 import { game } from '../server/index';
@@ -179,6 +182,22 @@ describe('dealing', () => {
         expect(fits[i - 1]).toBeGreaterThanOrEqual(fits[i] as number);
       expect(whiteServes(hand[0] as string)).toContain('doing');
     }
+  });
+
+  it('a hand with four cards on one subject trades the weakest of them for something else', () => {
+    // Four death cards (a coffin, a hearse, a funeral selfie, dying in a Golden Corral) in a
+    // nine-card hand: the refill tops up to ten and swaps one death card out, never for a
+    // weaker card, with every floor kept.
+    const s0 = start({ players: 4, decks: 'wild-only', seed: 21 });
+    const clumped = ['ww305', 'ww369', 'ww347', 'ww315', 'ww12', 'ww2', 'ww383', 'ww484', 'ww77'];
+    const deck = s0.whiteDeck.filter((id) => !clumped.includes(id));
+    const s1 = refillHands({ ...s0, whiteDeck: deck, hands: { ...s0.hands, ana: clumped } });
+    const hand = s1.hands['ana'] ?? [];
+    expect(hand).toHaveLength(10);
+    const deaths = hand.filter((id) => topicsOf(whiteText(id)).includes('death'));
+    expect(deaths.length).toBeLessThanOrEqual(3);
+    expect(hand.filter((c) => whiteTier(c) >= 3).length).toBeGreaterThanOrEqual(GOOD_FLOOR);
+    expect(hand.filter((c) => whiteTier(c) === 4).length).toBeGreaterThanOrEqual(BEST_FLOOR);
   });
 
   it('a wild hand holds at least five great and two amazing cards, round after round (the quality floors)', () => {

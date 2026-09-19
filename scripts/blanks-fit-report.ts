@@ -9,7 +9,7 @@ import { parseArgs } from 'node:util';
 import { runGame } from '../packages/sim/src/runner';
 import { DECKS, blackCard, blackTier, decksFor, whiteText } from '../games/blanks/server/content';
 import { fillText } from '../games/blanks/server/cards';
-import { TOPIC_HIT, WORD_ECHO, pairBonus } from '../games/blanks/server/topics';
+import { TOPIC_HIT, WORD_ECHO, pairBonus, topicsOf } from '../games/blanks/server/topics';
 import { game } from '../games/blanks/server/index';
 import { fitScore, servesOf, slotOf, slotsOf, SLOTS } from '../games/blanks/server/fit';
 import type { Slot } from '../games/blanks/server/fit';
@@ -77,6 +77,8 @@ let handsHalfGood = 0; // ≥ half the hand tier 3+
 let serveCards = 0; // cards serving the round's slot across hands
 let topFit = 0; // mean fit of the first four cards (the phone's first screenful), summed over hands
 let topGood = 0; // tier-3 cards among the first four, summed over hands
+let clumpy = 0; // hands where four or more cards share a topic
+let clumpTop = 0; // the largest single-topic group, summed over hands
 let handFit = 0; // mean fit of the whole hand, summed over hands (what an unsorted first four would show)
 let plays = 0;
 let hits = 0; // plays on the prompt's topic in other words
@@ -120,6 +122,17 @@ for (let r = 0; r < runs; r += 1) {
             top.reduce((sum, c) => sum + fitScore(slot, serves.get(c) ?? []), 0) /
             Math.max(1, top.length);
           topGood += top.filter((c) => (tiers.get(c) ?? 2) >= 3).length;
+          const byTopic = new Map<string, number>();
+          for (const c of hand)
+            for (const t of topicsOf(whiteText(c))) byTopic.set(t, (byTopic.get(t) ?? 0) + 1);
+          // The wild deck is about sex the way the mild deck is about family: the deck's own
+          // subject is not a clump, so the biggest OTHER topic is what counts.
+          const biggest = Math.max(
+            0,
+            ...[...byTopic].filter(([t]) => t !== 'sex').map(([, n]) => n),
+          );
+          clumpTop += biggest;
+          if (biggest >= 4) clumpy += 1;
           handFit +=
             hand.reduce((sum, c) => sum + fitScore(slot, serves.get(c) ?? []), 0) /
             Math.max(1, hand.length);
@@ -175,6 +188,9 @@ console.log(
 );
 console.log(
   `  the phone's first four cards: mean fit ${(topFit / Math.max(1, hands)).toFixed(3)} (whole hand ${(handFit / Math.max(1, hands)).toFixed(3)}), great among them ${(topGood / Math.max(1, hands)).toFixed(2)}`,
+);
+console.log(
+  `  topic clumps (sex aside): hands with four or more cards on one topic ${pct(clumpy, hands)}; largest group per hand ${(clumpTop / Math.max(1, hands)).toFixed(2)}`,
 );
 console.log(
   `  cards serving the slot per hand: ${(serveCards / Math.max(1, hands)).toFixed(2)}; great (tier 3+) per hand: ${(goodCards / Math.max(1, hands)).toFixed(2)}, amazing (tier 4) ${(bestCards / Math.max(1, hands)).toFixed(2)}; hands at least half great: ${pct(handsHalfGood, hands)}`,

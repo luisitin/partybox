@@ -4,7 +4,17 @@
 import { shuffle } from '@partybox/game-sdk';
 import type { RngState } from '@partybox/game-sdk';
 import { BLANK, blanksIn } from '../content/schema';
-import { WHITE_KINDS, blackSlot, blackTier, whiteKind, whiteServes, whiteTier } from './content';
+import {
+  WHITE_KINDS,
+  blackSlot,
+  blackTier,
+  whiteKind,
+  whiteServes,
+  whiteText,
+  whiteTier,
+} from './content';
+import { topicsOf } from './topics';
+import type { Topic } from './topics';
 import { fitScore } from './fit';
 import type { WhiteKind } from './content';
 import {
@@ -197,6 +207,8 @@ function fillHand(state: State, hand: readonly string[], target: number): [strin
     [out, next] = swapped;
     goodSwaps += 1;
   }
+  const varied = swapForVariety(next, out);
+  if (varied !== null) [out, next] = varied;
   return [out, next];
 }
 
@@ -209,10 +221,11 @@ function swapForGood(
   state: State,
   hand: readonly string[],
   wants: (id: string) => boolean = isGood,
+  spare: (id: string) => boolean = (id) => !wants(id),
 ): [string[], State] | null {
   const spares = hand
     .map((id, i) => ({ id, i }))
-    .filter(({ id }) => !wants(id))
+    .filter(({ id }) => spare(id))
     .sort((a, b) => whiteTier(a.id) - whiteTier(b.id));
   for (const { id: dropped, i } of spares) {
     const rest = hand.filter((_, j) => j !== i);
@@ -232,6 +245,29 @@ function swapForGood(
     return [[...rest, card], { ...after, discard: [...after.discard, dropped] }];
   }
   return null;
+}
+
+/** A hand with four or more cards on one subject (the deck's own aside — the wild deck is about
+ *  sex the way the mild deck is about family) trades one of them, the weakest that no floor
+ *  needs, for a card off that subject of at least its tier (loop 525: "balanced" hands — one
+ *  clump a round is enough to notice, one swap a round enough to thin it). */
+const CLUMP = 4;
+const DECK_SUBJECT = 'sex';
+function swapForVariety(state: State, hand: readonly string[]): [string[], State] | null {
+  const byTopic = new Map<Topic, number>();
+  for (const id of hand)
+    for (const t of topicsOf(whiteText(id)))
+      if (t !== DECK_SUBJECT) byTopic.set(t, (byTopic.get(t) ?? 0) + 1);
+  const clump = [...byTopic].find(([, n]) => n >= CLUMP)?.[0];
+  if (clump === undefined) return null;
+  const onClump = (id: string): boolean => topicsOf(whiteText(id)).includes(clump);
+  const floorTier = Math.min(...hand.filter(onClump).map(whiteTier));
+  return swapForGood(
+    state,
+    hand,
+    (id) => !onClump(id) && whiteTier(id) >= floorTier,
+    (id) => onClump(id) && whiteTier(id) === floorTier,
+  );
 }
 
 /** Every player's hand back up to HAND_SIZE (+ `extra` for the ids in `extraFor`). */
