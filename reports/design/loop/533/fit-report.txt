@@ -1,0 +1,253 @@
+decks wild: 1902 black, 4988 white
+  black slots: thing 1559 (82.0 %) · doing 210 (11.0 %) · person 19 (1.0 %) · name 114 (6.0 %)
+  white serves: thing 3699 (74.2 %) · doing 1424 (28.5 %) · person 192 (3.8 %) · name 1122 (22.5 %)
+  white tiers: 1: 849 (17.0 %) · 2: 1091 (21.9 %) · 3: 1631 (32.7 %) · 4: 1417 (28.4 %)
+  black tiers: 1: 532 (28.0 %) · 2: 273 (14.4 %) · 3: 1097 (57.7 %)
+6 games × 6 players, 288 hands at answer; prompts played: mean tier 3.00
+  rounds by slot: thing 39 · doing 7 · person 0 · name 2; hands with < 2 cards serving the round's slot: 0 (0.0 %) — thing 0 · doing 0 · person 0 · name 0
+  the phone's first four cards: mean fit 0.959 (whole hand 0.834), great among them 3.19
+  topic clumps (sex aside): hands with four or more cards on one topic 0.0 %; largest group per hand 1.96
+  cards serving the slot per hand: 5.25; great (tier 3+) per hand: 6.44, amazing (tier 4) 2.40; hands at least half great: 100.0 %
+  bot plays on the prompt's topic (other words): 6.9 %; echoing its word: 0.0 %
+  bot plays: 288; mean fit 0.978 (best on offer 1.000); serving the slot 87.2 %; mean tier 3.75
+sample plays — [kind, prompt tier] filled prompt ← card tier / fit:
+  [thing★★★] What's the real reason the field trip was cancelled? My grandmother's Tupperware collection.  ← 4/1.00
+  [thing★★★] What's the real reason the field trip was cancelled? A dick pic sent to the group chat.  ← 4/1.00
+  [thing★★★] What's the real reason the field trip was cancelled? A vagina that leaves voice memos.  ← 4/1.00
+  [thing★★★] What's the real reason the field trip was cancelled? A 69 that ends in a 911 call.  ← 4/1.00
+  [thing★★★] What's the real reason the field trip was cancelled? A fetish for tax paperwork.  ← 4/1.00
+  [thing★★★] What's the real reason the field trip was cancelled? An owl at brunch.  ← 4/1.00
+  [thing★★★] Barbie's Ken finally got Honey, and then ants.  ← 4/1.00
+  [thing★★★] Barbie's Ken finally got The Tooth Fairy's expense report.  ← 4/1.00
+  [thing★★★] Barbie's Ken finally got Genghis Khan's family tree.  ← 4/1.00
+  [thing★★★] Barbie's Ken finally got Mr. Rogers, disappointed.  ← 4/1.00
+  [thing★★★] Barbie's Ken finally got The office printer, sentient and angry.  ← 4/1.00
+  [thing★★★] Barbie's Ken finally got A handjob under a Cracker Barrel table.  ← 3/1.00
+  [thing★★★] The magician pulled A vasectomy coupon out of his hat.  ← 4/1.00
+  [thing★★★] The magician pulled A parent's toy drawer, found out of his hat.  ← 4/1.00
+  [thing★★★] The magician pulled A butthole tattoo of a butthole out of his hat.  ← 4/1.00
+  [thing★★★] The magician pulled Canada, but angry out of his hat.  ← 4/1.00
+  [thing★★★] The magician pulled A cock ring that's also a mood ring out of his hat.  ← 4/1.00
+  [thing★★★] The magician pulled A cucumber that's seen too much out of his hat.  ← 3/1.00
+  [name★★★] The fortune cookie said "Vomit-flavored vodka."  ← 2/1.00
+  [name★★★] The fortune cookie said "Rest-stop sushi."  ← 3/1.00
+  [name★★★] The fortune cookie said "The morning-after pill."  ← 2/1.00
+  [name★★★] The fortune cookie said "An ex who still has the Netflix password."  ← 4/0.60
+  [name★★★] The fortune cookie said "A Siri that sighs."  ← 3/1.00
+  [name★★★] The fortune cookie said "A colonoscopy prep milkshake."  ← 3/1.00
+  [thing★★★] My last meal would be A garden that grows best over the ex.  ← 4/1.00
+  [thing★★★] My last meal would be Getting a boner during a hostage negotiation.  ← 4/0.70
+  [thing★★★] My last meal would be A family tree with a loop in it.  ← 4/1.00
+  [thing★★★] My last meal would be A car seat installed wrong.  ← 4/1.00
+  [thing★★★] My last meal would be A Facebook uncle with sources.  ← 4/1.00
+  [thing★★★] My last meal would be A condom that expired in 2009.  ← 3/1.00
+  [thing★★★] The baby was conceived during A field trip to the slaughterhouse, participatory.  ← 3/1.00†
+  [thing★★★] The baby was conceived during A ringtone from 2007.  ← 4/1.00
+  [thing★★★] The baby was conceived during A Tinder profile with a family photo.  ← 3/1.00
+  [thing★★★] The baby was conceived during A wedding at a bowling alley.  ← 4/1.00
+  [thing★★★] The baby was conceived during A badger with boundaries.  ← 4/1.00
+  [thing★★★] The baby was conceived during A Kickstarter that shipped nothing.  ← 4/1.00
+  [thing★★★] The reason my parents are disappointed: A blowup doll in the carpool lane.  ← 3/1.00
+  [thing★★★] The reason my parents are disappointed: A performance review held at the gallows.  ← 4/1.00
+  [thing★★★] The reason my parents are disappointed: A waiter who says "enjoy" before you order.  ← 4/0.85
+  [thing★★★] The reason my parents are disappointed: Pickleball injuries at the swingers' club.  ← 4/1.00
+  [thing★★★] The reason my parents are disappointed: A breathalyzer with a good excuse.  ← 4/1.00
+  [thing★★★] The reason my parents are disappointed: Jack the Ripper's dating app.  ← 4/1.00
+  [thing★★★] The AI was trained entirely on An ice cube tray nobody refilled.  ← 3/1.00
+  [thing★★★] The AI was trained entirely on An open mic night at the nursing home.  ← 4/1.00
+  [thing★★★] The AI was trained entirely on A Secret Santa gift that ended a friendship.  ← 4/1.00
+  [thing★★★] The AI was trained entirely on A police sketch of my penis.  ← 4/1.00
+  [thing★★★] The AI was trained entirely on The end-credits song, sung badly.  ← 4/1.00
+  [thing★★★] The AI was trained entirely on A CEO who sells the interns.  ← 4/0.85
+  [doing★★★] The priest lost his faith after Screaming at a Little League umpire.  ← 3/1.00
+  [doing★★★] The priest lost his faith after Taking a dump at a job interview.  ← 4/1.00
+  [doing★★★] The priest lost his faith after A vasectomy coupon.  ← 4/1.00
+  [doing★★★] The priest lost his faith after Getting into an argument with a mascot.  ← 4/1.00
+  [doing★★★] The priest lost his faith after Deducting the strip club.  ← 4/1.00
+  [doing★★★] The priest lost his faith after Sexting the wrong Amanda.  ← 4/1.00
+  [thing★★★] The cat knocked A sexy Halloween costume for a pumpkin off the counter.  ← 4/1.00
+  [thing★★★] The cat knocked A nun with a Tinder off the counter.  ← 4/0.85
+  [thing★★★] The cat knocked A koi pond that eats the mailman off the counter.  ← 4/1.00†
+  [thing★★★] The cat knocked Auto-Tune on the national anthem off the counter.  ← 4/1.00
+  [thing★★★] The cat knocked A mugshot that became a meme off the counter.  ← 4/1.00
+  [thing★★★] The cat knocked A tan line shaped like a hand off the counter.  ← 4/1.00
+  [thing★★★] The gimp mask smelled like A meth-fueled trip to Home Depot.  ← 4/1.00
+  [thing★★★] The gimp mask smelled like The Pompeii guy who died mid-masturbation.  ← 4/0.85†
+  [thing★★★] The gimp mask smelled like The day the Wordle answer was a slur.  ← 4/1.00
+  [thing★★★] The gimp mask smelled like A spare tire that's also flat.  ← 4/1.00
+  [thing★★★] The gimp mask smelled like A porn plot with a twist ending.  ← 4/1.00†
+  [thing★★★] The gimp mask smelled like A cake topper of two men fighting.  ← 4/1.00
+  [thing★★★] NASA's next mission will search for A restraining order from a mascot.  ← 4/1.00
+  [thing★★★] NASA's next mission will search for A national park's "no fornicating" sign, earned.  ← 4/1.00
+  [thing★★★] NASA's next mission will search for An owl who works nights.  ← 4/0.85
+  [thing★★★] NASA's next mission will search for A snorkel in the bathtub.  ← 4/1.00
+  [thing★★★] NASA's next mission will search for A hit man with a punch card.  ← 4/1.00
+  [thing★★★] NASA's next mission will search for A Halloween candy bowl with the real fingers mixed in.  ← 3/1.00
+  [doing★★★] The moonwalk was actually Michael Jackson Holding a plank for nine seconds.  ← 3/1.00
+  [doing★★★] The moonwalk was actually Michael Jackson Panic-buying an entire aisle.  ← 3/1.00
+  [doing★★★] The moonwalk was actually Michael Jackson Explaining the plot of a movie badly.  ← 4/1.00
+  [doing★★★] The moonwalk was actually Michael Jackson Rearranging the dishwasher after your spouse.  ← 3/1.00
+  [doing★★★] The moonwalk was actually Michael Jackson Making eye contact during a group prayer.  ← 3/1.00
+  [doing★★★] The moonwalk was actually Michael Jackson Getting blessed with a dildo instead of holy water.  ← 2/1.00
+  [thing★★★] What did I trade for a ride home? Pantsless Founding Fathers.  ← 4/1.00
+  [thing★★★] What did I trade for a ride home? The Salem witch trials, but for Wi-Fi thieves.  ← 4/1.00
+  [thing★★★] What did I trade for a ride home? A twelve-hour drive with a toddler.  ← 4/1.00
+  [thing★★★] What did I trade for a ride home? A moose at the drive-thru.  ← 4/1.00
+  [thing★★★] What did I trade for a ride home? A urologist with a flashlight and a dream.  ← 4/1.00
+  [thing★★★] What did I trade for a ride home? Cavemen inventing the meeting.  ← 4/1.00
+  [thing★★★] Last night's hookup left behind A gas station coffee at hour nine.  ← 3/1.00
+  [thing★★★] Last night's hookup left behind A sex robot that unionized.  ← 4/1.00†
+  [thing★★★] Last night's hookup left behind A performance review that got personal.  ← 4/1.00
+  [thing★★★] Last night's hookup left behind An open bar at a custody hearing.  ← 4/1.00
+  [thing★★★] Last night's hookup left behind A screaming goat.  ← 3/1.00
+  [thing★★★] Last night's hookup left behind A donkey that says no.  ← 4/1.00
+  [name★★★] The sequel nobody wanted: "A nun's secret tattoo 2."  ← 2/1.00
+  [name★★★] The sequel nobody wanted: "An unlicensed lemonade stand 2."  ← 3/1.00
+  [name★★★] The sequel nobody wanted: "Naming the roomba 2."  ← 3/1.00
+  [name★★★] The sequel nobody wanted: "Aggressively friendly customer service 2."  ← 3/1.00
+  [name★★★] The sequel nobody wanted: "A porn-themed escape room 2."  ← 3/1.00
+  [name★★★] The sequel nobody wanted: "A substitute teacher who was never sent 2."  ← 4/0.60
+  [doing★★★] The glory hole led to Blacking out and waking up in Mexico.  ← 4/1.00
+  [doing★★★] The glory hole led to Crashing a work party at another company.  ← 3/1.00
+  [doing★★★] The glory hole led to Meeting the parents the morning after.  ← 3/1.00
+  [doing★★★] The glory hole led to Mispronouncing a word you only read.  ← 3/1.00
+  [doing★★★] The glory hole led to Saving the good plates for nobody.  ← 3/1.00
+  [doing★★★] The glory hole led to Peeling an orange in one piece.  ← 2/1.00
+  [thing★★★] My dad's toolbox contains A DUI on a lawnmower and no tools.  ← 4/1.00
+  [thing★★★] My dad's toolbox contains A garage with no room for a car and no tools.  ← 4/1.00
+  [thing★★★] My dad's toolbox contains A gold digger with a gold detector and no tools.  ← 4/1.00
+  [thing★★★] My dad's toolbox contains A hamster with a mortgage and no tools.  ← 4/1.00
+  [thing★★★] My dad's toolbox contains A lemon in a paper cut and no tools.  ← 4/1.00
+  [thing★★★] My dad's toolbox contains Grandma's driving and no tools.  ← 4/1.00†
+  [thing★★★] What do dads think about in the shower? A goose with a personal vendetta.  ← 4/1.00
+  [thing★★★] What do dads think about in the shower? The sourdough starter from lockdown.  ← 4/1.00
+  [thing★★★] What do dads think about in the shower? A minivan with a "Baby on Board" sign and no baby.  ← 4/1.00†
+  [thing★★★] What do dads think about in the shower? The kid who ate the paste.  ← 4/0.85
+  [thing★★★] What do dads think about in the shower? Bezos's bald spot, fully insured.  ← 4/1.00
+  [thing★★★] What do dads think about in the shower? A gloryhole at the Cheesecake Factory.  ← 3/1.00†
+  [thing★★★] The Founding Fathers' group chat was mostly about Obama's tan suit.  ← 4/1.00
+  [thing★★★] The Founding Fathers' group chat was mostly about Gym class dodgeball, no survivors.  ← 4/1.00
+  [thing★★★] The Founding Fathers' group chat was mostly about A parallel parking job that took nine tries.  ← 4/1.00
+  [thing★★★] The Founding Fathers' group chat was mostly about A sex swing installed by your dad.  ← 4/1.00
+  [thing★★★] The Founding Fathers' group chat was mostly about An NPC who says the same thing forever.  ← 4/0.85
+  [thing★★★] The Founding Fathers' group chat was mostly about An open bar with an open marriage.  ← 3/1.00
+  [thing★★★] The plumber found A browser history that explains everything in the drain and did not ask.  ← 4/1.00
+  [thing★★★] The plumber found A Florida Man headline in the drain and did not ask.  ← 4/1.00
+  [thing★★★] The plumber found A rocket that's mostly duct tape in the drain and did not ask.  ← 4/1.00
+  [thing★★★] The plumber found Gordon Ramsay yelling at a child in the drain and did not ask.  ← 4/1.00
+  [thing★★★] The plumber found The blood pressure cuff that squeezes with intent in the drain and did not ask.  ← 4/1.00
+  [thing★★★] The plumber found An otter holding a grudge in the drain and did not ask.  ← 4/1.00
+  [thing★★★] What's in my browser history? A pontoon boat with a karaoke machine.  ← 3/1.00
+  [thing★★★] What's in my browser history? A fanny pack on the runway.  ← 4/1.00
+  [thing★★★] What's in my browser history? A barista who spits in more than the coffee.  ← 4/0.85
+  [thing★★★] What's in my browser history? A jar of mayonnaise in the sun.  ← 4/1.00
+  [thing★★★] What's in my browser history? The world's oldest porn star.  ← 4/1.00
+  [thing★★★] What's in my browser history? A donkey that says no.  ← 4/1.00
+  [thing★★★] What did the DNA test reveal? Trump's hair, but on your balls.  ← 3/1.00
+  [thing★★★] What did the DNA test reveal? Bernie Madoff's spreadsheet.  ← 4/1.00
+  [thing★★★] What did the DNA test reveal? A hall monitor with power.  ← 4/1.00
+  [thing★★★] What did the DNA test reveal? A Thanksgiving with the deed to the land, finally discussed.  ← 3/1.00
+  [thing★★★] What did the DNA test reveal? A bachelorette sash that says "ask me anything."  ← 4/1.00
+  [thing★★★] What did the DNA test reveal? Edible underwear from 1998.  ← 3/1.00
+  [thing★★★] The song's real lyrics are about A misplaced retainer.  ← 3/1.00
+  [thing★★★] The song's real lyrics are about A pigeon in a business suit.  ← 4/1.00
+  [thing★★★] The song's real lyrics are about A pub quiz team named after a pun.  ← 4/1.00
+  [thing★★★] The song's real lyrics are about A Denny's at 4 a.m.  ← 3/1.00
+  [thing★★★] The song's real lyrics are about A one-night stand who left a thank-you note.  ← 4/0.85
+  [thing★★★] The song's real lyrics are about A sugar daddy on a budget.  ← 4/1.00
+  [thing★★★] Columbus's second voyage brought back A vibrating butt plug during a job interview.  ← 4/1.00
+  [thing★★★] Columbus's second voyage brought back A surprise party at a divorce hearing.  ← 4/1.00
+  [thing★★★] Columbus's second voyage brought back Bathroom sex at Applebee's.  ← 3/1.00
+  [thing★★★] Columbus's second voyage brought back A sex robot that unionized.  ← 4/1.00
+  [thing★★★] Columbus's second voyage brought back A loot box with nothing in it.  ← 4/1.00
+  [thing★★★] Columbus's second voyage brought back A Wi-Fi password that's just "password."  ← 4/1.00
+  [doing★★★] What does my cat do while I'm at work? A sex scene with the stunt double.  ← 4/1.00
+  [doing★★★] What does my cat do while I'm at work? Doing shots with your mother-in-law.  ← 3/1.00
+  [doing★★★] What does my cat do while I'm at work? Setting a cop car on fire with a scented candle.  ← 4/1.00
+  [doing★★★] What does my cat do while I'm at work? Sleeping with the wedding planner.  ← 4/1.00
+  [doing★★★] What does my cat do while I'm at work? Doing it in your childhood bed.  ← 3/1.00
+  [doing★★★] What does my cat do while I'm at work? Clapping when the plane lands.  ← 3/1.00
+  [thing★★★] My therapist wrote down Napoleon's lifts and underlined it.  ← 4/1.00
+  [thing★★★] My therapist wrote down A Roomba covered in dog poop and underlined it.  ← 4/1.00
+  [thing★★★] My therapist wrote down A dick that's more of a suggestion and underlined it.  ← 4/1.00
+  [thing★★★] My therapist wrote down A Star Wars fan explaining the timeline and underlined it.  ← 4/1.00
+  [thing★★★] My therapist wrote down A sugar daddy named Gary and underlined it.  ← 4/1.00
+  [thing★★★] My therapist wrote down A hit man with a punch card and underlined it.  ← 4/1.00
+  [thing★★★] The class pet's replacement was A 69 that turned into a 96.  ← 4/1.00
+  [thing★★★] The class pet's replacement was A conception story told at Thanksgiving.  ← 4/1.00
+  [thing★★★] The class pet's replacement was A Facebook uncle with sources.  ← 4/1.00
+  [thing★★★] The class pet's replacement was A pharmacist who knows too much.  ← 4/0.85
+  [thing★★★] The class pet's replacement was A DIY vasectomy kit.  ← 4/1.00
+  [thing★★★] The class pet's replacement was Holy water from a Slurpee machine.  ← 4/1.00
+  [thing★★★] The Greek gods' orgy needed A cock sock made of bacon.  ← 4/1.00†
+  [thing★★★] The Greek gods' orgy needed An escort who charges by the syllable.  ← 4/0.85†
+  [thing★★★] The Greek gods' orgy needed An OnlyFans funded by a church group.  ← 4/1.00†
+  [thing★★★] The Greek gods' orgy needed Sexy pilgrim.  ← 3/1.00†
+  [thing★★★] The Greek gods' orgy needed Pantsless Founding Fathers.  ← 4/1.00
+  [thing★★★] The Greek gods' orgy needed A sperm bank with a loyalty card.  ← 4/1.00
+  [thing★★★] The apocalypse will be survived by Zuckerberg's robot orgasm face.  ← 4/1.00
+  [thing★★★] The apocalypse will be survived by The Bachelor's abortion clause.  ← 4/1.00
+  [thing★★★] The apocalypse will be survived by An alibi carved into the victim.  ← 4/1.00
+  [thing★★★] The apocalypse will be survived by An NPC who says the same thing forever.  ← 4/0.85
+  [thing★★★] The apocalypse will be survived by A pizza box used as a sex toy tray.  ← 4/1.00
+  [thing★★★] The apocalypse will be survived by A snow globe of a parking lot.  ← 4/1.00
+  [thing★★★] The director's cut adds forty minutes of A safe word nobody remembers.  ← 4/1.00
+  [thing★★★] The director's cut adds forty minutes of A robot that only folds towels.  ← 4/0.85
+  [thing★★★] The director's cut adds forty minutes of A goose that goes for the crotch.  ← 4/1.00
+  [thing★★★] The director's cut adds forty minutes of A vasectomy coupon.  ← 4/1.00
+  [thing★★★] The director's cut adds forty minutes of A rocket shaped like what you think.  ← 4/1.00
+  [thing★★★] The director's cut adds forty minutes of A blue ribbon for a goat.  ← 3/1.00
+  [thing★★★] WebMD says my symptoms mean An ex who still has the Netflix password.  ← 4/0.85
+  [thing★★★] WebMD says my symptoms mean A cheating scandal at the retirement home.  ← 4/1.00
+  [thing★★★] WebMD says my symptoms mean A dad who knows the name of every tool.  ← 4/0.85
+  [thing★★★] WebMD says my symptoms mean Half a Xanax and a nap.  ← 4/1.00
+  [thing★★★] WebMD says my symptoms mean Balls in a blender, hypothetically.  ← 4/1.00
+  [thing★★★] WebMD says my symptoms mean Sexual tension at the DMV.  ← 4/1.00
+  [thing★★★] My Duolingo owl threatened me with A spider that pays rent.  ← 4/1.00
+  [thing★★★] My Duolingo owl threatened me with A snake that just wants a hug.  ← 4/1.00†
+  [thing★★★] My Duolingo owl threatened me with God's browser history.  ← 4/1.00
+  [thing★★★] My Duolingo owl threatened me with A performance review conducted with a hammer.  ← 4/1.00
+  [thing★★★] My Duolingo owl threatened me with A cheap toupee in a windstorm.  ← 4/1.00
+  [thing★★★] My Duolingo owl threatened me with Parallel parking with an audience.  ← 4/1.00
+  [doing★★★] The senator resigned after Getting stabbed with a churro.  ← 4/1.00
+  [doing★★★] The senator resigned after A layoff announced by carousel post.  ← 4/1.00
+  [doing★★★] The senator resigned after Making eye contact during a group prayer.  ← 3/1.00
+  [doing★★★] The senator resigned after Peeing on the electric fence.  ← 3/1.00
+  [doing★★★] The senator resigned after Pretending the hot tub was already like that.  ← 4/1.00
+  [doing★★★] The senator resigned after A meeting that should have been an email.  ← 4/1.00
+  [doing★★★] What does Beyoncé do at 3 a.m.? Petting a dog you were told not to.  ← 4/1.00
+  [doing★★★] What does Beyoncé do at 3 a.m.? Asking for the manager by name.  ← 3/1.00
+  [doing★★★] What does Beyoncé do at 3 a.m.? Zipping a coat over a seatbelt.  ← 4/1.00
+  [doing★★★] What does Beyoncé do at 3 a.m.? Wearing a cape to the grocery store.  ← 3/1.00
+  [doing★★★] What does Beyoncé do at 3 a.m.? An orgy at the Holiday Inn.  ← 3/1.00
+  [doing★★★] What does Beyoncé do at 3 a.m.? Karaoke-ing a song that names your ex.  ← 3/1.00
+  [thing★★★] The family reunion's body count was blamed on A dad who reads the sex scenes aloud.  ← 4/0.85†
+  [thing★★★] The family reunion's body count was blamed on A charging cable that only works at an angle.  ← 4/1.00
+  [thing★★★] The family reunion's body count was blamed on Two cats in a bathtub.  ← 3/1.00
+  [thing★★★] The family reunion's body count was blamed on A hall monitor with power.  ← 4/1.00
+  [thing★★★] The family reunion's body count was blamed on Erectile dysfunction ads during the big game.  ← 4/1.00
+  [thing★★★] The family reunion's body count was blamed on An alibi carved into the victim.  ← 4/1.00†
+  [thing★★★] The museum's most touched exhibit: Genghis Khan's family tree.  ← 4/1.00
+  [thing★★★] The museum's most touched exhibit: A magpie with your ring.  ← 4/1.00
+  [thing★★★] The museum's most touched exhibit: A therapist who takes notes with a shudder.  ← 4/0.85
+  [thing★★★] The museum's most touched exhibit: A book report on a book nobody read.  ← 4/1.00
+  [thing★★★] The museum's most touched exhibit: A dominatrix who does your taxes.  ← 4/0.85
+  [thing★★★] The museum's most touched exhibit: The Salem witch trials for women who own vibrators.  ← 4/0.85
+  [thing★★★] Nothing gets me out of bed like A burner phone with three contacts.  ← 4/1.00
+  [thing★★★] Nothing gets me out of bed like A wedgie from God.  ← 4/1.00
+  [thing★★★] Nothing gets me out of bed like A robot that only folds towels.  ← 4/0.85
+  [thing★★★] Nothing gets me out of bed like A one-night stand who left a Yelp review.  ← 4/0.85
+  [thing★★★] Nothing gets me out of bed like A DIY deck that slopes toward the pool.  ← 4/1.00
+  [thing★★★] Nothing gets me out of bed like A barista who spits in more than the coffee.  ← 4/0.85
+  [thing★★★] The world's worst aphrodisiac: Fingerprints, filed off with the fingers.  ← 4/1.00
+  [thing★★★] The world's worst aphrodisiac: A speeding ticket at 26 in a 25.  ← 4/1.00
+  [thing★★★] The world's worst aphrodisiac: A substitute teacher who was never sent.  ← 4/0.85
+  [thing★★★] The world's worst aphrodisiac: A church van with 300,000 miles.  ← 3/1.00
+  [thing★★★] The world's worst aphrodisiac: A drawer nobody opens.  ← 3/1.00
+  [thing★★★] The world's worst aphrodisiac: A doormat that says "hello" upside down.  ← 4/1.00
+  [thing★★★] Bob Ross painted a happy little dentist who keeps the teeth.  ← 4/0.85
+  [thing★★★] Bob Ross painted a happy little kid who ate the play-doh.  ← 4/0.85
+  [thing★★★] Bob Ross painted a happy little Alexa's silent judgment.  ← 4/1.00
+  [thing★★★] Bob Ross painted a happy little confession with a camera crew.  ← 3/1.00
+  [thing★★★] Bob Ross painted a happy little Thanksgiving political argument.  ← 3/1.00
+  [thing★★★] Bob Ross painted a happy little Jerking off in the Lincoln Memorial.  ← 4/0.70

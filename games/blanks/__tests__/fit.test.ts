@@ -26,6 +26,8 @@ describe('slotOf — what the blank wants', () => {
       "What am I doing to my ex's car?",
       'How did the neighbors find out?',
       "What got me banned from the swingers' club?",
+      "What does my cat do while I'm at work?",
+      'The moonwalk was actually Michael Jackson ____.',
       "What's the secret to a happy marriage?",
       'The livestream ended abruptly with ____.',
     ])

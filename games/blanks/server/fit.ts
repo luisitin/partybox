@@ -18,7 +18,8 @@ export type Slot = (typeof SLOTS)[number];
 /** Prompts whose blank wants an action or an event. */
 const DOING_PROMPT = [
   /\b(?:do|doing|done)\?["”]?$/i, // "What did the sex robot refuse to do?"
-  /\bdo (?:at|in|on|to|with|for|instead|before|after|during)\b/i, // "What did Lincoln do at…"
+  /\bdo (?:at|in|on|to|with|for|instead|before|after|during|while|when|all day|every)\b/i, // "What did Lincoln do at…", "…do while I'm at work?"
+  /\b(?:was|is|were) actually (?:[A-Z][\w']+ ){1,3}____/, // "The moonwalk was actually Michael Jackson ____."
   /\b(?:does|did|caught (?:me|him|her|them|us)|busy|instead of|after|before|while|spent (?:the \w+|\w+ years?))\s+____/i,
   /\b(?:what happened|what went wrong|walk(?:ed)? in on\?|catch (?:\w+ )+doing|am I doing|are you doing|^how did|^why\b)\b/i,
   /\b(?:pulled (?:me|us|him|her) over|in trouble|grounded|detention|suspended|deported|excommunicated|disqualified|demonetized|cancel(?:l)?ed) (?:\w+ )?for ____/i,
