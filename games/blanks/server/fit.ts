@@ -39,6 +39,7 @@ const DOING_PROMPT = [
   /^What (?:got|ended|finally ended|killed|ruined|started|caused|broke up)\b/i,
   /\b(?:technique|trick|secret to|real reason for|reason the [\w' ]+ ended|mistake (?:was|is)|biggest mistake|first mistake|mistake: ____|strategy (?:was|is)|plan (?:was|is)|never live down|live down|alibi (?:is|was|involves)|shalt not|practi[sc]e)\b/i,
   /\b(?:turned into|opens with|cuts to|closes with) ____/i, // "…trust exercise turned into ____", "The sex tape opens with ____"
+  /\b(?:confess(?:ed|ing)? to|admit(?:ted)? to|plead(?:ed)? guilty to|owned up to|apologi[sz]ed? for|blame[sd]? (?:me|him|her|them|us|you|it) for|forgive (?:me|him|her|them|us) for|guilty of)\b/i, // "What did I confess to on the witness stand?"
   /\b(?:done|did|loved|dare (?:was|is)|ritual (?:was|is)): ____|doing what \w+ loved/i,
   /\b(?:arrested|fired|executed|burned|shut down|raided|resigned|banned|expelled|sued|jailed|convicted|dumped|put (?:\w+ ){1,2}down|quit|walked out|kicked out)\b[^.]* (?:for|over) ____/i,
   // A ritual, a dare, an activity, a way to get something: what someone does.
