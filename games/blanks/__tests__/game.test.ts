@@ -9,7 +9,6 @@ import {
   blackCard,
   blackPool,
   blackTier,
-  whiteKind,
   whitePool,
   whiteServes,
   whiteTier,
