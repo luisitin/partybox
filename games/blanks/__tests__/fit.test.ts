@@ -36,6 +36,7 @@ describe('slotOf — what the blank wants', () => {
       'What did the kids walk in on?',
       'What did the hotel maid walk in on?',
       `The yearbook's "Most Likely To" was ____.`,
+      "What's my signature move in bed?",
       'The moonwalk was actually Michael Jackson ____.',
       "What's the secret to a happy marriage?",
       'The livestream ended abruptly with ____.',
@@ -103,6 +104,10 @@ describe('servesOf — what the white card is', () => {
     expect(servesOf({ text: 'Anal in a canoe.' })).toEqual(['thing', 'doing', 'name']);
     expect(servesOf({ text: 'A bachelor party at Chuck E. Cheese.' })).toEqual(['thing', 'doing']);
     expect(servesOf({ text: 'A trust fall off the roof.' })).toEqual(['thing', 'doing']);
+    // The event word must head the phrase: a sex toy is a toy, anal beads are beads.
+    expect(servesOf({ text: 'A sex toy that pairs with your car.' })).toEqual(['thing']);
+    expect(servesOf({ text: 'Anal beads in the Christmas tree.' })).toEqual(['thing']);
+    expect(servesOf({ text: 'Sex on a waterbed in 1987.' })).toEqual(['thing', 'doing']);
     expect(fitScore('doing', servesOf({ text: 'A threesome with a mime.' }))).toBe(1);
   });
   it('a short card is also a name (four words or fewer)', () => {
