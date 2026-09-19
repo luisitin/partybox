@@ -724,8 +724,8 @@
       "text": "My dating profile: \"I like ____ and I'm not afraid of ____.\"",
       "pick": 2,
       "draw": 0,
-      "tier": 3,
-      "slots": ["doing", "thing"]
+      "slots": ["doing", "thing"],
+      "tier": 3
     },
     {
       "id": "wb107",
@@ -2257,8 +2257,8 @@
       "text": "Marriage is ____ negotiating with ____.",
       "pick": 2,
       "draw": 0,
-      "tier": 3,
-      "slots": ["person", "person"]
+      "slots": ["person", "person"],
+      "tier": 3
     },
     {
       "id": "wb339",
@@ -2291,8 +2291,8 @@
       "text": "Hell is ____ for eternity with ____.",
       "pick": 2,
       "draw": 0,
-      "tier": 3,
-      "slots": ["doing", "person"]
+      "slots": ["doing", "person"],
+      "tier": 3
     },
     {
       "id": "wb344",
@@ -2361,8 +2361,8 @@
       "text": "Grindr is ____ wearing ____.",
       "pick": 2,
       "draw": 0,
-      "tier": 3,
-      "slots": ["person", "thing"]
+      "slots": ["person", "thing"],
+      "tier": 3
     },
     {
       "id": "wb355",
@@ -2659,8 +2659,8 @@
       "text": "My safe word is ____; my red flag is ____.",
       "pick": 2,
       "draw": 0,
-      "tier": 3,
-      "slots": ["name", "thing"]
+      "slots": ["name", "thing"],
+      "tier": 3
     },
     {
       "id": "wb401",
@@ -2705,8 +2705,8 @@
       "text": "The honeymoon was ____ interrupted by ____.",
       "pick": 2,
       "draw": 0,
-      "tier": 3,
-      "slots": ["thing", "doing"]
+      "slots": ["thing", "doing"],
+      "tier": 3
     },
     {
       "id": "wb408",
@@ -2720,8 +2720,8 @@
       "text": "The porn parody swaps ____ for ____.",
       "pick": 2,
       "draw": 0,
-      "tier": 3,
-      "slots": ["thing", "thing"]
+      "slots": ["thing", "thing"],
+      "tier": 3
     },
     {
       "id": "wb410",
@@ -2735,8 +2735,8 @@
       "text": "The cult's promise: ____ in exchange for ____.",
       "pick": 2,
       "draw": 0,
-      "tier": 3,
-      "slots": ["thing", "thing"]
+      "slots": ["thing", "thing"],
+      "tier": 3
     },
     {
       "id": "wb412",
@@ -3066,8 +3066,8 @@
       "text": "The first date ended with ____ in the trunk.",
       "pick": 1,
       "draw": 0,
-      "tier": 3,
-      "slot": "thing"
+      "slot": "thing",
+      "tier": 3
     },
     {
       "id": "wb461",
@@ -3613,6 +3613,126 @@
       "pick": 1,
       "draw": 0,
       "tier": 3
+    },
+    {
+      "id": "wb542",
+      "text": "The car's trunk rattled because of ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb543",
+      "text": "The hitchhiker turned out to be ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb544",
+      "text": "The pile-up on the interstate started with ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb545",
+      "text": "The airline lost a passenger and found ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb546",
+      "text": "The video game's hidden level was ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb547",
+      "text": "The speedrunner's secret was ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb548",
+      "text": "The arcade's basement held ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb549",
+      "text": "The bar's back room served ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb550",
+      "text": "The nightclub's fire exit was blocked by ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb551",
+      "text": "The bachelor party's last stop was ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb552",
+      "text": "The bouncer's body count came from ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb553",
+      "text": "The bartender's secret ingredient: ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb554",
+      "text": "History's bloodiest banquet featured ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb555",
+      "text": "The plague was spread by ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb556",
+      "text": "The guillotine's busiest day was over ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb557",
+      "text": "The Roman games' halftime show was ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb558",
+      "text": "What did the tow truck find inside?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb559",
+      "text": "What was buried under the arcade?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb560",
+      "text": "What was in the club's ice machine?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb561",
+      "text": "What did the archaeologists refuse to dig up?",
+      "pick": 1,
+      "draw": 0
     }
   ],
   "white": [
@@ -11766,6 +11886,134 @@
       "id": "ww1725",
       "text": "A forest that's mostly shallow graves.",
       "tier": 3
+    },
+    {
+      "id": "ww1726",
+      "text": "A car that runs on the passengers."
+    },
+    {
+      "id": "ww1727",
+      "text": "A hitchhiker with a body in each bag."
+    },
+    {
+      "id": "ww1728",
+      "text": "A carpool lane for the dead."
+    },
+    {
+      "id": "ww1729",
+      "text": "A crash test with real volunteers."
+    },
+    {
+      "id": "ww1730",
+      "text": "A trunk that thumps in time with the radio."
+    },
+    {
+      "id": "ww1731",
+      "text": "A bus route that ends at the quarry, no return."
+    },
+    {
+      "id": "ww1732",
+      "text": "A drive-thru that serves the previous customers."
+    },
+    {
+      "id": "ww1733",
+      "text": "A pilot who took the passengers with him."
+    },
+    {
+      "id": "ww1734",
+      "text": "A rideshare that never drops you off."
+    },
+    {
+      "id": "ww1735",
+      "text": "A traffic cone over a fresh hole."
+    },
+    {
+      "id": "ww1736",
+      "text": "A video game that kills the loser, physically."
+    },
+    {
+      "id": "ww1737",
+      "text": "A speedrun through a hospital, patients optional."
+    },
+    {
+      "id": "ww1738",
+      "text": "An arcade where the tokens are teeth."
+    },
+    {
+      "id": "ww1739",
+      "text": "A save file that remembers the murders."
+    },
+    {
+      "id": "ww1740",
+      "text": "A boss fight in a real basement."
+    },
+    {
+      "id": "ww1741",
+      "text": "A VR headset that doesn't come off, ever."
+    },
+    {
+      "id": "ww1742",
+      "text": "An NPC who's been a real person the whole time."
+    },
+    {
+      "id": "ww1743",
+      "text": "A bar tab paid in organs."
+    },
+    {
+      "id": "ww1744",
+      "text": "A cocktail with a finger, not a lime."
+    },
+    {
+      "id": "ww1745",
+      "text": "A nightclub with a body count on the marquee."
+    },
+    {
+      "id": "ww1746",
+      "text": "A bachelor party that ended in the desert with a shovel."
+    },
+    {
+      "id": "ww1747",
+      "text": "A bouncer who checks IDs and pulses."
+    },
+    {
+      "id": "ww1748",
+      "text": "A karaoke duet with the dead guy."
+    },
+    {
+      "id": "ww1749",
+      "text": "Last call at the morgue."
+    },
+    {
+      "id": "ww1750",
+      "text": "A pub crawl that ended in a crawlspace."
+    },
+    {
+      "id": "ww1751",
+      "text": "A plague doctor with a side business."
+    },
+    {
+      "id": "ww1752",
+      "text": "A Roman emperor's banquet with the guests as the course."
+    },
+    {
+      "id": "ww1753",
+      "text": "A guillotine with a punch card."
+    },
+    {
+      "id": "ww1754",
+      "text": "A Viking funeral for the living."
+    },
+    {
+      "id": "ww1755",
+      "text": "A medieval siege that used the neighbors."
+    },
+    {
+      "id": "ww1756",
+      "text": "A pharaoh buried with the whole staff, awake."
+    },
+    {
+      "id": "ww1757",
+      "text": "A dungeon with a waiting list."
     }
   ]
 }

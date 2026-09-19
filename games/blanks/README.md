@@ -100,8 +100,8 @@ number 6 (3–15) · `answerSeconds` number 60 (30–120, step 15; timed only) �
 
 ## Content
 
-Three decks, `mild.json` (clean, 744 black / 1796 white), `crude.json` (adult, 545 / 1359) and `wild.json`
-(explicit, 539 / 1720) — 6 703 cards, about one black card in nine a Pick 2 or Pick 3: `{ id, name, rating, black: [{ id, text, pick, draw }], white: [{ id, text }] }`,
+Three decks, `mild.json` (clean, 773 black / 1838 white), `crude.json` (adult, 570 / 1398) and `wild.json`
+(explicit, 559 / 1752) — 6 890 cards, about one black card in nine a Pick 2 or Pick 3: `{ id, name, rating, black: [{ id, text, pick, draw }], white: [{ id, text }] }`,
 blanks written `____`, `pick` ≥ blanks (a question card has none), `draw` 2 on Pick 3 cards. Mainstream
 real-world references are fine in crude and wild (heads of state past and present, well-known events);
 no obscure ones; no slurs or hate, nothing sexual involving minors, no non-consent. Add cards with
