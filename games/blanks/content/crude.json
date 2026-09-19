@@ -260,7 +260,8 @@
       "text": "I'd rather ____ than ____.",
       "pick": 2,
       "draw": 0,
-      "tier": 3
+      "tier": 3,
+      "slots": ["doing", "doing"]
     },
     {
       "id": "cb40",
@@ -1976,7 +1977,8 @@
       "text": "My worst decision was ____ followed by ____.",
       "pick": 2,
       "draw": 0,
-      "tier": 3
+      "tier": 3,
+      "slots": ["doing", "doing"]
     },
     {
       "id": "cb286",
@@ -2077,7 +2079,8 @@
       "text": "The cruise ship banned ____ after ____.",
       "pick": 2,
       "draw": 0,
-      "tier": 2
+      "tier": 2,
+      "slots": ["thing", "doing"]
     },
     {
       "id": "cb300",
@@ -2619,7 +2622,8 @@
       "text": "The cruise ship banned ____ after somebody tried ____.",
       "pick": 2,
       "draw": 0,
-      "tier": 1
+      "tier": 1,
+      "slots": ["thing", "doing"]
     },
     {
       "id": "cb377",
