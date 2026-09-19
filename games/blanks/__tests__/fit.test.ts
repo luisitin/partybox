@@ -4,6 +4,17 @@ import { describe, expect, it } from 'vitest';
 import { fitScore, servesOf, slotOf } from '../server/fit';
 
 describe('slotOf — what the blank wants', () => {
+  it('reads a name off a quoted blank, "…called?", "What did X say", a nickname', () => {
+    for (const text of [
+      'The porn parody of my life is called "____."',
+      `What's the porn parody of "Frozen" called?`,
+      'What did the drunk best man say in his toast?',
+      "What's my drag name?",
+      "What's the worst thing to whisper during sex?",
+      `Grandpa's new nickname at the retirement home: "____."`,
+    ])
+      expect(slotOf({ text }), text).toBe('name');
+  });
   it('reads a doing off "…do?", "…does ____", "ruined by ____", "ended with ____"', () => {
     for (const text of [
       'What did the sex robot refuse to do?',
@@ -45,27 +56,30 @@ describe('slotOf — what the blank wants', () => {
 describe('servesOf — what the white card is', () => {
   it('a gerund card is a doing', () => {
     expect(servesOf({ text: 'Farting during a prostate exam.' })).toEqual(['doing']);
-    expect(servesOf({ text: 'Quietly winning Monopoly.' })).toEqual(['doing']);
+    expect(servesOf({ text: 'Quietly winning Monopoly.' })).toEqual(['doing', 'name']);
   });
   it('a person heads the phrase or owns a who-clause', () => {
     for (const text of [
       'A nun with a strap-on.',
       'A therapist who takes notes with a shudder.',
       'MySpace Tom, who saw everything.',
-      'Grandma.',
       'A cop with a podcast.',
     ])
       expect(servesOf({ text }), text).toEqual(['person']);
+    expect(servesOf({ text: 'Grandma.' })).toEqual(['person', 'name']);
   });
   it('a possessive or a compound noun is the thing it names, not the person in it', () => {
     for (const text of [
-      "Grandpa's flesh-colored dildo.",
+      "Grandpa's flesh-colored dildo, still warm.",
       'A clown car full of dildos.',
       'A baby monitor that heard too much.',
-      'The Epstein files.',
-      'A gallon of cum.',
     ])
       expect(servesOf({ text }), text).toEqual(['thing']);
+  });
+  it('a short card is also a name (four words or fewer)', () => {
+    expect(servesOf({ text: 'The Epstein files.' })).toEqual(['thing', 'name']);
+    expect(servesOf({ text: 'A gallon of cum.' })).toEqual(['thing', 'name']);
+    expect(servesOf({ text: 'A gallon of cum on the good towels.' })).toEqual(['thing']);
   });
   it("the card's own serves wins", () => {
     expect(servesOf({ text: 'Beans.', serves: ['person'] })).toEqual(['person']);
@@ -79,5 +93,9 @@ describe('fitScore', () => {
     expect(fitScore('thing', ['person'])).toBeGreaterThan(0.8);
     expect(fitScore('person', ['thing'])).toBe(0.5);
     expect(fitScore('thing', ['doing', 'thing'])).toBe(1);
+    expect(fitScore('name', ['thing', 'name'])).toBe(1);
+    expect(fitScore('name', ['thing'])).toBeLessThan(0.6);
+    expect(fitScore('thing', ['thing', 'name'])).toBe(1);
+    expect(fitScore('thing', ['doing', 'name'])).toBe(0.7);
   });
 });
