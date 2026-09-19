@@ -53,6 +53,8 @@ export interface RoomState {
   results: RoomResults | null;
   /** For "play again". */
   lastGame: { gameId: string; settings: Settings } | null;
+  /** The host records each game to disk while true (ADR-035); the VIP toggles it in the picker. */
+  recording: boolean;
 }
 
 export type RoomEvent =

@@ -13,6 +13,18 @@ import {
 } from './test-utils.helper';
 
 describe('VIP validation', () => {
+  it('setRecording flips the room flag except mid-game, and is a no-op when unchanged', () => {
+    const room = roomWith(2);
+    expect(room.recording).toBe(true);
+    const off = vip(room, { action: 'setRecording', on: false });
+    expect(off.room.recording).toBe(false);
+    expect(effectTypes(off.effects)).toEqual(['push']);
+    expect(vip(off.room, { action: 'setRecording', on: false }).effects).toEqual([]);
+    expect(errorsOf(vip(playingRoom(2), { action: 'setRecording', on: false }).effects)).toEqual([
+      'cannot_start',
+    ]);
+  });
+
   it('non-VIPs are rejected with not_vip and nothing changes', () => {
     const room = roomWith(2);
     const r = vip(room, { action: 'lock' }, T0 + 5, 'p2');

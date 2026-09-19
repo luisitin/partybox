@@ -105,6 +105,9 @@ const NOT_GERUND =
  *  bagging" — which the gerund test on the first word alone read as a thing (loop 786). */
 const COMPOUND_VERB =
   /^(?:dry|skinny|day|line|tea|tap|parallel|extreme|ice|foam|team|quiet|drunk|ass|anal|speed|binge|power|deep|slow|dumpster|butt|dirty|pole|lap|belly|hate|rage|doom|stress|sleep|free|hand|rock|kite|sky|bungee|scuba|bar|face|toe|nut|dog|cat|glory|dick|body|window|couch|table|floor|wall|corpse|grave|bible|church|hair|nose|mouth|cross|street|hot|cold|wet|sad|angry|late|early|double|triple|half|over|under|micro|macro|mass|group|solo|public|private|online|remote|virtual|manual|reverse|forward|backward|upside|inside|outside|sword|knife|gun|axe|rope|chain|whip|belt|glass|bottle|can|cup|spoon|fork|plate|bowl|pan|pot|oven|stove|grill|dish|clothes|shoe|sock|hat|pants|shirt|tie|wig|mask)$/i;
+/** A gerund that is the first half of a noun: "breaking news", "parking lot", "sleeping bag". */
+const GERUND_NOUN =
+  /^(?:breaking news|living room|parking (?:lot|ticket|garage|spot|space)|swimming pool|sleeping bag|washing machine|frying pan|running shoes|dining room|shopping (?:cart|mall|list)|boxing day|driving (?:test|range)|drinking (?:game|fountain|problem)|dating (?:app|profile|show)|wrapping paper|reading glasses|waiting room|walking (?:stick|dead)|rolling pin|cooking show|bowling (?:alley|ball)|training (?:wheels|montage)|landing strip|dressing room|cutting board|hunting (?:season|lodge)|tanning bed|vending machine|sewing machine|fitting room|talking (?:points|stage)|wishing well|whipping cream|rocking chair|folding chair|opening night|closing time|standing desk|spinning class|bathing suit|baking soda|chewing gum|shaving cream|hearing aid|wedding (?:night|ring|dress|cake)|morning (?:wood|sickness|after)|evening (?:news|gown))$/i;
 const ADVERB =
   /^(not|quietly|slowly|loudly|secretly|aggressively|extremely|slightly|accidentally|finally|casually|barely|openly|silently|gently|violently|briefly|nearly|almost|never|always|just|still|only|really|very|too|softly|angrily|politely|deliberately|repeatedly|calmly|suddenly|passive)$/i;
 const PERSON_WORD =
@@ -142,8 +145,10 @@ export function servesOf(card: Pick<WhiteCard, 'text'> & { serves?: Slot[] }): S
   const gerund = (w: string | undefined): boolean =>
     w !== undefined && /ing$/i.test(w) && !NOT_GERUND.test(w);
   let kind: Slot = 'thing';
+  // "Breaking news: your nudes." is news, not breaking; "Living room" a room (loop 809).
+  const noun = GERUND_NOUN.test(`${words[0] ?? ''} ${words[1] ?? ''}`);
   if (
-    gerund(words[0]) ||
+    (!noun && gerund(words[0])) ||
     ((ADVERB.test(words[0] ?? '') || COMPOUND_VERB.test(words[0] ?? '')) && gerund(words[1]))
   )
     kind = 'doing';

@@ -149,6 +149,16 @@ interface GameResults {
 }
 ```
 
+### Recap (optional, ADR-035)
+
+`recap?(state, ctx)` returns `{ markdown, files? }` — what the host writes to disk when a room records a
+game (`recordings/<gameId>/<time>-<room>/recap.md` next to `session.json` and `state.json`). `ctx` has
+the players, the results (null when the VIP ended the game) and `history`: the state as each phase
+instance began, oldest first — read the reveal states there for anything the game clears per round
+(Lightning's picks, Wisecrack's votes). Files are plain names written beside the markdown (Broken
+Pencil writes each drawing as an SVG). Pure like every other method; without it the host keeps only the
+state.
+
 ### Bots (`manifest.supportsBots`)
 
 Every game ships `bot.sampleInput` (sim, e2e and the contract suite need it). Setting

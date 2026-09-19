@@ -44,6 +44,8 @@ export const vipPayloadSchema = z.discriminatedUnion('action', [
   z.object({ action: z.literal('unlock') }),
   z.object({ action: z.literal('playAgain') }),
   z.object({ action: z.literal('toLobby') }),
+  /** Whether the host keeps a recap of the next game on disk (ADR-035); any time but mid-game. */
+  z.object({ action: z.literal('setRecording'), on: z.boolean() }),
 ]);
 export type VipAction = z.infer<typeof vipPayloadSchema>;
 
@@ -111,6 +113,8 @@ export interface RoomSnapshot {
   results: RoomResults | null;
   /** Why the VIP's Start button is disabled, if it is. */
   canStart: { ok: true } | { ok: false; reason: string };
+  /** The host writes a recap of each game to disk while this is on (ADR-035). */
+  recording: boolean;
 }
 
 export interface WelcomePayload {

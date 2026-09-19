@@ -58,6 +58,9 @@ export const t = {
     settings: 'Settings',
     players: (min: number, max: number) => `${min}–${max} players`,
     minutes: (m: number) => `~${m} min`,
+    recording: 'Save a recap on the host PC',
+    recordingHint: 'Drawings, answers and scores of each game, for feedback later',
+    recordingOff: 'Not saving this game',
   },
   results: {
     title: 'Results',

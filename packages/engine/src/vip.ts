@@ -163,6 +163,12 @@ export function applyVip(
     case 'lock':
     case 'unlock':
       return { room: { ...room, locked: action.action === 'lock' }, effects: [{ type: 'push' }] };
+    case 'setRecording': {
+      if (room.status === 'playing')
+        return reject(room, playerId, 'cannot_start', 'Change that before the next game.');
+      if (room.recording === action.on) return { room, effects: [] };
+      return { room: { ...room, recording: action.on }, effects: [{ type: 'push' }] };
+    }
     case 'toLobby': {
       if (room.status === 'playing')
         return reject(room, playerId, 'cannot_start', 'End the current game first.');
