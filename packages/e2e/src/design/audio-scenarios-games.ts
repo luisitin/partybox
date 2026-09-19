@@ -80,6 +80,17 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
       !intro.includes('phase'),
     `cues=${intro.join(',')}`,
   );
+  // Each card landing in the hand is felt: a 12 ms tap per card on the pluck's beat (loop 380),
+  // and one more for the first call (BALL_LAND_MS after its push).
+  const dealTaps = (await T.between(vip.page, 'C3', 'D1b')).filter(
+    (e) => e.kind === 'buzz' && Number(e['pattern']) === 12,
+  );
+  T.ok(
+    'D',
+    'the hand feels each card land (one 12 ms tap per card) and then the first call',
+    dealTaps.length === 2,
+    `taps(12)=${dealTaps.length} (1 card + the first call)`,
+  );
   // Ready-ups tick (the shell's lock tick, rising with the count); the ring's first tick waits a
   // breath after the last one (loop 349: they were 30 ms apart).
   const introEvs = await T.between(tv, 'C3', 'D1b');
