@@ -5,12 +5,14 @@ import {
   allConnectedDone,
   applyVip,
   gameManifestSchema,
+  multiselectPicks,
   seedRng,
   setConnected,
 } from '@partybox/game-sdk';
 import type { GameDefinition, GameEvent, InitContext } from '@partybox/game-sdk';
 import manifestJson from '../manifest.json' with { type: 'json' };
 import { sampleInput } from './bot';
+import { subcategoriesOf } from './content';
 import { drawQuestions } from './draw';
 import { enterIntro, reduceIntro } from './phases/intro';
 import { enterQuestion, reduceQuestion } from './phases/question';
@@ -33,16 +35,19 @@ function clampInt(value: unknown, fallback: number, min: number, max: number): n
 
 /** Settings as the manifest declares them; out-of-range values (tests, old rooms) are clamped. */
 export function settingsFrom(raw: InitContext['settings']): Settings {
-  const category = typeof raw['category'] === 'string' ? raw['category'] : 'all';
+  const wanted = typeof raw['category'] === 'string' ? raw['category'] : 'all';
+  const category = manifest.settings.some(
+    (s) => s.key === 'category' && s.type === 'select' && s.options.some((o) => o.value === wanted),
+  )
+    ? wanted
+    : 'all';
+  // Topics: the manifest's comma-joined multiselect, kept to the category's own topics (ADR-034).
+  const topics = subcategoriesOf(category);
   return {
     questions: clampInt(raw['questions'], 10, 5, 20),
     answerSeconds: clampInt(raw['answerSeconds'], 15, 5, 30),
-    category: manifest.settings.some(
-      (s) =>
-        s.key === 'category' && s.type === 'select' && s.options.some((o) => o.value === category),
-    )
-      ? category
-      : 'all',
+    category,
+    subcategories: multiselectPicks(raw['subcategories']).filter((t) => topics.includes(t)),
   };
 }
 
@@ -56,13 +61,19 @@ function init(ctx: InitContext): State {
     stats[p.id] = EMPTY_STATS;
   }
   const settings = settingsFrom(ctx.settings);
-  const [draw, rng] = drawQuestions(seedRng(ctx.seed), settings.category, settings.questions);
+  const [draw, rng] = drawQuestions(
+    seedRng(ctx.seed),
+    settings.category,
+    settings.questions,
+    settings.subcategories,
+  );
   const base: State = {
     phase: { id: 'intro', startedAt: ctx.now, deadline: null },
     rng,
     players,
     settings,
     drawnFrom: draw.drawnFrom,
+    drawnSubs: draw.drawnSubs,
     questionIds: draw.ids,
     index: -1,
     picks: {},

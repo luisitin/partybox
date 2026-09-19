@@ -84,6 +84,7 @@ export function TvSelecting({ room, client }: TvSelectingProps): JSX.Element {
                     spec={spec}
                     value={room.settings[spec.key]}
                     players={room.players.length}
+                    settings={room.settings}
                     idPrefix="tv-setting"
                     onChange={(v) =>
                       client.act({ action: 'updateSettings', settings: { [spec.key]: v } })

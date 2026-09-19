@@ -1,5 +1,5 @@
-// Drawing the question list: seeded, without repeats, category-filtered with a fallback, and a
-// final question that prefers the hardest difficulty still available (README "Content").
+// Drawing the question list: seeded, without repeats, category- and topic-filtered with fallbacks,
+// and a final question that prefers the hardest difficulty still available (README "Content").
 import { shuffle } from '@partybox/game-sdk';
 import type { RngState } from '@partybox/game-sdk';
 import type { Difficulty, Question } from '../content/schema';
@@ -9,28 +9,40 @@ export interface Draw {
   ids: string[];
   /** `all` or the category actually used (the setting falls back to `all` when too small). */
   drawnFrom: string;
+  /** The topics actually used (empty = the whole category, or after a fallback). */
+  drawnSubs: string[];
 }
 
 const HARDEST_FIRST: readonly Difficulty[] = ['hard', 'medium', 'easy'];
 
-/** The pool a game draws from: the chosen category if it has `questions + 1` items, else everything. */
+/**
+ * The pool a game draws from: the ticked topics of the chosen category if they hold
+ * `questions + 1` items, else the whole category if it does, else everything.
+ */
 export function poolFor(
   category: string,
+  subcategories: readonly string[],
   questions: number,
-): { pool: readonly Question[]; from: string } {
+): { pool: readonly Question[]; from: string; subs: string[] } {
   if (category !== 'all') {
+    if (subcategories.length > 0) {
+      const topics = questionsIn(category, subcategories);
+      if (topics.length >= questions + 1)
+        return { pool: topics, from: category, subs: [...subcategories] };
+    }
     const pool = questionsIn(category);
-    if (pool.length >= questions + 1) return { pool, from: category };
+    if (pool.length >= questions + 1) return { pool, from: category, subs: [] };
   }
-  return { pool: QUESTIONS, from: 'all' };
+  return { pool: QUESTIONS, from: 'all', subs: [] };
 }
 
 export function drawQuestions(
   rng: RngState,
   category: string,
   questions: number,
+  subcategories: readonly string[] = [],
 ): [Draw, RngState] {
-  const { pool, from } = poolFor(category, questions);
+  const { pool, from, subs } = poolFor(category, subcategories, questions);
   const [shuffled, next] = shuffle(rng, pool);
   // Never more regular questions than leave one for the final (the pack guarantees >= 200 anyway).
   const regularCount = Math.max(0, Math.min(questions, shuffled.length - 1));
@@ -41,5 +53,5 @@ export function drawQuestions(
     rest[0];
   const ids = regular.map((q) => q.id);
   if (final) ids.push(final.id);
-  return [{ ids, drawnFrom: from }, next];
+  return [{ ids, drawnFrom: from, drawnSubs: subs }, next];
 }

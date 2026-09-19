@@ -2,7 +2,7 @@
 // Sections: contract (from shared) · reducer helpers · UI primitives (docs/DESIGN_SYSTEM.md).
 
 // ── contract types + zod, re-exported from shared ─────────────────────────────────────────────
-export { PARTYBOX_VERSION, gameManifestSchema, z } from '@partybox/shared';
+export { PARTYBOX_VERSION, gameManifestSchema, multiselectPicks, z } from '@partybox/shared';
 export type {
   ControllerView,
   GameAward,

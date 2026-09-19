@@ -1,7 +1,15 @@
 // Content pack guarantees from README.md "Content": size, categories, unique ids, four distinct
 // choices, answerIndex in range, balanced answer positions, and the manifest's category options.
 import { describe, expect, it } from 'vitest';
-import { CATEGORIES, MIN_CATEGORIES, MIN_QUESTIONS, packs } from '../content/schema';
+import {
+  CATEGORIES,
+  MIN_CATEGORIES,
+  MIN_PER_SUBCATEGORY,
+  MIN_QUESTIONS,
+  SUBCATEGORIES,
+  labelOf,
+  packs,
+} from '../content/schema';
 import questionsJson from '../content/questions.json' with { type: 'json' };
 import { QUESTIONS, categoryLabel, questionsIn } from '../server/content';
 import { game } from '../server/index';
@@ -30,12 +38,28 @@ describe('content/questions.json', () => {
     const counts = CATEGORIES.map((c) => questionsIn(c).length);
     const min = Math.min(...counts);
     const max = Math.max(...counts);
-    expect(min).toBeGreaterThanOrEqual(20);
-    expect(max - min).toBeLessThanOrEqual(10);
+    expect(min).toBeGreaterThanOrEqual(300);
+    expect(max).toBeLessThanOrEqual(min * 1.3);
     const positions = [0, 1, 2, 3].map((i) => QUESTIONS.filter((q) => q.answerIndex === i).length);
-    for (const n of positions) expect(n).toBeGreaterThanOrEqual(QUESTIONS.length / 8);
-    // Every category can host a category-only game at the maximum question count.
-    for (const c of CATEGORIES) expect(questionsIn(c).length).toBeGreaterThanOrEqual(21);
+    for (const n of positions) expect(n).toBeGreaterThanOrEqual(QUESTIONS.length / 5);
+    // Every topic can host a topic-only game at the maximum question count (20 + the final).
+    for (const c of CATEGORIES)
+      for (const s of SUBCATEGORIES[c])
+        expect(questionsIn(c, [s]).length, `${c}/${s}`).toBeGreaterThanOrEqual(MIN_PER_SUBCATEGORY);
+    // Difficulty is a mix everywhere, never a category of only easy questions.
+    for (const c of CATEGORIES) {
+      const hard = questionsIn(c).filter((q) => q.difficulty === 'hard').length;
+      expect(hard / questionsIn(c).length, c).toBeGreaterThanOrEqual(0.15);
+    }
+  });
+
+  it('never repeats a question text (normalised) across the pack', () => {
+    const norm = (s: string) =>
+      s
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, ' ')
+        .trim();
+    expect(new Set(QUESTIONS.map((q) => norm(q.question))).size).toBe(QUESTIONS.length);
   });
 
   it('never uses the hidden-info key names in prose', () => {
@@ -55,6 +79,18 @@ describe('manifest', () => {
     expect(setting.default).toBe('all');
     expect(setting.options.map((o) => o.value)).toEqual(['all', ...CATEGORIES]);
     for (const o of setting.options) expect(o.label).toBe(categoryLabel(o.value));
+  });
+
+  it('lists every topic of every category in the topics checklist, grouped by category', () => {
+    const setting = game.manifest.settings.find((s) => s.key === 'subcategories');
+    expect(setting?.type).toBe('multiselect');
+    if (setting?.type !== 'multiselect') return;
+    expect(setting.default).toBe('');
+    expect(setting.groupBy).toBe('category');
+    const expected = CATEGORIES.flatMap((c) =>
+      SUBCATEGORIES[c].map((s) => ({ value: s, label: labelOf(s), group: c })),
+    );
+    expect(setting.options).toEqual(expected);
   });
 
   it('declares the five phases in order', () => {

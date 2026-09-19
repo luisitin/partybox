@@ -72,7 +72,7 @@ export function FinalReveal({
       <div className={styles.header}>
         <span className={`${styles.kicker} ${styles.final}`}>Final question · the bets are in</span>
         <span>
-          {question.categoryLabel} · {question.difficulty}
+          {question.categoryLabel} · {question.subcategoryLabel} · {question.difficulty}
         </span>
       </div>
       <p className={styles.asked}>{question.text}</p>

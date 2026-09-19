@@ -1,6 +1,8 @@
-// One editable setting from a manifest spec (number stepper, checkbox, select). Shared by the
+// One editable setting from a manifest spec (number stepper, checkbox, select, multiselect
+// checklist). Shared by the
 // phone's game picker and the TV's host panel (ADR-031) so both edit the same spec the same way.
 import type { JSX } from 'react';
+import { multiselectPicks } from '@partybox/shared';
 import type { SettingSpec, Settings } from '@partybox/shared';
 import styles from './SettingField.module.css';
 
@@ -12,6 +14,8 @@ export interface SettingFieldProps {
   idPrefix?: string;
   /** Players in the room — a spec with `maxFromPlayers` caps itself to the roster. */
   players?: number;
+  /** Every current value: a grouped multiselect reads its sibling select from here (ADR-034). */
+  settings?: Settings;
 }
 
 export function SettingField({
@@ -20,6 +24,7 @@ export function SettingField({
   onChange,
   idPrefix = 'setting',
   players,
+  settings,
 }: SettingFieldProps): JSX.Element {
   const id = `${idPrefix}-${spec.key}`;
   // A roster-capped number: the ceiling (and a stored value above it) follow the player count, so
@@ -75,6 +80,49 @@ export function SettingField({
           </span>
         </label>
       );
+    case 'multiselect': {
+      const group = spec.groupBy !== undefined ? settings?.[spec.groupBy] : undefined;
+      const options =
+        spec.groupBy === undefined ? spec.options : spec.options.filter((o) => o.group === group);
+      // Nothing to pick from (the sibling select says "all"): the field steps aside.
+      if (options.length === 0) return <></>;
+      const picked = multiselectPicks(value, spec);
+      const toggle = (v: string): void => {
+        const next = picked.includes(v) ? picked.filter((p) => p !== v) : [...picked, v];
+        onChange(
+          spec.options
+            .map((o) => o.value)
+            .filter((o) => next.includes(o))
+            .join(','),
+        );
+      };
+      return (
+        <fieldset className={`${styles.setting} ${styles.multi}`} aria-labelledby={`${id}-label`}>
+          <span className={styles.settingLabel} id={`${id}-label`}>
+            {spec.label}
+            {spec.description ? <small>{spec.description}</small> : null}
+          </span>
+          <span className={styles.chips}>
+            {options.map((o) => (
+              <label
+                key={o.value}
+                className={`${styles.chip} ${picked.includes(o.value) ? styles.chipOn : ''}`}
+              >
+                <input
+                  type="checkbox"
+                  checked={picked.includes(o.value)}
+                  onChange={() => toggle(o.value)}
+                />
+                {o.label}
+              </label>
+            ))}
+          </span>
+          <small className={styles.multiHint}>
+            {picked.length === 0 ? 'None ticked: the whole category' : `${picked.length} ticked`}
+          </small>
+        </fieldset>
+      );
+    }
     case 'select':
       return (
         <label className={styles.setting} htmlFor={id}>

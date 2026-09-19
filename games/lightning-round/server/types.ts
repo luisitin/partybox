@@ -22,6 +22,8 @@ export interface Settings {
   questions: number;
   answerSeconds: number;
   category: string;
+  /** Ticked topics of `category` (empty = the whole category). */
+  subcategories: string[];
 }
 
 export interface Pick {
@@ -45,6 +47,8 @@ export interface State extends GameStateBase {
   settings: Settings;
   /** Category the questions were actually drawn from: the setting, or `all` after a fallback. */
   drawnFrom: string;
+  /** Topics actually drawn from (empty = the whole category; absent in older states). */
+  drawnSubs?: string[];
   /** Drawn question ids: `settings.questions` regular ones followed by the final question. */
   questionIds: string[];
   /** Index into `questionIds` of the question being asked or just revealed; -1 during `intro`. */

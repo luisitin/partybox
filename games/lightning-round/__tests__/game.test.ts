@@ -33,17 +33,38 @@ describe('draw', () => {
   });
 
   it('honours the category setting when it has enough questions', () => {
-    const s = start({ category: 'science', questions: 20 });
-    expect(s.drawnFrom).toBe('science');
+    const s = start({ category: 'stem', questions: 20 });
+    expect(s.drawnFrom).toBe('stem');
     expect(s.questionIds).toHaveLength(21);
-    for (const id of s.questionIds) expect(questionById(id)?.category).toBe('science');
+    for (const id of s.questionIds) expect(questionById(id)?.category).toBe('stem');
   });
 
   it('falls back to all categories when the category is too small or unknown', () => {
-    const [small] = drawQuestions(seedRng(1), 'science', questionsIn('science').length);
+    const [small] = drawQuestions(seedRng(1), 'stem', questionsIn('stem').length);
     expect(small.drawnFrom).toBe('all');
-    expect(small.ids).toHaveLength(questionsIn('science').length + 1);
+    expect(small.ids).toHaveLength(questionsIn('stem').length + 1);
     expect(start({ category: 'astrology' }).drawnFrom).toBe('all');
+  });
+
+  it('honours ticked topics, and falls back to the category, then all (ADR-034)', () => {
+    const s = start({ category: 'sports', subcategories: 'hockey,soccer', questions: 20 });
+    expect(s.settings.subcategories).toEqual(['hockey', 'soccer']);
+    expect(s.drawnFrom).toBe('sports');
+    expect(s.drawnSubs).toEqual(['hockey', 'soccer']);
+    for (const id of s.questionIds)
+      expect(['hockey', 'soccer']).toContain(questionById(id)?.subcategory);
+    expect(tv(s).categoryLabel).toBe('Sports · Hockey, Soccer');
+    // Topics from another category, unknown topics and blanks are dropped at init.
+    const mixed = start({ category: 'sports', subcategories: 'math, soccer,,nope' });
+    expect(mixed.settings.subcategories).toEqual(['soccer']);
+    expect(start({ category: 'all', subcategories: 'soccer' }).settings.subcategories).toEqual([]);
+    // A topic too small for the game falls back to its whole category.
+    const n = questionsIn('sports', ['hockey']).length;
+    const [fallback] = drawQuestions(seedRng(2), 'sports', n, ['hockey']);
+    expect(fallback.drawnFrom).toBe('sports');
+    expect(fallback.drawnSubs).toEqual([]);
+    expect(fallback.ids).toHaveLength(n + 1);
+    expect(start({ category: 'sports' }).drawnSubs).toEqual([]);
   });
 
   it('prefers the hardest available difficulty for the final question', () => {
@@ -183,9 +204,19 @@ describe('inputs', () => {
 
   it('clamps settings and defaults unknown ones', () => {
     const s = start({ questions: 99, answerSeconds: 1, category: 'nope' });
-    expect(s.settings).toEqual({ questions: 20, answerSeconds: 5, category: 'all' });
+    expect(s.settings).toEqual({
+      questions: 20,
+      answerSeconds: 5,
+      category: 'all',
+      subcategories: [],
+    });
     const d = game.init({ players: PLAYERS, settings: {}, seed: 1, now: T0 });
-    expect(d.settings).toEqual({ questions: 10, answerSeconds: 15, category: 'all' });
+    expect(d.settings).toEqual({
+      questions: 10,
+      answerSeconds: 15,
+      category: 'all',
+      subcategories: [],
+    });
   });
 });
 

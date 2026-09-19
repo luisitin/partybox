@@ -37,9 +37,11 @@
   "settings": {
     "questions": 10,
     "answerSeconds": 15,
-    "category": "all"
+    "category": "all",
+    "subcategories": []
   },
   "drawnFrom": "all",
+  "drawnSubs": [],
   "questionIds": [
     "geo-007",
     "geo-010",

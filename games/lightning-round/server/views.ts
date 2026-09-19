@@ -3,7 +3,8 @@
 // them (__tests__/contract.config.ts asserts those key names never leak early).
 import { controllerEnvelope, envelope, rank } from '@partybox/game-sdk';
 import type { ControllerView, PlayerStatus, TvView } from '@partybox/game-sdk';
-import { categoryLabel, questionById } from './content';
+import { categoryLabel, drawLabel, questionById } from './content';
+import { labelOf } from '../content/schema';
 import { wagerOptions } from './scoring';
 import type { WagerOption } from './scoring';
 import { isFinalIndex } from './types';
@@ -20,6 +21,8 @@ export interface RoundView {
 export interface QuestionView {
   id: string;
   categoryLabel: string;
+  /** The question's topic inside its category ("Basketball"). */
+  subcategoryLabel: string;
   difficulty: string;
   text: string;
   choices: string[];
@@ -105,6 +108,7 @@ export function questionOf(state: State): QuestionView | null {
   return {
     id: q.id,
     categoryLabel: categoryLabel(q.category),
+    subcategoryLabel: labelOf(q.subcategory),
     difficulty: q.difficulty,
     text: q.question,
     choices: [...q.choices],
@@ -161,7 +165,7 @@ export function tvView(state: State, gameId: string): LightningTvView {
   const phase = state.phase.id;
   const view: LightningTvView = {
     ...envelope(state, gameId, { statusOf: statusOf(state), scores: state.scores }),
-    categoryLabel: categoryLabel(state.drawnFrom),
+    categoryLabel: drawLabel(state.drawnFrom, state.drawnSubs ?? []),
     round: roundOf(state),
     question: phase === 'question' || phase === 'reveal' ? questionOf(state) : null,
     answeredCount:
