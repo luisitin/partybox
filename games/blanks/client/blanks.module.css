@@ -789,6 +789,17 @@
   align-content: start;
 }
 
+/* One more step down for a big room's Pick 3 (loop #448): 13 seven-line mini cards paged four at
+   a time at 720p with the lower third of the stage empty; at 0.8× two rows fit, so two pages. */
+.judgeGridTiny .mini {
+  font-size: calc(var(--pb-font-caption) * 0.8);
+  padding: var(--pb-space-2) var(--pb-space-3);
+}
+
+.judgeGridTiny .mini.lettered {
+  padding-left: calc(var(--pb-space-3) + 1.9em);
+}
+
 /* Every card on one page: centre them in the stage instead of hanging from the top. */
 .judgeGridFits {
   align-content: center;
