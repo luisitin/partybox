@@ -260,8 +260,8 @@
       "text": "I'd rather ____ than ____.",
       "pick": 2,
       "draw": 0,
-      "tier": 3,
-      "slots": ["doing", "doing"]
+      "slots": ["doing", "doing"],
+      "tier": 3
     },
     {
       "id": "cb40",
@@ -1977,8 +1977,8 @@
       "text": "My worst decision was ____ followed by ____.",
       "pick": 2,
       "draw": 0,
-      "tier": 3,
-      "slots": ["doing", "doing"]
+      "slots": ["doing", "doing"],
+      "tier": 3
     },
     {
       "id": "cb286",
@@ -2079,8 +2079,8 @@
       "text": "The cruise ship banned ____ after ____.",
       "pick": 2,
       "draw": 0,
-      "tier": 2,
-      "slots": ["thing", "doing"]
+      "slots": ["thing", "doing"],
+      "tier": 2
     },
     {
       "id": "cb300",
@@ -2622,8 +2622,8 @@
       "text": "The cruise ship banned ____ after somebody tried ____.",
       "pick": 2,
       "draw": 0,
-      "tier": 1,
-      "slots": ["thing", "doing"]
+      "slots": ["thing", "doing"],
+      "tier": 1
     },
     {
       "id": "cb377",
@@ -5850,6 +5850,126 @@
     {
       "id": "cb855",
       "text": "What did the ghost do at 3 a.m.?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb856",
+      "text": "Florida Man was caught with ____ and a gator.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb857",
+      "text": "The spring break hotel room had ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb858",
+      "text": "The Florida retirement community's STD outbreak was traced to ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb859",
+      "text": "The Miami club's VIP room offered ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb860",
+      "text": "Everything's bigger in Texas, including ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb861",
+      "text": "The Texas truck stop's back room sold ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb862",
+      "text": "The rodeo cowboy rode ____ for eight seconds.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb863",
+      "text": "The megachurch pastor was caught with ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb864",
+      "text": "The New York subway flasher showed ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb865",
+      "text": "The Times Square Elmo was doing ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb866",
+      "text": "The New York walk-up's neighbor could hear ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb867",
+      "text": "The Broadway understudy got the part by ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb868",
+      "text": "California's new wellness retreat is basically ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb869",
+      "text": "The Hollywood casting couch now has ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb870",
+      "text": "The porn valley's newest genre is ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb871",
+      "text": "The Burning Man orgy was interrupted by ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb872",
+      "text": "What did Florida Man do with the manatee?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb873",
+      "text": "What's under the Texan's belt buckle?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb874",
+      "text": "What did the New Yorker do on the fire escape?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb875",
+      "text": "What did the Californian's therapist recommend?",
       "pick": 1,
       "draw": 0
     }
@@ -15091,6 +15211,136 @@
     {
       "id": "cw1865",
       "text": "A cursed doll with a body count and a dating profile.",
+      "tier": 3
+    },
+    {
+      "id": "cw1866",
+      "text": "Florida Man, naked, on meth, with a gator.",
+      "tier": 4
+    },
+    {
+      "id": "cw1867",
+      "text": "A spring break foam party with a body fluid ratio.",
+      "tier": 3
+    },
+    {
+      "id": "cw1868",
+      "text": "A retirement community with a chlamydia problem.",
+      "tier": 4
+    },
+    {
+      "id": "cw1869",
+      "text": "A Miami club bathroom hookup with a bouncer watching.",
+      "tier": 3
+    },
+    {
+      "id": "cw1870",
+      "text": "A Disney adult with a Mickey-themed sex swing.",
+      "tier": 4
+    },
+    {
+      "id": "cw1871",
+      "text": "A Florida license plate that says \"SWINGRS.\"",
+      "tier": 3
+    },
+    {
+      "id": "cw1872",
+      "text": "A Texas belt buckle used as a mirror during sex.",
+      "tier": 4
+    },
+    {
+      "id": "cw1873",
+      "text": "Brisket sweat in all the wrong places.",
+      "tier": 3
+    },
+    {
+      "id": "cw1874",
+      "text": "A truck stop shower with a wait list and a rate.",
+      "tier": 3
+    },
+    {
+      "id": "cw1875",
+      "text": "A megachurch pastor with a \"youth outreach\" in Vegas.",
+      "tier": 4
+    },
+    {
+      "id": "cw1876",
+      "text": "A cowboy who rode more than the bull.",
+      "tier": 3
+    },
+    {
+      "id": "cw1877",
+      "text": "\"Don't mess with Texas\" as a safe word.",
+      "tier": 4
+    },
+    {
+      "id": "cw1878",
+      "text": "A subway grope on the L train, mutual.",
+      "tier": 3
+    },
+    {
+      "id": "cw1879",
+      "text": "A Times Square Elmo with a boner.",
+      "tier": 4
+    },
+    {
+      "id": "cw1880",
+      "text": "A New York walk-up where the neighbors hear everything and rate it.",
+      "tier": 3
+    },
+    {
+      "id": "cw1881",
+      "text": "A bodega bathroom with a glory hole and a cat.",
+      "tier": 4
+    },
+    {
+      "id": "cw1882",
+      "text": "A Broadway understudy who slept with the whole cast, alphabetically.",
+      "tier": 4
+    },
+    {
+      "id": "cw1883",
+      "text": "Rent paid in favors to the super.",
+      "tier": 3
+    },
+    {
+      "id": "cw1884",
+      "text": "A Hollywood casting couch with a stain map.",
+      "tier": 4
+    },
+    {
+      "id": "cw1885",
+      "text": "A Californian who tantric-sexes for six hours and calls it wellness.",
+      "tier": 3
+    },
+    {
+      "id": "cw1886",
+      "text": "A Burning Man orgy with a dust storm in the middle.",
+      "tier": 3
+    },
+    {
+      "id": "cw1887",
+      "text": "A Silicon Valley sex robot with a subscription tier.",
+      "tier": 4
+    },
+    {
+      "id": "cw1888",
+      "text": "A porn valley tour bus.",
+      "tier": 3
+    },
+    {
+      "id": "cw1889",
+      "text": "An LA juice cleanse that ended in a colonic and a confession.",
+      "tier": 3
+    },
+    {
+      "id": "cw1890",
+      "text": "A San Francisco bathhouse with a tech happy hour.",
+      "tier": 3
+    },
+    {
+      "id": "cw1891",
+      "text": "A yoga instructor named Sage who does more than adjust.",
       "tier": 3
     }
   ]
