@@ -71,6 +71,9 @@ const roundsBySlot = count(SLOTS);
 let goodCards = 0; // tier 3 cards across hands
 let handsHalfGood = 0; // ≥ half the hand tier 3
 let serveCards = 0; // cards serving the round's slot across hands
+let topFit = 0; // mean fit of the first four cards (the phone's first screenful), summed over hands
+let topGood = 0; // tier-3 cards among the first four, summed over hands
+let handFit = 0; // mean fit of the whole hand, summed over hands (what an unsorted first four would show)
 let plays = 0;
 let hits = 0; // plays on the prompt's topic in other words
 let echoes = 0; // plays that repeat the prompt's own word
@@ -108,6 +111,14 @@ for (let r = 0; r < runs; r += 1) {
           hands += 1;
           const serving = hand.filter((c) => (serves.get(c) ?? []).includes(slot)).length;
           serveCards += serving;
+          const top = hand.slice(0, 4);
+          topFit +=
+            top.reduce((sum, c) => sum + fitScore(slot, serves.get(c) ?? []), 0) /
+            Math.max(1, top.length);
+          topGood += top.filter((c) => tiers.get(c) === 3).length;
+          handFit +=
+            hand.reduce((sum, c) => sum + fitScore(slot, serves.get(c) ?? []), 0) /
+            Math.max(1, hand.length);
           if (serving < 2) {
             handsShortOfSlot += 1;
             shortBySlot[slot] += 1;
@@ -156,6 +167,9 @@ console.log(
 );
 console.log(
   `  rounds by slot: ${SLOTS.map((s) => `${s} ${roundsBySlot[s]}`).join(' · ')}; hands with < 2 cards serving the round's slot: ${handsShortOfSlot} (${pct(handsShortOfSlot, hands)}) — ${SLOTS.map((s) => `${s} ${shortBySlot[s]}`).join(' · ')}`,
+);
+console.log(
+  `  the phone's first four cards: mean fit ${(topFit / Math.max(1, hands)).toFixed(3)} (whole hand ${(handFit / Math.max(1, hands)).toFixed(3)}), tier-3 among them ${(topGood / Math.max(1, hands)).toFixed(2)}`,
 );
 console.log(
   `  cards serving the slot per hand: ${(serveCards / Math.max(1, hands)).toFixed(2)}; tier-3 per hand: ${(goodCards / Math.max(1, hands)).toFixed(2)}; hands at least half tier-3: ${pct(handsHalfGood, hands)}`,
