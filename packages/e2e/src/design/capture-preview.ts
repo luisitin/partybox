@@ -8,7 +8,7 @@ import { parseArgs } from 'node:util';
 import { chromium } from 'playwright';
 import type { DeviceId } from './devices';
 import { REPO_ROOT, startServer } from './server';
-import { openContext } from './session';
+import { applyDeviceCss, openContext } from './session';
 import { Shooter } from './shooter';
 
 const { values } = parseArgs({
@@ -64,6 +64,7 @@ async function main(): Promise<void> {
           const suffix = theme === 'night' ? '' : `-${theme}`;
           await tv.goto(`${server.url}/preview/${game}/${fixture}?view=tv&theme=${theme}`);
           await tv.waitForSelector('[data-surface="tv"]');
+          await applyDeviceCss(tv, TV);
           // The TV stage settles longer than a phone: a result lands in beats (Blanks names the
           // winner at 1.2 s) and a staggered grid is still arriving at 350 ms (review-loop #117).
           await shots.shot(
@@ -76,7 +77,9 @@ async function main(): Promise<void> {
               await page.goto(
                 `${server.url}/preview/${game}/${fixture}?view=controller&player=${playerId}&theme=${theme}`,
               );
+              // Every goto drops the emulation sheet (font200 rendered at plain size until #410).
               await page.waitForSelector('[data-surface="controller"]');
+              await applyDeviceCss(page, device);
               await shots.shot(page, {
                 group: game,
                 phase: `${fixture}${suffix}`,
