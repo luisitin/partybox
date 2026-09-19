@@ -32,7 +32,9 @@ Round start (`intro` entry): last round's played cards to the discard, hands bac
 card's `draw`) — the missing kinds drawn first, and up to two cards of the most plentiful kind
 swapped out when a hand is still short, so every hand holds at least 2 answers for each kind of
 question — 2 things, 2 doings (gerund cards) and 2 people (`server/fit.ts` reads the kind off the
-card's text; a card's own `serves` in the deck JSON overrides it) — while the decks can supply them; the
+card's text; a card's own `serves` in the deck JSON overrides it) and at least 5 tier-3 cards (`tier` in the
+deck JSON: 1 filler, 2 good, 3 great; up to three spare cards a round are swapped for great ones of the same
+kind) — while the decks can supply them; the
 hand is shuffled each round, so the same cards never sit at the top, and one card of each kind is
 moved to the front of it so the first screenful on a phone always offers all three — the judge chosen (czar mode: seat order by id, one per round,
 disconnected seats skipped), a black card drawn — three in czar mode, for the judge to choose between in

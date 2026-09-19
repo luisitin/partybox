@@ -4,7 +4,7 @@
 import { shuffle } from '@partybox/game-sdk';
 import type { RngState } from '@partybox/game-sdk';
 import { BLANK, blanksIn } from '../content/schema';
-import { WHITE_KINDS, whiteKind } from './content';
+import { WHITE_KINDS, whiteKind, whiteTier } from './content';
 import type { WhiteKind } from './content';
 import {
   BIG_REVEAL_MAX_MS,
@@ -48,38 +48,67 @@ export function drawBlack(state: State, pool: readonly string[]): [string | null
   return [id, { ...state, rng, blackDeck: deck.slice(1) }];
 }
 
-/** A hand always holds at least this many cards of each kind (thing / doing / combo). */
+/** A hand always holds at least this many cards of each kind (thing / doing / person). */
 export const KIND_FLOOR = 2;
-/** How many cards a round may swap out of one hand to meet the floor: a hand loses one card a
- *  round, so a top-up alone can never climb from none of a kind to two (review-loop #175). */
+/** …and at least this many tier-3 cards — half the hand (owner, 2026-09-18: "at least half of
+ *  their cards as really good cards"). */
+export const GOOD_FLOOR = HAND_SIZE / 2;
+/** How many cards a round may swap out of one hand to meet the kind floor: a hand loses one card
+ *  a round, so a top-up alone can never climb from none of a kind to two (review-loop #175). */
 const MAX_SWAPS = 2;
+/** …and how many for the quality floor (a round's play of a great card is one swap back). */
+const MAX_GOOD_SWAPS = 3;
 
 function countKind(hand: readonly string[], kind: WhiteKind): number {
   return hand.filter((id) => whiteKind(id) === kind).length;
 }
 
-/** The first card of `kind` in the white deck, taken out of its place. A deck with none left
+const isGood = (id: string): boolean => whiteTier(id) === 3;
+
+function countGood(hand: readonly string[]): number {
+  return hand.filter(isGood).length;
+}
+
+/** The first card in the white deck that `wants`, taken out of its place. A deck with none left
  *  shuffles the discard back in and looks again — without that, a long game on a deck thin in one
  *  kind (mild holds 45 gerunds) left hands with none of it at all. Null only when neither pile
  *  holds one. */
-function takeKind(state: State, kind: WhiteKind): [string | null, State] {
+function takeWhere(state: State, wants: (id: string) => boolean): [string | null, State] {
   let next = state;
-  let i = next.whiteDeck.findIndex((id) => whiteKind(id) === kind);
+  let i = next.whiteDeck.findIndex(wants);
   if (i === -1 && next.discard.length > 0) {
     const [refill, rng] = shuffle(next.rng, next.discard);
     next = { ...next, rng, whiteDeck: [...next.whiteDeck, ...refill], discard: [] };
-    i = next.whiteDeck.findIndex((id) => whiteKind(id) === kind);
+    i = next.whiteDeck.findIndex(wants);
   }
   if (i === -1) return [null, next];
   const id = next.whiteDeck[i] as string;
   return [id, { ...next, whiteDeck: next.whiteDeck.filter((_, j) => j !== i) }];
 }
 
+function takeKind(state: State, kind: WhiteKind): [string | null, State] {
+  return takeWhere(state, (id) => whiteKind(id) === kind);
+}
+
+/** A card the hand can spare for a better one: not great itself, of a kind the hand holds more
+ *  of than the floor — the weakest tier first. -1 when nothing can go. */
+function spareIndex(hand: readonly string[]): number {
+  let best = -1;
+  for (let i = 0; i < hand.length; i += 1) {
+    const id = hand[i] as string;
+    if (isGood(id) || countKind(hand, whiteKind(id)) <= KIND_FLOOR) continue;
+    if (best === -1 || whiteTier(id) < whiteTier(hand[best] as string)) best = i;
+  }
+  return best;
+}
+
 /**
- * One hand back up to `target`, with something of every kind to play: the missing kinds are drawn
- * first, then the rest off the top, and finally — when the hand is full and still short of a kind
- * — up to MAX_SWAPS cards of the most plentiful kind go to the discard and are replaced. So a
- * player always has a noun, an action and a phrase to work with (the owner's ask, loop #175).
+ * One hand back up to `target`, with something of every kind to play and enough great cards: the
+ * missing kinds are drawn first, then great cards up to the quality floor, then the rest off the
+ * top, and finally — when the hand is full and still short — up to MAX_SWAPS cards of the most
+ * plentiful kind (and up to MAX_GOOD_SWAPS spare cards) go to the discard and are replaced. So a
+ * player always has a noun, an action and a person to work with (the owner's ask, loop #175), and
+ * half a hand of cards worth playing (loop 451).
  */
 function fillHand(state: State, hand: readonly string[], target: number): [string[], State] {
   let next = state;
@@ -91,6 +120,12 @@ function fillHand(state: State, hand: readonly string[], target: number): [strin
       next = after;
       out.push(card);
     }
+  }
+  while (countGood(out) < GOOD_FLOOR && out.length < target) {
+    const [card, after] = takeWhere(next, isGood);
+    if (card === null) break;
+    next = after;
+    out.push(card);
   }
   if (out.length < target) {
     const [drawn, after] = drawWhite(next, target - out.length);
@@ -111,6 +146,21 @@ function fillHand(state: State, hand: readonly string[], target: number): [strin
       swaps += 1;
     }
   }
+  let goodSwaps = 0;
+  while (countGood(out) < GOOD_FLOOR && goodSwaps < MAX_GOOD_SWAPS) {
+    const i = spareIndex(out);
+    if (i === -1) break;
+    const dropped = out[i] as string;
+    // A great card of the same kind keeps the kind floor as it was.
+    const [card, after] = takeWhere(
+      next,
+      (id) => isGood(id) && whiteKind(id) === whiteKind(dropped),
+    );
+    if (card === null) break;
+    out = [...out.slice(0, i), ...out.slice(i + 1), card];
+    next = { ...after, discard: [...after.discard, dropped] };
+    goodSwaps += 1;
+  }
   return [out, next];
 }
 
@@ -121,7 +171,7 @@ export function refillHands(state: State, extra = 0, extraFor: readonly string[]
   for (const id of Object.keys(state.players).sort()) {
     const target = HAND_SIZE + (extraFor.includes(id) ? extra : 0);
     const hand = hands[id] ?? [];
-    if (hand.length >= target && countsMeetFloor(hand)) continue;
+    if (hand.length >= target && countsMeetFloor(hand) && countGood(hand) >= GOOD_FLOOR) continue;
     const [filled, after] = fillHand(next, hand, Math.max(target, hand.length));
     // A fresh shuffle every round: cards were appended to the end, so the top of the hand never
     // changed and a phone showed the same four cards round after round while the new ones sat
