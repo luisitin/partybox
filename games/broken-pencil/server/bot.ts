@@ -43,8 +43,10 @@ export function sampleInput(state: State, playerId: string, rng: Rng): Input | n
       return { type: 'draw', strokes };
     }
     case 'show':
-      // The presenter turns pages at a human pace: about one call in three sends Next.
-      return presenterOf(state) === playerId && rng.chance(0.35) ? { type: 'turn' } : null;
+      // A real bot's book turns itself (BOT_SHOW_MS): nothing to send. A human driven through the
+      // dev API's act (the harnesses) turns the page.
+      if (state.players[playerId]?.bot === true) return null;
+      return presenterOf(state) === playerId ? { type: 'turn' } : null;
     default:
       return null;
   }
