@@ -1,0 +1,211 @@
+{
+  "pass": "611",
+  "game": "broken-pencil",
+  "players": 7,
+  "scenario": "normal",
+  "focus": "tv",
+  "started": "12:12:54.719",
+  "tvVideoT0": "12:12:51.335",
+  "phoneVideoT0": "12:12:52.264",
+  "changes": [
+    {
+      "t": 1789819974721,
+      "status": "playing",
+      "phase": "pick",
+      "deadline": 1789819994714,
+      "bed": null,
+      "at": "12:12:54.721",
+      "sinceStartS": 0,
+      "videoS": 3.4,
+      "phoneVideoS": 2.5
+    },
+    {
+      "t": 1789819978970,
+      "status": "playing",
+      "phase": "draw",
+      "deadline": 1789820038962,
+      "bed": null,
+      "at": "12:12:58.970",
+      "sinceStartS": 4.3,
+      "videoS": 7.6,
+      "phoneVideoS": 6.7
+    },
+    {
+      "t": 1789819983186,
+      "status": "playing",
+      "phase": "pass",
+      "deadline": 1789820073069,
+      "bed": null,
+      "at": "12:13:03.186",
+      "sinceStartS": 8.5,
+      "videoS": 11.9,
+      "phoneVideoS": 10.9
+    },
+    {
+      "t": 1789819992449,
+      "status": "playing",
+      "phase": "guess",
+      "deadline": 1789820022315,
+      "bed": null,
+      "at": "12:13:12.449",
+      "sinceStartS": 17.7,
+      "videoS": 21.1,
+      "phoneVideoS": 20.2
+    },
+    {
+      "t": 1789819996659,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789820001540,
+      "bed": null,
+      "at": "12:13:16.659",
+      "sinceStartS": 21.9,
+      "videoS": 25.3,
+      "phoneVideoS": 24.4
+    },
+    {
+      "t": 1789820001591,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789820009544,
+      "bed": null,
+      "at": "12:13:21.591",
+      "sinceStartS": 26.9,
+      "videoS": 30.3,
+      "phoneVideoS": 29.3
+    },
+    {
+      "t": 1789820009562,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789820014550,
+      "bed": null,
+      "at": "12:13:29.562",
+      "sinceStartS": 34.8,
+      "videoS": 38.2,
+      "phoneVideoS": 37.3
+    },
+    {
+      "t": 1789820014592,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789820022562,
+      "bed": null,
+      "at": "12:13:34.592",
+      "sinceStartS": 39.9,
+      "videoS": 43.3,
+      "phoneVideoS": 42.3
+    },
+    {
+      "t": 1789820022649,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789820027568,
+      "bed": null,
+      "at": "12:13:42.649",
+      "sinceStartS": 47.9,
+      "videoS": 51.3,
+      "phoneVideoS": 50.4
+    },
+    {
+      "t": 1789820027636,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789820032571,
+      "bed": null,
+      "at": "12:13:47.636",
+      "sinceStartS": 52.9,
+      "videoS": 56.3,
+      "phoneVideoS": 55.4
+    },
+    {
+      "t": 1789820032600,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789820040580,
+      "bed": null,
+      "at": "12:13:52.600",
+      "sinceStartS": 57.9,
+      "videoS": 61.3,
+      "phoneVideoS": 60.3
+    },
+    {
+      "t": 1789820040635,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789820045584,
+      "bed": null,
+      "at": "12:14:00.635",
+      "sinceStartS": 65.9,
+      "videoS": 69.3,
+      "phoneVideoS": 68.4
+    },
+    {
+      "t": 1789820045599,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789820053586,
+      "bed": null,
+      "at": "12:14:05.599",
+      "sinceStartS": 70.9,
+      "videoS": 74.3,
+      "phoneVideoS": 73.3
+    },
+    {
+      "t": 1789820053690,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789820058596,
+      "bed": null,
+      "at": "12:14:13.690",
+      "sinceStartS": 79,
+      "videoS": 82.4,
+      "phoneVideoS": 81.4
+    },
+    {
+      "t": 1789820058653,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789820063609,
+      "bed": null,
+      "at": "12:14:18.653",
+      "sinceStartS": 83.9,
+      "videoS": 87.3,
+      "phoneVideoS": 86.4
+    },
+    {
+      "t": 1789820063686,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789820071612,
+      "bed": null,
+      "at": "12:14:23.686",
+      "sinceStartS": 89,
+      "videoS": 92.4,
+      "phoneVideoS": 91.4
+    },
+    {
+      "t": 1789820071688,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789820076624,
+      "bed": null,
+      "at": "12:14:31.688",
+      "sinceStartS": 97,
+      "videoS": 100.4,
+      "phoneVideoS": 99.4
+    },
+    {
+      "t": 1789820076720,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789820084629,
+      "bed": null,
+      "at": "12:14:36.720",
+      "sinceStartS": 102,
+      "videoS": 105.4,
+      "phoneVideoS": 104.5
+    }
+  ],
+  "notes": ["budget reached while playing; skipped to results"]
+}
