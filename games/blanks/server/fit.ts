@@ -53,7 +53,7 @@ const PERSON_PROMPT = [
   /\bmy (?:new )?(?:boyfriend|girlfriend|husband|wife|partner|therapist|doctor|lawyer|dealer|roommate|sponsor) is ____/i,
   /____ (?:walks|walked|is|was|got|gets) (?:into|in|arrested|elected|fired|hired|pregnant)/i,
   /\bwants? to be ____|\bgrow(?:s)? up to be ____/i, // "My son wants to be ____ when he grows up."
-  /\b(?:won|led|hosted|coached|taught|raised|narrated|officiated|catered) by ____|\b(?:spin-off|reboot|sequel|show|series|documentary) follows ____|\bimaginary friend (?:is|was) ____/i,
+  /\b(?:won|led|hosted|coached|taught|raised|narrated|officiated|catered|written|directed|designed|invented|founded|painted|composed|sung|performed|delivered|approved|signed|endorsed) by ____|\b(?:spin-off|reboot|sequel|show|series|documentary) follows ____|\bimaginary friend (?:is|was) ____/i,
   /\b(?:mistress|lover|secret admirer|stalker|sugar daddy|sugar baby|new stepdad|new stepmom) (?:was|is) (?:actually |secretly |really )?____/i, // "The senator's mistress was actually ____."
   // "Disney's next princess is ____.", "The Bachelor's final rose went to ____."
   /\b(?:princess|prince|villain|hero|superhero|host|judge|contestant|headliner|bachelor|bachelorette|winner|champion|mvp|nominee|role model|spokesperson) (?:is|was|will be) ____/i,
