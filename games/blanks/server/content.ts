@@ -5,6 +5,8 @@ import type { BlackCard, Deck, DeckId, WhiteCard } from '../content/schema';
 import crudeJson from '../content/crude.json' with { type: 'json' };
 import mildJson from '../content/mild.json' with { type: 'json' };
 import wildJson from '../content/wild.json' with { type: 'json' };
+import { SLOTS, servesOf, slotOf } from './fit';
+import type { Slot } from './fit';
 import type { DeckPreset } from './types';
 
 export const DECKS: Readonly<Record<DeckId, Deck>> = {
@@ -54,34 +56,37 @@ export function whiteText(id: string): string {
   return WHITE_BY_ID[id]?.text ?? '(missing card)';
 }
 
-/** What shape a white card is, so a hand always holds a few of each (owner, review-loop #151:
- *  "at least 2 nouns, 2 verbs, 2 combinations, so you always have options"). Heuristic on the
- *  text: a card that starts with a gerund ("Yodeling.", "Quietly winning Monopoly.") is a `doing`;
- *  one with a linking word ("Bird poop on a brand-new car." — "with", "in", "who", "and"…) is a
- *  `combo`; the rest are plain `thing`s ("Beans.", "A very small horse."). */
-export type WhiteKind = 'thing' | 'doing' | 'combo';
-export const WHITE_KINDS: readonly WhiteKind[] = ['thing', 'doing', 'combo'];
+/** What a white card is, so a hand always holds a few answers for every kind of question (owner,
+ *  review-loop #151: "at least 2 nouns, 2 verbs, 2 combinations"; 2026-09-18: at least 2 cards
+ *  for each question type). The kinds are the fit model's slots (server/fit.ts): a `thing`, a
+ *  `doing` (a gerund card) or a `person`; `whiteKind` is the card's primary slot, `whiteServes`
+ *  every slot it reads well in, `blackSlot` what a prompt's blank wants, `whiteTier` how good the
+ *  card is on its own (1 filler, 2 good, 3 great). */
+export type WhiteKind = Slot;
+export const WHITE_KINDS: readonly WhiteKind[] = SLOTS;
 
-const NOT_GERUND =
-  /^(thing|something|nothing|everything|anything|ring|king|wing|string|spring|bling|morning|evening|wedding|building|feeling|ceiling|pudding|stocking|clothing|sibling|darling|during)$/i;
-const ADVERB =
-  /^(not|quietly|slowly|loudly|secretly|aggressively|extremely|slightly|accidentally|finally|casually|barely|openly|silently|gently|violently|briefly|nearly|almost|never|always|just|still|only|really|very|too|softly|angrily|politely|deliberately|repeatedly|calmly|suddenly|passive)$/i;
-const LINK =
-  /\b(with|in|on|at|for|of|from|to|and|who|that|about|after|before|under|over|into|without|during|behind|near|by|inside|outside|through|like|as)\b/i;
-
-export function whiteKindOf(text: string): WhiteKind {
-  const words = text.replace(/[^A-Za-z' ]/g, '').split(/\s+/);
-  const gerund = (w: string | undefined): boolean =>
-    w !== undefined && /ing$/i.test(w) && !NOT_GERUND.test(w);
-  if (gerund(words[0]) || (ADVERB.test(words[0] ?? '') && gerund(words[1]))) return 'doing';
-  if (LINK.test(text)) return 'combo';
-  return 'thing';
-}
-
-const WHITE_KIND: Readonly<Record<string, WhiteKind>> = Object.fromEntries(
-  ALL.flatMap((d) => d.white.map((c) => [c.id, whiteKindOf(c.text)])),
+const WHITE_SERVES: Readonly<Record<string, readonly Slot[]>> = Object.fromEntries(
+  ALL.flatMap((d) => d.white.map((c) => [c.id, servesOf(c)])),
+);
+const WHITE_TIER: Readonly<Record<string, 1 | 2 | 3>> = Object.fromEntries(
+  ALL.flatMap((d) => d.white.map((c) => [c.id, (c.tier ?? 2) as 1 | 2 | 3])),
+);
+const BLACK_SLOT: Readonly<Record<string, Slot>> = Object.fromEntries(
+  ALL.flatMap((d) => d.black.map((c) => [c.id, slotOf(c)])),
 );
 
+export function whiteServes(id: string): readonly Slot[] {
+  return WHITE_SERVES[id] ?? ['thing'];
+}
+
 export function whiteKind(id: string): WhiteKind {
-  return WHITE_KIND[id] ?? 'thing';
+  return whiteServes(id)[0] ?? 'thing';
+}
+
+export function whiteTier(id: string): 1 | 2 | 3 {
+  return WHITE_TIER[id] ?? 2;
+}
+
+export function blackSlot(id: string | null): Slot {
+  return (id && BLACK_SLOT[id]) || 'thing';
 }
