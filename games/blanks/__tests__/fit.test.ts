@@ -19,6 +19,7 @@ describe('slotOf — what the blank wants', () => {
       "What's Trump's safe word?",
       'What did the parrot repeat at Thanksgiving?',
       'The new theme park ride is called "The ____."',
+      "My parents' Wi-Fi password is ____.",
     ])
       expect(slotOf({ text }), text).toBe('name');
   });
@@ -50,6 +51,11 @@ describe('slotOf — what the blank wants', () => {
       'What did Mark Zuckerberg practise in the mirror?',
       "The company retreat's trust exercise turned into ____.",
       'My alibi is ____.',
+      'The Ring doorbell caught the neighbor ____.',
+      'Pompeii froze one man in the middle of ____.',
+      'The gym class substitute made us do ____.',
+      'The best way to annoy a sibling: ____.',
+      'The referee threw a flag for ____.',
       'The moonwalk was actually Michael Jackson ____.',
       "What's the secret to a happy marriage?",
       'The livestream ended abruptly with ____.',
@@ -67,6 +73,9 @@ describe('slotOf — what the blank wants', () => {
       'My son wants to be ____ when he grows up.',
       'The dating app matched me with ____.',
       "The senator's mistress was actually ____.",
+      'The talent show was won by ____.',
+      'The next Star Wars spin-off follows ____.',
+      "My kid's imaginary friend is ____.",
     ])
       expect(slotOf({ text }), text).toBe('person');
   });
