@@ -1,7 +1,7 @@
 // Fixture capture: every `games/<id>/fixtures/<phase>.json` rendered through `/preview` on the TV
 // and on a phone for the first three players of the fixture (different roles), optionally in every
 // theme. Deterministic and fast — no bots, no clock.
-// Usage: tsx packages/e2e/src/design/capture-preview.ts --out reports/design/<stamp> [--games wisecrack,lightning-round] [--themes night,daylight,...] [--phones iphone,iphone-se]
+// Usage: tsx packages/e2e/src/design/capture-preview.ts --out reports/design/<stamp> [--games wisecrack,lightning-round] [--themes night,daylight,...] [--phones iphone,iphone-se] [--tv tv|pc720|laptop]
 import { readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { parseArgs } from 'node:util';
@@ -18,6 +18,9 @@ const { values } = parseArgs({
     games: { type: 'string' },
     themes: { type: 'string', default: 'night' },
     phones: { type: 'string', default: 'iphone,iphone-se' },
+    // The TV device: `tv` (1080p) by default; `pc720` is the couch's worst case, where a final
+    // board that fits 1080p can still run off the stage (review-loop #354).
+    tv: { type: 'string', default: 'tv' },
     players: { type: 'string', default: '3' },
   },
 });
@@ -25,6 +28,7 @@ const OUT = values.out ?? join(REPO_ROOT, 'reports', 'design', 'latest');
 const PORT = Number(values.port);
 const THEMES = (values.themes ?? 'night').split(',');
 const PHONES = (values.phones ?? 'iphone').split(',') as DeviceId[];
+const TV = (values.tv ?? 'tv') as DeviceId;
 const PLAYERS = Number(values.players);
 
 function gamesOnDisk(): string[] {
@@ -45,7 +49,7 @@ async function main(): Promise<void> {
   const shots = new Shooter(OUT);
   const browser = await chromium.launch();
   try {
-    const tvContext = await openContext(browser, 'tv');
+    const tvContext = await openContext(browser, TV);
     const tv = await tvContext.newPage();
     const phonePages = new Map<DeviceId, Awaited<ReturnType<typeof tvContext.newPage>>>();
     for (const device of PHONES)
@@ -64,7 +68,7 @@ async function main(): Promise<void> {
           // winner at 1.2 s) and a staggered grid is still arriving at 350 ms (review-loop #117).
           await shots.shot(
             tv,
-            { group: game, phase: `${fixture}${suffix}`, device: 'tv', role: 'stage' },
+            { group: game, phase: `${fixture}${suffix}`, device: TV, role: 'stage' },
             { settleMs: 1500 },
           );
           for (const [device, page] of phonePages) {
