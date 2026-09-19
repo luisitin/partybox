@@ -8,7 +8,7 @@ import type { Rng } from '@partybox/game-sdk';
 import { blackCard, blackSlots, whiteServes, whiteText, whiteTier } from './content';
 import { fitScore } from './fit';
 import type { Slot } from './fit';
-import { pairBonus } from './topics';
+import { pairBonus, punch } from './topics';
 import { canVote, hasPlayed, isCzar } from './round';
 import type { Input, State } from './types';
 
@@ -20,12 +20,14 @@ const NOISE = 0.2;
 
 /** One card's appeal in the blank: fit for the slot, plus its tier, plus the pair's topic nudge
  *  (topics.ts: on the prompt's subject from another angle is a hit, echoing its word a shrug),
- *  plus noise. */
+ *  plus the card's own punch (a twist after a comma, a specific; long cards read slower), plus
+ *  noise. */
 export function cardAppeal(slot: Slot, id: string, rng: Rng, blackText = ''): number {
   return (
     fitScore(slot, whiteServes(id)) +
     TIER_WEIGHT * (whiteTier(id) - 2) +
     (blackText ? pairBonus(blackText, whiteText(id)) : 0) +
+    punch(whiteText(id)) +
     NOISE * rng.float()
   );
 }

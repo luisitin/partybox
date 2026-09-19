@@ -96,3 +96,21 @@ export function pairBonus(blackText: string, whiteText: string): number {
   const bt = new Set(topicsOf(blackText));
   return wt.some((t) => bt.has(t)) ? TOPIC_HIT : 0;
 }
+
+/** How a card lands on its own, read off its shape (loop 479): a twist after a comma ("…, but
+ *  it's a coffin", "…, again", "…, hers") and a specific — a proper noun, a number, a brand —
+ *  punch harder; a card that runs long reads slower on the TV. A small nudge, like the topic one. */
+export function punch(text: string): number {
+  let score = 0;
+  if (
+    /, (?:but|and|again|or|hers|his|unedited|literally|allegedly|ranked|sold|kept|fully|technically|finally|permanently|slowly|badly|participatory)\b/i.test(
+      text,
+    )
+  )
+    score += 0.08;
+  else if (/,/.test(text)) score += 0.04;
+  if (/\b[A-Z][a-z]+(?:'s)?\b(?!\.$)/.test(text.slice(1)) || /\d/.test(text)) score += 0.04;
+  const words = text.split(/\s+/).length;
+  if (words > 10) score -= 0.06;
+  return score;
+}

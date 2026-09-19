@@ -1,0 +1,90 @@
+{
+  "pass": "475",
+  "game": "wisecrack",
+  "players": 6,
+  "scenario": "tie",
+  "focus": "tv",
+  "started": "06:14:40.812",
+  "tvVideoT0": "06:14:37.456",
+  "phoneVideoT0": "06:14:38.372",
+  "changes": [
+    {
+      "t": 1789798480814,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789798485800,
+      "bed": "warm",
+      "at": "06:14:40.814",
+      "sinceStartS": 0,
+      "videoS": 3.4,
+      "phoneVideoS": 2.4
+    },
+    {
+      "t": 1789798485829,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789798545810,
+      "bed": null,
+      "at": "06:14:45.829",
+      "sinceStartS": 5,
+      "videoS": 8.4,
+      "phoneVideoS": 7.5
+    },
+    {
+      "t": 1789798545893,
+      "status": "playing",
+      "phase": "scores",
+      "deadline": 1789798553814,
+      "bed": "lounge",
+      "at": "06:15:45.893",
+      "sinceStartS": 65.1,
+      "videoS": 68.4,
+      "phoneVideoS": 67.5
+    },
+    {
+      "t": 1789798553852,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789798558819,
+      "bed": "warm",
+      "at": "06:15:53.852",
+      "sinceStartS": 73,
+      "videoS": 76.4,
+      "phoneVideoS": 75.5
+    },
+    {
+      "t": 1789798558890,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789798618828,
+      "bed": null,
+      "at": "06:15:58.890",
+      "sinceStartS": 78.1,
+      "videoS": 81.4,
+      "phoneVideoS": 80.5
+    },
+    {
+      "t": 1789798618864,
+      "status": "playing",
+      "phase": "scores",
+      "deadline": 1789798626843,
+      "bed": "lounge",
+      "at": "06:16:58.864",
+      "sinceStartS": 138.1,
+      "videoS": 141.4,
+      "phoneVideoS": 140.5
+    },
+    {
+      "t": 1789798626915,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789798631857,
+      "bed": "warm",
+      "at": "06:17:06.915",
+      "sinceStartS": 146.1,
+      "videoS": 149.5,
+      "phoneVideoS": 148.5
+    }
+  ],
+  "notes": ["budget reached while playing; skipped to results"]
+}
