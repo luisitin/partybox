@@ -192,8 +192,26 @@ export function fitScore(
     /^(?:A|An) /.test(text)
   )
     return best * ONE_OF_MANY;
+  // "The Ring doorbell caught the neighbor ____" wants a verb: an event noun serves a doing blank
+  // after "for" or "after" ("arrested for A Labor Day gangbang") but not straight after its
+  // subject ("caught the neighbor A Labor Day gangbang"), where only a gerund reads (loop 762).
+  if (
+    slot === 'doing' &&
+    blackText !== undefined &&
+    serves[0] !== 'doing' &&
+    serves.includes('doing') &&
+    GERUND_PROMPT.test(blackText)
+  )
+    return best * EVENT_AFTER_SUBJECT;
   return best;
 }
+
+/** A doing blank right after its subject — a pronoun, "the neighbor", a name, "busy" — where
+ *  the card is the verb of the sentence. (Checked only once the blank is known to be a doing.) */
+const GERUND_PROMPT =
+  /\b(?:me|him|her|them|us|you|busy|the \w+|my \w+|(?!The\b|An?\b|Was\b|Is\b)[A-Z][\w']+) ____/;
+/** What an event noun ("A bachelor party") keeps of its doing fit there. */
+const EVENT_AFTER_SUBJECT = 0.6;
 
 /** Blanks that want a quantity — a plural, a mass noun — rather than one thing with an article. */
 const MASS_PROMPT =

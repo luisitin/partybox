@@ -184,5 +184,17 @@ describe('fitScore', () => {
     expect(
       fitScore('thing', ['thing'], 'A crop circle shaped like a bagel.', 'The HOA banned ____.'),
     ).toBe(1);
+    // A doing blank right after its subject is the verb: an event noun reads there only as a stretch.
+    const caught = 'The Ring doorbell caught the neighbor ____.';
+    expect(fitScore('doing', ['thing', 'doing'], 'A bachelor party.', caught)).toBe(0.6);
+    expect(fitScore('doing', ['doing'], 'Feeding the ducks bread again.', caught)).toBe(1);
+    expect(
+      fitScore(
+        'doing',
+        ['thing', 'doing'],
+        'A bachelor party.',
+        'Florida Man was arrested for ____.',
+      ),
+    ).toBe(1);
   });
 });
