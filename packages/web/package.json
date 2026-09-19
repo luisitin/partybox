@@ -1,0 +1,30 @@
+{
+  "name": "@partybox/web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@fontsource-variable/nunito": "5.3.0",
+    "@partybox/client": "workspace:*",
+    "@partybox/engine": "workspace:*",
+    "@partybox/game-sdk": "workspace:*",
+    "@partybox/host": "workspace:*",
+    "@partybox/shared": "workspace:*",
+    "peerjs": "^1.5.5",
+    "qrcode": "^1.5.4",
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  },
+  "devDependencies": {
+    "@types/qrcode": "^1.5.6",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "^6.1.1",
+    "vite": "catalog:"
+  }
+}

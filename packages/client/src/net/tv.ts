@@ -1,6 +1,5 @@
 // The TV's store: an observer that renders pushes (room snapshots, views, toasts) — plus the host
 // controls (ADR-031): `act` runs a VIP action as the room's VIP, `bot` adds/removes house bots.
-import { io } from 'socket.io-client';
 import type {
   BotAction,
   ErrorPayload,
@@ -13,6 +12,8 @@ import type {
   VipAction,
 } from '@partybox/shared';
 import { createRestartWatch } from './stale';
+import { socketTransport } from './transport';
+import type { NetTransport } from './transport';
 import { createStore, nextToastId } from './store';
 import type { Store, Toast } from './store';
 
@@ -42,7 +43,19 @@ export interface TvClient {
   home(): Promise<HomeResult>;
 }
 
-export function createTvClient(roomCode?: string, url?: string): TvClient {
+export interface TvClientOptions {
+  /** `?room=CODE`: watch one room instead of the house room. */
+  roomCode?: string;
+  /** Socket.IO origin; ignored when `transport` is given. */
+  url?: string;
+  /** The web build passes a data-channel (or in-tab) transport instead of a socket (ADR-034). */
+  transport?: NetTransport;
+  /** What 🏠 does from the lobby. Default: the dev API's reset, which needs a server to ask. */
+  reset?: () => Promise<HomeResult>;
+}
+
+export function createTvClient(options: TvClientOptions = {}): TvClient {
+  const { roomCode, url } = options;
   const store = createStore<TvState>({
     connected: false,
     room: null,
@@ -52,7 +65,7 @@ export function createTvClient(roomCode?: string, url?: string): TvClient {
     toasts: [],
     homing: false,
   });
-  const socket = io(url ?? '/', { transports: ['websocket', 'polling'] });
+  const socket = options.transport ?? socketTransport(url);
 
   const accept = (rev: number, code: string): boolean => {
     const s = store.get();
@@ -116,6 +129,14 @@ export function createTvClient(roomCode?: string, url?: string): TvClient {
       }
       act({ action: 'toLobby' });
       return 'ok';
+    }
+    if (options.reset) {
+      const result = await options.reset();
+      if (result === 'ok') {
+        store.set({ toasts: [] });
+        socket.emit('tv:join', { roomCode });
+      }
+      return result;
     }
     try {
       const res = await fetch(`${url ?? ''}/api/dev/reset`, { method: 'POST' });

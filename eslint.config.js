@@ -74,6 +74,24 @@ export default tseslint.config(
     },
   },
   {
+    // ADR-034: the room host runs under Node and in a browser tab. Nothing Node-only, no UI.
+    files: ['packages/host/src/**/*.ts'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          paths: [...sharedBans, '@partybox/game-sdk'],
+          patterns: [
+            {
+              group: ['node:*', 'fs', 'path', 'os', 'socket.io*', '**/packages/server/**'],
+              message: 'The host is platform-neutral: use Web Crypto and the Transport interface.',
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
     // Server never imports client or the SDK; games arrive via games.generated.ts only.
     files: ['packages/server/src/**/*.ts'],
     rules: {
@@ -97,6 +115,23 @@ export default tseslint.config(
           patterns: [
             { group: ['**/packages/server/**', '**/packages/engine/**'] },
             { group: ['node:*', 'fs', 'path', 'os'], message: 'client runs in the browser.' },
+          ],
+        },
+      ],
+    },
+  },
+  {
+    // ADR-034: the GitHub Pages build. It may reach into engine + host (it IS the server there)
+    // and reuse the client's shells, but it runs in a browser like the client does.
+    files: ['packages/web/src/**/*.{ts,tsx}'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          paths: sharedBans,
+          patterns: [
+            { group: ['**/packages/server/**'], message: 'The web build has no Node process.' },
+            { group: ['node:*', 'fs', 'path', 'os'], message: 'web runs in the browser.' },
           ],
         },
       ],
@@ -182,6 +217,7 @@ export default tseslint.config(
   {
     files: [
       'packages/client/src/**/*.{ts,tsx}',
+      'packages/web/src/**/*.{ts,tsx}',
       'packages/game-sdk/src/**/*.tsx',
       'games/**/*.tsx',
     ],

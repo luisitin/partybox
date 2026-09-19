@@ -34,8 +34,10 @@ export default defineConfig({
     projects: [
       unitProject('shared', 'packages/shared/src'),
       unitProject('engine', 'packages/engine/src'),
+      unitProject('host', 'packages/host/src'),
       unitProject('server', 'packages/server/src'),
       unitProject('client', 'packages/client/src'),
+      unitProject('web', 'packages/web/src'),
       unitProject('game-sdk', 'packages/game-sdk/src'),
       unitProject('sim', 'packages/sim/src'),
       unitProject('e2e', 'packages/e2e/src'),

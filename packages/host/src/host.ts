@@ -1,7 +1,7 @@
 // RoomHost: owns the rooms, runs the pure engine, and is the ONLY place effects turn into I/O
 // (ADR-010). One pending timer per room, re-armed from `nextWakeAt` after every event (ADR-022).
-// Sockets are behind the `Transport` interface so tests can run the host without Socket.IO.
-import { randomBytes, randomUUID } from 'node:crypto';
+// The wire is behind the `Transport` interface: Socket.IO on the LAN, WebRTC data channels in the
+// browser (ADR-034), a stub in tests. Nothing here is Node-only — it runs in a browser tab too.
 import type { ApplyResult, EngineDeps, RoomEvent, RoomState } from '@partybox/engine';
 import {
   applyRoomEvent,
@@ -21,6 +21,7 @@ import type {
 } from '@partybox/shared';
 import { createRng, roomCodeFrom } from '@partybox/shared';
 import type { Clock } from './clock';
+import { mintPlayerId, randomSeed } from './ids';
 
 export interface Transport {
   toPlayer(playerId: string, event: string, payload: unknown): void;
@@ -66,8 +67,8 @@ export function createHost(options: HostOptions): Host {
   const log =
     options.log ?? ((level, text) => console[level === 'info' ? 'log' : level](`[host] ${text}`));
   const rooms = new Map<string, RoomState>();
-  const timers = new Map<string, NodeJS.Timeout>();
-  const codeRng = createRng(randomBytes(4).readUInt32LE(0));
+  const timers = new Map<string, ReturnType<typeof setTimeout>>();
+  const codeRng = createRng(randomSeed());
   const listeners = new Set<(room: RoomState) => void>();
   let houseCode = '';
   /**
@@ -248,7 +249,7 @@ export function createHost(options: HostOptions): Host {
         } satisfies ViewPush<unknown>);
     },
     reset,
-    mintPlayer: () => ({ playerId: randomUUID(), token: randomBytes(24).toString('hex') }),
+    mintPlayer: mintPlayerId,
     subscribe(listener) {
       listeners.add(listener);
       return () => listeners.delete(listener);

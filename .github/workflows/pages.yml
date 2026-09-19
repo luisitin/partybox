@@ -1,0 +1,61 @@
+# Builds packages/web and publishes it to GitHub Pages (ADR-034, WEB_DEPLOY.md).
+#
+# One-time setup in the repository: Settings → Pages → Build and deployment → Source:
+# "GitHub Actions". Nothing else; no secrets, no tokens.
+name: Deploy web app to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Let the deploy finish even if another push lands: queue, never cancel a live deployment.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      # The same gate that guards a local commit. A red build never reaches Pages.
+      - run: pnpm verify
+
+      # `base` must match where Pages serves from: "/<repo>/" for a project site,
+      # "/" for <user>.github.io or a custom domain (see WEB_DEPLOY.md).
+      - name: Build the web app
+        env:
+          PARTYBOX_BASE: /${{ github.event.repository.name }}/
+        run: pnpm --filter @partybox/web build
+
+      # A single-page app on Pages: an unknown path must still load index.html, or a shared
+      # ?room= link that someone opened with a trailing path 404s. Pages serves 404.html for those.
+      - run: cp packages/web/dist/index.html packages/web/dist/404.html
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: packages/web/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

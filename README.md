@@ -1,9 +1,14 @@
 # PartyBox
 
-A self-hosted, LAN-only party game platform. One Node process on your PC serves a **TV page** for the big
+A self-hosted party game platform. One Node process on your PC serves a **TV page** for the big
 screen and a **controller page** for everyone's phone — no app install, no accounts, no internet needed.
 Games are plugins; two ship with v0.1: **Wisecrack** (write answers, vote for the funniest) and
 **Lightning Round** (speed trivia with streaks and a final wager).
+
+**Playing with people who are not in your house?** The same games also build to a static site with
+no server at all: the first player's browser tab hosts the room, everyone else joins with a 4-letter
+code, and each phone carries its own stage. Run it locally with `pnpm web`; deploying it to GitHub
+Pages and keeping it in step with this app is **[`WEB_DEPLOY.md`](WEB_DEPLOY.md)**.
 
 ## Quickstart (Windows 11, macOS or Linux)
 
@@ -62,7 +67,8 @@ bundled under `packages/client/public/sfx/`.
 
 | Command                                       | What                                              |
 | --------------------------------------------- | ------------------------------------------------- |
-| `pnpm dev` / `pnpm start`                     | run (dev / production)                            |
+| `pnpm dev` / `pnpm start`                     | run on the LAN (dev / production)                 |
+| `pnpm web`                                    | the GitHub Pages build locally (`WEB_DEPLOY.md`)  |
 | `pnpm verify`                                 | the full quality gate (< 3 min)                   |
 | `pnpm new-game <id>`                          | scaffold a new game — see `docs/ADDING_A_GAME.md` |
 | `pnpm sim --game <id> --players 6 --runs 200` | headless simulation                               |

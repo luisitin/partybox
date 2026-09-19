@@ -10,9 +10,10 @@
   },
   "scripts": {
     "dev": "tsx packages/server/src/main.ts --dev",
+    "web": "pnpm --filter @partybox/web dev",
     "dev:watch": "tsx watch --clear-screen=false --include packages --include games --exclude packages/client packages/server/src/main.ts --dev",
     "start": "cross-env NODE_ENV=production tsx packages/server/src/main.ts",
-    "build": "pnpm gen-registry && pnpm --filter @partybox/client build",
+    "build": "pnpm gen-registry && pnpm --filter @partybox/client build && pnpm --filter @partybox/web build",
     "verify": "tsx scripts/verify.ts",
     "typecheck": "tsc -p tsconfig.json",
     "lint": "eslint . --max-warnings 0",

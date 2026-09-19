@@ -5,7 +5,7 @@ import type { Socket } from 'socket.io-client';
 import type { ErrorPayload, RoomPush, WelcomePayload } from '@partybox/shared';
 import { createApp } from './app';
 import type { App } from './app';
-import { createClock } from './clock';
+import { createClock } from '@partybox/host';
 
 let app: App;
 let url: string;

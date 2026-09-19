@@ -1,10 +1,14 @@
 # @partybox/client
 
 Vite + React front end: the TV stage (`/tv`), the phone controller (`/`), and the dev preview.
+Both shells are transport-agnostic, so the GitHub Pages build renders the very same screens over
+WebRTC instead of Socket.IO (ADR-034, `WEB_DEPLOY.md`).
 
 ## Key files
 
 - `src/main.tsx` — route switch (`/tv`, `/`, `/preview/...`), no router library (ADR-011).
+- `src/index.ts` — the package barrel: what `packages/web` reuses. Export here, never copy a screen.
+- `src/net/transport.ts` — `NetTransport`: Socket.IO on the LAN, a data channel on the web.
 - `src/net/store.ts` — tiny external store + `useStore`. `src/net/controller.ts` — the phone connection (join/resume by token in `localStorage`, `rev` gating, clock offset, toasts, kicked). `src/net/tv.ts` — the TV observer. `src/net/info.ts` — `/api/info` hook.
 - `src/tv/TvApp.tsx` + `TvFrame.tsx` — stage chrome (room code, join URL, QR) and sound cues; `TvLobby`, `TvSelecting`, `TvPlaying` (envelope: chips + timer + VIP overlay + paused curtain), `TvResults`, `AudioGate` (tap to start, mute, fullscreen).
 - `src/controller/ControllerApp.tsx` + `ControllerShell.tsx` — phone frame: header (room, me, connection dot, VIP badge → `VipMenu`), reconnect banner, error strip, toasts.

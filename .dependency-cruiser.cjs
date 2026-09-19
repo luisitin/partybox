@@ -1,8 +1,9 @@
 /* Path-level import boundaries (docs/ARCHITECTURE.md "Dependency direction").
  * Run: pnpm lint:deps   (part of pnpm verify)
- * Allowed direction:  games -> game-sdk -> shared ; engine -> shared ;
- *                     server -> engine, shared, games/x/server ; client -> game-sdk, shared, games/x/client ;
- *                     sim / e2e / scripts -> anything ; nothing -> sim / e2e.
+ * Allowed direction:  games -> game-sdk -> shared ; engine -> shared ; host -> engine, shared ;
+ *                     server -> host, engine, shared, games/x/server ; client -> game-sdk, shared, games/x/client ;
+ *                     web -> client, host, engine, game-sdk, shared, games/x/{server,client} (ADR-034) ;
+ *                     sim / e2e / scripts -> anything ; nothing -> sim / e2e / web.
  */
 /** @type {import('dependency-cruiser').IConfiguration} */
 module.exports = {
@@ -66,10 +67,17 @@ module.exports = {
       to: { path: '^packages/(?!shared/|game-sdk/)' },
     },
     {
-      name: 'server-imports-only-engine-shared',
+      name: 'host-imports-only-engine-shared',
+      comment: 'ADR-034: the room host runs under Node AND in a browser tab, so it stays neutral.',
+      severity: 'error',
+      from: { path: '^packages/host/' },
+      to: { path: '^(packages/(?!shared/|engine/|host/)|games/)' },
+    },
+    {
+      name: 'server-imports-only-host-engine-shared',
       severity: 'error',
       from: { path: '^packages/server/' },
-      to: { path: '^packages/(?!shared/|engine/|server/)' },
+      to: { path: '^packages/(?!shared/|engine/|host/|server/)' },
     },
     {
       name: 'server-imports-only-game-server-code',
@@ -85,16 +93,23 @@ module.exports = {
       to: { path: '^packages/(?!shared/|game-sdk/|client/)' },
     },
     {
+      name: 'web-never-imports-server',
+      comment: 'ADR-034: the web build has no Node process; it hosts the room in the browser.',
+      severity: 'error',
+      from: { path: '^packages/web/' },
+      to: { path: '^packages/(server|sim|e2e)/' },
+    },
+    {
       name: 'client-imports-only-game-client-code',
       severity: 'error',
       from: { path: '^packages/client/' },
       to: { path: '^games/', pathNot: '^games/[^/]+/client/' },
     },
     {
-      name: 'nobody-imports-sim-or-e2e',
+      name: 'nobody-imports-sim-e2e-or-web',
       severity: 'error',
-      from: { path: '^(packages/(?!sim/|e2e/)|games/)' },
-      to: { path: '^packages/(sim|e2e)/' },
+      from: { path: '^(packages/(?!sim/|e2e/|web/)|games/)' },
+      to: { path: '^packages/(sim|e2e|web)/' },
     },
   ],
   options: {

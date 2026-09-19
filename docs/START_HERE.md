@@ -24,9 +24,16 @@ docs for your task. Every doc is short; every folder has a `README.md`; every pa
 2. `packages/client/README.md`, `packages/game-sdk/README.md` (primitives).
 3. `docs/DEV_API.md` + `packages/e2e/README.md` — freeze the clock, screenshot every phase.
 
+## Working on the GitHub Pages (web) build, or merging the LAN app into it
+
+1. `WEB_DEPLOY.md` (repo root) — the two builds, what travels for free, what needs a second look.
+2. `docs/DECISIONS.md` ADR-034, then `packages/web/README.md` and `packages/host/README.md`.
+
 ## Changing the engine or protocol
 
 1. `docs/ARCHITECTURE.md`, then `packages/engine/README.md` and `docs/PROTOCOL.md`.
+   A new wire event needs a handler in **both** `packages/server/src/sockets.ts` and
+   `packages/web/src/net/room-host.ts` (ADR-034).
 2. `docs/GAME_CONTRACT.md` — anything you change here breaks every game; write an ADR first.
 3. `docs/DECISIONS.md` — the constraints already chosen (timers-as-data, rev ordering, effects).
 

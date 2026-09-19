@@ -1,0 +1,24 @@
+/* The strip: 16:9 so the stage lands exactly, and a containing block for its fixed children. */
+.box {
+  position: relative;
+  flex: 0 0 auto;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  transform: translateZ(0);
+  background: var(--pb-bg);
+  border-bottom: 2px solid var(--pb-surface-2);
+}
+
+/* Folded away: still mounted (and still playing), just out of the way. */
+.hidden {
+  aspect-ratio: auto;
+  height: 0;
+  border-bottom: 0;
+}
+
+/* `zoom` (not `transform: scale`) so the subtree still gets its full 1920×1080 of layout; the
+   size itself is set inline from TV_DESIGN. Centred, so a screen wider than 16:9 does not bias it. */
+.zoom {
+  margin: 0 auto;
+}

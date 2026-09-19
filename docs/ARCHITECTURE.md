@@ -2,7 +2,11 @@
 
 ## Runtime topology
 
-One Node process (`packages/server`) on one port (default **42069**, `--port` / `PORT`), bound to `0.0.0.0`.
+Two deployments, one codebase (ADR-034). **LAN:** one Node process (`packages/server`) on one port
+(default **42069**, `--port` / `PORT`), bound to `0.0.0.0`. **Web (GitHub Pages, `packages/web`):**
+no process at all — the first player's browser tab runs `@partybox/host` and every other player
+opens a WebRTC data channel to it; there is no `/tv`, `/preview` or `/api`, and each device renders
+the stage and the controller on one page. `WEB_DEPLOY.md` is the guide. The table below is the LAN app.
 
 | Route                                                       | Who                                     | What                                                    |
 | ----------------------------------------------------------- | --------------------------------------- | ------------------------------------------------------- |
@@ -14,6 +18,7 @@ One Node process (`packages/server`) on one port (default **42069**, `--port` / 
 
 Dev mode (`pnpm dev`) mounts Vite in middleware mode inside Fastify (ADR-006) so phones still use one URL.
 Prod (`pnpm start`) serves `packages/client/dist`. Nothing touches the internet at runtime (ADR-012).
+The web build is the documented exception: it needs a signalling broker to introduce two browsers.
 
 ## Data flow
 
@@ -24,6 +29,7 @@ join/input/vip ──socket.io──▶ zod-validate payload (shared/protocol)
                               │  invalid → `error` event, ignored
                               ▼
                         engine.applyRoomEvent(room, event, now)      ← pure (packages/engine)
+                              (driven by packages/host — the same loop in the web build)
                               │   ├─ room lifecycle: lobby / selecting / playing / results
                               │   ├─ VIP rules, reconnect, spectators
                               │   └─ GameRunner: game.reduce(state, gameEvent)   ← pure (games/<id>/server)
@@ -49,18 +55,25 @@ join/input/vip ──socket.io──▶ zod-validate payload (shared/protocol)
 ## Packages and dependency direction
 
 ```
-games/<id> ──▶ game-sdk ──▶ shared ◀── engine ◀── server ──▶ games/<id>/server (generated registry)
-                  ▲                                 client ──▶ games/<id>/client (generated registry)
-                  └────────────── client            sim, e2e ──▶ anything;  nothing ──▶ sim, e2e
+games/<id> ──▶ game-sdk ──▶ shared ◀── engine ◀── host ◀── server ──▶ games/<id>/server (registry)
+                  ▲                                            client ──▶ games/<id>/client (registry)
+                  └────────────── client                       web ──▶ client, host, engine, games/*
+                                                               sim, e2e ──▶ anything
+                                        nothing ──▶ sim, e2e, web
 ```
+
+`packages/host` is the room loop with the platform taken out of it: `Transport` and `Clock` are the
+only ways it touches the world. `packages/server` gives it Socket.IO and a freezable clock;
+`packages/web` gives it WebRTC data channels plus a loopback for the host's own phone (ADR-034).
 
 Enforced by `eslint.config.js` (package-name bans) and `.dependency-cruiser.cjs` (path rules), both in `pnpm verify`.
 
 ## Game discovery
 
 Explicit and generated (ADR-003): `scripts/gen-registry.ts` scans `games/*/manifest.json` and writes
-`packages/server/src/games.generated.ts` (server definitions) and `packages/client/src/games.generated.ts`
-(lazy client modules). Folders starting with `_` (the template) are tested but not registered.
+`packages/server/src/games.generated.ts` and `packages/web/src/games.generated.ts` (server
+definitions, for the Node host and the browser host) and `packages/client/src/games.generated.ts`
+(lazy client modules). A new game therefore reaches both builds with no extra step. Folders starting with `_` (the template) are tested but not registered.
 `pnpm verify` fails when the generated files are stale or a game folder lacks a required file.
 
 ## Where state lives

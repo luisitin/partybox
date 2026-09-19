@@ -1,6 +1,8 @@
 // Generates the explicit game registries (ADR-003):
 //   packages/server/src/games.generated.ts  -> every games/<id>/server/index.ts `game`
 //   packages/client/src/games.generated.ts  -> every games/<id>/client/index.ts `clientModule`
+//   packages/web/src/games.generated.ts     -> the same `game` definitions, for the browser host
+//                                              that the GitHub Pages build runs (ADR-034)
 // Usage: pnpm gen-registry [--check]   (--check exits 1 when the files on disk are stale)
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -23,6 +25,18 @@ interface Target {
 const targets: Target[] = [
   {
     file: join(REPO_ROOT, 'packages/server/src/games.generated.ts'),
+    render: (games) =>
+      `${HEADER}import type { AnyGameDefinition } from '@partybox/shared';\n` +
+      (games.length === 0 ? '// No games yet. Add one with: pnpm new-game <id>\n' : '') +
+      games
+        .map((g) => `import { game as ${g.ident} } from '../../../games/${g.id}/server/index';\n`)
+        .join('') +
+      `\nexport const serverGames: Readonly<Record<string, AnyGameDefinition>> = {\n` +
+      games.map((g) => `  '${g.id}': ${g.ident},\n`).join('') +
+      `};\n`,
+  },
+  {
+    file: join(REPO_ROOT, 'packages/web/src/games.generated.ts'),
     render: (games) =>
       `${HEADER}import type { AnyGameDefinition } from '@partybox/shared';\n` +
       (games.length === 0 ? '// No games yet. Add one with: pnpm new-game <id>\n' : '') +

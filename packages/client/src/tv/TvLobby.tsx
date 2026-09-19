@@ -29,7 +29,7 @@ export function TvLobby({ room }: TvLobbyProps): JSX.Element {
           >
             {full ? t.lobby.full : t.lobby.scan}
           </BigText>
-          {info ? (
+          {info && info.qrSvg ? (
             <span
               className={styles.qr}
               dangerouslySetInnerHTML={{ __html: info.qrSvg }}

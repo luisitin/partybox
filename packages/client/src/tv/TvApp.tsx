@@ -6,6 +6,7 @@ import { ServerClockProvider, isSoundCue } from '@partybox/game-sdk/ui';
 import { clientGames } from '../games.generated';
 import { useStore } from '../net/store';
 import { createTvClient } from '../net/tv';
+import type { TvClient } from '../net/tv';
 import { bedFor, createBedEngine } from '../beds';
 import type { BedEngine } from '../beds';
 import { createMusicEngine, planFor } from '../music';
@@ -45,9 +46,14 @@ function musicInstance(muted: boolean): MusicEngine {
   return musicEngine;
 }
 
-export function TvApp(): JSX.Element {
+export interface TvAppProps {
+  /** The web build (ADR-034) passes a client backed by the in-browser host, not a socket. */
+  client?: TvClient;
+}
+
+export function TvApp({ client: injected }: TvAppProps = {}): JSX.Element {
   const roomCode = new URLSearchParams(location.search).get('room') ?? undefined;
-  const client = useMemo(() => createTvClient(roomCode), [roomCode]);
+  const client = useMemo(() => injected ?? createTvClient({ roomCode }), [injected, roomCode]);
   const audio = useMemo(() => soundInstance(), []);
   const music = useMemo(() => musicInstance(audio.muted()), [audio]);
   const beds = useMemo(() => bedsInstance(audio.muted()), [audio]);

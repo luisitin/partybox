@@ -1,5 +1,6 @@
-// Token bucket per socket: 20 inputs/s sustained, small burst. Non-VIP `vip` attempts cost extra
-// so a misbehaving phone throttles itself instead of the room.
+// Token bucket per client: 20 inputs/s sustained, small burst. Non-VIP `vip` attempts cost extra
+// so a misbehaving phone throttles itself instead of the room. Used by both wires — Socket.IO on
+// the LAN and WebRTC data channels on the web (ADR-034) — so it stays free of `node:*`.
 import { LIMITS } from '@partybox/shared';
 
 export interface RateLimiter {
@@ -25,10 +26,12 @@ export function createRateLimiter(
   };
 }
 
-/** UTF-8 byte length of a JSON payload without allocating a Buffer for small values. */
+const encoder = new TextEncoder();
+
+/** UTF-8 byte length of a JSON payload. `Infinity` for anything JSON cannot represent (a cycle). */
 export function jsonBytes(value: unknown): number {
   try {
-    return Buffer.byteLength(JSON.stringify(value) ?? '', 'utf8');
+    return encoder.encode(JSON.stringify(value) ?? '').length;
   } catch {
     return Number.POSITIVE_INFINITY;
   }

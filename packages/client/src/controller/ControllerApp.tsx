@@ -30,8 +30,13 @@ function soundInstance(): SoundEngine {
   return sound;
 }
 
-export function ControllerApp(): JSX.Element {
-  const controller = useMemo(() => controllerInstance(), []);
+export interface ControllerAppProps {
+  /** The web build (ADR-034) passes a controller backed by the in-browser host, not a socket. */
+  controller?: Controller;
+}
+
+export function ControllerApp({ controller: injected }: ControllerAppProps = {}): JSX.Element {
+  const controller = useMemo(() => injected ?? controllerInstance(), [injected]);
   const audio = useMemo(() => soundInstance(), []);
   const state = useStore(controller.store, (s) => s);
   // Autoplay policy: the AudioContext needs a gesture. Every tap re-checks (idempotent) so a

@@ -4,8 +4,7 @@
 import type { EngineDeps, RoomState } from '@partybox/engine';
 import { createRng, hashString } from '@partybox/shared';
 import type { BotStrategy, Rng } from '@partybox/shared';
-import type { Clock } from './clock';
-import type { Host } from './host';
+import type { Clock, Host } from '@partybox/host';
 
 export { BOT_STRATEGIES } from '@partybox/shared';
 export type { BotStrategy } from '@partybox/shared';

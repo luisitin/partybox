@@ -1,5 +1,9 @@
 # Protocol (Socket.IO)
 
+The GitHub Pages build speaks the same events over a WebRTC data channel instead of a socket
+(ADR-034): `packages/web/src/net/room-host.ts` validates them with these very schemas, and a device's
+stage half uses the same names under a `tv:` prefix. Adding an event here means adding it there too.
+
 Source of truth: `packages/shared/src/protocol.ts` (zod schemas for every payload). The server validates
 every incoming payload; invalid → `error { code, message }` back to the sender and the payload is ignored.
 The server never crashes on client input. The server is authoritative; clients render pushed views.

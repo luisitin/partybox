@@ -17,8 +17,8 @@ import {
   botPayloadSchema,
 } from '@partybox/shared';
 import type { ErrorPayload } from '@partybox/shared';
-import type { Host, Transport } from './host';
-import { createRateLimiter, jsonBytes } from './rate-limit';
+import { createRateLimiter, jsonBytes } from '@partybox/host';
+import type { Host, Transport } from '@partybox/host';
 
 interface SocketData {
   role: 'controller' | 'tv' | null;

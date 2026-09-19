@@ -1,9 +1,12 @@
 # PartyBox — the map (read this first, then docs/START_HERE.md)
 
-Self-hosted, LAN-only party-game platform. One Node process serves a **TV page** (`/tv`, read-only stage)
-and a **controller page** (`/`, phones). First player to join is the **VIP** (admin). Games are **plugins**
-in `games/<id>/` — pure, deterministic state machines. Priority #1 is that a session with no prior context
-can add a game correctly by reading a few short docs. Everything else serves that.
+Self-hosted party-game platform, in **two builds from one codebase**. LAN: one Node process serves a
+**TV page** (`/tv`, read-only stage) and a **controller page** (`/`, phones). Web (GitHub Pages, ADR-034):
+no server — the first player's tab hosts the room over WebRTC and every phone carries its own stage.
+First player to join is the **VIP** (admin). Games are **plugins** in `games/<id>/` — pure, deterministic
+state machines, and they work in both builds untouched. Priority #1 is that a session with no prior
+context can add a game correctly by reading a few short docs. Everything else serves that.
+**Bringing changes from the LAN app to the web app: `WEB_DEPLOY.md`.**
 
 ## Folder map (one line each)
 
@@ -11,8 +14,10 @@ can add a game correctly by reading a few short docs. Everything else serves tha
 | -------------------- | ---------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
 | `packages/shared/`   | Types + zod schemas: game contract, socket protocol, PRNG, ids. Deps: zod only.                                        | Anything with I/O or React.                                 |
 | `packages/engine/`   | PURE room machine: lobby→selecting→playing→results, VIP rules, reconnect/spectators, GameRunner. Host passes `now` in. | Sockets, timers, `Date.now()`.                              |
-| `packages/server/`   | Fastify + Socket.IO host: static/Vite serving, LAN IP + QR, dev API, real timers, injectable clock.                    | Game logic. Client imports.                                 |
+| `packages/host/`     | The room host, platform-neutral: effects→pushes, one timer per room, the clock, the rate limiter.                      | `node:*`, sockets, DOM, React.                              |
+| `packages/server/`   | LAN wire: Fastify + Socket.IO, static/Vite serving, LAN IP + QR, dev API, real timers.                                 | Game logic. Client imports. The host loop.                  |
 | `packages/client/`   | Vite + React: TvShell, ControllerShell, core screens (join/lobby/selecting/results), preview, tokens.                  | Game logic. Engine/server imports.                          |
+| `packages/web/`      | Web wire (ADR-034): WebRTC, the room hosted in a tab, stage strip over the controller. See `WEB_DEPLOY.md`.            | Game logic. Copies of client screens. Server imports.       |
 | `packages/game-sdk/` | Everything a game imports: contract types, rng/timer/scoring helpers, TV + controller primitives, contract tests.      | Engine or server imports.                                   |
 | `packages/sim/`      | Headless simulator: bot strategies, invariants, record/replay. `pnpm sim`.                                             | Being imported by anything.                                 |
 | `packages/e2e/`      | Playwright harness: boots server, 1 TV + N phones, screenshots. `pnpm e2e`, `pnpm e2e:snap`.                           | Being imported by anything.                                 |
@@ -27,7 +32,8 @@ can add a game correctly by reading a few short docs. Everything else serves tha
 
 ```
 pnpm install                 # once (Node >= 24, pnpm via corepack)
-pnpm dev [--port 42071]      # one process, one port (default 42069), Vite middleware, dev API on
+pnpm dev [--port 42071]      # LAN app: one process, one port (default 42069), Vite middleware, dev API on
+pnpm web                     # the GitHub Pages app locally (port 42072) — see WEB_DEPLOY.md
 pnpm start                   # production: serves packages/client/dist (run pnpm build first)
 pnpm verify                  # THE gate: typecheck → lint → boundaries → format → unit+contract → sim smoke → build → doc drift
 pnpm new-game <id>           # scaffold games/<id> from games/_template, then regenerates the registry
@@ -50,14 +56,16 @@ pnpm test | pnpm vitest --project engine                 # all unit tests / one 
 
 ## Dependency direction (lint + dependency-cruiser fail the build otherwise)
 
-`games → game-sdk → shared` · `engine → shared` · `server → engine, shared, games/*/server (generated registry)`
-· `client → game-sdk, shared, games/*/client (generated registry)` · `sim, e2e → anything` · **nothing → sim, e2e**.
+`games → game-sdk → shared` · `engine → shared` · `host → engine, shared` · `server → host, engine, shared, games/*/server`
+· `client → game-sdk, shared, games/*/client` · `web → client, host, engine, game-sdk, shared, games/*` (ADR-034)
+· `sim, e2e → anything` · **nothing → sim, e2e, web**.
 Games import **only** `@partybox/game-sdk` (server, pure) and `@partybox/game-sdk/ui` (client, React) — plus `react`.
 
 ## Where things are NOT
 
-- No game logic in `packages/client` or `packages/server` — views are computed by the game, rendered by shells.
-- No sockets or timers in `packages/engine` or any game — the server is the only place with I/O.
+- No game logic in `packages/client`, `packages/server` or `packages/web` — views are computed by the game.
+- No sockets or timers in `packages/engine` or any game; no `node:*` in `packages/host` (it runs in a browser too).
+- No copy of a client screen in `packages/web` — export it from `packages/client/src/index.ts` instead.
 - No `Math.random()` anywhere in game or engine code — `shared/rng` only.
 - No barrel files except each package's `src/index.ts`; no default exports (config files excepted).
 

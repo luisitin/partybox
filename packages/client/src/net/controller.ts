@@ -1,7 +1,5 @@
 // The phone's single source of truth: one socket, one store. Handles join/resume by token,
 // `rev` gating, clock offset, toasts, errors and kicks (docs/PROTOCOL.md).
-import { io } from 'socket.io-client';
-import type { Socket } from 'socket.io-client';
 import type {
   ControllerView,
   ErrorPayload,
@@ -16,6 +14,8 @@ import type {
   BotAction,
 } from '@partybox/shared';
 import { createRestartWatch } from './stale';
+import { socketTransport } from './transport';
+import type { NetTransport } from './transport';
 import { createStore, nextToastId } from './store';
 import type { Store, Toast } from './store';
 
@@ -103,7 +103,14 @@ export interface Controller {
   identity(): Identity | null;
 }
 
-export function createController(url?: string): Controller {
+export interface ControllerOptions {
+  /** Socket.IO origin; ignored when `transport` is given. */
+  url?: string;
+  /** The web build passes a data-channel (or in-tab) transport instead of a socket (ADR-034). */
+  transport?: NetTransport;
+}
+
+export function createController(options: ControllerOptions = {}): Controller {
   const store = createStore<ControllerState>({
     connection: 'connecting',
     joined: false,
@@ -118,7 +125,7 @@ export function createController(url?: string): Controller {
     kicked: null,
     restarted: false,
   });
-  const socket: Socket = io(url ?? '/', { transports: ['websocket', 'polling'] });
+  const socket = options.transport ?? socketTransport(options.url);
   let seq = 0;
   let pending: Session | null = null;
 
@@ -134,7 +141,7 @@ export function createController(url?: string): Controller {
     store.set({ offsetMs: at - Date.now() });
     lastPushAt = Date.now();
     // Any push proves the link: a stale-watchdog 'reconnecting' (below) ends here.
-    if (socket.connected) backOnline();
+    if (socket.connected()) backOnline();
   };
 
   // A dead link is invisible for up to the 20 s ping timeout (review-loop #4): the phone kept a
@@ -145,12 +152,12 @@ export function createController(url?: string): Controller {
   const goStale = (): void => {
     if (!store.get().joined) return;
     store.set({ connection: 'reconnecting' });
-    socket.io.engine?.close();
+    socket.drop();
   };
   if (typeof window !== 'undefined') {
     window.addEventListener('offline', goStale);
     window.addEventListener('online', () => {
-      if (!socket.connected) socket.connect();
+      if (!socket.connected()) socket.connect();
     });
   }
   setInterval(() => {

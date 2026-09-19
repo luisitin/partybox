@@ -23,6 +23,9 @@
     "paths": {
       "@partybox/shared": ["./packages/shared/src/index.ts"],
       "@partybox/engine": ["./packages/engine/src/index.ts"],
+      "@partybox/host": ["./packages/host/src/index.ts"],
+      "@partybox/client": ["./packages/client/src/index.ts"],
+      "@partybox/client/styles/*": ["./packages/client/src/styles/*"],
       "@partybox/game-sdk": ["./packages/game-sdk/src/index.ts"],
       "@partybox/game-sdk/ui": ["./packages/game-sdk/src/ui.ts"],
       "@partybox/game-sdk/testing": ["./packages/game-sdk/src/testing.ts"]

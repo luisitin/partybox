@@ -128,7 +128,7 @@ R-001 · R-002 · R-006 · R-008 · R-014 · R-016 · R-017 · R-018 · R-004
 
 - **Where**: core, playing, TV.
 - **Evidence**: `core/quickpoll-answer/tv-stage.png` — 120 px QR at y 54 (on the safe line), URL 28 px beside it, controls above.
-- **Change**: during play show only the URL (`192.168.4.87:42071`, caption) under the room code on the left; drop the small QR (the lobby has the big one; late joiners are spectators anyway). Frees the right column for the 128 px timer (R-002).
+- **Change**: during play show only the URL (`<your-lan-ip>:42071`, caption) under the room code on the left; drop the small QR (the lobby has the big one; late joiners are spectators anyway). Frees the right column for the 128 px timer (R-002).
 - **Files**: `packages/client/src/tv/TvFrame.tsx` + `.module.css`.
 - **Effort** S · **Risk** low.
 

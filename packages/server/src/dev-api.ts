@@ -8,8 +8,7 @@ import { nextWakeAt } from '@partybox/engine';
 import { createRng, z } from '@partybox/shared';
 import type { BotManager } from './bots';
 import { BOT_STRATEGIES } from '@partybox/shared';
-import type { Clock } from './clock';
-import type { Host } from './host';
+import type { Clock, Host } from '@partybox/host';
 
 export interface DevApiOptions {
   enabled: boolean;
