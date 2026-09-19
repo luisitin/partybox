@@ -20,6 +20,7 @@ const { values } = parseArgs({
     out: { type: 'string' },
     abort: { type: 'boolean', default: false },
     players: { type: 'string', default: '4' },
+    game: { type: 'string', default: 'broken-pencil' },
   },
 });
 
@@ -78,11 +79,13 @@ async function main(): Promise<void> {
 
     const bots = Math.max(2, Number(values.players) - 1);
     await api.bots(bots, 'random');
+    const game = values.game ?? 'broken-pencil';
+    const pencil = game === 'broken-pencil';
     await api.post('/api/dev/start', {
-      gameId: 'broken-pencil',
+      gameId: game,
       seed: 7,
       record: true,
-      settings: { drawSeconds: 20, guessSeconds: 15 },
+      settings: pencil ? { drawSeconds: 20, guessSeconds: 15 } : {},
     });
     // Skip through the whole game; bots act on their own, Sam acts through the dev API.
     for (let i = 0; i < 160; i += 1) {
@@ -106,15 +109,15 @@ async function main(): Promise<void> {
     console.log(files.map((f) => `  ${f}`).join('\n'));
     const session = files.find((f) => f.endsWith('session.json'));
     check(
-      !!session && session.startsWith('broken-pencil/'),
-      'session.json under broken-pencil/<stamp>-<code>/',
+      !!session && session.startsWith(`${game}/`),
+      `session.json under ${game}/<stamp>-<code>/`,
     );
     check(
       files.some((f) => f.endsWith('recap.md')),
       'recap.md written',
     );
     const svgs = files.filter((f) => f.endsWith('.svg'));
-    check(svgs.length > 0 || values.abort, `${svgs.length} drawing SVGs written`);
+    if (pencil) check(svgs.length > 0 || values.abort, `${svgs.length} drawing SVGs written`);
     if (session) {
       const meta = JSON.parse(readFileSync(join(recDir, session), 'utf8')) as {
         outcome: string;
@@ -143,11 +146,24 @@ async function main(): Promise<void> {
       const recap = readFileSync(join(recDir, session.replace('session.json', 'recap.md')), 'utf8');
       console.log('--- recap.md (head) ---');
       console.log(recap.split('\n').slice(0, 14).join('\n'));
-      check(/## Book 1 —/.test(recap), 'recap lists book 1');
-      check(
-        /drew:\*\* !\[.*\]\(book-01-page-02-.*\.svg\)/.test(recap),
-        'recap links the first drawing',
-      );
+      if (pencil) {
+        check(/## Book 1 —/.test(recap), 'recap lists book 1');
+        if (values.abort) check(recap.includes('ended early during'), 'recap says it ended early');
+        else
+          check(
+            /drew:\*\* !\[.*\]\(book-01-page-02-.*\.svg\)/.test(recap),
+            'recap links the first drawing',
+          );
+      } else if (game === 'wisecrack') {
+        check(/## Round 1/.test(recap), 'recap lists round 1');
+        check(/\d votes?/.test(recap), 'recap shows the vote tallies');
+        check(/## Final scores/.test(recap), 'recap has final scores');
+      } else {
+        check(/## Question 1 ·/.test(recap), 'recap lists question 1');
+        check(/## Final question ·/.test(recap), 'recap lists the final question');
+        check(/- Sam: /.test(recap), "recap has Sam's picks");
+        check(/## Final scores/.test(recap), 'recap has final scores');
+      }
     }
 
     // Second game with record off → nothing new.
