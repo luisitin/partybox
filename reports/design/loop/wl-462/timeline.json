@@ -1,0 +1,90 @@
+{
+  "pass": "460",
+  "game": "wisecrack",
+  "players": 6,
+  "scenario": "walkover",
+  "focus": "tv",
+  "started": "05:34:20.327",
+  "tvVideoT0": "05:34:16.945",
+  "phoneVideoT0": "05:34:17.868",
+  "changes": [
+    {
+      "t": 1789796060330,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789796065322,
+      "bed": "warm",
+      "at": "05:34:20.330",
+      "sinceStartS": 0,
+      "videoS": 3.4,
+      "phoneVideoS": 2.5
+    },
+    {
+      "t": 1789796065341,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789796125331,
+      "bed": null,
+      "at": "05:34:25.341",
+      "sinceStartS": 5,
+      "videoS": 8.4,
+      "phoneVideoS": 7.5
+    },
+    {
+      "t": 1789796125353,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789796131346,
+      "bed": "marimba",
+      "at": "05:35:25.353",
+      "sinceStartS": 65,
+      "videoS": 68.4,
+      "phoneVideoS": 67.5
+    },
+    {
+      "t": 1789796131463,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789796137347,
+      "bed": "marimba",
+      "at": "05:35:31.463",
+      "sinceStartS": 71.1,
+      "videoS": 74.5,
+      "phoneVideoS": 73.6
+    },
+    {
+      "t": 1789796137401,
+      "status": "playing",
+      "phase": "scores",
+      "deadline": 1789796145353,
+      "bed": "lounge",
+      "at": "05:35:37.401",
+      "sinceStartS": 77.1,
+      "videoS": 80.5,
+      "phoneVideoS": 79.5
+    },
+    {
+      "t": 1789796145379,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789796150355,
+      "bed": "warm",
+      "at": "05:35:45.379",
+      "sinceStartS": 85.1,
+      "videoS": 88.4,
+      "phoneVideoS": 87.5
+    },
+    {
+      "t": 1789796150447,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789796210367,
+      "bed": null,
+      "at": "05:35:50.447",
+      "sinceStartS": 90.1,
+      "videoS": 93.5,
+      "phoneVideoS": 92.6
+    }
+  ],
+  "notes": ["budget reached while playing; skipped to results"]
+}
