@@ -105,6 +105,17 @@ describe('servesOf — what the white card is', () => {
     expect(servesOf({ text: 'Parallel parking with an audience.' })).toEqual(['doing']);
     expect(servesOf({ text: 'Extreme couponing.' })).toEqual(['doing', 'name']);
     expect(servesOf({ text: 'Ranch dressing at a wake.' })).toEqual(['thing']);
+    // An event phrase is an event only when the phrase ends there: a garage sale is one, a garage sale
+    // sex swing is a swing; a relative clause or a night still keep it ("open mic night").
+    expect(servesOf({ text: 'A garage sale sex swing, lightly used.' })).toEqual(['thing']);
+    expect(servesOf({ text: 'A bachelor party mugshot.' })).toEqual(['thing', 'name']);
+    expect(servesOf({ text: 'A road trip where the passengers get fewer at every stop.' })).toEqual(
+      ['thing', 'doing'],
+    );
+    expect(servesOf({ text: 'An open mic night at the nursing home.' })).toEqual([
+      'thing',
+      'doing',
+    ]);
     // …and a gerund that is half of a noun is not a verb.
     expect(servesOf({ text: 'Breaking news: your nudes.' })).toEqual(['thing', 'name']);
     expect(servesOf({ text: 'Reading glasses on the head, then lost.' })).toEqual(['thing']);
