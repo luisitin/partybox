@@ -37,7 +37,7 @@ const DOING_PROMPT = [
   /\b(?:done|did|loved|dare (?:was|is)|ritual (?:was|is)): ____|doing what \w+ loved/i,
   /\b(?:arrested|fired|executed|burned|shut down|raided|resigned|banned|expelled|sued|jailed|convicted|dumped|put (?:\w+ ){1,2}down|quit|walked out|kicked out)\b[^.]* (?:for|over) ____/i,
   // A ritual, a dare, an activity, a way to get something: what someone does.
-  /\b(?:ritual|hazing|dare|tradition|activity|hobby|pastime|challenge|way to get|specializes in|known for|charged? extra for)\b/i,
+  /\b(?:ritual|hazing|dare|tradition|activity|hobby|pastime|challenge|way to get|specializes in|known for|charged? extra for|signature move|finishing move|move in bed)\b/i,
 ];
 /** "Renamed itself after ____", "modeled after ____": a thing, not an event after which. */
 const NAMED_AFTER = /\b(?:named|renamed|modeled|modelled|patterned|fashioned)\b[^.]*after ____/i;
@@ -104,7 +104,7 @@ const WHO_CLAUSE =
   /^(?:A |An |The |My |Your |Our )?(?!.*\b(?:someone|somebody|anyone) who)(?:[\w'’-]+,? ){1,4}who\b/i;
 /** What may follow the person word for it to be the head of the phrase. */
 const LINK_AFTER =
-  /^(?:with|who|whose|that|named|called|at|in|on|from|and|of|for|without|under|behind|during|after|before|as|to|dressed|covered|wearing|holding|doing|having|being|selling|giving|getting|taking)$/i;
+  /^(?:with|who|whose|that|named|called|at|in|on|from|and|of|for|without|under|behind|during|after|before|as|to|dressed|covered|wearing|holding|doing|having|being|selling|giving|getting|taking|my|your|his|her|their|our|nobody|everyone|someone|you|we|they|i)$/i;
 /** A card short enough to be a name, a safe word, a title: four words or fewer. */
 export const NAME_MAX_WORDS = 4;
 /** Nouns that name something that happens: a card headed by one reads as a doing too. */
@@ -143,7 +143,7 @@ export function servesOf(card: Pick<WhiteCard, 'text'> & { serves?: Slot[] }): S
       kind = 'person';
     // An event named as a noun ("A threesome with a mime.", "Anal in a canoe.") is a thing that
     // also reads as something that happened — the best answer to "…was ruined by ____".
-    else if ((!possessive && EVENT_WORD.test(head)) || EVENT_PHRASE.test(pair)) {
+    else if ((!possessive && ends && EVENT_WORD.test(head)) || EVENT_PHRASE.test(pair)) {
       const out: Slot[] = ['thing', 'doing'];
       return short ? [...out, 'name'] : out;
     }
