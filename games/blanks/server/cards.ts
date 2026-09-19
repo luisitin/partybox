@@ -63,9 +63,10 @@ export interface Segment {
  * Blanks beyond the whites played stay as blanks; whites beyond the blanks (a question card, a
  * "make a haiku") come back in `extra` for the caller to list underneath.
  */
-/** The black text right before a blank ends in an article or a possessive: "a happy little ____". */
+/** The black text right before a blank ends in an article or a possessive — "a happy little ____",
+ *  '"no ____"', a hashtag "#____" — so the white card's own article would double up. */
 const LEADS_WITH_ARTICLE =
-  /\b(?:a|an|the|my|your|his|her|their|our|little|new|sexy|favou?rite)\s*$/i;
+  /(?:\b(?:a|an|the|my|your|his|her|their|our|little|new|sexy|favou?rite|no)\s*|#)$/i;
 /** A card that ends in an abbreviation, not in a sentence's full stop: "2 a.m.", "O.J.", "Jr.". */
 const ABBREVIATION = /(?:\b[A-Za-z]\.){2}$|\b(?:Jr|Sr|St|Dr|Mr|Mrs|Ms|Inc|Ltd|vs|etc)\.$/;
 
