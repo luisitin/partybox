@@ -17,7 +17,9 @@ export type Slot = (typeof SLOTS)[number];
 
 /** Prompts whose blank wants an action or an event. */
 const DOING_PROMPT = [
-  /\b(?:do|doing|done)(?: again| anymore| twice| for money)?\?["”]?$/i, // "What did the sex robot refuse to do?", "…won't do again?"
+  /\b(?:do|doing|done|does)(?: again| anymore| twice| for money)?\?["”]?$/i, // "What did the sex robot refuse to do?", "…won't do again?", "…the roommate does?"
+  /\b(?:done|doing) (?:on|at|in|for|to|with|during|while)\b/i, // "the wildest thing you've done on the clock?", "What's Obama doing with…?"
+  /\b(?:real|hidden|secret|true) talent\b|\bpunishment (?:for|is|was)\b|\bpunishment\?$/i,
   /\b(?:cut short by|ends? (?:\w+ )?(?:with|in)) ____/i, // "The bedtime story ends with ____.", "cut short by ____"
   /^____ and ____: what\b/, // "____ and ____: what the Airbnb's two hidden cameras caught."
   /\bdo (?:at|in|on|to|with|for|instead|before|after|during|while|when|all day|every)\b/i, // "What did Lincoln do at…", "…do while I'm at work?"
