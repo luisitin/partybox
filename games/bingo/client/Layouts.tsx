@@ -6,6 +6,7 @@ import { useState } from 'react';
 import type { JSX } from 'react';
 import type { BingoControllerView } from '../server/views';
 import { Card } from './Card';
+import { wantedCells } from './close';
 import { Ball, BingoButton } from './ControllerParts';
 import type { Send } from './ControllerParts';
 import styles from './Controller.module.css';
@@ -59,6 +60,11 @@ function PlayCard({
     claim.cardIndex === c &&
     !p.verdictShown;
   const won = view.won.includes(c);
+  // One to go (loop 420): the squares that would win breathe on a live card, from its own daubs.
+  const wanted =
+    !p.intro && !won && (view.phaseId === 'play' || view.phaseId === 'check')
+      ? wantedCells(view.pattern, view.daubs[c] ?? [])
+      : [];
   const heading =
     label === undefined ? null : (
       <p className={`${styles.cardLabel} ${won ? styles.cardLabelWon : ''}`}>
@@ -91,6 +97,7 @@ function PlayCard({
         numbers={p.cards[c] ?? []}
         daubs={p.intro ? [] : (view.daubs[c] ?? [])}
         pattern={p.intro && view.pattern !== 'line' ? view.patternCells : []}
+        wanted={wanted}
         freeDaubed={won || p.freeDaubed.includes(c)}
         onTapFree={() => p.onTapFree(c)}
         onTap={(index) => p.onDaub(c, index)}

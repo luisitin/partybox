@@ -152,4 +152,10 @@ export const CUES: Record<SoundCue, Note[]> = {
     { freq: 90, at: 0.02, dur: 0.1, type: 'sine', gain: 0.16 },
     { freq: 2400, at: 0, dur: 0.012, type: 'square', gain: 0.05 },
   ],
+  // One square to go on a phone (Bingo, loop 420): a hushed rising two-note "ooh" — a private
+  // lean-in, quieter than `dibs` and a fifth lower so a call's voice always sits above it.
+  close: [
+    { freq: 392, to: 494, at: 0, dur: 0.12, type: 'triangle', gain: 0.07 },
+    { freq: 587, at: 0.13, dur: 0.14, type: 'sine', gain: 0.05 },
+  ],
 };

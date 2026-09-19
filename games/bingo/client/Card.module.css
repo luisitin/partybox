@@ -254,6 +254,28 @@ button.cell:focus-visible {
   border-style: dotted;
 }
 
+/* One to go (loop 420): the square that would win breathes — a slow warm outline, never a fill,
+   so a daub still reads as the change. The glow alone marks it — a gold border would twin the
+   FREE square's (seen at 420). Reduced motion: a steady halo. */
+.wanted {
+  animation: pb-want 1.6s ease-in-out infinite;
+}
+@keyframes pb-want {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--pb-accent-2) 0%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 5px color-mix(in srgb, var(--pb-accent-2) 60%, transparent);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wanted {
+    animation: none;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--pb-accent-2) 45%, transparent);
+  }
+}
+
 .green {
   background: var(--pb-accent-3);
   color: var(--pb-on-accent);
@@ -501,6 +523,10 @@ button.cell:focus-visible {
 }
 :global(:root[data-motion='off']) .stamp::before {
   display: none;
+}
+:global(:root[data-motion='off']) .wanted {
+  animation: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--pb-accent-2) 45%, transparent);
 }
 
 /* The claim went up (loop 240): every daubed square flashes white and lifts once, in reading

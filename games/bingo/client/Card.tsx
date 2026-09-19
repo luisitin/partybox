@@ -13,6 +13,8 @@ export interface CardProps {
   daubs: number[];
   /** Highlighted as the pattern (intro / phones): dotted outline. */
   pattern?: number[];
+  /** play: the squares that would win with one more daub (loop 420): a breathing outline. */
+  wanted?: number[];
   /** Check / celebration marks. */
   green?: number[];
   red?: number[];
@@ -63,6 +65,7 @@ export function Card({
   numbers,
   daubs,
   pattern = [],
+  wanted = [],
   green = [],
   red = [],
   missing = [],
@@ -84,6 +87,7 @@ export function Card({
   const turning = revealOrder !== undefined;
   const daubed = new Set(daubs);
   const patternSet = new Set(pattern);
+  const wantedSet = new Set(wanted);
   const greenSet = new Set(green);
   const redSet = new Set(red);
   const missingSet = new Set(missing);
@@ -149,6 +153,7 @@ export function Card({
                 : styles.missing
               : '',
             patternSet.has(i) && !isDaubed ? styles.pattern : '',
+            wantedSet.has(i) && !isDaubed ? styles.wanted : '',
             isFree ? styles.free : '',
             stamped.has(i) ? styles.stamp : '',
             sent && isDaubed ? styles.sent : '',
