@@ -4,13 +4,14 @@
 // drumroll for the engine's results screen: the final board, crown withheld, for 4 s ("done" is
 // terminal and never on screen — the engine's results take over at once).
 import { useEffect } from 'react';
-import type { JSX } from 'react';
+import type { CSSProperties, JSX } from 'react';
 import {
   Avatar,
   BigText,
   Confetti,
   Scoreboard,
   Stage,
+  boardLandedMs,
   useBeats,
   useSound,
 } from '@partybox/game-sdk/ui';
@@ -23,9 +24,14 @@ type Props = GameTvProps<BlanksTvView>;
 
 /** Authors at 600 ms, the winner at 1200 ms. */
 export const RESULT_BEATS_MS = [0, 600, 1200] as const;
-/** The final board: the scores land, then the card of the night is dealt beside them (loop #192 —
- *  the same 420 ms the `.bestCard` rise starts on, so the pluck and the card arrive together). */
-export const FINAL_BEATS_MS = [0, 420] as const;
+/** The final board: the scores land, then the card of the night is dealt beside them. The board
+ *  stacks bottom-up, so the leaders are the last rows in; the card waits one short beat past them
+ *  (twelve rows ≈ 1.4 s, three ≈ 0.8 s — loop #407; a flat 420 ms had it landing mid-stack) and
+ *  the pluck plays on the same beat. `.bestCard` reads the delay from --pb-best-delay. */
+export const BEST_CARD_GAP_MS = 120;
+export function finalBeatsMs(players: number): readonly number[] {
+  return [0, boardLandedMs(players, { dense: players >= 5 }) + BEST_CARD_GAP_MS];
+}
 const BEAT_BEST = 1;
 const BEAT_AUTHORS = 1;
 const BEAT_WINNER = 2;
@@ -119,7 +125,8 @@ function TvFinal({ view }: Props): JSX.Element {
   const tied = view.standings.filter((r) => r.rank === 1).length > 1;
   const best = view.bestCard;
   const play = useSound();
-  const beat = useBeats(FINAL_BEATS_MS);
+  const beats = finalBeatsMs(view.standings.length);
+  const beat = useBeats(beats);
   useEffect(() => {
     if (beat >= BEAT_BEST && best) play('card');
   }, [beat, best, play]);
@@ -142,7 +149,10 @@ function TvFinal({ view }: Props): JSX.Element {
         </div>
         {/* The night's best-liked card, back on the table one last time (review-loop #191). */}
         {best ? (
-          <div className={styles.bestCard}>
+          <div
+            className={styles.bestCard}
+            style={{ '--pb-best-delay': `${beats[1]}ms` } as CSSProperties}
+          >
             <p className={styles.kicker}>Card of the night</p>
             <FilledCard text={best.black} whites={best.whites} size="mini" winner>
               <span className={styles.author}>

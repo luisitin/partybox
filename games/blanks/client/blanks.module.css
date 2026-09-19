@@ -406,9 +406,10 @@
   }
 }
 
-/* It arrives after the board has stacked up, so the eye reads the scores first (loop #191). */
+/* It arrives after the board has stacked up, so the eye reads the scores first (loop #191). The
+   TV sets --pb-best-delay from the board's own landing beat (loop #407); the phone keeps 420 ms. */
 .bestCard {
-  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) 420ms both;
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) var(--pb-best-delay, 420ms) both;
   display: flex;
   flex-direction: column;
   gap: var(--pb-space-2);

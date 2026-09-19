@@ -58,7 +58,7 @@ export { Timer } from './tv/Timer';
 export type { TimerProps } from './tv/Timer';
 export { PlayerChips } from './tv/PlayerChips';
 export type { PlayerChipsProps } from './tv/PlayerChips';
-export { Scoreboard } from './tv/Scoreboard';
+export { Scoreboard, boardLandedMs } from './tv/Scoreboard';
 export type { ScoreboardProps, ScoreboardRow } from './tv/Scoreboard';
 export { Reveal } from './tv/Reveal';
 export type { RevealItem, RevealProps } from './tv/Reveal';

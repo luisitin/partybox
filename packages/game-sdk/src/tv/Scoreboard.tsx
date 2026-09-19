@@ -59,6 +59,21 @@ export function tierOf(count: number, compact?: boolean, dense?: boolean): Tier 
   return 'roomy';
 }
 
+/** When the last row of a staggered board has risen (ms after mount): the totals count up from
+ *  here, and a game can deal whatever sits beside the board on this beat instead of guessing.
+ *  Compact boards do not stagger, so they land at once. */
+export function boardLandedMs(
+  count: number,
+  opts: { compact?: boolean; dense?: boolean; stagger?: 'up' | 'down' | false } = {},
+): number {
+  if (opts.compact || opts.stagger === false) return 0;
+  const cols = COLUMNS[tierOf(count, opts.compact, opts.dense)];
+  // Half spacing on the multi-column tiers and for `down`, so 16 rows still land inside ~1.2 s;
+  // mirrors --pb-stagger-step in the CSS.
+  const stepMs = cols > 1 || opts.stagger === 'down' ? MOTION_FAST / 2 : MOTION_FAST;
+  return stepMs * Math.max(0, count - 1) + MOTION_BASE;
+}
+
 /** The total, counting up from its pre-delta value once the board has landed. */
 function Score({ row, delayMs }: { row: ScoreboardRow; delayMs: number }): JSX.Element {
   const shown = useCountUp(row.score, row.score - (row.delta ?? 0), MOTION_SLOW, delayMs);
@@ -80,11 +95,8 @@ export function Scoreboard({
   const winners = rows.filter((r) => r.rank === 1).length;
   const trophy = !noTrophy && winners < rows.length;
   const staggered = !compact && stagger !== false;
-  // Half spacing on the multi-column tiers and for `down`, so 16 rows still land inside ~1.2 s;
-  // mirrors --pb-stagger-step in the CSS.
-  const stepMs = cols > 1 || stagger === 'down' ? MOTION_FAST / 2 : MOTION_FAST;
   const order = (index: number): number => (stagger === 'down' ? index : rows.length - 1 - index);
-  const countDelayMs = stepMs * Math.max(0, rows.length - 1) + MOTION_BASE;
+  const countDelayMs = boardLandedMs(rows.length, { compact, dense, stagger });
   return (
     <ol
       className={`${styles.board} ${tier === 'roomy' ? '' : styles[tier]} ${size === 'lg' ? styles.lg : size === 'sm' ? styles.sm : ''} ${staggered ? styles.staggered : ''} ${staggered && stagger === 'down' ? styles.down : ''}`}

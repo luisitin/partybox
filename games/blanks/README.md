@@ -65,7 +65,9 @@ A **streak** — one player winning outright round after round — is kept in `s
 The **card of the night** — the single card that took the most votes all game (ties keep the earlier
 round) — is kept in `stats.best` and stands beside the final board, filled in and credited, on `final`
 and `done` — on the TV beside the board and on every phone under its own (a phone-only room sees it
-too). No card ever took a vote → no card of the night.
+too). The TV deals it one short beat after the board's last row has risen (the board stacks bottom-up,
+so the leaders land last; 12 rows ≈ 1.4 s, 3 rows ≈ 0.8 s), with the card pluck on that beat. No card
+ever took a vote → no card of the night.
 
 ## Edge cases
 
