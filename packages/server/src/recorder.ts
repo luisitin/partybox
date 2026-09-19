@@ -75,6 +75,9 @@ function sessionJson(s: Session): string {
       startedAt: new Date(s.startedAt).toISOString(),
       endedAt: s.endedAt === null ? null : new Date(s.endedAt).toISOString(),
       outcome: s.outcome,
+      // The phase the game was in when it ended: a VIP `end` shows a scoreboard like a natural
+      // finish, so this is how a reader tells the two apart (a mid-round phase = ended early).
+      lastPhase: s.lastState.phase.id,
       seed: s.seed,
       settings: s.settings,
       players: s.players.map((p) => ({ id: p.id, name: p.name, avatar: p.avatarId, bot: !!p.bot })),

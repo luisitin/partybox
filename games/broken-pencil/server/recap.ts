@@ -56,7 +56,13 @@ export function recap(state: State, ctx: RecapContext<State>): GameRecap | null 
   lines.push(
     `Settings: ${s.passes} passes · draw ${s.drawSeconds} s · guess ${s.guessSeconds} s · custom words ${s.customWords ? 'on' : 'off'} · spicy ${s.spicy ? 'on' : 'off'}`,
   );
+  const unfinished = state.books.filter((b) => b.pages.length < state.pageCount).length;
   if (!ctx.results) lines.push('', '_The game was ended before the show._');
+  else if (unfinished > 0)
+    lines.push(
+      '',
+      `_The game was ended early during the ${state.phase.id} phase — ${unfinished} of ${state.books.length} books were unfinished._`,
+    );
   lines.push('');
   state.books.forEach((book, b) => {
     const owner = name(book.ownerId);
