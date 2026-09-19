@@ -100,6 +100,13 @@ describe('slotOf — what the blank wants', () => {
 });
 
 describe('servesOf — what the white card is', () => {
+  it('a two-word verb — dry humping, skinny dipping, parallel parking — is a doing', () => {
+    expect(servesOf({ text: 'Dry humping a mailbox.' })).toEqual(['doing', 'name']);
+    expect(servesOf({ text: 'Parallel parking with an audience.' })).toEqual(['doing']);
+    expect(servesOf({ text: 'Extreme couponing.' })).toEqual(['doing', 'name']);
+    expect(servesOf({ text: 'Ranch dressing at a wake.' })).toEqual(['thing']);
+  });
+
   it("an owner's person is a person: Someone's dad, the groom's ex — not Grandma's career", () => {
     expect(servesOf({ text: "Someone's dad on Grindr." })).toEqual(['person', 'name']);
     expect(servesOf({ text: "Cheryl's husband." })).toEqual(['person', 'name']);
