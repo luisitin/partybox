@@ -1,0 +1,115 @@
+{
+  "pass": "656",
+  "game": "broken-pencil",
+  "players": 5,
+  "scenario": "vip-leaves",
+  "focus": "phone",
+  "started": "14:08:22.142",
+  "tvVideoT0": "14:08:18.595",
+  "phoneVideoT0": "14:08:19.559",
+  "changes": [
+    {
+      "t": 1789826902145,
+      "status": "playing",
+      "phase": "pick",
+      "deadline": 1789826922131,
+      "bed": null,
+      "at": "14:08:22.145",
+      "sinceStartS": 0,
+      "videoS": 3.5,
+      "phoneVideoS": 2.6
+    },
+    {
+      "t": 1789826906360,
+      "status": "playing",
+      "phase": "draw",
+      "deadline": 1789826966228,
+      "bed": null,
+      "at": "14:08:26.360",
+      "sinceStartS": 4.2,
+      "videoS": 7.8,
+      "phoneVideoS": 6.8
+    },
+    {
+      "t": 1789826942488,
+      "status": "playing",
+      "phase": "pass",
+      "deadline": 1789827000494,
+      "bed": null,
+      "at": "14:09:02.488",
+      "sinceStartS": 40.3,
+      "videoS": 43.9,
+      "phoneVideoS": 42.9
+    },
+    {
+      "t": 1789826951737,
+      "status": "playing",
+      "phase": "guess",
+      "deadline": 1789826981625,
+      "bed": null,
+      "at": "14:09:11.737",
+      "sinceStartS": 49.6,
+      "videoS": 53.1,
+      "phoneVideoS": 52.2
+    },
+    {
+      "t": 1789826955136,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789826960068,
+      "bed": null,
+      "at": "14:09:15.136",
+      "sinceStartS": 53,
+      "videoS": 56.5,
+      "phoneVideoS": 55.6
+    },
+    {
+      "t": 1789826960108,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789826968074,
+      "bed": null,
+      "at": "14:09:20.108",
+      "sinceStartS": 58,
+      "videoS": 61.5,
+      "phoneVideoS": 60.5
+    },
+    {
+      "t": 1789826968163,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789826973075,
+      "bed": null,
+      "at": "14:09:28.163",
+      "sinceStartS": 66,
+      "videoS": 69.6,
+      "phoneVideoS": 68.6
+    },
+    {
+      "t": 1789826973153,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789826981078,
+      "bed": null,
+      "at": "14:09:33.153",
+      "sinceStartS": 71,
+      "videoS": 74.6,
+      "phoneVideoS": 73.6
+    },
+    {
+      "t": 1789826981105,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789826986089,
+      "bed": null,
+      "at": "14:09:41.105",
+      "sinceStartS": 79,
+      "videoS": 82.5,
+      "phoneVideoS": 81.5
+    }
+  ],
+  "notes": [
+    "vip-leaves: Sam (VIP) closed the page in draw",
+    "budget reached while playing; skipped to results"
+  ]
+}
