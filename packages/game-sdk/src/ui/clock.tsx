@@ -1,6 +1,6 @@
 // Server-time awareness for the UI. Deadlines in views are SERVER timestamps; phones and TVs can be
 // seconds off, so the shells measure the offset from every push and provide it here.
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useCallback, useContext, useSyncExternalStore } from 'react';
 import type { JSX, ReactNode } from 'react';
 
 const OffsetContext = createContext<number>(0);
@@ -21,13 +21,31 @@ export function useServerOffset(): number {
   return useContext(OffsetContext);
 }
 
+/** The last wall-clock reading any ticker took; every subscriber refreshes it on its own cadence. */
+let latest = Date.now();
+
 export function useServerNow(intervalMs = 250): number {
   const offset = useContext(OffsetContext);
-  const [tick, setTick] = useState(() => Date.now());
-  useEffect(() => {
-    const handle = setInterval(() => setTick(Date.now()), intervalMs);
-    return () => clearInterval(handle);
-  }, [intervalMs]);
+  const subscribe = useCallback(
+    (notify: () => void) => {
+      // A new cadence reads the clock at once: a timer polls once a minute while paused, and on
+      // resume the deadline has moved by the pause's length — counting from the tick taken before
+      // the pause showed the held seconds plus the pause (18 for 11 on the review loop).
+      latest = Date.now();
+      notify();
+      const handle = setInterval(() => {
+        latest = Date.now();
+        notify();
+      }, intervalMs);
+      return () => clearInterval(handle);
+    },
+    [intervalMs],
+  );
+  const tick = useSyncExternalStore(
+    subscribe,
+    () => latest,
+    () => latest,
+  );
   return tick + offset;
 }
 

@@ -4,7 +4,8 @@ import type { JSX } from 'react';
 import { Scoreboard, Screen } from '@partybox/game-sdk/ui';
 import type { BingoControllerView } from '../server/views';
 import { PATTERN_LABEL, patternCells } from '../server/patterns';
-import { Card, PatternIcon } from './Card';
+import { Card } from './Card';
+import { PatternDemo } from './PatternDemo';
 import { DecideFooter, rows } from './ControllerParts';
 import type { Send } from './ControllerParts';
 import { winTitle } from './copy';
@@ -78,7 +79,7 @@ export function EndScreens({
         <Scoreboard rows={rows(view)} compact highlightId={meId} noTrophy />
         {next ? (
           <p className={`${styles.hint} ${styles.nextUp}`}>
-            <PatternIcon cells={patternCells(next)} size={28} />
+            <PatternDemo pattern={next} cells={patternCells(next)} size={36} />
             Next: round {view.round + 1} — {PATTERN_LABEL[next]}
           </p>
         ) : null}

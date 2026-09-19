@@ -12,6 +12,7 @@ import type { BingoTvView } from '../server/views';
 import { BALL_LAND_MS, hushCaller, speakCall } from './caller';
 import { PATTERN_LABEL, patternCells } from '../server/patterns';
 import { PatternIcon } from './Card';
+import { PatternDemo } from './PatternDemo';
 import { pendingLine, whyNot, winHeadline } from './copy';
 import { IntroStage, Resume } from './TvCountdown';
 import { Call, CalledBoard, ClaimStage, DibsLine, rows, whichCard } from './TvParts';
@@ -273,9 +274,10 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
         <BigText level="h1">Points</BigText>
         <Scoreboard rows={rows(view)} noTrophy />
         {next ? (
-          // The next pattern's shape beside its name (loop 287): the room sees the goal early.
+          // The next pattern's shape beside its name (loop 287), shown by doing it (loop 432):
+          // the board sits for ~6 s and the demo lights the goal square by square meanwhile.
           <div className={styles.nextUp}>
-            <PatternIcon cells={patternCells(next)} size={56} />
+            <PatternDemo pattern={next} cells={patternCells(next)} size={72} />
             <BigText level="h2" tone="accent">
               Next: round {view.round + 1} — {PATTERN_LABEL[next]}
             </BigText>
