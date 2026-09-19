@@ -29,6 +29,7 @@
     "gen-registry": "tsx scripts/gen-registry.ts",
     "check-drift": "tsx scripts/check-drift.ts",
     "lan-ip": "tsx scripts/lan-ip.ts",
+    "blanks-fit-report": "tsx scripts/blanks-fit-report.ts",
     "resolve-loop-log": "tsx scripts/resolve-loop-log.ts",
     "fetch-music": "tsx scripts/fetch-music.ts"
   },
