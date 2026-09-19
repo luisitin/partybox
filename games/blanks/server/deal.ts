@@ -7,6 +7,7 @@ import {
   WHITE_KINDS,
   blackCard,
   blackSlot,
+  deckSubject,
   whiteKind,
   whiteServes,
   whiteText,
@@ -227,12 +228,12 @@ function swapForGood(
  *  needs, for a card off that subject of at least its tier (loop 525: "balanced" hands — one
  *  clump a round is enough to notice, one swap a round enough to thin it). */
 const CLUMP = 4;
-const DECK_SUBJECT = 'sex';
 function swapForVariety(state: State, hand: readonly string[]): [string[], State] | null {
+  const subject = deckSubject(state.settings.decks);
   const byTopic = new Map<Topic, number>();
   for (const id of hand)
     for (const t of topicsOf(whiteText(id)))
-      if (t !== DECK_SUBJECT) byTopic.set(t, (byTopic.get(t) ?? 0) + 1);
+      if (t !== subject) byTopic.set(t, (byTopic.get(t) ?? 0) + 1);
   const clump = [...byTopic].find(([, n]) => n >= CLUMP)?.[0];
   if (clump === undefined) return null;
   const onClump = (id: string): boolean => topicsOf(whiteText(id)).includes(clump);

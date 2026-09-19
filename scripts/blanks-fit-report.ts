@@ -7,7 +7,14 @@
 import { writeFileSync } from 'node:fs';
 import { parseArgs } from 'node:util';
 import { runGame } from '../packages/sim/src/runner';
-import { DECKS, blackCard, blackTier, decksFor, whiteText } from '../games/blanks/server/content';
+import {
+  DECKS,
+  blackCard,
+  blackTier,
+  deckSubject,
+  decksFor,
+  whiteText,
+} from '../games/blanks/server/content';
 import { fillText } from '../games/blanks/server/cards';
 import { TOPIC_HIT, WORD_ECHO, pairBonus, topicsOf } from '../games/blanks/server/topics';
 import { game } from '../games/blanks/server/index';
@@ -258,7 +265,7 @@ console.log(
   `  the phone's first four cards: mean fit ${(topFit / Math.max(1, hands)).toFixed(3)} (whole hand ${(handFit / Math.max(1, hands)).toFixed(3)}), great among them ${(topGood / Math.max(1, hands)).toFixed(2)}`,
 );
 console.log(
-  `  topic clumps (sex aside): hands with four or more cards on one topic ${pct(clumpy, hands)}; largest group per hand ${(clumpTop / Math.max(1, hands)).toFixed(2)}`,
+  `  topic clumps (${deckSubject(preset)} aside): hands with four or more cards on one topic ${pct(clumpy, hands)}; largest group per hand ${(clumpTop / Math.max(1, hands)).toFixed(2)}`,
 );
 console.log(
   `  cards serving the slot per hand: ${(serveCards / Math.max(1, hands)).toFixed(2)}; great (tier 3+) per hand: ${(goodCards / Math.max(1, hands)).toFixed(2)}, amazing (tier 4) ${(bestCards / Math.max(1, hands)).toFixed(2)}, filler (tier 1) ${(fillerCards / Math.max(1, hands)).toFixed(2)} (hands with three or more: ${pct(fillerHeavy, hands)}); hands at least half great: ${pct(handsHalfGood, hands)}`,
