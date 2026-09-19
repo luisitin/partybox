@@ -733,6 +733,20 @@
   max-width: 1100px;
   perspective: none;
 }
+/* A crowded room's intro (loop 393): smaller faces in one row, the caption tighter. */
+.crowdedIntro {
+  --pb-face: 48px;
+  gap: var(--pb-space-2);
+}
+.crowdedIntro .readyRow {
+  gap: var(--pb-space-2);
+}
+.crowdedIntro .dealFan {
+  height: 64px;
+}
+.crowdedIntro .introSlot {
+  min-height: 90px;
+}
 .readyFace {
   position: relative;
   display: inline-flex;
