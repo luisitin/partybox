@@ -6,6 +6,8 @@ import crudeJson from '../content/crude.json' with { type: 'json' };
 import mildJson from '../content/mild.json' with { type: 'json' };
 import wildJson from '../content/wild.json' with { type: 'json' };
 import { SLOTS, servesOf, slotOf, slotsOf } from './fit';
+import { TOPICS, topicsOf } from './topics';
+import type { Topic } from './topics';
 import type { Slot } from './fit';
 import type { DeckPreset } from './types';
 
@@ -103,4 +105,20 @@ export function blackSlots(id: string | null): readonly Slot[] {
 
 export function blackTier(id: string): 1 | 2 | 3 {
   return (BLACK_BY_ID[id]?.tier ?? 2) as 1 | 2 | 3;
+}
+
+/** The subject a deck mix is about — the topic on the most of its white cards (sex for wild and
+ *  adults, family for mild): not a clump when four cards in a hand share it (deal.ts). */
+const DECK_SUBJECT: Readonly<Record<DeckPreset, Topic>> = Object.fromEntries(
+  (['mild', 'adults', 'wild', 'wild-only'] as const).map((preset) => {
+    const n = new Map<Topic, number>();
+    for (const id of whitePool(preset))
+      for (const t of topicsOf(whiteText(id))) n.set(t, (n.get(t) ?? 0) + 1);
+    const top = [...TOPICS].sort((a, b) => (n.get(b) ?? 0) - (n.get(a) ?? 0))[0] ?? 'sex';
+    return [preset, top];
+  }),
+) as Record<DeckPreset, Topic>;
+
+export function deckSubject(preset: DeckPreset): Topic {
+  return DECK_SUBJECT[preset];
 }
