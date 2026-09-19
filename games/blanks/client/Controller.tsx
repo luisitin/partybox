@@ -20,6 +20,7 @@ import { ControllerHand, ControllerPick } from './ControllerHand';
 import { ControllerJudge, ControllerReveal } from './ControllerJudge';
 import { NextButton } from './NextButton';
 import { RESULT_BEATS_MS, list, votesLabel, winnerLine } from './TvResult';
+import { rankLine } from './rankLine';
 import styles from './blanks.module.css';
 
 type Props = GameControllerProps<BlanksControllerView, Input>;
@@ -95,7 +96,7 @@ function ControllerResult({ view, me, send }: Props): JSX.Element {
       : winners.length === 2 && noVotes
         ? 'Only two cards — you both score'
         : `You split it with ${list(others)}`;
-  const rankLine = `${final ? 'Final: ' : ''}#${view.myRank} of ${view.standings.length} · ${view.myScore} ${view.myScore === 1 ? 'point' : 'points'}`;
+  const standing = rankLine(view, final);
   return (
     <Screen
       title={final ? 'Final scores' : `Round ${view.round} of ${view.rounds}`}
@@ -119,14 +120,14 @@ function ControllerResult({ view, me, send }: Props): JSX.Element {
           className={`${styles.resultLine} ${final || named ? '' : styles.beatWait}`.trim()}
           aria-hidden={!final && !named}
         >
-          {final ? rankLine : view.iWon ? wonLine : (iPicked ?? winnerLine(view))}
+          {final ? standing : view.iWon ? wonLine : (iPicked ?? winnerLine(view))}
         </h2>
         {/* The "+1" and your new place belong to the same reveal: before the winner beat they give
             the headline away (review-loop #222). */}
         {!final && named ? (
           <p className="pb-caption pb-muted">
             {view.iWon ? '+1 · ' : ''}
-            {rankLine}
+            {standing}
           </p>
         ) : null}
       </div>
