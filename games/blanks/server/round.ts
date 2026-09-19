@@ -1,7 +1,8 @@
 // Round setup and the selectors every phase and view needs: who judges, who answers, what was
 // played, who may vote on which slot, and the tally.
 import { shuffle } from '@partybox/game-sdk';
-import { drawBlack, drawWhite, leadWithFit, refillHands } from './cards';
+import { drawBlack, drawWhite } from './cards';
+import { leadWithFit, refillHands } from './deal';
 import { blackCard, blackPool } from './content';
 import { BLACK_CHOICES, RANDO } from './types';
 import type { State } from './types';
