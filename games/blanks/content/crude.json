@@ -271,7 +271,8 @@
       "text": "A night out in three words: ____, ____, ____.",
       "pick": 3,
       "draw": 2,
-      "tier": 3
+      "tier": 3,
+      "slots": ["name", "name", "name"]
     },
     {
       "id": "cb42",
@@ -2083,7 +2084,8 @@
       "id": "cb308",
       "text": "The night in three words: ____, ____, and ____.",
       "pick": 3,
-      "draw": 2
+      "draw": 2,
+      "slots": ["name", "name", "name"]
     },
     {
       "id": "cb309",
