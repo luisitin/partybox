@@ -61,7 +61,7 @@ bundled under `packages/client/public/sfx/`.
 ## Game recaps on disk
 
 Every game the room plays is written to `recordings/<game>/<date_time>-<room>/` on the host PC
-(gitignored): `session.json` (players, settings, phase timeline, results), `state.json` (the final game
+(gitignored): `session.json` (players, settings, phase timeline, results, and `lastPhase` — a mid-round phase means the VIP ended it early), `state.json` (the final game
 state) and, for games that offer one, `recap.md` — Broken Pencil's books page by page with every
 drawing as an SVG, Wisecrack's prompts with both answers and the votes, Lightning Round's questions
 with each pick, time and points. Hand the folder over when giving feedback on a night. The **Save a

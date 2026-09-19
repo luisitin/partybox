@@ -3,7 +3,9 @@
 // then Broken Pencil with bots started with `record: true` and skipped to the results — the folder
 // must hold session.json, state.json, recap.md and one SVG per drawing page. A second game with
 // `record: false` must leave nothing new. Prints the folder listing and the recap's first lines.
-// Usage: tsx packages/e2e/src/design/probe-recording.ts [--port 42127] [--out <dir>]
+// `--abort` instead ends the game from the VIP after a few phases: the session must be marked
+// aborted, keep its state and carry a partial recap.
+// Usage: tsx packages/e2e/src/design/probe-recording.ts [--port 42127] [--out <dir>] [--abort] [--players 4]
 import { mkdtempSync, readdirSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -13,7 +15,12 @@ import { startServer } from './server';
 import { DevApi, joinViaForm, openPhone, openTv, passAudioGate, settle } from './session';
 
 const { values } = parseArgs({
-  options: { port: { type: 'string', default: '42127' }, out: { type: 'string' } },
+  options: {
+    port: { type: 'string', default: '42127' },
+    out: { type: 'string' },
+    abort: { type: 'boolean', default: false },
+    players: { type: 'string', default: '4' },
+  },
 });
 
 function tree(dir: string): string[] {
@@ -69,7 +76,8 @@ async function main(): Promise<void> {
     await settle(400);
     check(await tvBox.isChecked(), 'and back on');
 
-    await api.bots(3, 'random');
+    const bots = Math.max(2, Number(values.players) - 1);
+    await api.bots(bots, 'random');
     await api.post('/api/dev/start', {
       gameId: 'broken-pencil',
       seed: 7,
@@ -77,16 +85,22 @@ async function main(): Promise<void> {
       settings: { drawSeconds: 20, guessSeconds: 15 },
     });
     // Skip through the whole game; bots act on their own, Sam acts through the dev API.
-    for (let i = 0; i < 80; i += 1) {
+    for (let i = 0; i < 160; i += 1) {
       const s = await api.state();
       if (s.room?.status === 'results') break;
+      if (values.abort && i === 6) {
+        await api.post('/api/dev/vip', { action: 'end' });
+        break;
+      }
       await api.post('/api/dev/act', {}).catch(() => undefined);
       await settle(300);
       await api.skip().catch(() => undefined);
       await settle(300);
     }
     const s1 = await api.state();
-    check(s1.room?.status === 'results', `game reached results (status ${s1.room?.status})`);
+    if (values.abort)
+      check(s1.room?.status !== 'playing', `VIP end left the game (status ${s1.room?.status})`);
+    else check(s1.room?.status === 'results', `game reached results (status ${s1.room?.status})`);
     await settle(800);
     const files = tree(recDir);
     console.log(files.map((f) => `  ${f}`).join('\n'));
@@ -100,21 +114,32 @@ async function main(): Promise<void> {
       'recap.md written',
     );
     const svgs = files.filter((f) => f.endsWith('.svg'));
-    check(svgs.length > 0, `${svgs.length} drawing SVGs written`);
+    check(svgs.length > 0 || values.abort, `${svgs.length} drawing SVGs written`);
     if (session) {
       const meta = JSON.parse(readFileSync(join(recDir, session), 'utf8')) as {
         outcome: string;
+        lastPhase: string;
         players: { name: string }[];
         timeline: { phase: string }[];
         results: { ranking: unknown[] } | null;
       };
+      // A VIP `end` shows a scoreboard, so the engine (and the recorder) call it finished; the
+      // `lastPhase` field is what tells a reader the game was cut short.
       check(meta.outcome === 'finished', `outcome finished (${meta.outcome})`);
+      if (values.abort)
+        check(
+          !['show', 'scoreboard'].includes(meta.lastPhase),
+          `lastPhase shows the early end (${meta.lastPhase})`,
+        );
       check(
         meta.players.some((p) => p.name === 'Sam'),
         'Sam is in the players list',
       );
       check(meta.timeline.length > 3, `timeline has ${meta.timeline.length} phases`);
-      check(!!meta.results && meta.results.ranking.length === 4, 'results carry 4 ranked players');
+      check(
+        !!meta.results && meta.results.ranking.length === bots + 1,
+        `results carry ${bots + 1} ranked players`,
+      );
       const recap = readFileSync(join(recDir, session.replace('session.json', 'recap.md')), 'utf8');
       console.log('--- recap.md (head) ---');
       console.log(recap.split('\n').slice(0, 14).join('\n'));
