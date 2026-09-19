@@ -23,13 +23,22 @@ const NOISE = 0.2;
  *  plus the card's own punch (a twist after a comma, a specific; long cards read slower), plus
  *  noise. */
 export function cardAppeal(slot: Slot, id: string, rng: Rng, blackText = ''): number {
+  const text = whiteText(id);
   return (
     fitScore(slot, whiteServes(id)) +
     TIER_WEIGHT * (whiteTier(id) - 2) +
-    (blackText ? pairBonus(blackText, whiteText(id)) : 0) +
-    punch(whiteText(id)) +
+    (blackText ? pairBonus(blackText, text) : 0) +
+    punch(text) +
+    (slot === 'name' ? shortness(text) : 0) +
     NOISE * rng.float()
   );
+}
+
+/** A name blank — a safe word, a nickname, last words — lands hardest on the shortest card
+ *  ("Smegma." as a safe word beats a four-word one): up to +0.09 for one word, nothing at four. */
+function shortness(text: string): number {
+  const words = text.split(/\s+/).filter(Boolean).length;
+  return Math.max(0, 4 - words) * 0.03;
 }
 
 /** The cards of `hand` that read best blank by blank (one slot per blank, in blank order): each
