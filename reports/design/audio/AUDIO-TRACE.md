@@ -1,6 +1,6 @@
 # Audio interaction trace
 
-Captured 2026-09-19T05:53:45.196Z on port 42112. Every cue, music event, speech call and buzz the TV and two phones produced, scenario by scenario, with the checks that were run.
+Captured 2026-09-19T10:56:22.383Z on port 42112. Every cue, music event, speech call and buzz the TV and two phones produced, scenario by scenario, with the checks that were run.
 
 **73 / 73 checks passed.**
 
@@ -13,13 +13,13 @@ Captured 2026-09-19T05:53:45.196Z on port 42112. Every cue, music event, speech 
 - ✅ **selecting keeps the lobby music (no plan change), a status-swap cue only** — cues=none; playing=[{"track":"george-street-shuffle.mp3","vol":0.35,"t":4.4}]
 
 ```
-   1763 tv    music:start  plan=lobby track=george-street-shuffle mode=rotate volume=0.35
-   1794 tv    cue          cue=ready surface=tv muted=false ready=true semitones=0
-   3121 tv    cue          cue=join surface=tv muted=false ready=true semitones=0
-   3275 tv    cue          cue=join surface=tv muted=false ready=true semitones=2
-   3972 tv    cue          cue=join surface=tv muted=false ready=true semitones=4
-   4608 tv    cue          cue=leave surface=tv muted=false ready=true semitones=0
-   5462 tv    ss:cancel    speaking=false pending=false
+   1752 tv    music:start  plan=lobby track=george-street-shuffle mode=rotate volume=0.35
+   1785 tv    cue          cue=ready surface=tv muted=false ready=true semitones=0
+   3109 tv    cue          cue=join surface=tv muted=false ready=true semitones=0
+   3246 tv    cue          cue=join surface=tv muted=false ready=true semitones=2
+   3946 tv    cue          cue=join surface=tv muted=false ready=true semitones=4
+   4580 tv    cue          cue=leave surface=tv muted=false ready=true semitones=0
+   5432 tv    ss:cancel    speaking=false pending=false
 ```
 
 ## B · Lightning Round: start, phases, lock-in, last five seconds, final reveal, results
@@ -43,107 +43,107 @@ Captured 2026-09-19T05:53:45.196Z on port 42112. Every cue, music event, speech 
 - ✅ **results on the phones → a buzz only (no cue)** — phone cues=none buzz=[60,60,60,60,160]
 
 ```
-   6312 tv    music:plan   from=lobby to=null
-   6312 tv    cue          cue=start surface=tv muted=false ready=true semitones=0
-   7813 tv    music:stop   track=george-street-shuffle.mp3
-   8270 tv    cue          cue=phase surface=tv muted=false ready=true semitones=0
-   8270 tv    bed:duck     bed=pulse cue=phase
-   9566 tv    cue          cue=lock surface=tv muted=false ready=true semitones=0
-  16526 tv    cue          cue=countdown surface=tv muted=false ready=true semitones=0
-  17527 tv    cue          cue=countdown surface=tv muted=false ready=true semitones=2
-  18525 tv    cue          cue=countdown surface=tv muted=false ready=true semitones=4
-  19525 tv    cue          cue=countdown surface=tv muted=false ready=true semitones=5
-  20524 tv    cue          cue=countdown surface=tv muted=false ready=true semitones=7
-  21320 tv    cue          cue=reveal surface=tv muted=false ready=true semitones=0
-  21320 tv    bed:duck     bed=pulse cue=reveal
-  22107 tv    cue          cue=phase surface=tv muted=false ready=true semitones=0
-  22107 tv    bed:duck     bed=pulse cue=phase
-  22248 tv    cue          cue=reveal surface=tv muted=false ready=true semitones=0
-  22248 tv    bed:duck     bed=pulse cue=reveal
-  22405 tv    cue          cue=phase surface=tv muted=false ready=true semitones=0
-  22405 tv    bed:duck     bed=pulse cue=phase
-  22560 tv    cue          cue=reveal surface=tv muted=false ready=true semitones=0
-  22560 tv    bed:duck     bed=pulse cue=reveal
-  22718 tv    cue          cue=phase surface=tv muted=false ready=true semitones=0
-  22718 tv    bed:duck     bed=pulse cue=phase
-  22876 tv    cue          cue=reveal surface=tv muted=false ready=true semitones=0
-  22876 tv    bed:duck     bed=pulse cue=reveal
-  23031 tv    cue          cue=phase surface=tv muted=false ready=true semitones=0
-  23031 tv    bed:duck     bed=pulse cue=phase
-  23188 tv    cue          cue=reveal surface=tv muted=false ready=true semitones=0
-  23188 tv    bed:duck     bed=pulse cue=reveal
-  23346 tv    cue          cue=phase surface=tv muted=false ready=true semitones=0
-  23346 tv    bed:duck     bed=pulse cue=phase
-  23504 tv    cue          cue=reveal surface=tv muted=false ready=true semitones=0
-  23504 tv    bed:duck     bed=pulse cue=reveal
-  23663 tv    cue          cue=phase surface=tv muted=false ready=true semitones=0
-  23663 tv    bed:duck     bed=pulse cue=phase
-  23819 tv    cue          cue=reveal surface=tv muted=false ready=true semitones=0
-  23819 tv    bed:duck     bed=pulse cue=reveal
-  23977 tv    cue          cue=phase surface=tv muted=false ready=true semitones=0
-  23977 tv    bed:duck     bed=pulse cue=phase
-  24131 tv    cue          cue=reveal surface=tv muted=false ready=true semitones=0
-  24131 tv    bed:duck     bed=pulse cue=reveal
-  24274 tv    cue          cue=phase surface=tv muted=false ready=true semitones=0
-  24274 tv    bed:duck     bed=pulse cue=phase
-  24431 tv    cue          cue=reveal surface=tv muted=false ready=true semitones=0
-  24431 tv    bed:duck     bed=pulse cue=reveal
-  24590 tv    cue          cue=phase surface=tv muted=false ready=true semitones=0
-  24590 tv    bed:duck     bed=pulse cue=phase
-  24749 tv    cue          cue=reveal surface=tv muted=false ready=true semitones=0
-  24749 tv    bed:duck     bed=pulse cue=reveal
-  24894 tv    cue          cue=wager surface=tv muted=false ready=true semitones=0
-  24894 tv    bed:duck     bed=latenight cue=wager
-  25769 tv    cue          cue=phase surface=tv muted=false ready=true semitones=0
-  25769 tv    bed:duck     bed=pulse cue=phase
-  26104 tv    cue          cue=silence surface=tv muted=false ready=true semitones=0
-  26104 tv    bed:duck     bed=pulse cue=silence
-  27909 tv    cue          cue=bust surface=tv muted=false ready=true semitones=0
-  27909 tv    bed:duck     bed=pulse cue=bust
-  29634 tv    ss:cancel    speaking=false pending=false
-  29634 tv    cue          cue=cheer surface=tv muted=false ready=true semitones=0
+   6286 tv    music:plan   from=lobby to=null
+   6286 tv    cue          cue=start surface=tv muted=false ready=true semitones=0
+   7792 tv    music:stop   track=george-street-shuffle.mp3
+   8246 tv    cue          cue=phase surface=tv muted=false ready=true semitones=0
+   8246 tv    bed:duck     bed=pulse cue=phase
+   9537 tv    cue          cue=lock surface=tv muted=false ready=true semitones=0
+  16506 tv    cue          cue=countdown surface=tv muted=false ready=true semitones=0
+  17497 tv    cue          cue=countdown surface=tv muted=false ready=true semitones=2
+  18506 tv    cue          cue=countdown surface=tv muted=false ready=true semitones=4
+  19510 tv    cue          cue=countdown surface=tv muted=false ready=true semitones=5
+  20502 tv    cue          cue=countdown surface=tv muted=false ready=true semitones=7
+  21282 tv    cue          cue=reveal surface=tv muted=false ready=true semitones=0
+  21282 tv    bed:duck     bed=pulse cue=reveal
+  22087 tv    cue          cue=phase surface=tv muted=false ready=true semitones=0
+  22087 tv    bed:duck     bed=pulse cue=phase
+  22244 tv    cue          cue=reveal surface=tv muted=false ready=true semitones=0
+  22244 tv    bed:duck     bed=pulse cue=reveal
+  22400 tv    cue          cue=phase surface=tv muted=false ready=true semitones=0
+  22400 tv    bed:duck     bed=pulse cue=phase
+  22558 tv    cue          cue=reveal surface=tv muted=false ready=true semitones=0
+  22558 tv    bed:duck     bed=pulse cue=reveal
+  22714 tv    cue          cue=phase surface=tv muted=false ready=true semitones=0
+  22714 tv    bed:duck     bed=pulse cue=phase
+  22872 tv    cue          cue=reveal surface=tv muted=false ready=true semitones=0
+  22872 tv    bed:duck     bed=pulse cue=reveal
+  23028 tv    cue          cue=phase surface=tv muted=false ready=true semitones=0
+  23028 tv    bed:duck     bed=pulse cue=phase
+  23184 tv    cue          cue=reveal surface=tv muted=false ready=true semitones=0
+  23184 tv    bed:duck     bed=pulse cue=reveal
+  23341 tv    cue          cue=phase surface=tv muted=false ready=true semitones=0
+  23341 tv    bed:duck     bed=pulse cue=phase
+  23494 tv    cue          cue=reveal surface=tv muted=false ready=true semitones=0
+  23494 tv    bed:duck     bed=pulse cue=reveal
+  23651 tv    cue          cue=phase surface=tv muted=false ready=true semitones=0
+  23651 tv    bed:duck     bed=pulse cue=phase
+  23811 tv    cue          cue=reveal surface=tv muted=false ready=true semitones=0
+  23811 tv    bed:duck     bed=pulse cue=reveal
+  23966 tv    cue          cue=phase surface=tv muted=false ready=true semitones=0
+  23966 tv    bed:duck     bed=pulse cue=phase
+  24123 tv    cue          cue=reveal surface=tv muted=false ready=true semitones=0
+  24123 tv    bed:duck     bed=pulse cue=reveal
+  24282 tv    cue          cue=phase surface=tv muted=false ready=true semitones=0
+  24282 tv    bed:duck     bed=pulse cue=phase
+  24439 tv    cue          cue=reveal surface=tv muted=false ready=true semitones=0
+  24439 tv    bed:duck     bed=pulse cue=reveal
+  24597 tv    cue          cue=phase surface=tv muted=false ready=true semitones=0
+  24597 tv    bed:duck     bed=pulse cue=phase
+  24754 tv    cue          cue=reveal surface=tv muted=false ready=true semitones=0
+  24754 tv    bed:duck     bed=pulse cue=reveal
+  24912 tv    cue          cue=wager surface=tv muted=false ready=true semitones=0
+  24912 tv    bed:duck     bed=latenight cue=wager
+  25788 tv    cue          cue=phase surface=tv muted=false ready=true semitones=0
+  25788 tv    bed:duck     bed=pulse cue=phase
+  26120 tv    cue          cue=silence surface=tv muted=false ready=true semitones=0
+  26120 tv    bed:duck     bed=pulse cue=silence
+  27930 tv    cue          cue=bust surface=tv muted=false ready=true semitones=0
+  27930 tv    bed:duck     bed=pulse cue=bust
+  29658 tv    ss:cancel    speaking=false pending=false
+  29658 tv    cue          cue=cheer surface=tv muted=false ready=true semitones=0
 ```
 
 ## C · Play again, end game, new game, back to lobby
 
 - ✅ **play again → start cue, still no music, no second cheer** — cues=start
 - ✅ **VIP ends the game → results → one cheer** — cues=cheer
-- ✅ **new game → selecting → lobby music comes back (plan null→lobby)** — plan=null→lobby; playing=[{"track":"local-forecast-elevator.mp3","vol":0.35,"t":1.5}]
+- ✅ **new game → selecting → lobby music comes back (plan null→lobby)** — plan=null→lobby; playing=[{"track":"bossa-antigua.mp3","vol":0.35,"t":1.5}]
 
 ```
-  31206 tv    cue          cue=start surface=tv muted=false ready=true semitones=0
-  33364 tv    ss:cancel    speaking=false pending=false
-  33365 tv    cue          cue=cheer surface=tv muted=false ready=true semitones=0
-  34926 tv    ss:cancel    speaking=false pending=false
-  34926 tv    music:plan   from=null to=lobby
-  34926 tv    music:start  plan=lobby track=local-forecast-elevator mode=rotate volume=0.35
+  31222 tv    cue          cue=start surface=tv muted=false ready=true semitones=0
+  33408 tv    ss:cancel    speaking=false pending=false
+  33408 tv    cue          cue=cheer surface=tv muted=false ready=true semitones=0
+  34959 tv    ss:cancel    speaking=false pending=false
+  34959 tv    music:plan   from=null to=lobby
+  34959 tv    music:start  plan=lobby track=bossa-antigua mode=rotate volume=0.35
 ```
 
 ## D · Bingo: music set, the caller, a wrong claim, a bingo, keep going, results
 
-- ✅ **Bingo start → lobby music fades out, the Bingo set starts (wallpaper or cool-vibes at 0.2)** — music=music:plan:lobby→game:bingo music:start:wallpaper music:stop:local-forecast-elevator.mp3
-- ✅ **exactly one track audible after the switch** — [{"track":"wallpaper.mp3","vol":0.2,"t":2.9}]
+- ✅ **Bingo start → lobby music fades out, the Bingo set starts (wallpaper or cool-vibes at 0.2)** — music=music:plan:lobby→game:bingo music:start:cool-vibes music:stop:bossa-antigua.mp3
+- ✅ **exactly one track audible after the switch** — [{"track":"cool-vibes.mp3","vol":0.2,"t":2.9}]
 - ✅ **intro: nothing spoken**
 - ✅ **the intro: one card pluck on the deal (one card each), three ticks (3 · 2 · 1), then the first call — no phase chime** — cues=start,card,lock,lock,tick,tick,tick,call
 - ✅ **the hand feels each card land (one 12 ms tap per card) and then the first call** — taps(12)=2 (1 card + the first call)
-- ✅ **each Ready ticks (lock, rising); the 3 · 2 · 1's first tick comes a breath (≥ 300 ms) after the last** — locks=2 last lock→first tick=424ms
-- ✅ **the deal's pluck: TV and phone within 150 ms of each other** — tv@+1027ms phone@+1042ms
+- ✅ **each Ready ticks (lock, rising); the 3 · 2 · 1's first tick comes a breath (≥ 300 ms) after the last** — locks=2 last lock→first tick=397ms
+- ✅ **the deal's pluck: TV and phone within 150 ms of each other** — tv@+1039ms phone@+1052ms
 - ✅ **the phone taps 3 · 2 · 1 with the TV; "another" is a 20 ms tap and one card pluck; Ready a 20 ms tap and the submit cue** — taps=3 cues=card,submit
 - ✅ **two calls → two boings and two recorded calls** — cues=call,call; spoken=b8.wav | n34.wav voice=clip
-- ✅ **each voice starts on the push (no delay); its boing lands on the squash, 170–230 ms later** — delays=0,0 boing lags=207,193ms
+- ✅ **each voice starts on the push (no delay); its boing lands on the squash, 170–230 ms later** — delays=0,0 boing lags=191,193ms
 - ✅ **the phones stay silent during calls**
 - ✅ **the first tap → the TV says "hm?" (dibs) once, before the verdict** — cues=dibs,reveal,wrong
 - ✅ **wrong claim → caller hushed at once, buzzer at the verdict (after the reveal), no chime on entry, nothing spoken** — events=dibs,hush,reveal,hush,wrong
-- ✅ **music keeps playing through the check** — [{"track":"wallpaper.mp3","vol":0.2,"t":18.9}]
+- ✅ **music keeps playing through the check** — [{"track":"cool-vibes.mp3","vol":0.2,"t":19}]
 - ✅ **after the verdict: 3 · 2 · 1 ticks, then the next number is spoken (no call before the ticks)** — cues=tick,tick,tick,call spoken=n35.wav
 - ✅ **pause → pause cue, music holds, no new call** — cues=pause playing=[]
-- ✅ **resume → phase chime, music resumes** — cues=phase playing=[{"track":"wallpaper.mp3","vol":0.2,"t":25.8}]
+- ✅ **resume → phase chime, music resumes** — cues=phase playing=[{"track":"cool-vibes.mp3","vol":0.2,"t":25.8}]
 - ✅ **skipping through the deck: a hush before every call, one voice at a time** — clips=41 hushes=41
-- ✅ **BINGO → caller hushed, the reveal lift on the announce, sweep as the line turns, cheer once at the verdict (~6.4 s), no chime on entry, no lock tick under the cheer, music continues** — cues=reveal,sweep,cheer cheer@+5359ms playing=[{"track":"wallpaper.mp3","vol":0.06,"t":40.3}]
-- ✅ **the winner's phone: a dauber per daub, the claim cue on the tap, 'correct' when the verdict lands** — phone cues=daub,daub,close,daub,claim,correct
-- ✅ **one 'close' between the penultimate and the last daub (one square to go), once for the card** — phone cues=daub,daub,close,daub,claim,correct
-- ✅ **the winner's celebration buzz (320 ms) runs whole — nothing shorter cuts it** — celebration@74588 cut by=[]
-- ✅ **the other phone: one soft tap as the win lands, within 400 ms of the TV's cheer, no sound** — taps=30 tap@+5391ms cheer@+5373ms cues=
+- ✅ **BINGO → caller hushed, the reveal lift on the announce, sweep as the line turns, cheer once at the verdict (~6.4 s), no chime on entry, no lock tick under the cheer, music continues** — cues=reveal,sweep,cheer cheer@+5370ms playing=[{"track":"cool-vibes.mp3","vol":0.06,"t":40.4}]
+- ✅ **the winner's phone: a dauber per daub, the claim cue on the tap, 'correct' when the verdict lands** — phone cues=daub,daub,daub,close,daub,claim,correct
+- ✅ **one 'close' between the penultimate and the last daub (one square to go), once for the card** — phone cues=daub,daub,daub,close,daub,claim,correct
+- ✅ **the winner's celebration buzz (320 ms) runs whole — nothing shorter cuts it** — celebration@74691 cut by=[]
+- ✅ **the other phone: one soft tap as the win lands, within 400 ms of the TV's cheer, no sound** — taps=30 tap@+5408ms cheer@+5386ms cues=
 - ✅ **celebration waits: still in the bingo phase, nothing spoken**
 - ✅ **keep going (blackout) → 3 · 2 · 1 ticks, then the number that was up is called again, no start/phase chime** — cues=silence,tick,tick,tick,call spoken=g57.wav
 - ✅ **the pick lands in the picker's hand: a 'submit' cue and a 20 ms buzz, before the ticks** — cues=submit,tick,tick,tick
@@ -154,660 +154,659 @@ Captured 2026-09-19T05:53:45.196Z on port 42112. Every cue, music event, speech 
 - ✅ **VIP ends Bingo → results cheer once; Bingo music stops; no speech after leaving play** — cues=cheer playing=[]
 
 ```
-  36520 tv    music:plan   from=lobby to=game:bingo
-  36520 tv    music:start  plan=game:bingo track=wallpaper mode=chain volume=0.2
-  36520 tv    cue          cue=start surface=tv muted=false ready=true semitones=0
-  36830 tv    hush
-  36831 tv    hush
-  37325 tv    music:stop   track=local-forecast-elevator.mp3
-  37484 tv    cue          cue=card surface=tv muted=false ready=true semitones=0
-  39604 tv    cue          cue=lock surface=tv muted=false ready=true semitones=0
-  40118 tv    cue          cue=lock surface=tv muted=false ready=true semitones=4
-  40542 tv    cue          cue=tick surface=tv muted=false ready=true semitones=0
-  41536 tv    cue          cue=tick surface=tv muted=false ready=true semitones=0
-  42542 tv    cue          cue=tick surface=tv muted=false ready=true semitones=0
-  43514 tv    hush
-  43514 tv    clip         src=b9.wav muted=false ready=true delayMs=0
-  43514 tv    speak        text=b9.wav voice=clip delayMs=0
-  43515 tv    hush
-  43707 tv    cue          cue=call surface=tv muted=false ready=true semitones=0
-  44068 tv    hush
-  44068 tv    clip         src=b8.wav muted=false ready=true delayMs=0
-  44068 tv    speak        text=b8.wav voice=clip delayMs=0
-  44275 tv    cue          cue=call surface=tv muted=false ready=true semitones=0
-  45892 tv    hush
-  45892 tv    clip         src=n34.wav muted=false ready=true delayMs=0
-  45892 tv    speak        text=n34.wav voice=clip delayMs=0
-  46085 tv    cue          cue=call surface=tv muted=false ready=true semitones=0
-  47787 tv    cue          cue=dibs surface=tv muted=false ready=true semitones=0
-  48057 tv    hush
-  48057 tv    cue          cue=reveal surface=tv muted=false ready=true semitones=0
-  48058 tv    hush
-  53420 tv    cue          cue=wrong surface=tv muted=false ready=true semitones=0
-  56423 tv    cue          cue=tick surface=tv muted=false ready=true semitones=0
-  57425 tv    cue          cue=tick surface=tv muted=false ready=true semitones=0
-  58424 tv    cue          cue=tick surface=tv muted=false ready=true semitones=0
-  59415 tv    hush
-  59415 tv    clip         src=n35.wav muted=false ready=true delayMs=0
-  59415 tv    speak        text=n35.wav voice=clip delayMs=0
-  59606 tv    cue          cue=call surface=tv muted=false ready=true semitones=0
-  61216 tv    music:paused paused=true
-  61216 tv    cue          cue=pause surface=tv muted=false ready=true semitones=0
-  62454 tv    music:paused paused=false
-  62454 tv    cue          cue=phase surface=tv muted=false ready=true semitones=0
-  63778 tv    hush
-  63778 tv    clip         src=i25.wav muted=false ready=true delayMs=0
-  63778 tv    speak        text=i25.wav voice=clip delayMs=0
-  63904 tv    hush
-  63904 tv    clip         src=n45.wav muted=false ready=true delayMs=0
-  63904 tv    speak        text=n45.wav voice=clip delayMs=0
-  64029 tv    hush
-  64029 tv    clip         src=n33.wav muted=false ready=true delayMs=0
-  64029 tv    speak        text=n33.wav voice=clip delayMs=0
-  64155 tv    hush
-  64155 tv    clip         src=g49.wav muted=false ready=true delayMs=0
-  64155 tv    speak        text=g49.wav voice=clip delayMs=0
-  64281 tv    hush
-  64281 tv    clip         src=b4.wav muted=false ready=true delayMs=0
-  64281 tv    speak        text=b4.wav voice=clip delayMs=0
-  64408 tv    hush
-  64408 tv    clip         src=i20.wav muted=false ready=true delayMs=0
-  64408 tv    speak        text=i20.wav voice=clip delayMs=0
-  64534 tv    hush
-  64534 tv    clip         src=o69.wav muted=false ready=true delayMs=0
-  64534 tv    speak        text=o69.wav voice=clip delayMs=0
+  36548 tv    music:plan   from=lobby to=game:bingo
+  36548 tv    music:start  plan=game:bingo track=cool-vibes mode=chain volume=0.2
+  36548 tv    cue          cue=start surface=tv muted=false ready=true semitones=0
+  36863 tv    hush
+  36867 tv    hush
+  37362 tv    music:stop   track=bossa-antigua.mp3
+  37522 tv    cue          cue=card surface=tv muted=false ready=true semitones=0
+  39606 tv    cue          cue=lock surface=tv muted=false ready=true semitones=0
+  40131 tv    cue          cue=lock surface=tv muted=false ready=true semitones=4
+  40528 tv    cue          cue=tick surface=tv muted=false ready=true semitones=0
+  41569 tv    cue          cue=tick surface=tv muted=false ready=true semitones=0
+  42529 tv    cue          cue=tick surface=tv muted=false ready=true semitones=0
+  43531 tv    hush
+  43531 tv    clip         src=b9.wav muted=false ready=true delayMs=0
+  43532 tv    speak        text=b9.wav voice=clip delayMs=0
+  43533 tv    hush
+  43728 tv    cue          cue=call surface=tv muted=false ready=true semitones=0
+  44095 tv    hush
+  44095 tv    clip         src=b8.wav muted=false ready=true delayMs=0
+  44095 tv    speak        text=b8.wav voice=clip delayMs=0
+  44286 tv    cue          cue=call surface=tv muted=false ready=true semitones=0
+  45926 tv    hush
+  45926 tv    clip         src=n34.wav muted=false ready=true delayMs=0
+  45926 tv    speak        text=n34.wav voice=clip delayMs=0
+  46119 tv    cue          cue=call surface=tv muted=false ready=true semitones=0
+  47810 tv    cue          cue=dibs surface=tv muted=false ready=true semitones=0
+  48074 tv    hush
+  48074 tv    cue          cue=reveal surface=tv muted=false ready=true semitones=0
+  48075 tv    hush
+  53429 tv    cue          cue=wrong surface=tv muted=false ready=true semitones=0
+  56438 tv    cue          cue=tick surface=tv muted=false ready=true semitones=0
+  57444 tv    cue          cue=tick surface=tv muted=false ready=true semitones=0
+  58443 tv    cue          cue=tick surface=tv muted=false ready=true semitones=0
+  59446 tv    hush
+  59446 tv    clip         src=n35.wav muted=false ready=true delayMs=0
+  59446 tv    speak        text=n35.wav voice=clip delayMs=0
+  59647 tv    cue          cue=call surface=tv muted=false ready=true semitones=0
+  61238 tv    music:paused paused=true
+  61238 tv    cue          cue=pause surface=tv muted=false ready=true semitones=0
+  62506 tv    music:paused paused=false
+  62506 tv    cue          cue=phase surface=tv muted=false ready=true semitones=0
+  63802 tv    hush
+  63802 tv    clip         src=i25.wav muted=false ready=true delayMs=0
+  63802 tv    speak        text=i25.wav voice=clip delayMs=0
+  63919 tv    hush
+  63919 tv    clip         src=n45.wav muted=false ready=true delayMs=0
+  63919 tv    speak        text=n45.wav voice=clip delayMs=0
+  64042 tv    hush
+  64042 tv    clip         src=n33.wav muted=false ready=true delayMs=0
+  64042 tv    speak        text=n33.wav voice=clip delayMs=0
+  64167 tv    hush
+  64167 tv    clip         src=g49.wav muted=false ready=true delayMs=0
+  64167 tv    speak        text=g49.wav voice=clip delayMs=0
+  64279 tv    hush
+  64279 tv    clip         src=b4.wav muted=false ready=true delayMs=0
+  64279 tv    speak        text=b4.wav voice=clip delayMs=0
+  64406 tv    hush
+  64406 tv    clip         src=i20.wav muted=false ready=true delayMs=0
+  64406 tv    speak        text=i20.wav voice=clip delayMs=0
+  64533 tv    hush
+  64533 tv    clip         src=o69.wav muted=false ready=true delayMs=0
+  64533 tv    speak        text=o69.wav voice=clip delayMs=0
   64660 tv    hush
   64660 tv    clip         src=o67.wav muted=false ready=true delayMs=0
   64660 tv    speak        text=o67.wav voice=clip delayMs=0
-  64785 tv    hush
-  64785 tv    clip         src=o65.wav muted=false ready=true delayMs=0
-  64785 tv    speak        text=o65.wav voice=clip delayMs=0
-  64882 tv    hush
-  64882 tv    clip         src=o73.wav muted=false ready=true delayMs=0
-  64882 tv    speak        text=o73.wav voice=clip delayMs=0
-  65006 tv    hush
-  65006 tv    clip         src=i21.wav muted=false ready=true delayMs=0
-  65006 tv    speak        text=i21.wav voice=clip delayMs=0
-  65132 tv    hush
-  65132 tv    clip         src=i18.wav muted=false ready=true delayMs=0
-  65132 tv    speak        text=i18.wav voice=clip delayMs=0
-  65257 tv    hush
-  65257 tv    clip         src=g58.wav muted=false ready=true delayMs=0
-  65257 tv    speak        text=g58.wav voice=clip delayMs=0
-  65384 tv    hush
-  65384 tv    clip         src=n36.wav muted=false ready=true delayMs=0
-  65384 tv    speak        text=n36.wav voice=clip delayMs=0
-  65511 tv    hush
-  65511 tv    clip         src=o61.wav muted=false ready=true delayMs=0
-  65511 tv    speak        text=o61.wav voice=clip delayMs=0
-  65636 tv    hush
-  65636 tv    clip         src=n37.wav muted=false ready=true delayMs=0
-  65636 tv    speak        text=n37.wav voice=clip delayMs=0
-  65764 tv    hush
-  65764 tv    clip         src=i16.wav muted=false ready=true delayMs=0
-  65764 tv    speak        text=i16.wav voice=clip delayMs=0
-  65890 tv    hush
-  65890 tv    clip         src=g47.wav muted=false ready=true delayMs=0
-  65890 tv    speak        text=g47.wav voice=clip delayMs=0
-  66014 tv    hush
-  66014 tv    clip         src=n41.wav muted=false ready=true delayMs=0
-  66014 tv    speak        text=n41.wav voice=clip delayMs=0
-  66142 tv    hush
-  66142 tv    clip         src=b6.wav muted=false ready=true delayMs=0
-  66142 tv    speak        text=b6.wav voice=clip delayMs=0
-  66266 tv    hush
-  66266 tv    clip         src=o72.wav muted=false ready=true delayMs=0
-  66266 tv    speak        text=o72.wav voice=clip delayMs=0
-  66392 tv    hush
-  66392 tv    clip         src=b3.wav muted=false ready=true delayMs=0
-  66392 tv    speak        text=b3.wav voice=clip delayMs=0
-  66518 tv    hush
-  66518 tv    clip         src=i30.wav muted=false ready=true delayMs=0
-  66518 tv    speak        text=i30.wav voice=clip delayMs=0
-  66629 tv    hush
-  66629 tv    clip         src=g56.wav muted=false ready=true delayMs=0
-  66629 tv    speak        text=g56.wav voice=clip delayMs=0
-  66758 tv    hush
-  66758 tv    clip         src=o75.wav muted=false ready=true delayMs=0
-  66758 tv    speak        text=o75.wav voice=clip delayMs=0
-  66882 tv    hush
-  66882 tv    clip         src=b1.wav muted=false ready=true delayMs=0
-  66882 tv    speak        text=b1.wav voice=clip delayMs=0
-  67007 tv    hush
-  67007 tv    clip         src=b2.wav muted=false ready=true delayMs=0
-  67007 tv    speak        text=b2.wav voice=clip delayMs=0
-  67132 tv    hush
-  67132 tv    clip         src=n32.wav muted=false ready=true delayMs=0
-  67132 tv    speak        text=n32.wav voice=clip delayMs=0
-  67258 tv    hush
-  67258 tv    clip         src=g48.wav muted=false ready=true delayMs=0
-  67258 tv    speak        text=g48.wav voice=clip delayMs=0
-  67383 tv    hush
-  67383 tv    clip         src=i23.wav muted=false ready=true delayMs=0
-  67383 tv    speak        text=i23.wav voice=clip delayMs=0
-  67509 tv    hush
-  67509 tv    clip         src=i26.wav muted=false ready=true delayMs=0
-  67509 tv    speak        text=i26.wav voice=clip delayMs=0
-  67634 tv    hush
-  67634 tv    clip         src=o66.wav muted=false ready=true delayMs=0
-  67634 tv    speak        text=o66.wav voice=clip delayMs=0
-  67761 tv    hush
-  67761 tv    clip         src=i19.wav muted=false ready=true delayMs=0
-  67761 tv    speak        text=i19.wav voice=clip delayMs=0
-  67885 tv    hush
-  67885 tv    clip         src=n42.wav muted=false ready=true delayMs=0
-  67885 tv    speak        text=n42.wav voice=clip delayMs=0
-  68014 tv    hush
-  68014 tv    clip         src=i24.wav muted=false ready=true delayMs=0
-  68014 tv    speak        text=i24.wav voice=clip delayMs=0
-  68138 tv    hush
-  68138 tv    clip         src=n39.wav muted=false ready=true delayMs=0
-  68138 tv    speak        text=n39.wav voice=clip delayMs=0
-  68262 tv    hush
-  68262 tv    clip         src=g46.wav muted=false ready=true delayMs=0
-  68262 tv    speak        text=g46.wav voice=clip delayMs=0
-  68388 tv    hush
-  68388 tv    clip         src=n44.wav muted=false ready=true delayMs=0
-  68388 tv    speak        text=n44.wav voice=clip delayMs=0
-  68513 tv    hush
-  68513 tv    clip         src=b15.wav muted=false ready=true delayMs=0
-  68513 tv    speak        text=b15.wav voice=clip delayMs=0
-  68639 tv    hush
-  68639 tv    clip         src=b11.wav muted=false ready=true delayMs=0
-  68639 tv    speak        text=b11.wav voice=clip delayMs=0
-  68768 tv    hush
-  68768 tv    clip         src=g57.wav muted=false ready=true delayMs=0
-  68768 tv    speak        text=g57.wav voice=clip delayMs=0
-  68962 tv    cue          cue=call surface=tv muted=false ready=true semitones=0
-  69403 tv    cue          cue=dibs surface=tv muted=false ready=true semitones=0
-  69687 tv    hush
-  69688 tv    cue          cue=reveal surface=tv muted=false ready=true semitones=0
-  69688 tv    hush
-  71573 tv    cue          cue=sweep surface=tv muted=false ready=true semitones=0
-  75046 tv    music:duck   ms=9000
-  75046 tv    cue          cue=cheer surface=tv muted=false ready=true semitones=0
-  79864 tv    cue          cue=silence surface=tv muted=false ready=true semitones=0
-  80199 tv    cue          cue=tick surface=tv muted=false ready=true semitones=0
-  81203 tv    cue          cue=tick surface=tv muted=false ready=true semitones=0
-  82206 tv    cue          cue=tick surface=tv muted=false ready=true semitones=0
-  83204 tv    hush
-  83204 tv    clip         src=g57.wav muted=false ready=true delayMs=0
-  83204 tv    speak        text=g57.wav voice=clip delayMs=0
-  83399 tv    cue          cue=call surface=tv muted=false ready=true semitones=0
-  85512 tv    ss:cancel    speaking=false pending=false
-  85512 tv    music:plan   from=game:bingo to=null
-  85517 tv    ss:cancel    speaking=false pending=false
-  85517 tv    music:plan   from=null to=lobby
-  85517 tv    music:start  plan=lobby track=george-street-shuffle mode=rotate volume=0.35
-  86332 tv    music:stop   track=wallpaper.mp3
-  88031 tv    ss:cancel    speaking=false pending=false
-  88050 tv    music:plan   from=lobby to=game:bingo
-  88050 tv    music:start  plan=game:bingo track=cool-vibes mode=chain volume=0.2
-  88050 tv    cue          cue=start surface=tv muted=false ready=true semitones=0
-  88055 tv    hush
-  88056 tv    hush
-  88651 tv    cue          cue=lock surface=tv muted=false ready=true semitones=0
-  88653 tv    hush
-  88653 tv    clip         src=i21.wav muted=false ready=true delayMs=0
-  88653 tv    speak        text=i21.wav voice=clip delayMs=0
-  88653 tv    hush
-  88677 tv    hush
-  88677 tv    clip         src=n32.wav muted=false ready=true delayMs=0
-  88677 tv    speak        text=n32.wav voice=clip delayMs=0
-  88767 tv    hush
-  88767 tv    clip         src=i18.wav muted=false ready=true delayMs=0
-  88767 tv    speak        text=i18.wav voice=clip delayMs=0
-  88849 tv    hush
-  88849 tv    clip         src=n40.wav muted=false ready=true delayMs=0
-  88849 tv    speak        text=n40.wav voice=clip delayMs=0
-  88852 tv    music:stop   track=george-street-shuffle.mp3
-  88941 tv    hush
-  88941 tv    clip         src=i30.wav muted=false ready=true delayMs=0
-  88941 tv    speak        text=i30.wav voice=clip delayMs=0
-  89054 tv    hush
-  89054 tv    clip         src=o69.wav muted=false ready=true delayMs=0
-  89054 tv    speak        text=o69.wav voice=clip delayMs=0
-  89130 tv    hush
-  89130 tv    clip         src=o61.wav muted=false ready=true delayMs=0
-  89130 tv    speak        text=o61.wav voice=clip delayMs=0
-  89236 tv    hush
-  89236 tv    clip         src=n34.wav muted=false ready=true delayMs=0
-  89236 tv    speak        text=n34.wav voice=clip delayMs=0
-  89331 tv    hush
-  89331 tv    clip         src=n35.wav muted=false ready=true delayMs=0
-  89331 tv    speak        text=n35.wav voice=clip delayMs=0
-  89418 tv    hush
-  89418 tv    clip         src=o67.wav muted=false ready=true delayMs=0
-  89418 tv    speak        text=o67.wav voice=clip delayMs=0
-  89509 tv    hush
-  89510 tv    clip         src=g55.wav muted=false ready=true delayMs=0
-  89510 tv    speak        text=g55.wav voice=clip delayMs=0
-  89615 tv    hush
-  89615 tv    clip         src=i26.wav muted=false ready=true delayMs=0
-  89615 tv    speak        text=i26.wav voice=clip delayMs=0
-  89695 tv    hush
-  89695 tv    clip         src=i22.wav muted=false ready=true delayMs=0
-  89695 tv    speak        text=i22.wav voice=clip delayMs=0
-  89789 tv    hush
-  89789 tv    clip         src=i29.wav muted=false ready=true delayMs=0
-  89789 tv    speak        text=i29.wav voice=clip delayMs=0
-  89869 tv    hush
-  89869 tv    clip         src=o66.wav muted=false ready=true delayMs=0
-  89869 tv    speak        text=o66.wav voice=clip delayMs=0
-  89981 tv    hush
-  89981 tv    clip         src=g51.wav muted=false ready=true delayMs=0
-  89981 tv    speak        text=g51.wav voice=clip delayMs=0
-  90096 tv    hush
-  90096 tv    clip         src=g53.wav muted=false ready=true delayMs=0
-  90096 tv    speak        text=g53.wav voice=clip delayMs=0
-  90194 tv    hush
-  90194 tv    clip         src=b9.wav muted=false ready=true delayMs=0
-  90194 tv    speak        text=b9.wav voice=clip delayMs=0
-  90293 tv    hush
-  90293 tv    clip         src=n36.wav muted=false ready=true delayMs=0
-  90293 tv    speak        text=n36.wav voice=clip delayMs=0
-  90390 tv    hush
-  90390 tv    clip         src=g52.wav muted=false ready=true delayMs=0
-  90390 tv    speak        text=g52.wav voice=clip delayMs=0
-  90459 tv    hush
-  90459 tv    clip         src=b1.wav muted=false ready=true delayMs=0
-  90459 tv    speak        text=b1.wav voice=clip delayMs=0
-  90567 tv    hush
-  90567 tv    clip         src=b13.wav muted=false ready=true delayMs=0
-  90567 tv    speak        text=b13.wav voice=clip delayMs=0
-  90664 tv    hush
-  90664 tv    clip         src=n37.wav muted=false ready=true delayMs=0
-  90664 tv    speak        text=n37.wav voice=clip delayMs=0
-  90747 tv    hush
-  90747 tv    clip         src=o71.wav muted=false ready=true delayMs=0
-  90747 tv    speak        text=o71.wav voice=clip delayMs=0
+  64805 tv    hush
+  64805 tv    clip         src=o65.wav muted=false ready=true delayMs=0
+  64805 tv    speak        text=o65.wav voice=clip delayMs=0
+  64913 tv    hush
+  64913 tv    clip         src=o73.wav muted=false ready=true delayMs=0
+  64913 tv    speak        text=o73.wav voice=clip delayMs=0
+  65037 tv    hush
+  65037 tv    clip         src=i21.wav muted=false ready=true delayMs=0
+  65037 tv    speak        text=i21.wav voice=clip delayMs=0
+  65160 tv    hush
+  65160 tv    clip         src=i18.wav muted=false ready=true delayMs=0
+  65160 tv    speak        text=i18.wav voice=clip delayMs=0
+  65288 tv    hush
+  65288 tv    clip         src=g58.wav muted=false ready=true delayMs=0
+  65288 tv    speak        text=g58.wav voice=clip delayMs=0
+  65411 tv    hush
+  65411 tv    clip         src=n36.wav muted=false ready=true delayMs=0
+  65411 tv    speak        text=n36.wav voice=clip delayMs=0
+  65535 tv    hush
+  65535 tv    clip         src=o61.wav muted=false ready=true delayMs=0
+  65535 tv    speak        text=o61.wav voice=clip delayMs=0
+  65663 tv    hush
+  65663 tv    clip         src=n37.wav muted=false ready=true delayMs=0
+  65663 tv    speak        text=n37.wav voice=clip delayMs=0
+  65781 tv    hush
+  65782 tv    clip         src=i16.wav muted=false ready=true delayMs=0
+  65782 tv    speak        text=i16.wav voice=clip delayMs=0
+  65910 tv    hush
+  65910 tv    clip         src=g47.wav muted=false ready=true delayMs=0
+  65910 tv    speak        text=g47.wav voice=clip delayMs=0
+  66034 tv    hush
+  66034 tv    clip         src=n41.wav muted=false ready=true delayMs=0
+  66034 tv    speak        text=n41.wav voice=clip delayMs=0
+  66152 tv    hush
+  66152 tv    clip         src=b6.wav muted=false ready=true delayMs=0
+  66152 tv    speak        text=b6.wav voice=clip delayMs=0
+  66283 tv    hush
+  66283 tv    clip         src=o72.wav muted=false ready=true delayMs=0
+  66283 tv    speak        text=o72.wav voice=clip delayMs=0
+  66411 tv    hush
+  66411 tv    clip         src=b3.wav muted=false ready=true delayMs=0
+  66411 tv    speak        text=b3.wav voice=clip delayMs=0
+  66528 tv    hush
+  66528 tv    clip         src=i30.wav muted=false ready=true delayMs=0
+  66528 tv    speak        text=i30.wav voice=clip delayMs=0
+  66655 tv    hush
+  66655 tv    clip         src=g56.wav muted=false ready=true delayMs=0
+  66655 tv    speak        text=g56.wav voice=clip delayMs=0
+  66788 tv    hush
+  66788 tv    clip         src=o75.wav muted=false ready=true delayMs=0
+  66788 tv    speak        text=o75.wav voice=clip delayMs=0
+  66907 tv    hush
+  66907 tv    clip         src=b1.wav muted=false ready=true delayMs=0
+  66907 tv    speak        text=b1.wav voice=clip delayMs=0
+  67033 tv    hush
+  67033 tv    clip         src=b2.wav muted=false ready=true delayMs=0
+  67033 tv    speak        text=b2.wav voice=clip delayMs=0
+  67162 tv    hush
+  67162 tv    clip         src=n32.wav muted=false ready=true delayMs=0
+  67162 tv    speak        text=n32.wav voice=clip delayMs=0
+  67289 tv    hush
+  67289 tv    clip         src=g48.wav muted=false ready=true delayMs=0
+  67289 tv    speak        text=g48.wav voice=clip delayMs=0
+  67418 tv    hush
+  67418 tv    clip         src=i23.wav muted=false ready=true delayMs=0
+  67418 tv    speak        text=i23.wav voice=clip delayMs=0
+  67552 tv    hush
+  67552 tv    clip         src=i26.wav muted=false ready=true delayMs=0
+  67552 tv    speak        text=i26.wav voice=clip delayMs=0
+  67658 tv    hush
+  67658 tv    clip         src=o66.wav muted=false ready=true delayMs=0
+  67658 tv    speak        text=o66.wav voice=clip delayMs=0
+  67799 tv    hush
+  67799 tv    clip         src=i19.wav muted=false ready=true delayMs=0
+  67799 tv    speak        text=i19.wav voice=clip delayMs=0
+  67916 tv    hush
+  67916 tv    clip         src=n42.wav muted=false ready=true delayMs=0
+  67916 tv    speak        text=n42.wav voice=clip delayMs=0
+  68047 tv    hush
+  68047 tv    clip         src=i24.wav muted=false ready=true delayMs=0
+  68047 tv    speak        text=i24.wav voice=clip delayMs=0
+  68156 tv    hush
+  68156 tv    clip         src=n39.wav muted=false ready=true delayMs=0
+  68156 tv    speak        text=n39.wav voice=clip delayMs=0
+  68274 tv    hush
+  68274 tv    clip         src=g46.wav muted=false ready=true delayMs=0
+  68274 tv    speak        text=g46.wav voice=clip delayMs=0
+  68407 tv    hush
+  68407 tv    clip         src=n44.wav muted=false ready=true delayMs=0
+  68407 tv    speak        text=n44.wav voice=clip delayMs=0
+  68526 tv    hush
+  68526 tv    clip         src=b15.wav muted=false ready=true delayMs=0
+  68526 tv    speak        text=b15.wav voice=clip delayMs=0
+  68653 tv    hush
+  68653 tv    clip         src=b11.wav muted=false ready=true delayMs=0
+  68653 tv    speak        text=b11.wav voice=clip delayMs=0
+  68784 tv    hush
+  68784 tv    clip         src=g57.wav muted=false ready=true delayMs=0
+  68784 tv    speak        text=g57.wav voice=clip delayMs=0
+  68975 tv    cue          cue=call surface=tv muted=false ready=true semitones=0
+  69475 tv    cue          cue=dibs surface=tv muted=false ready=true semitones=0
+  69763 tv    hush
+  69764 tv    cue          cue=reveal surface=tv muted=false ready=true semitones=0
+  69764 tv    hush
+  71647 tv    cue          cue=sweep surface=tv muted=false ready=true semitones=0
+  75133 tv    music:duck   ms=9000
+  75133 tv    cue          cue=cheer surface=tv muted=false ready=true semitones=0
+  79956 tv    cue          cue=silence surface=tv muted=false ready=true semitones=0
+  80281 tv    cue          cue=tick surface=tv muted=false ready=true semitones=0
+  81282 tv    cue          cue=tick surface=tv muted=false ready=true semitones=0
+  82287 tv    cue          cue=tick surface=tv muted=false ready=true semitones=0
+  83280 tv    hush
+  83280 tv    clip         src=g57.wav muted=false ready=true delayMs=0
+  83280 tv    speak        text=g57.wav voice=clip delayMs=0
+  83471 tv    cue          cue=call surface=tv muted=false ready=true semitones=0
+  85599 tv    ss:cancel    speaking=false pending=false
+  85599 tv    music:plan   from=game:bingo to=null
+  85605 tv    ss:cancel    speaking=false pending=false
+  85605 tv    music:plan   from=null to=lobby
+  85605 tv    music:start  plan=lobby track=bossa-antigua mode=rotate volume=0.35
+  86407 tv    music:stop   track=cool-vibes.mp3
+  88163 tv    ss:cancel    speaking=false pending=false
+  88179 tv    music:plan   from=lobby to=game:bingo
+  88179 tv    music:start  plan=game:bingo track=cool-vibes mode=chain volume=0.2
+  88179 tv    cue          cue=start surface=tv muted=false ready=true semitones=0
+  88185 tv    hush
+  88186 tv    hush
+  88775 tv    cue          cue=lock surface=tv muted=false ready=true semitones=0
+  88779 tv    hush
+  88779 tv    clip         src=i21.wav muted=false ready=true delayMs=0
+  88779 tv    speak        text=i21.wav voice=clip delayMs=0
+  88780 tv    hush
+  88791 tv    hush
+  88791 tv    clip         src=n32.wav muted=false ready=true delayMs=0
+  88791 tv    speak        text=n32.wav voice=clip delayMs=0
+  88888 tv    hush
+  88888 tv    clip         src=i18.wav muted=false ready=true delayMs=0
+  88888 tv    speak        text=i18.wav voice=clip delayMs=0
+  88981 tv    music:stop   track=bossa-antigua.mp3
+  88985 tv    hush
+  88985 tv    clip         src=n40.wav muted=false ready=true delayMs=0
+  88985 tv    speak        text=n40.wav voice=clip delayMs=0
+  89076 tv    hush
+  89076 tv    clip         src=i30.wav muted=false ready=true delayMs=0
+  89076 tv    speak        text=i30.wav voice=clip delayMs=0
+  89175 tv    hush
+  89175 tv    clip         src=o69.wav muted=false ready=true delayMs=0
+  89175 tv    speak        text=o69.wav voice=clip delayMs=0
+  89288 tv    hush
+  89288 tv    clip         src=o61.wav muted=false ready=true delayMs=0
+  89288 tv    speak        text=o61.wav voice=clip delayMs=0
+  89391 tv    hush
+  89391 tv    clip         src=n34.wav muted=false ready=true delayMs=0
+  89391 tv    speak        text=n34.wav voice=clip delayMs=0
+  89469 tv    hush
+  89469 tv    clip         src=n35.wav muted=false ready=true delayMs=0
+  89469 tv    speak        text=n35.wav voice=clip delayMs=0
+  89577 tv    hush
+  89577 tv    clip         src=o67.wav muted=false ready=true delayMs=0
+  89577 tv    speak        text=o67.wav voice=clip delayMs=0
+  89672 tv    hush
+  89672 tv    clip         src=g55.wav muted=false ready=true delayMs=0
+  89672 tv    speak        text=g55.wav voice=clip delayMs=0
+  89771 tv    hush
+  89771 tv    clip         src=i26.wav muted=false ready=true delayMs=0
+  89771 tv    speak        text=i26.wav voice=clip delayMs=0
+  89860 tv    hush
+  89860 tv    clip         src=i22.wav muted=false ready=true delayMs=0
+  89860 tv    speak        text=i22.wav voice=clip delayMs=0
+  89969 tv    hush
+  89969 tv    clip         src=i29.wav muted=false ready=true delayMs=0
+  89969 tv    speak        text=i29.wav voice=clip delayMs=0
+  90063 tv    hush
+  90063 tv    clip         src=o66.wav muted=false ready=true delayMs=0
+  90063 tv    speak        text=o66.wav voice=clip delayMs=0
+  90160 tv    hush
+  90160 tv    clip         src=g51.wav muted=false ready=true delayMs=0
+  90160 tv    speak        text=g51.wav voice=clip delayMs=0
+  90251 tv    hush
+  90251 tv    clip         src=g53.wav muted=false ready=true delayMs=0
+  90251 tv    speak        text=g53.wav voice=clip delayMs=0
+  90360 tv    hush
+  90360 tv    clip         src=b9.wav muted=false ready=true delayMs=0
+  90360 tv    speak        text=b9.wav voice=clip delayMs=0
+  90440 tv    hush
+  90440 tv    clip         src=n36.wav muted=false ready=true delayMs=0
+  90440 tv    speak        text=n36.wav voice=clip delayMs=0
+  90549 tv    hush
+  90549 tv    clip         src=g52.wav muted=false ready=true delayMs=0
+  90549 tv    speak        text=g52.wav voice=clip delayMs=0
+  90643 tv    hush
+  90643 tv    clip         src=b1.wav muted=false ready=true delayMs=0
+  90643 tv    speak        text=b1.wav voice=clip delayMs=0
+  90738 tv    hush
+  90738 tv    clip         src=b13.wav muted=false ready=true delayMs=0
+  90738 tv    speak        text=b13.wav voice=clip delayMs=0
   90836 tv    hush
-  90836 tv    clip         src=b8.wav muted=false ready=true delayMs=0
-  90836 tv    speak        text=b8.wav voice=clip delayMs=0
-  90933 tv    hush
-  90933 tv    clip         src=b5.wav muted=false ready=true delayMs=0
-  90933 tv    speak        text=b5.wav voice=clip delayMs=0
-  91053 tv    hush
-  91053 tv    clip         src=b7.wav muted=false ready=true delayMs=0
-  91053 tv    speak        text=b7.wav voice=clip delayMs=0
-  91130 tv    hush
-  91130 tv    clip         src=n42.wav muted=false ready=true delayMs=0
-  91130 tv    speak        text=n42.wav voice=clip delayMs=0
-  91221 tv    hush
-  91221 tv    clip         src=i28.wav muted=false ready=true delayMs=0
-  91221 tv    speak        text=i28.wav voice=clip delayMs=0
-  91333 tv    hush
-  91333 tv    clip         src=i27.wav muted=false ready=true delayMs=0
-  91333 tv    speak        text=i27.wav voice=clip delayMs=0
-  91425 tv    hush
-  91425 tv    clip         src=o63.wav muted=false ready=true delayMs=0
-  91425 tv    speak        text=o63.wav voice=clip delayMs=0
-  91520 tv    hush
-  91520 tv    clip         src=o64.wav muted=false ready=true delayMs=0
-  91520 tv    speak        text=o64.wav voice=clip delayMs=0
-  91599 tv    hush
-  91599 tv    clip         src=o73.wav muted=false ready=true delayMs=0
-  91599 tv    speak        text=o73.wav voice=clip delayMs=0
-  91693 tv    hush
-  91693 tv    clip         src=g50.wav muted=false ready=true delayMs=0
-  91693 tv    speak        text=g50.wav voice=clip delayMs=0
-  91788 tv    hush
-  91788 tv    clip         src=g48.wav muted=false ready=true delayMs=0
-  91788 tv    speak        text=g48.wav voice=clip delayMs=0
-  91884 tv    hush
-  91884 tv    clip         src=b12.wav muted=false ready=true delayMs=0
-  91884 tv    speak        text=b12.wav voice=clip delayMs=0
-  91979 tv    hush
-  91979 tv    clip         src=n45.wav muted=false ready=true delayMs=0
-  91979 tv    speak        text=n45.wav voice=clip delayMs=0
-  92070 tv    hush
-  92070 tv    clip         src=b4.wav muted=false ready=true delayMs=0
-  92070 tv    speak        text=b4.wav voice=clip delayMs=0
-  92166 tv    hush
-  92166 tv    clip         src=g46.wav muted=false ready=true delayMs=0
-  92166 tv    speak        text=g46.wav voice=clip delayMs=0
-  92275 tv    hush
-  92275 tv    clip         src=o74.wav muted=false ready=true delayMs=0
-  92275 tv    speak        text=o74.wav voice=clip delayMs=0
-  92370 tv    hush
-  92370 tv    clip         src=g47.wav muted=false ready=true delayMs=0
-  92370 tv    speak        text=g47.wav voice=clip delayMs=0
-  92463 tv    hush
-  92463 tv    clip         src=n31.wav muted=false ready=true delayMs=0
-  92463 tv    speak        text=n31.wav voice=clip delayMs=0
-  92558 tv    hush
-  92558 tv    clip         src=o62.wav muted=false ready=true delayMs=0
-  92558 tv    speak        text=o62.wav voice=clip delayMs=0
-  92655 tv    hush
-  92655 tv    clip         src=b10.wav muted=false ready=true delayMs=0
-  92655 tv    speak        text=b10.wav voice=clip delayMs=0
-  92746 tv    hush
-  92746 tv    clip         src=g60.wav muted=false ready=true delayMs=0
-  92746 tv    speak        text=g60.wav voice=clip delayMs=0
+  90836 tv    clip         src=n37.wav muted=false ready=true delayMs=0
+  90836 tv    speak        text=n37.wav voice=clip delayMs=0
+  90926 tv    hush
+  90926 tv    clip         src=o71.wav muted=false ready=true delayMs=0
+  90926 tv    speak        text=o71.wav voice=clip delayMs=0
+  91021 tv    hush
+  91021 tv    clip         src=b8.wav muted=false ready=true delayMs=0
+  91021 tv    speak        text=b8.wav voice=clip delayMs=0
+  91101 tv    hush
+  91101 tv    clip         src=b5.wav muted=false ready=true delayMs=0
+  91101 tv    speak        text=b5.wav voice=clip delayMs=0
+  91195 tv    hush
+  91195 tv    clip         src=b7.wav muted=false ready=true delayMs=0
+  91195 tv    speak        text=b7.wav voice=clip delayMs=0
+  91288 tv    hush
+  91288 tv    clip         src=n42.wav muted=false ready=true delayMs=0
+  91288 tv    speak        text=n42.wav voice=clip delayMs=0
+  91370 tv    hush
+  91370 tv    clip         src=i28.wav muted=false ready=true delayMs=0
+  91370 tv    speak        text=i28.wav voice=clip delayMs=0
+  91477 tv    hush
+  91477 tv    clip         src=i27.wav muted=false ready=true delayMs=0
+  91477 tv    speak        text=i27.wav voice=clip delayMs=0
+  91573 tv    hush
+  91573 tv    clip         src=o63.wav muted=false ready=true delayMs=0
+  91573 tv    speak        text=o63.wav voice=clip delayMs=0
+  91687 tv    hush
+  91687 tv    clip         src=o64.wav muted=false ready=true delayMs=0
+  91687 tv    speak        text=o64.wav voice=clip delayMs=0
+  91774 tv    hush
+  91774 tv    clip         src=o73.wav muted=false ready=true delayMs=0
+  91774 tv    speak        text=o73.wav voice=clip delayMs=0
+  91871 tv    hush
+  91871 tv    clip         src=g50.wav muted=false ready=true delayMs=0
+  91871 tv    speak        text=g50.wav voice=clip delayMs=0
+  91978 tv    hush
+  91978 tv    clip         src=g48.wav muted=false ready=true delayMs=0
+  91978 tv    speak        text=g48.wav voice=clip delayMs=0
+  92086 tv    hush
+  92086 tv    clip         src=b12.wav muted=false ready=true delayMs=0
+  92086 tv    speak        text=b12.wav voice=clip delayMs=0
+  92180 tv    hush
+  92180 tv    clip         src=n45.wav muted=false ready=true delayMs=0
+  92180 tv    speak        text=n45.wav voice=clip delayMs=0
+  92273 tv    hush
+  92273 tv    clip         src=b4.wav muted=false ready=true delayMs=0
+  92273 tv    speak        text=b4.wav voice=clip delayMs=0
+  92368 tv    hush
+  92368 tv    clip         src=g46.wav muted=false ready=true delayMs=0
+  92368 tv    speak        text=g46.wav voice=clip delayMs=0
+  92477 tv    hush
+  92477 tv    clip         src=o74.wav muted=false ready=true delayMs=0
+  92477 tv    speak        text=o74.wav voice=clip delayMs=0
+  92573 tv    hush
+  92573 tv    clip         src=g47.wav muted=false ready=true delayMs=0
+  92573 tv    speak        text=g47.wav voice=clip delayMs=0
+  92670 tv    hush
+  92670 tv    clip         src=n31.wav muted=false ready=true delayMs=0
+  92670 tv    speak        text=n31.wav voice=clip delayMs=0
+  92762 tv    hush
+  92762 tv    clip         src=o62.wav muted=false ready=true delayMs=0
+  92762 tv    speak        text=o62.wav voice=clip delayMs=0
   92841 tv    hush
-  92841 tv    clip         src=n38.wav muted=false ready=true delayMs=0
-  92841 tv    speak        text=n38.wav voice=clip delayMs=0
-  92935 tv    hush
-  92935 tv    clip         src=n39.wav muted=false ready=true delayMs=0
-  92935 tv    speak        text=n39.wav voice=clip delayMs=0
-  93029 tv    hush
-  93029 tv    clip         src=o70.wav muted=false ready=true delayMs=0
-  93029 tv    speak        text=o70.wav voice=clip delayMs=0
-  93124 tv    hush
-  93124 tv    clip         src=b11.wav muted=false ready=true delayMs=0
-  93124 tv    speak        text=b11.wav voice=clip delayMs=0
-  93219 tv    hush
-  93219 tv    clip         src=o75.wav muted=false ready=true delayMs=0
-  93219 tv    speak        text=o75.wav voice=clip delayMs=0
-  93300 tv    hush
-  93300 tv    clip         src=g58.wav muted=false ready=true delayMs=0
-  93300 tv    speak        text=g58.wav voice=clip delayMs=0
-  93411 tv    hush
-  93411 tv    clip         src=b15.wav muted=false ready=true delayMs=0
-  93411 tv    speak        text=b15.wav voice=clip delayMs=0
-  93504 tv    hush
-  93504 tv    clip         src=i24.wav muted=false ready=true delayMs=0
-  93504 tv    speak        text=i24.wav voice=clip delayMs=0
-  93598 tv    hush
-  93598 tv    clip         src=o72.wav muted=false ready=true delayMs=0
-  93598 tv    speak        text=o72.wav voice=clip delayMs=0
-  93709 tv    hush
-  93709 tv    clip         src=g56.wav muted=false ready=true delayMs=0
-  93709 tv    speak        text=g56.wav voice=clip delayMs=0
-  93804 tv    hush
-  93804 tv    clip         src=i20.wav muted=false ready=true delayMs=0
-  93804 tv    speak        text=i20.wav voice=clip delayMs=0
-  93897 tv    hush
-  93897 tv    clip         src=n44.wav muted=false ready=true delayMs=0
-  93897 tv    speak        text=n44.wav voice=clip delayMs=0
-  93991 tv    hush
-  93991 tv    clip         src=b3.wav muted=false ready=true delayMs=0
-  93991 tv    speak        text=b3.wav voice=clip delayMs=0
-  94086 tv    hush
-  94086 tv    clip         src=o68.wav muted=false ready=true delayMs=0
-  94086 tv    speak        text=o68.wav voice=clip delayMs=0
-  94180 tv    hush
-  94180 tv    clip         src=b2.wav muted=false ready=true delayMs=0
-  94180 tv    speak        text=b2.wav voice=clip delayMs=0
-  94287 tv    hush
-  94287 tv    clip         src=n41.wav muted=false ready=true delayMs=0
-  94287 tv    speak        text=n41.wav voice=clip delayMs=0
-  94382 tv    hush
-  94382 tv    clip         src=o65.wav muted=false ready=true delayMs=0
-  94382 tv    speak        text=o65.wav voice=clip delayMs=0
-  94477 tv    hush
-  94477 tv    clip         src=i17.wav muted=false ready=true delayMs=0
-  94477 tv    speak        text=i17.wav voice=clip delayMs=0
-  94571 tv    hush
-  94571 tv    clip         src=i25.wav muted=false ready=true delayMs=0
-  94571 tv    speak        text=i25.wav voice=clip delayMs=0
-  94665 tv    hush
-  94665 tv    clip         src=i19.wav muted=false ready=true delayMs=0
-  94665 tv    speak        text=i19.wav voice=clip delayMs=0
-  94760 tv    hush
-  94760 tv    clip         src=g57.wav muted=false ready=true delayMs=0
-  94760 tv    speak        text=g57.wav voice=clip delayMs=0
-  94854 tv    hush
-  94854 tv    clip         src=g59.wav muted=false ready=true delayMs=0
-  94854 tv    speak        text=g59.wav voice=clip delayMs=0
-  95044 tv    cue          cue=call surface=tv muted=false ready=true semitones=0
-  96067 tv    cue          cue=dibs surface=tv muted=false ready=true semitones=0
-  96336 tv    hush
-  96336 tv    cue          cue=reveal surface=tv muted=false ready=true semitones=0
-  96336 tv    hush
- 103944 tv    cue          cue=silence surface=tv muted=false ready=true semitones=0
- 103951 tv    music:duck   ms=9000
- 103952 tv    cue          cue=cheer surface=tv muted=false ready=true semitones=0
- 108953 tv    hush
- 108954 tv    cue          cue=tally surface=tv muted=false ready=true semitones=0
- 108954 tv    hush
- 112949 tv    ss:cancel    speaking=false pending=false
- 112949 tv    music:plan   from=game:bingo to=null
- 112949 tv    cue          cue=cheer surface=tv muted=false ready=true semitones=0
- 114454 tv    music:stop   track=cool-vibes.mp3
- 114576 tv    ss:cancel    speaking=false pending=false
- 114576 tv    music:plan   from=null to=lobby
- 114576 tv    music:start  plan=lobby track=bossa-antigua mode=rotate volume=0.35
- 117101 tv    ss:cancel    speaking=false pending=false
- 117119 tv    music:plan   from=lobby to=game:bingo
- 117119 tv    music:start  plan=game:bingo track=wallpaper mode=chain volume=0.2
- 117119 tv    cue          cue=start surface=tv muted=false ready=true semitones=0
- 117125 tv    hush
- 117126 tv    hush
- 117725 tv    cue          cue=lock surface=tv muted=false ready=true semitones=0
- 117729 tv    hush
- 117729 tv    clip         src=i21.wav muted=false ready=true delayMs=0
- 117729 tv    speak        text=i21.wav voice=clip delayMs=0
- 117730 tv    hush
- 117741 tv    hush
- 117741 tv    clip         src=n32.wav muted=false ready=true delayMs=0
- 117741 tv    speak        text=n32.wav voice=clip delayMs=0
- 117837 tv    hush
- 117837 tv    clip         src=i18.wav muted=false ready=true delayMs=0
- 117837 tv    speak        text=i18.wav voice=clip delayMs=0
- 117922 tv    music:stop   track=bossa-antigua.mp3
- 117931 tv    hush
- 117931 tv    clip         src=n40.wav muted=false ready=true delayMs=0
- 117931 tv    speak        text=n40.wav voice=clip delayMs=0
- 118013 tv    hush
- 118013 tv    clip         src=i30.wav muted=false ready=true delayMs=0
- 118013 tv    speak        text=i30.wav voice=clip delayMs=0
- 118120 tv    hush
- 118120 tv    clip         src=o69.wav muted=false ready=true delayMs=0
- 118120 tv    speak        text=o69.wav voice=clip delayMs=0
- 118215 tv    hush
- 118215 tv    clip         src=o61.wav muted=false ready=true delayMs=0
- 118215 tv    speak        text=o61.wav voice=clip delayMs=0
- 118312 tv    hush
- 118312 tv    clip         src=n34.wav muted=false ready=true delayMs=0
- 118312 tv    speak        text=n34.wav voice=clip delayMs=0
- 118405 tv    hush
- 118405 tv    clip         src=n35.wav muted=false ready=true delayMs=0
- 118405 tv    speak        text=n35.wav voice=clip delayMs=0
- 118513 tv    hush
- 118513 tv    clip         src=o67.wav muted=false ready=true delayMs=0
- 118513 tv    speak        text=o67.wav voice=clip delayMs=0
- 118622 tv    hush
- 118622 tv    clip         src=g55.wav muted=false ready=true delayMs=0
- 118622 tv    speak        text=g55.wav voice=clip delayMs=0
- 118718 tv    hush
- 118718 tv    clip         src=i26.wav muted=false ready=true delayMs=0
- 118718 tv    speak        text=i26.wav voice=clip delayMs=0
- 118827 tv    hush
- 118827 tv    clip         src=i22.wav muted=false ready=true delayMs=0
- 118827 tv    speak        text=i22.wav voice=clip delayMs=0
- 118921 tv    hush
- 118921 tv    clip         src=i29.wav muted=false ready=true delayMs=0
- 118921 tv    speak        text=i29.wav voice=clip delayMs=0
- 119016 tv    hush
- 119016 tv    clip         src=o66.wav muted=false ready=true delayMs=0
- 119016 tv    speak        text=o66.wav voice=clip delayMs=0
- 119123 tv    hush
- 119123 tv    clip         src=g51.wav muted=false ready=true delayMs=0
- 119123 tv    speak        text=g51.wav voice=clip delayMs=0
- 119218 tv    hush
- 119218 tv    clip         src=g53.wav muted=false ready=true delayMs=0
- 119218 tv    speak        text=g53.wav voice=clip delayMs=0
- 119298 tv    hush
- 119298 tv    clip         src=b9.wav muted=false ready=true delayMs=0
- 119298 tv    speak        text=b9.wav voice=clip delayMs=0
- 119392 tv    hush
- 119392 tv    clip         src=n36.wav muted=false ready=true delayMs=0
- 119392 tv    speak        text=n36.wav voice=clip delayMs=0
- 119486 tv    hush
- 119486 tv    clip         src=g52.wav muted=false ready=true delayMs=0
- 119486 tv    speak        text=g52.wav voice=clip delayMs=0
- 119581 tv    hush
- 119581 tv    clip         src=b1.wav muted=false ready=true delayMs=0
- 119581 tv    speak        text=b1.wav voice=clip delayMs=0
- 119661 tv    hush
- 119661 tv    clip         src=b13.wav muted=false ready=true delayMs=0
- 119661 tv    speak        text=b13.wav voice=clip delayMs=0
- 119754 tv    hush
- 119754 tv    clip         src=n37.wav muted=false ready=true delayMs=0
- 119754 tv    speak        text=n37.wav voice=clip delayMs=0
- 119848 tv    hush
- 119848 tv    clip         src=o71.wav muted=false ready=true delayMs=0
- 119848 tv    speak        text=o71.wav voice=clip delayMs=0
- 119944 tv    hush
- 119944 tv    clip         src=b8.wav muted=false ready=true delayMs=0
- 119944 tv    speak        text=b8.wav voice=clip delayMs=0
- 120052 tv    hush
- 120052 tv    clip         src=b5.wav muted=false ready=true delayMs=0
- 120052 tv    speak        text=b5.wav voice=clip delayMs=0
- 120147 tv    hush
- 120147 tv    clip         src=b7.wav muted=false ready=true delayMs=0
- 120147 tv    speak        text=b7.wav voice=clip delayMs=0
- 120243 tv    hush
- 120243 tv    clip         src=n42.wav muted=false ready=true delayMs=0
- 120243 tv    speak        text=n42.wav voice=clip delayMs=0
- 120338 tv    hush
- 120338 tv    clip         src=i28.wav muted=false ready=true delayMs=0
- 120338 tv    speak        text=i28.wav voice=clip delayMs=0
- 120431 tv    hush
- 120431 tv    clip         src=i27.wav muted=false ready=true delayMs=0
- 120431 tv    speak        text=i27.wav voice=clip delayMs=0
- 120514 tv    hush
- 120514 tv    clip         src=o63.wav muted=false ready=true delayMs=0
- 120514 tv    speak        text=o63.wav voice=clip delayMs=0
- 120622 tv    hush
- 120622 tv    clip         src=o64.wav muted=false ready=true delayMs=0
- 120622 tv    speak        text=o64.wav voice=clip delayMs=0
- 120715 tv    hush
- 120715 tv    clip         src=o73.wav muted=false ready=true delayMs=0
- 120715 tv    speak        text=o73.wav voice=clip delayMs=0
- 120780 tv    hush
- 120780 tv    clip         src=g50.wav muted=false ready=true delayMs=0
- 120780 tv    speak        text=g50.wav voice=clip delayMs=0
- 120859 tv    hush
- 120859 tv    clip         src=g48.wav muted=false ready=true delayMs=0
- 120859 tv    speak        text=g48.wav voice=clip delayMs=0
- 120951 tv    hush
- 120951 tv    clip         src=b12.wav muted=false ready=true delayMs=0
- 120951 tv    speak        text=b12.wav voice=clip delayMs=0
- 121031 tv    hush
- 121031 tv    clip         src=n45.wav muted=false ready=true delayMs=0
- 121031 tv    speak        text=n45.wav voice=clip delayMs=0
- 121139 tv    hush
- 121139 tv    clip         src=b4.wav muted=false ready=true delayMs=0
- 121139 tv    speak        text=b4.wav voice=clip delayMs=0
- 121233 tv    hush
- 121233 tv    clip         src=g46.wav muted=false ready=true delayMs=0
- 121233 tv    speak        text=g46.wav voice=clip delayMs=0
- 121345 tv    hush
- 121345 tv    clip         src=o74.wav muted=false ready=true delayMs=0
- 121345 tv    speak        text=o74.wav voice=clip delayMs=0
- 121437 tv    hush
- 121437 tv    clip         src=g47.wav muted=false ready=true delayMs=0
- 121437 tv    speak        text=g47.wav voice=clip delayMs=0
- 121531 tv    hush
- 121531 tv    clip         src=n31.wav muted=false ready=true delayMs=0
- 121531 tv    speak        text=n31.wav voice=clip delayMs=0
- 121629 tv    hush
- 121629 tv    clip         src=o62.wav muted=false ready=true delayMs=0
- 121629 tv    speak        text=o62.wav voice=clip delayMs=0
- 121735 tv    hush
- 121735 tv    clip         src=b10.wav muted=false ready=true delayMs=0
- 121735 tv    speak        text=b10.wav voice=clip delayMs=0
- 121830 tv    hush
- 121830 tv    clip         src=g60.wav muted=false ready=true delayMs=0
- 121830 tv    speak        text=g60.wav voice=clip delayMs=0
- 121926 tv    hush
- 121926 tv    clip         src=n38.wav muted=false ready=true delayMs=0
- 121926 tv    speak        text=n38.wav voice=clip delayMs=0
- 122021 tv    hush
- 122021 tv    clip         src=n39.wav muted=false ready=true delayMs=0
- 122021 tv    speak        text=n39.wav voice=clip delayMs=0
- 122115 tv    hush
- 122115 tv    clip         src=o70.wav muted=false ready=true delayMs=0
- 122115 tv    speak        text=o70.wav voice=clip delayMs=0
- 122212 tv    hush
- 122212 tv    clip         src=b11.wav muted=false ready=true delayMs=0
- 122212 tv    speak        text=b11.wav voice=clip delayMs=0
- 122300 tv    hush
- 122300 tv    clip         src=o75.wav muted=false ready=true delayMs=0
- 122300 tv    speak        text=o75.wav voice=clip delayMs=0
- 122397 tv    hush
- 122397 tv    clip         src=g58.wav muted=false ready=true delayMs=0
- 122397 tv    speak        text=g58.wav voice=clip delayMs=0
- 122493 tv    hush
- 122493 tv    clip         src=b15.wav muted=false ready=true delayMs=0
- 122493 tv    speak        text=b15.wav voice=clip delayMs=0
- 122586 tv    hush
- 122586 tv    clip         src=i24.wav muted=false ready=true delayMs=0
- 122586 tv    speak        text=i24.wav voice=clip delayMs=0
- 122650 tv    hush
- 122650 tv    clip         src=o72.wav muted=false ready=true delayMs=0
- 122650 tv    speak        text=o72.wav voice=clip delayMs=0
- 122759 tv    hush
- 122759 tv    clip         src=g56.wav muted=false ready=true delayMs=0
- 122759 tv    speak        text=g56.wav voice=clip delayMs=0
- 122862 tv    hush
- 122862 tv    clip         src=i20.wav muted=false ready=true delayMs=0
- 122862 tv    speak        text=i20.wav voice=clip delayMs=0
- 122943 tv    hush
- 122943 tv    clip         src=n44.wav muted=false ready=true delayMs=0
- 122943 tv    speak        text=n44.wav voice=clip delayMs=0
- 123027 tv    hush
- 123027 tv    clip         src=b3.wav muted=false ready=true delayMs=0
- 123027 tv    speak        text=b3.wav voice=clip delayMs=0
- 123137 tv    hush
- 123137 tv    clip         src=o68.wav muted=false ready=true delayMs=0
- 123137 tv    speak        text=o68.wav voice=clip delayMs=0
- 123232 tv    hush
- 123232 tv    clip         src=b2.wav muted=false ready=true delayMs=0
- 123232 tv    speak        text=b2.wav voice=clip delayMs=0
- 123342 tv    hush
- 123342 tv    clip         src=n41.wav muted=false ready=true delayMs=0
- 123342 tv    speak        text=n41.wav voice=clip delayMs=0
- 123434 tv    hush
- 123434 tv    clip         src=o65.wav muted=false ready=true delayMs=0
- 123434 tv    speak        text=o65.wav voice=clip delayMs=0
- 123534 tv    hush
- 123534 tv    clip         src=i17.wav muted=false ready=true delayMs=0
- 123534 tv    speak        text=i17.wav voice=clip delayMs=0
- 123618 tv    hush
- 123618 tv    clip         src=i25.wav muted=false ready=true delayMs=0
- 123618 tv    speak        text=i25.wav voice=clip delayMs=0
- 123707 tv    hush
- 123707 tv    clip         src=i19.wav muted=false ready=true delayMs=0
- 123707 tv    speak        text=i19.wav voice=clip delayMs=0
- 123782 tv    hush
- 123782 tv    clip         src=g57.wav muted=false ready=true delayMs=0
- 123782 tv    speak        text=g57.wav voice=clip delayMs=0
- 123892 tv    hush
- 123892 tv    clip         src=g59.wav muted=false ready=true delayMs=0
- 123892 tv    speak        text=g59.wav voice=clip delayMs=0
- 124087 tv    cue          cue=call surface=tv muted=false ready=true semitones=0
- 125152 tv    cue          cue=dibs surface=tv muted=false ready=true semitones=0
- 125420 tv    hush
- 125420 tv    cue          cue=reveal surface=tv muted=false ready=true semitones=0
- 125420 tv    hush
- 133029 tv    music:duck   ms=9000
- 133029 tv    cue          cue=cheer surface=tv muted=false ready=true semitones=0
- 138050 tv    hush
- 138050 tv    cue          cue=tally surface=tv muted=false ready=true semitones=0
- 138050 tv    hush
- 139595 tv    ss:cancel    speaking=false pending=false
- 139595 tv    music:plan   from=game:bingo to=null
- 139602 tv    ss:cancel    speaking=false pending=false
- 139602 tv    music:plan   from=null to=lobby
- 139602 tv    music:start  plan=lobby track=bossa-antigua mode=rotate volume=0.35
- 140418 tv    music:stop   track=wallpaper.mp3
- 142112 tv    cue          cue=join surface=tv muted=false ready=true semitones=5
- 142126 tv    ss:cancel    speaking=false pending=false
- 142130 tv    music:plan   from=lobby to=game:bingo
- 142130 tv    music:start  plan=game:bingo track=wallpaper mode=chain volume=0.2
- 142130 tv    cue          cue=start surface=tv muted=false ready=true semitones=0
- 142136 tv    hush
- 142137 tv    hush
- 142788 tv    cue          cue=card surface=tv muted=false ready=true semitones=0
- 142936 tv    music:stop   track=bossa-antigua.mp3
- 143362 tv    cue          cue=lock surface=tv muted=false ready=true semitones=4
- 144284 tv    ss:cancel    speaking=false pending=false
- 144284 tv    music:plan   from=game:bingo to=null
- 144284 tv    cue          cue=cheer surface=tv muted=false ready=true semitones=0
- 145788 tv    music:stop   track=wallpaper.mp3
+  92841 tv    clip         src=b10.wav muted=false ready=true delayMs=0
+  92841 tv    speak        text=b10.wav voice=clip delayMs=0
+  92966 tv    hush
+  92966 tv    clip         src=g60.wav muted=false ready=true delayMs=0
+  92966 tv    speak        text=g60.wav voice=clip delayMs=0
+  93056 tv    hush
+  93056 tv    clip         src=n38.wav muted=false ready=true delayMs=0
+  93056 tv    speak        text=n38.wav voice=clip delayMs=0
+  93151 tv    hush
+  93151 tv    clip         src=n39.wav muted=false ready=true delayMs=0
+  93151 tv    speak        text=n39.wav voice=clip delayMs=0
+  93277 tv    hush
+  93277 tv    clip         src=o70.wav muted=false ready=true delayMs=0
+  93277 tv    speak        text=o70.wav voice=clip delayMs=0
+  93360 tv    hush
+  93360 tv    clip         src=b11.wav muted=false ready=true delayMs=0
+  93360 tv    speak        text=b11.wav voice=clip delayMs=0
+  93456 tv    hush
+  93456 tv    clip         src=o75.wav muted=false ready=true delayMs=0
+  93456 tv    speak        text=o75.wav voice=clip delayMs=0
+  93547 tv    hush
+  93547 tv    clip         src=g58.wav muted=false ready=true delayMs=0
+  93547 tv    speak        text=g58.wav voice=clip delayMs=0
+  93626 tv    hush
+  93626 tv    clip         src=b15.wav muted=false ready=true delayMs=0
+  93626 tv    speak        text=b15.wav voice=clip delayMs=0
+  93718 tv    hush
+  93718 tv    clip         src=i24.wav muted=false ready=true delayMs=0
+  93718 tv    speak        text=i24.wav voice=clip delayMs=0
+  93813 tv    hush
+  93813 tv    clip         src=o72.wav muted=false ready=true delayMs=0
+  93813 tv    speak        text=o72.wav voice=clip delayMs=0
+  93919 tv    hush
+  93919 tv    clip         src=g56.wav muted=false ready=true delayMs=0
+  93919 tv    speak        text=g56.wav voice=clip delayMs=0
+  94014 tv    hush
+  94014 tv    clip         src=i20.wav muted=false ready=true delayMs=0
+  94014 tv    speak        text=i20.wav voice=clip delayMs=0
+  94109 tv    hush
+  94109 tv    clip         src=n44.wav muted=false ready=true delayMs=0
+  94109 tv    speak        text=n44.wav voice=clip delayMs=0
+  94204 tv    hush
+  94204 tv    clip         src=b3.wav muted=false ready=true delayMs=0
+  94204 tv    speak        text=b3.wav voice=clip delayMs=0
+  94312 tv    hush
+  94312 tv    clip         src=o68.wav muted=false ready=true delayMs=0
+  94312 tv    speak        text=o68.wav voice=clip delayMs=0
+  94409 tv    hush
+  94409 tv    clip         src=b2.wav muted=false ready=true delayMs=0
+  94409 tv    speak        text=b2.wav voice=clip delayMs=0
+  94502 tv    hush
+  94502 tv    clip         src=n41.wav muted=false ready=true delayMs=0
+  94502 tv    speak        text=n41.wav voice=clip delayMs=0
+  94597 tv    hush
+  94597 tv    clip         src=o65.wav muted=false ready=true delayMs=0
+  94597 tv    speak        text=o65.wav voice=clip delayMs=0
+  94704 tv    hush
+  94704 tv    clip         src=i17.wav muted=false ready=true delayMs=0
+  94704 tv    speak        text=i17.wav voice=clip delayMs=0
+  94815 tv    hush
+  94815 tv    clip         src=i25.wav muted=false ready=true delayMs=0
+  94815 tv    speak        text=i25.wav voice=clip delayMs=0
+  94908 tv    hush
+  94908 tv    clip         src=i19.wav muted=false ready=true delayMs=0
+  94908 tv    speak        text=i19.wav voice=clip delayMs=0
+  95003 tv    hush
+  95003 tv    clip         src=g57.wav muted=false ready=true delayMs=0
+  95003 tv    speak        text=g57.wav voice=clip delayMs=0
+  95110 tv    hush
+  95110 tv    clip         src=g59.wav muted=false ready=true delayMs=0
+  95110 tv    speak        text=g59.wav voice=clip delayMs=0
+  95307 tv    cue          cue=call surface=tv muted=false ready=true semitones=0
+  96441 tv    cue          cue=dibs surface=tv muted=false ready=true semitones=0
+  96708 tv    hush
+  96708 tv    cue          cue=reveal surface=tv muted=false ready=true semitones=0
+  96708 tv    hush
+ 104317 tv    music:duck   ms=9000
+ 104317 tv    cue          cue=cheer surface=tv muted=false ready=true semitones=0
+ 109347 tv    hush
+ 109347 tv    cue          cue=tally surface=tv muted=false ready=true semitones=0
+ 109348 tv    hush
+ 113341 tv    ss:cancel    speaking=false pending=false
+ 113341 tv    music:plan   from=game:bingo to=null
+ 113341 tv    cue          cue=cheer surface=tv muted=false ready=true semitones=0
+ 114842 tv    music:stop   track=cool-vibes.mp3
+ 114964 tv    ss:cancel    speaking=false pending=false
+ 114965 tv    music:plan   from=null to=lobby
+ 114965 tv    music:start  plan=lobby track=bossa-antigua mode=rotate volume=0.35
+ 117485 tv    ss:cancel    speaking=false pending=false
+ 117503 tv    music:plan   from=lobby to=game:bingo
+ 117503 tv    music:start  plan=game:bingo track=wallpaper mode=chain volume=0.2
+ 117503 tv    cue          cue=start surface=tv muted=false ready=true semitones=0
+ 117510 tv    hush
+ 117511 tv    hush
+ 118110 tv    cue          cue=lock surface=tv muted=false ready=true semitones=0
+ 118115 tv    hush
+ 118115 tv    clip         src=i21.wav muted=false ready=true delayMs=0
+ 118115 tv    speak        text=i21.wav voice=clip delayMs=0
+ 118115 tv    hush
+ 118127 tv    hush
+ 118127 tv    clip         src=n32.wav muted=false ready=true delayMs=0
+ 118127 tv    speak        text=n32.wav voice=clip delayMs=0
+ 118222 tv    hush
+ 118222 tv    clip         src=i18.wav muted=false ready=true delayMs=0
+ 118222 tv    speak        text=i18.wav voice=clip delayMs=0
+ 118306 tv    music:stop   track=bossa-antigua.mp3
+ 118317 tv    hush
+ 118317 tv    clip         src=n40.wav muted=false ready=true delayMs=0
+ 118317 tv    speak        text=n40.wav voice=clip delayMs=0
+ 118410 tv    hush
+ 118410 tv    clip         src=i30.wav muted=false ready=true delayMs=0
+ 118410 tv    speak        text=i30.wav voice=clip delayMs=0
+ 118506 tv    hush
+ 118506 tv    clip         src=o69.wav muted=false ready=true delayMs=0
+ 118506 tv    speak        text=o69.wav voice=clip delayMs=0
+ 118585 tv    hush
+ 118585 tv    clip         src=o61.wav muted=false ready=true delayMs=0
+ 118585 tv    speak        text=o61.wav voice=clip delayMs=0
+ 118692 tv    hush
+ 118692 tv    clip         src=n34.wav muted=false ready=true delayMs=0
+ 118692 tv    speak        text=n34.wav voice=clip delayMs=0
+ 118772 tv    hush
+ 118772 tv    clip         src=n35.wav muted=false ready=true delayMs=0
+ 118772 tv    speak        text=n35.wav voice=clip delayMs=0
+ 118882 tv    hush
+ 118882 tv    clip         src=o67.wav muted=false ready=true delayMs=0
+ 118882 tv    speak        text=o67.wav voice=clip delayMs=0
+ 118978 tv    hush
+ 118978 tv    clip         src=g55.wav muted=false ready=true delayMs=0
+ 118978 tv    speak        text=g55.wav voice=clip delayMs=0
+ 119086 tv    hush
+ 119086 tv    clip         src=i26.wav muted=false ready=true delayMs=0
+ 119086 tv    speak        text=i26.wav voice=clip delayMs=0
+ 119168 tv    hush
+ 119168 tv    clip         src=i22.wav muted=false ready=true delayMs=0
+ 119168 tv    speak        text=i22.wav voice=clip delayMs=0
+ 119275 tv    hush
+ 119275 tv    clip         src=i29.wav muted=false ready=true delayMs=0
+ 119275 tv    speak        text=i29.wav voice=clip delayMs=0
+ 119356 tv    hush
+ 119356 tv    clip         src=o66.wav muted=false ready=true delayMs=0
+ 119356 tv    speak        text=o66.wav voice=clip delayMs=0
+ 119448 tv    hush
+ 119448 tv    clip         src=g51.wav muted=false ready=true delayMs=0
+ 119448 tv    speak        text=g51.wav voice=clip delayMs=0
+ 119544 tv    hush
+ 119544 tv    clip         src=g53.wav muted=false ready=true delayMs=0
+ 119544 tv    speak        text=g53.wav voice=clip delayMs=0
+ 119651 tv    hush
+ 119651 tv    clip         src=b9.wav muted=false ready=true delayMs=0
+ 119651 tv    speak        text=b9.wav voice=clip delayMs=0
+ 119747 tv    hush
+ 119747 tv    clip         src=n36.wav muted=false ready=true delayMs=0
+ 119747 tv    speak        text=n36.wav voice=clip delayMs=0
+ 119842 tv    hush
+ 119842 tv    clip         src=g52.wav muted=false ready=true delayMs=0
+ 119842 tv    speak        text=g52.wav voice=clip delayMs=0
+ 119951 tv    hush
+ 119951 tv    clip         src=b1.wav muted=false ready=true delayMs=0
+ 119951 tv    speak        text=b1.wav voice=clip delayMs=0
+ 120046 tv    hush
+ 120046 tv    clip         src=b13.wav muted=false ready=true delayMs=0
+ 120046 tv    speak        text=b13.wav voice=clip delayMs=0
+ 120156 tv    hush
+ 120156 tv    clip         src=n37.wav muted=false ready=true delayMs=0
+ 120156 tv    speak        text=n37.wav voice=clip delayMs=0
+ 120251 tv    hush
+ 120251 tv    clip         src=o71.wav muted=false ready=true delayMs=0
+ 120251 tv    speak        text=o71.wav voice=clip delayMs=0
+ 120343 tv    hush
+ 120343 tv    clip         src=b8.wav muted=false ready=true delayMs=0
+ 120343 tv    speak        text=b8.wav voice=clip delayMs=0
+ 120423 tv    hush
+ 120423 tv    clip         src=b5.wav muted=false ready=true delayMs=0
+ 120423 tv    speak        text=b5.wav voice=clip delayMs=0
+ 120531 tv    hush
+ 120531 tv    clip         src=b7.wav muted=false ready=true delayMs=0
+ 120531 tv    speak        text=b7.wav voice=clip delayMs=0
+ 120627 tv    hush
+ 120627 tv    clip         src=n42.wav muted=false ready=true delayMs=0
+ 120627 tv    speak        text=n42.wav voice=clip delayMs=0
+ 120721 tv    hush
+ 120721 tv    clip         src=i28.wav muted=false ready=true delayMs=0
+ 120721 tv    speak        text=i28.wav voice=clip delayMs=0
+ 120816 tv    hush
+ 120816 tv    clip         src=i27.wav muted=false ready=true delayMs=0
+ 120816 tv    speak        text=i27.wav voice=clip delayMs=0
+ 120908 tv    hush
+ 120908 tv    clip         src=o63.wav muted=false ready=true delayMs=0
+ 120908 tv    speak        text=o63.wav voice=clip delayMs=0
+ 121002 tv    hush
+ 121002 tv    clip         src=o64.wav muted=false ready=true delayMs=0
+ 121002 tv    speak        text=o64.wav voice=clip delayMs=0
+ 121111 tv    hush
+ 121111 tv    clip         src=o73.wav muted=false ready=true delayMs=0
+ 121111 tv    speak        text=o73.wav voice=clip delayMs=0
+ 121202 tv    hush
+ 121202 tv    clip         src=g50.wav muted=false ready=true delayMs=0
+ 121202 tv    speak        text=g50.wav voice=clip delayMs=0
+ 121298 tv    hush
+ 121298 tv    clip         src=g48.wav muted=false ready=true delayMs=0
+ 121298 tv    speak        text=g48.wav voice=clip delayMs=0
+ 121390 tv    hush
+ 121390 tv    clip         src=b12.wav muted=false ready=true delayMs=0
+ 121390 tv    speak        text=b12.wav voice=clip delayMs=0
+ 121484 tv    hush
+ 121484 tv    clip         src=n45.wav muted=false ready=true delayMs=0
+ 121484 tv    speak        text=n45.wav voice=clip delayMs=0
+ 121578 tv    hush
+ 121578 tv    clip         src=b4.wav muted=false ready=true delayMs=0
+ 121578 tv    speak        text=b4.wav voice=clip delayMs=0
+ 121657 tv    hush
+ 121657 tv    clip         src=g46.wav muted=false ready=true delayMs=0
+ 121657 tv    speak        text=g46.wav voice=clip delayMs=0
+ 121752 tv    hush
+ 121752 tv    clip         src=o74.wav muted=false ready=true delayMs=0
+ 121752 tv    speak        text=o74.wav voice=clip delayMs=0
+ 121863 tv    hush
+ 121863 tv    clip         src=g47.wav muted=false ready=true delayMs=0
+ 121863 tv    speak        text=g47.wav voice=clip delayMs=0
+ 121969 tv    hush
+ 121969 tv    clip         src=n31.wav muted=false ready=true delayMs=0
+ 121969 tv    speak        text=n31.wav voice=clip delayMs=0
+ 122063 tv    hush
+ 122063 tv    clip         src=o62.wav muted=false ready=true delayMs=0
+ 122063 tv    speak        text=o62.wav voice=clip delayMs=0
+ 122157 tv    hush
+ 122157 tv    clip         src=b10.wav muted=false ready=true delayMs=0
+ 122157 tv    speak        text=b10.wav voice=clip delayMs=0
+ 122235 tv    hush
+ 122235 tv    clip         src=g60.wav muted=false ready=true delayMs=0
+ 122235 tv    speak        text=g60.wav voice=clip delayMs=0
+ 122328 tv    hush
+ 122328 tv    clip         src=n38.wav muted=false ready=true delayMs=0
+ 122328 tv    speak        text=n38.wav voice=clip delayMs=0
+ 122422 tv    hush
+ 122422 tv    clip         src=n39.wav muted=false ready=true delayMs=0
+ 122422 tv    speak        text=n39.wav voice=clip delayMs=0
+ 122517 tv    hush
+ 122517 tv    clip         src=o70.wav muted=false ready=true delayMs=0
+ 122517 tv    speak        text=o70.wav voice=clip delayMs=0
+ 122611 tv    hush
+ 122611 tv    clip         src=b11.wav muted=false ready=true delayMs=0
+ 122611 tv    speak        text=b11.wav voice=clip delayMs=0
+ 122707 tv    hush
+ 122707 tv    clip         src=o75.wav muted=false ready=true delayMs=0
+ 122707 tv    speak        text=o75.wav voice=clip delayMs=0
+ 122802 tv    hush
+ 122802 tv    clip         src=g58.wav muted=false ready=true delayMs=0
+ 122802 tv    speak        text=g58.wav voice=clip delayMs=0
+ 122881 tv    hush
+ 122881 tv    clip         src=b15.wav muted=false ready=true delayMs=0
+ 122881 tv    speak        text=b15.wav voice=clip delayMs=0
+ 122972 tv    hush
+ 122972 tv    clip         src=i24.wav muted=false ready=true delayMs=0
+ 122972 tv    speak        text=i24.wav voice=clip delayMs=0
+ 123068 tv    hush
+ 123068 tv    clip         src=o72.wav muted=false ready=true delayMs=0
+ 123068 tv    speak        text=o72.wav voice=clip delayMs=0
+ 123161 tv    hush
+ 123161 tv    clip         src=g56.wav muted=false ready=true delayMs=0
+ 123161 tv    speak        text=g56.wav voice=clip delayMs=0
+ 123257 tv    hush
+ 123257 tv    clip         src=i20.wav muted=false ready=true delayMs=0
+ 123257 tv    speak        text=i20.wav voice=clip delayMs=0
+ 123366 tv    hush
+ 123366 tv    clip         src=n44.wav muted=false ready=true delayMs=0
+ 123366 tv    speak        text=n44.wav voice=clip delayMs=0
+ 123475 tv    hush
+ 123475 tv    clip         src=b3.wav muted=false ready=true delayMs=0
+ 123475 tv    speak        text=b3.wav voice=clip delayMs=0
+ 123582 tv    hush
+ 123582 tv    clip         src=o68.wav muted=false ready=true delayMs=0
+ 123582 tv    speak        text=o68.wav voice=clip delayMs=0
+ 123676 tv    hush
+ 123676 tv    clip         src=b2.wav muted=false ready=true delayMs=0
+ 123676 tv    speak        text=b2.wav voice=clip delayMs=0
+ 123788 tv    hush
+ 123788 tv    clip         src=n41.wav muted=false ready=true delayMs=0
+ 123788 tv    speak        text=n41.wav voice=clip delayMs=0
+ 123899 tv    hush
+ 123899 tv    clip         src=o65.wav muted=false ready=true delayMs=0
+ 123899 tv    speak        text=o65.wav voice=clip delayMs=0
+ 123992 tv    hush
+ 123992 tv    clip         src=i17.wav muted=false ready=true delayMs=0
+ 123992 tv    speak        text=i17.wav voice=clip delayMs=0
+ 124101 tv    hush
+ 124101 tv    clip         src=i25.wav muted=false ready=true delayMs=0
+ 124101 tv    speak        text=i25.wav voice=clip delayMs=0
+ 124198 tv    hush
+ 124198 tv    clip         src=i19.wav muted=false ready=true delayMs=0
+ 124198 tv    speak        text=i19.wav voice=clip delayMs=0
+ 124289 tv    hush
+ 124289 tv    clip         src=g57.wav muted=false ready=true delayMs=0
+ 124289 tv    speak        text=g57.wav voice=clip delayMs=0
+ 124370 tv    hush
+ 124370 tv    clip         src=g59.wav muted=false ready=true delayMs=0
+ 124370 tv    speak        text=g59.wav voice=clip delayMs=0
+ 124565 tv    cue          cue=call surface=tv muted=false ready=true semitones=0
+ 125620 tv    cue          cue=dibs surface=tv muted=false ready=true semitones=0
+ 125880 tv    hush
+ 125880 tv    cue          cue=reveal surface=tv muted=false ready=true semitones=0
+ 125881 tv    hush
+ 133498 tv    music:duck   ms=9000
+ 133498 tv    cue          cue=cheer surface=tv muted=false ready=true semitones=0
+ 138515 tv    hush
+ 138515 tv    cue          cue=tally surface=tv muted=false ready=true semitones=0
+ 138516 tv    hush
+ 140067 tv    ss:cancel    speaking=false pending=false
+ 140067 tv    music:plan   from=game:bingo to=null
+ 140073 tv    ss:cancel    speaking=false pending=false
+ 140073 tv    music:plan   from=null to=lobby
+ 140073 tv    music:start  plan=lobby track=george-street-shuffle mode=rotate volume=0.35
+ 140874 tv    music:stop   track=wallpaper.mp3
+ 142591 tv    cue          cue=join surface=tv muted=false ready=true semitones=5
+ 142608 tv    ss:cancel    speaking=false pending=false
+ 142614 tv    music:plan   from=lobby to=game:bingo
+ 142614 tv    music:start  plan=game:bingo track=wallpaper mode=chain volume=0.2
+ 142614 tv    cue          cue=start surface=tv muted=false ready=true semitones=0
+ 142623 tv    hush
+ 142624 tv    hush
+ 143275 tv    cue          cue=card surface=tv muted=false ready=true semitones=0
+ 143424 tv    music:stop   track=george-street-shuffle.mp3
+ 143849 tv    cue          cue=lock surface=tv muted=false ready=true semitones=4
+ 144768 tv    ss:cancel    speaking=false pending=false
+ 144768 tv    music:plan   from=game:bingo to=null
+ 144768 tv    cue          cue=cheer surface=tv muted=false ready=true semitones=0
+ 146279 tv    music:stop   track=wallpaper.mp3
 ```
 
 ## E · Home (reset) from results and mid-game
@@ -817,38 +816,38 @@ Captured 2026-09-19T05:53:45.196Z on port 42112. Every cue, music event, speech 
 - ✅ **nothing spoken in the lobby afterwards**
 
 ```
- 146444 tv    ss:cancel    speaking=false pending=false
- 146444 tv    music:plan   from=null to=lobby
- 146444 tv    music:start  plan=lobby track=bossa-antigua mode=rotate volume=0.35
- 149811 tv    cue          cue=join surface=tv muted=false ready=true semitones=0
- 149828 tv    ss:cancel    speaking=false pending=false
- 149831 tv    music:plan   from=lobby to=game:bingo
- 149831 tv    music:start  plan=game:bingo track=wallpaper mode=chain volume=0.2
- 149831 tv    cue          cue=start surface=tv muted=false ready=true semitones=0
- 149838 tv    hush
- 149839 tv    hush
- 150254 tv    cue          cue=lock surface=tv muted=false ready=true semitones=8
- 150259 tv    hush
- 150259 tv    clip         src=i21.wav muted=false ready=true delayMs=0
- 150259 tv    speak        text=i21.wav voice=clip delayMs=0
- 150259 tv    hush
- 150452 tv    cue          cue=call surface=tv muted=false ready=true semitones=0
- 150635 tv    music:stop   track=bossa-antigua.mp3
- 150762 tv    ss:cancel    speaking=false pending=false
- 150762 tv    music:plan   from=game:bingo to=null
- 150770 tv    ss:cancel    speaking=false pending=false
- 150770 tv    music:plan   from=null to=lobby
- 150770 tv    music:start  plan=lobby track=local-forecast-elevator mode=rotate volume=0.35
- 151575 tv    music:stop   track=wallpaper.mp3
+ 146948 tv    ss:cancel    speaking=false pending=false
+ 146948 tv    music:plan   from=null to=lobby
+ 146948 tv    music:start  plan=lobby track=bossa-antigua mode=rotate volume=0.35
+ 150337 tv    cue          cue=join surface=tv muted=false ready=true semitones=0
+ 150359 tv    ss:cancel    speaking=false pending=false
+ 150364 tv    music:plan   from=lobby to=game:bingo
+ 150364 tv    music:start  plan=game:bingo track=wallpaper mode=chain volume=0.2
+ 150364 tv    cue          cue=start surface=tv muted=false ready=true semitones=0
+ 150374 tv    hush
+ 150374 tv    hush
+ 150780 tv    cue          cue=lock surface=tv muted=false ready=true semitones=8
+ 150787 tv    hush
+ 150787 tv    clip         src=i21.wav muted=false ready=true delayMs=0
+ 150787 tv    speak        text=i21.wav voice=clip delayMs=0
+ 150787 tv    hush
+ 150990 tv    cue          cue=call surface=tv muted=false ready=true semitones=0
+ 151174 tv    music:stop   track=bossa-antigua.mp3
+ 151283 tv    ss:cancel    speaking=false pending=false
+ 151283 tv    music:plan   from=game:bingo to=null
+ 151294 tv    ss:cancel    speaking=false pending=false
+ 151294 tv    music:plan   from=null to=lobby
+ 151294 tv    music:start  plan=lobby track=local-forecast-elevator mode=rotate volume=0.35
+ 152103 tv    music:stop   track=wallpaper.mp3
 ```
 
 ## F · Wisecrack: reveal sting vs phase chime, sweep, tally
 
-- ✅ **Wisecrack start → start cue, the lobby track only fading out, the warm bed under the intro** — cues=leave,leave,leave,leave,leave,join,start playing=[{"track":"local-forecast-elevator.mp3","vol":0.06,"t":10.3}] bed=warm
-- ✅ **the writing track eases in (under 0.2 a third of a second in), never a hard start** — playing=[{"track":"local-forecast-elevator.mp3","vol":0.03,"t":10.7},{"track":"fluffing-a-duck.mp3","vol":0.07,"t":0.3}]
-- ✅ **answer → one Wisecrack track at 0.2 × its trim while everyone writes, the bed gone** — playing=[{"track":"fluffing-a-duck.mp3","vol":0.19,"t":2.4}] bed=null
+- ✅ **Wisecrack start → start cue, the lobby track only fading out, the warm bed under the intro** — cues=leave,leave,leave,leave,leave,join,start playing=[{"track":"local-forecast-elevator.mp3","vol":0.06,"t":10.5}] bed=warm
+- ✅ **the writing track eases in (under 0.2 a third of a second in), never a hard start** — playing=[{"track":"local-forecast-elevator.mp3","vol":0.04,"t":10.9},{"track":"carefree.mp3","vol":0.11,"t":0.3}]
+- ✅ **answer → one Wisecrack track at 0.2 × its trim while everyone writes, the bed gone** — playing=[{"track":"carefree.mp3","vol":0.31,"t":2.4}] bed=null
 - ✅ **pause while writing → pause cue, the writing track holds (nothing playing), no bed** — cues=phase,pause playing=[]
-- ✅ **resume → phase chime, the same writing track carries on at its level (no music:start)** — cues=phase playing=[{"track":"fluffing-a-duck.mp3","vol":0.19,"t":3.4}]
+- ✅ **resume → phase chime, the same writing track carries on at its level (no music:start)** — cues=phase playing=[{"track":"carefree.mp3","vol":0.31,"t":3.4}]
 - ✅ **answers → lock ticks on the TV as phones submit** — cues=phase,pause,phase,lock,lock,phase
 - ✅ **submitting on the phone → submit cue + buzz** — phone cues=submit
 - ✅ **vote → the marimba bed (the first prompt), the track fading out** — bed=marimba playing=[]
@@ -857,65 +856,65 @@ Captured 2026-09-19T05:53:45.196Z on port 42112. Every cue, music event, speech 
 - ✅ **scores phase → tally ping (mapped), the lounge bed** — cues=phase,reveal,phase,reveal,tally bed=lounge
 
 ```
- 156416 tv    cue          cue=leave surface=tv muted=false ready=true semitones=0
- 156847 tv    cue          cue=leave surface=tv muted=false ready=true semitones=0
- 157280 tv    cue          cue=leave surface=tv muted=false ready=true semitones=0
- 157713 tv    cue          cue=leave surface=tv muted=false ready=true semitones=0
- 158146 tv    cue          cue=leave surface=tv muted=false ready=true semitones=0
- 159278 tv    cue          cue=join surface=tv muted=false ready=true semitones=4
- 159882 tv    ss:cancel    speaking=false pending=false
- 159891 tv    music:plan   from=lobby to=null
- 159891 tv    cue          cue=start surface=tv muted=false ready=true semitones=0
- 161163 tv    music:plan   from=null to=game:wisecrack
- 161163 tv    music:start  plan=game:wisecrack track=fluffing-a-duck mode=chain volume=0.18600000000000003
- 161163 tv    cue          cue=phase surface=tv muted=false ready=true semitones=0
- 161966 tv    music:stop   track=local-forecast-elevator.mp3
- 163695 tv    music:paused paused=true
- 163695 tv    cue          cue=pause surface=tv muted=false ready=true semitones=0
- 164674 tv    music:paused paused=false
- 164674 tv    cue          cue=phase surface=tv muted=false ready=true semitones=0
- 166616 tv    cue          cue=lock surface=tv muted=false ready=true semitones=0
- 167915 tv    cue          cue=lock surface=tv muted=false ready=true semitones=2
- 169217 tv    music:plan   from=game:wisecrack to=null
- 169218 tv    cue          cue=phase surface=tv muted=false ready=true semitones=0
- 169218 tv    bed:duck     bed=marimba cue=phase
- 170279 tv    cue          cue=reveal surface=tv muted=false ready=true semitones=0
- 170279 tv    bed:duck     bed=marimba cue=reveal
- 170718 tv    music:stop   track=fluffing-a-duck.mp3
- 173934 tv    cue          cue=phase surface=tv muted=false ready=true semitones=0
- 173934 tv    bed:duck     bed=lofi cue=phase
- 174116 tv    cue          cue=reveal surface=tv muted=false ready=true semitones=0
- 174116 tv    bed:duck     bed=lofi cue=reveal
- 174307 tv    cue          cue=phase surface=tv muted=false ready=true semitones=0
- 174307 tv    bed:duck     bed=marimba cue=phase
- 174478 tv    cue          cue=reveal surface=tv muted=false ready=true semitones=0
- 174478 tv    bed:duck     bed=marimba cue=reveal
- 174673 tv    cue          cue=tally surface=tv muted=false ready=true semitones=0
- 174673 tv    bed:duck     bed=lounge cue=tally
+ 156990 tv    cue          cue=leave surface=tv muted=false ready=true semitones=0
+ 157422 tv    cue          cue=leave surface=tv muted=false ready=true semitones=0
+ 157854 tv    cue          cue=leave surface=tv muted=false ready=true semitones=0
+ 158291 tv    cue          cue=leave surface=tv muted=false ready=true semitones=0
+ 158737 tv    cue          cue=leave surface=tv muted=false ready=true semitones=0
+ 159991 tv    cue          cue=join surface=tv muted=false ready=true semitones=4
+ 160599 tv    ss:cancel    speaking=false pending=false
+ 160608 tv    music:plan   from=lobby to=null
+ 160608 tv    cue          cue=start surface=tv muted=false ready=true semitones=0
+ 161886 tv    music:plan   from=null to=game:wisecrack
+ 161886 tv    music:start  plan=game:wisecrack track=carefree mode=chain volume=0.30600000000000005
+ 161886 tv    cue          cue=phase surface=tv muted=false ready=true semitones=0
+ 162689 tv    music:stop   track=local-forecast-elevator.mp3
+ 164424 tv    music:paused paused=true
+ 164424 tv    cue          cue=pause surface=tv muted=false ready=true semitones=0
+ 165419 tv    music:paused paused=false
+ 165419 tv    cue          cue=phase surface=tv muted=false ready=true semitones=0
+ 167439 tv    cue          cue=lock surface=tv muted=false ready=true semitones=0
+ 168788 tv    cue          cue=lock surface=tv muted=false ready=true semitones=2
+ 170128 tv    music:plan   from=game:wisecrack to=null
+ 170129 tv    cue          cue=phase surface=tv muted=false ready=true semitones=0
+ 170129 tv    bed:duck     bed=marimba cue=phase
+ 171232 tv    cue          cue=reveal surface=tv muted=false ready=true semitones=0
+ 171232 tv    bed:duck     bed=marimba cue=reveal
+ 171640 tv    music:stop   track=carefree.mp3
+ 174885 tv    cue          cue=phase surface=tv muted=false ready=true semitones=0
+ 174885 tv    bed:duck     bed=lofi cue=phase
+ 175070 tv    cue          cue=reveal surface=tv muted=false ready=true semitones=0
+ 175070 tv    bed:duck     bed=lofi cue=reveal
+ 175260 tv    cue          cue=phase surface=tv muted=false ready=true semitones=0
+ 175260 tv    bed:duck     bed=marimba cue=phase
+ 175449 tv    cue          cue=reveal surface=tv muted=false ready=true semitones=0
+ 175449 tv    bed:duck     bed=marimba cue=reveal
+ 175626 tv    cue          cue=tally surface=tv muted=false ready=true semitones=0
+ 175626 tv    bed:duck     bed=lounge cue=tally
 ```
 
 ## G · Broken Pencil: music only while drawing/guessing, reveal on show
 
 - ✅ **first phase (pick) → no game music yet unless it is draw/guess/pass** — phase=pick playing=[] plan=null→lobby lobby→null
-- ✅ **draw/guess/pass (draw) → the Broken Pencil set at 0.2, one track** — [{"track":"lobby-time.mp3","vol":0.2,"t":1.4}]
+- ✅ **draw/guess/pass (draw) → the Broken Pencil set at 0.2, one track** — [{"track":"backbay-lounge.mp3","vol":0.2,"t":1.3}]
 - ✅ **show → the soft 'card' page-turn pluck (mapped since loop 93), music stops (show)** — cues=phase,phase,card playing=[]
 
 ```
- 175823 tv    ss:cancel    speaking=false pending=false
- 175829 tv    ss:cancel    speaking=false pending=false
- 175829 tv    music:plan   from=null to=lobby
- 175829 tv    music:start  plan=lobby track=george-street-shuffle mode=rotate volume=0.35
- 177848 tv    cue          cue=join surface=tv muted=false ready=true semitones=5
- 177863 tv    ss:cancel    speaking=false pending=false
- 177865 tv    music:plan   from=lobby to=null
- 177865 tv    cue          cue=start surface=tv muted=false ready=true semitones=0
- 179368 tv    music:stop   track=george-street-shuffle.mp3
- 179463 tv    music:plan   from=null to=game:broken-pencil
- 179463 tv    music:start  plan=game:broken-pencil track=lobby-time mode=chain volume=0.2
- 179463 tv    cue          cue=phase surface=tv muted=false ready=true semitones=0
- 180938 tv    cue          cue=phase surface=tv muted=false ready=true semitones=0
- 181419 tv    cue          cue=phase surface=tv muted=false ready=true semitones=0
- 181574 tv    music:plan   from=game:broken-pencil to=null
- 181574 tv    cue          cue=card surface=tv muted=false ready=true semitones=0
- 183079 tv    music:stop   track=lobby-time.mp3
+ 176796 tv    ss:cancel    speaking=false pending=false
+ 176801 tv    ss:cancel    speaking=false pending=false
+ 176801 tv    music:plan   from=null to=lobby
+ 176801 tv    music:start  plan=lobby track=bossa-antigua mode=rotate volume=0.35
+ 178821 tv    cue          cue=join surface=tv muted=false ready=true semitones=5
+ 178838 tv    ss:cancel    speaking=false pending=false
+ 178842 tv    music:plan   from=lobby to=null
+ 178842 tv    cue          cue=start surface=tv muted=false ready=true semitones=0
+ 180355 tv    music:stop   track=bossa-antigua.mp3
+ 180432 tv    music:plan   from=null to=game:broken-pencil
+ 180432 tv    music:start  plan=game:broken-pencil track=backbay-lounge mode=chain volume=0.2
+ 180432 tv    cue          cue=phase surface=tv muted=false ready=true semitones=0
+ 181895 tv    cue          cue=phase surface=tv muted=false ready=true semitones=0
+ 182371 tv    cue          cue=phase surface=tv muted=false ready=true semitones=0
+ 182526 tv    music:plan   from=game:broken-pencil to=null
+ 182526 tv    cue          cue=card surface=tv muted=false ready=true semitones=0
+ 184038 tv    music:stop   track=backbay-lounge.mp3
 ```
