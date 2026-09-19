@@ -22,7 +22,8 @@ const DOING_PROMPT = [
   /^____ and ____: what\b/, // "____ and ____: what the Airbnb's two hidden cameras caught."
   /\bdo (?:at|in|on|to|with|for|instead|before|after|during|while|when|all day|every)\b/i, // "What did Lincoln do at…", "…do while I'm at work?"
   /\b(?:was|is|were) actually (?:[A-Z][\w']+ ){1,3}____/, // "The moonwalk was actually Michael Jackson ____."
-  /\b(?:does|did|caught (?:me|him|her|them|us)|busy|instead of|after|before|while|spent (?:the \w+|\w+ years?))\s+____/i,
+  /\b(?:does|did|caught (?:me|him|her|them|us)|busy|instead of|after|before|while|during|conceived during|spent (?:the \w+|\w+ years?)|most likely to)\s+____/i,
+  /["“]Most Likely To["”] was ____/i, // the yearbook's
   /\b(?:what happened|what went wrong|walk(?:ed)? in on\?|catch (?:\w+ )+doing|am I doing|are you doing|^how did|^why\b)\b/i,
   /\b(?:pulled (?:me|us|him|her) over|in trouble|grounded|detention|suspended|deported|excommunicated|disqualified|demonetized|cancel(?:l)?ed) (?:\w+ )?for ____/i,
   /\b(?:ruined|interrupted|cancelled|canceled|delayed|caused|started|ended|followed|triggered|brought on) by ____/i,
