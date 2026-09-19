@@ -60,6 +60,8 @@ export interface PencilControllerView extends ControllerView, Common {
   submitted: boolean;
   /** What I handed in this step (so the phone can show it after sending). */
   mine: { text?: string; drawing?: Drawing } | null;
+  /** My sheet so far this step (`draft`), so a phone that reloads mid-drawing gets it back. */
+  draft: Drawing | null;
   /** Who gets this book next (null after the last page). */
   nextName: string | null;
   showing: null | {
@@ -210,6 +212,10 @@ export function controllerView(
         : playing(state) && submittedThisStep(state, playerId)
       : false,
     mine: book ? mineOf(state, playerId, book) : null,
+    draft:
+      stage === 'draw' && state.drafts && Object.hasOwn(state.drafts, playerId)
+        ? (state.drafts[playerId] ?? null)
+        : null,
     nextName: nextSeat ? nameOf(state, nextSeat) : null,
     showing:
       state.phase.id === 'show' && showing && shownBook

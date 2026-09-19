@@ -6,8 +6,9 @@
   successor is injected from server/index.ts (`advance`) so phase files never import each other.
 - Hidden info is omitted by KEY (`correctIndex`, `pickIndex`, `wagerAmount`), never set to null —
   `__tests__/contract.config.ts` asserts those key names are absent before the reveal.
-- Questions are referenced by id; content/questions.json is the truth (≥ 200 items, 8 categories,
-  balanced `answerIndex`). Add questions with a `source` note; never time-sensitive facts.
+- Questions are referenced by id; content/questions.json is the truth (3 867 items, 10 categories × 59
+  topics, balanced `answerIndex`). Add questions with a `source` note and a `subcategory` from
+  content/schema.ts; never time-sensitive facts. The topics checklist is a `multiselect` setting (ADR-034).
 - Imports: only @partybox/game-sdk (+ react in client/). server/ is pure (no Date.now, Math.random,
   timers, I/O).
 - Fixtures are full states with real question ids; regenerate by hand with the reducer after a

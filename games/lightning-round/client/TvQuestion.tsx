@@ -27,7 +27,7 @@ export function RoundHeader({
       </span>
       {question ? (
         <span>
-          {question.categoryLabel} · {question.difficulty}
+          {question.categoryLabel} · {question.subcategoryLabel} · {question.difficulty}
         </span>
       ) : null}
     </div>

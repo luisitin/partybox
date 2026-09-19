@@ -68,6 +68,13 @@ export interface State extends GameStateBase {
   offers: Record<string, string[]>;
   showing: Showing | null;
   intactBooks: number;
+  /**
+   * What each artist has drawn so far this step (`draft` inputs), keyed by player id. When the
+   * deadline closes the step, a missing drawing takes its author's draft instead of an empty
+   * sheet, so a slow artist's page stops where it is. Cleared when the step closes; absent in
+   * older states and fixtures.
+   */
+  drafts?: Record<string, Drawing>;
 }
 
 const strokeSchema = z.object({
@@ -88,18 +95,19 @@ const strokeSchema = z.object({
     .refine((s) => s.length % 4 === 0 && s.length >= 4, { message: 'base64 length' }),
 });
 
+const strokesSchema = z
+  .array(strokeSchema)
+  .max(MAX_STROKES)
+  .refine((a) => a.reduce((n, s) => n + s.p.length, 0) <= INK_CHARS, { message: 'out of ink' });
+
 export const inputSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('pick'), option: z.number().int().min(0).max(2) }),
   /** show: the book's owner turns the page from their phone. */
   z.object({ type: z.literal('turn') }),
   z.object({ type: z.literal('pickCustom'), text: z.string().trim().min(1).max(30) }),
-  z.object({
-    type: z.literal('draw'),
-    strokes: z
-      .array(strokeSchema)
-      .max(MAX_STROKES)
-      .refine((a) => a.reduce((n, s) => n + s.p.length, 0) <= INK_CHARS, { message: 'out of ink' }),
-  }),
+  z.object({ type: z.literal('draw'), strokes: strokesSchema }),
+  /** The sheet so far, while still drawing: what the deadline keeps if "Done" never comes. */
+  z.object({ type: z.literal('draft'), strokes: strokesSchema }),
   z.object({ type: z.literal('guess'), text: z.string().trim().min(1).max(40) }),
 ]);
 export type Input = z.infer<typeof inputSchema>;

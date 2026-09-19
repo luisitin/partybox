@@ -46,14 +46,30 @@ export async function runMoreScenarios({ T, tv, vip, p2, api, pages, out }: Ctx)
   await settle(1200);
   await T.mark('F1');
   evs = await T.between(tv, 'E3', 'F1');
+  const bed = async (): Promise<string | null> =>
+    (await tv.evaluate('window.__pbBeds?.current() ?? null')) as string | null;
   T.ok(
     'F',
-    'Wisecrack start → start cue, no music (none configured; the lobby track only fading out)',
-    T.cues(evs).includes('start') && (await T.playing(tv)).every((m) => m.vol <= 0.1),
-    `cues=${T.cues(evs).join(',')} playing=${JSON.stringify(await T.playing(tv))}`,
+    'Wisecrack start → start cue, the lobby track only fading out, the warm bed under the intro',
+    T.cues(evs).includes('start') &&
+      (await T.playing(tv)).every((m) => m.vol <= 0.1) &&
+      (await bed()) === 'warm',
+    `cues=${T.cues(evs).join(',')} playing=${JSON.stringify(await T.playing(tv))} bed=${await bed()}`,
   );
   await api.skip(); // intro → answer
-  await settle(600);
+  await settle(2500);
+  const writing = (await T.playing(tv)).filter((m) => m.vol > 0.1);
+  T.ok(
+    'F',
+    'answer → one Wisecrack track at 0.2 while everyone writes, the bed gone',
+    writing.length === 1 &&
+      ['sneaky-snitch.mp3', 'fluffing-a-duck.mp3', 'carefree.mp3'].includes(
+        writing[0]?.track ?? '',
+      ) &&
+      writing[0]?.vol === 0.2 &&
+      (await bed()) === null,
+    `playing=${JSON.stringify(await T.playing(tv))} bed=${await bed()}`,
+  );
   for (const ph of [vip, p2, p3]) {
     const ta = ph.page.locator('textarea:not([disabled])');
     await ta
@@ -101,13 +117,27 @@ export async function runMoreScenarios({ T, tv, vip, p2, api, pages, out }: Ctx)
   );
   await api.skip(); // → vote
   await settle(500);
+  const voteBed = await bed();
+  T.ok(
+    'F',
+    'vote → the marimba bed (the first prompt), the track fading out',
+    voteBed === 'marimba',
+    `bed=${voteBed} playing=${JSON.stringify(await T.playing(tv))}`,
+  );
   await api.post('/api/dev/act', {}).catch(() => undefined);
   await settle(500);
-  await api.skip(); // → reveal
+  // Everyone voting closes the vote by itself; only skip when it is still open.
+  if ((await api.state()).room?.game?.state.phase.id === 'vote') await api.skip(); // → reveal
   await settle(2500);
   await T.mark('F3');
   evs = await T.between(tv, 'F2', 'F3');
   const cs = T.cues(evs);
+  T.ok(
+    'F',
+    'reveal keeps the vote’s bed (same list, same turn: no crossfade on the cut)',
+    (await bed()) === voteBed && (await T.playing(tv)).length === 0,
+    `bed=${await bed()} playing=${JSON.stringify(await T.playing(tv))}`,
+  );
   T.ok(
     'F',
     'reveal → the reveal sting from the game, no phase chime within it',
@@ -133,9 +163,9 @@ export async function runMoreScenarios({ T, tv, vip, p2, api, pages, out }: Ctx)
   evs = await T.between(tv, 'F3', 'F4');
   T.ok(
     'F',
-    'scores phase → tally ping (mapped)',
-    T.cues(evs).includes('tally'),
-    `cues=${T.cues(evs).join(',')}`,
+    'scores phase → tally ping (mapped), the lounge bed',
+    T.cues(evs).includes('tally') && (await bed()) === 'lounge',
+    `cues=${T.cues(evs).join(',')} bed=${await bed()}`,
   );
   T.timeline(await T.between(tv, 'E3', 'F4'), 'tv');
   await p3.context.close();

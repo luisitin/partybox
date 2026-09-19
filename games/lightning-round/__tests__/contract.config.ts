@@ -27,5 +27,9 @@ export const contractConfig = {
     if (finalPending(state)) hidden.push('wagerAmount');
     return hidden;
   },
-  settingsVariants: [{ questions: 5, answerSeconds: 5 }, { category: 'science' }],
+  settingsVariants: [
+    { questions: 5, answerSeconds: 5 },
+    { category: 'stem' },
+    { category: 'sports', subcategories: 'basketball,soccer' },
+  ],
 };

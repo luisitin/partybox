@@ -18,7 +18,7 @@ function roundKicker(view: LightningControllerView): string {
       : round.final
         ? 'Final question'
         : `Question ${round.number} of ${round.total}`;
-  return view.question ? `${where} · ${view.question.categoryLabel}` : where;
+  return view.question ? `${where} · ${view.question.subcategoryLabel}` : where;
 }
 
 export function Controller({

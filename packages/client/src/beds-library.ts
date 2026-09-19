@@ -3,20 +3,25 @@
 // 2026-09-17 from the Blanks review page: warm (relaxed picking / result), latenight (under the
 // read-out), marimba (judging), bossa (picking). Levels sit low on purpose: the owner asked for true
 // background ("lower its decibels", 2026-09-17) — roughly half the review-page sketches.
+import { MORE_BEDS } from './beds-library-more';
 import { hat, hz, kick, snare, voice } from './beds-voices';
+import type { Bed } from './beds-voices';
 
-export const BED_IDS = ['warm', 'bossa', 'latenight', 'marimba', 'lofi', 'lounge'] as const;
+export type { Bed } from './beds-voices';
+
+export const BED_IDS = [
+  'warm',
+  'bossa',
+  'latenight',
+  'marimba',
+  'lofi',
+  'lounge',
+  'pulse',
+] as const;
 export type BedId = (typeof BED_IDS)[number];
 
-export interface Bed {
-  bpm: number;
-  /** Steady level 0..1 into the master. */
-  level: number;
-  /** Schedule one bar starting at `t` (seconds on the context clock); `i` counts bars. */
-  bar(ctx: AudioContext, out: GainNode, t: number, i: number): void;
-}
-
 export const BEDS: Record<BedId, Bed> = {
+  ...MORE_BEDS,
   // Electric-piano chords (Cmaj7 · Am7 · Fmaj7 · G7), a round bass on 1 and 3, brushed hats.
   warm: {
     bpm: 92,

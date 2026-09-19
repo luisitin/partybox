@@ -35,7 +35,34 @@ export const settingSpecSchema = z.discriminatedUnion('type', [
     default: z.string(),
     options: z.array(z.object({ value: z.string(), label: z.string() })).min(2),
   }),
+  /**
+   * Several picks from a list (ADR-034): the value is the picked option values joined by commas
+   * (`''` = nothing picked, which a game reads as "no filter"). With `groupBy`, the options carry a
+   * `group` and only those whose group equals the sibling `select` setting's current value are
+   * offered — and kept: the engine drops picks from another group.
+   */
+  z.object({
+    ...settingBase,
+    type: z.literal('multiselect'),
+    default: z.string(),
+    options: z
+      .array(z.object({ value: z.string(), label: z.string(), group: z.string().optional() }))
+      .min(1),
+    groupBy: z.string().optional(),
+  }),
 ]);
+
+/** A multiselect value → its picks (deduped, in option order when `spec` is given). */
+export function multiselectPicks(
+  value: unknown,
+  spec?: { options: { value: string }[] },
+): string[] {
+  const raw = typeof value === 'string' ? value.split(',') : [];
+  const picks = [...new Set(raw.map((v) => v.trim()).filter((v) => v.length > 0))];
+  if (!spec) return picks;
+  const known = spec.options.map((o) => o.value);
+  return known.filter((v) => picks.includes(v));
+}
 export type SettingSpec = z.infer<typeof settingSpecSchema>;
 
 export const DEFAULT_MAX_INPUT_BYTES = 16 * 1024;

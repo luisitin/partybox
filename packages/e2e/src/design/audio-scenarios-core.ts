@@ -101,9 +101,11 @@ export async function runCoreScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
   await settle(1500);
   await T.mark('B1');
   evs = await T.between(tv, 'A4', 'B1');
+  const bed = async (): Promise<string | null> =>
+    (await tv.evaluate('window.__pbBeds?.current() ?? null')) as string | null;
   T.ok(
     'B',
-    'game start → start cue, lobby music fades to none (Lightning has no music)',
+    'game start → start cue, lobby music fades to none (Lightning plays beds, not tracks)',
     T.cues(evs).includes('start') && evs.some((e) => e.kind === 'music:plan' && e['to'] === null),
     `cues=${T.cues(evs).join(',')}; plan=${evs
       .filter((e) => e.kind === 'music:plan')
@@ -113,9 +115,9 @@ export async function runCoreScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
   await settle(400);
   T.ok(
     'B',
-    'no track audible during Lightning',
-    (await T.playing(tv)).length === 0,
-    JSON.stringify(await T.playing(tv)),
+    'no track audible during Lightning; the intro bed is the marimba',
+    (await T.playing(tv)).length === 0 && (await bed()) === 'marimba',
+    `playing=${JSON.stringify(await T.playing(tv))} bed=${await bed()}`,
   );
   await api.skip(); // intro → question
   await settle(900);
@@ -127,6 +129,7 @@ export async function runCoreScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
     T.cues(evs).filter((c) => c === 'phase').length === 1,
     `cues=${T.cues(evs).join(',')}`,
   );
+  T.ok('B', 'question → the pulse bed', (await bed()) === 'pulse', `bed=${await bed()}`);
   // unfreeze first (real time from here); the lock-in's push resyncs the TV's clock offset
   await api.clock(false);
   await settle(300);
@@ -188,6 +191,12 @@ export async function runCoreScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
       !T.cues(evs).slice(T.cues(evs).indexOf('reveal')).includes('phase'),
     `phase=${st.room?.game?.state.phase.id} cues=${T.cues(evs).join(',')}`,
   );
+  T.ok(
+    'B',
+    'the reveal keeps the pulse bed (no crossfade on the cut)',
+    (await bed()) === 'pulse',
+    `bed=${await bed()}`,
+  );
   await api.clock(true);
   // run to the wager and the final reveal
   guard = 0;
@@ -208,6 +217,7 @@ export async function runCoreScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
       T.cues(evs).lastIndexOf('phase') < T.cues(evs).lastIndexOf('wager'),
     `cues=${T.cues(evs).join(',')}`,
   );
+  T.ok('B', 'wager → the late-night bed', (await bed()) === 'latenight', `bed=${await bed()}`);
   await api.skip(); // wager → final question
   await settle(300);
   await api.skip(); // question → final reveal
@@ -227,11 +237,12 @@ export async function runCoreScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
   evs = await T.between(tv, 'B6', 'B7');
   T.ok(
     'B',
-    'results → one cheer (horn + crowd), no synth win, no music',
+    'results → one cheer (horn + crowd), no synth win, no music, no bed',
     T.cues(evs).filter((c) => c === 'cheer').length === 1 &&
       !T.cues(evs).includes('win') &&
-      (await T.playing(tv)).length === 0,
-    `cues=${T.cues(evs).join(',')}; playing=${JSON.stringify(await T.playing(tv))}`,
+      (await T.playing(tv)).length === 0 &&
+      (await bed()) === null,
+    `cues=${T.cues(evs).join(',')}; playing=${JSON.stringify(await T.playing(tv))} bed=${await bed()}`,
   );
   pev = await T.between(vip.page, 'B6', 'B7');
   T.ok(

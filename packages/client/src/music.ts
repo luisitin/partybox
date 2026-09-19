@@ -2,7 +2,7 @@
 // fetched by scripts/fetch-music.ts into /music/<id>.mp3 — never bundled, never on phones).
 // A plan says which tracks, how loud, and how they follow each other:
 //   rotate — play a few minutes of a track, fade out, a second of silence, start another (lobby);
-//   chain  — whole tracks back to back with no gap, weighted pick (Bingo, Broken Pencil).
+//   chain  — whole tracks back to back with no gap, weighted pick (Bingo, Broken Pencil, Wisecrack).
 // One <audio> element, JS fades, level via `volume`; the TV's mute toggle mutes it too. `play()`
 // needs a user gesture on the page (the TV's audio gate); until then it retries on `enable()`.
 import type { PushedView, RoomSnapshot, TvView } from '@partybox/shared';

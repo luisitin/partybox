@@ -5,6 +5,10 @@
 Speed trivia, four choices per question: faster correct answers earn more, streaks add a bonus, before
 the last question everyone wagers part of their score. Highest score wins. ~8 min. This is the spec.
 
+**Sound.** Synthesized beds only (the phases flip too fast for tracks): marimba on the intro, the quiz-show
+`pulse` under every question and reveal (one bed, so it carries through the cut), late-night chords under the
+wager; silent on `done` and the results.
+
 ## Players
 
 1–16. Late joiners spectate (engine). Disconnected players are not waited for; reconnect → can answer. Bots: welcome (`supportsBots`) — the bot answers from the pack / plays the odds.
@@ -50,11 +54,19 @@ player id): **Lightning fingers** = lowest average time over correct answers (�
 ## Settings
 
 `questions` number 10 (5–20 step 1, regular questions; the final is extra) · `answerSeconds` number 15
-(5–30 step 5) · `category` select `all` (default) or one of the eight content categories.
+(5–30 step 5) · `category` select `all` (default) or one of the ten content categories ·
+`subcategories` multiselect (ADR-034): the topics of the chosen category to draw from, comma-joined,
+`''` = the whole category; picks outside the category are dropped. The draw uses the ticked topics if
+they hold `questions + 1` items, else the whole category, else all (`drawnFrom` / `drawnSubs` in state;
+the TV intro says which: "Sports · Basketball, Soccer").
 
 ## Content
 
-`content/questions.json` — 256 original questions, 32 per category (geography, science, history,
-arts-and-literature, sports, food-and-drink, nature, language), 88 easy / 80 medium / 48 hard: `id`,
-`category`, `difficulty`, `question`, four distinct `choices`, `answerIndex`, `source`. Widely documented,
-non-time-sensitive, family-friendly. `content/schema.ts` enforces ≥ 200 items, ≥ 6 categories, unique ids.
+`content/questions.json` — 3 867 original questions across ten categories (geography, stem, history,
+arts-and-literature, sports, food-and-drink, nature, language, entertainment, everyday-life; 354–409
+each) and 59 topics (`SUBCATEGORIES` in `content/schema.ts`, 30+ questions each), about 39 % easy /
+39 % medium / 22 % hard: `id`, `category`, `subcategory`, `difficulty`, `question`, four distinct
+`choices`, `answerIndex`, `source`. Widely documented, non-time-sensitive, family-friendly, mainstream
+(pub-quiz, not specialist), no question text repeated. `content/schema.ts` enforces ≥ 200 items, ≥ 6
+categories, unique ids, and that every topic belongs to its category; `__tests__/content.test.ts`
+enforces the balance.

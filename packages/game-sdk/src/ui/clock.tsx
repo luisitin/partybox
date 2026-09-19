@@ -16,6 +16,11 @@ export function ServerClockProvider({ offsetMs, children }: ServerClockProviderP
 }
 
 /** Current server time, re-rendering every `intervalMs`. */
+/** Server time − this device's time (ms): compare a view's `deadline` with `Date.now() + offset`. */
+export function useServerOffset(): number {
+  return useContext(OffsetContext);
+}
+
 export function useServerNow(intervalMs = 250): number {
   const offset = useContext(OffsetContext);
   const [tick, setTick] = useState(() => Date.now());

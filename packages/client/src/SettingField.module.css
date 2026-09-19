@@ -58,3 +58,46 @@
   border: 0;
   font-weight: 700;
 }
+
+/* A multiselect checklist (ADR-034): the label on its own line, then the options as chips. */
+.multi {
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--pb-space-2);
+  border: 0;
+  margin: 0;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pb-space-2);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+  min-height: var(--pb-touch);
+  padding: 0 var(--pb-space-3);
+  border-radius: 999px;
+  background: var(--pb-surface-2);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.chip input {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  accent-color: var(--pb-accent);
+}
+
+.chipOn {
+  outline: 2px solid var(--pb-accent);
+}
+
+.multiHint {
+  color: var(--pb-text-muted);
+  font-size: var(--pb-font-caption);
+}

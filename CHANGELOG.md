@@ -5,6 +5,18 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Spicy** in Wisecrack (140 prompts) and Broken Pencil (90 drawable words) now matches the Blanks
+  WILD deck: explicit adult humour, 18+; nothing hateful, no real people.
+- **Lightning Round**: 3 867 questions (from 256) in ten categories: Science is now **STEM** with
+  math, engineering and computing; new **Entertainment** and **Everyday Life**; each split into
+  topics (59 in all). A **Topics** checklist under the category setting draws from the ticked topics
+  only (falls back to the category, then all). The TV and phones name the topic on every question.
+- `multiselect` setting type (ADR-034): several picks stored as one comma-joined string, optionally
+  grouped by a sibling `select`; rendered as a chip checklist on the phone and the TV host panel.
+- Background music for **Wisecrack** (comic tracks while writing: Sneaky Snitch / Fluffing a Duck /
+  Carefree, Kevin MacLeod CC BY 4.0, plus the warm / marimba / lo-fi / lounge beds around it) and
+  **Lightning Round** (a new synthesized `pulse` bed under questions and reveals, the late-night
+  chords under the wager, the marimba on the intro).
 - **Blanks** (`games/blanks`): fill-in-the-blank card comedy — a black card, a hand of ten white
   cards, one-at-a-time read-outs on the TV (and on every phone, so it plays without a TV), everyone
   votes or a rotating judge picks, one point per round; three decks (Mild / Crude / WILD) chosen by
@@ -28,6 +40,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 - Multi-persona live-play harness (`packages/e2e/live/`) and the 2026-09-15 session report.
 
 ### Fixed
+- **Broken Pencil**: a drawing the timer cuts off keeps what was drawn — the phone sends the sheet as a
+  `draft` while drawing, and the deadline uses it instead of a blank page (the phone also gets its draft
+  back after a reload mid-drawing).
 - Stale VIP badge while offline, toasts rendered as buttons, "Connecting…" shown while connected,
   spectators missing from the TV strip during play (all from the live-play report).
 

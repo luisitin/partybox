@@ -160,8 +160,11 @@ never needs information a phone would not have. Bots are never VIP and count tow
 
 ### Settings
 
-`manifest.settings` is a list of specs (`number` with min/max/step, `boolean`, `select` with options).
-The VIP edits them in the lobby; the engine validates against the spec and passes `settings` to `init`.
+`manifest.settings` is a list of specs (`number` with min/max/step, `boolean`, `select` with options,
+`multiselect` with options — several picks, stored as one comma-joined string, `''` = none; with
+`groupBy: '<select key>'` and a `group` per option only the options of the sibling select's current
+value are offered and kept, ADR-034). The VIP edits them in the lobby; the engine validates against the
+spec and passes `settings` to `init` (`multiselectPicks(value)` from `@partybox/shared` splits one).
 
 ## Client side — `games/<id>/client/index.ts`
 

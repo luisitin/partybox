@@ -23,7 +23,7 @@ export { Avatar, avatarColorVar } from './ui/Avatar';
 export type { AvatarProps } from './ui/Avatar';
 export { PlayerChip } from './ui/PlayerChip';
 export type { PlayerChipProps } from './ui/PlayerChip';
-export { ServerClockProvider, useSecondsLeft, useServerNow } from './ui/clock';
+export { ServerClockProvider, useSecondsLeft, useServerNow, useServerOffset } from './ui/clock';
 export { DeadlineBar } from './ui/DeadlineBar';
 export {
   applyMotionPreference,

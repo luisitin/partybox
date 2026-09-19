@@ -5,13 +5,20 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react
 import type { JSX, PointerEvent as ReactPointerEvent } from 'react';
 import { CANVAS, INK_CHARS, MAX_STROKES, encodePoints, inkCost } from '../server/encoding';
 import type { Stroke } from '../server/types';
-import { PALETTE, PALETTE_NAMES, WIDTHS, paint } from './drawing';
+import { PALETTE, PALETTE_NAMES, WIDTHS, decodeStroke, paint } from './drawing';
 import type { DecodedStroke } from './drawing';
 import styles from './DrawPad.module.css';
 
 export interface DrawPadProps {
   /** Encoded strokes, ready for `send({ type: 'draw', strokes })`. */
   onChange?: (strokes: Stroke[]) => void;
+  /**
+   * The sheet including the stroke under the finger, on every move — the draft the deadline keeps
+   * (a stroke still being drawn at the buzzer stops where it is, like everything else).
+   */
+  onProgress?: (strokes: Stroke[]) => void;
+  /** Strokes to start from: the draft the server kept when this phone reloaded mid-drawing. */
+  initial?: readonly Stroke[];
   disabled?: boolean;
 }
 
@@ -27,6 +34,10 @@ function encode(strokes: Live[]): Stroke[] {
   return strokes.map((s) => ({ c: s.c, w: s.w, p: encodePoints(s.points) }));
 }
 
+function decode(strokes: readonly Stroke[]): Live[] {
+  return strokes.map((s) => ({ c: s.c, w: s.w, ...decodeStroke(s) }));
+}
+
 function inkUsed(strokes: Live[], current: Live | null): number {
   let total = 0;
   for (const s of strokes) total += inkCost(s.points.length / 2);
@@ -34,10 +45,11 @@ function inkUsed(strokes: Live[], current: Live | null): number {
   return total;
 }
 
-export function DrawPad({ onChange, disabled }: DrawPadProps): JSX.Element {
+export function DrawPad({ onChange, onProgress, initial, disabled }: DrawPadProps): JSX.Element {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const boxRef = useRef<HTMLDivElement>(null);
-  const [strokes, setStrokes] = useState<Live[]>([]);
+  // `initial` is read once: later pushes carry this pad's own drafts back and must not reset it.
+  const [strokes, setStrokes] = useState<Live[]>(() => (initial ? decode(initial) : []));
   const [color, setColor] = useState(0);
   const [width, setWidth] = useState(1);
   const current = useRef<Live | null>(null);
@@ -125,6 +137,7 @@ export function DrawPad({ onChange, disabled }: DrawPadProps): JSX.Element {
     live.points.push(x, y);
     repaint();
     setLivePoints(live.points.length / 2);
+    onProgress?.(encode([...strokes, live]));
   };
 
   const onUp = (): void => {

@@ -750,15 +750,11 @@
 .readyFace {
   position: relative;
   display: inline-flex;
-  opacity: 0.35;
-  filter: saturate(0.4);
-  transition:
-    opacity var(--pb-motion-base) var(--pb-ease),
-    filter var(--pb-motion-base) var(--pb-ease);
+  opacity: 0.3; /* opacity only — a saturate() filter on 16 faces cost 50 ms frames (loop 396) */
+  transition: opacity var(--pb-motion-base) var(--pb-ease);
 }
 .readyDone {
   opacity: 1;
-  filter: none;
 }
 /* The last one picking (loop 389): their dim face breathes while the room waits — the same
    pulse their own Ready button has. Tokens: 0 ms under reduced motion. */
@@ -767,7 +763,7 @@
 }
 @keyframes ready-last {
   from {
-    opacity: 0.35;
+    opacity: 0.3;
     transform: scale(1);
   }
   to {
