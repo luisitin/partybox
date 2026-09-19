@@ -756,6 +756,44 @@
   .roundBody {
     gap: var(--pb-space-1);
   }
+  /* The card-pick step sideways (loop 387): the pattern and the caption stack on the left, the
+     card (and its thumbnails) take the right half at a size a thumb can read — the height
+     formula alone squashed a 5×5 card to 60 px. */
+  .introBody {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: auto 1fr;
+    column-gap: var(--pb-space-4);
+    align-items: start;
+  }
+  .introBody .intro {
+    grid-column: 1;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--pb-space-2);
+  }
+  .introBody .introCount {
+    grid-column: 1;
+    text-align: left;
+  }
+  .introBody .focus {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    grid-template-columns: auto auto;
+    align-items: start;
+  }
+  .introBody .focusMain,
+  .introBody .focus.dealing.focusMany .focusMain {
+    /* px from the height, never a % of an auto column (that collapsed it to nothing). */
+    width: min(46vw, calc((100dvh - 235px) / 1.15));
+    max-width: none;
+    display: block;
+  }
+  .introBody .focus.dealing .thumbs {
+    --pb-thumb: 64px;
+    grid-auto-flow: row;
+    width: auto;
+  }
   .callRow {
     min-height: 32px;
   }
