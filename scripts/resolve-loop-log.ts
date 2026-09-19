@@ -17,7 +17,6 @@ const show = (ref: string): string =>
   });
 const isRow = (line: string): boolean => /^\| \d+ /.test(line);
 const rowNo = (line: string): number => Number(line.split('|')[1]);
-const game = (line: string): string => line.split('|')[3]?.trim() ?? '';
 /** A row's text without its number and any renumbering note: the identity of a pass. */
 const body = (line: string): string =>
   line
@@ -41,25 +40,25 @@ for (const line of [...main, ...head].filter(isRow)) {
   if (prev === undefined) order.push(b);
   if (prev === undefined || rowNo(line) > rowNo(prev)) byBody.set(b, line);
 }
-// 2. One pass number per row: a later row on a number an earlier row of the OTHER game holds is
-//    renumbered past the highest — two sessions picked the same number (loop 370: twelve Bingo
-//    rows were once dropped silently for this). The same game twice on one number keeps the first.
+// 2. One pass number per row: a later row on a number an earlier row holds is renumbered past
+//    the highest — two sessions picked the same number (loop 370: twelve Bingo rows were once
+//    dropped silently for this; loop 452: two sessions on the SAME game collided, so the game no
+//    longer matters — a row is a duplicate only by its text, which step 1 already folded).
 const rowsAll = order.map((b) => byBody.get(b) as string);
 let next = Math.max(...rowsAll.map(rowNo)) + 1;
-const taken = new Map<number, string>();
+const taken = new Set<number>();
 const renumbered: string[] = [];
 const finalRows: string[] = [];
 for (const line of rowsAll) {
   const n = rowNo(line);
-  const holder = taken.get(n);
-  if (holder === undefined) {
-    taken.set(n, game(line));
+  if (!taken.has(n)) {
+    taken.add(n);
     finalRows.push(line);
-  } else if (holder !== game(line)) {
+  } else {
     const cells = line.split('|');
     cells[1] = ` ${next} `;
     renumbered.push(`${n}→${next}`);
-    taken.set(next, game(line));
+    taken.add(next);
     next += 1;
     finalRows.push(cells.join('|'));
   }
