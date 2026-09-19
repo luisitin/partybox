@@ -8,7 +8,8 @@ import type { Rng } from '@partybox/game-sdk';
 import { blackCard, blackSlots, blackTier, whiteServes, whiteText, whiteTier } from './content';
 import { fitScore } from './fit';
 import type { Slot } from './fit';
-import { pairBonus, punch } from './topics';
+import { pairBonus, punch, topicsOf } from './topics';
+import type { Topic } from './topics';
 import { canVote, hasPlayed, isCzar } from './round';
 import type { Input, State } from './types';
 
@@ -17,6 +18,8 @@ import type { Input, State } from './types';
 const TIER_WEIGHT = 0.2;
 /** Random spread on every score: bots are not one mind. */
 const NOISE = 0.2;
+/** What a Pick 2's second card loses for repeating the first one's subject. */
+const SAME_SUBJECT = 0.1;
 
 /** One card's appeal in the blank: fit for the slot, plus its tier, plus the pair's topic nudge
  *  (topics.ts: on the prompt's subject from another angle is a hit, echoing its word a shrug),
@@ -55,8 +58,18 @@ export function bestCards(
   const left = [...hand];
   const out: string[] = [];
   for (const slot of slots) {
+    // The second card of a Pick 2 steps off the first one's subject (the deck's own aside): two
+    // church cards in "____ and ____" read as one joke told twice.
+    const taken = new Set<Topic>(
+      out.flatMap((id) => topicsOf(whiteText(id))).filter((t) => t !== 'sex'),
+    );
     const best = left
-      .map((id) => ({ id, score: cardAppeal(slot, id, rng, blackText) }))
+      .map((id) => ({
+        id,
+        score:
+          cardAppeal(slot, id, rng, blackText) -
+          (topicsOf(whiteText(id)).some((t) => taken.has(t)) ? SAME_SUBJECT : 0),
+      }))
       .sort((a, b) => b.score - a.score)[0];
     if (best === undefined) break;
     out.push(best.id);
