@@ -61,15 +61,15 @@ export function whiteText(id: string): string {
  *  for each question type). The kinds are the fit model's slots (server/fit.ts): a `thing`, a
  *  `doing` (a gerund card) or a `person`; `whiteKind` is the card's primary slot, `whiteServes`
  *  every slot it reads well in, `blackSlot` what a prompt's blank wants, `whiteTier` how good the
- *  card is on its own (1 filler, 2 good, 3 great). */
+ *  card is on its own (1 filler, 2 good, 3 great, 4 amazing). */
 export type WhiteKind = Slot;
 export const WHITE_KINDS: readonly WhiteKind[] = SLOTS;
 
 const WHITE_SERVES: Readonly<Record<string, readonly Slot[]>> = Object.fromEntries(
   ALL.flatMap((d) => d.white.map((c) => [c.id, servesOf(c)])),
 );
-const WHITE_TIER: Readonly<Record<string, 1 | 2 | 3>> = Object.fromEntries(
-  ALL.flatMap((d) => d.white.map((c) => [c.id, (c.tier ?? 2) as 1 | 2 | 3])),
+const WHITE_TIER: Readonly<Record<string, WhiteTier>> = Object.fromEntries(
+  ALL.flatMap((d) => d.white.map((c) => [c.id, (c.tier ?? 2) as WhiteTier])),
 );
 const BLACK_SLOT: Readonly<Record<string, Slot>> = Object.fromEntries(
   ALL.flatMap((d) => d.black.map((c) => [c.id, slotOf(c)])),
@@ -86,7 +86,9 @@ export function whiteKind(id: string): WhiteKind {
   return whiteServes(id)[0] ?? 'thing';
 }
 
-export function whiteTier(id: string): 1 | 2 | 3 {
+export type WhiteTier = 1 | 2 | 3 | 4;
+
+export function whiteTier(id: string): WhiteTier {
   return WHITE_TIER[id] ?? 2;
 }
 
