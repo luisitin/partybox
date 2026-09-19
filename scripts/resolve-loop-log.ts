@@ -1,8 +1,9 @@
 // Resolves a merge conflict in reports/design/loop-log.md (loop 291). Two loop sessions append rows
 // to one table and every merge conflicts; concatenating both sides once quadrupled the table.
-// Result: main's file with every row kept once (first occurrence — a duplicated table was always
-// appended whole, so the first copy sits in the right section), plus HEAD's rows main lacks, in
-// HEAD's order. Run from a worktree with the conflict open: `pnpm resolve-loop-log`, then commit.
+// Result: main's file with every row kept once, plus HEAD's rows main lacks, appended. A row is
+// identified by its TEXT, not its number (loop 379): two sessions pick the same pass number often,
+// and a row one side renumbered must not come back under its old number. Run from a worktree with
+// the conflict open: `pnpm resolve-loop-log`, then `pnpm format` and commit.
 import { execFileSync } from 'node:child_process';
 import { writeFileSync } from 'node:fs';
 
@@ -13,46 +14,78 @@ const show = (ref: string): string =>
   execFileSync('git', ['show', `${ref}:${FILE}`], { encoding: 'utf8' });
 const isRow = (line: string): boolean => /^\| \d+ /.test(line);
 const rowNo = (line: string): number => Number(line.split('|')[1]);
+const game = (line: string): string => line.split('|')[3]?.trim() ?? '';
+/** A row's text without its number and any renumbering note: the identity of a pass. */
+const body = (line: string): string =>
+  line
+    .split('|')
+    .slice(2)
+    .join('|')
+    .replace(/\(folders numbered[^)]*\)/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
 
 const main = show('main').split('\n');
 const head = show('HEAD').split('\n');
-const seen = new Set<number>();
+
+// 1. Every row from both sides, main's first, one per body: the higher number wins (a row one
+//    side renumbered after a collision beats its older copy).
+const byBody = new Map<string, string>();
+const order: string[] = [];
+for (const line of [...main, ...head].filter(isRow)) {
+  const b = body(line);
+  const prev = byBody.get(b);
+  if (prev === undefined) order.push(b);
+  if (prev === undefined || rowNo(line) > rowNo(prev)) byBody.set(b, line);
+}
+// 2. One pass number per row: a later row on a number an earlier row of the OTHER game holds is
+//    renumbered past the highest — two sessions picked the same number (loop 370: twelve Bingo
+//    rows were once dropped silently for this). The same game twice on one number keeps the first.
+const rowsAll = order.map((b) => byBody.get(b) as string);
+let next = Math.max(...rowsAll.map(rowNo)) + 1;
+const taken = new Map<number, string>();
+const renumbered: string[] = [];
+const finalRows: string[] = [];
+for (const line of rowsAll) {
+  const n = rowNo(line);
+  const holder = taken.get(n);
+  if (holder === undefined) {
+    taken.set(n, game(line));
+    finalRows.push(line);
+  } else if (holder !== game(line)) {
+    const cells = line.split('|');
+    cells[1] = ` ${next} `;
+    renumbered.push(`${n}→${next}`);
+    taken.set(next, game(line));
+    next += 1;
+    finalRows.push(cells.join('|'));
+  }
+}
+const resolvedByBody = new Map(finalRows.map((r) => [body(r), r]));
+// 3. main's file with each row swapped for its resolved copy, then HEAD's new rows appended.
 const out: string[] = [];
 let headers = 0;
+const placed = new Set<string>();
 for (const line of main) {
   if (isRow(line)) {
-    if (seen.has(rowNo(line))) continue;
-    seen.add(rowNo(line));
-  } else if (line.startsWith('| Pass')) {
+    const b = body(line);
+    const kept = resolvedByBody.get(b);
+    if (kept === undefined || placed.has(b)) continue;
+    placed.add(b);
+    out.push(kept);
+    continue;
+  }
+  if (line.startsWith('| Pass')) {
     headers += 1;
     if (headers > SECTIONS) continue; // a duplicated table's header…
   } else if (line.startsWith('| ---') && headers > SECTIONS) continue; // …and its rule
   out.push(line);
 }
-// A HEAD row whose NUMBER main already has but whose text differs is a collision — two sessions
-// picked the same pass number — not a duplicate: it is renumbered past the highest, its evidence
-// folders untouched, and named in the output (loop 370: twelve Bingo rows were dropped silently).
-const mainText = new Map(main.filter(isRow).map((line) => [rowNo(line), line]));
-const game = (line: string): string => line.split('|')[3]?.trim() ?? '';
-let next = Math.max(...seen) + 1;
-const renumbered: string[] = [];
-const extra = head
-  .filter((line) => isRow(line))
-  .flatMap((line) => {
-    const n = rowNo(line);
-    const theirs = mainText.get(n);
-    if (theirs === undefined) return [line];
-    if (theirs.trim() === line.trim() || game(theirs) === game(line)) return [];
-    const cells = line.split('|');
-    cells[1] = ` ${next} `;
-    renumbered.push(`${n}→${next}`);
-    next += 1;
-    return [cells.join('|')];
-  });
-for (const line of extra) seen.add(rowNo(line));
+const extra = finalRows.filter((r) => !placed.has(body(r)));
 const text = `${out.join('\n').trimEnd()}\n${extra.length ? `${extra.join('\n')}\n` : ''}`;
 const rows = text.split('\n').filter(isRow);
-if (rows.length !== new Set(rows.map(rowNo)).size) throw new Error('duplicates remain');
+const dup = rows.map(rowNo).filter((n, i, a) => a.indexOf(n) !== i);
+if (dup.length > 0) throw new Error(`duplicates remain: ${dup.join(', ')}`);
 writeFileSync(FILE, text, 'utf8');
 console.log(
   `resolved ${FILE}: ${rows.length} rows; from HEAD + [${extra.map(rowNo).join(', ')}]${renumbered.length ? ` (renumbered after a collision: ${renumbered.join(', ')} — update the memory/notes)` : ''} — now \`pnpm format\` and commit`,
