@@ -1,0 +1,181 @@
+{
+  "pass": "375",
+  "game": "blanks",
+  "players": 4,
+  "scenario": "pause",
+  "focus": "phone",
+  "started": "00:54:35.704",
+  "tvVideoT0": "00:54:32.382",
+  "phoneVideoT0": "00:54:33.310",
+  "changes": [
+    {
+      "t": 1789779275708,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789779280699,
+      "bed": "warm",
+      "at": "00:54:35.708",
+      "sinceStartS": 0,
+      "videoS": 3.3,
+      "phoneVideoS": 2.4
+    },
+    {
+      "t": 1789779280787,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789779310705,
+      "bed": "bossa",
+      "at": "00:54:40.787",
+      "sinceStartS": 5.1,
+      "videoS": 8.4,
+      "phoneVideoS": 7.5
+    },
+    {
+      "t": 1789779294142,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789779297225,
+      "bed": "warm",
+      "at": "00:54:54.142",
+      "sinceStartS": 18.4,
+      "videoS": 21.8,
+      "phoneVideoS": 20.8
+    },
+    {
+      "t": 1789779297334,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789779300075,
+      "bed": "warm",
+      "at": "00:54:57.334",
+      "sinceStartS": 21.6,
+      "videoS": 25,
+      "phoneVideoS": 24
+    },
+    {
+      "t": 1789779300150,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789779303059,
+      "bed": "warm",
+      "at": "00:55:00.150",
+      "sinceStartS": 24.4,
+      "videoS": 27.8,
+      "phoneVideoS": 26.8
+    },
+    {
+      "t": 1789779303085,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789779306057,
+      "bed": "warm",
+      "at": "00:55:03.085",
+      "sinceStartS": 27.4,
+      "videoS": 30.7,
+      "phoneVideoS": 29.8
+    },
+    {
+      "t": 1789779306170,
+      "status": "playing",
+      "phase": "judge",
+      "deadline": 1789779336059,
+      "bed": "marimba",
+      "at": "00:55:06.170",
+      "sinceStartS": 30.5,
+      "videoS": 33.8,
+      "phoneVideoS": 32.9
+    },
+    {
+      "t": 1789779311218,
+      "status": "playing",
+      "phase": "result",
+      "deadline": 1789779319186,
+      "bed": "lounge",
+      "at": "00:55:11.218",
+      "sinceStartS": 35.5,
+      "videoS": 38.8,
+      "phoneVideoS": 37.9
+    },
+    {
+      "t": 1789779319277,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789779324198,
+      "bed": "warm",
+      "at": "00:55:19.277",
+      "sinceStartS": 43.6,
+      "videoS": 46.9,
+      "phoneVideoS": 46
+    },
+    {
+      "t": 1789779324228,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789779354208,
+      "bed": "marimba",
+      "at": "00:55:24.228",
+      "sinceStartS": 48.5,
+      "videoS": 51.8,
+      "phoneVideoS": 50.9
+    },
+    {
+      "t": 1789779330033,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789779333017,
+      "bed": "warm",
+      "at": "00:55:30.033",
+      "sinceStartS": 54.3,
+      "videoS": 57.7,
+      "phoneVideoS": 56.7
+    },
+    {
+      "t": 1789779333035,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789779336034,
+      "bed": "warm",
+      "at": "00:55:33.035",
+      "sinceStartS": 57.3,
+      "videoS": 60.7,
+      "phoneVideoS": 59.7
+    },
+    {
+      "t": 1789779336040,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789779339283,
+      "bed": "warm",
+      "at": "00:55:36.040",
+      "sinceStartS": 60.3,
+      "videoS": 63.7,
+      "phoneVideoS": 62.7
+    },
+    {
+      "t": 1789779339384,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789779342036,
+      "bed": "warm",
+      "at": "00:55:39.384",
+      "sinceStartS": 63.7,
+      "videoS": 67,
+      "phoneVideoS": 66.1
+    },
+    {
+      "t": 1789779342054,
+      "status": "playing",
+      "phase": "judge",
+      "deadline": 1789779372039,
+      "bed": "lofi",
+      "at": "00:55:42.054",
+      "sinceStartS": 66.3,
+      "videoS": 69.7,
+      "phoneVideoS": 68.7
+    }
+  ],
+  "notes": [
+    "pause: VIP paused 6 s at 2026-09-19T00:54:44.896Z in answer",
+    "budget reached while playing; skipped to results"
+  ]
+}
