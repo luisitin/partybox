@@ -1,0 +1,45 @@
+{
+  "tv": {
+    "frames": 9341,
+    "longFrames": 3,
+    "worstMs": 67,
+    "long": [
+      {
+        "t": 1789777277204,
+        "ms": 67,
+        "phase": "lobby"
+      },
+      {
+        "t": 1789777280708,
+        "ms": 50,
+        "phase": "intro"
+      },
+      {
+        "t": 1789777430316,
+        "ms": 50,
+        "phase": "play"
+      }
+    ]
+  },
+  "phone": {
+    "longFrames": 3,
+    "worstMs": 50,
+    "long": [
+      {
+        "t": 1789777277903,
+        "ms": 50,
+        "phase": "lobby"
+      },
+      {
+        "t": 1789777280708,
+        "ms": 50,
+        "phase": "intro"
+      },
+      {
+        "t": 1789777366739,
+        "ms": 50,
+        "phase": "scoreboard"
+      }
+    ]
+  }
+}

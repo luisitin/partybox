@@ -12,7 +12,9 @@ import {
   useSecondsLeft,
   useSound,
 } from '@partybox/game-sdk/ui';
+import type { PlayCue } from '@partybox/game-sdk/ui';
 import { RESUME_MS, dealDoneMs } from '../server/types';
+import type { Input } from '../server/types';
 import type { BingoControllerView } from '../server/views';
 import { STYLES, styleReason } from './styles';
 import type { CardStyle, Orientation } from './styles';
@@ -254,5 +256,61 @@ export function MissedToast({
         ? 'Back — you missed a number. It is on the TV board.'
         : `Back — you missed ${count} numbers. They are on the TV board.`}
     </p>
+  );
+}
+
+/**
+ * The card-pick step's two buttons (loop 344): "🎲 Another · card N" and Ready. They rise in once
+ * the last card has landed (loop 368) — before that the footer stood bare under an empty table,
+ * and Ready could be tapped before a card was even seen.
+ */
+export function IntroActions({
+  view,
+  cards,
+  pick,
+  canSwap,
+  send,
+  play,
+  onSwap,
+}: {
+  view: BingoControllerView;
+  cards: number;
+  pick: number;
+  canSwap: boolean;
+  send: (input: Input) => void;
+  play: PlayCue;
+  onSwap: () => void;
+}): JSX.Element {
+  const dealt = useHold('deal', dealDoneMs(cards));
+  return (
+    <div className={`${styles.introActions} ${dealt ? styles.introActionsIn : ''}`}>
+      <PrimaryButton
+        tone="neutral"
+        disabled={!canSwap || !dealt}
+        onClick={() => {
+          // The old card flips away and the new one flips in (loop 268): the flip is the card's
+          // key; the pluck lands as the new face turns to the eye (~200 ms in).
+          send({ type: 'swap', card: pick });
+          onSwap();
+          buzz(20);
+          setTimeout(() => play('card'), 200);
+        }}
+      >
+        🎲 {canSwap ? 'Another' : view.ready ? 'Picked' : 'Swapped'}
+        {cards > 1 ? ` · card ${pick + 1}` : ''}
+      </PrimaryButton>
+      <PrimaryButton
+        tone={view.ready ? 'success' : 'accent'}
+        disabled={view.ready || !dealt}
+        className={view.lastOne ? styles.nudge : undefined}
+        onClick={() => {
+          buzz(20);
+          play('submit');
+          send({ type: 'ready' });
+        }}
+      >
+        {view.ready ? '✓ Ready' : 'Ready'}
+      </PrimaryButton>
+    </div>
   );
 }

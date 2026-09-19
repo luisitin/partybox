@@ -59,7 +59,7 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
   // API a moment later; the ring starts a breath after that (loop 349).
   await vip.page.getByRole('button', { name: /^🎲 another/i }).click();
   await settle(200);
-  await vip.page.getByRole('button', { name: /^ready$/i }).click();
+  await vip.page.getByRole('button', { name: /^ready$/i }).dispatchEvent('click'); // it breathes when last (never "stable");
   await settle(250);
   await api.readyAll();
   await settle(3900); // ~7 s in: the last Ready (3.4 s) + a breath + the 3 · 2 · 1 → the first ball
