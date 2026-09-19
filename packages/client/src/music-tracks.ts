@@ -10,4 +10,7 @@ export const TRACK_IDS = [
   'hep-cats',
   'cool-vibes',
   'wallpaper',
+  'sneaky-snitch',
+  'fluffing-a-duck',
+  'carefree',
 ] as const;

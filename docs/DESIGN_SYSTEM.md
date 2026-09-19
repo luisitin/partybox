@@ -117,9 +117,10 @@ party horn + crowd from `packages/client/public/sfx/` (Mixkit licence).
 TV has a mute toggle (persisted in `localStorage`) and a "tap to start" overlay for the autoplay policy.
 
 **Music beds** (ADR-032, `packages/client/src/beds.ts`): looping backgrounds synthesized like the cues, one per phase via
-`clientModule.beds[phaseId]` (or a list of ids, which the shell rotates through — the next one each time that phase begins, loop #197) — `warm` (e-piano groove), `bossa`, `latenight` (held chords, no drums), `marimba` (16th-note
-pulse), `lofi` (swung dusty beat, soft kick + brushed snare) and `lounge` (vibraphone swing with a
-walking bass). The voices they are built from live in `beds-voices.ts`. The shell crossfades beds over 1.5 s as phases change, resumes a returning bed where it stopped, holds it on pause,
+`clientModule.beds[phaseId]` (or a list of ids, which the shell rotates through — the next one each time that phase begins, loop #197; the count starts over with every game) — `warm` (e-piano groove), `bossa`, `latenight` (held chords, no drums), `marimba` (16th-note
+pulse), `lofi` (swung dusty beat, soft kick + brushed snare), `lounge` (vibraphone swing with a
+walking bass) and `pulse` (a 120 bpm quiz-show tension bed: eighth-note bass, a clock tick per beat;
+`beds-library-more.ts`). The voices they are built from live in `beds-voices.ts`. The shell crossfades beds over 1.5 s as phases change, resumes a returning bed where it stopped, holds it on pause,
 ducks it to half under every cue for a second, and mutes it with the TV. Unmapped phases and the results screen are silent.
 The phone has its own engine (`createSoundEngine({ master: 0.35 })`, mute under `partybox:phone-sound`, default on,
 toggled from the theme sheet) that plays only what happened in the player's hand — never `phase`, `join`, `win` or

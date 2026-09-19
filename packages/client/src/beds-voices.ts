@@ -2,6 +2,14 @@
 // soft kick and a brushed snare, plus the MIDI-to-hertz helper. Split out of beds-library.ts when
 // the library outgrew the 300-line cap (review-loop #161).
 
+export interface Bed {
+  bpm: number;
+  /** Steady level 0..1 into the master. */
+  level: number;
+  /** Schedule one bar starting at `t` (seconds on the context clock); `i` counts bars. */
+  bar(ctx: AudioContext, out: GainNode, t: number, i: number): void;
+}
+
 interface Voice {
   f: number;
   at: number;

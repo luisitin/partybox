@@ -89,6 +89,9 @@ export function TvApp(): JSX.Element {
         bedTurns.current[bedPhase.current] = (bedTurns.current[bedPhase.current] ?? 0) + 1;
       bedPhase.current = phase;
     }
+    // Every game starts its rotation from the first bed: the counts belong to one game, not to
+    // the TV's whole evening (a second Wisecrack's first vote began on the lo-fi bed otherwise).
+    if (phase === null) bedTurns.current = {};
     beds.play(bedFor(room, view, gameBeds, bedTurns.current));
     beds.setPaused(room?.status === 'playing' && (view?.paused ?? false));
   }, [room, view, music, beds]);

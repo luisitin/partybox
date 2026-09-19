@@ -1,4 +1,4 @@
-// Downloads the background-music tracks the TV plays (lobby, Bingo, Broken Pencil) into
+// Downloads the background-music tracks the TV plays (lobby, Bingo, Broken Pencil, Wisecrack) into
 // packages/client/public/music/ — served as static files, never bundled, git-ignored. All tracks
 // are by Kevin MacLeod (incompetech.com), Creative Commons: By Attribution 4.0; the README carries
 // the credit. Run by start-partybox.bat after the build and by `pnpm fetch-music`; skips files
@@ -22,6 +22,10 @@ export const TRACKS: Record<string, string> = {
   'hep-cats': 'Hep Cats',
   'cool-vibes': 'Cool Vibes',
   wallpaper: 'Wallpaper',
+  // Wisecrack's writing set (owner request 2026-09-18): playful, comic, never busy.
+  'sneaky-snitch': 'Sneaky Snitch',
+  'fluffing-a-duck': 'Fluffing a Duck',
+  carefree: 'Carefree',
 };
 
 async function fetchTrack(id: string, title: string): Promise<'kept' | 'fetched' | 'failed'> {
