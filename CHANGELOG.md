@@ -28,6 +28,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 - Multi-persona live-play harness (`packages/e2e/live/`) and the 2026-09-15 session report.
 
 ### Fixed
+- **Broken Pencil**: a drawing the timer cuts off keeps what was drawn — the phone sends the sheet as a
+  `draft` while drawing, and the deadline uses it instead of a blank page (the phone also gets its draft
+  back after a reload mid-drawing).
 - Stale VIP badge while offline, toasts rendered as buttons, "Connecting…" shown while connected,
   spectators missing from the TV strip during play (all from the live-play report).
 

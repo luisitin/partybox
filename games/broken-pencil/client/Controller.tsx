@@ -1,8 +1,14 @@
 // Controller (phone) view for Broken Pencil: pick a word, draw on the DrawPad, guess a drawing,
 // then watch the TV. `send` is the only way out; the server validates every input first.
-import { useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import type { JSX } from 'react';
-import { PrimaryButton, Screen, TextAnswer, WaitingScreen } from '@partybox/game-sdk/ui';
+import {
+  PrimaryButton,
+  Screen,
+  TextAnswer,
+  WaitingScreen,
+  useServerOffset,
+} from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { Input, Stroke } from '../server/types';
 import type { PencilControllerView } from '../server/views';
@@ -95,12 +101,64 @@ function Sent({ view }: { view: PencilControllerView }): JSX.Element {
   );
 }
 
+/** Drafts go out at most this often; in the last seconds more often, so the buzzer loses less. */
+const DRAFT_MS = 1500;
+const DRAFT_LATE_MS = 400;
+const DRAFT_LATE_WINDOW_MS = 6000;
+
+/**
+ * Sends the sheet so far as a `draft` (throttled, trailing) so the deadline keeps what was drawn
+ * instead of a blank page. Nothing is sent after the phone's own "Done".
+ */
+function useDraftSender(
+  send: (input: Input) => void,
+  deadline: number | null,
+): (strokes: Stroke[]) => void {
+  // The deadline is server time: compare on the server's clock (game-sdk ServerClockProvider).
+  const offset = useServerOffset();
+  const pending = useRef<Stroke[] | null>(null);
+  const lastSentAt = useRef(0);
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const done = useRef(false);
+  useEffect(() => {
+    // Mount (again, under StrictMode's rehearsal) re-arms; unmount stops any trailing draft.
+    done.current = false;
+    return () => {
+      done.current = true;
+      if (timer.current) clearTimeout(timer.current);
+      timer.current = null;
+    };
+  }, []);
+  const flush = useCallback((): void => {
+    timer.current = null;
+    if (done.current || !pending.current) return;
+    lastSentAt.current = Date.now();
+    send({ type: 'draft', strokes: pending.current });
+    pending.current = null;
+  }, [send]);
+  return useCallback(
+    (strokes: Stroke[]): void => {
+      if (done.current) return;
+      pending.current = strokes;
+      if (timer.current) return;
+      const now = Date.now();
+      const late = deadline !== null && deadline - (now + offset) < DRAFT_LATE_WINDOW_MS;
+      const every = late ? DRAFT_LATE_MS : DRAFT_MS;
+      timer.current = setTimeout(flush, Math.max(0, lastSentAt.current + every - now));
+    },
+    [deadline, flush, offset],
+  );
+}
+
 /** Draw the text in `prompt`: your own word (round 1) or the guess you just wrote (a pass). */
 function Draw({ view, send }: GameControllerProps<PencilControllerView, Input>): JSX.Element {
   const strokes = useRef<Stroke[]>([]);
   const [count, setCount] = useState(0);
   const text = view.prompt?.kind === 'text' ? view.prompt.text : '???';
   const own = view.step === 1;
+  const draft = useDraftSender(send, view.deadline);
+  // The draft the server kept, read once at mount (the pad's initializer ignores later values).
+  const [initial] = useState(() => view.draft?.strokes ?? []);
   return (
     <Screen
       footer={
@@ -119,10 +177,13 @@ function Draw({ view, send }: GameControllerProps<PencilControllerView, Input>):
         {own ? 'Draw your word: ' : 'Now draw your guess: '}“{text}”
       </h2>
       <DrawPad
+        initial={initial}
         onChange={(s) => {
           strokes.current = s;
           setCount(s.length);
+          draft(s);
         }}
+        onProgress={draft}
       />
     </Screen>
   );

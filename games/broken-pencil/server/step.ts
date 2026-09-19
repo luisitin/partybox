@@ -1,10 +1,10 @@
 // The step machinery shared by phases/draw.ts, phases/pass.ts and phases/guess.ts: each player owes
 // one or two pages of the book in their hands; the step closes when every connected player is done
-// or the deadline passes, filling what is missing with placeholders (empty sheet / "???") authored
-// by whoever owed them.
+// or the deadline passes, filling what is missing with placeholders ("???", or the artist's draft
+// — the sheet as it stood — else an empty sheet) authored by whoever owed them.
 import { allConnectedDone, enterPhase, hasPlayer } from '@partybox/game-sdk';
 import { authorOfPage, bookInHands, kindOfPage, owedNow, pagesOfStep, targetLength } from './books';
-import type { Book, Input, Page, State, Transition } from './types';
+import type { Book, Drawing, Input, Page, State, Transition } from './types';
 
 /** Phase id for a step: 1 = draw your word; the last = guess only; in between = guess then draw. */
 export function phaseOfStep(state: State, step: number): 'draw' | 'pass' | 'guess' {
@@ -46,7 +46,16 @@ export function submittedIds(state: State): string[] {
     .filter((id) => id !== '');
 }
 
-/** Fills every missing page of this step with its placeholder, advances, and hands over to `next`. */
+/** The sheet `playerId` has drawn so far this step (a `draft`), if any. */
+function draftOf(state: State, playerId: string): Drawing | null {
+  const drafts = state.drafts;
+  return drafts && Object.hasOwn(drafts, playerId) ? (drafts[playerId] ?? null) : null;
+}
+
+/**
+ * Fills every missing page of this step with its placeholder — a drawing takes the artist's draft
+ * where there is one — advances, drops the drafts, and hands over to `next`.
+ */
 export function closeStep(state: State, now: number, next: Transition): State {
   const books = state.books.map((book, b): Book => {
     const pages = [...book.pages];
@@ -55,13 +64,27 @@ export function closeStep(state: State, now: number, next: Transition): State {
       const authorId = authorOfPage(state, b, i);
       pages.push(
         kindOfPage(i) === 'draw'
-          ? { kind: 'draw', authorId, drawing: null }
+          ? { kind: 'draw', authorId, drawing: draftOf(state, authorId) }
           : { kind: 'guess', authorId, text: null },
       );
     }
     return pages.length === book.pages.length ? book : { ...book, pages };
   });
-  return next({ ...state, books, step: state.step + 1 }, now);
+  const { drafts: _drafts, ...rest } = state;
+  return next({ ...rest, books, step: state.step + 1 }, now);
+}
+
+/** Keeps the sheet so far for the deadline; only from a player who owes a drawing right now. */
+function applyDraft(state: State, playerId: string, drawing: Drawing): State {
+  if (!hasPlayer(state, playerId) || owedNow(state, playerId) !== 'draw') return state;
+  return { ...state, drafts: { ...(state.drafts ?? {}), [playerId]: drawing } };
+}
+
+/** The player's draft is spent once a page of theirs is in (a drawing, or a guess in a pass). */
+function withoutDraft(state: State, playerId: string): State {
+  if (!state.drafts || !Object.hasOwn(state.drafts, playerId)) return state;
+  const { [playerId]: _gone, ...drafts } = state.drafts;
+  return { ...state, drafts };
 }
 
 /** The shared input handler: a guess or a drawing from a player, in the order the step asks. */
@@ -72,13 +95,15 @@ export function applyStepInput(
   now: number,
   next: Transition,
 ): State {
+  if (input.type === 'draft') return applyDraft(state, playerId, { strokes: input.strokes });
   let page: Page | null = null;
   if (input.type === 'draw')
     page = { kind: 'draw', authorId: playerId, drawing: { strokes: input.strokes } };
   else if (input.type === 'guess')
     page = { kind: 'guess', authorId: playerId, text: input.text.trim() };
   if (!page) return state;
-  const after = submitPage(state, playerId, page);
-  if (!after) return state;
+  const submitted = submitPage(state, playerId, page);
+  if (!submitted) return state;
+  const after = withoutDraft(submitted, playerId);
   return allConnectedDone(after, submittedIds(after)) ? closeStep(after, now, next) : after;
 }
