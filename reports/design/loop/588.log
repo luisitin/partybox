@@ -1,0 +1,27 @@
+(node:7304) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+pass 588: blanks reconnect 3p — 23 phase changes, 47 cues, tv long frames 324 (worst 133 ms), 137 s → C:\dev\partybox\.claude\worktrees\blanks-loop\reports\design\loop\588
+  +0.0s playing/intro (timer 5 s)
+  +5.0s playing/pick (timer 20 s)
+  +10.7s playing/answer (timer 60 s)
+  +16.3s playing/reveal (timer 3 s)
+  +19.1s playing/reveal (timer 3 s)
+  +22.1s playing/judge (timer 45 s)
+  +25.0s playing/result (timer 8 s)
+  +33.0s playing/intro (timer 5 s)
+  +38.1s playing/pick (timer 20 s)
+  +40.4s playing/answer (timer 60 s)
+  +46.0s playing/reveal (timer 3 s)
+  +48.9s playing/reveal (timer 3 s)
+  +51.7s playing/judge (timer 45 s)
+  +53.5s playing/result (timer 8 s)
+  +61.5s playing/intro (timer 5 s)
+  +66.5s playing/pick (timer 20 s)
+  +72.2s playing/answer (timer 60 s)
+  +77.6s playing/reveal (timer 3 s)
+  +80.8s playing/reveal (timer 3 s)
+  +83.9s playing/judge (timer 45 s)
+  +109.7s playing/result (timer 8 s)
+  +117.7s playing/final (timer 4 s)
+  +121.7s results/results
+  note: reconnect: Sam dropped for 8 s at 2026-09-19T09:50:24.846Z in judge
