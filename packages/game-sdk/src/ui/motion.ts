@@ -183,10 +183,15 @@ export function sanitizeSnapshot(node: HTMLElement): HTMLElement {
     const span = node.ownerDocument.createElement('span');
     span.className = el.className;
     span.style.cssText = el.style.cssText;
+    // A <select> keeps only what it showed — its picked option's label — not every option's text
+    // run together (the TV host panel's Category read "All categoriesGeographySTEM…" for one beat
+    // under the intro title).
     span.textContent =
       el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement
         ? el.value
-        : el.textContent;
+        : el instanceof HTMLSelectElement
+          ? (el.selectedOptions[0]?.label ?? '')
+          : el.textContent;
     el.replaceWith(span);
   }
   for (const el of node.querySelectorAll<HTMLElement>('*')) {
