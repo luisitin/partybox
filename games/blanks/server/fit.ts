@@ -47,6 +47,9 @@ const DOING_PROMPT = [
   /\b(?:done|did|loved|dare (?:was|is)|ritual (?:was|is)): ____|doing what \w+ loved/i,
   // "Game night's loser had to ____.": a verb wanted — a gerund is the nearest thing the decks hold.
   /\b(?:had to|has to|have to|forced (?:me|us|him|her|them) to|dared (?:me|us|him|her|them) to|made (?:me|us|him|her|them)|refused to|agreed to|threatened to|learned to|promised to|tried to|decided to|(?:ordered|told|asked) (?:me|us|him|her|them) to) ____/i,
+  // "The heat wave had everyone ____.", "Snowed in for three days, we ____.", "Poutine was used
+  // for ____.", "The Canadian's apology was for ____.", "What did the preacher confess?" (loop 831).
+  /\b(?:had (?:everyone|everybody|us|me|them|the \w+)|, (?:we|I|they|he|she)|used for|apolog(?:y|ies|ized|ised) (?:was |is |were )?for) ____|\bconfess\?$/i,
   /\b(?:arrested|fired|executed|burned|shut down|raided|resigned|banned|expelled|sued|jailed|convicted|dumped|put (?:\w+ ){1,2}down|quit|walked out|kicked out|fined|voted off|kicked (?:me|us|him|her) off|upgraded (?:me|us)|comped (?:me|us)|congratulated (?:me|us|him|her)|lost the prize)\b[^.]* (?:for|over) ____/i,
   // "…will be remembered for ____", "…is famous for ____", "a ribbon for ____", "charges extra for ____".
   /\b(?:remembered|remember (?:me|us|him|her)|famous|only good|charge[sd]?(?: (?:me|us|extra|a cleaning fee))?|a (?:charge|ribbon|badge|medal|trophy|award|bonus|raise|promotion)|one break a day) for ____/i,
