@@ -1936,8 +1936,8 @@
       "text": "Vegas is ____ wearing ____.",
       "pick": 2,
       "draw": 0,
-      "tier": 3,
-      "slots": ["person", "thing"]
+      "slots": ["person", "thing"],
+      "tier": 3
     },
     {
       "id": "cb288",
@@ -1979,16 +1979,16 @@
       "text": "The group chat is ____ arguing about ____.",
       "pick": 2,
       "draw": 0,
-      "tier": 3,
-      "slots": ["person", "thing"]
+      "slots": ["person", "thing"],
+      "tier": 3
     },
     {
       "id": "cb294",
       "text": "Tinder is ____ pretending to be ____.",
       "pick": 2,
       "draw": 0,
-      "tier": 3,
-      "slots": ["person", "person"]
+      "slots": ["person", "person"],
+      "tier": 3
     },
     {
       "id": "cb295",
@@ -4226,6 +4226,138 @@
     {
       "id": "cb623",
       "text": "What's in the \"secret menu\" at the diner?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb624",
+      "text": "The spy seduced the target with ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb625",
+      "text": "James Bond's safe word is \"____.\"",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb626",
+      "text": "The barracks' contraband of choice: ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb627",
+      "text": "The honeypot operation went wrong when ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb628",
+      "text": "The museum's after-hours exhibit featured ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb629",
+      "text": "The nude model's biggest complaint: ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb630",
+      "text": "The art class got weird when the teacher brought ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb631",
+      "text": "The statue's fig leaf was hiding ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb632",
+      "text": "The reality show's hot tub scene was cut for ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb633",
+      "text": "The Bachelor's fantasy suite included ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb634",
+      "text": "The game show's bonus round was ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb635",
+      "text": "The contestant lost the prize for ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb636",
+      "text": "The dating show's lie detector caught ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb637",
+      "text": "The farmer's daughter's secret was ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb638",
+      "text": "The barn's hayloft is famous for ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb639",
+      "text": "The county fair's back tent showed ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb640",
+      "text": "The country song's real subject was ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb641",
+      "text": "The rodeo clown's day job is ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb642",
+      "text": "What did the spy smuggle in his pants?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb643",
+      "text": "What did the museum's security camera record?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb644",
+      "text": "What did the game show host say off-mic?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "cb645",
+      "text": "What did the farmer find in the corn?",
       "pick": 1,
       "draw": 0
     }
@@ -11443,6 +11575,176 @@
       "id": "cw1494",
       "text": "A diner waitress who calls you \"hon\" and means it.",
       "tier": 3
+    },
+    {
+      "id": "cw1495",
+      "text": "A spy who moans in Morse code.",
+      "tier": 4
+    },
+    {
+      "id": "cw1496",
+      "text": "A honeypot with a punch card.",
+      "tier": 3
+    },
+    {
+      "id": "cw1497",
+      "text": "James Bond's STD panel.",
+      "tier": 4
+    },
+    {
+      "id": "cw1498",
+      "text": "A tank with a stripper pole.",
+      "tier": 3
+    },
+    {
+      "id": "cw1499",
+      "text": "A drill sergeant with a foot fetish.",
+      "tier": 3
+    },
+    {
+      "id": "cw1500",
+      "text": "Camouflage condoms.",
+      "tier": 4
+    },
+    {
+      "id": "cw1501",
+      "text": "A submarine that's mostly a hot tub.",
+      "tier": 3
+    },
+    {
+      "id": "cw1502",
+      "text": "A code name that's a sex position.",
+      "tier": 4
+    },
+    {
+      "id": "cw1503",
+      "text": "A nude painting of the art teacher.",
+      "tier": 3
+    },
+    {
+      "id": "cw1504",
+      "text": "A museum guard who touches the art.",
+      "tier": 3
+    },
+    {
+      "id": "cw1505",
+      "text": "A sculpture of a dick, tastefully.",
+      "tier": 4
+    },
+    {
+      "id": "cw1506",
+      "text": "The Venus de Milo's missing hands, found in a bedroom.",
+      "tier": 4
+    },
+    {
+      "id": "cw1507",
+      "text": "A gallery opening that was secretly an orgy.",
+      "tier": 3
+    },
+    {
+      "id": "cw1508",
+      "text": "A finger painting done with the wrong finger.",
+      "tier": 4
+    },
+    {
+      "id": "cw1509",
+      "text": "An art heist for a dirty Picasso.",
+      "tier": 3
+    },
+    {
+      "id": "cw1510",
+      "text": "Bob Ross's happy little bush.",
+      "tier": 4
+    },
+    {
+      "id": "cw1511",
+      "text": "A hot tub scene with the sound left in.",
+      "tier": 3
+    },
+    {
+      "id": "cw1512",
+      "text": "A rose ceremony that ended in a threesome.",
+      "tier": 4
+    },
+    {
+      "id": "cw1513",
+      "text": "The contestant who slept with the crew.",
+      "tier": 3
+    },
+    {
+      "id": "cw1514",
+      "text": "A game show buzzer shaped like a nipple.",
+      "tier": 4
+    },
+    {
+      "id": "cw1515",
+      "text": "A fantasy suite with a nanny cam.",
+      "tier": 3
+    },
+    {
+      "id": "cw1516",
+      "text": "Survivor's immunity idol, used as a toy.",
+      "tier": 4
+    },
+    {
+      "id": "cw1517",
+      "text": "A talent show act that's just stripping.",
+      "tier": 3
+    },
+    {
+      "id": "cw1518",
+      "text": "Wheel of Fortune: \"_UCK YO_R BOSS.\"",
+      "tier": 4
+    },
+    {
+      "id": "cw1519",
+      "text": "A cow that watches you skinny-dip.",
+      "tier": 4
+    },
+    {
+      "id": "cw1520",
+      "text": "A hayloft with a mattress and a rule.",
+      "tier": 3
+    },
+    {
+      "id": "cw1521",
+      "text": "A rodeo clown with a naughty side hustle.",
+      "tier": 3
+    },
+    {
+      "id": "cw1522",
+      "text": "A farmer's tan in the shape of a thong.",
+      "tier": 4
+    },
+    {
+      "id": "cw1523",
+      "text": "A county fair kissing booth with tongue.",
+      "tier": 3
+    },
+    {
+      "id": "cw1524",
+      "text": "Tractor sex, unromantic.",
+      "tier": 3
+    },
+    {
+      "id": "cw1525",
+      "text": "A rooster that crows during the good part.",
+      "tier": 4
+    },
+    {
+      "id": "cw1526",
+      "text": "A goat with a tramp stamp.",
+      "tier": 4
+    },
+    {
+      "id": "cw1527",
+      "text": "A pickup truck bed with a story.",
+      "tier": 3
+    },
+    {
+      "id": "cw1528",
+      "text": "Line dancing with a boner.",
+      "tier": 4
     }
   ]
 }
