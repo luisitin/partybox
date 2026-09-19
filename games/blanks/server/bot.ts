@@ -11,9 +11,9 @@ import type { Slot } from './fit';
 import { canVote, hasPlayed, isCzar } from './round';
 import type { Input, State } from './types';
 
-/** How much a tier step is worth against the fit (a great card in a fair blank beats a fair card
- *  in a perfect one, just). */
-const TIER_WEIGHT = 0.35;
+/** How much a tier step is worth against the fit: a great gerund in a thing blank (0.7 + 0.25)
+ *  nearly matches a fair thing (1.0), never a thing in a doing blank (0.3). */
+const TIER_WEIGHT = 0.25;
 /** Random spread on every score: bots are not one mind. */
 const NOISE = 0.2;
 
