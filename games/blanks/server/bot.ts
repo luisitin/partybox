@@ -24,9 +24,12 @@ const NOISE = 0.2;
  *  noise. */
 export function cardAppeal(slot: Slot, id: string, rng: Rng, blackText = ''): number {
   const text = whiteText(id);
+  const fit = fitScore(slot, whiteServes(id), text, blackText || undefined);
+  // The tier counts in proportion to the fit: an amazing card that does not fit the blank is
+  // not amazing there (a six-word safe word, a thing where a doing is wanted).
   return (
-    fitScore(slot, whiteServes(id), text) +
-    TIER_WEIGHT * (whiteTier(id) - 2) +
+    fit +
+    TIER_WEIGHT * (whiteTier(id) - 2) * fit +
     (blackText ? pairBonus(blackText, text) : 0) +
     punch(text) +
     (slot === 'name' ? shortness(text) : 0) +

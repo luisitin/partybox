@@ -130,8 +130,12 @@ for (let r = 0; r < runs; r += 1) {
               ].join(String.fromCharCode(10)),
             );
           topFit +=
-            top.reduce((sum, c) => sum + fitScore(slot, serves.get(c) ?? [], whiteText(c)), 0) /
-            Math.max(1, top.length);
+            top.reduce(
+              (sum, c) =>
+                sum +
+                fitScore(slot, serves.get(c) ?? [], whiteText(c), blackCard(state.blackId).text),
+              0,
+            ) / Math.max(1, top.length);
           topGood += top.filter((c) => (tiers.get(c) ?? 2) >= 3).length;
           const byTopic = new Map<string, number>();
           for (const c of hand)
@@ -145,8 +149,12 @@ for (let r = 0; r < runs; r += 1) {
           clumpTop += biggest;
           if (biggest >= 4) clumpy += 1;
           handFit +=
-            hand.reduce((sum, c) => sum + fitScore(slot, serves.get(c) ?? [], whiteText(c)), 0) /
-            Math.max(1, hand.length);
+            hand.reduce(
+              (sum, c) =>
+                sum +
+                fitScore(slot, serves.get(c) ?? [], whiteText(c), blackCard(state.blackId).text),
+              0,
+            ) / Math.max(1, hand.length);
           if (serving < 2) {
             handsShortOfSlot += 1;
             shortBySlot[slot] += 1;
@@ -167,17 +175,19 @@ for (let r = 0; r < runs; r += 1) {
             const b = pairBonus(black.text, whiteText(c));
             return b === TOPIC_HIT ? '†' : b === WORD_ECHO ? '↩' : '';
           };
-          const line = `[${blankSlots.join('+')}${'★'.repeat(blackTier(state.blackId))}] ${fillText(black.text, ev.input.cards.map(whiteText))}  ← ${ev.input.cards.map((c, i) => `${tiers.get(c) ?? 2}/${fitScore(slotAt(i), serves.get(c) ?? [], whiteText(c)).toFixed(2)}${mark(c)}`).join(' ')}`;
+          const line = `[${blankSlots.join('+')}${'★'.repeat(blackTier(state.blackId))}] ${fillText(black.text, ev.input.cards.map(whiteText))}  ← ${ev.input.cards.map((c, i) => `${tiers.get(c) ?? 2}/${fitScore(slotAt(i), serves.get(c) ?? [], whiteText(c), black.text).toFixed(2)}${mark(c)}`).join(' ')}`;
           samples.push(line);
         }
         ev.input.cards.forEach((c, i) => {
           const s = slotAt(i);
           const best = Math.max(
             0,
-            ...hand.map((h) => fitScore(s, serves.get(h) ?? [], whiteText(h))),
+            ...hand.map((h) =>
+              fitScore(s, serves.get(h) ?? [], whiteText(h), blackCard(state.blackId).text),
+            ),
           );
           plays += 1;
-          playFit += fitScore(s, serves.get(c) ?? [], whiteText(c));
+          playFit += fitScore(s, serves.get(c) ?? [], whiteText(c), blackCard(state.blackId).text);
           playTier += tiers.get(c) ?? 2;
           bestFit += best;
           if ((serves.get(c) ?? []).includes(s)) playServes += 1;

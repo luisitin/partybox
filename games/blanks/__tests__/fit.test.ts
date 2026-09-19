@@ -125,6 +125,14 @@ describe('fitScore', () => {
     // With the text, a name blank grades by length: a slogan takes six words, a wall is a wall.
     expect(fitScore('name', ['thing'], 'Lost luggage that went to Cleveland.')).toBe(0.8);
     expect(fitScore('name', ['thing', 'name'], 'Smegma.')).toBe(1);
+    // A blank that wants a word — a safe word, a handle — wants one or two.
+    expect(
+      fitScore('name', ['thing', 'name'], 'A jury of my exes.', 'My safe word is "____."'),
+    ).toBe(0.3);
+    expect(fitScore('name', ['thing', 'name'], 'Smegma.', 'My safe word is "____."')).toBe(1);
+    expect(
+      fitScore('name', ['thing', 'name'], 'A jury of my exes.', 'The rejected slogan was "____."'),
+    ).toBe(0.8);
     expect(
       fitScore('name', ['person'], 'A marathon runner who mentions it at every dinner party.'),
     ).toBe(0.45);
