@@ -149,7 +149,7 @@ as `buzz:dropped`.
 
 ## Primitives
 
-TV (`@partybox/game-sdk` → `tv/`): `Timer`, `PlayerChips`, `Scoreboard`, `Reveal`, `Stage` (overscan frame), `BigText`. `Scoreboard` picks its column count from the row count (one up to 6, two from 7, three from 13); `columns={3}` forces the three-column tier for a board that shares the stage with a three-row roster, and `size="sm"` shrinks the rows.
+TV (`@partybox/game-sdk` → `tv/`): `Timer`, `PlayerChips`, `Scoreboard`, `Reveal`, `Stage` (overscan frame), `BigText`. `Scoreboard` picks its column count from the row count (one up to 6, two from 7, three from 13); `columns={3}` / `columns={4}` force three or four body-size columns for a board that shares the stage with a three- or four-row roster, and `size="sm"` shrinks the rows.
 Shared (`ui/`): `DeadlineBar` (draining bar; danger in the last 5 s only when the phase lasts ≥ 15 s — a 6 s bingo call just drains — the TV strip and the phone header both use it), `usePrefersReducedMotion` (for JS-driven sequences).
 Controller (`controller/`): `TextAnswer`, `ChoiceGrid`, `VoteList` (with a sticky `header` slot for what is being voted on), `WaitingScreen`, `Screen` (safe-area frame; a body that scrolls fades its bottom 28 px while there is more below and lifts the fade at the end, via a scroll-driven `--pb-fold` — browsers without scroll timelines keep the plain fold), `PrimaryButton`.
 Shared: `Avatar`, `Chip`. Each primitive's props are documented in its file header.
