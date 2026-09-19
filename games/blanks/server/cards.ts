@@ -4,7 +4,7 @@
 import { shuffle } from '@partybox/game-sdk';
 import type { RngState } from '@partybox/game-sdk';
 import { BLANK, blanksIn } from '../content/schema';
-import { blackTier } from './content';
+import { blackCard, blackTier } from './content';
 import {
   BIG_REVEAL_MAX_MS,
   BIG_REVEAL_MIN_MS,
@@ -36,7 +36,25 @@ export function drawWhite(state: State, count: number): [string[], State] {
 /** The great prompts first, the filler last, each group in its shuffled order (owner, 2026-09-18:
  *  the best-fitting, funniest cards weighted up): a six-round night never reaches the back. */
 export function orderBlackDeck(deck: readonly string[]): string[] {
-  return [3, 2, 1].flatMap((tier) => deck.filter((id) => blackTier(id) === tier));
+  return [3, 2, 1].flatMap((tier) => spaceOut(deck.filter((id) => blackTier(id) === tier)));
+}
+
+/** The Pick 2 and Pick 3 prompts spread evenly through a run of singles, never two in a row: a
+ *  Pick 3 takes three cards off every hand, and two back to back (loop 751's transcript, rounds
+ *  2 and 3) left the room playing its leftovers. Order within each group is kept. */
+function spaceOut(ids: readonly string[]): string[] {
+  const multi = ids.filter((id) => blackCard(id).pick > 1);
+  const single = ids.filter((id) => blackCard(id).pick <= 1);
+  if (multi.length === 0 || single.length === 0) return [...ids];
+  const gap = single.length / multi.length;
+  const out: string[] = [];
+  let m = 0;
+  single.forEach((id, i) => {
+    out.push(id);
+    // One multi after every `gap` singles (the last multis ride at the end when gap < 1).
+    while (m < multi.length && Math.floor((m + 1) * gap) <= i + 1) out.push(multi[m++] as string);
+  });
+  return [...out, ...multi.slice(m)];
 }
 
 /** Draws the next black card; the black deck reshuffles from scratch when it runs out. */

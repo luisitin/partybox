@@ -65,6 +65,21 @@ describe('dealing', () => {
     }
   });
 
+  it('the Pick 2 and Pick 3 prompts are spread through the black deck, never two in a row', () => {
+    for (const decks of ['wild-only', 'adults', 'mild'] as const) {
+      const s = start({ players: 4, decks, seed: 5 });
+      const picks = s.blackDeck.map((id) => blackCard(id).pick);
+      const doubled = picks.findIndex((p, i) => p > 1 && (picks[i + 1] ?? 1) > 1);
+      expect(doubled, `${decks} at ${doubled}`).toBe(-1);
+      // …and not all at the back: the first one sits within two gaps of the top (the tier-3 group has its own ratio).
+      const gap = Math.ceil(picks.filter((p) => p <= 1).length / picks.filter((p) => p > 1).length);
+      expect(
+        picks.findIndex((p) => p > 1),
+        decks,
+      ).toBeLessThanOrEqual(2 * gap);
+    }
+  });
+
   it('the black deck leads with the great prompts and keeps the filler for the back', () => {
     const s = start({ players: 4, decks: 'wild-only', seed: 5 });
     const tiers = s.blackDeck.map(blackTier);
