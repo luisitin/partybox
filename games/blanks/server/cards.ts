@@ -111,7 +111,11 @@ export function fill(
     // at the end the black card's own full stop is dropped rather than doubled — the card of the
     // night read '…meaning "soup.".' on a results screen (review-loop #391).
     const closed = /\.["”'’)\]]+$/.test(white);
-    const ownStop = closed && punctuation.startsWith('.');
+    // A card that ends on a question or exclamation — 'The one relative who comments "who is
+    // this?"' — has ended the sentence itself, so the black card's full stop is dropped rather
+    // than stacked after the quote ('…who is this?".' — the fill sweep of loop #680).
+    const asked = /[?!]["”'’)\]]*$/.test(white);
+    const ownStop = (closed || asked) && punctuation.startsWith('.');
     const tail = ownStop ? punctuation.slice(1) : punctuation;
     let body =
       atEnd || keepDot || ownStop

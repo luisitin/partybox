@@ -105,6 +105,17 @@ describe('fill', () => {
     expect(fillText('Nothing beats ____', ['Bees?'])).toBe('Nothing beats Bees?');
   });
 
+  it('drops the black card’s full stop after a card that ends on a question or exclamation', () => {
+    // '…who is this?".' stacked a stop after the quote (loop #680); the card ended the sentence.
+    const ask = fillText('The museum’s newest exhibit: ____.', [
+      'The one relative who comments "who is this?"',
+    ]);
+    expect(ask).toBe('The museum’s newest exhibit: The one relative who comments "who is this?"');
+    expect(fillText('My motto is ____.', ['Yeehaw!'])).toBe('My motto is Yeehaw!');
+    // Mid-sentence the question mark stays and the comma follows as before.
+    expect(fillText('____, then dinner.', ['Who is this?'])).toBe('Who is this?, then dinner.');
+  });
+
   it('takes an opening quote or bracket onto the card with the answer', () => {
     // A quoted answer should read as one piece of paper, not an orphan quote against the black
     // text (review-loop #330).
