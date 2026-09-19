@@ -15,6 +15,7 @@ describe('slotOf — what the blank wants', () => {
       'The wedding hashtag is #____.',
       'What does the group chat call me?',
       `My résumé's "special skills" section says ____.`,
+      'Neverland Ranch had a ride called ____.',
     ])
       expect(slotOf({ text }), text).toBe('name');
   });
@@ -39,6 +40,8 @@ describe('slotOf — what the blank wants', () => {
       'What did the hotel maid walk in on?',
       `The yearbook's "Most Likely To" was ____.`,
       "What's my signature move in bed?",
+      "My public defender's strategy was ____.",
+      "What's the one thing I'll never live down?",
       'The moonwalk was actually Michael Jackson ____.',
       "What's the secret to a happy marriage?",
       'The livestream ended abruptly with ____.',
