@@ -120,13 +120,13 @@ function CurrentPage({ page }: { page: PageView }): JSX.Element {
     );
   if (page.kind === 'draw')
     return (
-      <div className={`${styles.page} pb-enter`}>
+      <div className={`${styles.page} ${styles.flip}`}>
         <p className={styles.pageWho}>{page.authorName} drew</p>
         <DrawingView drawing={page.drawing} size={560} label={`${page.authorName}'s drawing`} />
       </div>
     );
   return (
-    <div className={`${styles.page} pb-enter`}>
+    <div className={`${styles.page} ${styles.flip}`}>
       <p className={styles.pageWho}>{page.authorName} guessed</p>
       <BigText level="display" tone={page.text === null ? 'muted' : 'default'}>
         {page.text ?? '???'}

@@ -1,0 +1,178 @@
+{
+  "pass": "412",
+  "game": "broken-pencil",
+  "players": 4,
+  "scenario": "normal",
+  "focus": "tv",
+  "started": "03:19:36.290",
+  "tvVideoT0": "03:19:32.844",
+  "phoneVideoT0": "03:19:33.804",
+  "changes": [
+    {
+      "t": 1789787976291,
+      "status": "playing",
+      "phase": "pick",
+      "deadline": 1789787996288,
+      "bed": null,
+      "at": "03:19:36.291",
+      "sinceStartS": 0,
+      "videoS": 3.4,
+      "phoneVideoS": 2.5
+    },
+    {
+      "t": 1789787980504,
+      "status": "playing",
+      "phase": "draw",
+      "deadline": 1789788010385,
+      "bed": null,
+      "at": "03:19:40.504",
+      "sinceStartS": 4.2,
+      "videoS": 7.7,
+      "phoneVideoS": 6.7
+    },
+    {
+      "t": 1789787984645,
+      "status": "playing",
+      "phase": "pass",
+      "deadline": 1789788029536,
+      "bed": null,
+      "at": "03:19:44.645",
+      "sinceStartS": 8.4,
+      "videoS": 11.8,
+      "phoneVideoS": 10.8
+    },
+    {
+      "t": 1789787994086,
+      "status": "playing",
+      "phase": "pass",
+      "deadline": 1789788038924,
+      "bed": null,
+      "at": "03:19:54.086",
+      "sinceStartS": 17.8,
+      "videoS": 21.2,
+      "phoneVideoS": 20.3
+    },
+    {
+      "t": 1789788003536,
+      "status": "playing",
+      "phase": "guess",
+      "deadline": 1789788018378,
+      "bed": null,
+      "at": "03:20:03.536",
+      "sinceStartS": 27.2,
+      "videoS": 30.7,
+      "phoneVideoS": 29.7
+    },
+    {
+      "t": 1789788007765,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789788019644,
+      "bed": null,
+      "at": "03:20:07.765",
+      "sinceStartS": 31.5,
+      "videoS": 34.9,
+      "phoneVideoS": 34
+    },
+    {
+      "t": 1789788009131,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789788020395,
+      "bed": null,
+      "at": "03:20:09.131",
+      "sinceStartS": 32.8,
+      "videoS": 36.3,
+      "phoneVideoS": 35.3
+    },
+    {
+      "t": 1789788010514,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789788021791,
+      "bed": null,
+      "at": "03:20:10.514",
+      "sinceStartS": 34.2,
+      "videoS": 37.7,
+      "phoneVideoS": 36.7
+    },
+    {
+      "t": 1789788011996,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789788023186,
+      "bed": null,
+      "at": "03:20:11.996",
+      "sinceStartS": 35.7,
+      "videoS": 39.2,
+      "phoneVideoS": 38.2
+    },
+    {
+      "t": 1789788013399,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789788017638,
+      "bed": null,
+      "at": "03:20:13.399",
+      "sinceStartS": 37.1,
+      "videoS": 40.6,
+      "phoneVideoS": 39.6
+    },
+    {
+      "t": 1789788017706,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789788025647,
+      "bed": null,
+      "at": "03:20:17.706",
+      "sinceStartS": 41.4,
+      "videoS": 44.9,
+      "phoneVideoS": 43.9
+    },
+    {
+      "t": 1789788025736,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789788030657,
+      "bed": null,
+      "at": "03:20:25.736",
+      "sinceStartS": 49.4,
+      "videoS": 52.9,
+      "phoneVideoS": 51.9
+    },
+    {
+      "t": 1789788030681,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789788038671,
+      "bed": null,
+      "at": "03:20:30.681",
+      "sinceStartS": 54.4,
+      "videoS": 57.8,
+      "phoneVideoS": 56.9
+    },
+    {
+      "t": 1789788038684,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789788043672,
+      "bed": null,
+      "at": "03:20:38.684",
+      "sinceStartS": 62.4,
+      "videoS": 65.8,
+      "phoneVideoS": 64.9
+    },
+    {
+      "t": 1789788043733,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789788051675,
+      "bed": null,
+      "at": "03:20:43.733",
+      "sinceStartS": 67.4,
+      "videoS": 70.9,
+      "phoneVideoS": 69.9
+    }
+  ],
+  "notes": ["budget reached while playing; skipped to results"]
+}
