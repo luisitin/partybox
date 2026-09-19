@@ -2141,7 +2141,7 @@
       "pick": 3,
       "draw": 2,
       "slots": ["name", "name", "name"],
-      "tier": 3
+      "tier": 1
     },
     {
       "id": "cb309",
@@ -2421,7 +2421,7 @@
       "text": "My tattoo artist refused to do ____.",
       "pick": 1,
       "draw": 0,
-      "tier": 3
+      "tier": 1
     },
     {
       "id": "cb349",
@@ -4827,7 +4827,7 @@
       "text": "The gym's sauna rule is no ____.",
       "pick": 1,
       "draw": 0,
-      "tier": 2
+      "tier": 1
     },
     {
       "id": "cb692",
@@ -4986,7 +4986,8 @@
       "id": "cb715",
       "text": "My love language is actually ____.",
       "pick": 1,
-      "draw": 0
+      "draw": 0,
+      "tier": 1
     },
     {
       "id": "cb716",
@@ -5263,7 +5264,8 @@
       "id": "cb758",
       "text": "The wrestler's real finishing move is ____.",
       "pick": 1,
-      "draw": 0
+      "draw": 0,
+      "tier": 1
     },
     {
       "id": "cb759",
