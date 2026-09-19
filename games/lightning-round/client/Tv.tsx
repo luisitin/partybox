@@ -98,9 +98,10 @@ export function Tv({ view }: GameTvProps<LightningTvView>): JSX.Element {
           noTrophy
           dense={standings.length >= 5}
           // Six h2 rows per column plus this header overflow 1080 px (review-loop #53); once the
-          // roster is three rows (9+), even six small rows run into the host bar.
+          // roster is three rows (9+), even six small rows run into the host bar, and four rows
+          // (13+) leave room for four rows of standings only: four columns.
           size={standings.length >= 9 ? 'sm' : 'md'}
-          columns={standings.length >= 9 ? 3 : 2}
+          columns={standings.length >= 13 ? 4 : standings.length >= 9 ? 3 : 2}
           markIds={view.players.filter((p) => p.status === 'submitted').map((p) => p.id)}
           stagger="down"
         />

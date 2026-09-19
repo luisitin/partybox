@@ -1,5 +1,5 @@
 // Dealing (loop 445–525): every hand back up to ten with the floors the owner asked for — two
-// cards for each kind of question, five great cards and two amazing ones, no four-card clump on
+// cards for each kind of question, five great cards and three amazing ones, no four-card clump on
 // one subject — and, once the prompt is known, the best-fitting cards on top. Pure data, like
 // cards.ts, which it draws from.
 import { shuffle } from '@partybox/game-sdk';
@@ -36,8 +36,8 @@ const floorOf = (kind: WhiteKind): number => KIND_FLOORS[kind];
 /** …and at least this many great cards (tier 3 or 4) — half the hand (owner, 2026-09-18: "at
  *  least half of their cards as really good cards")… */
 export const GOOD_FLOOR = HAND_SIZE / 2;
-/** …of which at least this many amazing ones (tier 4: the best two hundred or so of a deck)… */
-export const BEST_FLOOR = 2;
+/** …of which at least this many amazing ones (tier 4: the best third of a deck, the way the loop rated them)… */
+export const BEST_FLOOR = 3;
 /** …and at most this many filler cards (tier 1): nobody plays them, so a hand silts up with
  *  them round after round — a fifth of hands held three or more before the cap (loop 602). */
 export const FILLER_CAP = 2;
@@ -48,7 +48,7 @@ const MAX_SWAPS = 2;
  *  came back from a Pick 2 with two great cards and the kind swap had just dropped one (loop
  *  #500); the loop only runs while the hand is short, so the floor bounds it anyway. */
 const MAX_GOOD_SWAPS = GOOD_FLOOR;
-const MAX_BEST_SWAPS = 2;
+const MAX_BEST_SWAPS = BEST_FLOOR;
 /** …and at least one WORD: a card of one or two words, for the blanks that want exactly that —
  *  a safe word, a nickname, a password, a hurricane's name (fit.ts WORD_PROMPT). Short cards are
  *  one in twenty-three, so two hands in three held none and every answer to "My cellmate's
