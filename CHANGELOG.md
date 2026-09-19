@@ -40,6 +40,8 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 - Multi-persona live-play harness (`packages/e2e/live/`) and the 2026-09-15 session report.
 
 ### Fixed
+- The crossfade ghost of a screen with a `<select>` (the TV host panel into a game intro) showed
+  every option's label run together for a beat; it now keeps the picked label only.
 - Wisecrack **Spicy**: the 25 mildest prompts (dark setups with no adult referent) rewritten in the
   explicit register of the Blanks WILD deck; the longest prompt (83 chars) proven to fit every surface.
 - Resuming a paused game no longer flashes the held seconds plus the pause length (18 for 11)
