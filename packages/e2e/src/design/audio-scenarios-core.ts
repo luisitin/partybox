@@ -130,6 +130,13 @@ export async function runCoreScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
     `cues=${T.cues(evs).join(',')}`,
   );
   T.ok('B', 'question → the pulse bed', (await bed()) === 'pulse', `bed=${await bed()}`);
+  const ducksB2 = evs.filter((e) => e.kind === 'bed:duck').length;
+  T.ok(
+    'B',
+    'the phase chime ducks the pulse bed once',
+    ducksB2 === 1,
+    `bed:duck events=${ducksB2}`,
+  );
   // unfreeze first (real time from here); the lock-in's push resyncs the TV's clock offset
   await api.clock(false);
   await settle(300);
@@ -139,6 +146,12 @@ export async function runCoreScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
   await T.mark('B3');
   evs = await T.between(tv, 'B2', 'B3');
   pev = await T.between(vip.page, 'B2', 'B3');
+  T.ok(
+    'B',
+    'a lock tick does not duck the pulse bed (light cue)',
+    !evs.some((e) => e.kind === 'bed:duck'),
+    `bed:duck events=${evs.filter((e) => e.kind === 'bed:duck').length}`,
+  );
   T.ok(
     'B',
     'lock-in → TV lock tick; phone submit cue + 20 ms buzz',
