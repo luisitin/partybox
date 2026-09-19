@@ -13,6 +13,8 @@ describe('slotOf — what the blank wants', () => {
       "What's the worst thing to whisper during sex?",
       `Grandpa's new nickname at the retirement home: "____."`,
       'The wedding hashtag is #____.',
+      'What does the group chat call me?',
+      `My résumé's "special skills" section says ____.`,
     ])
       expect(slotOf({ text }), text).toBe('name');
   });
@@ -51,6 +53,7 @@ describe('slotOf — what the blank wants', () => {
       'Squid Game, hosted by ____.',
       'I lost my virginity to ____.',
       "Disney's next princess is ____.",
+      'My son wants to be ____ when he grows up.',
     ])
       expect(slotOf({ text }), text).toBe('person');
   });
