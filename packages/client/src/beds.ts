@@ -5,6 +5,7 @@
 // bed's place so a bed that returns resumes where it left off, holds during a pause, ducks under
 // every cue, and follows the TV's mute. Phones never play beds.
 import type { PushedView, RoomSnapshot, TvView } from '@partybox/shared';
+import { trace } from '@partybox/game-sdk/ui';
 import { BED_IDS, BEDS } from './beds-library';
 import type { BedId } from './beds-library';
 
@@ -41,13 +42,15 @@ export interface BedEngine {
   setMuted(muted: boolean): void;
   /** A paused game holds the bed where it is. */
   setPaused(paused: boolean): void;
-  /** A cue is playing: dip for a second. */
-  duck(): void;
+  /** A cue is playing: dip for a second — unless it is one of the light ticks (LIGHT_CUES). */
+  duck(cue?: string): void;
   current(): BedId | null;
 }
 
 const FADE_S = 1.5;
 const LOOKAHEAD_S = 0.6;
+/** Cues too small to duck under: a 40 ms lock tick per player, a countdown tick per second. */
+export const LIGHT_CUES: ReadonlySet<string> = new Set(['lock', 'countdown', 'tick']);
 
 interface Running {
   id: BedId;
@@ -159,8 +162,9 @@ export function createBedEngine(): BedEngine {
         r.timer = setInterval(() => schedule(r), 150);
       }
     },
-    duck() {
-      if (!running || !ctx || paused) return;
+    duck(cue) {
+      if (!running || !ctx || paused || (cue !== undefined && LIGHT_CUES.has(cue))) return;
+      trace('bed:duck', { bed: running.id, cue: cue ?? '' });
       const g = running.out.gain;
       const now = ctx.currentTime;
       g.cancelScheduledValues(now);

@@ -121,7 +121,7 @@ TV has a mute toggle (persisted in `localStorage`) and a "tap to start" overlay 
 pulse), `lofi` (swung dusty beat, soft kick + brushed snare), `lounge` (vibraphone swing with a
 walking bass) and `pulse` (a 120 bpm quiz-show tension bed: eighth-note bass, a clock tick per beat;
 `beds-library-more.ts`). The voices they are built from live in `beds-voices.ts`. The shell crossfades beds over 1.5 s as phases change, resumes a returning bed where it stopped, holds it on pause,
-ducks it to half under every cue for a second, and mutes it with the TV. Unmapped phases and the results screen are silent.
+ducks it to half under every cue for a second (except the light `lock` / `countdown` / `tick` ticks, which would make it pump), and mutes it with the TV. Unmapped phases and the results screen are silent.
 The phone has its own engine (`createSoundEngine({ master: 0.35 })`, mute under `partybox:phone-sound`, default on,
 toggled from the theme sheet) that plays only what happened in the player's hand — never `phase`, `join`, `win` or
 `countdown`, which are the TV's. `useSound()` inside a game's Controller reaches it; the shell skips `submit` when a

@@ -32,8 +32,9 @@ function bedsInstance(muted: boolean): BedEngine {
 }
 let sound: SoundEngine | null = null;
 function soundInstance(): SoundEngine {
-  // Every cue ducks the music bed under it (ADR-032).
-  sound = sound ?? createSoundEngine({ onPlay: () => bedEngine?.duck() });
+  // A cue ducks the music bed under it (ADR-032) — except the small ticks: a lock per player and
+  // a countdown tick per second made the Lightning pulse bed pump five times a question (loop 400).
+  sound = sound ?? createSoundEngine({ onPlay: (cue) => bedEngine?.duck(cue) });
   return sound;
 }
 let musicEngine: MusicEngine | null = null;
