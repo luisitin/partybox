@@ -11,7 +11,10 @@ const FILE = 'reports/design/loop-log.md';
 const SECTIONS = 4; // the tables the log has grown into (columns widened over time)
 
 const show = (ref: string): string =>
-  execFileSync('git', ['show', `${ref}:${FILE}`], { encoding: 'utf8' });
+  execFileSync('git', ['show', `${ref}:${FILE}`], {
+    encoding: 'utf8',
+    maxBuffer: 64 * 1024 * 1024,
+  });
 const isRow = (line: string): boolean => /^\| \d+ /.test(line);
 const rowNo = (line: string): number => Number(line.split('|')[1]);
 const game = (line: string): string => line.split('|')[3]?.trim() ?? '';
