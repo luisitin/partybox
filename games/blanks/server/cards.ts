@@ -98,18 +98,6 @@ function takeKind(state: State, kind: WhiteKind): [string | null, State] {
   return takeWhere(state, (id) => whiteServes(id).includes(kind));
 }
 
-/** A card the hand can spare for a better one: not great itself, of a kind the hand holds more
- *  of than the floor — the weakest tier first. -1 when nothing can go. */
-function spareIndex(hand: readonly string[]): number {
-  let best = -1;
-  for (let i = 0; i < hand.length; i += 1) {
-    const id = hand[i] as string;
-    if (isGood(id) || whiteServes(id).some((k) => countKind(hand, k) <= KIND_FLOOR)) continue;
-    if (best === -1 || whiteTier(id) < whiteTier(hand[best] as string)) best = i;
-  }
-  return best;
-}
-
 /**
  * One hand back up to `target`, with something of every kind to play and enough great cards: the
  * missing kinds are drawn first, then great cards up to the quality floor, then the rest off the
@@ -161,20 +149,35 @@ function fillHand(state: State, hand: readonly string[], target: number): [strin
   }
   let goodSwaps = 0;
   while (countGood(out) < GOOD_FLOOR && goodSwaps < MAX_GOOD_SWAPS) {
-    const i = spareIndex(out);
-    if (i === -1) break;
-    const dropped = out[i] as string;
-    // A great card of the same kind keeps the kind floor as it was.
-    const [card, after] = takeWhere(
-      next,
-      (id) => isGood(id) && whiteKind(id) === whiteKind(dropped),
-    );
-    if (card === null) break;
-    out = [...out.slice(0, i), ...out.slice(i + 1), card];
-    next = { ...after, discard: [...after.discard, dropped] };
+    const swapped = swapForGood(next, out);
+    if (swapped === null) break;
+    [out, next] = swapped;
     goodSwaps += 1;
   }
   return [out, next];
+}
+
+/** One spare card out for a great one that keeps every kind floor: the weakest non-great cards
+ *  are tried first, and the great card must serve whatever kinds the hand would fall short of
+ *  without the spare. Null when no spare has a great card to cover it. (The old rule wanted a
+ *  spare that served no kind at its floor and a great card of the very same kind; a hand whose
+ *  spare things all read as names too had no spare at all and stopped at four — loop #472.) */
+function swapForGood(state: State, hand: readonly string[]): [string[], State] | null {
+  const spares = hand
+    .map((id, i) => ({ id, i }))
+    .filter(({ id }) => !isGood(id))
+    .sort((a, b) => whiteTier(a.id) - whiteTier(b.id));
+  for (const { id: dropped, i } of spares) {
+    const rest = hand.filter((_, j) => j !== i);
+    const needs = WHITE_KINDS.filter((k) => countKind(rest, k) < KIND_FLOOR);
+    const [card, after] = takeWhere(
+      state,
+      (id) => isGood(id) && needs.every((k) => whiteServes(id).includes(k)),
+    );
+    if (card === null) continue;
+    return [[...rest, card], { ...after, discard: [...after.discard, dropped] }];
+  }
+  return null;
 }
 
 /** Every player's hand back up to HAND_SIZE (+ `extra` for the ids in `extraFor`). */
