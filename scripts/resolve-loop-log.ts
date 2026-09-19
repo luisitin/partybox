@@ -29,12 +29,31 @@ for (const line of main) {
   } else if (line.startsWith('| ---') && headers > SECTIONS) continue; // …and its rule
   out.push(line);
 }
-const extra = head.filter((line) => isRow(line) && !seen.has(rowNo(line)));
+// A HEAD row whose NUMBER main already has but whose text differs is a collision — two sessions
+// picked the same pass number — not a duplicate: it is renumbered past the highest, its evidence
+// folders untouched, and named in the output (loop 370: twelve Bingo rows were dropped silently).
+const mainText = new Map(main.filter(isRow).map((line) => [rowNo(line), line]));
+const game = (line: string): string => line.split('|')[3]?.trim() ?? '';
+let next = Math.max(...seen) + 1;
+const renumbered: string[] = [];
+const extra = head
+  .filter((line) => isRow(line))
+  .flatMap((line) => {
+    const n = rowNo(line);
+    const theirs = mainText.get(n);
+    if (theirs === undefined) return [line];
+    if (theirs.trim() === line.trim() || game(theirs) === game(line)) return [];
+    const cells = line.split('|');
+    cells[1] = ` ${next} `;
+    renumbered.push(`${n}→${next}`);
+    next += 1;
+    return [cells.join('|')];
+  });
 for (const line of extra) seen.add(rowNo(line));
 const text = `${out.join('\n').trimEnd()}\n${extra.length ? `${extra.join('\n')}\n` : ''}`;
 const rows = text.split('\n').filter(isRow);
 if (rows.length !== new Set(rows.map(rowNo)).size) throw new Error('duplicates remain');
 writeFileSync(FILE, text, 'utf8');
 console.log(
-  `resolved ${FILE}: ${rows.length} rows; from HEAD + [${extra.map(rowNo).join(', ')}] — now \`pnpm format\` and commit`,
+  `resolved ${FILE}: ${rows.length} rows; from HEAD + [${extra.map(rowNo).join(', ')}]${renumbered.length ? ` (renumbered after a collision: ${renumbered.join(', ')} — update the memory/notes)` : ''} — now \`pnpm format\` and commit`,
 );
