@@ -115,6 +115,12 @@ describe('fitScore', () => {
     expect(fitScore('thing', ['doing', 'thing'])).toBe(1);
     expect(fitScore('name', ['thing', 'name'])).toBe(1);
     expect(fitScore('name', ['thing'])).toBe(0.5);
+    // With the text, a name blank grades by length: a slogan takes six words, a wall is a wall.
+    expect(fitScore('name', ['thing'], 'Lost luggage that went to Cleveland.')).toBe(0.8);
+    expect(fitScore('name', ['thing', 'name'], 'Smegma.')).toBe(1);
+    expect(
+      fitScore('name', ['person'], 'A marathon runner who mentions it at every dinner party.'),
+    ).toBe(0.45);
     expect(fitScore('name', ['person'])).toBe(0.5);
     expect(fitScore('thing', ['thing', 'name'])).toBe(1);
     expect(fitScore('thing', ['doing', 'name'])).toBe(0.7);

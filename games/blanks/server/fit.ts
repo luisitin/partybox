@@ -141,7 +141,19 @@ const FIT: Readonly<Record<Slot, Readonly<Record<Slot, number>>>> = {
   name: { thing: 0.5, doing: 0.5, person: 0.5, name: 1 },
 };
 
-/** 0–1: the best reading the white card offers the black card's slot. */
-export function fitScore(slot: Slot, serves: readonly Slot[]): number {
+/** 0–1: the best reading the white card offers the black card's slot. With the card's text, a
+ *  name blank grades by length instead of the four-word line: a slogan or a loading-screen tip
+ *  takes six words happily, a safe word wants one, and a twelve-word card is a wall either way. */
+export function fitScore(slot: Slot, serves: readonly Slot[], text?: string): number {
+  if (slot === 'name' && text !== undefined) return nameFit(text);
   return Math.max(0, ...serves.map((s) => FIT[slot][s] ?? 0));
+}
+
+/** How a card of this length reads as a name, a title, a line: 1 up to four words, then down. */
+export function nameFit(text: string): number {
+  const words = text.split(/\s+/).filter(Boolean).length;
+  if (words <= NAME_MAX_WORDS) return 1;
+  if (words <= 6) return 0.8;
+  if (words <= 8) return 0.6;
+  return 0.45;
 }
