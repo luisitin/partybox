@@ -39,6 +39,7 @@ const DOING_PROMPT = [
   /^What (?:got|ended|finally ended|killed|ruined|started|caused|broke up)\b/i,
   /\b(?:technique|trick|secret to|real reason for|reason the [\w' ]+ ended|mistake (?:was|is)|biggest mistake|first mistake|mistake: ____|strategy (?:was|is)|plan (?:was|is)|never live down|live down|alibi (?:is|was|involves)|shalt not|practi[sc]e)\b/i,
   /\b(?:turned into|opens with|cuts to|closes with) ____/i, // "…trust exercise turned into ____", "The sex tape opens with ____"
+  /\b(?:confess(?:ed|ing)? to|admit(?:ted)? to|plead(?:ed)? guilty to|owned up to|apologi[sz]ed? for|blame[sd]? (?:me|him|her|them|us|you|it) for|forgive (?:me|him|her|them|us) for|guilty of)\b/i, // "What did I confess to on the witness stand?"
   /\b(?:done|did|loved|dare (?:was|is)|ritual (?:was|is)): ____|doing what \w+ loved/i,
   /\b(?:arrested|fired|executed|burned|shut down|raided|resigned|banned|expelled|sued|jailed|convicted|dumped|put (?:\w+ ){1,2}down|quit|walked out|kicked out)\b[^.]* (?:for|over) ____/i,
   // A ritual, a dare, an activity, a way to get something: what someone does.
@@ -180,7 +181,16 @@ export function fitScore(
   blackText?: string,
 ): number {
   if (slot === 'name' && text !== undefined)
-    return nameFit(text, blackText !== undefined && WORD_PROMPT.test(blackText));
+    return nameFit(
+      text,
+      blackText === undefined
+        ? 'name'
+        : WORD_PROMPT.test(blackText)
+          ? 'word'
+          : LINE_PROMPT.test(blackText)
+            ? 'line'
+            : 'name',
+    );
   const best = Math.max(0, ...serves.map((s) => FIT[slot][s] ?? 0));
   // "My uncle's garage is full of ____" wants a plural or a mass noun: "A crop circle shaped like
   // a bagel" reads a beat off, "Cum-stained love letters" and "The wet spot" land (loop 758).
@@ -224,11 +234,23 @@ const ONE_OF_MANY = 0.85;
 const WORD_PROMPT =
   /\b(?:safe ?word|nickname|handle|password|first word|drag name|stage name|porn name|code ?word|call sign|username|gamer ?tag|named ____|was named|wi-?fi (?:network|password)|in (?:one|two|three) words|one word)\b/i;
 
+/** A name blank that is a LINE — a title, a chapter, a headline, a slogan, a status, a toast, a
+ *  review, a tweet: something said or written — where a whole sentence of a card is the joke
+ *  ('The child star's memoir chapter 3: "A CT scan that found the missing ring, and the missing
+ *  person."'); the seed-2024 read had six one-word cards up for it (loop 776). */
+const LINE_PROMPT =
+  /\b(?:memoir|chapter|title|titled|headline|slogan|tagline|motto|catchphrase|review|status|tweet|tweeted|post|posted|caption|captioned|toast|eulogy|vows?|speech|sermon|horoscope|fortune cookie|plaque|sign (?:reads|says|said)|reads ["“]|says ["“]|said ["“]|wrote ["“]|message|voicemail|text(?:ed)? ["“]|epitaph|tombstone|billboard|bumper sticker|last words|opening line|pickup line|first line|book|song|album|episode|movie|film|show|podcast|sequel|autobiography|biography|thesis|essay|manifesto|say|said|says|saying|yell|yelled|shout|shouted|whisper|whispered|hear|heard|announce|announced|announcing|write|wrote|written|repeat|repeated|sext|sexted|texted|words were|advice|mission statement|tip was|yearbook quote|confession|described|describes|quote|line was|report card|diary|notes|tab|birthday card|text|banner)\b/i;
+
 /** How a card of this length reads as a name, a title, a line: 1 up to four words, then down —
- *  and for a blank that wants a word, 1 up to two. */
-export function nameFit(text: string, word = false): number {
+ *  for a blank that wants a word, 1 up to two — and for a line, 1 up to eight. */
+export function nameFit(text: string, mode: 'name' | 'word' | 'line' = 'name'): number {
   const words = text.split(/\s+/).filter(Boolean).length;
-  if (word) {
+  if (mode === 'line') {
+    if (words <= 8) return 1;
+    if (words <= 11) return 0.85;
+    return 0.7;
+  }
+  if (mode === 'word') {
     // Steep: the one-word cards are mostly filler-tier, and the tier weight must not carry a
     // six-word amazing card past "Smegma." as a safe word.
     if (words <= 2) return 1;
