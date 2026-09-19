@@ -47,7 +47,7 @@ is final (`answer` entry) every answerer's hand leads with the cards that read b
 first, tier next, the shuffle's order among equals — the judge chosen (czar mode: seat order by id, one per round,
 disconnected seats skipped), a black card drawn — the deck leads with the great prompts (`tier` 3 in the deck
 JSON) and keeps the filler (tier 1) for the back, each group in its shuffled order with its Pick 2 / Pick 3 cards spread out, never two in a row; three in czar mode, for the judge to choose between in
-`pick` (the two not chosen go under the deck); its extra draws and Rando's cards (setting; great cards off the deck, never filler) follow once the
+`pick` (the two not chosen go under the deck); its extra draws and Rando's cards (setting; great cards off the deck that read in its blanks, never filler) follow once the
 card is final, on `answer` entry. Decks shuffled once at `init`; a dry white deck
 reshuffles the discard, a dry black deck reshuffles its pool. Slots (reveal / vote order) are shuffled
 when `answer` closes, so a letter never hints at who played it.

@@ -7,6 +7,7 @@ import {
   WHITE_KINDS,
   blackCard,
   blackSlot,
+  blackSlots,
   deckSubject,
   whiteKind,
   whiteServes,
@@ -269,18 +270,28 @@ function swapForVariety(state: State, hand: readonly string[]): [string[], State
 }
 
 /** Rando's play (a setting): `count` great cards off the deck — random, but never filler, so the
- *  house's card is in the running (loop 619). Short when the decks hold fewer. */
+ *  house's card is in the running (loop 619) — and, once the prompt is known, cards that read in
+ *  its blanks (loop 813: a Pick 1 doing round drew "A jury of my exes"; now a gerund). Short when
+ *  the decks hold fewer. */
 export function drawGreat(state: State, count: number): [string[], State] {
   let next = state;
   const out: string[] = [];
+  const slots = blackSlots(state.blackId);
+  const black = blackCard(state.blackId).text;
   for (let i = 0; i < count; i += 1) {
-    const [card, after] = takeWhere(next, isGood);
+    const slot = slots[i] ?? slots[0] ?? 'thing';
+    const reads = (id: string): boolean =>
+      fitScore(slot, whiteServes(id), whiteText(id), black) >= RANDO_FIT;
+    const [fitting, afterFit] = takeWhere(next, (id) => isGood(id) && reads(id));
+    const [card, after] = fitting !== null ? [fitting, afterFit] : takeWhere(next, isGood);
     if (card === null) break;
     next = after;
     out.push(card);
   }
   return [out, next];
 }
+/** How well Rando's card must read in the blank before any great card will do. */
+const RANDO_FIT = 0.85;
 
 /** Every player's hand back up to HAND_SIZE (+ `extra` for the ids in `extraFor`). */
 export function refillHands(state: State, extra = 0, extraFor: readonly string[] = []): State {

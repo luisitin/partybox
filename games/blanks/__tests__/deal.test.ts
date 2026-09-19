@@ -17,6 +17,7 @@ import {
   WHITE_KINDS,
   blackCard,
   blackPool,
+  blackSlots,
   blackTier,
   whitePool,
   whiteServes,
@@ -24,7 +25,7 @@ import {
   whiteTier,
 } from '../server/content';
 import { game } from '../server/index';
-import { HAND_SIZE } from '../server/types';
+import { HAND_SIZE, RANDO } from '../server/types';
 import { T0, playRound, start, timer, toAnswer } from './helpers';
 
 describe('dealing', () => {
@@ -152,6 +153,28 @@ describe('dealing', () => {
       s = timer(playRound(s));
       if (s.phase.id === 'final' || s.phase.id === 'done') break;
     }
+  });
+
+  it("Rando's cards are great ones that read in the round's blank, round after round", () => {
+    let s = start({ players: 6, decks: 'wild', seed: 3, rounds: 12, rando: true });
+    let checked = 0;
+    for (let round = 1; round <= 12; round++) {
+      s = toAnswer(s);
+      const cards = s.submissions[RANDO] ?? [];
+      const slots = blackSlots(s.blackId);
+      cards.forEach((card, i) => {
+        const slot = slots[i] ?? slots[0] ?? 'thing';
+        expect(whiteTier(card), `r${round} ${whiteText(card)}`).toBeGreaterThanOrEqual(3);
+        expect(
+          fitScore(slot, whiteServes(card), whiteText(card), blackCard(s.blackId).text),
+          `r${round} ${slot}: ${whiteText(card)}`,
+        ).toBeGreaterThanOrEqual(0.85);
+        checked += 1;
+      });
+      s = timer(playRound(s));
+      if (s.phase.id === 'final' || s.phase.id === 'done') break;
+    }
+    expect(checked).toBeGreaterThan(5);
   });
 
   it('every hand holds a word — one or two words — for the safe-word and nickname blanks, round after round', () => {
