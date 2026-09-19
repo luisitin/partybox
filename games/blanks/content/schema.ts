@@ -25,6 +25,12 @@ export const blackCardSchema = z
     draw: z.number().int().min(0).max(2),
     /** What the blank wants (server/fit.ts); read off the text when unset. */
     slot: z.enum(['thing', 'doing', 'person', 'name']).optional(),
+    /** Pick 2 / 3 whose blanks want different things ('Grindr is ____ wearing ____.'): one per blank. */
+    slots: z
+      .array(z.enum(['thing', 'doing', 'person', 'name']))
+      .min(2)
+      .max(3)
+      .optional(),
     /** How good the prompt is: 1 filler (the back of the deck), 2 good (the default), 3 great (the front). */
     tier: z.number().int().min(1).max(3).optional(),
   })

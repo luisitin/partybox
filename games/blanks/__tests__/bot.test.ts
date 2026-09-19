@@ -15,9 +15,11 @@ describe('bestCards', () => {
   it('a doing prompt takes the gerund; a thing prompt takes a thing', () => {
     for (let seed = 1; seed <= 20; seed += 1) {
       const rng = createRng(seed);
-      expect(bestCards('doing', [NOUN, GERUND, PERSON], 1, rng)).toEqual([GERUND]);
-      expect(bestCards('thing', [GERUND, NOUN, PERSON], 1, rng)[0]).not.toBe(GERUND);
-      expect(bestCards('person', [NOUN, GERUND, PERSON], 1, rng)).toEqual([PERSON]);
+      expect(bestCards(['doing'], [NOUN, GERUND, PERSON], rng)).toEqual([GERUND]);
+      expect(bestCards(['thing'], [GERUND, NOUN, PERSON], rng)[0]).not.toBe(GERUND);
+      expect(bestCards(['person'], [NOUN, GERUND, PERSON], rng)).toEqual([PERSON]);
+      // A Pick 2 wanting a person then a doing takes them in blank order.
+      expect(bestCards(['person', 'doing'], [NOUN, GERUND, PERSON], rng)).toEqual([PERSON, GERUND]);
     }
   });
 });

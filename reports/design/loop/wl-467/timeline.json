@@ -1,0 +1,302 @@
+{
+  "pass": "463",
+  "game": "wisecrack",
+  "players": 6,
+  "scenario": "reconnect",
+  "focus": "phone",
+  "started": "05:43:58.865",
+  "tvVideoT0": "05:43:55.719",
+  "phoneVideoT0": "05:43:56.531",
+  "changes": [
+    {
+      "t": 1789796638868,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789796643858,
+      "bed": "warm",
+      "at": "05:43:58.868",
+      "sinceStartS": 0,
+      "videoS": 3.1,
+      "phoneVideoS": 2.3
+    },
+    {
+      "t": 1789796643945,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789796703864,
+      "bed": null,
+      "at": "05:44:03.945",
+      "sinceStartS": 5.1,
+      "videoS": 8.2,
+      "phoneVideoS": 7.4
+    },
+    {
+      "t": 1789796653251,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789796673123,
+      "bed": "marimba",
+      "at": "05:44:13.251",
+      "sinceStartS": 14.4,
+      "videoS": 17.5,
+      "phoneVideoS": 16.7
+    },
+    {
+      "t": 1789796672750,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789796683553,
+      "bed": "lofi",
+      "at": "05:44:32.750",
+      "sinceStartS": 33.9,
+      "videoS": 37,
+      "phoneVideoS": 36.2
+    },
+    {
+      "t": 1789796674143,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789796679388,
+      "bed": "lofi",
+      "at": "05:44:34.143",
+      "sinceStartS": 35.3,
+      "videoS": 38.4,
+      "phoneVideoS": 37.6
+    },
+    {
+      "t": 1789796679440,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789796699397,
+      "bed": "marimba",
+      "at": "05:44:39.440",
+      "sinceStartS": 40.6,
+      "videoS": 43.7,
+      "phoneVideoS": 42.9
+    },
+    {
+      "t": 1789796683577,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789796689525,
+      "bed": "marimba",
+      "at": "05:44:43.577",
+      "sinceStartS": 44.7,
+      "videoS": 47.9,
+      "phoneVideoS": 47
+    },
+    {
+      "t": 1789796689546,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789796709538,
+      "bed": "lofi",
+      "at": "05:44:49.546",
+      "sinceStartS": 50.7,
+      "videoS": 53.8,
+      "phoneVideoS": 53
+    },
+    {
+      "t": 1789796694097,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789796700017,
+      "bed": "lofi",
+      "at": "05:44:54.097",
+      "sinceStartS": 55.2,
+      "videoS": 58.4,
+      "phoneVideoS": 57.6
+    },
+    {
+      "t": 1789796700109,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789796720031,
+      "bed": "marimba",
+      "at": "05:45:00.109",
+      "sinceStartS": 61.2,
+      "videoS": 64.4,
+      "phoneVideoS": 63.6
+    },
+    {
+      "t": 1789796704310,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789796710192,
+      "bed": "marimba",
+      "at": "05:45:04.310",
+      "sinceStartS": 65.4,
+      "videoS": 68.6,
+      "phoneVideoS": 67.8
+    },
+    {
+      "t": 1789796710238,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789796730203,
+      "bed": "lofi",
+      "at": "05:45:10.238",
+      "sinceStartS": 71.4,
+      "videoS": 74.5,
+      "phoneVideoS": 73.7
+    },
+    {
+      "t": 1789796714531,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789796720516,
+      "bed": "lofi",
+      "at": "05:45:14.531",
+      "sinceStartS": 75.7,
+      "videoS": 78.8,
+      "phoneVideoS": 78
+    },
+    {
+      "t": 1789796720554,
+      "status": "playing",
+      "phase": "scores",
+      "deadline": 1789796728521,
+      "bed": "lounge",
+      "at": "05:45:20.554",
+      "sinceStartS": 81.7,
+      "videoS": 84.8,
+      "phoneVideoS": 84
+    },
+    {
+      "t": 1789796728574,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789796733523,
+      "bed": "warm",
+      "at": "05:45:28.574",
+      "sinceStartS": 89.7,
+      "videoS": 92.9,
+      "phoneVideoS": 92
+    },
+    {
+      "t": 1789796733530,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789796793528,
+      "bed": null,
+      "at": "05:45:33.530",
+      "sinceStartS": 94.7,
+      "videoS": 97.8,
+      "phoneVideoS": 97
+    },
+    {
+      "t": 1789796742873,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789796762745,
+      "bed": "marimba",
+      "at": "05:45:42.873",
+      "sinceStartS": 104,
+      "videoS": 107.2,
+      "phoneVideoS": 106.3
+    },
+    {
+      "t": 1789796747014,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789796752997,
+      "bed": "marimba",
+      "at": "05:45:47.014",
+      "sinceStartS": 108.1,
+      "videoS": 111.3,
+      "phoneVideoS": 110.5
+    },
+    {
+      "t": 1789796753012,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789796773009,
+      "bed": "lofi",
+      "at": "05:45:53.012",
+      "sinceStartS": 114.1,
+      "videoS": 117.3,
+      "phoneVideoS": 116.5
+    },
+    {
+      "t": 1789796756924,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789796762843,
+      "bed": "lofi",
+      "at": "05:45:56.924",
+      "sinceStartS": 118.1,
+      "videoS": 121.2,
+      "phoneVideoS": 120.4
+    },
+    {
+      "t": 1789796762930,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789796782858,
+      "bed": "marimba",
+      "at": "05:46:02.930",
+      "sinceStartS": 124.1,
+      "videoS": 127.2,
+      "phoneVideoS": 126.4
+    },
+    {
+      "t": 1789796767045,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789796773027,
+      "bed": "marimba",
+      "at": "05:46:07.045",
+      "sinceStartS": 128.2,
+      "videoS": 131.3,
+      "phoneVideoS": 130.5
+    },
+    {
+      "t": 1789796773118,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789796793037,
+      "bed": "lofi",
+      "at": "05:46:13.118",
+      "sinceStartS": 134.3,
+      "videoS": 137.4,
+      "phoneVideoS": 136.6
+    },
+    {
+      "t": 1789796777309,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789796783205,
+      "bed": "lofi",
+      "at": "05:46:17.309",
+      "sinceStartS": 138.4,
+      "videoS": 141.6,
+      "phoneVideoS": 140.8
+    },
+    {
+      "t": 1789796783237,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789796803220,
+      "bed": "marimba",
+      "at": "05:46:23.237",
+      "sinceStartS": 144.4,
+      "videoS": 147.5,
+      "phoneVideoS": 146.7
+    },
+    {
+      "t": 1789796787385,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789796793274,
+      "bed": "marimba",
+      "at": "05:46:27.385",
+      "sinceStartS": 148.5,
+      "videoS": 151.7,
+      "phoneVideoS": 150.9
+    }
+  ],
+  "notes": [
+    "reconnect: Sam dropped for 8 s at 2026-09-19T05:44:17.359Z in vote",
+    "budget reached while playing; skipped to results"
+  ]
+}

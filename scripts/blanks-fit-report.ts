@@ -6,9 +6,11 @@
 // Usage: tsx scripts/blanks-fit-report.ts [--decks wild-only] [--players 6] [--runs 30] [--seed 1]
 import { parseArgs } from 'node:util';
 import { runGame } from '../packages/sim/src/runner';
-import { DECKS, blackCard, blackTier, decksFor } from '../games/blanks/server/content';
+import { DECKS, blackCard, blackTier, decksFor, whiteText } from '../games/blanks/server/content';
+import { fillText } from '../games/blanks/server/cards';
 import { game } from '../games/blanks/server/index';
-import { fitScore, servesOf, slotOf, SLOTS } from '../games/blanks/server/fit';
+import { fitScore, servesOf, slotOf, slotsOf, SLOTS } from '../games/blanks/server/fit';
+import type { Slot } from '../games/blanks/server/fit';
 import type { DeckPreset, Input, State } from '../games/blanks/server/types';
 import type { GameEvent } from '@partybox/game-sdk';
 
@@ -18,8 +20,11 @@ const { values } = parseArgs({
     players: { type: 'string', default: '6' },
     runs: { type: 'string', default: '30' },
     seed: { type: 'string', default: '1' },
+    /** Print this many sample rounds — the prompt with every bot's play filled in — to read. */
+    sample: { type: 'string', default: '0' },
   },
 });
+const sampleN = Number(values.sample);
 const preset = values.decks as DeckPreset;
 const players = Number(values.players);
 const runs = Number(values.runs);
@@ -57,6 +62,7 @@ console.log(
 // 2. Simulated games, replayed: hands at every answer phase + the bots' plays.
 let prompts = 0;
 let promptTier = 0; // sum of the tiers of the prompts played
+const samples: string[] = [];
 let hands = 0;
 let handsShortOfSlot = 0; // fewer than 2 cards serving the round's slot
 const shortBySlot = count(SLOTS);
@@ -110,15 +116,22 @@ for (let r = 0; r < runs; r += 1) {
       }
       if (ev.type === 'input' && ev.input.type === 'play' && before.phase.id === 'answer') {
         const hand = before.hands[ev.playerId] ?? [];
-        const best = Math.max(0, ...hand.map((c) => fitScore(slot, serves.get(c) ?? [])));
-        for (const c of ev.input.cards) {
+        const blankSlots = slotsOf(blackCard(state.blackId));
+        const slotAt = (i: number): Slot => blankSlots[i] ?? slot;
+        if (samples.length < sampleN * players) {
+          const black = blackCard(state.blackId);
+          const line = `[${blankSlots.join('+')}${'★'.repeat(blackTier(state.blackId))}] ${fillText(black.text, ev.input.cards.map(whiteText))}  ← ${ev.input.cards.map((c, i) => `${tiers.get(c) ?? 2}/${fitScore(slotAt(i), serves.get(c) ?? []).toFixed(2)}`).join(' ')}`;
+          samples.push(line);
+        }
+        ev.input.cards.forEach((c, i) => {
+          const s = slotAt(i);
+          const best = Math.max(0, ...hand.map((h) => fitScore(s, serves.get(h) ?? [])));
           plays += 1;
-          const f = fitScore(slot, serves.get(c) ?? []);
-          playFit += f;
+          playFit += fitScore(s, serves.get(c) ?? []);
           playTier += tiers.get(c) ?? 2;
           bestFit += best;
-          if ((serves.get(c) ?? []).includes(slot)) playServes += 1;
-        }
+          if ((serves.get(c) ?? []).includes(s)) playServes += 1;
+        });
       }
     }
   }
@@ -140,3 +153,7 @@ console.log(
 console.log(
   `  bot plays: ${plays}; mean fit ${(playFit / Math.max(1, plays)).toFixed(3)} (best on offer ${(bestFit / Math.max(1, plays)).toFixed(3)}); serving the slot ${pct(playServes, plays)}; mean tier ${(playTier / Math.max(1, plays)).toFixed(2)}`,
 );
+if (samples.length > 0) {
+  console.log('sample plays — [kind, prompt tier] filled prompt ← card tier / fit:');
+  for (const line of samples) console.log(`  ${line}`);
+}

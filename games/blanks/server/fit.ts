@@ -25,6 +25,8 @@ const DOING_PROMPT = [
   /\b(?:led to|ended (?:with|in)|started with|began with) ____\.?$/i,
   /\b(?:done|did|loved|dare (?:was|is)|ritual (?:was|is)): ____|doing what \w+ loved/i,
   /\b(?:arrested|fired|executed|burned|shut down|raided|resigned|banned|expelled|sued|jailed|convicted|dumped|put (?:\w+ ){1,2}down|quit|walked out|kicked out)\b[^.]* (?:for|over) ____/i,
+  // A ritual, a dare, an activity, a way to get something: what someone does.
+  /\b(?:ritual|hazing|dare|tradition|activity|hobby|pastime|challenge|way to get|specializes in|known for|charged? extra for)\b/i,
 ];
 /** "Renamed itself after ____", "modeled after ____": a thing, not an event after which. */
 const NAMED_AFTER = /\b(?:named|renamed|modeled|modelled|patterned|fashioned)\b[^.]*after ____/i;
@@ -47,14 +49,24 @@ const NAME_PROMPT = [
   /\b(?:named|nicknamed|titled|captioned) ____/i,
 ];
 
-/** The slot a black card's blank wants; the card's own `slot` wins over the reading. */
-export function slotOf(card: Pick<BlackCard, 'text'> & { slot?: Slot }): Slot {
+type BlackLike = Pick<BlackCard, 'text'> & { slot?: Slot; slots?: Slot[]; pick?: number };
+
+/** The slot a black card's (first) blank wants; the card's own `slot` / `slots` win over the reading. */
+export function slotOf(card: BlackLike): Slot {
+  if (card.slots?.[0]) return card.slots[0];
   if (card.slot) return card.slot;
   const t = card.text;
   if (NAME_PROMPT.some((re) => re.test(t))) return 'name';
   if (PERSON_PROMPT.some((re) => re.test(t))) return 'person';
   if (!NAMED_AFTER.test(t) && DOING_PROMPT.some((re) => re.test(t))) return 'doing';
   return 'thing';
+}
+
+/** One slot per white card the prompt takes: `slots` from the card, else the first blank's for all. */
+export function slotsOf(card: BlackLike): Slot[] {
+  const pick = card.pick ?? 1;
+  const first = slotOf(card);
+  return Array.from({ length: pick }, (_, i) => card.slots?.[i] ?? first);
 }
 
 const NOT_GERUND =

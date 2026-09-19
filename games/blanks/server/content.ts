@@ -5,7 +5,7 @@ import type { BlackCard, Deck, DeckId, WhiteCard } from '../content/schema';
 import crudeJson from '../content/crude.json' with { type: 'json' };
 import mildJson from '../content/mild.json' with { type: 'json' };
 import wildJson from '../content/wild.json' with { type: 'json' };
-import { SLOTS, servesOf, slotOf } from './fit';
+import { SLOTS, servesOf, slotOf, slotsOf } from './fit';
 import type { Slot } from './fit';
 import type { DeckPreset } from './types';
 
@@ -74,6 +74,9 @@ const WHITE_TIER: Readonly<Record<string, 1 | 2 | 3>> = Object.fromEntries(
 const BLACK_SLOT: Readonly<Record<string, Slot>> = Object.fromEntries(
   ALL.flatMap((d) => d.black.map((c) => [c.id, slotOf(c)])),
 );
+const BLACK_SLOTS: Readonly<Record<string, readonly Slot[]>> = Object.fromEntries(
+  ALL.flatMap((d) => d.black.map((c) => [c.id, slotsOf(c)])),
+);
 
 export function whiteServes(id: string): readonly Slot[] {
   return WHITE_SERVES[id] ?? ['thing'];
@@ -89,6 +92,11 @@ export function whiteTier(id: string): 1 | 2 | 3 {
 
 export function blackSlot(id: string | null): Slot {
   return (id && BLACK_SLOT[id]) || 'thing';
+}
+
+/** One slot per white card the prompt takes (a Pick 2 may want a person, then a thing). */
+export function blackSlots(id: string | null): readonly Slot[] {
+  return (id && BLACK_SLOTS[id]) || ['thing'];
 }
 
 export function blackTier(id: string): 1 | 2 | 3 {
