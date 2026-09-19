@@ -3045,7 +3045,8 @@
       "text": "My therapist says I use ____ to avoid ____.",
       "pick": 2,
       "draw": 0,
-      "tier": 3
+      "tier": 3,
+      "slots": ["thing", "doing"]
     },
     {
       "id": "mb437",
@@ -3073,7 +3074,8 @@
       "text": "Saturday chores: ____, then ____, then a nap.",
       "pick": 2,
       "draw": 0,
-      "tier": 1
+      "tier": 1,
+      "slots": ["doing", "doing"]
     },
     {
       "id": "mb441",
@@ -4035,7 +4037,8 @@
       "text": "The Olympics added ____ and ____ as events.",
       "pick": 2,
       "draw": 0,
-      "tier": 1
+      "tier": 1,
+      "slots": ["doing", "doing"]
     },
     {
       "id": "mb578",
