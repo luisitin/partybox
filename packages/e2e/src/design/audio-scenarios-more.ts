@@ -70,10 +70,12 @@ export async function runMoreScenarios({ T, tv, vip, p2, api, pages, out }: Ctx)
   const writing = (await T.playing(tv)).filter((m) => m.vol > 0.1);
   T.ok(
     'F',
-    'answer → one Wisecrack track at 0.2 while everyone writes, the bed gone',
+    'answer → one Wisecrack track at 0.2 × its trim while everyone writes, the bed gone',
     writing.length === 1 &&
       SET.includes(writing[0]?.track ?? '') &&
-      writing[0]?.vol === 0.2 &&
+      // 0.2 × the track's trim (carefree 1.53, fluffing-a-duck 0.93)
+      (writing[0]?.vol ?? 0) >= 0.18 &&
+      (writing[0]?.vol ?? 0) <= 0.31 &&
       (await bed()) === null,
     `playing=${JSON.stringify(await T.playing(tv))} bed=${await bed()}`,
   );
