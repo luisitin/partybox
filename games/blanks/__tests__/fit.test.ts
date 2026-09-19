@@ -33,6 +33,8 @@ describe('slotOf — what the blank wants', () => {
       'The field trip was cut short by ____.',
       "The time traveler's first mistake was ____.",
       'The baby was conceived during ____.',
+      'What did the kids walk in on?',
+      'What did the hotel maid walk in on?',
       `The yearbook's "Most Likely To" was ____.`,
       'The moonwalk was actually Michael Jackson ____.',
       "What's the secret to a happy marriage?",
