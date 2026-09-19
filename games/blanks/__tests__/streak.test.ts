@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { awardsFor } from '../server/scoring';
 import { RANDO } from '../server/types';
 import type { State } from '../server/types';
-import { connect, playRound, start, timer, tv } from './helpers';
+import { connect, cv, playAll, playRound, start, timer, toAnswer, tv } from './helpers';
 
 describe('streaks', () => {
   it('counts rounds won in a row, and the round card says so from the second', () => {
@@ -95,6 +95,22 @@ describe('the reader (vote mode)', () => {
     expect(s.readerId).not.toBe(first);
     const czar = start({ rounds: 6, players: 4, judge: 'czar' });
     expect(czar.readerId).toBeNull();
+  });
+
+  it('is unnamed on both surfaces once their phone drops mid-reading', () => {
+    // "Sam, read it out loud" pointed at a phone that had gone (review-loop #397).
+    let s: State = playAll(toAnswer(start({ rounds: 6, players: 4 })));
+    expect(s.phase.id).toBe('reveal');
+    const seat = s.readerId as string;
+    const other = s.order.find((id) => id !== seat) as string;
+    expect(tv(s).reader?.id).toBe(seat);
+    expect(cv(s, other).reader?.id).toBe(seat);
+    s = connect(s, seat, false, s.phase.startedAt + 100);
+    expect(s.phase.id).toBe('reveal');
+    expect(tv(s).reader).toBeNull();
+    expect(cv(s, other).reader).toBeNull();
+    s = connect(s, seat, true, s.phase.startedAt + 900);
+    expect(tv(s).reader?.id).toBe(seat);
   });
 
   it('skips a seat that has dropped', () => {
