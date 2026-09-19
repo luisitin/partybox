@@ -21,6 +21,34 @@
   animation: global(pb-pop) var(--pb-motion-slow) var(--pb-ease) both;
 }
 
+/* The question page measures the room it gets: a sixteen-player roster (four chip rows) leaves the
+   stage ~480 px and "0 / 16 locked in" went under the host bar. Below 560 px the prompt drops to
+   h2 and the cards shrink; twelve players (three rows) keep the full size. */
+.page {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-5);
+  container-type: size;
+}
+
+@container (max-height: 560px) {
+  .page .prompt {
+    font-size: var(--pb-font-h2);
+  }
+  .page .grid {
+    gap: var(--pb-space-3);
+  }
+  .page .choice {
+    min-height: 84px;
+    padding: var(--pb-space-3) var(--pb-space-5);
+  }
+  .page .count {
+    font-size: var(--pb-font-body);
+  }
+}
+
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
