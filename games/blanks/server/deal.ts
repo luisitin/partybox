@@ -218,9 +218,12 @@ function swapForGood(
   wants: (id: string) => boolean = isGood,
   spare: (id: string) => boolean = (id) => !wants(id),
 ): [string[], State] | null {
+  // The hand's last word card is never the spare: the filler cap and the variety swap run after
+  // the word block, and each traded a filler-tier word away (loop 788 — "a hand holds a word"
+  // failed on a reshuffle), so the guard sits here, under every swap.
   const spares = hand
     .map((id, i) => ({ id, i }))
-    .filter(({ id }) => spare(id))
+    .filter(({ id }) => spare(id) && !(isWord(id) && hand.filter(isWord).length <= WORD_FLOOR))
     .sort((a, b) => whiteTier(a.id) - whiteTier(b.id));
   for (const { id: dropped, i } of spares) {
     const rest = hand.filter((_, j) => j !== i);
