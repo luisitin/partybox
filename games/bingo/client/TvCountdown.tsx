@@ -11,6 +11,8 @@ import {
   useSoundApi,
 } from '@partybox/game-sdk/ui';
 import type { ViewPlayer } from '@partybox/game-sdk/ui';
+import type { BingoTvView } from '../server/views';
+import { PatternDemo } from './PatternDemo';
 import {
   DEAL_BOUNCE_MS,
   DEAL_START_MS,
@@ -94,7 +96,7 @@ export function IntroCountdown({
                       key={p.id}
                       className={`${styles.readyFace} ${p.status === 'submitted' ? `${styles.readyDone} pb-pop` : waitingOn.length === 1 ? styles.readyLast : ''}`}
                     >
-                      <Avatar avatarId={p.avatarId} size="72px" />
+                      <Avatar avatarId={p.avatarId} size="var(--pb-face, 72px)" />
                       <b className={styles.readyTick}>✓</b>
                     </span>
                   ))}
@@ -176,6 +178,51 @@ export function Resume({
       <BigText level="h2" tone="muted">
         {by ? `${by} said keep going — thumbs ready` : 'get your thumbs ready'}
       </BigText>
+    </Stage>
+  );
+}
+
+/** The intro stage: the round, the pattern demo, the programme, the deal and the card-pick step. */
+export function IntroStage({
+  view,
+  roundLabel,
+}: {
+  view: BingoTvView;
+  roundLabel: string;
+}): JSX.Element {
+  // Nine or more players wrap the roster to two or three rows (loop 393): the demo and the
+  // faces step down so the caption stays above the host bar.
+  const crowded = view.players.length > 8;
+  return (
+    <Stage center className={crowded ? styles.crowdedIntro : undefined}>
+      <BigText level="h2" tone="muted">
+        {roundLabel}
+      </BigText>
+      <div className={styles.patternRow}>
+        <PatternDemo pattern={view.pattern} cells={view.patternCells} size={crowded ? 140 : 200} />
+        <BigText level="display" tone="accent">
+          {view.patternLabel}
+        </BigText>
+      </div>
+      <BigText level="h2">{view.patternHint}</BigText>
+      {view.cardsPerPlayer > 1 ? (
+        <BigText level="h2" tone="muted">
+          {view.cardsPerPlayer} cards each — BINGO! checks the card you press it on.
+        </BigText>
+      ) : null}
+      <p className={styles.programme}>
+        {view.patterns.map((p, i) => (
+          <span key={i} className={i + 1 === view.round ? styles.programmeNow : ''}>
+            {i + 1}. {p}
+          </span>
+        ))}
+      </p>
+      <IntroCountdown
+        deadline={view.deadline}
+        cards={view.cardsPerPlayer}
+        waitingOn={view.waitingOn}
+        players={view.players}
+      />
     </Stage>
   );
 }

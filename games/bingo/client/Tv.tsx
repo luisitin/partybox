@@ -12,9 +12,8 @@ import type { BingoTvView } from '../server/views';
 import { BALL_LAND_MS, hushCaller, speakCall } from './caller';
 import { PATTERN_LABEL, patternCells } from '../server/patterns';
 import { PatternIcon } from './Card';
-import { PatternDemo } from './PatternDemo';
 import { pendingLine, whyNot, winHeadline } from './copy';
-import { IntroCountdown, Resume } from './TvCountdown';
+import { IntroStage, Resume } from './TvCountdown';
 import { Call, CalledBoard, ClaimStage, DibsLine, rows, whichCard } from './TvParts';
 import styles from './Tv.module.css';
 
@@ -61,40 +60,7 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
     };
   }, [phaseId, number, letter, quiet, calledAt, sound]);
 
-  if (view.phaseId === 'intro') {
-    return (
-      <Stage center>
-        <BigText level="h2" tone="muted">
-          {roundLabel}
-        </BigText>
-        <div className={styles.patternRow}>
-          <PatternDemo pattern={view.pattern} cells={view.patternCells} size={200} />
-          <BigText level="display" tone="accent">
-            {view.patternLabel}
-          </BigText>
-        </div>
-        <BigText level="h2">{view.patternHint}</BigText>
-        {view.cardsPerPlayer > 1 ? (
-          <BigText level="h2" tone="muted">
-            {view.cardsPerPlayer} cards each — BINGO! checks the card you press it on.
-          </BigText>
-        ) : null}
-        <p className={styles.programme}>
-          {view.patterns.map((p, i) => (
-            <span key={i} className={i + 1 === view.round ? styles.programmeNow : ''}>
-              {i + 1}. {p}
-            </span>
-          ))}
-        </p>
-        <IntroCountdown
-          deadline={view.deadline}
-          cards={view.cardsPerPlayer}
-          waitingOn={view.waitingOn}
-          players={view.players}
-        />
-      </Stage>
-    );
-  }
+  if (view.phaseId === 'intro') return <IntroStage view={view} roundLabel={roundLabel} />;
 
   if (view.phaseId === 'play') {
     // A menu open somewhere holds the caller; the last one closing runs a 3 · 2 · 1 on the stage.
