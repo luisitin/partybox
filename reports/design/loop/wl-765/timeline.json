@@ -1,0 +1,57 @@
+{
+  "pass": "668",
+  "game": "broken-pencil",
+  "players": 5,
+  "scenario": "tie",
+  "focus": "tv",
+  "started": "14:40:31.090",
+  "tvVideoT0": "14:40:27.707",
+  "phoneVideoT0": "14:40:28.642",
+  "changes": [
+    {
+      "t": 1789828831092,
+      "status": "playing",
+      "phase": "pick",
+      "deadline": 1789828851083,
+      "bed": null,
+      "at": "14:40:31.092",
+      "sinceStartS": 0,
+      "videoS": 3.4,
+      "phoneVideoS": 2.5
+    },
+    {
+      "t": 1789828851100,
+      "status": "playing",
+      "phase": "draw",
+      "deadline": 1789828881091,
+      "bed": null,
+      "at": "14:40:51.100",
+      "sinceStartS": 20,
+      "videoS": 23.4,
+      "phoneVideoS": 22.5
+    },
+    {
+      "t": 1789828881164,
+      "status": "playing",
+      "phase": "pass",
+      "deadline": 1789828926105,
+      "bed": null,
+      "at": "14:41:21.164",
+      "sinceStartS": 50.1,
+      "videoS": 53.5,
+      "phoneVideoS": 52.5
+    },
+    {
+      "t": 1789828926177,
+      "status": "playing",
+      "phase": "guess",
+      "deadline": 1789828941111,
+      "bed": null,
+      "at": "14:42:06.177",
+      "sinceStartS": 95.1,
+      "videoS": 98.5,
+      "phoneVideoS": 97.5
+    }
+  ],
+  "notes": ["budget reached while playing; skipped to results"]
+}
