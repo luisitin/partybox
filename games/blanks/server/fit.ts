@@ -186,7 +186,7 @@ export function fitScore(
 /** A name blank that wants a WORD — a safe word, a nickname, a handle, a password, a first
  *  word, a hurricane's name — lands hardest on one or two words; a title or a line takes six. */
 const WORD_PROMPT =
-  /\b(?:safe ?word|nickname|handle|password|first word|drag name|stage name|porn name|code ?word|call sign|username|gamer ?tag|named ____|was named|wi-?fi (?:network|password))\b/i;
+  /\b(?:safe ?word|nickname|handle|password|first word|drag name|stage name|porn name|code ?word|call sign|username|gamer ?tag|named ____|was named|wi-?fi (?:network|password)|in (?:one|two|three) words|one word)\b/i;
 
 /** How a card of this length reads as a name, a title, a line: 1 up to four words, then down —
  *  and for a blank that wants a word, 1 up to two. */
