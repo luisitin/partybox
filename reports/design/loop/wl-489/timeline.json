@@ -1,0 +1,57 @@
+{
+  "pass": "483",
+  "game": "lightning-round",
+  "players": 3,
+  "scenario": "tie",
+  "focus": "tv",
+  "started": "06:35:24.391",
+  "tvVideoT0": "06:35:21.136",
+  "phoneVideoT0": "06:35:21.926",
+  "changes": [
+    {
+      "t": 1789799724396,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789799728382,
+      "bed": "marimba",
+      "at": "06:35:24.396",
+      "sinceStartS": 0,
+      "videoS": 3.3,
+      "phoneVideoS": 2.5
+    },
+    {
+      "t": 1789799728458,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789799743397,
+      "bed": "pulse",
+      "at": "06:35:28.458",
+      "sinceStartS": 4.1,
+      "videoS": 7.3,
+      "phoneVideoS": 6.5
+    },
+    {
+      "t": 1789799743417,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789799748398,
+      "bed": "pulse",
+      "at": "06:35:43.417",
+      "sinceStartS": 19,
+      "videoS": 22.3,
+      "phoneVideoS": 21.5
+    },
+    {
+      "t": 1789799748420,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789799763409,
+      "bed": "pulse",
+      "at": "06:35:48.420",
+      "sinceStartS": 24,
+      "videoS": 27.3,
+      "phoneVideoS": 26.5
+    }
+  ],
+  "notes": ["budget reached while playing; skipped to results"]
+}
