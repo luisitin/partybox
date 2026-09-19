@@ -37,7 +37,7 @@ const DOING_PROMPT = [
   /\b(?:done|did|loved|dare (?:was|is)|ritual (?:was|is)): ____|doing what \w+ loved/i,
   /\b(?:arrested|fired|executed|burned|shut down|raided|resigned|banned|expelled|sued|jailed|convicted|dumped|put (?:\w+ ){1,2}down|quit|walked out|kicked out)\b[^.]* (?:for|over) ____/i,
   // A ritual, a dare, an activity, a way to get something: what someone does.
-  /\b(?:ritual|hazing|dare|tradition|activity|hobby|pastime|challenge|way to get|specializes in|known for|charged? extra for|signature move|finishing move|move in bed)\b/i,
+  /\b(?:ritual|hazing|dare|tradition|activity|hobby|pastime|challenge|way to get|specializes in|known for|charged? extra for|signature move|finishing move|move in bed|new event: ____|as an event)\b/i,
 ];
 /** "Renamed itself after ____", "modeled after ____": a thing, not an event after which. */
 const NAMED_AFTER = /\b(?:named|renamed|modeled|modelled|patterned|fashioned)\b[^.]*after ____/i;
@@ -45,7 +45,7 @@ const NAMED_AFTER = /\b(?:named|renamed|modeled|modelled|patterned|fashioned)\b[
 const PERSON_PROMPT = [
   /^Who(?:'s|se)?\b/i,
   /\bwho\b[^.?]*\?$/i,
-  /\b(?:goes to|went to|awarded to|belongs to|married|marry|dating|date with|hired|fired|elected|best man|maid of honor|godfather|babysitter|sponsored by|hosted by|played by|voiced by|replaced by|starring|cast as|roommate|in bed with|woke up next to|wake up next to|lying next to|virginity to|a threesome with|threesome with|swiped right on|matched with|proposed to|engaged to|left me for|guest of honor was|body count includes|tell-all names)\s+____/i,
+  /\b(?:goes to|went to|awarded to|belongs to|married|marry|dating|date with|hired|fired|elected|best man|maid of honor|godfather|babysitter|sponsored by|hosted by|played by|voiced by|replaced by|starring|cast as|roommate|in bed with|woke up next to|wake up next to|lying next to|virginity to|a threesome with|threesome with|swiped right on|matched (?:me )?with|proposed to|engaged to|left me for|guest of honor was|body count includes|tell-all names)\s+____/i,
   /\bmy (?:new )?(?:boyfriend|girlfriend|husband|wife|partner|therapist|doctor|lawyer|dealer|roommate|sponsor) is ____/i,
   /____ (?:walks|walked|is|was|got|gets) (?:into|in|arrested|elected|fired|hired|pregnant)/i,
   /\bwants? to be ____|\bgrow(?:s)? up to be ____/i, // "My son wants to be ____ when he grows up."
@@ -54,10 +54,10 @@ const PERSON_PROMPT = [
 ];
 /** Prompts whose blank is a name: a title, a nickname, a safe word, a line someone says. */
 const NAME_PROMPT = [
-  /["“]____|____["”]|#____/, // a quoted blank, a hashtag
-  /^What(?:'s| is| was) (?:my|the|your|his|her|their) [\w' -]*(?:name|nickname|handle|safe ?word|title|slogan|catchphrase|motto|password)\?/i,
+  /["“]____|____\.?["”]|#____/, // a quoted blank ("The ____." too), a hashtag
+  /^What(?:'s| is| was) [\w' -]*(?:name|nickname|handle|safe ?word|title|slogan|catchphrase|motto|password)\?/i, // "What's Trump's safe word?"
   /\b(?:called|titled|named|nicknamed)\?$/i, // 'the porn parody of "Frozen" called?'
-  /^What did .* (?:say|whisper|shout|yell|scream|write|announce|text|sext|tweet|post)\b/i,
+  /^What did .* (?:say|whisper|shout|yell|scream|write|announce|text|sext|tweet|post|repeat)\b/i,
   /\bthing (?:I|you|he|she|they|we)(?:'ve|'d|'s)? (?:ever )?(?:said|yelled|texted|whispered|posted|tweeted)\b/i,
   /\b(?:thing|things) to (?:say|hear|whisper|shout|yell|scream)\b/i,
   /\b(?:keeps? announcing|keeps? saying|keeps? yelling) ____/i,
