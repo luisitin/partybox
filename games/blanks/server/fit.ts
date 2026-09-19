@@ -41,7 +41,9 @@ const DOING_PROMPT = [
   /\b(?:turned into|opens with|cuts to|closes with) ____/i, // "…trust exercise turned into ____", "The sex tape opens with ____"
   /\b(?:confess(?:ed|ing)? to|admit(?:ted)? to|plead(?:ed)? guilty to|owned up to|apologi[sz]ed? for|blame[sd]? (?:me|him|her|them|us|you|it) for|forgive (?:me|him|her|them|us) for|guilty of)\b/i, // "What did I confess to on the witness stand?"
   /\b(?:done|did|loved|dare (?:was|is)|ritual (?:was|is)): ____|doing what \w+ loved/i,
-  /\b(?:arrested|fired|executed|burned|shut down|raided|resigned|banned|expelled|sued|jailed|convicted|dumped|put (?:\w+ ){1,2}down|quit|walked out|kicked out|fined|voted off|kicked (?:me|us|him|her) off|upgraded (?:me|us)|comped (?:me|us)|congratulated (?:me|us|him|her)|lost the prize|tested positive)\b[^.]* (?:for|over) ____/i,
+  // "Game night's loser had to ____.": a verb wanted — a gerund is the nearest thing the decks hold.
+  /\b(?:had to|has to|have to|forced (?:me|us|him|her|them) to|dared (?:me|us|him|her|them) to|made (?:me|us|him|her|them)|refused to|agreed to|threatened to|learned to|promised to|tried to|decided to|(?:ordered|told|asked) (?:me|us|him|her|them) to) ____/i,
+  /\b(?:arrested|fired|executed|burned|shut down|raided|resigned|banned|expelled|sued|jailed|convicted|dumped|put (?:\w+ ){1,2}down|quit|walked out|kicked out|fined|voted off|kicked (?:me|us|him|her) off|upgraded (?:me|us)|comped (?:me|us)|congratulated (?:me|us|him|her)|lost the prize)\b[^.]* (?:for|over) ____/i,
   // "…will be remembered for ____", "…is famous for ____", "a ribbon for ____", "charges extra for ____".
   /\b(?:remembered|remember (?:me|us|him|her)|famous|only good|charge[sd]?(?: (?:me|us|extra|a cleaning fee))?|a (?:charge|ribbon|badge|medal|trophy|award|bonus|raise|promotion)|one break a day) for ____/i,
   // A ritual, a dare, an activity, a way to get something: what someone does.
