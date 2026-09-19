@@ -90,3 +90,7 @@ export function whiteTier(id: string): 1 | 2 | 3 {
 export function blackSlot(id: string | null): Slot {
   return (id && BLACK_SLOT[id]) || 'thing';
 }
+
+export function blackTier(id: string): 1 | 2 | 3 {
+  return (BLACK_BY_ID[id]?.tier ?? 2) as 1 | 2 | 3;
+}

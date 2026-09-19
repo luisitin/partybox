@@ -4,7 +4,7 @@
 import { shuffle } from '@partybox/game-sdk';
 import type { RngState } from '@partybox/game-sdk';
 import { BLANK, blanksIn } from '../content/schema';
-import { WHITE_KINDS, whiteKind, whiteServes, whiteTier } from './content';
+import { WHITE_KINDS, blackTier, whiteKind, whiteServes, whiteTier } from './content';
 import type { WhiteKind } from './content';
 import {
   BIG_REVEAL_MAX_MS,
@@ -35,6 +35,12 @@ export function drawWhite(state: State, count: number): [string[], State] {
   return [deck.slice(0, count), { ...state, rng, whiteDeck: deck.slice(count), discard }];
 }
 
+/** The great prompts first, the filler last, each group in its shuffled order (owner, 2026-09-18:
+ *  the best-fitting, funniest cards weighted up): a six-round night never reaches the back. */
+export function orderBlackDeck(deck: readonly string[]): string[] {
+  return [3, 2, 1].flatMap((tier) => deck.filter((id) => blackTier(id) === tier));
+}
+
 /** Draws the next black card; the black deck reshuffles from scratch when it runs out. */
 export function drawBlack(state: State, pool: readonly string[]): [string | null, State] {
   let deck = state.blackDeck;
@@ -42,7 +48,7 @@ export function drawBlack(state: State, pool: readonly string[]): [string | null
   if (deck.length === 0) {
     const [refill, next] = shuffle(rng, pool);
     rng = next;
-    deck = refill;
+    deck = orderBlackDeck(refill);
   }
   const id = deck[0] ?? null;
   return [id, { ...state, rng, blackDeck: deck.slice(1) }];
