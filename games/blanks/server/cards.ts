@@ -65,8 +65,10 @@ export const BEST_FLOOR = 2;
 /** How many cards a round may swap out of one hand to meet the kind floor: a hand loses one card
  *  a round, so a top-up alone can never climb from none of a kind to two (review-loop #175). */
 const MAX_SWAPS = 2;
-/** …and how many for the quality floors (a round's play of a great card is one swap back). */
-const MAX_GOOD_SWAPS = 3;
+/** …and how many for the quality floor: the floor itself. Three was one short when a full hand
+ *  came back from a Pick 2 with two great cards and the kind swap had just dropped one (loop
+ *  #500); the loop only runs while the hand is short, so the floor bounds it anyway. */
+const MAX_GOOD_SWAPS = GOOD_FLOOR;
 const MAX_BEST_SWAPS = 2;
 
 /** Cards in the hand that serve `kind` (a short thing is a thing and a name). */
@@ -163,12 +165,17 @@ function fillHand(state: State, hand: readonly string[], target: number): [strin
       if (surplus === undefined || countKind(out, surplus) <= KIND_FLOOR) break;
       const [card, after] = takeKind(next, kind, out);
       if (card === null) break;
-      const i = out.findIndex(
-        (id) =>
-          whiteKind(id) === surplus &&
-          !whiteServes(id).some((k) => k !== surplus && countKind(out, k) <= KIND_FLOOR) &&
-          out.filter((x) => whiteKind(x) === surplus).length > 1,
-      );
+      // The weakest card of the surplus kind goes (a great one went first before loop #500).
+      const i =
+        out
+          .map((id, j) => ({ id, j }))
+          .filter(
+            ({ id }) =>
+              whiteKind(id) === surplus &&
+              !whiteServes(id).some((k) => k !== surplus && countKind(out, k) <= KIND_FLOOR) &&
+              out.filter((x) => whiteKind(x) === surplus).length > 1,
+          )
+          .sort((a, b) => whiteTier(a.id) - whiteTier(b.id))[0]?.j ?? -1;
       if (i === -1) break;
       const dropped = out[i] as string;
       out = [...out.slice(0, i), ...out.slice(i + 1), card];
