@@ -92,7 +92,7 @@ export function IntroCountdown({
                   .map((p) => (
                     <span
                       key={p.id}
-                      className={`${styles.readyFace} ${p.status === 'submitted' ? `${styles.readyDone} pb-pop` : ''}`}
+                      className={`${styles.readyFace} ${p.status === 'submitted' ? `${styles.readyDone} pb-pop` : waitingOn.length === 1 ? styles.readyLast : ''}`}
                     >
                       <Avatar avatarId={p.avatarId} size="72px" />
                       <b className={styles.readyTick}>✓</b>
