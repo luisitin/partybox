@@ -40,6 +40,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 - Multi-persona live-play harness (`packages/e2e/live/`) and the 2026-09-15 session report.
 
 ### Fixed
+- Lightning Round TV at sixteen players: the four-row roster pushed "0 / 16 locked in" under the
+  host bar; the question page now measures its room and drops to a compact prompt and cards when
+  the stage is short (twelve players and fewer keep the full size).
 - The crossfade ghost of a screen with a `<select>` (the TV host panel into a game intro) showed
   every option's label run together for a beat; it now keeps the picked label only.
 - Wisecrack **Spicy**: the 25 mildest prompts (dark setups with no adult referent) rewritten in the

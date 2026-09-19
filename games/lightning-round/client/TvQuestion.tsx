@@ -158,7 +158,9 @@ export function TvQuestion({
   return (
     <>
       <RoundHeader round={round} question={question} />
-      <BigText level="h1">{question?.text ?? '…'}</BigText>
+      <BigText level="h1" className={styles.prompt}>
+        {question?.text ?? '…'}
+      </BigText>
       {question ? <ChoiceBoard question={question} /> : null}
       <CountLine
         answeredCount={answeredCount}
