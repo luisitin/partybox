@@ -28,15 +28,17 @@ async function main(): Promise<void> {
       seed: 9,
       settings: { rounds: 1, round1: 'line', cards: 2, callSeconds: 60 },
     });
-    // The first ball: the intro runs out on its own (5 s) — poll from the start (loop 302).
+    // The first ball: the intro runs out on its own (the harness readies the phones 1.2 s in;
+    // two cards → ~6 s) — poll from the start (loop 302). The phone's call row reads "call 1"
+    // since loop 338 (the ball row on every style).
     const t00 = Date.now();
     let lastA = '';
     let lastB = '';
     const first: string[] = [];
-    while (Date.now() - t00 < 6500) {
+    while (Date.now() - t00 < 7500) {
       const [a, b] = await Promise.all([
         tv.evaluate(() => (/CALL 1 OF 75/.test(document.body.innerText) ? 'ball' : 'intro')),
-        sam.page.evaluate(() => (document.body.innerText.includes('Call 1 ·') ? 'ball' : 'intro')),
+        sam.page.evaluate(() => (/\bcall 1\b/.test(document.body.innerText) ? 'ball' : 'intro')),
       ]);
       const ms = Date.now() - t00;
       if (a !== lastA) {
