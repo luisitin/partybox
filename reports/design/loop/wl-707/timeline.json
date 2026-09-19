@@ -1,0 +1,49 @@
+{
+  "pass": "631",
+  "game": "broken-pencil",
+  "players": 7,
+  "scenario": "reconnect",
+  "focus": "phone",
+  "started": "13:02:12.541",
+  "tvVideoT0": "13:02:09.121",
+  "phoneVideoT0": "13:02:10.077",
+  "changes": [
+    {
+      "t": 1789822932543,
+      "status": "playing",
+      "phase": "pick",
+      "deadline": 1789822952536,
+      "bed": null,
+      "at": "13:02:12.543",
+      "sinceStartS": 0,
+      "videoS": 3.4,
+      "phoneVideoS": 2.5
+    },
+    {
+      "t": 1789822936703,
+      "status": "playing",
+      "phase": "draw",
+      "deadline": 1789822996593,
+      "bed": null,
+      "at": "13:02:16.703",
+      "sinceStartS": 4.2,
+      "videoS": 7.6,
+      "phoneVideoS": 6.6
+    },
+    {
+      "t": 1789822940908,
+      "status": "playing",
+      "phase": "pass",
+      "deadline": 1789823030788,
+      "bed": null,
+      "at": "13:02:20.908",
+      "sinceStartS": 8.4,
+      "videoS": 11.8,
+      "phoneVideoS": 10.8
+    }
+  ],
+  "notes": [
+    "reconnect: Sam dropped for 8 s at 2026-09-19T13:02:24.920Z in pass",
+    "budget reached while playing; skipped to results"
+  ]
+}
