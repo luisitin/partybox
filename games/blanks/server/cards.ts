@@ -94,7 +94,15 @@ function takeWhere(state: State, wants: (id: string) => boolean): [string | null
   return [id, { ...next, whiteDeck: next.whiteDeck.filter((_, j) => j !== i) }];
 }
 
-function takeKind(state: State, kind: WhiteKind): [string | null, State] {
+/** A card for `kind`: one that reads as it first while the hand has none that does (the top of a
+ *  hand leads with one card of each kind by first reading — a hand whose only doings were things
+ *  read as doings second had no doing up top, loop #488), otherwise any card that serves it. */
+function takeKind(state: State, kind: WhiteKind, hand: readonly string[]): [string | null, State] {
+  if (!hand.some((id) => whiteKind(id) === kind)) {
+    const [card, after] = takeWhere(state, (id) => whiteKind(id) === kind);
+    // `name` is only ever a second reading, so a first-reading name never exists: any serving card.
+    if (card !== null) return [card, after];
+  }
   return takeWhere(state, (id) => whiteServes(id).includes(kind));
 }
 
@@ -111,7 +119,7 @@ function fillHand(state: State, hand: readonly string[], target: number): [strin
   let out = [...hand];
   for (const kind of WHITE_KINDS) {
     while (countKind(out, kind) < KIND_FLOOR && out.length < target) {
-      const [card, after] = takeKind(next, kind);
+      const [card, after] = takeKind(next, kind, out);
       if (card === null) break;
       next = after;
       out.push(card);
@@ -133,7 +141,7 @@ function fillHand(state: State, hand: readonly string[], target: number): [strin
     while (countKind(out, kind) < KIND_FLOOR && swaps < MAX_SWAPS) {
       const surplus = [...WHITE_KINDS].sort((a, b) => countKind(out, b) - countKind(out, a))[0];
       if (surplus === undefined || countKind(out, surplus) <= KIND_FLOOR) break;
-      const [card, after] = takeKind(next, kind);
+      const [card, after] = takeKind(next, kind, out);
       if (card === null) break;
       const i = out.findIndex(
         (id) =>
@@ -169,7 +177,14 @@ function swapForGood(state: State, hand: readonly string[]): [string[], State] |
     .sort((a, b) => whiteTier(a.id) - whiteTier(b.id));
   for (const { id: dropped, i } of spares) {
     const rest = hand.filter((_, j) => j !== i);
-    const needs = WHITE_KINDS.filter((k) => countKind(rest, k) < KIND_FLOOR);
+    // Kinds the rest would fall short of — by any reading for the floor, and by first reading for
+    // the spare's own kind, so the top of the hand can still lead with one of each (loop #488: a
+    // spare gerund swapped for a great noun left a hand with no card that reads as a doing first).
+    const needs = WHITE_KINDS.filter(
+      (k) =>
+        countKind(rest, k) < KIND_FLOOR ||
+        (k === whiteKind(dropped) && !rest.some((id) => whiteKind(id) === k)),
+    );
     const [card, after] = takeWhere(
       state,
       (id) => isGood(id) && needs.every((k) => whiteServes(id).includes(k)),
