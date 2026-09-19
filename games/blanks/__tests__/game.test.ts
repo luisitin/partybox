@@ -2,7 +2,7 @@
 // (README "Phases" + "Content"). Phase and scoring edge cases live in phases.test.ts.
 import { describe, expect, it } from 'vitest';
 import { GOOD_FLOOR, KIND_FLOOR, fill, fillText, glue, revealMs } from '../server/cards';
-import { servesOf } from '../server/fit';
+import { fitScore, servesOf } from '../server/fit';
 import {
   DECKS,
   WHITE_KINDS,
@@ -152,6 +152,23 @@ describe('dealing', () => {
     expect(tiers.slice(firstTwo, firstOne).every((t) => t === 2)).toBe(true);
     expect(tiers.slice(firstOne).every((t) => t === 1)).toBe(true);
     expect(blackTier(s.blackId as string)).toBe(3);
+  });
+
+  it('once the prompt is known, every hand leads with the cards that fit it best', () => {
+    // "What did the sex robot refuse to do?" wants a doing: the gerund cards come first, the best
+    // tier among them first, and every card after the lead reads no better than it.
+    const intro = { ...start({ players: 6, decks: 'wild-only', seed: 9 }), blackId: 'wb267' };
+    const s = timer(intro);
+    expect(s.phase.id).toBe('answer');
+    for (const id of Object.keys(s.players)) {
+      if (s.czarId === id) continue;
+      const hand = s.hands[id] ?? [];
+      const fits = hand.map((c) => fitScore('doing', whiteServes(c)));
+      expect(fits[0]).toBe(Math.max(...fits));
+      for (let i = 1; i < fits.length; i += 1)
+        expect(fits[i - 1]).toBeGreaterThanOrEqual(fits[i] as number);
+      expect(whiteKind(hand[0] as string)).toBe('doing');
+    }
   });
 
   it('a wild hand holds at least five tier-3 cards, round after round (the quality floor)', () => {

@@ -39,7 +39,9 @@ card's text; a card's own `serves` in the deck JSON overrides it) and at least 5
 deck JSON: 1 filler, 2 good, 3 great; up to three spare cards a round are swapped for great ones of the same
 kind) — while the decks can supply them; the
 hand is shuffled each round, so the same cards never sit at the top, and one card of each kind is
-moved to the front of it so the first screenful on a phone always offers all three — the judge chosen (czar mode: seat order by id, one per round,
+moved to the front of it so the first screenful on a phone always offers all three; once the black card
+is final (`answer` entry) every answerer's hand leads with the cards that read best in its blank — fit
+first, tier next, the shuffle's order among equals — the judge chosen (czar mode: seat order by id, one per round,
 disconnected seats skipped), a black card drawn — the deck leads with the great prompts (`tier` 3 in the deck
 JSON) and keeps the filler (tier 1) for the back, each group in its shuffled order; three in czar mode, for the judge to choose between in
 `pick` (the two not chosen go under the deck); its extra draws and Rando's cards (setting) follow once the

@@ -4,7 +4,8 @@
 import { shuffle } from '@partybox/game-sdk';
 import type { RngState } from '@partybox/game-sdk';
 import { BLANK, blanksIn } from '../content/schema';
-import { WHITE_KINDS, blackTier, whiteKind, whiteServes, whiteTier } from './content';
+import { WHITE_KINDS, blackSlot, blackTier, whiteKind, whiteServes, whiteTier } from './content';
+import { fitScore } from './fit';
 import type { WhiteKind } from './content';
 import {
   BIG_REVEAL_MAX_MS,
@@ -196,6 +197,28 @@ export function refillHands(state: State, extra = 0, extraFor: readonly string[]
     hands[id] = frontLoadKinds(shuffled);
   }
   return { ...next, hands };
+}
+
+/** Once the prompt is known, every answerer's hand leads with the cards that read best in it —
+ *  fit for the blank first, tier next, the shuffle's order kept among equals — so the first
+ *  screenful on the phone is the four best answers, not four random ones (loop 473). */
+export function leadWithFit(state: State, playerIds: readonly string[]): State {
+  const slot = blackSlot(state.blackId);
+  const hands = { ...state.hands };
+  for (const id of playerIds) {
+    const hand = hands[id];
+    if (!hand) continue;
+    hands[id] = hand
+      .map((card, i) => ({
+        card,
+        i,
+        fit: fitScore(slot, whiteServes(card)),
+        tier: whiteTier(card),
+      }))
+      .sort((a, b) => b.fit - a.fit || b.tier - a.tier || a.i - b.i)
+      .map((c) => c.card);
+  }
+  return { ...state, hands };
 }
 
 /** One of each kind at the top of the hand, the shuffle's order kept otherwise. A phone shows
