@@ -1,7 +1,7 @@
 // Dealing (README "Players" and the round start): distinct cards, the kind, quality and variety
 // floors, the black deck's order, and the hand leading with the prompt's best fits.
 import { describe, expect, it } from 'vitest';
-import { BEST_FLOOR, GOOD_FLOOR, KIND_FLOOR, refillHands } from '../server/deal';
+import { BEST_FLOOR, GOOD_FLOOR, KIND_FLOORS, refillHands } from '../server/deal';
 import { topicsOf } from '../server/topics';
 import { fitScore, servesOf } from '../server/fit';
 import {
@@ -129,7 +129,7 @@ describe('dealing', () => {
         for (const id of Object.keys(s.players)) {
           const c = counts(s.hands[id] ?? []);
           for (const kind of WHITE_KINDS)
-            expect(c[kind], `${decks} r${round} ${kind}`).toBeGreaterThanOrEqual(KIND_FLOOR);
+            expect(c[kind], `${decks} r${round} ${kind}`).toBeGreaterThanOrEqual(KIND_FLOORS[kind]);
         }
         s = timer(playRound(s));
         // Past the last round the hands are spent and never refilled again — nothing to assert.
