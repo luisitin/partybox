@@ -100,6 +100,14 @@ describe('slotOf — what the blank wants', () => {
 });
 
 describe('servesOf — what the white card is', () => {
+  it("an owner's person is a person: Someone's dad, the groom's ex — not Grandma's career", () => {
+    expect(servesOf({ text: "Someone's dad on Grindr." })).toEqual(['person', 'name']);
+    expect(servesOf({ text: "Cheryl's husband." })).toEqual(['person', 'name']);
+    expect(servesOf({ text: "The groom's ex at the reception." })).toEqual(['person']);
+    expect(servesOf({ text: "Grandma's dominatrix career." })).toEqual(['thing', 'name']);
+    expect(servesOf({ text: "Mom's boyfriend's Camaro." })).toEqual(['thing', 'name']);
+  });
+
   it('a gerund card is a doing', () => {
     expect(servesOf({ text: 'Farting during a prostate exam.' })).toEqual(['doing']);
     expect(servesOf({ text: 'Quietly winning Monopoly.' })).toEqual(['doing', 'name']);
