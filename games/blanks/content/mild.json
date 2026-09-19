@@ -7988,6 +7988,132 @@
       "text": "What did the DMV clerk stamp?",
       "pick": 1,
       "draw": 0
+    },
+    {
+      "id": "mb1173",
+      "text": "NASA's next mission is to ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb1174",
+      "text": "The astronaut's first words on Mars were \"____.\"",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb1175",
+      "text": "The space station ran out of ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb1176",
+      "text": "Houston, we have a problem with ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb1177",
+      "text": "The eleventh plague was ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb1178",
+      "text": "The youth pastor's sermon was really about ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb1179",
+      "text": "The church bulletin's typo announced ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb1180",
+      "text": "The nativity scene was missing ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb1181",
+      "text": "The drive-thru speaker misheard \"burger\" as \"____.\"",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb1182",
+      "text": "The fast food chain's newest menu item is ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb1183",
+      "text": "The secret menu's most ordered thing is ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb1184",
+      "text": "The fry cook's special ingredient was ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb1185",
+      "text": "The garage sale's best find was ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb1186",
+      "text": "The thrift store's mystery bag held ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb1187",
+      "text": "Someone paid $4 for ____ at the yard sale.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb1188",
+      "text": "The estate sale's back bedroom had ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb1189",
+      "text": "Grandma's attic yielded ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb1190",
+      "text": "What did the astronaut smuggle aboard?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb1191",
+      "text": "What did Moses forget on the mountain?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb1192",
+      "text": "What was in the Happy Meal?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "mb1193",
+      "text": "What did the thrift store refuse to take?",
+      "pick": 1,
+      "draw": 0
     }
   ],
   "white": [
@@ -8984,8 +9110,8 @@
     {
       "id": "mw204",
       "text": "A very confident toddler.",
-      "tier": 3,
-      "serves": ["person", "name"]
+      "serves": ["person", "name"],
+      "tier": 3
     },
     {
       "id": "mw205",
@@ -9380,8 +9506,8 @@
     {
       "id": "mw283",
       "text": "A very tall man in a very small car.",
-      "tier": 4,
-      "serves": ["person"]
+      "serves": ["person"],
+      "tier": 4
     },
     {
       "id": "mw284",
@@ -15276,8 +15402,8 @@
     {
       "id": "mw1465",
       "text": "A retired mall cop.",
-      "tier": 3,
-      "serves": ["person", "name"]
+      "serves": ["person", "name"],
+      "tier": 3
     },
     {
       "id": "mw1466",
@@ -20296,6 +20422,161 @@
     {
       "id": "mw2465",
       "text": "Jury duty on your birthday.",
+      "tier": 4
+    },
+    {
+      "id": "mw2466",
+      "text": "An astronaut who's homesick for the DMV.",
+      "tier": 4
+    },
+    {
+      "id": "mw2467",
+      "text": "A space station argument about the thermostat.",
+      "tier": 3
+    },
+    {
+      "id": "mw2468",
+      "text": "Freeze-dried ice cream, again.",
+      "tier": 3
+    },
+    {
+      "id": "mw2469",
+      "text": "A moon rock that's clearly from the driveway.",
+      "tier": 4
+    },
+    {
+      "id": "mw2470",
+      "text": "The Mars rover's playlist.",
+      "tier": 3
+    },
+    {
+      "id": "mw2471",
+      "text": "A rocket built by the interns.",
+      "tier": 3
+    },
+    {
+      "id": "mw2472",
+      "text": "Zero gravity and a full bladder.",
+      "tier": 4
+    },
+    {
+      "id": "mw2473",
+      "text": "Noah's neighbors, watching the rain.",
+      "tier": 4
+    },
+    {
+      "id": "mw2474",
+      "text": "A youth pastor with a skateboard and a plan.",
+      "tier": 4
+    },
+    {
+      "id": "mw2475",
+      "text": "A church potluck that's 80 percent Jell-O.",
+      "tier": 3
+    },
+    {
+      "id": "mw2476",
+      "text": "Jonah, inside the whale, asking for the Wi-Fi.",
+      "tier": 4
+    },
+    {
+      "id": "mw2477",
+      "text": "A nativity scene with a dinosaur.",
+      "tier": 4
+    },
+    {
+      "id": "mw2478",
+      "text": "A church bulletin typo about the \"Sinners' Picnic.\"",
+      "tier": 3
+    },
+    {
+      "id": "mw2479",
+      "text": "Moses, back at the top for the charger.",
+      "tier": 4
+    },
+    {
+      "id": "mw2480",
+      "text": "The collection plate, passed back empty.",
+      "tier": 3
+    },
+    {
+      "id": "mw2481",
+      "text": "A drive-thru order shouted over a crying baby.",
+      "tier": 3
+    },
+    {
+      "id": "mw2482",
+      "text": "McDonald's ice cream machine, broken.",
+      "tier": 4
+    },
+    {
+      "id": "mw2483",
+      "text": "A Taco Bell at 2 a.m. and the consequences.",
+      "tier": 4
+    },
+    {
+      "id": "mw2484",
+      "text": "A Happy Meal toy that outlived the marriage.",
+      "tier": 3
+    },
+    {
+      "id": "mw2485",
+      "text": "A drive-thru worker who says \"my pleasure\" with dead eyes.",
+      "tier": 4
+    },
+    {
+      "id": "mw2486",
+      "text": "The sauce packet that explodes on the shirt.",
+      "tier": 3
+    },
+    {
+      "id": "mw2487",
+      "text": "A Wendy's with a Twitter account and a grudge.",
+      "tier": 4
+    },
+    {
+      "id": "mw2488",
+      "text": "A dollar menu item that costs $4.",
+      "tier": 3
+    },
+    {
+      "id": "mw2489",
+      "text": "A garage sale with one item and a lawn chair.",
+      "tier": 4
+    },
+    {
+      "id": "mw2490",
+      "text": "A thrift store sweater with a mystery stain.",
+      "tier": 3
+    },
+    {
+      "id": "mw2491",
+      "text": "A yard sale priced like Sotheby's.",
+      "tier": 3
+    },
+    {
+      "id": "mw2492",
+      "text": "An estate sale with the family still living there.",
+      "tier": 4
+    },
+    {
+      "id": "mw2493",
+      "text": "A thrift store VHS of a wedding, not yours.",
+      "tier": 3
+    },
+    {
+      "id": "mw2494",
+      "text": "A \"free\" box with a raccoon in it.",
+      "tier": 4
+    },
+    {
+      "id": "mw2495",
+      "text": "A garage sale haggle over a nickel.",
+      "tier": 3
+    },
+    {
+      "id": "mw2496",
+      "text": "Someone's grandma's ashes in a thrifted vase.",
       "tier": 4
     }
   ]
