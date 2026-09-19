@@ -5738,6 +5738,114 @@
       "text": "What did the tourist's luggage contain at customs?",
       "pick": 1,
       "draw": 0
+    },
+    {
+      "id": "wb840",
+      "text": "The 90s cartoon was cancelled after ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb841",
+      "text": "The Y2K bunker was found with ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb842",
+      "text": "The Blockbuster's back room was really ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb843",
+      "text": "The dog dug up ____ in the yard.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb844",
+      "text": "The cat's \"gift\" on the porch was ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb845",
+      "text": "The vet's back room held ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb846",
+      "text": "The dog park's missing owners were traced to ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb847",
+      "text": "The tornado dropped ____ on the town.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb848",
+      "text": "The flood washed up ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb849",
+      "text": "The blizzard trapped the family with ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb850",
+      "text": "The DMV's basement held ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb851",
+      "text": "The government form's last question was about ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb852",
+      "text": "The clerk processed ____ without looking up.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb853",
+      "text": "Jury duty ended when ____.",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb854",
+      "text": "What was in the time capsule?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb855",
+      "text": "What did the dog find under the porch?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb856",
+      "text": "What did the ice storm reveal?",
+      "pick": 1,
+      "draw": 0
+    },
+    {
+      "id": "wb857",
+      "text": "What did the audit uncover at the courthouse?",
+      "pick": 1,
+      "draw": 0
     }
   ],
   "white": [
@@ -8594,8 +8702,8 @@
     {
       "id": "ww571",
       "text": "A cock cage for Lent.",
-      "tier": 3,
-      "serves": ["thing"]
+      "serves": ["thing"],
+      "tier": 3
     },
     {
       "id": "ww572",
@@ -17438,6 +17546,126 @@
     {
       "id": "ww2341",
       "text": "A tour group that follows the flag into the furnace.",
+      "tier": 4
+    },
+    {
+      "id": "ww2342",
+      "text": "A Tamagotchi that had to be fed the neighbor's kid.",
+      "tier": 4
+    },
+    {
+      "id": "ww2343",
+      "text": "A Y2K bunker that opened in 2024, with the family still inside, mostly.",
+      "tier": 4
+    },
+    {
+      "id": "ww2344",
+      "text": "A Blockbuster back room with the late-fee customers.",
+      "tier": 3
+    },
+    {
+      "id": "ww2345",
+      "text": "A Furby that learned the last words of everyone in the house.",
+      "tier": 4
+    },
+    {
+      "id": "ww2346",
+      "text": "A MySpace top 8 that's now a memorial wall, one at a time.",
+      "tier": 3
+    },
+    {
+      "id": "ww2347",
+      "text": "A burned CD of the screams.",
+      "tier": 3
+    },
+    {
+      "id": "ww2348",
+      "text": "A dog that dug up the whole flower bed and the whole family under it.",
+      "tier": 3
+    },
+    {
+      "id": "ww2349",
+      "text": "A cat that brings back fingers, sorted.",
+      "tier": 4
+    },
+    {
+      "id": "ww2350",
+      "text": "A vet who puts down the owners too, for a fee.",
+      "tier": 3
+    },
+    {
+      "id": "ww2351",
+      "text": "A dog park where the missing owners are the mulch.",
+      "tier": 3
+    },
+    {
+      "id": "ww2352",
+      "text": "A golden retriever that fetched the murder weapon, and the murderer.",
+      "tier": 4
+    },
+    {
+      "id": "ww2353",
+      "text": "A kennel with a furnace and a waiting list.",
+      "tier": 3
+    },
+    {
+      "id": "ww2354",
+      "text": "A tornado that dropped the neighbors on the neighbors.",
+      "tier": 4
+    },
+    {
+      "id": "ww2355",
+      "text": "A flood that gave back every missing person, at once.",
+      "tier": 3
+    },
+    {
+      "id": "ww2356",
+      "text": "A blizzard that snowed the family in with the thing in the basement.",
+      "tier": 3
+    },
+    {
+      "id": "ww2357",
+      "text": "A heat wave that cooked the retirement home, and the menu.",
+      "tier": 3
+    },
+    {
+      "id": "ww2358",
+      "text": "A hail storm of teeth.",
+      "tier": 4
+    },
+    {
+      "id": "ww2359",
+      "text": "A DMV where the line ends at the incinerator.",
+      "tier": 4
+    },
+    {
+      "id": "ww2360",
+      "text": "A form 27B that's a confession, in triplicate.",
+      "tier": 4
+    },
+    {
+      "id": "ww2361",
+      "text": "A clerk who stamps the death certificates in advance.",
+      "tier": 3
+    },
+    {
+      "id": "ww2362",
+      "text": "Jury duty where the verdict is carried out in the room, on the jury.",
+      "tier": 4
+    },
+    {
+      "id": "ww2363",
+      "text": "A permit for the mass grave, approved.",
+      "tier": 3
+    },
+    {
+      "id": "ww2364",
+      "text": "A notary who witnesses the will and the cause.",
+      "tier": 3
+    },
+    {
+      "id": "ww2365",
+      "text": "Hold music that's the last caller.",
       "tier": 4
     }
   ]
