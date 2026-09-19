@@ -122,7 +122,8 @@ TV has a mute toggle (persisted in `localStorage`) and a "tap to start" overlay 
 pulse), `lofi` (swung dusty beat, soft kick + brushed snare), `lounge` (vibraphone swing with a
 walking bass) and `pulse` (a 120 bpm quiz-show tension bed: eighth-note bass, a clock tick per beat;
 `beds-library-more.ts`). The voices they are built from live in `beds-voices.ts`. The shell crossfades beds over 1.5 s as phases change, resumes a returning bed where it stopped, holds it on pause,
-ducks it to half under every cue for a second (except the light `lock` / `countdown` / `tick` ticks, which would make it pump), and mutes it with the TV. Unmapped phases and the results screen are silent.
+ducks it to half under every cue for a second (except the light `lock` / `countdown` / `tick` ticks, which would make it pump), and mutes it with the TV.
+File tracks carry a per-track trim (`TRACK_TRIM` in `music-tracks.ts`, measured with `probe-loudness.ts`) so one set plays at one loudness. Unmapped phases and the results screen are silent.
 The phone has its own engine (`createSoundEngine({ master: 0.35 })`, mute under `partybox:phone-sound`, default on,
 toggled from the theme sheet) that plays only what happened in the player's hand — never `phase`, `join`, `win` or
 `countdown`, which are the TV's. `useSound()` inside a game's Controller reaches it; the shell skips `submit` when a
@@ -150,7 +151,7 @@ as `buzz:dropped`.
 
 TV (`@partybox/game-sdk` → `tv/`): `Timer`, `PlayerChips`, `Scoreboard`, `Reveal`, `Stage` (overscan frame), `BigText`.
 Shared (`ui/`): `DeadlineBar` (draining bar; danger in the last 5 s only when the phase lasts ≥ 15 s — a 6 s bingo call just drains — the TV strip and the phone header both use it), `usePrefersReducedMotion` (for JS-driven sequences).
-Controller (`controller/`): `TextAnswer`, `ChoiceGrid`, `VoteList` (with a sticky `header` slot for what is being voted on), `WaitingScreen`, `Screen` (safe-area frame), `PrimaryButton`.
+Controller (`controller/`): `TextAnswer`, `ChoiceGrid`, `VoteList` (with a sticky `header` slot for what is being voted on), `WaitingScreen`, `Screen` (safe-area frame; a body that scrolls fades its bottom 28 px while there is more below and lifts the fade at the end, via a scroll-driven `--pb-fold` — browsers without scroll timelines keep the plain fold), `PrimaryButton`.
 Shared: `Avatar`, `Chip`. Each primitive's props are documented in its file header.
 
 ## Performance budget
