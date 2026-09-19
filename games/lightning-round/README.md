@@ -51,6 +51,10 @@ player id): **Lightning fingers** = lowest average time over correct answers (�
   → `done` with scores so far (unrevealed question = 0). Pause holds the deadline; inputs/timers ignored.
 - Every phase has a deadline. Everyone idle: all score 0 and tie for first, no awards. 1 player works.
 
+The TV question page is a size container: under 560 px of stage (a sixteen-player roster, four chip
+rows) the prompt drops to h2 and the choice cards to 84 px so the count line stays above the host bar
+(`capture-lightning-16.ts` proves 16 and 6 players).
+
 ## Settings
 
 `questions` number 10 (5–20 step 1, regular questions; the final is extra) · `answerSeconds` number 15
