@@ -27,6 +27,7 @@ const DOING_PROMPT = [
   /\b(?:was|is|were) actually (?:[A-Z][\w']+ ){1,3}____/, // "The moonwalk was actually Michael Jackson ____."
   /\b(?:does|did|caught (?:me|him|her|them|us|the \w+)|busy|instead of|after|before|while|during|until|in the middle of|conceived during|spent (?:the \w+|\w+ years?)|most likely to|made (?:me|us|them|him|her) do|performed|opened with|threw a flag for|flag for)\s+____/i,
   /["“]Most Likely To["”] was ____/i, // the yearbook's
+  /\b(?:when|once|until|the (?:moment|second|minute)) ____[.!?]?$/i, // "The audit got personal when ____." (a clause: what someone did)
   /\b(?:best|worst|favou?rite|only|fastest|quickest) way to \w+/i, // "The best way to annoy a sibling: ____."
   // (No trailing \b: after "on?" the end of the text is no word boundary — "What did the kids walk
   // in on?" read as a thing for twenty passes.)
@@ -37,7 +38,7 @@ const DOING_PROMPT = [
   // "What got me banned…?", "What ended the marriage?", "the secret to a happy marriage", "the
   // CIA's new interrogation technique": what someone did, or does.
   /^What (?:got|ended|finally ended|killed|ruined|started|caused|broke up)\b/i,
-  /\b(?:technique|trick|secret to|real reason for|reason the [\w' ]+ ended|mistake (?:was|is)|biggest mistake|first mistake|mistake: ____|strategy (?:was|is)|plan (?:was|is)|never live down|live down|alibi\b[^.?]* (?:is|was|involves)|shalt not|practi[sc]e)\b/i,
+  /\b(?:technique|trick(?!-or-)|secret to|real reason for|reason the [\w' ]+ ended|mistake (?:was|is)|biggest mistake|first mistake|mistake: ____|strategy (?:was|is)|plan (?:was|is)|never live down|live down|alibi\b[^.?]* (?:is|was|involves)|shalt not|practi[sc]e)\b/i,
   /\b(?:turned into|opens with|cuts to|closes with) ____/i, // "…trust exercise turned into ____", "The sex tape opens with ____"
   /\b(?:confess(?:ed|ing)? to|admit(?:ted)? to|plead(?:ed)? guilty to|owned up to|apologi[sz]ed? for|blame[sd]? (?:me|him|her|them|us|you|it) for|forgive (?:me|him|her|them|us) for|guilty of)\b/i, // "What did I confess to on the witness stand?"
   /\b(?:done|did|loved|dare (?:was|is)|ritual (?:was|is)): ____|doing what \w+ loved/i,
