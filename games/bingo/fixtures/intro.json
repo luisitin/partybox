@@ -2,7 +2,7 @@
   "phase": {
     "id": "intro",
     "startedAt": 1700000000000,
-    "deadline": 1700000005000
+    "deadline": 1700000015000
   },
   "rng": {
     "seed": 1,
@@ -102,7 +102,7 @@
     "judged": true,
     "judgedAt": null,
     "calledAt": null,
-    "ready": []
+    "ready": ["p2"]
   },
   "wins": {
     "p1": 0,
