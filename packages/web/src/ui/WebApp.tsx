@@ -70,8 +70,10 @@ export function WebApp(): JSX.Element {
 }
 
 function Party({ room }: { room: Room }): JSX.Element {
-  // The stage starts open: it is where the room, the code and the game itself are shown.
-  const [stageShown, setStageShown] = useState(true);
+  // The stage starts folded away (owner pick 2026-09-19): a phone's screen belongs to the controls,
+  // and the stage is the thing you glance at, not the thing you play on. It is mounted the whole
+  // time regardless — it owns the music, the beds and the cues, which play whether it is shown or not.
+  const [stageShown, setStageShown] = useState(false);
   const [reachable, setReachable] = useState(room.reachable);
   const controller = useMemo(
     () => createController({ transport: controllerTransport(room.link) }),

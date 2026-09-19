@@ -145,8 +145,8 @@ serves the TV and the phones on 42069.
    VIP, and **their tab runs the room** — if they close it, the party ends. They can hand the VIP
    badge to anyone from ★ VIP → _Make VIP_; that moves the controls, not the hosting.
 2. Everyone else opens the same link, types the code, picks a name and an avatar.
-3. The stage sits at the top of everyone's screen; **Stage** in the bar folds it away when a game
-   wants the whole screen (a Bingo card does).
+3. The controls get the whole screen. **Stage ▾** in the bar pulls the stage down over the top of
+   them when you want to see it, and folds it away again. It plays its music and cues either way.
 
 ---
 
