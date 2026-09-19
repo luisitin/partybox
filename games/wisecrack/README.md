@@ -6,6 +6,9 @@ Every player writes a one-liner for two prompts; each prompt then goes on the TV
 anonymously, and everyone who did not write for it votes for the funnier one. Authors and votes are
 revealed, points awarded, round scoreboard, next round. The last round of a multi-round game is worth double.
 
+**Sound.** Playful tracks under the writing (`music`, chained at 0.2), synthesized beds elsewhere (`beds`:
+warm intro, marimba / lo-fi alternating per prompt across vote + reveal, lounge on the scores); silent on `done`.
+
 ## Players
 
 3–8; ≈ 10 min by default. Every `init` player writes every round, connected or not (a disconnected
@@ -58,4 +61,5 @@ measured against the deadline; if > 0).
 ## Content
 
 `family.json`: ≥ 150 family-friendly prompts (`{ id, text }`) + `botAnswers` (≥ 40). `spicy.json`:
-≥ 50 edgier but PG-13 prompts, only when `spicy` is on. Nothing explicit, hateful or about real people.
+≥ 50 explicit adult prompts (18+; the intensity of the Blanks WILD deck, owner's order 2026-09-18), only
+when `spicy` is on. Nothing hateful (no group as the butt of the joke), nothing about real people.

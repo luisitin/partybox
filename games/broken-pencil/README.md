@@ -75,13 +75,13 @@ punctuation and extra spaces removed, a leading a/an/the dropped) equals the wor
 
 ## Settings
 
-| Key            | Type    | Default | Range        | Effect                                                   |
-| -------------- | ------- | ------- | ------------ | -------------------------------------------------------- |
-| `passes`       | number  | 15      | 1–15         | Other players per book; 15 = everyone (capped to N − 1). |
-| `drawSeconds`  | number  | 60      | 30–120 by 10 | Time per drawing.                                        |
-| `guessSeconds` | number  | 30      | 15–60 by 5   | Time per guess.                                          |
-| `customWords`  | boolean | true    | —            | Players may type their own secret word.                  |
-| `spicy`        | boolean | false   | —            | Adds the cheeky pack to the offers (PG-13).              |
+| Key            | Type    | Default | Range        | Effect                                                         |
+| -------------- | ------- | ------- | ------------ | -------------------------------------------------------------- |
+| `passes`       | number  | 15      | 1–15         | Other players per book; 15 = everyone (capped to N − 1).       |
+| `drawSeconds`  | number  | 60      | 30–120 by 10 | Time per drawing.                                              |
+| `guessSeconds` | number  | 30      | 15–60 by 5   | Time per guess.                                                |
+| `customWords`  | boolean | true    | —            | Players may type their own secret word.                        |
+| `spicy`        | boolean | false   | —            | Adds the explicit pack (18+, Blanks-WILD level) to the offers. |
 
 ## Content
 

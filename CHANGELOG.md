@@ -5,6 +5,8 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Spicy** in Wisecrack (140 prompts) and Broken Pencil (90 drawable words) now matches the Blanks
+  WILD deck: explicit adult humour, 18+; nothing hateful, no real people.
 - **Lightning Round**: 3 867 questions (from 256) in ten categories: Science is now **STEM** with
   math, engineering and computing; new **Entertainment** and **Everyday Life**; each split into
   topics (59 in all). A **Topics** checklist under the category setting draws from the ticked topics
