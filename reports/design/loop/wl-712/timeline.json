@@ -1,0 +1,46 @@
+{
+  "pass": "634",
+  "game": "broken-pencil",
+  "players": 7,
+  "scenario": "walkover",
+  "focus": "tv",
+  "started": "13:14:46.668",
+  "tvVideoT0": "13:14:43.292",
+  "phoneVideoT0": "13:14:44.229",
+  "changes": [
+    {
+      "t": 1789823686670,
+      "status": "playing",
+      "phase": "pick",
+      "deadline": 1789823706664,
+      "bed": null,
+      "at": "13:14:46.670",
+      "sinceStartS": 0,
+      "videoS": 3.4,
+      "phoneVideoS": 2.4
+    },
+    {
+      "t": 1789823706714,
+      "status": "playing",
+      "phase": "draw",
+      "deadline": 1789823766670,
+      "bed": null,
+      "at": "13:15:06.714",
+      "sinceStartS": 20,
+      "videoS": 23.4,
+      "phoneVideoS": 22.5
+    },
+    {
+      "t": 1789823766786,
+      "status": "playing",
+      "phase": "pass",
+      "deadline": 1789823856676,
+      "bed": null,
+      "at": "13:16:06.786",
+      "sinceStartS": 80.1,
+      "videoS": 83.5,
+      "phoneVideoS": 82.6
+    }
+  ],
+  "notes": ["budget reached while playing; skipped to results"]
+}
