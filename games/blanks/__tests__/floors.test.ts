@@ -1,13 +1,12 @@
 // The hand floors across every deck setting, table size and a spread of seeds (loop #472 found
-// the quality floor could be missed on one seed; this keeps the sweep in the suite).
+// the quality floor could be missed on one seed; this keeps the sweep in the suite). Since loop
+// 521 every pool is tiered, so the quality floors apply to mild and adults rooms too.
 import { describe, expect, it } from 'vitest';
-import { GOOD_FLOOR, KIND_FLOOR } from '../server/cards';
-import { WHITE_KINDS, whiteServes, whiteTier } from '../server/content';
+import { BEST_FLOOR, GOOD_FLOOR, KIND_FLOOR } from '../server/cards';
+import { WHITE_KINDS, whiteKind, whiteServes, whiteTier } from '../server/content';
 import { playRound, start, timer } from './helpers';
 
 const DECKS = ['mild', 'adults', 'wild', 'wild-only'] as const;
-/** Pools with no tiered cards yet: mild and crude carry no `tier`, so only wild supplies great cards. */
-const UNTIERED = ['mild ', 'adults '];
 
 function sweep(check: (hand: readonly string[], where: string) => void): void {
   for (const decks of DECKS) {
@@ -35,11 +34,24 @@ describe('hand floors', () => {
     });
   });
 
-  it('every hand holds five great cards wherever the pool has tiers', () => {
+  it('every hand holds a card that reads first as each leading kind', () => {
     sweep((hand, where) => {
-      if (UNTIERED.some((d) => where.startsWith(d))) return;
+      for (const k of WHITE_KINDS) {
+        if (k === 'name') continue; // only ever a second reading
+        expect(
+          hand.some((c) => whiteKind(c) === k),
+          `${where} ${k}`,
+        ).toBe(true);
+      }
+    });
+  });
+
+  it('every hand holds five great cards, two of them amazing, in every pool (all decks are tiered since loop 521)', () => {
+    sweep((hand, where) => {
       const good = hand.filter((c) => whiteTier(c) >= 3).length;
       expect(good, where).toBeGreaterThanOrEqual(GOOD_FLOOR);
+      const best = hand.filter((c) => whiteTier(c) === 4).length;
+      expect(best, `${where} amazing`).toBeGreaterThanOrEqual(BEST_FLOOR);
     });
   });
 });
