@@ -22,9 +22,10 @@ const DOING_PROMPT = [
   /\b(?:real|hidden|secret|true) talent\b|\bpunishment (?:for|is|was)\b|\bpunishment\?$/i,
   /\b(?:cut short by|ends? (?:\w+ )?(?:with|in)) ____/i, // "The bedtime story ends with ____.", "cut short by ____"
   /^____ and ____: what\b/, // "____ and ____: what the Airbnb's two hidden cameras caught."
+  /\b(?:resolutions?|bucket list|routine|to-do list|guilty pleasures?|hobby|hobbies|habits?)\b[^.?]*(?::| is| was| starts with| ends with) ____/i, // "New Year's resolution, abandoned by January 3rd: ____.", "The nun's guilty pleasure is ____."
   /\bdo (?:at|in|on|to|with|for|instead|before|after|during|while|when|all day|every)\b/i, // "What did Lincoln do at…", "…do while I'm at work?"
   /\b(?:was|is|were) actually (?:[A-Z][\w']+ ){1,3}____/, // "The moonwalk was actually Michael Jackson ____."
-  /\b(?:does|did|caught (?:me|him|her|them|us|the \w+)|busy|instead of|after|before|while|during|in the middle of|conceived during|spent (?:the \w+|\w+ years?)|most likely to|made (?:me|us|them|him|her) do|performed|opened with|threw a flag for|flag for)\s+____/i,
+  /\b(?:does|did|caught (?:me|him|her|them|us|the \w+)|busy|instead of|after|before|while|during|until|in the middle of|conceived during|spent (?:the \w+|\w+ years?)|most likely to|made (?:me|us|them|him|her) do|performed|opened with|threw a flag for|flag for)\s+____/i,
   /["“]Most Likely To["”] was ____/i, // the yearbook's
   /\b(?:best|worst|favou?rite|only|fastest|quickest) way to \w+/i, // "The best way to annoy a sibling: ____."
   // (No trailing \b: after "on?" the end of the text is no word boundary — "What did the kids walk
