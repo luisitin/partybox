@@ -962,6 +962,19 @@
   grid-template-columns: 1fr 1fr;
   gap: var(--pb-space-2);
 }
+/* The last one picking (loop 351): the Ready button breathes until it is tapped. Tokens only:
+   0 ms under reduced motion / the motion switch. */
+.nudge {
+  animation: nudge var(--pb-motion-pulse) var(--pb-ease) infinite alternate;
+}
+@keyframes nudge {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.04);
+  }
+}
 
 .introCount {
   margin: 0;

@@ -97,6 +97,8 @@ export interface BingoTvView extends TvView, Common {
 export interface BingoControllerView extends ControllerView, Common {
   /** intro: this phone has tapped Ready (its cards are picked; no more swaps). */
   ready: boolean;
+  /** intro: everyone else is ready and the room waits on this phone alone (loop 351). */
+  lastOne: boolean;
   /** play, during the 3 · 2 · 1 after "keep going": this phone made the choice (loop 326). */
   resumeMine: boolean;
   /** Whether the TV shows the hall board — decides how a reconnecting phone reports missed calls. */
@@ -300,6 +302,13 @@ export function controllerView(
       state.round.drawn < (state.round.waitForCall[playerId] ?? 0),
     called: player ? [] : calledNumbers(state),
     ready: state.phase.id === 'intro' && state.round.ready.includes(playerId),
+    lastOne:
+      state.phase.id === 'intro' &&
+      Object.keys(state.round.cards).length > 1 &&
+      (() => {
+        const left = waitingOn(state);
+        return left.length === 1 && left[0] === playerId;
+      })(),
     resumeMine:
       state.phase.id === 'play' &&
       state.round.resumeAt !== null &&

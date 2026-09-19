@@ -172,6 +172,7 @@ export function IntroCount({
   cards,
   ready,
   waitingOn,
+  lastOne,
 }: {
   deadline: number | null;
   /** Cards dealt: the caption says "dealing" only while the deal is on (loop 302). */
@@ -179,6 +180,8 @@ export function IntroCount({
   /** This phone tapped Ready; who has not yet (the card-pick step, loop 344). */
   ready: boolean;
   waitingOn: string[];
+  /** Everyone else is ready: one nudge buzz and the caption says so (loop 351). */
+  lastOne: boolean;
 }): JSX.Element {
   const left = useSecondsLeft(deadline, false, 50);
   const shown = left !== null && left <= 3 && left > 0 ? left : 0;
@@ -187,6 +190,9 @@ export function IntroCount({
   }, [shown]);
   // Once the last card is down the caption stops saying "dealing" (loop 302; a second a card, 345).
   const dealt = useHold('deal', dealDoneMs(cards));
+  useEffect(() => {
+    if (lastOne) buzz([30, 50, 30]); // the shell's "needs you" pattern, once
+  }, [lastOne]);
   return (
     <p className={styles.introCount} aria-live="polite">
       {shown > 0 ? (
@@ -203,6 +209,8 @@ export function IntroCount({
           ) : (
             'everyone is ready'
           )
+        ) : lastOne ? (
+          'everyone is waiting for you'
         ) : cards > 1 ? (
           'swap a card, or tap Ready'
         ) : (

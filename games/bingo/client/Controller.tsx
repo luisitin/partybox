@@ -169,6 +169,7 @@ export function Controller({
             <PrimaryButton
               tone={view.ready ? 'success' : 'accent'}
               disabled={view.ready}
+              className={view.lastOne ? styles.nudge : undefined}
               onClick={() => {
                 buzz(20);
                 play('submit');
@@ -197,6 +198,7 @@ export function Controller({
             cards={n}
             ready={view.ready}
             waitingOn={view.waitingOn}
+            lastOne={view.lastOne}
           />
           <div className={`${styles.focus} ${styles.dealing} ${n > 1 ? styles.focusMany : ''}`}>
             <div className={styles.focusMain}>
