@@ -25,6 +25,9 @@ describe('slotOf — what the blank wants', () => {
       'The priest lost his faith after ____.',
       "What am I doing to my ex's car?",
       'How did the neighbors find out?',
+      "What got me banned from the swingers' club?",
+      "What's the secret to a happy marriage?",
+      'The livestream ended abruptly with ____.',
     ])
       expect(slotOf({ text }), text).toBe('doing');
   });
