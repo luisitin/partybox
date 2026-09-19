@@ -73,6 +73,12 @@ function countKind(hand: readonly string[], kind: WhiteKind): number {
 
 const isGood = (id: string): boolean => whiteTier(id) === 3;
 
+/** The hand has a card that reads as `kind` first (`name` is only ever a second reading, so it
+ *  always counts as led): the top of a hand leads with one card of each kind by first reading. */
+function leads(hand: readonly string[], kind: WhiteKind): boolean {
+  return kind === 'name' || hand.some((id) => whiteKind(id) === kind);
+}
+
 function countGood(hand: readonly string[]): number {
   return hand.filter(isGood).length;
 }
@@ -118,7 +124,7 @@ function fillHand(state: State, hand: readonly string[], target: number): [strin
   let next = state;
   let out = [...hand];
   for (const kind of WHITE_KINDS) {
-    while (countKind(out, kind) < KIND_FLOOR && out.length < target) {
+    while ((countKind(out, kind) < KIND_FLOOR || !leads(out, kind)) && out.length < target) {
       const [card, after] = takeKind(next, kind, out);
       if (card === null) break;
       next = after;
@@ -146,7 +152,8 @@ function fillHand(state: State, hand: readonly string[], target: number): [strin
       const i = out.findIndex(
         (id) =>
           whiteKind(id) === surplus &&
-          !whiteServes(id).some((k) => k !== surplus && countKind(out, k) <= KIND_FLOOR),
+          !whiteServes(id).some((k) => k !== surplus && countKind(out, k) <= KIND_FLOOR) &&
+          out.filter((x) => whiteKind(x) === surplus).length > 1,
       );
       if (i === -1) break;
       const dropped = out[i] as string;
@@ -180,14 +187,14 @@ function swapForGood(state: State, hand: readonly string[]): [string[], State] |
     // Kinds the rest would fall short of — by any reading for the floor, and by first reading for
     // the spare's own kind, so the top of the hand can still lead with one of each (loop #488: a
     // spare gerund swapped for a great noun left a hand with no card that reads as a doing first).
-    const needs = WHITE_KINDS.filter(
-      (k) =>
-        countKind(rest, k) < KIND_FLOOR ||
-        (k === whiteKind(dropped) && !rest.some((id) => whiteKind(id) === k)),
-    );
+    const needs = WHITE_KINDS.filter((k) => countKind(rest, k) < KIND_FLOOR);
+    const lead = leads(rest, whiteKind(dropped)) ? null : whiteKind(dropped);
     const [card, after] = takeWhere(
       state,
-      (id) => isGood(id) && needs.every((k) => whiteServes(id).includes(k)),
+      (id) =>
+        isGood(id) &&
+        needs.every((k) => whiteServes(id).includes(k)) &&
+        (lead === null || whiteKind(id) === lead),
     );
     if (card === null) continue;
     return [[...rest, card], { ...after, discard: [...after.discard, dropped] }];
