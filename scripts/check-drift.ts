@@ -147,6 +147,28 @@ function checkDependenciesDocumented(): void {
   }
 }
 
+/**
+ * Two design-loop sessions append rows to one table; a clean git merge can land the same pass
+ * number twice (loop 375: eight pairs). `pnpm resolve-loop-log` renumbers a colliding row; this
+ * catches the merges that never conflicted.
+ */
+function checkLoopLogNumbers(): void {
+  const file = join(REPO_ROOT, 'reports', 'design', 'loop-log.md');
+  if (!existsSync(file)) return;
+  const seen = new Map<number, string>();
+  for (const line of readFileSync(file, 'utf8').split('\n')) {
+    const m = /^\| (\d+) +\| [\d-]+ +\| (\w+)/.exec(line);
+    if (!m) continue;
+    const n = Number(m[1]);
+    const prev = seen.get(n);
+    if (prev !== undefined && prev !== m[2])
+      bad(
+        `reports/design/loop-log.md: pass ${n} appears for both ${prev} and ${m[2]} — renumber the later row past the highest`,
+      );
+    seen.set(n, m[2] as string);
+  }
+}
+
 async function main(): Promise<void> {
   const registry = run('pnpm', ['gen-registry', '--check'], REPO_ROOT, true);
   if (!registry.ok) bad('registry is stale — run: pnpm gen-registry');
@@ -156,6 +178,7 @@ async function main(): Promise<void> {
   checkAddingAGameMentionsTemplate();
   checkTodos();
   checkDependenciesDocumented();
+  checkLoopLogNumbers();
   if (problems.length > 0) {
     console.error(`check-drift: ${problems.length} problem(s)\n  ${problems.join('\n  ')}`);
     process.exit(1);
