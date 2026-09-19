@@ -1,0 +1,126 @@
+{
+  "pass": "687",
+  "game": "wisecrack",
+  "players": 6,
+  "scenario": "vip-leaves",
+  "focus": "phone",
+  "started": "15:33:14.208",
+  "tvVideoT0": "15:33:10.938",
+  "phoneVideoT0": "15:33:11.750",
+  "changes": [
+    {
+      "t": 1789831994210,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789831999203,
+      "bed": "warm",
+      "at": "15:33:14.210",
+      "sinceStartS": 0,
+      "videoS": 3.3,
+      "phoneVideoS": 2.5
+    },
+    {
+      "t": 1789831999223,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789832029214,
+      "bed": null,
+      "at": "15:33:19.223",
+      "sinceStartS": 5,
+      "videoS": 8.3,
+      "phoneVideoS": 7.5
+    },
+    {
+      "t": 1789832035379,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789832055228,
+      "bed": "marimba",
+      "at": "15:33:55.379",
+      "sinceStartS": 41.2,
+      "videoS": 44.4,
+      "phoneVideoS": 43.6
+    },
+    {
+      "t": 1789832039727,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789832045632,
+      "bed": "lofi",
+      "at": "15:33:59.727",
+      "sinceStartS": 45.5,
+      "videoS": 48.8,
+      "phoneVideoS": 48
+    },
+    {
+      "t": 1789832045719,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789832065646,
+      "bed": "lofi",
+      "at": "15:34:05.719",
+      "sinceStartS": 51.5,
+      "videoS": 54.8,
+      "phoneVideoS": 54
+    },
+    {
+      "t": 1789832049520,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789832055489,
+      "bed": "marimba",
+      "at": "15:34:09.520",
+      "sinceStartS": 55.3,
+      "videoS": 58.6,
+      "phoneVideoS": 57.8
+    },
+    {
+      "t": 1789832055541,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789832075499,
+      "bed": "marimba",
+      "at": "15:34:15.541",
+      "sinceStartS": 61.3,
+      "videoS": 64.6,
+      "phoneVideoS": 63.8
+    },
+    {
+      "t": 1789832057753,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789832063657,
+      "bed": "lofi",
+      "at": "15:34:17.753",
+      "sinceStartS": 63.5,
+      "videoS": 66.8,
+      "phoneVideoS": 66
+    },
+    {
+      "t": 1789832063726,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789832069666,
+      "bed": "lofi",
+      "at": "15:34:23.726",
+      "sinceStartS": 69.5,
+      "videoS": 72.8,
+      "phoneVideoS": 72
+    },
+    {
+      "t": 1789832069724,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789832075676,
+      "bed": "lofi",
+      "at": "15:34:29.724",
+      "sinceStartS": 75.5,
+      "videoS": 78.8,
+      "phoneVideoS": 78
+    }
+  ],
+  "notes": [
+    "vip-leaves: Sam (VIP) closed the page in answer",
+    "budget reached while playing; skipped to results"
+  ]
+}
