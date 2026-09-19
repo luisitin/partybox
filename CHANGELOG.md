@@ -45,6 +45,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 - Multi-persona live-play harness (`packages/e2e/live/`) and the 2026-09-15 session report.
 
 ### Fixed
+- Lightning Round TV wager page: from nine players the standings take three columns (the
+  roster chips carry scores and wrap to three rows, so two columns of six small rows ran the
+  last row under the host bar at 12 players). `Scoreboard` gained an additive `columns` option.
 - Broken Pencil TV show: the drawing sheet now takes the height the stage has left (a two-row
   roster at seven or eight players pushed a fixed 560 px sheet over the page kicker and into the
   host bar).
