@@ -115,6 +115,11 @@ export type Input = z.infer<typeof inputSchema>;
 export const PICK_MS = 20_000;
 /** Fallback auto-turn while a presenter dawdles (their phone's Next is the real control). */
 export const SHOW_MS = { word: 12_000, draw: 20_000, guess: 12_000 } as const;
+/**
+ * A bot's book turns itself at a presenter's pace (loop 410: the server asks a bot only once per
+ * page, so a bot that "sometimes" sent Next left its pages on the 12–20 s fallbacks).
+ */
+export const BOT_SHOW_MS = { word: 5_000, draw: 8_000, guess: 5_000 } as const;
 /** The closing screen (every word → last guess) before the engine's results take over. */
 export const SUMMARY_MS = 15_000;
 /** `passes` at this value (the manifest max) means "everyone" — always capped to N − 1. */

@@ -13,6 +13,8 @@ import {
   pagesOfStep,
 } from '../server/books';
 import { decodePoints, encodePoints, inkCost } from '../server/encoding';
+import { enterShow, turnPage } from '../server/phases/show';
+import { BOT_SHOW_MS, SHOW_MS } from '../server/types';
 import type { Input, State } from '../server/types';
 
 const T0 = 1_000_000;
@@ -385,8 +387,18 @@ describe('encoding and bot', () => {
     const presenter = s.seats[0] as string;
     const other = s.seats[1] as string;
     expect(game.bot.sampleInput(s, other, rng)).toBeNull();
-    const turns = Array.from({ length: 30 }, () => game.bot.sampleInput(s, presenter, rng));
-    expect(turns.some((t) => t?.type === 'turn')).toBe(true);
+    expect(game.bot.sampleInput(s, presenter, rng)?.type).toBe('turn');
+    // A real bot's book turns itself on the shorter timers; the bot sends nothing.
+    const bots: State = {
+      ...s,
+      players: { ...s.players, [presenter]: { ...s.players[presenter]!, bot: true } },
+    };
+    const shown = enterShow(bots, T0 + 9000);
+    expect(game.bot.sampleInput(shown, presenter, rng)).toBeNull();
+    expect((shown.phase.deadline ?? 0) - shown.phase.startedAt).toBe(BOT_SHOW_MS.word);
+    const drawing = turnPage(shown, T0 + 9500, (st) => st);
+    expect((drawing.phase.deadline ?? 0) - drawing.phase.startedAt).toBe(BOT_SHOW_MS.draw);
+    expect((s.phase.deadline ?? 0) - s.phase.startedAt).toBe(SHOW_MS.word);
   });
 });
 
