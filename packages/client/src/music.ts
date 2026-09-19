@@ -9,7 +9,7 @@
 import type { PushedView, RoomSnapshot, TvView } from '@partybox/shared';
 import { trace } from '@partybox/game-sdk/ui';
 import type { GameMusic } from '@partybox/game-sdk/ui';
-import { TRACK_IDS } from './music-tracks';
+import { TRACK_IDS, TRACK_TRIM } from './music-tracks';
 
 export type TrackId = (typeof TRACK_IDS)[number];
 
@@ -148,17 +148,22 @@ export function createMusicEngine(): MusicEngine {
   /** Level ramp for a plan's first chained track: it lands while the last plan is still fading. */
   const CHAIN_IN_MS = 800;
 
+  /** The plan's level with the track's trim (TRACK_TRIM), never above 1. */
+  const levelOf = (p: MusicPlan, id: TrackId | null): number =>
+    Math.min(1, p.volume * (id ? (TRACK_TRIM[id] ?? 1) : 1));
+
   const start = (p: MusicPlan, gen: number, first = false): void => {
     if (gen !== generation) return;
     const id = pick(p, last);
     last = id;
-    trace('music:start', { plan: p.id, track: id, mode: p.mode, volume: p.volume });
+    const level = levelOf(p, id);
+    trace('music:start', { plan: p.id, track: id, mode: p.mode, volume: level });
     const el = new Audio(`/music/${id}.mp3`);
     el.preload = 'auto';
     el.muted = muted;
     // rotate fades every segment in; chain starts hard track to track but eases the first one in
     // under the outgoing plan's fade (loop 402: the writing tune jumped in at full level).
-    el.volume = p.mode === 'rotate' || first ? 0 : p.volume;
+    el.volume = p.mode === 'rotate' || first ? 0 : level;
     audio = el;
     live.add(el);
     el.addEventListener('ended', () => {
@@ -182,9 +187,9 @@ export function createMusicEngine(): MusicEngine {
     void el
       .play()
       .then(() => {
-        if (p.mode === 'chain' && first) rampTo(el, p.volume, CHAIN_IN_MS);
+        if (p.mode === 'chain' && first) rampTo(el, level, CHAIN_IN_MS);
         if (p.mode === 'rotate') {
-          rampTo(el, p.volume, Math.min(p.fadeMs ?? 2500, 1500));
+          rampTo(el, level, Math.min(p.fadeMs ?? 2500, 1500));
           const [lo, hi] = p.segmentMs ?? [30_000, 60_000];
           timer = setTimeout(
             () => {
@@ -239,7 +244,7 @@ export function createMusicEngine(): MusicEngine {
       const el = audio;
       if (!el || !plan) return;
       trace('music:duck', { ms });
-      const level = plan.volume;
+      const level = levelOf(plan, last);
       rampTo(el, level * 0.3, 400);
       setTimeout(() => {
         if (audio === el && !el.paused) rampTo(el, level, 1500);
