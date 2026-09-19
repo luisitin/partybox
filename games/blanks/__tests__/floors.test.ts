@@ -1,7 +1,7 @@
 // The hand floors across every deck setting, table size and a spread of seeds (loop #472 found
 // the quality floor could be missed on one seed; this keeps the sweep in the suite).
 import { describe, expect, it } from 'vitest';
-import { GOOD_FLOOR, KIND_FLOOR } from '../server/cards';
+import { GOOD_FLOOR, KIND_FLOOR } from '../server/deal';
 import { WHITE_KINDS, whiteServes, whiteTier } from '../server/content';
 import { playRound, start, timer } from './helpers';
 
