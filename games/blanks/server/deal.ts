@@ -245,6 +245,20 @@ function swapForVariety(state: State, hand: readonly string[]): [string[], State
   );
 }
 
+/** Rando's play (a setting): `count` great cards off the deck — random, but never filler, so the
+ *  house's card is in the running (loop 619). Short when the decks hold fewer. */
+export function drawGreat(state: State, count: number): [string[], State] {
+  let next = state;
+  const out: string[] = [];
+  for (let i = 0; i < count; i += 1) {
+    const [card, after] = takeWhere(next, isGood);
+    if (card === null) break;
+    next = after;
+    out.push(card);
+  }
+  return [out, next];
+}
+
 /** Every player's hand back up to HAND_SIZE (+ `extra` for the ids in `extraFor`). */
 export function refillHands(state: State, extra = 0, extraFor: readonly string[] = []): State {
   let next = state;
