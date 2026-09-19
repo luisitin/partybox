@@ -16,6 +16,7 @@ import type {
   Settings as RawSettings,
 } from '@partybox/game-sdk';
 import manifestJson from '../manifest.json' with { type: 'json' };
+import { recap } from './recap';
 import { sampleInput } from './bot';
 import { dealOffers } from './content';
 import { enterDraw, reduceDraw } from './phases/draw';
@@ -162,6 +163,7 @@ function reduce(state: State, event: GameEvent<Input>): State {
 }
 
 export const game: GameDefinition<State, Input, PencilTvView, PencilControllerView> = {
+  recap,
   manifest,
   phases: PHASES,
   inputSchema,

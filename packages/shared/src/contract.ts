@@ -191,6 +191,27 @@ export interface GameResults {
   awards: GameAward[];
 }
 
+/** One extra file a recap writes next to `recap.md` (a drawing as SVG, a CSV). */
+export interface RecapFile {
+  /** A plain file name, no folders. */
+  name: string;
+  body: string;
+}
+
+/** A human-readable account of one finished game, written by the host when the room records (ADR-035). */
+export interface GameRecap {
+  markdown: string;
+  files?: RecapFile[];
+}
+
+export interface RecapContext<S> {
+  players: PlayerInfo[];
+  /** The state as each phase instance began, oldest first — the reveal states hold what a game clears per round. */
+  history: { phase: string; at: number; state: S }[];
+  /** Null when the game was ended early. */
+  results: GameResults | null;
+}
+
 // ─── The definition ─────────────────────────────────────────────────────────────────────────────
 
 export interface GameBot<S, I> {
@@ -217,6 +238,11 @@ export interface GameDefinition<
   controllerView(state: S, playerId: string): CV;
   results(state: S): GameResults | null;
   bot: GameBot<S, I>;
+  /**
+   * Optional: what the host writes to disk for the owner's feedback (ADR-035) — a markdown recap and
+   * any files it references. Pure like every other method; `null` means "just the state".
+   */
+  recap?(state: S, ctx: RecapContext<S>): GameRecap | null;
 }
 
 /* eslint-disable @typescript-eslint/no-explicit-any -- the registry holds heterogeneous games */

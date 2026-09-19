@@ -30,6 +30,7 @@ export function createRoom(options: CreateRoomOptions): RoomState {
     game: null,
     results: null,
     lastGame: null,
+    recording: true,
   };
 }
 

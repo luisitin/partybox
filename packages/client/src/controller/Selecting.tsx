@@ -50,6 +50,19 @@ export function Selecting({ controller, room, me }: SelectingProps): JSX.Element
         </div>
       }
     >
+      <label className={styles.recording} htmlFor="phone-recording">
+        <span className={styles.recordingLabel}>
+          {t.selecting.recording}
+          <small>{room.recording ? t.selecting.recordingHint : t.selecting.recordingOff}</small>
+        </span>
+        <input
+          id="phone-recording"
+          type="checkbox"
+          className={styles.recordingBox}
+          checked={room.recording}
+          onChange={(e) => controller.vip({ action: 'setRecording', on: e.target.checked })}
+        />
+      </label>
       <ul className={styles.games} role="radiogroup" aria-label="games">
         {room.games.map((g) => {
           const isSelected = g.id === room.selectedGameId;

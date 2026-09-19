@@ -21,7 +21,7 @@ if (values.help) {
   console.log(`PartyBox ${PARTYBOX_VERSION}
   pnpm dev   [--port 42069] [--host <lan-ip>]            development (Vite middleware, dev API on)
   pnpm start [--port 42069] [--host <lan-ip>] [--dev-api] production (serves packages/client/dist)
-  env: PORT, PUBLIC_HOST`);
+  env: PORT, PUBLIC_HOST, PARTYBOX_RECORDINGS (a folder, or "off": no game recaps on disk)`);
   process.exit(0);
 }
 
@@ -31,11 +31,17 @@ if (!Number.isInteger(port) || port < 1 || port > 65535) {
   process.exit(1);
 }
 
+const recordingsEnv = process.env['PARTYBOX_RECORDINGS'];
 const app = await createApp({
   port,
   publicHost: values.host ?? process.env['PUBLIC_HOST'],
   dev: values.dev,
   devApi: values['dev-api'],
+  ...(recordingsEnv === 'off' || recordingsEnv === '0'
+    ? { recordingsDir: null }
+    : recordingsEnv
+      ? { recordingsDir: recordingsEnv }
+      : {}),
 });
 
 try {
@@ -64,6 +70,7 @@ console.log(`
 │  Phones →  ${join}        room ${app.host.house().code}
 │
 │  LAN IP: ${app.publicHost}${others ? `   (other candidates: ${others}; override with --host)` : ''}
+│  Recaps → ${app.recorder ? app.recorder.dir : 'off (PARTYBOX_RECORDINGS)'}
 │
 │  Windows Firewall (once, elevated prompt):
 │  netsh advfirewall firewall add rule name="PartyBox" dir=in action=allow protocol=TCP localport=${app.port}

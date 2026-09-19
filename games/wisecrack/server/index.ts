@@ -3,6 +3,7 @@
 import { gameManifestSchema, seedRng, shuffle } from '@partybox/game-sdk';
 import type { GameDefinition, InitContext, Settings as RawSettings } from '@partybox/game-sdk';
 import manifestJson from '../manifest.json' with { type: 'json' };
+import { recap } from './recap';
 import { FAMILY, promptPool } from './content';
 import { reduce } from './flow';
 import { enterIntro } from './phases/intro';
@@ -60,6 +61,7 @@ function init(ctx: InitContext): State {
 }
 
 export const game: GameDefinition<State, Input> = {
+  recap,
   manifest,
   phases: PHASES,
   inputSchema,

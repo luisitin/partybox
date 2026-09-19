@@ -10,6 +10,7 @@ import type { BotManager } from './bots';
 import { BOT_STRATEGIES } from '@partybox/shared';
 import type { Clock } from './clock';
 import type { Host } from './host';
+import type { Recorder } from './recorder';
 
 export interface DevApiOptions {
   enabled: boolean;
@@ -18,6 +19,8 @@ export interface DevApiOptions {
   clock: Clock;
   deps: EngineDeps;
   gamesDir: string;
+  /** Dev resets close any session mid-write; dev starts record only when asked (ADR-035). */
+  recorder?: Recorder | null;
 }
 
 const botsBody = z.object({
@@ -29,6 +32,8 @@ const startBody = z.object({
   gameId: z.string(),
   settings: z.record(z.string(), z.union([z.number(), z.boolean(), z.string()])).optional(),
   seed: z.number().int().optional(),
+  /** Tests and design captures should not pile up recaps: off unless the caller says so. */
+  record: z.boolean().optional(),
 });
 const eventBody = z.object({ event: z.unknown() });
 const loadStateBody = z.object({
@@ -66,6 +71,7 @@ export function registerDevApi(app: FastifyInstance, options: DevApiOptions): vo
     pending.clear();
     bots.removeAll();
     clock.unfreeze();
+    await options.recorder?.abortAll();
     host.reset();
     void req;
     return { ok: true, room: host.house().code };
@@ -103,6 +109,11 @@ export function registerDevApi(app: FastifyInstance, options: DevApiOptions): vo
         playerId: vip,
         action: { action: 'updateSettings', settings: body.data.settings },
       });
+    host.dispatch(code, {
+      type: 'vip',
+      playerId: vip,
+      action: { action: 'setRecording', on: body.data.record ?? false },
+    });
     const result = host.dispatch(code, {
       type: 'vip',
       playerId: vip,

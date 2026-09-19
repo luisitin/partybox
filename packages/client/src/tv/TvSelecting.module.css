@@ -162,3 +162,19 @@
   font-size: var(--pb-font-caption);
   font-weight: 700;
 }
+
+/* The recording toggle (ADR-035) under the game list: one caption line with a big box. */
+.recording {
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-3);
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+  cursor: pointer;
+}
+
+.recording input {
+  width: 28px;
+  height: 28px;
+  accent-color: var(--pb-accent);
+}

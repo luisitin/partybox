@@ -11,6 +11,7 @@ import {
 } from '@partybox/game-sdk';
 import type { GameDefinition, GameEvent, InitContext } from '@partybox/game-sdk';
 import manifestJson from '../manifest.json' with { type: 'json' };
+import { recap } from './recap';
 import { sampleInput } from './bot';
 import { subcategoriesOf } from './content';
 import { drawQuestions } from './draw';
@@ -139,6 +140,7 @@ function reduce(state: State, event: GameEvent<Input>): State {
 }
 
 export const game: GameDefinition<State, Input> = {
+  recap,
   manifest,
   phases: PHASES,
   inputSchema,
