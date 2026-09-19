@@ -1,0 +1,115 @@
+{
+  "pass": "660",
+  "game": "wisecrack",
+  "players": 5,
+  "scenario": "vip-leaves",
+  "focus": "tv",
+  "started": "14:19:01.975",
+  "tvVideoT0": "14:18:58.552",
+  "phoneVideoT0": "14:18:59.493",
+  "changes": [
+    {
+      "t": 1789827541976,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789827546970,
+      "bed": "warm",
+      "at": "14:19:01.976",
+      "sinceStartS": 0,
+      "videoS": 3.4,
+      "phoneVideoS": 2.5
+    },
+    {
+      "t": 1789827547000,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789827606979,
+      "bed": null,
+      "at": "14:19:07.000",
+      "sinceStartS": 5,
+      "videoS": 8.4,
+      "phoneVideoS": 7.5
+    },
+    {
+      "t": 1789827588186,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789827594066,
+      "bed": "marimba",
+      "at": "14:19:48.186",
+      "sinceStartS": 46.2,
+      "videoS": 49.6,
+      "phoneVideoS": 48.7
+    },
+    {
+      "t": 1789827594100,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789827600068,
+      "bed": "marimba",
+      "at": "14:19:54.100",
+      "sinceStartS": 52.1,
+      "videoS": 55.5,
+      "phoneVideoS": 54.6
+    },
+    {
+      "t": 1789827600147,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789827620082,
+      "bed": "marimba",
+      "at": "14:20:00.147",
+      "sinceStartS": 58.2,
+      "videoS": 61.6,
+      "phoneVideoS": 60.7
+    },
+    {
+      "t": 1789827602836,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789827608833,
+      "bed": "lofi",
+      "at": "14:20:02.836",
+      "sinceStartS": 60.9,
+      "videoS": 64.3,
+      "phoneVideoS": 63.3
+    },
+    {
+      "t": 1789827608927,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789827628833,
+      "bed": "lofi",
+      "at": "14:20:08.927",
+      "sinceStartS": 67,
+      "videoS": 70.4,
+      "phoneVideoS": 69.4
+    },
+    {
+      "t": 1789827613120,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789827619025,
+      "bed": "marimba",
+      "at": "14:20:13.120",
+      "sinceStartS": 71.1,
+      "videoS": 74.6,
+      "phoneVideoS": 73.6
+    },
+    {
+      "t": 1789827619037,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789827639031,
+      "bed": "marimba",
+      "at": "14:20:19.037",
+      "sinceStartS": 77.1,
+      "videoS": 80.5,
+      "phoneVideoS": 79.5
+    }
+  ],
+  "notes": [
+    "vip-leaves: Sam (VIP) closed the page in answer",
+    "budget reached while playing; skipped to results"
+  ]
+}
