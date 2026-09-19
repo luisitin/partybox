@@ -39,13 +39,15 @@ export function Tv({ view }: GameTvProps<LightningTvView>): JSX.Element {
   if (view.phaseId === 'question') {
     return (
       <Stage>
-        <TvQuestion
-          round={view.round}
-          question={view.question}
-          answeredCount={view.answeredCount}
-          totalCount={view.totalCount}
-          players={view.players}
-        />
+        <div className={styles.page}>
+          <TvQuestion
+            round={view.round}
+            question={view.question}
+            answeredCount={view.answeredCount}
+            totalCount={view.totalCount}
+            players={view.players}
+          />
+        </div>
       </Stage>
     );
   }
