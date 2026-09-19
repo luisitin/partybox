@@ -318,6 +318,25 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
     })(),
     `phone cues=${T.cues(phoneCues, 'phone').join(',')}`,
   );
+  // One to go (loop 420): the penultimate daub leaves one square — one hushed 'close' between it
+  // and the last dauber, never twice, nothing more once the line is full. (A line that crosses a
+  // square daubed earlier in the scenario needs fewer taps, so the count is not fixed at four.)
+  T.ok(
+    'D',
+    "one 'close' between the penultimate and the last daub (one square to go), once for the card",
+    (() => {
+      const c = T.cues(phoneCues, 'phone').slice(0, T.cues(phoneCues, 'phone').indexOf('claim'));
+      const closeAt = c.indexOf('close');
+      const daubIdx = c.map((x, i) => (x === 'daub' ? i : -1)).filter((i) => i >= 0);
+      return (
+        c.filter((x) => x === 'close').length === 1 &&
+        daubIdx.length >= 2 &&
+        closeAt > (daubIdx[daubIdx.length - 2] as number) &&
+        closeAt < (daubIdx[daubIdx.length - 1] as number)
+      );
+    })(),
+    `phone cues=${T.cues(phoneCues, 'phone').join(',')}`,
+  );
   // The celebration buzz is the last one the winner's phone runs at the verdict: the shell's
   // 20 ms "locked in" tick used to replace it on the same tick (loop 334).
   const winBuzzes = phoneCues.filter((e) => e.kind === 'buzz' || e.kind === 'buzz:dropped');

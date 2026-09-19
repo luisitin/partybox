@@ -8,6 +8,7 @@ import type { PlayCue } from '@partybox/game-sdk/ui';
 import type { BingoControllerView } from '../server/views';
 import { DEAL_BOUNCE_MS, DEAL_START_MS, DEAL_STEP_MS } from '../server/types';
 import { BALL_LAND_MS } from './caller';
+import { wantedCells } from './close';
 
 export function useVerdictFeel(
   view: BingoControllerView,
@@ -76,4 +77,28 @@ export function useDealFeel(dealing: boolean, cards: number, round: number, play
     );
     return () => handles.forEach((h) => clearTimeout(h));
   }, [dealing, cards, play, round]);
+}
+
+/**
+ * One to go (loop 420): the first time a live card is one daub from the pattern this round, a
+ * hushed 'close' and a 20 ms buzz — once per card per round (a daub undone and redone stays
+ * quiet), never on a card that already won, and not under the deal or a verdict. A ref, not state.
+ */
+export function useCloseFeel(view: BingoControllerView, play: PlayCue): void {
+  const said = useRef<{ round: number; cards: number[] }>({ round: 0, cards: [] });
+  const live = view.phaseId === 'play' && view.pausedBy.length === 0 && view.resumeAt === null;
+  const close = live
+    ? view.daubs
+        .map((d, c) => (view.won.includes(c) || wantedCells(view.pattern, d).length === 0 ? -1 : c))
+        .filter((c) => c >= 0)
+    : [];
+  const key = close.join(',');
+  useEffect(() => {
+    if (said.current.round !== view.round) said.current = { round: view.round, cards: [] };
+    const fresh = close.filter((c) => !said.current.cards.includes(c));
+    if (fresh.length === 0) return;
+    said.current.cards.push(...fresh);
+    play('close');
+    buzz(20);
+  }, [key, view.round, play]);
 }

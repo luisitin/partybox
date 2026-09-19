@@ -84,7 +84,15 @@ async function main(): Promise<void> {
     // 3. Sam's claim: dibs, the tap, the reveal to the verdict and its read.
     const me = (await api.playerId('Sam')) ?? '';
     const { line, card } = await skipToLine(api, me);
-    await daubLine(sam.page, line, card);
+    // 3a. One to go (loop 420): the fourth daub leaves one square, which breathes (with the
+    // hushed 'close') for a beat before the last daub.
+    const [last, ...rest] = [...line].filter((i) => i !== 12).reverse();
+    await daubLine(sam.page, rest.slice(0, -1), card);
+    marks.push({ name: '3a-one-to-go', at: Date.now(), before: 0.1, seconds: 3.5 });
+    await settle(300);
+    await daubLine(sam.page, rest.slice(-1), card);
+    await settle(2400);
+    await daubLine(sam.page, [last as number], card);
     await settle(600);
     marks.push({ name: '3-claim', at: Date.now(), before: 0.1, seconds: 10 });
     await sam.page.getByRole('button', { name: /^bingo! card 1$/i }).click();
