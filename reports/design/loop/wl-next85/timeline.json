@@ -1,0 +1,93 @@
+{
+  "pass": "564",
+  "game": "wisecrack",
+  "players": 8,
+  "scenario": "reconnect",
+  "focus": "phone",
+  "started": "09:56:30.224",
+  "tvVideoT0": "09:56:26.497",
+  "phoneVideoT0": "09:56:27.509",
+  "changes": [
+    {
+      "t": 1789811790228,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789811795220,
+      "bed": "warm",
+      "at": "09:56:30.228",
+      "sinceStartS": 0,
+      "videoS": 3.7,
+      "phoneVideoS": 2.7
+    },
+    {
+      "t": 1789811795301,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789811855230,
+      "bed": null,
+      "at": "09:56:35.301",
+      "sinceStartS": 5.1,
+      "videoS": 8.8,
+      "phoneVideoS": 7.8
+    },
+    {
+      "t": 1789811855322,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789811875232,
+      "bed": "marimba",
+      "at": "09:57:35.322",
+      "sinceStartS": 65.1,
+      "videoS": 68.8,
+      "phoneVideoS": 67.8
+    },
+    {
+      "t": 1789811859569,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789811865524,
+      "bed": "marimba",
+      "at": "09:57:39.569",
+      "sinceStartS": 69.3,
+      "videoS": 73.1,
+      "phoneVideoS": 72.1
+    },
+    {
+      "t": 1789811865577,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789811885538,
+      "bed": "lofi",
+      "at": "09:57:45.577",
+      "sinceStartS": 75.4,
+      "videoS": 79.1,
+      "phoneVideoS": 78.1
+    },
+    {
+      "t": 1789811870041,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789811876036,
+      "bed": "lofi",
+      "at": "09:57:50.041",
+      "sinceStartS": 79.8,
+      "videoS": 83.5,
+      "phoneVideoS": 82.5
+    },
+    {
+      "t": 1789811876106,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789811896049,
+      "bed": "marimba",
+      "at": "09:57:56.106",
+      "sinceStartS": 85.9,
+      "videoS": 89.6,
+      "phoneVideoS": 88.6
+    }
+  ],
+  "notes": [
+    "reconnect: Sam dropped for 8 s at 2026-09-19T09:56:39.328Z in answer",
+    "budget reached while playing; skipped to results"
+  ]
+}
