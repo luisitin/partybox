@@ -1,0 +1,112 @@
+{
+  "pass": "671",
+  "game": "broken-pencil",
+  "players": 6,
+  "scenario": "normal",
+  "focus": "phone",
+  "started": "14:49:02.848",
+  "tvVideoT0": "14:48:59.435",
+  "phoneVideoT0": "14:49:00.372",
+  "changes": [
+    {
+      "t": 1789829342851,
+      "status": "playing",
+      "phase": "pick",
+      "deadline": 1789829362842,
+      "bed": null,
+      "at": "14:49:02.851",
+      "sinceStartS": 0,
+      "videoS": 3.4,
+      "phoneVideoS": 2.5
+    },
+    {
+      "t": 1789829347020,
+      "status": "playing",
+      "phase": "draw",
+      "deadline": 1789829406891,
+      "bed": null,
+      "at": "14:49:07.020",
+      "sinceStartS": 4.2,
+      "videoS": 7.6,
+      "phoneVideoS": 6.6
+    },
+    {
+      "t": 1789829351164,
+      "status": "playing",
+      "phase": "pass",
+      "deadline": 1789829441044,
+      "bed": null,
+      "at": "14:49:11.164",
+      "sinceStartS": 8.3,
+      "videoS": 11.7,
+      "phoneVideoS": 10.8
+    },
+    {
+      "t": 1789829360499,
+      "status": "playing",
+      "phase": "pass",
+      "deadline": 1789829450379,
+      "bed": null,
+      "at": "14:49:20.499",
+      "sinceStartS": 17.7,
+      "videoS": 21.1,
+      "phoneVideoS": 20.1
+    },
+    {
+      "t": 1789829369860,
+      "status": "playing",
+      "phase": "pass",
+      "deadline": 1789829459739,
+      "bed": null,
+      "at": "14:49:29.860",
+      "sinceStartS": 27,
+      "videoS": 30.4,
+      "phoneVideoS": 29.5
+    },
+    {
+      "t": 1789829379156,
+      "status": "playing",
+      "phase": "pass",
+      "deadline": 1789829469037,
+      "bed": null,
+      "at": "14:49:39.156",
+      "sinceStartS": 36.3,
+      "videoS": 39.7,
+      "phoneVideoS": 38.8
+    },
+    {
+      "t": 1789829388568,
+      "status": "playing",
+      "phase": "guess",
+      "deadline": 1789829418434,
+      "bed": null,
+      "at": "14:49:48.568",
+      "sinceStartS": 45.7,
+      "videoS": 49.1,
+      "phoneVideoS": 48.2
+    },
+    {
+      "t": 1789829392921,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789829397910,
+      "bed": null,
+      "at": "14:49:52.921",
+      "sinceStartS": 50.1,
+      "videoS": 53.5,
+      "phoneVideoS": 52.5
+    },
+    {
+      "t": 1789829397987,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789829405916,
+      "bed": null,
+      "at": "14:49:57.987",
+      "sinceStartS": 55.1,
+      "videoS": 58.6,
+      "phoneVideoS": 57.6
+    }
+  ],
+  "notes": ["budget reached while playing; skipped to results"]
+}
