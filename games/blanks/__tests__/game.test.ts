@@ -167,7 +167,7 @@ describe('dealing', () => {
       expect(fits[0]).toBe(Math.max(...fits));
       for (let i = 1; i < fits.length; i += 1)
         expect(fits[i - 1]).toBeGreaterThanOrEqual(fits[i] as number);
-      expect(whiteKind(hand[0] as string)).toBe('doing');
+      expect(whiteServes(hand[0] as string)).toContain('doing');
     }
   });
 
@@ -208,7 +208,8 @@ describe('dealing', () => {
     expect(servesOf({ text: 'Quietly winning Monopoly at the wake.' })).toEqual(['doing']);
     expect(servesOf({ text: 'A nun with a strap-on.' })).toEqual(['person']);
     expect(servesOf({ text: 'Beans.' })).toEqual(['thing', 'name']);
-    expect(servesOf({ text: 'The wedding my mother planned.' })).toEqual(['thing']);
+    expect(servesOf({ text: 'The wedding my mother planned.' })).toEqual(['thing', 'doing']); // an event
+    expect(servesOf({ text: 'The mattress my mother bought.' })).toEqual(['thing']);
   });
 
   it('refills hands to ten after a round and never re-deals a played card before the discard turns', () => {

@@ -82,6 +82,9 @@ const LINK_AFTER =
   /^(?:with|who|whose|that|named|called|at|in|on|from|and|of|for|without|under|behind|during|after|before|as|to|dressed|covered|wearing|holding|doing|having|being|selling|giving|getting|taking)$/i;
 /** A card short enough to be a name, a safe word, a title: four words or fewer. */
 export const NAME_MAX_WORDS = 4;
+/** Nouns that name something that happens: a card headed by one reads as a doing too. */
+const EVENT_WORD =
+  /^(?:sex|anal|blowjob|handjob|footjob|threesome|orgy|gangbang|gang|quickie|hookup|fisting|rimming|creampie|bukkake|pegging|lap|road|murder|stabbing|shooting|hit-and-run|crash|dui|bender|breakup|affair|proposal|wedding|funeral|s[ée]ance|exorcism|baptism|colonoscopy|vasectomy|prostate|bake|potluck|party|shower|reunion|retreat|orgy|riot|brawl|fight|heist|robbery|arson|overdose|hangover|eviction|layoffs?|divorce|annulment|honeymoon|date|dinner|brunch|trip|vacation|sleepover|séance|ritual|sacrifice|ceremony|initiation|hazing|dare|bet|prank|accident|incident|scandal|walkover|walk|marathon|concert|show|parade|protest|strike|trial|hearing|deposition|confession|eulogy|toast|speech|sermon|audit|inspection|raid|abduction|kidnapping|ransom|massacre|apocalypse|rapture|birth|death|christening|bris|prom|graduation|recital|audition|interview|meeting|review|exam|surgery|transplant|autopsy|cremation|burial|wake|vigil|blackout|breakdown|meltdown|relapse|rehab|detox|fast|cleanse|diet|workout|yoga|massage|facial|wax|pedicure|manicure|tattoo|piercing|circumcision|abortion|miscarriage|pregnancy|labor|c-section|delivery|pickup|dropoff|carpool|commute|layover|flight|cruise|tour|safari|hike|camping|hunt|fishing|swim|dive|jump|fall|slip|spill|leak|flood|fire|explosion|earthquake|tornado|hurricane|blizzard|avalanche|eclipse|séance)$/i;
 
 /** The slots a white card serves, its own kind first; the card's own `serves` wins over the reading. */
 export function servesOf(card: Pick<WhiteCard, 'text'> & { serves?: Slot[] }): Slot[] {
@@ -105,6 +108,12 @@ export function servesOf(card: Pick<WhiteCard, 'text'> & { serves?: Slot[] }): S
     const ends = after === '' || LINK_AFTER.test(after);
     if ((!possessive && ends && PERSON_WORD.test(head)) || WHO_CLAUSE.test(card.text))
       kind = 'person';
+    // An event named as a noun ("A threesome with a mime.", "Anal in a canoe.") is a thing that
+    // also reads as something that happened — the best answer to "…was ruined by ____".
+    else if (!possessive && EVENT_WORD.test(head)) {
+      const out: Slot[] = ['thing', 'doing'];
+      return short ? [...out, 'name'] : out;
+    }
   }
   return short ? [kind, 'name'] : [kind];
 }
