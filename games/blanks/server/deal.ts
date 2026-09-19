@@ -264,7 +264,7 @@ export function leadWithFit(state: State, playerIds: readonly string[]): State {
       .map((card, i) => ({
         card,
         i,
-        fit: fitScore(slot, whiteServes(card)),
+        fit: fitScore(slot, whiteServes(card), whiteText(card)),
         tier: whiteTier(card),
       }))
       .sort((a, b) => b.fit - a.fit || b.tier - a.tier || a.i - b.i)

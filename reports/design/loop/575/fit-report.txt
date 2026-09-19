@@ -1,0 +1,397 @@
+decks adults: 1452 black, 3401 white
+  black slots: thing 1209 (83.3 %) · doing 150 (10.3 %) · person 10 (0.7 %) · name 83 (5.7 %)
+  white serves: thing 2554 (75.1 %) · doing 848 (24.9 %) · person 129 (3.8 %) · name 789 (23.2 %)
+  white tiers: 1: 567 (16.7 %) · 2: 611 (18.0 %) · 3: 1160 (34.1 %) · 4: 1063 (31.3 %)
+  black tiers: 1: 460 (31.7 %) · 2: 187 (12.9 %) · 3: 805 (55.4 %)
+8 games × 6 players, 384 hands at answer; prompts played: mean tier 3.00
+  rounds by slot: thing 46 · doing 9 · person 1 · name 8; hands with < 2 cards serving the round's slot: 0 (0.0 %) — thing 0 · doing 0 · person 0 · name 0
+  the phone's first four cards: mean fit 0.962 (whole hand 0.815), great among them 2.65
+  topic clumps (sex aside): hands with four or more cards on one topic 0.0 %; largest group per hand 1.85
+  cards serving the slot per hand: 4.54; great (tier 3+) per hand: 6.23, amazing (tier 4) 2.58; hands at least half great: 100.0 %
+  bot plays on the prompt's topic (other words): 10.8 %; echoing its word: 0.2 %
+  bot plays: 408; mean fit 0.955 (best on offer 1.000); serving the slot 75.2 %; mean tier 3.75
+sample plays — [kind, prompt tier] filled prompt ← card tier / fit:
+  [thing★★★] HR sent an all-staff email about A wedgie from God.  ← 4/1.00
+  [thing★★★] HR sent an all-staff email about Cereal milk, the best part.  ← 4/1.00
+  [thing★★★] HR sent an all-staff email about A stepdad named Randy.  ← 4/1.00
+  [thing★★★] HR sent an all-staff email about A DIY deck that slopes toward the pool.  ← 4/1.00
+  [thing★★★] HR sent an all-staff email about An MLM boss babe.  ← 4/1.00†
+  [thing★★★] HR sent an all-staff email about A nephew who bites.  ← 4/0.85
+  [thing★★★] In the sequel, Oppenheimer invents The kid who ate the play-doh.  ← 4/0.85
+  [thing★★★] In the sequel, Oppenheimer invents A breakup by Post-it note.  ← 4/1.00
+  [thing★★★] In the sequel, Oppenheimer invents Batman parking the Batmobile at Costco.  ← 4/1.00†
+  [thing★★★] In the sequel, Oppenheimer invents A pizza box used as a sex toy tray.  ← 4/1.00
+  [thing★★★] In the sequel, Oppenheimer invents The Pompeii guy who was mid-sneeze.  ← 4/0.85†
+  [thing★★★] In the sequel, Oppenheimer invents Lost luggage full of dildos.  ← 4/1.00
+  [thing★★★] What's the surprise inside the piñata? Lab-grown genitals.  ← 3/1.00
+  [thing★★★] What's the surprise inside the piñata? A jump scare in a documentary.  ← 4/1.00
+  [thing★★★] What's the surprise inside the piñata? A goat that climbed the car.  ← 4/1.00
+  [thing★★★] What's the surprise inside the piñata? A kale smoothie with a side of regret.  ← 4/1.00
+  [thing★★★] What's the surprise inside the piñata? The one relative who brings up politics.  ← 4/0.85
+  [thing★★★] What's the surprise inside the piñata? Pluto, still salty.  ← 4/1.00
+  [name★★★] The bar's Wi-Fi password is "Crying at a dog food commercial."  ← 4/0.80
+  [name★★★] The bar's Wi-Fi password is "An urn used as a bong."  ← 4/0.80†
+  [name★★★] The bar's Wi-Fi password is "A stripper named Destiny."  ← 3/1.00
+  [name★★★] The bar's Wi-Fi password is "Julius Caesar's bad Friday."  ← 4/1.00
+  [name★★★] The bar's Wi-Fi password is "Fighting a vending machine and losing."  ← 4/0.80†
+  [name★★★] The bar's Wi-Fi password is "A birthday card from the dentist."  ← 4/0.80
+  [person+person★★★] Tinder is A dad who knows the name of every tool pretending to be A sermon that went forty minutes long.  ← 4/1.00 3/0.50
+  [person+person★★★] Tinder is The uncle who dances too early pretending to be A dad in a thong.  ← 3/1.00 3/1.00
+  [person+person★★★] Tinder is A personal trainer who counts wrong on purpose pretending to be A baby with a full head of hair and opinions.  ← 4/1.00 3/1.00
+  [person+person★★★] Tinder is A cashier who's seen your search history pretending to be The one uncle who does magic tricks.  ← 4/1.00 3/1.00
+  [person+person★★★] Tinder is A DJ who only plays the one song pretending to be A brother who "invests."  ← 4/1.00 1/1.00
+  [person+person★★★] Tinder is A boss who "likes to hug" pretending to be A skunk with a warning.  ← 3/1.00 4/0.50
+  [thing★★★] What did the Zoom call reveal about my coworker? A Slack DM sent to the wrong channel.  ← 4/1.00
+  [thing★★★] What did the Zoom call reveal about my coworker? A ChatGPT sext with hallucinated body parts.  ← 4/1.00†
+  [thing★★★] What did the Zoom call reveal about my coworker? A CEO with a podcast.  ← 4/1.00†
+  [thing★★★] What did the Zoom call reveal about my coworker? A stapler in Jell-O.  ← 4/1.00
+  [thing★★★] What did the Zoom call reveal about my coworker? A boss who says "circle back."  ← 4/0.85†
+  [thing★★★] What did the Zoom call reveal about my coworker? A very dramatic weatherman.  ← 4/1.00
+  [thing★★★] What's in the time capsule? Lost luggage that went to Cleveland.  ← 4/1.00
+  [thing★★★] What's in the time capsule? A financial advisor named Chad.  ← 4/1.00
+  [thing★★★] What's in the time capsule? A perfectly folded map nobody can refold.  ← 4/1.00
+  [thing★★★] What's in the time capsule? A hummingbird on espresso.  ← 4/1.00
+  [thing★★★] What's in the time capsule? A Chuck E. Cheese ball pit.  ← 3/1.00
+  [thing★★★] What's in the time capsule? Bezos's bald spot, fully insured.  ← 4/1.00
+  [doing★★★] What killed the vibe at the party? The walk of shame past a church group.  ← 3/1.00
+  [doing★★★] What killed the vibe at the party? Introducing a one-night stand as a coworker.  ← 4/1.00
+  [doing★★★] What killed the vibe at the party? Eating the last slice without asking.  ← 4/1.00
+  [doing★★★] What killed the vibe at the party? Twerking at a funeral.  ← 3/1.00†
+  [doing★★★] What killed the vibe at the party? Taking a bath in a Jacuzzi at Home Depot.  ← 4/1.00
+  [doing★★★] What killed the vibe at the party? Weeping during a car commercial.  ← 4/1.00
+  [thing★★★] My browser has seventeen tabs about The one relative who comments "who is this?".  ← 4/0.85
+  [thing★★★] My browser has seventeen tabs about A MySpace mirror selfie with a flip phone.  ← 3/1.00†
+  [thing★★★] My browser has seventeen tabs about Stranger Things, but the kids are 40.  ← 4/1.00
+  [thing★★★] My browser has seventeen tabs about A rocket shaped like what you think.  ← 4/1.00†
+  [thing★★★] My browser has seventeen tabs about Columbus's syphilis souvenir.  ← 4/1.00
+  [thing★★★] My browser has seventeen tabs about Alexa laughing at 3 a.m.  ← 4/1.00†
+  [thing+thing★★★] A bachelorette sash that says "ask me anything" and A Renaissance painter who only painted his cat: the two things every Costco run comes home with.  ← 4/1.00 4/0.85
+  [thing+thing★★★] A streaming service with everything except that one show and A surfboard in Kansas: the two things every Costco run comes home with.  ← 4/1.00 4/1.00
+  [thing+thing★★★] A wedding registry that's all air fryers and A Cinnabon in an airport at 6 a.m.: the two things every Costco run comes home with.  ← 4/1.00 3/1.00†
+  [thing+thing★★★] A Renaissance nude with a tan line and A DMV number in the four hundreds: the two things every Costco run comes home with.  ← 4/1.00 3/1.00†
+  [thing+thing★★★] The guy who claps when the plane lands and A hospital bill for an aspirin: the two things every Costco run comes home with.  ← 4/0.85† 3/1.00
+  [thing+thing★★★] An MLM invite from a high school friend and Paying rent in feet pics: the two things every Costco run comes home with.  ← 3/1.00 4/0.70
+  [doing★★★] The music video was banned for Stealing from a hotel breakfast buffet.  ← 3/1.00
+  [doing★★★] The music video was banned for Watching a pot until it boils out of spite.  ← 3/1.00
+  [doing★★★] The music video was banned for Feeding the ducks bread again.  ← 3/1.00
+  [doing★★★] The music video was banned for Yelling "I'm fine!" from the floor.  ← 4/1.00
+  [doing★★★] The music video was banned for Sharting at the gym.  ← 2/1.00
+  [doing★★★] The music video was banned for Sneezing seven times in a row.  ← 4/1.00
+  [thing★★★] What's the one rule at Grandma's house? A family photo in matching pajamas.  ← 3/1.00†
+  [thing★★★] What's the one rule at Grandma's house? A dad who knows the name of every tool.  ← 4/0.85†
+  [thing★★★] What's the one rule at Grandma's house? A Roomba that found the cat.  ← 4/1.00
+  [thing★★★] What's the one rule at Grandma's house? An NPC who says the same thing forever.  ← 4/0.85
+  [thing★★★] What's the one rule at Grandma's house? A dad who reads the sex scenes aloud.  ← 4/0.85†
+  [thing★★★] What's the one rule at Grandma's house? A wedding night with the ex in the closet.  ← 4/1.00
+  [name★★★] The garage band's first single is "Somebody else's toothbrush."  ← 4/1.00
+  [name★★★] The garage band's first single is "Getting a standing ovation at Applebee's."  ← 4/0.80†
+  [name★★★] The garage band's first single is "Leaving a bar with someone else's coat."  ← 4/0.60
+  [name★★★] The garage band's first single is "The world's longest receipt."  ← 3/1.00
+  [name★★★] The garage band's first single is "A stripper's sciatica."  ← 4/1.00
+  [name★★★] The garage band's first single is "A pharaoh with a Yelp page."  ← 4/0.80
+  [thing★★★] Netflix's next reality show: "Keeping Up with A performance review with the word "synergy.""  ← 4/1.00
+  [thing★★★] Netflix's next reality show: "Keeping Up with A breakup by Post-it note."  ← 4/1.00
+  [thing★★★] Netflix's next reality show: "Keeping Up with A DJ who only plays the one song."  ← 4/0.85
+  [thing★★★] Netflix's next reality show: "Keeping Up with Prohibition, but for oat milk."  ← 4/1.00
+  [thing★★★] Netflix's next reality show: "Keeping Up with The one guy who still says "YOLO.""  ← 4/0.85
+  [thing★★★] Netflix's next reality show: "Keeping Up with A lockdown baby named after the Wi-Fi."  ← 4/1.00
+  [thing★★★] My grandma's last words were about A perfectly folded map nobody can refold.  ← 4/1.00
+  [thing★★★] My grandma's last words were about The kid who ate the play-doh.  ← 4/0.85
+  [thing★★★] My grandma's last words were about A parrot that swears in three languages.  ← 4/1.00
+  [thing★★★] My grandma's last words were about Backseat fogging with the parking brake off.  ← 4/1.00
+  [thing★★★] My grandma's last words were about A wizard who lost his wand in the couch.  ← 4/0.85
+  [thing★★★] My grandma's last words were about A goldfish that's seen too much.  ← 4/1.00
+  [thing★★★] My roommate's revenge involved Batman's utility belt, bedroom edition.  ← 3/1.00
+  [thing★★★] My roommate's revenge involved A car wash that's really a spa for the car.  ← 3/1.00
+  [thing★★★] My roommate's revenge involved A canoe in the living room.  ← 4/1.00
+  [thing★★★] My roommate's revenge involved An urn on the mantle, judging.  ← 4/1.00
+  [thing★★★] My roommate's revenge involved A monster truck at a garden party.  ← 4/1.00
+  [thing★★★] My roommate's revenge involved A lost balloon with a message.  ← 4/1.00
+  [thing★★★] The Ring doorbell caught the neighbor's A gas-station hot dog at 3 a.m.  ← 4/1.00
+  [thing★★★] The Ring doorbell caught the neighbor's Mercury in retrograde, blamed again.  ← 4/1.00
+  [thing★★★] The Ring doorbell caught the neighbor's Mom's "wine o'clock."  ← 4/1.00†
+  [thing★★★] The Ring doorbell caught the neighbor's A wedding band playing "Mr. Brightside" a third time.  ← 4/1.00†
+  [thing★★★] The Ring doorbell caught the neighbor's The office coffee pot at 4 p.m.  ← 4/1.00
+  [thing★★★] The Ring doorbell caught the neighbor's The kid who ate the play-doh.  ← 4/0.85
+  [thing★★★] What did the bouncer confiscate? Champagne at midnight with a Dixie cup.  ← 4/1.00
+  [thing★★★] What did the bouncer confiscate? A streaming service with everything except that one show.  ← 4/1.00
+  [thing★★★] What did the bouncer confiscate? An alien who came for the Wi-Fi.  ← 4/0.85
+  [thing★★★] What did the bouncer confiscate? A layover in Newark.  ← 4/1.00
+  [thing★★★] What did the bouncer confiscate? A biker named Tiny.  ← 4/0.85
+  [thing★★★] What did the bouncer confiscate? A Hooters birthday song.  ← 4/1.00
+  [name★★★] My doctor's note just says "A grandma with a leaf blower."  ← 4/0.80
+  [name★★★] My doctor's note just says "Pretending to be Canadian abroad."  ← 3/0.80
+  [name★★★] My doctor's note just says "Yelling "corner!" while carrying a couch."  ← 4/0.80
+  [name★★★] My doctor's note just says "The Easter Bunny's OnlyFans."  ← 3/1.00
+  [name★★★] My doctor's note just says "The mascot's contract dispute."  ← 3/1.00
+  [name★★★] My doctor's note just says "Suing a mascot."  ← 4/1.00
+  [thing★★★] The wedding was called off because of A car wash that's really a spa for the car.  ← 3/1.00
+  [thing★★★] The wedding was called off because of A jungle juice with no known ingredients.  ← 4/1.00
+  [thing★★★] The wedding was called off because of A sperm donor who's also the plumber.  ← 4/0.85
+  [thing★★★] The wedding was called off because of George Washington's honest dick pic.  ← 4/1.00
+  [thing★★★] The wedding was called off because of The groom's ex at the reception.  ← 3/1.00†
+  [thing★★★] The wedding was called off because of A team-building trust fall nobody caught.  ← 3/1.00
+  [thing★★★] This year's Halloween costume of choice: The one relative who brings up politics.  ← 4/0.85
+  [thing★★★] This year's Halloween costume of choice: A crossing guard who flashed.  ← 4/0.85
+  [thing★★★] This year's Halloween costume of choice: The office Christmas party hookup.  ← 3/1.00†
+  [thing★★★] This year's Halloween costume of choice: A doorbell that plays the national anthem.  ← 4/1.00
+  [thing★★★] This year's Halloween costume of choice: A fanny pack on the runway.  ← 4/1.00
+  [thing★★★] This year's Halloween costume of choice: An elf on the shelf who's seen things.  ← 4/0.85†
+  [thing★★★] Elon Musk's next company will sell The Pompeii guy who was mid-sneeze.  ← 4/0.85†
+  [thing★★★] Elon Musk's next company will sell A plane seat that reclines into your lap.  ← 4/1.00
+  [thing★★★] Elon Musk's next company will sell Aggressively friendly customer service.  ← 3/1.00†
+  [thing★★★] Elon Musk's next company will sell Introducing a one-night stand as a coworker.  ← 4/0.70†
+  [thing★★★] Elon Musk's next company will sell An eagle with a fish and regret.  ← 4/1.00
+  [thing★★★] Elon Musk's next company will sell A bag of marbles in the dryer.  ← 4/1.00
+  [thing★★★] What's in my browser history? Fortnite dances at a funeral.  ← 4/1.00
+  [thing★★★] What's in my browser history? A trash can fire in a driveway.  ← 4/1.00
+  [thing★★★] What's in my browser history? A crotch rocket.  ← 2/1.00†
+  [thing★★★] What's in my browser history? A waiter who watched the whole thing.  ← 4/0.85
+  [thing★★★] What's in my browser history? A breathalyzer with a good excuse.  ← 4/1.00
+  [thing★★★] What's in my browser history? A bank teller who knows too much.  ← 4/0.85
+  [thing★★★] Hogwarts' sex ed class covered A cocaine-fueled PTA meeting.  ← 4/1.00†
+  [thing★★★] Hogwarts' sex ed class covered A hotel bathrobe that went home with me.  ← 4/1.00
+  [thing★★★] Hogwarts' sex ed class covered Cold War canned peas.  ← 2/1.00†
+  [thing★★★] Hogwarts' sex ed class covered Zuckerberg's sunscreen face.  ← 3/1.00†
+  [thing★★★] Hogwarts' sex ed class covered The moon landing, but in a Denny's.  ← 4/1.00
+  [thing★★★] Hogwarts' sex ed class covered The one coworker who microwaves fish.  ← 4/0.85
+  [thing★★★] Today's top Reddit post: "AITA for A confession that made the priest blush?"  ← 4/1.00
+  [thing★★★] Today's top Reddit post: "AITA for A shark in the kiddie pool?"  ← 4/1.00
+  [thing★★★] Today's top Reddit post: "AITA for The one relative who comments "who is this?"?"  ← 4/0.85
+  [thing★★★] Today's top Reddit post: "AITA for Caligula's horse, promoted for reasons?"  ← 4/1.00
+  [thing★★★] Today's top Reddit post: "AITA for A senator asleep in session?"  ← 4/1.00†
+  [thing★★★] Today's top Reddit post: "AITA for A Taco Bell drive-thru confession?"  ← 4/1.00
+  [thing★★★] The new Marvel villain's superpower is A "sexy" Halloween costume for a dad bod.  ← 3/1.00
+  [thing★★★] The new Marvel villain's superpower is A hooker at the church picnic.  ← 4/0.85
+  [thing★★★] The new Marvel villain's superpower is A chore wheel ignored since March.  ← 3/1.00
+  [thing★★★] The new Marvel villain's superpower is A drunk text to the group chat.  ← 4/1.00
+  [thing★★★] The new Marvel villain's superpower is A divorce party with a bounce house.  ← 4/1.00
+  [thing★★★] The new Marvel villain's superpower is A hall monitor with power.  ← 4/1.00
+  [thing★★★] What did the robot vacuum find under the bed? Fake eyelashes in a windstorm.  ← 4/1.00
+  [thing★★★] What did the robot vacuum find under the bed? Chernobyl souvenirs.  ← 3/1.00
+  [thing★★★] What did the robot vacuum find under the bed? Grandpa's stories, now with new endings.  ← 4/1.00
+  [thing★★★] What did the robot vacuum find under the bed? The family group chat, muted since 2019.  ← 3/1.00†
+  [thing★★★] What did the robot vacuum find under the bed? A phone at 3% in a parking garage.  ← 4/1.00†
+  [thing★★★] What did the robot vacuum find under the bed? Breast milk in the office fridge, labeled "creamer."  ← 4/1.00
+  [thing★★★] Survivor's next twist: Last call, taken as a challenge.  ← 4/1.00
+  [thing★★★] Survivor's next twist: A jury that just wants lunch.  ← 4/1.00
+  [thing★★★] Survivor's next twist: The Pompeii guy who was mid-sneeze.  ← 4/0.85†
+  [thing★★★] Survivor's next twist: A thermostat set to spite.  ← 4/1.00
+  [thing★★★] Survivor's next twist: A biker named Tiny.  ← 4/0.85
+  [thing★★★] Survivor's next twist: Quiet quitting, loudly.  ← 4/1.00
+  [thing★★★] My résumé does not mention An NPC who says the same thing forever.  ← 4/0.85
+  [thing★★★] My résumé does not mention A grandma with a leaf blower.  ← 4/0.85
+  [thing★★★] My résumé does not mention A 200-hour save file, lost.  ← 4/1.00
+  [thing★★★] My résumé does not mention A lawyer who bills by the orgasm.  ← 4/0.85
+  [thing★★★] My résumé does not mention The cheapest hooker in Reno.  ← 4/1.00
+  [thing★★★] My résumé does not mention A lawyer who advertises on a bus bench.  ← 4/0.85
+  [thing★★★] The birthday clown showed up with A robot that only folds towels.  ← 4/0.85
+  [thing★★★] The birthday clown showed up with Alexa's silent judgment.  ← 4/1.00
+  [thing★★★] The birthday clown showed up with A plumber who found the toy.  ← 4/0.85
+  [thing★★★] The birthday clown showed up with Sexual tension at the DMV.  ← 4/1.00
+  [thing★★★] The birthday clown showed up with A dad who reads the sex scenes aloud.  ← 4/0.85
+  [thing★★★] The birthday clown showed up with A one-star review of the moon.  ← 4/1.00
+  [doing★★★] What did the bridesmaids do with the stripper? Sneezing during a moment of silence.  ← 4/1.00
+  [doing★★★] What did the bridesmaids do with the stripper? Insisting the shortcut is faster.  ← 3/1.00
+  [doing★★★] What did the bridesmaids do with the stripper? Charging a lap dance to the company card.  ← 4/1.00†
+  [doing★★★] What did the bridesmaids do with the stripper? Quietly winning Monopoly.  ← 4/1.00
+  [doing★★★] What did the bridesmaids do with the stripper? Pretending your kid drew it.  ← 4/1.00
+  [doing★★★] What did the bridesmaids do with the stripper? Getting banned from a Denny's.  ← 3/1.00
+  [name★★★] The rejected slogan was "Paying rent in feet pics."  ← 4/0.80
+  [name★★★] The rejected slogan was "Lost luggage that went to Cleveland."  ← 4/0.80
+  [name★★★] The rejected slogan was "A guy named Chad."  ← 4/1.00
+  [name★★★] The rejected slogan was "The Salem witch trials, but for Wi-Fi thieves."  ← 4/0.60
+  [name★★★] The rejected slogan was "A nudist colony's potluck."  ← 2/1.00
+  [name★★★] The rejected slogan was "Being the only one in costume."  ← 3/0.80
+  [thing★★★] The real reason I was late to work: Watergate's leaky faucet.  ← 4/1.00
+  [thing★★★] The real reason I was late to work: A Victorian ankle, scandalously.  ← 4/1.00
+  [thing★★★] The real reason I was late to work: A Tesla with a stick shift.  ← 4/1.00
+  [thing★★★] The real reason I was late to work: Autocorrect turning "duck" into the obvious.  ← 4/1.00
+  [thing★★★] The real reason I was late to work: A protein bar that tastes like a candle.  ← 4/1.00
+  [thing★★★] The real reason I was late to work: A donkey in an elevator.  ← 4/1.00
+  [name★★★] The drunk tattoo says "Blowing on the cartridge, still."  ← 3/0.80
+  [name★★★] The drunk tattoo says "A barista who spells "Bob" wrong."  ← 4/0.80
+  [name★★★] The drunk tattoo says "The kid who ate the paste."  ← 4/0.80
+  [name★★★] The drunk tattoo says "An IKEA meatball emergency."  ← 4/1.00
+  [name★★★] The drunk tattoo says "Vomiting into a Crock-Pot."  ← 4/1.00
+  [name★★★] The drunk tattoo says "A magician who forgot the trick."  ← 4/0.80
+  [name★★★] The video game's loading screen tip was "Watering the fake plant."  ← 4/1.00
+  [name★★★] The video game's loading screen tip was "An Ozempic before-and-after."  ← 3/1.00
+  [name★★★] The video game's loading screen tip was "A mime who won't stop talking."  ← 4/0.80
+  [name★★★] The video game's loading screen tip was "A guy named Chad."  ← 4/1.00
+  [name★★★] The video game's loading screen tip was "An NPC who says the same thing forever."  ← 4/0.60
+  [name★★★] The video game's loading screen tip was "Extremely aggressive mini-golf."  ← 3/1.00
+  [doing★★★] What did the substitute do on the last day? Wearing pajamas to the airport.  ← 3/1.00
+  [doing★★★] What did the substitute do on the last day? Passing out in a bouncy castle.  ← 3/1.00
+  [doing★★★] What did the substitute do on the last day? Sleeping through the loudest alarm.  ← 3/1.00
+  [doing★★★] What did the substitute do on the last day? Fighting a vending machine and losing.  ← 4/1.00
+  [doing★★★] What did the substitute do on the last day? Sex with the lights on.  ← 2/1.00
+  [doing★★★] What did the substitute do on the last day? Venmo-requesting your date for gas.  ← 4/1.00
+  [doing★★★] What did I do on the walk of shame? A blackout at your own wedding.  ← 3/1.00
+  [doing★★★] What did I do on the walk of shame? Going to the grocery store hungry.  ← 3/1.00
+  [doing★★★] What did I do on the walk of shame? Doing math out loud at a restaurant.  ← 3/1.00
+  [doing★★★] What did I do on the walk of shame? Cutting your own bangs at midnight.  ← 4/1.00
+  [doing★★★] What did I do on the walk of shame? Bringing a guitar to a sleepover.  ← 3/1.00
+  [doing★★★] What did I do on the walk of shame? Eating cereal with a fork.  ← 2/1.00
+  [thing★★★] The apocalypse will be survived by A she-shed with better Wi-Fi.  ← 4/1.00
+  [thing★★★] The apocalypse will be survived by A referee who needs glasses.  ← 4/0.85
+  [thing★★★] The apocalypse will be survived by A DIY deck that slopes toward the pool.  ← 4/1.00
+  [thing★★★] The apocalypse will be survived by An Apple Watch logging sex as "outdoor walk."  ← 4/1.00
+  [thing★★★] The apocalypse will be survived by A Wi-Fi password that's just "password."  ← 4/1.00
+  [thing★★★] The apocalypse will be survived by Popcorn butter as lube.  ← 4/1.00
+  [thing★★★] The wedding DJ refused to play A best man who slept with the bride, and the groom.  ← 4/0.85†
+  [thing★★★] The wedding DJ refused to play A lost bag with all the medication.  ← 3/1.00
+  [thing★★★] The wedding DJ refused to play A deck of cards with the joker doing the work.  ← 4/1.00
+  [thing★★★] The wedding DJ refused to play The couch cushion economy.  ← 4/1.00
+  [thing★★★] The wedding DJ refused to play A wet T-shirt contest at a funeral.  ← 3/1.00
+  [thing★★★] The wedding DJ refused to play The Pompeii guy who was mid-sneeze.  ← 4/0.85
+  [thing★★★] The wedding was called off because of Whatever is in the church basement.  ← 4/1.00
+  [thing★★★] The wedding was called off because of The relative who cried loudest and knew him least.  ← 4/0.85
+  [thing★★★] The wedding was called off because of A car seat installed wrong.  ← 4/1.00
+  [thing★★★] The wedding was called off because of A savings account with $4 and a dream.  ← 3/1.00
+  [thing★★★] The wedding was called off because of An intern who slept his way to the bottom.  ← 4/0.85
+  [thing★★★] The wedding was called off because of A rental car with a used condom in the glove box.  ← 4/1.00
+  [thing★★★] My Spotify Wrapped exposed my grandma hug that cracks your back.  ← 4/1.00
+  [thing★★★] My Spotify Wrapped exposed my Noah's neighbors, probably.  ← 4/1.00
+  [thing★★★] My Spotify Wrapped exposed my first date at a Cheesecake Factory.  ← 4/1.00
+  [thing★★★] My Spotify Wrapped exposed my Kickstarter that shipped nothing.  ← 4/1.00
+  [thing★★★] My Spotify Wrapped exposed my performance review over drinks at Hooters.  ← 3/1.00
+  [thing★★★] My Spotify Wrapped exposed my sperm donor who's also the plumber.  ← 4/0.85
+  [thing★★★] The Renaissance's real invention was A New Year's kiss with the wrong cousin.  ← 4/1.00
+  [thing★★★] The Renaissance's real invention was Dick jokes at a funeral.  ← 4/1.00
+  [thing★★★] The Renaissance's real invention was A group project where you did everything.  ← 4/1.00
+  [thing★★★] The Renaissance's real invention was A gaming chair with lumbar support and no dignity.  ← 4/1.00
+  [thing★★★] The Renaissance's real invention was The Fortnite battle bus, but it's a party bus.  ← 4/1.00
+  [thing★★★] The Renaissance's real invention was The one relative who brings up politics.  ← 4/0.85
+  [thing★★★] What does the nurse write on the chart? A nun with a Tinder.  ← 4/0.85
+  [thing★★★] What does the nurse write on the chart? Zero-gravity sex, badly.  ← 3/1.00
+  [thing★★★] What does the nurse write on the chart? A senator asleep in session.  ← 4/1.00
+  [thing★★★] What does the nurse write on the chart? A tramp stamp that says "Mom."  ← 4/1.00
+  [thing★★★] What does the nurse write on the chart? A personal trainer who counts wrong on purpose.  ← 4/0.85
+  [thing★★★] What does the nurse write on the chart? A bar bathroom with a glory hole and a Yelp page.  ← 4/1.00
+  [thing★★★] The CEO's apology video mentioned A pigeon with opinions about jazz.  ← 4/1.00
+  [thing★★★] The CEO's apology video mentioned A magician who forgot the trick.  ← 4/0.85
+  [thing★★★] The CEO's apology video mentioned A genie who grants only three inches.  ← 4/0.85
+  [thing★★★] The CEO's apology video mentioned A minivan doing 90 in the fast lane.  ← 3/1.00
+  [thing★★★] The CEO's apology video mentioned A fake plant that somehow died.  ← 4/1.00
+  [thing★★★] The CEO's apology video mentioned A loyalty card that's never once paid off.  ← 3/1.00†
+  [thing★★★] The GPS told me to turn left into The bottomless mimosa's bottom.  ← 3/1.00
+  [thing★★★] The GPS told me to turn left into A canoe in the living room.  ← 4/1.00
+  [thing★★★] The GPS told me to turn left into The 9/11 conspiracy uncle.  ← 4/1.00
+  [thing★★★] The GPS told me to turn left into A referee who needs glasses.  ← 4/0.85
+  [thing★★★] The GPS told me to turn left into An owl who works nights.  ← 4/0.85
+  [thing★★★] The GPS told me to turn left into The one coworker who microwaves fish.  ← 4/0.85
+  [thing★★★] The algorithm decided I'm into A bean bag chair that swallows you.  ← 3/1.00
+  [thing★★★] The algorithm decided I'm into A bike with training wheels on a highway.  ← 4/1.00
+  [thing★★★] The algorithm decided I'm into An air mattress with one night left in it.  ← 3/1.00
+  [thing★★★] The algorithm decided I'm into A golden retriever with a job.  ← 4/1.00
+  [thing★★★] The algorithm decided I'm into A suspiciously friendly squirrel.  ← 3/1.00
+  [thing★★★] The algorithm decided I'm into Grandma's vibrator in the estate sale.  ← 3/1.00
+  [thing★★★] The intern's exit interview mentioned Streaking across a Little League field.  ← 4/0.70
+  [thing★★★] The intern's exit interview mentioned A hedge shaped like Elvis.  ← 4/1.00
+  [thing★★★] The intern's exit interview mentioned A grandma with a leaf blower.  ← 4/0.85
+  [thing★★★] The intern's exit interview mentioned Claiming a Chili's is fine dining.  ← 4/0.70
+  [thing★★★] The intern's exit interview mentioned A baptism in a hot tub.  ← 4/1.00
+  [thing★★★] The intern's exit interview mentioned A dad who knows the name of every tool.  ← 4/0.85
+  [thing★★★] The hotel's "do not disturb" sign covers The Duolingo owl's dick pic.  ← 4/1.00
+  [thing★★★] The hotel's "do not disturb" sign covers A microwave with a personal vendetta.  ← 4/1.00
+  [thing★★★] The hotel's "do not disturb" sign covers A recount in a church basement.  ← 3/1.00†
+  [thing★★★] The hotel's "do not disturb" sign covers A smoke alarm that only chirps at night.  ← 4/1.00
+  [thing★★★] The hotel's "do not disturb" sign covers A marathon runner who mentions it.  ← 4/0.85
+  [thing★★★] The hotel's "do not disturb" sign covers A leaf blower at 7 a.m. on a Sunday.  ← 4/1.00
+  [doing★★★] LeBron's secret to longevity: Reading the whole cereal box.  ← 2/1.00
+  [doing★★★] LeBron's secret to longevity: Getting caught peeing behind a Denny's.  ← 3/1.00
+  [doing★★★] LeBron's secret to longevity: Streaking through the nursing home.  ← 3/1.00
+  [doing★★★] LeBron's secret to longevity: A tattoo of a Chinese character meaning "soup."  ← 4/1.00
+  [doing★★★] LeBron's secret to longevity: Doing a cartwheel at 45.  ← 4/1.00
+  [doing★★★] LeBron's secret to longevity: Claiming a Chili's is fine dining.  ← 4/1.00
+  [name★★★] What's the worst thing to hear from your dentist? A nephew who bites.  ← 4/1.00
+  [name★★★] What's the worst thing to hear from your dentist? Solicitation, but polite.  ← 4/1.00
+  [name★★★] What's the worst thing to hear from your dentist? A marriage counselor who takes sides.  ← 4/0.80
+  [name★★★] What's the worst thing to hear from your dentist? A mugshot mid-hickey.  ← 4/1.00
+  [name★★★] What's the worst thing to hear from your dentist? A baguette that surrenders.  ← 4/1.00
+  [name★★★] What's the worst thing to hear from your dentist? Fruitcake, regifted for the ninth year.  ← 4/0.80
+  [thing★★★] The neighborhood legend is about An accidental reply-all.  ← 4/1.00
+  [thing★★★] The neighborhood legend is about Humidity that feels like a hug from a stranger.  ← 4/1.00
+  [thing★★★] The neighborhood legend is about A boss who says "circle back."  ← 4/0.85
+  [thing★★★] The neighborhood legend is about An Uber rating of 3.9 and a story.  ← 4/1.00
+  [thing★★★] The neighborhood legend is about Thirty seconds of eye contact with a cow.  ← 4/1.00
+  [thing★★★] The neighborhood legend is about The friend who always has a guy for that, and the guy is a pimp.  ← 4/0.85
+  [doing★★★] Caligula's dinner party ended with Hitting on a nurse mid-stitches.  ← 4/1.00
+  [doing★★★] Caligula's dinner party ended with Winning an argument nine hours later.  ← 3/1.00
+  [doing★★★] Caligula's dinner party ended with Stealing a golf cart at a wedding.  ← 4/1.00
+  [doing★★★] Caligula's dinner party ended with Using a leaf blower on the carpet.  ← 4/1.00
+  [doing★★★] Caligula's dinner party ended with Leaving a party through a window.  ← 3/1.00↩
+  [doing★★★] Caligula's dinner party ended with Deleting a text three seconds too late.  ← 3/1.00
+  [thing★★★] My 3 a.m. delivery order was Nicolas Cage, shirtless, screaming.  ← 4/1.00
+  [thing★★★] My 3 a.m. delivery order was A Viking funeral for a goldfish.  ← 4/1.00
+  [thing★★★] My 3 a.m. delivery order was The "wardrobe malfunction," planned.  ← 4/1.00
+  [thing★★★] My 3 a.m. delivery order was A garter removed with the wrong teeth.  ← 4/1.00
+  [thing★★★] My 3 a.m. delivery order was An IKEA meatball plate at 11 a.m.  ← 3/1.00
+  [thing★★★] My 3 a.m. delivery order was A cow with a bell and a plan.  ← 4/1.00
+  [thing★★★] My New Year's resolution lasted until A Minecraft house that is just a hole in the ground.  ← 4/1.00
+  [thing★★★] My New Year's resolution lasted until A gender reveal with a strap-on.  ← 4/1.00†
+  [thing★★★] My New Year's resolution lasted until A crypto bro at Thanksgiving.  ← 4/1.00†
+  [thing★★★] My New Year's resolution lasted until A bartender who judges your order.  ← 4/0.85
+  [thing★★★] My New Year's resolution lasted until A sloth on a deadline.  ← 4/1.00
+  [thing★★★] My New Year's resolution lasted until The one coworker who microwaves fish.  ← 4/0.85
+  [thing★★★] Hillary's deleted emails were mostly about A very long hug from a coworker.  ← 3/1.00
+  [thing★★★] Hillary's deleted emails were mostly about Batman's cup.  ← 3/1.00†
+  [thing★★★] Hillary's deleted emails were mostly about A mother-in-law with a vibrator in her clutch.  ← 4/0.85
+  [thing★★★] Hillary's deleted emails were mostly about An overdue library fine the size of a car payment.  ← 4/1.00
+  [thing★★★] Hillary's deleted emails were mostly about An ant farm on the dinner table.  ← 4/1.00
+  [thing★★★] Hillary's deleted emails were mostly about A bottomless brunch that ended topless.  ← 4/1.00
+  [thing★★★] The sleep app diagnosed An eagle with a fish and regret.  ← 4/1.00
+  [thing★★★] The sleep app diagnosed A trip to the ER for a "bike accident."  ← 4/1.00
+  [thing★★★] The sleep app diagnosed A sperm donor who's also the plumber.  ← 4/0.85
+  [thing★★★] The sleep app diagnosed The substitute with a dating profile.  ← 3/1.00
+  [thing★★★] The sleep app diagnosed A goat on a trampoline.  ← 3/1.00
+  [thing★★★] The sleep app diagnosed Elmo asking how you are, and meaning it.  ← 4/1.00
+  [thing★★★] The sign on the door says "no Wine mom energy."  ← 4/1.00
+  [thing★★★] The sign on the door says "no duck with a job."  ← 4/1.00
+  [thing★★★] The sign on the door says "no church potluck with three kinds of Jell-O."  ← 4/1.00
+  [thing★★★] The sign on the door says "no avocado that was perfect for nine minutes."  ← 4/1.00
+  [thing★★★] The sign on the door says "no Erectile dysfunction ads during the big game."  ← 4/1.00
+  [thing★★★] The sign on the door says "no ferret with your keys."  ← 4/1.00
+  [doing★★★] Beyoncé's secret to a lasting marriage is Holding a door for someone forty feet away.  ← 3/1.00
+  [doing★★★] Beyoncé's secret to a lasting marriage is Faking a pulled muscle to skip the hike.  ← 3/1.00
+  [doing★★★] Beyoncé's secret to a lasting marriage is Losing to a five-year-old at chess.  ← 4/1.00
+  [doing★★★] Beyoncé's secret to a lasting marriage is Pretending to know wine.  ← 4/1.00
+  [doing★★★] Beyoncé's secret to a lasting marriage is Stepping on a stray LEGO.  ← 4/1.00
+  [doing★★★] Beyoncé's secret to a lasting marriage is Shouting the answer at a game show host.  ← 3/1.00
+  [thing+thing★★★] Vegas: The Tooth Fairy's exchange rate by day, A zookeeper's special relationship with the otter by night.  ← 4/1.00 4/1.00
+  [thing+thing★★★] Vegas: A delivery driver who's seen you naked twice by day, A jumper cable mystery by night.  ← 4/0.85 4/1.00
+  [thing+thing★★★] Vegas: A pizza box used as a sex toy tray by day, A cashier who says "no worries" in a worried way by night.  ← 4/1.00 4/0.85
+  [thing+thing★★★] Vegas: A parade for no reason by day, A bank teller who knows too much by night.  ← 3/1.00 4/0.85
+  [thing+thing★★★] Vegas: A love song written on a bar napkin about a stripper by day, A mother-in-law with a vibrator in her clutch by night.  ← 4/1.00 4/0.85
+  [thing+thing★★★] Vegas: A senator asleep in session by day, A DUI on a lawnmower by night.  ← 4/1.00 4/1.00
+  [name★★★] Trump's 3 a.m. post read: "A marathon runner who mentions it!"  ← 4/0.80
+  [name★★★] Trump's 3 a.m. post read: "A twelve-dollar corn dog!"  ← 3/1.00
+  [name★★★] Trump's 3 a.m. post read: "The kid who brought a snake for show-and-tell!"  ← 4/0.60
+  [name★★★] Trump's 3 a.m. post read: "The kid who ate the paste!"  ← 4/0.80
+  [name★★★] Trump's 3 a.m. post read: "Hitler's watercolor paintings!"  ← 3/1.00†
+  [name★★★] Trump's 3 a.m. post read: "The ghost of Jeffrey Epstein!"  ← 4/0.80†
+  [doing★★★] The babysitter charged extra for Rehearsing an argument in the car.  ← 3/1.00
+  [doing★★★] The babysitter charged extra for Cooking with a smoke detector for a timer.  ← 4/1.00
+  [doing★★★] The babysitter charged extra for A sex scene with the stunt double.  ← 4/1.00
+  [doing★★★] The babysitter charged extra for Giving directions to a stranger, wrongly.  ← 4/1.00
+  [doing★★★] The babysitter charged extra for Peeing in a Gatorade bottle on I-95.  ← 4/1.00
+  [doing★★★] The babysitter charged extra for Dancing on a table that was not built for it.  ← 3/1.00
+  [thing★★★] The mayor's scandal involved Someone's dad on Grindr.  ← 4/1.00
+  [thing★★★] The mayor's scandal involved Fireworks lit by an uncle.  ← 4/1.00
+  [thing★★★] The mayor's scandal involved The guy who claps when the plane lands.  ← 4/0.85
+  [thing★★★] The mayor's scandal involved The Hulk trying to open a pickle jar gently.  ← 4/1.00
+  [thing★★★] The mayor's scandal involved A Cracker Barrel peg game nobody solves.  ← 4/1.00
+  [thing★★★] The mayor's scandal involved Meatloaf shaped like a heart.  ← 4/1.00
+  [thing★★★] Bezos went to space to get away from Al Capone's tax return.  ← 4/1.00
+  [thing★★★] Bezos went to space to get away from A wedding toast that named names.  ← 3/1.00
+  [thing★★★] Bezos went to space to get away from A prairie dog town meeting.  ← 3/1.00
+  [thing★★★] Bezos went to space to get away from A tan line shaped like a hand.  ← 4/1.00
+  [thing★★★] Bezos went to space to get away from A raccoon in the lingerie drawer.  ← 4/1.00
+  [thing★★★] Bezos went to space to get away from A recipe that just says "season to taste."  ← 4/1.00
+  [thing+thing★★★] I'd rather A doormat that says "hello" upside down than A Halloween costume made from a trash bag.  ← 4/1.00 3/1.00
+  [thing+thing★★★] I'd rather A Roomba that ate the thong than A DoorDash driver who took a bite.  ← 4/1.00 4/0.85
+  [thing+thing★★★] I'd rather An overly complicated coffee order than Reheated fish in the office microwave.  ← 4/1.00 4/1.00
+  [thing+thing★★★] I'd rather Autocorrect turning "duck" into the obvious than A hamster on a wheel at 2 a.m.  ← 4/1.00 3/1.00
+  [thing+thing★★★] I'd rather A dentist who asks questions with his hands in your mouth than A treehouse with a doorbell.  ← 4/0.85 3/1.00
+  [thing+thing★★★] I'd rather A dad who yells "get a room" at the TV than A cop with a mustache and a grudge.  ← 4/0.85 3/0.85
