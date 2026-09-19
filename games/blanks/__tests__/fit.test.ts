@@ -12,6 +12,7 @@ describe('slotOf — what the blank wants', () => {
       "What's my drag name?",
       "What's the worst thing to whisper during sex?",
       `Grandpa's new nickname at the retirement home: "____."`,
+      'The wedding hashtag is #____.',
     ])
       expect(slotOf({ text }), text).toBe('name');
   });
@@ -30,6 +31,7 @@ describe('slotOf — what the blank wants', () => {
       "What's the one thing the babysitter won't do again?",
       'The bedtime story ends with ____.',
       'The field trip was cut short by ____.',
+      "The time traveler's first mistake was ____.",
       'The moonwalk was actually Michael Jackson ____.',
       "What's the secret to a happy marriage?",
       'The livestream ended abruptly with ____.',
@@ -108,7 +110,8 @@ describe('fitScore', () => {
     expect(fitScore('person', ['thing'])).toBe(0.5);
     expect(fitScore('thing', ['doing', 'thing'])).toBe(1);
     expect(fitScore('name', ['thing', 'name'])).toBe(1);
-    expect(fitScore('name', ['thing'])).toBeLessThan(0.6);
+    expect(fitScore('name', ['thing'])).toBe(0.5);
+    expect(fitScore('name', ['person'])).toBe(0.5);
     expect(fitScore('thing', ['thing', 'name'])).toBe(1);
     expect(fitScore('thing', ['doing', 'name'])).toBe(0.7);
   });

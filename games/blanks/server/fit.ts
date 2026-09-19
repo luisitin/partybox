@@ -30,7 +30,7 @@ const DOING_PROMPT = [
   // "What got me banned…?", "What ended the marriage?", "the secret to a happy marriage", "the
   // CIA's new interrogation technique": what someone did, or does.
   /^What (?:got|ended|finally ended|killed|ruined|started|caused|broke up)\b/i,
-  /\b(?:technique|trick|secret to|real reason for|reason the [\w' ]+ ended)\b/i,
+  /\b(?:technique|trick|secret to|real reason for|reason the [\w' ]+ ended|mistake (?:was|is)|biggest mistake)\b/i,
   /\b(?:done|did|loved|dare (?:was|is)|ritual (?:was|is)): ____|doing what \w+ loved/i,
   /\b(?:arrested|fired|executed|burned|shut down|raided|resigned|banned|expelled|sued|jailed|convicted|dumped|put (?:\w+ ){1,2}down|quit|walked out|kicked out)\b[^.]* (?:for|over) ____/i,
   // A ritual, a dare, an activity, a way to get something: what someone does.
@@ -50,7 +50,7 @@ const PERSON_PROMPT = [
 ];
 /** Prompts whose blank is a name: a title, a nickname, a safe word, a line someone says. */
 const NAME_PROMPT = [
-  /["“]____|____["”]/, // a quoted blank
+  /["“]____|____["”]|#____/, // a quoted blank, a hashtag
   /^What(?:'s| is| was) (?:my|the|your|his|her|their) [\w' -]*(?:name|nickname|handle|safe ?word|title|slogan|catchphrase|motto|password)\?/i,
   /\b(?:called|titled|named|nicknamed)\?$/i, // 'the porn parody of "Frozen" called?'
   /^What did .* (?:say|whisper|shout|yell|scream|write|announce|text|sext|tweet|post)\b/i,
@@ -135,7 +135,7 @@ const FIT: Readonly<Record<Slot, Readonly<Record<Slot, number>>>> = {
   thing: { thing: 1, doing: 0.7, person: 0.85, name: 0 },
   doing: { thing: 0.3, doing: 1, person: 0.25, name: 0 },
   person: { thing: 0.5, doing: 0.3, person: 1, name: 0 },
-  name: { thing: 0.55, doing: 0.5, person: 0.6, name: 1 },
+  name: { thing: 0.5, doing: 0.5, person: 0.5, name: 1 },
 };
 
 /** 0–1: the best reading the white card offers the black card's slot. */
