@@ -1,0 +1,93 @@
+{
+  "pass": "570",
+  "game": "wisecrack",
+  "players": 3,
+  "scenario": "vip-leaves",
+  "focus": "phone",
+  "started": "10:13:18.180",
+  "tvVideoT0": "10:13:14.885",
+  "phoneVideoT0": "10:13:15.721",
+  "changes": [
+    {
+      "t": 1789812798182,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789812803172,
+      "bed": "warm",
+      "at": "10:13:18.182",
+      "sinceStartS": 0,
+      "videoS": 3.3,
+      "phoneVideoS": 2.5
+    },
+    {
+      "t": 1789812803187,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789812863175,
+      "bed": null,
+      "at": "10:13:23.187",
+      "sinceStartS": 5,
+      "videoS": 8.3,
+      "phoneVideoS": 7.5
+    },
+    {
+      "t": 1789812844399,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789812850288,
+      "bed": "marimba",
+      "at": "10:14:04.399",
+      "sinceStartS": 46.2,
+      "videoS": 49.5,
+      "phoneVideoS": 48.7
+    },
+    {
+      "t": 1789812850361,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789812856292,
+      "bed": "marimba",
+      "at": "10:14:10.361",
+      "sinceStartS": 52.2,
+      "videoS": 55.5,
+      "phoneVideoS": 54.6
+    },
+    {
+      "t": 1789812856326,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789812876296,
+      "bed": "marimba",
+      "at": "10:14:16.326",
+      "sinceStartS": 58.1,
+      "videoS": 61.4,
+      "phoneVideoS": 60.6
+    },
+    {
+      "t": 1789812876392,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789812882313,
+      "bed": "lofi",
+      "at": "10:14:36.392",
+      "sinceStartS": 78.2,
+      "videoS": 81.5,
+      "phoneVideoS": 80.7
+    },
+    {
+      "t": 1789812882366,
+      "status": "playing",
+      "phase": "scores",
+      "deadline": 1789812890315,
+      "bed": "lounge",
+      "at": "10:14:42.366",
+      "sinceStartS": 84.2,
+      "videoS": 87.5,
+      "phoneVideoS": 86.6
+    }
+  ],
+  "notes": [
+    "vip-leaves: Sam (VIP) closed the page in answer",
+    "budget reached while playing; skipped to results"
+  ]
+}
