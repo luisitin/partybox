@@ -1,6 +1,7 @@
 // Browser-side helpers for the design capture: a TV page, phones that join through the real form,
 // and a thin dev-API client. The server is started by the caller (`pnpm dev --port 42071`).
 import type { Browser, BrowserContext, Page } from 'playwright';
+import { PLAYER_NAME_MAX } from '@partybox/shared';
 import type { DeviceId } from './devices';
 import { DEVICES } from './devices';
 
@@ -78,9 +79,12 @@ export class DevApi {
     const res = await fetch(`${this.url}/api/dev/state`);
     return (await res.json()) as DevState;
   }
+  /** The room keeps a name to PLAYER_NAME_MAX characters, so a long PB_NAME_A is looked up by
+   *  what the join form kept (loop 632: two 20+ character names left both recorded phones idle). */
   async playerId(name: string): Promise<string | null> {
     const s = await this.state();
-    return Object.values(s.room?.players ?? {}).find((p) => p.name === name)?.id ?? null;
+    const kept = name.slice(0, PLAYER_NAME_MAX);
+    return Object.values(s.room?.players ?? {}).find((p) => p.name === kept)?.id ?? null;
   }
 }
 
