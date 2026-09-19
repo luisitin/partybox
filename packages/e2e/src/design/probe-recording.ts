@@ -3,8 +3,9 @@
 // then Broken Pencil with bots started with `record: true` and skipped to the results — the folder
 // must hold session.json, state.json, recap.md and one SVG per drawing page. A second game with
 // `record: false` must leave nothing new. Prints the folder listing and the recap's first lines.
-// `--abort` instead ends the game from the VIP after a few phases: the session must be marked
-// aborted, keep its state and carry a partial recap.
+// `--abort` instead ends the game from the VIP after a few phases (a scoreboard, so `finished`,
+// with `lastPhase` and the recap telling the early end); `--reset` drops the room mid-game through
+// the dev API: the session must close as `aborted`, keep its state and carry a partial recap.
 // Usage: tsx packages/e2e/src/design/probe-recording.ts [--port 42127] [--out <dir>] [--abort] [--players 4]
 import { mkdtempSync, readdirSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -19,6 +20,7 @@ const { values } = parseArgs({
     port: { type: 'string', default: '42127' },
     out: { type: 'string' },
     abort: { type: 'boolean', default: false },
+    reset: { type: 'boolean', default: false },
     players: { type: 'string', default: '4' },
     game: { type: 'string', default: 'broken-pencil' },
   },
@@ -95,6 +97,10 @@ async function main(): Promise<void> {
         await api.post('/api/dev/vip', { action: 'end' });
         break;
       }
+      if (values.reset && i === 6) {
+        await api.reset(); // a dev reset drops the room mid-game: the session must close as aborted
+        break;
+      }
       await api.post('/api/dev/act', {}).catch(() => undefined);
       await settle(300);
       await api.skip().catch(() => undefined);
@@ -103,6 +109,8 @@ async function main(): Promise<void> {
     const s1 = await api.state();
     if (values.abort)
       check(s1.room?.status !== 'playing', `VIP end left the game (status ${s1.room?.status})`);
+    else if (values.reset)
+      check(s1.room?.status !== 'playing', `reset dropped the game (status ${s1.room?.status})`);
     else check(s1.room?.status === 'results', `game reached results (status ${s1.room?.status})`);
     await settle(800);
     const files = tree(recDir);
@@ -117,7 +125,8 @@ async function main(): Promise<void> {
       'recap.md written',
     );
     const svgs = files.filter((f) => f.endsWith('.svg'));
-    if (pencil) check(svgs.length > 0 || values.abort, `${svgs.length} drawing SVGs written`);
+    if (pencil)
+      check(svgs.length > 0 || values.abort || values.reset, `${svgs.length} drawing SVGs written`);
     if (session) {
       const meta = JSON.parse(readFileSync(join(recDir, session), 'utf8')) as {
         outcome: string;
@@ -128,7 +137,8 @@ async function main(): Promise<void> {
       };
       // A VIP `end` shows a scoreboard, so the engine (and the recorder) call it finished; the
       // `lastPhase` field is what tells a reader the game was cut short.
-      check(meta.outcome === 'finished', `outcome finished (${meta.outcome})`);
+      const want = values.reset ? 'aborted' : 'finished';
+      check(meta.outcome === want, `outcome ${want} (${meta.outcome})`);
       if (values.abort)
         check(
           !['show', 'scoreboard'].includes(meta.lastPhase),
@@ -139,16 +149,20 @@ async function main(): Promise<void> {
         'Sam is in the players list',
       );
       check(meta.timeline.length > 3, `timeline has ${meta.timeline.length} phases`);
-      check(
-        !!meta.results && meta.results.ranking.length === bots + 1,
-        `results carry ${bots + 1} ranked players`,
-      );
+      if (values.reset) check(meta.results === null, 'an aborted session has no results');
+      else
+        check(
+          !!meta.results && meta.results.ranking.length === bots + 1,
+          `results carry ${bots + 1} ranked players`,
+        );
       const recap = readFileSync(join(recDir, session.replace('session.json', 'recap.md')), 'utf8');
       console.log('--- recap.md (head) ---');
       console.log(recap.split('\n').slice(0, 14).join('\n'));
       if (pencil) {
         check(/## Book 1 —/.test(recap), 'recap lists book 1');
         if (values.abort) check(recap.includes('ended early during'), 'recap says it ended early');
+        else if (values.reset)
+          check(recap.includes('ended before the show'), 'recap says it ended before the show');
         else
           check(
             /drew:\*\* !\[.*\]\(book-01-page-02-.*\.svg\)/.test(recap),
