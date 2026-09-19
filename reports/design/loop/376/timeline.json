@@ -1,0 +1,178 @@
+{
+  "pass": "376",
+  "game": "blanks",
+  "players": 6,
+  "scenario": "normal",
+  "focus": "tv",
+  "started": "01:00:34.741",
+  "tvVideoT0": "01:00:31.380",
+  "phoneVideoT0": "01:00:32.314",
+  "changes": [
+    {
+      "t": 1789779634745,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789779639731,
+      "bed": "warm",
+      "at": "01:00:34.745",
+      "sinceStartS": 0,
+      "videoS": 3.4,
+      "phoneVideoS": 2.4
+    },
+    {
+      "t": 1789779639808,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789779669747,
+      "bed": "bossa",
+      "at": "01:00:39.808",
+      "sinceStartS": 5.1,
+      "videoS": 8.4,
+      "phoneVideoS": 7.5
+    },
+    {
+      "t": 1789779645416,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789779648243,
+      "bed": "warm",
+      "at": "01:00:45.416",
+      "sinceStartS": 10.7,
+      "videoS": 14,
+      "phoneVideoS": 13.1
+    },
+    {
+      "t": 1789779648268,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789779651195,
+      "bed": "warm",
+      "at": "01:00:48.268",
+      "sinceStartS": 13.5,
+      "videoS": 16.9,
+      "phoneVideoS": 16
+    },
+    {
+      "t": 1789779651306,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789779654116,
+      "bed": "warm",
+      "at": "01:00:51.306",
+      "sinceStartS": 16.6,
+      "videoS": 19.9,
+      "phoneVideoS": 19
+    },
+    {
+      "t": 1789779654202,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789779657045,
+      "bed": "warm",
+      "at": "01:00:54.202",
+      "sinceStartS": 19.5,
+      "videoS": 22.8,
+      "phoneVideoS": 21.9
+    },
+    {
+      "t": 1789779657115,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789779660116,
+      "bed": "warm",
+      "at": "01:00:57.115",
+      "sinceStartS": 22.4,
+      "videoS": 25.7,
+      "phoneVideoS": 24.8
+    },
+    {
+      "t": 1789779660134,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789779663070,
+      "bed": "warm",
+      "at": "01:01:00.134",
+      "sinceStartS": 25.4,
+      "videoS": 28.8,
+      "phoneVideoS": 27.8
+    },
+    {
+      "t": 1789779663090,
+      "status": "playing",
+      "phase": "judge",
+      "deadline": 1789779693075,
+      "bed": "marimba",
+      "at": "01:01:03.090",
+      "sinceStartS": 28.3,
+      "videoS": 31.7,
+      "phoneVideoS": 30.8
+    },
+    {
+      "t": 1789779668331,
+      "status": "playing",
+      "phase": "result",
+      "deadline": 1789779676236,
+      "bed": "lounge",
+      "at": "01:01:08.331",
+      "sinceStartS": 33.6,
+      "videoS": 37,
+      "phoneVideoS": 36
+    },
+    {
+      "t": 1789779676323,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789779681243,
+      "bed": "warm",
+      "at": "01:01:16.323",
+      "sinceStartS": 41.6,
+      "videoS": 44.9,
+      "phoneVideoS": 44
+    },
+    {
+      "t": 1789779681291,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789779711258,
+      "bed": "marimba",
+      "at": "01:01:21.291",
+      "sinceStartS": 46.5,
+      "videoS": 49.9,
+      "phoneVideoS": 49
+    },
+    {
+      "t": 1789779687029,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789779690015,
+      "bed": "warm",
+      "at": "01:01:27.029",
+      "sinceStartS": 52.3,
+      "videoS": 55.6,
+      "phoneVideoS": 54.7
+    },
+    {
+      "t": 1789779690136,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789779692815,
+      "bed": "warm",
+      "at": "01:01:30.136",
+      "sinceStartS": 55.4,
+      "videoS": 58.8,
+      "phoneVideoS": 57.8
+    },
+    {
+      "t": 1789779692864,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789779695735,
+      "bed": "warm",
+      "at": "01:01:32.864",
+      "sinceStartS": 58.1,
+      "videoS": 61.5,
+      "phoneVideoS": 60.5
+    }
+  ],
+  "notes": ["budget reached while playing; skipped to results"]
+}

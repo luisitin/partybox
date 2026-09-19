@@ -812,7 +812,8 @@
 
 .judgeGrid > li {
   min-width: 0;
-  /* dealt onto the table, 120 ms apart (TvJudge sets the delay) */
+  /* dealt onto the table, 150 ms apart like the phone's hand (TvJudge sets the delay); 120 ms
+     read as dumped rather than dealt (review-loop #376) */
   animation: global(pb-deal) var(--pb-motion-slow) var(--pb-ease) both;
 }
 

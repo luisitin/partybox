@@ -167,7 +167,7 @@ function JudgeGrid({ view }: Props): JSX.Element {
         aria-label={pages > 1 ? `the cards, page ${current + 1} of ${pages}` : 'the cards'}
       >
         {view.cards.map((c, i) => (
-          <li key={c.slot} style={{ animationDelay: `calc(${i} * 120ms)` }}>
+          <li key={c.slot} style={{ animationDelay: `calc(${i} * 150ms)` }}>
             {/* Only the current page is lit: the row below used to hang into the stage as a card
                 sliced through its own last line (loop #196). The fade sits on this wrapper, not on
                 the <li>, whose deal animation fills `both` and would win. */}
