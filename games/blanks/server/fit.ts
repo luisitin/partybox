@@ -33,7 +33,8 @@ const DOING_PROMPT = [
   // "What got me banned…?", "What ended the marriage?", "the secret to a happy marriage", "the
   // CIA's new interrogation technique": what someone did, or does.
   /^What (?:got|ended|finally ended|killed|ruined|started|caused|broke up)\b/i,
-  /\b(?:technique|trick|secret to|real reason for|reason the [\w' ]+ ended|mistake (?:was|is)|biggest mistake|first mistake|mistake: ____|strategy (?:was|is)|plan (?:was|is)|never live down|live down)\b/i,
+  /\b(?:technique|trick|secret to|real reason for|reason the [\w' ]+ ended|mistake (?:was|is)|biggest mistake|first mistake|mistake: ____|strategy (?:was|is)|plan (?:was|is)|never live down|live down|alibi (?:is|was|involves)|shalt not|practi[sc]e)\b/i,
+  /\b(?:turned into|opens with|cuts to|closes with) ____/i, // "…trust exercise turned into ____", "The sex tape opens with ____"
   /\b(?:done|did|loved|dare (?:was|is)|ritual (?:was|is)): ____|doing what \w+ loved/i,
   /\b(?:arrested|fired|executed|burned|shut down|raided|resigned|banned|expelled|sued|jailed|convicted|dumped|put (?:\w+ ){1,2}down|quit|walked out|kicked out)\b[^.]* (?:for|over) ____/i,
   // A ritual, a dare, an activity, a way to get something: what someone does.
@@ -49,6 +50,7 @@ const PERSON_PROMPT = [
   /\bmy (?:new )?(?:boyfriend|girlfriend|husband|wife|partner|therapist|doctor|lawyer|dealer|roommate|sponsor) is ____/i,
   /____ (?:walks|walked|is|was|got|gets) (?:into|in|arrested|elected|fired|hired|pregnant)/i,
   /\bwants? to be ____|\bgrow(?:s)? up to be ____/i, // "My son wants to be ____ when he grows up."
+  /\b(?:mistress|lover|secret admirer|stalker|sugar daddy|sugar baby|new stepdad|new stepmom) (?:was|is) (?:actually |secretly |really )?____/i, // "The senator's mistress was actually ____."
   // "Disney's next princess is ____.", "The Bachelor's final rose went to ____."
   /\b(?:princess|prince|villain|hero|superhero|host|judge|contestant|headliner|bachelor|bachelorette|winner|champion|mvp|nominee|role model|spokesperson) (?:is|was|will be) ____/i,
 ];

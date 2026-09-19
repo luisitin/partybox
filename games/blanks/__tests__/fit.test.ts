@@ -46,6 +46,10 @@ describe('slotOf — what the blank wants', () => {
       "My public defender's strategy was ____.",
       "What's the one thing I'll never live down?",
       'The Olympics added a new event: ____.',
+      'The eleventh commandment: thou shalt not ____.',
+      'What did Mark Zuckerberg practise in the mirror?',
+      "The company retreat's trust exercise turned into ____.",
+      'My alibi is ____.',
       'The moonwalk was actually Michael Jackson ____.',
       "What's the secret to a happy marriage?",
       'The livestream ended abruptly with ____.',
@@ -62,6 +66,7 @@ describe('slotOf — what the blank wants', () => {
       "Disney's next princess is ____.",
       'My son wants to be ____ when he grows up.',
       'The dating app matched me with ____.',
+      "The senator's mistress was actually ____.",
     ])
       expect(slotOf({ text }), text).toBe('person');
   });
