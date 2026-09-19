@@ -75,6 +75,22 @@ describe('the card-pick step', () => {
     expect(gone.phase.deadline).toBe(T0 + 7000 + INTRO_BREATH_MS + INTRO_READY_MS);
   });
 
+  it('the last one picking is told so — never a lone player, never once ready', () => {
+    let s = ready(start(), 'a', T0 + 800);
+    expect(game.controllerView(s, 'c').lastOne).toBe(false); // two still picking
+    s = ready(s, 'b', T0 + 900);
+    expect(game.controllerView(s, 'c').lastOne).toBe(true);
+    expect(game.controllerView(s, 'a').lastOne).toBe(false);
+    expect(game.controllerView(ready(s, 'c', T0 + 1000), 'c').lastOne).toBe(false);
+    const solo = game.init({
+      players: [PLAYERS[0]!],
+      settings: { rounds: 1, round1: 'line', callSeconds: 6 },
+      seed: 1,
+      now: T0,
+    });
+    expect(game.controllerView(solo, 'a').lastOne).toBe(false);
+  });
+
   it('the roster: ready players carry the ✓, the rest are active', () => {
     const s = ready(start(), 'b', T0 + 800);
     const status = (id: string) => game.tvView(s).players.find((p) => p.id === id)?.status;
