@@ -112,9 +112,9 @@ Three decks, `mild.json` (clean, 1214 black / 2517 white), `crude.json` (adult, 
 blanks written `____`, `pick` ≥ blanks (a question card has none), `draw` 2 on Pick 3 cards. Mainstream
 real-world references are fine in crude and wild (heads of state past and present, well-known events);
 no obscure ones; no slurs or hate, nothing sexual involving minors, no non-consent. Add cards with
-`pnpm exec tsx scripts/blanks-add-cards.ts <deck> black.txt white.txt` (ids, pick/draw and dedupe are
-automatic).
+`pnpm exec tsx scripts/blanks-add-cards.ts <deck> black.txt white.txt` (ids, pick/draw and dedupe are automatic).
 Every card carries a `tier` (1 filler · 2 good · 3 great · 4 amazing, read on a second pass — punchy,
 vivid, versatile cards up; flat gross-outs and one-word nouns down); a prompt may set `slot` / `slots`
-and a white `serves` where the text reading (`server/fit.ts`) is wrong. `pnpm blanks-fit-report` measures
-hands and bot plays; `--md` writes the deck as the model reads it (`reports/design/blanks-wild-fit.md`).
+and a white `serves` where the text reading (`server/fit.ts`) is wrong — `pnpm blanks-kinds --since <rev>`
+lists the reads of new cards, `__tests__/kinds.golden.json` pins the verified ones. `pnpm blanks-fit-report`
+measures hands and bot plays; `--md` writes the deck as the model reads it (`reports/design/blanks-wild-fit.md`).
