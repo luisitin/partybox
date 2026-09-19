@@ -1,0 +1,178 @@
+{
+  "pass": "552",
+  "game": "wisecrack",
+  "players": 6,
+  "scenario": "normal",
+  "focus": "phone",
+  "started": "09:27:20.775",
+  "tvVideoT0": "09:27:17.403",
+  "phoneVideoT0": "09:27:18.328",
+  "changes": [
+    {
+      "t": 1789810040778,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789810045770,
+      "bed": "warm",
+      "at": "09:27:20.778",
+      "sinceStartS": 0,
+      "videoS": 3.4,
+      "phoneVideoS": 2.5
+    },
+    {
+      "t": 1789810045858,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789810105779,
+      "bed": null,
+      "at": "09:27:25.858",
+      "sinceStartS": 5.1,
+      "videoS": 8.5,
+      "phoneVideoS": 7.5
+    },
+    {
+      "t": 1789810055311,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789810075173,
+      "bed": "marimba",
+      "at": "09:27:35.311",
+      "sinceStartS": 14.5,
+      "videoS": 17.9,
+      "phoneVideoS": 17
+    },
+    {
+      "t": 1789810059534,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789810065424,
+      "bed": "marimba",
+      "at": "09:27:39.534",
+      "sinceStartS": 18.8,
+      "videoS": 22.1,
+      "phoneVideoS": 21.2
+    },
+    {
+      "t": 1789810065444,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789810085437,
+      "bed": "lofi",
+      "at": "09:27:45.444",
+      "sinceStartS": 24.7,
+      "videoS": 28,
+      "phoneVideoS": 27.1
+    },
+    {
+      "t": 1789810069578,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789810075462,
+      "bed": "lofi",
+      "at": "09:27:49.578",
+      "sinceStartS": 28.8,
+      "videoS": 32.2,
+      "phoneVideoS": 31.3
+    },
+    {
+      "t": 1789810075474,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789810095472,
+      "bed": "marimba",
+      "at": "09:27:55.474",
+      "sinceStartS": 34.7,
+      "videoS": 38.1,
+      "phoneVideoS": 37.1
+    },
+    {
+      "t": 1789810079630,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789810085510,
+      "bed": "marimba",
+      "at": "09:27:59.630",
+      "sinceStartS": 38.9,
+      "videoS": 42.2,
+      "phoneVideoS": 41.3
+    },
+    {
+      "t": 1789810085592,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789810105512,
+      "bed": "lofi",
+      "at": "09:28:05.592",
+      "sinceStartS": 44.8,
+      "videoS": 48.2,
+      "phoneVideoS": 47.3
+    },
+    {
+      "t": 1789810088037,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789810093981,
+      "bed": "lofi",
+      "at": "09:28:08.037",
+      "sinceStartS": 47.3,
+      "videoS": 50.6,
+      "phoneVideoS": 49.7
+    },
+    {
+      "t": 1789810094010,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789810113982,
+      "bed": "marimba",
+      "at": "09:28:14.010",
+      "sinceStartS": 53.2,
+      "videoS": 56.6,
+      "phoneVideoS": 55.7
+    },
+    {
+      "t": 1789810097411,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789810103332,
+      "bed": "marimba",
+      "at": "09:28:17.411",
+      "sinceStartS": 56.6,
+      "videoS": 60,
+      "phoneVideoS": 59.1
+    },
+    {
+      "t": 1789810103375,
+      "status": "playing",
+      "phase": "vote",
+      "deadline": 1789810123334,
+      "bed": "lofi",
+      "at": "09:28:23.375",
+      "sinceStartS": 62.6,
+      "videoS": 66,
+      "phoneVideoS": 65
+    },
+    {
+      "t": 1789810107530,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789810113410,
+      "bed": "lofi",
+      "at": "09:28:27.530",
+      "sinceStartS": 66.8,
+      "videoS": 70.1,
+      "phoneVideoS": 69.2
+    },
+    {
+      "t": 1789810113530,
+      "status": "playing",
+      "phase": "scores",
+      "deadline": 1789810121421,
+      "bed": "lounge",
+      "at": "09:28:33.530",
+      "sinceStartS": 72.8,
+      "videoS": 76.1,
+      "phoneVideoS": 75.2
+    }
+  ],
+  "notes": ["budget reached while playing; skipped to results"]
+}
