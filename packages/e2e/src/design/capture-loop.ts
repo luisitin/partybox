@@ -308,6 +308,7 @@ async function main(): Promise<void> {
       t: number;
       freq: number | null;
       when: number;
+      type?: string;
     }[];
     const tvLong = (await tv.evaluate('window.__pbLong')) as { t: number; ms: number }[];
     const tvFrames = (await tv.evaluate('window.__pbFrames')) as number[];

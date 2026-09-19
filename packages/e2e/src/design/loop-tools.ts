@@ -29,7 +29,7 @@ export interface PhaseChange {
 }
 
 /** Cue signatures (first notes' frequencies) parsed from the client's sound table. */
-export function cueSignatures(): { name: string; freqs: number[] }[] {
+export function cueSignatures(): { name: string; freqs: number[]; type: string }[] {
   // The table moved to sound-cues.ts (bingo loop #238); read whichever file holds it.
   const src = join(REPO_ROOT, 'packages', 'client', 'src');
   let text = readFileSync(join(src, 'sound-cues.ts'), 'utf8');
@@ -41,7 +41,9 @@ export function cueSignatures(): { name: string; freqs: number[] }[] {
   // Bracket-aware (loop 312): one-line entries (`tick: [{…}],`) and multi-line ones sit side by
   // side, and a lazy regex swallowed several cues into their neighbours — `call`, `dibs`, `claim`,
   // `reveal` and `tick` were never in the table, so every Bingo call was logged as `ready`.
-  const out: { name: string; freqs: number[] }[] = [];
+  // The first note's waveform too (loop 373): `countdown` (880 triangle) and Bingo's `tick`
+  // (880 square) share a frequency, and every 3 · 2 · 1 tick was logged as a countdown.
+  const out: { name: string; freqs: number[]; type: string }[] = [];
   const re = /^\s{2}(\w+): \[/gm;
   for (let m = re.exec(block); m; m = re.exec(block)) {
     let depth = 0;
@@ -56,7 +58,8 @@ export function cueSignatures(): { name: string; freqs: number[] }[] {
     }
     const body = block.slice(m.index + m[0].length, end);
     const freqs = [...body.matchAll(/freq: (\d+)/g)].map((x) => Number(x[1]));
-    out.push({ name: m[1] as string, freqs });
+    const type = /type: '(\w+)'/.exec(body)?.[1] ?? 'sine';
+    out.push({ name: m[1] as string, freqs, type });
     re.lastIndex = end;
   }
   return out;
@@ -77,7 +80,7 @@ export const HOOKS = `
         let freq = null;
         osc.frequency.setValueAtTime = (v, t) => { if (freq === null) freq = v; return set(v, t); };
         const start = osc.start.bind(osc);
-        osc.start = (when) => { log.push({ t: Date.now(), freq, when: when - this.currentTime }); return start(when); };
+        osc.start = (when) => { log.push({ t: Date.now(), freq, when: when - this.currentTime, type: osc.type }); return start(when); };
         return osc;
       };
     }
@@ -88,7 +91,7 @@ export const HOOKS = `
 `;
 
 export function groupCues(
-  raw: { t: number; freq: number | null; when: number }[],
+  raw: { t: number; freq: number | null; when: number; type?: string }[],
   surface: 'tv' | 'phone',
   phaseAt: (t: number) => string,
 ): CueEvent[] {
@@ -117,7 +120,9 @@ export function groupCues(
       [...cands].sort(
         (a, b) => Math.abs((a.freqs[0] ?? 0) - first) - Math.abs((b.freqs[0] ?? 0) - first),
       )[0];
+    const type = [...group].sort((a, b) => a.when - b.when)[0]?.type ?? 'sine';
     const match =
+      sigs.find((s) => s.freqs.join(',') === freqs.join(',') && s.type === type) ??
       sigs.find((s) => s.freqs.join(',') === freqs.join(',')) ??
       nearest(
         sigs.filter((s) => s.freqs.length === freqs.length && norm(s.freqs) === norm(freqs)),
