@@ -4,7 +4,7 @@
 import { shuffle } from '@partybox/game-sdk';
 import type { RngState } from '@partybox/game-sdk';
 import { BLANK, blanksIn } from '../content/schema';
-import { WHITE_KINDS, whiteKind, whiteTier } from './content';
+import { WHITE_KINDS, whiteKind, whiteServes, whiteTier } from './content';
 import type { WhiteKind } from './content';
 import {
   BIG_REVEAL_MAX_MS,
@@ -59,8 +59,9 @@ const MAX_SWAPS = 2;
 /** …and how many for the quality floor (a round's play of a great card is one swap back). */
 const MAX_GOOD_SWAPS = 3;
 
+/** Cards in the hand that serve `kind` (a short thing is a thing and a name). */
 function countKind(hand: readonly string[], kind: WhiteKind): number {
-  return hand.filter((id) => whiteKind(id) === kind).length;
+  return hand.filter((id) => whiteServes(id).includes(kind)).length;
 }
 
 const isGood = (id: string): boolean => whiteTier(id) === 3;
@@ -87,7 +88,7 @@ function takeWhere(state: State, wants: (id: string) => boolean): [string | null
 }
 
 function takeKind(state: State, kind: WhiteKind): [string | null, State] {
-  return takeWhere(state, (id) => whiteKind(id) === kind);
+  return takeWhere(state, (id) => whiteServes(id).includes(kind));
 }
 
 /** A card the hand can spare for a better one: not great itself, of a kind the hand holds more
@@ -96,7 +97,7 @@ function spareIndex(hand: readonly string[]): number {
   let best = -1;
   for (let i = 0; i < hand.length; i += 1) {
     const id = hand[i] as string;
-    if (isGood(id) || countKind(hand, whiteKind(id)) <= KIND_FLOOR) continue;
+    if (isGood(id) || whiteServes(id).some((k) => countKind(hand, k) <= KIND_FLOOR)) continue;
     if (best === -1 || whiteTier(id) < whiteTier(hand[best] as string)) best = i;
   }
   return best;
@@ -139,7 +140,12 @@ function fillHand(state: State, hand: readonly string[], target: number): [strin
       if (surplus === undefined || countKind(out, surplus) <= KIND_FLOOR) break;
       const [card, after] = takeKind(next, kind);
       if (card === null) break;
-      const i = out.findIndex((id) => whiteKind(id) === surplus);
+      const i = out.findIndex(
+        (id) =>
+          whiteKind(id) === surplus &&
+          !whiteServes(id).some((k) => k !== surplus && countKind(out, k) <= KIND_FLOOR),
+      );
+      if (i === -1) break;
       const dropped = out[i] as string;
       out = [...out.slice(0, i), ...out.slice(i + 1), card];
       next = { ...after, discard: [...after.discard, dropped] };

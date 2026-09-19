@@ -24,7 +24,7 @@ export const blackCardSchema = z
     /** Extra white cards every answerer draws before choosing (0 or 2). */
     draw: z.number().int().min(0).max(2),
     /** What the blank wants (server/fit.ts); read off the text when unset. */
-    slot: z.enum(['thing', 'doing', 'person']).optional(),
+    slot: z.enum(['thing', 'doing', 'person', 'name']).optional(),
   })
   .refine((c) => c.pick >= Math.max(1, blanksIn(c.text)), { message: 'pick < blanks' });
 export type BlackCard = z.infer<typeof blackCardSchema>;

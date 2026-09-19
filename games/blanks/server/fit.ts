@@ -1,15 +1,18 @@
 // How a white card fits a black card (owner, 2026-09-18: "some answer cards only make sense with
 // some question cards"). A black card asks for one SLOT — a thing (most of them), something
-// someone did (`doing`: "What did the sex robot refuse to do?"), or a person (`person`: "Who…?",
-// "…goes to ____") — read off its text, or set on the card (`slot` in the deck JSON). A white card
-// SERVES a slot: a gerund card is a `doing`, a card about someone ("A therapist who takes notes
-// with a shudder.") a `person`, the rest `thing`s — and FIT says how each reads in the others'
-// blanks (a person is a fine thing; a thing is a poor doing).
-// `fitScore` is the soft match dealing, bots and the fit report share; `tier` (1 filler, 2 good,
-// 3 great — set on the card, default 2) is how good the card is on its own.
+// someone did (`doing`: "What did the sex robot refuse to do?"), a person (`person`: "Who…?",
+// "…goes to ____"), or a name — a title, a safe word, a nickname, something said (`name`: 'The
+// porn parody of my life is called "____."', "What did the best man say in his toast?") — read
+// off its text, or set on the card (`slot` in the deck JSON). A white card SERVES slots: a gerund
+// card is a `doing`, a card about someone ("A therapist who takes notes with a shudder.") a
+// `person`, the rest `thing`s, and any short card (four words or fewer) also a `name` — and FIT
+// says how each reads in the others' blanks (a person is a fine thing; a thing is a poor doing;
+// a long card is a poor safe word). `fitScore` is the soft match dealing, bots and the fit report
+// share; `tier` (1 filler, 2 good, 3 great — set on the card, default 2) is how good the card is
+// on its own.
 import type { BlackCard, WhiteCard } from '../content/schema';
 
-export const SLOTS = ['thing', 'doing', 'person'] as const;
+export const SLOTS = ['thing', 'doing', 'person', 'name'] as const;
 export type Slot = (typeof SLOTS)[number];
 
 /** Prompts whose blank wants an action or an event. */
@@ -19,7 +22,9 @@ const DOING_PROMPT = [
   /\b(?:does|did|caught (?:me|him|her|them|us)|busy|instead of|after|before|while|spent (?:the \w+|\w+ years?))\s+____/i,
   /\b(?:what happened|what went wrong|walk(?:ed)? in on\?|catch \w+ doing|am I doing|are you doing|^how did)\b/i,
   /\b(?:ruined|interrupted|cancelled|canceled|delayed|caused|started|ended|followed|triggered|brought on) by ____/i,
-  /\b(?:led to|ended (?:with|in)|started with|began with) ____/i,
+  /\b(?:led to|ended (?:with|in)|started with|began with) ____\.?$/i,
+  /\b(?:done|did|loved|dare (?:was|is)|ritual (?:was|is)): ____|doing what \w+ loved/i,
+  /\b(?:arrested|fired|executed|burned|shut down|raided|resigned|banned|expelled|sued|jailed|convicted|dumped|put (?:\w+ ){1,2}down|quit|walked out|kicked out)\b[^.]* (?:for|over) ____/i,
 ];
 /** "Renamed itself after ____", "modeled after ____": a thing, not an event after which. */
 const NAMED_AFTER = /\b(?:named|renamed|modeled|modelled|patterned|fashioned)\b[^.]*after ____/i;
@@ -27,15 +32,26 @@ const NAMED_AFTER = /\b(?:named|renamed|modeled|modelled|patterned|fashioned)\b[
 const PERSON_PROMPT = [
   /^Who(?:'s|se)?\b/i,
   /\bwho\b[^.?]*\?$/i,
-  /\b(?:goes to|went to|awarded to|belongs to|married|marry|dating|date with|hired|fired|elected|best man|maid of honor|godfather|babysitter|sponsored by|hosted by|played by|voiced by|replaced by|starring|cast as|roommate|in bed with|woke up next to|wake up next to|lying next to|virginity to|a threesome with|threesome with|swiped right on|matched with|proposed to|engaged to)\s+____/i,
+  /\b(?:goes to|went to|awarded to|belongs to|married|marry|dating|date with|hired|fired|elected|best man|maid of honor|godfather|babysitter|sponsored by|hosted by|played by|voiced by|replaced by|starring|cast as|roommate|in bed with|woke up next to|wake up next to|lying next to|virginity to|a threesome with|threesome with|swiped right on|matched with|proposed to|engaged to|left me for|guest of honor was|body count includes|tell-all names)\s+____/i,
   /\bmy (?:new )?(?:boyfriend|girlfriend|husband|wife|partner|therapist|doctor|lawyer|dealer|roommate|sponsor) is ____/i,
   /____ (?:walks|walked|is|was|got|gets) (?:into|in|arrested|elected|fired|hired|pregnant)/i,
+];
+/** Prompts whose blank is a name: a title, a nickname, a safe word, a line someone says. */
+const NAME_PROMPT = [
+  /["“]____|____["”]/, // a quoted blank
+  /^What(?:'s| is| was) (?:my|the|your|his|her|their) [\w' -]*(?:name|nickname|handle|safe ?word|title|slogan|catchphrase|motto|password)\?/i,
+  /\b(?:called|titled|named|nicknamed)\?$/i, // 'the porn parody of "Frozen" called?'
+  /^What did .* (?:say|whisper|shout|yell|scream|write|announce)\b/i,
+  /\b(?:thing|things) to (?:say|hear|whisper|shout|yell|scream)\b/i,
+  /\b(?:keeps? announcing|keeps? saying|keeps? yelling) ____/i,
+  /\b(?:named|nicknamed|titled|captioned) ____/i,
 ];
 
 /** The slot a black card's blank wants; the card's own `slot` wins over the reading. */
 export function slotOf(card: Pick<BlackCard, 'text'> & { slot?: Slot }): Slot {
   if (card.slot) return card.slot;
   const t = card.text;
+  if (NAME_PROMPT.some((re) => re.test(t))) return 'name';
   if (PERSON_PROMPT.some((re) => re.test(t))) return 'person';
   if (!NAMED_AFTER.test(t) && DOING_PROMPT.some((re) => re.test(t))) return 'doing';
   return 'thing';
@@ -52,38 +68,45 @@ const WHO_CLAUSE = /\bwho\b/i;
 /** What may follow the person word for it to be the head of the phrase. */
 const LINK_AFTER =
   /^(?:with|who|whose|that|named|called|at|in|on|from|and|of|for|without|under|behind|during|after|before|as|to|dressed|covered|wearing|holding|doing|having|being|selling|giving|getting|taking)$/i;
+/** A card short enough to be a name, a safe word, a title: four words or fewer. */
+export const NAME_MAX_WORDS = 4;
 
-/** The slots a white card serves; the card's own `serves` wins over the reading. */
+/** The slots a white card serves, its own kind first; the card's own `serves` wins over the reading. */
 export function servesOf(card: Pick<WhiteCard, 'text'> & { serves?: Slot[] }): Slot[] {
   if (card.serves && card.serves.length > 0) return card.serves;
-  const words = card.text.replace(/[^A-Za-z' ]/g, '').split(/\s+/);
+  const words = card.text
+    .replace(/[^A-Za-z' ]/g, '')
+    .split(/\s+/)
+    .filter(Boolean);
+  const short = words.length <= NAME_MAX_WORDS;
   const gerund = (w: string | undefined): boolean =>
     w !== undefined && /ing$/i.test(w) && !NOT_GERUND.test(w);
-  if (gerund(words[0]) || (ADVERB.test(words[0] ?? '') && gerund(words[1]))) return ['doing'];
-  // The head noun: "A nun with a strap-on." is a nun; "Grandma's corpse in the recliner." is a
-  // corpse (a possessive head names the owner, not the card); "A clown car full of dildos." is a
-  // car (the person word must end the noun phrase: a link word, a comma or the full stop after it).
-  const rest = card.text.replace(/^(?:A |An |The |My |Your |Our )/, '');
-  const [head = '', after = ''] = rest.split(/[ ,.]/);
-  const possessive = /['’]s$|s['’]$/.test(head);
-  const ends = after === '' || LINK_AFTER.test(after);
-  const person = (!possessive && ends && PERSON_WORD.test(head)) || WHO_CLAUSE.test(card.text);
-  return person ? ['person'] : ['thing'];
+  let kind: Slot = 'thing';
+  if (gerund(words[0]) || (ADVERB.test(words[0] ?? '') && gerund(words[1]))) kind = 'doing';
+  else {
+    // The head noun: "A nun with a strap-on." is a nun; "Grandma's corpse in the recliner." is a
+    // corpse (a possessive head names the owner, not the card); "A clown car full of dildos." is a
+    // car (the person word must end the noun phrase: a link word, a comma or the full stop after it).
+    const rest = card.text.replace(/^(?:A |An |The |My |Your |Our )/, '');
+    const [head = '', after = ''] = rest.split(/[ ,.]/);
+    const possessive = /['’]s$|s['’]$/.test(head);
+    const ends = after === '' || LINK_AFTER.test(after);
+    if ((!possessive && ends && PERSON_WORD.test(head)) || WHO_CLAUSE.test(card.text))
+      kind = 'person';
+  }
+  return short ? [kind, 'name'] : [kind];
 }
 
-/** How well a card of each served slot reads in a blank of each wanted slot (0–1). */
+/** How well a card of each served slot reads in a blank of each wanted slot (0–1); `name` is only
+ *  ever a second reading, so it adds nothing outside a name blank. */
 const FIT: Readonly<Record<Slot, Readonly<Record<Slot, number>>>> = {
-  thing: { thing: 1, doing: 0.7, person: 0.85 },
-  doing: { thing: 0.3, doing: 1, person: 0.25 },
-  person: { thing: 0.5, doing: 0.3, person: 1 },
+  thing: { thing: 1, doing: 0.7, person: 0.85, name: 0 },
+  doing: { thing: 0.3, doing: 1, person: 0.25, name: 0 },
+  person: { thing: 0.5, doing: 0.3, person: 1, name: 0 },
+  name: { thing: 0.55, doing: 0.5, person: 0.6, name: 1 },
 };
 
 /** 0–1: the best reading the white card offers the black card's slot. */
 export function fitScore(slot: Slot, serves: readonly Slot[]): number {
   return Math.max(0, ...serves.map((s) => FIT[slot][s] ?? 0));
-}
-
-/** True when the card is a natural answer for the slot (its best reading, not a stretch). */
-export function servesSlot(slot: Slot, serves: readonly Slot[]): boolean {
-  return serves.includes(slot);
 }

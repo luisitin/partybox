@@ -10,6 +10,7 @@ import {
   blackPool,
   whiteKind,
   whitePool,
+  whiteServes,
   whiteTier,
 } from '../server/content';
 import { game } from '../server/index';
@@ -131,10 +132,9 @@ describe('dealing', () => {
       let s = start({ players: 6, decks, seed: 3, rounds: 6 });
       for (let round = 1; round <= 6; round++) {
         for (const id of Object.keys(s.players)) {
-          const top = (s.hands[id] ?? []).slice(0, WHITE_KINDS.length).map(whiteKind);
-          expect(new Set(top).size, `${decks} r${round} ${id} ${top.join()}`).toBe(
-            WHITE_KINDS.length,
-          );
+          // `name` is only ever a card's second reading, so three kinds lead the hand.
+          const top = (s.hands[id] ?? []).slice(0, 3).map(whiteKind);
+          expect(new Set(top).size, `${decks} r${round} ${id} ${top.join()}`).toBe(3);
         }
         s = timer(playRound(s));
         if (s.phase.id === 'final' || s.phase.id === 'done') break;
@@ -154,12 +154,12 @@ describe('dealing', () => {
     }
   });
 
-  it('a hand always holds at least two things, two doings and two people while the deck has them', () => {
+  it('a hand always holds at least two things, two doings, two people and two names while the deck has them', () => {
     // A hand loses a card a round, so the refill also swaps a surplus kind out when a hand has
     // fallen short of one (review-loop #175) — checked here over eight rounds of every preset.
     const counts = (hand: string[]): Record<string, number> => {
-      const c: Record<string, number> = { thing: 0, doing: 0, person: 0 };
-      for (const id of hand) c[whiteKind(id)] = (c[whiteKind(id)] ?? 0) + 1;
+      const c: Record<string, number> = { thing: 0, doing: 0, person: 0, name: 0 };
+      for (const id of hand) for (const k of whiteServes(id)) c[k] = (c[k] ?? 0) + 1;
       return c;
     };
     for (const decks of ['mild', 'adults', 'wild', 'wild-only'] as const) {
@@ -175,11 +175,11 @@ describe('dealing', () => {
         if (s.phase.id === 'final' || s.phase.id === 'done') break;
       }
     }
-    expect(servesOf({ text: 'Yodeling.' })).toEqual(['doing']);
-    expect(servesOf({ text: 'Quietly winning Monopoly.' })).toEqual(['doing']);
+    expect(servesOf({ text: 'Yodeling.' })).toEqual(['doing', 'name']);
+    expect(servesOf({ text: 'Quietly winning Monopoly at the wake.' })).toEqual(['doing']);
     expect(servesOf({ text: 'A nun with a strap-on.' })).toEqual(['person']);
-    expect(servesOf({ text: 'Beans.' })).toEqual(['thing']);
-    expect(servesOf({ text: 'The wedding.' })).toEqual(['thing']);
+    expect(servesOf({ text: 'Beans.' })).toEqual(['thing', 'name']);
+    expect(servesOf({ text: 'The wedding my mother planned.' })).toEqual(['thing']);
   });
 
   it('refills hands to ten after a round and never re-deals a played card before the discard turns', () => {

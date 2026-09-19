@@ -31,7 +31,8 @@ bot picks a prompt at random.
 Round start (`intro` entry): last round's played cards to the discard, hands back to 10 (+ the black
 card's `draw`) — the missing kinds drawn first, and up to two cards of the most plentiful kind
 swapped out when a hand is still short, so every hand holds at least 2 answers for each kind of
-question — 2 things, 2 doings (gerund cards) and 2 people (`server/fit.ts` reads the kind off the
+question — 2 things, 2 doings (gerund cards), 2 people and 2 names (short cards, for a quoted blank, a
+nickname, a line someone says; `server/fit.ts` reads the kind off the
 card's text; a card's own `serves` in the deck JSON overrides it) and at least 5 tier-3 cards (`tier` in the
 deck JSON: 1 filler, 2 good, 3 great; up to three spare cards a round are swapped for great ones of the same
 kind) — while the decks can supply them; the
