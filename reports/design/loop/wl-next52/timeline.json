@@ -1,0 +1,90 @@
+{
+  "pass": "531",
+  "game": "wisecrack",
+  "players": 6,
+  "scenario": "walkover",
+  "focus": "phone",
+  "started": "08:29:01.292",
+  "tvVideoT0": "08:28:57.437",
+  "phoneVideoT0": "08:28:58.664",
+  "changes": [
+    {
+      "t": 1789806541295,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789806546288,
+      "bed": "warm",
+      "at": "08:29:01.295",
+      "sinceStartS": 0,
+      "videoS": 3.9,
+      "phoneVideoS": 2.6
+    },
+    {
+      "t": 1789806546307,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789806606293,
+      "bed": null,
+      "at": "08:29:06.307",
+      "sinceStartS": 5,
+      "videoS": 8.9,
+      "phoneVideoS": 7.6
+    },
+    {
+      "t": 1789806606334,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789806612302,
+      "bed": "marimba",
+      "at": "08:30:06.334",
+      "sinceStartS": 65,
+      "videoS": 68.9,
+      "phoneVideoS": 67.7
+    },
+    {
+      "t": 1789806612332,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789806618317,
+      "bed": "marimba",
+      "at": "08:30:12.332",
+      "sinceStartS": 71,
+      "videoS": 74.9,
+      "phoneVideoS": 73.7
+    },
+    {
+      "t": 1789806618352,
+      "status": "playing",
+      "phase": "scores",
+      "deadline": 1789806626319,
+      "bed": "lounge",
+      "at": "08:30:18.352",
+      "sinceStartS": 77.1,
+      "videoS": 80.9,
+      "phoneVideoS": 79.7
+    },
+    {
+      "t": 1789806626339,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789806631332,
+      "bed": "warm",
+      "at": "08:30:26.339",
+      "sinceStartS": 85,
+      "videoS": 88.9,
+      "phoneVideoS": 87.7
+    },
+    {
+      "t": 1789806631449,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789806691334,
+      "bed": null,
+      "at": "08:30:31.449",
+      "sinceStartS": 90.2,
+      "videoS": 94,
+      "phoneVideoS": 92.8
+    }
+  ],
+  "notes": ["budget reached while playing; skipped to results"]
+}
