@@ -40,6 +40,9 @@ const DOING_PROMPT = [
   /^What (?:got|ended|finally ended|killed|ruined|started|caused|broke up)\b/i,
   /\b(?:technique|trick(?!-or-)|secret to|real reason for|reason the [\w' ]+ ended|mistake (?:was|is)|biggest mistake|first mistake|mistake: ____|strategy (?:was|is)|plan (?:was|is)|never live down|live down|alibi\b[^.?]* (?:is|was|involves)|shalt not|practi[sc]e)\b/i,
   /\b(?:turned into|opens with|cuts to|closes with) ____/i, // "…trust exercise turned into ____", "The sex tape opens with ____"
+  // "The Times Square Elmo was doing ____.", "…married us and then ____.", "…talked me into ____.",
+  // "…got the part by ____." (loop 818).
+  /\bdoing ____|\band then ____|\btalked (?:me|us|him|her|them) into ____|\b(?:part|job|role|gig|promotion|raise|scholarship|record deal|internship) by ____/i,
   /\b(?:confess(?:ed|ing)? to|admit(?:ted)? to|plead(?:ed)? guilty to|owned up to|apologi[sz]ed? for|blame[sd]? (?:me|him|her|them|us|you|it) for|forgive (?:me|him|her|them|us) for|guilty of)\b/i, // "What did I confess to on the witness stand?"
   /\b(?:done|did|loved|dare (?:was|is)|ritual (?:was|is)): ____|doing what \w+ loved/i,
   // "Game night's loser had to ____.": a verb wanted — a gerund is the nearest thing the decks hold.
@@ -56,7 +59,7 @@ const NAMED_AFTER = /\b(?:named|renamed|modeled|modelled|patterned|fashioned)\b[
 const PERSON_PROMPT = [
   /^Who(?:'s|se)?\b/i,
   /\bwho\b[^.?]*\?$/i,
-  /\b(?:goes to|went to|awarded to|belongs to|married|marry|dating|date with|hired|fired|elected|best man|maid of honor|godfather|babysitter|sponsored by|hosted by|played by|voiced by|replaced by|starring|cast as|roommate|in bed with|woke up next to|wake up next to|lying next to|virginity to|a threesome with|threesome with|swiped right on|matched (?:me )?with|proposed to|engaged to|left me for|guest of honor was|body count includes|tell-all names)\s+____/i,
+  /\b(?:goes to|(?<!budget |money |funds |fund |proceeds |profits |donations |prize |award |trophy |medal |scholarship |inheritance |Oscar |Grammy |Emmy )went to|awarded to|belongs to|married|marry|dating|date with|hired|fired|elected|best man|maid of honor|godfather|babysitter|sponsored by|hosted by|played by|voiced by|replaced by|starring|cast as|roommate|in bed with|woke up next to|wake up next to|lying next to|virginity to|a threesome with|threesome with|swiped right on|matched (?:me )?with|proposed to|engaged to|left me for|guest of honor was|body count includes|tell-all names)\s+____/i,
   /\bmy (?:new )?(?:boyfriend|girlfriend|husband|wife|partner|therapist|doctor|lawyer|dealer|roommate|sponsor) is ____/i,
   /____ (?:walks|walked|is|was|got|gets) (?:into|in|arrested|elected|fired|hired|pregnant)/i,
   /\bwants? to be ____|\bgrow(?:s)? up to be ____/i, // "My son wants to be ____ when he grows up."
@@ -75,7 +78,7 @@ const NAME_PROMPT = [
   /\b(?:thing|things) to (?:say|hear|whisper|shout|yell|scream)\b/i,
   /\b(?:keeps? announcing|keeps? saying|keeps? yelling) ____/i,
   /\b(?:named|nicknamed|titled|captioned|called) ____/i,
-  /\b(?:porn name|stage name|drag name|nickname|safe ?word|handle|slogan|motto|title|password|catchphrase|wordle answer|first word|last words?) (?:is|was|were|will be) ____/i, // "My parents' Wi-Fi password is ____."
+  /\b(?:porn name|stage name|drag name|(?:real|full|middle|last|first|legal|birth|maiden|street|pen|code|user|Christian) name|nickname|safe ?word|handle|slogan|motto|title|password|catchphrase|wordle answer|first word|last words?) (?:is|was|were|will be) ____/i, // "My parents' Wi-Fi password is ____."
   /\b(?:says|reads|calls (?:me|him|her|it)|call (?:me|him|her|it)) ____|\bcalls? (?:me|him|her|it)\?$/i, // "...says ____", "What does the group chat call me?"
 ];
 
