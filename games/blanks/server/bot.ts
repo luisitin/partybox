@@ -2,10 +2,10 @@
 // cards"). A bot answers with the cards that read best in the round's blank — the fit model's
 // score for the prompt's slot, the card's tier on top, and a little noise so two bots with the
 // same hand do not always agree — and votes for the submission that reads best by the same
-// yardstick. A Pick 2 / Pick 3 takes the best cards in hand order of fit; the czar still picks a
-// prompt at random (no hand to judge it against).
+// yardstick. A Pick 2 / Pick 3 takes the best cards in hand order of fit; the czar picks the
+// best-rated prompt on offer (ties at random).
 import type { Rng } from '@partybox/game-sdk';
-import { blackCard, blackSlots, whiteServes, whiteText, whiteTier } from './content';
+import { blackCard, blackSlots, blackTier, whiteServes, whiteText, whiteTier } from './content';
 import { fitScore } from './fit';
 import type { Slot } from './fit';
 import { pairBonus, punch } from './topics';
@@ -86,7 +86,12 @@ export function botInput(state: State, playerId: string, rng: Rng): Input | null
   if (state.phase.id === 'pick') {
     if (!isCzar(state, playerId) || state.blackChoices.length < 2) return null;
     if (state.blackId !== null) return null; // already chosen; the beat is running
-    return { type: 'choose', index: rng.int(0, state.blackChoices.length - 1) };
+    // The best-rated prompt on offer, ties at random: a judge who reads the room, not the deck.
+    const top = Math.max(...state.blackChoices.map(blackTier));
+    const best = state.blackChoices
+      .map((id, i) => ({ id, i }))
+      .filter((c) => blackTier(c.id) === top);
+    return { type: 'choose', index: (rng.pick(best) ?? { i: 0 }).i };
   }
   if (state.phase.id === 'answer') {
     if (isCzar(state, playerId) || hasPlayed(state, playerId)) return null;
