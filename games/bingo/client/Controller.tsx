@@ -169,7 +169,7 @@ export function Controller({
           />
         }
       >
-        <div className={styles.roundBody}>
+        <div className={`${styles.roundBody} ${styles.introBody}`}>
           <div className={styles.intro}>
             {/* The same demo the TV runs, small, in step with it (loop 290). */}
             <PatternDemo pattern={view.pattern} cells={view.patternCells} size={56} />
