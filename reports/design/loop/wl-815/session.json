@@ -1,0 +1,93 @@
+{
+  "game": "broken-pencil",
+  "room": "ZWWA",
+  "startedAt": "2026-09-19T16:20:39.221Z",
+  "endedAt": "2026-09-19T16:20:43.266Z",
+  "outcome": "aborted",
+  "lastPhase": "show",
+  "seed": 7,
+  "settings": {
+    "passes": 15,
+    "drawSeconds": 30,
+    "guessSeconds": 15,
+    "customWords": true,
+    "spicy": false
+  },
+  "players": [
+    {
+      "id": "9150dfa4-cf34-42d8-99bf-dd647f2fce3a",
+      "name": "Sam",
+      "avatar": "owl",
+      "bot": false
+    },
+    {
+      "id": "6183f166-276b-4ee4-8fa8-f94a3b82ec35",
+      "name": "Bot 1",
+      "avatar": "robot",
+      "bot": true
+    },
+    {
+      "id": "230f15f7-b95c-4e14-ba21-b0275b7ab5d1",
+      "name": "Bot 2",
+      "avatar": "robot",
+      "bot": true
+    },
+    {
+      "id": "a67f7b37-af8a-4a5a-b4f1-405db5b3a970",
+      "name": "Bot 3",
+      "avatar": "robot",
+      "bot": true
+    },
+    {
+      "id": "c5f8d8bd-2c92-4071-8a87-eaa4359da4c9",
+      "name": "Bot 4",
+      "avatar": "robot",
+      "bot": true
+    }
+  ],
+  "timeline": [
+    {
+      "phase": "pick",
+      "at": "2026-09-19T16:20:39.221Z",
+      "t": 0,
+      "seconds": 20
+    },
+    {
+      "phase": "draw",
+      "at": "2026-09-19T16:20:39.559Z",
+      "t": 0.3,
+      "seconds": 30
+    },
+    {
+      "phase": "pass",
+      "at": "2026-09-19T16:20:40.236Z",
+      "t": 1,
+      "seconds": 45
+    },
+    {
+      "phase": "pass",
+      "at": "2026-09-19T16:20:40.898Z",
+      "t": 1.7,
+      "seconds": 45
+    },
+    {
+      "phase": "pass",
+      "at": "2026-09-19T16:20:41.569Z",
+      "t": 2.3,
+      "seconds": 45
+    },
+    {
+      "phase": "guess",
+      "at": "2026-09-19T16:20:42.244Z",
+      "t": 3,
+      "seconds": 15
+    },
+    {
+      "phase": "show",
+      "at": "2026-09-19T16:20:42.920Z",
+      "t": 3.7,
+      "seconds": 5
+    }
+  ],
+  "results": null
+}
