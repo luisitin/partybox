@@ -164,9 +164,11 @@ export function servesOf(card: Pick<WhiteCard, 'text'> & { serves?: Slot[] }): S
     // ends after it — the first word alone would read "wine" as a thing.
     const pair = `${head} ${after}`;
     const pairEnds = third === '' || LINK_AFTER.test(third);
-    // "Someone's dad on Grindr.", "Cheryl's husband.": an owner's person is a person (loop 784) —
-    // but "Grandma's dominatrix career." is a career and "Mom's boyfriend's Camaro." a Camaro.
-    const owned = possessive && pairEnds && !/['’]s$|s['’]$/.test(after) && PERSON_WORD.test(after);
+    // "Someone's dad on Grindr.", "Cheryl's husband." (loop 784), "A hot nun.", "The horniest man
+    // in a Cabela's.", "A masturbating monk." (loop 816): a person word after one modifier — an
+    // owner, an adjective — is the head when the phrase ends after it; "Grandma's dominatrix
+    // career." is a career, "Mom's boyfriend's Camaro." a Camaro, "A Florida Man headline." a headline.
+    const owned = pairEnds && !/['’]s$|s['’]$/.test(after) && PERSON_WORD.test(after);
     if (
       (!possessive && ends && PERSON_WORD.test(head)) ||
       owned ||
