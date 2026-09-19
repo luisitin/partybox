@@ -37,6 +37,9 @@ export interface ScoreboardProps {
    *  `sm`: body-size rows for a two-column board under a tall header (a 12-player wager screen,
    *  review-loop #53). */
   size?: 'sm' | 'md' | 'lg';
+  /** `3`: the three-column tier from any count — a board under a three-row roster (Lightning's
+   *  12-player wager page: two columns of six rows ran into the host bar). */
+  columns?: 2 | 3;
   /** Rows to mark with a ✓ in the delta slot when they carry no delta (e.g. "wager placed"). */
   markIds?: readonly string[];
   /**
@@ -51,9 +54,9 @@ type Tier = 'compact' | 'roomy' | 'tight' | 'dense' | 'tight3';
 
 const COLUMNS: Record<Tier, number> = { compact: 1, roomy: 1, tight: 1, dense: 2, tight3: 3 };
 
-export function tierOf(count: number, compact?: boolean, dense?: boolean): Tier {
+export function tierOf(count: number, compact?: boolean, dense?: boolean, columns?: 2 | 3): Tier {
   if (compact) return 'compact';
-  if (count >= 13) return 'tight3';
+  if (count >= 13 || columns === 3) return 'tight3';
   if (dense ?? count >= 7) return 'dense';
   if (count >= 5) return 'tight';
   return 'roomy';
@@ -64,10 +67,15 @@ export function tierOf(count: number, compact?: boolean, dense?: boolean): Tier 
  *  Compact boards do not stagger, so they land at once. */
 export function boardLandedMs(
   count: number,
-  opts: { compact?: boolean; dense?: boolean; stagger?: 'up' | 'down' | false } = {},
+  opts: {
+    compact?: boolean;
+    dense?: boolean;
+    columns?: 2 | 3;
+    stagger?: 'up' | 'down' | false;
+  } = {},
 ): number {
   if (opts.compact || opts.stagger === false) return 0;
-  const cols = COLUMNS[tierOf(count, opts.compact, opts.dense)];
+  const cols = COLUMNS[tierOf(count, opts.compact, opts.dense, opts.columns)];
   // Half spacing on the multi-column tiers and for `down`, so 16 rows still land inside ~1.2 s;
   // mirrors --pb-stagger-step in the CSS.
   const stepMs = cols > 1 || opts.stagger === 'down' ? MOTION_FAST / 2 : MOTION_FAST;
@@ -87,16 +95,17 @@ export function Scoreboard({
   noTrophy,
   dense,
   size = 'md',
+  columns,
   markIds = [],
   stagger = 'up',
 }: ScoreboardProps): JSX.Element {
-  const tier = tierOf(rows.length, compact, dense);
+  const tier = tierOf(rows.length, compact, dense, columns);
   const cols = COLUMNS[tier];
   const winners = rows.filter((r) => r.rank === 1).length;
   const trophy = !noTrophy && winners < rows.length;
   const staggered = !compact && stagger !== false;
   const order = (index: number): number => (stagger === 'down' ? index : rows.length - 1 - index);
-  const countDelayMs = boardLandedMs(rows.length, { compact, dense, stagger });
+  const countDelayMs = boardLandedMs(rows.length, { compact, dense, columns, stagger });
   return (
     <ol
       className={`${styles.board} ${tier === 'roomy' ? '' : styles[tier]} ${size === 'lg' ? styles.lg : size === 'sm' ? styles.sm : ''} ${staggered ? styles.staggered : ''} ${staggered && stagger === 'down' ? styles.down : ''}`}
