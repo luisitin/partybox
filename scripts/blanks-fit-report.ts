@@ -31,6 +31,8 @@ const { values } = parseArgs({
     /** Write a transcript of this many rounds — every submission filled in, the votes, the winner — here. */
     transcript: { type: 'string' },
     rounds: { type: 'string', default: '20' },
+    /** Rounds per simulated game (3–15; the manifest's range). */
+    gameRounds: { type: 'string', default: '8' },
   },
 });
 const sampleN = Number(values.sample);
@@ -103,7 +105,13 @@ for (let r = 0; r < runs; r += 1) {
     seed: seed0 + r,
     players,
     strategy: 'fast',
-    settings: { rounds: 8, judge: 'vote', decks: preset, timed: true, answerSeconds: 30 },
+    settings: {
+      rounds: Number(values.gameRounds),
+      judge: 'vote',
+      decks: preset,
+      timed: true,
+      answerSeconds: 30,
+    },
   });
   let state = game.init({
     players: result.init.players,
