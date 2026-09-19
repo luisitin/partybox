@@ -1,0 +1,79 @@
+{
+  "pass": "601",
+  "game": "wisecrack",
+  "players": 8,
+  "scenario": "walkover",
+  "focus": "phone",
+  "started": "11:38:01.104",
+  "tvVideoT0": "11:37:57.732",
+  "phoneVideoT0": "11:37:58.664",
+  "changes": [
+    {
+      "t": 1789817881107,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789817886098,
+      "bed": "warm",
+      "at": "11:38:01.107",
+      "sinceStartS": 0,
+      "videoS": 3.4,
+      "phoneVideoS": 2.4
+    },
+    {
+      "t": 1789817886135,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789817946106,
+      "bed": null,
+      "at": "11:38:06.135",
+      "sinceStartS": 5,
+      "videoS": 8.4,
+      "phoneVideoS": 7.5
+    },
+    {
+      "t": 1789817946157,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789817952108,
+      "bed": "marimba",
+      "at": "11:39:06.157",
+      "sinceStartS": 65.1,
+      "videoS": 68.4,
+      "phoneVideoS": 67.5
+    },
+    {
+      "t": 1789817952223,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789817958111,
+      "bed": "marimba",
+      "at": "11:39:12.223",
+      "sinceStartS": 71.1,
+      "videoS": 74.5,
+      "phoneVideoS": 73.6
+    },
+    {
+      "t": 1789817958151,
+      "status": "playing",
+      "phase": "scores",
+      "deadline": 1789817966119,
+      "bed": "lounge",
+      "at": "11:39:18.151",
+      "sinceStartS": 77,
+      "videoS": 80.4,
+      "phoneVideoS": 79.5
+    },
+    {
+      "t": 1789817966155,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789817971121,
+      "bed": "warm",
+      "at": "11:39:26.155",
+      "sinceStartS": 85.1,
+      "videoS": 88.4,
+      "phoneVideoS": 87.5
+    }
+  ],
+  "notes": ["budget reached while playing; skipped to results"]
+}

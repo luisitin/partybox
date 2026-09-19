@@ -16,6 +16,10 @@ describe('slotOf — what the blank wants', () => {
       'What does the group chat call me?',
       `My résumé's "special skills" section says ____.`,
       'Neverland Ranch had a ride called ____.',
+      "What's Trump's safe word?",
+      'What did the parrot repeat at Thanksgiving?',
+      'The new theme park ride is called "The ____."',
+      "My parents' Wi-Fi password is ____.",
     ])
       expect(slotOf({ text }), text).toBe('name');
   });
@@ -42,6 +46,16 @@ describe('slotOf — what the blank wants', () => {
       "What's my signature move in bed?",
       "My public defender's strategy was ____.",
       "What's the one thing I'll never live down?",
+      'The Olympics added a new event: ____.',
+      'The eleventh commandment: thou shalt not ____.',
+      'What did Mark Zuckerberg practise in the mirror?',
+      "The company retreat's trust exercise turned into ____.",
+      'My alibi is ____.',
+      'The Ring doorbell caught the neighbor ____.',
+      'Pompeii froze one man in the middle of ____.',
+      'The gym class substitute made us do ____.',
+      'The best way to annoy a sibling: ____.',
+      'The referee threw a flag for ____.',
       'The moonwalk was actually Michael Jackson ____.',
       "What's the secret to a happy marriage?",
       'The livestream ended abruptly with ____.',
@@ -57,6 +71,11 @@ describe('slotOf — what the blank wants', () => {
       'I lost my virginity to ____.',
       "Disney's next princess is ____.",
       'My son wants to be ____ when he grows up.',
+      'The dating app matched me with ____.',
+      "The senator's mistress was actually ____.",
+      'The talent show was won by ____.',
+      'The next Star Wars spin-off follows ____.',
+      "My kid's imaginary friend is ____.",
     ])
       expect(slotOf({ text }), text).toBe('person');
   });

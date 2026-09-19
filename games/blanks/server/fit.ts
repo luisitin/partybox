@@ -22,8 +22,9 @@ const DOING_PROMPT = [
   /^____ and ____: what\b/, // "____ and ____: what the Airbnb's two hidden cameras caught."
   /\bdo (?:at|in|on|to|with|for|instead|before|after|during|while|when|all day|every)\b/i, // "What did Lincoln do at…", "…do while I'm at work?"
   /\b(?:was|is|were) actually (?:[A-Z][\w']+ ){1,3}____/, // "The moonwalk was actually Michael Jackson ____."
-  /\b(?:does|did|caught (?:me|him|her|them|us)|busy|instead of|after|before|while|during|conceived during|spent (?:the \w+|\w+ years?)|most likely to)\s+____/i,
+  /\b(?:does|did|caught (?:me|him|her|them|us|the \w+)|busy|instead of|after|before|while|during|in the middle of|conceived during|spent (?:the \w+|\w+ years?)|most likely to|made (?:me|us|them|him|her) do|performed|opened with|threw a flag for|flag for)\s+____/i,
   /["“]Most Likely To["”] was ____/i, // the yearbook's
+  /\b(?:best|worst|favou?rite|only|fastest|quickest) way to \w+/i, // "The best way to annoy a sibling: ____."
   // (No trailing \b: after "on?" the end of the text is no word boundary — "What did the kids walk
   // in on?" read as a thing for twenty passes.)
   /\b(?:what happened|what went wrong|walk(?:ed)? in on\?|catch (?:\w+ )+doing\b|am I doing\b|are you doing\b|^how did\b|^why\b)/i,
@@ -33,11 +34,12 @@ const DOING_PROMPT = [
   // "What got me banned…?", "What ended the marriage?", "the secret to a happy marriage", "the
   // CIA's new interrogation technique": what someone did, or does.
   /^What (?:got|ended|finally ended|killed|ruined|started|caused|broke up)\b/i,
-  /\b(?:technique|trick|secret to|real reason for|reason the [\w' ]+ ended|mistake (?:was|is)|biggest mistake|first mistake|mistake: ____|strategy (?:was|is)|plan (?:was|is)|never live down|live down)\b/i,
+  /\b(?:technique|trick|secret to|real reason for|reason the [\w' ]+ ended|mistake (?:was|is)|biggest mistake|first mistake|mistake: ____|strategy (?:was|is)|plan (?:was|is)|never live down|live down|alibi (?:is|was|involves)|shalt not|practi[sc]e)\b/i,
+  /\b(?:turned into|opens with|cuts to|closes with) ____/i, // "…trust exercise turned into ____", "The sex tape opens with ____"
   /\b(?:done|did|loved|dare (?:was|is)|ritual (?:was|is)): ____|doing what \w+ loved/i,
   /\b(?:arrested|fired|executed|burned|shut down|raided|resigned|banned|expelled|sued|jailed|convicted|dumped|put (?:\w+ ){1,2}down|quit|walked out|kicked out)\b[^.]* (?:for|over) ____/i,
   // A ritual, a dare, an activity, a way to get something: what someone does.
-  /\b(?:ritual|hazing|dare|tradition|activity|hobby|pastime|challenge|way to get|specializes in|known for|charged? extra for|signature move|finishing move|move in bed)\b/i,
+  /\b(?:ritual|hazing|dare|tradition|activity|hobby|pastime|challenge|way to get|specializes in|known for|charged? extra for|signature move|finishing move|move in bed|new event: ____|as an event)\b/i,
 ];
 /** "Renamed itself after ____", "modeled after ____": a thing, not an event after which. */
 const NAMED_AFTER = /\b(?:named|renamed|modeled|modelled|patterned|fashioned)\b[^.]*after ____/i;
@@ -45,23 +47,26 @@ const NAMED_AFTER = /\b(?:named|renamed|modeled|modelled|patterned|fashioned)\b[
 const PERSON_PROMPT = [
   /^Who(?:'s|se)?\b/i,
   /\bwho\b[^.?]*\?$/i,
-  /\b(?:goes to|went to|awarded to|belongs to|married|marry|dating|date with|hired|fired|elected|best man|maid of honor|godfather|babysitter|sponsored by|hosted by|played by|voiced by|replaced by|starring|cast as|roommate|in bed with|woke up next to|wake up next to|lying next to|virginity to|a threesome with|threesome with|swiped right on|matched with|proposed to|engaged to|left me for|guest of honor was|body count includes|tell-all names)\s+____/i,
+  /\b(?:goes to|went to|awarded to|belongs to|married|marry|dating|date with|hired|fired|elected|best man|maid of honor|godfather|babysitter|sponsored by|hosted by|played by|voiced by|replaced by|starring|cast as|roommate|in bed with|woke up next to|wake up next to|lying next to|virginity to|a threesome with|threesome with|swiped right on|matched (?:me )?with|proposed to|engaged to|left me for|guest of honor was|body count includes|tell-all names)\s+____/i,
   /\bmy (?:new )?(?:boyfriend|girlfriend|husband|wife|partner|therapist|doctor|lawyer|dealer|roommate|sponsor) is ____/i,
   /____ (?:walks|walked|is|was|got|gets) (?:into|in|arrested|elected|fired|hired|pregnant)/i,
   /\bwants? to be ____|\bgrow(?:s)? up to be ____/i, // "My son wants to be ____ when he grows up."
+  /\b(?:won|led|hosted|coached|taught|raised|narrated|officiated|catered) by ____|\b(?:spin-off|reboot|sequel|show|series|documentary) follows ____|\bimaginary friend (?:is|was) ____/i,
+  /\b(?:mistress|lover|secret admirer|stalker|sugar daddy|sugar baby|new stepdad|new stepmom) (?:was|is) (?:actually |secretly |really )?____/i, // "The senator's mistress was actually ____."
   // "Disney's next princess is ____.", "The Bachelor's final rose went to ____."
   /\b(?:princess|prince|villain|hero|superhero|host|judge|contestant|headliner|bachelor|bachelorette|winner|champion|mvp|nominee|role model|spokesperson) (?:is|was|will be) ____/i,
 ];
 /** Prompts whose blank is a name: a title, a nickname, a safe word, a line someone says. */
 const NAME_PROMPT = [
-  /["“]____|____["”]|#____/, // a quoted blank, a hashtag
-  /^What(?:'s| is| was) (?:my|the|your|his|her|their) [\w' -]*(?:name|nickname|handle|safe ?word|title|slogan|catchphrase|motto|password)\?/i,
+  /["“]____|____\.?["”]|#____/, // a quoted blank ("The ____." too), a hashtag
+  /^What(?:'s| is| was) [\w' -]*(?:name|nickname|handle|safe ?word|title|slogan|catchphrase|motto|password)\?/i, // "What's Trump's safe word?"
   /\b(?:called|titled|named|nicknamed)\?$/i, // 'the porn parody of "Frozen" called?'
-  /^What did .* (?:say|whisper|shout|yell|scream|write|announce|text|sext|tweet|post)\b/i,
+  /^What did .* (?:say|whisper|shout|yell|scream|write|announce|text|sext|tweet|post|repeat)\b/i,
   /\bthing (?:I|you|he|she|they|we)(?:'ve|'d|'s)? (?:ever )?(?:said|yelled|texted|whispered|posted|tweeted)\b/i,
   /\b(?:thing|things) to (?:say|hear|whisper|shout|yell|scream)\b/i,
   /\b(?:keeps? announcing|keeps? saying|keeps? yelling) ____/i,
   /\b(?:named|nicknamed|titled|captioned|called) ____/i,
+  /\b(?:porn name|stage name|drag name|nickname|safe ?word|handle|slogan|motto|title|password|catchphrase|wordle answer|first word|last words?) (?:is|was|were|will be) ____/i, // "My parents' Wi-Fi password is ____."
   /\b(?:says|reads|calls (?:me|him|her|it)|call (?:me|him|her|it)) ____|\bcalls? (?:me|him|her|it)\?$/i, // "...says ____", "What does the group chat call me?"
 ];
 
