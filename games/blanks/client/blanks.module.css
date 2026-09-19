@@ -387,14 +387,17 @@
 }
 
 /* The final board sits beside the night's best card when there is one (a column under 1100px). */
+/* Never `min-height: 0` here: a stage a little short of the board let flex shrink this row and
+   centre the overflow, so six rows ran through "It's a tie…" and twelve ran off the stage
+   (review-loop #354). Content-sized, the stage overflows downward instead — and the board is
+   dealt in two columns from five rows so it never has to. */
 .finalRow {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   justify-items: center;
-  align-items: center;
+  align-items: start;
   gap: var(--pb-space-5);
   width: 100%;
-  min-height: 0;
 }
 
 @media (min-width: 1100px) {

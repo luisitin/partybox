@@ -129,7 +129,16 @@ function TvFinal({ view }: Props): JSX.Element {
       <BigText level="h1">Final scores</BigText>
       <div className={styles.finalRow}>
         <div className={styles.board}>
-          <Scoreboard rows={view.standings} noTrophy stagger="up" />
+          {/* Two columns from five rows and body-size rows from nine: beside the card of the
+              night, under a two- or three-row chip strip, a single column of six h2 rows ran
+              through the tease line and twelve rows off the stage (review-loop #354). */}
+          <Scoreboard
+            rows={view.standings}
+            noTrophy
+            stagger="up"
+            dense={view.standings.length >= 5}
+            size={view.standings.length >= 9 ? 'sm' : 'md'}
+          />
         </div>
         {/* The night's best-liked card, back on the table one last time (review-loop #191). */}
         {best ? (
