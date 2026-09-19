@@ -1,0 +1,112 @@
+{
+  "pass": "837",
+  "game": "wisecrack",
+  "players": 8,
+  "scenario": "walkover",
+  "focus": "tv",
+  "started": "17:04:37.993",
+  "tvVideoT0": "17:04:34.601",
+  "phoneVideoT0": "17:04:35.528",
+  "changes": [
+    {
+      "t": 1789837477995,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789837482989,
+      "bed": "warm",
+      "at": "17:04:37.995",
+      "sinceStartS": 0,
+      "videoS": 3.4,
+      "phoneVideoS": 2.5
+    },
+    {
+      "t": 1789837483018,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789837512990,
+      "bed": null,
+      "at": "17:04:43.018",
+      "sinceStartS": 5,
+      "videoS": 8.4,
+      "phoneVideoS": 7.5
+    },
+    {
+      "t": 1789837513023,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789837519005,
+      "bed": "marimba",
+      "at": "17:05:13.023",
+      "sinceStartS": 35,
+      "videoS": 38.4,
+      "phoneVideoS": 37.5
+    },
+    {
+      "t": 1789837519110,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789837525016,
+      "bed": "marimba",
+      "at": "17:05:19.110",
+      "sinceStartS": 41.1,
+      "videoS": 44.5,
+      "phoneVideoS": 43.6
+    },
+    {
+      "t": 1789837525029,
+      "status": "playing",
+      "phase": "scores",
+      "deadline": 1789837533022,
+      "bed": "lounge",
+      "at": "17:05:25.029",
+      "sinceStartS": 47,
+      "videoS": 50.4,
+      "phoneVideoS": 49.5
+    },
+    {
+      "t": 1789837533126,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789837538025,
+      "bed": "warm",
+      "at": "17:05:33.126",
+      "sinceStartS": 55.1,
+      "videoS": 58.5,
+      "phoneVideoS": 57.6
+    },
+    {
+      "t": 1789837538077,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789837568036,
+      "bed": null,
+      "at": "17:05:38.077",
+      "sinceStartS": 60.1,
+      "videoS": 63.5,
+      "phoneVideoS": 62.5
+    },
+    {
+      "t": 1789837568143,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789837574045,
+      "bed": "lofi",
+      "at": "17:06:08.143",
+      "sinceStartS": 90.2,
+      "videoS": 93.5,
+      "phoneVideoS": 92.6
+    },
+    {
+      "t": 1789837574079,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789837580046,
+      "bed": "lofi",
+      "at": "17:06:14.079",
+      "sinceStartS": 96.1,
+      "videoS": 99.5,
+      "phoneVideoS": 98.6
+    }
+  ],
+  "notes": ["budget reached while playing; skipped to results"]
+}
