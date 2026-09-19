@@ -117,6 +117,23 @@
   --pb-font-h2: 26px;
 }
 
+/* A checklist (ADR-034) takes the whole row: eight topic chips in one column of the grid wrapped
+   into three rows and pushed the "n ticked" hint under the panel's edge (loop 418). */
+.settings > fieldset {
+  grid-column: 1 / -1;
+}
+
+/* Compact chips on the TV: nobody taps them from the couch, and the panel has no room to scroll. */
+.settings > fieldset label {
+  min-height: 36px;
+  padding: 0 10px;
+  font-size: 20px;
+}
+
+.settings > fieldset > small {
+  display: none;
+}
+
 /* Ten settings (bingo): three columns, smaller labels, description clamped to three lines. */
 .dense .settings {
   grid-template-columns: repeat(3, minmax(0, 1fr));
