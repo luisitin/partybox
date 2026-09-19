@@ -114,6 +114,9 @@ describe('servesOf — what the white card is', () => {
     expect(servesOf({ text: "Someone's dad on Grindr." })).toEqual(['person', 'name']);
     expect(servesOf({ text: "Cheryl's husband." })).toEqual(['person', 'name']);
     expect(servesOf({ text: "The groom's ex at the reception." })).toEqual(['person']);
+    expect(servesOf({ text: 'A hot nun.' })).toEqual(['person', 'name']);
+    expect(servesOf({ text: "The horniest man in a Cabela's." })).toEqual(['person']);
+    expect(servesOf({ text: 'A Florida Man headline.' })).toEqual(['thing', 'name']);
     expect(servesOf({ text: "Grandma's dominatrix career." })).toEqual(['thing', 'name']);
     expect(servesOf({ text: "Mom's boyfriend's Camaro." })).toEqual(['thing', 'name']);
   });
