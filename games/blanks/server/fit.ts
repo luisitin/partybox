@@ -20,7 +20,8 @@ const DOING_PROMPT = [
   /\b(?:do|doing|done)\?["”]?$/i, // "What did the sex robot refuse to do?"
   /\bdo (?:at|in|on|to|with|for|instead|before|after|during)\b/i, // "What did Lincoln do at…"
   /\b(?:does|did|caught (?:me|him|her|them|us)|busy|instead of|after|before|while|spent (?:the \w+|\w+ years?))\s+____/i,
-  /\b(?:what happened|what went wrong|walk(?:ed)? in on\?|catch (?:\w+ )+doing|am I doing|are you doing|^how did)\b/i,
+  /\b(?:what happened|what went wrong|walk(?:ed)? in on\?|catch (?:\w+ )+doing|am I doing|are you doing|^how did|^why\b)\b/i,
+  /\b(?:pulled (?:me|us|him|her) over|in trouble|grounded|detention|suspended|deported|excommunicated|disqualified|demonetized|cancel(?:l)?ed) (?:\w+ )?for ____/i,
   /\b(?:ruined|interrupted|cancelled|canceled|delayed|caused|started|ended|followed|triggered|brought on) by ____/i,
   /\b(?:led to|ended (?:\w+ )?(?:with|in)|started with|began with) ____\.?$/i,
   // "What got me banned…?", "What ended the marriage?", "the secret to a happy marriage", "the
@@ -47,7 +48,8 @@ const NAME_PROMPT = [
   /["“]____|____["”]/, // a quoted blank
   /^What(?:'s| is| was) (?:my|the|your|his|her|their) [\w' -]*(?:name|nickname|handle|safe ?word|title|slogan|catchphrase|motto|password)\?/i,
   /\b(?:called|titled|named|nicknamed)\?$/i, // 'the porn parody of "Frozen" called?'
-  /^What did .* (?:say|whisper|shout|yell|scream|write|announce)\b/i,
+  /^What did .* (?:say|whisper|shout|yell|scream|write|announce|text|sext|tweet|post)\b/i,
+  /\bthing (?:I|you|he|she|they|we)(?:'ve|'d|'s)? (?:ever )?(?:said|yelled|texted|whispered|posted|tweeted)\b/i,
   /\b(?:thing|things) to (?:say|hear|whisper|shout|yell|scream)\b/i,
   /\b(?:keeps? announcing|keeps? saying|keeps? yelling) ____/i,
   /\b(?:named|nicknamed|titled|captioned) ____/i,
