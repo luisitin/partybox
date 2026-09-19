@@ -105,6 +105,9 @@ describe('servesOf — what the white card is', () => {
     expect(servesOf({ text: 'Parallel parking with an audience.' })).toEqual(['doing']);
     expect(servesOf({ text: 'Extreme couponing.' })).toEqual(['doing', 'name']);
     expect(servesOf({ text: 'Ranch dressing at a wake.' })).toEqual(['thing']);
+    // …and a gerund that is half of a noun is not a verb.
+    expect(servesOf({ text: 'Breaking news: your nudes.' })).toEqual(['thing', 'name']);
+    expect(servesOf({ text: 'Reading glasses on the head, then lost.' })).toEqual(['thing']);
   });
 
   it("an owner's person is a person: Someone's dad, the groom's ex — not Grandma's career", () => {
