@@ -101,6 +101,8 @@ describe('servesOf — what the white card is', () => {
   it('an event named as a noun is a thing that also reads as a doing', () => {
     expect(servesOf({ text: 'A threesome with a mime.' })).toEqual(['thing', 'doing']);
     expect(servesOf({ text: 'Anal in a canoe.' })).toEqual(['thing', 'doing', 'name']);
+    expect(servesOf({ text: 'A bachelor party at Chuck E. Cheese.' })).toEqual(['thing', 'doing']);
+    expect(servesOf({ text: 'A trust fall off the roof.' })).toEqual(['thing', 'doing']);
     expect(fitScore('doing', servesOf({ text: 'A threesome with a mime.' }))).toBe(1);
   });
   it('a short card is also a name (four words or fewer)', () => {

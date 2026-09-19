@@ -34,8 +34,11 @@ const floorOf = (kind: WhiteKind): number => KIND_FLOORS[kind];
 /** …and at least this many great cards (tier 3 or 4) — half the hand (owner, 2026-09-18: "at
  *  least half of their cards as really good cards")… */
 export const GOOD_FLOOR = HAND_SIZE / 2;
-/** …of which at least this many amazing ones (tier 4: the best two hundred or so of a deck). */
+/** …of which at least this many amazing ones (tier 4: the best two hundred or so of a deck)… */
 export const BEST_FLOOR = 2;
+/** …and at most this many filler cards (tier 1): nobody plays them, so a hand silts up with
+ *  them round after round — a fifth of hands held three or more before the cap (loop 602). */
+export const FILLER_CAP = 2;
 /** How many cards a round may swap out of one hand to meet the kind floor: a hand loses one card
  *  a round, so a top-up alone can never climb from none of a kind to two (review-loop #175). */
 const MAX_SWAPS = 2;
@@ -52,6 +55,7 @@ function countKind(hand: readonly string[], kind: WhiteKind): number {
 
 const isGood = (id: string): boolean => whiteTier(id) >= 3;
 const isBest = (id: string): boolean => whiteTier(id) === 4;
+const isFiller = (id: string): boolean => whiteTier(id) === 1;
 
 /** The hand has a card that reads as `kind` first (`name` is only ever a second reading, so it
  *  always counts as led): the top of a hand leads with one card of each kind by first reading. */
@@ -171,6 +175,13 @@ function fillHand(state: State, hand: readonly string[], target: number): [strin
     [out, next] = swapped;
     goodSwaps += 1;
   }
+  let fillerSwaps = 0;
+  while (out.filter(isFiller).length > FILLER_CAP && fillerSwaps < 2) {
+    const swapped = swapForGood(next, out, (id) => !isFiller(id), isFiller);
+    if (swapped === null) break;
+    [out, next] = swapped;
+    fillerSwaps += 1;
+  }
   const varied = swapForVariety(next, out);
   if (varied !== null) [out, next] = varied;
   return [out, next];
@@ -245,7 +256,8 @@ export function refillHands(state: State, extra = 0, extraFor: readonly string[]
       hand.length >= target &&
       countsMeetFloor(hand) &&
       countGood(hand) >= GOOD_FLOOR &&
-      countBest(hand) >= BEST_FLOOR
+      countBest(hand) >= BEST_FLOOR &&
+      hand.filter(isFiller).length <= FILLER_CAP
     )
       continue;
     const [filled, after] = fillHand(next, hand, Math.max(target, hand.length));

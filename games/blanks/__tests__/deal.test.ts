@@ -1,7 +1,7 @@
 // Dealing (README "Players" and the round start): distinct cards, the kind, quality and variety
 // floors, the black deck's order, and the hand leading with the prompt's best fits.
 import { describe, expect, it } from 'vitest';
-import { BEST_FLOOR, GOOD_FLOOR, KIND_FLOORS, refillHands } from '../server/deal';
+import { BEST_FLOOR, FILLER_CAP, GOOD_FLOOR, KIND_FLOORS, refillHands } from '../server/deal';
 import { topicsOf } from '../server/topics';
 import { fitScore, servesOf } from '../server/fit';
 import {
@@ -82,6 +82,18 @@ describe('dealing', () => {
       for (let i = 1; i < fits.length; i += 1)
         expect(fits[i - 1]).toBeGreaterThanOrEqual(fits[i] as number);
       expect(whiteServes(hand[0] as string)).toContain('doing');
+    }
+  });
+
+  it('a hand never holds more than two filler cards (they silt up: nobody plays them)', () => {
+    let s = start({ players: 6, decks: 'wild-only', seed: 13, rounds: 8 });
+    for (let round = 1; round <= 8; round++) {
+      for (const id of Object.keys(s.players)) {
+        const filler = (s.hands[id] ?? []).filter((c) => whiteTier(c) === 1).length;
+        expect(filler, `r${round} ${id}`).toBeLessThanOrEqual(FILLER_CAP);
+      }
+      s = timer(playRound(s));
+      if (s.phase.id === 'final' || s.phase.id === 'done') break;
     }
   });
 
