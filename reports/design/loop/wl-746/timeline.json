@@ -1,0 +1,90 @@
+{
+  "pass": "655",
+  "game": "lightning-round",
+  "players": 5,
+  "scenario": "walkover",
+  "focus": "tv",
+  "started": "14:07:06.824",
+  "tvVideoT0": "14:07:03.538",
+  "phoneVideoT0": "14:07:04.340",
+  "changes": [
+    {
+      "t": 1789826826825,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789826830818,
+      "bed": "marimba",
+      "at": "14:07:06.825",
+      "sinceStartS": 0,
+      "videoS": 3.3,
+      "phoneVideoS": 2.5
+    },
+    {
+      "t": 1789826830909,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789826845822,
+      "bed": "pulse",
+      "at": "14:07:10.909",
+      "sinceStartS": 4.1,
+      "videoS": 7.4,
+      "phoneVideoS": 6.6
+    },
+    {
+      "t": 1789826845890,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789826850837,
+      "bed": "pulse",
+      "at": "14:07:25.890",
+      "sinceStartS": 19.1,
+      "videoS": 22.4,
+      "phoneVideoS": 21.6
+    },
+    {
+      "t": 1789826850885,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789826865837,
+      "bed": "pulse",
+      "at": "14:07:30.885",
+      "sinceStartS": 24.1,
+      "videoS": 27.3,
+      "phoneVideoS": 26.5
+    },
+    {
+      "t": 1789826865868,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789826870841,
+      "bed": "pulse",
+      "at": "14:07:45.868",
+      "sinceStartS": 39,
+      "videoS": 42.3,
+      "phoneVideoS": 41.5
+    },
+    {
+      "t": 1789826870850,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789826885845,
+      "bed": "pulse",
+      "at": "14:07:50.850",
+      "sinceStartS": 44,
+      "videoS": 47.3,
+      "phoneVideoS": 46.5
+    },
+    {
+      "t": 1789826885968,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789826890855,
+      "bed": "pulse",
+      "at": "14:08:05.968",
+      "sinceStartS": 59.1,
+      "videoS": 62.4,
+      "phoneVideoS": 61.6
+    }
+  ],
+  "notes": ["budget reached while playing; skipped to results"]
+}
