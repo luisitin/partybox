@@ -8,7 +8,7 @@ import { start, toAnswer } from './helpers';
 const DOING = 'wb267'; // "What did the sex robot refuse to do?"
 const THING = 'wb8'; // "What's in my nightstand drawer?"
 const GERUND = 'ww484'; // "Farting during a prostate exam."
-const NOUN = 'ww3'; // "A dick so big it has its own zip code." (tier 3, as the others)
+const NOUN = 'ww3'; // "A dick so big it has its own zip code." (tier 4, as the others)
 const PERSON = 'ww383'; // "A nun with a strap-on."
 
 describe('bestCards', () => {

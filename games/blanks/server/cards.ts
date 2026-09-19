@@ -57,9 +57,11 @@ export function drawBlack(state: State, pool: readonly string[]): [string | null
 
 /** A hand always holds at least this many cards of each kind (thing / doing / person). */
 export const KIND_FLOOR = 2;
-/** …and at least this many tier-3 cards — half the hand (owner, 2026-09-18: "at least half of
- *  their cards as really good cards"). */
+/** …and at least this many great cards (tier 3 or 4) — half the hand (owner, 2026-09-18: "at
+ *  least half of their cards as really good cards")… */
 export const GOOD_FLOOR = HAND_SIZE / 2;
+/** …of which at least this many amazing ones (tier 4: the best two hundred or so of a deck). */
+export const BEST_FLOOR = 2;
 /** How many cards a round may swap out of one hand to meet the kind floor: a hand loses one card
  *  a round, so a top-up alone can never climb from none of a kind to two (review-loop #175). */
 const MAX_SWAPS = 2;
@@ -67,13 +69,15 @@ const MAX_SWAPS = 2;
  *  came back from a Pick 2 with two great cards and the kind swap had just dropped one (loop
  *  #500); the loop only runs while the hand is short, so the floor bounds it anyway. */
 const MAX_GOOD_SWAPS = GOOD_FLOOR;
+const MAX_BEST_SWAPS = 2;
 
 /** Cards in the hand that serve `kind` (a short thing is a thing and a name). */
 function countKind(hand: readonly string[], kind: WhiteKind): number {
   return hand.filter((id) => whiteServes(id).includes(kind)).length;
 }
 
-const isGood = (id: string): boolean => whiteTier(id) === 3;
+const isGood = (id: string): boolean => whiteTier(id) >= 3;
+const isBest = (id: string): boolean => whiteTier(id) === 4;
 
 /** The hand has a card that reads as `kind` first (`name` is only ever a second reading, so it
  *  always counts as led): the top of a hand leads with one card of each kind by first reading. */
@@ -83,6 +87,10 @@ function leads(hand: readonly string[], kind: WhiteKind): boolean {
 
 function countGood(hand: readonly string[]): number {
   return hand.filter(isGood).length;
+}
+
+function countBest(hand: readonly string[]): number {
+  return hand.filter(isBest).length;
 }
 
 /** The first card in the white deck that `wants`, taken out of its place. A deck with none left
@@ -133,6 +141,12 @@ function fillHand(state: State, hand: readonly string[], target: number): [strin
       out.push(card);
     }
   }
+  while (countBest(out) < BEST_FLOOR && out.length < target) {
+    const [card, after] = takeWhere(next, isBest);
+    if (card === null) break;
+    next = after;
+    out.push(card);
+  }
   while (countGood(out) < GOOD_FLOOR && out.length < target) {
     const [card, after] = takeWhere(next, isGood);
     if (card === null) break;
@@ -169,9 +183,16 @@ function fillHand(state: State, hand: readonly string[], target: number): [strin
       swaps += 1;
     }
   }
+  let bestSwaps = 0;
+  while (countBest(out) < BEST_FLOOR && bestSwaps < MAX_BEST_SWAPS) {
+    const swapped = swapForGood(next, out, isBest);
+    if (swapped === null) break;
+    [out, next] = swapped;
+    bestSwaps += 1;
+  }
   let goodSwaps = 0;
   while (countGood(out) < GOOD_FLOOR && goodSwaps < MAX_GOOD_SWAPS) {
-    const swapped = swapForGood(next, out);
+    const swapped = swapForGood(next, out, isGood);
     if (swapped === null) break;
     [out, next] = swapped;
     goodSwaps += 1;
@@ -184,10 +205,14 @@ function fillHand(state: State, hand: readonly string[], target: number): [strin
  *  without the spare. Null when no spare has a great card to cover it. (The old rule wanted a
  *  spare that served no kind at its floor and a great card of the very same kind; a hand whose
  *  spare things all read as names too had no spare at all and stopped at four — loop #472.) */
-function swapForGood(state: State, hand: readonly string[]): [string[], State] | null {
+function swapForGood(
+  state: State,
+  hand: readonly string[],
+  wants: (id: string) => boolean = isGood,
+): [string[], State] | null {
   const spares = hand
     .map((id, i) => ({ id, i }))
-    .filter(({ id }) => !isGood(id))
+    .filter(({ id }) => !wants(id))
     .sort((a, b) => whiteTier(a.id) - whiteTier(b.id));
   for (const { id: dropped, i } of spares) {
     const rest = hand.filter((_, j) => j !== i);
@@ -199,7 +224,7 @@ function swapForGood(state: State, hand: readonly string[]): [string[], State] |
     const [card, after] = takeWhere(
       state,
       (id) =>
-        isGood(id) &&
+        wants(id) &&
         needs.every((k) => whiteServes(id).includes(k)) &&
         (lead === null || whiteKind(id) === lead),
     );
@@ -216,7 +241,13 @@ export function refillHands(state: State, extra = 0, extraFor: readonly string[]
   for (const id of Object.keys(state.players).sort()) {
     const target = HAND_SIZE + (extraFor.includes(id) ? extra : 0);
     const hand = hands[id] ?? [];
-    if (hand.length >= target && countsMeetFloor(hand) && countGood(hand) >= GOOD_FLOOR) continue;
+    if (
+      hand.length >= target &&
+      countsMeetFloor(hand) &&
+      countGood(hand) >= GOOD_FLOOR &&
+      countBest(hand) >= BEST_FLOOR
+    )
+      continue;
     const [filled, after] = fillHand(next, hand, Math.max(target, hand.length));
     // A fresh shuffle every round: cards were appended to the end, so the top of the hand never
     // changed and a phone showed the same four cards round after round while the new ones sat

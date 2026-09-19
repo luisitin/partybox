@@ -38,7 +38,7 @@ describe('hand floors', () => {
   it('every hand holds five great cards wherever the pool has tiers', () => {
     sweep((hand, where) => {
       if (UNTIERED.some((d) => where.startsWith(d))) return;
-      const good = hand.filter((c) => whiteTier(c) === 3).length;
+      const good = hand.filter((c) => whiteTier(c) >= 3).length;
       expect(good, where).toBeGreaterThanOrEqual(GOOD_FLOOR);
     });
   });

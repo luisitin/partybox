@@ -46,8 +46,9 @@ export const whiteCardSchema = z.object({
     .min(1)
     .max(3)
     .optional(),
-  /** How good the card is on its own: 1 filler, 2 good (the default), 3 great. */
-  tier: z.number().int().min(1).max(3).optional(),
+  /** How good the card is on its own: 1 filler, 2 good (the default), 3 great, 4 amazing (the
+   *  best two hundred or so of a deck — every hand holds a couple). */
+  tier: z.number().int().min(1).max(4).optional(),
 });
 export type WhiteCard = z.infer<typeof whiteCardSchema>;
 

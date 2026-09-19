@@ -36,9 +36,10 @@ card's `draw`) — the missing kinds drawn first, and up to two cards of the mos
 swapped out when a hand is still short, so every hand holds at least 2 answers for each kind of
 question — 2 things, 2 doings (gerund cards), 2 people and 2 names (short cards, for a quoted blank, a
 nickname, a line someone says; `server/fit.ts` reads the kind off the
-card's text; a card's own `serves` in the deck JSON overrides it) and at least 5 tier-3 cards (`wild.json` carries tiers throughout and `mild.json` from its first 300 whites so far — a `mild` or `adults` room meets the floor only as far as its tiered cards allow; `tier` in the
-deck JSON: 1 filler, 2 good, 3 great; up to three spare cards a round are swapped for great ones of the same
-kind) — while the decks can supply them; the
+card's text; a card's own `serves` in the deck JSON overrides it) and at least 5 great cards, 2 of them amazing (`tier` in the deck JSON: 1 filler, 2 good, 3 great, 4 amazing —
+`wild.json` and `crude.json` carry tiers throughout, `mild.json` from its first 300 whites so far, so a
+`mild` room meets the floors only as far as its tiered cards allow; up to three spare cards a round are
+swapped for great ones and two for amazing ones, keeping every kind floor) — while the decks can supply them; the
 hand is shuffled each round, so the same cards never sit at the top, and one card of each kind is
 moved to the front of it so the first screenful on a phone always offers all three; once the black card
 is final (`answer` entry) every answerer's hand leads with the cards that read best in its blank — fit

@@ -1,7 +1,15 @@
 // Unit tests for Blanks: a whole game on timers alone, dealing, the fill rule and content
 // (README "Phases" + "Content"). Phase and scoring edge cases live in phases.test.ts.
 import { describe, expect, it } from 'vitest';
-import { GOOD_FLOOR, KIND_FLOOR, fill, fillText, glue, revealMs } from '../server/cards';
+import {
+  BEST_FLOOR,
+  GOOD_FLOOR,
+  KIND_FLOOR,
+  fill,
+  fillText,
+  glue,
+  revealMs,
+} from '../server/cards';
 import { fitScore, servesOf } from '../server/fit';
 import {
   DECKS,
@@ -173,12 +181,14 @@ describe('dealing', () => {
     }
   });
 
-  it('a wild hand holds at least five tier-3 cards, round after round (the quality floor)', () => {
+  it('a wild hand holds at least five great and two amazing cards, round after round (the quality floors)', () => {
     let s = start({ players: 8, decks: 'wild-only', seed: 11, rounds: 8 });
     for (let round = 1; round <= 8; round++) {
       for (const id of Object.keys(s.players)) {
-        const good = (s.hands[id] ?? []).filter((c) => whiteTier(c) === 3).length;
+        const good = (s.hands[id] ?? []).filter((c) => whiteTier(c) >= 3).length;
         expect(good, `r${round} ${id}`).toBeGreaterThanOrEqual(GOOD_FLOOR);
+        const best = (s.hands[id] ?? []).filter((c) => whiteTier(c) === 4).length;
+        expect(best, `r${round} ${id} amazing`).toBeGreaterThanOrEqual(BEST_FLOOR);
       }
       s = timer(playRound(s));
       if (s.phase.id === 'final' || s.phase.id === 'done') break;
