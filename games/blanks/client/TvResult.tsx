@@ -213,7 +213,10 @@ export function TvResult({ view }: Props): JSX.Element {
       </Stage>
     );
   }
-  const named = beat >= BEAT_WINNER;
+  // No winner (the judge dropped or never picked, or nobody voted): there is no name to build up
+  // to, so the line lands with the phase instead of leaving the stage empty for the 1.2 s winner
+  // beat (loop #768 — an 8 s result that opened on nothing).
+  const named = beat >= BEAT_WINNER || winners.length === 0;
   // Three chip rows or nine-plus losers: the stage is short and the pills many — everything a
   // size down (measured live at 838 px of content for a 630 px stage, review-loop #130).
   const dense = view.players.length > BIG_CHIP_ROOM || others.length > 8;

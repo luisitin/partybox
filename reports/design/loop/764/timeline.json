@@ -1,0 +1,200 @@
+{
+  "pass": "764",
+  "game": "blanks",
+  "players": 3,
+  "scenario": "vip-leaves",
+  "focus": "tv",
+  "started": "14:37:23.035",
+  "tvVideoT0": "14:37:19.767",
+  "phoneVideoT0": "14:37:20.582",
+  "changes": [
+    {
+      "t": 1789828643041,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789828648020,
+      "bed": "warm",
+      "at": "14:37:23.041",
+      "sinceStartS": 0,
+      "videoS": 3.3,
+      "phoneVideoS": 2.5
+    },
+    {
+      "t": 1789828648036,
+      "status": "playing",
+      "phase": "pick",
+      "deadline": 1789828668022,
+      "bed": "lofi",
+      "at": "14:37:28.036",
+      "sinceStartS": 5,
+      "videoS": 8.3,
+      "phoneVideoS": 7.5
+    },
+    {
+      "t": 1789828684615,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789828712122,
+      "bed": "bossa",
+      "at": "14:38:04.615",
+      "sinceStartS": 41.6,
+      "videoS": 44.8,
+      "phoneVideoS": 44
+    },
+    {
+      "t": 1789828686836,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789828690007,
+      "bed": "warm",
+      "at": "14:38:06.836",
+      "sinceStartS": 43.8,
+      "videoS": 47.1,
+      "phoneVideoS": 46.3
+    },
+    {
+      "t": 1789828690016,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789828693188,
+      "bed": "warm",
+      "at": "14:38:10.016",
+      "sinceStartS": 47,
+      "videoS": 50.2,
+      "phoneVideoS": 49.4
+    },
+    {
+      "t": 1789828693230,
+      "status": "playing",
+      "phase": "judge",
+      "deadline": 1789828713193,
+      "bed": "marimba",
+      "at": "14:38:13.230",
+      "sinceStartS": 50.2,
+      "videoS": 53.5,
+      "phoneVideoS": 52.6
+    },
+    {
+      "t": 1789828713232,
+      "status": "playing",
+      "phase": "result",
+      "deadline": 1789828721203,
+      "bed": "lounge",
+      "at": "14:38:33.232",
+      "sinceStartS": 70.2,
+      "videoS": 73.5,
+      "phoneVideoS": 72.7
+    },
+    {
+      "t": 1789828721262,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789828726212,
+      "bed": "warm",
+      "at": "14:38:41.262",
+      "sinceStartS": 78.2,
+      "videoS": 81.5,
+      "phoneVideoS": 80.7
+    },
+    {
+      "t": 1789828726303,
+      "status": "playing",
+      "phase": "pick",
+      "deadline": 1789828746218,
+      "bed": "latenight",
+      "at": "14:38:46.303",
+      "sinceStartS": 83.3,
+      "videoS": 86.5,
+      "phoneVideoS": 85.7
+    },
+    {
+      "t": 1789828731325,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789828791318,
+      "bed": "marimba",
+      "at": "14:38:51.325",
+      "sinceStartS": 88.3,
+      "videoS": 91.6,
+      "phoneVideoS": 90.7
+    },
+    {
+      "t": 1789828733553,
+      "status": "playing",
+      "phase": "result",
+      "deadline": 1789828741540,
+      "bed": "lounge",
+      "at": "14:38:53.553",
+      "sinceStartS": 90.5,
+      "videoS": 93.8,
+      "phoneVideoS": 93
+    },
+    {
+      "t": 1789828741604,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789828746550,
+      "bed": "warm",
+      "at": "14:39:01.604",
+      "sinceStartS": 98.6,
+      "videoS": 101.8,
+      "phoneVideoS": 101
+    },
+    {
+      "t": 1789828746669,
+      "status": "playing",
+      "phase": "pick",
+      "deadline": 1789828766550,
+      "bed": "lofi",
+      "at": "14:39:06.669",
+      "sinceStartS": 103.6,
+      "videoS": 106.9,
+      "phoneVideoS": 106.1
+    },
+    {
+      "t": 1789828748758,
+      "status": "playing",
+      "phase": "answer",
+      "deadline": 1789828808716,
+      "bed": "bossa",
+      "at": "14:39:08.758",
+      "sinceStartS": 105.7,
+      "videoS": 109,
+      "phoneVideoS": 108.2
+    },
+    {
+      "t": 1789828753050,
+      "status": "playing",
+      "phase": "result",
+      "deadline": 1789828760936,
+      "bed": "lounge",
+      "at": "14:39:13.050",
+      "sinceStartS": 110,
+      "videoS": 113.3,
+      "phoneVideoS": 112.5
+    },
+    {
+      "t": 1789828761026,
+      "status": "playing",
+      "phase": "final",
+      "deadline": 1789828764944,
+      "bed": null,
+      "at": "14:39:21.026",
+      "sinceStartS": 118,
+      "videoS": 121.3,
+      "phoneVideoS": 120.4
+    },
+    {
+      "t": 1789828765052,
+      "status": "results",
+      "phase": "results",
+      "deadline": null,
+      "bed": null,
+      "at": "14:39:25.052",
+      "sinceStartS": 122,
+      "videoS": 125.3,
+      "phoneVideoS": 124.5
+    }
+  ],
+  "notes": ["vip-leaves: Sam (VIP) closed the page in pick"]
+}
