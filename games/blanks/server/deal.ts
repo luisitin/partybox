@@ -48,6 +48,14 @@ const MAX_SWAPS = 2;
  *  #500); the loop only runs while the hand is short, so the floor bounds it anyway. */
 const MAX_GOOD_SWAPS = GOOD_FLOOR;
 const MAX_BEST_SWAPS = 2;
+/** …and at least one WORD: a card of one or two words, for the blanks that want exactly that —
+ *  a safe word, a nickname, a password, a hurricane's name (fit.ts WORD_PROMPT). Short cards are
+ *  one in twenty-three, so two hands in three held none and every answer to "My cellmate's
+ *  nickname is ____" was a sentence (loop 741). */
+export const WORD_FLOOR = 1;
+export const WORD_MAX_WORDS = 2;
+export const isWord = (id: string): boolean =>
+  whiteText(id).split(/\s+/).filter(Boolean).length <= WORD_MAX_WORDS;
 
 /** Cards in the hand that serve `kind` (a short thing is a thing and a name). */
 function countKind(hand: readonly string[], kind: WhiteKind): number {
@@ -176,6 +184,17 @@ function fillHand(state: State, hand: readonly string[], target: number): [strin
     [out, next] = swapped;
     goodSwaps += 1;
   }
+  // The word card last, so no later swap can take it back out: a great one where the deck has it.
+  if (out.filter(isWord).length < WORD_FLOOR) {
+    const swapped =
+      swapForGood(
+        next,
+        out,
+        (id) => isWord(id) && isGood(id),
+        (id) => !isWord(id),
+      ) ?? swapForGood(next, out, isWord, (id) => !isWord(id) && !isGood(id));
+    if (swapped !== null) [out, next] = swapped;
+  }
   let fillerSwaps = 0;
   while (out.filter(isFiller).length > FILLER_CAP && fillerSwaps < 2) {
     const swapped = swapForGood(next, out, (id) => !isFiller(id), isFiller);
@@ -272,7 +291,8 @@ export function refillHands(state: State, extra = 0, extraFor: readonly string[]
       countsMeetFloor(hand) &&
       countGood(hand) >= GOOD_FLOOR &&
       countBest(hand) >= BEST_FLOOR &&
-      hand.filter(isFiller).length <= FILLER_CAP
+      hand.filter(isFiller).length <= FILLER_CAP &&
+      hand.filter(isWord).length >= WORD_FLOOR
     )
       continue;
     const [filled, after] = fillHand(next, hand, Math.max(target, hand.length));

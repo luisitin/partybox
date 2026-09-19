@@ -1,7 +1,15 @@
 // Dealing (README "Players" and the round start): distinct cards, the kind, quality and variety
 // floors, the black deck's order, and the hand leading with the prompt's best fits.
 import { describe, expect, it } from 'vitest';
-import { BEST_FLOOR, FILLER_CAP, GOOD_FLOOR, KIND_FLOORS, refillHands } from '../server/deal';
+import {
+  BEST_FLOOR,
+  FILLER_CAP,
+  GOOD_FLOOR,
+  KIND_FLOORS,
+  WORD_FLOOR,
+  isWord,
+  refillHands,
+} from '../server/deal';
 import { topicsOf } from '../server/topics';
 import { fitScore, servesOf } from '../server/fit';
 import {
@@ -128,6 +136,21 @@ describe('dealing', () => {
       }
       s = timer(playRound(s));
       if (s.phase.id === 'final' || s.phase.id === 'done') break;
+    }
+  });
+
+  it('every hand holds a word — one or two words — for the safe-word and nickname blanks, round after round', () => {
+    for (const decks of ['wild', 'mild'] as const) {
+      let s = start({ players: 8, decks, seed: 5, rounds: 8 });
+      for (let round = 1; round <= 8; round++) {
+        for (const id of Object.keys(s.players))
+          expect(
+            (s.hands[id] ?? []).filter(isWord).length,
+            `${decks} r${round} ${id}`,
+          ).toBeGreaterThanOrEqual(WORD_FLOOR);
+        s = timer(playRound(s));
+        if (s.phase.id === 'final' || s.phase.id === 'done') break;
+      }
     }
   });
 
