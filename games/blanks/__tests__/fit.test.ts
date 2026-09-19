@@ -176,5 +176,13 @@ describe('fitScore', () => {
     expect(fitScore('name', ['person'])).toBe(0.5);
     expect(fitScore('thing', ['thing', 'name'])).toBe(1);
     expect(fitScore('thing', ['doing', 'name'])).toBe(0.7);
+    // A "full of ____" blank wants a plural or a mass noun: one thing with its article reads a beat off.
+    const garage = "My uncle's garage is full of ____.";
+    expect(fitScore('thing', ['thing'], 'A crop circle shaped like a bagel.', garage)).toBe(0.85);
+    expect(fitScore('thing', ['thing'], 'Cum-stained love letters.', garage)).toBe(1);
+    expect(fitScore('thing', ['thing'], 'The wet spot.', garage)).toBe(1);
+    expect(
+      fitScore('thing', ['thing'], 'A crop circle shaped like a bagel.', 'The HOA banned ____.'),
+    ).toBe(1);
   });
 });

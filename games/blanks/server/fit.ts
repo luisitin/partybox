@@ -181,8 +181,25 @@ export function fitScore(
 ): number {
   if (slot === 'name' && text !== undefined)
     return nameFit(text, blackText !== undefined && WORD_PROMPT.test(blackText));
-  return Math.max(0, ...serves.map((s) => FIT[slot][s] ?? 0));
+  const best = Math.max(0, ...serves.map((s) => FIT[slot][s] ?? 0));
+  // "My uncle's garage is full of ____" wants a plural or a mass noun: "A crop circle shaped like
+  // a bagel" reads a beat off, "Cum-stained love letters" and "The wet spot" land (loop 758).
+  if (
+    slot === 'thing' &&
+    text !== undefined &&
+    blackText !== undefined &&
+    MASS_PROMPT.test(blackText) &&
+    /^(?:A|An) /.test(text)
+  )
+    return best * ONE_OF_MANY;
+  return best;
 }
+
+/** Blanks that want a quantity — a plural, a mass noun — rather than one thing with an article. */
+const MASS_PROMPT =
+  /\b(?:full of|made (?:entirely |mostly )?of|covered in|mostly|out of everything but|a side of|stuffed with|filled with|packed with|a bag of|a box of|a pile of|a drawer full of|plenty of|lots of|enough) ____/i;
+/** What a one-of-something card keeps of its fit in such a blank. */
+const ONE_OF_MANY = 0.85;
 
 /** A name blank that wants a WORD — a safe word, a nickname, a handle, a password, a first
  *  word, a hurricane's name — lands hardest on one or two words; a title or a line takes six. */
