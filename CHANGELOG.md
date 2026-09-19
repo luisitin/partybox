@@ -40,6 +40,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 - Multi-persona live-play harness (`packages/e2e/live/`) and the 2026-09-15 session report.
 
 ### Fixed
+- Resuming a paused game no longer flashes the held seconds plus the pause length (18 for 11)
+  on the TV timer and the phone bar for a beat: the clock hook re-reads the time when its cadence
+  changes.
 - Phone screens that scroll (six-player results, a long wager list) fade their last line at the fold
   instead of cutting it mid-glyph; the fade lifts once scrolled to the end and never shows on a
   body that fits.
