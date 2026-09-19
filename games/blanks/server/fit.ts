@@ -20,7 +20,7 @@ const DOING_PROMPT = [
   /\b(?:do|doing|done)\?["”]?$/i, // "What did the sex robot refuse to do?"
   /\bdo (?:at|in|on|to|with|for|instead|before|after|during)\b/i, // "What did Lincoln do at…"
   /\b(?:does|did|caught (?:me|him|her|them|us)|busy|instead of|after|before|while|spent (?:the \w+|\w+ years?))\s+____/i,
-  /\b(?:what happened|what went wrong|walk(?:ed)? in on\?|catch \w+ doing|am I doing|are you doing|^how did)\b/i,
+  /\b(?:what happened|what went wrong|walk(?:ed)? in on\?|catch (?:\w+ )+doing|am I doing|are you doing|^how did)\b/i,
   /\b(?:ruined|interrupted|cancelled|canceled|delayed|caused|started|ended|followed|triggered|brought on) by ____/i,
   /\b(?:led to|ended (?:with|in)|started with|began with) ____\.?$/i,
   /\b(?:done|did|loved|dare (?:was|is)|ritual (?:was|is)): ____|doing what \w+ loved/i,
