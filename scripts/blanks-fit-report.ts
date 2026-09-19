@@ -16,6 +16,7 @@ import {
   whiteText,
 } from '../games/blanks/server/content';
 import { fillText } from '../games/blanks/server/cards';
+import { isWord } from '../games/blanks/server/deal';
 import { TOPIC_HIT, WORD_ECHO, pairBonus, topicsOf } from '../games/blanks/server/topics';
 import { game } from '../games/blanks/server/index';
 import { fitScore, servesOf, slotOf, slotsOf, SLOTS } from '../games/blanks/server/fit';
@@ -93,6 +94,7 @@ let goodCards = 0; // tier 3+ cards across hands
 let bestCards = 0; // tier 4 cards across hands
 let fillerCards = 0; // tier 1 cards across hands
 let fillerHeavy = 0; // hands with three or more tier-1 cards
+let wordless = 0; // hands with no one-or-two-word card (a safe word, a nickname)
 let handsHalfGood = 0; // ≥ half the hand tier 3+
 let serveCards = 0; // cards serving the round's slot across hands
 let topFit = 0; // mean fit of the first four cards (the phone's first screenful), summed over hands
@@ -213,6 +215,7 @@ for (let r = 0; r < runs; r += 1) {
           const filler = hand.filter((c) => tiers.get(c) === 1).length;
           fillerCards += filler;
           if (filler >= 3) fillerHeavy += 1;
+          if (!hand.some(isWord)) wordless += 1;
           if (good * 2 >= hand.length) handsHalfGood += 1;
         }
       }
@@ -268,7 +271,7 @@ console.log(
   `  topic clumps (${deckSubject(preset)} aside): hands with four or more cards on one topic ${pct(clumpy, hands)}; largest group per hand ${(clumpTop / Math.max(1, hands)).toFixed(2)}`,
 );
 console.log(
-  `  cards serving the slot per hand: ${(serveCards / Math.max(1, hands)).toFixed(2)}; great (tier 3+) per hand: ${(goodCards / Math.max(1, hands)).toFixed(2)}, amazing (tier 4) ${(bestCards / Math.max(1, hands)).toFixed(2)}, filler (tier 1) ${(fillerCards / Math.max(1, hands)).toFixed(2)} (hands with three or more: ${pct(fillerHeavy, hands)}); hands at least half great: ${pct(handsHalfGood, hands)}`,
+  `  cards serving the slot per hand: ${(serveCards / Math.max(1, hands)).toFixed(2)}; great (tier 3+) per hand: ${(goodCards / Math.max(1, hands)).toFixed(2)}, amazing (tier 4) ${(bestCards / Math.max(1, hands)).toFixed(2)}, filler (tier 1) ${(fillerCards / Math.max(1, hands)).toFixed(2)} (hands with three or more: ${pct(fillerHeavy, hands)}); hands at least half great: ${pct(handsHalfGood, hands)}; hands without a one-or-two-word card: ${pct(wordless, hands)}`,
 );
 console.log(
   `  bot plays on the prompt's topic (other words): ${pct(hits, plays)}; echoing its word: ${pct(echoes, plays)}`,
