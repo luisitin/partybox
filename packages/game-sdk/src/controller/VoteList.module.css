@@ -103,18 +103,18 @@
   letter-spacing: 0.06em;
 }
 
-/* A row's text keeps its width: the tag sits at the end of the last line instead of squeezing
-   a wrapped sentence into a narrow column (a Blanks card on an iPhone SE, review-loop #138). */
+/* A row's text keeps its width: the tag takes a line of its own under the text instead of
+   squeezing a wrapped sentence into a narrow column (a Blanks card on an iPhone SE, review-loop
+   #138) — and the letter stays beside the text, where a short card used to leave it stranded on
+   a line by itself (Blanks review-loop #386). */
 .option:has(.tag) {
   flex-wrap: wrap;
 }
 
-.option:has(.tag) .text {
-  flex-basis: 100%;
-}
-
 .option:has(.tag) .tag {
-  margin-left: auto;
+  flex-basis: 100%;
+  text-align: right;
+  margin-top: calc(-1 * var(--pb-space-2));
 }
 
 .mark {
