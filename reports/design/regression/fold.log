@@ -1,10 +1,10 @@
-(node:23932) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(node:34316) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
 (Use `node --trace-deprecation ...` to show where the warning was created)
 ok   six players: the results body scrolls — {"scrollable":true,"fold":"28px","atEnd":false}
 ok   six players: fold fade on at the top — 28px
 ok   six players: at the end of the list — {"scrollable":true,"fold":"0px","atEnd":true}
 ok   six players: fold fade lifted at the end — 0px
-ok   six players: the award line sits above the footer once scrolled — award bottom 429, footer top 527
+ok   six players: the award line sits above the footer once scrolled — award bottom 372, footer top 527
 ok   three players: the body fits — {"scrollable":false,"fold":"0px","atEnd":true}
 ok   three players: no fold fade — 0px
 7/7 checks passed → reports/design/fold/
