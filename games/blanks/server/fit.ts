@@ -8,8 +8,8 @@
 // `person`, the rest `thing`s, and any short card (four words or fewer) also a `name` — and FIT
 // says how each reads in the others' blanks (a person is a fine thing; a thing is a poor doing;
 // a long card is a poor safe word). `fitScore` is the soft match dealing, bots and the fit report
-// share; `tier` (1 filler, 2 good, 3 great — set on the card, default 2) is how good the card is
-// on its own.
+// share; `tier` (1 filler, 2 good, 3 great, 4 amazing — set on the card, default 2) is how good
+// the card is on its own.
 import type { BlackCard, WhiteCard } from '../content/schema';
 
 export const SLOTS = ['thing', 'doing', 'person', 'name'] as const;
