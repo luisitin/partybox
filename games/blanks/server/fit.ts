@@ -45,6 +45,7 @@ const DOING_PROMPT = [
   /\bdoing ____|\band then ____|\btalked (?:me|us|him|her|them) into ____|\b(?:part|job|role|gig|promotion|raise|scholarship|record deal|internship) by ____/i,
   /\b(?:confess(?:ed|ing)? to|admit(?:ted)? to|plead(?:ed)? guilty to|owned up to|apologi[sz]ed? for|blame[sd]? (?:me|him|her|them|us|you|it) for|forgive (?:me|him|her|them|us) for|guilty of)\b/i, // "What did I confess to on the witness stand?"
   /\b(?:done|did|loved|dare (?:was|is)|ritual (?:was|is)): ____|doing what \w+ loved/i,
+  /\b(?:mission|plan|goal|dream|job|first step|next step|only option|solution|answer|advice) (?:is|was) to ____/i, // "NASA's next mission is to ____."
   // "Game night's loser had to ____.": a verb wanted — a gerund is the nearest thing the decks hold.
   /\b(?:had to|has to|have to|forced (?:me|us|him|her|them) to|dared (?:me|us|him|her|them) to|made (?:me|us|him|her|them)|refused to|agreed to|threatened to|learned to|promised to|tried to|decided to|(?:ordered|told|asked) (?:me|us|him|her|them) to) ____/i,
   // "The heat wave had everyone ____.", "Snowed in for three days, we ____.", "Poutine was used
@@ -61,7 +62,7 @@ const NAMED_AFTER = /\b(?:named|renamed|modeled|modelled|patterned|fashioned)\b[
 /** Prompts whose blank wants a person. */
 const PERSON_PROMPT = [
   /^Who(?:'s|se)?\b/i,
-  /\bwho\b[^.?]*\?$/i,
+  /^(?!.*\bdo (?:with|to|about|for)\b).*\bwho\b[^.?]*\?$/i, // "…the ones who left?" is still "What did the cult DO with…?"
   /\b(?:goes to|(?<!budget |money |funds |fund |proceeds |profits |donations |prize |award |trophy |medal |scholarship |inheritance |Oscar |Grammy |Emmy )went to|awarded to|belongs to|married|marry|dating|date with|hired|fired|elected|best man|maid of honor|godfather|babysitter|sponsored by|hosted by|played by|voiced by|replaced by|starring|cast as|roommate|in bed with|woke up next to|wake up next to|lying next to|virginity to|a threesome with|threesome with|swiped right on|matched (?:me )?with|proposed to|engaged to|left me for|guest of honor was|body count includes|tell-all names)\s+____/i,
   /\bmy (?:new )?(?:boyfriend|girlfriend|husband|wife|partner|therapist|doctor|lawyer|dealer|roommate|sponsor) is ____/i,
   /____ (?:walks|walked|is|was|got|gets) (?:into|in|arrested|elected|fired|hired|pregnant)/i,
@@ -122,6 +123,9 @@ const PERSON_WORD =
 const EVENT_PHRASE =
   /^(?:bachelor party|bachelorette party|trust fall|conga line|gender reveal|juice cleanse|group hug|keg ?stand|body shot|road trip|field trip|gift exchange|secret santa|pool party|block party|bake sale|garage sale|yard sale|open mic|talent show|spelling bee|science fair|book club|wine night|game night|date night|girls'? trip|guys'? trip|spring break|happy hour|last call|closing time|lunch break|smoke break|fire drill|trust exercise|team building|team-building|ice bath|cold plunge|hot yoga|silent disco|bar crawl|pub crawl|walk of|morning after|first date|blind date|one-night stand|family reunion|high school reunion|class reunion|company retreat|corporate retreat|church retreat|couples'? retreat|office party|holiday party|christmas party|dinner party|birthday party|surprise party|divorce party|baby shower|bridal shower|wedding night|wedding toast|best man's toast|father-daughter dance|slow dance|lap dance|mosh pit|bar fight|food fight|pillow fight|snowball fight|water balloon fight|prank war|water park|ski trip|camping trip|cruise ship|all-nighter|power nap|drunk text|butt dial|booty call|walk of shame|group project|mass exodus|sit-in|hunger strike|jury duty|open house|home inspection|tax audit|drug test|drive-by|hit-and-run|car crash|fender bender|speed trap|sobriety test|perp walk|citizen's arrest|plea deal|parole hearing|custody hearing|will reading|open casket|viking funeral|pet funeral|clown funeral|mass grave)\b/i;
 
+/** A third word that keeps a two-word event an event: "open mic NIGHT", "spring break WEEKEND". */
+const EVENT_TAIL = /^(?:night|party|weekend|day|season|hour|morning|evening|afternoon|trip)$/i;
+
 /** Two-word roles the first word alone would miss. */
 const PERSON_PHRASE =
   /^(?:wine mom|mall santa|flower girl|best man|youth pastor|gym crush|one-night stand|florida man|sugar (?:daddy|baby|mama)|cam girl|pool boy|pizza guy|delivery guy|crossing guard|substitute teacher|school nurse|team doctor|parole officer|police officer|night-shift nurse|hit man|drunk uncle|creepy uncle|stage mom|soccer mom|dance mom|helicopter parent|gym teacher|lunch lady|bus driver|uber driver|lyft driver|cab driver|truck driver|flight attendant|tour guide|bar bathroom attendant|security guard|mall cop|dog walker|wedding planner|wedding dj|dental hygienist|party clown|birthday clown|drill sergeant|border agent|tsa agent|hr rep|customer service rep|reddit moderator|linkedin influencer|karen|chad|boomers?|crypto bro|tech bro|frat (?:boy|bro)|sorority girl|gamer girl|e-?girl|stunt double|body double|method actor|child star|porn star|rock star|drag queen|sex worker|sex robot|ai girlfriend)$/i;
@@ -133,12 +137,12 @@ const WHO_CLAUSE =
   /^(?:A |An |The |My |Your |Our )?(?!.*\b(?:someone|somebody|anyone) who)(?:[\w'’-]+,? ){1,4}who\b/i;
 /** What may follow the person word for it to be the head of the phrase. */
 const LINK_AFTER =
-  /^(?:with|who|whose|that|named|called|at|in|on|from|and|of|for|without|under|behind|during|after|before|as|to|dressed|covered|wearing|holding|doing|having|being|selling|giving|getting|taking|my|your|his|her|their|our|nobody|everyone|someone|you|we|they|i)$/i;
+  /^(?:with|who|who's|whose|that|that's|which|where|where's|named|called|at|in|on|from|and|of|for|without|under|behind|during|after|before|as|to|over|off|into|onto|through|across|against|held|judged|ended|gone|ending|attended|hosted|catered|dressed|covered|wearing|holding|doing|having|being|selling|giving|getting|taking|my|your|his|her|their|our|nobody|everyone|someone|you|we|they|i)$/i;
 /** A card short enough to be a name, a safe word, a title: four words or fewer. */
 export const NAME_MAX_WORDS = 4;
 /** Nouns that name something that happens: a card headed by one reads as a doing too. */
 const EVENT_WORD =
-  /^(?:sex|anal|blowjob|handjob|footjob|threesome|orgy|gangbang|gang|quickie|hookup|fisting|rimming|creampie|bukkake|pegging|lap|road|murder|stabbing|shooting|hit-and-run|crash|dui|bender|breakup|affair|proposal|wedding|funeral|s[ée]ance|exorcism|baptism|colonoscopy|vasectomy|prostate|bake|potluck|party|shower|reunion|retreat|orgy|riot|brawl|fight|heist|robbery|arson|overdose|hangover|eviction|layoffs?|divorce|annulment|honeymoon|date|dinner|brunch|trip|vacation|sleepover|séance|ritual|sacrifice|ceremony|initiation|hazing|dare|bet|prank|accident|incident|scandal|walkover|walk|marathon|concert|show|parade|protest|strike|trial|hearing|deposition|confession|eulogy|toast|speech|sermon|audit|inspection|raid|abduction|kidnapping|ransom|massacre|apocalypse|rapture|birth|death|christening|bris|prom|graduation|recital|audition|interview|meeting|review|exam|surgery|transplant|autopsy|cremation|burial|wake|vigil|blackout|breakdown|meltdown|relapse|rehab|detox|fast|cleanse|diet|workout|yoga|massage|facial|wax|pedicure|manicure|tattoo|piercing|circumcision|abortion|miscarriage|pregnancy|labor|c-section|delivery|pickup|dropoff|carpool|commute|layover|flight|cruise|tour|safari|hike|camping|hunt|fishing|swim|dive|jump|fall|slip|spill|leak|flood|fire|explosion|earthquake|tornado|hurricane|blizzard|avalanche|eclipse|séance)$/i;
+  /^(?:sex|anal|blowjob|handjob|footjob|threesome|orgy|gangbang|gang|quickie|hookup|kegstand|keg-stand|fisting|rimming|creampie|bukkake|pegging|lap|road|murder|stabbing|shooting|hit-and-run|crash|dui|bender|breakup|affair|proposal|wedding|funeral|s[ée]ance|exorcism|baptism|colonoscopy|vasectomy|prostate|bake|potluck|party|shower|reunion|retreat|orgy|riot|brawl|fight|heist|robbery|arson|overdose|hangover|eviction|layoffs?|divorce|annulment|honeymoon|date|dinner|brunch|trip|vacation|sleepover|séance|ritual|sacrifice|ceremony|initiation|hazing|dare|bet|prank|accident|incident|scandal|walkover|walk|marathon|concert|show|parade|protest|strike|trial|hearing|deposition|confession|eulogy|toast|speech|sermon|audit|inspection|raid|abduction|kidnapping|ransom|massacre|apocalypse|rapture|birth|death|christening|bris|prom|graduation|recital|audition|interview|meeting|review|exam|surgery|transplant|autopsy|cremation|burial|wake|vigil|blackout|breakdown|meltdown|relapse|rehab|detox|fast|cleanse|diet|workout|yoga|massage|facial|wax|pedicure|manicure|tattoo|piercing|circumcision|abortion|miscarriage|pregnancy|labor|c-section|delivery|pickup|dropoff|carpool|commute|layover|flight|cruise|tour|safari|hike|camping|hunt|fishing|swim|dive|jump|fall|slip|spill|leak|flood|fire|explosion|earthquake|tornado|hurricane|blizzard|avalanche|eclipse|séance)$/i;
 
 /** The slots a white card serves, its own kind first; the card's own `serves` wins over the reading. */
 export function servesOf(card: Pick<WhiteCard, 'text'> & { serves?: Slot[] }): Slot[] {
@@ -184,7 +188,10 @@ export function servesOf(card: Pick<WhiteCard, 'text'> & { serves?: Slot[] }): S
       kind = 'person';
     // An event named as a noun ("A threesome with a mime.", "Anal in a canoe.") is a thing that
     // also reads as something that happened — the best answer to "…was ruined by ____".
-    else if ((!possessive && ends && EVENT_WORD.test(head)) || EVENT_PHRASE.test(pair)) {
+    else if (
+      (!possessive && ends && EVENT_WORD.test(head)) ||
+      ((pairEnds || EVENT_TAIL.test(third)) && EVENT_PHRASE.test(pair))
+    ) {
       const out: Slot[] = ['thing', 'doing'];
       return short ? [...out, 'name'] : out;
     }
