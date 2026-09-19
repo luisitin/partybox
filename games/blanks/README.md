@@ -15,8 +15,8 @@ welcome (`supportsBots`) — a bot plays the cards that read best blank by blank
 fit model's score for what each blank wants — a Pick 2 may want a person, then a thing (`slots` in the
 deck JSON) — the card's tier, a nudge for a card on the prompt's subject in other words and against one
 that echoes its word, the card's own punch — a twist after a comma, a specific; a long card reads slower
-(`server/topics.ts`) — a little noise) and votes the same way; the czar bot picks a
-prompt at random.
+(`server/topics.ts`) — a little noise) and votes the same way; the czar bot picks the
+best-rated prompt on offer, ties at random.
 
 ## Phases
 
