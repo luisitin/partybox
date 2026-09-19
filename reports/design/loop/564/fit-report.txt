@@ -1,0 +1,253 @@
+decks mild: 832 black, 1926 white
+  black slots: thing 721 (86.7 %) · doing 58 (7.0 %) · person 6 (0.7 %) · name 47 (5.6 %)
+  white serves: thing 1484 (77.1 %) · doing 422 (21.9 %) · person 57 (3.0 %) · name 403 (20.9 %)
+  white tiers: 1: 216 (11.2 %) · 2: 449 (23.3 %) · 3: 650 (33.7 %) · 4: 611 (31.7 %)
+  black tiers: 1: 330 (39.7 %) · 2: 67 (8.1 %) · 3: 435 (52.3 %)
+6 games × 6 players, 288 hands at answer; prompts played: mean tier 3.00
+  rounds by slot: thing 40 · doing 5 · person 1 · name 2; hands with < 2 cards serving the round's slot: 0 (0.0 %) — thing 0 · doing 0 · person 0 · name 0
+  the phone's first four cards: mean fit 0.970 (whole hand 0.825), great among them 2.66
+  topic clumps (sex aside): hands with four or more cards on one topic 0.0 %; largest group per hand 1.85
+  cards serving the slot per hand: 4.72; great (tier 3+) per hand: 6.58, amazing (tier 4) 2.57; hands at least half great: 100.0 %
+  bot plays on the prompt's topic (other words): 7.1 %; echoing its word: 0.6 %
+  bot plays: 312; mean fit 0.957 (best on offer 1.000); serving the slot 74.4 %; mean tier 3.79
+sample plays — [kind, prompt tier] filled prompt ← card tier / fit:
+  [doing★★★] The Christmas card photo was ruined by Pretending the dog ate it.  ← 4/1.00
+  [doing★★★] The Christmas card photo was ruined by Watching paint dry, competitively.  ← 4/1.00
+  [doing★★★] The Christmas card photo was ruined by Stepping on a stray LEGO.  ← 4/1.00
+  [doing★★★] The Christmas card photo was ruined by Talking to the self-checkout like it's a person.  ← 4/1.00
+  [doing★★★] The Christmas card photo was ruined by Overpacking for a two-day trip.  ← 3/1.00
+  [doing★★★] The Christmas card photo was ruined by Sitting in the car to finish a song.  ← 3/1.00
+  [thing★★★] In the sequel, Oppenheimer invents A hall monitor with power.  ← 4/1.00
+  [thing★★★] In the sequel, Oppenheimer invents A chiropractor who cracked something new.  ← 4/0.85
+  [thing★★★] In the sequel, Oppenheimer invents Somebody else's toothbrush.  ← 4/1.00
+  [thing★★★] In the sequel, Oppenheimer invents Pantsless Founding Fathers.  ← 4/1.00
+  [thing★★★] In the sequel, Oppenheimer invents A fully inflated bouncy castle in the living room.  ← 4/1.00
+  [thing★★★] In the sequel, Oppenheimer invents Elvis, alive and working at a Costco.  ← 4/1.00
+  [doing★★★] What did the substitute do on the last day? Winning an argument two days later.  ← 4/1.00↩
+  [doing★★★] What did the substitute do on the last day? Knocking over a display at Target.  ← 3/1.00
+  [doing★★★] What did the substitute do on the last day? Driving past the house you grew up in.  ← 3/1.00
+  [doing★★★] What did the substitute do on the last day? Making eye contact through a Zoom camera.  ← 3/1.00
+  [doing★★★] What did the substitute do on the last day? Slowly closing a bag of chips in a quiet room.  ← 4/1.00
+  [doing★★★] What did the substitute do on the last day? Cooking with a smoke detector for a timer.  ← 4/1.00
+  [thing★★★] The hotel's "do not disturb" sign covers Last call, taken as a challenge.  ← 4/1.00
+  [thing★★★] The hotel's "do not disturb" sign covers An unpaid parking ticket from 2009.  ← 4/1.00
+  [thing★★★] The hotel's "do not disturb" sign covers An overdraft fee on a coffee.  ← 3/1.00
+  [thing★★★] The hotel's "do not disturb" sign covers An elf with a real estate license.  ← 4/1.00
+  [thing★★★] The hotel's "do not disturb" sign covers The kid who ate the play-doh.  ← 4/0.85
+  [thing★★★] The hotel's "do not disturb" sign covers Kale, aggressively.  ← 4/1.00
+  [thing★★★] What did the robbers leave behind? An IKEA bookcase with one screw left over.  ← 4/1.00
+  [thing★★★] What did the robbers leave behind? A diaper blowout at 30,000 feet.  ← 4/1.00
+  [thing★★★] What did the robbers leave behind? A backpack that weighs more than the kid.  ← 3/1.00
+  [thing★★★] What did the robbers leave behind? The airport's $14 water.  ← 4/1.00
+  [thing★★★] What did the robbers leave behind? An office chair race.  ← 3/1.00
+  [thing★★★] What did the robbers leave behind? A pillow fort with a security system.  ← 4/1.00
+  [thing★★★] The self-help podcast recommends A police lineup of golden retrievers.  ← 4/1.00
+  [thing★★★] The self-help podcast recommends A grandma who deadlifts.  ← 4/0.85
+  [thing★★★] The self-help podcast recommends A grandma with a leaf blower.  ← 4/0.85
+  [thing★★★] The self-help podcast recommends Gym class dodgeball, no survivors.  ← 4/1.00
+  [thing★★★] The self-help podcast recommends A Venmo request for $4.  ← 4/1.00†
+  [thing★★★] The self-help podcast recommends A baby monitor picking up the neighbors.  ← 3/1.00†
+  [thing★★★] What did the Vikings actually come for? A treadmill that's mostly a coat rack.  ← 3/1.00
+  [thing★★★] What did the Vikings actually come for? A spider that pays rent.  ← 4/1.00
+  [thing★★★] What did the Vikings actually come for? A ring bearer who ate the ring.  ← 4/0.85
+  [thing★★★] What did the Vikings actually come for? Tiger Woods's mulligan.  ← 3/1.00†
+  [thing★★★] What did the Vikings actually come for? A mosquito in the tent at 3 a.m.  ← 4/1.00
+  [thing★★★] What did the Vikings actually come for? The one coworker who microwaves fish.  ← 4/0.85
+  [thing★★★] The hostage negotiator offered A bartender who judges your order.  ← 4/0.85
+  [thing★★★] The hostage negotiator offered Alphabetizing the spice rack at 3 a.m.  ← 4/0.70
+  [thing★★★] The hostage negotiator offered A rooftop bar with $19 water.  ← 4/1.00
+  [thing★★★] The hostage negotiator offered A LinkedIn humble-brag.  ← 4/1.00
+  [thing★★★] The hostage negotiator offered A cashier who says "no worries" in a worried way.  ← 4/0.85
+  [thing★★★] The hostage negotiator offered The Eras Tour ticket queue.  ← 4/1.00
+  [thing★★★] Noah's Ark had two of everything except Somebody else's toothbrush.  ← 4/1.00
+  [thing★★★] Noah's Ark had two of everything except A grandma with a leaf blower.  ← 4/0.85
+  [thing★★★] Noah's Ark had two of everything except A vending machine that owes me money.  ← 4/1.00
+  [thing★★★] Noah's Ark had two of everything except The word "moist" at the doctor's office.  ← 4/1.00
+  [thing★★★] Noah's Ark had two of everything except Reply-all to the whole company.  ← 4/1.00
+  [thing★★★] Noah's Ark had two of everything except A smoke detector that chirps only at 3 a.m.  ← 4/1.00
+  [thing★★★] The wedding DJ refused to play A pickle in every pocket.  ← 4/1.00
+  [thing★★★] The wedding DJ refused to play An Olympic curler with a grudge.  ← 4/1.00
+  [thing★★★] The wedding DJ refused to play A gingerbread house with a hot tub.  ← 4/1.00
+  [thing★★★] The wedding DJ refused to play A weather app that just says "maybe."  ← 4/1.00
+  [thing★★★] The wedding DJ refused to play A field trip to the water treatment plant.  ← 4/1.00
+  [thing★★★] The wedding DJ refused to play A group project where you did everything.  ← 4/1.00
+  [thing★★★] What woke the baby? A soda that exploded in the car.  ← 4/1.00
+  [thing★★★] What woke the baby? The kid who ate the paste.  ← 4/0.85†
+  [thing★★★] What woke the baby? Whatever is in the church basement.  ← 4/1.00
+  [thing★★★] What woke the baby? A tax refund of four dollars.  ← 4/1.00
+  [thing★★★] What woke the baby? An elf on the shelf who's seen things.  ← 4/0.85
+  [thing★★★] What woke the baby? A grandma who deadlifts.  ← 4/0.85
+  [thing★★★] What's the surprise in the school lunch? A teenager's eye roll, audible.  ← 4/1.00
+  [thing★★★] What's the surprise in the school lunch? An ex who still has the Netflix password.  ← 4/0.85
+  [thing★★★] What's the surprise in the school lunch? A blue ribbon for a goat.  ← 3/1.00
+  [thing★★★] What's the surprise in the school lunch? The kid who eats glue.  ← 4/0.85†
+  [thing★★★] What's the surprise in the school lunch? A rental car that smells like old fries.  ← 4/1.00
+  [thing★★★] What's the surprise in the school lunch? A retired clown.  ← 4/1.00
+  [thing+thing★★★] My dating profile: I like A mosquito in the tent at 3 a.m. and I'm afraid of A trampoline park for seniors.  ← 4/1.00 3/1.00
+  [thing+thing★★★] My dating profile: I like A ring bearer who ate the ring and I'm afraid of The relative who cried loudest and knew him least.  ← 4/0.85† 4/0.85
+  [thing+thing★★★] My dating profile: I like An overly complicated coffee order and I'm afraid of An unlicensed lemonade stand.  ← 4/1.00 3/1.00
+  [thing+thing★★★] My dating profile: I like A dog that refuses to walk past one house and I'm afraid of An owl who works nights.  ← 3/1.00 4/0.85
+  [thing+thing★★★] My dating profile: I like Singing "Sweet Caroline" with strangers and I'm afraid of A turkey that escaped.  ← 4/0.70 3/1.00
+  [thing+thing★★★] My dating profile: I like A LinkedIn post about "grindset" and I'm afraid of A cashier who says "no worries" in a worried way.  ← 4/1.00 4/0.85
+  [doing★★★] The moonwalk was actually Michael Jackson Rage-quitting a children's game.  ← 4/1.00
+  [doing★★★] The moonwalk was actually Michael Jackson Using a leaf blower on the carpet.  ← 4/1.00
+  [doing★★★] The moonwalk was actually Michael Jackson Yelling "bingo" at the wrong time.  ← 4/1.00
+  [doing★★★] The moonwalk was actually Michael Jackson Losing a staring contest with a goat.  ← 4/1.00
+  [doing★★★] The moonwalk was actually Michael Jackson Blaming the dog.  ← 4/1.00
+  [doing★★★] The moonwalk was actually Michael Jackson Talking to the self-checkout like it's a person.  ← 4/1.00
+  [thing★★★] The reality show's twist: A shopping cart that only turns left.  ← 4/1.00
+  [thing★★★] The reality show's twist: A dad who knows the name of every tool.  ← 4/0.85
+  [thing★★★] The reality show's twist: A seal that applauds.  ← 4/1.00
+  [thing★★★] The reality show's twist: The Chicken Dance, unprompted.  ← 4/1.00
+  [thing★★★] The reality show's twist: A doormat that says "hello" upside down.  ← 4/1.00
+  [thing★★★] The reality show's twist: A wizard with allergies.  ← 3/1.00
+  [thing★★★] My New Year's resolution lasted until A personal trainer who counts wrong on purpose.  ← 4/0.85
+  [thing★★★] My New Year's resolution lasted until A yearbook signature that says "stay cool."  ← 4/1.00
+  [thing★★★] My New Year's resolution lasted until A couple that shares a toothbrush.  ← 4/1.00
+  [thing★★★] My New Year's resolution lasted until The dad who narrates the whole road trip.  ← 4/0.85
+  [thing★★★] My New Year's resolution lasted until An Airbnb with 41 house rules.  ← 4/1.00
+  [thing★★★] My New Year's resolution lasted until Noah's neighbors, probably.  ← 4/1.00
+  [thing★★★] The teacher confiscated A Batman voice at the drive-thru.  ← 4/1.00
+  [thing★★★] The teacher confiscated A trampoline with a "no adults" sign.  ← 4/1.00
+  [thing★★★] The teacher confiscated Squirrels that have organized.  ← 4/1.00
+  [thing★★★] The teacher confiscated A Venmo request for $4.  ← 4/1.00
+  [thing★★★] The teacher confiscated A ham that took eleven hours.  ← 4/1.00
+  [thing★★★] The teacher confiscated Cavemen inventing the meeting.  ← 4/1.00
+  [thing★★★] The Ring doorbell caught the neighbor An Elf on the Shelf with a bad attitude.  ← 4/1.00
+  [thing★★★] The Ring doorbell caught the neighbor A pancake stuck to the ceiling.  ← 4/1.00
+  [thing★★★] The Ring doorbell caught the neighbor A traffic cone with a family.  ← 3/1.00†
+  [thing★★★] The Ring doorbell caught the neighbor Fruitcake, regifted for the ninth year.  ← 4/1.00
+  [thing★★★] The Ring doorbell caught the neighbor A cat that knows exactly what it did.  ← 4/1.00
+  [thing★★★] The Ring doorbell caught the neighbor The one friend who screen-cheats at Mario Kart.  ← 4/0.85
+  [thing★★★] The wedding DJ refused to play The kid who brought a snake for show-and-tell.  ← 4/0.85
+  [thing★★★] The wedding DJ refused to play A waiter who says "enjoy" before you order.  ← 4/0.85
+  [thing★★★] The wedding DJ refused to play An ex who still has the Netflix password.  ← 4/0.85†
+  [thing★★★] The wedding DJ refused to play A pacifier found three years later.  ← 4/1.00
+  [thing★★★] The wedding DJ refused to play The one relative who brings up politics.  ← 4/0.85
+  [thing★★★] The wedding DJ refused to play The Pompeii guy who was mid-sneeze.  ← 4/0.85
+  [thing★★★] My cat knocked A grandma who deadlifts off the table.  ← 4/0.85
+  [thing★★★] My cat knocked Mall Santa on his break off the table.  ← 4/1.00
+  [thing★★★] My cat knocked The one coworker who microwaves fish off the table.  ← 4/0.85†
+  [thing★★★] My cat knocked A mime who won't stop talking off the table.  ← 4/0.85
+  [thing★★★] My cat knocked A bank robber who wrote the note on his own deposit slip off the table.  ← 4/0.85
+  [thing★★★] My cat knocked Giving directions to a stranger, wrongly off the table.  ← 4/0.70
+  [thing★★★] My last two brain cells are arguing about A pizza with the toppings slid off.  ← 3/1.00
+  [thing★★★] My last two brain cells are arguing about A Renaissance painter who only painted his cat.  ← 4/0.85
+  [thing★★★] My last two brain cells are arguing about Meatloaf shaped like a heart.  ← 4/1.00
+  [thing★★★] My last two brain cells are arguing about An old man on a hoverboard.  ← 3/1.00
+  [thing★★★] My last two brain cells are arguing about The guy who claps when the plane lands.  ← 4/0.85
+  [thing★★★] My last two brain cells are arguing about A barista who spells "Bob" wrong.  ← 4/0.85
+  [thing★★★] My smart speaker misheard me and ordered A duck leading traffic.  ← 3/1.00
+  [thing★★★] My smart speaker misheard me and ordered A lawyer who advertises on a bus bench.  ← 4/0.85
+  [thing★★★] My smart speaker misheard me and ordered A horse that hates carrots.  ← 3/1.00
+  [thing★★★] My smart speaker misheard me and ordered A robot that only folds towels.  ← 4/0.85†
+  [thing★★★] My smart speaker misheard me and ordered A grandma with a leaf blower.  ← 4/0.85
+  [thing★★★] My smart speaker misheard me and ordered A firetruck at a lemonade stand.  ← 4/1.00
+  [doing★★★] What did the substitute do on the last day? Jaywalking, aggressively.  ← 3/1.00
+  [doing★★★] What did the substitute do on the last day? Losing to a toddler at cards.  ← 4/1.00†
+  [doing★★★] What did the substitute do on the last day? Bringing a guitar to a sleepover.  ← 3/1.00
+  [doing★★★] What did the substitute do on the last day? Nodding along to a story you missed.  ← 4/1.00
+  [doing★★★] What did the substitute do on the last day? Doing a cartwheel at 45.  ← 4/1.00
+  [doing★★★] What did the substitute do on the last day? Whispering "good luck" to a houseplant.  ← 4/1.00
+  [thing★★★] What's in the mystery box? A surfboard in Kansas.  ← 4/1.00
+  [thing★★★] What's in the mystery box? A savings account with $4 and a dream.  ← 3/1.00
+  [thing★★★] What's in the mystery box? A toddler negotiating bedtime like a lawyer.  ← 4/1.00
+  [thing★★★] What's in the mystery box? Hiccups during a speech.  ← 4/1.00
+  [thing★★★] What's in the mystery box? The Chicken Dance, unprompted.  ← 4/1.00
+  [thing★★★] What's in the mystery box? Kale, aggressively.  ← 4/1.00
+  [thing★★★] What's the worst gift to open in front of the giver? Six hours of sleep, described as "plenty."  ← 4/1.00
+  [thing★★★] What's the worst gift to open in front of the giver? An alpaca in the passenger seat.  ← 4/1.00
+  [thing★★★] What's the worst gift to open in front of the giver? A church potluck casserole with a secret.  ← 4/1.00
+  [thing★★★] What's the worst gift to open in front of the giver? The kiss cam landing on siblings.  ← 4/1.00
+  [thing★★★] What's the worst gift to open in front of the giver? A stapler in Jell-O.  ← 4/1.00
+  [thing★★★] What's the worst gift to open in front of the giver? A thermostat war.  ← 4/1.00
+  [doing★★★] The moonwalk was actually Michael Jackson Calling the dog by the kid's name.  ← 4/1.00
+  [doing★★★] The moonwalk was actually Michael Jackson Setting six alarms and beating all of them.  ← 3/1.00
+  [doing★★★] The moonwalk was actually Michael Jackson Getting the hiccups during a speech.  ← 3/1.00
+  [doing★★★] The moonwalk was actually Michael Jackson Quoting Shrek at a wedding.  ← 4/1.00
+  [doing★★★] The moonwalk was actually Michael Jackson Complimenting a stranger's dog too loudly.  ← 3/1.00
+  [doing★★★] The moonwalk was actually Michael Jackson Asking ChatGPT to write your wedding vows.  ← 4/1.00†
+  [thing★★★] What did Mark Zuckerberg practise in the mirror? A wasp in the car at 70 mph.  ← 4/1.00
+  [thing★★★] What did Mark Zuckerberg practise in the mirror? A Renaissance painter who only painted his cat.  ← 4/0.85
+  [thing★★★] What did Mark Zuckerberg practise in the mirror? An accidental reply-all.  ← 4/1.00
+  [thing★★★] What did Mark Zuckerberg practise in the mirror? A parallel parking job that took nine tries.  ← 4/1.00
+  [thing★★★] What did Mark Zuckerberg practise in the mirror? The end-credits song, sung badly.  ← 4/1.00
+  [thing★★★] What did Mark Zuckerberg practise in the mirror? A "quick" trip to Home Depot.  ← 4/1.00
+  [thing★★★] The office Secret Santa gift nobody wanted: The napkin dispenser that gives you fifty.  ← 3/1.00
+  [thing★★★] The office Secret Santa gift nobody wanted: The kid who ate the play-doh.  ← 4/0.85
+  [thing★★★] The office Secret Santa gift nobody wanted: A surfboard in Kansas.  ← 4/1.00
+  [thing★★★] The office Secret Santa gift nobody wanted: Someone's grandma at the skate park.  ← 4/1.00
+  [thing★★★] The office Secret Santa gift nobody wanted: A junk drawer with three remotes.  ← 4/1.00
+  [thing★★★] The office Secret Santa gift nobody wanted: A snail in the fast lane.  ← 4/1.00
+  [thing★★★] My first job interview went wrong because of A baguette that surrenders.  ← 4/1.00
+  [thing★★★] My first job interview went wrong because of A cashier who says "no worries" in a worried way.  ← 4/0.85
+  [thing★★★] My first job interview went wrong because of An emotional support cactus.  ← 4/1.00
+  [thing★★★] My first job interview went wrong because of Ring doorbell footage of a raccoon.  ← 3/1.00
+  [thing★★★] My first job interview went wrong because of A bank teller who knows too much.  ← 4/0.85
+  [thing★★★] My first job interview went wrong because of A grandma with a leaf blower.  ← 4/0.85
+  [thing★★★] My dad's toolbox contains The last season of Game of Thrones and no tools.  ← 3/1.00
+  [thing★★★] My dad's toolbox contains The one coworker who microwaves fish and no tools.  ← 4/0.85
+  [thing★★★] My dad's toolbox contains A monster truck at a garden party and no tools.  ← 4/1.00
+  [thing★★★] My dad's toolbox contains A bartender who judges your order and no tools.  ← 4/0.85
+  [thing★★★] My dad's toolbox contains A ring bearer who ate the ring and no tools.  ← 4/0.85
+  [thing★★★] My dad's toolbox contains A magician who forgot the trick and no tools.  ← 4/0.85
+  [thing★★★] The substitute teacher let us watch A shelf that's held up by hope.  ← 4/1.00
+  [thing★★★] The substitute teacher let us watch A referee who needs glasses.  ← 4/0.85
+  [thing★★★] The substitute teacher let us watch A rhino in a china shop.  ← 3/1.00
+  [thing★★★] The substitute teacher let us watch An ex who still has the Netflix password.  ← 4/0.85
+  [thing★★★] The substitute teacher let us watch The kid who brought a snake for show-and-tell.  ← 4/0.85†
+  [thing★★★] The substitute teacher let us watch The kid who ate the paste.  ← 4/0.85†
+  [thing★★★] The honeymoon photo album is mostly Naming a hurricane after your ex.  ← 4/0.70†
+  [thing★★★] The honeymoon photo album is mostly A paper gown, open in the back.  ← 3/1.00
+  [thing★★★] The honeymoon photo album is mostly A hedgehog wedding.  ← 3/1.00†
+  [thing★★★] The honeymoon photo album is mostly A barista who spells "Bob" wrong.  ← 4/0.85
+  [thing★★★] The honeymoon photo album is mostly An unsupervised Roomba.  ← 3/1.00
+  [thing★★★] The honeymoon photo album is mostly A ham that took eleven hours.  ← 4/1.00
+  [thing★★★] The detective's only clue was The Tooth Fairy's expense report.  ← 4/1.00
+  [thing★★★] The detective's only clue was My uncle's conspiracy theories.  ← 4/1.00
+  [thing★★★] The detective's only clue was Every spider in Australia.  ← 4/1.00
+  [thing★★★] The detective's only clue was A bird that found the clean car.  ← 4/1.00
+  [thing★★★] The detective's only clue was An air mattress that deflates by 3 a.m.  ← 4/1.00
+  [thing★★★] The detective's only clue was A trust fall nobody caught.  ← 4/1.00
+  [thing★★★] New Year's resolution, abandoned by January 3rd: A car seat installed wrong.  ← 4/1.00
+  [thing★★★] New Year's resolution, abandoned by January 3rd: An unpaid parking ticket from 2009.  ← 4/1.00
+  [thing★★★] New Year's resolution, abandoned by January 3rd: DoorDash from the place next door.  ← 4/1.00
+  [thing★★★] New Year's resolution, abandoned by January 3rd: An alien autopsy that found a Hot Pocket.  ← 4/1.00
+  [thing★★★] New Year's resolution, abandoned by January 3rd: An alpaca in the passenger seat.  ← 4/1.00
+  [thing★★★] New Year's resolution, abandoned by January 3rd: A cat on a leash, judging everyone.  ← 4/1.00
+  [thing★★★] After the power went out, we survived on The cafeteria's rectangle pizza.  ← 3/1.00
+  [thing★★★] After the power went out, we survived on Parallel parking with an audience.  ← 4/1.00
+  [thing★★★] After the power went out, we survived on A trumpet at a library.  ← 4/1.00
+  [thing★★★] After the power went out, we survived on An ostrich with your sunglasses.  ← 3/1.00
+  [thing★★★] After the power went out, we survived on Springsteen's hometown, again.  ← 3/1.00
+  [thing★★★] After the power went out, we survived on The relative who cried loudest and knew him least.  ← 4/0.85
+  [thing★★★] Coming soon to a theme park near you: A DJ who only plays the one song.  ← 4/0.85
+  [thing★★★] Coming soon to a theme park near you: A very tall man in a very small car.  ← 4/1.00
+  [thing★★★] Coming soon to a theme park near you: A parrot that swears in three languages.  ← 4/1.00
+  [thing★★★] Coming soon to a theme park near you: A ham that took eleven hours.  ← 4/1.00
+  [thing★★★] Coming soon to a theme park near you: Deviled eggs at a funeral.  ← 4/1.00
+  [thing★★★] Coming soon to a theme park near you: A crossing guard with a whistle and a grudge.  ← 4/1.00
+  [thing★★★] The judge held me in contempt for A plumber's crack, on schedule.  ← 4/1.00
+  [thing★★★] The judge held me in contempt for Twelve geese with an agenda.  ← 4/1.00
+  [thing★★★] The judge held me in contempt for An ex who still has the Netflix password.  ← 4/0.85
+  [thing★★★] The judge held me in contempt for A bank teller who knows too much.  ← 4/0.85
+  [thing★★★] The judge held me in contempt for A casket with cup holders.  ← 4/1.00
+  [thing★★★] The judge held me in contempt for A board game missing a piece.  ← 3/1.00
+  [thing★★★] My favorite superhero's secret weakness is Tap dancing on a hardwood floor at midnight.  ← 3/1.00
+  [thing★★★] My favorite superhero's secret weakness is A very confident goose.  ← 3/1.00
+  [thing★★★] My favorite superhero's secret weakness is A referee who needs glasses.  ← 4/0.85
+  [thing★★★] My favorite superhero's secret weakness is A magpie with your ring.  ← 4/1.00
+  [thing★★★] My favorite superhero's secret weakness is The family group chat, muted since 2019.  ← 3/1.00
+  [thing★★★] My favorite superhero's secret weakness is A nervous giraffe.  ← 3/1.00
+  [person★★★] The Bachelor's final rose went to The one relative who comments "who is this?".  ← 4/1.00
+  [person★★★] The Bachelor's final rose went to An owl who works nights.  ← 4/1.00
+  [person★★★] The Bachelor's final rose went to The kid who can't whistle but tries.  ← 3/1.00
+  [person★★★] The Bachelor's final rose went to A grandma who deadlifts.  ← 4/1.00
+  [person★★★] The Bachelor's final rose went to The one coworker who microwaves fish.  ← 4/1.00
+  [person★★★] The Bachelor's final rose went to A wizard who lost his wand in the couch.  ← 4/1.00
+  [thing+thing★★★] The one relative who brings up politics is just A road trip playlist that's all one song for grown-ups.  ← 4/0.85 3/1.00
+  [thing+thing★★★] A "small pinch" from the nurse is just The Pompeii guy who was mid-sneeze for grown-ups.  ← 4/1.00 4/0.85
+  [thing+thing★★★] A fly that knows the pattern is just A bathtub full of Jell-O for grown-ups.  ← 4/1.00 3/1.00
+  [thing+thing★★★] A very dramatic weatherman is just A group chat with 400 unread messages for grown-ups.  ← 4/1.00 2/1.00
+  [thing+thing★★★] The kid who ate the play-doh is just A fish tank in the bathroom for grown-ups.  ← 4/0.85 3/1.00
+  [thing+thing★★★] A robot that only folds towels is just Alphabetizing the spice rack at 3 a.m. for grown-ups.  ← 4/0.85 4/0.70

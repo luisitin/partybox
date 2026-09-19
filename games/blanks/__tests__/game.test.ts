@@ -216,6 +216,14 @@ describe('fill', () => {
         'The Epstein files.',
       ]),
     ).toBe(`Netflix's next true-crime documentary: "The Epstein files Murders."`);
+    expect(fillText('The wedding hashtag is #____.', ['A fake plant that somehow died.'])).toBe(
+      'The wedding hashtag is #fake plant that somehow died.',
+    );
+    expect(
+      fillText('The sign on the door says "no ____."', [
+        'A wedding band playing "Mr. Brightside" again.',
+      ]),
+    ).toBe('The sign on the door says "no wedding band playing "Mr. Brightside" again."');
     // No article before the blank: the card keeps its own.
     expect(fillText('I woke up covered in ____.', ['A gallon of cum.'])).toBe(
       'I woke up covered in A gallon of cum.',
