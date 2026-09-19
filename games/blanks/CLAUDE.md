@@ -12,6 +12,8 @@
   hand (kinds.golden.json); when the new read is the better one, `pnpm blanks-kinds-golden` and commit both.
 - Content: three decks under content/ (mild / crude / wild); the `decks` setting picks the mix.
   Ids `<m|c|w>b<n>` / `<m|c|w>w<n>`; add cards from text lists with `scripts/blanks-add-cards.ts`.
+  After adding cards, `pnpm blanks-kinds --since <rev>` lists what the fit model reads into each new one;
+  fix a wrong read with `slot` / `slots` / `serves` on the card, or a rule in server/fit.ts.
 - Review pages: `reports/design/blanks-choreography.html` is frozen as of review-loop #224 (owner,
   2026-09-18: “I don’t need you to keep updating the choreography html page”). Motion, sound and timing
   changes go in the loop log and this game’s README instead — do not edit or republish that page.
