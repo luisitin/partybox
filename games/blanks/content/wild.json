@@ -724,7 +724,8 @@
       "text": "My dating profile: \"I like ____ and I'm not afraid of ____.\"",
       "pick": 2,
       "draw": 0,
-      "tier": 3
+      "tier": 3,
+      "slots": ["doing", "thing"]
     },
     {
       "id": "wb107",
@@ -2256,7 +2257,8 @@
       "text": "Marriage is ____ negotiating with ____.",
       "pick": 2,
       "draw": 0,
-      "tier": 3
+      "tier": 3,
+      "slots": ["person", "person"]
     },
     {
       "id": "wb339",
@@ -2289,7 +2291,8 @@
       "text": "Hell is ____ for eternity with ____.",
       "pick": 2,
       "draw": 0,
-      "tier": 3
+      "tier": 3,
+      "slots": ["doing", "person"]
     },
     {
       "id": "wb344",
@@ -2358,7 +2361,8 @@
       "text": "Grindr is ____ wearing ____.",
       "pick": 2,
       "draw": 0,
-      "tier": 3
+      "tier": 3,
+      "slots": ["person", "thing"]
     },
     {
       "id": "wb355",
@@ -2655,7 +2659,8 @@
       "text": "My safe word is ____; my red flag is ____.",
       "pick": 2,
       "draw": 0,
-      "tier": 3
+      "tier": 3,
+      "slots": ["name", "thing"]
     },
     {
       "id": "wb401",
@@ -2667,7 +2672,8 @@
       "id": "wb402",
       "text": "Marriage is ____ negotiating over ____.",
       "pick": 2,
-      "draw": 0
+      "draw": 0,
+      "slots": ["person", "thing"]
     },
     {
       "id": "wb403",
@@ -2699,7 +2705,8 @@
       "text": "The honeymoon was ____ interrupted by ____.",
       "pick": 2,
       "draw": 0,
-      "tier": 3
+      "tier": 3,
+      "slots": ["thing", "doing"]
     },
     {
       "id": "wb408",
@@ -2713,7 +2720,8 @@
       "text": "The porn parody swaps ____ for ____.",
       "pick": 2,
       "draw": 0,
-      "tier": 3
+      "tier": 3,
+      "slots": ["thing", "thing"]
     },
     {
       "id": "wb410",
@@ -2727,7 +2735,8 @@
       "text": "The cult's promise: ____ in exchange for ____.",
       "pick": 2,
       "draw": 0,
-      "tier": 3
+      "tier": 3,
+      "slots": ["thing", "thing"]
     },
     {
       "id": "wb412",
@@ -3057,7 +3066,8 @@
       "text": "The first date ended with ____ in the trunk.",
       "pick": 1,
       "draw": 0,
-      "tier": 3
+      "tier": 3,
+      "slot": "thing"
     },
     {
       "id": "wb461",
@@ -3482,25 +3492,29 @@
       "id": "wb523",
       "text": "The livestream ended abruptly with ____.",
       "pick": 1,
-      "draw": 0
+      "draw": 0,
+      "tier": 3
     },
     {
       "id": "wb524",
       "text": "The viral video was actually footage of ____.",
       "pick": 1,
-      "draw": 0
+      "draw": 0,
+      "tier": 3
     },
     {
       "id": "wb525",
       "text": "The influencer's retreat was shut down after ____.",
       "pick": 1,
-      "draw": 0
+      "draw": 0,
+      "tier": 3
     },
     {
       "id": "wb526",
       "text": "The family reunion's body count was blamed on ____.",
       "pick": 1,
-      "draw": 0
+      "draw": 0,
+      "tier": 3
     },
     {
       "id": "wb527",
@@ -3512,7 +3526,8 @@
       "id": "wb528",
       "text": "The bedtime story was true, especially the part about ____.",
       "pick": 1,
-      "draw": 0
+      "draw": 0,
+      "tier": 3
     },
     {
       "id": "wb529",
@@ -3524,7 +3539,8 @@
       "id": "wb530",
       "text": "The televangelist's miracle turned out to be ____.",
       "pick": 1,
-      "draw": 0
+      "draw": 0,
+      "tier": 3
     },
     {
       "id": "wb531",
@@ -3536,13 +3552,15 @@
       "id": "wb532",
       "text": "The church's foundation was poured over ____.",
       "pick": 1,
-      "draw": 0
+      "draw": 0,
+      "tier": 3
     },
     {
       "id": "wb533",
       "text": "The camping trip's survivors never spoke of ____.",
       "pick": 1,
-      "draw": 0
+      "draw": 0,
+      "tier": 3
     },
     {
       "id": "wb534",
@@ -3560,7 +3578,8 @@
       "id": "wb536",
       "text": "The hikers' last photo showed ____.",
       "pick": 1,
-      "draw": 0
+      "draw": 0,
+      "tier": 3
     },
     {
       "id": "wb537",
@@ -3572,13 +3591,15 @@
       "id": "wb538",
       "text": "What did the deepfake show?",
       "pick": 1,
-      "draw": 0
+      "draw": 0,
+      "tier": 3
     },
     {
       "id": "wb539",
       "text": "What did the babysitter find in the attic?",
       "pick": 1,
-      "draw": 0
+      "draw": 0,
+      "tier": 3
     },
     {
       "id": "wb540",
@@ -3590,7 +3611,8 @@
       "id": "wb541",
       "text": "What did the avalanche uncover?",
       "pick": 1,
-      "draw": 0
+      "draw": 0,
+      "tier": 3
     }
   ],
   "white": [
@@ -11613,31 +11635,38 @@
     },
     {
       "id": "ww1696",
-      "text": "A livestream that outlived the streamer."
+      "text": "A livestream that outlived the streamer.",
+      "tier": 3
     },
     {
       "id": "ww1697",
-      "text": "A comment section that found the mascot's home address."
+      "text": "A comment section that found the mascot's home address.",
+      "tier": 3
     },
     {
       "id": "ww1698",
-      "text": "An unboxing video of a coffin."
+      "text": "An unboxing video of a coffin.",
+      "tier": 3
     },
     {
       "id": "ww1699",
-      "text": "A viral challenge with a ninety percent survival rate."
+      "text": "A viral challenge with a ninety percent survival rate.",
+      "tier": 3
     },
     {
       "id": "ww1700",
-      "text": "A dating profile written by the last match's family."
+      "text": "A dating profile written by the last match's family.",
+      "tier": 3
     },
     {
       "id": "ww1701",
-      "text": "An algorithm that recommends who to kill next."
+      "text": "An algorithm that recommends who to kill next.",
+      "tier": 3
     },
     {
       "id": "ww1702",
-      "text": "A group chat that planned the funeral before the death."
+      "text": "A group chat that planned the funeral before the death.",
+      "tier": 3
     },
     {
       "id": "ww1703",
@@ -11645,47 +11674,58 @@
     },
     {
       "id": "ww1704",
-      "text": "A grandmother who buried three husbands, under the porch."
+      "text": "A grandmother who buried three husbands, under the porch.",
+      "tier": 3
     },
     {
       "id": "ww1705",
-      "text": "An inheritance that comes with the body."
+      "text": "An inheritance that comes with the body.",
+      "tier": 3
     },
     {
       "id": "ww1706",
-      "text": "A bedtime story that names the victims."
+      "text": "A bedtime story that names the victims.",
+      "tier": 3
     },
     {
       "id": "ww1707",
-      "text": "A twin nobody mentions, kept in the barn."
+      "text": "A twin nobody mentions, kept in the barn.",
+      "tier": 3
     },
     {
       "id": "ww1708",
-      "text": "A baby shower for something that isn't a baby."
+      "text": "A baby shower for something that isn't a baby.",
+      "tier": 3
     },
     {
       "id": "ww1709",
-      "text": "A televangelist who heals with a hammer."
+      "text": "A televangelist who heals with a hammer.",
+      "tier": 3
     },
     {
       "id": "ww1710",
-      "text": "A cult that pays tithes in fingers."
+      "text": "A cult that pays tithes in fingers.",
+      "tier": 3
     },
     {
       "id": "ww1711",
-      "text": "A confession booth with a trapdoor."
+      "text": "A confession booth with a trapdoor.",
+      "tier": 3
     },
     {
       "id": "ww1712",
-      "text": "A holy relic that's still warm."
+      "text": "A holy relic that's still warm.",
+      "tier": 3
     },
     {
       "id": "ww1713",
-      "text": "A rapture that took only the wrong people."
+      "text": "A rapture that took only the wrong people.",
+      "tier": 3
     },
     {
       "id": "ww1714",
-      "text": "A god that answers, unfortunately."
+      "text": "A god that answers, unfortunately.",
+      "tier": 3
     },
     {
       "id": "ww1715",
@@ -11693,7 +11733,8 @@
     },
     {
       "id": "ww1716",
-      "text": "A campfire story that was a confession."
+      "text": "A campfire story that was a confession.",
+      "tier": 3
     },
     {
       "id": "ww1717",
@@ -11709,19 +11750,23 @@
     },
     {
       "id": "ww1720",
-      "text": "A bear that developed a taste and a routine."
+      "text": "A bear that developed a taste and a routine.",
+      "tier": 3
     },
     {
       "id": "ww1721",
-      "text": "A cabin with a guestbook of last words."
+      "text": "A cabin with a guestbook of last words.",
+      "tier": 3
     },
     {
       "id": "ww1722",
-      "text": "A lightning strike that hit the right person."
+      "text": "A lightning strike that hit the right person.",
+      "tier": 3
     },
     {
       "id": "ww1723",
-      "text": "A blizzard that snowed in the killer with the guests."
+      "text": "A blizzard that snowed in the killer with the guests.",
+      "tier": 3
     },
     {
       "id": "ww1724",
@@ -11729,7 +11774,8 @@
     },
     {
       "id": "ww1725",
-      "text": "A forest that's mostly shallow graves."
+      "text": "A forest that's mostly shallow graves.",
+      "tier": 3
     }
   ]
 }
