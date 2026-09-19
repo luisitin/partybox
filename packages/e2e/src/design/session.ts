@@ -88,9 +88,16 @@ export class DevApi {
   }
 }
 
+/** Every capture context: dark scheme, and PB_MOTION=reduce emulates prefers-reduced-motion so a
+ *  live round can be filmed the way a reduced-motion TV or phone plays it (loop 724). */
+export const CONTEXT_BASE = {
+  colorScheme: 'dark' as const,
+  ...(process.env.PB_MOTION === 'reduce' ? { reducedMotion: 'reduce' as const } : {}),
+};
+
 export async function openContext(browser: Browser, device: DeviceId): Promise<BrowserContext> {
   const spec = DEVICES[device];
-  return browser.newContext({ ...spec.options, colorScheme: 'dark' });
+  return browser.newContext({ ...spec.options, ...CONTEXT_BASE });
 }
 
 /** Emulation CSS must land AFTER the app's stylesheet (same specificity, later wins). */
@@ -170,7 +177,7 @@ export async function openTvRecorded(
 ): Promise<{ page: Page; context: BrowserContext; t0: number; videoDir: string }> {
   const context = await browser.newContext({
     ...DEVICES.tv.options,
-    colorScheme: 'dark',
+    ...CONTEXT_BASE,
     recordVideo: { dir: videoDir, size: { width: 1920, height: 1080 } },
   });
   const t0 = Date.now();
@@ -218,7 +225,7 @@ export async function openPhoneRecorded(
   const spec = DEVICES[device];
   const context = await browser.newContext({
     ...spec.options,
-    colorScheme: 'dark',
+    ...CONTEXT_BASE,
     recordVideo: { dir: videoDir, size: spec.options.viewport ?? { width: 390, height: 844 } },
   });
   const t0 = Date.now();

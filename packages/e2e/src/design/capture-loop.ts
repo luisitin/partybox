@@ -4,7 +4,7 @@
 // log (cue, time, phase) and the TV's long-frame numbers.
 // Usage: tsx packages/e2e/src/design/capture-loop.ts --pass 1 --game bingo --players 6
 //        [--scenario normal|reconnect|vip-leaves|tie|walkover|spicy|pause] [--focus tv|phone] [--budget 150] [--port 42071] [--fps 10] [--after 2.5] [--pause-in <phase>]
-//        env: PB_NAME_A / PB_NAME_B name the two recorded phones; PB_PHONE picks their device (iphone-se, pixel, galaxy, font200)
+//        env: PB_NAME_A / PB_NAME_B name the two recorded phones; PB_PHONE picks their device (iphone-se, pixel, galaxy, font200); PB_MOTION=reduce films under prefers-reduced-motion
 import { mkdirSync, readFileSync, readdirSync, renameSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { parseArgs } from 'node:util';
@@ -12,7 +12,7 @@ import { chromium } from 'playwright';
 import type { Page } from 'playwright';
 import { rashTap } from './loop-rash';
 import { REPO_ROOT, startServer } from './server';
-import { DevApi, joinViaForm, openPhone, passAudioGate, settle } from './session';
+import { DevApi, joinViaForm, openPhone, passAudioGate, settle, CONTEXT_BASE } from './session';
 import type { Phone } from './session';
 import { groupCues, HOOKS, strip } from './loop-tools';
 import type { PhaseChange } from './loop-tools';
@@ -70,7 +70,7 @@ async function main(): Promise<void> {
     await api.reset();
     const tvContext = await browser.newContext({
       viewport: { width: 1920, height: 1080 },
-      colorScheme: 'dark',
+      ...CONTEXT_BASE,
       recordVideo: { dir: join(OUT, 'video', 'tv'), size: { width: 1920, height: 1080 } },
     });
     await tvContext.addInitScript(HOOKS);
@@ -87,7 +87,7 @@ async function main(): Promise<void> {
       const phone = DEVICES[process.env.PB_PHONE as keyof typeof DEVICES] ?? DEVICES.iphone;
       const context = await browser.newContext({
         ...phone.options,
-        colorScheme: 'dark',
+        ...CONTEXT_BASE,
         recordVideo: {
           dir: join(OUT, 'video', 'phone'),
           size: phone.options.viewport ?? { width: 390, height: 844 },
