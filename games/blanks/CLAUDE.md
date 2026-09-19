@@ -8,6 +8,8 @@
   every theme — warm charcoal `#16171c` and cream `#f6f1e6`, never pure, so a dark TV does not glare).
 - Dealing (the hand floors, the refill, the best fits on top) is `server/deal.ts`; what a card is and how it
   fits a prompt is `server/fit.ts` + `server/topics.ts`; the bot's taste is `server/bot.ts`.
+  A rule change in fit.ts must keep `__tests__/kinds.test.ts` green: it pins the reads the loop verified by
+  hand (kinds.golden.json); when the new read is the better one, `pnpm blanks-kinds-golden` and commit both.
 - Content: three decks under content/ (mild / crude / wild); the `decks` setting picks the mix.
   Ids `<m|c|w>b<n>` / `<m|c|w>w<n>`; add cards from text lists with `scripts/blanks-add-cards.ts`.
 - Review pages: `reports/design/blanks-choreography.html` is frozen as of review-loop #224 (owner,
