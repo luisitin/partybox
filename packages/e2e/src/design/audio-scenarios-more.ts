@@ -79,6 +79,37 @@ export async function runMoreScenarios({ T, tv, vip, p2, api, pages, out }: Ctx)
       (await bed()) === null,
     `playing=${JSON.stringify(await T.playing(tv))} bed=${await bed()}`,
   );
+  // A VIP pause mid-write (the only phase with a file track in Wisecrack): the track holds where it
+  // is — no fade, no restart — and comes back on resume with the phase chime.
+  await api.vip('pause');
+  await settle(900);
+  await T.mark('F1p');
+  evs = await T.between(tv, 'F1', 'F1p');
+  T.ok(
+    'F',
+    'pause while writing → pause cue, the writing track holds (nothing playing), no bed',
+    T.cues(evs).includes('pause') &&
+      evs.some((e) => e.kind === 'music:paused' && e['paused'] === true) &&
+      (await T.playing(tv)).length === 0 &&
+      (await bed()) === null,
+    `cues=${T.cues(evs).join(',')} playing=${JSON.stringify(await T.playing(tv))}`,
+  );
+  await api.vip('resume');
+  await settle(900);
+  await T.mark('F1r');
+  evs = await T.between(tv, 'F1p', 'F1r');
+  const resumed = (await T.playing(tv)).filter((m) => SET.includes(m.track));
+  T.ok(
+    'F',
+    'resume → phase chime, the same writing track carries on at its level (no music:start)',
+    T.cues(evs).includes('phase') &&
+      evs.some((e) => e.kind === 'music:paused' && e['paused'] === false) &&
+      !evs.some((e) => e.kind === 'music:start') &&
+      resumed.length === 1 &&
+      resumed[0]!.track === writing[0]?.track &&
+      resumed[0]!.vol >= 0.18,
+    `cues=${T.cues(evs).join(',')} playing=${JSON.stringify(await T.playing(tv))}`,
+  );
   for (const ph of [vip, p2, p3]) {
     const ta = ph.page.locator('textarea:not([disabled])');
     await ta
