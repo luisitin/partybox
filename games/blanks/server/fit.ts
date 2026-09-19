@@ -31,17 +31,19 @@ const DOING_PROMPT = [
   // (No trailing \b: after "on?" the end of the text is no word boundary — "What did the kids walk
   // in on?" read as a thing for twenty passes.)
   /\b(?:what happened|what went wrong|walk(?:ed)? in on\?|catch (?:\w+ )+doing\b|am I doing\b|are you doing\b|^how did\b|^why\b)/i,
-  /\b(?:pulled (?:me|us|him|her) over|in trouble|grounded|detention|suspended|deported|excommunicated|disqualified|demonetized|cancel(?:l)?ed) (?:\w+ )?for ____/i,
+  /\b(?:pulled (?:me|us|him|her) over|pulled over|in trouble|grounded|detention|suspended|deported|excommunicated|disqualified|demonetized|cancel(?:l)?ed) (?:\w+ )?for ____/i,
   /\b(?:ruined|interrupted|cancelled|canceled|delayed|caused|started|ended|followed|triggered|brought on) by ____/i,
   /\b(?:led to|ended (?:\w+ )?(?:with|in)|started with|began with) ____\.?$/i,
   // "What got me banned…?", "What ended the marriage?", "the secret to a happy marriage", "the
   // CIA's new interrogation technique": what someone did, or does.
   /^What (?:got|ended|finally ended|killed|ruined|started|caused|broke up)\b/i,
-  /\b(?:technique|trick|secret to|real reason for|reason the [\w' ]+ ended|mistake (?:was|is)|biggest mistake|first mistake|mistake: ____|strategy (?:was|is)|plan (?:was|is)|never live down|live down|alibi (?:is|was|involves)|shalt not|practi[sc]e)\b/i,
+  /\b(?:technique|trick|secret to|real reason for|reason the [\w' ]+ ended|mistake (?:was|is)|biggest mistake|first mistake|mistake: ____|strategy (?:was|is)|plan (?:was|is)|never live down|live down|alibi\b[^.?]* (?:is|was|involves)|shalt not|practi[sc]e)\b/i,
   /\b(?:turned into|opens with|cuts to|closes with) ____/i, // "…trust exercise turned into ____", "The sex tape opens with ____"
   /\b(?:confess(?:ed|ing)? to|admit(?:ted)? to|plead(?:ed)? guilty to|owned up to|apologi[sz]ed? for|blame[sd]? (?:me|him|her|them|us|you|it) for|forgive (?:me|him|her|them|us) for|guilty of)\b/i, // "What did I confess to on the witness stand?"
   /\b(?:done|did|loved|dare (?:was|is)|ritual (?:was|is)): ____|doing what \w+ loved/i,
-  /\b(?:arrested|fired|executed|burned|shut down|raided|resigned|banned|expelled|sued|jailed|convicted|dumped|put (?:\w+ ){1,2}down|quit|walked out|kicked out)\b[^.]* (?:for|over) ____/i,
+  /\b(?:arrested|fired|executed|burned|shut down|raided|resigned|banned|expelled|sued|jailed|convicted|dumped|put (?:\w+ ){1,2}down|quit|walked out|kicked out|fined|voted off|kicked (?:me|us|him|her) off|upgraded (?:me|us)|comped (?:me|us)|congratulated (?:me|us|him|her)|lost the prize|tested positive)\b[^.]* (?:for|over) ____/i,
+  // "…will be remembered for ____", "…is famous for ____", "a ribbon for ____", "charges extra for ____".
+  /\b(?:remembered|remember (?:me|us|him|her)|famous|only good|charge[sd]?(?: (?:me|us|extra|a cleaning fee))?|a (?:charge|ribbon|badge|medal|trophy|award|bonus|raise|promotion)|one break a day) for ____/i,
   // A ritual, a dare, an activity, a way to get something: what someone does.
   /\b(?:ritual|hazing|dare|tradition|activity|hobby|pastime|challenge|way to get|specializes in|known for|charged? extra for|signature move|finishing move|move in bed|new event: ____|as an event)\b/i,
 ];
