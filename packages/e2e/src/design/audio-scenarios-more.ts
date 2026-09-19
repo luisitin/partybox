@@ -57,15 +57,22 @@ export async function runMoreScenarios({ T, tv, vip, p2, api, pages, out }: Ctx)
     `cues=${T.cues(evs).join(',')} playing=${JSON.stringify(await T.playing(tv))} bed=${await bed()}`,
   );
   await api.skip(); // intro → answer
-  await settle(2500);
+  await settle(350);
+  const SET = ['sneaky-snitch.mp3', 'fluffing-a-duck.mp3', 'carefree.mp3'];
+  const early = (await T.playing(tv)).filter((m) => SET.includes(m.track));
+  T.ok(
+    'F',
+    'the writing track eases in (under 0.2 a third of a second in), never a hard start',
+    early.length === 1 && early[0]!.vol > 0 && early[0]!.vol < 0.2,
+    `playing=${JSON.stringify(await T.playing(tv))}`,
+  );
+  await settle(2150);
   const writing = (await T.playing(tv)).filter((m) => m.vol > 0.1);
   T.ok(
     'F',
     'answer → one Wisecrack track at 0.2 while everyone writes, the bed gone',
     writing.length === 1 &&
-      ['sneaky-snitch.mp3', 'fluffing-a-duck.mp3', 'carefree.mp3'].includes(
-        writing[0]?.track ?? '',
-      ) &&
+      SET.includes(writing[0]?.track ?? '') &&
       writing[0]?.vol === 0.2 &&
       (await bed()) === null,
     `playing=${JSON.stringify(await T.playing(tv))} bed=${await bed()}`,

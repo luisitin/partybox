@@ -50,7 +50,7 @@ it needs the server started with `--dev-api`, which the Windows launcher does.
 
 ## Music and the Bingo caller
 
-The TV plays background music (lobby, Bingo, Broken Pencil) from `packages/client/public/music/`,
+The TV plays background music (lobby, Bingo, Broken Pencil, Wisecrack) from `packages/client/public/music/`,
 fetched once by `pnpm fetch-music` (the Windows launcher does it after the build; no internet →
 silence, nothing else changes). Tracks: Kevin MacLeod (incompetech.com), licensed under Creative
 Commons: By Attribution 4.0 — https://creativecommons.org/licenses/by/4.0/. Bingo's caller speaks
