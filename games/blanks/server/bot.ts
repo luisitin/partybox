@@ -25,7 +25,7 @@ const NOISE = 0.2;
 export function cardAppeal(slot: Slot, id: string, rng: Rng, blackText = ''): number {
   const text = whiteText(id);
   return (
-    fitScore(slot, whiteServes(id)) +
+    fitScore(slot, whiteServes(id), text) +
     TIER_WEIGHT * (whiteTier(id) - 2) +
     (blackText ? pairBonus(blackText, text) : 0) +
     punch(text) +

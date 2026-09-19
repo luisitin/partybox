@@ -1,0 +1,79 @@
+{
+  "pass": "548",
+  "game": "lightning-round",
+  "players": 16,
+  "scenario": "tie",
+  "focus": "tv",
+  "started": "09:17:08.821",
+  "tvVideoT0": "09:17:05.485",
+  "phoneVideoT0": "09:17:06.285",
+  "changes": [
+    {
+      "t": 1789809428823,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789809432814,
+      "bed": "marimba",
+      "at": "09:17:08.823",
+      "sinceStartS": 0,
+      "videoS": 3.3,
+      "phoneVideoS": 2.5
+    },
+    {
+      "t": 1789809432840,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789809447827,
+      "bed": "pulse",
+      "at": "09:17:12.840",
+      "sinceStartS": 4,
+      "videoS": 7.4,
+      "phoneVideoS": 6.6
+    },
+    {
+      "t": 1789809447893,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789809452830,
+      "bed": "pulse",
+      "at": "09:17:27.893",
+      "sinceStartS": 19.1,
+      "videoS": 22.4,
+      "phoneVideoS": 21.6
+    },
+    {
+      "t": 1789809452867,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789809467842,
+      "bed": "pulse",
+      "at": "09:17:32.867",
+      "sinceStartS": 24,
+      "videoS": 27.4,
+      "phoneVideoS": 26.6
+    },
+    {
+      "t": 1789809467937,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789809472842,
+      "bed": "pulse",
+      "at": "09:17:47.937",
+      "sinceStartS": 39.1,
+      "videoS": 42.5,
+      "phoneVideoS": 41.7
+    },
+    {
+      "t": 1789809472845,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789809487842,
+      "bed": "pulse",
+      "at": "09:17:52.845",
+      "sinceStartS": 44,
+      "videoS": 47.4,
+      "phoneVideoS": 46.6
+    }
+  ],
+  "notes": ["budget reached while playing; skipped to results"]
+}

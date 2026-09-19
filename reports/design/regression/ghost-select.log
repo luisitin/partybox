@@ -1,6 +1,6 @@
-(node:28740) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(node:7444) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
 (Use `node --trace-deprecation ...` to show where the warning was created)
 ok   the live TV panel shows the picked category — STEM on the panel
-ok   no option list run together under the intro — polls=25
+ok   no option list run together under the intro — polls=26
 ok   the ghost panel keeps the picked label alone — STEM near Category
 3/3 checks passed → reports/design/ghost-select/

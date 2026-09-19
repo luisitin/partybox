@@ -79,8 +79,15 @@ describe('servesOf — what the white card is', () => {
       'A therapist who takes notes with a shudder.',
       'MySpace Tom, who saw everything.',
       'A cop with a podcast.',
+      'A wine mom with a tumbler that says "mama needs."',
+      'A crossing guard who flashed the school bus.',
     ])
       expect(servesOf({ text }), text).toEqual(['person']);
+    // A who-clause deep in the card is not about its head.
+    expect(servesOf({ text: "A funeral for someone who's at the funeral." })).toEqual([
+      'thing',
+      'doing',
+    ]);
     expect(servesOf({ text: 'Grandma.' })).toEqual(['person', 'name']);
   });
   it('a possessive or a compound noun is the thing it names, not the person in it', () => {
@@ -115,6 +122,12 @@ describe('fitScore', () => {
     expect(fitScore('thing', ['doing', 'thing'])).toBe(1);
     expect(fitScore('name', ['thing', 'name'])).toBe(1);
     expect(fitScore('name', ['thing'])).toBe(0.5);
+    // With the text, a name blank grades by length: a slogan takes six words, a wall is a wall.
+    expect(fitScore('name', ['thing'], 'Lost luggage that went to Cleveland.')).toBe(0.8);
+    expect(fitScore('name', ['thing', 'name'], 'Smegma.')).toBe(1);
+    expect(
+      fitScore('name', ['person'], 'A marathon runner who mentions it at every dinner party.'),
+    ).toBe(0.45);
     expect(fitScore('name', ['person'])).toBe(0.5);
     expect(fitScore('thing', ['thing', 'name'])).toBe(1);
     expect(fitScore('thing', ['doing', 'name'])).toBe(0.7);
