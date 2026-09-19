@@ -1,0 +1,702 @@
+[
+  {
+    "t": 1789818157565,
+    "surface": "tv",
+    "freqs": [523, 784],
+    "dur": 100,
+    "cue": "ready",
+    "phase": "lobby",
+    "at": "11:42:37.565",
+    "sinceStartS": -2.48
+  },
+  {
+    "t": 1789818158270,
+    "surface": "tv",
+    "freqs": [523, 659],
+    "dur": 100,
+    "cue": "join",
+    "phase": "lobby",
+    "at": "11:42:38.270",
+    "sinceStartS": -1.77
+  },
+  {
+    "t": 1789818159005,
+    "surface": "tv",
+    "freqs": [587, 740],
+    "dur": 100,
+    "cue": "join",
+    "phase": "lobby",
+    "at": "11:42:39.005",
+    "sinceStartS": -1.04
+  },
+  {
+    "t": 1789818159064,
+    "surface": "tv",
+    "freqs": [659, 830],
+    "dur": 100,
+    "cue": "join",
+    "phase": "lobby",
+    "at": "11:42:39.064",
+    "sinceStartS": -0.98
+  },
+  {
+    "t": 1789818159110,
+    "surface": "tv",
+    "freqs": [659, 830],
+    "dur": 100,
+    "cue": "join",
+    "phase": "lobby",
+    "at": "11:42:39.110",
+    "sinceStartS": -0.93
+  },
+  {
+    "t": 1789818160096,
+    "surface": "tv",
+    "freqs": [392, 523, 659, 784],
+    "dur": 120,
+    "cue": "start",
+    "phase": "intro",
+    "at": "11:42:40.096",
+    "sinceStartS": 0.05
+  },
+  {
+    "t": 1789818164078,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "dur": 120,
+    "cue": "phase",
+    "phase": "intro",
+    "at": "11:42:44.078",
+    "sinceStartS": 4.04
+  },
+  {
+    "t": 1789818164833,
+    "surface": "tv",
+    "freqs": [1568],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "question",
+    "at": "11:42:44.833",
+    "sinceStartS": 4.79
+  },
+  {
+    "t": 1789818165273,
+    "surface": "tv",
+    "freqs": [1760],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "question",
+    "at": "11:42:45.273",
+    "sinceStartS": 5.23
+  },
+  {
+    "t": 1789818165729,
+    "surface": "tv",
+    "freqs": [2489],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "question",
+    "at": "11:42:45.729",
+    "sinceStartS": 5.69
+  },
+  {
+    "t": 1789818166011,
+    "surface": "tv",
+    "freqs": [2489],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "question",
+    "at": "11:42:46.011",
+    "sinceStartS": 5.97
+  },
+  {
+    "t": 1789818166973,
+    "surface": "tv",
+    "freqs": [2489],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "question",
+    "at": "11:42:46.973",
+    "sinceStartS": 6.93
+  },
+  {
+    "t": 1789818167316,
+    "surface": "tv",
+    "freqs": [2489],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "question",
+    "at": "11:42:47.316",
+    "sinceStartS": 7.27
+  },
+  {
+    "t": 1789818167915,
+    "surface": "tv",
+    "freqs": [2489],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "question",
+    "at": "11:42:47.915",
+    "sinceStartS": 7.87
+  },
+  {
+    "t": 1789818168167,
+    "surface": "tv",
+    "freqs": [2489],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "question",
+    "at": "11:42:48.167",
+    "sinceStartS": 8.12
+  },
+  {
+    "t": 1789818168227,
+    "surface": "phone",
+    "freqs": [660, 880],
+    "dur": 70,
+    "cue": "submit",
+    "phase": "question",
+    "at": "11:42:48.227",
+    "sinceStartS": 8.18
+  },
+  {
+    "t": 1789818168460,
+    "surface": "tv",
+    "freqs": [330, 330, 494, 659, 988, 1319],
+    "dur": 110,
+    "cue": "reveal",
+    "phase": "question",
+    "at": "11:42:48.460",
+    "sinceStartS": 8.42
+  },
+  {
+    "t": 1789818173471,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "dur": 120,
+    "cue": "phase",
+    "phase": "reveal",
+    "at": "11:42:53.471",
+    "sinceStartS": 13.43
+  },
+  {
+    "t": 1789818174534,
+    "surface": "tv",
+    "freqs": [1568],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "reveal",
+    "at": "11:42:54.534",
+    "sinceStartS": 14.49
+  },
+  {
+    "t": 1789818174818,
+    "surface": "tv",
+    "freqs": [2489],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "reveal",
+    "at": "11:42:54.818",
+    "sinceStartS": 14.78
+  },
+  {
+    "t": 1789818175792,
+    "surface": "tv",
+    "freqs": [2489],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "reveal",
+    "at": "11:42:55.792",
+    "sinceStartS": 15.75
+  },
+  {
+    "t": 1789818176109,
+    "surface": "tv",
+    "freqs": [2489],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "reveal",
+    "at": "11:42:56.109",
+    "sinceStartS": 16.07
+  },
+  {
+    "t": 1789818176612,
+    "surface": "tv",
+    "freqs": [2489],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "reveal",
+    "at": "11:42:56.612",
+    "sinceStartS": 16.57
+  },
+  {
+    "t": 1789818176946,
+    "surface": "tv",
+    "freqs": [2489],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "reveal",
+    "at": "11:42:56.946",
+    "sinceStartS": 16.9
+  },
+  {
+    "t": 1789818177388,
+    "surface": "tv",
+    "freqs": [2489],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "reveal",
+    "at": "11:42:57.388",
+    "sinceStartS": 17.34
+  },
+  {
+    "t": 1789818183477,
+    "surface": "tv",
+    "freqs": [880],
+    "dur": 80,
+    "cue": "countdown",
+    "phase": "reveal",
+    "at": "11:43:03.477",
+    "sinceStartS": 23.43
+  },
+  {
+    "t": 1789818183573,
+    "surface": "phone",
+    "freqs": [880],
+    "dur": 70,
+    "cue": "tick",
+    "phase": "reveal",
+    "at": "11:43:03.573",
+    "sinceStartS": 23.53
+  },
+  {
+    "t": 1789818184471,
+    "surface": "tv",
+    "freqs": [988],
+    "dur": 80,
+    "cue": "countdown",
+    "phase": "reveal",
+    "at": "11:43:04.471",
+    "sinceStartS": 24.43
+  },
+  {
+    "t": 1789818185476,
+    "surface": "tv",
+    "freqs": [1109],
+    "dur": 80,
+    "cue": "countdown",
+    "phase": "question",
+    "at": "11:43:05.476",
+    "sinceStartS": 25.43
+  },
+  {
+    "t": 1789818185981,
+    "surface": "tv",
+    "freqs": [2489],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "question",
+    "at": "11:43:05.981",
+    "sinceStartS": 25.94
+  },
+  {
+    "t": 1789818186484,
+    "surface": "tv",
+    "freqs": [1175],
+    "dur": 80,
+    "cue": "countdown",
+    "phase": "question",
+    "at": "11:43:06.484",
+    "sinceStartS": 26.44
+  },
+  {
+    "t": 1789818187476,
+    "surface": "tv",
+    "freqs": [1319],
+    "dur": 80,
+    "cue": "countdown",
+    "phase": "question",
+    "at": "11:43:07.476",
+    "sinceStartS": 27.43
+  },
+  {
+    "t": 1789818188485,
+    "surface": "tv",
+    "freqs": [330, 330, 494, 659, 988, 1319],
+    "dur": 110,
+    "cue": "reveal",
+    "phase": "reveal",
+    "at": "11:43:08.485",
+    "sinceStartS": 28.44
+  },
+  {
+    "t": 1789818193496,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "dur": 120,
+    "cue": "phase",
+    "phase": "question",
+    "at": "11:43:13.496",
+    "sinceStartS": 33.45
+  },
+  {
+    "t": 1789818194221,
+    "surface": "tv",
+    "freqs": [1568],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "question",
+    "at": "11:43:14.221",
+    "sinceStartS": 34.18
+  },
+  {
+    "t": 1789818195158,
+    "surface": "tv",
+    "freqs": [1976],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "question",
+    "at": "11:43:15.158",
+    "sinceStartS": 35.12
+  },
+  {
+    "t": 1789818195539,
+    "surface": "tv",
+    "freqs": [2489],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "question",
+    "at": "11:43:15.539",
+    "sinceStartS": 35.5
+  },
+  {
+    "t": 1789818195837,
+    "surface": "tv",
+    "freqs": [2489],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "question",
+    "at": "11:43:15.837",
+    "sinceStartS": 35.79
+  },
+  {
+    "t": 1789818196215,
+    "surface": "tv",
+    "freqs": [2489],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "question",
+    "at": "11:43:16.215",
+    "sinceStartS": 36.17
+  },
+  {
+    "t": 1789818196750,
+    "surface": "tv",
+    "freqs": [2489],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "question",
+    "at": "11:43:16.750",
+    "sinceStartS": 36.71
+  },
+  {
+    "t": 1789818197079,
+    "surface": "tv",
+    "freqs": [2489],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "question",
+    "at": "11:43:17.079",
+    "sinceStartS": 37.04
+  },
+  {
+    "t": 1789818197563,
+    "surface": "phone",
+    "freqs": [660, 880],
+    "dur": 70,
+    "cue": "submit",
+    "phase": "question",
+    "at": "11:43:17.563",
+    "sinceStartS": 37.52
+  },
+  {
+    "t": 1789818197575,
+    "surface": "tv",
+    "freqs": [2489],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "question",
+    "at": "11:43:17.575",
+    "sinceStartS": 37.53
+  },
+  {
+    "t": 1789818197747,
+    "surface": "tv",
+    "freqs": [330, 330, 494, 659, 988, 1319],
+    "dur": 110,
+    "cue": "reveal",
+    "phase": "question",
+    "at": "11:43:17.747",
+    "sinceStartS": 37.7
+  },
+  {
+    "t": 1789818202761,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "dur": 120,
+    "cue": "phase",
+    "phase": "reveal",
+    "at": "11:43:22.761",
+    "sinceStartS": 42.72
+  },
+  {
+    "t": 1789818203499,
+    "surface": "tv",
+    "freqs": [1568],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "question",
+    "at": "11:43:23.499",
+    "sinceStartS": 43.46
+  },
+  {
+    "t": 1789818203803,
+    "surface": "tv",
+    "freqs": [1976],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "question",
+    "at": "11:43:23.803",
+    "sinceStartS": 43.76
+  },
+  {
+    "t": 1789818204464,
+    "surface": "tv",
+    "freqs": [2489],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "question",
+    "at": "11:43:24.464",
+    "sinceStartS": 44.42
+  },
+  {
+    "t": 1789818205016,
+    "surface": "tv",
+    "freqs": [2489],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "question",
+    "at": "11:43:25.016",
+    "sinceStartS": 44.97
+  },
+  {
+    "t": 1789818205910,
+    "surface": "tv",
+    "freqs": [2489],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "question",
+    "at": "11:43:25.910",
+    "sinceStartS": 45.87
+  },
+  {
+    "t": 1789818206428,
+    "surface": "tv",
+    "freqs": [2489],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "question",
+    "at": "11:43:26.428",
+    "sinceStartS": 46.38
+  },
+  {
+    "t": 1789818206834,
+    "surface": "tv",
+    "freqs": [2489],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "question",
+    "at": "11:43:26.834",
+    "sinceStartS": 46.79
+  },
+  {
+    "t": 1789818206901,
+    "surface": "phone",
+    "freqs": [660, 880],
+    "dur": 70,
+    "cue": "submit",
+    "phase": "question",
+    "at": "11:43:26.901",
+    "sinceStartS": 46.86
+  },
+  {
+    "t": 1789818206938,
+    "surface": "tv",
+    "freqs": [330, 330, 494, 659, 988, 1319],
+    "dur": 110,
+    "cue": "reveal",
+    "phase": "question",
+    "at": "11:43:26.938",
+    "sinceStartS": 46.9
+  },
+  {
+    "t": 1789818211939,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "dur": 120,
+    "cue": "phase",
+    "phase": "reveal",
+    "at": "11:43:31.939",
+    "sinceStartS": 51.9
+  },
+  {
+    "t": 1789818212741,
+    "surface": "tv",
+    "freqs": [1568],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "question",
+    "at": "11:43:32.741",
+    "sinceStartS": 52.7
+  },
+  {
+    "t": 1789818213002,
+    "surface": "tv",
+    "freqs": [1760],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "question",
+    "at": "11:43:33.002",
+    "sinceStartS": 52.96
+  },
+  {
+    "t": 1789818213254,
+    "surface": "tv",
+    "freqs": [1976],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "question",
+    "at": "11:43:33.254",
+    "sinceStartS": 53.21
+  },
+  {
+    "t": 1789818213552,
+    "surface": "tv",
+    "freqs": [2489],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "question",
+    "at": "11:43:33.552",
+    "sinceStartS": 53.51
+  },
+  {
+    "t": 1789818214569,
+    "surface": "tv",
+    "freqs": [2489],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "question",
+    "at": "11:43:34.569",
+    "sinceStartS": 54.53
+  },
+  {
+    "t": 1789818215091,
+    "surface": "tv",
+    "freqs": [2489],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "question",
+    "at": "11:43:35.091",
+    "sinceStartS": 55.05
+  },
+  {
+    "t": 1789818215356,
+    "surface": "tv",
+    "freqs": [2489],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "question",
+    "at": "11:43:35.356",
+    "sinceStartS": 55.31
+  },
+  {
+    "t": 1789818215760,
+    "surface": "tv",
+    "freqs": [2489],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "question",
+    "at": "11:43:35.760",
+    "sinceStartS": 55.72
+  },
+  {
+    "t": 1789818216053,
+    "surface": "phone",
+    "freqs": [660, 880],
+    "dur": 70,
+    "cue": "submit",
+    "phase": "question",
+    "at": "11:43:36.053",
+    "sinceStartS": 56.01
+  },
+  {
+    "t": 1789818216064,
+    "surface": "tv",
+    "freqs": [2489],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "question",
+    "at": "11:43:36.064",
+    "sinceStartS": 56.02
+  },
+  {
+    "t": 1789818216442,
+    "surface": "tv",
+    "freqs": [330, 330, 494, 659, 988, 1319],
+    "dur": 110,
+    "cue": "reveal",
+    "phase": "question",
+    "at": "11:43:36.442",
+    "sinceStartS": 56.4
+  },
+  {
+    "t": 1789818220110,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "dur": 120,
+    "cue": "phase",
+    "phase": "reveal",
+    "at": "11:43:40.110",
+    "sinceStartS": 60.07
+  },
+  {
+    "t": 1789818220186,
+    "surface": "tv",
+    "freqs": [330, 330, 494, 659, 988, 1319],
+    "dur": 110,
+    "cue": "reveal",
+    "phase": "reveal",
+    "at": "11:43:40.186",
+    "sinceStartS": 60.14
+  },
+  {
+    "t": 1789818220255,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "dur": 120,
+    "cue": "phase",
+    "phase": "reveal",
+    "at": "11:43:40.255",
+    "sinceStartS": 60.21
+  },
+  {
+    "t": 1789818220312,
+    "surface": "tv",
+    "freqs": [330, 392, 494],
+    "dur": 140,
+    "cue": "wager",
+    "phase": "reveal",
+    "at": "11:43:40.312",
+    "sinceStartS": 60.27
+  }
+]
