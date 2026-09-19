@@ -15670,29 +15670,35 @@
     },
     {
       "id": "mw2016",
-      "text": "Soggy."
+      "text": "Soggy.",
+      "serves": ["name"]
     },
     {
       "id": "mw2017",
-      "text": "Crunchy."
+      "text": "Crunchy.",
+      "serves": ["name"]
     },
     {
       "id": "mw2018",
       "text": "Big Dave.",
-      "tier": 3
+      "tier": 3,
+      "serves": ["person", "name"]
     },
     {
       "id": "mw2019",
-      "text": "Little Gary."
+      "text": "Little Gary.",
+      "serves": ["person", "name"]
     },
     {
       "id": "mw2020",
       "text": "Discount Santa.",
-      "tier": 3
+      "tier": 3,
+      "serves": ["person", "name"]
     },
     {
       "id": "mw2021",
-      "text": "Off-brand."
+      "text": "Off-brand.",
+      "serves": ["name"]
     },
     {
       "id": "mw2022",
@@ -15701,32 +15707,39 @@
     {
       "id": "mw2023",
       "text": "Refurbished.",
-      "tier": 3
+      "tier": 3,
+      "serves": ["name"]
     },
     {
       "id": "mw2024",
-      "text": "Slightly used."
+      "text": "Slightly used.",
+      "serves": ["name"]
     },
     {
       "id": "mw2025",
-      "text": "Lightly toasted."
+      "text": "Lightly toasted.",
+      "serves": ["name"]
     },
     {
       "id": "mw2026",
-      "text": "Room temp."
+      "text": "Room temp.",
+      "serves": ["name"]
     },
     {
       "id": "mw2027",
-      "text": "Pre-owned."
+      "text": "Pre-owned.",
+      "serves": ["name"]
     },
     {
       "id": "mw2028",
       "text": "Gluten-adjacent.",
-      "tier": 3
+      "tier": 3,
+      "serves": ["name"]
     },
     {
       "id": "mw2029",
-      "text": "Decaf."
+      "text": "Decaf.",
+      "serves": ["name"]
     },
     {
       "id": "mw2030",
@@ -15770,30 +15783,36 @@
     {
       "id": "mw2039",
       "text": "Kevin from accounting.",
-      "tier": 3
+      "tier": 3,
+      "serves": ["person", "name"]
     },
     {
       "id": "mw2040",
-      "text": "Regional manager."
+      "text": "Regional manager.",
+      "serves": ["person", "name"]
     },
     {
       "id": "mw2041",
       "text": "Assistant to the.",
-      "tier": 3
+      "tier": 3,
+      "serves": ["name"]
     },
     {
       "id": "mw2042",
-      "text": "Mostly cloudy."
+      "text": "Mostly cloudy.",
+      "serves": ["name"]
     },
     {
       "id": "mw2043",
       "text": "Partly nachos.",
-      "tier": 3
+      "tier": 3,
+      "serves": ["name"]
     },
     {
       "id": "mw2044",
       "text": "Lukewarm applause.",
-      "tier": 3
+      "tier": 3,
+      "serves": ["name"]
     },
     {
       "id": "mw2045",

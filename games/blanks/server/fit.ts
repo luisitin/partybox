@@ -33,7 +33,7 @@ const DOING_PROMPT = [
   // "What got me banned…?", "What ended the marriage?", "the secret to a happy marriage", "the
   // CIA's new interrogation technique": what someone did, or does.
   /^What (?:got|ended|finally ended|killed|ruined|started|caused|broke up)\b/i,
-  /\b(?:technique|trick|secret to|real reason for|reason the [\w' ]+ ended|mistake (?:was|is)|biggest mistake)\b/i,
+  /\b(?:technique|trick|secret to|real reason for|reason the [\w' ]+ ended|mistake (?:was|is)|biggest mistake|first mistake|mistake: ____)\b/i,
   /\b(?:done|did|loved|dare (?:was|is)|ritual (?:was|is)): ____|doing what \w+ loved/i,
   /\b(?:arrested|fired|executed|burned|shut down|raided|resigned|banned|expelled|sued|jailed|convicted|dumped|put (?:\w+ ){1,2}down|quit|walked out|kicked out)\b[^.]* (?:for|over) ____/i,
   // A ritual, a dare, an activity, a way to get something: what someone does.
