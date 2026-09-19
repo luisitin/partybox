@@ -40,6 +40,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 - Multi-persona live-play harness (`packages/e2e/live/`) and the 2026-09-15 session report.
 
 ### Fixed
+- Broken Pencil TV show: the drawing sheet now takes the height the stage has left (a two-row
+  roster at seven or eight players pushed a fixed 560 px sheet over the page kicker and into the
+  host bar).
 - Lightning Round TV at sixteen players: the four-row roster pushed "0 / 16 locked in" under the
   host bar; the question page now measures its room and drops to a compact prompt and cards when
   the stage is short (twelve players and fewer keep the full size).

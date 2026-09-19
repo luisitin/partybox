@@ -150,6 +150,9 @@
   gap: var(--pb-space-4);
   min-height: 0;
   text-align: center;
+  /* The drawing page measures the room it gets: an eight-player roster (two chip rows) leaves the
+     stage ~480 px and a fixed 560 px sheet ran over the kicker and into the host bar. */
+  container-type: size;
 }
 
 .page {

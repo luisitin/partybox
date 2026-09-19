@@ -74,6 +74,9 @@ punctuation and extra spaces removed, a leading a/an/the dropped) equals the wor
 - **A guess equal to the word mid-book** changes nothing; only the last page decides.
 - **Bot added mid-game** → spectator (no book) until the next game.
 
+The TV show's current-page column is a size container: the drawing sheet is 560 px or what is left under
+the "X drew" caption, whichever is smaller (`capture-pencil-show-fit.ts` proves 8 and 6 players).
+
 ## Settings
 
 | Key            | Type    | Default | Range        | Effect                                                         |
