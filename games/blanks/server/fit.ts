@@ -22,8 +22,9 @@ const DOING_PROMPT = [
   /^____ and ____: what\b/, // "____ and ____: what the Airbnb's two hidden cameras caught."
   /\bdo (?:at|in|on|to|with|for|instead|before|after|during|while|when|all day|every)\b/i, // "What did Lincoln do at…", "…do while I'm at work?"
   /\b(?:was|is|were) actually (?:[A-Z][\w']+ ){1,3}____/, // "The moonwalk was actually Michael Jackson ____."
-  /\b(?:does|did|caught (?:me|him|her|them|us)|busy|instead of|after|before|while|during|conceived during|spent (?:the \w+|\w+ years?)|most likely to)\s+____/i,
+  /\b(?:does|did|caught (?:me|him|her|them|us|the \w+)|busy|instead of|after|before|while|during|in the middle of|conceived during|spent (?:the \w+|\w+ years?)|most likely to|made (?:me|us|them|him|her) do|performed|opened with|threw a flag for|flag for)\s+____/i,
   /["“]Most Likely To["”] was ____/i, // the yearbook's
+  /\b(?:best|worst|favou?rite|only|fastest|quickest) way to \w+/i, // "The best way to annoy a sibling: ____."
   // (No trailing \b: after "on?" the end of the text is no word boundary — "What did the kids walk
   // in on?" read as a thing for twenty passes.)
   /\b(?:what happened|what went wrong|walk(?:ed)? in on\?|catch (?:\w+ )+doing\b|am I doing\b|are you doing\b|^how did\b|^why\b)/i,
@@ -50,6 +51,7 @@ const PERSON_PROMPT = [
   /\bmy (?:new )?(?:boyfriend|girlfriend|husband|wife|partner|therapist|doctor|lawyer|dealer|roommate|sponsor) is ____/i,
   /____ (?:walks|walked|is|was|got|gets) (?:into|in|arrested|elected|fired|hired|pregnant)/i,
   /\bwants? to be ____|\bgrow(?:s)? up to be ____/i, // "My son wants to be ____ when he grows up."
+  /\b(?:won|led|hosted|coached|taught|raised|narrated|officiated|catered) by ____|\b(?:spin-off|reboot|sequel|show|series|documentary) follows ____|\bimaginary friend (?:is|was) ____/i,
   /\b(?:mistress|lover|secret admirer|stalker|sugar daddy|sugar baby|new stepdad|new stepmom) (?:was|is) (?:actually |secretly |really )?____/i, // "The senator's mistress was actually ____."
   // "Disney's next princess is ____.", "The Bachelor's final rose went to ____."
   /\b(?:princess|prince|villain|hero|superhero|host|judge|contestant|headliner|bachelor|bachelorette|winner|champion|mvp|nominee|role model|spokesperson) (?:is|was|will be) ____/i,
@@ -64,6 +66,7 @@ const NAME_PROMPT = [
   /\b(?:thing|things) to (?:say|hear|whisper|shout|yell|scream)\b/i,
   /\b(?:keeps? announcing|keeps? saying|keeps? yelling) ____/i,
   /\b(?:named|nicknamed|titled|captioned|called) ____/i,
+  /\b(?:porn name|stage name|drag name|nickname|safe ?word|handle|slogan|motto|title|password|catchphrase|wordle answer|first word|last words?) (?:is|was|were|will be) ____/i, // "My parents' Wi-Fi password is ____."
   /\b(?:says|reads|calls (?:me|him|her|it)|call (?:me|him|her|it)) ____|\bcalls? (?:me|him|her|it)\?$/i, // "...says ____", "What does the group chat call me?"
 ];
 
