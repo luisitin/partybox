@@ -4,6 +4,7 @@
 // log (cue, time, phase) and the TV's long-frame numbers.
 // Usage: tsx packages/e2e/src/design/capture-loop.ts --pass 1 --game bingo --players 6
 //        [--scenario normal|reconnect|vip-leaves|tie|walkover|spicy|pause] [--focus tv|phone] [--budget 150] [--port 42071] [--fps 10] [--after 2.5] [--pause-in <phase>]
+//        env: PB_NAME_A / PB_NAME_B name the two recorded phones; PB_PHONE picks their device (iphone-se, pixel, galaxy, font200)
 import { mkdirSync, readFileSync, readdirSync, renameSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { parseArgs } from 'node:util';
@@ -82,12 +83,14 @@ async function main(): Promise<void> {
     // Phone A (Sam, VIP, recorded) and phone B (Priya).
     const openRecorded = async (name: string): Promise<Phone> => {
       const { DEVICES } = await import('./devices');
+      // PB_PHONE picks the recorded phones' device (iphone-se, pixel, galaxy…; loop 612).
+      const phone = DEVICES[process.env.PB_PHONE as keyof typeof DEVICES] ?? DEVICES.iphone;
       const context = await browser.newContext({
-        ...DEVICES.iphone.options,
+        ...phone.options,
         colorScheme: 'dark',
         recordVideo: {
           dir: join(OUT, 'video', 'phone'),
-          size: DEVICES.iphone.options.viewport ?? { width: 390, height: 844 },
+          size: phone.options.viewport ?? { width: 390, height: 844 },
         },
       });
       await context.addInitScript(HOOKS);
@@ -95,7 +98,7 @@ async function main(): Promise<void> {
       const page = await context.newPage();
       await page.goto(`${server.url}/`);
       await page.waitForSelector('[data-surface="controller"]');
-      return { device: 'iphone', context, page, name, playerId: null };
+      return { device: phone.id, context, page, name, playerId: null };
     };
     const sam = await openRecorded(process.env.PB_NAME_A ?? 'Sam'); // long-name stress: env
     await joinViaForm(sam, api, { avatarIndex: 3 });
