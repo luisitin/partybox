@@ -202,11 +202,13 @@ export function ControllerHand({ view, send }: Props): JSX.Element {
         />
       </div>
       <ul className={styles.hand} aria-label="your hand">
-        {view.hand.map((card) => {
+        {view.hand.map((card, i) => {
           const order = picked.indexOf(card.id);
           const on = order !== -1;
           return (
-            <li key={card.id}>
+            // Dealt 150 ms apart (the CSS sets the motion); a re-render on a tap keeps the <li>,
+            // so the deal plays once, when the hand arrives.
+            <li key={card.id} style={{ animationDelay: `${i * 150}ms` }}>
               <button
                 type="button"
                 className={`${styles.white} ${on ? styles.whiteOn : ''}`}

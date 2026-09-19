@@ -1052,6 +1052,42 @@
   gap: var(--pb-space-3);
 }
 
+/* Handed out, not dumped: the hand used to arrive as one block inside the phase crossfade. Each
+   card is dealt 150 ms after the one before — seven land over ~1.3 s, slow enough to see them
+   handed out (the owner's play-test note on a 110 ms deal being too quick, review-loop #369) and
+   done before anyone has read the black card. Fill both: the landing frame is the resting frame,
+   so a nine-card hand never ends mid-motion. ControllerHand sets each card's delay. */
+.hand > li {
+  animation: global(pb-rise) var(--pb-motion-slow) var(--pb-ease) both;
+}
+
+/* With motion welcome the card comes from below, tipped toward the player, and settles flat —
+   the phone's own version of the table deal (pb-bl-drop, loop #205). One transform per card. */
+@media (prefers-reduced-motion: no-preference) {
+  .hand {
+    perspective: 900px;
+  }
+
+  .hand > li {
+    animation-name: pb-bl-handdeal;
+  }
+
+  @keyframes pb-bl-handdeal {
+    0% {
+      opacity: 0;
+      transform: translateY(36px) rotateX(38deg) scale(0.97);
+    }
+    70% {
+      opacity: 1;
+      transform: translateY(-3px) rotateX(-4deg) scale(1.005);
+    }
+    100% {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
 /* The black card pins to the top of the scrolling body while the hand passes under it: the
    wrapper bleeds into the body's padding on an opaque band, so no white card (nor a picked
    card's ring) peeks around it. The band's bottom edge clears the ring's 3 px. */
