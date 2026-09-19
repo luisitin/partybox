@@ -155,17 +155,16 @@ function checkDependenciesDocumented(): void {
 function checkLoopLogNumbers(): void {
   const file = join(REPO_ROOT, 'reports', 'design', 'loop-log.md');
   if (!existsSync(file)) return;
-  const seen = new Map<number, string>();
+  const seen = new Set<number>();
   for (const line of readFileSync(file, 'utf8').split('\n')) {
     const m = /^\| (\d+) +\| [\d-]+ +\| (\w+)/.exec(line);
     if (!m) continue;
     const n = Number(m[1]);
-    const prev = seen.get(n);
-    if (prev !== undefined && prev !== m[2])
+    if (seen.has(n))
       bad(
-        `reports/design/loop-log.md: pass ${n} appears for both ${prev} and ${m[2]} — renumber the later row past the highest`,
+        `reports/design/loop-log.md: pass ${n} appears twice — renumber the later row past the highest (\`pnpm resolve-loop-log\`)`,
       );
-    seen.set(n, m[2] as string);
+    seen.add(n);
   }
 }
 
