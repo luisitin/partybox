@@ -167,9 +167,28 @@ describe('fitScore', () => {
       fitScore('name', ['thing', 'name'], 'A jury of my exes.', 'My safe word is "____."'),
     ).toBe(0.3);
     expect(fitScore('name', ['thing', 'name'], 'Smegma.', 'My safe word is "____."')).toBe(1);
+    // A line — a slogan, a memoir chapter, a headline — takes a whole sentence of a card.
     expect(
       fitScore('name', ['thing', 'name'], 'A jury of my exes.', 'The rejected slogan was "____."'),
-    ).toBe(0.8);
+    ).toBe(1);
+    const chapter = "The child star's memoir chapter 3: '____.'";
+    expect(
+      fitScore(
+        'name',
+        ['thing'],
+        'A CT scan that found the missing ring, and the missing person.',
+        chapter,
+      ),
+    ).toBe(0.7);
+    expect(fitScore('name', ['thing'], 'A colonoscopy that found a note.', chapter)).toBe(1);
+    expect(
+      fitScore(
+        'name',
+        ['thing'],
+        'A colonoscopy that found a note.',
+        "The bar's Wi-Fi password is '____.'",
+      ),
+    ).toBe(0.3);
     expect(
       fitScore('name', ['person'], 'A marathon runner who mentions it at every dinner party.'),
     ).toBe(0.45);
