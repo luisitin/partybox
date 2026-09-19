@@ -1,0 +1,9 @@
+(node:3672) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ok   16 players: "locked in" sits above the host bar — count bottom 968, host bar top 1025
+ok   16 players: nothing below the fold — overflow 0px
+ok   16 players: the cards are compact — first card 96 px tall
+ok   6 players: "locked in" sits above the host bar — count bottom 969, host bar top 1025
+ok   6 players: nothing below the fold — overflow 0px
+ok   6 players: the cards are full size — first card 120 px tall
+6/6 checks passed → reports/design/lightning-16/
