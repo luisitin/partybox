@@ -1,0 +1,148 @@
+{
+  "pass": "591",
+  "game": "lightning-round",
+  "players": 8,
+  "scenario": "pause",
+  "focus": "phone",
+  "started": "11:13:57.578",
+  "tvVideoT0": "11:13:54.346",
+  "phoneVideoT0": "11:13:55.138",
+  "changes": [
+    {
+      "t": 1789816437580,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789816441572,
+      "bed": "marimba",
+      "at": "11:13:57.580",
+      "sinceStartS": 0,
+      "videoS": 3.2,
+      "phoneVideoS": 2.4
+    },
+    {
+      "t": 1789816441630,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789816471581,
+      "bed": "pulse",
+      "at": "11:14:01.630",
+      "sinceStartS": 4.1,
+      "videoS": 7.3,
+      "phoneVideoS": 6.5
+    },
+    {
+      "t": 1789816453403,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789816458288,
+      "bed": "pulse",
+      "at": "11:14:13.403",
+      "sinceStartS": 15.8,
+      "videoS": 19.1,
+      "phoneVideoS": 18.3
+    },
+    {
+      "t": 1789816458356,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789816488299,
+      "bed": "pulse",
+      "at": "11:14:18.356",
+      "sinceStartS": 20.8,
+      "videoS": 24,
+      "phoneVideoS": 23.2
+    },
+    {
+      "t": 1789816462704,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789816467604,
+      "bed": "pulse",
+      "at": "11:14:22.704",
+      "sinceStartS": 25.1,
+      "videoS": 28.4,
+      "phoneVideoS": 27.6
+    },
+    {
+      "t": 1789816467614,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789816497606,
+      "bed": "pulse",
+      "at": "11:14:27.614",
+      "sinceStartS": 30,
+      "videoS": 33.3,
+      "phoneVideoS": 32.5
+    },
+    {
+      "t": 1789816471768,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789816476662,
+      "bed": "pulse",
+      "at": "11:14:31.768",
+      "sinceStartS": 34.2,
+      "videoS": 37.4,
+      "phoneVideoS": 36.6
+    },
+    {
+      "t": 1789816476720,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789816506673,
+      "bed": "pulse",
+      "at": "11:14:36.720",
+      "sinceStartS": 39.1,
+      "videoS": 42.4,
+      "phoneVideoS": 41.6
+    },
+    {
+      "t": 1789816480910,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789816485904,
+      "bed": "pulse",
+      "at": "11:14:40.910",
+      "sinceStartS": 43.3,
+      "videoS": 46.6,
+      "phoneVideoS": 45.8
+    },
+    {
+      "t": 1789816486008,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789816515912,
+      "bed": "pulse",
+      "at": "11:14:46.008",
+      "sinceStartS": 48.4,
+      "videoS": 51.7,
+      "phoneVideoS": 50.9
+    },
+    {
+      "t": 1789816490225,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789816495108,
+      "bed": "pulse",
+      "at": "11:14:50.225",
+      "sinceStartS": 52.6,
+      "videoS": 55.9,
+      "phoneVideoS": 55.1
+    },
+    {
+      "t": 1789816495124,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789816525114,
+      "bed": "pulse",
+      "at": "11:14:55.124",
+      "sinceStartS": 57.5,
+      "videoS": 60.8,
+      "phoneVideoS": 60
+    }
+  ],
+  "notes": [
+    "pause: VIP paused 6 s at 2026-09-19T11:14:05.633Z in question",
+    "budget reached while playing; skipped to results"
+  ]
+}
