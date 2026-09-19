@@ -746,6 +746,21 @@
   opacity: 1;
   filter: none;
 }
+/* The last one picking (loop 389): their dim face breathes while the room waits — the same
+   pulse their own Ready button has. Tokens: 0 ms under reduced motion. */
+.readyLast {
+  animation: ready-last var(--pb-motion-pulse) var(--pb-ease) infinite alternate;
+}
+@keyframes ready-last {
+  from {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0.7;
+    transform: scale(1.08);
+  }
+}
 .readyTick {
   position: absolute;
   right: -6px;
