@@ -150,7 +150,7 @@ as `buzz:dropped`.
 
 TV (`@partybox/game-sdk` → `tv/`): `Timer`, `PlayerChips`, `Scoreboard`, `Reveal`, `Stage` (overscan frame), `BigText`.
 Shared (`ui/`): `DeadlineBar` (draining bar; danger in the last 5 s only when the phase lasts ≥ 15 s — a 6 s bingo call just drains — the TV strip and the phone header both use it), `usePrefersReducedMotion` (for JS-driven sequences).
-Controller (`controller/`): `TextAnswer`, `ChoiceGrid`, `VoteList` (with a sticky `header` slot for what is being voted on), `WaitingScreen`, `Screen` (safe-area frame), `PrimaryButton`.
+Controller (`controller/`): `TextAnswer`, `ChoiceGrid`, `VoteList` (with a sticky `header` slot for what is being voted on), `WaitingScreen`, `Screen` (safe-area frame; a body that scrolls fades its bottom 28 px while there is more below and lifts the fade at the end, via a scroll-driven `--pb-fold` — browsers without scroll timelines keep the plain fold), `PrimaryButton`.
 Shared: `Avatar`, `Chip`. Each primitive's props are documented in its file header.
 
 ## Performance budget

@@ -60,3 +60,31 @@
     padding: 4px var(--pb-space-4) calc(4px + env(safe-area-inset-bottom));
   }
 }
+
+/* A long body (six-row results, a wager list on an SE) folds under the footer and the last line is
+   cut mid-glyph (review-loop, six-player results on an iPhone). Browsers with scroll-driven animations fade the body's bottom 28 px
+   while there is more below and lift the fade at the end; a body that does not scroll has no
+   timeline, so no fade. Others keep the plain fold. */
+@property --pb-fold {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+
+@supports (animation-timeline: scroll()) {
+  .body {
+    mask-image: linear-gradient(to bottom, #000 calc(100% - var(--pb-fold)), transparent);
+    animation: pb-fold linear both;
+    animation-timeline: scroll(self);
+  }
+}
+
+@keyframes pb-fold {
+  0%,
+  92% {
+    --pb-fold: 28px;
+  }
+  100% {
+    --pb-fold: 0px;
+  }
+}
