@@ -1,0 +1,137 @@
+{
+  "pass": "526",
+  "game": "broken-pencil",
+  "players": 6,
+  "scenario": "reconnect",
+  "focus": "tv",
+  "started": "08:13:38.216",
+  "tvVideoT0": "08:13:34.942",
+  "phoneVideoT0": "08:13:35.741",
+  "changes": [
+    {
+      "t": 1789805618219,
+      "status": "playing",
+      "phase": "pick",
+      "deadline": 1789805638212,
+      "bed": null,
+      "at": "08:13:38.219",
+      "sinceStartS": 0,
+      "videoS": 3.3,
+      "phoneVideoS": 2.5
+    },
+    {
+      "t": 1789805622403,
+      "status": "playing",
+      "phase": "draw",
+      "deadline": 1789805682279,
+      "bed": null,
+      "at": "08:13:42.403",
+      "sinceStartS": 4.2,
+      "videoS": 7.5,
+      "phoneVideoS": 6.7
+    },
+    {
+      "t": 1789805626572,
+      "status": "playing",
+      "phase": "pass",
+      "deadline": 1789805716453,
+      "bed": null,
+      "at": "08:13:46.572",
+      "sinceStartS": 8.4,
+      "videoS": 11.6,
+      "phoneVideoS": 10.8
+    },
+    {
+      "t": 1789805716492,
+      "status": "playing",
+      "phase": "pass",
+      "deadline": 1789805806457,
+      "bed": null,
+      "at": "08:15:16.492",
+      "sinceStartS": 98.3,
+      "videoS": 101.5,
+      "phoneVideoS": 100.8
+    },
+    {
+      "t": 1789805725801,
+      "status": "playing",
+      "phase": "pass",
+      "deadline": 1789805815669,
+      "bed": null,
+      "at": "08:15:25.801",
+      "sinceStartS": 107.6,
+      "videoS": 110.9,
+      "phoneVideoS": 110.1
+    },
+    {
+      "t": 1789805735171,
+      "status": "playing",
+      "phase": "pass",
+      "deadline": 1789805825045,
+      "bed": null,
+      "at": "08:15:35.171",
+      "sinceStartS": 117,
+      "videoS": 120.2,
+      "phoneVideoS": 119.4
+    },
+    {
+      "t": 1789805744603,
+      "status": "playing",
+      "phase": "guess",
+      "deadline": 1789805774488,
+      "bed": null,
+      "at": "08:15:44.603",
+      "sinceStartS": 126.4,
+      "videoS": 129.7,
+      "phoneVideoS": 128.9
+    },
+    {
+      "t": 1789805748874,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789805753793,
+      "bed": null,
+      "at": "08:15:48.874",
+      "sinceStartS": 130.7,
+      "videoS": 133.9,
+      "phoneVideoS": 133.1
+    },
+    {
+      "t": 1789805753841,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789805761799,
+      "bed": null,
+      "at": "08:15:53.841",
+      "sinceStartS": 135.6,
+      "videoS": 138.9,
+      "phoneVideoS": 138.1
+    },
+    {
+      "t": 1789805761904,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789805766811,
+      "bed": null,
+      "at": "08:16:01.904",
+      "sinceStartS": 143.7,
+      "videoS": 147,
+      "phoneVideoS": 146.2
+    },
+    {
+      "t": 1789805766837,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789805774812,
+      "bed": null,
+      "at": "08:16:06.837",
+      "sinceStartS": 148.6,
+      "videoS": 151.9,
+      "phoneVideoS": 151.1
+    }
+  ],
+  "notes": [
+    "reconnect: Sam dropped for 8 s at 2026-09-19T08:13:50.646Z in pass",
+    "budget reached while playing; skipped to results"
+  ]
+}
