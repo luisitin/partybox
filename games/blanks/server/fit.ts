@@ -96,6 +96,10 @@ export function slotsOf(card: BlackLike): Slot[] {
 
 const NOT_GERUND =
   /^(thing|something|nothing|everything|anything|ring|king|wing|string|spring|bling|morning|evening|wedding|building|feeling|ceiling|pudding|stocking|clothing|sibling|darling|during)$/i;
+/** The first half of a two-word verb — "Dry humping", "Skinny dipping", "Parallel parking", "Tea
+ *  bagging" — which the gerund test on the first word alone read as a thing (loop 786). */
+const COMPOUND_VERB =
+  /^(?:dry|skinny|day|line|tea|tap|parallel|extreme|ice|foam|team|quiet|drunk|ass|anal|speed|binge|power|deep|slow|dumpster|butt|dirty|pole|lap|belly|hate|rage|doom|stress|sleep|free|hand|rock|kite|sky|bungee|scuba|bar|face|toe|nut|dog|cat|glory|dick|body|window|couch|table|floor|wall|corpse|grave|bible|church|hair|nose|mouth|cross|street|hot|cold|wet|sad|angry|late|early|double|triple|half|over|under|micro|macro|mass|group|solo|public|private|online|remote|virtual|manual|reverse|forward|backward|upside|inside|outside|sword|knife|gun|axe|rope|chain|whip|belt|glass|bottle|can|cup|spoon|fork|plate|bowl|pan|pot|oven|stove|grill|dish|clothes|shoe|sock|hat|pants|shirt|tie|wig|mask)$/i;
 const ADVERB =
   /^(not|quietly|slowly|loudly|secretly|aggressively|extremely|slightly|accidentally|finally|casually|barely|openly|silently|gently|violently|briefly|nearly|almost|never|always|just|still|only|really|very|too|softly|angrily|politely|deliberately|repeatedly|calmly|suddenly|passive)$/i;
 const PERSON_WORD =
@@ -133,7 +137,11 @@ export function servesOf(card: Pick<WhiteCard, 'text'> & { serves?: Slot[] }): S
   const gerund = (w: string | undefined): boolean =>
     w !== undefined && /ing$/i.test(w) && !NOT_GERUND.test(w);
   let kind: Slot = 'thing';
-  if (gerund(words[0]) || (ADVERB.test(words[0] ?? '') && gerund(words[1]))) kind = 'doing';
+  if (
+    gerund(words[0]) ||
+    ((ADVERB.test(words[0] ?? '') || COMPOUND_VERB.test(words[0] ?? '')) && gerund(words[1]))
+  )
+    kind = 'doing';
   else {
     // The head noun: "A nun with a strap-on." is a nun; "Grandma's corpse in the recliner." is a
     // corpse (a possessive head names the owner, not the card); "A clown car full of dildos." is a
@@ -146,8 +154,12 @@ export function servesOf(card: Pick<WhiteCard, 'text'> & { serves?: Slot[] }): S
     // ends after it — the first word alone would read "wine" as a thing.
     const pair = `${head} ${after}`;
     const pairEnds = third === '' || LINK_AFTER.test(third);
+    // "Someone's dad on Grindr.", "Cheryl's husband.": an owner's person is a person (loop 784) —
+    // but "Grandma's dominatrix career." is a career and "Mom's boyfriend's Camaro." a Camaro.
+    const owned = possessive && pairEnds && !/['’]s$|s['’]$/.test(after) && PERSON_WORD.test(after);
     if (
       (!possessive && ends && PERSON_WORD.test(head)) ||
+      owned ||
       (pairEnds && PERSON_PHRASE.test(pair)) ||
       WHO_CLAUSE.test(card.text)
     )

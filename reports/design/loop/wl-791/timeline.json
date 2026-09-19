@@ -1,0 +1,178 @@
+{
+  "pass": "683",
+  "game": "broken-pencil",
+  "players": 3,
+  "scenario": "reconnect",
+  "focus": "tv",
+  "started": "15:23:06.199",
+  "tvVideoT0": "15:23:02.902",
+  "phoneVideoT0": "15:23:03.727",
+  "changes": [
+    {
+      "t": 1789831386203,
+      "status": "playing",
+      "phase": "pick",
+      "deadline": 1789831406194,
+      "bed": null,
+      "at": "15:23:06.203",
+      "sinceStartS": 0,
+      "videoS": 3.3,
+      "phoneVideoS": 2.5
+    },
+    {
+      "t": 1789831390414,
+      "status": "playing",
+      "phase": "draw",
+      "deadline": 1789831420292,
+      "bed": null,
+      "at": "15:23:10.414",
+      "sinceStartS": 4.2,
+      "videoS": 7.5,
+      "phoneVideoS": 6.7
+    },
+    {
+      "t": 1789831394582,
+      "status": "playing",
+      "phase": "pass",
+      "deadline": 1789831439466,
+      "bed": null,
+      "at": "15:23:14.582",
+      "sinceStartS": 8.4,
+      "videoS": 11.7,
+      "phoneVideoS": 10.9
+    },
+    {
+      "t": 1789831403973,
+      "status": "playing",
+      "phase": "guess",
+      "deadline": 1789831418834,
+      "bed": null,
+      "at": "15:23:23.973",
+      "sinceStartS": 17.8,
+      "videoS": 21.1,
+      "phoneVideoS": 20.2
+    },
+    {
+      "t": 1789831408154,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789831413033,
+      "bed": null,
+      "at": "15:23:28.154",
+      "sinceStartS": 22,
+      "videoS": 25.3,
+      "phoneVideoS": 24.4
+    },
+    {
+      "t": 1789831427495,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789831434045,
+      "bed": null,
+      "at": "15:23:47.495",
+      "sinceStartS": 41.3,
+      "videoS": 44.6,
+      "phoneVideoS": 43.8
+    },
+    {
+      "t": 1789831434075,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789831439045,
+      "bed": null,
+      "at": "15:23:54.075",
+      "sinceStartS": 47.9,
+      "videoS": 51.2,
+      "phoneVideoS": 50.3
+    },
+    {
+      "t": 1789831439057,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789831451051,
+      "bed": null,
+      "at": "15:23:59.057",
+      "sinceStartS": 52.9,
+      "videoS": 56.2,
+      "phoneVideoS": 55.3
+    },
+    {
+      "t": 1789831440421,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789831451701,
+      "bed": null,
+      "at": "15:24:00.421",
+      "sinceStartS": 54.2,
+      "videoS": 57.5,
+      "phoneVideoS": 56.7
+    },
+    {
+      "t": 1789831441789,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789831453077,
+      "bed": null,
+      "at": "15:24:01.789",
+      "sinceStartS": 55.6,
+      "videoS": 58.9,
+      "phoneVideoS": 58.1
+    },
+    {
+      "t": 1789831443172,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789831454432,
+      "bed": null,
+      "at": "15:24:03.172",
+      "sinceStartS": 57,
+      "videoS": 60.3,
+      "phoneVideoS": 59.4
+    },
+    {
+      "t": 1789831447335,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789831459223,
+      "bed": null,
+      "at": "15:24:07.335",
+      "sinceStartS": 61.1,
+      "videoS": 64.4,
+      "phoneVideoS": 63.6
+    },
+    {
+      "t": 1789831451528,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789831463413,
+      "bed": null,
+      "at": "15:24:11.528",
+      "sinceStartS": 65.3,
+      "videoS": 68.6,
+      "phoneVideoS": 67.8
+    },
+    {
+      "t": 1789831455748,
+      "status": "playing",
+      "phase": "summary",
+      "deadline": 1789831470627,
+      "bed": null,
+      "at": "15:24:15.748",
+      "sinceStartS": 69.5,
+      "videoS": 72.8,
+      "phoneVideoS": 72
+    },
+    {
+      "t": 1789831470688,
+      "status": "results",
+      "phase": "results",
+      "deadline": null,
+      "bed": null,
+      "at": "15:24:30.688",
+      "sinceStartS": 84.5,
+      "videoS": 87.8,
+      "phoneVideoS": 87
+    }
+  ],
+  "notes": ["reconnect: Sam dropped for 8 s at 2026-09-19T15:23:32.167Z in show"]
+}
