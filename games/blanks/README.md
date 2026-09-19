@@ -11,7 +11,9 @@ and takes one point. Playable with no TV in the room: from the reveal on, the ph
 
 3–12; ≈ 15 min by default (6 rounds — a round runs about a minute in a small room and closer to two with a full one; measured over live captures in review-loop #219). Every `init` player plays every round, connected or not (a
 disconnected player's card is simply not played). Late joiners spectate (engine behaviour). Bots:
-welcome (`supportsBots`) — the bot plays random cards from its hand and votes at random.
+welcome (`supportsBots`) — a bot plays the cards that read best in the blank (`server/bot.ts`: the
+fit model's score for the prompt's kind, the card's tier, a little noise) and votes the same way; the czar
+bot picks a prompt at random.
 
 ## Phases
 
@@ -28,8 +30,9 @@ welcome (`supportsBots`) — the bot plays random cards from its hand and votes 
 
 Round start (`intro` entry): last round's played cards to the discard, hands back to 10 (+ the black
 card's `draw`) — the missing kinds drawn first, and up to two cards of the most plentiful kind
-swapped out when a hand is still short, so every hand holds at least 2 things, 2 doings and 2 combos
-(a heuristic on the card text: gerund / linking word / the rest) while the decks can supply them; the
+swapped out when a hand is still short, so every hand holds at least 2 answers for each kind of
+question — 2 things, 2 doings (gerund cards) and 2 people (`server/fit.ts` reads the kind off the
+card's text; a card's own `serves` in the deck JSON overrides it) — while the decks can supply them; the
 hand is shuffled each round, so the same cards never sit at the top, and one card of each kind is
 moved to the front of it so the first screenful on a phone always offers all three — the judge chosen (czar mode: seat order by id, one per round,
 disconnected seats skipped), a black card drawn — three in czar mode, for the judge to choose between in

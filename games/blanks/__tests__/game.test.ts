@@ -2,15 +2,8 @@
 // (README "Phases" + "Content"). Phase and scoring edge cases live in phases.test.ts.
 import { describe, expect, it } from 'vitest';
 import { KIND_FLOOR, fill, fillText, glue, revealMs } from '../server/cards';
-import {
-  DECKS,
-  WHITE_KINDS,
-  blackCard,
-  blackPool,
-  whiteKind,
-  whiteKindOf,
-  whitePool,
-} from '../server/content';
+import { servesOf } from '../server/fit';
+import { DECKS, WHITE_KINDS, blackCard, blackPool, whiteKind, whitePool } from '../server/content';
 import { game } from '../server/index';
 import {
   BIG_REVEAL_MAX_MS,
@@ -141,11 +134,11 @@ describe('dealing', () => {
     }
   });
 
-  it('a hand always holds at least two things, two doings and two combos while the deck has them', () => {
+  it('a hand always holds at least two things, two doings and two people while the deck has them', () => {
     // A hand loses a card a round, so the refill also swaps a surplus kind out when a hand has
     // fallen short of one (review-loop #175) — checked here over eight rounds of every preset.
     const counts = (hand: string[]): Record<string, number> => {
-      const c: Record<string, number> = { thing: 0, doing: 0, combo: 0 };
+      const c: Record<string, number> = { thing: 0, doing: 0, person: 0 };
       for (const id of hand) c[whiteKind(id)] = (c[whiteKind(id)] ?? 0) + 1;
       return c;
     };
@@ -162,11 +155,11 @@ describe('dealing', () => {
         if (s.phase.id === 'final' || s.phase.id === 'done') break;
       }
     }
-    expect(whiteKindOf('Yodeling.')).toBe('doing');
-    expect(whiteKindOf('Quietly winning Monopoly.')).toBe('doing');
-    expect(whiteKindOf('Bird poop on a brand-new car.')).toBe('combo');
-    expect(whiteKindOf('Beans.')).toBe('thing');
-    expect(whiteKindOf('The wedding.')).toBe('thing');
+    expect(servesOf({ text: 'Yodeling.' })).toEqual(['doing']);
+    expect(servesOf({ text: 'Quietly winning Monopoly.' })).toEqual(['doing']);
+    expect(servesOf({ text: 'A nun with a strap-on.' })).toEqual(['person']);
+    expect(servesOf({ text: 'Beans.' })).toEqual(['thing']);
+    expect(servesOf({ text: 'The wedding.' })).toEqual(['thing']);
   });
 
   it('refills hands to ten after a round and never re-deals a played card before the discard turns', () => {

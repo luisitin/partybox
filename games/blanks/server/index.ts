@@ -4,11 +4,11 @@
 import { gameManifestSchema, seedRng, shuffle } from '@partybox/game-sdk';
 import type { GameDefinition, InitContext, Settings as RawSettings } from '@partybox/game-sdk';
 import manifestJson from '../manifest.json' with { type: 'json' };
+import { botInput } from './bot';
 import { refillHands } from './cards';
-import { blackCard, blackPool, whitePool } from './content';
+import { blackPool, whitePool } from './content';
 import { reduce } from './flow';
 import { enterIntro } from './phases/intro';
-import { canVote, hasPlayed, isCzar } from './round';
 import { results } from './scoring';
 import { DECK_PRESETS, JUDGE_MODES, PHASES, inputSchema } from './types';
 import type { DeckPreset, Input, JudgeMode, Settings, State } from './types';
@@ -91,29 +91,5 @@ export const game: GameDefinition<State, Input> = {
   tvView: (state) => tvView(state, manifest.id),
   controllerView: (state, playerId) => controllerView(state, manifest.id, playerId),
   results,
-  bot: {
-    sampleInput(state, playerId, rng) {
-      if (!Object.hasOwn(state.players, playerId)) return null;
-      if (state.phase.id === 'pick') {
-        if (!isCzar(state, playerId) || state.blackChoices.length < 2) return null;
-        if (state.blackId !== null) return null; // already chosen; the beat is running
-        return { type: 'choose', index: rng.int(0, state.blackChoices.length - 1) };
-      }
-      if (state.phase.id === 'answer') {
-        if (isCzar(state, playerId) || hasPlayed(state, playerId)) return null;
-        const { pick } = blackCard(state.blackId);
-        const hand = state.hands[playerId] ?? [];
-        if (hand.length < pick) return null;
-        return { type: 'play', cards: rng.shuffle(hand).slice(0, pick) };
-      }
-      // Bots never tap Next: an untimed result stays up for the humans (the hidden fallback ends it).
-      if (state.phase.id === 'judge') {
-        if (Object.hasOwn(state.votes, playerId)) return null;
-        const slots = state.slots.map((_, slot) => slot).filter((s) => canVote(state, playerId, s));
-        if (slots.length === 0) return null;
-        return { type: 'vote', slot: rng.pick(slots) };
-      }
-      return null;
-    },
-  },
+  bot: { sampleInput: botInput },
 };

@@ -61,5 +61,6 @@ measured against the deadline; if > 0).
 ## Content
 
 `family.json`: ≥ 150 family-friendly prompts (`{ id, text }`) + `botAnswers` (≥ 40). `spicy.json`:
-≥ 50 explicit adult prompts (18+; the intensity of the Blanks WILD deck, owner's order 2026-09-18), only
-when `spicy` is on. Nothing hateful (no group as the butt of the joke), nothing about real people.
+≥ 50 explicit adult prompts (18+; the intensity of the Blanks WILD deck, owner's order 2026-09-18 —
+about a quarter carry explicit words outright, the rest are adult setups; the longest runs to 83
+characters and `capture-spicy-fit.ts` proves it fits the TV, an iPhone and an SE), only when `spicy` is on. Nothing hateful (no group as the butt of the joke), nothing about real people.

@@ -23,6 +23,8 @@ export const blackCardSchema = z
     pick: z.number().int().min(1).max(3),
     /** Extra white cards every answerer draws before choosing (0 or 2). */
     draw: z.number().int().min(0).max(2),
+    /** What the blank wants (server/fit.ts); read off the text when unset. */
+    slot: z.enum(['thing', 'doing', 'person']).optional(),
   })
   .refine((c) => c.pick >= Math.max(1, blanksIn(c.text)), { message: 'pick < blanks' });
 export type BlackCard = z.infer<typeof blackCardSchema>;
@@ -30,6 +32,14 @@ export type BlackCard = z.infer<typeof blackCardSchema>;
 export const whiteCardSchema = z.object({
   id: z.string().regex(/^[mcw]w\d{1,4}$/),
   text: z.string().min(1).max(WHITE_MAX_CHARS),
+  /** The slots the card answers naturally (server/fit.ts); read off the text when unset. */
+  serves: z
+    .array(z.enum(['thing', 'doing', 'person']))
+    .min(1)
+    .max(3)
+    .optional(),
+  /** How good the card is on its own: 1 filler, 2 good (the default), 3 great. */
+  tier: z.number().int().min(1).max(3).optional(),
 });
 export type WhiteCard = z.infer<typeof whiteCardSchema>;
 
