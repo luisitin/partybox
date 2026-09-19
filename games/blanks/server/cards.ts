@@ -205,10 +205,20 @@ export function fill(
     // sandwich."`, not an orphan quote against the black text (review-loop #330).
     const opener = /(?:^|[\s(])(["“'‘(\[])$/.exec(lastText(segments))?.[1] ?? '';
     if (opener) trimLastText(segments, opener.length);
-    segments.push({
-      kind: 'fill',
-      text: opener + (atEnd || keepDot ? white : white.replace(/\.$/, '')) + punctuation,
-    });
+    // A card that ends inside its own quotes — 'Naming a goldfish "Doug."' — carries its full stop
+    // on the inside: mid-sentence the dot goes the way a bare one does ('"Doug" is my motto.'), and
+    // at the end the black card's own full stop is dropped rather than doubled — the card of the
+    // night read '…meaning "soup.".' on a results screen (review-loop #391).
+    const closed = /\.["”'’)\]]+$/.test(white);
+    const ownStop = closed && punctuation.startsWith('.');
+    const tail = ownStop ? punctuation.slice(1) : punctuation;
+    const body =
+      atEnd || keepDot || ownStop
+        ? white
+        : closed
+          ? white.replace(/\.(["”'’)\]]+)$/, '$1')
+          : white.replace(/\.$/, '');
+    segments.push({ kind: 'fill', text: opener + body + tail });
   });
   return { segments, extra: whites.slice(blanksIn(text)) };
 }

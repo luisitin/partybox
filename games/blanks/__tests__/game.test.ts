@@ -236,6 +236,22 @@ describe('fill', () => {
     );
   });
 
+  it('never doubles a full stop after a card that ends inside its own quotes', () => {
+    // '…meaning "soup.".' on a results screen (review-loop #391).
+    expect(fillText('The reality show’s twist: ____.', ['A tattoo meaning "soup."'])).toBe(
+      'The reality show’s twist: A tattoo meaning "soup."',
+    );
+    expect(fillText('____ is my motto.', ['Calling the teacher "mom."'])).toBe(
+      'Calling the teacher "mom" is my motto.',
+    );
+    expect(fillText('Nothing beats ____', ['A boat named "Boaty."'])).toBe(
+      'Nothing beats A boat named "Boaty."',
+    );
+    expect(fillText('I said ____, and left.', ['A weather app that just says "maybe."'])).toBe(
+      'I said A weather app that just says "maybe", and left.',
+    );
+  });
+
   it('keeps an abbreviation’s own period inside the sentence', () => {
     // "2 a.m." lost its period mid-sentence and read "2 a.m," (review-loop #201); at the end of the
     // sentence the black card's own full stop still wins, so it never doubles up.

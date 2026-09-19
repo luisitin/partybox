@@ -137,6 +137,14 @@ function votersExpected(state: State): number {
   ).length;
 }
 
+/** The seat asked to read, while their phone is still in the room: a reader who dropped
+ *  mid-reading leaves the room the plain "Read it out loud" instead of a name nobody can answer
+ *  to (review-loop #397). */
+function reader(state: State): PersonView | null {
+  const p = person(state, state.readerId);
+  return p?.connected ? p : null;
+}
+
 export function tvView(state: State, gameId: string): BlanksTvView {
   const phase = state.phase.id;
   // The round card carries the standings from round 2 on, so the room sees where it stands
@@ -154,7 +162,7 @@ export function tvView(state: State, gameId: string): BlanksTvView {
     judgeMode: state.settings.judge,
     timed: state.settings.timed,
     czar: person(state, state.czarId),
-    reader: phase === 'reveal' ? person(state, state.readerId) : null,
+    reader: phase === 'reveal' ? reader(state) : null,
     black: blackView(state),
     blackChoices: blackChoices(state),
     playedCount: playedCount(state),
@@ -195,7 +203,7 @@ export function controllerView(
     judgeMode: state.settings.judge,
     timed: state.settings.timed,
     czar: person(state, state.czarId),
-    reader: phase === 'reveal' ? person(state, state.readerId) : null,
+    reader: phase === 'reveal' ? reader(state) : null,
     black: blackView(state),
     blackChoices: blackChoices(state),
     role: !player ? 'spectator' : isCzar(state, playerId) ? 'judge' : 'player',
