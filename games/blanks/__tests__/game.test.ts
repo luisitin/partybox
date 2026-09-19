@@ -122,7 +122,8 @@ describe('dealing', () => {
         seen.add(card);
       }
     }
-    expect(s.whiteDeck.length).toBe(pool.size - 60);
+    // Cards the deal swapped out for the floors sit in the discard, still out of every hand.
+    expect(s.whiteDeck.length + s.discard.length).toBe(pool.size - 60);
     expect(blackPool('adults')).toHaveLength(DECKS.mild.black.length + DECKS.crude.black.length);
   });
 
@@ -220,7 +221,9 @@ describe('dealing', () => {
       expect(s.hands[id]).toHaveLength(HAND_SIZE);
       for (const card of s.hands[id] ?? []) expect(played.has(card)).toBe(false);
     }
-    expect(s.discard.length).toBe(played.size);
+    // Every played card is in the discard, with whatever the refill swapped out for the floors.
+    for (const card of played) expect(s.discard).toContain(card);
+    expect(s.discard.length).toBeGreaterThanOrEqual(played.size);
   });
 
   it('the mild deck alone still deals a full 12-player game (discard reshuffles in)', () => {

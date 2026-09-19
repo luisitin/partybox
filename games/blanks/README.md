@@ -36,7 +36,7 @@ card's `draw`) — the missing kinds drawn first, and up to two cards of the mos
 swapped out when a hand is still short, so every hand holds at least 2 answers for each kind of
 question — 2 things, 2 doings (gerund cards), 2 people and 2 names (short cards, for a quoted blank, a
 nickname, a line someone says; `server/fit.ts` reads the kind off the
-card's text; a card's own `serves` in the deck JSON overrides it) and at least 5 tier-3 cards (only `wild.json` carries tiers so far — a `mild` or `adults` room gets the kind floors alone; `tier` in the
+card's text; a card's own `serves` in the deck JSON overrides it) and at least 5 tier-3 cards (`wild.json` carries tiers throughout and `mild.json` from its first 300 whites so far — a `mild` or `adults` room meets the floor only as far as its tiered cards allow; `tier` in the
 deck JSON: 1 filler, 2 good, 3 great; up to three spare cards a round are swapped for great ones of the same
 kind) — while the decks can supply them; the
 hand is shuffled each round, so the same cards never sit at the top, and one card of each kind is
