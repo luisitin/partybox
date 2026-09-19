@@ -5,6 +5,11 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Game recaps on disk** (ADR-035): each game a room plays is written to `recordings/<game>/<time>-<room>/`
+  — `session.json`, `state.json` and a `recap.md` (Broken Pencil's books with every drawing as SVG,
+  Wisecrack's prompts, answers and votes, Lightning Round's questions with every pick). A **Save a
+  recap on the host PC** toggle in the game picker (phone and TV) turns it off; the dev API and the
+  design harness leave it off; `PARTYBOX_RECORDINGS=off` disables it server-wide.
 - **Spicy** in Wisecrack (140 prompts) and Broken Pencil (90 drawable words) now matches the Blanks
   WILD deck: explicit adult humour, 18+; nothing hateful, no real people.
 - **Lightning Round**: 3 867 questions (from 256) in ten categories: Science is now **STEM** with

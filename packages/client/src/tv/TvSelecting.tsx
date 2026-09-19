@@ -48,6 +48,15 @@ export function TvSelecting({ room, client }: TvSelectingProps): JSX.Element {
               );
             })}
           </ul>
+          <label className={styles.recording} htmlFor="tv-recording">
+            <input
+              id="tv-recording"
+              type="checkbox"
+              checked={room.recording}
+              onChange={(e) => client.act({ action: 'setRecording', on: e.target.checked })}
+            />
+            {room.recording ? t.selecting.recording : t.selecting.recordingOff}
+          </label>
           <PlayerChips
             players={room.players.map((p) => ({
               id: p.id,

@@ -71,6 +71,7 @@ export function snapshot(room: RoomState, deps: EngineDeps): RoomSnapshot {
     games: gameSummaries(deps),
     results: room.results,
     canStart: canStart(room, deps),
+    recording: room.recording,
   };
 }
 

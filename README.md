@@ -58,6 +58,17 @@ each number through the browser's speech voices (Windows "Zira" preferred); phon
 The winner moment (`cheer`) is a party horn and a crowd cheer from Mixkit (mixkit.co/license),
 bundled under `packages/client/public/sfx/`.
 
+## Game recaps on disk
+
+Every game the room plays is written to `recordings/<game>/<date_time>-<room>/` on the host PC
+(gitignored): `session.json` (players, settings, phase timeline, results), `state.json` (the final game
+state) and, for games that offer one, `recap.md` — Broken Pencil's books page by page with every
+drawing as an SVG, Wisecrack's prompts with both answers and the votes, Lightning Round's questions
+with each pick, time and points. Hand the folder over when giving feedback on a night. The **Save a
+recap on the host PC** toggle in the game picker (phone and TV) turns it off for the next games —
+Claude's test runs leave it off, and `PARTYBOX_RECORDINGS=off` (or a folder path) sets it for the
+whole server.
+
 ## Commands
 
 | Command                                       | What                                              |

@@ -16,6 +16,9 @@ reports/**/*.png
 reports/**/*.webm
 *.local.json
 
+# game recaps the host writes for the owner's feedback (ADR-035)
+recordings/
+
 # tooling
 .vite/
 .eslintcache

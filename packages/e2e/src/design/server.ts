@@ -15,7 +15,11 @@ export interface DevServer {
   log(): string;
 }
 
-export async function startServer(port: number): Promise<DevServer> {
+/** `env` overrides the harness defaults (e.g. `PARTYBOX_RECORDINGS: '<dir>'` for the recording proof). */
+export async function startServer(
+  port: number,
+  env: Record<string, string> = {},
+): Promise<DevServer> {
   // A server already answering on this port is someone else's (a stale `pnpm dev`, another
   // session): the capture would silently run against its code (loop 258 hit one a day old).
   const url = `http://localhost:${port}`;
@@ -28,7 +32,7 @@ export async function startServer(port: number): Promise<DevServer> {
     cwd: REPO_ROOT,
     shell: true,
     stdio: ['ignore', 'pipe', 'pipe'],
-    env: { ...process.env, PARTYBOX_DESIGN_CAPTURE: '1' },
+    env: { ...process.env, PARTYBOX_DESIGN_CAPTURE: '1', PARTYBOX_RECORDINGS: 'off', ...env },
   });
   const log: string[] = [];
   child.stdout?.on('data', (d: Buffer) => {

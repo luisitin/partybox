@@ -18,11 +18,14 @@ import { createHost } from './host';
 import type { Host } from './host';
 import { detectLanIp } from './lan-ip';
 import { qrSvg } from './qr';
+import { createRecorder } from './recorder';
+import type { Recorder } from './recorder';
 import { createSocketLayer } from './sockets';
 
 export const REPO_ROOT = resolve(fileURLToPath(new URL('../../..', import.meta.url)));
 export const CLIENT_DIR = join(REPO_ROOT, 'packages', 'client');
 export const GAMES_DIR = join(REPO_ROOT, 'games');
+export const RECORDINGS_DIR = join(REPO_ROOT, 'recordings');
 
 export interface AppOptions {
   port: number;
@@ -35,6 +38,8 @@ export interface AppOptions {
   quiet?: boolean;
   /** false = API + sockets only (tests). */
   serveClient?: boolean;
+  /** Where game recaps are written (ADR-035); null = never record. Default: <repo>/recordings. */
+  recordingsDir?: string | null;
 }
 
 export interface App {
@@ -43,6 +48,8 @@ export interface App {
   bots: BotManager;
   clock: Clock;
   deps: EngineDeps;
+  /** Null when recording is off for this process. */
+  recorder: Recorder | null;
   /** Resolved after listen(). */
   port: number;
   publicHost: string;
@@ -83,6 +90,17 @@ export async function createApp(options: AppOptions): Promise<App> {
     log: options.quiet ? () => {} : undefined,
   });
   const bots = createBotManager(host, deps, clock);
+  const recordingsDir =
+    options.recordingsDir === undefined ? RECORDINGS_DIR : options.recordingsDir;
+  const recorder =
+    recordingsDir === null
+      ? null
+      : createRecorder({
+          host,
+          deps,
+          dir: recordingsDir,
+          log: options.quiet ? () => {} : undefined,
+        });
   sockets.attach(host, deps);
 
   const app: App = {
@@ -91,6 +109,7 @@ export async function createApp(options: AppOptions): Promise<App> {
     bots,
     clock,
     deps,
+    recorder,
     port: options.port,
     publicHost: options.publicHost ?? process.env['PUBLIC_HOST'] ?? detectLanIp(),
     urls: () => ({
@@ -104,6 +123,10 @@ export async function createApp(options: AppOptions): Promise<App> {
     },
     async close() {
       bots.close();
+      if (recorder) {
+        await recorder.abortAll();
+        recorder.close();
+      }
       host.close();
       await sockets.io.close();
       await fastify.close();
@@ -146,6 +169,7 @@ export async function createApp(options: AppOptions): Promise<App> {
     clock,
     deps,
     gamesDir: GAMES_DIR,
+    recorder,
   });
 
   if (options.serveClient === false) {

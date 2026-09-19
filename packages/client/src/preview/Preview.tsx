@@ -65,6 +65,7 @@ function fakeRoom(gameId: string, view: PushedView<TvView>): RoomSnapshot {
     games: [],
     results: null,
     canStart: { ok: false, reason: 'preview' },
+    recording: true,
   };
 }
 
