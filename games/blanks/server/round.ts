@@ -1,8 +1,8 @@
 // Round setup and the selectors every phase and view needs: who judges, who answers, what was
 // played, who may vote on which slot, and the tally.
 import { shuffle } from '@partybox/game-sdk';
-import { drawBlack, drawWhite } from './cards';
-import { leadWithFit, refillHands } from './deal';
+import { drawBlack } from './cards';
+import { drawGreat, leadWithFit, refillHands } from './deal';
 import { blackCard, blackPool } from './content';
 import { BLACK_CHOICES, RANDO } from './types';
 import type { State } from './types';
@@ -117,7 +117,7 @@ export function settleBlack(state: State): State {
   const black = blackCard(next.blackId);
   next = leadWithFit(refillHands(next, black.draw, answerers(next)), answerers(next));
   if (state.settings.rando) {
-    const [cards, after] = drawWhite(next, black.pick);
+    const [cards, after] = drawGreat(next, black.pick);
     next = cards.length === black.pick ? { ...after, submissions: { [RANDO]: cards } } : next;
   }
   return next;
