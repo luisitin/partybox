@@ -1,0 +1,178 @@
+{
+  "pass": "827",
+  "game": "broken-pencil",
+  "players": 6,
+  "scenario": "normal",
+  "focus": "tv",
+  "started": "16:45:35.725",
+  "tvVideoT0": "16:45:32.341",
+  "phoneVideoT0": "16:45:33.258",
+  "changes": [
+    {
+      "t": 1789836335728,
+      "status": "playing",
+      "phase": "pick",
+      "deadline": 1789836355719,
+      "bed": null,
+      "at": "16:45:35.728",
+      "sinceStartS": 0,
+      "videoS": 3.4,
+      "phoneVideoS": 2.5
+    },
+    {
+      "t": 1789836339953,
+      "status": "playing",
+      "phase": "draw",
+      "deadline": 1789836369819,
+      "bed": null,
+      "at": "16:45:39.953",
+      "sinceStartS": 4.2,
+      "videoS": 7.6,
+      "phoneVideoS": 6.7
+    },
+    {
+      "t": 1789836344312,
+      "status": "playing",
+      "phase": "pass",
+      "deadline": 1789836389277,
+      "bed": null,
+      "at": "16:45:44.312",
+      "sinceStartS": 8.6,
+      "videoS": 12,
+      "phoneVideoS": 11.1
+    },
+    {
+      "t": 1789836353744,
+      "status": "playing",
+      "phase": "pass",
+      "deadline": 1789836398610,
+      "bed": null,
+      "at": "16:45:53.744",
+      "sinceStartS": 18,
+      "videoS": 21.4,
+      "phoneVideoS": 20.5
+    },
+    {
+      "t": 1789836363075,
+      "status": "playing",
+      "phase": "pass",
+      "deadline": 1789836407952,
+      "bed": null,
+      "at": "16:46:03.075",
+      "sinceStartS": 27.4,
+      "videoS": 30.7,
+      "phoneVideoS": 29.8
+    },
+    {
+      "t": 1789836372380,
+      "status": "playing",
+      "phase": "pass",
+      "deadline": 1789836417263,
+      "bed": null,
+      "at": "16:46:12.380",
+      "sinceStartS": 36.7,
+      "videoS": 40,
+      "phoneVideoS": 39.1
+    },
+    {
+      "t": 1789836381702,
+      "status": "playing",
+      "phase": "guess",
+      "deadline": 1789836396580,
+      "bed": null,
+      "at": "16:46:21.702",
+      "sinceStartS": 46,
+      "videoS": 49.4,
+      "phoneVideoS": 48.4
+    },
+    {
+      "t": 1789836385931,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789836390824,
+      "bed": null,
+      "at": "16:46:25.931",
+      "sinceStartS": 50.2,
+      "videoS": 53.6,
+      "phoneVideoS": 52.7
+    },
+    {
+      "t": 1789836390885,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789836398837,
+      "bed": null,
+      "at": "16:46:30.885",
+      "sinceStartS": 55.2,
+      "videoS": 58.5,
+      "phoneVideoS": 57.6
+    },
+    {
+      "t": 1789836398924,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789836403845,
+      "bed": null,
+      "at": "16:46:38.924",
+      "sinceStartS": 63.2,
+      "videoS": 66.6,
+      "phoneVideoS": 65.7
+    },
+    {
+      "t": 1789836403878,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789836411852,
+      "bed": null,
+      "at": "16:46:43.878",
+      "sinceStartS": 68.2,
+      "videoS": 71.5,
+      "phoneVideoS": 70.6
+    },
+    {
+      "t": 1789836411913,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789836416865,
+      "bed": null,
+      "at": "16:46:51.913",
+      "sinceStartS": 76.2,
+      "videoS": 79.6,
+      "phoneVideoS": 78.7
+    },
+    {
+      "t": 1789836416913,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789836424865,
+      "bed": null,
+      "at": "16:46:56.913",
+      "sinceStartS": 81.2,
+      "videoS": 84.6,
+      "phoneVideoS": 83.7
+    },
+    {
+      "t": 1789836424900,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789836429873,
+      "bed": null,
+      "at": "16:47:04.900",
+      "sinceStartS": 89.2,
+      "videoS": 92.6,
+      "phoneVideoS": 91.6
+    },
+    {
+      "t": 1789836429991,
+      "status": "playing",
+      "phase": "show",
+      "deadline": 1789836437878,
+      "bed": null,
+      "at": "16:47:09.991",
+      "sinceStartS": 94.3,
+      "videoS": 97.7,
+      "phoneVideoS": 96.7
+    }
+  ],
+  "notes": ["budget reached while playing; skipped to results"]
+}
