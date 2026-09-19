@@ -6,7 +6,7 @@
 // Usage: tsx scripts/blanks-fit-report.ts [--decks wild-only] [--players 6] [--runs 30] [--seed 1]
 import { parseArgs } from 'node:util';
 import { runGame } from '../packages/sim/src/runner';
-import { DECKS, blackCard, decksFor } from '../games/blanks/server/content';
+import { DECKS, blackCard, blackTier, decksFor } from '../games/blanks/server/content';
 import { game } from '../games/blanks/server/index';
 import { fitScore, servesOf, slotOf, SLOTS } from '../games/blanks/server/fit';
 import type { DeckPreset, Input, State } from '../games/blanks/server/types';
@@ -55,6 +55,8 @@ console.log(
 );
 
 // 2. Simulated games, replayed: hands at every answer phase + the bots' plays.
+let prompts = 0;
+let promptTier = 0; // sum of the tiers of the prompts played
 let hands = 0;
 let handsShortOfSlot = 0; // fewer than 2 cards serving the round's slot
 const shortBySlot = count(SLOTS);
@@ -90,6 +92,8 @@ for (let r = 0; r < runs; r += 1) {
       if (seenAnswer !== key) {
         seenAnswer = key;
         roundsBySlot[slot] += 1;
+        prompts += 1;
+        promptTier += blackTier(state.blackId);
         for (const id of Object.keys(state.hands)) {
           const hand = state.hands[id] ?? [];
           hands += 1;
@@ -119,7 +123,14 @@ for (let r = 0; r < runs; r += 1) {
     }
   }
 }
-console.log(`${runs} games × ${players} players, ${hands} hands at answer:`);
+const blackTierN = count(['1', '2', '3'] as const);
+for (const b of blacks) blackTierN[String(b.tier ?? 2) as '1' | '2' | '3'] += 1;
+console.log(
+  `  black tiers: ${(['1', '2', '3'] as const).map((t) => `${t}: ${blackTierN[t]} (${pct(blackTierN[t], blacks.length)})`).join(' · ')}`,
+);
+console.log(
+  `${runs} games × ${players} players, ${hands} hands at answer; prompts played: mean tier ${(promptTier / Math.max(1, prompts)).toFixed(2)}`,
+);
 console.log(
   `  rounds by slot: ${SLOTS.map((s) => `${s} ${roundsBySlot[s]}`).join(' · ')}; hands with < 2 cards serving the round's slot: ${handsShortOfSlot} (${pct(handsShortOfSlot, hands)}) — ${SLOTS.map((s) => `${s} ${shortBySlot[s]}`).join(' · ')}`,
 );

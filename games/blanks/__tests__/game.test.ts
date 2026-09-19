@@ -8,6 +8,7 @@ import {
   WHITE_KINDS,
   blackCard,
   blackPool,
+  blackTier,
   whiteKind,
   whitePool,
   whiteServes,
@@ -140,6 +141,17 @@ describe('dealing', () => {
         if (s.phase.id === 'final' || s.phase.id === 'done') break;
       }
     }
+  });
+
+  it('the black deck leads with the great prompts and keeps the filler for the back', () => {
+    const s = start({ players: 4, decks: 'wild-only', seed: 5 });
+    const tiers = s.blackDeck.map(blackTier);
+    const firstTwo = tiers.indexOf(2);
+    const firstOne = tiers.indexOf(1);
+    expect(tiers.slice(0, firstTwo).every((t) => t === 3)).toBe(true);
+    expect(tiers.slice(firstTwo, firstOne).every((t) => t === 2)).toBe(true);
+    expect(tiers.slice(firstOne).every((t) => t === 1)).toBe(true);
+    expect(blackTier(s.blackId as string)).toBe(3);
   });
 
   it('a wild hand holds at least five tier-3 cards, round after round (the quality floor)', () => {

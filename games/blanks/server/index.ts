@@ -5,7 +5,7 @@ import { gameManifestSchema, seedRng, shuffle } from '@partybox/game-sdk';
 import type { GameDefinition, InitContext, Settings as RawSettings } from '@partybox/game-sdk';
 import manifestJson from '../manifest.json' with { type: 'json' };
 import { botInput } from './bot';
-import { refillHands } from './cards';
+import { orderBlackDeck, refillHands } from './cards';
 import { blackPool, whitePool } from './content';
 import { reduce } from './flow';
 import { enterIntro } from './phases/intro';
@@ -52,7 +52,8 @@ function init(ctx: InitContext): State {
   const players: State['players'] = {};
   for (const p of ctx.players) players[p.id] = p;
   const settings = readSettings(ctx.settings);
-  const [blackDeck, r1] = shuffle(seedRng(ctx.seed), blackPool(settings.decks));
+  const [blackShuffled, r1] = shuffle(seedRng(ctx.seed), blackPool(settings.decks));
+  const blackDeck = orderBlackDeck(blackShuffled);
   const [whiteDeck, rng] = shuffle(r1, whitePool(settings.decks));
   const zero: Record<string, number> = {};
   for (const id of Object.keys(players)) zero[id] = 0;
