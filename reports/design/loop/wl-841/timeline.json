@@ -1,0 +1,178 @@
+{
+  "pass": "838",
+  "game": "lightning-round",
+  "players": 16,
+  "scenario": "pause",
+  "focus": "tv",
+  "started": "17:07:34.622",
+  "tvVideoT0": "17:07:31.195",
+  "phoneVideoT0": "17:07:32.145",
+  "changes": [
+    {
+      "t": 1789837654625,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1789837658615,
+      "bed": "marimba",
+      "at": "17:07:34.625",
+      "sinceStartS": 0,
+      "videoS": 3.4,
+      "phoneVideoS": 2.5
+    },
+    {
+      "t": 1789837658668,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789837668620,
+      "bed": "pulse",
+      "at": "17:07:38.668",
+      "sinceStartS": 4,
+      "videoS": 7.5,
+      "phoneVideoS": 6.5
+    },
+    {
+      "t": 1789837662840,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789837667822,
+      "bed": "pulse",
+      "at": "17:07:42.840",
+      "sinceStartS": 8.2,
+      "videoS": 11.6,
+      "phoneVideoS": 10.7
+    },
+    {
+      "t": 1789837667931,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789837677836,
+      "bed": "pulse",
+      "at": "17:07:47.931",
+      "sinceStartS": 13.3,
+      "videoS": 16.7,
+      "phoneVideoS": 15.8
+    },
+    {
+      "t": 1789837672358,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789837677341,
+      "bed": "pulse",
+      "at": "17:07:52.358",
+      "sinceStartS": 17.7,
+      "videoS": 21.2,
+      "phoneVideoS": 20.2
+    },
+    {
+      "t": 1789837677420,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789837687344,
+      "bed": "pulse",
+      "at": "17:07:57.420",
+      "sinceStartS": 22.8,
+      "videoS": 26.2,
+      "phoneVideoS": 25.3
+    },
+    {
+      "t": 1789837681727,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789837686699,
+      "bed": "pulse",
+      "at": "17:08:01.727",
+      "sinceStartS": 27.1,
+      "videoS": 30.5,
+      "phoneVideoS": 29.6
+    },
+    {
+      "t": 1789837686789,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789837696708,
+      "bed": "pulse",
+      "at": "17:08:06.789",
+      "sinceStartS": 32.2,
+      "videoS": 35.6,
+      "phoneVideoS": 34.6
+    },
+    {
+      "t": 1789837691035,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789837696018,
+      "bed": "pulse",
+      "at": "17:08:11.035",
+      "sinceStartS": 36.4,
+      "videoS": 39.8,
+      "phoneVideoS": 38.9
+    },
+    {
+      "t": 1789837696123,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789837706032,
+      "bed": "pulse",
+      "at": "17:08:16.123",
+      "sinceStartS": 41.5,
+      "videoS": 44.9,
+      "phoneVideoS": 44
+    },
+    {
+      "t": 1789837700338,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789837705278,
+      "bed": "pulse",
+      "at": "17:08:20.338",
+      "sinceStartS": 45.7,
+      "videoS": 49.1,
+      "phoneVideoS": 48.2
+    },
+    {
+      "t": 1789837705375,
+      "status": "playing",
+      "phase": "wager",
+      "deadline": 1789837720287,
+      "bed": "latenight",
+      "at": "17:08:25.375",
+      "sinceStartS": 50.8,
+      "videoS": 54.2,
+      "phoneVideoS": 53.2
+    },
+    {
+      "t": 1789837717242,
+      "status": "playing",
+      "phase": "question",
+      "deadline": 1789837727132,
+      "bed": "pulse",
+      "at": "17:08:37.242",
+      "sinceStartS": 62.6,
+      "videoS": 66,
+      "phoneVideoS": 65.1
+    },
+    {
+      "t": 1789837721468,
+      "status": "playing",
+      "phase": "reveal",
+      "deadline": 1789837726343,
+      "bed": "pulse",
+      "at": "17:08:41.468",
+      "sinceStartS": 66.8,
+      "videoS": 70.3,
+      "phoneVideoS": 69.3
+    },
+    {
+      "t": 1789837726435,
+      "status": "results",
+      "phase": "results",
+      "deadline": null,
+      "bed": null,
+      "at": "17:08:46.435",
+      "sinceStartS": 71.8,
+      "videoS": 75.2,
+      "phoneVideoS": 74.3
+    }
+  ],
+  "notes": ["pause: VIP paused 6 s at 2026-09-19T17:08:29.429Z in wager"]
+}
