@@ -1,0 +1,15 @@
+(node:18364) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ok   TV spicy.json vote (83 chars, s096): the prompt clears the first option card — h1 bottom 625, cards top 661
+ok   TV spicy.json vote (83 chars, s096): nothing below the fold — overflow 0px
+ok   iPhone spicy.json vote (83 chars, s096): the whole prompt is on screen — box 139–232 of 659
+ok   SE spicy.json vote (83 chars, s096): the whole prompt is on screen — box 135–258 of 568
+ok   iPhone spicy.json answer (83 chars, s096): the whole prompt is on screen — box 139–232 of 659
+ok   SE spicy.json answer (83 chars, s096): the whole prompt is on screen — box 135–258 of 568
+ok   TV family.json vote (60 chars, f022): the prompt clears the first option card — h1 bottom 625, cards top 650
+ok   TV family.json vote (60 chars, f022): nothing below the fold — overflow 0px
+ok   iPhone family.json vote (60 chars, f022): the whole prompt is on screen — box 139–201 of 659
+ok   SE family.json vote (60 chars, f022): the whole prompt is on screen — box 135–228 of 568
+ok   iPhone family.json answer (60 chars, f022): the whole prompt is on screen — box 139–201 of 659
+ok   SE family.json answer (60 chars, f022): the whole prompt is on screen — box 135–228 of 568
+12/12 checks passed → reports/design/spicy-fit/
