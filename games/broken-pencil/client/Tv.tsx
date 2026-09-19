@@ -107,6 +107,10 @@ function Thumb({ page }: { page: PageView }): JSX.Element {
   );
 }
 
+/** The show's sheet: 560 px when the stage has it, else what is left under the "X drew" caption
+ * (an eight-player roster leaves ~480 px; `.current` is the size container). */
+const SHEET_SIZE = 'min(560px, calc(100cqh - 72px))';
+
 function CurrentPage({ page }: { page: PageView }): JSX.Element {
   if (page.kind === 'word')
     return (
@@ -122,7 +126,11 @@ function CurrentPage({ page }: { page: PageView }): JSX.Element {
     return (
       <div className={`${styles.page} ${styles.flip}`}>
         <p className={styles.pageWho}>{page.authorName} drew</p>
-        <DrawingView drawing={page.drawing} size={560} label={`${page.authorName}'s drawing`} />
+        <DrawingView
+          drawing={page.drawing}
+          size={SHEET_SIZE}
+          label={`${page.authorName}'s drawing`}
+        />
       </div>
     );
   return (
