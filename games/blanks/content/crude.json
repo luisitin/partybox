@@ -11863,7 +11863,8 @@
     {
       "id": "cw1529",
       "text": "Sweaty Dave.",
-      "tier": 3
+      "tier": 3,
+      "serves": ["person", "name"]
     },
     {
       "id": "cw1530",
@@ -11872,12 +11873,14 @@
     {
       "id": "cw1531",
       "text": "Extra crispy.",
-      "tier": 3
+      "tier": 3,
+      "serves": ["name"]
     },
     {
       "id": "cw1532",
       "text": "Discount Elvis.",
-      "tier": 3
+      "tier": 3,
+      "serves": ["person", "name"]
     },
     {
       "id": "cw1533",
@@ -11890,7 +11893,8 @@
     },
     {
       "id": "cw1535",
-      "text": "Chunky."
+      "text": "Chunky.",
+      "serves": ["name"]
     },
     {
       "id": "cw1536",
@@ -11909,7 +11913,8 @@
     {
       "id": "cw1539",
       "text": "Slightly damp.",
-      "tier": 3
+      "tier": 3,
+      "serves": ["name"]
     },
     {
       "id": "cw1540",
@@ -11929,7 +11934,8 @@
     },
     {
       "id": "cw1544",
-      "text": "Hangry."
+      "text": "Hangry.",
+      "serves": ["name"]
     },
     {
       "id": "cw1545",
@@ -11942,7 +11948,8 @@
     {
       "id": "cw1547",
       "text": "Clammy.",
-      "tier": 3
+      "tier": 3,
+      "serves": ["name"]
     },
     {
       "id": "cw1548",
@@ -11987,7 +11994,8 @@
     {
       "id": "cw1558",
       "text": "Crusty.",
-      "tier": 3
+      "tier": 3,
+      "serves": ["name"]
     },
     {
       "id": "cw1559",

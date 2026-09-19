@@ -42,7 +42,7 @@ export const whiteCardSchema = z.object({
   text: z.string().min(1).max(WHITE_MAX_CHARS),
   /** The slots the card answers naturally (server/fit.ts); read off the text when unset. */
   serves: z
-    .array(z.enum(['thing', 'doing', 'person']))
+    .array(z.enum(['thing', 'doing', 'person', 'name']))
     .min(1)
     .max(3)
     .optional(),
