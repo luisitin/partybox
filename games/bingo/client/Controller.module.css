@@ -961,6 +961,11 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--pb-space-2);
+  /* Hidden until the deal is down (loop 368), then the two buttons rise together. */
+  opacity: 0;
+}
+.introActionsIn {
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
 }
 /* The last one picking (loop 351): the Ready button breathes until it is tapped. Tokens only:
    0 ms under reduced motion / the motion switch. */

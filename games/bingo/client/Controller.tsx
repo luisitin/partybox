@@ -5,7 +5,7 @@
 // and judges only the claim, on the card named.
 import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
-import { PrimaryButton, Screen, WaitingScreen, buzz, useSound } from '@partybox/game-sdk/ui';
+import { Screen, WaitingScreen, useSound } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { Input } from '../server/types';
 import type { BingoControllerView } from '../server/views';
@@ -13,7 +13,15 @@ import { Card } from './Card';
 import { PatternDemo } from './PatternDemo';
 import { BingoButton, CallRow, DecideFooter, daubWithFeel } from './ControllerParts';
 import { AllCardsLayout, FocusLayout, Thumbnails } from './Layouts';
-import { Countdown, HoldCurtain, IntroCount, MissedToast, StyleSheet, TurnGate } from './Overlays';
+import {
+  Countdown,
+  HoldCurtain,
+  IntroActions,
+  IntroCount,
+  MissedToast,
+  StyleSheet,
+  TurnGate,
+} from './Overlays';
 import {
   setCardStyle,
   styleSpec,
@@ -150,35 +158,15 @@ export function Controller({
         footer={
           // The card-pick step (loop 344, the owner): swap, then Ready — the round starts when
           // everyone is (or 15 s in). Two buttons on one row so a short phone keeps its cards.
-          <div className={styles.introActions}>
-            <PrimaryButton
-              tone="neutral"
-              disabled={!left}
-              onClick={() => {
-                // The old card flips away and the new one flips in (loop 268): the flip is the
-                // card's key; the pluck lands as the new face turns to the eye (~200 ms in).
-                send({ type: 'swap', card: pick });
-                setSwaps((s) => s + 1);
-                buzz(20);
-                setTimeout(() => play('card'), 200);
-              }}
-            >
-              🎲 {left ? 'Another' : view.ready ? 'Picked' : 'Swapped'}
-              {n > 1 ? ` · card ${pick + 1}` : ''}
-            </PrimaryButton>
-            <PrimaryButton
-              tone={view.ready ? 'success' : 'accent'}
-              disabled={view.ready}
-              className={view.lastOne ? styles.nudge : undefined}
-              onClick={() => {
-                buzz(20);
-                play('submit');
-                send({ type: 'ready' });
-              }}
-            >
-              {view.ready ? '✓ Ready' : 'Ready'}
-            </PrimaryButton>
-          </div>
+          <IntroActions
+            view={view}
+            cards={n}
+            pick={pick}
+            canSwap={left}
+            send={send}
+            play={play}
+            onSwap={() => setSwaps((s) => s + 1)}
+          />
         }
       >
         <div className={styles.roundBody}>

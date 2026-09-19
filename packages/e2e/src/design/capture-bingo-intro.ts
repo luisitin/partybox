@@ -47,7 +47,9 @@ async function main(): Promise<void> {
     // --live: the clock runs, so the intro's last three seconds count down to the first ball
     // (loop 262) and the tape runs into the first call.
     if (!values.live) await api.clock(true);
-    const marks = [{ name: 'intro-line', at: Date.now(), before: 0, seconds: values.live ? 7 : 5 }];
+    const marks = [
+      { name: 'intro-line', at: Date.now(), before: 0, seconds: values.live ? 12 : 5 },
+    ];
     await api.post('/api/dev/start', {
       gameId: 'bingo',
       seed: 9,
@@ -63,10 +65,10 @@ async function main(): Promise<void> {
     if (values.live) {
       // "Another" 1.8 s in (the deal has landed): the flip and its pluck (loop 268); then Ready
       // on Sam's phone and for the rest (loop 344) — the 3 · 2 · 1 from the 5 s floor.
-      await settle(1800);
+      await settle(1000 + Number(values.cards) * 1000); // the buttons rise once the deal is down (loop 368)
       await sam.page.getByRole('button', { name: /^🎲 another/i }).click();
       await settle(400);
-      await sam.page.getByRole('button', { name: /^ready$/i }).click();
+      await sam.page.getByRole('button', { name: /^ready$/i }).dispatchEvent('click'); // it breathes when last (never "stable");
       await api.readyAll();
       await settle(5300);
     } else await settle(5200);
