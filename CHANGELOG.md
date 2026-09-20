@@ -5,6 +5,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Blanks result lands one thing at a time** (I-005, option C): the winning card's voter chips pop in
+  120 ms apart with a `lock` note each, the other cards' pills rise 60 ms apart fewest votes first,
+  and as the winner is named the pills step back to 55 % and the confetti is twice as thick.
 - **Wisecrack reveal: the winner is crowned, the loser steps back** (I-002, option B): on the points
   beat the winning card takes the `pb-crown` lift instead of a flat 1.02 scale, and against a clear
   winner the other card shrinks to 0.96 and dims to 60 % (a tie moves nothing).
