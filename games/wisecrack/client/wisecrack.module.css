@@ -46,6 +46,7 @@
 }
 
 .cards {
+  perspective: 1200px; /* I-002 C: the winner's turn reads as a turn, not a squeeze */
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: stretch;
@@ -214,11 +215,13 @@
 }
 
 .revealCard {
+  backface-visibility: hidden; /* I-002 C: no mirrored text while the winner turns */
   outline: 3px solid transparent;
   transition:
     outline-color var(--pb-motion-slow) var(--pb-ease),
     background-color var(--pb-motion-slow) var(--pb-ease),
-    transform var(--pb-motion-slow) var(--pb-ease);
+    transform var(--pb-motion-slow) var(--pb-ease),
+    opacity var(--pb-motion-slow) var(--pb-ease);
 }
 
 /* The reveal keeps the letter row up, the answer centred in the free space, the footer down. */
@@ -226,10 +229,16 @@
   margin-block: auto;
 }
 
-.winner {
+/* I-002 C: the winner turns over — pb-flip, Blanks' card-turn (tossed in face-down, turning to its
+   face with a tilt, 600 ms) on the points beat, under the card row's perspective; the back is
+   hidden so the card is edge-on for a moment, then lands face up with its outline. */
+.revealCard.winner {
   outline-color: var(--pb-accent-2);
   background: var(--pb-surface-2);
-  transform: scale(1.02);
+  animation: global(pb-flip) var(--pb-motion-slow) var(--pb-ease) both;
+  /* .card:nth-child(n) sets the vote rise's per-card delay (1 s / 1.6 s) at a higher specificity;
+     the winner's beat is now — this selector outranks it. */
+  animation-delay: 0ms;
 }
 
 .cardTop {
@@ -340,7 +349,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .winner {
+  .revealCard.winner {
+    animation: none;
     transform: none;
   }
 }
@@ -373,4 +383,16 @@
 
 .pipPop {
   animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+/* ── I-002 B: the loser steps back on the points beat — smaller and dimmer over the card's own
+   600 ms transition (transform + opacity). Only against a clear winner; a tie moves nothing. */
+.loser {
+  transform: scale(0.96);
+  opacity: 0.6;
+}
+@media (prefers-reduced-motion: reduce) {
+  .loser {
+    transform: none;
+  }
 }
