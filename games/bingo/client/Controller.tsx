@@ -5,7 +5,8 @@
 // and judges only the claim, on the card named.
 import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
-import { Screen, WaitingScreen, useSound } from '@partybox/game-sdk/ui';
+import type React from 'react';
+import { Screen, WaitingScreen, avatarColorVar, useSound } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { Input } from '../server/types';
 import type { BingoControllerView } from '../server/views';
@@ -243,6 +244,9 @@ export function Controller({
     ) : (
       <AllCardsLayout {...layoutProps} disabled={roundOver} kind={kind} />
     );
+    const daubBody = (
+      <div style={{ '--pb-daub': avatarColorVar(me.avatarId) } as React.CSSProperties}>{body}</div>
+    );
     return (
       <Screen
         key="round"
@@ -293,7 +297,7 @@ export function Controller({
                 : `Card ${(view.claim.cardIndex ?? 0) + 1} is on the TV — everyone is checking it.`}
             </p>
           ) : null}
-          {body}
+          {daubBody}
           {view.pausedBy.length > 0 && !view.menuOpen && !sheet ? (
             <HoldCurtain names={view.pausedBy} onOpen={openMenu} />
           ) : null}
