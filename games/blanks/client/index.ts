@@ -34,4 +34,9 @@ export const clientModule: GameClientModule = {
   // The point lands on result entry but the stage names the winner on its last beat: the strip
   // waits for the next phase.
   stripScores: (view) => view.phaseId !== 'result',
+  // I-004 B: while the room votes, whoever has not voted yet is ringed in the strip.
+  stripActive: (view) =>
+    view.phaseId === 'judge'
+      ? view.players.filter((p) => p.status === 'active' && p.connected).map((p) => p.id)
+      : [],
 };

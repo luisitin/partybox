@@ -1273,3 +1273,9 @@
     transform: none;
   }
 }
+
+/* ── I-004 C: every vote is in — the cards bump once, 40 ms apart (on the page wrapper, whose
+   fade transition composes with a transform animation; the <li>'s deal keeps its fill). */
+.judgeGridDone .onPage {
+  animation: global(pb-bump) var(--pb-motion-base) var(--pb-ease) calc(var(--pb-i, 0) * 40ms) both;
+}

@@ -3,8 +3,8 @@
 // under the host bar (review-loop #129) — is measured and shown in pages that turn every few
 // seconds, so every card gets its time on the TV while the phones carry the whole list.
 import { useEffect, useRef, useState } from 'react';
-import type { JSX } from 'react';
-import { Avatar, Stage } from '@partybox/game-sdk/ui';
+import type { CSSProperties, JSX } from 'react';
+import { Avatar, Stage, useSound } from '@partybox/game-sdk/ui';
 import type { GameTvProps, ViewPlayer } from '@partybox/game-sdk/ui';
 import type { BlanksTvView } from '../server/index';
 import { fillText } from '../server/cards';
@@ -159,6 +159,15 @@ function JudgeGrid({ view }: Props): JSX.Element {
   }, [starts, current]);
   const from = starts[current] ?? 0;
   const to = (starts[current + 1] ?? count) - 1;
+  // I-004 C: "That's everyone" — every card bumps once, 40 ms apart, with the `tally` note.
+  const everyone =
+    view.judgeMode === 'vote' &&
+    view.votedCount > 0 &&
+    !view.players.some((p) => p.status === 'active' && p.connected);
+  const play = useSound();
+  useEffect(() => {
+    if (everyone) play('tally');
+  }, [everyone, play]);
   return (
     <>
       <div className={styles.kickerRow}>
@@ -167,14 +176,15 @@ function JudgeGrid({ view }: Props): JSX.Element {
           {pages > 1 ? ` · cards ${LETTERS[from]}–${LETTERS[to]} (${current + 1} of ${pages})` : ''}
         </p>
         <span className={styles.progressSlot} role="status" aria-live="polite">
-          <span key={view.votedCount} className={styles.progressPill}>
+          {/* I-004 A: keyed on the count, so every vote pops the pill once. */}
+          <span key={view.votedCount} className={`${styles.progressPill} ${view.votedCount > 0 ? 'pb-pop' : ''}`}>
             <Progress view={view} />
           </span>
         </span>
       </div>
       <ul
         ref={ref}
-        className={`${styles.judgeGrid} ${gridClass(count)} ${pages > 1 ? '' : styles.judgeGridFits} ${tiny ? styles.judgeGridTiny : ''}`}
+        className={`${styles.judgeGrid} ${gridClass(count)} ${pages > 1 ? '' : styles.judgeGridFits} ${tiny ? styles.judgeGridTiny : ''} ${everyone ? styles.judgeGridDone : ''}`}
         aria-label={pages > 1 ? `the cards, page ${current + 1} of ${pages}` : 'the cards'}
       >
         {view.cards.map((c, i) => (
@@ -182,7 +192,7 @@ function JudgeGrid({ view }: Props): JSX.Element {
             {/* Only the current page is lit: the row below used to hang into the stage as a card
                 sliced through its own last line (loop #196). The fade sits on this wrapper, not on
                 the <li>, whose deal animation fills `both` and would win. */}
-            <span className={i >= from && i <= to ? styles.onPage : styles.offPage}>
+            <span className={i >= from && i <= to ? styles.onPage : styles.offPage} style={{ '--pb-i': i } as CSSProperties}>
               <FilledCard
                 text={view.black?.text ?? ''}
                 whites={c.whites}
