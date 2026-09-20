@@ -90,3 +90,55 @@
 .dot:nth-child(3) {
   animation-delay: 0.4s;
 }
+
+/* ── I-029 B: two large soft radial glows in the brand pink and gold drift slowly behind the
+   lobby — a 14 s translate loop at 18 % opacity, no blur (radial gradients are cheap to paint);
+   the keyframes only exist without reduced motion, so a reduced-motion TV shows them still. */
+.glow {
+  position: fixed; /* behind the whole TV: the lobby's stage is not a positioned box */
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.glow > span {
+  position: absolute;
+  width: 900px;
+  height: 900px;
+  border-radius: 50%;
+  opacity: 0.18;
+}
+.glowA {
+  left: -300px;
+  top: -200px;
+  background: radial-gradient(circle, var(--pb-accent) 0%, transparent 62%);
+  animation: pb-glow-a 14s ease-in-out infinite alternate;
+}
+.glowB {
+  right: -320px;
+  bottom: -260px;
+  background: radial-gradient(circle, var(--pb-accent-2) 0%, transparent 62%);
+  animation: pb-glow-b 17s ease-in-out infinite alternate;
+}
+.split {
+  position: relative;
+  z-index: 1;
+}
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes pb-glow-a {
+    from {
+      transform: translate(0, 0);
+    }
+    to {
+      transform: translate(180px, 120px);
+    }
+  }
+  @keyframes pb-glow-b {
+    from {
+      transform: translate(0, 0);
+    }
+    to {
+      transform: translate(-160px, -140px);
+    }
+  }
+}
