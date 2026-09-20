@@ -167,7 +167,8 @@ function JudgeGrid({ view }: Props): JSX.Element {
           {pages > 1 ? ` · cards ${LETTERS[from]}–${LETTERS[to]} (${current + 1} of ${pages})` : ''}
         </p>
         <span className={styles.progressSlot} role="status" aria-live="polite">
-          <span key={view.votedCount} className={styles.progressPill}>
+          {/* I-004 A: keyed on the count, so every vote pops the pill once. */}
+          <span key={view.votedCount} className={`${styles.progressPill} ${view.votedCount > 0 ? 'pb-pop' : ''}`}>
             <Progress view={view} />
           </span>
         </span>
