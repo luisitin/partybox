@@ -5,7 +5,7 @@
 import { Suspense } from 'react';
 import type { JSX } from 'react';
 import type { PushedView, RoomSnapshot, TvView } from '@partybox/shared';
-import { BigText, Scoreboard, Stage } from '@partybox/game-sdk/ui';
+import { Avatar, BigText, Scoreboard, Stage } from '@partybox/game-sdk/ui';
 import { GameErrorBoundary } from '../controller/GameErrorBoundary';
 import { nobodyScored, scoreboardRows, winnerLine } from '../controller/results-rows';
 import { clientGames } from '../games.generated';
@@ -31,12 +31,19 @@ export function TvResults({ room, lastView = null }: TvResultsProps): JSX.Elemen
   // 7–8 rows sit in two columns of ≤ 4: large rows and a wider board column, or the lower half of
   // the stage is bare (review-loop #32).
   const large = many && rows.length <= 8;
+  // I-025: one clear winner gets a face and a crown on the headline (a tie stays a line).
+  const winnerIds = room.results?.results.winnerIds ?? [];
+  const winner =
+    winnerIds.length === 1 && !nobodyScored(room) && !scoreless
+      ? (room.results?.players.find((p) => p.id === winnerIds[0]) ?? null)
+      : null;
   return (
     // `data-screen` marks the end of a game for the e2e harness: a scoreboard is not a reliable
     // hook, since a game with its own finale (Bingo's board, Lightning's totals) replaces it
     // (review-loop #184).
     <Stage>
-      <div className={`${styles.hero} pb-enter`} data-screen="results">
+      <div className={`${styles.hero} ${winner ? styles.crowned : 'pb-enter'}`} data-screen="results">
+        {winner ? <Avatar avatarId={winner.avatarId} size={72} /> : null}
         <BigText level={many || keepBoard ? 'h1' : 'display'} tone="accent">
           {winnerLine(room, scoreless) || t.results.title}
         </BigText>

@@ -63,3 +63,13 @@
 .centredHint {
   text-align: center;
 }
+
+/* ── I-025 A: the winner is crowned — face beside the line, and the hero takes pb-crown (the
+   lift Blanks' winning card uses, 600 ms, transform only). */
+.crowned {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pb-space-4);
+  animation: global(pb-crown) var(--pb-motion-slow) var(--pb-ease) both;
+}
