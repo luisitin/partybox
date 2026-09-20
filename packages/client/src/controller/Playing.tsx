@@ -72,6 +72,7 @@ export function Playing({
     view: PushedView<ControllerView>;
     me: { id: string; name: string; avatarId: string };
     send: (input: unknown) => void;
+    skip?: () => void;
   }) => JSX.Element;
   return (
     <GameErrorBoundary key={view.gameId}>
@@ -81,6 +82,7 @@ export function Playing({
             view={view}
             me={{ id: me.id, name: me.name, avatarId: me.avatarId }}
             send={controller.sendInput}
+            skip={me.isVip ? () => controller.vip({ action: 'skip' }) : undefined}
           />
           <Ready onReady={onGameReady} />
         </SoundProvider>

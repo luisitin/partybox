@@ -54,6 +54,15 @@ const MAX_BEST_SWAPS = BEST_FLOOR;
  *  one in twenty-three, so two hands in three held none and every answer to "My cellmate's
  *  nickname is ____" was a sentence (loop 741). */
 export const WORD_FLOOR = 1;
+/** …and, once the prompt is known, cards that read well in its blank (fit 0.85+: a noun or a
+ *  person in a noun blank, a gerund in a verb blank, a name in a name blank): half the hand when
+ *  the deck allows, never under the four a phone shows without scrolling — the other floors (two
+ *  of each kind, a word) hold five cards of a ten-card hand, so a person prompt over a hand whose
+ *  word is a bare adjective stops at four. At most this many swaps a round to get there. */
+export const FIT_TARGET = HAND_SIZE / 2;
+export const FIT_FLOOR = 4;
+export const FIT_FLOOR_SCORE = 0.85;
+const MAX_FIT_SWAPS = 4;
 export const WORD_MAX_WORDS = 2;
 export const isWord = (id: string): boolean =>
   whiteText(id).split(/\s+/).filter(Boolean).length <= WORD_MAX_WORDS;
@@ -218,6 +227,7 @@ function swapForGood(
   hand: readonly string[],
   wants: (id: string) => boolean = isGood,
   spare: (id: string) => boolean = (id) => !wants(id),
+  floor: (kind: WhiteKind) => number = floorOf,
 ): [string[], State] | null {
   // The hand's last word card is never the spare: the filler cap and the variety swap run after
   // the word block, and each traded a filler-tier word away (loop 788 — "a hand holds a word"
@@ -231,7 +241,7 @@ function swapForGood(
     // Kinds the rest would fall short of — by any reading for the floor, and by first reading for
     // the spare's own kind, so the top of the hand can still lead with one of each (loop #488: a
     // spare gerund swapped for a great noun left a hand with no card that reads as a doing first).
-    const needs = WHITE_KINDS.filter((k) => countKind(rest, k) < floorOf(k));
+    const needs = WHITE_KINDS.filter((k) => countKind(rest, k) < floor(k));
     const lead = leads(rest, whiteKind(dropped)) ? null : whiteKind(dropped);
     const [card, after] = takeWhere(
       state,
@@ -325,10 +335,30 @@ export function refillHands(state: State, extra = 0, extraFor: readonly string[]
  *  screenful on the phone is the four best answers, not four random ones (loop 473). */
 export function leadWithFit(state: State, playerIds: readonly string[]): State {
   const slot = blackSlot(state.blackId);
+  const black = blackCard(state.blackId).text;
+  const fits = (id: string): boolean =>
+    fitScore(slot, whiteServes(id), whiteText(id), black) >= FIT_FLOOR_SCORE;
+  let next = state;
   const hands = { ...state.hands };
   for (const id of playerIds) {
-    const hand = hands[id];
-    if (!hand) continue;
+    const held = hands[id];
+    if (!held) continue;
+    let hand: readonly string[] = held;
+    // The fit floor: the kind floors keep three doings in a hand, but a "…had to ____." round
+    // wants a hand of them, and a phone of seven "A ____" nouns under a verb prompt reads as no
+    // options (owner, 2026-09-19). The weakest misfits go for great fitting cards, then any; the
+    // other kinds keep only the base floor for the round, so a person prompt can hold four people.
+    for (let n = 0; n < MAX_FIT_SWAPS && hand.filter(fits).length < FIT_TARGET; n++) {
+      const swapped: [string[], State] | null =
+        swapForGood(
+          next,
+          hand,
+          (c) => fits(c) && isGood(c),
+          (c) => !fits(c),
+        ) ?? swapForGood(next, hand, fits, (c) => !fits(c));
+      if (swapped === null) break;
+      [hand, next] = swapped;
+    }
     hands[id] = hand
       .map((card, i) => ({
         card,
@@ -339,7 +369,7 @@ export function leadWithFit(state: State, playerIds: readonly string[]): State {
       .sort((a, b) => b.fit - a.fit || b.tier - a.tier || a.i - b.i)
       .map((c) => c.card);
   }
-  return { ...state, hands };
+  return { ...next, hands };
 }
 
 /** One of each kind at the top of the hand, the shuffle's order kept otherwise. A phone shows

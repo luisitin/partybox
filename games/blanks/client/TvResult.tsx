@@ -226,7 +226,7 @@ export function TvResult({ view }: Props): JSX.Element {
         <p className={styles.kicker}>
           Round {view.round} of {view.rounds} · result
         </p>
-        {!view.timed ? <span className={styles.progressPill}>Next on any phone</span> : null}
+        {!view.timed ? <span className={styles.progressPill}>Next on the VIP's phone</span> : null}
       </div>
       <div
         className={`${styles.headline} ${named ? styles.rise : styles.pending}`}

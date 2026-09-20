@@ -199,7 +199,7 @@ export function TvAnswer({ view }: Props): JSX.Element {
       </div>
       {!view.timed && !nobodyDone && outstanding.length > 0 ? (
         <BigText level="h2" tone="muted">
-          No clock — anyone taps Next when the room is ready.
+          No clock — the VIP taps Next when the room is ready.
         </BigText>
       ) : null}
     </Stage>

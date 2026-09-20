@@ -34,12 +34,6 @@ function applyVote(state: State, voterId: string, input: VoteInput): State {
   return { ...state, votes: { ...state.votes, [voterId]: input.slot } };
 }
 
-/** Untimed czar mode: only a dropped judge lets the room move on without a pick. */
-export function judgeBlocksNext(state: State): boolean {
-  if (state.settings.judge !== 'czar' || state.czarId === null) return false;
-  return state.players[state.czarId]?.connected === true;
-}
-
 /** Every eligible voter has voted: the stage holds for a beat before the result, the same way the
  *  answer stage holds on "Everyone's in!" — the deadline moves up to now + VOTES_IN_MS (never later
  *  than it already was) and the timer ends the phase (review-loop #228). */
@@ -83,10 +77,6 @@ export function judgeReturns(state: State, playerId: string, now: number): State
 
 export function reduceJudge(state: State, event: GameEvent<Input>, next: Transition): State {
   if (event.type === 'input') {
-    if (event.input.type === 'next')
-      return !state.settings.timed && hasPlayer(state, event.playerId) && !judgeBlocksNext(state)
-        ? next(state, event.now)
-        : state;
     if (event.input.type !== 'vote') return state;
     const after = applyVote(state, event.playerId, event.input);
     if (after === state) return state;

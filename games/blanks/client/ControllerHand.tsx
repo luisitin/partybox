@@ -98,7 +98,7 @@ export function ControllerPick({ view, send }: Props): JSX.Element {
   );
 }
 
-export function ControllerHand({ view, send }: Props): JSX.Element {
+export function ControllerHand({ view, send, skip }: Props): JSX.Element {
   const [picked, setPicked] = useState<string[]>([]);
   const [sent, setSent] = useState(false);
   const black = view.black;
@@ -113,7 +113,7 @@ export function ControllerHand({ view, send }: Props): JSX.Element {
       >
         <Table view={view} />
         <FilledCard text={black.text} pick={black.pick} size="phone" />
-        <NextButton send={send} timed={view.timed} label="Start the reading now" />
+        <NextButton skip={skip} timed={view.timed} label="Start the reading now" />
       </WaitingScreen>
     );
   }
@@ -127,7 +127,7 @@ export function ControllerHand({ view, send }: Props): JSX.Element {
         hint={
           allIn
             ? "Everyone's in — here comes the reading."
-            : `${progressLine(view)} · ${view.timed ? "the reading starts when everyone's in." : 'the reading starts when everyone is in, or when anyone taps Next.'}`
+            : `${progressLine(view)} · ${view.timed ? "the reading starts when everyone's in." : 'the reading starts when everyone is in, or when the VIP taps Next.'}`
         }
         mood="done"
       >
@@ -135,7 +135,7 @@ export function ControllerHand({ view, send }: Props): JSX.Element {
         <FilledCard text={black.text} whites={view.myPlay} size="phone" />
         {/* Nothing to read yet, or everyone is in: no "don't wait" (review-loop #165). */}
         {allIn || view.playedCount === 0 ? null : (
-          <NextButton send={send} timed={view.timed} label="Start the reading now" />
+          <NextButton skip={skip} timed={view.timed} label="Start the reading now" />
         )}
       </WaitingScreen>
     );

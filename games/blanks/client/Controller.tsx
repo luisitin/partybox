@@ -65,7 +65,7 @@ function ControllerIntro({ view, me }: Props): JSX.Element {
   );
 }
 
-function ControllerResult({ view, me, send }: Props): JSX.Element {
+function ControllerResult({ view, me, skip }: Props): JSX.Element {
   const play = useSound();
   const final = view.phaseId === 'final' || view.phaseId === 'done';
   // The TV names the winner on its third beat (1.2 s). The phone used to say "You won the round!"
@@ -100,11 +100,11 @@ function ControllerResult({ view, me, send }: Props): JSX.Element {
   return (
     <Screen
       title={final ? 'Final scores' : `Round ${view.round} of ${view.rounds}`}
-      // Untimed rounds: the result stays up until someone in the room moves on.
+      // Untimed rounds: the result stays up until the VIP moves on.
       footer={
         final ? undefined : (
           <NextButton
-            send={send}
+            skip={skip}
             timed={view.timed}
             label={view.round < view.rounds ? 'Next round' : 'Final scores'}
           />

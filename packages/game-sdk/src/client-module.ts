@@ -19,6 +19,13 @@ export interface GameControllerProps<V extends ControllerView = ControllerView, 
   /** The player this phone belongs to. */
   me: { id: string; name: string; avatarId: string };
   send: (input: I) => void;
+  /**
+   * Present on the VIP's phone only: ends the current phase the way the VIP menu's "Skip / Next"
+   * does (the engine's `vip` skip, so the server enforces who may). A game that offers a
+   * "Next" button renders it only when this is set; it never learns who the VIP is (ADR-020,
+   * ADR-036).
+   */
+  skip?: () => void;
 }
 
 /* eslint-disable @typescript-eslint/no-explicit-any -- each game narrows its own view/input types */

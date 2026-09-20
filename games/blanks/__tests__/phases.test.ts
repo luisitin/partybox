@@ -7,7 +7,7 @@ import { ALL_IN_MS, RANDO, VOTES_IN_MS, JUDGE_GRACE_MS } from '../server/types';
 import {
   connect,
   cv,
-  next,
+  reduce,
   play,
   playAll,
   playRound,
@@ -51,7 +51,7 @@ describe('answer', () => {
     expect(allIn(s)).toBe(true);
     expect(s.phase.deadline).toBe(t + ALL_IN_MS);
     expect(tv(s).timerMode).toBe('hidden');
-    expect(next(s, 'ana', t + 100).phase.id).toBe('reveal'); // Next still cuts it short (untimed)
+    expect(vip(s, 'skip', t + 100).phase.id).toBe('reveal'); // the VIP's skip still cuts it short
     s = timer(s);
     expect(s.phase.id).toBe('reveal');
     expect(s.revealIndex).toBe(0);
@@ -277,46 +277,38 @@ describe('untimed rounds (the default)', () => {
     expect(tv(start({ timed: true })).timerMode).toBe('quiet');
   });
 
-  it('Next is ignored while nothing is on the table', () => {
-    const s = toAnswer(start({ timed: false, players: 4 }));
-    expect(s.phase.id).toBe('answer');
-    expect(next(s, 'ana')).toBe(s);
-    // One card in: Next works and the round is a walkover (no reading, no vote).
-    const one = play(s, 'ana', topCards(s, 'ana'));
-    expect(next(one, 'ben').phase.id).toBe('result');
-    // Two in: the reading starts.
-    const two = play(one, 'ben', topCards(one, 'ben'));
-    expect(next(two, 'cleo').phase.id).toBe('reveal');
-  });
-
-  it('Next from any player ends picking, voting and the result like the deadline would', () => {
+  it("the VIP's skip ends picking, voting and the result like the deadline would; nobody else can", () => {
     let s = playAll(toAnswer(start({ timed: false, players: 4 })), ['dev']);
-    expect(next(s, 'ghost', s.phase.startedAt + 1)).toBe(s);
-    s = next(s, 'ben');
+    // The `next` input is gone (ADR-036): a phone cannot move the room along by itself.
+    expect(
+      reduce(s, {
+        type: 'input',
+        now: s.phase.startedAt + 1,
+        playerId: 'ben',
+        input: { type: 'next' } as never,
+      }),
+    ).toBe(s);
+    s = vip(s, 'skip');
     expect(s.phase.id).toBe('reveal');
     expect(s.slots).toHaveLength(3);
     s = readAll(s);
-    s = next(s, 'dev');
+    s = vip(s, 'skip');
     expect(s.phase.id).toBe('result');
     expect(s.winners).toEqual([]);
-    s = next(s, 'ana');
+    s = vip(s, 'skip');
     expect(s.phase.id).toBe('intro');
     expect(s.round).toBe(2);
   });
 
-  it('Next never skips a connected judge', () => {
-    let s = readAll(playAll(toAnswer(start({ timed: false, judge: 'czar', players: 4 }))));
-    expect(s.phase.id).toBe('judge');
-    const judge = s.czarId as string;
-    const other = s.order.find((id) => id !== judge) as string;
-    expect(next(s, other)).toBe(s);
-    expect(next(s, judge)).toBe(s);
-    // The judge dropping opens the grace (review-loop #351); Next from anyone can end it then.
-    s = connect(s, judge, false);
-    expect(s.phase.id).toBe('judge');
-    s = next(s, other);
-    expect(s.phase.id).toBe('result');
-    expect(s.winners).toEqual([]);
+  it('one card in and a skip: the round is a walkover (no reading, no vote)', () => {
+    const s = toAnswer(start({ timed: false, players: 4 }));
+    const one = play(s, 'ana', topCards(s, 'ana'));
+    expect(vip(one, 'skip').phase.id).toBe('result');
+    const two = play(one, 'ben', topCards(one, 'ben'));
+    expect(vip(two, 'skip').phase.id).toBe('reveal');
+    expect(tv(playAll(toAnswer(start({ timed: true, players: 4 })), ['dev'])).timerMode).toBe(
+      'normal',
+    );
   });
 
   it('Quick draw counts a play within half the answer time of the start, not of the fallback', () => {
@@ -332,12 +324,6 @@ describe('untimed rounds (the default)', () => {
     const timed = toAnswer(start({ timed: true, players: 4 }));
     expect(play(timed, 'ana', topCards(timed, 'ana'), t0 + 29_000).stats.fastPlays['ana']).toBe(1);
     expect(play(timed, 'ana', topCards(timed, 'ana'), t0 + 31_000).stats.fastPlays['ana']).toBe(0);
-  });
-
-  it('Next is ignored in timed rounds', () => {
-    const s = playAll(toAnswer(start({ timed: true, players: 4 })), ['dev']);
-    expect(next(s, 'ana')).toBe(s);
-    expect(tv(s).timerMode).toBe('normal');
   });
 });
 

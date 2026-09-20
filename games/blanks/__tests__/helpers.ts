@@ -83,10 +83,6 @@ export function vote(
   return reduce(state, { type: 'input', now, playerId, input: { type: 'vote', slot } });
 }
 
-export function next(state: State, playerId: string, now = state.phase.startedAt + 1000): State {
-  return reduce(state, { type: 'input', now, playerId, input: { type: 'next' } });
-}
-
 /** The first `pick` cards of a player's hand. */
 export function topCards(state: State, playerId: string): string[] {
   return (state.hands[playerId] ?? []).slice(0, blackCard(state.blackId).pick);

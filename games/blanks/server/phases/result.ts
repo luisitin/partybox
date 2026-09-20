@@ -4,7 +4,7 @@
 // — the board with the crown withheld for 4 s ("And the winner is…", review-loop #134) — and then
 // "done", the terminal phase where results() becomes non-null. VIP end jumps to "done" from
 // anywhere.
-import { enterPhase, hasPlayer, isTimerFor } from '@partybox/game-sdk';
+import { enterPhase, isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { applyRound } from '../scoring';
 import { FINAL_MS, RESULT_MS, UNTIMED_RESULT_MS } from '../types';
@@ -34,10 +34,6 @@ export function enterDone(state: State, now: number): State {
 }
 
 export function reduceResult(state: State, event: GameEvent<Input>, next: Transition): State {
-  if (event.type === 'input' && event.input.type === 'next')
-    return !state.settings.timed && hasPlayer(state, event.playerId)
-      ? next(state, event.now)
-      : state;
   if (isTimerFor(state, event)) return next(state, event.now);
   return state;
 }

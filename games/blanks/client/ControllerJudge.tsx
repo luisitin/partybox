@@ -60,7 +60,7 @@ export function ControllerReveal({ view, me }: Props): JSX.Element {
   );
 }
 
-export function ControllerJudge({ view, send }: Props): JSX.Element {
+export function ControllerJudge({ view, send, skip }: Props): JSX.Element {
   const black = view.black;
   const vote = view.vote;
   if (!black || view.cards.length === 0)
@@ -108,7 +108,7 @@ export function ControllerJudge({ view, send }: Props): JSX.Element {
         // list's own line under the sticky bar. The result lands on this phone too (Blanks plays
         // without a TV), so it counts the room, not the screen across it (review-loop #138).
         lockedLabel={null}
-        // Untimed rounds: once this phone has voted it may close the vote for the room.
+        // Untimed rounds: once the VIP has voted they may close the vote for the room.
         footer={
           vote.votedSlot !== null ? (
             <>
@@ -117,7 +117,7 @@ export function ControllerJudge({ view, send }: Props): JSX.Element {
                   ? '✓ That’s everyone — here comes the result…'
                   : `✓ Vote in · ${view.votedCount} / ${view.votersExpected} voted`}
               </p>
-              <NextButton send={send} timed={view.timed} label="Close the vote now" />
+              <NextButton skip={skip} timed={view.timed} label="Close the vote now" />
             </>
           ) : undefined
         }
@@ -126,12 +126,12 @@ export function ControllerJudge({ view, send }: Props): JSX.Element {
   }
   const judge = view.czar;
   // A connected judge's pick is the phase: nobody skips it. A dropped judge (or vote mode, where
-  // this phone cannot vote) leaves Next to the room.
+  // this phone cannot vote) leaves Next to the VIP.
   const judgeHolds = view.judgeMode === 'czar' && judge?.connected === true;
   return (
     <Screen
       title={<span className={styles.kicker}>{kicker}</span>}
-      footer={judgeHolds ? undefined : <NextButton send={send} timed={view.timed} label="Next" />}
+      footer={judgeHolds ? undefined : <NextButton skip={skip} timed={view.timed} label="Next" />}
     >
       <div className={styles.waitLine} role="status">
         {judge && view.judgeMode === 'czar' ? (

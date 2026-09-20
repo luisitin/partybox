@@ -108,15 +108,12 @@ export const inputSchema = z.discriminatedUnion('type', [
     /** Anonymous slot (index into `slots`). */
     slot: z.number().int().min(0).max(15),
   }),
-  /** Anyone moves an untimed phase along (answer, judge, result); ignored in timed rounds. */
-  z.object({ type: z.literal('next') }),
   /** The judge picks the round's black card (czar mode, "pick" phase). */
   z.object({ type: z.literal('choose'), index: z.number().int().min(0).max(4) }),
 ]);
 export type Input = z.infer<typeof inputSchema>;
 export type PlayInput = Extract<Input, { type: 'play' }>;
 export type VoteInput = Extract<Input, { type: 'vote' }>;
-export type NextInput = Extract<Input, { type: 'next' }>;
 export type ChooseInput = Extract<Input, { type: 'choose' }>;
 
 export const HAND_SIZE = 10;

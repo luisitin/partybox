@@ -188,7 +188,8 @@ export const clientModule: GameClientModule = {
 };
 ```
 
-Components receive `{ view, send(input), me }` and are dumb: no sockets, no global state, no game logic —
+Components receive `{ view, send(input), me, skip? }` and are dumb (`skip` is set on the VIP's phone only and
+fires the engine's VIP skip, so a game's own "Next" button is the VIP's without the game knowing who that is — ADR-036): no sockets, no global state, no game logic —
 compose `@partybox/game-sdk/ui` primitives (`TextAnswer`, `ChoiceGrid`, `VoteList`, `WaitingScreen`,
 `Stage`, `BigText`, `Timer`, `PlayerChips`, `Scoreboard`, `Reveal`). The shell already renders the envelope
 (timer, chips, VIP overlay). Server code imports `@partybox/game-sdk` (pure); client code imports

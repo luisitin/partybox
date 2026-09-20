@@ -2,9 +2,19 @@
 // the quality floor could be missed on one seed; this keeps the sweep in the suite). Since loop
 // 521 every pool is tiered, so the quality floors apply to mild and adults rooms too.
 import { describe, expect, it } from 'vitest';
-import { BEST_FLOOR, GOOD_FLOOR, KIND_FLOORS } from '../server/deal';
-import { WHITE_KINDS, whiteKind, whiteServes, whiteTier } from '../server/content';
-import { playRound, start, timer } from './helpers';
+import { BEST_FLOOR, FIT_FLOOR, FIT_FLOOR_SCORE, GOOD_FLOOR, KIND_FLOORS } from '../server/deal';
+import {
+  WHITE_KINDS,
+  blackCard,
+  blackSlot,
+  whiteKind,
+  whiteServes,
+  whiteText,
+  whiteTier,
+} from '../server/content';
+import { fitScore } from '../server/fit';
+import { answerers } from '../server/round';
+import { playRound, start, timer, toAnswer } from './helpers';
 
 const DECKS = ['mild', 'adults', 'wild', 'wild-only'] as const;
 
@@ -53,5 +63,45 @@ describe('hand floors', () => {
       const best = hand.filter((c) => whiteTier(c) === 4).length;
       expect(best, `${where} amazing`).toBeGreaterThanOrEqual(BEST_FLOOR);
     });
+  });
+
+  it('once the prompt is known, every answerer holds five cards that read well in its blank (owner, 2026-09-19)', () => {
+    let rounds = 0;
+    let verbRounds = 0;
+    for (const decks of DECKS) {
+      for (const players of [3, 8, 12]) {
+        for (let seed = 1; seed <= 6; seed++) {
+          let s = start({ players, decks, seed, rounds: 5 });
+          for (let round = 1; round <= 5; round++) {
+            const a = toAnswer(s);
+            const slot = blackSlot(a.blackId);
+            const black = blackCard(a.blackId).text;
+            rounds++;
+            if (slot === 'doing') verbRounds++;
+            for (const id of answerers(a)) {
+              const hand = a.hands[id] ?? [];
+              const fits = hand.filter(
+                (c) => fitScore(slot, whiteServes(c), whiteText(c), black) >= FIT_FLOOR_SCORE,
+              ).length;
+              expect(
+                fits,
+                `${decks} p${players} s${seed} r${round} ${id} "${black}" (${slot})`,
+              ).toBeGreaterThanOrEqual(FIT_FLOOR);
+              // The other floors survive the fit swap.
+              for (const k of WHITE_KINDS)
+                expect(
+                  hand.filter((c) => whiteServes(c).includes(k)).length,
+                ).toBeGreaterThanOrEqual(KIND_FLOORS[k]);
+              expect(hand.filter((c) => whiteTier(c) >= 3).length).toBeGreaterThanOrEqual(
+                GOOD_FLOOR,
+              );
+            }
+            s = timer(playRound(s));
+            if (s.phase.id === 'final' || s.phase.id === 'done') break;
+          }
+        }
+      }
+    }
+    expect(verbRounds, `${verbRounds} verb rounds of ${rounds}`).toBeGreaterThan(20);
   });
 });
