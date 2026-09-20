@@ -20,6 +20,13 @@ export const INTRO_BEATS_MS = [0, 400, 800] as const;
 export function TvIntro({ view }: Props): JSX.Element {
   const last = view.round === view.rounds;
   const beat = useBeats(INTRO_BEATS_MS);
+  // I-013 A: each card of the fan lands with the game's own `card` pluck — on the cards' own
+  // delays (0 / 75 / 150 ms); the shell's phase chime has already sounded.
+  const play = useSound();
+  useEffect(() => {
+    const ts = [0, 75, 150].map((ms) => setTimeout(() => play('card'), ms));
+    return () => ts.forEach((t) => clearTimeout(t));
+  }, [play]);
   // Nobody has scored yet → no leader line (every rank-1 row would be the whole room).
   const top = view.standings.filter((r) => r.rank === 1);
   const leaders =
@@ -28,7 +35,7 @@ export function TvIntro({ view }: Props): JSX.Element {
       : [];
   return (
     <Stage center className={styles.table}>
-      <CardFan />
+      <CardFan label={`ROUND\n${view.round} OF ${view.rounds}`} />
       <p className={styles.kicker}>Blanks</p>
       <BigText level="display">
         Round {view.round} of {view.rounds}

@@ -232,6 +232,8 @@
 }
 
 .fanWhite {
+  /* I-013 A: dealt, not risen — Blanks' own toss onto the felt. */
+  animation-name: global(pb-deal);
   background: linear-gradient(180deg, var(--card-paper), var(--card-paper-2));
   /* the individual properties compose with the rise animation's transform */
   rotate: -9deg;
@@ -1272,4 +1274,14 @@
   .white:active {
     transform: none;
   }
+}
+
+/* ── I-013 B: the black card turns over (pb-flip, Blanks' card-turn) to its printed face. */
+.fanLabel {
+  animation-name: global(pb-flip);
+  white-space: pre-line;
+  text-align: center;
+  line-height: 1.15;
+  font-size: var(--pb-font-body);
+  letter-spacing: 0.08em;
 }
