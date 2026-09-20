@@ -11,7 +11,14 @@ import type { Input } from '../server/types';
 import type { BingoControllerView } from '../server/views';
 import { Card } from './Card';
 import { PatternDemo } from './PatternDemo';
-import { BingoButton, CallRow, DecideFooter, daubWithFeel } from './ControllerParts';
+import {
+  BingoButton,
+  CallRow,
+  DecideFooter,
+  IntroStyleSheet,
+  StylePill,
+  daubWithFeel,
+} from './ControllerParts';
 import { AllCardsLayout, FocusLayout, Thumbnails } from './Layouts';
 import {
   Countdown,
@@ -60,7 +67,7 @@ export function Controller({
   useDealFeel(view.phaseId === 'intro', n, view.round, play);
   // A valid claim too: the room learns who won from the TV, not from a phone flipping first.
   const pending = view.phaseId === 'bingo' && view.claim !== null && !verdictShown;
-  const [sheet, setSheet] = useState(false);
+  const [sheet, setSheet] = useState<'' | 'intro' | 'round'>('');
   const [preview, setPreview] = useState<CardStyle | null>(null);
   const shown = preview ?? style;
   const inRound = view.phaseId === 'play' || view.phaseId === 'check' || pending;
@@ -109,12 +116,12 @@ export function Controller({
   }, [missed]);
   // The sheet holds the caller for everyone: the server hears it open and close.
   const openMenu = (): void => {
-    setSheet(true);
+    setSheet(view.phaseId === 'intro' ? 'intro' : 'round');
     setPreview(null);
     send({ type: 'menu', open: true });
   };
   const closeMenu = (): void => {
-    setSheet(false);
+    setSheet('');
     setPreview(null);
     send({ type: 'menu', open: false });
   };
@@ -122,6 +129,11 @@ export function Controller({
     if (!sheet) return;
     return () => send({ type: 'menu', open: false });
   }, [sheet, send]);
+  // The sheet is offered on the card-pick step too (owner's play-test, 2026-09-19): there a tap
+  // applies the style at once (no live preview — the pick screen has its own layout) and the
+  // round starting closes it, so nobody holds the first number from the intro.
+  const intro = view.phaseId === 'intro';
+  if (sheet === 'intro' && !intro) setSheet('');
 
   if (!cards) {
     return (
@@ -181,6 +193,7 @@ export function Controller({
                 {n > 1 ? ' Pick a card below to swap it.' : ''}
               </p>
             </div>
+            {!sheet ? <StylePill onOpen={openMenu} /> : null}
           </div>
           <IntroCount
             deadline={view.deadline}
@@ -211,6 +224,7 @@ export function Controller({
               />
             ) : null}
           </div>
+          {sheet ? <IntroStyleSheet cards={n} current={style} onClose={closeMenu} /> : null}
         </div>
       </Screen>
     );
@@ -267,11 +281,7 @@ export function Controller({
               // top" of the grids); the nickname is the TV's and the caller's — loop 338.
               <CallRow view={view} />
             )}
-            {inRound && !sheet && kind !== 'tablet' ? (
-              <button type="button" className={styles.stylePill} onClick={openMenu}>
-                🃏 style
-              </button>
-            ) : null}
+            {inRound && !sheet && kind !== 'tablet' ? <StylePill onOpen={openMenu} /> : null}
           </div>
           {missed ? <MissedToast view={view} count={missed} /> : null}
           {view.phaseId === 'check' && view.claim?.playerId === me.id ? (

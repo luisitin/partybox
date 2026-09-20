@@ -11,6 +11,9 @@ import type { Input } from '../server/types';
 import type { BingoControllerView, CallView } from '../server/views';
 import { pendingLine } from './copy';
 import styles from './Controller.module.css';
+import { StyleSheet } from './Overlays';
+import { setCardStyle } from './styles';
+import type { CardStyle } from './styles';
 
 export type Send = (input: Input) => void;
 
@@ -234,4 +237,38 @@ export function daubWithFeel(
     play('daub');
   }
   send({ type: 'daub', card, index });
+}
+
+/** The 🃏 pill that opens the card-style sheet (play, and the card-pick step). */
+export function StylePill({ onOpen }: { onOpen: () => void }): JSX.Element {
+  return (
+    <button type="button" className={styles.stylePill} onClick={onOpen}>
+      🃏 style
+    </button>
+  );
+}
+
+/** The sheet on the card-pick step (owner's play-test, 2026-09-19): a tap applies the style at
+ *  once — the pick screen keeps its own layout, so there is nothing to preview — and the room
+ *  is not held. */
+export function IntroStyleSheet({
+  cards,
+  current,
+  onClose,
+}: {
+  cards: number;
+  current: CardStyle;
+  onClose: () => void;
+}): JSX.Element {
+  return (
+    <StyleSheet
+      cards={cards}
+      current={current}
+      preview={null}
+      note="for this round"
+      onPreview={setCardStyle}
+      onConfirm={onClose}
+      onClose={onClose}
+    />
+  );
 }

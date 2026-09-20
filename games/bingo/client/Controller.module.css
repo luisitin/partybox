@@ -465,6 +465,9 @@
   right: 0;
   bottom: 0;
   z-index: 4;
+  /* On the card-pick step the body is shorter than the sheet: it scrolls rather than losing its head. */
+  max-height: 100%;
+  overflow-y: auto;
   display: grid;
   gap: var(--pb-space-2);
   padding: var(--pb-space-4);
