@@ -272,3 +272,27 @@
   font-weight: 900;
   white-space: nowrap;
 }
+
+/* ── I-022 A: the recap lands row by row (80 ms apart); each verdict stamps down after its row
+   (scale 1.6 → 1 with a tilt, --pb-motion-base). Transform + opacity only. */
+.summaryIn {
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) calc(var(--pb-i, 0) * 80ms) both;
+}
+.markStamp {
+  display: inline-block;
+  animation: pb-bp-markstamp var(--pb-motion-base) var(--pb-ease) calc(var(--pb-i, 0) * 80ms + var(--pb-motion-base)) both;
+}
+@keyframes pb-bp-markstamp {
+  0% {
+    opacity: 0;
+    transform: scale(1.6) rotate(-6deg);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(0.96) rotate(-3deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(-3deg);
+  }
+}
