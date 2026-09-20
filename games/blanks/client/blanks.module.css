@@ -232,6 +232,8 @@
 }
 
 .fanWhite {
+  /* I-013 A: dealt, not risen — Blanks' own toss onto the felt. */
+  animation-name: global(pb-deal);
   background: linear-gradient(180deg, var(--card-paper), var(--card-paper-2));
   /* the individual properties compose with the rise animation's transform */
   rotate: -9deg;
@@ -1271,5 +1273,34 @@
 @media (prefers-reduced-motion: reduce) {
   .white:active {
     transform: none;
+  }
+}
+
+/* ── I-013 B: the black card turns over (pb-flip, Blanks' card-turn) to its printed face. */
+.fanLabel {
+  animation-name: global(pb-flip);
+  white-space: pre-line;
+  text-align: center;
+  line-height: 1.15;
+  font-size: var(--pb-font-body);
+  letter-spacing: 0.08em;
+}
+
+/* ── I-013 C: the fan leaves — up and out over --pb-motion-slow (replaces the float). The rest
+   state IS the end state: the shell's crossfade ghost is a DOM clone with its animations
+   stripped, so an animated exit alone would snap back to full for the ghost's 350 ms. */
+.fanLeave {
+  opacity: 0;
+  transform: translateY(-140px);
+  animation: pb-bl-fanleave var(--pb-motion-slow) var(--pb-ease) both;
+}
+@keyframes pb-bl-fanleave {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-140px);
   }
 }

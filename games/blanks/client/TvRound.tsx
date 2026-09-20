@@ -3,11 +3,12 @@
 // focal point — the black card — with a row of face-down cards on the table (one slot per expected
 // card; a played card lands in its slot, the newest with a bounce), the
 // count re-entering on every change, and a line naming who the room is waiting for.
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
 import { Avatar, BigText, Stage, useBeats, useSecondsLeft, useSound } from '@partybox/game-sdk/ui';
 import type { GameTvProps, ViewPlayer } from '@partybox/game-sdk/ui';
 import type { BlanksTvView } from '../server/index';
+import { INTRO_MS } from '../server/types';
 import { CardFan, FilledCard, FlipCard } from './Cards';
 import styles from './blanks.module.css';
 
@@ -20,6 +21,20 @@ export const INTRO_BEATS_MS = [0, 400, 800] as const;
 export function TvIntro({ view }: Props): JSX.Element {
   const last = view.round === view.rounds;
   const beat = useBeats(INTRO_BEATS_MS);
+  // I-013 C: the fan leaves as the round starts — 600 ms before the phase's deadline it slides
+  // up and fades (a VIP skip simply cuts it). Timed off the deadline the view carries, as the
+  // shell's own timers are, not off this mount (the screen mounts a beat after the phase begins).
+  const [leaveIn] = useState(
+    () => Math.max(0, (view.deadline ?? Date.now() + INTRO_MS) - 600 - Date.now()),
+  );
+  const leaving = useBeats([0, leaveIn]) >= 1;
+  // I-013 A: each card of the fan lands with the game's own `card` pluck — on the cards' own
+  // delays (0 / 75 / 150 ms); the shell's phase chime has already sounded.
+  const play = useSound();
+  useEffect(() => {
+    const ts = [0, 75, 150].map((ms) => setTimeout(() => play('card'), ms));
+    return () => ts.forEach((t) => clearTimeout(t));
+  }, [play]);
   // Nobody has scored yet → no leader line (every rank-1 row would be the whole room).
   const top = view.standings.filter((r) => r.rank === 1);
   const leaders =
@@ -28,7 +43,7 @@ export function TvIntro({ view }: Props): JSX.Element {
       : [];
   return (
     <Stage center className={styles.table}>
-      <CardFan />
+      <CardFan label={`ROUND\n${view.round} OF ${view.rounds}`} leaving={leaving} />
       <p className={styles.kicker}>Blanks</p>
       <BigText level="display">
         Round {view.round} of {view.rounds}

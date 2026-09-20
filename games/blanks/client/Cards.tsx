@@ -156,11 +156,15 @@ export function FlipCard(props: FilledCardProps & { flipKey: string }): JSX.Elem
 
 /** A fan of three face-down cards — a black one between two whites — for the round card, so the
  *  screen between rounds carries the game's look and not just a number (review-loop #144). */
-export function CardFan(): JSX.Element {
+export function CardFan({ label, leaving }: { label?: string; leaving?: boolean } = {}): JSX.Element {
+  // I-013 B: with a label the black card turns over to show it (the round, printed on the card).
+  // I-013 C: `leaving` slides the whole fan up and away.
   return (
-    <div className={styles.fan} aria-hidden>
+    <div className={`${styles.fan} ${leaving ? styles.fanLeave : ''}`} aria-hidden>
       <span className={`${styles.fanCard} ${styles.fanWhite}`} />
-      <span className={`${styles.fanCard} ${styles.fanBlack}`}>____</span>
+      <span className={`${styles.fanCard} ${styles.fanBlack} ${label ? styles.fanLabel : ''}`}>
+        {label ?? '____'}
+      </span>
       <span className={`${styles.fanCard} ${styles.fanWhite}`} />
     </div>
   );
