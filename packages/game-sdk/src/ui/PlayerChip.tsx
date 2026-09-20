@@ -61,6 +61,14 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
     setWasVip(isVip ?? false);
     setJustVip(isVip === true);
   }
+  // I-009 A: a drop and a return on a mounted chip flicker out / snap back — never on a screen
+  // swap (the same 'adjust state when a prop changes' rule as the ★ badge above).
+  const [wasConnected, setWasConnected] = useState(connected);
+  const [blip, setBlip] = useState<'off' | 'back' | null>(null);
+  if (connected !== wasConnected) {
+    setWasConnected(connected);
+    setBlip(connected ? 'back' : 'off');
+  }
   const glyph = connected ? GLYPH[status] : { text: '⟳', label: 'reconnecting' };
   const locked = status === 'submitted' && connected;
   const classes = [
@@ -68,6 +76,7 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
     styles[size],
     active ? styles.active : '',
     !connected ? styles.off : '',
+    blip === 'off' ? styles.flicker : blip === 'back' ? styles.snap : '',
     status === 'spectator' ? styles.spectator : '',
     locked ? styles.locked : '',
   ].join(' ');
