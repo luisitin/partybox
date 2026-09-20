@@ -2,7 +2,7 @@
 // cover finger, mouse and pen. While the VIP pauses, the shell freezes the pad (the phone's <main>
 // goes inert) and the deadline is shifted on resume, so no drawing time is lost.
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import type { JSX, PointerEvent as ReactPointerEvent } from 'react';
+import type { CSSProperties, JSX, PointerEvent as ReactPointerEvent } from 'react';
 import { CANVAS, INK_CHARS, MAX_STROKES, encodePoints, inkCost } from '../server/encoding';
 import type { Stroke } from '../server/types';
 import { PALETTE, PALETTE_NAMES, WIDTHS, decodeStroke, paint } from './drawing';
@@ -157,7 +157,7 @@ export function DrawPad({ onChange, onProgress, initial, disabled }: DrawPadProp
               key={hex}
               type="button"
               className={`${styles.swatch} ${i === color ? styles.swatchOn : ''}`}
-              style={{ background: hex }}
+              style={{ background: hex, '--pb-i': i } as CSSProperties}
               aria-label={PALETTE_NAMES[i]}
               aria-pressed={i === color}
               onClick={() => setColor(i)}
