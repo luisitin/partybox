@@ -125,6 +125,13 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
           </p>
         ) : null}
         {info && info.rooms.length === 0 ? <p className={styles.hint}>{t.join.noRooms}</p> : null}
+        {/* I-031 B: the portrait — the chosen face, large, beside the name; swaps with a pop. */}
+        <div className={styles.portraitRow}>
+          <span key={avatarId} className={styles.portrait} aria-hidden>
+            <Avatar avatarId={avatarId} size={96} />
+          </span>
+          <span className={styles.portraitName}>{name.trim() || '…'}</span>
+        </div>
         <label className={styles.field}>
           <span className={styles.label}>{t.join.name}</span>
           <input
@@ -167,10 +174,12 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
         ) : null}
         <fieldset className={styles.avatars}>
           <legend className={styles.label}>{t.join.avatar}</legend>
-          <div className={styles.grid} role="radiogroup">
+          {/* I-031 A: the pick pops (keyed on the pick, so it pops once per change) and the rest
+              step back while one is chosen. */}
+          <div className={`${styles.grid} ${styles.picking}`} role="radiogroup">
             {AVATAR_IDS.map((id) => (
               <button
-                key={id}
+                key={id === avatarId ? `${id}:on` : id}
                 type="button"
                 role="radio"
                 aria-checked={id === avatarId}
