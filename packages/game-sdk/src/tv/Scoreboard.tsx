@@ -46,9 +46,13 @@ export interface ScoreboardProps {
   /**
    * Entrance order: `up` (default) lands last place first and the leader last; `down` lands rank
    * 1 first at half spacing (standings before a decision); `false` renders the board at once.
-   * Ignored on `compact`. Remount (a `key`) to replay it.
+   * Ignored on `compact`. Remount (a `key`) to replay it. `climb` (I-014): rows appear where they
+   * stood in `climbFrom` (player ids, previous order), then slide to their new places once the
+   * totals have counted — the round's overtakes, watched.
    */
-  stagger?: 'up' | 'down' | false;
+  stagger?: 'up' | 'down' | 'climb' | false;
+  /** With `climb`: the previous order of the same players (ids). Missing ids are treated as unmoved. */
+  climbFrom?: readonly string[];
 }
 
 type Tier = 'compact' | 'roomy' | 'tight' | 'dense' | 'tight3' | 'tight4';
@@ -85,10 +89,11 @@ export function boardLandedMs(
     compact?: boolean;
     dense?: boolean;
     columns?: 2 | 3 | 4;
-    stagger?: 'up' | 'down' | false;
+    stagger?: 'up' | 'down' | 'climb' | false;
   } = {},
 ): number {
   if (opts.compact || opts.stagger === false) return 0;
+  if (opts.stagger === 'climb') return MOTION_BASE; // rows fade in together; the deltas follow
   const cols = COLUMNS[tierOf(count, opts.compact, opts.dense, opts.columns)];
   // Half spacing on the multi-column tiers and for `down`, so 16 rows still land inside ~1.2 s;
   // mirrors --pb-stagger-step in the CSS.
@@ -112,26 +117,37 @@ export function Scoreboard({
   columns,
   markIds = [],
   stagger = 'up',
+  climbFrom = [],
 }: ScoreboardProps): JSX.Element {
   const tier = tierOf(rows.length, compact, dense, columns);
   const cols = COLUMNS[tier];
   const winners = rows.filter((r) => r.rank === 1).length;
   const trophy = !noTrophy && winners < rows.length;
-  const staggered = !compact && stagger !== false;
+  const climb = !compact && stagger === 'climb';
+  const staggered = !compact && stagger !== false && !climb;
   const order = (index: number): number => (stagger === 'down' ? index : rows.length - 1 - index);
+  // I-014: rows away from where the row stood before (negative = it climbed).
+  const wasAt = new Map(climbFrom.map((id, i) => [id, i]));
+  const from = (row: ScoreboardRow, index: number): number => (wasAt.get(row.playerId) ?? index) - index;
   const countDelayMs = boardLandedMs(rows.length, { compact, dense, columns, stagger });
   return (
     <ol
-      className={`${styles.board} ${tier === 'roomy' ? '' : styles[tier]} ${size === 'lg' ? styles.lg : size === 'sm' ? styles.sm : ''} ${staggered ? styles.staggered : ''} ${staggered && stagger === 'down' ? styles.down : ''}`}
+      className={`${styles.board} ${tier === 'roomy' ? '' : styles[tier]} ${size === 'lg' ? styles.lg : size === 'sm' ? styles.sm : ''} ${staggered ? styles.staggered : ''} ${staggered && stagger === 'down' ? styles.down : ''} ${climb ? styles.climb : ''}`}
       style={{ '--pb-board-rows': Math.ceil(rows.length / cols) } as CSSProperties}
       aria-label="scoreboard"
     >
       {rows.map((row, index) => (
         <li
           key={row.playerId}
-          className={`${styles.row} ${row.rank === 1 && trophy ? styles.top : ''} ${row.playerId === highlightId ? styles.me : ''}`}
+          className={`${styles.row} ${row.rank === 1 && trophy ? styles.top : ''} ${row.playerId === highlightId ? styles.me : ''} ${climb && from(row, index) < 0 ? styles.up : ''} ${climb && from(row, index) > 0 ? styles.down : ''}`}
           aria-current={row.playerId === highlightId ? 'true' : undefined}
-          style={staggered ? ({ '--pb-i': order(index) } as CSSProperties) : undefined}
+          style={
+            staggered
+              ? ({ '--pb-i': order(index) } as CSSProperties)
+              : climb
+                ? ({ '--pb-from': from(row, index) } as CSSProperties)
+                : undefined
+          }
         >
           <span className={styles.rank} aria-label={`rank ${row.rank}`}>
             {row.rank === 1 && trophy ? '🏆' : row.rank}
@@ -149,7 +165,7 @@ export function Scoreboard({
               ✓
             </span>
           ) : null}
-          {staggered ? (
+          {staggered || climb ? (
             <Score row={row} delayMs={countDelayMs} />
           ) : (
             <span className={styles.score}>{row.score}</span>
