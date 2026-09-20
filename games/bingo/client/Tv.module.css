@@ -913,3 +913,20 @@
   align-items: center;
   gap: var(--pb-space-4);
 }
+
+/* ── I-003 A: the cage the ball drops out of — a dashed ring above the disc that fades as the
+   ball leaves it (pb-fade-out over --pb-motion-base). Keyed with the disc, so it returns for
+   every call. */
+.disc {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+.cage {
+  position: absolute;
+  inset: -22px;
+  border: 3px dashed var(--pb-text-muted);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: global(pb-fade-out) var(--pb-motion-base) var(--pb-ease) both;
+}

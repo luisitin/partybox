@@ -70,8 +70,13 @@ export function Call({
   const k = `${call.number}:${stamp ?? ''}`;
   return (
     <div className={`${big ? styles.callBig : styles.callSmall} ${big ? '' : 'pb-enter'}`}>
-      <span key={`l${k}`} className={styles.letter} data-letter={call.letter}>
-        {call.letter}
+      <span className={big ? styles.disc : undefined}>
+        {big ? (
+      <span key={`c${k}`} className={styles.cage} aria-hidden />
+        ) : null}
+        <span key={`l${k}`} className={styles.letter} data-letter={call.letter}>
+          {call.letter}
+        </span>
       </span>
       <span key={`n${k}`} className={styles.number}>
         {call.number}
