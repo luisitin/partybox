@@ -3,7 +3,7 @@
 // card is a new phase instance (the shell chimes 'card' for each). The judge stage lives in
 // TvJudge.tsx.
 import type { JSX } from 'react';
-import { BigText, Stage } from '@partybox/game-sdk/ui';
+import { Avatar, BigText, Stage } from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
 import type { BlanksTvView } from '../server/index';
 import { fillText } from '../server/cards';
@@ -35,7 +35,14 @@ export function TvReveal({ view }: Props): JSX.Element {
         {/* Somebody has to say it. In judge mode that is the judge (review-loop #172); in vote
             mode a seat is asked by name, rotating round by round, because “read it out loud”
             addressed to a room gets read by nobody (review-loop #248). */}
-        <span className={styles.progressPill}>
+        {/* I-017 B: the pill carries the reader's face and pops on every new card (keyed). */}
+        <span key={view.revealIndex} className={`${styles.progressPill} pb-pop`}>
+          {(view.judgeMode === 'czar' ? view.czar : view.reader) ? (
+            <Avatar
+              avatarId={(view.judgeMode === 'czar' ? view.czar : view.reader)?.avatarId ?? ''}
+              size="var(--pb-chip-size)"
+            />
+          ) : null}
           {view.judgeMode === 'czar' && view.czar
             ? `${view.czar.name} reads it out`
             : view.reader

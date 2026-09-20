@@ -34,4 +34,11 @@ export const clientModule: GameClientModule = {
   // The point lands on result entry but the stage names the winner on its last beat: the strip
   // waits for the next phase.
   stripScores: (view) => view.phaseId !== 'result',
+  // I-017 A: the seat reading a card out is ringed in the strip while it reads.
+  stripActive: (view) => {
+    const v = view as { phaseId: string; reader?: { id: string } | null; czar?: { id: string } | null; judgeMode?: string };
+    if (v.phaseId !== 'reveal') return [];
+    const who = v.judgeMode === 'czar' ? v.czar : v.reader;
+    return who ? [who.id] : [];
+  },
 };
