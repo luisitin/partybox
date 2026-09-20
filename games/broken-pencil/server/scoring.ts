@@ -3,7 +3,7 @@
 import { buildResults } from '@partybox/game-sdk';
 import type { GameAward, GameResults } from '@partybox/game-sdk';
 import { isIntact, lastGuessOf, wordOf } from './books';
-import type { State } from './types';
+import type { Page, State } from './types';
 
 export interface BookSummary {
   ownerId: string;
@@ -11,6 +11,8 @@ export interface BookSummary {
   word: string;
   last: string;
   intact: boolean;
+  /** I-022 B: the whole chain — every page, public by the time the summary shows. */
+  pages: Page[];
 }
 
 /** Every book's first word beside its last guess (done screen; VIP end may leave books short). */
@@ -21,6 +23,7 @@ export function summary(state: State): BookSummary[] {
     word: wordOf(book),
     last: lastGuessOf(book),
     intact: isIntact(book),
+    pages: book.pages,
   }));
 }
 
