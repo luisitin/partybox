@@ -913,3 +913,10 @@
   align-items: center;
   gap: var(--pb-space-4);
 }
+
+/* ── I-006 A: the card takes the buzzer — the checked card shakes (pb-shake, the game's own
+   "no", transform only) on the beat NOT A BINGO lands, with the buzzer. The red title keeps its
+   own later shake. The shake is on the Card inside .claim so the settle glide is untouched. */
+.claimWrong > :first-child {
+  animation: global(pb-shake) var(--pb-motion-base) var(--pb-ease) both;
+}

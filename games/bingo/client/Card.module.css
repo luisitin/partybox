@@ -605,3 +605,26 @@ button.cell:focus-visible {
     global(pb-bump) var(--pb-motion-base) var(--pb-ease)
       calc(var(--pb-motion-base) + var(--pb-i, 0) * 60ms) both;
 }
+
+/* ── I-006 B: the wipe is watched — after NOT A BINGO the daubs lift off one by one in reading
+   order (the Card sets each cell's delay), each squeezing once as its colour drains back to a
+   plain cell; the mark fades with it. Declared after the turn rules so it takes over from them. */
+.wipe {
+  animation: cell-wipe var(--pb-motion-base) var(--pb-ease) both;
+}
+.wipe .mark {
+  animation: global(pb-fade-out) var(--pb-motion-fast) var(--pb-ease) both;
+  animation-delay: inherit;
+}
+@keyframes cell-wipe {
+  35% {
+    transform: scale(0.86);
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+    background: var(--pb-surface-2);
+    border-color: var(--pb-border);
+    color: var(--pb-text);
+  }
+}

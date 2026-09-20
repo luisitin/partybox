@@ -47,6 +47,8 @@ export interface CardProps {
   sent?: boolean;
   /** A gold sweep along a winning line while its cells turn (the TV). */
   sweep?: { kind: SweepKind; index: number; ms: number } | null;
+  /** The claim was wrong: the daubs lift off one by one in reading order (the TV's wipe). */
+  wiped?: boolean;
 }
 
 export type SweepKind = 'row' | 'col' | 'diagA' | 'diagB';
@@ -82,6 +84,7 @@ export function Card({
   settled = true,
   sweep = null,
   sent = false,
+  wiped = false,
 }: CardProps): JSX.Element {
   const turnAt = new Map((revealOrder ?? []).map((i, k) => [i, k * revealStepMs]));
   const turning = revealOrder !== undefined;
@@ -166,12 +169,15 @@ export function Card({
             lineHit.has(i) ? styles.lineHit : '',
             sent && isDaubed ? styles.sent : '',
             lifted.has(i) ? styles.unstamp : '',
+            wiped && isDaubed && !isFree ? styles.wipe : '',
           ].join(' ');
           const mark = !showColour ? null : greenSet.has(i) ? '✓' : redSet.has(i) ? '✕' : null;
           const label = isFree ? 'FREE' : String(n);
           const shown = isFree && size === 'compact' ? '★' : label;
           const Tag = interactive && (!isFree || onTapFree) ? 'button' : 'div';
-          const style = reveal
+          const style = wiped && isDaubed && !isFree
+            ? ({ animationDelay: `${i * 40}ms` } as CSSProperties)
+            : reveal
             ? ({ animationDelay: `${i * REVEAL_STEP_MS}ms` } as CSSProperties)
             : turns
               ? ({ animationDelay: `${turnAt.get(i) ?? 0}ms` } as CSSProperties)
