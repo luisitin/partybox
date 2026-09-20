@@ -66,6 +66,12 @@ function Pick({ view, send }: GameControllerProps<PencilControllerView, Input>):
               className={styles.offer}
               onClick={() => send({ type: 'pick', option: i })}
             >
+              {/* I-023 A: the tier as heat — one, two or three discs, green to red. */}
+              <span className={`${styles.heat} ${styles[`heat${i}`]}`} aria-hidden>
+                {Array.from({ length: i + 1 }, (_, k) => (
+                  <span key={k} className={styles.heatDot} />
+                ))}
+              </span>
               <span className={styles.offerLevel}>{['easy', 'medium', 'hard'][i]}</span>
               <span className={styles.offerText}>{word}</span>
             </button>

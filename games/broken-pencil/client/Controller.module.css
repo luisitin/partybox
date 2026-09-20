@@ -163,3 +163,25 @@
     text-overflow: ellipsis;
   }
 }
+
+/* ── I-023 A: heat per tier — discs in the system's own greens, ambers and reds. */
+.heat {
+  display: inline-flex;
+  gap: 4px;
+  margin-bottom: 2px;
+}
+.heatDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--pb-heat, var(--pb-text-muted));
+}
+.heat0 {
+  --pb-heat: var(--pb-accent-3);
+}
+.heat1 {
+  --pb-heat: var(--pb-accent-2);
+}
+.heat2 {
+  --pb-heat: var(--pb-danger);
+}
