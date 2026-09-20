@@ -272,3 +272,38 @@
   font-weight: 900;
   white-space: nowrap;
 }
+
+/* ── I-024 A: finishing lands — the done card lands once (pb-land), the count bumps. */
+.cardDone {
+  animation: global(pb-land) var(--pb-motion-base) var(--pb-ease) both;
+}
+.countNum {
+  display: inline-block;
+  color: var(--pb-text);
+  font-weight: 800;
+  animation: global(pb-bump) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+/* ── I-024 B: the hand-off — each glyph slides in from the seat on its left, 150 ms per seat
+   (transform + opacity); the arrow line says which way the books go. */
+.passWay {
+  margin: 0 0 var(--pb-space-2);
+  text-align: right;
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.handoff {
+  animation: pb-bp-handoff var(--pb-motion-slow) var(--pb-ease) calc(var(--pb-i, 0) * 150ms) both;
+}
+@keyframes pb-bp-handoff {
+  from {
+    opacity: 0;
+    transform: translateX(-160px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

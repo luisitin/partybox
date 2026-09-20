@@ -2,8 +2,8 @@
 // the show it turns one page at a time — the filmstrip of pages shown so far on the left, the
 // current page big on the right, the verdict on a book's last page.
 import { useEffect, useState } from 'react';
-import type { JSX } from 'react';
-import { Avatar, BigText, Stage } from '@partybox/game-sdk/ui';
+import type { CSSProperties, JSX } from 'react';
+import { Avatar, BigText, Stage, useSound } from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
 import type { PageView, PencilTvView } from '../server/views';
 import { DrawingView } from './DrawingView';
@@ -44,7 +44,8 @@ function Hint({ phase }: { phase: keyof typeof HINTS }): JSX.Element {
 }
 
 /** Tiles in the same order as the chip strip above them (alphabetical, numeric-aware). */
-function byName(view: PencilTvView): PencilTvView['progress'] {
+// I-024 B: unused since the cards sit in seat order (kept for the other screens' callers).
+export function byName(view: PencilTvView): PencilTvView['progress'] {
   const nameOf = (id: string): string => view.players.find((x) => x.id === id)?.name ?? '';
   return [...view.progress].sort((a, b) =>
     nameOf(a.playerId).localeCompare(nameOf(b.playerId), undefined, {
@@ -56,14 +57,33 @@ function byName(view: PencilTvView): PencilTvView['progress'] {
 
 function Progress({ view }: { view: PencilTvView }): JSX.Element {
   const done = view.progress.filter((p) => p.stage === 'done').length;
+  // I-024 B: seat order (the books pass along the seats), and the hand-off is played once per
+  // phase instance: every glyph slides in from the seat on its left with a `card` pluck each.
+  const play = useSound();
+  const seats = view.progress.length;
+  const phaseKey = `${view.phaseId}:${view.deadline ?? ''}`;
+  useEffect(() => {
+    if (view.phaseId !== 'pass' && view.phaseId !== 'guess' && view.phaseId !== 'draw') return;
+    const ts = Array.from({ length: seats }, (_, i) => setTimeout(() => play('card'), i * 150));
+    return () => ts.forEach((t) => clearTimeout(t));
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- once per phase instance
+  }, [phaseKey, play]);
   return (
     <>
-      <ul className={styles.cards} aria-label="who is done">
-        {byName(view).map((p) => {
+      <p className={styles.passWay} aria-hidden>
+        books pass this way →
+      </p>
+      <ul className={styles.cards} aria-label="who is done" key={phaseKey}>
+        {view.progress.map((p, seat) => {
           const player = view.players.find((x) => x.id === p.playerId);
           const finished = p.stage === 'done';
           return (
-            <li key={p.playerId} className={`${styles.card} ${finished ? styles.cardDone : ''}`}>
+            // I-024 A: keyed on the stage too, so a card that turns done remounts and lands once.
+            <li
+              key={`${p.playerId}:${finished ? 'done' : 'busy'}`}
+              className={`${styles.card} ${finished ? styles.cardDone : ''}`}
+              style={{ '--pb-i': seat } as CSSProperties}
+            >
               <Avatar
                 avatarId={player?.avatarId ?? ''}
                 size={72}
@@ -73,7 +93,7 @@ function Progress({ view }: { view: PencilTvView }): JSX.Element {
               <span
                 // Keyed on the stage so a flip to ✓ remounts and pops (review-loop #19).
                 key={p.stage}
-                className={styles.cardMark}
+                className={`${styles.cardMark} ${finished ? '' : styles.handoff}`}
                 aria-label={finished ? 'done' : p.stage === 'draw' ? 'drawing' : 'guessing'}
               >
                 {STAGE_MARK[p.stage]}
@@ -83,7 +103,10 @@ function Progress({ view }: { view: PencilTvView }): JSX.Element {
         })}
       </ul>
       <p className={styles.count} role="status">
-        {done} of {view.progress.length} done
+        <span key={done} className={styles.countNum}>
+          {done}
+        </span>{' '}
+        of {view.progress.length} done
       </p>
     </>
   );
