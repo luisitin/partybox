@@ -115,7 +115,12 @@ export function TextAnswer(props: TextAnswerProps): JSX.Element {
           Time's up — your answer wasn't sent.
         </p>
       ) : (
-        <p className={styles.counter} aria-live="off">
+        // I-001 B: keyed on the length so every keystroke remounts the counter and it bumps once.
+        <p
+          key={text.length}
+          className={`${styles.counter} ${text.length > 0 ? styles.typed : ''}`}
+          aria-live="off"
+        >
           {text.length} / {maxLength}
         </p>
       )}
