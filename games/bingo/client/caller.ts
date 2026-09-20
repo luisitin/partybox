@@ -12,7 +12,9 @@ export function callClip(letter: string, number: number): string {
 }
 
 /** The ball's drop lands (the squash) this long after the push: the boing waits for it. */
-export const BALL_LAND_MS = 190;
+/** I-003 B: the cage turns once before the ball drops; everything that lands with the ball waits. */
+export const CAGE_SPIN_MS = 1000;
+export const BALL_LAND_MS = CAGE_SPIN_MS + 190;
 
 /**
  * Every recorded call opens with silence before the letter's first syllable — a fixed length per

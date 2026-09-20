@@ -9,7 +9,7 @@ import type { JSX } from 'react';
 import { Avatar, BigText, Scoreboard, Stage, useSoundApi } from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
 import type { BingoTvView } from '../server/views';
-import { BALL_LAND_MS, hushCaller, speakCall } from './caller';
+import { BALL_LAND_MS, CAGE_SPIN_MS, hushCaller, speakCall } from './caller';
 import { PATTERN_LABEL, patternCells } from '../server/patterns';
 import { PatternIcon } from './Card';
 import { PatternDemo } from './PatternDemo';
@@ -54,7 +54,7 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
     if (quiet || calledAt === null) return;
     // The voice starts now — its first syllable on the frame the ball enters (loop 335, the owner
     // twice); the boing waits for the squash, BALL_LAND_MS in.
-    speakCall(sound, letter, number);
+    speakCall(sound, letter, number, CAGE_SPIN_MS); // the voice waits for the cage too
     const t = setTimeout(() => sound.play('call'), BALL_LAND_MS);
     return () => {
       clearTimeout(t);
