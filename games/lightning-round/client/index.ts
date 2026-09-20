@@ -11,6 +11,11 @@ export const clientModule: GameClientModule = {
   finale: (view) => view.phaseId === 'reveal' && Boolean((view as LightningTvView).round?.final),
   Finale: lazy(() => import('./Finale').then((m) => ({ default: m.Finale }))),
   sounds: { reveal: 'reveal', wager: 'wager' },
+  // I-007 B: while a question (or the wager) is open, whoever has not locked in is ringed.
+  stripActive: (view) =>
+    view.phaseId === 'question' || view.phaseId === 'wager'
+      ? view.players.filter((p) => p.status === 'active' && p.connected).map((p) => p.id)
+      : [],
   // Background music (owner request 2026-09-18): the phases flip every 5–15 s, so synthesized beds
   // (ADR-032), never file tracks. The intro rolls in on the marimba; question and reveal share the
   // quiz-show `pulse` (one bed, so it carries straight through the reveal cut and back into the

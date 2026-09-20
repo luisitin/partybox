@@ -133,6 +133,7 @@ export function TvPlaying({ room, view, audio, onGameReady, music }: TvPlayingPr
               })),
           ]}
           vip={view.vip}
+          activeIds={[...(module?.stripActive?.(view) ?? [])]}
           botIds={room.players.filter((p) => p.bot).map((p) => p.id)}
           showScores={showScores || frozen}
           scoresMuted={frozen}

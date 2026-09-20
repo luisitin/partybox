@@ -453,3 +453,19 @@
 .rows:not(.rowsFinal) > .row {
   animation-delay: calc(var(--pb-motion-fast) + var(--pb-motion-fast) * 0.4 * var(--i, 0));
 }
+
+/* ── I-007 A: the crowd on the count line — one face per lock-in, each popping in once. */
+.crowd {
+  display: inline-flex;
+  align-items: center;
+  margin-right: var(--pb-space-3);
+  vertical-align: middle;
+}
+.crowdFace {
+  display: inline-flex;
+  margin-left: calc(-1 * var(--pb-space-2));
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+.crowdFace:first-child {
+  margin-left: 0;
+}

@@ -54,6 +54,11 @@ export interface GameClientModule {
    */
   stripScores?: (view: PushedView<TvView>) => boolean;
   /**
+   * Player ids the TV strip should ring as "on" for this view (I-007): the phones the room is
+   * waiting on — whoever the room should look at. Default: nobody.
+   */
+  stripActive?: (view: PushedView<TvView>) => readonly string[];
+  /**
    * Background music on the TV while this game plays (the shell's music engine: tracks are ids
    * under /music/, fetched by scripts/fetch-music.ts). `phases` limits it to those phase ids.
    */
