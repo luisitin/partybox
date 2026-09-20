@@ -272,3 +272,14 @@
   font-weight: 900;
   white-space: nowrap;
 }
+
+/* ── I-024 A: finishing lands — the done card lands once (pb-land), the count bumps. */
+.cardDone {
+  animation: global(pb-land) var(--pb-motion-base) var(--pb-ease) both;
+}
+.countNum {
+  display: inline-block;
+  color: var(--pb-text);
+  font-weight: 800;
+  animation: global(pb-bump) var(--pb-motion-base) var(--pb-ease) both;
+}

@@ -63,7 +63,11 @@ function Progress({ view }: { view: PencilTvView }): JSX.Element {
           const player = view.players.find((x) => x.id === p.playerId);
           const finished = p.stage === 'done';
           return (
-            <li key={p.playerId} className={`${styles.card} ${finished ? styles.cardDone : ''}`}>
+            // I-024 A: keyed on the stage too, so a card that turns done remounts and lands once.
+            <li
+              key={`${p.playerId}:${finished ? 'done' : 'busy'}`}
+              className={`${styles.card} ${finished ? styles.cardDone : ''}`}
+            >
               <Avatar
                 avatarId={player?.avatarId ?? ''}
                 size={72}
@@ -83,7 +87,10 @@ function Progress({ view }: { view: PencilTvView }): JSX.Element {
         })}
       </ul>
       <p className={styles.count} role="status">
-        {done} of {view.progress.length} done
+        <span key={done} className={styles.countNum}>
+          {done}
+        </span>{' '}
+        of {view.progress.length} done
       </p>
     </>
   );
