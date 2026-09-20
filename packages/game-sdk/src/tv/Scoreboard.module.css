@@ -188,3 +188,29 @@
     var(--pb-i, 0) * var(--pb-stagger-step) + var(--pb-motion-base) + var(--pb-motion-slow)
   );
 }
+
+/* ── I-014 A: the climb (stagger="climb"). Rows fade in where they stood last round — --pb-from
+   rows away (a row's own height plus the board gap per row) — the deltas land a beat later, the
+   totals count from --pb-motion-base, and at 1200 ms every row slides to its new place over
+   --pb-motion-slow. Transform + opacity only; reduced motion drops the wait and the slide. */
+.climb .row {
+  animation:
+    global(pb-fade-in) var(--pb-motion-base) var(--pb-ease) both,
+    pb-climb var(--pb-motion-slow) var(--pb-ease) 1200ms both;
+}
+.climb .delta {
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) var(--pb-motion-base) both;
+}
+@keyframes pb-climb {
+  from {
+    transform: translateY(calc(var(--pb-from, 0) * (100% + var(--pb-space-2))));
+  }
+  to {
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .climb .row {
+    animation-delay: 0ms;
+  }
+}
