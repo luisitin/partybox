@@ -277,7 +277,7 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
           // The next pattern's shape beside its name (loop 287), shown by doing it (loop 432):
           // the board sits for ~6 s and the demo lights the goal square by square meanwhile.
           <div className={styles.nextUp}>
-            <PatternDemo pattern={next} cells={patternCells(next)} size={72} />
+            <PatternDemo pattern={next} cells={patternCells(next)} size={136} />
             <BigText level="h2" tone="accent">
               Next: round {view.round + 1} — {PATTERN_LABEL[next]}
             </BigText>
