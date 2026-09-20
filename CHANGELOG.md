@@ -49,6 +49,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
   thirteen four (the roster chips carry scores and wrap to three or four rows, so two columns of
   six small rows ran the last row under the host bar at 12 players and three columns clipped at
   16). `Scoreboard` gained an additive `columns` option.
+- Lightning Round TV final reveal: under a four-row roster (16 players with scored chips) the
+  bet cards ran under the host bar; the reveal now sits in the same size container as the
+  question page and compacts below 560 px (slimmer answer bar, caption-size two-line rows).
 - Broken Pencil TV show: the drawing sheet now takes the height the stage has left (a two-row
   roster at seven or eight players pushed a fixed 560 px sheet over the page kicker and into the
   host bar).
