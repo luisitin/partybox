@@ -1,13 +1,7 @@
 // Bingo — 75-ball bingo with free daubing and a public check. `game` is what the registry
 // imports. One file per phase under ./phases; this file wires init / reduce / views / results /
 // bot together and owns the phase ORDER (docs/GAME_CONTRACT.md).
-import {
-  applyVip,
-  enterPhase,
-  gameManifestSchema,
-  seedRng,
-  setConnected,
-} from '@partybox/game-sdk';
+import { applyVip, gameManifestSchema, seedRng, setConnected } from '@partybox/game-sdk';
 import type {
   GameDefinition,
   GameEvent,
@@ -19,7 +13,7 @@ import { sampleInput } from './bot';
 import { credit, enterBingo, reduceBingo } from './phases/bingo';
 import { enterCheck, reduceCheck } from './phases/check';
 import { enterIntro, reduceIntro, settleIntro } from './phases/intro';
-import { enterPlay, enterResume, reducePlay } from './phases/play';
+import { enterPlay, enterResume, reducePlay, resumeAfterHold } from './phases/play';
 import {
   enterDone,
   enterFinal,
@@ -29,7 +23,7 @@ import {
 } from './phases/scoreboard';
 import { results } from './scoring';
 import { menusOpen } from './claims';
-import { DECK, MAX_CARDS, MAX_ROUNDS, PATTERNS, PHASES, RESUME_MS, inputSchema } from './types';
+import { DECK, MAX_CARDS, MAX_ROUNDS, PATTERNS, PHASES, inputSchema } from './types';
 import type { Input, Pattern, Settings, State } from './types';
 import { controllerView, tvView } from './views';
 import type { BingoControllerView, BingoTvView } from './views';
@@ -213,12 +207,7 @@ function afterPlayerChange(before: State, after: State, now: number): State {
   if (!held || !menusOpen(before) || menusOpen(after)) return after;
   // From the drop, not the hold's start (loop 329): a hold longer than the ring left the deadline
   // in the past — the next number fired at once, no 3 · 2 · 1.
-  return enterPhase(
-    { ...after, round: { ...after.round, resumeAt: now + RESUME_MS } },
-    'play',
-    now,
-    RESUME_MS,
-  );
+  return resumeAfterHold(after, now);
 }
 
 export const game: GameDefinition<State, Input, BingoTvView, BingoControllerView> = {

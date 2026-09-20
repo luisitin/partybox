@@ -210,7 +210,30 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
   // whose tick calls the next number.
   await settle(5200); // the read ends at ≈ 8.4 s, the ring runs to ≈ 11.4 s, the next number drops
   await T.mark('D4');
+  // A card-style change on p2 (the sheet holds the room; with one card it offers only Close): the 3 · 2 · 1, then
+  // the number that was up is called AGAIN — the change was a pause (owner's play-test 2026-09-19).
+  const sheet = p2.page.getByRole('button', { name: /card style|style/i }).first();
+  await sheet.click();
+  await settle(800);
+  await p2.page.getByRole('button', { name: /^(Confirm|Close)$/ }).click();
+  await settle(4200); // the ring (3 s) + the repeat
+  await T.mark('D4b');
   await api.clock(true); // hold the caller again for what follows
+  const spoken = (evs: { kind: string; [k: string]: unknown }[]): string[] =>
+    evs.filter((e) => e.kind === 'speak').map((e) => String(e['text']));
+  const spokenBefore = spoken(await T.between(tv, 'D3', 'D4')).at(-1);
+  const afterStyle = await T.between(tv, 'D4', 'D4b');
+  const styleCues = T.cues(afterStyle);
+  const spokenAfter = spoken(afterStyle);
+  T.ok(
+    'D',
+    'a card-style change: 3 · 2 · 1 ticks, then the SAME number is called again',
+    styleCues.filter((c) => c === 'tick').length === 3 &&
+      styleCues.indexOf('call') > styleCues.lastIndexOf('tick') &&
+      spokenAfter.length === 1 &&
+      spokenAfter[0] === spokenBefore,
+    `cues=${styleCues.join(',')} before=${spokenBefore} after=${spokenAfter.join(' | ')}`,
+  );
   evs = await T.between(tv, 'D3', 'D4');
   const back = T.cues(evs);
   T.ok(

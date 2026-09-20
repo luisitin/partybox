@@ -70,7 +70,7 @@ describe('two taps to claim, with dibs', () => {
 });
 
 describe('the card-style menu holds the caller', () => {
-  it('opening a menu drops the deadline; the last close starts a 3 s countdown, then the next number', () => {
+  it('opening a menu drops the deadline; the last close starts a 3 s countdown, then the SAME number again', () => {
     let s = timer(start());
     const drawn = s.round.drawn;
     const t = s.phase.startedAt + 500;
@@ -90,10 +90,16 @@ describe('the card-style menu holds the caller', () => {
     expect(s.phase.deadline).toBe(t + 400 + RESUME_MS);
     expect(game.tvView(s).pausedBy).toEqual([]);
     expect(s.round.drawn).toBe(drawn);
+    const calledAt = s.round.calledAt ?? 0;
     s = timer(s);
-    expect(s.round.drawn).toBe(drawn + 1);
+    // The number that was up is called again (the style change was a pause: whoever changed
+    // missed the call — owner's play-test 2026-09-19), then the clock runs to the next one.
+    expect(s.round.drawn).toBe(drawn);
+    expect(s.round.calledAt).toBeGreaterThan(calledAt);
     expect(s.round.resumeAt).toBeNull();
     expect(s.phase.deadline).toBe(s.phase.startedAt + 6000);
+    s = timer(s);
+    expect(s.round.drawn).toBe(drawn + 1);
   });
 
   it('a menu left open through a check holds the caller as play resumes', () => {

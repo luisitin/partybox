@@ -55,12 +55,18 @@ export function Tv({ view }: GameTvProps<LightningTvView>): JSX.Element {
     if (view.round?.final && view.question && view.correctIndex !== undefined) {
       return (
         <Stage>
-          <FinalReveal
-            key={view.round.number}
-            question={view.question}
-            correctIndex={view.correctIndex}
-            rows={view.rows ?? []}
-          />
+          {/* Same size container as the question page: a four-row roster leaves too little for
+              four rows of two-line bet cards, so below 560 px the reveal compacts. */}
+          <div className={styles.page}>
+            <div className={styles.fit}>
+              <FinalReveal
+                key={view.round.number}
+                question={view.question}
+                correctIndex={view.correctIndex}
+                rows={view.rows ?? []}
+              />
+            </div>
+          </div>
         </Stage>
       );
     }
