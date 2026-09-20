@@ -89,8 +89,9 @@ function Voters({ card }: { card: RevealedCard }): JSX.Element | null {
   const rest = card.voters.length - shown.length;
   return (
     <span className={styles.voters}>
-      {shown.map((v) => (
-        <span key={v.id} className={styles.voter}>
+      {shown.map((v, i) => (
+        // I-005 A: one at a time, 120 ms apart (--pb-i), with a lock note each (TvResult's effect)
+        <span key={v.id} className={`${styles.voter} ${styles.voterIn}`} style={{ '--pb-i': i } as CSSProperties}>
           <Avatar avatarId={v.avatarId} size="var(--pb-chip-size)" />
           <span className={styles.authorName}>{v.name}</span>
         </span>
@@ -188,6 +189,13 @@ export function TvResult({ view }: Props): JSX.Element {
   useEffect(() => {
     if (beat >= BEAT_WINNER && humanWin) play('sweep');
   }, [beat, humanWin, play]);
+  // I-005 A: a `lock` note per voter chip as it lands (vote mode; up to six chips are shown).
+  const voterCount = Math.min(6, Math.max(0, ...winners.map((w) => w.voters.length)));
+  useEffect(() => {
+    if (beat < BEAT_AUTHORS || view.judgeMode !== 'vote' || voterCount === 0) return;
+    const ts = Array.from({ length: voterCount }, (_, i) => setTimeout(() => play('lock'), i * 120));
+    return () => ts.forEach((t) => clearTimeout(t));
+  }, [beat, voterCount, view.judgeMode, play]);
   if (view.phaseId === 'final' || view.phaseId === 'done') return <TvFinal view={view} />;
   // Nobody played: nothing to reveal beat by beat — say so at once, with the card that got no takers.
   if (view.revealed.length === 0) {
@@ -272,18 +280,21 @@ export function TvResult({ view }: Props): JSX.Element {
       ) : null}
       {/* The winner beat (1200 ms) is the loud one: the card lifts and glows as the `sweep` cue
           sounds, and confetti falls behind it — only for a human win (review-loop #162). */}
-      {named && humanWin ? <Confetti pieces={48} /> : null}
+      {named && humanWin ? <Confetti pieces={96} /> : null}
       {/* The other cards were all up on the judge stage a moment ago: here only who played
           which letter, and their votes — twelve players fit in two rows of pills. */}
       {others.length > 0 ? (
         <ul
-          className={`${styles.losers} ${dense ? styles.losersDense : ''}`}
+          className={`${styles.losers} ${dense ? styles.losersDense : ''} ${named ? styles.losersDim : ''}`}
           aria-label="the other cards"
         >
-          {others.map((c) => (
+          {/* I-005 B: the pills rise one after another, fewest votes first — the runner-up lands
+              last, just before the winner is named. */}
+          {[...others].sort((a, b) => a.votes - b.votes).map((c, i) => (
             <li
               key={c.slot}
               className={`${styles.loser} ${beat >= BEAT_AUTHORS ? styles.rise : styles.pending}`}
+              style={{ '--pb-i': i } as CSSProperties}
               aria-hidden={beat < BEAT_AUTHORS}
             >
               <span className={styles.loserLetter} aria-hidden>
