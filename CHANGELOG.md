@@ -5,6 +5,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Bingo's next pattern is the size of the board** (I-012, option C): between rounds the pattern demo
+  sits at 216 px in its own column left of the Points board, and its first pass thumps a `daub` per
+  square as it lights; the loops after it stay silent.
 - **A dropped link is seen and heard** (I-009, option C, every game): the player's TV chip flickers
   out and sits as a ghost, snapping back with a green ring when the link returns; the room hears
   `leave` / `join`; the phone's "Reconnecting…" breathes and the return lands with a buzz and a note.

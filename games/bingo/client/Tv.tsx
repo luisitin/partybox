@@ -272,17 +272,19 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
     return (
       <Stage center>
         <BigText level="h1">Points</BigText>
-        <Scoreboard rows={rows(view)} noTrophy />
-        {next ? (
-          // The next pattern's shape beside its name (loop 287), shown by doing it (loop 432):
-          // the board sits for ~6 s and the demo lights the goal square by square meanwhile.
-          <div className={styles.nextUp}>
-            <PatternDemo pattern={next} cells={patternCells(next)} size={72} />
-            <BigText level="h2" tone="accent">
-              Next: round {view.round + 1} — {PATTERN_LABEL[next]}
-            </BigText>
-          </div>
-        ) : null}
+        {/* I-012 C: the next pattern takes the left of the board, its name under it — shown by
+            doing it (loop 432), now big enough to read from the sofa; the first pass thumps. */}
+        <div className={styles.boardRow}>
+          {next ? (
+            <div className={styles.nextUp}>
+              <PatternDemo pattern={next} cells={patternCells(next)} size={216} thump />
+              <BigText level="h2" tone="accent">
+                Next: round {view.round + 1} — {PATTERN_LABEL[next]}
+              </BigText>
+            </div>
+          ) : null}
+          <Scoreboard rows={rows(view)} noTrophy />
+        </div>
       </Stage>
     );
   }

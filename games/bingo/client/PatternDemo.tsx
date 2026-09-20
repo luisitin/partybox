@@ -4,7 +4,7 @@
 // cell's lit layer pops in with a CSS transition. Reduced motion: the pattern sits lit.
 import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
-import { usePrefersReducedMotion } from '@partybox/game-sdk/ui';
+import { usePrefersReducedMotion, useSoundApi } from '@partybox/game-sdk/ui';
 import type { Pattern } from '../server/types';
 import styles from './PatternDemo.module.css';
 
@@ -46,22 +46,40 @@ export function PatternDemo({
   pattern,
   cells,
   size = 200,
+  thump = false,
 }: {
   pattern: Pattern;
   cells: number[];
   size?: number;
+  /** The first pass thumps each cell as it lights (`daub`) — the TV's between-rounds preview. */
+  thump?: boolean;
 }): JSX.Element {
   const reduced = usePrefersReducedMotion();
   const shapes = demoShapes(pattern, cells);
   const last = shapes[shapes.length - 1];
   const loopMs = (last?.at ?? 0) + (last?.cells.length ?? 0) * STEP_MS + HOLD_MS + GAP_MS;
   const [t, setT] = useState(0);
+  const sound = useSoundApi();
+  // I-012 B: the first pass thumps — every cell that lights plays `daub`, the dauber's own
+  // thump, once; the loops after it are silent. Keyed on the cells' serialised form (a fresh
+  // array each render) so the clock starts once per demo.
+  const cellsKey = cells.join(',');
   useEffect(() => {
     if (reduced) return;
     const started = Date.now();
-    const handle = setInterval(() => setT((Date.now() - started) % loopMs), TICK_MS);
+    const shapes = demoShapes(pattern, cellsKey.split(',').map(Number));
+    let lit = 0;
+    const handle = setInterval(() => {
+      const elapsed = Date.now() - started;
+      setT(elapsed % loopMs);
+      if (thump && elapsed < loopMs) {
+        const n = litAt(shapes, elapsed).size;
+        if (n > lit) sound.play('daub');
+        lit = n;
+      }
+    }, TICK_MS);
     return () => clearInterval(handle);
-  }, [reduced, loopMs]);
+  }, [reduced, loopMs, thump, sound, pattern, cellsKey]);
   const lit = reduced ? new Set(cells) : litAt(shapes, t);
   return (
     <span

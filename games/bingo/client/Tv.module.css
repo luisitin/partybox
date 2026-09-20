@@ -920,3 +920,20 @@
 .claimWrong > :first-child {
   animation: global(pb-shake) var(--pb-motion-base) var(--pb-ease) both;
 }
+
+/* ── I-012 C: the shape beside the board — a 300 px column on the left, the board keeps its
+   width on the right. */
+.boardRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pb-space-6);
+  width: 100%;
+}
+.boardRow .nextUp {
+  flex-direction: column;
+  gap: var(--pb-space-3);
+  width: 300px;
+  flex: none;
+  text-align: center;
+}
