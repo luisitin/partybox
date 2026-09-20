@@ -1273,3 +1273,69 @@
     transform: none;
   }
 }
+
+/* ── I-015 A: the pick stands out — the picked card lifts 8 px at 1.02, the rest of the hand
+   steps back to 70 % while anything is picked (transform + opacity, the card's own transition). */
+.white {
+  transition:
+    translate var(--pb-motion-base) var(--pb-ease),
+    scale var(--pb-motion-base) var(--pb-ease),
+    opacity var(--pb-motion-base) var(--pb-ease);
+}
+.whiteOn {
+  translate: 0 -8px;
+  scale: 1.02;
+}
+.hand[data-picking] .white:not(.whiteOn):not(:disabled) {
+  opacity: 0.7;
+}
+
+/* ── I-015 B: Play — the picked card flies up and out, the rest of the hand fades; both rest
+   states are the end states, so the shell's crossfade ghost (animations stripped) keeps them. */
+.handFlying .white.whiteOn {
+  opacity: 0;
+  translate: 0 -160px;
+  scale: 0.9;
+  transition:
+    translate var(--pb-motion-base) var(--pb-ease),
+    scale var(--pb-motion-base) var(--pb-ease),
+    opacity var(--pb-motion-base) var(--pb-ease) calc(var(--pb-motion-base) / 2);
+}
+.handFlying .white:not(.whiteOn) {
+  opacity: 0;
+}
+
+/* ── I-015 C: a hand, not a list — the cards sit side by side in a scroll-snap row, each turned
+   a couple of degrees about a pivot well below the screen and overlapping its neighbours, like
+   cards held in a hand. The deal, the lift and the flight compose with the turn (individual
+   transform properties). */
+.hand {
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 0;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: var(--pb-space-5) var(--pb-space-5) var(--pb-space-4);
+  scrollbar-width: none;
+}
+.hand > li {
+  flex: 0 0 64%;
+  scroll-snap-align: center;
+  margin-inline: -7%;
+  transform-origin: 50% 180%;
+  rotate: calc((var(--pb-i, 0) - 4.5) * 1.6deg);
+}
+.hand > li:first-child {
+  margin-left: 0;
+}
+.hand > li:last-child {
+  margin-right: 0;
+}
+.hand .white {
+  min-height: 7.5em;
+  align-items: flex-start;
+}
+.hand .whiteOn {
+  z-index: 1;
+  position: relative;
+}

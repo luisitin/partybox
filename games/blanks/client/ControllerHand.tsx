@@ -4,7 +4,7 @@
 // until the server's view confirms it, so a double tap cannot send twice. The judge (czar mode)
 // sees the black card and the count instead of a hand.
 import { useState } from 'react';
-import type { JSX } from 'react';
+import type { CSSProperties, JSX } from 'react';
 import { Avatar, PrimaryButton, Screen, WaitingScreen } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { BlanksControllerView } from '../server/index';
@@ -101,6 +101,9 @@ export function ControllerPick({ view, send }: Props): JSX.Element {
 export function ControllerHand({ view, send, skip }: Props): JSX.Element {
   const [picked, setPicked] = useState<string[]>([]);
   const [sent, setSent] = useState(false);
+  // I-015 B: the played card flies up into the black card before the pick is sent (300 ms, the
+  // card's own flight); the flight IS the send.
+  const [flying, setFlying] = useState(false);
   const black = view.black;
   const pick = black?.pick ?? 1;
   if (!black) return <WaitingScreen title="Look at the TV" mood="watch" />;
@@ -184,7 +187,8 @@ export function ControllerHand({ view, send, skip }: Props): JSX.Element {
           onClick={() => {
             if (!ready || sent) return;
             setSent(true);
-            send({ type: 'play', cards: picked });
+            setFlying(true);
+            setTimeout(() => send({ type: 'play', cards: picked }), 300);
           }}
         >
           {sent ? 'Played' : label}
@@ -201,14 +205,18 @@ export function ControllerHand({ view, send, skip }: Props): JSX.Element {
           size="phone"
         />
       </div>
-      <ul className={styles.hand} aria-label="your hand">
+      <ul
+        className={`${styles.hand} ${flying ? styles.handFlying : ''}`}
+        aria-label="your hand"
+        data-picking={picked.length > 0 || undefined}
+      >
         {view.hand.map((card, i) => {
           const order = picked.indexOf(card.id);
           const on = order !== -1;
           return (
             // Dealt 150 ms apart (the CSS sets the motion); a re-render on a tap keeps the <li>,
             // so the deal plays once, when the hand arrives.
-            <li key={card.id} style={{ animationDelay: `${i * 150}ms` }}>
+            <li key={card.id} style={{ animationDelay: `${i * 150}ms`, '--pb-i': i } as CSSProperties}>
               <button
                 type="button"
                 className={`${styles.white} ${on ? styles.whiteOn : ''}`}
