@@ -5,6 +5,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Wisecrack reveal: the winner is crowned, the loser steps back** (I-002, option B): on the points
+  beat the winning card takes the `pb-crown` lift instead of a flat 1.02 scale, and against a clear
+  winner the other card shrinks to 0.96 and dims to 60 % (a tie moves nothing).
 - **The answer field reacts while you type** (I-001, option C, `TextAnswer` in the game-sdk — Wisecrack and
   Broken Pencil's text fields): the field joins the last-5-s urgency (danger border + beat), the
   character counter bumps on every keystroke, and a field left empty for 3 s breathes until you type.

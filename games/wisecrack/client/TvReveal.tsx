@@ -50,7 +50,7 @@ export function TvReveal({ view }: Props): JSX.Element {
           return (
             <article
               key={r.playerId}
-              className={`${styles.card} ${styles.cardStill} ${styles.revealCard} ${winner && beat >= BEAT_POINTS ? styles.winner : ''}`}
+              className={`${styles.card} ${styles.cardStill} ${styles.revealCard} ${winner && beat >= BEAT_POINTS ? styles.winner : ''} ${!winner && top > 0 && !tie && beat >= BEAT_POINTS ? styles.loser : ''}`}
               aria-label={`answer ${LETTERS[r.slot]}`}
             >
               <div className={styles.cardTop}>
