@@ -13,8 +13,15 @@ export function wagerLabel(option: WagerOption, score: number): JSX.Element {
       : option.percent === 100
         ? 'All in · 100 %'
         : `${option.percent} % of your ${score}`;
+  // I-026 A: a stack of chips sized to the share — one disc per 25 %, hollow for nothing.
+  const chips = Math.max(1, Math.round(option.percent / 25));
   return (
     <span className={styles.wagerRow}>
+      <span className={styles.chips} aria-hidden>
+        {Array.from({ length: chips }, (_, i) => (
+          <span key={i} className={`${styles.chip} ${option.percent === 0 ? styles.chipEmpty : ''}`} />
+        ))}
+      </span>
       <span className={styles.amount}>{option.percent === 0 ? '0' : option.amount}</span>
       <span className={styles.pct}>{caption}</span>
     </span>
@@ -23,9 +30,10 @@ export function wagerLabel(option: WagerOption, score: number): JSX.Element {
 
 // During the final question the TV hides wagers, so the phone is the only place the stake shows.
 // Lives in Screen's sticky footer, persists after lock-in, and Outcome replaces it at reveal.
-export function Stake({ amount }: { amount: number }): JSX.Element {
+export function Stake({ amount, live = false }: { amount: number; live?: boolean }): JSX.Element {
+  // I-026 C: the bet is live until the answer is locked — the footer breathes meanwhile.
   return (
-    <div className={styles.stake}>
+    <div className={`${styles.stake} ${live && amount > 0 ? styles.stakeLive : ''}`}>
       {amount > 0 ? (
         <>
           🎲 <b>Your bet: {amount}</b> · right +{amount} · wrong −{amount}

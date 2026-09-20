@@ -99,7 +99,7 @@ export function Controller({
               🎲 The bets are in — look at the TV
             </div>
           ) : stake !== null ? (
-            <Stake amount={stake} />
+            <Stake amount={stake} live={!locked} />
           ) : null
         }
       />
@@ -119,9 +119,16 @@ export function Controller({
         kicker="Final question next"
         prompt={
           <>
-            {view.myScore > 0
-              ? `Wager part of your ${view.myScore} points`
-              : 'No points yet — you can only wager 0'}
+            {/* I-026 B: once placed, the prompt is the pot. */}
+            {selected ? (
+              <span key="pot" className={`${styles.pot} pb-pop`}>
+                {selected.amount} in the pot
+              </span>
+            ) : view.myScore > 0 ? (
+              `Wager part of your ${view.myScore} points`
+            ) : (
+              'No points yet — you can only wager 0'
+            )}
             <span className={styles.rule}>Right answer: +wager. Wrong or no answer: −wager.</span>
           </>
         }
@@ -135,6 +142,7 @@ export function Controller({
           if (option) send({ type: 'wager', percent: option.percent });
         }}
         footer={null}
+        className={selected ? styles.placed : undefined}
       />
     );
   }
