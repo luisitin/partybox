@@ -237,7 +237,7 @@ export function ClaimStage({
       <div className={`${styles.claimStage} ${decided ? styles.decided : ''}`}>
         {landed ? (
           <div
-            className={`${styles.claim} ${styles.claimLand} ${shown && valid ? styles.shine : ''}`}
+            className={`${styles.claim} ${styles.claimLand} ${shown && valid ? styles.shine : ''} ${shown && !valid ? styles.claimWrong : ''}`}
           >
             <Card
               numbers={claim.card}
