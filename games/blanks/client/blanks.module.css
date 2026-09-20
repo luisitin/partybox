@@ -1273,3 +1273,8 @@
     transform: none;
   }
 }
+
+/* ── I-005 A: the votes arrive one by one — each voter chip pops 120 ms after the last. */
+.voterIn {
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) calc(var(--pb-i, 0) * 120ms) both;
+}
