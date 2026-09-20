@@ -6,6 +6,9 @@ import { PrimaryButton } from './PrimaryButton';
 import { Screen } from './Screen';
 import styles from './TextAnswer.module.css';
 
+/** How long an empty field sits before it breathes (I-001 C). */
+const STALL_MS = 3000;
+
 export interface TextAnswerProps {
   prompt: ReactNode;
   /** Small text above the prompt (e.g. "Round 2 · Prompt 1 of 2"). */
@@ -50,6 +53,19 @@ export function TextAnswer(props: TextAnswerProps): JSX.Element {
   }, [promptKey]);
   const trimmed = text.trim();
   const canSubmit = trimmed.length > 0 && !submitted && !disabled;
+  // I-001 C: a field left empty for 3 s breathes until a character lands — sequencing, not a
+  // timer the phone shows, so it is not gated on reduced motion (the keyframe itself is). The
+  // flag is armed by the timer and read only while the field is still empty and live; a keystroke
+  // clears it in render, so a field emptied again waits its 3 s afresh.
+  const idle = text.length === 0 && !submitted && !disabled;
+  const [stalledFlag, setStalledFlag] = useState(false);
+  if (stalledFlag && !idle) setStalledFlag(false);
+  useEffect(() => {
+    if (!idle) return;
+    const handle = setTimeout(() => setStalledFlag(true), STALL_MS);
+    return () => clearTimeout(handle);
+  }, [idle]);
+  const stalled = stalledFlag && idle;
   if (submitted) {
     // The dead textarea + counter added nothing once the answer was in; show what was sent instead.
     return (
@@ -93,7 +109,7 @@ export function TextAnswer(props: TextAnswerProps): JSX.Element {
       {kicker ? <p className={styles.kicker}>{kicker}</p> : null}
       <p className={styles.prompt}>{prompt}</p>
       <textarea
-        className={styles.input}
+        className={`${styles.input} ${stalled ? styles.stalled : ''}`}
         value={text}
         onChange={(e) => setText(e.target.value.slice(0, maxLength))}
         placeholder={placeholder}
@@ -115,7 +131,12 @@ export function TextAnswer(props: TextAnswerProps): JSX.Element {
           Time's up — your answer wasn't sent.
         </p>
       ) : (
-        <p className={styles.counter} aria-live="off">
+        // I-001 B: keyed on the length so every keystroke remounts the counter and it bumps once.
+        <p
+          key={text.length}
+          className={`${styles.counter} ${text.length > 0 ? styles.typed : ''}`}
+          aria-live="off"
+        >
           {text.length} / {maxLength}
         </p>
       )}

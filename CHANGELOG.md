@@ -5,6 +5,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **The answer field reacts while you type** (I-001, option C, `TextAnswer` in the game-sdk — Wisecrack and
+  Broken Pencil's text fields): the field joins the last-5-s urgency (danger border + beat), the
+  character counter bumps on every keystroke, and a field left empty for 3 s breathes until you type.
 - **Bingo daubs are ink blots in your colour** (I-010, option C): on the phone a daub stays as an
   irregular blot in the player's roster colour instead of a flat fill (the TV and verdict cards are
   unchanged); the tap that completes a row, column or diagonal bumps its five squares in order.
