@@ -194,3 +194,16 @@
   font-size: var(--pb-font-caption);
   font-weight: 800;
 }
+
+/* ── I-035 A: the sheet stays open while you try themes; Done closes it. */
+.done {
+  width: 100%;
+  margin-top: var(--pb-space-3);
+  min-height: var(--pb-touch);
+  border-radius: var(--pb-radius);
+  border: 0;
+  background: var(--pb-accent);
+  color: var(--pb-on-accent);
+  font: inherit;
+  font-weight: 800;
+}

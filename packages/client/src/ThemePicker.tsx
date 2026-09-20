@@ -47,8 +47,9 @@ export function ThemePicker({ variant, onClose, footer }: ThemePickerProps): JSX
               aria-pressed={active}
               onClick={() => {
                 setTheme(theme.id);
-                // The whole screen recolours, so the menu / sheet has done its job.
-                if (variant !== 'row') onClose?.();
+                // I-035 A: the sheet stays open — the page recolours behind it live and Done
+                // closes it; the menu variant still closes itself.
+                if (variant === 'menu') onClose?.();
               }}
             >
               <Swatch theme={theme} />
@@ -83,6 +84,9 @@ export function ThemePicker({ variant, onClose, footer }: ThemePickerProps): JSX
         </div>
         {list}
         {footer ? <div className={styles.footer}>{footer}</div> : null}
+        <button type="button" className={styles.done} onClick={onClose}>
+          Done
+        </button>
       </div>
     </div>
   );
