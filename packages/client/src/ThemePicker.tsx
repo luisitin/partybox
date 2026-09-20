@@ -9,10 +9,15 @@ import styles from './ThemePicker.module.css';
 
 function Swatch({ theme }: { theme: ThemeSpec }): JSX.Element {
   const [bg, a, b] = theme.swatch;
+  // I-035 B: a tiny screen — header strip, body, an accent button and a gold chip in the
+  // theme's own colours, so the row previews the look before the tap.
   return (
     <span className={styles.swatch} style={{ background: bg }} aria-hidden>
-      <span style={{ background: a }} />
-      <span style={{ background: b }} />
+      <span className={styles.miniHead} style={{ background: a }} />
+      <span className={styles.miniBody}>
+        <span className={styles.miniChip} style={{ background: b }} />
+        <span className={styles.miniButton} style={{ background: a }} />
+      </span>
     </span>
   );
 }
@@ -47,8 +52,9 @@ export function ThemePicker({ variant, onClose, footer }: ThemePickerProps): JSX
               aria-pressed={active}
               onClick={() => {
                 setTheme(theme.id);
-                // The whole screen recolours, so the menu / sheet has done its job.
-                if (variant !== 'row') onClose?.();
+                // I-035 A: the sheet stays open — the page recolours behind it live and Done
+                // closes it; the menu variant still closes itself.
+                if (variant === 'menu') onClose?.();
               }}
             >
               <Swatch theme={theme} />
@@ -83,6 +89,9 @@ export function ThemePicker({ variant, onClose, footer }: ThemePickerProps): JSX
         </div>
         {list}
         {footer ? <div className={styles.footer}>{footer}</div> : null}
+        <button type="button" className={styles.done} onClick={onClose}>
+          Done
+        </button>
       </div>
     </div>
   );
