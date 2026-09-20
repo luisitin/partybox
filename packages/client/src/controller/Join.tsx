@@ -167,10 +167,12 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
         ) : null}
         <fieldset className={styles.avatars}>
           <legend className={styles.label}>{t.join.avatar}</legend>
-          <div className={styles.grid} role="radiogroup">
+          {/* I-031 A: the pick pops (keyed on the pick, so it pops once per change) and the rest
+              step back while one is chosen. */}
+          <div className={`${styles.grid} ${styles.picking}`} role="radiogroup">
             {AVATAR_IDS.map((id) => (
               <button
-                key={id}
+                key={id === avatarId ? `${id}:on` : id}
                 type="button"
                 role="radio"
                 aria-checked={id === avatarId}
