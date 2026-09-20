@@ -453,3 +453,35 @@
 .rows:not(.rowsFinal) > .row {
   animation-delay: calc(var(--pb-motion-fast) + var(--pb-motion-fast) * 0.4 * var(--i, 0));
 }
+
+/* ── I-007 A: the crowd on the count line — one face per lock-in, each popping in once. */
+.crowd {
+  display: inline-flex;
+  align-items: center;
+  margin-right: var(--pb-space-3);
+  vertical-align: middle;
+}
+.crowdFace {
+  display: inline-flex;
+  margin-left: calc(-1 * var(--pb-space-2));
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+.crowdFace:first-child {
+  margin-left: 0;
+}
+
+/* ── I-007 C: the lean — a row of anonymous dots under a card's text, one per pick so far, each
+   popping in once (keyed by position; a new dot is a new node). */
+.lean {
+  grid-column: 2;
+  display: flex;
+  gap: 6px;
+  margin-top: 4px;
+}
+.leanDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--pb-accent-2);
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}

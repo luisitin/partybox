@@ -59,6 +59,9 @@ export interface LightningTvView extends TvView {
   question: QuestionView | null;
   /** Picks (in `question`) or wagers (in `wager`) received from connected players. */
   answeredCount: number;
+  /** I-007 C — `question` only: how many picks each choice has so far (anonymous). Shows the
+   *  room's lean before the reveal: a deliberate change to the game, not just its look. */
+  pickCounts?: number[];
   totalCount: number;
   correctIndex?: number;
   /** `reveal`: one row per player, correct first, then by score. */
@@ -175,6 +178,12 @@ export function tvView(state: State, gameId: string): LightningTvView {
           ? Object.keys(state.wagers).length
           : 0,
     totalCount: connectedCount(state),
+    pickCounts:
+      phase === 'question'
+        ? (questionOf(state)?.choices ?? []).map(
+            (_, i) => Object.values(state.picks).filter((p) => p.index === i).length,
+          )
+        : undefined,
     // Passive phases (nobody can act): a quiet bar instead of red digits and countdown ticks
     // (ADR-030) — the reveal has its own beats and the intro is a title card.
     timerMode: phase === 'intro' || phase === 'reveal' ? 'quiet' : 'normal',

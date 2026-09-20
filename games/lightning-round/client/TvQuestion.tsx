@@ -37,10 +37,13 @@ export function RoundHeader({
 export function ChoiceBoard({
   question,
   correctIndex,
+  pickCounts,
 }: {
   question: QuestionView;
   /** Undefined until the reveal. */
   correctIndex?: number;
+  /** I-007 C: picks per choice so far — one anonymous dot each. */
+  pickCounts?: number[];
 }): JSX.Element {
   const revealed = correctIndex !== undefined;
   return (
@@ -66,6 +69,13 @@ export function ChoiceBoard({
             <span className={styles.mark} aria-hidden>
               {isCorrect ? '✓' : ''}
             </span>
+            {!revealed && pickCounts && (pickCounts[index] ?? 0) > 0 ? (
+              <span className={styles.lean} aria-label={`${pickCounts[index]} picked this`}>
+                {Array.from({ length: pickCounts[index] ?? 0 }, (_, k) => (
+                  <span key={k} className={styles.leanDot} />
+                ))}
+              </span>
+            ) : null}
             {isCorrect ? <span className="pb-visually-hidden">correct answer</span> : null}
           </div>
         );
@@ -129,8 +139,20 @@ export function CountLine({
   verb: string;
 }): JSX.Element {
   const holdouts = holdoutsOf(players);
+  // I-007 A: the crowd builds — every locked-in face pops onto the line (keyed per player, so
+  // each pops once, in the order the view lists them).
+  const lockedIn = players.filter((p) => p.status === 'submitted');
   return (
     <p className={styles.count} role="status">
+      {lockedIn.length > 0 ? (
+        <span className={styles.crowd} aria-hidden>
+          {lockedIn.map((p) => (
+            <span key={p.id} className={styles.crowdFace}>
+              <Avatar avatarId={p.avatarId} size="var(--pb-space-7)" />
+            </span>
+          ))}
+        </span>
+      ) : null}
       <span key={answeredCount} className={styles.countNum}>
         {answeredCount} / {totalCount}
       </span>{' '}
@@ -148,12 +170,14 @@ export function TvQuestion({
   answeredCount,
   totalCount,
   players,
+  pickCounts,
 }: {
   round: RoundView | null;
   question: QuestionView | null;
   answeredCount: number;
   totalCount: number;
   players: ViewPlayer[];
+  pickCounts?: number[];
 }): JSX.Element {
   return (
     <>
@@ -161,7 +185,7 @@ export function TvQuestion({
       <BigText level="h1" className={styles.prompt}>
         {question?.text ?? '…'}
       </BigText>
-      {question ? <ChoiceBoard question={question} /> : null}
+      {question ? <ChoiceBoard question={question} pickCounts={pickCounts} /> : null}
       <CountLine
         answeredCount={answeredCount}
         totalCount={totalCount}

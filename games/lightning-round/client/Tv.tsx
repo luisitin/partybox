@@ -46,6 +46,7 @@ export function Tv({ view }: GameTvProps<LightningTvView>): JSX.Element {
             answeredCount={view.answeredCount}
             totalCount={view.totalCount}
             players={view.players}
+            pickCounts={view.pickCounts}
           />
         </div>
       </Stage>
