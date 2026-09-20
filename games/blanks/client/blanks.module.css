@@ -1273,3 +1273,34 @@
     transform: none;
   }
 }
+
+/* ── I-015 A: the pick stands out — the picked card lifts 8 px at 1.02, the rest of the hand
+   steps back to 70 % while anything is picked (transform + opacity, the card's own transition). */
+.white {
+  transition:
+    translate var(--pb-motion-base) var(--pb-ease),
+    scale var(--pb-motion-base) var(--pb-ease),
+    opacity var(--pb-motion-base) var(--pb-ease);
+}
+.whiteOn {
+  translate: 0 -8px;
+  scale: 1.02;
+}
+.hand[data-picking] .white:not(.whiteOn):not(:disabled) {
+  opacity: 0.7;
+}
+
+/* ── I-015 B: Play — the picked card flies up and out, the rest of the hand fades; both rest
+   states are the end states, so the shell's crossfade ghost (animations stripped) keeps them. */
+.handFlying .white.whiteOn {
+  opacity: 0;
+  translate: 0 -160px;
+  scale: 0.9;
+  transition:
+    translate var(--pb-motion-base) var(--pb-ease),
+    scale var(--pb-motion-base) var(--pb-ease),
+    opacity var(--pb-motion-base) var(--pb-ease) calc(var(--pb-motion-base) / 2);
+}
+.handFlying .white:not(.whiteOn) {
+  opacity: 0;
+}

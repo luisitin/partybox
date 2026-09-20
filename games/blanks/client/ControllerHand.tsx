@@ -101,6 +101,9 @@ export function ControllerPick({ view, send }: Props): JSX.Element {
 export function ControllerHand({ view, send, skip }: Props): JSX.Element {
   const [picked, setPicked] = useState<string[]>([]);
   const [sent, setSent] = useState(false);
+  // I-015 B: the played card flies up into the black card before the pick is sent (300 ms, the
+  // card's own flight); the flight IS the send.
+  const [flying, setFlying] = useState(false);
   const black = view.black;
   const pick = black?.pick ?? 1;
   if (!black) return <WaitingScreen title="Look at the TV" mood="watch" />;
@@ -184,7 +187,8 @@ export function ControllerHand({ view, send, skip }: Props): JSX.Element {
           onClick={() => {
             if (!ready || sent) return;
             setSent(true);
-            send({ type: 'play', cards: picked });
+            setFlying(true);
+            setTimeout(() => send({ type: 'play', cards: picked }), 300);
           }}
         >
           {sent ? 'Played' : label}
@@ -201,7 +205,11 @@ export function ControllerHand({ view, send, skip }: Props): JSX.Element {
           size="phone"
         />
       </div>
-      <ul className={styles.hand} aria-label="your hand">
+      <ul
+        className={`${styles.hand} ${flying ? styles.handFlying : ''}`}
+        aria-label="your hand"
+        data-picking={picked.length > 0 || undefined}
+      >
         {view.hand.map((card, i) => {
           const order = picked.indexOf(card.id);
           const on = order !== -1;
