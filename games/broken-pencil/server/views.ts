@@ -51,6 +51,8 @@ export interface PencilControllerView extends ControllerView, Common {
   /** pick: my three words. */
   offers: string[] | null;
   customWords: boolean;
+  /** I-023 C: the room plays spicy — the hard tier draws from the spicy pack. */
+  spicy: boolean;
   /** What I owe right now: a guess of `prompt`, a drawing of `prompt`, or nothing (sent / watching). */
   stage: 'guess' | 'draw' | null;
   /** The one page I work from — and nothing else. */
@@ -203,6 +205,7 @@ export function controllerView(
     ...common(state),
     offers: seated && state.phase.id === 'pick' ? (state.offers[playerId] ?? null) : null,
     customWords: state.settings.customWords,
+    spicy: state.settings.spicy,
     stage,
     prompt,
     bookOwnerName: book ? nameOf(state, book.ownerId) : null,
