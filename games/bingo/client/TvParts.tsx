@@ -3,6 +3,7 @@
 // sweep, the rest fading in, the verdict popping beside the settled card.
 import { memo, useEffect, useState } from 'react';
 import type { JSX } from 'react';
+import type React from 'react';
 import {
   BigText,
   Confetti,
@@ -70,8 +71,17 @@ export function Call({
   const k = `${call.number}:${stamp ?? ''}`;
   return (
     <div className={`${big ? styles.callBig : styles.callSmall} ${big ? '' : 'pb-enter'}`}>
-      <span key={`l${k}`} className={styles.letter} data-letter={call.letter}>
-        {call.letter}
+      <span className={big ? styles.disc : undefined}>
+        {big ? (
+      <span key={`c${k}`} className={styles.cage} aria-hidden>
+            {Array.from({ length: 10 }, (_, i) => (
+              <i key={i} style={{ '--pb-cage-i': i } as React.CSSProperties} />
+            ))}
+          </span>
+        ) : null}
+        <span key={`l${k}`} className={styles.letter} data-letter={call.letter}>
+          {call.letter}
+        </span>
       </span>
       <span key={`n${k}`} className={styles.number}>
         {call.number}

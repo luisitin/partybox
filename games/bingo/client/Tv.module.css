@@ -913,3 +913,48 @@
   align-items: center;
   gap: var(--pb-space-4);
 }
+
+/* ── I-003 B: the cage turns once before the drop. Ten balls sit in the ring (each on its own
+   angle from --pb-cage-i), the ring spins one turn over CAGE_SPIN_MS (pb-spin, transform only)
+   and fades as the ball drops; the disc's drop, the number's roll and the caption wait for it —
+   the boing, the buzz and the voice wait in caller.ts / feel.ts / Tv.tsx. */
+.disc {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+.cage {
+  position: absolute;
+  inset: -22px;
+  border: 3px dashed var(--pb-text-muted);
+  border-radius: 50%;
+  pointer-events: none;
+  animation:
+    pb-cage-spin 1000ms linear both,
+    global(pb-fade-out) var(--pb-motion-base) var(--pb-ease) 1000ms both;
+}
+.cage i {
+  position: absolute;
+  left: calc(50% - 12px);
+  top: calc(50% - 12px);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--pb-surface-2);
+  border: 2px solid var(--pb-text-muted);
+  transform: rotate(calc(var(--pb-cage-i) * 36deg)) translateY(-88px);
+}
+@keyframes pb-cage-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.callBig .letter {
+  animation-delay: 1000ms;
+}
+.callBig .number {
+  animation-delay: 1120ms;
+}
+.caption {
+  animation-delay: calc(1000ms + var(--pb-motion-fast) * 0.8);
+}
