@@ -13,8 +13,15 @@ export function wagerLabel(option: WagerOption, score: number): JSX.Element {
       : option.percent === 100
         ? 'All in · 100 %'
         : `${option.percent} % of your ${score}`;
+  // I-026 A: a stack of chips sized to the share — one disc per 25 %, hollow for nothing.
+  const chips = Math.max(1, Math.round(option.percent / 25));
   return (
     <span className={styles.wagerRow}>
+      <span className={styles.chips} aria-hidden>
+        {Array.from({ length: chips }, (_, i) => (
+          <span key={i} className={`${styles.chip} ${option.percent === 0 ? styles.chipEmpty : ''}`} />
+        ))}
+      </span>
       <span className={styles.amount}>{option.percent === 0 ? '0' : option.amount}</span>
       <span className={styles.pct}>{caption}</span>
     </span>
