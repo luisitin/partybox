@@ -129,8 +129,20 @@ export function CountLine({
   verb: string;
 }): JSX.Element {
   const holdouts = holdoutsOf(players);
+  // I-007 A: the crowd builds — every locked-in face pops onto the line (keyed per player, so
+  // each pops once, in the order the view lists them).
+  const lockedIn = players.filter((p) => p.status === 'submitted');
   return (
     <p className={styles.count} role="status">
+      {lockedIn.length > 0 ? (
+        <span className={styles.crowd} aria-hidden>
+          {lockedIn.map((p) => (
+            <span key={p.id} className={styles.crowdFace}>
+              <Avatar avatarId={p.avatarId} size="var(--pb-space-7)" />
+            </span>
+          ))}
+        </span>
+      ) : null}
       <span key={answeredCount} className={styles.countNum}>
         {answeredCount} / {totalCount}
       </span>{' '}
