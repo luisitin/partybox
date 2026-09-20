@@ -1,7 +1,7 @@
 // Controller (phone) view for Broken Pencil: pick a word, draw on the DrawPad, guess a drawing,
 // then watch the TV. `send` is the only way out; the server validates every input first.
 import { useCallback, useEffect, useRef, useState } from 'react';
-import type { JSX } from 'react';
+import type { CSSProperties, JSX } from 'react';
 import {
   PrimaryButton,
   Screen,
@@ -18,6 +18,8 @@ import styles from './Controller.module.css';
 
 function Pick({ view, send }: GameControllerProps<PencilControllerView, Input>): JSX.Element {
   const [custom, setCustom] = useState('');
+  // I-023 B: the tapped tier bumps, the other two step back, until the server moves us on.
+  const [picked, setPicked] = useState<number | null>(null);
   const offers = view.offers ?? [];
   const others = view.bookCount - 1;
   const reach = view.fullCircle
@@ -60,12 +62,18 @@ function Pick({ view, send }: GameControllerProps<PencilControllerView, Input>):
       <p className={styles.hint}>{reach} Pick something drawable.</p>
       <ul className={styles.offers}>
         {offers.map((word, i) => (
-          <li key={word}>
+          <li key={word} style={{ '--pb-i': i } as CSSProperties} className={picked !== null ? (picked === i ? styles.offerPicked : styles.offerOther) : undefined}>
             <button
               type="button"
               className={styles.offer}
-              onClick={() => send({ type: 'pick', option: i })}
+              onClick={() => { setPicked(i); send({ type: 'pick', option: i }); }}
             >
+              {/* I-023 A: the tier as heat — one, two or three discs, green to red. */}
+              <span className={`${styles.heat} ${styles[`heat${i}`]}`} aria-hidden>
+                {Array.from({ length: i + 1 }, (_, k) => (
+                  <span key={k} className={styles.heatDot} />
+                ))}
+              </span>
               <span className={styles.offerLevel}>{['easy', 'medium', 'hard'][i]}</span>
               <span className={styles.offerText}>{word}</span>
             </button>
