@@ -117,3 +117,40 @@
 .stake b {
   color: var(--pb-accent);
 }
+
+/* ── I-026 A: chips on the wager row — a stack of discs, one per 25 % of the share, in the
+   game's gold; the 0 row's single chip is hollow. */
+.chips {
+  display: inline-flex;
+  align-items: center;
+  margin-right: var(--pb-space-2);
+}
+.chip {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  margin-left: -8px;
+  background: var(--pb-accent-2-fill);
+  border: 3px solid var(--pb-on-accent-2-fill);
+  box-sizing: border-box;
+}
+.chip:first-child {
+  margin-left: 0;
+}
+.chipEmpty {
+  background: transparent;
+  border: 3px dashed var(--pb-border);
+}
+
+/* ── I-026 B: the pick settles — the chosen row's chips bump, the other rows step back. */
+.pot {
+  display: inline-block;
+  color: var(--pb-accent-2);
+}
+.placed [role='radio'][aria-checked='true'] .chip {
+  animation: global(pb-bump) var(--pb-motion-base) var(--pb-ease) both;
+}
+.placed [role='radio']:not([aria-checked='true']) {
+  opacity: 0.6;
+  transition: opacity var(--pb-motion-base) var(--pb-ease);
+}
