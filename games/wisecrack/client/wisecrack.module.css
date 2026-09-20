@@ -226,10 +226,15 @@
   margin-block: auto;
 }
 
-.winner {
+/* I-002 A: the winner is crowned — pb-crown, Blanks' own winner lift (up 14 px, settles 6 px
+   up at 1.03), on the points beat; the outline and the surface still fade in over the same 600 ms. */
+.revealCard.winner {
   outline-color: var(--pb-accent-2);
   background: var(--pb-surface-2);
-  transform: scale(1.02);
+  animation: global(pb-crown) var(--pb-motion-slow) var(--pb-ease) both;
+  /* .card:nth-child(n) sets the vote rise's per-card delay (1 s / 1.6 s) at a higher specificity;
+     the winner's beat is now — this selector outranks it. */
+  animation-delay: 0ms;
 }
 
 .cardTop {
@@ -340,7 +345,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .winner {
+  .revealCard.winner {
+    animation: none;
     transform: none;
   }
 }
