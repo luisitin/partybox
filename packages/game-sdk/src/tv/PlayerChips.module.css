@@ -28,9 +28,24 @@
 }
 
 /* A new chip pops into place (opt-in via `enter`; keys are player ids, so only a fresh mount pops). */
+/* I-029 A: a joiner walks in from the left (the QR's side on the lobby) as it pops. */
 .enter {
-  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+  animation: pb-chip-walk var(--pb-motion-base) var(--pb-ease) both;
   transform-origin: center;
+}
+@keyframes pb-chip-walk {
+  0% {
+    opacity: 0;
+    transform: translateX(-40px) scale(0.8);
+  }
+  60% {
+    opacity: 1;
+    transform: translateX(4px) scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /* Empty seats: the outline of a `lg` chip (the size in force whenever seats are shown). */
