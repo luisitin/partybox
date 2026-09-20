@@ -36,6 +36,7 @@ import {
   STEP_MANY_MS,
   STEP_MS,
   STING_LAG_MS,
+  WIPE_AT_MS,
 } from '../server/reveal';
 
 const BOARD_ROWS = ['B', 'I', 'N', 'G', 'O'] as const;
@@ -201,9 +202,17 @@ export function ClaimStage({
   // A card with nothing beyond the pattern has no "rest" to show: straight on to the suspense.
   const restMs = claim.daubs.some((i) => !order.includes(i)) ? REST_MS : 0;
   const settleAt = restAt + restMs + HOLD_MS;
-  const seq = useSequence([0, cardAt, cardAt + DROP_MS, restAt, settleAt, settleAt + SETTLE_MS]);
+  const seq = useSequence([
+    0,
+    cardAt,
+    cardAt + DROP_MS,
+    restAt,
+    settleAt,
+    settleAt + SETTLE_MS,
+    settleAt + SETTLE_MS + WIPE_AT_MS,
+  ]);
   const [late] = useState(judged === true); // judged at mount: straight to the end, no sounds
-  const beat = late ? 5 : seq;
+  const beat = late ? 6 : seq;
   const reduced = usePrefersReducedMotion();
   const sound = useSoundApi();
   const landed = beat >= 1; // the card is on stage (dropping in)
@@ -211,6 +220,7 @@ export function ClaimStage({
   const restShown = beat >= 3; // the other tiles fade in together
   const decided = beat >= 4; // the card settles into its column
   const shown = beat >= 5; // the verdict pops beside it — and sounds
+  const wiped = beat >= 6 && !valid; // a wrong claim: the daubs lift off, the wipe is watched
   const line = valid ? lineOf(order) : null;
   const sweeps = turning && line !== null && !reduced && !late;
   // The announce beat has a sound of its own: the caller is hushed, so a lift ("someone has a
@@ -224,6 +234,17 @@ export function ClaimStage({
     const t = setTimeout(() => sound.play('sweep'), STING_LAG_MS);
     return () => clearTimeout(t);
   }, [sweeps, sound]);
+  // I-006 C: every checked cell is heard — a tick as each pattern cell's colour lands (the
+  // squeeze, STING_LAG_MS into its turn), so the room follows the check cell by cell; the sweep
+  // sting still opens a winning line. Primitives only in the deps: one schedule per mount.
+  const cells = order.length;
+  useEffect(() => {
+    if (!turning || late) return;
+    const ts = Array.from({ length: cells }, (_, k) =>
+      setTimeout(() => sound.play('tick'), k * step + STING_LAG_MS),
+    );
+    return () => ts.forEach((t) => clearTimeout(t));
+  }, [turning, late, sound, cells, step]);
   // The verdict's sound lands on the verdict — cheer + confetti for a bingo, the buzzer otherwise.
   useEffect(() => {
     if (!shown || late) return;
@@ -237,7 +258,7 @@ export function ClaimStage({
       <div className={`${styles.claimStage} ${decided ? styles.decided : ''}`}>
         {landed ? (
           <div
-            className={`${styles.claim} ${styles.claimLand} ${shown && valid ? styles.shine : ''}`}
+            className={`${styles.claim} ${styles.claimLand} ${shown && valid ? styles.shine : ''} ${shown && !valid ? styles.claimWrong : ''}`}
           >
             <Card
               numbers={claim.card}
@@ -251,6 +272,7 @@ export function ClaimStage({
               revealStepMs={step}
               restShown={restShown}
               settled={decided}
+              wiped={wiped}
               sweep={turning && line && !reduced ? { ...line, ms: lineMs } : null}
             />
           </div>
