@@ -107,3 +107,31 @@
   border-color: var(--pb-accent-2);
   background: var(--pb-surface-2);
 }
+
+/* ── I-031 A: the pick pops, the rest step back (transform + opacity). */
+.picking .selected {
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+.picking .avatarButton:not(.selected) {
+  opacity: 0.55;
+  transition:
+    opacity var(--pb-motion-base) var(--pb-ease),
+    transform var(--pb-motion-fast) var(--pb-ease);
+}
+
+/* ── I-031 B: the portrait row — the chosen face at 96 px and the name as typed. */
+.portraitRow {
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-4);
+  min-height: 104px;
+}
+.portrait {
+  display: inline-flex;
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+.portraitName {
+  font-size: var(--pb-font-h1);
+  font-weight: 900;
+  overflow-wrap: anywhere;
+}
