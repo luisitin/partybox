@@ -194,3 +194,60 @@
   font-size: var(--pb-font-caption);
   font-weight: 800;
 }
+
+/* ── I-035 A: the sheet stays open while you try themes; Done closes it. */
+.done {
+  width: 100%;
+  margin-top: var(--pb-space-3);
+  min-height: var(--pb-touch);
+  border-radius: var(--pb-radius);
+  border: 0;
+  background: var(--pb-accent);
+  color: var(--pb-on-accent);
+  font: inherit;
+  font-weight: 800;
+}
+
+/* ── I-035 B: the swatch as a tiny screen. */
+.swatch {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 0.35em 1fr;
+  width: 2.6em;
+  height: 1.8em;
+  padding: 0.15em;
+  gap: 0.1em;
+}
+.miniHead {
+  border-radius: 2px 2px 0 0;
+  opacity: 0.9;
+}
+.miniBody {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.1em;
+  padding: 0.05em;
+}
+.miniChip {
+  width: 0.5em;
+  height: 0.5em;
+  border-radius: 50%;
+}
+.miniButton {
+  width: 1.1em;
+  height: 0.35em;
+  border-radius: 999px;
+}
+
+/* ── I-035 C: the sheet takes the new colours over --pb-motion-base instead of snapping. */
+.sheet,
+.sheet .option,
+.title,
+.close,
+.done {
+  transition:
+    background-color var(--pb-motion-base) var(--pb-ease),
+    color var(--pb-motion-base) var(--pb-ease),
+    border-color var(--pb-motion-base) var(--pb-ease);
+}
