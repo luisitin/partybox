@@ -33,6 +33,21 @@ export function paint(ctx: CanvasRenderingContext2D, strokes: DecodedStroke[], s
   ctx.clearRect(0, 0, size, size);
   ctx.fillStyle = PAPER;
   ctx.fillRect(0, 0, size, size);
+  // I-021 A: paper — faint ruled lines every 27 units and a red margin, under the strokes. Only
+  // the phone's pad paints through here; the TV renders the same strokes as SVG on plain paper.
+  ctx.lineWidth = 1;
+  ctx.strokeStyle = 'rgba(80, 110, 170, 0.18)';
+  for (let y = 27 * k; y < size; y += 27 * k) {
+    ctx.beginPath();
+    ctx.moveTo(0, Math.round(y) + 0.5);
+    ctx.lineTo(size, Math.round(y) + 0.5);
+    ctx.stroke();
+  }
+  ctx.strokeStyle = 'rgba(214, 88, 88, 0.45)';
+  ctx.beginPath();
+  ctx.moveTo(Math.round(34 * k) + 0.5, 0);
+  ctx.lineTo(Math.round(34 * k) + 0.5, size);
+  ctx.stroke();
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
   for (const s of strokes) {

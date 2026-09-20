@@ -203,3 +203,8 @@
     height: 28px;
   }
 }
+
+/* ── I-021 A: the picked swatch wobbles once, like a pencil lifted from the tray. */
+.swatchOn {
+  animation: global(pb-bump) var(--pb-motion-base) var(--pb-ease) both;
+}
