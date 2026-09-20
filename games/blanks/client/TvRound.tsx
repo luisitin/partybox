@@ -16,10 +16,19 @@ type Props = GameTvProps<BlanksTvView>;
 /** The round card's three beats: the fan and the round (0), who is judging (400), who is ahead
  *  (800) — the hold used to land as one pop and then sit still for four seconds (loop #194). */
 export const INTRO_BEATS_MS = [0, 400, 800] as const;
+/** I-015 A: when each card of the round card's fan lands (the fan's own rise delays). */
+const FAN_PLUCKS_MS = [0, 75, 150] as const;
 
 export function TvIntro({ view }: Props): JSX.Element {
   const last = view.round === view.rounds;
   const beat = useBeats(INTRO_BEATS_MS);
+  // I-015 A: each card of the fan lands with the game's own `card` pluck — on the cards' own
+  // delays (0 / 75 / 150 ms); the shell's phase chime has already sounded.
+  const play = useSound();
+  useEffect(() => {
+    const ts = FAN_PLUCKS_MS.map((ms) => setTimeout(() => play('card'), ms));
+    return () => ts.forEach((t) => clearTimeout(t));
+  }, [play]);
   // Nobody has scored yet → no leader line (every rank-1 row would be the whole room).
   const top = view.standings.filter((r) => r.rank === 1);
   const leaders =

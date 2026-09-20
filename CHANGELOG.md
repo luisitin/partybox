@@ -5,6 +5,8 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Blanks' round card is dealt** (I-015, option A): the two white cards are tossed onto the felt
+  instead of rising in place, and each of the three cards lands with the game's `card` pluck.
 - **Bingo's next pattern is the size of the board** (I-012, option C): between rounds the pattern demo
   sits at 216 px in its own column left of the Points board, and its first pass thumps a `daub` per
   square as it lights; the loops after it stay silent.
