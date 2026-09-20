@@ -28,6 +28,8 @@ export interface FilledCardProps {
   /** Emphasised (the winner). */
   winner?: boolean;
   ariaLabel?: string;
+  /** I-017 C: the words light up one after another on the reveal's clock (the hero card). */
+  readAlong?: boolean;
 }
 
 // A Pick 3 with three long whites runs past 190 characters: h2 still fits the stage in five
@@ -69,14 +71,30 @@ export function FilledCard({
   className,
   winner,
   ariaLabel,
+  readAlong = false,
 }: FilledCardProps): JSX.Element {
   const { segments, extra } = fill(text, whites);
   const sizeClass = styles[size] ?? '';
   const parts = glueBlanks(segments);
   let fills = 0;
+  // I-017 C: read along — every word (and every white) carries its character offset, and the
+  // CSS lights them in order at the reveal's own 16 ms a character.
+  let chars = 0;
+  const words = (s: string, key: number): JSX.Element[] =>
+    s.split(/(\s+)/).map((w, k) => {
+      const at = chars;
+      chars += w.length;
+      return w.trim() === '' ? (
+        <span key={`${key}:${k}`}>{w}</span>
+      ) : (
+        <span key={`${key}:${k}`} className={styles.word} style={{ '--pb-ch': at } as CSSProperties}>
+          {w}
+        </span>
+      );
+    });
   return (
     <article
-      className={`${styles.black} ${sizeClass} ${lengthClass(size, text, whites)} ${letter ? styles.lettered : ''} ${winner ? styles.winner : ''} ${className ?? ''}`}
+      className={`${styles.black} ${sizeClass} ${lengthClass(size, text, whites)} ${letter ? styles.lettered : ''} ${winner ? styles.winner : ''} ${readAlong ? styles.readAlong : ''} ${className ?? ''}`}
       aria-label={ariaLabel ?? fillText(text, whites)}
     >
       {letter ? (
@@ -92,10 +110,12 @@ export function FilledCard({
             <mark
               key={`${i}:${s.text}`}
               className={styles.fill}
-              style={{ '--fill-index': fills++ } as CSSProperties}
+              style={{ '--fill-index': fills++, '--pb-ch': (chars += s.text.length) - s.text.length } as CSSProperties}
             >
               {glue(s.text)}
             </mark>
+          ) : readAlong && s.text.trim() !== '' ? (
+            <span key={i}>{words(s.text, i)}</span>
           ) : (
             // A bare space between two whites ("____, ____") becomes a visible gap, so two
             // paper marks never read as one slab (review-loop #99).

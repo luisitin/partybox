@@ -1273,3 +1273,19 @@
     transform: none;
   }
 }
+
+/* ── I-017 C: read along — the hero card's words start dim and light up in order, each at its
+   character offset × 16 ms (REVEAL_PER_CHAR_MS) from 600 ms in, so the sweep paces the reader.
+   Opacity only; the flip's 3D context is untouched (the words are inside the card). */
+.readAlong .word,
+.readAlong .fill {
+  animation: pb-bl-readword var(--pb-motion-base) var(--pb-ease) calc(600ms + var(--pb-ch, 0) * 16ms) both;
+}
+@keyframes pb-bl-readword {
+  from {
+    opacity: 0.35;
+  }
+  to {
+    opacity: 1;
+  }
+}
