@@ -66,11 +66,28 @@
   display: grid;
   place-items: center;
   background: var(--pb-scrim);
-  animation: global(pb-fade-in) var(--pb-motion-base) var(--pb-ease) both;
+  /* I-030 A: the curtain drops from the top edge and lifts back up (transform only). */
+  animation: pb-curtain-drop var(--pb-motion-slow) var(--pb-ease) both;
 }
 
 .curtain.leaving {
-  animation-name: global(pb-fade-out);
+  animation-name: pb-curtain-lift;
+}
+@keyframes pb-curtain-drop {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes pb-curtain-lift {
+  from {
+    transform: none;
+  }
+  to {
+    transform: translateY(-100%);
+  }
 }
 
 .pausedCard {
@@ -84,7 +101,8 @@
   background: var(--pb-surface);
   box-shadow: 0 6px 20px rgb(0 0 0 / 40%);
   text-align: center;
-  animation: global(pb-rise) var(--pb-motion-slow) var(--pb-ease) both;
+  /* I-030 A: the card lands once the curtain is down. */
+  animation: global(pb-land) var(--pb-motion-base) var(--pb-ease) var(--pb-motion-slow) both;
 }
 
 /* No digits to protect (quiet / hidden timer): only the ⏸ glyph ever shows here (review-loop #1). */
@@ -92,4 +110,23 @@
   flex: 0 0 auto;
   display: flex;
   justify-content: flex-end;
+}
+
+/* ── I-030 B: the room steps back while paused — the stage scales to 0.96 and the strip's chips
+   dim to 60 %, over the curtain's own 600 ms (transform + opacity on the containers only). */
+.held .game,
+.held .gameQuick {
+  transform: scale(0.96);
+  transition: transform var(--pb-motion-slow) var(--pb-ease);
+}
+.held .strip {
+  opacity: 0.6;
+  transition: opacity var(--pb-motion-slow) var(--pb-ease);
+}
+.game,
+.gameQuick {
+  transition: transform var(--pb-motion-slow) var(--pb-ease);
+}
+.strip {
+  transition: opacity var(--pb-motion-slow) var(--pb-ease);
 }
