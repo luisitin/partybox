@@ -50,6 +50,17 @@ export function TextAnswer(props: TextAnswerProps): JSX.Element {
   }, [promptKey]);
   const trimmed = text.trim();
   const canSubmit = trimmed.length > 0 && !submitted && !disabled;
+  // I-001 C: a field left empty for 3 s breathes until a character lands — sequencing, not a
+  // timer the phone shows, so it is not gated on reduced motion (the keyframe itself is).
+  const [stalled, setStalled] = useState(false);
+  useEffect(() => {
+    if (text.length > 0 || submitted || disabled) {
+      setStalled(false);
+      return;
+    }
+    const handle = setTimeout(() => setStalled(true), 3000);
+    return () => clearTimeout(handle);
+  }, [text, submitted, disabled]);
   if (submitted) {
     // The dead textarea + counter added nothing once the answer was in; show what was sent instead.
     return (
@@ -93,7 +104,7 @@ export function TextAnswer(props: TextAnswerProps): JSX.Element {
       {kicker ? <p className={styles.kicker}>{kicker}</p> : null}
       <p className={styles.prompt}>{prompt}</p>
       <textarea
-        className={styles.input}
+        className={`${styles.input} ${stalled ? styles.stalled : ''}`}
         value={text}
         onChange={(e) => setText(e.target.value.slice(0, maxLength))}
         placeholder={placeholder}
@@ -115,7 +126,12 @@ export function TextAnswer(props: TextAnswerProps): JSX.Element {
           Time's up — your answer wasn't sent.
         </p>
       ) : (
-        <p className={styles.counter} aria-live="off">
+        // I-001 B: keyed on the length so every keystroke remounts the counter and it bumps once.
+        <p
+          key={text.length}
+          className={`${styles.counter} ${text.length > 0 ? styles.typed : ''}`}
+          aria-live="off"
+        >
           {text.length} / {maxLength}
         </p>
       )}
