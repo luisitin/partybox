@@ -14,7 +14,7 @@ CC BY 4.0, see the root README). A failed claim's buzzer comes from the synth; a
 
 The TV calls one number every `callSeconds`; every player daubs their own 5×5 card (or cards — the
 `cards` setting deals 1–4 per player) on their phone however they like (the server accepts every tap,
-called or not; one daub from the pattern, the winning square breathes with a hushed cue). Press
+called or not; a daub stays as an ink blot in the player's own colour; the tap that completes a line bumps its five squares in order; one daub from the pattern, the winning square breathes with a hushed cue). Press
 **BINGO!** and the caller stops: your card goes on the TV — with several cards, the one nearest the
 pattern — the pattern in green ✓, every never-called daub in red ✕, missed pattern squares outlined. Right → a bingo: +1, and any phone may keep the round going on the
 same cards (that card sits the pattern out; your other cards play on) or move on. Wrong → **that card

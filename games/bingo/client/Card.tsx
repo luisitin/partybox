@@ -100,10 +100,17 @@ export function Card({
   if (seen.key !== key) setSeen({ key, was: daubs });
   const stamped = new Set<number>();
   const lifted = new Set<number>();
+  // I-010 C: a stamp that completes a line (row, column or diagonal through it) bumps its five
+  // cells in order — --pb-i is the cell's place along the line. FREE counts as daubed.
+  const lineHit = new Map<number, number>();
   if (interactive && seen.key !== key) {
     const before = new Set(seen.was);
     for (const i of daubed) if (!before.has(i)) stamped.add(i);
     for (const i of before) if (!daubed.has(i)) lifted.add(i);
+    for (const i of stamped)
+      for (const line of linesThrough(i))
+        if (line.every((k) => k === FREE || daubed.has(k)))
+          line.forEach((k, place) => lineHit.set(k, place));
   }
   return (
     <div
@@ -156,6 +163,7 @@ export function Card({
             wantedSet.has(i) && !isDaubed ? styles.wanted : '',
             isFree ? styles.free : '',
             stamped.has(i) ? styles.stamp : '',
+            lineHit.has(i) ? styles.lineHit : '',
             sent && isDaubed ? styles.sent : '',
             lifted.has(i) ? styles.unstamp : '',
           ].join(' ');
@@ -169,7 +177,9 @@ export function Card({
               ? ({ animationDelay: `${turnAt.get(i) ?? 0}ms` } as CSSProperties)
               : sent && isDaubed
                 ? ({ animationDelay: `${i * 18}ms` } as CSSProperties)
-                : undefined;
+                : lineHit.has(i)
+                  ? ({ '--pb-i': lineHit.get(i) } as CSSProperties)
+                  : undefined;
           return (
             <Tag
               key={i}
@@ -193,6 +203,17 @@ export function Card({
       </div>
     </div>
   );
+}
+
+/** The row, the column and any diagonal through cell `i`, each as its five indices in order. */
+function linesThrough(i: number): number[][] {
+  const r = Math.floor(i / 5);
+  const c = i % 5;
+  const five = [0, 1, 2, 3, 4];
+  const lines = [five.map((k) => r * 5 + k), five.map((k) => k * 5 + c)];
+  if (r === c) lines.push(five.map((k) => k * 6));
+  if (r + c === 4) lines.push(five.map((k) => 4 + k * 4));
+  return lines;
 }
 
 /** Tiny pattern icon: the shape the round is after, nothing else. */

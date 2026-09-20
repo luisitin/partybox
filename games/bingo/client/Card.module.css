@@ -509,7 +509,9 @@ button.cell:focus-visible {
 }
 @media (prefers-reduced-motion: reduce) {
   .stamp,
-  .unstamp {
+  .unstamp,
+  .lineHit,
+  .stamp.lineHit {
     animation: none;
   }
   .stamp::before {
@@ -518,7 +520,9 @@ button.cell:focus-visible {
 }
 /* The in-app motion switch (loop 311): the same as reduced motion. */
 :global(:root[data-motion='off']) .stamp,
-:global(:root[data-motion='off']) .unstamp {
+:global(:root[data-motion='off']) .unstamp,
+:global(:root[data-motion='off']) .lineHit,
+:global(:root[data-motion='off']) .stamp.lineHit {
   animation: none;
 }
 :global(:root[data-motion='off']) .stamp::before {
@@ -556,4 +560,48 @@ button.cell:focus-visible {
 /* The in-app motion switch (loop 311): the same as reduced motion. */
 :global(:root[data-motion='off']) .sent {
   animation: none;
+}
+
+/* ── I-010: the ink stays (an irregular blot, not a flat fill) — phones only (the Focus / tablet
+   card and the compact cards of Grid, Stack, Side by side, Strip and the thumbnails); the TV and
+   every verdict card (green / red / dimmed cells) keep the flat daub so a reveal reads as today.
+   The blot sits under the number (z-index), rotated a little per column so no two look stamped
+   by a machine; its colour is the player's own (`--pb-daub`, set by the phone's Controller). */
+:is(.phone, .compact) .cell.daubed:not(.free, .green, .red, .dim) {
+  background: var(--pb-surface-2);
+}
+:is(.phone, .compact) .cell.daubed:not(.free, .green, .red, .dim)::after {
+  content: '';
+  position: absolute;
+  inset: 4%;
+  border-radius: 46% 54% 60% 40% / 50% 44% 56% 50%;
+  background: var(--pb-daub, var(--pb-accent));
+  opacity: 0.92;
+  transform: rotate(var(--pb-blot-rot, -6deg)) scale(1.06);
+  pointer-events: none;
+}
+:is(.phone, .compact) .cell.daubed:not(.free, .green, .red, .dim) .number {
+  position: relative;
+  z-index: 1;
+}
+:is(.phone, .compact) .cell:nth-child(3n + 2).daubed::after {
+  --pb-blot-rot: 5deg;
+  border-radius: 44% 56% 62% 38% / 48% 40% 60% 52%;
+}
+:is(.phone, .compact) .cell:nth-child(3n).daubed::after {
+  --pb-blot-rot: -2deg;
+  border-radius: 58% 42% 50% 50% / 46% 58% 42% 54%;
+}
+
+/* ── I-010 C: the tap that completes a line — the five cells bump in order (60 ms apart). The
+   cell just stamped keeps its landing and bumps after it (two animations, not one replacing
+   the other — the branch's rule silently dropped the stamp-land on the completing cell). */
+.lineHit {
+  animation: global(pb-bump) var(--pb-motion-base) var(--pb-ease) calc(var(--pb-i, 0) * 60ms) both;
+}
+.stamp.lineHit {
+  animation:
+    stamp-land var(--pb-motion-base) cubic-bezier(0.2, 0.9, 0.3, 1.2) both,
+    global(pb-bump) var(--pb-motion-base) var(--pb-ease)
+      calc(var(--pb-motion-base) + var(--pb-i, 0) * 60ms) both;
 }

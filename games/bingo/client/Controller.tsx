@@ -4,8 +4,8 @@
 // BINGO! takes two taps (dibs for 3 s). `send` is the only way out; the server accepts every daub
 // and judges only the claim, on the card named.
 import { useEffect, useState } from 'react';
-import type { JSX } from 'react';
-import { Screen, WaitingScreen, useSound } from '@partybox/game-sdk/ui';
+import type { CSSProperties, JSX } from 'react';
+import { Screen, WaitingScreen, avatarColorVar, useSound } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { Input } from '../server/types';
 import type { BingoControllerView } from '../server/views';
@@ -269,6 +269,7 @@ export function Controller({
       >
         <div
           className={`${styles.roundBody} ${sheet && !preview ? styles.dimmed : ''} ${roundOver ? styles.deciding : ''}`}
+          style={{ '--pb-daub': avatarColorVar(me.avatarId) } as CSSProperties} // I-010: the blot's colour
         >
           <div className={styles.topRow}>
             {roundOver ? (

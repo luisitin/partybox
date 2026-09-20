@@ -5,6 +5,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Bingo daubs are ink blots in your colour** (I-010, option C): on the phone a daub stays as an
+  irregular blot in the player's roster colour instead of a flat fill (the TV and verdict cards are
+  unchanged); the tap that completes a row, column or diagonal bumps its five squares in order.
 - **Game recaps on disk** (ADR-035): each game a room plays is written to `recordings/<game>/<time>-<room>/`
   — `session.json`, `state.json` and a `recap.md` (Broken Pencil's books with every drawing as SVG,
   Wisecrack's prompts, answers and votes, Lightning Round's questions with every pick). A **Save a

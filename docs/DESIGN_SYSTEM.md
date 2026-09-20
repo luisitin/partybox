@@ -79,6 +79,7 @@ Phone: every `Screen` rises on mount (`pb-rise`, `--pb-motion-base`, fill backwa
 when a phase should read as a new screen, and never keys the Controller itself (game-local state would reset).
 TV status swaps (lobby / selecting / playing / results) are keyed and rise (`pb-rise`, fill backwards); a game chunk that
 takes > 150 ms shows a centred "<game> — Getting the game ready…" card, never a stray glyph.
+Bingo's daub (loop 238) lands as a stamp; on the phone the ink then stays as an irregular blot in the player's own colour (`--pb-daub` = the roster's `--pb-player-N`; the TV and every verdict card keep the flat daub), and the tap that completes a line bumps its five cells in order (`pb-bump`, 60 ms apart — I-010).
 Timer: in the last 5 s it switches to `--pb-danger`, scales 1.15×, pulses once per second (`--pb-motion-pulse`, 0 under reduced motion) and ticks (sound `countdown`).
 
 ## Sound cues (Web Audio, synthesized — no files)
