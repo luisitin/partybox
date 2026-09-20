@@ -107,9 +107,12 @@ export function TvApp(): JSX.Element {
     paused: boolean;
     code: string;
     locked: number;
+    /** I-009 B: who was offline last snapshot — a drop plays `leave`, a return `join`. */
+    offline: Set<string>;
   }>({
     players: 0,
     ids: new Set(),
+    offline: new Set(),
     status: '',
     phase: null,
     deadline: null,
@@ -132,6 +135,17 @@ export function TvApp(): JSX.Element {
       if (gone && performance.now() - lastLeaveAt.current >= 300) {
         lastLeaveAt.current = performance.now();
         audio.play('leave');
+      }
+    }
+    // I-009 B: a link dropping or returning mid-room — the room's own leave/join pair, one per
+    // 300 ms like the leave rule; a fresh room (Home reset) or a TV reload says nothing.
+    if (p.status !== '' && p.code === room.code) {
+      const offlineNow = new Set(room.players.filter((pl) => !pl.connected).map((pl) => pl.id));
+      const dropped = [...offlineNow].some((id) => !p.offline.has(id) && p.ids.has(id));
+      const back = [...p.offline].some((id) => !offlineNow.has(id) && room.players.some((pl) => pl.id === id));
+      if ((dropped || back) && performance.now() - lastLeaveAt.current >= 300) {
+        lastLeaveAt.current = performance.now();
+        audio.play(dropped ? 'leave' : 'join');
       }
     }
     const paused = view?.paused ?? false;
@@ -188,6 +202,7 @@ export function TvApp(): JSX.Element {
     prev.current = {
       players: room.players.length,
       ids: new Set(room.players.map((pl) => pl.id)),
+      offline: new Set(room.players.filter((pl) => !pl.connected).map((pl) => pl.id)),
       status: room.status,
       phase: view?.phaseId ?? null,
       deadline: view?.deadline ?? null,

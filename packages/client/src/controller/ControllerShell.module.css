@@ -201,6 +201,9 @@
   display: block;
   color: var(--pb-text-muted);
   font-weight: 700;
+  /* I-009 C: the link is down — the cue breathes (the lobby's idle keyframe; absent under
+     reduced motion) so the phone reads as waiting, not frozen. */
+  animation: global(pb-breathe) calc(var(--pb-motion-pulse) * 2) ease-in-out infinite;
   text-transform: none;
   letter-spacing: 0;
 }

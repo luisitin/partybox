@@ -87,6 +87,15 @@ export function ControllerShell({
     roomStatus: string;
     error: ControllerState['error'];
   }>({ status: null, phase: null, roomStatus: '', error: null });
+  // I-009 C: the link comes back — it lands in the hand: one short buzz and the `join` note.
+  const wasOnline = useRef(online);
+  useEffect(() => {
+    if (online && !wasOnline.current) {
+      audio?.play('join');
+      buzz(30);
+    }
+    wasOnline.current = online;
+  }, [online, audio]);
   useEffect(() => {
     const p = prev.current;
     const roomStatus = room?.status ?? '';
