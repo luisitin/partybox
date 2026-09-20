@@ -73,3 +73,20 @@
   color: var(--pb-text-muted);
   font-variant-numeric: tabular-nums;
 }
+
+/* ── I-001 A: the field joins the last 5 s (`data-urgent` on the controller shell, as the primary
+   button does): a danger border and the shell's once-a-second beat, so the whole card escalates,
+   not one label. --pb-motion-pulse is 0 under reduced motion → no beat, the border alone. */
+[data-urgent] .input:not(:disabled) {
+  border-color: var(--pb-danger);
+  animation: pb-urge var(--pb-motion-pulse) ease-in-out infinite;
+}
+@keyframes pb-urge {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
