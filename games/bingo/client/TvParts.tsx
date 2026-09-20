@@ -36,6 +36,7 @@ import {
   STEP_MANY_MS,
   STEP_MS,
   STING_LAG_MS,
+  WIPE_AT_MS,
 } from '../server/reveal';
 
 const BOARD_ROWS = ['B', 'I', 'N', 'G', 'O'] as const;
@@ -201,9 +202,17 @@ export function ClaimStage({
   // A card with nothing beyond the pattern has no "rest" to show: straight on to the suspense.
   const restMs = claim.daubs.some((i) => !order.includes(i)) ? REST_MS : 0;
   const settleAt = restAt + restMs + HOLD_MS;
-  const seq = useSequence([0, cardAt, cardAt + DROP_MS, restAt, settleAt, settleAt + SETTLE_MS]);
+  const seq = useSequence([
+    0,
+    cardAt,
+    cardAt + DROP_MS,
+    restAt,
+    settleAt,
+    settleAt + SETTLE_MS,
+    settleAt + SETTLE_MS + WIPE_AT_MS,
+  ]);
   const [late] = useState(judged === true); // judged at mount: straight to the end, no sounds
-  const beat = late ? 5 : seq;
+  const beat = late ? 6 : seq;
   const reduced = usePrefersReducedMotion();
   const sound = useSoundApi();
   const landed = beat >= 1; // the card is on stage (dropping in)
@@ -211,6 +220,7 @@ export function ClaimStage({
   const restShown = beat >= 3; // the other tiles fade in together
   const decided = beat >= 4; // the card settles into its column
   const shown = beat >= 5; // the verdict pops beside it — and sounds
+  const wiped = beat >= 6 && !valid; // a wrong claim: the daubs lift off, the wipe is watched
   const line = valid ? lineOf(order) : null;
   const sweeps = turning && line !== null && !reduced && !late;
   // The announce beat has a sound of its own: the caller is hushed, so a lift ("someone has a
@@ -237,7 +247,7 @@ export function ClaimStage({
       <div className={`${styles.claimStage} ${decided ? styles.decided : ''}`}>
         {landed ? (
           <div
-            className={`${styles.claim} ${styles.claimLand} ${shown && valid ? styles.shine : ''}`}
+            className={`${styles.claim} ${styles.claimLand} ${shown && valid ? styles.shine : ''} ${shown && !valid ? styles.claimWrong : ''}`}
           >
             <Card
               numbers={claim.card}
@@ -251,6 +261,7 @@ export function ClaimStage({
               revealStepMs={step}
               restShown={restShown}
               settled={decided}
+              wiped={wiped}
               sweep={turning && line && !reduced ? { ...line, ms: lineMs } : null}
             />
           </div>

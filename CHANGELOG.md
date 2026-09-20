@@ -5,6 +5,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Bingo's wrong claim is a moment** (I-006, option B): the checked card shakes with the NOT A BINGO
+  buzzer, and 1.2 s later its daubs lift off one by one in reading order, each squeezing as its
+  colour drains — the wipe is watched, not read.
 - **Blanks result lands one thing at a time** (I-005, option C): the winning card's voter chips pop in
   120 ms apart with a `lock` note each, the other cards' pills rise 60 ms apart fewest votes first,
   and as the winner is named the pills step back to 55 % and the confetti is twice as thick.

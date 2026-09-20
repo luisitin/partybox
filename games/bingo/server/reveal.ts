@@ -32,6 +32,9 @@ export function verdictAtMs(patternCells: number, hasRest: boolean): number {
 /** After the verdict lands the room reads it: the check phase ends this long after. */
 export const VERDICT_READ_MS = 3_000;
 
+/** A wrong claim: the daubs lift off the TV's card this long after NOT A BINGO (I-006 B). */
+export const WIPE_AT_MS = 1_200;
+
 /** The reveal's length for one claim: its pattern cells, and whether other daubs rest in. */
 export function claimRevealMs(cells: readonly number[], daubs: readonly number[]): number {
   return verdictAtMs(
