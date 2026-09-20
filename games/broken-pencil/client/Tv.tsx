@@ -115,7 +115,11 @@ function CurrentPage({ page }: { page: PageView }): JSX.Element {
   if (page.kind === 'word')
     return (
       // Three beats (review-loop #17): the kicker follows the title, then the word pops.
-      <div className={styles.page}>
+      <div className={`${styles.page} ${styles.opened}`}>
+        {/* I-008 B: the book opens — a cover printed with the owner's name turns away first. */}
+        <div className={styles.cover} aria-hidden>
+          <span className={styles.coverTitle}>{page.authorName}'s book</span>
+        </div>
         <p className={`${styles.pageWho} ${styles.beat2}`}>{page.authorName}'s secret word</p>
         <div className={styles.beat3}>
           <BigText level="display">“{page.text}”</BigText>
@@ -221,7 +225,7 @@ export function Tv({ view }: GameTvProps<PencilTvView>): JSX.Element {
             {current ? <CurrentPage page={current} /> : null}
             {last ? (
               <div
-                className={`${styles.verdict} ${s.verdict === 'intact' ? styles.intact : styles.broken} pb-enter`}
+                className={`${styles.verdict} ${s.verdict === 'intact' ? styles.intact : styles.broken} ${styles.stamp}`}
               >
                 <span className={styles.verdictLine}>{s.verdictLine}</span>
                 <span className={styles.verdictPair}>
