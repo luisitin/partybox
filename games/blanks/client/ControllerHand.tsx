@@ -201,7 +201,7 @@ export function ControllerHand({ view, send, skip }: Props): JSX.Element {
           size="phone"
         />
       </div>
-      <ul className={styles.hand} aria-label="your hand">
+      <ul className={styles.hand} aria-label="your hand" data-picking={picked.length > 0 || undefined}>
         {view.hand.map((card, i) => {
           const order = picked.indexOf(card.id);
           const on = order !== -1;

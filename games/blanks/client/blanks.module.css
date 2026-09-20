@@ -1273,3 +1273,19 @@
     transform: none;
   }
 }
+
+/* ── I-015 A: the pick stands out — the picked card lifts 8 px at 1.02, the rest of the hand
+   steps back to 70 % while anything is picked (transform + opacity, the card's own transition). */
+.white {
+  transition:
+    translate var(--pb-motion-base) var(--pb-ease),
+    scale var(--pb-motion-base) var(--pb-ease),
+    opacity var(--pb-motion-base) var(--pb-ease);
+}
+.whiteOn {
+  translate: 0 -8px;
+  scale: 1.02;
+}
+.hand[data-picking] .white:not(.whiteOn):not(:disabled) {
+  opacity: 0.7;
+}
