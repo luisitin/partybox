@@ -175,16 +175,19 @@
 
 /* A page turn is a cut (quickInto: show): the page is visible from its first frame and settles
    from a slight lift, like a leaf laid down — never a fade from nothing (a blank frame, loop 412). */
+/* I-008 A: a real page turn — the page pivots in on its left edge under the stage's perspective
+   (transform only; visible from the first frame at −70°, never a blank). */
 .flip {
-  animation: pageFlip var(--pb-motion-base) var(--pb-ease) both;
+  transform-origin: left center;
+  animation: pageFlip var(--pb-motion-slow) var(--pb-ease) both;
 }
 
 @keyframes pageFlip {
   from {
-    transform: scale(0.96) translateY(8px);
+    transform: perspective(1400px) rotateY(-70deg);
   }
   to {
-    transform: none;
+    transform: perspective(1400px) rotateY(0deg);
   }
 }
 
