@@ -232,6 +232,8 @@
 }
 
 .fanWhite {
+  /* I-013 A: dealt, not risen — Blanks' own toss onto the felt. */
+  animation-name: global(pb-deal);
   background: linear-gradient(180deg, var(--card-paper), var(--card-paper-2));
   /* the individual properties compose with the rise animation's transform */
   rotate: -9deg;
