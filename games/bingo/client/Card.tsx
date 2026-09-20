@@ -100,10 +100,24 @@ export function Card({
   if (seen.key !== key) setSeen({ key, was: daubs });
   const stamped = new Set<number>();
   const lifted = new Set<number>();
+  // I-010 C: a stamp that completes a line (row, column or diagonal through it) bumps its five
+  // cells in order — --pb-i is the cell's place along the line.
+  const lineHit = new Map<number, number>();
   if (interactive && seen.key !== key) {
     const before = new Set(seen.was);
     for (const i of daubed) if (!before.has(i)) stamped.add(i);
     for (const i of before) if (!daubed.has(i)) lifted.add(i);
+    for (const i of stamped) {
+      const r = Math.floor(i / 5), c = i % 5;
+      const lines: number[][] = [
+        [0, 1, 2, 3, 4].map((k) => r * 5 + k),
+        [0, 1, 2, 3, 4].map((k) => k * 5 + c),
+      ];
+      if (r === c) lines.push([0, 6, 12, 18, 24]);
+      if (r + c === 4) lines.push([4, 8, 12, 16, 20]);
+      for (const line of lines)
+        if (line.every((k) => k === 12 || daubed.has(k))) line.forEach((k, n) => lineHit.set(k, n));
+    }
   }
   return (
     <div
@@ -156,6 +170,7 @@ export function Card({
             wantedSet.has(i) && !isDaubed ? styles.wanted : '',
             isFree ? styles.free : '',
             stamped.has(i) ? styles.stamp : '',
+            lineHit.has(i) ? styles.lineHit : '',
             sent && isDaubed ? styles.sent : '',
             lifted.has(i) ? styles.unstamp : '',
           ].join(' ');
@@ -169,7 +184,9 @@ export function Card({
               ? ({ animationDelay: `${turnAt.get(i) ?? 0}ms` } as CSSProperties)
               : sent && isDaubed
                 ? ({ animationDelay: `${i * 18}ms` } as CSSProperties)
-                : undefined;
+                : lineHit.has(i)
+                  ? ({ '--pb-i': lineHit.get(i) } as CSSProperties)
+                  : undefined;
           return (
             <Tag
               key={i}

@@ -557,3 +557,37 @@ button.cell:focus-visible {
 :global(:root[data-motion='off']) .sent {
   animation: none;
 }
+
+/* ── I-010: the ink stays (an irregular blot, not a flat fill) — phones only; the TV and the
+   verdict card keep the flat daub so the reveal's greens and reds read as today. The blot sits
+   under the number (z-index), rotated a little per column so no two look stamped by a machine. */
+.phone .cell.daubed:not(.free) {
+  background: var(--pb-surface-2);
+}
+.phone .cell.daubed:not(.free)::after {
+  content: '';
+  position: absolute;
+  inset: 4%;
+  border-radius: 46% 54% 60% 40% / 50% 44% 56% 50%;
+  background: var(--pb-daub, var(--pb-accent));
+  opacity: 0.92;
+  transform: rotate(var(--pb-blot-rot, -6deg)) scale(1.06);
+  pointer-events: none;
+}
+.phone .cell.daubed:not(.free) .number {
+  position: relative;
+  z-index: 1;
+}
+.phone .cell:nth-child(3n + 2).daubed::after {
+  --pb-blot-rot: 5deg;
+  border-radius: 44% 56% 62% 38% / 48% 40% 60% 52%;
+}
+.phone .cell:nth-child(3n).daubed::after {
+  --pb-blot-rot: -2deg;
+  border-radius: 58% 42% 50% 50% / 46% 58% 42% 54%;
+}
+
+/* ── I-010 C: the tap that completes a line — the five cells bump in order (60 ms apart). */
+.lineHit {
+  animation: global(pb-bump) var(--pb-motion-base) var(--pb-ease) calc(var(--pb-i, 0) * 60ms) both;
+}
