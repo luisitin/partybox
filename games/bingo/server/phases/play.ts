@@ -93,7 +93,9 @@ export function canClaim(state: State, playerId: string, card?: number): boolean
   );
 }
 
-/** The card-style menu opened or closed: hold the caller, or start the 3 · 2 · 1. */
+/** The card-style menu opened or closed: hold the caller, or start the 3 · 2 · 1 — after which
+ *  the number that was up is called again (`resumeAgain`), the way the room comes back from a
+ *  bingo: whoever was changing style missed the call (owner's play-test, 2026-09-19). */
 function applyMenu(state: State, playerId: string, open: boolean, now: number): State {
   const next = setMenu(state, playerId, open);
   if (next === state) return state;
@@ -101,14 +103,18 @@ function applyMenu(state: State, playerId: string, open: boolean, now: number): 
   const isOpen = menusOpen(next);
   if (isOpen && !wasOpen)
     return enterPhase({ ...next, round: { ...next.round, resumeAt: null } }, 'play', now, null);
-  if (!isOpen && wasOpen)
-    return enterPhase(
-      { ...next, round: { ...next.round, resumeAt: now + RESUME_MS } },
-      'play',
-      now,
-      RESUME_MS,
-    );
+  if (!isOpen && wasOpen) return resumeAfterHold(next, now);
   return next;
+}
+
+/** The last menu closed: the 3 · 2 · 1, then the held number again. */
+export function resumeAfterHold(state: State, now: number): State {
+  return enterPhase(
+    { ...state, round: { ...state.round, resumeAt: now + RESUME_MS, resumeAgain: true } },
+    'play',
+    now,
+    RESUME_MS,
+  );
 }
 
 export function reducePlay(state: State, event: GameEvent<Input>, exits: PlayExits): State {
