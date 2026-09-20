@@ -5,6 +5,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **A dropped link is seen and heard** (I-009, option C, every game): the player's TV chip flickers
+  out and sits as a ghost, snapping back with a green ring when the link returns; the room hears
+  `leave` / `join`; the phone's "Reconnecting…" breathes and the return lands with a buzz and a note.
 - **Bingo's wrong claim is a moment** (I-006, option B): the checked card shakes with the NOT A BINGO
   buzzer, and 1.2 s later its daubs lift off one by one in reading order, each squeezing as its
   colour drains — the wipe is watched, not read.

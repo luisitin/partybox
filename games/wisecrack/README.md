@@ -49,7 +49,7 @@ measured against the deadline; if > 0).
   skipped and the `reveal` pays the real answer one vote's worth (100 × multiplier, "wins by default").
   With **both** blank the `vote` and `reveal` are skipped (an all-blank round goes straight to `scores`).
 - Disconnected players never block "all answered" / "all voted"; a reconnect before the deadline can
-  act. VIP skip: `intro` → `answer`; `answer` → first votable `vote` (unanswered = blank); `vote` → its
+  act. A drop is seen and heard (shell, I-009): the TV chip flickers out to a ghost and snaps back with a green ring (A), the room hears `leave` / `join` (B), the phone's "Reconnecting…" breathes and the return buzzes with a `join` note (C). VIP skip: `intro` → `answer`; `answer` → first votable `vote` (unanswered = blank); `vote` → its
   `reveal` with the votes so far; `reveal` → next `vote` or `scores`; `scores` → next `intro` or `done`.
   VIP end → `done` from anywhere (a prompt whose `reveal` never ran scores nothing). Pause holds the
   deadline. Every phase but `done` has a deadline, so an idle room finishes on timers alone.

@@ -26,8 +26,12 @@ export interface ControllerShellProps {
 }
 
 /** Haptic patterns (ms on/off) — docs/DESIGN_SYSTEM.md → Haptics. */
-const BUZZ: Record<'submit' | 'error' | 'prompt' | 'winner' | 'results', number | number[]> = {
+const BUZZ: Record<
+  'submit' | 'error' | 'prompt' | 'winner' | 'results' | 'back',
+  number | number[]
+> = {
   submit: 20,
+  back: 30, // I-009 C: the link came back
   error: [40, 60, 40],
   prompt: [30, 50, 30],
   winner: [60, 60, 60, 60, 160],
@@ -87,6 +91,15 @@ export function ControllerShell({
     roomStatus: string;
     error: ControllerState['error'];
   }>({ status: null, phase: null, roomStatus: '', error: null });
+  // I-009 C: the link comes back — it lands in the hand: one short buzz and the `join` note.
+  const wasOnline = useRef(online);
+  useEffect(() => {
+    if (online && !wasOnline.current) {
+      audio?.play('join');
+      buzz(BUZZ.back);
+    }
+    wasOnline.current = online;
+  }, [online, audio]);
   useEffect(() => {
     const p = prev.current;
     const roomStatus = room?.status ?? '';
