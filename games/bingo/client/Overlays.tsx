@@ -27,6 +27,7 @@ export function StyleSheet({
   onPreview,
   onConfirm,
   onClose,
+  note = 'the room is paused',
 }: {
   cards: number;
   current: CardStyle;
@@ -34,6 +35,8 @@ export function StyleSheet({
   onPreview: (id: CardStyle) => void;
   onConfirm: () => void;
   onClose: () => void;
+  /** What the sheet costs the room: a hold in play, nothing on the card-pick step. */
+  note?: string;
 }): JSX.Element {
   const motionOff = useMotionOff();
   // Previewing: the sheet folds to a bar so the whole screen shows the style with the real cards.
@@ -50,7 +53,7 @@ export function StyleSheet({
   return (
     <div className={styles.sheet} role="dialog" aria-label="Card style">
       <h4 className={styles.sheetTitle}>
-        Card style <small>the room is paused</small>
+        Card style <small>{note}</small>
       </h4>
       {STYLES.map((s) => {
         const why = styleReason(s, cards);
