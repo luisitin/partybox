@@ -20,6 +20,11 @@ export function TvLobby({ room }: TvLobbyProps): JSX.Element {
   const empty = players.length === 0;
   return (
     <Stage>
+      {/* I-029 B: the room breathes — two soft glows drift behind the lobby (transform only). */}
+      <div className={styles.glow} aria-hidden>
+        <span className={styles.glowA} />
+        <span className={styles.glowB} />
+      </div>
       <div className={styles.split}>
         <div className={`${styles.join} ${full ? styles.full : ''}`}>
           <BigText
