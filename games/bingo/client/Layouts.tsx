@@ -134,13 +134,15 @@ export function Thumbnails({
       {cards.map((numbers, c) => {
         const won = view.phaseId !== 'intro' && view.won.includes(c);
         const cur = c === marked;
-        const tag = won ? 'BINGO ✓' : cur ? markLabel : spent.includes(c) ? 'swapped' : null;
+        // I-011 A: the up card is told by its gold edge, not a tag (the tag stays for won/swapped)
+        const tag = won ? 'BINGO ✓' : cur ? null : spent.includes(c) ? 'swapped' : null;
+        const fan = cards.length > 1 ? c - (cards.length - 1) / 2 : 0;
         return (
           <button
             type="button"
             key={c}
             className={`${styles.thumb} ${cur ? styles.thumbCur : ''} ${won ? styles.thumbWon : ''}`}
-            style={{ ['--i' as string]: c }}
+            style={{ ['--i' as string]: c, ['--fan' as string]: fan }}
             disabled={cur}
             onClick={() => onPick(c)}
             aria-label={`Card ${c + 1}${cur ? `, ${markLabel}` : ''}${won ? ', won' : ''}`}
