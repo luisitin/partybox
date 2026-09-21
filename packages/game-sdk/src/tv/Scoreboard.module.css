@@ -188,3 +188,69 @@
     var(--pb-i, 0) * var(--pb-stagger-step) + var(--pb-motion-base) + var(--pb-motion-slow)
   );
 }
+
+/* ── I-027 A: the climb (stagger="climb"). Rows fade in where they stood last round — --pb-from
+   rows away (a row's own height plus the board gap per row) — the deltas land a beat later, the
+   totals count from --pb-motion-base, and at 1200 ms every row slides to its new place over
+   --pb-motion-slow. Transform + opacity only; reduced motion drops the wait and the slide. */
+.climb .row {
+  animation:
+    global(pb-fade-in) var(--pb-motion-base) var(--pb-ease) both,
+    pb-climb var(--pb-motion-slow) var(--pb-ease) 1200ms both;
+}
+.climb .delta {
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) var(--pb-motion-base) both;
+}
+@keyframes pb-climb {
+  from {
+    transform: translateY(calc(var(--pb-from, 0) * (100% + var(--pb-space-2))));
+  }
+  to {
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .climb .row {
+    animation-delay: 0ms;
+  }
+}
+:global(:root[data-motion='off']) .climb .row {
+  animation-delay: 0ms;
+}
+
+/* ── I-027 B: movers glow once they settle (1800 ms): a climbed row's outline is green and fades
+   over 1 s, a fallen row's a dim red; a row that held its place gets nothing. The rank digit and
+   the slide itself carry the story — the colour is never alone. */
+.climb .rose,
+.climb .fell {
+  outline: 3px solid transparent;
+  outline-offset: -1px;
+}
+.climb .rose {
+  animation:
+    global(pb-fade-in) var(--pb-motion-base) var(--pb-ease) both,
+    pb-climb var(--pb-motion-slow) var(--pb-ease) 1200ms both,
+    pb-glow-up var(--pb-motion-pulse) ease-out 1800ms both;
+}
+.climb .fell {
+  animation:
+    global(pb-fade-in) var(--pb-motion-base) var(--pb-ease) both,
+    pb-climb var(--pb-motion-slow) var(--pb-ease) 1200ms both,
+    pb-glow-down var(--pb-motion-pulse) ease-out 1800ms both;
+}
+@keyframes pb-glow-up {
+  from {
+    outline-color: var(--pb-accent-3);
+  }
+  to {
+    outline-color: transparent;
+  }
+}
+@keyframes pb-glow-down {
+  from {
+    outline-color: color-mix(in srgb, var(--pb-danger) 60%, transparent);
+  }
+  to {
+    outline-color: transparent;
+  }
+}

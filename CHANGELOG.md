@@ -5,6 +5,10 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Wisecrack's round board is a climb** (I-027, option B): rows appear in last round's order, the
+  deltas land and the totals count, then every row slides to its new place — overtakes are watched;
+  a row that rose glows green as it settles, one that fell dim red. New `Scoreboard`
+  `stagger="climb"` + `climbFrom` in the game-sdk.
 - **Blanks' reader is pointed at** (I-017, option B): the seat asked to read a card out is ringed in
   the TV's roster strip while it reads, and the "read it out" pill carries their face and pops on
   every new card. New optional client-module hook `stripActive(view)` for any game to point the

@@ -18,6 +18,16 @@ export function TvScores({ view }: Props): JSX.Element {
   // all zeros instead of landing unexplained (review-loop #35).
   const tied = view.standings.filter((r) => r.rank === 1).length > 1;
   const silentRound = view.promptsPlayed === 0;
+  // I-027: where every row stood before this round — by pre-delta score, ties in roster order
+  // (after round 1 everyone was level: the roster IS the old board).
+  const roster = new Map(view.players.map((p, i) => [p.id, i]));
+  const climbFrom = [...view.standings]
+    .sort(
+      (a, b) =>
+        b.score - b.delta - (a.score - a.delta) ||
+        (roster.get(a.playerId) ?? 0) - (roster.get(b.playerId) ?? 0),
+    )
+    .map((r) => r.playerId);
   return (
     <Stage center>
       <p className={styles.kicker}>
@@ -35,7 +45,7 @@ export function TvScores({ view }: Props): JSX.Element {
         </BigText>
       ) : null}
       <div className={styles.board}>
-        <Scoreboard rows={view.standings} noTrophy stagger="up" />
+        <Scoreboard rows={view.standings} noTrophy stagger="climb" climbFrom={climbFrom} />
       </div>
       {final ? (
         <BigText level="h2" tone="accent">
