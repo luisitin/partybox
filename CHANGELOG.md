@@ -5,6 +5,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **An all-zero board is not a tie** (I-128, option C): the results read "No bingos this time" /
+  "Nobody scored" with "The game ended before anyone could.", the rank column is blank
+  (`Scoreboard` `noRanks`), and a quiet `leave` lands instead of the cheer.
 - **A lapsed BINGO? resolves** (I-115, option C): the TV's "Priya says BINGO?…" holds a beat as
   "— never mind" with a quiet `bust` and fades; her phone says "Dibs lapsed — tap twice within
   3 s to claim" for two seconds.

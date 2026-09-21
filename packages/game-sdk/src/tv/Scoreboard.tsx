@@ -54,6 +54,8 @@ export interface ScoreboardProps {
   stagger?: 'up' | 'down' | 'climb' | false;
   /** I-019: hold every total as "—" this long after mount, then count up from zero (a reveal). */
   holdMs?: number;
+  /** I-128 B: no rank numbers (an all-zero board has nothing to rank). */
+  noRanks?: boolean;
   /** With `climb`: the previous order of the same players (ids). Missing ids are treated as unmoved. */
   climbFrom?: readonly string[];
 }
@@ -157,6 +159,7 @@ export function Scoreboard({
   stagger = 'up',
   climbFrom = [],
   holdMs = 0,
+  noRanks = false,
 }: ScoreboardProps): JSX.Element {
   const tier = tierOf(rows.length, compact, dense, columns);
   const cols = COLUMNS[tier];
@@ -189,7 +192,7 @@ export function Scoreboard({
           }
         >
           <span className={styles.rank} aria-label={`rank ${row.rank}`}>
-            {heldRanks ? '·' : row.rank === 1 && trophy ? '🏆' : row.rank}
+            {noRanks ? '' : heldRanks ? '·' : row.rank === 1 && trophy ? '🏆' : row.rank}
           </span>
           <Avatar
             avatarId={row.avatarId}

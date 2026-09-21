@@ -88,10 +88,10 @@ describe('winnerLineFor', () => {
     );
     expect(winnerLineFor(all, 'Sam')).toBe("It's a tie!");
   });
-  it('calls a zero-score game a tie (review-loop #6), whoever asks; a lone player just gets game over', () => {
+  it('calls a zero-score game "Nobody scored" (I-128: an honest state, not a tie), whoever asks', () => {
     const none = room({ Sam: 0, Priya: 0 }, [], []);
-    expect(winnerLineFor(none, 'Sam')).toBe("It's a tie!");
-    expect(winnerLineFor(room({ Sam: 0 }, [], []), 'Sam')).toBe('Game over');
+    expect(winnerLineFor(none, 'Sam')).toBe('Nobody scored');
+    expect(winnerLineFor(room({ Sam: 0 }, [], []), 'Sam')).toBe('Nobody scored');
   });
   it('falls back to the shared line for a spectator', () => {
     expect(winnerLineFor(three, 'Ghost')).toBe('Sam wins!');
