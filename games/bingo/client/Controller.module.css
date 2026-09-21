@@ -1250,3 +1250,17 @@
     width: 100%;
   }
 }
+
+/* ── I-115 C: the lapsed-dibs hint under the button. */
+.lapsedHint {
+  display: block;
+  margin-top: var(--pb-space-1);
+  text-align: center;
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  color: var(--pb-accent-2);
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
+:global(:root[data-motion='off']) .lapsedHint {
+  animation: none;
+}

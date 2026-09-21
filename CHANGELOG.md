@@ -5,6 +5,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **A lapsed BINGO? resolves** (I-115, option C): the TV's "Priya says BINGO?…" holds a beat as
+  "— never mind" with a quiet `bust` and fades; her phone says "Dibs lapsed — tap twice within
+  3 s to claim" for two seconds.
 - **Bingo's card-pick step sideways is two halves** (I-099, option C): the pattern demo big on the
   left, the card with Picked / Ready under it on the right — no dead middle on a landscape phone.
 - **Bingo's BINGO! button pauses with the room** (I-097, option C): dimmed and disabled while

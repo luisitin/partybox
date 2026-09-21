@@ -118,6 +118,25 @@ export function BingoButton({
     setWasHeld(held);
     setBack(!held);
   }
+  // I-115 C: the phone learns the two-tap rule the one time it lapses — the arm went with no
+  // claim of mine. The previous arm lives in state, adjusted during render (no setState in an
+  // effect); a timer clears the hint.
+  const [armSeen, setArmSeen] = useState({ armed: armedHere, lapses: 0, hint: false });
+  if (armSeen.armed !== armedHere) {
+    const lapsed = !armedHere && !checking && !myCheck;
+    setArmSeen({
+      armed: armedHere,
+      lapses: armSeen.lapses + (lapsed ? 1 : 0),
+      hint: lapsed || armSeen.hint,
+    });
+  }
+  const lapses = armSeen.lapses;
+  useEffect(() => {
+    if (lapses === 0) return;
+    const t = setTimeout(() => setArmSeen((v) => ({ ...v, hint: false })), 2200);
+    return () => clearTimeout(t);
+  }, [lapses]);
+  const lapsedHint = armSeen.hint;
   const canTap = view.claimable.includes(card) && !checking && !held;
   let label = 'BINGO!';
   let tone: 'accent' | 'neutral' | 'danger' | 'success' = 'accent';
@@ -176,6 +195,11 @@ export function BingoButton({
       >
         {label}
       </PrimaryButton>
+      {lapsedHint ? (
+        <span className={styles.lapsedHint} aria-live="polite">
+          Dibs lapsed — tap twice within 3 s to claim
+        </span>
+      ) : null}
       {/* The window, draining along the button's foot in step with the TV's bar (loop 256). */}
       {armedHere && arm ? (
         <span

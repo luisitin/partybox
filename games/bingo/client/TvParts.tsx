@@ -89,17 +89,53 @@ export function Call({
 export function DibsLine({
   arm,
   queue,
+  claimed = false,
 }: {
   arm: BingoTvView['arm'];
+  /** I-115: the arm turned into a claim (a check is on) — not a lapse. */
+  claimed?: boolean;
   /** Who is waiting behind the armed player, in order (loop 271: the room sees the queue). */
   queue: string[];
 }): JSX.Element {
+  const sound = useSoundApi();
   const then =
     queue.length === 0
       ? ''
       : queue.length === 1
         ? ` · then ${queue[0]}`
         : ` · then ${queue[0]} and ${queue.length - 1} more`;
+  // I-115 A: a window that lapses (the arm goes with no claim) resolves for one beat.
+  // The previous arm lives in state, adjusted during render (no ref read in render, no setState
+  // in an effect); the effect plays the note and clears the line after its beat.
+  // `ended` is the arm that just went with no claim; the effect checks the clock (impure in
+  // render) and turns it into the line, which clears after its beat.
+  type Arm = NonNullable<BingoTvView['arm']>;
+  const [seen, setSeen] = useState<{
+    arm: BingoTvView['arm'];
+    ended: Arm | null;
+    lapsed: Arm | null;
+  }>({
+    arm,
+    ended: null,
+    lapsed: null,
+  });
+  if (seen.arm !== arm) {
+    const prev = seen.arm;
+    setSeen({ ...seen, arm, ended: prev && !arm && !claimed ? prev : null });
+  }
+  const ended = seen.ended;
+  useEffect(() => {
+    if (!ended) return;
+    if (Date.now() < ended.until - 150) return; // ended early: a claim or a re-arm, not a lapse
+    sound.play('bust', { quiet: true });
+    const show = setTimeout(() => setSeen((v) => ({ ...v, ended: null, lapsed: ended })), 0);
+    const hide = setTimeout(() => setSeen((v) => ({ ...v, lapsed: null })), 1600);
+    return () => {
+      clearTimeout(show);
+      clearTimeout(hide);
+    };
+  }, [ended, sound]);
+  const lapsed = seen.lapsed;
   return (
     <div className={styles.armSlot}>
       {arm ? (
@@ -109,6 +145,12 @@ export function DibsLine({
             {then ? <span className={styles.armThen}>{then}</span> : null}
           </BigText>
           <span className={styles.armDrain} style={{ animationDuration: `${ARM_MS}ms` }} />
+        </div>
+      ) : lapsed ? (
+        <div key={lapsed.until} className={`${styles.armLine} ${styles.armLapsed}`}>
+          <BigText level="h2" tone="muted">
+            {lapsed.name} says BINGO?… — never mind
+          </BigText>
         </div>
       ) : null}
     </div>

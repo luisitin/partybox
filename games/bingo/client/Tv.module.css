@@ -980,3 +980,16 @@
   text-align: center;
   animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
 }
+
+/* ── I-115 A: the lapse resolves — the line holds a beat, muted, and fades. */
+.armLapsed {
+  animation: global(pb-fade-out) var(--pb-motion-slow) var(--pb-ease) 1000ms both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .armLapsed {
+    animation: none;
+  }
+}
+:global(:root[data-motion='off']) .armLapsed {
+  animation: none;
+}
