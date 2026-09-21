@@ -5,6 +5,8 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Bingo's BINGO! button pauses with the room** (I-097, option C): dimmed and disabled while
+  paused, reading "⏸ Paused", popping back the moment play resumes.
 - **Bingo's confirm step in plain words** (I-096, option A): the armed button reads "Tap again ·
   3 s" — the seconds of dibs left, one line on an SE.
 - **Bingo's swap screen says it once** (I-094, option B): the count line ("swap a card, or tap

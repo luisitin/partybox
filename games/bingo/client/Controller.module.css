@@ -1199,3 +1199,17 @@
   gap: 3px;
   animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
 }
+
+/* ── I-097 A: the BINGO! button on hold — dimmed with the rest of the screen while paused. */
+.bingoHeld {
+  opacity: 0.45;
+  transition: opacity var(--pb-motion-base) var(--pb-ease);
+}
+
+/* ── I-097 C: back with a pop on resume. */
+.bingoBack {
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+:global(:root[data-motion='off']) .bingoBack {
+  animation: none;
+}

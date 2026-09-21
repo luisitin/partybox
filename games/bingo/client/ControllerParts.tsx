@@ -109,7 +109,16 @@ export function BingoButton({
   // The check is about one card: only that button says "Not a bingo".
   const myClaim = checking && view.claim?.playerId === meId && view.claim.cardIndex === card;
   const myCheck = myClaim && verdictShown;
-  const canTap = view.claimable.includes(card) && !checking;
+  // I-097 A: on hold with the rest of the screen while the room is paused.
+  const held = view.paused;
+  // I-097 C: the button pops back when play resumes.
+  const [wasHeld, setWasHeld] = useState(held);
+  const [back, setBack] = useState(false);
+  if (held !== wasHeld) {
+    setWasHeld(held);
+    setBack(!held);
+  }
+  const canTap = view.claimable.includes(card) && !checking && !held;
   let label = 'BINGO!';
   let tone: 'accent' | 'neutral' | 'danger' | 'success' = 'accent';
   // The check first: a card under review says so, never "Yours already" before the verdict. The
@@ -126,6 +135,8 @@ export function BingoButton({
             ? 'Not a bingo — see card ' + ((view.claim?.cardIndex ?? 0) + 1)
             : `${who}'s card: not a bingo`
           : 'Look at the TV';
+  else if (held)
+    label = '⏸ Paused'; // I-097 B
   else if (won) label = 'Yours already';
   else if (view.waitingForCall) label = 'Next number soon…';
   else if (armedHere) {
@@ -159,7 +170,8 @@ export function BingoButton({
           }
           send({ type: 'bingo', card });
         }}
-        className={`${small ? styles.bingoSmall : styles.bingo} ${armedHere ? styles.armed : ''}`}
+        className={`${small ? styles.bingoSmall : styles.bingo} ${armedHere ? styles.armed : ''} ${held ? styles.bingoHeld : ''} ${back ? styles.bingoBack : ''}`}
+        onAnimationEnd={() => setBack(false)}
         aria-label={`BINGO! card ${card + 1}${armedHere ? ', armed, tap again to claim' : ''}`}
       >
         {label}
