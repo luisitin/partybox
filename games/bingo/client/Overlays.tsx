@@ -2,7 +2,7 @@
 // Confirm or Keep changing), the curtain while someone else is changing (with a way into your own
 // menu), the 3 · 2 · 1 before calling resumes (the turn gate and the reconnect toast: Notices.tsx).
 import { useEffect } from 'react';
-import type { JSX } from 'react';
+import type { CSSProperties, JSX } from 'react';
 import {
   PrimaryButton,
   buzz,
@@ -17,7 +17,7 @@ import { RESUME_MS, dealDoneMs } from '../server/types';
 import type { Input } from '../server/types';
 import type { BingoControllerView } from '../server/views';
 import { StyleMini } from './StyleMini';
-import { STYLES, styleReason } from './styles';
+import { DAUBS, INKS, STYLES, setDaubStyle, setInk, styleReason, useDaubStyle, useInk } from './styles';
 import type { CardStyle } from './styles';
 import styles from './Controller.module.css';
 
@@ -40,6 +40,8 @@ export function StyleSheet({
   note?: string;
 }): JSX.Element {
   const motionOff = useMotionOff();
+  const daub = useDaubStyle();
+  const ink = useInk();
   // Previewing: the sheet folds to a bar so the whole screen shows the style with the real cards.
   if (preview)
     return (
@@ -102,6 +104,44 @@ export function StyleSheet({
           <StyleMini id="motion" live={!motionOff} />
         </span>
       </button>
+
+      {/* S-002 A: the daub's look — Blot, Stamp or Ring — per phone, applied at once. */}
+      <p className={styles.sheetGroup}>Daub</p>
+      <div className={styles.choiceRow} role="radiogroup" aria-label="Daub">
+        {DAUBS.map((d) => (
+          <button
+            type="button"
+            key={d.id}
+            role="radio"
+            aria-checked={daub === d.id}
+            className={`${styles.choice} ${daub === d.id ? styles.choiceOn : ''}`}
+            onClick={() => setDaubStyle(d.id)}
+          >
+            <span className={styles.choiceCell} data-daub={d.id} aria-hidden>
+              <i>27</i>
+            </span>
+            {d.label}
+          </button>
+        ))}
+      </div>
+      {/* S-002 B: the ink. */}
+      <p className={styles.sheetGroup}>Ink</p>
+      <div className={styles.choiceRow} role="radiogroup" aria-label="Ink">
+        {INKS.map((i) => (
+          <button
+            type="button"
+            key={i.id}
+            role="radio"
+            aria-checked={ink === i.id}
+            className={`${styles.choice} ${ink === i.id ? styles.choiceOn : ''}`}
+            onClick={() => setInk(i.id)}
+            style={i.css ? ({ '--pb-swatch': i.css } as CSSProperties) : undefined}
+          >
+            <span className={`${styles.swatch} ${i.css ? '' : styles.swatchMine}`} aria-hidden />
+            {i.label}
+          </button>
+        ))}
+      </div>
       <p className={styles.sheetNote}>Theme: the 🎨 in the top bar, any time.</p>
       <PrimaryButton tone="neutral" onClick={onClose}>
         Close
