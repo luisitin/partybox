@@ -143,3 +143,9 @@
     }
   }
 }
+
+/* ── I-072 A: the QR is 560 px while nobody has joined (the couch can scan it), 360 px after. */
+.qrBig {
+  width: 560px;
+  height: 560px;
+}
