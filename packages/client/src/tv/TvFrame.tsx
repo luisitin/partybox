@@ -98,8 +98,9 @@ export function TvFrame({
             <span className={styles.brand}>{t.appName}</span>
           )}
           {room ? (
-            <span className={styles.code}>
-              <span className={styles.codeLabel}>{t.lobby.room}</span> {room.code}
+            <span className={`${styles.badge} ${styles.badgeBump}`} key={room.players.length}>
+              <small>{t.lobby.room}</small>
+              {room.code}
               {room.locked ? <span className={styles.lock}> 🔒</span> : null}
             </span>
           ) : null}
