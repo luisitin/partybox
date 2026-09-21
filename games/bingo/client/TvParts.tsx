@@ -211,6 +211,7 @@ export function ClaimStage({
   verdict,
   aside,
   judged,
+  keepRed = false,
 }: {
   claim: ClaimView;
   valid: boolean;
@@ -224,6 +225,8 @@ export function ClaimStage({
    * replaying a reveal the room has already seen (loop 293).
    */
   judged?: boolean;
+  /** I-108 B: the strays stay red through the win stage (the card's `red` list stays passed). */
+  keepRed?: boolean;
 }): JSX.Element {
   const order = patternOrder(claim);
   const step = order.length > 9 ? STEP_MANY_MS : STEP_MS;
@@ -284,7 +287,7 @@ export function ClaimStage({
               numbers={claim.card}
               daubs={claim.daubs}
               green={claim.green}
-              red={valid ? [] : claim.red}
+              red={valid && !keepRed ? [] : claim.red} /* I-108 B: the strays stay red on a win */
               missing={claim.missing}
               size="tv"
               verdict

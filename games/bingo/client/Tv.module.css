@@ -980,3 +980,19 @@
   text-align: center;
   animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
 }
+
+/* ── I-108 A: the stray-daubs kicker under the win headline. */
+.strayLine {
+  margin: 0;
+  font-size: var(--pb-font-h2);
+  font-weight: 700;
+  color: var(--pb-text-muted);
+  text-align: center;
+}
+
+/* ── I-108 B: the strays stay red on the winner's card through the win stage (see TvParts). */
+
+/* ── I-108 C: a clean card is seen too. */
+.cleanLine {
+  color: var(--pb-accent-2);
+}
