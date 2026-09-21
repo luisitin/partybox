@@ -628,3 +628,52 @@ button.cell:focus-visible {
     color: var(--pb-text);
   }
 }
+
+/* ── I-104 A: the cells under check ringed in gold; every other daub steps back. */
+.checked {
+  box-shadow: 0 0 0 3px var(--pb-accent-2);
+  position: relative;
+  z-index: 1;
+}
+.stepBack {
+  opacity: 0.4;
+  transition: opacity var(--pb-motion-base) var(--pb-ease);
+}
+
+/* ── I-104 B: a gold band through the line under check — per cell, by direction, so a row,
+   a column or a diagonal reads as one stroke. */
+.checked::before {
+  content: '';
+  position: absolute;
+  background: var(--pb-accent-2);
+  opacity: 0.8;
+  pointer-events: none;
+  z-index: 0;
+}
+.checked .number {
+  position: relative;
+  z-index: 1;
+}
+.band_row::before {
+  left: -8px;
+  right: -8px;
+  bottom: 3px;
+  height: 5px;
+}
+.band_col::before {
+  top: -8px;
+  bottom: -8px;
+  left: 3px;
+  width: 5px;
+}
+.band_diag::before,
+.band_anti::before {
+  left: -12%;
+  right: -12%;
+  top: calc(50% - 2px);
+  height: 4px;
+  transform: rotate(45deg);
+}
+.band_anti::before {
+  transform: rotate(-45deg);
+}

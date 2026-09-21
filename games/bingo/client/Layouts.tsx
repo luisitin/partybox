@@ -60,6 +60,9 @@ function PlayCard({
     claim.cardIndex === c &&
     !p.verdictShown;
   const won = view.won.includes(c);
+  // I-104: the cells under check on the claimant's own phone, in the TV's reveal order.
+  const checking = mine && claim !== null && claim !== undefined && !p.verdictShown;
+  const checkedCells = checking ? [...claim.cells].sort((a, b) => a - b) : [];
   // One to go (loop 420): the squares that would win breathe on a live card, from its own daubs.
   const wanted =
     !p.intro && !won && (view.phaseId === 'play' || view.phaseId === 'check')
@@ -104,6 +107,8 @@ function PlayCard({
         disabled={p.disabled}
         size={size}
         sent={sent}
+        checked={checkedCells}
+        checkedDir={lineDir(checkedCells)}
       />
     </div>
   );
@@ -158,6 +163,15 @@ export function Thumbnails({
       })}
     </div>
   );
+}
+
+/** I-104 B: five sorted cells in a row, column or diagonal (not corners, not blackout). */
+function lineDir(cells: readonly number[]): 'row' | 'col' | 'diag' | 'anti' | null {
+  if (cells.length !== 5) return null;
+  const first = cells[0] ?? 0;
+  const d = (cells[1] ?? 0) - first;
+  if (!cells.every((cell, i) => cell === first + i * d)) return null;
+  return d === 1 ? 'row' : d === 5 ? 'col' : d === 6 ? 'diag' : d === 4 ? 'anti' : null;
 }
 
 /** Focus: the card that is up, big, with the thumbnails under it. One BINGO! in the footer. */
