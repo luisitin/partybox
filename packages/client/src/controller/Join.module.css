@@ -112,6 +112,11 @@
 .picking .selected {
   animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
 }
+/* With a photo up the picked face steps back too: its pop (fill both) would pin opacity at 1,
+   so the animation goes (it has played). */
+.photoUp .selected {
+  animation: none;
+}
 .picking .avatarButton:not(.selected),
 .photoUp .avatarButton {
   opacity: 0.55;
