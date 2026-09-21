@@ -1074,3 +1074,9 @@
   justify-content: center;
   gap: var(--pb-space-2);
 }
+
+/* ── I-097 A: the BINGO! button on hold — dimmed with the rest of the screen while paused. */
+.bingoHeld {
+  opacity: 0.45;
+  transition: opacity var(--pb-motion-base) var(--pb-ease);
+}
