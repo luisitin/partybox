@@ -1074,3 +1074,49 @@
   justify-content: center;
   gap: var(--pb-space-2);
 }
+
+/* ── I-011 A: a hand of cards — the thumbnails overlap and fan from the middle (--fan is the
+   card's offset from the centre: -1, 0, 1 for three), the up one straight and lifted with a gold
+   edge; no UP tag. */
+.thumbs {
+  gap: 0;
+  padding-top: 14px;
+}
+.thumbs .thumb:not(.thumbCur) {
+  transform: translateX(calc(var(--fan, 0) * -14px)) translateY(calc(abs(var(--fan, 0)) * 6px))
+    rotate(calc(var(--fan, 0) * 7deg)) scale(0.96);
+  transform-origin: 50% 100%;
+  background: var(--pb-bg);
+}
+.thumbs .thumb:not(.thumbCur):active {
+  transform: translateX(calc(var(--fan, 0) * -14px)) translateY(calc(abs(var(--fan, 0)) * 6px + 2px))
+    rotate(calc(var(--fan, 0) * 7deg)) scale(0.92);
+}
+.thumbCur {
+  transform: translateX(calc(var(--fan, 0) * -14px)) translateY(-8px) scale(1.04);
+  box-shadow:
+    0 0 0 2px var(--pb-accent-2),
+    0 0 12px 2px color-mix(in oklab, var(--pb-accent-2) 55%, transparent);
+  z-index: 2;
+}
+
+/* ── I-011 C: the peek — a background card the call just hit pulses its edge gold twice
+   (pb-bump is transform only; the edge is a static gold ring while the pulse runs). */
+.thumbPeek {
+  border-color: var(--pb-accent-2);
+  box-shadow: 0 0 0 2px var(--pb-accent-2);
+  opacity: 1;
+  animation: pb-thumb-peek var(--pb-motion-slow) var(--pb-ease) 2 both;
+  z-index: 1;
+}
+@keyframes pb-thumb-peek {
+  0%,
+  100% {
+    transform: translateX(calc(var(--fan, 0) * -14px)) translateY(calc(abs(var(--fan, 0)) * 6px))
+      rotate(calc(var(--fan, 0) * 7deg)) scale(0.96);
+  }
+  50% {
+    transform: translateX(calc(var(--fan, 0) * -14px)) translateY(calc(abs(var(--fan, 0)) * 6px - 6px))
+      rotate(calc(var(--fan, 0) * 7deg)) scale(1.02);
+  }
+}
