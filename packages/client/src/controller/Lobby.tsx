@@ -11,11 +11,13 @@ import styles from './Lobby.module.css';
 
 export interface LobbyProps {
   controller: Controller;
+  /** S-003 B: opens the phone's 🎨 sheet. */
+  onSetup?: () => void;
   room: RoomSnapshot;
   me: PlayerPublic;
 }
 
-export function Lobby({ controller, room, me }: LobbyProps): JSX.Element {
+export function Lobby({ controller, room, me, onSetup }: LobbyProps): JSX.Element {
   const first = room.games[0];
   const pick = (): void => {
     if (first) controller.vip({ action: 'selectGame', gameId: first.id });
@@ -37,6 +39,10 @@ export function Lobby({ controller, room, me }: LobbyProps): JSX.Element {
       }
     >
       <p className="pb-muted">{me.isVip ? t.lobby.youAreVip : t.lobby.waitingForVip}</p>
+      {/* S-003 B: set up your phone while you wait — opens the 🎨 sheet. */}
+      <button type="button" className={styles.setup} onClick={onSetup}>
+        🎨 Set up your phone while you wait
+      </button>
       <p className={`pb-caption ${styles.count}`}>
         {t.lobby.players(room.players.length, room.capacity)}
         {room.locked ? ` · ${t.lobby.locked}` : ''}
