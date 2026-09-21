@@ -150,8 +150,18 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
           />
           {state.error ? (
             <span id="join-error" className={styles.error} role="alert">
-              <span aria-hidden>⚠ </span>
-              {state.error.message} {t.join.tryAgain}
+              {/* I-040 C: a taken name shows who has it. */}
+              {state.error.player ? (
+                <>
+                  <Avatar avatarId={state.error.player.avatarId} size={22} />
+                  That name is taken — {state.error.player.name} is already in.
+                </>
+              ) : (
+                <>
+                  <span aria-hidden>⚠ </span>
+                  {state.error.message} {t.join.tryAgain}
+                </>
+              )}
             </span>
           ) : null}
         </label>
