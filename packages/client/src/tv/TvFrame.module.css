@@ -184,3 +184,32 @@
   background: var(--pb-accent-2);
   color: var(--pb-bg);
 }
+
+/* ── I-049 A: the room code is one badge everywhere — a rounded mono chip in the accent-2. */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  padding: 0.15em 0.6em;
+  border-radius: 999px;
+  background: var(--pb-surface-2);
+  border: 2px solid var(--pb-border);
+  font-family: var(--pb-font-mono);
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  color: var(--pb-accent-2);
+  text-indent: 0.2em; /* balances the tracking on the last letter */
+}
+.badge small {
+  font-family: var(--pb-font-family);
+  font-size: 0.55em;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-indent: 0;
+  text-transform: uppercase;
+  color: var(--pb-text-muted);
+}
+
+.badge {
+  font-size: var(--pb-font-body);
+}

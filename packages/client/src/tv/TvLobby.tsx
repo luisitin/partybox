@@ -48,7 +48,10 @@ export function TvLobby({ room }: TvLobbyProps): JSX.Element {
           </BigText>
           {room ? (
             <p className={styles.code}>
-              {t.lobby.room} <strong>{room.code}</strong>
+              <span className={`${styles.badge} ${styles.badgeLarge}`}>
+                <small>{t.lobby.room}</small>
+                {room.code}
+              </span>
             </p>
           ) : null}
         </div>
