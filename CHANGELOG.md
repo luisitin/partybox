@@ -5,6 +5,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Lightning Round's crowd closes in** (I-007, option B): every locked-in player's face pops onto the
+  count line, and the phones still thinking are ringed in the TV strip until they lock in — who
+  picked what stays hidden until the reveal.
 - **Blanks' vote is watched** (I-004, option C): the count pill pops on every vote, the phones still
   deciding are ringed in the TV strip until they vote, and when the last vote lands every card bumps
   once, 40 ms apart, with a `tally` note before the result.
