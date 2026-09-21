@@ -143,3 +143,37 @@
     }
   }
 }
+
+/* ── I-042 A: the door sign — a card the size of the QR, over it, while the room is full. */
+.qrWrap {
+  position: relative;
+  display: block;
+  perspective: 900px;
+}
+.sign {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pb-space-3);
+  padding: var(--pb-space-5);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface-2);
+  border: 3px solid var(--pb-accent);
+  color: var(--pb-text);
+  text-align: center;
+  backface-visibility: hidden;
+}
+.sign strong {
+  font-size: var(--pb-font-h1);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  color: var(--pb-accent);
+}
+.sign small {
+  font-size: var(--pb-font-body);
+  font-weight: 700;
+  color: var(--pb-text-muted);
+}

@@ -35,12 +35,23 @@ export function TvLobby({ room }: TvLobbyProps): JSX.Element {
             {full ? t.lobby.full : t.lobby.scan}
           </BigText>
           {info ? (
-            <span
-              className={styles.qr}
-              dangerouslySetInnerHTML={{ __html: info.qrSvg }}
-              role="img"
-              aria-label={`QR code for ${info.joinUrl}`}
-            />
+            <span className={styles.qrWrap}>
+              <span
+                className={styles.qr}
+                dangerouslySetInnerHTML={{ __html: info.qrSvg }}
+                role="img"
+                aria-label={`QR code for ${info.joinUrl}`}
+              />
+              {/* I-042 A: the door sign over the code while the room is full. */}
+              {full ? (
+                <span className={styles.sign}>
+                  <strong>ROOM FULL</strong>
+                  <small>
+                    {room?.capacity ?? 16} / {room?.capacity ?? 16} · a seat opens when someone leaves
+                  </small>
+                </span>
+              ) : null}
+            </span>
           ) : null}
           <p className={styles.or}>{t.lobby.orOpen}</p>
           <BigText level="h2" tone="accent" className={styles.url}>
