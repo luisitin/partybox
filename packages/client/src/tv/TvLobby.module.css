@@ -143,3 +143,34 @@
     }
   }
 }
+
+/* ── I-073 A: the "last up" card beside the roster. */
+.lastUp {
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--pb-space-2);
+  align-self: start;
+  padding: var(--pb-space-3) var(--pb-space-5);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  border-left: 4px solid var(--pb-accent-2);
+}
+.lastUpKicker {
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--pb-text-muted);
+}
+.lastUpWinner {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+  font-size: var(--pb-font-h2);
+  font-weight: 800;
+}
+.lastUpFace {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+}

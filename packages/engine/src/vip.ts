@@ -172,7 +172,8 @@ export function applyVip(
     case 'toLobby': {
       if (room.status === 'playing')
         return reject(room, playerId, 'cannot_start', 'End the current game first.');
-      return { room: { ...room, status: 'lobby', results: null }, effects: [{ type: 'push' }] };
+      // I-073 A: the results stay with the room until the next game starts (the lobby's "last up").
+      return { room: { ...room, status: 'lobby' }, effects: [{ type: 'push' }] };
     }
   }
 }

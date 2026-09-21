@@ -3,13 +3,37 @@
 // into the first seat and bumps the count — so the eye lands on the chip, not a toast.
 import type { JSX } from 'react';
 import type { RoomSnapshot } from '@partybox/shared';
-import { BigText, PlayerChips, Stage } from '@partybox/game-sdk/ui';
+import { Avatar, BigText, PlayerChips, Stage } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import { useServerInfo } from '../net/info';
 import styles from './TvLobby.module.css';
 
 export interface TvLobbyProps {
   room: RoomSnapshot | null;
+}
+
+/** I-073 A: the "last up" card — the game's name and who won it. */
+function LastUp({ room }: { room: RoomSnapshot }): JSX.Element | null {
+  const r = room.results;
+  if (!r) return null;
+  const game = room.games.find((g) => g.id === r.gameId)?.name ?? r.gameId;
+  const winners = r.results.winnerIds
+    .map((id) => r.players.find((p) => p.id === id))
+    .filter((p): p is NonNullable<typeof p> => p !== undefined);
+  return (
+    <aside className={`${styles.lastUp}`} aria-label="last game">
+      <span className={styles.lastUpKicker}>Last up · {game}</span>
+      <span className={styles.lastUpWinner}>
+        {winners.map((w) => (
+          <span key={w.id} className={styles.lastUpFace}>
+            <Avatar avatarId={w.avatarId} size={32} />
+            {w.name}
+          </span>
+        ))}
+        {winners.length > 0 ? ' won' : 'no winner'}
+      </span>
+    </aside>
+  );
 }
 
 export function TvLobby({ room }: TvLobbyProps): JSX.Element {
@@ -71,6 +95,10 @@ export function TvLobby({ room }: TvLobbyProps): JSX.Element {
             align="start"
             enter
           />
+          {/* I-073 A: the last game, still on the table until the next one starts. */}
+          {room?.results ? (
+            <LastUp room={room} />
+          ) : null}
           {empty ? (
             <p className="pb-muted">
               {t.lobby.waitingForFirst.replace(/…$/, '')}
