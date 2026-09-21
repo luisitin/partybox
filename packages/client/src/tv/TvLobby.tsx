@@ -3,6 +3,7 @@
 // into the first seat and bumps the count — so the eye lands on the chip, not a toast.
 import type { JSX } from 'react';
 import type { RoomSnapshot } from '@partybox/shared';
+import { useState } from 'react';
 import { BigText, PlayerChips, Stage } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import { useServerInfo } from '../net/info';
@@ -18,6 +19,13 @@ export function TvLobby({ room }: TvLobbyProps): JSX.Element {
   const vip = players.find((p) => p.isVip);
   const full = room !== null && players.length >= room.capacity;
   const empty = players.length === 0;
+  // I-072: the QR is big while nobody has joined and shrinks with the first join.
+  const [wasEmpty, setWasEmpty] = useState(empty);
+  const [shrinking, setShrinking] = useState(false);
+  if (empty !== wasEmpty) {
+    setWasEmpty(empty);
+    setShrinking(!empty);
+  }
   return (
     <Stage>
       {/* I-029 B: the room breathes — two soft glows drift behind the lobby (transform only). */}
@@ -36,7 +44,8 @@ export function TvLobby({ room }: TvLobbyProps): JSX.Element {
           </BigText>
           {info ? (
             <span
-              className={styles.qr}
+              className={`${styles.qr} ${empty ? styles.qrBig : ''} ${shrinking ? styles.qrShrink : ''}`}
+              onAnimationEnd={() => setShrinking(false)}
               dangerouslySetInnerHTML={{ __html: info.qrSvg }}
               role="img"
               aria-label={`QR code for ${info.joinUrl}`}

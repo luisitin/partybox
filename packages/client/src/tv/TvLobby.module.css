@@ -143,3 +143,23 @@
     }
   }
 }
+
+/* ── I-072 A: the QR is 560 px while nobody has joined (the couch can scan it), 360 px after. */
+.qrBig {
+  width: 560px;
+  height: 560px;
+}
+
+/* ── I-072 B: the first join shrinks the code — a 600 ms scale from the big size (rest = end). */
+.qrShrink {
+  transform-origin: top center;
+  animation: pb-qr-shrink var(--pb-motion-slow) var(--pb-ease) both;
+}
+@keyframes pb-qr-shrink {
+  from {
+    transform: scale(1.56);
+  }
+  to {
+    transform: scale(1);
+  }
+}
