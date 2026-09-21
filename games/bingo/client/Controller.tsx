@@ -5,9 +5,10 @@
 // and judges only the claim, on the card named.
 import { useEffect, useState } from 'react';
 import type { CSSProperties, JSX } from 'react';
-import { Screen, WaitingScreen, avatarColorVar, useSound } from '@partybox/game-sdk/ui';
+import { Screen, WaitingScreen, avatarColorVar, useHold, useSound } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { Input } from '../server/types';
+import { dealDoneMs } from '../server/types';
 import type { BingoControllerView } from '../server/views';
 import { Card } from './Card';
 import { PatternDemo } from './PatternDemo';
@@ -126,6 +127,8 @@ export function Controller({
   // applies the style at once (no live preview — the pick screen has its own layout) and the
   // round starting closes it, so nobody holds the first number from the intro.
   const intro = view.phaseId === 'intro';
+  // I-094 A: the deal's own hold (the count line's), so the swap sentence waits for the last card.
+  const dealt = useHold('deal', dealDoneMs(n));
   if (sheet === 'intro' && !intro) setSheet('');
 
   if (!cards) {
@@ -183,7 +186,8 @@ export function Controller({
               <p className={styles.patternLabel}>{view.patternLabel}</p>
               <p className={styles.hint}>
                 {view.patternHint}
-                {n > 1 ? ' Pick a card below to swap it.' : ''}
+                {/* I-094 A: the swap sentence waits for the deal. */}
+                {n > 1 && dealt ? <span className={styles.swapHint}> Pick a card below to swap it.</span> : null}
               </p>
             </div>
             {!sheet ? <StylePill onOpen={openMenu} /> : null}

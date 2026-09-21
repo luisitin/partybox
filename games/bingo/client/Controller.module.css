@@ -1199,3 +1199,9 @@
   gap: 3px;
   animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
 }
+
+/* ── I-094 A: the swap sentence rises in once the deal is done. */
+.swapHint {
+  display: inline-block;
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
