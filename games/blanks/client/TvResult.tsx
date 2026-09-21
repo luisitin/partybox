@@ -56,7 +56,7 @@ export function winnerLine(
   }
   const humans = winners.filter((w) => !w.rando).map((w) => w.name);
   // Rando alone is the room's shame; a tie with Rando still names who scored (review-loop #124).
-  if (humans.length === 0) return 'Rando wins. Shame on all of you.';
+  if (humans.length === 0) return 'The deck wins this one! Shame on all of you.';
   if (humans.length < winners.length) return `${list(humans)} split it with Rando`;
   const names = humans;
   if (view.walkover) return `Only ${names[0]} played — wins by default`;
@@ -121,8 +121,17 @@ function Author({
       className={`${styles.author} ${shown ? styles.rise : styles.pending}`}
       aria-hidden={!shown}
     >
-      <Avatar avatarId={card.avatarId} size="var(--pb-chip-size)" />
-      <span className={styles.authorName}>{card.name}</span>
+      {/* I-018 A: the deck's card is authored by the deck — a card-stack mascot, not a face. */}
+      {card.rando ? (
+        <span className={styles.deck} aria-label="the deck">
+          <span />
+          <span />
+          <span />
+        </span>
+      ) : (
+        <Avatar avatarId={card.avatarId} size="var(--pb-chip-size)" />
+      )}
+      <span className={styles.authorName}>{card.rando ? 'The deck' : card.name}</span>
       {label ? <span className={styles.voteCount}>{label}</span> : null}
     </span>
   );
