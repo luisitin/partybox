@@ -26,6 +26,8 @@ export interface CallView {
 
 export interface ClaimView extends Claim {
   name: string;
+  /** I-111 B: the claimant's face, for the other phones' "Priya says BINGO!" line. */
+  avatarId: string;
   /** The card that was checked (`cardIndex` of the claimant's `cardCount`). */
   card: number[];
   cardCount: number;
@@ -161,6 +163,7 @@ function claimView(state: State): ClaimView | null {
   return {
     ...claim,
     name: state.players[claim.playerId]?.name ?? '?',
+    avatarId: state.players[claim.playerId]?.avatarId ?? 'ghost', // I-111 B
     card: cards[claim.cardIndex] ?? [],
     cardCount: cards.length,
   };
