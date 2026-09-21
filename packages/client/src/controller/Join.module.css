@@ -75,6 +75,12 @@
   letter-spacing: 0.3em;
   text-transform: uppercase;
 }
+/* I-041: the placeholder is a sentence ("4 letters from the TV"), not a code — no tracking. */
+.code::placeholder {
+  font-family: var(--pb-font-family);
+  letter-spacing: 0;
+  text-transform: none;
+}
 
 .avatars {
   border: 0;
@@ -192,4 +198,16 @@
 }
 :global(:root[data-motion='off']) .roomError {
   animation: none;
+}
+
+/* I-041: "Joining room KGVU" — the code came with the QR, no field to fill. */
+.joiningRoom {
+  margin: 0 0 var(--pb-space-3);
+  color: var(--pb-text-muted);
+  text-align: center;
+}
+.joiningRoom strong {
+  font-family: var(--pb-font-mono);
+  letter-spacing: 0.2em;
+  color: var(--pb-accent-2);
 }

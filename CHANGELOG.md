@@ -5,6 +5,10 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **The QR carries the room code** (I-041, the owner's request): the TV's QR encodes `/?room=KGVU`,
+  so a scan goes straight in ("Joining room KGVU" above the name, no field); a phone that types
+  the bare URL from the TV always gets the room-code field ("4 letters from the TV"), a wrong
+  code shaking that field. `/api/info` gains `qrUrl`; the server's code-less fallback is unchanged.
 - **A mid-game joiner sits on the bench** (I-057, option C): the waiting screen shows a read-only
   mini-scoreboard from the view the phone already has — "Lightning Round · question" above it, the
   leader in gold with a 🏆, a total that changes bumping with a quiet `tally`.

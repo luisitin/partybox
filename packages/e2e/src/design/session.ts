@@ -130,10 +130,15 @@ export async function openPhone(
   url: string,
   device: DeviceId,
   name: string,
+  options: { bare?: boolean } = {},
 ): Promise<Phone> {
   const context = await openContext(browser, device);
   const page = await context.newPage();
-  await page.goto(`${url}/`);
+  // I-041: a phone opens the QR's URL (the room code in it) unless the test types the bare one
+  const info = (await (await fetch(`${url}/api/info`)).json()) as { qrUrl?: string };
+  const target =
+    options.bare || !info.qrUrl ? `${url}/` : info.qrUrl.replace(/^https?:\/\/[^/]+/, url);
+  await page.goto(target);
   await page.waitForSelector('[data-surface="controller"]');
   await applyDeviceCss(page, device);
   return { device, context, page, name, playerId: null };
@@ -151,7 +156,11 @@ export async function joinViaForm(
   const count = await avatars.count();
   if (count > 0) await avatars.nth((options.avatarIndex ?? 0) % count).click();
   const codeField = page.getByLabel(/room code/i);
-  if (options.code && (await codeField.count()) > 0) await codeField.fill(options.code);
+  if ((await codeField.count()) > 0) {
+    // I-041: a bare-URL phone types the code from the TV (the house room's unless given)
+    const code = options.code ?? (await api.state()).room?.code ?? '';
+    if (code) await codeField.fill(code);
+  }
   await page.getByRole('button', { name: /^join$/i }).click();
   if (options.expectError) {
     await page.waitForTimeout(600);

@@ -18,6 +18,14 @@ export interface JoinProps {
   audio?: SoundEngine;
 }
 
+/** The `room` query parameter of the page the phone opened (the QR's), as a 4-letter code. */
+function roomFromUrl(): string | null {
+  if (typeof window === 'undefined') return null;
+  const raw = new URLSearchParams(window.location.search).get('room');
+  const code = raw?.trim().toUpperCase() ?? '';
+  return /^[A-Z]{4}$/.test(code) ? code : null;
+}
+
 export function Join({ controller, state, audio }: JoinProps): JSX.Element {
   const info = useServerInfo();
   const session = controller.session() ?? controller.identity();
@@ -28,9 +36,13 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
   );
   // I-031 (the owner): a photo avatar from the phone, kept with the name and face across sessions.
   const [photo, setPhoto] = useState<string | null>(session?.photo ?? null);
-  const [code, setCode] = useState('');
+  // I-041 (the owner): a phone that scanned the QR carries the room in the URL and skips the
+  // code; one that typed the bare URL from the TV always asks for it (the server keeps its
+  // single-open-room fallback for a code-less join, but the form asks).
+  const urlRoom = roomFromUrl();
+  const [code, setCode] = useState(urlRoom ?? '');
   const [submittedAt, setSubmittedAt] = useState<number | null>(null);
-  const needsCode = info !== null && info.rooms.length !== 1;
+  const needsCode = urlRoom === null;
   // A rejected join shakes the name field and hands the taken/invalid name back selected (or the
   // code, for a room that does not exist) so the retry is one keystroke away. "Adjust state when
   // a prop changes": every new error object shakes once; the one already on screen at mount (a
@@ -69,7 +81,9 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
     state.error?.code === 'room_full' || state.error?.code === 'room_locked'
       ? state.error.code
       : null;
-  const nameError = state.error !== null && roomError === null;
+  // I-041: a room that does not exist is the CODE field's fault when the phone typed one.
+  const codeError = state.error?.code === 'room_not_found' && needsCode;
+  const nameError = state.error !== null && roomError === null && !codeError;
   // I-056 C: after a room rejection the button says why and holds for 5 s, then allows a retry.
   // `retryFor` is the error object the hold has ended for: a fresh rejection (a new object) is
   // held again without a synchronous setState in the effect.
@@ -112,7 +126,7 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
     controller.join({
       name: name.trim(),
       avatarId,
-      roomCode: needsCode ? code.trim().toUpperCase() : undefined,
+      roomCode: code.trim().length === 4 ? code.trim().toUpperCase() : undefined,
       ...(photo ? { photo } : {}),
     });
   };
@@ -165,6 +179,11 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
           </p>
         ) : null}
         {info && info.rooms.length === 0 ? <p className={styles.hint}>{t.join.noRooms}</p> : null}
+        {urlRoom ? (
+          <p className={styles.joiningRoom} role="status">
+            {t.join.joiningRoom} <strong>{urlRoom}</strong>
+          </p>
+        ) : null}
         {/* I-031 B: the portrait — the chosen face (or the photo), large, beside the name. */}
         <JoinPortrait avatarId={avatarId} name={name} photo={photo} onPhoto={setPhoto} />
         <label className={styles.field}>
@@ -206,7 +225,10 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
             <span className={styles.label}>{t.join.code}</span>
             <input
               ref={codeRef}
-              className={`${styles.input} ${styles.code}`}
+              className={`${styles.input} ${styles.code} ${codeError ? styles.inputError : ''} ${shaking && codeError ? styles.shake : ''}`}
+              onAnimationEnd={() => setShaking(false)}
+              aria-invalid={codeError}
+              aria-describedby={codeError ? 'join-code-error' : undefined}
               value={code}
               onChange={(e) => setCode(e.target.value.toUpperCase())}
               placeholder={t.join.codePlaceholder}
@@ -215,6 +237,12 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
               autoCorrect="off"
               spellCheck={false}
             />
+            {codeError && state.error ? (
+              <span id="join-code-error" className={styles.error} role="alert">
+                <span aria-hidden>⚠ </span>
+                {state.error.message} {t.join.tryAgain}
+              </span>
+            ) : null}
           </label>
         ) : null}
         <fieldset className={styles.avatars}>
