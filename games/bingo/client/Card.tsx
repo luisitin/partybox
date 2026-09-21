@@ -47,6 +47,8 @@ export interface CardProps {
   settled?: boolean;
   /** The claim just went up from this phone: the daubs flash once in a wave (loop 240). */
   sent?: boolean;
+  /** I-104 A: the cells under check (`claim.cells`, the completion, sorted) — ringed; other daubs step back. */
+  checked?: readonly number[];
   /** A gold sweep along a winning line while its cells turn (the TV). */
   sweep?: { kind: SweepKind; index: number; ms: number } | null;
   /** The claim was wrong: the daubs lift off one by one in reading order (the TV's wipe, I-006 B). */
@@ -86,12 +88,14 @@ export function Card({
   settled = true,
   sweep = null,
   sent = false,
+  checked = [],
   wiped = false,
 }: CardProps): JSX.Element {
   const turnAt = new Map((revealOrder ?? []).map((i, k) => [i, k * revealStepMs]));
   const turning = revealOrder !== undefined;
   const daubed = new Set(daubs);
   const patternSet = new Set(pattern);
+  const checkedSet = new Set(checked);
   const wantedSet = new Set(wanted);
   const greenSet = new Set(green);
   const redSet = new Set(red);
@@ -170,6 +174,8 @@ export function Card({
             stamped.has(i) ? styles.stamp : '',
             lineHit.has(i) ? styles.lineHit : '',
             sent && isDaubed ? styles.sent : '',
+            checkedSet.has(i) ? styles.checked : '',
+            checked.length > 0 && isDaubed && !checkedSet.has(i) && !isFree ? styles.stepBack : '',
             lifted.has(i) ? styles.unstamp : '',
             wiped && isDaubed && !isFree ? styles.wipe : '',
           ].join(' ');

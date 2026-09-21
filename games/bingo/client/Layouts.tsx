@@ -60,6 +60,9 @@ function PlayCard({
     claim.cardIndex === c &&
     !p.verdictShown;
   const won = view.won.includes(c);
+  // I-104: the cells under check on the claimant's own phone, in the TV's reveal order.
+  const checking = mine && claim !== null && claim !== undefined && !p.verdictShown;
+  const checkedCells = checking ? [...claim.cells].sort((a, b) => a - b) : [];
   // One to go (loop 420): the squares that would win breathe on a live card, from its own daubs.
   const wanted =
     !p.intro && !won && (view.phaseId === 'play' || view.phaseId === 'check')
@@ -104,6 +107,7 @@ function PlayCard({
         disabled={p.disabled}
         size={size}
         sent={sent}
+        checked={checkedCells}
       />
     </div>
   );

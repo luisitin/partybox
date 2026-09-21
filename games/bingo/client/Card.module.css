@@ -628,3 +628,14 @@ button.cell:focus-visible {
     color: var(--pb-text);
   }
 }
+
+/* ── I-104 A: the cells under check ringed in gold; every other daub steps back. */
+.checked {
+  box-shadow: 0 0 0 3px var(--pb-accent-2);
+  position: relative;
+  z-index: 1;
+}
+.stepBack {
+  opacity: 0.4;
+  transition: opacity var(--pb-motion-base) var(--pb-ease);
+}
