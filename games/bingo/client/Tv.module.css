@@ -993,3 +993,11 @@
 :global(:root[data-motion='off']) .armLapsed {
   animation: none;
 }
+
+/* ── I-109 C: the bots' note at the end of the ready row. */
+.botNote {
+  align-self: center;
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  color: var(--pb-text-muted);
+}

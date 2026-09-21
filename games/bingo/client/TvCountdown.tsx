@@ -32,12 +32,15 @@ export function IntroCountdown({
   cards,
   waitingOn,
   players,
+  botIds = [],
 }: {
   deadline: number | null;
   /** Cards per player: the TV plucks once per card on the phones' deal beats (loop 278). */
   cards: number;
   /** Who is still picking their cards (loop 344): the slot names them until the 3 · 2 · 1. */
   waitingOn: string[];
+  /** I-109 C: the bots in the room — no ticks for them. */
+  botIds?: string[];
   /** Everyone with cards: a row of faces, each lighting up as its player taps Ready (loop 349). */
   players: ViewPlayer[];
 }): JSX.Element {
@@ -90,7 +93,7 @@ export function IntroCountdown({
               // picking, lit with a ✓ as each Ready lands — who the room waits for, at a glance.
               <span className={`${styles.dealFan} ${styles.readyRow}`} aria-hidden>
                 {players
-                  .filter((p) => p.status !== 'spectator')
+                  .filter((p) => p.status !== 'spectator' && !botIds.includes(p.id))
                   .map((p) => (
                     <span
                       key={p.id}
@@ -100,6 +103,10 @@ export function IntroCountdown({
                       <b className={styles.readyTick}>✓</b>
                     </span>
                   ))}
+                {/* I-109 C: nothing waits on a bot — a note instead of ticks. */}
+                {botIds.length > 0 ? (
+                  <span className={styles.botNote}>+{botIds.length} {botIds.length === 1 ? 'bot' : 'bots'}</span>
+                ) : null}
               </span>
             ) : (
               <span className={styles.dealFan} aria-hidden>
@@ -186,9 +193,11 @@ export function Resume({
 export function IntroStage({
   view,
   roundLabel,
+  botIds = [],
 }: {
   view: BingoTvView;
   roundLabel: string;
+  botIds?: string[];
 }): JSX.Element {
   // Nine or more players wrap the roster to two or three rows (loop 393): the demo and the
   // faces step down so the caption stays above the host bar.
@@ -217,7 +226,7 @@ export function IntroStage({
           </span>
         ))}
       </p>
-      <IntroCountdown
+      <IntroCountdown botIds={botIds}
         deadline={view.deadline}
         cards={view.cardsPerPlayer}
         waitingOn={view.waitingOn}

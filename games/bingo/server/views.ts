@@ -97,6 +97,8 @@ export interface BingoTvView extends TvView, Common {
   /** R2-01: players with a live card one daub from the pattern (play only); [] unless the
    *  `showClose` setting is on — the strip ring, the caption and the hush all hang off it. */
   closeIds: string[];
+  /** I-109 C: the bots in the round — the ready row shows people only. */
+  botIds: string[];
 }
 
 export interface BingoControllerView extends ControllerView, Common {
@@ -183,7 +185,7 @@ function statusOf(state: State): (id: string) => PlayerStatus {
     if (!Object.hasOwn(state.round.cards, id)) return 'spectator';
     // The card-pick step (loop 344): a ✓ for everyone who is ready (bots count as ready).
     if (state.phase.id === 'intro')
-      return state.round.ready.includes(id) || state.players[id]?.bot ? 'submitted' : 'active';
+      return state.round.ready.includes(id) ? 'submitted' : 'active'; // I-109 A: a bot's own Ready
     // Every card won: done for the pattern (the chip shows it while the others keep daubing).
     if (state.phase.id === 'play' || state.phase.id === 'check')
       return liveCards(state, id).length === 0 ? 'submitted' : 'active';
@@ -265,6 +267,7 @@ export function tvView(state: State, gameId: string): BingoTvView {
     showBoard: state.settings.showBoard,
     showPrevious: state.settings.showPrevious,
     closeIds: state.settings.showClose ? closePlayers(state) : [],
+    botIds: Object.keys(state.players).filter((id) => state.players[id]?.bot),
   };
 }
 

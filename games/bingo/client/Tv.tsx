@@ -73,7 +73,7 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
     };
   }, [phaseId, number, letter, quiet, calledAt, sound]);
 
-  if (view.phaseId === 'intro') return <IntroStage view={view} roundLabel={roundLabel} />;
+  if (view.phaseId === 'intro') return <IntroStage view={view} roundLabel={roundLabel} botIds={view.botIds} />;
 
   // R2-01 B: the players one square from the pattern, by name (roster order).
   const closeNames = view.players.filter((p) => view.closeIds.includes(p.id)).map((p) => p.name);
