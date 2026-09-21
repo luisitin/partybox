@@ -70,6 +70,7 @@
   border: 3px solid var(--pb-border);
   transition: border-color var(--pb-motion-fast) var(--pb-ease); /* done: outline fades in */
   font-size: var(--pb-font-body);
+  position: relative; /* I-024 C: the book tile sits in the card's corner */
 }
 
 .cardDone {
@@ -299,4 +300,95 @@
     opacity: 1;
     transform: scale(1) rotate(-3deg);
   }
+}
+
+/* ── I-024 A: finishing lands — the done card lands once (pb-land), the count bumps. */
+.cardDone {
+  animation: global(pb-land) var(--pb-motion-base) var(--pb-ease) both;
+}
+.countNum {
+  display: inline-block;
+  color: var(--pb-text);
+  font-weight: 800;
+  animation: global(pb-bump) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+/* ── I-024 B: the hand-off — each glyph slides in from the seat on its left, 450 ms per seat
+   (the owner: "a lot slower" — the stagger stretches, each slide stays at the 600 ms ceiling;
+   transform + opacity); the arrow line says which way the books go. */
+.passWay {
+  margin: 0 0 var(--pb-space-2);
+  text-align: right;
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.handoff {
+  animation: pb-bp-handoff var(--pb-motion-slow) var(--pb-ease) calc(var(--pb-i, 0) * 450ms) both;
+}
+@keyframes pb-bp-handoff {
+  from {
+    opacity: 0;
+    transform: translateX(-160px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ── I-024 C: the book — a small notebook tile on every card; when the player is done it slides
+   out to the right toward the next seat and fades, 300 ms after the ✓ so the finish is read
+   first (rest state = gone, for the shell's ghost), and the next seat's card takes a brief green
+   ring. */
+.book {
+  position: absolute;
+  right: var(--pb-space-3);
+  top: var(--pb-space-3);
+  width: 26px;
+  height: 34px;
+  border-radius: 3px 6px 6px 3px;
+  background: var(--pb-surface-2);
+  border: 2px solid var(--pb-border);
+  box-shadow: inset 4px 0 0 var(--pb-accent-2);
+}
+.bookGone {
+  opacity: 0;
+  transform: translateX(140px);
+  animation: pb-bp-bookgone var(--pb-motion-slow) var(--pb-ease) 300ms both;
+}
+@keyframes pb-bp-bookgone {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: translateX(140px);
+  }
+}
+.cardReceiving {
+  animation: pb-bp-receive var(--pb-motion-pulse) var(--pb-ease) both;
+}
+@keyframes pb-bp-receive {
+  from {
+    border-color: var(--pb-accent-3);
+  }
+  to {
+    border-color: var(--pb-border);
+  }
+}
+
+/* The durations collapse through the tokens; the delays are literal, so they collapse here —
+   a `both` fill would otherwise hold every glyph invisible for its seat's wait. */
+@media (prefers-reduced-motion: reduce) {
+  .handoff,
+  .bookGone {
+    animation-delay: 0ms;
+  }
+}
+:global(:root[data-motion='off']) .handoff,
+:global(:root[data-motion='off']) .bookGone {
+  animation-delay: 0ms;
 }

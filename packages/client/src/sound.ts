@@ -52,6 +52,9 @@ export interface PlayOptions {
   semitones?: number;
   /** Do not touch `lastPlayedAt`: a quiet cue must never suppress the shell's phase chime. */
   quiet?: boolean;
+  /** Scale every note and sample of the cue (0..1, default 1): a pluck in the background of a
+   *  moment, not on top of it (I-024: books passing hands). */
+  gain?: number;
 }
 
 /** One lock-in = one soft tick, each higher than the last (whole tones, capped at the 5th). */
@@ -176,11 +179,14 @@ export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine
         muted,
         ready: ctx?.state === 'running',
         semitones: opts?.semitones ?? 0,
+        gain: opts?.gain ?? 1,
       });
       if (!ctx || muted || ctx.state !== 'running') return;
       options.onPlay?.(cue);
       const t0 = ctx.currentTime;
-      for (const sample of SAMPLES[cue] ?? []) playSample(sample, t0);
+      const scale = Math.min(1, Math.max(0, opts?.gain ?? 1));
+      for (const sample of SAMPLES[cue] ?? [])
+        playSample({ ...sample, gain: sample.gain * scale }, t0);
       const k = 2 ** ((opts?.semitones ?? 0) / 12);
       for (const note of CUES[cue]) {
         const osc = ctx.createOscillator();
@@ -189,7 +195,7 @@ export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine
         osc.frequency.setValueAtTime(note.freq * k, t0 + note.at);
         if (note.to)
           osc.frequency.exponentialRampToValueAtTime(note.to * k, t0 + note.at + note.dur);
-        const level = note.gain ?? 0.18;
+        const level = (note.gain ?? 0.18) * scale;
         gain.gain.setValueAtTime(0.0001, t0 + note.at);
         gain.gain.exponentialRampToValueAtTime(level, t0 + note.at + 0.01);
         gain.gain.exponentialRampToValueAtTime(0.0001, t0 + note.at + note.dur);

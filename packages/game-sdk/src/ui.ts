@@ -34,7 +34,7 @@ export {
 } from './ui/motion';
 export type { DeadlineBarProps } from './ui/DeadlineBar';
 export { SOUND_CUES, SoundProvider, isSoundCue, useSound, useSoundApi } from './ui/sound';
-export type { ClipOptions, PlayCue, SoundApi, SoundCue } from './ui/sound';
+export type { ClipOptions, PlayCue, PlayCueOptions, SoundApi, SoundCue } from './ui/sound';
 export { buzz, hapticsEnabled, setHapticsEnabled } from './ui/haptics';
 export { DEFAULT_PAD_STYLE, getPadStyle, setPadStyle, usePadStyle } from './ui/pad';
 export type { PadPaper, PadPencil, PadStyle } from './ui/pad';

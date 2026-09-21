@@ -2,8 +2,8 @@
 // the show it turns one page at a time — the filmstrip of pages shown so far on the left, the
 // current page big on the right, the verdict on a book's last page.
 import { useEffect, useState } from 'react';
-import type { JSX } from 'react';
-import { Avatar, BigText, Stage } from '@partybox/game-sdk/ui';
+import type { CSSProperties, JSX } from 'react';
+import { Avatar, BigText, Stage, useSound } from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
 import type { PageView, PencilTvView } from '../server/views';
 import { DrawingView } from './DrawingView';
@@ -43,37 +43,69 @@ function Hint({ phase }: { phase: keyof typeof HINTS }): JSX.Element {
   );
 }
 
-/** Tiles in the same order as the chip strip above them (alphabetical, numeric-aware). */
-function byName(view: PencilTvView): PencilTvView['progress'] {
-  const nameOf = (id: string): string => view.players.find((x) => x.id === id)?.name ?? '';
-  return [...view.progress].sort((a, b) =>
-    nameOf(a.playerId).localeCompare(nameOf(b.playerId), undefined, {
-      numeric: true,
-      sensitivity: 'base',
-    }),
-  );
-}
+/** I-024 B (the owner: "a lot slower"): each seat's glyph starts this long after the one before. */
+const HANDOFF_STEP_MS = 450;
+/** I-024 (the owner: "a quieter sound"): the per-seat pluck, at half gain and never standing in
+ *  for the phase chime. */
+const PLUCK = { quiet: true, gain: 0.5 } as const;
 
 function Progress({ view }: { view: PencilTvView }): JSX.Element {
   const done = view.progress.filter((p) => p.stage === 'done').length;
+  // I-024 B: the cards sit in SEAT order (`progress` is the seat ring) — the books pass along
+  // the seats — and once per pass every glyph slides in from the seat on its left, a `card`
+  // pluck per seat. Round 1 is not a hand-off (nobody has passed yet): the line still says which
+  // way the books will go, but nothing slides and nothing plucks.
+  const play = useSound();
+  const seats = view.progress.length;
+  const passing = view.phaseId === 'pass' || view.phaseId === 'guess';
+  const phaseKey = `${view.phaseId}:${view.step}`;
+  useEffect(() => {
+    if (!passing) return;
+    const ts = Array.from({ length: seats }, (_, i) =>
+      setTimeout(() => play('card', PLUCK), i * HANDOFF_STEP_MS),
+    );
+    return () => ts.forEach((t) => clearTimeout(t));
+    // `seats` is fixed for a phase, so the plucks play once per phase instance (phaseKey).
+  }, [phaseKey, passing, play, seats]);
+  // The glyph slides in only as the phase opens: a mid-phase stage change (💬 → ✏️) is not a
+  // hand-off and must not hide the new glyph for its seat's delay.
+  const opening = view.phaseId === 'draw' ? 'draw' : 'guess';
   return (
     <>
-      <ul className={styles.cards} aria-label="who is done">
-        {byName(view).map((p) => {
+      <p className={styles.passWay} aria-hidden>
+        books pass this way →
+      </p>
+      <ul className={styles.cards} aria-label="who is done" key={phaseKey}>
+        {view.progress.map((p, seat) => {
           const player = view.players.find((x) => x.id === p.playerId);
           const finished = p.stage === 'done';
+          // I-024 C: the seat on the left just finished — its book is arriving here.
+          const left = view.progress[(seat + seats - 1) % seats];
+          const receiving = left !== undefined && left.stage === 'done' && !finished;
+          const handoff = passing && p.stage === opening;
           return (
-            <li key={p.playerId} className={`${styles.card} ${finished ? styles.cardDone : ''}`}>
+            // I-024 A: keyed on the stage too, so a card that turns done remounts and lands once.
+            <li
+              key={`${p.playerId}:${finished ? 'done' : 'busy'}`}
+              className={`${styles.card} ${finished ? styles.cardDone : ''} ${receiving ? styles.cardReceiving : ''}`}
+              style={{ '--pb-i': seat } as CSSProperties}
+            >
               <Avatar
                 avatarId={player?.avatarId ?? ''}
                 size={72}
                 dim={player?.connected === false}
               />
               <span className={styles.cardName}>{player?.name ?? '?'}</span>
+              {/* I-024 C: the book in their hands — it slides on to the right once they are done. */}
+              <span
+                key={`book:${finished ? 'gone' : 'here'}`}
+                className={`${styles.book} ${finished ? styles.bookGone : ''}`}
+                aria-hidden
+              />
               <span
                 // Keyed on the stage so a flip to ✓ remounts and pops (review-loop #19).
                 key={p.stage}
-                className={styles.cardMark}
+                className={`${styles.cardMark} ${handoff ? styles.handoff : ''}`}
                 aria-label={finished ? 'done' : p.stage === 'draw' ? 'drawing' : 'guessing'}
               >
                 {STAGE_MARK[p.stage]}
@@ -83,7 +115,10 @@ function Progress({ view }: { view: PencilTvView }): JSX.Element {
         })}
       </ul>
       <p className={styles.count} role="status">
-        {done} of {view.progress.length} done
+        <span key={done} className={styles.countNum}>
+          {done}
+        </span>{' '}
+        of {view.progress.length} done
       </p>
     </>
   );

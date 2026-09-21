@@ -110,8 +110,10 @@ Timer: in the last 5 s it switches to `--pb-danger`, scales 1.15×, pulses once 
 | `correct`                 | the phone's own verdict card                                                                                                                         | game via `useSound` (phone)                                                    |
 | `submit`                  | a player's own choice sent — a Blanks card, Bingo's "keep going / next round" pick (loop 322)                                                        | game via `useSound` (phone)                                                    |
 
-`play(cue, { semitones, quiet })` transposes a cue (the engine multiplies every note by 2^(n/12)); `quiet` leaves
-`lastPlayedAt` alone so the cue never suppresses the shell's next chime. A `clip` counts like a cue: a game that speaks
+`play(cue, { semitones, quiet, gain })` transposes a cue (the engine multiplies every note by 2^(n/12)); `quiet` leaves
+`lastPlayedAt` alone so the cue never suppresses the shell's next chime — it does not lower the cue; `gain` (0..1)
+does, scaling every note and sample (I-024: a game's `play(cue, { quiet, gain })` reaches the engine through the
+shell, the `card` pluck under Broken Pencil's hand-off is `{ quiet: true, gain: 0.5 }`). A `clip` counts like a cue: a game that speaks
 into a phase (Bingo's first number) keeps the chime off its voice.
 `clientModule.sounds` maps phase ids to cues; unmapped phases play `phase`, reserved for moments where the phone needs
 the player (so 'pick up your phone' and 'look at the TV' never sound the same). A mapped phase that re-enters itself

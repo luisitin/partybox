@@ -16,6 +16,7 @@ import { clientGames } from '../games.generated';
 import { t } from '../i18n';
 import { countdownSemitones } from '../sound';
 import type { MusicEngine } from '../music';
+import type { PlayCueOptions } from '@partybox/game-sdk/ui';
 import type { SoundCue, SoundEngine } from '../sound';
 import { CrossfadeSwap } from '../CrossfadeSwap';
 import styles from './TvPlaying.module.css';
@@ -73,10 +74,10 @@ export function TvPlaying({ room, view, audio, onGameReady, music }: TvPlayingPr
     [audio],
   );
   const play = useCallback(
-    (cue: SoundCue) => {
+    (cue: SoundCue, opts?: PlayCueOptions) => {
       // The winner moment sits on top of the music, not inside it.
       if (cue === 'cheer') music?.duck(9000);
-      audio.play(cue);
+      audio.play(cue, opts);
     },
     [audio, music],
   );

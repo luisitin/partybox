@@ -7,6 +7,7 @@ import { SoundProvider, WaitingScreen } from '@partybox/game-sdk/ui';
 import { clientGames } from '../games.generated';
 import { t } from '../i18n';
 import type { Controller } from '../net/controller';
+import type { PlayCueOptions } from '@partybox/game-sdk/ui';
 import type { SoundCue, SoundEngine } from '../sound';
 import { GameErrorBoundary } from './GameErrorBoundary';
 
@@ -47,7 +48,10 @@ export function Playing({
   audio,
   onGameReady,
 }: PlayingProps): JSX.Element {
-  const play = useCallback((cue: SoundCue) => audio?.play(cue), [audio]);
+  const play = useCallback(
+    (cue: SoundCue, opts?: PlayCueOptions) => audio?.play(cue, opts),
+    [audio],
+  );
   if (me.spectator || view?.me.role === 'spectator') {
     // A spectator's screen is the game screen for them: release the game-start hold (loop #22).
     return (

@@ -5,6 +5,12 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Broken Pencil's books pass hands** (I-024, option C): a finished card lands and the count bumps;
+  the cards sit in seat order under "books pass this way →" and each pass opens with every glyph
+  sliding in from the seat on its left, 450 ms apart, a quiet `card` pluck per seat; a done card's
+  book tile slides on to the next seat, which rings green. The game-sdk `play(cue)` now takes
+  `{ quiet?, gain? }` and the shell engine honours `gain` (0..1) — `quiet` alone never lowered a
+  cue's level.
 - **Broken Pencil's tiers are a spice dial** (I-023, option C): one, two or three heat discs beside
   each offer, the tiers rising in order and the picked one bumping while the others step back; with
   Spicy on the hard tier's discs breathe like an ember (the phone view gains `spicy`).

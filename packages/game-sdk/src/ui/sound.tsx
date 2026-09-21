@@ -43,7 +43,14 @@ export function isSoundCue(value: string): value is SoundCue {
   return (SOUND_CUES as readonly string[]).includes(value);
 }
 
-export type PlayCue = (cue: SoundCue) => void;
+/** What a game may ask of a cue: `quiet` keeps it from standing in for the shell's phase chime
+ *  (a background tick, not the moment); `gain` scales it (0..1) — a pluck under a hand-off, not
+ *  on top of it (I-024). The shell may ignore either. */
+export interface PlayCueOptions {
+  quiet?: boolean;
+  gain?: number;
+}
+export type PlayCue = (cue: SoundCue, opts?: PlayCueOptions) => void;
 
 export interface ClipOptions {
   /** Start this far into the clip (skip a recording's leading silence) — seconds. */
