@@ -1376,3 +1376,16 @@
 :global(:root[data-motion='off']) .judgeGridDone .onPage {
   animation-delay: 0ms;
 }
+
+/* ── I-020 A: named slots — the player's face in the landed card's corner. */
+.pip {
+  position: relative;
+}
+.pipFace {
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+  display: inline-flex;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 35%);
+}

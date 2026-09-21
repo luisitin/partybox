@@ -192,13 +192,25 @@ export function TvAnswer({ view }: Props): JSX.Element {
       <BigText key={headline} level="h2" className="pb-enter">
         {headline}
       </BigText>
-      <div className={styles.pips} aria-hidden>
-        {Array.from({ length: view.playersExpected }, (_, i) => (
-          <span
-            key={i}
-            className={`${styles.pip} ${i < view.playedCount ? styles.pipDone : ''} ${i === view.playedCount - 1 ? styles.pipPop : ''}`}
-          />
-        ))}
+      {/* I-020 A: named slots — each player's card lands in their own slot, face in the corner. */}
+      <div className={`${styles.pips}`} aria-hidden>
+        {connected.map((p) => {
+          const played = p.status === 'submitted';
+          return (
+            <span
+              key={p.id + (played ? ':in' : ':out')}
+              className={`${styles.pip} ${played ? `${styles.pipDone} ${styles.pipPop}` : ''}`}
+            >
+              {played ? (
+                <>
+                  <span className={styles.pipFace}>
+                    <Avatar avatarId={p.avatarId} size={28} />
+                  </span>
+                </>
+              ) : null}
+            </span>
+          );
+        })}
       </div>
       <div key={view.playedCount} className="pb-enter" role="status">
         <BigText level="h2" tone={nobodyDone ? 'muted' : 'accent'}>
