@@ -139,7 +139,9 @@
 }
 .chipEmpty {
   background: transparent;
-  border: 3px dashed var(--pb-border);
+  /* the muted ink, not the border token: on Night / Daylight / Arcade / Cabin the border is the
+     row's own surface and the hollow chip vanished (pass 864) */
+  border: 3px dashed var(--pb-text-muted);
 }
 
 /* ── I-026 B: the pick settles — the chosen row's chips bump, the other rows step back. */
