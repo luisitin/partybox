@@ -258,15 +258,33 @@ button.cell:focus-visible {
    so a daub still reads as the change. The glow alone marks it — a gold border would twin the
    FREE square's (seen at 420). Reduced motion: a steady halo. */
 .wanted {
-  animation: pb-want 1.6s ease-in-out infinite;
+  /* S-001: a real breath — the square swells with the halo. */
+  animation: pb-want 2.4s ease-in-out infinite;
+  position: relative;
+  z-index: 1;
 }
 @keyframes pb-want {
+  /* S-001 C: lub-dub — two quick swells, then a rest. */
   0%,
+  60%,
   100% {
+    transform: scale(1);
+    color: inherit;
     box-shadow: 0 0 0 0 color-mix(in srgb, var(--pb-accent-2) 0%, transparent);
   }
-  50% {
+  12% {
+    transform: scale(1.08);
+    color: var(--pb-accent-2);
     box-shadow: 0 0 0 5px color-mix(in srgb, var(--pb-accent-2) 60%, transparent);
+  }
+  24% {
+    transform: scale(1.01);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--pb-accent-2) 20%, transparent);
+  }
+  36% {
+    transform: scale(1.06);
+    color: var(--pb-accent-2);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--pb-accent-2) 50%, transparent);
   }
 }
 @media (prefers-reduced-motion: reduce) {
