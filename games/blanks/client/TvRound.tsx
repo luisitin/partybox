@@ -162,6 +162,13 @@ export function TvAnswer({ view }: Props): JSX.Element {
   const lastChance =
     left !== null && left <= LAST_CHANCE_S && !view.paused && outstanding.length > 0;
   const nobodyDone = view.playedCount === 0;
+  // I-020 B: the game's `card` pluck as each card lands (the drop's 55 % beat).
+  const play = useSound();
+  useEffect(() => {
+    if (view.playedCount === 0) return;
+    const t = setTimeout(() => play('card'), 330);
+    return () => clearTimeout(t);
+  }, [view.playedCount, play]);
   const pick = view.black?.pick ?? 1;
   const headline = lastChance
     ? 'Last chance!'
@@ -192,13 +199,27 @@ export function TvAnswer({ view }: Props): JSX.Element {
       <BigText key={headline} level="h2" className="pb-enter">
         {headline}
       </BigText>
-      <div className={styles.pips} aria-hidden>
-        {Array.from({ length: view.playersExpected }, (_, i) => (
-          <span
-            key={i}
-            className={`${styles.pip} ${i < view.playedCount ? styles.pipDone : ''} ${i === view.playedCount - 1 ? styles.pipPop : ''}`}
-          />
-        ))}
+      {/* I-020 A: named slots — each player's card lands in their own slot, face in the corner. */}
+      <div className={`${styles.pips}`} aria-hidden>
+        {connected.map((p) => {
+          const played = p.status === 'submitted';
+          return (
+            <span
+              key={p.id + (played ? ':in' : ':out')}
+              className={`${styles.pip} ${played ? `${styles.pipDone} ${styles.pipPop}` : ''}`}
+            >
+              {played ? (
+                <>
+                  <span className={styles.pipFace}>
+                    <Avatar avatarId={p.avatarId} size={28} />
+                  </span>
+                  <span className={styles.puff} />
+                  <span className={styles.puff} />
+                </>
+              ) : null}
+            </span>
+          );
+        })}
       </div>
       <div key={view.playedCount} className="pb-enter" role="status">
         <BigText level="h2" tone={nobodyDone ? 'muted' : 'accent'}>
