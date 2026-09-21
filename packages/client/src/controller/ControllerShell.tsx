@@ -169,7 +169,7 @@ export function ControllerShell({
             🎨
           </button>
           <span
-            className={`${styles.dot} ${state.connection === 'connected' ? styles.on : styles.off}`}
+            className={`${styles.dot} ${state.connection === 'connected' ? `${styles.on} ${styles.beat}` : styles.off}`}
             role="status"
             aria-label={state.connection}
           />

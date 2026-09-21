@@ -5,6 +5,8 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **The phone's connection dot has a heartbeat** (I-050, option A): while connected it breathes
+  (opacity 0.55 ↔ 1 over 2.4 s); still under reduced motion.
 - **The room code is one badge** (I-049, option C): the header and the QR card share a rounded
   mono chip with a small ROOM label; the card's letters land one after another when the lobby
   opens, and the header's badge bumps as each player joins.
