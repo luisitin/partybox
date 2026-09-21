@@ -5,6 +5,8 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Broken Pencil's pages turn** (I-008, option A): every page after the first pivots in on its left
+  edge under a perspective (600 ms) instead of settling from a lift.
 - **Lightning Round's crowd closes in** (I-007, option B): every locked-in player's face pops onto the
   count line, and the phones still thinking are ringed in the TV strip until they lock in — who
   picked what stays hidden until the reveal.
