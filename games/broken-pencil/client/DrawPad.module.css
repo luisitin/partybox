@@ -20,7 +20,7 @@
   flex-wrap: wrap;
 }
 
-/* 36 px: eight in one row on a 320 px phone (secondary controls; the sheet is the target). */
+/* 36 px: eight in one row from 360 px up (secondary controls; the sheet is the target). */
 .swatch {
   width: 36px;
   height: 36px;
@@ -29,6 +29,18 @@
   padding: 0;
   cursor: pointer;
   box-shadow: inset 0 0 0 2px rgb(255 255 255 / 25%);
+}
+
+/* A 320 px phone has a 288 px row: 30 px swatches keep the eight on one line (pass 859 — the
+   wrap cost the sheet a row's height). */
+@media (max-width: 359px) {
+  .swatches {
+    gap: 5px;
+  }
+  .swatch {
+    width: 30px;
+    height: 30px;
+  }
 }
 
 .swatchOn {
@@ -74,6 +86,15 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
+}
+
+/* Upright, the sheet never goes under 180 px: the box holds that height so the body scrolls
+   rather than the sheet shrinking (pass 859 — a 320 × 568 phone drew on 115 px; 180 keeps the
+   ink row and Undo above the sticky button there). */
+@media (orientation: portrait) {
+  .box {
+    min-height: 180px;
+  }
 }
 
 .canvas {

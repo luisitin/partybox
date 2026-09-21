@@ -69,7 +69,10 @@ export function DrawPad({ onChange, onProgress, initial, disabled }: DrawPadProp
     // a full-width square hid its bottom third under the button. Floor 220 px, then the body scrolls.
     const measure = (): void => {
       // A sideways phone in Safari leaves the box under 220 px tall: the floor is the box then.
-      const floor = Math.min(220, box.clientHeight || 220);
+      // Upright, a 180 px floor holds (pass 859: a 320 × 568 phone squeezed the sheet to 115 px;
+      // at 180 the ink row and Undo still sit above the sticky button there).
+      const sideways = window.matchMedia('(orientation: landscape)').matches;
+      const floor = sideways ? Math.min(220, box.clientHeight || 220) : 180;
       setSize(Math.max(floor, Math.floor(Math.min(box.clientWidth, box.clientHeight || Infinity))));
     };
     measure();
