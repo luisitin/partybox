@@ -183,7 +183,7 @@ export function Controller({
               <p className={styles.patternLabel}>{view.patternLabel}</p>
               <p className={styles.hint}>
                 {view.patternHint}
-                {n > 1 ? ' Pick a card below to swap it.' : ''}
+                {/* I-094 B: the count line is the one instruction; the hint is the pattern's. */}
               </p>
             </div>
             {!sheet ? <StylePill onOpen={openMenu} /> : null}
