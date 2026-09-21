@@ -1199,3 +1199,24 @@
   gap: 3px;
   animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
 }
+
+/* ── I-110 B: why FREE is quiet, for two seconds over the card. */
+.slot {
+  position: relative;
+}
+.freeWhy {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 40%;
+  width: max-content;
+  margin: 0 auto;
+  z-index: 2;
+  padding: var(--pb-space-2) var(--pb-space-4);
+  border-radius: 999px;
+  background: var(--pb-surface-2);
+  border: 2px solid var(--pb-accent-2);
+  font-weight: 800;
+  white-space: nowrap;
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}

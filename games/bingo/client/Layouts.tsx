@@ -60,6 +60,7 @@ function PlayCard({
     claim.cardIndex === c &&
     !p.verdictShown;
   const won = view.won.includes(c);
+  const [why, setWhy] = useState<string | null>(null);
   // One to go (loop 420): the squares that would win breathe on a live card, from its own daubs.
   const wanted =
     !p.intro && !won && (view.phaseId === 'play' || view.phaseId === 'check')
@@ -93,13 +94,22 @@ function PlayCard({
       className={`${styles.slot} ${wasWiped && !view.waitingForCall ? 'pb-enter' : ''} ${won ? styles.won : ''}`}
     >
       {heading}
+      {why ? <p className={styles.freeWhy}>{why}</p> : null}
       <Card
         numbers={p.cards[c] ?? []}
         daubs={p.intro ? [] : (view.daubs[c] ?? [])}
         pattern={p.intro && view.pattern !== 'line' ? view.patternCells : []}
+        freeIdle={view.pattern !== 'line' && !view.patternCells.includes(12)}
         wanted={wanted}
         freeDaubed={won || p.freeDaubed.includes(c)}
-        onTapFree={() => p.onTapFree(c)}
+        onTapFree={() => {
+          // I-110 B: a quiet FREE says why on a tap.
+          if (view.pattern !== 'line' && !view.patternCells.includes(12)) {
+            setWhy(`FREE — not part of ${view.patternLabel}`);
+            setTimeout(() => setWhy(null), 2000);
+          }
+          p.onTapFree(c);
+        }}
         onTap={(index) => p.onDaub(c, index)}
         disabled={p.disabled}
         size={size}
