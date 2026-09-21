@@ -103,7 +103,7 @@ export interface BingoControllerView extends ControllerView, Common {
   resumeMine: boolean;
   /** Whether the TV shows the hall board — decides how a reconnecting phone reports missed calls. */
   showBoard: boolean;
-  /** Nicknames of the last few calls, newest last (numbers stay on the TV). */
+  /** The last few calls as "O 65", newest last — a reconnecting phone names what it missed. */
   recent: string[];
   /** My cards this round; null for spectators. */
   cards: number[][] | null;
@@ -138,12 +138,13 @@ function callView(state: State, index: number): CallView | null {
   return { number, letter: letterOf(number), call: callFor(number, state.settings.spicy) };
 }
 
-/** Nicknames of the last n calls, oldest first (a reconnecting phone names what it missed). */
+/** The last n calls as "O 65", oldest first (a reconnecting phone names what it missed — the
+ *  number, not the nickname: pass 866 read "you missed Sixty-five — old age pension"). */
 function recentCalls(state: State, n: number): string[] {
   const out: string[] = [];
   for (let i = Math.max(0, state.round.drawn - n); i < state.round.drawn; i++) {
     const view = callView(state, i);
-    if (view) out.push(view.call);
+    if (view) out.push(`${view.letter} ${view.number}`);
   }
   return out;
 }

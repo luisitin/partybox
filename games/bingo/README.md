@@ -25,7 +25,7 @@ carries on. Points: 3, 2, 1, then ½ per bingo under a pattern (a blackout resta
 
 1–16. The phone shows the call the way the TV's ball does (letter, number, the one before, the
 count); the nickname is the TV's and the caller's — the TV can also keep a hall board of every number called (`showBoard`)
-and the previous call (`showPrevious`); a phone that was away says how many calls it missed. Late joiners spectate (their phone shows the current call and the called list) and get a card
+and the previous call (`showPrevious`); a phone that was away says how many calls it missed (board on: they are on the TV; board off: it names them from `recent`, up to three). Late joiners spectate (their phone shows the current call and the called list) and get a card
 next game. A disconnected player's card and daubs persist; calls never wait for anyone.
 **Bots: welcome** (`supportsBots: true`) — the bot daubs what it hears on its own cards, mis-taps about
 1 in 20, and presses BINGO! when a live card looks complete, so it wins rounds and sometimes gets checked

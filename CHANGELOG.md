@@ -115,6 +115,13 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 - Multi-persona live-play harness (`packages/e2e/live/`) and the 2026-09-15 session report.
 
 ### Fixed
+- Bingo phone: a player back from a drop with the hall board OFF now hears which calls they
+  missed ("Back — you missed B 2, O 65.", up to three, then "and n more") — the view carried
+  `recent` for this and the phone showed nothing. Board on still points at the TV.
+- The Scoreboard climb (I-027) glowed the wrong way (a row that rose red, one that fell green) and
+  still waited 1.2 s under reduced motion; every literal stagger has its reduced-motion twin now.
+- Broken Pencil's draw pad on a 320 px phone: one swatch row and a real 180 px floor for the sheet.
+- Lightning Round's hollow "nothing at stake" chip reads in every theme.
 - Lightning Round TV wager page: from nine players the standings take three columns, from
   thirteen four (the roster chips carry scores and wrap to three or four rows, so two columns of
   six small rows ran the last row under the host bar at 12 players and three columns clipped at
