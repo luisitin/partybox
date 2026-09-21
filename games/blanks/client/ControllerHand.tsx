@@ -3,8 +3,8 @@
 // button says what it does and only enables at the right count. "Sent" is remembered locally
 // until the server's view confirms it, so a double tap cannot send twice. The judge (czar mode)
 // sees the black card and the count instead of a hand.
-import { useState } from 'react';
-import type { JSX } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import type { CSSProperties, JSX } from 'react';
 import { Avatar, PrimaryButton, Screen, WaitingScreen } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { BlanksControllerView } from '../server/index';
@@ -12,6 +12,11 @@ import type { Input } from '../server/types';
 import { FilledCard } from './Cards';
 import { NextButton } from './NextButton';
 import styles from './blanks.module.css';
+
+/** I-016 B: how long the played card flies before the pick is sent. */
+const FLIGHT_MS = 300;
+/** I-016: a card longer than this steps its type down one size so it reads whole in the fan. */
+const LONG_CARD_CHARS = 64;
 
 type Props = GameControllerProps<BlanksControllerView, Input>;
 
@@ -101,6 +106,11 @@ export function ControllerPick({ view, send }: Props): JSX.Element {
 export function ControllerHand({ view, send, skip }: Props): JSX.Element {
   const [picked, setPicked] = useState<string[]>([]);
   const [sent, setSent] = useState(false);
+  // I-016 B: the played card flies up into the black card before the pick is sent (300 ms, the
+  // card's own flight); the flight IS the send. The timer dies with the screen.
+  const [flying, setFlying] = useState(false);
+  const flight = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(() => () => clearTimeout(flight.current ?? undefined), []);
   const black = view.black;
   const pick = black?.pick ?? 1;
   if (!black) return <WaitingScreen title="Look at the TV" mood="watch" />;
@@ -184,7 +194,8 @@ export function ControllerHand({ view, send, skip }: Props): JSX.Element {
           onClick={() => {
             if (!ready || sent) return;
             setSent(true);
-            send({ type: 'play', cards: picked });
+            setFlying(true);
+            flight.current = setTimeout(() => send({ type: 'play', cards: picked }), FLIGHT_MS);
           }}
         >
           {sent ? 'Played' : label}
@@ -201,17 +212,27 @@ export function ControllerHand({ view, send, skip }: Props): JSX.Element {
           size="phone"
         />
       </div>
-      <ul className={styles.hand} aria-label="your hand">
+      <ul
+        className={`${styles.hand} ${flying ? styles.handFlying : ''}`}
+        aria-label="your hand"
+        data-picking={picked.length > 0 || undefined}
+      >
         {view.hand.map((card, i) => {
           const order = picked.indexOf(card.id);
           const on = order !== -1;
+          // I-016 (owner's note): every card's whole text reads without a tap — a long card
+          // steps its type down one size rather than wrap past the card or be cut.
+          const long = card.text.length > LONG_CARD_CHARS;
           return (
             // Dealt 150 ms apart (the CSS sets the motion); a re-render on a tap keeps the <li>,
-            // so the deal plays once, when the hand arrives.
-            <li key={card.id} style={{ animationDelay: `${i * 150}ms` }}>
+            // so the deal plays once, when the hand arrives. --pb-i turns the card in the fan.
+            <li
+              key={card.id}
+              style={{ animationDelay: `${i * 150}ms`, '--pb-i': i } as CSSProperties}
+            >
               <button
                 type="button"
-                className={`${styles.white} ${on ? styles.whiteOn : ''}`}
+                className={`${styles.white} ${on ? styles.whiteOn : ''} ${long ? styles.whiteLong : ''}`}
                 aria-pressed={on}
                 disabled={sent}
                 onClick={() => toggle(card.id)}

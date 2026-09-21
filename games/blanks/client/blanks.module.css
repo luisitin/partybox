@@ -1292,3 +1292,66 @@
   opacity: 0.55;
   transition: opacity var(--pb-motion-slow) var(--pb-ease);
 }
+
+/* ── I-016 A: the pick stands out — the picked card lifts 8 px at 1.02, the rest of the hand
+   steps back to 70 % while anything is picked (transform + opacity, the card's own transition). */
+.white {
+  transition:
+    translate var(--pb-motion-base) var(--pb-ease),
+    scale var(--pb-motion-base) var(--pb-ease),
+    opacity var(--pb-motion-base) var(--pb-ease);
+}
+.whiteOn {
+  translate: 0 -8px;
+  scale: 1.02;
+}
+.hand[data-picking] .white:not(.whiteOn):not(:disabled) {
+  opacity: 0.7;
+}
+
+/* ── I-016 B: Play — the picked card flies up and out, the rest of the hand fades; both rest
+   states are the end states, so the shell's crossfade ghost (animations stripped) keeps them. */
+.handFlying .white.whiteOn {
+  opacity: 0;
+  translate: 0 -160px;
+  scale: 0.9;
+  transition:
+    translate var(--pb-motion-base) var(--pb-ease),
+    scale var(--pb-motion-base) var(--pb-ease),
+    opacity var(--pb-motion-base) var(--pb-ease) calc(var(--pb-motion-base) / 2);
+}
+.handFlying .white:not(.whiteOn) {
+  opacity: 0;
+}
+
+/* ── I-016 C: a hand, not a list — the cards sit side by side in a scroll-snap row, each turned
+   a little about a pivot well below the screen, like cards held in a hand. The deal, the lift and
+   the flight compose with the turn (individual transform properties). The owner's note: every
+   card's whole text reads without a tap — no overlap (a card is 76 % of the row and its
+   neighbours sit beside it, not under it), the text wraps, and a long card steps its type down. */
+.hand {
+  flex-direction: row;
+  align-items: flex-end;
+  gap: var(--pb-space-2);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: var(--pb-space-5) var(--pb-space-5) var(--pb-space-4);
+  scrollbar-width: none;
+}
+.hand > li {
+  flex: 0 0 76%;
+  scroll-snap-align: center;
+  transform-origin: 50% 180%;
+  rotate: calc((var(--pb-i, 0) - 4.5) * 1deg);
+}
+.hand .white {
+  min-height: 7.5em;
+  align-items: flex-start;
+}
+.hand .whiteLong {
+  font-size: var(--pb-font-caption);
+}
+.hand .whiteOn {
+  z-index: 1;
+  position: relative;
+}

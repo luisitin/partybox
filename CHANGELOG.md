@@ -5,6 +5,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Blanks' hand is a hand** (I-016, option C): the white cards sit side by side in a fanned
+  scroll-snap row (no overlap — every card's whole text reads without a tap, a long card's type one
+  size down), the pick lifts while the rest step back, and Play flies the card into the black card.
 - **Blanks' round card is dealt** (I-015, option A): the two white cards are tossed onto the felt
   instead of rising in place, and each of the three cards lands with the game's `card` pluck.
 - **Bingo's next pattern is the size of the board** (I-012, option C): between rounds the pattern demo
