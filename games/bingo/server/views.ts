@@ -97,6 +97,8 @@ export interface BingoTvView extends TvView, Common {
   /** R2-01: players with a live card one daub from the pattern (play only); [] unless the
    *  `showClose` setting is on — the strip ring, the caption and the hush all hang off it. */
   closeIds: string[];
+  /** I-117 B: the caller's tone, for the fast path's line. */
+  spicy: boolean;
 }
 
 export interface BingoControllerView extends ControllerView, Common {
@@ -265,6 +267,7 @@ export function tvView(state: State, gameId: string): BingoTvView {
     showBoard: state.settings.showBoard,
     showPrevious: state.settings.showPrevious,
     closeIds: state.settings.showClose ? closePlayers(state) : [],
+    spicy: state.settings.spicy,
   };
 }
 

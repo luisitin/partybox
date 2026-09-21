@@ -14,6 +14,7 @@ import { PATTERN_LABEL, patternCells } from '../server/patterns';
 import { PatternIcon } from './Card';
 import { PatternDemo } from './PatternDemo';
 import { pendingLine, whyNot, winHeadline } from './copy';
+import { hopelessClaim } from '../server/reveal';
 import { IntroStage, Resume } from './TvCountdown';
 import { Call, CalledBoard, ClaimStage, DibsLine, rows, whichCard } from './TvParts';
 import styles from './Tv.module.css';
@@ -170,7 +171,11 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
           verdict={
             <>
               <BigText level="h1" className={styles.no}>
-                NOT A BINGO
+                {hopelessClaim(view.claim)
+                  ? view.spicy
+                    ? `${view.claim.name}. ${view.claim.red.length} of those were never called. We're watching you.`
+                    : `Not yet, ${view.claim.name} — ${view.claim.red.length} of those ${view.claim.red.length === 1 ? 'was' : 'were'} never called`
+                  : 'NOT A BINGO'}
               </BigText>
               <p className={styles.legend}>
                 <span className={styles.legendGreen}>✓ right</span>
