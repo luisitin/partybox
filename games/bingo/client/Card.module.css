@@ -628,3 +628,8 @@ button.cell:focus-visible {
     color: var(--pb-text);
   }
 }
+
+/* ── I-090 B: a daubed pattern cell keeps a gold ring around the blot — "that one counted". */
+.patternDaub {
+  box-shadow: 0 0 0 3px var(--pb-accent-2) inset;
+}

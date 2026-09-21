@@ -96,7 +96,7 @@ function PlayCard({
       <Card
         numbers={p.cards[c] ?? []}
         daubs={p.intro ? [] : (view.daubs[c] ?? [])}
-        pattern={p.intro && view.pattern !== 'line' ? view.patternCells : []}
+        pattern={view.pattern !== 'line' ? view.patternCells : []} /* I-090 A: for the whole round */
         wanted={wanted}
         freeDaubed={won || p.freeDaubed.includes(c)}
         onTapFree={() => p.onTapFree(c)}
