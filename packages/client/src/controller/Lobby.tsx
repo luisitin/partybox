@@ -1,6 +1,7 @@
 // Lobby on the phone: who is here (bots included, with ✕ on the ones you may remove), a
 // "＋ Add a bot" chip at the end of the grid (ADR-028), and for the VIP the button that opens
 // game selection.
+import { useState } from 'react';
 import type { JSX } from 'react';
 import { MAX_BOTS_PER_OWNER } from '@partybox/shared';
 import type { PlayerPublic, RoomSnapshot } from '@partybox/shared';
@@ -16,6 +17,16 @@ export interface LobbyProps {
 }
 
 export function Lobby({ controller, room, me }: LobbyProps): JSX.Element {
+  // I-074 A: a removed bot puffs out before the remove is sent (450 ms, one poof at a time).
+  const [poofing, setPoofing] = useState<string | null>(null);
+  const poof = (botId: string): void => {
+    if (poofing) return;
+    setPoofing(botId);
+    setTimeout(() => {
+      controller.bot({ action: 'remove', botId });
+      setPoofing(null);
+    }, 450);
+  };
   const first = room.games[0];
   const pick = (): void => {
     if (first) controller.vip({ action: 'selectGame', gameId: first.id });
@@ -46,7 +57,15 @@ export function Lobby({ controller, room, me }: LobbyProps): JSX.Element {
           // The owner or the VIP may remove a bot (ADR-028): one tap, no confirm — re-adding is one tap too.
           const removable = p.bot !== undefined && (p.bot.ownerId === me.id || me.isVip);
           return (
-            <li key={p.id} className={styles.item}>
+            <li key={p.id} className={`${styles.item} ${poofing === p.id ? styles.poof : ''}`}>
+              {poofing === p.id ? (
+                <span className={styles.bits} aria-hidden>
+                  <i />
+                  <i />
+                  <i />
+                  <i />
+                </span>
+              ) : null}
               <PlayerChip
                 name={p.name}
                 avatarId={p.avatarId}
@@ -55,9 +74,7 @@ export function Lobby({ controller, room, me }: LobbyProps): JSX.Element {
                 isBot={p.bot !== undefined}
                 status={p.spectator ? 'spectator' : 'active'}
                 isMe={p.id === me.id}
-                onRemove={
-                  removable ? () => controller.bot({ action: 'remove', botId: p.id }) : undefined
-                }
+                onRemove={removable ? () => poof(p.id) : undefined}
                 removeLabel={`${t.lobby.removeBot} ${p.name}`}
               />
             </li>

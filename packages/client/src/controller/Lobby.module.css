@@ -41,3 +41,61 @@
   font-weight: 900;
   color: var(--pb-accent-2);
 }
+
+/* ── I-074 A: the poof — the row shrinks to nothing while four square bits fly out and fade
+   (transform + opacity only; rest = end state, the row is gone with the next snapshot). */
+.item.poof {
+  position: relative;
+  animation: pb-bot-poof 450ms var(--pb-ease) both;
+}
+@keyframes pb-bot-poof {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+.bits {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.bits > i {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  margin: -4px 0 0 -4px;
+  background: var(--pb-accent);
+  animation: pb-bot-bit 450ms ease-out both;
+}
+.bits > i:nth-child(1) {
+  --bx: -46px;
+  --by: -30px;
+}
+.bits > i:nth-child(2) {
+  --bx: 48px;
+  --by: -26px;
+}
+.bits > i:nth-child(3) {
+  --bx: -40px;
+  --by: 30px;
+}
+.bits > i:nth-child(4) {
+  --bx: 44px;
+  --by: 32px;
+}
+@keyframes pb-bot-bit {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--bx), var(--by)) rotate(90deg);
+  }
+}
