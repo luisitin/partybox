@@ -3,6 +3,7 @@
 // into the first seat and bumps the count — so the eye lands on the chip, not a toast.
 import type { JSX } from 'react';
 import type { RoomSnapshot } from '@partybox/shared';
+import { useState } from 'react';
 import { BigText, PlayerChips, Stage } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import { useServerInfo } from '../net/info';
@@ -20,6 +21,13 @@ export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
   const vip = players.find((p) => p.isVip);
   const full = room !== null && players.length >= room.capacity;
   const empty = players.length === 0;
+  // I-072: the QR is big while nobody has joined and shrinks with the first join.
+  const [wasEmpty, setWasEmpty] = useState(empty);
+  const [shrinking, setShrinking] = useState(false);
+  if (empty !== wasEmpty) {
+    setWasEmpty(empty);
+    setShrinking(!empty);
+  }
   return (
     <Stage>
       {/* I-029 B: the room breathes — two soft glows drift behind the lobby (transform only). */}
@@ -27,7 +35,7 @@ export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
         <span className={styles.glowA} />
         <span className={styles.glowB} />
       </div>
-      <div className={styles.split}>
+      <div className={`${styles.split} ${empty ? styles.splitEmpty : ''}`}>
         <div className={`${styles.join} ${full ? styles.full : ''}`}>
           <BigText
             level="h2"
@@ -38,7 +46,8 @@ export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
           </BigText>
           {info ? (
             <span
-              className={styles.qr}
+              className={`${styles.qr} ${empty ? styles.qrBig : ''} ${shrinking ? styles.qrShrink : ''}`}
+              onAnimationEnd={() => setShrinking(false)}
               dangerouslySetInnerHTML={{ __html: info.qrSvg }}
               role="img"
               aria-label={`QR code for ${info.joinUrl}`}
@@ -61,7 +70,7 @@ export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
             </p>
           ) : null}
         </div>
-        <div className={styles.players}>
+        <div className={`${styles.players} ${empty ? styles.playersHidden : ''}`}>
           <BigText key={players.length} level="h2" className={styles.count}>
             {room ? t.lobby.players(players.length, room.capacity) : t.connection.connecting}
           </BigText>

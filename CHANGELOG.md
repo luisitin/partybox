@@ -5,6 +5,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **The QR code is sized for the couch** (I-072, option C): 560 px and alone in the middle of the
+  stage while nobody has joined; the first join shrinks it to 360 px over 600 ms and the roster
+  column appears.
 - **Three join failures, three treatments** (I-056, option C): a taken name keeps the shake and
   the red field; a full or locked room leaves the name alone — the form dims, a badged banner
   (👥 / 🔒) rises above the button, which reads "Room is full" / "Room is locked" and holds for
