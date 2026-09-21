@@ -56,7 +56,7 @@ export function ControllerApp(): JSX.Element {
   } else {
     switch (state.room.status) {
       case 'lobby':
-        screen = <Lobby controller={controller} room={state.room} me={me} />;
+        screen = <Lobby controller={controller} room={state.room} me={me} audio={audio} />;
         break;
       case 'selecting':
         screen = <Selecting controller={controller} room={state.room} me={me} />;
