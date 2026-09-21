@@ -156,6 +156,11 @@ export function TvApp(): JSX.Element {
       if (performance.now() - audio.lastPlayedAt() > 50) audio.play('phase');
     if (room.players.length > p.players && p.status !== '')
       audio.play('join', { semitones: joinSemitones(room.players.length) });
+    // I-042 B: the door sign — a `lock` tick as the room fills.
+    const fullNow = room.players.length >= room.capacity;
+    const fullBefore = p.players >= room.capacity;
+    if (p.status !== '' && room.status === 'lobby' && fullNow && !fullBefore)
+      setTimeout(() => audio.play('lock'), 500);
     // A game begins: a held G-major arpeggio (the intro itself never chimes — p.phase is null);
     // a TV that reloads mid-game (p.status === '') stays quiet, like the join rule.
     if (room.status === 'playing' && p.status !== 'playing' && p.status !== '') audio.play('start');
