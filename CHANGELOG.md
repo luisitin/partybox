@@ -5,6 +5,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **The lobby is alive** (I-029, option C): a joiner's chip walks in from the QR's side with a gold
+  welcome ring that fades over a second, and two soft glows in the brand accents drift slowly behind
+  the stage (still under reduced motion).
 - **Pausing freezes the room** (I-030, option C, every game's TV): the curtain drops from the top edge
   and lifts on resume, the Paused card lands once it is down, the stage steps back to 0.96 with the
   strip at 60 % while held, and the stage lands back to full on the resume chime. The owner's note:
