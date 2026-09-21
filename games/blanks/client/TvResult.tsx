@@ -33,6 +33,8 @@ export function finalBeatsMs(players: number): readonly number[] {
   return [0, boardLandedMs(players, { dense: players >= 5 }) + BEST_CARD_GAP_MS];
 }
 const BEAT_BEST = 1;
+/** I-019: the final board's totals hold as "—" this long (the tease under them), then count up. */
+const HOLD_MS = 1_600;
 const BEAT_AUTHORS = 1;
 const BEAT_WINNER = 2;
 /** I-005 A: the voter chips land this far apart (the CSS `.voterIn` delay uses the same figure). */
@@ -137,6 +139,16 @@ function TvFinal({ view }: Props): JSX.Element {
   useEffect(() => {
     if (beat >= BEAT_BEST && best) play('card');
   }, [beat, best, play]);
+  // I-019 B: a run of eight ticks, faster and faster, into the hold's end (the drumroll).
+  useEffect(() => {
+    const gaps = [260, 220, 190, 160, 130, 110, 90, 70];
+    let at = HOLD_MS - gaps.reduce((a, b) => a + b, 0);
+    const ts = gaps.map((g) => {
+      at += g;
+      return setTimeout(() => play('tick'), at);
+    });
+    return () => ts.forEach((t) => clearTimeout(t));
+  }, [play]);
   return (
     <Stage center className={styles.table}>
       <p className={styles.kicker}>Final round played</p>
@@ -149,6 +161,7 @@ function TvFinal({ view }: Props): JSX.Element {
           <Scoreboard
             rows={view.standings}
             noTrophy
+            holdMs={HOLD_MS}
             stagger="up"
             dense={view.standings.length >= 5}
             size={view.standings.length >= 9 ? 'sm' : 'md'}
@@ -177,6 +190,10 @@ function TvFinal({ view }: Props): JSX.Element {
         ) : null}
       </div>
       <BigText level="h2" tone="accent">
+        {/* I-019 B: the envelope — its flap turns open as the hold ends. */}
+        <span className={styles.envelope} aria-hidden>
+          <span className={styles.flap} />
+        </span>
         {tied ? "It's a tie" : 'And the winner is'}
         <span className={styles.ellipsis} aria-hidden>
           …

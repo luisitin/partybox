@@ -1376,3 +1376,38 @@
 :global(:root[data-motion='off']) .judgeGridDone .onPage {
   animation-delay: 0ms;
 }
+
+/* ── I-019 B: the envelope beside "And the winner is…" — a flap that turns open (transform only)
+   as the hold ends (1600 ms − 300 ms). */
+.envelope {
+  position: relative;
+  display: inline-block;
+  width: 1.4em;
+  height: 0.95em;
+  margin-right: 0.35em;
+  vertical-align: -0.12em;
+  border-radius: 3px;
+  background: var(--pb-surface-2);
+  border: 2px solid var(--pb-accent-2);
+  box-sizing: border-box;
+}
+.flap {
+  position: absolute;
+  left: 50%;
+  top: -2px;
+  width: 0.9em;
+  height: 0.9em;
+  background: var(--pb-accent-2);
+  transform-origin: 50% 0;
+  transform: translateX(-50%) rotate(45deg) scale(0.7);
+  animation: pb-bl-flap var(--pb-motion-base) var(--pb-ease) 1300ms both;
+}
+@keyframes pb-bl-flap {
+  from {
+    transform: translateX(-50%) rotate(45deg) scale(0.7);
+  }
+  to {
+    transform: translateX(-50%) rotate(45deg) scale(0.7) translateY(-0.9em);
+    opacity: 0.4;
+  }
+}
