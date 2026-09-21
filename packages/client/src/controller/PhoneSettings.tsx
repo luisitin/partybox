@@ -42,6 +42,7 @@ export function PhoneSettings({ audio }: PhoneSettingsProps): JSX.Element {
   // I-021 (the owner): the drawing pad's paper and pencil are this phone's choice — ruled paper
   // and a pencil as picked, plain / pen one tap away; nothing crosses the wire.
   const pad = usePadStyle();
+  const [tvSounds, setTvSounds] = useState(() => tvSoundsOn());
   return (
     <>
       <button
@@ -87,6 +88,22 @@ export function PhoneSettings({ audio }: PhoneSettingsProps): JSX.Element {
           {soundOn ? t.controller.on : t.controller.off}
         </span>
       </button>
+      {/* S-005 C: the TV's sounds on this phone (a phone-only room). */}
+      <button
+        type="button"
+        className={pickerStyles.toggle}
+        aria-pressed={tvSounds}
+        onClick={() => {
+          setTvSoundsOn(!tvSounds);
+          setTvSounds(!tvSounds);
+        }}
+      >
+        <span className={pickerStyles.toggleGlyph} aria-hidden>
+          📺
+        </span>
+        TV sounds on this phone
+        <span className={pickerStyles.toggleState}>{tvSounds ? t.controller.on : t.controller.off}</span>
+      </button>
       {canVibrate ? (
         <button
           type="button"
@@ -109,4 +126,21 @@ export function PhoneSettings({ audio }: PhoneSettingsProps): JSX.Element {
       )}
     </>
   );
+}
+
+// ── S-005 C: the TV's sounds on this phone — per phone, on by default.
+const TV_SOUNDS_KEY = 'partybox:tv-sounds';
+export function tvSoundsOn(): boolean {
+  try {
+    return localStorage.getItem(TV_SOUNDS_KEY) !== 'off';
+  } catch {
+    return true;
+  }
+}
+export function setTvSoundsOn(on: boolean): void {
+  try {
+    localStorage.setItem(TV_SOUNDS_KEY, on ? 'on' : 'off');
+  } catch {
+    // private mode
+  }
 }

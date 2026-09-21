@@ -12,7 +12,9 @@ import type { Controller, ControllerState } from '../net/controller';
 import type { SoundEngine } from '../sound';
 import { ThemePicker } from '../ThemePicker';
 import styles from './ControllerShell.module.css';
-import { PhoneSettings } from './PhoneSettings';
+import { PhoneSettings, tvSoundsOn } from './PhoneSettings';
+import { clientGames } from '../games.generated';
+import type { SoundCue } from '../sound';
 import { usePhoneUrgency } from './urgency';
 import { VipMenu } from './VipMenu';
 
@@ -110,6 +112,20 @@ export function ControllerShell({
     if (playing && myStatus === 'submitted' && p.status !== 'submitted' && p.status !== null) {
       if (audio && performance.now() - audio.lastPlayedAt() > 50) audio.play('submit');
       buzz(BUZZ.submit);
+    }
+    // S-005 C: the TV's phase cue on this phone (a phone-only room, the phone opted in).
+    if (
+      playing &&
+      phase !== null &&
+      p.phase !== phase &&
+      state.room?.phoneOnly &&
+      tvSoundsOn() &&
+      audio
+    ) {
+      const mapped = state.room.selectedGameId
+        ? clientGames[state.room.selectedGameId]?.sounds?.[phase]
+        : undefined;
+      if (mapped && mapped !== 'silence') audio.play(mapped as SoundCue);
     }
     // A rejected join or input, once per error object: the strip goes red (Join renders the
     // same error inline).

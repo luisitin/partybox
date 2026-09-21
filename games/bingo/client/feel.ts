@@ -4,10 +4,11 @@
 // ref, not state, so no render is scheduled.
 import { useEffect, useRef } from 'react';
 import { buzz } from '@partybox/game-sdk/ui';
+import type { SoundApi } from '@partybox/game-sdk/ui';
 import type { PlayCue } from '@partybox/game-sdk/ui';
 import type { BingoControllerView } from '../server/views';
 import { DEAL_BOUNCE_MS, DEAL_START_MS, DEAL_STEP_MS } from '../server/types';
-import { BALL_LAND_MS } from './caller';
+import { BALL_LAND_MS, speakCall } from './caller';
 import { wantedCells } from './close';
 
 export function useVerdictFeel(
@@ -43,7 +44,7 @@ export function useVerdictFeel(
  * Every new number: a short buzz as the nickname lands — BALL_LAND_MS after the push, the beat
  * the TV's ball squashes on — so every phone in the room feels the call together (loop 248).
  */
-export function useCallFeel(view: BingoControllerView): void {
+export function useCallFeel(view: BingoControllerView, voice?: SoundApi | null): void {
   // A call is the server's stamp (loop 294): a countdown or a hold shows the number without
   // calling it, and the repeat after "keep going" is a new stamp — one buzz per real call.
   const stamp =
@@ -53,7 +54,10 @@ export function useCallFeel(view: BingoControllerView): void {
   useEffect(() => {
     if (stamp === null) return;
     const t = setTimeout(() => buzz(12), BALL_LAND_MS);
+    // S-005 B: phone-only — the caller's voice from the phone, as the TV would say it.
+    if (voice && view.current) speakCall(voice, view.current.letter, view.current.number);
     return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- once per call stamp
   }, [stamp]);
 }
 

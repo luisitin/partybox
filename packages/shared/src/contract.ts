@@ -171,6 +171,8 @@ export type TvView = ViewEnvelope;
 
 export interface ControllerView extends ViewEnvelope {
   me: { id: string; role: 'player' | 'spectator' };
+  /** S-005: the room is in "phone only" mode (the engine stamps it). */
+  phoneOnly?: boolean;
 }
 
 /** What actually goes over the wire: the engine adds the VIP (ADR-020). */
