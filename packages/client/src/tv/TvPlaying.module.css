@@ -141,3 +141,11 @@
   animation: global(pb-land) var(--pb-motion-base) var(--pb-ease) both;
   transition: none;
 }
+
+/* ── I-098 A: a heavier curtain — the stage is clearly behind the pause card. */
+.curtain {
+  background: rgb(15 16 32 / 82%);
+}
+:global([data-theme='daylight']) .curtain {
+  background: rgb(23 22 51 / 70%);
+}
