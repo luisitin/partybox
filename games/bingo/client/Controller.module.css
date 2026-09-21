@@ -1199,3 +1199,23 @@
   gap: 3px;
   animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
 }
+
+/* ── I-099 A: the card-pick step sideways is two halves — the pattern side and the card side,
+   each centred, no dead middle. */
+@media (orientation: landscape) and (max-height: 420px) {
+  .introBody {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    justify-items: center;
+  }
+  .introBody .intro {
+    align-items: center;
+    text-align: center;
+  }
+  .introBody .introCount {
+    text-align: center;
+  }
+  .introBody .focus {
+    justify-self: center;
+  }
+
+}
