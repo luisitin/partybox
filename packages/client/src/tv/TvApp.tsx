@@ -190,11 +190,16 @@ export function TvApp(): JSX.Element {
       view && room.status === 'playing'
         ? view.players.filter((pl) => pl.status === 'submitted').length
         : 0;
+    const ownLock =
+      view && room.selectedGameId
+        ? (clientGames[room.selectedGameId]?.ownLocks?.includes(view.phaseId) ?? false)
+        : false;
     if (
       view &&
       room.status === 'playing' &&
       view.phaseId === p.phase &&
       locked > p.locked &&
+      !ownLock &&
       performance.now() - lastLockAt.current >= 250 &&
       performance.now() - audio.lastPlayedAt() > 300
     ) {

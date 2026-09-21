@@ -59,6 +59,12 @@ export interface GameClientModule {
    */
   stripActive?: (view: PushedView<TvView>) => readonly string[];
   /**
+   * TV phase ids where the game plays its own lock-in sound (I-020: Blanks' `card` pluck as a
+   * submission lands on the table); the shell's per-push `lock` tick stays quiet there so one
+   * lock-in is one note. Default: the shell ticks.
+   */
+  ownLocks?: readonly string[];
+  /**
    * Background music on the TV while this game plays (the shell's music engine: tracks are ids
    * under /music/, fetched by scripts/fetch-music.ts). `phases` limits it to those phase ids.
    */

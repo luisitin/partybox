@@ -5,6 +5,10 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Blanks' submissions land in named slots** (I-020, option C): one slot per player in roster
+  order, their face in the landed card's corner, a puff and the `card` pluck as it lands, and every
+  card turning face-up together on "Everyone's in!". The owner's note: one note per lock-in — the
+  shell's `lock` tick stays quiet in a phase the game lists in `ownLocks` (new, additive).
 - **Blanks' final board has an envelope to open** (I-019, option C): every total holds as "—"
   and every rank as "·" for 1.6 s (SDK `Scoreboard` `holdMs`, additive), an SVG envelope beside
   "And the winner is…" turns its flap open as the hold ends under eight accelerating `tick`s (the

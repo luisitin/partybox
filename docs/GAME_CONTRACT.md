@@ -186,6 +186,7 @@ export const clientModule: GameClientModule = {
   sounds: { reveal: 'reveal' }, // optional: map your moments to design-system cue names
   quickInto: ['play'], // optional: phases the TV cuts into (their own entrance is the choreography)
   stripActive: (view) => [], // optional: player ids the TV strip rings as "on" — whoever the room should look at (I-017)
+  ownLocks: ['answer'], // optional: TV phases where the game sounds its own lock-ins; the shell's `lock` tick stays quiet there (I-020)
 };
 ```
 

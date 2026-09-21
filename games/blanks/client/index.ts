@@ -12,6 +12,9 @@ export const clientModule: GameClientModule = {
   // The final board is a scores moment too; the results fanfare follows it.
   // The pick is the judge's moment: the phone chime says so (unmapped = 'phase').
   sounds: { reveal: 'card', result: 'tally', final: 'tally' },
+  // I-020 B + the owner's note: the answer phase's lock-in is the `card` pluck as the card lands
+  // on the table (TvRound.tsx), so the shell's `lock` tick stays quiet there — one note per card.
+  ownLocks: ['answer'],
   // Music beds (ADR-032, owner's picks 2026-09-17): the warm groove is the general background
   // (round card, read-out, result — it resumes where it left off), the soft bossa plays while
   // people pick a card, the marimba pulse while the room judges. Results stay silent under the

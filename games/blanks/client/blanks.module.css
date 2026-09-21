@@ -1516,3 +1516,81 @@
 :global(:root[data-motion='off']) .finalRow .board li:first-child > *:not([class*='delta']) {
   animation: none;
 }
+
+/* ── I-020 A: named slots — the player's face in the landed card's corner. */
+.pip {
+  position: relative;
+}
+.pipFace {
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+  display: inline-flex;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 35%);
+}
+
+/* ── I-020 B: the landing puff — two tiny discs fly out from the card's foot and fade, on the
+   drop's landing beat (transform + opacity only). */
+.puff {
+  position: absolute;
+  left: 50%;
+  bottom: -4px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--pb-text-muted);
+  opacity: 0;
+  animation: pb-bl-puff var(--pb-motion-base) var(--pb-ease) 330ms both;
+}
+.puff:last-child {
+  animation-name: pb-bl-puff-r;
+}
+@keyframes pb-bl-puff {
+  0% {
+    opacity: 0.8;
+    transform: translate(-50%, 0) scale(0.6);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-260%, -10px) scale(1.2);
+  }
+}
+@keyframes pb-bl-puff-r {
+  0% {
+    opacity: 0.8;
+    transform: translate(-50%, 0) scale(0.6);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(160%, -10px) scale(1.2);
+  }
+}
+
+/* ── I-020 C: everyone's in — every card turns face-up together (a 600 ms rotateY under the
+   row's perspective), 60 ms apart across the row; the face stays in the corner. */
+.pipsAllIn .pipDone {
+  animation: pb-bl-turnup var(--pb-motion-slow) var(--pb-ease) both;
+  animation-delay: calc(var(--pb-i, 0) * 60ms);
+  background: linear-gradient(180deg, #ffffff, var(--card-paper));
+}
+@keyframes pb-bl-turnup {
+  from {
+    transform: rotateY(180deg);
+    background: linear-gradient(180deg, var(--card-paper), var(--card-paper-2));
+  }
+  to {
+    transform: rotateY(0deg);
+  }
+}
+/* The owner's note (smoothness): the twins — no puff, the cards simply face up. */
+@media (prefers-reduced-motion: reduce) {
+  .puff,
+  .pipsAllIn .pipDone {
+    animation: none;
+  }
+}
+:global(:root[data-motion='off']) .puff,
+:global(:root[data-motion='off']) .pipsAllIn .pipDone {
+  animation: none;
+}
