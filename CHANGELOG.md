@@ -5,6 +5,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Bingo's hall board is lamps** (I-014, option C): round bulbs with a halo per called number,
+  the current one catching with a smooth 320 ms fade (one dip, no steps — the owner's note) and a
+  soft `tick` 60 ms after the ball lands; numbers that arrive together light 40 ms apart.
 - **Bingo's card styles are shown, not described** (I-013, option C): every row of the style sheet
   carries a little diagram of the layout, the live one breathes, and the preview bar shows the pick
   at 1.5 ×; rows stay one line at every phone width (the owner's note).
