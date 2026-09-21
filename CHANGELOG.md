@@ -5,6 +5,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Broken Pencil's tiers are a spice dial** (I-023, option C): one, two or three heat discs beside
+  each offer, the tiers rising in order and the picked one bumping while the others step back; with
+  Spicy on the hard tier's discs breathe like an ember (the phone view gains `spicy`).
 - **Broken Pencil's recap is read in order** (I-022, option A): the rows rise one after another,
   80 ms apart, and each verdict stamps down after its row.
 - **Broken Pencil's pad feels like paper and pencil** (I-021, option C): ruled paper with a red margin

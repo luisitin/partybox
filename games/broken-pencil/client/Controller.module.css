@@ -163,3 +163,55 @@
     text-overflow: ellipsis;
   }
 }
+
+/* ── I-023 A: heat per tier — discs in the system's own greens, ambers and reds. */
+.heat {
+  display: inline-flex;
+  gap: 4px;
+  margin-bottom: 2px;
+}
+.heatDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--pb-heat, var(--pb-text-muted));
+}
+.heat0 {
+  --pb-heat: var(--pb-accent-3);
+}
+.heat1 {
+  --pb-heat: var(--pb-accent-2);
+}
+.heat2 {
+  --pb-heat: var(--pb-danger);
+}
+
+/* ── I-023 B: the tiers rise in order; the picked tier's discs bump, the others step back. */
+.offers > li {
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) calc(var(--pb-i, 0) * 60ms) both;
+}
+.offerPicked .heatDot {
+  animation: global(pb-bump) var(--pb-motion-base) var(--pb-ease) both;
+}
+.offerPicked .offer {
+  border-color: var(--pb-accent);
+}
+.offerOther {
+  opacity: 0.6;
+  transition: opacity var(--pb-motion-base) var(--pb-ease);
+}
+
+/* ── I-023 C: spicy — the hard tier's discs breathe like an ember (the lobby's idle keyframe;
+   absent under reduced motion), flagging the wild pick before the word is read. */
+.ember .heatDot {
+  animation: global(pb-breathe) var(--pb-motion-pulse) ease-in-out infinite;
+}
+.ember .heatDot:nth-child(2) {
+  animation-delay: 200ms;
+}
+.ember .heatDot:nth-child(3) {
+  animation-delay: 400ms;
+}
+:global(:root[data-motion='off']) .ember .heatDot {
+  animation: none;
+}

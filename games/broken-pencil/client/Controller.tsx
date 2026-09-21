@@ -15,9 +15,13 @@ import type { PencilControllerView } from '../server/views';
 import { DrawPad } from './DrawPad';
 import { DrawingView } from './DrawingView';
 import styles from './Controller.module.css';
+import { Offers } from './Offers';
 
 function Pick({ view, send }: GameControllerProps<PencilControllerView, Input>): JSX.Element {
   const [custom, setCustom] = useState('');
+  // I-023 B: the tapped tier bumps, the other two step back, until the server moves us on.
+  const [picked, setPicked] = useState<number | null>(null);
+  const spicy = view.spicy;
   const offers = view.offers ?? [];
   const others = view.bookCount - 1;
   const reach = view.fullCircle
@@ -58,20 +62,15 @@ function Pick({ view, send }: GameControllerProps<PencilControllerView, Input>):
       }
     >
       <p className={styles.hint}>{reach} Pick something drawable.</p>
-      <ul className={styles.offers}>
-        {offers.map((word, i) => (
-          <li key={word}>
-            <button
-              type="button"
-              className={styles.offer}
-              onClick={() => send({ type: 'pick', option: i })}
-            >
-              <span className={styles.offerLevel}>{['easy', 'medium', 'hard'][i]}</span>
-              <span className={styles.offerText}>{word}</span>
-            </button>
-          </li>
-        ))}
-      </ul>
+      <Offers
+        offers={offers}
+        spicy={spicy}
+        picked={picked}
+        onPick={(i) => {
+          setPicked(i);
+          send({ type: 'pick', option: i });
+        }}
+      />
     </Screen>
   );
 }
