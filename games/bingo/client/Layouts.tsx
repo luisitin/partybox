@@ -2,11 +2,12 @@
 // thumbnail below (the one up is marked, a card that won fades); tap a thumbnail to bring it up.
 // Grid / Strip / Stack / Side by side / tablet: every card at once with its own BINGO! button; the
 // grid's spare slot (three cards) shows the call the way the TV does.
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
 import type { BingoControllerView } from '../server/views';
 import { Card } from './Card';
 import { wantedCells } from './close';
+import { useSound } from '@partybox/game-sdk/ui';
 import { Ball, BingoButton } from './ControllerParts';
 import type { Send } from './ControllerParts';
 import styles from './Controller.module.css';
@@ -134,13 +135,15 @@ export function Thumbnails({
       {cards.map((numbers, c) => {
         const won = view.phaseId !== 'intro' && view.won.includes(c);
         const cur = c === marked;
-        const tag = won ? 'BINGO ✓' : cur ? markLabel : spent.includes(c) ? 'swapped' : null;
+        // I-011 A: the up card is told by its gold edge, not a tag (the tag stays for won/swapped)
+        const tag = won ? 'BINGO ✓' : cur ? null : spent.includes(c) ? 'swapped' : null;
+        const fan = cards.length > 1 ? c - (cards.length - 1) / 2 : 0;
         return (
           <button
             type="button"
             key={c}
             className={`${styles.thumb} ${cur ? styles.thumbCur : ''} ${won ? styles.thumbWon : ''}`}
-            style={{ ['--i' as string]: c }}
+            style={{ ['--i' as string]: c, ['--fan' as string]: fan }}
             disabled={cur}
             onClick={() => onPick(c)}
             aria-label={`Card ${c + 1}${cur ? `, ${markLabel}` : ''}${won ? ', won' : ''}`}
@@ -178,6 +181,11 @@ export function FocusLayout(
     setSeen(p.up);
     setPicked(true);
   }
+  // I-011 B: a card coming up sounds like one — the `card` pluck with the rise.
+  const play = useSound();
+  useEffect(() => {
+    if (picked) play('card');
+  }, [p.up, picked, play]);
   return (
     <div className={`${styles.focus} ${many ? styles.focusMany : ''}`}>
       <div
