@@ -3,6 +3,7 @@
 // into the first seat and bumps the count — so the eye lands on the chip, not a toast.
 import type { JSX } from 'react';
 import type { RoomSnapshot } from '@partybox/shared';
+import { useEffect, useRef, useState } from 'react';
 import { BigText, PlayerChips, Stage } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import { useServerInfo } from '../net/info';
@@ -18,6 +19,19 @@ export function TvLobby({ room }: TvLobbyProps): JSX.Element {
   const vip = players.find((p) => p.isVip);
   const full = room !== null && players.length >= room.capacity;
   const empty = players.length === 0;
+  // I-044: the room's first VIP — crowned once, on the snapshot that first names a VIP.
+  const crowned = useRef<{ code: string; id: string | null }>({ code: '', id: null });
+  if (room && crowned.current.code !== room.code) crowned.current = { code: room.code, id: null };
+  const [crownId, setCrownId] = useState<string | null>(null);
+  if (room && vip && crowned.current.id === null) {
+    crowned.current.id = vip.id;
+    setCrownId(vip.id);
+  }
+  useEffect(() => {
+    if (!crownId) return;
+    const h = setTimeout(() => setCrownId(null), 4000);
+    return () => clearTimeout(h);
+  }, [crownId]);
   return (
     <Stage>
       {/* I-029 B: the room breathes — two soft glows drift behind the lobby (transform only). */}
@@ -65,6 +79,7 @@ export function TvLobby({ room }: TvLobbyProps): JSX.Element {
               status: p.spectator ? 'spectator' : 'active',
             }))}
             vip={room?.vip}
+            crownId={crownId}
             botIds={players.filter((p) => p.bot).map((p) => p.id)}
             layout="grid"
             size={players.length > 8 ? 'md' : 'lg'}
@@ -81,7 +96,10 @@ export function TvLobby({ room }: TvLobbyProps): JSX.Element {
               ))}
             </p>
           ) : room && vip ? (
-            <p className="pb-muted">{t.lobby.waitingFor(vip.name)}</p>
+            <p key={crownId ? 'crown' : 'wait'} className={`pb-muted ${styles.rise}`}>
+              {/* I-044 C: the room is told once who the VIP is. */}
+              {crownId ? `${vip.name} is the VIP — they pick the games` : t.lobby.waitingFor(vip.name)}
+            </p>
           ) : null}
         </div>
       </div>

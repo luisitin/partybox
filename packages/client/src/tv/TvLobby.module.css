@@ -143,3 +143,8 @@
     }
   }
 }
+
+/* ── I-044 C: the VIP line rises in, then the waiting line replaces it. */
+.rise {
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
