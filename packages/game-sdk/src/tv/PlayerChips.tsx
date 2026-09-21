@@ -9,6 +9,8 @@ export interface PlayerChipsProps {
   vip?: string | null;
   /** Ids to highlight. */
   activeIds?: string[];
+  /** I-045 B: players the room is waiting on — three pulsing dots above their avatar. */
+  thinkingIds?: string[];
   showScores?: boolean;
   /** The scores are held-over values, not live: rendered muted (review-loop #32). */
   scoresMuted?: boolean;
@@ -29,6 +31,7 @@ export function PlayerChips({
   players,
   vip,
   activeIds = [],
+  thinkingIds = [],
   showScores,
   scoresMuted = false,
   size = 'md',
@@ -56,7 +59,14 @@ export function PlayerChips({
       aria-label="players"
     >
       {ordered.map((p) => (
-        <li key={p.id} className={`${styles.item} ${enter ? styles.enter : ''}`}>
+        <li key={p.id} className={`${styles.item} ${enter ? styles.enter : ''} ${thinkingIds.includes(p.id) ? styles.thinking : ''}`}>
+          {thinkingIds.includes(p.id) ? (
+            <span className={styles.dots} aria-hidden>
+              <i />
+              <i />
+              <i />
+            </span>
+          ) : null}
           <PlayerChip
             name={p.name}
             avatarId={p.avatarId}

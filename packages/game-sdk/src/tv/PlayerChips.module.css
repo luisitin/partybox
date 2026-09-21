@@ -49,7 +49,7 @@
 }
 /* I-029 C: the newest chip is welcomed — a gold ring that fades over a second, once the walk has
    landed (the one easing; the chip's own rings — active, back — are its own rules). */
-.enter > * {
+.enter > *:not([class*='_active_']) {
   outline: 3px solid transparent;
   outline-offset: 2px;
   border-radius: 999px;
@@ -83,4 +83,44 @@
   border-radius: 50%;
   background: var(--pb-surface-2);
   flex-shrink: 0;
+}
+
+/* ── I-045 B: the thinking dots above a chip the room is waiting on (opacity only). */
+.thinking {
+  position: relative;
+}
+.dots {
+  position: absolute;
+  left: 14px;
+  top: -16px;
+  display: inline-flex;
+  gap: 4px;
+}
+.dots > i {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--pb-accent-2);
+  animation: pb-think 1200ms ease-in-out infinite;
+}
+.dots > i:nth-child(2) {
+  animation-delay: 200ms;
+}
+.dots > i:nth-child(3) {
+  animation-delay: 400ms;
+}
+@keyframes pb-think {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dots > i {
+    animation: none;
+    opacity: 0.8;
+  }
 }

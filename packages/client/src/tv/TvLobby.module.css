@@ -143,3 +143,10 @@
     }
   }
 }
+
+/* ── I-045 C: "Sam is picking a game…" with Sam's face inline. */
+.picking {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+}

@@ -3,7 +3,7 @@
 // into the first seat and bumps the count — so the eye lands on the chip, not a toast.
 import type { JSX } from 'react';
 import type { RoomSnapshot } from '@partybox/shared';
-import { BigText, PlayerChips, Stage } from '@partybox/game-sdk/ui';
+import { Avatar, BigText, PlayerChips, Stage } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import { useServerInfo } from '../net/info';
 import styles from './TvLobby.module.css';
@@ -65,7 +65,9 @@ export function TvLobby({ room }: TvLobbyProps): JSX.Element {
               status: p.spectator ? 'spectator' : 'active',
             }))}
             vip={room?.vip}
+            activeIds={vip ? [vip.id] : []}
             botIds={players.filter((p) => p.bot).map((p) => p.id)}
+            thinkingIds={vip ? [vip.id] : []}
             layout="grid"
             size={players.length > 8 ? 'md' : 'lg'}
             align="start"
@@ -81,7 +83,11 @@ export function TvLobby({ room }: TvLobbyProps): JSX.Element {
               ))}
             </p>
           ) : room && vip ? (
-            <p className="pb-muted">{t.lobby.waitingFor(vip.name)}</p>
+            <p className={`pb-muted ${styles.picking}`}>
+              {/* I-045 C: the sentence and the person are one thing. */}
+              <Avatar avatarId={vip.avatarId} size={28} />
+              {vip.name} is picking a game…
+            </p>
           ) : null}
         </div>
       </div>
