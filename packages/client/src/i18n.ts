@@ -121,6 +121,7 @@ export const t = {
   },
   theme: {
     title: 'Theme',
+    done: 'Done',
   },
   controller: {
     phoneSound: 'Sounds on this phone',

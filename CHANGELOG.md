@@ -5,6 +5,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Theme try-on** (I-035, option C): the theme sheet stays open while you try themes (Done closes
+  it), every swatch is a tiny screen in that theme's colours, and the sheet fades to the new colours
+  instead of snapping.
 - **Character select** (I-031, option B + the owner's note): the join form shows the picked face large
   beside the name, popping on each pick while the other cells step back; "Use a photo" takes a
   picture from the phone (camera or gallery), crops it to a 128 × 128 JPEG on the phone and sends it
