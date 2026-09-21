@@ -74,6 +74,13 @@ export function ControllerShell({
   const myStatus = state.view?.players.find((p) => p.id === state.playerId)?.status ?? null;
   // Offline, the local countdown still runs (and parks at 0): show it muted, never urgent.
   const online = state.connection === 'connected';
+  // I-050 B: the dot pops once each time the link lands (a fresh load, a reconnect).
+  const [connectedAt, setConnectedAt] = useState(0);
+  const [wasLinked, setWasLinked] = useState(online);
+  if (online !== wasLinked) {
+    setWasLinked(online);
+    if (online) setConnectedAt(Date.now());
+  }
   // With a countdown row on screen, "Reconnecting…" takes its cue slot (review-loop #33): the
   // overlay banner hid the first content line for the whole outage. No row → the banner.
   const countdownRow = view !== null && seconds !== null && view.timerMode !== 'hidden';
@@ -168,7 +175,7 @@ export function ControllerShell({
             🎨
           </button>
           <span
-            className={`${styles.dot} ${state.connection === 'connected' ? styles.on : styles.off}`}
+            key={connectedAt} className={`${styles.dot} ${state.connection === 'connected' ? `${styles.on} ${styles.beat}` : styles.off} ${connectedAt ? styles.blink : ''}`}
             role="status"
             aria-label={state.connection}
           />

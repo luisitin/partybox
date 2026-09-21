@@ -332,3 +332,30 @@
     padding: 2px var(--pb-space-4);
   }
 }
+
+/* ── I-050 A: the heartbeat — the connected dot breathes (opacity only); still under reduced
+   motion. */
+.beat {
+  animation: pb-heartbeat 2400ms ease-in-out infinite;
+}
+@keyframes pb-heartbeat {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .beat {
+    animation: none;
+  }
+}
+
+/* ── I-050 B: the confirming blink as the link lands — one pop, then the heartbeat. */
+.blink {
+  animation:
+    global(pb-pop) var(--pb-motion-base) var(--pb-ease) both,
+    pb-heartbeat 2400ms ease-in-out var(--pb-motion-base) infinite;
+}
