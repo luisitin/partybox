@@ -64,6 +64,23 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
   // "Joining…" until the server answers: a welcome unmounts this screen, an error (or a 6 s safety
   // timeout, for a server that never answers) re-enables the button.
   const submitting = submittedAt !== null;
+  // I-056 A: a rejection about the ROOM (full / locked) is not about what was typed.
+  const roomError =
+    state.error?.code === 'room_full' || state.error?.code === 'room_locked'
+      ? state.error.code
+      : null;
+  const nameError = state.error !== null && roomError === null;
+  // I-056 C: after a room rejection the button says why and holds for 5 s, then allows a retry.
+  // `retryFor` is the error object the hold has ended for: a fresh rejection (a new object) is
+  // held again without a synchronous setState in the effect.
+  const [retryFor, setRetryFor] = useState<ControllerState['error']>(null);
+  const roomErr = roomError ? state.error : null;
+  useEffect(() => {
+    if (!roomErr) return;
+    const h = setTimeout(() => setRetryFor(roomErr), 5000);
+    return () => clearTimeout(h);
+  }, [roomErr]);
+  const retryOpen = roomErr !== null && retryFor === roomErr;
   // "Adjust state when a prop changes": an error answers the pending join, right in this render.
   if (submittedAt !== null && state.error !== null) setSubmittedAt(null);
   useEffect(() => {
@@ -101,21 +118,40 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
   };
 
   return (
-    <form className={styles.form} onSubmit={submit}>
+    <form className={`${styles.form} ${roomError ? styles.formDim : ''}`} onSubmit={submit}>
       <Screen
         title={t.join.title}
         footer={
-          <PrimaryButton type="submit" disabled={!canSubmit || submitting}>
-            {submitting
-              ? t.join.joining
-              : state.connection !== 'connected'
-                ? t.join.offline
-                : name.trim().length === 0
-                  ? t.join.needName
-                  : needsCode && code.trim().length !== 4
-                    ? t.join.needCode
-                    : t.join.submit}
-          </PrimaryButton>
+          <>
+            {/* I-056 B: a room rejection lands where the action is — above the button. */}
+            {roomError && state.error ? (
+              <p className={`${styles.kicked} ${styles.roomError}`} role="alert">
+                <span aria-hidden>{roomError === 'room_full' ? '👥 ' : '🔒 '}</span>
+                {state.error.message}{' '}
+                {roomError === 'room_full'
+                  ? 'Ask the VIP to make room.'
+                  : 'Ask the VIP to unlock it.'}
+              </p>
+            ) : null}
+            <PrimaryButton
+              type="submit"
+              disabled={!canSubmit || submitting || (roomError !== null && !retryOpen)}
+            >
+              {submitting
+                ? t.join.joining
+                : state.connection !== 'connected'
+                  ? t.join.offline
+                  : name.trim().length === 0
+                    ? t.join.needName
+                    : needsCode && code.trim().length !== 4
+                      ? t.join.needCode
+                      : roomError === 'room_full' && !retryOpen
+                        ? 'Room is full'
+                        : roomError === 'room_locked' && !retryOpen
+                          ? 'Room is locked'
+                          : t.join.submit}
+            </PrimaryButton>
+          </>
         }
       >
         {state.kicked ? (
@@ -135,12 +171,12 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
           <span className={styles.label}>{t.join.name}</span>
           <input
             ref={nameRef}
-            className={`${styles.input} ${state.error ? styles.inputError : ''} ${shaking ? styles.shake : ''}`}
+            className={`${styles.input} ${nameError ? styles.inputError : ''} ${shaking && nameError ? styles.shake : ''}`}
             onAnimationEnd={() => setShaking(false)}
             value={name}
             onChange={(e) => setName(e.target.value)}
-            aria-invalid={state.error !== null}
-            aria-describedby={state.error ? 'join-error' : undefined}
+            aria-invalid={nameError}
+            aria-describedby={nameError ? 'join-error' : undefined}
             placeholder={t.join.namePlaceholder}
             maxLength={PLAYER_NAME_MAX}
             autoComplete="nickname"
@@ -148,7 +184,7 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
             enterKeyHint="done"
             required
           />
-          {state.error ? (
+          {nameError && state.error ? (
             <span id="join-error" className={styles.error} role="alert">
               {/* I-040 C: a taken name shows who has it. */}
               {state.error.player ? (

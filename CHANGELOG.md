@@ -5,6 +5,10 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Three join failures, three treatments** (I-056, option C): a taken name keeps the shake and
+  the red field; a full or locked room leaves the name alone — the form dims, a badged banner
+  (👥 / 🔒) rises above the button, which reads "Room is full" / "Room is locked" and holds for
+  5 s before a retry.
 - **The TV marks the last seat** (I-054, option C): at capacity the hushed `close` chord follows
   the join note and a toast says "Room full — 16 / 16"; a seat freeing plays `ready` after the
   leave note with "A seat opened — 15 / 16".

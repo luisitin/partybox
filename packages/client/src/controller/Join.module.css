@@ -174,3 +174,22 @@
   font-size: var(--pb-font-caption);
   color: var(--pb-danger);
 }
+
+/* ── I-056 A: a room rejection (full / locked) is not about what was typed — the form's inputs
+   dim, the warning wears its own badge. Transform/opacity only. */
+.formDim :is(input, fieldset) {
+  opacity: 0.55;
+  transition: opacity var(--pb-motion-base) var(--pb-ease);
+}
+
+/* ── I-056 B: the room rejection as a banner above the button, in the danger colour. */
+.roomError {
+  border-left-color: var(--pb-danger);
+  color: var(--pb-danger);
+  font-weight: 700;
+  margin-bottom: var(--pb-space-3);
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
+:global(:root[data-motion='off']) .roomError {
+  animation: none;
+}
