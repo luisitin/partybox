@@ -185,6 +185,7 @@ export const clientModule: GameClientModule = {
   Controller: lazy(() => import('./Controller').then((m) => ({ default: m.Controller }))),
   sounds: { reveal: 'reveal' }, // optional: map your moments to design-system cue names
   quickInto: ['play'], // optional: phases the TV cuts into (their own entrance is the choreography)
+  stripActive: (view) => [], // optional: player ids the TV strip rings as "on" — whoever the room should look at (I-017)
 };
 ```
 

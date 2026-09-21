@@ -5,6 +5,10 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Blanks' reader is pointed at** (I-017, option B): the seat asked to read a card out is ringed in
+  the TV's roster strip while it reads, and the "read it out" pill carries their face and pops on
+  every new card. New optional client-module hook `stripActive(view)` for any game to point the
+  room at a player.
 - **Blanks' hand is a hand** (I-016, option C): the white cards sit side by side in a fanned
   scroll-snap row (no overlap — every card's whole text reads without a tap, a long card's type one
   size down), the pick lifts while the rest step back, and Play flies the card into the black card.
