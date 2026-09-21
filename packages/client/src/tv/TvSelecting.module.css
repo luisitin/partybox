@@ -4,6 +4,12 @@
 .choosing {
   text-align: center;
 }
+/* I-045 C: "Sam is choosing a game…" with Sam's face inline. */
+.picking {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+}
 
 .columns {
   display: grid;
@@ -18,27 +24,36 @@
 .left {
   display: flex;
   flex-direction: column;
-  gap: var(--pb-space-5);
+  gap: var(--pb-space-4);
   min-height: 0;
-  overflow-y: auto;
+  overflow: hidden;
 }
 
+/* Nobody scrolls a TV: the game list is the part that gives (it scrolls if it must); the recap
+   toggle and the roster stay in view — with Bingo's ten settings on the right the roster sat
+   under the host bar (found proving I-045, the thinking dots over the VIP). */
 .games {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--pb-space-3);
+  gap: var(--pb-space-2);
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+}
+.left > :not(.games) {
+  flex: none;
 }
 
 .gameButton {
   width: 100%;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--pb-space-1);
-  padding: var(--pb-space-3) var(--pb-space-4);
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: var(--pb-space-3);
+  padding: var(--pb-space-2) var(--pb-space-4);
   border-radius: var(--pb-radius);
   border: 3px solid var(--pb-border);
   background: var(--pb-surface);

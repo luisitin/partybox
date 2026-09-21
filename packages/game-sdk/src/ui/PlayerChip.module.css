@@ -231,3 +231,52 @@
 .spectator {
   opacity: 0.6;
 }
+
+/* ── I-045 B + the owner's note: the thinking dots OVER the avatar — the portrait dims to 0.35
+   under three gold dots pulsing in turn (opacity only, 1.2 s); the twins hold them steady. */
+.portrait {
+  display: inline-flex;
+}
+.avatarThinking > .portrait {
+  opacity: 0.35;
+}
+.dots {
+  position: absolute;
+  inset: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+}
+.dots > i {
+  width: 22%;
+  height: 22%;
+  border-radius: 50%;
+  background: var(--pb-accent-2);
+  animation: pb-think 1200ms ease-in-out infinite;
+}
+.dots > i:nth-child(2) {
+  animation-delay: 200ms;
+}
+.dots > i:nth-child(3) {
+  animation-delay: 400ms;
+}
+@keyframes pb-think {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dots > i {
+    animation: none;
+    opacity: 0.8;
+  }
+}
+:global(:root[data-motion='off']) .dots > i {
+  animation: none;
+  opacity: 0.8;
+}

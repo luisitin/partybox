@@ -5,6 +5,11 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **The room sees who is picking** (I-045, option C): the lobby rings the VIP's chip while it
+  waits on them; once they tap "Pick a game" the selecting stage shows three gold dots pulsing
+  over their dimmed portrait (`PlayerChip` `thinking`, `PlayerChips` `thinkingIds`) and "Sam is
+  choosing a game…" with Sam's face inline — the owner's note: dots only while picking, over the
+  portrait.
 - **A taken name is the room's business** (I-040, option C): the TVs get a toast ("Someone's
   trying to join as Sam — that name's taken") through a new `to: 'tvs'` effect target and the lobby
   rings Sam's chip while it shows; the phone's error carries Sam's face and name and a double buzz.

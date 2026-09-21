@@ -9,6 +9,8 @@ export interface PlayerChipsProps {
   vip?: string | null;
   /** Ids to highlight. */
   activeIds?: string[];
+  /** I-045 B: players the room is waiting on — three pulsing dots over their dimmed avatar. */
+  thinkingIds?: string[];
   showScores?: boolean;
   /** The scores are held-over values, not live: rendered muted (review-loop #32). */
   scoresMuted?: boolean;
@@ -29,6 +31,7 @@ export function PlayerChips({
   players,
   vip,
   activeIds = [],
+  thinkingIds = [],
   showScores,
   scoresMuted = false,
   size = 'md',
@@ -64,6 +67,7 @@ export function PlayerChips({
             status={p.status}
             isVip={vip === p.id}
             active={activeIds.includes(p.id)}
+            thinking={thinkingIds.includes(p.id)}
             score={showScores ? p.score : undefined}
             scoreMuted={scoresMuted}
             leader={leaders.has(p.id)}

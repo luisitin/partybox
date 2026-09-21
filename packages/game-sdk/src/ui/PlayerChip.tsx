@@ -18,6 +18,9 @@ export interface PlayerChipProps {
   leader?: boolean;
   /** Highlight (e.g. it is this player's turn). */
   active?: boolean;
+  /** I-045 B + the owner's note: the room waits on this player — three pulsing dots over the
+   *  avatar, the avatar dimmed under them. */
+  thinking?: boolean;
   /** This chip is the viewer: a small "you" tag (not the turn outline). */
   isMe?: boolean;
   /** A bot player (ADR-028): shows a robot tag so nobody mistakes it for a person. */
@@ -47,6 +50,7 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
     scoreMuted = false,
     leader,
     active,
+    thinking = false,
     isMe,
     isBot,
     onRemove,
@@ -85,8 +89,17 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
       className={classes}
       aria-label={`${name}${isMe ? ' (you)' : ''}${isBot ? ' (bot)' : ''}${isVip ? ', VIP' : ''}${glyph.label ? `, ${glyph.label}` : ''}${leader ? ', leading' : ''}`}
     >
-      <span className={styles.avatar}>
-        <Avatar avatarId={avatarId} dim={!connected || status === 'spectator'} />
+      <span className={`${styles.avatar} ${thinking ? styles.avatarThinking : ''}`}>
+        <span className={styles.portrait}>
+          <Avatar avatarId={avatarId} dim={!connected || status === 'spectator'} />
+        </span>
+        {thinking ? (
+          <span className={styles.dots} aria-hidden>
+            <i />
+            <i />
+            <i />
+          </span>
+        ) : null}
       </span>
       <span className={styles.name}>{name}</span>
       {isMe ? (

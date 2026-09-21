@@ -3,7 +3,7 @@
 // room state. The room sees the highlighted game big, its settings, and who is here.
 import type { JSX } from 'react';
 import type { RoomSnapshot } from '@partybox/shared';
-import { BigText, PlayerChips, Stage } from '@partybox/game-sdk/ui';
+import { Avatar, BigText, PlayerChips, Stage } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import type { TvClient } from '../net/tv';
 import { SettingField } from '../SettingField';
@@ -21,7 +21,15 @@ export function TvSelecting({ room, client }: TvSelectingProps): JSX.Element {
   return (
     <Stage>
       <p className={`pb-muted ${styles.choosing}`}>
-        {vip ? t.selecting.vipChoosing(vip.name) : t.host.choosing}
+        {/* I-045 C: the sentence and the person are one thing — the VIP's face inline. */}
+        {vip ? (
+          <span className={styles.picking}>
+            <Avatar avatarId={vip.avatarId} size={28} />
+            {t.selecting.vipChoosing(vip.name)}
+          </span>
+        ) : (
+          t.host.choosing
+        )}
       </p>
       <div className={styles.columns}>
         <div className={styles.left}>
@@ -66,6 +74,10 @@ export function TvSelecting({ room, client }: TvSelectingProps): JSX.Element {
               status: p.spectator ? 'spectator' : 'active',
             }))}
             vip={room.vip}
+            // I-045 A + B (the owner's note): the VIP is picking — ringed, thinking dots over
+            // their portrait; the plain lobby shows the ring alone.
+            activeIds={vip ? [vip.id] : []}
+            thinkingIds={vip ? [vip.id] : []}
             botIds={room.players.filter((p) => p.bot).map((p) => p.id)}
             layout="grid"
             size="sm"
