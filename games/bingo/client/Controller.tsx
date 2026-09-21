@@ -75,7 +75,20 @@ export function Controller({
   const [freeDaubed, setFreeDaubed] = useState<number[]>([]);
   const toggleFree = (c: number): void =>
     setFreeDaubed((v) => (v.includes(c) ? v.filter((i) => i !== c) : [...v, c]));
-  const daub = (c: number, index: number): void => daubWithFeel(view, send, play, c, index);
+  // I-136 B: "Lifted B 9 · Undo" for two seconds after an un-daub.
+  const [lifted, setLifted] = useState<{ card: number; index: number; label: string } | null>(null);
+  useEffect(() => {
+    if (!lifted) return;
+    const t = setTimeout(() => setLifted(null), 2000);
+    return () => clearTimeout(t);
+  }, [lifted]);
+  const daub = (c: number, index: number): void => {
+    if ((view.daubs[c] ?? []).includes(index)) {
+      const n = cards?.[c]?.[index];
+      setLifted({ card: c, index, label: n === undefined ? '' : `${'BINGO'[index % 5]} ${n}` });
+    } else setLifted(null);
+    daubWithFeel(view, send, play, c, index);
+  };
   useCallFeel(view);
   useCloseFeel(view, play);
   // The card up just won: bring a live card up instead — once, at the moment it wins, so a won
@@ -290,6 +303,18 @@ export function Controller({
           {body}
           {view.pausedBy.length > 0 && !view.menuOpen && !sheet ? (
             <HoldCurtain names={view.pausedBy} onOpen={openMenu} />
+          ) : null}
+          {lifted ? (
+            <button
+              type="button"
+              className={styles.undoPill}
+              onClick={() => {
+                daubWithFeel(view, send, play, lifted.card, lifted.index);
+                setLifted(null);
+              }}
+            >
+              Lifted {lifted.label} · Undo
+            </button>
           ) : null}
           {view.resumeAt !== null ? (
             <Countdown

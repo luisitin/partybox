@@ -1199,3 +1199,19 @@
   gap: 3px;
   animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
 }
+
+/* ── I-136 B: the undo pill after an un-daub — two seconds, over the card's foot. */
+.undoPill {
+  position: absolute;
+  left: 50%;
+  bottom: 84px;
+  transform: translateX(-50%);
+  z-index: 3;
+  padding: var(--pb-space-2) var(--pb-space-4);
+  border-radius: 999px;
+  border: 2px solid var(--pb-accent-2);
+  background: var(--pb-surface-2);
+  color: var(--pb-text);
+  font-weight: 800;
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}

@@ -495,12 +495,13 @@ button.cell:focus-visible {
 }
 /* Un-daubing lifts the blot straight off: a quick fade, no bounce. */
 .unstamp {
-  animation: unstamp var(--pb-motion-fast) var(--pb-ease) both;
+  /* I-136 A: a peel — a touch bigger and turned, fading over 300 ms. */
+  animation: unstamp var(--pb-motion-base) var(--pb-ease) both;
 }
 @keyframes unstamp {
   from {
-    transform: scale(1.06);
-    opacity: 0.6;
+    transform: scale(1.12) rotate(-6deg);
+    opacity: 0.5;
   }
   to {
     transform: none;
