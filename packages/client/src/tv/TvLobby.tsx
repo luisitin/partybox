@@ -28,19 +28,30 @@ export function TvLobby({ room }: TvLobbyProps): JSX.Element {
       <div className={styles.split}>
         <div className={`${styles.join} ${full ? styles.full : ''}`}>
           <BigText
+            key={full ? 'full' : 'scan'}
             level="h2"
             tone={full ? 'accent' : 'muted'}
-            className={empty ? styles.scanIdle : ''}
+            className={`${empty ? styles.scanIdle : ''} ${!full && room && players.length === room.capacity - 1 ? styles.titleBump : ''}`}
           >
             {full ? t.lobby.full : t.lobby.scan}
           </BigText>
           {info ? (
-            <span
-              className={styles.qr}
-              dangerouslySetInnerHTML={{ __html: info.qrSvg }}
-              role="img"
-              aria-label={`QR code for ${info.joinUrl}`}
-            />
+            <span className={styles.qrWrap}>
+              <span
+                className={styles.qr}
+                dangerouslySetInnerHTML={{ __html: info.qrSvg }}
+                role="img"
+                aria-label={`QR code for ${info.joinUrl}`}
+              />
+              {/* I-042 A: the door sign over the code while the room is full. */}
+              <span className={`${styles.sign} ${full ? styles.signClosed : styles.signOpen}`} aria-hidden={!full}>
+                  <strong>ROOM FULL</strong>
+                  <small>
+                    {room?.capacity ?? 16} / {room?.capacity ?? 16} · a seat opens when someone leaves
+                  </small>
+                </span>
+              
+            </span>
           ) : null}
           <p className={styles.or}>{t.lobby.orOpen}</p>
           <BigText level="h2" tone="accent" className={styles.url}>

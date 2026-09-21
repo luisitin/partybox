@@ -143,3 +143,70 @@
     }
   }
 }
+
+/* ── I-042 A: the door sign — a card the size of the QR, over it, while the room is full. */
+.qrWrap {
+  position: relative;
+  display: block;
+  perspective: 900px;
+}
+.sign {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pb-space-3);
+  padding: var(--pb-space-5);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface-2);
+  border: 3px solid var(--pb-accent);
+  color: var(--pb-text);
+  text-align: center;
+  backface-visibility: hidden;
+}
+.sign strong {
+  font-size: var(--pb-font-h1);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  color: var(--pb-accent);
+}
+.sign small {
+  font-size: var(--pb-font-body);
+  font-weight: 700;
+  color: var(--pb-text-muted);
+}
+
+/* ── I-042 B: the sign turns in (rotateY 90 → 0) and turns away when a seat opens; each state's
+   rest equals its animation's end, so the stage swap's ghost cannot strip it. */
+.signClosed {
+  transform: rotateY(0deg);
+  animation: pb-sign-close var(--pb-motion-slow) var(--pb-ease) both;
+}
+.signOpen {
+  transform: rotateY(90deg);
+  pointer-events: none;
+  animation: pb-sign-open var(--pb-motion-slow) var(--pb-ease) both;
+}
+@keyframes pb-sign-close {
+  from {
+    transform: rotateY(90deg);
+  }
+  to {
+    transform: rotateY(0deg);
+  }
+}
+@keyframes pb-sign-open {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(90deg);
+  }
+}
+
+/* ── I-042 C: the title bumps back to "Scan to join" as the seat opens. */
+.titleBump {
+  animation: global(pb-bump) var(--pb-motion-base) var(--pb-ease) both;
+}
