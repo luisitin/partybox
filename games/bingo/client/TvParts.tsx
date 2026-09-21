@@ -89,8 +89,11 @@ export function Call({
 export function DibsLine({
   arm,
   queue,
+  claimed = false,
 }: {
   arm: BingoTvView['arm'];
+  /** I-115: the arm turned into a claim (a check is on) — not a lapse. */
+  claimed?: boolean;
   /** Who is waiting behind the armed player, in order (loop 271: the room sees the queue). */
   queue: string[];
 }): JSX.Element {
@@ -100,6 +103,19 @@ export function DibsLine({
       : queue.length === 1
         ? ` · then ${queue[0]}`
         : ` · then ${queue[0]} and ${queue.length - 1} more`;
+  // I-115 A: a window that lapses (the arm goes with no claim) resolves for one beat.
+  const [lapsed, setLapsed] = useState<{ name: string; until: number } | null>(null);
+  const last = useRef<BingoTvView['arm']>(null);
+  useEffect(() => {
+    const prev = last.current;
+    last.current = arm;
+    if (prev && !arm && Date.now() >= prev.until - 150 && !claimed) {
+      setLapsed({ name: prev.name, until: prev.until });
+      const t = setTimeout(() => setLapsed(null), 1600);
+      return () => clearTimeout(t);
+    }
+    return undefined;
+  }, [arm, claimed]);
   return (
     <div className={styles.armSlot}>
       {arm ? (
@@ -109,6 +125,12 @@ export function DibsLine({
             {then ? <span className={styles.armThen}>{then}</span> : null}
           </BigText>
           <span className={styles.armDrain} style={{ animationDuration: `${ARM_MS}ms` }} />
+        </div>
+      ) : lapsed ? (
+        <div key={lapsed.until} className={`${styles.armLine} ${styles.armLapsed}`}>
+          <BigText level="h2" tone="muted">
+            {lapsed.name} says BINGO?… — never mind
+          </BigText>
         </div>
       ) : null}
     </div>
