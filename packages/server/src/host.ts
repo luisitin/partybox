@@ -129,8 +129,13 @@ export function createHost(options: HostOptions): Host {
           push(room);
           break;
         case 'toast': {
-          const payload: ToastPayload = { kind: effect.kind, text: effect.text };
+          const payload: ToastPayload = {
+            kind: effect.kind,
+            text: effect.text,
+            ...(effect.playerId ? { playerId: effect.playerId } : {}),
+          };
           if (effect.to === 'all') transport.toAll(room.code, 'toast', payload);
+          else if (effect.to === 'tvs') transport.toTvs(room.code, 'toast', payload); // I-040
           else transport.toPlayer(effect.to, 'toast', payload);
           break;
         }

@@ -58,8 +58,24 @@ export function join(room: RoomState, event: JoinEvent, deps: EngineDeps): Apply
       room,
       effects: [error(event.playerId, 'name_invalid', 'Pick a name of 1–16 characters.')],
     };
-  if (nameTaken(room, name))
-    return { room, effects: [error(event.playerId, 'name_taken', 'That name is taken.')] };
+  if (nameTaken(room, name)) {
+    // I-040 A: the room is told too — the TVs get a toast naming the clash.
+    const key = nameKey(name);
+    const taken = Object.values(room.players).find((p) => nameKey(p.name) === key);
+    return {
+      room,
+      effects: [
+        error(event.playerId, 'name_taken', 'That name is taken.'),
+        {
+          type: 'toast',
+          to: 'tvs',
+          kind: 'info',
+          text: `Someone's trying to join as ${taken?.name ?? name} — that name's taken`,
+          ...(taken ? { playerId: taken.id } : {}),
+        },
+      ],
+    };
+  }
   if (!isAvatarId(event.avatarId))
     return { room, effects: [error(event.playerId, 'avatar_invalid', 'Pick an avatar.')] };
 
