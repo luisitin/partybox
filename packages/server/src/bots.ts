@@ -125,8 +125,14 @@ export function createBotManager(host: Host, deps: EngineDeps, clock: Clock): Bo
         continue;
       }
       if (wants === null) continue;
-      const delay = delayFor(driver, room, clock.now());
+      let delay = delayFor(driver, room, clock.now());
       if (delay === null) continue;
+      // I-109 A: the card-pick step — a bot reads its cards like a person: 3–5.5 s after the deal,
+      // jittered per bot, and one after another (spaced 700 ms per bot).
+      if (room.game?.state.phase.id === 'intro') {
+        const order = Object.keys(room.players).filter((id) => room.players[id]?.bot).indexOf(driver.id);
+        delay = Math.max(delay, 3000 + driver.rng.int(0, 2500) + Math.max(0, order) * 700);
+      }
       driver.pending = setTimeout(() => act(driver), delay);
     }
   }

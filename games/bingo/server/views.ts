@@ -183,7 +183,7 @@ function statusOf(state: State): (id: string) => PlayerStatus {
     if (!Object.hasOwn(state.round.cards, id)) return 'spectator';
     // The card-pick step (loop 344): a ✓ for everyone who is ready (bots count as ready).
     if (state.phase.id === 'intro')
-      return state.round.ready.includes(id) || state.players[id]?.bot ? 'submitted' : 'active';
+      return state.round.ready.includes(id) ? 'submitted' : 'active'; // I-109 A: a bot's own Ready
     // Every card won: done for the pattern (the chip shows it while the others keep daubing).
     if (state.phase.id === 'play' || state.phase.id === 'check')
       return liveCards(state, id).length === 0 ? 'submitted' : 'active';
