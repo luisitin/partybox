@@ -1361,3 +1361,18 @@
 .judgeGridDone .onPage {
   animation: global(pb-bump) var(--pb-motion-base) var(--pb-ease) calc(var(--pb-i, 0) * 40ms) both;
 }
+
+/* The stagger waits above are literal, so they collapse here with the durations (pass 865: a
+   `both` fill would hold each voter and loser invisible for its wait). */
+@media (prefers-reduced-motion: reduce) {
+  .voterIn,
+  .loser.rise,
+  .judgeGridDone .onPage {
+    animation-delay: 0ms;
+  }
+}
+:global(:root[data-motion='off']) .voterIn,
+:global(:root[data-motion='off']) .loser.rise,
+:global(:root[data-motion='off']) .judgeGridDone .onPage {
+  animation-delay: 0ms;
+}

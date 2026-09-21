@@ -209,14 +209,6 @@
     transform: none;
   }
 }
-@media (prefers-reduced-motion: reduce) {
-  .climb .row {
-    animation-delay: 0ms;
-  }
-}
-:global(:root[data-motion='off']) .climb .row {
-  animation-delay: 0ms;
-}
 
 /* ── I-027 B: movers glow once they settle (1800 ms): a climbed row's outline is green and fades
    over 1 s, a fallen row's a dim red; a row that held its place gets nothing. The rank digit and
@@ -253,4 +245,19 @@
   to {
     outline-color: transparent;
   }
+}
+
+/* The waits are literal (1200 / 1800 ms), so they collapse here — after the .rose / .fell rules,
+   which restate the animation list (pass 865: movers still sat 1.2 s in the old order). */
+@media (prefers-reduced-motion: reduce) {
+  .climb .row,
+  .climb .rose,
+  .climb .fell {
+    animation-delay: 0ms;
+  }
+}
+:global(:root[data-motion='off']) .climb .row,
+:global(:root[data-motion='off']) .climb .rose,
+:global(:root[data-motion='off']) .climb .fell {
+  animation-delay: 0ms;
 }

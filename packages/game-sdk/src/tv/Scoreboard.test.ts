@@ -1,6 +1,6 @@
 // The board's landing beat (what counts up, and what a game deals beside the board, wait for).
 import { describe, expect, it } from 'vitest';
-import { boardLandedMs, tierOf } from './Scoreboard';
+import { boardLandedMs, climbOffset, tierOf } from './Scoreboard';
 
 describe('boardLandedMs', () => {
   it('lands one row per 150 ms in a single column, plus the last rise', () => {
@@ -31,5 +31,15 @@ describe('boardLandedMs', () => {
   it('is instant when the board does not stagger', () => {
     expect(boardLandedMs(8, { compact: true })).toBe(0);
     expect(boardLandedMs(8, { stagger: false })).toBe(0);
+  });
+});
+
+describe('climbOffset (I-027)', () => {
+  it('is positive for a row that climbed (it starts the slide that many rows down), negative for one that fell', () => {
+    const before = ['a', 'b', 'c'];
+    expect(climbOffset(before, 'c', 0)).toBe(2); // third → first: climbed two rows
+    expect(climbOffset(before, 'a', 2)).toBe(-2); // first → third: fell two rows
+    expect(climbOffset(before, 'b', 1)).toBe(0); // held its place
+    expect(climbOffset(before, 'new', 1)).toBe(0); // not on the previous board
   });
 });

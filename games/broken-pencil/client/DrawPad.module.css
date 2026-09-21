@@ -237,3 +237,15 @@
     global(pb-pop) var(--pb-motion-base) var(--pb-ease) calc(var(--pb-i, 0) * 40ms) both,
     global(pb-bump) var(--pb-motion-base) var(--pb-ease) both;
 }
+
+/* The swatches' 40 ms stagger (I-021) is literal, so it collapses here (pass 865). */
+@media (prefers-reduced-motion: reduce) {
+  .swatch,
+  .swatchOn {
+    animation-delay: 0ms;
+  }
+}
+:global(:root[data-motion='off']) .swatch,
+:global(:root[data-motion='off']) .swatchOn {
+  animation-delay: 0ms;
+}

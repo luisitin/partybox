@@ -215,3 +215,13 @@
 :global(:root[data-motion='off']) .ember .heatDot {
   animation: none;
 }
+
+/* The tiers' 60 ms stagger (I-023) is literal, so it collapses here (pass 865). */
+@media (prefers-reduced-motion: reduce) {
+  .offers > li {
+    animation-delay: 0ms;
+  }
+}
+:global(:root[data-motion='off']) .offers > li {
+  animation-delay: 0ms;
+}

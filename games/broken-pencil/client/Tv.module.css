@@ -392,3 +392,15 @@
 :global(:root[data-motion='off']) .bookGone {
   animation-delay: 0ms;
 }
+
+/* The recap's stagger waits (I-022) are literal, so they collapse here (pass 865). */
+@media (prefers-reduced-motion: reduce) {
+  .summaryIn,
+  .markStamp {
+    animation-delay: 0ms;
+  }
+}
+:global(:root[data-motion='off']) .summaryIn,
+:global(:root[data-motion='off']) .markStamp {
+  animation-delay: 0ms;
+}

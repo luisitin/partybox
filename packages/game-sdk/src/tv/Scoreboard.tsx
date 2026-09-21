@@ -107,6 +107,14 @@ function Score({ row, delayMs }: { row: ScoreboardRow; delayMs: number }): JSX.E
   return <span className={styles.score}>{shown}</span>;
 }
 
+/** I-027: how many rows away a row is from where it stood before — the slide starts that many
+ *  rows down, so positive = it stood lower = it climbed (pass 865: the glows read it backwards).
+ *  A row that was not on the previous board has not moved. */
+export function climbOffset(previous: readonly string[], id: string, index: number): number {
+  const was = previous.indexOf(id);
+  return (was < 0 ? index : was) - index;
+}
+
 export function Scoreboard({
   rows,
   compact,
@@ -126,10 +134,8 @@ export function Scoreboard({
   const climb = !compact && stagger === 'climb';
   const staggered = !compact && stagger !== false && !climb;
   const order = (index: number): number => (stagger === 'down' ? index : rows.length - 1 - index);
-  // I-027: rows away from where the row stood before (negative = it climbed).
-  const wasAt = new Map(climbFrom.map((id, i) => [id, i]));
   const from = (row: ScoreboardRow, index: number): number =>
-    (wasAt.get(row.playerId) ?? index) - index;
+    climbOffset(climbFrom, row.playerId, index);
   const countDelayMs = boardLandedMs(rows.length, { compact, dense, columns, stagger });
   return (
     <ol
@@ -140,7 +146,7 @@ export function Scoreboard({
       {rows.map((row, index) => (
         <li
           key={row.playerId}
-          className={`${styles.row} ${row.rank === 1 && trophy ? styles.top : ''} ${row.playerId === highlightId ? styles.me : ''} ${climb && from(row, index) < 0 ? styles.rose : ''} ${climb && from(row, index) > 0 ? styles.fell : ''}`}
+          className={`${styles.row} ${row.rank === 1 && trophy ? styles.top : ''} ${row.playerId === highlightId ? styles.me : ''} ${climb && from(row, index) > 0 ? styles.rose : ''} ${climb && from(row, index) < 0 ? styles.fell : ''}`}
           aria-current={row.playerId === highlightId ? 'true' : undefined}
           style={
             staggered
