@@ -5,6 +5,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Blanks' vote is watched** (I-004, option C): the count pill pops on every vote, the phones still
+  deciding are ringed in the TV strip until they vote, and when the last vote lands every card bumps
+  once, 40 ms apart, with a `tally` note before the result.
 - **Wisecrack's round board is a climb** (I-027, option B): rows appear in last round's order, the
   deltas land and the totals count, then every row slides to its new place — overtakes are watched;
   a row that rose glows green as it settles, one that fell dim red. New `Scoreboard`

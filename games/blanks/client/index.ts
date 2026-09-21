@@ -35,10 +35,12 @@ export const clientModule: GameClientModule = {
   // The point lands on result entry but the stage names the winner on its last beat: the strip
   // waits for the next phase.
   stripScores: (view) => view.phaseId !== 'result',
-  // I-017 A: the seat reading a card out (the judge in czar mode) is ringed in the strip while
-  // it reads.
+  // Whoever the room should look at: the seat reading a card out (the judge in czar mode) while
+  // it reads (I-017 A); while the room votes, whoever has not voted yet (I-004 B).
   stripActive: (view) => {
     const v = view as unknown as BlanksTvView;
+    if (v.phaseId === 'judge')
+      return v.players.filter((p) => p.status === 'active' && p.connected).map((p) => p.id);
     if (v.phaseId !== 'reveal') return [];
     const who = v.judgeMode === 'czar' ? v.czar : v.reader;
     return who ? [who.id] : [];
