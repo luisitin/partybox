@@ -937,3 +937,33 @@
   flex: none;
   text-align: center;
 }
+
+/* ── I-092 B: the progress ring around the ball (a dash offset on an SVG stroke; the shipped
+   ball sits inside). */
+.ballRing {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+}
+.ring {
+  position: absolute;
+  inset: -14px;
+  width: calc(100% + 28px);
+  height: calc(100% + 28px);
+  transform: rotate(-90deg);
+  pointer-events: none;
+}
+.ringTrack,
+.ringFill {
+  fill: none;
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+.ringTrack {
+  stroke: var(--pb-border);
+}
+.ringFill {
+  stroke: var(--pb-accent-2);
+  stroke-dasharray: 100;
+  transition: stroke-dashoffset var(--pb-motion-slow) var(--pb-ease);
+}

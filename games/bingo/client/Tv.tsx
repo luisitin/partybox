@@ -103,7 +103,23 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
             ? ` · ${view.bingosThisRound} bingo${view.bingosThisRound === 1 ? '' : 's'} so far`
             : ''}
         </p>
-        {view.current ? <Call call={view.current} big stamp={view.calledAt} /> : null}
+        {/* I-092 B: a thin ring around the ball fills to the closest player's share of the pattern. */}
+        <div className={styles.ballRing}>
+          {view.closest ? (
+            <svg className={styles.ring} viewBox="0 0 100 100" aria-hidden>
+              <circle cx="50" cy="50" r="47" pathLength="100" className={styles.ringTrack} />
+              <circle
+                cx="50"
+                cy="50"
+                r="47"
+                pathLength="100"
+                className={styles.ringFill}
+                style={{ strokeDashoffset: 100 - Math.round((100 * view.closest.got) / view.closest.of) }}
+              />
+            </svg>
+          ) : null}
+          {view.current ? <Call call={view.current} big stamp={view.calledAt} /> : null}
+        </div>
         {/* Ball first (180 ms pop), nickname 120 ms behind it: the number is the news (review-loop #1). */}
         {view.current ? (
           <div key={`${view.current.number}:${view.calledAt ?? ''}`} className={styles.caption}>

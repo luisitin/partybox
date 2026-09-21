@@ -93,6 +93,8 @@ export interface BingoTvView extends TvView, Common {
   /** VIP toggles at game selection: the board and the previous call are optional on the TV. */
   showBoard: boolean;
   showPrevious: boolean;
+  /** I-092 B: the player nearest the pattern this round (pattern cells daubed, free square in). */
+  closest: { id: string; name: string; got: number; of: number } | null;
 }
 
 export interface BingoControllerView extends ControllerView, Common {
@@ -260,7 +262,23 @@ export function tvView(state: State, gameId: string): BingoTvView {
     called: calledNumbers(state),
     showBoard: state.settings.showBoard,
     showPrevious: state.settings.showPrevious,
+    closest: closestPlayer(state),
   };
+}
+
+/** I-092 B: who is nearest the pattern, from the daubs the server holds. */
+function closestPlayer(state: State): BingoTvView['closest'] {
+  if (state.phase.id !== 'play' || state.round.pattern === 'line') return null;
+  const cells = patternCells(state.round.pattern);
+  let best: BingoTvView['closest'] = null;
+  for (const [playerId, cards] of Object.entries(state.round.daubs)) {
+    for (const d of cards) {
+      const got = cells.filter((i) => i === 12 || d.includes(i)).length;
+      if (!best || got > best.got)
+        best = { id: playerId, name: state.players[playerId]?.name ?? '?', got, of: cells.length };
+    }
+  }
+  return best;
 }
 
 export function controllerView(

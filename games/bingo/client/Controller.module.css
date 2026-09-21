@@ -1199,3 +1199,10 @@
   gap: 3px;
   animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
 }
+
+/* ── I-092 A: the pattern count in the card's header, bumping as it climbs. */
+.patternCount {
+  display: inline-block;
+  color: var(--pb-accent-2);
+  animation: global(pb-bump) var(--pb-motion-base) var(--pb-ease) both;
+}
