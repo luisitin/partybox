@@ -3,7 +3,8 @@
 import { Suspense, useCallback, useEffect, useState } from 'react';
 import type { JSX } from 'react';
 import type { ControllerView, PlayerPublic, PushedView, RoomSnapshot } from '@partybox/shared';
-import { SoundProvider, WaitingScreen } from '@partybox/game-sdk/ui';
+import { Avatar, SoundProvider, WaitingScreen } from '@partybox/game-sdk/ui';
+import styles from './ControllerShell.module.css';
 import { clientGames } from '../games.generated';
 import { t } from '../i18n';
 import type { Controller } from '../net/controller';
@@ -40,6 +41,76 @@ function Ready({ onReady }: { onReady?: () => void }): null {
   return null;
 }
 
+/** I-057 A: the bench — what the game's own view already tells a spectator, read-only. */
+function Bench({
+  view,
+  room,
+  play,
+}: {
+  view: PushedView<ControllerView> | null;
+  room: RoomSnapshot;
+  play: (cue: SoundCue, opts?: PlayCueOptions) => void;
+}): JSX.Element | null {
+  const rows = [...(view?.players ?? [])]
+    .filter((p) => p.score !== undefined)
+    .sort((a, b) => (b.score ?? 0) - (a.score ?? 0));
+  // I-057 C: a total that changes bumps and ticks. The previous totals live in state, adjusted
+  // during render when the scores move (no ref read in render, no setState in an effect).
+  const scoresKey = rows.map((r) => `${r.id}:${r.score ?? 0}`).join(',');
+  const [seen, setSeen] = useState<{
+    key: string;
+    scores: Record<string, number>;
+    changed: string[];
+  }>(() => ({
+    key: scoresKey,
+    scores: Object.fromEntries(rows.map((r) => [r.id, r.score ?? 0])),
+    changed: [],
+  }));
+  if (seen.key !== scoresKey) {
+    const changed = rows
+      .filter((r) => seen.scores[r.id] !== undefined && seen.scores[r.id] !== (r.score ?? 0))
+      .map((r) => r.id);
+    setSeen({
+      key: scoresKey,
+      scores: Object.fromEntries(rows.map((r) => [r.id, r.score ?? 0])),
+      changed,
+    });
+  }
+  const changed = new Set(seen.changed);
+  useEffect(() => {
+    if (seen.changed.length > 0) play('tally', { quiet: true });
+  }, [seen, play]);
+  if (rows.length === 0) return null;
+  const top = rows[0]?.score ?? 0;
+  const gameName =
+    room.games.find((g) => g.id === room.selectedGameId)?.name ?? room.selectedGameId ?? '';
+  return (
+    <div className={styles.bench} aria-label="scores so far">
+      <p className={styles.benchWhere}>
+        {gameName} · {view?.phaseId ?? ''}
+      </p>
+      <ol className={styles.benchList}>
+        {rows.map((p) => (
+          <li
+            key={p.id}
+            className={`${styles.benchRow} ${top > 0 && p.score === top ? styles.benchLead : ''}`}
+          >
+            <Avatar avatarId={p.avatarId} size={24} />
+            <span className={styles.benchName}>{p.name}</span>
+            <span
+              key={p.score}
+              className={`${styles.benchScore} ${changed.has(p.id) ? styles.benchBump : ''}`}
+            >
+              {top > 0 && p.score === top ? '🏆 ' : ''}
+              {p.score}
+            </span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
 export function Playing({
   controller,
   room,
@@ -56,7 +127,9 @@ export function Playing({
     // A spectator's screen is the game screen for them: release the game-start hold (loop #22).
     return (
       <>
-        <WaitingScreen title={t.spectator.title} hint={t.spectator.hint} mood="watch" />
+        <WaitingScreen title={t.spectator.title} hint={t.spectator.hint} mood="watch">
+          <Bench view={view} room={room} play={play} />
+        </WaitingScreen>
         <Ready onReady={onGameReady} />
       </>
     );

@@ -5,6 +5,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **A mid-game joiner sits on the bench** (I-057, option C): the waiting screen shows a read-only
+  mini-scoreboard from the view the phone already has — "Lightning Round · question" above it, the
+  leader in gold with a 🏆, a total that changes bumping with a quiet `tally`.
 - **The QR code is sized for the couch** (I-072, option C): 560 px and alone in the middle of the
   stage while nobody has joined; the first join shrinks it to 360 px over 600 ms and the roster
   column appears.
