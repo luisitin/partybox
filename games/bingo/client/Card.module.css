@@ -636,3 +636,49 @@ button.cell:focus-visible {
     color: var(--pb-text);
   }
 }
+
+/* ── S-002 A: the daub's look, per phone (data-daub on <html>). Stamp: the original flat fill in
+   the ink; Ring: a ring around the number, the number in the ink. */
+:global(:root[data-daub='stamp'])
+  :is(.phone, .compact)
+  .cell.daubed:not(.free, .green, .red, .dim) {
+  background: var(--pb-daub, var(--pb-accent));
+  color: var(--pb-on-accent);
+}
+:global(:root[data-daub='stamp'])
+  :is(.phone, .compact)
+  .cell.daubed:not(.free, .green, .red, .dim)::after {
+  display: none;
+}
+/* The owner's note: the ring is CONCENTRIC with the number — drawn on the number itself (a
+   circle 1.9 em across, the number centred inside), so it stays round and centred on a cell of
+   any shape; the blot's ::after is dropped. The FREE cell rings the same way in its gold. */
+:global(:root[data-daub='ring']) :is(.phone, .compact) .cell.daubed:not(.green, .red, .dim) {
+  background: var(--pb-surface-2);
+  color: var(--pb-daub, var(--pb-accent));
+}
+:global(:root[data-daub='ring'])
+  :is(.phone, .compact)
+  .cell.daubed:not(.free, .green, .red, .dim)::after {
+  display: none;
+}
+:global(:root[data-daub='ring'])
+  :is(.phone, .compact)
+  .cell.daubed:not(.green, .red, .dim)
+  .number {
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  width: 1.9em;
+  height: 1.9em;
+  border-radius: 50%;
+  border: 3px solid currentColor;
+}
+:global(:root[data-daub='ring']) :is(.phone, .compact) .cell.free.daubed {
+  color: var(--pb-accent-2);
+}
+:global(:root[data-daub='ring']) :is(.phone, .compact) .cell.free.daubed .number {
+  width: 3.4em;
+  height: 3.4em;
+  border-width: 2px;
+}

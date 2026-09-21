@@ -18,6 +18,7 @@ import type { Input } from '../server/types';
 import type { BingoControllerView } from '../server/views';
 import { StyleMini } from './StyleMini';
 import { STYLES, styleReason } from './styles';
+import { DaubRows } from './DaubRows';
 import type { CardStyle } from './styles';
 import styles from './Controller.module.css';
 
@@ -102,6 +103,8 @@ export function StyleSheet({
           <StyleMini id="motion" live={!motionOff} />
         </span>
       </button>
+
+      <DaubRows />
       <p className={styles.sheetNote}>Theme: the 🎨 in the top bar, any time.</p>
       <PrimaryButton tone="neutral" onClick={onClose}>
         Close

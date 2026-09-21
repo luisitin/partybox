@@ -1264,3 +1264,87 @@
 :global(:root[data-motion='off']) .lapsedHint {
   animation: none;
 }
+
+/* ── S-002 A: the Daub / Ink rows in the style sheet. */
+.sheetGroup {
+  margin: var(--pb-space-2) 0 0;
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--pb-text-muted);
+}
+.choiceRow {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: var(--pb-space-2);
+}
+.choice {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pb-space-1);
+  min-height: 44px;
+  padding: var(--pb-space-2);
+  border: 2px solid var(--pb-text-muted);
+  border-radius: var(--pb-radius);
+  background: none;
+  color: inherit;
+  font-weight: 700;
+}
+.choiceOn {
+  border-color: var(--pb-accent-2);
+}
+
+/* ── S-002 B: the ink swatches. */
+.swatch {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--pb-swatch, var(--pb-accent));
+}
+.swatchMine {
+  background: linear-gradient(135deg, var(--pb-accent), var(--pb-accent-2), var(--pb-accent-3));
+}
+
+/* ── S-002 C: each daub choice is a tiny daubed cell in that look. */
+.choiceCell {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: var(--pb-surface-2);
+  overflow: hidden;
+}
+.choiceCell i {
+  position: relative;
+  z-index: 1;
+  font-style: normal;
+  font-size: 12px;
+  font-weight: 800;
+}
+.choiceCell[data-daub='blot']::after {
+  content: '';
+  position: absolute;
+  inset: 8%;
+  border-radius: 46% 54% 60% 40% / 50% 44% 56% 50%;
+  background: var(--pb-daub, var(--pb-accent));
+  transform: rotate(-6deg) scale(1.06);
+}
+.choiceCell[data-daub='stamp'] {
+  background: var(--pb-daub, var(--pb-accent));
+  color: var(--pb-on-accent);
+}
+.choiceCell[data-daub='ring']::after {
+  content: '';
+  position: absolute;
+  inset: 10%;
+  border-radius: 50%;
+  border: 3px solid var(--pb-daub, var(--pb-accent));
+}
+.choiceCell[data-daub='ring'] {
+  color: var(--pb-daub, var(--pb-accent));
+}

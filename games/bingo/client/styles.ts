@@ -136,3 +136,96 @@ export function useOrientationLock(wanted: Orientation | null): void {
     return () => api.unlock?.();
   }, [wanted]);
 }
+
+// ── S-002: the daub's look and ink, per phone (localStorage, like the card style). Applied as
+// data attributes on <html> so the card's CSS can pick them up without props.
+export type DaubStyle = 'blot' | 'stamp' | 'ring';
+export const DAUBS: readonly { id: DaubStyle; label: string; hint: string }[] = [
+  { id: 'blot', label: 'Blot', hint: 'the ink blot' },
+  { id: 'stamp', label: 'Stamp', hint: 'the flat fill' },
+  { id: 'ring', label: 'Ring', hint: 'a ring round the number' },
+];
+export type Ink = 'mine' | 'pink' | 'gold' | 'green';
+export const INKS: readonly { id: Ink; label: string; css: string | null }[] = [
+  { id: 'mine', label: 'Mine', css: null },
+  { id: 'pink', label: 'Pink', css: 'var(--pb-accent)' },
+  { id: 'gold', label: 'Gold', css: 'var(--pb-accent-2)' },
+  { id: 'green', label: 'Green', css: 'var(--pb-accent-3)' },
+];
+const DAUB_KEY = 'partybox:bingo-daub';
+const INK_KEY = 'partybox:bingo-ink';
+const daubListeners = new Set<() => void>();
+function readKey<T extends string>(key: string, ok: readonly T[], fallback: T): T {
+  try {
+    const v = localStorage.getItem(key);
+    return ok.includes(v as T) ? (v as T) : fallback;
+  } catch {
+    return fallback;
+  }
+}
+function applyDaubAttrs(): void {
+  const root = document.documentElement;
+  root.dataset['daub'] = readKey(
+    DAUB_KEY,
+    DAUBS.map((d) => d.id),
+    'blot',
+  );
+  const ink = INKS.find(
+    (i) =>
+      i.id ===
+      readKey(
+        INK_KEY,
+        INKS.map((i) => i.id),
+        'mine',
+      ),
+  );
+  if (ink?.css) root.style.setProperty('--pb-ink', ink.css);
+  else root.style.removeProperty('--pb-ink');
+}
+export function setDaubStyle(id: DaubStyle): void {
+  try {
+    localStorage.setItem(DAUB_KEY, id);
+  } catch {
+    // private mode
+  }
+  applyDaubAttrs();
+  for (const l of daubListeners) l();
+}
+export function setInk(id: Ink): void {
+  try {
+    localStorage.setItem(INK_KEY, id);
+  } catch {
+    // private mode
+  }
+  applyDaubAttrs();
+  for (const l of daubListeners) l();
+}
+function subscribeDaub(cb: () => void): () => void {
+  daubListeners.add(cb);
+  return () => daubListeners.delete(cb);
+}
+export function useDaubStyle(): DaubStyle {
+  return useSyncExternalStore(
+    subscribeDaub,
+    () =>
+      readKey(
+        DAUB_KEY,
+        DAUBS.map((d) => d.id),
+        'blot',
+      ),
+    () => 'blot',
+  );
+}
+export function useInk(): Ink {
+  return useSyncExternalStore(
+    subscribeDaub,
+    () =>
+      readKey(
+        INK_KEY,
+        INKS.map((i) => i.id),
+        'mine',
+      ),
+    () => 'mine',
+  );
+}
+if (typeof document !== 'undefined') applyDaubAttrs();

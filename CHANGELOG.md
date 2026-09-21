@@ -5,6 +5,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Bingo's daub is a choice** (S-002, option C): the style sheet gains a Daub row (Blot / Stamp /
+  Ring) and an Ink row (Mine / Pink / Gold / Green), per phone, applied as you tap, each row a
+  tiny daubed cell in that look; the ring is concentric with the number (the owner's note).
 - **Bingo's one-to-go square breathes** (S-001, option B): the wanted square swells 1 → 1.07
   over 2 s with its halo and the number goes gold at the peak.
 - **Bingo's un-daub is felt** (I-136, option A): a quiet `card` pluck with an 8 ms buzz, and the
