@@ -628,3 +628,25 @@ button.cell:focus-visible {
     color: var(--pb-text);
   }
 }
+
+/* ── S-002 A: the daub's look, per phone (data-daub on <html>). Stamp: the original flat fill in
+   the ink; Ring: a ring around the number, the number in the ink. */
+:global(:root[data-daub='stamp']) :is(.phone, .compact) .cell.daubed:not(.free, .green, .red, .dim) {
+  background: var(--pb-daub, var(--pb-accent));
+  color: var(--pb-on-accent);
+}
+:global(:root[data-daub='stamp']) :is(.phone, .compact) .cell.daubed:not(.free, .green, .red, .dim)::after {
+  display: none;
+}
+:global(:root[data-daub='ring']) :is(.phone, .compact) .cell.daubed:not(.free, .green, .red, .dim) {
+  background: var(--pb-surface-2);
+  color: var(--pb-daub, var(--pb-accent));
+}
+:global(:root[data-daub='ring']) :is(.phone, .compact) .cell.daubed:not(.free, .green, .red, .dim)::after {
+  inset: 6%;
+  border-radius: 50%;
+  background: transparent;
+  border: 3px solid var(--pb-daub, var(--pb-accent));
+  opacity: 1;
+  transform: none;
+}

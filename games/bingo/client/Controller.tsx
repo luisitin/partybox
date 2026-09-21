@@ -262,7 +262,7 @@ export function Controller({
       >
         <div
           className={`${styles.roundBody} ${sheet && !preview ? styles.dimmed : ''} ${roundOver ? styles.deciding : ''}`}
-          style={{ '--pb-daub': avatarColorVar(me.avatarId) } as CSSProperties} // I-010: the blot's colour
+          style={{ '--pb-daub': `var(--pb-ink, ${avatarColorVar(me.avatarId)})` } as CSSProperties} // I-010: the blot's colour; S-002: the ink overrides
         >
           <div className={styles.topRow}>
             {roundOver ? (
