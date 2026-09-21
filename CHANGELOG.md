@@ -115,6 +115,8 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 - Multi-persona live-play harness (`packages/e2e/live/`) and the 2026-09-15 session report.
 
 ### Fixed
+- Lightning Round TV: at four players or fewer the reveal rows and the final board take one column
+  of taller rows, so a three-player game no longer leaves the results stage two-thirds bare.
 - Bingo phone: a player back from a drop with the hall board OFF now hears which calls they
   missed ("Back — you missed B 2, O 65.", up to three, then "and n more") — the view carried
   `recent` for this and the phone showed nothing. Board on still points at the TV.

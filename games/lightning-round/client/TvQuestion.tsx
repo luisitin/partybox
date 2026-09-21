@@ -200,7 +200,17 @@ export function deltaText(delta: number): string {
 
 /** Explicit columns by player count (never auto-fit): every count stays within four 60 px rows. */
 export function rowsClass(count: number): string {
-  return (count <= 8 ? styles.rows2 : count <= 12 ? styles.rows3 : styles.rows4) ?? '';
+  // Four or fewer: one column of taller rows, so a three-player board does not sit in the top
+  // third of the stage (pass 871).
+  return (
+    (count <= 4
+      ? styles.rows1
+      : count <= 8
+        ? styles.rows2
+        : count <= 12
+          ? styles.rows3
+          : styles.rows4) ?? ''
+  );
 }
 
 export function RevealRows({ rows }: { rows: RevealRow[] }): JSX.Element {

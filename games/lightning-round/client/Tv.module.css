@@ -267,6 +267,22 @@
   width: 100%;
 }
 
+/* Four players or fewer (pass 871): one column, rows half again as tall, the name at h2 — a
+   three-player final used to sit in the top third of the results stage. */
+.rows1 {
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--pb-space-3);
+}
+
+.rows1 .row {
+  min-height: 96px;
+  font-size: var(--pb-font-h2);
+}
+
+.rows1 .rowFinal {
+  min-height: 120px;
+}
+
 .rows2 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
