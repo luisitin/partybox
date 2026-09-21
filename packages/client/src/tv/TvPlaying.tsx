@@ -117,7 +117,10 @@ export function TvPlaying({ room, view, audio, onGameReady, music }: TvPlayingPr
   const frozen = !showScores && view.players.some((p) => held[p.id] !== undefined);
   const players = frozen ? view.players.map((p) => ({ ...p, score: held[p.id] })) : view.players;
   return (
-    <div className={styles.playing}>
+    // I-030: `held` steps the room back behind the curtain; `resumed` lands it as the curtain lifts.
+    <div
+      className={`${styles.playing} ${paused ? styles.held : ''} ${!paused && leaving ? styles.resumed : ''}`}
+    >
       <div className={styles.strip}>
         <PlayerChips
           players={[

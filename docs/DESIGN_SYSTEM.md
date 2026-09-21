@@ -72,8 +72,8 @@ in-app choice (`<html data-motion="off">`, `setMotionOff` / `useMotionOff` in th
 per device; Bingo's card-style sheet has the row). Both collapse the `--pb-motion-*` tokens, and
 `usePrefersReducedMotion()` reports either, so JS-driven motion follows. A CSS module's
 `@media (prefers-reduced-motion: reduce)` block needs a `:global(:root[data-motion='off'])` twin.
-Keyframes in global.css: `pb-rise`, `pb-pop`, `pb-tick` (a keyed change that must never blank a frame — a countdown digit — squeezes from 1.3× and is visible from its first frame), `pb-shake`, `pb-fade-in` / `pb-fade-out` (the pause curtain and the
-server-lost dim arrive and leave over `--pb-motion-base`), `pb-spin` (a reconnecting ⟳; only under no-preference),
+Keyframes in global.css: `pb-rise`, `pb-pop`, `pb-tick` (a keyed change that must never blank a frame — a countdown digit — squeezes from 1.3× and is visible from its first frame), `pb-shake`, `pb-fade-in` / `pb-fade-out` (the
+server-lost dim arrives and leaves over `--pb-motion-base`), `pb-spin` (a reconnecting ⟳; only under no-preference),
 `pb-confetti`, `pb-land` (a card replacing a card: a bounce from half opacity, never from transparent, so a stage never blinks empty between two), `pb-deal` (a card dealt onto a table: up from below with a small tilt that settles), `pb-flip` (a card turned face-up in 3D — transform only: animating opacity alongside it flattens Chromium's 3D context and shows the face mirrored), `pb-crown` (a winning card lifts off the table with a warm bloom). PlayerChip reserves its glyph slot, so a ✓ landing pops in place and never shifts the row.
 Phone: every `Screen` rises on mount (`pb-rise`, `--pb-motion-base`, fill backwards); a game keys its Screen or grid
 when a phase should read as a new screen, and never keys the Controller itself (game-local state would reset).
@@ -81,6 +81,10 @@ TV status swaps (lobby / selecting / playing / results) are keyed and rise (`pb-
 takes > 150 ms shows a centred "<game> — Getting the game ready…" card, never a stray glyph.
 `ChoiceGrid` takes a `className` for its Screen (I-026), so a game can style a state of the grid — Lightning's placed
 wager steps the other rows back to 60 % and bumps the chosen row's chips.
+The pause curtain (I-030, every game): the scrim drops from the top edge over `--pb-motion-slow` (transform only) and
+lifts back on resume; the Paused card lands (`pb-land`) once it is down; behind it the stage scales to 0.96 and the chip
+strip dims to 60 % (`.held`), and as the curtain lifts the stage lands back to full (`.resumed`, `pb-land`) on the
+shell's `phase` chime.
 Results (I-025, `TvResults`, every game): one clear winner — `winnerIds.length === 1`, someone scored, the game keeps
 score — gets their face (72 px) beside the line and the hero takes `pb-crown` instead of `pb-enter`; confetti falls
 behind it (48 pieces, 16 for a bot); the board or finale under it holds 55 % opacity for a beat and returns over two

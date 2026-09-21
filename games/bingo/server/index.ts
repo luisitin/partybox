@@ -170,7 +170,10 @@ function reduce(state: State, event: GameEvent<Input>): State {
 /**
  * A VIP resume shifts `phase.deadline` by the pause (game-sdk); the game's own clocks that run to
  * that deadline — the 3 · 2 · 1's `resumeAt` — shift with it, or the ring would end early and the
- * number drop with no ring (loop 294).
+ * number drop with no ring (loop 294). A resume mid-call (I-030, the owner: "it should repeat
+ * the call it left on") then takes the hold's path: the 3 · 2 · 1 and the number that was up
+ * AGAIN, before a full interval — the room was not listening when it dropped. A held caller
+ * (no deadline: a menu is open) stays held; check / bingo / scoreboard keep the plain shift.
  */
 function shiftResume(before: State, after: State, event: GameEvent<Input>): State {
   if (event.type !== 'vip' || event.action !== 'resume') return after;
@@ -182,17 +185,22 @@ function shiftResume(before: State, after: State, event: GameEvent<Input>): Stat
       : before.phase.paused
         ? event.now - before.phase.paused.at
         : 0;
-  if (shift <= 0) return after;
   const round = after.round;
-  return {
-    ...after,
-    round: {
-      ...round,
-      resumeAt: round.resumeAt === null ? null : round.resumeAt + shift,
-      // Dibs (a 3 s window to tap again) survive a pause whole (loop 295).
-      arm: round.arm === null ? null : { ...round.arm, until: round.arm.until + shift },
-    },
-  };
+  const shifted =
+    shift <= 0
+      ? after
+      : {
+          ...after,
+          round: {
+            ...round,
+            resumeAt: round.resumeAt === null ? null : round.resumeAt + shift,
+            // Dibs (a 3 s window to tap again) survive a pause whole (loop 295).
+            arm: round.arm === null ? null : { ...round.arm, until: round.arm.until + shift },
+          },
+        };
+  return after.phase.id === 'play' && after.phase.deadline !== null
+    ? resumeAfterHold(shifted, event.now)
+    : shifted;
 }
 
 /**

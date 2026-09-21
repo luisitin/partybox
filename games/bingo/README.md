@@ -44,7 +44,7 @@ in public like anyone else. It only reads what its phone shows (own card, own da
 | `done`       | Final standings. `results()` non-null.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | terminal                                                                                                                                                                                                 | —                                                                            |
 
 VIP `end` from any phase → `done` with rounds won as they stand (an unfinished round has no winner).
-Pause freezes the caller (and a running check); daubs and claims are ignored while paused.
+Pause freezes the caller (and a running check); daubs and claims are ignored while paused. A resume mid-call rings the 3 · 2 · 1 and calls the number that was up AGAIN before a full interval (I-030, the owner: the room missed it); a held caller stays held, other phases keep the shifted deadline.
 
 ## Inputs
 

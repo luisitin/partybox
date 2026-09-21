@@ -5,6 +5,11 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Pausing freezes the room** (I-030, option C, every game's TV): the curtain drops from the top edge
+  and lifts on resume, the Paused card lands once it is down, the stage steps back to 0.96 with the
+  strip at 60 % while held, and the stage lands back to full on the resume chime. The owner's note:
+  a Bingo resume mid-call rings the 3 · 2 · 1 and calls the number that was up again before a full
+  interval, instead of dropping the next one.
 - **Lightning Round's wagers are chips on a table** (I-026, option C): every wager row carries a
   stack of gold chips sized to the share; a placed pick bumps its chips, the prompt becomes "n in
   the pot" and the other rows step back; the "Your bet" footer breathes on the final question until

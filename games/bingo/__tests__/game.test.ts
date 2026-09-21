@@ -270,15 +270,25 @@ describe('rounds and results', () => {
     expect(vip(ended, 'skip')).toEqual(ended);
   });
 
-  it('pause holds the caller: inputs and timers wait, resume shifts the deadline', () => {
+  it('pause holds the caller: inputs and timers wait; resume rings 3 · 2 · 1 and calls the number again (I-030)', () => {
     let s = timer(start());
-    const deadline = s.phase.deadline as number;
+    const drawn = s.round.drawn;
     s = vip(s, 'pause', s.phase.startedAt + 1000);
     expect(input(s, 'a', { type: 'daub', card: 0, index: 0 })).toBe(s);
     expect(timer(s)).toBe(s);
-    s = vip(s, 'resume', s.phase.startedAt + 4000);
-    expect(s.phase.deadline).toBe(deadline + 3000);
+    const at = s.phase.startedAt + 4000;
+    s = vip(s, 'resume', at);
     expect(s.phase.paused).toBeUndefined();
+    expect(s.phase.deadline).toBe(at + RESUME_MS);
+    expect(s.round.resumeAt).toBe(at + RESUME_MS);
+    expect(s.round.resumeAgain).toBe(true);
+    // The ring ends: the SAME number, called again (a new stamp), then a full interval.
+    const again = timer(s);
+    expect(again.round.drawn).toBe(drawn);
+    expect(again.round.calledAt).toBe(again.phase.startedAt);
+    expect(again.round.resumeAgain).toBe(false);
+    expect(again.phase.deadline).toBe(again.phase.startedAt + again.settings.callSeconds * 1000);
+    // A resume outside a call (a check) keeps the plain shift.
   });
 
   it('a stale timer (previous call instance) is ignored', () => {
