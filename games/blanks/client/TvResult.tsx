@@ -56,7 +56,7 @@ export function winnerLine(
   }
   const humans = winners.filter((w) => !w.rando).map((w) => w.name);
   // Rando alone is the room's shame; a tie with Rando still names who scored (review-loop #124).
-  if (humans.length === 0) return 'Rando wins. Shame on all of you.';
+  if (humans.length === 0) return 'The deck wins this one! Shame on all of you.';
   if (humans.length < winners.length) return `${list(humans)} split it with Rando`;
   const names = humans;
   if (view.walkover) return `Only ${names[0]} played — wins by default`;
@@ -121,8 +121,17 @@ function Author({
       className={`${styles.author} ${shown ? styles.rise : styles.pending}`}
       aria-hidden={!shown}
     >
-      <Avatar avatarId={card.avatarId} size="var(--pb-chip-size)" />
-      <span className={styles.authorName}>{card.name}</span>
+      {/* I-018 A: the deck's card is authored by the deck — a card-stack mascot, not a face. */}
+      {card.rando ? (
+        <span className={styles.deck} aria-label="the deck">
+          <span />
+          <span />
+          <span />
+        </span>
+      ) : (
+        <Avatar avatarId={card.avatarId} size="var(--pb-chip-size)" />
+      )}
+      <span className={styles.authorName}>{card.rando ? 'The deck' : card.name}</span>
       {label ? <span className={styles.voteCount}>{label}</span> : null}
     </span>
   );
@@ -195,6 +204,11 @@ export function TvResult({ view }: Props): JSX.Element {
   useEffect(() => {
     if (beat >= BEAT_WINNER && humanWin) play('sweep');
   }, [beat, humanWin, play]);
+  // I-018 B: the deck's win gets its own sting — the sad two-note `bust` where the sweep would be.
+  const deckWin = winners.length > 0 && !humanWin;
+  useEffect(() => {
+    if (beat >= BEAT_WINNER && deckWin) play('bust');
+  }, [beat, deckWin, play]);
   // I-005 A: a `lock` note per voter chip as it lands (vote mode; up to six chips are shown) — on
   // the authors beat only: the branch's `beat >= BEAT_AUTHORS` played the run again at the winner.
   const voterCount = Math.min(6, Math.max(0, ...winners.map((w) => w.voters.length)));
@@ -252,6 +266,11 @@ export function TvResult({ view }: Props): JSX.Element {
         <BigText level="h1" tone="accent">
           {winnerLine(view)}
         </BigText>
+        {deckWin ? (
+          <BigText level="h2" tone="muted">
+            Nobody's score moves.
+          </BigText>
+        ) : null}
       </div>
       {winners.length > 0 && view.black ? (
         <div
@@ -278,10 +297,11 @@ export function TvResult({ view }: Props): JSX.Element {
               <Author card={w} shown={beat >= BEAT_AUTHORS} label={votesLabel(view, w.votes)} />
               {/* Who voted for it, on the same beat the authors land. */}
               {beat >= BEAT_AUTHORS && view.judgeMode === 'vote' ? <Voters card={w} /> : null}
+              {/* I-018 C: the deck's point goes to nobody — say so where the +1 would pop. */}
               <span
-                className={`${styles.plusOne} ${named && !w.rando ? styles.pop : styles.pending}`}
+                className={`${styles.plusOne} ${w.rando ? styles.plusNobody : ''} ${named ? styles.pop : styles.pending}`}
               >
-                +1
+                {w.rando ? '+0 · nobody' : '+1'}
               </span>
             </FilledCard>
           ))}
