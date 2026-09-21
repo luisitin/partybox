@@ -5,6 +5,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **The room code is one badge** (I-049, option C): the header and the QR card share a rounded
+  mono chip with a small ROOM label; the card's letters land one after another when the lobby
+  opens, and the header's badge bumps as each player joins.
 - **The room sees who is picking** (I-045, option C): the lobby rings the VIP's chip while it
   waits on them; once they tap "Pick a game" the selecting stage shows three gold dots pulsing
   over their dimmed portrait (`PlayerChip` `thinking`, `PlayerChips` `thinkingIds`) and "Sam is

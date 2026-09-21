@@ -50,7 +50,14 @@ export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
           </BigText>
           {room ? (
             <p className={styles.code}>
-              {t.lobby.room} <strong>{room.code}</strong>
+              <span className={`${styles.badge} ${styles.badgeLarge}`}>
+                <small>{t.lobby.room}</small>
+                {room.code.split('').map((ch, i) => (
+                  <span key={i} className={styles.letter} style={{ animationDelay: `${i * 80}ms` }}>
+                    {ch}
+                  </span>
+                ))}
+              </span>
             </p>
           ) : null}
         </div>
