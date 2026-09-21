@@ -58,6 +58,8 @@ export function TvAnswer({ view }: Props): JSX.Element {
       <p className={styles.kicker}>
         Round {view.round} of {view.rounds}
         {view.multiplier > 1 ? ' · double points' : ''}
+        {/* I-028 A: the minimum room is a mode, not an accident. */}
+        {connected.length === 3 ? ' · cozy round, just the three of you' : ''}
       </p>
       <BigText key={headline} level="display" className="pb-enter">
         {headline}
