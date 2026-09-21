@@ -133,6 +133,13 @@ function CalledBoardView({
   current: number | null;
 }): JSX.Element {
   const lit = new Set(called);
+  // I-014 B: a soft tick as the current lamp catches (the landing beat + the flicker's first step).
+  const sound = useSoundApi();
+  useEffect(() => {
+    if (current === null) return;
+    const t = setTimeout(() => sound.play('tick'), 190 + 60);
+    return () => clearTimeout(t);
+  }, [current, sound]);
   return (
     <div className={styles.board} aria-label={`${called.length} numbers called`}>
       {BOARD_ROWS.map((letter, row) => (

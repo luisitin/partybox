@@ -535,10 +535,36 @@
    phone's boing waits): dim until the thud, a bright overshoot, then it settles to called. */
 .cellCurrent {
   position: relative;
-  z-index: 1; /* the overshoot rides over its neighbours */
+  z-index: 1;
   box-shadow: 0 0 0 3px var(--pb-accent);
-  animation: cell-light 320ms var(--pb-ease) both;
+  /* I-014 B: a filament catching — opacity steps, not an overshoot — from the ball's landing. */
+  animation: cell-flicker 320ms steps(1, end) both;
   animation-delay: 190ms;
+}
+@keyframes cell-flicker {
+  0% {
+    opacity: 0.45;
+    background: var(--pb-surface);
+  }
+  20% {
+    opacity: 1;
+    background: var(--pb-accent);
+  }
+  35% {
+    opacity: 0.55;
+    background: var(--pb-surface);
+  }
+  50% {
+    opacity: 1;
+    background: var(--pb-accent);
+  }
+  70% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 1;
+    background: var(--ball-fill);
+  }
 }
 
 @keyframes cell-light {
@@ -936,4 +962,29 @@
   width: 300px;
   flex: none;
   text-align: center;
+}
+
+/* ── I-014 A: lamps — round 40 px bulbs with a filament highlight; a called lamp glows with a
+   static halo in its row's colour (no motion, so no motion budget spent). */
+.cell {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 30%, rgb(255 255 255 / 18%), transparent 45%),
+    var(--pb-surface);
+  border: 2px solid color-mix(in oklab, var(--pb-border) 70%, var(--pb-surface));
+}
+.cellCalled {
+  background:
+    radial-gradient(circle at 35% 30%, rgb(255 255 255 / 45%), transparent 45%),
+    var(--ball-fill);
+  border-color: color-mix(in oklab, var(--ball-fill) 60%, white);
+  box-shadow: 0 0 10px 2px color-mix(in oklab, var(--ball-fill) 55%, transparent);
+}
+.board {
+  gap: 6px;
+}
+.boardRow {
+  gap: 6px;
 }
