@@ -17,7 +17,7 @@ import { RESUME_MS, dealDoneMs } from '../server/types';
 import type { Input } from '../server/types';
 import type { BingoControllerView } from '../server/views';
 import { StyleMini } from './StyleMini';
-import { STYLES, styleReason } from './styles';
+import { DAUBS, STYLES, setDaubStyle, styleReason, useDaubStyle } from './styles';
 import type { CardStyle } from './styles';
 import styles from './Controller.module.css';
 
@@ -40,6 +40,7 @@ export function StyleSheet({
   note?: string;
 }): JSX.Element {
   const motionOff = useMotionOff();
+  const daub = useDaubStyle();
   // Previewing: the sheet folds to a bar so the whole screen shows the style with the real cards.
   if (preview)
     return (
@@ -102,6 +103,23 @@ export function StyleSheet({
           <StyleMini id="motion" live={!motionOff} />
         </span>
       </button>
+
+      {/* S-002 A: the daub's look — Blot, Stamp or Ring — per phone, applied at once. */}
+      <p className={styles.sheetGroup}>Daub</p>
+      <div className={styles.choiceRow} role="radiogroup" aria-label="Daub">
+        {DAUBS.map((d) => (
+          <button
+            type="button"
+            key={d.id}
+            role="radio"
+            aria-checked={daub === d.id}
+            className={`${styles.choice} ${daub === d.id ? styles.choiceOn : ''}`}
+            onClick={() => setDaubStyle(d.id)}
+          >
+            {d.label}
+          </button>
+        ))}
+      </div>
       <p className={styles.sheetNote}>Theme: the 🎨 in the top bar, any time.</p>
       <PrimaryButton tone="neutral" onClick={onClose}>
         Close

@@ -1199,3 +1199,35 @@
   gap: 3px;
   animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
 }
+
+/* ── S-002 A: the Daub / Ink rows in the style sheet. */
+.sheetGroup {
+  margin: var(--pb-space-2) 0 0;
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--pb-text-muted);
+}
+.choiceRow {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: var(--pb-space-2);
+}
+.choice {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pb-space-1);
+  min-height: 44px;
+  padding: var(--pb-space-2);
+  border: 2px solid var(--pb-text-muted);
+  border-radius: var(--pb-radius);
+  background: none;
+  color: inherit;
+  font-weight: 700;
+}
+.choiceOn {
+  border-color: var(--pb-accent-2);
+}
