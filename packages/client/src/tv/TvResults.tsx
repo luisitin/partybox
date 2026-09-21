@@ -70,7 +70,7 @@ export function TvResults({ room, lastView = null }: TvResultsProps): JSX.Elemen
         <div
           className={`${styles.columns} ${awards.length === 0 ? styles.single : ''} ${large ? styles.wide : ''} ${winner ? styles.photoFinish : ''}`}
         >
-          <Scoreboard rows={rows} noTrophy={nobodyScored(room)} size={large ? 'lg' : 'md'} />
+          <Scoreboard rows={rows} noTrophy={nobodyScored(room)} noRanks={nobodyScored(room)} size={large ? 'lg' : 'md'} />
           {awards.length > 0 ? (
             <ul className={styles.awards} aria-label="awards">
               {awards.map((a) => (

@@ -9,6 +9,7 @@ import { createTvClient } from '../net/tv';
 import { bedFor, createBedEngine } from '../beds';
 import type { BedEngine } from '../beds';
 import { createMusicEngine, planFor } from '../music';
+import { nobodyScored } from '../controller/results-rows';
 import type { MusicEngine } from '../music';
 import { createSoundEngine, joinSemitones, lockSemitones } from '../sound';
 import type { SoundEngine } from '../sound';
@@ -191,8 +192,12 @@ export function TvApp(): JSX.Element {
     if (room.status === 'playing' && p.status !== 'playing' && p.status !== '') audio.play('start');
     // The winner moment (owner pick): a party horn with a crowd cheer under it (music ducked).
     if (room.status === 'results' && p.status !== 'results' && !homing) {
-      music.duck(9000);
-      audio.play('cheer');
+      // I-128 C: an all-zero board gets a soft note, not the cheer.
+      if (nobodyScored(room)) audio.play('leave', { quiet: true });
+      else {
+        music.duck(9000);
+        audio.play('cheer');
+      }
     }
     // A game that cued this phase itself (useSound, child effects run first) keeps the stage's
     // generic chime out of its way. `clientModule.sounds` maps a phase id to its own cue (reveal,
