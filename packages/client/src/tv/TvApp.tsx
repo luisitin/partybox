@@ -121,6 +121,15 @@ export function TvApp(): JSX.Element {
     locked: 0,
   });
   const lastLeaveAt = useRef(-Infinity);
+  // I-054 C: a toast the TV raises for itself (the store's shipped toast list, 3 s).
+  const showLocalToast = (toast: { kind: 'info' | 'success' | 'warning'; text: string }): void => {
+    const id = Date.now();
+    client.store.set((prev) => ({ toasts: [...prev.toasts.slice(-1), { id, ...toast }] }));
+    setTimeout(
+      () => client.store.set((prev) => ({ toasts: prev.toasts.filter((t) => t.id !== id) })),
+      3000,
+    );
+  };
   const lastLockAt = useRef(-Infinity);
   const homing = state.homing;
   useEffect(() => {
@@ -156,6 +165,18 @@ export function TvApp(): JSX.Element {
       if (performance.now() - audio.lastPlayedAt() > 50) audio.play('phase');
     if (room.players.length > p.players && p.status !== '')
       audio.play('join', { semitones: joinSemitones(room.players.length) });
+    // I-054 A: the room closing — the hushed `close` chord after the join note at capacity.
+    const fullNow = room.players.length >= room.capacity;
+    const fullBefore = p.players >= room.capacity;
+    if (p.status !== '' && fullNow && !fullBefore) {
+      setTimeout(() => audio.play('close'), 500);
+      showLocalToast({ kind: 'info', text: `Room full — ${room.players.length} / ${room.capacity}` });
+    }
+    // I-054 B: a seat opening — the `ready` chime after the leave note.
+    if (p.status !== '' && !fullNow && fullBefore) {
+      setTimeout(() => audio.play('ready'), 350);
+      showLocalToast({ kind: 'success', text: `A seat opened — ${room.players.length} / ${room.capacity}` });
+    }
     // A game begins: a held G-major arpeggio (the intro itself never chimes — p.phase is null);
     // a TV that reloads mid-game (p.status === '') stays quiet, like the join rule.
     if (room.status === 'playing' && p.status !== 'playing' && p.status !== '') audio.play('start');
