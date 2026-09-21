@@ -231,3 +231,57 @@
 .spectator {
   opacity: 0.6;
 }
+
+/* ── I-044 A: the coronation — four gold sparks converge on the pill as it pops in (400 ms,
+   transform + opacity only). */
+.crown {
+  position: relative;
+}
+.sparks {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.sparks > i {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  margin: -5px 0 0 -5px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 0 2px var(--pb-accent-2);
+  opacity: 0;
+  animation: pb-spark var(--pb-motion-slow) ease-in both;
+}
+.sparks > i:nth-child(1) {
+  --dx: -150px;
+  --dy: -50px;
+}
+.sparks > i:nth-child(2) {
+  --dx: 154px;
+  --dy: -46px;
+}
+.sparks > i:nth-child(3) {
+  --dx: -148px;
+  --dy: 50px;
+}
+.sparks > i:nth-child(4) {
+  --dx: 152px;
+  --dy: 52px;
+}
+@keyframes pb-spark {
+  0% {
+    opacity: 1;
+    transform: translate(var(--dx), var(--dy)) scale(1);
+  }
+  70% {
+    opacity: 1;
+    transform: translate(calc(var(--dx) * 0.15), calc(var(--dy) * 0.15)) scale(0.9);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.4);
+  }
+}
