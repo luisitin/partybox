@@ -92,9 +92,9 @@ async function main(): Promise<void> {
     );
     await vip.page.getByRole('button', { name: /^close$/i }).click();
 
-    // Play Quick Poll (supports bots) with a late spectator: strip shows bots + a dimmed spectator.
+    // Play Lightning Round (supports bots; Quick Poll is parked — pass 883) with a late spectator: strip shows bots + a dimmed spectator.
     await api.clock(true);
-    await api.start('quickpoll', 5);
+    await api.start('lightning-round', 5);
     await settle(800);
     const late = await openPhone(browser, server.url, 'pixel', 'Late Luca');
     await joinViaForm(late, api, { avatarIndex: 12 });

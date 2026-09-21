@@ -1,6 +1,6 @@
 // Motion capture: one unfrozen round of a game with the TV recorded (Playwright recordVideo), plus
 // timestamped stills around every transition and the last 5 seconds of the first timer.
-// Usage: tsx packages/e2e/src/design/capture-video.ts --out reports/design/<stamp> [--game quickpoll]
+// Usage: tsx packages/e2e/src/design/capture-video.ts --out reports/design/<stamp> [--game lightning-round]
 import { existsSync, mkdirSync, readdirSync, renameSync } from 'node:fs';
 import { join } from 'node:path';
 import { parseArgs } from 'node:util';
@@ -13,11 +13,11 @@ const { values } = parseArgs({
   options: {
     out: { type: 'string' },
     port: { type: 'string', default: '42071' },
-    game: { type: 'string', default: 'quickpoll' },
+    game: { type: 'string', default: 'lightning-round' },
   },
 });
 const OUT = values.out ?? join(REPO_ROOT, 'reports', 'design', 'latest');
-const GAME = values.game ?? 'quickpoll';
+const GAME = values.game ?? 'lightning-round';
 const PORT = Number(values.port);
 
 async function main(): Promise<void> {

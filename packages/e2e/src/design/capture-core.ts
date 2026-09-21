@@ -1,5 +1,5 @@
 // Design pass capture: core screens + one game, every device, every role, frozen clock.
-// Usage: tsx packages/e2e/src/design/capture-core.ts --out reports/design/<stamp> [--port 42071] [--game quickpoll]
+// Usage: tsx packages/e2e/src/design/capture-core.ts --out reports/design/<stamp> [--port 42071] [--game lightning-round]
 import { parseArgs } from 'node:util';
 import { join } from 'node:path';
 import { chromium } from 'playwright';
@@ -23,12 +23,12 @@ const { values } = parseArgs({
   options: {
     out: { type: 'string' },
     port: { type: 'string', default: '42071' },
-    game: { type: 'string', default: 'quickpoll' },
+    game: { type: 'string', default: 'lightning-round' },
   },
 });
 const OUT = values.out ?? join(REPO_ROOT, 'reports', 'design', 'latest');
 const PORT = Number(values.port);
-const GAME = values.game ?? 'quickpoll';
+const GAME = values.game ?? 'lightning-round';
 
 // Roles per device. The VIP is the first to join; the 16-char name tests truncation everywhere.
 const CAST: { device: DeviceId; name: string; role: string }[] = [

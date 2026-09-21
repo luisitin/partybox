@@ -42,7 +42,7 @@ try {
   await settle(400);
   console.log('TV selecting', JSON.stringify(await tv.evaluate(PROBE)));
   await api.clock(true);
-  await api.start('quickpoll', 1);
+  await api.start('lightning-round', 1);
   await settle(800);
   console.log('TV playing', JSON.stringify(await tv.evaluate(PROBE)));
   console.log('SE playing', JSON.stringify(await p.page.evaluate(PROBE)));
