@@ -1,8 +1,8 @@
 // The pieces of the Bingo TV: scoreboard rows, a call (big or small), the hall board, and the
 // claim stage — a card dropping in, the pattern's cells turning in reading order with a gold
 // sweep, the rest fading in, the verdict popping beside the settled card.
-import { memo, useEffect, useState } from 'react';
-import type { JSX } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
+import type { CSSProperties, JSX } from 'react';
 import {
   BigText,
   Confetti,
@@ -133,6 +133,21 @@ function CalledBoardView({
   current: number | null;
 }): JSX.Element {
   const lit = new Set(called);
+  // I-014 B: a soft tick as the current lamp catches (the landing beat + the flicker's first step).
+  const sound = useSoundApi();
+  // I-014 C: numbers that arrive together (a reconnect, a resume) light 40 ms apart, each ticked.
+  const seen = useRef<Set<number>>(new Set()); // empty: what the board mounts with lights too
+  const fresh = called.filter((n) => !seen.current.has(n));
+  useEffect(() => {
+    seen.current = new Set(called);
+  });
+  const order = new Map(fresh.map((n, i) => [n, i]));
+  useEffect(() => {
+    if (fresh.length === 0) return;
+    const ts = fresh.map((_, i) => setTimeout(() => sound.play('tick'), 190 + i * 40 + 60));
+    return () => ts.forEach((t) => clearTimeout(t));
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- once per new set of numbers
+  }, [fresh.join(','), sound]);
   return (
     <div className={styles.board} aria-label={`${called.length} numbers called`}>
       {BOARD_ROWS.map((letter, row) => (
@@ -141,7 +156,8 @@ function CalledBoardView({
           {Array.from({ length: 15 }, (_, i) => row * 15 + i + 1).map((n) => (
             <span
               key={n}
-              className={`${styles.cell} ${lit.has(n) ? styles.cellCalled : ''} ${n === current ? styles.cellCurrent : ''}`}
+              className={`${styles.cell} ${lit.has(n) ? styles.cellCalled : ''} ${n === current || order.has(n) ? styles.cellCurrent : ''}`}
+              style={order.has(n) ? ({ '--pb-i': order.get(n) } as CSSProperties) : undefined}
             >
               {n}
             </span>
