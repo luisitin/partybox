@@ -937,3 +937,13 @@
   flex: none;
   text-align: center;
 }
+
+/* ── R2-01 B: "Sam is one away" under the ball's nickname — the accent, rising in. */
+.closeLine {
+  margin: 0;
+  font-size: var(--pb-font-h2);
+  font-weight: 800;
+  color: var(--pb-accent-2);
+  text-align: center;
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}

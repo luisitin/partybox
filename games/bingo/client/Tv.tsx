@@ -4,7 +4,7 @@
 // (server); the stage then drops the claimant's card, turns the pattern's cells in reading order
 // for the whole room, shows the rest of the card, and only then delivers the verdict: a buzzer
 // and "NOT A BINGO", or the cheer with confetti — and waits for a phone to move on.
-import { useEffect, useLayoutEffect } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import type { JSX } from 'react';
 import { Avatar, BigText, Scoreboard, Stage, useSoundApi } from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
@@ -28,6 +28,17 @@ function joinNames(names: string[]): string {
 export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
   const roundLabel = `Round ${view.round} of ${view.totalRounds}`;
   const sound = useSoundApi();
+  // R2-01 C: the room hears it — the phone's hushed `close` when a player joins the one-away set
+  // (once per player per round).
+  const heard = useRef<{ round: number; ids: string[] }>({ round: 0, ids: [] });
+  const closeKey = view.closeIds.join(',');
+  useEffect(() => {
+    if (heard.current.round !== view.round) heard.current = { round: view.round, ids: [] };
+    const fresh = view.closeIds.filter((id) => !heard.current.ids.includes(id));
+    if (fresh.length === 0) return;
+    heard.current.ids.push(...fresh);
+    sound.play('close');
+  }, [closeKey, view.round, sound]);
   const phaseId = view.phaseId;
   const number = view.current?.number ?? null;
   const letter = view.current?.letter ?? null;
@@ -63,6 +74,8 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
 
   if (view.phaseId === 'intro') return <IntroStage view={view} roundLabel={roundLabel} />;
 
+  // R2-01 B: the players one square from the pattern, by name (roster order).
+  const closeNames = view.players.filter((p) => view.closeIds.includes(p.id)).map((p) => p.name);
   if (view.phaseId === 'play') {
     // A menu open somewhere holds the caller; the last one closing runs a 3 · 2 · 1 on the stage.
     if (view.resumeAt !== null)
@@ -109,6 +122,14 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
           <div key={`${view.current.number}:${view.calledAt ?? ''}`} className={styles.caption}>
             <BigText level="h1">{view.current.call}</BigText>
           </div>
+        ) : null}
+        {/* R2-01 B: who is one away, under the nickname — rises in, keyed on the names. */}
+        {closeNames.length > 0 ? (
+          <p key={closeNames.join('|')} className={styles.closeLine}>
+            {closeNames.length === 1
+              ? `${closeNames[0]} is one away`
+              : `${closeNames.slice(0, -1).join(', ')} and ${closeNames[closeNames.length - 1]} are one away`}
+          </p>
         ) : null}
         {/* No reserved slot on the first call (review-loop #3): the row arrives with number two. */}
         {/* Crowded and the board on: the board is the history, the tray row gives its 80 px back. */}
