@@ -154,6 +154,8 @@ export type ToastKind = 'info' | 'success' | 'warning';
 export interface ToastPayload {
   kind: ToastKind;
   text: string;
+  /** I-040 B: the player this is about — the lobby rings their chip while the toast shows. */
+  playerId?: string;
 }
 
 export type ErrorCode =
@@ -179,6 +181,8 @@ export type ErrorCode =
 export interface ErrorPayload {
   code: ErrorCode;
   message: string;
+  /** I-040 C: `name_taken` names who has it, with their face. */
+  player?: { name: string; avatarId: string };
 }
 
 export interface KickedPayload {

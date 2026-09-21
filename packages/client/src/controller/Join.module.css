@@ -62,6 +62,9 @@
 }
 
 .error {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-2);
   font-size: var(--pb-font-caption);
   font-weight: 700;
   color: var(--pb-danger);

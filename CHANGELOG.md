@@ -5,6 +5,10 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **A taken name is the room's business** (I-040, option C): the TVs get a toast ("Someone's
+  trying to join as Sam — that name's taken") through a new `to: 'tvs'` effect target and the lobby
+  rings Sam's chip while it shows; the phone's error carries Sam's face and name and a double buzz.
+  ADR-038.
 - **Wisecrack's cozy round** (I-028, option A): at exactly three connected players the answer
   stage's kicker reads "· cozy round, just the three of you" — the minimum room as a mode.
 - **Blanks: a new hand, three times a game** — a "New hand · n left" button under the black card

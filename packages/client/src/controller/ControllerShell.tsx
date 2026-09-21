@@ -115,7 +115,8 @@ export function ControllerShell({
     // same error inline).
     if (error && error !== p.error) {
       audio?.play('error');
-      buzz(BUZZ.error);
+      // I-040 C: a taken name buzzes twice — the one join error that is about someone else.
+      buzz(error.code === 'name_taken' ? [40, 60, 40] : BUZZ.error);
     }
     // The phone needs the player (a new prompt): a buzz only — the TV plays `phase`.
     if (

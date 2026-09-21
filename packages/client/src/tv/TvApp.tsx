@@ -221,7 +221,13 @@ export function TvApp(): JSX.Element {
 
   let content: JSX.Element;
   if (!room) content = <TvLobby room={null} />;
-  else if (room.status === 'lobby') content = <TvLobby room={room} />;
+  else if (room.status === 'lobby')
+    content = (
+      <TvLobby
+        room={room}
+        nudgeIds={state.toasts.flatMap((t) => (t.playerId ? [t.playerId] : []))}
+      />
+    );
   else if (room.status === 'selecting') content = <TvSelecting room={room} client={client} />;
   else if (room.status === 'playing')
     content = (

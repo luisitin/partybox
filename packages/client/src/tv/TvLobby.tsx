@@ -10,9 +10,11 @@ import styles from './TvLobby.module.css';
 
 export interface TvLobbyProps {
   room: RoomSnapshot | null;
+  /** I-040 B: players a live toast is about — their chips are ringed while it shows. */
+  nudgeIds?: string[];
 }
 
-export function TvLobby({ room }: TvLobbyProps): JSX.Element {
+export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
   const info = useServerInfo();
   const players = room?.players ?? [];
   const vip = players.find((p) => p.isVip);
@@ -65,6 +67,7 @@ export function TvLobby({ room }: TvLobbyProps): JSX.Element {
               status: p.spectator ? 'spectator' : 'active',
             }))}
             vip={room?.vip}
+            activeIds={nudgeIds}
             botIds={players.filter((p) => p.bot).map((p) => p.id)}
             layout="grid"
             size={players.length > 8 ? 'md' : 'lg'}

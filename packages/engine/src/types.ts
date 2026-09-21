@@ -100,9 +100,24 @@ export type RoomEvent =
 export type Effect =
   | { type: 'welcome'; playerId: string }
   | { type: 'push' }
-  | { type: 'toast'; to: 'all' | string; kind: ToastKind; text: string }
+  | {
+      type: 'toast';
+      /** I-040: 'tvs' reaches every TV in the room and no phone. */
+      to: 'all' | 'tvs' | string;
+      kind: ToastKind;
+      text: string;
+      /** I-040 B: a player the toast is about (the lobby rings their chip while it shows). */
+      playerId?: string;
+    }
   | { type: 'kicked'; playerId: string; reason: string }
-  | { type: 'error'; to: string; code: ErrorCode; message: string }
+  | {
+      type: 'error';
+      to: string;
+      code: ErrorCode;
+      message: string;
+      /** I-040 C: for `name_taken`, who already has the name (the phone shows their face). */
+      player?: { name: string; avatarId: string };
+    }
   | { type: 'log'; level: 'warn' | 'error'; text: string };
 
 export interface ApplyResult {

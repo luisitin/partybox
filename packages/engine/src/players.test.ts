@@ -38,6 +38,12 @@ describe('join', () => {
     expect(bad.room).toBe(room);
     const dup = applyRoomEvent(room, joinEvent(2, T0 + 2, 'p1'), deps);
     expect(errorsOf(dup.effects)).toEqual(['name_taken']);
+    // I-040: the phone is told who has it; the TVs get a toast about that player.
+    const err = dup.effects.find((e) => e.type === 'error');
+    expect(err && 'player' in err ? err.player?.name : null).toBe('P1');
+    const toast = dup.effects.find((e) => e.type === 'toast');
+    expect(toast && 'to' in toast ? toast.to : null).toBe('tvs');
+    expect(toast && 'playerId' in toast ? toast.playerId : null).toBe('p1');
     const avatar = applyRoomEvent(room, { ...joinEvent(2), avatarId: 'dragon' } as never, deps);
     expect(errorsOf(avatar.effects)).toEqual(['avatar_invalid']);
     const long = applyRoomEvent(room, joinEvent(2, T0 + 2, 'x'.repeat(17)), deps);

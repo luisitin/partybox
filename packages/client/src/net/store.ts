@@ -36,6 +36,8 @@ export interface Toast {
   id: number;
   kind: 'info' | 'success' | 'warning';
   text: string;
+  /** I-040 B: the player the toast is about (the lobby rings their chip). */
+  playerId?: string;
 }
 
 let toastSeq = 0;

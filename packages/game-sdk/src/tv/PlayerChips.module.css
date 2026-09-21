@@ -49,7 +49,7 @@
 }
 /* I-029 C: the newest chip is welcomed — a gold ring that fades over a second, once the walk has
    landed (the one easing; the chip's own rings — active, back — are its own rules). */
-.enter > * {
+.enter > *:not([class*='_active_']) {
   outline: 3px solid transparent;
   outline-offset: 2px;
   border-radius: 999px;
