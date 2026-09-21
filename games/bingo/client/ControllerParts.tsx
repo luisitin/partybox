@@ -2,7 +2,7 @@
 // row in the TV's ball style (for the grids), the scoreboard rows, the BINGO! button with its two
 // taps, and the choice after a bingo (keep going or move on — any phone with a card, first tap
 // wins).
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { JSX } from 'react';
 import { PrimaryButton, buzz, useSecondsLeft, useSound } from '@partybox/game-sdk/ui';
 import type { PlayCue, ScoreboardRow } from '@partybox/game-sdk/ui';
@@ -109,6 +109,18 @@ export function BingoButton({
   // The check is about one card: only that button says "Not a bingo".
   const myClaim = checking && view.claim?.playerId === meId && view.claim.cardIndex === card;
   const myCheck = myClaim && verdictShown;
+  // I-115 C: the phone learns the two-tap rule the one time it lapses.
+  const [lapsedHint, setLapsedHint] = useState(false);
+  const wasArmed = useRef(false);
+  useEffect(() => {
+    if (wasArmed.current && !armedHere && !checking && !myCheck) {
+      setLapsedHint(true);
+      const t = setTimeout(() => setLapsedHint(false), 2200);
+      return () => clearTimeout(t);
+    }
+    wasArmed.current = armedHere;
+    return undefined;
+  }, [armedHere, checking, myCheck]);
   const canTap = view.claimable.includes(card) && !checking;
   let label = 'BINGO!';
   let tone: 'accent' | 'neutral' | 'danger' | 'success' = 'accent';
@@ -164,6 +176,11 @@ export function BingoButton({
       >
         {label}
       </PrimaryButton>
+      {lapsedHint ? (
+        <span className={styles.lapsedHint} aria-live="polite">
+          Dibs lapsed — tap twice within 3 s to claim
+        </span>
+      ) : null}
       {/* The window, draining along the button's foot in step with the TV's bar (loop 256). */}
       {armedHere && arm ? (
         <span
