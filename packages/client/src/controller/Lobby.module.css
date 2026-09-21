@@ -41,3 +41,15 @@
   font-weight: 900;
   color: var(--pb-accent-2);
 }
+
+/* ── I-073 C: the VIP's "Show the scores again". */
+.again {
+  display: block;
+  margin-top: var(--pb-space-2);
+  padding: var(--pb-space-2) var(--pb-space-4);
+  border-radius: 999px;
+  border: 2px solid var(--pb-border);
+  background: var(--pb-surface-2);
+  color: var(--pb-text);
+  font-weight: 700;
+}

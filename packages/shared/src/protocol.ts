@@ -53,6 +53,8 @@ export const vipPayloadSchema = z.discriminatedUnion('action', [
   z.object({ action: z.literal('unlock') }),
   z.object({ action: z.literal('playAgain') }),
   z.object({ action: z.literal('toLobby') }),
+  /** I-073 C: from the lobby, back to the results stage of the last game. */
+  z.object({ action: z.literal('showResults') }),
   /** Whether the host keeps a recap of the next game on disk (ADR-035); any time but mid-game. */
   z.object({ action: z.literal('setRecording'), on: z.boolean() }),
 ]);

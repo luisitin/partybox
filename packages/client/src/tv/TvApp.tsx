@@ -156,6 +156,8 @@ export function TvApp(): JSX.Element {
       if (performance.now() - audio.lastPlayedAt() > 50) audio.play('phase');
     if (room.players.length > p.players && p.status !== '')
       audio.play('join', { semitones: joinSemitones(room.players.length) });
+    // I-073 B: the "last up" card deals onto the lobby table with the `card` cue.
+    if (room.status === 'lobby' && p.status === 'results' && room.results) audio.play('card');
     // A game begins: a held G-major arpeggio (the intro itself never chimes — p.phase is null);
     // a TV that reloads mid-game (p.status === '') stays quiet, like the join rule.
     if (room.status === 'playing' && p.status !== 'playing' && p.status !== '') audio.play('start');

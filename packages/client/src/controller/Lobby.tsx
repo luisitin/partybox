@@ -40,6 +40,12 @@ export function Lobby({ controller, room, me }: LobbyProps): JSX.Element {
       <p className={`pb-caption ${styles.count}`}>
         {t.lobby.players(room.players.length, room.capacity)}
         {room.locked ? ` · ${t.lobby.locked}` : ''}
+        {/* I-073 C: the VIP can bring the last game's scores back once more. */}
+        {me.isVip && room.results ? (
+          <button type="button" className={styles.again} onClick={() => controller.vip({ action: 'showResults' })}>
+            Show the scores again
+          </button>
+        ) : null}
       </p>
       <ul className={styles.list} aria-label="players">
         {room.players.map((p) => {
