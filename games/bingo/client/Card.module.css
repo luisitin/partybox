@@ -628,3 +628,14 @@ button.cell:focus-visible {
     color: var(--pb-text);
   }
 }
+
+/* ── I-110 A: FREE when the pattern never uses it — quiet, "already yours". */
+.free.freeIdle,
+.free.freeIdle.daubed {
+  background: transparent;
+  border-color: color-mix(in oklab, var(--pb-accent-2) 45%, var(--pb-border));
+  color: color-mix(in oklab, var(--pb-accent-2) 55%, var(--pb-text-muted));
+  font-size: 0.8em;
+
+  transition: background-color var(--pb-motion-base) var(--pb-ease), color var(--pb-motion-base) var(--pb-ease), border-color var(--pb-motion-base) var(--pb-ease);
+}

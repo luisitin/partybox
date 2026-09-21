@@ -15,6 +15,8 @@ export interface CardProps {
   daubs: number[];
   /** Highlighted as the pattern (intro / phones): dotted outline. */
   pattern?: number[];
+  /** I-110 A: the round's pattern never uses the centre — FREE goes quiet. */
+  freeIdle?: boolean;
   /** play: the squares that would win with one more daub (loop 420): a breathing outline. */
   wanted?: number[];
   /** Check / celebration marks. */
@@ -69,6 +71,7 @@ export function Card({
   numbers,
   daubs,
   pattern = [],
+  freeIdle = false,
   wanted = [],
   green = [],
   red = [],
@@ -154,6 +157,7 @@ export function Card({
           const cls = [
             styles.cell,
             isDaubed ? styles.daubed : '',
+            isFree && freeIdle ? styles.freeIdle : '',
             pending ? styles.pending : '',
             turning && !ordered && showColour ? styles.slowIn : '',
             verdict && !turning && isDaubed && !isFree && !coloured ? styles.dim : '',
@@ -175,7 +179,7 @@ export function Card({
           ].join(' ');
           const mark = !showColour ? null : greenSet.has(i) ? '✓' : redSet.has(i) ? '✕' : null;
           const label = isFree ? 'FREE' : String(n);
-          const shown = isFree && size === 'compact' ? '★' : label;
+          const shown = isFree && size === 'compact' ? '★' : isFree && freeIdle ? '✓ FREE' : label;
           const Tag = interactive && (!isFree || onTapFree) ? 'button' : 'div';
           const style =
             wiped && isDaubed && !isFree
