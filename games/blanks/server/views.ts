@@ -4,7 +4,7 @@
 import { controllerEnvelope, envelope } from '@partybox/game-sdk';
 import type { ControllerView, GameAward, PlayerStatus, TvView } from '@partybox/game-sdk';
 import { whiteText } from './content';
-import { allIn } from './phases/answer';
+import { allIn, redrawsLeft } from './phases/answer';
 import { votesIn } from './phases/judge';
 import {
   canVote,
@@ -79,6 +79,8 @@ export interface BlanksControllerView extends ControllerView {
   role: 'player' | 'judge' | 'spectator';
   /** answer: my hand. Empty in every other phase (the TV never needs it, the phone only then). */
   hand: { id: string; text: string }[];
+  /** answer: new hands I may still take this game (0 once used up, or after playing). */
+  redrawsLeft: number;
   /** My cards this round, in blank order; null until the server accepted a play. */
   myPlay: string[] | null;
   playedCount: number;
@@ -212,6 +214,10 @@ export function controllerView(
       phase === 'answer' && player && !isCzar(state, playerId)
         ? (state.hands[playerId] ?? []).map((id) => ({ id, text: whiteText(id) }))
         : [],
+    redrawsLeft:
+      phase === 'answer' && player && !isCzar(state, playerId) && !mine
+        ? redrawsLeft(state, playerId)
+        : 0,
     myPlay: mine && phase !== 'intro' ? mine.map(whiteText) : null,
     playedCount: playedCount(state),
     playersExpected: playersExpected(state),

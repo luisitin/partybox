@@ -95,6 +95,8 @@ export interface State extends GameStateBase {
   winners: string[];
   scores: Record<string, number>;
   stats: Stats;
+  /** playerId → new hands taken this game (REDRAWS_PER_GAME at most; the owner, 2026-09-21). */
+  redraws: Record<string, number>;
 }
 
 export const inputSchema = z.discriminatedUnion('type', [
@@ -110,6 +112,8 @@ export const inputSchema = z.discriminatedUnion('type', [
   }),
   /** The judge picks the round's black card (czar mode, "pick" phase). */
   z.object({ type: z.literal('choose'), index: z.number().int().min(0).max(4) }),
+  /** A whole new hand (answer phase, before playing; REDRAWS_PER_GAME per player per game). */
+  z.object({ type: z.literal('redraw') }),
 ]);
 export type Input = z.infer<typeof inputSchema>;
 export type PlayInput = Extract<Input, { type: 'play' }>;
@@ -117,6 +121,8 @@ export type VoteInput = Extract<Input, { type: 'vote' }>;
 export type ChooseInput = Extract<Input, { type: 'choose' }>;
 
 export const HAND_SIZE = 10;
+/** New hands a player may take in one game (the owner, 2026-09-21: "3x each game"). */
+export const REDRAWS_PER_GAME = 3;
 export const INTRO_MS = 5_000;
 /** czar mode: how many black cards the judge chooses between, and how long they get (timed; a
  *  hidden 60 s fallback untimed — the default is the first card, so an idle judge never stalls). */

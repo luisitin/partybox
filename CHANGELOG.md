@@ -5,6 +5,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Blanks: a new hand, three times a game** — a "New hand · n left" button under the black card
+  during the answer phase (before playing) deals the whole hand again under every rule of a fresh
+  hand; `{ type: 'redraw' }`, `redrawsLeft` on the phone view (the owner, 2026-09-21).
 - **Blanks' submissions land in named slots** (I-020, option C): one slot per player in roster
   order, their face in the landed card's corner, a puff and the `card` pluck as it lands, and every
   card turning face-up together on "Everyone's in!". The owner's note: one note per lock-in — the

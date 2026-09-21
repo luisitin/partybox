@@ -23,6 +23,31 @@ import {
 } from './helpers';
 
 describe('answer', () => {
+  it('deals a whole new hand on redraw, three times a game, before playing, never for the judge', () => {
+    const s = toAnswer(start());
+    const before = s.hands['ana'] ?? [];
+    const redraw = (st: typeof s, who: string) =>
+      reduce(st, {
+        type: 'input',
+        now: st.phase.startedAt + 500,
+        playerId: who,
+        input: { type: 'redraw' },
+      });
+    const one = redraw(s, 'ana');
+    expect(one.hands['ana']).toHaveLength(before.length);
+    expect((one.hands['ana'] ?? []).filter((id) => before.includes(id))).toHaveLength(0);
+    expect(one.discard).toEqual(expect.arrayContaining(before));
+    expect(cv(one, 'ana').redrawsLeft).toBe(2);
+    expect(cv(s, 'ana').redrawsLeft).toBe(3);
+    const three = redraw(redraw(one, 'ana'), 'ana');
+    expect(cv(three, 'ana').redrawsLeft).toBe(0);
+    expect(redraw(three, 'ana')).toBe(three);
+    // After playing, or from a spectator: unchanged.
+    const played = play(s, 'ana', before.slice(0, blackCard(s.blackId).pick));
+    expect(redraw(played, 'ana')).toBe(played);
+    expect(cv(played, 'ana').redrawsLeft).toBe(0);
+    expect(redraw(s, 'ghost')).toBe(s);
+  });
   it('accepts exactly pick distinct cards from the hand, once, and removes them from the hand', () => {
     const s = toAnswer(start());
     const pick = blackCard(s.blackId).pick;

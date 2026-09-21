@@ -1594,3 +1594,22 @@
 :global(:root[data-motion='off']) .pipsAllIn .pipDone {
   animation: none;
 }
+
+/* A whole new hand (the owner, 2026-09-21): a quiet text button under the pinned black card —
+   the hand is the choice, this is the escape hatch, so it never competes with the cards. */
+.redraw {
+  display: block;
+  margin: var(--pb-space-2) auto 0;
+  padding: var(--pb-space-1) var(--pb-space-3);
+  border: 1px solid var(--pb-border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--pb-text-muted);
+  font: inherit;
+  font-size: var(--pb-font-small);
+  font-weight: 700;
+  min-height: 36px;
+}
+.redraw:disabled {
+  opacity: 0.5;
+}

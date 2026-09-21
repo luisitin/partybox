@@ -6,8 +6,9 @@
 import { allConnectedDone, enterPhase, hasPlayer, isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { blackCard } from '../content';
+import { leadWithFit, refillHands } from '../deal';
 import { hasPlayed, isCzar, playersDone } from '../round';
-import { ALL_IN_MS, EXTRA_PICK_S, UNTIMED_ANSWER_MS } from '../types';
+import { ALL_IN_MS, EXTRA_PICK_S, REDRAWS_PER_GAME, UNTIMED_ANSWER_MS } from '../types';
 import type { Input, PlayInput, State } from '../types';
 import type { Transition } from './intro';
 
@@ -58,9 +59,34 @@ function applyPlay(state: State, playerId: string, input: PlayInput, now: number
   };
 }
 
+/** New hands left for `playerId` this game. */
+export function redrawsLeft(state: State, playerId: string): number {
+  return Math.max(0, REDRAWS_PER_GAME - (state.redraws[playerId] ?? 0));
+}
+
+/** A whole new hand (the owner, 2026-09-21): the old one goes to the discard and the hand is
+ *  dealt again under every rule a fresh hand follows — the kind floors, the good and best floors,
+ *  the filler cap, a word, and the round's fit on top. Before playing only, REDRAWS_PER_GAME
+ *  times a game, never for the judge. */
+function applyRedraw(state: State, playerId: string): State {
+  if (!hasPlayer(state, playerId) || isCzar(state, playerId) || hasPlayed(state, playerId))
+    return state;
+  if (redrawsLeft(state, playerId) === 0) return state;
+  const old = state.hands[playerId] ?? [];
+  const emptied: State = {
+    ...state,
+    hands: { ...state.hands, [playerId]: [] },
+    discard: [...state.discard, ...old],
+    redraws: { ...state.redraws, [playerId]: (state.redraws[playerId] ?? 0) + 1 },
+  };
+  const { draw } = blackCard(state.blackId);
+  return leadWithFit(refillHands(emptied, draw, [playerId]), [playerId]);
+}
+
 export function reduceAnswer(state: State, event: GameEvent<Input>, next: Transition): State {
   if (event.type === 'input') {
     // Moving an untimed round along is the VIP's alone, through the engine's skip (ADR-036).
+    if (event.input.type === 'redraw') return applyRedraw(state, event.playerId);
     if (event.input.type !== 'play') return state;
     const after = applyPlay(state, event.playerId, event.input, event.now);
     if (after === state) return state;

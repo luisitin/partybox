@@ -59,7 +59,7 @@ black card's `pick` ids, distinct, all in that player's hand, in blank order. `{
 during `judge`, from an eligible voter (everyone in vote mode; the judge alone in czar mode), once, never
 on their own slot. No `next` input: the phones' Next ("Start the reading now", "Close the vote now", "Next
 round") is the engine's VIP skip through the shell's `skip` prop (VIP's phone alone, untimed rounds; ADR-036).
-`{ type: 'choose', index }` — during `pick`, from the judge: `index` into the three black cards.
+`{ type: 'choose', index }` — during `pick`, from the judge: `index` into the three black cards. `{ type: 'redraw' }` — during `answer`, from a non-judge player who has not played, at most `REDRAWS_PER_GAME` (3) times a game: the hand goes to the discard and is dealt again under every rule of a fresh hand (floors, filler cap, a word, the round's fit on top); the phone's "New hand · n left" (the owner, 2026-09-21).
 Anything else leaves the state unchanged.
 
 ## Scoring

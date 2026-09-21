@@ -211,6 +211,20 @@ export function ControllerHand({ view, send, skip }: Props): JSX.Element {
           whites={picked.map((id) => view.hand.find((c) => c.id === id)?.text ?? '')}
           size="phone"
         />
+        {/* A whole new hand, three times a game (the owner, 2026-09-21) — dealt under every rule
+            a fresh hand follows. The pick is dropped with the cards it pointed at. */}
+        <button
+          type="button"
+          className={styles.redraw}
+          disabled={sent || view.redrawsLeft === 0}
+          onClick={() => {
+            if (sent || view.redrawsLeft === 0) return;
+            setPicked([]);
+            send({ type: 'redraw' });
+          }}
+        >
+          {view.redrawsLeft === 0 ? 'No new hands left' : `New hand · ${view.redrawsLeft} left`}
+        </button>
       </div>
       <ul
         className={`${styles.hand} ${flying ? styles.handFlying : ''}`}
