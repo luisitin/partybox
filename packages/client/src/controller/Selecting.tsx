@@ -63,6 +63,20 @@ export function Selecting({ controller, room, me }: SelectingProps): JSX.Element
           onChange={(e) => controller.vip({ action: 'setRecording', on: e.target.checked })}
         />
       </label>
+      {/* S-005 A: phone only — the TV's moments go to the phones. */}
+      <label className={styles.recording} htmlFor="phone-only">
+        <span className={styles.recordingLabel}>
+          Phone only
+          <small>{room.phoneOnly ? 'the phones show what the TV would' : 'the TV is the stage'}</small>
+        </span>
+        <input
+          id="phone-only"
+          type="checkbox"
+          className={styles.recordingBox}
+          checked={room.phoneOnly}
+          onChange={(e) => controller.vip({ action: 'setPhoneOnly', on: e.target.checked })}
+        />
+      </label>
       <ul className={styles.games} role="radiogroup" aria-label="games">
         {room.games.map((g) => {
           const isSelected = g.id === room.selectedGameId;

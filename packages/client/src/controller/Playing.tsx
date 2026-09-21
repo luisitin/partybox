@@ -145,6 +145,11 @@ export function Playing({
         mood="wait"
       />
     );
+  // S-005 A: a "phone only" room hands the phones the TV's moment for the phases the game names.
+  const PhoneStage =
+    room.phoneOnly && module.PhoneStage && module.phoneStagePhases?.includes(view.phaseId)
+      ? module.PhoneStage
+      : null;
   const GameController = module.Controller as unknown as (props: {
     view: PushedView<ControllerView>;
     me: { id: string; name: string; avatarId: string };
@@ -155,12 +160,16 @@ export function Playing({
     <GameErrorBoundary key={view.gameId}>
       <Suspense fallback={<DelayedWaiting title={t.connection.loadingGame} />}>
         <SoundProvider play={play}>
-          <GameController
-            view={view}
-            me={{ id: me.id, name: me.name, avatarId: me.avatarId }}
-            send={controller.sendInput}
-            skip={me.isVip ? () => controller.vip({ action: 'skip' }) : undefined}
-          />
+          {PhoneStage ? (
+            <PhoneStage view={view} />
+          ) : (
+            <GameController
+              view={view}
+              me={{ id: me.id, name: me.name, avatarId: me.avatarId }}
+              send={controller.sendInput}
+              skip={me.isVip ? () => controller.vip({ action: 'skip' }) : undefined}
+            />
+          )}
           <Ready onReady={onGameReady} />
         </SoundProvider>
       </Suspense>
