@@ -113,19 +113,23 @@
 }
 
 /* ── I-030 B: the room steps back while paused — the stage scales to 0.96 and the strip's chips
-   dim to 60 %, over the curtain's own 600 ms (transform + opacity on the containers only). */
-.held .game,
-.held .gameQuick {
-  transform: scale(0.96);
+   dim to 60 %, over the curtain's own 600 ms (transform + opacity on the containers only). The
+   transform sits on `.stage`, a wrapper with no entrance of its own: on `.game` the phase's
+   pb-rise (fill both) pinned `transform: none`, so the hold never showed outside Bingo's quick
+   cuts, and the return replayed the rise — a blink after every resume (pass 891). */
+.stage {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
   transition: transform var(--pb-motion-slow) var(--pb-ease);
+}
+.held .stage {
+  transform: scale(0.96);
 }
 .held .strip {
   opacity: 0.6;
   transition: opacity var(--pb-motion-slow) var(--pb-ease);
-}
-.game,
-.gameQuick {
-  transition: transform var(--pb-motion-slow) var(--pb-ease);
 }
 .strip {
   transition: opacity var(--pb-motion-slow) var(--pb-ease);
@@ -133,8 +137,7 @@
 
 /* ── I-030 C: the resume lands — as the curtain lifts the stage lands back to full (pb-land)
    with the shell's `phase` chime, instead of easing back. */
-.resumed .game,
-.resumed .gameQuick {
+.resumed .stage {
   animation: global(pb-land) var(--pb-motion-base) var(--pb-ease) both;
   transition: none;
 }

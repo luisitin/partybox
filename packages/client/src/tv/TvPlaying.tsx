@@ -162,35 +162,39 @@ export function TvPlaying({ room, view, audio, onGameReady, music }: TvPlayingPr
           className={styles.bar}
         />
       ) : null}
-      <CrossfadeSwap
-        swapKey={view.phaseId}
-        className={quick ? styles.gameQuick : styles.game}
-        quick={quick}
-      >
-        {GameTv ? (
-          <GameErrorBoundary surface="tv">
-            <Suspense
-              fallback={
-                <DelayedFallback>
-                  <Stage center>
-                    <BigText level="h1" tone="muted">
-                      {gameName}
-                    </BigText>
-                    <p className="pb-muted">{t.connection.loadingGame}</p>
-                  </Stage>
-                </DelayedFallback>
-              }
-            >
-              <SoundProvider play={play} clip={clip} hush={hush}>
-                <GameTv view={view} />
-                <Ready onReady={onGameReady} />
-              </SoundProvider>
-            </Suspense>
-          </GameErrorBoundary>
-        ) : (
-          <BigText tone="muted">Unknown game "{room.selectedGameId}"</BigText>
-        )}
-      </CrossfadeSwap>
+      {/* `.stage` carries the pause hold and the resume landing (I-030): the swap's own container
+          animates each phase in, and an animation there would pin the transform. */}
+      <div className={styles.stage}>
+        <CrossfadeSwap
+          swapKey={view.phaseId}
+          className={quick ? styles.gameQuick : styles.game}
+          quick={quick}
+        >
+          {GameTv ? (
+            <GameErrorBoundary surface="tv">
+              <Suspense
+                fallback={
+                  <DelayedFallback>
+                    <Stage center>
+                      <BigText level="h1" tone="muted">
+                        {gameName}
+                      </BigText>
+                      <p className="pb-muted">{t.connection.loadingGame}</p>
+                    </Stage>
+                  </DelayedFallback>
+                }
+              >
+                <SoundProvider play={play} clip={clip} hush={hush}>
+                  <GameTv view={view} />
+                  <Ready onReady={onGameReady} />
+                </SoundProvider>
+              </Suspense>
+            </GameErrorBoundary>
+          ) : (
+            <BigText tone="muted">Unknown game "{room.selectedGameId}"</BigText>
+          )}
+        </CrossfadeSwap>
+      </div>
       {view.paused || leaving ? (
         <div
           className={`${styles.curtain} ${!view.paused ? styles.leaving : ''}`}
