@@ -33,6 +33,7 @@ async function main(): Promise<void> {
     await api.post('/api/dev/start', {
       gameId: G,
       seed: 3,
+      readyUp: false, // the script swaps a card first (the dev start readies everyone after 1 s — pass 889)
       settings: { rounds: 1, round1: 'line', cards: 2, callSeconds: 6 },
     });
     await settle(500);
