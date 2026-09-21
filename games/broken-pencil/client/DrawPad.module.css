@@ -77,6 +77,8 @@
 }
 
 .canvas {
+  /* I-021 C: the sheet is dealt onto the table when the pad mounts. */
+  animation: global(pb-deal) var(--pb-motion-slow) var(--pb-ease) both;
   display: block;
   touch-action: none;
   border-radius: var(--pb-radius);
@@ -202,4 +204,15 @@
     width: 28px;
     height: 28px;
   }
+}
+
+/* ── I-021 C: the swatches pop in 40 ms apart; A: the picked one wobbles once, like a pencil
+   lifted from the tray. */
+.swatch {
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) calc(var(--pb-i, 0) * 40ms) both;
+}
+.swatchOn {
+  animation:
+    global(pb-pop) var(--pb-motion-base) var(--pb-ease) calc(var(--pb-i, 0) * 40ms) both,
+    global(pb-bump) var(--pb-motion-base) var(--pb-ease) both;
 }

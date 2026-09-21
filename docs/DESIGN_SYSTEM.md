@@ -29,7 +29,7 @@ same primitives. Games must not hard-code colours, sizes or durations — use th
 
 ## Themes
 
-Five palettes re-declare the colour tokens (`tokens.css` → `[data-theme='…']`): `night` (default), `daylight` (light, `color-scheme: light`), `arcade`, `cabin`, `contrast`. The choice is per device (`localStorage`, `src/theme.ts`), picked from the TV corner 🎨 or the phone header 🎨; `?theme=<id>` forces one for previews and screenshots. Rules for a new theme: text ≥ 4.5:1 on `bg`/`surface`, `on-accent` ≥ 4.5:1 on every accent, `accent-2` readable as text on `surface` (light themes use a dark amber), player colours untouched.
+Five palettes re-declare the colour tokens (`tokens.css` → `[data-theme='…']`): `night` (default), `daylight` (light, `color-scheme: light`), `arcade`, `cabin`, `contrast`. The choice is per device (`localStorage`, `src/theme.ts`), picked from the TV corner 🎨 or the phone header 🎨; `?theme=<id>` forces one for previews and screenshots. The same sheet's footer holds the phone's own choices: sound, vibration, and (I-021) Broken Pencil's drawing paper (ruled / plain) and pencil (pencil / pen) — `getPadStyle` / `setPadStyle` / `usePadStyle` in the game-sdk, per device, never over the wire. Rules for a new theme: text ≥ 4.5:1 on `bg`/`surface`, `on-accent` ≥ 4.5:1 on every accent, `accent-2` readable as text on `surface` (light themes use a dark amber), player colours untouched.
 
 ## Type scale
 

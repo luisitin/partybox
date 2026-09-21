@@ -2,9 +2,10 @@
 // cover finger, mouse and pen. While the VIP pauses, the shell freezes the pad (the phone's <main>
 // goes inert) and the deadline is shifted on resume, so no drawing time is lost.
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import type { JSX, PointerEvent as ReactPointerEvent } from 'react';
+import type { CSSProperties, JSX, PointerEvent as ReactPointerEvent } from 'react';
 import { CANVAS, INK_CHARS, MAX_STROKES, encodePoints, inkCost } from '../server/encoding';
 import type { Stroke } from '../server/types';
+import { usePadStyle } from '@partybox/game-sdk/ui';
 import { PALETTE, PALETTE_NAMES, WIDTHS, decodeStroke, paint } from './drawing';
 import type { DecodedStroke } from './drawing';
 import styles from './DrawPad.module.css';
@@ -48,6 +49,8 @@ function inkUsed(strokes: Live[], current: Live | null): number {
 export function DrawPad({ onChange, onProgress, initial, disabled }: DrawPadProps): JSX.Element {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const boxRef = useRef<HTMLDivElement>(null);
+  // I-021: this phone's paper and pencil (the settings sheet); the pad repaints when they change.
+  const pad = usePadStyle();
   // `initial` is read once: later pushes carry this pad's own drafts back and must not reset it.
   const [strokes, setStrokes] = useState<Live[]>(() => (initial ? decode(initial) : []));
   const [color, setColor] = useState(0);
@@ -85,8 +88,8 @@ export function DrawPad({ onChange, onProgress, initial, disabled }: DrawPadProp
       canvas.height = size * dpr;
     }
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    paint(ctx, current.current ? [...strokes, current.current] : strokes, size);
-  }, [strokes, size]);
+    paint(ctx, current.current ? [...strokes, current.current] : strokes, size, pad);
+  }, [strokes, size, pad]);
 
   useEffect(repaint, [repaint]);
 
@@ -157,7 +160,7 @@ export function DrawPad({ onChange, onProgress, initial, disabled }: DrawPadProp
               key={hex}
               type="button"
               className={`${styles.swatch} ${i === color ? styles.swatchOn : ''}`}
-              style={{ background: hex }}
+              style={{ background: hex, '--pb-i': i } as CSSProperties}
               aria-label={PALETTE_NAMES[i]}
               aria-pressed={i === color}
               onClick={() => setColor(i)}

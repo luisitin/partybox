@@ -125,6 +125,12 @@ export const t = {
     noVibration: 'Vibration is not available in this browser (iPhones have no vibration API).',
     on: 'On',
     off: 'Off',
+    padPaper: 'Drawing paper',
+    padPencil: 'Drawing pencil',
+    paperRuled: 'Ruled',
+    paperPlain: 'Plain',
+    pencilSoft: 'Pencil',
+    pencilPen: 'Pen',
   },
   host: {
     title: 'Host',
