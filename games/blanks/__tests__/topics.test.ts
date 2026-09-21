@@ -1,6 +1,15 @@
 // Topics (loop 469): what a card is about, and the bot's nudge for a pair.
 import { describe, expect, it } from 'vitest';
-import { TOPIC_HIT, WORD_ECHO, keywordsOf, pairBonus, punch, topicsOf } from '../server/topics';
+import {
+  TAG_HIT,
+  TOPIC_HIT,
+  WORD_ECHO,
+  keywordsOf,
+  pairBonus,
+  punch,
+  tagHit,
+  topicsOf,
+} from '../server/topics';
 
 describe('topicsOf', () => {
   it('reads topics off the words', () => {
@@ -46,6 +55,16 @@ describe('pairBonus', () => {
       TOPIC_HIT,
     );
     expect(pairBonus("Grandma's cookies were laced with ____.", 'A hickey from a vacuum.')).toBe(0);
+  });
+
+  it("a card's own tags name the prompts it was written for: a whole word, any case, beats a topic", () => {
+    expect(tagHit('Who did 9/11?', ['9/11', 'iraq'])).toBe(true);
+    expect(tagHit('I wish I could hire ____ as a babysitter.', ['babysitter', 'nanny'])).toBe(true);
+    expect(tagHit('The Iraqi restaurant was ____.', ['iraq'])).toBe(false); // "iraqi" is not "iraq"
+    expect(tagHit('Who did 9/11?', undefined)).toBe(false);
+    expect(pairBonus('Who did 9/11?', 'Bush.', ['9/11'])).toBe(TAG_HIT);
+    expect(pairBonus('Who did 9/11?', 'Bush.')).toBe(0);
+    expect(TAG_HIT).toBeGreaterThan(TOPIC_HIT);
   });
 });
 

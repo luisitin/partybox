@@ -107,14 +107,13 @@ number 6 (3–15) · `answerSeconds` number 60 (30–120, step 15; timed only) �
 
 ## Content
 
-Three decks, `mild.json` (clean, 1259 black / 2576 white), `crude.json` (adult, 987 / 2023) and `wild.json`
-(explicit 922 / 2456) — 10 223 cards, about one black card in nine a Pick 2 or Pick 3: `{ id, name, rating, black: [{ id, text, pick, draw }], white: [{ id, text }] }`,
+Three decks, `mild.json` (clean, 1259 black / 2601 white), `crude.json` (adult, 987 / 2053) and `wild.json`
+(explicit 924 / 2501) — 10 325 cards, about one black card in nine a Pick 2 or Pick 3: `{ id, name, rating, black: [{ id, text, pick, draw }], white: [{ id, text }] }`,
 blanks written `____`, `pick` ≥ blanks (a question card has none), `draw` 2 on Pick 3 cards. Mainstream
 real-world references are fine in crude and wild (heads of state past and present, well-known events);
 no obscure ones; no slurs or hate, nothing sexual involving minors, no non-consent. Add cards with
 `pnpm exec tsx scripts/blanks-add-cards.ts <deck> black.txt white.txt` (ids, pick/draw and dedupe are automatic).
 Every card carries a `tier` (1 filler · 2 good · 3 great · 4 amazing, read on a second pass — punchy,
 vivid, versatile cards up; flat gross-outs and one-word nouns down); a prompt may set `slot` / `slots`
-and a white `serves` where the text reading (`server/fit.ts`) is wrong — `pnpm blanks-kinds --since <rev>`
-lists the reads of new cards, `__tests__/kinds.golden.json` pins the verified ones. `pnpm blanks-fit-report`
+and a white `serves` where the text reading (`server/fit.ts`) is wrong; a white `tags` names the prompt words it was written for ("Bush." → `9/11`): a prompt holding one leads with the card in every hand and for the bots (`server/topics.ts` `tagHit`). Cards come in every shape — bare nouns, gerunds, possessives, names, lines; no opening word past a fifth of a deck (`reports/blanks-card-audit.md`) — `pnpm blanks-kinds --since <rev>` lists the reads of new cards, `__tests__/kinds.golden.json` pins the verified ones. `pnpm blanks-fit-report`
 measures hands and bot plays; `--md` writes the deck as the model reads it (`reports/design/blanks-wild-fit.md`).

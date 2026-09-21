@@ -11,13 +11,14 @@ import {
   deckSubject,
   whiteKind,
   whiteServes,
+  whiteTags,
   whiteText,
   whiteTier,
 } from './content';
 import type { WhiteKind } from './content';
 import { drawWhite } from './cards';
 import { fitScore } from './fit';
-import { topicsOf } from './topics';
+import { tagHit, topicsOf } from './topics';
 import type { Topic } from './topics';
 import { HAND_SIZE } from './types';
 import type { State } from './types';
@@ -363,10 +364,12 @@ export function leadWithFit(state: State, playerIds: readonly string[]): State {
       .map((card, i) => ({
         card,
         i,
-        fit: fitScore(slot, whiteServes(card), whiteText(card), blackCard(state.blackId).text),
+        fit: fitScore(slot, whiteServes(card), whiteText(card), black),
+        // A card written for this prompt family (`tags`) leads its fit group, ahead of the tier.
+        hit: tagHit(black, whiteTags(card)) ? 1 : 0,
         tier: whiteTier(card),
       }))
-      .sort((a, b) => b.fit - a.fit || b.tier - a.tier || a.i - b.i)
+      .sort((a, b) => b.fit - a.fit || b.hit - a.hit || b.tier - a.tier || a.i - b.i)
       .map((c) => c.card);
   }
   return { ...next, hands };
