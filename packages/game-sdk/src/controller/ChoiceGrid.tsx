@@ -37,6 +37,8 @@ export interface ChoiceGridProps {
   tone?: 'default' | 'final';
   /** Replaces "✓ Locked in — look at the TV" once the server has echoed the pick (e.g. with the time to spare). */
   lockedHint?: ReactNode;
+  /** I-026 B: a class for the screen (a game styles a state of the grid, e.g. a placed wager). */
+  className?: string;
 }
 
 const LETTERS = 'ABCDEFGH';
@@ -52,6 +54,7 @@ interface Pending {
 
 export function ChoiceGrid(props: ChoiceGridProps): JSX.Element {
   const {
+    className,
     prompt,
     kicker,
     choices,
@@ -87,7 +90,7 @@ export function ChoiceGrid(props: ChoiceGridProps): JSX.Element {
     onPick(id);
   };
   return (
-    <Screen footer={footer}>
+    <Screen footer={footer} className={className}>
       {kicker ? (
         <p className={`${styles.kicker} ${tone === 'final' ? styles.kickerFinal : ''}`}>{kicker}</p>
       ) : null}

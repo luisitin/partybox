@@ -30,6 +30,14 @@ export function wagerAmount(score: number, percent: number): number {
   return Math.floor((score * percent) / 100 / 10) * 10;
 }
 
+/** I-026: a custom stake in points — never above the score, rounded down to tens like a preset
+ *  (the whole score is allowed, as "all in" is). */
+export function clampWager(score: number, amount: number): number {
+  if (score <= 0 || amount <= 0) return 0;
+  if (amount >= score) return score;
+  return Math.floor(amount / 10) * 10;
+}
+
 export interface WagerOption {
   percent: WagerPercent;
   amount: number;

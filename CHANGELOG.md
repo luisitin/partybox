@@ -5,6 +5,11 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Lightning Round's wagers are chips on a table** (I-026, option C): every wager row carries a
+  stack of gold chips sized to the share; a placed pick bumps its chips, the prompt becomes "n in
+  the pot" and the other rows step back; the "Your bet" footer breathes on the final question until
+  the answer is locked. The owner's note: a fifth Custom row takes a percentage or a points amount
+  (`{ type: 'wager', amount }`, clamped server-side). `ChoiceGrid` gains `className`.
 - **The winner is crowned** (I-025, option C, every game's results): one clear winner gets their
   face beside the headline and the `pb-crown` lift, confetti falls behind it (48 pieces for a person,
   16 for a bot), and the board under it comes back from 55 % over 1.2 s so the name reads first.

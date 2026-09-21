@@ -67,9 +67,14 @@ export interface State extends GameStateBase {
 
 export const inputSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('pick'), index: z.number().int().min(0).max(3) }),
+  // A preset share, or (I-026, the owner) a custom stake in points — the server clamps it
+  // (0…score, rounded down to tens); `amount` wins when both are sent.
   z.object({
     type: z.literal('wager'),
-    percent: z.union([z.literal(0), z.literal(25), z.literal(50), z.literal(75), z.literal(100)]),
+    percent: z
+      .union([z.literal(0), z.literal(25), z.literal(50), z.literal(75), z.literal(100)])
+      .optional(),
+    amount: z.number().int().min(0).max(1_000_000).optional(),
   }),
 ]);
 export type Input = z.infer<typeof inputSchema>;

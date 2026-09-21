@@ -79,6 +79,8 @@ Phone: every `Screen` rises on mount (`pb-rise`, `--pb-motion-base`, fill backwa
 when a phase should read as a new screen, and never keys the Controller itself (game-local state would reset).
 TV status swaps (lobby / selecting / playing / results) are keyed and rise (`pb-rise`, fill backwards); a game chunk that
 takes > 150 ms shows a centred "<game> — Getting the game ready…" card, never a stray glyph.
+`ChoiceGrid` takes a `className` for its Screen (I-026), so a game can style a state of the grid — Lightning's placed
+wager steps the other rows back to 60 % and bumps the chosen row's chips.
 Results (I-025, `TvResults`, every game): one clear winner — `winnerIds.length === 1`, someone scored, the game keeps
 score — gets their face (72 px) beside the line and the hero takes `pb-crown` instead of `pb-enter`; confetti falls
 behind it (48 pieces, 16 for a bot); the board or finale under it holds 55 % opacity for a beat and returns over two

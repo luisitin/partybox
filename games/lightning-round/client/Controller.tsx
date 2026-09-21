@@ -7,6 +7,7 @@ import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { LightningControllerView } from '../server/index';
 import type { Input } from '../server/types';
 import { Outcome, Stake, wagerLabel } from './ControllerBits';
+import { CustomStake } from './CustomStake';
 import styles from './Controller.module.css';
 import { FINAL_REVEAL_HOLD_MS, REVEAL_BEAT_MS } from './timing';
 
@@ -28,6 +29,8 @@ export function Controller({
   const { phaseId } = view;
   // The streak carried into the question: `myStreak` is already reset in the reveal view.
   const [streakBefore, setStreakBefore] = useState(0);
+  // I-026: the custom stake this phone sent, until the server echoes it (reset per game).
+  const [customSent, setCustomSent] = useState<number | null>(null);
   // Speed is the point: remember the header's seconds-left at the tap so the locked line can say
   // how fast the pick was (same rounded number the shell prints, so hint and header agree).
   const secondsLeft = useSecondsLeft(view.deadline, view.paused);
@@ -99,7 +102,7 @@ export function Controller({
               🎲 The bets are in — look at the TV
             </div>
           ) : stake !== null ? (
-            <Stake amount={stake} />
+            <Stake amount={stake} live={!locked} />
           ) : null
         }
       />
@@ -108,7 +111,12 @@ export function Controller({
   if (phaseId === 'wager') {
     const options = view.wagerChoices ?? [];
     const placed = view.myWagerAmount;
-    const selected = placed === undefined ? null : options.find((o) => o.amount === placed);
+    const selected =
+      placed === undefined ? null : (options.find((o) => o.amount === placed) ?? null);
+    // I-026 (the owner): a stake that is no preset is the custom row's — the server's echo, or
+    // the tap just sent until it lands (a custom stake that equals a preset is that preset's).
+    const customPlaced = placed !== undefined ? (selected ? null : placed) : customSent;
+    const potAmount = selected ? selected.amount : customPlaced;
     return (
       <ChoiceGrid
         key="wager"
@@ -119,9 +127,16 @@ export function Controller({
         kicker="Final question next"
         prompt={
           <>
-            {view.myScore > 0
-              ? `Wager part of your ${view.myScore} points`
-              : 'No points yet — you can only wager 0'}
+            {/* I-026 B: once placed, the prompt is the pot. */}
+            {potAmount !== null ? (
+              <span key="pot" className={`${styles.pot} pb-pop`}>
+                {potAmount} in the pot
+              </span>
+            ) : view.myScore > 0 ? (
+              `Wager part of your ${view.myScore} points`
+            ) : (
+              'No points yet — you can only wager 0'
+            )}
             <span className={styles.rule}>Right answer: +wager. Wrong or no answer: −wager.</span>
           </>
         }
@@ -130,11 +145,26 @@ export function Controller({
           label: wagerLabel(o, view.myScore),
         }))}
         selectedId={selected ? String(selected.percent) : null}
+        disabled={customPlaced !== null}
         onPick={(id) => {
           const option = options.find((o) => String(o.percent) === id);
           if (option) send({ type: 'wager', percent: option.percent });
         }}
-        footer={null}
+        footer={
+          view.myScore > 0 ? (
+            <CustomStake
+              score={view.myScore}
+              placed={customPlaced}
+              disabled={selected !== null}
+              onPlace={(amount) => {
+                setCustomSent(amount);
+                buzz(15);
+                send({ type: 'wager', amount });
+              }}
+            />
+          ) : null
+        }
+        className={potAmount !== null ? styles.placed : undefined}
       />
     );
   }

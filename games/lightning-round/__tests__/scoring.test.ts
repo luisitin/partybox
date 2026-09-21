@@ -3,8 +3,19 @@
 import { describe, expect, it } from 'vitest';
 import type { Rng } from '@partybox/game-sdk';
 import { game } from '../server/index';
-import { awards, questionPoints, wagerAmount, wagerOptions } from '../server/scoring';
-import { PLAYERS, phone, pick, playQuestion, start, timer, toWager, vip, wager } from './helpers';
+import { awards, clampWager, questionPoints, wagerAmount, wagerOptions } from '../server/scoring';
+import {
+  PLAYERS,
+  input,
+  phone,
+  pick,
+  playQuestion,
+  start,
+  timer,
+  toWager,
+  vip,
+  wager,
+} from './helpers';
 
 describe('questionPoints', () => {
   it('is 1000 at 0 ms, 750 at half time, 500 at the deadline (10 s window)', () => {
@@ -78,6 +89,22 @@ describe('wagers', () => {
     ]);
     expect(wagerAmount(0, 100)).toBe(0);
     expect(wagerAmount(-5, 100)).toBe(0);
+  });
+
+  it('a custom stake (I-026) is clamped to the score and rounded down to tens', () => {
+    expect(clampWager(967, 120)).toBe(120);
+    expect(clampWager(967, 125)).toBe(120);
+    expect(clampWager(967, 5000)).toBe(967);
+    expect(clampWager(967, 967)).toBe(967);
+    expect(clampWager(967, 0)).toBe(0);
+    expect(clampWager(0, 50)).toBe(0);
+    let s = toWager(start(), { a: true, b: true });
+    const score = s.scores['a'] ?? 0;
+    expect(score).toBeGreaterThan(0);
+    s = input(s, 'a', { type: 'wager', amount: 10 }, s.phase.startedAt + 1);
+    expect(s.wagers['a']).toBe(10);
+    s = input(s, 'b', { type: 'wager', amount: 10_000 }, s.phase.startedAt + 1);
+    expect(s.wagers['b']).toBe(s.scores['b']);
   });
 
   it('a 0-score player can only wager 0 whatever percent they send', () => {
