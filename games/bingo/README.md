@@ -49,7 +49,7 @@ Pause freezes the caller (and a running check); daubs and claims are ignored whi
 ## Inputs
 
 - `{ type: 'daub', card?: 0..3, index: 0..24 }` — toggles that square on your card `card` (default the
-  first; tap again = undo). Accepted in `play` and `check`, from players with that card. Index 12 (FREE)
+  first; tap again = undo — a quiet `card` pluck, an 8 ms buzz and a 300 ms peel, I-136 A). Accepted in `play` and `check`, from players with that card. Index 12 (FREE)
   is ignored. No validation against calls.
 - `{ type: 'menu', open }` — any phase: this phone's card-style menu opened/closed. In `play` an open menu
   anywhere holds the caller (the deadline is dropped; daubs still land); when the last one closes the

@@ -271,6 +271,10 @@ export function daubWithFeel(
   if (!(view.daubs[card] ?? []).includes(index)) {
     buzz(18);
     play('daub');
+  } else {
+    // I-136 A: the lift is felt — a soft pluck and a lighter buzz.
+    buzz(8);
+    play('card', { quiet: true });
   }
   send({ type: 'daub', card, index });
 }
