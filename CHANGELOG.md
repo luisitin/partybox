@@ -5,6 +5,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **The winner is crowned** (I-025, option C, every game's results): one clear winner gets their
+  face beside the headline and the `pb-crown` lift, confetti falls behind it (48 pieces for a person,
+  16 for a bot), and the board under it comes back from 55 % over 1.2 s so the name reads first.
 - **Broken Pencil's books pass hands** (I-024, option C): a finished card lands and the count bumps;
   the cards sit in seat order under "books pass this way →" and each pass opens with every glyph
   sliding in from the seat on its left, 450 ms apart, a quiet `card` pluck per seat; a done card's

@@ -79,6 +79,10 @@ Phone: every `Screen` rises on mount (`pb-rise`, `--pb-motion-base`, fill backwa
 when a phase should read as a new screen, and never keys the Controller itself (game-local state would reset).
 TV status swaps (lobby / selecting / playing / results) are keyed and rise (`pb-rise`, fill backwards); a game chunk that
 takes > 150 ms shows a centred "<game> — Getting the game ready…" card, never a stray glyph.
+Results (I-025, `TvResults`, every game): one clear winner — `winnerIds.length === 1`, someone scored, the game keeps
+score — gets their face (72 px) beside the line and the hero takes `pb-crown` instead of `pb-enter`; confetti falls
+behind it (48 pieces, 16 for a bot); the board or finale under it holds 55 % opacity for a beat and returns over two
+`--pb-motion-slow` beats (1.2 s) so the name reads first. A tie or a scoreless game keeps the plain rising line.
 Bingo's daub (loop 238) lands as a stamp; on the phone the ink then stays as an irregular blot in the player's own colour (`--pb-daub` = the roster's `--pb-player-N`; the TV and every verdict card keep the flat daub), and the tap that completes a line bumps its five cells in order (`pb-bump`, 60 ms apart — I-010).
 `PlayerChip` (I-009): a link dropping on a mounted chip flickers it out (opacity steps over `--pb-motion-slow`) to a 0.6 ghost; the return pops it back with a green ring fading over `--pb-motion-pulse` (never on a screen swap; the ring skips an `.active` chip). The phone's "Reconnecting…" breathes (`pb-breathe`).
 `TextAnswer` (I-001): under the shell's `data-urgent` the textarea takes the danger border and the once-a-second beat like the primary button (border alone under reduced motion); the "n / max" counter remounts on every keystroke and bumps once (`pb-bump`, `--pb-motion-fast`); a field left empty 3 s breathes (`pb-breathe`, absent under reduced motion) until a character lands — urgency outranks it.
