@@ -129,7 +129,7 @@ export function BingoButton({
   else if (won) label = 'Yours already';
   else if (view.waitingForCall) label = 'Next number soon…';
   else if (armedHere) {
-    label = `Tap again for BINGO! · ${Math.min(3, left ?? 0)}`; // a clock a hair behind can say 4
+    label = 'Tap again to confirm'; // I-096 C: the bar and the caption carry the time
     tone = 'success';
   } else if (mine) label = 'BINGO!';
   else if (arm) {
@@ -172,6 +172,12 @@ export function BingoButton({
           style={{ animationDuration: `${ARM_MS}ms` }}
           aria-hidden
         />
+      ) : null}
+      {/* I-096 B: the bar is named. */}
+      {armedHere ? (
+        <span className={styles.armCaption} aria-hidden>
+          {Math.min(3, left ?? 0)} s to confirm — then the dibs pass on
+        </span>
       ) : null}
     </div>
   );
