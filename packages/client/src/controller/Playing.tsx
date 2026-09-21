@@ -3,7 +3,8 @@
 import { Suspense, useCallback, useEffect, useState } from 'react';
 import type { JSX } from 'react';
 import type { ControllerView, PlayerPublic, PushedView, RoomSnapshot } from '@partybox/shared';
-import { SoundProvider, WaitingScreen } from '@partybox/game-sdk/ui';
+import { Avatar, SoundProvider, WaitingScreen } from '@partybox/game-sdk/ui';
+import styles from './ControllerShell.module.css';
 import { clientGames } from '../games.generated';
 import { t } from '../i18n';
 import type { Controller } from '../net/controller';
@@ -40,6 +41,30 @@ function Ready({ onReady }: { onReady?: () => void }): null {
   return null;
 }
 
+
+/** I-057 A: the bench — what the game's own view already tells a spectator, read-only. */
+function Bench({ view }: { view: PushedView<ControllerView> | null }): JSX.Element | null {
+  const rows = [...(view?.players ?? [])]
+    .filter((p) => p.score !== undefined)
+    .sort((a, b) => (b.score ?? 0) - (a.score ?? 0));
+  if (rows.length === 0) return null;
+  return (
+    <div className={styles.bench} aria-label="scores so far">
+      <ol className={styles.benchList}>
+        {rows.map((p) => (
+          <li key={p.id} className={`${styles.benchRow}`}>
+            <Avatar avatarId={p.avatarId} size={24} />
+            <span className={styles.benchName}>{p.name}</span>
+            <span className={styles.benchScore}>
+              {p.score}
+            </span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
 export function Playing({
   controller,
   room,
@@ -56,7 +81,9 @@ export function Playing({
     // A spectator's screen is the game screen for them: release the game-start hold (loop #22).
     return (
       <>
-        <WaitingScreen title={t.spectator.title} hint={t.spectator.hint} mood="watch" />
+        <WaitingScreen title={t.spectator.title} hint={t.spectator.hint} mood="watch">
+          <Bench view={view} />
+        </WaitingScreen>
         <Ready onReady={onGameReady} />
       </>
     );

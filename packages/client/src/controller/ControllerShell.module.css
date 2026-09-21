@@ -332,3 +332,38 @@
     padding: 2px var(--pb-space-4);
   }
 }
+
+/* ── I-057 A: the bench — a read-only mini-scoreboard on a spectator's phone. */
+.bench {
+  width: 100%;
+  max-width: 360px;
+  margin-top: var(--pb-space-4);
+  text-align: left;
+}
+.benchList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--pb-space-1);
+}
+.benchRow {
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+  padding: var(--pb-space-1) var(--pb-space-3);
+  border-radius: 999px;
+  background: var(--pb-surface);
+}
+.benchName {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 700;
+}
+.benchScore {
+  font-variant-numeric: tabular-nums;
+  font-weight: 900;
+}
