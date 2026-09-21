@@ -5,6 +5,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Bingo's card styles are shown, not described** (I-013, option C): every row of the style sheet
+  carries a little diagram of the layout, the live one breathes, and the preview bar shows the pick
+  at 1.5 ×; rows stay one line at every phone width (the owner's note).
 - **Theme try-on** (I-035, option C): the theme sheet stays open while you try themes (Done closes
   it), every swatch is a tiny screen in that theme's colours, and the sheet fades to the new colours
   instead of snapping.

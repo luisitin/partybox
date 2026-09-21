@@ -1,6 +1,6 @@
 // The Bingo phone's overlays: the card-style sheet (tap a style to see it behind the sheet, then
 // Confirm or Keep changing), the curtain while someone else is changing (with a way into your own
-// menu), the 3 · 2 · 1 before calling resumes, and the turn-your-phone gate.
+// menu), the 3 · 2 · 1 before calling resumes (the turn gate and the reconnect toast: Notices.tsx).
 import { useEffect } from 'react';
 import type { JSX } from 'react';
 import {
@@ -16,8 +16,9 @@ import type { PlayCue } from '@partybox/game-sdk/ui';
 import { RESUME_MS, dealDoneMs } from '../server/types';
 import type { Input } from '../server/types';
 import type { BingoControllerView } from '../server/views';
+import { StyleMini } from './StyleMini';
 import { STYLES, styleReason } from './styles';
-import type { CardStyle, Orientation } from './styles';
+import type { CardStyle } from './styles';
 import styles from './Controller.module.css';
 
 export function StyleSheet({
@@ -43,7 +44,11 @@ export function StyleSheet({
   if (preview)
     return (
       <div className={styles.previewBar} role="dialog" aria-label="Card style preview">
-        <span>{STYLES.find((s) => s.id === preview)?.label}: like it?</span>
+        <span className={styles.previewLabel}>
+          {/* I-013 C: the picked shape, big, pops in beside the question. */}
+          <StyleMini id={preview} big />
+          {STYLES.find((s) => s.id === preview)?.label}: like it?
+        </span>
         <PrimaryButton tone="neutral" onClick={() => onPreview(current)}>
           Keep changing
         </PrimaryButton>
@@ -66,13 +71,18 @@ export function StyleSheet({
             disabled={why !== ''}
             onClick={() => onPreview(s.id)}
           >
-            <span>
-              {s.label} <small>· {s.hint}</small>
+            {/* One line per row (the owner's note): the text ellipsizes before the diagram
+                wraps; under 360 px the hint goes. */}
+            <span className={styles.rowText}>
+              {s.label} <small className={styles.rowHint}>· {s.hint}</small>
             </span>
-            <small>
-              {why || (s.orient === 'landscape' ? 'sideways' : 'upright')}
-              {on ? ' ✓' : ''}
-            </small>
+            <span className={styles.rowRight}>
+              <small>
+                {why || (s.orient === 'landscape' ? 'sideways' : 'upright')}
+                {on ? ' ✓' : ''}
+              </small>
+              <StyleMini id={s.id} off={why !== ''} live={on && !motionOff} />
+            </span>
           </button>
         );
       })}
@@ -84,10 +94,13 @@ export function StyleSheet({
         onClick={() => setMotionOff(!motionOff)}
         aria-pressed={!motionOff}
       >
-        <span>
-          Motion <small>· cards rise, numbers pop</small>
+        <span className={styles.rowText}>
+          Motion <small className={styles.rowHint}>· cards rise, numbers pop</small>
         </span>
-        <small>{motionOff ? 'off' : 'on ✓'}</small>
+        <span className={styles.rowRight}>
+          <small>{motionOff ? 'off' : 'on ✓'}</small>
+          <StyleMini id="motion" live={!motionOff} />
+        </span>
       </button>
       <p className={styles.sheetNote}>Theme: the 🎨 in the top bar, any time.</p>
       <PrimaryButton tone="neutral" onClick={onClose}>
@@ -224,46 +237,6 @@ export function IntroCount({
       ) : (
         'dealing the cards…'
       )}
-    </p>
-  );
-}
-
-/** Wrong way up for the chosen style: a little phone turns the way it should go. */
-export function TurnGate({ to, style }: { to: Orientation; style: string }): JSX.Element {
-  return (
-    <div className={styles.turn} role="status">
-      <span
-        className={`${styles.turnPhone} ${to === 'landscape' ? styles.turnToLandscape : styles.turnToPortrait}`}
-        aria-hidden
-      />
-      <p className={styles.turnLine}>
-        Turn your phone {to === 'landscape' ? 'sideways' : 'upright'} for {style}.
-      </p>
-      <p className={styles.hint}>the cards appear the moment you do</p>
-    </div>
-  );
-}
-
-/** The reconnect notice (review-loop #4): the TV board has what you missed — and with the board
- *  off, the notice names the calls (pass 866: `recent` carried them and the phone never showed
- *  them). `recent` is the last four calls, the current one last; more than three → "and n more". */
-export function MissedToast({
-  view,
-  count,
-}: {
-  view: BingoControllerView;
-  count: number;
-}): JSX.Element | null {
-  const missed = view.showBoard ? [] : view.recent.slice(0, -1).slice(-count);
-  if (!view.showBoard && missed.length === 0) return null;
-  const more = count - missed.length;
-  return (
-    <p className={styles.missedToast} role="status">
-      {view.showBoard
-        ? count === 1
-          ? 'Back — you missed a number. It is on the TV board.'
-          : `Back — you missed ${count} numbers. They are on the TV board.`
-        : `Back — you missed ${missed.join(', ')}${more > 0 ? ` and ${more} more` : ''}.`}
     </p>
   );
 }

@@ -54,7 +54,7 @@ Pause freezes the caller (and a running check); daubs and claims are ignored whi
 - `{ type: 'menu', open }` — any phase: this phone's card-style menu opened/closed. In `play` an open menu
   anywhere holds the caller (the deadline is dropped; daubs still land); when the last one closes the
   phase re-enters with a 3 s deadline (`round.resumeAt`, a 3 · 2 · 1 on every screen), then the number that
-  was up is called AGAIN (`resumeAgain`, as after a bingo: whoever changed missed the call). A menu open through a check holds the caller as play resumes.
+  was up is called AGAIN (`resumeAgain`, as after a bingo: whoever changed missed the call). A menu open through a check holds the caller as play resumes. The sheet's rows carry a 44 × 28 diagram of the layout (I-013 A), the live one breathes (B), the preview bar shows the pick at 1.5 × (C); every row stays one line (the owner's note — the text ellipsizes, under 360 px the hint goes).
 - `{ type: 'swap', card? }` — `intro` only: one fresh deal per card ("deal me another"), the old one gone (`round.swapped`).
 - `{ type: 'continue', pattern: 'same' | 'blackout' }` / `{ type: 'next' }` — accepted in `bingo`
   from any player with a card (first tap wins; phones show the buttons once the TV's verdict has

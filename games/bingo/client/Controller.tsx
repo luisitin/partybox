@@ -20,15 +20,8 @@ import {
   daubWithFeel,
 } from './ControllerParts';
 import { AllCardsLayout, FocusLayout, Thumbnails } from './Layouts';
-import {
-  Countdown,
-  HoldCurtain,
-  IntroActions,
-  IntroCount,
-  MissedToast,
-  StyleSheet,
-  TurnGate,
-} from './Overlays';
+import { Countdown, HoldCurtain, IntroActions, IntroCount, StyleSheet } from './Overlays';
+import { MissedToast, TurnGate } from './Notices';
 import {
   setCardStyle,
   styleSpec,

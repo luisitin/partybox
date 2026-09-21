@@ -469,6 +469,9 @@
   max-height: 100%;
   overflow-y: auto;
   display: grid;
+  /* One column that never exceeds the sheet: an `auto` track took a nowrap row's full text as its
+     size and the rows ran 60–110 px past the edge (I-013's fit test at 360–430 px). */
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--pb-space-2);
   padding: var(--pb-space-4);
   border-radius: var(--pb-radius) var(--pb-radius) 0 0;
@@ -1073,4 +1076,126 @@
   align-items: center;
   justify-content: center;
   gap: var(--pb-space-2);
+}
+
+/* ── I-013 A: the style diagrams — 44 × 28 px of little card rectangles; each style's layout
+   is a tiny grid of its own. The owner's note: every row stays ONE line — the text ellipsizes
+   before the diagram wraps, and under 360 px the hint goes. */
+.rowText {
+  flex: 1 1 auto;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@media (max-width: 359px) {
+  .rowHint {
+    display: none;
+  }
+}
+.rowRight {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.mini {
+  position: relative;
+  display: inline-grid;
+  width: 44px;
+  height: 28px;
+  gap: 2px;
+  flex-shrink: 0;
+}
+.mini > i {
+  display: block;
+  min-width: 0;
+  min-height: 0;
+  border-radius: 2px;
+  background: var(--pb-accent-2);
+  opacity: 0.9;
+}
+.miniOff > i {
+  background: transparent;
+  border: 1.5px solid var(--pb-text-muted);
+  opacity: 0.6;
+}
+/* Focus: one big card, three thumbnails under it. */
+.mini[data-style='focus'] {
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 1fr 6px;
+}
+.mini[data-style='focus'] > i:first-child {
+  grid-column: 1 / -1;
+}
+/* Grid: 2 × 2. */
+.mini[data-style='grid'] {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+/* Stack: two upright cards, one above the other. */
+.mini[data-style='stack'] {
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
+  padding-inline: 12px;
+}
+/* Side by side: two sideways cards. */
+.mini[data-style='side'] {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  padding-block: 6px;
+}
+/* Strip: three sideways cards in a row. */
+.mini[data-style='strip'] {
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 1fr;
+  padding-block: 8px;
+}
+/* Motion: two cards, the second lifted — the rise. */
+.mini[data-style='motion'] {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  padding-block: 4px;
+}
+.mini[data-style='motion'] > i:last-child {
+  transform: translateY(-4px);
+  opacity: 0.55;
+}
+
+/* ── I-013 B: the diagram of the style that is on breathes — a 2.4 s bob, transform only
+   (ambient, like the lobby's dots; the JS drops `live` with Motion off, the twins cover the OS). */
+.miniLive {
+  animation: pb-mini-bob 2400ms ease-in-out infinite;
+}
+@keyframes pb-mini-bob {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-2px) scale(1.06);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .miniLive {
+    animation: none;
+  }
+}
+:global(:root[data-motion='off']) .miniLive {
+  animation: none;
+}
+
+/* ── I-013 C: the picked diagram at 1.5 × in the preview bar, popping in. */
+.previewLabel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pb-space-3);
+}
+.miniBig {
+  width: 66px;
+  height: 42px;
+  gap: 3px;
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
 }
