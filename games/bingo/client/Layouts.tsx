@@ -2,7 +2,7 @@
 // thumbnail below (the one up is marked, a card that won fades); tap a thumbnail to bring it up.
 // Grid / Strip / Stack / Side by side / tablet: every card at once with its own BINGO! button; the
 // grid's spare slot (three cards) shows the call the way the TV does.
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
 import type { BingoControllerView } from '../server/views';
 import { Card } from './Card';
@@ -60,6 +60,33 @@ function PlayCard({
     claim.cardIndex === c &&
     !p.verdictShown;
   const won = view.won.includes(c);
+  // I-104: the cells under check on the claimant's own phone, in the TV's reveal order.
+  const checking = mine && claim !== null && claim !== undefined && !p.verdictShown;
+  const checkedCells = checking ? [...claim.cells].sort((a, b) => a - b) : [];
+  // I-104 C: the verdict lands on the phone at the TV's rhythm, once the card is on the TV.
+  const [turned, setTurned] = useState(0);
+  const claimKey = checking ? `${claim.playerId}:${claim.cardIndex}` : '';
+  useEffect(() => {
+    if (!claimKey) {
+      setTurned(0);
+      return undefined;
+    }
+    const total = checkedCells.length;
+    let n = 0;
+    let tick: ReturnType<typeof setInterval> | undefined;
+    const start = setTimeout(() => {
+      tick = setInterval(() => {
+        n += 1;
+        setTurned(n);
+        if (n >= total && tick) clearInterval(tick);
+      }, 140);
+    }, 1800);
+    return () => {
+      clearTimeout(start);
+      if (tick) clearInterval(tick);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- once per check
+  }, [claimKey]);
   // One to go (loop 420): the squares that would win breathe on a live card, from its own daubs.
   const wanted =
     !p.intro && !won && (view.phaseId === 'play' || view.phaseId === 'check')
@@ -104,6 +131,12 @@ function PlayCard({
         disabled={p.disabled}
         size={size}
         sent={sent}
+        checked={checkedCells}
+        checkedDir={lineDir(checkedCells)}
+        checkedTurned={turned}
+        green={checking ? claim.green : []}
+        red={checking ? claim.red : []}
+        missing={checking ? claim.missing : []}
       />
     </div>
   );
@@ -158,6 +191,15 @@ export function Thumbnails({
       })}
     </div>
   );
+}
+
+/** I-104 B: five sorted cells in a row, column or diagonal (not corners, not blackout). */
+function lineDir(cells: readonly number[]): 'row' | 'col' | 'diag' | 'anti' | null {
+  if (cells.length !== 5) return null;
+  const first = cells[0] ?? 0;
+  const d = (cells[1] ?? 0) - first;
+  if (!cells.every((cell, i) => cell === first + i * d)) return null;
+  return d === 1 ? 'row' : d === 5 ? 'col' : d === 6 ? 'diag' : d === 4 ? 'anti' : null;
 }
 
 /** Focus: the card that is up, big, with the thumbnails under it. One BINGO! in the footer. */
