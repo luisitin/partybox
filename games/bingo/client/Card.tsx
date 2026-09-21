@@ -165,6 +165,7 @@ export function Card({
                 : styles.missing
               : '',
             patternSet.has(i) && !isDaubed ? styles.pattern : '',
+            patternSet.has(i) && isDaubed ? styles.patternDaub : '', /* I-090 B */
             wantedSet.has(i) && !isDaubed ? styles.wanted : '',
             isFree ? styles.free : '',
             stamped.has(i) ? styles.stamp : '',

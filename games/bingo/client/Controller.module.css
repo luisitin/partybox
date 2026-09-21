@@ -1074,3 +1074,10 @@
   justify-content: center;
   gap: var(--pb-space-2);
 }
+
+/* ── I-090 C: the pattern count in the card's header, bumping as it climbs. */
+.patternCount {
+  display: inline-block;
+  color: var(--pb-accent-2);
+  animation: global(pb-bump) var(--pb-motion-base) var(--pb-ease) both;
+}

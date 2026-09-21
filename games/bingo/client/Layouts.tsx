@@ -65,10 +65,21 @@ function PlayCard({
     !p.intro && !won && (view.phaseId === 'play' || view.phaseId === 'check')
       ? wantedCells(view.pattern, view.daubs[c] ?? [])
       : [];
+  // I-090 C: how many of the pattern's cells are daubed (the free square counts when it is in).
+  const patternCells = view.pattern === 'line' ? [] : view.patternCells;
+  const daubedSet = new Set([...(view.daubs[c] ?? []), ...(won || p.freeDaubed.includes(c) ? [12] : [])]);
+  const got = patternCells.filter((i) => daubedSet.has(i)).length;
+  const showCount = !won && patternCells.length > 0 && !p.intro;
   const heading =
-    label === undefined ? null : (
+    label === undefined && !showCount ? null : (
       <p className={`${styles.cardLabel} ${won ? styles.cardLabelWon : ''}`}>
-        {won ? 'BINGO ✓' : label}
+        {won ? 'BINGO ✓' : (label ?? view.patternLabel)}
+        {showCount ? (
+          <span key={got} className={styles.patternCount}>
+            {' · '}
+            {got} of {patternCells.length}
+          </span>
+        ) : null}
       </p>
     );
   if (mine && claim && p.verdictShown)
@@ -96,7 +107,7 @@ function PlayCard({
       <Card
         numbers={p.cards[c] ?? []}
         daubs={p.intro ? [] : (view.daubs[c] ?? [])}
-        pattern={p.intro && view.pattern !== 'line' ? view.patternCells : []}
+        pattern={view.pattern !== 'line' ? view.patternCells : []} /* I-090 A: for the whole round */
         wanted={wanted}
         freeDaubed={won || p.freeDaubed.includes(c)}
         onTapFree={() => p.onTapFree(c)}
