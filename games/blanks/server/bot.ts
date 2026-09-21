@@ -11,6 +11,7 @@ import {
   blackTier,
   deckSubject,
   whiteServes,
+  whiteTags,
   whiteText,
   whiteTier,
 } from './content';
@@ -41,7 +42,7 @@ export function cardAppeal(slot: Slot, id: string, rng: Rng, blackText = ''): nu
   return (
     fit +
     TIER_WEIGHT * (whiteTier(id) - 2) * fit +
-    (blackText ? pairBonus(blackText, text) : 0) +
+    (blackText ? pairBonus(blackText, text, whiteTags(id)) : 0) +
     punch(text) +
     (slot === 'name' ? shortness(text) : 0) +
     NOISE * rng.float()

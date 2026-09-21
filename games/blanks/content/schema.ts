@@ -49,6 +49,10 @@ export const whiteCardSchema = z.object({
   /** How good the card is on its own: 1 filler, 2 good (the default), 3 great, 4 amazing (the
    *  best two hundred or so of a deck — every hand holds a couple). */
   tier: z.number().int().min(1).max(4).optional(),
+  /** Prompt words the card is a killer answer for ("Bush." → 9/11, Iraq; "Lindsay Clancy." →
+   *  babysitter, nanny): a prompt holding one of them is on the card's subject, so the bot and the
+   *  hand order lead with it there (server/topics.ts `pairBonus`). Matched as whole words, any case. */
+  tags: z.array(z.string().min(1).max(30)).min(1).max(8).optional(),
 });
 export type WhiteCard = z.infer<typeof whiteCardSchema>;
 

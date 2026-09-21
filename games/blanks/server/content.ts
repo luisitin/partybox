@@ -73,6 +73,9 @@ const WHITE_SERVES: Readonly<Record<string, readonly Slot[]>> = Object.fromEntri
 const WHITE_TIER: Readonly<Record<string, WhiteTier>> = Object.fromEntries(
   ALL.flatMap((d) => d.white.map((c) => [c.id, (c.tier ?? 2) as WhiteTier])),
 );
+const WHITE_TAGS: Readonly<Record<string, readonly string[]>> = Object.fromEntries(
+  ALL.flatMap((d) => d.white.filter((c) => c.tags).map((c) => [c.id, c.tags as string[]])),
+);
 const BLACK_SLOT: Readonly<Record<string, Slot>> = Object.fromEntries(
   ALL.flatMap((d) => d.black.map((c) => [c.id, slotOf(c)])),
 );
@@ -82,6 +85,11 @@ const BLACK_SLOTS: Readonly<Record<string, readonly Slot[]>> = Object.fromEntrie
 
 export function whiteServes(id: string): readonly Slot[] {
   return WHITE_SERVES[id] ?? ['thing'];
+}
+
+/** The prompt words a card was written for (deck JSON `tags`); none for most cards. */
+export function whiteTags(id: string): readonly string[] | undefined {
+  return WHITE_TAGS[id];
 }
 
 export function whiteKind(id: string): WhiteKind {

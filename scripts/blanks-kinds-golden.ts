@@ -27,7 +27,7 @@ for (const id of ['wild', 'crude', 'mild'] as const) {
     if (c.serves) continue;
     const k = servesOf(c);
     const key = k.join('+');
-    if ((key === 'thing' || key === 'thing+name') && !oneIn(c.text, 25)) continue;
+    if ((key === 'thing' || key === 'thing+name') && !oneIn(c.text, 14)) continue;
     if ((key === 'doing' || key === 'doing+name') && !oneIn(c.text, 6)) continue;
     cards[c.text] = k;
   }

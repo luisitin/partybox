@@ -80,6 +80,28 @@ export function keywordsOf(text: string): Set<string> {
  *  own word coming back is a shrug (−), anything else is neutral. */
 export const TOPIC_HIT = 0.12;
 export const WORD_ECHO = -0.15;
+/** The nudge for a card's own `tags` (deck JSON) — the prompt families a card was written for
+ *  ("Bush." on "Who did 9/11?"): a hand-picked pairing, so it outweighs a tier step and the noise. */
+export const TAG_HIT = 0.35;
+
+/** Whether the prompt holds one of the card's tags as a whole word or phrase, any case. */
+export function tagHit(blackText: string, tags: readonly string[] | undefined): boolean {
+  if (!tags || tags.length === 0) return false;
+  const t = blackText.toLowerCase();
+  return tags.some((tag) => {
+    const needle = tag.toLowerCase().trim();
+    if (!needle) return false;
+    let from = 0;
+    for (;;) {
+      const at = t.indexOf(needle, from);
+      if (at < 0) return false;
+      const before = at === 0 ? '' : (t[at - 1] ?? '');
+      const after = t[at + needle.length] ?? '';
+      if (!/[a-z0-9]/.test(before) && !/[a-z0-9]/.test(after)) return true;
+      from = at + 1;
+    }
+  });
+}
 
 /** A blank that wants a substance: "laced with ____", "the new flavor of", "smells like ____",
  *  "covered in ____", "oozing", "leaking" — food, gross and drug cards land there. */
@@ -87,7 +109,8 @@ const SUBSTANCE_PROMPT =
   /\b(?:laced with|flavou?r|smells? like|tastes? like|covered in|soaked in|full of|oozing|leaking|dripping|stuffed with|served with|side of|filled with|made of|ingredient|recipe|sauce|topping|scent)\b/i;
 const SUBSTANCE_TOPICS: readonly Topic[] = ['food', 'gross', 'drugs'];
 
-export function pairBonus(blackText: string, whiteText: string): number {
+export function pairBonus(blackText: string, whiteText: string, tags?: readonly string[]): number {
+  if (tagHit(blackText, tags)) return TAG_HIT;
   const bw = keywordsOf(blackText);
   for (const w of keywordsOf(whiteText)) if (bw.has(w)) return WORD_ECHO;
   const wt = topicsOf(whiteText);
