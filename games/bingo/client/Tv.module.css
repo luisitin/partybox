@@ -937,3 +937,28 @@
   flex: none;
   text-align: center;
 }
+
+/* ── I-014 A: lamps — round 40 px bulbs with a filament highlight; a called lamp glows with a
+   static halo in its row's colour (no motion, so no motion budget spent). */
+.cell {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 30%, rgb(255 255 255 / 18%), transparent 45%),
+    var(--pb-surface);
+  border: 2px solid color-mix(in oklab, var(--pb-border) 70%, var(--pb-surface));
+}
+.cellCalled {
+  background:
+    radial-gradient(circle at 35% 30%, rgb(255 255 255 / 45%), transparent 45%),
+    var(--ball-fill);
+  border-color: color-mix(in oklab, var(--ball-fill) 60%, white);
+  box-shadow: 0 0 10px 2px color-mix(in oklab, var(--ball-fill) 55%, transparent);
+}
+.board {
+  gap: 6px;
+}
+.boardRow {
+  gap: 6px;
+}
