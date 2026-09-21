@@ -12,7 +12,7 @@ import { chromium } from 'playwright';
 import type { Page } from 'playwright';
 import { rashTap } from './loop-rash';
 import { REPO_ROOT, startServer } from './server';
-import { DevApi, joinViaForm, openPhone, passAudioGate, settle, CONTEXT_BASE } from './session';
+import { DevApi, joinViaForm, openPhone, passAudioGate, phoneUrl, settle, CONTEXT_BASE } from './session'; // prettier-ignore
 import type { Phone } from './session';
 import { groupCues, HOOKS, strip } from './loop-tools';
 import type { PhaseChange } from './loop-tools';
@@ -96,7 +96,7 @@ async function main(): Promise<void> {
       await context.addInitScript(HOOKS);
       phoneVideoT0 = Date.now();
       const page = await context.newPage();
-      await page.goto(`${server.url}/`);
+      await page.goto(await phoneUrl(server.url));
       await page.waitForSelector('[data-surface="controller"]');
       return { device: phone.id, context, page, name, playerId: null };
     };

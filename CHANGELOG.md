@@ -5,6 +5,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Removing your bot is a poof** (I-074, option C): the row shrinks with four small bits flying
+  out over 450 ms before the remove is sent, the phone plays a quiet `leave`, and the list rises
+  into place instead of jumping.
 - **The lobby remembers the last game** (I-073, option A): "Back to lobby" keeps the results
   until the next game starts and a "Last up · Lightning Round" card names the winner — "Sam
   won", "Sam and Priya tied" (faces, four at most then +n), or "no winner" (the owner's note).

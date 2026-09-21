@@ -134,14 +134,17 @@ export async function openPhone(
 ): Promise<Phone> {
   const context = await openContext(browser, device);
   const page = await context.newPage();
-  // I-041: a phone opens the QR's URL (the room code in it) unless the test types the bare one
-  const info = (await (await fetch(`${url}/api/info`)).json()) as { qrUrl?: string };
-  const target =
-    options.bare || !info.qrUrl ? `${url}/` : info.qrUrl.replace(/^https?:\/\/[^/]+/, url);
-  await page.goto(target);
+  await page.goto(await phoneUrl(url, options.bare));
   await page.waitForSelector('[data-surface="controller"]');
   await applyDeviceCss(page, device);
   return { device, context, page, name, playerId: null };
+}
+
+/** I-041: a phone opens the QR's URL (the room code in it) unless the test types the bare one. */
+export async function phoneUrl(url: string, bare = false): Promise<string> {
+  if (bare) return `${url}/`;
+  const info = (await (await fetch(`${url}/api/info`)).json()) as { qrUrl?: string };
+  return info.qrUrl ? info.qrUrl.replace(/^https?:\/\/[^/]+/, url) : `${url}/`;
 }
 
 /** Fill the join form the way a person would. Resolves once the lobby (or an error) is on screen. */
@@ -239,7 +242,7 @@ export async function openPhoneRecorded(
   });
   const t0 = Date.now();
   const page = await context.newPage();
-  await page.goto(`${url}/`);
+  await page.goto(await phoneUrl(url));
   await page.waitForSelector('[data-surface="controller"]');
   await applyDeviceCss(page, device);
   return { device, context, page, name, playerId: null, t0, videoDir };

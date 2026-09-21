@@ -4,6 +4,7 @@ import type { Browser, BrowserContext, Page } from 'playwright';
 import { DEVICES } from './devices';
 import type { DeviceId } from './devices';
 import { skipToLine } from './bingo-lines';
+import { phoneUrl } from './session';
 import type { Phone, DevApi } from './session';
 
 export interface Ev {
@@ -135,7 +136,7 @@ export async function openPhoneTraced(p: Pages, device: DeviceId, name: string):
   p.contexts.push(ctx);
   await ctx.addInitScript(INIT);
   const page = await ctx.newPage();
-  await page.goto(`${p.url}/`);
+  await page.goto(await phoneUrl(p.url));
   await page.waitForSelector('[data-surface="controller"]');
   return { device, context: ctx, page, name, playerId: null };
 }

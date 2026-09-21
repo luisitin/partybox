@@ -8,7 +8,15 @@ import { chromium } from 'playwright';
 import type { Browser } from 'playwright';
 import type { DeviceId } from './devices';
 import { REPO_ROOT, startServer } from './server';
-import { DevApi, joinViaForm, openContext, openTv, passAudioGate, settle } from './session';
+import {
+  DevApi,
+  joinViaForm,
+  openContext,
+  openTv,
+  passAudioGate,
+  phoneUrl,
+  settle,
+} from './session';
 import type { Phone } from './session';
 import { Shooter } from './shooter';
 
@@ -32,7 +40,7 @@ async function openStyled(
     style,
   );
   const page = await context.newPage();
-  await page.goto(`${url}/`);
+  await page.goto(await phoneUrl(url));
   await page.waitForSelector('[data-surface="controller"]');
   return { device, context, page, name, playerId: null };
 }
