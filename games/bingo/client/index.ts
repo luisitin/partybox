@@ -6,6 +6,8 @@ export const clientModule: GameClientModule = {
   id: 'bingo',
   Tv: lazy(() => import('./Tv').then((m) => ({ default: m.Tv }))),
   Controller: lazy(() => import('./Controller').then((m) => ({ default: m.Controller }))),
+  // S-003: the card style and Motion, set up in the lobby.
+  PhoneSettings: lazy(() => import('./PhonePanel').then((m) => ({ default: m.PhonePanel }))),
   // Both phases cue themselves once the claimed card has landed (a cheer or the buzzer, Tv.tsx):
   // nothing on entry.
   // The final board is a scores moment (the drumroll); the results fanfare follows it.
