@@ -5,7 +5,7 @@
 // and judges only the claim, on the card named.
 import { useEffect, useState } from 'react';
 import type { CSSProperties, JSX } from 'react';
-import { Screen, WaitingScreen, avatarColorVar, useSound } from '@partybox/game-sdk/ui';
+import { Screen, WaitingScreen, avatarColorVar, useSound, useSoundApi } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { Input } from '../server/types';
 import type { BingoControllerView } from '../server/views';
@@ -56,6 +56,7 @@ export function Controller({
     : null;
   const verdictShown = view.verdictShown;
   const play = useSound();
+  const sound = useSoundApi();
   useVerdictFeel(view, me.id, claimKey, verdictShown, play);
   useDealFeel(view.phaseId === 'intro', n, view.round, play);
   // A valid claim too: the room learns who won from the TV, not from a phone flipping first.
@@ -76,7 +77,7 @@ export function Controller({
   const toggleFree = (c: number): void =>
     setFreeDaubed((v) => (v.includes(c) ? v.filter((i) => i !== c) : [...v, c]));
   const daub = (c: number, index: number): void => daubWithFeel(view, send, play, c, index);
-  useCallFeel(view);
+  useCallFeel(view, view.phoneOnly ? sound : null); // S-005 B
   useCloseFeel(view, play);
   // The card up just won: bring a live card up instead — once, at the moment it wins, so a won
   // card picked on purpose later (to daub towards a blackout) stays up.
