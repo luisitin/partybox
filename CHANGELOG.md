@@ -5,6 +5,8 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Bingo's swap screen says it once** (I-094, option B): the count line ("swap a card, or tap
+  Ready") is the only instruction on the multi-card intro; the hint is the pattern's alone.
 - **Removing your bot is a poof** (I-074, option C): the row shrinks with four small bits flying
   out over 450 ms before the remove is sent, the phone plays a quiet `leave`, and the list rises
   into place instead of jumping.
