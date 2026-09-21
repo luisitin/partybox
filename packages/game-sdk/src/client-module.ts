@@ -59,6 +59,13 @@ export interface GameClientModule {
    */
   stripActive?: (view: PushedView<TvView>) => readonly string[];
   /**
+   * S-003: the game's own phone settings (per phone: a card style, a pad …) for the lobby's 🎨
+   * sheet, so a player sets up while they wait. Lazy like the surfaces. Default: none.
+   */
+  PhoneSettings?: LazyExoticComponent<ComponentType>;
+  /** S-003 C: one line of the current setup for the lobby ("Focus · Motion on"). */
+  phoneSetup?: () => string;
+  /**
    * TV phase ids where the game plays its own lock-in sound (I-020: Blanks' `card` pluck as a
    * submission lands on the table); the shell's per-push `lock` tick stays quiet there so one
    * lock-in is one note. Default: the shell ticks.

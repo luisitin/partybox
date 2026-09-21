@@ -6,6 +6,19 @@ export const clientModule: GameClientModule = {
   id: 'bingo',
   Tv: lazy(() => import('./Tv').then((m) => ({ default: m.Tv }))),
   Controller: lazy(() => import('./Controller').then((m) => ({ default: m.Controller }))),
+  // S-003: the card style and Motion, set up in the lobby.
+  PhoneSettings: lazy(() => import('./PhonePanel').then((m) => ({ default: m.PhonePanel }))),
+  phoneSetup: () => {
+    const style = (() => {
+      try {
+        return localStorage.getItem('partybox:bingo-style') ?? 'focus';
+      } catch {
+        return 'focus';
+      }
+    })();
+    const motion = document.documentElement.dataset['motion'] === 'off' ? 'Motion off' : 'Motion on';
+    return `${style.charAt(0).toUpperCase()}${style.slice(1)} · ${motion}`;
+  },
   // Both phases cue themselves once the claimed card has landed (a cheer or the buzzer, Tv.tsx):
   // nothing on entry.
   // The final board is a scores moment (the drumroll); the results fanfare follows it.

@@ -6,16 +6,24 @@ import { MAX_BOTS_PER_OWNER } from '@partybox/shared';
 import type { PlayerPublic, RoomSnapshot } from '@partybox/shared';
 import { PlayerChip, PrimaryButton, Screen } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
+import { clientGames } from '../games.generated';
 import type { Controller } from '../net/controller';
 import styles from './Lobby.module.css';
 
 export interface LobbyProps {
   controller: Controller;
+  /** S-003 B: opens the phone's 🎨 sheet. */
+  onSetup?: () => void;
   room: RoomSnapshot;
   me: PlayerPublic;
 }
 
-export function Lobby({ controller, room, me }: LobbyProps): JSX.Element {
+export function Lobby({ controller, room, me, onSetup }: LobbyProps): JSX.Element {
+  // S-003 C: the setup, read once per render (the stores are per phone).
+  const setup = Object.values(clientGames)
+    .map((m) => m.phoneSetup?.())
+    .filter((s): s is string => Boolean(s))
+    .join(' · ');
   const first = room.games[0];
   const pick = (): void => {
     if (first) controller.vip({ action: 'selectGame', gameId: first.id });
@@ -37,6 +45,11 @@ export function Lobby({ controller, room, me }: LobbyProps): JSX.Element {
       }
     >
       <p className="pb-muted">{me.isVip ? t.lobby.youAreVip : t.lobby.waitingForVip}</p>
+      {/* S-003 B: set up your phone while you wait — opens the 🎨 sheet. */}
+      <button type="button" className={styles.setup} onClick={onSetup}>
+        🎨 Set up your phone while you wait
+        {setup ? <small className={styles.setupNow}>{setup}</small> : null}
+      </button>
       <p className={`pb-caption ${styles.count}`}>
         {t.lobby.players(room.players.length, room.capacity)}
         {room.locked ? ` · ${t.lobby.locked}` : ''}

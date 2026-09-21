@@ -1199,3 +1199,9 @@
   gap: 3px;
   animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
 }
+
+/* ── S-003 A: the game's settings in the lobby's 🎨 sheet. */
+.lobbyPanel {
+  display: grid;
+  gap: var(--pb-space-2);
+}
