@@ -93,6 +93,9 @@
   overflow: hidden;
   text-overflow: ellipsis;
   min-width: 0;
+  /* A name of sixteen wide glyphs made a 640 px chip and wrapped a four-player strip under the
+     timer (pass 882): past 9 em the name ellipsizes — "Bartholomew XVII" still fits whole. */
+  max-width: 9em;
 }
 
 /* A fixed slot: empty and invisible until there is a glyph, then it scales in (no layout shift). */
