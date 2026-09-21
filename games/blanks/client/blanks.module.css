@@ -1431,3 +1431,88 @@
   color: var(--pb-text-muted);
   border: 1px solid var(--pb-border);
 }
+
+/* ── I-019 B + the owner's note ("the envelope needs to work better"): a real envelope beside
+   "And the winner is…" — an inline SVG (the back, the letter, the front pocket, the flap). The
+   flap turns open on its top edge (rotateX −150°, 600 ms, --pb-ease) exactly as the hold ends
+   (1600 ms), then the letter rises 8 units (≈ 12 px at the h2 size) out of the body (300 ms).
+   Transform + opacity only; the motion twins leave it open at rest. */
+.envelope {
+  display: inline-block;
+  width: 1.4em;
+  height: 1em;
+  margin-right: 0.35em;
+  vertical-align: -0.12em;
+  overflow: visible;
+}
+.envBack,
+.envPocket {
+  fill: var(--pb-surface-2);
+  stroke: var(--pb-accent-2);
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+}
+.envLetter {
+  fill: var(--card-paper, #fff8e6);
+  stroke: rgb(0 0 0 / 35%);
+  stroke-width: 1;
+  transform-box: fill-box;
+  animation: pb-bl-letter var(--pb-motion-base) var(--pb-ease) 2200ms both;
+}
+.envFlap {
+  fill: var(--pb-accent-2);
+  stroke: var(--pb-accent-2);
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+  transform-box: fill-box;
+  transform-origin: 50% 0;
+  animation: pb-bl-flap var(--pb-motion-slow) var(--pb-ease) 1600ms both;
+}
+@keyframes pb-bl-flap {
+  from {
+    transform: rotateX(0deg);
+  }
+  to {
+    transform: rotateX(-150deg);
+  }
+}
+@keyframes pb-bl-letter {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-8px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .envFlap {
+    animation: none;
+    transform: rotateX(-150deg);
+  }
+  .envLetter {
+    animation: none;
+    transform: translateY(-8px);
+  }
+}
+:global(:root[data-motion='off']) .envFlap {
+  animation: none;
+  transform: rotateX(-150deg);
+}
+:global(:root[data-motion='off']) .envLetter {
+  animation: none;
+  transform: translateY(-8px);
+}
+/* ── I-019 C: the winner's row lands last — the top row lifts (pb-crown) as the totals settle,
+   with the `fanfare`. On the row's children (not the delta, which keeps its own
+   rise), so the row's own staggered rise is untouched. */
+.finalRow .board li:first-child > *:not([class*='delta']) {
+  animation: global(pb-crown) var(--pb-motion-slow) var(--pb-ease) 2200ms both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .finalRow .board li:first-child > *:not([class*='delta']) {
+    animation: none;
+  }
+}
+:global(:root[data-motion='off']) .finalRow .board li:first-child > *:not([class*='delta']) {
+  animation: none;
+}

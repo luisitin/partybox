@@ -8,6 +8,7 @@
 // while rows were still arriving read as two competing motions — review-loop #32); the leader's
 // trophy pops last. Everything runs on the motion tokens, so reduced motion renders the final
 // board at once.
+import { useEffect, useState } from 'react';
 import type { CSSProperties, JSX } from 'react';
 import { Avatar } from '../ui/Avatar';
 import { MOTION_BASE, MOTION_FAST, MOTION_SLOW, useCountUp } from '../ui/motion';
@@ -51,6 +52,8 @@ export interface ScoreboardProps {
    * totals have counted — the round's overtakes, watched.
    */
   stagger?: 'up' | 'down' | 'climb' | false;
+  /** I-019: hold every total as "—" this long after mount, then count up from zero (a reveal). */
+  holdMs?: number;
   /** With `climb`: the previous order of the same players (ids). Missing ids are treated as unmoved. */
   climbFrom?: readonly string[];
 }
@@ -102,9 +105,36 @@ export function boardLandedMs(
 }
 
 /** The total, counting up from its pre-delta value once the board has landed. */
-function Score({ row, delayMs }: { row: ScoreboardRow; delayMs: number }): JSX.Element {
-  const shown = useCountUp(row.score, row.score - (row.delta ?? 0), MOTION_SLOW, delayMs);
-  return <span className={styles.score}>{shown}</span>;
+function Score({
+  row,
+  delayMs,
+  holdMs = 0,
+}: {
+  row: ScoreboardRow;
+  delayMs: number;
+  holdMs?: number;
+}): JSX.Element {
+  // I-019 A: with a hold the total shows "—" until the hold has passed, then counts up from zero.
+  const start = Math.max(delayMs, holdMs);
+  const held = useHeld(holdMs);
+  const shown = useCountUp(
+    row.score,
+    holdMs > 0 ? 0 : row.score - (row.delta ?? 0),
+    MOTION_SLOW,
+    start,
+  );
+  return <span className={styles.score}>{held ? '—' : shown}</span>;
+}
+
+/** True until `ms` after mount (0 = never held). */
+function useHeld(ms: number): boolean {
+  const [held, setHeld] = useState(ms > 0);
+  useEffect(() => {
+    if (ms <= 0) return;
+    const t = setTimeout(() => setHeld(false), ms);
+    return () => clearTimeout(t);
+  }, [ms]);
+  return held;
 }
 
 /** I-027: how many rows away a row is from where it stood before — the slide starts that many
@@ -126,12 +156,14 @@ export function Scoreboard({
   markIds = [],
   stagger = 'up',
   climbFrom = [],
+  holdMs = 0,
 }: ScoreboardProps): JSX.Element {
   const tier = tierOf(rows.length, compact, dense, columns);
   const cols = COLUMNS[tier];
   const winners = rows.filter((r) => r.rank === 1).length;
   const trophy = !noTrophy && winners < rows.length;
   const climb = !compact && stagger === 'climb';
+  const heldRanks = useHeld(holdMs); // I-019 A: ranks show "·" through the hold as well
   const staggered = !compact && stagger !== false && !climb;
   const order = (index: number): number => (stagger === 'down' ? index : rows.length - 1 - index);
   const from = (row: ScoreboardRow, index: number): number =>
@@ -157,7 +189,7 @@ export function Scoreboard({
           }
         >
           <span className={styles.rank} aria-label={`rank ${row.rank}`}>
-            {row.rank === 1 && trophy ? '🏆' : row.rank}
+            {heldRanks ? '·' : row.rank === 1 && trophy ? '🏆' : row.rank}
           </span>
           <Avatar
             avatarId={row.avatarId}
@@ -173,7 +205,7 @@ export function Scoreboard({
             </span>
           ) : null}
           {staggered || climb ? (
-            <Score row={row} delayMs={countDelayMs} />
+            <Score row={row} delayMs={countDelayMs} holdMs={holdMs} />
           ) : (
             <span className={styles.score}>{row.score}</span>
           )}

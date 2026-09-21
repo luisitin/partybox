@@ -74,7 +74,7 @@ card, quoted with its vote count — never Rando’s; with a judge, its round in
 restate the score), **On a roll** (the longest run of rounds won outright, two or more), **Quick draw** (most cards played within half the answer time — `answerSeconds` / 2 from the phase's start,
 measured against the deadline so a pause never cheats it; the same yardstick when untimed).
 
-A **streak** — one player winning outright round after round — is kept in `stats.streak` and named on the round card from the second win (“Sam is on a 2-round streak”, TV and phones); a shared point, a Rando win or a round nobody won ends it.
+A **streak** — one player winning outright round after round — is kept in `stats.streak` and named on the round card from the second win (“Sam is on a 2-round streak”, TV and phones); a shared point, a Rando win or a round nobody won ends it. The final board (I-019) holds every total as "—" for 1.6 s (A), an envelope beside "And the winner is…" turns open under eight accelerating `tick`s as the hold ends (B), then the totals count up and the top row lifts with the `fanfare` (C).
 
 The **card of the night** — the single card that took the most votes all game (ties keep the earlier
 round) — is kept in `stats.best` and stands beside the final board, filled in and credited, on `final`

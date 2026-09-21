@@ -5,6 +5,11 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Blanks' final board has an envelope to open** (I-019, option C): every total holds as "—"
+  and every rank as "·" for 1.6 s (SDK `Scoreboard` `holdMs`, additive), an SVG envelope beside
+  "And the winner is…" turns its flap open as the hold ends under eight accelerating `tick`s (the
+  owner's note: a real envelope, the letter rising out), then the totals count up and the top row
+  lifts with the `fanfare`.
 - **A Rando win in Blanks is its own beat** (I-018, option C): Rando's card is authored by a
   card-stack mascot (the owner's note: still named Rando), the headline reads "Rando wins this
   one! Shame on all of you.", the sad `bust` lands where a human win's `sweep` would, and the +1
