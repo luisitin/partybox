@@ -129,7 +129,7 @@ export function BingoButton({
   else if (won) label = 'Yours already';
   else if (view.waitingForCall) label = 'Next number soon…';
   else if (armedHere) {
-    label = `Tap again for BINGO! · ${Math.min(3, left ?? 0)}`; // a clock a hair behind can say 4
+    label = `Tap again · ${Math.min(3, left ?? 0)} s`; // I-096 A: plain words, one line on an SE
     tone = 'success';
   } else if (mine) label = 'BINGO!';
   else if (arm) {

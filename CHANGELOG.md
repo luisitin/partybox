@@ -5,6 +5,8 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Bingo's confirm step in plain words** (I-096, option A): the armed button reads "Tap again ·
+  3 s" — the seconds of dibs left, one line on an SE.
 - **Bingo's swap screen says it once** (I-094, option B): the count line ("swap a card, or tap
   Ready") is the only instruction on the multi-card intro; the hint is the pattern's alone.
 - **Removing your bot is a poof** (I-074, option C): the row shrinks with four small bits flying
