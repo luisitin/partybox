@@ -5,6 +5,8 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Broken Pencil's recap is read in order** (I-022, option A): the rows rise one after another,
+  80 ms apart, and each verdict stamps down after its row.
 - **Broken Pencil's pad feels like paper and pencil** (I-021, option C): ruled paper with a red margin
   under the strokes and soft double-pass pencil strokes, the sheet dealt in with the swatches popping
   in — and, per the owner's note, the paper (ruled / plain) and the pencil (pencil / pen) are this
