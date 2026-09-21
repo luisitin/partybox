@@ -5,6 +5,8 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Bingo's card-pick step sideways is two halves** (I-099, option C): the pattern demo big on the
+  left, the card with Picked / Ready under it on the right — no dead middle on a landscape phone.
 - **Bingo's BINGO! button pauses with the room** (I-097, option C): dimmed and disabled while
   paused, reading "⏸ Paused", popping back the moment play resumes.
 - **Bingo's confirm step in plain words** (I-096, option A): the armed button reads "Tap again ·

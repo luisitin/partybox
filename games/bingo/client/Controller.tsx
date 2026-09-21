@@ -33,7 +33,8 @@ import {
 import type { CardStyle } from './styles';
 import { otherTitle, whyNot } from './copy';
 import { EndScreens, afterLine, WinScreen } from './WinScreen';
-import { useCallFeel, useCloseFeel, useDealFeel, useVerdictFeel } from './feel';
+import { useCallFeel, useCloseFeel, useDealFeel, useLandscape, useVerdictFeel } from './feel';
+
 import styles from './Controller.module.css';
 
 export function Controller({
@@ -126,6 +127,9 @@ export function Controller({
   // applies the style at once (no live preview — the pick screen has its own layout) and the
   // round starting closes it, so nobody holds the first number from the intro.
   const intro = view.phaseId === 'intro';
+  // I-099 B: sideways, the pattern demo is the wait's centrepiece.
+  const landscape = useLandscape();
+  const demoSize = landscape ? 92 : 56;
   if (sheet === 'intro' && !intro) setSheet('');
 
   if (!cards) {
@@ -157,6 +161,17 @@ export function Controller({
 
   if (view.phaseId === 'intro') {
     const left = view.swappable.includes(pick) && !view.ready;
+    const actions = (
+      <IntroActions
+        view={view}
+        cards={n}
+        pick={pick}
+        canSwap={left}
+        send={send}
+        play={play}
+        onSwap={() => setSwaps((s) => s + 1)}
+      />
+    );
     return (
       <Screen
         key="round"
@@ -164,21 +179,17 @@ export function Controller({
         footer={
           // The card-pick step (loop 344, the owner): swap, then Ready — the round starts when
           // everyone is (or 15 s in). Two buttons on one row so a short phone keeps its cards.
-          <IntroActions
-            view={view}
-            cards={n}
-            pick={pick}
-            canSwap={left}
-            send={send}
-            play={play}
-            onSwap={() => setSwaps((s) => s + 1)}
-          />
+          landscape ? undefined : actions
         }
       >
         <div className={`${styles.roundBody} ${styles.introBody}`}>
           <div className={styles.intro}>
             {/* The same demo the TV runs, small, in step with it (loop 290). */}
-            <PatternDemo pattern={view.pattern} cells={view.patternCells} size={56} />
+            <PatternDemo
+              pattern={view.pattern}
+              cells={view.patternCells}
+              size={held === 'wide' ? 56 : demoSize}
+            />
             <div>
               <p className={styles.patternLabel}>{view.patternLabel}</p>
               <p className={styles.hint}>
@@ -195,6 +206,8 @@ export function Controller({
             waitingOn={view.waitingOn}
             lastOne={view.lastOne}
           />
+          {/* I-099 C: sideways, the buttons live in the left half. */}
+          {landscape ? <div className={styles.introSide}>{actions}</div> : null}
           <div className={`${styles.focus} ${styles.dealing} ${n > 1 ? styles.focusMany : ''}`}>
             <div className={styles.focusMain}>
               <div key={swaps} className={swaps > 0 ? styles.swapIn : undefined}>

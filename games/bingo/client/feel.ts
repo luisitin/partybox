@@ -2,7 +2,7 @@
 // buzz and the 'correct' cue, their miss shakes (Controller.module.css .wiped) with a sad buzz and
 // the 'error' cue; every other phone gets one soft tap on a win (loop 260). Once per claim; a
 // ref, not state, so no render is scheduled.
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { buzz } from '@partybox/game-sdk/ui';
 import type { PlayCue } from '@partybox/game-sdk/ui';
 import type { BingoControllerView } from '../server/views';
@@ -101,4 +101,18 @@ export function useCloseFeel(view: BingoControllerView, play: PlayCue): void {
     play('close');
     buzz(20);
   }, [key, view.round, play]);
+}
+
+/** I-099 B: a sideways phone (the same query the intro's landscape CSS uses). */
+export function useLandscape(): boolean {
+  const [on, setOn] = useState(
+    () => matchMedia('(orientation: landscape) and (max-height: 420px)').matches,
+  );
+  useEffect(() => {
+    const mq = matchMedia('(orientation: landscape) and (max-height: 420px)');
+    const h = (): void => setOn(mq.matches);
+    mq.addEventListener('change', h);
+    return () => mq.removeEventListener('change', h);
+  }, []);
+  return on;
 }

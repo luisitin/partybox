@@ -1213,3 +1213,40 @@
 :global(:root[data-motion='off']) .bingoBack {
   animation: none;
 }
+
+/* ── I-099 A: the card-pick step sideways is two halves — the pattern side and the card side,
+   each centred, no dead middle. */
+@media (orientation: landscape) and (max-height: 420px) {
+  .introBody {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    justify-items: center;
+  }
+  .introBody .intro {
+    align-items: center;
+    text-align: center;
+  }
+  .introBody .introCount {
+    text-align: center;
+  }
+  .introBody .focus {
+    justify-self: center;
+  }
+
+  /* I-099 B: room for the big demo. */
+  .introBody .intro {
+    gap: var(--pb-space-3);
+  }
+
+  /* I-099 C: Picked / Ready under the card, in the right half; the portrait footer is hidden. */
+  .introBody .focus {
+    grid-row: 1;
+  }
+  .introBody .introSide {
+    grid-column: 2;
+    grid-row: 2;
+    display: flex;
+    gap: var(--pb-space-2);
+    justify-content: center;
+    width: 100%;
+  }
+}
