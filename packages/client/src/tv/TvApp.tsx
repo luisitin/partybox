@@ -156,6 +156,12 @@ export function TvApp(): JSX.Element {
       if (performance.now() - audio.lastPlayedAt() > 50) audio.play('phase');
     if (room.players.length > p.players && p.status !== '')
       audio.play('join', { semitones: joinSemitones(room.players.length) });
+    // I-054 A: the room closing — the hushed `close` chord after the join note at capacity.
+    const fullNow = room.players.length >= room.capacity;
+    const fullBefore = p.players >= room.capacity;
+    if (p.status !== '' && fullNow && !fullBefore) {
+      setTimeout(() => audio.play('close'), 500);
+    }
     // A game begins: a held G-major arpeggio (the intro itself never chimes — p.phase is null);
     // a TV that reloads mid-game (p.status === '') stays quiet, like the join rule.
     if (room.status === 'playing' && p.status !== 'playing' && p.status !== '') audio.play('start');
