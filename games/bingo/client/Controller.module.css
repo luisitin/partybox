@@ -1199,3 +1199,8 @@
   gap: 3px;
   animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
 }
+
+/* ── I-094 C: the count line's change is a swap — the new line rises in. */
+.introCountSwap {
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) 200ms both;
+}

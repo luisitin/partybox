@@ -212,7 +212,7 @@ export function IntroCount({
     if (lastOne) buzz([30, 50, 30]); // the shell's "needs you" pattern, once
   }, [lastOne]);
   return (
-    <p className={styles.introCount} aria-live="polite">
+    <p key={shown > 0 ? 'count' : dealt ? 'dealt' : 'dealing'} className={`${styles.introCount} ${styles.introCountSwap}`} aria-live="polite">
       {shown > 0 ? (
         <>
           first number in{' '}
