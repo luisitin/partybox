@@ -1,9 +1,10 @@
 // During a game: spectators wait; players get the game's lazy Controller component with
 // `{ view, me, send }`. Unknown game ids (registry drift) show a plain message instead of crashing.
-import { Suspense, useCallback, useEffect, useState } from 'react';
+import { Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import type { JSX } from 'react';
 import type { ControllerView, PlayerPublic, PushedView, RoomSnapshot } from '@partybox/shared';
-import { SoundProvider, WaitingScreen } from '@partybox/game-sdk/ui';
+import { Avatar, SoundProvider, WaitingScreen } from '@partybox/game-sdk/ui';
+import styles from './ControllerShell.module.css';
 import { clientGames } from '../games.generated';
 import { t } from '../i18n';
 import type { Controller } from '../net/controller';
@@ -40,6 +41,43 @@ function Ready({ onReady }: { onReady?: () => void }): null {
   return null;
 }
 
+
+/** I-057 A: the bench — what the game's own view already tells a spectator, read-only. */
+function Bench({ view, room, play }: { view: PushedView<ControllerView> | null; room: RoomSnapshot; play: (cue: SoundCue, opts?: PlayCueOptions) => void }): JSX.Element | null {
+  const rows = [...(view?.players ?? [])]
+    .filter((p) => p.score !== undefined)
+    .sort((a, b) => (b.score ?? 0) - (a.score ?? 0));
+  // I-057 C: a total that changes bumps and ticks.
+  const last = useRef<Record<string, number>>({});
+  const changed = new Set<string>();
+  for (const r of rows) if (last.current[r.id] !== undefined && last.current[r.id] !== r.score) changed.add(r.id);
+  useEffect(() => {
+    for (const r of rows) last.current[r.id] = r.score ?? 0;
+    if (changed.size > 0) play('tally', { quiet: true });
+  });
+  if (rows.length === 0) return null;
+  const top = rows[0]?.score ?? 0;
+  const gameName = room.games.find((g) => g.id === room.selectedGameId)?.name ?? room.selectedGameId ?? '';
+  return (
+    <div className={styles.bench} aria-label="scores so far">
+      <p className={styles.benchWhere}>
+        {gameName} · {view?.phaseId ?? ''}
+      </p>
+      <ol className={styles.benchList}>
+        {rows.map((p) => (
+          <li key={p.id} className={`${styles.benchRow} ${top > 0 && p.score === top ? styles.benchLead : ''}`}>
+            <Avatar avatarId={p.avatarId} size={24} />
+            <span className={styles.benchName}>{p.name}</span>
+            <span key={p.score} className={`${styles.benchScore} ${changed.has(p.id) ? styles.benchBump : ''}`}>
+              {top > 0 && p.score === top ? '🏆 ' : ''}{p.score}
+            </span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
 export function Playing({
   controller,
   room,
@@ -56,7 +94,9 @@ export function Playing({
     // A spectator's screen is the game screen for them: release the game-start hold (loop #22).
     return (
       <>
-        <WaitingScreen title={t.spectator.title} hint={t.spectator.hint} mood="watch" />
+        <WaitingScreen title={t.spectator.title} hint={t.spectator.hint} mood="watch">
+          <Bench view={view} room={room} play={play} />
+        </WaitingScreen>
         <Ready onReady={onGameReady} />
       </>
     );
