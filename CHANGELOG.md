@@ -5,6 +5,8 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Wisecrack's cozy round** (I-028, option A): at exactly three connected players the answer
+  stage's kicker reads "· cozy round, just the three of you" — the minimum room as a mode.
 - **Blanks: a new hand, three times a game** — a "New hand · n left" button under the black card
   during the answer phase (before playing) deals the whole hand again under every rule of a fresh
   hand; `{ type: 'redraw' }`, `redrawsLeft` on the phone view (the owner, 2026-09-21).
