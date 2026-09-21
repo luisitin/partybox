@@ -125,7 +125,7 @@ export function BingoButton({
           ? mineChecking
             ? 'Not a bingo — see card ' + ((view.claim?.cardIndex ?? 0) + 1)
             : `${who}'s card: not a bingo`
-          : 'Look at the TV';
+          : `${who} says BINGO! — look at the TV`; // I-111
   else if (won) label = 'Yours already';
   else if (view.waitingForCall) label = 'Next number soon…';
   else if (armedHere) {
