@@ -12,6 +12,11 @@ export const clientModule: GameClientModule = {
   // `phase` is "your phone needs you"; between rounds nothing does, so the board gets the points
   // sound (loop 323). The next intro keeps `phase`: the deal wants the hand.
   sounds: { bingo: 'silence', check: 'silence', scoreboard: 'tally', final: 'tally' },
+  // I-098 C: the pause card says where the round stands.
+  pauseLine: (view) => {
+    const v = view as { current?: { letter: string; number: number } | null; callIndex?: number };
+    return v.current ? `Call ${v.callIndex ?? 0} of 75 · ${v.current.letter} ${v.current.number}` : null;
+  },
   // The ball dropping out of the cage is the entrance into play: cut, don't dissolve (loop 296).
   quickInto: ['play'],
   // Owner pick: "Wallpaper" with the occasional "Cool Vibes", quiet under the caller, back to back.

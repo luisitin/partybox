@@ -59,6 +59,11 @@ export interface GameClientModule {
    */
   stripActive?: (view: PushedView<TvView>) => readonly string[];
   /**
+   * I-098 C: one line for the shell's pause card saying where the game stands ("Call 2 of 75 ·
+   * B 8"), so what the curtain hides is in the card. Default: nothing.
+   */
+  pauseLine?: (view: PushedView<TvView>) => string | null;
+  /**
    * Background music on the TV while this game plays (the shell's music engine: tracks are ids
    * under /music/, fetched by scripts/fetch-music.ts). `phases` limits it to those phase ids.
    */
