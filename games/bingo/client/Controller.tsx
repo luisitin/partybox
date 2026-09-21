@@ -34,6 +34,18 @@ import type { CardStyle } from './styles';
 import { otherTitle, whyNot } from './copy';
 import { EndScreens, afterLine, WinScreen } from './WinScreen';
 import { useCallFeel, useCloseFeel, useDealFeel, useVerdictFeel } from './feel';
+
+/** I-099 B: a sideways phone (the same query the intro's landscape CSS uses). */
+function useLandscape(): boolean {
+  const [on, setOn] = useState(() => matchMedia('(orientation: landscape) and (max-height: 420px)').matches);
+  useEffect(() => {
+    const mq = matchMedia('(orientation: landscape) and (max-height: 420px)');
+    const h = (): void => setOn(mq.matches);
+    mq.addEventListener('change', h);
+    return () => mq.removeEventListener('change', h);
+  }, []);
+  return on;
+}
 import styles from './Controller.module.css';
 
 export function Controller({
@@ -126,6 +138,9 @@ export function Controller({
   // applies the style at once (no live preview — the pick screen has its own layout) and the
   // round starting closes it, so nobody holds the first number from the intro.
   const intro = view.phaseId === 'intro';
+  // I-099 B: sideways, the pattern demo is the wait's centrepiece.
+  const landscape = useLandscape();
+  const demoSize = landscape ? 92 : 56;
   if (sheet === 'intro' && !intro) setSheet('');
 
   if (!cards) {
@@ -178,7 +193,7 @@ export function Controller({
         <div className={`${styles.roundBody} ${styles.introBody}`}>
           <div className={styles.intro}>
             {/* The same demo the TV runs, small, in step with it (loop 290). */}
-            <PatternDemo pattern={view.pattern} cells={view.patternCells} size={56} />
+            <PatternDemo pattern={view.pattern} cells={view.patternCells} size={held === 'wide' ? 56 : demoSize} />
             <div>
               <p className={styles.patternLabel}>{view.patternLabel}</p>
               <p className={styles.hint}>
