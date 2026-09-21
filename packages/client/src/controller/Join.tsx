@@ -64,6 +64,10 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
   // "Joining…" until the server answers: a welcome unmounts this screen, an error (or a 6 s safety
   // timeout, for a server that never answers) re-enables the button.
   const submitting = submittedAt !== null;
+  // I-056 A: a rejection about the ROOM (full / locked) is not about what was typed.
+  const roomError =
+    state.error?.code === 'room_full' || state.error?.code === 'room_locked' ? state.error.code : null;
+  const nameError = state.error !== null && roomError === null;
   // "Adjust state when a prop changes": an error answers the pending join, right in this render.
   if (submittedAt !== null && state.error !== null) setSubmittedAt(null);
   useEffect(() => {
@@ -101,7 +105,7 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
   };
 
   return (
-    <form className={styles.form} onSubmit={submit}>
+    <form className={`${styles.form} ${roomError ? styles.formDim : ''}`} onSubmit={submit}>
       <Screen
         title={t.join.title}
         footer={
@@ -135,12 +139,12 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
           <span className={styles.label}>{t.join.name}</span>
           <input
             ref={nameRef}
-            className={`${styles.input} ${state.error ? styles.inputError : ''} ${shaking ? styles.shake : ''}`}
+            className={`${styles.input} ${nameError ? styles.inputError : ''} ${shaking && nameError ? styles.shake : ''}`}
             onAnimationEnd={() => setShaking(false)}
             value={name}
             onChange={(e) => setName(e.target.value)}
-            aria-invalid={state.error !== null}
-            aria-describedby={state.error ? 'join-error' : undefined}
+            aria-invalid={nameError}
+            aria-describedby={nameError ? 'join-error' : undefined}
             placeholder={t.join.namePlaceholder}
             maxLength={PLAYER_NAME_MAX}
             autoComplete="nickname"
@@ -150,7 +154,8 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
           />
           {state.error ? (
             <span id="join-error" className={styles.error} role="alert">
-              <span aria-hidden>⚠ </span>
+              {/* I-056 A: the badge says what kind of no this is. */}
+              <span aria-hidden>{roomError === 'room_full' ? '👥 ' : roomError === 'room_locked' ? '🔒 ' : '⚠ '}</span>
               {state.error.message} {t.join.tryAgain}
             </span>
           ) : null}
