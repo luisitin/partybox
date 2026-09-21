@@ -1,6 +1,7 @@
 // Views for Bingo. Nothing in this game is secret: a card only reaches the TV when its owner
 // presses BINGO!, and then everyone is meant to see it. Phones get their own cards and daubs; the
-// spectator phone gets the called list instead (players must remember — that is the design).
+// spectator view carries the called list (the shell shows spectators its own waiting screen,
+// loop #22, so nothing renders it today — players must remember; that is the design).
 // With several cards per player the phone gets them all; a claim carries the one card checked.
 import { controllerEnvelope, envelope, hasPlayer } from '@partybox/game-sdk';
 import type { ControllerView, PlayerStatus, TvView } from '@partybox/game-sdk';
