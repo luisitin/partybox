@@ -13,6 +13,7 @@ import { pendingLine } from './copy';
 import styles from './Controller.module.css';
 import { StyleSheet } from './Overlays';
 import { setCardStyle } from './styles';
+import { closeness } from './close';
 import type { CardStyle } from './styles';
 
 export type Send = (input: Input) => void;
@@ -217,9 +218,11 @@ export function BingoButton({
 export function DecideFooter({
   view,
   send,
+  meId = '',
 }: {
   view: BingoControllerView;
   send: Send;
+  meId?: string;
 }): JSX.Element | null {
   const decide = view.decide;
   const play = useSound();
@@ -235,10 +238,14 @@ export function DecideFooter({
     play('submit');
     send(input);
   };
+  // I-106 A: how close this phone's card is — from its own daubs and the pattern table.
+  const myDaubs = view.daubs[view.claim?.playerId === meId ? (view.claim?.cardIndex ?? 0) : 0] ?? view.daubs[0] ?? [];
+  const same = closeness(view.pattern, myDaubs);
+  const blackoutDone = new Set([...myDaubs, 12]).size;
   return (
     <div className={styles.decide}>
       {decide.same ? (
-        <PrimaryButton onClick={() => pick({ type: 'continue', pattern: 'same' })}>
+        <PrimaryButton tone={same.left <= 2 ? 'success' : 'accent'} onClick={() => pick({ type: 'continue', pattern: 'same' })}>
           Keep going — same pattern
         </PrimaryButton>
       ) : null}
@@ -253,6 +260,11 @@ export function DecideFooter({
       <PrimaryButton tone="neutral" onClick={() => pick({ type: 'next' })}>
         {nextLabel}
       </PrimaryButton>
+      <p className={styles.closeLine}>
+        {decide.same ? `closest line: ${same.where} · ${same.left} to go` : ''}
+        {decide.same && decide.blackout ? ' · ' : ''}
+        {decide.blackout ? `blackout: ${blackoutDone} of 25` : ''}
+      </p>
     </div>
   );
 }

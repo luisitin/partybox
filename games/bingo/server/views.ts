@@ -9,7 +9,7 @@ import { calledNumbers, letterOf } from './cards';
 import { closePlayers } from './close';
 import type { Letter } from './cards';
 import { callFor } from './content';
-import { PATTERN_HINT, PATTERN_LABEL, patternCells } from './patterns';
+import { PATTERN_HINT, PATTERN_LABEL, completions, patternCells } from './patterns';
 import { menusOpen } from './claims';
 import { canContinue, liveCards } from './phases/bingo';
 import { waitingOn } from './phases/intro';
@@ -97,6 +97,8 @@ export interface BingoTvView extends TvView, Common {
   /** R2-01: players with a live card one daub from the pattern (play only); [] unless the
    *  `showClose` setting is on — the strip ring, the caption and the hush all hang off it. */
   closeIds: string[];
+  /** I-106 C: after a bingo, who is nearest the same pattern and how near ("Priya", 1). */
+  decideClosest: { name: string; left: number } | null;
 }
 
 export interface BingoControllerView extends ControllerView, Common {
@@ -265,7 +267,25 @@ export function tvView(state: State, gameId: string): BingoTvView {
     showBoard: state.settings.showBoard,
     showPrevious: state.settings.showPrevious,
     closeIds: state.settings.showClose ? closePlayers(state) : [],
+    decideClosest: state.phase.id === 'bingo' ? decideClosest(state) : null,
   };
+}
+
+/** I-106 C: the live card nearest the round's pattern, by undaubed cells. */
+function decideClosest(state: State): BingoTvView['decideClosest'] {
+  let best: BingoTvView['decideClosest'] = null;
+  for (const [playerId, cards] of Object.entries(state.round.daubs)) {
+    const won = state.round.won[playerId] ?? [];
+    cards.forEach((d, c) => {
+      if (won.includes(c)) return;
+      const daubed = new Set([...d, 12]);
+      for (const cells of completions(state.round.pattern)) {
+        const left = cells.filter((i) => !daubed.has(i)).length;
+        if (!best || left < best.left) best = { name: state.players[playerId]?.name ?? '?', left };
+      }
+    });
+  }
+  return best;
 }
 
 export function controllerView(

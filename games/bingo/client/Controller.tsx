@@ -261,7 +261,7 @@ export function Controller({
         }
         footer={
           roundOver ? (
-            <DecideFooter view={view} send={send} />
+            <DecideFooter view={view} send={send} meId={me.id} />
           ) : focus && !turn ? (
             <BingoButton
               view={view}

@@ -244,6 +244,11 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
                 </p>
               ) : view.decide && (view.decide.same || view.decide.blackout) ? (
                 <p className={`${styles.decideLine} pb-enter`}>
+                  {view.decideClosest ? (
+                    <>
+                      {view.decideClosest.name} is {view.decideClosest.left} away on the same pattern.{' '}
+                    </>
+                  ) : null}
                   <span className={styles.decideWho}>Anyone</span> picks on their phone: keep going
                   {view.decide.blackout ? ' (same pattern or blackout)' : ''} or{' '}
                   {view.round < view.totalRounds ? 'next round' : 'finish'}. The caller waits.
