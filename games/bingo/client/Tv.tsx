@@ -63,6 +63,8 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
 
   if (view.phaseId === 'intro') return <IntroStage view={view} roundLabel={roundLabel} />;
 
+  // R2-01 B: the players one square from the pattern, by name (roster order).
+  const closeNames = view.players.filter((p) => view.closeIds.includes(p.id)).map((p) => p.name);
   if (view.phaseId === 'play') {
     // A menu open somewhere holds the caller; the last one closing runs a 3 · 2 · 1 on the stage.
     if (view.resumeAt !== null)
@@ -109,6 +111,14 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
           <div key={`${view.current.number}:${view.calledAt ?? ''}`} className={styles.caption}>
             <BigText level="h1">{view.current.call}</BigText>
           </div>
+        ) : null}
+        {/* R2-01 B: who is one away, under the nickname — rises in, keyed on the names. */}
+        {closeNames.length > 0 ? (
+          <p key={closeNames.join('|')} className={styles.closeLine}>
+            {closeNames.length === 1
+              ? `${closeNames[0]} is one away`
+              : `${closeNames.slice(0, -1).join(', ')} and ${closeNames[closeNames.length - 1]} are one away`}
+          </p>
         ) : null}
         {/* No reserved slot on the first call (review-loop #3): the row arrives with number two. */}
         {/* Crowded and the board on: the board is the history, the tray row gives its 80 px back. */}
