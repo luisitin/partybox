@@ -40,7 +40,8 @@ export function winnerLine(room: RoomSnapshot, scoreless = false): string {
   // A game without points (Broken Pencil) is a show, not a tie (review-loop #63).
   if (scoreless) return t.results.show;
   // Everyone on zero is still a tie (review-loop #6): the headline says so; the screens add why.
-  if (nobodyScored(room)) return results.players.length > 1 ? t.results.tie : t.results.over;
+  // I-128 A: an all-zero board is not a tie — say what happened.
+  if (nobodyScored(room)) return results.gameId === 'bingo' ? 'No bingos this time' : t.results.nobody;
   const ids = results.results.winnerIds;
   if (ids.length === 0) return '';
   if (ids.length >= results.players.length && ids.length > 1) return t.results.tie;
