@@ -35,8 +35,21 @@ export const VERDICT_READ_MS = 3_000;
 /** A wrong claim: the daubs lift off the TV's card this long after NOT A BINGO (I-006 B). */
 export const WIPE_AT_MS = 1_200;
 
+/** I-117: a claim the room can see through — more never-called daubs than called ones on the
+ *  checked line — gets no suspense. */
+export function hopelessClaim(claim: { green: readonly number[]; red: readonly number[] }): boolean {
+  return claim.red.length > claim.green.length;
+}
+/** The fast path's length: the announce, the drop, one turn for every cell together, a beat. */
+export const HOPELESS_MS = ANNOUNCE_MS + DROP_MS + STEP_MS + HOLD_MS;
+
 /** The reveal's length for one claim: its pattern cells, and whether other daubs rest in. */
-export function claimRevealMs(cells: readonly number[], daubs: readonly number[]): number {
+export function claimRevealMs(
+  cells: readonly number[],
+  daubs: readonly number[],
+  claim?: { green: readonly number[]; red: readonly number[] },
+): number {
+  if (claim && hopelessClaim(claim)) return HOPELESS_MS;
   return verdictAtMs(
     cells.length,
     daubs.some((i) => !cells.includes(i)),

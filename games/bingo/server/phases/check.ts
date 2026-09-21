@@ -29,7 +29,7 @@ export function enterCheck(state: State, now: number, claim: Claim): State {
     }),
     'check',
     now,
-    claimRevealMs(claim.cells, claim.daubs),
+    claimRevealMs(claim.cells, claim.daubs, claim),
   );
 }
 

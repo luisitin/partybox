@@ -109,6 +109,11 @@ export function BingoButton({
   // The check is about one card: only that button says "Not a bingo".
   const myClaim = checking && view.claim?.playerId === meId && view.claim.cardIndex === card;
   const myCheck = myClaim && verdictShown;
+  // I-117 C: a hopeless claim teaches — which numbers were never called.
+  const tooSoon =
+    myCheck && view.claim && view.claim.red.length > view.claim.green.length
+      ? `Too soon — ${view.claim.red.map((i) => view.claim?.card[i]).filter((n) => n !== undefined).join(', ')} ${view.claim.red.length === 1 ? "hasn't" : "haven't"} been called`
+      : null;
   // I-097 A: on hold with the rest of the screen while the room is paused.
   const held = view.paused;
   // I-097 C: the button pops back when play resumes.
@@ -200,6 +205,7 @@ export function BingoButton({
           Dibs lapsed — tap twice within 3 s to claim
         </span>
       ) : null}
+      {tooSoon ? <span className={styles.tooSoon}>{tooSoon}</span> : null}
       {/* The window, draining along the button's foot in step with the TV's bar (loop 256). */}
       {armedHere && arm ? (
         <span
