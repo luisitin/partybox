@@ -1,7 +1,7 @@
 // The 5×5 card, used by both surfaces: tappable on the phone, read-only on the TV. Marks are
 // never carried by colour alone — green cells get ✓, red cells ✕, missed pattern cells a dashed
 // outline — so a check reads the same in every theme and for every viewer.
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import type { CSSProperties, JSX } from 'react';
 import styles from './Card.module.css';
 
@@ -92,6 +92,10 @@ export function Card({
   const turning = revealOrder !== undefined;
   const daubed = new Set(daubs);
   const patternSet = new Set(pattern);
+  // I-136 C: the reluctant un-daub — a press timer per cell, a wobble for a plain tap.
+  const pressTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const pressed = useRef<number | null>(null);
+  const [wobble, setWobble] = useState<number | null>(null);
   const wantedSet = new Set(wanted);
   const greenSet = new Set(green);
   const redSet = new Set(red);
@@ -171,6 +175,7 @@ export function Card({
             lineHit.has(i) ? styles.lineHit : '',
             sent && isDaubed ? styles.sent : '',
             lifted.has(i) ? styles.unstamp : '',
+            wobble === i ? styles.wobble : '',
             wiped && isDaubed && !isFree ? styles.wipe : '',
           ].join(' ');
           const mark = !showColour ? null : greenSet.has(i) ? '✓' : redSet.has(i) ? '✕' : null;
@@ -198,7 +203,33 @@ export function Card({
               role="gridcell"
               aria-pressed={Tag === 'button' ? isDaubed : undefined}
               aria-label={`${LETTERS[i % 5]} ${label}${isDaubed ? ', daubed' : ''}`}
-              onClick={Tag === 'button' ? () => (isFree ? onTapFree?.() : onTap?.(i)) : undefined}
+              onClick={
+                Tag === 'button'
+                  ? () => {
+                      if (isFree) return onTapFree?.();
+                      if (!isDaubed) return onTap?.(i);
+                      // I-136 C: a plain tap on a daub only wobbles it; the press below lifts it.
+                      if (pressed.current === i) {
+                        pressed.current = null;
+                        return;
+                      }
+                      setWobble(i);
+                    }
+                  : undefined
+              }
+              onPointerDown={
+                Tag === 'button' && isDaubed && !isFree
+                  ? () => {
+                      pressTimer.current = setTimeout(() => {
+                        pressed.current = i;
+                        onTap?.(i);
+                      }, 350);
+                    }
+                  : undefined
+              }
+              onPointerUp={() => clearTimeout(pressTimer.current)}
+              onPointerLeave={() => clearTimeout(pressTimer.current)}
+              onAnimationEnd={() => wobble === i && setWobble(null)}
             >
               <span className={styles.number}>{shown}</span>
               {mark ? (
