@@ -154,7 +154,9 @@ describe('VIP validation', () => {
     expect(again.room.game?.seed).toBe(9);
     const lobby = vip(ended, { action: 'toLobby' }, T0 + 400).room;
     expect(lobby.status).toBe('lobby');
-    expect(lobby.results).toBeNull();
+    // I-073: the results stay with the room in the lobby (the "last up" card); the next game's
+    // start clears them (runner).
+    expect(lobby.results).toBe(ended.results);
     expect(errorsOf(vip(playingRoom(2), { action: 'toLobby' }, T0 + 400).effects)).toEqual([
       'cannot_start',
     ]);

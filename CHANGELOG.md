@@ -5,6 +5,10 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **The lobby remembers the last game** (I-073, option A): "Back to lobby" keeps the results
+  until the next game starts and a "Last up · Lightning Round" card names the winner — "Sam
+  won", "Sam and Priya tied" (faces, four at most then +n), or "no winner" (the owner's note).
+  Contract: `RoomSnapshot.results` may be non-null in the lobby.
 - **The QR carries the room code** (I-041, the owner's request): the TV's QR encodes `/?room=KGVU`,
   so a scan goes straight in ("Joining room KGVU" above the name, no field); a phone that types
   the bare URL from the TV always gets the room-code field ("4 letters from the TV"), a wrong

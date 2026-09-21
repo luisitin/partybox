@@ -226,3 +226,9 @@ session might want to undo. Never edit an old one — supersede it.
 **Context.** A taken name was a private failure: the phone shook and the room saw nothing (I-040, the owner's pick C, 2026-09-21). The effect union had `toast.to: 'all' | <playerId>` — every phone or one — and no way to tell the TVs something the phones need not hear.
 **Decision.** `toast.to` gains `'tvs'` (the host routes it with `transport.toTvs`, no phone sees it) and an optional `playerId` — the player the toast is about, which the lobby uses to ring that chip while the toast shows. `error` gains an optional `player: { name, avatarId }` — for `name_taken`, who already has the name, so the phone shows their face. Both are additive; the wire payloads carry them only when set.
 **Consequences.** Games cannot raise room effects, so nothing changes for them. A TV that ignores `playerId` shows the toast as before. The engine's join path is the only producer today.
+
+## ADR-039 — The lobby keeps the last game's results until the next game starts
+
+**Context.** "Back to lobby" nulled `room.results`, so a room returning to the lobby carried no trace the game happened (I-073, the owner's pick A, 2026-09-21).
+**Decision.** The VIP's `toLobby` keeps `room.results`; the runner's start of the next game clears it as it already did. `RoomSnapshot.results` may therefore be non-null while `status` is `lobby`. The TV lobby shows a "Last up · <game>" card from it — one winner "won", several "tied" (faces first, four at most then "+n"), none "no winner" (the owner's note).
+**Consequences.** A phone ignores `results` outside the results stage today; a game never sees the snapshot. A reset (Home) still starts from a null result.

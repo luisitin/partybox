@@ -4,7 +4,7 @@
 import type { JSX } from 'react';
 import type { RoomSnapshot } from '@partybox/shared';
 import { useState } from 'react';
-import { BigText, PlayerChips, Stage } from '@partybox/game-sdk/ui';
+import { Avatar, BigText, PlayerChips, Stage } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import { useServerInfo } from '../net/info';
 import styles from './TvLobby.module.css';
@@ -13,6 +13,49 @@ export interface TvLobbyProps {
   room: RoomSnapshot | null;
   /** I-040 B: players a live toast is about — their chips are ringed while it shows. */
   nudgeIds?: string[];
+}
+
+/** "Sam", "Sam and Priya", "Sam, Priya and Bot 2". */
+function listNames(names: string[]): string {
+  if (names.length <= 1) return names[0] ?? '';
+  return `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}`;
+}
+
+const LAST_UP_FACES = 4;
+
+/** I-073 A: the "last up" card — the game's name and who won it. The owner's note: one winner
+ *  "Sam won", a tie "Sam and Priya tied" (faces first, four at most then "+n"), an abandoned or
+ *  scoreless game "no winner" in the muted colour with no face. */
+function LastUp({ room }: { room: RoomSnapshot }): JSX.Element | null {
+  const r = room.results;
+  if (!r) return null;
+  const game = room.games.find((g) => g.id === r.gameId)?.name ?? r.gameId;
+  // Nobody scored (the VIP ended it early, a room that never answered): every "winner" is on
+  // zero — that is no winner, not a sixteen-way tie.
+  const scored = r.results.winnerIds.some((id) => (r.results.scores[id] ?? 0) > 0);
+  const winners = (scored ? r.results.winnerIds : [])
+    .map((id) => r.players.find((p) => p.id === id))
+    .filter((p): p is NonNullable<typeof p> => p !== undefined);
+  const shown = winners.slice(0, LAST_UP_FACES);
+  const more = winners.length - shown.length;
+  return (
+    <aside className={styles.lastUp} aria-label="last game">
+      <span className={styles.lastUpKicker}>Last up · {game}</span>
+      {winners.length === 0 ? (
+        <span className={`${styles.lastUpWinner} ${styles.lastUpNone}`}>no winner</span>
+      ) : (
+        <span className={styles.lastUpWinner}>
+          <span className={styles.lastUpFaces}>
+            {shown.map((w) => (
+              <Avatar key={w.id} avatarId={w.avatarId} size={32} />
+            ))}
+          </span>
+          {listNames([...shown.map((w) => w.name), ...(more > 0 ? [`+${more}`] : [])])}
+          {winners.length === 1 ? ' won' : ' tied'}
+        </span>
+      )}
+    </aside>
+  );
 }
 
 export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
@@ -103,6 +146,8 @@ export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
           ) : room && vip ? (
             <p className="pb-muted">{t.lobby.waitingFor(vip.name)}</p>
           ) : null}
+          {/* I-073 A: the last game, still on the table until the next one starts. */}
+          {room?.results ? <LastUp room={room} /> : null}
         </div>
       </div>
     </Stage>
