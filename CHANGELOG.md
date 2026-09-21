@@ -5,6 +5,8 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Bingo's one-to-go square breathes** (S-001, option B): the wanted square swells 1 → 1.07
+  over 2 s with its halo and the number goes gold at the peak.
 - **Bingo's un-daub is felt** (I-136, option A): a quiet `card` pluck with an 8 ms buzz, and the
   lift is a peel — a touch bigger and turned, fading over 300 ms.
 - **An all-zero board is not a tie** (I-128, option C): the results read "No bingos this time" /
