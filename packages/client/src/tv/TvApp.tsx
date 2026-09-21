@@ -107,6 +107,8 @@ export function TvApp(): JSX.Element {
     paused: boolean;
     code: string;
     locked: number;
+    /** I-044 B: last snapshot's VIP — the first one gets the chime. */
+    vip: string | null;
     /** I-009 B: who was offline last snapshot — a drop plays `leave`, a return `join`. */
     offline: Set<string>;
   }>({
@@ -119,6 +121,7 @@ export function TvApp(): JSX.Element {
     paused: false,
     code: '',
     locked: 0,
+    vip: null,
   });
   const lastLeaveAt = useRef(-Infinity);
   const lastLockAt = useRef(-Infinity);
@@ -156,6 +159,8 @@ export function TvApp(): JSX.Element {
       if (performance.now() - audio.lastPlayedAt() > 50) audio.play('phase');
     if (room.players.length > p.players && p.status !== '')
       audio.play('join', { semitones: joinSemitones(room.players.length) });
+    // I-044 B: the room's first VIP — one warm `ready` chime after the join note.
+    if (p.status !== '' && room.vip && !p.vip) setTimeout(() => audio.play('ready'), 300);
     // A game begins: a held G-major arpeggio (the intro itself never chimes — p.phase is null);
     // a TV that reloads mid-game (p.status === '') stays quiet, like the join rule.
     if (room.status === 'playing' && p.status !== 'playing' && p.status !== '') audio.play('start');
@@ -211,6 +216,7 @@ export function TvApp(): JSX.Element {
       paused,
       code: room.code,
       locked: view && view.phaseId === p.phase ? locked : 0,
+      vip: room.vip,
     };
   }, [room, view, audio, music, homing]);
 

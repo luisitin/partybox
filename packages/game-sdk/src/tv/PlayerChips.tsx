@@ -9,6 +9,8 @@ export interface PlayerChipsProps {
   vip?: string | null;
   /** Ids to highlight. */
   activeIds?: string[];
+  /** I-044 A: the chip whose VIP pill is being granted for the first time in this room. */
+  crownId?: string | null;
   showScores?: boolean;
   /** The scores are held-over values, not live: rendered muted (review-loop #32). */
   scoresMuted?: boolean;
@@ -29,6 +31,7 @@ export function PlayerChips({
   players,
   vip,
   activeIds = [],
+  crownId = null,
   showScores,
   scoresMuted = false,
   size = 'md',
@@ -64,6 +67,7 @@ export function PlayerChips({
             status={p.status}
             isVip={vip === p.id}
             active={activeIds.includes(p.id)}
+            crown={crownId === p.id}
             score={showScores ? p.score : undefined}
             scoreMuted={scoresMuted}
             leader={leaders.has(p.id)}

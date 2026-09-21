@@ -18,6 +18,8 @@ export interface PlayerChipProps {
   leader?: boolean;
   /** Highlight (e.g. it is this player's turn). */
   active?: boolean;
+  /** I-044 A: the room's first VIP — the pill assembles from four sparks as it pops in. */
+  crown?: boolean;
   /** This chip is the viewer: a small "you" tag (not the turn outline). */
   isMe?: boolean;
   /** A bot player (ADR-028): shows a robot tag so nobody mistakes it for a person. */
@@ -47,6 +49,7 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
     scoreMuted = false,
     leader,
     active,
+    crown = false,
     isMe,
     isBot,
     onRemove,
@@ -101,10 +104,18 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
       ) : null}
       {isVip ? (
         <span
-          className={`${styles.vip} ${justVip ? styles.vipPop : ''}`}
+          className={`${styles.vip} ${justVip || crown ? styles.vipPop : ''} ${crown ? styles.crown : ''}`}
           aria-hidden
           onAnimationEnd={() => setJustVip(false)}
         >
+          {crown ? (
+            <span className={styles.sparks} aria-hidden>
+              <i />
+              <i />
+              <i />
+              <i />
+            </span>
+          ) : null}
           ★ VIP
         </span>
       ) : null}
