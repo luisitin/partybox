@@ -256,6 +256,17 @@
   font-size: var(--pb-font-body);
 }
 
+/* Seven or more books (pass 895): four columns at caption size — two rows of four instead of
+   three rows that ran under the host bar and to the frame's edge with long words. */
+.summaryMany {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.summaryMany .summaryRow {
+  font-size: var(--pb-font-caption);
+  gap: var(--pb-space-3);
+  padding: var(--pb-space-3) var(--pb-space-4);
+}
+
 .summaryOwner {
   font-weight: 800;
   color: var(--pb-accent-2);

@@ -115,6 +115,8 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 - Multi-persona live-play harness (`packages/e2e/live/`) and the 2026-09-15 session report.
 
 ### Fixed
+- Broken Pencil recap: seven or more books take four columns at caption size, so an eight-book
+  recap with long words no longer runs to the frame's edge under a two-row strip.
 - TV pause curtain (I-030): the stage's step-back never showed outside Bingo (the phase's rise
   animation pinned its transform) and the resume replayed that rise — a blink after every resume.
   Both now sit on a wrapper with no entrance of its own.
