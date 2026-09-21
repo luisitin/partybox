@@ -1264,3 +1264,12 @@
 :global(:root[data-motion='off']) .lapsedHint {
   animation: none;
 }
+
+/* ── I-106 A: how close the card is, under the choice. */
+.closeLine {
+  margin: 0;
+  text-align: center;
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  color: var(--pb-text-muted);
+}
