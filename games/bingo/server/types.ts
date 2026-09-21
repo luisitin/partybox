@@ -25,6 +25,8 @@ export interface Settings {
   /** TV extras the VIP can switch off at game selection (review-loop #2, owner request). */
   showBoard: boolean;
   showPrevious: boolean;
+  /** R2-01, the owner's note: the room is told who is one away (off by default). */
+  showClose: boolean;
 }
 
 /** What the TV shows while a claim is checked (or celebrated). Computed once, never re-evaluated. */

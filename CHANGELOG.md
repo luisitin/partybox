@@ -5,6 +5,10 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Bingo tells the room who is one away** (R2-01, option C) behind a new `showClose` setting,
+  off by default (the owner's note): the strip rings the players one daub from the pattern, "Sam is
+  one away" rises under the nickname and the room hears the phone's hushed `close` once per player
+  per round. The one-to-go rule moved server-side (`server/close.ts`); the phone re-imports it.
 - **Bingo's hall board is lamps** (I-014, option C): round bulbs with a halo per called number,
   the current one catching with a smooth 320 ms fade (one dip, no steps — the owner's note) and a
   soft `tick` 60 ms after the ball lands; numbers that arrive together light 40 ms apart.

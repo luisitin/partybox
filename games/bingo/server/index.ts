@@ -48,6 +48,7 @@ export function readSettings(raw: RawSettings): Settings {
     spicy: raw['spicy'] === true,
     showBoard: raw['showBoard'] === true,
     showPrevious: raw['showPrevious'] !== false,
+    showClose: raw['showClose'] === true,
   };
 }
 

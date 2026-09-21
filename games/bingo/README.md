@@ -26,7 +26,7 @@ carries on. Points: 3, 2, 1, then ½ per bingo under a pattern (a blackout resta
 1–16. The phone shows the call the way the TV's ball does (letter, number, the one before, the
 count); the nickname is the TV's and the caller's — the TV can also keep a hall board of every number called (`showBoard`) — round lamps with a halo per called number (I-014 A), the current one catching with a smooth 320 ms fade and a `tick` at landing + 60 ms (B, the owner's note: one dip, no steps), numbers that arrive together lighting 40 ms apart (C)
 and the previous call (`showPrevious`); a phone that was away says how many calls it missed (board on: they are on the TV; board off: it names them from `recent`, up to three). Late joiners spectate (the shell's waiting screen — the view's called list is not shown, loop #22) and get a card
-next game. A disconnected player's card and daubs persist; calls never wait for anyone.
+next game. A disconnected player's card and daubs persist; calls never wait for anyone. With `showClose` on (R2-01, off by default — the owner's note) the TV view's `closeIds` names the players one daub from the pattern (`server/close.ts`, the phone's own "one to go" rule): the strip rings them (A), "Sam is one away" rises under the nickname (B) and the room hears the phone's hushed `close` once per player per round (C); off, `closeIds` is `[]` and the phone's pulse is unchanged.
 **Bots: welcome** (`supportsBots: true`) — the bot daubs what it hears on its own cards, mis-taps about
 1 in 20, and presses BINGO! when a live card looks complete, so it wins rounds and sometimes gets checked
 in public like anyone else. It only reads what its phone shows (own card, own daubs, called numbers).
@@ -108,10 +108,10 @@ exactly like humans.
 | `callSeconds`     | number  | 6                                | 3–12                          | Seconds each number stays up before the next call.          |
 | `showBoard`       | boolean | false                            | —                             | TV shows the hall board of every number called so far.      |
 | `showPrevious`    | boolean | true                             | —                             | TV shows the previous number under the current call.        |
+| `showClose`       | boolean | false                            | —                             | TV tells the room who is one number from the pattern.       |
 | `spicy`           | boolean | false                            | —                             | Cheekier caller nicknames for some numbers (PG-13).         |
 
-Patterns: **line** = any full row, column or diagonal (FREE counts); **corners** = the four corners;
-**x** = both diagonals; **blackout** = every square. Settings are fixed at init.
+Patterns: **line** = any full row, column or diagonal (FREE counts); **corners** = the four corners; **x** = both diagonals; **blackout** = every square. Settings are fixed at init.
 
 ## Content
 

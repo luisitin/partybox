@@ -116,6 +116,13 @@
       "default": true
     },
     {
+      "key": "showClose",
+      "label": "One away",
+      "description": "Tell the room when a player is one number from the pattern — a ring in the strip, a line under the call and a hush",
+      "type": "boolean",
+      "default": false
+    },
+    {
       "key": "spicy",
       "label": "Cheeky caller",
       "description": "Cheekier nicknames for some numbers (PG-13)",

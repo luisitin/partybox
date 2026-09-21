@@ -6,6 +6,7 @@
 import { controllerEnvelope, envelope, hasPlayer } from '@partybox/game-sdk';
 import type { ControllerView, PlayerStatus, TvView } from '@partybox/game-sdk';
 import { calledNumbers, letterOf } from './cards';
+import { closePlayers } from './close';
 import type { Letter } from './cards';
 import { callFor } from './content';
 import { PATTERN_HINT, PATTERN_LABEL, patternCells } from './patterns';
@@ -93,6 +94,9 @@ export interface BingoTvView extends TvView, Common {
   /** VIP toggles at game selection: the board and the previous call are optional on the TV. */
   showBoard: boolean;
   showPrevious: boolean;
+  /** R2-01: players with a live card one daub from the pattern (play only); [] unless the
+   *  `showClose` setting is on — the strip ring, the caption and the hush all hang off it. */
+  closeIds: string[];
 }
 
 export interface BingoControllerView extends ControllerView, Common {
@@ -260,6 +264,7 @@ export function tvView(state: State, gameId: string): BingoTvView {
     called: calledNumbers(state),
     showBoard: state.settings.showBoard,
     showPrevious: state.settings.showPrevious,
+    closeIds: state.settings.showClose ? closePlayers(state) : [],
   };
 }
 
