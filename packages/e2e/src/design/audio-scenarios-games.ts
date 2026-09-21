@@ -270,7 +270,9 @@ export async function runGameScenarios({ T, tv, vip, p2, api, pages }: Ctx): Pro
   T.ok(
     'D',
     'resume → phase chime, music resumes',
-    T.cues(evs).includes('phase') &&
+    // A Bingo resume mid-call rings its own 3 · 2 · 1 (I-030, the owner: the number is called
+    // again): the first tick lands in the resume's commit and stands in for the shell's chime.
+    (T.cues(evs).includes('phase') || T.cues(evs).includes('tick')) &&
       evs.some((e) => e.kind === 'music:paused' && e['paused'] === false) &&
       (await T.playing(tv)).length === 1,
     `cues=${T.cues(evs).join(',')} playing=${JSON.stringify(await T.playing(tv))}`,
