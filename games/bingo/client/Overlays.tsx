@@ -69,10 +69,13 @@ export function StyleSheet({
             <span>
               {s.label} <small>· {s.hint}</small>
             </span>
-            <small>
-              {why || (s.orient === 'landscape' ? 'sideways' : 'upright')}
-              {on ? ' ✓' : ''}
-            </small>
+            <span className={styles.rowRight}>
+              <small>
+                {why || (s.orient === 'landscape' ? 'sideways' : 'upright')}
+                {on ? ' ✓' : ''}
+              </small>
+              <StyleMini id={s.id} off={why !== ''} live={on && !motionOff} />
+            </span>
           </button>
         );
       })}
@@ -87,13 +90,44 @@ export function StyleSheet({
         <span>
           Motion <small>· cards rise, numbers pop</small>
         </span>
-        <small>{motionOff ? 'off' : 'on ✓'}</small>
+        <span className={styles.rowRight}>
+          <small>{motionOff ? 'off' : 'on ✓'}</small>
+          <StyleMini id="motion" live={!motionOff} />
+        </span>
       </button>
       <p className={styles.sheetNote}>Theme: the 🎨 in the top bar, any time.</p>
       <PrimaryButton tone="neutral" onClick={onClose}>
         Close
       </PrimaryButton>
     </div>
+  );
+}
+
+
+/** I-013 A: the style as a shape — little card rectangles laid out the way the style lays them. */
+function StyleMini({
+  id,
+  off = false,
+  big = false,
+  live = false,
+}: {
+  id: string;
+  off?: boolean;
+  big?: boolean;
+  /** I-013 B: the diagram of the style that is on breathes. */
+  live?: boolean;
+}): JSX.Element {
+  const n = id === 'focus' ? 4 : id === 'grid' ? 4 : id === 'strip' ? 3 : 2;
+  return (
+    <span
+      className={`${styles.mini} ${off ? styles.miniOff : ''} ${big ? styles.miniBig : ''} ${live ? styles.miniLive : ''}`}
+      data-style={id}
+      aria-hidden
+    >
+      {Array.from({ length: n }, (_, i) => (
+        <i key={i} />
+      ))}
+    </span>
   );
 }
 
