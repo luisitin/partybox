@@ -218,6 +218,14 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
                   <Avatar avatarId={winnerAvatar} size="var(--pb-win-avatar)" />
                   <BigText level="h1">{winHeadline(view, view.winnerName)}</BigText>
                 </div>
+                {/* I-108 A: a valid claim with daubs that were never called — say so. */}
+                {view.claim.red.length > 0 ? (
+                  <p className={`${styles.strayLine} pb-enter`}>
+                    {view.spicy
+                      ? `${view.claim.red.length === 1 ? 'one fib' : `${view.claim.red.length} fibs`} and a bingo, ${view.winnerName} — we're watching you.`
+                      : `…and ${view.claim.red.length} ${view.claim.red.length === 1 ? 'daub' : 'daubs'} that ${view.claim.red.length === 1 ? 'was' : 'were'} never called — lucky the line was real.`}
+                  </p>
+                ) : null}
                 <p className={styles.winLine}>
                   <PatternIcon cells={view.patternCells} size={72} />
                   <span>
