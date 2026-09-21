@@ -16,6 +16,7 @@ export interface RoomPlayer {
   id: string;
   name: string;
   avatarId: string;
+  photo?: string;
   token: string;
   isVip: boolean;
   connected: boolean;
@@ -66,6 +67,8 @@ export type RoomEvent =
       token: string;
       name: string;
       avatarId: string;
+      /** A photo avatar (I-031): a JPEG data URL the socket already validated. */
+      photo?: string;
       existingToken?: string;
     }
   | {

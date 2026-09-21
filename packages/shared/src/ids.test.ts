@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { PHOTO_MAX_BYTES, joinPayloadSchema } from './protocol';
 import {
   AVATAR_IDS,
   isAvatarId,
@@ -50,5 +51,27 @@ describe('avatars', () => {
     expect(new Set(AVATAR_IDS).size).toBe(16);
     expect(isAvatarId('fox')).toBe(true);
     expect(isAvatarId('dragon')).toBe(false);
+  });
+});
+
+describe('joinPayloadSchema.photo (ADR-037)', () => {
+  const base = { name: 'Sam', avatarId: 'fox' };
+  it('takes a small JPEG data URL and nothing else', () => {
+    expect(
+      joinPayloadSchema.safeParse({ ...base, photo: 'data:image/jpeg;base64,/9j/4AAQ==' }).success,
+    ).toBe(true);
+    expect(joinPayloadSchema.safeParse({ ...base }).success).toBe(true);
+    expect(
+      joinPayloadSchema.safeParse({ ...base, photo: 'data:image/png;base64,iVBORw0=' }).success,
+    ).toBe(false);
+    expect(
+      joinPayloadSchema.safeParse({ ...base, photo: 'https://example.com/a.jpg' }).success,
+    ).toBe(false);
+    expect(
+      joinPayloadSchema.safeParse({
+        ...base,
+        photo: `data:image/jpeg;base64,${'A'.repeat(PHOTO_MAX_BYTES)}`,
+      }).success,
+    ).toBe(false);
   });
 });

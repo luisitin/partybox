@@ -107,3 +107,62 @@
   border-color: var(--pb-accent-2);
   background: var(--pb-surface-2);
 }
+
+/* ── I-031 A: the pick pops, the rest step back (transform + opacity). */
+.picking .selected {
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+.picking .avatarButton:not(.selected),
+.photoUp .avatarButton {
+  opacity: 0.55;
+  transition:
+    opacity var(--pb-motion-base) var(--pb-ease),
+    transform var(--pb-motion-fast) var(--pb-ease);
+}
+
+/* ── I-031 B: the portrait row — the chosen face at 96 px and the name as typed; the owner's
+   note adds "Use a photo" beside it (the phone's own camera / gallery sheet). */
+.portraitRow {
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-4);
+  min-height: 104px;
+}
+.portrait {
+  display: inline-flex;
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+.portraitSide {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--pb-space-2);
+  min-width: 0;
+}
+.portraitName {
+  font-size: var(--pb-font-h1);
+  font-weight: 900;
+  overflow-wrap: anywhere;
+}
+.photoInput {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+.photoButton {
+  min-height: var(--pb-touch);
+  padding: 0 var(--pb-space-3);
+  border-radius: var(--pb-radius);
+  border: 2px solid var(--pb-border);
+  background: var(--pb-surface);
+  color: var(--pb-text);
+  font: inherit;
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+}
+.photoHint {
+  font-size: var(--pb-font-caption);
+  color: var(--pb-danger);
+}

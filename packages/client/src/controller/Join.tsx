@@ -9,6 +9,7 @@ import type { Controller, ControllerState } from '../net/controller';
 import { useServerInfo } from '../net/info';
 import type { SoundEngine } from '../sound';
 import styles from './Join.module.css';
+import { JoinPortrait } from './JoinPortrait';
 
 export interface JoinProps {
   controller: Controller;
@@ -25,6 +26,8 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
   const [avatarId, setAvatarId] = useState<string>(
     () => session?.avatarId ?? AVATAR_IDS[Math.floor(Math.random() * AVATAR_IDS.length)] ?? 'fox',
   );
+  // I-031 (the owner): a photo avatar from the phone, kept with the name and face across sessions.
+  const [photo, setPhoto] = useState<string | null>(session?.photo ?? null);
   const [code, setCode] = useState('');
   const [submittedAt, setSubmittedAt] = useState<number | null>(null);
   const needsCode = info !== null && info.rooms.length !== 1;
@@ -93,6 +96,7 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
       name: name.trim(),
       avatarId,
       roomCode: needsCode ? code.trim().toUpperCase() : undefined,
+      ...(photo ? { photo } : {}),
     });
   };
 
@@ -125,6 +129,8 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
           </p>
         ) : null}
         {info && info.rooms.length === 0 ? <p className={styles.hint}>{t.join.noRooms}</p> : null}
+        {/* I-031 B: the portrait — the chosen face (or the photo), large, beside the name. */}
+        <JoinPortrait avatarId={avatarId} name={name} photo={photo} onPhoto={setPhoto} />
         <label className={styles.field}>
           <span className={styles.label}>{t.join.name}</span>
           <input
@@ -167,10 +173,15 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
         ) : null}
         <fieldset className={styles.avatars}>
           <legend className={styles.label}>{t.join.avatar}</legend>
-          <div className={styles.grid} role="radiogroup">
+          {/* I-031 A: the pick pops (keyed on the pick, so it pops once per change) and the rest
+              step back while one is chosen; with a photo up the whole grid steps back. */}
+          <div
+            className={`${styles.grid} ${styles.picking} ${photo ? styles.photoUp : ''}`}
+            role="radiogroup"
+          >
             {AVATAR_IDS.map((id) => (
               <button
-                key={id}
+                key={id === avatarId ? `${id}:on` : id}
                 type="button"
                 role="radio"
                 aria-checked={id === avatarId}

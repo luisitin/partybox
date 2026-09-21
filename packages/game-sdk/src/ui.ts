@@ -19,7 +19,7 @@ export type {
 } from '@partybox/shared';
 
 // ── shared ───────────────────────────────────────────────────────────────────────────────────
-export { Avatar, avatarColorVar } from './ui/Avatar';
+export { Avatar, AvatarPhotos, avatarColorVar } from './ui/Avatar';
 export type { AvatarProps } from './ui/Avatar';
 export { PlayerChip } from './ui/PlayerChip';
 export type { PlayerChipProps } from './ui/PlayerChip';

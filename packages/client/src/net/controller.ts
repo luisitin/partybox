@@ -45,6 +45,8 @@ interface Session {
   token: string;
   name: string;
   avatarId: string;
+  /** The photo avatar (I-031), a small JPEG data URL. */
+  photo?: string;
   roomCode?: string;
 }
 
@@ -69,7 +71,7 @@ function saveSession(session: Session | null): void {
 // Name + avatar outlive the session: after a kick, a server restart or the TV's Home the join form
 // is prefilled and getting back in is one tap.
 const IDENTITY_KEY = 'partybox:identity';
-export type Identity = Pick<Session, 'name' | 'avatarId'>;
+export type Identity = Pick<Session, 'name' | 'avatarId' | 'photo'>;
 
 function loadIdentity(): Identity | null {
   try {
@@ -90,7 +92,7 @@ function saveIdentity(identity: Identity): void {
 
 export interface Controller {
   store: Store<ControllerState>;
-  join(input: { name: string; avatarId: string; roomCode?: string }): void;
+  join(input: { name: string; avatarId: string; roomCode?: string; photo?: string }): void;
   sendInput(input: unknown): void;
   vip(action: VipAction): void;
   /** Add a bot you own, or remove one of yours (VIPs may remove any). */
@@ -167,6 +169,7 @@ export function createController(url?: string): Controller {
       avatarId: session.avatarId,
       roomCode: session.roomCode,
       token,
+      ...(session.photo ? { photo: session.photo } : {}),
     });
   };
 
@@ -192,7 +195,11 @@ export function createController(url?: string): Controller {
     const session = pending ?? loadSession();
     if (session) {
       saveSession({ ...session, token: payload.token, roomCode: payload.room.code });
-      saveIdentity({ name: session.name, avatarId: session.avatarId });
+      saveIdentity({
+        name: session.name,
+        avatarId: session.avatarId,
+        ...(session.photo ? { photo: session.photo } : {}),
+      });
     }
     pending = null;
     measure(payload.at);
@@ -297,6 +304,7 @@ export function createController(url?: string): Controller {
         name: input.name,
         avatarId: input.avatarId,
         roomCode: input.roomCode,
+        ...(input.photo ? { photo: input.photo } : {}),
       };
       pending = session;
       store.set({ error: null, kicked: null });

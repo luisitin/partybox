@@ -1,6 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import { LIMITS } from '@partybox/shared';
 import { applyRoomEvent, createRoom } from './room';
+import type { RoomEvent } from './types';
+import { playerInfos } from './runner';
+import { publicPlayers } from './views';
 import {
   deps,
   effectTypes,
@@ -39,6 +42,19 @@ describe('join', () => {
     expect(errorsOf(avatar.effects)).toEqual(['avatar_invalid']);
     const long = applyRoomEvent(room, joinEvent(2, T0 + 2, 'x'.repeat(17)), deps);
     expect(errorsOf(long.effects)).toEqual(['name_invalid']);
+  });
+
+  it('a photo avatar (ADR-037) rides on the player: the snapshot carries it, every avatar id becomes photo:<id>', () => {
+    const photo = 'data:image/jpeg;base64,/9j/4AAQ';
+    const room = applyRoomEvent(roomWith(1), { ...joinEvent(2), photo } as RoomEvent, deps).room;
+    const pub = publicPlayers(room).find((p) => p.id === 'p2');
+    expect(pub?.avatarId).toBe('photo:p2');
+    expect(pub?.photo).toBe(photo);
+    expect(publicPlayers(room).find((p) => p.id === 'p1')?.avatarId).toBe('fox');
+    expect(publicPlayers(room).find((p) => p.id === 'p1')?.photo).toBeUndefined();
+    const infos = playerInfos(room);
+    expect(infos.find((p) => p.id === 'p2')?.avatarId).toBe('photo:p2');
+    expect(JSON.stringify(infos)).not.toContain('base64'); // views stay small: the picture is in the snapshot only
   });
 
   it('enforces capacity and lock', () => {

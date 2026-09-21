@@ -1,6 +1,7 @@
 // Turns room state into what clients see: the RoomSnapshot (lobby/selecting/results) and the
 // per-TV / per-controller game views, decorated with the VIP (ADR-020). A view function that
 // throws (contract violation) degrades to a bare envelope instead of taking the room down.
+import { avatarIdOf } from './avatar';
 import type {
   ControllerView,
   GameSummary,
@@ -49,7 +50,8 @@ export function publicPlayers(room: RoomState): PlayerPublic[] {
     .map((p) => ({
       id: p.id,
       name: p.name,
-      avatarId: p.avatarId,
+      avatarId: avatarIdOf(p),
+      ...(p.photo ? { photo: p.photo } : {}),
       isVip: p.isVip,
       connected: p.connected,
       spectator: p.spectator,

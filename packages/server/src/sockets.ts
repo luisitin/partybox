@@ -105,6 +105,7 @@ export function createSocketLayer(server: HttpServer): SocketLayer {
           token,
           name: parsed.data.name,
           avatarId: parsed.data.avatarId,
+          ...(parsed.data.photo ? { photo: parsed.data.photo } : {}),
           existingToken: parsed.data.token,
         });
         const welcome = result?.effects.find((e) => e.type === 'welcome');

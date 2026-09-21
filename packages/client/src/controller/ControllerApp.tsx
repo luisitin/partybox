@@ -2,7 +2,7 @@
 // status. Game components are loaded lazily from the generated registry.
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { JSX } from 'react';
-import { ServerClockProvider } from '@partybox/game-sdk/ui';
+import { AvatarPhotos, ServerClockProvider } from '@partybox/game-sdk/ui';
 import { createController } from '../net/controller';
 import type { Controller } from '../net/controller';
 import { useStore } from '../net/store';
@@ -81,14 +81,16 @@ export function ControllerApp(): JSX.Element {
 
   return (
     <ServerClockProvider offsetMs={state.offsetMs}>
-      <ControllerShell controller={controller} state={state} me={me} audio={audio}>
-        <CrossfadeSwap
-          swapKey={!state.joined || !state.room || !me ? 'join' : state.room.status}
-          hold={state.room?.status === 'playing' && !gameReady}
-        >
-          {screen}
-        </CrossfadeSwap>
-      </ControllerShell>
+      <AvatarPhotos players={state.room?.players}>
+        <ControllerShell controller={controller} state={state} me={me} audio={audio}>
+          <CrossfadeSwap
+            swapKey={!state.joined || !state.room || !me ? 'join' : state.room.status}
+            hold={state.room?.status === 'playing' && !gameReady}
+          >
+            {screen}
+          </CrossfadeSwap>
+        </ControllerShell>
+      </AvatarPhotos>
     </ServerClockProvider>
   );
 }

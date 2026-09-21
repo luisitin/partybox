@@ -16,11 +16,20 @@ export const LIMITS = {
 
 // ─── client → server ────────────────────────────────────────────────────────────────────────────
 
+/** A photo avatar (I-031, the owner): a 128 × 128 JPEG the phone made, as a data URL, capped at
+ *  24 KB. `avatarId` stays required — the face is the fallback wherever the photo is absent. */
+export const PHOTO_MAX_BYTES = 24 * 1024;
+export const photoSchema = z
+  .string()
+  .max(PHOTO_MAX_BYTES)
+  .regex(/^data:image\/jpeg;base64,[A-Za-z0-9+/]+=*$/);
+
 export const joinPayloadSchema = z.object({
   roomCode: z.string().max(8).optional(),
   name: z.string().max(64),
   avatarId: z.string().max(32),
   token: z.string().max(128).optional(),
+  photo: photoSchema.optional(),
 });
 export type JoinPayload = z.infer<typeof joinPayloadSchema>;
 
@@ -71,7 +80,11 @@ export type RoomStatus = 'lobby' | 'selecting' | 'playing' | 'results';
 export interface PlayerPublic {
   id: string;
   name: string;
+  /** The face — or, for a player with a photo, `photo:<id>`: every surface that renders an
+   *  avatar id resolves it through the room's photos (I-031), so views stay small. */
   avatarId: string;
+  /** The photo avatar (a JPEG data URL), only in the room snapshot. */
+  photo?: string;
   isVip: boolean;
   connected: boolean;
   spectator: boolean;

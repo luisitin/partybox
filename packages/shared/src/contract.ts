@@ -101,6 +101,7 @@ export const settingsSchema = z.record(z.string(), z.union([z.number(), z.boolea
 export interface PlayerInfo {
   id: string;
   name: string;
+  /** The face id — or `photo:<id>` for a player with a photo avatar (I-031); pass it to `Avatar`. */
   avatarId: string;
   connected: boolean;
   /** A bot (ADR-028): a game may act for it where a person would tap (Bingo's ready-up). */

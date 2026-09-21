@@ -90,6 +90,10 @@ score — gets their face (72 px) beside the line and the hero takes `pb-crown` 
 behind it (48 pieces, 16 for a bot); the board or finale under it holds 55 % opacity for a beat and returns over two
 `--pb-motion-slow` beats (1.2 s) so the name reads first. A tie or a scoreless game keeps the plain rising line.
 Bingo's daub (loop 238) lands as a stamp; on the phone the ink then stays as an irregular blot in the player's own colour (`--pb-daub` = the roster's `--pb-player-N`; the TV and every verdict card keep the flat daub), and the tap that completes a line bumps its five cells in order (`pb-bump`, 60 ms apart — I-010).
+Photo avatars (I-031, ADR-037): the join form's portrait row — the picked face at 96 px beside the name, popping on each
+pick while the grid's other cells step back to 55 % — carries "Use a photo": the phone's own camera / gallery sheet, a
+128 × 128 JPEG made on the phone, shown at once and sent with the join. `Avatar` renders a `photo:<id>` avatar id as a
+circular `<img>` (object-fit cover) from the shell's `AvatarPhotos` context, the face otherwise; `dim` still applies.
 The lobby (I-029): a fresh chip walks in from the QR's side as it pops (`pb-chip-walk`, `--pb-motion-base`) and wears a
 gold welcome ring that fades over `--pb-motion-pulse` once landed; two soft radial glows in the accents drift behind the
 stage (14 s / 17 s loops at 18 %, transform only — still under reduced motion). The walk is the `enter` chips' entrance

@@ -5,6 +5,11 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Character select** (I-031, option B + the owner's note): the join form shows the picked face large
+  beside the name, popping on each pick while the other cells step back; "Use a photo" takes a
+  picture from the phone (camera or gallery), crops it to a 128 × 128 JPEG on the phone and sends it
+  with the join (`photo`, capped at 24 KB, ADR-037) — every chip, scoreboard, roster and card
+  everywhere shows the photo through `Avatar`, with no game changes.
 - **The lobby is alive** (I-029, option C): a joiner's chip walks in from the QR's side with a gold
   welcome ring that fades over a second, and two soft glows in the brand accents drift slowly behind
   the stage (still under reduced motion).

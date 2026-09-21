@@ -68,6 +68,7 @@ export function join(room: RoomState, event: JoinEvent, deps: EngineDeps): Apply
     id: event.playerId,
     name,
     avatarId: event.avatarId,
+    ...(event.photo ? { photo: event.photo } : {}),
     token: event.token,
     isVip,
     connected: true,

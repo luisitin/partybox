@@ -2,7 +2,7 @@
 // transitions, and never sends player events. `?room=CODE` watches a specific room.
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { JSX } from 'react';
-import { ServerClockProvider, isSoundCue } from '@partybox/game-sdk/ui';
+import { AvatarPhotos, ServerClockProvider, isSoundCue } from '@partybox/game-sdk/ui';
 import { clientGames } from '../games.generated';
 import { useStore } from '../net/store';
 import { createTvClient } from '../net/tv';
@@ -226,24 +226,26 @@ export function TvApp(): JSX.Element {
 
   return (
     <ServerClockProvider offsetMs={state.offsetMs}>
-      <TvFrame
-        room={room}
-        connected={state.connected}
-        toasts={state.toasts}
-        compact={room?.status === 'playing'}
-        onHome={client.home}
-        footer={room ? <HostBar client={client} room={room} view={view} /> : null}
-      >
-        {/* Game start: hold the lobby until the first game view has painted, so the stage never
-            flickers through "Connecting…" / empty / "Getting the game ready…" (review-loop #10). */}
-        <CrossfadeSwap
-          swapKey={room?.status ?? 'none'}
-          className={styles.swap}
-          hold={room?.status === 'playing' && !gameReady}
+      <AvatarPhotos players={room?.players}>
+        <TvFrame
+          room={room}
+          connected={state.connected}
+          toasts={state.toasts}
+          compact={room?.status === 'playing'}
+          onHome={client.home}
+          footer={room ? <HostBar client={client} room={room} view={view} /> : null}
         >
-          {content}
-        </CrossfadeSwap>
-      </TvFrame>
+          {/* Game start: hold the lobby until the first game view has painted, so the stage never
+            flickers through "Connecting…" / empty / "Getting the game ready…" (review-loop #10). */}
+          <CrossfadeSwap
+            swapKey={room?.status ?? 'none'}
+            className={styles.swap}
+            hold={room?.status === 'playing' && !gameReady}
+          >
+            {content}
+          </CrossfadeSwap>
+        </TvFrame>
+      </AvatarPhotos>
       <AudioGate audio={audio} music={music} beds={beds} />
     </ServerClockProvider>
   );

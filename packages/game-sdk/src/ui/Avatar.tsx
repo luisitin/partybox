@@ -1,14 +1,38 @@
 // The 16 built-in avatars as inline SVG (no image files, ADR-012). Each is a coloured disc with a
 // simple face so it reads at 40 px on a phone and 72 px on a TV. Colour = index % 8 (design system).
-import type { JSX } from 'react';
+import { createContext, useContext, useMemo } from 'react';
+import type { JSX, ReactNode } from 'react';
 import { AVATAR_IDS } from '@partybox/shared';
 
 export interface AvatarProps {
+  /** A face id — or `photo:<playerId>` (I-031): the picture comes from `AvatarPhotos`. */
   avatarId: string;
+  /** A photo avatar to show instead of the face (a JPEG data URL — the join form's preview). */
+  photo?: string;
   size?: number | string;
   className?: string;
   /** Rendered dimmer (disconnected / spectator). */
   dim?: boolean;
+}
+
+/** The room's photo avatars by player id (I-031, the owner: "upload your own photo"). The shell
+ *  provides it from the room snapshot; a `photo:<id>` avatar id anywhere resolves through it. */
+const PhotoContext = createContext<ReadonlyMap<string, string>>(new Map());
+const PHOTO_PREFIX = 'photo:';
+
+export function AvatarPhotos({
+  players,
+  children,
+}: {
+  players?: readonly { id: string; photo?: string }[];
+  children: ReactNode;
+}): JSX.Element {
+  const map = useMemo(() => {
+    const m = new Map<string, string>();
+    for (const p of players ?? []) if (p.photo) m.set(p.id, p.photo);
+    return m;
+  }, [players]);
+  return <PhotoContext.Provider value={map}>{children}</PhotoContext.Provider>;
 }
 
 const INK = '#1a0b12';
@@ -171,16 +195,47 @@ const ART: Record<string, JSX.Element> = {
 };
 
 export function avatarColorVar(avatarId: string): string {
-  const index = Math.max(0, (AVATAR_IDS as readonly string[]).indexOf(avatarId));
+  // A photo player has no face colour: a stable one from the id (I-031).
+  const index = avatarId.startsWith(PHOTO_PREFIX)
+    ? [...avatarId].reduce((h, c) => (h * 31 + c.charCodeAt(0)) % 8, 0)
+    : Math.max(0, (AVATAR_IDS as readonly string[]).indexOf(avatarId));
   return `var(--pb-player-${(index % 8) + 1})`;
 }
 
 export function Avatar({
   avatarId,
+  photo,
   size = 'var(--pb-chip-size)',
   className,
   dim,
 }: AvatarProps): JSX.Element {
+  const photos = useContext(PhotoContext);
+  const src =
+    photo ??
+    (avatarId.startsWith(PHOTO_PREFIX)
+      ? photos.get(avatarId.slice(PHOTO_PREFIX.length))
+      : undefined);
+  if (src)
+    return (
+      <img
+        src={src}
+        alt=""
+        role="img"
+        aria-label="photo avatar"
+        width={typeof size === 'number' ? size : undefined}
+        height={typeof size === 'number' ? size : undefined}
+        className={className}
+        style={{
+          width: size,
+          height: size,
+          borderRadius: '50%',
+          objectFit: 'cover',
+          opacity: dim ? 0.45 : 1,
+          flexShrink: 0,
+          display: 'block',
+        }}
+      />
+    );
   const art = ART[avatarId] ?? ART['ghost'];
   return (
     <svg

@@ -1,5 +1,6 @@
 // GameRunner: the bridge between a room and a pure GameDefinition. Starts games, feeds them events
 // (catching anything a buggy reducer throws), detects the end, and turns deadlines into ticks.
+import { avatarIdOf } from './avatar';
 import type { GameEvent, GameStateBase, PlayerInfo, Settings } from '@partybox/shared';
 import { LIMITS } from '@partybox/shared';
 import type { ApplyResult, Effect, EngineDeps, RoomState, RunningGame } from './types';
@@ -10,7 +11,7 @@ export function playerInfos(room: RoomState): PlayerInfo[] {
     .map((p) => ({
       id: p.id,
       name: p.name,
-      avatarId: p.avatarId,
+      avatarId: avatarIdOf(p),
       connected: p.connected,
       ...(p.bot ? { bot: true } : {}),
     }));
