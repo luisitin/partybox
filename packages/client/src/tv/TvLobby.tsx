@@ -65,7 +65,9 @@ export function TvLobby({ room }: TvLobbyProps): JSX.Element {
               status: p.spectator ? 'spectator' : 'active',
             }))}
             vip={room?.vip}
+            activeIds={vip ? [vip.id] : []}
             botIds={players.filter((p) => p.bot).map((p) => p.id)}
+            thinkingIds={vip ? [vip.id] : []}
             layout="grid"
             size={players.length > 8 ? 'md' : 'lg'}
             align="start"
