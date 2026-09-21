@@ -33,6 +33,8 @@ export function finalBeatsMs(players: number): readonly number[] {
   return [0, boardLandedMs(players, { dense: players >= 5 }) + BEST_CARD_GAP_MS];
 }
 const BEAT_BEST = 1;
+/** I-019: the final board's totals hold as "—" this long (the tease under them), then count up. */
+const HOLD_MS = 1_600;
 const BEAT_AUTHORS = 1;
 const BEAT_WINNER = 2;
 /** I-005 A: the voter chips land this far apart (the CSS `.voterIn` delay uses the same figure). */
@@ -149,6 +151,7 @@ function TvFinal({ view }: Props): JSX.Element {
           <Scoreboard
             rows={view.standings}
             noTrophy
+            holdMs={HOLD_MS}
             stagger="up"
             dense={view.standings.length >= 5}
             size={view.standings.length >= 9 ? 'sm' : 'md'}
