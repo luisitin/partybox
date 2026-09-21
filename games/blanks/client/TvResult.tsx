@@ -16,8 +16,9 @@ import {
   useSound,
 } from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
-import type { BlanksTvView, RevealedCard } from '../server/index';
+import type { BlanksTvView } from '../server/index';
 import { FilledCard, LETTERS } from './Cards';
+import { Author, Voters } from './TvResultParts';
 import styles from './blanks.module.css';
 
 type Props = GameTvProps<BlanksTvView>;
@@ -56,7 +57,7 @@ export function winnerLine(
   }
   const humans = winners.filter((w) => !w.rando).map((w) => w.name);
   // Rando alone is the room's shame; a tie with Rando still names who scored (review-loop #124).
-  if (humans.length === 0) return 'Rando wins. Shame on all of you.';
+  if (humans.length === 0) return 'Rando wins this one! Shame on all of you.';
   if (humans.length < winners.length) return `${list(humans)} split it with Rando`;
   const names = humans;
   if (view.walkover) return `Only ${names[0]} played — wins by default`;
@@ -82,50 +83,6 @@ export function votesLabel(
   if (votes === 0) return null;
   if (view.judgeMode === 'czar') return view.czar ? `${view.czar.name}'s pick` : "Judge's pick";
   return `${votes} ${votes === 1 ? 'vote' : 'votes'}`;
-}
-
-/** Who voted for this card: up to six avatars with names, then "+n" (review-loop #170). */
-function Voters({ card }: { card: RevealedCard }): JSX.Element | null {
-  if (card.voters.length === 0) return null;
-  const shown = card.voters.slice(0, 6);
-  const rest = card.voters.length - shown.length;
-  return (
-    <span className={styles.voters}>
-      {shown.map((v, i) => (
-        // I-005 A: one at a time, 120 ms apart (--pb-i), with a lock note each (TvResult's effect)
-        <span
-          key={v.id}
-          className={`${styles.voter} ${styles.voterIn}`}
-          style={{ '--pb-i': i } as CSSProperties}
-        >
-          <Avatar avatarId={v.avatarId} size="var(--pb-chip-size)" />
-          <span className={styles.authorName}>{v.name}</span>
-        </span>
-      ))}
-      {rest > 0 ? <span className={styles.authorName}>+{rest}</span> : null}
-    </span>
-  );
-}
-
-function Author({
-  card,
-  shown,
-  label,
-}: {
-  card: RevealedCard;
-  shown: boolean;
-  label: string | null;
-}): JSX.Element {
-  return (
-    <span
-      className={`${styles.author} ${shown ? styles.rise : styles.pending}`}
-      aria-hidden={!shown}
-    >
-      <Avatar avatarId={card.avatarId} size="var(--pb-chip-size)" />
-      <span className={styles.authorName}>{card.name}</span>
-      {label ? <span className={styles.voteCount}>{label}</span> : null}
-    </span>
-  );
 }
 
 function TvFinal({ view }: Props): JSX.Element {
@@ -195,6 +152,11 @@ export function TvResult({ view }: Props): JSX.Element {
   useEffect(() => {
     if (beat >= BEAT_WINNER && humanWin) play('sweep');
   }, [beat, humanWin, play]);
+  // I-018 B: the deck's win gets its own sting — the sad two-note `bust` where the sweep would be.
+  const deckWin = winners.length > 0 && !humanWin;
+  useEffect(() => {
+    if (beat >= BEAT_WINNER && deckWin) play('bust');
+  }, [beat, deckWin, play]);
   // I-005 A: a `lock` note per voter chip as it lands (vote mode; up to six chips are shown) — on
   // the authors beat only: the branch's `beat >= BEAT_AUTHORS` played the run again at the winner.
   const voterCount = Math.min(6, Math.max(0, ...winners.map((w) => w.voters.length)));
@@ -252,6 +214,11 @@ export function TvResult({ view }: Props): JSX.Element {
         <BigText level="h1" tone="accent">
           {winnerLine(view)}
         </BigText>
+        {deckWin ? (
+          <BigText level="h2" tone="muted">
+            Nobody's score moves.
+          </BigText>
+        ) : null}
       </div>
       {winners.length > 0 && view.black ? (
         <div
@@ -278,10 +245,11 @@ export function TvResult({ view }: Props): JSX.Element {
               <Author card={w} shown={beat >= BEAT_AUTHORS} label={votesLabel(view, w.votes)} />
               {/* Who voted for it, on the same beat the authors land. */}
               {beat >= BEAT_AUTHORS && view.judgeMode === 'vote' ? <Voters card={w} /> : null}
+              {/* I-018 C: the deck's point goes to nobody — say so where the +1 would pop. */}
               <span
-                className={`${styles.plusOne} ${named && !w.rando ? styles.pop : styles.pending}`}
+                className={`${styles.plusOne} ${w.rando ? styles.plusNobody : ''} ${named ? styles.pop : styles.pending}`}
               >
-                +1
+                {w.rando ? '+0 · nobody' : '+1'}
               </span>
             </FilledCard>
           ))}

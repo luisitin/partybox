@@ -66,7 +66,7 @@ Anything else leaves the state unchanged.
 
 One point per round to the most-voted card's author; a tie shares the point. One submission is a
 **walkover** (no reading, no vote, one point). Two submissions whose authors are the only voters skip the
-vote too (each could only vote for the other): both take the point. No votes → nobody scores. Rando's wins pay nobody. Points
+vote too (each could only vote for the other): both take the point. No votes → nobody scores. Rando's wins pay nobody — and the TV makes a beat of it (I-018): a card-stack mascot as Rando's face (A), the sad `bust` where the `sweep` would land (B), a muted "+0 · nobody" badge and "Nobody's score moves." under "Rando wins this one! Shame on all of you." (C). Points
 lock in when `result` starts, once per round. Ties share a rank; winners = every rank-1 player. Awards
 (a real player each; ties → higher score, then lower id): **Card of the night** (the night’s best-liked
 card, quoted with its vote count — never Rando’s; with a judge, its round instead: every pick is one

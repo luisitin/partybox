@@ -5,6 +5,10 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **A Rando win in Blanks is its own beat** (I-018, option C): Rando's card is authored by a
+  card-stack mascot (the owner's note: still named Rando), the headline reads "Rando wins this
+  one! Shame on all of you.", the sad `bust` lands where a human win's `sweep` would, and the +1
+  is a muted "+0 · nobody" with "Nobody's score moves." under the headline.
 - **Bingo tells the room who is one away** (R2-01, option C) behind a new `showClose` setting,
   off by default (the owner's note): the strip rings the players one daub from the pattern, "Sam is
   one away" rises under the nickname and the room hears the phone's hushed `close` once per player
