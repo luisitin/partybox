@@ -90,6 +90,8 @@ export interface BlanksControllerView extends ControllerView {
   cardCount: number;
   /** judge: what this phone may do. `mySlot` is my own card (not votable). */
   vote: { canVote: boolean; mySlot: number | null; votedSlot: number | null } | null;
+  /** I-149 A: the side bet, for a phone that is not the judge (null for the judge and in vote mode). */
+  guess: { canGuess: boolean; mySlot: number | null; guessedSlot: number | null } | null;
   votedCount: number;
   votersExpected: number;
   revealed: RevealedCard[];
@@ -224,6 +226,14 @@ export function controllerView(
     cards: stageCards(state),
     revealIndex: phase === 'reveal' ? state.revealIndex : -1,
     cardCount: state.slots.length,
+    guess:
+      phase === 'judge' && player && state.settings.judge === 'czar' && !isCzar(state, playerId)
+        ? {
+            canGuess: true,
+            mySlot: state.slots.findIndex((id) => id === playerId),
+            guessedSlot: state.guesses?.[playerId] ?? null,
+          }
+        : null,
     vote:
       phase === 'judge' && player
         ? {

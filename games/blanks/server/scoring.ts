@@ -27,6 +27,10 @@ export function applyRound(state: State): State {
   for (const id of winners)
     if (id !== RANDO && Object.hasOwn(state.players, id))
       scores[id] = (scores[id] ?? 0) + WIN_POINTS;
+  // I-149 A: a called shot is worth half. The winning SLOT is what was called, not the author.
+  for (const [id, slot] of Object.entries(state.guesses ?? {}))
+    if (Object.hasOwn(state.players, id) && winners.includes(state.slots[slot] ?? ''))
+      scores[id] = (scores[id] ?? 0) + 0.5;
   for (const row of tally(state))
     if (row.submitterId !== RANDO && Object.hasOwn(state.players, row.submitterId))
       votesReceived[row.submitterId] = (votesReceived[row.submitterId] ?? 0) + row.votes;

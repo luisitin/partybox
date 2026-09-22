@@ -75,8 +75,18 @@ export function judgeReturns(state: State, playerId: string, now: number): State
   return { ...state, phase: { ...state.phase, deadline: now + ms } };
 }
 
+/** I-149 A: a non-judge's call on what the judge will take. Never their own card; one per round
+ *  (a retap moves it, which is the same freedom the vote has). */
+export function applyGuess(state: State, playerId: string, slot: number): State {
+  if (state.settings.judge !== 'czar' || state.czarId === playerId) return state;
+  if (!Object.hasOwn(state.players, playerId)) return state;
+  if (slot < 0 || slot >= state.slots.length || state.slots[slot] === playerId) return state;
+  return { ...state, guesses: { ...state.guesses, [playerId]: slot } };
+}
+
 export function reduceJudge(state: State, event: GameEvent<Input>, next: Transition): State {
   if (event.type === 'input') {
+    if (event.input.type === 'guess') return applyGuess(state, event.playerId, event.input.slot);
     if (event.input.type !== 'vote') return state;
     const after = applyVote(state, event.playerId, event.input);
     if (after === state) return state;
