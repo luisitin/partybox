@@ -55,6 +55,27 @@ export function Ball({
  * dropped 20 px at call 2). Call 1 has no "before that", and no stray "·" in front of it.
  */
 export function CallRow({ view }: { view: BingoControllerView }): JSX.Element {
+  // I-113 B: with "Previous number" off the phone keeps the last three calls it has seen and
+  // shows them for two seconds when "call N" is tapped — a lifeline, not a display.
+  const [seen, setSeen] = useState<CallView[]>([]);
+  const [peekUntil, setPeekUntil] = useState(0);
+  const [peeks, setPeeks] = useState(0);
+  const [lastIndex, setLastIndex] = useState(view.callIndex);
+  if (view.callIndex !== lastIndex) {
+    setLastIndex(view.callIndex);
+    if (view.current && view.callIndex > lastIndex) setSeen((s) => [view.current as CallView, ...s].slice(0, 4));
+    if (view.callIndex < lastIndex) {
+      setSeen([]);
+      setPeeks(0);
+    }
+  }
+  const peeking = peekUntil > Date.now();
+  useEffect(() => {
+    if (!peeking) return undefined;
+    const h = setTimeout(() => setPeekUntil(0), Math.max(0, peekUntil - Date.now()));
+    return () => clearTimeout(h);
+  }, [peeking, peekUntil]);
+  const lifeline = view.previous === null && view.current !== null && seen.length > 1;
   return (
     <div className={styles.callRow} role="status" aria-live="polite">
       {view.current ? <Ball call={view.current} /> : <span>First number coming…</span>}
@@ -66,7 +87,30 @@ export function CallRow({ view }: { view: BingoControllerView }): JSX.Element {
               {' · '}
             </>
           ) : null}
-          call {view.callIndex}
+          {peeking ? (
+            <>
+              {seen.slice(1, 4).map((c) => (
+                <Ball key={`${c.letter}${c.number}`} call={c} size="sm" />
+              ))}
+              {' · '}
+            </>
+          ) : null}
+          {lifeline ? (
+            <button
+              type="button"
+              className={styles.peek}
+              onClick={() => {
+                setPeekUntil(Date.now() + 2000);
+                setPeeks((n) => n + 1);
+              }}
+              aria-label="peek at the last three calls"
+            >
+              call {view.callIndex}
+            </button>
+          ) : (
+            <>call {view.callIndex}</>
+          )}
+          {peeks > 0 ? ` · peeked ×${peeks}` : ''}
         </span>
       ) : null}
     </div>
