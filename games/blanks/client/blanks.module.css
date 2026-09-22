@@ -1613,3 +1613,22 @@
 .redraw:disabled {
   opacity: 0.5;
 }
+
+/* ── I-142 A: the clock the slots carry — a rule under the row, draining with the phase. */
+.slotClock {
+  width: min(52vw, 720px);
+  height: 4px;
+  margin: var(--pb-space-2) auto 0;
+  border-radius: 999px;
+  background: var(--pb-surface-2);
+  overflow: hidden;
+}
+.slotClockFill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--pb-accent);
+  transform-origin: left center;
+  transform: scaleX(var(--pb-left, 1));
+  transition: transform 1s linear;
+}
