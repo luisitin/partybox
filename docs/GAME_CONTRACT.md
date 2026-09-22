@@ -188,6 +188,8 @@ export const clientModule: GameClientModule = {
   stripActive: (view) => [], // optional: player ids the TV strip rings as "on" — whoever the room should look at (I-017)
   ownLocks: ['answer'], // optional: TV phases where the game sounds its own lock-ins; the shell's `lock` tick stays quiet there (I-020)
   PhoneSettings: lazy(() => import('./PhonePanel')), // optional: the game's per-phone settings panel for the lobby's 🎨 sheet, under the game's name (S-003)
+  PhoneStage: lazy(() => import('./PhoneStage')), // optional: in a "phone only" room the phones show what the TV would for `phoneStagePhases`, in place of the Controller (S-005)
+  phoneStagePhases: ['bingo'],
 };
 ```
 

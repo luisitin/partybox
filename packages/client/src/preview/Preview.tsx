@@ -67,6 +67,7 @@ function fakeRoom(gameId: string, view: PushedView<TvView>): RoomSnapshot {
     canStart: { ok: false, reason: 'preview' },
     recording: true,
     musicOnPhones: false,
+    phoneOnly: false,
   };
 }
 

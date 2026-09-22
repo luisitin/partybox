@@ -57,6 +57,8 @@ export const vipPayloadSchema = z.discriminatedUnion('action', [
   z.object({ action: z.literal('setRecording'), on: z.boolean() }),
   /** S-004 (the owner): every phone plays the room's music when this is on. */
   z.object({ action: z.literal('setMusicOnPhones'), on: z.boolean() }),
+  /** S-005: the room's "phone only" mode; any time but mid-game. */
+  z.object({ action: z.literal('setPhoneOnly'), on: z.boolean() }),
 ]);
 export type VipAction = z.infer<typeof vipPayloadSchema>;
 
@@ -132,6 +134,8 @@ export interface RoomSnapshot {
   recording: boolean;
   /** S-004: every phone plays the room's music plan (the VIP's switch, default off). */
   musicOnPhones: boolean;
+  /** S-005: "phone only" — games hand the phones what the TV would show; set by the VIP. */
+  phoneOnly: boolean;
 }
 
 export interface WelcomePayload {

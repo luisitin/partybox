@@ -8,6 +8,11 @@ export const clientModule: GameClientModule = {
   Controller: lazy(() => import('./Controller').then((m) => ({ default: m.Controller }))),
   // S-003: the card style and Motion, set up in the lobby.
   PhoneSettings: lazy(() => import('./PhonePanel').then((m) => ({ default: m.PhonePanel }))),
+  // S-005: in a phone-only room the check and the win are shown on every phone.
+  PhoneStage: lazy(() =>
+    import('./PhoneStage').then((m) => ({ default: m.PhoneStage })),
+  ) as unknown as GameClientModule['PhoneStage'],
+  phoneStagePhases: ['check'], // the win keeps the phone's own screen (the Next-round choice lives there)
   // Both phases cue themselves once the claimed card has landed (a cheer or the buzzer, Tv.tsx):
   // nothing on entry.
   // The final board is a scores moment (the drumroll); the results fanfare follows it.

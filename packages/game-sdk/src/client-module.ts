@@ -66,6 +66,12 @@ export interface GameClientModule {
   /** S-003 C: one line of the current setup for the lobby ("Focus · Motion on"). */
   phoneSetup?: () => string;
   /**
+   * S-005: in a "phone only" room the phones show what the TV would for these phases — a lazy
+   * component taking the controller view, rendered by the shell in place of the Controller.
+   */
+  PhoneStage?: LazyExoticComponent<ComponentType<{ view: PushedView<ControllerView> }>>;
+  phoneStagePhases?: readonly string[];
+  /**
    * TV phase ids where the game plays its own lock-in sound (I-020: Blanks' `card` pluck as a
    * submission lands on the table); the shell's per-push `lock` tick stays quiet there so one
    * lock-in is one note. Default: the shell ticks.

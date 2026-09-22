@@ -1353,3 +1353,10 @@
   display: grid;
   gap: var(--pb-space-2);
 }
+
+/* ── S-005 A: the check on a phone — the phone's own card, centred. */
+.phoneStageCard {
+  width: 100%;
+  max-width: 360px;
+  margin: var(--pb-space-3) auto;
+}

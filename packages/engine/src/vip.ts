@@ -174,6 +174,13 @@ export function applyVip(
       if (room.musicOnPhones === action.on) return { room, effects: [] };
       return { room: { ...room, musicOnPhones: action.on }, effects: [{ type: 'push' }] };
     }
+    case 'setPhoneOnly': {
+      // S-005: like the recap switch — any time but mid-game.
+      if (room.status === 'playing')
+        return reject(room, playerId, 'cannot_start', 'Change that before the next game.');
+      if (room.phoneOnly === action.on) return { room, effects: [] };
+      return { room: { ...room, phoneOnly: action.on }, effects: [{ type: 'push' }] };
+    }
     case 'toLobby': {
       if (room.status === 'playing')
         return reject(room, playerId, 'cannot_start', 'End the current game first.');

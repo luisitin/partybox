@@ -75,6 +75,7 @@ export function snapshot(room: RoomState, deps: EngineDeps): RoomSnapshot {
     canStart: canStart(room, deps),
     recording: room.recording,
     musicOnPhones: room.musicOnPhones,
+    phoneOnly: room.phoneOnly,
   };
 }
 
@@ -112,7 +113,11 @@ export function controllerView(
   if (!game) return null;
   const role = Object.hasOwn(running.state.players, playerId) ? 'player' : 'spectator';
   try {
-    return { ...game.controllerView(running.state, playerId), vip: room.vipId };
+    return {
+      ...game.controllerView(running.state, playerId),
+      vip: room.vipId,
+      phoneOnly: room.phoneOnly,
+    };
   } catch {
     return { ...fallbackEnvelope(room), me: { id: playerId, role }, vip: room.vipId };
   }

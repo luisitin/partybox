@@ -5,7 +5,13 @@
 // and judges only the claim, on the card named.
 import { useEffect, useState } from 'react';
 import type { CSSProperties, JSX } from 'react';
-import { Screen, WaitingScreen, avatarColorVar, useSound } from '@partybox/game-sdk/ui';
+import {
+  Screen,
+  WaitingScreen,
+  avatarColorVar,
+  useSound,
+  useSoundApi,
+} from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { Input } from '../server/types';
 import type { BingoControllerView } from '../server/views';
@@ -33,7 +39,15 @@ import {
 import type { CardStyle } from './styles';
 import { otherTitle, whyNot } from './copy';
 import { EndScreens, afterLine, WinScreen } from './WinScreen';
-import { useCallFeel, useCloseFeel, useDealFeel, useLandscape, useVerdictFeel } from './feel';
+import {
+  useCallFeel,
+  useCloseFeel,
+  useDealFeel,
+  useLandscape,
+  useMissedCalls,
+  useRoundReset,
+  useVerdictFeel,
+} from './feel';
 
 import styles from './Controller.module.css';
 
@@ -57,6 +71,7 @@ export function Controller({
     : null;
   const verdictShown = view.verdictShown;
   const play = useSound();
+  const sound = useSoundApi();
   useVerdictFeel(view, me.id, claimKey, verdictShown, play);
   useDealFeel(view.phaseId === 'intro', n, view.round, play);
   // A valid claim too: the room learns who won from the TV, not from a phone flipping first.
@@ -77,37 +92,22 @@ export function Controller({
   const toggleFree = (c: number): void =>
     setFreeDaubed((v) => (v.includes(c) ? v.filter((i) => i !== c) : [...v, c]));
   const daub = (c: number, index: number): void => daubWithFeel(view, send, play, c, index);
-  useCallFeel(view);
+  useCallFeel(view, view.phoneOnly ? sound : null); // S-005 B
   useCloseFeel(view, play);
-  // The card up just won: bring a live card up instead — once, at the moment it wins, so a won
-  // card picked on purpose later (to daub towards a blackout) stays up.
+  // The card up just won: a live card comes up once, at that moment (a won card picked later stays).
   const liveUp = cards?.findIndex((_, i) => !view.won.includes(i)) ?? -1;
   const [wonSeen, setWonSeen] = useState(view.won.length);
   if (view.won.length !== wonSeen) {
     setWonSeen(view.won.length);
     if (cards && view.won.includes(up) && liveUp >= 0 && liveUp !== up) setUp(liveUp);
   }
-  const [round, setRound] = useState(view.round);
-  if (round !== view.round) {
-    setRound(view.round);
+  useRoundReset(view.round, () => {
     setFreeDaubed([]);
     setUp(0);
     setPick(0);
     setSwaps(0);
-  }
-  // Calls that landed while this phone was away (review-loop #4).
-  const [seenCall, setSeenCall] = useState(view.callIndex);
-  const [missed, setMissed] = useState(0);
-  if (view.callIndex !== seenCall) {
-    const jumped = view.callIndex - seenCall;
-    setSeenCall(view.callIndex);
-    if (jumped > 1 && view.phaseId === 'play') setMissed(jumped - 1);
-  }
-  useEffect(() => {
-    if (!missed) return;
-    const handle = setTimeout(() => setMissed(0), 5000);
-    return () => clearTimeout(handle);
-  }, [missed]);
+  });
+  const missed = useMissedCalls(view);
   // The sheet holds the caller for everyone: the server hears it open and close.
   const openMenu = (): void => {
     setSheet(view.phaseId === 'intro' ? 'intro' : 'round');

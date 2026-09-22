@@ -5,6 +5,10 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **"Phone only" rooms** (S-005, option C): a VIP switch on the picker; Bingo's check — the claim,
+  the card turning over, the verdict — plays on every phone (`PhoneStage` + `phoneStagePhases`,
+  a client-module hook), each call is spoken by the caller on the phones, and the TV's phase cues
+  play on phones that keep "TV sounds on this phone" on. ADR-041.
 - **Music on the phones** (S-004, option C + the owner's note): a per-phone "Music on this phone"
   switch with soft / normal / loud and a "♪ Lobby set" line, and the VIP's "Music on every phone"
   room switch (`setMusicOnPhones`, in the snapshot) that plays the room's plan on every phone

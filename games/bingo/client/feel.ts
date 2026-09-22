@@ -4,10 +4,11 @@
 // ref, not state, so no render is scheduled.
 import { useEffect, useRef, useState } from 'react';
 import { buzz } from '@partybox/game-sdk/ui';
+import type { SoundApi } from '@partybox/game-sdk/ui';
 import type { PlayCue } from '@partybox/game-sdk/ui';
 import type { BingoControllerView } from '../server/views';
 import { DEAL_BOUNCE_MS, DEAL_START_MS, DEAL_STEP_MS } from '../server/types';
-import { BALL_LAND_MS } from './caller';
+import { BALL_LAND_MS, speakCall } from './caller';
 import { wantedCells } from './close';
 
 export function useVerdictFeel(
@@ -43,16 +44,27 @@ export function useVerdictFeel(
  * Every new number: a short buzz as the nickname lands — BALL_LAND_MS after the push, the beat
  * the TV's ball squashes on — so every phone in the room feels the call together (loop 248).
  */
-export function useCallFeel(view: BingoControllerView): void {
+export function useCallFeel(view: BingoControllerView, voice?: SoundApi | null): void {
   // A call is the server's stamp (loop 294): a countdown or a hold shows the number without
   // calling it, and the repeat after "keep going" is a new stamp — one buzz per real call.
   const stamp =
     view.phaseId === 'play' && view.resumeAt === null && view.pausedBy.length === 0
       ? view.calledAt
       : null;
+  // S-005 B: phone-only — the caller's voice from the phone, as the TV would say it. What to
+  // say is kept in a ref (written in its own, earlier effect) so the call effect keys on the
+  // stamp alone: one voice per real call, never a repeat when the voice or the view changes.
+  const say = useRef<{ voice: SoundApi | null; letter: string; number: number } | null>(null);
+  useEffect(() => {
+    say.current = view.current
+      ? { voice: voice ?? null, letter: view.current.letter, number: view.current.number }
+      : null;
+  });
   useEffect(() => {
     if (stamp === null) return;
     const t = setTimeout(() => buzz(12), BALL_LAND_MS);
+    const s = say.current;
+    if (s?.voice) speakCall(s.voice, s.letter, s.number);
     return () => clearTimeout(t);
   }, [stamp]);
 }
@@ -115,4 +127,30 @@ export function useLandscape(): boolean {
     return () => mq.removeEventListener('change', h);
   }, []);
   return on;
+}
+
+/** Calls that landed while this phone was away (review-loop #4): how many, for five seconds. */
+export function useMissedCalls(view: BingoControllerView): number {
+  const [seenCall, setSeenCall] = useState(view.callIndex);
+  const [missed, setMissed] = useState(0);
+  if (view.callIndex !== seenCall) {
+    const jumped = view.callIndex - seenCall;
+    setSeenCall(view.callIndex);
+    if (jumped > 1 && view.phaseId === 'play') setMissed(jumped - 1);
+  }
+  useEffect(() => {
+    if (!missed) return;
+    const handle = setTimeout(() => setMissed(0), 5000);
+    return () => clearTimeout(handle);
+  }, [missed]);
+  return missed;
+}
+
+/** A new round: the per-round phone state resets, during render (the adjust-on-change pattern). */
+export function useRoundReset(round: number, reset: () => void): void {
+  const [seen, setSeen] = useState(round);
+  if (seen !== round) {
+    setSeen(round);
+    reset();
+  }
 }
