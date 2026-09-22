@@ -334,6 +334,7 @@ export function ClaimStage({
               green={claim.green}
               red={valid && !keepRed ? [] : claim.red} /* I-108 B: the strays stay red on a win */
               missing={claim.missing}
+              waiting={claim.waiting}
               size="tv"
               verdict
               revealOrder={turning ? order : []}

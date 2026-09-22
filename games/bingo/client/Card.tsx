@@ -21,6 +21,8 @@ export interface CardProps {
   green?: number[];
   red?: number[];
   missing?: number[];
+  /** I-132 B: pattern cells still to be called — a plain dotted outline, not the amber slip. */
+  waiting?: number[];
   /** Phone only: tap to toggle. */
   onTap?: (index: number) => void;
   /** Phone only: the FREE square is tappable too (it always counts; daubing it is the fun part). */
@@ -73,6 +75,7 @@ export function Card({
   green = [],
   red = [],
   missing = [],
+  waiting = [],
   onTap,
   onTapFree,
   freeDaubed = true,
@@ -96,6 +99,7 @@ export function Card({
   const greenSet = new Set(green);
   const redSet = new Set(red);
   const missingSet = new Set(missing);
+  const waitingSet = new Set(waiting);
   const interactive = onTap !== undefined && !disabled;
   // Which cells changed since the last daubs the card was given (the stamp plays on the one just
   // daubed, the lift on the one just cleared): "adjust state when a prop changes". A fresh card or
@@ -146,7 +150,8 @@ export function Card({
           const isDaubed = isFree ? freeDaubed : daubed.has(i);
           // During a reveal a daub is an outline until its beat (or until the rest is shown),
           // then flips to its colour; tiles outside the order fade to their final look together.
-          const coloured = greenSet.has(i) || redSet.has(i) || missingSet.has(i);
+          const coloured = greenSet.has(i) || redSet.has(i) || missingSet.has(i) || waitingSet.has(i);
+          const waitingCell = waitingSet.has(i);
           const ordered = turnAt.has(i);
           const showColour = !turning || ordered || restShown;
           const turns = turning && ordered && coloured;
@@ -192,6 +197,7 @@ export function Card({
           return (
             <Tag
               key={i}
+              data-waiting={waitingCell ? '' : undefined}
               type={Tag === 'button' ? 'button' : undefined}
               className={cls}
               style={style}
