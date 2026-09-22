@@ -82,7 +82,7 @@
 @keyframes pb-fold {
   0%,
   92% {
-    --pb-fold: 28px;
+    --pb-fold: 72px; /* I-066 A: one cut row deep */
   }
   100% {
     --pb-fold: 0px;
