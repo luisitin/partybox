@@ -36,6 +36,8 @@ export interface BlanksTvView extends TvView {
   czar: PersonView | null;
   /** vote mode, reveal only: the seat asked to read the cards out loud (review-loop #248). */
   reader: PersonView | null;
+  /** I-143 B: nobody in the room can read — the TV does. */
+  everyoneIsABot: boolean;
   black: BlackView | null;
   /** pick (czar mode): the black cards the judge chooses between. */
   blackChoices: BlackView[];
@@ -142,6 +144,11 @@ function votersExpected(state: State): number {
 /** The seat asked to read, while their phone is still in the room: a reader who dropped
  *  mid-reading leaves the room the plain "Read it out loud" instead of a name nobody can answer
  *  to (review-loop #397). */
+/** I-143 B: there is no seat left that could read a card out loud. */
+function everyoneIsABot(state: State): boolean {
+  return Object.values(state.players).every((p) => p.bot === true || !p.connected);
+}
+
 function reader(state: State): PersonView | null {
   const p = person(state, state.readerId);
   return p?.connected ? p : null;
@@ -165,6 +172,7 @@ export function tvView(state: State, gameId: string): BlanksTvView {
     timed: state.settings.timed,
     czar: person(state, state.czarId),
     reader: phase === 'reveal' ? reader(state) : null,
+    everyoneIsABot: everyoneIsABot(state),
     black: blackView(state),
     blackChoices: blackChoices(state),
     playedCount: playedCount(state),
