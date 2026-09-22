@@ -1613,3 +1613,32 @@
 .redraw:disabled {
   opacity: 0.5;
 }
+
+/* \u2500\u2500 I-145 A: the setup as a one-line strip, the blank marked; tap opens the card. */
+.promptStrip {
+  display: block;
+  width: 100%;
+  padding: var(--pb-space-2) var(--pb-space-3);
+  border: 0;
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface-2);
+  color: inherit;
+  font: inherit;
+  text-align: left;
+}
+.promptStripOpen {
+  padding: 0;
+  background: none;
+}
+.promptLine {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-weight: 700;
+}
+.promptBlank {
+  padding: 0 4px;
+  border-radius: 4px;
+  background: var(--pb-accent-soft, rgba(255, 255, 255, 0.22));
+}

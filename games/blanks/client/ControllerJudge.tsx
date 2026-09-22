@@ -1,3 +1,4 @@
+import { useState } from 'react';
 // Phone during "reveal" (the same card the TV is reading, so a phone-only room can read along)
 // and "judge" (voters get the list; the judge in czar mode is the only voter; everyone else reads
 // the cards and waits). A voter's own card is listed but not votable.
@@ -8,6 +9,7 @@ import type { BlanksControllerView } from '../server/index';
 import type { Input } from '../server/types';
 import { FilledCard, FlipCard, InlineFilled, LETTERS } from './Cards';
 import { NextButton } from './NextButton';
+import { BLANK } from '../content/schema';
 import styles from './blanks.module.css';
 
 type Props = GameControllerProps<BlanksControllerView, Input>;
@@ -61,6 +63,37 @@ export function ControllerReveal({ view, me }: Props): JSX.Element {
   );
 }
 
+/**
+ * I-145 A: the setup, one line high. The room has just heard it read out; the phone's job now is
+ * the options, so the prompt is a strip with its blank marked, and a tap opens the whole card for
+ * anyone who wants to reread it.
+ */
+function PromptStrip({ text, pick }: { text: string; pick: number }): JSX.Element {
+  const [open, setOpen] = useState(false);
+  return (
+    <button
+      type="button"
+      className={`${styles.promptStrip} ${open ? styles.promptStripOpen : ''}`}
+      onClick={() => setOpen((o) => !o)}
+      aria-expanded={open}
+      aria-label={open ? 'hide the question' : 'show the whole question'}
+    >
+      {open ? (
+        <FilledCard text={text} pick={pick} size="phone" />
+      ) : (
+        <span className={styles.promptLine}>
+          {text.split(BLANK).map((part, i, all) => (
+            <span key={i}>
+              {part}
+              {i < all.length - 1 ? <span className={styles.promptBlank}>{BLANK}</span> : null}
+            </span>
+          ))}
+        </span>
+      )}
+    </button>
+  );
+}
+
 export function ControllerJudge({ view, send, skip }: Props): JSX.Element {
   const black = view.black;
   const vote = view.vote;
@@ -79,9 +112,10 @@ export function ControllerJudge({ view, send, skip }: Props): JSX.Element {
       <VoteList
         kicker={kicker}
         header={
-          answersOnly ? <FilledCard text={black.text} pick={black.pick} size="phone" /> : null
+          answersOnly ? <PromptStrip text={black.text} pick={black.pick} /> : null
         }
-        prompt={view.judgeMode === 'czar' ? 'Pick the winner' : 'Vote for the best'}
+        // I-145 B: how long the list is, before anyone votes at D without knowing about E.
+        prompt={`${view.judgeMode === 'czar' ? 'Pick the winner' : 'Vote for the best'} \u00b7 ${view.cards.length} options`}
         promptKey={`${view.round}`}
         // Two or three cards: tall lettered cards fill the thumb zone (as Wisecrack's A / B).
         size={large ? 'large' : 'compact'}
