@@ -8,6 +8,7 @@ import type { BingoControllerView } from '../server/views';
 import { Card } from './Card';
 import { wantedCells } from './close';
 import { Ball, BingoButton } from './ControllerParts';
+import { looksComplete } from '../server/patterns';
 import type { Send } from './ControllerParts';
 import styles from './Controller.module.css';
 
@@ -232,15 +233,18 @@ export function AllCardsLayout(
             size={size}
             label={p.kind === 'stack' || p.kind === 'side' ? undefined : `Card ${c + 1}`}
           />
+          {/* I-123 A: a quiet claim chip; it only fills pink when THIS card looks complete. */}
           {p.intro ? null : (
-            <BingoButton
-              view={p.view}
-              card={c}
-              send={p.send}
-              meId={p.meId}
-              small
-              verdictShown={p.verdictShown}
-            />
+            <span className={looksComplete(p.view.pattern, p.view.daubs[c] ?? []) ? styles.claimHot : styles.claimQuiet}>
+              <BingoButton
+                view={p.view}
+                card={c}
+                send={p.send}
+                meId={p.meId}
+                small
+                verdictShown={p.verdictShown}
+              />
+            </span>
           )}
         </div>
       ))}
