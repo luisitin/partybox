@@ -5,6 +5,8 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **A locked room says so on the QR panel** (I-055, option A): "Room locked" replaces "Scan to
+  join" and the code, URL and "or open" dim — the full-room treatment.
 - **"Remove all 13 bots"** (I-048, option A): from four bots the host bar's button takes the
   danger tone and says the count; the removes go out 300 ms apart, so none is lost to the rate
   limit (thirteen at once left bots behind).

@@ -63,6 +63,8 @@ export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
   const players = room?.players ?? [];
   const vip = players.find((p) => p.isVip);
   const full = room !== null && players.length >= room.capacity;
+  // I-055 A: a locked room reads on the QR panel, like a full one.
+  const locked = room?.locked ?? false;
   const empty = players.length === 0;
   // I-072: the QR is big while nobody has joined and shrinks with the first join.
   const [wasEmpty, setWasEmpty] = useState(empty);
@@ -79,13 +81,13 @@ export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
         <span className={styles.glowB} />
       </div>
       <div className={`${styles.split} ${empty ? styles.splitEmpty : ''}`}>
-        <div className={`${styles.join} ${full ? styles.full : ''}`}>
+        <div className={`${styles.join} ${full || locked ? styles.full : ''}`}>
           <BigText
             level="h2"
-            tone={full ? 'accent' : 'muted'}
+            tone={full || locked ? 'accent' : 'muted'}
             className={empty ? styles.scanIdle : ''}
           >
-            {full ? t.lobby.full : t.lobby.scan}
+            {locked ? 'Room locked' : full ? t.lobby.full : t.lobby.scan}
           </BigText>
           {info ? (
             <span
