@@ -86,6 +86,30 @@ export interface Segment {
 const LEADS_WITH_ARTICLE =
   /(?:\b(?:a|an|the|my|your|his|her|their|our|little|new|sexy|favou?rite|no)\s*|#)$/i;
 /** A card that ends in an abbreviation, not in a sentence's full stop: "2 a.m.", "O.J.", "Jr.". */
+/**
+ * I-150 A: a white card is written as its own sentence, so it opens with a capital. Dropped into
+ * the middle of a black card's sentence that capital is a seam ("to Naming a goldfish", "was
+ * about A whoopee cushion"). Only a first word this list recognises comes down — a gerund, or one
+ * of the everyday openers — so a proper noun ("Stalin's", "Epstein"), an acronym ("FBI"), "I" and
+ * anything unrecognised keep the capital they were written with.
+ */
+const COMMON_OPENER =
+  /^(?:A|An|The|My|Your|Our|His|Her|Their|Its|That|This|These|Those|Some|Any|Every|All|No|Not|Never|Just|Too|One|Two|Three|Being|Getting|Having|Doing|Going|Trying|Making|Taking|Telling|Naming|Finding|Watching|Eating|Drinking|Crying|Dying|Waiting|Asking|Putting|Leaving|Losing|Winning|Playing|Reading|Running|Sitting|Standing|Screaming|Whispering|Accidentally|Secretly|Slowly|Quietly|Finally|Somehow|Whatever|Whoever|When|What|Why|How|Where|Whether)\b/;
+/** A gerund that is not a name: "Naming", "Crashing" — but not "Kingdom" (no -ing ending). */
+const GERUND = /^[A-Z][a-z]+ing\b/;
+
+/** I-150 A: the card's first letter, lowered when the sentence is already under way. */
+function lowerOpening(body: string): string {
+  // Look past an opening quote or bracket the card carries of its own.
+  const lead = /^["“'‘(\[]+/.exec(body)?.[0] ?? '';
+  const word = body.slice(lead.length);
+  if (!/^[A-Z]/.test(word)) return body;
+  if (/^[A-Z]{2}/.test(word)) return body; // FBI, NASA
+  if (/^I\b|^I'/.test(word)) return body; // the pronoun
+  if (!COMMON_OPENER.test(word) && !GERUND.test(word)) return body;
+  return `${lead}${word.charAt(0).toLowerCase()}${word.slice(1)}`;
+}
+
 const ABBREVIATION = /(?:\b[A-Za-z]\.){2}$|\b(?:Jr|Sr|St|Dr|Mr|Mrs|Ms|Inc|Ltd|vs|etc)\.$/;
 
 export function fill(
@@ -150,6 +174,13 @@ export function fill(
       /^(?:A|An|The|My|Your|Our) [a-zA-Z]/.test(body)
     )
       body = body.replace(/^(?:A|An|The|My|Your|Our) /, '');
+    // I-150 A: the sentence is already under way unless the blank opens it, follows a full stop,
+    // follows a colon ("Coming soon: A windmill." — the house style the fill tests pin), or opens
+    // a quotation of its own ('says "A raccoon…"'): there the card's own capital is the right one.
+    // This runs AFTER the article rule above, which matches on the card's own capital ("A dentist").
+    const before = lastText(segments);
+    if (!opener && before.trim() !== '' && !/[.!?:]["”'’)\]]*\s*$/.test(before))
+      body = lowerOpening(body);
     segments.push({ kind: 'fill', text: opener + body + tail });
   });
   return { segments, extra: whites.slice(blanksIn(text)) };

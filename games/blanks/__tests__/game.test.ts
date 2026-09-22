@@ -145,10 +145,10 @@ describe('fill', () => {
       'Calling the teacher "mom" is my motto.',
     );
     expect(fillText('Nothing beats ____', ['A boat named "Boaty."'])).toBe(
-      'Nothing beats A boat named "Boaty."',
+      'Nothing beats a boat named "Boaty."', // I-150 A: mid-sentence, the capital comes down
     );
     expect(fillText('I said ____, and left.', ['A weather app that just says "maybe."'])).toBe(
-      'I said A weather app that just says "maybe", and left.',
+      'I said a weather app that just says "maybe", and left.', // I-150 A
     );
   });
 
@@ -159,14 +159,14 @@ describe('fill', () => {
       'My routine: Dancing at 2 a.m., Coffee.',
     );
     expect(fillText('I heard ____ and left.', ['The stairs at 2 a.m.'])).toBe(
-      'I heard The stairs at 2 a.m. and left.',
+      'I heard the stairs at 2 a.m. and left.', // I-150 A
     );
     expect(fillText('What woke me? ____.', ['Bagpipes at 6 a.m.'])).toBe(
       'What woke me? Bagpipes at 6 a.m.',
     );
     // A word that merely ends in "st." is not an abbreviation.
     expect(fillText('I trust ____ with this.', ['A dentist.'])).toBe(
-      'I trust A dentist with this.',
+      'I trust a dentist with this.', // I-150 A
     );
   });
 
@@ -199,7 +199,7 @@ describe('fill', () => {
   it('carries a closing quote inside the paper but never a possessive', () => {
     expect(fill('"Goodnight, ____."', ['A cow.']).segments.map((s) => s.text)).toEqual([
       '"Goodnight, ',
-      'A cow."',
+      'a cow."', // I-150 A: mid-quotation, the sentence is already under way
     ]);
     expect(fill("____'s big day.", ['Bob.']).segments.map((s) => s.text)).toEqual([
       'Bob',
@@ -212,7 +212,7 @@ describe('fill', () => {
     expect(glue('The pull-out method.')).toBe('The pull-out method.');
     expect(glue('Naps.')).toBe('Naps.');
     expect(glue('Being too drunk.')).toBe('Being too drunk.');
-    expect(fillText('I love ____.', ['A nap'])).toBe('I love A nap.');
+    expect(fillText('I love ____.', ['A nap'])).toBe('I love a nap.'); // I-150 A
   });
 
   it("drops the white card's own article after the black card's article or possessive (the next word as the card has it)", () => {
@@ -237,7 +237,7 @@ describe('fill', () => {
     ).toBe('The sign on the door says "no wedding band playing "Mr. Brightside" again."');
     // No article before the blank: the card keeps its own.
     expect(fillText('I woke up covered in ____.', ['A gallon of cum.'])).toBe(
-      'I woke up covered in A gallon of cum.',
+      'I woke up covered in a gallon of cum.', // I-150 A
     );
     expect(fillText('A little ____ never hurt anyone.', ["The Kardashians' shared dildo."])).toBe(
       "A little Kardashians' shared dildo never hurt anyone.",
