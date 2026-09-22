@@ -84,6 +84,18 @@
       "description": "A random card from the deck plays every round as a phantom player; if it wins, nobody scores",
       "type": "boolean",
       "default": false
+    },
+    {
+      "key": "doubles",
+      "label": "Double blanks",
+      "description": "How often a Pick 2 or Pick 3 card comes up: rarely, once in the middle of the game, or every fourth round",
+      "type": "select",
+      "default": "one",
+      "options": [
+        { "value": "rare", "label": "Rare" },
+        { "value": "one", "label": "One per game" },
+        { "value": "many", "label": "Every fourth round" }
+      ]
     }
   ],
   "supportsBots": true

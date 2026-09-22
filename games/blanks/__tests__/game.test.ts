@@ -75,6 +75,7 @@ describe('whole game', () => {
       'timed',
       'answerSeconds',
       'rando',
+      'doubles', // I-158 C
     ]);
   });
 
@@ -92,6 +93,7 @@ describe('whole game', () => {
       decks: 'wild',
       rando: false,
       timed: false,
+      doubles: 'one', // I-158 C: one double-blank per game unless the host says otherwise
     });
   });
 });

@@ -23,6 +23,8 @@ export interface Settings {
   decks: DeckPreset;
   judge: JudgeMode;
   rounds: number;
+  /** I-158 C: how often a double-blank (Pick 2 / 3) card comes up — the host's call. */
+  doubles: 'rare' | 'one' | 'many';
   answerSeconds: number;
   rando: boolean;
   /** Clocks on picking, voting and the result; off = the room moves itself along with Next. */

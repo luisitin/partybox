@@ -46,6 +46,7 @@ export function readSettings(raw: RawSettings): Settings {
     answerSeconds: numberSetting(raw, 'answerSeconds'),
     rando: raw['rando'] === true,
     timed: raw['timed'] === true,
+    doubles: oneOf(raw, 'doubles', ['rare', 'one', 'many'] as const),
   };
 }
 
@@ -54,7 +55,7 @@ function init(ctx: InitContext): State {
   for (const p of ctx.players) players[p.id] = p;
   const settings = readSettings(ctx.settings);
   const [blackShuffled, r1] = shuffle(seedRng(ctx.seed), blackPool(settings.decks));
-  const blackDeck = orderBlackDeck(blackShuffled);
+  const blackDeck = orderBlackDeck(blackShuffled, settings.rounds, settings.doubles); // I-158
   const [whiteDeck, rng] = shuffle(r1, whitePool(settings.decks));
   const zero: Record<string, number> = {};
   for (const id of Object.keys(players)) zero[id] = 0;
