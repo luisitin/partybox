@@ -172,6 +172,26 @@ export function Scoreboard({
   const from = (row: ScoreboardRow, index: number): number =>
     climbOffset(climbFrom, row.playerId, index);
   const countDelayMs = boardLandedMs(rows.length, { compact, dense, columns, stagger });
+  // I-146 C: rows on the same rank are bracketed down the left edge \u2014 a four-way tie stops
+  // depending on four identical digits being noticed.
+  const tieClass = (all: ScoreboardRow[], i: number): string => {
+    const r = all[i]?.rank;
+    if (r === undefined) return '';
+    const up = all[i - 1]?.rank === r;
+    const down = all[i + 1]?.rank === r;
+    if (!up && !down) return '';
+    return `${styles.tied ?? ''} ${!up ? (styles.tieTop ?? '') : ''} ${!down ? (styles.tieEnd ?? '') : ''}`;
+  };
+  // I-146 B: a split board says where each column starts and ends, so a column edge reads as a
+  // continuation of the ranking rather than a second list beside the first.
+  const perCol = Math.ceil(rows.length / cols);
+  const bandFor = (index: number): string | null => {
+    if (cols < 2 || noRanks || index % perCol !== 0) return null;
+    const last = rows[Math.min(index + perCol - 1, rows.length - 1)];
+    const first = rows[index];
+    if (!first || !last) return null;
+    return first.rank === last.rank ? `${first.rank}` : `${first.rank}\u2013${last.rank}`;
+  };
   return (
     <ol
       className={`${styles.board} ${tier === 'roomy' ? '' : styles[tier]} ${size === 'lg' ? styles.lg : size === 'sm' ? styles.sm : ''} ${staggered ? styles.staggered : ''} ${staggered && stagger === 'down' ? styles.down : ''} ${climb ? styles.climb : ''}`}
@@ -181,7 +201,7 @@ export function Scoreboard({
       {rows.map((row, index) => (
         <li
           key={row.playerId}
-          className={`${styles.row} ${row.rank === 1 && trophy ? styles.top : ''} ${row.playerId === highlightId ? styles.me : ''} ${climb && from(row, index) > 0 ? styles.rose : ''} ${climb && from(row, index) < 0 ? styles.fell : ''}`}
+          className={`${styles.row} ${tieClass(rows, index)} ${row.rank === 1 && trophy ? styles.top : ''} ${row.playerId === highlightId ? styles.me : ''} ${climb && from(row, index) > 0 ? styles.rose : ''} ${climb && from(row, index) < 0 ? styles.fell : ''}`}
           aria-current={row.playerId === highlightId ? 'true' : undefined}
           style={
             staggered
@@ -191,6 +211,11 @@ export function Scoreboard({
                 : undefined
           }
         >
+          {bandFor(index) ? (
+            <span className={styles.band} aria-hidden>
+              {bandFor(index)}
+            </span>
+          ) : null}
           <span className={styles.rank} aria-label={`rank ${row.rank}`}>
             {noRanks ? '' : heldRanks ? '·' : row.rank === 1 && trophy ? '🏆' : row.rank}
           </span>
