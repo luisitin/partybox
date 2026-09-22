@@ -7,7 +7,14 @@ import { defineConfig } from 'vitest/config';
 const unitProject = (
   name: string,
   dir: string,
-): { test: { name: string; include: string[]; exclude: string[] } } => ({
+): {
+  extends: true;
+  test: { name: string; include: string[]; exclude: string[] };
+} => ({
+  // Inline projects do NOT inherit the root `test` options unless they say so: without this every
+  // test ran on Vitest's default 5 s, not the 20 s below, and the heaviest contract simulations
+  // (Bingo's "terminates" runs, ~2-4 s alone) timed out whenever the machine was busy (2026-09-22).
+  extends: true,
   test: {
     name,
     include: [`${dir}/**/*.test.{ts,tsx}`],
@@ -17,7 +24,7 @@ const unitProject = (
 
 export default defineConfig({
   test: {
-    // Projects inherit these root settings.
+    // Projects inherit these root settings (each project sets `extends: true` — see unitProject).
     passWithNoTests: true,
     testTimeout: 20_000,
     hookTimeout: 20_000,
@@ -43,6 +50,7 @@ export default defineConfig({
       unitProject('scripts', 'scripts'),
       {
         // Runs the contract suite against every folder in games/ (docs/TESTING.md).
+        extends: true,
         test: {
           name: 'contract',
           include: ['packages/game-sdk/src/contract-tests/**/*.test.ts'],
