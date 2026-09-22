@@ -122,6 +122,7 @@ export function TvPlaying({ room, view, audio, onGameReady, music }: TvPlayingPr
       className={`${styles.playing} ${paused ? styles.held : ''} ${!paused && leaving ? styles.resumed : ''}`}
     >
       <div className={styles.strip}>
+        {/* I-131 C: some phases take the whole stage. */}
         <PlayerChips
           players={[
             ...players,
@@ -142,6 +143,7 @@ export function TvPlaying({ room, view, audio, onGameReady, music }: TvPlayingPr
           showScores={showScores || frozen}
           scoresMuted={frozen}
           size="sm"
+          facesOnly={module?.stripCompact?.includes(view.phaseId) ?? false}
         />
         {/* Quiet/hidden timers free the column: six chips fit on one row instead of wrapping (loop #1). */}
         <div className={timerMode === 'normal' ? styles.timer : styles.timerSlim}>

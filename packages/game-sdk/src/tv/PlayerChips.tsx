@@ -9,6 +9,8 @@ export interface PlayerChipsProps {
   vip?: string | null;
   /** Ids to highlight. */
   activeIds?: string[];
+  /** I-131 A: faces only — no names, no scores (a claim needs the height). */
+  facesOnly?: boolean;
   /** I-045 B: players the room is waiting on — three pulsing dots over their dimmed avatar. */
   thinkingIds?: string[];
   showScores?: boolean;
@@ -31,6 +33,7 @@ export function PlayerChips({
   players,
   vip,
   activeIds = [],
+  facesOnly = false,
   thinkingIds = [],
   showScores,
   scoresMuted = false,
@@ -61,14 +64,14 @@ export function PlayerChips({
       {ordered.map((p) => (
         <li key={p.id} className={`${styles.item} ${enter ? styles.enter : ''}`}>
           <PlayerChip
-            name={p.name}
+            name={facesOnly ? '' : p.name}
             avatarId={p.avatarId}
             connected={p.connected}
             status={p.status}
             isVip={vip === p.id}
             active={activeIds.includes(p.id)}
             thinking={thinkingIds.includes(p.id)}
-            score={showScores ? p.score : undefined}
+            score={showScores && !(facesOnly) ? p.score : undefined}
             scoreMuted={scoresMuted}
             leader={leaders.has(p.id)}
             isBot={botIds.includes(p.id)}
