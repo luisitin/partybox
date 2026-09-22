@@ -287,6 +287,8 @@ export function controllerView(
     }),
     timerMode: 'quiet',
     ...common(state),
+    // I-113 A: "Previous number" off applies to the phones too (the TV keeps its own flag).
+    previous: state.settings.showPrevious ? common(state).previous : null,
     cards: player ? (state.round.cards[playerId] ?? null) : null,
     daubs: player ? (state.round.daubs[playerId] ?? []) : [],
     canClaim: canClaim(state, playerId),

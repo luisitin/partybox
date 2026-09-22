@@ -1371,3 +1371,13 @@
   color: var(--pb-accent-2);
   animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
 }
+
+/* ── I-113 B: the "call N" peek button — text-shaped, a lifeline. */
+.peek {
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  padding: 0 4px;
+  border-radius: 6px;
+  text-decoration: underline dotted;
+}
