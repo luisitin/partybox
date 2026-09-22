@@ -9,6 +9,8 @@ export interface PlayerChipsProps {
   vip?: string | null;
   /** Ids to highlight. */
   activeIds?: string[];
+  /** I-089 A: seconds of grace left per dropped player. */
+  awayLeft?: Record<string, number>;
   /** I-045 B: players the room is waiting on — three pulsing dots over their dimmed avatar. */
   thinkingIds?: string[];
   showScores?: boolean;
@@ -31,6 +33,7 @@ export function PlayerChips({
   players,
   vip,
   activeIds = [],
+  awayLeft = {},
   thinkingIds = [],
   showScores,
   scoresMuted = false,
@@ -67,6 +70,7 @@ export function PlayerChips({
             status={p.status}
             isVip={vip === p.id}
             active={activeIds.includes(p.id)}
+            awayLeft={awayLeft[p.id] ?? null}
             thinking={thinkingIds.includes(p.id)}
             score={showScores ? p.score : undefined}
             scoreMuted={scoresMuted}

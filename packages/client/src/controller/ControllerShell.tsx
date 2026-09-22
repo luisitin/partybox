@@ -5,6 +5,7 @@
 // only sounds for what happened in the player's hand (submit, error) and buzzes for the rest.
 import { useEffect, useRef, useState } from 'react';
 import type { JSX, ReactNode } from 'react';
+import { LIMITS } from '@partybox/shared';
 import type { PlayerPublic } from '@partybox/shared';
 import { Avatar, DeadlineBar, buzz, useSecondsLeft } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
@@ -87,6 +88,19 @@ export function ControllerShell({
   const myStatus = state.view?.players.find((p) => p.id === state.playerId)?.status ?? null;
   // Offline, the local countdown still runs (and parks at 0): show it muted, never urgent.
   const online = state.connection === 'connected';
+  // I-089 C: how long the phone has to get back — the same 120 s the server gives, from the
+  // moment this phone saw the socket go.
+  const lostAt = useRef<number | null>(null);
+  const [lostNow, setLostNow] = useState(0);
+  if (!online && state.joined && lostAt.current === null) lostAt.current = Date.now();
+  if (online) lostAt.current = null;
+  useEffect(() => {
+    if (online || !state.joined) return undefined;
+    const h = setInterval(() => setLostNow(Date.now()), 1000);
+    return () => clearInterval(h);
+  }, [online, state.joined]);
+  const left = lostAt.current === null ? null : Math.max(0, Math.round((LIMITS.disconnectGraceMs - (Math.max(lostNow, lostAt.current) - lostAt.current)) / 1000));
+  const reconnectingText = left === null ? t.connection.reconnecting : `${t.connection.reconnecting} ${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')} left`;
   // With a countdown row on screen, "Reconnecting…" takes its cue slot (review-loop #33): the
   // overlay banner hid the first content line for the whole outage. No row → the banner.
   const countdownRow = view !== null && seconds !== null && view.timerMode !== 'hidden';
@@ -248,7 +262,7 @@ export function ControllerShell({
           />
           {!online ? (
             <span className={`${styles.cue} ${styles.cueStale}`} role="status">
-              {t.connection.reconnecting}
+              {reconnectingText}
             </span>
           ) : candidate ? (
             <span className={styles.cue} aria-hidden>
@@ -284,7 +298,7 @@ export function ControllerShell({
             the drawing sheet under a finger mid-stroke. */}
         {showBanner && !countdownRow ? (
           <div className={styles.banner} role="status">
-            {t.connection.reconnecting}
+            {reconnectingText}
           </div>
         ) : paused ? (
           <div className={styles.banner} role="status">
