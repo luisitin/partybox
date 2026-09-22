@@ -41,6 +41,17 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
   // single-open-room fallback for a code-less join, but the form asks).
   const urlRoom = roomFromUrl();
   const [code, setCode] = useState(urlRoom ?? '');
+  // I-046 A: the placeholder rotates through example names while the field is empty and unfocused.
+  const EXAMPLES = ['Sam', 'Priya', 'Grandma Jo', 'Big Dave', 'Mo', 'Auntie Kay'];
+  const exampleNames = EXAMPLES;
+  const [exampleAt, setExampleAt] = useState(0);
+  const [nameFocused, setNameFocused] = useState(false);
+  useEffect(() => {
+    if (name !== '' || nameFocused) return undefined;
+    const h = setInterval(() => setExampleAt((i) => i + 1), 2500);
+    return () => clearInterval(h);
+  }, [name, nameFocused]);
+  const placeholder = `e.g. ${exampleNames[exampleAt % exampleNames.length] ?? 'Sam'}`;
   const [submittedAt, setSubmittedAt] = useState<number | null>(null);
   const needsCode = urlRoom === null;
   // A rejected join shakes the name field and hands the taken/invalid name back selected (or the
@@ -190,13 +201,15 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
           <span className={styles.label}>{t.join.name}</span>
           <input
             ref={nameRef}
-            className={`${styles.input} ${nameError ? styles.inputError : ''} ${shaking && nameError ? styles.shake : ''}`}
+            className={`${styles.input} ${nameError ? styles.inputError : ''} ${shaking && nameError ? styles.shake : ''} ${name === '' && !nameFocused ? styles.placeholderFade : ''}`}
             onAnimationEnd={() => setShaking(false)}
             value={name}
             onChange={(e) => setName(e.target.value)}
             aria-invalid={nameError}
             aria-describedby={nameError ? 'join-error' : undefined}
-            placeholder={t.join.namePlaceholder}
+            placeholder={placeholder}
+            onFocus={() => setNameFocused(true)}
+            onBlur={() => setNameFocused(false)}
             maxLength={PLAYER_NAME_MAX}
             autoComplete="nickname"
             autoCapitalize="words"
