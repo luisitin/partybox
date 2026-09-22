@@ -73,7 +73,9 @@ function Progress({ view }: Props): JSX.Element {
 
 /** How many columns the judge grid needs so every card is readable at 1080p. */
 function gridClass(count: number): string {
-  if (count <= 2) return styles.grid2 ?? '';
+  // I-156 A: four cards are a 2 x 2. Three columns left card D alone on a second page while the
+  // TV showed A–C for six seconds and every phone listed all four.
+  if (count <= 2 || count === 4) return styles.grid2 ?? '';
   if (count <= 6) return styles.grid3 ?? '';
   return styles.grid4 ?? '';
 }
