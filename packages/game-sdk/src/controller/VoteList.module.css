@@ -177,3 +177,12 @@
   background: var(--pb-danger);
   color: var(--pb-on-accent);
 }
+
+/* \u2500\u2500 I-145 C: landscape is wide and short \u2014 the options go two-up instead of one per screen. */
+@media (orientation: landscape) and (max-height: 520px) {
+  .list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--pb-space-2);
+  }
+}
