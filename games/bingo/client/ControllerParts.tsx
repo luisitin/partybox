@@ -148,12 +148,16 @@ export function BingoButton({
     label = myCheck
       ? 'Not a bingo'
       : myClaim
-        ? 'Checking on the TV…'
+        ? view.phoneOnly
+          ? 'Checking your card…'
+          : 'Checking on the TV…'
         : view.phaseId === 'check' && verdictShown
           ? mineChecking
             ? 'Not a bingo — see card ' + ((view.claim?.cardIndex ?? 0) + 1)
             : `${who}'s card: not a bingo`
-          : 'Look at the TV'; // I-111
+          : view.phoneOnly
+            ? `Checking ${who === 'Their' ? 'the' : `${who}'s`} card…`
+            : 'Look at the TV'; // I-111
   else if (held)
     label = '⏸ Paused'; // I-097 B
   else if (won) label = 'Yours already';

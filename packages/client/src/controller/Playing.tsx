@@ -3,7 +3,7 @@
 import { Suspense, useCallback, useEffect, useState } from 'react';
 import type { JSX } from 'react';
 import type { ControllerView, PlayerPublic, PushedView, RoomSnapshot } from '@partybox/shared';
-import { Avatar, SoundProvider, WaitingScreen } from '@partybox/game-sdk/ui';
+import { Avatar, PhoneOnlyProvider, SoundProvider, WaitingScreen } from '@partybox/game-sdk/ui';
 import styles from './ControllerShell.module.css';
 import { clientGames } from '../games.generated';
 import { t } from '../i18n';
@@ -159,23 +159,25 @@ export function Playing({
   return (
     <GameErrorBoundary key={view.gameId}>
       <Suspense fallback={<DelayedWaiting title={t.connection.loadingGame} />}>
-        <SoundProvider
-          play={play}
-          clip={audio ? (src, opts) => audio.clip(src, opts) : undefined}
-          hush={audio ? () => audio.hushClips() : undefined}
-        >
-          {PhoneStage ? (
-            <PhoneStage view={view} />
-          ) : (
-            <GameController
-              view={view}
-              me={{ id: me.id, name: me.name, avatarId: me.avatarId }}
-              send={controller.sendInput}
-              skip={me.isVip ? () => controller.vip({ action: 'skip' }) : undefined}
-            />
-          )}
-          <Ready onReady={onGameReady} />
-        </SoundProvider>
+        <PhoneOnlyProvider value={room.phoneOnly}>
+          <SoundProvider
+            play={play}
+            clip={audio ? (src, opts) => audio.clip(src, opts) : undefined}
+            hush={audio ? () => audio.hushClips() : undefined}
+          >
+            {PhoneStage ? (
+              <PhoneStage view={view} />
+            ) : (
+              <GameController
+                view={view}
+                me={{ id: me.id, name: me.name, avatarId: me.avatarId }}
+                send={controller.sendInput}
+                skip={me.isVip ? () => controller.vip({ action: 'skip' }) : undefined}
+              />
+            )}
+            <Ready onReady={onGameReady} />
+          </SoundProvider>
+        </PhoneOnlyProvider>
       </Suspense>
     </GameErrorBoundary>
   );

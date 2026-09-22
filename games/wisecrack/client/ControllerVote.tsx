@@ -78,6 +78,8 @@ export function ControllerReveal({
   const shown = useHold(REVEAL_HOLD_MS);
   // A "phone only" room: the TV's reveal on the phone once the hold has passed.
   const onPhone = view.phoneOnly === true && view.reveal ? view.reveal : null;
+  // The words follow the ROOM (no TV at all), not whether the reveal data has arrived yet.
+  const noTv = view.phoneOnly === true;
   if (!mine) {
     if (onPhone && shown)
       return (
@@ -92,7 +94,7 @@ export function ControllerReveal({
       return (
         <WaitingScreen
           title={`You picked ${LETTERS[lastVote.slot] ?? '?'}`}
-          hint={onPhone ? 'Who wrote it…' : 'See who wrote it on the TV'}
+          hint={noTv ? 'Who wrote it…' : 'See who wrote it on the TV'}
           mood="watch"
         >
           <p className={styles.quote}>{lastVote.text}</p>
@@ -102,7 +104,7 @@ export function ControllerReveal({
     return (
       <WaitingScreen
         title="Authors revealed!"
-        hint={onPhone ? undefined : 'Look at the TV'}
+        hint={noTv ? undefined : 'Look at the TV'}
         mood="watch"
       />
     );
@@ -111,7 +113,7 @@ export function ControllerReveal({
     return (
       <WaitingScreen
         title="Your answer is up"
-        hint={onPhone ? 'The votes are in…' : 'Look at the TV'}
+        hint={noTv ? 'The votes are in…' : 'Look at the TV'}
         mood="watch"
       >
         <p className={styles.quote}>{mine.text}</p>

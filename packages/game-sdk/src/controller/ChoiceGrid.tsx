@@ -7,6 +7,7 @@ import type { JSX, ReactNode } from 'react';
 import { buzz } from '../ui/haptics';
 import { Screen } from './Screen';
 import styles from './ChoiceGrid.module.css';
+import { SDK_LINES, usePhoneOnly } from './phoneOnly';
 
 export interface Choice {
   id: string;
@@ -55,6 +56,7 @@ interface Pending {
 }
 
 export function ChoiceGrid(props: ChoiceGridProps): JSX.Element {
+  const phoneOnly = usePhoneOnly();
   const {
     className,
     after,
@@ -145,7 +147,7 @@ export function ChoiceGrid(props: ChoiceGridProps): JSX.Element {
       {correctId === null ? (
         selectedId !== null ? (
           <p className={styles.locked} role="status">
-            {lockedHint ?? '✓ Locked in — look at the TV'}
+            {lockedHint ?? SDK_LINES.lockedIn(phoneOnly)}
           </p>
         ) : pendingId !== null ? (
           <p className={styles.locked} role="status">
@@ -153,7 +155,7 @@ export function ChoiceGrid(props: ChoiceGridProps): JSX.Element {
           </p>
         ) : pending?.failed ? (
           <p className={`${styles.locked} ${styles.failed}`} role="status">
-            ✗ Didn't reach the TV — tap again
+            {SDK_LINES.retry(phoneOnly)}
           </p>
         ) : null
       ) : null}

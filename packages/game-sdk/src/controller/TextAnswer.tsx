@@ -5,6 +5,7 @@ import type { JSX, ReactNode } from 'react';
 import { PrimaryButton } from './PrimaryButton';
 import { Screen } from './Screen';
 import styles from './TextAnswer.module.css';
+import { SDK_LINES, usePhoneOnly } from './phoneOnly';
 
 /** How long an empty field sits before it breathes (I-001 C). */
 const STALL_MS = 3000;
@@ -25,11 +26,13 @@ export interface TextAnswerProps {
   promptKey?: string;
   /** Forwarded to the Screen frame (e.g. `pb-enter` so a new prompt rises in as a new card). */
   className?: string;
-  /** Under "You said …" once submitted (default: "Waiting for the others — look at the TV"). */
+  /** Under "You said …" once submitted (default: "Waiting for the others — look at the TV", or
+   *  without the TV in a phone-only room — see `SDK_LINES`). */
   submittedHint?: ReactNode;
 }
 
 export function TextAnswer(props: TextAnswerProps): JSX.Element {
+  const phoneOnly = usePhoneOnly();
   const {
     prompt,
     kicker,
@@ -41,7 +44,7 @@ export function TextAnswer(props: TextAnswerProps): JSX.Element {
     onSubmit,
     promptKey,
     className,
-    submittedHint = 'Waiting for the others — look at the TV',
+    submittedHint,
   } = props;
   const [text, setText] = useState('');
   const lastKey = useRef(promptKey);
@@ -88,7 +91,7 @@ export function TextAnswer(props: TextAnswerProps): JSX.Element {
           ) : (
             <span className={styles.sentLabel}>Your answer is in</span>
           )}
-          <span className={styles.sentHint}>{submittedHint}</span>
+          <span className={styles.sentHint}>{submittedHint ?? SDK_LINES.waiting(phoneOnly)}</span>
         </div>
       </Screen>
     );

@@ -31,12 +31,15 @@ export function MissedToast({
   view: BingoControllerView;
   count: number;
 }): JSX.Element | null {
-  const missed = view.showBoard ? [] : view.recent.slice(0, -1).slice(-count);
-  if (!view.showBoard && missed.length === 0) return null;
+  // A phone-only room has no TV board to point at: it lists what was missed, like a room without
+  // the board (the owner, 2026-09-22).
+  const board = view.showBoard && !view.phoneOnly;
+  const missed = board ? [] : view.recent.slice(0, -1).slice(-count);
+  if (!board && missed.length === 0) return null;
   const more = count - missed.length;
   return (
     <p className={styles.missedToast} role="status">
-      {view.showBoard
+      {board
         ? count === 1
           ? 'Back — you missed a number. It is on the TV board.'
           : `Back — you missed ${count} numbers. They are on the TV board.`

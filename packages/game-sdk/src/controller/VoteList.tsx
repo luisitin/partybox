@@ -9,6 +9,7 @@ import type { JSX, ReactNode } from 'react';
 import { buzz } from '../ui/haptics';
 import { Screen } from './Screen';
 import styles from './VoteList.module.css';
+import { SDK_LINES, usePhoneOnly } from './phoneOnly';
 
 export interface VoteOption {
   id: string;
@@ -55,6 +56,7 @@ interface Pending {
 }
 
 export function VoteList(props: VoteListProps): JSX.Element {
+  const phoneOnly = usePhoneOnly();
   const {
     prompt,
     header,
@@ -137,7 +139,7 @@ export function VoteList(props: VoteListProps): JSX.Element {
       {votedId !== null ? (
         lockedLabel === null ? null : (
           <p className={styles.locked} role="status">
-            {lockedLabel ?? '✓ Vote in — look at the TV'}
+            {lockedLabel ?? SDK_LINES.voteIn(phoneOnly)}
           </p>
         )
       ) : pendingId !== null ? (
@@ -146,7 +148,7 @@ export function VoteList(props: VoteListProps): JSX.Element {
         </p>
       ) : pending?.failed ? (
         <p className={`${styles.locked} ${styles.failed}`} role="status">
-          ✗ Didn't reach the TV — tap again
+          {SDK_LINES.retry(phoneOnly)}
         </p>
       ) : null}
     </Screen>

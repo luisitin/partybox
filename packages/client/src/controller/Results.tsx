@@ -81,7 +81,9 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
       ) : null}
       {scoreless ? (
         // No points: a board of zeros says nothing; the TV holds the show's summary.
-        <p className="pb-muted pb-caption">{t.results.scorelessHint}</p>
+        <p className="pb-muted pb-caption">
+          {room.phoneOnly ? t.results.scorelessHintPhones : t.results.scorelessHint}
+        </p>
       ) : (
         <div ref={list}>
           <Scoreboard rows={rows} compact highlightId={me.id} noTrophy={over} />

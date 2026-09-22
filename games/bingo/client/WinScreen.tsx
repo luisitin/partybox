@@ -68,7 +68,7 @@ export function EndScreens({
     return (
       <Screen key="final" title="Final points">
         <Scoreboard rows={rows(view)} compact highlightId={meId} noTrophy />
-        <p className={styles.hint}>And the winner is… look at the TV.</p>
+        <p className={styles.hint}>{finalLine(view)}</p>
       </Screen>
     );
   }
@@ -95,4 +95,13 @@ export function EndScreens({
       <Scoreboard rows={rows(view)} compact highlightId={meId} />
     </Screen>
   );
+}
+
+/** The final board's line: the TV names the winner, so a phone points there — unless there is no
+ *  TV (phone only), where the phone names them itself. */
+function finalLine(view: BingoControllerView): string {
+  if (!view.phoneOnly) return 'And the winner is… look at the TV.';
+  const top = view.standings.filter((s) => s.rank === 1);
+  if (top.length === 1 && top[0]) return `And the winner is… ${top[0].name}!`;
+  return top.length > 1 ? 'A tie at the top!' : 'That’s the game!';
 }

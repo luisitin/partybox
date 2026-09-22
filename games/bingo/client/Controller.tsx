@@ -26,7 +26,7 @@ import {
   StylePill,
   daubWithFeel,
 } from './ControllerParts';
-import { AllCardsLayout, FocusLayout, Thumbnails } from './Layouts';
+import { AllCardsLayout, FocusLayout, Thumbnails, introOutline } from './Layouts';
 import { Countdown, HoldCurtain, IntroActions, IntroCount, StyleSheet } from './Overlays';
 import { MissedToast, TurnGate } from './Notices';
 import {
@@ -213,7 +213,7 @@ export function Controller({
                 <Card
                   numbers={cards[pick] ?? []}
                   daubs={[]}
-                  pattern={view.pattern === 'line' ? [] : view.patternCells}
+                  pattern={introOutline(view)}
                   disabled
                 />
               </div>
@@ -299,7 +299,7 @@ export function Controller({
             <p className={`${styles.wipeNote} ${verdictShown ? '' : styles.wipeNotePending}`}>
               {verdictShown
                 ? `${whyNot(view.claim) ? `${whyNot(view.claim)}. ` : ''}Card ${(view.claim.cardIndex ?? 0) + 1} wiped — re-daub from memory when play resumes.`
-                : `Card ${(view.claim.cardIndex ?? 0) + 1} is on the TV — everyone is checking it.`}
+                : `Card ${(view.claim.cardIndex ?? 0) + 1} is ${view.phoneOnly ? 'up' : 'on the TV'} — everyone is checking it.`}
             </p>
           ) : null}
           {body}
