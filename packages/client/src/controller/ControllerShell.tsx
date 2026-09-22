@@ -15,7 +15,7 @@ import styles from './ControllerShell.module.css';
 import { PhoneSettings, tvSoundsOn } from './PhoneSettings';
 import { clientGames } from '../games.generated';
 import type { SoundCue } from '../sound';
-import { useGraceLeft } from './grace';
+import { useLinkBanner } from './flapFree';
 import { usePhoneUrgency } from './urgency';
 import { VipMenu } from './VipMenu';
 
@@ -62,7 +62,6 @@ export function ControllerShell({
     if (openTheme > 0) setThemeOpen(true);
   }
   const room = state.room;
-  const showBanner = state.connection !== 'connected' && state.joined;
   // A pause freezes the phone too: the screen dims and goes inert (no taps, no focus, out of the
   // a11y tree — the server would drop the input anyway), and a banner says who resumes it. The
   // reconnect banner wins when both apply.
@@ -88,13 +87,12 @@ export function ControllerShell({
   const myStatus = state.view?.players.find((p) => p.id === state.playerId)?.status ?? null;
   // Offline, the local countdown still runs (and parks at 0): show it muted, never urgent.
   const online = state.connection === 'connected';
-  // I-089 C: how long the phone has to get back (the server's 120 s), from the moment this phone
-  // saw the socket go.
-  const left = useGraceLeft(!online && state.joined);
-  const reconnectingText =
-    left === null
-      ? t.connection.reconnecting
-      : `${t.connection.reconnecting} ${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')} left`;
+  // The link's own banner: one steady message across a flapping connection (the owner,
+  // 2026-09-22), ending in "Back online" instead of vanishing.
+  const { showBanner, text: reconnectingText } = useLinkBanner(
+    !online && state.joined,
+    state.joined,
+  );
   // With a countdown row on screen, "Reconnecting…" takes its cue slot (review-loop #33): the
   // overlay banner hid the first content line for the whole outage. No row → the banner.
   const countdownRow = view !== null && seconds !== null && view.timerMode !== 'hidden';
@@ -254,7 +252,7 @@ export function ControllerShell({
             paused={view.paused}
             urgentAt={online ? 5 : 0}
           />
-          {!online ? (
+          {showBanner ? (
             <span className={`${styles.cue} ${styles.cueStale}`} role="status">
               {reconnectingText}
             </span>

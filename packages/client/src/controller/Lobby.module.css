@@ -187,3 +187,111 @@
 :global(:root[data-motion='off']) .tip {
   animation: none;
 }
+
+/* ── The owner (2026-09-22): the lobby's title row carries the Share pill and the way out. */
+.head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--pb-space-3);
+}
+.headTitle {
+  min-width: 0;
+  text-wrap: balance;
+}
+.headPills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--pb-space-2);
+  flex: 0 0 auto;
+}
+.sharePill,
+.leavePill {
+  min-height: 40px;
+  padding: 0 var(--pb-space-3);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  font: inherit;
+  font-size: var(--pb-font-small);
+  font-weight: 800;
+  white-space: nowrap;
+  transition: transform var(--pb-motion-fast) var(--pb-ease);
+}
+.sharePill {
+  background: var(--pb-accent);
+  color: var(--pb-on-accent);
+}
+.sharePill:active {
+  transform: scale(0.96);
+}
+.leavePill {
+  background: transparent;
+  border-color: var(--pb-border);
+  color: var(--pb-text-muted);
+}
+
+/* The phone's own share chooser, where the system sheet does not exist (a plain-http origin). */
+.shareBack {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  align-items: end;
+  background: rgb(0 0 0 / 0.5);
+  animation: global(pb-fade-in) var(--pb-motion-fast) var(--pb-ease) both;
+}
+.shareSheet {
+  display: grid;
+  gap: var(--pb-space-2);
+  padding: var(--pb-space-4);
+  padding-bottom: calc(var(--pb-space-4) + env(safe-area-inset-bottom, 0px));
+  border-radius: var(--pb-radius-lg) var(--pb-radius-lg) 0 0;
+  background: var(--pb-surface);
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
+.shareCode {
+  margin: 0;
+  color: var(--pb-text-muted);
+}
+.shareRow {
+  display: block;
+  min-height: 52px;
+  line-height: 52px;
+  padding: 0 var(--pb-space-3);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface-2);
+  color: var(--pb-text);
+  font: inherit;
+  font-weight: 700;
+  text-align: left;
+  text-decoration: none;
+}
+.shareLink {
+  margin: 0;
+  font-size: var(--pb-font-small);
+  color: var(--pb-text-muted);
+  overflow-wrap: anywhere;
+}
+.shareClose {
+  min-height: 44px;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--pb-text-muted);
+  font: inherit;
+  font-weight: 700;
+}
+@media (prefers-reduced-motion: reduce) {
+  .shareBack,
+  .shareSheet,
+  .sharePill {
+    animation: none;
+    transition: none;
+  }
+}
+:global(:root[data-motion='off']) .shareBack,
+:global(:root[data-motion='off']) .shareSheet,
+:global(:root[data-motion='off']) .sharePill {
+  animation: none;
+  transition: none;
+}

@@ -4,7 +4,18 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ## [Unreleased]
 
+### Fixed
+
+- **"Reconnecting…" no longer strobes** (the owner, 2026-09-22): the link watchdog could kill each
+  fresh socket a second after it connected, and the banner followed the socket exactly. The
+  watchdog now holds off after a connect and between kicks, and the banner waits out a blip, holds
+  through a flapping link as one message, and ends with "✓ Back online".
+
 ### Changed
+
+- **Share is a pill in the lobby's top-right corner** and opens a real chooser (the owner,
+  2026-09-22): the phone's own share sheet where the page is https, otherwise Messages · WhatsApp ·
+  Mail · Copy. A "🚪 Leave" pill beside it drops the session and goes back to the room menu.
 
 - The join screen's language pills moved to the top-right corner, beside the title, and the "more
   below" chevron grew from 32x22 to 56x40 so a thumb can actually hit it (the owner, 2026-09-22).

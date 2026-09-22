@@ -10,35 +10,8 @@ import { lobbyStrings, t } from '../i18n';
 import type { Controller } from '../net/controller';
 import type { SoundEngine } from '../sound';
 import styles from './Lobby.module.css';
+import { ShareButton } from './ShareSheet';
 import { VIP_TIPS, setTipsSeen, tipsSeen } from './vipTips';
-
-/** The room's join link (`?room=CODE`, I-041) on the origin THIS phone reached the room by — a
- *  phone that came in through the tunnel shares the tunnel address, one on the Wi-Fi the LAN one. */
-function joinLink(code: string): string {
-  return `${window.location.origin}/?room=${code}`;
-}
-
-/** Share the link: the clipboard AND the phone's share sheet (the owner, 2026-09-21: "copy it to
- *  my clipboard AND pull up the window"). Both start inside the tap — iOS opens the sheet only
- *  from a user gesture, so the copy must not be awaited first. */
-async function shareLink(url: string, code: string): Promise<'shared' | 'copied' | 'failed'> {
-  const nav = navigator as Navigator & { share?: (d: ShareData) => Promise<void> };
-  const copied = navigator.clipboard?.writeText(url).then(
-    () => true,
-    () => false,
-  );
-  let shared = false;
-  if (nav.share) {
-    try {
-      await nav.share({ title: 'PartyBox', text: `Join my PartyBox room ${code}`, url });
-      shared = true;
-    } catch {
-      // dismissed, or no sheet after all
-    }
-  }
-  const ok = (await copied) ?? false;
-  return shared ? 'shared' : ok ? 'copied' : 'failed';
-}
 
 export interface LobbyProps {
   controller: Controller;
@@ -54,10 +27,17 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
   // I-070 A: one nudge per 20 s from this phone (the server throttles too).
   const [nudgedAt, setNudgedAt] = useState<number | null>(null);
   const vipName = room.players.find((p) => p.isVip)?.name ?? null;
-  // The owner (2026-09-21): a "share" in the lobby — the join link straight to this room.
   // I-082 A: the tips strip — first hosted room only; rotates every 5 s; ✕ ends it for good.
   const [tipsOn, setTipsOn] = useState(() => !tipsSeen());
   const [tipIndex, setTipIndex] = useState(0);
+  // Leaving is one tap to arm, one to go (the ★ menu's confirm shape) — it drops the session and
+  // lands back on the join screen, where the room list and "open a new room" live.
+  const [leaving, setLeaving] = useState(false);
+  useEffect(() => {
+    if (!leaving) return undefined;
+    const h = setTimeout(() => setLeaving(false), 3000);
+    return () => clearTimeout(h);
+  }, [leaving]);
   // I-082 B: tips retire as the VIP learns them.
   const hasBot = room.players.some((p) => p.bot);
   const tips: readonly { id: string; text: string }[] = VIP_TIPS.filter(
@@ -69,12 +49,6 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
     return () => clearInterval(h);
   }, [tipsOn, me.isVip, tips.length]);
   const tip = tips.length > 0 ? tips[tipIndex % tips.length] : undefined;
-  const [shared, setShared] = useState<'shared' | 'copied' | 'failed' | null>(null);
-  const share = async (): Promise<void> => {
-    const result = await shareLink(joinLink(room.code), room.code);
-    setShared(result);
-    setTimeout(() => setShared(null), 2500);
-  };
   // I-074 A: a removed bot puffs out before the remove is sent (450 ms, one poof at a time).
   const [poofing, setPoofing] = useState<string | null>(null);
   const poof = (botId: string): void => {
@@ -97,7 +71,25 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
   const addLabel = full ? t.lobby.full : maxed ? t.lobby.botsMaxed : lobbyStrings().addBot;
   return (
     <Screen
-      title={t.lobby.title}
+      title={
+        <span className={styles.head}>
+          <span className={styles.headTitle}>{t.lobby.title}</span>
+          <span className={styles.headPills}>
+            {/* The owner (2026-09-22): Share is a pill in the corner, and there is a way out. */}
+            <button
+              type="button"
+              className={styles.leavePill}
+              onClick={() => {
+                if (leaving) controller.leave();
+                else setLeaving(true);
+              }}
+            >
+              {leaving ? 'Leave?' : '🚪 Leave'}
+            </button>
+            <ShareButton code={room.code} />
+          </span>
+        </span>
+      }
       footer={
         me.isVip ? (
           <PrimaryButton onClick={pick} disabled={!first}>
@@ -138,22 +130,10 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
           {nudgedAt !== null ? '👋 Nudged' : `👋 Hurry up, ${vipName}!`}
         </button>
       ) : null}
-      <div className={styles.pills}>
-        {/* The join link, straight to this room: the share sheet where the phone has one. */}
-        <button type="button" className={styles.setup} onClick={() => void share()}>
-          {shared === 'copied'
-            ? '✓ Link copied'
-            : shared === 'shared'
-              ? '✓ Shared · link copied'
-              : shared === 'failed'
-                ? `Room ${room.code} — ${joinLink(room.code).replace(/^https?:\/\//, '')}`
-                : '🔗 Share the room link'}
-        </button>
-        {/* S-003 B: set up your phone while you wait — opens the 🎨 sheet. */}
-        <button type="button" className={styles.setup} onClick={onSetup}>
-          🎨 Set up your phone while you wait
-        </button>
-      </div>
+      {/* S-003 B: set up your phone while you wait — opens the 🎨 sheet. */}
+      <button type="button" className={styles.setup} onClick={onSetup}>
+        🎨 Set up your phone while you wait
+      </button>
       <p className={`pb-caption ${styles.count}`}>
         {t.lobby.players(room.players.length, room.capacity)}
         {room.locked ? ` · ${t.lobby.locked}` : ''}

@@ -15,8 +15,10 @@ import type {
   WelcomePayload,
   BotAction,
 } from '@partybox/shared';
+import { createLinkWatch } from './link-watch';
+import { dropRoomFromUrl } from './leave-url';
 import { createRestartWatch } from './stale';
-import { createStore, nextToastId } from './store';
+import { createStore, toastOnce } from './store';
 import type { Store, Toast } from './store';
 
 export type Connection = 'connecting' | 'connected' | 'reconnecting';
@@ -141,18 +143,20 @@ export function createController(url?: string): Controller {
     if (socket.connected) backOnline();
   };
 
-  // A dead link is invisible for up to the 20 s ping timeout (review-loop #4): the phone kept a
-  // green dot and a stale call for a whole 8 s drop. Two earlier signals flip it to reconnecting
-  // and kick the transport so socket.io's reconnect loop starts now: the browser's own offline
-  // event, and a deadline that passed more than 2 s ago with no push since (the server always
-  // pushes when a timer fires).
+  const link = createLinkWatch();
   const goStale = (): void => {
-    if (!store.get().joined) return;
+    const s = store.get();
+    if (!link.shouldGoStale(s.joined, s.connection === 'reconnecting')) return;
     store.set({ connection: 'reconnecting' });
     socket.io.engine?.close();
   };
   if (typeof window !== 'undefined') {
-    window.addEventListener('offline', goStale);
+    window.addEventListener('offline', () => {
+      if (!store.get().joined) return;
+      link.onOffline();
+      store.set({ connection: 'reconnecting' });
+      socket.io.engine?.close();
+    });
     window.addEventListener('online', () => {
       if (!socket.connected) socket.connect();
     });
@@ -177,6 +181,7 @@ export function createController(url?: string): Controller {
 
   const restarts = createRestartWatch();
   socket.on('connect', () => {
+    link.onConnect();
     restarts.onConnect();
     const wasJoined = store.get().joined;
     backOnline();
@@ -239,14 +244,7 @@ export function createController(url?: string): Controller {
     measure(push.at);
     store.set({ rev: push.rev, view: push.view });
   });
-  const showToast = (shown: ToastPayload): void => {
-    const id = nextToastId();
-    store.set(() => ({ toasts: [{ id, ...shown }] }));
-    setTimeout(
-      () => store.set((prev) => ({ toasts: prev.toasts.filter((t) => t.id !== id) })),
-      2500,
-    );
-  };
+  const showToast = (shown: ToastPayload): void => toastOnce(store, shown);
   // Reconnecting → connected while in a room: say so, or the banner just vanishes (review-loop #33).
   const backOnline = (): void => {
     const s = store.get();
@@ -328,6 +326,7 @@ export function createController(url?: string): Controller {
     leave() {
       socket.emit('leave', {});
       saveSession(null);
+      dropRoomFromUrl();
       store.set({ joined: false, playerId: null, room: null, view: null, rev: -1 });
     },
     dismissError: () => store.set({ error: null }),

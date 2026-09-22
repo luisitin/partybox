@@ -45,3 +45,14 @@ export function nextToastId(): number {
   toastSeq += 1;
   return toastSeq;
 }
+
+/** One toast at a time on a phone, gone after TOAST_MS (the shape every caller used inline). */
+const TOAST_MS = 2500;
+export function toastOnce(store: Store<{ toasts: Toast[] }>, shown: Omit<Toast, 'id'>): void {
+  const id = nextToastId();
+  store.set(() => ({ toasts: [{ id, ...shown }] }));
+  setTimeout(
+    () => store.set((prev) => ({ toasts: prev.toasts.filter((t) => t.id !== id) })),
+    TOAST_MS,
+  );
+}

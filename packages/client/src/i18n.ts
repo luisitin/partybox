@@ -121,6 +121,9 @@ export const t = {
     connecting: 'Connecting…',
     loadingGame: 'Getting the game ready…',
     lostServer: 'Lost the PartyBox server — reconnecting…',
+    /** The owner (2026-09-22): the banner ends here instead of vanishing, so a flapping link
+     *  cannot strobe "Reconnecting…" over and over. */
+    backOnline: '✓ Back online',
     seconds: (n: number) => `${n} s`,
     secondsLeft: (n: number) => `${n} seconds left`,
     hurry: 'Hurry!',
