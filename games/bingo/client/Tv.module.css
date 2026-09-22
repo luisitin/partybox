@@ -1003,3 +1003,8 @@
 }
 
 /* ── I-108 B: the strays stay red on the winner's card through the win stage (see TvParts). */
+
+/* ── I-091 A: a spicy caption — hotter colour. */
+.spicyCaption {
+  color: var(--pb-accent);
+}

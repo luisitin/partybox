@@ -121,8 +121,15 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
         {view.current ? <Call call={view.current} big stamp={view.calledAt} /> : null}
         {/* Ball first (180 ms pop), nickname 120 ms behind it: the number is the news (review-loop #1). */}
         {view.current ? (
-          <div key={`${view.current.number}:${view.calledAt ?? ''}`} className={styles.caption}>
-            <BigText level="h1">{view.current.call}</BigText>
+          <div
+            key={`${view.current.number}:${view.calledAt ?? ''}`}
+            className={`${styles.caption} ${view.current.spicy ? styles.spicyCaption : ''}`}
+          >
+            {/* I-091 A: a spicy line is marked — the rare one reads as the event. */}
+            <BigText level="h1" tone={view.current.spicy ? 'accent' : undefined}>
+              {view.current.spicy ? <span aria-label="spicy">🌶 </span> : null}
+              {view.current.call}
+            </BigText>
           </div>
         ) : null}
         {/* R2-01 B: who is one away, under the nickname — rises in, keyed on the names. */}
