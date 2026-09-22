@@ -7,7 +7,7 @@ import { allConnectedDone, enterPhase, hasPlayer, isTimerFor } from '@partybox/g
 import type { GameEvent } from '@partybox/game-sdk';
 import { blackCard } from '../content';
 import { leadWithFit, refillHands } from '../deal';
-import { hasPlayed, isCzar, playersDone } from '../round';
+import { hasPlayed, isCzar, playersDone, sitsOut } from '../round';
 import { ALL_IN_MS, EXTRA_PICK_S, REDRAWS_PER_GAME, UNTIMED_ANSWER_MS } from '../types';
 import type { Input, PlayInput, State } from '../types';
 import type { Transition } from './intro';
@@ -39,6 +39,7 @@ function isFast(state: State, now: number): boolean {
 function applyPlay(state: State, playerId: string, input: PlayInput, now: number): State {
   if (!hasPlayer(state, playerId) || isCzar(state, playerId) || hasPlayed(state, playerId))
     return state;
+  if (sitsOut(state, playerId)) return state; // I-147 A: the tie-break card is the tied players'
   const hand = state.hands[playerId] ?? [];
   const { pick } = blackCard(state.blackId);
   // Exactly the cards the black card asks for, all distinct, all from this hand.
@@ -71,6 +72,7 @@ export function redrawsLeft(state: State, playerId: string): number {
 function applyRedraw(state: State, playerId: string): State {
   if (!hasPlayer(state, playerId) || isCzar(state, playerId) || hasPlayed(state, playerId))
     return state;
+  if (sitsOut(state, playerId)) return state; // I-147 A
   if (redrawsLeft(state, playerId) === 0) return state;
   const old = state.hands[playerId] ?? [];
   const emptied: State = {

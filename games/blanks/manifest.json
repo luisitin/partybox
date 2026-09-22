@@ -84,6 +84,13 @@
       "description": "A random card from the deck plays every round as a phantom player; if it wins, nobody scores",
       "type": "boolean",
       "default": false
+    },
+    {
+      "key": "tieBreak",
+      "label": "Sudden death on a tie",
+      "description": "A shared top score after the last round deals one more card to the tied players (up to three times)",
+      "type": "boolean",
+      "default": true
     }
   ],
   "supportsBots": true
