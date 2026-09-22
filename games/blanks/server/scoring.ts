@@ -55,8 +55,15 @@ export function applyRound(state: State): State {
 const count = (n: number, noun: string): string => `${n} ${noun}${n === 1 ? '' : 's'}`;
 
 /** Player with the highest stat (> 0); ties go to the higher total score, then the lower id. */
+/**
+ * I-154 A: an award a person cannot win is an anti-award. A bot plays on the first sample, so
+ * "Quick draw" was decided before anyone had read the black card. Awards are for the people who
+ * were in the room; with no human in the running, the award is simply not shown.
+ */
 function leader(state: State, stat: Record<string, number>): string | null {
-  const ids = Object.keys(state.players).filter((id) => (stat[id] ?? 0) > 0);
+  const ids = Object.keys(state.players).filter(
+    (id) => (stat[id] ?? 0) > 0 && state.players[id]?.bot !== true,
+  );
   ids.sort(
     (a, b) =>
       (stat[b] ?? 0) - (stat[a] ?? 0) ||
