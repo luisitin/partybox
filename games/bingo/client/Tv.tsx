@@ -13,7 +13,7 @@ import { BALL_LAND_MS, hushCaller, speakCall } from './caller';
 import { PATTERN_LABEL, patternCells } from '../server/patterns';
 import { PatternIcon } from './Card';
 import { PatternDemo } from './PatternDemo';
-import { pendingLine, whyNot, winHeadline } from './copy';
+import { botLine, pendingLine, whyNot, winHeadline } from './copy';
 import { hopelessClaim } from '../server/reveal';
 import { IntroStage, Resume } from './TvCountdown';
 import { Call, CalledBoard, ClaimStage, DibsLine, rows, whichCard } from './TvParts';
@@ -183,6 +183,12 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
                 <span className={styles.legendMissing}>▢ missed</span>
               </p>
               {whyNot(view.claim) ? <BigText level="h2">{whyNot(view.claim)}</BigText> : null}
+              {/* I-138 A: the bot answers for itself. */}
+              {botLine(view.claim) ? (
+                <BigText level="h2" tone="accent">
+                  {botLine(view.claim)}
+                </BigText>
+              ) : null}
               <BigText level="h2" tone="muted">
                 Card wiped. Next number in a moment…
               </BigText>
