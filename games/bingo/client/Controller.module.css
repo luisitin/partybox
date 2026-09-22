@@ -1371,3 +1371,9 @@
   color: var(--pb-accent-2);
   animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
 }
+
+/* ── I-125 A: the spare slot is a caller stage, not a greyed leftover. */
+.miniCallBright {
+  opacity: 1;
+  color: var(--pb-text);
+}

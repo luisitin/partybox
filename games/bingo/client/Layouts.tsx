@@ -197,17 +197,14 @@ export function FocusLayout(
 /** The spare slot in a three-card grid: the call, the way the TV shows it. */
 function MiniCall({ view }: { view: BingoControllerView }): JSX.Element {
   return (
-    <div className={`${styles.slot} ${styles.miniCall}`} role="status">
+    <div className={`${styles.slot} ${styles.miniCall} ${styles.miniCallBright}`} role="status">
       {view.current ? <Ball call={view.current} size="lg" /> : <span>first number…</span>}
-      <span>
-        {view.previous ? (
-          <>
-            before that <Ball call={view.previous} size="sm" />
-          </>
-        ) : (
-          '—'
-        )}
-      </span>
+      {/* I-125 A: no placeholder dash before there is a previous call. */}
+      {view.previous ? (
+        <span>
+          before that <Ball call={view.previous} size="sm" />
+        </span>
+      ) : null}
       <span>
         call {view.callIndex} · {view.patternLabel.toLowerCase()}
       </span>
