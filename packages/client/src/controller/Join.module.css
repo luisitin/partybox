@@ -260,3 +260,12 @@
 :global(:root[data-motion='off']) .flipBack {
   animation: none;
 }
+
+/* ── I-067 A: a short sideways box — the join button needs no portrait-height target. */
+@media (orientation: landscape) and (max-height: 420px) {
+  .form :global(button[type='submit']) {
+    min-height: 44px;
+    padding-top: var(--pb-space-2);
+    padding-bottom: var(--pb-space-2);
+  }
+}
