@@ -67,6 +67,8 @@ export function HostBar({ client, room, view }: HostBarProps): JSX.Element | nul
   };
   const label = (key: string, text: string): string => (confirm === key ? `Sure? ${text}` : text);
   const vipAway = useVipAway(room);
+  // I-071 B: the bar says whose controls these are.
+  const vipName = room.players.find((p) => p.id === room.vip)?.name ?? null;
   const bots = room.players.filter((p) => p.bot);
   const full = room.players.length >= room.capacity;
   const firstGame = room.games[0];
@@ -189,7 +191,10 @@ export function HostBar({ client, room, view }: HostBarProps): JSX.Element | nul
 
   return (
     <div className={styles.bar} role="toolbar" aria-label={t.host.title}>
-      <span className={styles.label}>{t.host.title}</span>
+      {/* I-071 A: the room's one badge for "who runs this" — the roster's ★ pill. */}
+      <span className={`${styles.label} ${styles.pill}`}>
+        <span aria-hidden>★</span> {vipName ?? t.host.title}
+      </span>
       {vipAway ? (
         <span className={styles.away} role="status">
           {vipAway.next ? t.host.vipAway(vipAway.next, vipAway.seconds) : t.host.vipAwayNobody}
