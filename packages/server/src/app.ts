@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 import Fastify from 'fastify';
 import type { FastifyInstance } from 'fastify';
 import type { EngineDeps } from '@partybox/engine';
-import { PARTYBOX_VERSION, ROOM_CODE_ALPHABET, gameManifestSchema } from '@partybox/shared';
+import { PARTYBOX_VERSION, gameManifestSchema } from '@partybox/shared';
 import { gameSummaries } from '@partybox/engine';
 import { createBotManager } from './bots';
 import type { BotManager } from './bots';
@@ -21,13 +21,9 @@ import { qrSvg } from './qr';
 import { readFile } from 'node:fs/promises';
 import { createRecorder } from './recorder';
 import type { Recorder } from './recorder';
+import { registerRoomsRoute } from './rooms-route';
 import { createSocketLayer } from './sockets';
 import { createFunnelBook } from './funnel';
-
-/** The owner (2026-09-22): a phone-made room nobody joined is reaped after this, and a host keeps
- *  at most this many rooms open at once. */
-const ROOM_IDLE_MS = 10 * 60_000;
-const MAX_ROOMS = 12;
 
 export const REPO_ROOT = resolve(fileURLToPath(new URL('../../..', import.meta.url)));
 export const CLIENT_DIR = join(REPO_ROOT, 'packages', 'client');
@@ -112,40 +108,7 @@ export async function createApp(options: AppOptions): Promise<App> {
   sockets.attach(host, deps, funnel);
   fastify.get('/api/funnel', async () => funnel.all());
 
-  /**
-   * The owner (2026-09-22): a phone that does not know a code can open its own room — with a code
-   * it picked, when that code is free — instead of being stuck on the join form. An empty room
-   * nobody joined is reaped after ROOM_IDLE_MS so the browser list stays honest.
-   */
-  fastify.post('/api/rooms', async (req, reply) => {
-    for (const room of host.rooms())
-      if (
-        room.code !== host.house().code &&
-        Object.keys(room.players).length === 0 &&
-        Date.now() - room.createdAt > ROOM_IDLE_MS
-      )
-        host.drop(room.code);
-    const body = (req.body ?? {}) as { code?: unknown; listed?: unknown };
-    const wanted = typeof body.code === 'string' ? body.code.trim().toUpperCase() : '';
-    if (host.rooms().length >= MAX_ROOMS)
-      return reply.code(429).send({ error: 'too_many_rooms', message: 'Too many rooms open.' });
-    try {
-      const room = host.createRoom({
-        code: wanted || undefined,
-        listed: body.listed === false ? false : true,
-      });
-      return { code: room.code, listed: room.listed };
-    } catch (err) {
-      const why = err instanceof Error ? err.message : 'invalid';
-      return reply.code(why === 'taken' ? 409 : 400).send({
-        error: why,
-        message:
-          why === 'taken'
-            ? 'That code is already in use.'
-            : `A code is 4 letters from ${ROOM_CODE_ALPHABET}.`,
-      });
-    }
-  });
+  registerRoomsRoute(fastify, { host, clock, io: sockets.io }); // ADR-043
 
   const app: App = {
     fastify,

@@ -36,6 +36,24 @@ describe('VIP validation', () => {
     ]);
   });
 
+  it('setListed makes a room public or private any time; a no-op when unchanged (ADR-043)', () => {
+    const room = roomWith(2);
+    expect(room.listed).toBe(true);
+    const off = vip(room, { action: 'setListed', on: false });
+    expect(off.room.listed).toBe(false);
+    expect(effectTypes(off.effects)).toEqual(['push']);
+    expect(vip(off.room, { action: 'setListed', on: false }).effects).toEqual([]);
+    expect(vip(playingRoom(2), { action: 'setListed', on: false }).room.listed).toBe(false);
+  });
+  it('setCapacity clamps to 16 and never goes below the people already in (I-088)', () => {
+    const room = roomWith(5);
+    expect(vip(room, { action: 'setCapacity', capacity: 8 }).room.capacity).toBe(8);
+    // below the head count: floored at it
+    expect(vip(room, { action: 'setCapacity', capacity: 4 }).room.capacity).toBe(5);
+    expect(vip(room, { action: 'setCapacity', capacity: 16 }).room.capacity).toBe(16);
+    const same = vip(room, { action: 'setCapacity', capacity: room.capacity });
+    expect(same.effects).toEqual([]);
+  });
   it('non-VIPs are rejected with not_vip and nothing changes', () => {
     const room = roomWith(2);
     const r = vip(room, { action: 'lock' }, T0 + 5, 'p2');
