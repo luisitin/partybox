@@ -411,3 +411,11 @@
   display: inline-block;
   animation: global(pb-bump) var(--pb-motion-base) var(--pb-ease) both;
 }
+
+/* ── I-134 A: the live line on a waiting phone. */
+.watchLine {
+  margin: var(--pb-space-3) 0 0;
+  font-size: var(--pb-text-lg, 1.15rem);
+  font-weight: 800;
+  text-align: center;
+}

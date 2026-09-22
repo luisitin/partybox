@@ -78,7 +78,13 @@ export function applyGameEvent(
     });
     return { room, effects };
   }
-  const next: RoomState = { ...room, game: { ...running, state } };
+  // I-134 B: a spectator the game has taken in (a round-dealing game's next deal) is a player now.
+  let players = room.players;
+  for (const id of Object.keys(state.players)) {
+    const p = players[id];
+    if (p?.spectator) players = { ...players, [id]: { ...p, spectator: false } };
+  }
+  const next: RoomState = { ...room, players, game: { ...running, state } };
   return finishIfOver(next, deps, effects);
 }
 

@@ -88,6 +88,12 @@ export const gameManifestSchema = z
      * while bots are in the room (ADR-028).
      */
     supportsBots: z.boolean().optional(),
+    /**
+     * I-134 B: a game that deals in rounds may take a phone that joined mid-game at its next round
+     * ('round'): the engine sends it a `player` event with `joining` for every waiting spectator.
+     * Without it a spectator waits for the next game, as before.
+     */
+    lateJoin: z.enum(['round']).optional(),
   })
   .refine((m) => m.minPlayers <= m.maxPlayers, { message: 'minPlayers must be <= maxPlayers' });
 export type GameManifest = z.infer<typeof gameManifestSchema>;
@@ -138,7 +144,14 @@ export type GameEvent<I> =
    *  them (Broken Pencil's "close enough" veto) without ever learning who the VIP is otherwise. */
   | { type: 'input'; now: number; playerId: string; input: I; vip?: boolean }
   | { type: 'timer'; now: number; phaseId: string; startedAt: number }
-  | { type: 'player'; now: number; playerId: string; connected: boolean }
+  | {
+      type: 'player';
+      now: number;
+      playerId: string;
+      connected: boolean;
+      /** I-134 B: a spectator the game may take at its next round (only to `lateJoin` games). */
+      joining?: { name: string; avatarId: string; bot?: boolean };
+    }
   | { type: 'vip'; now: number; action: VipGameAction };
 
 // ─── Views ──────────────────────────────────────────────────────────────────────────────────────
@@ -167,6 +180,19 @@ export interface ViewEnvelope {
    * (a bingo call, a page of a slideshow). `hidden`: nothing at all.
    */
   timerMode?: 'normal' | 'quiet' | 'hidden';
+  /**
+   * I-134 A: what a spectator should be shown while they wait. The shell knows a spectator is
+   * waiting but nothing about the game they are waiting on; a game that has something worth
+   * watching (a number being called) fills this and the wait stops being a blank screen.
+   */
+  spectator?: {
+    /** The live line — for Bingo, the call and its nickname. */
+    line: string;
+    /** I-134 B: when this phone is in. Bingo re-deals every round, so it is the next round. */
+    joinAt?: string;
+    /** I-134 B: the title that goes with it ("Waiting for the next round"). */
+    title?: string;
+  };
 }
 
 export type TvView = ViewEnvelope;
