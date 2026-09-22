@@ -20,6 +20,7 @@
   --pb-on-accent-2-fill: #1a0b12;
   /* optional edge for surfaces; only High Contrast sets it */
   --pb-border: transparent;
+  --pb-border-w: 1px; /* I-061 A: outline weight — High Contrast thickens it */
   /* the veil behind a pause curtain or a phone sheet: the theme's own ink, never a baked-in night */
   --pb-scrim: rgb(15 16 32 / 62%);
 
@@ -142,7 +143,25 @@ ight is the :root default above) ────────
   --pb-accent-2-fill: #ffff00;
   --pb-on-accent-2-fill: #000000;
   --pb-border: #ffffff;
+  --pb-border-w: 3px; /* I-061 A */
   --pb-scrim: rgb(0 0 0 / 78%);
+}
+/* I-061 B: High Contrast is flat — no shadows, no glows, no gradients. */
+[data-theme='contrast'] *,
+[data-theme='contrast'] *::before,
+[data-theme='contrast'] *::after {
+  box-shadow: none !important;
+  text-shadow: none !important;
+  background-image: none !important;
+}
+/* I-061 C: bolder — body weight 700, the muted text full white. */
+[data-theme='contrast'] {
+  --pb-text-muted: #ffffff;
+}
+[data-theme='contrast'] body,
+[data-theme='contrast'] button,
+[data-theme='contrast'] input {
+  font-weight: 700;
 }
 [data-surface='tv'] {
   --pb-font-display: 128px;
