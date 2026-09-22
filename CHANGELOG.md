@@ -5,6 +5,8 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **The QR carries the mark** (I-075, option C): a PB disc in the accent colour at the code's
+  centre (the server's QR moved to error level H, so a scan is unaffected), bumping on every join.
 - **The host bar names the VIP** (I-071, option B): the "HOST" label is the roster's ★ pill with
   the VIP's name — "★ SAM".
 - **A waiting player can nudge the VIP** (I-070, option C): a "👋 Hurry up, Sam!" pill on a
