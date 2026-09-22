@@ -2,8 +2,9 @@
 // An empty lobby breathes (heading + waiting dots); a join pops its chip
 // into the first seat and bumps the count — so the eye lands on the chip, not a toast.
 import type { JSX } from 'react';
+import { LIMITS } from '@partybox/shared';
 import type { RoomSnapshot } from '@partybox/shared';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Avatar, BigText, PlayerChips, Stage } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import { useServerInfo } from '../net/info';
@@ -58,9 +59,48 @@ function LastUp({ room }: { room: RoomSnapshot }): JSX.Element | null {
   );
 }
 
+/**
+ * I-089 A: seconds of grace left per dropped player — counted from the first tick that sees them
+ * offline (the server flips `connected` on socket close), 1 s tick while any is out. Same shape as
+ * HostBar's `useVipAway`: the interval owns the state, so render stays pure and no ref is read
+ * during it (the preview branch kept the timestamps in a ref, which this repo's react-hooks rules
+ * reject).
+ */
+function useAwayLeft(
+  players: readonly { id: string; connected: boolean }[],
+): Record<string, number> {
+  const offline = players
+    .filter((p) => !p.connected)
+    .map((p) => p.id)
+    .sort()
+    .join(',');
+  const [tick, setTick] = useState<{ now: number; since: Record<string, number> }>({
+    now: 0,
+    since: {},
+  });
+  useEffect(() => {
+    if (offline === '') return undefined;
+    const ids = offline.split(',');
+    const update = (): void =>
+      setTick((t) => {
+        const now = Date.now();
+        const since: Record<string, number> = {};
+        for (const id of ids) since[id] = t.since[id] ?? now;
+        return { now, since };
+      });
+    const handle = setInterval(update, 1000);
+    return () => clearInterval(handle);
+  }, [offline]);
+  const out: Record<string, number> = {};
+  for (const [id, at] of Object.entries(tick.since))
+    out[id] = Math.max(0, Math.round((at + LIMITS.disconnectGraceMs - tick.now) / 1000));
+  return out;
+}
+
 export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
   const info = useServerInfo();
   const players = room?.players ?? [];
+  const awayLeft = useAwayLeft(players); // I-089 A
   const vip = players.find((p) => p.isVip);
   const full = room !== null && players.length >= room.capacity;
   // I-055 A: a locked room reads on the QR panel, like a full one.
@@ -143,6 +183,7 @@ export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
             // I-045 A: the room waits on the VIP — their chip carries the ring.
             activeIds={vip ? [...nudgeIds, vip.id] : nudgeIds}
             wavingIds={nudgeIds.filter((id) => id !== vip?.id)}
+            awayLeft={awayLeft}
             botIds={players.filter((p) => p.bot).map((p) => p.id)}
             layout="grid"
             size={players.length > 8 ? 'md' : 'lg'}

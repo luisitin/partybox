@@ -15,6 +15,7 @@ import styles from './ControllerShell.module.css';
 import { PhoneSettings, tvSoundsOn } from './PhoneSettings';
 import { clientGames } from '../games.generated';
 import type { SoundCue } from '../sound';
+import { useGraceLeft } from './grace';
 import { usePhoneUrgency } from './urgency';
 import { VipMenu } from './VipMenu';
 
@@ -87,6 +88,13 @@ export function ControllerShell({
   const myStatus = state.view?.players.find((p) => p.id === state.playerId)?.status ?? null;
   // Offline, the local countdown still runs (and parks at 0): show it muted, never urgent.
   const online = state.connection === 'connected';
+  // I-089 C: how long the phone has to get back (the server's 120 s), from the moment this phone
+  // saw the socket go.
+  const left = useGraceLeft(!online && state.joined);
+  const reconnectingText =
+    left === null
+      ? t.connection.reconnecting
+      : `${t.connection.reconnecting} ${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')} left`;
   // With a countdown row on screen, "Reconnecting…" takes its cue slot (review-loop #33): the
   // overlay banner hid the first content line for the whole outage. No row → the banner.
   const countdownRow = view !== null && seconds !== null && view.timerMode !== 'hidden';
@@ -248,7 +256,7 @@ export function ControllerShell({
           />
           {!online ? (
             <span className={`${styles.cue} ${styles.cueStale}`} role="status">
-              {t.connection.reconnecting}
+              {reconnectingText}
             </span>
           ) : candidate ? (
             <span className={styles.cue} aria-hidden>
@@ -284,7 +292,7 @@ export function ControllerShell({
             the drawing sheet under a finger mid-stroke. */}
         {showBanner && !countdownRow ? (
           <div className={styles.banner} role="status">
-            {t.connection.reconnecting}
+            {reconnectingText}
           </div>
         ) : paused ? (
           <div className={styles.banner} role="status">

@@ -306,3 +306,28 @@
 :global(:root[data-motion='off']) .wave {
   animation: none;
 }
+
+/* ── I-089 A: the grace left, small, after the name of a dropped player. */
+.away {
+  flex-shrink: 0;
+  font-size: 0.7em;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--pb-text-muted);
+}
+
+/* ── I-089 B: a thin ring drains around the dimmed face (one CSS var, repainted per second). */
+.draining {
+  position: relative;
+  border-radius: 50%;
+}
+.draining::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background: conic-gradient(var(--pb-text-muted) var(--pb-away, 360deg), transparent 0);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px));
+  pointer-events: none;
+}

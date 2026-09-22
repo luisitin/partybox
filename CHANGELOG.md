@@ -11,6 +11,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Added
 
+- **The disconnect grace counts down** (I-089, option C): the TV shows "1:58" after a dropped
+  player's name with a ring draining around their dimmed face, and the dropped phone's own banner
+  says "Reconnecting… 1:47 left".
 - **The room's own size** (I-088, option C): a "Room size − X / N +" stepper in the ★ VIP menu
   (4–16, never below the head count; the TV's count follows) and "Lock at this size", which sets
   the capacity to the head count and locks the room in one tap.
