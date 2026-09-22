@@ -157,7 +157,16 @@ export async function createApp(options: AppOptions): Promise<App> {
       qrSvg: await qrSvg(qrUrl),
       rooms: host
         .rooms()
-        .map((r) => ({ code: r.code, locked: r.locked, players: Object.keys(r.players).length })),
+        .map((r) => ({
+          code: r.code,
+          locked: r.locked,
+          players: Object.keys(r.players).length,
+          // I-046 B: a few first names for the join page's example placeholder.
+          names: Object.values(r.players)
+            .filter((p) => !p.bot)
+            .slice(0, 4)
+            .map((p) => p.name),
+        })),
       houseRoom: host.house().code,
       dev: options.dev,
     };
