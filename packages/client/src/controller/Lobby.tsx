@@ -6,7 +6,7 @@ import type { JSX } from 'react';
 import { MAX_BOTS_PER_OWNER } from '@partybox/shared';
 import type { PlayerPublic, RoomSnapshot } from '@partybox/shared';
 import { PlayerChip, PrimaryButton, Screen } from '@partybox/game-sdk/ui';
-import { t } from '../i18n';
+import { lobbyStrings, t } from '../i18n';
 import type { Controller } from '../net/controller';
 import type { SoundEngine } from '../sound';
 import styles from './Lobby.module.css';
@@ -76,7 +76,7 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
   const full = room.players.length >= room.capacity;
   const maxed = myBots.length >= MAX_BOTS_PER_OWNER;
   const canAddBot = !maxed && !full;
-  const addLabel = full ? t.lobby.full : maxed ? t.lobby.botsMaxed : t.lobby.addBot;
+  const addLabel = full ? t.lobby.full : maxed ? t.lobby.botsMaxed : lobbyStrings().addBot;
   return (
     <Screen
       title={t.lobby.title}
@@ -88,7 +88,7 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
         ) : undefined
       }
     >
-      <p className="pb-muted">{me.isVip ? t.lobby.youAreVip : t.lobby.waitingForVip}</p>
+      <p className="pb-muted">{me.isVip ? t.lobby.youAreVip : lobbyStrings().waitingForVip}</p>
       <div className={styles.pills}>
         {/* The join link, straight to this room: the share sheet where the phone has one. */}
         <button type="button" className={styles.setup} onClick={() => void share()}>
@@ -147,7 +147,7 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
             className={styles.addBot}
             onClick={() => controller.bot({ action: 'add' })}
             disabled={!canAddBot}
-            aria-label={t.lobby.addBot}
+            aria-label={lobbyStrings().addBot}
           >
             <span className={styles.addBotPlus} aria-hidden>
               ＋
@@ -156,7 +156,7 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
           </button>
         </li>
       </ul>
-      <p className="pb-caption pb-muted">{t.lobby.addBotHint}</p>
+      <p className="pb-caption pb-muted">{lobbyStrings().addBotHint}</p>
     </Screen>
   );
 }
