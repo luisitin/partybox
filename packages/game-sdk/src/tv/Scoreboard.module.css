@@ -261,3 +261,17 @@
 :global(:root[data-motion='off']) .climb .fell {
   animation-delay: 0ms;
 }
+
+/* ── I-146 B: the band a split column covers, over its first row. */
+.band {
+  position: absolute;
+  top: -1.35em;
+  left: var(--pb-space-3);
+  font-size: 0.62em;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--pb-muted, rgba(255, 255, 255, 0.55));
+}
+.board .row {
+  position: relative;
+}

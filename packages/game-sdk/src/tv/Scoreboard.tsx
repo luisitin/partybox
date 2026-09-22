@@ -172,6 +172,16 @@ export function Scoreboard({
   const from = (row: ScoreboardRow, index: number): number =>
     climbOffset(climbFrom, row.playerId, index);
   const countDelayMs = boardLandedMs(rows.length, { compact, dense, columns, stagger });
+  // I-146 B: a split board says where each column starts and ends, so a column edge reads as a
+  // continuation of the ranking rather than a second list beside the first.
+  const perCol = Math.ceil(rows.length / cols);
+  const bandFor = (index: number): string | null => {
+    if (cols < 2 || noRanks || index % perCol !== 0) return null;
+    const last = rows[Math.min(index + perCol - 1, rows.length - 1)];
+    const first = rows[index];
+    if (!first || !last) return null;
+    return first.rank === last.rank ? `${first.rank}` : `${first.rank}\u2013${last.rank}`;
+  };
   return (
     <ol
       className={`${styles.board} ${tier === 'roomy' ? '' : styles[tier]} ${size === 'lg' ? styles.lg : size === 'sm' ? styles.sm : ''} ${staggered ? styles.staggered : ''} ${staggered && stagger === 'down' ? styles.down : ''} ${climb ? styles.climb : ''}`}
@@ -191,6 +201,11 @@ export function Scoreboard({
                 : undefined
           }
         >
+          {bandFor(index) ? (
+            <span className={styles.band} aria-hidden>
+              {bandFor(index)}
+            </span>
+          ) : null}
           <span className={styles.rank} aria-label={`rank ${row.rank}`}>
             {noRanks ? '' : heldRanks ? '·' : row.rank === 1 && trophy ? '🏆' : row.rank}
           </span>
