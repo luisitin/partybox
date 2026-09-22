@@ -5,6 +5,8 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **The host bar names the VIP** (I-071, option B): the "HOST" label is the roster's ★ pill with
+  the VIP's name — "★ SAM".
 - **A waiting player can nudge the VIP** (I-070, option C): a "👋 Hurry up, Sam!" pill on a
   non-VIP's lobby (20 s cooldown, the server charges it 10 tokens) raises "👋 Priya says: hurry
   up, Sam!" to the room — the VIP's phone buzzes and plays `phase`, and the TV rocks the
