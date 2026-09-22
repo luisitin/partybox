@@ -9,6 +9,7 @@ import { PatternDemo } from './PatternDemo';
 import { DecideFooter, rows } from './ControllerParts';
 import type { Send } from './ControllerParts';
 import { winTitle } from './copy';
+import { nearest } from './close';
 import styles from './Controller.module.css';
 
 /** What happens after this bingo: the room decides, fresh cards, or the final board. */
@@ -57,6 +58,25 @@ export function WinScreen({
 }
 
 /** Between rounds ("Points so far") and after the last one (your place). */
+/** I-121: a private recap of the round from the phone's own daubs. */
+function RoundRecap({ view }: { view: BingoControllerView }): JSX.Element | null {
+  const cards = view.cards ?? [];
+  const daubs = view.daubs[0] ?? [];
+  const numbers = cards[0];
+  if (!numbers) return null;
+  const won = view.won.includes(0);
+  const near = nearest(view.pattern, daubs);
+  return (
+    <div className={styles.recap}>
+      <p className={styles.recapTitle}>Your round</p>
+      <p className={styles.recapLine}>
+        {daubs.length} {daubs.length === 1 ? 'daub' : 'daubs'}
+        {won ? ' · a bingo' : near.left < 99 ? ` · closest line: ${near.where}, ${near.left} to go` : ''}
+      </p>
+    </div>
+  );
+}
+
 export function EndScreens({
   view,
   meId,
@@ -83,6 +103,8 @@ export function EndScreens({
             Next: round {view.round + 1} — {PATTERN_LABEL[next]}
           </p>
         ) : null}
+        {/* I-121 A: what only this phone knows — its own round. */}
+        <RoundRecap view={view} />
       </Screen>
     );
   }

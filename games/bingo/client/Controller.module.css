@@ -1353,3 +1353,24 @@
   display: grid;
   gap: var(--pb-space-2);
 }
+
+/* ── I-121 A: the round recap in the empty half of the between-rounds screen. */
+.recap {
+  margin-top: var(--pb-space-4);
+  padding: var(--pb-space-3) var(--pb-space-4);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  border-left: 4px solid var(--pb-accent-2);
+}
+.recapTitle {
+  margin: 0 0 var(--pb-space-1);
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--pb-text-muted);
+}
+.recapLine {
+  margin: 0;
+  font-weight: 700;
+}
