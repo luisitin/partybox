@@ -295,3 +295,8 @@
   animation: none;
   transition: none;
 }
+.shareNote {
+  margin: 0;
+  font-size: var(--pb-font-small);
+  color: var(--pb-text-muted);
+}

@@ -1,7 +1,7 @@
 // I-076 B: the join screen's language row — a way to choose, remembered in this browser.
 import type { JSX } from 'react';
-import { JOIN_LANGS, setJoinLang } from '../i18n';
-import type { JoinLang } from '../i18n';
+import { JOIN_LANGS, setJoinLang } from '../i18n-join';
+import type { JoinLang } from '../i18n-join';
 import styles from './Join.module.css';
 
 export function JoinLangs({

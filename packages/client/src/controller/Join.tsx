@@ -4,8 +4,9 @@ import { useEffect, useRef, useState } from 'react';
 import type { FormEvent, JSX } from 'react';
 import { EVERYDAY_AVATAR_IDS, PLAYER_NAME_MAX } from '@partybox/shared';
 import { Avatar, AvatarPhotos, PlayerChip, PrimaryButton, Screen } from '@partybox/game-sdk/ui';
-import { joinLang, joinStrings, t } from '../i18n';
-import type { JoinLang } from '../i18n';
+import { t } from '../i18n';
+import { joinLang, joinStrings, roomStrings } from '../i18n-join';
+import type { JoinLang } from '../i18n-join';
 import type { Controller, ControllerState } from '../net/controller';
 import { useServerInfo } from '../net/info';
 import type { SoundEngine } from '../sound';
@@ -24,7 +25,7 @@ export interface JoinProps {
 }
 
 export function Join({ controller, state, audio }: JoinProps): JSX.Element {
-  const info = useServerInfo();
+  const info = useServerInfo(60_000, true); // the join page: the funnel's "opened" (I-077)
   // I-079 A/B: the faces on offer today (`?date=` previews a month).
   const { season, ids: gridIds } = joinGrid();
   // I-076 A: the join strings in the phone's language (B: the remembered choice).
@@ -55,6 +56,11 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
   // I-031 (the owner): a photo avatar from the phone, kept with the name and face across sessions.
   const [photo, setPhoto] = useState<string | null>(session?.photo ?? null);
   const [code, setCode] = useState(urlRoom ?? '');
+  // The badges follow the room actually being joined — a code typed or a room tapped in the list
+  // (ADR-043) — while the default face above stays keyed on the first room, so it does not change
+  // under the person's thumb as they type.
+  const picked = info?.rooms.find((r) => r.code === code.trim().toUpperCase());
+  const badged = picked ? new Set(picked.avatars ?? []) : taken;
   // I-046 A: the placeholder rotates through example names while the field is empty and unfocused.
   const EXAMPLES = ['Sam', 'Priya', 'Grandma Jo', 'Big Dave', 'Mo', 'Auntie Kay'];
   // I-046 B: the room's own people lead the examples.
@@ -261,7 +267,7 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
           </label>
           {needsCode ? (
             <label className={styles.field}>
-              <span className={styles.label}>{t.join.code}</span>
+              <span className={styles.label}>{roomStrings(lang).code}</span>
               <input
                 ref={codeRef}
                 className={`${styles.input} ${styles.code} ${codeError ? styles.inputError : ''} ${shaking && codeError ? styles.shake : ''}`}
@@ -270,7 +276,7 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
                 aria-describedby={codeError ? 'join-code-error' : undefined}
                 value={code}
                 onChange={(e) => setCode(e.target.value.toUpperCase())}
-                placeholder={t.join.codePlaceholder}
+                placeholder={roomStrings(lang).codePlaceholder}
                 maxLength={4}
                 autoCapitalize="characters"
                 autoCorrect="off"
@@ -285,14 +291,14 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
             </label>
           ) : null}
           {/* The owner (2026-09-22): which rooms are open, and a way to open your own. */}
-          {needsCode ? <RoomPicker info={info} code={code} onPick={setCode} /> : null}
+          {needsCode ? <RoomPicker info={info} code={code} onPick={setCode} lang={lang} /> : null}
         </div>
         <JoinAvatars
           legend={j.avatar}
           ids={gridIds}
           avatarId={avatarId}
           onPick={setAvatarId}
-          taken={taken}
+          taken={badged}
           season={season}
           photo={photo !== null}
         />

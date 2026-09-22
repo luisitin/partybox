@@ -34,21 +34,31 @@ export interface ServerInfo {
 
 let cached: ServerInfo | null = null;
 
-export async function fetchInfo(): Promise<ServerInfo> {
-  // I-077 A: a phone says so (the funnel's "opened"); the TV and /preview stay uncounted.
-  const from = document.querySelector('[data-surface="controller"]') ? '?from=phone' : '';
-  const res = await fetch(`/api/info${from}`);
+/**
+ * I-077 A: the join funnel's "opened" is one join page opened on one phone. Only the join page
+ * asks to be counted, and only on its first fetch per page load — the minute refreshes, the VIP's
+ * game picker (a phone already in the room) and every TV stay uncounted. (Until 2026-09-22 the
+ * flag was read off the DOM, so any phone screen that fetched info counted, and "opened" kept
+ * climbing through a whole game.)
+ */
+let countedThisPage = false;
+
+export async function fetchInfo(opts: { countOpen?: boolean } = {}): Promise<ServerInfo> {
+  const count = opts.countOpen === true && !countedThisPage;
+  if (count) countedThisPage = true;
+  const res = await fetch(`/api/info${count ? '?from=phone' : ''}`);
   if (!res.ok) throw new Error(`info ${res.status}`);
   cached = (await res.json()) as ServerInfo;
   return cached;
 }
 
-export function useServerInfo(refreshMs = 60_000): ServerInfo | null {
+/** `countOpen`: this is the join page (see `fetchInfo`). */
+export function useServerInfo(refreshMs = 60_000, countOpen = false): ServerInfo | null {
   const [info, setInfo] = useState<ServerInfo | null>(cached);
   useEffect(() => {
     let alive = true;
     const load = (): void => {
-      fetchInfo()
+      fetchInfo({ countOpen })
         .then((i) => alive && setInfo(i))
         .catch(() => undefined);
     };
@@ -58,6 +68,6 @@ export function useServerInfo(refreshMs = 60_000): ServerInfo | null {
       alive = false;
       clearInterval(handle);
     };
-  }, [refreshMs]);
+  }, [refreshMs, countOpen]);
   return info;
 }

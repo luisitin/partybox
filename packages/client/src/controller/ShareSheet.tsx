@@ -15,6 +15,19 @@ export function joinLink(code: string): string {
 
 type Nav = Navigator & { share?: (data: ShareData) => Promise<void> };
 
+/**
+ * True when the link only works on this network: a private address (192.168.x, 10.x, 172.16-31.x)
+ * or localhost. The in-app chooser appears exactly there (plain http has no system share sheet),
+ * so it says so — a friend elsewhere needs the tunnel's https link (the owner, 2026-09-22).
+ */
+export function isLocalOnly(host: string): boolean {
+  return (
+    /^(localhost|127\.|10\.|192\.168\.)/.test(host) ||
+    /^172\.(1[6-9]|2\d|3[01])\./.test(host) ||
+    host.endsWith('.local')
+  );
+}
+
 /** True when the phone can open its own share sheet (https or localhost only). */
 export function canShareNatively(): boolean {
   return typeof navigator !== 'undefined' && typeof (navigator as Nav).share === 'function';
@@ -95,6 +108,12 @@ export function ShareButton({ code }: { code: string }): JSX.Element {
               📋 Copy the link
             </button>
             <p className={styles.shareLink}>{url.replace(/^https?:\/\//, '')}</p>
+            {isLocalOnly(window.location.hostname) ? (
+              <p className={styles.shareNote}>
+                This link works on this Wi-Fi only. For friends somewhere else, open PartyBox from
+                the https link and share from there.
+              </p>
+            ) : null}
             <button type="button" className={styles.shareClose} onClick={() => setOpen(false)}>
               Close
             </button>

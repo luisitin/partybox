@@ -4,6 +4,8 @@
 import { useState } from 'react';
 import type { JSX } from 'react';
 import { isRoomCode } from '@partybox/shared';
+import { roomStrings } from '../i18n-join';
+import type { JoinLang } from '../i18n-join';
 import type { ServerInfo } from '../net/info';
 import styles from './Join.module.css';
 
@@ -12,6 +14,8 @@ export interface RoomPickerProps {
   /** What the code field holds — a tapped room or a new one fills it. */
   code: string;
   onPick: (code: string) => void;
+  /** I-076: the join screen's language. */
+  lang?: JoinLang;
 }
 
 async function createRoom(code: string): Promise<{ code: string } | { error: string }> {
@@ -29,7 +33,13 @@ async function createRoom(code: string): Promise<{ code: string } | { error: str
   }
 }
 
-export function RoomPicker({ info, code, onPick }: RoomPickerProps): JSX.Element | null {
+export function RoomPicker({
+  info,
+  code,
+  onPick,
+  lang = 'en',
+}: RoomPickerProps): JSX.Element | null {
+  const rs = roomStrings(lang);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   if (!info) return null;
@@ -47,7 +57,7 @@ export function RoomPicker({ info, code, onPick }: RoomPickerProps): JSX.Element
   };
   return (
     <div className={styles.rooms}>
-      <span className={styles.label}>Rooms open now</span>
+      <span className={styles.label}>{rs.roomsOpen}</span>
       {open.length > 0 ? (
         <div className={styles.roomList}>
           {open.map((r) => (
@@ -62,19 +72,19 @@ export function RoomPicker({ info, code, onPick }: RoomPickerProps): JSX.Element
               <span className={styles.roomCode}>{r.code}</span>
               <span className={styles.roomWho}>
                 {r.locked
-                  ? 'locked'
+                  ? rs.locked
                   : r.status === 'playing'
-                    ? `playing · ${r.players}`
-                    : `${r.players} here`}
+                    ? rs.playing(r.players)
+                    : rs.here(r.players)}
               </span>
             </button>
           ))}
         </div>
       ) : (
-        <p className={styles.hint}>No public rooms yet — open one.</p>
+        <p className={styles.hint}>{rs.noRooms}</p>
       )}
       <button type="button" className={styles.newRoom} onClick={() => void make()} disabled={busy}>
-        {busy ? 'Opening…' : wants && !taken ? `＋ Open room ${wants}` : '＋ Open a new room'}
+        {busy ? rs.opening : wants && !taken ? rs.openCode(wants) : rs.openNew}
       </button>
       {error ? (
         <span className={styles.error} role="alert">

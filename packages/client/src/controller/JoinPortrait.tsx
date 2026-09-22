@@ -5,7 +5,7 @@
 import { useRef, useState } from 'react';
 import type { JSX } from 'react';
 import { Avatar } from '@partybox/game-sdk/ui';
-import { joinStrings } from '../i18n';
+import { joinStrings } from '../i18n-join';
 import styles from './Join.module.css';
 import { photoFromFile } from './photo';
 
