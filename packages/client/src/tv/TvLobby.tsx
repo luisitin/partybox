@@ -89,12 +89,20 @@ export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
           </BigText>
           {info ? (
             <span
-              className={`${styles.qr} ${empty ? styles.qrBig : ''} ${shrinking ? styles.qrShrink : ''}`}
+              className={`${styles.qrWrap} ${empty ? styles.qrBig : ''} ${shrinking ? styles.qrShrink : ''}`}
               onAnimationEnd={() => setShrinking(false)}
-              dangerouslySetInnerHTML={{ __html: info.qrSvg }}
-              role="img"
-              aria-label={`QR code for ${info.joinUrl}`}
-            />
+            >
+              <span
+                className={styles.qr}
+                dangerouslySetInnerHTML={{ __html: info.qrSvg }}
+                role="img"
+                aria-label={`QR code for ${info.joinUrl}`}
+              />
+              {/* I-075 A: the PartyBox mark in the code's centre (error level H covers it). */}
+              <span className={`${styles.qrMark}`} aria-hidden>
+                PB
+              </span>
+            </span>
           ) : null}
           <p className={styles.or}>{t.lobby.orOpen}</p>
           <BigText level="h2" tone="accent" className={styles.url}>
