@@ -192,6 +192,8 @@ export function ControllerApp(): JSX.Element {
         >
           <CrossfadeSwap
             swapKey={!state.joined || !state.room || !me ? 'join' : state.room.status}
+            delayMs={state.room?.status === 'playing' ? 200 : 0} /* I-039 A: a beat between phase screens */
+            ghostMs={state.room?.status === 'playing' ? 150 : 0} /* I-039 B: the ghost fades on the fast token */
             hold={state.room?.status === 'playing' && !gameReady}
           >
             {screen}

@@ -9,6 +9,7 @@
   min-height: 0;
   overscroll-behavior: none;
   animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) backwards;
+  animation-delay: var(--pb-screen-delay, 0ms); /* I-039 A: the shell can hold the rise a beat */
 }
 
 /* A leaving screen's snapshot, parked in the parent: on top, inert, fading over the base token. */
@@ -19,7 +20,7 @@
   display: flex;
   flex-direction: column;
   pointer-events: none;
-  animation: global(pb-fade-out) var(--pb-motion-base) var(--pb-ease) both;
+  animation: global(pb-fade-out) var(--pb-screen-ghost, var(--pb-motion-base)) var(--pb-ease) both; /* I-039 B */
 }
 
 /* Cloned nodes would replay their entrance keyframes; freeze them where they were. */
