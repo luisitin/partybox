@@ -19,7 +19,7 @@ import { fitScore } from './fit';
 import type { Slot } from './fit';
 import { pairBonus, punch, topicsOf } from './topics';
 import type { Topic } from './topics';
-import { canVote, hasPlayed, isCzar } from './round';
+import { canVote, hasPlayed, isCzar, sitsOut } from './round';
 import type { Input, State } from './types';
 
 /** How much a tier step is worth against the fit: a great gerund in a thing blank (0.7 + 0.25)
@@ -118,6 +118,7 @@ export function botInput(state: State, playerId: string, rng: Rng): Input | null
   }
   if (state.phase.id === 'answer') {
     if (isCzar(state, playerId) || hasPlayed(state, playerId)) return null;
+    if (sitsOut(state, playerId)) return null; // I-147 A: a bot outside the tie waits to vote
     const { pick } = blackCard(state.blackId);
     const hand = state.hands[playerId] ?? [];
     if (hand.length < pick) return null;

@@ -82,6 +82,10 @@ export interface State extends GameStateBase {
   /** Vote mode: the seat asked to read the cards out this round, rotating like the judge's does.
    *  Null in czar mode, where the judge reads (review-loop #248). */
   readerId: string | null;
+  /** I-147 A: sudden death — the ids still tied for the top, or null when this is a normal round. */
+  tied?: string[] | null;
+  /** I-147 A: how many tie-breaks this game has played (capped, so a deadlock still ends). */
+  tieBreaks?: number;
   /** submitterId (a player or RANDO) → white card ids in blank order. */
   submissions: Record<string, string[]>;
   /** Submitter ids in reveal / vote order (shuffled when the answer phase closes); the index is

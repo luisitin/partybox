@@ -10,6 +10,7 @@ import { enterJudge, holdForJudge, judgeAway, judgeReturns, reduceJudge } from '
 import { enterPick, reducePick } from './phases/pick';
 import { enterReveal, reduceReveal } from './phases/reveal';
 import { enterDone, enterFinal, enterResult, reduceFinal, reduceResult } from './phases/result';
+import { standings } from './scoring';
 import { closeAnswers, playersDone, settleBlack, voteIsFormality, votingDone } from './round';
 import type { Input, State } from './types';
 
@@ -45,8 +46,26 @@ export function afterJudge(state: State, now: number): State {
   return enterResult(state, now);
 }
 
+/** I-147 A: the ids sharing the top rank after the last round — [] when someone has won it. */
+export function tiedAtTop(state: State): string[] {
+  const rows = standings(state);
+  const top = rows[0];
+  if (!top || top.score <= 0) return [];
+  const shared = rows.filter((r) => r.score === top.score);
+  return shared.length > 1 ? shared.map((r) => r.playerId) : [];
+}
+
+const MAX_TIE_BREAKS = 3;
+
 export function afterResult(state: State, now: number): State {
-  return state.round >= state.settings.rounds ? enterFinal(state, now) : enterIntro(state, now);
+  if (state.round < state.settings.rounds) return enterIntro(state, now);
+  // I-147 A: the flattest ending the game has, turned into one more card.
+  const tied = tiedAtTop(state);
+  const may =
+    tied.length > 1 &&
+    (state.tieBreaks ?? 0) < MAX_TIE_BREAKS;
+  if (!may) return enterFinal({ ...state, tied: null }, now);
+  return enterIntro({ ...state, tied, tieBreaks: (state.tieBreaks ?? 0) + 1 }, now);
 }
 
 /** "Skip" = what the current phase's deadline would do (reveal: skip the whole reading). */
