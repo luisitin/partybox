@@ -4,6 +4,7 @@ import type { JSX } from 'react';
 import type { PlayerPublic, RoomSnapshot } from '@partybox/shared';
 import { PrimaryButton, Screen, WaitingScreen } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
+import { useServerInfo } from '../net/info';
 import { SettingField } from '../SettingField';
 import type { Controller } from '../net/controller';
 import styles from './Selecting.module.css';
@@ -15,6 +16,7 @@ export interface SelectingProps {
 }
 
 export function Selecting({ controller, room, me }: SelectingProps): JSX.Element {
+  const info = useServerInfo(); // I-034 B
   const selected = room.games.find((g) => g.id === room.selectedGameId) ?? null;
   const vip = room.players.find((p) => p.isVip);
 
@@ -63,6 +65,12 @@ export function Selecting({ controller, room, me }: SelectingProps): JSX.Element
           onChange={(e) => controller.vip({ action: 'setRecording', on: e.target.checked })}
         />
       </label>
+      {/* I-034 B: a way into the last recap from the phone. */}
+      {info?.lastRecap ? (
+        <a className="pb-caption" href="/api/recaps/latest/page" target="_blank" rel="noreferrer">
+          📼 Open the last recap ({info.lastRecap.gameId}, room {info.lastRecap.code})
+        </a>
+      ) : null}
       {/* S-004 (the owner): the VIP's switch — music on every phone. */}
       <label className={styles.recording} htmlFor="phone-music-all">
         <span className={styles.recordingLabel}>

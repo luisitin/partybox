@@ -28,6 +28,8 @@ export interface Recorder {
   flush(): Promise<void>;
   /** Stops listening to the host. */
   close(): void;
+  /** I-034 A: the last finished session with a recap, if any (its folder, game and room). */
+  latest(): { dir: string; gameId: string; code: string; files: string[] } | null;
 }
 
 interface TimelineEntry {
@@ -110,6 +112,7 @@ export function createRecorder(options: RecorderOptions): Recorder {
     options.log ??
     ((level, text) => console[level === 'info' ? 'log' : level](`[recorder] ${text}`));
   const sessions = new Map<string, Session>();
+  let latest: { dir: string; gameId: string; code: string; files: string[] } | null = null; // I-034 A
 
   /** Serialises this session's writes so a later snapshot never lands before an earlier one. */
   function queue(s: Session, work: () => Promise<void>): void {
@@ -194,6 +197,7 @@ export function createRecorder(options: RecorderOptions): Recorder {
     queue(s, async () => {
       await writeFile(join(s.dir, 'recap.md'), markdown, 'utf8');
       for (const f of files) await writeFile(join(s.dir, f.name), f.body, 'utf8');
+      latest = { dir: s.dir, gameId: s.gameId, code: s.code, files: files.map((f) => f.name) }; // I-034 A
     });
     finished.push(s.writes);
   }
@@ -230,5 +234,6 @@ export function createRecorder(options: RecorderOptions): Recorder {
     close: () => {
       unsubscribe();
     },
+    latest: () => latest,
   };
 }

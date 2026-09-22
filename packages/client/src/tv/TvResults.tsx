@@ -91,6 +91,8 @@ export function TvResults({ room, lastView = null }: TvResultsProps): JSX.Elemen
       )}
       <p className={`pb-muted pb-caption ${awards.length === 0 ? styles.centredHint : ''}`}>
         {t.vip.badge}: {t.results.playAgain} · {t.results.newGame} · {t.results.lobby}
+        {/* I-034 A: the room knows the game was kept. */}
+        {room.recording ? <> · 📼 Recap saved on the host PC</> : null}
       </p>
     </Stage>
   );
