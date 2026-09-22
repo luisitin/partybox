@@ -21,6 +21,20 @@ export function roomCodeFrom(rng: Rng): string {
   return code;
 }
 
+/** I-080 A: whole codes the room must never be called (the alphabet has no I, L or O). */
+const BANNED_CODES: ReadonlySet<string> = new Set(['FUCK','CUNT','ARSE','TWAT','CRAP','COCK','KNOB','WANK','JERK','DAMN','DUMB','RAPE','ANUS','BUTT','FART','POOP','SUCK','SEXY','PUSS','SLUT','HOMO','FAGS','SPAZ','CUMS','DYKE','KYKE','NAZY','PAKY','GAYS','HELL','DEAD','KYSS','SHAG','MUFF','TURD','WHAT','NUTS','JUGS','BUMS','PEDO','DRUG','METH','HEAD','SCUM','DUNG','SNOT','PUKE']);
+export function isCleanRoomCode(code: string): boolean {
+  if (BANNED_CODES.has(code)) return false;
+  return true;
+}
+
+/** A code that is clean: rerolls like the host does against collisions (bounded: ≤ 0.05 % hit). */
+export function cleanRoomCodeFrom(rng: Rng): string {
+  let code = roomCodeFrom(rng);
+  for (let i = 0; i < 50 && !isCleanRoomCode(code); i++) code = roomCodeFrom(rng);
+  return code;
+}
+
 export const PLAYER_NAME_MIN = 1;
 export const PLAYER_NAME_MAX = 16;
 
