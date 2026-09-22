@@ -207,7 +207,7 @@ export function IntroStage({
       <BigText level="h2">{view.patternHint}</BigText>
       {view.cardsPerPlayer > 1 ? (
         <BigText level="h2" tone="muted">
-          {view.cardsPerPlayer} cards each — BINGO! checks the card you press it on.
+          {view.cardsPerPlayer} cards each — BINGO! checks your best card.
         </BigText>
       ) : null}
       <p className={styles.programme}>
