@@ -57,6 +57,10 @@ export function TvApp(): JSX.Element {
   const bedPhase = useRef<string | null>(null);
   const state = useStore(client.store, (s) => s);
   const room = state.room;
+  // I-085 B: the tab says which — TV · room code.
+  useEffect(() => {
+    document.title = room ? `PartyBox · TV · ROOM ${room.code}` : 'PartyBox · TV';
+  }, [room?.code]);
   const view = state.view;
   // The last board of the game, kept for the results stage ("adjust state when a prop changes").
   const [lastView, setLastView] = useState<typeof view>(null);
