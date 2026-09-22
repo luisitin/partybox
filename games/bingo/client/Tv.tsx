@@ -77,6 +77,9 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
 
   // R2-01 B: the players one square from the pattern, by name (roster order).
   const closeNames = view.players.filter((p) => view.closeIds.includes(p.id)).map((p) => p.name);
+  // I-119: the gap between calls, from the server's own stamps (8 s or more is "slow").
+  const gapMs = view.calledAt !== null && view.deadline !== null ? view.deadline - view.calledAt : 0;
+  const slowGap = gapMs >= 8000;
   if (view.phaseId === 'play') {
     // A menu open somewhere holds the caller; the last one closing runs a 3 · 2 · 1 on the stage.
     if (view.resumeAt !== null)
@@ -117,10 +120,31 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
             ? ` · ${view.bingosThisRound} bingo${view.bingosThisRound === 1 ? '' : 's'} so far`
             : ''}
         </p>
-        {view.current ? <Call call={view.current} big stamp={view.calledAt} /> : null}
+        {/* I-119 A: a long gap between calls — a ring around the ball drains to the next one. */}
+        <div className={styles.gapRing}>
+          {slowGap && view.calledAt !== null && view.deadline !== null ? (
+            <svg
+              key={`${view.current?.number ?? ''}:${view.calledAt}`}
+              className={styles.gapSvg}
+              viewBox="0 0 100 100"
+              aria-hidden
+            >
+              <circle cx="50" cy="50" r="47" pathLength="100" className={styles.gapTrack} />
+              <circle
+                cx="50"
+                cy="50"
+                r="47"
+                pathLength="100"
+                className={styles.gapFill}
+                style={{ animationDuration: `${Math.max(1000, view.deadline - view.calledAt)}ms` }}
+              />
+            </svg>
+          ) : null}
+          {view.current ? <Call call={view.current} big stamp={view.calledAt} /> : null}
+        </div>
         {/* Ball first (180 ms pop), nickname 120 ms behind it: the number is the news (review-loop #1). */}
         {view.current ? (
-          <div key={`${view.current.number}:${view.calledAt ?? ''}`} className={styles.caption}>
+          <div key={`${view.current.number}:${view.calledAt ?? ''}`} className={`${styles.caption} ${slowGap ? styles.captionBreathe : ''}`}>
             <BigText level="h1">{view.current.call}</BigText>
           </div>
         ) : null}
