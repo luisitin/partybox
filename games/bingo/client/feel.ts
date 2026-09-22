@@ -154,3 +154,14 @@ export function useRoundReset(round: number, reset: () => void): void {
     reset();
   }
 }
+
+/** A sheet that unmounts with the screen still tells the server it closed (the caller held). */
+export function useMenuRelease(
+  open: boolean,
+  send: (input: { type: 'menu'; open: boolean }) => void,
+): void {
+  useEffect(() => {
+    if (!open) return;
+    return () => send({ type: 'menu', open: false });
+  }, [open, send]);
+}

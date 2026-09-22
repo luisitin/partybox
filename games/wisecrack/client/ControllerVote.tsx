@@ -32,12 +32,20 @@ export function ControllerVote({
   const tvOff = view.phoneOnly === true;
   if (!vote) return <WaitingScreen title={tvOff ? 'Voting…' : 'Look at the TV'} mood="watch" />;
   if (vote.role === 'author') {
+    // The other answer too (the owner, 2026-09-21): the pair as the room sees it, mine marked.
+    const other = vote.options.find((o) => o.text !== vote.myAnswer);
     return (
       <WaitingScreen
         title={tvOff ? 'Your answer is up' : 'Your answer is on the TV'}
         hint="Don't say which one — the others are voting…"
         mood="watch"
       >
+        {other ? (
+          <p className={styles.quoteOther}>
+            <span className={styles.quoteWho}>against</span>
+            {other.text === BLANK ? '(no answer)' : other.text}
+          </p>
+        ) : null}
         <p className={styles.quote}>{vote.myAnswer}</p>
       </WaitingScreen>
     );

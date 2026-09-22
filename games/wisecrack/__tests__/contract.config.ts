@@ -37,13 +37,8 @@ export const contractConfig = {
       // My own id sits in the envelope's `me`; my own name is fine too.
       const myName = state.players[playerId]?.name;
       const hidden = authorsOf(state).filter((s) => s !== playerId && s !== myName);
-      if (prompt && prompt.authors.includes(playerId)) {
-        const myText = state.answers[prompt.id]?.[playerId];
-        for (const other of prompt.authors) {
-          const text = state.answers[prompt.id]?.[other];
-          if (other !== playerId && text !== undefined && text !== myText) hidden.push(text);
-        }
-      }
+      // Both answers are on the TV anonymously: an author may read the other one too (2026-09-21).
+      void prompt;
       return hidden;
     }
     return [];

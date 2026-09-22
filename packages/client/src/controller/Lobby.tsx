@@ -17,23 +17,26 @@ function joinLink(code: string): string {
   return `${window.location.origin}/?room=${code}`;
 }
 
-/** Share the link the way the phone can: the share sheet, else the clipboard. */
+/** Share the link: the clipboard AND the phone's share sheet (the owner, 2026-09-21: "copy it to
+ *  my clipboard AND pull up the window"). Both start inside the tap — iOS opens the sheet only
+ *  from a user gesture, so the copy must not be awaited first. */
 async function shareLink(url: string, code: string): Promise<'shared' | 'copied' | 'failed'> {
   const nav = navigator as Navigator & { share?: (d: ShareData) => Promise<void> };
+  const copied = navigator.clipboard?.writeText(url).then(
+    () => true,
+    () => false,
+  );
+  let shared = false;
   if (nav.share) {
     try {
       await nav.share({ title: 'PartyBox', text: `Join my PartyBox room ${code}`, url });
-      return 'shared';
+      shared = true;
     } catch {
-      // dismissed, or the sheet refused: fall through to the clipboard
+      // dismissed, or no sheet after all
     }
   }
-  try {
-    await navigator.clipboard.writeText(url);
-    return 'copied';
-  } catch {
-    return 'failed';
-  }
+  const ok = (await copied) ?? false;
+  return shared ? 'shared' : ok ? 'copied' : 'failed';
 }
 
 export interface LobbyProps {
@@ -92,7 +95,7 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
           {shared === 'copied'
             ? '✓ Link copied'
             : shared === 'shared'
-              ? '✓ Shared'
+              ? '✓ Shared · link copied'
               : shared === 'failed'
                 ? `Room ${room.code} — ${joinLink(room.code).replace(/^https?:\/\//, '')}`
                 : '🔗 Share the room link'}

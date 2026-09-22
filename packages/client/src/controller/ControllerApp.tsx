@@ -1,6 +1,6 @@
 // Route `/` — the phone. Owns the singleton controller connection and switches screens on the room
 // status. Game components are loaded lazily from the generated registry.
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { JSX } from 'react';
 import { AvatarPhotos, ServerClockProvider } from '@partybox/game-sdk/ui';
 import { createController } from '../net/controller';
@@ -14,6 +14,7 @@ import { Join } from './Join';
 import { useSyncExternalStore } from 'react';
 import type { PushedView, TvView } from '@partybox/shared';
 import { clientGames } from '../games.generated';
+import { bedFor, createBedEngine } from '../beds';
 import type { MusicEngine } from '../music';
 import {
   createMusicEngine,
@@ -79,11 +80,18 @@ export function ControllerApp(): JSX.Element {
     document.addEventListener('pointerdown', start);
     return () => document.removeEventListener('pointerdown', start);
   }, [audio]);
+  // The game's synthesized beds too (Wisecrack's vote / reveal, Lightning's phases): a phone
+  // that carries the room's audio ran the MP3 sets but sat silent under a bed-only phase (the
+  // owner, 2026-09-21: "some games had no music / sound (like wisecrack)").
+  const beds = useMemo(() => createBedEngine(), []);
   useEffect(() => {
-    const start = (): void => music.enable();
+    const start = (): void => {
+      music.enable();
+      void beds.enable();
+    };
     document.addEventListener('pointerdown', start);
     return () => document.removeEventListener('pointerdown', start);
-  }, [music]);
+  }, [music, beds]);
   // The plan is derived (no state): the VIP's room-wide switch (S-004, the owner: "if VIP
   // enables it, then it is auto for everyone") or this phone's own; the effect drives the engine.
   const room = state.room;
@@ -109,6 +117,22 @@ export function ControllerApp(): JSX.Element {
     // `plan` is a fresh object per render; its id and level are the identity
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [music, planId, musicLevel, paused, results]);
+  const bedTurns = useRef<Record<string, number>>({});
+  const bedPhase = useRef<string | null>(null);
+  const gameBeds = room?.selectedGameId ? clientGames[room.selectedGameId]?.beds : undefined;
+  const bedsWanted = musicWanted || (room?.phoneOnly ?? false);
+  useEffect(() => {
+    // the TV's rotation rule (TvApp): a phase that names several beds turns through them
+    const phase = bedsWanted && room?.status === 'playing' ? (view?.phaseId ?? null) : null;
+    if (phase !== bedPhase.current) {
+      if (bedPhase.current !== null)
+        bedTurns.current[bedPhase.current] = (bedTurns.current[bedPhase.current] ?? 0) + 1;
+      bedPhase.current = phase;
+    }
+    if (phase === null) bedTurns.current = {};
+    beds.play(bedsWanted ? bedFor(room, view, gameBeds, bedTurns.current) : null);
+    beds.setPaused(paused);
+  }, [beds, bedsWanted, room, view, gameBeds, paused]);
   const me = state.room?.players.find((p) => p.id === state.playerId) ?? null;
   // Game start holds the previous screen until the game component has painted (review-loop #11):
   // no "Getting the game ready…" flash on a LAN. Reset whenever a game is not running.

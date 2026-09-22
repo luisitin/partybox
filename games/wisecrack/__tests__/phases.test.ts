@@ -271,7 +271,8 @@ describe('hidden information', () => {
     expect(tv(s).revealed).toEqual([]);
     const author = cv(s, prompt.authors[0]);
     expect(author.vote?.role).toBe('author');
-    expect(author.vote?.options).toEqual([]);
+    // an author reads both answers too (anonymous, as the TV shows them — 2026-09-21)
+    expect(author.vote?.options).toHaveLength(2);
     expect(JSON.stringify(author.vote)).not.toContain(prompt.authors[1]);
     const voter = cv(s, voters(s)[0] as string);
     expect(voter.vote?.role).toBe('voter');

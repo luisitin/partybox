@@ -179,8 +179,9 @@ function voteFor(state: State, playerId: string): WisecrackControllerView['vote'
     promptId: prompt.id,
     promptText: prompt.text,
     role: author ? 'author' : 'voter',
-    // An author sees only their own answer; voters need both to choose.
-    options: author ? [] : optionsOf(state, prompt),
+    // Both answers, as the TV shows them anonymously — an author reads the one they are up
+    // against too (the owner, 2026-09-21: the phone-only author should see the other card).
+    options: optionsOf(state, prompt),
     votedSlot: votedFor === undefined ? null : prompt.authors.indexOf(votedFor),
     myAnswer: author ? (answerOf(state, prompt.id, playerId) ?? NO_ANSWER) : null,
   };

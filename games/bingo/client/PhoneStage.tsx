@@ -51,7 +51,17 @@ export function PhoneStage({
           size="phone"
         />
       </div>
-      {settled ? (
+      {settled && view.phaseId === 'bingo' ? (
+        // The owner (2026-09-21): a RIGHT claim shows on every phone too, not only a wrong one.
+        <div className="pb-enter">
+          <BigText level="h1" tone="accent">
+            BINGO!
+          </BigText>
+          <p className="pb-muted">
+            +{view.claimPoints} {view.claimPoints === 1 ? 'point' : 'points'} for {claim.name}.
+          </p>
+        </div>
+      ) : settled ? (
         <div className="pb-enter">
           <BigText level="h1" tone="accent">
             NOT A BINGO

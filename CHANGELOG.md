@@ -5,6 +5,10 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Play-test fixes** (the owner, 2026-09-21): a RIGHT bingo claim turns over on every phone in a
+  "phone only" room too; a Wisecrack author sees the answer they are up against; the games'
+  synthesized beds (Wisecrack's vote / reveal) play on phones that carry the room's audio; the
+  lobby's Share copies the link AND opens the phone's share sheet in one tap.
 - **Blanks has music** (the owner, 2026-09-21): a quiet lounge set through the intro, the pick, the
   answer and the judge phases; and the TV's phase cues play on phones whenever the room asked the
   phones to carry the audio ("Phone only" or "Music on every phone"), not only phone-only.

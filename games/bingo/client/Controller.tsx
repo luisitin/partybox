@@ -3,7 +3,7 @@
 // A 🃏 button opens the style sheet — which holds the caller for the whole room until it closes.
 // BINGO! takes two taps (dibs for 3 s). `send` is the only way out; the server accepts every daub
 // and judges only the claim, on the card named.
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import type { CSSProperties, JSX } from 'react';
 import {
   Screen,
@@ -17,6 +17,7 @@ import type { Input } from '../server/types';
 import type { BingoControllerView } from '../server/views';
 import { Card } from './Card';
 import { PatternDemo } from './PatternDemo';
+import { PhoneStage } from './PhoneStage';
 import {
   BingoButton,
   CallRow,
@@ -44,6 +45,7 @@ import {
   useCloseFeel,
   useDealFeel,
   useLandscape,
+  useMenuRelease,
   useMissedCalls,
   useRoundReset,
   useVerdictFeel,
@@ -119,10 +121,7 @@ export function Controller({
     setPreview(null);
     send({ type: 'menu', open: false });
   };
-  useEffect(() => {
-    if (!sheet) return;
-    return () => send({ type: 'menu', open: false });
-  }, [sheet, send]);
+  useMenuRelease(sheet !== '', send);
   // The sheet is offered on the card-pick step too (owner's play-test, 2026-09-19): there a tap
   // applies the style at once (no live preview — the pick screen has its own layout) and the
   // round starting closes it, so nobody holds the first number from the intro.
@@ -236,6 +235,9 @@ export function Controller({
     );
   }
 
+  // A "phone only" room: someone else's RIGHT claim turns over on my phone too (the owner,
+  // 2026-09-21 — only the wrong ones did); the win screen follows once the verdict has landed.
+  if (view.phoneOnly && pending && view.winnerId !== me.id) return <PhoneStage view={view} />;
   // Play, check and a bingo phase without my winning card keep the same cards mounted.
   const roundOver =
     view.phaseId === 'bingo' && !pending && !(view.winnerId === me.id && view.claim);
