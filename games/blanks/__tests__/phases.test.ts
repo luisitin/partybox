@@ -331,8 +331,10 @@ describe('untimed rounds (the default)', () => {
     expect(vip(one, 'skip').phase.id).toBe('result');
     const two = play(one, 'ben', topCards(one, 'ben'));
     expect(vip(two, 'skip').phase.id).toBe('reveal');
+    // I-142 A: during "answer" the slot row carries the clock, so the shell's own timer stands
+    // down — the corner box and the phase bar are the two clocks this replaces.
     expect(tv(playAll(toAnswer(start({ timed: true, players: 4 })), ['dev'])).timerMode).toBe(
-      'normal',
+      'hidden',
     );
   });
 

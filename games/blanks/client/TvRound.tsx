@@ -3,7 +3,7 @@
 // focal point — the black card — with a row of face-down cards on the table (one slot per expected
 // card; a played card lands in its slot, the newest with a bounce), the
 // count re-entering on every change, and a line naming who the room is waiting for.
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import type { CSSProperties, JSX } from 'react';
 import { Avatar, BigText, Stage, useBeats, useSecondsLeft, useSound } from '@partybox/game-sdk/ui';
 import type { GameTvProps, ViewPlayer } from '@partybox/game-sdk/ui';
@@ -162,6 +162,15 @@ export function TvAnswer({ view }: Props): JSX.Element {
   const lastChance =
     left !== null && left <= LAST_CHANCE_S && !view.paused && outstanding.length > 0;
   const nobodyDone = view.playedCount === 0;
+  // I-142 A: the phase's remaining fraction, 1 → 0 — the slot row's own clock. `left` (seconds)
+  // is already read above; this measures it against the longest value this deadline has shown.
+  const [span, setSpan] = useState<{ deadline: number | null; seconds: number }>({
+    deadline: view.deadline,
+    seconds: left ?? 1,
+  });
+  if (span.deadline !== view.deadline) setSpan({ deadline: view.deadline, seconds: left ?? 1 });
+  const frac = Math.max(0, Math.min(1, (left ?? 0) / Math.max(1, span.seconds)));
+  const urgent = (left ?? 99) <= 5;
   // I-020 B: the game's `card` pluck as each card lands (the drop's 55 % beat).
   const play = useSound();
   useEffect(() => {
@@ -203,13 +212,14 @@ export function TvAnswer({ view }: Props): JSX.Element {
       <div
         className={`${styles.pips} ${!nobodyDone && outstanding.length === 0 ? styles.pipsAllIn : ''}`}
         aria-hidden
+        style={{ '--pb-left': frac } as CSSProperties}
       >
         {connected.map((p, i) => {
           const played = p.status === 'submitted';
           return (
             <span
               key={p.id + (played ? ':in' : ':out')}
-              className={`${styles.pip} ${played ? `${styles.pipDone} ${styles.pipPop}` : ''}`}
+              className={`${styles.pip} ${played ? `${styles.pipDone} ${styles.pipPop}` : ''} ${!played ? styles.pipTide : ''} ${!played && urgent ? styles.pipUrgent : ''}`}
               style={{ '--pb-i': i } as CSSProperties}
             >
               {played ? (
@@ -225,6 +235,12 @@ export function TvAnswer({ view }: Props): JSX.Element {
           );
         })}
       </div>
+      {/* I-142 A: the clock, on the thing it is timing. */}
+      {view.timed && view.deadline !== null ? (
+        <div className={styles.slotClock} aria-hidden>
+          <span className={styles.slotClockFill} style={{ '--pb-left': frac } as CSSProperties} />
+        </div>
+      ) : null}
       <div key={view.playedCount} className="pb-enter" role="status">
         <BigText level="h2" tone={nobodyDone ? 'muted' : 'accent'}>
           {view.playedCount} / {view.playersExpected} in
