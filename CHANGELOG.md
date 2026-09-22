@@ -5,6 +5,8 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Muting the TV says so** (I-069, option A): a corner toast — "Sound off" / "Sound on" — on
+  every manual toggle.
 - **The join form sideways is two columns** (I-067, option B): in a short landscape box the
   portrait and name sit left of the avatar grid and the join button drops to 44 px, so the header
   and the faces are above the fold.

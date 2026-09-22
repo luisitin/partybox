@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { JSX } from 'react';
 import { AvatarPhotos, ServerClockProvider, isSoundCue } from '@partybox/game-sdk/ui';
 import { clientGames } from '../games.generated';
+import { t } from '../i18n';
 import { useStore } from '../net/store';
 import { createTvClient } from '../net/tv';
 import { bedFor, createBedEngine } from '../beds';
@@ -308,7 +309,14 @@ export function TvApp(): JSX.Element {
           </CrossfadeSwap>
         </TvFrame>
       </AvatarPhotos>
-      <AudioGate audio={audio} music={music} beds={beds} />
+      <AudioGate
+        audio={audio}
+        music={music}
+        beds={beds}
+        onToggle={(m) =>
+          showLocalToast({ kind: 'info', text: m ? t.tv.soundOffToast : t.tv.soundOnToast })
+        }
+      />
     </ServerClockProvider>
   );
 }

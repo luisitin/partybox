@@ -20,9 +20,11 @@ export interface AudioGateProps {
   music?: MusicEngine;
   /** The synthesized beds (ADR-032): same gate, same mute. */
   beds?: BedEngine;
+  /** I-069 A: a manual mute/unmute happened (true = now muted) — the shell raises a toast. */
+  onToggle?: (muted: boolean) => void;
 }
 
-export function AudioGate({ audio, music, beds }: AudioGateProps): JSX.Element {
+export function AudioGate({ audio, music, beds, onToggle }: AudioGateProps): JSX.Element {
   const [started, setStarted] = useState(false);
   const [pillGone, setPillGone] = useState(false);
   const [muted, setMuted] = useState(audio.muted());
@@ -95,6 +97,8 @@ export function AudioGate({ audio, music, beds }: AudioGateProps): JSX.Element {
     setMuted(next);
     setPop(true);
     if (!next) audio.play('ready');
+    // I-069 A: the stage says so — a corner toast from the TV's own list.
+    onToggle?.(next);
   };
   const fullscreen = (): void => {
     void document.documentElement.requestFullscreen?.();
