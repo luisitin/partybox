@@ -258,3 +258,45 @@
 .lastUpNone {
   color: var(--pb-text-muted);
 }
+
+/* ── I-055 A: a locked room on the QR panel (the full treatment: title in the accent, code dim). */
+
+/* ── I-055 B: the seal — a metallic band that slides across the code and stays (rest = end). */
+.locked {
+  position: relative;
+}
+.seal {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 44%;
+  height: 28px;
+  background: linear-gradient(90deg, #6b6f7a, #d8dbe3 40%, #9aa0ad 60%, #6b6f7a);
+  box-shadow: 0 2px 6px rgb(0 0 0 / 45%);
+  z-index: 2;
+  pointer-events: none;
+}
+.sealOn {
+  transform: translateX(0);
+  animation: pb-seal-on var(--pb-motion-slow) var(--pb-ease) both;
+}
+.sealOff {
+  transform: translateX(-110%);
+  animation: pb-seal-off var(--pb-motion-slow) var(--pb-ease) both;
+}
+@keyframes pb-seal-on {
+  from {
+    transform: translateX(-110%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes pb-seal-off {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-110%);
+  }
+}
