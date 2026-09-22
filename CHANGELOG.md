@@ -5,6 +5,11 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **The lobby counts the phones that never made it in** (I-077, option C): a per-room join funnel
+  (opened / attempted / joined / failed-by-code) at `GET /api/funnel`, written to
+  `<recordings>/funnel/<room>.json` when the host keeps recordings, and live on the TV's host bar
+  as "8 opened · 1 in". Counts only — no names, no ids. "Opened" counts the join page's info
+  fetches, so it is an upper bound, not a head count.
 - **The join screen speaks the phone's language** (I-076, option C): es / de / fr / pt for the
   join flow (from `navigator.language` or `?lang=` on the link), an EN · ES · DE · FR · PT pill
   row remembered in the browser, and the phone lobby's waiting line and "Add a bot" follow.

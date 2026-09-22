@@ -18,6 +18,7 @@ import {
 } from '@partybox/shared';
 import type { ErrorPayload } from '@partybox/shared';
 import type { Host, Transport } from './host';
+import type { FunnelBook } from './funnel';
 import { createRateLimiter, jsonBytes } from './rate-limit';
 
 interface SocketData {
@@ -30,7 +31,7 @@ export interface SocketLayer {
   io: IoServer;
   transport: Transport;
   /** Wires the host once it exists (host and sockets need each other). */
-  attach(host: Host, deps: EngineDeps): void;
+  attach(host: Host, deps: EngineDeps, funnel?: FunnelBook): void;
 }
 
 export function createSocketLayer(server: HttpServer): SocketLayer {
@@ -57,7 +58,7 @@ export function createSocketLayer(server: HttpServer): SocketLayer {
     },
   };
 
-  function attach(host: Host, deps: EngineDeps): void {
+  function attach(host: Host, deps: EngineDeps, funnel?: FunnelBook): void {
     io.on('connection', (socket) => {
       const data: SocketData = { role: null, playerId: null, code: null };
       socket.data = data;
@@ -99,6 +100,7 @@ export function createSocketLayer(server: HttpServer): SocketLayer {
           }
           byPlayer.set(id, socket);
         }
+        funnel?.attempted(code); // I-077 A
         const result = host.dispatch(code, {
           type: 'join',
           playerId,
@@ -109,6 +111,11 @@ export function createSocketLayer(server: HttpServer): SocketLayer {
           existingToken: parsed.data.token,
         });
         const welcome = result?.effects.find((e) => e.type === 'welcome');
+        if (welcome) funnel?.joined(code);
+        else {
+          const err = result?.effects.find((e) => e.type === 'error');
+          funnel?.failed(code, err && err.type === 'error' ? err.code : 'unknown');
+        }
         for (const id of [playerId, resumed?.id])
           if (id && (!welcome || welcome.type !== 'welcome' || welcome.playerId !== id))
             byPlayer.delete(id);
