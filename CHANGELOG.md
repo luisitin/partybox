@@ -11,6 +11,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Added
 
+- **Bingo's Points board climbs** (I-103, option B): rows start where they stood before the round
+  and rise past each other as the points count in, after one beat of `·` ranks and `—` totals — so
+  the rank is the visible consequence of the points, not a fact the board asserts first.
 - **Three more Bingo patterns** (I-093, option C): Picture frame (the outer ring), Postage stamp
   (any 2×2 corner block — its icon shows one example block) and The T (top row + middle column),
   in every round select.

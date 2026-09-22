@@ -12,19 +12,14 @@ import type { BingoTvView } from '../server/views';
 import { BALL_LAND_MS, hushCaller, speakCall } from './caller';
 import { PATTERN_LABEL, patternCells } from '../server/patterns';
 import { PatternIcon } from './Card';
+
 import { PatternDemo } from './PatternDemo';
 import { pendingLine, whyNot, winHeadline } from './copy';
 import { hopelessClaim } from '../server/reveal';
 import { IntroStage, Resume } from './TvCountdown';
 import { Call, CalledBoard, ClaimStage, DibsLine, rows, whichCard } from './TvParts';
+import { climbFrom, joinNames, useDibsCue } from './tvBoard';
 import styles from './Tv.module.css';
-
-/** "Sam is" / "Sam and Priya are" / "Sam and 2 others are". */
-function joinNames(names: string[]): string {
-  if (names.length === 1) return `${names[0]} is`;
-  if (names.length === 2) return `${names[0]} and ${names[1]} are`;
-  return `${names[0]} and ${names.length - 1} others are`;
-}
 
 export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
   const roundLabel = `Round ${view.round} of ${view.totalRounds}`;
@@ -51,10 +46,7 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
   // boing or a voice still in the air.
   // Dibs (loop 252): the "says BINGO?…" line pops with a soft rising "hm?"; a window passing on
   // to the next in line is a new window, so it sounds again.
-  const armWindow = view.arm?.until ?? null;
-  useEffect(() => {
-    if (armWindow !== null) sound.play('dibs');
-  }, [armWindow, sound]);
+  useDibsCue(view.arm?.until ?? null, sound);
   // A call is the server's stamp (`calledAt`, loop 294): a resume countdown or a card-style hold
   // shows the same number without re-calling it, and the repeat after "keep going" is a new stamp.
   const calledAt = view.calledAt;
@@ -319,7 +311,14 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
               </BigText>
             </div>
           ) : null}
-          <Scoreboard rows={rows(view)} noTrophy />
+          {/* I-103 A: the rank lands WITH the points — rows climb from where they stood. */}
+          <Scoreboard
+            rows={rows(view)}
+            noTrophy
+            stagger="climb"
+            climbFrom={climbFrom(view)}
+            holdMs={600}
+          />
         </div>
       </Stage>
     );
