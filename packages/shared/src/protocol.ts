@@ -53,6 +53,8 @@ export const vipPayloadSchema = z.discriminatedUnion('action', [
   z.object({ action: z.literal('unlock') }),
   z.object({ action: z.literal('playAgain') }),
   z.object({ action: z.literal('toLobby') }),
+  /** I-088 A: the room's own size (4–16), never below the people already in. */
+  z.object({ action: z.literal('setCapacity'), capacity: z.number().int().min(4).max(16) }),
   /** Whether the host keeps a recap of the next game on disk (ADR-035); any time but mid-game. */
   z.object({ action: z.literal('setRecording'), on: z.boolean() }),
   /** S-004 (the owner): every phone plays the room's music when this is on. */

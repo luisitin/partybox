@@ -11,6 +11,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Added
 
+- **The room's own size** (I-088, option C): a "Room size − X / N +" stepper in the ★ VIP menu
+  (4–16, never below the head count; the TV's count follows) and "Lock at this size", which sets
+  the capacity to the head count and locks the room in one tap.
 - **Every avatar blinks** (I-087, option C): the eye pair closes for ~150 ms every 6 s, offset per
   face so a roster never blinks in unison, a double blink on odd-hashed faces, and a dropped
   player's face sleeps with its eyes shut until they are back.
