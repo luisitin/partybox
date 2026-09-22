@@ -14,9 +14,19 @@ export interface JoinPortraitProps {
   name: string;
   photo: string | null;
   onPhoto: (photo: string | null) => void;
+  /** I-047 C: the phone's cue player (the flip sounds like a card turning). */
+  play?: (cue: 'card') => void;
 }
 
-export function JoinPortrait({ avatarId, name, photo, onPhoto }: JoinPortraitProps): JSX.Element {
+export function JoinPortrait({ avatarId, name, photo, onPhoto, play }: JoinPortraitProps): JSX.Element {
+  // I-047: the flip runs on a MODE change (face ↔ photo), keyed so it restarts each time.
+  const [wasPhoto, setWasPhoto] = useState(photo !== null);
+  const [flipKey, setFlipKey] = useState(0);
+  if ((photo !== null) !== wasPhoto) {
+    setWasPhoto(photo !== null);
+    setFlipKey((k) => k + 1);
+    play?.('card');
+  }
   const fileRef = useRef<HTMLInputElement>(null);
   const [failed, setFailed] = useState(false);
   const pick = async (file: File | undefined): Promise<void> => {
@@ -27,11 +37,17 @@ export function JoinPortrait({ avatarId, name, photo, onPhoto }: JoinPortraitPro
   };
   return (
     <div className={styles.portraitRow}>
-      <span key={photo ?? avatarId} className={styles.portrait} aria-hidden>
+      {/* I-047 A: a mode change is a flip; a face-to-face pick keeps its pop. */}
+      <span
+        key={`${photo ? 'photo' : avatarId}:${flipKey}`}
+        className={`${styles.portrait} ${flipKey > 0 ? (photo ? styles.flipIn : styles.flipBack) : ''} ${photo ? styles.portraitPhoto : ''}`}
+        aria-hidden
+      >
         <Avatar avatarId={avatarId} photo={photo ?? undefined} size={96} />
       </span>
       <span className={styles.portraitSide}>
         <span className={styles.portraitName}>{name.trim() || '…'}</span>
+        {photo ? <span className={styles.photoCaption}>your photo</span> : null}
         <input
           ref={fileRef}
           className={styles.photoInput}

@@ -185,7 +185,7 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
           </p>
         ) : null}
         {/* I-031 B: the portrait — the chosen face (or the photo), large, beside the name. */}
-        <JoinPortrait avatarId={avatarId} name={name} photo={photo} onPhoto={setPhoto} />
+        <JoinPortrait avatarId={avatarId} name={name} photo={photo} onPhoto={setPhoto} play={(cue) => audio?.play(cue)} />
         <label className={styles.field}>
           <span className={styles.label}>{t.join.name}</span>
           <input
