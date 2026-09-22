@@ -69,6 +69,16 @@ export function ControllerPick({ view, send }: Props): JSX.Element {
             ))}
           </ul>
         ) : null}
+        {/* I-148 A: the hand is here too — the wait is the only time to read it unhurried. */}
+        {view.hand.length > 0 ? (
+          <ul className={`${styles.peekHand}`} aria-label="your hand">
+            {view.hand.map((c) => (
+              <li key={c.id}>
+                <span className={styles.peekHandCard}>{c.text}</span>
+              </li>
+            ))}
+          </ul>
+        ) : null}
       </WaitingScreen>
     );
   }
