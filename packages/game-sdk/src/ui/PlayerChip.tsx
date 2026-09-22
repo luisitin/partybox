@@ -18,6 +18,8 @@ export interface PlayerChipProps {
   leader?: boolean;
   /** Highlight (e.g. it is this player's turn). */
   active?: boolean;
+  /** I-089 A: seconds of disconnect grace left (the TV counts it); shown under the name. */
+  awayLeft?: number | null;
   /** I-045 B + the owner's note: the room waits on this player — three pulsing dots over the
    *  avatar, the avatar dimmed under them. */
   thinking?: boolean;
@@ -50,6 +52,7 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
     scoreMuted = false,
     leader,
     active,
+    awayLeft = null,
     thinking = false,
     isMe,
     isBot,
@@ -102,6 +105,11 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
         ) : null}
       </span>
       <span className={styles.name}>{name}</span>
+      {!connected && awayLeft !== null ? (
+        <span className={styles.away} aria-label={`${awayLeft} seconds before they drop out`}>
+          {Math.floor(awayLeft / 60)}:{String(awayLeft % 60).padStart(2, '0')}
+        </span>
+      ) : null}
       {isMe ? (
         <span className={styles.you} aria-hidden>
           you

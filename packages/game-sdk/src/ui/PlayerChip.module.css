@@ -280,3 +280,12 @@
   animation: none;
   opacity: 0.8;
 }
+
+/* ── I-089 A: the grace left, small, after the name of a dropped player. */
+.away {
+  flex-shrink: 0;
+  font-size: 0.7em;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--pb-text-muted);
+}
