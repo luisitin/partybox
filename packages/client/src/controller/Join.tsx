@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import type { FormEvent, JSX } from 'react';
 import { AVATAR_IDS, PLAYER_NAME_MAX } from '@partybox/shared';
-import { Avatar, PrimaryButton, Screen } from '@partybox/game-sdk/ui';
+import { Avatar, AvatarPhotos, PlayerChip, PrimaryButton, Screen } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import type { Controller, ControllerState } from '../net/controller';
 import { useServerInfo } from '../net/info';
@@ -28,6 +28,7 @@ function roomFromUrl(): string | null {
 
 export function Join({ controller, state, audio }: JoinProps): JSX.Element {
   const info = useServerInfo();
+  const house = info?.rooms[0]; // I-059 C: who is already in
   const session = controller.session() ?? controller.identity();
   const [name, setName] = useState(session?.name ?? '');
   // A random default (instead of always the fox) so two phones joining together rarely match.
@@ -287,6 +288,26 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
           </div>
         </fieldset>
       </Screen>
+      {/* I-059 A: a tablet's spare width is a preview stage — your chip as the room will see it. */}
+      <aside className={styles.stage} aria-label="preview">
+        <p className={styles.label}>How the room sees you</p>
+        <div key={`${name.trim()}|${photo ?? avatarId}`} className={styles.stagePop}>
+          <AvatarPhotos players={photo ? [{ id: 'preview', photo }] : []}>
+            <PlayerChip
+              name={name.trim() || t.join.namePlaceholder}
+              avatarId={photo ? 'photo:preview' : avatarId}
+              isMe
+              size="lg"
+            />
+          </AvatarPhotos>
+        </div>
+        {house && (house.names?.length ?? 0) > 0 ? (
+          <p className="pb-muted pb-caption">
+            Already in: {(house.names ?? []).join(', ')}
+            {house.players > (house.names?.length ?? 0) ? ` +${house.players - (house.names?.length ?? 0)}` : ''}
+          </p>
+        ) : null}
+      </aside>
     </form>
   );
 }
