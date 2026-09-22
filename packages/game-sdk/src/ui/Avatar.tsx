@@ -38,12 +38,18 @@ export function AvatarPhotos({
 const INK = '#1a0b12';
 const LIGHT = '#fff7fb';
 
+// I-087 A: the eyes sit in a group the stylesheet can blink (scaleY about the eye line).
 const eyes = (dx = 9, y = 30, r = 3.2): JSX.Element => (
-  <>
+  <g className="pb-eyes" style={{ transformOrigin: `32px ${y}px` }}>
     <circle cx={32 - dx} cy={y} r={r} fill={INK} />
     <circle cx={32 + dx} cy={y} r={r} fill={INK} />
-  </>
+  </g>
 );
+/** A stable 0–5.9 s offset per face so a roster never blinks in unison. */
+function blinkDelay(avatarId: string): string {
+  const h = [...avatarId].reduce((a, c) => (a * 31 + c.charCodeAt(0)) % 997, 7);
+  return `${((h % 60) / 10).toFixed(1)}s`;
+}
 const smile = (w = 8, y = 41): JSX.Element => (
   <path
     d={`M${32 - w} ${y} q${w} ${w * 0.9} ${w * 2} 0`}
@@ -288,7 +294,14 @@ export function Avatar({
       className={className}
       role="img"
       aria-label={`avatar ${avatarId}`}
-      style={{ color: avatarColorVar(avatarId), opacity: dim ? 0.45 : 1, flexShrink: 0 }}
+      style={{
+        color: avatarColorVar(avatarId),
+        opacity: dim ? 0.45 : 1,
+        flexShrink: 0,
+        ['--pb-blink-delay' as string]: blinkDelay(avatarId),
+        ['--pb-blink-name' as string]:
+          [...avatarId].reduce((a, c) => a + c.charCodeAt(0), 0) % 2 === 1 ? 'pb-blink-twice' : 'pb-blink', // I-087 B
+      }}
     >
       <circle cx={32} cy={32} r={31} fill="currentColor" />
       {art}

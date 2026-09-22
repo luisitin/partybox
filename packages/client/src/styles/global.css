@@ -317,3 +317,49 @@ button {
 [data-surface] {
   font-size: var(--pb-font-body);
 }
+
+/* ── I-087 A: every avatar blinks — the eye group closes for 150 ms every 6 s, offset per face
+   (transform only; one keyframe pair, no per-avatar JS). */
+.pb-eyes {
+  animation: var(--pb-blink-name, pb-blink) 6s var(--pb-blink-delay, 0s) infinite;
+}
+@keyframes pb-blink {
+  0%,
+  96.5%,
+  100% {
+    transform: scaleY(1);
+  }
+  97.5%,
+  99% {
+    transform: scaleY(0.08);
+  }
+}
+
+/* ── I-087 B: now and then a double blink (odd-hashed faces). */
+@keyframes pb-blink-twice {
+  0%,
+  93%,
+  100% {
+    transform: scaleY(1);
+  }
+  94%,
+  95% {
+    transform: scaleY(0.08);
+  }
+  96% {
+    transform: scaleY(1);
+  }
+  97.5%,
+  99% {
+    transform: scaleY(0.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pb-eyes {
+    animation: none;
+  }
+}
+:root[data-motion='off'] .pb-eyes {
+  animation: none;
+}
