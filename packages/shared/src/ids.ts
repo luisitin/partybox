@@ -21,6 +21,24 @@ export function roomCodeFrom(rng: Rng): string {
   return code;
 }
 
+/** I-081 C: a code that passes the name list too (rerolls, bounded). */
+export function cleanRoomCodeFrom(rng: Rng): string {
+  let code = roomCodeFrom(rng);
+  for (let i = 0; i < 50 && !isCleanName(code); i++) code = roomCodeFrom(rng);
+  return code;
+}
+
+/** I-081 A: slurs (stems, after leet folding) a display name must not contain. Swearing is fine. */
+const NAME_STEMS: readonly string[] = ['nigg','nigr','n1gg','fagg','faggot','kike','kyke','spic','wetback','chink','gook','tranny','retard','r3tard','raghead','towelhead','beaner','dyke','paki','jigaboo','zipperhead'];
+const LEET: Record<string, string> = { '0': 'o', '1': 'i', '3': 'e', '4': 'a', '5': 's', '7': 't', '@': 'a', '$': 's', '!': 'i' };
+export function isCleanName(name: string): boolean {
+  const folded = name
+    .toLowerCase()
+    .replace(/[013457@$!]/g, (c) => LEET[c] ?? c)
+    .replace(/[^a-z]/g, '');
+  return !NAME_STEMS.some((stem) => folded.includes(stem));
+}
+
 export const PLAYER_NAME_MIN = 1;
 export const PLAYER_NAME_MAX = 16;
 

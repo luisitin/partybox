@@ -19,7 +19,7 @@ import type {
   ViewPush,
   WelcomePayload,
 } from '@partybox/shared';
-import { createRng, roomCodeFrom } from '@partybox/shared';
+import { cleanRoomCodeFrom, createRng } from '@partybox/shared';
 import type { Clock } from './clock';
 
 export interface Transport {
@@ -189,8 +189,8 @@ export function createHost(options: HostOptions): Host {
   }
 
   function createNewRoom(): RoomState {
-    let code = roomCodeFrom(codeRng);
-    while (rooms.has(code)) code = roomCodeFrom(codeRng);
+    let code = cleanRoomCodeFrom(codeRng); // I-081 C
+    while (rooms.has(code)) code = cleanRoomCodeFrom(codeRng);
     const room = createRoom({ code, now: clock.now() });
     rooms.set(code, room);
     return room;

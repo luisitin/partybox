@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { PHOTO_MAX_BYTES, joinPayloadSchema } from './protocol';
+import { cleanRoomCodeFrom, isCleanName } from './ids';
 import {
   AVATAR_IDS,
   isAvatarId,
@@ -73,5 +74,19 @@ describe('joinPayloadSchema.photo (ADR-037)', () => {
         photo: `data:image/jpeg;base64,${'A'.repeat(PHOTO_MAX_BYTES)}`,
       }).success,
     ).toBe(false);
+  });
+});
+
+// I-081 C: the name list, with leet folding, and the room-code roller on the same list.
+describe('isCleanName (I-081)', () => {
+  it('lets ordinary and rude-but-not-slur names through', () => {
+    for (const n of ['Sam', 'Bloody Sam', 'Grandma Jo', 'Dr. Evil', 'Raccoon']) expect(isCleanName(n)).toBe(true);
+  });
+  it('catches slurs and their leet spellings', () => {
+    for (const n of ['n1gg3r', 'F@ggot', 'k y k e', 'tr4nny']) expect(isCleanName(n)).toBe(false);
+  });
+  it('rolls 20 000 clean codes', () => {
+    const rng = createRng(81);
+    for (let i = 0; i < 20_000; i++) expect(isCleanName(cleanRoomCodeFrom(rng))).toBe(true);
   });
 });

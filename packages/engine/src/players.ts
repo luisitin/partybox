@@ -1,7 +1,7 @@
 // Player lifecycle: join (with name/capacity/lock rules), resume by token, disconnect, leave,
 // removal, spectators, and the time-based rules (120 s leave grace, 30 s VIP handover).
 import type { ErrorCode } from '@partybox/shared';
-import { LIMITS, isAvatarId, nameKey, normalizeName } from '@partybox/shared';
+import { LIMITS, isAvatarId, isCleanName, nameKey, normalizeName } from '@partybox/shared';
 import { applyGameEvent } from './runner';
 import type { ApplyResult, Effect, EngineDeps, RoomEvent, RoomPlayer, RoomState } from './types';
 
@@ -57,6 +57,16 @@ export function join(room: RoomState, event: JoinEvent, deps: EngineDeps): Apply
     return {
       room,
       effects: [error(event.playerId, 'name_invalid', 'Pick a name of 1–16 characters.')],
+    };
+  // I-081 A: a slur is not a name — the same rejection path as an empty one.
+  if (!isCleanName(name))
+    return {
+      room,
+      effects: [
+        error(event.playerId, 'name_invalid', 'Pick a different name.'),
+        // I-081 B: the room hears it (like a clash, I-040 A) so a stalled friend gets help.
+        { type: 'toast', to: 'tvs', kind: 'info', text: "Someone's trying to join with a name we won't show" },
+      ],
     };
   if (nameTaken(room, name)) {
     // I-040 A: the room is told too — the TVs get a toast naming the clash.
