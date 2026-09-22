@@ -31,6 +31,8 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
   const session = controller.session() ?? controller.identity();
   const [name, setName] = useState(session?.name ?? '');
   // A random default (instead of always the fox) so two phones joining together rarely match.
+  // I-083 A: the faces already in the room (from /api/info) — badged on the grid.
+  const taken = new Set(info?.rooms[0]?.avatars ?? []);
   const [avatarId, setAvatarId] = useState<string>(
     () => session?.avatarId ?? AVATAR_IDS[Math.floor(Math.random() * AVATAR_IDS.length)] ?? 'fox',
   );
@@ -277,11 +279,17 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
                 type="button"
                 role="radio"
                 aria-checked={id === avatarId}
-                aria-label={id}
+                aria-label={taken.has(id) ? `${id} (someone in the room has it)` : id}
                 className={`${styles.avatarButton} ${id === avatarId ? styles.selected : ''}`}
                 onClick={() => setAvatarId(id)}
               >
                 <Avatar avatarId={id} size={56} />
+                {/* I-083 A: a face already in the room — still yours to pick. */}
+                {taken.has(id) ? (
+                  <span className={styles.takenBadge} aria-hidden>
+                    in
+                  </span>
+                ) : null}
               </button>
             ))}
           </div>
