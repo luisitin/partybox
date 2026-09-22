@@ -682,3 +682,16 @@ button.cell:focus-visible {
   height: 3.4em;
   border-width: 2px;
 }
+
+/* ── I-107 B: the verdict icon draws in, cell by cell (opacity only, 70 ms apart). */
+.iconDraw {
+  animation: pb-icon-draw 200ms var(--pb-ease) both;
+}
+@keyframes pb-icon-draw {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
