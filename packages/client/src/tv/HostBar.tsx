@@ -52,6 +52,8 @@ function useVipAway(room: RoomSnapshot): { next: string | null; seconds: number 
 
 export function HostBar({ client, room, view }: HostBarProps): JSX.Element | null {
   const [confirm, setConfirm] = useState<string | null>(null);
+  // I-048 B: the first Remove click asks once (3 s).
+  const [sure, setSure] = useState(false);
   useEffect(() => {
     if (confirm === null) return;
     const handle = setTimeout(() => setConfirm(null), CONFIRM_MS);
@@ -86,12 +88,19 @@ export function HostBar({ client, room, view }: HostBarProps): JSX.Element | nul
       {bots.length > 0 ? (
         <button
           type="button"
-          className={styles.button}
+          className={`${styles.button} ${bots.length >= 4 ? styles.buttonDanger : ''} ${sure ? styles.buttonSure : ''}`}
           onClick={() => {
+            // I-048 B: the first click warns (the chips flash), the second clears.
+            if (!sure) {
+              setSure(true);
+              setTimeout(() => setSure(false), 3000);
+              return;
+            }
+            setSure(false);
             for (const bot of bots) client.bot({ action: 'remove', botId: bot.id });
           }}
         >
-          ✕ {t.host.removeBots(bots.length)}
+          ✕ {sure ? `Sure? Remove ${bots.length}` : bots.length >= 4 ? `Remove all ${bots.length} bots` : t.host.removeBots(bots.length)}
         </button>
       ) : null}
     </>
