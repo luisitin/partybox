@@ -91,7 +91,8 @@ export function awardsFor(state: State): GameAward[] {
     out.push({
       id: 'card-of-the-night',
       title: 'Card of the night',
-      description: `“${shorten(fillText(blackCard(best.blackId).text, best.cards.map(whiteText)))}” · ${czar ? `round ${best.round}` : count(best.votes, 'vote')}`,
+      // I-150 C: the sentence is quoted here, so its own quotes step down (it read '…séance.""').
+      description: `“${innerQuotes(shorten(fillText(blackCard(best.blackId).text, best.cards.map(whiteText))))}” · ${czar ? `round ${best.round}` : count(best.votes, 'vote')}`,
       playerId: best.submitterId,
     });
   const crowd = czar ? null : leader(state, state.stats.votesReceived);
@@ -137,4 +138,9 @@ export function standings(state: State): StandingRow[] {
 export function results(state: State): GameResults | null {
   if (state.phase.id !== 'done') return null;
   return buildResults(state, state.scores, awardsFor(state));
+}
+
+/** I-150 C: a sentence about to be wrapped in quotes — its own double quotes become single ones. */
+export function innerQuotes(s: string): string {
+  return s.replace(/"/g, "'").replace(/“/g, '‘').replace(/”/g, '’');
 }
