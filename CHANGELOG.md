@@ -5,6 +5,10 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **A hopeless claim skips the suspense** (I-117, option B): more never-called daubs than called
+  ones on the line — the card drops, every cell turns at once, the verdict lands 2.7 s after the
+  announce and reads "Not yet, Priya — 2 of those were never called" (spicy: "Priya. 2 of those
+  were never called. We're watching you.").
 - **The phone says who is claiming** (I-111, option C): during someone else's check a line with
   their face — "Priya says BINGO!" — then "…and it's real" / "…not a bingo — carry on" as the
   TV's verdict lands; the claim view carries the claimant's avatar.

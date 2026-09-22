@@ -99,7 +99,7 @@ export interface BingoTvView extends TvView, Common {
   /** R2-01: players with a live card one daub from the pattern (play only); [] unless the
    *  `showClose` setting is on — the strip ring, the caption and the hush all hang off it. */
   closeIds: string[];
-  /** I-108: the caller's tone, for the stray-daubs kicker. */
+  /** I-108 / I-117: the caller's tone, for the stray-daubs kicker and the fast path's line. */
   spicy: boolean;
 }
 

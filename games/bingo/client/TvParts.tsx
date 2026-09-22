@@ -26,6 +26,7 @@ import styles from './Tv.module.css';
 // buzzer. After that nothing is on a timer — the phones decide. Before any of it, a beat with
 // only the heading on stage (ANNOUNCE): the room hears who, then sees the card. Reduced motion
 // keeps the beats (they are sequencing, not decoration) and drops the bounce and the glide.
+import { hopelessClaim } from '../server/reveal';
 import {
   ANNOUNCE_MS,
   DROP_MS,
@@ -271,13 +272,15 @@ export function ClaimStage({
   keepRed?: boolean;
 }): JSX.Element {
   const order = patternOrder(claim);
-  const step = order.length > 9 ? STEP_MANY_MS : STEP_MS;
+  // I-117 A: a hopeless claim turns every cell at once and skips the rest and the hold.
+  const hopeless = !valid && hopelessClaim(claim);
+  const step = hopeless ? 0 : order.length > 9 ? STEP_MANY_MS : STEP_MS;
   const lineMs = order.length * step;
   const cardAt = ANNOUNCE_MS;
-  const restAt = cardAt + DROP_MS + lineMs + LINE_HOLD_MS;
+  const restAt = cardAt + DROP_MS + (hopeless ? STEP_MS : lineMs + LINE_HOLD_MS);
   // A card with nothing beyond the pattern has no "rest" to show: straight on to the suspense.
-  const restMs = claim.daubs.some((i) => !order.includes(i)) ? REST_MS : 0;
-  const settleAt = restAt + restMs + HOLD_MS;
+  const restMs = !hopeless && claim.daubs.some((i) => !order.includes(i)) ? REST_MS : 0;
+  const settleAt = hopeless ? restAt : restAt + restMs + HOLD_MS;
   const seq = useSequence([
     0,
     cardAt,
