@@ -260,3 +260,40 @@
 :global(:root[data-motion='off']) .flipBack {
   animation: none;
 }
+
+/* ── I-067 A: a short sideways box — the join button needs no portrait-height target. */
+@media (orientation: landscape) and (max-height: 420px) {
+  .form :global(button[type='submit']) {
+    min-height: 44px;
+    padding-top: var(--pb-space-2);
+    padding-bottom: var(--pb-space-2);
+  }
+}
+
+/* ── I-067 B: two columns sideways — portrait + name left (fixed), the grid takes the rest. */
+.sideways {
+  display: contents;
+}
+@media (orientation: landscape) and (max-height: 420px) {
+  .form :global(section) > div:nth-of-type(1) {
+    display: grid;
+    grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
+    column-gap: var(--pb-space-5);
+    row-gap: var(--pb-space-2);
+    align-content: start;
+  }
+  .sideways {
+    display: flex;
+    flex-direction: column;
+    gap: var(--pb-space-3);
+    grid-column: 1;
+  }
+  .avatars {
+    grid-column: 2;
+    min-height: 0;
+  }
+  /* status lines (kicked, joining room…) span both columns */
+  .form :global(section) > div:nth-of-type(1) > p {
+    grid-column: 1 / -1;
+  }
+}
