@@ -411,3 +411,30 @@
   display: inline-block;
   animation: global(pb-bump) var(--pb-motion-base) var(--pb-ease) both;
 }
+
+/* ── I-134 A: the live line on a waiting phone. */
+.watchLine {
+  margin: var(--pb-space-3) 0 0;
+  font-size: var(--pb-text-lg, 1.15rem);
+  font-weight: 800;
+  text-align: center;
+}
+
+/* ── I-134 C: the last fifteen numbers, so the wait has something to read. */
+.watchBoard {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--pb-space-2);
+  margin: var(--pb-space-3) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.watchBoard li {
+  min-width: 30px;
+  padding: 3px 7px;
+  border-radius: 999px;
+  background: var(--pb-surface-2);
+  font-weight: 700;
+  text-align: center;
+}

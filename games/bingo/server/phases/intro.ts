@@ -10,7 +10,24 @@ import { setMenu } from '../claims';
 import { DECK, INTRO_BREATH_MS, INTRO_MS, INTRO_READY_MS, introMinMs } from '../types';
 import type { Input, Pattern, RoundState, State, Transition } from '../types';
 
-export function enterIntro(state: State, number: number, now: number): State {
+/** I-134 B: phones that joined mid-game are dealt in at the next round, like everyone else. */
+function admitJoiners(state: State): State {
+  const waiting = state.joining ?? {};
+  const ids = Object.keys(waiting);
+  if (ids.length === 0) return state;
+  const players = { ...state.players };
+  const wins = { ...state.wins };
+  for (const id of ids) {
+    const p = waiting[id];
+    if (!p || Object.hasOwn(players, id)) continue;
+    players[id] = p;
+    wins[id] = wins[id] ?? 0;
+  }
+  return { ...state, players, wins, joining: {} };
+}
+
+export function enterIntro(waiting: State, number: number, now: number): State {
+  const state = admitJoiners(waiting); // I-134 B
   let rng = state.rng;
   const [deck, afterDeck] = shuffle(rng, range(1, DECK));
   rng = afterDeck;

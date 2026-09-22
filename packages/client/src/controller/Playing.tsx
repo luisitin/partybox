@@ -127,7 +127,21 @@ export function Playing({
     // A spectator's screen is the game screen for them: release the game-start hold (loop #22).
     return (
       <>
-        <WaitingScreen title={t.spectator.title} hint={t.spectator.hint} mood="watch">
+        <WaitingScreen
+          title={view?.spectator?.title ?? t.spectator.title}
+          hint={view?.spectator?.joinAt ?? t.spectator.hint}
+          mood="watch"
+        >
+          {/* I-134 A: the game says what a waiting phone should see — here, the live call. */}
+          {view?.spectator ? <p className={styles.watchLine}>{view.spectator.line}</p> : null}
+          {/* I-134 C: and the board, so the wait is a second screen. */}
+          {view?.spectator?.called && view.spectator.called.length > 0 ? (
+            <ul className={styles.watchBoard} aria-label="numbers called">
+              {view.spectator.called.slice(-15).map((n) => (
+                <li key={n}>{n}</li>
+              ))}
+            </ul>
+          ) : null}
           <Bench view={view} room={room} play={play} />
         </WaitingScreen>
         <Ready onReady={onGameReady} />

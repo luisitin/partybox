@@ -2,6 +2,7 @@
 // removal, spectators, and the time-based rules (120 s leave grace, 30 s VIP handover).
 import type { ErrorCode } from '@partybox/shared';
 import { LIMITS, isAvatarId, nameKey, normalizeName } from '@partybox/shared';
+import { avatarIdOf } from './avatar';
 import { applyGameEvent } from './runner';
 import type { ApplyResult, Effect, EngineDeps, RoomEvent, RoomPlayer, RoomState } from './types';
 
@@ -35,9 +36,19 @@ function notifyGame(
   now: number,
   deps: EngineDeps,
 ): ApplyResult {
-  if (room.status !== 'playing' || !Object.hasOwn(room.game?.state.players ?? {}, playerId))
-    return { room, effects: [] };
-  return applyGameEvent(room, { type: 'player', now, playerId, connected }, deps);
+  if (room.status !== 'playing' || !room.game) return { room, effects: [] };
+  if (Object.hasOwn(room.game.state.players, playerId))
+    return applyGameEvent(room, { type: 'player', now, playerId, connected }, deps);
+  // I-134 B: a game that deals in rounds hears who is waiting, and takes them at its next deal.
+  const p = room.players[playerId];
+  if (!p || !joinsAtRounds(room, deps)) return { room, effects: [] };
+  const joining = { name: p.name, avatarId: avatarIdOf(p), ...(p.bot ? { bot: true } : {}) };
+  return applyGameEvent(room, { type: 'player', now, playerId, connected, joining }, deps);
+}
+
+/** I-134 B: the running game takes spectators at its round boundaries (manifest `lateJoin`). */
+function joinsAtRounds(room: RoomState, deps: EngineDeps): boolean {
+  return room.game ? deps.games[room.game.gameId]?.manifest.lateJoin === 'round' : false;
 }
 
 export function join(room: RoomState, event: JoinEvent, deps: EngineDeps): ApplyResult {
@@ -103,16 +114,20 @@ export function join(room: RoomState, event: JoinEvent, deps: EngineDeps): Apply
     players: { ...room.players, [player.id]: player },
     vipId: isVip ? player.id : room.vipId,
   };
+  // I-134 B: a round-dealing game hears about the new spectator at once.
+  const rounds = player.spectator && joinsAtRounds(next, deps);
+  const game = rounds ? notifyGame(next, player.id, true, event.now, deps) : { room: next, effects: [] };
   return {
-    room: next,
+    room: game.room,
     effects: [
       { type: 'welcome', playerId: player.id },
+      ...game.effects,
       { type: 'push' },
       {
         type: 'toast',
         to: 'all',
         kind: 'info',
-        text: `${name} joined${player.spectator ? ' (next game)' : ''}`,
+        text: `${name} joined${player.spectator ? (rounds ? ' (next round)' : ' (next game)') : ''}`,
       },
     ],
   };

@@ -93,6 +93,7 @@ function init(ctx: InitContext): State {
     wins,
     history: [],
     winsAtRoundStart: { ...wins },
+    joining: {},
   };
   return enterIntro(base, 1, ctx.now);
 }
@@ -132,8 +133,22 @@ export function advance(state: State, now: number): State {
 }
 
 function reduce(state: State, event: GameEvent<Input>): State {
-  if (event.type === 'player')
+  if (event.type === 'player') {
+    // I-134 B: someone joined mid-game — they wait for the next deal (and leave the queue if they go).
+    if (event.joining && !Object.hasOwn(state.players, event.playerId)) {
+      const { [event.playerId]: _gone, ...rest } = state.joining ?? {};
+      return event.connected
+        ? {
+            ...state,
+            joining: {
+              ...rest,
+              [event.playerId]: { id: event.playerId, ...event.joining, connected: true },
+            },
+          }
+        : { ...state, joining: rest };
+    }
     return afterPlayerChange(state, setConnected(state, event), event.now);
+  }
   // VIP skip = the phase's normal exit; VIP end always jumps to done (bingos as they stand).
   // A win the TV has not scored yet (the VIP cut the reveal short) still counts — on skip and end
   // only: a pause must not score it (the phones would show the verdict mid-reveal — loop 294).

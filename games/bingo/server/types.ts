@@ -1,7 +1,7 @@
 // State and input types for Bingo (docs/game-ideas/001-bingo.html). Everything is JSON: the deck,
 // every card, every daub — nothing here is secret, a card only reaches the TV when its owner claims.
 import { z } from '@partybox/game-sdk';
-import type { GameStateBase } from '@partybox/game-sdk';
+import type { GameStateBase, PlayerInfo } from '@partybox/game-sdk';
 
 export const PHASES = ['intro', 'play', 'check', 'bingo', 'scoreboard', 'final', 'done'] as const;
 export type PhaseId = (typeof PHASES)[number];
@@ -134,6 +134,9 @@ export interface State extends GameStateBase {
   history: { round: number; winnerId: string | null; calls: number }[];
   /** Points at the start of the current round: the scoreboard shows each row's gain as a delta. */
   winsAtRoundStart: Record<string, number>;
+  /** I-134 B: phones that joined mid-game, dealt in at the next round's intro. Optional: a state
+   *  saved before this field existed (the contract fixtures) has none. */
+  joining?: Record<string, PlayerInfo>;
 }
 
 export const inputSchema = z.discriminatedUnion('type', [
