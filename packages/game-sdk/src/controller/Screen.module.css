@@ -94,7 +94,8 @@
 .more {
   position: absolute;
   left: 50%;
-  bottom: calc(var(--pb-space-3) + 60px + env(safe-area-inset-bottom));
+  /* I-151 A: on the footer's measured top edge (it was a fixed 60 px: a one-button footer). */
+  bottom: calc(var(--pb-space-3) + var(--pb-footer-h, calc(60px + env(safe-area-inset-bottom))));
   translate: -50% 0;
   z-index: 2;
   /* The owner (2026-09-22): a real thumb target, not a 32x22 sliver. */

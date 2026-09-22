@@ -7,7 +7,7 @@
 // (no state, no extra render) so the ghost is there from the first frame; StrictMode's simulated
 // unmount leaves the node connected and is ignored. Reduced motion: no ghost.
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import type { JSX, ReactNode } from 'react';
+import type { CSSProperties, JSX, ReactNode } from 'react';
 import { sanitizeSnapshot, usePrefersReducedMotion } from '../ui/motion';
 import styles from './Screen.module.css';
 
@@ -27,6 +27,22 @@ export function Screen({ children, footer, title, className }: ScreenProps): JSX
   // I-066 B: "more below" — true while the body can scroll further (scroll + resize watched).
   const body = useRef<HTMLDivElement>(null);
   const [more, setMore] = useState(false);
+  // I-151 A: the pill sits on the footer's real top edge, however tall the footer is.
+  const foot = useRef<HTMLDivElement>(null);
+  const [footH, setFootH] = useState(0);
+  const hasFooter = footer !== undefined && footer !== null && footer !== false;
+  useEffect(() => {
+    const el = foot.current;
+    if (!el) {
+      setFootH(0);
+      return undefined;
+    }
+    const measure = (): void => setFootH(el.offsetHeight);
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [hasFooter]);
   useEffect(() => {
     const el = body.current;
     if (!el) return undefined;
@@ -68,6 +84,11 @@ export function Screen({ children, footer, title, className }: ScreenProps): JSX
         <button
           type="button"
           className={styles.more}
+          style={
+            {
+              '--pb-footer-h': footH > 0 ? `${footH}px` : 'env(safe-area-inset-bottom)',
+            } as CSSProperties
+          }
           aria-label="scroll down"
           onClick={() =>
             body.current?.scrollBy({ top: body.current.clientHeight * 0.8, behavior: 'smooth' })
@@ -76,7 +97,11 @@ export function Screen({ children, footer, title, className }: ScreenProps): JSX
           ▾
         </button>
       ) : null}
-      {footer ? <div className={styles.footer}>{footer}</div> : null}
+      {footer ? (
+        <div ref={foot} className={styles.footer}>
+          {footer}
+        </div>
+      ) : null}
     </section>
   );
 }

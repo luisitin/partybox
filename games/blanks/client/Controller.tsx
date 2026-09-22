@@ -97,18 +97,46 @@ function ControllerResult({ view, me, skip }: Props): JSX.Element {
         ? 'Only two cards — you both score'
         : `You split it with ${list(others)}`;
   const standing = rankLine(view, final);
+  // I-151 B: the footer shares the phone with the winner card, so it shows three rows — mine and
+  // its neighbours — and SAYS how many are missing: a ranked list is only trustworthy when it is
+  // clearly complete or clearly truncated. (FIRST BUILD: five rows, so in a five-player room B
+  // never cut anything and looked exactly like A — audit 2026-09-22.)
+  const FITS = 3;
+  const mineAt = view.standings.findIndex((r) => r.playerId === me.id);
+  const windowed =
+    view.standings.length <= FITS
+      ? view.standings
+      : view.standings.slice(
+          Math.max(0, Math.min(mineAt - 1, view.standings.length - FITS)),
+          Math.max(FITS, Math.min(mineAt - 1, view.standings.length - FITS) + FITS),
+        );
+  const boardRows = windowed;
+  const hidden = view.standings.length - windowed.length;
   return (
     <Screen
       title={final ? 'Final scores' : `Round ${view.round} of ${view.rounds}`}
       // Untimed rounds: the result stays up until the VIP moves on.
       footer={
-        final ? undefined : (
-          <NextButton
-            skip={skip}
-            timed={view.timed}
-            label={view.round < view.rounds ? 'Next round' : 'Final scores'}
-          />
-        )
+        <>
+          {/* I-151 A: the standings are a constant footer, not the last thing in a body that may
+              never be scrolled — on a split result the winner cards used to fill the screen and
+              the board never came into view. */}
+          {view.standings.length > 0 ? (
+            <div className={`${styles.resultBoard} ${named || final ? '' : styles.beatWait}`.trim()}>
+              <Scoreboard compact highlightId={me.id} rows={boardRows} noTrophy />
+              {hidden > 0 ? (
+                <p className={`${styles.moreRows} pb-caption pb-muted`}>and {hidden} more</p>
+              ) : null}
+            </div>
+          ) : null}
+          {final ? null : (
+            <NextButton
+              skip={skip}
+              timed={view.timed}
+              label={view.round < view.rounds ? 'Next round' : 'Final scores'}
+            />
+          )}
+        </>
       }
     >
       <div className={styles.resultHero} role="status" aria-live="polite">
@@ -182,9 +210,7 @@ function ControllerResult({ view, me, skip }: Props): JSX.Element {
       {/* The point is already in the standings when the result opens, and the TV holds its own
           strip back until the winner is named (`stripScores`). The phone's board keeps its place
           and fades in on the same beat, so nothing counts up before the reveal (loop #222). */}
-      <div className={named ? undefined : styles.beatWait}>
-        <Scoreboard compact highlightId={me.id} rows={view.standings} noTrophy />
-      </div>
+      {/* I-151 A: the board is in the footer now — see the Screen's `footer` above. */}
       {/* The night's best-liked card, on the phone too (review-loop #193). */}
       {final && view.bestCard ? (
         <div className={styles.bestCard}>
