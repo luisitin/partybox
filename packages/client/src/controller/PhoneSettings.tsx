@@ -1,6 +1,6 @@
 // The theme sheet's footer on a phone: this phone's own sound and vibration toggles (R-048).
 // Turning one on plays/buzzes the `submit` pattern so the player hears or feels what they enabled.
-import { Suspense, useState, useSyncExternalStore } from 'react';
+import { Suspense, useEffect, useState, useSyncExternalStore } from 'react';
 import type { ComponentType, LazyExoticComponent } from 'react';
 import { clientGames } from '../games.generated';
 
@@ -42,6 +42,20 @@ export interface PhoneSettingsProps {
 
 export function PhoneSettings({ audio, what }: PhoneSettingsProps): JSX.Element {
   const [soundOn, setSoundOn] = useState(() => !(audio?.muted() ?? true));
+  // I-062 C: the bars answer real cues — polled off the engine's lastPlayedAt (no engine events).
+  const [kick, setKick] = useState(0);
+  useEffect(() => {
+    if (!audio) return undefined;
+    let seen = audio.lastPlayedAt();
+    const h = setInterval(() => {
+      const at = audio.lastPlayedAt();
+      if (at !== seen) {
+        seen = at;
+        setKick(at);
+      }
+    }, 100);
+    return () => clearInterval(h);
+  }, [audio]);
   const [haptics, setHaptics] = useState(() => hapticsEnabled());
   // iOS Safari has no navigator.vibrate at all: say so instead of offering a switch that does
   // nothing (Android Chrome has it, after the page's first tap).
@@ -49,7 +63,11 @@ export function PhoneSettings({ audio, what }: PhoneSettingsProps): JSX.Element 
   const toggleSound = (): void => {
     if (!audio) return;
     const next = !soundOn;
-    audio.setMuted(!next);
+    // I-062 B: "off" is heard too — a short note before the mute lands.
+    if (!next) {
+      audio.play('lock');
+      setTimeout(() => audio.setMuted(true), 180);
+    } else audio.setMuted(false);
     setSoundOn(next);
     if (next) void audio.enable().then((ok) => ok && audio.play('submit'));
   };
@@ -104,7 +122,15 @@ export function PhoneSettings({ audio, what }: PhoneSettingsProps): JSX.Element 
         disabled={!audio}
       >
         <span className={pickerStyles.toggleGlyph} aria-hidden>
-          {soundOn ? '🔊' : '🔇'}
+          {/* I-062 A: a live waveform — bars bounce while On, flat when Off. */}
+          <span
+            className={`${pickerStyles.wave} ${soundOn ? pickerStyles.waveOn : ''} ${kick ? pickerStyles.waveKick : ''}`}
+            key={kick}
+          >
+            <span />
+            <span />
+            <span />
+          </span>
         </span>
         {t.controller.phoneSound}
         <span className={pickerStyles.toggleState}>
