@@ -52,3 +52,8 @@
   flex-direction: column;
   gap: var(--pb-space-1);
 }
+
+/* \u2500\u2500 I-155 A: your own award reads as yours. */
+.awardMine strong {
+  color: var(--pb-accent);
+}

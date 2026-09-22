@@ -29,6 +29,9 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
   const scoreless = room.results ? clientGames[room.results.gameId]?.scoreless === true : false;
   const over = nobodyScored(room) && !scoreless;
   const vipName = room.players.find((p) => p.id === room.vip)?.name;
+  const awardsForMe = [...(room.results?.results.awards ?? [])].sort(
+    (x, y) => Number(y.playerId === me.id) - Number(x.playerId === me.id),
+  );
   return (
     <Screen
       // The winner line is the sticky title: on a long board the body scrolls to your own row and a
@@ -87,13 +90,23 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
           <Scoreboard rows={rows} compact highlightId={me.id} noTrophy={over} />
         </div>
       )}
+      {/* I-155 B: your own awards come first — a receipt opens with you on it. */}
       {room.results?.results.awards.length ? (
         <ul className={styles.awards}>
-          {room.results.results.awards.map((a) => (
-            <li key={a.id} className={styles.award}>
+          {awardsForMe.map((a) => (
+            <li key={a.id} className={`${styles.award} ${a.playerId === me.id ? styles.awardMine : ''}`.trim()}>
               <span>
-                <strong>{a.title}</strong> ·{' '}
-                {room.results?.players.find((p) => p.id === a.playerId)?.name ?? '?'}
+                {/* I-155 A: the screen already knows whose hand it is in — the award should too. */}
+                {a.playerId === me.id ? (
+                  <>
+                    <strong>Your {a.title.charAt(0).toLowerCase()}{a.title.slice(1)}</strong>
+                  </>
+                ) : (
+                  <>
+                    <strong>{a.title}</strong> ·{' '}
+                    {room.results?.players.find((p) => p.id === a.playerId)?.name ?? '?'}
+                  </>
+                )}
               </span>
               <span className="pb-muted pb-caption">{a.description}</span>
             </li>
