@@ -73,3 +73,23 @@
   border-color: var(--pb-danger);
   color: var(--pb-on-accent);
 }
+
+/* ── I-071 A: the host label is the roster's ★ VIP pill (same fill, same shape). */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  padding: 0 0.6em;
+  border-radius: 999px;
+  background: var(--pb-accent-2-fill);
+  color: var(--pb-on-accent-2-fill);
+  font-size: 14px;
+  font-weight: 900;
+  line-height: 1.7;
+  letter-spacing: 0.04em;
+}
+
+/* ── I-071 C: a handover pops the pill (keyed on the VIP id: once per change). */
+.pillPop {
+  animation: global(pb-pop) var(--pb-motion-slow) var(--pb-ease) both;
+}
