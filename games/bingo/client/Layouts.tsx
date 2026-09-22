@@ -117,6 +117,7 @@ export function Thumbnails({
   markLabel,
   onPick,
   spent = [],
+  hideMarked = false,
 }: {
   view: BingoControllerView;
   cards: number[][];
@@ -125,15 +126,27 @@ export function Thumbnails({
   onPick: (card: number) => void;
   /** intro: cards already swapped (a "swapped" tag instead of a border). */
   spent?: number[];
+  /** I-114 A: leave the marked card out (Focus: the big card is not drawn twice); the rest spread. */
+  hideMarked?: boolean;
 }): JSX.Element {
+  const shown = hideMarked ? cards.length - 1 : cards.length;
+  void shown;
   return (
     <div
       className={styles.thumbs}
-      style={{ gridTemplateColumns: `repeat(${cards.length}, minmax(0, var(--pb-thumb)))` }}
+      style={{
+        gridTemplateColumns: `repeat(${cards.length}, minmax(0, ${hideMarked ? 'calc(var(--pb-thumb) * 2)' : 'var(--pb-thumb)'}))`,
+      }}
     >
       {cards.map((numbers, c) => {
         const won = view.phaseId !== 'intro' && view.won.includes(c);
         const cur = c === marked;
+        if (hideMarked && cur)
+          return (
+            <span key={c} className={styles.thumbGhost} aria-hidden>
+              ↑ up
+            </span>
+          ); // I-114 B: the slot keeps the order
         const tag = won ? 'BINGO ✓' : cur ? markLabel : spent.includes(c) ? 'swapped' : null;
         return (
           <button
@@ -188,7 +201,7 @@ export function FocusLayout(
         <PlayCard p={p} c={p.up} size="phone" />
       </div>
       {many ? (
-        <Thumbnails view={p.view} cards={p.cards} marked={p.up} markLabel="up" onPick={p.onUp} />
+        <Thumbnails view={p.view} cards={p.cards} marked={p.up} markLabel="up" onPick={p.onUp} hideMarked />
       ) : null}
     </div>
   );

@@ -1371,3 +1371,15 @@
   color: var(--pb-accent-2);
   animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
 }
+
+/* ── I-114 B: the up card's slot stays, as a ghost, so the row never shuffles. */
+.thumbGhost {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 5 / 6;
+  border-radius: var(--pb-radius);
+  border: 2px dashed var(--pb-surface-2);
+  color: var(--pb-text-muted);
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+}
