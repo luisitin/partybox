@@ -6,6 +6,12 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Fixed
 
+- **The phone's audio comes back after a lock** (the owner, 2026-09-22 — "in phone only mode I
+  don't hear the caller"): iOS parks the AudioContext when the phone locks or backgrounds, and
+  nothing resumed it after the join gesture, so a phone went quiet mid-game. The page becoming
+  visible, a tap, or a clip asked for while it is parked now revive it — and a call whose clip
+  will not decode falls back to an `<audio>` element instead of being skipped.
+
 - **"Reconnecting…" no longer strobes** (the owner, 2026-09-22): the link watchdog could kill each
   fresh socket a second after it connected, and the banner followed the socket exactly. The
   watchdog now holds off after a connect and between kicks, and the banner waits out a blip, holds

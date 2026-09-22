@@ -113,14 +113,56 @@ export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine
     }
     return pending;
   };
+  // The owner (2026-09-22): "in phone only mode I don't hear the caller". iOS Safari parks the
+  // AudioContext in 'suspended'/'interrupted' whenever the phone locks, backgrounds or takes a
+  // call, and nothing resumed it after the join gesture — so a phone that had sound simply went
+  // quiet mid-game. Anything that proves the person is back (the page becoming visible, a tap)
+  // revives it, throttled so a burst of taps is one resume.
+  let revivedAt = 0;
+  const revive = (): void => {
+    const now = Date.now();
+    if (!ctx || ctx.state === 'running' || now - revivedAt < 500) return;
+    revivedAt = now;
+    void ctx.resume().catch(() => undefined);
+  };
+  if (typeof document !== 'undefined') {
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') revive();
+    });
+    document.addEventListener('pointerdown', revive, { passive: true });
+    document.addEventListener('touchend', revive, { passive: true });
+  }
+
   const clips = new Set<AudioBufferSourceNode>();
   // A hush also cancels clips still decoding (a first-time call fetched after the hush), so a
   // caller hushed mid-fetch never speaks late (loop 333).
   let hushGen = 0;
+  /** The fallback path: an <audio> element, which needs no AudioContext at all. */
+  const media = new Set<HTMLAudioElement>();
+  const playAsMedia = (sample: Sample): void => {
+    if (typeof Audio === 'undefined') return;
+    try {
+      const el = new Audio(sample.src);
+      el.volume = Math.min(1, Math.max(0, sample.gain));
+      if (sample.offset) el.currentTime = sample.offset;
+      media.add(el);
+      el.addEventListener('ended', () => media.delete(el));
+      void el.play().catch(() => media.delete(el));
+    } catch {
+      /* no media element: the call is simply silent */
+    }
+  };
+
   const playSample = (sample: Sample, t0: number, track = false): void => {
     const gen = hushGen;
     void buffer(sample.src).then((buf) => {
-      if (!buf || !ctx || muted || ctx.state !== 'running') return;
+      if (muted) return;
+      // A clip the Web Audio graph cannot use (a decode Safari refuses, a fetch that failed) is
+      // still playable as plain media — a recorded call is worth the fallback.
+      if (!buf || !ctx || ctx.state !== 'running') {
+        if (track && gen === hushGen) playAsMedia(sample);
+        return;
+      }
       if (track && gen !== hushGen) return;
       if (track) options.onClip?.(Math.round(buf.duration * 1000) + Math.max(0, sample.at * 1000));
       const source = ctx.createBufferSource();
@@ -228,7 +270,10 @@ export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine
       // The audio trace reads calls as `speak` events (what the caller used to emit).
       if (name.match(/^[bingo]\d+\.wav$/))
         trace('speak', { text: name, voice: 'clip', delayMs: at });
-      if (!ctx || muted || ctx.state !== 'running') return;
+      if (muted) return;
+      // Parked (iOS after a lock): revive and speak anyway — the buffer path checks again, and
+      // the media fallback covers the case where it never comes back.
+      if (!ctx || ctx.state !== 'running') revive();
       playSample(
         {
           src,
@@ -236,7 +281,7 @@ export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine
           gain: opts?.gain ?? 1,
           offset: opts?.offsetS,
         },
-        ctx.currentTime,
+        ctx?.currentTime ?? 0,
         true,
       );
     },
@@ -250,6 +295,12 @@ export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine
         }
       }
       clips.clear();
+      // The media fallback hushes with them, or a cut-off call carries on over the next one.
+      for (const el of media) {
+        el.pause();
+        el.src = '';
+      }
+      media.clear();
     },
     muted: () => muted,
     setMuted(value) {
