@@ -189,7 +189,10 @@ export function TvApp(): JSX.Element {
     }
     // A game begins: a held G-major arpeggio (the intro itself never chimes — p.phase is null);
     // a TV that reloads mid-game (p.status === '') stays quiet, like the join rule.
-    if (room.status === 'playing' && p.status !== 'playing' && p.status !== '') audio.play('start');
+    if (room.status === 'playing' && p.status !== 'playing' && p.status !== '') {
+      audio.play('close'); // I-120 C: the curtain falls
+      setTimeout(() => audio.play('start'), 350);
+    }
     // The winner moment (owner pick): a party horn with a crowd cheer under it (music ducked).
     if (room.status === 'results' && p.status !== 'results' && !homing) {
       // I-128 C: an all-zero board gets a soft note, not the cheer.
@@ -287,6 +290,7 @@ export function TvApp(): JSX.Element {
             swapKey={room?.status ?? 'none'}
             className={styles.swap}
             hold={room?.status === 'playing' && !gameReady}
+            curtain={room?.status === 'playing'} /* I-120 A: the lobby leaves behind a curtain */
           >
             {content}
           </CrossfadeSwap>
