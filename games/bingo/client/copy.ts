@@ -80,3 +80,24 @@ export function pendingLine(
           : 'next round';
   return `${by ? `${by} picked` : 'Picked'}: ${what}. It starts when the celebration is done.`;
 }
+
+/** I-138 A: a bot answers its own verdict — one line, keyed to what went wrong. */
+const BOT_MISS = [
+  'my sensors were dirty',
+  'I got excited',
+  'recalculating…',
+  'that was a rounding error',
+];
+const BOT_EARLY = ['I got excited', 'I counted the FREE twice', 'my clock is fast'];
+const BOT_WIN = ['beep. gloat.', 'as computed', 'humans: 0'];
+
+export function botLine(claim: {
+  name: string;
+  bot?: boolean;
+  red: number[];
+  playerId?: string;
+}, kind: 'miss' | 'win' = 'miss'): string | null {
+  if (!claim.bot) return null;
+  const pool = kind === 'win' ? BOT_WIN : claim.red.length > 0 ? BOT_MISS : BOT_EARLY;
+  return `${claim.name}: ${pool[Math.floor(Math.random() * pool.length)]}`;
+}
