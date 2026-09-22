@@ -58,6 +58,8 @@ export interface GameClientModule {
    * card out, the judge deciding — whoever the room should look at. Default: nobody.
    */
   stripActive?: (view: PushedView<TvView>) => readonly string[];
+  /** I-131 A: phases whose stage needs the height — the strip drops to faces only. */
+  stripCompact?: readonly string[];
   /**
    * S-003: the game's own phone settings (per phone: a card style, a pad …) for the lobby's 🎨
    * sheet, so a player sets up while they wait. Lazy like the surfaces. Default: none.
