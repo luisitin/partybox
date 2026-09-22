@@ -101,7 +101,7 @@ export function TvFrame({
             <span className={`${styles.badge} ${styles.badgeBump}`} key={room.players.length}>
               <small>{t.lobby.room}</small>
               {room.code}
-              {room.locked ? <span className={styles.lock}> 🔒</span> : null}
+              {room.locked ? <span className={`${styles.lock} ${styles.lockPill}`}>🔒 locked</span> : null}
             </span>
           ) : null}
           {!connected ? <span className={styles.offline}>{t.connection.connecting}</span> : null}

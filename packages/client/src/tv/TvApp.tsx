@@ -108,6 +108,8 @@ export function TvApp(): JSX.Element {
     paused: boolean;
     code: string;
     locked: number;
+    /** I-055 B: the room's lock last snapshot. */
+    roomLocked: boolean;
     /** I-009 B: who was offline last snapshot — a drop plays `leave`, a return `join`. */
     offline: Set<string>;
   }>({
@@ -120,6 +122,7 @@ export function TvApp(): JSX.Element {
     paused: false,
     code: '',
     locked: 0,
+    roomLocked: false,
   });
   const lastLeaveAt = useRef(-Infinity);
   // I-054 C: a toast the TV raises for itself (the store's shipped toast list, 3 s).
@@ -169,6 +172,8 @@ export function TvApp(): JSX.Element {
       if (performance.now() - audio.lastPlayedAt() > 50) audio.play('phase');
     if (room.players.length > p.players && p.status !== '')
       audio.play('join', { semitones: joinSemitones(room.players.length) });
+    // I-055 B: the room locks — a `lock` tick with the seal.
+    if (p.status !== '' && room.locked && !p.roomLocked) audio.play('lock');
     // I-054 A: the room closing — the hushed `close` chord after the join note at capacity.
     const fullNow = room.players.length >= room.capacity;
     const fullBefore = p.players >= room.capacity;
@@ -251,6 +256,7 @@ export function TvApp(): JSX.Element {
       paused,
       code: room.code,
       locked: view && view.phaseId === p.phase ? locked : 0,
+      roomLocked: room.locked,
     };
   }, [room, view, audio, music, homing, showLocalToast]);
 
