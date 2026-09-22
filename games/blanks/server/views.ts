@@ -126,6 +126,8 @@ function statusOf(state: State): (id: string) => PlayerStatus {
  *  round card, each read-out and the final board are a rhythm, not a countdown: a draining bar,
  *  no number (review-loop #133 — a "6 s" clock on every card read nothing but urgency). */
 function timerMode(state: State): 'normal' | 'quiet' | 'hidden' {
+  // I-142 A: during "answer" the slot row is the clock — three clocks on one screen is none.
+  if (state.phase.id === 'answer') return 'hidden';
   const phase = state.phase.id;
   const untimed = phase === 'pick' || phase === 'answer' || phase === 'judge' || phase === 'result';
   if (allIn(state) || votesIn(state)) return 'hidden';
