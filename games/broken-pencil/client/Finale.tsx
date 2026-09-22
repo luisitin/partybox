@@ -18,7 +18,12 @@ export function Summary({ view }: { view: PencilTvView }): JSX.Element {
       <p className={styles.kicker}>every book, first word → last guess</p>
       {/* Seven or more books: four tighter columns, so two-row strips and three-line pairs keep
           the last row inside the overscan frame (pass 895: eight books ran to the frame's edge). */}
-      <ul className={`${styles.summary} ${summary.length >= 7 ? styles.summaryMany : ''}`}>
+      {/* S-006 A: a small room's books get the stage's width — one per line up to three, two-up
+          to six. Three 560 px cards side by side left a long name and the verdict a few
+          characters for the chain, which then came apart mid-word. */}
+      <ul
+        className={`${styles.summary} ${summary.length >= 7 ? styles.summaryMany : summary.length <= 3 ? styles.summaryFew : styles.summaryPairs}`}
+      >
         {summary.map((b, i) => (
           // I-022 A: rows land 80 ms apart; the verdict stamps after its row.
           <li
