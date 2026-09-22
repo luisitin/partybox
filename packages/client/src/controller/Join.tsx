@@ -21,7 +21,10 @@ export interface JoinProps {
 /** The `room` query parameter of the page the phone opened (the QR's), as a 4-letter code. */
 function roomFromUrl(): string | null {
   if (typeof window === 'undefined') return null;
-  const raw = new URLSearchParams(window.location.search).get('room');
+  // I-068 A: `/HXNJ` (the short room path) counts as `?room=HXNJ`.
+  const raw =
+    new URLSearchParams(window.location.search).get('room') ??
+    (/^\/[A-Za-z]{4}$/.test(window.location.pathname) ? window.location.pathname.slice(1) : null);
   const code = raw?.trim().toUpperCase() ?? '';
   return /^[A-Z]{4}$/.test(code) ? code : null;
 }

@@ -102,6 +102,14 @@ export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
           <BigText level="h2" tone="accent" className={styles.url}>
             {info ? info.joinUrl.replace(/^https?:\/\//, '').replace(/\/$/, '') : '…'}
           </BigText>
+          {/* I-068 A: the short room path — one thing to type. */}
+          {info && room ? (
+            <p className={`${styles.or} ${styles.shortPath}`}>
+              or type <span className={styles.url}>{info.joinUrl.replace(/^https?:\/\//, '').replace(/\/$/, '')}/{room.code}</span>
+              <br />
+              or ask someone who's in to share the link
+            </p>
+          ) : null}
           {room ? (
             <p className={styles.code}>
               <span className={`${styles.badge} ${styles.badgeLarge}`}>
