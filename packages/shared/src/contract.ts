@@ -167,6 +167,15 @@ export interface ViewEnvelope {
    * (a bingo call, a page of a slideshow). `hidden`: nothing at all.
    */
   timerMode?: 'normal' | 'quiet' | 'hidden';
+  /**
+   * I-134 A: what a spectator should be shown while they wait. The shell knows a spectator is
+   * waiting but nothing about the game they are waiting on; a game that has something worth
+   * watching (a number being called) fills this and the wait stops being a blank screen.
+   */
+  spectator?: {
+    /** The live line — for Bingo, the call and its nickname. */
+    line: string;
+  };
 }
 
 export type TvView = ViewEnvelope;

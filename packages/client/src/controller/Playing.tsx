@@ -127,7 +127,13 @@ export function Playing({
     // A spectator's screen is the game screen for them: release the game-start hold (loop #22).
     return (
       <>
-        <WaitingScreen title={t.spectator.title} hint={t.spectator.hint} mood="watch">
+        <WaitingScreen
+          title={t.spectator.title}
+          hint={t.spectator.hint}
+          mood="watch"
+        >
+          {/* I-134 A: the game says what a waiting phone should see — here, the live call. */}
+          {view?.spectator ? <p className={styles.watchLine}>{view.spectator.line}</p> : null}
           <Bench view={view} room={room} play={play} />
         </WaitingScreen>
         <Ready onReady={onGameReady} />
