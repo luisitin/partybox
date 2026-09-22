@@ -287,6 +287,7 @@ export function TvApp(): JSX.Element {
             swapKey={room?.status ?? 'none'}
             className={styles.swap}
             hold={room?.status === 'playing' && !gameReady}
+            curtain={room?.status === 'playing'} /* I-120 A: the lobby leaves behind a curtain */
           >
             {content}
           </CrossfadeSwap>
