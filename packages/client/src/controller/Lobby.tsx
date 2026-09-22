@@ -9,14 +9,12 @@ import { PlayerChip, PrimaryButton, Screen } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import type { Controller } from '../net/controller';
 import type { SoundEngine } from '../sound';
-import { useServerInfo } from '../net/info';
 import styles from './Lobby.module.css';
 
-/** The room's join link — the QR's URL (`?room=CODE`, I-041), so a tap lands straight in. */
-function joinLink(info: { qrUrl?: string; joinUrl: string } | null, code: string): string {
-  if (info?.qrUrl) return info.qrUrl;
-  const base = info?.joinUrl ?? `${window.location.origin}/`;
-  return `${base.replace(/\/$/, '')}/?room=${code}`;
+/** The room's join link (`?room=CODE`, I-041) on the origin THIS phone reached the room by — a
+ *  phone that came in through the tunnel shares the tunnel address, one on the Wi-Fi the LAN one. */
+function joinLink(code: string): string {
+  return `${window.location.origin}/?room=${code}`;
 }
 
 /** Share the link the way the phone can: the share sheet, else the clipboard. */
@@ -50,10 +48,9 @@ export interface LobbyProps {
 
 export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX.Element {
   // The owner (2026-09-21): a "share" in the lobby — the join link straight to this room.
-  const info = useServerInfo();
   const [shared, setShared] = useState<'shared' | 'copied' | 'failed' | null>(null);
   const share = async (): Promise<void> => {
-    const result = await shareLink(joinLink(info, room.code), room.code);
+    const result = await shareLink(joinLink(room.code), room.code);
     setShared(result);
     setTimeout(() => setShared(null), 2500);
   };
@@ -97,7 +94,7 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
             : shared === 'shared'
               ? '✓ Shared'
               : shared === 'failed'
-                ? `Room ${room.code} — ${joinLink(info, room.code).replace(/^https?:\/\//, '')}`
+                ? `Room ${room.code} — ${joinLink(room.code).replace(/^https?:\/\//, '')}`
                 : '🔗 Share the room link'}
         </button>
         {/* S-003 B: set up your phone while you wait — opens the 🎨 sheet. */}

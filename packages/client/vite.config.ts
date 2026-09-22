@@ -11,6 +11,9 @@ export default defineConfig({
   server: {
     // Game client code lives outside this package (games/<id>/client); allow serving it.
     fs: { allow: [repoRoot] },
+    // A Cloudflare quick tunnel (the owner, 2026-09-21: guests outside the LAN) fronts the dev
+    // server under a random *.trycloudflare.com host; Vite's host check must let it through.
+    allowedHosts: ['.trycloudflare.com', '.ts.net'],
   },
   resolve: { dedupe: ['react', 'react-dom'] },
   build: { outDir: 'dist', emptyOutDir: true, sourcemap: false },
