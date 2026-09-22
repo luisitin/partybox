@@ -18,6 +18,7 @@ import { createHost } from './host';
 import type { Host } from './host';
 import { detectLanIp } from './lan-ip';
 import { qrSvg } from './qr';
+import { readFile } from 'node:fs/promises';
 import { createRecorder } from './recorder';
 import type { Recorder } from './recorder';
 import { createSocketLayer } from './sockets';
@@ -140,6 +141,13 @@ export async function createApp(options: AppOptions): Promise<App> {
     uptime: Math.round((Date.now() - startedAt) / 1000),
   }));
 
+  // I-034 A: the last finished recap — markdown, its files and the folder on the host PC.
+  fastify.get('/api/recaps/latest', async (_req, reply) => {
+    const last = recorder?.latest() ?? null;
+    if (!last) return reply.code(404).send({ error: 'no recap yet' });
+    const markdown = await readFile(join(last.dir, 'recap.md'), 'utf8');
+    return { ...last, markdown };
+  });
   fastify.get('/api/info', async () => {
     const { tv, join: joinUrl } = app.urls();
     // I-041 (the owner): the QR carries the house room's code (`/?room=KGVU`) so a scan goes
