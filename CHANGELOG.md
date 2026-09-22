@@ -5,6 +5,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **A phone screen says there is more below** (I-066, option C): the fold fades one cut row deep
+  (72 px) and a ▾ pill sits at the body's foot while it can scroll — tapping it scrolls a screen
+  down.
 - **Sound off stills the room** (I-065, option C): the lobby's glows pause, grey and dim while the
   TV's sound is off (`data-sound` on `<html>`), then swell once as sound comes on and the "Scan to
   join" heading pops.
