@@ -5,6 +5,7 @@
 import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
 import { usePrefersReducedMotion, useSoundApi } from '@partybox/game-sdk/ui';
+import { completions, isAnyOf } from '../server/patterns';
 import type { Pattern } from '../server/types';
 import styles from './PatternDemo.module.css';
 
@@ -21,7 +22,14 @@ const TICK_MS = 50;
 
 /** The shapes the demo plays, in order, and when each starts (ms into the loop). */
 export function demoShapes(pattern: Pattern, cells: number[]): { cells: number[]; at: number }[] {
-  const shapes = pattern === 'line' ? LINE_SHAPES : [cells];
+  // "Any" patterns play several of their shapes so the room sees "any" means any: lines their
+  // row / column / diagonal, the Postage stamp its four corner blocks.
+  const shapes =
+    pattern === 'line'
+      ? LINE_SHAPES
+      : isAnyOf(pattern)
+        ? completions(pattern).map((c) => [...c])
+        : [cells];
   let at = 0;
   return shapes.map((c) => {
     const start = at;

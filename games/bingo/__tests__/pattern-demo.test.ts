@@ -1,7 +1,8 @@
 // The intro's pattern demo (loop 243) is a pure schedule: pins which cells are lit when.
 import { describe, expect, it } from 'vitest';
 import { demoShapes, litAt } from '../client/PatternDemo';
-import { patternCells } from '../server/patterns';
+import { introOutline } from '../client/Layouts';
+import { isAnyOf, patternCells } from '../server/patterns';
 
 describe('the pattern demo schedule', () => {
   it('"any line" plays a row, a column and a diagonal in turn, one cell every 140 ms, then holds', () => {
@@ -25,5 +26,32 @@ describe('the pattern demo schedule', () => {
     const shapes = demoShapes('corners', cells);
     expect(shapes).toHaveLength(1);
     expect([...litAt(shapes, 5 * 140)]).toEqual(cells);
+  });
+
+  it('the Postage stamp plays all four corner blocks — any corner, not just the top-left', () => {
+    const shapes = demoShapes('stamp', patternCells('stamp'));
+    expect(shapes.map((s) => s.cells)).toEqual([
+      [0, 1, 5, 6],
+      [3, 4, 8, 9],
+      [15, 16, 20, 21],
+      [18, 19, 23, 24],
+    ]);
+  });
+});
+
+describe('which patterns are "any of" (2026-09-22)', () => {
+  it('any line and the Postage stamp are; every fixed shape is not', () => {
+    expect(isAnyOf('line')).toBe(true);
+    expect(isAnyOf('stamp')).toBe(true);
+    for (const p of ['corners', 'x', 'blackout', 'frame', 'tee'] as const)
+      expect(isAnyOf(p)).toBe(false);
+  });
+
+  it('the card outlines a fixed shape while dealing, and nothing for an "any of" pattern', () => {
+    expect(introOutline({ pattern: 'stamp', patternCells: patternCells('stamp') })).toEqual([]);
+    expect(introOutline({ pattern: 'line', patternCells: patternCells('line') })).toEqual([]);
+    expect(introOutline({ pattern: 'frame', patternCells: patternCells('frame') })).toEqual(
+      patternCells('frame'),
+    );
   });
 });

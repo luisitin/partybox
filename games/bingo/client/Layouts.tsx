@@ -9,7 +9,18 @@ import { Card } from './Card';
 import { wantedCells } from './close';
 import { Ball, BingoButton } from './ControllerParts';
 import type { Send } from './ControllerParts';
+import { isAnyOf } from '../server/patterns';
+import type { Pattern } from '../server/types';
 import styles from './Controller.module.css';
+
+/**
+ * The pattern outlined on a card while the cards are dealt: the pattern's own cells — except for
+ * an "any of" pattern (any line, any corner block), where no single set IS the pattern and an
+ * outline would say one corner is the target when any corner wins.
+ */
+export function introOutline(view: { pattern: Pattern; patternCells: number[] }): number[] {
+  return isAnyOf(view.pattern) ? [] : view.patternCells;
+}
 
 export interface LayoutProps {
   view: BingoControllerView;
@@ -96,7 +107,7 @@ function PlayCard({
       <Card
         numbers={p.cards[c] ?? []}
         daubs={p.intro ? [] : (view.daubs[c] ?? [])}
-        pattern={p.intro && view.pattern !== 'line' ? view.patternCells : []}
+        pattern={p.intro ? introOutline(view) : []}
         wanted={wanted}
         freeDaubed={won || p.freeDaubed.includes(c)}
         onTapFree={() => p.onTapFree(c)}

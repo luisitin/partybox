@@ -53,6 +53,15 @@ export function completions(pattern: Pattern): readonly (readonly number[])[] {
  * What the pattern icon highlights (and the phone outlines): every cell the pattern needs — except
  * `line`, where "every line" would fill the grid, so one example row stands for it.
  */
+/**
+ * True when the pattern is "any one of several shapes" (any line, any corner block): no single
+ * set of cells IS the pattern, so a card must not outline one as if it were (2026-09-22 — the
+ * Postage stamp's card outlined only the top-left block while any corner wins).
+ */
+export function isAnyOf(pattern: Pattern): boolean {
+  return completions(pattern).length > 1;
+}
+
 export function patternCells(pattern: Pattern): number[] {
   if (pattern === 'line') return [...(ROWS[2] as number[])];
   if (pattern === 'stamp') return [0, 1, 5, 6]; // I-093 C: one example block stands for "any corner"
