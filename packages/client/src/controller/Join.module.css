@@ -211,3 +211,27 @@
   letter-spacing: 0.2em;
   color: var(--pb-accent-2);
 }
+
+/* ── I-060 A: the empty name slot says what it is — the field's placeholder, muted and italic. */
+.portraitHint {
+  color: var(--pb-text-muted);
+  font-style: italic;
+  font-weight: 600;
+}
+
+/* ── I-060 C: the placeholder types itself in once (a stepped clip over 900 ms). */
+.portraitTyped {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  vertical-align: bottom;
+  animation: pb-typed 900ms steps(8, end) both;
+}
+@keyframes pb-typed {
+  from {
+    max-width: 0;
+  }
+  to {
+    max-width: 8em;
+  }
+}
