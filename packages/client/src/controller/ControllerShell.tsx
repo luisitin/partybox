@@ -129,7 +129,8 @@ export function ControllerShell({
       playing &&
       phase !== null &&
       p.phase !== phase &&
-      room?.phoneOnly &&
+      // a room that asked the phones to carry the audio (phone only, or music on every phone)
+      (room?.phoneOnly || room?.musicOnPhones) &&
       tvSoundsOn() &&
       audio
     ) {

@@ -15,6 +15,15 @@ export const clientModule: GameClientModule = {
   // I-020 B + the owner's note: the answer phase's lock-in is the `card` pluck as the card lands
   // on the table (TvRound.tsx), so the shell's `lock` tick stays quiet there — one note per card.
   ownLocks: ['answer'],
+  // Blanks had no music at all (the owner, 2026-09-21: "Blanks has no music or sounds on phone"):
+  // a sly lounge set, quiet, while people pick and while the judge decides — never over the reads
+  // (the caller's voice on a phone-only room) or the result's beats.
+  music: {
+    tracks: ['local-forecast-elevator', 'george-street-shuffle', 'bossa-antigua'],
+    volume: 0.2,
+    mode: 'chain',
+    phases: ['intro', 'pick', 'answer', 'judge'],
+  },
   // Music beds (ADR-032, owner's picks 2026-09-17): the warm groove is the general background
   // (round card, read-out, result — it resumes where it left off), the soft bossa plays while
   // people pick a card, the marimba pulse while the room judges. Results stay silent under the

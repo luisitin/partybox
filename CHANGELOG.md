@@ -5,6 +5,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Blanks has music** (the owner, 2026-09-21): a quiet lounge set through the intro, the pick, the
+  answer and the judge phases; and the TV's phase cues play on phones whenever the room asked the
+  phones to carry the audio ("Phone only" or "Music on every phone"), not only phone-only.
 - **Share the room link from the lobby** (the owner, 2026-09-21): a "🔗 Share the room link" pill
   opens the phone's share sheet with the join link straight to this room (`?room=CODE`), or
   copies it where there is no sheet.
