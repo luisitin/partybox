@@ -11,7 +11,10 @@ import type { GameTvProps } from '@partybox/game-sdk/ui';
 import type { BingoTvView } from '../server/views';
 import { BALL_LAND_MS, hushCaller, speakCall } from './caller';
 import { PATTERN_LABEL, patternCells } from '../server/patterns';
-import { PatternIcon } from './Card';
+import { Card, PatternIcon } from './Card';
+
+/** I-130 C: every cell daubed — the deck ran out, so every card is full. */
+const ALL_CELLS = Array.from({ length: 25 }, (_, i) => i);
 import { PatternDemo } from './PatternDemo';
 import { pendingLine, whyNot, winHeadline } from './copy';
 import { hopelessClaim } from '../server/reveal';
@@ -273,10 +276,26 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
     }
     return (
       <Stage center>
-        <BigText level="display" tone="muted">
-          No bingo
+        {/* I-130 A: say what happened — the deck really did run out, so every card was full. */}
+        <BigText level="display" tone="accent">
+          75 balls!
         </BigText>
-        <BigText level="h1">The deck's empty — nobody wins round {view.round}.</BigText>
+        <BigText level="h1">Not one BINGO! — every card in this room was full.</BigText>
+        <BigText level="h2" tone="muted">
+          {view.patternLabel} · round {view.round}
+          {' · everyone takes a point'}
+        </BigText>
+        {/* I-130 C: the proof — every card, face up, all green. */}
+        {view.allCards.length > 0 ? (
+          <div className={styles.fullCards}>
+            {view.allCards.map((c) => (
+              <div key={c.playerId} className={styles.fullCard}>
+                <span className={styles.fullCardName}>{c.name}</span>
+                <Card numbers={c.numbers} daubs={ALL_CELLS} freeDaubed disabled size="compact" />
+              </div>
+            ))}
+          </div>
+        ) : null}
       </Stage>
     );
   }

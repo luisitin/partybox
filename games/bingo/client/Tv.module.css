@@ -1003,3 +1003,22 @@
 }
 
 /* ── I-108 B: the strays stay red on the winner's card through the win stage (see TvParts). */
+
+/* ── I-130 C: every card, face up, on the "nobody won" stage. */
+.fullCards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pb-space-4);
+  justify-content: center;
+  margin-top: var(--pb-space-4);
+}
+.fullCard {
+  display: grid;
+  justify-items: center;
+  gap: var(--pb-space-1);
+}
+.fullCardName {
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  color: var(--pb-text-muted);
+}

@@ -57,6 +57,8 @@ interface Common {
   winnerId: string | null;
   winnerName: string | null;
   standings: StandingRow[];
+  /** I-130 C: every player's card, for the "nobody won" stage (empty otherwise). */
+  allCards: { playerId: string; name: string; numbers: number[] }[];
   /** bingo: whether the round can keep going (same pattern / for a blackout); any player decides. */
   decide: { same: boolean; blackout: boolean } | null;
   /** How many bingos this round has had so far (a continued round celebrates more than one). */
@@ -223,6 +225,14 @@ function common(state: State): Common {
     winnerId,
     winnerName: winnerId ? (state.players[winnerId]?.name ?? '?') : null,
     standings: standings(state),
+    allCards:
+      state.phase.id === 'bingo' && !state.round.winnerId
+        ? Object.entries(state.round.cards).flatMap(([id, cards]) =>
+            (cards[0] ?? []).length > 0
+              ? [{ playerId: id, name: state.players[id]?.name ?? '?', numbers: cards[0] ?? [] }]
+              : [],
+          )
+        : [],
     decide: state.phase.id === 'bingo' ? canContinue(state) : null,
     bingosThisRound: round.bingos,
     claimPoints: winnerId ? pointsFor(round.patternBingos) : 0,

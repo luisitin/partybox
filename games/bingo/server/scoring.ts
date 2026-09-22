@@ -33,6 +33,14 @@ export function standings(state: State): StandingRow[] {
   }));
 }
 
+/** I-130 B: a round nobody won pays everyone who played one point — the room's unlucky round
+ *  is not nothing. */
+export function shareRound(state: State): Record<string, number> {
+  const out: Record<string, number> = { ...state.wins };
+  for (const id of Object.keys(state.round.cards)) out[id] = (out[id] ?? 0) + 1;
+  return out;
+}
+
 export function results(state: State): GameResults | null {
   if (state.phase.id !== 'done') return null;
   return buildResults(state, state.wins);
