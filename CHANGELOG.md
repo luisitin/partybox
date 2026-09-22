@@ -5,6 +5,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **The join form uses a tablet's width** (I-059, option B): from 760 px the spare space is a
+  preview stage — your roster chip as the room will see it, live as you type, re-popping on every
+  change.
 - **The host bar advertises the shelf** (I-053, option B): the game button turns its label over
   every 2.2 s — Pick a game → Bingo → Blanks … — with a glyph per game.
 - **A beat between phone screens** (I-039, option C): the outgoing ghost fades alone for 200 ms
