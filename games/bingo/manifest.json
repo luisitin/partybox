@@ -7,7 +7,12 @@
   "minPlayers": 1,
   "maxPlayers": 16,
   "estimatedMinutes": 15,
-  "tags": ["classic", "luck", "tap", "family"],
+  "tags": [
+    "classic",
+    "luck",
+    "tap",
+    "family"
+  ],
   "settings": [
     {
       "key": "rounds",
@@ -25,10 +30,22 @@
       "type": "select",
       "default": "line",
       "options": [
-        { "value": "line", "label": "Any line" },
-        { "value": "corners", "label": "Four corners" },
-        { "value": "x", "label": "The X" },
-        { "value": "blackout", "label": "Blackout" }
+        {
+          "value": "line",
+          "label": "Any line"
+        },
+        {
+          "value": "corners",
+          "label": "Four corners"
+        },
+        {
+          "value": "x",
+          "label": "The X"
+        },
+        {
+          "value": "blackout",
+          "label": "Blackout"
+        }
       ]
     },
     {
@@ -37,10 +54,22 @@
       "type": "select",
       "default": "corners",
       "options": [
-        { "value": "line", "label": "Any line" },
-        { "value": "corners", "label": "Four corners" },
-        { "value": "x", "label": "The X" },
-        { "value": "blackout", "label": "Blackout" }
+        {
+          "value": "line",
+          "label": "Any line"
+        },
+        {
+          "value": "corners",
+          "label": "Four corners"
+        },
+        {
+          "value": "x",
+          "label": "The X"
+        },
+        {
+          "value": "blackout",
+          "label": "Blackout"
+        }
       ]
     },
     {
@@ -49,10 +78,22 @@
       "type": "select",
       "default": "x",
       "options": [
-        { "value": "line", "label": "Any line" },
-        { "value": "corners", "label": "Four corners" },
-        { "value": "x", "label": "The X" },
-        { "value": "blackout", "label": "Blackout" }
+        {
+          "value": "line",
+          "label": "Any line"
+        },
+        {
+          "value": "corners",
+          "label": "Four corners"
+        },
+        {
+          "value": "x",
+          "label": "The X"
+        },
+        {
+          "value": "blackout",
+          "label": "Blackout"
+        }
       ]
     },
     {
@@ -62,10 +103,22 @@
       "type": "select",
       "default": "line",
       "options": [
-        { "value": "line", "label": "Any line" },
-        { "value": "corners", "label": "Four corners" },
-        { "value": "x", "label": "The X" },
-        { "value": "blackout", "label": "Blackout" }
+        {
+          "value": "line",
+          "label": "Any line"
+        },
+        {
+          "value": "corners",
+          "label": "Four corners"
+        },
+        {
+          "value": "x",
+          "label": "The X"
+        },
+        {
+          "value": "blackout",
+          "label": "Blackout"
+        }
       ]
     },
     {
@@ -75,16 +128,28 @@
       "type": "select",
       "default": "blackout",
       "options": [
-        { "value": "line", "label": "Any line" },
-        { "value": "corners", "label": "Four corners" },
-        { "value": "x", "label": "The X" },
-        { "value": "blackout", "label": "Blackout" }
+        {
+          "value": "line",
+          "label": "Any line"
+        },
+        {
+          "value": "corners",
+          "label": "Four corners"
+        },
+        {
+          "value": "x",
+          "label": "The X"
+        },
+        {
+          "value": "blackout",
+          "label": "Blackout"
+        }
       ]
     },
     {
       "key": "cards",
       "label": "Cards per player",
-      "description": "How many cards everyone plays each round — one BINGO! button checks your best card",
+      "description": "How many cards everyone plays each round — BINGO! checks the card you press it on (Focus: the card that is up)",
       "type": "number",
       "default": 1,
       "min": 1,
