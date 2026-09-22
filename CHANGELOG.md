@@ -5,6 +5,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Sound off stills the room** (I-065, option C): the lobby's glows pause, grey and dim while the
+  TV's sound is off (`data-sound` on `<html>`), then swell once as sound comes on and the "Scan to
+  join" heading pops.
 - **The phone's sound row shows its sound** (I-062, option C): three bars bounce while On and
   freeze flat Off, switching off plays a short `lock` note, and every cue the phone plays kicks
   the bars.
