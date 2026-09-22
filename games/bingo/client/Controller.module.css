@@ -1371,3 +1371,10 @@
   color: var(--pb-accent-2);
   animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
 }
+
+/* ── I-124 C: a card one call away wears it on its label. */
+.slotClose :global(figcaption),
+.slotClose > :first-child > :first-child {
+  color: var(--pb-accent-2);
+  font-weight: 800;
+}

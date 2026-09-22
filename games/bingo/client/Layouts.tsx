@@ -195,6 +195,14 @@ export function FocusLayout(
 }
 
 /** The spare slot in a three-card grid: the call, the way the TV shows it. */
+/** I-124 B: "Card 3", "Card 3 · 1 to go" (a line one call away), "Card 3 · BINGO ✓" once won. */
+function cardLabel(view: BingoControllerView, c: number): string {
+  const base = `Card ${c + 1}`;
+  if (view.won.includes(c)) return `${base} · BINGO ✓`;
+  const wanted = view.phaseId === 'play' ? wantedCells(view.pattern, view.daubs[c] ?? []) : [];
+  return wanted.length > 0 ? `${base} · 1 to go` : base;
+}
+
 function MiniCall({ view }: { view: BingoControllerView }): JSX.Element {
   return (
     <div className={`${styles.slot} ${styles.miniCall}`} role="status">
@@ -225,12 +233,16 @@ export function AllCardsLayout(
   return (
     <div className={`${styles.layout} ${kindClass}`} style={{ ['--n' as string]: n }}>
       {p.cards.map((_, c) => (
-        <div key={c} className={styles.slotWrap}>
+        <div
+          key={c}
+          className={`${styles.slotWrap} ${cardLabel(p.view, c).includes('1 to go') ? styles.slotClose : ''}`}
+        >
           <PlayCard
             p={p}
             c={c}
             size={size}
-            label={p.kind === 'stack' || p.kind === 'side' ? undefined : `Card ${c + 1}`}
+            // I-124 A/B: every layout labels its cards, and the label is the card's status.
+            label={cardLabel(p.view, c)}
           />
           {p.intro ? null : (
             <BingoButton
