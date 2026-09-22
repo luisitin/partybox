@@ -177,6 +177,8 @@
   display: flex;
   flex-direction: column;
   gap: var(--pb-space-3);
+  overflow-y: auto; /* I-100 A: a tall layout scrolls under the footer instead of clipping */
+  -webkit-overflow-scrolling: touch;
 }
 .dimmed > :not(:last-child) {
   opacity: 0.35;
@@ -659,6 +661,11 @@
   margin: 0;
   font-size: var(--pb-font-caption);
   color: var(--pb-text-muted);
+  /* I-100 B: never more than two lines — the card keeps the room at large text sizes. */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 /* The keep-going screen: three footer buttons take ~150 px more than one BINGO!, so the card
