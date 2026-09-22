@@ -19,6 +19,7 @@ export const clientModule: GameClientModule = {
   // `phase` is "your phone needs you"; between rounds nothing does, so the board gets the points
   // sound (loop 323). The next intro keeps `phase`: the deal wants the hand.
   sounds: { bingo: 'silence', check: 'silence', scoreboard: 'tally', final: 'tally' },
+  stageBottomBusy: ['check', 'bingo'], // I-116 B: the card on the TV reaches the foot of the stage
   // R2-01 A: whoever is one square from the pattern is ringed in the strip while it is true.
   stripActive: (view) => (view as { closeIds?: string[] }).closeIds ?? [],
   // The ball dropping out of the cage is the entrance into play: cut, don't dissolve (loop 296).
