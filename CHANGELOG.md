@@ -5,6 +5,8 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **The empty name preview breathes** (I-060, option B): the portrait's three dots pulse in turn
+  like a typing indicator until you type (still under reduced motion).
 - **The join form uses a tablet's width** (I-059, option B): from 760 px the spare space is a
   preview stage — your roster chip as the room will see it, live as you type, re-popping on every
   change.

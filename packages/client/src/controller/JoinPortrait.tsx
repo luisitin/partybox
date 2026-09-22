@@ -43,7 +43,15 @@ export function JoinPortrait({ avatarId, name, photo, onPhoto }: JoinPortraitPro
         <Avatar avatarId={avatarId} photo={photo ?? undefined} size={96} />
       </span>
       <span className={styles.portraitSide}>
-        <span className={styles.portraitName}>{name.trim() || '…'}</span>
+        <span className={styles.portraitName}>
+          {name.trim() || (
+            <span className={styles.portraitDots} aria-label="…">
+              <span />
+              <span />
+              <span />
+            </span>
+          )}
+        </span>
         {photo ? <span className={styles.photoCaption}>your photo</span> : null}
         <input
           ref={fileRef}
