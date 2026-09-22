@@ -76,6 +76,9 @@ export interface PencilControllerView extends ControllerView, Common {
     /** True on the last page of the book / the last book. */
     lastPage: boolean;
     lastBook: boolean;
+    /** The page on stage, as the TV shows it — a "phone only" room reads the book on the phone
+     *  (the owner, 2026-09-21). Only the shown page, never the unshown ones. */
+    current: PageView | null;
   };
   summary: BookSummary[] | null;
   myBook: BookSummary | null;
@@ -230,6 +233,10 @@ export function controllerView(
             presenting: shownBook.ownerId === playerId,
             lastPage: showing.page >= shownBook.pages.length - 1,
             lastBook: showing.book >= state.books.length - 1,
+            current: (() => {
+              const p = shownBook.pages[showing.page];
+              return p ? { ...p, authorName: nameOf(state, p.authorId) } : null;
+            })(),
           }
         : null,
     summary: all,

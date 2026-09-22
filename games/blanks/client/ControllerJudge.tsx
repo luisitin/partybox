@@ -15,7 +15,8 @@ type Props = GameControllerProps<BlanksControllerView, Input>;
 export function ControllerReveal({ view, me }: Props): JSX.Element {
   const black = view.black;
   const current = view.cards[view.revealIndex];
-  if (!black || !current) return <WaitingScreen title="Look at the TV" mood="watch" />;
+  if (!black || !current)
+    return <WaitingScreen title={view.phoneOnly ? 'One moment…' : 'Look at the TV'} mood="watch" />;
   // Slots are anonymous even to the phone: my card is the one whose text is my play.
   const mine = view.myPlay !== null && view.myPlay.join('|') === current.whites.join('|');
   return (
@@ -64,7 +65,7 @@ export function ControllerJudge({ view, send, skip }: Props): JSX.Element {
   const black = view.black;
   const vote = view.vote;
   if (!black || view.cards.length === 0)
-    return <WaitingScreen title="Look at the TV" mood="watch" />;
+    return <WaitingScreen title={view.phoneOnly ? 'One moment…' : 'Look at the TV'} mood="watch" />;
   const kicker = `Round ${view.round} · ${view.judgeMode === 'czar' ? 'the judge decides' : 'vote'}`;
   if (vote?.canVote) {
     // Two or three cards get VoteList's tall lettered cards (it draws the disc); more get compact

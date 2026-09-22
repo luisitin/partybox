@@ -225,6 +225,8 @@ export function Controller(props: Props): JSX.Element {
     case 'done':
       return <ControllerResult {...props} />;
     default:
-      return <WaitingScreen title="Look at the TV" mood="watch" />;
+      return (
+        <WaitingScreen title={view.phoneOnly ? 'One moment…' : 'Look at the TV'} mood="watch" />
+      );
   }
 }

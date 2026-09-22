@@ -232,3 +232,29 @@
 :global(:root[data-motion='off']) .offers > li {
   animation-delay: 0ms;
 }
+
+/* ── A "phone only" room reads the book on the phone (the owner, 2026-09-21): the page on stage —
+   the word big, the drawing full width, the guess big. */
+.phonePage {
+  display: grid;
+  gap: var(--pb-space-2);
+  margin: var(--pb-space-2) 0;
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
+.phonePageWho {
+  font-size: var(--pb-font-small);
+  font-weight: 700;
+  color: var(--pb-text-muted);
+}
+.phoneWord {
+  font-size: var(--pb-font-h1);
+  font-weight: 800;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+.phoneWordNone {
+  color: var(--pb-text-muted);
+}
+:global(:root[data-motion='off']) .phonePage {
+  animation: none;
+}

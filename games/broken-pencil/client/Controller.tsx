@@ -16,6 +16,7 @@ import { DrawPad } from './DrawPad';
 import { DrawingView } from './DrawingView';
 import styles from './Controller.module.css';
 import { Offers } from './Offers';
+import { Show } from './Show';
 
 function Pick({ view, send }: GameControllerProps<PencilControllerView, Input>): JSX.Element {
   const [custom, setCustom] = useState('');
@@ -212,41 +213,6 @@ function Guess({ view, send }: GameControllerProps<PencilControllerView, Input>)
       promptKey={`${view.step}:${view.deadline ?? ''}`}
       onSubmit={(text) => send({ type: 'guess', text })}
     />
-  );
-}
-
-/** The show: the presenter turns the pages of their own book; everyone else watches the TV. */
-function Show({ view, send }: GameControllerProps<PencilControllerView, Input>): JSX.Element {
-  const s = view.showing;
-  if (!s) return <WaitingScreen title="Watch the TV" mood="watch" />;
-  const where = `page ${s.page + 1} of ${view.pageCount}`;
-  if (!s.presenting)
-    return (
-      <WaitingScreen
-        title={`${s.ownerName} is presenting`}
-        hint={`${s.ownerName}'s book · ${where}. Your turn comes when your book is up.`}
-        mood="watch"
-      />
-    );
-  const label = !s.lastPage ? 'Next page ▸' : s.lastBook ? 'Finish ▸' : 'Next book ▸';
-  return (
-    <Screen
-      title="Your book is on the TV"
-      footer={
-        <PrimaryButton onClick={() => send({ type: 'turn' })} disabled={view.paused}>
-          {label}
-        </PrimaryButton>
-      }
-    >
-      <p className={styles.kicker}>
-        {where} ·{' '}
-        {s.pageKind === 'word' ? 'your word' : s.pageKind === 'draw' ? 'a drawing' : 'a guess'}
-      </p>
-      <p className={styles.hint}>
-        Read it out, let everyone look, then turn the page. The TV turns it for you if you take too
-        long.
-      </p>
-    </Screen>
   );
 }
 

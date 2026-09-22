@@ -5,6 +5,10 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Every game reads the TV's moments on the phone in a "phone only" room** (the owner,
+  2026-09-21): Wisecrack's reveal (the prompt, both answers, authors, votes, points) on every
+  phone; Broken Pencil's show page (the word, the drawing, the guess) on every phone; no "look at
+  the TV" copy while the TV is off (Blanks, Lightning, Wisecrack, Pencil).
 - **Lightning Round in a "phone only" room** (the owner, 2026-09-21): the reveal's rows (who got
   it, ±points, totals) on every phone under the answers (`rows` on the controller view,
   `ChoiceGrid` `after` slot) and no "look at the TV" copy while the TV is off.

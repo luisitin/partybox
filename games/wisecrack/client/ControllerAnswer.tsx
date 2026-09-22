@@ -58,7 +58,11 @@ export function ControllerAnswer({
       <WaitingScreen
         className="pb-enter"
         title={total > 0 ? 'Both answers in!' : 'Nothing to write this round'}
-        hint="Waiting for the others… the voting starts on the TV."
+        hint={
+          view.phoneOnly
+            ? 'Waiting for the others… then the vote.'
+            : 'Waiting for the others… the voting starts on the TV.'
+        }
         mood={total > 0 ? 'done' : 'watch'}
       >
         {view.myPrompts.map((p) => (

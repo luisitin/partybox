@@ -48,12 +48,15 @@ export const contractConfig = {
       state.phase.id === 'draw' || state.phase.id === 'pass' || state.phase.id === 'guess';
     const inHands = playing ? bookInHands(state, playerId) : -1;
     const promptPage = (pagesOfStep(state, state.step)[0] ?? 0) - 1;
+    // The show: a shown page is public to phones too (a "phone only" room reads it there).
+    const showing = state.phase.id === 'show' ? state.showing : null;
     return split(
       state,
       (b, i, page) =>
         page.authorId === playerId ||
         mine.has(textOf(page) ?? '') ||
-        (b === inHands && i === promptPage),
+        (b === inHands && i === promptPage) ||
+        (showing !== null && (b < showing.book || (b === showing.book && i <= showing.page))),
     );
   },
   settingsVariants: [

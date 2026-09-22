@@ -400,3 +400,78 @@
 :global(:root[data-motion='off']) .loser {
   transform: none;
 }
+
+/* ── A "phone only" room reads the reveal on the phone: the prompt, both answers, the authors,
+   the votes and the points (the owner, 2026-09-21). */
+.phoneKicker {
+  margin: 0 0 var(--pb-space-2);
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--pb-accent-2);
+}
+.phoneReveal {
+  margin-top: var(--pb-space-3);
+}
+.phonePrompt {
+  margin: 0 0 var(--pb-space-2);
+  font-weight: 800;
+  color: var(--pb-text-muted);
+}
+.phoneAnswers {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--pb-space-2);
+}
+.phoneAnswer {
+  display: grid;
+  grid-template-columns: 1.6em minmax(0, 1fr) auto;
+  grid-template-areas:
+    'letter text points'
+    'letter author votes';
+  column-gap: var(--pb-space-2);
+  row-gap: var(--pb-space-1);
+  align-items: center;
+  padding: var(--pb-space-2) var(--pb-space-3);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  border: 2px solid var(--pb-border);
+}
+.phoneAnswerWon {
+  border-color: var(--pb-accent-2);
+}
+.phoneAnswerMine {
+  background: color-mix(in oklab, var(--pb-accent) 12%, var(--pb-surface));
+}
+.phoneLetter {
+  grid-area: letter;
+  font-weight: 800;
+  color: var(--pb-text-muted);
+}
+.phoneText {
+  grid-area: text;
+  font-weight: 700;
+}
+.phoneAuthor {
+  grid-area: author;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-1);
+  font-size: var(--pb-font-small);
+  color: var(--pb-text-muted);
+}
+.phoneVotes {
+  grid-area: votes;
+  justify-self: end;
+  font-size: var(--pb-font-small);
+  color: var(--pb-text-muted);
+}
+.phonePoints {
+  grid-area: points;
+  justify-self: end;
+  font-weight: 800;
+  color: var(--pb-accent-2);
+}

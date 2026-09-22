@@ -7,6 +7,7 @@ import { Screen, VoteList, WaitingScreen } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { WisecrackControllerView } from '../server/index';
 import type { Input } from '../server/types';
+import { PhoneReveal } from './PhoneReveal';
 import { REVEAL_HOLD_MS, useHold } from './timing';
 import styles from './wisecrack.module.css';
 
@@ -28,11 +29,12 @@ export function ControllerVote({
   onPick,
 }: Props & { onPick: (pick: LastVote) => void }): JSX.Element {
   const vote = view.vote;
-  if (!vote) return <WaitingScreen title="Look at the TV" mood="watch" />;
+  const tvOff = view.phoneOnly === true;
+  if (!vote) return <WaitingScreen title={tvOff ? 'Voting…' : 'Look at the TV'} mood="watch" />;
   if (vote.role === 'author') {
     return (
       <WaitingScreen
-        title="Your answer is on the TV"
+        title={tvOff ? 'Your answer is up' : 'Your answer is on the TV'}
         hint="Don't say which one — the others are voting…"
         mood="watch"
       >
@@ -66,23 +68,44 @@ export function ControllerReveal({
 }: Props & { lastVote: LastVote | null }): JSX.Element {
   const mine = view.myReveal;
   const shown = useHold(REVEAL_HOLD_MS);
+  // A "phone only" room: the TV's reveal on the phone once the hold has passed.
+  const onPhone = view.phoneOnly === true && view.reveal ? view.reveal : null;
   if (!mine) {
+    if (onPhone && shown)
+      return (
+        <Screen>
+          <p className={styles.phoneKicker}>
+            {lastVote ? `You picked ${LETTERS[lastVote.slot] ?? '?'}` : 'Authors revealed!'}
+          </p>
+          <PhoneReveal reveal={onPhone} meId={view.me.id} />
+        </Screen>
+      );
     if (lastVote) {
       return (
         <WaitingScreen
           title={`You picked ${LETTERS[lastVote.slot] ?? '?'}`}
-          hint="See who wrote it on the TV"
+          hint={onPhone ? 'Who wrote it…' : 'See who wrote it on the TV'}
           mood="watch"
         >
           <p className={styles.quote}>{lastVote.text}</p>
         </WaitingScreen>
       );
     }
-    return <WaitingScreen title="Authors revealed!" hint="Look at the TV" mood="watch" />;
+    return (
+      <WaitingScreen
+        title="Authors revealed!"
+        hint={onPhone ? undefined : 'Look at the TV'}
+        mood="watch"
+      />
+    );
   }
   if (!shown) {
     return (
-      <WaitingScreen title="Your answer is up" hint="Look at the TV" mood="watch">
+      <WaitingScreen
+        title="Your answer is up"
+        hint={onPhone ? 'The votes are in…' : 'Look at the TV'}
+        mood="watch"
+      >
         <p className={styles.quote}>{mine.text}</p>
       </WaitingScreen>
     );
@@ -121,6 +144,7 @@ export function ControllerReveal({
         <p className={styles.quote}>{mine.text}</p>
         <p className="pb-caption pb-muted">{caption}</p>
       </div>
+      {onPhone ? <PhoneReveal reveal={onPhone} meId={view.me.id} /> : null}
     </Screen>
   );
 }

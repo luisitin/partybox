@@ -113,7 +113,8 @@ export function ControllerHand({ view, send, skip }: Props): JSX.Element {
   useEffect(() => () => clearTimeout(flight.current ?? undefined), []);
   const black = view.black;
   const pick = black?.pick ?? 1;
-  if (!black) return <WaitingScreen title="Look at the TV" mood="watch" />;
+  if (!black)
+    return <WaitingScreen title={view.phoneOnly ? 'One moment…' : 'Look at the TV'} mood="watch" />;
   if (view.role === 'judge') {
     return (
       <WaitingScreen
