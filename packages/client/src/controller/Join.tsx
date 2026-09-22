@@ -201,6 +201,8 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
           </p>
         ) : null}
         {/* I-031 B: the portrait — the chosen face (or the photo), large, beside the name. */}
+        {/* I-067 B: sideways, the portrait + field sit in a left column beside the grid. */}
+        <div className={styles.sideways}>
         <JoinPortrait avatarId={avatarId} name={name} photo={photo} onPhoto={setPhoto} />
         <label className={styles.field}>
           <span className={styles.label}>{t.join.name}</span>
@@ -263,6 +265,7 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
             ) : null}
           </label>
         ) : null}
+        </div>
         <fieldset className={styles.avatars}>
           <legend className={styles.label}>{t.join.avatar}</legend>
           {/* I-031 A: the pick pops (keyed on the pick, so it pops once per change) and the rest
