@@ -211,3 +211,10 @@
   letter-spacing: 0.2em;
   color: var(--pb-accent-2);
 }
+
+/* ── I-060 A: the empty name slot says what it is — the field's placeholder, muted and italic. */
+.portraitHint {
+  color: var(--pb-text-muted);
+  font-style: italic;
+  font-weight: 600;
+}
