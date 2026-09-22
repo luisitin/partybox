@@ -280,3 +280,31 @@
   animation: none;
   opacity: 0.8;
 }
+
+/* ── I-043 B: a bot boots — its avatar blinks on in two steps (opacity only), once, on mount. */
+.boot svg {
+  animation: pb-boot 500ms steps(1, end) both;
+}
+@keyframes pb-boot {
+  0% {
+    opacity: 0.2;
+  }
+  30% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  70% {
+    opacity: 1;
+  }
+}
+
+/* ── I-043 C: the bot's make, in the tag text. */
+.make {
+  font-size: 0.65em;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--pb-text-muted);
+  margin-left: var(--pb-space-1);
+}
