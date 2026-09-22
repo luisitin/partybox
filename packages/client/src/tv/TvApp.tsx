@@ -169,6 +169,9 @@ export function TvApp(): JSX.Element {
       if (performance.now() - audio.lastPlayedAt() > 50) audio.play('phase');
     if (room.players.length > p.players && p.status !== '')
       audio.play('join', { semitones: joinSemitones(room.players.length) });
+    // I-043 B: a bot powers on — an electronic chirp after the join note.
+    if (room.players.length > p.players && p.status !== '' && room.players.some((pl) => pl.bot && !p.ids.has(pl.id)))
+      setTimeout(() => audio.play('lock'), 400);
     // I-054 A: the room closing — the hushed `close` chord after the join note at capacity.
     const fullNow = room.players.length >= room.capacity;
     const fullBefore = p.players >= room.capacity;

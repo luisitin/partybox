@@ -2,7 +2,7 @@
 // State is never colour-only: submitted shows ✓, disconnected shows ⟳ and dims, spectator shows 👁.
 import { useState } from 'react';
 import type { JSX } from 'react';
-import { Avatar } from './Avatar';
+import { Avatar, robotSkin } from './Avatar';
 import styles from './PlayerChip.module.css';
 
 export interface PlayerChipProps {
@@ -65,6 +65,8 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
     setWasVip(isVip ?? false);
     setJustVip(isVip === true);
   }
+  // I-043 B: a bot powers on — the eyes blink twice as its chip lands.
+  const booting = isBot === true && robotSkin(avatarId) !== null;
   // I-009 A: a drop and a return on a mounted chip flicker out / snap back — never on a screen
   // swap (the same 'adjust state when a prop changes' rule as the ★ badge above).
   const [wasConnected, setWasConnected] = useState(connected);
@@ -79,6 +81,7 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
     styles.chip,
     styles[size],
     active ? styles.active : '',
+    booting ? styles.boot : '',
     !connected ? styles.off : '',
     blip === 'off' ? styles.flicker : blip === 'back' ? styles.snap : '',
     status === 'spectator' ? styles.spectator : '',
