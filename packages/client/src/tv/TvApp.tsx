@@ -196,7 +196,8 @@ export function TvApp(): JSX.Element {
       if (nobodyScored(room)) audio.play('leave', { quiet: true });
       else {
         music.duck(9000);
-        audio.play('cheer');
+        // I-037 C: several winners — the suspended chord, not the horn.
+        audio.play((room.results?.results.winnerIds.length ?? 0) > 1 ? 'tie' : 'cheer');
       }
     }
     // A game that cued this phase itself (useSound, child effects run first) keeps the stage's

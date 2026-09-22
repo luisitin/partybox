@@ -32,6 +32,8 @@ const SAMPLES: Partial<Record<SoundCue, Sample[]>> = {
     { src: '/sfx/party-horn.mp3', at: 0, gain: 0.9 },
     { src: '/sfx/crowd-cheer.mp3', at: 0.15, gain: 0.7, fadeAt: 6.5, fadeMs: 3000 },
   ],
+  // I-037 C: a tie keeps the crowd, drops the horn.
+  tie: [{ src: '/sfx/crowd-cheer.mp3', at: 0.3, gain: 0.55, fadeAt: 5.5, fadeMs: 3000 }],
 };
 /** The phone remembers its own mute (default on) separately from the TV's. */
 

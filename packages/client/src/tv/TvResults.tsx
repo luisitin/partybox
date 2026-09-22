@@ -38,16 +38,31 @@ export function TvResults({ room, lastView = null }: TvResultsProps): JSX.Elemen
     winnerIds.length === 1 && !nobodyScored(room) && !scoreless
       ? (room.results?.players.find((p) => p.id === winnerIds[0]) ?? null)
       : null;
+  // I-037 A: a real tie shares the crown — the tied faces together beside the line.
+  const tied =
+    winnerIds.length > 1 && !nobodyScored(room) && !scoreless
+      ? (room.results?.players.filter((p) => winnerIds.includes(p.id)) ?? []).slice(0, 4)
+      : [];
+  const crowned = winner !== null || tied.length > 0;
   return (
     // `data-screen` marks the end of a game for the e2e harness: a scoreboard is not a reliable
     // hook, since a game with its own finale (Bingo's board, Lightning's totals) replaces it
     // (review-loop #184).
     <Stage>
       <div
-        className={`${styles.hero} ${winner ? styles.crowned : 'pb-enter'}`}
+        className={`${styles.hero} ${crowned ? styles.crowned : 'pb-enter'}`}
         data-screen="results"
       >
         {winner ? <Avatar avatarId={winner.avatarId} size={72} /> : null}
+        {tied.length > 0 ? (
+          <span className={styles.tiedFaces} aria-hidden>
+            {tied.map((p) => (
+              <span key={p.id} className={styles.tiedFace}>
+                <Avatar avatarId={p.avatarId} size={56} />
+              </span>
+            ))}
+          </span>
+        ) : null}
         <BigText level={many || keepBoard ? 'h1' : 'display'} tone="accent">
           {winnerLine(room, scoreless) || t.results.title}
         </BigText>
@@ -57,18 +72,20 @@ export function TvResults({ room, lastView = null }: TvResultsProps): JSX.Elemen
       </div>
       {/* I-025 B: confetti for a person — a gentle sixteen pieces when a bot takes it. */}
       {winner ? <Confetti pieces={winner.bot ? 16 : 48} /> : null}
+      {/* I-037 A: a tie gets one shared, smaller sprinkle. */}
+      {tied.length > 0 ? <Confetti pieces={12} /> : null}
       {keepBoard && Finale && lastView ? (
         <GameErrorBoundary surface="tv">
           {/* I-025 C: a photo finish — the board dims for a beat as the winner is named. */}
           <Suspense fallback={null}>
-            <div className={winner ? styles.photoFinish : undefined}>
+            <div className={crowned ? styles.photoFinish : undefined}>
               <Finale lastView={lastView} room={room} />
             </div>
           </Suspense>
         </GameErrorBoundary>
       ) : (
         <div
-          className={`${styles.columns} ${awards.length === 0 ? styles.single : ''} ${large ? styles.wide : ''} ${winner ? styles.photoFinish : ''}`}
+          className={`${styles.columns} ${awards.length === 0 ? styles.single : ''} ${large ? styles.wide : ''} ${crowned ? styles.photoFinish : ''}`}
         >
           <Scoreboard
             rows={rows}

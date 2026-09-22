@@ -69,6 +69,15 @@ export const CUES: Record<SoundCue, Note[]> = {
     { freq: 659, at: 0, dur: 0.08 },
     { freq: 523, at: 0.09, dur: 0.14 },
   ],
+  // I-037 C: a tie — the `win` arpeggio that lands on a held Csus4 (F+G+C), not the tonic.
+  tie: [
+    { freq: 523, at: 0, dur: 0.12 },
+    { freq: 659, at: 0.13, dur: 0.12 },
+    { freq: 784, at: 0.26, dur: 0.12 },
+    { freq: 698, at: 0.4, dur: 0.7, type: 'triangle', gain: 0.14 },
+    { freq: 784, at: 0.4, dur: 0.7, type: 'triangle', gain: 0.12 },
+    { freq: 1047, at: 0.4, dur: 0.7, type: 'triangle', gain: 0.1 },
+  ],
   fanfare: [
     { freq: 523, at: 0, dur: 0.12 },
     { freq: 659, at: 0.13, dur: 0.12 },
