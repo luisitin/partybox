@@ -12,6 +12,7 @@ import {
   hasPlayed,
   hasVotableSlot,
   isCzar,
+  sitsOut,
   isWalkover,
   playedCount,
   playersExpected,
@@ -28,6 +29,8 @@ import type { JudgeMode, State } from './types';
 
 export interface BlanksTvView extends TvView {
   round: number;
+  /** I-147 A: this round is sudden death — the tied players, or null. */
+  tieBreak: string[] | null;
   rounds: number;
   judgeMode: JudgeMode;
   /** Clocks on picking, voting and the result; false = anyone taps Next (the shells hide the timer). */
@@ -77,6 +80,8 @@ export interface BlanksControllerView extends ControllerView {
   blackChoices: BlackView[];
   /** 'judge' = this round's czar (plays no card, picks the winner). */
   role: 'player' | 'judge' | 'spectator';
+  /** I-147 A: answer phase of a tie-break, and this phone is outside the tie. */
+  sitsOut: boolean;
   /** answer: my hand. Empty in every other phase (the TV never needs it, the phone only then). */
   hand: { id: string; text: string }[];
   /** answer: new hands I may still take this game (0 once used up, or after playing). */
@@ -110,7 +115,7 @@ function statusOf(state: State): (id: string) => PlayerStatus {
   return (id) => {
     if (phase === 'pick') return isCzar(state, id) ? 'active' : 'waiting';
     if (phase === 'answer') {
-      if (isCzar(state, id)) return 'waiting';
+      if (isCzar(state, id) || sitsOut(state, id)) return 'waiting'; // I-147 A
       return hasPlayed(state, id) ? 'submitted' : 'active';
     }
     if (phase === 'judge') {
@@ -160,6 +165,7 @@ export function tvView(state: State, gameId: string): BlanksTvView {
     ...envelope(state, gameId, { statusOf: statusOf(state), scores: state.scores }),
     timerMode: timerMode(state),
     round: state.round,
+    tieBreak: state.tied ?? null,
     rounds: state.settings.rounds,
     judgeMode: state.settings.judge,
     timed: state.settings.timed,
@@ -209,13 +215,14 @@ export function controllerView(
     black: blackView(state),
     blackChoices: blackChoices(state),
     role: !player ? 'spectator' : isCzar(state, playerId) ? 'judge' : 'player',
+    sitsOut: phase === 'answer' && !!player && sitsOut(state, playerId),
     // The judge keeps their hand for later rounds but has nothing to play now: no list.
     hand:
-      phase === 'answer' && player && !isCzar(state, playerId)
+      phase === 'answer' && player && !isCzar(state, playerId) && !sitsOut(state, playerId)
         ? (state.hands[playerId] ?? []).map((id) => ({ id, text: whiteText(id) }))
         : [],
     redrawsLeft:
-      phase === 'answer' && player && !isCzar(state, playerId) && !mine
+      phase === 'answer' && player && !isCzar(state, playerId) && !sitsOut(state, playerId) && !mine
         ? redrawsLeft(state, playerId)
         : 0,
     myPlay: mine && phase !== 'intro' ? mine.map(whiteText) : null,

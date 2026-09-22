@@ -46,6 +46,8 @@ export function readSettings(raw: RawSettings): Settings {
     answerSeconds: numberSetting(raw, 'answerSeconds'),
     rando: raw['rando'] === true,
     timed: raw['timed'] === true,
+    // I-147 B: on unless the host switched it off.
+    tieBreak: raw['tieBreak'] !== false,
   };
 }
 
@@ -73,6 +75,8 @@ function init(ctx: InitContext): State {
     blackChoices: [],
     czarId: null,
     readerId: null,
+    tied: null,
+    tieBreaks: 0,
     submissions: {},
     slots: [],
     revealIndex: 0,

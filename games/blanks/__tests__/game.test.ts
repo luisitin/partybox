@@ -75,6 +75,7 @@ describe('whole game', () => {
       'timed',
       'answerSeconds',
       'rando',
+      'tieBreak', // I-147 B
     ]);
   });
 
@@ -92,6 +93,7 @@ describe('whole game', () => {
       decks: 'wild',
       rando: false,
       timed: false,
+      tieBreak: true, // I-147 B: on unless the host switches it off
     });
   });
 });

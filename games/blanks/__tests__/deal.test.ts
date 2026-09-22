@@ -257,6 +257,12 @@ describe('dealing', () => {
       s = playRound(s);
       s = timer(s);
     }
+    // I-147 A: a shared top rank plays sudden death before the final board (capped at three), so
+    // the game may still be dealing here — play the tie-breaks out.
+    for (let extra = 0; extra < 4 && s.phase.id !== 'final'; extra++) {
+      s = playRound(toAnswer(s));
+      s = timer(s);
+    }
     expect(s.phase.id).toBe('final');
   });
 });
