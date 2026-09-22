@@ -5,11 +5,13 @@
 // the unmount's microtask — before the next paint — because a state update would land a frame
 // later and leave one blank frame (review-loop #26). Reduced motion: no snapshot.
 import { useCallback, useEffect, useLayoutEffect, useRef } from 'react';
-import type { JSX, ReactNode } from 'react';
+import type { CSSProperties, JSX, ReactNode } from 'react';
 import { sanitizeSnapshot, usePrefersReducedMotion } from '@partybox/game-sdk/ui';
 import styles from './CrossfadeSwap.module.css';
 
 export interface CrossfadeSwapProps {
+  /** I-039 A: a game-sdk Screen mounting inside waits this long before its rise. */
+  delayMs?: number;
   swapKey: string;
   /** Class for the live container (layout + the rise animation). Default: a flex column the
    *  phone Screen fills, so its sticky footer parks at the bottom (review-loop #31). */
@@ -33,9 +35,12 @@ const GHOST_QUICK = styles['ghostQuick'] ?? 'ghostQuick';
 function Screen({
   className,
   onLeave,
+  delayMs,
   children,
 }: {
   className?: string;
+  /** I-039 A: the next game-sdk Screen waits this long before rising (its ghost fades first). */
+  delayMs?: number;
   onLeave: (snapshot: HTMLElement) => void;
   children: ReactNode;
 }): JSX.Element {
@@ -55,7 +60,11 @@ function Screen({
     [onLeave],
   );
   return (
-    <div ref={node} className={className}>
+    <div
+      ref={node}
+      className={className}
+      style={{ '--pb-screen-delay': `${delayMs ?? 0}ms` } as CSSProperties}
+    >
       {children}
     </div>
   );
@@ -68,6 +77,7 @@ interface Ghost {
 
 export function CrossfadeSwap({
   swapKey,
+  delayMs = 0,
   className = styles.live,
   hold = false,
   quick = false,
@@ -132,7 +142,7 @@ export function CrossfadeSwap({
   );
   return (
     <div ref={wrap} className={styles.wrap}>
-      <Screen key={swapKey} className={className} onLeave={onLeave}>
+      <Screen key={swapKey} className={className} onLeave={onLeave} delayMs={delayMs}>
         {children}
       </Screen>
     </div>

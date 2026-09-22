@@ -5,6 +5,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **A beat between phone screens** (I-039, option C): the outgoing ghost fades alone for 200 ms
+  before the next screen rises (`CrossfadeSwap` `delayMs` → `--pb-screen-delay`), and Lightning's
+  final question carries "· you bet 240" in its kicker.
 - **A real tie gets its own ceremony** (I-037, option C): the tied faces share the crown and the
   lift with one lighter sprinkle, popping in together a beat after the line, and a new `tie` cue
   (the win arpeggio on a held Csus4, no horn) plays in place of `cheer`.
