@@ -17,6 +17,8 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
   results; a reconnect no longer pops a "Back online" toast on top of the banner; the ROOM CODE
   field and the room picker speak the join screen's language; and the share chooser says when its
   link only works on this Wi-Fi.
+  A phone-only room now plays the game's music on the phones (Broken Pencil was silent there), and
+  a phone's Sound switch mutes its music and beds too, not just its cues.
 
 - **The phone's audio comes back after a lock** (the owner, 2026-09-22 — "in phone only mode I
   don't hear the caller"): iOS parks the AudioContext when the phone locks or backgrounds, and

@@ -78,6 +78,8 @@ export interface SoundEngine {
   hushClips(): void;
   muted(): boolean;
   setMuted(muted: boolean): void;
+  /** Tells a listener every time the mute changes (the phone's music and beds follow it). */
+  onMuteChange(listener: (muted: boolean) => void): () => void;
 }
 
 export interface SoundEngineOptions {
@@ -98,6 +100,7 @@ export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine
   let ctx: AudioContext | null = null;
   let master: GainNode | null = null;
   let muted = false;
+  const muteListeners = new Set<(muted: boolean) => void>();
   let lastPlayedAt = -Infinity;
   let lastCue: { cue: SoundCue; at: number } | null = null;
   let lastClip: { src: string; at: number } | null = null;
@@ -310,6 +313,11 @@ export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine
       } catch {
         /* ignore */
       }
+      for (const l of muteListeners) l(value);
+    },
+    onMuteChange(listener) {
+      muteListeners.add(listener);
+      return () => muteListeners.delete(listener);
     },
   };
   return engine;

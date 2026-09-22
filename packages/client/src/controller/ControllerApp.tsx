@@ -94,11 +94,25 @@ export function ControllerApp(): JSX.Element {
     document.addEventListener('pointerdown', start);
     return () => document.removeEventListener('pointerdown', start);
   }, [music, beds]);
+  // The phone's Sound switch silences ALL of the phone's audio — the music and the beds follow
+  // the cue engine's mute. Until 2026-09-22 they ignored it, so a player who switched sound off
+  // in a phone-only room still got the game's beds (the audio sweep found it).
+  useEffect(() => {
+    const apply = (m: boolean): void => {
+      music.setMuted(m);
+      beds.setMuted(m);
+    };
+    apply(audio.muted());
+    return audio.onMuteChange(apply);
+  }, [audio, music, beds]);
   // The plan is derived (no state): the VIP's room-wide switch (S-004, the owner: "if VIP
   // enables it, then it is auto for everyone") or this phone's own; the effect drives the engine.
   const room = state.room;
   const view = state.view as PushedView<TvView> | null;
-  const musicWanted = musicOn || (room?.musicOnPhones ?? false);
+  // A "phone only" room has no TV to play the game's music, so the phones do — the rule the beds
+  // below already followed. Without it a game with music but no beds (Broken Pencil) was silent
+  // on every phone in a phone-only room (the 2026-09-22 audio sweep: 2 sounds in a whole game).
+  const musicWanted = musicOn || (room?.musicOnPhones ?? false) || (room?.phoneOnly ?? false);
   const gameMusic = room?.selectedGameId ? clientGames[room.selectedGameId]?.music : undefined;
   const plan = musicWanted ? planFor(room, view, gameMusic) : null;
   const musicWhat = !musicWanted
@@ -122,7 +136,7 @@ export function ControllerApp(): JSX.Element {
   const bedTurns = useRef<Record<string, number>>({});
   const bedPhase = useRef<string | null>(null);
   const gameBeds = room?.selectedGameId ? clientGames[room.selectedGameId]?.beds : undefined;
-  const bedsWanted = musicWanted || (room?.phoneOnly ?? false);
+  const bedsWanted = musicWanted;
   useEffect(() => {
     // the TV's rotation rule (TvApp): a phase that names several beds turns through them
     const phase = bedsWanted && room?.status === 'playing' ? (view?.phaseId ?? null) : null;

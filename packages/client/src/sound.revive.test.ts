@@ -103,4 +103,18 @@ describe('the phone revives a parked AudioContext', () => {
     await new Promise((r) => setTimeout(r, 20));
     expect(played).toEqual(['/sfx/calls/b12.wav']);
   });
+
+  it('tells listeners when the phone is muted, so its music and beds follow (2026-09-22)', async () => {
+    fakeDocument();
+    const { createSoundEngine } = await import('./sound');
+    const engine = createSoundEngine({});
+    const heard: boolean[] = [];
+    const stop = engine.onMuteChange((m) => heard.push(m));
+    engine.setMuted(true);
+    engine.setMuted(false);
+    stop();
+    engine.setMuted(true); // after unsubscribing: not heard
+    expect(heard).toEqual([true, false]);
+    expect(engine.muted()).toBe(true);
+  });
 });

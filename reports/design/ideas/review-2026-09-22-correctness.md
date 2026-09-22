@@ -2,7 +2,7 @@
 
 With the spec queue empty, a sweep of the whole product rather than one feature: every game driven
 through every phase in a real browser, TV and phones, normal and phone-only; then a read of the
-day's own code. Eleven problems found and fixed; each fix is proven below.
+day's own code. Twelve problems found and fixed; each fix is proven below.
 
 ## The sweeps (scratchpad `c-capture/`)
 
@@ -138,6 +138,38 @@ now · ＋ Open a new room". `roomStrings(lang)` covers the field and the picker
 PartyBox's own share chooser appears exactly where the phone has no system sheet: the plain-http
 LAN address — so the link it shares is a 192.168… link that only works on the same Wi-Fi. It now
 says so under the link, and how to share with someone elsewhere (the https tunnel address).
+
+## 12. Broken Pencil was silent on phones in a phone-only room — and muting a phone did not mute its music
+
+The audio sweep (scratchpad `c-capture/audio.ts`) counts every sound a phone starts — Web Audio
+cues and sample buffers, and `<audio>` plays — phase by phase. In phone-only mode it found Broken
+Pencil made **2 sounds in a whole game** (Blanks 914, Wisecrack 538, Lightning Round 440, Bingo 284).
+The cause: on a phone the game's music plan played only with the phone's own music switch or the
+room's "music on phones" — not in a phone-only room — while the synthesized beds did follow phone
+only. A game with music but no beds and no caller went silent. The music now follows the same rule
+as the beds (there is no TV to play it).
+
+Checking that exposed an older gap: the phone's **Sound** switch muted only the cue engine, never
+the music or the beds — so a player who switched sound off in a phone-only room still got the beds.
+The sound engine now announces mute changes (`onMuteChange`) and the phone's music and beds follow.
+
+```
+drawing, sound on   hep-cats.mp3        playing  muted=false  t=3.6 s
+after Sound off     hep-cats.mp3        playing  muted=true
+after Sound on      hep-cats.mp3        playing  muted=false
+reloaded + a tap    backbay-lounge.mp3  playing  muted=true    ← the remembered mute applies at start
+```
+
+(The word-choosing phase stays quiet by design: Broken Pencil's plan plays only while people draw,
+pass and guess, and never over the show.) Test: `sound.revive.test.ts` (+1, the subscription).
+
+## Layout sweep (scratchpad `c-capture/layout.ts`)
+
+Every phase of every game, the TV at 1280×720 and phones at 320 px and at 200 % text, both modes,
+with long names and long typed answers: the page scrolling sideways, anything past the right edge,
+and text cut off by a box that does not ellipsize. The checker was first shown to catch all three on
+a deliberately broken page (and to ignore an ellipsis and a real scroller). Result: **0** — the only
+hits were `pb-visually-hidden` screen-reader text, which is clipped to 1 px on purpose.
 
 ## Accessibility sweep (scratchpad `c-capture/a11y.ts`)
 

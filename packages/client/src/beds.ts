@@ -3,7 +3,8 @@
 // tempo, a level and a bar function that schedules one bar of notes. A game maps phase ids to bed
 // ids in `clientModule.beds`; the TV shell crossfades between beds as phases change, keeps each
 // bed's place so a bed that returns resumes where it left off, holds during a pause, ducks under
-// every cue, and follows the TV's mute. Phones never play beds.
+// every cue, and follows the TV's mute. A phone plays them too when it carries the room's audio
+// (phone only, or music on every phone — ControllerApp), following the phone's own Sound switch.
 import type { PushedView, RoomSnapshot, TvView } from '@partybox/shared';
 import { trace } from '@partybox/game-sdk/ui';
 import { BED_IDS, BEDS } from './beds-library';
