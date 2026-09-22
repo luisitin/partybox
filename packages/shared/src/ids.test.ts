@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { PHOTO_MAX_BYTES, joinPayloadSchema } from './protocol';
+import { cleanRoomCodeFrom, isCleanRoomCode } from './ids';
 import {
   AVATAR_IDS,
   isAvatarId,
@@ -73,5 +74,22 @@ describe('joinPayloadSchema.photo (ADR-037)', () => {
         photo: `data:image/jpeg;base64,${'A'.repeat(PHOTO_MAX_BYTES)}`,
       }).success,
     ).toBe(false);
+  });
+});
+
+// I-080 C: the roller never hands out a banned code, and always terminates.
+describe('cleanRoomCodeFrom (I-080)', () => {
+  it('draws 20 000 clean codes', () => {
+    const rng = createRng(80);
+    for (let i = 0; i < 20_000; i++) {
+      const code = cleanRoomCodeFrom(rng);
+      expect(code).toHaveLength(4);
+      expect(isCleanRoomCode(code)).toBe(true);
+    }
+  });
+  it('bans the obvious ones', () => {
+    expect(isCleanRoomCode('FUCK')).toBe(false);
+    expect(isCleanRoomCode('KASS')).toBe(false);
+    expect(isCleanRoomCode('PBQX')).toBe(true);
   });
 });
