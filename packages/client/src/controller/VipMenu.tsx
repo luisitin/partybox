@@ -98,6 +98,31 @@ export function VipMenu({ controller, room, me, paused, onClose }: VipMenuProps)
             >
               {room.locked ? t.vip.unlock : t.vip.lock}
             </PrimaryButton>
+            {/* I-088 A: the room's own size — a stepper; the TV's "X / N" follows. */}
+            <div className={styles.sizeRow} role="group" aria-label="room size">
+              <span className={styles.sizeLabel}>Room size</span>
+              <button
+                type="button"
+                className={styles.sizeBtn}
+                aria-label="smaller room"
+                disabled={room.capacity <= Math.max(4, room.players.length)}
+                onClick={() => controller.vip({ action: 'setCapacity', capacity: room.capacity - 1 })}
+              >
+                −
+              </button>
+              <span className={styles.sizeValue} aria-live="polite">
+                {room.players.length} / {room.capacity}
+              </span>
+              <button
+                type="button"
+                className={styles.sizeBtn}
+                aria-label="bigger room"
+                disabled={room.capacity >= 16}
+                onClick={() => controller.vip({ action: 'setCapacity', capacity: room.capacity + 1 })}
+              >
+                +
+              </button>
+            </div>
           </div>
         </section>
         <section className={`${styles.section} ${styles.sectionPlayers}`}>

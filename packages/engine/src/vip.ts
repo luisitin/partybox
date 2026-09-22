@@ -163,6 +163,13 @@ export function applyVip(
     case 'lock':
     case 'unlock':
       return { room: { ...room, locked: action.action === 'lock' }, effects: [{ type: 'push' }] };
+    case 'setCapacity': {
+      // I-088 A: never below the head count; a no-op when unchanged.
+      const floor = Object.keys(room.players).length;
+      const capacity = Math.max(floor, Math.min(16, action.capacity));
+      if (capacity === room.capacity) return { room, effects: [] };
+      return { room: { ...room, capacity }, effects: [{ type: 'push' }] };
+    }
     case 'setRecording': {
       if (room.status === 'playing')
         return reject(room, playerId, 'cannot_start', 'Change that before the next game.');
