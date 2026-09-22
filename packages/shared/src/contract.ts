@@ -224,6 +224,11 @@ export interface GameAward {
 }
 
 export interface GameResults {
+  /**
+   * I-155 C: optional per-player, per-round detail a CONTROLLER may show as a personal receipt
+   * ("your votes: 2 · 0 · 3"). The TV ignores it; a game that keeps no such history omits it.
+   */
+  perRoundVotes?: Record<string, number[]>;
   scores: Record<string, number>;
   ranking: { playerId: string; score: number; rank: number }[];
   winnerIds: string[];

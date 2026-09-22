@@ -89,6 +89,7 @@ Results (I-025, `TvResults`, every game): one clear winner — `winnerIds.length
 score — gets their face (72 px) beside the line and the hero takes `pb-crown` instead of `pb-enter`; confetti falls
 behind it (48 pieces, 16 for a bot); the board or finale under it holds 55 % opacity for a beat and returns over two
 `--pb-motion-slow` beats (1.2 s) so the name reads first. A tie or a scoreless game keeps the plain rising line.
+On the phone's results (I-155, `controller/Results`) an award you won reads "Your …" in `--pb-accent` and sorts first; a game may add the optional `GameResults.perRoundVotes` and the phone prints your row as a muted tabular "your votes: 2 · 0 · 3" under the awards.
 Bingo's daub (loop 238) lands as a stamp; on the phone the ink then stays as an irregular blot in the player's own colour (`--pb-daub` = the roster's `--pb-player-N`; the TV and every verdict card keep the flat daub), and the tap that completes a line bumps its five cells in order (`pb-bump`, 60 ms apart — I-010).
 The theme sheet (I-035): a tap recolours the page behind it and moves the ✓ but leaves the sheet up (Done closes it;
 the compact menu still closes itself); each row's swatch is a tiny screen — header strip, body, accent button, gold chip

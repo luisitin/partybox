@@ -99,3 +99,15 @@ describe('awards with a judge (czar mode)', () => {
     );
   });
 });
+
+describe('per-round votes (I-155 C)', () => {
+  it('keeps one entry per player per round, summing to the votes received', () => {
+    const one = playRound(start({ rounds: 3 }), () => 0);
+    const ids = Object.keys(one.players);
+    for (const id of ids) expect(one.stats.roundVotes[id]).toHaveLength(1);
+    const total = ids.reduce((n, id) => n + (one.stats.roundVotes[id]?.[0] ?? 0), 0);
+    const received = ids.reduce((n, id) => n + (one.stats.votesReceived[id] ?? 0), 0);
+    expect(total).toBe(received);
+    expect(total).toBeGreaterThan(0);
+  });
+});
