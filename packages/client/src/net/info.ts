@@ -11,7 +11,7 @@ export interface ServerInfo {
   tvUrl: string;
   joinUrl: string;
   qrSvg: string;
-  rooms: { code: string; locked: boolean; players: number }[];
+  rooms: { code: string; locked: boolean; players: number; names?: string[] }[];
   houseRoom: string;
   /** I-041: the join URL with the house room's code — what the TV's QR encodes. */
   qrUrl?: string;
