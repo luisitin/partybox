@@ -71,6 +71,30 @@ function Progress({ view }: Props): JSX.Element {
   );
 }
 
+/**
+ * I-144 A: one chip per vote, showing the voter's face. The TV already knows who has voted — a
+ * voter's status is 'submitted' — and it never knows what for, so the chips say who is in and who
+ * the room is still waiting on without giving anything away.
+ */
+function VoteChips({ view }: { view: BlanksTvView }): JSX.Element | null {
+  const voters = view.players.filter((p) => p.status === 'submitted' && p.id !== view.czar?.id);
+  if (view.judgeMode === 'czar' || voters.length === 0) return null;
+  return (
+    <ul className={`${styles.voteChips}`} aria-label="votes in">
+      {voters.map((p, i) => (
+        <li key={p.id} className={styles.voteChip} style={{ '--pb-i': i } as CSSProperties}>
+          <span className={styles.voteChipInner}>
+            {/* the side the room sees: WHO has voted */}
+            <span className={styles.voteChipBack}>
+              <Avatar avatarId={p.avatarId} size="var(--pb-space-6)" />
+            </span>
+          </span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 /** How many columns the judge grid needs so every card is readable at 1080p. */
 function gridClass(count: number): string {
   if (count <= 2) return styles.grid2 ?? '';
@@ -209,6 +233,8 @@ function JudgeGrid({ view }: Props): JSX.Element {
           </li>
         ))}
       </ul>
+      {/* I-144 A: the votes land on the table, not only in a counter. */}
+      <VoteChips view={view} />
     </>
   );
 }
