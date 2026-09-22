@@ -344,7 +344,13 @@
   grid-template-columns: 1fr;
 }
 .layout_stack .slotWrap {
-  max-width: min(100%, calc((100dvh - 260px) / 2 / 1.3));
+  /* I-127 A: the cards fill the phone's width — the cells (and the thumb targets) roughly double. */
+  max-width: 100%;
+}
+/* I-127 B: the pair scrolls rather than shrinking to fit. */
+.layout_stack {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 .layout_side {
   grid-template-columns: repeat(2, minmax(0, 1fr));

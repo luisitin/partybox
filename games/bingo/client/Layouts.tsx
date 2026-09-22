@@ -232,7 +232,9 @@ export function AllCardsLayout(
             size={size}
             label={p.kind === 'stack' || p.kind === 'side' ? undefined : `Card ${c + 1}`}
           />
-          {p.intro ? null : (
+          {/* I-127 C: one claim under the pair in Stack — the second card's button is the height
+              the cells get back. */}
+          {p.intro || (p.kind === 'stack' && c > 0) ? null : (
             <BingoButton
               view={p.view}
               card={c}
