@@ -18,6 +18,8 @@ export interface PlayerChipProps {
   leader?: boolean;
   /** Highlight (e.g. it is this player's turn). */
   active?: boolean;
+  /** I-083 C: someone else in the room wears this face too. */
+  dup?: boolean;
   /** I-045 B + the owner's note: the room waits on this player — three pulsing dots over the
    *  avatar, the avatar dimmed under them. */
   thinking?: boolean;
@@ -50,6 +52,7 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
     scoreMuted = false,
     leader,
     active,
+    dup = false,
     thinking = false,
     isMe,
     isBot,
@@ -105,6 +108,11 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
       {isMe ? (
         <span className={styles.you} aria-hidden>
           you
+        </span>
+      ) : null}
+      {dup ? (
+        <span className={styles.dup} aria-label="same face as someone else">
+          ×2
         </span>
       ) : null}
       {isBot ? (

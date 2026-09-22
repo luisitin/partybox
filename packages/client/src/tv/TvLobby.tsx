@@ -130,6 +130,7 @@ export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
             vip={room?.vip}
             // I-045 A: the room waits on the VIP — their chip carries the ring.
             activeIds={vip ? [...nudgeIds, vip.id] : nudgeIds}
+            dupIds={players.filter((p) => players.some((q) => q.id !== p.id && q.avatarId === p.avatarId)).map((p) => p.id)}
             botIds={players.filter((p) => p.bot).map((p) => p.id)}
             layout="grid"
             size={players.length > 8 ? 'md' : 'lg'}

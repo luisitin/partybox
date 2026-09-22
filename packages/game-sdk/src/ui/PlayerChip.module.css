@@ -280,3 +280,15 @@
   animation: none;
   opacity: 0.8;
 }
+
+/* ── I-083 C: a doubled face — a small ×2 tag after the name. */
+.dup {
+  flex-shrink: 0;
+  padding: 0 0.4em;
+  border-radius: 999px;
+  background: var(--pb-surface-2);
+  color: var(--pb-text-muted);
+  font-size: 0.65em;
+  font-weight: 800;
+  line-height: 1.6;
+}
