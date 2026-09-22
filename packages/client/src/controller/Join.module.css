@@ -211,3 +211,38 @@
   letter-spacing: 0.2em;
   color: var(--pb-accent-2);
 }
+
+/* ── I-060 B: the three dots breathe like a typing indicator (opacity only, 1.2 s loop). */
+.portraitDots {
+  display: inline-flex;
+  gap: 0.18em;
+  vertical-align: middle;
+}
+.portraitDots span {
+  width: 0.28em;
+  height: 0.28em;
+  border-radius: 50%;
+  background: var(--pb-text-muted);
+  animation: pb-dot-breathe 1.2s ease-in-out infinite;
+}
+.portraitDots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.portraitDots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+@keyframes pb-dot-breathe {
+  0%,
+  60%,
+  100% {
+    opacity: 0.35;
+  }
+  30% {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .portraitDots span {
+    animation: none;
+  }
+}
