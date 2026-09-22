@@ -59,6 +59,8 @@ export const vipPayloadSchema = z.discriminatedUnion('action', [
   z.object({ action: z.literal('setMusicOnPhones'), on: z.boolean() }),
   /** S-005: the room's "phone only" mode; any time but mid-game. */
   z.object({ action: z.literal('setPhoneOnly'), on: z.boolean() }),
+  /** I-088 A: the room's own size (4–16), never below the people already in. */
+  z.object({ action: z.literal('setCapacity'), capacity: z.number().int().min(4).max(16) }),
 ]);
 export type VipAction = z.infer<typeof vipPayloadSchema>;
 

@@ -129,3 +129,35 @@
   background: var(--pb-danger);
   color: var(--pb-on-accent);
 }
+
+/* ── I-088 A: the room-size stepper. */
+.sizeRow {
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-3);
+  width: 100%;
+  padding: var(--pb-space-2) 0;
+}
+.sizeLabel {
+  flex: 1;
+  font-weight: 700;
+}
+.sizeBtn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--pb-surface-2);
+  color: var(--pb-text);
+  font: inherit;
+  font-size: 24px;
+  font-weight: 800;
+}
+.sizeBtn:disabled {
+  opacity: 0.35;
+}
+.sizeValue {
+  min-width: 4.5em;
+  text-align: center;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
