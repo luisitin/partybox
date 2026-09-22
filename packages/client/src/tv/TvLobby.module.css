@@ -260,3 +260,13 @@
 }
 
 /* ── I-055 A: a locked room on the QR panel (the full treatment: title in the accent, code dim). */
+
+/* ── I-068 A: the short path line under the address. */
+.shortPath {
+  margin-top: var(--pb-space-1);
+  text-align: center;
+}
+.shortPath .url {
+  font-size: var(--pb-font-body);
+  color: var(--pb-text);
+}

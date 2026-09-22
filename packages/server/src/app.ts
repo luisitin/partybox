@@ -233,6 +233,11 @@ async function registerStatic(fastify: FastifyInstance): Promise<void> {
     maxAge: '1h',
     immutable: false,
   });
+  // I-068 A: a short room path — `/HXNJ` is the join page with that room filled in.
+  fastify.get('/:code([A-Za-z]{4})', async (req, reply) => {
+    const { code } = req.params as { code: string };
+    return reply.redirect(`/?room=${code.toUpperCase()}`, 302);
+  });
   // SPA fallback: any unknown GET that wants HTML gets index.html (routes are client-side).
   fastify.setNotFoundHandler(async (req, reply) => {
     if (
