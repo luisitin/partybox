@@ -50,6 +50,8 @@ export interface Claim {
   red: number[];
   /** Cells of that completion not daubed. */
   missing: number[];
+  /** I-132 A: pattern cells whose number has not been called yet — not the player's slip. */
+  waiting: number[];
   valid: boolean;
 }
 

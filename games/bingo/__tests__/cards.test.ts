@@ -44,7 +44,9 @@ describe('several cards per player', () => {
     t = claim(t, 'b', 1);
     expect(t.phase.id).toBe('check');
     expect(t.round.claim?.cardIndex).toBe(1);
-    expect(t.round.claim?.missing).toEqual([4]);
+    // I-132: 4 was never called — it is "still to come", not a miss.
+    expect(t.round.claim?.missing).toEqual([]);
+    expect(t.round.claim?.waiting).toEqual([4]);
     expect(t.round.daubs['b']).toEqual([[20], []]);
   });
 
