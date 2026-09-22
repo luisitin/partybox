@@ -89,3 +89,18 @@
     opacity: 1;
   }
 }
+
+/* ── I-037 A: the tied faces, together, overlapping a touch, beside the tie line. */
+.tiedFaces {
+  display: inline-flex;
+  align-items: center;
+}
+.tiedFace {
+  display: inline-flex;
+  margin-left: -10px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px var(--pb-bg);
+}
+.tiedFace:first-child {
+  margin-left: 0;
+}
