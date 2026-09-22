@@ -5,6 +5,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **"Remove all 13 bots"** (I-048, option A): from four bots the host bar's button takes the
+  danger tone and says the count; the removes go out 300 ms apart, so none is lost to the rate
+  limit (thirteen at once left bots behind).
 - **The photo swap is a flip** (I-047, option B): the join portrait turns 180° between face and
   photo, the photo landing in a gold ring with a "your photo" caption.
 - **The name field's example rotates** (I-046, option C): every 2.5 s while empty and unfocused,

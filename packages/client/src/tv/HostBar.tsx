@@ -86,12 +86,16 @@ export function HostBar({ client, room, view }: HostBarProps): JSX.Element | nul
       {bots.length > 0 ? (
         <button
           type="button"
-          className={styles.button}
+          className={`${styles.button} ${bots.length >= 4 ? styles.buttonDanger : ''}`}
           onClick={() => {
-            for (const bot of bots) client.bot({ action: 'remove', botId: bot.id });
+            // Spaced, not a burst: a bot action costs 5 of the socket's 20 tokens a second, so
+            // thirteen at once left bots behind under "Slow down." (found recording I-048).
+            bots.forEach((bot, i) =>
+              setTimeout(() => client.bot({ action: 'remove', botId: bot.id }), i * 300),
+            );
           }}
         >
-          ✕ {t.host.removeBots(bots.length)}
+          ✕ {bots.length >= 4 ? `Remove all ${bots.length} bots` : t.host.removeBots(bots.length)}
         </button>
       ) : null}
     </>

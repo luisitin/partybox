@@ -73,3 +73,9 @@
   border-color: var(--pb-danger);
   color: var(--pb-on-accent);
 }
+
+/* ── I-048 A: the button's weight scales with the count — the danger tone from four bots. */
+.buttonDanger {
+  border-color: var(--pb-danger);
+  color: var(--pb-danger);
+}
