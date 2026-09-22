@@ -211,3 +211,12 @@
   letter-spacing: 0.2em;
   color: var(--pb-accent-2);
 }
+
+/* ── I-046 A: the placeholder crossfades as it rotates (the input remounts per example; the
+   text itself does not move). */
+.placeholderFade::placeholder {
+  animation: global(pb-fade-in) var(--pb-motion-base) var(--pb-ease) both;
+}
+:global(:root[data-motion='off']) .placeholderFade::placeholder {
+  animation: none;
+}

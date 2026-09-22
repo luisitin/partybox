@@ -34,4 +34,4 @@ curl -X POST :42069/api/dev/start -d '{"gameId":"wisecrack","seed":1}' -H 'conte
 curl -X POST :42069/api/dev/skip
 ```
 
-Also public (not dev-only): `GET /api/games` → registered game summaries (id, name, player bounds, settings spec); `GET /api/info` → `{ version, publicHost, port, tvUrl, joinUrl, qrUrl, qrSvg, rooms[], houseRoom, dev }` (`qrUrl` = `joinUrl` + `?room=<house code>`, what the QR encodes — I-041) — what the TV frame and the join form read.
+Also public (not dev-only): `GET /api/games` → registered game summaries (id, name, player bounds, settings spec); `GET /api/info` → `{ version, publicHost, port, tvUrl, joinUrl, qrUrl, qrSvg, rooms[], houseRoom, dev }` (`rooms[].names`: up to four first names of the people in the room, for the join page's example placeholder — I-046) (`qrUrl` = `joinUrl` + `?room=<house code>`, what the QR encodes — I-041) — what the TV frame and the join form read.
