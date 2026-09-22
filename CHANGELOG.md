@@ -11,6 +11,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Added
 
+- **Three more Bingo patterns** (I-093, option C): Picture frame (the outer ring), Postage stamp
+  (any 2×2 corner block — its icon shows one example block) and The T (top row + middle column),
+  in every round select.
 - **The disconnect grace counts down** (I-089, option C): the TV shows "1:58" after a dropped
   player's name with a ring draining around their dimmed face, and the dropped phone's own banner
   says "Reconnecting… 1:47 left".

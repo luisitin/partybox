@@ -19,7 +19,7 @@ called or not; a daub stays as an ink blot in the player's own colour; the tap t
 pattern — the pattern in green ✓, every never-called daub in red ✕, missed pattern squares outlined. Right → a bingo: +1, and any phone may keep the round going on the
 same cards (that card sits the pattern out; your other cards play on) or move on. Wrong → **that card
 is wiped blank** (the penalty; re-daub from memory; your other cards keep their daubs) and the caller
-carries on. Points: 3, 2, 1, then ½ per bingo under a pattern (a blackout restarts the ladder).
+carries on. Points: 3, 2, 1, then ½ per bingo under a pattern (a blackout restarts the ladder). Patterns: Any line, Four corners, The X, Blackout, and (I-093) Picture frame (the outer ring), Postage stamp (any 2×2 corner block; its icon shows one example block) and The T (top row + middle column).
 
 ## Players
 
