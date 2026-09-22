@@ -12,6 +12,16 @@ import type { BingoTvView } from '../server/views';
 import { BALL_LAND_MS, hushCaller, speakCall } from './caller';
 import { PATTERN_LABEL, patternCells } from '../server/patterns';
 import { PatternIcon } from './Card';
+
+/** I-091 C: one quiet "ooh" per spicy call, 300 ms after the ball. */
+function SpicyOoh(): null {
+  const sound = useSoundApi();
+  useEffect(() => {
+    const h = setTimeout(() => sound.play('wager', { quiet: true }), 300);
+    return () => clearTimeout(h);
+  }, [sound]);
+  return null;
+}
 import { PatternDemo } from './PatternDemo';
 import { pendingLine, whyNot, winHeadline } from './copy';
 import { hopelessClaim } from '../server/reveal';
@@ -119,10 +129,19 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
             : ''}
         </p>
         {view.current ? <Call call={view.current} big stamp={view.calledAt} /> : null}
+        {/* I-091 C: the crowd reacts to a spicy line (a quiet two-note, keyed per call). */}
+        {view.current?.spicy ? <SpicyOoh key={view.current.number} /> : null}
         {/* Ball first (180 ms pop), nickname 120 ms behind it: the number is the news (review-loop #1). */}
         {view.current ? (
-          <div key={`${view.current.number}:${view.calledAt ?? ''}`} className={styles.caption}>
-            <BigText level="h1">{view.current.call}</BigText>
+          <div
+            key={`${view.current.number}:${view.calledAt ?? ''}`}
+            className={`${styles.caption} ${view.current.spicy ? styles.spicyCaption : ''}`}
+          >
+            {/* I-091 A: a spicy line is marked — the rare one reads as the event. */}
+            <BigText level="h1" tone={view.current.spicy ? 'accent' : undefined}>
+              {view.current.spicy ? <span aria-label="spicy">🌶 </span> : null}
+              {view.current.call}
+            </BigText>
           </div>
         ) : null}
         {/* R2-01 B: who is one away, under the nickname — rises in, keyed on the names. */}
