@@ -5,6 +5,8 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **A skin per bot** (I-043, option A): the n-th bot is `robot:<n>` — the robot art in one of six
+  colours with a small variation (square / round / visor eyes, a second antenna, a rounder head).
 - **Broken Pencil: the VIP's "close enough"** (the owner, 2026-09-21): a broken book counts as
   intact on the VIP's word — a button on the VIP's phone on the book's last page and in the
   summary; `{ type: 'veto', book }`, accepted from the VIP alone (the engine stamps `vip` on the

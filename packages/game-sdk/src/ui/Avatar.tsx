@@ -194,7 +194,49 @@ const ART: Record<string, JSX.Element> = {
   ),
 };
 
+/** I-043: a bot's skin — `robot:<n>` — its colour slot and a small variation on the face. */
+const ROBOT_SKINS = 6;
+export function robotSkin(avatarId: string): number | null {
+  if (!avatarId.startsWith('robot:')) return null;
+  const n = Number(avatarId.slice(6));
+  return Number.isFinite(n) ? ((n % ROBOT_SKINS) + ROBOT_SKINS) % ROBOT_SKINS : 0;
+}
+function robotArt(skin: number): JSX.Element {
+  const eyes =
+    skin % 3 === 0 ? (
+      <>
+        <rect x={22} y={28} width={7} height={7} fill={INK} />
+        <rect x={35} y={28} width={7} height={7} fill={INK} />
+      </>
+    ) : skin % 3 === 1 ? (
+      <>
+        <circle cx={25.5} cy={31.5} r={3.5} fill={INK} />
+        <circle cx={38.5} cy={31.5} r={3.5} fill={INK} />
+      </>
+    ) : (
+      <rect x={21} y={28} width={22} height={6} rx={3} fill={INK} />
+    );
+  return (
+    <>
+      <rect x={16} y={20} width={32} height={28} rx={skin >= 3 ? 10 : 5} fill={LIGHT} />
+      {eyes}
+      <rect x={24} y={40} width={16} height={3} fill={INK} />
+      <path d="M32 20 v-8" stroke={INK} strokeWidth={3} />
+      <circle cx={32} cy={10} r={3} fill={INK} />
+      {skin % 2 === 1 ? (
+        <>
+          <path d="M22 20 v-6" stroke={INK} strokeWidth={2} />
+          <circle cx={22} cy={12} r={2} fill={INK} />
+        </>
+      ) : null}
+    </>
+  );
+}
+
 export function avatarColorVar(avatarId: string): string {
+  // I-043 A: a bot's skin picks its colour slot.
+  const skin = robotSkin(avatarId);
+  if (skin !== null) return `var(--pb-player-${(skin % 8) + 1})`;
   // A photo player has no face colour: a stable one from the id (I-031).
   const index = avatarId.startsWith(PHOTO_PREFIX)
     ? [...avatarId].reduce((h, c) => (h * 31 + c.charCodeAt(0)) % 8, 0)
@@ -236,7 +278,8 @@ export function Avatar({
         }}
       />
     );
-  const art = ART[avatarId] ?? ART['ghost'];
+  const skin = robotSkin(avatarId);
+  const art = skin !== null ? robotArt(skin) : (ART[avatarId] ?? ART['ghost']);
   return (
     <svg
       viewBox="0 0 64 64"

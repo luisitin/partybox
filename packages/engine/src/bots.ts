@@ -51,7 +51,8 @@ export function addBot(room: RoomState, event: BotAddEvent): ApplyResult {
   const bot: RoomPlayer = {
     id: event.playerId,
     name: botName(room, owner),
-    avatarId: 'robot',
+    // I-043 A: a skin per bot (the n-th bot in the room), read by the Avatar as `robot:<n>`.
+    avatarId: `robot:${Object.values(room.players).filter((p) => p.bot).length}`,
     token: event.token,
     isVip: false,
     connected: true,

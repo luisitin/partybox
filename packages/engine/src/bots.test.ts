@@ -30,7 +30,7 @@ describe('bots', () => {
     const r1 = addBot(roomWith(2), 'p2', 1);
     expect(r1.room.players['bot1']).toMatchObject({
       name: "P2's bot",
-      avatarId: 'robot',
+      avatarId: 'robot:0', // I-043: the n-th bot's skin
       isVip: false,
       bot: { ownerId: 'p2', strategy: 'random' },
     });
