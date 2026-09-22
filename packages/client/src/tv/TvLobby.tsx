@@ -2,8 +2,9 @@
 // An empty lobby breathes (heading + waiting dots); a join pops its chip
 // into the first seat and bumps the count — so the eye lands on the chip, not a toast.
 import type { JSX } from 'react';
+import { LIMITS } from '@partybox/shared';
 import type { RoomSnapshot } from '@partybox/shared';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Avatar, BigText, PlayerChips, Stage } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import { useServerInfo } from '../net/info';
@@ -58,9 +59,31 @@ function LastUp({ room }: { room: RoomSnapshot }): JSX.Element | null {
   );
 }
 
+/** I-089 A: seconds of grace left per dropped player — counted from the first snapshot that
+ *  shows them offline (the server flips `connected` on socket close), 1 s tick while any is out. */
+function useAwayLeft(players: readonly { id: string; connected: boolean }[]): Record<string, number> {
+  const since = useRef(new Map<string, number>());
+  const [now, setNow] = useState(() => Date.now());
+  const anyOut = players.some((p) => !p.connected);
+  for (const p of players) {
+    if (!p.connected && !since.current.has(p.id)) since.current.set(p.id, Date.now());
+    if (p.connected) since.current.delete(p.id);
+  }
+  useEffect(() => {
+    if (!anyOut) return undefined;
+    const h = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(h);
+  }, [anyOut]);
+  const out: Record<string, number> = {};
+  for (const [id, at] of since.current)
+    out[id] = Math.max(0, Math.round((LIMITS.disconnectGraceMs - (now - at)) / 1000));
+  return out;
+}
+
 export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
   const info = useServerInfo();
   const players = room?.players ?? [];
+  const awayLeft = useAwayLeft(players); // I-089 A
   const vip = players.find((p) => p.isVip);
   const full = room !== null && players.length >= room.capacity;
   // I-055 A: a locked room reads on the QR panel, like a full one.
@@ -130,6 +153,7 @@ export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
             vip={room?.vip}
             // I-045 A: the room waits on the VIP — their chip carries the ring.
             activeIds={vip ? [...nudgeIds, vip.id] : nudgeIds}
+            awayLeft={awayLeft}
             botIds={players.filter((p) => p.bot).map((p) => p.id)}
             layout="grid"
             size={players.length > 8 ? 'md' : 'lg'}
