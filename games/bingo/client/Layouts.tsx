@@ -117,6 +117,7 @@ export function Thumbnails({
   markLabel,
   onPick,
   spent = [],
+  hideMarked = false,
 }: {
   view: BingoControllerView;
   cards: number[][];
@@ -125,21 +126,34 @@ export function Thumbnails({
   onPick: (card: number) => void;
   /** intro: cards already swapped (a "swapped" tag instead of a border). */
   spent?: number[];
+  /** I-114 A: leave the marked card out (Focus: the big card is not drawn twice); the rest spread. */
+  hideMarked?: boolean;
 }): JSX.Element {
+  const shown = hideMarked ? cards.length - 1 : cards.length;
+  void shown;
   return (
     <div
       className={styles.thumbs}
-      style={{ gridTemplateColumns: `repeat(${cards.length}, minmax(0, var(--pb-thumb)))` }}
+      style={{
+        gridTemplateColumns: `repeat(${Math.max(1, shown)}, minmax(0, ${hideMarked ? 'calc(var(--pb-thumb) * 2)' : 'var(--pb-thumb)'}))`,
+      }}
     >
       {cards.map((numbers, c) => {
         const won = view.phaseId !== 'intro' && view.won.includes(c);
         const cur = c === marked;
+        if (hideMarked && cur) return null; // I-114 A
+        // I-114 C: one away on this card (the phone's own count, the TV's I-045 rule).
+        const cells = numbers.map((_n, i) => (i === 12 ? true : (view.daubs[c] ?? []).includes(i)));
+        const rows = [0, 1, 2, 3, 4].map((r) => [0, 1, 2, 3, 4].map((k) => r * 5 + k));
+        const cols = [0, 1, 2, 3, 4].map((k) => [0, 1, 2, 3, 4].map((r) => r * 5 + k));
+        const lines = [...rows, ...cols, [0, 6, 12, 18, 24], [4, 8, 12, 16, 20]];
+        const oneAway = !won && view.pattern === 'line' && lines.some((l) => l.filter((i) => cells[i]).length === 4);
         const tag = won ? 'BINGO ✓' : cur ? markLabel : spent.includes(c) ? 'swapped' : null;
         return (
           <button
             type="button"
             key={c}
-            className={`${styles.thumb} ${cur ? styles.thumbCur : ''} ${won ? styles.thumbWon : ''}`}
+            className={`${styles.thumb} ${cur ? styles.thumbCur : ''} ${won ? styles.thumbWon : ''} ${oneAway ? styles.thumbClose : ''}`}
             style={{ ['--i' as string]: c }}
             disabled={cur}
             onClick={() => onPick(c)}
@@ -188,7 +202,7 @@ export function FocusLayout(
         <PlayCard p={p} c={p.up} size="phone" />
       </div>
       {many ? (
-        <Thumbnails view={p.view} cards={p.cards} marked={p.up} markLabel="up" onPick={p.onUp} />
+        <Thumbnails view={p.view} cards={p.cards} marked={p.up} markLabel="up" onPick={p.onUp} hideMarked />
       ) : null}
     </div>
   );

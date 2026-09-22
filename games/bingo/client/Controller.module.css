@@ -1371,3 +1371,9 @@
   color: var(--pb-accent-2);
   animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
 }
+
+/* ── I-114 C: a thumbnail one away from the pattern — the TV's ring, here. */
+.thumbClose {
+  outline: 3px solid var(--pb-accent-2);
+  outline-offset: 2px;
+}
