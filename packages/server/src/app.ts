@@ -254,6 +254,8 @@ export async function createApp(options: AppOptions): Promise<App> {
           .filter((p) => !p.bot)
           .slice(0, 4)
           .map((p) => p.name),
+        // I-083 A: the faces already in the room, so the join form can say so.
+        avatars: Object.values(r.players).map((p) => p.avatarId),
       })),
       houseRoom: host.house().code,
       funnel: funnel.get(host.house().code), // I-077 C

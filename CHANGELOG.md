@@ -11,6 +11,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Added
 
+- **A face already in the room says so** (I-083, option B): the join grid tags a taken face "IN"
+  (still pickable, and the screen reader says who-has-it), and a fresh phone's random default is
+  drawn from the free faces.
 - **Open your own room, and browse the open ones** (the owner, 2026-09-22 — ADR-043): the join
   screen lists the public rooms (code, who is in, locked/playing) and opens a new one — with a code
   you typed or one the host picks — through `POST /api/rooms`. The ★ VIP menu flips a room between

@@ -480,3 +480,19 @@
 :global(:root[data-motion='off']) .roomChip {
   transition: none;
 }
+
+/* ── I-083 A: a face already in the room — a small tag in the cell's top-right corner (the
+   bottom edge belongs to I-079's "this month" tag). */
+.takenBadge {
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--pb-surface-2);
+  color: var(--pb-text-muted);
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1.5;
+  text-transform: uppercase;
+}

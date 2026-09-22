@@ -10,6 +10,7 @@ import type { Controller, ControllerState } from '../net/controller';
 import { useServerInfo } from '../net/info';
 import type { SoundEngine } from '../sound';
 import styles from './Join.module.css';
+import { JoinAvatars } from './JoinAvatars';
 import { JoinLangs } from './JoinLangs';
 import { JoinPortrait } from './JoinPortrait';
 import { RoomPicker } from './RoomPicker';
@@ -32,18 +33,27 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
   const session = controller.session() ?? controller.identity();
   const [name, setName] = useState(session?.name ?? '');
   // A random default (instead of always the fox) so two phones joining together rarely match.
-  const [avatarId, setAvatarId] = useState<string>(
-    () =>
-      session?.avatarId ??
-      EVERYDAY_AVATAR_IDS[Math.floor(Math.random() * EVERYDAY_AVATAR_IDS.length)] ??
-      'fox',
-  );
-  // I-031 (the owner): a photo avatar from the phone, kept with the name and face across sessions.
-  const [photo, setPhoto] = useState<string | null>(session?.photo ?? null);
   // I-041 (the owner): a phone that scanned the QR carries the room in the URL and skips the
   // code; one that typed the bare URL from the TV always asks for it (the server keeps its
   // single-open-room fallback for a code-less join, but the form asks).
   const urlRoom = roomFromUrl();
+  // I-083 A: the faces already in the room the phone is joining (ADR-043 made "the room" a
+  // question — the typed code decides, else the first room /api/info lists).
+  const taken = new Set(
+    (info?.rooms.find((r) => r.code === (urlRoom ?? '')) ?? info?.rooms[0])?.avatars ?? [],
+  );
+  // I-083 B: a fresh phone's random default is drawn from the free faces.
+  const freeIds = EVERYDAY_AVATAR_IDS.filter((id) => !taken.has(id));
+  const pool = freeIds.length > 0 ? freeIds : EVERYDAY_AVATAR_IDS;
+  // The default face is DERIVED, not rolled once at mount: /api/info (and with it `taken`) lands a
+  // beat after the first render, and a default chosen before it knew the room would happily be the
+  // face someone already wears. A remembered identity, or a tap, wins over it.
+  const [chosen, setChosen] = useState<string | null>(session?.avatarId ?? null);
+  const [seed] = useState(() => Math.random());
+  const avatarId = chosen ?? pool[Math.floor(seed * pool.length)] ?? 'fox';
+  const setAvatarId = setChosen;
+  // I-031 (the owner): a photo avatar from the phone, kept with the name and face across sessions.
+  const [photo, setPhoto] = useState<string | null>(session?.photo ?? null);
   const [code, setCode] = useState(urlRoom ?? '');
   // I-046 A: the placeholder rotates through example names while the field is empty and unfocused.
   const EXAMPLES = ['Sam', 'Priya', 'Grandma Jo', 'Big Dave', 'Mo', 'Auntie Kay'];
@@ -277,35 +287,15 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
           {/* The owner (2026-09-22): which rooms are open, and a way to open your own. */}
           {needsCode ? <RoomPicker info={info} code={code} onPick={setCode} /> : null}
         </div>
-        <fieldset className={styles.avatars}>
-          <legend className={styles.label}>{j.avatar}</legend>
-          {/* I-031 A: the pick pops (keyed on the pick, so it pops once per change) and the rest
-              step back while one is chosen; with a photo up the whole grid steps back. */}
-          <div
-            className={`${styles.grid} ${styles.picking} ${photo ? styles.photoUp : ''}`}
-            role="radiogroup"
-          >
-            {gridIds.map((id) => (
-              <button
-                key={id === avatarId ? `${id}:on` : id}
-                type="button"
-                role="radio"
-                aria-checked={id === avatarId}
-                aria-label={id}
-                className={`${styles.avatarButton} ${id === avatarId ? styles.selected : ''}`}
-                onClick={() => setAvatarId(id)}
-              >
-                <Avatar avatarId={id} size={56} />
-                {/* I-079 C: the seasonal cell says why it is here. */}
-                {id === season ? (
-                  <span className={styles.seasonTag} aria-hidden>
-                    this month
-                  </span>
-                ) : null}
-              </button>
-            ))}
-          </div>
-        </fieldset>
+        <JoinAvatars
+          legend={j.avatar}
+          ids={gridIds}
+          avatarId={avatarId}
+          onPick={setAvatarId}
+          taken={taken}
+          season={season}
+          photo={photo !== null}
+        />
       </Screen>
       {/* I-059 A: a tablet's spare width is a preview stage — your chip as the room will see it. */}
       <aside className={styles.stage} aria-label="preview">

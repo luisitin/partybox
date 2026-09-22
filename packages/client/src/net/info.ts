@@ -16,6 +16,8 @@ export interface ServerInfo {
     locked: boolean;
     players: number;
     names?: string[];
+    /** I-083 A: the faces already in the room, so the join form can badge them. */
+    avatars?: string[];
     /** The owner (2026-09-22): a private room is left out of the join page's room list. */
     listed?: boolean;
     status?: 'lobby' | 'selecting' | 'playing' | 'results';
