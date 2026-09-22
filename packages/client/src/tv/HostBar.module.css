@@ -79,3 +79,31 @@
   border-color: var(--pb-danger);
   color: var(--pb-danger);
 }
+
+/* ── I-053 A: the label turns over (keyed: a fade-in per game). */
+.turn {
+  display: inline-block;
+  animation: global(pb-fade-in) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+/* ── I-053 C: the bot winks every 4 s (two opacity steps, 300 ms). */
+.wink {
+  display: inline-block;
+  animation: pb-wink 4s steps(1, end) infinite;
+}
+@keyframes pb-wink {
+  0%,
+  92%,
+  100% {
+    opacity: 1;
+  }
+  94%,
+  97% {
+    opacity: 0.25;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wink {
+    animation: none;
+  }
+}
