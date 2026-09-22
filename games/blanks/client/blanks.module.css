@@ -1613,3 +1613,18 @@
 .redraw:disabled {
   opacity: 0.5;
 }
+
+/* ── I-149 B: the callers, under the card the judge took. */
+.calledIt {
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+  margin-top: var(--pb-space-2);
+  color: var(--pb-muted, rgba(255, 255, 255, 0.7));
+  font-weight: 700;
+}
+.caller {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
