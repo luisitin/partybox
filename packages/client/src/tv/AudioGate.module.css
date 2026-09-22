@@ -79,3 +79,14 @@
   background: var(--pb-surface-2);
   animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
 }
+
+/* ── I-116 A: during a game the pill steps aside — top-right under the roster, small. */
+.pillAside {
+  left: auto;
+  right: calc(var(--pb-overscan-x, 32px) + var(--pb-space-4));
+  bottom: auto;
+  top: calc(var(--pb-overscan-y) + 72px);
+  translate: 0 0;
+  padding: var(--pb-space-1) var(--pb-space-4);
+  font-size: var(--pb-font-caption);
+}

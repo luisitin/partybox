@@ -15,6 +15,8 @@ import { ThemePicker } from '../ThemePicker';
 import styles from './AudioGate.module.css';
 
 export interface AudioGateProps {
+  /** I-116: the room's status — during a game the pill steps aside. */
+  roomStatus?: string | null;
   audio: SoundEngine;
   /** The stage's background music: starts on the gate tap, follows the mute toggle. */
   music?: MusicEngine;
@@ -22,9 +24,16 @@ export interface AudioGateProps {
   beds?: BedEngine;
 }
 
-export function AudioGate({ audio, music, beds }: AudioGateProps): JSX.Element {
+export function AudioGate({
+  audio,
+  music,
+  beds,
+  roomStatus = null,
+}: AudioGateProps): JSX.Element {
   const [started, setStarted] = useState(false);
   const [pillGone, setPillGone] = useState(false);
+  // I-116 A: during a game the pill steps aside (top-right, small) — the stage's foot is the game's.
+  const playing = roomStatus === 'playing';
   const [muted, setMuted] = useState(audio.muted());
   const [themes, setThemes] = useState(false);
   const [pop, setPop] = useState(false);
@@ -105,7 +114,7 @@ export function AudioGate({ audio, music, beds }: AudioGateProps): JSX.Element {
       {showPill ? (
         <button
           type="button"
-          className={`${styles.pill} ${started ? styles.pillLeaving : ''}`}
+          className={`${styles.pill} ${started ? styles.pillLeaving : ''} ${playing ? styles.pillAside : ''}`}
           onAnimationEnd={() => started && setPillGone(true)}
           tabIndex={started ? -1 : 0}
         >

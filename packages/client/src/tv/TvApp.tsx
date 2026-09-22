@@ -292,7 +292,12 @@ export function TvApp(): JSX.Element {
           </CrossfadeSwap>
         </TvFrame>
       </AvatarPhotos>
-      <AudioGate audio={audio} music={music} beds={beds} />
+      <AudioGate
+        audio={audio}
+        music={music}
+        beds={beds}
+        roomStatus={room?.status ?? null}
+      />
     </ServerClockProvider>
   );
 }
