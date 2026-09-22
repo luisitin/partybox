@@ -42,6 +42,8 @@ export interface BedEngine {
   setMuted(muted: boolean): void;
   /** A paused game holds the bed where it is. */
   setPaused(paused: boolean): void;
+  /** I-032 A: how tense the moment is (0 calm … 1) — the tempo nudges up to +12 % with it. */
+  setTension(t: number): void;
   /** A cue is playing: dip for a second — unless it is one of the light ticks (LIGHT_CUES). */
   duck(cue?: string): void;
   current(): BedId | null;
@@ -62,9 +64,17 @@ interface Running {
 export function createBedEngine(): BedEngine {
   let ctx: AudioContext | null = null;
   // The design harness reads which bed plays under each phase (evidence, never a control).
-  const probe = window as unknown as { __pbBeds?: { current(): BedId | null } };
-  probe.__pbBeds = { current: () => running?.id ?? null };
+  let tension = 0;
+  const probe = window as unknown as {
+    __pbBeds?: { current(): BedId | null; tension(): number; barLen(): number | null };
+  };
+  probe.__pbBeds = {
+    current: () => running?.id ?? null,
+    tension: () => tension,
+    barLen: () => (running ? (60 / BEDS[running.id].bpm) * 4 / (1 + 0.12 * tension) : null),
+  };
   let master: GainNode | null = null;
+  let tone: BiquadFilterNode | null = null; // I-032 B
   let muted = false;
   let paused = false;
   let want: BedId | null = null;
@@ -75,10 +85,30 @@ export function createBedEngine(): BedEngine {
   const schedule = (r: Running): void => {
     if (!ctx) return;
     const bed = BEDS[r.id];
-    const barLen = (60 / bed.bpm) * 4;
+    const barLen = ((60 / bed.bpm) * 4) / (1 + 0.12 * tension); // I-032 A
     while (r.next < ctx.currentTime + LOOKAHEAD_S) {
       const i = bars[r.id] ?? 0;
       bed.bar(ctx, r.out, r.next, i);
+      // I-032 C: a sparse hat on beats 2 and 4, as loud as the moment is tense.
+      if (tension > 0.15) {
+        for (const beat of [1, 3]) {
+          const at = r.next + (barLen / 4) * beat;
+          const buf = ctx.createBuffer(1, Math.floor(ctx.sampleRate * 0.03), ctx.sampleRate);
+          const data = buf.getChannelData(0);
+          for (let s = 0; s < data.length; s++) data[s] = (Math.random() * 2 - 1) * (1 - s / data.length);
+          const src = ctx.createBufferSource();
+          src.buffer = buf;
+          const g = ctx.createGain();
+          g.gain.value = 0.05 * tension;
+          const hp = ctx.createBiquadFilter();
+          hp.type = 'highpass';
+          hp.frequency.value = 6000;
+          src.connect(hp);
+          hp.connect(g);
+          g.connect(r.out);
+          src.start(at);
+        }
+      }
       bars[r.id] = i + 1;
       r.next += barLen;
     }
@@ -125,7 +155,13 @@ export function createBedEngine(): BedEngine {
           (ctx as unknown as { __pbBed?: boolean }).__pbBed = true;
           master = ctx.createGain();
           master.gain.value = muted ? 0 : 1;
-          master.connect(ctx.destination);
+          // I-032 B: a low-pass between the beds and the room, opened by tension.
+          tone = ctx.createBiquadFilter();
+          tone.type = 'lowpass';
+          tone.frequency.value = 1800;
+          tone.Q.value = 0.5;
+          master.connect(tone);
+          tone.connect(ctx.destination);
         }
         if (ctx.state !== 'running') await ctx.resume();
       } catch {
@@ -172,5 +208,10 @@ export function createBedEngine(): BedEngine {
       g.setTargetAtTime(BEDS[running.id].level, now + 0.8, 0.3);
     },
     current: () => running?.id ?? null,
+    setTension(t) {
+      tension = Math.max(0, Math.min(1, t));
+      // I-032 B: the low-pass opens with tension (1.8 kHz → 8 kHz).
+      if (tone && ctx) tone.frequency.setTargetAtTime(1800 + 6200 * tension, ctx.currentTime, 0.2);
+    },
   };
 }

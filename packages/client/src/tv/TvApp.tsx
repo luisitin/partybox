@@ -97,6 +97,21 @@ export function TvApp(): JSX.Element {
     beds.play(bedFor(room, view, gameBeds, bedTurns.current));
     beds.setPaused(room?.status === 'playing' && (view?.paused ?? false));
   }, [room, view, music, beds]);
+  // I-032 A: tension from the deadline — the last ten seconds ramp 0 → 1; none without a deadline.
+  useEffect(() => {
+    const deadline = room?.status === 'playing' && !view?.paused ? (view?.deadline ?? null) : null;
+    if (deadline === null) {
+      beds.setTension(0);
+      return undefined;
+    }
+    const tick = (): void => {
+      const left = (deadline - (Date.now() + state.offsetMs)) / 1000;
+      beds.setTension(left > 10 ? 0 : left < 0 ? 1 : 1 - left / 10);
+    };
+    tick();
+    const h = setInterval(tick, 250);
+    return () => clearInterval(h);
+  }, [room?.status, view?.deadline, view?.paused, state.offsetMs, beds]);
 
   // Sound cues from state transitions (docs/DESIGN_SYSTEM.md).
   const prev = useRef<{
