@@ -14,6 +14,7 @@ import {
 } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { Input } from '../server/types';
+import { looksComplete } from '../server/patterns';
 import type { BingoControllerView } from '../server/views';
 import { Card } from './Card';
 import { PatternDemo } from './PatternDemo';
@@ -86,6 +87,15 @@ export function Controller({
   useOrientationLock(inRound && held !== 'wide' && !turn ? styleSpec(shown).orient : null);
   // The card that is up (Focus) and the card picked to swap (intro): per round.
   const [up, setUp] = useState(0);
+  // I-118 B: Focus's one button checks your best card — the one that looks complete (the up card
+  // first), the way the settings copy always said.
+  const bestCard = (() => {
+    const cards = view.cards ?? [];
+    const done = (c: number): boolean => looksComplete(view.pattern, view.daubs[c] ?? []);
+    if (done(up)) return up;
+    const other = cards.findIndex((_card, c) => c !== up && view.claimable.includes(c) && done(c));
+    return other >= 0 ? other : up;
+  })();
   const [pick, setPick] = useState(0);
   const [swaps, setSwaps] = useState(0); // "deal me another" taps this round: keys the flip
   // FREE always counts (server); daubing it is pure satisfaction, so it lives on the phone only
@@ -267,7 +277,7 @@ export function Controller({
           ) : focus && !turn ? (
             <BingoButton
               view={view}
-              card={up}
+              card={bestCard}
               send={send}
               meId={me.id}
               verdictShown={verdictShown}
@@ -275,6 +285,12 @@ export function Controller({
           ) : undefined
         }
       >
+        {/* I-118 B: the button is about another card than the one up — say so for a beat. */}
+        {focus && bestCard !== up ? (
+          <p key={bestCard} className={styles.checkingOther} role="status">
+            checking card {bestCard + 1}
+          </p>
+        ) : null}
         <div
           className={`${styles.roundBody} ${sheet && !preview ? styles.dimmed : ''} ${roundOver ? styles.deciding : ''}`}
           style={{ '--pb-daub': `var(--pb-ink, ${avatarColorVar(me.avatarId)})` } as CSSProperties} // I-010: the blot's colour; S-002: the ink overrides

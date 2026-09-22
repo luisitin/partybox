@@ -1371,3 +1371,13 @@
   color: var(--pb-accent-2);
   animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
 }
+
+/* ── I-118 B: "checking card 2" — a small line above the footer when the button is about another card. */
+.checkingOther {
+  margin: 0 var(--pb-space-4);
+  text-align: center;
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  color: var(--pb-accent-2);
+  animation: global(pb-fade-in) var(--pb-motion-base) var(--pb-ease) both;
+}
