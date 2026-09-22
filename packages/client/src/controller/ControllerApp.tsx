@@ -11,6 +11,17 @@ import type { SoundEngine } from '../sound';
 import { ControllerShell } from './ControllerShell';
 import { CrossfadeSwap } from '../CrossfadeSwap';
 import { Join } from './Join';
+import { useSyncExternalStore } from 'react';
+import type { PushedView, TvView } from '@partybox/shared';
+import { clientGames } from '../games.generated';
+import {
+  createMusicEngine,
+  planFor,
+  phoneMusicOn,
+  subscribePhoneMusic,
+  phoneMusicLevel,
+  PHONE_MUSIC_GAIN,
+} from '../music';
 import { Lobby } from './Lobby';
 import { Playing } from './Playing';
 import { Results } from './Results';
@@ -33,6 +44,14 @@ function soundInstance(): SoundEngine {
 export function ControllerApp(): JSX.Element {
   const controller = useMemo(() => controllerInstance(), []);
   const audio = useMemo(() => soundInstance(), []);
+  // S-004: music on this phone — the TV's plan, on the phone's own engine, while the switch is on.
+  const music = useMemo(() => createMusicEngine(), []);
+  const musicOn = useSyncExternalStore(subscribePhoneMusic, phoneMusicOn, () => false);
+  const musicLevel = useSyncExternalStore(
+    subscribePhoneMusic,
+    phoneMusicLevel,
+    () => 'normal' as const,
+  );
   const state = useStore(controller.store, (s) => s);
   // Autoplay policy: the AudioContext needs a gesture. Every tap re-checks (idempotent) so a
   // context iOS suspended while the phone was locked comes back on the next touch.
@@ -43,6 +62,36 @@ export function ControllerApp(): JSX.Element {
     document.addEventListener('pointerdown', start);
     return () => document.removeEventListener('pointerdown', start);
   }, [audio]);
+  useEffect(() => {
+    const start = (): void => music.enable();
+    document.addEventListener('pointerdown', start);
+    return () => document.removeEventListener('pointerdown', start);
+  }, [music]);
+  // The plan is derived (no state): the VIP's room-wide switch (S-004, the owner: "if VIP
+  // enables it, then it is auto for everyone") or this phone's own; the effect drives the engine.
+  const room = state.room;
+  const view = state.view as PushedView<TvView> | null;
+  const musicWanted = musicOn || (room?.musicOnPhones ?? false);
+  const gameMusic = room?.selectedGameId ? clientGames[room.selectedGameId]?.music : undefined;
+  const plan = musicWanted ? planFor(room, view, gameMusic) : null;
+  const musicWhat = !musicWanted
+    ? null
+    : plan
+      ? plan.id === 'lobby'
+        ? 'Lobby set'
+        : `${room?.games.find((g) => g.id === room.selectedGameId)?.name ?? 'the game'}'s set`
+      : 'quiet for now';
+  const planId = plan?.id ?? null;
+  const paused = room?.status === 'playing' && (view?.paused ?? false);
+  const results = room?.status === 'results';
+  useEffect(() => {
+    music.play(plan ? { ...plan, volume: plan.volume * PHONE_MUSIC_GAIN[musicLevel] } : null);
+    music.setPaused(paused);
+    // S-004 B: the phone ducks with the TV's cheer on results.
+    if (results) music.duck(9000);
+    // `plan` is a fresh object per render; its id and level are the identity
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [music, planId, musicLevel, paused, results]);
   const me = state.room?.players.find((p) => p.id === state.playerId) ?? null;
   // Game start holds the previous screen until the game component has painted (review-loop #11):
   // no "Getting the game ready…" flash on a LAN. Reset whenever a game is not running.
@@ -98,6 +147,7 @@ export function ControllerApp(): JSX.Element {
           me={me}
           audio={audio}
           openTheme={setupOpen}
+          musicWhat={musicWhat}
         >
           <CrossfadeSwap
             swapKey={!state.joined || !state.room || !me ? 'join' : state.room.status}

@@ -31,6 +31,7 @@ export function createRoom(options: CreateRoomOptions): RoomState {
     results: null,
     lastGame: null,
     recording: true,
+    musicOnPhones: false,
   };
 }
 

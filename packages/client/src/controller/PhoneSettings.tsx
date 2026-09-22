@@ -1,6 +1,6 @@
 // The theme sheet's footer on a phone: this phone's own sound and vibration toggles (R-048).
 // Turning one on plays/buzzes the `submit` pattern so the player hears or feels what they enabled.
-import { Suspense, useState } from 'react';
+import { Suspense, useState, useSyncExternalStore } from 'react';
 import type { ComponentType, LazyExoticComponent } from 'react';
 import { clientGames } from '../games.generated';
 
@@ -22,6 +22,13 @@ import {
 } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import type { SoundEngine } from '../sound';
+import {
+  phoneMusicOn,
+  setPhoneMusicOn,
+  subscribePhoneMusic,
+  phoneMusicLevel,
+  setPhoneMusicLevel,
+} from '../music';
 import pickerStyles from '../ThemePicker.module.css';
 
 const SUBMIT_BUZZ = 20;
@@ -29,9 +36,11 @@ const SUBMIT_BUZZ = 20;
 export interface PhoneSettingsProps {
   /** The phone's sound engine; absent in /preview (the sound toggle is then disabled). */
   audio?: SoundEngine;
+  /** S-004 B: what the music engine is on right now ("Lobby set", "Bingo's set"). */
+  what?: string | null;
 }
 
-export function PhoneSettings({ audio }: PhoneSettingsProps): JSX.Element {
+export function PhoneSettings({ audio, what }: PhoneSettingsProps): JSX.Element {
   const [soundOn, setSoundOn] = useState(() => !(audio?.muted() ?? true));
   const [haptics, setHaptics] = useState(() => hapticsEnabled());
   // iOS Safari has no navigator.vibrate at all: say so instead of offering a switch that does
@@ -53,6 +62,9 @@ export function PhoneSettings({ audio }: PhoneSettingsProps): JSX.Element {
   // I-021 (the owner): the drawing pad's paper and pencil are this phone's choice — ruled paper
   // and a pencil as picked, plain / pen one tap away; nothing crosses the wire.
   const pad = usePadStyle();
+  const musicOn = useSyncExternalStore(subscribePhoneMusic, phoneMusicOn, () => false);
+  const level = useSyncExternalStore(subscribePhoneMusic, phoneMusicLevel, () => 'normal' as const);
+  const musicWhat = what ?? 'the room is quiet';
   return (
     <>
       <button
@@ -98,6 +110,38 @@ export function PhoneSettings({ audio }: PhoneSettingsProps): JSX.Element {
           {soundOn ? t.controller.on : t.controller.off}
         </span>
       </button>
+      {/* S-004 A: music on this phone — the TV's set, here too. */}
+      <button
+        type="button"
+        className={pickerStyles.toggle}
+        aria-pressed={musicOn}
+        onClick={() => setPhoneMusicOn(!musicOn)}
+      >
+        <span className={pickerStyles.toggleGlyph} aria-hidden>
+          ♪
+        </span>
+        Music on this phone
+        <span className={pickerStyles.toggleState}>
+          {musicOn ? t.controller.on : t.controller.off}
+        </span>
+      </button>
+      {/* The room's switch (the VIP's) plays too: the line and the level follow the music, not the phone's own switch. */}
+      {what !== null && what !== undefined ? <p className="pb-caption">♪ {musicWhat}</p> : null}
+      {what !== null && what !== undefined ? (
+        <div aria-label="Music level">
+          {(['soft', 'normal', 'loud'] as const).map((lv) => (
+            <button
+              type="button"
+              key={lv}
+              aria-pressed={level === lv}
+              className={pickerStyles.toggle}
+              onClick={() => setPhoneMusicLevel(lv)}
+            >
+              {lv}
+            </button>
+          ))}
+        </div>
+      ) : null}
       {/* S-003 A: each installed game's own phone settings, under its name. */}
       {Object.entries(clientGames)
         .filter(([, m]) => m.PhoneSettings)

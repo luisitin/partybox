@@ -223,7 +223,15 @@ export function createMusicEngine(): MusicEngine {
 
   return {
     play(next) {
-      if ((next?.id ?? null) === (plan?.id ?? null)) return;
+      if ((next?.id ?? null) === (plan?.id ?? null)) {
+        // S-004 C: the same plan at a new level (the phone's soft / normal / loud) re-levels the
+        // playing track instead of restarting it.
+        if (next && plan && next.volume !== plan.volume) {
+          plan = next;
+          if (audio && !audio.paused) rampTo(audio, levelOf(next, last), 400);
+        }
+        return;
+      }
       trace('music:plan', { from: plan?.id ?? null, to: next?.id ?? null });
       stop(next ? 800 : 1500);
       plan = next;
@@ -260,4 +268,50 @@ export function createMusicEngine(): MusicEngine {
     },
     current: () => (audio ? (last ?? null) : null),
   };
+}
+
+// ── S-004: music on this phone — a per-phone choice (localStorage), read by the controller app.
+const PHONE_MUSIC_KEY = 'partybox:phone-music';
+const PHONE_MUSIC_LEVEL_KEY = 'partybox:phone-music-level';
+const phoneMusicListeners = new Set<() => void>();
+export type PhoneMusicLevel = 'soft' | 'normal' | 'loud';
+export const PHONE_MUSIC_GAIN: Record<PhoneMusicLevel, number> = {
+  soft: 0.35,
+  normal: 0.7,
+  loud: 1,
+};
+export function phoneMusicOn(): boolean {
+  try {
+    return localStorage.getItem(PHONE_MUSIC_KEY) === 'on';
+  } catch {
+    return false;
+  }
+}
+export function setPhoneMusicOn(on: boolean): void {
+  try {
+    localStorage.setItem(PHONE_MUSIC_KEY, on ? 'on' : 'off');
+  } catch {
+    // private mode: the session
+  }
+  for (const l of phoneMusicListeners) l();
+}
+export function phoneMusicLevel(): PhoneMusicLevel {
+  try {
+    const v = localStorage.getItem(PHONE_MUSIC_LEVEL_KEY);
+    return v === 'soft' || v === 'loud' ? v : 'normal';
+  } catch {
+    return 'normal';
+  }
+}
+export function setPhoneMusicLevel(level: PhoneMusicLevel): void {
+  try {
+    localStorage.setItem(PHONE_MUSIC_LEVEL_KEY, level);
+  } catch {
+    // private mode
+  }
+  for (const l of phoneMusicListeners) l();
+}
+export function subscribePhoneMusic(cb: () => void): () => void {
+  phoneMusicListeners.add(cb);
+  return () => phoneMusicListeners.delete(cb);
 }

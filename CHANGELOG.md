@@ -5,6 +5,10 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Music on the phones** (S-004, option C + the owner's note): a per-phone "Music on this phone"
+  switch with soft / normal / loud and a "♪ Lobby set" line, and the VIP's "Music on every phone"
+  room switch (`setMusicOnPhones`, in the snapshot) that plays the room's plan on every phone
+  automatically; the engine re-levels a playing track on a level change. ADR-040.
 - **Set up your phone in the lobby** (S-003, option B): a game's per-phone settings come to the
   🎨 sheet under its name — a new client-module hook `PhoneSettings`; Bingo brings its card style
   and Motion — and a "🎨 Set up your phone while you wait" pill under the lobby's waiting line.

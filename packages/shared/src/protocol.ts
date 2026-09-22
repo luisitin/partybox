@@ -55,6 +55,8 @@ export const vipPayloadSchema = z.discriminatedUnion('action', [
   z.object({ action: z.literal('toLobby') }),
   /** Whether the host keeps a recap of the next game on disk (ADR-035); any time but mid-game. */
   z.object({ action: z.literal('setRecording'), on: z.boolean() }),
+  /** S-004 (the owner): every phone plays the room's music when this is on. */
+  z.object({ action: z.literal('setMusicOnPhones'), on: z.boolean() }),
 ]);
 export type VipAction = z.infer<typeof vipPayloadSchema>;
 
@@ -128,6 +130,8 @@ export interface RoomSnapshot {
   canStart: { ok: true } | { ok: false; reason: string };
   /** The host writes a recap of each game to disk while this is on (ADR-035). */
   recording: boolean;
+  /** S-004: every phone plays the room's music plan (the VIP's switch, default off). */
+  musicOnPhones: boolean;
 }
 
 export interface WelcomePayload {

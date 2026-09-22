@@ -56,6 +56,8 @@ export interface RoomState {
   lastGame: { gameId: string; settings: Settings } | null;
   /** The host records each game to disk while true (ADR-035); the VIP toggles it in the picker. */
   recording: boolean;
+  /** S-004: the VIP's room-wide phone-music switch. */
+  musicOnPhones: boolean;
 }
 
 export type RoomEvent =

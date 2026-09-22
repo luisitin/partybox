@@ -65,6 +65,15 @@ export function TvSelecting({ room, client }: TvSelectingProps): JSX.Element {
             />
             {room.recording ? t.selecting.recording : t.selecting.recordingOff}
           </label>
+          <label className={styles.recording} htmlFor="tv-music-all">
+            <input
+              id="tv-music-all"
+              type="checkbox"
+              checked={room.musicOnPhones}
+              onChange={(e) => client.act({ action: 'setMusicOnPhones', on: e.target.checked })}
+            />
+            {t.selecting.musicOnPhones}
+          </label>
           <PlayerChips
             players={room.players.map((p) => ({
               id: p.id,

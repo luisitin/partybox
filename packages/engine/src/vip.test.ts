@@ -13,6 +13,17 @@ import {
 } from './test-utils.helper';
 
 describe('VIP validation', () => {
+  it('setMusicOnPhones flips the room flag any time, and is a no-op when unchanged (S-004)', () => {
+    const room = roomWith(2);
+    expect(room.musicOnPhones).toBe(false);
+    const on = vip(room, { action: 'setMusicOnPhones', on: true });
+    expect(on.room.musicOnPhones).toBe(true);
+    expect(effectTypes(on.effects)).toEqual(['push']);
+    expect(vip(on.room, { action: 'setMusicOnPhones', on: true }).effects).toEqual([]);
+    expect(vip(playingRoom(2), { action: 'setMusicOnPhones', on: true }).room.musicOnPhones).toBe(
+      true,
+    );
+  });
   it('setRecording flips the room flag except mid-game, and is a no-op when unchanged', () => {
     const room = roomWith(2);
     expect(room.recording).toBe(true);

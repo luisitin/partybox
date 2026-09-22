@@ -65,6 +65,10 @@ export const t = {
     recording: 'Save a recap on the host PC',
     recordingHint: 'Drawings, answers and scores of each game, for feedback later',
     recordingOff: 'Not saving this game',
+    musicOnPhones: 'Music on every phone',
+    musicOnPhonesHint:
+      'The room’s music plays on each phone too (each phone can still mute itself)',
+    musicOnPhonesOff: 'Music on the TV only — a phone can turn its own on in 🎨',
   },
   results: {
     title: 'Results',

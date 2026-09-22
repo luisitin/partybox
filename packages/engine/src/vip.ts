@@ -169,6 +169,11 @@ export function applyVip(
       if (room.recording === action.on) return { room, effects: [] };
       return { room: { ...room, recording: action.on }, effects: [{ type: 'push' }] };
     }
+    case 'setMusicOnPhones': {
+      // S-004 (the owner): "If VIP enables it, then it is auto for everyone" — any time.
+      if (room.musicOnPhones === action.on) return { room, effects: [] };
+      return { room: { ...room, musicOnPhones: action.on }, effects: [{ type: 'push' }] };
+    }
     case 'toLobby': {
       if (room.status === 'playing')
         return reject(room, playerId, 'cannot_start', 'End the current game first.');

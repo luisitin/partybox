@@ -24,6 +24,8 @@ export interface ControllerShellProps {
   audio?: SoundEngine;
   /** S-003 B: bump to open the 🎨 sheet from a screen (the lobby's setup pill). */
   openTheme?: number;
+  /** S-004 B: what the phone's music is on ("Lobby set", "Bingo's set"). */
+  musicWhat?: string | null;
   children: ReactNode;
 }
 
@@ -46,6 +48,7 @@ export function ControllerShell({
   me,
   audio,
   openTheme = 0,
+  musicWhat = null,
   children,
 }: ControllerShellProps): JSX.Element {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -300,7 +303,7 @@ export function ControllerShell({
         <ThemePicker
           variant="sheet"
           onClose={() => setThemeOpen(false)}
-          footer={<PhoneSettings audio={audio} />}
+          footer={<PhoneSettings audio={audio} what={musicWhat} />}
         />
       ) : null}
     </div>
