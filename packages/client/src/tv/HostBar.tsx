@@ -86,12 +86,12 @@ export function HostBar({ client, room, view }: HostBarProps): JSX.Element | nul
       {bots.length > 0 ? (
         <button
           type="button"
-          className={styles.button}
+          className={`${styles.button} ${bots.length >= 4 ? styles.buttonDanger : ''}`}
           onClick={() => {
             for (const bot of bots) client.bot({ action: 'remove', botId: bot.id });
           }}
         >
-          ✕ {t.host.removeBots(bots.length)}
+          ✕ {bots.length >= 4 ? `Remove all ${bots.length} bots` : t.host.removeBots(bots.length)}
         </button>
       ) : null}
     </>
