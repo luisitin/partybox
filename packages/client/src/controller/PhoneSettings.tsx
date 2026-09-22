@@ -104,7 +104,12 @@ export function PhoneSettings({ audio, what }: PhoneSettingsProps): JSX.Element 
         disabled={!audio}
       >
         <span className={pickerStyles.toggleGlyph} aria-hidden>
-          {soundOn ? '🔊' : '🔇'}
+          {/* I-062 A: a live waveform — bars bounce while On, flat when Off. */}
+          <span className={`${pickerStyles.wave} ${soundOn ? pickerStyles.waveOn : ''}`}>
+            <span />
+            <span />
+            <span />
+          </span>
         </span>
         {t.controller.phoneSound}
         <span className={pickerStyles.toggleState}>
