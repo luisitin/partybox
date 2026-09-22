@@ -42,6 +42,8 @@ export interface BedEngine {
   setMuted(muted: boolean): void;
   /** A paused game holds the bed where it is. */
   setPaused(paused: boolean): void;
+  /** I-032 A: how tense the moment is (0 calm … 1) — the tempo nudges up to +12 % with it. */
+  setTension(t: number): void;
   /** A cue is playing: dip for a second — unless it is one of the light ticks (LIGHT_CUES). */
   duck(cue?: string): void;
   current(): BedId | null;
@@ -62,8 +64,15 @@ interface Running {
 export function createBedEngine(): BedEngine {
   let ctx: AudioContext | null = null;
   // The design harness reads which bed plays under each phase (evidence, never a control).
-  const probe = window as unknown as { __pbBeds?: { current(): BedId | null } };
-  probe.__pbBeds = { current: () => running?.id ?? null };
+  let tension = 0;
+  const probe = window as unknown as {
+    __pbBeds?: { current(): BedId | null; tension(): number; barLen(): number | null };
+  };
+  probe.__pbBeds = {
+    current: () => running?.id ?? null,
+    tension: () => tension,
+    barLen: () => (running ? (60 / BEDS[running.id].bpm) * 4 / (1 + 0.12 * tension) : null),
+  };
   let master: GainNode | null = null;
   let muted = false;
   let paused = false;
@@ -75,7 +84,7 @@ export function createBedEngine(): BedEngine {
   const schedule = (r: Running): void => {
     if (!ctx) return;
     const bed = BEDS[r.id];
-    const barLen = (60 / bed.bpm) * 4;
+    const barLen = ((60 / bed.bpm) * 4) / (1 + 0.12 * tension); // I-032 A
     while (r.next < ctx.currentTime + LOOKAHEAD_S) {
       const i = bars[r.id] ?? 0;
       bed.bar(ctx, r.out, r.next, i);
@@ -172,5 +181,8 @@ export function createBedEngine(): BedEngine {
       g.setTargetAtTime(BEDS[running.id].level, now + 0.8, 0.3);
     },
     current: () => running?.id ?? null,
+    setTension(t) {
+      tension = Math.max(0, Math.min(1, t));
+    },
   };
 }
