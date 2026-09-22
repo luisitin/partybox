@@ -104,6 +104,17 @@ function submissionAppeal(
   );
 }
 
+/**
+ * I-154 C: a bot used to act on the host's 300 ms–4.5 s strategy delay, which in the answer
+ * phase meant it had played before anyone had read the black card. Reading a hand takes a human
+ * five to twenty seconds, and longer when the card has more than one blank.
+ */
+export function botThinkMs(state: State, _playerId: string, rng: Rng): number | null {
+  if (state.phase.id !== 'answer') return null;
+  const pick = state.blackId ? blackCard(state.blackId).pick : 1;
+  return Math.round((5 + rng.float() * 15 + (pick - 1) * 6) * 1000);
+}
+
 export function botInput(state: State, playerId: string, rng: Rng): Input | null {
   if (!Object.hasOwn(state.players, playerId)) return null;
   if (state.phase.id === 'pick') {

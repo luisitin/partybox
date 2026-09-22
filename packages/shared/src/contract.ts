@@ -222,6 +222,12 @@ export interface RecapContext<S> {
 export interface GameBot<S, I> {
   /** A valid input for this player right now, or null when there is nothing to do. */
   sampleInput(state: S, playerId: string, rng: Rng): I | null;
+  /**
+   * I-154 C: how long this bot should think before acting, in ms. A game whose phases are about
+   * READING (Blanks' hand) wants a human-shaped pause; one whose phases are about reacting
+   * (Bingo's daubs) does not. Omitted, the host's own strategy delay is used.
+   */
+  thinkMs?(state: S, playerId: string, rng: Rng): number | null;
 }
 
 /**

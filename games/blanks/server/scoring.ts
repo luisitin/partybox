@@ -55,8 +55,15 @@ export function applyRound(state: State): State {
 const count = (n: number, noun: string): string => `${n} ${noun}${n === 1 ? '' : 's'}`;
 
 /** Player with the highest stat (> 0); ties go to the higher total score, then the lower id. */
+/**
+ * I-154 A: an award a person cannot win is an anti-award. A bot plays on the first sample, so
+ * "Quick draw" was decided before anyone had read the black card. Awards are for the people who
+ * were in the room; with no human in the running, the award is simply not shown.
+ */
 function leader(state: State, stat: Record<string, number>): string | null {
-  const ids = Object.keys(state.players).filter((id) => (stat[id] ?? 0) > 0);
+  const ids = Object.keys(state.players).filter(
+    (id) => (stat[id] ?? 0) > 0 && state.players[id]?.bot !== true,
+  );
   ids.sort(
     (a, b) =>
       (stat[b] ?? 0) - (stat[a] ?? 0) ||
@@ -111,12 +118,16 @@ export function awardsFor(state: State): GameAward[] {
       description: `${run.runs} rounds in a row`,
       playerId: run.playerId,
     });
-  const quick = leader(state, state.stats.fastPlays);
+  // I-154 B: a speed award needs a bar the room could see. An untimed round has none — the
+  // shipped stat measured against half of `answerSeconds` even with the clock off, so "half time"
+  // was half of a clock nobody was shown.
+  const quick = state.settings.timed ? leader(state, state.stats.fastPlays) : null;
   if (quick)
     out.push({
       id: 'quick-draw',
       title: 'Quick draw',
-      description: `${count(state.stats.fastPlays[quick] ?? 0, 'card')} in before half time`,
+      // …and it says what it measured, rather than naming a phase boundary.
+      description: `${count(state.stats.fastPlays[quick] ?? 0, 'card')} in under ${Math.round(state.settings.answerSeconds / 2)} s`,
       playerId: quick,
     });
   return out;

@@ -64,7 +64,7 @@ describe('count awards', () => {
     };
     const awards = awardsFor(one);
     expect(awards.find((x) => x.id === 'quick-draw')?.description).toBe(
-      '1 card in before half time',
+      '1 card in under 30 s',
     );
     expect(awards.find((x) => x.id === 'crowd-favourite')?.description).toBe(
       '1 vote across the night',
@@ -74,7 +74,7 @@ describe('count awards', () => {
       stats: { ...fresh.stats, fastPlays: { [a]: 3 }, votesReceived: { [b]: 4 } },
     };
     expect(awardsFor(three).find((x) => x.id === 'quick-draw')?.description).toBe(
-      '3 cards in before half time',
+      '3 cards in under 30 s',
     );
     expect(awardsFor(three).find((x) => x.id === 'crowd-favourite')?.description).toBe(
       '4 votes across the night',

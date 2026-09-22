@@ -31,8 +31,12 @@ export interface BotManager {
   close(): void;
 }
 
-function delayFor(driver: Driver, room: RoomState, now: number): number | null {
+function delayFor(driver: Driver, room: RoomState, now: number, game?: { bot: { thinkMs?: (s: unknown, id: string, rng: Rng) => number | null } }): number | null {
   if (driver.reactionMs !== null) return driver.reactionMs;
+  // I-154 C: the game gets first say — a bot that answers a Blanks hand in 300 ms made every
+  // counter read "the bots, then everyone else".
+  const think = room.game && game?.bot.thinkMs?.(room.game.state, driver.id, driver.rng);
+  if (typeof think === 'number') return think;
   const deadline = room.game?.state.phase.deadline ?? null;
   switch (driver.strategy) {
     case 'idle':
@@ -125,7 +129,7 @@ export function createBotManager(host: Host, deps: EngineDeps, clock: Clock): Bo
         continue;
       }
       if (wants === null) continue;
-      const delay = delayFor(driver, room, clock.now());
+      const delay = delayFor(driver, room, clock.now(), deps.games[room.game?.gameId ?? ''] as never);
       if (delay === null) continue;
       driver.pending = setTimeout(() => act(driver), delay);
     }

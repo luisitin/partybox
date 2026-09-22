@@ -4,7 +4,7 @@
 import { gameManifestSchema, seedRng, shuffle } from '@partybox/game-sdk';
 import type { GameDefinition, InitContext, Settings as RawSettings } from '@partybox/game-sdk';
 import manifestJson from '../manifest.json' with { type: 'json' };
-import { botInput } from './bot';
+import { botInput, botThinkMs } from './bot';
 import { orderBlackDeck } from './cards';
 import { refillHands } from './deal';
 import { blackPool, whitePool } from './content';
@@ -94,5 +94,5 @@ export const game: GameDefinition<State, Input> = {
   tvView: (state) => tvView(state, manifest.id),
   controllerView: (state, playerId) => controllerView(state, manifest.id, playerId),
   results,
-  bot: { sampleInput: botInput },
+  bot: { sampleInput: botInput, thinkMs: botThinkMs },
 };
