@@ -11,6 +11,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Added
 
+- **Every avatar blinks** (I-087, option C): the eye pair closes for ~150 ms every 6 s, offset per
+  face so a roster never blinks in unison, a double blink on odd-hashed faces, and a dropped
+  player's face sleeps with its eyes shut until they are back.
 - **No white flash on a slow phone** (I-084, option C): an inline style paints the app's
   background before any JS, an inline script applies the remembered theme before the first paint,
   and a centred "PB" mark holds the screen until the app mounts.
