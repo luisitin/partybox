@@ -5,7 +5,7 @@
 // ends the round via `exits.next`. A card-style menu open on any phone holds the caller: the
 // deadline is dropped, and when the last menu closes a RESUME_MS countdown runs before the next
 // number.
-import { enterPhase, hasPlayer, isTimerFor } from '@partybox/game-sdk';
+import { enterPhase, hasPlayer, isTimerFor, pick } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { calledNumbers, toggleDaub } from '../cards';
 import { clearClaims, menusOpen, setMenu, settle, tapBingo } from '../claims';
@@ -81,6 +81,24 @@ export function isHeld(state: State): boolean {
 }
 
 /** A live card, and no wait after a failed claim. */
+/** I-135 B: one heckle per player per 20 s, and only from a phone with nothing live. */
+const HECKLE_MS = 20_000;
+const HECKLES = [
+  'hurry up',
+  'my card is getting cold',
+  'I did it in four calls',
+  'any day now',
+];
+export function heckle(state: State, playerId: string, now: number): State {
+  if (liveCards(state, playerId).length > 0) return state;
+  const last = state.round.heckle;
+  if (last && last.playerId === playerId && now - last.at < HECKLE_MS) return state;
+  // the game's own seeded dice, never Math.random: a reducer must replay the same (the first build
+  // used Math.random here)
+  const [line, rng] = pick(state.rng, HECKLES);
+  return { ...state, rng, round: { ...state.round, heckle: { playerId, line, at: now } } };
+}
+
 export function canClaim(state: State, playerId: string, card?: number): boolean {
   const round = state.round;
   const live = liveCards(state, playerId);
@@ -120,6 +138,8 @@ export function resumeAfterHold(state: State, now: number): State {
 export function reducePlay(state: State, event: GameEvent<Input>, exits: PlayExits): State {
   if (event.type === 'input') {
     const input = event.input;
+    // I-135 B: the winner's one button, handled beside the daubs
+    if (input.type === 'heckle') return heckle(state, event.playerId, event.now);
     if (input.type === 'daub') return toggleDaub(state, event.playerId, input.card, input.index);
     if (input.type === 'menu') return applyMenu(state, event.playerId, input.open, event.now);
     if (input.type === 'lapse') return settle(state, event.now);

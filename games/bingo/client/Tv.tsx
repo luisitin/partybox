@@ -135,6 +135,12 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
         {view.showBoard ? (
           <CalledBoard called={view.called} current={view.current?.number ?? null} />
         ) : null}
+        {/* I-135 B: the winner still has a voice in the room. */}
+        {view.heckleLine ? (
+          <p key={view.heckleLine} className={styles.closeLine}>
+            📣 {view.heckleLine}
+          </p>
+        ) : null}
         <DibsLine arm={view.arm} queue={view.queue} claimed={view.claim !== null} />
       </Stage>
     );

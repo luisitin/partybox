@@ -11,6 +11,7 @@ import { enterPhase, hasPlayer, isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { clearClaims, setMenu } from '../claims';
 import { AUTO_END_MS, VERDICT_READ_MS, claimRevealMs } from '../reveal';
+import { dealCard } from '../cards';
 import { pointsFor } from '../scoring';
 import { BINGO_ABANDONED_MS, BINGO_MS, DECK } from '../types';
 import type { Claim, Decision, Input, State, Transition } from '../types';
@@ -46,6 +47,7 @@ export function enterBingo(
       bingos,
       patternBingos,
       decision: null,
+      heckle: null,
       judged: false,
       judgedAt: null,
     },
@@ -57,11 +59,22 @@ export function enterBingo(
   return enterPhase(next, 'bingo', now, ms);
 }
 
+/** What the current win is worth: the ladder (3, 2, 1, then ½), halved on a card dealt during
+ *  the extension (I-135 C). */
+export function claimWorth(state: State): number {
+  const round = state.round;
+  const full = pointsFor(round.patternBingos);
+  const onHalfCard =
+    round.winnerId !== null &&
+    (round.half?.[round.winnerId] ?? []).includes(round.claim?.cardIndex ?? -1);
+  return onHalfCard ? full / 2 : full;
+}
+
 /** The verdict has landed (at `now`): score the win (3, 2, 1, then ½ under a pattern — scoring.ts). */
 export function credit(state: State, now: number): State {
   const round = state.round;
   if (round.judged || !round.winnerId) return state;
-  const points = pointsFor(round.patternBingos);
+  const points = claimWorth(state); // I-135 C: half on a fresh card
   return {
     ...state,
     wins: { ...state.wins, [round.winnerId]: (state.wins[round.winnerId] ?? 0) + points },
@@ -108,19 +121,46 @@ export function canContinue(state: State): { same: boolean; blackout: boolean } 
   return { same: more && contest && !blackedOut, blackout: more && round.pattern !== 'blackout' };
 }
 
+/** I-135 C: a fresh card for every player whose cards have all won — marked half-points. */
+function dealHalfCards(state: State): {
+  cards: Record<string, number[][]>;
+  daubs: Record<string, number[][]>;
+  half?: Record<string, number[]>;
+  rng: State['rng'];
+} {
+  const round = state.round;
+  let rng = state.rng;
+  const cards = { ...round.cards };
+  const daubs = { ...round.daubs };
+  const half = { ...round.half };
+  for (const id of Object.keys(round.cards)) {
+    if (liveCards(state, id).length > 0) continue;
+    const [fresh, next] = dealCard(rng);
+    rng = next;
+    cards[id] = [...(cards[id] ?? []), fresh];
+    daubs[id] = [...(daubs[id] ?? []), []];
+    half[id] = [...(half[id] ?? []), (cards[id]?.length ?? 1) - 1];
+  }
+  return { cards, daubs, half, rng };
+}
+
 /** The room's choice, once the celebration is done. */
 function decide(state: State, decision: Decision, now: number, exits: BingoExits): State {
   if (decision.type === 'next') return exits.next(state, now);
   const round = state.round;
   const blackout = decision.pattern === 'blackout';
+  // I-135 C: everyone with nothing live gets a fresh card for the extension, at half points.
+  const dealt = blackout ? null : dealHalfCards(state);
   return exits.resume(
     {
       ...state,
+      rng: dealt ? dealt.rng : state.rng,
       round: {
         ...round,
         // A new pattern reopens the round for every card; the same one keeps its winners locked.
         pattern: blackout ? 'blackout' : round.pattern,
         won: blackout ? {} : round.won,
+        ...(dealt ? { cards: dealt.cards, daubs: dealt.daubs, half: dealt.half } : {}),
         patternBingos: blackout ? 0 : round.patternBingos,
         decision: null,
         claim: null,

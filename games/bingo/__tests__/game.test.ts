@@ -104,12 +104,15 @@ describe('play', () => {
     let same = input(s, 'b', { type: 'continue', pattern: 'same' }, after(s));
     expect(same.phase.id).toBe('play');
     expect(same.round.drawn).toBe(drawnAtBingo); // the number that was up repeats
-    expect(same.round.cards).toBe(cardsAtBingo);
-    expect(same.round.daubs['a']).toEqual([[0, 1, 2, 3, 4]]);
+    // I-135 C: everyone else keeps their cards; the winner gains a fresh half-points one.
+    expect(same.round.cards['b']).toEqual(cardsAtBingo['b']);
+    expect(same.round.cards['a']).toHaveLength(2);
+    expect(same.round.half?.['a']).toEqual([1]);
+    expect(same.round.daubs['a']?.[0]).toEqual([0, 1, 2, 3, 4]);
     expect(same.round.pattern).toBe('line');
     expect(same.round.won).toEqual({ a: [0] });
-    expect(claim(same, 'a').phase.id).toBe('play'); // ignored: already won it
-    expect(game.controllerView(same, 'a').canClaim).toBe(false);
+    expect(game.controllerView(same, 'a').canClaim).toBe(true); // on the fresh card only
+    expect(game.controllerView(same, 'a').claimable).toEqual([1]);
     expect(game.controllerView(same, 'b').canClaim).toBe(true);
     // blackout: the pattern changes for everyone and the winner is back in
     let black = input(s, 'b', { type: 'continue', pattern: 'blackout' }, after(s));

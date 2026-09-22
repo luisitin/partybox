@@ -35,7 +35,8 @@ describe('keeping the round going', () => {
     expect(s.round.drawn).toBe(drawn);
     expect(game.tvView(s).callIndex).toBe(drawn);
     // Ana's card 1 won the line: no claim from it, but daubs land (a blackout may be next).
-    expect(game.controllerView(s, 'a').claimable).toEqual([]);
+    // I-135 C: her fresh half-points card (index 1) is the one that can claim.
+    expect(game.controllerView(s, 'a').claimable).toEqual([1]);
     s = input(s, 'a', { type: 'daub', card: 0, index: 7 });
     expect(s.round.daubs['a']?.[0]).toContain(7);
   });

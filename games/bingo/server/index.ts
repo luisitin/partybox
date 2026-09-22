@@ -78,6 +78,8 @@ function init(ctx: InitContext): State {
       bingos: 0,
       patternBingos: 0,
       decision: null,
+      heckle: null,
+      half: {},
       judged: false,
       judgedAt: null,
       calledAt: null,

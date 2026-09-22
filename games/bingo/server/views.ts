@@ -6,15 +6,15 @@
 import { controllerEnvelope, envelope, hasPlayer } from '@partybox/game-sdk';
 import type { ControllerView, PlayerStatus, TvView } from '@partybox/game-sdk';
 import { calledNumbers, letterOf } from './cards';
-import { closePlayers } from './close';
+import { closePlayers, mates } from './close';
 import type { Letter } from './cards';
 import { callFor } from './content';
 import { PATTERN_HINT, PATTERN_LABEL, patternCells } from './patterns';
 import { menusOpen } from './claims';
-import { canContinue, liveCards } from './phases/bingo';
+import { canContinue, claimWorth, liveCards } from './phases/bingo';
 import { waitingOn } from './phases/intro';
 import { canClaim, isHeld } from './phases/play';
-import { pointsFor, standings } from './scoring';
+import { standings } from './scoring';
 import type { StandingRow } from './scoring';
 import type { Claim, Pattern, State } from './types';
 
@@ -99,6 +99,8 @@ export interface BingoTvView extends TvView, Common {
   /** R2-01: players with a live card one daub from the pattern (play only); [] unless the
    *  `showClose` setting is on — the strip ring, the caption and the hush all hang off it. */
   closeIds: string[];
+  /** I-135 B: a heckle from a player with nothing left to daub. */
+  heckleLine: string | null;
   /** I-108 / I-117: the caller's tone, for the stray-daubs kicker and the fast path's line. */
   spicy: boolean;
 }
@@ -120,6 +122,10 @@ export interface BingoControllerView extends ControllerView, Common {
   daubs: number[][];
   /** play: true unless waiting for the next number after a failed claim (or every card won). */
   canClaim: boolean;
+  /** I-135 B: the heckle button is off its cooldown (only sent to a phone with the panel). */
+  heckleReady: boolean;
+  /** I-135 A: while I have nothing live, the room's closeness — the caller's-mate view. */
+  mates: { id: string; name: string; avatarId: string; toGo: number; where: string }[];
   /** My cards that already won the current pattern this round (locked). */
   won: number[];
   /** Every one of my cards has won: nothing left to claim until the pattern or round changes. */
@@ -225,7 +231,7 @@ function common(state: State): Common {
     standings: standings(state),
     decide: state.phase.id === 'bingo' ? canContinue(state) : null,
     bingosThisRound: round.bingos,
-    claimPoints: winnerId ? pointsFor(round.patternBingos) : 0,
+    claimPoints: winnerId ? claimWorth(state) : 0, // I-135 C
     verdictShown: (state.phase.id === 'check' || state.phase.id === 'bingo') && round.judged,
     autoEnd:
       state.phase.id === 'bingo' &&
@@ -270,6 +276,10 @@ export function tvView(state: State, gameId: string): BingoTvView {
     showBoard: state.settings.showBoard,
     showPrevious: state.settings.showPrevious,
     closeIds: state.settings.showClose ? closePlayers(state) : [],
+    heckleLine:
+      !state.round.heckle
+        ? null
+        : `${state.players[state.round.heckle.playerId]?.name ?? 'Someone'} says: ${state.round.heckle.line}`,
     spicy: state.settings.spicy,
   };
 }
@@ -314,6 +324,18 @@ export function controllerView(
       (state.phase.id === 'play' || state.phase.id === 'check') &&
       state.round.drawn < (state.round.waitForCall[playerId] ?? 0),
     called: player ? [] : calledNumbers(state),
+    heckleReady:
+      !state.round.heckle ||
+      state.round.heckle.playerId !== playerId ||
+      state.phase.startedAt - state.round.heckle.at > 20_000,
+    mates:
+      player && liveCards(state, playerId).length === 0
+        ? mates(state, playerId).map((m) => ({
+            ...m,
+            name: state.players[m.id]?.name ?? '',
+            avatarId: state.players[m.id]?.avatarId ?? 'ghost',
+          }))
+        : [],
     ready: state.phase.id === 'intro' && state.round.ready.includes(playerId),
     lastOne:
       state.phase.id === 'intro' &&

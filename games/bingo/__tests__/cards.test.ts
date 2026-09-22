@@ -109,12 +109,15 @@ describe('keep going with several cards', () => {
     const atBingo = s;
     s = input(s, 'a', { type: 'continue', pattern: 'same' }, after(s));
     expect(s.phase.id).toBe('play');
+    // I-135 C: the winner is dealt a fresh card for the extension, worth half points — they are
+    // back in the round instead of sitting it out.
     const c = game.controllerView(s, 'c');
-    expect(c.doneForRound).toBe(true);
-    expect(c.canClaim).toBe(false);
-    expect(claim(s, 'c')).toBe(s);
-    expect(game.tvView(s).players.find((p) => p.id === 'c')?.status).toBe('submitted');
-    expect(sampleInput(s, 'c', createRng(2))).toBeNull();
+    expect(c.doneForRound).toBe(false);
+    expect(c.canClaim).toBe(true);
+    expect(s.round.cards['c']).toHaveLength(2);
+    expect(s.round.half?.['c']).toEqual([1]);
+    expect(s.round.daubs['c']?.[1]).toEqual([]);
+    expect(game.tvView(s).players.find((p) => p.id === 'c')?.status).toBe('active');
     // A blackout on the same cards puts every card back in.
     const black = input(atBingo, 'a', { type: 'continue', pattern: 'blackout' }, after(atBingo));
     expect(black.round.won).toEqual({});
