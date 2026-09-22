@@ -102,13 +102,23 @@ function ControllerResult({ view, me, skip }: Props): JSX.Element {
       title={final ? 'Final scores' : `Round ${view.round} of ${view.rounds}`}
       // Untimed rounds: the result stays up until the VIP moves on.
       footer={
-        final ? undefined : (
-          <NextButton
-            skip={skip}
-            timed={view.timed}
-            label={view.round < view.rounds ? 'Next round' : 'Final scores'}
-          />
-        )
+        <>
+          {/* I-151 A: the standings are a constant footer, not the last thing in a body that may
+              never be scrolled — on a split result the winner cards used to fill the screen and
+              the board never came into view. */}
+          {view.standings.length > 0 ? (
+            <div className={`${styles.resultBoard} ${named || final ? '' : styles.beatWait}`.trim()}>
+              <Scoreboard compact highlightId={me.id} rows={view.standings} noTrophy />
+            </div>
+          ) : null}
+          {final ? null : (
+            <NextButton
+              skip={skip}
+              timed={view.timed}
+              label={view.round < view.rounds ? 'Next round' : 'Final scores'}
+            />
+          )}
+        </>
       }
     >
       <div className={styles.resultHero} role="status" aria-live="polite">
@@ -182,9 +192,7 @@ function ControllerResult({ view, me, skip }: Props): JSX.Element {
       {/* The point is already in the standings when the result opens, and the TV holds its own
           strip back until the winner is named (`stripScores`). The phone's board keeps its place
           and fades in on the same beat, so nothing counts up before the reveal (loop #222). */}
-      <div className={named ? undefined : styles.beatWait}>
-        <Scoreboard compact highlightId={me.id} rows={view.standings} noTrophy />
-      </div>
+      {/* I-151 A: the board is in the footer now — see the Screen's `footer` above. */}
       {/* The night's best-liked card, on the phone too (review-loop #193). */}
       {final && view.bestCard ? (
         <div className={styles.bestCard}>

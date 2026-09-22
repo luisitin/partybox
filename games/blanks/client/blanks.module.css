@@ -1613,3 +1613,8 @@
 .redraw:disabled {
   opacity: 0.5;
 }
+
+/* ── I-151 A: the standings, pinned above the Next button. */
+.resultBoard {
+  margin-bottom: var(--pb-space-2);
+}
