@@ -38,9 +38,11 @@ export interface PhoneSettingsProps {
   audio?: SoundEngine;
   /** S-004 B: what the music engine is on right now ("Lobby set", "Bingo's set"). */
   what?: string | null;
+  /** I-033 B: this phone's side of the room for relayed TV cues. */
+  side?: 'left' | 'right' | null;
 }
 
-export function PhoneSettings({ audio, what }: PhoneSettingsProps): JSX.Element {
+export function PhoneSettings({ audio, what, side = null }: PhoneSettingsProps): JSX.Element {
   const [soundOn, setSoundOn] = useState(() => !(audio?.muted() ?? true));
   const [haptics, setHaptics] = useState(() => hapticsEnabled());
   // iOS Safari has no navigator.vibrate at all: say so instead of offering a switch that does
@@ -170,7 +172,7 @@ export function PhoneSettings({ audio, what }: PhoneSettingsProps): JSX.Element 
         <span className={pickerStyles.toggleGlyph} aria-hidden>
           📺
         </span>
-        TV sounds on this phone
+        TV sounds on this phone{tvSounds && side ? ` · ${side} side` : ''}
         <span className={pickerStyles.toggleState}>
           {tvSounds ? t.controller.on : t.controller.off}
         </span>

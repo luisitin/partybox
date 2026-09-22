@@ -104,6 +104,13 @@ export function ControllerShell({
     roomStatus: string;
     error: ControllerState['error'];
   }>({ status: null, phase: null, roomStatus: '', error: null });
+  // I-033 A: this phone's side of the room (people only, by join order): the first half is
+  // "left", the rest "right"; relayed cues alternate sides so the sound ping-pongs.
+  const people = (room?.players ?? []).filter((p) => !p.bot);
+  const myIndex = people.findIndex((p) => p.id === state.playerId);
+  const side: 'left' | 'right' | null =
+    myIndex < 0 || people.length < 2 ? null : myIndex < people.length / 2 ? 'left' : 'right';
+  const relayed = useRef(0);
   // I-009 C: the link comes back — it lands in the hand: one short buzz and the `join` note.
   const wasOnline = useRef(online);
   useEffect(() => {
@@ -137,7 +144,12 @@ export function ControllerShell({
       const mapped = room.selectedGameId
         ? clientGames[room.selectedGameId]?.sounds?.[phase]
         : undefined;
-      if (mapped && mapped !== 'silence') audio.play(mapped as SoundCue);
+      if (mapped && mapped !== 'silence') {
+        // I-033 A: whose turn — even relays play full on the left phones, odd on the right.
+        const turn = relayed.current++ % 2 === 0 ? 'left' : 'right';
+        const gain = side === null || side === turn ? 1 : 0.3;
+        audio.play(mapped as SoundCue, { gain });
+      }
     }
     // A rejected join or input, once per error object: the strip goes red (Join renders the
     // same error inline).
@@ -320,7 +332,7 @@ export function ControllerShell({
         <ThemePicker
           variant="sheet"
           onClose={() => setThemeOpen(false)}
-          footer={<PhoneSettings audio={audio} what={musicWhat} />}
+          footer={<PhoneSettings audio={audio} what={musicWhat} side={side} />}
         />
       ) : null}
     </div>
