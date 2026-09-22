@@ -1613,3 +1613,11 @@
 .redraw:disabled {
   opacity: 0.5;
 }
+
+/* ── I-140 C: a previewed fill is a ghost — outlined, see-through paper; a pick is solid paper. */
+.fillGhost {
+  background: transparent;
+  color: var(--card-paper);
+  box-shadow: inset 0 0 0 0.08em var(--card-paper);
+  opacity: 0.92;
+}
