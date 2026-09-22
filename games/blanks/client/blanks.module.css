@@ -1613,3 +1613,43 @@
 .redraw:disabled {
   opacity: 0.5;
 }
+
+/* \u2500\u2500 I-148 A: the hand, dimmed, while the judge decides. */
+.peekHand {
+  display: flex;
+  gap: var(--pb-space-2);
+  overflow-x: auto;
+  margin: var(--pb-space-3) 0 0;
+  padding: 0 var(--pb-space-3) var(--pb-space-2);
+  list-style: none;
+  opacity: 0.55;
+  transition: opacity var(--pb-motion-base) var(--pb-ease);
+  scrollbar-width: none;
+}
+.peekHandCard {
+  display: block;
+  width: 9.5rem;
+  min-height: 5.5rem;
+  padding: var(--pb-space-2);
+  border-radius: var(--pb-radius-sm, 8px);
+  background: var(--pb-card, #f2ede3);
+  color: #15121b;
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+/* \u2500\u2500 I-148 B: a setup you can try your card in. */
+.tryOn {
+  /* FIRST BUILD WAS WRONG (audit 2026-09-22): without a width and an alignment the button's own
+     defaults centred each setup and shrank a one-line one to its text — B no longer looked like A. */
+  display: block;
+  width: 100%;
+  text-align: start;
+  cursor: pointer;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+}

@@ -44,6 +44,8 @@ export function ControllerPick({ view, send }: Props): JSX.Element {
   // Until the judge has taken one, all three read the same: dimming them before that made the
   // waiting screen look disabled (loop #204).
   const taken = view.blackChoices.some((b) => b.chosen);
+  // I-148 B: the candidate being tried on — its blank reads this phone's front card.
+  const [tryOn, setTryOn] = useState<number | null>(null);
   if (view.role !== 'judge') {
     return (
       <WaitingScreen
@@ -64,7 +66,32 @@ export function ControllerPick({ view, send }: Props): JSX.Element {
           <ul className={styles.peekList} aria-label="the questions on the table">
             {view.blackChoices.map((b, i) => (
               <li key={i} className={b.chosen ? styles.peekOn : taken ? styles.peekOff : undefined}>
-                <FilledCard text={b.text} pick={b.pick} size="mini" winner={b.chosen} />
+                {/* I-148 B: tap a setup to hear your front card in it. */}
+                <button
+                  type="button"
+                  className={styles.tryOn}
+                  onClick={() => setTryOn((t) => (t === i ? null : i))}
+                  aria-pressed={tryOn === i}
+                  aria-label="try your first card in this question"
+                >
+                  <FilledCard
+                    text={b.text}
+                    pick={b.pick}
+                    size="mini"
+                    winner={b.chosen}
+                    whites={tryOn === i && view.hand[0] ? [view.hand[0].text] : undefined}
+                  />
+                </button>
+              </li>
+            ))}
+          </ul>
+        ) : null}
+        {/* I-148 A: the hand is here too — the wait is the only time to read it unhurried. */}
+        {view.hand.length > 0 ? (
+          <ul className={`${styles.peekHand}`} aria-label="your hand">
+            {view.hand.map((c) => (
+              <li key={c.id}>
+                <span className={styles.peekHandCard}>{c.text}</span>
               </li>
             ))}
           </ul>
