@@ -81,7 +81,7 @@ export function Controller({
         fill
         promptKey={`${phaseId}:${view.round?.number ?? 0}`}
         tone={finalQ ? 'final' : undefined}
-        kicker={roundKicker(view)}
+        kicker={finalQ && stake !== null && stake > 0 ? `${roundKicker(view)} · you bet ${stake}` : roundKicker(view)} /* I-039 C */
         prompt={view.question.text}
         choices={view.question.choices.map((label, index) => ({ id: String(index), label }))}
         selectedId={locked ? String(view.myPickIndex) : null}

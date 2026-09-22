@@ -9,6 +9,7 @@
   min-height: 0;
   overscroll-behavior: none;
   animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) backwards;
+  animation-delay: var(--pb-screen-delay, 0ms); /* I-039 A: the shell can hold the rise a beat */
 }
 
 /* A leaving screen's snapshot, parked in the parent: on top, inert, fading over the base token. */
