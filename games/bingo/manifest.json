@@ -7,7 +7,12 @@
   "minPlayers": 1,
   "maxPlayers": 16,
   "estimatedMinutes": 15,
-  "tags": ["classic", "luck", "tap", "family"],
+  "tags": [
+    "classic",
+    "luck",
+    "tap",
+    "family"
+  ],
   "settings": [
     {
       "key": "rounds",
@@ -25,10 +30,34 @@
       "type": "select",
       "default": "line",
       "options": [
-        { "value": "line", "label": "Any line" },
-        { "value": "corners", "label": "Four corners" },
-        { "value": "x", "label": "The X" },
-        { "value": "blackout", "label": "Blackout" }
+        {
+          "value": "line",
+          "label": "Any line"
+        },
+        {
+          "value": "corners",
+          "label": "Four corners"
+        },
+        {
+          "value": "x",
+          "label": "The X"
+        },
+        {
+          "value": "blackout",
+          "label": "Blackout"
+        },
+        {
+          "value": "frame",
+          "label": "Picture frame"
+        },
+        {
+          "value": "stamp",
+          "label": "Postage stamp"
+        },
+        {
+          "value": "tee",
+          "label": "The T"
+        }
       ]
     },
     {
@@ -37,10 +66,34 @@
       "type": "select",
       "default": "corners",
       "options": [
-        { "value": "line", "label": "Any line" },
-        { "value": "corners", "label": "Four corners" },
-        { "value": "x", "label": "The X" },
-        { "value": "blackout", "label": "Blackout" }
+        {
+          "value": "line",
+          "label": "Any line"
+        },
+        {
+          "value": "corners",
+          "label": "Four corners"
+        },
+        {
+          "value": "x",
+          "label": "The X"
+        },
+        {
+          "value": "blackout",
+          "label": "Blackout"
+        },
+        {
+          "value": "frame",
+          "label": "Picture frame"
+        },
+        {
+          "value": "stamp",
+          "label": "Postage stamp"
+        },
+        {
+          "value": "tee",
+          "label": "The T"
+        }
       ]
     },
     {
@@ -49,10 +102,34 @@
       "type": "select",
       "default": "x",
       "options": [
-        { "value": "line", "label": "Any line" },
-        { "value": "corners", "label": "Four corners" },
-        { "value": "x", "label": "The X" },
-        { "value": "blackout", "label": "Blackout" }
+        {
+          "value": "line",
+          "label": "Any line"
+        },
+        {
+          "value": "corners",
+          "label": "Four corners"
+        },
+        {
+          "value": "x",
+          "label": "The X"
+        },
+        {
+          "value": "blackout",
+          "label": "Blackout"
+        },
+        {
+          "value": "frame",
+          "label": "Picture frame"
+        },
+        {
+          "value": "stamp",
+          "label": "Postage stamp"
+        },
+        {
+          "value": "tee",
+          "label": "The T"
+        }
       ]
     },
     {
@@ -62,10 +139,34 @@
       "type": "select",
       "default": "line",
       "options": [
-        { "value": "line", "label": "Any line" },
-        { "value": "corners", "label": "Four corners" },
-        { "value": "x", "label": "The X" },
-        { "value": "blackout", "label": "Blackout" }
+        {
+          "value": "line",
+          "label": "Any line"
+        },
+        {
+          "value": "corners",
+          "label": "Four corners"
+        },
+        {
+          "value": "x",
+          "label": "The X"
+        },
+        {
+          "value": "blackout",
+          "label": "Blackout"
+        },
+        {
+          "value": "frame",
+          "label": "Picture frame"
+        },
+        {
+          "value": "stamp",
+          "label": "Postage stamp"
+        },
+        {
+          "value": "tee",
+          "label": "The T"
+        }
       ]
     },
     {
@@ -75,10 +176,34 @@
       "type": "select",
       "default": "blackout",
       "options": [
-        { "value": "line", "label": "Any line" },
-        { "value": "corners", "label": "Four corners" },
-        { "value": "x", "label": "The X" },
-        { "value": "blackout", "label": "Blackout" }
+        {
+          "value": "line",
+          "label": "Any line"
+        },
+        {
+          "value": "corners",
+          "label": "Four corners"
+        },
+        {
+          "value": "x",
+          "label": "The X"
+        },
+        {
+          "value": "blackout",
+          "label": "Blackout"
+        },
+        {
+          "value": "frame",
+          "label": "Picture frame"
+        },
+        {
+          "value": "stamp",
+          "label": "Postage stamp"
+        },
+        {
+          "value": "tee",
+          "label": "The T"
+        }
       ]
     },
     {
