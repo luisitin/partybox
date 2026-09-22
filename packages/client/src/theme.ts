@@ -71,6 +71,10 @@ export function applyTheme(id: ThemeId = getTheme()): void {
   current = id;
   if (id === DEFAULT) delete document.documentElement.dataset['theme'];
   else document.documentElement.dataset['theme'] = id;
+  // I-085 C: the browser chrome follows the theme's background (the swatch's first colour).
+  const meta = document.querySelector('meta[name="theme-color"]');
+  const bg = THEMES.find((t) => t.id === id)?.swatch[0];
+  if (meta && bg) meta.setAttribute('content', bg);
 }
 
 export function setTheme(id: ThemeId): void {

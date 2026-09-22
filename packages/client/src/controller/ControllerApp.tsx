@@ -134,6 +134,10 @@ export function ControllerApp(): JSX.Element {
     beds.setPaused(paused);
   }, [beds, bedsWanted, room, view, gameBeds, paused]);
   const me = state.room?.players.find((p) => p.id === state.playerId) ?? null;
+  // I-085 B: the tab says who — the joined name.
+  useEffect(() => {
+    document.title = me ? `PartyBox · ${me.name}` : 'PartyBox';
+  }, [me?.name]);
   // Game start holds the previous screen until the game component has painted (review-loop #11):
   // no "Getting the game ready…" flash on a LAN. Reset whenever a game is not running.
   const [gameReady, setGameReady] = useState(false);
