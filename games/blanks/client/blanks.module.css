@@ -1613,3 +1613,15 @@
 .redraw:disabled {
   opacity: 0.5;
 }
+
+/* ── I-143 C: taking the reading nobody can do. */
+.takeRead {
+  min-height: var(--pb-touch);
+  margin-top: var(--pb-space-3);
+  padding: 0 var(--pb-space-4);
+  border-radius: var(--pb-radius);
+  background: var(--pb-accent);
+  color: var(--pb-on-accent, #1a1022);
+  font: inherit;
+  font-weight: 800;
+}

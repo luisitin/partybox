@@ -110,6 +110,8 @@ export const inputSchema = z.discriminatedUnion('type', [
     /** Anonymous slot (index into `slots`). */
     slot: z.number().int().min(0).max(15),
   }),
+  /** I-143 C: "I'll read" — a connected person takes this round's reading from nobody. */
+  z.object({ type: z.literal('takeReading') }),
   /** The judge picks the round's black card (czar mode, "pick" phase). */
   z.object({ type: z.literal('choose'), index: z.number().int().min(0).max(4) }),
   /** A whole new hand (answer phase, before playing; REDRAWS_PER_GAME per player per game). */

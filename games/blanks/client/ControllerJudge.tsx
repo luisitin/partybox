@@ -12,7 +12,7 @@ import styles from './blanks.module.css';
 
 type Props = GameControllerProps<BlanksControllerView, Input>;
 
-export function ControllerReveal({ view, me }: Props): JSX.Element {
+export function ControllerReveal({ view, me, send }: Props): JSX.Element {
   const black = view.black;
   const current = view.cards[view.revealIndex];
   if (!black || !current)
@@ -56,6 +56,12 @@ export function ControllerReveal({ view, me }: Props): JSX.Element {
                     ? `Read along. ${view.reader.name} is reading.`
                     : 'Read along. The vote is next.'}
         </p>
+        {/* I-143 C: nobody can read it — anyone may take it. */}
+        {view.readingOpen ? (
+          <button type="button" className={styles.takeRead} onClick={() => send({ type: 'takeReading' })}>
+            I&apos;ll read
+          </button>
+        ) : null}
       </div>
     </Screen>
   );
