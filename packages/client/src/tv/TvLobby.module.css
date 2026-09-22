@@ -26,11 +26,38 @@
 
 .qr {
   display: block;
-  width: 360px;
-  height: 360px;
+  width: 100%;
+  height: 100%;
   padding: var(--pb-space-3);
   border-radius: var(--pb-radius);
   background: #fff;
+}
+/* I-075 A: the code's frame (the size the .qr had) — the mark sits in its centre. */
+.qrWrap {
+  position: relative;
+  display: block;
+  width: 360px;
+  height: 360px;
+}
+.qrMark {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 16%;
+  height: 16%;
+  translate: -50% -50%;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--pb-accent);
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  box-shadow: 0 0 0 3px #fff;
+}
+.qrBig .qrMark {
+  font-size: 34px;
 }
 
 .qr :global(svg) {
