@@ -5,6 +5,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Share the room link from the lobby** (the owner, 2026-09-21): a "🔗 Share the room link" pill
+  opens the phone's share sheet with the join link straight to this room (`?room=CODE`), or
+  copies it where there is no sheet.
 - **Every game reads the TV's moments on the phone in a "phone only" room** (the owner,
   2026-09-21): Wisecrack's reveal (the prompt, both answers, authors, votes, points) on every
   phone; Broken Pencil's show page (the word, the drawing, the guess) on every phone; no "look at

@@ -137,3 +137,14 @@
   color: var(--pb-text-muted);
   font-weight: 600;
 }
+
+/* The lobby's pills (Share, Set up) in a row that wraps on a narrow phone. */
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pb-space-2);
+  margin: var(--pb-space-2) 0;
+}
+.pills > .setup {
+  margin: 0;
+}

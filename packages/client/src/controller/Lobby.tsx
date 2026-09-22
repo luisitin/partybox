@@ -9,7 +9,34 @@ import { PlayerChip, PrimaryButton, Screen } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import type { Controller } from '../net/controller';
 import type { SoundEngine } from '../sound';
+import { useServerInfo } from '../net/info';
 import styles from './Lobby.module.css';
+
+/** The room's join link — the QR's URL (`?room=CODE`, I-041), so a tap lands straight in. */
+function joinLink(info: { qrUrl?: string; joinUrl: string } | null, code: string): string {
+  if (info?.qrUrl) return info.qrUrl;
+  const base = info?.joinUrl ?? `${window.location.origin}/`;
+  return `${base.replace(/\/$/, '')}/?room=${code}`;
+}
+
+/** Share the link the way the phone can: the share sheet, else the clipboard. */
+async function shareLink(url: string, code: string): Promise<'shared' | 'copied' | 'failed'> {
+  const nav = navigator as Navigator & { share?: (d: ShareData) => Promise<void> };
+  if (nav.share) {
+    try {
+      await nav.share({ title: 'PartyBox', text: `Join my PartyBox room ${code}`, url });
+      return 'shared';
+    } catch {
+      // dismissed, or the sheet refused: fall through to the clipboard
+    }
+  }
+  try {
+    await navigator.clipboard.writeText(url);
+    return 'copied';
+  } catch {
+    return 'failed';
+  }
+}
 
 export interface LobbyProps {
   controller: Controller;
@@ -22,6 +49,14 @@ export interface LobbyProps {
 }
 
 export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX.Element {
+  // The owner (2026-09-21): a "share" in the lobby — the join link straight to this room.
+  const info = useServerInfo();
+  const [shared, setShared] = useState<'shared' | 'copied' | 'failed' | null>(null);
+  const share = async (): Promise<void> => {
+    const result = await shareLink(joinLink(info, room.code), room.code);
+    setShared(result);
+    setTimeout(() => setShared(null), 2500);
+  };
   // I-074 A: a removed bot puffs out before the remove is sent (450 ms, one poof at a time).
   const [poofing, setPoofing] = useState<string | null>(null);
   const poof = (botId: string): void => {
@@ -54,10 +89,22 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
       }
     >
       <p className="pb-muted">{me.isVip ? t.lobby.youAreVip : t.lobby.waitingForVip}</p>
-      {/* S-003 B: set up your phone while you wait — opens the 🎨 sheet. */}
-      <button type="button" className={styles.setup} onClick={onSetup}>
-        🎨 Set up your phone while you wait
-      </button>
+      <div className={styles.pills}>
+        {/* The join link, straight to this room: the share sheet where the phone has one. */}
+        <button type="button" className={styles.setup} onClick={() => void share()}>
+          {shared === 'copied'
+            ? '✓ Link copied'
+            : shared === 'shared'
+              ? '✓ Shared'
+              : shared === 'failed'
+                ? `Room ${room.code} — ${joinLink(info, room.code).replace(/^https?:\/\//, '')}`
+                : '🔗 Share the room link'}
+        </button>
+        {/* S-003 B: set up your phone while you wait — opens the 🎨 sheet. */}
+        <button type="button" className={styles.setup} onClick={onSetup}>
+          🎨 Set up your phone while you wait
+        </button>
+      </div>
       <p className={`pb-caption ${styles.count}`}>
         {t.lobby.players(room.players.length, room.capacity)}
         {room.locked ? ` · ${t.lobby.locked}` : ''}
