@@ -39,6 +39,8 @@ export interface ChoiceGridProps {
   lockedHint?: ReactNode;
   /** I-026 B: a class for the screen (a game styles a state of the grid, e.g. a placed wager). */
   className?: string;
+  /** Rendered in the scrolling body under the grid (a "phone only" room's results list — S-005). */
+  after?: ReactNode;
 }
 
 const LETTERS = 'ABCDEFGH';
@@ -55,6 +57,7 @@ interface Pending {
 export function ChoiceGrid(props: ChoiceGridProps): JSX.Element {
   const {
     className,
+    after,
     prompt,
     kicker,
     choices,
@@ -138,6 +141,7 @@ export function ChoiceGrid(props: ChoiceGridProps): JSX.Element {
           );
         })}
       </div>
+      {after}
       {correctId === null ? (
         selectedId !== null ? (
           <p className={styles.locked} role="status">

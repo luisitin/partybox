@@ -5,6 +5,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Lightning Round in a "phone only" room** (the owner, 2026-09-21): the reveal's rows (who got
+  it, ±points, totals) on every phone under the answers (`rows` on the controller view,
+  `ChoiceGrid` `after` slot) and no "look at the TV" copy while the TV is off.
 - **The caller is louder than the music on a phone** (the owner, 2026-09-21): a voice clip on a
   phone bypasses the 0.35 cue master and the phone's music ducks to 30 % for the clip's length;
   the dev API's `vip` route accepts every VIP action.

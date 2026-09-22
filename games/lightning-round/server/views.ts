@@ -76,6 +76,9 @@ export interface LightningControllerView extends ControllerView {
   correctIndex?: number;
   /** `reveal`: how this player did. */
   outcome?: { correct: boolean; delta: number };
+  /** `reveal`: the room's rows as the TV shows them — a "phone only" room reads them on the phone
+   *  (the owner, 2026-09-21: Lightning was not optimised for phone only). */
+  rows?: RevealRow[];
   /** `wager`: the buttons for this player (0-score players only see 0). */
   wagerChoices?: WagerOption[];
   /** Own wager once placed (from `wager` through the final reveal). */
@@ -221,6 +224,7 @@ export function controllerView(
         correct: myPick?.index === q.answerIndex,
         delta: me ? (state.lastDelta[playerId] ?? 0) : 0,
       };
+      view.rows = revealRows(state, q.answerIndex, final);
     }
   }
   if (phase === 'wager' && me) view.wagerChoices = wagerOptions(score);

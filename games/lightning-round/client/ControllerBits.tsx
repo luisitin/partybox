@@ -1,7 +1,8 @@
 // Small presentational pieces for the phone: the reveal outcome card and wager button labels.
 import type { JSX } from 'react';
+import { Avatar } from '@partybox/game-sdk/ui';
 import type { WagerOption } from '../server/scoring';
-import type { LightningControllerView } from '../server/views';
+import type { LightningControllerView, RevealRow } from '../server/views';
 import styles from './Controller.module.css';
 
 // The amount is the decision, so it leads at h1; the share is the caption. Plain digits, no
@@ -73,7 +74,7 @@ export function Outcome({ view, streakBefore, spare = null }: OutcomeProps): JSX
   if (!outcome) {
     return (
       <p className={styles.footnote} role="status">
-        Look at the TV
+        {view.phoneOnly ? 'The answer is coming…' : 'Look at the TV'}
       </p>
     );
   }
@@ -111,5 +112,27 @@ export function Outcome({ view, streakBefore, spare = null }: OutcomeProps): JSX
       {answer ? <span className={styles.detail}>{answer}</span> : null}
       <span className={styles.detail}>{detail}</span>
     </div>
+  );
+}
+
+/** A "phone only" room reads the TV's reveal on the phone: who got it, the points, the totals. */
+export function RoomRows({ rows }: { rows: RevealRow[] }): JSX.Element {
+  return (
+    <ol className={styles.roomRows} aria-label="everyone's results">
+      {rows.map((row) => (
+        <li
+          key={row.playerId}
+          className={`${styles.roomRow} ${row.correct ? styles.roomRowOk : ''}`}
+        >
+          <Avatar avatarId={row.avatarId} size={24} dim={!row.connected} />
+          <span className={styles.roomName}>{row.name}</span>
+          <span className={styles.roomVerdict} aria-hidden>
+            {row.correct ? '✓' : row.pickIndex !== null ? '✗' : '—'}
+          </span>
+          <span className={styles.roomDelta}>{deltaText(row.delta)}</span>
+          <span className={styles.roomScore}>{row.score}</span>
+        </li>
+      ))}
+    </ol>
   );
 }

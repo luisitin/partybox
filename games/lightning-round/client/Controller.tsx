@@ -6,7 +6,7 @@ import { ChoiceGrid, WaitingScreen, buzz, useHold, useSecondsLeft } from '@party
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { LightningControllerView } from '../server/index';
 import type { Input } from '../server/types';
-import { Outcome, Stake, wagerLabel } from './ControllerBits';
+import { Outcome, RoomRows, Stake, wagerLabel } from './ControllerBits';
 import { CustomStake } from './CustomStake';
 import styles from './Controller.module.css';
 import { FINAL_REVEAL_HOLD_MS, REVEAL_BEAT_MS } from './timing';
@@ -71,8 +71,8 @@ export function Controller({
       spare === null
         ? undefined
         : spare <= 3
-          ? '✓ Just made it — look at the TV'
-          : `✓ Locked in with ${spare} s to spare — look at the TV`;
+          ? `✓ Just made it${view.phoneOnly ? '' : ' — look at the TV'}`
+          : `✓ Locked in with ${spare} s to spare${view.phoneOnly ? '' : ' — look at the TV'}`;
     const questionId = view.question.id;
     return (
       // A new question rises as a new screen; question → reveal keeps the same node.
@@ -90,6 +90,10 @@ export function Controller({
         }
         disabled={revealed}
         lockedHint={lockedHint}
+        // A "phone only" room: the TV's rows, on the phone under the answers (the owner).
+        after={
+          revealed && shown && view.phoneOnly && view.rows ? <RoomRows rows={view.rows} /> : null
+        }
         onPick={(id) => {
           if (secondsLeft !== null) setLockedAt({ questionId, seconds: secondsLeft });
           send({ type: 'pick', index: Number(id) });
@@ -99,7 +103,7 @@ export function Controller({
             <Outcome view={view} streakBefore={streakBefore} spare={spare} />
           ) : revealed && finalQ ? (
             <div className={styles.stake} role="status">
-              🎲 The bets are in — look at the TV
+              🎲 The bets are in{view.phoneOnly ? '…' : ' — look at the TV'}
             </div>
           ) : stake !== null ? (
             <Stake amount={stake} live={!locked} />
@@ -181,5 +185,11 @@ export function Controller({
       />
     );
   }
-  return <WaitingScreen title="Look at the TV" mood="watch" />;
+  return (
+    <WaitingScreen
+      title={view.phoneOnly ? 'One moment…' : 'Look at the TV'}
+      hint={view.phoneOnly ? 'the next question is on its way' : undefined}
+      mood="watch"
+    />
+  );
 }

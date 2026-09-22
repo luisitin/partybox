@@ -226,3 +226,45 @@
 .place:disabled {
   opacity: 0.5;
 }
+
+/* A "phone only" room (S-005, the owner): the TV's reveal rows on the phone — one line each,
+   the correct ones lit, under the player's own outcome. */
+.roomRows {
+  list-style: none;
+  margin: var(--pb-space-3) 0 0;
+  padding: 0;
+  display: grid;
+  gap: var(--pb-space-1);
+}
+.roomRow {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr) 1.2em 3.5em 3em;
+  align-items: center;
+  gap: var(--pb-space-2);
+  padding: var(--pb-space-1) var(--pb-space-2);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  font-size: var(--pb-font-small);
+  font-weight: 700;
+  color: var(--pb-text-muted);
+}
+.roomRowOk {
+  color: var(--pb-text);
+  background: color-mix(in oklab, var(--pb-accent-3) 18%, var(--pb-surface));
+}
+.roomName {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.roomVerdict {
+  text-align: center;
+}
+.roomDelta,
+.roomScore {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.roomScore {
+  color: var(--pb-text);
+}
