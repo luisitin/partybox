@@ -230,7 +230,7 @@ export function AllCardsLayout(
             p={p}
             c={c}
             size={size}
-            label={p.kind === 'stack' || p.kind === 'side' ? undefined : `Card ${c + 1}`}
+            label={`Card ${c + 1}`} // I-124 A: every all-cards layout labels its cards
           />
           {p.intro ? null : (
             <BingoButton
