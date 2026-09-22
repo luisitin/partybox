@@ -682,3 +682,9 @@ button.cell:focus-visible {
   height: 3.4em;
   border-width: 2px;
 }
+
+/* ── I-132 B: a pattern cell the caller has not reached — dotted, not amber. */
+[data-waiting] {
+  outline: 2px dotted var(--pb-text-muted);
+  outline-offset: -3px;
+}

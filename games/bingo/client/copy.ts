@@ -47,7 +47,12 @@ export function otherTitle(view: Win, name: string): string {
  * Why a claim failed, by the numbers (loop 272): "19 was never called · 3 was missed", "19 and 44
  * were never called", or nothing when the card is simply short of the pattern.
  */
-export function whyNot(claim: { card: number[]; red: number[]; missing: number[] }): string {
+export function whyNot(claim: {
+  card: number[];
+  red: number[];
+  missing: number[];
+  waiting?: number[];
+}): string {
   const num = (i: number): string => (i === 12 ? 'FREE' : String(claim.card[i] ?? '?'));
   const list = (cells: number[]): string => {
     const names = cells.map(num);
@@ -60,6 +65,9 @@ export function whyNot(claim: { card: number[]; red: number[]; missing: number[]
   const missed = claim.missing.filter((i) => i !== 12);
   if (missed.length > 0)
     parts.push(`${list(missed)} ${missed.length === 1 ? 'was' : 'were'} missed`);
+  // I-132 A: cells the caller has not reached are "still to come", never a miss.
+  const waiting = (claim.waiting ?? []).filter((i) => i !== 12);
+  if (waiting.length > 0) parts.push(`${list(waiting)} still to come`);
   return parts.join(' · ');
 }
 

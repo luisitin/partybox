@@ -75,7 +75,11 @@ export function evaluate(
       best = { cells, green };
     }
   }
-  const missing = best.cells.filter((i) => !d.has(i));
+  // I-132 A: a cell not daubed is only a "miss" when its number was actually called; the rest
+  // are still to come (the deck, not the player).
+  const notDaubed = best.cells.filter((i) => !d.has(i));
+  const missing = notDaubed.filter((i) => i === 12 || c.has(card[i] as number));
+  const waiting = notDaubed.filter((i) => i !== 12 && !c.has(card[i] as number));
   return {
     playerId,
     cardIndex,
@@ -84,6 +88,7 @@ export function evaluate(
     green: best.green,
     red,
     missing,
+    waiting,
     valid: best.cells.length > 0 && best.green.length === best.cells.length,
   };
 }

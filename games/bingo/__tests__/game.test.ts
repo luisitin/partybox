@@ -144,7 +144,8 @@ describe('play', () => {
     expect(shown?.playerId).toBe('b');
     expect(shown?.red).toEqual([uncalled]);
     expect(shown?.cells).toEqual([5, 6, 7, 8, 9]);
-    expect(shown?.missing).toEqual([9]);
+    expect(shown?.missing).toEqual([]); // I-132: 9 had not been called
+    expect(shown?.waiting).toEqual([9]);
     expect(s.round.daubs['b']).toEqual([[]]); // wiped
     expect(s.round.waitForCall['b']).toBe(before + 1);
     // Daubing continues during the check; claims do not.
