@@ -46,6 +46,7 @@ export function enterBingo(
       bingos,
       patternBingos,
       decision: null,
+      heckle: null,
       judged: false,
       judgedAt: null,
     },

@@ -12,6 +12,7 @@ import {
   useSound,
   useSoundApi,
 } from '@partybox/game-sdk/ui';
+import { Avatar } from '@partybox/game-sdk/ui'; // I-135 A: the mate rows carry faces
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { Input } from '../server/types';
 import type { BingoControllerView } from '../server/views';
@@ -292,6 +293,32 @@ export function Controller({
             )}
             {inRound && !sheet && kind !== 'tablet' ? <StylePill onOpen={openMenu} /> : null}
           </div>
+          {/* I-135 A: nothing of mine is live — the phone becomes the caller's mate. */}
+          {view.mates.length > 0 ? (
+            <div className={styles.mates}>
+              <p className={styles.matesHead}>Caller&apos;s mate — the room right now</p>
+              <ul className={styles.matesList}>
+                {view.mates.map((m) => (
+                  <li key={m.id} className={styles.mateRow}>
+                    <Avatar avatarId={m.avatarId} size="var(--pb-chip-size)" />
+                    <b>{m.name}</b>
+                    <span>
+                      {m.toGo} to go{m.where ? ` · ${m.where}` : ''}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+              {/* I-135 B: and a voice — one button, one heckle, twenty seconds. */}
+              <button
+                type="button"
+                className={styles.heckle}
+                disabled={view.heckleReady === false}
+                onClick={() => send({ type: 'heckle' })}
+              >
+                {view.heckleReady === false ? 'Heckle — hold on…' : '📣 Heckle the room'}
+              </button>
+            </div>
+          ) : null}
           {missed ? <MissedToast view={view} count={missed} /> : null}
           {view.phaseId === 'check' && view.claim?.playerId === me.id ? (
             // The note's lines are reserved from the claim (loop 313): filling them at the verdict

@@ -87,6 +87,8 @@ export interface RoundState {
    * celebration is done (the phase deadline), then applied. Never two: the first one counts.
    */
   decision: Decision | null;
+  /** I-135 B: the last heckle fired onto the TV, and when — the 20 s cooldown lives here. */
+  heckle?: { playerId: string; line: string; at: number } | null;
   /**
    * check / bingo: the TV's verdict has landed (the phase's first tick, at the end of the reveal —
    * ADR-033). A win is scored as it flips; the phones show nothing conclusive before it.
@@ -165,6 +167,8 @@ export const inputSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('lapse') }),
   /** The card-style menu opened or closed on this phone; the caller holds while any is open. */
   z.object({ type: z.literal('menu'), open: z.boolean() }),
+  /** I-135 B: the winner's one button during an extension. */
+  z.object({ type: z.literal('heckle') }),
   /** Intro only: one fresh deal per card ("deal me another"); the old card is gone for good. */
   z.object({
     type: z.literal('swap'),
