@@ -201,68 +201,71 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
           </p>
         ) : null}
         {/* I-031 B: the portrait — the chosen face (or the photo), large, beside the name. */}
-        <JoinPortrait avatarId={avatarId} name={name} photo={photo} onPhoto={setPhoto} />
-        <label className={styles.field}>
-          <span className={styles.label}>{t.join.name}</span>
-          <input
-            ref={nameRef}
-            className={`${styles.input} ${nameError ? styles.inputError : ''} ${shaking && nameError ? styles.shake : ''} ${name === '' && !nameFocused ? styles.placeholderFade : ''}`}
-            onAnimationEnd={() => setShaking(false)}
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            aria-invalid={nameError}
-            aria-describedby={nameError ? 'join-error' : undefined}
-            placeholder={placeholder}
-            onFocus={() => setNameFocused(true)}
-            onBlur={() => setNameFocused(false)}
-            maxLength={PLAYER_NAME_MAX}
-            autoComplete="nickname"
-            autoCapitalize="words"
-            enterKeyHint="done"
-            required
-          />
-          {nameError && state.error ? (
-            <span id="join-error" className={styles.error} role="alert">
-              {/* I-040 C: a taken name shows who has it. */}
-              {state.error.player ? (
-                <>
-                  <Avatar avatarId={state.error.player.avatarId} size={22} />
-                  That name is taken — {state.error.player.name} is already in.
-                </>
-              ) : (
-                <>
-                  <span aria-hidden>⚠ </span>
-                  {state.error.message} {t.join.tryAgain}
-                </>
-              )}
-            </span>
-          ) : null}
-        </label>
-        {needsCode ? (
+        {/* I-067 B: sideways, the portrait + field sit in a left column beside the grid. */}
+        <div className={styles.sideways}>
+          <JoinPortrait avatarId={avatarId} name={name} photo={photo} onPhoto={setPhoto} />
           <label className={styles.field}>
-            <span className={styles.label}>{t.join.code}</span>
+            <span className={styles.label}>{t.join.name}</span>
             <input
-              ref={codeRef}
-              className={`${styles.input} ${styles.code} ${codeError ? styles.inputError : ''} ${shaking && codeError ? styles.shake : ''}`}
+              ref={nameRef}
+              className={`${styles.input} ${nameError ? styles.inputError : ''} ${shaking && nameError ? styles.shake : ''} ${name === '' && !nameFocused ? styles.placeholderFade : ''}`}
               onAnimationEnd={() => setShaking(false)}
-              aria-invalid={codeError}
-              aria-describedby={codeError ? 'join-code-error' : undefined}
-              value={code}
-              onChange={(e) => setCode(e.target.value.toUpperCase())}
-              placeholder={t.join.codePlaceholder}
-              maxLength={4}
-              autoCapitalize="characters"
-              autoCorrect="off"
-              spellCheck={false}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              aria-invalid={nameError}
+              aria-describedby={nameError ? 'join-error' : undefined}
+              placeholder={placeholder}
+              onFocus={() => setNameFocused(true)}
+              onBlur={() => setNameFocused(false)}
+              maxLength={PLAYER_NAME_MAX}
+              autoComplete="nickname"
+              autoCapitalize="words"
+              enterKeyHint="done"
+              required
             />
-            {codeError && state.error ? (
-              <span id="join-code-error" className={styles.error} role="alert">
-                <span aria-hidden>⚠ </span>
-                {state.error.message} {t.join.tryAgain}
+            {nameError && state.error ? (
+              <span id="join-error" className={styles.error} role="alert">
+                {/* I-040 C: a taken name shows who has it. */}
+                {state.error.player ? (
+                  <>
+                    <Avatar avatarId={state.error.player.avatarId} size={22} />
+                    That name is taken — {state.error.player.name} is already in.
+                  </>
+                ) : (
+                  <>
+                    <span aria-hidden>⚠ </span>
+                    {state.error.message} {t.join.tryAgain}
+                  </>
+                )}
               </span>
             ) : null}
           </label>
-        ) : null}
+          {needsCode ? (
+            <label className={styles.field}>
+              <span className={styles.label}>{t.join.code}</span>
+              <input
+                ref={codeRef}
+                className={`${styles.input} ${styles.code} ${codeError ? styles.inputError : ''} ${shaking && codeError ? styles.shake : ''}`}
+                onAnimationEnd={() => setShaking(false)}
+                aria-invalid={codeError}
+                aria-describedby={codeError ? 'join-code-error' : undefined}
+                value={code}
+                onChange={(e) => setCode(e.target.value.toUpperCase())}
+                placeholder={t.join.codePlaceholder}
+                maxLength={4}
+                autoCapitalize="characters"
+                autoCorrect="off"
+                spellCheck={false}
+              />
+              {codeError && state.error ? (
+                <span id="join-code-error" className={styles.error} role="alert">
+                  <span aria-hidden>⚠ </span>
+                  {state.error.message} {t.join.tryAgain}
+                </span>
+              ) : null}
+            </label>
+          ) : null}
+        </div>
         <fieldset className={styles.avatars}>
           <legend className={styles.label}>{t.join.avatar}</legend>
           {/* I-031 A: the pick pops (keyed on the pick, so it pops once per change) and the rest

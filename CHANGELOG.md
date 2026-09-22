@@ -5,6 +5,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **The join form sideways is two columns** (I-067, option B): in a short landscape box the
+  portrait and name sit left of the avatar grid and the join button drops to 44 px, so the header
+  and the faces are above the fold.
 - **A phone screen says there is more below** (I-066, option C): the fold fades one cut row deep
   (72 px) and a ▾ pill sits at the body's foot while it can scroll — tapping it scrolls a screen
   down.
