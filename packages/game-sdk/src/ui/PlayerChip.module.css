@@ -228,8 +228,11 @@
   }
 }
 
+/* I-058 A: a spectator is a dashed outline, no fill — a category, not a dimmed player. */
 .spectator {
-  opacity: 0.6;
+  opacity: 0.85;
+  background: transparent;
+  border: 2px dashed var(--pb-text-muted);
 }
 
 /* ── I-045 B + the owner's note: the thinking dots OVER the avatar — the portrait dims to 0.35
@@ -279,4 +282,9 @@
 :global(:root[data-motion='off']) .dots > i {
   animation: none;
   opacity: 0.8;
+}
+
+/* ── I-058 C: the spectator's chip fills in when their game starts. */
+.landed {
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
 }

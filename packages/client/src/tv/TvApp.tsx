@@ -108,6 +108,8 @@ export function TvApp(): JSX.Element {
     paused: boolean;
     code: string;
     locked: number;
+    /** I-058 C: spectators last snapshot; they are players once the next game starts. */
+    spectators: number;
     /** I-009 B: who was offline last snapshot — a drop plays `leave`, a return `join`. */
     offline: Set<string>;
   }>({
@@ -120,6 +122,7 @@ export function TvApp(): JSX.Element {
     paused: false,
     code: '',
     locked: 0,
+    spectators: 0,
   });
   const lastLeaveAt = useRef(-Infinity);
   // I-054 C: a toast the TV raises for itself (the store's shipped toast list, 3 s).
@@ -190,6 +193,9 @@ export function TvApp(): JSX.Element {
     // A game begins: a held G-major arpeggio (the intro itself never chimes — p.phase is null);
     // a TV that reloads mid-game (p.status === '') stays quiet, like the join rule.
     if (room.status === 'playing' && p.status !== 'playing' && p.status !== '') audio.play('start');
+    // I-058 C: the spectators are in — a `join` note for them, after the start.
+    if (room.status === 'playing' && p.status !== 'playing' && p.status !== '' && p.spectators > 0)
+      setTimeout(() => audio.play('join'), 700);
     // The winner moment (owner pick): a party horn with a crowd cheer under it (music ducked).
     if (room.status === 'results' && p.status !== 'results' && !homing) {
       // I-128 C: an all-zero board gets a soft note, not the cheer.
@@ -251,6 +257,7 @@ export function TvApp(): JSX.Element {
       paused,
       code: room.code,
       locked: view && view.phaseId === p.phase ? locked : 0,
+      spectators: room.players.filter((pl) => pl.spectator).length,
     };
   }, [room, view, audio, music, homing, showLocalToast]);
 

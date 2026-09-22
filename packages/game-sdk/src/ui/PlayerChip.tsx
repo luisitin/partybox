@@ -36,7 +36,7 @@ const GLYPH: Record<NonNullable<PlayerChipProps['status']>, { text: string; labe
   submitted: { text: '✓', label: 'submitted' },
   // No glyph: a row of dashes during a reveal carried nothing; the label keeps it for screen readers.
   waiting: { text: '', label: 'waiting' },
-  spectator: { text: '◎', label: 'spectator' },
+  spectator: { text: 'next game', label: 'spectator, in the next game' }, // I-058 B
 };
 
 export function PlayerChip(props: PlayerChipProps): JSX.Element {
@@ -65,6 +65,13 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
     setWasVip(isVip ?? false);
     setJustVip(isVip === true);
   }
+  // I-058 C: a spectator becoming a player — the dashed chip fills in with a pop.
+  const [wasSpectator, setWasSpectator] = useState(status === 'spectator');
+  const [landed, setLanded] = useState(false);
+  if ((status === 'spectator') !== wasSpectator) {
+    setWasSpectator(status === 'spectator');
+    setLanded(status !== 'spectator');
+  }
   // I-009 A: a drop and a return on a mounted chip flicker out / snap back — never on a screen
   // swap (the same 'adjust state when a prop changes' rule as the ★ badge above).
   const [wasConnected, setWasConnected] = useState(connected);
@@ -82,6 +89,7 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
     !connected ? styles.off : '',
     blip === 'off' ? styles.flicker : blip === 'back' ? styles.snap : '',
     status === 'spectator' ? styles.spectator : '',
+    landed ? styles.landed : '',
     locked ? styles.locked : '',
   ].join(' ');
   return (
