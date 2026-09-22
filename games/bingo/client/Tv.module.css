@@ -993,3 +993,13 @@
 :global(:root[data-motion='off']) .armLapsed {
   animation: none;
 }
+/* ── I-108 A: the stray-daubs kicker under the win headline. */
+.strayLine {
+  margin: 0;
+  font-size: var(--pb-font-h2);
+  font-weight: 700;
+  color: var(--pb-text-muted);
+  text-align: center;
+}
+
+/* ── I-108 B: the strays stay red on the winner's card through the win stage (see TvParts). */

@@ -5,6 +5,10 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **A valid bingo with stray daubs gets a kicker** (I-108, option B): "…and 1 daub that was
+  never called — lucky the line was real." (spicy: "one fib and a bingo, Sam — we're watching
+  you.") and the strays stay red on the winner's card through the win stage; the TV view gains
+  `spicy`.
 - **A locked room says so on the QR panel** (I-055, option A): "Room locked" replaces "Scan to
   join" and the code, URL and "or open" dim — the full-room treatment.
 - **"Remove all 13 bots"** (I-048, option A): from four bots the host bar's button takes the
