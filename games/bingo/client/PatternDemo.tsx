@@ -43,6 +43,7 @@ export function litAt(shapes: { cells: number[]; at: number }[], t: number): Set
 }
 
 export function PatternDemo({
+  delayMs = 0,
   pattern,
   cells,
   size = 200,
@@ -53,6 +54,8 @@ export function PatternDemo({
   size?: number;
   /** The first pass thumps each cell as it lights (`daub`) — the TV's between-rounds preview. */
   thump?: boolean;
+  /** I-103 C: hold the first pass this long (the board ranks first). */
+  delayMs?: number;
 }): JSX.Element {
   const reduced = usePrefersReducedMotion();
   const shapes = demoShapes(pattern, cells);
@@ -66,11 +69,12 @@ export function PatternDemo({
   const cellsKey = cells.join(',');
   useEffect(() => {
     if (reduced) return;
-    const started = Date.now();
+    const started = Date.now() + delayMs; // I-103 C: the first pass waits for the board
     const shapes = demoShapes(pattern, cellsKey.split(',').map(Number));
     let lit = 0;
     const handle = setInterval(() => {
       const elapsed = Date.now() - started;
+      if (elapsed < 0) return; // I-103 C: holding
       setT(elapsed % loopMs);
       if (thump && elapsed < loopMs) {
         const n = litAt(shapes, elapsed).size;

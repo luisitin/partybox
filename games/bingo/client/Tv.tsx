@@ -12,6 +12,19 @@ import type { BingoTvView } from '../server/views';
 import { BALL_LAND_MS, hushCaller, speakCall } from './caller';
 import { PATTERN_LABEL, patternCells } from '../server/patterns';
 import { PatternIcon } from './Card';
+
+/** I-103 A: where every row stood before this round's points — pre-delta wins, ties in roster
+ *  order (the I-027 rule Wisecrack uses). */
+function climbFrom(view: BingoTvView): string[] {
+  const roster = new Map(view.players.map((p, i) => [p.id, i]));
+  return [...view.standings]
+    .sort(
+      (a, b) =>
+        b.wins - b.delta - (a.wins - a.delta) ||
+        (roster.get(a.playerId) ?? 0) - (roster.get(b.playerId) ?? 0),
+    )
+    .map((r) => r.playerId);
+}
 import { PatternDemo } from './PatternDemo';
 import { pendingLine, whyNot, winHeadline } from './copy';
 import { hopelessClaim } from '../server/reveal';
@@ -313,13 +326,14 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
         <div className={styles.boardRow}>
           {next ? (
             <div className={styles.nextUp}>
-              <PatternDemo pattern={next} cells={patternCells(next)} size={216} thump />
+              <PatternDemo pattern={next} cells={patternCells(next)} size={216} thump delayMs={1800} /* I-103 C */ />
               <BigText level="h2" tone="accent">
                 Next: round {view.round + 1} — {PATTERN_LABEL[next]}
               </BigText>
             </div>
           ) : null}
-          <Scoreboard rows={rows(view)} noTrophy />
+          {/* I-103 A: the rank lands WITH the points — rows climb from where they stood. */}
+          <Scoreboard rows={rows(view)} noTrophy stagger="climb" climbFrom={climbFrom(view)} holdMs={600} />
         </div>
       </Stage>
     );
