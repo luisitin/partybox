@@ -25,9 +25,14 @@ export function botsOf(room: RoomState, ownerId: string | null): RoomPlayer[] {
  * "<Owner>'s bot", "<Owner>'s bot 2", …; ownerless bots are "Bot 1", "Bot 2", … (a lone "Bot" next to
  * "Bot 2" read as a typo on the TV strip — review-loop #1). Unique per room, case-insensitive.
  */
+// I-052 A: a short bank of bot names, unique per room; "Bot n" only once the bank is spent.
+const BOT_NAMES = ['Beep', 'Clank', 'Widget', 'Sprocket', 'Gizmo', 'Pixel', 'Bolt', 'Tock', 'Rivet', 'Dot', 'Nova', 'Chip'];
+
 function botName(room: RoomState, owner: RoomPlayer | null): string {
-  const base = owner ? `${owner.name}'s bot` : 'Bot';
   const taken = new Set(Object.values(room.players).map((p) => nameKey(p.name)));
+  const free = BOT_NAMES.find((n) => !taken.has(nameKey(owner ? `${owner.name}'s ${n}` : n)));
+  if (free) return owner ? `${owner.name}'s ${free}` : free;
+  const base = owner ? `${owner.name}'s bot` : 'Bot';
   for (let n = 1; n < 100; n++) {
     const candidate = n === 1 && owner ? base : `${base} ${n}`;
     if (!taken.has(nameKey(candidate))) return candidate;
