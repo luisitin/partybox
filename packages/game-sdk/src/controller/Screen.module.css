@@ -82,9 +82,29 @@
 @keyframes pb-fold {
   0%,
   92% {
-    --pb-fold: 28px;
+    --pb-fold: 72px; /* I-066 A: one cut row deep */
   }
   100% {
     --pb-fold: 0px;
   }
+}
+
+/* ── I-066 B: the "more below" chevron — a small pill at the body's foot while it can scroll. */
+.more {
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--pb-space-3) + 60px + env(safe-area-inset-bottom));
+  translate: -50% 0;
+  z-index: 2;
+  width: 32px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--pb-surface-2);
+  color: var(--pb-text-muted);
+  font-size: 14px;
+  line-height: 1;
+  pointer-events: auto;
+  animation: global(pb-fade-in) var(--pb-motion-base) var(--pb-ease) both;
 }

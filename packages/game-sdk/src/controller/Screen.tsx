@@ -6,7 +6,7 @@
 // even a frame later — rises under the old picture instead of after a blank. Imperative on purpose
 // (no state, no extra render) so the ghost is there from the first frame; StrictMode's simulated
 // unmount leaves the node connected and is ignored. Reduced motion: no ghost.
-import { useLayoutEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import type { JSX, ReactNode } from 'react';
 import { sanitizeSnapshot, usePrefersReducedMotion } from '../ui/motion';
 import styles from './Screen.module.css';
@@ -24,6 +24,23 @@ const GHOST = styles['ghost'] ?? 'ghost';
 
 export function Screen({ children, footer, title, className }: ScreenProps): JSX.Element {
   const section = useRef<HTMLElement>(null);
+  // I-066 B: "more below" — true while the body can scroll further (scroll + resize watched).
+  const body = useRef<HTMLDivElement>(null);
+  const [more, setMore] = useState(false);
+  useEffect(() => {
+    const el = body.current;
+    if (!el) return undefined;
+    const check = (): void =>
+      setMore(el.scrollHeight - el.clientHeight - el.scrollTop > 24);
+    check();
+    el.addEventListener('scroll', check, { passive: true });
+    const ro = new ResizeObserver(check);
+    ro.observe(el);
+    return () => {
+      el.removeEventListener('scroll', check);
+      ro.disconnect();
+    };
+  }, []);
   const reduced = usePrefersReducedMotion();
   useLayoutEffect(() => {
     const el = section.current;
@@ -45,7 +62,19 @@ export function Screen({ children, footer, title, className }: ScreenProps): JSX
   return (
     <section ref={section} className={`${styles.screen} ${className ?? ''}`}>
       {title ? <h2 className={styles.title}>{title}</h2> : null}
-      <div className={styles.body}>{children}</div>
+      <div ref={body} className={styles.body}>
+        {children}
+      </div>
+      {more ? (
+        <button
+          type="button"
+          className={styles.more}
+          aria-label="scroll down"
+          onClick={() => body.current?.scrollBy({ top: body.current.clientHeight * 0.8, behavior: 'smooth' })}
+        >
+          ▾
+        </button>
+      ) : null}
       {footer ? <div className={styles.footer}>{footer}</div> : null}
     </section>
   );
