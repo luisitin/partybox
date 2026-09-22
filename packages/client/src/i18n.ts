@@ -76,6 +76,11 @@ export const t = {
     winners: (names: string) => `${names} win!`,
     tieAmong: (names: string, others: number) =>
       `${names} & ${others} ${others === 1 ? 'other' : 'others'} tie!`,
+    /** I-153 B: bots tied with people take no naming slot. */
+    tieWithBots: (names: string, bots: number) =>
+      `${names} & the ${bots === 1 ? 'bot' : 'bots'} tie!`,
+    /** I-153 C: nobody human was in this one. */
+    botTie: 'The bots tie \u2014 nobody home?',
     tie: "It's a tie!",
     over: 'Game over',
     show: "That's the show!",
