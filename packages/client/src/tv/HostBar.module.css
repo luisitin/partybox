@@ -79,3 +79,17 @@
   border-color: var(--pb-danger);
   color: var(--pb-danger);
 }
+
+/* ── I-053 A: the label turns over (keyed: a fade-in per game). */
+.turn {
+  display: inline-block;
+  animation: global(pb-fade-in) var(--pb-motion-base) var(--pb-ease) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .turn {
+    animation: none;
+  }
+}
+:global(:root[data-motion='off']) .turn {
+  animation: none;
+}

@@ -5,6 +5,8 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **The host bar advertises the shelf** (I-053, option B): the game button turns its label over
+  every 2.2 s — Pick a game → Bingo → Blanks … — with a glyph per game.
 - **A beat between phone screens** (I-039, option C): the outgoing ghost fades alone for 200 ms
   before the next screen rises (`CrossfadeSwap` `delayMs` → `--pb-screen-delay`), and Lightning's
   final question carries "· you bet 240" in its kicker.
