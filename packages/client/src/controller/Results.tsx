@@ -90,10 +90,19 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
       {room.results?.results.awards.length ? (
         <ul className={styles.awards}>
           {room.results.results.awards.map((a) => (
-            <li key={a.id} className={styles.award}>
+            <li key={a.id} className={`${styles.award} ${a.playerId === me.id ? styles.awardMine : ''}`.trim()}>
               <span>
-                <strong>{a.title}</strong> ·{' '}
-                {room.results?.players.find((p) => p.id === a.playerId)?.name ?? '?'}
+                {/* I-155 A: the screen already knows whose hand it is in — the award should too. */}
+                {a.playerId === me.id ? (
+                  <>
+                    <strong>Your {a.title.charAt(0).toLowerCase()}{a.title.slice(1)}</strong>
+                  </>
+                ) : (
+                  <>
+                    <strong>{a.title}</strong> ·{' '}
+                    {room.results?.players.find((p) => p.id === a.playerId)?.name ?? '?'}
+                  </>
+                )}
               </span>
               <span className="pb-muted pb-caption">{a.description}</span>
             </li>
