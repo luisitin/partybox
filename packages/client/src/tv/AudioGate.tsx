@@ -100,6 +100,10 @@ export function AudioGate({ audio, music, beds }: AudioGateProps): JSX.Element {
     void document.documentElement.requestFullscreen?.();
   };
   const soundOn = started && !muted;
+  // I-065 A: the document knows whether sound is on — ambient motion follows it.
+  useEffect(() => {
+    document.documentElement.dataset['sound'] = soundOn ? 'on' : 'off';
+  }, [soundOn]);
   return (
     <>
       {showPill ? (
