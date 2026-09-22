@@ -14,6 +14,7 @@ import {
 } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { Input } from '../server/types';
+import { looksComplete } from '../server/patterns';
 import type { BingoControllerView } from '../server/views';
 import { Card } from './Card';
 import { PatternDemo } from './PatternDemo';
@@ -110,6 +111,9 @@ export function Controller({
     setSwaps(0);
   });
   const missed = useMissedCalls(view);
+  // I-123 B: exactly one card complete → the footer's single BINGO! claims it.
+  const hot = (cards ?? []).map((_c, i) => i).filter((i) => looksComplete(view.pattern, view.daubs[i] ?? []) && !view.won.includes(i));
+  const oneHot = hot.length === 1 ? (hot[0] ?? -1) : -1;
   // The sheet holds the caller for everyone: the server hears it open and close.
   const openMenu = (): void => {
     setSheet(view.phaseId === 'intro' ? 'intro' : 'round');
@@ -264,6 +268,15 @@ export function Controller({
         footer={
           roundOver ? (
             <DecideFooter view={view} send={send} />
+          ) : !focus && !turn && oneHot >= 0 ? (
+            // I-123 B: one loud button at the bottom, naming the card it will claim.
+            <BingoButton
+              view={view}
+              card={oneHot}
+              send={send}
+              meId={me.id}
+              verdictShown={verdictShown}
+            />
           ) : focus && !turn ? (
             <BingoButton
               view={view}
