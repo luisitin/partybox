@@ -12,6 +12,14 @@ import type { BingoTvView } from '../server/views';
 import { BALL_LAND_MS, hushCaller, speakCall } from './caller';
 import { PATTERN_LABEL, patternCells } from '../server/patterns';
 import { PatternIcon } from './Card';
+
+/** I-107 C: which line a completion is — a row, a column (by its letter) or a diagonal. */
+function lineName(cells: number[]): string {
+  const s = [...cells].sort((a, b) => a - b);
+  if (s.every((c, i) => i === 0 || c - (s[i - 1] ?? 0) === 1)) return `row ${Math.floor((s[0] ?? 0) / 5) + 1}`;
+  if (s.every((c) => c % 5 === (s[0] ?? 0) % 5)) return `the ${'BINGO'[(s[0] ?? 0) % 5]} column`;
+  return 'the diagonal';
+}
 import { PatternDemo } from './PatternDemo';
 import { pendingLine, whyNot, winHeadline } from './copy';
 import { hopelessClaim } from '../server/reveal';
@@ -233,10 +241,12 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
                   </p>
                 ) : null}
                 <p className={styles.winLine}>
-                  <PatternIcon cells={view.patternCells} size={72} />
+                  {/* I-107 A: the icon lights the line that actually won, not the example row. */}
+                  <PatternIcon cells={view.claim.cells} size={72} draw />
                   <span>
                     {/* No "round N" here: the kicker above the card says it (loop 337). */}
-                    {view.patternLabel} on call {view.callIndex} · +{view.claimPoints}{' '}
+                    {view.patternLabel}
+                    {view.pattern === 'line' ? ` (${lineName(view.claim.cells)})` : ''} on call {view.callIndex} · +{view.claimPoints}{' '}
                     {view.claimPoints === 1 ? 'point' : 'points'}
                     {whichCard(view.claim)}
                   </span>
