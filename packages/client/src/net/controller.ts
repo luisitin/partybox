@@ -97,6 +97,8 @@ export interface Controller {
   vip(action: VipAction): void;
   /** Add a bot you own, or remove one of yours (VIPs may remove any). */
   bot(action: BotAction): void;
+  /** I-070 A: nudge the VIP (lobby only; the server rate-limits it). */
+  nudge(): void;
   leave(): void;
   dismissError(): void;
   dismissToast(id: number): void;
@@ -319,6 +321,9 @@ export function createController(url?: string): Controller {
     },
     bot(action) {
       socket.emit('bot', action);
+    },
+    nudge() {
+      socket.emit('nudge', {});
     },
     leave() {
       socket.emit('leave', {});

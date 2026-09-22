@@ -87,6 +87,8 @@ export type RoomEvent =
   | { type: 'bot-remove'; now: number; ownerId: string | null; botId: string }
   | { type: 'disconnect'; now: number; playerId: string }
   | { type: 'leave'; now: number; playerId: string }
+  /** I-070 A: a waiting player nudges the VIP — a toast to everyone that names the sender. */
+  | { type: 'nudge'; now: number; playerId: string }
   | {
       type: 'vip';
       now: number;
