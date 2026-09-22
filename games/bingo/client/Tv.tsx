@@ -233,7 +233,8 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
                   </p>
                 ) : null}
                 <p className={styles.winLine}>
-                  <PatternIcon cells={view.patternCells} size={72} />
+                  {/* I-107 A: the icon lights the line that actually won, not the example row. */}
+                  <PatternIcon cells={view.claim.cells} size={72} />
                   <span>
                     {/* No "round N" here: the kicker above the card says it (loop 337). */}
                     {view.patternLabel} on call {view.callIndex} · +{view.claimPoints}{' '}
