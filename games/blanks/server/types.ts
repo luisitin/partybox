@@ -32,6 +32,8 @@ export interface Settings {
 export interface Stats {
   /** playerId → votes received over the game (Crowd favourite). */
   votesReceived: Record<string, number>;
+  /** I-155 C: playerId → votes received in each round, for the phone's own receipt. */
+  roundVotes: Record<string, number[]>;
   /** playerId → cards played before half the answer time (Quick draw). */
   fastPlays: Record<string, number>;
   /** The night's best-liked card: the most votes any one card took, kept for the final board.

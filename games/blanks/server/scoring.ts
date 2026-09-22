@@ -24,6 +24,10 @@ export function applyRound(state: State): State {
         votes: row.votes,
         round: state.round,
       };
+  // I-155 C: what each player took this round, kept round by round.
+  const roundVotes = { ...state.stats.roundVotes };
+  for (const id of Object.keys(state.players))
+    roundVotes[id] = [...(roundVotes[id] ?? []), tally(state).find((r) => r.submitterId === id)?.votes ?? 0];
   for (const id of winners)
     if (id !== RANDO && Object.hasOwn(state.players, id))
       scores[id] = (scores[id] ?? 0) + WIN_POINTS;
@@ -47,7 +51,7 @@ export function applyRound(state: State): State {
     ...state,
     winners,
     scores,
-    stats: { ...state.stats, votesReceived, best, streak, bestRun },
+    stats: { ...state.stats, votesReceived, roundVotes, best, streak, bestRun },
   };
 }
 
@@ -136,5 +140,9 @@ export function standings(state: State): StandingRow[] {
 
 export function results(state: State): GameResults | null {
   if (state.phase.id !== 'done') return null;
-  return buildResults(state, state.scores, awardsFor(state));
+  return {
+    ...buildResults(state, state.scores, awardsFor(state)),
+    // I-155 C: the phone's receipt reads this; the TV ignores it.
+    perRoundVotes: state.stats.roundVotes,
+  };
 }

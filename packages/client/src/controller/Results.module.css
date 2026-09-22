@@ -52,3 +52,14 @@
   flex-direction: column;
   gap: var(--pb-space-1);
 }
+
+/* \u2500\u2500 I-155 A: your own award reads as yours. */
+.awardMine strong {
+  color: var(--pb-accent);
+}
+
+.myVotes {
+  margin-top: var(--pb-space-2);
+  color: var(--pb-muted, rgba(255, 255, 255, 0.7));
+  font-variant-numeric: tabular-nums;
+}
