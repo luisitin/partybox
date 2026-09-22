@@ -8,6 +8,31 @@
     />
     <meta name="color-scheme" content="dark" />
     <title>PartyBox</title>
+    <!-- I-084 A: the first paint is already the app's dark, before any JS. -->
+    <style>
+      html,
+      body {
+        margin: 0;
+        background: #0f1020;
+        color: #f3f4ff;
+      }
+      /* I-084 B: the remembered theme's background, set by the inline script below. */
+      html[data-theme='daylight'] { background: #f6f5ff; }
+      html[data-theme='daylight'] body { background: #f6f5ff; color: #1a1630; }
+      html[data-theme='arcade'] { background: #050014; }
+      html[data-theme='arcade'] body { background: #050014; }
+      html[data-theme='cabin'] { background: #1d1410; }
+      html[data-theme='cabin'] body { background: #1d1410; }
+      html[data-theme='contrast'] { background: #000000; }
+      html[data-theme='contrast'] body { background: #000000; }
+    </style>
+    <!-- I-084 B: paint the remembered theme before the bundle (the app sets the same attribute). -->
+    <script>
+      try {
+        var t = localStorage.getItem('partybox:theme');
+        if (t && t !== 'night') document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    </script>
   </head>
   <body>
     <div id="root"></div>
