@@ -110,6 +110,15 @@ export function VipMenu({ controller, room, me, paused, onClose }: VipMenuProps)
             >
               {room.locked ? t.vip.unlock : t.vip.lock}
             </PrimaryButton>
+            {/* The owner (2026-09-22): public rooms show up in the join page's list; a private
+                room still joins by code. */}
+            <PrimaryButton
+              tone="neutral"
+              className={styles.wide}
+              onClick={() => controller.vip({ action: 'setListed', on: !room.listed })}
+            >
+              {room.listed ? '🔓 Public — listed for anyone' : '🔒 Private — code only'}
+            </PrimaryButton>
           </div>
         </section>
         <section className={`${styles.section} ${styles.sectionPlayers}`}>

@@ -174,6 +174,11 @@ export function applyVip(
       if (room.musicOnPhones === action.on) return { room, effects: [] };
       return { room: { ...room, musicOnPhones: action.on }, effects: [{ type: 'push' }] };
     }
+    case 'setListed': {
+      // The owner (2026-09-22): public rooms are browsable; a private one still joins by code.
+      if (room.listed === action.on) return { room, effects: [] };
+      return { room: { ...room, listed: action.on }, effects: [{ type: 'push' }] };
+    }
     case 'setPhoneOnly': {
       // S-005: like the recap switch — any time but mid-game.
       if (room.status === 'playing')

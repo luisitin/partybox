@@ -58,6 +58,8 @@ export interface RoomState {
   recording: boolean;
   /** S-004: the VIP's room-wide phone-music switch. */
   musicOnPhones: boolean;
+  /** The owner (2026-09-22): shown in the join page's room list. */
+  listed: boolean;
   /** S-005: "phone only" — the TV's moments go to the phones. */
   phoneOnly: boolean;
 }

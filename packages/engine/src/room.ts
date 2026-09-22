@@ -13,6 +13,8 @@ export interface CreateRoomOptions {
   code: string;
   now: number;
   capacity?: number;
+  /** The owner (2026-09-22): private rooms (listed: false) are join-by-code only. */
+  listed?: boolean;
 }
 
 export function createRoom(options: CreateRoomOptions): RoomState {
@@ -32,6 +34,7 @@ export function createRoom(options: CreateRoomOptions): RoomState {
     lastGame: null,
     recording: true,
     musicOnPhones: false,
+    listed: options.listed ?? true,
     phoneOnly: false,
   };
 }

@@ -19,7 +19,7 @@ import type {
   ViewPush,
   WelcomePayload,
 } from '@partybox/shared';
-import { createRng, roomCodeFrom } from '@partybox/shared';
+import { createRng, isRoomCode, roomCodeFrom } from '@partybox/shared';
 import type { Clock } from './clock';
 
 export interface Transport {
@@ -49,7 +49,13 @@ export interface Host {
   get(code: string): RoomState | undefined;
   /** The room phones auto-join when it is the only open one. */
   house(): RoomState;
-  createRoom(): RoomState;
+  /**
+   * The owner (2026-09-22): a phone can open its own room — with a code it picked, when that code
+   * is free. Throws 'taken' / 'invalid' so the route can answer properly.
+   */
+  createRoom(options?: { code?: string; listed?: boolean }): RoomState;
+  /** Drops an empty room (never the house room) — the idle reaper behind POST /api/rooms. */
+  drop(code: string): void;
   dispatch(code: string, event: HostEvent): ApplyResult | undefined;
   /** Re-sends the current snapshot/views (a TV or phone that just connected). */
   resend(code: string, playerId?: string): void;
@@ -188,10 +194,16 @@ export function createHost(options: HostOptions): Host {
     return result;
   }
 
-  function createNewRoom(): RoomState {
-    let code = roomCodeFrom(codeRng);
-    while (rooms.has(code)) code = roomCodeFrom(codeRng);
-    const room = createRoom({ code, now: clock.now() });
+  function createNewRoom(options?: { code?: string; listed?: boolean }): RoomState {
+    let code = options?.code?.trim().toUpperCase() ?? '';
+    if (code) {
+      if (!isRoomCode(code)) throw new Error('invalid');
+      if (rooms.has(code)) throw new Error('taken');
+    } else {
+      code = roomCodeFrom(codeRng);
+      while (rooms.has(code)) code = roomCodeFrom(codeRng);
+    }
+    const room = createRoom({ code, now: clock.now(), listed: options?.listed ?? true });
     rooms.set(code, room);
     return room;
   }
@@ -222,6 +234,15 @@ export function createHost(options: HostOptions): Host {
     get: (code) => rooms.get(code),
     house: () => rooms.get(houseCode) as RoomState,
     createRoom: createNewRoom,
+    drop: (code) => {
+      const room = rooms.get(code);
+      if (!room || code === houseCode || Object.keys(room.players).length > 0) return;
+      const handle = timers.get(code);
+      if (handle) clearTimeout(handle);
+      timers.delete(code);
+      rooms.delete(code);
+      lastTvView.delete(code);
+    },
     dispatch,
     resend(code, playerId) {
       const room = rooms.get(code);

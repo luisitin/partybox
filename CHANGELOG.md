@@ -4,7 +4,18 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ## [Unreleased]
 
+### Changed
+
+- The join screen's language pills moved to the top-right corner, beside the title, and the "more
+  below" chevron grew from 32x22 to 56x40 so a thumb can actually hit it (the owner, 2026-09-22).
+
 ### Added
+
+- **Open your own room, and browse the open ones** (the owner, 2026-09-22 — ADR-043): the join
+  screen lists the public rooms (code, who is in, locked/playing) and opens a new one — with a code
+  you typed or one the host picks — through `POST /api/rooms`. The ★ VIP menu flips a room between
+  **🔓 Public** (listed) and **🔒 Private** (join by code only). Empty phone-made rooms are reaped
+  after 10 minutes; a host keeps at most 12.
 - **A first-time VIP gets three tips** (I-082, option C): a rotating strip under "You're the VIP"
   on the first room a browser hosts (bots · the ★ menu · recaps), retiring each tip as it is
   learned, ✕ to end it for good, and 💡 in the ★ menu to bring it back for the next host.

@@ -12,6 +12,7 @@ import type { SoundEngine } from '../sound';
 import styles from './Join.module.css';
 import { JoinLangs } from './JoinLangs';
 import { JoinPortrait } from './JoinPortrait';
+import { RoomPicker } from './RoomPicker';
 import { joinGrid, roomFromUrl } from './joinUrl';
 
 export interface JoinProps {
@@ -153,7 +154,12 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
   return (
     <form className={`${styles.form} ${roomError ? styles.formDim : ''}`} onSubmit={submit}>
       <Screen
-        title={j.title}
+        title={
+          <span className={styles.head}>
+            <span className={styles.headTitle}>{j.title}</span>
+            <JoinLangs lang={lang} onPick={setLang} />
+          </span>
+        }
         footer={
           <>
             {/* I-056 B: a room rejection lands where the action is — above the button. */}
@@ -268,6 +274,8 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
               ) : null}
             </label>
           ) : null}
+          {/* The owner (2026-09-22): which rooms are open, and a way to open your own. */}
+          {needsCode ? <RoomPicker info={info} code={code} onPick={setCode} /> : null}
         </div>
         <fieldset className={styles.avatars}>
           <legend className={styles.label}>{j.avatar}</legend>
@@ -298,7 +306,6 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
             ))}
           </div>
         </fieldset>
-        <JoinLangs lang={lang} onPick={setLang} />
       </Screen>
       {/* I-059 A: a tablet's spare width is a preview stage — your chip as the room will see it. */}
       <aside className={styles.stage} aria-label="preview">

@@ -59,6 +59,8 @@ export const vipPayloadSchema = z.discriminatedUnion('action', [
   z.object({ action: z.literal('setMusicOnPhones'), on: z.boolean() }),
   /** S-005: the room's "phone only" mode; any time but mid-game. */
   z.object({ action: z.literal('setPhoneOnly'), on: z.boolean() }),
+  /** The owner (2026-09-22): whether this room shows up in the join page's room list. */
+  z.object({ action: z.literal('setListed'), on: z.boolean() }),
 ]);
 export type VipAction = z.infer<typeof vipPayloadSchema>;
 
@@ -136,6 +138,9 @@ export interface RoomSnapshot {
   musicOnPhones: boolean;
   /** S-005: "phone only" — games hand the phones what the TV would show; set by the VIP. */
   phoneOnly: boolean;
+  /** The owner (2026-09-22): a listed ("public") room appears in the join page's room list; a
+   *  private one can still be joined by anyone who knows its code. */
+  listed: boolean;
 }
 
 export interface WelcomePayload {

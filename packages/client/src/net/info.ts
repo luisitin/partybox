@@ -11,7 +11,15 @@ export interface ServerInfo {
   tvUrl: string;
   joinUrl: string;
   qrSvg: string;
-  rooms: { code: string; locked: boolean; players: number; names?: string[] }[];
+  rooms: {
+    code: string;
+    locked: boolean;
+    players: number;
+    names?: string[];
+    /** The owner (2026-09-22): a private room is left out of the join page's room list. */
+    listed?: boolean;
+    status?: 'lobby' | 'selecting' | 'playing' | 'results';
+  }[];
   /** I-034 B: the last finished recap, when the host keeps them. */
   lastRecap?: { gameId: string; code: string } | null;
   /** I-077 C: the house room's join funnel — phones that opened the join page vs. got in. */

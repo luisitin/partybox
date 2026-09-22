@@ -75,6 +75,7 @@ export function snapshot(room: RoomState, deps: EngineDeps): RoomSnapshot {
     canStart: canStart(room, deps),
     recording: room.recording,
     musicOnPhones: room.musicOnPhones,
+    listed: room.listed,
     phoneOnly: room.phoneOnly,
   };
 }
