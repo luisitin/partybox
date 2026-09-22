@@ -86,6 +86,9 @@ export interface SoundEngineOptions {
   muteKey?: string;
   /** Called when a cue actually starts (not muted): the TV ducks its music bed under it. */
   onPlay?: (cue: SoundCue) => void;
+  /** Called when a clip (a caller's voice) starts, with its length in ms: the phone's music
+   *  ducks under it (the owner, 2026-09-21: "the caller voice is too quiet on phone"). */
+  onClip?: (ms: number) => void;
 }
 
 export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine {
@@ -117,6 +120,7 @@ export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine
     void buffer(sample.src).then((buf) => {
       if (!buf || !ctx || muted || ctx.state !== 'running') return;
       if (track && gen !== hushGen) return;
+      if (track) options.onClip?.(Math.round(buf.duration * 1000) + Math.max(0, sample.at * 1000));
       const source = ctx.createBufferSource();
       const gain = ctx.createGain();
       source.buffer = buf;
@@ -133,7 +137,9 @@ export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine
           start + sample.fadeAt + (sample.fadeMs ?? 2000) / 1000,
         );
       }
-      source.connect(gain).connect(master ?? ctx.destination);
+      // A tracked clip is a voice (the caller): it goes to the destination at its own level,
+      // never through the phone's 0.35 cue master, so it sits above the phone's music.
+      source.connect(gain).connect(track ? ctx.destination : (master ?? ctx.destination));
       source.start(start, sample.offset ?? 0);
     });
   };

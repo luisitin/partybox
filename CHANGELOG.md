@@ -5,6 +5,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **The caller is louder than the music on a phone** (the owner, 2026-09-21): a voice clip on a
+  phone bypasses the 0.35 cue master and the phone's music ducks to 30 % for the clip's length;
+  the dev API's `vip` route accepts every VIP action.
 - **"Phone only" rooms** (S-005, option C): a VIP switch on the picker; Bingo's check — the claim,
   the card turning over, the verdict — plays on every phone (`PhoneStage` + `phoneStagePhases`,
   a client-module hook), each call is spoken by the caller on the phones, and the TV's phase cues

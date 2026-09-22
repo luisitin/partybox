@@ -253,7 +253,8 @@ export function createMusicEngine(): MusicEngine {
       if (!el || !plan) return;
       trace('music:duck', { ms });
       const level = levelOf(plan, last);
-      rampTo(el, level * 0.3, 400);
+      // a short duck (a caller's one-second call on a phone) dips fast enough to matter
+      rampTo(el, level * 0.3, Math.min(400, Math.max(80, ms / 4)));
       setTimeout(() => {
         if (audio === el && !el.paused) rampTo(el, level, 1500);
       }, ms);

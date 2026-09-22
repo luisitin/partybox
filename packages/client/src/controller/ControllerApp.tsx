@@ -14,6 +14,7 @@ import { Join } from './Join';
 import { useSyncExternalStore } from 'react';
 import type { PushedView, TvView } from '@partybox/shared';
 import { clientGames } from '../games.generated';
+import type { MusicEngine } from '../music';
 import {
   createMusicEngine,
   planFor,
@@ -36,8 +37,18 @@ function controllerInstance(): Controller {
 // The phone's own cues (submit, error, a game's verdict card) — quiet, so the TV stays the
 // audible focal point of the room; the phone never plays the TV's join/phase/win cues.
 let sound: SoundEngine | null = null;
+// The caller's voice ducks the phone's music while it speaks (S-005 + the owner, 2026-09-21:
+// "the caller voice is too quiet on phone … louder than background music"): the voice itself
+// bypasses the 0.35 cue master (sound.ts), and the music dips for the clip's length.
+let phoneMusic: MusicEngine | null = null;
 function soundInstance(): SoundEngine {
-  sound = sound ?? createSoundEngine({ master: 0.35, muteKey: PHONE_MUTE_KEY });
+  sound =
+    sound ??
+    createSoundEngine({
+      master: 0.35,
+      muteKey: PHONE_MUTE_KEY,
+      onClip: (ms) => phoneMusic?.duck(ms + 300),
+    });
   return sound;
 }
 
@@ -46,6 +57,12 @@ export function ControllerApp(): JSX.Element {
   const audio = useMemo(() => soundInstance(), []);
   // S-004: music on this phone — the TV's plan, on the phone's own engine, while the switch is on.
   const music = useMemo(() => createMusicEngine(), []);
+  useEffect(() => {
+    phoneMusic = music;
+    return () => {
+      phoneMusic = null;
+    };
+  }, [music]);
   const musicOn = useSyncExternalStore(subscribePhoneMusic, phoneMusicOn, () => false);
   const musicLevel = useSyncExternalStore(
     subscribePhoneMusic,

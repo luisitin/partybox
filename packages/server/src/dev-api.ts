@@ -7,7 +7,7 @@ import type { EngineDeps } from '@partybox/engine';
 import { nextWakeAt } from '@partybox/engine';
 import { createRng, z } from '@partybox/shared';
 import type { BotManager } from './bots';
-import { BOT_STRATEGIES } from '@partybox/shared';
+import { BOT_STRATEGIES, vipPayloadSchema } from '@partybox/shared';
 import type { Clock } from './clock';
 import type { Host } from './host';
 import type { Recorder } from './recorder';
@@ -42,7 +42,8 @@ const loadStateBody = z.object({
   settings: z.record(z.string(), z.union([z.number(), z.boolean(), z.string()])).optional(),
 });
 const actBody = z.object({ playerId: z.string().optional(), seed: z.number().int().optional() });
-const vipBody = z.object({ action: z.enum(['pause', 'resume', 'skip', 'end']) });
+// Any VIP action (the full protocol schema): the harness flips room switches too (S-004/S-005).
+const vipBody = vipPayloadSchema;
 const clockBody = z.object({ freeze: z.boolean(), now: z.number().optional() });
 const disconnectBody = z.object({ playerId: z.string(), seconds: z.number().min(0).max(3600) });
 const previewQuery = z.object({
@@ -147,7 +148,7 @@ export function registerDevApi(app: FastifyInstance, options: DevApiOptions): vo
     const result = host.dispatch(code, {
       type: 'vip',
       playerId: vip,
-      action: { action: body.data.action },
+      action: body.data,
     });
     return { ok: true, effects: result?.effects ?? [] };
   });
