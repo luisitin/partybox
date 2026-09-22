@@ -260,3 +260,34 @@
 }
 
 /* ── I-055 A: a locked room on the QR panel (the full treatment: title in the accent, code dim). */
+
+/* ── I-065 A: sound off stills the room — the glows pause, grey and dim until the first tap
+   (or while muted). Filter on two fixed spans only. */
+:global(:root[data-sound='off']) .glow > span {
+  animation-play-state: paused;
+  filter: grayscale(1);
+  opacity: 0.1;
+}
+
+/* ── I-065 B: the wake — one swell as sound comes on, on top of the drift. */
+:global(:root[data-sound='on']) .glowA {
+  animation:
+    pb-glow-a 14s ease-in-out infinite alternate,
+    pb-glow-wake var(--pb-motion-slow) var(--pb-ease) both;
+}
+:global(:root[data-sound='on']) .glowB {
+  animation:
+    pb-glow-b 17s ease-in-out infinite alternate,
+    pb-glow-wake var(--pb-motion-slow) var(--pb-ease) both;
+}
+@keyframes pb-glow-wake {
+  0% {
+    opacity: 0.1;
+  }
+  45% {
+    opacity: 0.34;
+  }
+  100% {
+    opacity: 0.18;
+  }
+}
