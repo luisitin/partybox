@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { FormEvent, JSX } from 'react';
 import { AVATAR_IDS, PLAYER_NAME_MAX } from '@partybox/shared';
 import { Avatar, PrimaryButton, Screen } from '@partybox/game-sdk/ui';
-import { t } from '../i18n';
+import { joinStrings } from '../i18n';
 import type { Controller, ControllerState } from '../net/controller';
 import { useServerInfo } from '../net/info';
 import type { SoundEngine } from '../sound';
@@ -27,6 +27,8 @@ function roomFromUrl(): string | null {
 }
 
 export function Join({ controller, state, audio }: JoinProps): JSX.Element {
+  // I-076 A: the join strings in the phone's language (B: the remembered choice).
+  const j = joinStrings();
   const info = useServerInfo();
   const session = controller.session() ?? controller.identity();
   const [name, setName] = useState(session?.name ?? '');
@@ -123,7 +125,7 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
     return (
       <Screen>
         <p className={styles.resuming} role="status">
-          {t.join.resuming}
+          {j.resuming}
         </p>
       </Screen>
     );
@@ -150,7 +152,7 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
   return (
     <form className={`${styles.form} ${roomError ? styles.formDim : ''}`} onSubmit={submit}>
       <Screen
-        title={t.join.title}
+        title={j.title}
         footer={
           <>
             {/* I-056 B: a room rejection lands where the action is — above the button. */}
@@ -168,42 +170,42 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
               disabled={!canSubmit || submitting || (roomError !== null && !retryOpen)}
             >
               {submitting
-                ? t.join.joining
+                ? j.joining
                 : state.connection !== 'connected'
-                  ? t.join.offline
+                  ? j.offline
                   : name.trim().length === 0
-                    ? t.join.needName
+                    ? j.needName
                     : needsCode && code.trim().length !== 4
-                      ? t.join.needCode
+                      ? j.needCode
                       : roomError === 'room_full' && !retryOpen
                         ? 'Room is full'
                         : roomError === 'room_locked' && !retryOpen
                           ? 'Room is locked'
-                          : t.join.submit}
+                          : j.submit}
             </PrimaryButton>
           </>
         }
       >
         {state.kicked ? (
           <p className={styles.kicked} role="alert">
-            {t.join.kicked}
+            {j.kicked}
           </p>
         ) : null}
         {state.restarted && !state.kicked ? (
           <p className={styles.kicked} role="status">
-            {t.join.restarted}
+            {j.restarted}
           </p>
         ) : null}
-        {info && info.rooms.length === 0 ? <p className={styles.hint}>{t.join.noRooms}</p> : null}
+        {info && info.rooms.length === 0 ? <p className={styles.hint}>{j.noRooms}</p> : null}
         {urlRoom ? (
           <p className={styles.joiningRoom} role="status">
-            {t.join.joiningRoom} <strong>{urlRoom}</strong>
+            {j.joiningRoom} <strong>{urlRoom}</strong>
           </p>
         ) : null}
         {/* I-031 B: the portrait — the chosen face (or the photo), large, beside the name. */}
         <JoinPortrait avatarId={avatarId} name={name} photo={photo} onPhoto={setPhoto} />
         <label className={styles.field}>
-          <span className={styles.label}>{t.join.name}</span>
+          <span className={styles.label}>{j.name}</span>
           <input
             ref={nameRef}
             className={`${styles.input} ${nameError ? styles.inputError : ''} ${shaking && nameError ? styles.shake : ''} ${name === '' && !nameFocused ? styles.placeholderFade : ''}`}
@@ -232,7 +234,7 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
               ) : (
                 <>
                   <span aria-hidden>⚠ </span>
-                  {state.error.message} {t.join.tryAgain}
+                  {state.error.message} {j.tryAgain}
                 </>
               )}
             </span>
@@ -240,7 +242,7 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
         </label>
         {needsCode ? (
           <label className={styles.field}>
-            <span className={styles.label}>{t.join.code}</span>
+            <span className={styles.label}>{j.code}</span>
             <input
               ref={codeRef}
               className={`${styles.input} ${styles.code} ${codeError ? styles.inputError : ''} ${shaking && codeError ? styles.shake : ''}`}
@@ -249,7 +251,7 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
               aria-describedby={codeError ? 'join-code-error' : undefined}
               value={code}
               onChange={(e) => setCode(e.target.value.toUpperCase())}
-              placeholder={t.join.codePlaceholder}
+              placeholder={j.codePlaceholder}
               maxLength={4}
               autoCapitalize="characters"
               autoCorrect="off"
@@ -258,13 +260,13 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
             {codeError && state.error ? (
               <span id="join-code-error" className={styles.error} role="alert">
                 <span aria-hidden>⚠ </span>
-                {state.error.message} {t.join.tryAgain}
+                {state.error.message} {j.tryAgain}
               </span>
             ) : null}
           </label>
         ) : null}
         <fieldset className={styles.avatars}>
-          <legend className={styles.label}>{t.join.avatar}</legend>
+          <legend className={styles.label}>{j.avatar}</legend>
           {/* I-031 A: the pick pops (keyed on the pick, so it pops once per change) and the rest
               step back while one is chosen; with a photo up the whole grid steps back. */}
           <div
