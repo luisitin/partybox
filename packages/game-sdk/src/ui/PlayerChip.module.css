@@ -280,3 +280,29 @@
   animation: none;
   opacity: 0.8;
 }
+
+/* ── I-070 C: a wave — ±12° twice over 500 ms (transform only), on the nudger's chip. */
+.wave {
+  animation: pb-wave-chip 500ms var(--pb-ease) 2;
+  transform-origin: 50% 90%;
+}
+@keyframes pb-wave-chip {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  25% {
+    transform: rotate(-12deg);
+  }
+  75% {
+    transform: rotate(12deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wave {
+    animation: none;
+  }
+}
+:global(:root[data-motion='off']) .wave {
+  animation: none;
+}

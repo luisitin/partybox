@@ -148,3 +148,12 @@
 .pills > .setup {
   margin: 0;
 }
+
+/* ── I-070 A: the nudge pill — the setup pill's shape, disabled while it cools down. */
+.nudge {
+  flex-direction: row;
+  font-weight: 800;
+}
+.nudge:disabled {
+  opacity: 0.55;
+}

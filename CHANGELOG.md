@@ -5,6 +5,10 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **A waiting player can nudge the VIP** (I-070, option C): a "👋 Hurry up, Sam!" pill on a
+  non-VIP's lobby (20 s cooldown, the server charges it 10 tokens) raises "👋 Priya says: hurry
+  up, Sam!" to the room — the VIP's phone buzzes and plays `phase`, and the TV rocks the
+  sender's chip (`PlayerChips` `wavingIds`).
 - **Muting the TV says so** (I-069, option A): a corner toast — "Sound off" / "Sound on" — on
   every manual toggle.
 - **The join form sideways is two columns** (I-067, option B): in a short landscape box the

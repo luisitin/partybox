@@ -9,6 +9,8 @@ export interface PlayerChipsProps {
   vip?: string | null;
   /** Ids to highlight. */
   activeIds?: string[];
+  /** I-070 C: players whose nudge is showing — their chip waves. */
+  wavingIds?: string[];
   /** I-045 B: players the room is waiting on — three pulsing dots over their dimmed avatar. */
   thinkingIds?: string[];
   showScores?: boolean;
@@ -31,6 +33,7 @@ export function PlayerChips({
   players,
   vip,
   activeIds = [],
+  wavingIds = [],
   thinkingIds = [],
   showScores,
   scoresMuted = false,
@@ -67,6 +70,7 @@ export function PlayerChips({
             status={p.status}
             isVip={vip === p.id}
             active={activeIds.includes(p.id)}
+            waving={wavingIds.includes(p.id)}
             thinking={thinkingIds.includes(p.id)}
             score={showScores ? p.score : undefined}
             scoreMuted={scoresMuted}

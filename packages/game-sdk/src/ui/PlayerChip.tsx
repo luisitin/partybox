@@ -18,6 +18,8 @@ export interface PlayerChipProps {
   leader?: boolean;
   /** Highlight (e.g. it is this player's turn). */
   active?: boolean;
+  /** I-070 C: this player just nudged the VIP — the chip waves. */
+  waving?: boolean;
   /** I-045 B + the owner's note: the room waits on this player — three pulsing dots over the
    *  avatar, the avatar dimmed under them. */
   thinking?: boolean;
@@ -50,6 +52,7 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
     scoreMuted = false,
     leader,
     active,
+    waving = false,
     thinking = false,
     isMe,
     isBot,
@@ -79,6 +82,7 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
     styles.chip,
     styles[size],
     active ? styles.active : '',
+    waving ? styles.wave : '', // I-070 C: the sender waves while their nudge shows
     !connected ? styles.off : '',
     blip === 'off' ? styles.flicker : blip === 'back' ? styles.snap : '',
     status === 'spectator' ? styles.spectator : '',

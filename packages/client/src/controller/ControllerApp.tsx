@@ -10,6 +10,8 @@ import { PHONE_MUTE_KEY, createSoundEngine } from '../sound';
 import type { SoundEngine } from '../sound';
 import { ControllerShell } from './ControllerShell';
 import { CrossfadeSwap } from '../CrossfadeSwap';
+import { buzz } from '@partybox/game-sdk/ui';
+const SUBMIT_BUZZ = 20; // I-070 B: the same pattern a submit uses
 import { Join } from './Join';
 import { useSyncExternalStore } from 'react';
 import type { PushedView, TvView } from '@partybox/shared';
@@ -134,6 +136,15 @@ export function ControllerApp(): JSX.Element {
     beds.setPaused(paused);
   }, [beds, bedsWanted, room, view, gameBeds, paused]);
   const me = state.room?.players.find((p) => p.id === state.playerId) ?? null;
+  // I-070 B: a nudge is felt on the VIP's phone — a buzz and the `phase` note as the toast lands.
+  const lastNudge = useRef(0);
+  useEffect(() => {
+    const nudge = state.toasts.find((x) => x.text.startsWith('👋') && x.id !== lastNudge.current);
+    if (!nudge || !me?.isVip) return;
+    lastNudge.current = nudge.id;
+    buzz(SUBMIT_BUZZ);
+    audio.play('phase');
+  }, [state.toasts, me?.isVip, audio]);
   // Game start holds the previous screen until the game component has painted (review-loop #11):
   // no "Getting the game ready…" flash on a LAN. Reset whenever a game is not running.
   const [gameReady, setGameReady] = useState(false);
