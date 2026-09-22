@@ -5,6 +5,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **A first-time VIP gets three tips** (I-082, option C): a rotating strip under "You're the VIP"
+  on the first room a browser hosts (bots · the ★ menu · recaps), retiring each tip as it is
+  learned, ✕ to end it for good, and 💡 in the ★ menu to bring it back for the next host.
 - **A face for the season** (I-079, option C): `pumpkin`, `snowflake` and `heart` are valid avatar
   ids every day and take the unicorn's slot in October, December and February — sixteen cells stay
   sixteen — with a "THIS MONTH" tag on the cell. `?date=YYYY-MM-DD` on the join link previews a

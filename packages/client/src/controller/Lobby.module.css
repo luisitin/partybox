@@ -157,3 +157,33 @@
 .nudge:disabled {
   opacity: 0.55;
 }
+
+/* ── I-082 A: the first-VIP tips strip (keyed: each tip fades in). */
+.tip {
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+  margin: var(--pb-space-2) 0;
+  padding: var(--pb-space-2) var(--pb-space-3);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface-2);
+  font-size: var(--pb-font-caption);
+  animation: global(pb-fade-in) var(--pb-motion-base) var(--pb-ease) both;
+}
+.tipClose {
+  margin-left: auto;
+  min-width: 32px;
+  min-height: 32px;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--pb-text-muted);
+  font: inherit;
+}
+@media (prefers-reduced-motion: reduce) {
+  .tip {
+    animation: none;
+  }
+}
+:global(:root[data-motion='off']) .tip {
+  animation: none;
+}

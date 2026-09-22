@@ -1,7 +1,7 @@
 // Lobby on the phone: who is here (bots included, with ✕ on the ones you may remove), a
 // "＋ Add a bot" chip at the end of the grid (ADR-028), and for the VIP the button that opens
 // game selection.
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
 import { MAX_BOTS_PER_OWNER } from '@partybox/shared';
 import type { PlayerPublic, RoomSnapshot } from '@partybox/shared';
@@ -10,6 +10,7 @@ import { lobbyStrings, t } from '../i18n';
 import type { Controller } from '../net/controller';
 import type { SoundEngine } from '../sound';
 import styles from './Lobby.module.css';
+import { VIP_TIPS, setTipsSeen, tipsSeen } from './vipTips';
 
 /** The room's join link (`?room=CODE`, I-041) on the origin THIS phone reached the room by — a
  *  phone that came in through the tunnel shares the tunnel address, one on the Wi-Fi the LAN one. */
@@ -54,6 +55,20 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
   const [nudgedAt, setNudgedAt] = useState<number | null>(null);
   const vipName = room.players.find((p) => p.isVip)?.name ?? null;
   // The owner (2026-09-21): a "share" in the lobby — the join link straight to this room.
+  // I-082 A: the tips strip — first hosted room only; rotates every 5 s; ✕ ends it for good.
+  const [tipsOn, setTipsOn] = useState(() => !tipsSeen());
+  const [tipIndex, setTipIndex] = useState(0);
+  // I-082 B: tips retire as the VIP learns them.
+  const hasBot = room.players.some((p) => p.bot);
+  const tips: readonly { id: string; text: string }[] = VIP_TIPS.filter(
+    (tip) => !(tip.id === 'bots' && hasBot),
+  );
+  useEffect(() => {
+    if (!tipsOn || !me.isVip || tips.length === 0) return undefined;
+    const h = setInterval(() => setTipIndex((i) => i + 1), 5000);
+    return () => clearInterval(h);
+  }, [tipsOn, me.isVip, tips.length]);
+  const tip = tips.length > 0 ? tips[tipIndex % tips.length] : undefined;
   const [shared, setShared] = useState<'shared' | 'copied' | 'failed' | null>(null);
   const share = async (): Promise<void> => {
     const result = await shareLink(joinLink(room.code), room.code);
@@ -92,6 +107,22 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
       }
     >
       <p className="pb-muted">{me.isVip ? t.lobby.youAreVip : lobbyStrings().waitingForVip}</p>
+      {me.isVip && tipsOn && tip ? (
+        <p key={tip.id} className={styles.tip} role="status">
+          <span aria-hidden>💡</span> {tip.text}
+          <button
+            type="button"
+            className={styles.tipClose}
+            aria-label="dismiss tips"
+            onClick={() => {
+              setTipsSeen(true);
+              setTipsOn(false);
+            }}
+          >
+            ✕
+          </button>
+        </p>
+      ) : null}
       {/* I-070 A: something to tap while you wait — a rate-limited nudge to the VIP. */}
       {!me.isVip && vipName ? (
         <button
