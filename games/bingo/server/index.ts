@@ -36,6 +36,17 @@ function asPattern(value: unknown, fallback: Pattern): Pattern {
 }
 
 /** Settings arrive validated against the manifest spec; this only shapes them (per-round list). */
+/** I-112 B/C: the two display flags derived consistently (the board implies the last call;
+ *  the three-way "calls shown" maps onto the same flags). */
+function callFlags(raw: RawSettings): { showBoard: boolean; showPrevious: boolean } {
+  const mode = raw['callsShown'];
+  if (mode === 'none') return { showBoard: false, showPrevious: false };
+  if (mode === 'board') return { showBoard: true, showPrevious: true };
+  if (mode === 'last') return { showBoard: false, showPrevious: true };
+  const showBoard = raw['showBoard'] === true;
+  return { showBoard, showPrevious: showBoard || raw['showPrevious'] !== false };
+}
+
 export function readSettings(raw: RawSettings): Settings {
   const rounds = Math.min(MAX_ROUNDS, Math.max(1, Math.round(Number(raw['rounds'] ?? 3))));
   const patterns: Pattern[] = [];
@@ -46,8 +57,7 @@ export function readSettings(raw: RawSettings): Settings {
     cards: Math.min(MAX_CARDS, Math.max(1, Math.round(Number(raw['cards'] ?? 1)))),
     callSeconds: Math.min(12, Math.max(3, Number(raw['callSeconds'] ?? 6))),
     spicy: raw['spicy'] === true,
-    showBoard: raw['showBoard'] === true,
-    showPrevious: raw['showPrevious'] !== false,
+    ...callFlags(raw),
     showClose: raw['showClose'] === true,
   };
 }
