@@ -17,6 +17,13 @@ export interface JoinPortraitProps {
 }
 
 export function JoinPortrait({ avatarId, name, photo, onPhoto }: JoinPortraitProps): JSX.Element {
+  // I-047: the flip runs on a MODE change (face ↔ photo), keyed so it restarts each time.
+  const [wasPhoto, setWasPhoto] = useState(photo !== null);
+  const [flipKey, setFlipKey] = useState(0);
+  if ((photo !== null) !== wasPhoto) {
+    setWasPhoto(photo !== null);
+    setFlipKey((k) => k + 1);
+  }
   const fileRef = useRef<HTMLInputElement>(null);
   const [failed, setFailed] = useState(false);
   const pick = async (file: File | undefined): Promise<void> => {
@@ -27,7 +34,12 @@ export function JoinPortrait({ avatarId, name, photo, onPhoto }: JoinPortraitPro
   };
   return (
     <div className={styles.portraitRow}>
-      <span key={photo ?? avatarId} className={styles.portrait} aria-hidden>
+      {/* I-047 A: a mode change is a flip; a face-to-face pick keeps its pop. */}
+      <span
+        key={`${photo ? 'photo' : avatarId}:${flipKey}`}
+        className={`${styles.portrait} ${flipKey > 0 ? (photo ? styles.flipIn : styles.flipBack) : ''}`}
+        aria-hidden
+      >
         <Avatar avatarId={avatarId} photo={photo ?? undefined} size={96} />
       </span>
       <span className={styles.portraitSide}>

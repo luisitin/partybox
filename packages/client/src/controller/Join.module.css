@@ -211,3 +211,28 @@
   letter-spacing: 0.2em;
   color: var(--pb-accent-2);
 }
+
+/* ── I-047 A: the portrait flips between face and photo (rotateY, 600 ms; the new side lands as
+   it comes round). A face-to-face pick keeps its pop. */
+.flipIn {
+  animation: pb-portrait-flip var(--pb-motion-slow) var(--pb-ease) both;
+}
+.flipBack {
+  animation: pb-portrait-flip-back var(--pb-motion-slow) var(--pb-ease) both;
+}
+@keyframes pb-portrait-flip {
+  0% {
+    transform: perspective(400px) rotateY(-180deg);
+  }
+  100% {
+    transform: perspective(400px) rotateY(0deg);
+  }
+}
+@keyframes pb-portrait-flip-back {
+  0% {
+    transform: perspective(400px) rotateY(180deg);
+  }
+  100% {
+    transform: perspective(400px) rotateY(0deg);
+  }
+}
