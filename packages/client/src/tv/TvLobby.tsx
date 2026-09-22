@@ -58,6 +58,13 @@ function LastUp({ room }: { room: RoomSnapshot }): JSX.Element | null {
   );
 }
 
+/** I-068 C: the address grouped for reading aloud — dots spaced, the port named. */
+function spoken(url: string): string {
+  const bare = url.replace(/^https?:\/\//, '').replace(/\/$/, '');
+  const [host, port] = bare.split(':');
+  return `${(host ?? '').split('.').join(' · ')}${port ? `  port ${port}` : ''}`;
+}
+
 export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
   const info = useServerInfo();
   const players = room?.players ?? [];
@@ -100,8 +107,16 @@ export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
           ) : null}
           <p className={styles.or}>{t.lobby.orOpen}</p>
           <BigText level="h2" tone="accent" className={styles.url}>
-            {info ? info.joinUrl.replace(/^https?:\/\//, '').replace(/\/$/, '') : '…'}
+            {info ? spoken(info.joinUrl) : '…'}
           </BigText>
+          {/* I-068 A: the short room path — one thing to type. */}
+          {info && room ? (
+            <p className={`${styles.or} ${styles.shortPath}`}>
+              or type <span className={styles.url}>{info.joinUrl.replace(/^https?:\/\//, '').replace(/\/$/, '')}/{room.code}</span>
+              <br />
+              or ask someone who's in to share the link
+            </p>
+          ) : null}
           {room ? (
             <p className={styles.code}>
               <span className={`${styles.badge} ${styles.badgeLarge}`}>
