@@ -157,7 +157,11 @@ export function BingoButton({
   else if (held)
     label = '⏸ Paused'; // I-097 B
   else if (won) label = 'Yours already';
-  else if (view.waitingForCall) label = 'Next number soon…';
+  else if (view.waitingForCall) {
+    // I-137 A: a locked button is not a hot one — say what it waits for, in the quiet tone.
+    label = 'Wiped — BINGO! is back next number';
+    tone = 'neutral';
+  }
   else if (armedHere) {
     label = `Tap again · ${Math.min(3, left ?? 0)} s`; // I-096 A: plain words, one line on an SE
     tone = 'success';
