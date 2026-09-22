@@ -6,6 +6,7 @@ import type { JSX } from 'react';
 import type { PlayerPublic, RoomSnapshot } from '@partybox/shared';
 import { Avatar, PrimaryButton } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
+import { setTipsSeen } from './Lobby';
 import type { Controller } from '../net/controller';
 import styles from './VipMenu.module.css';
 
@@ -49,6 +50,17 @@ export function VipMenu({ controller, room, me, paused, onClose }: VipMenuProps)
       <div className={styles.sheet} onClick={(e) => e.stopPropagation()}>
         <div className={styles.head}>
           <h2 className={styles.title}>{t.vip.menu}</h2>
+          {/* I-082 C: bring the tips back for the next host on this phone. */}
+          <button
+            type="button"
+            className={styles.close}
+            style={{ marginRight: 8 }}
+            onClick={() => setTipsSeen(false)}
+            aria-label="show the VIP tips again"
+            title="Show the tips again"
+          >
+            💡
+          </button>
           <button type="button" className={styles.close} onClick={onClose} aria-label={t.vip.close}>
             ✕
           </button>

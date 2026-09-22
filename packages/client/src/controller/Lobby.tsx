@@ -1,7 +1,30 @@
 // Lobby on the phone: who is here (bots included, with ✕ on the ones you may remove), a
 // "＋ Add a bot" chip at the end of the grid (ADR-028), and for the VIP the button that opens
 // game selection.
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
+/** I-082 A: the first room this browser hosts gets a strip of tips — once. */
+const TIPS_KEY = 'partybox:vip-tips-seen';
+const TIPS = [
+  { id: 'bots', text: 'Add bots to fill empty seats — they play for real.' },
+  { id: 'crown', text: 'Tap your ★ VIP badge for pause, lock and kick.' },
+  { id: 'recap', text: 'Recaps save to the host PC — switch it off on the game picker.' },
+] as const;
+function tipsSeen(): boolean {
+  try {
+    return localStorage.getItem(TIPS_KEY) === '1';
+  } catch {
+    return true;
+  }
+}
+export function setTipsSeen(seen: boolean): void {
+  try {
+    if (seen) localStorage.setItem(TIPS_KEY, '1');
+    else localStorage.removeItem(TIPS_KEY);
+  } catch {
+    /* private mode */
+  }
+}
 import type { JSX } from 'react';
 import { MAX_BOTS_PER_OWNER } from '@partybox/shared';
 import type { PlayerPublic, RoomSnapshot } from '@partybox/shared';
@@ -50,6 +73,18 @@ export interface LobbyProps {
 }
 
 export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX.Element {
+  // I-082 A: the tips strip — first hosted room only; rotates every 5 s; ✕ ends it for good.
+  const [tipsOn, setTipsOn] = useState(() => !tipsSeen());
+  const [tipIndex, setTipIndex] = useState(0);
+  // I-082 B: tips retire as the VIP learns them.
+  const hasBot = room.players.some((p) => p.bot);
+  const tips: readonly { id: string; text: string }[] = TIPS.filter((tip) => !(tip.id === 'bots' && hasBot));
+  useEffect(() => {
+    if (!tipsOn || !me.isVip || tips.length === 0) return undefined;
+    const h = setInterval(() => setTipIndex((i) => i + 1), 5000);
+    return () => clearInterval(h);
+  }, [tipsOn, me.isVip, tips.length]);
+  const tip = tips.length > 0 ? tips[tipIndex % tips.length] : undefined;
   // The owner (2026-09-21): a "share" in the lobby — the join link straight to this room.
   const [shared, setShared] = useState<'shared' | 'copied' | 'failed' | null>(null);
   const share = async (): Promise<void> => {
@@ -89,6 +124,22 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
       }
     >
       <p className="pb-muted">{me.isVip ? t.lobby.youAreVip : t.lobby.waitingForVip}</p>
+      {me.isVip && tipsOn && tip ? (
+        <p key={tip.id} className={styles.tip} role="status">
+          <span aria-hidden>💡</span> {tip.text}
+          <button
+            type="button"
+            className={styles.tipClose}
+            aria-label="dismiss tips"
+            onClick={() => {
+              setTipsSeen(true);
+              setTipsOn(false);
+            }}
+          >
+            ✕
+          </button>
+        </p>
+      ) : null}
       <div className={styles.pills}>
         {/* The join link, straight to this room: the share sheet where the phone has one. */}
         <button type="button" className={styles.setup} onClick={() => void share()}>
