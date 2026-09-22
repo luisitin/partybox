@@ -20,6 +20,7 @@
   --pb-on-accent-2-fill: #1a0b12;
   /* optional edge for surfaces; only High Contrast sets it */
   --pb-border: transparent;
+  --pb-border-w: 1px; /* I-061 A: outline weight — High Contrast thickens it */
   /* the veil behind a pause curtain or a phone sheet: the theme's own ink, never a baked-in night */
   --pb-scrim: rgb(15 16 32 / 62%);
 
@@ -142,6 +143,7 @@ ight is the :root default above) ────────
   --pb-accent-2-fill: #ffff00;
   --pb-on-accent-2-fill: #000000;
   --pb-border: #ffffff;
+  --pb-border-w: 3px; /* I-061 A */
   --pb-scrim: rgb(0 0 0 / 78%);
 }
 [data-surface='tv'] {
