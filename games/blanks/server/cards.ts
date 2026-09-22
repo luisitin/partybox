@@ -35,18 +35,23 @@ export function drawWhite(state: State, count: number): [string[], State] {
 
 /** The great prompts first, the filler last, each group in its shuffled order (owner, 2026-09-18:
  *  the best-fitting, funniest cards weighted up): a six-round night never reaches the back. */
-export function orderBlackDeck(deck: readonly string[]): string[] {
-  return [3, 2, 1].flatMap((tier) => spaceOut(deck.filter((id) => blackTier(id) === tier)));
+export function orderBlackDeck(deck: readonly string[], rounds = 0): string[] {
+  // I-158 A: one double-blank every fourth round — three singles, then a multi. (The note's
+  // min(deck gap, max(2, rounds / 2)) gave exactly one per game at 6 AND 15 rounds.)
+  const maxGap = rounds > 0 ? 3 : Infinity;
+  return [3, 2, 1].flatMap((tier) => spaceOut(deck.filter((id) => blackTier(id) === tier), maxGap));
 }
 
 /** The Pick 2 and Pick 3 prompts spread evenly through a run of singles, never two in a row: a
  *  Pick 3 takes three cards off every hand, and two back to back (loop 751's transcript, rounds
  *  2 and 3) left the room playing its leftovers. Order within each group is kept. */
-function spaceOut(ids: readonly string[]): string[] {
+function spaceOut(ids: readonly string[], maxGap = Infinity): string[] {
   const multi = ids.filter((id) => blackCard(id).pick > 1);
   const single = ids.filter((id) => blackCard(id).pick <= 1);
   if (multi.length === 0 || single.length === 0) return [...ids];
-  const gap = single.length / multi.length;
+  // I-158: the deck's own ratio put the first multi ~17 singles deep (WILD) — past the end of a
+  // 6-round game. `maxGap` lets the game's length cap it; never below 2, so never back to back.
+  const gap = Math.max(2, Math.min(single.length / multi.length, maxGap));
   const out: string[] = [];
   let m = 0;
   single.forEach((id, i) => {
@@ -64,7 +69,7 @@ export function drawBlack(state: State, pool: readonly string[]): [string | null
   if (deck.length === 0) {
     const [refill, next] = shuffle(rng, pool);
     rng = next;
-    deck = orderBlackDeck(refill);
+    deck = orderBlackDeck(refill, state.settings.rounds); // I-158
   }
   const id = deck[0] ?? null;
   return [id, { ...state, rng, blackDeck: deck.slice(1) }];
