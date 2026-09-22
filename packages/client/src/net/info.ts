@@ -21,7 +21,9 @@ export interface ServerInfo {
 let cached: ServerInfo | null = null;
 
 export async function fetchInfo(): Promise<ServerInfo> {
-  const res = await fetch('/api/info');
+  // I-077 A: a phone says so (the funnel's "opened"); the TV and /preview stay uncounted.
+  const from = document.querySelector('[data-surface="controller"]') ? '?from=phone' : '';
+  const res = await fetch(`/api/info${from}`);
   if (!res.ok) throw new Error(`info ${res.status}`);
   cached = (await res.json()) as ServerInfo;
   return cached;

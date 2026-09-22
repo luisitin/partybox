@@ -21,6 +21,7 @@ import { qrSvg } from './qr';
 import { createRecorder } from './recorder';
 import type { Recorder } from './recorder';
 import { createSocketLayer } from './sockets';
+import { createFunnelBook } from './funnel';
 
 export const REPO_ROOT = resolve(fileURLToPath(new URL('../../..', import.meta.url)));
 export const CLIENT_DIR = join(REPO_ROOT, 'packages', 'client');
@@ -101,7 +102,9 @@ export async function createApp(options: AppOptions): Promise<App> {
           dir: recordingsDir,
           log: options.quiet ? () => {} : undefined,
         });
-  sockets.attach(host, deps);
+  const funnel = createFunnelBook(); // I-077
+  sockets.attach(host, deps, funnel);
+  fastify.get('/api/funnel', async () => funnel.all());
 
   const app: App = {
     fastify,
@@ -140,7 +143,9 @@ export async function createApp(options: AppOptions): Promise<App> {
     uptime: Math.round((Date.now() - startedAt) / 1000),
   }));
 
-  fastify.get('/api/info', async () => {
+  fastify.get('/api/info', async (req) => {
+    // I-077 A: a phone opening the join page counts as "opened" for the house room.
+    if ((req.query as { from?: string }).from === 'phone') funnel.opened(host.house().code);
     const { tv, join: joinUrl } = app.urls();
     // I-041 (the owner): the QR carries the house room's code (`/?room=KGVU`) so a scan goes
     // straight in; the URL the TV prints stays bare and a phone that types it asks for the code.
