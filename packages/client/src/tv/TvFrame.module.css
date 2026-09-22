@@ -218,3 +218,15 @@
 .badgeBump {
   animation: global(pb-bump) var(--pb-motion-base) var(--pb-ease) both;
 }
+
+/* ── I-051 A: the wordmark bumps on the room's big moments (keyed: one bump each). */
+.brandBump {
+  display: inline-block;
+  animation: global(pb-bump) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+/* ── I-051 C: the idle breath in a quiet lobby (one 3 s cycle). */
+.brandBreathe {
+  display: inline-block;
+  animation: global(pb-breathe) 3s ease-in-out 1;
+}
