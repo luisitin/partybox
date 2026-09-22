@@ -8,6 +8,9 @@ export const PATTERN_LABEL: Record<Pattern, string> = {
   corners: 'Four corners',
   x: 'The X',
   blackout: 'Blackout',
+  frame: 'Picture frame', // I-093 A
+  stamp: 'Postage stamp',
+  tee: 'The T', // I-093 B
 };
 
 export const PATTERN_HINT: Record<Pattern, string> = {
@@ -15,6 +18,9 @@ export const PATTERN_HINT: Record<Pattern, string> = {
   corners: 'The four corner squares.',
   x: 'Both diagonals, corner to corner.',
   blackout: 'Every square on the card. Settle in.',
+  frame: 'The outer ring — all sixteen edge squares.',
+  stamp: 'Any 2×2 block in a corner of the card.',
+  tee: 'The top row and the middle column.',
 };
 
 const ROWS = [0, 1, 2, 3, 4].map((r) => [0, 1, 2, 3, 4].map((c) => r * 5 + c));
@@ -28,6 +34,15 @@ const COMPLETIONS: Record<Pattern, readonly (readonly number[])[]> = {
   corners: [[0, 4, 20, 24]],
   x: [[...DIAG_A, 4, 8, 16, 20]],
   blackout: [ALL],
+  // I-093 A: the ring, and the four corner blocks (any one wins).
+  frame: [[0, 1, 2, 3, 4, 5, 9, 10, 14, 15, 19, 20, 21, 22, 23, 24]],
+  stamp: [
+    [0, 1, 5, 6],
+    [3, 4, 8, 9],
+    [15, 16, 20, 21],
+    [18, 19, 23, 24],
+  ],
+  tee: [[0, 1, 2, 3, 4, 7, 12, 17, 22]], // I-093 B
 };
 
 export function completions(pattern: Pattern): readonly (readonly number[])[] {
