@@ -70,7 +70,23 @@ export const AVATAR_IDS = [
   'ghost',
   'dino',
   'unicorn',
+  // I-079 A: seasonal faces — valid every day (a chip never breaks), offered in their month.
+  'pumpkin',
+  'snowflake',
+  'heart',
 ] as const;
+
+/** I-079 A: the everyday sixteen (what the join grid shows out of season). */
+export const EVERYDAY_AVATAR_IDS = AVATAR_IDS.slice(0, 16);
+export const SEASONAL_AVATARS: Record<number, AvatarId> = {
+  10: 'pumpkin',
+  12: 'snowflake',
+  2: 'heart',
+};
+/** The seasonal face for a date's month, if any. */
+export function seasonalAvatarId(date: Date = new Date()): AvatarId | null {
+  return SEASONAL_AVATARS[date.getMonth() + 1] ?? null;
+}
 
 export type AvatarId = (typeof AVATAR_IDS)[number];
 

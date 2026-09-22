@@ -2,12 +2,14 @@ import { describe, expect, it } from 'vitest';
 import { PHOTO_MAX_BYTES, joinPayloadSchema } from './protocol';
 import {
   AVATAR_IDS,
+  EVERYDAY_AVATAR_IDS,
   isAvatarId,
   isRoomCode,
   nameKey,
   normalizeName,
   normalizeRoomCode,
   roomCodeFrom,
+  seasonalAvatarId,
 } from './ids';
 import { createRng } from './rng';
 
@@ -47,10 +49,20 @@ describe('names', () => {
 });
 
 describe('avatars', () => {
-  it('has 16 unique ids', () => {
-    expect(new Set(AVATAR_IDS).size).toBe(16);
+  it('has 16 everyday ids plus the three seasonal ones, all unique', () => {
+    expect(new Set(AVATAR_IDS).size).toBe(19);
+    expect(new Set(EVERYDAY_AVATAR_IDS).size).toBe(16);
     expect(isAvatarId('fox')).toBe(true);
     expect(isAvatarId('dragon')).toBe(false);
+  });
+
+  // I-079 A: the seasonal faces are valid ids every day, so an old chip never breaks.
+  it('offers a seasonal face only in its month', () => {
+    expect(isAvatarId('pumpkin')).toBe(true);
+    expect(seasonalAvatarId(new Date('2026-10-15T12:00:00'))).toBe('pumpkin');
+    expect(seasonalAvatarId(new Date('2026-12-03T12:00:00'))).toBe('snowflake');
+    expect(seasonalAvatarId(new Date('2026-02-14T12:00:00'))).toBe('heart');
+    expect(seasonalAvatarId(new Date('2026-06-01T12:00:00'))).toBe(null);
   });
 });
 

@@ -2,15 +2,17 @@
 // resume/kicked states. The submit button lives in the sticky footer so the keyboard never hides it.
 import { useEffect, useRef, useState } from 'react';
 import type { FormEvent, JSX } from 'react';
-import { AVATAR_IDS, PLAYER_NAME_MAX } from '@partybox/shared';
+import { EVERYDAY_AVATAR_IDS, PLAYER_NAME_MAX } from '@partybox/shared';
 import { Avatar, AvatarPhotos, PlayerChip, PrimaryButton, Screen } from '@partybox/game-sdk/ui';
-import { JOIN_LANGS, joinLang, joinStrings, setJoinLang, t } from '../i18n';
+import { joinLang, joinStrings, t } from '../i18n';
 import type { JoinLang } from '../i18n';
 import type { Controller, ControllerState } from '../net/controller';
 import { useServerInfo } from '../net/info';
 import type { SoundEngine } from '../sound';
 import styles from './Join.module.css';
+import { JoinLangs } from './JoinLangs';
 import { JoinPortrait } from './JoinPortrait';
+import { joinGrid, roomFromUrl } from './joinUrl';
 
 export interface JoinProps {
   controller: Controller;
@@ -19,16 +21,10 @@ export interface JoinProps {
   audio?: SoundEngine;
 }
 
-/** The `room` query parameter of the page the phone opened (the QR's), as a 4-letter code. */
-function roomFromUrl(): string | null {
-  if (typeof window === 'undefined') return null;
-  const raw = new URLSearchParams(window.location.search).get('room');
-  const code = raw?.trim().toUpperCase() ?? '';
-  return /^[A-Z]{4}$/.test(code) ? code : null;
-}
-
 export function Join({ controller, state, audio }: JoinProps): JSX.Element {
   const info = useServerInfo();
+  // I-079 A/B: the faces on offer today (`?date=` previews a month).
+  const { season, ids: gridIds } = joinGrid();
   // I-076 A: the join strings in the phone's language (B: the remembered choice).
   const [lang, setLang] = useState<JoinLang>(() => joinLang());
   const j = joinStrings(lang);
@@ -36,7 +32,10 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
   const [name, setName] = useState(session?.name ?? '');
   // A random default (instead of always the fox) so two phones joining together rarely match.
   const [avatarId, setAvatarId] = useState<string>(
-    () => session?.avatarId ?? AVATAR_IDS[Math.floor(Math.random() * AVATAR_IDS.length)] ?? 'fox',
+    () =>
+      session?.avatarId ??
+      EVERYDAY_AVATAR_IDS[Math.floor(Math.random() * EVERYDAY_AVATAR_IDS.length)] ??
+      'fox',
   );
   // I-031 (the owner): a photo avatar from the phone, kept with the name and face across sessions.
   const [photo, setPhoto] = useState<string | null>(session?.photo ?? null);
@@ -278,7 +277,7 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
             className={`${styles.grid} ${styles.picking} ${photo ? styles.photoUp : ''}`}
             role="radiogroup"
           >
-            {AVATAR_IDS.map((id) => (
+            {gridIds.map((id) => (
               <button
                 key={id === avatarId ? `${id}:on` : id}
                 type="button"
@@ -289,27 +288,17 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
                 onClick={() => setAvatarId(id)}
               >
                 <Avatar avatarId={id} size={56} />
+                {/* I-079 C: the seasonal cell says why it is here. */}
+                {id === season ? (
+                  <span className={styles.seasonTag} aria-hidden>
+                    this month
+                  </span>
+                ) : null}
               </button>
             ))}
           </div>
         </fieldset>
-        {/* I-076 B: a way to choose — remembered in this browser. */}
-        <div className={styles.langs} role="group" aria-label="language">
-          {JOIN_LANGS.map((l) => (
-            <button
-              key={l}
-              type="button"
-              className={`${styles.lang} ${l === lang ? styles.langOn : ''}`}
-              aria-pressed={l === lang}
-              onClick={() => {
-                setJoinLang(l);
-                setLang(l);
-              }}
-            >
-              {l.toUpperCase()}
-            </button>
-          ))}
-        </div>
+        <JoinLangs lang={lang} onPick={setLang} />
       </Screen>
       {/* I-059 A: a tablet's spare width is a preview stage — your chip as the room will see it. */}
       <aside className={styles.stage} aria-label="preview">

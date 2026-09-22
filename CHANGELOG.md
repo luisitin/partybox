@@ -5,6 +5,10 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **A face for the season** (I-079, option C): `pumpkin`, `snowflake` and `heart` are valid avatar
+  ids every day and take the unicorn's slot in October, December and February — sixteen cells stay
+  sixteen — with a "THIS MONTH" tag on the cell. `?date=YYYY-MM-DD` on the join link previews a
+  month.
 - **The lobby counts the phones that never made it in** (I-077, option C): a per-room join funnel
   (opened / attempted / joined / failed-by-code) at `GET /api/funnel`, written to
   `<recordings>/funnel/<room>.json` when the host keeps recordings, and live on the TV's host bar
