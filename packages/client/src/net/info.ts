@@ -12,6 +12,8 @@ export interface ServerInfo {
   joinUrl: string;
   qrSvg: string;
   rooms: { code: string; locked: boolean; players: number; names?: string[] }[];
+  /** I-034 B: the last finished recap, when the host keeps them. */
+  lastRecap?: { gameId: string; code: string } | null;
   houseRoom: string;
   /** I-041: the join URL with the house room's code — what the TV's QR encodes. */
   qrUrl?: string;
