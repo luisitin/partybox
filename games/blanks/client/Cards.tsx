@@ -27,6 +27,8 @@ export interface FilledCardProps {
   className?: string;
   /** Emphasised (the winner). */
   winner?: boolean;
+  /** I-140: the fill at `index` is a preview, not a pick — it carries `className`. */
+  provisional?: { index: number; className: string };
   ariaLabel?: string;
 }
 
@@ -69,6 +71,7 @@ export function FilledCard({
   className,
   winner,
   ariaLabel,
+  provisional,
 }: FilledCardProps): JSX.Element {
   const { segments, extra } = fill(text, whites);
   const sizeClass = styles[size] ?? '';
@@ -85,25 +88,29 @@ export function FilledCard({
         </span>
       ) : null}
       <p className={styles.sentence}>
-        {parts.map((s, i) =>
-          s.kind === 'fill' ? (
+        {parts.map((s, i) => {
+          if (s.kind !== 'fill')
+            return (
+              // A bare space between two whites ("____, ____") becomes a visible gap, so two
+              // paper marks never read as one slab (review-loop #99).
+              <span key={i} className={s.text.trim() === '' ? styles.gap : undefined}>
+                {s.text}
+              </span>
+            );
+          const n = fills++;
+          return (
             // Keyed by text as well: a new white dropped into the phone's preview mounts fresh
             // and pops into place (review-loop #146).
             <mark
               key={`${i}:${s.text}`}
-              className={styles.fill}
-              style={{ '--fill-index': fills++ } as CSSProperties}
+              className={`${styles.fill} ${provisional?.index === n ? provisional.className : ''}`}
+              style={{ '--fill-index': n } as CSSProperties}
             >
               {glue(s.text)}
             </mark>
-          ) : (
-            // A bare space between two whites ("____, ____") becomes a visible gap, so two
-            // paper marks never read as one slab (review-loop #99).
-            <span key={i} className={s.text.trim() === '' ? styles.gap : undefined}>
-              {s.text}
-            </span>
-          ),
-        )}
+          );
+        })}
+
       </p>
       {extra.length > 0 ? (
         <ul className={styles.extras}>

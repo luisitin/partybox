@@ -1613,3 +1613,10 @@
 .redraw:disabled {
   opacity: 0.5;
 }
+
+/* ── I-140 B: a previewed fill is provisional — the same paper, the words dotted-underlined. */
+.fillDotted {
+  text-decoration: underline dotted;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.18em;
+}

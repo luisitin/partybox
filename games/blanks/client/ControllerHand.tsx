@@ -106,6 +106,8 @@ export function ControllerPick({ view, send }: Props): JSX.Element {
 export function ControllerHand({ view, send, skip }: Props): JSX.Element {
   const [picked, setPicked] = useState<string[]>([]);
   const [sent, setSent] = useState(false);
+  // I-140 A: the white card under the thumb (hover, press or focus), cleared when it is left.
+  const [previewId, setPreviewId] = useState<string | null>(null);
   // I-016 B: the played card flies up into the black card before the pick is sent (300 ms, the
   // card's own flight); the flight IS the send. The timer dies with the screen.
   const [flying, setFlying] = useState(false);
@@ -163,6 +165,11 @@ export function ControllerHand({ view, send, skip }: Props): JSX.Element {
     );
   }
   const ready = picked.length === pick;
+  const pickedTexts = picked.map((id) => view.hand.find((c) => c.id === id)?.text ?? '');
+  const previewCard =
+    previewId !== null && !picked.includes(previewId) && picked.length < pick
+      ? view.hand.find((c) => c.id === previewId)
+      : undefined;
   const label =
     pick === 1
       ? 'Play this card'
@@ -206,11 +213,14 @@ export function ControllerHand({ view, send, skip }: Props): JSX.Element {
       {/* Sticky: the sentence (and the live preview of the pick) stays in view while the hand
           scrolls under it — ten cards run past a phone's screen (review-loop #136). */}
       <div className={styles.handBlack}>
+        {/* I-140 A: the card under the thumb is read INTO the sentence — the next empty blank,
+            after any picks — while it is browsed. A card already picked is not read twice. */}
         <FilledCard
           text={black.text}
           pick={black.pick}
-          whites={picked.map((id) => view.hand.find((c) => c.id === id)?.text ?? '')}
+          whites={previewCard ? [...pickedTexts, previewCard.text] : pickedTexts}
           size="phone"
+          provisional={previewCard ? { index: pickedTexts.length, className: styles.fillDotted ?? '' } : undefined}
         />
         {/* A whole new hand, three times a game (the owner, 2026-09-21) — dealt under every rule
             a fresh hand follows. The pick is dropped with the cards it pointed at. */}
@@ -247,6 +257,11 @@ export function ControllerHand({ view, send, skip }: Props): JSX.Element {
             >
               <button
                 type="button"
+                onFocus={() => setPreviewId(card.id)}
+                onPointerEnter={() => setPreviewId(card.id)}
+                onPointerDown={() => setPreviewId(card.id)}
+                onPointerLeave={() => setPreviewId((t) => (t === card.id ? null : t))}
+                onBlur={() => setPreviewId((t) => (t === card.id ? null : t))}
                 className={`${styles.white} ${on ? styles.whiteOn : ''} ${long ? styles.whiteLong : ''}`}
                 aria-pressed={on}
                 disabled={sent}
