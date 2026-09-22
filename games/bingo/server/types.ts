@@ -6,7 +6,7 @@ import type { GameStateBase } from '@partybox/game-sdk';
 export const PHASES = ['intro', 'play', 'check', 'bingo', 'scoreboard', 'final', 'done'] as const;
 export type PhaseId = (typeof PHASES)[number];
 
-export const PATTERNS = ['line', 'corners', 'x', 'blackout'] as const;
+export const PATTERNS = ['line', 'corners', 'x', 'blackout', 'frame', 'stamp'] as const; // I-093
 export type Pattern = (typeof PATTERNS)[number];
 
 /** The VIP picks a pattern per round in the lobby (`round1` … `round5` settings). */
