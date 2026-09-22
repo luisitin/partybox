@@ -57,3 +57,21 @@ rooms listed    PRSS 1 here
 ```
 
 `pnpm verify` GREEN (119.3 s).
+
+## 4. Both reachable mid-game, not only from the lobby (follow-up)
+
+The pills live on the lobby screen, so during a game there was no way out and no way to share. The
+🎨 sheet — reachable from every screen — now carries a **Room CODE** section with the same Share
+button and a "🚪 Leave the room" row (tap to arm, tap to go).
+
+Probe (scratchpad `c-capture/probe_sheet.ts`), Priya mid-Lightning-Round:
+
+```
+screen            Get ready!
+lobby pills here  0                       ← the lobby's own pills are gone, as expected
+sheet has         ROOM RJWD | 🔗 Share | 🚪 Leave the room
+after one tap     🚪 Leave the room?  tap again
+screen now        Join the party  EN ES DE FR PT
+room list         RJWD playing · 1
+players left in   1                       ← the server really dropped her
+```

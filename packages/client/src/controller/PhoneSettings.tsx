@@ -3,6 +3,7 @@
 import { Suspense, useEffect, useState, useSyncExternalStore } from 'react';
 import type { ComponentType, LazyExoticComponent } from 'react';
 import { clientGames } from '../games.generated';
+import { ShareButton } from './ShareSheet';
 
 /** The games' display names for the settings headings (the manifest names, by id). */
 const GAME_NAMES: Record<string, string> = {
@@ -38,9 +39,19 @@ export interface PhoneSettingsProps {
   audio?: SoundEngine;
   /** S-004 B: what the music engine is on right now ("Lobby set", "Bingo's set"). */
   what?: string | null;
+  /** The owner (2026-09-22): the room this phone is in — the sheet carries Share and Leave, so
+   *  both are reachable mid-game and not only from the lobby. */
+  room?: { code: string } | null;
+  onLeave?: () => void;
 }
 
-export function PhoneSettings({ audio, what }: PhoneSettingsProps): JSX.Element {
+export function PhoneSettings({ audio, what, room, onLeave }: PhoneSettingsProps): JSX.Element {
+  const [leaving, setLeaving] = useState(false);
+  useEffect(() => {
+    if (!leaving) return undefined;
+    const h = setTimeout(() => setLeaving(false), 3000);
+    return () => clearTimeout(h);
+  }, [leaving]);
   const [soundOn, setSoundOn] = useState(() => !(audio?.muted() ?? true));
   // I-062 C: the bars answer real cues — polled off the engine's lastPlayedAt (no engine events).
   const [kick, setKick] = useState(0);
@@ -168,6 +179,32 @@ export function PhoneSettings({ audio, what }: PhoneSettingsProps): JSX.Element 
             </button>
           ))}
         </div>
+      ) : null}
+      {/* The owner (2026-09-22): the room's own row — share it, or leave for the room menu. */}
+      {room ? (
+        <section className={pickerStyles.gameSection}>
+          <h4 className={pickerStyles.gameTitle}>Room {room.code}</h4>
+          <ShareButton code={room.code} />
+          {onLeave ? (
+            <button
+              type="button"
+              className={pickerStyles.toggle}
+              onClick={() => {
+                if (!leaving) {
+                  setLeaving(true);
+                  return;
+                }
+                onLeave();
+              }}
+            >
+              <span className={pickerStyles.toggleGlyph} aria-hidden>
+                🚪
+              </span>
+              {leaving ? 'Leave the room?' : 'Leave the room'}
+              <span className={pickerStyles.toggleState}>{leaving ? 'tap again' : ''}</span>
+            </button>
+          ) : null}
+        </section>
       ) : null}
       {/* S-003 A: each installed game's own phone settings, under its name. */}
       {Object.entries(clientGames)

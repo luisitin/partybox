@@ -62,6 +62,12 @@ export function ControllerShell({
     if (openTheme > 0) setThemeOpen(true);
   }
   const room = state.room;
+  // The owner (2026-09-22): leaving is reachable from the 🎨 sheet too, so a phone can get out
+  // mid-game and not only from the lobby.
+  const leave = (): void => {
+    setThemeOpen(false);
+    controller.leave();
+  };
   // A pause freezes the phone too: the screen dims and goes inert (no taps, no focus, out of the
   // a11y tree — the server would drop the input anyway), and a banner says who resumes it. The
   // reconnect banner wins when both apply.
@@ -326,7 +332,7 @@ export function ControllerShell({
         <ThemePicker
           variant="sheet"
           onClose={() => setThemeOpen(false)}
-          footer={<PhoneSettings audio={audio} what={musicWhat} />}
+          footer={<PhoneSettings audio={audio} what={musicWhat} room={room} onLeave={leave} />}
         />
       ) : null}
     </div>
