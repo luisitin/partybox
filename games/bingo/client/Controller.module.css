@@ -1371,3 +1371,8 @@
   color: var(--pb-accent-2);
   animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
 }
+
+/* ── I-137 B: the claim button comes back from a wipe with a pop. */
+.bingoUnlocked {
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
