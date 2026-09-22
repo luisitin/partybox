@@ -2,7 +2,14 @@
 // resume/kicked states. The submit button lives in the sticky footer so the keyboard never hides it.
 import { useEffect, useRef, useState } from 'react';
 import type { FormEvent, JSX } from 'react';
-import { AVATAR_IDS, PLAYER_NAME_MAX } from '@partybox/shared';
+import { EVERYDAY_AVATAR_IDS, PLAYER_NAME_MAX, seasonalAvatarId } from '@partybox/shared';
+
+/** I-079 A: `?date=YYYY-MM-DD` on the join link previews that month's grid. */
+function previewDate(): Date {
+  const raw = typeof window === 'undefined' ? null : new URLSearchParams(window.location.search).get('date');
+  const d = raw ? new Date(`${raw}T12:00:00`) : new Date();
+  return Number.isNaN(d.getTime()) ? new Date() : d;
+}
 import { Avatar, PrimaryButton, Screen } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import type { Controller, ControllerState } from '../net/controller';
@@ -28,11 +35,14 @@ function roomFromUrl(): string | null {
 
 export function Join({ controller, state, audio }: JoinProps): JSX.Element {
   const info = useServerInfo();
+  // I-079 A: the faces on offer today (`?date=` previews a month).
+  const season = seasonalAvatarId(previewDate());
+  const gridIds = season ? [...EVERYDAY_AVATAR_IDS, season] : EVERYDAY_AVATAR_IDS;
   const session = controller.session() ?? controller.identity();
   const [name, setName] = useState(session?.name ?? '');
   // A random default (instead of always the fox) so two phones joining together rarely match.
   const [avatarId, setAvatarId] = useState<string>(
-    () => session?.avatarId ?? AVATAR_IDS[Math.floor(Math.random() * AVATAR_IDS.length)] ?? 'fox',
+    () => session?.avatarId ?? EVERYDAY_AVATAR_IDS[Math.floor(Math.random() * EVERYDAY_AVATAR_IDS.length)] ?? 'fox',
   );
   // I-031 (the owner): a photo avatar from the phone, kept with the name and face across sessions.
   const [photo, setPhoto] = useState<string | null>(session?.photo ?? null);
@@ -271,7 +281,7 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
             className={`${styles.grid} ${styles.picking} ${photo ? styles.photoUp : ''}`}
             role="radiogroup"
           >
-            {AVATAR_IDS.map((id) => (
+            {gridIds.map((id) => (
               <button
                 key={id === avatarId ? `${id}:on` : id}
                 type="button"

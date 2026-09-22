@@ -183,6 +183,28 @@ const ART: Record<string, JSX.Element> = {
       <path d="M22 42 h20 l-3 5 h-14 z" fill={INK} />
     </>
   ),
+  // I-079 A: the seasonal three.
+  pumpkin: (
+    <>
+      <path d="M30 14 q2 -6 8 -6" stroke={INK} strokeWidth={3} fill="none" />
+      <path d="M20 26 l6 6 l-12 0 z M44 26 l-6 6 l12 0 z" fill={INK} />
+      <path d="M18 42 l4 -4 l4 4 l4 -4 l4 4 l4 -4 l4 4 l4 -4 l2 6 h-32 z" fill={INK} />
+    </>
+  ),
+  snowflake: (
+    <>
+      <path d="M32 10 v44 M13 21 l38 22 M13 43 l38 -22" stroke={LIGHT} strokeWidth={3} />
+      {eyes(8, 30)}
+      <path d="M26 42 q6 5 12 0" stroke={INK} strokeWidth={3} fill="none" />
+    </>
+  ),
+  heart: (
+    <>
+      <path d="M32 52 l-14 -14 a8 8 0 0 1 14 -10 a8 8 0 0 1 14 10 z" fill={LIGHT} />
+      {eyes(6, 32, 3)}
+      <path d="M28 41 q4 3 8 0" stroke={INK} strokeWidth={2.5} fill="none" />
+    </>
+  ),
   unicorn: (
     <>
       <path d="M32 6 l6 16 h-12 z" fill={LIGHT} />
