@@ -226,8 +226,18 @@ function linesThrough(i: number): number[][] {
 }
 
 /** Tiny pattern icon: the shape the round is after, nothing else. */
-export function PatternIcon({ cells, size = 48 }: { cells: number[]; size?: number }): JSX.Element {
+export function PatternIcon({
+  cells,
+  size = 48,
+  draw = false,
+}: {
+  cells: number[];
+  size?: number;
+  /** I-107 B: the lit cells draw in one after another (opacity only). */
+  draw?: boolean;
+}): JSX.Element {
   const set = new Set(cells);
+  const order = new Map(cells.map((c, i) => [c, i]));
   return (
     <span
       className={styles.icon}
@@ -236,7 +246,13 @@ export function PatternIcon({ cells, size = 48 }: { cells: number[]; size?: numb
       data-testid="pattern-icon"
     >
       {Array.from({ length: 25 }, (_, i) => (
-        <span key={i} className={`${styles.iconCell} ${set.has(i) ? styles.iconOn : ''}`} />
+        <span
+          key={i}
+          className={`${styles.iconCell} ${set.has(i) ? styles.iconOn : ''} ${draw && set.has(i) ? styles.iconDraw : ''}`}
+          style={
+            draw && set.has(i) ? { animationDelay: `${(order.get(i) ?? 0) * 70}ms` } : undefined
+          }
+        />
       ))}
     </span>
   );

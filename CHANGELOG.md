@@ -11,6 +11,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Added
 
+- **The verdict's icon lights the winning line** (I-107, option B): the pattern icon beside a
+  bingo now shows the claim's own completion — the diagonal for a diagonal — and draws its cells
+  in 70 ms apart.
 - **Bingo's Points board climbs** (I-103, option B): rows start where they stood before the round
   and rise past each other as the points count in, after one beat of `·` ranks and `—` totals — so
   the rank is the visible consequence of the points, not a fact the board asserts first.

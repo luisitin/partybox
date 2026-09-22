@@ -36,7 +36,6 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
     heard.current.ids.push(...fresh);
     sound.play('close');
   }, [closeKey, view.round, sound]);
-  const phaseId = view.phaseId;
   const number = view.current?.number ?? null;
   const letter = view.current?.letter ?? null;
   // Every new number: the ball drops out of the cage (Tv.module.css, 420 ms); the recorded call's
@@ -49,7 +48,7 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
   useDibsCue(view.arm?.until ?? null, sound);
   // A call is the server's stamp (`calledAt`, loop 294): a resume countdown or a card-style hold
   // shows the same number without re-calling it, and the repeat after "keep going" is a new stamp.
-  const calledAt = view.calledAt;
+  const { calledAt, phaseId } = view;
   const quiet = view.resumeAt !== null || view.pausedBy.length > 0;
   useLayoutEffect(() => {
     if (phaseId !== 'play' || number === null || letter === null) {
@@ -225,7 +224,8 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
                   </p>
                 ) : null}
                 <p className={styles.winLine}>
-                  <PatternIcon cells={view.patternCells} size={72} />
+                  {/* I-107 A: the icon lights the line that actually won, not the example row. */}
+                  <PatternIcon cells={view.claim.cells} size={72} draw />
                   <span>
                     {/* No "round N" here: the kicker above the card says it (loop 337). */}
                     {view.patternLabel} on call {view.callIndex} · +{view.claimPoints}{' '}
