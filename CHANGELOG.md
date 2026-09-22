@@ -5,6 +5,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **The beds tighten as a deadline closes** (I-032, option B): `BedEngine.setTension(0..1)`, fed
+  by the TV from the view's deadline over the last ten seconds — the tempo nudges up to +12 % and
+  a low-pass opens 1.8 → 8 kHz.
 - **A hopeless claim skips the suspense** (I-117, option B): more never-called daubs than called
   ones on the line — the card drops, every cell turns at once, the verdict lands 2.7 s after the
   announce and reads "Not yet, Priya — 2 of those were never called" (spicy: "Priya. 2 of those
