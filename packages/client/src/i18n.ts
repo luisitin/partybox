@@ -158,6 +158,8 @@ export const t = {
     unmute: 'Unmute',
     enableSound: 'Sound is off — tap to enable',
     soundOn: 'Sound on',
+    soundOffToast: 'Sound off', // I-069 A
+    soundOnToast: 'Sound on',
     fullscreen: 'Fullscreen',
     paused: 'Paused',
     pausedHint: (name: string) => `${name} can resume from the VIP menu`,
