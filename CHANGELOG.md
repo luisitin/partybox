@@ -6,6 +6,18 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Fixed
 
+- **A correctness pass over the whole product** (2026-09-22, `reports/design/ideas/review-2026-09-22-correctness.md`):
+  phone-only rooms no longer send anyone to a TV (the SDK controls' default lines, the results
+  screen, Bingo and Wisecrack — `usePhoneOnly()` in the SDK); the Postage stamp no longer outlines
+  only the top-left block and its demo plays all four corners; the join funnel counts one "opened"
+  per join-page load (it counted the VIP's game picker and every refresh); taken-face badges follow
+  the room being joined; the room reaper spares a room a TV is watching; opening rooms is limited to three per address, then one per 20 s; and Vitest's projects now
+  really get the 20 s test timeout (`extends: true` — every test had been on the 5 s default).
+  Also: a tap that races the end of a game no longer puts "⚠ No game is running." over the
+  results; a reconnect no longer pops a "Back online" toast on top of the banner; the ROOM CODE
+  field and the room picker speak the join screen's language; and the share chooser says when its
+  link only works on this Wi-Fi.
+
 - **The phone's audio comes back after a lock** (the owner, 2026-09-22 — "in phone only mode I
   don't hear the caller"): iOS parks the AudioContext when the phone locks or backgrounds, and
   nothing resumed it after the join gesture, so a phone went quiet mid-game. The page becoming
