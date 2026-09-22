@@ -11,7 +11,7 @@ import { enterPhase, hasPlayer, isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { clearClaims, setMenu } from '../claims';
 import { AUTO_END_MS, VERDICT_READ_MS, claimRevealMs } from '../reveal';
-import { pointsFor } from '../scoring';
+import { pointsFor, shareRound } from '../scoring';
 import { BINGO_ABANDONED_MS, BINGO_MS, DECK } from '../types';
 import type { Claim, Decision, Input, State, Transition } from '../types';
 
@@ -138,6 +138,11 @@ function celebrationEndsAt(state: State): number | null {
   return at === null ? null : at + VERDICT_READ_MS;
 }
 
+/** I-130 B: the deck ran out — everyone who played takes a point. */
+function shareOut(state: State): State {
+  return state.round.winnerId ? state : { ...state, wins: shareRound(state) };
+}
+
 export function reduceBingo(state: State, event: GameEvent<Input>, exits: BingoExits): State {
   if (isTimerFor(state, event)) {
     // The first tick of a won round is the verdict: score it, then wait for the room.
@@ -149,7 +154,8 @@ export function reduceBingo(state: State, event: GameEvent<Input>, exits: BingoE
       };
     }
     const held = state.round.decision;
-    return held ? decide(state, held, event.now, exits) : exits.next(state, event.now);
+    // I-130 B: nobody won the round — everyone who played takes a point on the way out.
+    return held ? decide(state, held, event.now, exits) : exits.next(shareOut(state), event.now);
   }
   if (event.type !== 'input') return state;
   if (!hasPlayer(state, event.playerId) || !Object.hasOwn(state.round.cards, event.playerId))

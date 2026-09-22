@@ -273,10 +273,15 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
     }
     return (
       <Stage center>
-        <BigText level="display" tone="muted">
-          No bingo
+        {/* I-130 A: say what happened — the deck really did run out, so every card was full. */}
+        <BigText level="display" tone="accent">
+          75 balls!
         </BigText>
-        <BigText level="h1">The deck's empty — nobody wins round {view.round}.</BigText>
+        <BigText level="h1">Not one BINGO! — every card in this room was full.</BigText>
+        <BigText level="h2" tone="muted">
+          {view.patternLabel} · round {view.round}
+          {' · everyone takes a point'}
+        </BigText>
       </Stage>
     );
   }

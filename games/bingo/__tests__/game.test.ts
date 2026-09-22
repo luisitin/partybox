@@ -190,7 +190,8 @@ describe('play', () => {
     expect(s.phase.id).toBe('final');
     s = timer(s);
     expect(s.phase.id).toBe('done');
-    expect(game.results(s)?.scores).toEqual({ a: 0, b: 0, c: 0 });
+    // I-130 B: a round nobody won pays everyone who played a point.
+    expect(game.results(s)?.scores).toEqual({ a: 1, b: 1, c: 1 });
     expect(game.results(s)?.winnerIds.sort()).toEqual(['a', 'b', 'c']);
   });
 });
