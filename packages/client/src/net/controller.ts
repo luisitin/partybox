@@ -245,12 +245,14 @@ export function createController(url?: string): Controller {
     store.set({ rev: push.rev, view: push.view });
   });
   const showToast = (shown: ToastPayload): void => toastOnce(store, shown);
-  // Reconnecting → connected while in a room: say so, or the banner just vanishes (review-loop #33).
+  // Reconnecting → connected while in a room. The banner itself now ends with "✓ Back online"
+  // (flapFree.ts), so no toast: the toast (review-loop #33, when the banner vanished silently) fired
+  // on EVERY reconnect — a toast per flap on a weak link, and "Back online" while the banner was
+  // still, deliberately, saying "Reconnecting…" (the owner, 2026-09-22).
   const backOnline = (): void => {
     const s = store.get();
     if (s.connection !== 'reconnecting' || !s.joined) return;
     store.set({ connection: 'connected' });
-    showToast({ kind: 'success', text: 'Back online' });
   };
   socket.on('toast', (toast: ToastPayload) => {
     // "<name> joined" is TV information; on a phone it only piles up over the primary button.
@@ -288,6 +290,10 @@ export function createController(url?: string): Controller {
       return;
     }
     if (error.code === 'rate_limited') return;
+    // A tap that raced the end of a game (a daub, a vote, the VIP's Pause) reaches the server just
+    // after it finished; the phone is about to show the results anyway, so "No game is running."
+    // over them is noise, never news (found by the 2026-09-22 sweep on a Bingo results screen).
+    if (error.code === 'not_playing') return;
     pending = null;
     store.set({ error });
   });
