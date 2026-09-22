@@ -233,7 +233,9 @@ export function TvAnswer({ view }: Props): JSX.Element {
       </div>
       {!view.timed && !nobodyDone && outstanding.length > 0 ? (
         <BigText level="h2" tone="muted">
-          No clock — the VIP taps Next when the room is ready.
+          {/* I-152 C: the same line, with the same name on it. */}
+          No clock — {view.players.find((p) => p.id === view.vip)?.name ?? 'the VIP'} taps Next when
+          the room is ready.
         </BigText>
       ) : null}
     </Stage>

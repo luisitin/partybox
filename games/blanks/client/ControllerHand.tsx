@@ -103,7 +103,7 @@ export function ControllerPick({ view, send }: Props): JSX.Element {
   );
 }
 
-export function ControllerHand({ view, send, skip }: Props): JSX.Element {
+export function ControllerHand({ view, me, send, skip }: Props): JSX.Element {
   const [picked, setPicked] = useState<string[]>([]);
   const [sent, setSent] = useState(false);
   // I-016 B: the played card flies up into the black card before the pick is sent (300 ms, the
@@ -138,7 +138,7 @@ export function ControllerHand({ view, send, skip }: Props): JSX.Element {
         hint={
           allIn
             ? "Everyone's in — here comes the reading."
-            : `${progressLine(view)} · ${view.timed ? "the reading starts when everyone's in." : 'the reading starts when everyone is in, or when the VIP taps Next.'}`
+            : `${progressLine(view)} · ${view.timed ? "the reading starts when everyone's in." : `the reading starts when everyone is in, or when ${view.vip === me.id ? 'you tap' : `${view.players.find((p) => p.id === view.vip)?.name ?? 'the VIP'} taps`} Next.`}`
         }
         mood="done"
       >
