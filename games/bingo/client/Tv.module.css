@@ -1003,3 +1003,16 @@
 }
 
 /* ── I-108 B: the strays stay red on the winner's card through the win stage (see TvParts). */
+
+/* ── I-091 A: a spicy caption — hotter colour. */
+.spicyCaption {
+  color: var(--pb-accent);
+}
+
+/* ── I-091 B: the one-off flourish — the caption bumps a beat after the ball, the ball glows warm. */
+.spicyCaption {
+  animation: global(pb-bump) var(--pb-motion-base) var(--pb-ease) 180ms both;
+}
+[data-spicy] {
+  filter: drop-shadow(0 0 18px var(--pb-accent));
+}

@@ -14,6 +14,11 @@ const spicyByNumber: Readonly<Record<number, string>> = Object.fromEntries(
   SPICY.calls.map((c) => [c.number, c.call]),
 );
 
+/** I-091 A: true when the spicy pack has its own line for this number. */
+export function isSpicyCall(number: number, spicy: boolean): boolean {
+  return spicy && spicyByNumber[number] !== undefined;
+}
+
 /** The spicy override when `spicy` and one exists, else the family call. Never empty. */
 export function callFor(number: number, spicy: boolean): string {
   return (spicy ? spicyByNumber[number] : undefined) ?? familyByNumber[number] ?? String(number);

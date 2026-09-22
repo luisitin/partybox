@@ -71,7 +71,7 @@ export function Call({
 }): JSX.Element {
   const k = `${call.number}:${stamp ?? ''}`;
   return (
-    <div className={`${big ? styles.callBig : styles.callSmall} ${big ? '' : 'pb-enter'}`}>
+    <div className={`${big ? styles.callBig : styles.callSmall} ${big ? '' : 'pb-enter'}`} data-spicy={call.spicy ? '' : undefined}>
       <span key={`l${k}`} className={styles.letter} data-letter={call.letter}>
         {call.letter}
       </span>
