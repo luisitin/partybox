@@ -2,7 +2,7 @@
 // row in the TV's ball style (for the grids), the scoreboard rows, the BINGO! button with its two
 // taps, and the choice after a bingo (keep going or move on — any phone with a card, first tap
 // wins).
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { JSX } from 'react';
 import { Avatar, PrimaryButton, buzz, useSecondsLeft, useSound } from '@partybox/game-sdk/ui';
 import type { PlayCue, ScoreboardRow } from '@partybox/game-sdk/ui';
@@ -157,7 +157,22 @@ export function BingoButton({
   else if (held)
     label = '⏸ Paused'; // I-097 B
   else if (won) label = 'Yours already';
-  else if (view.waitingForCall) label = 'Next number soon…';
+  // I-137 C: and it is heard — a quiet tick as the button returns.
+  const unlockSound = useSound();
+  const wasLockedRef = useRef(view.waitingForCall);
+  useEffect(() => {
+    if (!view.waitingForCall && wasLockedRef.current) unlockSound('lock', { quiet: true });
+    wasLockedRef.current = view.waitingForCall;
+  }, [view.waitingForCall, unlockSound]);
+  // I-137 B: the button was locked a moment ago — it pops as it comes back.
+  const [wasLocked, setWasLocked] = useState(view.waitingForCall);
+  if (wasLocked !== view.waitingForCall && !view.waitingForCall) setWasLocked(false);
+  if (!wasLocked && view.waitingForCall) setWasLocked(true);
+  if (view.waitingForCall) {
+    // I-137 A: a locked button is not a hot one — say what it waits for, in the quiet tone.
+    label = 'Wiped — BINGO! is back next number';
+    tone = 'neutral';
+  }
   else if (armedHere) {
     label = `Tap again · ${Math.min(3, left ?? 0)} s`; // I-096 A: plain words, one line on an SE
     tone = 'success';
@@ -200,7 +215,8 @@ export function BingoButton({
           }
           send({ type: 'bingo', card });
         }}
-        className={`${small ? styles.bingoSmall : styles.bingo} ${armedHere ? styles.armed : ''} ${held ? styles.bingoHeld : ''} ${back ? styles.bingoBack : ''}`}
+        key={view.waitingForCall ? 'locked' : `live:${view.callIndex}`} /* I-137 B: the lock lifts with a pop */
+        className={`${small ? styles.bingoSmall : styles.bingo} ${armedHere ? styles.armed : ''} ${held ? styles.bingoHeld : ''} ${back ? styles.bingoBack : ''} ${!view.waitingForCall && wasLocked ? styles.bingoUnlocked : ''}`}
         onAnimationEnd={() => setBack(false)}
         aria-label={`BINGO! card ${card + 1}${armedHere ? ', armed, tap again to claim' : ''}`}
       >
