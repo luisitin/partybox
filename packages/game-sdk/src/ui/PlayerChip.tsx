@@ -36,7 +36,7 @@ const GLYPH: Record<NonNullable<PlayerChipProps['status']>, { text: string; labe
   submitted: { text: '✓', label: 'submitted' },
   // No glyph: a row of dashes during a reveal carried nothing; the label keeps it for screen readers.
   waiting: { text: '', label: 'waiting' },
-  spectator: { text: '◎', label: 'spectator' },
+  spectator: { text: 'next game', label: 'spectator, in the next game' }, // I-058 B
 };
 
 export function PlayerChip(props: PlayerChipProps): JSX.Element {
