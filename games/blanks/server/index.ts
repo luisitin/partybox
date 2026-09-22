@@ -73,6 +73,8 @@ function init(ctx: InitContext): State {
     blackChoices: [],
     czarId: null,
     readerId: null,
+    guesses: {},
+    calls: {},
     submissions: {},
     slots: [],
     revealIndex: 0,
