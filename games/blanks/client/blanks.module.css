@@ -1613,3 +1613,50 @@
 .redraw:disabled {
   opacity: 0.5;
 }
+
+/* ── I-144 A: a chip per vote, the voter's face up, dealt under the cards. */
+.voteChips {
+  display: flex;
+  justify-content: center;
+  gap: var(--pb-space-3);
+  margin: var(--pb-space-3) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.voteChip {
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+  animation-delay: calc(var(--pb-i) * 90ms);
+}
+.voteChipInner {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: var(--pb-space-7);
+  height: var(--pb-space-7);
+  transform-style: preserve-3d;
+  transition: transform var(--pb-motion-base) var(--pb-ease);
+}
+.voteChipBack,
+.voteChipFace {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  backface-visibility: hidden;
+  background: var(--pb-surface-3, rgba(255, 255, 255, 0.16));
+  box-shadow: inset 0 0 0 2px var(--pb-surface-2);
+}
+
+/* ── I-144 C: every vote is in — the chips turn over and show the letter chosen. */
+.voteChipFace {
+  transform: rotateY(180deg);
+  font-family: var(--pb-font-display);
+  font-size: var(--pb-font-body);
+  font-weight: 900;
+  color: var(--pb-accent);
+}
+.voteChipsOpen .voteChipInner {
+  transform: rotateY(180deg);
+  transition-delay: calc(var(--pb-i) * 70ms);
+}

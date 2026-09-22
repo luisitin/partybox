@@ -136,7 +136,8 @@ export const ALL_IN_MS = 1_500;
 /** The last vote lands and the room gets a beat to see "That's everyone" before the result
  *  crossfades in — the vote's own tick is still ringing (review-loop #228). Shorter than the
  *  answer stage's beat: the room has been staring at these cards for half a minute. */
-export const VOTES_IN_MS = 900;
+/** I-144 C: 1.6 s (was 0.9 s) — the chips turn over on this beat and their letters must be readable. */
+export const VOTES_IN_MS = 1600;
 /** Extra answer seconds per white card beyond the first. */
 export const EXTRA_PICK_S = 15;
 /** A reveal card is a 2–3 s presentation (owner, review-loop #151: "they abruptly pop and take

@@ -51,6 +51,9 @@ export interface BlanksTvView extends TvView {
   /** judge: progress. */
   votedCount: number;
   votersExpected: number;
+  /** I-144 C: voter → the slot they chose, on the closing beat only (every vote is in and a vote
+   *  cannot be changed), so the TV's chips can turn over; null the rest of the time. */
+  voteLetters: Record<string, number> | null;
   /** result only. */
   revealed: RevealedCard[];
   winnerIds: string[];
@@ -174,6 +177,8 @@ export function tvView(state: State, gameId: string): BlanksTvView {
     cardCount: state.slots.length,
     votedCount: Object.keys(state.votes).length,
     votersExpected: votersExpected(state),
+    voteLetters:
+      phase === 'judge' && state.settings.judge === 'vote' && votesIn(state) ? { ...state.votes } : null,
     revealed: revealedCards(state),
     winnerIds: phase === 'result' ? [...state.winners] : [],
     walkover: phase === 'result' && isWalkover(state),

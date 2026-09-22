@@ -47,9 +47,9 @@ function Progress({ view }: Props): JSX.Element {
     );
   }
   const n = view.votedCount;
-  const m = view.votersExpected;
   const holdouts = view.players.filter((p) => p.status === 'active' && p.connected);
-  if (n === 0) return <>Vote on your phone · 0 / {m}</>;
+  // I-144 B: the chips on the table do the counting now — the pill keeps only the words.
+  if (n === 0) return <>Vote on your phone</>;
   if (holdouts.length === 1)
     return (
       <>
@@ -62,12 +62,40 @@ function Progress({ view }: Props): JSX.Element {
   const rest = holdouts.length - NAMED_HOLDOUTS;
   return (
     <>
-      {n} / {m} voted · waiting for
+      Waiting for
       {holdouts.slice(0, NAMED_HOLDOUTS).map((p) => (
         <Holdout key={p.id} player={p} />
       ))}
       {rest > 0 ? `+${rest}` : null}
     </>
+  );
+}
+
+/**
+ * I-144 A: one chip per vote, showing the voter's face. The TV already knows who has voted — a
+ * voter's status is 'submitted' — and it never knows what for, so the chips say who is in and who
+ * the room is still waiting on without giving anything away.
+ */
+function VoteChips({ view }: { view: BlanksTvView }): JSX.Element | null {
+  const voters = view.players.filter((p) => p.status === 'submitted' && p.id !== view.czar?.id);
+  if (view.judgeMode === 'czar' || voters.length === 0) return null;
+  return (
+    <ul className={`${styles.voteChips} ${view.voteLetters ? styles.voteChipsOpen : ''}`} aria-label="votes in">
+      {voters.map((p, i) => (
+        <li key={p.id} className={styles.voteChip} style={{ '--pb-i': i } as CSSProperties}>
+          <span className={styles.voteChipInner}>
+            {/* the side the room sees: WHO has voted */}
+            <span className={styles.voteChipBack}>
+              <Avatar avatarId={p.avatarId} size="var(--pb-space-6)" />
+            </span>
+            {/* I-144 C: the other side, turned up on the closing beat — the card they chose. */}
+            <span className={styles.voteChipFace}>
+              {view.voteLetters?.[p.id] !== undefined ? LETTERS[view.voteLetters[p.id] as number] : ''}
+            </span>
+          </span>
+        </li>
+      ))}
+    </ul>
   );
 }
 
@@ -209,6 +237,8 @@ function JudgeGrid({ view }: Props): JSX.Element {
           </li>
         ))}
       </ul>
+      {/* I-144 A: the votes land on the table, not only in a counter. */}
+      <VoteChips view={view} />
     </>
   );
 }
