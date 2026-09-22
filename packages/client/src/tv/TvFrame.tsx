@@ -1,7 +1,7 @@
 // The stage chrome: 🏠 + brand (Home: click twice to start over) + room code on the left, the join
 // URL on the right (the lobby shows the big QR; during play a 120 px QR only crowded the timer),
 // connection state and toasts. Overscan-safe padding is on the Stage.
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { JSX, ReactNode } from 'react';
 import type { RoomSnapshot } from '@partybox/shared';
 import { Avatar } from '@partybox/game-sdk/ui';
@@ -28,6 +28,26 @@ const HOME_ARM_MS = 4000;
 
 type HomeState = { kind: 'idle' } | { kind: 'armed' } | { kind: 'note'; text: string };
 
+/** I-051: the wordmark reacts to the room's big moments: a bump on results, a small one per join. */
+function useBrandBump(status: string | null, players: number): { brandKey: string; brandBump: boolean } {
+  const [key, setKey] = useState('');
+  const [bump, setBump] = useState(false);
+  const prev = useRef({ status, players });
+  useEffect(() => {
+    const p = prev.current;
+    prev.current = { status, players };
+    if (status === 'results' && p.status !== 'results' && p.status !== null) {
+      setKey(`results:${Date.now()}`);
+      setBump(true);
+    }
+    else if (players > p.players && p.status !== null) {
+      setKey(`join:${players}`);
+      setBump(true);
+    }
+  }, [status, players]);
+  return { brandKey: key, brandBump: bump };
+}
+
 export function TvFrame({
   room,
   connected,
@@ -38,6 +58,7 @@ export function TvFrame({
   children,
 }: TvFrameProps): JSX.Element {
   const info = useServerInfo();
+  const { brandKey, brandBump } = useBrandBump(room?.status ?? null, room?.players.length ?? 0);
   const [home, setHome] = useState<HomeState>({ kind: 'idle' });
   useEffect(() => {
     if (home.kind === 'idle') return;
@@ -90,12 +111,14 @@ export function TvFrame({
               <span className={styles.homeGlyph} aria-hidden>
                 🏠
               </span>
-              <span className={styles.brand} aria-live="polite">
+              <span key={brandKey} className={`${styles.brand} ${brandBump ? styles.brandBump : ''}`} aria-live="polite">
                 {brandText}
               </span>
             </button>
           ) : (
-            <span className={styles.brand}>{t.appName}</span>
+            <span key={brandKey} className={`${styles.brand} ${brandBump ? styles.brandBump : ''}`}>
+              {t.appName}
+            </span>
           )}
           {room ? (
             <span className={`${styles.badge} ${styles.badgeBump}`} key={room.players.length}>
