@@ -5,6 +5,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **The phone says who is claiming** (I-111, option C): during someone else's check a line with
+  their face — "Priya says BINGO!" — then "…and it's real" / "…not a bingo — carry on" as the
+  TV's verdict lands; the claim view carries the claimant's avatar.
 - **A valid bingo with stray daubs gets a kicker** (I-108, option B): "…and 1 daub that was
   never called — lucky the line was real." (spicy: "one fib and a bingo, Sam — we're watching
   you.") and the strays stay red on the winner's card through the win stage; the TV view gains

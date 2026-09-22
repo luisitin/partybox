@@ -4,7 +4,7 @@
 // wins).
 import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
-import { PrimaryButton, buzz, useSecondsLeft, useSound } from '@partybox/game-sdk/ui';
+import { Avatar, PrimaryButton, buzz, useSecondsLeft, useSound } from '@partybox/game-sdk/ui';
 import type { PlayCue, ScoreboardRow } from '@partybox/game-sdk/ui';
 import { ARM_MS } from '../server/types';
 import type { Input } from '../server/types';
@@ -153,7 +153,7 @@ export function BingoButton({
           ? mineChecking
             ? 'Not a bingo — see card ' + ((view.claim?.cardIndex ?? 0) + 1)
             : `${who}'s card: not a bingo`
-          : 'Look at the TV';
+          : 'Look at the TV'; // I-111
   else if (held)
     label = '⏸ Paused'; // I-097 B
   else if (won) label = 'Yours already';
@@ -177,6 +177,17 @@ export function BingoButton({
       className={`${styles.bingoWrap} ${small ? styles.bingoWrapSmall : ''} ${slam ? styles.slam : ''}`}
       onAnimationEnd={() => setSlam(false)}
     >
+      {/* I-111 B: who is claiming, with their face — and (C) the verdict as the TV lands it. */}
+      {checking && !myClaim && view.claim ? (
+        <p key={verdictShown ? 'verdict' : 'claim'} className={styles.claimLine}>
+          <Avatar avatarId={view.claim.avatarId} size={24} />
+          {verdictShown
+            ? view.phaseId === 'bingo'
+              ? `${view.claim.name} says BINGO! …and it's real`
+              : `${view.claim.name} says BINGO! …not a bingo — carry on`
+            : `${view.claim.name} says BINGO!`}
+        </p>
+      ) : null}
       <PrimaryButton
         tone={myCheck ? 'danger' : tone}
         disabled={!canTap && !(arm && !mine && canTap)}

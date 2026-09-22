@@ -1360,3 +1360,14 @@
   max-width: 360px;
   margin: var(--pb-space-3) auto;
 }
+/* ── I-111 B: the claimant's line above the button. */
+.claimLine {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pb-space-2);
+  margin: 0 0 var(--pb-space-2);
+  font-weight: 800;
+  color: var(--pb-accent-2);
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
