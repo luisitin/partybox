@@ -5,6 +5,10 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **The last recap is reachable from the room** (I-034, option C): the results stage says
+  "📼 Recap saved on the host PC", the game picker links "📼 Open the last recap", and
+  `/api/recaps/latest[/page|/files/:file]` serve it (the markdown as a simple page, drawings
+  inline).
 - **The beds tighten as a deadline closes** (I-032, option B): `BedEngine.setTension(0..1)`, fed
   by the TV from the view's deadline over the last ten seconds — the tempo nudges up to +12 % and
   a low-pass opens 1.8 → 8 kHz.

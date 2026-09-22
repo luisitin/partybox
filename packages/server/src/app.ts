@@ -18,6 +18,7 @@ import { createHost } from './host';
 import type { Host } from './host';
 import { detectLanIp } from './lan-ip';
 import { qrSvg } from './qr';
+import { readFile } from 'node:fs/promises';
 import { createRecorder } from './recorder';
 import type { Recorder } from './recorder';
 import { createSocketLayer } from './sockets';
@@ -140,6 +141,47 @@ export async function createApp(options: AppOptions): Promise<App> {
     uptime: Math.round((Date.now() - startedAt) / 1000),
   }));
 
+  // I-034 A: the last finished recap — markdown, its files and the folder on the host PC.
+  fastify.get('/api/recaps/latest', async (_req, reply) => {
+    const last = recorder?.latest() ?? null;
+    if (!last) return reply.code(404).send({ error: 'no recap yet' });
+    const markdown = await readFile(join(last.dir, 'recap.md'), 'utf8');
+    return { ...last, markdown };
+  });
+  // I-034 C: the recap as a page — the markdown rendered simply, drawings served next to it.
+  fastify.get('/api/recaps/latest/page', async (_req, reply) => {
+    const last = recorder?.latest() ?? null;
+    if (!last) return reply.code(404).type('text/html').send('<p>No recap yet.</p>');
+    const md = await readFile(join(last.dir, 'recap.md'), 'utf8');
+    const esc = (s: string): string =>
+      s.replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[c] ?? c);
+    const html = md
+      .split('\n')
+      .map((line) => {
+        const h = /^(#{1,3}) (.*)$/.exec(line);
+        if (h) return `<h${h[1]?.length ?? 1}>${esc(h[2] ?? '')}</h${h[1]?.length ?? 1}>`;
+        const img = /!\[([^\]]*)\]\(([^)]+)\)/.exec(line);
+        if (img)
+          return `<figure><img src="/api/recaps/latest/files/${encodeURIComponent(img[2] ?? '')}" alt="${esc(img[1] ?? '')}"><figcaption>${esc(img[1] ?? '')}</figcaption></figure>`;
+        if (line.startsWith('- ')) return `<li>${esc(line.slice(2))}</li>`;
+        if (line.trim() === '') return '';
+        return `<p>${esc(line)}</p>`;
+      })
+      .join('\n');
+    return reply
+      .type('text/html')
+      .send(
+        `<!doctype html><meta name="viewport" content="width=device-width"><title>PartyBox recap</title><style>body{font-family:system-ui;max-width:640px;margin:24px auto;padding:0 16px;background:#0e0f1a;color:#eee}img{max-width:100%;background:#fff;border-radius:8px}li{margin:4px 0}</style>${html}`,
+      );
+  });
+  fastify.get('/api/recaps/latest/files/:file', async (req, reply) => {
+    const last = recorder?.latest() ?? null;
+    const { file } = req.params as { file: string };
+    if (!last || !last.files.includes(file)) return reply.code(404).send({ error: 'not found' });
+    return reply
+      .type(file.endsWith('.svg') ? 'image/svg+xml' : 'text/plain')
+      .send(await readFile(join(last.dir, file), 'utf8'));
+  });
   fastify.get('/api/info', async () => {
     const { tv, join: joinUrl } = app.urls();
     // I-041 (the owner): the QR carries the house room's code (`/?room=KGVU`) so a scan goes
@@ -166,6 +208,10 @@ export async function createApp(options: AppOptions): Promise<App> {
           .map((p) => p.name),
       })),
       houseRoom: host.house().code,
+      // I-034 B: the last finished recap, for the phone's link.
+      lastRecap: recorder?.latest()
+        ? { gameId: recorder.latest()?.gameId ?? '', code: recorder.latest()?.code ?? '' }
+        : null,
       dev: options.dev,
     };
   });
