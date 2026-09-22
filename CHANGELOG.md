@@ -5,6 +5,8 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **The photo swap is a flip** (I-047, option B): the join portrait turns 180° between face and
+  photo, the photo landing in a gold ring with a "your photo" caption.
 - **The name field's example rotates** (I-046, option C): every 2.5 s while empty and unfocused,
   the room's own people first (`/api/info` rooms gain a few first names), a random start per phone.
 - **A skin per bot** (I-043, option A): the n-th bot is `robot:<n>` — the robot art in one of six

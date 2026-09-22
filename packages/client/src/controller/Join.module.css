@@ -220,3 +220,43 @@
 :global(:root[data-motion='off']) .placeholderFade::placeholder {
   animation: none;
 }
+
+/* ── I-047 A: the portrait flips between face and photo (rotateY, 600 ms; the new side lands as
+   it comes round). A face-to-face pick keeps its pop. */
+.flipIn {
+  animation: pb-portrait-flip var(--pb-motion-slow) var(--pb-ease) both;
+}
+.flipBack {
+  animation: pb-portrait-flip-back var(--pb-motion-slow) var(--pb-ease) both;
+}
+@keyframes pb-portrait-flip {
+  0% {
+    transform: perspective(400px) rotateY(-180deg);
+  }
+  100% {
+    transform: perspective(400px) rotateY(0deg);
+  }
+}
+@keyframes pb-portrait-flip-back {
+  0% {
+    transform: perspective(400px) rotateY(180deg);
+  }
+  100% {
+    transform: perspective(400px) rotateY(0deg);
+  }
+}
+
+/* ── I-047 B: a photo lands framed — a gold ring and a caption. */
+.portraitPhoto {
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px var(--pb-accent-2);
+}
+.photoCaption {
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  color: var(--pb-accent-2);
+}
+:global(:root[data-motion='off']) .flipIn,
+:global(:root[data-motion='off']) .flipBack {
+  animation: none;
+}
