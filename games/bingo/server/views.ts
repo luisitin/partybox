@@ -6,7 +6,7 @@
 import { controllerEnvelope, envelope, hasPlayer } from '@partybox/game-sdk';
 import type { ControllerView, PlayerStatus, TvView } from '@partybox/game-sdk';
 import { calledNumbers, letterOf } from './cards';
-import { closePlayers } from './close';
+import { closePlayers, mates } from './close';
 import type { Letter } from './cards';
 import { callFor } from './content';
 import { PATTERN_HINT, PATTERN_LABEL, patternCells } from './patterns';
@@ -120,6 +120,8 @@ export interface BingoControllerView extends ControllerView, Common {
   daubs: number[][];
   /** play: true unless waiting for the next number after a failed claim (or every card won). */
   canClaim: boolean;
+  /** I-135 A: while I have nothing live, the room's closeness — the caller's-mate view. */
+  mates: { id: string; name: string; avatarId: string; toGo: number; where: string }[];
   /** My cards that already won the current pattern this round (locked). */
   won: number[];
   /** Every one of my cards has won: nothing left to claim until the pattern or round changes. */
@@ -314,6 +316,14 @@ export function controllerView(
       (state.phase.id === 'play' || state.phase.id === 'check') &&
       state.round.drawn < (state.round.waitForCall[playerId] ?? 0),
     called: player ? [] : calledNumbers(state),
+    mates:
+      player && liveCards(state, playerId).length === 0
+        ? mates(state, playerId).map((m) => ({
+            ...m,
+            name: state.players[m.id]?.name ?? '',
+            avatarId: state.players[m.id]?.avatarId ?? 'ghost',
+          }))
+        : [],
     ready: state.phase.id === 'intro' && state.round.ready.includes(playerId),
     lastOne:
       state.phase.id === 'intro' &&
