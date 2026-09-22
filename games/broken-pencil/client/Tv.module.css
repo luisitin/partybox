@@ -247,7 +247,12 @@
 
 .summaryRow {
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  /* S-006 B: the name and the verdict share the top line; the chain gets the whole width of the
+     card underneath. No name length and no book count can squeeze it any more. */
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    'owner mark'
+    'pair pair';
   align-items: center;
   gap: var(--pb-space-4);
   padding: var(--pb-space-3) var(--pb-space-5);
@@ -273,7 +278,10 @@
 }
 
 .summaryPair {
-  overflow-wrap: anywhere;
+  /* S-006: `anywhere` let the column collapse to one character and split words down the middle
+     ("christ / mas", "gra / ndp / a"). `break-word` keeps a whole word as the narrowest the
+     column can be. */
+  overflow-wrap: break-word;
 }
 
 .intactMark {
@@ -414,4 +422,28 @@
 :global(:root[data-motion='off']) .summaryIn,
 :global(:root[data-motion='off']) .markStamp {
   animation-delay: 0ms;
+}
+
+/* ── S-006 B: the three cells of a stacked recap row. */
+.summaryOwner {
+  grid-area: owner;
+}
+.summaryPair {
+  grid-area: pair;
+}
+.markStamp {
+  grid-area: mark;
+  justify-self: end;
+}
+
+/* ── S-006 C: the chain's two ends, inline. */
+.chainFrom {
+  opacity: 0.8;
+}
+.chainArrow {
+  color: var(--pb-accent-2);
+  font-weight: 900;
+}
+.chainTo {
+  font-weight: 800;
 }

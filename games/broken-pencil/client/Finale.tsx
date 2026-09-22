@@ -27,8 +27,14 @@ export function Summary({ view }: { view: PencilTvView }): JSX.Element {
             style={{ '--pb-i': i } as CSSProperties}
           >
             <span className={styles.summaryOwner}>{b.ownerName}</span>
+            {/* S-006 C: what it started as, and what it became — inline, so a long first phrase
+                wraps in reading order instead of splitting around the arrow. */}
             <span className={styles.summaryPair}>
-              {b.word} → {b.last}
+              <span className={styles.chainFrom}>{b.word}</span>{' '}
+              <span className={styles.chainArrow} aria-hidden>
+                →
+              </span>{' '}
+              <span className={styles.chainTo}>{b.last}</span>
             </span>
             <span
               className={`${b.intact ? styles.intactMark : styles.brokenMark} ${styles.markStamp}`}
