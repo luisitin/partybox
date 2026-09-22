@@ -5,6 +5,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **The join screen speaks the phone's language** (I-076, option C): es / de / fr / pt for the
+  join flow (from `navigator.language` or `?lang=` on the link), an EN · ES · DE · FR · PT pill
+  row remembered in the browser, and the phone lobby's waiting line and "Add a bot" follow.
 - **The QR carries the mark** (I-075, option C): a PB disc in the accent colour at the code's
   centre (the server's QR moved to error level H, so a scan is unaffected), bumping on every join.
 - **The host bar names the VIP** (I-071, option B): the "HOST" label is the roster's ★ pill with

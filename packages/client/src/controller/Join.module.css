@@ -366,3 +366,25 @@
     grid-column: 1 / -1;
   }
 }
+
+/* ── I-076 B: the language pills under the form. */
+.langs {
+  display: flex;
+  gap: var(--pb-space-2);
+  justify-content: center;
+  margin-top: var(--pb-space-2);
+}
+.lang {
+  padding: 2px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--pb-surface-2);
+  background: transparent;
+  color: var(--pb-text-muted);
+  font: inherit;
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+}
+.langOn {
+  background: var(--pb-surface-2);
+  color: var(--pb-text);
+}

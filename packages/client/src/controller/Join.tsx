@@ -4,7 +4,8 @@ import { useEffect, useRef, useState } from 'react';
 import type { FormEvent, JSX } from 'react';
 import { AVATAR_IDS, PLAYER_NAME_MAX } from '@partybox/shared';
 import { Avatar, AvatarPhotos, PlayerChip, PrimaryButton, Screen } from '@partybox/game-sdk/ui';
-import { t } from '../i18n';
+import { JOIN_LANGS, joinLang, joinStrings, setJoinLang, t } from '../i18n';
+import type { JoinLang } from '../i18n';
 import type { Controller, ControllerState } from '../net/controller';
 import { useServerInfo } from '../net/info';
 import type { SoundEngine } from '../sound';
@@ -28,6 +29,9 @@ function roomFromUrl(): string | null {
 
 export function Join({ controller, state, audio }: JoinProps): JSX.Element {
   const info = useServerInfo();
+  // I-076 A: the join strings in the phone's language (B: the remembered choice).
+  const [lang, setLang] = useState<JoinLang>(() => joinLang());
+  const j = joinStrings(lang);
   const session = controller.session() ?? controller.identity();
   const [name, setName] = useState(session?.name ?? '');
   // A random default (instead of always the fox) so two phones joining together rarely match.
@@ -150,7 +154,7 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
   return (
     <form className={`${styles.form} ${roomError ? styles.formDim : ''}`} onSubmit={submit}>
       <Screen
-        title={t.join.title}
+        title={j.title}
         footer={
           <>
             {/* I-056 B: a room rejection lands where the action is — above the button. */}
@@ -168,18 +172,18 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
               disabled={!canSubmit || submitting || (roomError !== null && !retryOpen)}
             >
               {submitting
-                ? t.join.joining
+                ? j.joining
                 : state.connection !== 'connected'
                   ? t.join.offline
                   : name.trim().length === 0
-                    ? t.join.needName
+                    ? j.needName
                     : needsCode && code.trim().length !== 4
                       ? t.join.needCode
                       : roomError === 'room_full' && !retryOpen
                         ? 'Room is full'
                         : roomError === 'room_locked' && !retryOpen
                           ? 'Room is locked'
-                          : t.join.submit}
+                          : j.submit}
             </PrimaryButton>
           </>
         }
@@ -197,7 +201,7 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
         {info && info.rooms.length === 0 ? <p className={styles.hint}>{t.join.noRooms}</p> : null}
         {urlRoom ? (
           <p className={styles.joiningRoom} role="status">
-            {t.join.joiningRoom} <strong>{urlRoom}</strong>
+            {j.joiningRoom} <strong>{urlRoom}</strong>
           </p>
         ) : null}
         {/* I-031 B: the portrait — the chosen face (or the photo), large, beside the name. */}
@@ -205,7 +209,7 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
         <div className={styles.sideways}>
           <JoinPortrait avatarId={avatarId} name={name} photo={photo} onPhoto={setPhoto} />
           <label className={styles.field}>
-            <span className={styles.label}>{t.join.name}</span>
+            <span className={styles.label}>{j.name}</span>
             <input
               ref={nameRef}
               className={`${styles.input} ${nameError ? styles.inputError : ''} ${shaking && nameError ? styles.shake : ''} ${name === '' && !nameFocused ? styles.placeholderFade : ''}`}
@@ -267,7 +271,7 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
           ) : null}
         </div>
         <fieldset className={styles.avatars}>
-          <legend className={styles.label}>{t.join.avatar}</legend>
+          <legend className={styles.label}>{j.avatar}</legend>
           {/* I-031 A: the pick pops (keyed on the pick, so it pops once per change) and the rest
               step back while one is chosen; with a photo up the whole grid steps back. */}
           <div
@@ -289,6 +293,23 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
             ))}
           </div>
         </fieldset>
+        {/* I-076 B: a way to choose — remembered in this browser. */}
+        <div className={styles.langs} role="group" aria-label="language">
+          {JOIN_LANGS.map((l) => (
+            <button
+              key={l}
+              type="button"
+              className={`${styles.lang} ${l === lang ? styles.langOn : ''}`}
+              aria-pressed={l === lang}
+              onClick={() => {
+                setJoinLang(l);
+                setLang(l);
+              }}
+            >
+              {l.toUpperCase()}
+            </button>
+          ))}
+        </div>
       </Screen>
       {/* I-059 A: a tablet's spare width is a preview stage — your chip as the room will see it. */}
       <aside className={styles.stage} aria-label="preview">
@@ -296,7 +317,7 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
         <div key={`${name.trim()}|${photo ?? avatarId}`} className={styles.stagePop}>
           <AvatarPhotos players={photo ? [{ id: 'preview', photo }] : []}>
             <PlayerChip
-              name={name.trim() || t.join.namePlaceholder}
+              name={name.trim() || j.namePlaceholder}
               avatarId={photo ? 'photo:preview' : avatarId}
               isMe
               size="lg"

@@ -5,7 +5,7 @@
 import { useRef, useState } from 'react';
 import type { JSX } from 'react';
 import { Avatar } from '@partybox/game-sdk/ui';
-import { t } from '../i18n';
+import { joinStrings } from '../i18n';
 import styles from './Join.module.css';
 import { photoFromFile } from './photo';
 
@@ -59,7 +59,7 @@ export function JoinPortrait({ avatarId, name, photo, onPhoto }: JoinPortraitPro
           type="file"
           accept="image/*"
           capture="user"
-          aria-label={t.join.usePhoto}
+          aria-label={joinStrings().usePhoto}
           onChange={(e) => {
             void pick(e.target.files?.[0]);
             e.target.value = '';
@@ -67,7 +67,7 @@ export function JoinPortrait({ avatarId, name, photo, onPhoto }: JoinPortraitPro
         />
         {photo ? (
           <button type="button" className={styles.photoButton} onClick={() => onPhoto(null)}>
-            {t.join.useFace}
+            {joinStrings().useFace}
           </button>
         ) : (
           <button
@@ -75,12 +75,12 @@ export function JoinPortrait({ avatarId, name, photo, onPhoto }: JoinPortraitPro
             className={styles.photoButton}
             onClick={() => fileRef.current?.click()}
           >
-            {t.join.usePhoto}
+            {joinStrings().usePhoto}
           </button>
         )}
         {failed ? (
           <span className={styles.photoHint} role="status">
-            {t.join.photoFailed}
+            {joinStrings().photoFailed}
           </span>
         ) : null}
       </span>
