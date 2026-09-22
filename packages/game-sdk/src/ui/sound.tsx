@@ -19,6 +19,7 @@ export const SOUND_CUES = [
   'leave',
   'fanfare',
   'cheer',
+  'tie', // I-037 C: several winners — the win arpeggio landing on a held Csus4, crowd under it
   'silence',
   'jackpot',
   'bust',

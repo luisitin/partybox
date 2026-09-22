@@ -5,6 +5,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **A real tie gets its own ceremony** (I-037, option C): the tied faces share the crown and the
+  lift with one lighter sprinkle, popping in together a beat after the line, and a new `tie` cue
+  (the win arpeggio on a held Csus4, no horn) plays in place of `cheer`.
 - **The last recap is reachable from the room** (I-034, option C): the results stage says
   "📼 Recap saved on the host PC", the game picker links "📼 Open the last recap", and
   `/api/recaps/latest[/page|/files/:file]` serve it (the markdown as a simple page, drawings
