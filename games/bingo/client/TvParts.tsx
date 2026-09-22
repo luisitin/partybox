@@ -99,12 +99,13 @@ export function DibsLine({
   queue: string[];
 }): JSX.Element {
   const sound = useSoundApi();
+  // I-095 A: the couch gets the phone's plain words — who is next, in a sentence.
   const then =
     queue.length === 0
       ? ''
-      : queue.length === 1
-        ? ` · then ${queue[0]}`
-        : ` · then ${queue[0]} and ${queue.length - 1} more`;
+      : queue.length <= 3
+        ? ` — ⏳ ${queue[0]} is next${queue.slice(1).map((n) => `, then ${n}`).join('')}`
+        : ` — ⏳ ${queue[0]} is next, then ${queue[1]}, then ${queue[2]} +${queue.length - 3}`;
   // I-115 A: a window that lapses (the arm goes with no claim) resolves for one beat.
   // The previous arm lives in state, adjusted during render (no ref read in render, no setState
   // in an effect); the effect plays the note and clears the line after its beat.
