@@ -7,6 +7,7 @@ import type { JSX } from 'react';
 import { LIMITS } from '@partybox/shared';
 import type { PushedView, RoomSnapshot, TvView } from '@partybox/shared';
 import { t } from '../i18n';
+import { useServerInfo } from '../net/info';
 import type { TvClient } from '../net/tv';
 import styles from './HostBar.module.css';
 
@@ -67,6 +68,7 @@ export function HostBar({ client, room, view }: HostBarProps): JSX.Element | nul
   };
   const label = (key: string, text: string): string => (confirm === key ? `Sure? ${text}` : text);
   const vipAway = useVipAway(room);
+  const info = useServerInfo(5000); // I-077 C
   const bots = room.players.filter((p) => p.bot);
   const full = room.players.length >= room.capacity;
   const firstGame = room.games[0];
@@ -194,6 +196,12 @@ export function HostBar({ client, room, view }: HostBarProps): JSX.Element | nul
   return (
     <div className={styles.bar} role="toolbar" aria-label={t.host.title}>
       <span className={styles.label}>{t.host.title}</span>
+      {/* I-077 C: the gap, live — phones that opened the join page vs. got in. */}
+      {info?.funnel && info.funnel.opened > 0 ? (
+        <span className={styles.label} title="phones that opened the join page · joined">
+          {info.funnel.opened} opened · {info.funnel.joined} in
+        </span>
+      ) : null}
       {vipAway ? (
         <span className={styles.away} role="status">
           {vipAway.next ? t.host.vipAway(vipAway.next, vipAway.seconds) : t.host.vipAwayNobody}

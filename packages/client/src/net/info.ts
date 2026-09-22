@@ -12,6 +12,8 @@ export interface ServerInfo {
   joinUrl: string;
   qrSvg: string;
   rooms: { code: string; locked: boolean; players: number; names?: string[] }[];
+  /** I-077 C: the house room's join funnel. */
+  funnel?: { opened: number; attempted: number; joined: number };
   houseRoom: string;
   /** I-041: the join URL with the house room's code — what the TV's QR encodes. */
   qrUrl?: string;
@@ -21,7 +23,9 @@ export interface ServerInfo {
 let cached: ServerInfo | null = null;
 
 export async function fetchInfo(): Promise<ServerInfo> {
-  const res = await fetch('/api/info');
+  // I-077 A: a phone says so (the funnel's "opened"); the TV and /preview stay uncounted.
+  const from = document.querySelector('[data-surface="controller"]') ? '?from=phone' : '';
+  const res = await fetch(`/api/info${from}`);
   if (!res.ok) throw new Error(`info ${res.status}`);
   cached = (await res.json()) as ServerInfo;
   return cached;
