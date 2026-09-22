@@ -79,3 +79,21 @@
   background: var(--pb-surface-2);
   animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
 }
+
+/* ── I-069 B: the mute vignette — a full-stage 12 % wash that fades over the slow token. */
+.vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 19;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 55%, var(--pb-text) 100%);
+  animation: pb-vignette var(--pb-motion-slow) var(--pb-ease) both;
+}
+@keyframes pb-vignette {
+  from {
+    opacity: 0.12;
+  }
+  to {
+    opacity: 0;
+  }
+}
