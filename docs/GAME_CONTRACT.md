@@ -187,6 +187,7 @@ export const clientModule: GameClientModule = {
   quickInto: ['play'], // optional: phases the TV cuts into (their own entrance is the choreography)
   stripActive: (view) => [], // optional: player ids the TV strip rings as "on" — whoever the room should look at (I-017)
   ownLocks: ['answer'], // optional: TV phases where the game sounds its own lock-ins; the shell's `lock` tick stays quiet there (I-020)
+  PhoneSettings: lazy(() => import('./PhonePanel')), // optional: the game's per-phone settings panel for the lobby's 🎨 sheet, under the game's name (S-003)
 };
 ```
 

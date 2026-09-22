@@ -49,6 +49,8 @@ export function ControllerApp(): JSX.Element {
   const [gameReady, setGameReady] = useState(false);
   if (state.room?.status !== 'playing' && gameReady) setGameReady(false);
   const markGameReady = useCallback(() => setGameReady(true), []);
+  // S-003 B: the lobby's pill opens the shell's 🎨 sheet (a counter: every tap opens).
+  const [setupOpen, setSetupOpen] = useState(0);
 
   let screen: JSX.Element;
   if (!state.joined || !state.room || !me) {
@@ -56,7 +58,15 @@ export function ControllerApp(): JSX.Element {
   } else {
     switch (state.room.status) {
       case 'lobby':
-        screen = <Lobby controller={controller} room={state.room} me={me} audio={audio} />;
+        screen = (
+          <Lobby
+            controller={controller}
+            room={state.room}
+            me={me}
+            audio={audio}
+            onSetup={() => setSetupOpen((n) => n + 1)}
+          />
+        );
         break;
       case 'selecting':
         screen = <Selecting controller={controller} room={state.room} me={me} />;
@@ -82,7 +92,13 @@ export function ControllerApp(): JSX.Element {
   return (
     <ServerClockProvider offsetMs={state.offsetMs}>
       <AvatarPhotos players={state.room?.players}>
-        <ControllerShell controller={controller} state={state} me={me} audio={audio}>
+        <ControllerShell
+          controller={controller}
+          state={state}
+          me={me}
+          audio={audio}
+          openTheme={setupOpen}
+        >
           <CrossfadeSwap
             swapKey={!state.joined || !state.room || !me ? 'join' : state.room.status}
             hold={state.room?.status === 'playing' && !gameReady}

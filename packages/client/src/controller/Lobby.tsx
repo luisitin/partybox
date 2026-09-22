@@ -15,11 +15,13 @@ export interface LobbyProps {
   controller: Controller;
   /** I-074 B: the phone's own sound engine (a quiet `leave` as a bot puffs). */
   audio?: SoundEngine | null;
+  /** S-003 B: opens the phone's 🎨 sheet. */
+  onSetup?: () => void;
   room: RoomSnapshot;
   me: PlayerPublic;
 }
 
-export function Lobby({ controller, room, me, audio }: LobbyProps): JSX.Element {
+export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX.Element {
   // I-074 A: a removed bot puffs out before the remove is sent (450 ms, one poof at a time).
   const [poofing, setPoofing] = useState<string | null>(null);
   const poof = (botId: string): void => {
@@ -52,6 +54,10 @@ export function Lobby({ controller, room, me, audio }: LobbyProps): JSX.Element 
       }
     >
       <p className="pb-muted">{me.isVip ? t.lobby.youAreVip : t.lobby.waitingForVip}</p>
+      {/* S-003 B: set up your phone while you wait — opens the 🎨 sheet. */}
+      <button type="button" className={styles.setup} onClick={onSetup}>
+        🎨 Set up your phone while you wait
+      </button>
       <p className={`pb-caption ${styles.count}`}>
         {t.lobby.players(room.players.length, room.capacity)}
         {room.locked ? ` · ${t.lobby.locked}` : ''}

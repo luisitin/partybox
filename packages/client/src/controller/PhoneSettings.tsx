@@ -1,6 +1,17 @@
 // The theme sheet's footer on a phone: this phone's own sound and vibration toggles (R-048).
 // Turning one on plays/buzzes the `submit` pattern so the player hears or feels what they enabled.
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
+import type { ComponentType, LazyExoticComponent } from 'react';
+import { clientGames } from '../games.generated';
+
+/** The games' display names for the settings headings (the manifest names, by id). */
+const GAME_NAMES: Record<string, string> = {
+  bingo: 'Bingo',
+  blanks: 'Blanks',
+  wisecrack: 'Wisecrack',
+  'lightning-round': 'Lightning Round',
+  'broken-pencil': 'Broken Pencil',
+};
 import type { JSX } from 'react';
 import {
   buzz,
@@ -87,6 +98,20 @@ export function PhoneSettings({ audio }: PhoneSettingsProps): JSX.Element {
           {soundOn ? t.controller.on : t.controller.off}
         </span>
       </button>
+      {/* S-003 A: each installed game's own phone settings, under its name. */}
+      {Object.entries(clientGames)
+        .filter(([, m]) => m.PhoneSettings)
+        .map(([id, m]) => {
+          const Panel = m.PhoneSettings as LazyExoticComponent<ComponentType>;
+          return (
+            <section key={id} className={pickerStyles.gameSection}>
+              <h4 className={pickerStyles.gameTitle}>{GAME_NAMES[id] ?? id}</h4>
+              <Suspense fallback={null}>
+                <Panel />
+              </Suspense>
+            </section>
+          );
+        })}
       {canVibrate ? (
         <button
           type="button"

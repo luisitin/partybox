@@ -5,6 +5,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Set up your phone in the lobby** (S-003, option B): a game's per-phone settings come to the
+  🎨 sheet under its name — a new client-module hook `PhoneSettings`; Bingo brings its card style
+  and Motion — and a "🎨 Set up your phone while you wait" pill under the lobby's waiting line.
 - **Bingo's daub is a choice** (S-002, option C): the style sheet gains a Daub row (Blot / Stamp /
   Ring) and an Ink row (Mine / Pink / Gold / Green), per phone, applied as you tap, each row a
   tiny daubed cell in that look; the ring is concentric with the number (the owner's note).

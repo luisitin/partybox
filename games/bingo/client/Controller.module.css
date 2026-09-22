@@ -1348,3 +1348,8 @@
 .choiceCell[data-daub='ring'] {
   color: var(--pb-daub, var(--pb-accent));
 }
+/* ── S-003 A: the game's settings in the lobby's 🎨 sheet. */
+.lobbyPanel {
+  display: grid;
+  gap: var(--pb-space-2);
+}

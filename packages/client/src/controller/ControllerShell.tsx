@@ -22,6 +22,8 @@ export interface ControllerShellProps {
   me: PlayerPublic | null;
   /** The phone's sound engine; absent in /preview (silent). */
   audio?: SoundEngine;
+  /** S-003 B: bump to open the 🎨 sheet from a screen (the lobby's setup pill). */
+  openTheme?: number;
   children: ReactNode;
 }
 
@@ -43,10 +45,16 @@ export function ControllerShell({
   state,
   me,
   audio,
+  openTheme = 0,
   children,
 }: ControllerShellProps): JSX.Element {
   const [menuOpen, setMenuOpen] = useState(false);
   const [themeOpen, setThemeOpen] = useState(false);
+  const [seenOpen, setSeenOpen] = useState(openTheme);
+  if (openTheme !== seenOpen) {
+    setSeenOpen(openTheme);
+    if (openTheme > 0) setThemeOpen(true);
+  }
   const room = state.room;
   const showBanner = state.connection !== 'connected' && state.joined;
   // A pause freezes the phone too: the screen dims and goes inert (no taps, no focus, out of the

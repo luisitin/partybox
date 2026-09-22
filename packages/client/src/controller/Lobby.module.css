@@ -118,3 +118,22 @@
 :global(:root[data-motion='off']) .settle {
   animation: none;
 }
+
+/* ── S-003 B: the setup pill under the lobby's line. */
+.setup {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  margin: var(--pb-space-2) 0;
+  padding: var(--pb-space-2) var(--pb-space-4);
+  border-radius: 999px;
+  border: 2px solid var(--pb-border);
+  background: var(--pb-surface-2);
+  color: var(--pb-text);
+  font-weight: 700;
+}
+.setupNow {
+  color: var(--pb-text-muted);
+  font-weight: 600;
+}
