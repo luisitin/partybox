@@ -11,6 +11,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Added
 
+- **No white flash on a slow phone** (I-084, option C): an inline style paints the app's
+  background before any JS, an inline script applies the remembered theme before the first paint,
+  and a centred "PB" mark holds the screen until the app mounts.
 - **A face already in the room says so** (I-083, option B): the join grid tags a taken face "IN"
   (still pickable, and the screen reader says who-has-it), and a fresh phone's random default is
   drawn from the free faces.
