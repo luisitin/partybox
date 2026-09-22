@@ -50,6 +50,9 @@ export interface LobbyProps {
 }
 
 export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX.Element {
+  // I-070 A: one nudge per 20 s from this phone (the server throttles too).
+  const [nudgedAt, setNudgedAt] = useState<number | null>(null);
+  const vipName = room.players.find((p) => p.isVip)?.name ?? null;
   // The owner (2026-09-21): a "share" in the lobby — the join link straight to this room.
   const [shared, setShared] = useState<'shared' | 'copied' | 'failed' | null>(null);
   const share = async (): Promise<void> => {
@@ -89,6 +92,21 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
       }
     >
       <p className="pb-muted">{me.isVip ? t.lobby.youAreVip : t.lobby.waitingForVip}</p>
+      {/* I-070 A: something to tap while you wait — a rate-limited nudge to the VIP. */}
+      {!me.isVip && vipName ? (
+        <button
+          type="button"
+          className={`${styles.setup} ${styles.nudge}`}
+          disabled={nudgedAt !== null}
+          onClick={() => {
+            controller.nudge();
+            setNudgedAt(Date.now());
+            setTimeout(() => setNudgedAt(null), 20_000);
+          }}
+        >
+          {nudgedAt !== null ? '👋 Nudged' : `👋 Hurry up, ${vipName}!`}
+        </button>
+      ) : null}
       <div className={styles.pills}>
         {/* The join link, straight to this room: the share sheet where the phone has one. */}
         <button type="button" className={styles.setup} onClick={() => void share()}>

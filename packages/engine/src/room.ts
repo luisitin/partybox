@@ -138,6 +138,25 @@ function dispatch(room: RoomState, event: RoomEvent, deps: EngineDeps): ApplyRes
       return handleInput(room, event.playerId, event.input, event.now, deps);
     case 'tick':
       return handleTick(room, event.now, deps);
+    case 'nudge': {
+      // I-070 A: only in the lobby, only from a player who is not the VIP; the toast names the
+      // sender so a TV rings their chip (I-040 B).
+      const who = room.players[event.playerId];
+      const vip = room.vipId ? room.players[room.vipId] : undefined;
+      if (room.status !== 'lobby' || !who || who.isVip) return { room, effects: [] };
+      return {
+        room,
+        effects: [
+          {
+            type: 'toast',
+            to: 'all',
+            kind: 'info',
+            text: `👋 ${who.name} says: hurry up${vip ? `, ${vip.name}` : ''}!`,
+            playerId: who.id,
+          },
+        ],
+      };
+    }
     case 'dev:loadState': {
       const game = deps.games[event.gameId];
       if (!game || !isStateBase(event.state))

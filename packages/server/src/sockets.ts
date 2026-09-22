@@ -177,6 +177,13 @@ export function createSocketLayer(server: HttpServer): SocketLayer {
         });
       });
 
+      // I-070 A: a nudge costs 10 tokens (two per 20 s at most) and the engine ignores the VIP's.
+      socket.on('nudge', () => {
+        if (!data.playerId || !data.code) return sendError('not_in_room', 'Join a room first.');
+        if (!limiter.take(10)) return sendError('rate_limited', 'Slow down.');
+        host.dispatch(data.code, { type: 'nudge', playerId: data.playerId });
+      });
+
       socket.on('leave', () => {
         if (!data.playerId || !data.code) return;
         const { playerId, code } = data;
