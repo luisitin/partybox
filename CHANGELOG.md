@@ -5,6 +5,10 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 ## [Unreleased]
 
 ### Added
+- **Broken Pencil: the VIP's "close enough"** (the owner, 2026-09-21): a broken book counts as
+  intact on the VIP's word — a button on the VIP's phone on the book's last page and in the
+  summary; `{ type: 'veto', book }`, accepted from the VIP alone (the engine stamps `vip` on the
+  VIP's inputs, ADR-042).
 - **Play-test fixes** (the owner, 2026-09-21): a RIGHT bingo claim turns over on every phone in a
   "phone only" room too; a Wisecrack author sees the answer they are up against; the games'
   synthesized beds (Wisecrack's vote / reveal) play on phones that carry the room's audio; the

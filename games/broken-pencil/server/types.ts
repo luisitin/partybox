@@ -68,6 +68,9 @@ export interface State extends GameStateBase {
   offers: Record<string, string[]>;
   showing: Showing | null;
   intactBooks: number;
+  /** Books the VIP called "close enough" (the owner, 2026-09-21): intact by veto. Absent in
+   *  older states and fixtures. */
+  vetoed?: number[];
   /**
    * What each artist has drawn so far this step (`draft` inputs), keyed by player id. When the
    * deadline closes the step, a missing drawing takes its author's draft instead of an empty
@@ -109,6 +112,8 @@ export const inputSchema = z.discriminatedUnion('type', [
   /** The sheet so far, while still drawing: what the deadline keeps if "Done" never comes. */
   z.object({ type: z.literal('draft'), strokes: strokesSchema }),
   z.object({ type: z.literal('guess'), text: z.string().trim().min(1).max(40) }),
+  /** The VIP's "close enough": a broken book counts as intact (show's last page, or the summary). */
+  z.object({ type: z.literal('veto'), book: z.number().int().min(0).max(15) }),
 ]);
 export type Input = z.infer<typeof inputSchema>;
 

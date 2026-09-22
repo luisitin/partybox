@@ -84,7 +84,11 @@ function handleInput(
         },
       ],
     };
-  return applyGameEvent(room, { type: 'input', now, playerId, input: parsed.data }, deps);
+  return applyGameEvent(
+    room,
+    { type: 'input', now, playerId, input: parsed.data, vip: playerId === room.vipId },
+    deps,
+  );
 }
 
 function handleTick(room: RoomState, now: number, deps: EngineDeps): ApplyResult {

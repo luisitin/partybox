@@ -258,3 +258,16 @@
 :global(:root[data-motion='off']) .phonePage {
   animation: none;
 }
+
+/* The VIP's "close enough" on a broken book (summary and the show's last page). */
+.veto {
+  padding: 2px var(--pb-space-2);
+  border-radius: 999px;
+  border: 2px solid var(--pb-accent-3);
+  background: transparent;
+  color: var(--pb-accent-3);
+  font: inherit;
+  font-size: var(--pb-font-small);
+  font-weight: 800;
+  white-space: nowrap;
+}

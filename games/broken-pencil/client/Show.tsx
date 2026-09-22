@@ -22,13 +22,26 @@ export function Show({
   // A "phone only" room reads the book on the phone: the page on stage, for everyone.
   const page =
     tvOff && s.current ? <PhonePage key={`${s.book}:${s.page}`} page={s.current} /> : null;
+  // The VIP's "close enough" on a broken last page (the owner, 2026-09-21): the server takes the
+  // veto from the VIP alone (ADR-042); the verdict on stage flips to intact.
+  const vetoButton =
+    s.verdict === 'broken' && view.vip === view.me.id ? (
+      <button
+        type="button"
+        className={styles.veto}
+        onClick={() => send({ type: 'veto', book: s.book })}
+      >
+        close enough ✓ — count it
+      </button>
+    ) : null;
   if (!s.presenting)
-    return page ? (
+    return page || vetoButton ? (
       <Screen title={`${s.ownerName} is presenting`}>
         <p className={styles.kicker}>
           {s.ownerName}'s book · {where}
         </p>
         {page}
+        {vetoButton}
       </Screen>
     ) : (
       <WaitingScreen
@@ -52,6 +65,7 @@ export function Show({
         {s.pageKind === 'word' ? 'your word' : s.pageKind === 'draw' ? 'a drawing' : 'a guess'}
       </p>
       {page}
+      {vetoButton}
       <p className={styles.hint}>
         Read it out, let everyone look, then turn the page.
         {tvOff

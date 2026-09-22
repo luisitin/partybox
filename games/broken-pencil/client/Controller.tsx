@@ -217,7 +217,7 @@ function Guess({ view, send }: GameControllerProps<PencilControllerView, Input>)
 }
 
 export function Controller(props: GameControllerProps<PencilControllerView, Input>): JSX.Element {
-  const { view, me } = props;
+  const { view, me, send } = props;
   if (view.me.role === 'spectator')
     return (
       <WaitingScreen
@@ -258,16 +258,28 @@ export function Controller(props: GameControllerProps<PencilControllerView, Inpu
           <p className={styles.hint}>
             {view.intactBooks} of {view.bookCount} books survived.
           </p>
+          {/* The VIP's "close enough" (the owner, 2026-09-21): a broken book counts as intact —
+              the server takes the input from the VIP alone (ADR-042), during the summary. */}
           <ul className={styles.summary}>
-            {(view.summary ?? []).map((b) => (
+            {(view.summary ?? []).map((b, i) => (
               <li key={b.ownerId} className={b.ownerId === me.id ? styles.me : ''}>
                 <span className={styles.summaryOwner}>{b.ownerName}</span>
                 <span>
                   {b.word} → {b.last}
                 </span>
-                <span className={b.intact ? styles.intact : styles.broken}>
-                  {b.intact ? '✓' : '✕'}
-                </span>
+                {!b.intact && view.vip === me.id && view.phaseId === 'summary' ? (
+                  <button
+                    type="button"
+                    className={styles.veto}
+                    onClick={() => send({ type: 'veto', book: i })}
+                  >
+                    close enough ✓
+                  </button>
+                ) : (
+                  <span className={b.intact ? styles.intact : styles.broken}>
+                    {b.intact ? '✓' : '✕'}
+                  </span>
+                )}
               </li>
             ))}
           </ul>

@@ -55,11 +55,31 @@ export function presenterOf(state: State): string | null {
   return state.books[showing.book]?.ownerId ?? null;
 }
 
+/** The VIP's "close enough" (the owner, 2026-09-21): a broken book is called intact — on its last
+ *  page during the show (the verdict flips on stage) or in the summary. Once per book. */
+export function veto(state: State, event: GameEvent<Input>): State {
+  if (event.type !== 'input' || event.input.type !== 'veto' || !event.vip) return state;
+  const b = event.input.book;
+  const book = state.books[b];
+  if (!book || (state.vetoed ?? []).includes(b) || isIntact(book)) return state;
+  const showing = state.showing;
+  const onStage =
+    state.phase.id === 'show' && showing?.book === b && showing.page === book.pages.length - 1;
+  if (!onStage && state.phase.id !== 'summary') return state;
+  return {
+    ...state,
+    vetoed: [...(state.vetoed ?? []), b],
+    intactBooks: state.intactBooks + 1,
+    showing: onStage && showing ? { ...showing, verdict: 'intact', line: VETO_LINE } : showing,
+  };
+}
+const VETO_LINE = 'Close enough — the VIP allows it.';
+
 export function reduceShow(state: State, event: GameEvent<Input>, next: Transition): State {
   if (event.type === 'input') {
     if (event.input.type === 'turn' && event.playerId === presenterOf(state))
       return turnPage(state, event.now, next);
-    return state;
+    return veto(state, event);
   }
   if (isTimerFor(state, event)) return turnPage(state, event.now, next);
   return state;
@@ -72,7 +92,7 @@ export function enterSummary(state: State, now: number): State {
 
 export function reduceSummary(state: State, event: GameEvent<Input>, next: Transition): State {
   if (isTimerFor(state, event)) return next(state, event.now);
-  return state;
+  return veto(state, event);
 }
 
 export function enterDone(state: State, now: number): State {

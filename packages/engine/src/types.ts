@@ -96,7 +96,7 @@ export type RoomEvent =
       seed?: number;
       host?: boolean;
     }
-  | { type: 'input'; now: number; playerId: string; input: unknown }
+  | { type: 'input'; now: number; playerId: string; input: unknown; vip?: boolean }
   | { type: 'tick'; now: number }
   | { type: 'dev:loadState'; now: number; gameId: string; state: unknown; settings?: Settings }
   | { type: 'dev:gameEvent'; now: number; event: unknown };

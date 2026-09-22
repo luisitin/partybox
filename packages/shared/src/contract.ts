@@ -134,7 +134,9 @@ export interface InitContext {
 export type VipGameAction = 'skip' | 'pause' | 'resume' | 'end';
 
 export type GameEvent<I> =
-  | { type: 'input'; now: number; playerId: string; input: I }
+  /** `vip`: true when the sender is the room's VIP (ADR-042) — a game may reserve an input for
+   *  them (Broken Pencil's "close enough" veto) without ever learning who the VIP is otherwise. */
+  | { type: 'input'; now: number; playerId: string; input: I; vip?: boolean }
   | { type: 'timer'; now: number; phaseId: string; startedAt: number }
   | { type: 'player'; now: number; playerId: string; connected: boolean }
   | { type: 'vip'; now: number; action: VipGameAction };
