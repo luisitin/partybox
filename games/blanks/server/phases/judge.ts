@@ -100,6 +100,24 @@ export function reduceJudge(state: State, event: GameEvent<Input>, next: Transit
     if (after === state) return state;
     return allConnectedDone(after, votingDone(after)) ? holdVotesIn(after, event.now) : after;
   }
-  if (isTimerFor(state, event)) return next(state, event.now);
+  // I-773 A: the grace ran out with the judge still gone — the room votes instead of nobody winning
+  if (isTimerFor(state, event))
+    return judgeAway(state) ? roomVote(state, event.now, 'dropped') : next(state, event.now);
   return state;
+}
+
+/** I-773 A: the judge is gone for good (the grace ran out).
+ *  Every card was read out loud already, so the room judges them: this round flips to a vote,
+ *  with a fresh vote window. startRound puts the judge back for the next round. */
+export function roomVote(state: State, now: number, why: 'dropped' | 'kicked' | 'left'): State {
+  const name = (state.czarId !== null && state.players[state.czarId]?.name) || '';
+  const flipped: State = {
+    ...state,
+    settings: { ...state.settings, judge: 'vote' },
+    czarId: null,
+    votes: {},
+    guesses: {},
+    judgeGone: { name, why },
+  };
+  return enterJudge(flipped, now);
 }

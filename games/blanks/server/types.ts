@@ -87,6 +87,8 @@ export interface State extends GameStateBase {
   blackChoices: string[];
   /** The judge this round (czar mode), else null. */
   czarId: string | null;
+  /** I-773 A: this round's judge went and the room is judging in their place (null otherwise). */
+  judgeGone?: { name: string; why: 'dropped' | 'kicked' | 'left' } | null;
   /** Vote mode: the seat asked to read the cards out this round, rotating like the judge's does.
    *  Null in czar mode, where the judge reads (review-loop #248). */
   readerId: string | null;
