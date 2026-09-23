@@ -77,6 +77,7 @@ export function snapshot(room: RoomState, deps: EngineDeps): RoomSnapshot {
     musicOnPhones: room.musicOnPhones,
     listed: room.listed,
     phoneOnly: room.phoneOnly,
+    ...(room.formerVip ? { formerVip: room.formerVip } : {}),
   };
 }
 

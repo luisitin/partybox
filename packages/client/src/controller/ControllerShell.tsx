@@ -307,6 +307,15 @@ export function ControllerShell({
         {children}
       </main>
       <div className={styles.toasts} aria-live="polite">
+        {/* I-347 C: the host whose VIP passed on while they were away can take it back */}
+        {room?.formerVip && room.formerVip === state.playerId && room.vip !== state.playerId ? (
+          <div className={`${styles.toast} ${styles.info} ${styles.reclaim}`}>
+            <span>{room.players.find((p) => p.id === room.vip)?.name ?? 'Someone'} took over as VIP while you were away</span>
+            <button type="button" onClick={() => controller.vip({ action: 'reclaimVip' })}>
+              Take it back
+            </button>
+          </div>
+        ) : null}
         {state.toasts.map((toast) => (
           // A status line, not a button: screen readers announce it once and it never masquerades
           // as an action (a "… is now the VIP" toast used to match button lookups for /VIP/).

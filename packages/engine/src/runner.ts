@@ -175,7 +175,8 @@ export function nextWakeAt(room: RoomState): number | null {
   for (const p of Object.values(room.players)) {
     if (p.disconnectedAt === null) continue;
     candidates.push(p.disconnectedAt + LIMITS.disconnectGraceMs);
-    if (p.isVip) candidates.push(p.disconnectedAt + LIMITS.vipHandoverMs);
+    // I-347 B: the handover happens only during a game, so it is only scheduled then
+    if (p.isVip && room.status === 'playing') candidates.push(p.disconnectedAt + LIMITS.vipHandoverMs);
   }
   return candidates.length === 0 ? null : Math.min(...candidates);
 }
