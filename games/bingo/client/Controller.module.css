@@ -1428,3 +1428,26 @@
   color: var(--pb-text-muted);
   font: inherit;
 }
+
+/* ── I-407 A: the preview bar as one slim row at the bottom. */
+.previewSlim {
+  flex-wrap: nowrap;
+  padding: 6px 8px;
+  gap: 6px;
+}
+.previewSlim > span {
+  flex: 1 1 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 4px;
+  text-align: left;
+  white-space: nowrap;
+}
+.previewSlim > button {
+  flex: 0 0 auto;
+  width: auto; /* PrimaryButton is full-width by default: Confirm fell off the row */
+  min-height: 40px;
+  padding: 0 14px;
+  font-size: var(--pb-font-caption);
+}

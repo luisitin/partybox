@@ -51,14 +51,18 @@ export function StyleSheet({
   // Previewing: the sheet folds to a bar so the whole screen shows the style with the real cards.
   if (preview)
     return (
-      <div className={styles.previewBar} role="dialog" aria-label={L('Card style preview')}>
+      <div
+        className={`${styles.previewBar} ${styles.previewSlim}`}
+        role="dialog"
+        aria-label={L('Card style preview')}
+      >
+        {/* I-407 A: one slim row — the previewed cards stay in view */}
         <span className={styles.previewLabel}>
-          {/* I-013 C: the picked shape, big, pops in beside the question. */}
-          <StyleMini id={preview} big />
-          {L('{style}: like it?', { style: words[preview].label })}
+          <StyleMini id={preview} />
+          {L('{style}?', { style: words[preview].label })}
         </span>
         <PrimaryButton tone="neutral" onClick={() => (onBack ? onBack() : onPreview(current))}>
-          {L('Keep changing')}
+          {L('Change')}
         </PrimaryButton>
         <PrimaryButton onClick={onConfirm}>{L('Confirm')}</PrimaryButton>
       </div>
