@@ -53,3 +53,37 @@
   animation: none !important;
   transition: none !important;
 }
+
+/* ── I-120 A: the curtain — the held snapshot darkens over the base token, then fades. */
+.ghostCurtain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--pb-bg);
+  opacity: 0;
+}
+.ghostCurtain.ghostFade {
+  animation: curtain-drop calc(var(--pb-motion-base) * 2) var(--pb-ease) both;
+}
+.ghostCurtain.ghostFade::after {
+  animation: curtain-wash var(--pb-motion-base) var(--pb-ease) both;
+}
+@keyframes curtain-wash {
+  to {
+    opacity: 1;
+  }
+}
+@keyframes curtain-drop {
+  0% {
+    opacity: 1;
+    transform: none;
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(-6%) scale(0.98); /* I-120 B: cleared away, not dissolved */
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-6%) scale(0.98);
+  }
+}

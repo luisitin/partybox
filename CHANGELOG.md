@@ -51,6 +51,10 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Added
 
+- **The lobby leaves behind a curtain** (I-120, option B): when a game starts, the TV's lobby darkens
+  to the background and slides away before the intro lands — no ghost of the game list under "Any line".
+- **"Previous number" off applies to the phones too** (I-113, option A).
+
 - **The verdict's icon lights the winning line** (I-107, option B): the pattern icon beside a
   bingo now shows the claim's own completion — the diagonal for a diagonal — and draws its cells
   in 70 ms apart.

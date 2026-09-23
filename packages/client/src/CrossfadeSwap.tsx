@@ -21,6 +21,8 @@ export interface CrossfadeSwapProps {
   hold?: boolean;
   /** The ghost fades over `--pb-motion-fast` (the incoming screen brings its own entrance). */
   quick?: boolean;
+  /** I-120 A: the outgoing snapshot goes to black before it drops (a curtain, not a dissolve). */
+  curtain?: boolean;
   children: ReactNode;
 }
 
@@ -30,6 +32,7 @@ const HOLD_MAX_MS = 1500;
 const GHOST = styles['ghost'] ?? 'ghost';
 const GHOST_FADE = styles['ghostFade'] ?? 'ghostFade';
 const GHOST_QUICK = styles['ghostQuick'] ?? 'ghostQuick';
+const GHOST_CURTAIN = styles['ghostCurtain'] ?? 'ghostCurtain'; // I-120 A
 
 /** The live screen; hands a clone of its DOM to the parent the moment it really unmounts. */
 function Screen({
@@ -81,6 +84,7 @@ export function CrossfadeSwap({
   className = styles.live,
   hold = false,
   quick = false,
+  curtain = false,
   children,
 }: CrossfadeSwapProps): JSX.Element {
   const wrap = useRef<HTMLDivElement>(null);
@@ -88,11 +92,13 @@ export function CrossfadeSwap({
   const reducedRef = useRef(reduced);
   const holdRef = useRef(hold);
   const quickRef = useRef(quick);
+  const curtainRef = useRef(curtain);
   useEffect(() => {
     reducedRef.current = reduced;
     holdRef.current = hold;
     quickRef.current = quick;
-  }, [reduced, hold, quick]);
+    curtainRef.current = curtain;
+  }, [reduced, hold, quick, curtain]);
   /** The current ghost host and its timer; one ghost at a time (a new swap replaces it). */
   const ghost = useRef<Ghost | null>(null);
 
@@ -101,10 +107,14 @@ export function CrossfadeSwap({
     if (!g || g.host.classList.contains(GHOST_FADE)) return;
     g.host.classList.add(GHOST_FADE);
     if (g.timer) clearTimeout(g.timer);
-    g.timer = setTimeout(() => {
-      g.host.remove();
-      if (ghost.current === g) ghost.current = null;
-    }, GHOST_MS);
+    // I-120 A: a curtain takes two beats (dark, then gone).
+    g.timer = setTimeout(
+      () => {
+        g.host.remove();
+        if (ghost.current === g) ghost.current = null;
+      },
+      g.host.classList.contains(GHOST_CURTAIN) ? GHOST_MS * 2 : GHOST_MS,
+    );
   }, []);
 
   // Stable on purpose: a changing callback would re-run Screen's cleanup on a LIVE screen.
@@ -117,7 +127,11 @@ export function CrossfadeSwap({
         ghost.current.host.remove();
       }
       const host = parent.ownerDocument.createElement('div');
-      host.className = quickRef.current ? `${GHOST} ${GHOST_QUICK}` : GHOST;
+      host.className = quickRef.current
+        ? `${GHOST} ${GHOST_QUICK}`
+        : curtainRef.current
+          ? `${GHOST} ${GHOST_CURTAIN}`
+          : GHOST;
       host.setAttribute('aria-hidden', 'true');
       host.appendChild(snapshot);
       parent.appendChild(host);
