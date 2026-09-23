@@ -180,8 +180,15 @@ export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
           <BigText key={players.length} level="h2" className={styles.count}>
             {room ? t.lobby.players(players.length, room.capacity) : t.connection.connecting}
           </BigText>
+          {/* I-340 A: the lobby's one sentence above the roster, never under the host bar */}
+          {room && vip && !empty ? (
+            <p className={`pb-muted ${styles.waitLine}`}>{t.lobby.waitingFor(vip.name)}</p>
+          ) : null}
           <PlayerChips
-            players={players.map((p) => ({
+            // I-340 B: the VIP's chip leads — never the one under the sound pill
+            players={[...players]
+              .sort((a, b) => Number(b.isVip) - Number(a.isVip))
+              .map((p) => ({
               id: p.id,
               name: p.name,
               avatarId: p.avatarId,
@@ -195,7 +202,8 @@ export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
             awayLeft={awayLeft}
             botIds={players.filter((p) => p.bot).map((p) => p.id)}
             layout="grid"
-            size={players.length > 8 ? 'md' : 'lg'}
+            // I-340 A: a third size past 12, so 16 chips fit above the host bar
+            size={players.length > 12 ? 'sm' : players.length > 8 ? 'md' : 'lg'}
             align="start"
             enter
           />
@@ -208,8 +216,6 @@ export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
                 </span>
               ))}
             </p>
-          ) : room && vip ? (
-            <p className="pb-muted">{t.lobby.waitingFor(vip.name)}</p>
           ) : null}
           {/* I-073 A: the last game, still on the table until the next one starts. */}
           {room?.results ? <LastUp room={room} /> : null}

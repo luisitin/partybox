@@ -352,3 +352,8 @@
 :global(:root[data-motion='off']) .qrMarkBump {
   animation: none;
 }
+
+/* ── I-340 A: the waiting line sits right under the count. */
+.waitLine {
+  margin: calc(-1 * var(--pb-space-3)) 0 0;
+}
