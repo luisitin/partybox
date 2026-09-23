@@ -11,6 +11,7 @@ import { SettingField } from '../SettingField';
 import { serverText } from '../server-text';
 import { STRINGS } from './strings';
 import styles from './TvSelecting.module.css';
+import { keySetting } from '../keySetting';
 
 export interface TvSelectingProps {
   room: RoomSnapshot;
@@ -110,6 +111,19 @@ export function TvSelecting({ room, client }: TvSelectingProps): JSX.Element {
             <p className={styles.meta}>
               {t.selecting.players(game.minPlayers, game.maxPlayers)} ·{' '}
               {t.selecting.minutes(game.estimatedMinutes)}
+              {/* I-187 C: the room sees the deck before the VIP starts — on the meta line, so the
+                  settings below keep their room */}
+              {(() => {
+                const key = keySetting(game, room.settings);
+                return key ? (
+                  <>
+                    {' · '}
+                    <span className={`${styles.keyTag} ${key.mark === '🔞' ? styles.keyTagHot : ''}`}>
+                      {key.mark} {gameText(game.id, lang, key.short)} {L('deck')}
+                    </span>
+                  </>
+                ) : null;
+              })()}
             </p>
             {game.settings.length > 0 ? (
               <div className={styles.settings} aria-label={t.selecting.settings}>

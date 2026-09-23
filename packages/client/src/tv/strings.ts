@@ -18,6 +18,8 @@ export const STRINGS: Strings = {
       'teléfonos que abrieron la página para entrar · los que entraron',
     'Switch the TV to Spanish': 'Cambiar la TV a español',
     'Switch the TV to English': 'Cambiar la TV a inglés',
+    // I-187 C
+    deck: 'mazo',
     // TvLobby
     '{names} and {last}': '{names} y {last}',
     'last game': 'último juego',

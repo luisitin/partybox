@@ -193,3 +193,11 @@
   height: 28px;
   accent-color: var(--pb-accent);
 }
+
+/* ── I-187 C: the deck on the game's meta line. */
+.keyTag {
+  font-weight: 800;
+}
+.keyTagHot {
+  color: var(--pb-danger);
+}
