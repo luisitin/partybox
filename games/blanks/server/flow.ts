@@ -6,7 +6,7 @@ import { allConnectedDone, applyVip, setConnected } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { enterAnswer, reduceAnswer } from './phases/answer';
 import { enterIntro, reduceIntro } from './phases/intro';
-import { enterJudge, holdForJudge, judgeAway, judgeReturns, reduceJudge } from './phases/judge';
+import { roomVote, enterJudge, holdForJudge, judgeAway, judgeReturns, reduceJudge } from './phases/judge';
 import { enterPick, reducePick } from './phases/pick';
 import { applySpeech, enterReveal, reduceReveal } from './phases/reveal';
 import { enterDone, enterFinal, enterResult, reduceFinal, reduceResult } from './phases/result';
@@ -109,6 +109,9 @@ export function reduce(state: State, event: GameEvent<Input>): State {
   if (event.type === 'player') {
     const after = setConnected(state, event);
     if (after.phase.paused) return after;
+    // I-773 B: a judge who left or was removed is not coming back — the room votes now
+    if (!event.connected && event.gone && after.phase.id === 'judge' && judgeAway(after))
+      return roomVote(after, event.now, event.gone);
     return event.connected
       ? judgeReturns(after, event.playerId, event.now)
       : closeIfDone(after, event.now);

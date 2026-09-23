@@ -34,10 +34,14 @@ function notifyGame(
   connected: boolean,
   now: number,
   deps: EngineDeps,
+  gone?: 'left' | 'kicked', // I-773 B: the game hears why a player went for good
 ): ApplyResult {
   if (room.status !== 'playing' || !Object.hasOwn(room.game?.state.players ?? {}, playerId))
     return { room, effects: [] };
-  return applyGameEvent(room, { type: 'player', now, playerId, connected }, deps);
+  const event = gone
+    ? { type: 'player' as const, now, playerId, connected, gone }
+    : { type: 'player' as const, now, playerId, connected };
+  return applyGameEvent(room, event, deps);
 }
 
 export function join(room: RoomState, event: JoinEvent, deps: EngineDeps): ApplyResult {
@@ -166,7 +170,7 @@ export function removePlayer(
     effects.push(...gone.effects);
   }
   // Idempotent for the game: a second `connected: false` is harmless, a missed one is not.
-  const game = notifyGame(next, playerId, false, now, deps);
+  const game = notifyGame(next, playerId, false, now, deps, reason);
   next = game.room;
   effects.push(...game.effects);
   if (room.vipId === playerId) {

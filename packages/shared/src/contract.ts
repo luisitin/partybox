@@ -147,7 +147,14 @@ export type GameEvent<I> =
    *  them (Broken Pencil's "close enough" veto) without ever learning who the VIP is otherwise. */
   | { type: 'input'; now: number; playerId: string; input: I; vip?: boolean }
   | { type: 'timer'; now: number; phaseId: string; startedAt: number }
-  | { type: 'player'; now: number; playerId: string; connected: boolean }
+  | {
+      type: 'player';
+      now: number;
+      playerId: string;
+      connected: boolean;
+      /** I-773 B: set when the player is gone for good — they left, or the VIP removed them. */
+      gone?: 'left' | 'kicked';
+    }
   | { type: 'vip'; now: number; action: VipGameAction }
   /** READER-VOICES (ADR-045): a reading the game asked for (`speech()`) is ready — `ms` is its
    *  length, or -1 when it could not be made (the game carries on without a voice). */
