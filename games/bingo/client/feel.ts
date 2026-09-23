@@ -54,17 +54,27 @@ export function useCallFeel(view: BingoControllerView, voice?: SoundApi | null):
   // S-005 B: phone-only — the caller's voice from the phone, as the TV would say it. What to
   // say is kept in a ref (written in its own, earlier effect) so the call effect keys on the
   // stamp alone: one voice per real call, never a repeat when the voice or the view changes.
-  const say = useRef<{ voice: SoundApi | null; letter: string; number: number } | null>(null);
+  const say = useRef<{
+    voice: SoundApi | null;
+    letter: string;
+    number: number;
+    reader: string;
+  } | null>(null);
   useEffect(() => {
     say.current = view.current
-      ? { voice: voice ?? null, letter: view.current.letter, number: view.current.number }
+      ? {
+          voice: voice ?? null,
+          letter: view.current.letter,
+          number: view.current.number,
+          reader: view.reader,
+        }
       : null;
   });
   useEffect(() => {
     if (stamp === null) return;
     const t = setTimeout(() => buzz(12), BALL_LAND_MS);
     const s = say.current;
-    if (s?.voice) speakCall(s.voice, s.letter, s.number);
+    if (s?.voice) speakCall(s.voice, s.letter, s.number, s.reader);
     return () => clearTimeout(t);
   }, [stamp]);
 }

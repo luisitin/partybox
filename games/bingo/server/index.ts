@@ -23,8 +23,8 @@ import {
 } from './phases/scoreboard';
 import { results } from './scoring';
 import { menusOpen } from './claims';
-import { DECK, MAX_CARDS, MAX_ROUNDS, PATTERNS, PHASES, inputSchema } from './types';
-import type { Input, Pattern, Settings, State } from './types';
+import { DECK, MAX_CARDS, MAX_ROUNDS, PATTERNS, PHASES, READERS, inputSchema } from './types';
+import type { Input, Pattern, Reader, Settings, State } from './types';
 import { controllerView, tvView } from './views';
 import type { BingoControllerView, BingoTvView } from './views';
 
@@ -59,6 +59,10 @@ export function readSettings(raw: RawSettings): Settings {
     spicy: raw['spicy'] === true,
     ...callFlags(raw),
     showClose: raw['showClose'] === true,
+    // READER-VOICES: Bingo's default reader is the Soft-Spoken Woman (Kokoro "sky").
+    reader: (READERS as readonly unknown[]).includes(raw['reader'])
+      ? (raw['reader'] as Reader)
+      : 'sky',
   };
 }
 

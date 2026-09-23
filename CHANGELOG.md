@@ -91,6 +91,11 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Added
 
+- **Bingo: pick the caller's voice** (READER-VOICES, the owner, 2026-09-22): a Reader setting — No
+  reader · Old British Man · Young British Man · American Woman · Soft-Spoken Woman (the default) ·
+  Original — with all 75 calls recorded in each of the four new voices. Every clip ends, plus a
+  beat, before even the 3-second caller's next number.
+
 - **Blanks: a side bet while the judge thinks** (I-149, option C): in judge mode every other phone
   can call which card the judge will take (never their own) for half a point — closed the moment the
   judge picks; the result shows "called it" with the callers' faces, and the night's best caller

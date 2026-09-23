@@ -34,6 +34,15 @@ export const ES_GAME: Readonly<Record<string, string>> = {
   'Seconds per number': 'Segundos por número',
   'How long each number stays up before the next one is called':
     'Cuánto se ve cada número antes de cantar el siguiente',
+  // READER-VOICES: whose voice calls the numbers.
+  Reader: 'Locutor',
+  'Whose voice calls the numbers': 'Qué voz canta los números',
+  'No reader': 'Sin locutor',
+  'Old British Man': 'Señor británico',
+  'Young British Man': 'Joven británico',
+  'American Woman': 'Mujer estadounidense',
+  'Soft-Spoken Woman': 'Mujer de voz suave',
+  Original: 'Original',
   // I-112 C: one three-way choice replaced "Called board" and "Previous number".
   'Calls shown': 'Números a la vista',
   'How much of the call history the TV keeps up': 'Cuántos números ya cantados muestra la TV',

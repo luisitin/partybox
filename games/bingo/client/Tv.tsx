@@ -69,12 +69,12 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
     if (quiet || calledAt === null) return;
     // The voice starts now — its first syllable on the frame the ball enters (loop 335, the owner
     // twice); the boing waits for the squash, BALL_LAND_MS in.
-    speakCall(sound, letter, number);
+    speakCall(sound, letter, number, view.reader);
     const t = setTimeout(() => sound.play('call'), BALL_LAND_MS);
     return () => {
       clearTimeout(t);
     };
-  }, [phaseId, number, letter, quiet, calledAt, sound]);
+  }, [phaseId, number, letter, quiet, calledAt, sound, view.reader]);
 
   if (view.phaseId === 'intro') return <IntroStage view={view} roundLabel={roundLabel} />;
 

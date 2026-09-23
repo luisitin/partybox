@@ -5,25 +5,43 @@
 // synthesis is gone (Chrome's speech queue replayed old calls in the lobby and mid-round).
 import { trace } from '@partybox/game-sdk/ui';
 import type { SoundApi } from '@partybox/game-sdk/ui';
+import voices from './call-voices.json';
 
-/** The clip for a call: /sfx/calls/b12.wav. */
-export function callClip(letter: string, number: number): string {
-  return `/sfx/calls/${letter.toLowerCase()}${number}.wav`;
+/** READER-VOICES (the owner, 2026-09-22): four Kokoro voices recorded the same 75 calls
+ *  (/sfx/calls/<voice>/b12.wav); "original" is the shipped Zira set (/sfx/calls/b12.wav); "none"
+ *  says nothing (the boing still sounds). `call-voices.json` holds each clip's first-syllable
+ *  offset (5 % of peak, 5 ms early so the attack is kept — per clip: the Kokoro leads vary from
+ *  25 to 200 ms) and its length (the rule "the room waits for the reader": calls-shown.test). */
+type Clips = Readonly<Record<string, Readonly<Record<string, readonly [number, number]>>>>;
+const CLIPS = voices as unknown as Clips;
+
+/** The clip for a call in the room's voice, or null for "No reader". */
+export function callClip(
+  letter: string,
+  number: number,
+  reader: string = 'original',
+): string | null {
+  if (reader === 'none') return null;
+  const name = `${letter.toLowerCase()}${number}`;
+  return reader === 'original' || !CLIPS[reader]
+    ? `/sfx/calls/${name}.wav`
+    : `/sfx/calls/${reader}/${name}.wav`;
 }
 
 /** The ball's drop lands (the squash) this long after the push: the boing waits for it. */
 export const BALL_LAND_MS = 190;
 
-/**
- * Every recorded call opens with silence before the letter's first syllable — a fixed length per
- * letter (measured on the 75 clips at 5 % of peak, loop 335: B 137–140 ms, I 89–90, N 93–96,
- * G 112, O 92–93). The caller skips it, a few ms short so the attack is kept, and the first
- * syllable starts where the clip is scheduled. (Loop 310 skipped a flat 90 ms: B started 50 ms
- * late, G 20 ms late.)
- */
-const CLIP_LEAD_S: Record<string, number> = { B: 0.132, I: 0.084, N: 0.088, G: 0.106, O: 0.087 };
-export function clipLeadS(letter: string): number {
-  return CLIP_LEAD_S[letter.toUpperCase()] ?? 0.084;
+/** Where the first syllable starts in a clip (the caller skips the silence before it). */
+export function clipLeadS(letter: string, number: number, reader: string = 'original'): number {
+  const set = CLIPS[reader === 'none' ? 'original' : reader] ?? CLIPS['original'];
+  return set?.[`${letter.toLowerCase()}${number}`]?.[0] ?? 0.084;
+}
+
+/** A clip's length in seconds (0 for no reader). */
+export function clipSeconds(letter: string, number: number, reader: string): number {
+  if (reader === 'none') return 0;
+  const set = CLIPS[reader] ?? CLIPS['original'];
+  return set?.[`${letter.toLowerCase()}${number}`]?.[1] ?? 0;
 }
 
 /**
@@ -32,11 +50,18 @@ export function clipLeadS(letter: string): number {
  * the push with no delay: the first syllable is on the frame the ball enters; the boing waits
  * for the squash (BALL_LAND_MS). Before loop 335 the voice waited for the squash too.
  */
-export function speakCall(sound: SoundApi, letter: string, number: number, delayMs = 0): void {
+export function speakCall(
+  sound: SoundApi,
+  letter: string,
+  number: number,
+  reader: string = 'original',
+  delayMs = 0,
+): void {
   // Never two voices: a call that comes while the last one is still being said (a VIP pressing
   // Skip twice, a 3 s caller) cuts it off first (loop 333).
   hushCaller(sound);
-  sound.clip(callClip(letter, number), { delayMs, gain: 1, offsetS: clipLeadS(letter) });
+  const clip = callClip(letter, number, reader);
+  if (clip) sound.clip(clip, { delayMs, gain: 1, offsetS: clipLeadS(letter, number, reader) });
 }
 
 /** Stop talking (a claim, a phase change). */

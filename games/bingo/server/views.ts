@@ -16,7 +16,7 @@ import { waitingOn } from './phases/intro';
 import { canClaim, isHeld } from './phases/play';
 import { pointsFor, standings } from './scoring';
 import type { StandingRow } from './scoring';
-import type { Claim, Pattern, State } from './types';
+import type { Claim, Pattern, Reader, State } from './types';
 
 export interface CallView {
   number: number;
@@ -36,6 +36,8 @@ export interface ClaimView extends Claim {
 }
 
 interface Common {
+  /** READER-VOICES: the voice that calls the numbers on the TV (and a phone-only room's phones). */
+  reader: Reader;
   round: number;
   totalRounds: number;
   pattern: Pattern;
@@ -212,6 +214,7 @@ function common(state: State): Common {
   const winnerId =
     state.phase.id === 'bingo' || state.phase.id === 'scoreboard' ? round.winnerId : null;
   return {
+    reader: state.settings.reader ?? 'sky',
     round: round.number,
     totalRounds: state.settings.rounds,
     pattern: round.pattern,

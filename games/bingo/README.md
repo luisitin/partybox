@@ -69,8 +69,7 @@ Pause freezes the caller (and a running check); daubs and claims are ignored whi
   3 s (`round.arm` — this player has dibs; a tap on another of their cards re-arms there), the second tap
   on the same card claims it. Other players' first taps queue (`round.queue`, in order); a lapsed window
   passes to the next in line with a fresh 3 s from that moment (the armed phone sends `lapse`; the next
-  event settles it anyway). A claim
-  evaluates **that card only** against the pattern and the numbers called so far:
+  event settles it anyway). A claim evaluates **that card only** against the pattern and the numbers called so far:
   - `red` = every daubed square whose number was never called (anywhere on the card);
   - the completion shown is the one with the most green squares; **valid iff it is entirely green**.
   - Valid → `bingo` (+1, that card locked). Invalid → `check`: that card's daubs wiped (other cards keep
@@ -101,15 +100,16 @@ exactly like humans.
 
 ## Settings
 
-| Key               | Type    | Default                          | Range                         | Effect                                                                                                                                                                                           |
-| ----------------- | ------- | -------------------------------- | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `rounds`          | number  | 3                                | 1–5                           | Rounds played; fresh cards and deck each round.                                                                                                                                                  |
-| `round1`…`round5` | select  | line, corners, x, line, blackout | line / corners / x / blackout | The pattern for that round (only the first `rounds` apply).                                                                                                                                      |
-| `cards`           | number  | 1                                | 1–4                           | Cards dealt to every player each round.                                                                                                                                                          |
-| `callSeconds`     | number  | 6                                | 3–12                          | Seconds each number stays up before the next call.                                                                                                                                               |
-| `callsShown`      | select  | last                             | none · last · board           | I-112 C: nothing (a memory test), the previous number under the call (off, the phones drop it too — I-113 A), or also the hall board; maps onto `showBoard` / `showPrevious` (board ⇒ previous). |
-| `showClose`       | boolean | false                            | —                             | TV tells the room who is one number from the pattern.                                                                                                                                            |
-| `spicy`           | boolean | false                            | —                             | Cheekier caller nicknames for some numbers (PG-13).                                                                                                                                              |
+| Key               | Type    | Default                          | Range                                            | Effect                                                                                                                                                                                           |
+| ----------------- | ------- | -------------------------------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `rounds`          | number  | 3                                | 1–5                                              | Rounds played; fresh cards and deck each round.                                                                                                                                                  |
+| `round1`…`round5` | select  | line, corners, x, line, blackout | line / corners / x / blackout                    | The pattern for that round (only the first `rounds` apply).                                                                                                                                      |
+| `cards`           | number  | 1                                | 1–4                                              | Cards dealt to every player each round.                                                                                                                                                          |
+| `callSeconds`     | number  | 6                                | 3–12                                             | Seconds each number stays up before the next call.                                                                                                                                               |
+| `callsShown`      | select  | last                             | none · last · board                              | I-112 C: nothing (a memory test), the previous number under the call (off, the phones drop it too — I-113 A), or also the hall board; maps onto `showBoard` / `showPrevious` (board ⇒ previous). |
+| `reader`          | select  | sky                              | none · george · fable · jessica · sky · original | READER-VOICES: whose voice calls the numbers (four Kokoro voices, the Zira set, or none); every clip ends, plus a beat, before the fastest next call.                                            |
+| `showClose`       | boolean | false                            | —                                                | TV tells the room who is one number from the pattern.                                                                                                                                            |
+| `spicy`           | boolean | false                            | —                                                | Cheekier caller nicknames for some numbers (PG-13).                                                                                                                                              |
 
 Patterns: **line** = any full row, column or diagonal (FREE counts); **corners** = the four corners; **x** = both diagonals; **blackout** = every square. Settings are fixed at init.
 

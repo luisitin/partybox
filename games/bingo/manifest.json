@@ -117,6 +117,21 @@
       "step": 1
     },
     {
+      "key": "reader",
+      "label": "Reader",
+      "description": "Whose voice calls the numbers",
+      "type": "select",
+      "default": "sky",
+      "options": [
+        { "value": "none", "label": "No reader" },
+        { "value": "george", "label": "Old British Man" },
+        { "value": "fable", "label": "Young British Man" },
+        { "value": "jessica", "label": "American Woman" },
+        { "value": "sky", "label": "Soft-Spoken Woman" },
+        { "value": "original", "label": "Original" }
+      ]
+    },
+    {
       "key": "callsShown",
       "label": "Calls shown",
       "description": "How much of the call history the TV keeps up",

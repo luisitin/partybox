@@ -27,7 +27,13 @@ export interface Settings {
   showPrevious: boolean;
   /** R2-01, the owner's note: the room is told who is one away (off by default). */
   showClose: boolean;
+  /** READER-VOICES (the owner, 2026-09-22): whose voice calls the numbers, or nobody. */
+  reader: Reader;
 }
+
+/** The Reader setting's voices, in the owner's order: none, four Kokoro voices, the shipped Zira. */
+export const READERS = ['none', 'george', 'fable', 'jessica', 'sky', 'original'] as const;
+export type Reader = (typeof READERS)[number];
 
 /** What the TV shows while a claim is checked (or celebrated). Computed once, never re-evaluated. */
 /** How the room moves on after a bingo: keep going (same pattern / blackout) or next. */
