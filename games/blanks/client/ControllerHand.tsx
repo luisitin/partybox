@@ -10,7 +10,7 @@ import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { BlanksControllerView } from '../server/index';
 import type { Input } from '../server/types';
 import { FilledCard } from './Cards';
-import { FanDots, NewHandCard, useFan } from './HandFan';
+import { FanDots, NewHandCard, useFan, useHandList } from './HandFan';
 import { NextButton } from './NextButton';
 import { STRINGS } from './strings';
 import styles from './blanks.module.css';
@@ -124,7 +124,9 @@ export function ControllerHand({ view, send, skip }: Props): JSX.Element {
   useEffect(() => () => clearTimeout(flight.current ?? undefined), []);
   // I-141 (the owner's design B): the fan's shape and where it is; the New hand card is the last.
   const [fanEl, setFanEl] = useState<HTMLUListElement | null>(null);
-  const at = useFan(fanEl, view.hand.length + 1);
+  // I-160: the hand is a list when the fan can't show a readable card
+  const list = useHandList(fanEl);
+  const at = useFan(list ? null : fanEl, view.hand.length + 1);
   const black = view.black;
   const pick = black?.pick ?? 1;
   if (!black)
@@ -254,11 +256,11 @@ export function ControllerHand({ view, send, skip }: Props): JSX.Element {
           whites={picked.map((id) => view.hand.find((c) => c.id === id)?.text ?? '')}
           size="phone"
         />
-        <FanDots cards={view.hand.length} at={at} />
+        {list ? null : <FanDots cards={view.hand.length} at={at} />}
       </div>
       <ul
         ref={setFanEl}
-        className={`${styles.hand} ${flying ? styles.handFlying : ''}`}
+        className={`${styles.hand} ${list ? styles.handList : ''} ${flying ? styles.handFlying : ''}`}
         aria-label={L('your hand')}
         data-picking={picked.length > 0 || undefined}
       >
