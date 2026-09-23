@@ -43,6 +43,8 @@ export function createSocketLayer(server: HttpServer): SocketLayer {
     cors: { origin: true },
   });
   const byPlayer = new Map<string, Socket>();
+  /** I-755 C: recent join times per login token. */
+  const joinsByToken = new Map<string, number[]>();
 
   const transport: Transport = {
     toPlayer: (playerId, event, payload) => byPlayer.get(playerId)?.emit(event, payload),
@@ -85,6 +87,18 @@ export function createSocketLayer(server: HttpServer): SocketLayer {
         if (!parsed.success) return sendError('invalid_payload', 'Bad join payload.');
         const code = resolveRoom(parsed.data.roomCode);
         if (!code) return sendError('room_not_found', 'No room with that code.');
+        // I-755 C: a login that joins more than 3 times in 5 s is two tabs fighting — the newest
+        // attempt is told so instead of taking the seat
+        if (parsed.data.token) {
+          const now = Date.now();
+          const recent = (joinsByToken.get(parsed.data.token) ?? []).filter((t) => now - t < 5000);
+          recent.push(now);
+          joinsByToken.set(parsed.data.token, recent);
+          if (recent.length > 3) {
+            socket.emit('kicked', { reason: 'another_tab' });
+            return;
+          }
+        }
         const { playerId, token } = host.mintPlayer();
         // Map this socket to both the provisional id and (for a resume) the existing player BEFORE
         // dispatching, so the engine's welcome/error effects land on this socket.
@@ -96,6 +110,9 @@ export function createSocketLayer(server: HttpServer): SocketLayer {
           const previous = byPlayer.get(id);
           if (previous && previous !== socket) {
             (previous.data as SocketData).playerId = null;
+            // I-755 A: say why, so the other tab stops reconnecting (else two tabs trade the seat
+            // ~35 times a second, forever)
+            previous.emit('kicked', { reason: 'another_tab' });
             previous.disconnect(true);
           }
           byPlayer.set(id, socket);

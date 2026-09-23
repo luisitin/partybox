@@ -136,6 +136,7 @@ export function Preview(): JSX.Element {
     toasts: [],
     kicked: null,
     restarted: false,
+    otherTab: false,
   };
   const controller: Controller = {
     store: createStore(state),
@@ -145,6 +146,7 @@ export function Preview(): JSX.Element {
     bot: (action) => console.log('[preview] bot', action),
     nudge: () => console.log('[preview] nudge'),
     leave: () => undefined,
+    playHere: () => undefined,
     dismissError: () => undefined,
     dismissToast: () => undefined,
     session: () => null,
