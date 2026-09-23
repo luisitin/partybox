@@ -310,10 +310,15 @@ export function IntroStyleSheet({
   cards,
   current,
   onClose,
+  onPick,
+  tablet,
 }: {
   cards: number;
   current: CardStyle;
   onClose: () => void;
+  /** I-126 A: a tablet saves its own pick here too (default: the phone's). */
+  onPick?: (id: CardStyle) => void;
+  tablet?: { on: boolean; onPick: () => void };
 }): JSX.Element {
   return (
     <StyleSheet
@@ -321,9 +326,10 @@ export function IntroStyleSheet({
       current={current}
       preview={null}
       note="for this round"
-      onPreview={setCardStyle}
+      onPreview={onPick ?? setCardStyle}
       onConfirm={onClose}
       onClose={onClose}
+      {...(tablet ? { tablet } : {})}
     />
   );
 }

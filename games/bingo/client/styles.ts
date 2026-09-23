@@ -229,3 +229,36 @@ export function useInk(): Ink {
   );
 }
 if (typeof document !== 'undefined') applyDaubAttrs();
+
+// ── I-126 A: a tablet's own pick. The all-cards tablet layout stays its default ('all'); a style
+// picked ON a wide screen is remembered apart from the phone's, so one never reshapes the other.
+export type TabletStyle = CardStyle | 'all';
+const TABLET_KEY = 'partybox:bingo-style-tablet';
+let tabletStored: TabletStyle | null = null;
+
+function readTablet(): TabletStyle {
+  if (tabletStored) return tabletStored;
+  try {
+    const v = localStorage.getItem(TABLET_KEY);
+    tabletStored = v === 'all' || isStyle(v) ? (v as TabletStyle) : 'all';
+  } catch {
+    tabletStored = 'all';
+  }
+  return tabletStored;
+}
+
+export function setTabletStyle(id: TabletStyle): void {
+  tabletStored = id;
+  try {
+    localStorage.setItem(TABLET_KEY, id);
+  } catch {
+    // private mode: the choice lasts the session
+  }
+  for (const l of listeners) l();
+}
+
+/** The tablet's layout: its own pick when that suits this many cards, else all cards at once. */
+export function useTabletStyle(cards: number): TabletStyle {
+  const chosen = useSyncExternalStore(subscribe, readTablet, () => 'all' as TabletStyle);
+  return chosen === 'all' || styleSpec(chosen).cards.includes(cards) ? chosen : 'all';
+}
