@@ -58,10 +58,10 @@ export const es: Texts = {
     recording: 'Guardar un resumen en el PC anfitrión',
     recordingHint: 'Dibujos, respuestas y puntos de cada juego, para comentarlos después',
     recordingOff: 'Este juego no se guarda',
-    musicOnPhones: 'Música en todos los móviles',
+    musicOnPhones: 'Música en todos los teléfonos',
     musicOnPhonesHint:
-      'La música de la sala suena también en cada móvil (cada móvil puede silenciarse)',
-    musicOnPhonesOff: 'Música solo en la TV: cada móvil puede activar la suya en 🎨',
+      'La música de la sala suena también en cada teléfono (cada uno puede silenciarse)',
+    musicOnPhonesOff: 'Música solo en la TV: cada teléfono puede activar la suya en 🎨',
     less: (label) => `menos ${label}`,
     more: (label) => `más ${label}`,
     noneTicked: 'Nada marcado: toda la categoría',
@@ -129,7 +129,7 @@ export const es: Texts = {
     done: 'Listo',
   },
   controller: {
-    phoneSound: 'Sonidos en este móvil',
+    phoneSound: 'Sonidos en este teléfono',
     vibration: 'Vibración',
     noVibration:
       'La vibración no está disponible en este navegador (los iPhone no tienen API de vibración).',
@@ -147,7 +147,7 @@ export const es: Texts = {
     pickGame: 'Elegir un juego',
     skip: 'Saltar / Siguiente',
     removeBots: (n) => (n === 1 ? 'Quitar el bot' : `Quitar ${n} bots`),
-    choosing: 'Elige aquí un juego y sus ajustes, o desde el móvil del VIP.',
+    choosing: 'Elige aquí un juego y sus ajustes, o desde el teléfono del VIP.',
     vipAway: (next, seconds) => `VIP ausente: pasa a ${next} en ${seconds} s`,
     vipAwayNobody: 'VIP ausente: no hay nadie más a quien pasarlo',
   },

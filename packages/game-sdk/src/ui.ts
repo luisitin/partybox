@@ -75,7 +75,17 @@ export type { PrimaryButtonProps } from './controller/PrimaryButton';
 export { WaitingScreen } from './controller/WaitingScreen';
 export type { WaitingScreenProps } from './controller/WaitingScreen';
 export { PhoneOnlyProvider, usePhoneOnly } from './controller/phoneOnly';
-export { LANGS, fill, getLang, setLang, subscribeLang, translate, useLang, useT } from './ui/lang';
+export {
+  LANGS,
+  fill,
+  getLang,
+  setLang,
+  subscribeLang,
+  translate,
+  translateSent,
+  useLang,
+  useT,
+} from './ui/lang';
 export type { Lang, Strings, Translator } from './ui/lang';
 export { TextAnswer } from './controller/TextAnswer';
 export type { TextAnswerProps } from './controller/TextAnswer';

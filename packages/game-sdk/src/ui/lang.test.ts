@@ -2,7 +2,7 @@
 // translatable to Spanish). Node has no window: detection falls back to English, and the store
 // still switches and tells its listeners.
 import { describe, expect, it } from 'vitest';
-import { fill, getLang, setLang, subscribeLang, translate } from './lang';
+import { fill, getLang, setLang, subscribeLang, translate, translateSent } from './lang';
 import type { Strings } from './lang';
 
 const TABLE: Strings = {
@@ -33,6 +33,27 @@ describe('translate', () => {
     expect(translate(TABLE, 'en', '{name} is presenting', { name: 'Ana' })).toBe(
       'Ana is presenting',
     );
+  });
+});
+
+describe('translateSent', () => {
+  const SENT: Strings = {
+    es: {
+      'Too slow!': '¡Demasiado lento!',
+      '{name} left': '{name} se fue',
+      '{a} beat {b} (x2).': '{a} le ganó a {b} (x2).',
+    },
+  };
+  it('matches exact sentences, then placeholder sentences, with regex characters literal', () => {
+    expect(translateSent(SENT, 'es', 'Too slow!')).toBe('¡Demasiado lento!');
+    expect(translateSent(SENT, 'es', 'Ana María left')).toBe('Ana María se fue');
+    expect(translateSent(SENT, 'es', 'Sam beat Ana (x2).')).toBe('Sam le ganó a Ana (x2).');
+    expect(translateSent(SENT, 'es', 'Sam beat Ana (x2)!')).toBe('Sam beat Ana (x2)!');
+  });
+  it('shows anything unknown, or any English phone, as sent', () => {
+    expect(translateSent(SENT, 'es', 'Nobody left early')).toBe('Nobody left early');
+    expect(translateSent(SENT, 'en', 'Sam left')).toBe('Sam left');
+    expect(translateSent(SENT, 'de', 'Sam left')).toBe('Sam left');
   });
 });
 

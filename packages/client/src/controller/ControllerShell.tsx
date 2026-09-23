@@ -284,7 +284,7 @@ export function ControllerShell({
         >
           <span role="alert">
             <span aria-hidden>⚠ </span>
-            {serverText(state.error.message, getLang())}
+            {serverText(state.error.message, getLang(), room?.selectedGameId)}
           </span>
         </button>
       ) : null}
@@ -316,7 +316,7 @@ export function ControllerShell({
             className={`${styles.toast} ${styles[toast.kind]}`}
             onClick={() => controller.dismissToast(toast.id)}
           >
-            {serverText(toast.text, getLang())}
+            {serverText(toast.text, getLang(), room?.selectedGameId)}
           </div>
         ))}
       </div>

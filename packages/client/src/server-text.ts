@@ -1,7 +1,10 @@
 // What the server says — toasts ("Sam is now the VIP"), errors ("This room is full.") — arrives in
 // English; the phone shows it in its own language (the owner, 2026-09-22). Exact sentences first,
-// then the few with a name in them. Anything not listed shows as sent: never a blank.
+// then the few with a name in them, then the running game's own table (a game's server errors live
+// in its `strings`). Anything not listed shows as sent: never a blank.
+import { translateSent } from '@partybox/game-sdk/ui';
 import type { Lang } from '@partybox/game-sdk/ui';
+import { gameStrings } from './i18n-games';
 
 const EXACT_ES: Readonly<Record<string, string>> = {
   'No game is running.': 'No hay ningún juego en marcha.',
@@ -49,8 +52,9 @@ const PATTERNS_ES: readonly [RegExp, (m: RegExpMatchArray) => string][] = [
   [/^A code is 4 letters from (.+)\.$/, (m) => `Un código son 4 letras de ${m[1]}.`],
 ];
 
-/** The server's sentence in the phone's language, or as sent. */
-export function serverText(text: string, lang: Lang): string {
+/** The server's sentence in the phone's language, or as sent. `gameId`: the room's game, whose
+ *  table covers its own server's sentences. */
+export function serverText(text: string, lang: Lang, gameId?: string | null): string {
   if (lang !== 'es') return text;
   const exact = EXACT_ES[text];
   if (exact !== undefined) return exact;
@@ -58,5 +62,5 @@ export function serverText(text: string, lang: Lang): string {
     const m = re.exec(text);
     if (m) return to(m);
   }
-  return text;
+  return translateSent(gameStrings(gameId), lang, text);
 }

@@ -8,14 +8,19 @@
 //   const L = useT(STRINGS);  …  <p>{L('Waiting for the others…')}</p>
 //   L('{name} is presenting', { name })
 // A language with no entry for a sentence shows the English — nothing ever renders blank.
-import { useCallback, useSyncExternalStore } from 'react';
+import { useMemo, useSyncExternalStore } from 'react';
 
 export const LANGS = ['en', 'es', 'de', 'fr', 'pt'] as const;
 export type Lang = (typeof LANGS)[number];
 /** Translations of English sentences, per language. `{name}` marks a placeholder. */
 export type Strings = Partial<Record<Exclude<Lang, 'en'>, Readonly<Record<string, string>>>>;
-/** What `useT` hands back: an English sentence (with `{name}` placeholders) in the device's language. */
-export type Translator = (en: string, vars?: Readonly<Record<string, string | number>>) => string;
+/** What `useT` hands back: an English sentence (with `{name}` placeholders) in the device's language;
+ *  `.sent(text)` for a sentence that arrives already written (from the server); `.lang` the language. */
+export interface Translator {
+  (en: string, vars?: Readonly<Record<string, string | number>>): string;
+  sent: (text: string) => string;
+  lang: Lang;
+}
 
 const KEY = 'partybox:lang';
 const listeners = new Set<() => void>();
@@ -95,8 +100,57 @@ export function translate(
   return fill(hit ?? en, vars);
 }
 
+type Pattern = { re: RegExp; names: string[]; to: string };
+const compiled = new WeakMap<Readonly<Record<string, string>>, Pattern[]>();
+
+/** The table's `{placeholder}` sentences as patterns, built once per table. */
+function patterns(rows: Readonly<Record<string, string>>): Pattern[] {
+  let out = compiled.get(rows);
+  if (out) return out;
+  out = [];
+  for (const [en, to] of Object.entries(rows)) {
+    const names = [...en.matchAll(/\{(\w+)\}/g)].map((m) => m[1]!);
+    if (names.length === 0) continue;
+    const body = en
+      .split(/\{\w+\}/)
+      .map((part) => part.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+      .join('(.+?)');
+    out.push({ re: new RegExp(`^${body}$`), names, to });
+  }
+  compiled.set(rows, out);
+  return out;
+}
+
+/**
+ * A sentence the server wrote in English, in `lang`: the table's exact entry, else the first
+ * `{placeholder}` entry whose English matches it ("{name} left" matches "Sam left"), else as sent.
+ */
+export function translateSent(table: Strings, lang: Lang, text: string): string {
+  if (lang === 'en') return text;
+  const rows = table[lang];
+  if (!rows) return text;
+  const exact = rows[text];
+  if (exact !== undefined) return exact;
+  for (const p of patterns(rows)) {
+    const m = p.re.exec(text);
+    if (!m) continue;
+    const vars: Record<string, string> = {};
+    p.names.forEach((name, i) => (vars[name] = m[i + 1]!));
+    return fill(p.to, vars);
+  }
+  return text;
+}
+
 /** A translator for `table` in the device's language; the component re-renders when it changes. */
 export function useT(table: Strings): Translator {
   const lang = useLang();
-  return useCallback((en, vars) => translate(table, lang, en, vars), [table, lang]);
+  return useMemo(
+    () =>
+      Object.assign(
+        (en: string, vars?: Readonly<Record<string, string | number>>) =>
+          translate(table, lang, en, vars),
+        { sent: (text: string) => translateSent(table, lang, text), lang },
+      ),
+    [table, lang],
+  );
 }
