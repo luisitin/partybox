@@ -54,6 +54,12 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Changed
 
+- **Bingo: after a bingo every phone votes** (I-105, option C): keep going (same pattern or
+  blackout) or next round is a vote, not the fastest thumb — your choice stays lit and can change,
+  each button shows its count, the TV lists who voted what, and the phone counts the vote down. It
+  closes 6 s after the first vote or once everyone has voted; most votes win, the VIP breaks a tie.
+  The TV's win screen now fits at 1080p even with the "never called" kicker and the vote list.
+
 - **Bingo: "Calls shown" is one choice** (I-112, option C): Memory test (nothing) · Last call only ·
   Full board replaces the "Called board" and "Previous number" switches, which could be set to a
   contradiction (the board on, the previous call off). Any setting can now declare `impliedBy` to

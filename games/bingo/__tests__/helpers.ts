@@ -85,3 +85,9 @@ export function after(state: State): number {
   const c = state.round.claim;
   return state.phase.startedAt + (c ? claimRevealMs(c.cells, c.daubs) + VERDICT_READ_MS : 0) + 10;
 }
+
+/** I-105: a choice after a bingo is a vote — cast it, then let the vote close (its timer). */
+export function choose(state: State, playerId: string, value: Input, now?: number): State {
+  const s = input(state, playerId, value, now);
+  return s === state || s.phase.id !== 'bingo' ? s : timer(s);
+}

@@ -7,7 +7,8 @@ import type { BingoControllerView } from '../server/views';
 import { PATTERN_LABEL, patternCells } from '../server/patterns';
 import { Card } from './Card';
 import { PatternDemo } from './PatternDemo';
-import { DecideFooter, rows } from './ControllerParts';
+import { rows } from './ControllerParts';
+import { DecideFooter } from './Vote';
 import type { Send } from './ControllerParts';
 import { winTitle } from './copy';
 import { STRINGS } from './strings';
@@ -16,7 +17,7 @@ import styles from './Controller.module.css';
 /** What happens after this bingo: the room decides, fresh cards, or the final board. */
 export function afterLine(view: BingoControllerView, iDecide: boolean, L: Translator): string {
   if (iDecide)
-    return L('Keep these cards and carry on calling, or deal fresh ones? Anyone can pick.');
+    return L('Keep these cards and carry on calling, or deal fresh ones? Everyone votes.');
   if (view.decide && (view.decide.same || view.decide.blackout))
     return L('The players decide: keep going or next round.');
   return view.round < view.totalRounds
@@ -56,7 +57,7 @@ export function WinScreen({
           ? L('Nothing left to play for on these cards — the scores in a moment.')
           : iDecide && cards > 1
             ? L(
-                'Keep going and this card sits the pattern out; your other cards play on. Anyone can pick.',
+                'Keep going and this card sits the pattern out; your other cards play on. Everyone votes.',
               )
             : afterLine(view, iDecide, L)}
       </p>

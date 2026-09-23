@@ -13,6 +13,7 @@ import { BALL_LAND_MS, hushCaller, speakCall } from './caller';
 import { PatternIcon } from './Card';
 
 import { botLine, holdLine, pendingLine, whyNot, winHeadline } from './copy';
+import { VoteClock, VoteTally } from './Vote';
 import { hopelessClaim } from '../server/reveal';
 import { IntroStage, Resume } from './TvCountdown';
 import { Call, CalledBoard, ClaimStage, DibsLine, whichCard } from './TvParts';
@@ -197,8 +198,11 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
   if (view.phaseId === 'bingo') {
     if (view.claim && view.winnerName) {
       const winnerAvatar = view.players.find((p) => p.id === view.claim?.playerId)?.avatarId ?? '';
+      // I-105 (Session B's note): the stray-daubs kicker adds two lines above the vote, which ran
+      // the decide line under the host bar at 1080p — that win steps its column down a size.
+      const tight = view.claim.red.length > 0 ? styles.winTight : '';
       return (
-        <Stage className={crowd}>
+        <Stage className={`${crowd} ${tight}`}>
           <div className={`${styles.checkHead} pb-enter`}>
             <BigText level="h2" tone="accent">
               {L('{name} says BINGO!', { name: view.winnerName })}
@@ -269,7 +273,11 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
                 </p>
               ) : view.decide && (view.decide.same || view.decide.blackout) ? (
                 <p className={decideLineClass(view)}>
-                  <span className={styles.decideWho}>{L('Anyone')}</span> {decideText(view, L)}
+                  <span className={styles.decideWho}>{L('Everyone')}</span> {decideText(view, L)}
+                  {/* I-105 C: the vote's clock, once someone has voted. */}
+                  <VoteClock endsAt={view.voteEndsAt} />
+                  {/* I-105 B: the room's votes, live. */}
+                  <VoteTally votes={view.votes} className={styles.votes} />
                 </p>
               ) : null
             }

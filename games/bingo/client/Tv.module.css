@@ -1010,3 +1010,36 @@
 }
 
 /* ── I-108 B: the strays stay red on the winner's card through the win stage (see TvParts). */
+
+/* ── I-105 B: the live vote tally under the decide line. */
+.votes {
+  display: block;
+  margin-top: var(--pb-space-2);
+  color: var(--pb-text-muted);
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+}
+
+/* ── I-105 (Session B's note, 2026-09-22): a win with stray daubs carries the "…never called —
+   lucky the line was real" kicker; with the vote's clock and tally under the decide line the
+   column ran past the host bar at 1080p. That win takes the short stage's sizes (loop 337). */
+.winTight .bingoTitle {
+  font-size: 80px;
+}
+.winTight .winWho {
+  --pb-win-avatar: 48px;
+}
+.winTight .winWho > :last-child {
+  font-size: var(--pb-font-h2);
+}
+.winTight .winLine {
+  font-size: 26px;
+  margin-top: var(--pb-space-2);
+}
+.winTight .strayLine {
+  font-size: var(--pb-font-caption);
+}
+.winTight .decideLine {
+  font-size: var(--pb-font-caption);
+  margin-top: var(--pb-space-2);
+}

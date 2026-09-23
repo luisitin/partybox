@@ -28,15 +28,21 @@ export const ES_TV: Readonly<Record<string, string>> = {
   '{pattern} on call {n}': '{pattern} en la bola {n}',
   '+1 point': '+1 punto',
   '+{n} points': '+{n} puntos',
-  Anyone: 'Cualquiera',
-  'picks on their phone: keep going (same pattern or blackout) or finish. The caller waits.':
-    'elige en su teléfono: seguir (misma figura o cartón lleno) o terminar. El locutor espera.',
-  'picks on their phone: keep going (same pattern or blackout) or next round. The caller waits.':
-    'elige en su teléfono: seguir (misma figura o cartón lleno) u otra ronda. El locutor espera.',
-  'picks on their phone: keep going or finish. The caller waits.':
-    'elige en su teléfono: seguir o terminar. El locutor espera.',
-  'picks on their phone: keep going or next round. The caller waits.':
-    'elige en su teléfono: seguir u otra ronda. El locutor espera.',
+  // I-105: every phone votes on what comes after a bingo.
+  Everyone: 'Todos',
+  'votes on their phone: keep going (same pattern or blackout) or finish. The caller waits.':
+    'votan en su teléfono: seguir (misma figura o cartón lleno) o terminar. El locutor espera.',
+  'votes on their phone: keep going (same pattern or blackout) or next round. The caller waits.':
+    'votan en su teléfono: seguir (misma figura o cartón lleno) u otra ronda. El locutor espera.',
+  'votes on their phone: keep going or finish. The caller waits.':
+    'votan en su teléfono: seguir o terminar. El locutor espera.',
+  'votes on their phone: keep going or next round. The caller waits.':
+    'votan en su teléfono: seguir u otra ronda. El locutor espera.',
+  'fresh cards': 'cartones nuevos',
+  'same pattern': 'misma figura',
+  'Vote closes in {n}': 'La votación cierra en {n}',
+  'Vote closes in {n} — tap another to change it': 'Cierra en {n}: toca otra para cambiar',
+  'Counting the votes…': 'Contando los votos…',
   'The winning card sits the pattern out; the rest play on.':
     'El cartón ganador no juega esta figura; los demás siguen.',
   'No bingo': 'Sin bingo',

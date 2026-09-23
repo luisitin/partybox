@@ -12,7 +12,7 @@ import type { GameEvent } from '@partybox/game-sdk';
 import { clearClaims, setMenu } from '../claims';
 import { AUTO_END_MS, VERDICT_READ_MS, claimRevealMs } from '../reveal';
 import { pointsFor } from '../scoring';
-import { BINGO_ABANDONED_MS, BINGO_MS, DECK } from '../types';
+import { BINGO_ABANDONED_MS, BINGO_MS, DECK, VOTE_MS } from '../types';
 import type { Claim, Decision, Input, State, Transition } from '../types';
 
 export interface BingoExits {
@@ -46,6 +46,8 @@ export function enterBingo(
       bingos,
       patternBingos,
       decision: null,
+      votes: {},
+      voteEndsAt: null,
       judged: false,
       judgedAt: null,
     },
@@ -77,6 +79,14 @@ export function credit(state: State, now: number): State {
  */
 function deadlineAfterVerdict(state: State, now: number): number {
   if (state.round.decision) return now + VERDICT_READ_MS;
+  // I-105 A: a vote cast before the verdict closes after the read, at its own 6 s mark at the
+  // earliest — or at the read if everyone has voted already.
+  const votes = state.round.votes ?? {};
+  if (Object.keys(votes).length > 0)
+    return Math.max(
+      now + VERDICT_READ_MS,
+      everyoneVoted(state, votes) ? 0 : (state.round.voteEndsAt ?? 0),
+    );
   const can = canContinue(state);
   if (can.same || can.blackout) return now + BINGO_ABANDONED_MS;
   return now + VERDICT_READ_MS + AUTO_END_MS;
@@ -123,6 +133,8 @@ function decide(state: State, decision: Decision, now: number, exits: BingoExits
         won: blackout ? {} : round.won,
         patternBingos: blackout ? 0 : round.patternBingos,
         decision: null,
+        votes: {},
+        voteEndsAt: null,
         claim: null,
         waitForCall: {},
       },
@@ -148,6 +160,9 @@ export function reduceBingo(state: State, event: GameEvent<Input>, exits: BingoE
         phase: { ...scored.phase, deadline: deadlineAfterVerdict(scored, event.now) },
       };
     }
+    // I-105 A: the vote closed — the room's choice is the majority.
+    const votes = state.round.votes ?? {};
+    if (Object.keys(votes).length > 0) return decide(state, winner(votes), event.now, exits);
     const held = state.round.decision;
     return held ? decide(state, held, event.now, exits) : exits.next(state, event.now);
   }
@@ -161,12 +176,38 @@ export function reduceBingo(state: State, event: GameEvent<Input>, exits: BingoE
     const can = canContinue(state);
     if (!(input.pattern === 'blackout' ? can.blackout : can.same)) return state;
   }
-  if (state.round.decision) return state; // the first choice counts
+  if (state.round.decision) return state; // decided already (held for the end of the read)
+  // I-105 A: every tap is a vote. The first opens a 6 s vote; each phone may change its mind.
+  const vote = { choice: { ...input, by: event.playerId }, at: event.now, vip: event.vip === true };
+  const votes = { ...(state.round.votes ?? {}), [event.playerId]: vote };
+  const voteEndsAt = state.round.voteEndsAt ?? event.now + VOTE_MS;
+  const next: State = { ...state, round: { ...state.round, votes, voteEndsAt } };
   const endsAt = celebrationEndsAt(state);
-  const decision = { ...input, by: event.playerId };
-  if (endsAt !== null && event.now >= endsAt) return decide(state, decision, event.now, exits);
-  // Mid-celebration (or before the verdict has even landed): hold it. Once the verdict is in, the
-  // deadline comes forward to the end of the read; before that the verdict tick sets it.
-  const held = { ...state, round: { ...state.round, decision } };
-  return endsAt !== null ? { ...held, phase: { ...held.phase, deadline: endsAt } } : held;
+  if (endsAt === null) return next; // the verdict tick sets the deadline
+  // It closes at 6 s — or as soon as every connected person with cards has voted — but never
+  // before the celebration's read is over.
+  const closeAt = Math.max(endsAt, everyoneVoted(state, votes) ? event.now : voteEndsAt);
+  if (event.now >= closeAt) return decide(next, winner(votes), event.now, exits);
+  return { ...next, phase: { ...next.phase, deadline: closeAt } };
+}
+
+/** I-105 A: the people whose vote closes it early — connected, with cards, not bots. */
+function everyoneVoted(state: State, votes: Record<string, unknown>): boolean {
+  return Object.keys(state.round.cards)
+    .filter((id) => state.players[id]?.connected && !state.players[id]?.bot)
+    .every((id) => Object.hasOwn(votes, id));
+}
+
+/** I-105 A: the majority's choice; a tie goes to the VIP's vote, else to the first vote cast. */
+function winner(votes: Record<string, { choice: Decision; at: number; vip: boolean }>): Decision {
+  const all = Object.values(votes).sort((a, b) => a.at - b.at);
+  const key = (d: Decision): string => (d.type === 'next' ? 'next' : `continue:${d.pattern}`);
+  const counts = new Map<string, number>();
+  for (const v of all) counts.set(key(v.choice), (counts.get(key(v.choice)) ?? 0) + 1);
+  const top = Math.max(...counts.values());
+  const tied = [...counts].filter(([, n]) => n === top).map(([k]) => k);
+  const pick =
+    (tied.length > 1 ? all.find((v) => v.vip && tied.includes(key(v.choice))) : undefined) ??
+    all.find((v) => tied.includes(key(v.choice)));
+  return (pick ?? (all[0] as (typeof all)[number])).choice;
 }

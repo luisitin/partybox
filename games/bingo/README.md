@@ -57,8 +57,9 @@ Pause freezes the caller (and a running check); daubs and claims are ignored whi
   was up is called AGAIN (`resumeAgain`, as after a bingo: whoever changed missed the call). A menu open through a check holds the caller as play resumes. The sheet's rows carry a 44 × 28 diagram of the layout (I-013 A), the live one breathes (B), the preview bar shows the pick at 1.5 × (C); every row stays one line (the owner's note — the text ellipsizes, under 360 px the hint goes). A tablet keeps the 🃏 pill and its own pick, all cards by default (I-126 A); its header is the caller — the ball big, the nickname under it (B).
 - `{ type: 'swap', card? }` — `intro` only: one fresh deal per card ("deal me another"), the old one gone (`round.swapped`).
 - `{ type: 'continue', pattern: 'same' | 'blackout' }` / `{ type: 'next' }` — accepted in `bingo`
-  from any player with a card (first tap wins; phones show the buttons once the TV's verdict has
-  landed — an earlier tap is held and applied then). `same` keeps the pattern; the card that won
+  from any player with a card as a changeable VOTE (I-105: closes 6 s after the first or when all
+  have voted; most votes win, VIP breaks a tie; B counts on the buttons + TV list, C a clock) —
+  phones show the buttons once the TV's verdict has landed (an earlier tap is held till then). `same` keeps the pattern; the card that won
   cannot claim it again (`round.won`, per card) but still takes daubs, the winner's other cards play
   on. `same` needs a contest (two players — everyone, in a two-player game — with an unwon card, nobody
   blacked out on every card), else only `blackout` (new pattern, every card reopens) or `next`. Cards,

@@ -3,7 +3,7 @@
 import { describe, expect, it } from 'vitest';
 import { game } from '../server/index';
 import { ARM_MS, RESUME_MS } from '../server/types';
-import { after, callUntil, claim, daubAll, input, start, timer } from './helpers';
+import { after, callUntil, claim, daubAll, choose, input, start, timer } from './helpers';
 
 describe('two taps to claim, with dibs', () => {
   it('the first tap arms one card for 3 s; the second tap on it claims; a tap elsewhere re-arms', () => {
@@ -64,7 +64,7 @@ describe('two taps to claim, with dibs', () => {
     expect(s.phase.id).toBe('bingo');
     expect(s.round.queue).toEqual([]);
     expect(input(s, 'ghost', { type: 'bingo', card: 0 })).toBe(s);
-    s = input(s, 'b', { type: 'continue', pattern: 'same' }, after(s));
+    s = choose(s, 'b', { type: 'continue', pattern: 'same' }, after(s));
     expect(input(s, 'a', { type: 'bingo', card: 0 })).toBe(s); // Ana's card sits the pattern out
   });
 });

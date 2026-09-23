@@ -9,7 +9,6 @@ import type { PlayCue, ScoreboardRow } from '@partybox/game-sdk/ui';
 import { ARM_MS } from '../server/types';
 import type { Input } from '../server/types';
 import type { BingoControllerView, CallView } from '../server/views';
-import { pendingLine } from './copy';
 import styles from './Controller.module.css';
 import { STRINGS } from './strings';
 
@@ -249,52 +248,6 @@ export function BingoButton({
           aria-hidden
         />
       ) : null}
-    </div>
-  );
-}
-
-/** After a bingo: keep going on the same cards (same pattern / blackout) or move on. */
-export function DecideFooter({
-  view,
-  send,
-}: {
-  view: BingoControllerView;
-  send: Send;
-}): JSX.Element | null {
-  const decide = view.decide;
-  const play = useSound();
-  const L = useT(STRINGS);
-  if (!decide) return null;
-  // A choice already made mid-celebration: the buttons go, the phone says what starts when.
-  const lastRound = view.round >= view.totalRounds;
-  const pending = pendingLine(view.pendingDecision, lastRound, view.pendingBy, L);
-  if (pending) return <p className={styles.hint}>{pending}</p>;
-  const nextLabel = lastRound ? L('Finish the game') : L('Next round — fresh cards');
-  // The pick lands in the hand (loop 322): a 'submit' cue and a short buzz on the tap itself —
-  // every other tap in the game sounds; the room's choice did not.
-  const pick = (input: Input): void => {
-    buzz(20);
-    play('submit');
-    send(input);
-  };
-  return (
-    <div className={styles.decide}>
-      {decide.same ? (
-        <PrimaryButton onClick={() => pick({ type: 'continue', pattern: 'same' })}>
-          {L('Keep going — same pattern')}
-        </PrimaryButton>
-      ) : null}
-      {decide.blackout ? (
-        <PrimaryButton
-          tone="neutral"
-          onClick={() => pick({ type: 'continue', pattern: 'blackout' })}
-        >
-          {L('Keep going — blackout')}
-        </PrimaryButton>
-      ) : null}
-      <PrimaryButton tone="neutral" onClick={() => pick({ type: 'next' })}>
-        {nextLabel}
-      </PrimaryButton>
     </div>
   );
 }

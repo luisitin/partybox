@@ -103,15 +103,15 @@ export const ES_PHONE: Readonly<Record<string, string>> = {
   'checking…': 'revisando…',
 
   // WinScreen.tsx
-  'Keep these cards and carry on calling, or deal fresh ones? Anyone can pick.':
-    '¿Seguimos con estos cartones o repartimos nuevos? Cualquiera puede elegir.',
+  'Keep these cards and carry on calling, or deal fresh ones? Everyone votes.':
+    '¿Seguimos con estos cartones o repartimos nuevos? Todos votan.',
   'The players decide: keep going or next round.': 'Los jugadores deciden: seguir u otra ronda.',
   'Fresh cards next round.': 'Cartones nuevos en la próxima ronda.',
   'That was the last round.': 'Esa fue la última ronda.',
   '+1 point.': '+1 punto.',
   '+{n} points.': '+{n} puntos.',
-  'Keep going and this card sits the pattern out; your other cards play on. Anyone can pick.':
-    'Si seguimos, este cartón no juega esta figura; tus otros cartones sí. Cualquiera puede elegir.',
+  'Keep going and this card sits the pattern out; your other cards play on. Everyone votes.':
+    'Si seguimos, este cartón no juega esta figura; tus otros cartones sí. Todos votan.',
   'Points so far': 'Puntos hasta ahora',
   'You won!': '¡Ganaste!',
   'You finished #{rank}': 'Quedaste {rank}.º',
@@ -124,4 +124,7 @@ export const ES_PHONE: Readonly<Record<string, string>> = {
   'All cards': 'Todos los cartones',
   '· the tablet layout': '· la vista de tableta',
   tablet: 'tableta',
+  // I-105: the vote's hint line on the phone.
+  'Your vote is in — tap another to change it.': 'Ya votaste: toca otra para cambiar.',
+  'Everyone votes; the most votes win.': 'Todos votan; gana la opción más votada.',
 };
