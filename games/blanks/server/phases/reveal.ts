@@ -4,6 +4,7 @@
 import { enterPhase, isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { revealMs } from '../cards';
+import { readingOpen } from '../round';
 import { blackCard, whiteText } from '../content';
 import type { Input, State } from '../types';
 import type { Transition } from './intro';
@@ -18,5 +19,11 @@ export function enterReveal(state: State, now: number, index: number): State {
 
 export function reduceReveal(state: State, event: GameEvent<Input>, next: Transition): State {
   if (isTimerFor(state, event)) return next(state, event.now);
+  // I-143 C: nobody can do the reading — the first person to offer takes it.
+  if (event.type === 'input' && event.input.type === 'takeReading') {
+    const p = state.players[event.playerId];
+    if (!readingOpen(state) || !p?.connected || p.bot === true) return state;
+    return { ...state, readerId: event.playerId };
+  }
   return state;
 }

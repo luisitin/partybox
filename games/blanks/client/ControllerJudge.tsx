@@ -40,7 +40,7 @@ function readAlongLine(
     : L('Read along. The vote is next.');
 }
 
-export function ControllerReveal({ view, me }: Props): JSX.Element {
+export function ControllerReveal({ view, me, send }: Props): JSX.Element {
   const L = useT(STRINGS);
   const black = view.black;
   const current = view.cards[view.revealIndex];
@@ -74,6 +74,16 @@ export function ControllerReveal({ view, me }: Props): JSX.Element {
         />
         {/* The reader is told it is them; everyone else reads along (review-loop #248). */}
         <p className="pb-caption pb-muted">{readAlongLine(view, me.id, mine, L)}</p>
+        {/* I-143 C: nobody can read it — anyone may take it. */}
+        {view.readingOpen ? (
+          <button
+            type="button"
+            className={styles.takeRead}
+            onClick={() => send({ type: 'takeReading' })}
+          >
+            {L("I'll read")}
+          </button>
+        ) : null}
       </div>
     </Screen>
   );

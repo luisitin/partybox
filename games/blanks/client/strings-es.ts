@@ -180,4 +180,7 @@ export const SCREENS_ES: Readonly<Record<string, string>> = {
   'Final round played': 'Última ronda jugada',
   "It's a tie": 'Hay empate',
   'And the winner is': 'Y el ganador es',
+  // I-143: the reading when no person holds it.
+  "I'll read": 'Yo leo',
+  'the TV reads this one': 'esta la lee la TV',
 };

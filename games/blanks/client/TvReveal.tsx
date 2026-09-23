@@ -50,7 +50,10 @@ export function TvReveal({ view }: Props): JSX.Element {
             ? L('{name} reads it out', { name: view.czar.name })
             : view.reader
               ? L('{name}, read it out loud', { name: view.reader.name })
-              : L('Read it out loud')}
+              : // I-143 B: a room with nobody to ask gets an owner for the beat anyway.
+                view.everyoneIsABot
+                ? L('the TV reads this one')
+                : L('Read it out loud')}
         </span>
       </div>
       <div className={styles.stageMain}>

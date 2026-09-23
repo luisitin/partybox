@@ -6,6 +6,10 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Fixed
 
+- **Blanks never asks a bot to read out loud** (I-143, option C): the reading skips bots to the next
+  person; with no person left the TV says "the TV reads this one"; and when the reader's phone
+  drops, every other phone offers "I'll read" — the first tap takes the rest of the round.
+
 - **Bingo on an iPad** (I-126, option B): the 🃏 style pill no longer disappears on a tablet — it
   keeps the all-cards layout by default but can pick Focus, Stack or Grid, remembered apart from a
   phone's — and the tablet's header is a real caller strip: the ball and number big, the nickname

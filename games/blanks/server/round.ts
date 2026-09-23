@@ -27,11 +27,21 @@ export function readerFor(state: State, round: number): string | null {
   if (state.settings.judge === 'czar' || state.order.length === 0) return null;
   const n = state.order.length;
   const from = (round - 1) % n;
+  // I-143 A: a bot is "connected" but cannot read a card out loud — the rotation walks past it.
   for (let i = 0; i < n; i++) {
     const id = state.order[(from + i) % n] as string;
-    if (state.players[id]?.connected) return id;
+    const p = state.players[id];
+    if (p?.connected && p.bot !== true) return id;
   }
-  return state.order[from] as string;
+  // Nobody in the room can read it: the TV takes the card (I-143 B).
+  return null;
+}
+
+/** I-143 C: the reading is up for grabs — vote mode, and nobody connected (and not a bot) holds it. */
+export function readingOpen(state: State): boolean {
+  if (state.settings.judge === 'czar' || state.phase.id !== 'reveal') return false;
+  const cur = state.readerId === null ? undefined : state.players[state.readerId];
+  return !cur || !cur.connected || cur.bot === true;
 }
 
 /** Players who play a card this round: everyone but the judge. */
