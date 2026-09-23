@@ -156,3 +156,18 @@
   flex-shrink: 0;
   accent-color: var(--pb-accent);
 }
+
+/* ── I-187 B: the game's key setting as a chip on its card (red for the explicit deck). */
+.keyChip {
+  align-self: flex-start;
+  margin-top: var(--pb-space-1);
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 2px solid color-mix(in srgb, var(--pb-text-muted) 45%, transparent);
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+}
+.keyChipHot {
+  border-color: var(--pb-danger);
+  color: var(--pb-danger);
+}

@@ -94,7 +94,7 @@
 .more {
   position: absolute;
   left: 50%;
-  bottom: calc(var(--pb-space-3) + 60px + env(safe-area-inset-bottom));
+  bottom: var(--pb-space-2); /* I-187: from the footer's top edge, not a guessed 60 px */
   translate: -50% 0;
   z-index: 2;
   /* The owner (2026-09-22): a real thumb target, not a 32x22 sliver. */
@@ -118,4 +118,11 @@
 }
 :global(:root[data-motion='off']) .more {
   animation: none;
+}
+
+/* ── I-187: the pill's zero-height anchor between the body and the footer. */
+.moreAnchor {
+  position: relative;
+  height: 0;
+  z-index: 2;
 }

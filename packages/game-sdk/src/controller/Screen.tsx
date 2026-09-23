@@ -68,6 +68,7 @@ export function Screen({ children, footer, title, className }: ScreenProps): JSX
         {children}
       </div>
       {more ? (
+        <div className={styles.moreAnchor}>
         <button
           type="button"
           className={styles.more}
@@ -78,6 +79,7 @@ export function Screen({ children, footer, title, className }: ScreenProps): JSX
         >
           ▾
         </button>
+        </div>
       ) : null}
       {footer ? <div className={styles.footer}>{footer}</div> : null}
     </section>
