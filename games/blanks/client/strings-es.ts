@@ -183,4 +183,9 @@ export const SCREENS_ES: Readonly<Record<string, string>> = {
   // I-143: the reading when no person holds it.
   "I'll read": 'Yo leo',
   'the TV reads this one': 'esta la lee la TV',
+  // I-147: sudden death.
+  'TIE-BREAK': 'DESEMPATE',
+  'Tie-break': 'Desempate',
+  'Only the tied players play this card — you vote on it.':
+    'Solo los empatados juegan esta carta; tú la votas.',
 };

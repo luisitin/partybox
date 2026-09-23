@@ -147,6 +147,19 @@ export function ControllerHand({ view, send, skip }: Props): JSX.Element {
       </WaitingScreen>
     );
   }
+  if (view.sitsOut) {
+    // I-147 A: sudden death — this card is the tied players' to play; everyone else votes on it.
+    return (
+      <WaitingScreen
+        title={L('Tie-break')}
+        hint={L('Only the tied players play this card — you vote on it.')}
+        mood="watch"
+      >
+        <Table view={view} />
+        <FilledCard text={black.text} pick={black.pick} size="phone" />
+      </WaitingScreen>
+    );
+  }
   if (view.myPlay) {
     // Everyone's in: the reading is a beat away, nothing left to hurry.
     const allIn = view.playedCount >= view.playersExpected;

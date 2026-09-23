@@ -82,6 +82,10 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Added
 
+- **Blanks: a tie is played off** (I-147, option A): when the last round leaves the top score shared,
+  one more black card is dealt — the TV says TIE-BREAK, only the tied players get a hand, everyone
+  else votes — up to three times, so a tie that will not break still ends.
+
 - **Blanks: the hand is a real fan** (I-141, the owner's design B): the middle card stands upright
   and lifted, the side cards turn away and drop as you swipe, page dots with "3 of 10" sit over the
   fan, and "New hand" is the fan's last card ("Swap all 10 cards for fresh ones · 3 left"). A new

@@ -13,6 +13,14 @@ export function czarFor(state: State, round: number): string | null {
   if (state.settings.judge !== 'czar' || state.order.length === 0) return null;
   const n = state.order.length;
   const from = (round - 1) % n;
+  const tied = state.tied;
+  if (tied) {
+    // I-147 A: sudden death's judge comes from outside the tie — a tied judge could not play.
+    for (let i = 0; i < n; i++) {
+      const id = state.order[(from + i) % n] as string;
+      if (state.players[id]?.connected && !tied.includes(id)) return id;
+    }
+  }
   for (let i = 0; i < n; i++) {
     const id = state.order[(from + i) % n] as string;
     if (state.players[id]?.connected) return id;
@@ -46,9 +54,11 @@ export function readingOpen(state: State): boolean {
 
 /** Players who play a card this round: everyone but the judge. */
 export function answerers(state: State): string[] {
-  return Object.keys(state.players)
+  const all = Object.keys(state.players)
     .sort()
     .filter((id) => id !== state.czarId);
+  // I-147 A: in sudden death only the tied players play a card; everyone else still votes.
+  return state.tied ? all.filter((id) => state.tied?.includes(id)) : all;
 }
 
 export function isCzar(state: State, playerId: string): boolean {
@@ -59,9 +69,16 @@ export function hasPlayed(state: State, id: string): boolean {
   return Object.hasOwn(state.submissions, id);
 }
 
+/** I-147 A: sudden death — everyone outside the tie sits the card out (they still vote on it). */
+export function sitsOut(state: State, id: string): boolean {
+  return !!state.tied && !state.tied.includes(id);
+}
+
 /** Everyone who no longer holds the answer phase up: submitted, or the judge. */
 export function playersDone(state: State): string[] {
-  return Object.keys(state.players).filter((id) => isCzar(state, id) || hasPlayed(state, id));
+  return Object.keys(state.players).filter(
+    (id) => isCzar(state, id) || hasPlayed(state, id) || sitsOut(state, id), // I-147 A
+  );
 }
 
 /** Real (non-rando) submissions so far. */
@@ -84,7 +101,8 @@ export function playersExpected(state: State): number {
  * known.
  */
 export function startRound(state: State): State {
-  const round = state.round + 1;
+  // I-147 A: a tie-break is not round N+1 of N — it replays the last round's number.
+  const round = state.tied ? state.round : state.round + 1;
   const discard = [...state.discard, ...Object.values(state.submissions).flat()];
   let next: State = {
     ...state,

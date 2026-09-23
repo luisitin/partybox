@@ -50,7 +50,10 @@ export function TvIntro({ view }: Props): JSX.Element {
       <CardFan />
       <p className={styles.kicker}>Blanks</p>
       <BigText level="display">
-        {L('Round {round} of {rounds}', { round: view.round, rounds: view.rounds })}
+        {/* I-147 A: sudden death is not "round 3 of 3" all over again. */}
+        {view.tieBreak
+          ? L('TIE-BREAK')
+          : L('Round {round} of {rounds}', { round: view.round, rounds: view.rounds })}
       </BigText>
       {/* Both lines stay mounted and fade in on their beat: mounting them late re-centred the
           stage and the fan jumped (loop #194). */}
