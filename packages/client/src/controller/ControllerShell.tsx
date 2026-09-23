@@ -13,6 +13,7 @@ import type { SoundEngine } from '../sound';
 import { ThemePicker } from '../ThemePicker';
 import styles from './ControllerShell.module.css';
 import { PhoneSettings, tvSoundsOn } from './PhoneSettings';
+import { ShareButton } from './ShareSheet';
 import { clientGames } from '../games.generated';
 import type { SoundCue } from '../sound';
 import { linkLabel, useLinkBanner } from './flapFree';
@@ -194,21 +195,29 @@ export function ControllerShell({
             </span>
           </span>
           {room ? (
-            <span className={styles.code} aria-label={`${t.lobby.room} ${room.code}`}>
-              {room.code}
-            </span>
+            // I-666 A: the code is the thing people ask for — tap it to share the room
+            <ShareButton
+              code={room.code}
+              className={`${styles.code} ${styles.codeButton}`}
+              label={room.code}
+              ariaLabel={`${t.lobby.room} ${room.code} — ${t.share.button}`}
+            />
           ) : null}
         </div>
         <div className={styles.right}>
-          <button
-            type="button"
-            className={styles.iconButton}
-            onClick={() => setThemeOpen(true)}
-            aria-haspopup="dialog"
-            aria-label={t.theme.title}
-          >
-            🎨
-          </button>
+          {/* I-666 B: once you're in, no 🎨 — your face opens the same sheet (the join page, with
+              no face yet, keeps it) */}
+          {!me ? (
+            <button
+              type="button"
+              className={styles.iconButton}
+              onClick={() => setThemeOpen(true)}
+              aria-haspopup="dialog"
+              aria-label={t.theme.title}
+            >
+              🎨
+            </button>
+          ) : null}
           <span
             className={`${styles.dot} ${state.connection === 'connected' ? `${styles.on} ${styles.beat}` : styles.off}`}
             role="status"
