@@ -144,6 +144,7 @@ export function Preview(): JSX.Element {
     vip: (action) => console.log('[preview] vip', action),
     bot: (action) => console.log('[preview] bot', action),
     nudge: () => console.log('[preview] nudge'),
+    here: (on) => console.log('[preview] here', on),
     leave: () => undefined,
     dismissError: () => undefined,
     dismissToast: () => undefined,

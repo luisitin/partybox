@@ -304,3 +304,40 @@
   font-size: var(--pb-font-small);
   color: var(--pb-text-muted);
 }
+
+/* ── I-388 A: "I'm here" — the setup pill's shape, filled once tapped. */
+.here {
+  flex-direction: row;
+  font-weight: 800;
+}
+.hereOn {
+  background: var(--pb-accent-3);
+  border-color: var(--pb-accent-3);
+  color: var(--pb-bg);
+}
+.hereCount {
+  margin: var(--pb-space-1) 0;
+  font-weight: 800;
+}
+
+/* ── I-388 B: everyone's in. */
+.allIn {
+  color: var(--pb-accent-3);
+}
+.pulse {
+  animation: pb-here-pulse 1.4s var(--pb-ease) infinite;
+}
+@keyframes pb-here-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.04);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pulse {
+    animation: none;
+  }
+}

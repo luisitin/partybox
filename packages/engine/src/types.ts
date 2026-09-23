@@ -62,6 +62,8 @@ export interface RoomState {
   listed: boolean;
   /** S-005: "phone only" — the TV's moments go to the phones. */
   phoneOnly: boolean;
+  /** I-388: who tapped "I'm here" in the lobby; cleared when a game starts. */
+  here?: string[];
 }
 
 export type RoomEvent =
@@ -91,6 +93,8 @@ export type RoomEvent =
   | { type: 'leave'; now: number; playerId: string }
   /** I-070 A: a waiting player nudges the VIP — a toast to everyone that names the sender. */
   | { type: 'nudge'; now: number; playerId: string }
+  /** I-388: a guest says "I'm here" (or takes it back). */
+  | { type: 'here'; now: number; playerId: string; on: boolean }
   | {
       type: 'vip';
       now: number;

@@ -101,6 +101,8 @@ export interface Controller {
   bot(action: BotAction): void;
   /** I-070 A: nudge the VIP (lobby only; the server rate-limits it). */
   nudge(): void;
+  /** I-388: "I'm here" in the lobby (false takes it back). */
+  here(on: boolean): void;
   leave(): void;
   dismissError(): void;
   dismissToast(id: number): void;
@@ -328,6 +330,9 @@ export function createController(url?: string): Controller {
     },
     nudge() {
       socket.emit('nudge', {});
+    },
+    here(on) {
+      socket.emit('here', { on });
     },
     leave() {
       socket.emit('leave', {});

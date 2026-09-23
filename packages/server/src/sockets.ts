@@ -191,6 +191,14 @@ export function createSocketLayer(server: HttpServer): SocketLayer {
         host.dispatch(data.code, { type: 'nudge', playerId: data.playerId });
       });
 
+      // I-388: "I'm here" in the lobby (1 token: a toggle).
+      socket.on('here', (raw: unknown) => {
+        if (!data.playerId || !data.code) return sendError('not_in_room', 'Join a room first.');
+        const on = typeof raw === 'object' && raw !== null && (raw as { on?: unknown }).on === true;
+        if (!limiter.take(1)) return sendError('rate_limited', 'Slow down.');
+        host.dispatch(data.code, { type: 'here', playerId: data.playerId, on });
+      });
+
       socket.on('leave', () => {
         if (!data.playerId || !data.code) return;
         const { playerId, code } = data;
