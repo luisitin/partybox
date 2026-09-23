@@ -2,7 +2,13 @@
 // resume/kicked states. The submit button lives in the sticky footer so the keyboard never hides it.
 import { useEffect, useRef, useState } from 'react';
 import type { FormEvent, JSX } from 'react';
-import { EVERYDAY_AVATAR_IDS, PLAYER_NAME_MAX, normalizeName } from '@partybox/shared';
+import {
+  EVERYDAY_AVATAR_IDS,
+  PLAYER_NAME_MAX,
+  avatarFace,
+  avatarTint,
+  normalizeName,
+} from '@partybox/shared';
 import { Avatar, AvatarPhotos, PlayerChip, PrimaryButton, Screen } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import { joinLang, joinStrings, roomStrings } from '../i18n-join';
@@ -41,7 +47,9 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
   // I-083 A: the faces already in the room the phone is joining (ADR-043 made "the room" a
   // question — the typed code decides, else the first room /api/info lists).
   const taken = new Set(
-    (info?.rooms.find((r) => r.code === (urlRoom ?? '')) ?? info?.rooms[0])?.avatars ?? [],
+    ((info?.rooms.find((r) => r.code === (urlRoom ?? '')) ?? info?.rooms[0])?.avatars ?? []).map(
+      avatarFace,
+    ),
   );
   // I-083 B: a fresh phone's random default is drawn from the free faces.
   const freeIds = EVERYDAY_AVATAR_IDS.filter((id) => !taken.has(id));
@@ -49,7 +57,14 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
   // The default face is DERIVED, not rolled once at mount: /api/info (and with it `taken`) lands a
   // beat after the first render, and a default chosen before it knew the room would happily be the
   // face someone already wears. A remembered identity, or a tap, wins over it.
-  const [chosen, setChosen] = useState<string | null>(session?.avatarId ?? null);
+  // I-086 B: the colour slot, kept beside the face; the join sends `face#tint`.
+  const [pickedTint, setTint] = useState<number | null>(() =>
+    session?.avatarId ? avatarTint(session.avatarId) : null,
+  );
+  const tint = pickedTint ?? 0;
+  const [chosen, setChosen] = useState<string | null>(
+    session?.avatarId ? avatarFace(session.avatarId) : null,
+  );
   const [seed] = useState(() => Math.random());
   const avatarId = chosen ?? pool[Math.floor(seed * pool.length)] ?? 'fox';
   const setAvatarId = setChosen;
@@ -60,7 +75,7 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
   // (ADR-043) — while the default face above stays keyed on the first room, so it does not change
   // under the person's thumb as they type.
   const picked = info?.rooms.find((r) => r.code === code.trim().toUpperCase());
-  const badged = picked ? new Set(picked.avatars ?? []) : taken;
+  const badged = picked ? new Set((picked.avatars ?? []).map(avatarFace)) : taken;
   // I-046 A: the placeholder rotates through example names while the field is empty and unfocused.
   const EXAMPLES = ['Sam', 'Priya', 'Grandma Jo', 'Big Dave', 'Mo', 'Auntie Kay'];
   // I-046 B: the room's own people lead the examples.
@@ -164,7 +179,8 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
     setSubmittedAt(Date.now());
     controller.join({
       name: cleanName ?? name.trim(),
-      avatarId,
+      // I-086 B: the face and the colour travel as one id.
+      avatarId: `${avatarId}#${tint}`,
       roomCode: code.trim().length === 4 ? code.trim().toUpperCase() : undefined,
       ...(photo ? { photo } : {}),
     });
@@ -231,7 +247,7 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
         {/* I-031 B: the portrait — the chosen face (or the photo), large, beside the name. */}
         {/* I-067 B: sideways, the portrait + field sit in a left column beside the grid. */}
         <div className={styles.sideways}>
-          <JoinPortrait avatarId={avatarId} name={name} photo={photo} onPhoto={setPhoto} />
+          <JoinPortrait avatarId={`${avatarId}#${tint}`} name={name} photo={photo} onPhoto={setPhoto} />
           <label className={styles.field}>
             <span className={styles.label}>{j.name}</span>
             <input
@@ -305,6 +321,21 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
           season={season}
           photo={photo !== null}
         />
+        {/* I-086 B: the colour is its own choice — eight swatches, live on the portrait. */}
+        <div className={styles.tints} role="radiogroup" aria-label="Pick a colour">
+          {[0, 1, 2, 3, 4, 5, 6, 7].map((t) => (
+            <button
+              key={t}
+              type="button"
+              role="radio"
+              aria-checked={tint === t}
+              aria-label={`colour ${t + 1}`}
+              className={`${styles.tint} ${tint === t ? styles.tintOn : ''}`}
+              style={{ background: `var(--pb-player-${t + 1})` }}
+              onClick={() => setTint(t)}
+            />
+          ))}
+        </div>
       </Screen>
       {/* I-059 A: a tablet's spare width is a preview stage — your chip as the room will see it. */}
       <aside className={styles.stage} aria-label="preview">

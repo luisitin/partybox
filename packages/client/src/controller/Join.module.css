@@ -496,3 +496,20 @@
   line-height: 1.5;
   text-transform: uppercase;
 }
+
+/* ── I-086 B: the eight colour swatches under the face grid. */
+.tints {
+  display: flex;
+  gap: var(--pb-space-2);
+  flex-wrap: wrap;
+  margin-top: var(--pb-space-2);
+}
+.tint {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+}
+.tintOn {
+  border-color: var(--pb-focus);
+}
