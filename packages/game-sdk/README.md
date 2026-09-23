@@ -37,3 +37,7 @@ Language (ADR-044, 2026-09-22): `useLang()` / `setLang()` / `getLang()` are the 
 English-keyed `Strings` table and `L.sent(text)` translates a sentence the server wrote.
 `translate` / `translateSent` are the same outside React. The SDK's own components translate through
 `controller/strings.ts` and `tv/strings.ts`.
+
+`spectator` on a view (I-134 A, 2026-09-23): optional `{ line }` a game fills for a phone that is
+waiting for the next game; the shell's waiting screen shows it (in the phone's language through the
+game's table). Bingo sends the live call ("N 34 — Thirty-four — ask for more").

@@ -51,6 +51,11 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Added
 
+- **Bingo: a late joiner watches the call while they wait** (I-134 A): a phone that joins mid-game
+  still waits for the next game, but its waiting screen now shows the live call and its nickname
+  ("N 34 — Thirty-four — ask for more"), changing with every call. Any game can fill the new
+  optional `spectator` line on its view.
+
 - **Every screen in Spanish** (the owner, 2026-09-22 — "all text should be at least translatable
   to Spanish when the language is changed"; ADR-044): the join screen's language pills now set the
   phone's language for the whole party — lobby, game picker, settings, VIP menu, results, pause and

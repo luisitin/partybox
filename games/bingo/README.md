@@ -95,7 +95,7 @@ exactly like humans.
 - **Claim spam**: one check per claim, one claim per player per number after a failure, claims during
   checks ignored.
 - **Bot owner leaves / bot added mid-game**: the bot's card persists like any disconnected player's; a
-  bot added mid-game is a spectator (card `null`, bot returns `null`) and is dealt in next game.
+  bot added mid-game is a spectator (card `null`, bot returns `null`) and is dealt in next game; meanwhile its phone shows the live call (`spectator.line`, I-134 A).
 - `daub` with index 12, from a spectator, or in any other phase → ignored. Stale timers → ignored.
 
 ## Settings

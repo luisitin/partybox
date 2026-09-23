@@ -316,6 +316,14 @@ export function controllerView(
       (state.phase.id === 'play' || state.phase.id === 'check') &&
       state.round.drawn < (state.round.waitForCall[playerId] ?? 0),
     called: player ? [] : calledNumbers(state),
+    // I-134 A: a phone with no cards is not out of the game — it is watching it.
+    ...(player
+      ? {}
+      : {
+          spectator: {
+            line: spectatorLine(state),
+          },
+        }),
     ready: state.phase.id === 'intro' && state.round.ready.includes(playerId),
     lastOne:
       state.phase.id === 'intro' &&
@@ -332,4 +340,12 @@ export function controllerView(
     recent: recentCalls(state, 4),
     myWins: state.wins[playerId] ?? 0,
   };
+}
+
+/** I-134 A: the one line a waiting phone should see — the call, and the joke with it. */
+function spectatorLine(state: State): string {
+  const current = callView(state, state.round.drawn - 1);
+  if (state.phase.id === 'intro') return 'the cards are going out…';
+  if (!current) return 'the first number is coming…';
+  return `${current.letter} ${current.number} — ${current.call}`;
 }

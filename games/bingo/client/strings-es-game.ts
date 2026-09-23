@@ -17,6 +17,10 @@ export const ES_GAME: Readonly<Record<string, string>> = {
   'Round 5 pattern': 'Figura de la ronda 5',
   'Only used when Rounds is 4 or more': 'Solo se usa con 4 rondas o más',
   'Only used when Rounds is 5': 'Solo se usa con 5 rondas',
+  // I-134 A: the waiting phone's line, written by the server (the call itself — letter, number,
+  // nickname — is content and stays as sent).
+  'the cards are going out…': 'se están repartiendo los cartones…',
+  'the first number is coming…': 'ya viene el primer número…',
   'Any line': 'Línea', // Spanish bingo's own word for "any line" (the hint spells it out)
   'Four corners': 'Cuatro esquinas',
   'The X': 'La X',

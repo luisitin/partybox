@@ -3,10 +3,17 @@
 import { Suspense, useCallback, useEffect, useState } from 'react';
 import type { JSX } from 'react';
 import type { ControllerView, PlayerPublic, PushedView, RoomSnapshot } from '@partybox/shared';
-import { Avatar, PhoneOnlyProvider, SoundProvider, WaitingScreen } from '@partybox/game-sdk/ui';
+import {
+  Avatar,
+  PhoneOnlyProvider,
+  SoundProvider,
+  WaitingScreen,
+  getLang,
+} from '@partybox/game-sdk/ui';
 import styles from './ControllerShell.module.css';
 import { clientGames } from '../games.generated';
 import { t } from '../i18n';
+import { serverText } from '../server-text';
 import type { Controller } from '../net/controller';
 import type { PlayCueOptions } from '@partybox/game-sdk/ui';
 import type { SoundCue, SoundEngine } from '../sound';
@@ -131,6 +138,12 @@ export function Playing({
     return (
       <>
         <WaitingScreen title={t.spectator.title} hint={t.spectator.hint} mood="watch">
+          {/* I-134 A: the game says what a waiting phone should see — here, the live call. */}
+          {view?.spectator ? (
+            <p className={styles.watchLine}>
+              {serverText(view.spectator.line, getLang(), room.selectedGameId)}
+            </p>
+          ) : null}
           <Bench view={view} room={room} play={play} />
         </WaitingScreen>
         <Ready onReady={onGameReady} />
