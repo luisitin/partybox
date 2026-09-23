@@ -92,7 +92,10 @@ export function applyVip(
         return reject(room, playerId, 'cannot_start', 'Pick a game first.');
       const check = canStart(room, deps);
       if (!check.ok) return reject(room, playerId, 'cannot_start', check.reason);
-      return startGame(room, room.selectedGameId as string, room.settings, seed ?? now, now, deps);
+      // I-347: a new game starts — the handover is settled
+      const { formerVip: _settled, ...settled } = room;
+      void _settled;
+      return startGame(settled as RoomState, room.selectedGameId as string, room.settings, seed ?? now, now, deps);
     }
     case 'playAgain': {
       if (room.status !== 'results' || !room.lastGame)
@@ -151,7 +154,9 @@ export function applyVip(
       const players: Record<string, RoomState['players'][string]> = {};
       for (const p of Object.values(room.players))
         players[p.id] = { ...p, isVip: p.id === target.id };
-      const demoted: RoomState = { ...room, vipId: target.id, players };
+      const { formerVip: _moved, ...rest } = room; // I-347: the role moved on purpose
+      void _moved;
+      const demoted: RoomState = { ...(rest as RoomState), vipId: target.id, players };
       return {
         room: demoted,
         effects: [

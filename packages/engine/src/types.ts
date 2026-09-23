@@ -62,6 +62,9 @@ export interface RoomState {
   listed: boolean;
   /** S-005: "phone only" — the TV's moments go to the phones. */
   phoneOnly: boolean;
+  /** I-347 A: the VIP whose role passed on while their phone was away (cleared when a game starts
+   *  or the role moves again). */
+  formerVip?: string;
 }
 
 export type RoomEvent =
