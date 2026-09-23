@@ -50,7 +50,8 @@ export async function fetchInfo(opts: { countOpen?: boolean } = {}): Promise<Ser
   const count = opts.countOpen === true && !countedThisPage;
   if (count) countedThisPage = true;
   // I-785 A: a phone that came in by a room's link asks for that room by its code (a private room
-  // is not in the public list)
+  // is not in the public list); I-787 A: a second room's TV (/tv?room=CODE) does too, so its QR
+  // is that room's
   const room = new URLSearchParams(typeof window === 'undefined' ? '' : window.location.search).get(
     'room',
   );
