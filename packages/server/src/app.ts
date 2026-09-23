@@ -200,6 +200,12 @@ export async function createApp(options: AppOptions): Promise<App> {
     // I-041 (the owner): the QR carries the house room's code (`/?room=KGVU`) so a scan goes
     // straight in; the URL the TV prints stays bare and a phone that types it asks for the code.
     const qrUrl = `${joinUrl.replace(/\/$/, '')}/?room=${host.house().code}`;
+    // I-785 A: a private room is not published — only the one asked for by its exact code (a QR
+    // link), and the house room (its code is on the TV and in the QR anyway)
+    const asked = String((req.query as { room?: string }).room ?? '').trim().toUpperCase();
+    const visible = host
+      .rooms()
+      .filter((r) => r.listed !== false || r.code === asked || r.code === host.house().code);
     return {
       version: PARTYBOX_VERSION,
       /** Boot time: a client that reconnects to a different value reloads (stale bundle guard). */
@@ -210,7 +216,7 @@ export async function createApp(options: AppOptions): Promise<App> {
       joinUrl,
       qrUrl,
       qrSvg: await qrSvg(qrUrl),
-      rooms: host.rooms().map((r) => ({
+      rooms: visible.map((r) => ({
         code: r.code,
         locked: r.locked,
         players: Object.keys(r.players).length,
