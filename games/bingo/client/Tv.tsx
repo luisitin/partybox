@@ -12,7 +12,7 @@ import type { BingoTvView } from '../server/views';
 import { BALL_LAND_MS, hushCaller, speakCall } from './caller';
 import { PatternIcon } from './Card';
 
-import { holdLine, pendingLine, whyNot, winHeadline } from './copy';
+import { botLine, holdLine, pendingLine, whyNot, winHeadline } from './copy';
 import { hopelessClaim } from '../server/reveal';
 import { IntroStage, Resume } from './TvCountdown';
 import { Call, CalledBoard, ClaimStage, DibsLine, whichCard } from './TvParts';
@@ -178,6 +178,12 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
                 <span className={styles.legendMissing}>{L('▢ missed')}</span>
               </p>
               {whyNot(view.claim, L) ? <BigText level="h2">{whyNot(view.claim, L)}</BigText> : null}
+              {/* I-138 A: the bot answers for itself. */}
+              {botLine(view.claim, 'miss', L) ? (
+                <BigText level="h2" tone="accent">
+                  {botLine(view.claim, 'miss', L)}
+                </BigText>
+              ) : null}
               <BigText level="h2" tone="muted">
                 {L('Card wiped. Next number in a moment…')}
               </BigText>
@@ -224,6 +230,10 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
                   <p className={`${styles.strayLine} pb-enter`}>
                     {strayLine(view.claim.red.length, view.winnerName, view.spicy, L)}
                   </p>
+                ) : null}
+                {/* I-138 B: and when a bot wins. */}
+                {botLine(view.claim, 'win', L) ? (
+                  <p className={styles.winLine}>{botLine(view.claim, 'win', L)}</p>
                 ) : null}
                 <p className={styles.winLine}>
                   {/* I-107 A: the icon lights the line that actually won, not the example row. */}

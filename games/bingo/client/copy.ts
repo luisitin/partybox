@@ -129,3 +129,32 @@ export function holdLine(names: string[], L: Translator): string {
     return L('⏸ {a} and {b} are changing card style…', { a: name, b: second });
   return L('⏸ {name} and {n} others are changing card style…', { name, n: names.length - 1 });
 }
+
+/** I-138 A: a bot answers its own verdict — one line, keyed to what went wrong (never-called
+ *  daubs, or a tap before the line was there); B: and a line when it wins. */
+function botPool(kind: 'miss' | 'early' | 'win', L: Translator): string[] {
+  if (kind === 'win') return [L('beep. gloat.'), L('as computed'), L('humans: 0')];
+  if (kind === 'early')
+    return [L('I got excited'), L('I counted the FREE twice'), L('my clock is fast')];
+  return [
+    L('my sensors were dirty'),
+    L('I got excited'),
+    L('recalculating…'),
+    L('that was a rounding error'),
+  ];
+}
+
+export function botLine(
+  claim: { name: string; bot?: boolean; red: number[]; playerId?: string },
+  kind: 'miss' | 'win',
+  L: Translator,
+): string | null {
+  if (!claim.bot) return null;
+  const pool = botPool(kind === 'win' ? 'win' : claim.red.length > 0 ? 'miss' : 'early', L);
+  // I-138 C: a bot's voice is its own — the same id always draws the same line.
+  const h = [...(claim.playerId ?? claim.name)].reduce(
+    (a, c) => (a * 31 + c.charCodeAt(0)) % 9973,
+    7,
+  );
+  return `${claim.name}: ${pool[h % pool.length]}`;
+}

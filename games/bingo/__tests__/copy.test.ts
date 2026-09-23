@@ -1,7 +1,15 @@
 // The TV's verdict copy for a failed claim (loop 272): the numbers, by name — and the same lines in
 // Spanish (the owner, 2026-09-22), ordinals included.
 import { describe, expect, it } from 'vitest';
-import { holdLine, ordinal, otherTitle, whyNot, winHeadline, winTitle } from '../client/copy';
+import {
+  botLine,
+  holdLine,
+  ordinal,
+  otherTitle,
+  whyNot,
+  winHeadline,
+  winTitle,
+} from '../client/copy';
 import { translatorFor } from '../client/words';
 
 const card = Array.from({ length: 25 }, (_, i) => (i === 12 ? 0 : i + 1));
@@ -63,5 +71,27 @@ describe('the win lines', () => {
       '¡CARTÓN LLENO! Tu 1.er cartón lleno de la ronda 2 — cartón 3',
     );
     expect(otherTitle(win(1), 'Sam', es)).toBe('Sam tiene bingo');
+  });
+});
+
+// I-138: a bot answers its own verdict, in a voice of its own (the same id, the same line).
+describe('botLine', () => {
+  const bot = { name: 'Bot 3', bot: true, red: [7], playerId: 'b-3' };
+  it('says nothing for a person', () => {
+    expect(botLine({ ...bot, bot: undefined }, 'miss', en)).toBeNull();
+  });
+  it('keeps each bot to one line per kind, whatever the verdict', () => {
+    const first = botLine(bot, 'miss', en);
+    expect(first).toMatch(/^Bot 3: /);
+    expect(botLine(bot, 'miss', en)).toBe(first);
+    expect(botLine({ ...bot, red: [] }, 'miss', en)).toMatch(
+      /^Bot 3: (I got excited|I counted the FREE twice|my clock is fast)$/,
+    );
+    expect(botLine(bot, 'win', en)).toMatch(/^Bot 3: (beep\. gloat\.|as computed|humans: 0)$/);
+  });
+  it('speaks Spanish on a Spanish screen, name kept', () => {
+    expect(botLine(bot, 'win', es)).toMatch(
+      /^Bot 3: (bip\. presumo\.|según mis cálculos|humanos: 0)$/,
+    );
   });
 });

@@ -7,7 +7,7 @@ import { BigText, Screen, useT } from '@partybox/game-sdk/ui';
 import type { PushedView } from '@partybox/game-sdk/ui';
 import type { BingoControllerView } from '../server/views';
 import { Card } from './Card';
-import { whyNot } from './copy';
+import { botLine, whyNot } from './copy';
 import { STRINGS } from './strings';
 import styles from './Controller.module.css';
 
@@ -64,6 +64,8 @@ export function PhoneStage({
               ? L('+1 point for {name}.', { name: claim.name })
               : L('+{n} points for {name}.', { n: view.claimPoints, name: claim.name })}
           </p>
+          {/* I-138 B: a bot's win line, as on the TV. */}
+          {botLine(claim, 'win', L) ? <p className="pb-muted">{botLine(claim, 'win', L)}</p> : null}
         </div>
       ) : settled ? (
         <div className="pb-enter">
@@ -71,6 +73,8 @@ export function PhoneStage({
             {L('NOT A BINGO')}
           </BigText>
           {whyNot(claim, L) ? <p className="pb-muted">{whyNot(claim, L)}</p> : null}
+          {/* I-138 A: the bot answers for itself, as on the TV. */}
+          {botLine(claim, 'miss', L) ? <p>{botLine(claim, 'miss', L)}</p> : null}
           <p className="pb-muted">{L('Card wiped. Next number in a moment…')}</p>
         </div>
       ) : (

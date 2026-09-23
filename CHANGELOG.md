@@ -63,6 +63,11 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Added
 
+- **Bingo bots answer for themselves** (I-138, option C): a bot's failed claim gets its own line on
+  the verdict ("Bot 3: my sensors were dirty" for never-called daubs, "I got excited" for an early
+  tap), a bot's win gets one too ("beep. gloat."), and each bot keeps the same voice all evening.
+  On the TV and the phone-only stage, in English or Spanish.
+
 - **Pick your avatar's colour** (I-086, option C): eight colour swatches above the face grid paint
   the portrait live, and the join carries face and colour together (`fox#3` — every surface renders
   it). A colour someone in the room already wears is crossed through, and a new phone starts on a

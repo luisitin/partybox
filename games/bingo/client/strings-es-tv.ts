@@ -66,4 +66,14 @@ export const ES_TV: Readonly<Record<string, string>> = {
   '{name} said keep going — thumbs ready': '{name} dijo que seguimos: pulgares listos',
   '{n} cards each — BINGO! checks the card you press it on.':
     '{n} cartones cada uno: ¡BINGO! revisa el cartón donde lo toques.',
+  // I-138: what a bot says about its own verdict (its name goes in front, as written).
+  'my sensors were dirty': 'tenía los sensores sucios',
+  'I got excited': 'me emocioné',
+  'recalculating…': 'recalculando…',
+  'that was a rounding error': 'fue un error de redondeo',
+  'I counted the FREE twice': 'conté el LIBRE dos veces',
+  'my clock is fast': 'mi reloj va adelantado',
+  'beep. gloat.': 'bip. presumo.',
+  'as computed': 'según mis cálculos',
+  'humans: 0': 'humanos: 0',
 };
