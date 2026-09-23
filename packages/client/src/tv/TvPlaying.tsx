@@ -216,7 +216,11 @@ export function TvPlaying({ room, view, audio, onGameReady, music }: TvPlayingPr
         >
           <div className={styles.pausedCard}>
             <BigText level="h1">⏸ {t.tv.paused}</BigText>
-            {vip ? <p className="pb-muted">{t.tv.pausedHint(vip.name)}</p> : null}
+            {room.asleep ? (
+              <p className="pb-muted">It carries on as soon as a phone is back</p>
+            ) : vip ? (
+              <p className="pb-muted">{t.tv.pausedHint(vip.name)}</p>
+            ) : null}
           </div>
         </div>
       ) : null}
