@@ -15,15 +15,20 @@ import type { Claim, Input, State } from '../types';
 export function enterCheck(state: State, now: number, claim: Claim): State {
   const round = state.round;
   const mine = round.daubs[claim.playerId] ?? [];
-  const wiped = mine.map((d, i) => (i === claim.cardIndex ? [] : d));
+  // I-435 C: the whole card goes, as today — the called squares are then ringed on the phone
+  const drop = new Set(mine[claim.cardIndex] ?? []);
+  const lost = (mine[claim.cardIndex] ?? []).filter((c) => drop.has(c));
+  const wiped = mine.map((d, i) => (i === claim.cardIndex ? d.filter((c) => !drop.has(c)) : d));
   return enterPhase(
     clearClaims({
       ...state,
       round: {
         ...round,
-        claim,
+        claim: { ...claim, wiped: lost },
         daubs: { ...round.daubs, [claim.playerId]: wiped },
         waitForCall: { ...round.waitForCall, [claim.playerId]: round.drawn + 1 },
+        // I-435 C: the called numbers on their phone for the next three calls
+        rebuild: { ...round.rebuild, [claim.playerId]: round.drawn + 3 },
         judged: false,
       },
     }),

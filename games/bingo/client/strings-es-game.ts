@@ -6,8 +6,8 @@ export const ES_GAME: Readonly<Record<string, string>> = {
   // The manifest (the game picker and its settings).
   'Daub what you hear. Press BINGO! Everyone checks.':
     'Marca lo que oyes. Toca ¡BINGO! Todos lo revisan.',
-  'Plain 75-ball bingo. The TV calls a number every few seconds; you daub your own card however you like. Press BINGO! and the caller stops while your card goes on the TV for everyone to check: the pattern in green, every square you daubed that was never called in red. Right — you win the round. Wrong — your whole card is wiped blank, and the caller carries on.':
-    'Bingo clásico de 75 bolas. La TV canta un número cada pocos segundos; tú marcas tu cartón como quieras. Toca ¡BINGO! y el locutor se detiene mientras tu cartón sale en la TV para que todos lo revisen: la figura en verde y, en rojo, cada casilla que marcaste y nunca salió. ¿Acertaste? Ganas la ronda. ¿Fallaste? Tu cartón se borra entero y el locutor sigue.',
+  'Plain 75-ball bingo. The TV calls a number every few seconds; you daub your own card however you like. Press BINGO! and the caller stops while your card goes on the TV for everyone to check: the pattern in green, every square you daubed that was never called in red. Right — you win the round. Wrong — your whole card is wiped blank (the called squares are ringed to re-daub), and the caller carries on.':
+    'Bingo clásico de 75 bolas. La TV canta un número cada pocos segundos; tú marcas tu cartón como quieras. Toca ¡BINGO! y el locutor se detiene mientras tu cartón sale en la TV para que todos lo revisen: la figura en verde y, en rojo, cada casilla que marcaste y nunca salió. ¿Acertaste? Ganas la ronda. ¿Fallaste? Tu cartón se borra entero (las casillas que ya salieron llevan un aro para volver a marcarlas) y el locutor sigue.',
   Rounds: 'Rondas',
   'Each round deals fresh cards and a fresh deck': 'Cada ronda reparte cartones y bolas nuevos',
   'Round 1 pattern': 'Figura de la ronda 1',
@@ -50,6 +50,10 @@ export const ES_GAME: Readonly<Record<string, string>> = {
   'Last call only': 'Solo el último',
   'Full board': 'Tablero completo',
   'One away': 'A un número',
+  'Card {n} wiped — the called squares are ringed: re-daub them when play resumes.':
+    'Cartón {n} borrado: las casillas que ya salieron tienen un aro; vuelve a marcarlas cuando siga el juego.',
+  // I-435 C: the re-daub tray
+  'Called so far — re-daub from these:': 'Lo que ya salió — vuelve a marcar con esto:',
   'Tell the room when a player is one number from the pattern — a ring in the strip, a line under the call and a hush':
     'Avisa a la sala cuando a alguien le falta un número para la figura: un aro en la franja, una línea bajo el número y un susurro',
   'Cheeky caller': 'Locutor pícaro',
@@ -71,6 +75,12 @@ export const ES_GAME: Readonly<Record<string, string>> = {
   '{name} says BINGO!': '{name} canta ¡BINGO!',
   'NOT A BINGO': 'NO ES BINGO',
   'Card wiped. Next number in a moment…': 'Cartón borrado. Enseguida sale otro número…',
+  // I-435: what a wrong claim took
+  'Wrong daubs wiped. Next number in a moment…': 'Marcas equivocadas borradas. Enseguida sale otro número…',
+  'Card {n}: the wrong daubs and that line are wiped — the rest stay.':
+    'Cartón {n}: se borran las marcas equivocadas y esa línea; el resto se queda.',
+  'Card {n}: the wrong daubs are wiped — the rest stay.':
+    'Cartón {n}: se borran las marcas equivocadas; el resto se queda.',
   'checking against {n} calls': 'comprobando con {n} bolas',
   'Final points': 'Puntos finales',
   'Next: round {round} — {pattern}': 'Siguiente: ronda {round} — {pattern}',

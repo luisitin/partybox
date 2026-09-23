@@ -57,6 +57,8 @@ export interface Claim {
   /** Cells of that completion not daubed. */
   missing: number[];
   valid: boolean;
+  /** I-435: the daubs a wrong claim took off the card (the TV lifts exactly these). */
+  wiped?: number[];
 }
 
 export interface RoundState {
@@ -75,6 +77,8 @@ export interface RoundState {
   claim: Claim | null;
   /** playerId → may claim again once `drawn >= this` (set after a failed claim). */
   waitForCall: Record<string, number>;
+  /** I-435 C: a player whose card a wrong claim wiped sees the calls until this many are drawn. */
+  rebuild?: Record<string, number>;
   /** The latest bingo's owner (the celebration); null when the deck ran out. */
   winnerId: string | null;
   /**

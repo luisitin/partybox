@@ -711,3 +711,11 @@ button.cell:focus-visible {
 :global(:root[data-motion='off']) .iconDraw {
   animation: none;
 }
+
+/* ── I-435 C: right after a wrong claim wiped the card, every square whose number was called
+   wears a dashed ring — re-daub from the record, not from memory. */
+.calledRing {
+  box-shadow: inset 0 0 0 3px var(--pb-accent-2);
+  outline: 2px dashed color-mix(in srgb, var(--pb-accent-2) 70%, transparent);
+  outline-offset: -6px;
+}

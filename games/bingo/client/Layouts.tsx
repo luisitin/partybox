@@ -111,6 +111,9 @@ function PlayCard({
         daubs={p.intro ? [] : (view.daubs[c] ?? [])}
         pattern={p.intro ? introOutline(view) : []}
         wanted={wanted}
+        // I-435 C: the called squares, ringed, while the re-daub window is open (players only get
+        // the called numbers then)
+        called={(p.cards[c] ?? []).flatMap((n, i) => (view.called.includes(n) ? [i] : []))}
         freeDaubed={won || p.freeDaubed.includes(c)}
         onTapFree={() => p.onTapFree(c)}
         onTap={(index) => p.onDaub(c, index)}

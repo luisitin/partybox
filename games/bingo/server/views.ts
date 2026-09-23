@@ -338,7 +338,11 @@ export function controllerView(
       player &&
       (state.phase.id === 'play' || state.phase.id === 'check') &&
       state.round.drawn < (state.round.waitForCall[playerId] ?? 0),
-    called: player ? [] : calledNumbers(state),
+    // I-435 C: players remember — except right after a wrong claim wiped their card
+    called:
+      player && !((state.round.rebuild?.[playerId] ?? -1) >= state.round.drawn)
+        ? []
+        : calledNumbers(state),
     // I-134 A: a phone with no cards is not out of the game — it is watching it.
     ...(player
       ? {}
