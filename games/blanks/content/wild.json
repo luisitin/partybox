@@ -204,7 +204,8 @@
       "text": "Why is there blood on the ceiling?",
       "pick": 1,
       "draw": 0,
-      "tier": 1
+      "tier": 1,
+      "slot": "thing"
     },
     {
       "id": "wb30",
@@ -267,7 +268,8 @@
       "text": "What's the CIA's new interrogation technique?",
       "pick": 1,
       "draw": 0,
-      "tier": 3
+      "tier": 3,
+      "slot": "thing"
     },
     {
       "id": "wb39",
@@ -450,14 +452,16 @@
       "text": "What's the fraternity's hazing ritual this year?",
       "pick": 1,
       "draw": 0,
-      "tier": 3
+      "tier": 3,
+      "slot": "thing"
     },
     {
       "id": "wb65",
       "text": "What finally ended the marriage?",
       "pick": 1,
       "draw": 0,
-      "tier": 3
+      "tier": 3,
+      "slot": "thing"
     },
     {
       "id": "wb66",
@@ -612,7 +616,8 @@
       "text": "What ended the bachelorette party early?",
       "pick": 1,
       "draw": 0,
-      "tier": 3
+      "tier": 3,
+      "slot": "thing"
     },
     {
       "id": "wb88",
@@ -640,7 +645,8 @@
       "text": "Doctors hate this one weird trick: ____.",
       "pick": 1,
       "draw": 0,
-      "tier": 3
+      "tier": 3,
+      "slot": "thing"
     },
     {
       "id": "wb92",
@@ -675,7 +681,8 @@
       "text": "How did the neighbors find out?",
       "pick": 1,
       "draw": 0,
-      "tier": 3
+      "tier": 3,
+      "slot": "thing"
     },
     {
       "id": "wb97",
@@ -1152,7 +1159,8 @@
       "text": "I went to the glory hole and it led to ____.",
       "pick": 1,
       "draw": 0,
-      "tier": 3
+      "tier": 3,
+      "slot": "thing"
     },
     {
       "id": "wb165",
@@ -1222,7 +1230,8 @@
       "text": "The queen's coronation was ruined by ____.",
       "pick": 1,
       "draw": 0,
-      "tier": 2
+      "tier": 2,
+      "slot": "thing"
     },
     {
       "id": "wb175",
@@ -1649,7 +1658,8 @@
       "text": "What ended the Roman orgy?",
       "pick": 1,
       "draw": 0,
-      "tier": 2
+      "tier": 2,
+      "slot": "thing"
     },
     {
       "id": "wb236",
@@ -2568,7 +2578,8 @@
       "text": "My worst date ended with ____.",
       "pick": 1,
       "draw": 0,
-      "tier": 2
+      "tier": 2,
+      "slot": "thing"
     },
     {
       "id": "wb368",
@@ -2666,7 +2677,8 @@
       "text": "What did the hotel maid walk in on?",
       "pick": 1,
       "draw": 0,
-      "tier": 2
+      "tier": 2,
+      "slot": "thing"
     },
     {
       "id": "wb382",
@@ -2743,7 +2755,8 @@
       "text": "My worst hookup story ends with ____.",
       "pick": 1,
       "draw": 0,
-      "tier": 2
+      "tier": 2,
+      "slot": "thing"
     },
     {
       "id": "wb393",
@@ -3036,7 +3049,8 @@
       "text": "The halftime show ended with ____.",
       "pick": 1,
       "draw": 0,
-      "tier": 2
+      "tier": 2,
+      "slot": "thing"
     },
     {
       "id": "wb434",
@@ -3107,7 +3121,8 @@
       "text": "The dentist charged extra for ____.",
       "pick": 1,
       "draw": 0,
-      "tier": 2
+      "tier": 2,
+      "slot": "thing"
     },
     {
       "id": "wb444",
@@ -3480,7 +3495,8 @@
       "text": "The hospital's night shift was known for ____.",
       "pick": 1,
       "draw": 0,
-      "tier": 1
+      "tier": 1,
+      "slot": "thing"
     },
     {
       "id": "wb497",
@@ -3494,14 +3510,16 @@
       "text": "The clinic's waiting list got shorter after ____.",
       "pick": 1,
       "draw": 0,
-      "tier": 3
+      "tier": 3,
+      "slot": "thing"
     },
     {
       "id": "wb499",
       "text": "Grandma's nursing home talent show ended with ____.",
       "pick": 1,
       "draw": 0,
-      "tier": 2
+      "tier": 2,
+      "slot": "thing"
     },
     {
       "id": "wb500",
@@ -3979,7 +3997,8 @@
       "text": "The eulogy was interrupted by ____.",
       "pick": 1,
       "draw": 0,
-      "tier": 2
+      "tier": 2,
+      "slot": "thing"
     },
     {
       "id": "wb568",
@@ -5984,7 +6003,8 @@
       "text": "Jury duty ended when ____.",
       "pick": 1,
       "draw": 0,
-      "tier": 2
+      "tier": 2,
+      "slot": "thing"
     },
     {
       "id": "wb854",
@@ -6499,6 +6519,171 @@
       "draw": 0,
       "slot": "person",
       "tier": 3
+    },
+    {
+      "id": "wb927",
+      "text": "Where did the Hitler Youth go every summer?",
+      "pick": 1,
+      "draw": 0,
+      "tier": 3
+    },
+    {
+      "id": "wb928",
+      "text": "What does a turkey say at a Nazi Thanksgiving?",
+      "pick": 1,
+      "draw": 0,
+      "tier": 3
+    },
+    {
+      "id": "wb929",
+      "text": "What did the hangman say about Saddam Hussein?",
+      "pick": 1,
+      "draw": 0,
+      "tier": 3
+    },
+    {
+      "id": "wb930",
+      "text": "JFK's last trip to Dallas was ____.",
+      "pick": 1,
+      "draw": 0,
+      "tier": 3
+    },
+    {
+      "id": "wb931",
+      "text": "What was Chris Brown's biggest hit?",
+      "pick": 1,
+      "draw": 0,
+      "tier": 3
+    },
+    {
+      "id": "wb932",
+      "text": "What's Vladimir Putin's favorite season?",
+      "pick": 1,
+      "draw": 0,
+      "tier": 3
+    },
+    {
+      "id": "wb933",
+      "text": "Where did Kurt Cobain end up after the shotgun?",
+      "pick": 1,
+      "draw": 0,
+      "tier": 3
+    },
+    {
+      "id": "wb934",
+      "text": "At trial, Oscar Pistorius's defense didn't have ____.",
+      "pick": 1,
+      "draw": 0,
+      "tier": 3
+    },
+    {
+      "id": "wb935",
+      "text": "Why did Hitler finally kill himself?",
+      "pick": 1,
+      "draw": 0,
+      "tier": 3,
+      "slot": "thing"
+    },
+    {
+      "id": "wb936",
+      "text": "What's Bill Cosby's favorite part of any house?",
+      "pick": 1,
+      "draw": 0,
+      "tier": 3
+    },
+    {
+      "id": "wb937",
+      "text": "What did the stingray do to Steve Irwin?",
+      "pick": 1,
+      "draw": 0,
+      "tier": 3,
+      "slot": "thing"
+    },
+    {
+      "id": "wb938",
+      "text": "What do you call a nun in a wheelchair?",
+      "pick": 1,
+      "draw": 0,
+      "tier": 3
+    },
+    {
+      "id": "wb939",
+      "text": "What workout did Jesus quit after one session?",
+      "pick": 1,
+      "draw": 0,
+      "tier": 3
+    },
+    {
+      "id": "wb940",
+      "text": "What does the necrophiliac do after a long shift at the morgue?",
+      "pick": 1,
+      "draw": 0,
+      "tier": 3,
+      "slot": "thing"
+    },
+    {
+      "id": "wb941",
+      "text": "What did the guy say after losing his left arm and left leg?",
+      "pick": 1,
+      "draw": 0,
+      "tier": 3
+    },
+    {
+      "id": "wb942",
+      "text": "What did the cannibal do after he dumped his girlfriend?",
+      "pick": 1,
+      "draw": 0,
+      "tier": 3,
+      "slot": "thing"
+    },
+    {
+      "id": "wb943",
+      "text": "What does a cannibal call a man in a wheelchair?",
+      "pick": 1,
+      "draw": 0,
+      "tier": 3
+    },
+    {
+      "id": "wb944",
+      "text": "What did the leper say to the hooker?",
+      "pick": 1,
+      "draw": 0,
+      "tier": 3
+    },
+    {
+      "id": "wb945",
+      "text": "How does Michael J. Fox take his martini?",
+      "pick": 1,
+      "draw": 0,
+      "tier": 3
+    },
+    {
+      "id": "wb946",
+      "text": "What does Chris Brown drink at parties?",
+      "pick": 1,
+      "draw": 0,
+      "tier": 3
+    },
+    {
+      "id": "wb947",
+      "text": "Lorena Bobbitt's cooking show is called ____.",
+      "pick": 1,
+      "draw": 0,
+      "tier": 3
+    },
+    {
+      "id": "wb948",
+      "text": "What did the OceanGate CEO promise the passengers?",
+      "pick": 1,
+      "draw": 0,
+      "tier": 3
+    },
+    {
+      "id": "wb949",
+      "text": "What was Kobe Bryant's last shot?",
+      "pick": 1,
+      "draw": 0,
+      "tier": 3
     }
   ],
   "white": [
@@ -6516,7 +6701,8 @@
     {
       "id": "ww3",
       "text": "A dick so big it has its own zip code.",
-      "tier": 4
+      "tier": 4,
+      "tags": ["endowment"]
     },
     {
       "id": "ww4",
@@ -6781,7 +6967,8 @@
     {
       "id": "ww53",
       "text": "Eating ass like it owes you money.",
-      "tier": 3
+      "tier": 3,
+      "tags": ["raccoons"]
     },
     {
       "id": "ww54",
@@ -7062,7 +7249,8 @@
     {
       "id": "ww106",
       "text": "Twelve dicks in a trench coat.",
-      "tier": 4
+      "tier": 4,
+      "tags": ["members"]
     },
     {
       "id": "ww107",
@@ -7547,7 +7735,8 @@
     {
       "id": "ww199",
       "text": "A bag of teeth.",
-      "tier": 3
+      "tier": 3,
+      "tags": ["rattled"]
     },
     {
       "id": "ww200",
@@ -8083,7 +8272,7 @@
       "id": "ww302",
       "text": "Burying a body in the community garden.",
       "tier": 3,
-      "tags": ["hoa"]
+      "tags": ["hoa", "ground game"]
     },
     {
       "id": "ww303",
@@ -8246,7 +8435,8 @@
     {
       "id": "ww333",
       "text": "The smell of a body found in August.",
-      "tier": 2
+      "tier": 2,
+      "tags": ["find out"]
     },
     {
       "id": "ww334",
@@ -8277,7 +8467,8 @@
     {
       "id": "ww339",
       "text": "Getting your face eaten by a monkey.",
-      "tier": 2
+      "tier": 2,
+      "tags": ["Joe Rogan's"]
     },
     {
       "id": "ww340",
@@ -8290,7 +8481,7 @@
       "text": "Autoerotic asphyxiation.",
       "tier": 3,
       "serves": ["thing", "doing", "name"],
-      "tags": ["died"]
+      "tags": ["died", "stocking", "belt"]
     },
     {
       "id": "ww342",
@@ -8351,7 +8542,8 @@
     {
       "id": "ww353",
       "text": "Stranger's teeth on a string.",
-      "tier": 2
+      "tier": 2,
+      "tags": ["anal beads"]
     },
     {
       "id": "ww354",
@@ -8581,7 +8773,8 @@
     {
       "id": "ww398",
       "text": "A rosary made of anal beads.",
-      "tier": 2
+      "tier": 2,
+      "tags": ["nuns", "bless"]
     },
     {
       "id": "ww399",
@@ -8659,7 +8852,8 @@
     {
       "id": "ww413",
       "text": "The rapture, but only for hot people.",
-      "tier": 3
+      "tier": 3,
+      "tags": ["faith"]
     },
     {
       "id": "ww414",
@@ -9161,7 +9355,9 @@
     {
       "id": "ww511",
       "text": "Trump's micropenis.",
-      "tier": 2
+      "tier": 2,
+      "tags": ["tell-all"],
+      "serves": ["thing", "name", "person"]
     },
     {
       "id": "ww512",
@@ -9171,7 +9367,8 @@
     {
       "id": "ww513",
       "text": "Hitler's one testicle.",
-      "tier": 4
+      "tier": 4,
+      "tags": ["Stalin", "war", "bunker"]
     },
     {
       "id": "ww514",
@@ -9213,7 +9410,7 @@
       "id": "ww521",
       "text": "Lincoln's log.",
       "tier": 4,
-      "tags": ["proctologist"]
+      "tags": ["proctologist", "septic tank"]
     },
     {
       "id": "ww522",
@@ -9278,7 +9475,8 @@
     {
       "id": "ww534",
       "text": "Creampie at the pie-eating contest.",
-      "tier": 2
+      "tier": 2,
+      "tags": ["county fair"]
     },
     {
       "id": "ww535",
@@ -9396,7 +9594,8 @@
     {
       "id": "ww557",
       "text": "Trump's pee tape.",
-      "tier": 2
+      "tier": 2,
+      "tags": ["Watergate's", "evidence", "spy's"]
     },
     {
       "id": "ww558",
@@ -9426,7 +9625,8 @@
     {
       "id": "ww563",
       "text": "The Tijuana donkey show.",
-      "tier": 2
+      "tier": 2,
+      "tags": ["bachelor party"]
     },
     {
       "id": "ww564",
@@ -9451,7 +9651,8 @@
     {
       "id": "ww568",
       "text": "A yeast infection that smells like bread.",
-      "tier": 2
+      "tier": 2,
+      "tags": ["bake-off"]
     },
     {
       "id": "ww569",
@@ -9467,7 +9668,8 @@
       "id": "ww571",
       "text": "Cock cage for Lent.",
       "serves": ["thing"],
-      "tier": 3
+      "tier": 3,
+      "tags": ["robe"]
     },
     {
       "id": "ww572",
@@ -9634,7 +9836,8 @@
     {
       "id": "ww604",
       "text": "The Holocaust Museum gift shop.",
-      "tier": 2
+      "tier": 2,
+      "tags": ["hair extensions"]
     },
     {
       "id": "ww605",
@@ -9736,7 +9939,8 @@
     {
       "id": "ww624",
       "text": "Cumming to a Peloton instructor.",
-      "tier": 1
+      "tier": 1,
+      "tags": ["lockdown"]
     },
     {
       "id": "ww625",
@@ -10026,7 +10230,8 @@
     {
       "id": "ww681",
       "text": "Oval Office glory hole.",
-      "tier": 2
+      "tier": 2,
+      "tags": ["internship"]
     },
     {
       "id": "ww682",
@@ -10077,7 +10282,8 @@
     {
       "id": "ww691",
       "text": "The Titanic going down on the iceberg.",
-      "tier": 4
+      "tier": 4,
+      "tags": ["adult channel", "Titanic", "cruise ship's", "cruise's", "cruise"]
     },
     {
       "id": "ww692",
@@ -10198,7 +10404,7 @@
       "id": "ww715",
       "text": "The pope's Fleshlight.",
       "tier": 3,
-      "tags": ["vatican"]
+      "tags": ["vatican", "still warm"]
     },
     {
       "id": "ww716",
@@ -10361,7 +10567,8 @@
     {
       "id": "ww747",
       "text": "A cucumber that's seen too much.",
-      "tier": 2
+      "tier": 2,
+      "tags": ["sex ed"]
     },
     {
       "id": "ww748",
@@ -10381,7 +10588,8 @@
     {
       "id": "ww751",
       "text": "Edible underwear from 1998.",
-      "tier": 3
+      "tier": 3,
+      "tags": ["clearance bin"]
     },
     {
       "id": "ww752",
@@ -10834,7 +11042,8 @@
     {
       "id": "ww840",
       "text": "Ancient Greek wrestling, as intended.",
-      "tier": 3
+      "tier": 3,
+      "tags": ["fraternity"]
     },
     {
       "id": "ww841",
@@ -10986,7 +11195,8 @@
       "id": "ww869",
       "text": "Pizza guy, no pizza.",
       "tier": 4,
-      "serves": ["person", "name"]
+      "serves": ["person", "name"],
+      "tags": ["doorbell"]
     },
     {
       "id": "ww870",
@@ -11110,7 +11320,8 @@
     {
       "id": "ww892",
       "text": "Peanut butter in unusual places.",
-      "tier": 1
+      "tier": 1,
+      "tags": ["dog lick", "dog"]
     },
     {
       "id": "ww893",
@@ -11221,7 +11432,8 @@
     {
       "id": "ww914",
       "text": "Pull-out failure.",
-      "tier": 1
+      "tier": 1,
+      "tags": ["pull out", "Christmas miracle"]
     },
     {
       "id": "ww915",
@@ -11237,7 +11449,8 @@
     {
       "id": "ww917",
       "text": "Paternity test, live on daytime TV.",
-      "tier": 3
+      "tier": 3,
+      "tags": ["succession"]
     },
     {
       "id": "ww918",
@@ -11565,7 +11778,8 @@
     {
       "id": "ww981",
       "text": "A safe word that's just screaming.",
-      "tier": 4
+      "tier": 4,
+      "tags": ["called 911"]
     },
     {
       "id": "ww982",
@@ -11779,7 +11993,8 @@
       "id": "ww1022",
       "text": "A pimp named Reverend.",
       "tier": 4,
-      "serves": ["person", "name"]
+      "serves": ["person", "name"],
+      "tags": ["officiated"]
     },
     {
       "id": "ww1023",
@@ -11896,7 +12111,8 @@
     {
       "id": "ww1046",
       "text": "A choir boy, now forty and horny.",
-      "tier": 2
+      "tier": 2,
+      "tags": ["Vatican's"]
     },
     {
       "id": "ww1047",
@@ -13094,7 +13310,7 @@
       "id": "ww1275",
       "text": "Jeffrey Epstein's guest list.",
       "tier": 4,
-      "tags": ["evidence"]
+      "tags": ["evidence", "buried with him", "list"]
     },
     {
       "id": "ww1276",
@@ -13209,7 +13425,8 @@
     {
       "id": "ww1298",
       "text": "The Epstein files.",
-      "tier": 2
+      "tier": 2,
+      "tags": ["Trump", "under the rug", "disappear"]
     },
     {
       "id": "ww1299",
@@ -13656,7 +13873,8 @@
     {
       "id": "ww1385",
       "text": "Shoebox of Polaroids.",
-      "tier": 3
+      "tier": 3,
+      "tags": ["priest"]
     },
     {
       "id": "ww1386",
@@ -14356,7 +14574,8 @@
     {
       "id": "ww1525",
       "text": "Apple Watch: \"It looks like you've died.\"",
-      "tier": 3
+      "tier": 3,
+      "tags": ["eulogy"]
     },
     {
       "id": "ww1526",
@@ -14538,7 +14757,8 @@
     {
       "id": "ww1562",
       "text": "Trust-falling off the roof.",
-      "tier": 3
+      "tier": 3,
+      "tags": ["window-cleaning"]
     },
     {
       "id": "ww1563",
@@ -15157,7 +15377,8 @@
     {
       "id": "ww1684",
       "text": "Wig, scalp still attached.",
-      "tier": 2
+      "tier": 2,
+      "tags": ["roller coaster"]
     },
     {
       "id": "ww1685",
@@ -15806,7 +16027,8 @@
     {
       "id": "ww1807",
       "text": "A guest room with a lock on the outside.",
-      "tier": 1
+      "tier": 1,
+      "tags": ["DIY project"]
     },
     {
       "id": "ww1808",
@@ -16169,7 +16391,8 @@
       "id": "ww1873",
       "text": "The HOA, personally.",
       "tier": 3,
-      "serves": ["person", "thing", "name"]
+      "serves": ["person", "thing", "name"],
+      "tags": ["gators"]
     },
     {
       "id": "ww1874",
@@ -16205,7 +16428,8 @@
     {
       "id": "ww1880",
       "text": "Ambien.",
-      "tier": 3
+      "tier": 3,
+      "tags": ["baby formula"]
     },
     {
       "id": "ww1881",
@@ -16220,7 +16444,8 @@
     {
       "id": "ww1883",
       "text": "Turducken.",
-      "tier": 2
+      "tier": 2,
+      "tags": ["sex position"]
     },
     {
       "id": "ww1884",
@@ -16250,7 +16475,8 @@
     {
       "id": "ww1889",
       "text": "Velcro.",
-      "tier": 1
+      "tier": 1,
+      "tags": ["anal beads"]
     },
     {
       "id": "ww1890",
@@ -16277,8 +16503,9 @@
     {
       "id": "ww1894",
       "text": "Thicc.",
-      "serves": ["name"],
-      "tier": 3
+      "serves": ["name", "thing"],
+      "tier": 3,
+      "tags": ["loot"]
     },
     {
       "id": "ww1895",
@@ -16291,7 +16518,7 @@
       "text": "Oopsie.",
       "serves": ["name"],
       "tier": 4,
-      "tags": ["colonoscopy", "proctologist", "gynecologist"]
+      "tags": ["colonoscopy", "proctologist", "gynecologist", "whisper"]
     },
     {
       "id": "ww1897",
@@ -16329,8 +16556,9 @@
     {
       "id": "ww1903",
       "text": "Room temperature.",
-      "serves": ["name"],
-      "tier": 2
+      "serves": ["name", "thing"],
+      "tier": 2,
+      "tags": ["kink", "funeral home", "coroner", "control group", "were found"]
     },
     {
       "id": "ww1904",
@@ -16360,29 +16588,34 @@
       "id": "ww1908",
       "text": "Hard pass.",
       "serves": ["name"],
-      "tier": 2
+      "tier": 2,
+      "tags": ["review", "glory hole", "art teacher"]
     },
     {
       "id": "ww1909",
       "text": "Soft launch.",
       "serves": ["name"],
-      "tier": 2
+      "tier": 2,
+      "tags": ["dick pic"]
     },
     {
       "id": "ww1910",
       "text": "Big Pharma.",
-      "tier": 2
+      "tier": 2,
+      "tags": ["senator's pockets"]
     },
     {
       "id": "ww1911",
       "text": "Little Caesar.",
-      "tier": 2
+      "tier": 2,
+      "tags": ["stage name"]
     },
     {
       "id": "ww1912",
       "text": "Load-bearing.",
       "serves": ["name"],
-      "tier": 2
+      "tier": 2,
+      "tags": ["porn name", "tramp stamp", "gloryhole", "glory hole"]
     },
     {
       "id": "ww1913",
@@ -16595,7 +16828,8 @@
     {
       "id": "ww1952",
       "text": "Sneezing during a rim job.",
-      "tier": 3
+      "tier": 3,
+      "tags": ["blooper reel"]
     },
     {
       "id": "ww1953",
@@ -16809,7 +17043,8 @@
     {
       "id": "ww1993",
       "text": "A gender reveal with a body count.",
-      "tier": 3
+      "tier": 3,
+      "tags": ["forest fire"]
     },
     {
       "id": "ww1994",
@@ -17009,7 +17244,8 @@
       "id": "ww2029",
       "text": "The lion tamer, mostly inside the lion.",
       "tier": 2,
-      "serves": ["person"]
+      "serves": ["person"],
+      "tags": ["circus"]
     },
     {
       "id": "ww2030",
@@ -17275,7 +17511,8 @@
     {
       "id": "ww2079",
       "text": "Consensual, mostly.",
-      "tier": 3
+      "tier": 3,
+      "tags": ["sex tape's title"]
     },
     {
       "id": "ww2080",
@@ -17320,7 +17557,8 @@
     {
       "id": "ww2088",
       "text": "Raw dog.",
-      "tier": 3
+      "tier": 3,
+      "tags": ["must love"]
     },
     {
       "id": "ww2089",
@@ -17413,7 +17651,8 @@
     {
       "id": "ww2105",
       "text": "Post-nut clarity.",
-      "tier": 3
+      "tier": 3,
+      "tags": ["prenup", "meaning of life"]
     },
     {
       "id": "ww2106",
@@ -17430,7 +17669,8 @@
     {
       "id": "ww2108",
       "text": "Ol' Faithful.",
-      "tier": 2
+      "tier": 2,
+      "tags": ["retirement home", "colonoscopy", "gynecologist"]
     },
     {
       "id": "ww2109",
@@ -17454,7 +17694,8 @@
       "id": "ww2112",
       "text": "Barbecue Steve.",
       "tier": 2,
-      "serves": ["person", "name"]
+      "serves": ["person", "name"],
+      "tags": ["crematorium"]
     },
     {
       "id": "ww2113",
@@ -17464,7 +17705,8 @@
     {
       "id": "ww2114",
       "text": "Yikes forever.",
-      "tier": 2
+      "tier": 2,
+      "tags": ["underlined"]
     },
     {
       "id": "ww2115",
@@ -18029,7 +18271,7 @@
       "text": "Wearing the neighbor for Halloween.",
       "tier": 3,
       "serves": ["doing"],
-      "tags": ["costume"]
+      "tags": ["costume", "Halloween costume"]
     },
     {
       "id": "ww2219",
@@ -18590,7 +18832,8 @@
     {
       "id": "ww2319",
       "text": "The Midwest goodbye, ending politely in the wood chipper.",
-      "tier": 3
+      "tier": 3,
+      "tags": ["never left"]
     },
     {
       "id": "ww2320",
@@ -18653,7 +18896,8 @@
       "id": "ww2330",
       "text": "The Mountie always gets his man, and keeps him.",
       "tier": 3,
-      "serves": ["person"]
+      "serves": ["person"],
+      "tags": ["Mountie"]
     },
     {
       "id": "ww2331",
@@ -19036,7 +19280,14 @@
       "text": "Rewriting the will with a pillow.",
       "tier": 3,
       "serves": ["doing"],
-      "tags": ["rewritten", "nurse"]
+      "tags": [
+        "rewritten",
+        "nurse",
+        "nursing home",
+        "séance",
+        "pretend not to see",
+        "retirement home's"
+      ]
     },
     {
       "id": "ww2401",
@@ -19164,7 +19415,7 @@
       "id": "ww2423",
       "text": "\"Are we there yet\" from the trunk.",
       "tier": 4,
-      "tags": ["road trip"]
+      "tags": ["road trip", "pull over"]
     },
     {
       "id": "ww2424",
@@ -19390,7 +19641,16 @@
       "text": "Bush.",
       "tier": 4,
       "serves": ["person", "name"],
-      "tags": ["9/11", "election", "jumbotron", "podcast"]
+      "tags": [
+        "9/11",
+        "election",
+        "jumbotron",
+        "podcast",
+        "fetish",
+        "porn parody",
+        "war",
+        "recount"
+      ]
     },
     {
       "id": "ww2464",
@@ -19404,35 +19664,44 @@
       "text": "Casey Anthony.",
       "tier": 4,
       "serves": ["person", "name"],
-      "tags": ["bake sale", "babysitter", "trunk", "jury", "acquitted"]
+      "tags": ["bake sale", "babysitter", "trunk", "jury", "acquitted", "sex ed", "nanny cam"]
     },
     {
       "id": "ww2466",
       "text": "The Menendez brothers.",
       "tier": 4,
       "serves": ["person", "name"],
-      "tags": ["thanksgiving"]
+      "tags": ["thanksgiving", "therapist", "estate sale"]
     },
     {
       "id": "ww2467",
       "text": "Diddy's thousand bottles of baby oil.",
       "tier": 4,
       "serves": ["thing", "name"],
-      "tags": ["lube", "orgy", "nightstand"]
+      "tags": [
+        "lube",
+        "orgy",
+        "nightstand",
+        "uncle's basement",
+        "contract rider",
+        "hotel room",
+        "do not disturb",
+        "prison"
+      ]
     },
     {
       "id": "ww2468",
       "text": "Diddy.",
       "tier": 3,
       "serves": ["person", "name"],
-      "tags": ["orgy", "podcast", "sponsor"]
+      "tags": ["orgy", "podcast", "sponsor", "morning after", "wake up"]
     },
     {
       "id": "ww2469",
       "text": "O.J.'s glove.",
       "tier": 3,
       "serves": ["thing", "name"],
-      "tags": ["evidence", "jury", "acquitted", "detective"]
+      "tags": ["evidence", "jury", "acquitted", "detective", "ended the marriage", "donation bin"]
     },
     {
       "id": "ww2470",
@@ -19446,7 +19715,16 @@
       "text": "Jeffrey Dahmer.",
       "tier": 4,
       "serves": ["person", "name"],
-      "tags": ["freezer", "leftovers", "fridge", "chef"]
+      "tags": [
+        "freezer",
+        "leftovers",
+        "fridge",
+        "chef",
+        "worst hookup",
+        "Grindr",
+        "meat",
+        "never came back"
+      ]
     },
     {
       "id": "ww2472",
@@ -19474,21 +19752,30 @@
       "text": "Bill Cosby.",
       "tier": 4,
       "serves": ["person", "name"],
-      "tags": ["morning after", "sponsor", "bartender"]
+      "tags": [
+        "morning after",
+        "sponsor",
+        "bartender",
+        "pass out",
+        "virginity",
+        "whisper during sex",
+        "sex ed",
+        "refused"
+      ]
     },
     {
       "id": "ww2476",
       "text": "Harvey Weinstein.",
       "tier": 3,
       "serves": ["person", "name"],
-      "tags": ["hollywood producer", "massage", "five-star review"]
+      "tags": ["hollywood producer", "massage", "five-star review", "do not disturb"]
     },
     {
       "id": "ww2477",
       "text": "Ghislaine Maxwell.",
       "tier": 3,
       "serves": ["person", "name"],
-      "tags": ["epstein", "babysitter", "sex ed"]
+      "tags": ["epstein", "babysitter", "sex ed", "youth pastor"]
     },
     {
       "id": "ww2478",
@@ -19509,7 +19796,7 @@
       "text": "Chris Watts.",
       "tier": 3,
       "serves": ["person", "name"],
-      "tags": ["father", "trunk", "neighbors", "wife"]
+      "tags": ["father", "trunk", "neighbors", "wife", "search history", "babysitter"]
     },
     {
       "id": "ww2481",
@@ -19537,7 +19824,7 @@
       "text": "OceanGate.",
       "tier": 3,
       "serves": ["thing", "name"],
-      "tags": ["titanic", "tour group", "itinerary"]
+      "tags": ["titanic", "tour group", "itinerary", "sex position", "final text"]
     },
     {
       "id": "ww2485",
@@ -19551,21 +19838,30 @@
       "text": "Alec Baldwin's prop gun.",
       "tier": 3,
       "serves": ["thing", "name"],
-      "tags": ["movie", "on-set accident", "special effect", "hollywood"]
+      "tags": [
+        "movie",
+        "on-set accident",
+        "special effect",
+        "hollywood",
+        "cursed",
+        "shoot",
+        "TSA",
+        "reenactment"
+      ]
     },
     {
       "id": "ww2487",
       "text": "Harambe.",
       "tier": 4,
       "serves": ["thing", "name"],
-      "tags": ["zoo", "petting zoo", "surplus animals", "kids"]
+      "tags": ["zoo", "petting zoo", "surplus animals", "kids", "mystery meat", "firstborn"]
     },
     {
       "id": "ww2488",
       "text": "Osama bin Laden.",
       "tier": 4,
       "serves": ["person", "name"],
-      "tags": ["attic", "9/11", "compound", "hiding"]
+      "tags": ["attic", "9/11", "compound", "hiding", "trawler"]
     },
     {
       "id": "ww2489",
@@ -19579,7 +19875,7 @@
       "text": "Armie Hammer.",
       "tier": 3,
       "serves": ["person", "name"],
-      "tags": ["body count", "tasting menu", "first date", "chef", "dating profile"]
+      "tags": ["body count", "tasting menu", "first date", "chef", "dating profile", "we ate"]
     },
     {
       "id": "ww2491",
@@ -19607,14 +19903,23 @@
       "text": "The Unabomber's package.",
       "tier": 3,
       "serves": ["thing", "name"],
-      "tags": ["mailbox", "neighbor", "cabin", "white elephant", "goodie bag"]
+      "tags": ["mailbox", "neighbor", "cabin", "white elephant", "goodie bag", "mouth"]
     },
     {
       "id": "ww2495",
       "text": "Chris Hansen.",
       "tier": 3,
       "serves": ["person", "name"],
-      "tags": ["glory hole", "dating app", "3 a.m."]
+      "tags": [
+        "glory hole",
+        "dating app",
+        "3 a.m.",
+        "orgy",
+        "safe word",
+        "eternity",
+        "date",
+        "hookup"
+      ]
     },
     {
       "id": "ww2496",
@@ -19649,7 +19954,7 @@
       "text": "John Wayne Gacy.",
       "tier": 3,
       "serves": ["person", "name"],
-      "tags": ["birthday clown", "kids", "crawlspace", "magician"]
+      "tags": ["birthday clown", "kids", "crawlspace", "magician", "house was cheap"]
     },
     {
       "id": "ww2501",
@@ -19663,7 +19968,16 @@
       "text": "The Donner Party.",
       "tier": 3,
       "serves": ["thing", "name"],
-      "tags": ["wagon train", "camping", "blizzard", "survivors", "leftovers"]
+      "tags": [
+        "wagon train",
+        "camping",
+        "blizzard",
+        "survivors",
+        "leftovers",
+        "stomach",
+        "sex position",
+        "porn parody"
+      ]
     },
     {
       "id": "ww2503",
@@ -19677,21 +19991,29 @@
       "text": "Flint tap water.",
       "tier": 3,
       "serves": ["thing", "name"],
-      "tags": ["baby formula", "coffee", "secret ingredient", "baptismal font"]
+      "tags": [
+        "baby formula",
+        "coffee",
+        "secret ingredient",
+        "baptismal font",
+        "interrogation",
+        "coroner",
+        "plague"
+      ]
     },
     {
       "id": "ww2505",
       "text": "Matthew Perry.",
       "tier": 3,
       "serves": ["person", "name"],
-      "tags": ["hot tub", "doctor", "sponsor"]
+      "tags": ["hot tub", "doctor", "sponsor", "washed up"]
     },
     {
       "id": "ww2506",
       "text": "MH370.",
       "tier": 3,
       "serves": ["thing", "name"],
-      "tags": ["airline", "lost luggage", "flight", "black box", "trawler"]
+      "tags": ["airline", "lost luggage", "flight", "black box", "trawler", "proctologist"]
     },
     {
       "id": "ww2507",
@@ -19699,6 +20021,1777 @@
       "tier": 3,
       "serves": ["thing", "name"],
       "tags": ["cia", "interrogation", "dungeon", "photo booth"]
+    },
+    {
+      "id": "ww2508",
+      "text": "Finding Jesus on Grindr.",
+      "tier": 3,
+      "tags": ["priest"]
+    },
+    {
+      "id": "ww2509",
+      "text": "Jimmy Hoffa.",
+      "tier": 3,
+      "tags": ["found", "dig up", "foundation", "landfill", "buried"]
+    },
+    {
+      "id": "ww2510",
+      "text": "The gerbil, and the second gerbil sent in to find it.",
+      "tier": 3,
+      "tags": ["paramedics"]
+    },
+    {
+      "id": "ww2511",
+      "text": "Mom, with orange slices.",
+      "tier": 3,
+      "tags": ["orgy"]
+    },
+    {
+      "id": "ww2512",
+      "text": "My last one-night stand, folded neatly.",
+      "tier": 3,
+      "tags": ["nightstand"]
+    },
+    {
+      "id": "ww2513",
+      "text": "The Clapper.",
+      "tier": 3,
+      "tags": ["STD"]
+    },
+    {
+      "id": "ww2514",
+      "text": "Hello, hello, hello.",
+      "tier": 3,
+      "tags": ["gynecologist"]
+    },
+    {
+      "id": "ww2515",
+      "text": "Schindler's Fist.",
+      "tier": 4,
+      "tags": ["porn parody"]
+    },
+    {
+      "id": "ww2516",
+      "text": "A very possessive ex.",
+      "tier": 3,
+      "tags": ["exorcist"]
+    },
+    {
+      "id": "ww2517",
+      "text": "The Dick Cheney: it shoots you in the face.",
+      "tier": 3,
+      "tags": ["sex toy"]
+    },
+    {
+      "id": "ww2518",
+      "text": "The Kool-Aid Man, who didn't make it.",
+      "tier": 3,
+      "tags": ["walls"]
+    },
+    {
+      "id": "ww2519",
+      "text": "Pillow talk.",
+      "tier": 3,
+      "tags": ["hospice"]
+    },
+    {
+      "id": "ww2520",
+      "text": "Period sex on a trampoline.",
+      "tier": 3,
+      "tags": ["ceiling"]
+    },
+    {
+      "id": "ww2521",
+      "text": "Mountain Dew Code Red.",
+      "tier": 3,
+      "tags": ["tampon"]
+    },
+    {
+      "id": "ww2522",
+      "text": "Viagra Falls.",
+      "tier": 3,
+      "tags": ["Grandpa's"]
+    },
+    {
+      "id": "ww2523",
+      "text": "My junk, first-class.",
+      "tier": 3,
+      "tags": ["mailbox"]
+    },
+    {
+      "id": "ww2524",
+      "text": "My second wife, alive, as is tradition.",
+      "tier": 3,
+      "tags": ["buried"]
+    },
+    {
+      "id": "ww2525",
+      "text": "Molly from HR.",
+      "tier": 3,
+      "tags": ["office"]
+    },
+    {
+      "id": "ww2526",
+      "text": "Taking the queen from behind, diagonally.",
+      "tier": 3,
+      "tags": ["bishop"]
+    },
+    {
+      "id": "ww2527",
+      "text": "Josef Fritzl's family tree.",
+      "tier": 3,
+      "tags": ["basement"]
+    },
+    {
+      "id": "ww2528",
+      "text": "My little Arby's.",
+      "tier": 3,
+      "tags": ["gynecologist"]
+    },
+    {
+      "id": "ww2529",
+      "text": "Saluting during the Hitler documentary.",
+      "tier": 3,
+      "tags": ["grandpa"]
+    },
+    {
+      "id": "ww2530",
+      "text": "Anne Frank's drum solo.",
+      "tier": 4,
+      "tags": ["attic"]
+    },
+    {
+      "id": "ww2531",
+      "text": "Anne Frankfurter.",
+      "tier": 3,
+      "tags": ["drag name"]
+    },
+    {
+      "id": "ww2532",
+      "text": "Her dad, front row, tipping in singles.",
+      "tier": 3,
+      "tags": ["stripper"]
+    },
+    {
+      "id": "ww2533",
+      "text": "The Shroud of Turin.",
+      "tier": 3,
+      "tags": ["wipe"]
+    },
+    {
+      "id": "ww2534",
+      "text": "Schindler's Lust.",
+      "tier": 3,
+      "tags": ["adult channel"]
+    },
+    {
+      "id": "ww2535",
+      "text": "Dad, employee of the month.",
+      "tier": 3,
+      "tags": ["brothel"]
+    },
+    {
+      "id": "ww2536",
+      "text": "A baby with a note: \"He's yours, Father.\".",
+      "tier": 3,
+      "tags": ["donation box"]
+    },
+    {
+      "id": "ww2537",
+      "text": "Robert Kraft's loyalty card.",
+      "tier": 3,
+      "tags": ["massage parlor"]
+    },
+    {
+      "id": "ww2538",
+      "text": "The male stripper was the bride's dad.",
+      "tier": 3,
+      "tags": ["bachelorette"]
+    },
+    {
+      "id": "ww2539",
+      "text": "Horse dewormer.",
+      "tier": 3,
+      "tags": ["weird trick"]
+    },
+    {
+      "id": "ww2540",
+      "text": "The stripper, who ran out of air an hour ago.",
+      "tier": 3,
+      "tags": ["cake"]
+    },
+    {
+      "id": "ww2541",
+      "text": "Pretending to like your podcast.",
+      "tier": 3,
+      "tags": ["escort"]
+    },
+    {
+      "id": "ww2542",
+      "text": "Mounting his ex-wife, both ways.",
+      "tier": 3,
+      "tags": ["taxidermist"]
+    },
+    {
+      "id": "ww2543",
+      "text": "Three hos at once.",
+      "tier": 3,
+      "tags": ["Santa's"]
+    },
+    {
+      "id": "ww2544",
+      "text": "Collecting underpants.",
+      "tier": 3,
+      "tags": ["Step three"]
+    },
+    {
+      "id": "ww2545",
+      "text": "Drawing her like one of his French girls, with his dick.",
+      "tier": 3,
+      "tags": ["Titanic"]
+    },
+    {
+      "id": "ww2546",
+      "text": "Recognizing your dad's balls.",
+      "tier": 3,
+      "tags": ["orgy"]
+    },
+    {
+      "id": "ww2547",
+      "text": "Twin Towers Jenga, plane sold separately.",
+      "tier": 3,
+      "tags": ["9/11"]
+    },
+    {
+      "id": "ww2548",
+      "text": "Concealer for the third eye.",
+      "tier": 3,
+      "tags": ["cover-up"]
+    },
+    {
+      "id": "ww2549",
+      "text": "Every hair he's ever sniffed, in jars.",
+      "tier": 3,
+      "tags": ["Biden's"]
+    },
+    {
+      "id": "ww2550",
+      "text": "Both my hands are on your shoulders.",
+      "tier": 3,
+      "tags": ["proctologist"]
+    },
+    {
+      "id": "ww2551",
+      "text": "Enlarged to show texture.",
+      "tier": 3,
+      "tags": ["dick pic"]
+    },
+    {
+      "id": "ww2552",
+      "text": "Hiding in Argentina since 1945.",
+      "tier": 3,
+      "tags": ["grandfather"]
+    },
+    {
+      "id": "ww2553",
+      "text": "Gas the Nazis were saving for later.",
+      "tier": 3,
+      "tags": ["Hindenburg"]
+    },
+    {
+      "id": "ww2554",
+      "text": "Jesus's foreskin, in a Ziploc.",
+      "tier": 3,
+      "tags": ["Vatican's"]
+    },
+    {
+      "id": "ww2555",
+      "text": "A seventh-floor window.",
+      "tier": 3,
+      "tags": ["Putin's"]
+    },
+    {
+      "id": "ww2556",
+      "text": "Giving him head before Oswald took it.",
+      "tier": 3,
+      "tags": ["JFK"]
+    },
+    {
+      "id": "ww2557",
+      "text": "Eat, Pray, Gape.",
+      "tier": 3,
+      "tags": ["memoir"]
+    },
+    {
+      "id": "ww2558",
+      "text": "Dad's cologne.",
+      "tier": 3,
+      "tags": ["gimp mask"]
+    },
+    {
+      "id": "ww2559",
+      "text": "Just the tip.",
+      "tier": 3,
+      "tags": ["Titanic"]
+    },
+    {
+      "id": "ww2560",
+      "text": "Recognizing Dad's wedding ring through the hole.",
+      "tier": 3,
+      "tags": ["glory hole"]
+    },
+    {
+      "id": "ww2561",
+      "text": "Exit only.",
+      "tier": 3,
+      "tags": ["tramp stamp"]
+    },
+    {
+      "id": "ww2562",
+      "text": "It's what's inside that counts.",
+      "tier": 3,
+      "tags": ["slogan"]
+    },
+    {
+      "id": "ww2563",
+      "text": "Getting his mind blown.",
+      "tier": 3,
+      "tags": ["Lincoln"]
+    },
+    {
+      "id": "ww2564",
+      "text": "Prince Andrew, visibly sweating.",
+      "tier": 3,
+      "tags": ["queen's"]
+    },
+    {
+      "id": "ww2565",
+      "text": "Uranus.",
+      "tier": 3,
+      "tags": ["astronaut", "astronauts"]
+    },
+    {
+      "id": "ww2566",
+      "text": "Double-dipping.",
+      "tier": 3,
+      "tags": ["strict policy"]
+    },
+    {
+      "id": "ww2567",
+      "text": "A husband who's been dead for two thousand years.",
+      "tier": 3,
+      "tags": ["nun"]
+    },
+    {
+      "id": "ww2568",
+      "text": "The DMT machine elves.",
+      "tier": 3,
+      "tags": ["Joe Rogan's"]
+    },
+    {
+      "id": "ww2569",
+      "text": "Lorena Bobbitt, on set.",
+      "tier": 3,
+      "tags": ["cut"]
+    },
+    {
+      "id": "ww2570",
+      "text": "Eating out, technically.",
+      "tier": 3,
+      "tags": ["taco"]
+    },
+    {
+      "id": "ww2571",
+      "text": "No touching.",
+      "tier": 3,
+      "tags": ["stripper"]
+    },
+    {
+      "id": "ww2572",
+      "text": "Conjoined twins, one G-string.",
+      "tier": 3,
+      "tags": ["two-for-one"]
+    },
+    {
+      "id": "ww2573",
+      "text": "Your mom's initials.",
+      "tier": 3,
+      "tags": ["used sex toy"]
+    },
+    {
+      "id": "ww2574",
+      "text": "Let It Blow.",
+      "tier": 3,
+      "tags": ["Frozen"]
+    },
+    {
+      "id": "ww2575",
+      "text": "Covfefe.",
+      "tier": 3,
+      "tags": ["Trump"]
+    },
+    {
+      "id": "ww2576",
+      "text": "Corn Pop.",
+      "tier": 3,
+      "tags": ["Biden"]
+    },
+    {
+      "id": "ww2577",
+      "text": "Juggling his one ball.",
+      "tier": 3,
+      "tags": ["Hitler"]
+    },
+    {
+      "id": "ww2578",
+      "text": "Vesuvius, erupting early.",
+      "tier": 3,
+      "tags": ["Roman"]
+    },
+    {
+      "id": "ww2579",
+      "text": "The door, with room for two.",
+      "tier": 3,
+      "tags": ["Titanic"]
+    },
+    {
+      "id": "ww2580",
+      "text": "Gave them a half-life.",
+      "tier": 3,
+      "tags": ["Chernobyl"],
+      "serves": ["doing", "thing"]
+    },
+    {
+      "id": "ww2581",
+      "text": "Limp Bizkit.",
+      "tier": 3,
+      "tags": ["playlist"]
+    },
+    {
+      "id": "ww2582",
+      "text": "The Duggars.",
+      "tier": 3,
+      "tags": ["condom"]
+    },
+    {
+      "id": "ww2583",
+      "text": "The Second Coming.",
+      "tier": 3,
+      "tags": ["Bible"]
+    },
+    {
+      "id": "ww2584",
+      "text": "Saving Ryan's Privates.",
+      "tier": 3,
+      "tags": ["sex tape's title"]
+    },
+    {
+      "id": "ww2585",
+      "text": "Charlie Sheen, winning.",
+      "tier": 3,
+      "tags": ["brothel"]
+    },
+    {
+      "id": "ww2586",
+      "text": "Hot-N-Ready, five bucks.",
+      "tier": 3,
+      "tags": ["gloryhole"]
+    },
+    {
+      "id": "ww2587",
+      "text": "Plymouth Cock.",
+      "tier": 3,
+      "tags": ["Thanksgiving"]
+    },
+    {
+      "id": "ww2588",
+      "text": "Tossed salad, extra dressing.",
+      "tier": 3,
+      "tags": ["potluck"]
+    },
+    {
+      "id": "ww2589",
+      "text": "An art school acceptance letter.",
+      "tier": 3,
+      "tags": ["Hitler"]
+    },
+    {
+      "id": "ww2590",
+      "text": "Bottomless mimosas and bottomless waitresses.",
+      "tier": 3,
+      "tags": ["brunch"]
+    },
+    {
+      "id": "ww2591",
+      "text": "The \"Free Candy\" sign.",
+      "tier": 3,
+      "tags": ["church van"]
+    },
+    {
+      "id": "ww2592",
+      "text": "Epstein, confirming he didn't kill himself.",
+      "tier": 3,
+      "tags": ["séance"]
+    },
+    {
+      "id": "ww2593",
+      "text": "Issuing refunds.",
+      "tier": 3,
+      "tags": ["cult"]
+    },
+    {
+      "id": "ww2594",
+      "text": "Iceberg lettuce.",
+      "tier": 3,
+      "tags": ["Titanic"]
+    },
+    {
+      "id": "ww2595",
+      "text": "Piss Jug Pete.",
+      "tier": 3,
+      "tags": ["trucker"]
+    },
+    {
+      "id": "ww2596",
+      "text": "Purging after brunch.",
+      "tier": 3,
+      "tags": ["Stalin"]
+    },
+    {
+      "id": "ww2597",
+      "text": "Tom Brady's deflated balls.",
+      "tier": 3,
+      "tags": ["Super Bowl"]
+    },
+    {
+      "id": "ww2598",
+      "text": "Matching Nikes and a comet schedule.",
+      "tier": 3,
+      "tags": ["welcome package"]
+    },
+    {
+      "id": "ww2599",
+      "text": "Hotboxing the showers.",
+      "tier": 4,
+      "tags": ["Hitler"]
+    },
+    {
+      "id": "ww2600",
+      "text": "Buzz Lightyear, to infinity and beyond.",
+      "tier": 3,
+      "tags": ["most-removed object"]
+    },
+    {
+      "id": "ww2601",
+      "text": "Skill issue.",
+      "tier": 3,
+      "tags": ["coroner"]
+    },
+    {
+      "id": "ww2602",
+      "text": "Prince Andrew, who medically cannot sweat.",
+      "tier": 3,
+      "tags": ["Epstein"]
+    },
+    {
+      "id": "ww2603",
+      "text": "Chef's fist.",
+      "tier": 3,
+      "tags": ["menu"]
+    },
+    {
+      "id": "ww2604",
+      "text": "\"Is it necrophilia if we're still married,\" searched twice.",
+      "tier": 3,
+      "tags": ["browser history"]
+    },
+    {
+      "id": "ww2605",
+      "text": "A MAGA hat and nothing else.",
+      "tier": 3,
+      "tags": ["wearing"]
+    },
+    {
+      "id": "ww2606",
+      "text": "Open-box Fleshlight, minor cosmetic damage.",
+      "tier": 3,
+      "tags": ["clearance bin"]
+    },
+    {
+      "id": "ww2607",
+      "text": "Exit through the gift shop, ball gags half off.",
+      "tier": 3,
+      "tags": ["tour"]
+    },
+    {
+      "id": "ww2608",
+      "text": "End credits, longer than the sex.",
+      "tier": 3,
+      "tags": ["sex tape's"]
+    },
+    {
+      "id": "ww2609",
+      "text": "Quality-testing the returns, personally.",
+      "tier": 3,
+      "tags": ["employee of the month"]
+    },
+    {
+      "id": "ww2610",
+      "text": "Hale-Bopp, and which Nikes to wear.",
+      "tier": 3,
+      "tags": ["cult"]
+    },
+    {
+      "id": "ww2611",
+      "text": "Hanger steak.",
+      "tier": 3,
+      "tags": ["Epstein"]
+    },
+    {
+      "id": "ww2612",
+      "text": "Grandpa's sudden 1945 move to Argentina.",
+      "tier": 3,
+      "tags": ["Grandpa"]
+    },
+    {
+      "id": "ww2613",
+      "text": "David Carradine, hanging out in the closet.",
+      "tier": 3,
+      "tags": ["hotel"]
+    },
+    {
+      "id": "ww2614",
+      "text": "Disney's Robin Hood, the fox one.",
+      "tier": 3,
+      "tags": ["origin story"]
+    },
+    {
+      "id": "ww2615",
+      "text": "Lorena Bobbitt's director's cut.",
+      "tier": 3,
+      "tags": ["cutting room floor"]
+    },
+    {
+      "id": "ww2616",
+      "text": "Matching Nikes and a ride on the comet.",
+      "tier": 3,
+      "tags": ["cult's"]
+    },
+    {
+      "id": "ww2617",
+      "text": "Richard Gere's gerbil.",
+      "tier": 3,
+      "tags": ["nurse"]
+    },
+    {
+      "id": "ww2618",
+      "text": "Needs to respect other kids' borders.",
+      "tier": 3,
+      "tags": ["report card"]
+    },
+    {
+      "id": "ww2619",
+      "text": "A position you can hold for two thousand years.",
+      "tier": 3,
+      "tags": ["Pompeii's"]
+    },
+    {
+      "id": "ww2620",
+      "text": "A mug that says \"Jet fuel can't melt steel beams.\".",
+      "tier": 3,
+      "tags": ["9/11"]
+    },
+    {
+      "id": "ww2621",
+      "text": "\"Ope, just gonna pillage past ya.\".",
+      "tier": 3,
+      "tags": ["Vikings'"]
+    },
+    {
+      "id": "ww2622",
+      "text": "His spare nose.",
+      "tier": 3,
+      "tags": ["Michael Jackson's"]
+    },
+    {
+      "id": "ww2623",
+      "text": "Squeegeeing oligarchs off the sidewalk.",
+      "tier": 3,
+      "tags": ["window-cleaning"]
+    },
+    {
+      "id": "ww2624",
+      "text": "\"Now playing 'Despacito.'\".",
+      "tier": 3,
+      "tags": ["Alexa's"]
+    },
+    {
+      "id": "ww2625",
+      "text": "Getting lei'd.",
+      "tier": 3,
+      "tags": ["Pearl Harbor's"]
+    },
+    {
+      "id": "ww2626",
+      "text": "Finally affordable housing.",
+      "tier": 3,
+      "tags": ["Black Death's"]
+    },
+    {
+      "id": "ww2627",
+      "text": "Janet Jackson's other nipple.",
+      "tier": 3,
+      "tags": ["halftime show"]
+    },
+    {
+      "id": "ww2628",
+      "text": "Bandit going to live on a farm upstate.",
+      "tier": 3,
+      "tags": ["Bluey's"]
+    },
+    {
+      "id": "ww2629",
+      "text": "Oral.",
+      "tier": 3,
+      "tags": ["dentist"]
+    },
+    {
+      "id": "ww2630",
+      "text": "Most of California.",
+      "tier": 3,
+      "tags": ["gender reveal"]
+    },
+    {
+      "id": "ww2631",
+      "text": "Grandpa's bones.",
+      "tier": 3,
+      "tags": ["dog"]
+    },
+    {
+      "id": "ww2632",
+      "text": "Three of Uncle Randy's fingers.",
+      "tier": 3,
+      "tags": ["4th of July"]
+    },
+    {
+      "id": "ww2633",
+      "text": "Polly wants a plea deal.",
+      "tier": 3,
+      "tags": ["parrot"]
+    },
+    {
+      "id": "ww2634",
+      "text": "The fourth drummer this year.",
+      "tier": 3,
+      "tags": ["roadie"]
+    },
+    {
+      "id": "ww2635",
+      "text": "Dad's side piece.",
+      "tier": 3,
+      "tags": ["side of"]
+    },
+    {
+      "id": "ww2636",
+      "text": "Mary's alibi.",
+      "tier": 3,
+      "tags": ["Christmas miracle"]
+    },
+    {
+      "id": "ww2637",
+      "text": "Uncle Randy's fingers, briefly airborne.",
+      "tier": 3,
+      "tags": ["fireworks"]
+    },
+    {
+      "id": "ww2638",
+      "text": "Heisenberg.",
+      "tier": 3,
+      "tags": ["teacher"]
+    },
+    {
+      "id": "ww2639",
+      "text": "The teacher's pet, now in a cage.",
+      "tier": 3,
+      "tags": ["class pet's"]
+    },
+    {
+      "id": "ww2640",
+      "text": "The Uruguayan rugby team.",
+      "tier": 3,
+      "tags": ["in-flight meal"]
+    },
+    {
+      "id": "ww2641",
+      "text": "The Middle Passage, with a buffet.",
+      "tier": 3,
+      "tags": ["cruise"]
+    },
+    {
+      "id": "ww2642",
+      "text": "Whitney Houston's last bath.",
+      "tier": 3,
+      "tags": ["do not disturb"]
+    },
+    {
+      "id": "ww2643",
+      "text": "Lucy Letby.",
+      "tier": 3,
+      "tags": ["night shift"]
+    },
+    {
+      "id": "ww2644",
+      "text": "His left hand.",
+      "tier": 3,
+      "tags": ["surgeon left"]
+    },
+    {
+      "id": "ww2645",
+      "text": "Dr. Kevorkian's house calls.",
+      "tier": 3,
+      "tags": ["waiting list"]
+    },
+    {
+      "id": "ww2646",
+      "text": "Sudden death, in overtime.",
+      "tier": 3,
+      "tags": ["nursing home"]
+    },
+    {
+      "id": "ww2647",
+      "text": "Rainbow fentanyl.",
+      "tier": 3,
+      "tags": ["piñata"]
+    },
+    {
+      "id": "ww2648",
+      "text": "Affluenza.",
+      "tier": 3,
+      "tags": ["acquitted"]
+    },
+    {
+      "id": "ww2649",
+      "text": "Bill Cosby's pudding cup.",
+      "tier": 3,
+      "tags": ["prison riot"]
+    },
+    {
+      "id": "ww2650",
+      "text": "Rebooting Mengele's twin study.",
+      "tier": 3,
+      "tags": ["ethics board"]
+    },
+    {
+      "id": "ww2651",
+      "text": "Pregnant, on the sugar pills.",
+      "tier": 3,
+      "tags": ["control group"]
+    },
+    {
+      "id": "ww2652",
+      "text": "Santa, mummified since 1987.",
+      "tier": 3,
+      "tags": ["chimney"]
+    },
+    {
+      "id": "ww2653",
+      "text": "Grandpa, who left Germany in a hurry in 1945.",
+      "tier": 3,
+      "tags": ["hiding"]
+    },
+    {
+      "id": "ww2654",
+      "text": "Jimmy Hoffa, finally.",
+      "tier": 3,
+      "tags": ["septic tank", "trunk"],
+      "serves": ["thing", "name", "person"]
+    },
+    {
+      "id": "ww2655",
+      "text": "Buffalo Bill's unfinished skin suit.",
+      "tier": 3,
+      "tags": ["fashion designer's"]
+    },
+    {
+      "id": "ww2656",
+      "text": "Aunt Linda's potato salad, out since noon.",
+      "tier": 3,
+      "tags": ["family reunion"]
+    },
+    {
+      "id": "ww2657",
+      "text": "Grandma's first husband.",
+      "tier": 3,
+      "tags": ["Grandpa's basement"]
+    },
+    {
+      "id": "ww2658",
+      "text": "Nicolas Cage and a helmet full of bees.",
+      "tier": 3,
+      "tags": ["harvest festival"]
+    },
+    {
+      "id": "ww2659",
+      "text": "Brokeback Mountain.",
+      "tier": 3,
+      "tags": ["camping trip"]
+    },
+    {
+      "id": "ww2660",
+      "text": "The previous babysitter.",
+      "tier": 3,
+      "tags": ["babysitter"]
+    },
+    {
+      "id": "ww2661",
+      "text": "The Uruguayan rugby team's packed lunch.",
+      "tier": 3,
+      "tags": ["avalanche"]
+    },
+    {
+      "id": "ww2662",
+      "text": "Jesus, who then took the wheel.",
+      "tier": 3,
+      "tags": ["hitchhiker"]
+    },
+    {
+      "id": "ww2663",
+      "text": "D.B. Cooper.",
+      "tier": 3,
+      "tags": ["airline"]
+    },
+    {
+      "id": "ww2664",
+      "text": "Epstein Island, unlocked at 100% completion.",
+      "tier": 3,
+      "tags": ["hidden level"]
+    },
+    {
+      "id": "ww2665",
+      "text": "Premature ejaculation, any% world record.",
+      "tier": 3,
+      "tags": ["speedrunner's"]
+    },
+    {
+      "id": "ww2666",
+      "text": "Spirits. Mostly Grandpa.",
+      "tier": 3,
+      "tags": ["secret ingredient"]
+    },
+    {
+      "id": "ww2667",
+      "text": "Janet Jackson's nipple, on a pike.",
+      "tier": 3,
+      "tags": ["halftime show"]
+    },
+    {
+      "id": "ww2668",
+      "text": "Matching 23andMe results.",
+      "tier": 3,
+      "tags": ["wedding"]
+    },
+    {
+      "id": "ww2669",
+      "text": "The bride's ex, in a white wine sauce.",
+      "tier": 3,
+      "tags": ["chicken or fish"]
+    },
+    {
+      "id": "ww2670",
+      "text": "Grandpa's Auschwitz tattoo.",
+      "tier": 3,
+      "tags": ["scan"]
+    },
+    {
+      "id": "ww2671",
+      "text": "Auschwitz, arrival and liberation.",
+      "tier": 3,
+      "tags": ["before-and-after"]
+    },
+    {
+      "id": "ww2672",
+      "text": "Pussy, which counts as pescatarian.",
+      "tier": 3,
+      "tags": ["diet's"]
+    },
+    {
+      "id": "ww2673",
+      "text": "Forty-year-old virgins, finally useful.",
+      "tier": 3,
+      "tags": ["dragon's"]
+    },
+    {
+      "id": "ww2674",
+      "text": "A wizard's sleeve.",
+      "tier": 3,
+      "tags": ["wizard's"]
+    },
+    {
+      "id": "ww2675",
+      "text": "Aunt Carol, still doing the Mannequin Challenge from 2016.",
+      "tier": 3,
+      "tags": ["mannequin"]
+    },
+    {
+      "id": "ww2676",
+      "text": "Rubbing his other lamp.",
+      "tier": 3,
+      "tags": ["genie"]
+    },
+    {
+      "id": "ww2677",
+      "text": "The chemicals that turn the frogs gay.",
+      "tier": 3,
+      "tags": ["conspiracy"]
+    },
+    {
+      "id": "ww2678",
+      "text": "Every Naruto runner from 2019.",
+      "tier": 3,
+      "tags": ["Area 51's"]
+    },
+    {
+      "id": "ww2679",
+      "text": "Grandpa, finely ground.",
+      "tier": 3,
+      "tags": ["coffee's"]
+    },
+    {
+      "id": "ww2680",
+      "text": "Your mom, close enough.",
+      "tier": 3,
+      "tags": ["cattle"]
+    },
+    {
+      "id": "ww2681",
+      "text": "A blue waffle.",
+      "tier": 3,
+      "tags": ["waffle iron"]
+    },
+    {
+      "id": "ww2682",
+      "text": "Chum, for the Shark Tank finale.",
+      "tier": 3,
+      "tags": ["eliminated"]
+    },
+    {
+      "id": "ww2683",
+      "text": "A nice farm upstate.",
+      "tier": 3,
+      "tags": ["sent to"]
+    },
+    {
+      "id": "ww2684",
+      "text": "Josef Fritzl's second family.",
+      "tier": 3,
+      "tags": ["hidden room", "dungeon"]
+    },
+    {
+      "id": "ww2685",
+      "text": "Most of Jamal Khashoggi.",
+      "tier": 3,
+      "tags": ["embassy"]
+    },
+    {
+      "id": "ww2686",
+      "text": "The lesbians' second date.",
+      "tier": 3,
+      "tags": ["moving truck"]
+    },
+    {
+      "id": "ww2687",
+      "text": "Apple turnovers, heavy on the rat poison.",
+      "tier": 3,
+      "tags": ["turnover"]
+    },
+    {
+      "id": "ww2688",
+      "text": "You have died of dysentery.",
+      "tier": 3,
+      "tags": ["wagon train"]
+    },
+    {
+      "id": "ww2689",
+      "text": "Stephen Hawking, somehow.",
+      "tier": 3,
+      "tags": ["Epstein"],
+      "serves": ["thing", "name", "person"]
+    },
+    {
+      "id": "ww2690",
+      "text": "Paula Deen, y'all.",
+      "tier": 3,
+      "tags": ["that word"],
+      "serves": ["thing", "name", "person"]
+    },
+    {
+      "id": "ww2691",
+      "text": "Nick Cannon, statistically.",
+      "tier": 3,
+      "tags": ["father"],
+      "serves": ["thing", "name", "person"]
+    },
+    {
+      "id": "ww2692",
+      "text": "The deceased. He drowned.",
+      "tier": 3,
+      "tags": ["wet T-shirt"],
+      "serves": ["thing", "name", "person"]
+    },
+    {
+      "id": "ww2693",
+      "text": "Somali pirates. They're the captain now.",
+      "tier": 3,
+      "tags": ["boat"]
+    },
+    {
+      "id": "ww2694",
+      "text": "The Wampanoag. They brought blankets.",
+      "tier": 3,
+      "tags": ["Thanksgiving"],
+      "serves": ["thing", "person"]
+    },
+    {
+      "id": "ww2695",
+      "text": "Epstein, who'd like to clarify some things.",
+      "tier": 3,
+      "tags": ["séance"]
+    },
+    {
+      "id": "ww2696",
+      "text": "A CEO and his head of HR, at Coldplay.",
+      "tier": 3,
+      "tags": ["jumbotron"],
+      "serves": ["thing", "person"]
+    },
+    {
+      "id": "ww2697",
+      "text": "Anne Frank. Keep your voice down.",
+      "tier": 4,
+      "tags": ["attic"],
+      "serves": ["thing", "person"]
+    },
+    {
+      "id": "ww2698",
+      "text": "Kristi Noem, unfortunately.",
+      "tier": 3,
+      "tags": ["dog"],
+      "serves": ["thing", "name", "person"]
+    },
+    {
+      "id": "ww2699",
+      "text": "Also, you're ugly.",
+      "tier": 3,
+      "tags": ["second opinion"]
+    },
+    {
+      "id": "ww2700",
+      "text": "Motherfucking snakes.",
+      "tier": 3,
+      "tags": ["flight"]
+    },
+    {
+      "id": "ww2701",
+      "text": "Amelia Earhart.",
+      "tier": 3,
+      "tags": ["lost luggage"]
+    },
+    {
+      "id": "ww2702",
+      "text": "Lorena Bobbitt.",
+      "tier": 3,
+      "tags": ["members"]
+    },
+    {
+      "id": "ww2703",
+      "text": "Gwyneth Paltrow's head.",
+      "tier": 3,
+      "tags": ["wrapping"]
+    },
+    {
+      "id": "ww2704",
+      "text": "Conjoined twins, as a favor.",
+      "tier": 3,
+      "tags": ["saw in half"]
+    },
+    {
+      "id": "ww2705",
+      "text": "Walt Disney's frozen head.",
+      "tier": 3,
+      "tags": ["Disney's"]
+    },
+    {
+      "id": "ww2706",
+      "text": "Stephen Hawking's voice box, secondhand.",
+      "tier": 3,
+      "tags": ["voice"]
+    },
+    {
+      "id": "ww2707",
+      "text": "His wife's safe word.",
+      "tier": 3,
+      "tags": ["therapist"]
+    },
+    {
+      "id": "ww2708",
+      "text": "Jumanji, still rolling for a five.",
+      "tier": 3,
+      "tags": ["missing player"]
+    },
+    {
+      "id": "ww2709",
+      "text": "Referring them to Dr. Kevorkian.",
+      "tier": 3,
+      "tags": ["didn't improve"]
+    },
+    {
+      "id": "ww2710",
+      "text": "The last party, all five of them.",
+      "tier": 3,
+      "tags": ["dungeon master"]
+    },
+    {
+      "id": "ww2711",
+      "text": "Xi Jinping.",
+      "tier": 3,
+      "tags": ["Disney character's"]
+    },
+    {
+      "id": "ww2712",
+      "text": "Princess Diana's brake lines.",
+      "tier": 3,
+      "tags": ["palace"]
+    },
+    {
+      "id": "ww2713",
+      "text": "Five interlocking cock rings.",
+      "tier": 3,
+      "tags": ["Olympic"]
+    },
+    {
+      "id": "ww2714",
+      "text": "The boyfriend, sewn into a bear, on fire.",
+      "tier": 3,
+      "tags": ["harvest festival"]
+    },
+    {
+      "id": "ww2715",
+      "text": "Prince Andrew, not sweating.",
+      "tier": 3,
+      "tags": ["royal"]
+    },
+    {
+      "id": "ww2716",
+      "text": "Visiting the Saudi consulate for paperwork.",
+      "tier": 3,
+      "tags": ["reporter"]
+    },
+    {
+      "id": "ww2717",
+      "text": "Rosebud. It was a butt plug.",
+      "tier": 3,
+      "tags": ["deathbed"]
+    },
+    {
+      "id": "ww2718",
+      "text": "Corpses in matching Nikes.",
+      "tier": 3,
+      "tags": ["cult"]
+    },
+    {
+      "id": "ww2719",
+      "text": "The adopted kid, once the views dropped.",
+      "tier": 3,
+      "tags": ["influencer"]
+    },
+    {
+      "id": "ww2720",
+      "text": "Boeing's surprise nose-dive mode.",
+      "tier": 3,
+      "tags": ["software"]
+    },
+    {
+      "id": "ww2721",
+      "text": "Have you tried turning him off and on again?",
+      "tier": 3,
+      "tags": ["help desk"]
+    },
+    {
+      "id": "ww2722",
+      "text": "Saying Epstein didn't kill himself.",
+      "tier": 3,
+      "tags": ["opponent"]
+    },
+    {
+      "id": "ww2723",
+      "text": "Walt Disney's head.",
+      "tier": 3,
+      "tags": ["freezer"]
+    },
+    {
+      "id": "ww2724",
+      "text": "One hanged Chad, and the hanging chads.",
+      "tier": 3,
+      "tags": ["recount"]
+    },
+    {
+      "id": "ww2725",
+      "text": "Seconds.",
+      "tier": 3,
+      "tags": ["last meal"]
+    },
+    {
+      "id": "ww2726",
+      "text": "Jeffrey Epstein, alive and well.",
+      "tier": 3,
+      "tags": ["warden's"]
+    },
+    {
+      "id": "ww2727",
+      "text": "Carole Baskin's husband.",
+      "tier": 3,
+      "tags": ["feeding", "Florida Man"]
+    },
+    {
+      "id": "ww2728",
+      "text": "Kevin O'Leary, and for that reason, he's out.",
+      "tier": 3,
+      "tags": ["shark tank"]
+    },
+    {
+      "id": "ww2729",
+      "text": "Heavy petting.",
+      "tier": 3,
+      "tags": ["petting"]
+    },
+    {
+      "id": "ww2730",
+      "text": "Anne Frank's attic.",
+      "tier": 3,
+      "tags": ["shelter"]
+    },
+    {
+      "id": "ww2731",
+      "text": "Tossed salad.",
+      "tier": 3,
+      "tags": ["prison"]
+    },
+    {
+      "id": "ww2732",
+      "text": "A torso insisting it's just a flesh wound.",
+      "tier": 3,
+      "tags": ["knight's"]
+    },
+    {
+      "id": "ww2733",
+      "text": "Lake Mead, until the drought.",
+      "tier": 3,
+      "tags": ["Vegas"]
+    },
+    {
+      "id": "ww2734",
+      "text": "His other kidney.",
+      "tier": 3,
+      "tags": ["debt"]
+    },
+    {
+      "id": "ww2735",
+      "text": "Dad's trip out for cigarettes.",
+      "tier": 3,
+      "tags": ["disappearing"]
+    },
+    {
+      "id": "ww2736",
+      "text": "Robert Kraft.",
+      "tier": 3,
+      "tags": ["masseuse"]
+    },
+    {
+      "id": "ww2737",
+      "text": "Getting entered by a tall, dark stranger.",
+      "tier": 3,
+      "tags": ["psychic's"]
+    },
+    {
+      "id": "ww2738",
+      "text": "It rubs the lotion on its skin.",
+      "tier": 3,
+      "tags": ["skin"],
+      "serves": ["doing", "thing"]
+    },
+    {
+      "id": "ww2739",
+      "text": "Forty sister wives.",
+      "tier": 3,
+      "tags": ["back forty"]
+    },
+    {
+      "id": "ww2740",
+      "text": "Undocumented workers, paid in cash.",
+      "tier": 3,
+      "tags": ["border wall"]
+    },
+    {
+      "id": "ww2741",
+      "text": "Texas toast.",
+      "tier": 3,
+      "tags": ["execution chamber"]
+    },
+    {
+      "id": "ww2742",
+      "text": "Jared from Subway.",
+      "tier": 3,
+      "tags": ["subway"]
+    },
+    {
+      "id": "ww2743",
+      "text": "Rudy Giuliani.",
+      "tier": 3,
+      "tags": ["washed up"]
+    },
+    {
+      "id": "ww2744",
+      "text": "A single drop of blood, allegedly.",
+      "tier": 3,
+      "tags": ["startup"]
+    },
+    {
+      "id": "ww2745",
+      "text": "Rent-stabilized them, in concrete.",
+      "tier": 3,
+      "tags": ["landlord"],
+      "serves": ["doing", "thing"]
+    },
+    {
+      "id": "ww2746",
+      "text": "The slavery part.",
+      "tier": 3,
+      "tags": ["plantation"]
+    },
+    {
+      "id": "ww2747",
+      "text": "Trudeau's blackface, all three times.",
+      "tier": 3,
+      "tags": ["Canadian"]
+    },
+    {
+      "id": "ww2748",
+      "text": "Nancy Kerrigan's other knee.",
+      "tier": 3,
+      "tags": ["rink"]
+    },
+    {
+      "id": "ww2749",
+      "text": "Mimes. They went quietly.",
+      "tier": 3,
+      "tags": ["Paris"]
+    },
+    {
+      "id": "ww2750",
+      "text": "Natalee Holloway.",
+      "tier": 3,
+      "tags": ["tour group"]
+    },
+    {
+      "id": "ww2751",
+      "text": "Jack, still mad about the door.",
+      "tier": 3,
+      "tags": ["ice fishing"]
+    },
+    {
+      "id": "ww2752",
+      "text": "Madeleine McCann.",
+      "tier": 3,
+      "tags": ["tourist", "nuggets", "trip"]
+    },
+    {
+      "id": "ww2753",
+      "text": "Tweety, finally.",
+      "tier": 3,
+      "tags": ["cat's"]
+    },
+    {
+      "id": "ww2754",
+      "text": "The farm upstate.",
+      "tier": 3,
+      "tags": ["vet's"]
+    },
+    {
+      "id": "ww2755",
+      "text": "Jack Nicholson and an axe.",
+      "tier": 3,
+      "tags": ["blizzard"]
+    },
+    {
+      "id": "ww2756",
+      "text": "Being a Nazi, specifically between 1933 and 1945.",
+      "tier": 3,
+      "tags": ["government form's"]
+    },
+    {
+      "id": "ww2757",
+      "text": "Hitler's art school application.",
+      "tier": 3,
+      "tags": ["clerk"]
+    },
+    {
+      "id": "ww2758",
+      "text": "The glove didn't fit.",
+      "tier": 3,
+      "tags": ["Jury duty"]
+    },
+    {
+      "id": "ww2759",
+      "text": "Serious shrinkage.",
+      "tier": 3,
+      "tags": ["ice storm"]
+    },
+    {
+      "id": "ww2760",
+      "text": "Astronaut ice cream.",
+      "tier": 3,
+      "tags": ["space station's"]
+    },
+    {
+      "id": "ww2761",
+      "text": "Baby Hitler, and you had one chance.",
+      "tier": 3,
+      "tags": ["nativity"]
+    },
+    {
+      "id": "ww2762",
+      "text": "Toby from HR, finally.",
+      "tier": 3,
+      "tags": ["office party"]
+    },
+    {
+      "id": "ww2763",
+      "text": "Andrew Cuomo's paperwork.",
+      "tier": 3,
+      "tags": ["nursing home's"]
+    },
+    {
+      "id": "ww2764",
+      "text": "Anna Nicole Smith.",
+      "tier": 3,
+      "tags": ["Grandpa's will"],
+      "serves": ["thing", "name", "person"]
+    },
+    {
+      "id": "ww2765",
+      "text": "Actual pyramids, slaves included.",
+      "tier": 3,
+      "tags": ["MLM"]
+    },
+    {
+      "id": "ww2766",
+      "text": "In matching Nikes, under purple shrouds.",
+      "tier": 3,
+      "tags": ["graduates"]
+    },
+    {
+      "id": "ww2767",
+      "text": "The CEO and the head of HR, Coldplay-style.",
+      "tier": 3,
+      "tags": ["office party"]
+    },
+    {
+      "id": "ww2768",
+      "text": "Billing the estate for the pillow.",
+      "tier": 3,
+      "tags": ["home care"]
+    },
+    {
+      "id": "ww2769",
+      "text": "Poppers and denial.",
+      "tier": 3,
+      "tags": ["closet"]
+    },
+    {
+      "id": "ww2770",
+      "text": "My other kidney.",
+      "tier": 3,
+      "tags": ["ice machine"]
+    },
+    {
+      "id": "ww2771",
+      "text": "Soylent Green.",
+      "tier": 3,
+      "tags": ["mystery ingredient"]
+    },
+    {
+      "id": "ww2772",
+      "text": "Actual ladyfingers.",
+      "tier": 3,
+      "tags": ["cake"]
+    },
+    {
+      "id": "ww2773",
+      "text": "Crisis actors.",
+      "tier": 3,
+      "tags": ["real people"]
+    },
+    {
+      "id": "ww2774",
+      "text": "Keith Richards.",
+      "tier": 3,
+      "tags": ["last survivors"]
+    },
+    {
+      "id": "ww2775",
+      "text": "Duct tape, a shovel, and a single rose.",
+      "tier": 3,
+      "tags": ["trunk"]
+    },
+    {
+      "id": "ww2776",
+      "text": "Getting the stain out of Monica's dress.",
+      "tier": 3,
+      "tags": ["internship"]
+    },
+    {
+      "id": "ww2777",
+      "text": "Flight-school students who skipped the landing lesson.",
+      "tier": 3,
+      "tags": ["9/11"]
+    },
+    {
+      "id": "ww2778",
+      "text": "Mein Kampf.",
+      "tier": 3,
+      "tags": ["Hitler Youth"]
+    },
+    {
+      "id": "ww2779",
+      "text": "Goebbels, Goebbels.",
+      "tier": 3,
+      "tags": ["turkey"]
+    },
+    {
+      "id": "ww2780",
+      "text": "Well hung.",
+      "tier": 3,
+      "tags": ["hangman"]
+    },
+    {
+      "id": "ww2781",
+      "text": "Mind-blowing.",
+      "tier": 3,
+      "tags": ["Dallas"]
+    },
+    {
+      "id": "ww2782",
+      "text": "Rihanna.",
+      "tier": 4,
+      "tags": ["Chris Brown"]
+    },
+    {
+      "id": "ww2783",
+      "text": "Fall.",
+      "tier": 3,
+      "tags": ["Vladimir Putin"]
+    },
+    {
+      "id": "ww2784",
+      "text": "Nirvana.",
+      "tier": 3,
+      "tags": ["Kurt Cobain"]
+    },
+    {
+      "id": "ww2785",
+      "text": "A leg to stand on.",
+      "tier": 3,
+      "tags": ["Oscar Pistorius"]
+    },
+    {
+      "id": "ww2786",
+      "text": "He saw the gas bill.",
+      "tier": 3,
+      "tags": ["Hitler"]
+    },
+    {
+      "id": "ww2787",
+      "text": "The roofie.",
+      "tier": 3,
+      "tags": ["Bill Cosby"]
+    },
+    {
+      "id": "ww2788",
+      "text": "Touched his heart.",
+      "tier": 3,
+      "tags": ["Steve Irwin"]
+    },
+    {
+      "id": "ww2789",
+      "text": "Virgin Mobile.",
+      "tier": 3,
+      "tags": ["nun in a wheelchair"]
+    },
+    {
+      "id": "ww2790",
+      "text": "CrossFit.",
+      "tier": 3,
+      "tags": ["Jesus"]
+    },
+    {
+      "id": "ww2791",
+      "text": "Cracks open a cold one.",
+      "tier": 3,
+      "tags": ["necrophiliac"]
+    },
+    {
+      "id": "ww2792",
+      "text": "I'm all right now.",
+      "tier": 3,
+      "tags": ["left arm and left leg"]
+    },
+    {
+      "id": "ww2793",
+      "text": "Wiped his ass.",
+      "tier": 3,
+      "tags": ["dumped"]
+    },
+    {
+      "id": "ww2794",
+      "text": "Meals on Wheels.",
+      "tier": 3,
+      "tags": ["cannibal"]
+    },
+    {
+      "id": "ww2795",
+      "text": "Keep the tip.",
+      "tier": 3,
+      "tags": ["leper"]
+    },
+    {
+      "id": "ww2796",
+      "text": "Shaken, not stirred.",
+      "tier": 3,
+      "tags": ["Michael J. Fox"]
+    },
+    {
+      "id": "ww2797",
+      "text": "Punch.",
+      "tier": 3,
+      "tags": ["Chris Brown"]
+    },
+    {
+      "id": "ww2798",
+      "text": "Chopped.",
+      "tier": 3,
+      "tags": ["Lorena Bobbitt"]
+    },
+    {
+      "id": "ww2799",
+      "text": "We're gonna crush it.",
+      "tier": 3,
+      "tags": ["OceanGate"]
+    },
+    {
+      "id": "ww2800",
+      "text": "An air ball.",
+      "tier": 3,
+      "tags": ["Kobe Bryant"]
     }
   ]
 }

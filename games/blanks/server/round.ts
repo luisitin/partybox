@@ -3,6 +3,7 @@
 import { shuffle } from '@partybox/game-sdk';
 import { drawBlack } from './cards';
 import { drawGreat, leadWithFit, refillHands } from './deal';
+import { dealKiller } from './killers';
 import { blackCard, blackPool } from './content';
 import { BLACK_CHOICES, RANDO } from './types';
 import type { State } from './types';
@@ -115,7 +116,10 @@ export function settleBlack(state: State): State {
   const rest = next.blackChoices.filter((id) => id !== next.blackId);
   next = { ...next, blackChoices: [], blackDeck: [...next.blackDeck, ...rest] };
   const black = blackCard(next.blackId);
-  next = leadWithFit(refillHands(next, black.draw, answerers(next)), answerers(next));
+  // The prompt's own killer (a card tagged for it) into one answerer's hand (the 2026-09-22 audit),
+  // then the fit floor and the order — which keep it and lead with it.
+  next = refillHands(next, black.draw, answerers(next));
+  next = leadWithFit(dealKiller(next, answerers(next)), answerers(next));
   if (state.settings.rando) {
     const [cards, after] = drawGreat(next, black.pick);
     next = cards.length === black.pick ? { ...after, submissions: { [RANDO]: cards } } : next;

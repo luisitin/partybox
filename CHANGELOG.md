@@ -51,6 +51,13 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Added
 
+- **Blanks: the combos worth laughing at now reach the hands** (the owner, 2026-09-22 — "we want
+  kickers like 'What was Hitler's favorite drink?' + 'Juice.'"): an 84-agent audit of every wild
+  prompt kept 461 pairings two independent skeptics both scored 4-5 (152 new tags, 293 new answers)
+  and 23 new pun prompts; `server/killers.ts` deals the round's verified joke to one answerer. In 320
+  simulated rounds a verified joke is in a hand 78.8 % of the time (was 10 %) and wins 47.8 % (was
+  7.5 %). No card was removed or softened. `reports/blanks-combo-audit-2026-09-22.md` lists every change.
+
 - **A claim gets the stage, even in a full room** (I-131, option C): while a claim is checked the TV
   strip shows faces only with the claimant's chip named and a size up; on the verdict the strip goes
   and the card takes the room. The long decide line steps down a size so it stays on screen at 15-16

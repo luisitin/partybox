@@ -223,7 +223,7 @@ function fillHand(state: State, hand: readonly string[], target: number): [strin
  *  without the spare. Null when no spare has a great card to cover it. (The old rule wanted a
  *  spare that served no kind at its floor and a great card of the very same kind; a hand whose
  *  spare things all read as names too had no spare at all and stopped at four — loop #472.) */
-function swapForGood(
+export function swapForGood(
   state: State,
   hand: readonly string[],
   wants: (id: string) => boolean = isGood,
@@ -339,6 +339,8 @@ export function leadWithFit(state: State, playerIds: readonly string[]): State {
   const black = blackCard(state.blackId).text;
   const fits = (id: string): boolean =>
     fitScore(slot, whiteServes(id), whiteText(id), black) >= FIT_FLOOR_SCORE;
+  // A card tagged for this prompt (its killer, `killers.ts`) is never the one traded away.
+  const spare = (id: string): boolean => !fits(id) && !tagHit(black, whiteTags(id));
   let next = state;
   const hands = { ...state.hands };
   for (const id of playerIds) {
@@ -351,12 +353,8 @@ export function leadWithFit(state: State, playerIds: readonly string[]): State {
     // other kinds keep only the base floor for the round, so a person prompt can hold four people.
     for (let n = 0; n < MAX_FIT_SWAPS && hand.filter(fits).length < FIT_TARGET; n++) {
       const swapped: [string[], State] | null =
-        swapForGood(
-          next,
-          hand,
-          (c) => fits(c) && isGood(c),
-          (c) => !fits(c),
-        ) ?? swapForGood(next, hand, fits, (c) => !fits(c));
+        swapForGood(next, hand, (c) => fits(c) && isGood(c), spare) ??
+        swapForGood(next, hand, fits, spare);
       if (swapped === null) break;
       [hand, next] = swapped;
     }
