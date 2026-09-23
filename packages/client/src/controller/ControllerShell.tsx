@@ -13,6 +13,7 @@ import type { SoundEngine } from '../sound';
 import { ThemePicker } from '../ThemePicker';
 import styles from './ControllerShell.module.css';
 import { PhoneSettings, tvSoundsOn } from './PhoneSettings';
+import { ShareButton } from './ShareSheet';
 import { clientGames } from '../games.generated';
 import type { SoundCue } from '../sound';
 import { linkLabel, useLinkBanner } from './flapFree';
@@ -194,9 +195,13 @@ export function ControllerShell({
             </span>
           </span>
           {room ? (
-            <span className={styles.code} aria-label={`${t.lobby.room} ${room.code}`}>
-              {room.code}
-            </span>
+            // I-666 A: the code is the thing people ask for — tap it to share the room
+            <ShareButton
+              code={room.code}
+              className={`${styles.code} ${styles.codeButton}`}
+              label={room.code}
+              ariaLabel={`${t.lobby.room} ${room.code} — ${t.share.button}`}
+            />
           ) : null}
         </div>
         <div className={styles.right}>

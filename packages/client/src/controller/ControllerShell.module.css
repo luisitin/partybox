@@ -419,3 +419,13 @@
   font-weight: 800;
   text-align: center;
 }
+
+/* ── I-666 A: the room code is a button (it opens Share). */
+.codeButton {
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+}
+.codeButton:active {
+  transform: scale(0.96);
+}
