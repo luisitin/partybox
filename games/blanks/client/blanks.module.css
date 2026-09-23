@@ -1710,3 +1710,21 @@
   align-items: center;
   gap: 6px;
 }
+
+/* ── I-159: the hand as a plain list (the fan's row undone): full-width cards, top to bottom, no
+   turn and no snap — every card's whole text reads with a scroll of the page. */
+.hand.handList {
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--pb-space-3);
+  overflow: visible;
+  scroll-snap-type: none;
+  touch-action: auto;
+  padding: var(--pb-space-3) 0 var(--pb-space-4);
+}
+.hand.handList > li {
+  flex: none;
+}
+.hand.handList .white {
+  min-height: 0;
+}
