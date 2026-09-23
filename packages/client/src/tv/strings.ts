@@ -18,6 +18,9 @@ export const STRINGS: Strings = {
       'teléfonos que abrieron la página para entrar · los que entraron',
     'Switch the TV to Spanish': 'Cambiar la TV a español',
     'Switch the TV to English': 'Cambiar la TV a inglés',
+    // I-668 C: the picker's switch chips
+    Recap: 'Resumen',
+    'Phone music': 'Música en los teléfonos',
     // TvLobby
     '{names} and {last}': '{names} y {last}',
     'last game': 'último juego',

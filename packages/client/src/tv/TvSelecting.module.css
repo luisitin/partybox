@@ -193,3 +193,34 @@
   height: 28px;
   accent-color: var(--pb-accent);
 }
+
+/* ── I-668: the room as a row of overlapping faces. */
+.faces {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  margin-left: var(--pb-space-4);
+}
+.faces > * + * {
+  margin-left: -12px;
+}
+
+/* ── I-668 C: the switches as toggle chips on one line. */
+.switches {
+  display: flex;
+  gap: var(--pb-space-2);
+}
+.switchChip {
+  padding: 6px 16px;
+  border-radius: 999px;
+  border: 2px solid var(--pb-border);
+  background: var(--pb-surface);
+  color: var(--pb-text-muted);
+  font: inherit;
+  font-size: 0.85em;
+  cursor: pointer;
+}
+.switchOn {
+  border-color: var(--pb-accent);
+  color: var(--pb-text);
+}
