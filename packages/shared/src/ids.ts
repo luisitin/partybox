@@ -95,6 +95,19 @@ export function seasonalAvatarId(date: Date = new Date()): AvatarId | null {
 
 export type AvatarId = (typeof AVATAR_IDS)[number];
 
+/** I-086 A: an avatar id may carry a colour slot — `fox#3` — so a face and a colour are two
+ *  choices (128 combinations from the sixteen faces and eight player colours). */
+export function avatarFace(id: string): string {
+  const cut = id.indexOf('#');
+  return cut < 0 ? id : id.slice(0, cut);
+}
+export function avatarTint(id: string): number | null {
+  const cut = id.indexOf('#');
+  if (cut < 0) return null;
+  const n = Number(id.slice(cut + 1));
+  return Number.isInteger(n) && n >= 0 && n < 8 ? n : null;
+}
+
 export function isAvatarId(id: string): id is AvatarId {
-  return (AVATAR_IDS as readonly string[]).includes(id);
+  return (AVATAR_IDS as readonly string[]).includes(avatarFace(id));
 }

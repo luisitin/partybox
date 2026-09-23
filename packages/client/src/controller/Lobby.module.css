@@ -191,12 +191,15 @@
 /* ── The owner (2026-09-22): the lobby's title row carries the Share pill and the way out. */
 .head {
   display: flex;
+  flex-wrap: wrap;
   align-items: flex-start;
   justify-content: space-between;
-  gap: var(--pb-space-3);
+  gap: var(--pb-space-2) var(--pb-space-3);
 }
+/* The title keeps its width: on an iPhone SE the pills (never shrinking) squeezed "Lobby" under
+   "🚪 Leave" — now they wrap to their own line, still right-aligned (2026-09-23). */
 .headTitle {
-  min-width: 0;
+  flex: 1 0 auto;
   text-wrap: balance;
 }
 .headPills {
@@ -205,6 +208,7 @@
   justify-content: flex-end;
   gap: var(--pb-space-2);
   flex: 0 0 auto;
+  margin-left: auto; /* right-aligned on its own line too */
 }
 .sharePill,
 .leavePill {

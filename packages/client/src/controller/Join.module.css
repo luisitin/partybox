@@ -496,3 +496,33 @@
   line-height: 1.5;
   text-transform: uppercase;
 }
+
+/* ── I-086 B: the eight colour swatches under the face grid. */
+.tints {
+  /* One row of eight on any phone: an iPhone SE's 288 px gave a 6 + 2 wrap whose second row sat
+     under the "more below" chevron (Session C, 2026-09-23). */
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 36px));
+  justify-content: space-between;
+  gap: var(--pb-space-1);
+  margin-top: var(--pb-space-2);
+}
+.tint {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 3px solid transparent;
+}
+.tintOn {
+  border-color: var(--pb-focus);
+}
+
+/* I-086 C: a colour someone in the room wears — still pickable, crossed through. */
+.tintTaken {
+  background-image: linear-gradient(
+    135deg,
+    transparent 45%,
+    rgba(0, 0, 0, 0.6) 45% 55%,
+    transparent 55%
+  ) !important;
+}

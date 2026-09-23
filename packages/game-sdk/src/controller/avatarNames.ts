@@ -4,7 +4,9 @@
 // it always did); an unknown id reads as itself.
 import type { Translator } from '../ui/lang';
 
-export function avatarName(id: string, L: Translator): string {
+export function avatarName(raw: string, L: Translator): string {
+  // I-086: `fox#3` is the fox in colour 3 — the name is the face's.
+  const id = raw.includes('#') ? raw.slice(0, raw.indexOf('#')) : raw;
   if (id.startsWith('robot:')) return L('robot:{n}', { n: id.slice(6) });
   switch (id) {
     case 'fox':

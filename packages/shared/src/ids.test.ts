@@ -3,6 +3,8 @@ import { PHOTO_MAX_BYTES, joinPayloadSchema } from './protocol';
 import {
   AVATAR_IDS,
   EVERYDAY_AVATAR_IDS,
+  avatarFace,
+  avatarTint,
   isAvatarId,
   isRoomCode,
   nameKey,
@@ -54,6 +56,16 @@ describe('avatars', () => {
     expect(new Set(EVERYDAY_AVATAR_IDS).size).toBe(16);
     expect(isAvatarId('fox')).toBe(true);
     expect(isAvatarId('dragon')).toBe(false);
+  });
+
+  // I-086 A: a face may carry one of the eight player colours — `fox#3`.
+  it('reads a colour slot beside the face, and ignores a bad one', () => {
+    expect(isAvatarId('fox#3')).toBe(true);
+    expect(isAvatarId('dragon#3')).toBe(false);
+    expect([avatarFace('fox#3'), avatarTint('fox#3')]).toEqual(['fox', 3]);
+    expect([avatarFace('fox'), avatarTint('fox')]).toEqual(['fox', null]);
+    expect(avatarTint('fox#8')).toBeNull();
+    expect(avatarTint('fox#x')).toBeNull();
   });
 
   // I-079 A: the seasonal faces are valid ids every day, so an old chip never breaks.

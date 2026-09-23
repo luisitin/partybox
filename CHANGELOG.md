@@ -6,6 +6,9 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Fixed
 
+- On an iPhone SE the lobby's title no longer slides under the 🚪 Leave pill: the pills wrap to
+  their own line.
+
 - **Broken Pencil's recap never cuts a word in half** (S-006, option B): each book's card puts the
   name and the verdict on its first line and gives the chain the card's full width underneath, so a
   long player name no longer squeezes "christmas" into "christ / mas".
@@ -54,6 +57,11 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
   below" chevron grew from 32x22 to 56x40 so a thumb can actually hit it (the owner, 2026-09-22).
 
 ### Added
+
+- **Pick your avatar's colour** (I-086, option C): eight colour swatches above the face grid paint
+  the portrait live, and the join carries face and colour together (`fox#3` — every surface renders
+  it). A colour someone in the room already wears is crossed through, and a new phone starts on a
+  free one.
 
 - **Bingo: a late joiner watches the call while they wait** (I-134 A): a phone that joins mid-game
   still waits for the next game, but its waiting screen now shows the live call and its nickname

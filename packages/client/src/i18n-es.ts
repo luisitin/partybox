@@ -39,6 +39,8 @@ export const es: Texts = {
     language: 'Idioma',
     languageGroup: 'idioma',
     avatarTaken: (avatar) => `${avatar} (alguien de la sala lo tiene)`,
+    pickColour: 'Elige un color',
+    colour: (n, taken) => `color ${n}${taken ? ' (alguien de la sala lo tiene)' : ''}`,
     takenBadge: 'ya',
     thisMonth: 'este mes',
     yourPhoto: 'tu foto',

@@ -41,6 +41,9 @@ export const en = {
     /** The language pills' group label (screen readers). */
     languageGroup: 'language',
     avatarTaken: (avatar: string) => `${avatar} (someone in the room has it)`,
+    pickColour: 'Pick a colour',
+    colour: (n: number, taken: boolean) =>
+      `colour ${n}${taken ? ' (someone in the room has it)' : ''}`,
     takenBadge: 'in',
     thisMonth: 'this month',
     yourPhoto: 'your photo',
