@@ -64,6 +64,27 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
     if (first) controller.vip({ action: 'selectGame', gameId: first.id });
   };
   const myBots = room.players.filter((p) => p.bot?.ownerId === me.id);
+  // I-354 B: the first "Add a bot" on this phone explains bots first (remembered per phone)
+  const [botIntro, setBotIntro] = useState(false);
+  const addBot = (): void => {
+    let seen = false;
+    try {
+      seen = localStorage.getItem('pb.botIntro') === '1';
+    } catch {
+      seen = false;
+    }
+    if (seen) controller.bot({ action: 'add' });
+    else setBotIntro(true);
+  };
+  const confirmBot = (): void => {
+    try {
+      localStorage.setItem('pb.botIntro', '1');
+    } catch {
+      // private mode: the note comes back next time
+    }
+    setBotIntro(false);
+    controller.bot({ action: 'add' });
+  };
   const full = room.players.length >= room.capacity;
   const maxed = myBots.length >= MAX_BOTS_PER_OWNER;
   const canAddBot = !maxed && !full;
@@ -97,7 +118,12 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
         ) : undefined
       }
     >
-      <p className="pb-muted">{me.isVip ? t.lobby.youAreVip : lobbyStrings().waitingForVip}</p>
+      {/* I-354 A: a guest's first line says how this works, not just "waiting" */}
+      <p className="pb-muted">
+        {me.isVip
+          ? t.lobby.youAreVip
+          : `📺 ${vipName ?? 'The VIP'} picks a game — it plays on the TV, and you play on this phone.`}
+      </p>
       {me.isVip && tipsOn && tip ? (
         <p key={tip.id} className={styles.tip} role="status">
           <span aria-hidden>💡</span> {t.tips[tip.id]}
@@ -173,7 +199,7 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
           <button
             type="button"
             className={styles.addBot}
-            onClick={() => controller.bot({ action: 'add' })}
+            onClick={addBot}
             disabled={!canAddBot}
             aria-label={t.lobby.addBot}
           >
@@ -184,7 +210,30 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
           </button>
         </li>
       </ul>
-      <p className="pb-caption pb-muted">{t.lobby.addBotHint}</p>
+      {botIntro ? (
+        <div className={styles.botIntro} role="dialog" aria-label="About bots">
+          <p>
+            <strong>🤖 A bot plays for you</strong> in the games marked 🤖 — its own card, its own
+            answers. It's yours: ✕ removes it. Up to 4 per person.
+          </p>
+          <div className={styles.botIntroActions}>
+            <button type="button" className={styles.botIntroAdd} onClick={confirmBot}>
+              Add a bot
+            </button>
+            <button type="button" className={styles.botIntroNo} onClick={() => setBotIntro(false)}>
+              Not now
+            </button>
+          </div>
+        </div>
+      ) : null}
+      {/* I-354 A: the bot rules only for someone who owns a bot */}
+      {myBots.length > 0 ? (
+        <p className="pb-caption pb-muted">
+          🤖 {myBots.length === 1 ? 'Your bot plays' : 'Your bots play'} for you in games marked 🤖
+          · ✕ removes {myBots.length === 1 ? 'it' : 'one'}
+          {maxed ? ' · 4 is the most per person' : ''}
+        </p>
+      ) : null}
     </Screen>
   );
 }

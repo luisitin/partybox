@@ -304,3 +304,41 @@
   font-size: var(--pb-font-small);
   color: var(--pb-text-muted);
 }
+
+/* ── I-354 B: the first "Add a bot" explains bots. */
+.botIntro {
+  /* a sheet at the bottom of the screen, in view wherever the lobby is scrolled */
+  position: fixed;
+  left: var(--pb-space-3);
+  right: var(--pb-space-3);
+  bottom: calc(var(--pb-space-3) + env(safe-area-inset-bottom, 0px));
+  z-index: 50;
+  box-shadow: 0 10px 30px rgb(0 0 0 / 45%);
+  padding: var(--pb-space-3) var(--pb-space-4);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface-2);
+  border: 2px solid var(--pb-accent-3);
+}
+.botIntro p {
+  margin: 0 0 var(--pb-space-2);
+}
+.botIntroActions {
+  display: flex;
+  gap: var(--pb-space-2);
+}
+.botIntroAdd {
+  flex: 1;
+  min-height: 44px;
+  border-radius: 999px;
+  background: var(--pb-accent-3);
+  color: var(--pb-bg);
+  font-weight: 800;
+}
+.botIntroNo {
+  min-height: 44px;
+  padding: 0 var(--pb-space-4);
+  border-radius: 999px;
+  border: 2px solid color-mix(in srgb, var(--pb-text-muted) 45%, transparent);
+  color: var(--pb-text);
+  font-weight: 700;
+}
