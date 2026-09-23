@@ -66,7 +66,7 @@ export function afterResult(state: State, now: number): State {
   return enterIntro({ ...state, tied, tieBreaks: (state.tieBreaks ?? 0) + 1 }, now);
 }
 
-/** "Skip" = what the current phase's deadline would do (reveal: skip the whole reading). */
+/** "Skip" = what the current phase's deadline would do (reveal: the next card — I-774). */
 function skip(state: State, now: number): State {
   switch (state.phase.id) {
     case 'intro':
@@ -76,9 +76,8 @@ function skip(state: State, now: number): State {
     case 'answer':
       return afterAnswer(state, now);
     case 'reveal':
-      return voteIsFormality(state)
-        ? enterResult(state, now)
-        : closeIfDone(enterJudge(state, now), now);
+      // I-774: the next card, as its own timer would; the last card's Next opens the vote
+      return afterReveal(state, now);
     case 'judge':
       return afterJudge(state, now);
     case 'result':
