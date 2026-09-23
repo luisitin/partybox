@@ -12,24 +12,20 @@ import type { BingoControllerView } from '../server/views';
 import { Card } from './Card';
 import { PatternDemo } from './PatternDemo';
 import { PhoneStage } from './PhoneStage';
-import {
-  BingoButton,
-  CallRow,
-  DecideFooter,
-  IntroStyleSheet,
-  StylePill,
-  daubWithFeel,
-} from './ControllerParts';
+import { BingoButton, CallRow, DecideFooter, daubWithFeel } from './ControllerParts';
+import { IntroStyleSheet, RoundStyleSheet, StylePill } from './StyleEntry';
 import { AllCardsLayout, FocusLayout, Thumbnails, introOutline } from './Layouts';
-import { Countdown, HoldCurtain, IntroActions, IntroCount, StyleSheet } from './Overlays';
+import { Countdown, HoldCurtain } from './Overlays';
+import { IntroActions, IntroCount } from './IntroParts';
 import { ClaimNote, MissedToast, TurnGate, Watching } from './Notices';
 import {
-  setCardStyle,
+  setTabletStyle,
   styleSpec,
   turnNeeded,
   useCardStyle,
   useHeld,
   useOrientationLock,
+  useTabletStyle,
 } from './styles';
 import type { CardStyle } from './styles';
 import { otherTitle } from './copy';
@@ -58,6 +54,7 @@ export function Controller({
   const n = cards?.length ?? 1;
   const L = useT(STRINGS);
   const style = useCardStyle(n);
+  const tabletPick = useTabletStyle(n); // I-126 A
   const held = useHeld();
   // The TV plays the claim reveal in beats; this phone shows nothing conclusive (colours, "Not a
   // bingo", the wipe note) until the TV has (DESIGN_SYSTEM principle 5). The verdict is the
@@ -214,7 +211,19 @@ export function Controller({
               />
             ) : null}
           </div>
-          {sheet ? <IntroStyleSheet cards={n} current={style} onClose={closeMenu} /> : null}
+          {sheet ? (
+            <IntroStyleSheet
+              cards={n}
+              current={held === 'wide' && tabletPick !== 'all' ? tabletPick : style}
+              onClose={closeMenu}
+              {...(held === 'wide'
+                ? {
+                    onPick: setTabletStyle,
+                    tablet: { on: tabletPick === 'all', onPick: () => setTabletStyle('all') },
+                  }
+                : {})}
+            />
+          ) : null}
         </div>
       </Screen>
     );
@@ -227,7 +236,9 @@ export function Controller({
   const roundOver =
     view.phaseId === 'bingo' && !pending && !(view.winnerId === me.id && view.claim);
   if (inRound || roundOver) {
-    const kind = held === 'wide' ? 'tablet' : shown;
+    // I-126 A: a wide screen shows its own pick (or the one being previewed); all cards until then.
+    const kind =
+      held === 'wide' ? (preview ?? (tabletPick === 'all' ? 'tablet' : tabletPick)) : shown;
     const focus = kind === 'focus';
     const body = turn ? (
       <TurnGate to={turn} style={styleWords(L)[shown].label} />
@@ -273,9 +284,10 @@ export function Controller({
             ) : (
               // The ball row on every style (owner, play-test 2: "the way the calls look at the
               // top" of the grids); the nickname is the TV's and the caller's — loop 338.
-              <CallRow view={view} />
+              <CallRow view={view} big={held === 'wide'} />
             )}
-            {inRound && !sheet && kind !== 'tablet' ? <StylePill onOpen={openMenu} /> : null}
+            {/* I-126 A: the tablet keeps the style pill — the four-up layout is a default, not a cage. */}
+            {inRound && !sheet ? <StylePill onOpen={openMenu} /> : null}
           </div>
           {missed ? <MissedToast view={view} count={missed} /> : null}
           {view.phaseId === 'check' && view.claim?.playerId === me.id ? (
@@ -296,15 +308,13 @@ export function Controller({
             />
           ) : null}
           {sheet ? (
-            <StyleSheet
+            <RoundStyleSheet
               cards={n}
-              current={style}
+              wide={held === 'wide'}
+              style={style}
+              tabletPick={tabletPick}
               preview={preview}
-              onPreview={(id) => setPreview(id === style ? null : id)}
-              onConfirm={() => {
-                if (preview) setCardStyle(preview);
-                closeMenu();
-              }}
+              setPreview={setPreview}
               onClose={closeMenu}
             />
           ) : null}

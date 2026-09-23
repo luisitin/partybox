@@ -1371,3 +1371,15 @@
   color: var(--pb-accent-2);
   animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
 }
+
+/* ── I-126 B: the tablet's caller strip — the ball and the nickname at the size the screen affords. */
+.callRowBig {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--pb-space-1);
+}
+.callNick {
+  font-size: var(--pb-font-body);
+  font-weight: 700;
+  color: var(--pb-text);
+}

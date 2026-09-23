@@ -120,4 +120,8 @@ export const ES_PHONE: Readonly<Record<string, string>> = {
   'And the winner is… {name}!': 'Y quien gana es… ¡{name}!',
   'A tie at the top!': '¡Empate en el primer puesto!',
   'That’s the game!': '¡Fin del juego!',
+  // I-126 A: the tablet's own row in the style sheet.
+  'All cards': 'Todos los cartones',
+  '· the tablet layout': '· la vista de tableta',
+  tablet: 'tableta',
 };

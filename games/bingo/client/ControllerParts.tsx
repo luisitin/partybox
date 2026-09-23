@@ -11,10 +11,7 @@ import type { Input } from '../server/types';
 import type { BingoControllerView, CallView } from '../server/views';
 import { pendingLine } from './copy';
 import styles from './Controller.module.css';
-import { StyleSheet } from './Overlays';
 import { STRINGS } from './strings';
-import { setCardStyle } from './styles';
-import type { CardStyle } from './styles';
 
 export type Send = (input: Input) => void;
 
@@ -55,11 +52,28 @@ export function Ball({
  * pattern either (loop 330: "· four corners" wrapped the line on a 360 px phone and the cards
  * dropped 20 px at call 2). Call 1 has no "before that", and no stray "·" in front of it.
  */
-export function CallRow({ view }: { view: BingoControllerView }): JSX.Element {
+export function CallRow({
+  view,
+  big,
+}: {
+  view: BingoControllerView;
+  /** I-126 B: the tablet's header has room for a real caller — the ball big, the nickname under it. */
+  big?: boolean;
+}): JSX.Element {
   const L = useT(STRINGS);
   return (
-    <div className={styles.callRow} role="status" aria-live="polite">
-      {view.current ? <Ball call={view.current} /> : <span>{L('First number coming…')}</span>}
+    <div
+      className={`${styles.callRow} ${big ? styles.callRowBig : ''}`}
+      role="status"
+      aria-live="polite"
+    >
+      {view.current ? (
+        <Ball call={view.current} size={big ? 'lg' : 'md'} />
+      ) : (
+        <span>{L('First number coming…')}</span>
+      )}
+      {/* I-126 B: on a tablet the nickname is the caller — it has the room the phone does not. */}
+      {big && view.current ? <span className={styles.callNick}>{view.current.call}</span> : null}
       {view.current ? (
         <span className={styles.callMeta}>
           {view.previous ? (
@@ -305,40 +319,4 @@ export function daubWithFeel(
     play('card', { quiet: true });
   }
   send({ type: 'daub', card, index });
-}
-
-/** The 🃏 pill that opens the card-style sheet (play, and the card-pick step). */
-export function StylePill({ onOpen }: { onOpen: () => void }): JSX.Element {
-  const L = useT(STRINGS);
-  return (
-    <button type="button" className={styles.stylePill} onClick={onOpen}>
-      {L('🃏 style')}
-    </button>
-  );
-}
-
-/** The sheet on the card-pick step (owner's play-test, 2026-09-19): a tap applies the style at
- *  once — the pick screen keeps its own layout, so there is nothing to preview — and the room
- *  is not held. */
-export function IntroStyleSheet({
-  cards,
-  current,
-  onClose,
-}: {
-  cards: number;
-  current: CardStyle;
-  onClose: () => void;
-}): JSX.Element {
-  const L = useT(STRINGS);
-  return (
-    <StyleSheet
-      cards={cards}
-      current={current}
-      preview={null}
-      note={L('for this round')}
-      onPreview={setCardStyle}
-      onConfirm={onClose}
-      onClose={onClose}
-    />
-  );
 }

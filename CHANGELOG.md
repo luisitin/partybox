@@ -6,6 +6,11 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Fixed
 
+- **Bingo on an iPad** (I-126, option B): the 🃏 style pill no longer disappears on a tablet — it
+  keeps the all-cards layout by default but can pick Focus, Stack or Grid, remembered apart from a
+  phone's — and the tablet's header is a real caller strip: the ball and number big, the nickname
+  line under them.
+
 - On an iPhone SE the lobby's title no longer slides under the 🚪 Leave pill: the pills wrap to
   their own line.
 
