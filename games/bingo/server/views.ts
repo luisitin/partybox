@@ -74,6 +74,9 @@ interface Common {
   patternBingos: number;
   /** bingo: a choice already made mid-celebration, applied when the reveal is done. */
   pendingDecision: 'same' | 'blackout' | 'next' | null;
+  /** I-105: the vote after a bingo — who chose what so far, and when it closes. */
+  votes: { name: string; choice: 'same' | 'blackout' | 'next' }[];
+  voteEndsAt: number | null;
   /** bingo: who made the held choice (their name), for "Priya picked: …". */
   pendingBy: string | null;
   /** play: whose BINGO! is armed (dibs), until when (server clock), and who waits behind. */
@@ -104,6 +107,8 @@ export interface BingoTvView extends TvView, Common {
 }
 
 export interface BingoControllerView extends ControllerView, Common {
+  /** I-105 A: my current vote after a bingo (lit on my phone), null before I choose. */
+  myVote: 'same' | 'blackout' | 'next' | null;
   /** intro: this phone has tapped Ready (its cards are picked; no more swaps). */
   ready: boolean;
   /** intro: everyone else is ready and the room waits on this phone alone (loop 351). */
@@ -233,6 +238,14 @@ function common(state: State): Common {
       !canContinue(state).same &&
       !canContinue(state).blackout,
     patternBingos: round.patternBingos,
+    votes:
+      state.phase.id === 'bingo'
+        ? Object.entries(round.votes ?? {}).map(([id, v]) => ({
+            name: state.players[id]?.name ?? '?',
+            choice: v.choice.type === 'next' ? ('next' as const) : v.choice.pattern,
+          }))
+        : [],
+    voteEndsAt: state.phase.id === 'bingo' ? (round.voteEndsAt ?? null) : null,
     pendingDecision:
       round.decision === null
         ? null
@@ -289,6 +302,10 @@ export function controllerView(
     ...common(state),
     // I-113 A: "Previous number" off applies to the phones too (the TV keeps its own flag).
     previous: state.settings.showPrevious ? common(state).previous : null,
+    myVote: (() => {
+      const v = state.phase.id === 'bingo' ? state.round.votes?.[playerId] : undefined;
+      return v ? (v.choice.type === 'next' ? ('next' as const) : v.choice.pattern) : null;
+    })(),
     cards: player ? (state.round.cards[playerId] ?? null) : null,
     daubs: player ? (state.round.daubs[playerId] ?? []) : [],
     canClaim: canClaim(state, playerId),

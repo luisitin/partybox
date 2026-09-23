@@ -87,6 +87,10 @@ export interface RoundState {
    * celebration is done (the phase deadline), then applied. Never two: the first one counts.
    */
   decision: Decision | null;
+  /** I-105 A: the vote after a bingo — each phone's current choice (the VIP's flagged). */
+  votes?: Record<string, { choice: Decision; at: number; vip: boolean }>;
+  /** I-105 A: when the vote closes (6 s after the first choice, never before the read ends). */
+  voteEndsAt?: number | null;
   /**
    * check / bingo: the TV's verdict has landed (the phase's first tick, at the end of the reveal —
    * ADR-033). A win is scored as it flips; the phones show nothing conclusive before it.
@@ -224,6 +228,8 @@ export const BINGO_MS = 10_000;
  * so an abandoned room (a bots-only game) does not sit on the verdict forever.
  */
 export const BINGO_ABANDONED_MS = 5 * 60_000;
+/** I-105 A: the vote after a bingo runs this long from its first choice (the note's six seconds). */
+export const VOTE_MS = 6_000;
 export const SCOREBOARD_MS = 6_000;
 export const DECK = 75;
 export const FREE = 12;

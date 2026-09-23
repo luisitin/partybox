@@ -1010,3 +1010,12 @@
 }
 
 /* ── I-108 B: the strays stay red on the winner's card through the win stage (see TvParts). */
+
+/* ── I-105 B: the live vote tally under the decide line. */
+.votes {
+  display: block;
+  margin-top: var(--pb-space-2);
+  color: var(--pb-text-muted);
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+}

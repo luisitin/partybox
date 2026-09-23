@@ -243,6 +243,11 @@ export function DecideFooter({
   const pending = pendingLine(view.pendingDecision, view.round >= view.totalRounds, view.pendingBy);
   if (pending) return <p className={styles.hint}>{pending}</p>;
   const nextLabel = view.round < view.totalRounds ? 'Next round — fresh cards' : 'Finish the game';
+  // I-105 B: how many have voted for each choice, on the button itself (" · 2").
+  const tallyOf = (choice: 'same' | 'blackout' | 'next'): string => {
+    const n = view.votes.filter((v) => v.choice === choice).length;
+    return n > 0 ? ` · ${n}` : '';
+  };
   // The pick lands in the hand (loop 322): a 'submit' cue and a short buzz on the tap itself —
   // every other tap in the game sounds; the room's choice did not.
   const pick = (input: Input): void => {
@@ -252,22 +257,39 @@ export function DecideFooter({
   };
   return (
     <div className={styles.decide}>
+      {/* I-105 A: a vote — the buttons stay until it closes; my choice is lit and can change. */}
       {decide.same ? (
-        <PrimaryButton onClick={() => pick({ type: 'continue', pattern: 'same' })}>
-          Keep going — same pattern
+        <PrimaryButton
+          className={view.myVote === 'same' ? styles.voted : undefined}
+          onClick={() => pick({ type: 'continue', pattern: 'same' })}
+        >
+          {view.myVote === 'same' ? '✓ ' : ''}Keep going — same pattern{tallyOf('same')}
         </PrimaryButton>
       ) : null}
       {decide.blackout ? (
         <PrimaryButton
           tone="neutral"
+          className={view.myVote === 'blackout' ? styles.voted : undefined}
           onClick={() => pick({ type: 'continue', pattern: 'blackout' })}
         >
-          Keep going — blackout
+          {view.myVote === 'blackout' ? '✓ ' : ''}Keep going — blackout{tallyOf('blackout')}
         </PrimaryButton>
       ) : null}
-      <PrimaryButton tone="neutral" onClick={() => pick({ type: 'next' })}>
-        {nextLabel}
+      <PrimaryButton
+        tone="neutral"
+        className={view.myVote === 'next' ? styles.voted : undefined}
+        onClick={() => pick({ type: 'next' })}
+      >
+        {view.myVote === 'next' ? '✓ ' : ''}
+        {nextLabel}{tallyOf('next')}
       </PrimaryButton>
+      {/* (SECOND BUILD: B's tally and C's clock were extra lines under the buttons, which pushed
+          them under the phone's "more below" arrow; now the counts ride on the buttons and the
+          clock takes the hint line, so the screen is as tall as A's.) */}
+      <p className={styles.hint}>
+        <VoteClock endsAt={view.voteEndsAt} changeable={view.myVote !== null} />
+        {view.voteEndsAt !== null ? null : view.myVote ? 'Your vote is in — tap another to change it.' : 'Everyone votes; the most votes win.'}
+      </p>
     </div>
   );
 }
@@ -325,5 +347,43 @@ export function IntroStyleSheet({
       onConfirm={onClose}
       onClose={onClose}
     />
+  );
+}
+
+/** I-105 B: who has voted for what, in one line ("Sam: blackout · Priya: fresh cards"). */
+export function VoteTally({
+  votes,
+  className,
+}: {
+  votes: { name: string; choice: 'same' | 'blackout' | 'next' }[];
+  className?: string;
+}): JSX.Element | null {
+  if (votes.length === 0) return null;
+  const say = (c: 'same' | 'blackout' | 'next'): string =>
+    c === 'next' ? 'fresh cards' : c === 'blackout' ? 'blackout' : 'same pattern';
+  return (
+    <span className={className} role="status">
+      {votes.map((v) => `${v.name}: ${say(v.choice)}`).join(' · ')}
+    </span>
+  );
+}
+
+/** I-105 C: the vote's clock — "vote closes in 4" once someone has voted. */
+export function VoteClock({
+  endsAt,
+  changeable = false,
+}: {
+  endsAt: number | null;
+  /** On the phone, once I have voted: "tap another to change it" rides on the same line. */
+  changeable?: boolean;
+}): JSX.Element | null {
+  const left = useSecondsLeft(endsAt);
+  if (endsAt === null || left === null) return null;
+  return (
+    <span className={styles.voteClock} role="timer">
+      {left > 0
+        ? `Vote closes in ${left}${changeable ? ' — tap another to change it' : ''}`
+        : 'Counting the votes…'}
+    </span>
   );
 }

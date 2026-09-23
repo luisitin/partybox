@@ -15,6 +15,7 @@ import { PatternIcon } from './Card';
 
 import { PatternDemo } from './PatternDemo';
 import { pendingLine, whyNot, winHeadline } from './copy';
+import { VoteClock, VoteTally } from './ControllerParts';
 import { hopelessClaim } from '../server/reveal';
 import { IntroStage, Resume } from './TvCountdown';
 import { Call, CalledBoard, ClaimStage, DibsLine, rows, whichCard } from './TvParts';
@@ -250,12 +251,16 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
                 </p>
               ) : view.decide && (view.decide.same || view.decide.blackout) ? (
                 <p className={decideLineClass(view)}>
-                  <span className={styles.decideWho}>Anyone</span> picks on their phone: keep going
+                  <span className={styles.decideWho}>Everyone</span> votes on their phone: keep going
                   {view.decide.blackout ? ' (same pattern or blackout)' : ''} or{' '}
                   {view.round < view.totalRounds ? 'next round' : 'finish'}. The caller waits.
                   {view.decide.same && view.claim.cardCount > 1
                     ? ' The winning card sits the pattern out; the rest play on.'
                     : ''}
+                  {/* I-105 C: the vote's clock, once someone has voted. */}
+                  <VoteClock endsAt={view.voteEndsAt} />
+                  {/* I-105 B: the room's votes, live. */}
+                  <VoteTally votes={view.votes} className={styles.votes} />
                 </p>
               ) : null
             }
