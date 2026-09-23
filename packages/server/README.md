@@ -6,7 +6,7 @@ The only process. Fastify + Socket.IO host that wires the pure engine to real so
 
 - `src/main.ts` — CLI (`--port`, `--host`, `--dev`, `--dev-api`), banner with LAN IP / URLs / firewall hint, port-in-use warning.
 - `src/app.ts` — Fastify app: `/healthz`, static client (prod) or Vite middleware (dev, ADR-006), dev API.
-- `src/sockets.ts` — Socket.IO: zod validation, rate limit (20 inputs/s, non-VIP `vip` costs 5), payload size vs `manifest.maxInputBytes`, resume-by-token socket remapping (and, I-741, resume-by-name / `takeOver`, so the welcome reaches the new phone), TV rooms.
+- `src/sockets.ts` — Socket.IO: zod validation, rate limit (20 inputs/s, non-VIP `vip` costs 5), payload size vs `manifest.maxInputBytes`, resume-by-token socket remapping (and, I-741, resume-by-name / `takeOver`, so the welcome reaches the new phone), I-755 (the replaced socket is sent `kicked: another_tab`; C: a login joining more than 3 times in 5 s is refused the same way), TV rooms.
 - `src/rate-limit.ts` — token bucket + `jsonBytes`.
 - `src/host.ts` — interprets engine effects: pushes views with `rev`, one timer per room, toasts, kicks.
 - `src/clock.ts` — injectable clock (real / frozen) used by everything that needs `now`.

@@ -5,7 +5,7 @@ Vite + React front end: the TV stage (`/tv`), the phone controller (`/`), and th
 ## Key files
 
 - `src/main.tsx` — route switch (`/tv`, `/`, `/preview/...`), no router library (ADR-011).
-- `src/net/store.ts` — tiny external store + `useStore`. `src/net/controller.ts` — the phone connection (join/resume by token in `localStorage`, `rev` gating, clock offset, toasts, kicked). `src/net/tv.ts` — the TV observer. `src/net/info.ts` — `/api/info` hook.
+- `src/net/store.ts` — tiny external store + `useStore`. `src/net/controller.ts` — the phone connection (join/resume by token in `localStorage`, `rev` gating, clock offset, toasts, kicked). `src/net/session-store.ts` — the stored login + identity. `src/net/seat-channel.ts` — I-755 B: a new tab asks this browser's other tabs who has the seat and steps aside (`OtherTab.tsx`, A: the tab that lost the seat stops reconnecting and offers "Play here instead"). `src/net/tv.ts` — the TV observer. `src/net/info.ts` — `/api/info` hook.
 - `src/tv/TvApp.tsx` + `TvFrame.tsx` — stage chrome (room code, join URL, QR) and sound cues; `TvLobby`, `TvSelecting`, `TvPlaying` (envelope: chips + timer + VIP overlay + paused curtain), `TvResults`, `AudioGate` (tap to start, mute, fullscreen).
 - `src/controller/ControllerApp.tsx` + `ControllerShell.tsx` — phone frame: header (room, me, connection dot, VIP badge → `VipMenu`), reconnect banner, error strip, toasts.
 - `src/controller/{Join,Lobby,Selecting,Playing,Results}.tsx` — core screens; `Playing` mounts the game.s lazy Controller inside `GameErrorBoundary`; `results-rows.ts` is shared with the TV.

@@ -171,6 +171,12 @@ export const en = {
     title: 'Waiting for the next game',
     hint: 'You joined mid-game — you are in as soon as this one ends.',
   },
+  /** I-755 A: this phone has PartyBox open in another tab, which holds the seat. */
+  otherTab: {
+    title: 'PartyBox is open in another tab',
+    body: 'This phone is already in the game in another tab. Use that one — or tap below to play here (the other tab will step aside).',
+    playHere: 'Play here instead',
+  },
   connection: {
     reconnecting: 'Reconnecting…',
     /** The link banner with the server's grace left ("Reconnecting… 1:42 left", I-089 C). */

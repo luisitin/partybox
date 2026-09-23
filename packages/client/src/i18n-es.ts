@@ -165,6 +165,11 @@ export const es: Texts = {
     title: 'Esperando al próximo juego',
     hint: 'Entraste a mitad de juego: juegas en cuanto termine este.',
   },
+  otherTab: {
+    title: 'PartyBox está abierto en otra pestaña',
+    body: 'Este teléfono ya está en el juego en otra pestaña. Usa esa, o toca abajo para jugar aquí (la otra pestaña se hará a un lado).',
+    playHere: 'Jugar aquí',
+  },
   connection: {
     reconnecting: 'Reconectando…',
     reconnectingLeft: (mmss) => `Reconectando… quedan ${mmss}`,
