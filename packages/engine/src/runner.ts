@@ -51,6 +51,7 @@ export function startGame(
       game: running,
       results: null,
       lastGame: { gameId, settings },
+      here: [], // I-388: a game started — everyone was here
     },
     effects: [{ type: 'push' }],
   };

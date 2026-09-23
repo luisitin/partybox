@@ -163,6 +163,17 @@ function dispatch(room: RoomState, event: RoomEvent, deps: EngineDeps): ApplyRes
         ],
       };
     }
+    case 'here': {
+      // I-388: the lobby only; a person (bots are always here)
+      const who = room.players[event.playerId];
+      if (!who || who.bot || room.status !== 'lobby') return { room, effects: [] };
+      const was = room.here?.includes(who.id) ?? false;
+      if (was === event.on) return { room, effects: [] };
+      const here = event.on
+        ? [...(room.here ?? []), who.id]
+        : (room.here ?? []).filter((id) => id !== who.id);
+      return { room: { ...room, here }, effects: [{ type: 'push' }] };
+    }
     case 'dev:loadState': {
       const game = deps.games[event.gameId];
       if (!game || !isStateBase(event.state))

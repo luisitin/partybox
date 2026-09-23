@@ -59,6 +59,10 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
       setPoofing(null);
     }, 450);
   };
+  // I-388 A: who is here — people who tapped, and bots (always here)
+  const iAmHere = room.here?.includes(me.id) ?? false;
+  const people = room.players.filter((p) => !p.bot && !p.isVip);
+  const hereCount = people.filter((p) => room.here?.includes(p.id)).length;
   const first = room.games[0];
   const pick = (): void => {
     if (first) controller.vip({ action: 'selectGame', gameId: first.id });
@@ -98,6 +102,23 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
       }
     >
       <p className="pb-muted">{me.isVip ? t.lobby.youAreVip : lobbyStrings().waitingForVip}</p>
+      {/* I-388 A: the VIP sees who is in */}
+      {me.isVip && people.length > 0 ? (
+        <p className={styles.hereCount}>
+          ✋ {hereCount} of {people.length} here
+        </p>
+      ) : null}
+      {/* I-388 A: a guest says "I'm here" — a ✓ on their TV chip */}
+      {!me.isVip ? (
+        <button
+          type="button"
+          aria-pressed={iAmHere}
+          className={`${styles.setup} ${styles.here} ${iAmHere ? styles.hereOn : ''}`}
+          onClick={() => controller.here(!iAmHere)}
+        >
+          {iAmHere ? "✓ You're here — tap to undo" : "✋ I'm here"}
+        </button>
+      ) : null}
       {me.isVip && tipsOn && tip ? (
         <p key={tip.id} className={styles.tip} role="status">
           <span aria-hidden>💡</span> {t.tips[tip.id]}

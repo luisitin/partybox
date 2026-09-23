@@ -77,6 +77,7 @@ export function snapshot(room: RoomState, deps: EngineDeps): RoomSnapshot {
     musicOnPhones: room.musicOnPhones,
     listed: room.listed,
     phoneOnly: room.phoneOnly,
+    ...(room.here ? { here: room.here.filter((id) => room.players[id]) } : {}),
   };
 }
 

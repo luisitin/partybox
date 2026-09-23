@@ -186,7 +186,12 @@ export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
               name: p.name,
               avatarId: p.avatarId,
               connected: p.connected,
-              status: p.spectator ? 'spectator' : 'active',
+              // I-388 A: a ✓ for everyone who tapped "I'm here"
+              status: p.spectator
+                ? 'spectator'
+                : room?.here?.includes(p.id)
+                  ? 'submitted'
+                  : 'active',
             }))}
             vip={room?.vip}
             // I-045 A: the room waits on the VIP — their chip carries the ring.
