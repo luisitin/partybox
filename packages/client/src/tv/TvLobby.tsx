@@ -43,6 +43,13 @@ function LastUp({ room }: { room: RoomSnapshot }): JSX.Element | null {
   const winners = (scored ? r.results.winnerIds : [])
     .map((id) => r.players.find((p) => p.id === id))
     .filter((p): p is NonNullable<typeof p> => p !== undefined);
+  // I-652 A: a win by bots only reads as what it is, with the best person named
+  const botsOnly = winners.length > 0 && winners.every((w) => w.bot === true);
+  const bestHuman = botsOnly
+    ? r.results.ranking
+        .map((row) => ({ row, p: r.players.find((p) => p.id === row.playerId) }))
+        .find((x) => x.p && !x.p.bot)
+    : undefined;
   const shown = winners.slice(0, LAST_UP_FACES);
   const more = winners.length - shown.length;
   const names = [...shown.map((w) => w.name), ...(more > 0 ? [`+${more}`] : [])];
@@ -51,6 +58,16 @@ function LastUp({ room }: { room: RoomSnapshot }): JSX.Element | null {
       <span className={styles.lastUpKicker}>{L('Last up · {game}', { game })}</span>
       {winners.length === 0 ? (
         <span className={`${styles.lastUpWinner} ${styles.lastUpNone}`}>{L('no winner')}</span>
+      ) : botsOnly ? (
+        <>
+          <span className={`${styles.lastUpWinner} ${styles.lastUpNone}`}>🤖 Bots took it</span>
+          {bestHuman?.p ? (
+            <span className={styles.lastUpHuman}>
+              <Avatar avatarId={bestHuman.p.avatarId} size={32} />
+              {bestHuman.p.name} led the humans · {ordinal(bestHuman.row.rank)}
+            </span>
+          ) : null}
+        </>
       ) : (
         <span className={styles.lastUpWinner}>
           <span className={styles.lastUpFaces}>
@@ -212,9 +229,60 @@ export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
             <p className="pb-muted">{t.lobby.waitingFor(vip.name)}</p>
           ) : null}
           {/* I-073 A: the last game, still on the table until the next one starts. */}
-          {room?.results ? <LastUp room={room} /> : null}
+          {/* I-652 B: the last game and the night so far, side by side */}
+          <div className={styles.afterRow}>
+            {room?.results ? <LastUp room={room} /> : null}
+            {room?.tonight && room.tonight.length > 1 ? <Tonight room={room} /> : null}
+          </div>
         </div>
       </div>
     </Stage>
+  );
+}
+
+/** I-652 A: 1st, 2nd, 3rd, 4th … */
+function ordinal(n: number): string {
+  const s = ['th', 'st', 'nd', 'rd'];
+  const v = n % 100;
+  return `${n}${s[(v - 20) % 10] ?? s[v] ?? s[0]}`;
+}
+
+/** I-652 B: tonight's games, newest first — the game and its human winner, or "bots took it". */
+function Tonight({ room }: { room: RoomSnapshot }): JSX.Element | null {
+  const games = [...(room.tonight ?? [])].reverse();
+  const name = (id: string): string => room.games.find((g) => g.id === id)?.name ?? id;
+  // I-652 C: the night's tally — a win per person (bots never count)
+  const tally = new Map<string, { n: number; avatarId: string }>();
+  for (const g of games)
+    for (const w of g.winners)
+      tally.set(w.name, { n: (tally.get(w.name)?.n ?? 0) + 1, avatarId: w.avatarId });
+  const board = [...tally.entries()].sort((a, b) => b[1].n - a[1].n);
+  const leader = board[0] && board[0][1].n > (board[1]?.[1].n ?? 0) ? board[0] : null;
+  return (
+    <aside className={`${styles.lastUp} ${styles.tonight}`} aria-label="tonight">
+      <span className={styles.lastUpKicker}>Tonight · {games.length} games</span>
+      <ul className={styles.tonightList}>
+        {games.map((g, i) => (
+          <li key={i} className={styles.tonightChip}>
+            {g.winners.length === 0 ? (
+              <span className={styles.lastUpNone}>{g.botsWon ? '🤖 bots' : 'no winner'}</span>
+            ) : (
+              <>
+                <Avatar avatarId={g.winners[0]?.avatarId ?? 'fox'} size={32} />
+                <strong>{g.winners.map((w) => w.name).join(' & ')}</strong>
+              </>
+            )}
+            <span className={styles.tonightGame}>· {name(g.gameId)}</span>
+          </li>
+        ))}
+      </ul>
+      {board.length > 0 ? (
+        <p className={styles.tonightTally}>
+          {leader ? <strong>👑 {leader[0]} leads tonight</strong> : null}
+          {leader ? ' · ' : ''}
+          {board.map(([n, v]) => `${n} ${v.n}`).join(' · ')}
+        </p>
+      ) : null}
+    </aside>
   );
 }
