@@ -2,7 +2,7 @@
 // status. Game components are loaded lazily from the generated registry.
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { JSX } from 'react';
-import { AvatarPhotos, ServerClockProvider } from '@partybox/game-sdk/ui';
+import { AvatarPhotos, ServerClockProvider, useLang } from '@partybox/game-sdk/ui';
 import { createController } from '../net/controller';
 import type { Controller } from '../net/controller';
 import { useStore } from '../net/store';
@@ -73,6 +73,7 @@ export function ControllerApp(): JSX.Element {
     () => 'normal' as const,
   );
   const state = useStore(controller.store, (s) => s);
+  const lang = useLang();
   // Autoplay policy: the AudioContext needs a gesture. Every tap re-checks (idempotent) so a
   // context iOS suspended while the phone was locked comes back on the next touch.
   useEffect(() => {
@@ -208,6 +209,9 @@ export function ControllerApp(): JSX.Element {
     <ServerClockProvider offsetMs={state.offsetMs}>
       <AvatarPhotos players={state.room?.players}>
         <ControllerShell
+          // The device's language (the join pills, the 🎨 sheet): a change re-renders every screen
+          // in it — the socket lives outside React, so nothing reconnects (the owner, 2026-09-22).
+          key={lang}
           controller={controller}
           state={state}
           me={me}

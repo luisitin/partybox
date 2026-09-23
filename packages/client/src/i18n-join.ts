@@ -1,7 +1,9 @@
 // The join screen's languages (I-076): the join flow, the room code and room picker (ADR-043),
 // and the phone lobby's two lines, in EN · ES · DE · FR · PT. Split from i18n.ts (its line cap);
 // it imports `t` for the English strings and nothing imports it back, so there is no cycle.
-import { t } from './i18n';
+import { getLang, setLang } from '@partybox/game-sdk/ui';
+import { textsFor } from './i18n';
+import type { t } from './i18n';
 
 // I-076 A: the join flow in a few languages — the one screen every guest reads first. Detected
 // from the phone (`navigator.language`); everything past the join stays English.
@@ -89,8 +91,8 @@ export interface RoomStrings {
 }
 const ROOM_L10N: Record<JoinLang, RoomStrings> = {
   en: {
-    code: t.join.code,
-    codePlaceholder: t.join.codePlaceholder,
+    code: textsFor('en').join.code,
+    codePlaceholder: textsFor('en').join.codePlaceholder,
     roomsOpen: 'Rooms open now',
     noRooms: 'No public rooms yet — open one.',
     openNew: '＋ Open a new room',
@@ -152,33 +154,12 @@ const ROOM_L10N: Record<JoinLang, RoomStrings> = {
 export function roomStrings(lang: JoinLang): RoomStrings {
   return ROOM_L10N[lang];
 }
-const LANG_KEY = 'partybox:lang';
+/** The device's language (the SDK's store: the join pills, the 🎨 sheet and every screen share it). */
 export function joinLang(): JoinLang {
-  if (typeof window === 'undefined') return 'en';
-  // `?lang=es` on the join link wins (a host can hand out a link in a language).
-  const fromUrl = new URLSearchParams(window.location.search)
-    .get('lang')
-    ?.slice(0, 2)
-    .toLowerCase();
-  if (fromUrl && (JOIN_LANGS as readonly string[]).includes(fromUrl)) {
-    setJoinLang(fromUrl as JoinLang);
-    return fromUrl as JoinLang;
-  }
-  try {
-    const stored = localStorage.getItem(LANG_KEY);
-    if (stored && (JOIN_LANGS as readonly string[]).includes(stored)) return stored as JoinLang;
-  } catch {
-    /* private mode */
-  }
-  const tag = (navigator.language || 'en').slice(0, 2).toLowerCase();
-  return (JOIN_LANGS as readonly string[]).includes(tag) ? (tag as JoinLang) : 'en';
+  return getLang();
 }
 export function setJoinLang(lang: JoinLang): void {
-  try {
-    localStorage.setItem(LANG_KEY, lang);
-  } catch {
-    /* private mode */
-  }
+  setLang(lang);
 }
 /** I-076 C: the phone lobby's two lines follow the same choice. */
 const LOBBY_L10N: Record<Exclude<JoinLang, 'en'>, { waitingForVip: string; addBot: string }> = {
@@ -190,9 +171,11 @@ const LOBBY_L10N: Record<Exclude<JoinLang, 'en'>, { waitingForVip: string; addBo
 export function lobbyStrings(
   lang: JoinLang = joinLang(),
 ): Omit<typeof t.lobby, 'waitingForVip' | 'addBot'> & { waitingForVip: string; addBot: string } {
-  return lang === 'en' ? t.lobby : { ...t.lobby, ...LOBBY_L10N[lang] };
+  if (lang === 'en' || lang === 'es') return textsFor(lang).lobby;
+  return { ...textsFor('en').lobby, ...LOBBY_L10N[lang] };
 }
 /** The join strings for a language: English plus the table's overrides. */
 export function joinStrings(lang: JoinLang = joinLang()): JoinAll {
-  return lang === 'en' ? t.join : { ...t.join, ...JOIN_L10N[lang] };
+  if (lang === 'en' || lang === 'es') return textsFor(lang).join as JoinAll;
+  return { ...textsFor('en').join, ...JOIN_L10N[lang] } as JoinAll;
 }

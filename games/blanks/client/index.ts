@@ -2,9 +2,11 @@
 import { lazy } from 'react';
 import type { GameClientModule } from '@partybox/game-sdk/ui';
 import type { BlanksTvView } from '../server/index';
+import { STRINGS } from './strings';
 
 export const clientModule: GameClientModule = {
   id: 'blanks',
+  strings: STRINGS,
   Tv: lazy(() => import('./Tv').then((m) => ({ default: m.Tv }))),
   Controller: lazy(() => import('./Controller').then((m) => ({ default: m.Controller }))),
   // Every reveal step is its own phase instance: one soft 'card' pluck per card read out (the

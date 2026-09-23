@@ -2,9 +2,11 @@
 import { lazy } from 'react';
 import type { GameClientModule } from '@partybox/game-sdk/ui';
 import type { LightningTvView } from '../server/views';
+import { STRINGS } from './strings';
 
 export const clientModule: GameClientModule = {
   id: 'lightning-round',
+  strings: STRINGS,
   Tv: lazy(() => import('./Tv').then((m) => ({ default: m.Tv }))),
   Controller: lazy(() => import('./Controller').then((m) => ({ default: m.Controller }))),
   // The final-wager board stays on the results stage until someone presses Play again / Home.

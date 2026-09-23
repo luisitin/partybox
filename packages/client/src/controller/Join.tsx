@@ -3,9 +3,17 @@
 import { useEffect, useRef, useState } from 'react';
 import type { FormEvent, JSX } from 'react';
 import { EVERYDAY_AVATAR_IDS, PLAYER_NAME_MAX, normalizeName } from '@partybox/shared';
-import { Avatar, AvatarPhotos, PlayerChip, PrimaryButton, Screen } from '@partybox/game-sdk/ui';
+import {
+  Avatar,
+  AvatarPhotos,
+  PlayerChip,
+  PrimaryButton,
+  Screen,
+  useLang,
+} from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
-import { joinLang, joinStrings, roomStrings } from '../i18n-join';
+import { joinStrings, roomStrings, setJoinLang } from '../i18n-join';
+import { serverText } from '../server-text';
 import type { JoinLang } from '../i18n-join';
 import type { Controller, ControllerState } from '../net/controller';
 import { useServerInfo } from '../net/info';
@@ -29,7 +37,9 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
   // I-079 A/B: the faces on offer today (`?date=` previews a month).
   const { season, ids: gridIds } = joinGrid();
   // I-076 A: the join strings in the phone's language (B: the remembered choice).
-  const [lang, setLang] = useState<JoinLang>(() => joinLang());
+  // The device's language store (shared with every screen after this one and the 🎨 sheet).
+  const lang: JoinLang = useLang();
+  const setLang = setJoinLang;
   const j = joinStrings(lang);
   const session = controller.session() ?? controller.identity();
   const [name, setName] = useState(session?.name ?? '');
@@ -185,7 +195,7 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
             {roomError && state.error ? (
               <p className={`${styles.kicked} ${styles.roomError}`} role="alert">
                 <span aria-hidden>{roomError === 'room_full' ? '👥 ' : '🔒 '}</span>
-                {state.error.message}{' '}
+                {serverText(state.error.message, lang)}{' '}
                 {roomError === 'room_full'
                   ? 'Ask the VIP to make room.'
                   : 'Ask the VIP to unlock it.'}
@@ -262,7 +272,7 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
                 ) : (
                   <>
                     <span aria-hidden>⚠ </span>
-                    {state.error.message} {t.join.tryAgain}
+                    {serverText(state.error.message, lang)} {t.join.tryAgain}
                   </>
                 )}
               </span>
@@ -288,7 +298,7 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
               {codeError && state.error ? (
                 <span id="join-code-error" className={styles.error} role="alert">
                   <span aria-hidden>⚠ </span>
-                  {state.error.message} {t.join.tryAgain}
+                  {serverText(state.error.message, lang)} {t.join.tryAgain}
                 </span>
               ) : null}
             </label>

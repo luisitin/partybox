@@ -2,6 +2,7 @@
 // a game's UI is only downloaded when it is played.
 import type { ComponentType, LazyExoticComponent } from 'react';
 import type { ControllerView, PushedView, RoomSnapshot, TvView } from '@partybox/shared';
+import type { Strings } from './ui/lang';
 
 export interface GameTvProps<V extends TvView = TvView> {
   view: PushedView<V>;
@@ -102,6 +103,13 @@ export interface GameClientModule {
   /** No points in this game: the results headline says the show is over instead of calling an
    *  all-zero scoreboard a tie (review-loop #63). */
   scoreless?: boolean;
+  /**
+   * The game's own words in other languages (the owner, 2026-09-22: every screen translatable to
+   * Spanish), keyed by the English sentence: its phone and TV screens read them through
+   * `useT(strings)`, and the shell's game picker translates the manifest's tagline, description and
+   * setting labels from the same table. Content (cards, questions) stays in the deck's language.
+   */
+  strings?: Strings;
 }
 /* eslint-enable @typescript-eslint/no-explicit-any */
 

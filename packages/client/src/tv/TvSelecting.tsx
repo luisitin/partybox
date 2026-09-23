@@ -3,8 +3,9 @@
 // room state. The room sees the highlighted game big, its settings, and who is here.
 import type { JSX } from 'react';
 import type { RoomSnapshot } from '@partybox/shared';
-import { Avatar, BigText, PlayerChips, Stage } from '@partybox/game-sdk/ui';
+import { Avatar, BigText, PlayerChips, Stage, useLang } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
+import { gameText } from '../i18n-games';
 import type { TvClient } from '../net/tv';
 import { SettingField } from '../SettingField';
 import styles from './TvSelecting.module.css';
@@ -18,6 +19,7 @@ export function TvSelecting({ room, client }: TvSelectingProps): JSX.Element {
   const game = room.games.find((g) => g.id === room.selectedGameId);
   const vip = room.players.find((p) => p.isVip);
   const botCount = room.players.filter((p) => p.bot).length;
+  const lang = useLang();
   return (
     <Stage>
       <p className={`pb-muted ${styles.choosing}`}>
@@ -100,8 +102,8 @@ export function TvSelecting({ room, client }: TvSelectingProps): JSX.Element {
             key={game.id}
           >
             <BigText level="h1">{game.name}</BigText>
-            <p className={styles.tagline}>{game.tagline}</p>
-            <p className={styles.description}>{game.description}</p>
+            <p className={styles.tagline}>{gameText(game.id, lang, game.tagline)}</p>
+            <p className={styles.description}>{gameText(game.id, lang, game.description)}</p>
             <p className={styles.meta}>
               {t.selecting.players(game.minPlayers, game.maxPlayers)} ·{' '}
               {t.selecting.minutes(game.estimatedMinutes)}
@@ -116,6 +118,7 @@ export function TvSelecting({ room, client }: TvSelectingProps): JSX.Element {
                     players={room.players.length}
                     settings={room.settings}
                     idPrefix="tv-setting"
+                    gameId={game.id}
                     onChange={(v) =>
                       client.act({ action: 'updateSettings', settings: { [spec.key]: v } })
                     }

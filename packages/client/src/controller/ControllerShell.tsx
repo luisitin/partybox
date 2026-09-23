@@ -6,7 +6,7 @@
 import { useEffect, useRef, useState } from 'react';
 import type { JSX, ReactNode } from 'react';
 import type { PlayerPublic } from '@partybox/shared';
-import { Avatar, DeadlineBar, buzz, useSecondsLeft } from '@partybox/game-sdk/ui';
+import { Avatar, DeadlineBar, buzz, getLang, useSecondsLeft } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import type { Controller, ControllerState } from '../net/controller';
 import type { SoundEngine } from '../sound';
@@ -16,6 +16,7 @@ import { PhoneSettings, tvSoundsOn } from './PhoneSettings';
 import { clientGames } from '../games.generated';
 import type { SoundCue } from '../sound';
 import { useLinkBanner } from './flapFree';
+import { serverText } from '../server-text';
 import { usePhoneUrgency } from './urgency';
 import { VipMenu } from './VipMenu';
 
@@ -283,7 +284,7 @@ export function ControllerShell({
         >
           <span role="alert">
             <span aria-hidden>⚠ </span>
-            {state.error.message}
+            {serverText(state.error.message, getLang())}
           </span>
         </button>
       ) : null}
@@ -315,7 +316,7 @@ export function ControllerShell({
             className={`${styles.toast} ${styles[toast.kind]}`}
             onClick={() => controller.dismissToast(toast.id)}
           >
-            {toast.text}
+            {serverText(toast.text, getLang())}
           </div>
         ))}
       </div>

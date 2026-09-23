@@ -5,6 +5,7 @@ import { useState } from 'react';
 import type { JSX } from 'react';
 import { isRoomCode } from '@partybox/shared';
 import { roomStrings } from '../i18n-join';
+import { serverText } from '../server-text';
 import type { JoinLang } from '../i18n-join';
 import type { ServerInfo } from '../net/info';
 import styles from './Join.module.css';
@@ -89,7 +90,7 @@ export function RoomPicker({
       {error ? (
         <span className={styles.error} role="alert">
           <span aria-hidden>⚠ </span>
-          {error}
+          {serverText(error, lang)}
         </span>
       ) : null}
     </div>

@@ -3,6 +3,7 @@
 import { Suspense, useEffect, useState, useSyncExternalStore } from 'react';
 import type { ComponentType, LazyExoticComponent } from 'react';
 import { clientGames } from '../games.generated';
+import { JoinLangs } from './JoinLangs';
 import { ShareButton } from './ShareSheet';
 
 /** The games' display names for the settings headings (the manifest names, by id). */
@@ -20,6 +21,8 @@ import {
   setHapticsEnabled,
   setPadStyle,
   usePadStyle,
+  setLang,
+  useLang,
 } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import type { SoundEngine } from '../sound';
@@ -46,6 +49,7 @@ export interface PhoneSettingsProps {
 }
 
 export function PhoneSettings({ audio, what, room, onLeave }: PhoneSettingsProps): JSX.Element {
+  const lang = useLang();
   const [leaving, setLeaving] = useState(false);
   useEffect(() => {
     if (!leaving) return undefined;
@@ -180,6 +184,11 @@ export function PhoneSettings({ audio, what, room, onLeave }: PhoneSettingsProps
           ))}
         </div>
       ) : null}
+      {/* The owner (2026-09-22): the language, changeable after joining too — every screen follows. */}
+      <section className={pickerStyles.gameSection}>
+        <h4 className={pickerStyles.gameTitle}>{lang === 'es' ? 'Idioma' : 'Language'}</h4>
+        <JoinLangs lang={lang} onPick={setLang} />
+      </section>
       {/* The owner (2026-09-22): the room's own row — share it, or leave for the room menu. */}
       {room ? (
         <section className={pickerStyles.gameSection}>

@@ -4,6 +4,9 @@
 import type { JSX } from 'react';
 import { multiselectPicks } from '@partybox/shared';
 import type { SettingSpec, Settings } from '@partybox/shared';
+import { useLang } from '@partybox/game-sdk/ui';
+import { t } from './i18n';
+import { gameText } from './i18n-games';
 import styles from './SettingField.module.css';
 
 export interface SettingFieldProps {
@@ -16,6 +19,8 @@ export interface SettingFieldProps {
   players?: number;
   /** Every current value: a grouped multiselect reads its sibling select from here (ADR-034). */
   settings?: Settings;
+  /** Whose manifest this is: its labels read in the device's language from the game's table. */
+  gameId?: string;
 }
 
 export function SettingField({
@@ -25,8 +30,13 @@ export function SettingField({
   idPrefix = 'setting',
   players,
   settings,
+  gameId,
 }: SettingFieldProps): JSX.Element {
   const id = `${idPrefix}-${spec.key}`;
+  const lang = useLang();
+  const L = (en: string): string => gameText(gameId, lang, en);
+  const label = L(spec.label);
+  const description = spec.description ? L(spec.description) : undefined;
   // A roster-capped number: the ceiling (and a stored value above it) follow the player count, so
   // "players per book" reads 4 with five people in and grows as bots or friends join.
   const max =
@@ -41,8 +51,8 @@ export function SettingField({
       return (
         <label className={styles.setting} htmlFor={id}>
           <span className={styles.settingLabel}>
-            {spec.label}
-            {spec.description ? <small>{spec.description}</small> : null}
+            {label}
+            {description ? <small>{description}</small> : null}
           </span>
           <input
             id={id}
@@ -57,13 +67,13 @@ export function SettingField({
       return (
         <label className={styles.setting} htmlFor={id}>
           <span className={styles.settingLabel}>
-            {spec.label}
-            {spec.description ? <small>{spec.description}</small> : null}
+            {label}
+            {description ? <small>{description}</small> : null}
           </span>
           <span className={styles.stepper}>
             <button
               type="button"
-              aria-label={`less ${spec.label}`}
+              aria-label={t.selecting.less(label)}
               onClick={() => onChange(Math.max(spec.min, shown - (spec.step ?? 1)))}
             >
               −
@@ -71,7 +81,7 @@ export function SettingField({
             <output id={id}>{String(shown)}</output>
             <button
               type="button"
-              aria-label={`more ${spec.label}`}
+              aria-label={t.selecting.more(label)}
               disabled={shown >= max}
               onClick={() => onChange(Math.min(max, shown + (spec.step ?? 1)))}
             >
@@ -99,8 +109,8 @@ export function SettingField({
       return (
         <fieldset className={`${styles.setting} ${styles.multi}`} aria-labelledby={`${id}-label`}>
           <span className={styles.settingLabel} id={`${id}-label`}>
-            {spec.label}
-            {spec.description ? <small>{spec.description}</small> : null}
+            {label}
+            {description ? <small>{description}</small> : null}
           </span>
           <span className={styles.chips}>
             {options.map((o) => (
@@ -113,12 +123,12 @@ export function SettingField({
                   checked={picked.includes(o.value)}
                   onChange={() => toggle(o.value)}
                 />
-                {o.label}
+                {L(o.label)}
               </label>
             ))}
           </span>
           <small className={styles.multiHint}>
-            {picked.length === 0 ? 'None ticked: the whole category' : `${picked.length} ticked`}
+            {picked.length === 0 ? t.selecting.noneTicked : t.selecting.ticked(picked.length)}
           </small>
         </fieldset>
       );
@@ -127,8 +137,8 @@ export function SettingField({
       return (
         <label className={styles.setting} htmlFor={id}>
           <span className={styles.settingLabel}>
-            {spec.label}
-            {spec.description ? <small>{spec.description}</small> : null}
+            {label}
+            {description ? <small>{description}</small> : null}
           </span>
           <select
             id={id}
@@ -138,7 +148,7 @@ export function SettingField({
           >
             {spec.options.map((o) => (
               <option key={o.value} value={o.value}>
-                {o.label}
+                {L(o.label)}
               </option>
             ))}
           </select>

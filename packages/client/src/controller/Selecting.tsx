@@ -2,8 +2,9 @@
 // with the server's reason). Everyone else: a calm "X is choosing…" with the current pick.
 import type { JSX } from 'react';
 import type { PlayerPublic, RoomSnapshot } from '@partybox/shared';
-import { PrimaryButton, Screen, WaitingScreen } from '@partybox/game-sdk/ui';
+import { PrimaryButton, Screen, WaitingScreen, useLang } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
+import { gameText } from '../i18n-games';
 import { useServerInfo } from '../net/info';
 import { SettingField } from '../SettingField';
 import type { Controller } from '../net/controller';
@@ -19,12 +20,17 @@ export function Selecting({ controller, room, me }: SelectingProps): JSX.Element
   const info = useServerInfo(); // I-034 B
   const selected = room.games.find((g) => g.id === room.selectedGameId) ?? null;
   const vip = room.players.find((p) => p.isVip);
+  const lang = useLang();
 
   if (!me.isVip) {
     return (
       <WaitingScreen
         title={t.selecting.vipChoosing(vip?.name ?? 'The VIP')}
-        hint={selected ? `${selected.name} — ${selected.tagline}` : undefined}
+        hint={
+          selected
+            ? `${selected.name} — ${gameText(selected.id, lang, selected.tagline)}`
+            : undefined
+        }
         mood="wait"
       />
     );
@@ -121,7 +127,7 @@ export function Selecting({ controller, room, me }: SelectingProps): JSX.Element
                     {isSelected ? '✓' : ''}
                   </span>
                 </span>
-                <span className={styles.cardTagline}>{g.tagline}</span>
+                <span className={styles.cardTagline}>{gameText(g.id, lang, g.tagline)}</span>
                 <span className={styles.cardMeta}>
                   {t.selecting.players(g.minPlayers, g.maxPlayers)} ·{' '}
                   {t.selecting.minutes(g.estimatedMinutes)} ·{' '}
@@ -135,7 +141,9 @@ export function Selecting({ controller, room, me }: SelectingProps): JSX.Element
                   )}
                 </span>
                 {isSelected ? (
-                  <span className={styles.cardDescription}>{g.description}</span>
+                  <span className={styles.cardDescription}>
+                    {gameText(g.id, lang, g.description)}
+                  </span>
                 ) : null}
               </button>
             </li>
@@ -152,6 +160,7 @@ export function Selecting({ controller, room, me }: SelectingProps): JSX.Element
               value={room.settings[spec.key]}
               players={room.players.length}
               settings={room.settings}
+              gameId={selected.id}
               onChange={(v) =>
                 controller.vip({ action: 'updateSettings', settings: { [spec.key]: v } })
               }
