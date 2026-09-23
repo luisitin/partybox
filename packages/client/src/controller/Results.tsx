@@ -24,7 +24,8 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
   const list = useRef<HTMLDivElement>(null);
   const lang = useLang();
   useEffect(() => {
-    list.current?.querySelector('[aria-current="true"]')?.scrollIntoView({ block: 'nearest' });
+    // I-456 B: to the middle of the list, not its nearest edge (which was half under the footer)
+    list.current?.querySelector('[aria-current="true"]')?.scrollIntoView({ block: 'center' });
   }, []);
   const rows = scoreboardRows(room);
   const mine = myRow(room, me.id);
@@ -36,9 +37,17 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
       // The winner line is the sticky title: on a long board the body scrolls to your own row and a
       // hero inside the body scrolled off the top (review-loop #76).
       title={
-        <span className={styles.winner} data-screen="results">
-          {winnerLineFor(room, me.id, scoreless)}
-        </span>
+        <>
+          <span className={styles.winner} data-screen="results">
+            {winnerLineFor(room, me.id, scoreless)}
+          </span>
+          {/* I-456 B: your place stays in view while the board scrolls to your row */}
+          {mine && !over && !scoreless ? (
+            <span className={`pb-muted pb-caption ${styles.place}`}>
+              {t.results.yourPlace(mine.rank, mine.score)}
+            </span>
+          ) : null}
+        </>
       }
       footer={
         me.isVip ? (
@@ -76,11 +85,7 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
       }
     >
       {over ? <p className="pb-muted pb-caption">{t.results.nobodyScored}</p> : null}
-      {mine && !over && !scoreless ? (
-        <p className={`pb-muted pb-caption ${styles.place}`}>
-          {t.results.yourPlace(mine.rank, mine.score)}
-        </p>
-      ) : null}
+      {/* (I-456 B: your place moved up under the winner line) */}
       {scoreless ? (
         // No points: a board of zeros says nothing; the TV holds the show's summary.
         <p className="pb-muted pb-caption">

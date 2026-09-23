@@ -9,8 +9,10 @@
 
 /* My place, right under the winner line. */
 .place {
+  display: block;
   text-align: center;
-  margin-top: calc(-1 * var(--pb-space-2));
+  margin-top: var(--pb-space-1);
+  font-weight: 700;
 }
 
 .actions {
