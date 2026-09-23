@@ -104,6 +104,8 @@ export const ES_GAME: Readonly<Record<string, string>> = {
   '{a}, {b} and {n} more': '{a}, {b} y {n} más',
   '{list} was never called': '{list} nunca salió',
   '{list} were never called': '{list} nunca salieron',
+  // I-433 B: a bot's claim
+  '{name} calls it — checking': '{name} lo canta: comprobando',
   '{list} was missed': 'faltó marcar {list}',
   '{list} were missed': 'faltó marcar {list}',
   'keep going — same pattern': 'seguir — misma figura',

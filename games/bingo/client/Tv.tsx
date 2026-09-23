@@ -154,7 +154,9 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
       <Stage className={crowd}>
         <div className={`${styles.checkHead} pb-enter`}>
           <BigText level="h2" tone="accent">
-            {L('{name} says BINGO!', { name: view.claim.name })}
+            {view.claim.bot
+              ? L('{name} calls it — checking', { name: view.claim.name }) /* I-433 B */
+              : L('{name} says BINGO!', { name: view.claim.name })}
           </BigText>
           <p className={styles.kicker}>
             {patternLabel}
@@ -205,7 +207,9 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
         <Stage className={`${crowd} ${tight}`}>
           <div className={`${styles.checkHead} pb-enter`}>
             <BigText level="h2" tone="accent">
-              {L('{name} says BINGO!', { name: view.winnerName })}
+              {view.claim.bot
+                ? L('{name} calls it — checking', { name: view.winnerName }) /* I-433 B */
+                : L('{name} says BINGO!', { name: view.winnerName })}
             </BigText>
             <p className={styles.kicker}>
               {patternLabel}
