@@ -141,7 +141,13 @@ export interface State extends GameStateBase {
   round: RoundState;
   /** Bingos won. */
   wins: Record<string, number>;
-  history: { round: number; winnerId: string | null; calls: number }[];
+  history: {
+    round: number;
+    winnerId: string | null;
+    calls: number;
+    /** I-401: the win had no never-called daubs (the "Clean card" award). */
+    clean?: boolean;
+  }[];
   /** Points at the start of the current round: the scoreboard shows each row's gain as a delta. */
   winsAtRoundStart: Record<string, number>;
 }

@@ -104,6 +104,12 @@ export const ES_GAME: Readonly<Record<string, string>> = {
   '{a}, {b} and {n} more': '{a}, {b} y {n} más',
   '{list} was never called': '{list} nunca salió',
   '{list} were never called': '{list} nunca salieron',
+  // I-401: the awards
+  'Quick draw': 'Mano rápida',
+  'Bingo on call {n}': 'Bingo en la bola {n}',
+  'Clean card': 'Cartón limpio',
+  'Won with no stray daubs': 'Ganó sin marcas de más',
+  '{n} wins with no stray daubs': '{n} victorias sin marcas de más',
   '{list} was missed': 'faltó marcar {list}',
   '{list} were missed': 'faltó marcar {list}',
   'keep going — same pattern': 'seguir — misma figura',

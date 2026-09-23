@@ -100,7 +100,7 @@ describe('play', () => {
     expect(shown?.valid).toBe(true);
     expect(shown?.green.sort()).toEqual([0, 1, 2, 3, 4]);
     expect(shown?.red).toEqual([]);
-    expect(s.history).toEqual([{ round: 1, winnerId: 'a', calls: s.round.drawn }]);
+    expect(s.history).toEqual([expect.objectContaining({ round: 1, winnerId: 'a', calls: s.round.drawn })]); // I-401: + clean
   });
 
   it('after a bingo the round can keep going: same pattern (winner sits it out) or blackout (everyone back in), same cards and deck', () => {
@@ -265,7 +265,8 @@ describe('rounds and results', () => {
     const results = game.results(s);
     expect(results?.scores).toEqual({ a: 3, b: 0, c: 3 }); // a first bingo in each round;
     expect(results?.winnerIds.sort()).toEqual(['a', 'c']);
-    expect(results?.awards).toEqual([]);
+    // I-401: Bingo hands out awards now (the fastest bingo, a clean win)
+    expect(results?.awards.map((a) => a.id)).toContain('quick-draw');
   });
 
   it('VIP skip: intro → first call, play → next number, bingo → scoreboard/done; end → done anywhere', () => {

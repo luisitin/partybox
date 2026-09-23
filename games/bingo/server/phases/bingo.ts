@@ -30,7 +30,15 @@ export function enterBingo(
   const round = state.round;
   const bingos = winnerId ? round.bingos + 1 : round.bingos;
   const patternBingos = winnerId ? round.patternBingos + 1 : round.patternBingos;
-  const history = [...state.history, { round: round.number, winnerId, calls: round.drawn }];
+  const history = [
+    ...state.history,
+    {
+      round: round.number,
+      winnerId,
+      calls: round.drawn,
+      ...(claim ? { clean: claim.red.length === 0 } : {}), // I-401: for "Clean card"
+    },
+  ];
   const won =
     winnerId && claim
       ? { ...round.won, [winnerId]: [...(round.won[winnerId] ?? []), claim.cardIndex] }
