@@ -3,17 +3,19 @@
 // card's deadline; VIP skip jumps straight to the vote.
 import { enterPhase, isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
-import { revealMs } from '../cards';
+import { flightMs, revealMs, revealSpan } from '../cards';
 import { blackCard, whiteText } from '../content';
 import type { Input, State } from '../types';
 import type { Transition } from './intro';
 
-/** Puts `state.slots[index]` on stage. */
+/** Puts the flight starting at `state.slots[index]` on stage (one card in a small room — I-157). */
 export function enterReveal(state: State, now: number, index: number): State {
-  const submitter = state.slots[index];
-  const whites = (submitter ? state.submissions[submitter] : []) ?? [];
-  const ms = revealMs(blackCard(state.blackId).text, whites.map(whiteText), state.slots.length);
-  return enterPhase({ ...state, revealIndex: index }, 'reveal', now, ms);
+  const span = revealSpan(state.slots.length);
+  const each = state.slots.slice(index, index + span).map((submitter) => {
+    const whites = state.submissions[submitter] ?? [];
+    return revealMs(blackCard(state.blackId).text, whites.map(whiteText), state.slots.length);
+  });
+  return enterPhase({ ...state, revealIndex: index }, 'reveal', now, flightMs(each));
 }
 
 export function reduceReveal(state: State, event: GameEvent<Input>, next: Transition): State {

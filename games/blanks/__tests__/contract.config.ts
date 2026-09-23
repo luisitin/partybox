@@ -3,6 +3,7 @@
 // not yet read during "reveal"; hands always. Phones: other players' hands always; other players'
 // submissions before "reveal"; unread cards during "reveal".
 import type { GameStateBase } from '@partybox/game-sdk';
+import { revealSpan } from '../server/cards';
 import { whiteText } from '../server/content';
 import type { State } from '../server/types';
 
@@ -18,10 +19,11 @@ function submissionTexts(state: State, except: string): string[] {
     .flatMap(([, cards]) => cards.map(whiteText));
 }
 
-/** Submissions in slots after `revealIndex` (not read yet). */
+/** Submissions in slots after the flight on stage (not read yet) — I-157: a flight of two or
+ *  three cards is read in one beat. */
 function unreadTexts(state: State, except: string): string[] {
   return state.slots
-    .slice(state.revealIndex + 1)
+    .slice(state.revealIndex + revealSpan(state.slots.length))
     .filter((id) => id !== except)
     .flatMap((id) => (state.submissions[id] ?? []).map(whiteText));
 }

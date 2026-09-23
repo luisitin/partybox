@@ -1613,3 +1613,12 @@
 .redraw:disabled {
   opacity: 0.5;
 }
+
+/* ── I-157: a reveal flight — two or three cards side by side on the stage. */
+.flight {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: var(--pb-space-4);
+  width: 100%;
+}
