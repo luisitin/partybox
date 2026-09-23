@@ -6,8 +6,8 @@ export const ES_GAME: Readonly<Record<string, string>> = {
   // The manifest (the game picker and its settings).
   'Daub what you hear. Press BINGO! Everyone checks.':
     'Marca lo que oyes. Toca ¡BINGO! Todos lo revisan.',
-  'Plain 75-ball bingo. The TV calls a number every few seconds; you daub your own card however you like. Press BINGO! and the caller stops while your card goes on the TV for everyone to check: the pattern in green, every square you daubed that was never called in red. Right — you win the round. Wrong — your whole card is wiped blank, and the caller carries on.':
-    'Bingo clásico de 75 bolas. La TV canta un número cada pocos segundos; tú marcas tu cartón como quieras. Toca ¡BINGO! y el locutor se detiene mientras tu cartón sale en la TV para que todos lo revisen: la figura en verde y, en rojo, cada casilla que marcaste y nunca salió. ¿Acertaste? Ganas la ronda. ¿Fallaste? Tu cartón se borra entero y el locutor sigue.',
+  'Plain 75-ball bingo. The TV calls a number every few seconds; you daub your own card however you like. Press BINGO! and the caller stops while your card goes on the TV for everyone to check: the pattern in green, every square you daubed that was never called in red. Right — you win the round. Wrong — the daubs that were never called are wiped, and the caller carries on.':
+    'Bingo clásico de 75 bolas. La TV canta un número cada pocos segundos; tú marcas tu cartón como quieras. Toca ¡BINGO! y el locutor se detiene mientras tu cartón sale en la TV para que todos lo revisen: la figura en verde y, en rojo, cada casilla que marcaste y nunca salió. ¿Acertaste? Ganas la ronda. ¿Fallaste? Se borran las marcas de números que no salieron, y el locutor sigue.',
   Rounds: 'Rondas',
   'Each round deals fresh cards and a fresh deck': 'Cada ronda reparte cartones y bolas nuevos',
   'Round 1 pattern': 'Figura de la ronda 1',
@@ -71,6 +71,12 @@ export const ES_GAME: Readonly<Record<string, string>> = {
   '{name} says BINGO!': '{name} canta ¡BINGO!',
   'NOT A BINGO': 'NO ES BINGO',
   'Card wiped. Next number in a moment…': 'Cartón borrado. Enseguida sale otro número…',
+  // I-435: what a wrong claim took
+  'Wrong daubs wiped. Next number in a moment…': 'Marcas equivocadas borradas. Enseguida sale otro número…',
+  'Card {n}: the wrong daubs and that line are wiped — the rest stay.':
+    'Cartón {n}: se borran las marcas equivocadas y esa línea; el resto se queda.',
+  'Card {n}: the wrong daubs are wiped — the rest stay.':
+    'Cartón {n}: se borran las marcas equivocadas; el resto se queda.',
   'checking against {n} calls': 'comprobando con {n} bolas',
   'Final points': 'Puntos finales',
   'Next: round {round} — {pattern}': 'Siguiente: ronda {round} — {pattern}',

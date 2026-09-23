@@ -45,7 +45,7 @@ describe('several cards per player', () => {
     expect(t.phase.id).toBe('check');
     expect(t.round.claim?.cardIndex).toBe(1);
     expect(t.round.claim?.missing).toEqual([4]);
-    expect(t.round.daubs['b']).toEqual([[20], []]);
+    expect(t.round.daubs['b']).toEqual([[20], [0, 1, 2, 3]]); // I-435 B: nothing wrong to wipe
   });
 
   it('the bot works every card and claims when any looks complete', () => {

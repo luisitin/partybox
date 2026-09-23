@@ -156,11 +156,12 @@ describe('play', () => {
     expect(shown?.red).toEqual([uncalled]);
     expect(shown?.cells).toEqual([5, 6, 7, 8, 9]);
     expect(shown?.missing).toEqual([9]);
-    expect(s.round.daubs['b']).toEqual([[]]); // wiped
+    expect(s.round.daubs['b']?.[0]).not.toContain(uncalled); // I-435 B: only the wrong daub goes
+    expect(s.round.daubs['b']?.[0]).toEqual(expect.arrayContaining([5, 6, 7, 8]));
     expect(s.round.waitForCall['b']).toBe(before + 1);
     // Daubing continues during the check; claims do not.
-    s = input(s, 'b', { type: 'daub', card: 0, index: 5 });
-    expect(s.round.daubs['b']).toEqual([[5]]);
+    s = input(s, 'b', { type: 'daub', card: 0, index: 5 }); // I-435 B: 5 stayed, so this un-daubs it
+    expect(s.round.daubs['b']?.[0]).not.toContain(5);
     expect(claimRaw(s, 'a').phase.id).toBe('check'); // a second BINGO! during a check is ignored
     // The check's second timer (the verdict has been read) goes back to play through a 3 · 2 · 1
     // (loop 282); its tick then calls the next number.
