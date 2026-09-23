@@ -193,3 +193,14 @@
   height: 28px;
   accent-color: var(--pb-accent);
 }
+
+/* ── I-668: the room as a row of overlapping faces. */
+.faces {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  margin-left: var(--pb-space-4);
+}
+.faces > * + * {
+  margin-left: -12px;
+}

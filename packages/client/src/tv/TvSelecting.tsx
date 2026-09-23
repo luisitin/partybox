@@ -3,7 +3,7 @@
 // room state. The room sees the highlighted game big, its settings, and who is here.
 import type { JSX } from 'react';
 import type { RoomSnapshot } from '@partybox/shared';
-import { Avatar, BigText, PlayerChips, Stage, useT } from '@partybox/game-sdk/ui';
+import { Avatar, BigText, Stage, useT } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import { gameText } from '../i18n-games';
 import type { TvClient } from '../net/tv';
@@ -35,6 +35,8 @@ export function TvSelecting({ room, client }: TvSelectingProps): JSX.Element {
         ) : (
           t.host.choosing
         )}
+        {/* I-668 B: the room on the sentence's line — the column is the games and the switches */}
+        <FaceStack room={room} />
       </p>
       <div className={styles.columns}>
         <div className={styles.left}>
@@ -79,23 +81,6 @@ export function TvSelecting({ room, client }: TvSelectingProps): JSX.Element {
             />
             {t.selecting.musicOnPhones}
           </label>
-          <PlayerChips
-            players={room.players.map((p) => ({
-              id: p.id,
-              name: p.name,
-              avatarId: p.avatarId,
-              connected: p.connected,
-              status: p.spectator ? 'spectator' : 'active',
-            }))}
-            vip={room.vip}
-            // I-045 A + B (the owner's note): the VIP is picking — ringed, thinking dots over
-            // their portrait; the plain lobby shows the ring alone.
-            activeIds={vip ? [vip.id] : []}
-            thinkingIds={vip ? [vip.id] : []}
-            botIds={room.players.filter((p) => p.bot).map((p) => p.id)}
-            layout="grid"
-            size="sm"
-          />
         </div>
         {game ? (
           // Nobody scrolls a TV: a game with many settings (bingo's ten) packs three columns and a
@@ -138,5 +123,16 @@ export function TvSelecting({ room, client }: TvSelectingProps): JSX.Element {
         ) : null}
       </div>
     </Stage>
+  );
+}
+
+/** I-668: the room as one row of overlapping faces — never taller than one line. */
+function FaceStack({ room }: { room: RoomSnapshot }): JSX.Element {
+  return (
+    <span className={styles.faces} aria-label={`${room.players.length} players`}>
+      {room.players.map((p) => (
+        <Avatar key={p.id} avatarId={p.avatarId} size={40} dim={!p.connected} />
+      ))}
+    </span>
   );
 }
