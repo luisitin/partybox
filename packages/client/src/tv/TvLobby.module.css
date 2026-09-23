@@ -352,3 +352,10 @@
 :global(:root[data-motion='off']) .qrMarkBump {
   animation: none;
 }
+
+/* ── I-340 C: "· Waiting for Sam to pick a game…" after the count, body size, muted. */
+.countWait {
+  font-size: var(--pb-font-body);
+  font-weight: 600;
+  color: var(--pb-text-muted);
+}
