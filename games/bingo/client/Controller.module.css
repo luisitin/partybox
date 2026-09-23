@@ -1428,3 +1428,44 @@
   color: var(--pb-text-muted);
   font: inherit;
 }
+
+/* ── I-407 A: the preview bar as one slim row at the bottom. */
+.previewSlim {
+  flex-wrap: nowrap;
+  padding: 6px 8px;
+  gap: 6px;
+}
+.previewSlim > span {
+  flex: 1 1 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 4px;
+  text-align: left;
+  white-space: nowrap;
+}
+.previewSlim > button {
+  flex: 0 0 auto;
+  width: auto; /* PrimaryButton is full-width by default: Confirm fell off the row */
+  min-height: 40px;
+  padding: 0 14px;
+  font-size: var(--pb-font-caption);
+}
+
+/* ── I-407 B: the 20 s cap, draining along the bar's foot. */
+.previewCap {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 3px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--pb-accent);
+  transform-origin: left center;
+  animation: preview-cap 20s linear both;
+}
+@keyframes preview-cap {
+  to {
+    transform: scaleX(0);
+  }
+}
