@@ -186,7 +186,12 @@ export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
               name: p.name,
               avatarId: p.avatarId,
               connected: p.connected,
-              status: p.spectator ? 'spectator' : 'active',
+              // I-388 A: a ✓ for everyone who tapped "I'm here"
+              status: p.spectator
+                ? 'spectator'
+                : room?.here?.includes(p.id)
+                  ? 'submitted'
+                  : 'active',
             }))}
             vip={room?.vip}
             // I-045 A: the room waits on the VIP — their chip carries the ring.
@@ -209,7 +214,20 @@ export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
               ))}
             </p>
           ) : room && vip ? (
-            <p className="pb-muted">{t.lobby.waitingFor(vip.name)}</p>
+            <p className="pb-muted">
+              {(() => {
+                // I-388 B: everyone's in — the line says so, and names the VIP
+                const people = players.filter((p) => !p.bot && !p.isVip);
+                const allIn = people.length > 0 && people.every((p) => room.here?.includes(p.id));
+                return allIn ? (
+                  <strong className={styles.allIn}>
+                    All {players.length} here — {vip.name}, pick a game
+                  </strong>
+                ) : (
+                  t.lobby.waitingFor(vip.name)
+                );
+              })()}
+            </p>
           ) : null}
           {/* I-073 A: the last game, still on the table until the next one starts. */}
           {room?.results ? <LastUp room={room} /> : null}

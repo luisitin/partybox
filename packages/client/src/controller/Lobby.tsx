@@ -1,11 +1,11 @@
 // Lobby on the phone: who is here (bots included, with ✕ on the ones you may remove), a
 // "＋ Add a bot" chip at the end of the grid (ADR-028), and for the VIP the button that opens
 // game selection.
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { JSX } from 'react';
 import { MAX_BOTS_PER_OWNER } from '@partybox/shared';
 import type { PlayerPublic, RoomSnapshot } from '@partybox/shared';
-import { PlayerChip, PrimaryButton, Screen } from '@partybox/game-sdk/ui';
+import { PlayerChip, PrimaryButton, Screen, buzz } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import { lobbyStrings } from '../i18n-join';
 import type { Controller } from '../net/controller';
@@ -59,6 +59,20 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
       setPoofing(null);
     }, 450);
   };
+  // I-388 A: who is here — people who tapped, and bots (always here)
+  const iAmHere = room.here?.includes(me.id) ?? false;
+  const people = room.players.filter((p) => !p.bot && !p.isVip);
+  const hereCount = people.filter((p) => room.here?.includes(p.id)).length;
+  const allIn = people.length > 0 && hereCount === people.length;
+  // I-388 C: the VIP's phone buzzes once as the last person taps in
+  const wasAllIn = useRef(allIn);
+  useEffect(() => {
+    if (me.isVip && allIn && !wasAllIn.current) {
+      buzz([40, 60, 40]);
+      audio?.play('phase');
+    }
+    wasAllIn.current = allIn;
+  }, [allIn, me.isVip, audio]);
   const first = room.games[0];
   const pick = (): void => {
     if (first) controller.vip({ action: 'selectGame', gameId: first.id });
@@ -91,13 +105,42 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
       }
       footer={
         me.isVip ? (
-          <PrimaryButton onClick={pick} disabled={!first}>
+          <PrimaryButton
+            onClick={pick}
+            disabled={!first}
+            className={allIn ? styles.pulse : undefined}
+          >
             {t.lobby.pickGame}
           </PrimaryButton>
         ) : undefined
       }
     >
-      <p className="pb-muted">{me.isVip ? t.lobby.youAreVip : lobbyStrings().waitingForVip}</p>
+      <p className="pb-muted">
+        {me.isVip && allIn ? (
+          <strong className={styles.allIn}>Everyone's in — pick a game</strong>
+        ) : me.isVip ? (
+          t.lobby.youAreVip
+        ) : (
+          lobbyStrings().waitingForVip
+        )}
+      </p>
+      {/* I-388 A: the VIP sees who is in */}
+      {me.isVip && people.length > 0 ? (
+        <p className={styles.hereCount}>
+          ✋ {hereCount} of {people.length} here
+        </p>
+      ) : null}
+      {/* I-388 A: a guest says "I'm here" — a ✓ on their TV chip */}
+      {!me.isVip ? (
+        <button
+          type="button"
+          aria-pressed={iAmHere}
+          className={`${styles.setup} ${styles.here} ${iAmHere ? styles.hereOn : ''}`}
+          onClick={() => controller.here(!iAmHere)}
+        >
+          {iAmHere ? "✓ You're here — tap to undo" : "✋ I'm here"}
+        </button>
+      ) : null}
       {me.isVip && tipsOn && tip ? (
         <p key={tip.id} className={styles.tip} role="status">
           <span aria-hidden>💡</span> {t.tips[tip.id]}

@@ -352,3 +352,8 @@
 :global(:root[data-motion='off']) .qrMarkBump {
   animation: none;
 }
+
+/* ── I-388 B: everyone's in. */
+.allIn {
+  color: var(--pb-accent-3);
+}
