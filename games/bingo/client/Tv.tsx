@@ -250,7 +250,7 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
                 </p>
               ) : view.decide && (view.decide.same || view.decide.blackout) ? (
                 <p className={decideLineClass(view)}>
-                  <span className={styles.decideWho}>Anyone</span> picks on their phone: keep going
+                  <span className={styles.decideWho}>Everyone</span> votes on their phone: keep going
                   {view.decide.blackout ? ' (same pattern or blackout)' : ''} or{' '}
                   {view.round < view.totalRounds ? 'next round' : 'finish'}. The caller waits.
                   {view.decide.same && view.claim.cardCount > 1

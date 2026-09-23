@@ -252,22 +252,38 @@ export function DecideFooter({
   };
   return (
     <div className={styles.decide}>
+      {/* I-105 A: a vote — the buttons stay until it closes; my choice is lit and can change. */}
       {decide.same ? (
-        <PrimaryButton onClick={() => pick({ type: 'continue', pattern: 'same' })}>
-          Keep going — same pattern
+        <PrimaryButton
+          className={view.myVote === 'same' ? styles.voted : undefined}
+          onClick={() => pick({ type: 'continue', pattern: 'same' })}
+        >
+          {view.myVote === 'same' ? '✓ ' : ''}Keep going — same pattern
         </PrimaryButton>
       ) : null}
       {decide.blackout ? (
         <PrimaryButton
           tone="neutral"
+          className={view.myVote === 'blackout' ? styles.voted : undefined}
           onClick={() => pick({ type: 'continue', pattern: 'blackout' })}
         >
-          Keep going — blackout
+          {view.myVote === 'blackout' ? '✓ ' : ''}Keep going — blackout
         </PrimaryButton>
       ) : null}
-      <PrimaryButton tone="neutral" onClick={() => pick({ type: 'next' })}>
+      <PrimaryButton
+        tone="neutral"
+        className={view.myVote === 'next' ? styles.voted : undefined}
+        onClick={() => pick({ type: 'next' })}
+      >
+        {view.myVote === 'next' ? '✓ ' : ''}
         {nextLabel}
       </PrimaryButton>
+      {/* (SECOND BUILD: B's tally and C's clock were extra lines under the buttons, which pushed
+          them under the phone's "more below" arrow; now the counts ride on the buttons and the
+          clock takes the hint line, so the screen is as tall as A's.) */}
+      <p className={styles.hint}>
+        {view.myVote ? 'Your vote is in — tap another to change it.' : 'Everyone votes; the most votes win.'}
+      </p>
     </div>
   );
 }
