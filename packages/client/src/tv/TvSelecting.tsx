@@ -79,7 +79,11 @@ export function TvSelecting({ room, client }: TvSelectingProps): JSX.Element {
             />
             {t.selecting.musicOnPhones}
           </label>
-          <PlayerChips
+          {/* I-668 A: past 8 players the roster is one row of faces — the five games always show */}
+          {room.players.length > 8 ? (
+            <FaceStack room={room} />
+          ) : (
+            <PlayerChips
             players={room.players.map((p) => ({
               id: p.id,
               name: p.name,
@@ -96,6 +100,7 @@ export function TvSelecting({ room, client }: TvSelectingProps): JSX.Element {
             layout="grid"
             size="sm"
           />
+          )}
         </div>
         {game ? (
           // Nobody scrolls a TV: a game with many settings (bingo's ten) packs three columns and a
@@ -138,5 +143,16 @@ export function TvSelecting({ room, client }: TvSelectingProps): JSX.Element {
         ) : null}
       </div>
     </Stage>
+  );
+}
+
+/** I-668: the room as one row of overlapping faces — never taller than one line. */
+function FaceStack({ room }: { room: RoomSnapshot }): JSX.Element {
+  return (
+    <span className={styles.faces} aria-label={`${room.players.length} players`}>
+      {room.players.map((p) => (
+        <Avatar key={p.id} avatarId={p.avatarId} size={40} dim={!p.connected} />
+      ))}
+    </span>
   );
 }

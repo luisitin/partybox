@@ -39,9 +39,8 @@
   display: flex;
   flex-direction: column;
   gap: var(--pb-space-2);
-  flex: 1 1 auto;
-  min-height: 0;
-  overflow-y: auto;
+  /* I-668 A: the list never gives — all five games always show */
+  flex: none;
 }
 .left > :not(.games) {
   flex: none;
@@ -192,4 +191,15 @@
   width: 28px;
   height: 28px;
   accent-color: var(--pb-accent);
+}
+
+/* ── I-668: the room as a row of overlapping faces. */
+.faces {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  margin-left: var(--pb-space-4);
+}
+.faces > * + * {
+  margin-left: -12px;
 }
