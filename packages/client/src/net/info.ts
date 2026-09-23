@@ -36,6 +36,13 @@ export interface ServerInfo {
 }
 
 let cached: ServerInfo | null = null;
+/** I-658 B: every mounted hook's reload, so a room change can refresh the QR at once. */
+const reloaders = new Set<() => void>();
+
+/** I-658 B: fetch /api/info now (the TV calls it when its room code changes). */
+export function refreshServerInfo(): void {
+  for (const reload of reloaders) reload();
+}
 
 /**
  * I-077 A: the join funnel's "opened" is one join page opened on one phone. Only the join page
@@ -66,9 +73,11 @@ export function useServerInfo(refreshMs = 60_000, countOpen = false): ServerInfo
         .catch(() => undefined);
     };
     load();
+    reloaders.add(load);
     const handle = setInterval(load, refreshMs);
     return () => {
       alive = false;
+      reloaders.delete(load);
       clearInterval(handle);
     };
   }, [refreshMs, countOpen]);

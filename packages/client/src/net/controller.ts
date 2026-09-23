@@ -199,6 +199,8 @@ export function createController(url?: string): Controller {
     if (reason === 'io server disconnect') socket.connect();
   });
   socket.on('welcome', (payload: WelcomePayload) => {
+    // I-658 B: the address carries the room the phone is really in (a reload, a share)
+    replaceRoomParam(payload.room.code);
     const session = pending ?? loadSession();
     if (session) {
       saveSession({ ...session, token: payload.token, roomCode: payload.room.code });
@@ -287,6 +289,13 @@ export function createController(url?: string): Controller {
         toasts: [],
         restarted: true,
       });
+      // I-658 B: the form shows the new room, not the dead code in the address
+      void fetch('/api/info')
+        .then((r) => r.json() as Promise<{ houseRoom?: string }>)
+        .then((i) => {
+          if (i.houseRoom && replaceRoomParam(i.houseRoom)) store.set({ restarted: true });
+        })
+        .catch(() => undefined);
       return;
     }
     if (error.code === 'rate_limited') return;
@@ -340,4 +349,18 @@ export function createController(url?: string): Controller {
     session: loadSession,
     identity: loadIdentity,
   };
+}
+
+/** I-658 B: swaps `?room=` in the address (only when one is there and differs); true if changed. */
+function replaceRoomParam(code: string): boolean {
+  try {
+    const url = new URL(window.location.href);
+    const now = url.searchParams.get('room');
+    if (!now || now.toUpperCase() === code) return false;
+    url.searchParams.set('room', code);
+    window.history.replaceState(window.history.state, '', url);
+    return true;
+  } catch {
+    return false;
+  }
 }
