@@ -6,6 +6,10 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Fixed
 
+- **Broken Pencil's recap never cuts a word in half** (S-006, option B): each book's card puts the
+  name and the verdict on its first line and gives the chain the card's full width underneath, so a
+  long player name no longer squeezes "christmas" into "christ / mas".
+
 - **Share hands out the link that works from anywhere, and Copy works** (the owner, 2026-09-22):
   the server now knows the Cloudflare tunnel's address (`PARTYBOX_PUBLIC_URL`, or the newest one in
   `cloudflared.log` while a `cloudflared` process is running — local signals only, ADR-012) and
