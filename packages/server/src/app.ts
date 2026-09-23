@@ -199,7 +199,11 @@ export async function createApp(options: AppOptions): Promise<App> {
     const { tv, join: joinUrl } = app.urls();
     // I-041 (the owner): the QR carries the house room's code (`/?room=KGVU`) so a scan goes
     // straight in; the URL the TV prints stays bare and a phone that types it asks for the code.
-    const qrUrl = `${joinUrl.replace(/\/$/, '')}/?room=${host.house().code}`;
+    // I-787 A: the QR of the room the caller is looking at (a second room's TV passes its own code);
+    // without one, the house room's, as before
+    const askedRoom = String((req.query as { room?: string }).room ?? '').trim().toUpperCase();
+    const qrRoom = host.get(askedRoom) ? askedRoom : host.house().code;
+    const qrUrl = `${joinUrl.replace(/\/$/, '')}/?room=${qrRoom}`;
     return {
       version: PARTYBOX_VERSION,
       /** Boot time: a client that reconnects to a different value reloads (stale bundle guard). */
