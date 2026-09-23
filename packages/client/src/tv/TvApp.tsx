@@ -14,6 +14,7 @@ import type { MusicEngine } from '../music';
 import { createSoundEngine, joinSemitones, lockSemitones } from '../sound';
 import type { SoundEngine } from '../sound';
 import { AudioGate } from './AudioGate';
+import { PhoneOnTvHint } from '../SurfaceHint';
 import { HostBar } from './HostBar';
 import { roomFullToast, seatOpenedToast, soundToast } from './own-toasts';
 import { TvFrame } from './TvFrame';
@@ -319,6 +320,8 @@ export function TvApp(): JSX.Element {
         beds={beds}
         onToggle={(m) => showLocalToast({ kind: 'info', text: soundToast(m) })}
       />
+      {/* I-677: the TV page on a phone offers joining as a player */}
+      <PhoneOnTvHint code={room?.code ?? null} />
     </ServerClockProvider>
   );
 }
