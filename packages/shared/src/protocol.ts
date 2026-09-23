@@ -140,6 +140,8 @@ export interface RoomSnapshot {
   musicOnPhones: boolean;
   /** S-005: "phone only" — games hand the phones what the TV would show; set by the VIP. */
   phoneOnly: boolean;
+  /** I-652 B: tonight's finished games (newest last) and their human winners. */
+  tonight?: { gameId: string; winners: { name: string; avatarId: string }[]; botsWon: boolean }[];
   /** The owner (2026-09-22): a listed ("public") room appears in the join page's room list; a
    *  private one can still be joined by anyone who knows its code. */
   listed: boolean;

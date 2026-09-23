@@ -62,6 +62,18 @@ export interface RoomState {
   listed: boolean;
   /** S-005: "phone only" — the TV's moments go to the phones. */
   phoneOnly: boolean;
+  /** I-652 B: tonight's finished games, newest last (a gap over 3 h starts a new night). */
+  tonight?: TonightGame[];
+}
+
+/** I-652 B: one finished game, as the lobby remembers it. */
+export interface TonightGame {
+  gameId: string;
+  endedAt: number;
+  /** The people who won (bots left out). */
+  winners: { name: string; avatarId: string }[];
+  /** Only bots won it (as opposed to nobody scoring). */
+  botsWon: boolean;
 }
 
 export type RoomEvent =
