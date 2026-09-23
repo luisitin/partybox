@@ -41,6 +41,17 @@ export function createSocketLayer(server: HttpServer): SocketLayer {
     pingTimeout: LIMITS.pingTimeoutMs,
     serveClient: false,
     cors: { origin: true },
+    // I-753 C: a browser page from another website may not open a PartyBox socket (browsers do not
+    // apply CORS to WebSockets, so the Origin is checked here); tools without an Origin are fine
+    allowRequest: (req, callback) => {
+      const from = req.headers.origin;
+      if (!from) return callback(null, true);
+      try {
+        callback(null, new URL(from).host === req.headers.host);
+      } catch {
+        callback(null, false);
+      }
+    },
   });
   const byPlayer = new Map<string, Socket>();
 

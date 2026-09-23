@@ -59,6 +59,13 @@ export function registerDevApi(app: FastifyInstance, options: DevApiOptions): vo
   app.addHook('onRequest', async (req, reply) => {
     if (req.url.startsWith('/api/dev/') && !options.enabled) {
       await reply.code(403).send({ error: 'dev api off (start with --dev or --dev-api)' });
+      return;
+    }
+    // I-753 B: the developer API is for the host PC itself; the one route the TV's 🏠 needs
+    // (start over) stays reachable, for a TV that is a separate device
+    const loopback = ['127.0.0.1', '::1', '::ffff:127.0.0.1'].includes(req.ip);
+    if (req.url.startsWith('/api/dev/') && !loopback && !(req.method === 'POST' && req.url.startsWith('/api/dev/reset'))) {
+      await reply.code(403).send({ error: 'host PC only' });
     }
   });
 
@@ -183,7 +190,15 @@ export function registerDevApi(app: FastifyInstance, options: DevApiOptions): vo
     const code = roomOf(req.query);
     const room = host.get(code);
     return {
-      room: room ?? null,
+      // I-753 A: never the players' login tokens (a token lets a phone take that player over)
+      room: room
+        ? {
+            ...room,
+            players: Object.fromEntries(
+              Object.entries(room.players).map(([id, p]) => [id, { ...p, token: '' }]),
+            ),
+          }
+        : null,
       nextWakeAt: room ? nextWakeAt(room) : null,
       clock: { now: clock.now(), frozen: clock.isFrozen() },
       bots: bots.ids(code),
