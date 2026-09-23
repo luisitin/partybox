@@ -12,7 +12,7 @@ import type { BingoTvView } from '../server/views';
 import { BALL_LAND_MS, hushCaller, speakCall } from './caller';
 import { PatternIcon } from './Card';
 
-import { botLine, holdLine, pendingLine, whyNot, winHeadline } from './copy';
+import { wipeKind, botLine, holdLine, pendingLine, whyNot, winHeadline } from './copy';
 import { VoteClock, VoteTally } from './Vote';
 import { hopelessClaim } from '../server/reveal';
 import { IntroStage, Resume } from './TvCountdown';
@@ -186,7 +186,9 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
                 </BigText>
               ) : null}
               <BigText level="h2" tone="muted">
-                {L('Card wiped. Next number in a moment…')}
+                {view.claim && wipeKind(view.claim) !== 'card'
+                  ? L('Wrong daubs and that line wiped. Next number in a moment…')
+                  : L('Card wiped. Next number in a moment…')}
               </BigText>
             </>
           }
