@@ -112,6 +112,44 @@ export function ControllerHand({ view, send, skip }: Props): JSX.Element {
   const flight = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => () => clearTimeout(flight.current ?? undefined), []);
   const black = view.black;
+  // I-141 A: where the fan is — the card nearest its centre, and how many there are.
+  const fanRef = useRef<HTMLUListElement | null>(null);
+  const [at, setAt] = useState(0);
+  useEffect(() => {
+    const el = fanRef.current;
+    if (!el) return undefined;
+    const read = (): void => {
+      const kids = [...el.children] as HTMLElement[];
+      if (kids.length === 0) return;
+      const mid = el.scrollLeft + el.clientWidth / 2;
+      let best = 0;
+      let bestD = Infinity;
+      kids.forEach((k, i) => {
+        const d = Math.abs(k.offsetLeft + k.offsetWidth / 2 - mid);
+        if (d < bestD) { bestD = d; best = i; }
+      });
+      setAt(best);
+    };
+    read();
+    el.addEventListener('scroll', read, { passive: true });
+    return () => el.removeEventListener('scroll', read);
+  }, [view.hand.length]);
+  // I-141 B: the row is a scrubber — a press anywhere on it flies the fan to that card.
+  const scrubTo = (clientX: number, row: HTMLElement): void => {
+    const el = fanRef.current;
+    const kids = el ? ([...el.children] as HTMLElement[]) : [];
+    if (!el || kids.length === 0) return;
+    const box = row.getBoundingClientRect();
+    const f = Math.min(0.999, Math.max(0, (clientX - box.left) / box.width));
+    scrubToCard(Math.floor(f * kids.length));
+  };
+  // I-141 B: …and a keyboard / screen reader moves it a card at a time (the FIRST build had the
+  // slider role with no key handling — audit 2026-09-22).
+  const scrubToCard = (i: number): void => {
+    const el = fanRef.current;
+    const k = el ? (el.children[Math.max(0, Math.min(el.children.length - 1, i))] as HTMLElement | undefined) : undefined;
+    if (el && k) el.scrollTo({ left: k.offsetLeft + k.offsetWidth / 2 - el.clientWidth / 2, behavior: 'smooth' });
+  };
   const pick = black?.pick ?? 1;
   if (!black)
     return <WaitingScreen title={view.phoneOnly ? 'One moment…' : 'Look at the TV'} mood="watch" />;
@@ -226,9 +264,48 @@ export function ControllerHand({ view, send, skip }: Props): JSX.Element {
         >
           {view.redrawsLeft === 0 ? 'No new hands left' : `New hand · ${view.redrawsLeft} left`}
         </button>
+        {/* I-141 A: the hand's width, made visible — one edge per card, the current one lifted. */}
+      <div className={styles.fanPos}>
+        <div
+          className={styles.fanEdges}
+          role="slider"
+          tabIndex={0}
+          aria-label="scrub the hand"
+          aria-valuemin={1}
+          aria-valuemax={view.hand.length}
+          aria-valuenow={at + 1}
+          aria-valuetext={`card ${at + 1} of ${view.hand.length}`}
+          onKeyDown={(e) => {
+            const to =
+              e.key === 'ArrowRight' || e.key === 'ArrowUp' ? at + 1
+              : e.key === 'ArrowLeft' || e.key === 'ArrowDown' ? at - 1
+              : e.key === 'Home' ? 0
+              : e.key === 'End' ? view.hand.length - 1
+              : null;
+            if (to === null) return;
+            e.preventDefault();
+            scrubToCard(to);
+          }}
+          onPointerDown={(e) => { e.currentTarget.setPointerCapture(e.pointerId); scrubTo(e.clientX, e.currentTarget); }}
+          onPointerMove={(e) => { if (e.buttons) scrubTo(e.clientX, e.currentTarget); }}
+        >
+          {view.hand.map((card, i) => (
+            <span
+              key={card.id}
+              className={`${styles.fanEdge} ${i === at ? styles.fanEdgeOn : ''} ${picked.includes(card.id) ? styles.fanEdgeSpent : ''}`}
+            />
+          ))}
+        </div>
+        <span className="pb-caption pb-muted">
+          {at + 1} of {view.hand.length}
+        </span>
+      </div>
       </div>
       <ul
-        className={`${styles.hand} ${flying ? styles.handFlying : ''}`}
+        ref={fanRef}
+        data-more-left={at > 0 || undefined}
+        data-more-right={at < view.hand.length - 1 || undefined}
+        className={`${styles.hand} ${flying ? styles.handFlying : ''} ${styles.handStacked}`}
         aria-label="your hand"
         data-picking={picked.length > 0 || undefined}
       >
