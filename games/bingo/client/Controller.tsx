@@ -110,6 +110,18 @@ export function Controller({
     setSwaps(0);
   });
   const missed = useMissedCalls(view);
+  // I-122 A: ✕ hides the tray for this batch of missed calls; a new batch shows again.
+  // (FIRST BUILD: two counters that the dismiss made equal again, so ✕ never closed it.)
+  const [missedDismissed, setMissedDismissed] = useState(false);
+  const [missedBatch, setMissedBatch] = useState(missed);
+  // (SECOND BUILD: the tray re-read view.recent every render, so it slid on to calls the player saw.)
+  const [missedCalls, setMissedCalls] = useState<string[]>(() => view.recent.slice(0, -1).slice(-missed));
+  if (missed !== missedBatch) {
+    setMissedBatch(missed);
+    setMissedDismissed(false);
+    setMissedCalls(view.recent.slice(0, -1).slice(-missed));
+  }
+  const dismissMissed = (): void => setMissedDismissed(true);
   // The sheet holds the caller for everyone: the server hears it open and close.
   const openMenu = (): void => {
     setSheet(view.phaseId === 'intro' ? 'intro' : 'round');
@@ -292,7 +304,21 @@ export function Controller({
             )}
             {inRound && !sheet && kind !== 'tablet' ? <StylePill onOpen={openMenu} /> : null}
           </div>
-          {missed ? <MissedToast view={view} count={missed} /> : null}
+          {missed && !missedDismissed ? (
+            <MissedToast
+              view={view}
+              count={missed}
+              calls={missedCalls}
+              onDismiss={dismissMissed}
+              onBall={(n) => {
+                // I-122 B: daub the cell on the card that is up, if the number is on it.
+                const index = (cards?.[up] ?? []).indexOf(n);
+                if (index < 0) return false;
+                daub(up, index);
+                return true;
+              }}
+            />
+          ) : null}
           {view.phaseId === 'check' && view.claim?.playerId === me.id ? (
             // The note's lines are reserved from the claim (loop 313): filling them at the verdict
             // used to drop the card 25 px in one frame. Before the verdict they say what is on.
