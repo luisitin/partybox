@@ -46,19 +46,31 @@ export function SettingField({
         ? spec.max
         : 0;
   const shown = spec.type === 'number' ? Math.min(max, Number(value ?? spec.default)) : 0;
+  // I-112 A: implied by a sibling — greyed, with the reason.
+  const implied =
+    spec.impliedBy !== undefined && settings?.[spec.impliedBy.key] === spec.impliedBy.value;
   switch (spec.type) {
     case 'boolean':
       return (
-        <label className={styles.setting} htmlFor={id}>
+        <label
+          className={styles.setting}
+          htmlFor={id}
+          style={implied ? { opacity: 0.5 } : undefined}
+        >
           <span className={styles.settingLabel}>
             {label}
-            {description ? <small>{description}</small> : null}
+            {implied && spec.impliedBy ? (
+              <small>{L(spec.impliedBy.note)}</small>
+            ) : description ? (
+              <small>{description}</small>
+            ) : null}
           </span>
           <input
             id={id}
             type="checkbox"
             className={styles.checkbox}
-            checked={value === true}
+            checked={implied ? true : value === true}
+            disabled={implied}
             onChange={(e) => onChange(e.target.checked)}
           />
         </label>

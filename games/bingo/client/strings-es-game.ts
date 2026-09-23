@@ -34,10 +34,12 @@ export const ES_GAME: Readonly<Record<string, string>> = {
   'Seconds per number': 'Segundos por número',
   'How long each number stays up before the next one is called':
     'Cuánto se ve cada número antes de cantar el siguiente',
-  'Called board': 'Tablero de números',
-  'Show every number called so far on the TV': 'Muestra en la TV todos los números que salieron',
-  'Previous number': 'Número anterior',
-  'Show the number before this one under the call': 'Muestra el número anterior bajo el actual',
+  // I-112 C: one three-way choice replaced "Called board" and "Previous number".
+  'Calls shown': 'Números a la vista',
+  'How much of the call history the TV keeps up': 'Cuántos números ya cantados muestra la TV',
+  'Memory test (nothing)': 'Prueba de memoria (nada)',
+  'Last call only': 'Solo el último',
+  'Full board': 'Tablero completo',
   'One away': 'A un número',
   'Tell the room when a player is one number from the pattern — a ring in the strip, a line under the call and a hush':
     'Avisa a la sala cuando a alguien le falta un número para la figura: un aro en la franja, una línea bajo el número y un susurro',

@@ -45,3 +45,6 @@ game's table). Bingo sends the live call ("N 34 — Thirty-four — ask for more
 Avatar ids may carry a colour (I-086, 2026-09-23): `fox#3` is the fox in player colour 4
 (`avatarFace` / `avatarTint` in `@partybox/shared`); `Avatar` and `avatarColorVar` read both, and an
 id without `#` behaves as before.
+
+A manifest setting may declare `impliedBy: { key, value, note }` (I-112 A, 2026-09-23): while the
+sibling `key` has `value`, the picker (phone and TV) greys the field out, checked, with `note`.

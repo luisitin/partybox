@@ -100,16 +100,15 @@ exactly like humans.
 
 ## Settings
 
-| Key               | Type    | Default                          | Range                         | Effect                                                                                      |
-| ----------------- | ------- | -------------------------------- | ----------------------------- | ------------------------------------------------------------------------------------------- |
-| `rounds`          | number  | 3                                | 1–5                           | Rounds played; fresh cards and deck each round.                                             |
-| `round1`…`round5` | select  | line, corners, x, line, blackout | line / corners / x / blackout | The pattern for that round (only the first `rounds` apply).                                 |
-| `cards`           | number  | 1                                | 1–4                           | Cards dealt to every player each round.                                                     |
-| `callSeconds`     | number  | 6                                | 3–12                          | Seconds each number stays up before the next call.                                          |
-| `showBoard`       | boolean | false                            | —                             | TV shows the hall board of every number called so far.                                      |
-| `showPrevious`    | boolean | true                             | —                             | TV shows the previous number under the current call; off, the phones drop it too (I-113 A). |
-| `showClose`       | boolean | false                            | —                             | TV tells the room who is one number from the pattern.                                       |
-| `spicy`           | boolean | false                            | —                             | Cheekier caller nicknames for some numbers (PG-13).                                         |
+| Key               | Type    | Default                          | Range                         | Effect                                                                                                                                                                                           |
+| ----------------- | ------- | -------------------------------- | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `rounds`          | number  | 3                                | 1–5                           | Rounds played; fresh cards and deck each round.                                                                                                                                                  |
+| `round1`…`round5` | select  | line, corners, x, line, blackout | line / corners / x / blackout | The pattern for that round (only the first `rounds` apply).                                                                                                                                      |
+| `cards`           | number  | 1                                | 1–4                           | Cards dealt to every player each round.                                                                                                                                                          |
+| `callSeconds`     | number  | 6                                | 3–12                          | Seconds each number stays up before the next call.                                                                                                                                               |
+| `callsShown`      | select  | last                             | none · last · board           | I-112 C: nothing (a memory test), the previous number under the call (off, the phones drop it too — I-113 A), or also the hall board; maps onto `showBoard` / `showPrevious` (board ⇒ previous). |
+| `showClose`       | boolean | false                            | —                             | TV tells the room who is one number from the pattern.                                                                                                                                            |
+| `spicy`           | boolean | false                            | —                             | Cheekier caller nicknames for some numbers (PG-13).                                                                                                                                              |
 
 Patterns: **line** = any full row, column or diagonal (FREE counts); **corners** = the four corners; **x** = both diagonals; **blackout** = every square. Settings are fixed at init.
 

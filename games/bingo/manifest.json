@@ -117,18 +117,16 @@
       "step": 1
     },
     {
-      "key": "showBoard",
-      "label": "Called board",
-      "description": "Show every number called so far on the TV",
-      "type": "boolean",
-      "default": false
-    },
-    {
-      "key": "showPrevious",
-      "label": "Previous number",
-      "description": "Show the number before this one under the call",
-      "type": "boolean",
-      "default": true
+      "key": "callsShown",
+      "label": "Calls shown",
+      "description": "How much of the call history the TV keeps up",
+      "type": "select",
+      "default": "last",
+      "options": [
+        { "value": "none", "label": "Memory test (nothing)" },
+        { "value": "last", "label": "Last call only" },
+        { "value": "board", "label": "Full board" }
+      ]
     },
     {
       "key": "showClose",

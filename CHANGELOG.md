@@ -49,6 +49,11 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Changed
 
+- **Bingo: "Calls shown" is one choice** (I-112, option C): Memory test (nothing) · Last call only ·
+  Full board replaces the "Called board" and "Previous number" switches, which could be set to a
+  contradiction (the board on, the previous call off). Any setting can now declare `impliedBy` to
+  grey itself out while a sibling implies it.
+
 - **Share is a pill in the lobby's top-right corner** and opens a real chooser (the owner,
   2026-09-22): the phone's own share sheet where the page is https, otherwise Messages · WhatsApp ·
   Mail · Copy. A "🚪 Leave" pill beside it drops the session and goes back to the room menu.
