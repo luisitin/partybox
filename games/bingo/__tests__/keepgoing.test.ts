@@ -15,6 +15,7 @@ import {
   claim,
   claimRaw,
   daubAll,
+  choose,
   input,
   start,
   timer,
@@ -30,7 +31,7 @@ describe('keeping the round going', () => {
     s = claim(s, 'a');
     const drawn = s.round.drawn;
     const endsAt = after(s) - 10;
-    s = input(s, 'b', { type: 'continue', pattern: 'same' }, endsAt + 10);
+    s = choose(s, 'b', { type: 'continue', pattern: 'same' }, endsAt + 10);
     expect(s.phase.id).toBe('play');
     expect(s.round.drawn).toBe(drawn);
     expect(game.tvView(s).callIndex).toBe(drawn);
@@ -46,7 +47,7 @@ describe('keeping the round going', () => {
     s = claim(s, 'a');
     expect(game.tvView(s).patternBingos).toBe(1);
     const endsAt = after(s) - 10;
-    s = input(s, 'b', { type: 'continue', pattern: 'same' }, endsAt + 10);
+    s = choose(s, 'b', { type: 'continue', pattern: 'same' }, endsAt + 10);
     // Ben completes the same row later on his card: the second bingo of the pattern.
     s = callUntil(s, 'b', LINE);
     s = daubAll(s, 'b', LINE);
@@ -54,7 +55,7 @@ describe('keeping the round going', () => {
     expect(game.tvView(s).patternBingos).toBe(2);
     expect(game.tvView(s).bingosThisRound).toBe(2);
     const endsAt2 = after(s) - 10;
-    s = input(s, 'c', { type: 'continue', pattern: 'blackout' }, endsAt2 + 10);
+    s = choose(s, 'c', { type: 'continue', pattern: 'blackout' }, endsAt2 + 10);
     expect(s.round.pattern).toBe('blackout');
     expect(s.round.patternBingos).toBe(0);
     expect(s.round.won).toEqual({});
@@ -74,8 +75,8 @@ describe('keeping the round going', () => {
     expect(s.phase.id).toBe('bingo');
     expect(game.tvView(s).decide).toEqual({ same: false, blackout: true });
     const endsAt = after(s) - 10;
-    expect(input(s, 'b', { type: 'continue', pattern: 'same' }, endsAt + 10)).toBe(s);
-    s = input(s, 'b', { type: 'continue', pattern: 'blackout' }, endsAt + 10);
+    expect(choose(s, 'b', { type: 'continue', pattern: 'same' }, endsAt + 10)).toBe(s);
+    s = choose(s, 'b', { type: 'continue', pattern: 'blackout' }, endsAt + 10);
     expect(s.phase.id).toBe('play');
     expect(s.round.pattern).toBe('blackout');
     // A round that is a blackout from the start: the first full card ends it.
@@ -95,22 +96,27 @@ describe('keeping the round going', () => {
     expect(game.tvView(b).decide).toEqual({ same: false, blackout: false });
   });
 
-  it('a choice made mid-celebration is held until the reveal is done, then applied; the first one counts', () => {
+  it('I-105: a choice mid-celebration is a vote; the majority decides when the vote closes', () => {
     let s = callUntil(start(), 'a', LINE);
     s = daubAll(s, 'a', LINE);
     s = claim(s, 'a');
     const endsAt = after(s) - 10;
     const early = input(s, 'b', { type: 'continue', pattern: 'same' }, s.phase.startedAt + 400);
     expect(early.phase.id).toBe('bingo');
-    expect(early.round.decision).toEqual({ type: 'continue', pattern: 'same', by: 'b' });
-    expect(early.phase.deadline).toBe(endsAt);
-    expect(game.tvView(early).pendingDecision).toBe('same');
-    expect(game.tvView(early).pendingBy).toBe('Ben'); // the TV names who picked (loop 261)
-    // A second, different choice while one is held changes nothing.
-    expect(input(early, 'c', { type: 'next' }, s.phase.startedAt + 800)).toBe(early);
-    const applied = timer(early);
-    expect(applied.phase.id).toBe('play');
-    expect(applied.round.decision).toBeNull();
+    expect(early.round.votes?.['b']?.choice).toEqual({ type: 'continue', pattern: 'same', by: 'b' });
+    expect(early.phase.deadline).toBe(Math.max(endsAt, s.phase.startedAt + 400 + 6000));
+    expect(game.tvView(early).pendingDecision).toBeNull(); // no one has picked FOR the room
+    expect(game.tvView(early).votes).toEqual([{ name: 'Ben', choice: 'same' }]);
+    expect(game.controllerView(early, 'b').myVote).toBe('same');
+    // Two more votes for the next round: the majority wins when the vote closes.
+    const voted = input(
+      input(early, 'c', { type: 'next' }, s.phase.startedAt + 800),
+      'a',
+      { type: 'next' },
+      s.phase.startedAt + 900,
+    );
+    const applied = timer(voted);
+    expect(applied.phase.id).toBe('scoreboard');
     // With nothing held, the long deadline still means "abandoned": on to the scoreboard.
     expect(timer(s).phase.id).toBe('scoreboard');
   });
@@ -123,7 +129,7 @@ describe('points and the end of a round', () => {
     s = claim(s, 'a', 0);
     expect(s.wins['a']).toBe(3);
     expect(game.tvView(s).claimPoints).toBe(3);
-    s = input(s, 'b', { type: 'continue', pattern: 'same' }, after(s));
+    s = choose(s, 'b', { type: 'continue', pattern: 'same' }, after(s));
     for (const [card, points] of [
       [1, 2],
       [2, 1],
@@ -134,13 +140,13 @@ describe('points and the end of a round', () => {
       s = claim(s, 'a', card);
       expect(s.phase.id).toBe('bingo');
       expect(game.tvView(s).claimPoints).toBe(points);
-      if (card < 3) s = input(s, 'b', { type: 'continue', pattern: 'same' }, after(s));
+      if (card < 3) s = choose(s, 'b', { type: 'continue', pattern: 'same' }, after(s));
     }
     expect(s.wins['a']).toBe(6.5);
     expect(game.tvView(s).standings[0]).toMatchObject({ playerId: 'a', wins: 6.5, rank: 1 });
     // Every card of Ana's has won the line: in a three-player game the others still contest.
     expect(game.tvView(s).decide).toEqual({ same: true, blackout: true });
-    s = input(s, 'b', { type: 'continue', pattern: 'blackout' }, after(s));
+    s = choose(s, 'b', { type: 'continue', pattern: 'blackout' }, after(s));
     // The ladder starts again for the blackout: the next bingo would be worth 3.
     expect(s.round.patternBingos).toBe(0);
     expect(pointsFor(s.round.patternBingos + 1)).toBe(3);
@@ -194,12 +200,15 @@ describe('the points land with the verdict (loop 257)', () => {
     s = claimRaw(s, 'a');
     const verdictAt = s.phase.deadline ?? 0;
     const early = input(s, 'b', { type: 'continue', pattern: 'same' }, s.phase.startedAt + 400);
-    expect(early.round.decision).toEqual({ type: 'continue', pattern: 'same', by: 'b' });
+    expect(early.round.votes?.['b']?.choice).toEqual({ type: 'continue', pattern: 'same', by: 'b' });
     expect(early.phase.deadline).toBe(verdictAt); // the verdict tick is still due
     const scored = timer(early);
     expect(scored.phase.id).toBe('bingo');
     expect(scored.wins['a']).toBe(3);
-    expect(scored.phase.deadline).toBe(verdictAt + VERDICT_READ_MS);
+    // I-105: the vote closes at its own 6 s mark, never before the read after the verdict.
+    expect(scored.phase.deadline).toBe(
+      Math.max(verdictAt + VERDICT_READ_MS, s.phase.startedAt + 400 + 6000),
+    );
     expect(timer(scored).phase.id).toBe('play');
   });
 
@@ -248,7 +257,7 @@ describe('the resume countdown (loop 276)', () => {
     s = daubAll(s, 'a', LINE);
     s = claim(s, 'a');
     const drawn = s.round.drawn;
-    s = input(s, 'b', { type: 'continue', pattern: 'blackout' }, after(s));
+    s = choose(s, 'b', { type: 'continue', pattern: 'blackout' }, after(s));
     expect(s.phase.id).toBe('play');
     expect(s.round.resumeAgain).toBe(true);
     expect(s.round.resumeAt).toBe(s.phase.startedAt + RESUME_MS);
@@ -272,7 +281,7 @@ describe('the resume countdown (loop 276)', () => {
     s = claim(s, 'a');
     const drawn = s.round.drawn;
     s = input(s, 'c', { type: 'menu', open: true }, after(s));
-    s = input(s, 'b', { type: 'continue', pattern: 'same' }, after(s));
+    s = choose(s, 'b', { type: 'continue', pattern: 'same' }, after(s));
     expect(s.phase.id).toBe('play');
     expect(s.phase.deadline).toBeNull(); // held, as the check's way back is (no ring that leads nowhere)
     expect(s.round.resumeAt).toBeNull();
@@ -291,7 +300,7 @@ describe('the resume countdown (loop 276)', () => {
     s = daubAll(s, 'a', LINE);
     s = claim(s, 'a');
     const drawn = s.round.drawn;
-    s = input(s, 'b', { type: 'continue', pattern: 'same' }, after(s));
+    s = choose(s, 'b', { type: 'continue', pattern: 'same' }, after(s));
     const skipped = vip(s, 'skip');
     expect(skipped.round.drawn).toBe(drawn + 1);
     expect(skipped.round.resumeAgain).toBe(false);
@@ -323,7 +332,8 @@ describe('a VIP pause through a bingo (loop 294 — the review)', () => {
       judged.round.judgedAt ?? 0,
     );
     expect(choice.phase.id).toBe('bingo');
-    expect(choice.phase.deadline).toBe((judged.round.judgedAt ?? 0) + VERDICT_READ_MS);
+    // I-105: a vote cast at the verdict runs its full 6 s (longer than the 3 s read).
+    expect(choice.phase.deadline).toBe((judged.round.judgedAt ?? 0) + 6000);
     expect(timer(choice).phase.id).toBe('play');
   });
 
@@ -344,7 +354,7 @@ describe('a VIP pause through a bingo (loop 294 — the review)', () => {
     let s = callUntil(start(), 'a', LINE);
     s = daubAll(s, 'a', LINE);
     s = claim(s, 'a');
-    s = input(s, 'b', { type: 'continue', pattern: 'same' }, after(s));
+    s = choose(s, 'b', { type: 'continue', pattern: 'same' }, after(s));
     expect(s.round.resumeAt).toBe(s.phase.deadline);
     const paused = vip(s, 'pause', s.phase.startedAt + 1000);
     const resumed = vip(paused, 'resume', s.phase.startedAt + 3000);
@@ -372,7 +382,7 @@ describe('a VIP pause through a bingo (loop 294 — the review)', () => {
     expect(game.tvView(held).calledAt).toBe(stamp);
     s = daubAll(s, 'a', LINE);
     s = claim(s, 'a');
-    s = input(s, 'b', { type: 'continue', pattern: 'same' }, after(s));
+    s = choose(s, 'b', { type: 'continue', pattern: 'same' }, after(s));
     expect(game.tvView(s).calledAt).toBe(stamp); // the countdown: not a call
     const again = timer(s);
     expect(again.round.calledAt).toBe(again.phase.startedAt); // the repeat: a new stamp
