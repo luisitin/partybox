@@ -19,6 +19,11 @@ export function enterCheck(state: State, now: number, claim: Claim): State {
   return enterPhase(
     clearClaims({
       ...state,
+      // I-401 B: counted for "Trigger finger"
+      wrongClaims: {
+        ...state.wrongClaims,
+        [claim.playerId]: (state.wrongClaims?.[claim.playerId] ?? 0) + 1,
+      },
       round: {
         ...round,
         claim,
