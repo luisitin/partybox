@@ -30,14 +30,14 @@ export const ES_TV: Readonly<Record<string, string>> = {
   '+{n} points': '+{n} puntos',
   // I-105: every phone votes on what comes after a bingo.
   Everyone: 'Todos',
-  'votes on their phone: keep going (same pattern or blackout) or finish. The caller waits.':
-    'votan en su teléfono: seguir (misma figura o cartón lleno) o terminar. El locutor espera.',
-  'votes on their phone: keep going (same pattern or blackout) or next round. The caller waits.':
-    'votan en su teléfono: seguir (misma figura o cartón lleno) u otra ronda. El locutor espera.',
-  'votes on their phone: keep going or finish. The caller waits.':
-    'votan en su teléfono: seguir o terminar. El locutor espera.',
-  'votes on their phone: keep going or next round. The caller waits.':
-    'votan en su teléfono: seguir u otra ronda. El locutor espera.',
+  'votes on their phone: keep going (same pattern or blackout) or finish — no pick in 20 s: finish.':
+    'votan en su teléfono: seguir (misma figura o cartón lleno) o terminar; sin elección en 20 s, se termina.',
+  'votes on their phone: keep going (same pattern or blackout) or next round — no pick in 20 s: next round.':
+    'votan en su teléfono: seguir (misma figura o cartón lleno) u otra ronda; sin elección en 20 s, otra ronda.',
+  'votes on their phone: keep going or finish — no pick in 20 s: finish.':
+    'votan en su teléfono: seguir o terminar; sin elección en 20 s, se termina.',
+  'votes on their phone: keep going or next round — no pick in 20 s: next round.':
+    'votan en su teléfono: seguir u otra ronda; sin elección en 20 s, otra ronda.',
   'fresh cards': 'cartones nuevos',
   'same pattern': 'misma figura',
   'Vote closes in {n}': 'La votación cierra en {n}',
@@ -82,4 +82,7 @@ export const ES_TV: Readonly<Record<string, string>> = {
   'beep. gloat.': 'bip. presumo.',
   'as computed': 'según mis cálculos',
   'humans: 0': 'humanos: 0',
+  // I-400 B
+  'Finishing in {n}': 'Termina en {n}',
+  'Next round in {n}': 'Otra ronda en {n}',
 };

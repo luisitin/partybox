@@ -1,8 +1,8 @@
 // Phase "bingo": the round is over — or is it. With a winner, their green card is the celebration,
 // the win is recorded and that card locked on entry, and the phase then waits for any player's
 // choice: keep going on the same cards for the same pattern (the card that won sits it out; the
-// winner's other cards play on) or for a blackout, or move on — unpaced, save a long safety valve
-// for abandoned rooms (BINGO_ABANDONED_MS). A choice that arrives while the TV is still revealing
+// winner's other cards play on) or for a blackout, or move on — nobody picking for 20 s after the
+// read moves the room on (I-400: it waited 5 minutes). A choice that arrives while the TV is still revealing
 // the card is held (`round.decision`) and applied when the celebration ends. With no winner (deck
 // empty, VIP skipped through 75 calls) the TV says so for BINGO_MS. `next` and the VIP skip exit
 // (scoreboard, or done after the last round); `continue` resumes calling via `resume`, which
@@ -12,7 +12,7 @@ import type { GameEvent } from '@partybox/game-sdk';
 import { clearClaims, setMenu } from '../claims';
 import { AUTO_END_MS, VERDICT_READ_MS, claimRevealMs } from '../reveal';
 import { pointsFor } from '../scoring';
-import { BINGO_ABANDONED_MS, BINGO_MS, DECK, VOTE_MS } from '../types';
+import { BINGO_MS, DECK, NO_PICK_MS, VOTE_MS } from '../types';
 import type { Claim, Decision, Input, State, Transition } from '../types';
 
 export interface BingoExits {
@@ -88,7 +88,8 @@ function deadlineAfterVerdict(state: State, now: number): number {
       everyoneVoted(state, votes) ? 0 : (state.round.voteEndsAt ?? 0),
     );
   const can = canContinue(state);
-  if (can.same || can.blackout) return now + BINGO_ABANDONED_MS;
+  // I-400 A: a choice to make, but not forever — 20 s after the read, nobody picking moves on
+  if (can.same || can.blackout) return now + VERDICT_READ_MS + NO_PICK_MS;
   return now + VERDICT_READ_MS + AUTO_END_MS;
 }
 
