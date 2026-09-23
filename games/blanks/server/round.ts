@@ -109,6 +109,7 @@ export function startRound(state: State): State {
     round,
     discard,
     submissions: {},
+    guesses: {},
     slots: [],
     revealIndex: 0,
     votes: {},

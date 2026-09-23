@@ -88,6 +88,10 @@ export interface State extends GameStateBase {
   tied?: string[] | null;
   /** I-147 A: how many tie-breaks this game has played (capped, so a deadlock still ends). */
   tieBreaks?: number;
+  /** I-149 A: czar mode side bet — playerId → the slot they think the judge will take. */
+  guesses?: Record<string, number>;
+  /** I-149 C: correct calls across the night, for the "Read the room" award. */
+  calls?: Record<string, number>;
   /** submitterId (a player or RANDO) → white card ids in blank order. */
   submissions: Record<string, string[]>;
   /** Submitter ids in reveal / vote order (shuffled when the answer phase closes); the index is
@@ -118,6 +122,8 @@ export const inputSchema = z.discriminatedUnion('type', [
   }),
   /** I-143 C: "I'll read" — a connected person takes this round's reading from nobody. */
   z.object({ type: z.literal('takeReading') }),
+  /** I-149 A: the side bet — which card this phone thinks the judge will take. */
+  z.object({ type: z.literal('guess'), slot: z.number().int().min(0).max(15) }),
   /** The judge picks the round's black card (czar mode, "pick" phase). */
   z.object({ type: z.literal('choose'), index: z.number().int().min(0).max(4) }),
   /** A whole new hand (answer phase, before playing; REDRAWS_PER_GAME per player per game). */

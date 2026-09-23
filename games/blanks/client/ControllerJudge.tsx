@@ -99,6 +99,30 @@ export function ControllerJudge({ view, send, skip }: Props): JSX.Element {
       ? L('Round {round} · the judge decides', { round: view.round })
       : L('Round {round} · vote', { round: view.round });
   const count = { voted: view.votedCount, expected: view.votersExpected };
+  // I-149 A: in czar mode the other phones have a bet to place while the judge thinks.
+  if (view.guess?.canGuess) {
+    return (
+      <VoteList
+        kicker={kicker}
+        header={<FilledCard text={black.text} pick={black.pick} size="phone" />}
+        prompt={L('Which one will the judge take?')}
+        promptKey={`guess:${view.round}`}
+        size={view.cards.length <= 3 ? 'large' : 'compact'}
+        options={view.cards.map((c) => ({
+          id: String(c.slot),
+          text: <span className={styles.voteAnswer}>{c.whites.join(' ')}</span>,
+          mine: c.slot === view.guess?.mySlot,
+        }))}
+        votedId={view.guess.guessedSlot === null ? null : String(view.guess.guessedSlot)}
+        onVote={(id) => send({ type: 'guess', slot: Number(id) })}
+        footer={
+          <p className="pb-caption pb-muted">
+            {L('Half a point if you call it. The judge cannot see this.')}
+          </p>
+        }
+      />
+    );
+  }
   if (vote?.canVote) {
     // Two or three cards get VoteList's tall lettered cards (it draws the disc); more get compact
     // rows, where the letter is ours.

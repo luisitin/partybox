@@ -27,6 +27,13 @@ export function applyRound(state: State): State {
   for (const id of winners)
     if (id !== RANDO && Object.hasOwn(state.players, id))
       scores[id] = (scores[id] ?? 0) + WIN_POINTS;
+  // I-149 A: a called shot is worth half. The winning SLOT is what was called, not the author.
+  const calls = { ...state.calls };
+  for (const [id, slot] of Object.entries(state.guesses ?? {}))
+    if (Object.hasOwn(state.players, id) && winners.includes(state.slots[slot] ?? '')) {
+      scores[id] = (scores[id] ?? 0) + 0.5;
+      calls[id] = (calls[id] ?? 0) + 1; // I-149 C
+    }
   for (const row of tally(state))
     if (row.submitterId !== RANDO && Object.hasOwn(state.players, row.submitterId))
       votesReceived[row.submitterId] = (votesReceived[row.submitterId] ?? 0) + row.votes;
@@ -47,6 +54,7 @@ export function applyRound(state: State): State {
     ...state,
     winners,
     scores,
+    calls, // I-149 C: saved, or the award below never finds anyone
     stats: { ...state.stats, votesReceived, best, streak, bestRun },
   };
 }
@@ -93,6 +101,15 @@ export function awardsFor(state: State): GameAward[] {
       title: 'Card of the night',
       description: `“${shorten(fillText(blackCard(best.blackId).text, best.cards.map(whiteText)))}” · ${czar ? `round ${best.round}` : count(best.votes, 'vote')}`,
       playerId: best.submitterId,
+    });
+  // I-149 C: judge mode's own award — who read the judge best.
+  const reader = czar ? leader(state, state.calls ?? {}) : null;
+  if (reader)
+    out.push({
+      id: 'read-the-room',
+      title: 'Read the room',
+      description: `${count(state.calls?.[reader] ?? 0, 'call')} called right`,
+      playerId: reader,
     });
   const crowd = czar ? null : leader(state, state.stats.votesReceived);
   if (crowd)

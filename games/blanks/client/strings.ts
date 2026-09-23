@@ -20,6 +20,10 @@ const AWARDS_ES: Readonly<Record<string, string>> = {
   '{n} rounds in a row': '{n} rondas seguidas',
   '1 card in before half time': '1 carta antes de la mitad del tiempo',
   '{n} cards in before half time': '{n} cartas antes de la mitad del tiempo',
+  // I-149 C
+  'Read the room': 'Buen olfato',
+  '{n} call called right': '{n} acierto',
+  '{n} calls called right': '{n} aciertos',
 };
 
 /** The game picker's lines (manifest.json). Mild, Crude and WILD are the decks' names. */

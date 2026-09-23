@@ -188,4 +188,9 @@ export const SCREENS_ES: Readonly<Record<string, string>> = {
   'Tie-break': 'Desempate',
   'Only the tied players play this card — you vote on it.':
     'Solo los empatados juegan esta carta; tú la votas.',
+  // I-149: judge mode's side bet.
+  'Which one will the judge take?': '¿Cuál va a elegir el juez?',
+  'Half a point if you call it. The judge cannot see this.':
+    'Medio punto si aciertas. El juez no lo ve.',
+  'called it:': 'acertaron:',
 };

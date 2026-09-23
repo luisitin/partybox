@@ -76,6 +76,8 @@ function init(ctx: InitContext): State {
     readerId: null,
     tied: null,
     tieBreaks: 0,
+    guesses: {},
+    calls: {},
     submissions: {},
     slots: [],
     revealIndex: 0,

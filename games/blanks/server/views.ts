@@ -5,7 +5,7 @@ import { controllerEnvelope, envelope } from '@partybox/game-sdk';
 import type { ControllerView, GameAward, PlayerStatus, TvView } from '@partybox/game-sdk';
 import { whiteText } from './content';
 import { allIn, redrawsLeft } from './phases/answer';
-import { votesIn } from './phases/judge';
+import { judgePicked, votesIn } from './phases/judge';
 import {
   canVote,
   eligibleVoters,
@@ -39,6 +39,8 @@ export interface BlanksTvView extends TvView {
   /** czar mode: this round's judge. */
   czar: PersonView | null;
   /** vote mode, reveal only: the seat asked to read the cards out loud (review-loop #248). */
+  /** I-149 B: who called the winning card. */
+  calledIt: { name: string; avatarId: string }[];
   reader: PersonView | null;
   /** I-143 B: nobody in the room can read — the TV does. */
   everyoneIsABot: boolean;
@@ -100,6 +102,8 @@ export interface BlanksControllerView extends ControllerView {
   cardCount: number;
   /** judge: what this phone may do. `mySlot` is my own card (not votable). */
   vote: { canVote: boolean; mySlot: number | null; votedSlot: number | null } | null;
+  /** I-149 A: the side bet, for a phone that is not the judge (null for the judge and in vote mode). */
+  guess: { canGuess: boolean; mySlot: number | null; guessedSlot: number | null } | null;
   votedCount: number;
   votersExpected: number;
   revealed: RevealedCard[];
@@ -180,6 +184,7 @@ export function tvView(state: State, gameId: string): BlanksTvView {
     judgeMode: state.settings.judge,
     timed: state.settings.timed,
     czar: person(state, state.czarId),
+    calledIt: calledIt(state),
     reader: phase === 'reveal' ? reader(state) : null,
     everyoneIsABot: everyoneIsABot(state),
     black: blackView(state),
@@ -243,6 +248,14 @@ export function controllerView(
     cards: stageCards(state),
     revealIndex: phase === 'reveal' ? state.revealIndex : -1,
     cardCount: state.slots.length,
+    guess:
+      phase === 'judge' && player && state.settings.judge === 'czar' && !isCzar(state, playerId)
+        ? {
+            canGuess: !judgePicked(state),
+            mySlot: state.slots.findIndex((id) => id === playerId),
+            guessedSlot: state.guesses?.[playerId] ?? null,
+          }
+        : null,
     vote:
       phase === 'judge' && player
         ? {
@@ -269,4 +282,15 @@ export function controllerView(
     streak: phase === 'intro' ? streakView(state) : null,
     bestCard: phase === 'final' || phase === 'done' ? bestCardView(state) : null,
   };
+}
+
+/** I-149 B: the players whose call matched the card the judge took. */
+function calledIt(state: State): { name: string; avatarId: string }[] {
+  if (state.phase.id !== 'result' || state.winners.length === 0) return [];
+  return Object.entries(state.guesses ?? {})
+    .filter(([, slot]) => state.winners.includes(state.slots[slot] ?? ''))
+    .map(([id]) => ({
+      name: state.players[id]?.name ?? '',
+      avatarId: state.players[id]?.avatarId ?? 'ghost',
+    }));
 }

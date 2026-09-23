@@ -235,6 +235,18 @@ export function TvResult({ view }: Props): JSX.Element {
               <Author card={w} shown={beat >= BEAT_AUTHORS} label={votesLabel(view, w.votes, L)} />
               {/* Who voted for it, on the same beat the authors land. */}
               {beat >= BEAT_AUTHORS && view.judgeMode === 'vote' ? <Voters card={w} /> : null}
+              {/* I-149 B: judge mode has its own row here — who called the judge's pick. */}
+              {beat >= BEAT_AUTHORS && view.calledIt.length > 0 ? (
+                <span className={styles.calledIt}>
+                  {L('called it:')}{' '}
+                  {view.calledIt.map((c) => (
+                    <span key={c.name} className={styles.caller}>
+                      <Avatar avatarId={c.avatarId} size="var(--pb-chip-size)" />
+                      {c.name}
+                    </span>
+                  ))}
+                </span>
+              ) : null}
               {/* I-018 C: the deck's point goes to nobody — say so where the +1 would pop. */}
               <span
                 className={`${styles.plusOne} ${w.rando ? styles.plusNobody : ''} ${named ? styles.pop : styles.pending}`}

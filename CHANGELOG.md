@@ -82,6 +82,11 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Added
 
+- **Blanks: a side bet while the judge thinks** (I-149, option C): in judge mode every other phone
+  can call which card the judge will take (never their own) for half a point — closed the moment the
+  judge picks; the result shows "called it" with the callers' faces, and the night's best caller
+  gets a "Read the room" award.
+
 - **Blanks: a tie is played off** (I-147, option A): when the last round leaves the top score shared,
   one more black card is dealt — the TV says TIE-BREAK, only the tied players get a hand, everyone
   else votes — up to three times, so a tie that will not break still ends.
