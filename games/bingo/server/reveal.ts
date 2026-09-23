@@ -33,7 +33,9 @@ export function verdictAtMs(patternCells: number, hasRest: boolean): number {
 export const VERDICT_READ_MS = 3_000;
 
 /** A wrong claim: the daubs lift off the TV's card this long after NOT A BINGO (I-006 B). */
-export const WIPE_AT_MS = 1_200;
+// I-394 B: the verdict is read first — the wipe is the last beat before the 3 · 2 · 1 (it was
+// 1.2 s in, and the words pointed at red squares that were gone for the last 1.8 s)
+export const WIPE_AT_MS = 2_600;
 
 /** I-117: a claim the room can see through — more never-called daubs than called ones on the
  *  checked line — gets no suspense. */
