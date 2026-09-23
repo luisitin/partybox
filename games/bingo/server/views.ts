@@ -8,7 +8,7 @@ import type { ControllerView, PlayerStatus, TvView } from '@partybox/game-sdk';
 import { calledNumbers, letterOf } from './cards';
 import { closePlayers } from './close';
 import type { Letter } from './cards';
-import { callFor } from './content';
+import { callFor, callPackFor } from './content';
 import { PATTERN_HINT, PATTERN_LABEL, patternCells } from './patterns';
 import { menusOpen } from './claims';
 import { canContinue, liveCards } from './phases/bingo';
@@ -22,6 +22,8 @@ export interface CallView {
   number: number;
   letter: Letter;
   call: string;
+  /** I-129 B: which pack's voice says the nickname (the cheeky one only where it has the line). */
+  pack: 'family' | 'cheeky';
 }
 
 export interface ClaimView extends Claim {
@@ -144,7 +146,12 @@ export interface BingoControllerView extends ControllerView, Common {
 function callView(state: State, index: number): CallView | null {
   const number = state.round.deck[index];
   if (index < 0 || number === undefined) return null;
-  return { number, letter: letterOf(number), call: callFor(number, state.settings.spicy) };
+  return {
+    number,
+    letter: letterOf(number),
+    call: callFor(number, state.settings.spicy),
+    pack: callPackFor(number, state.settings.spicy), // I-129 B
+  };
 }
 
 /** The last n calls as "O 65", oldest first (a reconnecting phone names what it missed — the
