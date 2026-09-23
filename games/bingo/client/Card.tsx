@@ -159,9 +159,13 @@ export function Card({
             isDaubed ? styles.daubed : '',
             pending ? styles.pending : '',
             turning && !ordered && showColour ? styles.slowIn : '',
-            verdict && !turning && isDaubed && !isFree && !coloured ? styles.dim : '',
-            greenSet.has(i) && showColour ? (turns ? styles.turnGreen : styles.green) : '',
-            redSet.has(i) && showColour ? (turns ? styles.turnRed : styles.red) : '',
+            verdict && (!turning || restShown) && isDaubed && !isFree && !coloured
+              ? styles.dim
+              : '',
+            // A turning cell keeps its colour class too: the turn animates onto it, and the daub
+            // look's ink (its blot) stays off a checked square.
+            greenSet.has(i) && showColour ? `${styles.green} ${turns ? styles.turnGreen : ''}` : '',
+            redSet.has(i) && showColour ? `${styles.red} ${turns ? styles.turnRed : ''}` : '',
             missingSet.has(i) && (settled || turns)
               ? turns
                 ? styles.turnMissing

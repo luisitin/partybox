@@ -44,8 +44,10 @@ export function PhoneStage({
           red={claim.red}
           missing={claim.missing}
           verdict
-          reveal={t > ANNOUNCE_MS}
-          revealOrder={order}
+          // The turn starts once the announcement has had its moment (as on the TV: the order is
+          // handed over then). Not `reveal`: that is the card's arrival pop, and its animation
+          // outranks the turn's — every square fell back to the viewer's daub pink (2026-09-23).
+          revealOrder={t > ANNOUNCE_MS ? order : []}
           revealStepMs={STEP_MS}
           restShown={revealDone}
           settled={settled}

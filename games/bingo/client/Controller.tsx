@@ -230,9 +230,9 @@ export function Controller({
     );
   }
 
-  // A "phone only" room: someone else's RIGHT claim turns over on my phone too (the owner,
-  // 2026-09-21 — only the wrong ones did); the win screen follows once the verdict has landed.
-  if (view.phoneOnly && pending && view.winnerId !== me.id) return <PhoneStage view={view} />;
+  // A "phone only" room: a RIGHT claim turns over on every phone (the owner, 2026-09-21 — only the
+  // wrong ones did), the claimant's own too (2026-09-23); the win screen follows the verdict.
+  if (view.phoneOnly && pending) return <PhoneStage view={view} />;
   // Play, check and a bingo phase without my winning card keep the same cards mounted.
   const roundOver =
     view.phaseId === 'bingo' && !pending && !(view.winnerId === me.id && view.claim);

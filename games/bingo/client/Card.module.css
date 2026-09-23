@@ -87,7 +87,12 @@ button.cell:focus-visible {
   color: var(--pb-on-accent);
 }
 
+/* A checked card's daubs outside the verdict: neutral, not the viewer's ink (pink read as "wrong"
+   on every phone watching a check — the owner, 2026-09-23). */
 .dim {
+  background: var(--pb-surface-2);
+  color: var(--pb-text);
+  border-color: transparent;
   opacity: 0.45;
 }
 
@@ -575,10 +580,10 @@ button.cell:focus-visible {
    every verdict card (green / red / dimmed cells) keep the flat daub so a reveal reads as today.
    The blot sits under the number (z-index), rotated a little per column so no two look stamped
    by a machine; its colour is the player's own (`--pb-daub`, set by the phone's Controller). */
-:is(.phone, .compact) .cell.daubed:not(.free, .green, .red, .dim) {
+:is(.phone, .compact) .cell.daubed:not(.free, .green, .red, .dim, .pending) {
   background: var(--pb-surface-2);
 }
-:is(.phone, .compact) .cell.daubed:not(.free, .green, .red, .dim)::after {
+:is(.phone, .compact) .cell.daubed:not(.free, .green, .red, .dim, .pending)::after {
   content: '';
   position: absolute;
   inset: 4%;
@@ -588,7 +593,7 @@ button.cell:focus-visible {
   transform: rotate(var(--pb-blot-rot, -6deg)) scale(1.06);
   pointer-events: none;
 }
-:is(.phone, .compact) .cell.daubed:not(.free, .green, .red, .dim) .number {
+:is(.phone, .compact) .cell.daubed:not(.free, .green, .red, .dim, .pending) .number {
   position: relative;
   z-index: 1;
 }
@@ -641,30 +646,32 @@ button.cell:focus-visible {
    the ink; Ring: a ring around the number, the number in the ink. */
 :global(:root[data-daub='stamp'])
   :is(.phone, .compact)
-  .cell.daubed:not(.free, .green, .red, .dim) {
+  .cell.daubed:not(.free, .green, .red, .dim, .pending) {
   background: var(--pb-daub, var(--pb-accent));
   color: var(--pb-on-accent);
 }
 :global(:root[data-daub='stamp'])
   :is(.phone, .compact)
-  .cell.daubed:not(.free, .green, .red, .dim)::after {
+  .cell.daubed:not(.free, .green, .red, .dim, .pending)::after {
   display: none;
 }
 /* The owner's note: the ring is CONCENTRIC with the number — drawn on the number itself (a
    circle 1.9 em across, the number centred inside), so it stays round and centred on a cell of
    any shape; the blot's ::after is dropped. The FREE cell rings the same way in its gold. */
-:global(:root[data-daub='ring']) :is(.phone, .compact) .cell.daubed:not(.green, .red, .dim) {
+:global(:root[data-daub='ring'])
+  :is(.phone, .compact)
+  .cell.daubed:not(.green, .red, .dim, .pending) {
   background: var(--pb-surface-2);
   color: var(--pb-daub, var(--pb-accent));
 }
 :global(:root[data-daub='ring'])
   :is(.phone, .compact)
-  .cell.daubed:not(.free, .green, .red, .dim)::after {
+  .cell.daubed:not(.free, .green, .red, .dim, .pending)::after {
   display: none;
 }
 :global(:root[data-daub='ring'])
   :is(.phone, .compact)
-  .cell.daubed:not(.green, .red, .dim)
+  .cell.daubed:not(.green, .red, .dim, .pending)
   .number {
   display: grid;
   place-items: center;
