@@ -192,3 +192,21 @@ export function revealMs(text: string, whites: readonly string[], cards = 1): nu
     return Math.min(BIG_REVEAL_MAX_MS, BIG_REVEAL_MIN_MS + length * BIG_REVEAL_PER_CHAR_MS);
   return Math.min(REVEAL_MAX_MS, REVEAL_MIN_MS + length * REVEAL_PER_CHAR_MS);
 }
+
+/**
+ * I-157: how many played cards share one reveal beat. One in a small room; past BIG_ROOM two
+ * ("a flight"), and past eleven three — a full room's queue of twelve one-at-a-time
+ * reveals was half of every round.
+ */
+export function revealSpan(cards: number): number {
+  if (cards > 11) return 3;
+  return cards > BIG_ROOM ? 2 : 1;
+}
+
+/** I-157: a flight's beat — its longest card, plus 60% of the others (the reader still reads them all). */
+export function flightMs(each: readonly number[]): number {
+  if (each.length === 0) return 0;
+  const longest = Math.max(...each);
+  const rest = each.reduce((a, b) => a + b, 0) - longest;
+  return Math.round(longest + 0.6 * rest);
+}

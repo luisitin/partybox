@@ -2,6 +2,7 @@
 // result → intro | final → done.
 // Phase files only know their own entry/exit; this file wires the loop so no phase imports
 // another (dependency-cruiser forbids cycles). VIP skip uses the same transitions as a deadline.
+import { revealSpan } from './cards';
 import { allConnectedDone, applyVip, setConnected } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { enterAnswer, reduceAnswer } from './phases/answer';
@@ -34,7 +35,8 @@ export function afterAnswer(state: State, now: number): State {
 }
 
 export function afterReveal(state: State, now: number): State {
-  const index = state.revealIndex + 1;
+  // I-157: the next beat starts after the whole flight.
+  const index = state.revealIndex + revealSpan(state.slots.length);
   if (index < state.slots.length) return enterReveal(state, now, index);
   return voteIsFormality(state)
     ? enterResult(state, now)

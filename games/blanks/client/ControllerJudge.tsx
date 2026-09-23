@@ -12,42 +12,61 @@ import styles from './blanks.module.css';
 
 type Props = GameControllerProps<BlanksControllerView, Input>;
 
-export function ControllerReveal({ view, me }: Props): JSX.Element {
+export function ControllerReveal({ view, me, send }: Props): JSX.Element {
   const black = view.black;
   const current = view.cards[view.revealIndex];
+  // I-157: the whole flight — with the index jumping by two, rendering only `current` would skip
+  // every second card on every phone.
+  const flight = view.cards.slice(view.revealIndex);
   if (!black || !current)
     return <WaitingScreen title={view.phoneOnly ? 'One moment…' : 'Look at the TV'} mood="watch" />;
   // Slots are anonymous even to the phone: my card is the one whose text is my play.
-  const mine = view.myPlay !== null && view.myPlay.join('|') === current.whites.join('|');
+  const mine =
+    view.myPlay !== null && flight.some((c) => c.whites.join('|') === view.myPlay?.join('|'));
   return (
     <Screen
       className="pb-enter"
       title={
         <span className={styles.kicker}>
-          Round {view.round} · Card {view.revealIndex + 1} of {view.cardCount}
+          Round {view.round} ·{' '}
+          {flight.length > 1
+            ? `Cards ${view.revealIndex + 1}–${view.revealIndex + flight.length} of ${view.cardCount}`
+            : `Card ${view.revealIndex + 1} of ${view.cardCount}`}
         </span>
       }
     >
       {/* The card is the whole screen in a phone-only room: centred in the free space, the
           caption under it (it sat in the top third over a blank two-thirds, review-loop #139). */}
       <div className={styles.readAlong}>
-        <FlipCard
-          flipKey={String(current.slot)}
-          key={current.slot}
-          text={black.text}
-          whites={current.whites}
-          size="phone"
-          letter={LETTERS[current.slot]}
-          className={styles.readCard}
-        />
+        {flight.map((c) => (
+          <FlipCard
+            flipKey={String(c.slot)}
+            key={c.slot}
+            text={black.text}
+            whites={c.whites}
+            size={flight.length > 1 ? 'mini' : 'phone'}
+            letter={LETTERS[c.slot]}
+            className={styles.readCard}
+          />
+        ))}
+        {/* I-157 C: the reader moves the room on when they have read it aloud. */}
+        {(view.judgeMode === 'czar' ? view.czar?.id : view.reader?.id) === me.id ? (
+          <button type="button" className={styles.nextCard} onClick={() => send({ type: 'nextCard' })}>
+            {flight.length > 1 ? 'Read them \u2014 next' : 'Read it \u2014 next'}
+          </button>
+        ) : null}
         {/* The reader is told it is them; everyone else reads along (review-loop #248). */}
         <p className="pb-caption pb-muted">
           {view.reader?.id === me.id
             ? mine
-              ? "You're reading them out — and this one is yours. Good luck."
+              ? flight.length > 1
+                ? "You're reading them out — and one of these is yours. Good luck."
+                : "You're reading them out — and this one is yours. Good luck."
               : "You're reading them out. Take your time."
             : mine
-              ? "This one's yours — keep a straight face."
+              ? flight.length > 1
+                ? "One of these is yours — keep a straight face."
+                : "This one's yours — keep a straight face."
               : view.role === 'judge'
                 ? 'Read along. You pick the winner after the last card.'
                 : view.judgeMode === 'czar' && view.czar
