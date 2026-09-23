@@ -32,6 +32,8 @@ export function start(options: StartOptions = {}): State {
       judge: 'vote',
       decks: 'mild',
       timed: true,
+      // The players read aloud here (I-143); the voice is its own suite (speech.test).
+      reader: 'none',
       ...settings,
     },
     seed: seed ?? 1,

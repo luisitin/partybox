@@ -6,6 +6,12 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Fixed
 
+- **Bingo's check on a phone-only room** (the owner's video, 2026-09-23): the claimed card no
+  longer turns every square pink while it is checked — the pattern turns green, a wrong daub red,
+  and the card's other daubs fade to grey instead of keeping the watcher's ink. The player who
+  called BINGO now sees the check on their own phone too, then their win screen. A Blanks room
+  whose reader voice is not installed asks a person to read again, as before voices.
+
 - **Blanks' hand on an iPhone** (the owner's video, 2026-09-23): the fan's cards were cut off at the
   bottom and the fan itself scrolled up and down; it now scrolls sideways only and leaves room for
   the turned side cards. **Blanks' music** plays one continuous, quieter set from the round card
@@ -90,6 +96,13 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
   below" chevron grew from 32x22 to 56x40 so a thumb can actually hit it (the owner, 2026-09-22).
 
 ### Added
+
+- **Blanks reads every card aloud** (READER-VOICES, ADR-045): a Reader setting (default Old British
+  Man; Young British Man, American Woman, Soft-Spoken Woman, Original, or No reader for the players
+  to read). Each finished card is synthesised on the host the moment it is played — with a beat
+  before each answer and the pronunciation lexicon (Harambe, NASA, "nineteen forty-five", 60 card
+  fixes) — and the reveal waits for the reading plus a beat. The question is read too, "blank" for
+  its gap.
 
 - **Bingo: pick the caller's voice** (READER-VOICES, the owner, 2026-09-22): a Reader setting — No
   reader · Old British Man · Young British Man · American Woman · Soft-Spoken Woman (the default) ·

@@ -11,9 +11,10 @@ import { blackPool, whitePool } from './content';
 import { reduce } from './flow';
 import { enterIntro } from './phases/intro';
 import { results } from './scoring';
-import { DECK_PRESETS, HAND_SIZES, JUDGE_MODES, PHASES, inputSchema } from './types';
-import type { DeckPreset, Input, JudgeMode, Settings, State } from './types';
+import { DECK_PRESETS, HAND_SIZES, JUDGE_MODES, PHASES, READERS, inputSchema } from './types';
+import type { DeckPreset, Input, JudgeMode, Reader, Settings, State } from './types';
 import { controllerView, tvView } from './views';
+import { speech } from './speech';
 
 export type { BlanksControllerView, BlanksTvView, CardView, RevealedCard } from './views';
 
@@ -47,6 +48,7 @@ export function readSettings(raw: RawSettings): Settings {
     rando: raw['rando'] === true,
     timed: raw['timed'] === true,
     handSize: Number(oneOf(raw, 'handSize', HAND_SIZES)),
+    reader: oneOf<Reader>(raw, 'reader', READERS),
   };
 }
 
@@ -100,4 +102,5 @@ export const game: GameDefinition<State, Input> = {
   controllerView: (state, playerId) => controllerView(state, manifest.id, playerId),
   results,
   bot: { sampleInput: botInput },
+  speech, // READER-VOICES (ADR-045)
 };

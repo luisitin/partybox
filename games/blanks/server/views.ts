@@ -2,6 +2,7 @@
 // and no author before "result"; a phone shows only its owner's hand and own play until then. From
 // "reveal" on, TV and phones carry the same cards so the game is playable without the TV.
 import { controllerEnvelope, envelope } from '@partybox/game-sdk';
+import { readingFor } from './speech';
 import type { ControllerView, GameAward, PlayerStatus, TvView } from '@partybox/game-sdk';
 import { whiteText } from './content';
 import { allIn, redrawsLeft } from './phases/answer';
@@ -17,6 +18,7 @@ import {
   readingOpen,
   playedCount,
   playersExpected,
+  voiced,
 } from './round';
 import { awardsFor, standings } from './scoring';
 import { bestCardView, standingsRows, streakView } from './views-board';
@@ -28,7 +30,7 @@ export type { BestCardView, StandingsRow, StreakView } from './views-board';
 
 import type { JudgeMode, State } from './types';
 
-export interface BlanksTvView extends TvView {
+export interface BlanksTvView extends TvView, Voice {
   round: number;
   /** I-147 A: this round is sudden death — the tied players, or null. */
   tieBreak: string[] | null;
@@ -73,7 +75,13 @@ export interface BlanksTvView extends TvView {
   bestCard: BestCardView | null;
 }
 
-export interface BlanksControllerView extends ControllerView {
+/** READER-VOICES (ADR-045): the room has a voice, and the reading that is up now (once made). */
+interface Voice {
+  voice: boolean;
+  speech: { key: string; url: string } | null;
+}
+
+export interface BlanksControllerView extends ControllerView, Voice {
   round: number;
   rounds: number;
   judgeMode: JudgeMode;
@@ -187,6 +195,7 @@ export function tvView(state: State, gameId: string): BlanksTvView {
     calledIt: calledIt(state),
     reader: phase === 'reveal' ? reader(state) : null,
     everyoneIsABot: everyoneIsABot(state),
+    ...voiceView(state),
     black: blackView(state),
     blackChoices: blackChoices(state),
     playedCount: playedCount(state),
@@ -227,6 +236,7 @@ export function controllerView(
     judgeMode: state.settings.judge,
     timed: state.settings.timed,
     czar: person(state, state.czarId),
+    ...voiceView(state),
     reader: phase === 'reveal' ? reader(state) : null,
     readingOpen: player && readingOpen(state) && state.players[playerId]?.connected === true,
     black: blackView(state),
@@ -293,4 +303,25 @@ function calledIt(state: State): { name: string; avatarId: string }[] {
       name: state.players[id]?.name ?? '',
       avatarId: state.players[id]?.avatarId ?? 'ghost',
     }));
+}
+
+/** READER-VOICES: the reading that belongs to this moment — the question while answers come in,
+ *  the card on stage during the reading — once the host has made it. */
+function voiceView(state: State): Voice {
+  const voice = voiced(state);
+  const slot =
+    state.phase.id === 'reveal'
+      ? state.revealIndex
+      : state.phase.id === 'answer'
+        ? null
+        : undefined;
+  const reading = voice && slot !== undefined ? readingFor(state, slot) : null;
+  const ms = reading ? state.speech?.[reading.key] : undefined;
+  return {
+    voice,
+    speech:
+      reading && ms !== undefined && ms >= 0
+        ? { key: reading.key, url: `/api/speech/${reading.key}.wav` }
+        : null,
+  };
 }

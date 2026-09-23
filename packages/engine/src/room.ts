@@ -109,7 +109,10 @@ function handleTick(room: RoomState, now: number, deps: EngineDeps): ApplyResult
 function isGameEvent(value: unknown): value is GameEvent<unknown> {
   if (typeof value !== 'object' || value === null) return false;
   const v = value as { type?: unknown; now?: unknown };
-  return typeof v.now === 'number' && ['input', 'timer', 'player', 'vip'].includes(String(v.type));
+  return (
+    typeof v.now === 'number' &&
+    ['input', 'timer', 'player', 'vip', 'speech'].includes(String(v.type))
+  );
 }
 
 function isStateBase(value: unknown): value is GameStateBase {
@@ -185,6 +188,14 @@ function dispatch(room: RoomState, event: RoomEvent, deps: EngineDeps): ApplyRes
         effects: [{ type: 'push' }],
       };
     }
+    case 'speech':
+      // ADR-045: the host's speech service finished a reading the game asked for.
+      if (!room.game || room.status !== 'playing') return { room, effects: [] };
+      return applyGameEvent(
+        room,
+        { type: 'speech', now: event.now, key: event.key, ms: event.ms },
+        deps,
+      );
     case 'dev:gameEvent':
       if (!isGameEvent(event.event))
         return { room, effects: [{ type: 'log', level: 'warn', text: 'dev:gameEvent rejected' }] };

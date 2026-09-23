@@ -8,7 +8,7 @@ import { enterAnswer, reduceAnswer } from './phases/answer';
 import { enterIntro, reduceIntro } from './phases/intro';
 import { enterJudge, holdForJudge, judgeAway, judgeReturns, reduceJudge } from './phases/judge';
 import { enterPick, reducePick } from './phases/pick';
-import { enterReveal, reduceReveal } from './phases/reveal';
+import { applySpeech, enterReveal, reduceReveal } from './phases/reveal';
 import { enterDone, enterFinal, enterResult, reduceFinal, reduceResult } from './phases/result';
 import { standings } from './scoring';
 import { closeAnswers, playersDone, settleBlack, voteIsFormality, votingDone } from './round';
@@ -113,6 +113,7 @@ export function reduce(state: State, event: GameEvent<Input>): State {
       ? judgeReturns(after, event.playerId, event.now)
       : closeIfDone(after, event.now);
   }
+  if (event.type === 'speech') return applySpeech(state, event.key, event.ms, event.now);
   const vip = applyVip(state, event, { skip, end: enterDone });
   if (vip) return vip;
   if (state.phase.paused) return state; // inputs and timers wait while paused

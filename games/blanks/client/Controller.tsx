@@ -10,6 +10,7 @@ import {
   Screen,
   WaitingScreen,
   useBeats,
+  usePhoneOnly,
   useSound,
   useT,
 } from '@partybox/game-sdk/ui';
@@ -20,6 +21,7 @@ import { FilledCard, LETTERS } from './Cards';
 import { ControllerHand, ControllerPick } from './ControllerHand';
 import { ControllerJudge, ControllerReveal } from './ControllerJudge';
 import { NextButton } from './NextButton';
+import { useReading } from './useReading';
 import { RESULT_BEATS_MS } from './TvResult';
 import { rankLine } from './rankLine';
 import { list, votesLabel, winnerLine } from './resultLines';
@@ -248,6 +250,8 @@ function ControllerResult({ view, me, skip }: Props): JSX.Element {
 export function Controller(props: Props): JSX.Element {
   const L = useT(STRINGS);
   const { view } = props;
+  // READER-VOICES: a phone-only room has no TV to read aloud — the phones do.
+  useReading(view.speech, usePhoneOnly());
   switch (view.phaseId) {
     case 'intro':
       return <ControllerIntro {...props} />;

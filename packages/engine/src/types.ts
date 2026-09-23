@@ -103,7 +103,9 @@ export type RoomEvent =
   | { type: 'input'; now: number; playerId: string; input: unknown; vip?: boolean }
   | { type: 'tick'; now: number }
   | { type: 'dev:loadState'; now: number; gameId: string; state: unknown; settings?: Settings }
-  | { type: 'dev:gameEvent'; now: number; event: unknown };
+  | { type: 'dev:gameEvent'; now: number; event: unknown }
+  /** ADR-045: a reading the running game asked for is ready (or failed: ms -1). */
+  | { type: 'speech'; now: number; key: string; ms: number };
 
 export type Effect =
   | { type: 'welcome'; playerId: string }

@@ -148,7 +148,23 @@ export type GameEvent<I> =
   | { type: 'input'; now: number; playerId: string; input: I; vip?: boolean }
   | { type: 'timer'; now: number; phaseId: string; startedAt: number }
   | { type: 'player'; now: number; playerId: string; connected: boolean }
-  | { type: 'vip'; now: number; action: VipGameAction };
+  | { type: 'vip'; now: number; action: VipGameAction }
+  /** READER-VOICES (ADR-045): a reading the game asked for (`speech()`) is ready — `ms` is its
+   *  length, or -1 when it could not be made (the game carries on without a voice). */
+  | { type: 'speech'; now: number; key: string; ms: number };
+
+/** A piece of a reading: text for the voice to say, or phonemes (espeak notation) said as given —
+ *  with the written word beside them for a voice that cannot take phonemes (Zira). */
+export type SpeechPart = { text: string } | { ipa: string; text?: string };
+
+/** A reading a game wants made (ADR-045): the host synthesises it once per `key`, serves it at
+ *  /api/speech/<key>.wav and answers with a `speech` event. */
+export interface SpeechRequest {
+  key: string;
+  /** A voice id the host's speech service knows ('george', 'fable', 'jessica', 'sky', 'original'). */
+  voice: string;
+  parts: readonly SpeechPart[];
+}
 
 // ─── Views ──────────────────────────────────────────────────────────────────────────────────────
 
@@ -266,6 +282,12 @@ export interface GameDefinition<
    * any files it references. Pure like every other method; `null` means "just the state".
    */
   recap?(state: S, ctx: RecapContext<S>): GameRecap | null;
+  /**
+   * Optional (ADR-045): the spoken readings this state wants — a game with a voice asks for each
+   * one as soon as its text is known, so it is ready before its moment. Pure; the host makes each
+   * key once and reports back with a `speech` event.
+   */
+  speech?(state: S): readonly SpeechRequest[];
 }
 
 /* eslint-disable @typescript-eslint/no-explicit-any -- the registry holds heterogeneous games */

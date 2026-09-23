@@ -28,11 +28,20 @@ export function czarFor(state: State, round: number): string | null {
   return state.order[from] as string;
 }
 
+/** READER-VOICES: a voice is reading — set, and none of its readings has failed (a host without
+ *  the voice installed answers -1: the room falls back to a person reading, as before). */
+export function voiced(state: State): boolean {
+  if ((state.settings.reader ?? 'none') === 'none') return false;
+  return !Object.values(state.speech ?? {}).some((ms) => ms < 0);
+}
+
 /** Vote mode: the seat asked to read this round's cards out loud — the same rotation the judge
  *  uses, so over a game everyone gets a turn; a disconnected seat is skipped. Null in czar mode,
  *  where the judge is already the reader (review-loop #248). */
 export function readerFor(state: State, round: number): string | null {
   if (state.settings.judge === 'czar' || state.order.length === 0) return null;
+  // READER-VOICES: a voice reads the cards — nobody is asked to.
+  if (voiced(state)) return null;
   const n = state.order.length;
   const from = (round - 1) % n;
   // I-143 A: a bot is "connected" but cannot read a card out loud — the rotation walks past it.
@@ -48,6 +57,7 @@ export function readerFor(state: State, round: number): string | null {
 /** I-143 C: the reading is up for grabs — vote mode, and nobody connected (and not a bot) holds it. */
 export function readingOpen(state: State): boolean {
   if (state.settings.judge === 'czar' || state.phase.id !== 'reveal') return false;
+  if (voiced(state)) return false; // the voice has it
   const cur = state.readerId === null ? undefined : state.players[state.readerId];
   return !cur || !cur.connected || cur.bot === true;
 }

@@ -25,6 +25,7 @@ import { createPublicUrl } from './public-url';
 import { registerRoomsRoute } from './rooms-route';
 import { createSocketLayer } from './sockets';
 import { createFunnelBook } from './funnel';
+import { attachSpeech } from './speech';
 
 export const REPO_ROOT = resolve(fileURLToPath(new URL('../../..', import.meta.url)));
 export const CLIENT_DIR = join(REPO_ROOT, 'packages', 'client');
@@ -107,6 +108,7 @@ export async function createApp(options: AppOptions): Promise<App> {
         });
   const funnel = createFunnelBook(recordingsDir); // I-077
   sockets.attach(host, deps, funnel);
+  const detachSpeech = attachSpeech(fastify, host, deps); // READER-VOICES (ADR-045)
   fastify.get('/api/funnel', async () => funnel.all());
 
   registerRoomsRoute(fastify, { host, clock, io: sockets.io }); // ADR-043
@@ -132,6 +134,7 @@ export async function createApp(options: AppOptions): Promise<App> {
     },
     async close() {
       bots.close();
+      detachSpeech();
       if (recorder) {
         await recorder.abortAll();
         recorder.close();

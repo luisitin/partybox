@@ -25,6 +25,8 @@ export type {
   SettingSpec,
   Settings,
   SettingValue,
+  SpeechPart,
+  SpeechRequest,
   TvView,
   ViewEnvelope,
   ViewPlayer,

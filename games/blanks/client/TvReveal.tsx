@@ -29,7 +29,7 @@ export function TvReveal({ view }: Props): JSX.Element {
     before.some((c) => fillText(view.black?.text ?? '', c.whites).length > STRIP_LONG);
   const read = before.slice(long ? -3 : -4);
   // I-017: whoever the room should look at — the judge in czar mode, else the seat asked to read.
-  const reader = view.judgeMode === 'czar' ? view.czar : view.reader;
+  const reader = view.voice ? null : view.judgeMode === 'czar' ? view.czar : view.reader;
   return (
     <Stage className={styles.table}>
       <div className={styles.kickerRow}>
@@ -46,14 +46,16 @@ export function TvReveal({ view }: Props): JSX.Element {
         {/* I-017 B: the pill carries the reader's face and pops on every new card (keyed). */}
         <span key={view.revealIndex} className={`${styles.progressPill} pb-pop`}>
           {reader ? <Avatar avatarId={reader.avatarId} size="var(--pb-chip-size)" /> : null}
-          {view.judgeMode === 'czar' && view.czar
-            ? L('{name} reads it out', { name: view.czar.name })
-            : view.reader
-              ? L('{name}, read it out loud', { name: view.reader.name })
-              : // I-143 B: a room with nobody to ask gets an owner for the beat anyway.
-                view.everyoneIsABot
-                ? L('the TV reads this one')
-                : L('Read it out loud')}
+          {view.voice
+            ? L('🔊 Listen') // READER-VOICES: the voice reads it — nobody is asked to
+            : view.judgeMode === 'czar' && view.czar
+              ? L('{name} reads it out', { name: view.czar.name })
+              : view.reader
+                ? L('{name}, read it out loud', { name: view.reader.name })
+                : // I-143 B: a room with nobody to ask gets an owner for the beat anyway.
+                  view.everyoneIsABot
+                  ? L('the TV reads this one')
+                  : L('Read it out loud')}
         </span>
       </div>
       <div className={styles.stageMain}>

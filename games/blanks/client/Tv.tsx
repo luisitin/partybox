@@ -8,9 +8,11 @@ import { TvJudge } from './TvJudge';
 import { TvReveal } from './TvReveal';
 import { TvResult } from './TvResult';
 import { TvAnswer, TvIntro, TvPick } from './TvRound';
+import { useReading } from './useReading';
 import styles from './blanks.module.css';
 
 export function Tv({ view }: GameTvProps<BlanksTvView>): JSX.Element {
+  useReading(view.speech); // READER-VOICES: the room hears the question and each card
   switch (view.phaseId) {
     case 'intro':
       return <TvIntro view={view} />;

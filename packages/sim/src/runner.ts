@@ -72,7 +72,9 @@ export function runGame(game: AnyGameDefinition, options: RunOptions): RunResult
   const settings = defaultSettingsOf(game, options.settings);
   const init: RunInit = { players, settings, seed: options.seed, now: T0 };
   const initIds = players.map((p) => p.id);
-  const maxSimMs = options.maxSimMs ?? game.manifest.estimatedMinutes * 3 * 60_000;
+  // A stuck-guard, not a length check: 4× the estimate (an untimed Blanks with a slow seat and a
+  // sudden-death round ran 2707 s against the old 3× — 2700 s — without being stuck, 2026-09-23).
+  const maxSimMs = options.maxSimMs ?? game.manifest.estimatedMinutes * 4 * 60_000;
   const maxEvents = options.maxEvents ?? 20_000;
   const viewsEvery = options.viewsEvery ?? 25;
   const strategies = assignStrategies(options.strategy, options.players, rng);
@@ -96,6 +98,7 @@ export function runGame(game: AnyGameDefinition, options: RunOptions): RunResult
   let now = T0;
   let firedFor: string | null = null;
   let stuck = false;
+  const asked = new Set<string>();
   phaseVisits[state.phase.id] = 1;
 
   const apply = (event: GameEvent<unknown>): void => {
@@ -121,6 +124,14 @@ export function runGame(game: AnyGameDefinition, options: RunOptions): RunResult
       for (const detail of checkViews(game, after))
         violations.push({ at: events.length - 1, rule: 'views', detail });
     state = after;
+    // READER-VOICES (ADR-045): the host answers every reading the game asks for. The sim is a host
+    // with no voice installed (as in CI): -1 at once, so the game keeps its own timing — the voiced
+    // timing is games' own tests (a voiced 11-player Blanks runs past this budget, as it should).
+    for (const req of game.speech?.(state) ?? []) {
+      if (asked.has(req.key)) continue;
+      asked.add(req.key);
+      apply({ type: 'speech', now, key: req.key, ms: -1 });
+    }
   };
 
   const schedule = (agent: Agent): void => {

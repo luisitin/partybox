@@ -45,9 +45,16 @@ export function orderBlackDeck(
   if (doubles === 'many' && rounds > 0) {
     // every fourth round (A's rule)
     const maxGap = 3;
-    return [3, 2, 1].flatMap((tier) => spaceOut(deck.filter((id) => blackTier(id) === tier), maxGap));
+    return [3, 2, 1].flatMap((tier) =>
+      spaceOut(
+        deck.filter((id) => blackTier(id) === tier),
+        maxGap,
+      ),
+    );
   }
-  const ordered = [3, 2, 1].flatMap((tier) => spaceOut(deck.filter((id) => blackTier(id) === tier)));
+  const ordered = [3, 2, 1].flatMap((tier) =>
+    spaceOut(deck.filter((id) => blackTier(id) === tier)),
+  );
   if (doubles === 'rare' || rounds <= 0) return ordered;
   // I-158 B: exactly one double-blank in the middle of the game. Round 1's card is drawn at init,
   // so index k of this deck is round k + 1; round floor(rounds / 2) + 1 is index floor(rounds / 2).

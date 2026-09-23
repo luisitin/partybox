@@ -87,6 +87,39 @@
       ]
     },
     {
+      "key": "reader",
+      "label": "Reader",
+      "description": "Who reads each finished card aloud; No reader = the players take turns",
+      "type": "select",
+      "default": "george",
+      "options": [
+        {
+          "value": "none",
+          "label": "No reader"
+        },
+        {
+          "value": "george",
+          "label": "Old British Man"
+        },
+        {
+          "value": "fable",
+          "label": "Young British Man"
+        },
+        {
+          "value": "jessica",
+          "label": "American Woman"
+        },
+        {
+          "value": "sky",
+          "label": "Soft-Spoken Woman"
+        },
+        {
+          "value": "original",
+          "label": "Original"
+        }
+      ]
+    },
+    {
       "key": "timed",
       "label": "Timed rounds",
       "description": "Put a clock on picking, voting and the result; off = play at your own pace, anyone taps Next",

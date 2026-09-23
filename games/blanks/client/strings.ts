@@ -52,6 +52,15 @@ const PICKER_ES: Readonly<Record<string, string>> = {
   'Answer time (timed rounds)': 'Tiempo de respuesta (con reloj)',
   'Seconds to pick a card when rounds are timed; Pick 2 and Pick 3 cards get 15 s more each':
     'Segundos para elegir carta en rondas con reloj; las cartas Elige 2 y Elige 3 tienen 15 s más cada una',
+  Reader: 'Lector',
+  'Who reads each finished card aloud; No reader = the players take turns':
+    'Quién lee cada carta en voz alta; Sin lector = los jugadores por turnos',
+  'No reader': 'Sin lector',
+  'Old British Man': 'Señor británico',
+  'Young British Man': 'Joven británico',
+  'American Woman': 'Mujer estadounidense',
+  'Soft-Spoken Woman': 'Mujer de voz suave',
+  Original: 'Original',
   'Cards dealt': 'Cartas en la mano',
   'White cards in each hand; a new hand swaps them all':
     'Cartas blancas en cada mano; una mano nueva las cambia todas',

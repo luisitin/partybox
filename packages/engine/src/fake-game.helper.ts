@@ -103,6 +103,7 @@ export const fakeGame: GameDefinition<FakeState, FakeInput> = {
         return state;
       return done({ ...state, log }, event.now);
     }
+    if (event.type !== 'input') return state;
     if (event.input.type === 'boom') throw new Error('boom');
     if (!(event.playerId in state.taps)) return state;
     return {

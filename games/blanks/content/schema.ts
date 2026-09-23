@@ -69,4 +69,23 @@ export const deckSchema = z.object({
 });
 export type Deck = z.infer<typeof deckSchema>;
 
-export const packs = { mild: deckSchema, crude: deckSchema, wild: deckSchema } as const;
+/** READER-VOICES (ADR-045): how the reader says hard words — per card, then shared words, then
+ *  regex patterns. An entry spells the word out, says something else, or gives its phonemes. */
+const sayEntry = z.object({
+  spell: z.boolean().optional(),
+  say: z.string().min(1).optional(),
+  ipa: z.string().min(1).optional(),
+});
+export const pronounceSchema = z.object({
+  _about: z.string().optional(),
+  words: z.record(z.string(), sayEntry),
+  patterns: z.array(z.object({ match: z.string().min(1), say: z.string() })),
+  cards: z.record(z.string().regex(/^[mcw][bw]\d{1,4}$/), z.record(z.string(), sayEntry)),
+});
+
+export const packs = {
+  mild: deckSchema,
+  crude: deckSchema,
+  wild: deckSchema,
+  pronounce: pronounceSchema,
+} as const;

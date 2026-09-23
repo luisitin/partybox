@@ -73,6 +73,7 @@ describe('whole game', () => {
       'judge',
       'rounds',
       'handSize',
+      'reader',
       'timed',
       'answerSeconds',
       'rando',
@@ -94,6 +95,7 @@ describe('whole game', () => {
       rando: false,
       timed: false,
       handSize: 10,
+      reader: 'george',
     });
   });
 });

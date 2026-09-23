@@ -19,6 +19,10 @@ export type DeckPreset = (typeof DECK_PRESETS)[number];
 export const JUDGE_MODES = ['vote', 'czar'] as const;
 export type JudgeMode = (typeof JUDGE_MODES)[number];
 
+/** READER-VOICES: the Reader setting (the owner, 2026-09-22): Blanks defaults to the Old British Man. */
+export const READERS = ['none', 'george', 'fable', 'jessica', 'sky', 'original'] as const;
+export type Reader = (typeof READERS)[number];
+
 export interface Settings {
   decks: DeckPreset;
   judge: JudgeMode;
@@ -29,6 +33,8 @@ export interface Settings {
   timed: boolean;
   /** I-141: white cards in a hand (the owner's "Cards dealt": 7 / 10 / 12 / 15). */
   handSize: number;
+  /** READER-VOICES: who reads the finished cards aloud ('none': the players do, I-143). */
+  reader?: Reader;
 }
 
 export interface Stats {
@@ -92,6 +98,8 @@ export interface State extends GameStateBase {
   guesses?: Record<string, number>;
   /** I-149 C: correct calls across the night, for the "Read the room" award. */
   calls?: Record<string, number>;
+  /** READER-VOICES (ADR-045): each reading's length in ms once the host has made it (-1: failed). */
+  speech?: Record<string, number>;
   /** submitterId (a player or RANDO) → white card ids in blank order. */
   submissions: Record<string, string[]>;
   /** Submitter ids in reveal / vote order (shuffled when the answer phase closes); the index is

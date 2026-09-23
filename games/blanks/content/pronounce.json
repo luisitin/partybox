@@ -1,0 +1,917 @@
+{
+  "_about": "READER-VOICES pronunciation lexicon for Blanks (Session B, 2026-09-22/23; checked by a speech recogniser, capture/lexicon_check.py). Applied before the voice, in order: (1) `cards` — fixes for one card id, `_whole` replacing the card's whole text; (2) `words` by exact token (a possessive 's kept); (3) `patterns`, regexes over what is left. Forms: {spell:true} the letters, {say:'…'} this text instead, {ipa:'…'} these phonemes (espeak notation). games/blanks/__tests__/pronounce.test.ts checks every card id exists.",
+  "words": {
+    "AC": {
+      "spell": true
+    },
+    "AI": {
+      "spell": true
+    },
+    "AITA": {
+      "spell": true
+    },
+    "AOL": {
+      "spell": true
+    },
+    "ATM": {
+      "spell": true
+    },
+    "BDSM": {
+      "spell": true
+    },
+    "CB": {
+      "spell": true
+    },
+    "CD": {
+      "spell": true
+    },
+    "CEO": {
+      "spell": true
+    },
+    "CIA": {
+      "spell": true
+    },
+    "CT": {
+      "spell": true
+    },
+    "CVS": {
+      "spell": true
+    },
+    "DEA": {
+      "spell": true
+    },
+    "DIY": {
+      "spell": true
+    },
+    "DJ": {
+      "spell": true
+    },
+    "DM": {
+      "spell": true
+    },
+    "DMT": {
+      "spell": true
+    },
+    "DMV": {
+      "spell": true
+    },
+    "DNA": {
+      "spell": true
+    },
+    "DUI": {
+      "spell": true
+    },
+    "DVD": {
+      "spell": true
+    },
+    "ER": {
+      "spell": true
+    },
+    "EVP": {
+      "spell": true
+    },
+    "FBI": {
+      "spell": true
+    },
+    "GPS": {
+      "spell": true
+    },
+    "HOA": {
+      "spell": true
+    },
+    "HQ": {
+      "spell": true
+    },
+    "HR": {
+      "spell": true
+    },
+    "ID": {
+      "spell": true
+    },
+    "IRS": {
+      "spell": true
+    },
+    "IT": {
+      "spell": true
+    },
+    "IV": {
+      "spell": true
+    },
+    "JFK": {
+      "spell": true
+    },
+    "KFC": {
+      "spell": true
+    },
+    "LA": {
+      "spell": true
+    },
+    "LSD": {
+      "spell": true
+    },
+    "MLM": {
+      "spell": true
+    },
+    "NFT": {
+      "spell": true
+    },
+    "NPC": {
+      "spell": true
+    },
+    "PA": {
+      "spell": true
+    },
+    "PR": {
+      "spell": true
+    },
+    "PTA": {
+      "spell": true
+    },
+    "RA": {
+      "spell": true
+    },
+    "SNL": {
+      "spell": true
+    },
+    "STD": {
+      "spell": true
+    },
+    "TA": {
+      "spell": true
+    },
+    "TSA": {
+      "spell": true
+    },
+    "TV": {
+      "spell": true
+    },
+    "UFO": {
+      "spell": true
+    },
+    "UTI": {
+      "spell": true
+    },
+    "UV": {
+      "spell": true
+    },
+    "VFW": {
+      "spell": true
+    },
+    "VHS": {
+      "spell": true
+    },
+    "VIP": {
+      "spell": true
+    },
+    "VR": {
+      "spell": true
+    },
+    "O.J.": {
+      "spell": true
+    },
+    "O.J": {
+      "spell": true
+    },
+    "D.B.": {
+      "spell": true
+    },
+    "D.B": {
+      "spell": true
+    },
+    "PS5": {
+      "say": "P S 5"
+    },
+    "NASA": {
+      "ipa": "nˈasə"
+    },
+    "IKEA": {
+      "ipa": "aɪkˈiːə"
+    },
+    "COVID": {
+      "ipa": "kˈəʊvɪd"
+    },
+    "LEGO": {
+      "ipa": "lˈɛɡəʊ"
+    },
+    "MAGA": {
+      "ipa": "mˈaɡə"
+    },
+    "YOLO": {
+      "ipa": "jˈəʊləʊ"
+    },
+    "SWAT": {
+      "ipa": "swˈɒt"
+    },
+    "CPAP": {
+      "ipa": "sˈiːpap"
+    },
+    "MILF": {
+      "ipa": "mˈɪlf"
+    },
+    "ICE": {
+      "ipa": "ˈaɪs"
+    },
+    "BREAKING": {
+      "say": "Breaking"
+    },
+    "WORST": {
+      "say": "worst"
+    },
+    "SWINGRS": {
+      "say": "swingers"
+    },
+    "VIII": {
+      "say": "the Eighth"
+    },
+    "Harambe": {
+      "ipa": "həɹˈɑːmbeɪ",
+      "why": "the gorilla: ha-RAHM-bay (the engine said 'Harambu')"
+    },
+    "Epstein": {
+      "ipa": "ˈɛpstiːn",
+      "why": "Jeffrey Epstein: EP-steen, as the news says it (the engine said EP-stine)"
+    },
+    "60s": {
+      "say": "sixties"
+    },
+    "70s": {
+      "say": "seventies"
+    },
+    "80s": {
+      "say": "eighties"
+    },
+    "90s": {
+      "say": "nineties"
+    },
+    "Airbnb": {
+      "ipa": "ˈeə bˌiː ɛn bˈiː",
+      "why": "Air B-n-B (Session B's review of the engine's phonemes)"
+    },
+    "Beyoncé": {
+      "ipa": "biːˈɒnseɪ",
+      "why": "bee-YON-say (Session B's review of the engine's phonemes)"
+    },
+    "Bugatti": {
+      "ipa": "buːɡˈɑːti",
+      "why": "boo-GAH-tee (Session B's review of the engine's phonemes)"
+    },
+    "Cabela": {
+      "ipa": "kəbˈɛlə",
+      "why": "Cabela's: kuh-BELL-uhz (Session B's review of the engine's phonemes)"
+    },
+    "Cinnabon": {
+      "ipa": "sˈɪnəbɒn",
+      "why": "SIN-uh-bon (Session B's review of the engine's phonemes)"
+    },
+    "Disneyland": {
+      "ipa": "dˈɪznilˌand",
+      "why": "DIZ-nee-land (Session B's review of the engine's phonemes)"
+    },
+    "DMs": {
+      "ipa": "dˌiː ˈɛmz",
+      "why": "D-Ms (Session B's review of the engine's phonemes)"
+    },
+    "DUIs": {
+      "ipa": "dˌiː juː ˈaɪz",
+      "why": "D-U-Is (Session B's review of the engine's phonemes)"
+    },
+    "IDs": {
+      "ipa": "aɪ dˈiːz",
+      "why": "I-Ds (Session B's review of the engine's phonemes)"
+    },
+    "Elon": {
+      "ipa": "ˈiːlɒn",
+      "why": "EE-lon (Session B's review of the engine's phonemes)"
+    },
+    "Fieri": {
+      "ipa": "fiˈɛɹi",
+      "why": "Guy Fieri: fee-ERR-ee (Session B's review of the engine's phonemes)"
+    },
+    "Gaetz": {
+      "ipa": "ɡˈeɪts",
+      "why": "Matt Gaetz: 'gates' (Session B's review of the engine's phonemes)"
+    },
+    "Gein": {
+      "ipa": "ɡˈiːn",
+      "why": "Ed Gein: 'geen' (Session B's review of the engine's phonemes)"
+    },
+    "Ghraib": {
+      "ipa": "ɡɹˈeɪb",
+      "why": "Abu Ghraib: 'grayb' (Session B's review of the engine's phonemes)"
+    },
+    "Giuliani": {
+      "ipa": "dʒˌuːliˈɑːni",
+      "why": "joo-lee-AH-nee (Session B's review of the engine's phonemes)"
+    },
+    "Heimlich": {
+      "ipa": "hˈaɪmlɪk",
+      "why": "HIME-lick (Session B's review of the engine's phonemes)"
+    },
+    "Hussein": {
+      "ipa": "huːsˈeɪn",
+      "why": "hoo-SANE (Session B's review of the engine's phonemes)"
+    },
+    "Kanye": {
+      "ipa": "kˈɑːnjeɪ",
+      "why": "KAHN-yay (Session B's review of the engine's phonemes)"
+    },
+    "Kegels": {
+      "ipa": "kˈeɪɡəlz",
+      "why": "KAY-gulls (Session B's review of the engine's phonemes)"
+    },
+    "Kelce": {
+      "ipa": "kˈɛlsi",
+      "why": "KEL-see (Session B's review of the engine's phonemes)"
+    },
+    "Khashoggi": {
+      "ipa": "kəʃˈɒɡi",
+      "why": "kuh-SHOG-ee (Session B's review of the engine's phonemes)"
+    },
+    "Kobe": {
+      "ipa": "kˈəʊbiː",
+      "why": "Kobe Bryant: KOH-bee (Session B's review of the engine's phonemes)"
+    },
+    "Koresh": {
+      "ipa": "kəɹˈɛʃ",
+      "why": "David Koresh: kuh-RESH (Session B's review of the engine's phonemes)"
+    },
+    "Lasso": {
+      "ipa": "lˈasəʊ",
+      "why": "Ted Lasso: LASS-oh (Session B's review of the engine's phonemes)"
+    },
+    "Lochte": {
+      "ipa": "lˈɒkti",
+      "why": "Ryan Lochte: LOCK-tee (Session B's review of the engine's phonemes)"
+    },
+    "Mangione": {
+      "ipa": "mˌandʒiˈəʊni",
+      "why": "Luigi Mangione: man-jee-OH-nee (Session B's review of the engine's phonemes)"
+    },
+    "Mengele": {
+      "ipa": "mˈɛŋɡələ",
+      "why": "MENG-guh-luh (Session B's review of the engine's phonemes)"
+    },
+    "Murdaugh": {
+      "ipa": "mˈɜːdɒk",
+      "why": "Alex Murdaugh: MUR-dock (Session B's review of the engine's phonemes)"
+    },
+    "Noem": {
+      "ipa": "nˈəʊm",
+      "why": "Kristi Noem: 'nome' (Session B's review of the engine's phonemes)"
+    },
+    "NyQuil": {
+      "ipa": "nˈaɪkwɪl",
+      "why": "NYE-quill (Session B's review of the engine's phonemes)"
+    },
+    "Patagonia": {
+      "ipa": "pˌatəɡˈəʊniə",
+      "why": "pat-uh-GO-nee-uh (Session B's review of the engine's phonemes)"
+    },
+    "Putin": {
+      "ipa": "pˈuːtɪn",
+      "why": "POO-tin (Session B's review of the engine's phonemes)"
+    },
+    "Razr": {
+      "ipa": "ɹˈeɪzə",
+      "why": "'razor' (Session B's review of the engine's phonemes)"
+    },
+    "Sotheby": {
+      "ipa": "sˈʌðəbi",
+      "why": "Sotheby's: SUTH-uh-beez (Session B's review of the engine's phonemes)"
+    },
+    "Tuah": {
+      "ipa": "tˈuːə",
+      "why": "Hawk Tuah: TOO-uh (Session B's review of the engine's phonemes)"
+    },
+    "Uruguayan": {
+      "ipa": "jˌʊəɹəɡwˈaɪən",
+      "why": "yoor-uh-GWY-an (Session B's review of the engine's phonemes)"
+    },
+    "Weiner": {
+      "ipa": "wˈiːnə",
+      "why": "Anthony Weiner: WEE-ner (Session B's review of the engine's phonemes)"
+    },
+    "Oppenheimer": {
+      "ipa": "ˈɒpənhˌaɪmə",
+      "why": "OP-en-hy-mer (Session B's review of the engine's phonemes)"
+    },
+    "Jr": {
+      "ipa": "dʒˈuːniə",
+      "why": "'junior' (Session B's review of the engine's phonemes)"
+    },
+    "Cancún": {
+      "ipa": "kankˈuːn",
+      "why": "can-KOON (the engine said KANK-un)"
+    },
+    "Jäger": {
+      "ipa": "jˈeɪɡə",
+      "why": "Jägermeister: YAY-ger (the engine said JEDGE-er)"
+    },
+    "ayahuasca": {
+      "ipa": "ˌaɪəwˈɑːskə",
+      "why": "flagged by the ear check; confirmed wrong by reading the engine's phonemes"
+    },
+    "Baristas": {
+      "ipa": "bəɹˈiːstəz",
+      "why": "flagged by the ear check; confirmed wrong by reading the engine's phonemes"
+    },
+    "Boebert": {
+      "ipa": "bˈəʊbɜːt",
+      "why": "flagged by the ear check; confirmed wrong by reading the engine's phonemes"
+    },
+    "copay": {
+      "ipa": "kˈəʊpeɪ",
+      "why": "flagged by the ear check; confirmed wrong by reading the engine's phonemes"
+    },
+    "Descartes": {
+      "ipa": "deɪkˈɑːt",
+      "why": "flagged by the ear check; confirmed wrong by reading the engine's phonemes"
+    },
+    "dewormer": {
+      "ipa": "diːwˈɜːmə",
+      "why": "flagged by the ear check; confirmed wrong by reading the engine's phonemes"
+    },
+    "Fauci": {
+      "ipa": "fˈaʊtʃi",
+      "why": "flagged by the ear check; confirmed wrong by reading the engine's phonemes"
+    },
+    "Ghislaine": {
+      "ipa": "ɡiːlˈeɪn",
+      "why": "flagged by the ear check; confirmed wrong by reading the engine's phonemes"
+    },
+    "Laden": {
+      "ipa": "lˈɑːdən",
+      "why": "flagged by the ear check; confirmed wrong by reading the engine's phonemes"
+    },
+    "Onesie": {
+      "ipa": "wˈʌnzi",
+      "why": "flagged by the ear check; confirmed wrong by reading the engine's phonemes"
+    },
+    "bukkake": {
+      "ipa": "buːkˈɑːkeɪ",
+      "why": "boo-KAH-kay"
+    },
+    "Bukkake": {
+      "ipa": "buːkˈɑːkeɪ",
+      "why": "boo-KAH-kay"
+    },
+    "Gere": {
+      "ipa": "ɡˈiə",
+      "why": "flagged by the ear check; confirmed wrong by reading the engine's phonemes"
+    },
+    "gulag": {
+      "ipa": "ɡˈuːlaɡ",
+      "why": "flagged by the ear check; confirmed wrong by reading the engine's phonemes"
+    },
+    "Kegel": {
+      "ipa": "kˈeɪɡəl",
+      "why": "flagged by the ear check; confirmed wrong by reading the engine's phonemes"
+    },
+    "Lorena": {
+      "ipa": "ləɹˈeɪnə",
+      "why": "flagged by the ear check; confirmed wrong by reading the engine's phonemes"
+    },
+    "parkour": {
+      "ipa": "pɑːkˈʊə",
+      "why": "flagged by the ear check; confirmed wrong by reading the engine's phonemes"
+    },
+    "Zambonis": {
+      "ipa": "zambˈəʊniz",
+      "why": "flagged by the ear check; confirmed wrong by reading the engine's phonemes"
+    },
+    "Bodegas": {
+      "ipa": "bəʊdˈeɪɡəz",
+      "why": "flagged by the ear check; confirmed wrong by reading the engine's phonemes"
+    },
+    "Covfefe": {
+      "ipa": "kəvfˈɛfi",
+      "why": "flagged by the ear check; confirmed wrong by reading the engine's phonemes"
+    },
+    "Nonna": {
+      "ipa": "nˈɒnə",
+      "why": "flagged by the ear check; confirmed wrong by reading the engine's phonemes"
+    },
+    "Ozempic": {
+      "ipa": "əʊzˈɛmpɪk",
+      "why": "flagged by the ear check; confirmed wrong by reading the engine's phonemes"
+    },
+    "prenup": {
+      "ipa": "pɹˈiːnʌp",
+      "why": "flagged by the ear check; confirmed wrong by reading the engine's phonemes"
+    },
+    "Prenup": {
+      "ipa": "pɹˈiːnʌp",
+      "why": "flagged by the ear check; confirmed wrong by reading the engine's phonemes"
+    },
+    "Schindler": {
+      "ipa": "ʃˈɪndlə",
+      "why": "flagged by the ear check; confirmed wrong by reading the engine's phonemes"
+    },
+    "cunnilingus": {
+      "ipa": "kˌʌnɪlˈɪŋɡəs",
+      "why": "flagged by the ear check; confirmed wrong by reading the engine's phonemes"
+    },
+    "masseuse": {
+      "ipa": "məsˈuːs",
+      "why": "muh-SOOS"
+    },
+    "Skibidi": {
+      "ipa": "skˈɪbɪdi",
+      "why": "flagged by the ear check; confirmed wrong by reading the engine's phonemes"
+    },
+    "zucchini": {
+      "ipa": "zuːkˈiːni",
+      "why": "flagged by the ear check; confirmed wrong by reading the engine's phonemes"
+    },
+    "piñata": {
+      "ipa": "pɪnjˈɑːtə",
+      "why": "flagged by the ear check; confirmed wrong by reading the engine's phonemes"
+    }
+  },
+  "patterns": [
+    {
+      "match": "\\b19(\\d\\d)\\b(?!,\\d)",
+      "say": "19 $1",
+      "why": "a 1900s year: 'nineteen forty-five', not 'nineteen hundred and forty-five'"
+    },
+    {
+      "match": "\\b20([1-9]\\d)\\b(?!,\\d)",
+      "say": "20 $1",
+      "why": "2010-2099: 'twenty nineteen', as years are said"
+    },
+    {
+      "match": "\\b911\\b",
+      "say": "9 1 1"
+    },
+    {
+      "match": "\\b9/11\\b",
+      "say": "9 11"
+    },
+    {
+      "match": "#(\\d+)",
+      "say": "number $1"
+    }
+  ],
+  "cards": {
+    "cw867": {
+      "Bass": {
+        "ipa": "bˈæs",
+        "why": "Bass Pro Shops: the fish"
+      }
+    },
+    "cw1029": {
+      "Bass": {
+        "ipa": "bˈæs",
+        "why": "Bass Pro Shops: the fish"
+      }
+    },
+    "mw2139": {
+      "Live": {
+        "ipa": "lˈɪv",
+        "why": "\"Live, laugh, love\": the verb"
+      }
+    },
+    "cw375": {
+      "Live": {
+        "ipa": "lˈɪv",
+        "why": "\"Live, Laugh, Love\": the verb"
+      }
+    },
+    "mb1220": {
+      "lives": {
+        "ipa": "lˈɪvz",
+        "why": "basically lives here: the verb"
+      }
+    },
+    "cw406": {
+      "lives": {
+        "ipa": "lˈɪvz",
+        "why": "\"lives in the basement\": the verb"
+      }
+    },
+    "mw2238": {
+      "produce": {
+        "ipa": "pɹˈɒdjuːs",
+        "why": "the produce section: the noun"
+      }
+    },
+    "mw2292": {
+      "Produce": {
+        "ipa": "pɹˈɒdjuːs",
+        "why": "produce mist: the noun"
+      }
+    },
+    "cw1804": {
+      "produce": {
+        "ipa": "pɹˈɒdjuːs",
+        "why": "the produce aisle: the noun"
+      }
+    },
+    "ww310": {
+      "produce": {
+        "ipa": "pɹˈɒdjuːs",
+        "why": "the produce aisle: the noun"
+      }
+    },
+    "mb1006": {
+      "read": {
+        "ipa": "ɹˈɛd",
+        "why": "the correction read: past tense"
+      }
+    },
+    "mw431": {
+      "read": {
+        "ipa": "ɹˈɛd",
+        "why": "read by a robot: past participle"
+      }
+    },
+    "mw677": {
+      "read": {
+        "ipa": "ɹˈɛd",
+        "why": "a book nobody read: past"
+      }
+    },
+    "mw1214": {
+      "read": {
+        "ipa": "ɹˈɛd",
+        "why": "a word you only read: past"
+      }
+    },
+    "mw2064": {
+      "read": {
+        "ipa": "ɹˈɛd",
+        "why": "read by the author's mom: past participle"
+      }
+    },
+    "cb340": {
+      "read": {
+        "ipa": "ɹˈɛd",
+        "why": "the banner read: past"
+      }
+    },
+    "cb378": {
+      "read": {
+        "ipa": "ɹˈɛd",
+        "why": "the post read: past"
+      }
+    },
+    "cw530": {
+      "read": {
+        "ipa": "ɹˈɛd",
+        "why": "a letter read aloud: past participle"
+      }
+    },
+    "cw749": {
+      "read": {
+        "ipa": "ɹˈɛd",
+        "why": "a list read aloud: past participle"
+      }
+    },
+    "cw1293": {
+      "read": {
+        "ipa": "ɹˈɛd",
+        "why": "results, read out loud: past participle"
+      }
+    },
+    "cw1863": {
+      "read": {
+        "ipa": "ɹˈɛd",
+        "why": "the psychic read your palm: past"
+      }
+    },
+    "wb756": {
+      "read": {
+        "ipa": "ɹˈɛd",
+        "why": "the ticket read: past"
+      }
+    },
+    "ww812": {
+      "read": {
+        "ipa": "ɹˈɛd",
+        "why": "the tax code, read erotically: past participle"
+      }
+    },
+    "ww1380": {
+      "read": {
+        "ipa": "ɹˈɛd",
+        "why": "a prenup nobody read: past"
+      }
+    },
+    "mb1215": {
+      "record": {
+        "ipa": "ɹɪkˈɔːd",
+        "why": "what did it record: the verb"
+      }
+    },
+    "cb572": {
+      "record": {
+        "ipa": "ɹɪkˈɔːd",
+        "why": "the verb"
+      }
+    },
+    "cb643": {
+      "record": {
+        "ipa": "ɹɪkˈɔːd",
+        "why": "the verb"
+      }
+    },
+    "cb854": {
+      "record": {
+        "ipa": "ɹɪkˈɔːd",
+        "why": "the verb"
+      }
+    },
+    "wb699": {
+      "record": {
+        "ipa": "ɹɪkˈɔːd",
+        "why": "the verb"
+      }
+    },
+    "wb890": {
+      "record": {
+        "ipa": "ɹɪkˈɔːd",
+        "why": "the verb"
+      }
+    },
+    "mw331": {
+      "Wind": {
+        "ipa": "wˈaɪnd",
+        "why": "a wind-up toy: to wind"
+      }
+    },
+    "mb812": {
+      "$11": {
+        "say": "eleven dollars",
+        "why": "a number read as people say it"
+      }
+    },
+    "cw1463": {
+      "$12": {
+        "say": "twelve-dollar",
+        "why": "a number read as people say it"
+      }
+    },
+    "mb920": {
+      "$14": {
+        "say": "fourteen dollars",
+        "why": "a number read as people say it"
+      }
+    },
+    "cw1643": {
+      "$18": {
+        "say": "eighteen-dollar",
+        "why": "a number read as people say it"
+      }
+    },
+    "mw1834": {
+      "$19": {
+        "say": "nineteen-dollar",
+        "why": "a number read as people say it"
+      }
+    },
+    "mw2389": {
+      "$19": {
+        "say": "nineteen dollars",
+        "why": "a number read as people say it"
+      }
+    },
+    "mb785": {
+      "$2.99": {
+        "say": "two ninety-nine",
+        "why": "a number read as people say it"
+      }
+    },
+    "mw2313": {
+      "$3": {
+        "say": "three-dollar",
+        "why": "a number read as people say it"
+      }
+    },
+    "mw2285": {
+      "$300": {
+        "say": "three hundred dollars",
+        "why": "a number read as people say it"
+      }
+    },
+    "mb1187": {
+      "$4": {
+        "say": "four dollars",
+        "why": "a number read as people say it"
+      }
+    },
+    "mw2382": {
+      "$4,000": {
+        "say": "four thousand dollars",
+        "why": "a number read as people say it"
+      }
+    },
+    "mw1534": {
+      "$4": {
+        "say": "four dollars",
+        "why": "a number read as people say it"
+      }
+    },
+    "mw1576": {
+      "$400": {
+        "say": "four-hundred-dollar",
+        "why": "a number read as people say it"
+      }
+    },
+    "mw1962": {
+      "$400": {
+        "say": "four hundred dollars",
+        "why": "a number read as people say it"
+      }
+    },
+    "mw2110": {
+      "$5": {
+        "say": "five-dollar",
+        "why": "a number read as people say it"
+      }
+    },
+    "mw2108": {
+      "$6": {
+        "say": "six-dollar",
+        "why": "a number read as people say it"
+      }
+    },
+    "mw2089": {
+      "$9": {
+        "say": "nine-dollar",
+        "why": "a number read as people say it"
+      }
+    },
+    "mw2152": {
+      "$9": {
+        "say": "nine dollars",
+        "why": "a number read as people say it"
+      }
+    },
+    "mw1239": {
+      "0:01": {
+        "say": "zero oh one",
+        "why": "a number read as people say it"
+      }
+    },
+    "cw1900": {
+      "F-150": {
+        "say": "F one-fifty",
+        "why": "a number read as people say it"
+      }
+    },
+    "wb693": {
+      "237": {
+        "say": "two thirty-seven",
+        "why": "a number read as people say it"
+      }
+    },
+    "mw2458": {
+      "347": {
+        "say": "three forty-seven",
+        "why": "a number read as people say it"
+      }
+    },
+    "mw1570": {
+      "847": {
+        "say": "eight forty-seven",
+        "why": "a number read as people say it"
+      }
+    },
+    "cw687": {
+      "401k": {
+        "say": "four oh one K",
+        "why": "a number read as people say it"
+      }
+    },
+    "ww2506": {
+      "MH370": {
+        "say": "M H three seventy",
+        "why": "a number read as people say it"
+      }
+    },
+    "cw1008": {
+      "4.1": {
+        "say": "four point one",
+        "why": "a number read as people say it"
+      }
+    },
+    "mw2141": {
+      "1.5x": {
+        "say": "one and a half times",
+        "why": "a number read as people say it"
+      }
+    },
+    "cw2025": {
+      "6": {
+        "say": "six",
+        "why": "a number read as people say it"
+      }
+    },
+    "cw1518": {
+      "_whole": {
+        "say": "Wheel of Fortune: blank, U, C, K. Y, O, blank, R. Boss.",
+        "why": "a puzzle board: read the letters, the gaps as 'blank' (the words BOSS/YO/UCK are not acronyms)"
+      }
+    }
+  }
+}
