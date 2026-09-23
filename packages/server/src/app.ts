@@ -118,7 +118,12 @@ export async function createApp(options: AppOptions): Promise<App> {
   const funnel = createFunnelBook(recordingsDir); // I-077
   sockets.attach(host, deps, funnel);
   const detachSpeech = attachSpeech(fastify, host, deps); // READER-VOICES (ADR-045)
-  fastify.get('/api/funnel', async () => funnel.all());
+  // I-785 B: keyed by room code — so only the rooms anyone may see
+  fastify.get('/api/funnel', async () =>
+    Object.fromEntries(
+      Object.entries(funnel.all()).filter(([code]) => host.get(code)?.listed !== false),
+    ),
+  );
 
   registerRoomsRoute(fastify, { host, clock, io: sockets.io }); // ADR-043
   const publicUrl = createPublicUrl({ repoRoot: REPO_ROOT }); // Share hands out the tunnel
@@ -209,6 +214,14 @@ export async function createApp(options: AppOptions): Promise<App> {
     // I-041 (the owner): the QR carries the house room's code (`/?room=KGVU`) so a scan goes
     // straight in; the URL the TV prints stays bare and a phone that types it asks for the code.
     const qrUrl = `${joinUrl.replace(/\/$/, '')}/?room=${host.house().code}`;
+    // I-785 A: a private room is not published — only the one asked for by its exact code (a QR
+    // link), and the house room (its code is on the TV and in the QR anyway)
+    const asked = String((req.query as { room?: string }).room ?? '')
+      .trim()
+      .toUpperCase();
+    const visible = host
+      .rooms()
+      .filter((r) => r.listed !== false || r.code === asked || r.code === host.house().code);
     return {
       version: PARTYBOX_VERSION,
       /** Boot time: a client that reconnects to a different value reloads (stale bundle guard). */
@@ -219,20 +232,25 @@ export async function createApp(options: AppOptions): Promise<App> {
       joinUrl,
       qrUrl,
       qrSvg: await qrSvg(qrUrl),
-      rooms: host.rooms().map((r) => ({
+      rooms: visible.map((r) => ({
         code: r.code,
         locked: r.locked,
         players: Object.keys(r.players).length,
         // The owner (2026-09-22): private rooms stay out of the join page's list.
         listed: r.listed,
         status: r.status,
-        // I-046 B: a few first names for the join page's example placeholder.
-        names: Object.values(r.players)
-          .filter((p) => !p.bot)
-          .slice(0, 4)
-          .map((p) => p.name),
-        // I-083 A: the faces already in the room, so the join form can say so.
-        avatars: Object.values(r.players).map((p) => p.avatarId),
+        // I-785 C: who is in a room only for the room this phone is joining by code
+        ...(r.code === asked
+          ? {
+              // I-046 B: a few first names for the join page's example placeholder.
+              names: Object.values(r.players)
+                .filter((p) => !p.bot)
+                .slice(0, 4)
+                .map((p) => p.name),
+              // I-083 A: the faces already in the room, so the join form can say so.
+              avatars: Object.values(r.players).map((p) => p.avatarId),
+            }
+          : {}),
       })),
       houseRoom: host.house().code,
       publicUrl: await publicUrl.get(),

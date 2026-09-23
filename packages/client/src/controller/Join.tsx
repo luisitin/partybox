@@ -99,7 +99,9 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
   const picked = info?.rooms.find((r) => r.code === code.trim().toUpperCase());
   const badged = picked ? new Set((picked.avatars ?? []).map(avatarFace)) : taken;
   const [nameFocused, setNameFocused] = useState(false);
-  const placeholder = j.example(useExampleName(info?.rooms[0]?.names, name === '' && !nameFocused));
+  // I-785 C: names come only with the room asked for by code (the link's), so read that room's
+  const linkRoom = info?.rooms.find((r) => r.code === (urlRoom ?? '')) ?? info?.rooms[0];
+  const placeholder = j.example(useExampleName(linkRoom?.names, name === '' && !nameFocused));
   const [submittedAt, setSubmittedAt] = useState<number | null>(null);
   const needsCode = urlRoom === null;
   // A rejected join shakes the name field (or the code) and hands it back selected; I-741 C's
