@@ -26,6 +26,7 @@ export function gameSummaries(deps: EngineDeps): GameSummary[] {
         minPlayers,
         maxPlayers,
         estimatedMinutes,
+        estimate,
         tags,
         settings,
         supportsBots,
@@ -37,6 +38,7 @@ export function gameSummaries(deps: EngineDeps): GameSummary[] {
         minPlayers,
         maxPlayers,
         estimatedMinutes,
+        ...(estimate ? { estimate } : {}), // I-189
         tags,
         settings,
         supportsBots: supportsBots === true,

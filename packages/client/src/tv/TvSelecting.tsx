@@ -1,6 +1,7 @@
 // Choosing a game. The TV is the host's screen (ADR-031): the game list on the left is clickable
 // and the settings on the right are editable — the same picks the VIP phone makes, on the same
 // room state. The room sees the highlighted game big, its settings, and who is here.
+import { minutesFor } from '../estimate';
 import type { JSX } from 'react';
 import type { RoomSnapshot } from '@partybox/shared';
 import { Avatar, BigText, PlayerChips, Stage, useT } from '@partybox/game-sdk/ui';
@@ -53,7 +54,9 @@ export function TvSelecting({ room, client }: TvSelectingProps): JSX.Element {
                     <span className={styles.gameName}>{g.name}</span>
                     <span className={styles.gameMeta}>
                       {t.selecting.players(g.minPlayers, g.maxPlayers)} ·{' '}
-                      {t.selecting.minutes(g.estimatedMinutes)}
+                      {t.selecting.minutes(
+                        minutesFor(g, g.id === room.selectedGameId ? room.settings : null, room.players.length),
+                      ) /* I-189 */}
                       {g.supportsBots ? ' · 🤖' : botCount > 0 ? ` · ${t.lobby.noBots}` : ''}
                     </span>
                   </button>
@@ -109,7 +112,7 @@ export function TvSelecting({ room, client }: TvSelectingProps): JSX.Element {
             <p className={styles.description}>{gameText(game.id, lang, game.description)}</p>
             <p className={styles.meta}>
               {t.selecting.players(game.minPlayers, game.maxPlayers)} ·{' '}
-              {t.selecting.minutes(game.estimatedMinutes)}
+              {t.selecting.minutes(minutesFor(game, room.settings, room.players.length)) /* I-189 */}
             </p>
             {game.settings.length > 0 ? (
               <div className={styles.settings} aria-label={t.selecting.settings}>
