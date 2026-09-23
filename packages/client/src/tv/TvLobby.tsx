@@ -211,10 +211,35 @@ export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
           ) : room && vip ? (
             <p className="pb-muted">{t.lobby.waitingFor(vip.name)}</p>
           ) : null}
+          {/* I-650 A: what the room wants to play next */}
+          {room ? <VoteTally room={room} /> : null}
           {/* I-073 A: the last game, still on the table until the next one starts. */}
           {room?.results ? <LastUp room={room} /> : null}
         </div>
       </div>
     </Stage>
+  );
+}
+
+/** I-650 A: the votes for the next game, most-wanted first. */
+function VoteTally({ room }: { room: RoomSnapshot }): JSX.Element | null {
+  const votes = Object.entries(room.votes ?? {});
+  if (votes.length === 0) return null;
+  const rows = room.games
+    .map((g) => ({ g, ids: votes.filter(([, v]) => v === g.id).map(([id]) => id) }))
+    .filter((r) => r.ids.length > 0)
+    .sort((a, b) => b.ids.length - a.ids.length);
+  return (
+    <aside className={styles.tally} aria-label="votes for the next game">
+      <span className={styles.lastUpKicker}>🙋 Wants to play next</span>
+      <span className={styles.tallyRow}>
+        {rows.map(({ g, ids }) => (
+          <span key={g.id} className={styles.tallyChip}>
+            {g.name}
+            <strong className={styles.tallyCount}>{ids.length}</strong>
+          </span>
+        ))}
+      </span>
+    </aside>
   );
 }

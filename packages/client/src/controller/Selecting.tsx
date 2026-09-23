@@ -10,6 +10,7 @@ import { useServerInfo } from '../net/info';
 import { SettingField } from '../SettingField';
 import type { Controller } from '../net/controller';
 import styles from './Selecting.module.css';
+import { VoteRow, voteCounts } from './VoteRow';
 
 export interface SelectingProps {
   controller: Controller;
@@ -33,12 +34,18 @@ export function Selecting({ controller, room, me }: SelectingProps): JSX.Element
             : undefined
         }
         mood="wait"
-      />
+      >
+        {/* I-650 A: the vote stays open while the VIP picks */}
+        <VoteRow controller={controller} room={room} me={me} />
+      </WaitingScreen>
     );
   }
 
   const start = (): void => controller.vip({ action: 'start' });
   const botCount = room.players.filter((p) => p.bot).length;
+  // I-650 A: the votes on each game
+  const counts = voteCounts(room);
+  const games = room.games;
   return (
     <Screen
       title={t.lobby.pickGame}
@@ -114,8 +121,9 @@ export function Selecting({ controller, room, me }: SelectingProps): JSX.Element
         />
       </label>
       <ul className={styles.games} role="radiogroup" aria-label={t.selecting.games}>
-        {room.games.map((g) => {
+        {games.map((g) => {
           const isSelected = g.id === room.selectedGameId;
+          const wants = counts.get(g.id) ?? 0;
           return (
             <li key={g.id}>
               <button
@@ -127,6 +135,11 @@ export function Selecting({ controller, room, me }: SelectingProps): JSX.Element
               >
                 <span className={styles.cardHead}>
                   <span className={styles.cardTitle}>{g.name}</span>
+                  {wants > 0 ? (
+                    <span className={styles.votes} aria-label={`${wants} want this`}>
+                      🙋 {wants}
+                    </span>
+                  ) : null}
                   <span className={styles.check} aria-hidden>
                     {isSelected ? '✓' : ''}
                   </span>

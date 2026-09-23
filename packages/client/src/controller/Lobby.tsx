@@ -12,6 +12,7 @@ import type { Controller } from '../net/controller';
 import type { SoundEngine } from '../sound';
 import styles from './Lobby.module.css';
 import { ShareButton } from './ShareSheet';
+import { VoteRow, tallyLine } from './VoteRow';
 import { VIP_TIPS, setTipsSeen, tipsSeen } from './vipTips';
 
 export interface LobbyProps {
@@ -98,6 +99,13 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
       }
     >
       <p className="pb-muted">{me.isVip ? t.lobby.youAreVip : lobbyStrings().waitingForVip}</p>
+      {/* I-650 A: guests vote for the next game; the VIP sees the tally */}
+      {!me.isVip ? <VoteRow controller={controller} room={room} me={me} /> : null}
+      {me.isVip && tallyLine(room) ? (
+        <p className={styles.tally}>
+          <span aria-hidden>🙋</span> {tallyLine(room)}
+        </p>
+      ) : null}
       {me.isVip && tipsOn && tip ? (
         <p key={tip.id} className={styles.tip} role="status">
           <span aria-hidden>💡</span> {t.tips[tip.id]}

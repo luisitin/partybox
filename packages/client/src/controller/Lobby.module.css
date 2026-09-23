@@ -304,3 +304,9 @@
   font-size: var(--pb-font-small);
   color: var(--pb-text-muted);
 }
+
+/* ── I-650 A: the VIP's view of the votes. */
+.tally {
+  margin: var(--pb-space-2) 0;
+  font-weight: 800;
+}
