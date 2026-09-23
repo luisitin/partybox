@@ -326,6 +326,11 @@ export function ControllerShell({
           room={room}
           me={me}
           paused={view?.paused ?? false}
+          skipLabel={
+            view?.vipSkipLabel
+              ? serverText(view.vipSkipLabel, getLang(), view.gameId)
+              : undefined
+          } /* I-774 B */
           onClose={() => setMenuOpen(false)}
         />
       ) : null}

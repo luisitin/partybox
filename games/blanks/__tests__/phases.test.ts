@@ -123,7 +123,7 @@ describe('answer', () => {
 });
 
 describe('reveal', () => {
-  it('reads one card per phase instance, then opens the vote; VIP skip jumps to the vote', () => {
+  it('reads one card per phase instance, then opens the vote; VIP skip is the next card', () => {
     let s = playAll(toAnswer(start({ players: 4 })));
     const n = s.slots.length;
     for (let i = 0; i < n; i++) {
@@ -136,7 +136,11 @@ describe('reveal', () => {
     }
     expect(s.phase.id).toBe('judge');
     expect(tv(s).cards).toHaveLength(n);
-    const skipped = vip(playAll(toAnswer(start({ players: 4 }))), 'skip');
+    // I-774: a skip is one card forward; only the last card's skip opens the vote
+    let skipped = vip(playAll(toAnswer(start({ players: 4 }))), 'skip');
+    expect(skipped.phase.id).toBe('reveal');
+    expect(skipped.revealIndex).toBe(1);
+    while (skipped.phase.id === 'reveal') skipped = vip(skipped, 'skip');
     expect(skipped.phase.id).toBe('judge');
   });
 });
@@ -378,7 +382,7 @@ describe('VIP', () => {
     s = vip(s, 'skip');
     expect(s.phase.id).toBe('reveal');
     expect(s.slots).toHaveLength(3);
-    s = vip(s, 'skip');
+    s = vip(vip(vip(s, 'skip'), 'skip'), 'skip'); // I-774: one card per skip
     expect(s.phase.id).toBe('judge');
     s = vip(s, 'skip');
     expect(s.phase.id).toBe('result');

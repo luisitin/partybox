@@ -201,6 +201,11 @@ export interface ViewEnvelope {
     /** The live line — for Bingo, the call and its nickname. */
     line: string;
   };
+  /**
+   * I-774 B: what the VIP's Skip / Next does in this phase, in words ("Next card (2 of 4)"). The
+   * TV's host bar and the ★ menu show it instead of the generic "Skip / Next".
+   */
+  vipSkipLabel?: string;
 }
 
 export type TvView = ViewEnvelope;

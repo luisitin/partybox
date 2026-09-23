@@ -16,12 +16,21 @@ export interface VipMenuProps {
   me: PlayerPublic;
   /** Current game paused state (from the pushed view), for the Pause/Resume toggle. */
   paused?: boolean;
+  /** I-774 B: the game's words for Skip / Next in this phase. */
+  skipLabel?: string;
   onClose: () => void;
 }
 
 const CONFIRM_MS = 4000;
 
-export function VipMenu({ controller, room, me, paused, onClose }: VipMenuProps): JSX.Element {
+export function VipMenu({
+  controller,
+  room,
+  me,
+  paused,
+  skipLabel,
+  onClose,
+}: VipMenuProps): JSX.Element {
   const [confirm, setConfirm] = useState<string | null>(null);
   useEffect(() => {
     if (confirm === null) return;
@@ -73,7 +82,7 @@ export function VipMenu({ controller, room, me, paused, onClose }: VipMenuProps)
                 tone="neutral"
                 onClick={() => act('skip', () => controller.vip({ action: 'skip' }))}
               >
-                {t.vip.skip}
+                {skipLabel ?? t.vip.skip}
               </PrimaryButton>
               <PrimaryButton
                 tone="neutral"

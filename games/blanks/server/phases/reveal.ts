@@ -1,6 +1,6 @@
 // Phase "reveal": the TV (and every phone) reads one submission at a time — the black card with
 // the white cards dropped in — one phase instance per slot, timed to its length. Exits on each
-// card's deadline; VIP skip jumps straight to the vote.
+// card's deadline; a VIP skip is the next card (I-774), and the last one's opens the vote.
 import { enterPhase, isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { revealMs } from '../cards';
