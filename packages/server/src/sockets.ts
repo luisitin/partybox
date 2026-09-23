@@ -41,11 +41,59 @@ export function createSocketLayer(server: HttpServer): SocketLayer {
     pingTimeout: LIMITS.pingTimeoutMs,
     serveClient: false,
     cors: { origin: true },
+    // I-750 C: compress messages over 1 KB (the room snapshot is repeated keys and text)
+    perMessageDeflate: { threshold: 1024 },
   });
   const byPlayer = new Map<string, Socket>();
+  /** I-750 B: the newest room/view push waiting for a busy connection, per socket. */
+  const latest = new Map<Socket, Map<string, unknown>>();
+  const ticking = new Set<Socket>();
+  const busy = (socket: Socket): boolean => {
+    const transport = socket.conn.transport as unknown as {
+      writable: boolean;
+      socket?: { bufferedAmount?: number };
+    };
+    return !transport.writable || (transport.socket?.bufferedAmount ?? 0) > 16 * 1024;
+  };
 
   const transport: Transport = {
-    toPlayer: (playerId, event, payload) => byPlayer.get(playerId)?.emit(event, payload),
+    toPlayer: (playerId, event, payload) => {
+      const socket = byPlayer.get(playerId);
+      if (!socket) return;
+      // I-750 B: latest wins — a room/view push is a full state, so while the connection is busy
+      // (still writing, or more than 16 KB handed to the network and not yet sent), the newest
+      // replaces the one waiting instead of queueing behind it: a slow phone renders the present,
+      // not the backlog. Everything else is sent in order.
+      // (SECOND BUILD: waited on the connection's 'drain' event, which did not always come, so a
+      //  waiting push could be lost, and a newer one sent directly overtook it. Now: while one is
+      //  waiting, newer ones wait too, and a 15 ms timer sends when the connection is free.)
+      if ((event === 'room' || event === 'view') && (busy(socket) || latest.has(socket))) {
+        const waiting = latest.get(socket) ?? new Map<string, unknown>();
+        waiting.set(event, payload);
+        latest.set(socket, waiting);
+        if (!ticking.has(socket)) {
+          ticking.add(socket);
+          const tick = (): void => {
+            if (!socket.connected) {
+              latest.delete(socket);
+              ticking.delete(socket);
+              return;
+            }
+            if (busy(socket)) {
+              setTimeout(tick, 15);
+              return;
+            }
+            const due = latest.get(socket);
+            latest.delete(socket);
+            ticking.delete(socket);
+            for (const [ev, p] of due ?? []) socket.emit(ev, p);
+          };
+          setTimeout(tick, 15);
+        }
+        return;
+      }
+      socket.emit(event, payload);
+    },
     toTvs: (code, event, payload) => io.to(`tv:${code}`).emit(event, payload),
     toAll: (code, event, payload) => io.to(`tv:${code}`).to(`room:${code}`).emit(event, payload),
     disconnectPlayer: (playerId) => {
