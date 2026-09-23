@@ -711,3 +711,24 @@ button.cell:focus-visible {
 :global(:root[data-motion='off']) .iconDraw {
   animation: none;
 }
+
+/* ── I-394 A: after the wipe, a never-called square keeps a ghost of its red — a dashed outline
+   and a dim ✕ — so "… were never called" still points at something. */
+.wipe.ghostRed {
+  animation-name: cell-wipe-ghost;
+}
+.wipe.ghostRed .mark {
+  animation: none;
+  opacity: 0.5;
+}
+@keyframes cell-wipe-ghost {
+  35% {
+    transform: scale(0.86);
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+    background: var(--pb-surface-2);
+    border: 3px dashed color-mix(in srgb, var(--pb-danger) 60%, transparent);
+  }
+}

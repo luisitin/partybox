@@ -179,6 +179,8 @@ export function Card({
             sent && isDaubed ? styles.sent : '',
             lifted.has(i) ? styles.unstamp : '',
             wiped && isDaubed && !isFree ? styles.wipe : '',
+            // I-394 A: a never-called square keeps a ghost of its red while the verdict names it
+            wiped && isDaubed && !isFree && redSet.has(i) ? styles.ghostRed : '',
           ].join(' ');
           const mark = !showColour ? null : greenSet.has(i) ? '✓' : redSet.has(i) ? '✕' : null;
           const label = isFree ? L('FREE') : String(n);
