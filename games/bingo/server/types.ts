@@ -118,6 +118,8 @@ export interface RoundState {
   resumeBy: string | null;
   /** playerId → card indices already swapped at the intro (one "deal me another" per card). */
   swapped: Record<string, number[]>;
+  /** I-139 A: a swap waiting on its answer — which card, the old numbers, when it was dealt. */
+  offer?: Record<string, { card: number; old: number[]; at: number }>;
   /**
    * intro: who has tapped Ready (loop 344 — the owner: a real card-pick step). Once every
    * connected person with cards has (bots and the disconnected count as ready), the first
@@ -165,6 +167,9 @@ export const inputSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('lapse') }),
   /** The card-style menu opened or closed on this phone; the caller holds while any is open. */
   z.object({ type: z.literal('menu'), open: z.boolean() }),
+  /** I-139 A: the answer to a swap offer — put the old card back, or keep the new one. */
+  z.object({ type: z.literal('keepOld') }),
+  z.object({ type: z.literal('takeNew') }),
   /** Intro only: one fresh deal per card ("deal me another"); the old card is gone for good. */
   z.object({
     type: z.literal('swap'),

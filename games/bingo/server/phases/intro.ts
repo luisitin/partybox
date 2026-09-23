@@ -48,6 +48,7 @@ export function enterIntro(state: State, number: number, now: number): State {
     resumeAgain: false,
     resumeBy: null,
     swapped: {},
+    offer: {},
     ready: [],
   };
   return enterPhase(
@@ -62,7 +63,7 @@ export function enterIntro(state: State, number: number, now: number): State {
  * "Deal me another": one fresh card per slot, during the intro only; the old one is gone. Not
  * after Ready — the cards are picked.
  */
-function swapCard(state: State, playerId: string, card: number): State {
+function swapCard(state: State, playerId: string, card: number, now: number): State {
   const round = state.round;
   const cards = round.cards[playerId];
   if (!hasPlayer(state, playerId) || !cards || card < 0 || card >= cards.length) return state;
@@ -77,8 +78,39 @@ function swapCard(state: State, playerId: string, card: number): State {
       ...round,
       cards: { ...round.cards, [playerId]: cards.map((c, i) => (i === card ? fresh : c)) },
       swapped: { ...round.swapped, [playerId]: [...done, card] },
+      // I-139 A: the old card waits beside the new one until the player picks a side.
+      offer: { ...round.offer, [playerId]: { card, old: cards[card] ?? [], at: now } },
     },
   };
+}
+
+/** I-139 A: put the old card back; the offer is over. */
+function keepOld(state: State, playerId: string): State {
+  const round = state.round;
+  const offer = round.offer?.[playerId];
+  const cards = round.cards[playerId];
+  if (!offer || !cards || round.ready.includes(playerId)) return state;
+  const { [playerId]: _gone, ...rest } = round.offer ?? {};
+  return {
+    ...state,
+    round: {
+      ...round,
+      cards: { ...round.cards, [playerId]: cards.map((c, i) => (i === offer.card ? offer.old : c)) },
+      // I-139 C: looking is free — the swap is only spent on a card actually taken.
+      swapped: {
+        ...round.swapped,
+        [playerId]: (round.swapped[playerId] ?? []).filter((c) => c !== offer.card),
+      },
+      offer: rest,
+    },
+  };
+}
+
+/** I-139 A: the new card stays; the offer is over (also what Ready does to an open offer). */
+function takeNew(state: State, playerId: string): State {
+  if (!state.round.offer?.[playerId]) return state;
+  const { [playerId]: _gone, ...rest } = state.round.offer ?? {};
+  return { ...state, round: { ...state.round, offer: rest } };
 }
 
 /** People with cards still to hear from: connected, not a bot, not ready. */
@@ -108,12 +140,17 @@ function markReady(state: State, playerId: string, now: number): State {
   const round = state.round;
   if (!hasPlayer(state, playerId) || !Object.hasOwn(round.cards, playerId)) return state;
   if (round.ready.includes(playerId)) return state;
-  return settleIntro({ ...state, round: { ...round, ready: [...round.ready, playerId] } }, now);
+  const settled = takeNew(state, playerId).round; // I-139 A: an open offer ends on the new card
+  return settleIntro({ ...state, round: { ...settled, ready: [...round.ready, playerId] } }, now);
 }
 
 export function reduceIntro(state: State, event: GameEvent<Input>, next: Transition): State {
   if (event.type === 'input') {
-    if (event.input.type === 'swap') return swapCard(state, event.playerId, event.input.card);
+    if (event.input.type === 'swap')
+      return swapCard(state, event.playerId, event.input.card, event.now);
+    // I-139 A: the answer to an offer.
+    if (event.input.type === 'keepOld') return keepOld(state, event.playerId);
+    if (event.input.type === 'takeNew') return takeNew(state, event.playerId);
     if (event.input.type === 'menu') return setMenu(state, event.playerId, event.input.open);
     if (event.input.type === 'ready') return markReady(state, event.playerId, event.now);
     return state;

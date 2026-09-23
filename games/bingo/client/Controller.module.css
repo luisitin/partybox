@@ -1371,3 +1371,21 @@
   color: var(--pb-accent-2);
   animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
 }
+
+/* ── I-139 A: the old card and the new one, side by side on the card-pick step. */
+.offerPair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--pb-space-3);
+  width: 100%;
+}
+.offerSide {
+  margin: 0;
+  display: grid;
+  gap: var(--pb-space-1);
+  justify-items: center;
+}
+.offerSide figcaption {
+  font-weight: 800;
+  color: var(--pb-text-muted);
+}

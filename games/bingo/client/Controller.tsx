@@ -27,7 +27,14 @@ import {
   daubWithFeel,
 } from './ControllerParts';
 import { AllCardsLayout, FocusLayout, Thumbnails, introOutline } from './Layouts';
-import { Countdown, HoldCurtain, IntroActions, IntroCount, StyleSheet } from './Overlays';
+import {
+  Countdown,
+  HoldCurtain,
+  IntroActions,
+  IntroCount,
+  OfferActions,
+  StyleSheet,
+} from './Overlays';
 import { MissedToast, TurnGate } from './Notices';
 import {
   setCardStyle,
@@ -178,7 +185,17 @@ export function Controller({
         footer={
           // The card-pick step (loop 344, the owner): swap, then Ready — the round starts when
           // everyone is (or 15 s in). Two buttons on one row so a short phone keeps its cards.
-          landscape ? undefined : actions
+          // I-139 A: while a swap waits on its answer, the answer is the footer. Another / Ready stay
+          // MOUNTED underneath (hidden): remounting them restarted their deal-in hold, and they
+          // vanished for two seconds after every answer (first rebuild, seen in the frames).
+          landscape ? undefined : (
+            <>
+              {view.offer ? (
+                <OfferActions key={view.offer.at} send={send} at={view.offer.at} />
+              ) : null}
+              <div hidden={view.offer !== null}>{actions}</div>
+            </>
+          )
         }
       >
         <div className={`${styles.roundBody} ${styles.introBody}`}>
@@ -206,17 +223,38 @@ export function Controller({
             lastOne={view.lastOne}
           />
           {/* I-099 C: sideways, the buttons live in the left half. */}
-          {landscape ? <div className={styles.introSide}>{actions}</div> : null}
+          {landscape ? (
+            <div className={styles.introSide}>
+              {view.offer ? (
+                <OfferActions key={view.offer.at} send={send} at={view.offer.at} />
+              ) : null}
+              <div hidden={view.offer !== null}>{actions}</div>
+            </div>
+          ) : null}
           <div className={`${styles.focus} ${styles.dealing} ${n > 1 ? styles.focusMany : ''}`}>
             <div className={styles.focusMain}>
-              <div key={swaps} className={swaps > 0 ? styles.swapIn : undefined}>
-                <Card
-                  numbers={cards[pick] ?? []}
-                  daubs={[]}
-                  pattern={introOutline(view)}
-                  disabled
-                />
-              </div>
+              {view.offer && view.offer.card === pick ? (
+                // I-139 A: the old card beside the new one — the choice is made looking at both.
+                <div className={styles.offerPair}>
+                  <figure className={styles.offerSide}>
+                    <Card numbers={view.offer.old} daubs={[]} pattern={[]} disabled />
+                    <figcaption>Old</figcaption>
+                  </figure>
+                  <figure className={styles.offerSide}>
+                    <Card numbers={cards[pick] ?? []} daubs={[]} pattern={[]} disabled />
+                    <figcaption>New</figcaption>
+                  </figure>
+                </div>
+              ) : (
+                <div key={swaps} className={swaps > 0 ? styles.swapIn : undefined}>
+                  <Card
+                    numbers={cards[pick] ?? []}
+                    daubs={[]}
+                    pattern={introOutline(view)}
+                    disabled
+                  />
+                </div>
+              )}
             </div>
             {n > 1 ? (
               <Thumbnails
