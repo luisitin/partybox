@@ -28,6 +28,8 @@ export const es: Texts = {
     offline: 'Conectando…',
     kicked: 'El VIP te sacó de la sala. Puedes volver a entrar.',
     restarted: 'La fiesta empezó de nuevo: toca Entrar para volver.',
+    restartedTo: (code) =>
+      `La fiesta empezó de nuevo: ahora la sala es ${code}. Toca Entrar para volver.`,
     noRooms: 'No hay ninguna sala abierta. Inicia el servidor y abre /tv en la pantalla grande.',
     askRoom: 'Pídele al VIP que haga espacio.',
     askUnlock: 'Pídele al VIP que la abra.',
@@ -211,6 +213,8 @@ export const es: Texts = {
     vipAwayNobody: 'VIP ausente: no hay nadie más a quien pasarlo',
   },
   tv: {
+    restartedBefore: 'PartyBox se reinició: esta es una sala nueva,',
+    restartedAfter: 'Teléfonos: toquen Entrar para volver.',
     tapToStart: 'Toca para activar el sonido',
     tapHint: 'la fiesta funciona sin él',
     mute: 'Silenciar',

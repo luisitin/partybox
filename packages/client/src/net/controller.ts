@@ -255,6 +255,9 @@ export function createController(url?: string): Controller {
       (s.resuming || (s.joined && (error.code === 'room_not_found' || error.code === 'bad_token')));
     if (staleSession) {
       saveSession(null);
+      // I-744 A: the room in the QR link is gone (a restart or a reset) — drop it, so the join
+      // screen asks for a room (or offers the one that is open) instead of re-sending the dead code.
+      dropRoomFromUrl();
       store.set({
         joined: false,
         resuming: false,

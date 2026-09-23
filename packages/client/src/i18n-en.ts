@@ -30,6 +30,9 @@ export const en = {
     offline: 'Connecting…',
     kicked: 'The VIP removed you from the room. You can join again.',
     restarted: 'The party started over — tap Join to get back in.',
+    /** I-744 A: after a restart with one open room, that room is filled in. */
+    restartedTo: (code: string) =>
+      `The party started over — the room is ${code} now. Tap Join to get back in.`,
     noRooms: 'No room is open right now. Start the server and open /tv on the big screen.',
     askRoom: 'Ask the VIP to make room.',
     askUnlock: 'Ask the VIP to unlock it.',
@@ -221,6 +224,9 @@ export const en = {
     vipAwayNobody: 'VIP away — nobody else to hand over to',
   },
   tv: {
+    /** I-744 B: the banner after a server restart, around the new room code. */
+    restartedBefore: 'PartyBox restarted — this is a new room,',
+    restartedAfter: 'Phones: tap Join to get back in.',
     tapToStart: 'Tap anywhere for sound',
     tapHint: 'the party works without it',
     mute: 'Mute',
