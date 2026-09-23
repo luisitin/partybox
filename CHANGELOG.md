@@ -6,6 +6,13 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Fixed
 
+- **Share hands out the link that works from anywhere, and Copy works** (the owner, 2026-09-22):
+  the server now knows the Cloudflare tunnel's address (`PARTYBOX_PUBLIC_URL`, or the newest one in
+  `cloudflared.log` while a `cloudflared` process is running — local signals only, ADR-012) and
+  Share, Messages, WhatsApp, Mail and Copy all use it; the QR and the TV keep the faster LAN
+  address. "Copy the link" failed on the LAN page because the Clipboard API only exists on https;
+  it now falls back to a selection copy inside the same tap.
+
 - **A correctness pass over the whole product** (2026-09-22, `reports/design/ideas/review-2026-09-22-correctness.md`):
   phone-only rooms no longer send anyone to a TV (the SDK controls' default lines, the results
   screen, Bingo and Wisecrack — `usePhoneOnly()` in the SDK); the Postage stamp no longer outlines

@@ -27,6 +27,9 @@ export interface ServerInfo {
   /** I-077 C: the house room's join funnel — phones that opened the join page vs. got in. */
   funnel?: { opened: number; attempted: number; joined: number };
   houseRoom: string;
+  /** The host's public (tunnel) address while one is live — what Share hands out (the owner,
+   *  2026-09-22: friends on another Wi-Fi need it). Null without a tunnel. */
+  publicUrl?: string | null;
   /** I-041: the join URL with the house room's code — what the TV's QR encodes. */
   qrUrl?: string;
   dev: boolean;

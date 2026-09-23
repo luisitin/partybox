@@ -6,11 +6,17 @@
 // rows are ordinary links the phone handles itself: Messages, WhatsApp, Mail — plus Copy.
 import { useState } from 'react';
 import type { JSX } from 'react';
+import { useServerInfo } from '../net/info';
 import styles from './Lobby.module.css';
 
-/** The join link (`?room=CODE`, I-041) on the origin THIS phone reached the room by. */
-export function joinLink(code: string): string {
-  return `${window.location.origin}/?room=${code}`;
+/**
+ * The join link (`?room=CODE`, I-041). The owner (2026-09-22): "when sharing with friends, it
+ * should be the link for non-same wifi" — so the host's public tunnel address when one is live
+ * (`/api/info` `publicUrl`), else the origin this phone reached the room by.
+ */
+export function joinLink(code: string, publicUrl?: string | null): string {
+  const base = (publicUrl ?? window.location.origin).replace(/\/$/, '');
+  return `${base}/?room=${code}`;
 }
 
 type Nav = Navigator & { share?: (data: ShareData) => Promise<void> };
@@ -33,19 +39,46 @@ export function canShareNatively(): boolean {
   return typeof navigator !== 'undefined' && typeof (navigator as Nav).share === 'function';
 }
 
-async function copy(url: string): Promise<boolean> {
+/**
+ * Copy the link. The Clipboard API, like the share sheet, exists only in a secure context — on the
+ * LAN address `navigator.clipboard` is undefined and "Copy" failed every time (the owner,
+ * 2026-09-22). There the old selection copy still works, inside the same tap: it runs before any
+ * await, so the browser still counts the tap.
+ */
+function copy(url: string): Promise<boolean> {
+  if (navigator.clipboard?.writeText)
+    return navigator.clipboard.writeText(url).then(
+      () => true,
+      () => Promise.resolve(selectionCopy(url)),
+    );
+  return Promise.resolve(selectionCopy(url));
+}
+
+function selectionCopy(text: string): boolean {
+  const area = document.createElement('textarea');
+  area.value = text;
+  area.setAttribute('readonly', ''); // no keyboard pops up on a phone
+  area.style.position = 'fixed';
+  area.style.top = '0';
+  area.style.opacity = '0';
+  document.body.appendChild(area);
+  area.select();
+  area.setSelectionRange(0, text.length); // iOS ignores select() alone
+  let ok = false;
   try {
-    await navigator.clipboard.writeText(url);
-    return true;
+    ok = document.execCommand('copy');
   } catch {
-    return false;
+    ok = false;
   }
+  area.remove();
+  return ok;
 }
 
 export function ShareButton({ code }: { code: string }): JSX.Element {
   const [open, setOpen] = useState(false);
   const [said, setSaid] = useState<string | null>(null);
-  const url = joinLink(code);
+  const info = useServerInfo();
+  const url = joinLink(code, info?.publicUrl);
   const text = `Join my PartyBox room ${code}`;
   // Android wants sms:?body=, iOS sms:&body=.
   const sms = /android/i.test(navigator.userAgent) ? '?' : '&';
@@ -108,7 +141,7 @@ export function ShareButton({ code }: { code: string }): JSX.Element {
               📋 Copy the link
             </button>
             <p className={styles.shareLink}>{url.replace(/^https?:\/\//, '')}</p>
-            {isLocalOnly(window.location.hostname) ? (
+            {isLocalOnly(new URL(url).hostname) ? (
               <p className={styles.shareNote}>
                 This link works on this Wi-Fi only. For friends somewhere else, open PartyBox from
                 the https link and share from there.

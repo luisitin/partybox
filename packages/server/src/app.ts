@@ -21,6 +21,7 @@ import { qrSvg } from './qr';
 import { readFile } from 'node:fs/promises';
 import { createRecorder } from './recorder';
 import type { Recorder } from './recorder';
+import { createPublicUrl } from './public-url';
 import { registerRoomsRoute } from './rooms-route';
 import { createSocketLayer } from './sockets';
 import { createFunnelBook } from './funnel';
@@ -109,6 +110,7 @@ export async function createApp(options: AppOptions): Promise<App> {
   fastify.get('/api/funnel', async () => funnel.all());
 
   registerRoomsRoute(fastify, { host, clock, io: sockets.io }); // ADR-043
+  const publicUrl = createPublicUrl({ repoRoot: REPO_ROOT }); // Share hands out the tunnel
 
   const app: App = {
     fastify,
@@ -221,6 +223,7 @@ export async function createApp(options: AppOptions): Promise<App> {
         avatars: Object.values(r.players).map((p) => p.avatarId),
       })),
       houseRoom: host.house().code,
+      publicUrl: await publicUrl.get(),
       funnel: funnel.get(host.house().code), // I-077 C
       // I-034 B: the last finished recap, for the phone's link.
       lastRecap: recorder?.latest()

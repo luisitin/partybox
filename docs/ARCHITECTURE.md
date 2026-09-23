@@ -14,6 +14,10 @@ One Node process (`packages/server`) on one port (default **42069**, `--port` / 
 | `/api/funnel`                                               | the host, tools                         | per-room join counts (I-077): opened / attempted / joined / failed                            |
 | `POST /api/rooms`                                           | phones                                  | opens a room (ADR-043), a chosen 4-letter code or a fresh one; 3 per address, then 1 per 20 s |
 
+`/api/info` also carries `publicUrl`: the Cloudflare quick tunnel's address while one is live
+(`PARTYBOX_PUBLIC_URL`, else the newest address in `cloudflared.log` while a `cloudflared` process
+runs — `packages/server/src/public-url.ts`). Share hands it out; the QR stays on the LAN address.
+
 Dev mode (`pnpm dev`) mounts Vite in middleware mode inside Fastify (ADR-006) so phones still use one URL.
 Prod (`pnpm start`) serves `packages/client/dist`. Nothing touches the internet at runtime (ADR-012).
 
