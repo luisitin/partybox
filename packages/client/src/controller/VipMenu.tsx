@@ -4,8 +4,9 @@
 import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
 import type { PlayerPublic, RoomSnapshot } from '@partybox/shared';
-import { Avatar, PrimaryButton } from '@partybox/game-sdk/ui';
+import { Avatar, PrimaryButton, getLang } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
+import { serverText } from '../server-text';
 import { setTipsSeen } from './vipTips';
 import type { Controller } from '../net/controller';
 import styles from './VipMenu.module.css';
@@ -16,12 +17,34 @@ export interface VipMenuProps {
   me: PlayerPublic;
   /** Current game paused state (from the pushed view), for the Pause/Resume toggle. */
   paused?: boolean;
+  /** I-774 B: the game's words for Skip / Next in this phase. */
+  skipLabel?: string;
   onClose: () => void;
 }
 
 const CONFIRM_MS = 4000;
 
-export function VipMenu({ controller, room, me, paused, onClose }: VipMenuProps): JSX.Element {
+/** The pushed view's part of the menu: pause state and (I-774 B) the game's words for Skip / Next,
+ *  translated through the game's strings. */
+export function vipMenuState(
+  view: { paused?: boolean; vipSkipLabel?: string; gameId?: string } | null,
+): Pick<VipMenuProps, 'paused' | 'skipLabel'> {
+  return {
+    paused: view?.paused ?? false,
+    skipLabel: view?.vipSkipLabel
+      ? serverText(view.vipSkipLabel, getLang(), view.gameId)
+      : undefined,
+  };
+}
+
+export function VipMenu({
+  controller,
+  room,
+  me,
+  paused,
+  skipLabel,
+  onClose,
+}: VipMenuProps): JSX.Element {
   const [confirm, setConfirm] = useState<string | null>(null);
   useEffect(() => {
     if (confirm === null) return;
@@ -73,7 +96,7 @@ export function VipMenu({ controller, room, me, paused, onClose }: VipMenuProps)
                 tone="neutral"
                 onClick={() => act('skip', () => controller.vip({ action: 'skip' }))}
               >
-                {t.vip.skip}
+                {skipLabel ?? t.vip.skip}
               </PrimaryButton>
               <PrimaryButton
                 tone="neutral"
