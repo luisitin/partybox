@@ -97,7 +97,12 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
         ) : undefined
       }
     >
-      <p className="pb-muted">{me.isVip ? t.lobby.youAreVip : lobbyStrings().waitingForVip}</p>
+      {/* I-354 A: a guest's first line says how this works, not just "waiting" */}
+      <p className="pb-muted">
+        {me.isVip
+          ? t.lobby.youAreVip
+          : `📺 ${vipName ?? 'The VIP'} picks a game — it plays on the TV, and you play on this phone.`}
+      </p>
       {me.isVip && tipsOn && tip ? (
         <p key={tip.id} className={styles.tip} role="status">
           <span aria-hidden>💡</span> {t.tips[tip.id]}
@@ -184,7 +189,14 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
           </button>
         </li>
       </ul>
-      <p className="pb-caption pb-muted">{t.lobby.addBotHint}</p>
+      {/* I-354 A: the bot rules only for someone who owns a bot */}
+      {myBots.length > 0 ? (
+        <p className="pb-caption pb-muted">
+          🤖 {myBots.length === 1 ? 'Your bot plays' : 'Your bots play'} for you in games marked 🤖
+          · ✕ removes {myBots.length === 1 ? 'it' : 'one'}
+          {maxed ? ' · 4 is the most per person' : ''}
+        </p>
+      ) : null}
     </Screen>
   );
 }
