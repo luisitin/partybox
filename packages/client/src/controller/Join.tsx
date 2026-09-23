@@ -81,6 +81,13 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
   // I-031 (the owner): a photo avatar from the phone, kept with the name and face across sessions.
   const [photo, setPhoto] = useState<string | null>(session?.photo ?? null);
   const [code, setCode] = useState(urlRoom ?? '');
+  // I-744 A: after a restart, the one open room is the party — fill it in (the home case). With
+  // more than one, the room list below asks.
+  const onlyRoom = state.restarted && info && info.rooms.length === 1 ? info.rooms[0]?.code : null;
+  // (SECOND BUILD: the recording showed the form mounting with the dead code already in it, so
+  //  a code that is not an open room is replaced, not only an empty one.)
+  if (onlyRoom && code !== onlyRoom && !info?.rooms.some((r) => r.code === code.trim().toUpperCase()))
+    setCode(onlyRoom);
   // The badges follow the room actually being joined — a code typed or a room tapped in the list
   // (ADR-043) — while the default face above stays keyed on the first room, so it does not change
   // under the person's thumb as they type.
@@ -229,7 +236,9 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
         ) : null}
         {state.restarted && !state.kicked ? (
           <p className={styles.kicked} role="status">
-            {t.join.restarted}
+            {onlyRoom
+              ? `The party started over — the room is ${onlyRoom} now. Tap Join to get back in.`
+              : t.join.restarted}
           </p>
         ) : null}
         {info && info.rooms.length === 0 ? <p className={styles.hint}>{t.join.noRooms}</p> : null}
