@@ -25,6 +25,7 @@ import { createPublicUrl } from './public-url';
 import { registerRoomsRoute } from './rooms-route';
 import { createSocketLayer } from './sockets';
 import { createFunnelBook } from './funnel';
+import { createRoomStore } from './room-store';
 
 export const REPO_ROOT = resolve(fileURLToPath(new URL('../../..', import.meta.url)));
 export const CLIENT_DIR = join(REPO_ROOT, 'packages', 'client');
@@ -87,13 +88,19 @@ export async function createApp(options: AppOptions): Promise<App> {
   });
   const startedAt = Date.now();
   const sockets = createSocketLayer(fastify.server);
+  // I-744 C: the rooms on disk (next to the recaps; nothing kept without them)
+  const roomStore = createRoomStore(
+    options.recordingsDir === undefined ? RECORDINGS_DIR : options.recordingsDir,
+  );
   const host = createHost({
+    restore: () => roomStore.load(),
     deps,
     clock,
     transport: sockets.transport,
     log: options.quiet ? () => {} : undefined,
   });
   const bots = createBotManager(host, deps, clock);
+  host.subscribe(() => roomStore.save({ house: host.house().code, rooms: host.rooms() })); // I-744 C
   const recordingsDir =
     options.recordingsDir === undefined ? RECORDINGS_DIR : options.recordingsDir;
   const recorder =

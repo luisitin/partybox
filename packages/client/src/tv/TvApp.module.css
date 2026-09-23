@@ -8,3 +8,21 @@
   flex-direction: column;
   animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) backwards;
 }
+
+/* ── I-744 B: the restart banner over the lobby. */
+.restartBanner {
+  position: fixed;
+  top: 12vh;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+  max-width: 80vw;
+  padding: 1.2vh 2.4vw;
+  border-radius: 999px;
+  background: var(--pb-warn, #ffc861);
+  color: #1b0812;
+  font-size: 2.4vh;
+  font-weight: 800;
+  text-align: center;
+  box-shadow: 0 1vh 3vh rgba(0, 0, 0, 0.45);
+}

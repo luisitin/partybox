@@ -1,6 +1,7 @@
 // RoomHost: owns the rooms, runs the pure engine, and is the ONLY place effects turn into I/O
 // (ADR-010). One pending timer per room, re-armed from `nextWakeAt` after every event (ADR-022).
 // Sockets are behind the `Transport` interface so tests can run the host without Socket.IO.
+import { restoredRoom } from './room-store';
 import { randomBytes, randomUUID } from 'node:crypto';
 import type { ApplyResult, EngineDeps, RoomEvent, RoomState } from '@partybox/engine';
 import {
@@ -42,6 +43,8 @@ export interface HostOptions {
   clock: Clock;
   transport: Transport;
   log?: (level: 'warn' | 'error' | 'info', text: string) => void;
+  /** I-744 C: rooms saved before a restart (the house code first), restored on boot. */
+  restore?: () => { house: string; rooms: RoomState[] } | null;
 }
 
 export interface Host {
@@ -227,7 +230,13 @@ export function createHost(options: HostOptions): Host {
     }
   });
 
-  reset();
+  // I-744 C: a restart brings the saved rooms back (same codes, players, tokens); a first boot, or
+  // nothing saved, starts the usual fresh house room. The TV's 🏠 reset still starts over.
+  const saved = options.restore?.() ?? null;
+  if (saved && saved.rooms.some((r) => r.code === saved.house)) {
+    for (const r of saved.rooms) rooms.set(r.code, restoredRoom(r, clock.now()));
+    houseCode = saved.house;
+  } else reset();
 
   return {
     rooms: () => [...rooms.values()],
