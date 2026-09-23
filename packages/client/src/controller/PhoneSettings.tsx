@@ -27,11 +27,10 @@ import {
 import { t } from '../i18n';
 import type { SoundEngine } from '../sound';
 import {
-  phoneMusicOn,
   setPhoneMusicOn,
   subscribePhoneMusic,
-  phoneMusicLevel,
-  setPhoneMusicLevel,
+  phoneMusicVolume,
+  setPhoneMusicVolume,
 } from '../music';
 import pickerStyles from '../ThemePicker.module.css';
 
@@ -95,8 +94,11 @@ export function PhoneSettings({ audio, what, room, onLeave }: PhoneSettingsProps
   // I-021 (the owner): the drawing pad's paper and pencil are this phone's choice — ruled paper
   // and a pencil as picked, plain / pen one tap away; nothing crosses the wire.
   const pad = usePadStyle();
-  const musicOn = useSyncExternalStore(subscribePhoneMusic, phoneMusicOn, () => false);
-  const level = useSyncExternalStore(subscribePhoneMusic, phoneMusicLevel, () => 'normal' as const);
+  // The switch shows what this phone plays (the room may have turned it on); a tap sets the
+  // phone's own choice, which wins over the room's (the owner, 2026-09-23).
+  const musicOn = what !== null && what !== undefined;
+  const volume = useSyncExternalStore(subscribePhoneMusic, phoneMusicVolume, () => 70);
+  const toggleMusic = (): void => setPhoneMusicOn(!musicOn);
   const musicWhat = what ?? t.music.roomQuiet;
   const [tvSounds, setTvSounds] = useState(() => tvSoundsOn());
   return (
@@ -157,7 +159,7 @@ export function PhoneSettings({ audio, what, room, onLeave }: PhoneSettingsProps
         type="button"
         className={pickerStyles.toggle}
         aria-pressed={musicOn}
-        onClick={() => setPhoneMusicOn(!musicOn)}
+        onClick={toggleMusic}
       >
         <span className={pickerStyles.toggleGlyph} aria-hidden>
           ♪
@@ -169,20 +171,21 @@ export function PhoneSettings({ audio, what, room, onLeave }: PhoneSettingsProps
       </button>
       {/* The room's switch (the VIP's) plays too: the line and the level follow the music, not the phone's own switch. */}
       {what !== null && what !== undefined ? <p className="pb-caption">♪ {musicWhat}</p> : null}
-      {what !== null && what !== undefined ? (
-        <div aria-label={t.phone.musicLevel}>
-          {(['soft', 'normal', 'loud'] as const).map((lv) => (
-            <button
-              type="button"
-              key={lv}
-              aria-pressed={level === lv}
-              className={pickerStyles.toggle}
-              onClick={() => setPhoneMusicLevel(lv)}
-            >
-              {t.phone[lv]}
-            </button>
-          ))}
-        </div>
+      {musicOn ? (
+        // The owner (2026-09-23): turn the music down to hear the reader — any level, not three.
+        <label className={pickerStyles.volume} htmlFor="phone-music-volume">
+          <span>{t.phone.musicLevel}</span>
+          <input
+            id="phone-music-volume"
+            type="range"
+            min={0}
+            max={100}
+            step={5}
+            value={volume}
+            onChange={(e) => setPhoneMusicVolume(Number(e.currentTarget.value))}
+          />
+          <span className={pickerStyles.volumeValue}>{volume} %</span>
+        </label>
       ) : null}
       {/* The owner (2026-09-22): the language, changeable after joining too — every screen follows. */}
       <section className={pickerStyles.gameSection}>

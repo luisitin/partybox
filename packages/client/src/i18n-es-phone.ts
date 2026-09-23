@@ -21,9 +21,6 @@ export const esPhone: Pick<Texts, keyof typeof enPhone> = {
   phone: {
     music: 'Música en este teléfono',
     musicLevel: 'Volumen de la música',
-    soft: 'bajo',
-    normal: 'medio',
-    loud: 'alto',
     leave: 'Salir de la sala',
     leaveConfirm: '¿Salir de la sala?',
     tapAgain: 'toca otra vez',

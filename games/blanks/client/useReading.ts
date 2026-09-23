@@ -13,6 +13,7 @@ export function useReading(speech: { key: string; url: string } | null, on = tru
     if (!key || !url || said.current.has(key)) return;
     said.current.add(key);
     sound.hush(); // never two readings at once
-    sound.clip(url, { gain: 1 });
+    // No duck: the music stays quietly under the reading (the owner, 2026-09-23).
+    sound.clip(url, { gain: 1, duck: false });
   }, [key, url, sound]);
 }

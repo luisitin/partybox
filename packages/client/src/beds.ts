@@ -41,6 +41,8 @@ export interface BedEngine {
   /** Crossfade to a bed (null = fade out). The same bed is a no-op; a bed resumes where it left off. */
   play(id: BedId | null): void;
   setMuted(muted: boolean): void;
+  /** The phone's music volume (0–1) — the beds are the game's music too. */
+  setVolume(volume: number): void;
   /** A paused game holds the bed where it is. */
   setPaused(paused: boolean): void;
   /** I-032 A: how tense the moment is (0 calm … 1) — the tempo nudges up to +12 % with it. */
@@ -77,6 +79,7 @@ export function createBedEngine(): BedEngine {
   let master: GainNode | null = null;
   let tone: BiquadFilterNode | null = null; // I-032 B
   let muted = false;
+  let volume = 1;
   let paused = false;
   let want: BedId | null = null;
   let running: Running | null = null;
@@ -135,7 +138,7 @@ export function createBedEngine(): BedEngine {
           // The design harness logs every oscillator as a cue; beds are not cues.
           (ctx as unknown as { __pbBed?: boolean }).__pbBed = true;
           master = ctx.createGain();
-          master.gain.value = muted ? 0 : 1;
+          master.gain.value = muted ? 0 : volume;
           // I-032 B: a low-pass between the beds and the room, opened by tension.
           tone = ctx.createBiquadFilter();
           tone.type = 'lowpass';
@@ -161,7 +164,11 @@ export function createBedEngine(): BedEngine {
     },
     setMuted(value) {
       muted = value;
-      if (master && ctx) master.gain.setTargetAtTime(value ? 0 : 1, ctx.currentTime, 0.05);
+      if (master && ctx) master.gain.setTargetAtTime(value ? 0 : volume, ctx.currentTime, 0.05);
+    },
+    setVolume(value) {
+      volume = Math.max(0, Math.min(1, value));
+      if (master && ctx && !muted) master.gain.setTargetAtTime(volume, ctx.currentTime, 0.05);
     },
     setPaused(value) {
       if (paused === value) return;

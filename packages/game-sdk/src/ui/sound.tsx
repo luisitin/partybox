@@ -60,6 +60,9 @@ export interface ClipOptions {
   gain?: number;
   /** Start this many ms after the call (a cue may lead). */
   delayMs?: number;
+  /** false: the music stays where it is under this clip (Blanks' readings — the owner,
+   *  2026-09-23: quiet music the whole time, not a dip and a swell around every card). */
+  duck?: boolean;
 }
 
 /**

@@ -22,10 +22,10 @@ import type { MusicEngine } from '../music';
 import {
   createMusicEngine,
   planFor,
-  phoneMusicOn,
+  phoneMusicChoice,
+  phoneMusicWanted,
   subscribePhoneMusic,
-  phoneMusicLevel,
-  PHONE_MUSIC_GAIN,
+  phoneMusicVolume,
 } from '../music';
 import { Lobby } from './Lobby';
 import { Playing } from './Playing';
@@ -67,12 +67,8 @@ export function ControllerApp(): JSX.Element {
       phoneMusic = null;
     };
   }, [music]);
-  const musicOn = useSyncExternalStore(subscribePhoneMusic, phoneMusicOn, () => false);
-  const musicLevel = useSyncExternalStore(
-    subscribePhoneMusic,
-    phoneMusicLevel,
-    () => 'normal' as const,
-  );
+  const musicChoice = useSyncExternalStore(subscribePhoneMusic, phoneMusicChoice, () => null);
+  const musicVolume = useSyncExternalStore(subscribePhoneMusic, phoneMusicVolume, () => 70);
   const state = useStore(controller.store, (s) => s);
   // The device's language (the join pills, the 🎨 sheet): subscribing re-renders every screen, and
   // `t` reads the language at render. No remount — the 🎨 sheet stays open and a typed answer or a
@@ -117,7 +113,8 @@ export function ControllerApp(): JSX.Element {
   // A "phone only" room has no TV to play the game's music, so the phones do — the rule the beds
   // below already followed. Without it a game with music but no beds (Broken Pencil) was silent
   // on every phone in a phone-only room (the 2026-09-22 audio sweep: 2 sounds in a whole game).
-  const musicWanted = musicOn || (room?.musicOnPhones ?? false) || (room?.phoneOnly ?? false);
+  // The phone's own switch wins once touched (the owner, 2026-09-23: Off did not turn it off).
+  const musicWanted = phoneMusicWanted(musicChoice, room);
   const gameMusic = room?.selectedGameId ? clientGames[room.selectedGameId]?.music : undefined;
   const plan = musicWanted ? planFor(room, view, gameMusic) : null;
   const gameName = room?.games.find((g) => g.id === room.selectedGameId)?.name;
@@ -134,13 +131,13 @@ export function ControllerApp(): JSX.Element {
   const paused = room?.status === 'playing' && (view?.paused ?? false);
   const results = room?.status === 'results';
   useEffect(() => {
-    music.play(plan ? { ...plan, volume: plan.volume * PHONE_MUSIC_GAIN[musicLevel] } : null);
+    music.play(plan ? { ...plan, volume: plan.volume * (musicVolume / 100) } : null);
     music.setPaused(paused);
     // S-004 B: the phone ducks with the TV's cheer on results.
     if (results) music.duck(9000);
     // `plan` is a fresh object per render; its id and level are the identity
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [music, planId, musicLevel, paused, results]);
+  }, [music, planId, musicVolume, paused, results]);
   const bedTurns = useRef<Record<string, number>>({});
   const bedPhase = useRef<string | null>(null);
   const gameBeds = room?.selectedGameId ? clientGames[room.selectedGameId]?.beds : undefined;
@@ -154,9 +151,10 @@ export function ControllerApp(): JSX.Element {
       bedPhase.current = phase;
     }
     if (phase === null) bedTurns.current = {};
+    beds.setVolume(musicVolume / 100);
     beds.play(bedsWanted ? bedFor(room, view, gameBeds, bedTurns.current) : null);
     beds.setPaused(paused);
-  }, [beds, bedsWanted, room, view, gameBeds, paused]);
+  }, [beds, bedsWanted, room, view, gameBeds, paused, musicVolume]);
   const me = state.room?.players.find((p) => p.id === state.playerId) ?? null;
   // I-070 B: a nudge is felt on the VIP's phone — a buzz and the `phase` note as the toast lands.
   const lastNudge = useRef(0);

@@ -23,10 +23,11 @@ export const clientModule: GameClientModule = {
   // and lower the volume since it is background": one chain of tracks carries on from the round
   // card through the result (the same plan, so a phase change never restarts it), at 0.12 (was
   // 0.2), and the per-phase synthesized beds that swapped under it are gone. The final board keeps
-  // its fanfare to itself.
+  // its fanfare to itself. Later that day: "still a bit loud — music quietly in the background the
+  // whole time": 0.07, and the reader no longer dips it (useReading's clip asks for no duck).
   music: {
     tracks: ['local-forecast-elevator', 'george-street-shuffle', 'bossa-antigua'],
-    volume: 0.12,
+    volume: 0.07,
     mode: 'chain',
     phases: ['intro', 'pick', 'answer', 'reveal', 'judge', 'result'],
   },

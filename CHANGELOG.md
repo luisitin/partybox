@@ -6,6 +6,14 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Fixed
 
+- **Music on a phone** (the owner, 2026-09-23): the phone's Music switch now really turns the music
+  off in a phone-only room (or when the VIP put music on every phone) — the phone's own choice wins
+  once touched. The soft / normal / loud buttons are a **Music volume** slider (0–100 %), shown
+  whenever music plays, and it sets the game's beds too. The lobby's track no longer keeps playing
+  underneath a game's music when the game starts quickly (on the TV too — that was most of Blanks'
+  loudness). Blanks' music is quieter still (0.07) and stays level under the reader instead of
+  dipping and swelling around every card.
+
 - **Bingo's check on a phone-only room** (the owner's video, 2026-09-23): the claimed card no
   longer turns every square pink while it is checked — the pattern turns green, a wrong daub red,
   and the card's other daubs fade to grey instead of keeping the watcher's ink. The player who

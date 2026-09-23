@@ -24,6 +24,8 @@ interface Sample {
   fadeMs?: number;
   /** Start this far into the buffer (a recording's leading silence skipped) — seconds. */
   offset?: number;
+  /** false: no music duck under it (ClipOptions.duck). */
+  duck?: boolean;
 }
 
 const SAMPLES: Partial<Record<SoundCue, Sample[]>> = {
@@ -73,7 +75,10 @@ export interface SoundEngine {
    *  when the game just played a specific one in the same commit. */
   lastPlayedAt(): number;
   /** A recorded clip under /sfx (a bingo call): decoded once, scheduled exactly, mute-aware. */
-  clip(src: string, opts?: { gain?: number; delayMs?: number; offsetS?: number }): void;
+  clip(
+    src: string,
+    opts?: { gain?: number; delayMs?: number; offsetS?: number; duck?: boolean },
+  ): void;
   /** Stop every clip now (a claim interrupts the caller). */
   hushClips(): void;
   muted(): boolean;
@@ -167,7 +172,8 @@ export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine
         return;
       }
       if (track && gen !== hushGen) return;
-      if (track) options.onClip?.(Math.round(buf.duration * 1000) + Math.max(0, sample.at * 1000));
+      if (track && sample.duck !== false)
+        options.onClip?.(Math.round(buf.duration * 1000) + Math.max(0, sample.at * 1000));
       const source = ctx.createBufferSource();
       const gain = ctx.createGain();
       source.buffer = buf;
@@ -283,6 +289,7 @@ export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine
           at: (opts?.delayMs ?? 0) / 1000,
           gain: opts?.gain ?? 1,
           offset: opts?.offsetS,
+          duck: opts?.duck,
         },
         ctx?.currentTime ?? 0,
         true,

@@ -18,10 +18,7 @@ export const enPhone = {
   /** The 🎨 sheet's phone rows (PhoneSettings). */
   phone: {
     music: 'Music on this phone',
-    musicLevel: 'Music level',
-    soft: 'soft',
-    normal: 'normal',
-    loud: 'loud',
+    musicLevel: 'Music volume',
     leave: 'Leave the room',
     leaveConfirm: 'Leave the room?',
     tapAgain: 'tap again',
