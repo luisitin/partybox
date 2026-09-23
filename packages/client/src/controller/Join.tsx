@@ -98,8 +98,12 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
   const codeRef = useRef<HTMLInputElement>(null);
   const [shaking, setShaking] = useState(false);
   const [seenError, setSeenError] = useState(state.error);
+  // I-741 C: the name the room said was taken — while it is still the typed name, the button
+  // offers "That's me — take my seat" (your phone died and the room has not noticed yet)
+  const [takenName, setTakenName] = useState<string | null>(null);
   if (state.error !== seenError) {
     setSeenError(state.error);
+    setTakenName(state.error?.code === 'name_taken' && state.error.player ? name : null);
     if (state.error && !state.joined) setShaking(true);
   }
   useEffect(() => {
@@ -123,6 +127,7 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
   // "Joining…" until the server answers: a welcome unmounts this screen, an error (or a 6 s safety
   // timeout, for a server that never answers) re-enables the button.
   const submitting = submittedAt !== null;
+  const takeSeat = takenName !== null && name === takenName && state.error?.code === 'name_taken';
   // I-056 A: a rejection about the ROOM (full / locked) is not about what was typed.
   const roomError =
     state.error?.code === 'room_full' || state.error?.code === 'room_locked'
@@ -168,12 +173,13 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
     (!needsCode || code.trim().length === 4) &&
     state.connection === 'connected';
 
-  const submit = (e: FormEvent): void => {
+  const submit = (e: FormEvent, takeOver = false): void => {
     e.preventDefault();
     if (!canSubmit) return;
     void audio?.enable();
     setSubmittedAt(Date.now());
     controller.join({
+      ...(takeOver ? { takeOver: true } : {}),
       name: cleanName ?? name.trim(),
       // I-086 B: the face and the colour travel as one id.
       avatarId: `${avatarId}#${tint}`,
@@ -183,7 +189,10 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
   };
 
   return (
-    <form className={`${styles.form} ${roomError ? styles.formDim : ''}`} onSubmit={submit}>
+    <form
+      className={`${styles.form} ${roomError ? styles.formDim : ''}`}
+      onSubmit={(e) => submit(e, takeSeat)}
+    >
       <Screen
         title={
           <span className={styles.head}>
@@ -207,6 +216,8 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
             >
               {submitting
                 ? j.joining
+                : takeSeat
+                  ? 'That’s me — take my seat'
                 : state.connection !== 'connected'
                   ? t.join.offline
                   : cleanName === null

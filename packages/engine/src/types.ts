@@ -76,6 +76,8 @@ export type RoomEvent =
       /** A photo avatar (I-031): a JPEG data URL the socket already validated. */
       photo?: string;
       existingToken?: string;
+      /** I-741 C: "That's me — take my seat": claim the seat of this name even if it reads connected. */
+      takeOver?: boolean;
     }
   | {
       /** A player (or the dev API, ownerId null) adds a bot; the host mints id + token. */

@@ -30,6 +30,8 @@ export const joinPayloadSchema = z.object({
   avatarId: z.string().max(32),
   token: z.string().max(128).optional(),
   photo: photoSchema.optional(),
+  /** I-741 C: "That's me — take my seat". */
+  takeOver: z.boolean().optional(),
 });
 export type JoinPayload = z.infer<typeof joinPayloadSchema>;
 

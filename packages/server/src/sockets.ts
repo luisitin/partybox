@@ -14,8 +14,7 @@ import {
   normalizeRoomCode,
   tvJoinPayloadSchema,
   vipPayloadSchema,
-  botPayloadSchema,
-} from '@partybox/shared';
+  botPayloadSchema, nameKey, normalizeName } from '@partybox/shared';
 import type { ErrorPayload } from '@partybox/shared';
 import type { Host, Transport } from './host';
 import type { FunnelBook } from './funnel';
@@ -88,9 +87,18 @@ export function createSocketLayer(server: HttpServer): SocketLayer {
         const { playerId, token } = host.mintPlayer();
         // Map this socket to both the provisional id and (for a resume) the existing player BEFORE
         // dispatching, so the engine's welcome/error effects land on this socket.
+        const seats = Object.values(host.get(code)?.players ?? {});
+        // I-741 A: a token-less join under the name of a disconnected player resumes that seat
+        // (ADR-029) — so this socket must be mapped to it too, or the welcome goes to the dead one.
+        // I-741 C: "That's me — take my seat" (takeOver) also claims a seat that still reads connected.
+        const key = nameKey(normalizeName(parsed.data.name) ?? '');
         const resumed = parsed.data.token
-          ? Object.values(host.get(code)?.players ?? {}).find((p) => p.token === parsed.data.token)
-          : undefined;
+          ? seats.find((p) => p.token === parsed.data.token)
+          : key
+            ? seats.find(
+                (p) => !p.bot && nameKey(p.name) === key && (parsed.data.takeOver === true || !p.connected),
+              )
+            : undefined;
         for (const id of [playerId, resumed?.id]) {
           if (!id) continue;
           const previous = byPlayer.get(id);
@@ -109,6 +117,7 @@ export function createSocketLayer(server: HttpServer): SocketLayer {
           avatarId: parsed.data.avatarId,
           ...(parsed.data.photo ? { photo: parsed.data.photo } : {}),
           existingToken: parsed.data.token,
+          ...(parsed.data.takeOver ? { takeOver: true } : {}),
         });
         const welcome = result?.effects.find((e) => e.type === 'welcome');
         if (welcome) funnel?.joined(code);

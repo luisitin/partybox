@@ -94,7 +94,14 @@ function saveIdentity(identity: Identity): void {
 
 export interface Controller {
   store: Store<ControllerState>;
-  join(input: { name: string; avatarId: string; roomCode?: string; photo?: string }): void;
+  join(input: {
+    name: string;
+    avatarId: string;
+    roomCode?: string;
+    photo?: string;
+    /** I-741 C: "That's me — take my seat". */
+    takeOver?: boolean;
+  }): void;
   sendInput(input: unknown): void;
   vip(action: VipAction): void;
   /** Add a bot you own, or remove one of yours (VIPs may remove any). */
@@ -169,12 +176,13 @@ export function createController(url?: string): Controller {
     if (serverNow > deadline + 2000 && lastPushAt + 2000 < Date.now()) goStale();
   }, 1000);
 
-  const sendJoin = (session: Session, token?: string): void => {
+  const sendJoin = (session: Session, token?: string, takeOver?: boolean): void => {
     socket.emit('join', {
       name: session.name,
       avatarId: session.avatarId,
       roomCode: session.roomCode,
       token,
+      ...(takeOver ? { takeOver: true } : {}),
       ...(session.photo ? { photo: session.photo } : {}),
     });
   };
@@ -314,7 +322,7 @@ export function createController(url?: string): Controller {
       };
       pending = session;
       store.set({ error: null, kicked: null });
-      sendJoin(session);
+      sendJoin(session, undefined, input.takeOver);
     },
     sendInput(input) {
       seq += 1;
