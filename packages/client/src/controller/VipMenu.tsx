@@ -7,6 +7,7 @@ import type { PlayerPublic, RoomSnapshot } from '@partybox/shared';
 import { Avatar, PrimaryButton } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import { setTipsSeen } from './vipTips';
+import { useServerInfo } from '../net/info';
 import type { Controller } from '../net/controller';
 import styles from './VipMenu.module.css';
 
@@ -29,6 +30,7 @@ export function VipMenu({ controller, room, me, paused, onClose }: VipMenuProps)
     return () => clearTimeout(handle);
   }, [confirm]);
   const playing = room.status === 'playing';
+  const info = useServerInfo(); // I-642 A: the recap link moved here from the picker
   const act = (key: string, run: () => void, dangerous = false): void => {
     if (dangerous && confirm !== key) {
       setConfirm(key);
@@ -164,6 +166,44 @@ export function VipMenu({ controller, room, me, paused, onClose }: VipMenuProps)
             >
               {room.listed ? t.vip.listed : t.vip.unlisted}
             </PrimaryButton>
+            {/* I-642 A: the room's switches, set once a night — here with lock and size, not on
+                every pick */}
+            <RoomSwitch
+              id="vip-recording"
+              label={t.selecting.recording}
+              hint={room.recording ? t.selecting.recordingHint : t.selecting.recordingOff}
+              on={room.recording}
+              disabled={playing}
+              onChange={(on) => controller.vip({ action: 'setRecording', on })}
+            />
+            <RoomSwitch
+              id="vip-music-all"
+              label={t.selecting.musicOnPhones}
+              hint={room.musicOnPhones ? t.selecting.musicOnPhonesHint : t.selecting.musicOnPhonesOff}
+              on={room.musicOnPhones}
+              onChange={(on) => controller.vip({ action: 'setMusicOnPhones', on })}
+            />
+            <RoomSwitch
+              id="vip-phone-only"
+              label={t.selecting.phoneOnly}
+              hint={room.phoneOnly ? t.selecting.phoneOnlyOn : t.selecting.phoneOnlyOff}
+              on={room.phoneOnly}
+              disabled={playing}
+              onChange={(on) => controller.vip({ action: 'setPhoneOnly', on })}
+            />
+            {playing ? (
+              <p className={styles.switchNote}>Recap and Phone only change between games.</p>
+            ) : null}
+            {info?.lastRecap ? (
+              <a
+                className={`pb-caption ${styles.wide}`}
+                href="/api/recaps/latest/page"
+                target="_blank"
+                rel="noreferrer"
+              >
+                {t.selecting.lastRecap(info.lastRecap.gameId, info.lastRecap.code)}
+              </a>
+            ) : null}
           </div>
         </section>
         <section className={`${styles.section} ${styles.sectionPlayers}`}>
@@ -208,5 +248,39 @@ export function VipMenu({ controller, room, me, paused, onClose }: VipMenuProps)
         </section>
       </div>
     </div>
+  );
+}
+
+/** I-642 A: one room switch — the picker's old row, in the ★ menu's Room section. */
+function RoomSwitch({
+  id,
+  label,
+  hint,
+  on,
+  disabled = false,
+  onChange,
+}: {
+  id: string;
+  label: string;
+  hint: string;
+  on: boolean;
+  disabled?: boolean;
+  onChange: (on: boolean) => void;
+}): JSX.Element {
+  return (
+    <label className={`${styles.switchRow} ${disabled ? styles.switchOff : ''}`} htmlFor={id}>
+      <span className={styles.switchLabel}>
+        {label}
+        <small>{hint}</small>
+      </span>
+      <input
+        id={id}
+        type="checkbox"
+        className={styles.switchBox}
+        checked={on}
+        disabled={disabled}
+        onChange={(e) => onChange(e.target.checked)}
+      />
+    </label>
   );
 }

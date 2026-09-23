@@ -56,6 +56,12 @@ export function ControllerShell({
   children,
 }: ControllerShellProps): JSX.Element {
   const [menuOpen, setMenuOpen] = useState(false);
+  // I-642 B: the picker's Room row opens this menu
+  useEffect(() => {
+    const open = (): void => setMenuOpen(true);
+    window.addEventListener('pb:vip-menu', open);
+    return () => window.removeEventListener('pb:vip-menu', open);
+  }, []);
   const [themeOpen, setThemeOpen] = useState(false);
   const [seenOpen, setSeenOpen] = useState(openTheme);
   if (openTheme !== seenOpen) {
