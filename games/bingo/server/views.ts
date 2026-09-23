@@ -128,6 +128,8 @@ export interface BingoControllerView extends ControllerView, Common {
   claimable: number[];
   /** intro: my cards that can still be swapped once ("deal me another"). */
   swappable: number[];
+  /** I-139 A: card-pick step — a swap waiting on my answer: the card and its old numbers. */
+  offer: { card: number; old: number[]; at: number } | null;
   /** My card-style menu is open (the server's view of it — the phone mirrors this). */
   menuOpen: boolean;
   /** I tapped BINGO! while someone else had dibs: my place in the queue (1 = next), 0 = not queued. */
@@ -287,6 +289,8 @@ export function controllerView(
     }),
     timerMode: 'quiet',
     ...common(state),
+    offer:
+      player && state.phase.id === 'intro' ? (state.round.offer?.[playerId] ?? null) : null,
     cards: player ? (state.round.cards[playerId] ?? null) : null,
     daubs: player ? (state.round.daubs[playerId] ?? []) : [],
     canClaim: canClaim(state, playerId),

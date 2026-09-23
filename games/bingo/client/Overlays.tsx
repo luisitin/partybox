@@ -1,7 +1,7 @@
 // The Bingo phone's overlays: the card-style sheet (tap a style to see it behind the sheet, then
 // Confirm or Keep changing), the curtain while someone else is changing (with a way into your own
 // menu), the 3 · 2 · 1 before calling resumes (the turn gate and the reconnect toast: Notices.tsx).
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
 import {
   PrimaryButton,
@@ -295,6 +295,36 @@ export function IntroActions({
         }}
       >
         {view.ready ? '✓ Ready' : 'Ready'}
+      </PrimaryButton>
+    </div>
+  );
+}
+
+/** I-139 A: a swap is a choice — the two answers take the place of Another / Ready while it is open. */
+export function OfferActions({
+  send,
+  at,
+}: {
+  send: (input: Input) => void;
+  /** when the offer was dealt: a new offer restarts the clock (B) */
+  at: number;
+}): JSX.Element {
+  void at; // only B's clock reads it
+  const [sent, setSent] = useState(false);
+  return (
+    <div className={`${styles.introActions} ${styles.introActionsIn}`} role="group" aria-label="keep or take">
+      <PrimaryButton tone="neutral" disabled={sent} onClick={() => send({ type: 'keepOld' })}>
+        Keep the old card
+      </PrimaryButton>
+      <PrimaryButton
+        tone="accent"
+        disabled={sent}
+        onClick={() => {
+          setSent(true);
+          send({ type: 'takeNew' });
+        }}
+      >
+        Take the new one
       </PrimaryButton>
     </div>
   );
