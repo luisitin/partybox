@@ -10,7 +10,7 @@ The only process. Fastify + Socket.IO host that wires the pure engine to real so
 - `src/rate-limit.ts` — token bucket + `jsonBytes`.
 - `src/host.ts` — interprets engine effects: pushes views with `rev`, one timer per room, toasts, kicks.
 - `src/clock.ts` — injectable clock (real / frozen) used by everything that needs `now`.
-- `src/dev-api.ts` — `/api/dev/*` (docs/DEV_API.md). `src/bots.ts` — server-played bots.
+- `src/dev-api.ts` — `/api/dev/*` (docs/DEV_API.md). I-753: `/state` carries no login tokens (A); only the host PC is answered, except `POST /reset` for the TV's 🏠 (B); sockets.ts refuses a socket whose Origin is another site (C). `src/bots.ts` — server-played bots.
 - `src/qr.ts` — SVG QR for the join URL. `src/lan-ip.ts` — LAN IPv4 detection.
 - `src/tuned.ts` — I-763 C: the VIP's per-game settings saved at `<recordings>/tuned-settings.json`; every new room starts from them.
 - `src/games.generated.ts` — GENERATED registry (ADR-003). Do not edit.

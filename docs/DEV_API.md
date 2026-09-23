@@ -7,6 +7,11 @@ unless `?room=CODE` is given. `start-partybox.bat` runs `pnpm start --dev-api` s
 button (`POST /api/dev/reset`) works at a party; the API is unauthenticated, so this is a LAN-only trade-off
 (`PARTYBOX_NO_DEV_API=1` turns it off, and Home then explains itself instead of resetting).
 
+I-753 (2026-09-24): the API answers only the host PC itself (loopback, not relayed by the Cloudflare
+tunnel) with `403 { error: 'host PC only' }` otherwise — except `POST /api/dev/reset`, so a TV on a
+separate device keeps its 🏠. `GET /api/dev/state` blanks every player's login `token`. Separately,
+the socket layer refuses a socket whose `Origin` is another website.
+
 | Method + path                                  | Body                                    | Effect                                                                                                                                                                                                                                                                                                                                                                      |
 | ---------------------------------------------- | --------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `POST /api/dev/reset`                          | —                                       | Drop every room, recreate the house room, unfreeze the clock.                                                                                                                                                                                                                                                                                                               |
