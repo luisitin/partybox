@@ -88,6 +88,7 @@ function init(ctx: InitContext): State {
       resumeAgain: false,
       resumeBy: null,
       swapped: {},
+      offer: {},
       ready: [],
     },
     wins,
