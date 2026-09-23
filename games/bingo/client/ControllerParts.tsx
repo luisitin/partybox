@@ -54,10 +54,19 @@ export function Ball({
  * pattern either (loop 330: "· four corners" wrapped the line on a 360 px phone and the cards
  * dropped 20 px at call 2). Call 1 has no "before that", and no stray "·" in front of it.
  */
-export function CallRow({ view }: { view: BingoControllerView }): JSX.Element {
+export function CallRow({
+  view,
+  big,
+}: {
+  view: BingoControllerView;
+  /** I-126 B: the tablet's header has room for a real caller — the ball big, the nickname under it. */
+  big?: boolean;
+}): JSX.Element {
   return (
-    <div className={styles.callRow} role="status" aria-live="polite">
-      {view.current ? <Ball call={view.current} /> : <span>First number coming…</span>}
+    <div className={`${styles.callRow} ${big ? styles.callRowBig : ''}`} role="status" aria-live="polite">
+      {view.current ? <Ball call={view.current} size={big ? 'lg' : 'md'} /> : <span>First number coming…</span>}
+      {/* I-126 B: on a tablet the nickname is the caller — it has the room the phone does not. */}
+      {big && view.current ? <span className={styles.callNick}>{view.current.call}</span> : null}
       {view.current ? (
         <span className={styles.callMeta}>
           {view.previous ? (
@@ -67,6 +76,16 @@ export function CallRow({ view }: { view: BingoControllerView }): JSX.Element {
             </>
           ) : null}
           call {view.callIndex}
+        </span>
+      ) : null}
+      {/* I-126 C: the last five calls across the strip — the tablet as the room's second TV. */}
+      {big && view.recentCalled.length > 0 ? (
+        <span className={styles.callHistory} aria-hidden>
+          {view.recentCalled.map((n) => (
+            <span key={n} className={styles.callHistoryBall}>
+              {n}
+            </span>
+          ))}
         </span>
       ) : null}
     </div>
@@ -310,10 +329,15 @@ export function IntroStyleSheet({
   cards,
   current,
   onClose,
+  onPick,
+  tablet,
 }: {
   cards: number;
   current: CardStyle;
   onClose: () => void;
+  /** I-126 A: a tablet saves its own pick here too (default: the phone's). */
+  onPick?: (id: CardStyle) => void;
+  tablet?: { on: boolean; onPick: () => void };
 }): JSX.Element {
   return (
     <StyleSheet
@@ -321,9 +345,10 @@ export function IntroStyleSheet({
       current={current}
       preview={null}
       note="for this round"
-      onPreview={setCardStyle}
+      onPreview={onPick ?? setCardStyle}
       onConfirm={onClose}
       onClose={onClose}
+      {...(tablet ? { tablet } : {})}
     />
   );
 }

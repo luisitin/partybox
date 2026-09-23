@@ -1371,3 +1371,32 @@
   color: var(--pb-accent-2);
   animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
 }
+
+/* ── I-126 B: the tablet's caller strip — the ball and the nickname at the size the screen affords. */
+.callRowBig {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--pb-space-1);
+}
+.callNick {
+  font-size: var(--pb-font-body);
+  font-weight: 700;
+  color: var(--pb-text);
+}
+
+/* ── I-126 C: the last five calls, small, across the strip. */
+.callHistory {
+  display: flex;
+  gap: var(--pb-space-2);
+  margin-top: var(--pb-space-1);
+}
+.callHistoryBall {
+  min-width: 26px;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: var(--pb-surface-2);
+  color: var(--pb-muted, rgba(255, 255, 255, 0.7));
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-align: center;
+}

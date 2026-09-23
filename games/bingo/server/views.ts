@@ -120,6 +120,8 @@ export interface BingoControllerView extends ControllerView, Common {
   daubs: number[][];
   /** play: true unless waiting for the next number after a failed claim (or every card won). */
   canClaim: boolean;
+  /** I-126 C: the last five numbers before the current one — the tablet's call history. */
+  recentCalled: number[];
   /** My cards that already won the current pattern this round (locked). */
   won: number[];
   /** Every one of my cards has won: nothing left to claim until the pattern or round changes. */
@@ -314,6 +316,7 @@ export function controllerView(
       (state.phase.id === 'play' || state.phase.id === 'check') &&
       state.round.drawn < (state.round.waitForCall[playerId] ?? 0),
     called: player ? [] : calledNumbers(state),
+    recentCalled: calledNumbers(state).slice(-6, -1),
     ready: state.phase.id === 'intro' && state.round.ready.includes(playerId),
     lastOne:
       state.phase.id === 'intro' &&
