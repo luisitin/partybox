@@ -1,5 +1,6 @@
 // Game selection. VIP: browse game cards, tweak settings from the manifest spec, start (disabled
 // with the server's reason). Everyone else: a calm "X is choosing…" with the current pick.
+import { minutesFor } from '../estimate';
 import type { JSX } from 'react';
 import type { PlayerPublic, RoomSnapshot } from '@partybox/shared';
 import { PrimaryButton, Screen, WaitingScreen, useLang } from '@partybox/game-sdk/ui';
@@ -134,7 +135,11 @@ export function Selecting({ controller, room, me }: SelectingProps): JSX.Element
                 <span className={styles.cardTagline}>{gameText(g.id, lang, g.tagline)}</span>
                 <span className={styles.cardMeta}>
                   {t.selecting.players(g.minPlayers, g.maxPlayers)} ·{' '}
-                  {t.selecting.minutes(g.estimatedMinutes)} ·{' '}
+                  {/* I-189: from the game's pace, the settings and the room */}
+                  {t.selecting.minutes(
+                    minutesFor(g, g.id === room.selectedGameId ? room.settings : null, room.players.length),
+                  )}{' '}
+                  ·{' '}
                   {g.supportsBots ? (
                     <span className={styles.botsOk}>🤖 {t.lobby.botsWelcome}</span>
                   ) : (
