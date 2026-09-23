@@ -13,6 +13,7 @@ import {
 } from '@partybox/engine';
 import type {
   ErrorPayload,
+  Settings,
   KickedPayload,
   RoomPush,
   ToastPayload,
@@ -42,6 +43,8 @@ export interface HostOptions {
   clock: Clock;
   transport: Transport;
   log?: (level: 'warn' | 'error' | 'info', text: string) => void;
+  /** I-763 C: the per-game settings every new room starts from (the host PC's saved ones). */
+  tuned?: () => Record<string, Settings>;
 }
 
 export interface Host {
@@ -68,6 +71,7 @@ export interface Host {
 }
 
 export function createHost(options: HostOptions): Host {
+  const createOptions = options; // I-763 C
   const { deps, clock, transport } = options;
   const log =
     options.log ?? ((level, text) => console[level === 'info' ? 'log' : level](`[host] ${text}`));
@@ -203,7 +207,11 @@ export function createHost(options: HostOptions): Host {
       code = roomCodeFrom(codeRng);
       while (rooms.has(code)) code = roomCodeFrom(codeRng);
     }
-    const room = createRoom({ code, now: clock.now(), listed: options?.listed ?? true });
+    const seed = createOptions.tuned?.() ?? {};
+    const room: RoomState = {
+      ...createRoom({ code, now: clock.now(), listed: options?.listed ?? true }),
+      ...(Object.keys(seed).length > 0 ? { settingsByGame: seed } : {}),
+    };
     rooms.set(code, room);
     return room;
   }

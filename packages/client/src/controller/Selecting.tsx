@@ -1,7 +1,7 @@
 // Game selection. VIP: browse game cards, tweak settings from the manifest spec, start (disabled
 // with the server's reason). Everyone else: a calm "X is choosing…" with the current pick.
 import type { JSX } from 'react';
-import type { PlayerPublic, RoomSnapshot } from '@partybox/shared';
+import type { GameSummary, PlayerPublic, RoomSnapshot, Settings } from '@partybox/shared';
 import { PrimaryButton, Screen, WaitingScreen, useLang } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import { gameText } from '../i18n-games';
@@ -144,6 +144,10 @@ export function Selecting({ controller, room, me }: SelectingProps): JSX.Element
                     </span>
                   )}
                 </span>
+                {/* I-763 B: the card says what is tuned, so the VIP can see it stuck */}
+                {tunedLine(g, room.tuned?.[g.id]) ? (
+                  <span className={styles.cardTuned}>{tunedLine(g, room.tuned?.[g.id])}</span>
+                ) : null}
                 {isSelected ? (
                   <span className={styles.cardDescription}>
                     {gameText(g.id, lang, g.description)}
@@ -156,7 +160,24 @@ export function Selecting({ controller, room, me }: SelectingProps): JSX.Element
       </ul>
       {selected && selected.settings.length > 0 ? (
         <section className={styles.settings} aria-label={t.selecting.settings}>
-          <h3 className={styles.settingsTitle}>{t.selecting.settings}</h3>
+          <h3 className={styles.settingsTitle}>
+            {t.selecting.settings}
+            {/* I-763 B: the factory numbers, one tap away */}
+            {tunedLine(selected, room.settings) ? (
+              <button
+                type="button"
+                className={styles.resetDefaults}
+                onClick={() =>
+                  controller.vip({
+                    action: 'updateSettings',
+                    settings: Object.fromEntries(selected.settings.map((s) => [s.key, s.default])),
+                  })
+                }
+              >
+                Reset to defaults
+              </button>
+            ) : null}
+          </h3>
           {selected.settings.map((spec) => (
             <SettingField
               key={spec.key}
@@ -174,4 +195,22 @@ export function Selecting({ controller, room, me }: SelectingProps): JSX.Element
       ) : null}
     </Screen>
   );
+}
+
+/** I-763 B: "Your settings: Cards 4 · Seconds per call 3" — the settings that differ from the
+ *  game's defaults, up to three, or null when nothing is tuned. */
+function tunedLine(game: GameSummary, values: Settings | undefined): string | null {
+  if (!values) return null;
+  const changed = game.settings.filter(
+    (s) => values[s.key] !== undefined && values[s.key] !== s.default,
+  );
+  if (changed.length === 0) return null;
+  const say = (s: GameSummary['settings'][number]): string => {
+    const v = values[s.key];
+    if (typeof v === 'boolean') return `${s.label} ${v ? 'on' : 'off'}`;
+    if (s.type === 'select') return `${s.label} ${s.options.find((o) => o.value === v)?.label ?? String(v)}`;
+    return `${s.label} ${String(v)}`;
+  };
+  const shown = changed.slice(0, 3).map(say).join(' · ');
+  return `Your settings: ${shown}${changed.length > 3 ? ` · +${changed.length - 3} more` : ''}`;
 }
