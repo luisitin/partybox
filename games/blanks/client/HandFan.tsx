@@ -54,6 +54,13 @@ export function useFan(fan: HTMLUListElement | null, items: number): number {
     window.addEventListener('resize', onScroll);
     return () => {
       cancelAnimationFrame(raf);
+      // I-160: the list takes over — no card keeps the fan's turn
+      for (const card of [...fan.children] as HTMLElement[]) {
+        card.style.translate = '';
+        card.style.rotate = '';
+        card.style.scale = '';
+        card.style.zIndex = '';
+      }
       fan.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onScroll);
     };
@@ -113,4 +120,24 @@ export function NewHandCard({
       </button>
     </li>
   );
+}
+
+/** I-160: true when the fan can't show a readable card (a phone on its side): the hand is a plain list then. */
+export function useHandList(fan: HTMLUListElement | null): boolean {
+  const [list, setList] = useState(false);
+  useEffect(() => {
+    if (!fan) return undefined;
+    const check = (): void => {
+      setList(window.matchMedia('(orientation: landscape) and (max-height: 500px)').matches);
+    };
+    check();
+    const ro = new ResizeObserver(check);
+    ro.observe(fan);
+    window.addEventListener('resize', check);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener('resize', check);
+    };
+  }, [fan]);
+  return list;
 }
