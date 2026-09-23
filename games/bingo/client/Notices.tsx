@@ -1,9 +1,10 @@
-// The Bingo phone's notices: the turn-your-phone gate, the reconnect toast, the note under my
+// The Bingo phone's notices: the turn-your-phone gate, the reconnect tray, the note under my
 // claim, and a spectator's screen (split out of Overlays.tsx at the 300-line cap when I-013 added
 // the style diagrams; the last two out of Controller.tsx when its words learned Spanish).
 import type { JSX } from 'react';
 import { WaitingScreen, useT } from '@partybox/game-sdk/ui';
-import type { BingoControllerView } from '../server/views';
+import type { BingoControllerView, CallView } from '../server/views';
+import { Ball } from './ControllerParts';
 import { whyNot } from './copy';
 import { STRINGS } from './strings';
 import type { Orientation } from './styles';
@@ -34,28 +35,52 @@ export function TurnGate({ to, style }: { to: Orientation; style: string }): JSX
 export function MissedToast({
   view,
   count,
+  calls,
+  onDismiss,
 }: {
   view: BingoControllerView;
   count: number;
+  /** I-122 A: the calls missed, frozen when the player came back (so the tray does not slide on to new calls). */
+  calls: string[];
+  /** I-122 A: the tray closes by hand. */
+  onDismiss: () => void;
 }): JSX.Element | null {
   const L = useT(STRINGS);
   // A phone-only room has no TV board to point at: it lists what was missed, like a room without
   // the board (the owner, 2026-09-22).
   const board = view.showBoard && !view.phoneOnly;
-  const missed = board ? [] : view.recent.slice(0, -1).slice(-count);
-  if (!board && missed.length === 0) return null;
+
+  const missed = calls;
+  if (missed.length === 0 && !board) return null;
   const more = count - missed.length;
-  const list = missed.join(', ');
+  const balls = missed.map((s) => {
+    const [letter, num] = s.split(' ');
+    return { letter: (letter ?? 'B') as CallView['letter'], number: Number(num), call: s };
+  });
   return (
-    <p className={styles.missedToast} role="status">
-      {board
-        ? count === 1
-          ? L('Back — you missed a number. It is on the TV board.')
-          : L('Back — you missed {n} numbers. They are on the TV board.', { n: count })
-        : more > 0
-          ? L('Back — you missed {list} and {n} more.', { list, n: more })
-          : L('Back — you missed {list}.', { list })}
-    </p>
+    <div className={`${styles.missedToast} ${styles.missedTray}`} role="status">
+      <span className={styles.missedLabel}>
+        {board && balls.length === 0
+          ? count === 1
+            ? L('Back — you missed a number. It is on the TV board.')
+            : L('Back — you missed {n} numbers. They are on the TV board.', { n: count })
+          : L('Back — you missed')}
+      </span>
+      {balls.map((b) => (
+        <span key={b.number} className={styles.missedBall}>
+          <Ball call={b} size="sm" />
+        </span>
+      ))}
+      {more > 0 ? <span className={styles.missedLabel}>{L('+{n} more', { n: more })}</span> : null}
+      <button
+        type="button"
+        className={styles.missedClose}
+        onClick={onDismiss}
+        aria-label={L('dismiss')}
+      >
+        ✕
+      </button>
+    </div>
   );
 }
 

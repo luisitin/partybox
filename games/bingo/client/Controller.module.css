@@ -1398,3 +1398,33 @@
   color: var(--pb-accent);
   text-align: center;
 }
+
+/* ── I-122 A: the missed-calls tray — balls under the header, until dismissed. */
+.missedTray {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--pb-space-2);
+  /* the old toast's 5 s fade-out would still end at opacity 0: the tray only pops in (FIRST
+     BUILD kept the fade, so it vanished on its own after five seconds anyway) */
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+.missedLabel {
+  font-weight: 700;
+}
+.missedBall {
+  display: inline-flex;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+.missedClose {
+  margin-left: auto;
+  min-width: 32px;
+  min-height: 32px;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--pb-text-muted);
+  font: inherit;
+}

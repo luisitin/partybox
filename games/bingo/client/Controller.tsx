@@ -39,7 +39,7 @@ import {
   useDealFeel,
   useLandscape,
   useMenuRelease,
-  useMissedCalls,
+  useMissedTray,
   useRoundReset,
   useVerdictFeel,
 } from './feel';
@@ -104,7 +104,7 @@ export function Controller({
     setPick(0);
     setSwaps(0);
   });
-  const missed = useMissedCalls(view);
+  const { missed, missedCalls, missedDismissed, dismissMissed } = useMissedTray(view);
   // The sheet holds the caller for everyone: the server hears it open and close.
   const openMenu = (): void => {
     setSheet(view.phaseId === 'intro' ? 'intro' : 'round');
@@ -290,7 +290,9 @@ export function Controller({
             {/* I-126 A: the tablet keeps the style pill — the four-up layout is a default, not a cage. */}
             {inRound && !sheet ? <StylePill onOpen={openMenu} /> : null}
           </div>
-          {missed ? <MissedToast view={view} count={missed} /> : null}
+          {missed && !missedDismissed ? (
+            <MissedToast view={view} count={missed} calls={missedCalls} onDismiss={dismissMissed} />
+          ) : null}
           {view.phaseId === 'check' && view.claim?.playerId === me.id ? (
             // The note's lines are reserved from the claim (loop 313): filling them at the verdict
             // used to drop the card 25 px in one frame. Before the verdict they say what is on.

@@ -52,8 +52,6 @@ export const ES_PHONE: Readonly<Record<string, string>> = {
     'De vuelta: te perdiste un número. Está en el tablero de la TV.',
   'Back — you missed {n} numbers. They are on the TV board.':
     'De vuelta: te perdiste {n} números. Están en el tablero de la TV.',
-  'Back — you missed {list} and {n} more.': 'De vuelta: te perdiste {list} y {n} más.',
-  'Back — you missed {list}.': 'De vuelta: te perdiste {list}.',
   'Card {n} wiped — re-daub from memory when play resumes.':
     'Cartón {n} borrado: vuelve a marcarlo de memoria cuando siga el juego.',
   'Card {n} is up — everyone is checking it.': 'Cartón {n} a la vista: todos lo están revisando.',
@@ -127,4 +125,8 @@ export const ES_PHONE: Readonly<Record<string, string>> = {
   // I-105: the vote's hint line on the phone.
   'Your vote is in — tap another to change it.': 'Ya votaste: toca otra para cambiar.',
   'Everyone votes; the most votes win.': 'Todos votan; gana la opción más votada.',
+  // I-122 A: the reconnect tray.
+  'Back — you missed': 'De vuelta: te perdiste',
+  '+{n} more': '+{n} más',
+  dismiss: 'cerrar',
 };

@@ -138,11 +138,11 @@ export function useMissedCalls(view: BingoControllerView): number {
     setSeenCall(view.callIndex);
     if (jumped > 1 && view.phaseId === 'play') setMissed(jumped - 1);
   }
+  // I-122 A: the tray stays until dismissed (✕, the phone's own state) or play ends; the
+  // five-second self-destruct is gone.
   useEffect(() => {
-    if (!missed) return;
-    const handle = setTimeout(() => setMissed(0), 5000);
-    return () => clearTimeout(handle);
-  }, [missed]);
+    if (view.phaseId !== 'play') setMissed(0);
+  }, [view.phaseId]);
   return missed;
 }
 
@@ -164,4 +164,27 @@ export function useMenuRelease(
     if (!open) return;
     return () => send({ type: 'menu', open: false });
   }, [open, send]);
+}
+
+/** I-122 A: the reconnect tray's state — the calls missed, frozen when the phone came back (the
+ *  second build: re-reading `view.recent` slid the tray on to calls the player saw), and ✕ hiding
+ *  this batch; a new batch shows again (the first build: two counters the dismiss made equal). */
+export function useMissedTray(view: BingoControllerView): {
+  missed: number;
+  missedCalls: string[];
+  missedDismissed: boolean;
+  dismissMissed: () => void;
+} {
+  const missed = useMissedCalls(view);
+  const [missedDismissed, setMissedDismissed] = useState(false);
+  const [missedBatch, setMissedBatch] = useState(missed);
+  const [missedCalls, setMissedCalls] = useState<string[]>(() =>
+    view.recent.slice(0, -1).slice(-missed),
+  );
+  if (missed !== missedBatch) {
+    setMissedBatch(missed);
+    setMissedDismissed(false);
+    setMissedCalls(view.recent.slice(0, -1).slice(-missed));
+  }
+  return { missed, missedCalls, missedDismissed, dismissMissed: () => setMissedDismissed(true) };
 }

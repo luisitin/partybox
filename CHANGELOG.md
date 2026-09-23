@@ -54,6 +54,10 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Changed
 
+- **Bingo: missed calls wait in a tray** (I-122, option A): a phone that comes back from a dropout
+  shows "Back — you missed [N 35]" as balls under the header, until its ✕ or the round's end — no
+  longer a sentence that vanished after five seconds — and the calls stay the ones actually missed.
+
 - **Bingo: after a bingo every phone votes** (I-105, option C): keep going (same pattern or
   blackout) or next round is a vote, not the fastest thumb — your choice stays lit and can change,
   each button shows its count, the TV lists who voted what, and the phone counts the vote down. It
