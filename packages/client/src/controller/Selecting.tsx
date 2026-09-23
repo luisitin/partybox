@@ -6,7 +6,6 @@ import { PrimaryButton, Screen, WaitingScreen, useLang } from '@partybox/game-sd
 import { t } from '../i18n';
 import { gameText } from '../i18n-games';
 import { serverText } from '../server-text';
-import { useServerInfo } from '../net/info';
 import { SettingField } from '../SettingField';
 import type { Controller } from '../net/controller';
 import styles from './Selecting.module.css';
@@ -18,7 +17,6 @@ export interface SelectingProps {
 }
 
 export function Selecting({ controller, room, me }: SelectingProps): JSX.Element {
-  const info = useServerInfo(); // I-034 B
   const selected = room.games.find((g) => g.id === room.selectedGameId) ?? null;
   const vip = room.players.find((p) => p.isVip);
   const lang = useLang();
@@ -64,55 +62,7 @@ export function Selecting({ controller, room, me }: SelectingProps): JSX.Element
         </div>
       }
     >
-      <label className={styles.recording} htmlFor="phone-recording">
-        <span className={styles.recordingLabel}>
-          {t.selecting.recording}
-          <small>{room.recording ? t.selecting.recordingHint : t.selecting.recordingOff}</small>
-        </span>
-        <input
-          id="phone-recording"
-          type="checkbox"
-          className={styles.recordingBox}
-          checked={room.recording}
-          onChange={(e) => controller.vip({ action: 'setRecording', on: e.target.checked })}
-        />
-      </label>
-      {/* I-034 B: a way into the last recap from the phone. */}
-      {info?.lastRecap ? (
-        <a className="pb-caption" href="/api/recaps/latest/page" target="_blank" rel="noreferrer">
-          {t.selecting.lastRecap(info.lastRecap.gameId, info.lastRecap.code)}
-        </a>
-      ) : null}
-      {/* S-004 (the owner): the VIP's switch — music on every phone. */}
-      <label className={styles.recording} htmlFor="phone-music-all">
-        <span className={styles.recordingLabel}>
-          {t.selecting.musicOnPhones}
-          <small>
-            {room.musicOnPhones ? t.selecting.musicOnPhonesHint : t.selecting.musicOnPhonesOff}
-          </small>
-        </span>
-        <input
-          id="phone-music-all"
-          type="checkbox"
-          className={styles.recordingBox}
-          checked={room.musicOnPhones}
-          onChange={(e) => controller.vip({ action: 'setMusicOnPhones', on: e.target.checked })}
-        />
-      </label>
-      {/* S-005 A: phone only — the TV's moments go to the phones. */}
-      <label className={styles.recording} htmlFor="phone-only">
-        <span className={styles.recordingLabel}>
-          {t.selecting.phoneOnly}
-          <small>{room.phoneOnly ? t.selecting.phoneOnlyOn : t.selecting.phoneOnlyOff}</small>
-        </span>
-        <input
-          id="phone-only"
-          type="checkbox"
-          className={styles.recordingBox}
-          checked={room.phoneOnly}
-          onChange={(e) => controller.vip({ action: 'setPhoneOnly', on: e.target.checked })}
-        />
-      </label>
+      {/* I-642 A: the room's switches moved to the ★ menu's Room section */}
       <ul className={styles.games} role="radiogroup" aria-label={t.selecting.games}>
         {room.games.map((g) => {
           const isSelected = g.id === room.selectedGameId;
