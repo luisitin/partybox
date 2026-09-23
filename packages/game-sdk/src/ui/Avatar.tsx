@@ -3,7 +3,7 @@
 import { createContext, useContext, useMemo } from 'react';
 import type { JSX, ReactNode } from 'react';
 import { ART, INK, LIGHT, blinkDelay } from './avatarArt';
-import { AVATAR_IDS } from '@partybox/shared';
+import { AVATAR_IDS, avatarFace, avatarTint } from '@partybox/shared';
 
 export interface AvatarProps {
   /** A face id — or `photo:<playerId>` (I-031): the picture comes from `AvatarPhotos`. */
@@ -75,6 +75,9 @@ function robotArt(skin: number): JSX.Element {
 }
 
 export function avatarColorVar(avatarId: string): string {
+  // I-086 A: `fox#3` — the colour the player picked, not the face's slot.
+  const tint = avatarTint(avatarId);
+  if (tint !== null) return `var(--pb-player-${(tint % 8) + 1})`;
   // I-043 A: a bot's skin picks its colour slot.
   const skin = robotSkin(avatarId);
   if (skin !== null) return `var(--pb-player-${(skin % 8) + 1})`;
@@ -120,7 +123,7 @@ export function Avatar({
       />
     );
   const skin = robotSkin(avatarId);
-  const art = skin !== null ? robotArt(skin) : (ART[avatarId] ?? ART['ghost']);
+  const art = skin !== null ? robotArt(skin) : (ART[avatarFace(avatarId)] ?? ART['ghost']);
   return (
     <svg
       viewBox="0 0 64 64"
