@@ -96,6 +96,9 @@ export function createSocketLayer(server: HttpServer): SocketLayer {
           const previous = byPlayer.get(id);
           if (previous && previous !== socket) {
             (previous.data as SocketData).playerId = null;
+            // I-755 A: say why, so the other tab stops reconnecting (else two tabs trade the seat
+            // ~35 times a second, forever)
+            previous.emit('kicked', { reason: 'another_tab' });
             previous.disconnect(true);
           }
           byPlayer.set(id, socket);

@@ -37,6 +37,8 @@ export interface ControllerState {
   error: ErrorPayload | null;
   toasts: Toast[];
   kicked: string | null;
+  /** I-755 A: this phone has PartyBox open in another tab, which holds the seat. */
+  otherTab: boolean;
   /** The stored session was rejected (server restarted, room gone): the join form explains why. */
   restarted: boolean;
 }
@@ -102,6 +104,8 @@ export interface Controller {
   /** I-070 A: nudge the VIP (lobby only; the server rate-limits it). */
   nudge(): void;
   leave(): void;
+  /** I-755 A: take the seat back from the other tab. */
+  playHere(): void;
   dismissError(): void;
   dismissToast(id: number): void;
   session(): Session | null;
@@ -123,6 +127,7 @@ export function createController(url?: string): Controller {
     toasts: [],
     kicked: null,
     restarted: false,
+    otherTab: false,
   });
   const socket: Socket = io(url ?? '/', { transports: ['websocket', 'polling'] });
   let seq = 0;
@@ -180,6 +185,8 @@ export function createController(url?: string): Controller {
   };
 
   const restarts = createRestartWatch();
+  // I-755 A: set when another tab holds the seat; cleared by "Play here"
+  let holdReconnect = false;
   socket.on('connect', () => {
     link.onConnect();
     restarts.onConnect();
@@ -196,7 +203,7 @@ export function createController(url?: string): Controller {
     store.set({ connection: store.get().joined ? 'reconnecting' : 'connecting' });
     // A kick closes the socket from the server side; socket.io treats that as final, but the
     // person still needs a live connection to join again (or another room) without reloading.
-    if (reason === 'io server disconnect') socket.connect();
+    if (reason === 'io server disconnect' && !holdReconnect) socket.connect();
   });
   socket.on('welcome', (payload: WelcomePayload) => {
     const session = pending ?? loadSession();
@@ -298,6 +305,12 @@ export function createController(url?: string): Controller {
     store.set({ error });
   });
   socket.on('kicked', (payload: KickedPayload) => {
+    // I-755 A: another tab took the seat — keep the login (the tabs share it), stop reconnecting
+    if (payload.reason === 'another_tab') {
+      holdReconnect = true;
+      store.set({ otherTab: true });
+      return;
+    }
     saveSession(null);
     store.set({ joined: false, playerId: null, room: null, view: null, kicked: payload.reason });
   });
@@ -334,6 +347,13 @@ export function createController(url?: string): Controller {
       saveSession(null);
       dropRoomFromUrl();
       store.set({ joined: false, playerId: null, room: null, view: null, rev: -1 });
+    },
+    playHere() {
+      holdReconnect = false;
+      store.set({ otherTab: false });
+      const session = loadSession();
+      if (socket.connected && session) sendJoin(session, session.token);
+      else socket.connect(); // the connect handler joins with the stored login
     },
     dismissError: () => store.set({ error: null }),
     dismissToast: (id) => store.set((prev) => ({ toasts: prev.toasts.filter((t) => t.id !== id) })),
