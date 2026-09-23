@@ -19,6 +19,8 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
   link only works on this Wi-Fi.
   A phone-only room now plays the game's music on the phones (Broken Pencil was silent there), and
   a phone's Sound switch mutes its music and beds too, not just its cues.
+  Names that render as nothing (Hangul fillers, the braille blank) are refused like empty ones, and
+  a reloaded phone no longer logs a blocked-vibrate error on every push before it is touched.
 
 - **The phone's audio comes back after a lock** (the owner, 2026-09-22 — "in phone only mode I
   don't hear the caller"): iOS parks the AudioContext when the phone locks or backgrounds, and

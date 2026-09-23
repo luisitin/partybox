@@ -2,7 +2,7 @@
 
 With the spec queue empty, a sweep of the whole product rather than one feature: every game driven
 through every phase in a real browser, TV and phones, normal and phone-only; then a read of the
-day's own code. Twelve problems found and fixed; each fix is proven below.
+day's own code. Fourteen problems found and fixed; each fix is proven below.
 
 ## The sweeps (scratchpad `c-capture/`)
 
@@ -162,6 +162,37 @@ reloaded + a tap    backbay-lounge.mp3  playing  muted=true    ← the remembere
 
 (The word-choosing phase stays quiet by design: Broken Pencil's plan plays only while people draw,
 pass and guess, and never over the show.) Test: `sound.revive.test.ts` (+1, the subscription).
+
+## 13. A reloaded phone logged an error on every push until it was touched
+
+The resume sweep (below) found one kind of noise, 180 times: after a reload the phone called
+`navigator.vibrate` before the person had tapped, and Chrome blocks that and logs "Blocked call to
+navigator.vibrate…" on every call — enough to bury a real error in the console. `buzz()` now asks
+`navigator.userActivation.hasBeenActive` first where the browser can say (the vibration would have
+been dropped anyway). Lightning Round's resume run: 29 findings → **0**. Test: `haptics.test.ts`.
+
+## 14. A name that renders as nothing
+
+Names were already stripped of control, zero-width and bidi characters — but not of the characters
+that _draw_ nothing: Hangul fillers (ㅤ U+3164 and relatives), the braille blank (⠀ U+2800), the
+Mongolian vowel separator and the combining grapheme joiner. A player could join as a blank chip.
+They are stripped now, and the join form uses the server's own rule, so it never offers an enabled
+Join button for a name the server will refuse.
+
+```
+"ㅤㅤㅤ"  → "Enter a name to join" (disabled)   in the room: []
+"⠀⠀"     → "Enter a name to join" (disabled)   in the room: []
+"Samㅤ"  → "Join"                               in the room: ["Sam"]
+```
+
+Tests: `ids.test.ts` (+2).
+
+## Resume sweep (scratchpad `c-capture/resume.ts`)
+
+Every game, both modes: a phone reloads at every phase (what a locked or backgrounded phone does),
+the TV reloads once mid-game, and a new phone joins mid-game. Every reload landed back in the game,
+the TV resumed, and the latecomer sees "Waiting for the next game" — no crash anywhere. The only
+finding was the vibrate noise (§13).
 
 ## Layout sweep (scratchpad `c-capture/layout.ts`)
 
