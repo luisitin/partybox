@@ -112,6 +112,28 @@ export function ControllerHand({ view, send, skip }: Props): JSX.Element {
   const flight = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => () => clearTimeout(flight.current ?? undefined), []);
   const black = view.black;
+  // I-141 A: where the fan is — the card nearest its centre, and how many there are.
+  const fanRef = useRef<HTMLUListElement | null>(null);
+  const [at, setAt] = useState(0);
+  useEffect(() => {
+    const el = fanRef.current;
+    if (!el) return undefined;
+    const read = (): void => {
+      const kids = [...el.children] as HTMLElement[];
+      if (kids.length === 0) return;
+      const mid = el.scrollLeft + el.clientWidth / 2;
+      let best = 0;
+      let bestD = Infinity;
+      kids.forEach((k, i) => {
+        const d = Math.abs(k.offsetLeft + k.offsetWidth / 2 - mid);
+        if (d < bestD) { bestD = d; best = i; }
+      });
+      setAt(best);
+    };
+    read();
+    el.addEventListener('scroll', read, { passive: true });
+    return () => el.removeEventListener('scroll', read);
+  }, [view.hand.length]);
   const pick = black?.pick ?? 1;
   if (!black)
     return <WaitingScreen title={view.phoneOnly ? 'One moment…' : 'Look at the TV'} mood="watch" />;
@@ -226,8 +248,26 @@ export function ControllerHand({ view, send, skip }: Props): JSX.Element {
         >
           {view.redrawsLeft === 0 ? 'No new hands left' : `New hand · ${view.redrawsLeft} left`}
         </button>
+        {/* I-141 A: the hand's width, made visible — one edge per card, the current one lifted. */}
+      <div className={styles.fanPos}>
+        <div
+          className={styles.fanEdges}
+          aria-hidden
+        >
+          {view.hand.map((card, i) => (
+            <span
+              key={card.id}
+              className={`${styles.fanEdge} ${i === at ? styles.fanEdgeOn : ''}`}
+            />
+          ))}
+        </div>
+        <span className="pb-caption pb-muted">
+          {at + 1} of {view.hand.length}
+        </span>
+      </div>
       </div>
       <ul
+        ref={fanRef}
         className={`${styles.hand} ${flying ? styles.handFlying : ''}`}
         aria-label="your hand"
         data-picking={picked.length > 0 || undefined}

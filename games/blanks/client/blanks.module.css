@@ -1613,3 +1613,49 @@
 .redraw:disabled {
   opacity: 0.5;
 }
+
+/* ── I-141 A: the hand's own width — one thin edge per card under the fan.
+   (SECOND BUILD: the owner saw the first build cut the top line off every card on an iPhone —
+   the hand is a scroller in a column, so it shrank to make room for this row and clipped its
+   cards. The row now takes no height at all: it hangs under the black-card block.) */
+/* the black-card block is sticky (so it already anchors the row); a phone on its side makes it
+   static, and there it anchors the row as relative */
+@media (max-height: 500px) {
+  .handBlack {
+    position: relative;
+  }
+}
+.fanPos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pb-space-2);
+  /* no height of its own: it hangs under the black-card block, in the gap above the hand, so the
+     screen is exactly as tall as today's (the third build still cost the column's gap and pushed the
+     cards' bottoms under the fade and the "more below" arrow onto the cards) */
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  height: 14px;
+  margin-top: var(--pb-space-1);
+  z-index: 1;
+}
+.fanEdges {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 14px;
+  touch-action: none;
+}
+.fanEdge {
+  width: 4px;
+  height: 10px;
+  border-radius: 2px;
+  background: var(--pb-surface-3, rgba(255, 255, 255, 0.22));
+  transition: height var(--pb-motion-fast, 160ms) var(--pb-ease), background var(--pb-motion-fast, 160ms) var(--pb-ease);
+}
+.fanEdgeOn {
+  height: 14px;
+  background: var(--pb-accent);
+}
