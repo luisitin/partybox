@@ -24,9 +24,14 @@ export function roomCodeFrom(rng: Rng): string {
 export const PLAYER_NAME_MIN = 1;
 export const PLAYER_NAME_MAX = 16;
 
-/** Character class of code points to strip from names: C0/C1 controls, zero-width, bidi, BOM. */
+/**
+ * Character class of code points to strip from names: C0/C1 controls, zero-width, bidi, BOM — and
+ * the characters that render as nothing, the classic "invisible name" trick (2026-09-22): the
+ * combining grapheme joiner, the Hangul fillers (U+115F, U+1160, U+3164, U+FFA0), the Mongolian
+ * vowel separator and the braille blank. A name made only of them is no name at all.
+ */
 const INVISIBLE = new RegExp(
-  `[${cp(0x0, 0x1f)}${cp(0x7f, 0x9f)}${cp(0x200b, 0x200f)}${cp(0x2028, 0x202e)}${cp(0x2060, 0x206f)}${cp(0xfeff)}]`,
+  `[${cp(0x0, 0x1f)}${cp(0x7f, 0x9f)}${cp(0x34f)}${cp(0x115f, 0x1160)}${cp(0x180e)}${cp(0x200b, 0x200f)}${cp(0x2028, 0x202e)}${cp(0x2060, 0x206f)}${cp(0x2800)}${cp(0x3164)}${cp(0xfeff)}${cp(0xffa0)}]`,
   'g',
 );
 

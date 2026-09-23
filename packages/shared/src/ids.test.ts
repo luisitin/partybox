@@ -87,3 +87,15 @@ describe('joinPayloadSchema.photo (ADR-037)', () => {
     ).toBe(false);
   });
 });
+
+describe('names that render as nothing (2026-09-22)', () => {
+  it('are rejected, however they are spelled', () => {
+    for (const blank of ['ㅤ', 'ㅤㅤㅤ', '⠀⠀', 'ﾠ', 'ᅟᅠ', '᠎', '͏'])
+      expect(normalizeName(blank)).toBeNull();
+  });
+
+  it('lose the invisible part and keep the rest', () => {
+    expect(normalizeName('Samㅤ')).toBe('Sam');
+    expect(normalizeName('⠀Priya⠀')).toBe('Priya');
+  });
+});

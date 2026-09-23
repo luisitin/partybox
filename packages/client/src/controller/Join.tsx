@@ -2,7 +2,7 @@
 // resume/kicked states. The submit button lives in the sticky footer so the keyboard never hides it.
 import { useEffect, useRef, useState } from 'react';
 import type { FormEvent, JSX } from 'react';
-import { EVERYDAY_AVATAR_IDS, PLAYER_NAME_MAX } from '@partybox/shared';
+import { EVERYDAY_AVATAR_IDS, PLAYER_NAME_MAX, normalizeName } from '@partybox/shared';
 import { Avatar, AvatarPhotos, PlayerChip, PrimaryButton, Screen } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import { joinLang, joinStrings, roomStrings } from '../i18n-join';
@@ -149,8 +149,11 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
     );
   }
 
+  // The server's own rule (normalizeName: invisible characters out, 1-16 left), so a name that
+  // renders as nothing never gets an enabled Join button (2026-09-22).
+  const cleanName = normalizeName(name);
   const canSubmit =
-    name.trim().length > 0 &&
+    cleanName !== null &&
     (!needsCode || code.trim().length === 4) &&
     state.connection === 'connected';
 
@@ -160,7 +163,7 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
     void audio?.enable();
     setSubmittedAt(Date.now());
     controller.join({
-      name: name.trim(),
+      name: cleanName ?? name.trim(),
       avatarId,
       roomCode: code.trim().length === 4 ? code.trim().toUpperCase() : undefined,
       ...(photo ? { photo } : {}),
@@ -196,7 +199,7 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
                 ? j.joining
                 : state.connection !== 'connected'
                   ? t.join.offline
-                  : name.trim().length === 0
+                  : cleanName === null
                     ? j.needName
                     : needsCode && code.trim().length !== 4
                       ? t.join.needCode
