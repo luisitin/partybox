@@ -5,7 +5,7 @@
 import { useState } from 'react';
 import type { JSX } from 'react';
 import { useT } from '@partybox/game-sdk/ui';
-import { wagerAmount } from '../server/scoring';
+import { wagerAmount } from '../server/wager'; // I-752 A: not scoring.ts (it imports the questions)
 import { Chips } from './ControllerBits';
 import styles from './Controller.module.css';
 import { STRINGS } from './strings';

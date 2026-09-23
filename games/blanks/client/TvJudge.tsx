@@ -7,7 +7,7 @@ import type { CSSProperties, JSX, ReactNode } from 'react';
 import { Avatar, Stage, useSound, useT } from '@partybox/game-sdk/ui';
 import type { GameTvProps, ViewPlayer } from '@partybox/game-sdk/ui';
 import type { BlanksTvView } from '../server/index';
-import { fillText } from '../server/cards';
+import { fillText } from '../server/fill';
 import { FilledCard, LETTERS } from './Cards';
 import { STRINGS } from './strings';
 import styles from './blanks.module.css';
