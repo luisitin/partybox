@@ -138,11 +138,11 @@ export function useMissedCalls(view: BingoControllerView): number {
     setSeenCall(view.callIndex);
     if (jumped > 1 && view.phaseId === 'play') setMissed(jumped - 1);
   }
+  // I-122 A: the tray stays until dismissed (✕, the phone's own state) or play ends; the
+  // five-second self-destruct is gone.
   useEffect(() => {
-    if (!missed) return;
-    const handle = setTimeout(() => setMissed(0), 5000);
-    return () => clearTimeout(handle);
-  }, [missed]);
+    if (view.phaseId !== 'play') setMissed(0);
+  }, [view.phaseId]);
   return missed;
 }
 
