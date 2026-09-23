@@ -208,7 +208,11 @@ export function expirePlayers(room: RoomState, now: number, deps: EngineDeps): A
   for (const id of Object.keys(room.players)) {
     const p = next.players[id]; // re-read: an earlier removal may have promoted a new VIP
     if (!p || p.disconnectedAt === null) continue;
-    if (now - p.disconnectedAt >= LIMITS.disconnectGraceMs) {
+    if (now - p.disconnectedAt >= LIMITS.disconnectGraceMs && next.status === 'playing' && !p.bot) {
+      // I-746 A: during a game a quiet seat is kept — its phone comes back to its own cards and
+      // score, not as a spectator next to its ghost. The grace restarts; after the game, it applies.
+      next = { ...next, players: { ...next.players, [p.id]: { ...p, disconnectedAt: now } } };
+    } else if (now - p.disconnectedAt >= LIMITS.disconnectGraceMs) {
       const r = removePlayer(next, p.id, now, deps, 'left');
       next = r.room;
       effects.push(...r.effects);

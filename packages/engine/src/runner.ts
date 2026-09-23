@@ -175,7 +175,12 @@ export function nextWakeAt(room: RoomState): number | null {
   for (const p of Object.values(room.players)) {
     if (p.disconnectedAt === null) continue;
     candidates.push(p.disconnectedAt + LIMITS.disconnectGraceMs);
-    if (p.isVip) candidates.push(p.disconnectedAt + LIMITS.vipHandoverMs);
+    // I-746 A: the handover deadline only while someone could take over — with nobody connected it
+    // stayed in the past and the host's timer re-fired at once, over and over (a busy loop)
+    const canHandOver = Object.values(room.players).some(
+      (o) => o.connected && o.id !== p.id && !o.bot,
+    );
+    if (p.isVip && canHandOver) candidates.push(p.disconnectedAt + LIMITS.vipHandoverMs);
   }
   return candidates.length === 0 ? null : Math.min(...candidates);
 }
