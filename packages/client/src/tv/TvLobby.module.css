@@ -225,8 +225,9 @@
 
 /* ── I-072 A: the QR is 560 px while nobody has joined (the couch can scan it), 360 px after. */
 .qrBig {
-  width: 560px;
-  height: 560px;
+  /* I-682 A: 400 px — the card (title, code, address, room code) fits above the host bar */
+  width: 400px;
+  height: 400px;
 }
 
 /* ── I-072 B: the first join shrinks the code — a 600 ms scale from the big size (rest = end). */
@@ -236,7 +237,7 @@
 }
 @keyframes pb-qr-shrink {
   from {
-    transform: scale(1.56);
+    transform: scale(1.11); /* I-682 A: 400 / 360 */
   }
   to {
     transform: scale(1);
