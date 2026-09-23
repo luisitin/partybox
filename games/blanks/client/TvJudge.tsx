@@ -63,6 +63,27 @@ function Progress({ view }: Props): JSX.Element {
   const n = view.votedCount;
   const m = view.votersExpected;
   const holdouts = view.players.filter((p) => p.status === 'active' && p.connected);
+  // I-773 A: the judge went — the room votes in their place, and the TV says why
+  const gone = view.judgeGone;
+  if (n === 0 && gone)
+    return (
+      <>
+        {gone.why === 'kicked'
+          ? L('{name} was removed — everyone votes this one · 0 / {expected}', {
+              name: gone.name,
+              expected: m,
+            })
+          : gone.why === 'left'
+            ? L('{name} left — everyone votes this one · 0 / {expected}', {
+                name: gone.name,
+                expected: m,
+              })
+            : L('{name} dropped — everyone votes this one · 0 / {expected}', {
+                name: gone.name,
+                expected: m,
+              })}
+      </>
+    );
   if (n === 0) return <>{L('Vote on your phone · 0 / {expected}', { expected: m })}</>;
   if (holdouts.length === 1)
     return around(L('Just waiting for {name}…'), <Holdout player={holdouts[0]!} />);

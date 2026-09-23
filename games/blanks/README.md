@@ -87,15 +87,7 @@ ever took a vote → no card of the night.
 
 - Nobody played: `answer` → `result` ("Nobody played a card"), no reveal, no vote.
 - A voter whose card is the only one up (everyone else sat out) is not waited for and cannot vote.
-- Disconnected players never block "all played" / "all voted". The judge dropping during `judge` (or
-  before it opens) pulls its deadline in to 20 s — "Sam dropped — a moment for them to come back…" —
-  and it ends with no winner if they are still gone; back in time, they get a fresh judge window and
-  their pick counts (review-loop #351). A phase nobody connected can act in (every answerer gone) ends
-  the moment it starts. A reconnect before the deadline can act. VIP skip: `intro` → `answer`; `answer` →
-  reveal with the cards so far; `reveal` → `judge` (rest of the reading skipped); `judge` → `result`
-  with the votes so far; `result` → next `intro` or `final`; `final` → `done`. VIP end → `done` from anywhere (a round
-  whose `result` never ran scores nothing). Pause holds the deadline. Every phase but `done` has a
-  deadline, so an idle room finishes on timers alone.
+- Disconnected players never block "all played" / "all voted". The judge dropping during `judge` (or before it opens) pulls its deadline in to 20 s — "Sam dropped — a moment for them to come back…" — and if they are still gone the round flips to a vote on the cards already read (I-773 A: `judgeGone` on the TV view, "Sam dropped — everyone votes this one · 0 / 4", a fresh vote window; the judge game resumes after the result); a judge who left or was removed flips it at once (B: the engine's `player` event carries `gone`); back in time, they get a fresh judge window and their pick counts (review-loop #351). A phase nobody connected can act in (every answerer gone) ends the moment it starts. A reconnect before the deadline can act. VIP skip: `intro` → `answer`; `answer` → reveal with the cards so far; `reveal` → the next card, the last one's → `judge` (I-774); `judge` → `result` with the votes so far; `result` → next `intro` or `final`; `final` → `done`. VIP end → `done` from anywhere (a round whose `result` never ran scores nothing). Pause holds the deadline. Every phase but `done` has a deadline, so an idle room finishes on timers alone.
 - A hand short of `pick` (only with a tiny deck) sits the round out; the phone says so.
 
 ## Settings

@@ -46,7 +46,7 @@ interface GameStateBase {
 type GameEvent<I> =
   | { type: 'input'; now: number; playerId: string; input: I } // schema-valid input
   | { type: 'timer'; now: number; phaseId: string; startedAt: number } // once per deadline (ADR-033)
-  | { type: 'player'; now: number; playerId: string; connected: boolean } // (re)connect / leave
+  | { type: 'player'; now: number; playerId: string; connected: boolean; gone?: 'left' | 'kicked' } // (re)connect / leave; `gone` = for good (ADR-046)
   | { type: 'vip'; now: number; action: 'skip' | 'pause' | 'resume' | 'end' };
 ```
 

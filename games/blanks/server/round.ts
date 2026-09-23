@@ -114,8 +114,12 @@ export function startRound(state: State): State {
   // I-147 A: a tie-break is not round N+1 of N — it replays the last round's number.
   const round = state.tied ? state.round : state.round + 1;
   const discard = [...state.discard, ...Object.values(state.submissions).flat()];
+  // I-773 A: a round the room judged in the judge's place goes back to a judge
+  const settings = state.judgeGone ? { ...state.settings, judge: 'czar' as const } : state.settings;
   let next: State = {
     ...state,
+    settings,
+    judgeGone: null,
     round,
     discard,
     submissions: {},
