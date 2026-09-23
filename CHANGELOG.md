@@ -6,6 +6,11 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Fixed
 
+- **Blanks' hand on an iPhone** (the owner's video, 2026-09-23): the fan's cards were cut off at the
+  bottom and the fan itself scrolled up and down; it now scrolls sideways only and leaves room for
+  the turned side cards. **Blanks' music** plays one continuous, quieter set from the round card
+  through the result instead of switching tracks and beds between picking, reading and judging.
+
 - **Blanks deals its Pick 2 / Pick 3 cards** (I-158, option B): every game now deals exactly one, in
   the middle (round 4 of six, round 8 of fifteen). Before, the deck's spacing put the first one ~17
   rounds deep, so no six-round game on mild, adults or wild ever saw one.
