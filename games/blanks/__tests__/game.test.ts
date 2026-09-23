@@ -72,6 +72,7 @@ describe('whole game', () => {
       'decks',
       'judge',
       'rounds',
+      'handSize',
       'timed',
       'answerSeconds',
       'rando',
@@ -92,6 +93,7 @@ describe('whole game', () => {
       decks: 'wild',
       rando: false,
       timed: false,
+      handSize: 10,
     });
   });
 });

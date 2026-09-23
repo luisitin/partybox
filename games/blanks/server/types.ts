@@ -27,6 +27,8 @@ export interface Settings {
   rando: boolean;
   /** Clocks on picking, voting and the result; off = the room moves itself along with Next. */
   timed: boolean;
+  /** I-141: white cards in a hand (the owner's "Cards dealt": 7 / 10 / 12 / 15). */
+  handSize: number;
 }
 
 export interface Stats {
@@ -120,7 +122,9 @@ export type PlayInput = Extract<Input, { type: 'play' }>;
 export type VoteInput = Extract<Input, { type: 'vote' }>;
 export type ChooseInput = Extract<Input, { type: 'choose' }>;
 
+/** The default hand; the room picks 7 / 10 / 12 / 15 (`settings.handSize`, I-141). */
 export const HAND_SIZE = 10;
+export const HAND_SIZES = ['7', '10', '12', '15'] as const;
 /** New hands a player may take in one game (the owner, 2026-09-21: "3x each game"). */
 export const REDRAWS_PER_GAME = 3;
 export const INTRO_MS = 5_000;

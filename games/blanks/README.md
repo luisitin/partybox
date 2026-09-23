@@ -103,7 +103,8 @@ ever took a vote → no card of the night.
 `decks` select `wild` (`mild` · `adults` = mild + crude · `wild` = all three · `wild-only`) · `judge`
 select `vote` (`vote` = everyone votes, `czar` = a rotating judge) · `timed` boolean false (off: no clock
 on picking, voting or the result, the VIP taps Next; the screens hide the long fallback timers) · `rounds`
-number 6 (3–15) · `answerSeconds` number 60 (30–120, step 15; timed only) · `rando` boolean false.
+number 6 (3–15) · `handSize` select `10` (7 · 10 · 12 · 15 cards a hand, I-141) · `answerSeconds` number 60
+(30–120, step 15; timed only) · `rando` boolean false.
 
 ## Content
 

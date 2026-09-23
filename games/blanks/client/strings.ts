@@ -48,6 +48,13 @@ const PICKER_ES: Readonly<Record<string, string>> = {
   'Answer time (timed rounds)': 'Tiempo de respuesta (con reloj)',
   'Seconds to pick a card when rounds are timed; Pick 2 and Pick 3 cards get 15 s more each':
     'Segundos para elegir carta en rondas con reloj; las cartas Elige 2 y Elige 3 tienen 15 s más cada una',
+  'Cards dealt': 'Cartas en la mano',
+  'White cards in each hand; a new hand swaps them all':
+    'Cartas blancas en cada mano; una mano nueva las cambia todas',
+  '7 cards': '7 cartas',
+  '10 cards': '10 cartas',
+  '12 cards': '12 cartas',
+  '15 cards': '15 cartas',
   Rando: 'Rando',
   'A random card from the deck plays every round as a phantom player; if it wins, nobody scores':
     'Una carta al azar del mazo juega cada ronda como jugador fantasma; si gana, nadie suma',

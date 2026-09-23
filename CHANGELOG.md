@@ -78,6 +78,11 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Added
 
+- **Blanks: the hand is a real fan** (I-141, the owner's design B): the middle card stands upright
+  and lifted, the side cards turn away and drop as you swipe, page dots with "3 of 10" sit over the
+  fan, and "New hand" is the fan's last card ("Swap all 10 cards for fresh ones · 3 left"). A new
+  setting, **Cards dealt**, picks 7, 10, 12 or 15 cards a hand.
+
 - **Bingo bots answer for themselves** (I-138, option C): a bot's failed claim gets its own line on
   the verdict ("Bot 3: my sensors were dirty" for never-called daubs, "I got excited" for an early
   tap), a bot's win gets one too ("beep. gloat."), and each bot keeps the same voice all evening.

@@ -60,7 +60,11 @@ export const SCREENS_ES: Readonly<Record<string, string>> = {
   'Round {round} · pick one': 'Ronda {round} · elige una',
   Played: 'Jugada',
   'No new hands left': 'No quedan manos nuevas',
-  'New hand · {n} left': 'Mano nueva · quedan {n}',
+  // I-141: the fan's counter and its New hand card.
+  'New hand': 'Mano nueva',
+  '{n} of {count}': '{n} de {count}',
+  'Swap all {n} cards for fresh ones': 'Cambia las {n} cartas por otras nuevas',
+  '{n} left': 'quedan {n}',
   'your hand': 'tu mano',
   picked: 'elegida',
   'picked {n} of {count}': 'elegida {n} de {count}',

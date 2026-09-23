@@ -37,6 +37,10 @@ const floorOf = (kind: WhiteKind): number => KIND_FLOORS[kind];
 /** …and at least this many great cards (tier 3 or 4) — half the hand (owner, 2026-09-18: "at
  *  least half of their cards as really good cards")… */
 export const GOOD_FLOOR = HAND_SIZE / 2;
+/** The room's hand size (I-141: 7 / 10 / 12 / 15; a state from before the setting holds 10). */
+export const handSizeOf = (state: State): number => state.settings.handSize ?? HAND_SIZE;
+/** Half the hand, whatever its size (10 → 5, 7 → 4, 15 → 8). */
+export const goodFloor = (size: number): number => Math.ceil(size / 2);
 /** …of which at least this many amazing ones (tier 4: the best third of a deck, the way the loop rated them)… */
 export const BEST_FLOOR = 3;
 /** …and at most this many filler cards (tier 1): nobody plays them, so a hand silts up with
@@ -48,7 +52,6 @@ const MAX_SWAPS = 2;
 /** …and how many for the quality floor: the floor itself. Three was one short when a full hand
  *  came back from a Pick 2 with two great cards and the kind swap had just dropped one (loop
  *  #500); the loop only runs while the hand is short, so the floor bounds it anyway. */
-const MAX_GOOD_SWAPS = GOOD_FLOOR;
 const MAX_BEST_SWAPS = BEST_FLOOR;
 /** …and at least one WORD: a card of one or two words, for the blanks that want exactly that —
  *  a safe word, a nickname, a password, a hurricane's name (fit.ts WORD_PROMPT). Short cards are
@@ -129,6 +132,7 @@ function takeKind(state: State, kind: WhiteKind, hand: readonly string[]): [stri
  * half a hand of cards worth playing (loop 451).
  */
 function fillHand(state: State, hand: readonly string[], target: number): [string[], State] {
+  const good = goodFloor(handSizeOf(state));
   let next = state;
   let out = [...hand];
   for (const kind of WHITE_KINDS) {
@@ -145,7 +149,7 @@ function fillHand(state: State, hand: readonly string[], target: number): [strin
     next = after;
     out.push(card);
   }
-  while (countGood(out) < GOOD_FLOOR && out.length < target) {
+  while (countGood(out) < good && out.length < target) {
     const [card, after] = takeWhere(next, isGood);
     if (card === null) break;
     next = after;
@@ -189,7 +193,7 @@ function fillHand(state: State, hand: readonly string[], target: number): [strin
     bestSwaps += 1;
   }
   let goodSwaps = 0;
-  while (countGood(out) < GOOD_FLOOR && goodSwaps < MAX_GOOD_SWAPS) {
+  while (countGood(out) < good && goodSwaps < good) {
     const swapped = swapForGood(next, out, isGood);
     if (swapped === null) break;
     [out, next] = swapped;
@@ -304,17 +308,17 @@ export function drawGreat(state: State, count: number): [string[], State] {
 /** How well Rando's card must read in the blank before any great card will do. */
 const RANDO_FIT = 0.85;
 
-/** Every player's hand back up to HAND_SIZE (+ `extra` for the ids in `extraFor`). */
+/** Every player's hand back up to the room's hand size (+ `extra` for the ids in `extraFor`). */
 export function refillHands(state: State, extra = 0, extraFor: readonly string[] = []): State {
   let next = state;
   const hands = { ...state.hands };
   for (const id of Object.keys(state.players).sort()) {
-    const target = HAND_SIZE + (extraFor.includes(id) ? extra : 0);
+    const target = handSizeOf(state) + (extraFor.includes(id) ? extra : 0);
     const hand = hands[id] ?? [];
     if (
       hand.length >= target &&
       countsMeetFloor(hand) &&
-      countGood(hand) >= GOOD_FLOOR &&
+      countGood(hand) >= goodFloor(handSizeOf(state)) &&
       countBest(hand) >= BEST_FLOOR &&
       hand.filter(isFiller).length <= FILLER_CAP &&
       hand.filter(isWord).length >= WORD_FLOOR
@@ -351,7 +355,8 @@ export function leadWithFit(state: State, playerIds: readonly string[]): State {
     // wants a hand of them, and a phone of seven "A ____" nouns under a verb prompt reads as no
     // options (owner, 2026-09-19). The weakest misfits go for great fitting cards, then any; the
     // other kinds keep only the base floor for the round, so a person prompt can hold four people.
-    for (let n = 0; n < MAX_FIT_SWAPS && hand.filter(fits).length < FIT_TARGET; n++) {
+    const fitTarget = goodFloor(handSizeOf(state));
+    for (let n = 0; n < MAX_FIT_SWAPS && hand.filter(fits).length < fitTarget; n++) {
       const swapped: [string[], State] | null =
         swapForGood(next, hand, (c) => fits(c) && isGood(c), spare) ??
         swapForGood(next, hand, fits, spare);

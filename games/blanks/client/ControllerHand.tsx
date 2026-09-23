@@ -10,6 +10,7 @@ import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { BlanksControllerView } from '../server/index';
 import type { Input } from '../server/types';
 import { FilledCard } from './Cards';
+import { FanDots, NewHandCard, useFan } from './HandFan';
 import { NextButton } from './NextButton';
 import { STRINGS } from './strings';
 import styles from './blanks.module.css';
@@ -121,6 +122,9 @@ export function ControllerHand({ view, send, skip }: Props): JSX.Element {
   const [flying, setFlying] = useState(false);
   const flight = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => () => clearTimeout(flight.current ?? undefined), []);
+  // I-141 (the owner's design B): the fan's shape and where it is; the New hand card is the last.
+  const [fanEl, setFanEl] = useState<HTMLUListElement | null>(null);
+  const at = useFan(fanEl, view.hand.length + 1);
   const black = view.black;
   const pick = black?.pick ?? 1;
   if (!black)
@@ -237,24 +241,10 @@ export function ControllerHand({ view, send, skip }: Props): JSX.Element {
           whites={picked.map((id) => view.hand.find((c) => c.id === id)?.text ?? '')}
           size="phone"
         />
-        {/* A whole new hand, three times a game (the owner, 2026-09-21) — dealt under every rule
-            a fresh hand follows. The pick is dropped with the cards it pointed at. */}
-        <button
-          type="button"
-          className={styles.redraw}
-          disabled={sent || view.redrawsLeft === 0}
-          onClick={() => {
-            if (sent || view.redrawsLeft === 0) return;
-            setPicked([]);
-            send({ type: 'redraw' });
-          }}
-        >
-          {view.redrawsLeft === 0
-            ? L('No new hands left')
-            : L('New hand · {n} left', { n: view.redrawsLeft })}
-        </button>
+        <FanDots cards={view.hand.length} at={at} />
       </div>
       <ul
+        ref={setFanEl}
         className={`${styles.hand} ${flying ? styles.handFlying : ''}`}
         aria-label={L('your hand')}
         data-picking={picked.length > 0 || undefined}
@@ -296,6 +286,21 @@ export function ControllerHand({ view, send, skip }: Props): JSX.Element {
             </li>
           );
         })}
+        {/* A whole new hand, three times a game (the owner, 2026-09-21), as the fan's last card
+            (I-141). The pick is dropped with the cards it pointed at; the fan goes back to card 1. */}
+        <NewHandCard
+          index={view.hand.length}
+          cards={view.hand.length}
+          left={view.redrawsLeft}
+          disabled={sent}
+          onRedraw={() => {
+            if (sent || view.redrawsLeft === 0) return;
+            setPicked([]);
+            send({ type: 'redraw' });
+            const still = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+            fanEl?.scrollTo({ left: 0, behavior: still ? 'auto' : 'smooth' });
+          }}
+        />
       </ul>
     </Screen>
   );

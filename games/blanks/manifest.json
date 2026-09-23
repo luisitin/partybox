@@ -62,6 +62,31 @@
       "step": 1
     },
     {
+      "key": "handSize",
+      "label": "Cards dealt",
+      "description": "White cards in each hand; a new hand swaps them all",
+      "type": "select",
+      "default": "10",
+      "options": [
+        {
+          "value": "7",
+          "label": "7 cards"
+        },
+        {
+          "value": "10",
+          "label": "10 cards"
+        },
+        {
+          "value": "12",
+          "label": "12 cards"
+        },
+        {
+          "value": "15",
+          "label": "15 cards"
+        }
+      ]
+    },
+    {
       "key": "timed",
       "label": "Timed rounds",
       "description": "Put a clock on picking, voting and the result; off = play at your own pace, anyone taps Next",

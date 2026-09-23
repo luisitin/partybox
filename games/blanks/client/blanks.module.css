@@ -1330,19 +1330,26 @@
    card's whole text reads without a tap — no overlap (a card is 76 % of the row and its
    neighbours sit beside it, not under it), the text wraps, and a long card steps its type down. */
 .hand {
+  /* I-141: a card is a fixed width and the row pads by half of what is left on each side, so
+     every card — the first and the New hand card too — can snap to the dead centre, where the fan
+     stands it upright (a 76 % card with a fixed padding left the first card off centre, tilted). */
+  --fan-card: min(260px, 62vw);
+  /* the cards' offsets are measured against the fan */
+  position: relative;
   flex-direction: row;
   align-items: flex-end;
   gap: var(--pb-space-2);
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  padding: var(--pb-space-5) var(--pb-space-5) var(--pb-space-4);
+  padding: var(--pb-space-5) calc(50% - var(--fan-card) / 2) var(--pb-space-4);
   scrollbar-width: none;
 }
 .hand > li {
-  flex: 0 0 76%;
+  flex: 0 0 var(--fan-card);
   scroll-snap-align: center;
-  transform-origin: 50% 180%;
-  rotate: calc((var(--pb-i, 0) - 4.5) * 1deg);
+  /* I-141: HandFan.tsx shapes each card from its place on screen, about its bottom centre (the
+     old fixed tilt by hand position is gone) */
+  transform-origin: 50% 100%;
 }
 .hand .white {
   min-height: 7.5em;
@@ -1595,21 +1602,77 @@
   animation: none;
 }
 
-/* A whole new hand (the owner, 2026-09-21): a quiet text button under the pinned black card —
-   the hand is the choice, this is the escape hatch, so it never competes with the cards. */
-.redraw {
-  display: block;
-  margin: var(--pb-space-2) auto 0;
-  padding: var(--pb-space-1) var(--pb-space-3);
-  border: 1px solid var(--pb-border);
-  border-radius: 999px;
-  background: transparent;
-  color: var(--pb-text-muted);
-  font: inherit;
+/* ── I-141 (the owner's design B): page dots under the pinned black card — hung below it in the
+   gap above the hand, so they take no height (the first build's row pushed the cards down) — the
+   middle card's dot stretched and gold, the New hand card's a hollow dotted ring. */
+.fanDots {
+  position: absolute;
+  /* up into the band's own bottom padding: clear of the black card above and of the middle
+     card's 18 px lift below (measured on an iPhone SE, 2026-09-23) */
+  top: calc(100% - var(--pb-space-2));
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pb-space-2);
   font-size: var(--pb-font-small);
   font-weight: 700;
-  min-height: 36px;
+  color: var(--pb-text-muted);
+  pointer-events: none;
 }
-.redraw:disabled {
-  opacity: 0.5;
+.dots {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.dots i {
+  width: 7px;
+  height: 7px;
+  border-radius: 4px;
+  background: rgb(255 255 255 / 22%);
+  transition:
+    width var(--pb-motion-fast) var(--pb-ease),
+    background var(--pb-motion-fast) var(--pb-ease);
+}
+.dots i.dotOn {
+  width: 22px;
+  background: var(--pb-accent-2-fill);
+}
+.dots i.dotNew {
+  margin-left: 4px;
+  background: transparent;
+  border: 1.5px dotted rgb(255 255 255 / 55%);
+}
+.dots i.dotNew.dotOn {
+  background: rgb(255 209 102 / 18%);
+  border-color: var(--pb-accent-2-fill);
+}
+
+/* The New hand card: the fan's last card, dashed gold, saying what it does and what is left. */
+.hand .newHand {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* no taller than a white card, so its lift never reaches the dots above the fan */
+  gap: 2px;
+  padding-block: var(--pb-space-2);
+  line-height: 1.15;
+  text-align: center;
+  background: transparent;
+  color: var(--pb-text);
+  border: 2px dashed var(--pb-accent-2-fill);
+  box-shadow: none;
+}
+.hand .newHand small {
+  font-size: var(--pb-font-caption);
+  font-weight: 600;
+  color: var(--pb-text-muted);
+}
+.newHandIcon {
+  font-size: 22px;
+  line-height: 1;
+}
+.hand .newHand:disabled {
+  opacity: 0.4;
 }
