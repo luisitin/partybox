@@ -130,7 +130,9 @@ export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
         <span className={styles.glowB} />
       </div>
       <div className={`${styles.split} ${empty ? styles.splitEmpty : ''}`}>
-        <div className={`${styles.join} ${full || locked ? styles.full : ''}`}>
+        <div
+          className={`${styles.join} ${full || locked ? styles.full : ''} ${empty ? styles.joinWide : ''}`}
+        >
           <BigText
             level="h2"
             tone={full || locked ? 'accent' : 'muted'}

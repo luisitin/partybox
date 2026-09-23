@@ -225,8 +225,9 @@
 
 /* ── I-072 A: the QR is 560 px while nobody has joined (the couch can scan it), 360 px after. */
 .qrBig {
-  width: 560px;
-  height: 560px;
+  /* I-682 B: 520 px on the side of a wide card (the upright card was taller than the stage) */
+  width: 520px;
+  height: 520px;
 }
 
 /* ── I-072 B: the first join shrinks the code — a 600 ms scale from the big size (rest = end). */
@@ -236,7 +237,7 @@
 }
 @keyframes pb-qr-shrink {
   from {
-    transform: scale(1.56);
+    transform: scale(1.44); /* I-682 B: 520 / 360 */
   }
   to {
     transform: scale(1);
@@ -351,4 +352,25 @@
 }
 :global(:root[data-motion='off']) .qrMarkBump {
   animation: none;
+}
+
+/* ── I-682 B: the empty room's card on its side — the code left, the words to read aloud right. */
+.joinWide {
+  display: grid;
+  grid-template-columns: auto minmax(0, auto);
+  grid-auto-rows: auto;
+  column-gap: var(--pb-space-8);
+  row-gap: var(--pb-space-3);
+  align-content: center;
+  align-items: center;
+  justify-items: start;
+  text-align: left;
+}
+.joinWide .qrWrap {
+  grid-column: 1;
+  grid-row: 1 / span 4;
+}
+.joinWide > :not(.qrWrap) {
+  grid-column: 2;
+  margin: 0;
 }
