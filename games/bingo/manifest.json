@@ -7,7 +7,12 @@
   "minPlayers": 1,
   "maxPlayers": 16,
   "estimatedMinutes": 15,
-  "tags": ["classic", "luck", "tap", "family"],
+  "tags": [
+    "classic",
+    "luck",
+    "tap",
+    "family"
+  ],
   "settings": [
     {
       "key": "rounds",
@@ -25,13 +30,34 @@
       "type": "select",
       "default": "line",
       "options": [
-        { "value": "line", "label": "Any line" },
-        { "value": "corners", "label": "Four corners" },
-        { "value": "x", "label": "The X" },
-        { "value": "blackout", "label": "Blackout" },
-        { "value": "frame", "label": "Picture frame" },
-        { "value": "stamp", "label": "Postage stamp" },
-        { "value": "tee", "label": "The T" }
+        {
+          "value": "line",
+          "label": "Any line"
+        },
+        {
+          "value": "corners",
+          "label": "Four corners"
+        },
+        {
+          "value": "x",
+          "label": "The X"
+        },
+        {
+          "value": "blackout",
+          "label": "Blackout"
+        },
+        {
+          "value": "frame",
+          "label": "Picture frame"
+        },
+        {
+          "value": "stamp",
+          "label": "Postage stamp"
+        },
+        {
+          "value": "tee",
+          "label": "The T"
+        }
       ]
     },
     {
@@ -40,13 +66,34 @@
       "type": "select",
       "default": "corners",
       "options": [
-        { "value": "line", "label": "Any line" },
-        { "value": "corners", "label": "Four corners" },
-        { "value": "x", "label": "The X" },
-        { "value": "blackout", "label": "Blackout" },
-        { "value": "frame", "label": "Picture frame" },
-        { "value": "stamp", "label": "Postage stamp" },
-        { "value": "tee", "label": "The T" }
+        {
+          "value": "line",
+          "label": "Any line"
+        },
+        {
+          "value": "corners",
+          "label": "Four corners"
+        },
+        {
+          "value": "x",
+          "label": "The X"
+        },
+        {
+          "value": "blackout",
+          "label": "Blackout"
+        },
+        {
+          "value": "frame",
+          "label": "Picture frame"
+        },
+        {
+          "value": "stamp",
+          "label": "Postage stamp"
+        },
+        {
+          "value": "tee",
+          "label": "The T"
+        }
       ]
     },
     {
@@ -55,13 +102,34 @@
       "type": "select",
       "default": "x",
       "options": [
-        { "value": "line", "label": "Any line" },
-        { "value": "corners", "label": "Four corners" },
-        { "value": "x", "label": "The X" },
-        { "value": "blackout", "label": "Blackout" },
-        { "value": "frame", "label": "Picture frame" },
-        { "value": "stamp", "label": "Postage stamp" },
-        { "value": "tee", "label": "The T" }
+        {
+          "value": "line",
+          "label": "Any line"
+        },
+        {
+          "value": "corners",
+          "label": "Four corners"
+        },
+        {
+          "value": "x",
+          "label": "The X"
+        },
+        {
+          "value": "blackout",
+          "label": "Blackout"
+        },
+        {
+          "value": "frame",
+          "label": "Picture frame"
+        },
+        {
+          "value": "stamp",
+          "label": "Postage stamp"
+        },
+        {
+          "value": "tee",
+          "label": "The T"
+        }
       ]
     },
     {
@@ -71,13 +139,34 @@
       "type": "select",
       "default": "line",
       "options": [
-        { "value": "line", "label": "Any line" },
-        { "value": "corners", "label": "Four corners" },
-        { "value": "x", "label": "The X" },
-        { "value": "blackout", "label": "Blackout" },
-        { "value": "frame", "label": "Picture frame" },
-        { "value": "stamp", "label": "Postage stamp" },
-        { "value": "tee", "label": "The T" }
+        {
+          "value": "line",
+          "label": "Any line"
+        },
+        {
+          "value": "corners",
+          "label": "Four corners"
+        },
+        {
+          "value": "x",
+          "label": "The X"
+        },
+        {
+          "value": "blackout",
+          "label": "Blackout"
+        },
+        {
+          "value": "frame",
+          "label": "Picture frame"
+        },
+        {
+          "value": "stamp",
+          "label": "Postage stamp"
+        },
+        {
+          "value": "tee",
+          "label": "The T"
+        }
       ]
     },
     {
@@ -87,13 +176,34 @@
       "type": "select",
       "default": "blackout",
       "options": [
-        { "value": "line", "label": "Any line" },
-        { "value": "corners", "label": "Four corners" },
-        { "value": "x", "label": "The X" },
-        { "value": "blackout", "label": "Blackout" },
-        { "value": "frame", "label": "Picture frame" },
-        { "value": "stamp", "label": "Postage stamp" },
-        { "value": "tee", "label": "The T" }
+        {
+          "value": "line",
+          "label": "Any line"
+        },
+        {
+          "value": "corners",
+          "label": "Four corners"
+        },
+        {
+          "value": "x",
+          "label": "The X"
+        },
+        {
+          "value": "blackout",
+          "label": "Blackout"
+        },
+        {
+          "value": "frame",
+          "label": "Picture frame"
+        },
+        {
+          "value": "stamp",
+          "label": "Postage stamp"
+        },
+        {
+          "value": "tee",
+          "label": "The T"
+        }
       ]
     },
     {
@@ -117,18 +227,25 @@
       "step": 1
     },
     {
-      "key": "showBoard",
-      "label": "Called board",
-      "description": "Show every number called so far on the TV",
-      "type": "boolean",
-      "default": false
-    },
-    {
-      "key": "showPrevious",
-      "label": "Previous number",
-      "description": "Show the number before this one under the call",
-      "type": "boolean",
-      "default": true
+      "key": "callsShown",
+      "label": "Calls shown",
+      "description": "How much of the call history the TV keeps up",
+      "type": "select",
+      "default": "last",
+      "options": [
+        {
+          "value": "none",
+          "label": "Memory test (nothing)"
+        },
+        {
+          "value": "last",
+          "label": "Last call only"
+        },
+        {
+          "value": "board",
+          "label": "Full board"
+        }
+      ]
     },
     {
       "key": "showClose",

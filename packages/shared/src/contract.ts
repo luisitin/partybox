@@ -11,6 +11,11 @@ const settingBase = {
   key: z.string().regex(/^[a-zA-Z][a-zA-Z0-9]*$/),
   label: z.string().min(1).max(40),
   description: z.string().max(200).optional(),
+  /** I-112 A: while the sibling setting `key` equals `value`, this one is implied — greyed out
+   *  with `note` (e.g. "the board already shows it"). */
+  impliedBy: z
+    .object({ key: z.string(), value: z.union([z.boolean(), z.string(), z.number()]), note: z.string().max(80) })
+    .optional(),
 };
 
 export const settingSpecSchema = z.discriminatedUnion('type', [
