@@ -46,7 +46,8 @@ export function join(room: RoomState, event: JoinEvent, deps: EngineDeps): Apply
   // A closed tab loses its token. A token-less join under the name of a player who is currently
   // DISCONNECTED resumes that player (living-room trust model, ADR-029) instead of "name taken".
   const orphan = findDisconnectedByName(room, event.name);
-  if (orphan) return resume(room, orphan, event.now, deps);
+  // I-741 A: the seat's login moves to the phone that took it back (the minted token)
+  if (orphan) return resume(room, orphan, event.now, deps, { token: event.token, byName: true });
 
   if (room.locked)
     return { room, effects: [error(event.playerId, 'room_locked', 'This room is locked.')] };
@@ -118,13 +119,29 @@ export function join(room: RoomState, event: JoinEvent, deps: EngineDeps): Apply
   };
 }
 
-function resume(room: RoomState, player: RoomPlayer, now: number, deps: EngineDeps): ApplyResult {
-  const updated: RoomPlayer = { ...player, connected: true, disconnectedAt: null };
+function resume(
+  room: RoomState,
+  player: RoomPlayer,
+  now: number,
+  deps: EngineDeps,
+  /** I-741: a seat taken back by name (another phone) — its login moves to that phone. */
+  byName?: { token: string; byName: true },
+): ApplyResult {
+  const updated: RoomPlayer = {
+    ...player,
+    ...(byName ? { token: byName.token } : {}),
+    connected: true,
+    disconnectedAt: null,
+  };
   const next: RoomState = { ...room, players: { ...room.players, [player.id]: updated } };
   const game = notifyGame(next, player.id, true, now, deps);
   return {
     room: game.room,
-    effects: [{ type: 'welcome', playerId: player.id }, ...game.effects, { type: 'push' }],
+    effects: [
+      { type: 'welcome', playerId: player.id },
+      ...game.effects,
+      { type: 'push' },
+    ],
   };
 }
 
