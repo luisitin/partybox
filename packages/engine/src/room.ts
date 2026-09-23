@@ -163,6 +163,17 @@ function dispatch(room: RoomState, event: RoomEvent, deps: EngineDeps): ApplyRes
         ],
       };
     }
+    case 'vote': {
+      // I-650: between games only; bots never vote; an unknown game is ignored.
+      const who = room.players[event.playerId];
+      if (!who || who.bot || room.status === 'playing') return { room, effects: [] };
+      if (event.gameId !== null && !deps.games[event.gameId]) return { room, effects: [] };
+      if ((room.votes?.[who.id] ?? null) === event.gameId) return { room, effects: [] };
+      const votes = { ...room.votes };
+      if (event.gameId === null) delete votes[who.id];
+      else votes[who.id] = event.gameId;
+      return { room: { ...room, votes }, effects: [{ type: 'push' }] };
+    }
     case 'dev:loadState': {
       const game = deps.games[event.gameId];
       if (!game || !isStateBase(event.state))
