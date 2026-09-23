@@ -43,6 +43,13 @@ function LastUp({ room }: { room: RoomSnapshot }): JSX.Element | null {
   const winners = (scored ? r.results.winnerIds : [])
     .map((id) => r.players.find((p) => p.id === id))
     .filter((p): p is NonNullable<typeof p> => p !== undefined);
+  // I-652 A: a win by bots only reads as what it is, with the best person named
+  const botsOnly = winners.length > 0 && winners.every((w) => w.bot === true);
+  const bestHuman = botsOnly
+    ? r.results.ranking
+        .map((row) => ({ row, p: r.players.find((p) => p.id === row.playerId) }))
+        .find((x) => x.p && !x.p.bot)
+    : undefined;
   const shown = winners.slice(0, LAST_UP_FACES);
   const more = winners.length - shown.length;
   const names = [...shown.map((w) => w.name), ...(more > 0 ? [`+${more}`] : [])];
@@ -51,6 +58,16 @@ function LastUp({ room }: { room: RoomSnapshot }): JSX.Element | null {
       <span className={styles.lastUpKicker}>{L('Last up · {game}', { game })}</span>
       {winners.length === 0 ? (
         <span className={`${styles.lastUpWinner} ${styles.lastUpNone}`}>{L('no winner')}</span>
+      ) : botsOnly ? (
+        <>
+          <span className={`${styles.lastUpWinner} ${styles.lastUpNone}`}>🤖 Bots took it</span>
+          {bestHuman?.p ? (
+            <span className={styles.lastUpHuman}>
+              <Avatar avatarId={bestHuman.p.avatarId} size={32} />
+              {bestHuman.p.name} led the humans · {ordinal(bestHuman.row.rank)}
+            </span>
+          ) : null}
+        </>
       ) : (
         <span className={styles.lastUpWinner}>
           <span className={styles.lastUpFaces}>
@@ -217,4 +234,11 @@ export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
       </div>
     </Stage>
   );
+}
+
+/** I-652 A: 1st, 2nd, 3rd, 4th … */
+function ordinal(n: number): string {
+  const s = ['th', 'st', 'nd', 'rd'];
+  const v = n % 100;
+  return `${n}${s[(v - 20) % 10] ?? s[v] ?? s[0]}`;
 }

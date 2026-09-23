@@ -352,3 +352,13 @@
 :global(:root[data-motion='off']) .qrMarkBump {
   animation: none;
 }
+
+/* ── I-652 A: the best person, on its own line under "Bots took it". */
+.lastUpHuman {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  white-space: nowrap;
+}
