@@ -1,6 +1,7 @@
 // What is on the table, as the TV and the phones see it: the black card (and the judge's three
 // choices), the anonymous cards on stage, and — once the result is public — who played each one and
 // who voted for it. The rules for what may be shown when live in views.ts.
+import { revealSpan } from './cards';
 import { blackCard, whiteText } from './content';
 import { tally } from './round';
 import { RANDO, RANDO_NAME } from './types';
@@ -70,7 +71,9 @@ export function cardViews(state: State, upTo: number): CardView[] {
 export /** Cards on stage for this phase: none until reveal, one more per reveal step, all from judge on. */
 function stageCards(state: State): CardView[] {
   const phase = state.phase.id;
-  if (phase === 'reveal') return cardViews(state, state.revealIndex + 1);
+  // I-157: the whole flight on stage — exactly the flight, so nothing unrevealed leaks early.
+  if (phase === 'reveal')
+    return cardViews(state, Math.min(state.slots.length, state.revealIndex + revealSpan(state.slots.length)));
   if (phase === 'judge' || phase === 'result') return cardViews(state, state.slots.length);
   return [];
 }

@@ -19,6 +19,8 @@ const BIG_CHIP_ROOM = 10;
 
 export function TvReveal({ view }: Props): JSX.Element {
   const current = view.cards[view.revealIndex];
+  // I-157: the cards on stage beyond revealIndex ARE the flight (the server sends exactly those).
+  const flight = view.cards.slice(view.revealIndex);
   // The last four read (the judge grid shows them all) in one row — three when the sentences run
   // long, so the minis stay at three lines and the hero card keeps its room (review-loop #119).
   const before = view.cards.slice(0, view.revealIndex);
@@ -32,7 +34,10 @@ export function TvReveal({ view }: Props): JSX.Element {
     <Stage className={styles.table}>
       <div className={styles.kickerRow}>
         <p className={styles.kicker}>
-          Round {view.round} · Card {view.revealIndex + 1} of {view.cardCount}
+          Round {view.round} ·{' '}
+          {flight.length > 1
+            ? `Cards ${view.revealIndex + 1}–${view.revealIndex + flight.length} of ${view.cardCount}`
+            : `Card ${view.revealIndex + 1} of ${view.cardCount}`}
         </p>
         {/* Somebody has to say it. In judge mode that is the judge (review-loop #172); in vote
             mode a seat is asked by name, rotating round by round, because “read it out loud”
@@ -48,7 +53,22 @@ export function TvReveal({ view }: Props): JSX.Element {
         </span>
       </div>
       <div className={styles.stageMain}>
-        {view.black && current ? (
+        {view.black && flight.length > 1 ? (
+          // I-157: a flight — its cards side by side, each at grid size, flipping in together.
+          <div className={styles.flight}>
+            {flight.map((c) => (
+              <FlipCard
+                flipKey={String(c.slot)}
+                key={c.slot}
+                text={view.black?.text ?? ''}
+                whites={c.whites}
+                size="grid"
+                letter={LETTERS[c.slot]}
+                className={`${styles.stageCard} ${styles.landing}`}
+              />
+            ))}
+          </div>
+        ) : view.black && current ? (
           <FlipCard
             flipKey={String(current.slot)}
             key={current.slot}
