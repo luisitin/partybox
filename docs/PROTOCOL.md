@@ -57,4 +57,8 @@ Every `room` and `view` push carries a per-room, monotonically increasing `rev`.
   recording: boolean }
 ```
 
+`tuned?: Record<gameId, Settings>` (I-763, 2026-09-24) is what the VIP tuned per game tonight —
+seeded from `<recordings>/tuned-settings.json` on the host PC, so the next party opens at the same
+numbers; picking a game reads it, a settings change writes it. Absent until something was tuned.
+
 `canStart` is computed by the engine (`docs/GLOSSARY.md`). Exact shapes: `packages/shared/src/protocol.ts`.

@@ -72,7 +72,12 @@ export function applyVip(
           ...room,
           status: 'selecting',
           selectedGameId: action.gameId,
-          settings: defaultSettings(game.manifest),
+          // I-763 A: the game's own tuned settings, not the factory ones — browsing another game,
+          // "New game" or the lobby and back no longer resets the steppers. coerceSettings fills any
+          // key the manifest added since and drops keys it no longer has.
+          settings: room.settingsByGame?.[action.gameId]
+            ? coerceSettings(game.manifest, room.settingsByGame[action.gameId] ?? {}, {})
+            : defaultSettings(game.manifest),
           results: null,
         },
         effects: [{ type: 'push' }],
@@ -82,8 +87,17 @@ export function applyVip(
       const manifest = manifestOf(room, deps);
       if (room.status !== 'selecting' || !manifest)
         return reject(room, playerId, 'cannot_start', 'Pick a game first.');
+      const settings = coerceSettings(manifest, room.settings, action.settings);
       return {
-        room: { ...room, settings: coerceSettings(manifest, room.settings, action.settings) },
+        room: {
+          ...room,
+          settings,
+          // I-763 A: remembered for this game for the rest of the night
+          settingsByGame: {
+            ...(room.settingsByGame ?? {}),
+            [room.selectedGameId as string]: settings,
+          },
+        },
         effects: [{ type: 'push' }],
       };
     }

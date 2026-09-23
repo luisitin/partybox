@@ -9,6 +9,7 @@ import { serverText } from '../server-text';
 import { useServerInfo } from '../net/info';
 import { SettingField } from '../SettingField';
 import type { Controller } from '../net/controller';
+import { tunedLine, tunedSettings } from './tunedLine';
 import styles from './Selecting.module.css';
 
 export interface SelectingProps {
@@ -144,6 +145,10 @@ export function Selecting({ controller, room, me }: SelectingProps): JSX.Element
                     </span>
                   )}
                 </span>
+                {/* I-763 B: the card says what is tuned, so the VIP can see it stuck */}
+                {tunedLine(g, room.tuned?.[g.id], lang) ? (
+                  <span className={styles.cardTuned}>{tunedLine(g, room.tuned?.[g.id], lang)}</span>
+                ) : null}
                 {isSelected ? (
                   <span className={styles.cardDescription}>
                     {gameText(g.id, lang, g.description)}
@@ -156,7 +161,24 @@ export function Selecting({ controller, room, me }: SelectingProps): JSX.Element
       </ul>
       {selected && selected.settings.length > 0 ? (
         <section className={styles.settings} aria-label={t.selecting.settings}>
-          <h3 className={styles.settingsTitle}>{t.selecting.settings}</h3>
+          <h3 className={styles.settingsTitle}>
+            {t.selecting.settings}
+            {/* I-763 B: the factory numbers, one tap away */}
+            {tunedSettings(selected, room.settings).length > 0 ? (
+              <button
+                type="button"
+                className={styles.resetDefaults}
+                onClick={() =>
+                  controller.vip({
+                    action: 'updateSettings',
+                    settings: Object.fromEntries(selected.settings.map((s) => [s.key, s.default])),
+                  })
+                }
+              >
+                {t.selecting.resetDefaults}
+              </button>
+            ) : null}
+          </h3>
           {selected.settings.map((spec) => (
             <SettingField
               key={spec.key}

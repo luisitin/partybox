@@ -99,6 +99,11 @@ export const es: Texts = {
     phoneOnlyOn: 'los teléfonos muestran lo que mostraría la TV',
     phoneOnlyOff: 'la TV es el escenario',
     games: 'juegos',
+    tuned: (list) => `Tus ajustes: ${list}`,
+    tunedMore: (n) => `+${n} más`,
+    tunedOn: 'sí',
+    tunedOff: 'no',
+    resetDefaults: 'Volver a los de fábrica',
   },
   results: {
     title: 'Resultados',

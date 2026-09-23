@@ -26,6 +26,7 @@ import { registerRoomsRoute } from './rooms-route';
 import { createSocketLayer } from './sockets';
 import { createFunnelBook } from './funnel';
 import { attachSpeech } from './speech';
+import { createTunedBook } from './tuned';
 
 export const REPO_ROOT = resolve(fileURLToPath(new URL('../../..', import.meta.url)));
 export const CLIENT_DIR = join(REPO_ROOT, 'packages', 'client');
@@ -88,13 +89,21 @@ export async function createApp(options: AppOptions): Promise<App> {
   });
   const startedAt = Date.now();
   const sockets = createSocketLayer(fastify.server);
+  // I-763 C: the per-game settings kept on this PC (next to the recaps; memory only without them)
+  const tunedBook = createTunedBook(
+    options.recordingsDir === undefined ? RECORDINGS_DIR : options.recordingsDir,
+  );
   const host = createHost({
+    tuned: () => tunedBook.get(),
     deps,
     clock,
     transport: sockets.transport,
     log: options.quiet ? () => {} : undefined,
   });
   const bots = createBotManager(host, deps, clock);
+  host.subscribe((room) => {
+    if (room.settingsByGame) tunedBook.save(room.settingsByGame); // I-763 C
+  });
   const recordingsDir =
     options.recordingsDir === undefined ? RECORDINGS_DIR : options.recordingsDir;
   const recorder =

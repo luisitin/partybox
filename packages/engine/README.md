@@ -10,6 +10,7 @@ the effects the engine returns (ADR-010). Everything here is unit-tested to ≥ 
 - `src/vip.ts` — VIP powers, validation, 30 s handover to the longest-connected player.
 - `src/runner.ts` — GameRunner: `startGame`, `applyGameEvent` (catches throwing reducers), `fireDueTimer` (once per phase instance), `nextWakeAt`.
 - `src/settings.ts` — defaults + coercion against a manifest `settings` spec.
+- I-763: `room.settingsByGame` keeps what the VIP tuned per game (A); the snapshot sends it as `tuned` for the picker card and reset link (B); the host seeds it from disk (C).
 - `src/views.ts` — `snapshot`, `tvView`, `controllerView` (adds `vip`; degrades to a bare envelope if a game view throws).
 - `src/types.ts` — `RoomState`, `RoomEvent`, `Effect`, `EngineDeps`. `rev` lives on the room and bumps once per push.
 - `src/index.ts` — the only barrel.

@@ -102,6 +102,12 @@ export const en = {
     phoneOnlyOn: 'the phones show what the TV would',
     phoneOnlyOff: 'the TV is the stage',
     games: 'games',
+    // I-763 B: the picker card's tuned line and the sheet's reset link
+    tuned: (list: string) => `Your settings: ${list}`,
+    tunedMore: (n: number) => `+${n} more`,
+    tunedOn: 'on',
+    tunedOff: 'off',
+    resetDefaults: 'Reset to defaults',
   },
   results: {
     title: 'Results',

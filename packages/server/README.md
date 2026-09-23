@@ -12,6 +12,7 @@ The only process. Fastify + Socket.IO host that wires the pure engine to real so
 - `src/clock.ts` — injectable clock (real / frozen) used by everything that needs `now`.
 - `src/dev-api.ts` — `/api/dev/*` (docs/DEV_API.md). `src/bots.ts` — server-played bots.
 - `src/qr.ts` — SVG QR for the join URL. `src/lan-ip.ts` — LAN IPv4 detection.
+- `src/tuned.ts` — I-763 C: the VIP's per-game settings saved at `<recordings>/tuned-settings.json`; every new room starts from them.
 - `src/games.generated.ts` — GENERATED registry (ADR-003). Do not edit.
 
 ## Test
