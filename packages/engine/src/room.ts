@@ -5,7 +5,7 @@ import { LIMITS } from '@partybox/shared';
 import type { GameEvent, GameStateBase } from '@partybox/shared';
 import { addBot, removeBot } from './bots';
 import { disconnect, expirePlayers, join, removePlayer } from './players';
-import { applyGameEvent, fireDueTimer } from './runner';
+import { ASLEEP_END_MS, abortGame, applyGameEvent, fireDueTimer } from './runner';
 import type { ApplyResult, Effect, EngineDeps, RoomEvent, RoomState } from './types';
 import { applyVip } from './vip';
 
@@ -95,6 +95,19 @@ function handleInput(
 }
 
 function handleTick(room: RoomState, now: number, deps: EngineDeps): ApplyResult {
+  // I-746 C: nobody came back — end the game to the lobby
+  if (room.asleepSince !== undefined && room.status === 'playing' && now >= room.asleepSince + ASLEEP_END_MS) {
+    const ended = abortGame(room);
+    const { asleepSince: _gone, ...awake } = ended.room;
+    void _gone;
+    return {
+      room: awake as RoomState,
+      effects: [
+        ...ended.effects.filter((e) => e.type !== 'toast'),
+        { type: 'toast', to: 'all', kind: 'info', text: 'Nobody came back — the game ended.' },
+      ],
+    };
+  }
   let result = expirePlayers(room, now, deps);
   const effects = [...result.effects];
   for (let i = 0; i < MAX_TIMERS_PER_TICK; i++) {

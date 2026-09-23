@@ -121,7 +121,17 @@ export function join(room: RoomState, event: JoinEvent, deps: EngineDeps): Apply
 function resume(room: RoomState, player: RoomPlayer, now: number, deps: EngineDeps): ApplyResult {
   const updated: RoomPlayer = { ...player, connected: true, disconnectedAt: null };
   const next: RoomState = { ...room, players: { ...room.players, [player.id]: updated } };
-  const game = notifyGame(next, player.id, true, now, deps);
+  const woke = notifyGame(next, player.id, true, now, deps);
+  // I-746 B: the first phone back wakes the room: the game carries on
+  const game =
+    woke.room.asleepSince !== undefined && woke.room.status === 'playing' && !player.bot
+      ? (() => {
+          const r = applyGameEvent(woke.room, { type: 'vip', now, action: 'resume' }, deps);
+          const { asleepSince: _gone, ...awake } = r.room;
+          void _gone;
+          return { room: awake as RoomState, effects: [...woke.effects, ...r.effects] };
+        })()
+      : woke;
   return {
     room: game.room,
     effects: [{ type: 'welcome', playerId: player.id }, ...game.effects, { type: 'push' }],
@@ -141,6 +151,16 @@ export function disconnect(
     players: { ...room.players, [playerId]: { ...player, connected: false, disconnectedAt: now } },
   };
   const game = notifyGame(next, playerId, false, now, deps);
+  // I-746 B: the last person's phone went quiet mid-game — pause it (the game's own pause), so
+  // nothing is spent on an empty room
+  const anyone = Object.values(game.room.players).some((p) => p.connected && !p.bot);
+  if (game.room.status === 'playing' && !anyone && game.room.asleepSince === undefined) {
+    const paused = applyGameEvent(game.room, { type: 'vip', now, action: 'pause' }, deps);
+    return {
+      room: { ...paused.room, asleepSince: now },
+      effects: [...game.effects, ...paused.effects, { type: 'push' }],
+    };
+  }
   return { room: game.room, effects: [...game.effects, { type: 'push' }] };
 }
 
@@ -208,7 +228,11 @@ export function expirePlayers(room: RoomState, now: number, deps: EngineDeps): A
   for (const id of Object.keys(room.players)) {
     const p = next.players[id]; // re-read: an earlier removal may have promoted a new VIP
     if (!p || p.disconnectedAt === null) continue;
-    if (now - p.disconnectedAt >= LIMITS.disconnectGraceMs) {
+    if (now - p.disconnectedAt >= LIMITS.disconnectGraceMs && next.status === 'playing' && !p.bot) {
+      // I-746 A: during a game a quiet seat is kept — its phone comes back to its own cards and
+      // score, not as a spectator next to its ghost. The grace restarts; after the game, it applies.
+      next = { ...next, players: { ...next.players, [p.id]: { ...p, disconnectedAt: now } } };
+    } else if (now - p.disconnectedAt >= LIMITS.disconnectGraceMs) {
       const r = removePlayer(next, p.id, now, deps, 'left');
       next = r.room;
       effects.push(...r.effects);

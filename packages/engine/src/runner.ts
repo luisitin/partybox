@@ -175,7 +175,18 @@ export function nextWakeAt(room: RoomState): number | null {
   for (const p of Object.values(room.players)) {
     if (p.disconnectedAt === null) continue;
     candidates.push(p.disconnectedAt + LIMITS.disconnectGraceMs);
-    if (p.isVip) candidates.push(p.disconnectedAt + LIMITS.vipHandoverMs);
+    // I-746 A: the handover deadline only while someone could take over — with nobody connected it
+    // stayed in the past and the host's timer re-fired at once, over and over (a busy loop)
+    const canHandOver = Object.values(room.players).some(
+      (o) => o.connected && o.id !== p.id && !o.bot,
+    );
+    if (p.isVip && canHandOver) candidates.push(p.disconnectedAt + LIMITS.vipHandoverMs);
   }
+  // I-746 C: an empty room ends 5 minutes after the last phone dropped
+  if (room.asleepSince !== undefined && room.status === 'playing')
+    candidates.push(room.asleepSince + ASLEEP_END_MS);
   return candidates.length === 0 ? null : Math.min(...candidates);
 }
+
+/** I-746 C: how long a room with every phone asleep waits before it ends the game. */
+export const ASLEEP_END_MS = 5 * 60_000;

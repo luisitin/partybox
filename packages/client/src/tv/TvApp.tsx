@@ -312,6 +312,13 @@ export function TvApp(): JSX.Element {
             {content}
           </CrossfadeSwap>
         </TvFrame>
+        {/* I-746 B: say why the game stopped */}
+        {room?.asleep ? (
+          <div className={styles.asleepBanner} role="status">
+            Everyone's phone is asleep — wake one to carry on.
+            <small>If nobody is back in 5 minutes, the game ends.</small>
+          </div>
+        ) : null}
       </AvatarPhotos>
       <AudioGate
         audio={audio}
