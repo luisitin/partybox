@@ -352,3 +352,35 @@
 :global(:root[data-motion='off']) .qrMarkBump {
   animation: none;
 }
+
+/* ── I-650 A: the vote tally under the roster (TV tokens: px on the 1080p stage). */
+.tally {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-2);
+  margin-top: var(--pb-space-4);
+}
+.tallyRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pb-space-2) var(--pb-space-3);
+}
+.tallyChip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+  padding: 6px 20px;
+  border-radius: 999px;
+  background: var(--pb-surface);
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+}
+.tallyCount {
+  color: var(--pb-accent-2);
+}
+.tallyFaces {
+  display: inline-flex;
+}
+.tallyFaces > * + * {
+  margin-left: -12px;
+}

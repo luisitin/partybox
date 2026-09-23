@@ -12,6 +12,7 @@ import type { Controller } from '../net/controller';
 import type { SoundEngine } from '../sound';
 import styles from './Lobby.module.css';
 import { ShareButton } from './ShareSheet';
+import { VoteRow, tallyLine, voteLeader } from './VoteRow';
 import { VIP_TIPS, setTipsSeen, tipsSeen } from './vipTips';
 
 export interface LobbyProps {
@@ -60,8 +61,11 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
     }, 450);
   };
   const first = room.games[0];
+  // I-650 B: the picker opens on the room's favourite (the VIP can still pick any game)
+  const leader = voteLeader(room);
   const pick = (): void => {
-    if (first) controller.vip({ action: 'selectGame', gameId: first.id });
+    const gameId = leader?.id ?? first?.id;
+    if (gameId) controller.vip({ action: 'selectGame', gameId });
   };
   const myBots = room.players.filter((p) => p.bot?.ownerId === me.id);
   const full = room.players.length >= room.capacity;
@@ -93,11 +97,23 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
         me.isVip ? (
           <PrimaryButton onClick={pick} disabled={!first}>
             {t.lobby.pickGame}
+            {leader ? (
+              <small className={styles.leads}>
+                🙋 {leader.name} leads · {leader.votes} {leader.votes === 1 ? 'vote' : 'votes'}
+              </small>
+            ) : null}
           </PrimaryButton>
         ) : undefined
       }
     >
       <p className="pb-muted">{me.isVip ? t.lobby.youAreVip : lobbyStrings().waitingForVip}</p>
+      {/* I-650 A: guests vote for the next game; the VIP sees the tally */}
+      {!me.isVip ? <VoteRow controller={controller} room={room} me={me} /> : null}
+      {me.isVip && tallyLine(room) ? (
+        <p className={styles.tally}>
+          <span aria-hidden>🙋</span> {tallyLine(room)}
+        </p>
+      ) : null}
       {me.isVip && tipsOn && tip ? (
         <p key={tip.id} className={styles.tip} role="status">
           <span aria-hidden>💡</span> {t.tips[tip.id]}

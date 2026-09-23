@@ -144,6 +144,7 @@ export function Preview(): JSX.Element {
     vip: (action) => console.log('[preview] vip', action),
     bot: (action) => console.log('[preview] bot', action),
     nudge: () => console.log('[preview] nudge'),
+    vote: (gameId) => console.log('[preview] vote', gameId),
     leave: () => undefined,
     dismissError: () => undefined,
     dismissToast: () => undefined,

@@ -11,6 +11,7 @@ import { SettingField } from '../SettingField';
 import { serverText } from '../server-text';
 import { STRINGS } from './strings';
 import styles from './TvSelecting.module.css';
+import { voteCounts } from '../controller/VoteRow';
 
 export interface TvSelectingProps {
   room: RoomSnapshot;
@@ -21,6 +22,7 @@ export function TvSelecting({ room, client }: TvSelectingProps): JSX.Element {
   const game = room.games.find((g) => g.id === room.selectedGameId);
   const vip = room.players.find((p) => p.isVip);
   const botCount = room.players.filter((p) => p.bot).length;
+  const counts = voteCounts(room); // I-650 C: the room's votes, shown while the VIP picks
   const L = useT(STRINGS);
   const lang = L.lang;
   return (
@@ -50,7 +52,12 @@ export function TvSelecting({ room, client }: TvSelectingProps): JSX.Element {
                     className={`${styles.gameButton} ${selected ? styles.gameSelected : ''}`}
                     onClick={() => client.act({ action: 'selectGame', gameId: g.id })}
                   >
-                    <span className={styles.gameName}>{g.name}</span>
+                    <span className={styles.gameName}>
+                      {g.name}
+                      {counts.get(g.id) ? (
+                        <span className={styles.votes}>🙋 {counts.get(g.id)}</span>
+                      ) : null}
+                    </span>
                     <span className={styles.gameMeta}>
                       {t.selecting.players(g.minPlayers, g.maxPlayers)} ·{' '}
                       {t.selecting.minutes(g.estimatedMinutes)}

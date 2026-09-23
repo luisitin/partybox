@@ -62,6 +62,8 @@ export interface RoomState {
   listed: boolean;
   /** S-005: "phone only" — the TV's moments go to the phones. */
   phoneOnly: boolean;
+  /** I-650: votes for the next game (player id → game id); cleared when a game starts. */
+  votes?: Record<string, string>;
 }
 
 export type RoomEvent =
@@ -91,6 +93,8 @@ export type RoomEvent =
   | { type: 'leave'; now: number; playerId: string }
   /** I-070 A: a waiting player nudges the VIP — a toast to everyone that names the sender. */
   | { type: 'nudge'; now: number; playerId: string }
+  /** I-650: a person votes for the next game (null takes the vote back). */
+  | { type: 'vote'; now: number; playerId: string; gameId: string | null }
   | {
       type: 'vip';
       now: number;

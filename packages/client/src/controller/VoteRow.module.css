@@ -1,0 +1,66 @@
+/* ── I-650 A: the vote row — game chips, the voter's own one filled. */
+.vote {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-2);
+  margin: var(--pb-space-2) 0;
+}
+.ask {
+  margin: 0;
+  font-weight: 800;
+  font-size: var(--pb-font-caption);
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pb-space-2);
+}
+.chip {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 4px 12px;
+  font-size: var(--pb-font-caption);
+  border-radius: 999px;
+  border: 2px solid color-mix(in srgb, var(--pb-text-muted) 55%, transparent);
+  background: var(--pb-surface);
+  color: var(--pb-text);
+  font-weight: 700;
+  transition:
+    transform var(--pb-motion-fast) var(--pb-ease),
+    background var(--pb-motion-fast) var(--pb-ease);
+}
+.row {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+  /* the ends fade, so a chip cut by the edge reads as "scroll for more", not as a clipped label */
+  padding: 0 20px;
+  mask-image: linear-gradient(to right, transparent, #000 20px, #000 calc(100% - 20px), transparent);
+}
+.chip:active {
+  transform: scale(0.96);
+}
+.on {
+  background: var(--pb-accent);
+  border-color: var(--pb-accent);
+  color: var(--pb-on-accent);
+}
+.count {
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: 999px;
+  display: inline-grid;
+  place-items: center;
+  font-size: var(--pb-font-caption);
+  font-weight: 900;
+  background: var(--pb-surface-2);
+  color: var(--pb-text);
+}
+.on .count {
+  background: color-mix(in srgb, var(--pb-on-accent) 22%, transparent);
+  color: var(--pb-on-accent);
+}
