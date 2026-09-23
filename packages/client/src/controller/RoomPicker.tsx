@@ -4,6 +4,7 @@
 import { useState } from 'react';
 import type { JSX } from 'react';
 import { isRoomCode } from '@partybox/shared';
+import { t } from '../i18n';
 import { roomStrings } from '../i18n-join';
 import { serverText } from '../server-text';
 import type { JoinLang } from '../i18n-join';
@@ -27,10 +28,11 @@ async function createRoom(code: string): Promise<{ code: string } | { error: str
       body: JSON.stringify(code ? { code } : {}),
     });
     const body = (await res.json()) as { code?: string; message?: string };
-    if (!res.ok || !body.code) return { error: body.message ?? 'Could not open a room.' };
+    // The server's own sentence is English (serverText translates it at display); these two are ours.
+    if (!res.ok || !body.code) return { error: body.message ?? t.join.openFailed };
     return { code: body.code };
   } catch {
-    return { error: 'The host did not answer.' };
+    return { error: t.join.noAnswer };
   }
 }
 

@@ -5,6 +5,7 @@ import type { PlayerPublic, RoomSnapshot } from '@partybox/shared';
 import { PrimaryButton, Screen, WaitingScreen, useLang } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import { gameText } from '../i18n-games';
+import { serverText } from '../server-text';
 import { useServerInfo } from '../net/info';
 import { SettingField } from '../SettingField';
 import type { Controller } from '../net/controller';
@@ -25,7 +26,7 @@ export function Selecting({ controller, room, me }: SelectingProps): JSX.Element
   if (!me.isVip) {
     return (
       <WaitingScreen
-        title={t.selecting.vipChoosing(vip?.name ?? 'The VIP')}
+        title={t.selecting.vipChoosing(vip?.name ?? t.selecting.theVip)}
         hint={
           selected
             ? `${selected.name} — ${gameText(selected.id, lang, selected.tagline)}`
@@ -43,7 +44,12 @@ export function Selecting({ controller, room, me }: SelectingProps): JSX.Element
       title={t.lobby.pickGame}
       footer={
         <div className={styles.footer}>
-          {!room.canStart.ok ? <p className={styles.reason}>{room.canStart.reason}</p> : null}
+          {/* The engine writes the reason in English; the phone shows it in its own language. */}
+          {!room.canStart.ok ? (
+            <p className={styles.reason}>
+              {serverText(room.canStart.reason, lang, room.selectedGameId)}
+            </p>
+          ) : null}
           <PrimaryButton onClick={start} disabled={!room.canStart.ok}>
             {t.selecting.start}
             {selected ? ` ${selected.name}` : ''}
@@ -74,7 +80,7 @@ export function Selecting({ controller, room, me }: SelectingProps): JSX.Element
       {/* I-034 B: a way into the last recap from the phone. */}
       {info?.lastRecap ? (
         <a className="pb-caption" href="/api/recaps/latest/page" target="_blank" rel="noreferrer">
-          📼 Open the last recap ({info.lastRecap.gameId}, room {info.lastRecap.code})
+          {t.selecting.lastRecap(info.lastRecap.gameId, info.lastRecap.code)}
         </a>
       ) : null}
       {/* S-004 (the owner): the VIP's switch — music on every phone. */}
@@ -96,10 +102,8 @@ export function Selecting({ controller, room, me }: SelectingProps): JSX.Element
       {/* S-005 A: phone only — the TV's moments go to the phones. */}
       <label className={styles.recording} htmlFor="phone-only">
         <span className={styles.recordingLabel}>
-          Phone only
-          <small>
-            {room.phoneOnly ? 'the phones show what the TV would' : 'the TV is the stage'}
-          </small>
+          {t.selecting.phoneOnly}
+          <small>{room.phoneOnly ? t.selecting.phoneOnlyOn : t.selecting.phoneOnlyOff}</small>
         </span>
         <input
           id="phone-only"
@@ -109,7 +113,7 @@ export function Selecting({ controller, room, me }: SelectingProps): JSX.Element
           onChange={(e) => controller.vip({ action: 'setPhoneOnly', on: e.target.checked })}
         />
       </label>
-      <ul className={styles.games} role="radiogroup" aria-label="games">
+      <ul className={styles.games} role="radiogroup" aria-label={t.selecting.games}>
         {room.games.map((g) => {
           const isSelected = g.id === room.selectedGameId;
           return (

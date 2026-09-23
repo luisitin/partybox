@@ -6,8 +6,9 @@ export type ThemeId = 'night' | 'daylight' | 'arcade' | 'cabin' | 'contrast';
 
 export interface ThemeSpec {
   id: ThemeId;
+  /** The English name; pickers show `t.themes[id]`, the device's language (i18n-en-phone.ts). */
   label: string;
-  /** One-line hint shown in pickers. */
+  /** One-line hint shown in pickers (the English; `t.themes[id].hint` on screen). */
   hint: string;
   /** Three swatch colours (bg, accent, accent-2) so a picker can preview without applying. */
   swatch: [string, string, string];

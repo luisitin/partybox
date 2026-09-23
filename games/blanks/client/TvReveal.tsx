@@ -3,11 +3,12 @@
 // card is a new phase instance (the shell chimes 'card' for each). The judge stage lives in
 // TvJudge.tsx.
 import type { JSX } from 'react';
-import { Avatar, BigText, Stage } from '@partybox/game-sdk/ui';
+import { Avatar, BigText, Stage, useT } from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
 import type { BlanksTvView } from '../server/index';
 import { fillText } from '../server/cards';
 import { FilledCard, FlipCard, LETTERS } from './Cards';
+import { STRINGS } from './strings';
 import styles from './blanks.module.css';
 
 type Props = GameTvProps<BlanksTvView>;
@@ -18,6 +19,7 @@ const STRIP_LONG = 75;
 const BIG_CHIP_ROOM = 10;
 
 export function TvReveal({ view }: Props): JSX.Element {
+  const L = useT(STRINGS);
   const current = view.cards[view.revealIndex];
   // The last four read (the judge grid shows them all) in one row — three when the sentences run
   // long, so the minis stay at three lines and the hero card keeps its room (review-loop #119).
@@ -32,7 +34,11 @@ export function TvReveal({ view }: Props): JSX.Element {
     <Stage className={styles.table}>
       <div className={styles.kickerRow}>
         <p className={styles.kicker}>
-          Round {view.round} · Card {view.revealIndex + 1} of {view.cardCount}
+          {L('Round {round} · Card {n} of {count}', {
+            round: view.round,
+            n: view.revealIndex + 1,
+            count: view.cardCount,
+          })}
         </p>
         {/* Somebody has to say it. In judge mode that is the judge (review-loop #172); in vote
             mode a seat is asked by name, rotating round by round, because “read it out loud”
@@ -41,10 +47,10 @@ export function TvReveal({ view }: Props): JSX.Element {
         <span key={view.revealIndex} className={`${styles.progressPill} pb-pop`}>
           {reader ? <Avatar avatarId={reader.avatarId} size="var(--pb-chip-size)" /> : null}
           {view.judgeMode === 'czar' && view.czar
-            ? `${view.czar.name} reads it out`
+            ? L('{name} reads it out', { name: view.czar.name })
             : view.reader
-              ? `${view.reader.name}, read it out loud`
-              : 'Read it out loud'}
+              ? L('{name}, read it out loud', { name: view.reader.name })
+              : L('Read it out loud')}
         </span>
       </div>
       <div className={styles.stageMain}>
@@ -63,7 +69,7 @@ export function TvReveal({ view }: Props): JSX.Element {
         ) : null}
       </div>
       {read.length > 0 && view.black ? (
-        <ul className={`${styles.strip} ${styles.readRow}`} aria-label="cards read so far">
+        <ul className={`${styles.strip} ${styles.readRow}`} aria-label={L('cards read so far')}>
           {read.map((c) => (
             <li key={c.slot}>
               <FilledCard
@@ -78,8 +84,8 @@ export function TvReveal({ view }: Props): JSX.Element {
       ) : (
         <BigText level="h2" tone="muted">
           {view.judgeMode === 'czar' && view.czar
-            ? `${view.czar.name} picks the winner after the last card.`
-            : 'The vote opens after the last card.'}
+            ? L('{name} picks the winner after the last card.', { name: view.czar.name })
+            : L('The vote opens after the last card.')}
         </BigText>
       )}
     </Stage>

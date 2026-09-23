@@ -3,38 +3,44 @@
 // current page big on the right, the verdict on a book's last page.
 import { useEffect, useState } from 'react';
 import type { CSSProperties, JSX } from 'react';
-import { Avatar, BigText, Stage, useSound } from '@partybox/game-sdk/ui';
-import type { GameTvProps } from '@partybox/game-sdk/ui';
+import { Avatar, BigText, Stage, useSound, useT } from '@partybox/game-sdk/ui';
+import type { GameTvProps, Translator } from '@partybox/game-sdk/ui';
 import type { PageView, PencilTvView } from '../server/views';
 import { DrawingView } from './DrawingView';
 import { Summary } from './Finale';
+import { STRINGS } from './strings';
 import styles from './Tv.module.css';
 
 const STAGE_MARK = { guess: '💬', draw: '✏️', done: '✓' } as const;
 
+type HintPhase = 'draw' | 'pass' | 'guess';
+
 /** One muted line under the counter, rotating every 8 s: a 60–90 s wait with something to read
  *  instead of an empty stage (review-loop #8). Keyed so each line rises in. */
-const HINTS = {
-  draw: [
-    'Draw big — every picture goes on the TV at the end.',
-    'No letters, no numbers: the pencil has to do the talking.',
-    'Done early? Tap Done and watch the tiles fill in.',
-  ],
-  pass: [
-    'Guess first, then draw your guess for the next player.',
-    'Wrong guesses are the fun part — the chain shows every step.',
-    'Stuck? A rough sketch beats a blank page.',
-  ],
-  guess: ['One word, best guess — then the reveal.', 'The whole chain shows on the TV next.'],
-} as const;
+function hints(L: Translator, phase: HintPhase): string[] {
+  if (phase === 'draw')
+    return [
+      L('Draw big — every picture goes on the TV at the end.'),
+      L('No letters, no numbers: the pencil has to do the talking.'),
+      L('Done early? Tap Done and watch the tiles fill in.'),
+    ];
+  if (phase === 'pass')
+    return [
+      L('Guess first, then draw your guess for the next player.'),
+      L('Wrong guesses are the fun part — the chain shows every step.'),
+      L('Stuck? A rough sketch beats a blank page.'),
+    ];
+  return [L('One word, best guess — then the reveal.'), L('The whole chain shows on the TV next.')];
+}
 
-function Hint({ phase }: { phase: keyof typeof HINTS }): JSX.Element {
+function Hint({ phase }: { phase: HintPhase }): JSX.Element {
+  const L = useT(STRINGS);
   const [i, setI] = useState(0);
   useEffect(() => {
     const handle = setInterval(() => setI((n) => n + 1), 8000);
     return () => clearInterval(handle);
   }, [phase]);
-  const lines = HINTS[phase];
+  const lines = hints(L, phase);
   const line = lines[i % lines.length];
   return (
     <p key={line} className={`${styles.hint} pb-enter`} aria-live="off">
@@ -50,6 +56,7 @@ const HANDOFF_STEP_MS = 450;
 const PLUCK = { quiet: true, gain: 0.5 } as const;
 
 function Progress({ view }: { view: PencilTvView }): JSX.Element {
+  const L = useT(STRINGS);
   const done = view.progress.filter((p) => p.stage === 'done').length;
   // I-024 B: the cards sit in SEAT order (`progress` is the seat ring) — the books pass along
   // the seats — and once per pass every glyph slides in from the seat on its left, a `card`
@@ -73,9 +80,9 @@ function Progress({ view }: { view: PencilTvView }): JSX.Element {
   return (
     <>
       <p className={styles.passWay} aria-hidden>
-        books pass this way →
+        {L('books pass this way →')}
       </p>
-      <ul className={styles.cards} aria-label="who is done" key={phaseKey}>
+      <ul className={styles.cards} aria-label={L('who is done')} key={phaseKey}>
         {view.progress.map((p, seat) => {
           const player = view.players.find((x) => x.id === p.playerId);
           const finished = p.stage === 'done';
@@ -106,7 +113,9 @@ function Progress({ view }: { view: PencilTvView }): JSX.Element {
                 // Keyed on the stage so a flip to ✓ remounts and pops (review-loop #19).
                 key={p.stage}
                 className={`${styles.cardMark} ${handoff ? styles.handoff : ''}`}
-                aria-label={finished ? 'done' : p.stage === 'draw' ? 'drawing' : 'guessing'}
+                aria-label={
+                  finished ? L('done') : p.stage === 'draw' ? L('drawing') : L('guessing')
+                }
               >
                 {STAGE_MARK[p.stage]}
               </span>
@@ -118,7 +127,7 @@ function Progress({ view }: { view: PencilTvView }): JSX.Element {
         <span key={done} className={styles.countNum}>
           {done}
         </span>{' '}
-        of {view.progress.length} done
+        {L('of {total} done', { total: view.progress.length })}
       </p>
     </>
   );
@@ -128,15 +137,20 @@ function Progress({ view }: { view: PencilTvView }): JSX.Element {
 const STRIP_MAX = 6;
 
 function Thumb({ page }: { page: PageView }): JSX.Element {
+  const L = useT(STRINGS);
   if (page.kind === 'draw')
     return (
       <li className={styles.thumb}>
-        <DrawingView drawing={page.drawing} size={120} label={`${page.authorName}'s drawing`} />
+        <DrawingView
+          drawing={page.drawing}
+          size={120}
+          label={L("{name}'s drawing", { name: page.authorName })}
+        />
       </li>
     );
   return (
     <li className={`${styles.thumb} ${styles.thumbText}`}>
-      <span className={styles.thumbWho}>{page.kind === 'word' ? 'word' : page.authorName}</span>
+      <span className={styles.thumbWho}>{page.kind === 'word' ? L('word') : page.authorName}</span>
       <span>{page.text ?? '???'}</span>
     </li>
   );
@@ -147,11 +161,13 @@ function Thumb({ page }: { page: PageView }): JSX.Element {
 const SHEET_SIZE = 'min(560px, calc(100cqh - 72px))';
 
 function CurrentPage({ page }: { page: PageView }): JSX.Element {
+  const L = useT(STRINGS);
+  const name = page.authorName;
   if (page.kind === 'word')
     return (
       // Three beats (review-loop #17): the kicker follows the title, then the word pops.
       <div className={styles.page}>
-        <p className={`${styles.pageWho} ${styles.beat2}`}>{page.authorName}'s secret word</p>
+        <p className={`${styles.pageWho} ${styles.beat2}`}>{L("{name}'s secret word", { name })}</p>
         <div className={styles.beat3}>
           <BigText level="display">“{page.text}”</BigText>
         </div>
@@ -160,17 +176,17 @@ function CurrentPage({ page }: { page: PageView }): JSX.Element {
   if (page.kind === 'draw')
     return (
       <div className={`${styles.page} ${styles.flip}`}>
-        <p className={styles.pageWho}>{page.authorName} drew</p>
+        <p className={styles.pageWho}>{L('{name} drew', { name })}</p>
         <DrawingView
           drawing={page.drawing}
           size={SHEET_SIZE}
-          label={`${page.authorName}'s drawing`}
+          label={L("{name}'s drawing", { name })}
         />
       </div>
     );
   return (
     <div className={`${styles.page} ${styles.flip}`}>
-      <p className={styles.pageWho}>{page.authorName} guessed</p>
+      <p className={styles.pageWho}>{L('{name} guessed', { name })}</p>
       <BigText level="display" tone={page.text === null ? 'muted' : 'default'}>
         {page.text ?? '???'}
       </BigText>
@@ -179,6 +195,7 @@ function CurrentPage({ page }: { page: PageView }): JSX.Element {
 }
 
 export function Tv({ view }: GameTvProps<PencilTvView>): JSX.Element {
+  const L = useT(STRINGS);
   if (view.phaseId === 'pick') {
     const picked = view.progress.filter((p) => p.stage === 'done').length;
     return (
@@ -186,15 +203,19 @@ export function Tv({ view }: GameTvProps<PencilTvView>): JSX.Element {
         <BigText level="display" tone="accent">
           Broken Pencil
         </BigText>
-        <BigText level="h2">Pick a secret word on your phone.</BigText>
+        <BigText level="h2">{L('Pick a secret word on your phone.')}</BigText>
         <ol className={styles.howto}>
-          <li>Everyone draws their word.</li>
-          <li>Your drawing goes to the next player: they guess it, then draw their guess.</li>
-          <li>That goes on round the circle; the last player only guesses.</li>
-          <li>Then everyone presents their own book on the TV, page by page.</li>
+          <li>{L('Everyone draws their word.')}</li>
+          <li>
+            {L('Your drawing goes to the next player: they guess it, then draw their guess.')}
+          </li>
+          <li>{L('That goes on round the circle; the last player only guesses.')}</li>
+          <li>{L('Then everyone presents their own book on the TV, page by page.')}</li>
         </ol>
         <p className={styles.count} role="status">
-          {picked} of {view.progress.length} picked
+          {picked === 1
+            ? L('1 of {total} picked', { total: view.progress.length })
+            : L('{picked} of {total} picked', { picked, total: view.progress.length })}
         </p>
       </Stage>
     );
@@ -203,16 +224,16 @@ export function Tv({ view }: GameTvProps<PencilTvView>): JSX.Element {
   if (view.phaseId === 'draw' || view.phaseId === 'pass' || view.phaseId === 'guess') {
     const title =
       view.phaseId === 'draw'
-        ? 'Everyone is drawing their word…'
+        ? L('Everyone is drawing their word…')
         : view.phaseId === 'pass'
-          ? 'Guess the drawing, then draw your guess…'
-          : 'Last guesses…';
+          ? L('Guess the drawing, then draw your guess…')
+          : L('Last guesses…');
     return (
       <Stage className={styles.waiting}>
         <div className={styles.head}>
           <BigText level="h1">{title}</BigText>
           <p className={styles.kicker}>
-            round {view.step} of {view.stepCount}
+            {L('round {step} of {count}', { step: view.step, count: view.stepCount })}
           </p>
         </div>
         <div className={styles.waitBlock}>
@@ -227,23 +248,31 @@ export function Tv({ view }: GameTvProps<PencilTvView>): JSX.Element {
     const s = view.showing;
     const current = s.pages[s.page];
     const last = s.verdict !== null;
+    const earlier = s.pages.length - 1 - STRIP_MAX;
     return (
       <Stage>
         <div className={styles.head}>
           <BigText level="h1" tone="accent">
-            {s.ownerName}'s book
+            {L("{name}'s book", { name: s.ownerName })}
           </BigText>
           <p className={styles.kicker}>
-            {s.ownerName} turns the pages · book {s.book + 1} of {view.bookCount} · page{' '}
-            {s.page + 1} of {view.pageCount}
+            {L('{name} turns the pages · book {book} of {books} · page {page} of {pages}', {
+              name: s.ownerName,
+              book: s.book + 1,
+              books: view.bookCount,
+              page: s.page + 1,
+              pages: view.pageCount,
+            })}
           </p>
         </div>
         <div className={styles.showBody}>
-          <ul className={styles.strip} aria-label="pages so far">
+          <ul className={styles.strip} aria-label={L('pages so far')}>
             {/* The stage fits about six thumbnails; a long chain keeps its newest pages (the context
                 for the current one) and folds the rest into a count (review-loop #67). */}
-            {s.pages.length - 1 > STRIP_MAX ? (
-              <li className={styles.thumbMore}>{s.pages.length - 1 - STRIP_MAX} earlier pages…</li>
+            {earlier > 0 ? (
+              <li className={styles.thumbMore}>
+                {earlier === 1 ? L('1 earlier page…') : L('{n} earlier pages…', { n: earlier })}
+              </li>
             ) : null}
             {s.pages
               .slice(0, -1)
@@ -258,7 +287,11 @@ export function Tv({ view }: GameTvProps<PencilTvView>): JSX.Element {
               <div
                 className={`${styles.verdict} ${s.verdict === 'intact' ? styles.intact : styles.broken} pb-enter`}
               >
-                <span className={styles.verdictLine}>{s.verdictLine}</span>
+                {/* The server picks the line (content/lines.json, or the VIP's "close enough"):
+                    it arrives in English and shows through the table. */}
+                <span className={styles.verdictLine}>
+                  {s.verdictLine === null ? null : L.sent(s.verdictLine)}
+                </span>
                 <span className={styles.verdictPair}>
                   “{s.pages[0]?.kind === 'word' ? s.pages[0].text : '—'}” → “
                   {current?.kind === 'guess' ? (current.text ?? '???') : '—'}”

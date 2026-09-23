@@ -4,7 +4,7 @@
 // wins).
 import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
-import { Avatar, PrimaryButton, buzz, useSecondsLeft, useSound } from '@partybox/game-sdk/ui';
+import { Avatar, PrimaryButton, buzz, useSecondsLeft, useSound, useT } from '@partybox/game-sdk/ui';
 import type { PlayCue, ScoreboardRow } from '@partybox/game-sdk/ui';
 import { ARM_MS } from '../server/types';
 import type { Input } from '../server/types';
@@ -12,6 +12,7 @@ import type { BingoControllerView, CallView } from '../server/views';
 import { pendingLine } from './copy';
 import styles from './Controller.module.css';
 import { StyleSheet } from './Overlays';
+import { STRINGS } from './strings';
 import { setCardStyle } from './styles';
 import type { CardStyle } from './styles';
 
@@ -55,18 +56,19 @@ export function Ball({
  * dropped 20 px at call 2). Call 1 has no "before that", and no stray "·" in front of it.
  */
 export function CallRow({ view }: { view: BingoControllerView }): JSX.Element {
+  const L = useT(STRINGS);
   return (
     <div className={styles.callRow} role="status" aria-live="polite">
-      {view.current ? <Ball call={view.current} /> : <span>First number coming…</span>}
+      {view.current ? <Ball call={view.current} /> : <span>{L('First number coming…')}</span>}
       {view.current ? (
         <span className={styles.callMeta}>
           {view.previous ? (
             <>
-              before that <Ball call={view.previous} size="sm" />
+              {L('before that')} <Ball call={view.previous} size="sm" />
               {' · '}
             </>
           ) : null}
-          call {view.callIndex}
+          {L('call {n}', { n: view.callIndex })}
         </span>
       ) : null}
     </div>
@@ -99,6 +101,7 @@ export function BingoButton({
   const armedHere = mine && arm.card === card;
   const left = useSecondsLeft(armedHere ? arm.until : null);
   const play = useSound();
+  const L = useT(STRINGS);
   const [slam, setSlam] = useState(false);
   useEffect(() => {
     if (armedHere && left === 0) send({ type: 'lapse' });
@@ -138,42 +141,46 @@ export function BingoButton({
   }, [lapses]);
   const lapsedHint = armSeen.hint;
   const canTap = view.claimable.includes(card) && !checking && !held;
-  let label = 'BINGO!';
+  let label = L('BINGO!');
   let tone: 'accent' | 'neutral' | 'danger' | 'success' = 'accent';
   // The check first: a card under review says so, never "Yours already" before the verdict. The
   // other phones read the verdict too (loop 308): "Sam's card: not a bingo" once it lands.
   const mineChecking = view.claim?.playerId === meId; // any of my cards: my claim, my verdict
-  const who = view.claim?.name ?? 'Their';
+  const who = view.claim?.name ?? null;
   if (checking)
     label = myCheck
-      ? 'Not a bingo'
+      ? L('Not a bingo')
       : myClaim
         ? view.phoneOnly
-          ? 'Checking your card…'
-          : 'Checking on the TV…'
+          ? L('Checking your card…')
+          : L('Checking on the TV…')
         : view.phaseId === 'check' && verdictShown
           ? mineChecking
-            ? 'Not a bingo — see card ' + ((view.claim?.cardIndex ?? 0) + 1)
-            : `${who}'s card: not a bingo`
+            ? L('Not a bingo — see card {n}', { n: (view.claim?.cardIndex ?? 0) + 1 })
+            : who === null
+              ? L('Their card: not a bingo')
+              : L("{name}'s card: not a bingo", { name: who })
           : view.phoneOnly
-            ? `Checking ${who === 'Their' ? 'the' : `${who}'s`} card…`
-            : 'Look at the TV'; // I-111
+            ? who === null
+              ? L('Checking the card…')
+              : L("Checking {name}'s card…", { name: who })
+            : L('Look at the TV'); // I-111
   else if (held)
-    label = '⏸ Paused'; // I-097 B
-  else if (won) label = 'Yours already';
-  else if (view.waitingForCall) label = 'Next number soon…';
+    label = L('⏸ Paused'); // I-097 B
+  else if (won) label = L('Yours already');
+  else if (view.waitingForCall) label = L('Next number soon…');
   else if (armedHere) {
-    label = `Tap again · ${Math.min(3, left ?? 0)} s`; // I-096 A: plain words, one line on an SE
+    label = L('Tap again · {n} s', { n: Math.min(3, left ?? 0) }); // I-096 A: plain words, one line on an SE
     tone = 'success';
-  } else if (mine) label = 'BINGO!';
+  } else if (mine) label = L('BINGO!');
   else if (arm) {
     const queuedHere = view.queuedCard === card;
     label =
       queuedHere && view.queuePlace === 1
-        ? `${arm.name} is calling it… you're next`
+        ? L("{name} is calling it… you're next", { name: arm.name })
         : queuedHere && view.queuePlace > 1
-          ? `${arm.name} is calling it… #${view.queuePlace} in line`
-          : `${arm.name} is calling it…`;
+          ? L('{name} is calling it… #{place} in line', { name: arm.name, place: view.queuePlace })
+          : L('{name} is calling it…', { name: arm.name });
     tone = 'neutral';
   }
   return (
@@ -187,9 +194,9 @@ export function BingoButton({
           <Avatar avatarId={view.claim.avatarId} size={24} />
           {verdictShown
             ? view.phaseId === 'bingo'
-              ? `${view.claim.name} says BINGO! …and it's real`
-              : `${view.claim.name} says BINGO! …not a bingo — carry on`
-            : `${view.claim.name} says BINGO!`}
+              ? L("{name} says BINGO! …and it's real", { name: view.claim.name })
+              : L('{name} says BINGO! …not a bingo — carry on', { name: view.claim.name })
+            : L('{name} says BINGO!', { name: view.claim.name })}
         </p>
       ) : null}
       <PrimaryButton
@@ -206,13 +213,17 @@ export function BingoButton({
         }}
         className={`${small ? styles.bingoSmall : styles.bingo} ${armedHere ? styles.armed : ''} ${held ? styles.bingoHeld : ''} ${back ? styles.bingoBack : ''}`}
         onAnimationEnd={() => setBack(false)}
-        aria-label={`BINGO! card ${card + 1}${armedHere ? ', armed, tap again to claim' : ''}`}
+        aria-label={
+          armedHere
+            ? L('BINGO! card {n}, armed, tap again to claim', { n: card + 1 })
+            : L('BINGO! card {n}', { n: card + 1 })
+        }
       >
         {label}
       </PrimaryButton>
       {lapsedHint ? (
         <span className={styles.lapsedHint} aria-live="polite">
-          Dibs lapsed — tap twice within 3 s to claim
+          {L('Dibs lapsed — tap twice within 3 s to claim')}
         </span>
       ) : null}
       {/* The window, draining along the button's foot in step with the TV's bar (loop 256). */}
@@ -238,11 +249,13 @@ export function DecideFooter({
 }): JSX.Element | null {
   const decide = view.decide;
   const play = useSound();
+  const L = useT(STRINGS);
   if (!decide) return null;
   // A choice already made mid-celebration: the buttons go, the phone says what starts when.
-  const pending = pendingLine(view.pendingDecision, view.round >= view.totalRounds, view.pendingBy);
+  const lastRound = view.round >= view.totalRounds;
+  const pending = pendingLine(view.pendingDecision, lastRound, view.pendingBy, L);
   if (pending) return <p className={styles.hint}>{pending}</p>;
-  const nextLabel = view.round < view.totalRounds ? 'Next round — fresh cards' : 'Finish the game';
+  const nextLabel = lastRound ? L('Finish the game') : L('Next round — fresh cards');
   // The pick lands in the hand (loop 322): a 'submit' cue and a short buzz on the tap itself —
   // every other tap in the game sounds; the room's choice did not.
   const pick = (input: Input): void => {
@@ -254,7 +267,7 @@ export function DecideFooter({
     <div className={styles.decide}>
       {decide.same ? (
         <PrimaryButton onClick={() => pick({ type: 'continue', pattern: 'same' })}>
-          Keep going — same pattern
+          {L('Keep going — same pattern')}
         </PrimaryButton>
       ) : null}
       {decide.blackout ? (
@@ -262,7 +275,7 @@ export function DecideFooter({
           tone="neutral"
           onClick={() => pick({ type: 'continue', pattern: 'blackout' })}
         >
-          Keep going — blackout
+          {L('Keep going — blackout')}
         </PrimaryButton>
       ) : null}
       <PrimaryButton tone="neutral" onClick={() => pick({ type: 'next' })}>
@@ -296,9 +309,10 @@ export function daubWithFeel(
 
 /** The 🃏 pill that opens the card-style sheet (play, and the card-pick step). */
 export function StylePill({ onOpen }: { onOpen: () => void }): JSX.Element {
+  const L = useT(STRINGS);
   return (
     <button type="button" className={styles.stylePill} onClick={onOpen}>
-      🃏 style
+      {L('🃏 style')}
     </button>
   );
 }
@@ -315,12 +329,13 @@ export function IntroStyleSheet({
   current: CardStyle;
   onClose: () => void;
 }): JSX.Element {
+  const L = useT(STRINGS);
   return (
     <StyleSheet
       cards={cards}
       current={current}
       preview={null}
-      note="for this round"
+      note={L('for this round')}
       onPreview={setCardStyle}
       onConfirm={onClose}
       onClose={onClose}

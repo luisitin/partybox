@@ -9,10 +9,13 @@ import {
   useHold,
   useSecondsLeft,
   useSoundApi,
+  useT,
 } from '@partybox/game-sdk/ui';
 import type { ViewPlayer } from '@partybox/game-sdk/ui';
 import type { BingoTvView } from '../server/views';
 import { PatternDemo } from './PatternDemo';
+import { STRINGS } from './strings';
+import { patternShort } from './words';
 import {
   DEAL_BOUNCE_MS,
   DEAL_START_MS,
@@ -44,6 +47,7 @@ export function IntroCountdown({
   const left = useSecondsLeft(deadline, false, 50);
   const counting = left !== null && left <= 3 && left > 0;
   const sound = useSoundApi();
+  const L = useT(STRINGS);
   useEffect(() => {
     if (counting) sound.play('tick');
   }, [counting, left, sound]);
@@ -61,7 +65,7 @@ export function IntroCountdown({
     <div className={styles.introSlot}>
       {counting ? (
         <>
-          <span className={styles.introLead}>first number in</span>
+          <span className={styles.introLead}>{L('first number in')}</span>
           {/* The ring pops in whole; only a CHANGE of digit pops the digit (loop 299: the
               first frame showed an empty ring while the digit's own pop was still invisible). */}
           <span className={`${styles.introRing} pb-tick`}>
@@ -119,12 +123,16 @@ export function IntroCountdown({
             )}
             <span className={styles.introLead}>
               {!dealt
-                ? 'dealing the cards…'
+                ? L('dealing the cards…')
                 : waitingOn.length === 0
-                  ? 'everyone is ready'
+                  ? L('everyone is ready')
                   : waitingOn.length > 3
-                    ? `pick your cards on your phone — ${waitingOn.length} still picking`
-                    : `pick your cards on your phone — waiting for ${waitingOn.join(', ')}`}
+                    ? L('pick your cards on your phone — {n} still picking', {
+                        n: waitingOn.length,
+                      })
+                    : L('pick your cards on your phone — waiting for {names}', {
+                        names: waitingOn.join(', '),
+                      })}
             </span>
           </span>
         </>
@@ -149,6 +157,7 @@ export function Resume({
 }): JSX.Element {
   const left = Math.min(3, useSecondsLeft(resumeAt, false, 50) ?? 0); // a 4 would tick four times on a 3 s hold
   const sound = useSoundApi();
+  const L = useT(STRINGS);
   useEffect(() => {
     if (left > 0) sound.play('tick');
   }, [left, sound]);
@@ -156,7 +165,7 @@ export function Resume({
     <Stage center>
       <p className={styles.kicker}>
         {roundLabel}
-        {pattern ? ` · ${pattern}` : ''} · calling resumes in
+        {pattern ? ` · ${pattern}` : ''} · {L('calling resumes in')}
       </p>
       <div className={styles.resumeWrap}>
         <svg className={styles.ring} viewBox="0 0 120 120" aria-hidden>
@@ -176,7 +185,7 @@ export function Resume({
         </BigText>
       </div>
       <BigText level="h2" tone="muted">
-        {by ? `${by} said keep going — thumbs ready` : 'get your thumbs ready'}
+        {by ? L('{name} said keep going — thumbs ready', { name: by }) : L('get your thumbs ready')}
       </BigText>
     </Stage>
   );
@@ -193,6 +202,7 @@ export function IntroStage({
   // Nine or more players wrap the roster to two or three rows (loop 393): the demo and the
   // faces step down so the caption stays above the host bar.
   const crowded = view.players.length > 8;
+  const L = useT(STRINGS);
   return (
     <Stage center className={crowded ? styles.crowdedIntro : undefined}>
       <BigText level="h2" tone="muted">
@@ -201,19 +211,21 @@ export function IntroStage({
       <div className={styles.patternRow}>
         <PatternDemo pattern={view.pattern} cells={view.patternCells} size={crowded ? 140 : 200} />
         <BigText level="display" tone="accent">
-          {view.patternLabel}
+          {L.sent(view.patternLabel)}
         </BigText>
       </div>
-      <BigText level="h2">{view.patternHint}</BigText>
+      <BigText level="h2">{L.sent(view.patternHint)}</BigText>
       {view.cardsPerPlayer > 1 ? (
         <BigText level="h2" tone="muted">
-          {view.cardsPerPlayer} cards each — BINGO! checks the card you press it on.
+          {L('{n} cards each — BINGO! checks the card you press it on.', {
+            n: view.cardsPerPlayer,
+          })}
         </BigText>
       ) : null}
       <p className={styles.programme}>
         {view.patterns.map((p, i) => (
           <span key={i} className={i + 1 === view.round ? styles.programmeNow : ''}>
-            {i + 1}. {p}
+            {i + 1}. {patternShort(p, L)}
           </span>
         ))}
       </p>

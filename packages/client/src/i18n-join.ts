@@ -3,13 +3,14 @@
 // it imports `t` for the English strings and nothing imports it back, so there is no cycle.
 import { getLang, setLang } from '@partybox/game-sdk/ui';
 import { textsFor } from './i18n';
-import type { t } from './i18n';
+import type { t, Texts } from './i18n';
 
 // I-076 A: the join flow in a few languages — the one screen every guest reads first. Detected
-// from the phone (`navigator.language`); everything past the join stays English.
+// from the phone (`navigator.language`). Past the join, Spanish is complete (`t`, i18n-es.ts);
+// German, French and Portuguese cover the lines below and fall back to English elsewhere.
 export type JoinLang = 'en' | 'es' | 'de' | 'fr' | 'pt';
 export const JOIN_LANGS: readonly JoinLang[] = ['en', 'es', 'de', 'fr', 'pt'];
-type JoinAll = { [K in keyof typeof t.join]: string };
+type JoinAll = Texts['join'];
 type JoinStrings = Pick<
   JoinAll,
   | 'title'
@@ -163,7 +164,7 @@ export function setJoinLang(lang: JoinLang): void {
 }
 /** I-076 C: the phone lobby's two lines follow the same choice. */
 const LOBBY_L10N: Record<Exclude<JoinLang, 'en'>, { waitingForVip: string; addBot: string }> = {
-  es: { waitingForVip: 'Esperando a que el VIP elija un juego…', addBot: 'Añadir un bot' },
+  es: { waitingForVip: 'Esperando a que el VIP elija un juego…', addBot: 'Añadir bot' },
   de: { waitingForVip: 'Warten, bis der VIP ein Spiel wählt…', addBot: 'Bot hinzufügen' },
   fr: { waitingForVip: 'En attente que le VIP choisisse un jeu…', addBot: 'Ajouter un bot' },
   pt: { waitingForVip: 'À espera que o VIP escolha um jogo…', addBot: 'Adicionar um bot' },
@@ -176,6 +177,6 @@ export function lobbyStrings(
 }
 /** The join strings for a language: English plus the table's overrides. */
 export function joinStrings(lang: JoinLang = joinLang()): JoinAll {
-  if (lang === 'en' || lang === 'es') return textsFor(lang).join as JoinAll;
-  return { ...textsFor('en').join, ...JOIN_L10N[lang] } as JoinAll;
+  if (lang === 'en' || lang === 'es') return textsFor(lang).join;
+  return { ...textsFor('en').join, ...JOIN_L10N[lang] };
 }

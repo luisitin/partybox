@@ -5,8 +5,10 @@
 // stage shows settled. Mount with `key={round.number}` so a re-pushed view never restarts it.
 import { useEffect, useRef } from 'react';
 import type { CSSProperties, JSX } from 'react';
-import { Avatar, useBeats, useSound } from '@partybox/game-sdk/ui';
+import { Avatar, useBeats, useSound, useT } from '@partybox/game-sdk/ui';
 import type { QuestionView, RevealRow } from '../server/views';
+import { topicLine } from './labels';
+import { STRINGS } from './strings';
 import { AnswerCard, deltaText, rowsClass, verdictOf } from './TvQuestion';
 import styles from './Tv.module.css';
 
@@ -38,6 +40,7 @@ export function FinalReveal({
   /** The results stage: everything shown at once, no cue (the reveal already played). */
   settled?: boolean;
 }): JSX.Element {
+  const L = useT(STRINGS);
   const rows = [...unsorted].sort(byWager);
   const n = rows.length;
   const stepMs = n > 1 ? Math.min(STEP_MAX_MS, STEP_SPAN_MS / (n - 1)) : 0;
@@ -70,20 +73,20 @@ export function FinalReveal({
   return (
     <>
       <div className={styles.header}>
-        <span className={`${styles.kicker} ${styles.final}`}>Final question · the bets are in</span>
-        <span>
-          {question.categoryLabel} · {question.subcategoryLabel} · {question.difficulty}
+        <span className={`${styles.kicker} ${styles.final}`}>
+          {L('Final question · the bets are in')}
         </span>
+        <span>{topicLine(question, L)}</span>
       </div>
       <p className={styles.asked}>{question.text}</p>
       <AnswerCard question={question} correctIndex={correctIndex} hidden={!answered} />
       <ol
         className={`${styles.rows} ${rowsClass(n)} ${styles.rowsFinal}`}
         style={listStyle}
-        aria-label="results"
+        aria-label={L('results')}
       >
         {rows.map((row, index) => {
-          const verdict = verdictOf(row);
+          const verdict = verdictOf(row, L);
           const bet = row.wagerAmount ?? 0;
           const deltaClass =
             row.delta > 0 ? styles.deltaUp : row.delta < 0 ? styles.deltaDown : styles.deltaZero;
@@ -108,7 +111,7 @@ export function FinalReveal({
                       {verdict.glyph}&nbsp;
                     </span>
                   ) : null}
-                  {bet > 0 ? `bet ${bet}` : 'no bet'}
+                  {bet > 0 ? L('bet {bet}', { bet }) : L('no bet')}
                   {totals ? (
                     <span className={`${styles.pop} ${styles.total}`}>&nbsp;· {row.score} pts</span>
                   ) : null}

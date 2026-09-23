@@ -3,6 +3,8 @@
 // outline — so a check reads the same in every theme and for every viewer.
 import { useState } from 'react';
 import type { CSSProperties, JSX } from 'react';
+import { useT } from '@partybox/game-sdk/ui';
+import { STRINGS } from './strings';
 import styles from './Card.module.css';
 
 const LETTERS = ['B', 'I', 'N', 'G', 'O'];
@@ -88,6 +90,7 @@ export function Card({
   sent = false,
   wiped = false,
 }: CardProps): JSX.Element {
+  const L = useT(STRINGS);
   const turnAt = new Map((revealOrder ?? []).map((i, k) => [i, k * revealStepMs]));
   const turning = revealOrder !== undefined;
   const daubed = new Set(daubs);
@@ -121,7 +124,7 @@ export function Card({
     <div
       className={`${styles.card} ${styles[size]} ${reveal ? styles.reveal : ''}`}
       role="grid"
-      aria-label="bingo card"
+      aria-label={L('bingo card')}
     >
       <div className={styles.head} role="row">
         {LETTERS.map((l) => (
@@ -174,7 +177,8 @@ export function Card({
             wiped && isDaubed && !isFree ? styles.wipe : '',
           ].join(' ');
           const mark = !showColour ? null : greenSet.has(i) ? '✓' : redSet.has(i) ? '✕' : null;
-          const label = isFree ? 'FREE' : String(n);
+          const label = isFree ? L('FREE') : String(n);
+          const cellName = `${LETTERS[i % 5]} ${label}`;
           const shown = isFree && size === 'compact' ? '★' : label;
           const Tag = interactive && (!isFree || onTapFree) ? 'button' : 'div';
           const style =
@@ -197,7 +201,7 @@ export function Card({
               style={style}
               role="gridcell"
               aria-pressed={Tag === 'button' ? isDaubed : undefined}
-              aria-label={`${LETTERS[i % 5]} ${label}${isDaubed ? ', daubed' : ''}`}
+              aria-label={isDaubed ? L('{cell}, daubed', { cell: cellName }) : cellName}
               onClick={Tag === 'button' ? () => (isFree ? onTapFree?.() : onTap?.(i)) : undefined}
             >
               <span className={styles.number}>{shown}</span>

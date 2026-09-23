@@ -1,17 +1,14 @@
 // TV: the question, its four lettered choices in a 2×2 grid, and — in reveal — the correct one
 // marked with ✓ (never colour-only) plus one row per player with verdict, points and streak.
 import type { CSSProperties, JSX } from 'react';
-import { Avatar, BigText } from '@partybox/game-sdk/ui';
-import type { ViewPlayer } from '@partybox/game-sdk/ui';
+import { Avatar, BigText, useT } from '@partybox/game-sdk/ui';
+import type { Translator, ViewPlayer } from '@partybox/game-sdk/ui';
 import type { QuestionView, RevealRow, RoundView } from '../server/views';
+import { roundLabel, topicLine, waitingText } from './labels';
+import { STRINGS } from './strings';
 import styles from './Tv.module.css';
 
 const LETTERS = ['A', 'B', 'C', 'D'];
-
-export function roundLabel(round: RoundView | null): string {
-  if (round === null) return '';
-  return round.final ? 'Final question' : `Question ${round.number} of ${round.total}`;
-}
 
 export function RoundHeader({
   round,
@@ -20,16 +17,13 @@ export function RoundHeader({
   round: RoundView | null;
   question: QuestionView | null;
 }): JSX.Element {
+  const L = useT(STRINGS);
   return (
     <div className={styles.header}>
       <span className={`${styles.kicker} ${round?.final ? styles.final : ''}`}>
-        {roundLabel(round)}
+        {roundLabel(round, L)}
       </span>
-      {question ? (
-        <span>
-          {question.categoryLabel} · {question.subcategoryLabel} · {question.difficulty}
-        </span>
-      ) : null}
+      {question ? <span>{topicLine(question, L)}</span> : null}
     </div>
   );
 }
@@ -42,9 +36,10 @@ export function ChoiceBoard({
   /** Undefined until the reveal. */
   correctIndex?: number;
 }): JSX.Element {
+  const L = useT(STRINGS);
   const revealed = correctIndex !== undefined;
   return (
-    <div className={styles.grid} role="list" aria-label="choices">
+    <div className={styles.grid} role="list" aria-label={L('choices')}>
       {question.choices.map((text, index) => {
         const isCorrect = revealed && index === correctIndex;
         const classes = [
@@ -66,7 +61,7 @@ export function ChoiceBoard({
             <span className={styles.mark} aria-hidden>
               {isCorrect ? '✓' : ''}
             </span>
-            {isCorrect ? <span className="pb-visually-hidden">correct answer</span> : null}
+            {isCorrect ? <span className="pb-visually-hidden">{L('correct answer')}</span> : null}
           </div>
         );
       })}
@@ -85,6 +80,7 @@ export function AnswerCard({
   /** Held back (invisible, space reserved) until a choreographed beat; the pop plays on unhide. */
   hidden?: boolean;
 }): JSX.Element {
+  const L = useT(STRINGS);
   return (
     <div
       className={`${styles.choice} ${styles.answer} ${hidden ? styles.answerHidden : ''}`}
@@ -97,15 +93,11 @@ export function AnswerCard({
       <span className={styles.mark} aria-hidden>
         ✓
       </span>
-      <span className="pb-visually-hidden">correct answer: {LETTERS[correctIndex]}</span>
+      <span className="pb-visually-hidden">
+        {L('correct answer: {letter}', { letter: LETTERS[correctIndex] ?? '' })}
+      </span>
     </div>
   );
-}
-
-/** "Sam", "Sam and Priya", "Sam, Priya and Kenji". */
-export function joinNames(names: string[]): string {
-  if (names.length <= 1) return names[0] ?? '';
-  return `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}`;
 }
 
 /**
@@ -128,6 +120,7 @@ export function CountLine({
   players: ViewPlayer[];
   verb: string;
 }): JSX.Element {
+  const L = useT(STRINGS);
   const holdouts = holdoutsOf(players);
   // I-007 A: the crowd builds — every locked-in face pops onto the line (keyed per player, so
   // each pops once, in the order the view lists them).
@@ -148,7 +141,7 @@ export function CountLine({
       </span>{' '}
       {verb}
       {holdouts.length >= 1 && holdouts.length <= 3 ? (
-        <span className={styles.holdouts}> · waiting for {joinNames(holdouts)}</span>
+        <span className={styles.holdouts}> · {waitingText(holdouts, L)}</span>
       ) : null}
     </p>
   );
@@ -167,6 +160,7 @@ export function TvQuestion({
   totalCount: number;
   players: ViewPlayer[];
 }): JSX.Element {
+  const L = useT(STRINGS);
   return (
     <>
       <RoundHeader round={round} question={question} />
@@ -178,18 +172,18 @@ export function TvQuestion({
         answeredCount={answeredCount}
         totalCount={totalCount}
         players={players}
-        verb="locked in"
+        verb={L('locked in')}
       />
     </>
   );
 }
 
 /** Verdict glyph with the pick folded in — "A✓", "D✗" or "–" — so the room sees who picked what. */
-export function verdictOf(row: RevealRow): { glyph: string; label: string } {
-  if (row.pickIndex === null) return { glyph: '–', label: 'no answer' };
+export function verdictOf(row: RevealRow, L: Translator): { glyph: string; label: string } {
+  if (row.pickIndex === null) return { glyph: '–', label: L('no answer') };
   const letter = LETTERS[row.pickIndex] ?? '';
-  if (row.correct) return { glyph: `${letter}✓`, label: `picked ${letter}, correct` };
-  return { glyph: `${letter}✗`, label: `picked ${letter}, wrong` };
+  if (row.correct) return { glyph: `${letter}✓`, label: L('picked {letter}, correct', { letter }) };
+  return { glyph: `${letter}✗`, label: L('picked {letter}, wrong', { letter }) };
 }
 
 export function deltaText(delta: number): string {
@@ -214,13 +208,14 @@ export function rowsClass(count: number): string {
 }
 
 export function RevealRows({ rows }: { rows: RevealRow[] }): JSX.Element {
+  const L = useT(STRINGS);
   const wide = rows.length <= 8;
   const crowned = rows.length <= 12;
   const top = Math.max(0, ...rows.map((r) => r.score));
   return (
-    <ol className={`${styles.rows} ${rowsClass(rows.length)}`} aria-label="results">
+    <ol className={`${styles.rows} ${rowsClass(rows.length)}`} aria-label={L('results')}>
       {rows.map((row, index) => {
-        const verdict = verdictOf(row);
+        const verdict = verdictOf(row, L);
         const quiet = row.delta === 0;
         const deltaClass = row.delta > 0 ? styles.deltaUp : row.delta < 0 ? styles.deltaDown : '';
         const verdictClass = row.correct
@@ -236,7 +231,7 @@ export function RevealRows({ rows }: { rows: RevealRow[] }): JSX.Element {
           >
             <Avatar avatarId={row.avatarId} size={48} dim={!row.connected} />
             {crowned && top > 0 && row.score === top ? (
-              <span className={styles.crown} aria-label="leader">
+              <span className={styles.crown} aria-label={L('leader')}>
                 👑
               </span>
             ) : null}
@@ -244,7 +239,7 @@ export function RevealRows({ rows }: { rows: RevealRow[] }): JSX.Element {
             {row.streak >= 2 ? (
               <span
                 className={`${styles.streak} ${row.streak >= 3 ? styles.streakHot : ''}`}
-                aria-label={`streak ${row.streak}`}
+                aria-label={L('streak {streak}', { streak: row.streak })}
               >
                 🔥{row.streak}
               </span>

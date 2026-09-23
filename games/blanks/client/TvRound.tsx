@@ -5,10 +5,19 @@
 // count re-entering on every change, and a line naming who the room is waiting for.
 import { useEffect } from 'react';
 import type { CSSProperties, JSX } from 'react';
-import { Avatar, BigText, Stage, useBeats, useSecondsLeft, useSound } from '@partybox/game-sdk/ui';
-import type { GameTvProps, ViewPlayer } from '@partybox/game-sdk/ui';
+import {
+  Avatar,
+  BigText,
+  Stage,
+  useBeats,
+  useSecondsLeft,
+  useSound,
+  useT,
+} from '@partybox/game-sdk/ui';
+import type { GameTvProps, Translator, ViewPlayer } from '@partybox/game-sdk/ui';
 import type { BlanksTvView } from '../server/index';
 import { CardFan, FilledCard, FlipCard } from './Cards';
+import { STRINGS } from './strings';
 import styles from './blanks.module.css';
 
 type Props = GameTvProps<BlanksTvView>;
@@ -20,6 +29,7 @@ export const INTRO_BEATS_MS = [0, 400, 800] as const;
 const FAN_PLUCKS_MS = [0, 75, 150] as const;
 
 export function TvIntro({ view }: Props): JSX.Element {
+  const L = useT(STRINGS);
   const last = view.round === view.rounds;
   const beat = useBeats(INTRO_BEATS_MS);
   // I-015 A: each card of the fan lands with the game's own `card` pluck — on the cards' own
@@ -40,7 +50,7 @@ export function TvIntro({ view }: Props): JSX.Element {
       <CardFan />
       <p className={styles.kicker}>Blanks</p>
       <BigText level="display">
-        Round {view.round} of {view.rounds}
+        {L('Round {round} of {rounds}', { round: view.round, rounds: view.rounds })}
       </BigText>
       {/* Both lines stay mounted and fade in on their beat: mounting them late re-centred the
           stage and the fan jumped (loop #194). */}
@@ -48,13 +58,13 @@ export function TvIntro({ view }: Props): JSX.Element {
         <div className={`${styles.judgeLine} ${beat >= 1 ? 'pb-enter' : styles.beatWait}`}>
           <Avatar avatarId={view.czar.avatarId} size="var(--pb-chip-size)" />
           <BigText level="h2" tone="accent">
-            {view.czar.name} judges this round
+            {L('{name} judges this round', { name: view.czar.name })}
           </BigText>
         </div>
       ) : (
         <div className={beat >= 1 ? 'pb-enter' : styles.beatWait}>
           <BigText level="h2" tone="muted">
-            {last ? 'Last round. Make it count.' : 'Everyone votes. Play your worst.'}
+            {last ? L('Last round. Make it count.') : L('Everyone votes. Play your worst.')}
           </BigText>
         </div>
       )}
@@ -69,7 +79,7 @@ export function TvIntro({ view }: Props): JSX.Element {
             {view.streak.name}
           </span>
           <BigText level="h2" tone="accent">
-            is on a {view.streak.runs}-round streak
+            {L('is on a {runs}-round streak', { runs: view.streak.runs })}
           </BigText>
         </div>
       ) : leaders.length > 0 ? (
@@ -81,7 +91,9 @@ export function TvIntro({ view }: Props): JSX.Element {
             </span>
           ))}
           <BigText level="h2" tone="accent">
-            {leaders.length > 1 ? 'lead with' : 'leads with'} {leaders[0]?.score}
+            {leaders.length > 1
+              ? L('lead with {score}', { score: leaders[0]?.score ?? 0 })
+              : L('leads with {score}', { score: leaders[0]?.score ?? 0 })}
           </BigText>
         </div>
       ) : null}
@@ -91,6 +103,7 @@ export function TvIntro({ view }: Props): JSX.Element {
 
 /** czar mode: the judge chooses the round's black card from three (review-loop #154). */
 export function TvPick({ view }: Props): JSX.Element {
+  const L = useT(STRINGS);
   const taken = view.blackChoices.some((b) => b.chosen);
   // The judge's choice is a real beat — the card lifts and rings gold while the other two step
   // back — and it was the one beat in the round the room heard nothing for (review-loop #221).
@@ -103,22 +116,27 @@ export function TvPick({ view }: Props): JSX.Element {
     <Stage className={styles.table}>
       <div className={styles.kickerRow}>
         <p className={styles.kicker}>
-          Round {view.round} of {view.rounds} · {view.czar?.name ?? 'The judge'} judges
+          {view.czar
+            ? roundKicker(view, L)
+            : L('Round {round} of {rounds} · The judge judges', {
+                round: view.round,
+                rounds: view.rounds,
+              })}
         </p>
         <span className={styles.progressPill}>
           {view.czar ? (
             <>
               <Avatar avatarId={view.czar.avatarId} size="var(--pb-space-7)" />
               {taken
-                ? `${view.czar.name} picked this one`
-                : `${view.czar.name} is picking the question…`}
+                ? L('{name} picked this one', { name: view.czar.name })
+                : L('{name} is picking the question…', { name: view.czar.name })}
             </>
           ) : (
-            'Picking the question…'
+            L('Picking the question…')
           )}
         </span>
       </div>
-      <ul className={styles.choices} aria-label="the black cards to choose from">
+      <ul className={styles.choices} aria-label={L('the black cards to choose from')}>
         {view.blackChoices.map((b, i) => (
           <li
             key={i}
@@ -135,7 +153,7 @@ export function TvPick({ view }: Props): JSX.Element {
         ))}
       </ul>
       <BigText level="h2" tone="muted">
-        {taken ? "That's the round's card." : "One of these is this round's card."}
+        {taken ? L("That's the round's card.") : L("One of these is this round's card.")}
       </BigText>
     </Stage>
   );
@@ -144,17 +162,32 @@ export function TvPick({ view }: Props): JSX.Element {
 const LAST_CHANCE_S = 10;
 const NAMED = 4;
 
+/** "Round 2 of 6 · Ana judges" — the judge's name when the round has one. */
+function roundKicker(view: BlanksTvView, L: Translator): string {
+  const vars = { round: view.round, rounds: view.rounds };
+  return view.czar
+    ? L('Round {round} of {rounds} · {name} judges', { ...vars, name: view.czar.name })
+    : L('Round {round} of {rounds}', vars);
+}
+
 /** Who the room is waiting for. Disconnected players never block the phase, so they are not named. */
-function waitingLine(outstanding: ViewPlayer[]): string {
+function waitingLine(outstanding: ViewPlayer[], L: Translator): string {
   const names = outstanding.map((p) => p.name);
-  if (names.length === 0) return 'here comes the reading…';
-  if (names.length === 1) return `Just waiting for ${names[0]}…`;
+  if (names.length === 0) return L('here comes the reading…');
+  if (names.length === 1) return L('Just waiting for {name}…', { name: names[0] ?? '' });
   if (names.length <= NAMED)
-    return `Waiting for ${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}…`;
-  return `Waiting for ${names.slice(0, NAMED).join(', ')} and ${names.length - NAMED} more…`;
+    return L('Waiting for {names} and {last}…', {
+      names: names.slice(0, -1).join(', '),
+      last: names[names.length - 1] ?? '',
+    });
+  return L('Waiting for {names} and {n} more…', {
+    names: names.slice(0, NAMED).join(', '),
+    n: names.length - NAMED,
+  });
 }
 
 export function TvAnswer({ view }: Props): JSX.Element {
+  const L = useT(STRINGS);
   const left = useSecondsLeft(view.deadline, view.paused);
   const connected = view.players.filter((p) => p.connected && p.status !== 'waiting');
   const outstanding = connected.filter((p) => p.status !== 'submitted');
@@ -171,19 +204,17 @@ export function TvAnswer({ view }: Props): JSX.Element {
   }, [view.playedCount, play]);
   const pick = view.black?.pick ?? 1;
   const headline = lastChance
-    ? 'Last chance!'
+    ? L('Last chance!')
     : !nobodyDone && outstanding.length === 0
-      ? "Everyone's in!"
+      ? L("Everyone's in!")
       : pick > 1
-        ? `Play ${pick} cards from your hand`
-        : 'Play a card from your hand';
+        ? L('Play {n} cards from your hand', { n: pick })
+        : L('Play a card from your hand');
+  const progress = { played: view.playedCount, expected: view.playersExpected };
   return (
     <Stage center className={styles.table}>
       <div className={styles.kickerRow}>
-        <p className={styles.kicker}>
-          Round {view.round} of {view.rounds}
-          {view.czar ? ` · ${view.czar.name} judges` : ''}
-        </p>
+        <p className={styles.kicker}>{roundKicker(view, L)}</p>
       </div>
       {/* The round's question is turned face-up for the room — the same move the read-out uses,
           so the judge's pick lands as a card on the table (review-loop #166). */}
@@ -227,13 +258,17 @@ export function TvAnswer({ view }: Props): JSX.Element {
       </div>
       <div key={view.playedCount} className="pb-enter" role="status">
         <BigText level="h2" tone={nobodyDone ? 'muted' : 'accent'}>
-          {view.playedCount} / {view.playersExpected} in
-          {nobodyDone ? ' · your cards are on your phone' : ` · ${waitingLine(outstanding)}`}
+          {nobodyDone
+            ? L('{played} / {expected} in · your cards are on your phone', progress)
+            : L('{played} / {expected} in · {waiting}', {
+                ...progress,
+                waiting: waitingLine(outstanding, L),
+              })}
         </BigText>
       </div>
       {!view.timed && !nobodyDone && outstanding.length > 0 ? (
         <BigText level="h2" tone="muted">
-          No clock — the VIP taps Next when the room is ready.
+          {L('No clock — the VIP taps Next when the room is ready.')}
         </BigText>
       ) : null}
     </Stage>

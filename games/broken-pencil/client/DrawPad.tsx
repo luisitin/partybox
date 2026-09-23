@@ -5,10 +5,27 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react
 import type { CSSProperties, JSX, PointerEvent as ReactPointerEvent } from 'react';
 import { CANVAS, INK_CHARS, MAX_STROKES, encodePoints, inkCost } from '../server/encoding';
 import type { Stroke } from '../server/types';
-import { usePadStyle } from '@partybox/game-sdk/ui';
-import { PALETTE, PALETTE_NAMES, WIDTHS, decodeStroke, paint } from './drawing';
+import { usePadStyle, useT } from '@partybox/game-sdk/ui';
+import type { Translator } from '@partybox/game-sdk/ui';
+import { PALETTE, WIDTHS, decodeStroke, paint } from './drawing';
 import type { DecodedStroke } from './drawing';
 import styles from './DrawPad.module.css';
+import { STRINGS } from './strings';
+
+/** The swatches' names for a screen reader, in PALETTE order (server/palette.ts PALETTE_NAMES),
+ *  in the phone's language. */
+function colourNames(L: Translator): string[] {
+  return [
+    L('ink'),
+    L('red'),
+    L('blue'),
+    L('green'),
+    L('yellow'),
+    L('orange'),
+    L('purple'),
+    L('brown'),
+  ];
+}
 
 export interface DrawPadProps {
   /** Encoded strokes, ready for `send({ type: 'draw', strokes })`. */
@@ -47,6 +64,7 @@ function inkUsed(strokes: Live[], current: Live | null): number {
 }
 
 export function DrawPad({ onChange, onProgress, initial, disabled }: DrawPadProps): JSX.Element {
+  const L = useT(STRINGS);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const boxRef = useRef<HTMLDivElement>(null);
   // I-021: this phone's paper and pencil (the settings sheet); the pad repaints when they change.
@@ -154,9 +172,11 @@ export function DrawPad({ onChange, onProgress, initial, disabled }: DrawPadProp
     commit([...strokes, live]);
   };
 
+  const colours = colourNames(L);
+  const sizeNames = [L('thin'), L('medium'), L('thick')];
   return (
     <div className={styles.pad}>
-      <div className={styles.tools} role="toolbar" aria-label="pen">
+      <div className={styles.tools} role="toolbar" aria-label={L('pen')}>
         <div className={styles.swatches}>
           {PALETTE.map((hex, i) => (
             <button
@@ -164,7 +184,7 @@ export function DrawPad({ onChange, onProgress, initial, disabled }: DrawPadProp
               type="button"
               className={`${styles.swatch} ${i === color ? styles.swatchOn : ''}`}
               style={{ background: hex, '--pb-i': i } as CSSProperties}
-              aria-label={PALETTE_NAMES[i]}
+              aria-label={colours[i]}
               aria-pressed={i === color}
               onClick={() => setColor(i)}
               disabled={disabled}
@@ -182,13 +202,15 @@ export function DrawPad({ onChange, onProgress, initial, disabled }: DrawPadProp
           onPointerUp={onUp}
           onPointerCancel={onUp}
           onPointerLeave={onUp}
-          aria-label="drawing sheet"
+          aria-label={L('drawing sheet')}
         />
       </div>
       <div className={styles.bottom}>
         <div
           className={styles.ink}
-          aria-label={`ink ${Math.round((1 - ink / INK_CHARS) * 100)} percent left`}
+          aria-label={L('ink {pct} percent left', {
+            pct: Math.round((1 - ink / INK_CHARS) * 100),
+          })}
         >
           <span
             className={`${styles.inkFill} ${outOfInk ? styles.inkOut : ''}`}
@@ -196,7 +218,11 @@ export function DrawPad({ onChange, onProgress, initial, disabled }: DrawPadProp
           />
         </div>
         <span className={styles.inkLabel}>
-          {outOfInk ? 'Out of ink — undo to get some back' : tooMany ? 'Too many strokes' : 'ink'}
+          {outOfInk
+            ? L('Out of ink — undo to get some back')
+            : tooMany
+              ? L('Too many strokes')
+              : L('ink')}
         </span>
         {/* Pen sizes live down here so the colour row is a single line and the sheet gets the
             height back (review-loop #9). */}
@@ -206,7 +232,7 @@ export function DrawPad({ onChange, onProgress, initial, disabled }: DrawPadProp
               key={w}
               type="button"
               className={`${styles.size} ${i === width ? styles.sizeOn : ''}`}
-              aria-label={['thin', 'medium', 'thick'][i]}
+              aria-label={sizeNames[i]}
               aria-pressed={i === width}
               onClick={() => setWidth(i)}
               disabled={disabled}
@@ -221,7 +247,7 @@ export function DrawPad({ onChange, onProgress, initial, disabled }: DrawPadProp
           onClick={() => commit(strokes.slice(0, -1))}
           disabled={disabled || strokes.length === 0}
         >
-          ↶ Undo
+          {L('↶ Undo')}
         </button>
         <button
           type="button"
@@ -229,7 +255,7 @@ export function DrawPad({ onChange, onProgress, initial, disabled }: DrawPadProp
           onClick={() => commit([])}
           disabled={disabled || strokes.length === 0}
         >
-          Clear
+          {L('Clear')}
         </button>
       </div>
     </div>

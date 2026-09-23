@@ -1,5 +1,6 @@
 // I-076 B: the join screen's language row — a way to choose, remembered in this browser.
 import type { JSX } from 'react';
+import { t } from '../i18n';
 import { JOIN_LANGS, setJoinLang } from '../i18n-join';
 import type { JoinLang } from '../i18n-join';
 import styles from './Join.module.css';
@@ -12,7 +13,7 @@ export function JoinLangs({
   onPick: (lang: JoinLang) => void;
 }): JSX.Element {
   return (
-    <div className={styles.langs} role="group" aria-label="language">
+    <div className={styles.langs} role="group" aria-label={t.join.languageGroup}>
       {JOIN_LANGS.map((l) => (
         <button
           key={l}

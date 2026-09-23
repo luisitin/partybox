@@ -4,9 +4,11 @@
 // server clamps either (0…score, tens) and is the source of truth. Bots keep the presets.
 import { useState } from 'react';
 import type { JSX } from 'react';
+import { useT } from '@partybox/game-sdk/ui';
 import { wagerAmount } from '../server/scoring';
 import { Chips } from './ControllerBits';
 import styles from './Controller.module.css';
+import { STRINGS } from './strings';
 
 export interface CustomStakeProps {
   score: number;
@@ -26,6 +28,7 @@ function stakeOf(text: string, unit: 'pct' | 'pts', score: number): number | nul
 }
 
 export function CustomStake({ score, placed, disabled, onPlace }: CustomStakeProps): JSX.Element {
+  const L = useT(STRINGS);
   const [text, setText] = useState('');
   const [unit, setUnit] = useState<'pct' | 'pts'>('pct');
   const amount = placed ?? stakeOf(text, unit, score);
@@ -35,12 +38,12 @@ export function CustomStake({ score, placed, disabled, onPlace }: CustomStakePro
     <div
       className={`${styles.custom} ${placed !== null ? styles.customOn : ''} ${disabled ? styles.customOff : ''}`}
       role="group"
-      aria-label="custom wager"
+      aria-label={L('custom wager')}
     >
       <span className={styles.wagerRow}>
         <Chips percent={percent} />
         <span className={styles.amount}>{amount ?? '–'}</span>
-        <span className={styles.pct}>{placed !== null ? '✓ your stake' : 'Custom'}</span>
+        <span className={styles.pct}>{placed !== null ? L('✓ your stake') : L('Custom')}</span>
       </span>
       {open ? (
         <form
@@ -57,7 +60,7 @@ export function CustomStake({ score, placed, disabled, onPlace }: CustomStakePro
             autoComplete="off"
             maxLength={7}
             placeholder={unit === 'pct' ? '1–100' : `0–${score}`}
-            aria-label={unit === 'pct' ? 'percentage of your score' : 'points'}
+            aria-label={unit === 'pct' ? L('percentage of your score') : L('points')}
             value={text}
             onChange={(e) => setText(e.target.value.replace(/\D/g, ''))}
           />
@@ -66,14 +69,14 @@ export function CustomStake({ score, placed, disabled, onPlace }: CustomStakePro
             className={styles.unit}
             aria-pressed={unit === 'pts'}
             aria-label={
-              unit === 'pct' ? 'percent — switch to points' : 'points — switch to percent'
+              unit === 'pct' ? L('percent — switch to points') : L('points — switch to percent')
             }
             onClick={() => setUnit(unit === 'pct' ? 'pts' : 'pct')}
           >
-            {unit === 'pct' ? '%' : 'pts'}
+            {unit === 'pct' ? '%' : L('pts')}
           </button>
           <button type="submit" className={styles.place} disabled={amount === null}>
-            Place
+            {L('Place')}
           </button>
         </form>
       ) : null}

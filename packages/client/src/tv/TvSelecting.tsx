@@ -3,11 +3,13 @@
 // room state. The room sees the highlighted game big, its settings, and who is here.
 import type { JSX } from 'react';
 import type { RoomSnapshot } from '@partybox/shared';
-import { Avatar, BigText, PlayerChips, Stage, useLang } from '@partybox/game-sdk/ui';
+import { Avatar, BigText, PlayerChips, Stage, useT } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import { gameText } from '../i18n-games';
 import type { TvClient } from '../net/tv';
 import { SettingField } from '../SettingField';
+import { serverText } from '../server-text';
+import { STRINGS } from './strings';
 import styles from './TvSelecting.module.css';
 
 export interface TvSelectingProps {
@@ -19,7 +21,8 @@ export function TvSelecting({ room, client }: TvSelectingProps): JSX.Element {
   const game = room.games.find((g) => g.id === room.selectedGameId);
   const vip = room.players.find((p) => p.isVip);
   const botCount = room.players.filter((p) => p.bot).length;
-  const lang = useLang();
+  const L = useT(STRINGS);
+  const lang = L.lang;
   return (
     <Stage>
       <p className={`pb-muted ${styles.choosing}`}>
@@ -35,7 +38,7 @@ export function TvSelecting({ room, client }: TvSelectingProps): JSX.Element {
       </p>
       <div className={styles.columns}>
         <div className={styles.left}>
-          <ul className={styles.games} role="radiogroup" aria-label="games">
+          <ul className={styles.games} role="radiogroup" aria-label={L('games')}>
             {room.games.map((g) => {
               const selected = g.id === room.selectedGameId;
               return (
@@ -126,7 +129,11 @@ export function TvSelecting({ room, client }: TvSelectingProps): JSX.Element {
                 ))}
               </div>
             ) : null}
-            {!room.canStart.ok ? <p className={styles.reason}>{room.canStart.reason}</p> : null}
+            {!room.canStart.ok ? (
+              <p className={styles.reason}>
+                {serverText(room.canStart.reason, lang, room.selectedGameId)}
+              </p>
+            ) : null}
           </div>
         ) : null}
       </div>

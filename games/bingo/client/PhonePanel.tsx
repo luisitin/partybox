@@ -2,13 +2,17 @@
 // same stores the in-game sheet writes (per phone), so a choice made while waiting is the choice
 // in the round.
 import type { JSX } from 'react';
-import { setMotionOff, useMotionOff } from '@partybox/game-sdk/ui';
+import { setMotionOff, useMotionOff, useT } from '@partybox/game-sdk/ui';
+import { STRINGS } from './strings';
 import { STYLES, setCardStyle, useCardStyle } from './styles';
+import { styleWords } from './words';
 import styles from './Controller.module.css';
 
 export function PhonePanel(): JSX.Element {
   const current = useCardStyle(4); // every style fits four cards: the full list is offered
   const motionOff = useMotionOff();
+  const L = useT(STRINGS);
+  const words = styleWords(L);
   return (
     <div className={styles.lobbyPanel}>
       {STYLES.map((s) => (
@@ -19,7 +23,7 @@ export function PhonePanel(): JSX.Element {
           onClick={() => setCardStyle(s.id)}
         >
           <span className={styles.rowText}>
-            {s.label} <small className={styles.rowHint}>· {s.hint}</small>
+            {words[s.id].label} <small className={styles.rowHint}>· {words[s.id].hint}</small>
           </span>
           <small>{s.id === current ? '✓' : ''}</small>
         </button>
@@ -31,9 +35,9 @@ export function PhonePanel(): JSX.Element {
         aria-pressed={!motionOff}
       >
         <span className={styles.rowText}>
-          Motion <small className={styles.rowHint}>· cards rise, numbers pop</small>
+          {L('Motion')} <small className={styles.rowHint}>· {L('cards rise, numbers pop')}</small>
         </span>
-        <small>{motionOff ? 'off' : 'on ✓'}</small>
+        <small>{motionOff ? L('off') : L('on ✓')}</small>
       </button>
     </div>
   );

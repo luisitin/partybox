@@ -2,7 +2,13 @@
 // wears (I-083) and the pick animation (I-031 A).
 import type { JSX } from 'react';
 import { Avatar } from '@partybox/game-sdk/ui';
+import { t } from '../i18n';
 import styles from './Join.module.css';
+
+/** A face's name in the device's language (the id when it has none: a new face reads as its id). */
+function avatarName(id: string): string {
+  return (t.avatars as Readonly<Record<string, string>>)[id] ?? id;
+}
 
 export interface JoinAvatarsProps {
   legend: string;
@@ -41,7 +47,7 @@ export function JoinAvatars({
             type="button"
             role="radio"
             aria-checked={id === avatarId}
-            aria-label={taken.has(id) ? `${id} (someone in the room has it)` : id}
+            aria-label={taken.has(id) ? t.join.avatarTaken(avatarName(id)) : avatarName(id)}
             className={`${styles.avatarButton} ${id === avatarId ? styles.selected : ''}`}
             onClick={() => onPick(id)}
           >
@@ -49,13 +55,13 @@ export function JoinAvatars({
             {/* I-083 A: a face already in the room — still yours to pick. */}
             {taken.has(id) ? (
               <span className={styles.takenBadge} aria-hidden>
-                in
+                {t.join.takenBadge}
               </span>
             ) : null}
             {/* I-079 C: the seasonal cell says why it is here. */}
             {id === season ? (
               <span className={styles.seasonTag} aria-hidden>
-                this month
+                {t.join.thisMonth}
               </span>
             ) : null}
           </button>

@@ -9,12 +9,14 @@ import {
   usePrefersReducedMotion,
   useSequence,
   useSoundApi,
+  useT,
 } from '@partybox/game-sdk/ui';
-import type { ScoreboardRow } from '@partybox/game-sdk/ui';
+import type { ScoreboardRow, Translator } from '@partybox/game-sdk/ui';
 import type { BingoTvView, CallView, ClaimView } from '../server/views';
 import { Card } from './Card';
 import type { SweepKind } from './Card';
 import { ARM_MS } from '../server/types';
+import { STRINGS } from './strings';
 import styles from './Tv.module.css';
 
 // A claim on the stage, in beats. The card drops in with a bounce (DROP), every daub an outline,
@@ -99,12 +101,13 @@ export function DibsLine({
   queue: string[];
 }): JSX.Element {
   const sound = useSoundApi();
+  const L = useT(STRINGS);
   const then =
     queue.length === 0
       ? ''
       : queue.length === 1
-        ? ` · then ${queue[0]}`
-        : ` · then ${queue[0]} and ${queue.length - 1} more`;
+        ? ` · ${L('then {name}', { name: queue[0] ?? '' })}`
+        : ` · ${L('then {name} and {n} more', { name: queue[0] ?? '', n: queue.length - 1 })}`;
   // I-115 A: a window that lapses (the arm goes with no claim) resolves for one beat.
   // The previous arm lives in state, adjusted during render (no ref read in render, no setState
   // in an effect); the effect plays the note and clears the line after its beat.
@@ -142,7 +145,7 @@ export function DibsLine({
       {arm ? (
         <div key={arm.until} className={`${styles.armLine} pb-pop`}>
           <BigText level="h2" tone="accent">
-            {arm.name} says BINGO?…
+            {L('{name} says BINGO?…', { name: arm.name })}
             {then ? <span className={styles.armThen}>{then}</span> : null}
           </BigText>
           <span className={styles.armDrain} style={{ animationDuration: `${ARM_MS}ms` }} />
@@ -150,7 +153,7 @@ export function DibsLine({
       ) : lapsed ? (
         <div key={lapsed.until} className={`${styles.armLine} ${styles.armLapsed}`}>
           <BigText level="h2" tone="muted">
-            {lapsed.name} says BINGO?… — never mind
+            {L('{name} says BINGO?… — never mind', { name: lapsed.name })}
           </BigText>
         </div>
       ) : null}
@@ -176,6 +179,7 @@ function CalledBoardView({
   current: number | null;
 }): JSX.Element {
   const lit = new Set(called);
+  const L = useT(STRINGS);
   // I-014 B: a soft tick as the current lamp catches (the landing beat + 60 ms).
   const sound = useSoundApi();
   // I-014 C: numbers that arrive together (a reconnect, a resume, the board mounting mid-game)
@@ -207,7 +211,12 @@ function CalledBoardView({
     };
   }, [calledKey, sound]);
   return (
-    <div className={styles.board} aria-label={`${called.length} numbers called`}>
+    <div
+      className={styles.board}
+      aria-label={
+        called.length === 1 ? L('1 number called') : L('{n} numbers called', { n: called.length })
+      }
+    >
       {BOARD_ROWS.map((letter, row) => (
         <div key={letter} className={styles.boardRow} data-letter={letter}>
           <span className={styles.boardLetter}>{letter}</span>
@@ -244,8 +253,9 @@ function lineOf(cells: readonly number[]): { kind: SweepKind; index: number } | 
 }
 
 /** "card 2 of 3" when the claimant holds several cards; nothing for the classic one. */
-export function whichCard(claim: ClaimView): string {
-  return claim.cardCount > 1 ? ` · card ${claim.cardIndex + 1} of ${claim.cardCount}` : '';
+export function whichCard(claim: ClaimView, L: Translator): string {
+  if (claim.cardCount <= 1) return '';
+  return ` · ${L('card {n} of {total}', { n: claim.cardIndex + 1, total: claim.cardCount })}`;
 }
 
 export function ClaimStage({

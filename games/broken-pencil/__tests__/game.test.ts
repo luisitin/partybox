@@ -314,6 +314,8 @@ describe('the show', () => {
     expect(results?.scores).toEqual({ p1: 0, p2: 0, p3: 0 });
     expect(results?.winnerIds.sort()).toEqual(['p1', 'p2', 'p3']);
     expect(normalizeText('A Cat, wearing   a Crown!')).toBe('cat wearing a crown');
+    expect(normalizeText('El Árbol')).toBe(normalizeText('arbol'));
+    expect(normalizeText('una piñata')).toBe('pinata');
     expect(isIntact({ ownerId: 'x', pages: [] })).toBe(false);
     expect(isIntact({ ownerId: 'x', pages: [{ kind: 'word', authorId: 'x', text: 'cat' }] })).toBe(
       false,

@@ -10,6 +10,7 @@ import {
   SoundProvider,
   Stage,
   Timer,
+  useT,
 } from '@partybox/game-sdk/ui';
 import { GameErrorBoundary } from '../controller/GameErrorBoundary';
 import { clientGames } from '../games.generated';
@@ -19,6 +20,7 @@ import type { MusicEngine } from '../music';
 import type { PlayCueOptions } from '@partybox/game-sdk/ui';
 import type { SoundCue, SoundEngine } from '../sound';
 import { CrossfadeSwap } from '../CrossfadeSwap';
+import { STRINGS } from './strings';
 import styles from './TvPlaying.module.css';
 
 export interface TvPlayingProps {
@@ -53,6 +55,7 @@ function DelayedFallback({ children }: { children: ReactNode }): JSX.Element | n
 }
 
 export function TvPlaying({ room, view, audio, onGameReady, music }: TvPlayingProps): JSX.Element {
+  const L = useT(STRINGS);
   // The curtain stays mounted while it fades out after a resume ("adjust state during render":
   // the paused flag flipping true → false starts the leave; animationend or 400 ms clears it).
   const paused = view?.paused ?? false;
@@ -199,7 +202,9 @@ export function TvPlaying({ room, view, audio, onGameReady, music }: TvPlayingPr
               </Suspense>
             </GameErrorBoundary>
           ) : (
-            <BigText tone="muted">Unknown game "{room.selectedGameId}"</BigText>
+            <BigText tone="muted">
+              {L('Unknown game "{id}"', { id: room.selectedGameId ?? '' })}
+            </BigText>
           )}
         </CrossfadeSwap>
       </div>

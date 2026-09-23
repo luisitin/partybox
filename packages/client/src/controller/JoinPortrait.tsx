@@ -52,7 +52,7 @@ export function JoinPortrait({ avatarId, name, photo, onPhoto }: JoinPortraitPro
             </span>
           )}
         </span>
-        {photo ? <span className={styles.photoCaption}>your photo</span> : null}
+        {photo ? <span className={styles.photoCaption}>{joinStrings().yourPhoto}</span> : null}
         <input
           ref={fileRef}
           className={styles.photoInput}

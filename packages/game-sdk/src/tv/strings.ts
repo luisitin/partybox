@@ -4,5 +4,15 @@
 import type { Strings } from '../ui/lang';
 
 export const STRINGS: Strings = {
-  es: {},
+  es: {
+    // PlayerChips, Scoreboard (screen-reader labels)
+    players: 'jugadores',
+    scoreboard: 'marcador',
+    'rank {rank}': 'puesto {rank}',
+    'wager placed': 'apuesta hecha',
+    // Timer: one label for every count (the design harness finds the timer by "…seconds left"), so
+    // the Spanish reads as a label and its value — right for 1 as for 30.
+    paused: 'en pausa',
+    '{n} seconds left': 'segundos restantes: {n}',
+  },
 };

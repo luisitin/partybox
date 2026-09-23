@@ -77,6 +77,7 @@ TypeScript plus content. Everything below is checked by `pnpm verify`; nothing i
 | `server/content.ts`                                                  | typed, validated access to `content/*.json`                                                                    |
 | `content/schema.ts`, `content/words.json`                            | `packs` (pack name → zod schema) + the pack itself                                                             |
 | `client/index.ts`, `client/Tv.tsx`, `client/Controller.tsx`          | lazy `clientModule` + the two dumb views (they import `@partybox/game-sdk/ui`)                                 |
+| `client/strings.ts`                                                  | the game's Spanish, keyed by the English sentence (`useT(STRINGS)` → `L('…')`, ADR-044)                        |
 | `fixtures/answer.json`, `fixtures/reveal.json`, `fixtures/done.json` | one full state per phase                                                                                       |
 | `__tests__/game.test.ts`                                             | unit tests pinning the README rules                                                                            |
 | `__tests__/contract.config.ts`                                       | optional hints for the contract suite: `hiddenFromTv`, `hiddenFromController`, `settingsVariants`              |
@@ -92,5 +93,7 @@ TypeScript plus content. Everything below is checked by `pnpm verify`; nothing i
 - [ ] Content pack validates; ≥ the item count your README promises; family-friendly default.
 - [ ] Controller: ≥ 44 px targets, explicit submitted state, works after reconnect.
 - [ ] TV: readable at 1080p from the couch (body ≥ 32 px), timer visible, nothing carried by colour alone.
+- [ ] Every visible sentence (and aria-label, placeholder, title) is `L('…')` with its Spanish in
+      `client/strings.ts`, and so are the manifest's picker lines (ADR-044; the coverage test checks).
 - [ ] `pnpm e2e:snap --game <id>` produces screenshots for every phase.
 - [ ] `pnpm verify` green; `CHANGELOG.md` updated; commit message `feat(<id>): …`.

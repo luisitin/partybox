@@ -17,7 +17,7 @@ const EXACT_ES: Readonly<Record<string, string>> = {
   'Nothing to replay.': 'No hay nada que repetir.',
   'End the current game first.': 'Termina primero el juego actual.',
   'Change that before the next game.': 'Cámbialo antes del próximo juego.',
-  'You cannot kick yourself.': 'No puedes expulsarte a ti mismo.',
+  'You cannot kick yourself.': 'No puedes expulsarte.',
   'Pick another player.': 'Elige a otro jugador.',
   'That player already left.': 'Ese jugador ya se fue.',
   'Unknown game.': 'Juego desconocido.',
@@ -36,9 +36,45 @@ const EXACT_ES: Readonly<Record<string, string>> = {
   "You're the VIP now — tap ★ VIP for host controls":
     'Ahora eres el VIP: toca ★ VIP para los controles',
   'Back online': 'Conectado de nuevo',
+  // canStart reasons (engine vip.ts): the VIP's Start button says why it is off.
+  'A game is already running.': 'Ya hay un juego en marcha.',
+  // Bots (engine bots.ts), joining (players.ts), kicks (vip.ts).
+  'Join the room first.': 'Primero entra en la sala.',
+  'Bots cannot add bots.': 'Los bots no pueden añadir bots.',
+  'That bot is already gone.': 'Ese bot ya se fue.',
+  "Only the bot's owner or the VIP can remove it.":
+    'Solo quien lo añadió o el VIP pueden quitar ese bot.',
+  'Pick an avatar.': 'Elige un avatar.',
+  'The VIP removed you from the room.': 'El VIP te sacó de la sala.',
+  // The socket layer's rejections (server sockets.ts).
+  'Bad join payload.': 'No se pudo procesar tu solicitud para entrar.',
+  'Bad input payload.': 'No se pudo procesar esa jugada.',
+  'Bad VIP payload.': 'No se pudo procesar esa acción del VIP.',
+  'Bad bot payload.': 'No se pudo procesar esa acción del bot.',
+  'Bad TV payload.': 'No se pudo procesar esa acción de la TV.',
+  'This TV is not watching a room.': 'Esta TV no está mostrando ninguna sala.',
 };
 
 const PATTERNS_ES: readonly [RegExp, (m: RegExpMatchArray) => string][] = [
+  // canStart reasons with the game's name and the head count (engine vip.ts).
+  [
+    /^(.+) has no bot support — remove the bot or pick a game that welcomes bots\.$/,
+    (m) => `${m[1]} no admite bots: quita el bot o elige un juego que los acepte.`,
+  ],
+  [
+    /^(.+) has no bot support — remove the (\d+) bots or pick a game that welcomes bots\.$/,
+    (m) => `${m[1]} no admite bots: quita los ${m[2]} bots o elige un juego que los acepte.`,
+  ],
+  [
+    /^(.+) needs at least (\d+) players \((\d+) here\)\.$/,
+    (m) => `${m[1]} necesita al menos ${m[2]} jugadores (hay ${m[3]}).`,
+  ],
+  [
+    /^(.+) takes at most (\d+) players \((\d+) here\)\.$/,
+    (m) => `${m[1]} admite como máximo ${m[2]} jugadores (hay ${m[3]}).`,
+  ],
+  [/^You can add at most (\d+) bots\.$/, (m) => `Puedes añadir como máximo ${m[1]} bots.`],
+  [/^(.+) was kicked$/, (m) => `Expulsaron a ${m[1]}`],
   [/^(.+) is now the VIP$/, (m) => `${m[1]} ahora es el VIP`],
   [/^(.+) joined \(next game\)$/, (m) => `${m[1]} entró (para el próximo juego)`],
   [/^(.+) joined$/, (m) => `${m[1]} entró`],
@@ -49,7 +85,7 @@ const PATTERNS_ES: readonly [RegExp, (m: RegExpMatchArray) => string][] = [
     /^Someone's trying to join as (.+) — that name's taken$/,
     (m) => `Alguien intenta entrar como ${m[1]}: ese nombre ya está en uso`,
   ],
-  [/^A code is 4 letters from (.+)\.$/, (m) => `Un código son 4 letras de ${m[1]}.`],
+  [/^A code is 4 letters from (.+)\.$/, (m) => `Un código tiene 4 letras de ${m[1]}.`],
 ];
 
 /** The server's sentence in the phone's language, or as sent. `gameId`: the room's game, whose
@@ -62,5 +98,7 @@ export function serverText(text: string, lang: Lang, gameId?: string | null): st
     const m = re.exec(text);
     if (m) return to(m);
   }
-  return translateSent(gameStrings(gameId), lang, text);
+  // Only patterns with real words around their placeholders: "{a} and {b}" in a game's table must
+  // not half-translate a sentence nobody listed.
+  return translateSent(gameStrings(gameId), lang, text, 5);
 }

@@ -11,34 +11,39 @@ import {
   WaitingScreen,
   useBeats,
   useSound,
+  useT,
 } from '@partybox/game-sdk/ui';
-import type { GameControllerProps } from '@partybox/game-sdk/ui';
-import type { BlanksControllerView } from '../server/index';
+import type { GameControllerProps, Translator } from '@partybox/game-sdk/ui';
+import type { BlanksControllerView, RevealedCard } from '../server/index';
 import type { Input } from '../server/types';
 import { FilledCard, LETTERS } from './Cards';
 import { ControllerHand, ControllerPick } from './ControllerHand';
 import { ControllerJudge, ControllerReveal } from './ControllerJudge';
 import { NextButton } from './NextButton';
-import { RESULT_BEATS_MS, list, votesLabel, winnerLine } from './TvResult';
+import { RESULT_BEATS_MS } from './TvResult';
 import { rankLine } from './rankLine';
+import { list, votesLabel, winnerLine } from './resultLines';
+import { STRINGS } from './strings';
 import styles from './blanks.module.css';
 
 type Props = GameControllerProps<BlanksControllerView, Input>;
 
 function ControllerIntro({ view, me }: Props): JSX.Element {
+  const L = useT(STRINGS);
   const judge = view.czar;
   const meJudge = judge?.id === me.id;
+  const standing = { rank: view.myRank, count: view.standings.length, score: view.myScore };
   return (
     <WaitingScreen
-      title={`Round ${view.round} of ${view.rounds}`}
+      title={L('Round {round} of {rounds}', { round: view.round, rounds: view.rounds })}
       hint={
         meJudge
-          ? 'You judge this round — sit back and read the cards.'
+          ? L('You judge this round — sit back and read the cards.')
           : judge
-            ? `${judge.name} judges this round.`
+            ? L('{name} judges this round.', { name: judge.name })
             : view.round === view.rounds
-              ? 'Last round. Play your worst.'
-              : 'Everyone votes. Play your worst.'
+              ? L('Last round. Play your worst.')
+              : L('Everyone votes. Play your worst.')
       }
       mood="wait"
     >
@@ -51,21 +56,47 @@ function ControllerIntro({ view, me }: Props): JSX.Element {
       {/* Somebody is on a run — the same line the TV's round card carries (review-loop #236). */}
       {view.streak ? (
         <p className="pb-caption">
-          {view.streak.name} is on a {view.streak.runs}-round streak
+          {L('{name} is on a {runs}-round streak', {
+            name: view.streak.name,
+            runs: view.streak.runs,
+          })}
         </p>
       ) : null}
       {/* Round 2 on: where I stand, on the same beat as the TV's board (review-loop #164). */}
       {view.standings.length > 0 ? (
         <p className="pb-caption pb-muted">
-          You&apos;re #{view.myRank} of {view.standings.length} · {view.myScore}{' '}
-          {view.myScore === 1 ? 'point' : 'points'}
+          {view.myScore === 1
+            ? L("You're #{rank} of {count} · 1 point", standing)
+            : L("You're #{rank} of {count} · {score} points", standing)}
         </p>
       ) : null}
     </WaitingScreen>
   );
 }
 
+/** Your own card's line when it did not win: the judge passed on it, or its votes and voters. */
+function yoursLine(view: BlanksControllerView, mine: RevealedCard, L: Translator): string {
+  const letter = LETTERS[mine.slot] ?? '';
+  if (view.judgeMode === 'czar') return L("Yours ({letter}) wasn't picked.", { letter });
+  const vars = {
+    letter,
+    n: mine.votes,
+    names: list(
+      mine.voters.map((v) => v.name),
+      L,
+    ),
+  };
+  if (mine.voters.length === 0)
+    return mine.votes === 1
+      ? L('Yours ({letter}) got 1 vote.', vars)
+      : L('Yours ({letter}) got {n} votes.', vars);
+  return mine.votes === 1
+    ? L('Yours ({letter}) got 1 vote — {names}.', vars)
+    : L('Yours ({letter}) got {n} votes — {names}.', vars);
+}
+
 function ControllerResult({ view, me, skip }: Props): JSX.Element {
+  const L = useT(STRINGS);
   const play = useSound();
   const final = view.phaseId === 'final' || view.phaseId === 'done';
   // The TV names the winner on its third beat (1.2 s). The phone used to say "You won the round!"
@@ -85,28 +116,32 @@ function ControllerResult({ view, me, skip }: Props): JSX.Element {
   // The judge's own phone: their pick, by name (they had no card in the round).
   const iPicked =
     view.role === 'judge' && winners.length === 1 && !winners[0]?.rando
-      ? `You picked ${winners[0]?.name}`
+      ? L('You picked {name}', { name: winners[0]?.name ?? '' })
       : null;
   const others = winners.filter((w) => w.submitterId !== me.id).map((w) => w.name);
   const noVotes = view.revealed.every((r) => r.votes === 0);
   // A shared point says so: a formality split (two cards, no one else to vote) or a tie.
   const wonLine =
     winners.length === 1
-      ? 'You won the round!'
+      ? L('You won the round!')
       : winners.length === 2 && noVotes
-        ? 'Only two cards — you both score'
-        : `You split it with ${list(others)}`;
-  const standing = rankLine(view, final);
+        ? L('Only two cards — you both score')
+        : L('You split it with {names}', { names: list(others, L) });
+  const standing = rankLine(view, final, L);
   return (
     <Screen
-      title={final ? 'Final scores' : `Round ${view.round} of ${view.rounds}`}
+      title={
+        final
+          ? L('Final scores')
+          : L('Round {round} of {rounds}', { round: view.round, rounds: view.rounds })
+      }
       // Untimed rounds: the result stays up until the VIP moves on.
       footer={
         final ? undefined : (
           <NextButton
             skip={skip}
             timed={view.timed}
-            label={view.round < view.rounds ? 'Next round' : 'Final scores'}
+            label={view.round < view.rounds ? L('Next round') : L('Final scores')}
           />
         )
       }
@@ -120,7 +155,7 @@ function ControllerResult({ view, me, skip }: Props): JSX.Element {
           className={`${styles.resultLine} ${final || named ? '' : styles.beatWait}`.trim()}
           aria-hidden={!final && !named}
         >
-          {final ? standing : view.iWon ? wonLine : (iPicked ?? winnerLine(view))}
+          {final ? standing : view.iWon ? wonLine : (iPicked ?? winnerLine(view, L))}
         </h2>
         {/* The "+1" and your new place belong to the same reveal: before the winner beat they give
             the headline away (review-loop #222). */}
@@ -150,8 +185,8 @@ function ControllerResult({ view, me, skip }: Props): JSX.Element {
               >
                 <Avatar avatarId={w.avatarId} size="var(--pb-chip-size)" />
                 <span className={styles.authorName}>{w.name}</span>
-                {votesLabel(view, w.votes) ? (
-                  <span className={styles.voteCount}>{votesLabel(view, w.votes)}</span>
+                {votesLabel(view, w.votes, L) ? (
+                  <span className={styles.voteCount}>{votesLabel(view, w.votes, L)}</span>
                 ) : null}
               </span>
               {/* A phone-only room sees the social payoff too (review-loop #170). */}
@@ -160,7 +195,12 @@ function ControllerResult({ view, me, skip }: Props): JSX.Element {
                 // animation's own opacity beats a class's (the trap from loop #196).
                 <span className={final || beat >= 1 ? '' : styles.beatWait}>
                   <span className={`${styles.voters} pb-caption`}>
-                    Voted by {list(w.voters.map((v) => v.name))}
+                    {L('Voted by {names}', {
+                      names: list(
+                        w.voters.map((v) => v.name),
+                        L,
+                      ),
+                    })}
                   </span>
                 </span>
               ) : null}
@@ -171,13 +211,7 @@ function ControllerResult({ view, me, skip }: Props): JSX.Element {
           worth a name: "got 2 votes — Priya and Sam" is the thing people lean over to say out loud
           (review-loop #226); a judge's round has no votes to name. */}
       {!final && named && mine && !mine.winner ? (
-        <p className="pb-caption pb-muted">
-          {view.judgeMode === 'czar'
-            ? `Yours (${LETTERS[mine.slot]}) wasn't picked.`
-            : `Yours (${LETTERS[mine.slot]}) got ${mine.votes} ${mine.votes === 1 ? 'vote' : 'votes'}${
-                mine.voters.length > 0 ? ` — ${list(mine.voters.map((v) => v.name))}` : ''
-              }.`}
-        </p>
+        <p className="pb-caption pb-muted">{yoursLine(view, mine, L)}</p>
       ) : null}
       {/* The point is already in the standings when the result opens, and the TV holds its own
           strip back until the winner is named (`stripScores`). The phone's board keeps its place
@@ -188,17 +222,21 @@ function ControllerResult({ view, me, skip }: Props): JSX.Element {
       {/* The night's best-liked card, on the phone too (review-loop #193). */}
       {final && view.bestCard ? (
         <div className={styles.bestCard}>
-          <p className={styles.kicker}>Card of the night</p>
+          <p className={styles.kicker}>{L('Card of the night')}</p>
           <FilledCard text={view.bestCard.black} whites={view.bestCard.whites} size="mini" winner>
             <span className={styles.author}>
               <Avatar avatarId={view.bestCard.avatarId} size="var(--pb-chip-size)" />
               <span className={styles.authorName}>{view.bestCard.name}</span>
               {view.judgeMode === 'czar' ? null : (
                 <span className={styles.voteCount}>
-                  {view.bestCard.votes} {view.bestCard.votes === 1 ? 'vote' : 'votes'}
+                  {view.bestCard.votes === 1
+                    ? L('1 vote')
+                    : L('{n} votes', { n: view.bestCard.votes })}
                 </span>
               )}
-              <span className={styles.bestRound}>round {view.bestCard.round}</span>
+              <span className={styles.bestRound}>
+                {L('round {round}', { round: view.bestCard.round })}
+              </span>
             </span>
           </FilledCard>
         </div>
@@ -208,6 +246,7 @@ function ControllerResult({ view, me, skip }: Props): JSX.Element {
 }
 
 export function Controller(props: Props): JSX.Element {
+  const L = useT(STRINGS);
   const { view } = props;
   switch (view.phaseId) {
     case 'intro':
@@ -226,7 +265,10 @@ export function Controller(props: Props): JSX.Element {
       return <ControllerResult {...props} />;
     default:
       return (
-        <WaitingScreen title={view.phoneOnly ? 'One moment…' : 'Look at the TV'} mood="watch" />
+        <WaitingScreen
+          title={view.phoneOnly ? L('One moment…') : L('Look at the TV')}
+          mood="watch"
+        />
       );
   }
 }

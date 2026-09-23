@@ -50,6 +50,23 @@ describe('translateSent', () => {
     expect(translateSent(SENT, 'es', 'Sam beat Ana (x2).')).toBe('Sam le ganó a Ana (x2).');
     expect(translateSent(SENT, 'es', 'Sam beat Ana (x2)!')).toBe('Sam beat Ana (x2)!');
   });
+  it('skips short patterns when asked, so an unknown sentence is never half-translated', () => {
+    const LOOSE: Strings = {
+      es: { '{a} and {b}': '{a} y {b}', '{n} rounds in a row': '{n} rondas seguidas' },
+    };
+    expect(translateSent(LOOSE, 'es', 'Sam and Ana left early')).toBe('Sam y Ana left early');
+    expect(translateSent(LOOSE, 'es', 'Sam and Ana left early', 5)).toBe('Sam and Ana left early');
+    expect(translateSent(LOOSE, 'es', '3 rounds in a row', 5)).toBe('3 rondas seguidas');
+  });
+  it('matches number placeholders to digits only, most specific pattern first', () => {
+    const T: Strings = {
+      es: { '{n} votes': '{n} votos', '{name} got {n} votes': '{name} recibió {n} votos' },
+    };
+    expect(translateSent(T, 'es', 'Most votes')).toBe('Most votes');
+    expect(translateSent(T, 'es', '12 votes')).toBe('12 votos');
+    expect(translateSent(T, 'es', 'Ana got 3 votes')).toBe('Ana recibió 3 votos');
+    expect(translateSent(T, 'es', 'Ana got 2.5 votes')).toBe('Ana recibió 2.5 votos');
+  });
   it('shows anything unknown, or any English phone, as sent', () => {
     expect(translateSent(SENT, 'es', 'Nobody left early')).toBe('Nobody left early');
     expect(translateSent(SENT, 'en', 'Sam left')).toBe('Sam left');

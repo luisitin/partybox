@@ -31,3 +31,9 @@ Engine or server imports, sockets, game-specific logic, anything a game shouldn'
 faces only on those phases — the claimant's chip (`PlayerChips` `leadId`) keeps its name and is drawn
 a size up — and `stripHidden` removes the strip entirely so the stage takes the room. Bingo uses both
 for a claim and its verdict.
+
+Language (ADR-044, 2026-09-22): `useLang()` / `setLang()` / `getLang()` are the device's language;
+`useT(table)` returns `L`, where `L('English {name}', { name })` answers in that language from an
+English-keyed `Strings` table and `L.sent(text)` translates a sentence the server wrote.
+`translate` / `translateSent` are the same outside React. The SDK's own components translate through
+`controller/strings.ts` and `tv/strings.ts`.

@@ -5,9 +5,11 @@ import type { JSX } from 'react';
 import { LIMITS } from '@partybox/shared';
 import type { RoomSnapshot } from '@partybox/shared';
 import { useEffect, useState } from 'react';
-import { Avatar, BigText, PlayerChips, Stage } from '@partybox/game-sdk/ui';
+import { Avatar, BigText, PlayerChips, Stage, useT } from '@partybox/game-sdk/ui';
+import type { Translator } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import { useServerInfo } from '../net/info';
+import { STRINGS } from './strings';
 import styles from './TvLobby.module.css';
 
 export interface TvLobbyProps {
@@ -17,9 +19,12 @@ export interface TvLobbyProps {
 }
 
 /** "Sam", "Sam and Priya", "Sam, Priya and Bot 2". */
-function listNames(names: string[]): string {
+function listNames(L: Translator, names: string[]): string {
   if (names.length <= 1) return names[0] ?? '';
-  return `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}`;
+  return L('{names} and {last}', {
+    names: names.slice(0, -1).join(', '),
+    last: names[names.length - 1] ?? '',
+  });
 }
 
 const LAST_UP_FACES = 4;
@@ -28,6 +33,7 @@ const LAST_UP_FACES = 4;
  *  "Sam won", a tie "Sam and Priya tied" (faces first, four at most then "+n"), an abandoned or
  *  scoreless game "no winner" in the muted colour with no face. */
 function LastUp({ room }: { room: RoomSnapshot }): JSX.Element | null {
+  const L = useT(STRINGS);
   const r = room.results;
   if (!r) return null;
   const game = room.games.find((g) => g.id === r.gameId)?.name ?? r.gameId;
@@ -39,11 +45,12 @@ function LastUp({ room }: { room: RoomSnapshot }): JSX.Element | null {
     .filter((p): p is NonNullable<typeof p> => p !== undefined);
   const shown = winners.slice(0, LAST_UP_FACES);
   const more = winners.length - shown.length;
+  const names = [...shown.map((w) => w.name), ...(more > 0 ? [`+${more}`] : [])];
   return (
-    <aside className={styles.lastUp} aria-label="last game">
-      <span className={styles.lastUpKicker}>Last up · {game}</span>
+    <aside className={styles.lastUp} aria-label={L('last game')}>
+      <span className={styles.lastUpKicker}>{L('Last up · {game}', { game })}</span>
       {winners.length === 0 ? (
-        <span className={`${styles.lastUpWinner} ${styles.lastUpNone}`}>no winner</span>
+        <span className={`${styles.lastUpWinner} ${styles.lastUpNone}`}>{L('no winner')}</span>
       ) : (
         <span className={styles.lastUpWinner}>
           <span className={styles.lastUpFaces}>
@@ -51,8 +58,9 @@ function LastUp({ room }: { room: RoomSnapshot }): JSX.Element | null {
               <Avatar key={w.id} avatarId={w.avatarId} size={32} />
             ))}
           </span>
-          {listNames([...shown.map((w) => w.name), ...(more > 0 ? [`+${more}`] : [])])}
-          {winners.length === 1 ? ' won' : ' tied'}
+          {winners.length === 1
+            ? L('{names} won', { names: listNames(L, names) })
+            : L('{names} tied', { names: listNames(L, names) })}
         </span>
       )}
     </aside>
@@ -98,6 +106,7 @@ function useAwayLeft(
 }
 
 export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
+  const L = useT(STRINGS);
   const info = useServerInfo();
   const players = room?.players ?? [];
   const awayLeft = useAwayLeft(players); // I-089 A
@@ -127,7 +136,7 @@ export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
             tone={full || locked ? 'accent' : 'muted'}
             className={empty ? styles.scanIdle : ''}
           >
-            {locked ? 'Room locked' : full ? t.lobby.full : t.lobby.scan}
+            {locked ? t.lobby.locked : full ? t.lobby.full : t.lobby.scan}
           </BigText>
           {info ? (
             <span
@@ -138,7 +147,7 @@ export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
                 className={styles.qr}
                 dangerouslySetInnerHTML={{ __html: info.qrSvg }}
                 role="img"
-                aria-label={`QR code for ${info.joinUrl}`}
+                aria-label={L('QR code for {url}', { url: info.joinUrl })}
               />
               {/* I-075 A: the PartyBox mark in the code's centre (error level H covers it). */}
               <span

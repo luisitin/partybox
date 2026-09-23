@@ -97,7 +97,7 @@ export function PhoneSettings({ audio, what, room, onLeave }: PhoneSettingsProps
   const pad = usePadStyle();
   const musicOn = useSyncExternalStore(subscribePhoneMusic, phoneMusicOn, () => false);
   const level = useSyncExternalStore(subscribePhoneMusic, phoneMusicLevel, () => 'normal' as const);
-  const musicWhat = what ?? 'the room is quiet';
+  const musicWhat = what ?? t.music.roomQuiet;
   const [tvSounds, setTvSounds] = useState(() => tvSoundsOn());
   return (
     <>
@@ -162,7 +162,7 @@ export function PhoneSettings({ audio, what, room, onLeave }: PhoneSettingsProps
         <span className={pickerStyles.toggleGlyph} aria-hidden>
           ♪
         </span>
-        Music on this phone
+        {t.phone.music}
         <span className={pickerStyles.toggleState}>
           {musicOn ? t.controller.on : t.controller.off}
         </span>
@@ -170,7 +170,7 @@ export function PhoneSettings({ audio, what, room, onLeave }: PhoneSettingsProps
       {/* The room's switch (the VIP's) plays too: the line and the level follow the music, not the phone's own switch. */}
       {what !== null && what !== undefined ? <p className="pb-caption">♪ {musicWhat}</p> : null}
       {what !== null && what !== undefined ? (
-        <div aria-label="Music level">
+        <div aria-label={t.phone.musicLevel}>
           {(['soft', 'normal', 'loud'] as const).map((lv) => (
             <button
               type="button"
@@ -179,20 +179,22 @@ export function PhoneSettings({ audio, what, room, onLeave }: PhoneSettingsProps
               className={pickerStyles.toggle}
               onClick={() => setPhoneMusicLevel(lv)}
             >
-              {lv}
+              {t.phone[lv]}
             </button>
           ))}
         </div>
       ) : null}
       {/* The owner (2026-09-22): the language, changeable after joining too — every screen follows. */}
       <section className={pickerStyles.gameSection}>
-        <h4 className={pickerStyles.gameTitle}>{lang === 'es' ? 'Idioma' : 'Language'}</h4>
+        <h4 className={pickerStyles.gameTitle}>{t.join.language}</h4>
         <JoinLangs lang={lang} onPick={setLang} />
       </section>
       {/* The owner (2026-09-22): the room's own row — share it, or leave for the room menu. */}
       {room ? (
         <section className={pickerStyles.gameSection}>
-          <h4 className={pickerStyles.gameTitle}>Room {room.code}</h4>
+          <h4 className={pickerStyles.gameTitle}>
+            {t.lobby.room} {room.code}
+          </h4>
           <ShareButton code={room.code} />
           {onLeave ? (
             <button
@@ -209,8 +211,8 @@ export function PhoneSettings({ audio, what, room, onLeave }: PhoneSettingsProps
               <span className={pickerStyles.toggleGlyph} aria-hidden>
                 🚪
               </span>
-              {leaving ? 'Leave the room?' : 'Leave the room'}
-              <span className={pickerStyles.toggleState}>{leaving ? 'tap again' : ''}</span>
+              {leaving ? t.phone.leaveConfirm : t.phone.leave}
+              <span className={pickerStyles.toggleState}>{leaving ? t.phone.tapAgain : ''}</span>
             </button>
           ) : null}
         </section>
@@ -242,7 +244,7 @@ export function PhoneSettings({ audio, what, room, onLeave }: PhoneSettingsProps
         <span className={pickerStyles.toggleGlyph} aria-hidden>
           📺
         </span>
-        TV sounds on this phone
+        {t.phone.tvSounds}
         <span className={pickerStyles.toggleState}>
           {tvSounds ? t.controller.on : t.controller.off}
         </span>

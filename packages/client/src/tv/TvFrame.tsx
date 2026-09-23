@@ -4,11 +4,14 @@
 import { useEffect, useState } from 'react';
 import type { JSX, ReactNode } from 'react';
 import type { RoomSnapshot } from '@partybox/shared';
-import { Avatar } from '@partybox/game-sdk/ui';
+import { Avatar, useT } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import { useServerInfo } from '../net/info';
 import type { Toast } from '../net/store';
 import type { HomeResult } from '../net/tv';
+import { serverText } from '../server-text';
+import { ownToast } from './own-toasts';
+import { STRINGS } from './strings';
 import styles from './TvFrame.module.css';
 
 export interface TvFrameProps {
@@ -26,7 +29,8 @@ export interface TvFrameProps {
 /** A misclick on the TV must not end the party: the first click arms, the second acts. */
 const HOME_ARM_MS = 4000;
 
-type HomeState = { kind: 'idle' } | { kind: 'armed' } | { kind: 'note'; text: string };
+/** A note names its sentence, never holds it: a language switch while it shows re-words it. */
+type HomeState = { kind: 'idle' } | { kind: 'armed' } | { kind: 'note'; note: 'off' | 'failed' };
 
 export function TvFrame({
   room,
@@ -37,6 +41,7 @@ export function TvFrame({
   footer,
   children,
 }: TvFrameProps): JSX.Element {
+  const L = useT(STRINGS);
   const info = useServerInfo();
   const [home, setHome] = useState<HomeState>({ kind: 'idle' });
   useEffect(() => {
@@ -52,8 +57,8 @@ export function TvFrame({
     }
     setHome({ kind: 'idle' });
     void onHome().then((result) => {
-      if (result === 'off') setHome({ kind: 'note', text: t.tv.homeOff });
-      else if (result === 'error') setHome({ kind: 'note', text: t.tv.homeFailed });
+      if (result === 'off') setHome({ kind: 'note', note: 'off' });
+      else if (result === 'error') setHome({ kind: 'note', note: 'failed' });
     });
   };
   const inLobby = room === null || room.status === 'lobby';
@@ -63,7 +68,9 @@ export function TvFrame({
         ? t.tv.homeConfirmReset
         : t.tv.homeConfirm
       : home.kind === 'note'
-        ? home.text
+        ? home.note === 'off'
+          ? t.tv.homeOff
+          : t.tv.homeFailed
         : t.appName;
   // A blip stays a header caption; after 3 s the whole stage says so (a lit lobby + QR would keep
   // inviting people to scan a dead server).
@@ -124,12 +131,15 @@ export function TvFrame({
       <div className={styles.toasts} aria-live="polite">
         {toasts.map((toast) => {
           // A handover changes who runs the room: the toast carries the face (review-loop #5).
+          // The list keeps English (the server's and the TV's own); only what shows is translated.
           const handover = /^(.+) is now the VIP$/.exec(toast.text);
           const who = handover ? room?.players.find((p) => p.name === handover[1]) : undefined;
           return (
             <div key={toast.id} className={`${styles.toast} ${who ? styles.toastVip : ''}`}>
               {who ? <Avatar avatarId={who.avatarId} size={36} /> : null}
-              {who ? `👑 ${who.name} is the VIP now` : toast.text}
+              {who
+                ? L('👑 {name} is the VIP now', { name: who.name })
+                : (ownToast(L, toast.text) ?? serverText(toast.text, L.lang, room?.selectedGameId))}
             </div>
           );
         })}

@@ -2,9 +2,8 @@
 // transitions, and never sends player events. `?room=CODE` watches a specific room.
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { JSX } from 'react';
-import { AvatarPhotos, ServerClockProvider, isSoundCue } from '@partybox/game-sdk/ui';
+import { AvatarPhotos, ServerClockProvider, isSoundCue, useLang } from '@partybox/game-sdk/ui';
 import { clientGames } from '../games.generated';
-import { t } from '../i18n';
 import { useStore } from '../net/store';
 import { createTvClient } from '../net/tv';
 import { bedFor, createBedEngine } from '../beds';
@@ -16,6 +15,7 @@ import { createSoundEngine, joinSemitones, lockSemitones } from '../sound';
 import type { SoundEngine } from '../sound';
 import { AudioGate } from './AudioGate';
 import { HostBar } from './HostBar';
+import { roomFullToast, seatOpenedToast, soundToast } from './own-toasts';
 import { TvFrame } from './TvFrame';
 import { CrossfadeSwap } from '../CrossfadeSwap';
 import { TvLobby } from './TvLobby';
@@ -49,6 +49,9 @@ function musicInstance(muted: boolean): MusicEngine {
 }
 
 export function TvApp(): JSX.Element {
+  // The stage follows the TV's language (the host bar's 🌐, `?lang=`): a switch re-renders from
+  // here. Never a re-key — this component owns the socket client and the audio engines.
+  useLang();
   const roomCode = new URLSearchParams(location.search).get('room') ?? undefined;
   const client = useMemo(() => createTvClient(roomCode), [roomCode]);
   const audio = useMemo(() => soundInstance(), []);
@@ -192,7 +195,7 @@ export function TvApp(): JSX.Element {
       setTimeout(() => audio.play('close'), 500);
       showLocalToast({
         kind: 'info',
-        text: `Room full — ${room.players.length} / ${room.capacity}`,
+        text: roomFullToast(room.players.length, room.capacity), // worded when shown (TvFrame)
       });
     }
     // I-054 B: a seat opening — the `ready` chime after the leave note.
@@ -200,7 +203,7 @@ export function TvApp(): JSX.Element {
       setTimeout(() => audio.play('ready'), 350);
       showLocalToast({
         kind: 'success',
-        text: `A seat opened — ${room.players.length} / ${room.capacity}`,
+        text: seatOpenedToast(room.players.length, room.capacity),
       });
     }
     // A game begins: a held G-major arpeggio (the intro itself never chimes — p.phase is null);
@@ -314,9 +317,7 @@ export function TvApp(): JSX.Element {
         audio={audio}
         music={music}
         beds={beds}
-        onToggle={(m) =>
-          showLocalToast({ kind: 'info', text: m ? t.tv.soundOffToast : t.tv.soundOnToast })
-        }
+        onToggle={(m) => showLocalToast({ kind: 'info', text: soundToast(m) })}
       />
     </ServerClockProvider>
   );

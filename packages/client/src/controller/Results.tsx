@@ -5,9 +5,10 @@
 import { useEffect, useRef } from 'react';
 import type { JSX } from 'react';
 import type { PlayerPublic, RoomSnapshot } from '@partybox/shared';
-import { PrimaryButton, Scoreboard, Screen } from '@partybox/game-sdk/ui';
+import { PrimaryButton, Scoreboard, Screen, useLang } from '@partybox/game-sdk/ui';
 import { clientGames } from '../games.generated';
 import { t } from '../i18n';
+import { serverText } from '../server-text';
 import type { Controller } from '../net/controller';
 import { myRow, nobodyScored, scoreboardRows, winnerLineFor } from './results-rows';
 import styles from './Results.module.css';
@@ -21,6 +22,7 @@ export interface ResultsProps {
 export function Results({ controller, room, me }: ResultsProps): JSX.Element {
   // Your own row is what you look for first: bring it above the sticky footer (review-loop #15).
   const list = useRef<HTMLDivElement>(null);
+  const lang = useLang();
   useEffect(() => {
     list.current?.querySelector('[aria-current="true"]')?.scrollIntoView({ block: 'nearest' });
   }, []);
@@ -93,11 +95,14 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
         <ul className={styles.awards}>
           {room.results.results.awards.map((a) => (
             <li key={a.id} className={styles.award}>
+              {/* The game's results() writes the award in English: its own table translates it. */}
               <span>
-                <strong>{a.title}</strong> ·{' '}
+                <strong>{serverText(a.title, lang, room.results?.gameId)}</strong> ·{' '}
                 {room.results?.players.find((p) => p.id === a.playerId)?.name ?? '?'}
               </span>
-              <span className="pb-muted pb-caption">{a.description}</span>
+              <span className="pb-muted pb-caption">
+                {serverText(a.description, lang, room.results?.gameId)}
+              </span>
             </li>
           ))}
         </ul>

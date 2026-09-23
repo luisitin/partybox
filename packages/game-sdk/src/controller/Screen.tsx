@@ -8,8 +8,10 @@
 // unmount leaves the node connected and is ignored. Reduced motion: no ghost.
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import type { JSX, ReactNode } from 'react';
+import { useT } from '../ui/lang';
 import { sanitizeSnapshot, usePrefersReducedMotion } from '../ui/motion';
 import styles from './Screen.module.css';
+import { STRINGS } from './strings';
 
 export interface ScreenProps {
   children: ReactNode;
@@ -23,6 +25,7 @@ const GHOST_MS = 350;
 const GHOST = styles['ghost'] ?? 'ghost';
 
 export function Screen({ children, footer, title, className }: ScreenProps): JSX.Element {
+  const L = useT(STRINGS);
   const section = useRef<HTMLElement>(null);
   // I-066 B: "more below" — true while the body can scroll further (scroll + resize watched).
   const body = useRef<HTMLDivElement>(null);
@@ -68,7 +71,7 @@ export function Screen({ children, footer, title, className }: ScreenProps): JSX
         <button
           type="button"
           className={styles.more}
-          aria-label="scroll down"
+          aria-label={L('scroll down')}
           onClick={() =>
             body.current?.scrollBy({ top: body.current.clientHeight * 0.8, behavior: 'smooth' })
           }

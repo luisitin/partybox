@@ -3,9 +3,9 @@
 // other two step back until the server moves the phone on; with Spicy on the hard tier's discs
 // breathe like an ember.
 import type { CSSProperties, JSX } from 'react';
+import { useT } from '@partybox/game-sdk/ui';
 import styles from './Controller.module.css';
-
-const LEVELS = ['easy', 'medium', 'hard'] as const;
+import { STRINGS } from './strings';
 
 export function Offers({
   offers,
@@ -18,6 +18,8 @@ export function Offers({
   picked: number | null;
   onPick: (option: number) => void;
 }): JSX.Element {
+  const L = useT(STRINGS);
+  const levels = [L('easy'), L('medium'), L('hard')];
   return (
     <ul className={styles.offers}>
       {offers.map((word, i) => (
@@ -37,7 +39,7 @@ export function Offers({
                 <span key={k} className={styles.heatDot} />
               ))}
             </span>
-            <span className={styles.offerLevel}>{LEVELS[i]}</span>
+            <span className={styles.offerLevel}>{levels[i]}</span>
             <span className={styles.offerText}>{word}</span>
           </button>
         </li>

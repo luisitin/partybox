@@ -173,6 +173,28 @@
   cursor: default;
 }
 
+/* Spanish (<html lang> follows the phone's): "Deshacer" / "Borrar" / "tinta" are wider than
+   Undo / Clear / ink, so the ink column gives way first (its label wraps inside it) and, on a
+   narrow phone, the row's gaps and Undo / Clear's side padding halve — it fits 360 px instead of
+   running off the screen, with the ink bar still ~35 px. English — and a language with no table
+   yet, which shows the English — keeps its layout; a new table adds its :lang() here. */
+.bottom:lang(es) {
+  grid-template-columns: minmax(0, 1fr) auto auto auto;
+}
+
+.bottom:lang(es) .inkLabel {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 400px) {
+  .bottom:lang(es) {
+    column-gap: var(--pb-space-1);
+  }
+  .bottom:lang(es) .tool {
+    padding: 0 var(--pb-space-2);
+  }
+}
+
 /* A sideways phone in Safari (≈ 330 px tall): the pad turns into a row — colours down the left,
    the sheet in the middle taking the height, ink and the pen tools stacked on the right — so the
    sheet is a square worth drawing on instead of a sliver under the palette (loop 228). */
@@ -216,6 +238,16 @@
       'undo clear';
     align-content: center;
     gap: 4px;
+  }
+  /* Side by side the two 64 px tools hold English; in Spanish ("Deshacer") each takes a row. */
+  .bottom:lang(es) {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      'ink ink'
+      'label label'
+      'sizes sizes'
+      'undo undo'
+      'clear clear';
   }
   .tool {
     min-height: 32px;

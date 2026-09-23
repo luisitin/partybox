@@ -5,13 +5,7 @@
 // and judges only the claim, on the card named.
 import { useState } from 'react';
 import type { CSSProperties, JSX } from 'react';
-import {
-  Screen,
-  WaitingScreen,
-  avatarColorVar,
-  useSound,
-  useSoundApi,
-} from '@partybox/game-sdk/ui';
+import { Screen, avatarColorVar, useSound, useSoundApi, useT } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { Input } from '../server/types';
 import type { BingoControllerView } from '../server/views';
@@ -28,7 +22,7 @@ import {
 } from './ControllerParts';
 import { AllCardsLayout, FocusLayout, Thumbnails, introOutline } from './Layouts';
 import { Countdown, HoldCurtain, IntroActions, IntroCount, StyleSheet } from './Overlays';
-import { MissedToast, TurnGate } from './Notices';
+import { ClaimNote, MissedToast, TurnGate, Watching } from './Notices';
 import {
   setCardStyle,
   styleSpec,
@@ -38,8 +32,10 @@ import {
   useOrientationLock,
 } from './styles';
 import type { CardStyle } from './styles';
-import { otherTitle, whyNot } from './copy';
+import { otherTitle } from './copy';
 import { EndScreens, afterLine, WinScreen } from './WinScreen';
+import { STRINGS } from './strings';
+import { styleWords } from './words';
 import {
   useCallFeel,
   useCloseFeel,
@@ -60,6 +56,7 @@ export function Controller({
 }: GameControllerProps<BingoControllerView, Input>): JSX.Element {
   const cards = view.cards;
   const n = cards?.length ?? 1;
+  const L = useT(STRINGS);
   const style = useCardStyle(n);
   const held = useHeld();
   // The TV plays the claim reveal in beats; this phone shows nothing conclusive (colours, "Not a
@@ -131,19 +128,7 @@ export function Controller({
   const demoSize = landscape ? 92 : 56;
   if (sheet === 'intro' && !intro) setSheet('');
 
-  if (!cards) {
-    return (
-      <WaitingScreen
-        title="You're watching this one"
-        hint={
-          view.current
-            ? `${view.current.letter} ${view.current.number} — ${view.current.call}. Called so far: ${view.called.join(', ')}`
-            : 'You get a card next game.'
-        }
-        mood="watch"
-      />
-    );
-  }
+  if (!cards) return <Watching view={view} />;
   const iDecide = view.decide !== null && (view.decide.same || view.decide.blackout);
   const layoutProps = {
     view,
@@ -174,7 +159,7 @@ export function Controller({
     return (
       <Screen
         key="round"
-        title={`Round ${view.round} of ${view.totalRounds}`}
+        title={L('Round {round} of {total}', { round: view.round, total: view.totalRounds })}
         footer={
           // The card-pick step (loop 344, the owner): swap, then Ready — the round starts when
           // everyone is (or 15 s in). Two buttons on one row so a short phone keeps its cards.
@@ -190,9 +175,9 @@ export function Controller({
               size={held === 'wide' ? 56 : demoSize}
             />
             <div>
-              <p className={styles.patternLabel}>{view.patternLabel}</p>
+              <p className={styles.patternLabel}>{L.sent(view.patternLabel)}</p>
               <p className={styles.hint}>
-                {view.patternHint}
+                {L.sent(view.patternHint)}
                 {/* I-094 B: the count line is the one instruction; the hint is the pattern's. */}
               </p>
             </div>
@@ -223,7 +208,7 @@ export function Controller({
                 view={view}
                 cards={cards}
                 marked={pick}
-                markLabel="swap this"
+                markLabel={L('swap this')}
                 onPick={setPick}
                 spent={cards.map((_, i) => i).filter((i) => !view.swappable.includes(i))}
               />
@@ -245,7 +230,7 @@ export function Controller({
     const kind = held === 'wide' ? 'tablet' : shown;
     const focus = kind === 'focus';
     const body = turn ? (
-      <TurnGate to={turn} style={styleSpec(shown).label} />
+      <TurnGate to={turn} style={styleWords(L)[shown].label} />
     ) : focus ? (
       <FocusLayout {...layoutProps} disabled={roundOver} up={up} onUp={setUp} />
     ) : (
@@ -257,8 +242,8 @@ export function Controller({
         title={
           roundOver
             ? view.winnerName
-              ? otherTitle(view, view.winnerName)
-              : 'No bingo this round'
+              ? otherTitle(view, view.winnerName, L)
+              : L('No bingo this round')
             : undefined
         }
         footer={
@@ -281,7 +266,7 @@ export function Controller({
         >
           <div className={styles.topRow}>
             {roundOver ? (
-              <p className={styles.hint}>{afterLine(view, iDecide)}</p>
+              <p className={styles.hint}>{afterLine(view, iDecide, L)}</p>
             ) : kind === 'grid' && n === 3 ? (
               // Three cards: the call sits in the grid's spare slot — not twice (owner, loop 309).
               <span className={styles.topSpacer} aria-hidden />
@@ -296,11 +281,7 @@ export function Controller({
           {view.phaseId === 'check' && view.claim?.playerId === me.id ? (
             // The note's lines are reserved from the claim (loop 313): filling them at the verdict
             // used to drop the card 25 px in one frame. Before the verdict they say what is on.
-            <p className={`${styles.wipeNote} ${verdictShown ? '' : styles.wipeNotePending}`}>
-              {verdictShown
-                ? `${whyNot(view.claim) ? `${whyNot(view.claim)}. ` : ''}Card ${(view.claim.cardIndex ?? 0) + 1} wiped — re-daub from memory when play resumes.`
-                : `Card ${(view.claim.cardIndex ?? 0) + 1} is ${view.phoneOnly ? 'up' : 'on the TV'} — everyone is checking it.`}
-            </p>
+            <ClaimNote view={view} verdictShown={verdictShown} />
           ) : null}
           {body}
           {view.pausedBy.length > 0 && !view.menuOpen && !sheet ? (
@@ -309,8 +290,9 @@ export function Controller({
           {view.resumeAt !== null ? (
             <Countdown
               resumeAt={view.resumeAt}
-              pattern={view.patternLabel}
-              by={view.resumeMine ? 'you' : view.resumeBy}
+              pattern={L.sent(view.patternLabel)}
+              by={view.resumeBy}
+              mine={view.resumeMine}
             />
           ) : null}
           {sheet ? (

@@ -3,11 +3,12 @@
 // "paper" marks — the physical game's convention, kept in every theme so the game is its own
 // thing. `fill` (server/cards.ts) is the one rule for where the text goes.
 import type { CSSProperties, JSX, ReactNode } from 'react';
-import { usePrefersReducedMotion } from '@partybox/game-sdk/ui';
+import { usePrefersReducedMotion, useT } from '@partybox/game-sdk/ui';
 import { BLANK } from '../content/schema';
 import { fill, fillText, glue } from '../server/cards';
 import type { Segment } from '../server/cards';
 import styles from './blanks.module.css';
+import { STRINGS } from './strings';
 
 export const LETTERS = 'ABCDEFGHIJKLMNOP';
 
@@ -70,6 +71,7 @@ export function FilledCard({
   winner,
   ariaLabel,
 }: FilledCardProps): JSX.Element {
+  const L = useT(STRINGS);
   const { segments, extra } = fill(text, whites);
   const sizeClass = styles[size] ?? '';
   const parts = glueBlanks(segments);
@@ -124,7 +126,7 @@ export function FilledCard({
         </ul>
       ) : null}
       {whites.length === 0 && pick > 1 ? (
-        <span className={styles.pickBadge}>Pick {pick}</span>
+        <span className={styles.pickBadge}>{L('Pick {n}', { n: pick })}</span>
       ) : null}
       {children}
     </article>

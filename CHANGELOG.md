@@ -51,6 +51,19 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Added
 
+- **Every screen in Spanish** (the owner, 2026-09-22 — "all text should be at least translatable
+  to Spanish when the language is changed"; ADR-044): the join screen's language pills now set the
+  phone's language for the whole party — lobby, game picker, settings, VIP menu, results, pause and
+  reconnect lines, the share sheet, and every screen of Bingo, Blanks, Broken Pencil, Lightning Round
+  and Wisecrack, phone-only stages included, aria-labels too. The 🎨 sheet changes it later without
+  closing or losing a typed answer; the TV follows `?lang=es`, its browser, or the host bar's new
+  🌐 Español / English button. Server toasts, errors, Start-button reasons and award lines show in
+  the phone's language. Cards, prompts, questions, words and the caller's voice stay English (game
+  content). Broken Pencil now counts "árbol" and "arbol" (and "el árbol") as the same guess.
+  `scripts/i18n-coverage.test.ts` keeps it that way: a sentence written as `L('…')` or a manifest
+  line without its Spanish fails verify. English reads as before, bar three grammar fixes ("1 point",
+  "1 number called", "1 earlier page").
+
 - **Blanks: the combos worth laughing at now reach the hands** (the owner, 2026-09-22 — "we want
   kickers like 'What was Hitler's favorite drink?' + 'Juice.'"): an 84-agent audit of every wild
   prompt kept 461 pairings two independent skeptics both scored 4-5 (152 new tags, 293 new answers)

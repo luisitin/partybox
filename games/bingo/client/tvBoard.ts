@@ -1,8 +1,8 @@
-// Small helpers for the TV's between-rounds board: where each row stood before this round's
-// points (I-103's climb), and the "Sam and Priya are" phrasing.
+// Small helpers for the TV: where each row stood before this round's points (I-103's climb), and
+// the stage's longer lines, each through the screen's translator `L` (the owner, 2026-09-22).
 import { useEffect } from 'react';
-import type { SoundApi } from '@partybox/game-sdk/ui';
-import type { BingoTvView } from '../server/views';
+import type { SoundApi, Translator } from '@partybox/game-sdk/ui';
+import type { BingoTvView, ClaimView } from '../server/views';
 import styles from './Tv.module.css';
 
 /**
@@ -28,11 +28,60 @@ export function climbFrom(view: BingoTvView): string[] {
     .map((r) => r.playerId);
 }
 
-/** "Sam is" / "Sam and Priya are" / "Sam and 2 others are". */
-export function joinNames(names: string[]): string {
-  if (names.length === 1) return `${names[0]} is`;
-  if (names.length === 2) return `${names[0]} and ${names[1]} are`;
-  return `${names[0]} and ${names.length - 1} others are`;
+/** The play kicker's count: " · 2 bingos so far" (nothing before the first). */
+export function bingosSoFar(n: number, L: Translator): string {
+  if (n <= 0) return '';
+  return ` · ${n === 1 ? L('1 bingo so far') : L('{n} bingos so far', { n })}`;
+}
+
+/** R2-01 B: "Sam is one away" / "Sam, Ana and Priya are one away" (roster order). */
+export function closeLine(names: string[], L: Translator): string {
+  if (names.length === 1) return L('{name} is one away', { name: names[0] ?? '' });
+  return L('{names} and {last} are one away', {
+    names: names.slice(0, -1).join(', '),
+    last: names[names.length - 1] ?? '',
+  });
+}
+
+/** I-117: the fast path's headline — a claim with nothing right on it. */
+export function hopelessLine(claim: ClaimView, spicy: boolean, L: Translator): string {
+  const vars = { name: claim.name, n: claim.red.length };
+  if (spicy) return L("{name}. {n} of those were never called. We're watching you.", vars);
+  return claim.red.length === 1
+    ? L('Not yet, {name} — {n} of those was never called', vars)
+    : L('Not yet, {name} — {n} of those were never called', vars);
+}
+
+/** I-108 A: a valid claim with daubs that were never called — say so. */
+export function strayLine(red: number, name: string, spicy: boolean, L: Translator): string {
+  if (spicy)
+    return red === 1
+      ? L("one fib and a bingo, {name} — we're watching you.", { name })
+      : L("{n} fibs and a bingo, {name} — we're watching you.", { n: red, name });
+  return red === 1
+    ? L('…and 1 daub that was never called — lucky the line was real.')
+    : L('…and {n} daubs that were never called — lucky the line was real.', { n: red });
+}
+
+/** The verdict's decide line after "Anyone": the choice, and what the winning card does. */
+export function decideText(view: BingoTvView, L: Translator): string {
+  const last = view.round >= view.totalRounds;
+  const choice = view.decide?.blackout
+    ? last
+      ? L(
+          'picks on their phone: keep going (same pattern or blackout) or finish. The caller waits.',
+        )
+      : L(
+          'picks on their phone: keep going (same pattern or blackout) or next round. The caller waits.',
+        )
+    : last
+      ? L('picks on their phone: keep going or finish. The caller waits.')
+      : L('picks on their phone: keep going or next round. The caller waits.');
+  const sitsOut =
+    view.decide?.same && (view.claim?.cardCount ?? 1) > 1
+      ? ` ${L('The winning card sits the pattern out; the rest play on.')}`
+      : '';
+  return `${choice}${sitsOut}`;
 }
 
 /**

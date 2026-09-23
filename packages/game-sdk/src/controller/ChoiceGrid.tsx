@@ -5,9 +5,11 @@
 import { useEffect, useState } from 'react';
 import type { JSX, ReactNode } from 'react';
 import { buzz } from '../ui/haptics';
+import { useT } from '../ui/lang';
 import { Screen } from './Screen';
 import styles from './ChoiceGrid.module.css';
 import { SDK_LINES, usePhoneOnly } from './phoneOnly';
+import { STRINGS } from './strings';
 
 export interface Choice {
   id: string;
@@ -57,6 +59,7 @@ interface Pending {
 
 export function ChoiceGrid(props: ChoiceGridProps): JSX.Element {
   const phoneOnly = usePhoneOnly();
+  const L = useT(STRINGS);
   const {
     className,
     after,
@@ -103,7 +106,7 @@ export function ChoiceGrid(props: ChoiceGridProps): JSX.Element {
       <div
         className={`${styles.grid} ${fill ? styles.fill : ''}`}
         role="radiogroup"
-        aria-label="choices"
+        aria-label={L('choices')}
       >
         {choices.map((choice, index) => {
           const isSelected = choice.id === shownId;
@@ -137,8 +140,8 @@ export function ChoiceGrid(props: ChoiceGridProps): JSX.Element {
               <span className={styles.mark} aria-hidden>
                 {isCorrect ? '✓' : isWrongPick ? '✗' : isSelected ? '✓' : ''}
               </span>
-              {isCorrect ? <span className="pb-visually-hidden">correct</span> : null}
-              {isWrongPick ? <span className="pb-visually-hidden">incorrect</span> : null}
+              {isCorrect ? <span className="pb-visually-hidden">{L('correct')}</span> : null}
+              {isWrongPick ? <span className="pb-visually-hidden">{L('incorrect')}</span> : null}
             </button>
           );
         })}
@@ -147,15 +150,15 @@ export function ChoiceGrid(props: ChoiceGridProps): JSX.Element {
       {correctId === null ? (
         selectedId !== null ? (
           <p className={styles.locked} role="status">
-            {lockedHint ?? SDK_LINES.lockedIn(phoneOnly)}
+            {lockedHint ?? SDK_LINES.lockedIn(phoneOnly, L)}
           </p>
         ) : pendingId !== null ? (
           <p className={styles.locked} role="status">
-            ✓ Locking in…
+            {L('✓ Locking in…')}
           </p>
         ) : pending?.failed ? (
           <p className={`${styles.locked} ${styles.failed}`} role="status">
-            {SDK_LINES.retry(phoneOnly)}
+            {SDK_LINES.retry(phoneOnly, L)}
           </p>
         ) : null
       ) : null}

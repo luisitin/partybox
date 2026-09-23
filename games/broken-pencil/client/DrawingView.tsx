@@ -1,9 +1,11 @@
 // Read-only rendering of a drawing as an inline SVG (crisp at any size, no canvas sizing dance).
 // `null` = the artist never sent one: an empty sheet that says so.
 import type { JSX } from 'react';
+import { useT } from '@partybox/game-sdk/ui';
 import type { Drawing } from '../server/types';
 import { CANVAS, PAPER, decodeDrawing } from './drawing';
 import styles from './DrawingView.module.css';
+import { STRINGS } from './strings';
 
 export interface DrawingViewProps {
   drawing: Drawing | null;
@@ -27,6 +29,7 @@ export function DrawingView({
   className,
   label,
 }: DrawingViewProps): JSX.Element {
+  const L = useT(STRINGS);
   const strokes = decodeDrawing(drawing);
   const empty = strokes.length === 0;
   // Spans (display: block) so the view is also valid inside phrasing content such as a prompt <p>.
@@ -36,7 +39,7 @@ export function DrawingView({
         viewBox={`0 0 ${CANVAS} ${CANVAS}`}
         className={styles.svg}
         role="img"
-        aria-label={label ?? (empty ? 'an empty sheet' : 'a drawing')}
+        aria-label={label ?? (empty ? L('an empty sheet') : L('a drawing'))}
       >
         <rect x="0" y="0" width={CANVAS} height={CANVAS} fill={PAPER} />
         {strokes.map((s, i) => (
@@ -51,7 +54,7 @@ export function DrawingView({
           />
         ))}
       </svg>
-      {empty ? <span className={styles.empty}>(nothing was drawn)</span> : null}
+      {empty ? <span className={styles.empty}>{L('(nothing was drawn)')}</span> : null}
     </span>
   );
 }

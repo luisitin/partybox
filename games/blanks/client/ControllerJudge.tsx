@@ -2,21 +2,49 @@
 // and "judge" (voters get the list; the judge in czar mode is the only voter; everyone else reads
 // the cards and waits). A voter's own card is listed but not votable.
 import type { JSX } from 'react';
-import { Avatar, Screen, VoteList, WaitingScreen } from '@partybox/game-sdk/ui';
-import type { GameControllerProps } from '@partybox/game-sdk/ui';
+import { Avatar, Screen, VoteList, WaitingScreen, useT } from '@partybox/game-sdk/ui';
+import type { GameControllerProps, Translator } from '@partybox/game-sdk/ui';
 import type { BlanksControllerView } from '../server/index';
 import type { Input } from '../server/types';
 import { FilledCard, FlipCard, InlineFilled, LETTERS } from './Cards';
 import { NextButton } from './NextButton';
+import { STRINGS } from './strings';
 import styles from './blanks.module.css';
 
 type Props = GameControllerProps<BlanksControllerView, Input>;
 
+/** No card to show yet: the TV has it, or (a phone-only room) it is a moment away. */
+function Elsewhere({ view, L }: { view: BlanksControllerView; L: Translator }): JSX.Element {
+  return (
+    <WaitingScreen title={view.phoneOnly ? L('One moment…') : L('Look at the TV')} mood="watch" />
+  );
+}
+
+/** The caption under the read-out card: the reader is told it is them (review-loop #248). */
+function readAlongLine(
+  view: BlanksControllerView,
+  meId: string,
+  mine: boolean,
+  L: Translator,
+): string {
+  if (view.reader?.id === meId)
+    return mine
+      ? L("You're reading them out — and this one is yours. Good luck.")
+      : L("You're reading them out. Take your time.");
+  if (mine) return L("This one's yours — keep a straight face.");
+  if (view.role === 'judge') return L('Read along. You pick the winner after the last card.');
+  if (view.judgeMode === 'czar' && view.czar)
+    return L('Read along. {name} decides after the last card.', { name: view.czar.name });
+  return view.reader
+    ? L('Read along. {name} is reading.', { name: view.reader.name })
+    : L('Read along. The vote is next.');
+}
+
 export function ControllerReveal({ view, me }: Props): JSX.Element {
+  const L = useT(STRINGS);
   const black = view.black;
   const current = view.cards[view.revealIndex];
-  if (!black || !current)
-    return <WaitingScreen title={view.phoneOnly ? 'One moment…' : 'Look at the TV'} mood="watch" />;
+  if (!black || !current) return <Elsewhere view={view} L={L} />;
   // Slots are anonymous even to the phone: my card is the one whose text is my play.
   const mine = view.myPlay !== null && view.myPlay.join('|') === current.whites.join('|');
   return (
@@ -24,7 +52,11 @@ export function ControllerReveal({ view, me }: Props): JSX.Element {
       className="pb-enter"
       title={
         <span className={styles.kicker}>
-          Round {view.round} · Card {view.revealIndex + 1} of {view.cardCount}
+          {L('Round {round} · Card {n} of {count}', {
+            round: view.round,
+            n: view.revealIndex + 1,
+            count: view.cardCount,
+          })}
         </span>
       }
     >
@@ -41,32 +73,22 @@ export function ControllerReveal({ view, me }: Props): JSX.Element {
           className={styles.readCard}
         />
         {/* The reader is told it is them; everyone else reads along (review-loop #248). */}
-        <p className="pb-caption pb-muted">
-          {view.reader?.id === me.id
-            ? mine
-              ? "You're reading them out — and this one is yours. Good luck."
-              : "You're reading them out. Take your time."
-            : mine
-              ? "This one's yours — keep a straight face."
-              : view.role === 'judge'
-                ? 'Read along. You pick the winner after the last card.'
-                : view.judgeMode === 'czar' && view.czar
-                  ? `Read along. ${view.czar.name} decides after the last card.`
-                  : view.reader
-                    ? `Read along. ${view.reader.name} is reading.`
-                    : 'Read along. The vote is next.'}
-        </p>
+        <p className="pb-caption pb-muted">{readAlongLine(view, me.id, mine, L)}</p>
       </div>
     </Screen>
   );
 }
 
 export function ControllerJudge({ view, send, skip }: Props): JSX.Element {
+  const L = useT(STRINGS);
   const black = view.black;
   const vote = view.vote;
-  if (!black || view.cards.length === 0)
-    return <WaitingScreen title={view.phoneOnly ? 'One moment…' : 'Look at the TV'} mood="watch" />;
-  const kicker = `Round ${view.round} · ${view.judgeMode === 'czar' ? 'the judge decides' : 'vote'}`;
+  if (!black || view.cards.length === 0) return <Elsewhere view={view} L={L} />;
+  const kicker =
+    view.judgeMode === 'czar'
+      ? L('Round {round} · the judge decides', { round: view.round })
+      : L('Round {round} · vote', { round: view.round });
+  const count = { voted: view.votedCount, expected: view.votersExpected };
   if (vote?.canVote) {
     // Two or three cards get VoteList's tall lettered cards (it draws the disc); more get compact
     // rows, where the letter is ours.
@@ -81,7 +103,7 @@ export function ControllerJudge({ view, send, skip }: Props): JSX.Element {
         header={
           answersOnly ? <FilledCard text={black.text} pick={black.pick} size="phone" /> : null
         }
-        prompt={view.judgeMode === 'czar' ? 'Pick the winner' : 'Vote for the best'}
+        prompt={view.judgeMode === 'czar' ? L('Pick the winner') : L('Vote for the best')}
         promptKey={`${view.round}`}
         // Two or three cards: tall lettered cards fill the thumb zone (as Wisecrack's A / B).
         size={large ? 'large' : 'compact'}
@@ -115,10 +137,10 @@ export function ControllerJudge({ view, send, skip }: Props): JSX.Element {
             <>
               <p className={styles.voteIn} role="status">
                 {view.votedCount >= view.votersExpected
-                  ? '✓ That’s everyone — here comes the result…'
-                  : `✓ Vote in · ${view.votedCount} / ${view.votersExpected} voted`}
+                  ? L('✓ That’s everyone — here comes the result…')
+                  : L('✓ Vote in · {voted} / {expected} voted', count)}
               </p>
-              <NextButton skip={skip} timed={view.timed} label="Close the vote now" />
+              <NextButton skip={skip} timed={view.timed} label={L('Close the vote now')} />
             </>
           ) : undefined
         }
@@ -132,7 +154,9 @@ export function ControllerJudge({ view, send, skip }: Props): JSX.Element {
   return (
     <Screen
       title={<span className={styles.kicker}>{kicker}</span>}
-      footer={judgeHolds ? undefined : <NextButton skip={skip} timed={view.timed} label="Next" />}
+      footer={
+        judgeHolds ? undefined : <NextButton skip={skip} timed={view.timed} label={L('Next')} />
+      }
     >
       <div className={styles.waitLine} role="status">
         {judge && view.judgeMode === 'czar' ? (
@@ -140,14 +164,12 @@ export function ControllerJudge({ view, send, skip }: Props): JSX.Element {
             <Avatar avatarId={judge.avatarId} size="var(--pb-chip-size)" />
             <span>
               {judge.connected
-                ? `${judge.name} is choosing…`
-                : `${judge.name} dropped — waiting a moment for them…`}
+                ? L('{name} is choosing…', { name: judge.name })
+                : L('{name} dropped — waiting a moment for them…', { name: judge.name })}
             </span>
           </>
         ) : (
-          <span>
-            {view.votedCount} / {view.votersExpected} voted
-          </span>
+          <span>{L('{voted} / {expected} voted', count)}</span>
         )}
       </div>
       {/* The question once, then the answers — the same shape as the vote list (review-loop #181). */}
@@ -156,7 +178,7 @@ export function ControllerJudge({ view, send, skip }: Props): JSX.Element {
           <FilledCard text={black.text} pick={black.pick} size="phone" />
         </div>
       ) : null}
-      <ul className={styles.cardList} aria-label="the cards">
+      <ul className={styles.cardList} aria-label={L('the cards')}>
         {view.cards.map((c) => (
           <li key={c.slot}>
             <FilledCard

@@ -3,12 +3,13 @@
 // under the host bar (review-loop #129) — is measured and shown in pages that turn every few
 // seconds, so every card gets its time on the TV while the phones carry the whole list.
 import { useEffect, useRef, useState } from 'react';
-import type { CSSProperties, JSX } from 'react';
-import { Avatar, Stage, useSound } from '@partybox/game-sdk/ui';
+import type { CSSProperties, JSX, ReactNode } from 'react';
+import { Avatar, Stage, useSound, useT } from '@partybox/game-sdk/ui';
 import type { GameTvProps, ViewPlayer } from '@partybox/game-sdk/ui';
 import type { BlanksTvView } from '../server/index';
 import { fillText } from '../server/cards';
 import { FilledCard, LETTERS } from './Cards';
+import { STRINGS } from './strings';
 import styles from './blanks.module.css';
 
 type Props = GameTvProps<BlanksTvView>;
@@ -28,41 +29,50 @@ function Holdout({ player }: { player: ViewPlayer }): JSX.Element {
   );
 }
 
+/** A translated sentence with a chip where its `{name}` is (`L` leaves an unfilled `{name}` in). */
+function around(sentence: string, node: ReactNode): JSX.Element {
+  const [before = '', after = ''] = sentence.split('{name}');
+  return (
+    <>
+      {before}
+      {node}
+      {after}
+    </>
+  );
+}
+
 /** "n / m voted · waiting for …" (vote mode) or "Ana is choosing…" (czar mode). */
 function Progress({ view }: Props): JSX.Element {
+  const L = useT(STRINGS);
   if (view.judgeMode === 'czar') {
     const judge = view.czar;
-    if (!judge) return <>Judging…</>;
+    if (!judge) return <>{L('Judging…')}</>;
     // Their phone dropped: the round holds a grace for them (review-loop #351).
     if (judge.connected === false && view.votedCount === 0)
-      return <>{judge.name} dropped — a moment for them to come back…</>;
+      return <>{L('{name} dropped — a moment for them to come back…', { name: judge.name })}</>;
     return view.votedCount > 0 ? (
       // The pick is in and the stage holds a beat before the result (loop #228).
-      <>{judge.name} has decided — here it comes…</>
+      <>{L('{name} has decided — here it comes…', { name: judge.name })}</>
     ) : (
       <>
         <Avatar avatarId={judge.avatarId} size="var(--pb-space-7)" />
-        {judge.name} is choosing…
+        {L('{name} is choosing…', { name: judge.name })}
       </>
     );
   }
   const n = view.votedCount;
   const m = view.votersExpected;
   const holdouts = view.players.filter((p) => p.status === 'active' && p.connected);
-  if (n === 0) return <>Vote on your phone · 0 / {m}</>;
+  if (n === 0) return <>{L('Vote on your phone · 0 / {expected}', { expected: m })}</>;
   if (holdouts.length === 1)
-    return (
-      <>
-        Just waiting for <Holdout player={holdouts[0]!} />…
-      </>
-    );
+    return around(L('Just waiting for {name}…'), <Holdout player={holdouts[0]!} />);
   // Every vote is in: the stage holds "That's everyone" for a beat, the way the answer stage
   // holds "Everyone's in!", instead of cutting straight to the result (loop #228).
-  if (holdouts.length === 0) return <>That&rsquo;s everyone — here comes the result…</>;
+  if (holdouts.length === 0) return <>{L('That’s everyone — here comes the result…')}</>;
   const rest = holdouts.length - NAMED_HOLDOUTS;
   return (
     <>
-      {n} / {m} voted · waiting for
+      {L('{voted} / {expected} voted · waiting for', { voted: n, expected: m })}
       {holdouts.slice(0, NAMED_HOLDOUTS).map((p) => (
         <Holdout key={p.id} player={p} />
       ))}
@@ -99,6 +109,7 @@ function pageStarts(grid: HTMLElement): number[] {
  * Mounted under a per-round key so the page count starts over with every new set of cards.
  */
 function JudgeGrid({ view }: Props): JSX.Element {
+  const L = useT(STRINGS);
   const count = view.cards.length;
   // Five or six long cards need three lines each at grid size, which is two rows the stage cannot
   // hold — and the room would rather read six small cards than page through them (review-loop
@@ -172,8 +183,17 @@ function JudgeGrid({ view }: Props): JSX.Element {
     <>
       <div className={styles.kickerRow}>
         <p className={styles.kicker}>
-          Round {view.round} · {view.judgeMode === 'czar' ? 'The judge decides' : 'Vote'}
-          {pages > 1 ? ` · cards ${LETTERS[from]}–${LETTERS[to]} (${current + 1} of ${pages})` : ''}
+          {view.judgeMode === 'czar'
+            ? L('Round {round} · The judge decides', { round: view.round })
+            : L('Round {round} · Vote', { round: view.round })}
+          {pages > 1
+            ? ` · ${L('cards {from}–{to} ({page} of {pages})', {
+                from: LETTERS[from] ?? '',
+                to: LETTERS[to] ?? '',
+                page: current + 1,
+                pages,
+              })}`
+            : ''}
         </p>
         <span className={styles.progressSlot} role="status" aria-live="polite">
           {/* I-004 A: keyed on the count, so every vote pops the pill once. */}
@@ -188,7 +208,11 @@ function JudgeGrid({ view }: Props): JSX.Element {
       <ul
         ref={ref}
         className={`${styles.judgeGrid} ${gridClass(count)} ${pages > 1 ? '' : styles.judgeGridFits} ${tiny ? styles.judgeGridTiny : ''} ${everyone ? styles.judgeGridDone : ''}`}
-        aria-label={pages > 1 ? `the cards, page ${current + 1} of ${pages}` : 'the cards'}
+        aria-label={
+          pages > 1
+            ? L('the cards, page {page} of {pages}', { page: current + 1, pages })
+            : L('the cards')
+        }
       >
         {view.cards.map((c, i) => (
           <li key={c.slot} style={{ animationDelay: `calc(${i} * 150ms)` }}>

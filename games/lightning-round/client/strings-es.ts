@@ -1,0 +1,108 @@
+// Lightning Round's screens in Spanish, keyed by the English sentence each screen writes as
+// `L('…')`. `{name}` marks a placeholder and must survive the translation. The questions and
+// their choices are content and stay in the deck's language.
+
+export const SCREENS_ES: Readonly<Record<string, string>> = {
+  // Round, category and difficulty (labels.ts)
+  'Final question': 'Pregunta final',
+  'Question {number} of {total}': 'Pregunta {number} de {total}',
+  easy: 'fácil',
+  medium: 'media',
+  hard: 'difícil',
+  '1 point': '1 punto',
+  '{n} points': '{n} puntos',
+  'waiting for {name}': 'esperando a {name}',
+  'waiting for {names} and {last}': 'esperando a {names} y {last}',
+
+  // Phone: waiting, answering, locked in (Controller.tsx)
+  Spectating: 'Modo espectador',
+  'You are in for the next game.': 'Entras en el próximo juego.',
+  'Get ready!': '¡Prepárate!',
+  'Four choices per question. Faster is worth more.':
+    'Cuatro opciones por pregunta. Cuanto más rápido, más puntos.',
+  '✓ Just made it': '✓ ¡Justo a tiempo!',
+  '✓ Just made it — look at the TV': '✓ ¡Justo a tiempo! Mira la TV',
+  '✓ Locked in with {seconds} s to spare': '✓ Confirmado con {seconds} s de sobra',
+  '✓ Locked in with {seconds} s to spare — look at the TV':
+    '✓ Confirmado con {seconds} s de sobra: mira la TV',
+  'you bet {stake}': 'apostaste {stake}',
+  'The bets are in…': 'Apuestas cerradas…',
+  'The bets are in — look at the TV': 'Apuestas cerradas: mira la TV',
+  'Thanks for playing!': '¡Gracias por jugar!',
+  'You finished #{rank} with {points}.': 'Quedaste en el puesto {rank} con {points}.',
+  'One moment…': 'Un momento…',
+  'Look at the TV': 'Mira la TV',
+  'the next question is on its way': 'la próxima pregunta ya viene',
+
+  // Phone: the wager (Controller.tsx, ControllerBits.tsx, CustomStake.tsx)
+  'Final question next': 'Viene la pregunta final',
+  '{amount} in the pot': '{amount} en juego',
+  'Wager part of your {points}': 'Apuesta parte de tus {points}',
+  'No points yet — you can only wager 0': 'Aún no tienes puntos: solo puedes apostar 0',
+  'Right answer: +wager. Wrong or no answer: −wager.':
+    'Acierto: +apuesta. Fallo o sin respuesta: −apuesta.',
+  'nothing at stake': 'nada en juego',
+  'All in · 100 %': 'Con todo · 100 %',
+  '{percent} % of your {score}': '{percent} % de tus {score}',
+  'Your bet: {amount}': 'Tu apuesta: {amount}',
+  'right +{amount} · wrong −{amount}': 'acierto +{amount} · fallo −{amount}',
+  'Nothing riding on this one — play for pride': 'Sin apuesta: juega por orgullo',
+  'custom wager': 'apuesta personalizada',
+  '✓ your stake': '✓ tu apuesta',
+  Custom: 'Otra',
+  'percentage of your score': 'porcentaje de tus puntos',
+  points: 'puntos',
+  'percent — switch to points': 'porcentaje: cambiar a puntos',
+  'points — switch to percent': 'puntos: cambiar a porcentaje',
+  pts: 'pts',
+  Place: 'Apostar',
+
+  // Phone: the reveal (ControllerBits.tsx)
+  'The answer is coming…': 'Ya viene la respuesta…',
+  'Correct!': '¡Correcto!',
+  'No answer': 'Sin respuesta',
+  'Too slow': 'Muy tarde',
+  Wrong: 'Incorrecto',
+  'It was {letter} · {answer}': 'Era la {letter} · {answer}',
+  'Wagered nothing · final score {score}': 'Sin apuesta · puntuación final {score}',
+  'Won the wager · you bet {bet} · final score {score}':
+    'Ganaste la apuesta · apostaste {bet} · puntuación final {score}',
+  'Lost the wager · you bet {bet} · final score {score}':
+    'Perdiste la apuesta · apostaste {bet} · puntuación final {score}',
+  '🔥 streak {streak}': '🔥 racha de {streak}',
+  '{seconds} s to spare': '{seconds} s de sobra',
+  'Streak of {streak} over': 'Se cortó tu racha de {streak}',
+  "everyone's results": 'resultados de todos',
+
+  // TV (Tv.tsx, TvQuestion.tsx, TvFinal.tsx)
+  'faster is worth more': 'más rápido, más puntos',
+  choices: 'opciones',
+  'correct answer': 'respuesta correcta',
+  'correct answer: {letter}': 'respuesta correcta: {letter}',
+  'locked in': 'respondieron',
+  results: 'resultados',
+  leader: 'líder',
+  'streak {streak}': 'racha de {streak}',
+  'no answer': 'sin respuesta',
+  'picked {letter}, correct': 'eligió la {letter}, correcta',
+  'picked {letter}, wrong': 'eligió la {letter}, incorrecta',
+  placed: 'apostaron',
+  'Place your wagers': '¡A apostar!',
+  'Right answer wins the bet · wrong answer loses it':
+    'Si aciertas, ganas la apuesta · si fallas, la pierdes',
+  '{name} leads by {gap}': '{name} lleva {gap} de ventaja',
+  "That's the round!": '¡Fin de la ronda!',
+  'Final question · the bets are in': 'Pregunta final · apuestas cerradas',
+  'bet {bet}': 'apostó {bet}',
+  'no bet': 'no apostó',
+
+  // Awards: the server writes them (server/scoring.ts); the results screens show them.
+  'Lightning fingers': 'Dedos relámpago',
+  'Fastest correct answers: {seconds} s on average':
+    'Aciertos más rápidos: {seconds} s en promedio',
+  'Hot streak': 'Racha de fuego',
+  '{count} correct answers in a row': '{count} aciertos seguidos',
+  'High roller': 'Gran apuesta',
+  'Won a {points}-point wager on the final question':
+    'Ganó una apuesta de {points} puntos en la pregunta final',
+};

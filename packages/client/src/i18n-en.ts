@@ -1,8 +1,11 @@
 // English for every shell string: the source every translation mirrors (i18n-es.ts), and the
 // fallback for any language without a table. Read through `t` (i18n.ts), which picks the device's.
+// The phone's newer sections live in i18n-en-phone.ts (this file's line cap) and are spread in.
+import { enPhone } from './i18n-en-phone';
 import { ordinal } from './ordinal';
 
 export const en = {
+  ...enPhone,
   appName: 'PartyBox',
   appShort: 'PB',
   join: {
@@ -26,6 +29,23 @@ export const en = {
     kicked: 'The VIP removed you from the room. You can join again.',
     restarted: 'The party started over — tap Join to get back in.',
     noRooms: 'No room is open right now. Start the server and open /tv on the big screen.',
+    askRoom: 'Ask the VIP to make room.',
+    askUnlock: 'Ask the VIP to unlock it.',
+    roomFull: 'Room is full',
+    roomLocked: 'Room is locked',
+    nameTakenBy: (name: string) => `That name is taken — ${name} is already in.`,
+    example: (name: string) => `e.g. ${name}`,
+    preview: 'preview',
+    howSeen: 'How the room sees you',
+    language: 'Language',
+    /** The language pills' group label (screen readers). */
+    languageGroup: 'language',
+    avatarTaken: (avatar: string) => `${avatar} (someone in the room has it)`,
+    takenBadge: 'in',
+    thisMonth: 'this month',
+    yourPhoto: 'your photo',
+    openFailed: 'Could not open a room.',
+    noAnswer: 'The host did not answer.',
   },
   lobby: {
     title: 'Lobby',
@@ -47,6 +67,13 @@ export const en = {
     removeBotsFirst: (n: number) => `remove ${n} bot${n === 1 ? '' : 's'} first`,
     botsWelcome: 'Bots welcome',
     noBots: 'No bots',
+    leave: '🚪 Leave',
+    leaveConfirm: 'Leave?',
+    dismissTips: 'dismiss tips',
+    nudged: '👋 Nudged',
+    nudge: (name: string) => `👋 Hurry up, ${name}!`,
+    setup: '🎨 Set up your phone while you wait',
+    playersList: 'players',
   },
   selecting: {
     vipChoosing: (name: string) => `${name} is choosing a game…`,
@@ -66,11 +93,19 @@ export const en = {
     more: (label: string) => `more ${label}`,
     noneTicked: 'None ticked: the whole category',
     ticked: (n: number) => `${n} ticked`,
+    theVip: 'The VIP',
+    lastRecap: (game: string, code: string) => `📼 Open the last recap (${game}, room ${code})`,
+    phoneOnly: 'Phone only',
+    phoneOnlyOn: 'the phones show what the TV would',
+    phoneOnlyOff: 'the TV is the stage',
+    games: 'games',
   },
   results: {
     title: 'Results',
     winner: (name: string) => `${name} wins!`,
     winners: (names: string) => `${names} win!`,
+    /** Two tied winners' names, for `winners`. */
+    pair: (a: string, b: string) => `${a} & ${b}`,
     tieAmong: (names: string, others: number) =>
       `${names} & ${others} ${others === 1 ? 'other' : 'others'} tie!`,
     tie: "It's a tie!",
@@ -81,6 +116,7 @@ export const en = {
     scorelessHintPhones: 'No points in this game — the books are the result.',
     nobodyScored: 'The game ended before anyone could.',
     nobody: 'Nobody scored',
+    noBingos: 'No bingos this time',
     playAgain: 'Play again',
     newGame: 'New game',
     lobby: 'Back to lobby',
@@ -106,6 +142,15 @@ export const en = {
     groupGame: 'Game',
     groupRoom: 'Room',
     groupPlayers: 'Players',
+    tipsAgain: 'Show the tips again',
+    tipsAgainLabel: 'show the VIP tips again',
+    roomSize: 'Room size',
+    roomSizeGroup: 'room size',
+    smaller: 'smaller room',
+    bigger: 'bigger room',
+    lockAtSize: (n: number) => `Lock at this size (${n})`,
+    listed: '🔓 Public — listed for anyone',
+    unlisted: '🔒 Private — code only',
   },
   paused: {
     other: (name: string) => `Paused — ${name} will resume the game`,
@@ -117,7 +162,12 @@ export const en = {
   },
   connection: {
     reconnecting: 'Reconnecting…',
+    /** The link banner with the server's grace left ("Reconnecting… 1:42 left", I-089 C). */
+    reconnectingLeft: (mmss: string) => `Reconnecting… ${mmss} left`,
     connecting: 'Connecting…',
+    connected: 'Connected',
+    /** The header dot's label, by the link's state (flapFree.ts `linkLabel`). */
+    dot: { connecting: 'connecting', connected: 'connected', reconnecting: 'reconnecting' },
     loadingGame: 'Getting the game ready…',
     lostServer: 'Lost the PartyBox server — reconnecting…',
     /** The owner (2026-09-22): the banner ends here instead of vanishing, so a flapping link

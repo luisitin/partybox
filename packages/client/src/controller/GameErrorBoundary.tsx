@@ -2,6 +2,7 @@
 // button, because the usual cause is a page from an older build (see net/build.ts).
 import { Component } from 'react';
 import type { ErrorInfo, JSX, ReactNode } from 'react';
+import { t } from '../i18n';
 
 interface Props {
   children: ReactNode;
@@ -28,7 +29,7 @@ export class GameErrorBoundary extends Component<Props, State> {
     if (!this.state.error) return this.props.children;
     return (
       <div role="alert" style={{ padding: 'var(--pb-space-6)', textAlign: 'center' }}>
-        <p style={{ fontWeight: 800 }}>This game hit a snag.</p>
+        <p style={{ fontWeight: 800 }}>{t.playing.snag}</p>
         <p className="pb-muted pb-caption">{this.state.error.message}</p>
         <button
           type="button"
@@ -42,7 +43,7 @@ export class GameErrorBoundary extends Component<Props, State> {
             fontWeight: 800,
           }}
         >
-          Reload
+          {t.playing.reload}
         </button>
       </div>
     ) as JSX.Element;

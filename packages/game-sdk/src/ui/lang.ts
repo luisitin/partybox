@@ -100,10 +100,19 @@ export function translate(
   return fill(hit ?? en, vars);
 }
 
-type Pattern = { re: RegExp; names: string[]; to: string };
+/** `letters`: how many letters the English has outside its placeholders. */
+type Pattern = { re: RegExp; names: string[]; to: string; letters: number };
 const compiled = new WeakMap<Readonly<Record<string, string>>, Pattern[]>();
 
-/** The table's `{placeholder}` sentences as patterns, built once per table. */
+/** Placeholders that only ever hold a number match digits, so "{n} votes" never reads "Most votes"
+ *  as n = "Most" (review 2026-09-22). */
+const NUMERIC = new Set([
+  ...['n', 'm', 'count', 'number', 'total', 'cap', 'percent', 'pct', 'page', 'pages'],
+  ...['round', 'rounds', 'score', 'rank', 'seconds', 'points', 'amount', 'streak', 'stake', 'bet'],
+]);
+
+/** The table's `{placeholder}` sentences as patterns, built once per table; the most specific
+ *  (most letters outside the placeholders) are tried first, so table order never decides. */
 function patterns(rows: Readonly<Record<string, string>>): Pattern[] {
   let out = compiled.get(rows);
   if (out) return out;
@@ -114,9 +123,14 @@ function patterns(rows: Readonly<Record<string, string>>): Pattern[] {
     const body = en
       .split(/\{\w+\}/)
       .map((part) => part.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
-      .join('(.+?)');
-    out.push({ re: new RegExp(`^${body}$`), names, to });
+      .map((part, i) =>
+        i === 0 ? part : `${NUMERIC.has(names[i - 1]!) ? '(-?\\d[\\d.,]*)' : '(.+?)'}${part}`,
+      )
+      .join('');
+    const letters = en.replace(/\{\w+\}/g, '').replace(/[^\p{L}]/gu, '').length;
+    out.push({ re: new RegExp(`^${body}$`), names, to, letters });
   }
+  out.sort((a, b) => b.letters - a.letters);
   compiled.set(rows, out);
   return out;
 }
@@ -124,14 +138,18 @@ function patterns(rows: Readonly<Record<string, string>>): Pattern[] {
 /**
  * A sentence the server wrote in English, in `lang`: the table's exact entry, else the first
  * `{placeholder}` entry whose English matches it ("{name} left" matches "Sam left"), else as sent.
+ * `minLetters`: skip patterns with fewer letters outside their placeholders — a caller matching
+ * sentences it does not know (the shell's fallback to a game's table) keeps "{a} and {b}" from
+ * half-translating any sentence with an "and" in it.
  */
-export function translateSent(table: Strings, lang: Lang, text: string): string {
+export function translateSent(table: Strings, lang: Lang, text: string, minLetters = 0): string {
   if (lang === 'en') return text;
   const rows = table[lang];
   if (!rows) return text;
   const exact = rows[text];
   if (exact !== undefined) return exact;
   for (const p of patterns(rows)) {
+    if (p.letters < minLetters) continue;
     const m = p.re.exec(text);
     if (!m) continue;
     const vars: Record<string, string> = {};

@@ -5,11 +5,13 @@
 import { Suspense } from 'react';
 import type { JSX } from 'react';
 import type { PushedView, RoomSnapshot, TvView } from '@partybox/shared';
-import { Avatar, BigText, Confetti, Scoreboard, Stage } from '@partybox/game-sdk/ui';
+import { Avatar, BigText, Confetti, Scoreboard, Stage, useT } from '@partybox/game-sdk/ui';
 import { GameErrorBoundary } from '../controller/GameErrorBoundary';
 import { nobodyScored, scoreboardRows, winnerLine } from '../controller/results-rows';
 import { clientGames } from '../games.generated';
 import { t } from '../i18n';
+import { serverText } from '../server-text';
+import { STRINGS } from './strings';
 import styles from './TvResults.module.css';
 
 export interface TvResultsProps {
@@ -19,6 +21,9 @@ export interface TvResultsProps {
 }
 
 export function TvResults({ room, lastView = null }: TvResultsProps): JSX.Element {
+  const L = useT(STRINGS);
+  // An award is the game server's sentence: its own table carries the Spanish.
+  const said = (text: string): string => serverText(text, L.lang, room.results?.gameId);
   const rows = scoreboardRows(room);
   const awards = room.results?.results.awards ?? [];
   const many = rows.length >= 7;
@@ -94,12 +99,12 @@ export function TvResults({ room, lastView = null }: TvResultsProps): JSX.Elemen
             size={large ? 'lg' : 'md'}
           />
           {awards.length > 0 ? (
-            <ul className={styles.awards} aria-label="awards">
+            <ul className={styles.awards} aria-label={L('awards')}>
               {awards.map((a) => (
                 <li key={a.id} className={styles.award}>
-                  <span className={styles.awardTitle}>{a.title}</span>
+                  <span className={styles.awardTitle}>{said(a.title)}</span>
                   <span className={styles.awardWho}>{nameOf(a.playerId)}</span>
-                  <span className="pb-muted pb-caption">{a.description}</span>
+                  <span className="pb-muted pb-caption">{said(a.description)}</span>
                 </li>
               ))}
             </ul>
@@ -109,7 +114,7 @@ export function TvResults({ room, lastView = null }: TvResultsProps): JSX.Elemen
       <p className={`pb-muted pb-caption ${awards.length === 0 ? styles.centredHint : ''}`}>
         {t.vip.badge}: {t.results.playAgain} · {t.results.newGame} · {t.results.lobby}
         {/* I-034 A: the room knows the game was kept. */}
-        {room.recording ? <> · 📼 Recap saved on the host PC</> : null}
+        {room.recording ? <> · {L('📼 Recap saved on the host PC')}</> : null}
       </p>
     </Stage>
   );

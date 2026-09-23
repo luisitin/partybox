@@ -10,7 +10,7 @@ import { Preview } from './preview/Preview';
 import '@fontsource-variable/nunito/wght.css';
 import './styles/tokens.css';
 import './styles/global.css';
-import { applyMotionPreference } from '@partybox/game-sdk/ui';
+import { applyMotionPreference, getLang, subscribeLang } from '@partybox/game-sdk/ui';
 import { THEMES, applyTheme } from './theme';
 import type { ThemeId } from './theme';
 import { fitTvToViewport } from './tv/fit';
@@ -39,6 +39,14 @@ function route(pathname: string): JSX.Element {
   document.documentElement.dataset['surface'] = 'controller';
   return <ControllerApp />;
 }
+
+// <html lang> follows the device's language (the join pills, the 🎨 sheet): screen readers speak
+// the page in it, and the browser stops offering to translate a page that is already Spanish.
+const syncLang = (): void => {
+  document.documentElement.lang = getLang();
+};
+syncLang();
+subscribeLang(syncLang);
 
 guardStaleChunks();
 const rootEl = document.getElementById('root');

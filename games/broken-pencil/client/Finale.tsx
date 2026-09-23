@@ -3,19 +3,23 @@
 // it up under "That's the show!" until Play again / New game / Home (review-loop #63) through
 // clientModule.Finale.
 import type { CSSProperties, JSX } from 'react';
-import { BigText } from '@partybox/game-sdk/ui';
+import { BigText, useT } from '@partybox/game-sdk/ui';
 import type { GameFinaleProps } from '@partybox/game-sdk/ui';
 import type { PencilTvView } from '../server/views';
+import { STRINGS } from './strings';
 import styles from './Tv.module.css';
 
 export function Summary({ view }: { view: PencilTvView }): JSX.Element {
+  const L = useT(STRINGS);
   const summary = view.summary ?? [];
   return (
     <>
       <BigText level="h1" tone="accent">
-        {view.intactBooks} of {view.bookCount} books survived
+        {view.intactBooks === 1
+          ? L('1 of {total} books survived', { total: view.bookCount })
+          : L('{n} of {total} books survived', { n: view.intactBooks, total: view.bookCount })}
       </BigText>
-      <p className={styles.kicker}>every book, first word → last guess</p>
+      <p className={styles.kicker}>{L('every book, first word → last guess')}</p>
       {/* Seven or more books: four tighter columns, so two-row strips and three-line pairs keep
           the last row inside the overscan frame (pass 895: eight books ran to the frame's edge). */}
       <ul className={`${styles.summary} ${summary.length >= 7 ? styles.summaryMany : ''}`}>
@@ -33,7 +37,7 @@ export function Summary({ view }: { view: PencilTvView }): JSX.Element {
             <span
               className={`${b.intact ? styles.intactMark : styles.brokenMark} ${styles.markStamp}`}
             >
-              {b.intact ? '✓ unbroken' : '✕ broken'}
+              {b.intact ? L('✓ unbroken') : L('✕ broken')}
             </span>
           </li>
         ))}

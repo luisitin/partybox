@@ -7,10 +7,12 @@
 // answer was blank, no vote ran) lands the same way: the real answer's card wins "by default".
 import { useEffect } from 'react';
 import type { CSSProperties, JSX } from 'react';
-import { Avatar, Stage, useBeats, useSound } from '@partybox/game-sdk/ui';
+import { Avatar, Stage, useBeats, useSound, useT } from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
 import type { WisecrackTvView } from '../server/index';
-import { BLANK, LETTERS, PromptHeader, answerClass, isShort } from './TvVote';
+import { BLANK, answerText } from './blank';
+import { STRINGS } from './strings';
+import { LETTERS, PromptHeader, answerClass, isShort } from './TvVote';
 import { REVEAL_BEATS_MS } from './timing';
 import styles from './wisecrack.module.css';
 
@@ -21,6 +23,7 @@ const BEAT_AUTHORS = 2;
 const BEAT_POINTS = 3;
 
 export function TvReveal({ view }: Props): JSX.Element {
+  const L = useT(STRINGS);
   const play = useSound();
   const beat = useBeats(REVEAL_BEATS_MS);
   const players = new Map(view.players.map((p) => [p.id, p]));
@@ -46,12 +49,12 @@ export function TvReveal({ view }: Props): JSX.Element {
           const voters = r.voterIds
             .map((id) => players.get(id))
             .filter((p): p is NonNullable<typeof p> => p !== undefined);
-          const pill = r.sweep ? 'Sweep' : tie && winner ? 'Tie' : null;
+          const pill = r.sweep ? L('Sweep') : tie && winner ? L('Tie') : null;
           return (
             <article
               key={r.playerId}
               className={`${styles.card} ${styles.cardStill} ${styles.revealCard} ${winner && beat >= BEAT_POINTS ? styles.winner : ''} ${!winner && top > 0 && !tie && beat >= BEAT_POINTS ? styles.loser : ''}`}
-              aria-label={`answer ${LETTERS[r.slot]}`}
+              aria-label={L('answer {letter}', { letter: LETTERS[r.slot] ?? '' })}
             >
               <div className={styles.cardTop}>
                 <span className={styles.letter} aria-hidden>
@@ -66,14 +69,16 @@ export function TvReveal({ view }: Props): JSX.Element {
                 </span>
               </div>
               <p className={answerClass(r.text)} data-short={isShort(r.text)}>
-                {r.text}
+                {answerText(L, r.text)}
               </p>
               <div className={styles.footer}>
                 {voters.length > 0 ? (
                   <span
                     className={styles.voters}
                     role="list"
-                    aria-label={`voted for this: ${voters.map((v) => v.name).join(', ')}`}
+                    aria-label={L('voted for this: {names}', {
+                      names: voters.map((v) => v.name).join(', '),
+                    })}
                     aria-hidden={beat < BEAT_VOTERS}
                   >
                     {voters.map((v, i) => (
@@ -94,11 +99,13 @@ export function TvReveal({ view }: Props): JSX.Element {
                     aria-hidden={beat < BEAT_POINTS}
                   >
                     {r.walkover ? (
-                      <span className={styles.voteWord}>wins by default</span>
+                      <span className={styles.voteWord}>{L('wins by default')}</span>
                     ) : (
                       <>
                         <span className={styles.voteCount}>{r.votes}</span>
-                        <span className={styles.voteWord}>{r.votes === 1 ? 'vote' : 'votes'}</span>
+                        <span className={styles.voteWord}>
+                          {r.votes === 1 ? L('vote') : L('votes')}
+                        </span>
                       </>
                     )}
                     {r.points > 0 ? <span className={styles.delta}>+{r.points}</span> : null}

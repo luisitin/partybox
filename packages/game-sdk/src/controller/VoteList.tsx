@@ -7,9 +7,11 @@
 import { useEffect, useState } from 'react';
 import type { JSX, ReactNode } from 'react';
 import { buzz } from '../ui/haptics';
+import { useT } from '../ui/lang';
 import { Screen } from './Screen';
 import styles from './VoteList.module.css';
 import { SDK_LINES, usePhoneOnly } from './phoneOnly';
+import { STRINGS } from './strings';
 
 export interface VoteOption {
   id: string;
@@ -57,6 +59,7 @@ interface Pending {
 
 export function VoteList(props: VoteListProps): JSX.Element {
   const phoneOnly = usePhoneOnly();
+  const L = useT(STRINGS);
   const {
     prompt,
     header,
@@ -99,7 +102,7 @@ export function VoteList(props: VoteListProps): JSX.Element {
       <div
         className={`${styles.list} ${large ? styles.large : ''}`}
         role="radiogroup"
-        aria-label="vote"
+        aria-label={L('vote')}
       >
         {options.map((option, index) => {
           const isVoted = option.id === shownId;
@@ -126,7 +129,7 @@ export function VoteList(props: VoteListProps): JSX.Element {
                 </span>
               ) : null}
               <span className={styles.text}>{option.text}</span>
-              {option.mine ? <span className={styles.tag}>yours</span> : null}
+              {option.mine ? <span className={styles.tag}>{L('yours')}</span> : null}
               {isVoted ? (
                 <span className={styles.mark} aria-hidden>
                   ✓
@@ -139,16 +142,16 @@ export function VoteList(props: VoteListProps): JSX.Element {
       {votedId !== null ? (
         lockedLabel === null ? null : (
           <p className={styles.locked} role="status">
-            {lockedLabel ?? SDK_LINES.voteIn(phoneOnly)}
+            {lockedLabel ?? SDK_LINES.voteIn(phoneOnly, L)}
           </p>
         )
       ) : pendingId !== null ? (
         <p className={styles.locked} role="status">
-          ✓ Locking in…
+          {L('✓ Locking in…')}
         </p>
       ) : pending?.failed ? (
         <p className={`${styles.locked} ${styles.failed}`} role="status">
-          {SDK_LINES.retry(phoneOnly)}
+          {SDK_LINES.retry(phoneOnly, L)}
         </p>
       ) : null}
     </Screen>

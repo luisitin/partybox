@@ -11,6 +11,7 @@ import {
   useMotionOff,
   useSecondsLeft,
   useSound,
+  useT,
 } from '@partybox/game-sdk/ui';
 import type { PlayCue } from '@partybox/game-sdk/ui';
 import { RESUME_MS, dealDoneMs } from '../server/types';
@@ -19,7 +20,10 @@ import type { BingoControllerView } from '../server/views';
 import { StyleMini } from './StyleMini';
 import { STYLES, styleReason } from './styles';
 import { DaubRows } from './DaubRows';
+import { holdLine } from './copy';
+import { STRINGS } from './strings';
 import type { CardStyle } from './styles';
+import { styleWords } from './words';
 import styles from './Controller.module.css';
 
 export function StyleSheet({
@@ -29,7 +33,7 @@ export function StyleSheet({
   onPreview,
   onConfirm,
   onClose,
-  note = 'the room is paused',
+  note,
 }: {
   cards: number;
   current: CardStyle;
@@ -41,28 +45,30 @@ export function StyleSheet({
   note?: string;
 }): JSX.Element {
   const motionOff = useMotionOff();
+  const L = useT(STRINGS);
+  const words = styleWords(L);
   // Previewing: the sheet folds to a bar so the whole screen shows the style with the real cards.
   if (preview)
     return (
-      <div className={styles.previewBar} role="dialog" aria-label="Card style preview">
+      <div className={styles.previewBar} role="dialog" aria-label={L('Card style preview')}>
         <span className={styles.previewLabel}>
           {/* I-013 C: the picked shape, big, pops in beside the question. */}
           <StyleMini id={preview} big />
-          {STYLES.find((s) => s.id === preview)?.label}: like it?
+          {L('{style}: like it?', { style: words[preview].label })}
         </span>
         <PrimaryButton tone="neutral" onClick={() => onPreview(current)}>
-          Keep changing
+          {L('Keep changing')}
         </PrimaryButton>
-        <PrimaryButton onClick={onConfirm}>Confirm</PrimaryButton>
+        <PrimaryButton onClick={onConfirm}>{L('Confirm')}</PrimaryButton>
       </div>
     );
   return (
-    <div className={styles.sheet} role="dialog" aria-label="Card style">
+    <div className={styles.sheet} role="dialog" aria-label={L('Card style')}>
       <h4 className={styles.sheetTitle}>
-        Card style <small>{note}</small>
+        {L('Card style')} <small>{note ?? L('the room is paused')}</small>
       </h4>
       {STYLES.map((s) => {
-        const why = styleReason(s, cards);
+        const why = styleReason(s, cards, L);
         const on = s.id === current;
         return (
           <button
@@ -75,11 +81,11 @@ export function StyleSheet({
             {/* One line per row (the owner's note): the text ellipsizes before the diagram
                 wraps; under 360 px the hint goes. */}
             <span className={styles.rowText}>
-              {s.label} <small className={styles.rowHint}>· {s.hint}</small>
+              {words[s.id].label} <small className={styles.rowHint}>· {words[s.id].hint}</small>
             </span>
             <span className={styles.rowRight}>
               <small>
-                {why || (s.orient === 'landscape' ? 'sideways' : 'upright')}
+                {why || (s.orient === 'landscape' ? L('sideways') : L('upright'))}
                 {on ? ' ✓' : ''}
               </small>
               <StyleMini id={s.id} off={why !== ''} live={on && !motionOff} />
@@ -96,18 +102,18 @@ export function StyleSheet({
         aria-pressed={!motionOff}
       >
         <span className={styles.rowText}>
-          Motion <small className={styles.rowHint}>· cards rise, numbers pop</small>
+          {L('Motion')} <small className={styles.rowHint}>· {L('cards rise, numbers pop')}</small>
         </span>
         <span className={styles.rowRight}>
-          <small>{motionOff ? 'off' : 'on ✓'}</small>
+          <small>{motionOff ? L('off') : L('on ✓')}</small>
           <StyleMini id="motion" live={!motionOff} />
         </span>
       </button>
 
       <DaubRows />
-      <p className={styles.sheetNote}>Theme: the 🎨 in the top bar, any time.</p>
+      <p className={styles.sheetNote}>{L('Theme: the 🎨 in the top bar, any time.')}</p>
       <PrimaryButton tone="neutral" onClick={onClose}>
-        Close
+        {L('Close')}
       </PrimaryButton>
     </div>
   );
@@ -121,15 +127,13 @@ export function HoldCurtain({
   names: string[];
   onOpen: () => void;
 }): JSX.Element {
-  const who = names.length > 2 ? `${names[0]} and ${names.length - 1} others` : names.join(' and ');
+  const L = useT(STRINGS);
   return (
     <div className={styles.curtain} role="status">
       <div>
-        <p className={styles.curtainLine}>
-          ⏸ {who} {names.length > 1 ? 'are' : 'is'} changing card style…
-        </p>
+        <p className={styles.curtainLine}>{holdLine(names, L)}</p>
         <PrimaryButton tone="neutral" onClick={onOpen}>
-          Change my style too
+          {L('Change my style too')}
         </PrimaryButton>
       </div>
     </div>
@@ -141,15 +145,19 @@ export function Countdown({
   resumeAt,
   pattern,
   by,
+  mine = false,
 }: {
   resumeAt: number;
   /** The pattern in play: after "keep going — blackout" the hand reads the new goal (loop 277). */
   pattern?: string;
-  /** Who chose to keep going (loop 326) — "you", on their own phone. */
+  /** Who chose to keep going (loop 326)… */
   by?: string | null;
+  /** …or this phone did: "you said keep going". */
+  mine?: boolean;
 }): JSX.Element | null {
   const left = useSecondsLeft(resumeAt, false, 50);
   const play = useSound();
+  const L = useT(STRINGS);
   const shown = left === null ? 0 : Math.min(3, left); // a clock a hair behind would say 4 first
   // Each digit lands with a tick (the TV ticks too, at its own clock); the last one is the call.
   useEffect(() => {
@@ -178,7 +186,11 @@ export function Countdown({
       </div>
       <p className={styles.curtainLine}>
         {pattern ? `${pattern} · ` : ''}
-        {by ? `${by} said keep going` : 'get your thumbs ready'}
+        {mine
+          ? L('you said keep going')
+          : by
+            ? L('{name} said keep going', { name: by })
+            : L('get your thumbs ready')}
       </p>
     </div>
   );
@@ -205,6 +217,7 @@ export function IntroCount({
   lastOne: boolean;
 }): JSX.Element {
   const left = useSecondsLeft(deadline, false, 50);
+  const L = useT(STRINGS);
   const shown = left !== null && left <= 3 && left > 0 ? left : 0;
   useEffect(() => {
     if (shown > 0) buzz(15);
@@ -218,27 +231,31 @@ export function IntroCount({
     <p className={styles.introCount} aria-live="polite">
       {shown > 0 ? (
         <>
-          first number in{' '}
+          {L('first number in')}{' '}
           <b key={shown} className="pb-tick">
             {shown}
           </b>
         </>
       ) : dealt ? (
         ready ? (
-          waitingOn.length > 0 ? (
-            `ready — waiting for ${waitingOn.length > 2 ? `${waitingOn.length} more` : waitingOn.join(' and ')}`
+          waitingOn.length > 2 ? (
+            L('ready — waiting for {n} more', { n: waitingOn.length })
+          ) : waitingOn.length === 2 ? (
+            L('ready — waiting for {a} and {b}', { a: waitingOn[0] ?? '', b: waitingOn[1] ?? '' })
+          ) : waitingOn.length === 1 ? (
+            L('ready — waiting for {name}', { name: waitingOn[0] ?? '' })
           ) : (
-            'everyone is ready'
+            L('everyone is ready')
           )
         ) : lastOne ? (
-          'everyone is waiting for you'
+          L('everyone is waiting for you')
         ) : cards > 1 ? (
-          'swap a card, or tap Ready'
+          L('swap a card, or tap Ready')
         ) : (
-          'swap it, or tap Ready'
+          L('swap it, or tap Ready')
         )
       ) : (
-        'dealing the cards…'
+        L('dealing the cards…')
       )}
     </p>
   );
@@ -267,6 +284,8 @@ export function IntroActions({
   onSwap: () => void;
 }): JSX.Element {
   const dealt = useHold('deal', dealDoneMs(cards));
+  const L = useT(STRINGS);
+  const swap = canSwap ? L('Another') : view.ready ? L('Picked') : L('Swapped');
   return (
     <div className={`${styles.introActions} ${dealt ? styles.introActionsIn : ''}`}>
       <PrimaryButton
@@ -281,8 +300,8 @@ export function IntroActions({
           setTimeout(() => play('card'), 200);
         }}
       >
-        🎲 {canSwap ? 'Another' : view.ready ? 'Picked' : 'Swapped'}
-        {cards > 1 ? ` · card ${pick + 1}` : ''}
+        🎲 {swap}
+        {cards > 1 ? ` · ${L('card {n}', { n: pick + 1 })}` : ''}
       </PrimaryButton>
       <PrimaryButton
         tone={view.ready ? 'success' : 'accent'}
@@ -294,7 +313,7 @@ export function IntroActions({
           send({ type: 'ready' });
         }}
       >
-        {view.ready ? '✓ Ready' : 'Ready'}
+        {view.ready ? L('✓ Ready') : L('Ready')}
       </PrimaryButton>
     </div>
   );

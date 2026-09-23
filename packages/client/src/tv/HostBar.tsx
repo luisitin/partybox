@@ -1,14 +1,17 @@
 // Host controls on the TV/PC (ADR-031): the screen the party is run from has every VIP power —
-// pick and start games, add bots, pause / skip / end, play again. The frame's bottom row, so the
-// stage never has to dodge it; destructive actions ask once (click again within 4 s). Home is
-// the frame's 🏠 (TvFrame).
+// pick and start games, add bots, pause / skip / end, play again — and the TV's language (🌐). The
+// frame's bottom row, so the stage never has to dodge it; destructive actions ask once (click again
+// within 4 s). Home is the frame's 🏠 (TvFrame).
 import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
 import { LIMITS } from '@partybox/shared';
 import type { PushedView, RoomSnapshot, TvView } from '@partybox/shared';
+import { setLang, useT } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import { useServerInfo } from '../net/info';
 import type { TvClient } from '../net/tv';
+import { serverText } from '../server-text';
+import { STRINGS } from './strings';
 import styles from './HostBar.module.css';
 
 /** I-053 B: a glyph per game on the shelf (games carry no icon of their own). */
@@ -61,6 +64,7 @@ function useVipAway(room: RoomSnapshot): { next: string | null; seconds: number 
 }
 
 export function HostBar({ client, room, view }: HostBarProps): JSX.Element | null {
+  const L = useT(STRINGS);
   const [confirm, setConfirm] = useState<string | null>(null);
   useEffect(() => {
     if (confirm === null) return;
@@ -75,7 +79,8 @@ export function HostBar({ client, room, view }: HostBarProps): JSX.Element | nul
     setConfirm(null);
     run();
   };
-  const label = (key: string, text: string): string => (confirm === key ? `Sure? ${text}` : text);
+  const label = (key: string, text: string): string =>
+    confirm === key ? L('Sure? {action}', { action: text }) : text;
   const vipAway = useVipAway(room);
   const info = useServerInfo(5000); // I-077 C
   // I-071 B: the bar says whose controls these are.
@@ -92,6 +97,14 @@ export function HostBar({ client, room, view }: HostBarProps): JSX.Element | nul
   }, [room.status, room.games.length]);
   const shelfGame = shelf === 0 ? null : (room.games[shelf - 1] ?? null);
   const game = room.games.find((g) => g.id === room.selectedGameId);
+  // Why Start is off: the engine's sentence, in the TV's language.
+  const cannotStart = room.canStart.ok
+    ? undefined
+    : serverText(room.canStart.reason, L.lang, room.selectedGameId);
+  // The owner (2026-09-22): the room's screen speaks Spanish too. The button offers the other
+  // language in its own words; a browser in de / fr / pt counts as English here.
+  const spanish = L.lang === 'es';
+  const switchLabel = spanish ? L('Switch the TV to English') : L('Switch the TV to Spanish');
 
   const botButtons = (
     <>
@@ -116,7 +129,10 @@ export function HostBar({ client, room, view }: HostBarProps): JSX.Element | nul
             );
           }}
         >
-          ✕ {bots.length >= 4 ? `Remove all ${bots.length} bots` : t.host.removeBots(bots.length)}
+          ✕{' '}
+          {bots.length >= 4
+            ? L('Remove all {n} bots', { n: bots.length })
+            : t.host.removeBots(bots.length)}
         </button>
       ) : null}
     </>
@@ -150,7 +166,7 @@ export function HostBar({ client, room, view }: HostBarProps): JSX.Element | nul
             type="button"
             className={`${styles.button} ${styles.primary}`}
             disabled={!room.canStart.ok}
-            title={room.canStart.ok ? undefined : room.canStart.reason}
+            title={cannotStart}
             onClick={() => client.act({ action: 'start' })}
           >
             ▶ {t.selecting.start}
@@ -193,7 +209,7 @@ export function HostBar({ client, room, view }: HostBarProps): JSX.Element | nul
             type="button"
             className={`${styles.button} ${styles.primary}`}
             disabled={!room.canStart.ok}
-            title={room.canStart.ok ? undefined : room.canStart.reason}
+            title={cannotStart}
             onClick={() => client.act({ action: 'playAgain' })}
           >
             ↻ {t.results.playAgain}
@@ -223,8 +239,11 @@ export function HostBar({ client, room, view }: HostBarProps): JSX.Element | nul
       </span>
       {/* I-077 C: the gap, live — phones that opened the join page vs. got in. */}
       {info?.funnel && info.funnel.opened > 0 ? (
-        <span className={styles.label} title="phones that opened the join page · joined">
-          {info.funnel.opened} opened · {info.funnel.joined} in
+        <span className={styles.label} title={L('phones that opened the join page · joined')}>
+          {L('{opened} opened · {joined} in', {
+            opened: info.funnel.opened,
+            joined: info.funnel.joined,
+          })}
         </span>
       ) : null}
       {vipAway ? (
@@ -232,6 +251,15 @@ export function HostBar({ client, room, view }: HostBarProps): JSX.Element | nul
           {vipAway.next ? t.host.vipAway(vipAway.next, vipAway.seconds) : t.host.vipAwayNobody}
         </span>
       ) : null}
+      <button
+        type="button"
+        className={styles.button}
+        onClick={() => setLang(spanish ? 'en' : 'es')}
+        aria-label={switchLabel}
+        title={switchLabel}
+      >
+        🌐 {spanish ? 'English' : 'Español'}
+      </button>
       {buttons}
     </div>
   );

@@ -84,10 +84,13 @@ function Bench({
   const top = rows[0]?.score ?? 0;
   const gameName =
     room.games.find((g) => g.id === room.selectedGameId)?.name ?? room.selectedGameId ?? '';
+  // The phase id as a word in the device's language (the id itself in English, or when unknown).
+  const phaseId = view?.phaseId ?? '';
+  const phase = (t.phases as Readonly<Record<string, string>>)[phaseId] ?? phaseId;
   return (
-    <div className={styles.bench} aria-label="scores so far">
+    <div className={styles.bench} aria-label={t.playing.scoresSoFar}>
       <p className={styles.benchWhere}>
-        {gameName} · {view?.phaseId ?? ''}
+        {gameName} · {phase}
       </p>
       <ol className={styles.benchList}>
         {rows.map((p) => (
@@ -140,8 +143,8 @@ export function Playing({
   if (!module)
     return (
       <WaitingScreen
-        title={`Unknown game "${room.selectedGameId ?? ''}"`}
-        hint="Run pnpm gen-registry and restart."
+        title={t.playing.unknownGame(room.selectedGameId ?? '')}
+        hint={t.playing.unknownHint}
         mood="wait"
       />
     );

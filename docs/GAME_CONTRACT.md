@@ -181,6 +181,7 @@ spec and passes `settings` to `init` (`multiselectPicks(value)` from `@partybox/
 ```ts
 export const clientModule: GameClientModule = {
   id: 'my-game',
+  strings: STRINGS, // from ./strings.ts: the game's Spanish, keyed by the English sentence (ADR-044)
   Tv: lazy(() => import('./Tv').then((m) => ({ default: m.Tv }))),
   Controller: lazy(() => import('./Controller').then((m) => ({ default: m.Controller }))),
   sounds: { reveal: 'reveal' }, // optional: map your moments to design-system cue names
@@ -199,6 +200,13 @@ compose `@partybox/game-sdk/ui` primitives (`TextAnswer`, `ChoiceGrid`, `VoteLis
 `Stage`, `BigText`, `Timer`, `PlayerChips`, `Scoreboard`, `Reveal`). The shell already renders the envelope
 (timer, chips, VIP overlay). Server code imports `@partybox/game-sdk` (pure); client code imports
 `@partybox/game-sdk/ui` (ADR-023) — the linter enforces the split.
+
+Every sentence a player or the room reads goes through the device's language (ADR-044): `const L =
+useT(STRINGS)` at the top of a component, then `L('Waiting for {name}…', { name })` — the key is the
+literal English, placeholders instead of template strings, one key per plural form. A sentence your
+server writes renders through `L.sent(text)` (the table's exact entry, or a `{placeholder}` entry that
+matches it). `STRINGS.es` also carries the manifest's tagline, description and setting labels for the
+game picker. `scripts/i18n-coverage.test.ts` fails until each has its Spanish. Content stays as written.
 
 ## Worked example — the template game (`games/_template`)
 

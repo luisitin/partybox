@@ -6,23 +6,33 @@
 // and "NOT A BINGO", or the cheer with confetti — and waits for a phone to move on.
 import { useEffect, useLayoutEffect, useRef } from 'react';
 import type { JSX } from 'react';
-import { Avatar, BigText, Scoreboard, Stage, useSoundApi } from '@partybox/game-sdk/ui';
+import { Avatar, BigText, Stage, useSoundApi, useT } from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
 import type { BingoTvView } from '../server/views';
 import { BALL_LAND_MS, hushCaller, speakCall } from './caller';
-import { PATTERN_LABEL, patternCells } from '../server/patterns';
 import { PatternIcon } from './Card';
 
-import { PatternDemo } from './PatternDemo';
-import { pendingLine, whyNot, winHeadline } from './copy';
+import { holdLine, pendingLine, whyNot, winHeadline } from './copy';
 import { hopelessClaim } from '../server/reveal';
 import { IntroStage, Resume } from './TvCountdown';
-import { Call, CalledBoard, ClaimStage, DibsLine, rows, whichCard } from './TvParts';
-import { climbFrom, decideLineClass, joinNames, useDibsCue } from './tvBoard';
+import { Call, CalledBoard, ClaimStage, DibsLine, whichCard } from './TvParts';
+import { TvEnd } from './TvEnd';
+import {
+  bingosSoFar,
+  closeLine,
+  decideLineClass,
+  decideText,
+  hopelessLine,
+  strayLine,
+  useDibsCue,
+} from './tvBoard';
+import { STRINGS } from './strings';
 import styles from './Tv.module.css';
 
 export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
-  const roundLabel = `Round ${view.round} of ${view.totalRounds}`;
+  const L = useT(STRINGS);
+  const roundLabel = L('Round {round} of {total}', { round: view.round, total: view.totalRounds });
+  const patternLabel = L.sent(view.patternLabel); // the server writes it in English
   const sound = useSoundApi();
   // R2-01 C: the room hears it — the phone's hushed `close` when a player joins the one-away set
   // (once per player per round).
@@ -76,7 +86,7 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
         <Resume
           roundLabel={roundLabel}
           resumeAt={view.resumeAt}
-          pattern={view.patternLabel}
+          pattern={patternLabel}
           by={view.resumeBy}
         />
       );
@@ -84,16 +94,16 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
       return (
         <Stage center className={styles.held}>
           <p className={styles.kicker}>
-            {roundLabel} · call {view.callIndex} of 75
+            {roundLabel} · {L('call {n} of 75', { n: view.callIndex })}
           </p>
           {view.current ? (
             <div className={styles.heldCall}>
               <Call call={view.current} big />
             </div>
           ) : null}
-          <BigText level="h1">⏸ {joinNames(view.pausedBy)} changing card style…</BigText>
+          <BigText level="h1">{holdLine(view.pausedBy, L)}</BigText>
           <BigText level="h2" tone="muted">
-            calling resumes when they are done
+            {L('calling resumes when they are done')}
           </BigText>
         </Stage>
       );
@@ -104,10 +114,8 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
         className={`${styles.playStage} ${view.showBoard ? '' : styles.roomy} ${view.players.length > 8 ? styles.crowded : ''}`}
       >
         <p className={styles.kicker}>
-          {roundLabel} · {view.patternLabel} · call {view.callIndex} of 75
-          {view.bingosThisRound > 0
-            ? ` · ${view.bingosThisRound} bingo${view.bingosThisRound === 1 ? '' : 's'} so far`
-            : ''}
+          {roundLabel} · {patternLabel} · {L('call {n} of 75', { n: view.callIndex })}
+          {bingosSoFar(view.bingosThisRound, L)}
         </p>
         {view.current ? <Call call={view.current} big stamp={view.calledAt} /> : null}
         {/* Ball first (180 ms pop), nickname 120 ms behind it: the number is the news (review-loop #1). */}
@@ -119,16 +127,14 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
         {/* R2-01 B: who is one away, under the nickname — rises in, keyed on the names. */}
         {closeNames.length > 0 ? (
           <p key={closeNames.join('|')} className={styles.closeLine}>
-            {closeNames.length === 1
-              ? `${closeNames[0]} is one away`
-              : `${closeNames.slice(0, -1).join(', ')} and ${closeNames[closeNames.length - 1]} are one away`}
+            {closeLine(closeNames, L)}
           </p>
         ) : null}
         {/* No reserved slot on the first call (review-loop #3): the row arrives with number two. */}
         {/* Crowded and the board on: the board is the history, the tray row gives its 80 px back. */}
         {view.showPrevious && view.previous && !(view.players.length > 8 && view.showBoard) ? (
           <div className={styles.previousRow}>
-            <span className={styles.previousLabel}>Before that</span>
+            <span className={styles.previousLabel}>{L('Before that')}</span>
             <Call call={view.previous} />
           </div>
         ) : null}
@@ -147,11 +153,11 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
       <Stage className={crowd}>
         <div className={`${styles.checkHead} pb-enter`}>
           <BigText level="h2" tone="accent">
-            {view.claim.name} says BINGO!
+            {L('{name} says BINGO!', { name: view.claim.name })}
           </BigText>
           <p className={styles.kicker}>
-            {view.patternLabel}
-            {whichCard(view.claim)} · checking against {view.callIndex} calls
+            {patternLabel}
+            {whichCard(view.claim, L)} · {L('checking against {n} calls', { n: view.callIndex })}
           </p>
         </div>
         <ClaimStage
@@ -163,19 +169,17 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
             <>
               <BigText level="h1" className={styles.no}>
                 {hopelessClaim(view.claim)
-                  ? view.spicy
-                    ? `${view.claim.name}. ${view.claim.red.length} of those were never called. We're watching you.`
-                    : `Not yet, ${view.claim.name} — ${view.claim.red.length} of those ${view.claim.red.length === 1 ? 'was' : 'were'} never called`
-                  : 'NOT A BINGO'}
+                  ? hopelessLine(view.claim, view.spicy, L)
+                  : L('NOT A BINGO')}
               </BigText>
               <p className={styles.legend}>
-                <span className={styles.legendGreen}>✓ right</span>
-                <span className={styles.legendRed}>✕ never called</span>
-                <span className={styles.legendMissing}>▢ missed</span>
+                <span className={styles.legendGreen}>{L('✓ right')}</span>
+                <span className={styles.legendRed}>{L('✕ never called')}</span>
+                <span className={styles.legendMissing}>{L('▢ missed')}</span>
               </p>
-              {whyNot(view.claim) ? <BigText level="h2">{whyNot(view.claim)}</BigText> : null}
+              {whyNot(view.claim, L) ? <BigText level="h2">{whyNot(view.claim, L)}</BigText> : null}
               <BigText level="h2" tone="muted">
-                Card wiped. Next number in a moment…
+                {L('Card wiped. Next number in a moment…')}
               </BigText>
             </>
           }
@@ -191,11 +195,11 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
         <Stage className={crowd}>
           <div className={`${styles.checkHead} pb-enter`}>
             <BigText level="h2" tone="accent">
-              {view.winnerName} says BINGO!
+              {L('{name} says BINGO!', { name: view.winnerName })}
             </BigText>
             <p className={styles.kicker}>
-              {view.patternLabel}
-              {whichCard(view.claim)} · checking against {view.callIndex} calls
+              {patternLabel}
+              {whichCard(view.claim, L)} · {L('checking against {n} calls', { n: view.callIndex })}
             </p>
           </div>
           <ClaimStage
@@ -207,20 +211,18 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
             verdict={
               <>
                 <BigText level="display" tone="accent" className={styles.bingoTitle}>
-                  BINGO!
+                  {L('BINGO!')}
                 </BigText>
                 {/* The winner's face beside their name (loop 331): the room looks up from the
                     phones and sees who, not just a name in the roster. */}
                 <div className={styles.winWho}>
                   <Avatar avatarId={winnerAvatar} size="var(--pb-win-avatar)" />
-                  <BigText level="h1">{winHeadline(view, view.winnerName)}</BigText>
+                  <BigText level="h1">{winHeadline(view, view.winnerName, L)}</BigText>
                 </div>
                 {/* I-108 A: a valid claim with daubs that were never called — say so. */}
                 {view.claim.red.length > 0 ? (
                   <p className={`${styles.strayLine} pb-enter`}>
-                    {view.spicy
-                      ? `${view.claim.red.length === 1 ? 'one fib' : `${view.claim.red.length} fibs`} and a bingo, ${view.winnerName} — we're watching you.`
-                      : `…and ${view.claim.red.length} ${view.claim.red.length === 1 ? 'daub' : 'daubs'} that ${view.claim.red.length === 1 ? 'was' : 'were'} never called — lucky the line was real.`}
+                    {strayLine(view.claim.red.length, view.winnerName, view.spicy, L)}
                   </p>
                 ) : null}
                 <p className={styles.winLine}>
@@ -228,9 +230,15 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
                   <PatternIcon cells={view.claim.cells} size={72} draw />
                   <span>
                     {/* No "round N" here: the kicker above the card says it (loop 337). */}
-                    {view.patternLabel} on call {view.callIndex} · +{view.claimPoints}{' '}
-                    {view.claimPoints === 1 ? 'point' : 'points'}
-                    {whichCard(view.claim)}
+                    {L('{pattern} on call {n}', {
+                      pattern: patternLabel,
+                      n: view.callIndex,
+                    })}{' '}
+                    ·{' '}
+                    {view.claimPoints === 1
+                      ? L('+1 point')
+                      : L('+{n} points', { n: view.claimPoints })}
+                    {whichCard(view.claim, L)}
                   </span>
                 </p>
               </>
@@ -238,7 +246,7 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
             aside={
               view.autoEnd ? (
                 <p className={`${styles.decideLine} pb-enter`}>
-                  Nothing left to play for on these cards — the scores in a moment.
+                  {L('Nothing left to play for on these cards — the scores in a moment.')}
                 </p>
               ) : view.pendingDecision ? (
                 <p className={`${styles.decideLine} pb-enter`}>
@@ -246,16 +254,12 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
                     view.pendingDecision,
                     view.round >= view.totalRounds,
                     view.pendingBy,
+                    L,
                   )}
                 </p>
               ) : view.decide && (view.decide.same || view.decide.blackout) ? (
                 <p className={decideLineClass(view)}>
-                  <span className={styles.decideWho}>Anyone</span> picks on their phone: keep going
-                  {view.decide.blackout ? ' (same pattern or blackout)' : ''} or{' '}
-                  {view.round < view.totalRounds ? 'next round' : 'finish'}. The caller waits.
-                  {view.decide.same && view.claim.cardCount > 1
-                    ? ' The winning card sits the pattern out; the rest play on.'
-                    : ''}
+                  <span className={styles.decideWho}>{L('Anyone')}</span> {decideText(view, L)}
                 </p>
               ) : null
             }
@@ -266,70 +270,14 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
     return (
       <Stage center>
         <BigText level="display" tone="muted">
-          No bingo
+          {L('No bingo')}
         </BigText>
-        <BigText level="h1">The deck's empty — nobody wins round {view.round}.</BigText>
-      </Stage>
-    );
-  }
-
-  if (view.phaseId === 'final') {
-    // The drumroll (loop 246): the final board with the crown withheld, "and the winner is…" —
-    // the engine's results screen names them with the fanfare 4 s later.
-    const tied = view.standings.filter((r) => r.rank === 1).length > 1;
-    return (
-      <Stage center>
-        <BigText level="h2" tone="muted">
-          Final round played
-        </BigText>
-        <BigText level="h1">Final points</BigText>
-        <Scoreboard rows={rows(view)} noTrophy stagger="up" />
-        <BigText level="h2" tone="accent">
-          {tied ? "It's a tie" : 'And the winner is'}
-          <span className={styles.ellipsis} aria-hidden>
-            …
-          </span>
+        <BigText level="h1">
+          {L("The deck's empty — nobody wins round {round}.", { round: view.round })}
         </BigText>
       </Stage>
     );
   }
 
-  if (view.phaseId === 'scoreboard') {
-    const next = view.patterns[view.round] ?? null;
-    // Centred like the game-end board (loop 6 pick 2A): the rounds-won table sat in the left half.
-    return (
-      <Stage center>
-        <BigText level="h1">Points</BigText>
-        {/* I-012 C: the next pattern takes the left of the board, its name under it — shown by
-            doing it (loop 432), now big enough to read from the sofa; the first pass thumps. */}
-        <div className={styles.boardRow}>
-          {next ? (
-            <div className={styles.nextUp}>
-              <PatternDemo pattern={next} cells={patternCells(next)} size={216} thump />
-              <BigText level="h2" tone="accent">
-                Next: round {view.round + 1} — {PATTERN_LABEL[next]}
-              </BigText>
-            </div>
-          ) : null}
-          {/* I-103 A: the rank lands WITH the points — rows climb from where they stood. */}
-          <Scoreboard
-            rows={rows(view)}
-            noTrophy
-            stagger="climb"
-            climbFrom={climbFrom(view)}
-            holdMs={600}
-          />
-        </div>
-      </Stage>
-    );
-  }
-
-  return (
-    <Stage center>
-      <BigText level="h1" tone="accent">
-        That's bingo!
-      </BigText>
-      <Scoreboard rows={rows(view)} />
-    </Stage>
-  );
+  return <TvEnd view={view} />;
 }

@@ -1,9 +1,19 @@
 // Words both surfaces share for a bingo: the headline counts bingos under the current pattern
 // ("2nd bingo in round 1", "1st blackout in round 1"), the first bingo of a round is plainly a
-// win. Owner, 2026-09-17: "it always says person won round 1".
+// win. Owner, 2026-09-17: "it always says person won round 1". Every line takes the screen's
+// translator `L` (the owner, 2026-09-22: every screen translatable to Spanish).
+import type { Lang, Translator } from '@partybox/game-sdk/ui';
 import type { BingoTvView } from '../server/views';
 
-export function ordinal(n: number): string {
+/**
+ * "2nd" — in Spanish "2.º", with "1.er" / "3.er" before the noun as Spanish writes them. A
+ * language without Bingo sentences reads them in English, so it gets the English ordinal.
+ */
+export function ordinal(n: number, lang: Lang = 'en'): string {
+  if (lang === 'es') {
+    const apocope = (n % 10 === 1 && n % 100 !== 11) || n % 10 === 3;
+    return `${n}.${apocope ? 'er' : 'º'}`;
+  }
   const rem100 = n % 100;
   if (rem100 >= 11 && rem100 <= 13) return `${n}th`;
   const rem10 = n % 10;
@@ -12,54 +22,80 @@ export function ordinal(n: number): string {
 
 type Win = Pick<BingoTvView, 'pattern' | 'patternBingos' | 'round'>;
 
-/** What this bingo is: "wins round 1", "2nd bingo in round 1", "1st blackout in round 1". */
-export function winPhrase(view: Win): string {
-  const n = Math.max(1, view.patternBingos);
-  if (view.pattern === 'blackout') return `${ordinal(n)} blackout in round ${view.round}`;
-  return n === 1 ? `wins round ${view.round}` : `${ordinal(n)} bingo in round ${view.round}`;
-}
-
 /** The TV's headline under BINGO!, one line: "Sam wins round 1" / "Sam's 2nd bingo" (the line
  * under it carries the round). */
-export function winHeadline(view: Win, name: string): string {
+export function winHeadline(view: Win, name: string, L: Translator): string {
   const n = Math.max(1, view.patternBingos);
-  if (view.pattern === 'blackout') return `${name}'s ${ordinal(n)} blackout`;
-  return n === 1 ? `${name} wins round ${view.round}` : `${name}'s ${ordinal(n)} bingo`;
+  const nth = ordinal(n, L.lang);
+  if (view.pattern === 'blackout') return L("{name}'s {nth} blackout", { name, nth });
+  return n === 1
+    ? L('{name} wins round {round}', { name, round: view.round })
+    : L("{name}'s {nth} bingo", { name, nth });
 }
 
-/** The winner's own phone title. */
-export function winTitle(view: Win, which: string): string {
-  const phrase = winPhrase(view);
-  const head = view.pattern === 'blackout' ? 'BLACKOUT!' : 'BINGO!';
-  return phrase.startsWith('wins')
-    ? `${head} You win round ${view.round}${which}`
-    : `${head} Your ${phrase}${which}`;
+/** The winner's own phone title; `card` (1-based) when they play several. */
+export function winTitle(view: Win, card: number | null, L: Translator): string {
+  const n = Math.max(1, view.patternBingos);
+  const vars = { nth: ordinal(n, L.lang), round: view.round, card: card ?? 0 };
+  if (view.pattern === 'blackout')
+    return card === null
+      ? L('BLACKOUT! Your {nth} blackout in round {round}', vars)
+      : L('BLACKOUT! Your {nth} blackout in round {round} — card {card}', vars);
+  if (n === 1)
+    return card === null
+      ? L('BINGO! You win round {round}', vars)
+      : L('BINGO! You win round {round} — card {card}', vars);
+  return card === null
+    ? L('BINGO! Your {nth} bingo in round {round}', vars)
+    : L('BINGO! Your {nth} bingo in round {round} — card {card}', vars);
 }
 
 /** Everyone else's phone title. */
-export function otherTitle(view: Win, name: string): string {
-  const phrase = winPhrase(view);
-  if (view.pattern === 'blackout') return `${name} has a blackout`;
-  return phrase.startsWith('wins') ? `${name} has bingo` : `${name} — ${phrase}`;
+export function otherTitle(view: Win, name: string, L: Translator): string {
+  if (view.pattern === 'blackout') return L('{name} has a blackout', { name });
+  const n = Math.max(1, view.patternBingos);
+  return n === 1
+    ? L('{name} has bingo', { name })
+    : L('{name} — {nth} bingo in round {round}', {
+        name,
+        nth: ordinal(n, L.lang),
+        round: view.round,
+      });
 }
 
 /**
  * Why a claim failed, by the numbers (loop 272): "19 was never called · 3 was missed", "19 and 44
  * were never called", or nothing when the card is simply short of the pattern.
  */
-export function whyNot(claim: { card: number[]; red: number[]; missing: number[] }): string {
-  const num = (i: number): string => (i === 12 ? 'FREE' : String(claim.card[i] ?? '?'));
+export function whyNot(
+  claim: { card: number[]; red: number[]; missing: number[] },
+  L: Translator,
+): string {
+  const num = (i: number): string => (i === 12 ? L('FREE') : String(claim.card[i] ?? '?'));
   const list = (cells: number[]): string => {
-    const names = cells.map(num);
-    if (names.length <= 2) return names.join(' and ');
-    return `${names.slice(0, 2).join(', ')} and ${names.length - 2} more`;
+    const [a = '', b = ''] = cells.map(num);
+    if (cells.length < 2) return a;
+    if (cells.length === 2) return L('{a} and {b}', { a, b });
+    return L('{a}, {b} and {n} more', { a, b, n: cells.length - 2 });
   };
   const parts: string[] = [];
-  if (claim.red.length > 0)
-    parts.push(`${list(claim.red)} ${claim.red.length === 1 ? 'was' : 'were'} never called`);
+  if (claim.red.length > 0) {
+    const l = list(claim.red);
+    parts.push(
+      claim.red.length === 1
+        ? L('{list} was never called', { list: l })
+        : L('{list} were never called', { list: l }),
+    );
+  }
   const missed = claim.missing.filter((i) => i !== 12);
-  if (missed.length > 0)
-    parts.push(`${list(missed)} ${missed.length === 1 ? 'was' : 'were'} missed`);
+  if (missed.length > 0) {
+    const l = list(missed);
+    parts.push(
+      missed.length === 1
+        ? L('{list} was missed', { list: l })
+        : L('{list} were missed', { list: l }),
+    );
+  }
   return parts.join(' · ');
 }
 
@@ -67,16 +103,29 @@ export function whyNot(claim: { card: number[]; red: number[]; missing: number[]
 export function pendingLine(
   pending: 'same' | 'blackout' | 'next' | null,
   lastRound: boolean,
-  by: string | null = null,
+  by: string | null,
+  L: Translator,
 ): string | null {
   if (!pending) return null;
   const what =
     pending === 'same'
-      ? 'keep going — same pattern'
+      ? L('keep going — same pattern')
       : pending === 'blackout'
-        ? 'keep going — blackout'
+        ? L('keep going — blackout')
         : lastRound
-          ? 'finish the game'
-          : 'next round';
-  return `${by ? `${by} picked` : 'Picked'}: ${what}. It starts when the celebration is done.`;
+          ? L('finish the game')
+          : L('next round');
+  return by
+    ? L('{name} picked: {what}. It starts when the celebration is done.', { name: by, what })
+    : L('Picked: {what}. It starts when the celebration is done.', { what });
+}
+
+/** The caller held by open style menus: "⏸ Sam is" / "Sam and Priya are" / "Sam and 2 others
+ *  are" changing card style (the TV's stage and the phones' curtain say it alike). */
+export function holdLine(names: string[], L: Translator): string {
+  const [name = '', second = ''] = names;
+  if (names.length <= 1) return L('⏸ {name} is changing card style…', { name });
+  if (names.length === 2)
+    return L('⏸ {a} and {b} are changing card style…', { a: name, b: second });
+  return L('⏸ {name} and {n} others are changing card style…', { name, n: names.length - 1 });
 }

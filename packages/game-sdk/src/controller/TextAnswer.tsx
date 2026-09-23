@@ -2,10 +2,12 @@
 // iOS keyboard never covers it). Keeps the draft in state so a reconnect mid-phase re-sends it.
 import { useEffect, useRef, useState } from 'react';
 import type { JSX, ReactNode } from 'react';
+import { useT } from '../ui/lang';
 import { PrimaryButton } from './PrimaryButton';
 import { Screen } from './Screen';
 import styles from './TextAnswer.module.css';
 import { SDK_LINES, usePhoneOnly } from './phoneOnly';
+import { STRINGS } from './strings';
 
 /** How long an empty field sits before it breathes (I-001 C). */
 const STALL_MS = 3000;
@@ -33,6 +35,7 @@ export interface TextAnswerProps {
 
 export function TextAnswer(props: TextAnswerProps): JSX.Element {
   const phoneOnly = usePhoneOnly();
+  const L = useT(STRINGS);
   const {
     prompt,
     kicker,
@@ -40,7 +43,7 @@ export function TextAnswer(props: TextAnswerProps): JSX.Element {
     maxLength = 80,
     submitted,
     disabled,
-    submitLabel = 'Submit',
+    submitLabel = L('Submit'),
     onSubmit,
     promptKey,
     className,
@@ -76,7 +79,7 @@ export function TextAnswer(props: TextAnswerProps): JSX.Element {
         className={className}
         footer={
           <PrimaryButton done onClick={() => undefined}>
-            Submitted
+            {L('Submitted')}
           </PrimaryButton>
         }
       >
@@ -85,13 +88,15 @@ export function TextAnswer(props: TextAnswerProps): JSX.Element {
         <div className={styles.sent} role="status">
           {trimmed ? (
             <>
-              <span className={styles.sentLabel}>You said</span>
+              <span className={styles.sentLabel}>{L('You said')}</span>
               <span className={styles.sentText}>{trimmed}</span>
             </>
           ) : (
-            <span className={styles.sentLabel}>Your answer is in</span>
+            <span className={styles.sentLabel}>{L('Your answer is in')}</span>
           )}
-          <span className={styles.sentHint}>{submittedHint ?? SDK_LINES.waiting(phoneOnly)}</span>
+          <span className={styles.sentHint}>
+            {submittedHint ?? SDK_LINES.waiting(phoneOnly, L)}
+          </span>
         </div>
       </Screen>
     );
@@ -105,7 +110,7 @@ export function TextAnswer(props: TextAnswerProps): JSX.Element {
           disabled={!canSubmit}
           done={submitted}
         >
-          {submitted ? 'Submitted' : submitLabel}
+          {submitted ? L('Submitted') : submitLabel}
         </PrimaryButton>
       }
     >
@@ -127,11 +132,11 @@ export function TextAnswer(props: TextAnswerProps): JSX.Element {
             if (canSubmit) onSubmit(trimmed);
           }
         }}
-        aria-label="your answer"
+        aria-label={L('your answer')}
       />
       {disabled && trimmed ? (
         <p className={styles.late} role="status">
-          Time's up — your answer wasn't sent.
+          {L("Time's up — your answer wasn't sent.")}
         </p>
       ) : (
         // I-001 B: keyed on the length so every keystroke remounts the counter and it bumps once.

@@ -41,8 +41,7 @@ export function winnerLine(room: RoomSnapshot, scoreless = false): string {
   if (scoreless) return t.results.show;
   // Everyone on zero is still a tie (review-loop #6): the headline says so; the screens add why.
   // I-128 A: an all-zero board is not a tie — say what happened.
-  if (nobodyScored(room))
-    return results.gameId === 'bingo' ? 'No bingos this time' : t.results.nobody;
+  if (nobodyScored(room)) return results.gameId === 'bingo' ? t.results.noBingos : t.results.nobody;
   const ids = results.results.winnerIds;
   if (ids.length === 0) return '';
   if (ids.length >= results.players.length && ids.length > 1) return t.results.tie;
@@ -51,7 +50,8 @@ export function winnerLine(room: RoomSnapshot, scoreless = false): string {
     .map((id) => results.players.find((p) => p.id === id)?.name ?? '?')
     .sort((x, y) => x.localeCompare(y, undefined, { numeric: true, sensitivity: 'base' }));
   if (names.length === 1) return t.results.winner(names[0] as string);
-  if (names.length === 2) return t.results.winners(`${names[0]} & ${names[1]}`);
+  if (names.length === 2)
+    return t.results.winners(t.results.pair(names[0] as string, names[1] as string));
   return t.results.tieAmong(`${names[0]}, ${names[1]}`, names.length - 2);
 }
 

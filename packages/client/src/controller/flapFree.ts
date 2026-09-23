@@ -10,7 +10,14 @@
 //   · so six flaps in ten seconds read as one outage, not six.
 import { useEffect, useState } from 'react';
 import { t as strings } from '../i18n';
+import type { Connection } from '../net/controller';
 import { useGraceLeft } from './grace';
+
+/** The header dot's label: the link's state in the device's language ("connected" in English, as
+ *  the raw state always read). */
+export function linkLabel(connection: Connection): string {
+  return strings.connection.dot[connection];
+}
 
 const SHOW_AFTER_MS = 1200;
 /** How long the link must hold before the banner is allowed to say the trouble is over. */
@@ -51,17 +58,19 @@ export function useFlapFree(trouble: boolean): LinkBanner {
   return banner;
 }
 
-/** What the banner says: the grace countdown while it is trouble, the settled line after. */
+/** What the banner says: the grace countdown while it is trouble, the settled line after.
+ *  `reconnectingLeft` words the countdown ("Reconnecting… 1:42 left") in the device's language. */
 export function linkBannerText(
   banner: LinkBanner,
   reconnecting: string,
   backOnline: string,
   secondsLeft: number | null,
+  reconnectingLeft: (mmss: string) => string,
 ): string {
   if (banner === 'back') return backOnline;
   if (secondsLeft === null) return reconnecting;
   const mmss = `${Math.floor(secondsLeft / 60)}:${String(secondsLeft % 60).padStart(2, '0')}`;
-  return `${reconnecting} ${mmss} left`;
+  return reconnectingLeft(mmss);
 }
 
 /** The phone's link banner: whether to show it, and what it says. */
@@ -79,6 +88,7 @@ export function useLinkBanner(
       strings.connection.reconnecting,
       strings.connection.backOnline,
       left,
+      strings.connection.reconnectingLeft,
     ),
   };
 }

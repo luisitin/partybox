@@ -2,6 +2,7 @@
 // hints hanging from the TV corner 🎨 (closes on select); `sheet`: a bottom sheet with big rows
 // (phones). All mark the current theme with ✓, never colour alone.
 import type { JSX, ReactNode } from 'react';
+import { useLang } from '@partybox/game-sdk/ui';
 import { t } from './i18n';
 import { THEMES, setTheme, useTheme } from './theme';
 import type { ThemeSpec } from './theme';
@@ -31,6 +32,8 @@ export interface ThemePickerProps {
 
 export function ThemePicker({ variant, onClose, footer }: ThemePickerProps): JSX.Element {
   const current = useTheme();
+  // The names and hints read in the device's language (`t.themes`); a switch re-renders them.
+  useLang();
   const list = (
     <ul
       className={
@@ -59,8 +62,8 @@ export function ThemePicker({ variant, onClose, footer }: ThemePickerProps): JSX
             >
               <Swatch theme={theme} />
               <span className={styles.label}>
-                {theme.label}
-                {variant !== 'row' ? <small>{theme.hint}</small> : null}
+                {t.themes[theme.id].label}
+                {variant !== 'row' ? <small>{t.themes[theme.id].hint}</small> : null}
               </span>
               <span className={styles.mark} aria-hidden>
                 {active ? '✓' : ''}

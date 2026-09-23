@@ -4,6 +4,7 @@
 // grid's spare slot (three cards) shows the call the way the TV does.
 import { useState } from 'react';
 import type { JSX } from 'react';
+import { useT } from '@partybox/game-sdk/ui';
 import type { BingoControllerView } from '../server/views';
 import { Card } from './Card';
 import { wantedCells } from './close';
@@ -11,6 +12,7 @@ import { Ball, BingoButton } from './ControllerParts';
 import type { Send } from './ControllerParts';
 import { isAnyOf } from '../server/patterns';
 import type { Pattern } from '../server/types';
+import { STRINGS } from './strings';
 import styles from './Controller.module.css';
 
 /**
@@ -137,6 +139,7 @@ export function Thumbnails({
   /** intro: cards already swapped (a "swapped" tag instead of a border). */
   spent?: number[];
 }): JSX.Element {
+  const L = useT(STRINGS);
   return (
     <div
       className={styles.thumbs}
@@ -145,7 +148,8 @@ export function Thumbnails({
       {cards.map((numbers, c) => {
         const won = view.phaseId !== 'intro' && view.won.includes(c);
         const cur = c === marked;
-        const tag = won ? 'BINGO ✓' : cur ? markLabel : spent.includes(c) ? 'swapped' : null;
+        const tag = won ? 'BINGO ✓' : cur ? markLabel : spent.includes(c) ? L('swapped') : null;
+        const label = [L('Card {n}', { n: c + 1 }), cur ? markLabel : '', won ? L('won') : ''];
         return (
           <button
             type="button"
@@ -154,7 +158,7 @@ export function Thumbnails({
             style={{ ['--i' as string]: c }}
             disabled={cur}
             onClick={() => onPick(c)}
-            aria-label={`Card ${c + 1}${cur ? `, ${markLabel}` : ''}${won ? ', won' : ''}`}
+            aria-label={label.filter(Boolean).join(', ')}
             data-tag={tag ?? undefined}
           >
             <Card
@@ -185,6 +189,7 @@ export function FocusLayout(
   // a reconnect — is already where it belongs, and a rise there collided with the phase swap.
   const [picked, setPicked] = useState(false);
   const [seen, setSeen] = useState(p.up);
+  const L = useT(STRINGS);
   if (seen !== p.up) {
     setSeen(p.up);
     setPicked(true);
@@ -199,7 +204,13 @@ export function FocusLayout(
         <PlayCard p={p} c={p.up} size="phone" />
       </div>
       {many ? (
-        <Thumbnails view={p.view} cards={p.cards} marked={p.up} markLabel="up" onPick={p.onUp} />
+        <Thumbnails
+          view={p.view}
+          cards={p.cards}
+          marked={p.up}
+          markLabel={L('up')}
+          onPick={p.onUp}
+        />
       ) : null}
     </div>
   );
@@ -207,20 +218,21 @@ export function FocusLayout(
 
 /** The spare slot in a three-card grid: the call, the way the TV shows it. */
 function MiniCall({ view }: { view: BingoControllerView }): JSX.Element {
+  const L = useT(STRINGS);
   return (
     <div className={`${styles.slot} ${styles.miniCall}`} role="status">
-      {view.current ? <Ball call={view.current} size="lg" /> : <span>first number…</span>}
+      {view.current ? <Ball call={view.current} size="lg" /> : <span>{L('first number…')}</span>}
       <span>
         {view.previous ? (
           <>
-            before that <Ball call={view.previous} size="sm" />
+            {L('before that')} <Ball call={view.previous} size="sm" />
           </>
         ) : (
           '—'
         )}
       </span>
       <span>
-        call {view.callIndex} · {view.patternLabel.toLowerCase()}
+        {L('call {n}', { n: view.callIndex })} · {L.sent(view.patternLabel).toLowerCase()}
       </span>
     </div>
   );
@@ -231,6 +243,7 @@ export function AllCardsLayout(
   p: LayoutProps & { kind: 'grid' | 'strip' | 'stack' | 'side' | 'tablet' },
 ): JSX.Element {
   const n = p.cards.length;
+  const L = useT(STRINGS);
   const size = p.kind === 'tablet' ? 'phone' : 'compact';
   const kindClass = styles[`layout_${p.kind}`] ?? '';
   return (
@@ -241,7 +254,9 @@ export function AllCardsLayout(
             p={p}
             c={c}
             size={size}
-            label={p.kind === 'stack' || p.kind === 'side' ? undefined : `Card ${c + 1}`}
+            label={
+              p.kind === 'stack' || p.kind === 'side' ? undefined : L('Card {n}', { n: c + 1 })
+            }
           />
           {p.intro ? null : (
             <BingoButton

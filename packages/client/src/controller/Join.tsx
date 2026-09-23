@@ -86,7 +86,7 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
     const h = setInterval(() => setExampleAt((i) => i + 1), 2500);
     return () => clearInterval(h);
   }, [name, nameFocused]);
-  const placeholder = `e.g. ${exampleNames[exampleAt % exampleNames.length] ?? 'Sam'}`;
+  const placeholder = j.example(exampleNames[exampleAt % exampleNames.length] ?? 'Sam');
   const [submittedAt, setSubmittedAt] = useState<number | null>(null);
   const needsCode = urlRoom === null;
   // A rejected join shakes the name field and hands the taken/invalid name back selected (or the
@@ -196,9 +196,7 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
               <p className={`${styles.kicked} ${styles.roomError}`} role="alert">
                 <span aria-hidden>{roomError === 'room_full' ? '👥 ' : '🔒 '}</span>
                 {serverText(state.error.message, lang)}{' '}
-                {roomError === 'room_full'
-                  ? 'Ask the VIP to make room.'
-                  : 'Ask the VIP to unlock it.'}
+                {roomError === 'room_full' ? j.askRoom : j.askUnlock}
               </p>
             ) : null}
             <PrimaryButton
@@ -214,9 +212,9 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
                     : needsCode && code.trim().length !== 4
                       ? t.join.needCode
                       : roomError === 'room_full' && !retryOpen
-                        ? 'Room is full'
+                        ? j.roomFull
                         : roomError === 'room_locked' && !retryOpen
-                          ? 'Room is locked'
+                          ? j.roomLocked
                           : j.submit}
             </PrimaryButton>
           </>
@@ -267,7 +265,7 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
                 {state.error.player ? (
                   <>
                     <Avatar avatarId={state.error.player.avatarId} size={22} />
-                    That name is taken — {state.error.player.name} is already in.
+                    {j.nameTakenBy(state.error.player.name)}
                   </>
                 ) : (
                   <>
@@ -317,8 +315,8 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
         />
       </Screen>
       {/* I-059 A: a tablet's spare width is a preview stage — your chip as the room will see it. */}
-      <aside className={styles.stage} aria-label="preview">
-        <p className={styles.label}>How the room sees you</p>
+      <aside className={styles.stage} aria-label={j.preview}>
+        <p className={styles.label}>{j.howSeen}</p>
         <div key={`${name.trim()}|${photo ?? avatarId}`} className={styles.stagePop}>
           <AvatarPhotos players={photo ? [{ id: 'preview', photo }] : []}>
             <PlayerChip

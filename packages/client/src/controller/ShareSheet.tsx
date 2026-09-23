@@ -6,6 +6,7 @@
 // rows are ordinary links the phone handles itself: Messages, WhatsApp, Mail — plus Copy.
 import { useState } from 'react';
 import type { JSX } from 'react';
+import { t } from '../i18n';
 import { useServerInfo } from '../net/info';
 import styles from './Lobby.module.css';
 
@@ -79,7 +80,7 @@ export function ShareButton({ code }: { code: string }): JSX.Element {
   const [said, setSaid] = useState<string | null>(null);
   const info = useServerInfo();
   const url = joinLink(code, info?.publicUrl);
-  const text = `Join my PartyBox room ${code}`;
+  const text = t.share.message(code);
   // Android wants sms:?body=, iOS sms:&body=.
   const sms = /android/i.test(navigator.userAgent) ? '?' : '&';
   const flash = (word: string): void => {
@@ -91,7 +92,7 @@ export function ShareButton({ code }: { code: string }): JSX.Element {
     const nav = navigator as Nav;
     if (nav.share) {
       void nav.share({ title: 'PartyBox', text, url }).then(
-        () => flash('Shared'),
+        () => flash(t.share.shared),
         () => undefined,
       );
       void copy(url);
@@ -102,19 +103,19 @@ export function ShareButton({ code }: { code: string }): JSX.Element {
   return (
     <>
       <button type="button" className={styles.sharePill} onClick={tap}>
-        {said ? `✓ ${said}` : '🔗 Share'}
+        {said ? `✓ ${said}` : t.share.button}
       </button>
       {open ? (
-        <div className={styles.shareBack} role="dialog" aria-label="share the room">
+        <div className={styles.shareBack} role="dialog" aria-label={t.share.sheet}>
           <div className={styles.shareSheet}>
             <p className={styles.shareCode}>
-              Room <b>{code}</b>
+              {t.lobby.room} <b>{code}</b>
             </p>
             <a
               className={styles.shareRow}
               href={`sms:${sms}body=${encodeURIComponent(`${text} ${url}`)}`}
             >
-              💬 Messages
+              {t.share.messages}
             </a>
             <a
               className={styles.shareRow}
@@ -128,27 +129,24 @@ export function ShareButton({ code }: { code: string }): JSX.Element {
               className={styles.shareRow}
               href={`mailto:?subject=${encodeURIComponent('PartyBox')}&body=${encodeURIComponent(`${text}\n\n${url}`)}`}
             >
-              ✉️ Mail
+              {t.share.mail}
             </a>
             <button
               type="button"
               className={styles.shareRow}
               onClick={() => {
-                void copy(url).then((ok) => flash(ok ? 'Copied' : 'Copy failed'));
+                void copy(url).then((ok) => flash(ok ? t.share.copied : t.share.copyFailed));
                 setOpen(false);
               }}
             >
-              📋 Copy the link
+              {t.share.copyLink}
             </button>
             <p className={styles.shareLink}>{url.replace(/^https?:\/\//, '')}</p>
             {isLocalOnly(new URL(url).hostname) ? (
-              <p className={styles.shareNote}>
-                This link works on this Wi-Fi only. For friends somewhere else, open PartyBox from
-                the https link and share from there.
-              </p>
+              <p className={styles.shareNote}>{t.share.localOnly}</p>
             ) : null}
             <button type="button" className={styles.shareClose} onClick={() => setOpen(false)}>
-              Close
+              {t.vip.close}
             </button>
           </div>
         </div>

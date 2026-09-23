@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { JSX } from 'react';
 import { AvatarPhotos, ServerClockProvider, useLang } from '@partybox/game-sdk/ui';
+import { t } from '../i18n';
 import { createController } from '../net/controller';
 import type { Controller } from '../net/controller';
 import { useStore } from '../net/store';
@@ -73,7 +74,10 @@ export function ControllerApp(): JSX.Element {
     () => 'normal' as const,
   );
   const state = useStore(controller.store, (s) => s);
-  const lang = useLang();
+  // The device's language (the join pills, the 🎨 sheet): subscribing re-renders every screen, and
+  // `t` reads the language at render. No remount — the 🎨 sheet stays open and a typed answer or a
+  // drawing in progress survives the switch (the owner, 2026-09-22).
+  useLang();
   // Autoplay policy: the AudioContext needs a gesture. Every tap re-checks (idempotent) so a
   // context iOS suspended while the phone was locked comes back on the next touch.
   useEffect(() => {
@@ -116,13 +120,16 @@ export function ControllerApp(): JSX.Element {
   const musicWanted = musicOn || (room?.musicOnPhones ?? false) || (room?.phoneOnly ?? false);
   const gameMusic = room?.selectedGameId ? clientGames[room.selectedGameId]?.music : undefined;
   const plan = musicWanted ? planFor(room, view, gameMusic) : null;
+  const gameName = room?.games.find((g) => g.id === room.selectedGameId)?.name;
   const musicWhat = !musicWanted
     ? null
     : plan
       ? plan.id === 'lobby'
-        ? 'Lobby set'
-        : `${room?.games.find((g) => g.id === room.selectedGameId)?.name ?? 'the game'}'s set`
-      : 'quiet for now';
+        ? t.music.lobbySet
+        : gameName
+          ? t.music.gameSet(gameName)
+          : t.music.anyGameSet
+      : t.music.quietForNow;
   const planId = plan?.id ?? null;
   const paused = room?.status === 'playing' && (view?.paused ?? false);
   const results = room?.status === 'results';
@@ -209,9 +216,6 @@ export function ControllerApp(): JSX.Element {
     <ServerClockProvider offsetMs={state.offsetMs}>
       <AvatarPhotos players={state.room?.players}>
         <ControllerShell
-          // The device's language (the join pills, the 🎨 sheet): a change re-renders every screen
-          // in it — the socket lives outside React, so nothing reconnects (the owner, 2026-09-22).
-          key={lang}
           controller={controller}
           state={state}
           me={me}

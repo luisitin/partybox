@@ -65,14 +65,19 @@ export function owedNow(state: State, playerId: string): 'guess' | 'draw' | null
   return kindOfPage(have) === 'draw' ? 'draw' : 'guess';
 }
 
-/** Lower-case, punctuation and extra spaces out, a leading a/an/the dropped. */
+/** Lower-case, accents folded, punctuation and extra spaces out, a leading article dropped. */
 export function normalizeText(text: string): string {
+  // Accents fold to their letter (Spanish phones, 2026-09-22: "árbol" and "arbol" are one guess —
+  // before, the á became a gap and "rbol" broke the chain), and a leading Spanish article drops
+  // like an English one.
   return text
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
     .toLowerCase()
     .replace(/[^a-z0-9 ]+/g, ' ')
     .replace(/\s+/g, ' ')
     .trim()
-    .replace(/^(a|an|the) /, '');
+    .replace(/^(a|an|the|el|la|los|las|un|una|unos|unas) /, '');
 }
 
 /** The book survived: its last page is a guess that matches the word. Empty books never do. */

@@ -4,6 +4,7 @@
 // there. A game can read it too — `usePhoneOnly()` — instead of threading `view.phoneOnly` down.
 import { createContext, useContext } from 'react';
 import type { JSX, ReactNode } from 'react';
+import type { Translator } from '../ui/lang';
 
 const PhoneOnlyContext = createContext(false);
 
@@ -22,14 +23,16 @@ export function usePhoneOnly(): boolean {
   return useContext(PhoneOnlyContext);
 }
 
-/** The SDK's default lines, with and without a TV in the room. */
+/** The SDK's default lines, with and without a TV in the room, in the device's language (`L`,
+ *  the caller's `useT(STRINGS)`). */
 export const SDK_LINES = {
-  lockedIn: (phoneOnly: boolean): string =>
-    phoneOnly ? '✓ Locked in' : '✓ Locked in — look at the TV',
-  voteIn: (phoneOnly: boolean): string => (phoneOnly ? '✓ Vote in' : '✓ Vote in — look at the TV'),
-  waiting: (phoneOnly: boolean): string =>
-    phoneOnly ? 'Waiting for the others…' : 'Waiting for the others — look at the TV',
+  lockedIn: (phoneOnly: boolean, L: Translator): string =>
+    phoneOnly ? L('✓ Locked in') : L('✓ Locked in — look at the TV'),
+  voteIn: (phoneOnly: boolean, L: Translator): string =>
+    phoneOnly ? L('✓ Vote in') : L('✓ Vote in — look at the TV'),
+  waiting: (phoneOnly: boolean, L: Translator): string =>
+    phoneOnly ? L('Waiting for the others…') : L('Waiting for the others — look at the TV'),
   // The input goes to the host, not the TV; with no TV in the room, say it plainly.
-  retry: (phoneOnly: boolean): string =>
-    phoneOnly ? "✗ Didn't go through — tap again" : "✗ Didn't reach the TV — tap again",
+  retry: (phoneOnly: boolean, L: Translator): string =>
+    phoneOnly ? L("✗ Didn't go through — tap again") : L("✗ Didn't reach the TV — tap again"),
 };

@@ -3,11 +3,12 @@
 // the claim's colouring, as the claimant's phone already shows a verdict), then the verdict.
 import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
-import { BigText, Screen } from '@partybox/game-sdk/ui';
+import { BigText, Screen, useT } from '@partybox/game-sdk/ui';
 import type { PushedView } from '@partybox/game-sdk/ui';
 import type { BingoControllerView } from '../server/views';
 import { Card } from './Card';
 import { whyNot } from './copy';
+import { STRINGS } from './strings';
 import styles from './Controller.module.css';
 
 const ANNOUNCE_MS = 900;
@@ -19,6 +20,7 @@ export function PhoneStage({
   view: PushedView<BingoControllerView>;
 }): JSX.Element | null {
   const claim = view.claim;
+  const L = useT(STRINGS);
   const [t, setT] = useState(0);
   useEffect(() => {
     const start = Date.now();
@@ -30,9 +32,9 @@ export function PhoneStage({
   const revealDone = t > ANNOUNCE_MS + order.length * STEP_MS + 400;
   const settled = view.verdictShown && revealDone;
   return (
-    <Screen title={`${claim.name} says BINGO!`}>
+    <Screen title={L('{name} says BINGO!', { name: claim.name })}>
       <p className="pb-muted">
-        {view.patternLabel} · checking against {view.callIndex} calls
+        {L.sent(view.patternLabel)} · {L('checking against {n} calls', { n: view.callIndex })}
       </p>
       <div className={styles.phoneStageCard}>
         <Card
@@ -55,22 +57,24 @@ export function PhoneStage({
         // The owner (2026-09-21): a RIGHT claim shows on every phone too, not only a wrong one.
         <div className="pb-enter">
           <BigText level="h1" tone="accent">
-            BINGO!
+            {L('BINGO!')}
           </BigText>
           <p className="pb-muted">
-            +{view.claimPoints} {view.claimPoints === 1 ? 'point' : 'points'} for {claim.name}.
+            {view.claimPoints === 1
+              ? L('+1 point for {name}.', { name: claim.name })
+              : L('+{n} points for {name}.', { n: view.claimPoints, name: claim.name })}
           </p>
         </div>
       ) : settled ? (
         <div className="pb-enter">
           <BigText level="h1" tone="accent">
-            NOT A BINGO
+            {L('NOT A BINGO')}
           </BigText>
-          {whyNot(claim) ? <p className="pb-muted">{whyNot(claim)}</p> : null}
-          <p className="pb-muted">Card wiped. Next number in a moment…</p>
+          {whyNot(claim, L) ? <p className="pb-muted">{whyNot(claim, L)}</p> : null}
+          <p className="pb-muted">{L('Card wiped. Next number in a moment…')}</p>
         </div>
       ) : (
-        <p className="pb-muted">checking…</p>
+        <p className="pb-muted">{L('checking…')}</p>
       )}
     </Screen>
   );

@@ -15,7 +15,7 @@ import styles from './ControllerShell.module.css';
 import { PhoneSettings, tvSoundsOn } from './PhoneSettings';
 import { clientGames } from '../games.generated';
 import type { SoundCue } from '../sound';
-import { useLinkBanner } from './flapFree';
+import { linkLabel, useLinkBanner } from './flapFree';
 import { serverText } from '../server-text';
 import { usePhoneUrgency } from './urgency';
 import { VipMenu } from './VipMenu';
@@ -212,7 +212,7 @@ export function ControllerShell({
           <span
             className={`${styles.dot} ${state.connection === 'connected' ? `${styles.on} ${styles.beat}` : styles.off}`}
             role="status"
-            aria-label={state.connection}
+            aria-label={linkLabel(state.connection)}
           />
           {me ? (
             <>

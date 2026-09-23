@@ -1,39 +1,27 @@
 // Card styles for the Bingo phone (owner picks, 2026-09-17): Focus (one big card + thumbnails,
 // the default), Grid, Stack, Side by side and Strip — each says how many cards it suits and how
 // the phone must be held. A wide screen (tablet, computer) ignores all that and lays every card
-// out full size. The choice is per phone and remembered like the theme.
+// out full size. The choice is per phone and remembered like the theme. The names and hints the
+// players read live in words.ts, in the device's language.
 import { useEffect, useSyncExternalStore } from 'react';
+import type { Translator } from '@partybox/game-sdk/ui';
 
 export type CardStyle = 'focus' | 'grid' | 'stack' | 'side' | 'strip';
 export type Orientation = 'portrait' | 'landscape';
 
 export interface StyleSpec {
   id: CardStyle;
-  label: string;
-  hint: string;
   orient: Orientation;
   /** Card counts this style is for. */
   cards: readonly number[];
 }
 
 export const STYLES: readonly StyleSpec[] = [
-  {
-    id: 'focus',
-    label: 'Focus',
-    hint: 'one big card + thumbnails',
-    orient: 'portrait',
-    cards: [1, 2, 3, 4],
-  },
-  { id: 'grid', label: 'Grid', hint: 'all cards at once', orient: 'portrait', cards: [3, 4] },
-  { id: 'stack', label: 'Stack', hint: 'two cards, upright', orient: 'portrait', cards: [2] },
-  {
-    id: 'side',
-    label: 'Side by side',
-    hint: 'two cards, sideways',
-    orient: 'landscape',
-    cards: [2],
-  },
-  { id: 'strip', label: 'Strip', hint: '3–4 cards, sideways', orient: 'landscape', cards: [3, 4] },
+  { id: 'focus', orient: 'portrait', cards: [1, 2, 3, 4] },
+  { id: 'grid', orient: 'portrait', cards: [3, 4] },
+  { id: 'stack', orient: 'portrait', cards: [2] },
+  { id: 'side', orient: 'landscape', cards: [2] },
+  { id: 'strip', orient: 'landscape', cards: [3, 4] },
 ];
 
 export function styleSpec(id: CardStyle): StyleSpec {
@@ -41,11 +29,13 @@ export function styleSpec(id: CardStyle): StyleSpec {
 }
 
 /** Why a style is greyed out for this many cards; '' when it fits. */
-export function styleReason(spec: StyleSpec, cards: number): string {
+export function styleReason(spec: StyleSpec, cards: number, L: Translator): string {
   if (spec.cards.includes(cards)) return '';
   const first = spec.cards[0] ?? 1;
   const last = spec.cards[spec.cards.length - 1] ?? first;
-  return first === last ? `${first} cards only` : `${first}–${last} cards only`;
+  return first === last
+    ? L('{n} cards only', { n: first })
+    : L('{first}–{last} cards only', { first, last });
 }
 
 const KEY = 'partybox:bingo-style';
@@ -139,18 +129,19 @@ export function useOrientationLock(wanted: Orientation | null): void {
 
 // ── S-002: the daub's look and ink, per phone (localStorage, like the card style). Applied as
 // data attributes on <html> so the card's CSS can pick them up without props.
+// Blot: the ink blot; Stamp: the flat fill; Ring: a ring round the number (names: words.ts).
 export type DaubStyle = 'blot' | 'stamp' | 'ring';
-export const DAUBS: readonly { id: DaubStyle; label: string; hint: string }[] = [
-  { id: 'blot', label: 'Blot', hint: 'the ink blot' },
-  { id: 'stamp', label: 'Stamp', hint: 'the flat fill' },
-  { id: 'ring', label: 'Ring', hint: 'a ring round the number' },
+export const DAUBS: readonly { id: DaubStyle }[] = [
+  { id: 'blot' },
+  { id: 'stamp' },
+  { id: 'ring' },
 ];
 export type Ink = 'mine' | 'pink' | 'gold' | 'green';
-export const INKS: readonly { id: Ink; label: string; css: string | null }[] = [
-  { id: 'mine', label: 'Mine', css: null },
-  { id: 'pink', label: 'Pink', css: 'var(--pb-accent)' },
-  { id: 'gold', label: 'Gold', css: 'var(--pb-accent-2)' },
-  { id: 'green', label: 'Green', css: 'var(--pb-accent-3)' },
+export const INKS: readonly { id: Ink; css: string | null }[] = [
+  { id: 'mine', css: null },
+  { id: 'pink', css: 'var(--pb-accent)' },
+  { id: 'gold', css: 'var(--pb-accent-2)' },
+  { id: 'green', css: 'var(--pb-accent-3)' },
 ];
 const DAUB_KEY = 'partybox:bingo-daub';
 const INK_KEY = 'partybox:bingo-ink';

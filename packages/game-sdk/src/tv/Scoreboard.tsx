@@ -11,8 +11,10 @@
 import { useEffect, useState } from 'react';
 import type { CSSProperties, JSX } from 'react';
 import { Avatar } from '../ui/Avatar';
+import { useT } from '../ui/lang';
 import { MOTION_BASE, MOTION_FAST, MOTION_SLOW, useCountUp } from '../ui/motion';
 import styles from './Scoreboard.module.css';
+import { STRINGS } from './strings';
 
 export interface ScoreboardRow {
   playerId: string;
@@ -161,6 +163,7 @@ export function Scoreboard({
   holdMs = 0,
   noRanks = false,
 }: ScoreboardProps): JSX.Element {
+  const L = useT(STRINGS);
   const tier = tierOf(rows.length, compact, dense, columns);
   const cols = COLUMNS[tier];
   const winners = rows.filter((r) => r.rank === 1).length;
@@ -176,7 +179,7 @@ export function Scoreboard({
     <ol
       className={`${styles.board} ${tier === 'roomy' ? '' : styles[tier]} ${size === 'lg' ? styles.lg : size === 'sm' ? styles.sm : ''} ${staggered ? styles.staggered : ''} ${staggered && stagger === 'down' ? styles.down : ''} ${climb ? styles.climb : ''}`}
       style={{ '--pb-board-rows': Math.ceil(rows.length / cols) } as CSSProperties}
-      aria-label="scoreboard"
+      aria-label={L('scoreboard')}
     >
       {rows.map((row, index) => (
         <li
@@ -191,7 +194,7 @@ export function Scoreboard({
                 : undefined
           }
         >
-          <span className={styles.rank} aria-label={`rank ${row.rank}`}>
+          <span className={styles.rank} aria-label={L('rank {rank}', { rank: row.rank })}>
             {noRanks ? '' : heldRanks ? '·' : row.rank === 1 && trophy ? '🏆' : row.rank}
           </span>
           <Avatar
@@ -203,7 +206,7 @@ export function Scoreboard({
           {row.delta ? (
             <span className={styles.delta}>+{row.delta}</span>
           ) : markIds.includes(row.playerId) ? (
-            <span className={styles.mark} aria-label="wager placed">
+            <span className={styles.mark} aria-label={L('wager placed')}>
               ✓
             </span>
           ) : null}

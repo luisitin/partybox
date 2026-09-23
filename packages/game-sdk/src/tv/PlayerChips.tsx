@@ -1,7 +1,9 @@
 // A row/grid of player chips built from the view envelope's `players[]`.
 import type { JSX } from 'react';
 import type { ViewPlayer } from '@partybox/shared';
+import { useT } from '../ui/lang';
 import { PlayerChip } from '../ui/PlayerChip';
+import { STRINGS } from './strings';
 import styles from './PlayerChips.module.css';
 
 export interface PlayerChipsProps {
@@ -53,6 +55,7 @@ export function PlayerChips({
   enter = false,
   seats = 0,
 }: PlayerChipsProps): JSX.Element {
+  const L = useT(STRINGS);
   // Same rule as Scoreboard's 🏆: no leader mark when nobody has scored or everyone is tied.
   // Alphabetical everywhere chips appear (lobby, selecting, game strip), so a player finds their
   // chip in the same place on every screen; numeric-aware so Bot 2 precedes Bot 10 (review-loop #3).
@@ -68,7 +71,7 @@ export function PlayerChips({
   return (
     <ul
       className={`${styles.list} ${styles[layout]} ${align === 'start' ? styles.start : ''}`}
-      aria-label="players"
+      aria-label={L('players')}
     >
       {ordered.map((p) => (
         <li key={p.id} className={`${styles.item} ${enter ? styles.enter : ''}`}>

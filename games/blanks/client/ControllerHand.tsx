@@ -5,12 +5,13 @@
 // sees the black card and the count instead of a hand.
 import { useEffect, useRef, useState } from 'react';
 import type { CSSProperties, JSX } from 'react';
-import { Avatar, PrimaryButton, Screen, WaitingScreen } from '@partybox/game-sdk/ui';
+import { Avatar, PrimaryButton, Screen, WaitingScreen, useT } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { BlanksControllerView } from '../server/index';
 import type { Input } from '../server/types';
 import { FilledCard } from './Cards';
 import { NextButton } from './NextButton';
+import { STRINGS } from './strings';
 import styles from './blanks.module.css';
 
 /** I-016 B: how long the played card flies before the pick is sent. */
@@ -20,8 +21,9 @@ const LONG_CARD_CHARS = 64;
 
 type Props = GameControllerProps<BlanksControllerView, Input>;
 
-function progressLine(view: BlanksControllerView): string {
-  return `${view.playedCount} / ${view.playersExpected} in`;
+/** "2 / 5 in": the `{played}` and `{expected}` of the progress sentences. */
+function progress(view: BlanksControllerView): { played: number; expected: number } {
+  return { played: view.playedCount, expected: view.playersExpected };
 }
 
 /** The table as the TV shows it: one slot per expected card, the played ones face-down. */
@@ -40,6 +42,7 @@ function Table({ view }: { view: BlanksControllerView }): JSX.Element {
 
 /** czar mode: the judge taps one of three black cards; everyone else sees who is choosing. */
 export function ControllerPick({ view, send }: Props): JSX.Element {
+  const L = useT(STRINGS);
   const [sent, setSent] = useState<number | null>(null);
   // Until the judge has taken one, all three read the same: dimming them before that made the
   // waiting screen look disabled (loop #204).
@@ -47,8 +50,12 @@ export function ControllerPick({ view, send }: Props): JSX.Element {
   if (view.role !== 'judge') {
     return (
       <WaitingScreen
-        title={`${view.czar?.name ?? 'The judge'} is picking the question`}
-        hint="Your hand is next — the card they choose is the one you play on."
+        title={
+          view.czar
+            ? L('{name} is picking the question', { name: view.czar.name })
+            : L('The judge is picking the question')
+        }
+        hint={L('Your hand is next — the card they choose is the one you play on.')}
         mood="watch"
       >
         {view.czar ? (
@@ -61,7 +68,7 @@ export function ControllerPick({ view, send }: Props): JSX.Element {
             here too, and the one the judge takes lights up while the others step back (loop
             #204). */}
         {view.blackChoices.length > 0 ? (
-          <ul className={styles.peekList} aria-label="the questions on the table">
+          <ul className={styles.peekList} aria-label={L('the questions on the table')}>
             {view.blackChoices.map((b, i) => (
               <li key={i} className={b.chosen ? styles.peekOn : taken ? styles.peekOff : undefined}>
                 <FilledCard text={b.text} pick={b.pick} size="mini" winner={b.chosen} />
@@ -76,10 +83,12 @@ export function ControllerPick({ view, send }: Props): JSX.Element {
     <Screen
       className="pb-enter"
       title={
-        <span className={styles.kicker}>Round {view.round} · you judge — pick the question</span>
+        <span className={styles.kicker}>
+          {L('Round {round} · you judge — pick the question', { round: view.round })}
+        </span>
       }
     >
-      <ul className={styles.choiceList} aria-label="the black cards">
+      <ul className={styles.choiceList} aria-label={L('the black cards')}>
         {view.blackChoices.map((b, i) => (
           <li key={i}>
             <button
@@ -98,12 +107,13 @@ export function ControllerPick({ view, send }: Props): JSX.Element {
           </li>
         ))}
       </ul>
-      <p className="pb-caption pb-muted">Tap the one the room should answer.</p>
+      <p className="pb-caption pb-muted">{L('Tap the one the room should answer.')}</p>
     </Screen>
   );
 }
 
 export function ControllerHand({ view, send, skip }: Props): JSX.Element {
+  const L = useT(STRINGS);
   const [picked, setPicked] = useState<string[]>([]);
   const [sent, setSent] = useState(false);
   // I-016 B: the played card flies up into the black card before the pick is sent (300 ms, the
@@ -114,17 +124,22 @@ export function ControllerHand({ view, send, skip }: Props): JSX.Element {
   const black = view.black;
   const pick = black?.pick ?? 1;
   if (!black)
-    return <WaitingScreen title={view.phoneOnly ? 'One moment…' : 'Look at the TV'} mood="watch" />;
+    return (
+      <WaitingScreen title={view.phoneOnly ? L('One moment…') : L('Look at the TV')} mood="watch" />
+    );
   if (view.role === 'judge') {
     return (
       <WaitingScreen
-        title="You're the judge"
-        hint={`${progressLine(view)} · you pick the winner after the reading.`}
+        title={L("You're the judge")}
+        hint={L(
+          '{played} / {expected} in · you pick the winner after the reading.',
+          progress(view),
+        )}
         mood="watch"
       >
         <Table view={view} />
         <FilledCard text={black.text} pick={black.pick} size="phone" />
-        <NextButton skip={skip} timed={view.timed} label="Start the reading now" />
+        <NextButton skip={skip} timed={view.timed} label={L('Start the reading now')} />
       </WaitingScreen>
     );
   }
@@ -134,11 +149,19 @@ export function ControllerHand({ view, send, skip }: Props): JSX.Element {
     return (
       <WaitingScreen
         className="pb-enter"
-        title="Played!"
+        title={L('Played!')}
         hint={
           allIn
-            ? "Everyone's in — here comes the reading."
-            : `${progressLine(view)} · ${view.timed ? "the reading starts when everyone's in." : 'the reading starts when everyone is in, or when the VIP taps Next.'}`
+            ? L("Everyone's in — here comes the reading.")
+            : view.timed
+              ? L(
+                  "{played} / {expected} in · the reading starts when everyone's in.",
+                  progress(view),
+                )
+              : L(
+                  '{played} / {expected} in · the reading starts when everyone is in, or when the VIP taps Next.',
+                  progress(view),
+                )
         }
         mood="done"
       >
@@ -146,7 +169,7 @@ export function ControllerHand({ view, send, skip }: Props): JSX.Element {
         <FilledCard text={black.text} whites={view.myPlay} size="phone" />
         {/* Nothing to read yet, or everyone is in: no "don't wait" (review-loop #165). */}
         {allIn || view.playedCount === 0 ? null : (
-          <NextButton skip={skip} timed={view.timed} label="Start the reading now" />
+          <NextButton skip={skip} timed={view.timed} label={L('Start the reading now')} />
         )}
       </WaitingScreen>
     );
@@ -154,8 +177,8 @@ export function ControllerHand({ view, send, skip }: Props): JSX.Element {
   if (view.hand.length < pick) {
     return (
       <WaitingScreen
-        title="Out of cards"
-        hint="The deck ran dry — you sit this round out."
+        title={L('Out of cards')}
+        hint={L('The deck ran dry — you sit this round out.')}
         mood="watch"
       >
         <FilledCard text={black.text} pick={black.pick} size="phone" />
@@ -165,10 +188,10 @@ export function ControllerHand({ view, send, skip }: Props): JSX.Element {
   const ready = picked.length === pick;
   const label =
     pick === 1
-      ? 'Play this card'
+      ? L('Play this card')
       : ready
-        ? `Play these ${pick}`
-        : `Pick ${pick - picked.length} more`;
+        ? L('Play these {n}', { n: pick })
+        : L('Pick {n} more', { n: pick - picked.length });
   const toggle = (id: string): void => {
     if (sent) return;
     setPicked((p) => {
@@ -185,7 +208,9 @@ export function ControllerHand({ view, send, skip }: Props): JSX.Element {
       className="pb-enter"
       title={
         <span className={styles.kicker}>
-          Round {view.round} · {pick > 1 ? `pick ${pick}, in order` : 'pick one'}
+          {pick > 1
+            ? L('Round {round} · pick {n}, in order', { round: view.round, n: pick })
+            : L('Round {round} · pick one', { round: view.round })}
         </span>
       }
       footer={
@@ -199,7 +224,7 @@ export function ControllerHand({ view, send, skip }: Props): JSX.Element {
             flight.current = setTimeout(() => send({ type: 'play', cards: picked }), FLIGHT_MS);
           }}
         >
-          {sent ? 'Played' : label}
+          {sent ? L('Played') : label}
         </PrimaryButton>
       }
     >
@@ -224,12 +249,14 @@ export function ControllerHand({ view, send, skip }: Props): JSX.Element {
             send({ type: 'redraw' });
           }}
         >
-          {view.redrawsLeft === 0 ? 'No new hands left' : `New hand · ${view.redrawsLeft} left`}
+          {view.redrawsLeft === 0
+            ? L('No new hands left')
+            : L('New hand · {n} left', { n: view.redrawsLeft })}
         </button>
       </div>
       <ul
         className={`${styles.hand} ${flying ? styles.handFlying : ''}`}
-        aria-label="your hand"
+        aria-label={L('your hand')}
         data-picking={picked.length > 0 || undefined}
       >
         {view.hand.map((card, i) => {
@@ -256,7 +283,11 @@ export function ControllerHand({ view, send, skip }: Props): JSX.Element {
                 {on ? (
                   <span
                     className={styles.order}
-                    aria-label={`picked${pick > 1 ? ` ${order + 1} of ${pick}` : ''}`}
+                    aria-label={
+                      pick > 1
+                        ? L('picked {n} of {count}', { n: order + 1, count: pick })
+                        : L('picked')
+                    }
                   >
                     {pick > 1 ? order + 1 : '✓'}
                   </span>

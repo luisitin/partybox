@@ -56,8 +56,8 @@ export function VipMenu({ controller, room, me, paused, onClose }: VipMenuProps)
             className={styles.close}
             style={{ marginRight: 8 }}
             onClick={() => setTipsSeen(false)}
-            aria-label="show the VIP tips again"
-            title="Show the tips again"
+            aria-label={t.vip.tipsAgainLabel}
+            title={t.vip.tipsAgain}
           >
             💡
           </button>
@@ -111,12 +111,12 @@ export function VipMenu({ controller, room, me, paused, onClose }: VipMenuProps)
               {room.locked ? t.vip.unlock : t.vip.lock}
             </PrimaryButton>
             {/* I-088 A: the room's own size — a stepper; the TV's "X / N" follows. */}
-            <div className={styles.sizeRow} role="group" aria-label="room size">
-              <span className={styles.sizeLabel}>Room size</span>
+            <div className={styles.sizeRow} role="group" aria-label={t.vip.roomSizeGroup}>
+              <span className={styles.sizeLabel}>{t.vip.roomSize}</span>
               <button
                 type="button"
                 className={styles.sizeBtn}
-                aria-label="smaller room"
+                aria-label={t.vip.smaller}
                 disabled={room.capacity <= Math.max(4, room.players.length)}
                 onClick={() =>
                   controller.vip({ action: 'setCapacity', capacity: room.capacity - 1 })
@@ -130,7 +130,7 @@ export function VipMenu({ controller, room, me, paused, onClose }: VipMenuProps)
               <button
                 type="button"
                 className={styles.sizeBtn}
-                aria-label="bigger room"
+                aria-label={t.vip.bigger}
                 disabled={room.capacity >= 16}
                 onClick={() =>
                   controller.vip({ action: 'setCapacity', capacity: room.capacity + 1 })
@@ -152,7 +152,7 @@ export function VipMenu({ controller, room, me, paused, onClose }: VipMenuProps)
                   controller.vip({ action: 'lock' });
                 }}
               >
-                Lock at this size ({room.players.length})
+                {t.vip.lockAtSize(room.players.length)}
               </PrimaryButton>
             ) : null}
             {/* The owner (2026-09-22): public rooms show up in the join page's list; a private
@@ -162,7 +162,7 @@ export function VipMenu({ controller, room, me, paused, onClose }: VipMenuProps)
               className={styles.wide}
               onClick={() => controller.vip({ action: 'setListed', on: !room.listed })}
             >
-              {room.listed ? '🔓 Public — listed for anyone' : '🔒 Private — code only'}
+              {room.listed ? t.vip.listed : t.vip.unlisted}
             </PrimaryButton>
           </div>
         </section>

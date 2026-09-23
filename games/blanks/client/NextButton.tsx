@@ -5,7 +5,8 @@
 // double tap never skips two phases. Hidden entirely when the round is timed.
 import { useState } from 'react';
 import type { JSX } from 'react';
-import { PrimaryButton } from '@partybox/game-sdk/ui';
+import { PrimaryButton, useT } from '@partybox/game-sdk/ui';
+import { STRINGS } from './strings';
 
 export function NextButton({
   skip,
@@ -16,6 +17,7 @@ export function NextButton({
   label: string;
   timed: boolean;
 }): JSX.Element | null {
+  const L = useT(STRINGS);
   const [sent, setSent] = useState(false);
   if (timed || skip === undefined) return null;
   return (
@@ -28,7 +30,7 @@ export function NextButton({
         skip();
       }}
     >
-      {sent ? 'Moving on…' : label}
+      {sent ? L('Moving on…') : label}
     </PrimaryButton>
   );
 }

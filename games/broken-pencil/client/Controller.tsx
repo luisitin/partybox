@@ -8,8 +8,9 @@ import {
   TextAnswer,
   WaitingScreen,
   useServerOffset,
+  useT,
 } from '@partybox/game-sdk/ui';
-import type { GameControllerProps } from '@partybox/game-sdk/ui';
+import type { GameControllerProps, Translator } from '@partybox/game-sdk/ui';
 import type { Input, Stroke } from '../server/types';
 import type { PencilControllerView } from '../server/views';
 import { DrawPad } from './DrawPad';
@@ -17,29 +18,38 @@ import { DrawingView } from './DrawingView';
 import styles from './Controller.module.css';
 import { Offers } from './Offers';
 import { Show } from './Show';
+import { STRINGS } from './strings';
+
+/** Who touches my book, in the pick screen's hint. */
+function reachLine(L: Translator, view: PencilControllerView): string {
+  const others = view.bookCount - 1;
+  if (view.fullCircle)
+    return L('Everyone else ({others}) will touch your book before it comes home.', { others });
+  return L('{passes} of your {others} friends will touch your book.', {
+    passes: view.passes,
+    others,
+  });
+}
 
 function Pick({ view, send }: GameControllerProps<PencilControllerView, Input>): JSX.Element {
+  const L = useT(STRINGS);
   const [custom, setCustom] = useState('');
   // I-023 B: the tapped tier bumps, the other two step back, until the server moves us on.
   const [picked, setPicked] = useState<number | null>(null);
   const spicy = view.spicy;
   const offers = view.offers ?? [];
-  const others = view.bookCount - 1;
-  const reach = view.fullCircle
-    ? `Everyone else (${others}) will touch your book before it comes home.`
-    : `${view.passes} of your ${others} friends will touch your book.`;
   if (view.submitted)
     return (
       <WaitingScreen
-        title="Locked in"
-        hint="Drawing starts when everyone has picked."
+        title={L('Locked in')}
+        hint={L('Drawing starts when everyone has picked.')}
         mood="done"
       />
     );
   const text = custom.trim();
   return (
     <Screen
-      title="Pick your secret word"
+      title={L('Pick your secret word')}
       footer={
         view.customWords ? (
           <div className={styles.customRow}>
@@ -47,22 +57,24 @@ function Pick({ view, send }: GameControllerProps<PencilControllerView, Input>):
               className={styles.customInput}
               value={custom}
               maxLength={30}
-              placeholder="…or write your own"
+              placeholder={L('…or write your own')}
               onChange={(e) => setCustom(e.target.value)}
-              aria-label="your own word"
+              aria-label={L('your own word')}
             />
             <PrimaryButton
               tone="neutral"
               disabled={text.length === 0}
               onClick={() => send({ type: 'pickCustom', text })}
             >
-              Use mine
+              {L('Use mine')}
             </PrimaryButton>
           </div>
         ) : undefined
       }
     >
-      <p className={styles.hint}>{reach} Pick something drawable.</p>
+      <p className={styles.hint}>
+        {reachLine(L, view)} {L('Pick something drawable.')}
+      </p>
       <Offers
         offers={offers}
         spicy={spicy}
@@ -76,26 +88,31 @@ function Pick({ view, send }: GameControllerProps<PencilControllerView, Input>):
   );
 }
 
-function stepKicker(view: PencilControllerView): string {
-  const who = view.bookOwnerName ?? 'Someone';
-  return `${who}'s book · round ${view.step} of ${view.stepCount}`;
+function stepKicker(L: Translator, view: PencilControllerView): string {
+  const at = { step: view.step, count: view.stepCount };
+  const name = view.bookOwnerName ?? null;
+  if (name === null) return L("Someone's book · round {step} of {count}", at);
+  return L("{name}'s book · round {step} of {count}", { name, ...at });
 }
 
 /** After both pages of a step are in: what I sent, and who gets the book next. */
 function Sent({ view }: { view: PencilControllerView }): JSX.Element {
+  const L = useT(STRINGS);
   return (
-    <Screen title="Sent!">
-      <p className={styles.kicker}>{stepKicker(view)}</p>
+    <Screen title={L('Sent!')}>
+      <p className={styles.kicker}>{stepKicker(L, view)}</p>
       {view.mine?.text ? (
         <p className={styles.bookLine}>
-          You guessed <strong>“{view.mine.text}”</strong>
+          {L('You guessed')} <strong>“{view.mine.text}”</strong>
         </p>
       ) : null}
-      {view.mine?.drawing ? <DrawingView drawing={view.mine.drawing} label="your drawing" /> : null}
+      {view.mine?.drawing ? (
+        <DrawingView drawing={view.mine.drawing} label={L('your drawing')} />
+      ) : null}
       <p className={styles.hint}>
         {view.nextName
-          ? `${view.nextName} gets this next. Good luck, ${view.nextName}.`
-          : 'That was the last page of this book.'}
+          ? L('{name} gets this next. Good luck, {name}.', { name: view.nextName })
+          : L('That was the last page of this book.')}
       </p>
     </Screen>
   );
@@ -152,6 +169,7 @@ function useDraftSender(
 
 /** Draw the text in `prompt`: your own word (round 1) or the guess you just wrote (a pass). */
 function Draw({ view, send }: GameControllerProps<PencilControllerView, Input>): JSX.Element {
+  const L = useT(STRINGS);
   const strokes = useRef<Stroke[]>([]);
   const [count, setCount] = useState(0);
   const text = view.prompt?.kind === 'text' ? view.prompt.text : '???';
@@ -168,13 +186,15 @@ function Draw({ view, send }: GameControllerProps<PencilControllerView, Input>):
           onClick={() => send({ type: 'draw', strokes: strokes.current })}
           disabled={view.paused}
         >
-          {count === 0 ? 'Send an empty sheet' : 'Done drawing'}
+          {count === 0 ? L('Send an empty sheet') : L('Done drawing')}
         </PrimaryButton>
       }
     >
-      <p className={styles.kicker}>{stepKicker(view)}</p>
+      <p className={styles.kicker}>{stepKicker(L, view)}</p>
       <h2 className={styles.prompt}>
-        {own ? 'Draw your word: ' : 'Now draw your guess: '}“{text}”
+        {own
+          ? L('Draw your word: “{text}”', { text })
+          : L('Now draw your guess: “{text}”', { text })}
       </h2>
       <DrawPad
         initial={initial}
@@ -191,25 +211,26 @@ function Draw({ view, send }: GameControllerProps<PencilControllerView, Input>):
 
 /** Guess the drawing that reached you; in a pass the DrawPad follows right after. */
 function Guess({ view, send }: GameControllerProps<PencilControllerView, Input>): JSX.Element {
+  const L = useT(STRINGS);
   const drawing = view.prompt?.kind === 'drawing' ? view.prompt.drawing : null;
   const last = view.phaseId === 'guess';
   return (
     <TextAnswer
-      kicker={stepKicker(view)}
+      kicker={stepKicker(L, view)}
       prompt={
         <span className={styles.guessPrompt}>
           <span className={styles.guessDrawing}>
-            <DrawingView drawing={drawing} label="the drawing to guess" />
+            <DrawingView drawing={drawing} label={L('the drawing to guess')} />
           </span>
           <span className={styles.guessText}>
-            {last ? 'Last guess — what is this?' : 'What is this? (you draw it next)'}
+            {last ? L('Last guess — what is this?') : L('What is this? (you draw it next)')}
           </span>
         </span>
       }
-      placeholder="Your best guess…"
+      placeholder={L('Your best guess…')}
       maxLength={40}
       submitted={false}
-      submitLabel={last ? 'Send guess' : 'Guess, then draw it'}
+      submitLabel={last ? L('Send guess') : L('Guess, then draw it')}
       promptKey={`${view.step}:${view.deadline ?? ''}`}
       onSubmit={(text) => send({ type: 'guess', text })}
     />
@@ -217,12 +238,13 @@ function Guess({ view, send }: GameControllerProps<PencilControllerView, Input>)
 }
 
 export function Controller(props: GameControllerProps<PencilControllerView, Input>): JSX.Element {
+  const L = useT(STRINGS);
   const { view, me, send } = props;
   if (view.me.role === 'spectator')
     return (
       <WaitingScreen
-        title="You're watching this one"
-        hint="You get a book next game."
+        title={L("You're watching this one")}
+        hint={L('You get a book next game.')}
         mood="watch"
       />
     );
@@ -245,9 +267,9 @@ export function Controller(props: GameControllerProps<PencilControllerView, Inpu
           title={
             mine
               ? mine.intact
-                ? 'Your book survived!'
-                : 'Your book broke'
-              : 'That was Broken Pencil'
+                ? L('Your book survived!')
+                : L('Your book broke')
+              : L('That was Broken Pencil')
           }
         >
           {mine ? (
@@ -256,7 +278,12 @@ export function Controller(props: GameControllerProps<PencilControllerView, Inpu
             </p>
           ) : null}
           <p className={styles.hint}>
-            {view.intactBooks} of {view.bookCount} books survived.
+            {view.intactBooks === 1
+              ? L('1 of {total} books survived.', { total: view.bookCount })
+              : L('{n} of {total} books survived.', {
+                  n: view.intactBooks,
+                  total: view.bookCount,
+                })}
           </p>
           {/* The VIP's "close enough" (the owner, 2026-09-21): a broken book counts as intact —
               the server takes the input from the VIP alone (ADR-042), during the summary. */}
@@ -273,7 +300,7 @@ export function Controller(props: GameControllerProps<PencilControllerView, Inpu
                     className={styles.veto}
                     onClick={() => send({ type: 'veto', book: i })}
                   >
-                    close enough ✓
+                    {L('close enough ✓')}
                   </button>
                 ) : (
                   <span className={b.intact ? styles.intact : styles.broken}>

@@ -1,9 +1,11 @@
 // TV view for Lightning Round. Dumb component: renders `view`, composes game-sdk primitives, never
 // touches sockets or game logic. The shell already shows the timer, player chips and VIP overlay.
 import type { CSSProperties, JSX } from 'react';
-import { BigText, Scoreboard, Stage } from '@partybox/game-sdk/ui';
+import { BigText, Scoreboard, Stage, useT } from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
 import type { LightningTvView } from '../server/index';
+import { drawText } from './labels';
+import { STRINGS } from './strings';
 import { FinalReveal } from './TvFinal';
 import { AnswerCard, RevealRows, RoundHeader, TvQuestion } from './TvQuestion';
 import styles from './Tv.module.css';
@@ -18,6 +20,7 @@ function Bolt(): JSX.Element {
 }
 
 export function Tv({ view }: GameTvProps<LightningTvView>): JSX.Element {
+  const L = useT(STRINGS);
   const standings = view.standings ?? [];
   if (view.phaseId === 'intro') {
     // Bolt + title ride the shell's phase rise; the tagline and the pill follow one beat each.
@@ -28,10 +31,12 @@ export function Tv({ view }: GameTvProps<LightningTvView>): JSX.Element {
           Lightning Round
         </BigText>
         <div className={styles.introLine} style={{ '--i': 1 } as CSSProperties}>
-          <BigText level="h2">Fast fingers, sharp minds. Bet big on the last one.</BigText>
+          <BigText level="h2">{L('Fast fingers, sharp minds. Bet big on the last one.')}</BigText>
         </div>
         <div className={styles.introLine} style={{ '--i': 2 } as CSSProperties}>
-          <span className={styles.introPill}>{view.categoryLabel} · faster is worth more</span>
+          <span className={styles.introPill}>
+            {drawText(view.categoryLabel, L)} · {L('faster is worth more')}
+          </span>
         </div>
       </Stage>
     );
@@ -86,18 +91,18 @@ export function Tv({ view }: GameTvProps<LightningTvView>): JSX.Element {
     return (
       <Stage>
         <div className={styles.header}>
-          <span className={`${styles.kicker} ${styles.final}`}>Final question next</span>
+          <span className={`${styles.kicker} ${styles.final}`}>{L('Final question next')}</span>
           <span className={styles.placed} role="status">
             <span key={view.answeredCount} className={styles.countNum}>
               {view.answeredCount} / {view.totalCount}
             </span>{' '}
-            placed
+            {L('placed')}
           </span>
         </div>
-        <BigText level="h2">Place your wagers</BigText>
+        <BigText level="h2">{L('Place your wagers')}</BigText>
         <p className={`pb-muted pb-caption ${styles.rules}`}>
-          Right answer wins the bet · wrong answer loses it
-          {gap > 0 ? ` · ${standings[0]!.name} leads by ${gap}` : ''}
+          {L('Right answer wins the bet · wrong answer loses it')}
+          {gap > 0 ? ` · ${L('{name} leads by {gap}', { name: standings[0]!.name, gap })}` : ''}
         </p>
         <Scoreboard
           rows={standings}
@@ -117,7 +122,7 @@ export function Tv({ view }: GameTvProps<LightningTvView>): JSX.Element {
   return (
     <Stage>
       <BigText level="h1" tone="accent">
-        That's the round!
+        {L("That's the round!")}
       </BigText>
       <Scoreboard rows={standings} stagger="up" />
     </Stage>

@@ -41,9 +41,7 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
   }, [leaving]);
   // I-082 B: tips retire as the VIP learns them.
   const hasBot = room.players.some((p) => p.bot);
-  const tips: readonly { id: string; text: string }[] = VIP_TIPS.filter(
-    (tip) => !(tip.id === 'bots' && hasBot),
-  );
+  const tips = VIP_TIPS.filter((tip) => !(tip.id === 'bots' && hasBot));
   useEffect(() => {
     if (!tipsOn || !me.isVip || tips.length === 0) return undefined;
     const h = setInterval(() => setTipIndex((i) => i + 1), 5000);
@@ -85,7 +83,7 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
                 else setLeaving(true);
               }}
             >
-              {leaving ? 'Leave?' : '🚪 Leave'}
+              {leaving ? t.lobby.leaveConfirm : t.lobby.leave}
             </button>
             <ShareButton code={room.code} />
           </span>
@@ -102,11 +100,11 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
       <p className="pb-muted">{me.isVip ? t.lobby.youAreVip : lobbyStrings().waitingForVip}</p>
       {me.isVip && tipsOn && tip ? (
         <p key={tip.id} className={styles.tip} role="status">
-          <span aria-hidden>💡</span> {tip.text}
+          <span aria-hidden>💡</span> {t.tips[tip.id]}
           <button
             type="button"
             className={styles.tipClose}
-            aria-label="dismiss tips"
+            aria-label={t.lobby.dismissTips}
             onClick={() => {
               setTipsSeen(true);
               setTipsOn(false);
@@ -128,18 +126,18 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
             setTimeout(() => setNudgedAt(null), 20_000);
           }}
         >
-          {nudgedAt !== null ? '👋 Nudged' : `👋 Hurry up, ${vipName}!`}
+          {nudgedAt !== null ? t.lobby.nudged : t.lobby.nudge(vipName)}
         </button>
       ) : null}
       {/* S-003 B: set up your phone while you wait — opens the 🎨 sheet. */}
       <button type="button" className={styles.setup} onClick={onSetup}>
-        🎨 Set up your phone while you wait
+        {t.lobby.setup}
       </button>
       <p className={`pb-caption ${styles.count}`}>
         {t.lobby.players(room.players.length, room.capacity)}
         {room.locked ? ` · ${t.lobby.locked}` : ''}
       </p>
-      <ul key={room.players.length} className={styles.list} aria-label="players">
+      <ul key={room.players.length} className={styles.list} aria-label={t.lobby.playersList}>
         {room.players.map((p, i) => {
           // The owner or the VIP may remove a bot (ADR-028): one tap, no confirm — re-adding is one tap too.
           const removable = p.bot !== undefined && (p.bot.ownerId === me.id || me.isVip);

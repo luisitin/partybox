@@ -2,30 +2,42 @@
 // tap, ✓/✗ in reveal), a ChoiceGrid of wager options before the final, waiting screens otherwise.
 import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
-import { ChoiceGrid, WaitingScreen, buzz, useHold, useSecondsLeft } from '@partybox/game-sdk/ui';
-import type { GameControllerProps } from '@partybox/game-sdk/ui';
+import {
+  ChoiceGrid,
+  WaitingScreen,
+  buzz,
+  useHold,
+  useSecondsLeft,
+  useT,
+} from '@partybox/game-sdk/ui';
+import type { GameControllerProps, Translator } from '@partybox/game-sdk/ui';
 import type { LightningControllerView } from '../server/index';
 import type { Input } from '../server/types';
 import { Outcome, RoomRows, Stake, wagerLabel } from './ControllerBits';
 import { CustomStake } from './CustomStake';
 import styles from './Controller.module.css';
+import { pointsText, roundLabel } from './labels';
+import { STRINGS } from './strings';
 import { FINAL_REVEAL_HOLD_MS, REVEAL_BEAT_MS } from './timing';
 
-function roundKicker(view: LightningControllerView): string {
-  const round = view.round;
-  const where =
-    round === null
-      ? ''
-      : round.final
-        ? 'Final question'
-        : `Question ${round.number} of ${round.total}`;
-  return view.question ? `${where} · ${view.question.subcategoryLabel}` : where;
+function roundKicker(view: LightningControllerView, L: Translator): string {
+  const where = roundLabel(view.round, L);
+  return view.question ? `${where} · ${L.sent(view.question.subcategoryLabel)}` : where;
+}
+
+/** The line under the answers once locked in: how fast the pick was, and where to look. */
+function lockedLine(spare: number, phoneOnly: boolean, L: Translator): string {
+  if (spare <= 3) return phoneOnly ? L('✓ Just made it') : L('✓ Just made it — look at the TV');
+  return phoneOnly
+    ? L('✓ Locked in with {seconds} s to spare', { seconds: spare })
+    : L('✓ Locked in with {seconds} s to spare — look at the TV', { seconds: spare });
 }
 
 export function Controller({
   view,
   send,
 }: GameControllerProps<LightningControllerView, Input>): JSX.Element {
+  const L = useT(STRINGS);
   const { phaseId } = view;
   // The streak carried into the question: `myStreak` is already reset in the reveal view.
   const [streakBefore, setStreakBefore] = useState(0);
@@ -48,13 +60,19 @@ export function Controller({
     buzz(correct ? [30, 40, 30] : 120);
   }, [phaseId, shown, correct]);
   if (view.me.role === 'spectator') {
-    return <WaitingScreen title="Spectating" hint="You are in for the next game." mood="watch" />;
+    return (
+      <WaitingScreen
+        title={L('Spectating')}
+        hint={L('You are in for the next game.')}
+        mood="watch"
+      />
+    );
   }
   if (phaseId === 'intro') {
     return (
       <WaitingScreen
-        title="Get ready!"
-        hint="Four choices per question. Faster is worth more."
+        title={L('Get ready!')}
+        hint={L('Four choices per question. Faster is worth more.')}
         mood="wait"
       />
     );
@@ -67,12 +85,7 @@ export function Controller({
     const stake = finalQ && phaseId === 'question' ? (view.myWagerAmount ?? 0) : null;
     // Comparing the id at render is the reset; a reconnect after picking gets the default line.
     const spare = locked && lockedAt?.questionId === view.question.id ? lockedAt.seconds : null;
-    const lockedHint =
-      spare === null
-        ? undefined
-        : spare <= 3
-          ? `✓ Just made it${view.phoneOnly ? '' : ' — look at the TV'}`
-          : `✓ Locked in with ${spare} s to spare${view.phoneOnly ? '' : ' — look at the TV'}`;
+    const lockedHint = spare === null ? undefined : lockedLine(spare, view.phoneOnly === true, L);
     const questionId = view.question.id;
     return (
       // A new question rises as a new screen; question → reveal keeps the same node.
@@ -83,8 +96,8 @@ export function Controller({
         tone={finalQ ? 'final' : undefined}
         kicker={
           finalQ && stake !== null && stake > 0
-            ? `${roundKicker(view)} · you bet ${stake}`
-            : roundKicker(view)
+            ? `${roundKicker(view, L)} · ${L('you bet {stake}', { stake })}`
+            : roundKicker(view, L)
         } /* I-039 C */
         prompt={view.question.text}
         choices={view.question.choices.map((label, index) => ({ id: String(index), label }))}
@@ -107,7 +120,7 @@ export function Controller({
             <Outcome view={view} streakBefore={streakBefore} spare={spare} />
           ) : revealed && finalQ ? (
             <div className={styles.stake} role="status">
-              🎲 The bets are in{view.phoneOnly ? '…' : ' — look at the TV'}
+              🎲 {view.phoneOnly ? L('The bets are in…') : L('The bets are in — look at the TV')}
             </div>
           ) : stake !== null ? (
             <Stake amount={stake} live={!locked} />
@@ -132,25 +145,27 @@ export function Controller({
         letters={false}
         tone="final"
         promptKey="wager"
-        kicker="Final question next"
+        kicker={L('Final question next')}
         prompt={
           <>
             {/* I-026 B: once placed, the prompt is the pot. */}
             {potAmount !== null ? (
               <span key="pot" className={`${styles.pot} pb-pop`}>
-                {potAmount} in the pot
+                {L('{amount} in the pot', { amount: potAmount })}
               </span>
             ) : view.myScore > 0 ? (
-              `Wager part of your ${view.myScore} points`
+              L('Wager part of your {points}', { points: pointsText(view.myScore, L) })
             ) : (
-              'No points yet — you can only wager 0'
+              L('No points yet — you can only wager 0')
             )}
-            <span className={styles.rule}>Right answer: +wager. Wrong or no answer: −wager.</span>
+            <span className={styles.rule}>
+              {L('Right answer: +wager. Wrong or no answer: −wager.')}
+            </span>
           </>
         }
         choices={options.map((o) => ({
           id: String(o.percent),
-          label: wagerLabel(o, view.myScore),
+          label: wagerLabel(o, view.myScore, L),
         }))}
         selectedId={selected ? String(selected.percent) : null}
         disabled={customPlaced !== null}
@@ -179,11 +194,14 @@ export function Controller({
   if (phaseId === 'done') {
     return (
       <WaitingScreen
-        title="Thanks for playing!"
+        title={L('Thanks for playing!')}
         hint={
           view.myRank !== undefined
-            ? `You finished #${view.myRank} with ${view.myScore} points.`
-            : `${view.myScore} points.`
+            ? L('You finished #{rank} with {points}.', {
+                rank: view.myRank,
+                points: pointsText(view.myScore, L),
+              })
+            : `${pointsText(view.myScore, L)}.`
         }
         mood="done"
       />
@@ -191,8 +209,8 @@ export function Controller({
   }
   return (
     <WaitingScreen
-      title={view.phoneOnly ? 'One moment…' : 'Look at the TV'}
-      hint={view.phoneOnly ? 'the next question is on its way' : undefined}
+      title={view.phoneOnly ? L('One moment…') : L('Look at the TV')}
+      hint={view.phoneOnly ? L('the next question is on its way') : undefined}
       mood="watch"
     />
   );

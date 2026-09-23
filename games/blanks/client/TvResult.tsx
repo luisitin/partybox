@@ -14,11 +14,14 @@ import {
   boardLandedMs,
   useBeats,
   useSound,
+  useT,
 } from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
 import type { BlanksTvView } from '../server/index';
 import { FilledCard, LETTERS } from './Cards';
 import { Author, Voters } from './TvResultParts';
+import { votesLabel, winnerLine } from './resultLines';
+import { STRINGS } from './strings';
 import styles from './blanks.module.css';
 
 type Props = GameTvProps<BlanksTvView>;
@@ -43,51 +46,8 @@ const VOTER_STEP_MS = 120;
 /** Past this many players the chip strip takes three rows beside the timer. */
 const BIG_CHIP_ROOM = 10;
 
-export function winnerLine(
-  view: Pick<BlanksTvView, 'revealed' | 'winnerIds' | 'walkover' | 'judgeMode' | 'czar'>,
-): string {
-  const winners = view.revealed.filter((r) => r.winner);
-  if (winners.length === 0) {
-    if (view.revealed.length === 0) return 'Nobody played a card';
-    if (view.judgeMode === 'czar') {
-      const judge = view.czar?.name ?? 'The judge';
-      return view.czar?.connected === false
-        ? `${judge} dropped — no judge, nobody wins this round`
-        : `${judge} never picked — nobody wins this round`;
-    }
-    return 'No votes — nobody wins this round';
-  }
-  const humans = winners.filter((w) => !w.rando).map((w) => w.name);
-  // Rando alone is the room's shame; a tie with Rando still names who scored (review-loop #124).
-  if (humans.length === 0) return 'Rando wins this one! Shame on all of you.';
-  if (humans.length < winners.length) return `${list(humans)} split it with Rando`;
-  const names = humans;
-  if (view.walkover) return `Only ${names[0]} played — wins by default`;
-  // Two cards, no one else to vote: the round skipped the vote and both take the point.
-  if (names.length === 2 && view.revealed.every((r) => r.votes === 0))
-    return `Only two cards — ${names[0]} and ${names[1]} split it`;
-  if (names.length === 1) return `${names[0]} wins the round!`;
-  return `${list(names)} split it`;
-}
-
-/** "Ana", "Ana and Ben", "Ana, Ben and Cleo". */
-export function list(names: string[]): string {
-  if (names.length <= 1) return names[0] ?? '';
-  return `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}`;
-}
-
-/** The pill on a card with votes: "3 votes" — or, with a judge, whose pick it was ("1 vote" from a
- *  lone judge read as a poor turnout, review-loop #116). Null when nobody voted for it. */
-export function votesLabel(
-  view: Pick<BlanksTvView, 'judgeMode' | 'czar'>,
-  votes: number,
-): string | null {
-  if (votes === 0) return null;
-  if (view.judgeMode === 'czar') return view.czar ? `${view.czar.name}'s pick` : "Judge's pick";
-  return `${votes} ${votes === 1 ? 'vote' : 'votes'}`;
-}
-
 function TvFinal({ view }: Props): JSX.Element {
+  const L = useT(STRINGS);
   const tied = view.standings.filter((r) => r.rank === 1).length > 1;
   const best = view.bestCard;
   const play = useSound();
@@ -109,8 +69,8 @@ function TvFinal({ view }: Props): JSX.Element {
   }, [play]);
   return (
     <Stage center className={styles.table}>
-      <p className={styles.kicker}>Final round played</p>
-      <BigText level="h1">Final scores</BigText>
+      <p className={styles.kicker}>{L('Final round played')}</p>
+      <BigText level="h1">{L('Final scores')}</BigText>
       <div className={styles.finalRow}>
         <div className={styles.board}>
           {/* Two columns from five rows and body-size rows from nine: beside the card of the
@@ -131,17 +91,19 @@ function TvFinal({ view }: Props): JSX.Element {
             className={styles.bestCard}
             style={{ '--pb-best-delay': `${beats[1]}ms` } as CSSProperties}
           >
-            <p className={styles.kicker}>Card of the night</p>
+            <p className={styles.kicker}>{L('Card of the night')}</p>
             <FilledCard text={best.black} whites={best.whites} size="mini" winner>
               <span className={styles.author}>
                 <Avatar avatarId={best.avatarId} size="var(--pb-chip-size)" />
                 <span className={styles.authorName}>{best.name}</span>
                 {view.judgeMode === 'czar' ? null : (
                   <span className={styles.voteCount}>
-                    {best.votes} {best.votes === 1 ? 'vote' : 'votes'}
+                    {best.votes === 1 ? L('1 vote') : L('{n} votes', { n: best.votes })}
                   </span>
                 )}
-                <span className={styles.bestRound}>round {best.round}</span>
+                <span className={styles.bestRound}>
+                  {L('round {round}', { round: best.round })}
+                </span>
               </span>
             </FilledCard>
           </div>
@@ -159,7 +121,7 @@ function TvFinal({ view }: Props): JSX.Element {
           />
           <path className={styles.envFlap} d="M1 5 H27 L14 14 Z" />
         </svg>
-        {tied ? "It's a tie" : 'And the winner is'}
+        {tied ? L("It's a tie") : L('And the winner is')}
         <span className={styles.ellipsis} aria-hidden>
           …
         </span>
@@ -169,6 +131,7 @@ function TvFinal({ view }: Props): JSX.Element {
 }
 
 export function TvResult({ view }: Props): JSX.Element {
+  const L = useT(STRINGS);
   const play = useSound();
   const beat = useBeats(RESULT_BEATS_MS);
   const winners = view.revealed.filter((r) => r.winner);
@@ -198,10 +161,10 @@ export function TvResult({ view }: Props): JSX.Element {
     return (
       <Stage center className={styles.table}>
         <p className={styles.kicker}>
-          Round {view.round} of {view.rounds} · result
+          {L('Round {round} of {rounds} · result', { round: view.round, rounds: view.rounds })}
         </p>
         <BigText level="h1" tone="accent" className="pb-enter">
-          {winnerLine(view)}
+          {winnerLine(view, L)}
         </BigText>
         {view.black ? (
           <FilledCard
@@ -212,7 +175,7 @@ export function TvResult({ view }: Props): JSX.Element {
           />
         ) : null}
         <BigText level="h2" tone="muted">
-          {view.round < view.rounds ? 'Next card coming up…' : 'That was the last card.'}
+          {view.round < view.rounds ? L('Next card coming up…') : L('That was the last card.')}
         </BigText>
       </Stage>
     );
@@ -228,20 +191,22 @@ export function TvResult({ view }: Props): JSX.Element {
     <Stage className={styles.table}>
       <div className={styles.kickerRow}>
         <p className={styles.kicker}>
-          Round {view.round} of {view.rounds} · result
+          {L('Round {round} of {rounds} · result', { round: view.round, rounds: view.rounds })}
         </p>
-        {!view.timed ? <span className={styles.progressPill}>Next on the VIP's phone</span> : null}
+        {!view.timed ? (
+          <span className={styles.progressPill}>{L("Next on the VIP's phone")}</span>
+        ) : null}
       </div>
       <div
         className={`${styles.headline} ${named ? styles.rise : styles.pending}`}
         aria-hidden={!named}
       >
         <BigText level="h1" tone="accent">
-          {winnerLine(view)}
+          {winnerLine(view, L)}
         </BigText>
         {deckWin ? (
           <BigText level="h2" tone="muted">
-            Nobody's score moves.
+            {L("Nobody's score moves.")}
           </BigText>
         ) : null}
       </div>
@@ -267,14 +232,14 @@ export function TvResult({ view }: Props): JSX.Element {
               winner={named}
               className={`${styles.stageCard} ${named ? styles.crowned : ''}`}
             >
-              <Author card={w} shown={beat >= BEAT_AUTHORS} label={votesLabel(view, w.votes)} />
+              <Author card={w} shown={beat >= BEAT_AUTHORS} label={votesLabel(view, w.votes, L)} />
               {/* Who voted for it, on the same beat the authors land. */}
               {beat >= BEAT_AUTHORS && view.judgeMode === 'vote' ? <Voters card={w} /> : null}
               {/* I-018 C: the deck's point goes to nobody — say so where the +1 would pop. */}
               <span
                 className={`${styles.plusOne} ${w.rando ? styles.plusNobody : ''} ${named ? styles.pop : styles.pending}`}
               >
-                {w.rando ? '+0 · nobody' : '+1'}
+                {w.rando ? L('+0 · nobody') : '+1'}
               </span>
             </FilledCard>
           ))}
@@ -288,7 +253,7 @@ export function TvResult({ view }: Props): JSX.Element {
       {others.length > 0 ? (
         <ul
           className={`${styles.losers} ${dense ? styles.losersDense : ''} ${named ? styles.losersDim : ''}`}
-          aria-label="the other cards"
+          aria-label={L('the other cards')}
         >
           {/* I-005 B: the pills rise one after another, fewest votes first — the runner-up lands
               last, just before the winner is named. */}
@@ -306,8 +271,8 @@ export function TvResult({ view }: Props): JSX.Element {
                 </span>
                 <Avatar avatarId={c.avatarId} size="var(--pb-chip-size)" />
                 <span className={styles.authorName}>{c.name}</span>
-                {votesLabel(view, c.votes) ? (
-                  <span className={styles.voteCount}>{votesLabel(view, c.votes)}</span>
+                {votesLabel(view, c.votes, L) ? (
+                  <span className={styles.voteCount}>{votesLabel(view, c.votes, L)}</span>
                 ) : null}
               </li>
             ))}

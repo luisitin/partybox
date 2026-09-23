@@ -4,6 +4,9 @@ import { createContext, useContext, useMemo } from 'react';
 import type { JSX, ReactNode } from 'react';
 import { ART, INK, LIGHT, blinkDelay } from './avatarArt';
 import { AVATAR_IDS } from '@partybox/shared';
+import { avatarName } from '../controller/avatarNames';
+import { STRINGS } from '../controller/strings';
+import { useT } from './lang';
 
 export interface AvatarProps {
   /** A face id — or `photo:<playerId>` (I-031): the picture comes from `AvatarPhotos`. */
@@ -93,6 +96,8 @@ export function Avatar({
   dim,
 }: AvatarProps): JSX.Element {
   const photos = useContext(PhotoContext);
+  // The label reads in the device's language ("avatar de zorro"); the id stays the face's key.
+  const L = useT(STRINGS);
   const src =
     photo ??
     (avatarId.startsWith(PHOTO_PREFIX)
@@ -104,7 +109,7 @@ export function Avatar({
         src={src}
         alt=""
         role="img"
-        aria-label="photo avatar"
+        aria-label={L('photo avatar')}
         width={typeof size === 'number' ? size : undefined}
         height={typeof size === 'number' ? size : undefined}
         className={className}
@@ -128,7 +133,7 @@ export function Avatar({
       height={size}
       className={className}
       role="img"
-      aria-label={`avatar ${avatarId}`}
+      aria-label={L('avatar {name}', { name: avatarName(avatarId, L) })}
       style={{
         color: avatarColorVar(avatarId),
         opacity: dim ? 0.45 : 1,

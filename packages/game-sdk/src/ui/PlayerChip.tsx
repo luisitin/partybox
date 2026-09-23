@@ -2,7 +2,10 @@
 // State is never colour-only: submitted shows ✓, disconnected shows ⟳ and dims, spectator shows 👁.
 import { useState } from 'react';
 import type { CSSProperties, JSX } from 'react';
+import { STRINGS } from '../controller/strings';
 import { Avatar } from './Avatar';
+import { useT } from './lang';
+import type { Translator } from './lang';
 import styles from './PlayerChip.module.css';
 
 export interface PlayerChipProps {
@@ -35,13 +38,29 @@ export interface PlayerChipProps {
   size?: 'sm' | 'md' | 'lg';
 }
 
-const GLYPH: Record<NonNullable<PlayerChipProps['status']>, { text: string; label: string }> = {
-  active: { text: '', label: '' },
-  submitted: { text: '✓', label: 'submitted' },
+const GLYPH: Record<NonNullable<PlayerChipProps['status']>, string> = {
+  active: '',
+  submitted: '✓',
   // No glyph: a row of dashes during a reveal carried nothing; the label keeps it for screen readers.
-  waiting: { text: '', label: 'waiting' },
-  spectator: { text: '◎', label: 'spectator' },
+  waiting: '',
+  spectator: '◎',
 };
+
+/** The state's words for screen readers, in the device's language (`L` from the caller). */
+function stateLabel(state: PlayerChipProps['status'] | 'reconnecting', L: Translator): string {
+  switch (state) {
+    case 'submitted':
+      return L('submitted');
+    case 'waiting':
+      return L('waiting');
+    case 'spectator':
+      return L('spectator');
+    case 'reconnecting':
+      return L('reconnecting');
+    default:
+      return '';
+  }
+}
 
 export function PlayerChip(props: PlayerChipProps): JSX.Element {
   const {
@@ -60,9 +79,10 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
     isMe,
     isBot,
     onRemove,
-    removeLabel = 'remove',
+    removeLabel,
     size = 'md',
   } = props;
+  const L = useT(STRINGS);
   // The ★ VIP badge pops only when it arrives on a mounted chip (a handover), never on a screen
   // swap — 'adjust state when a prop changes' (review-loop #5).
   const [wasVip, setWasVip] = useState(isVip ?? false);
@@ -79,7 +99,9 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
     setWasConnected(connected);
     setBlip(connected ? 'back' : 'off');
   }
-  const glyph = connected ? GLYPH[status] : { text: '⟳', label: 'reconnecting' };
+  const glyph = connected
+    ? { text: GLYPH[status], label: stateLabel(status, L) }
+    : { text: '⟳', label: stateLabel('reconnecting', L) };
   const locked = status === 'submitted' && connected;
   const classes = [
     styles.chip,
@@ -94,7 +116,7 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
   return (
     <div
       className={classes}
-      aria-label={`${name}${isMe ? ' (you)' : ''}${isBot ? ' (bot)' : ''}${isVip ? ', VIP' : ''}${glyph.label ? `, ${glyph.label}` : ''}${leader ? ', leading' : ''}`}
+      aria-label={`${name}${isMe ? ` ${L('(you)')}` : ''}${isBot ? ` ${L('(bot)')}` : ''}${isVip ? ', VIP' : ''}${glyph.label ? `, ${glyph.label}` : ''}${leader ? `, ${L('leading')}` : ''}`}
     >
       <span className={`${styles.avatar} ${thinking ? styles.avatarThinking : ''}`}>
         <span
@@ -117,17 +139,20 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
       </span>
       <span className={styles.name}>{name}</span>
       {!connected && awayLeft !== null ? (
-        <span className={styles.away} aria-label={`${awayLeft} seconds before they drop out`}>
+        <span
+          className={styles.away}
+          aria-label={L('{seconds} seconds before they drop out', { seconds: awayLeft })}
+        >
           {Math.floor(awayLeft / 60)}:{String(awayLeft % 60).padStart(2, '0')}
         </span>
       ) : null}
       {isMe ? (
         <span className={styles.you} aria-hidden>
-          you
+          {L('you')}
         </span>
       ) : null}
       {isBot ? (
-        <span className={styles.bot} role="img" aria-label="bot">
+        <span className={styles.bot} role="img" aria-label={L('bot')}>
           🤖
         </span>
       ) : null}
@@ -148,7 +173,7 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
         {glyph.text}
       </span>
       {leader && score !== undefined ? (
-        <span className={styles.leader} role="img" aria-label="leading">
+        <span className={styles.leader} role="img" aria-label={L('leading')}>
           ▲
         </span>
       ) : null}
@@ -159,7 +184,12 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
         </span>
       ) : null}
       {onRemove ? (
-        <button type="button" className={styles.remove} onClick={onRemove} aria-label={removeLabel}>
+        <button
+          type="button"
+          className={styles.remove}
+          onClick={onRemove}
+          aria-label={removeLabel ?? L('remove')}
+        >
           ✕
         </button>
       ) : null}

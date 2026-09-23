@@ -3,7 +3,9 @@
 import { useEffect, useRef, useState } from 'react';
 import type { JSX } from 'react';
 import { useSecondsLeft } from '../ui/clock';
+import { useT } from '../ui/lang';
 import styles from './Timer.module.css';
+import { STRINGS } from './strings';
 
 export interface TimerProps {
   deadline: number | null;
@@ -19,6 +21,7 @@ export function Timer({
   onTick,
   size = 'lg',
 }: TimerProps): JSX.Element | null {
+  const L = useT(STRINGS);
   const seconds = useSecondsLeft(deadline, paused);
   // Short phases (a 5 s reveal, ten times a game) never go red: urgency is for phases of 15 s or
   // more, judged by how much was left when this deadline was first seen (review-loop #24; same
@@ -43,7 +46,7 @@ export function Timer({
       className={`${styles.timer} ${styles[size]} ${urgent ? styles.urgent : ''} ${paused ? styles.paused : ''}`}
       role="timer"
       aria-live={urgent ? 'assertive' : 'off'}
-      aria-label={paused ? 'paused' : `${seconds} seconds left`}
+      aria-label={paused ? L('paused') : L('{n} seconds left', { n: seconds })}
     >
       {paused ? <span className={styles.pauseGlyph}>⏸</span> : null}
       <span className={styles.digits}>{seconds}</span>
