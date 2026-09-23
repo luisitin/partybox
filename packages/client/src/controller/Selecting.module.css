@@ -156,3 +156,14 @@
   flex-shrink: 0;
   accent-color: var(--pb-accent);
 }
+
+/* ── I-667 A: the red line's fix — a pill under it. */
+.fix {
+  align-self: center;
+  min-height: 40px;
+  padding: 6px 16px;
+  border-radius: 999px;
+  border: 2px solid var(--pb-accent-2);
+  color: var(--pb-text);
+  font-weight: 800;
+}

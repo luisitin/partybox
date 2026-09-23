@@ -13,6 +13,7 @@ import type { TvClient } from '../net/tv';
 import { serverText } from '../server-text';
 import { STRINGS } from './strings';
 import styles from './HostBar.module.css';
+import { runFix, startFix } from '../startFix';
 
 /** I-053 B: a glyph per game on the shelf (games carry no icon of their own). */
 const GAME_GLYPH: Record<string, string> = {
@@ -86,6 +87,10 @@ export function HostBar({ client, room, view }: HostBarProps): JSX.Element | nul
   // I-071 B: the bar says whose controls these are.
   const vipName = room.players.find((p) => p.id === room.vip)?.name ?? null;
   const bots = room.players.filter((p) => p.bot);
+  // I-667 B: what would let the picked game start — the exact bots, not all of them
+  const picked = room.games.find((g) => g.id === room.selectedGameId);
+  const fix =
+    room.status === 'selecting' && !room.canStart.ok && picked ? startFix(room, picked) : null;
   const full = room.players.length >= room.capacity;
   const firstGame = room.games[0];
   // I-053 A: the game button turns its label over — the shelf, one game at a time (0 = the label).
@@ -117,7 +122,16 @@ export function HostBar({ client, room, view }: HostBarProps): JSX.Element | nul
       >
         🤖 {t.lobby.addBot}
       </button>
-      {bots.length > 0 ? (
+      {fix ? (
+        <button
+          type="button"
+          className={`${styles.button} ${styles.primary}`}
+          onClick={() => runFix(fix, (a) => client.bot(a))}
+        >
+          {fix.kind === 'remove' ? '✕' : '🤖'} {fix.label}
+        </button>
+      ) : null}
+      {bots.length > 0 && fix?.kind !== 'remove' ? (
         <button
           type="button"
           className={`${styles.button} ${bots.length >= 4 ? styles.buttonDanger : ''}`}
