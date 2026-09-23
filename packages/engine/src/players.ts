@@ -122,6 +122,15 @@ function resume(room: RoomState, player: RoomPlayer, now: number, deps: EngineDe
   const updated: RoomPlayer = { ...player, connected: true, disconnectedAt: null };
   const next: RoomState = { ...room, players: { ...room.players, [player.id]: updated } };
   const game = notifyGame(next, player.id, true, now, deps);
+  // I-347 A: the host is back — say who has the VIP now
+  const nowVip = next.vipId ? next.players[next.vipId] : undefined;
+  if (next.formerVip === player.id && nowVip && nowVip.id !== player.id)
+    game.effects.push({
+      type: 'toast',
+      to: player.id,
+      kind: 'info',
+      text: `${nowVip.name} took over as VIP while you were away`,
+    });
   return {
     room: game.room,
     effects: [{ type: 'welcome', playerId: player.id }, ...game.effects, { type: 'push' }],
@@ -212,10 +221,14 @@ export function expirePlayers(room: RoomState, now: number, deps: EngineDeps): A
       const r = removePlayer(next, p.id, now, deps, 'left');
       next = r.room;
       effects.push(...r.effects);
-    } else if (p.isVip && now - p.disconnectedAt >= LIMITS.vipHandoverMs) {
+    } else if (
+      p.isVip &&
+      now - p.disconnectedAt >= LIMITS.vipHandoverMs
+    ) {
       const r = promoteVip(next, now);
       if (r.room !== next) {
-        next = r.room;
+        // I-347 A: remember whose role it was, so their phone can be told when it is back
+        next = { ...r.room, formerVip: p.id };
         effects.push(...r.effects, { type: 'push' });
       }
     }
