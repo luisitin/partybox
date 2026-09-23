@@ -6,6 +6,10 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Fixed
 
+- **Blanks deals its Pick 2 / Pick 3 cards** (I-158, option B): every game now deals exactly one, in
+  the middle (round 4 of six, round 8 of fifteen). Before, the deck's spacing put the first one ~17
+  rounds deep, so no six-round game on mild, adults or wild ever saw one.
+
 - **Blanks never asks a bot to read out loud** (I-143, option C): the reading skips bots to the next
   person; with no person left the TV says "the TV reads this one"; and when the reader's phone
   drops, every other phone offers "I'll read" — the first tap takes the rest of the round.
