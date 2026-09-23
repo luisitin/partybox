@@ -100,7 +100,7 @@ ever took a vote → no card of the night.
 
 ## Settings
 
-`decks` select `wild` (`mild` · `adults` = mild + crude · `wild` = all three · `wild-only`) · `judge`
+`decks` select `wild` (`mild` · `adults` = mild + crude · `wild` = all three · `wild-only`; the picker names it on the Start button, "Start Blanks · WILD" — I-187 A; as a "🔞 WILD deck — change" chip on the card that scrolls to the setting, B; and on the TV's game line, C) · `judge`
 select `vote` (`vote` = everyone votes, `czar` = a rotating judge) · `timed` boolean false (off: no clock
 on picking, voting or the result, the VIP taps Next; the screens hide the long fallback timers) · `rounds`
 number 6 (3–15) · `handSize` select `10` (7 · 10 · 12 · 15 cards a hand, I-141) · `reader` select `george` (none · george · fable · jessica · sky · original: a voice reads each finished card, the reveal waits for it + 0.9 s; none = the players read, I-143; ADR-045) · `answerSeconds` number 60

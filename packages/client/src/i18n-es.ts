@@ -79,6 +79,7 @@ export const es: Texts = {
     vipChoosing: (name) => `${name} está eligiendo un juego…`,
     back: 'Atrás',
     start: 'Empezar',
+    keyChip: (mark, deck) => `${mark} Mazo ${deck} — cambiar`,
     settings: 'Ajustes',
     players: (min, max) => `${min}–${max} jugadores`,
     minutes: (m) => `~${m} min`,

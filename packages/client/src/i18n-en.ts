@@ -82,6 +82,8 @@ export const en = {
     vipChoosing: (name: string) => `${name} is choosing a game…`,
     back: 'Back',
     start: 'Start',
+    /** I-187 B: the deck chip on the selected card ("🔞 WILD deck — change"). */
+    keyChip: (mark: string, deck: string) => `${mark} ${deck} deck — change`,
     settings: 'Settings',
     players: (min: number, max: number) => `${min}–${max} players`,
     minutes: (m: number) => `~${m} min`,
