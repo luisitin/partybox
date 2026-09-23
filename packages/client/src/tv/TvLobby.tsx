@@ -115,6 +115,9 @@ export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
   // I-055 A: a locked room reads on the QR panel, like a full one.
   const locked = room?.locked ?? false;
   const empty = players.length === 0;
+  // I-646 B: which link the card shows — the Wi-Fi one, or the tunnel's for friends elsewhere
+  const [anywhere, setAnywhere] = useState(false);
+  const remote = anywhere && info?.publicQrUrl && info.publicQrSvg ? info : null;
   // I-072: the QR is big while nobody has joined and shrinks with the first join.
   const [wasEmpty, setWasEmpty] = useState(empty);
   const [shrinking, setShrinking] = useState(false);
@@ -145,7 +148,7 @@ export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
             >
               <span
                 className={styles.qr}
-                dangerouslySetInnerHTML={{ __html: info.qrSvg }}
+                dangerouslySetInnerHTML={{ __html: remote?.publicQrSvg ?? info.qrSvg }}
                 role="img"
                 aria-label={L('QR code for {url}', { url: info.joinUrl })}
               />
@@ -159,9 +162,34 @@ export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
               </span>
             </span>
           ) : null}
+          {/* I-646 B: the Wi-Fi code or the tunnel's — a click on the TV */}
+          {info?.publicQrUrl ? (
+            <div className={styles.linkSwitch} role="group" aria-label={L('Which link')}>
+              <button
+                type="button"
+                aria-pressed={!anywhere}
+                className={!anywhere ? styles.linkOn : ''}
+                onClick={() => setAnywhere(false)}
+              >
+                📶 {L('Same Wi-Fi')}
+              </button>
+              <button
+                type="button"
+                aria-pressed={anywhere}
+                className={anywhere ? styles.linkOn : ''}
+                onClick={() => setAnywhere(true)}
+              >
+                🌍 {L('Anywhere')}
+              </button>
+            </div>
+          ) : null}
           <p className={styles.or}>{t.lobby.orOpen}</p>
           <BigText level="h2" tone="accent" className={styles.url}>
-            {info ? info.joinUrl.replace(/^https?:\/\//, '').replace(/\/$/, '') : '…'}
+            {remote?.publicQrUrl
+              ? remote.publicQrUrl.replace(/^https?:\/\//, '').replace(/\/\?room=.*$/, '')
+              : info
+                ? info.joinUrl.replace(/^https?:\/\//, '').replace(/\/$/, '')
+                : '…'}
           </BigText>
           {room ? (
             <p className={styles.code}>

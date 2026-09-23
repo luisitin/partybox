@@ -352,3 +352,27 @@
 :global(:root[data-motion='off']) .qrMarkBump {
   animation: none;
 }
+
+/* ── I-646 B: Same Wi-Fi / Anywhere. */
+.linkSwitch {
+  display: inline-flex;
+  padding: 4px;
+  gap: 4px;
+  border-radius: 999px;
+  background: var(--pb-surface-2);
+}
+.linkSwitch button {
+  padding: 8px 22px;
+  border-radius: 999px;
+  border: 0;
+  background: transparent;
+  color: var(--pb-text-muted);
+  font: inherit;
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  cursor: pointer;
+}
+.linkSwitch .linkOn {
+  background: var(--pb-accent);
+  color: var(--pb-on-accent, #fff);
+}
