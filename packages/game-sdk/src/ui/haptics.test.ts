@@ -50,3 +50,39 @@ describe('buzz', () => {
     expect(calls).toEqual([18, 18]);
   });
 });
+
+// Before a page's first tap the browser drops a vibrate and logs an error every time (2026-09-22:
+// 180 of them in one resume sweep). buzz() asks first where the browser can say.
+describe('buzz before the first tap', () => {
+  afterEach(() => {
+    vi.unstubAllGlobals();
+    vi.resetModules();
+  });
+
+  async function withNavigator(userActivation: { hasBeenActive: boolean } | undefined) {
+    const vibrate = vi.fn(() => true);
+    vi.stubGlobal('navigator', { vibrate, ...(userActivation ? { userActivation } : {}) });
+    vi.stubGlobal('localStorage', { getItem: () => null, setItem: () => undefined });
+    vi.resetModules();
+    const fresh = await import('./haptics');
+    return { buzz: fresh.buzz, vibrate };
+  }
+
+  it('does not call vibrate before the page has been tapped', async () => {
+    const t = await withNavigator({ hasBeenActive: false });
+    t.buzz(20);
+    expect(t.vibrate).not.toHaveBeenCalled();
+  });
+
+  it('vibrates once the page has been tapped', async () => {
+    const t = await withNavigator({ hasBeenActive: true });
+    t.buzz(20);
+    expect(t.vibrate).toHaveBeenCalledWith(20);
+  });
+
+  it('vibrates where the browser cannot say (no userActivation)', async () => {
+    const t = await withNavigator(undefined);
+    t.buzz([10, 20]);
+    expect(t.vibrate).toHaveBeenCalledWith([10, 20]);
+  });
+});

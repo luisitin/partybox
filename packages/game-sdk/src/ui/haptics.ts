@@ -23,6 +23,17 @@ export function setHapticsEnabled(on: boolean): void {
   }
 }
 
+/**
+ * Before the page's first tap the browser drops a vibrate and logs a console error every time
+ * ("Blocked call to navigator.vibrate…") — a phone that reloads mid-game buzzed on every push until
+ * touched, 180 errors in one resume sweep (2026-09-22). Where the browser can say, ask it first.
+ */
+function activated(): boolean {
+  const ua = (navigator as Navigator & { userActivation?: { hasBeenActive: boolean } })
+    .userActivation;
+  return ua === undefined || ua.hasBeenActive;
+}
+
 /** When the pattern now running ends (`navigator.vibrate` replaces, it never queues). */
 let busyUntil = 0;
 /** The last pattern and when: the same one twice inside 30 ms is one buzz (loop 344 — a Ready
@@ -46,7 +57,7 @@ export function buzz(pattern: number | number[]): void {
   last = { key, at: now };
   busyUntil = now + total;
   trace('buzz', { pattern });
-  if (!hapticsEnabled()) return;
+  if (!hapticsEnabled() || !activated()) return;
   try {
     navigator.vibrate?.(pattern);
   } catch {
