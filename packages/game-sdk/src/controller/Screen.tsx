@@ -30,6 +30,19 @@ export function Screen({ children, footer, title, className }: ScreenProps): JSX
   // I-066 B: "more below" — true while the body can scroll further (scroll + resize watched).
   const body = useRef<HTMLDivElement>(null);
   const [more, setMore] = useState(false);
+  // I-456 A: the footer's real height, so the arrow sits just above it (a 60 px guess put it over
+  // the text of any taller footer — the VIP's results, a two-line button)
+  const foot = useRef<HTMLDivElement>(null);
+  const [footH, setFootH] = useState(0);
+  useEffect(() => {
+    const el = foot.current;
+    if (!el) return undefined;
+    const measure = (): void => setFootH(el.offsetHeight);
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [footer !== undefined]);
   useEffect(() => {
     const el = body.current;
     if (!el) return undefined;
@@ -71,6 +84,7 @@ export function Screen({ children, footer, title, className }: ScreenProps): JSX
         <button
           type="button"
           className={styles.more}
+          style={footH ? { bottom: `calc(${footH}px + var(--pb-space-2))` } : undefined}
           aria-label={L('scroll down')}
           onClick={() =>
             body.current?.scrollBy({ top: body.current.clientHeight * 0.8, behavior: 'smooth' })
@@ -79,7 +93,11 @@ export function Screen({ children, footer, title, className }: ScreenProps): JSX
           ▾
         </button>
       ) : null}
-      {footer ? <div className={styles.footer}>{footer}</div> : null}
+      {footer ? (
+        <div ref={foot} className={styles.footer}>
+          {footer}
+        </div>
+      ) : null}
     </section>
   );
 }
