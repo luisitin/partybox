@@ -352,3 +352,15 @@
 :global(:root[data-motion='off']) .qrMarkBump {
   animation: none;
 }
+
+/* ── I-646 A: the tunnel's address for friends elsewhere. */
+.remote {
+  margin: 0;
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+  overflow-wrap: anywhere;
+}
+.remote strong {
+  color: var(--pb-text);
+  font-family: var(--pb-font-mono);
+}

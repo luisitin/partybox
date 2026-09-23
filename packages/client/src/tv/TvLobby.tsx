@@ -175,6 +175,13 @@ export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
               </span>
             </p>
           ) : null}
+          {/* I-646 A: friends elsewhere — the tunnel's address, under the room code */}
+          {info?.publicQrUrl ? (
+            <p className={styles.remote}>
+              🌍 {L('Not on this Wi-Fi?')}{' '}
+              <strong>{info.publicQrUrl.replace(/^https?:\/\//, '')}</strong>
+            </p>
+          ) : null}
         </div>
         <div className={`${styles.players} ${empty ? styles.playersHidden : ''}`}>
           <BigText key={players.length} level="h2" className={styles.count}>
