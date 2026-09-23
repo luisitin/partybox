@@ -51,6 +51,11 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Added
 
+- **A claim gets the stage, even in a full room** (I-131, option C): while a claim is checked the TV
+  strip shows faces only with the claimant's chip named and a size up; on the verdict the strip goes
+  and the card takes the room. The long decide line steps down a size so it stays on screen at 15-16
+  players (Session B's note).
+
 - **The lobby leaves behind a curtain** (I-120, option B): when a game starts, the TV's lobby darkens
   to the background and slides away before the intro lands — no ghost of the game list under "Any line".
 - **"Previous number" off applies to the phones too** (I-113, option A).

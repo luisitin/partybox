@@ -122,27 +122,35 @@ export function TvPlaying({ room, view, audio, onGameReady, music }: TvPlayingPr
       className={`${styles.playing} ${paused ? styles.held : ''} ${!paused && leaving ? styles.resumed : ''}`}
     >
       <div className={styles.strip}>
-        <PlayerChips
-          players={[
-            ...players,
-            // Spectators are not in the game state; show them dimmed so late joiners feel seen.
-            ...room.players
-              .filter((p) => p.spectator)
-              .map((p) => ({
-                id: p.id,
-                name: p.name,
-                avatarId: p.avatarId,
-                connected: p.connected,
-                status: 'spectator' as const,
-              })),
-          ]}
-          vip={view.vip}
-          activeIds={[...(module?.stripActive?.(view) ?? [])]}
-          botIds={room.players.filter((p) => p.bot).map((p) => p.id)}
-          showScores={showScores || frozen}
-          scoresMuted={frozen}
-          size="sm"
-        />
+        {module?.stripHidden?.includes(view.phaseId) ? null : (
+          <PlayerChips
+            players={[
+              ...players,
+              // Spectators are not in the game state; show them dimmed so late joiners feel seen.
+              ...room.players
+                .filter((p) => p.spectator)
+                .map((p) => ({
+                  id: p.id,
+                  name: p.name,
+                  avatarId: p.avatarId,
+                  connected: p.connected,
+                  status: 'spectator' as const,
+                })),
+            ]}
+            vip={view.vip}
+            activeIds={[...(module?.stripActive?.(view) ?? [])]}
+            botIds={room.players.filter((p) => p.bot).map((p) => p.id)}
+            showScores={showScores || frozen}
+            scoresMuted={frozen}
+            size="sm"
+            facesOnly={module?.stripCompact?.includes(view.phaseId) ?? false}
+            leadId={
+              view.phaseId === 'check' || view.phaseId === 'bingo'
+                ? ((view as { claim?: { playerId?: string } }).claim?.playerId ?? null)
+                : null
+            }
+          />
+        )}
         {/* Quiet/hidden timers free the column: six chips fit on one row instead of wrapping (loop #1). */}
         <div className={timerMode === 'normal' ? styles.timer : styles.timerSlim}>
           {timerMode === 'normal' ? (

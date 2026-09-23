@@ -9,6 +9,10 @@ export interface PlayerChipsProps {
   vip?: string | null;
   /** Ids to highlight. */
   activeIds?: string[];
+  /** I-131 A: faces only — no names, no scores (a claim needs the height). */
+  facesOnly?: boolean;
+  /** I-131 B: this player's chip keeps its name and leads the row. */
+  leadId?: string | null;
   /** I-070 C: players whose nudge is showing — their chip waves. */
   wavingIds?: string[];
   /** I-089 A: seconds of grace left per dropped player. */
@@ -35,6 +39,8 @@ export function PlayerChips({
   players,
   vip,
   activeIds = [],
+  facesOnly = false,
+  leadId = null,
   wavingIds = [],
   awayLeft = {},
   thinkingIds = [],
@@ -67,7 +73,7 @@ export function PlayerChips({
       {ordered.map((p) => (
         <li key={p.id} className={`${styles.item} ${enter ? styles.enter : ''}`}>
           <PlayerChip
-            name={p.name}
+            name={facesOnly && p.id !== leadId ? '' : p.name}
             avatarId={p.avatarId}
             connected={p.connected}
             status={p.status}
@@ -76,11 +82,11 @@ export function PlayerChips({
             waving={wavingIds.includes(p.id)}
             awayLeft={awayLeft[p.id] ?? null}
             thinking={thinkingIds.includes(p.id)}
-            score={showScores ? p.score : undefined}
+            score={showScores && !(facesOnly && p.id !== leadId) ? p.score : undefined}
             scoreMuted={scoresMuted}
             leader={leaders.has(p.id)}
             isBot={botIds.includes(p.id)}
-            size={size}
+            size={p.id === leadId ? 'md' : size}
           />
         </li>
       ))}

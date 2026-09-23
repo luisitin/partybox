@@ -18,7 +18,7 @@ import { pendingLine, whyNot, winHeadline } from './copy';
 import { hopelessClaim } from '../server/reveal';
 import { IntroStage, Resume } from './TvCountdown';
 import { Call, CalledBoard, ClaimStage, DibsLine, rows, whichCard } from './TvParts';
-import { climbFrom, joinNames, useDibsCue } from './tvBoard';
+import { climbFrom, decideLineClass, joinNames, useDibsCue } from './tvBoard';
 import styles from './Tv.module.css';
 
 export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
@@ -249,7 +249,7 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
                   )}
                 </p>
               ) : view.decide && (view.decide.same || view.decide.blackout) ? (
-                <p className={`${styles.decideLine} pb-enter`}>
+                <p className={decideLineClass(view)}>
                   <span className={styles.decideWho}>Anyone</span> picks on their phone: keep going
                   {view.decide.blackout ? ' (same pattern or blackout)' : ''} or{' '}
                   {view.round < view.totalRounds ? 'next round' : 'finish'}. The caller waits.

@@ -396,6 +396,13 @@
   max-width: 22em;
 }
 
+/* I-131 (Session B's note, 2026-09-22): with the strip gone on the verdict the card grows, and the
+   long decide line (the blackout option, or a winning card sitting the pattern out) ran past the
+   stage's bottom at 15-16 players. The long form steps down a size; the short one keeps its own. */
+.decideLong {
+  font-size: var(--pb-font-caption);
+}
+
 .decideWho {
   color: var(--pb-accent-2);
   font-weight: 800;

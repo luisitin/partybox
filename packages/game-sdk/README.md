@@ -26,3 +26,8 @@ primitives, and hosts the contract tests that run against every game.
 ## Must NOT go here
 
 Engine or server imports, sockets, game-specific logic, anything a game shouldn't be allowed to call.
+
+`GameClientModule` strip flags (I-131, 2026-09-22): `stripCompact` (phase ids) drops the TV strip to
+faces only on those phases — the claimant's chip (`PlayerChips` `leadId`) keeps its name and is drawn
+a size up — and `stripHidden` removes the strip entirely so the stage takes the room. Bingo uses both
+for a claim and its verdict.
