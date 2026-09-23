@@ -31,11 +31,13 @@ import { Countdown, HoldCurtain, IntroActions, IntroCount, StyleSheet } from './
 import { MissedToast, TurnGate } from './Notices';
 import {
   setCardStyle,
+  setTabletStyle,
   styleSpec,
   turnNeeded,
   useCardStyle,
   useHeld,
   useOrientationLock,
+  useTabletStyle,
 } from './styles';
 import type { CardStyle } from './styles';
 import { otherTitle, whyNot } from './copy';
@@ -61,6 +63,7 @@ export function Controller({
   const cards = view.cards;
   const n = cards?.length ?? 1;
   const style = useCardStyle(n);
+  const tabletPick = useTabletStyle(n); // I-126 A
   const held = useHeld();
   // The TV plays the claim reveal in beats; this phone shows nothing conclusive (colours, "Not a
   // bingo", the wipe note) until the TV has (DESIGN_SYSTEM principle 5). The verdict is the
@@ -229,7 +232,19 @@ export function Controller({
               />
             ) : null}
           </div>
-          {sheet ? <IntroStyleSheet cards={n} current={style} onClose={closeMenu} /> : null}
+          {sheet ? (
+            <IntroStyleSheet
+              cards={n}
+              current={held === 'wide' && tabletPick !== 'all' ? tabletPick : style}
+              onClose={closeMenu}
+              {...(held === 'wide'
+                ? {
+                    onPick: setTabletStyle,
+                    tablet: { on: tabletPick === 'all', onPick: () => setTabletStyle('all') },
+                  }
+                : {})}
+            />
+          ) : null}
         </div>
       </Screen>
     );
@@ -242,7 +257,8 @@ export function Controller({
   const roundOver =
     view.phaseId === 'bingo' && !pending && !(view.winnerId === me.id && view.claim);
   if (inRound || roundOver) {
-    const kind = held === 'wide' ? 'tablet' : shown;
+    // I-126 A: a wide screen shows its own pick (or the one being previewed); all cards until then.
+    const kind = held === 'wide' ? (preview ?? (tabletPick === 'all' ? 'tablet' : tabletPick)) : shown;
     const focus = kind === 'focus';
     const body = turn ? (
       <TurnGate to={turn} style={styleSpec(shown).label} />
@@ -288,9 +304,10 @@ export function Controller({
             ) : (
               // The ball row on every style (owner, play-test 2: "the way the calls look at the
               // top" of the grids); the nickname is the TV's and the caller's — loop 338.
-              <CallRow view={view} />
+              <CallRow view={view} big={held === 'wide'} />
             )}
-            {inRound && !sheet && kind !== 'tablet' ? <StylePill onOpen={openMenu} /> : null}
+            {/* I-126 A: the tablet keeps the style pill — the four-up layout is a default, not a cage. */}
+            {inRound && !sheet ? <StylePill onOpen={openMenu} /> : null}
           </div>
           {missed ? <MissedToast view={view} count={missed} /> : null}
           {view.phaseId === 'check' && view.claim?.playerId === me.id ? (
@@ -316,14 +333,29 @@ export function Controller({
           {sheet ? (
             <StyleSheet
               cards={n}
-              current={style}
+              current={held === 'wide' && tabletPick !== 'all' ? tabletPick : style}
               preview={preview}
-              onPreview={(id) => setPreview(id === style ? null : id)}
+              onPreview={(id) =>
+                setPreview(id === (held === 'wide' ? tabletPick : style) ? null : id)
+              }
               onConfirm={() => {
-                if (preview) setCardStyle(preview);
+                // I-126 A: a pick on a tablet is the tablet's; a phone's is the phone's
+                if (preview) (held === 'wide' ? setTabletStyle : setCardStyle)(preview);
                 closeMenu();
               }}
               onClose={closeMenu}
+              onBack={() => setPreview(null)}
+              tablet={
+                held === 'wide'
+                  ? {
+                      on: tabletPick === 'all',
+                      onPick: () => {
+                        setTabletStyle('all');
+                        setPreview(null);
+                      },
+                    }
+                  : undefined
+              }
             />
           ) : null}
         </div>

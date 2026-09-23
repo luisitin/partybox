@@ -30,6 +30,8 @@ export function StyleSheet({
   onConfirm,
   onClose,
   note = 'the room is paused',
+  tablet,
+  onBack,
 }: {
   cards: number;
   current: CardStyle;
@@ -39,6 +41,10 @@ export function StyleSheet({
   onClose: () => void;
   /** What the sheet costs the room: a hold in play, nothing on the card-pick step. */
   note?: string;
+  /** I-126 A: on a tablet, the all-cards layout is a choice too (its default). */
+  tablet?: { on: boolean; onPick: () => void };
+  /** I-126 A: "Keep changing" — back to the list (it previewed the phone's style on a tablet). */
+  onBack?: () => void;
 }): JSX.Element {
   const motionOff = useMotionOff();
   // Previewing: the sheet folds to a bar so the whole screen shows the style with the real cards.
@@ -50,7 +56,7 @@ export function StyleSheet({
           <StyleMini id={preview} big />
           {STYLES.find((s) => s.id === preview)?.label}: like it?
         </span>
-        <PrimaryButton tone="neutral" onClick={() => onPreview(current)}>
+        <PrimaryButton tone="neutral" onClick={() => (onBack ? onBack() : onPreview(current))}>
           Keep changing
         </PrimaryButton>
         <PrimaryButton onClick={onConfirm}>Confirm</PrimaryButton>
@@ -61,9 +67,23 @@ export function StyleSheet({
       <h4 className={styles.sheetTitle}>
         Card style <small>{note}</small>
       </h4>
+      {tablet ? (
+        <button
+          type="button"
+          className={`${styles.row} ${tablet.on ? styles.rowOn : ''}`}
+          onClick={tablet.onPick}
+        >
+          <span className={styles.rowText}>
+            All cards <small className={styles.rowHint}>· the tablet layout</small>
+          </span>
+          <span className={styles.rowRight}>
+            <small>{tablet.on ? 'on ✓' : 'tablet'}</small>
+          </span>
+        </button>
+      ) : null}
       {STYLES.map((s) => {
         const why = styleReason(s, cards);
-        const on = s.id === current;
+        const on = s.id === current && !tablet?.on;
         return (
           <button
             type="button"
