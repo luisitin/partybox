@@ -11,6 +11,7 @@ import type {
   TvView,
 } from '@partybox/shared';
 import type { EngineDeps, RoomState } from './types';
+import { highlightedGameId } from './picker';
 import { canStart } from './vip';
 
 /** The chosen game's settings form (the list itself is the host's catalog, sent once). */
@@ -65,6 +66,7 @@ export function snapshot(room: RoomState, deps: EngineDeps): RoomSnapshot {
       : {}),
     ...(room.formerVip ? { formerVip: room.formerVip } : {}),
     ...(room.votes ? { votes: peopleVotes(room) } : {}),
+    ...(highlightedGameId(room) ? { highlightedGameId: highlightedGameId(room) ?? undefined } : {}),
   };
 }
 

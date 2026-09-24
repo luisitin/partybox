@@ -2,9 +2,11 @@
 // Spanish"). The same shape as i18n.ts's English table — the compiler holds them to it; neutral "tú".
 import type { Texts } from './i18n-en';
 import { esPhone } from './i18n-es-phone';
+import { esPicker } from './i18n-es-picker';
 
 export const es: Texts = {
   ...esPhone,
+  ...esPicker,
   appName: 'PartyBox',
   appShort: 'PB',
   join: {

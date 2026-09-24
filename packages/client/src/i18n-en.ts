@@ -1,11 +1,14 @@
 // English for every shell string: the source every translation mirrors (i18n-es.ts), and the
 // fallback for any language without a table. Read through `t` (i18n.ts), which picks the device's.
-// The phone's newer sections live in i18n-en-phone.ts (this file's line cap) and are spread in.
+// The phone's newer sections live in i18n-en-phone.ts and the picker's in i18n-en-picker.ts (this
+// file's line cap); both are spread in.
 import { enPhone } from './i18n-en-phone';
+import { enPicker } from './i18n-en-picker';
 import { ordinal } from './ordinal';
 
 export const en = {
   ...enPhone,
+  ...enPicker,
   appName: 'PartyBox',
   appShort: 'PB',
   join: {

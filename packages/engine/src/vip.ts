@@ -3,6 +3,7 @@
 import type { GameManifest, VipAction } from '@partybox/shared';
 import { removePlayer } from './players';
 import { abortGame, applyGameEvent, startGame } from './runner';
+import { applyHighlight } from './picker';
 import { coerceSettings, defaultSettings } from './settings';
 import type { ApplyResult, Effect, EngineDeps, RoomState } from './types';
 
@@ -72,7 +73,14 @@ export function applyVip(
       // and nothing downloads until someone picks one.
       if (action.gameId === null)
         return {
-          room: { ...room, status: 'selecting', selectedGameId: null, settings: {}, results: null },
+          room: {
+            ...room,
+            status: 'selecting',
+            selectedGameId: null,
+            settings: {},
+            results: null,
+            highlight: undefined,
+          },
           effects: [{ type: 'push' }],
         };
       const game = deps.games[action.gameId];
@@ -89,6 +97,7 @@ export function applyVip(
             ? coerceSettings(game.manifest, room.settingsByGame[action.gameId] ?? {}, {})
             : defaultSettings(game.manifest),
           results: null,
+          highlight: undefined,
         },
         effects: [{ type: 'push' }],
       };
@@ -273,6 +282,8 @@ export function applyVip(
         ],
       };
     }
+    case 'highlight':
+      return applyHighlight(room, action.gameId, playerId, deps);
     case 'toLobby': {
       if (room.status === 'playing')
         return reject(room, playerId, 'cannot_start', 'End the current game first.');

@@ -33,6 +33,8 @@ export type InputPayload = z.infer<typeof inputPayloadSchema>;
 export const vipPayloadSchema = z.discriminatedUnion('action', [
   /** `null`: the game list with nothing chosen (Part 00 §1.3; nothing downloads until a pick). */
   z.object({ action: z.literal('selectGame'), gameId: z.string().max(32).nullable() }),
+  /** Part 00 §1.4: the VIP opened a game's About (its id) or closed it (null): the TV mirrors it. */
+  z.object({ action: z.literal('highlight'), gameId: z.string().max(32).nullable() }),
   z.object({ action: z.literal('updateSettings'), settings: settingsSchema }),
   z.object({ action: z.literal('start') }),
   z.object({ action: z.literal('skip') }),
@@ -197,6 +199,8 @@ export interface RoomSnapshot {
   formerVip?: string;
   /** I-650: who wants to play what next (player id → game id) — people still here, never bots. */
   votes?: Record<string, string>;
+  /** Part 00 §1.4: the game the VIP is reading about on the open list; the TV shows it big. */
+  highlightedGameId?: string;
   /** The owner (2026-09-22): a listed ("public") room appears in the join page's room list; a
    *  private one can still be joined by anyone who knows its code. */
   listed: boolean;

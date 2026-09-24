@@ -31,6 +31,8 @@ const { values } = parseArgs({
     guest: { type: 'string', default: 'iphone-se' },
     lang: { type: 'string', default: 'en' },
     bots: { type: 'string', default: '3' },
+    /** The pack's nine games in the catalog too (PARTYBOX_DEMO_CATALOG): the picker at 14. */
+    demo: { type: 'boolean', default: false },
   },
 });
 const OUT =
@@ -91,9 +93,10 @@ async function main(): Promise<void> {
   rmSync(join(OUT, 'strips'), { recursive: true, force: true });
   mkdirSync(join(OUT, 'stills'), { recursive: true });
   const port = Number(values.port);
+  const env: Record<string, string> = values.demo ? { PARTYBOX_DEMO_CATALOG: '1' } : {};
   const server = values.prod
-    ? await startProdServer(port, { build: values.build })
-    : await startServer(port);
+    ? await startProdServer(port, { build: values.build, env })
+    : await startServer(port, env);
   const api = new DevApi(server.url);
   const browser = await chromium.launch();
   const marks: Mark[] = [];
@@ -166,6 +169,28 @@ async function main(): Promise<void> {
     await settle(1500);
     await vip.page.screenshot({ path: join(OUT, 'stills', `${String(stillN).padStart(2, '0')}-about-vip-open.png`) }); // prettier-ignore
     await tv.page.screenshot({ path: join(OUT, 'stills', `${String(stillN).padStart(2, '0')}-about-tv-open.png`) }); // prettier-ignore
+    if (opened) {
+      // Close it with a finger: the sheet's handle dragged down (swipe-to-close).
+      await stage('swipe', 50);
+      const box = await vip.page.getByRole('dialog').boundingBox();
+      const f2 = await Finger.on(vip.context, vip.page);
+      if (box) await f2.drag(box.x + box.width / 2, box.y + 24, box.x + box.width / 2, box.y + 300, 260); // prettier-ignore
+      await f2.detach();
+      await settle(900);
+      await vip.page.screenshot({ path: join(OUT, 'stills', `${String(stillN).padStart(2, '0')}-swipe-vip-closed.png`) }); // prettier-ignore
+      notes.push(`swipe: the sheet ${(await vip.page.getByRole('dialog').count()) === 0 ? 'closed' : 'stayed open'}`); // prettier-ignore
+      // A guest reads another game and suggests it: the vote, heard as a toast (ruling 2).
+      await stage('suggest', 50);
+      await clickFirst([p2.page.getByRole('button', { name: /^(about|sobre) bingo/i })]);
+      await settle(900);
+      await clickFirst([p2.page.getByRole('button', { name: /suggest|proponer/i })]);
+      await settle(1200);
+      stillN += 1;
+      for (const s of surfaces)
+        await s.page.screenshot({ path: join(OUT, 'stills', `${String(stillN).padStart(2, '0')}-suggested-${s.id}.png`) }); // prettier-ignore
+      await clickFirst([p2.page.getByRole('button', { name: /^(close|cerrar)$/i })]);
+      await settle(600);
+    }
 
     // Choose: the sheet's Choose button, the new row, or the old radio card.
     await stage('choose', 50);
@@ -179,6 +204,12 @@ async function main(): Promise<void> {
     stillN += 1;
     for (const s of surfaces)
       await s.page.screenshot({ path: join(OUT, 'stills', `${String(stillN).padStart(2, '0')}-chosen-${s.id}.png`) }); // prettier-ignore
+    // The collapsed settings (Part 00 §1.5): open "Game options (n) ▾".
+    if (
+      await clickFirst([vip.page.getByRole('button', { name: /game options|opciones del juego/i })])
+    ) {
+      await stage('options', 900);
+    }
 
     await stage('start', 50);
     const started = await clickFirst([

@@ -86,8 +86,12 @@ export function serveCatalog(
   games: readonly { manifest: GameManifest }[],
   texts: GameTexts,
   now: number,
+  /** Captures only (catalog-demo.ts): entries shown in the picker that no game backs. */
+  demo: readonly GameManifest[] = [],
 ): Catalog {
-  const manifests = Object.fromEntries(games.map((g) => [g.manifest.id, g.manifest]));
+  const manifests = Object.fromEntries(
+    [...games.map((g) => g.manifest), ...demo].map((m) => [m.id, m]),
+  );
   const catalog = buildCatalog(Object.values(manifests), texts, now);
   registerCatalogRoutes(fastify, catalog, manifests, texts);
   return catalog;

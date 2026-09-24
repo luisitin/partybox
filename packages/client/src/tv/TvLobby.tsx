@@ -13,6 +13,7 @@ import { STRINGS } from './strings';
 import styles from './TvLobby.module.css';
 import { CROWDED_PLAYERS, Tonight, ordinal } from './Tonight';
 import { gameName, useCatalog } from '../catalog';
+import { Glow } from './Glow';
 
 export interface TvLobbyProps {
   room: RoomSnapshot | null;
@@ -150,10 +151,7 @@ export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
   return (
     <Stage>
       {/* I-029 B: the room breathes — two soft glows drift behind the lobby (transform only). */}
-      <div className={styles.glow} aria-hidden>
-        <span className={styles.glowA} />
-        <span className={styles.glowB} />
-      </div>
+      <Glow />
       <div className={`${styles.split} ${empty ? styles.splitEmpty : ''}`}>
         <div
           className={`${styles.join} ${full || locked ? styles.full : ''} ${empty ? styles.joinWide : ''}`}

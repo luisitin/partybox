@@ -8,6 +8,7 @@ import type { EngineDeps } from '@partybox/engine';
 import { PARTYBOX_VERSION, gameManifestSchema } from '@partybox/shared';
 import { createBotManager } from './bots';
 import { serveCatalog } from './catalog';
+import { demoManifests } from './catalog-demo';
 import type { BotManager } from './bots';
 import { createClock } from './clock';
 import type { Clock } from './clock';
@@ -117,7 +118,7 @@ export async function createApp(options: AppOptions): Promise<App> {
         });
   const funnel = createFunnelBook(recordingsDir); // I-077
   // Part 00 §1.2 (ADR-049): the lobby's catalog, built once with the host's clock for NEW.
-  const catalog = serveCatalog(fastify, Object.values(deps.games), serverGameText, clock.now());
+  const catalog = serveCatalog(fastify, Object.values(deps.games), serverGameText, clock.now(), process.env['PARTYBOX_DEMO_CATALOG'] === '1' ? demoManifests(new Date(clock.now()).toISOString().slice(0, 10)) : []); // prettier-ignore
   sockets.attach(host, deps, funnel, catalog);
   const detachSpeech = attachSpeech(fastify, host, deps); // READER-VOICES (ADR-045)
   // I-785 B: keyed by room code — so only the rooms anyone may see
