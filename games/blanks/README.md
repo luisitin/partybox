@@ -16,7 +16,8 @@ fit model's score for what each blank wants — a Pick 2 may want a person, then
 deck JSON) — the card's tier, a nudge for a card on the prompt's subject in other words and against one
 that echoes its word, the card's own punch — a twist after a comma, a specific; a long card reads slower
 (`server/topics.ts`) — a little noise) and votes the same way; the czar bot picks the
-best-rated prompt on offer, ties at random.
+best-rated prompt on offer, ties at random. A bot's vote leans toward a person's card, +0.2 (I-445 A),
+and each bot has its own fixed taste, ±0.2 a card, so a person wins about their fair share (B).
 
 ## Phases
 
