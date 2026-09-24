@@ -6,6 +6,8 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Fixed
 
+- **Everyone sees the settings while the VIP tunes** (I-648, option B): while the VIP picks a game, every other phone lists that game's settings under its name, read-only, updating as the VIP changes them — so nobody finds out spicy is ON after the first card. The setting that just changed breathes yellow once over 2 s (held still under reduced motion).
+
 - **Broken Pencil: the drawing on the show fills its stage.** The book's title and page count move to the left column above the WORD tile, and "X drew" becomes a tag on the sheet's corner. A drawing is now about 650 px tall on the 1080-px TV instead of 480. The crammed text under the title is shortened to two lines, "BOOK 1 OF 6" / "PAGE 2 OF 5". (I-211, option B)
 
 - **Broken Pencil: the verdict lands a beat after the last guess.** On a book's last page the guess shows alone, and the CHAIN BROKEN / UNBROKEN box rises 2.5 s later (3.5 s for a book that survived). The presenter's Next is held for that beat too, so a quick thumb can't skip the verdict. (I-512, option B)
