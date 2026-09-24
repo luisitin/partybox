@@ -4,7 +4,7 @@
 // made mid-celebration waits for the reveal.
 import { describe, expect, it } from 'vitest';
 import { game } from '../server/index';
-import { AUTO_END_MS, VERDICT_READ_MS, claimRevealMs } from '../server/reveal';
+import { AUTO_END_MS, VERDICT_READ_MS, WRONG_READ_MS, claimRevealMs } from '../server/reveal';
 import { RESUME_MS } from '../server/types';
 import { pointsFor } from '../server/scoring';
 import {
@@ -244,7 +244,7 @@ describe('the verdict is the server’s word (loop 258)', () => {
     expect(judged.phase.id).toBe('check');
     expect(judged.round.judged).toBe(true);
     expect(game.controllerView(judged, 'a').verdictShown).toBe(true);
-    expect(judged.phase.deadline).toBe(verdictAt + VERDICT_READ_MS);
+    expect(judged.phase.deadline).toBe(verdictAt + WRONG_READ_MS); // I-394: a wrong claim reads 6 s
     expect(timer(judged).phase.id).toBe('play');
   });
 

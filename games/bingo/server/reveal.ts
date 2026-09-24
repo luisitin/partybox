@@ -32,8 +32,15 @@ export function verdictAtMs(patternCells: number, hasRest: boolean): number {
 /** After the verdict lands the room reads it: the check phase ends this long after. */
 export const VERDICT_READ_MS = 3_000;
 
-/** A wrong claim: the daubs lift off the TV's card this long after NOT A BINGO (I-006 B). */
-export const WIPE_AT_MS = 1_200;
+/** I-394 (the owner's note: "give more time to look at it … maybe double it"): a wrong claim's
+ *  verdict is read twice as long as a right one's — its own constant, so a win's read (and I-400's
+ *  no-pick clock built on it) keeps VERDICT_READ_MS. */
+export const WRONG_READ_MS = 6_000;
+
+/** A wrong claim: the daubs lift off the TV's card this long after NOT A BINGO (I-006 B).
+ *  I-394 B: the verdict is read first — the wipe is the last beat before the 3 · 2 · 1 (it was
+ *  1.2 s in, and the words pointed at red squares that were gone for the rest of the read). */
+export const WIPE_AT_MS = WRONG_READ_MS - 400;
 
 /** I-117: a claim the room can see through — more never-called daubs than called ones on the
  *  checked line — gets no suspense. */

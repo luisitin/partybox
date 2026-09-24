@@ -8,7 +8,7 @@ import { enterPhase, isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { toggleDaub } from '../cards';
 import { clearClaims, menusOpen, setMenu } from '../claims';
-import { VERDICT_READ_MS, claimRevealMs } from '../reveal';
+import { WRONG_READ_MS, claimRevealMs } from '../reveal';
 import { RESUME_MS } from '../types';
 import type { Claim, Input, State } from '../types';
 
@@ -59,6 +59,6 @@ export function reduceCheck(state: State, event: GameEvent<Input>): State {
   return {
     ...state,
     round: { ...state.round, judged: true },
-    phase: { ...state.phase, deadline: (state.phase.deadline ?? event.now) + VERDICT_READ_MS },
+    phase: { ...state.phase, deadline: (state.phase.deadline ?? event.now) + WRONG_READ_MS },
   };
 }
