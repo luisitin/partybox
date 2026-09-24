@@ -1,0 +1,84 @@
+{
+  "id": "who-said-it",
+  "name": "Who Said It",
+  "tagline": "Everyone answers. Everyone guesses who wrote what.",
+  "description": "Everyone answers the same question on their phone. The answers come up one at a time and everyone taps who they think wrote each one. Score for every right guess, and for every friend your answer fools. Answer honestly, or write like someone else to throw the room off.",
+  "version": "0.1.0",
+  "minPlayers": 3,
+  "maxPlayers": 16,
+  "estimatedMinutes": 10,
+  "tags": ["comedy", "bluff"],
+  "settings": [
+    {
+      "key": "prompts",
+      "label": "Questions",
+      "description": "Questions to answer; auto picks 4, 3 or 2 by room size, and a big room is capped at 40 answers",
+      "type": "select",
+      "default": "auto",
+      "options": [
+        { "value": "auto", "label": "Auto" },
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" }
+      ]
+    },
+    {
+      "key": "writeSeconds",
+      "label": "Writing time",
+      "description": "Seconds to write an answer",
+      "type": "number",
+      "default": 60,
+      "min": 30,
+      "max": 120,
+      "step": 10
+    },
+    {
+      "key": "guessSeconds",
+      "label": "Guessing time",
+      "description": "Seconds to guess who wrote each answer",
+      "type": "number",
+      "default": 12,
+      "min": 8,
+      "max": 20,
+      "step": 1
+    },
+    {
+      "key": "ideas",
+      "label": "Need an idea?",
+      "description": "A once-per-question button that offers two ready-made answers",
+      "type": "boolean",
+      "default": true
+    },
+    {
+      "key": "readAnswers",
+      "label": "Read answers aloud",
+      "description": "The reader says each answer before the guessing",
+      "type": "boolean",
+      "default": true
+    },
+    {
+      "key": "spicy",
+      "label": "Spicy questions",
+      "description": "Mix in flirty, embarrassing questions for grown-ups",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "key": "reader",
+      "label": "Reader",
+      "description": "The voice that reads the questions and answers",
+      "type": "select",
+      "default": "sky",
+      "options": [
+        { "value": "sky", "label": "Soft-Spoken Woman" },
+        { "value": "george", "label": "Old British Man" },
+        { "value": "fable", "label": "Young British Man" },
+        { "value": "jessica", "label": "American Woman" },
+        { "value": "original", "label": "Original" },
+        { "value": "none", "label": "No reader" }
+      ]
+    }
+  ],
+  "supportsBots": true
+}
