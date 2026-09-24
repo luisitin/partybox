@@ -37,8 +37,20 @@ module.exports = {
       name: 'game-server-never-imports-sdk-ui',
       comment: 'ADR-023: the pure sdk entry point must stay loadable by Node (no React/CSS).',
       severity: 'error',
-      from: { path: '^(games/[^/]+/server/|packages/game-sdk/src/(index|timer|scoring|views).ts)' },
+      from: {
+        path: '^(games/[^/]+/server/|packages/game-sdk/src/((index|timer|scoring|views|speech).ts|speech/))',
+      },
       to: { path: '^packages/game-sdk/src/(ui|tv|controller)/' },
+    },
+    {
+      // Its purity (no node:*, clocks, randomness) is ESLint's: see eslint.config.js.
+      name: 'sdk-speech-is-server-only',
+      comment: 'It carries zod and the override lists: a phone or TV download never includes it.',
+      severity: 'error',
+      from: {
+        path: '^(packages/client/|games/[^/]+/client/|packages/game-sdk/src/(ui|tv|controller)/)',
+      },
+      to: { path: '^packages/game-sdk/src/(speech\\.ts|speech/)' },
     },
     {
       name: 'game-server-no-node-core',

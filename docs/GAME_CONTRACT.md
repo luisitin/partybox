@@ -47,7 +47,8 @@ type GameEvent<I> =
   | { type: 'input'; now: number; playerId: string; input: I } // schema-valid input
   | { type: 'timer'; now: number; phaseId: string; startedAt: number } // once per deadline (ADR-033)
   | { type: 'player'; now: number; playerId: string; connected: boolean; gone?: 'left' | 'kicked' } // (re)connect / leave; `gone` = for good (ADR-046)
-  | { type: 'vip'; now: number; action: 'skip' | 'pause' | 'resume' | 'end' };
+  | { type: 'vip'; now: number; action: 'skip' | 'pause' | 'resume' | 'end' }
+  | { type: 'speech'; now: number; key: string; ms: number }; // a reading you asked for is ready: its length, or -1 (ADR-045)
 ```
 
 `reduce` must handle every event in every phase. A timer fires once per phase instance — unless
@@ -158,6 +159,41 @@ instance began, oldest first — read the reveal states there for anything the g
 (Lightning's picks, Wisecrack's votes). Files are plain names written beside the markdown (Broken
 Pencil writes each drawing as an SVG). Pure like every other method; without it the host keeps only the
 state.
+
+### Speech (optional, ADR-045)
+
+`speech?(state)` lists the readings the state wants: `SpeechRequest { key, voice, parts }`, where a part
+is `{ text }` or `{ ipa, text }` — `text` is required on phoneme parts too, because Zira (`original`)
+reads it where Kokoro reads the phonemes. The host makes each key once, serves it at
+`/api/speech/<key>.wav` (cached for good: the key is a content hash) and answers with the `speech`
+event; `-1` means no voice — carry on with reading time. Ask for a line as soon as its text is known,
+never before a secret it contains is revealed, and at most `pendingCap(players)` at a time. Build
+readings with the server-only `@partybox/game-sdk/speech` (never from `client/`):
+
+```ts
+import { parsePronunciations, speechKey, toSpeakable } from '@partybox/game-sdk/speech';
+import list from '../content/pronunciations.json' with { type: 'json' };
+const OVERRIDES = parsePronunciations(list); // validated once, at module level
+
+const parts = toSpeakable(prompt.text, {
+  voice,
+  lang: 'en',
+  overrides: OVERRIDES,
+  itemId: prompt.id,
+});
+// player-written text: { ..., playerText: true } (shouting, stretched words, 140 characters)
+const req = { key: speechKey('fake-out', voice, parts), voice, parts };
+```
+
+- `toSpeakable(text, { voice, lang, overrides?, itemId?, playerText? })` applies Part 00 §5.3's rules:
+  numbers, money, times and years as words, symbols and abbreviations, acronyms spelled (as phonemes,
+  so a mid-line "A" is not "uh"), pacing, no emoji. Spanish gets rules 1, 9, 10 and 11 only.
+- Overrides: the SDK's `speech/overrides.en.json`, beaten by your `content/pronunciations.json`
+  (`docs/game-pack/schemas/pronunciations.schema.json`: `words`, `items`, `patterns`; each entry
+  `say` / `ipa` (alias `phonemes`) / `spell`), whole words, **case-sensitive** unless `anyCase: true`.
+  Test your list: it parses, and `unknownPhonemes(ipa)` is empty for every entry.
+- `speakableName(name)`: the name to read, or `null` to skip it. `speechKey(gameId, voice, parts)`:
+  `<gameId>-<16 hex>`, a hash of `SPEECH_ENGINE_VERSION`, the voice and the parts.
 
 ### Bots (`manifest.supportsBots`)
 

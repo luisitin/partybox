@@ -186,6 +186,45 @@ export default tseslint.config(
     },
   },
   {
+    // `@partybox/game-sdk/speech` runs inside game server code, so it is held to the same purity:
+    // no clocks, randomness, timers, I/O or module state (ADR-045 addendum). Its tests may read files.
+    files: ['packages/game-sdk/src/speech.ts', 'packages/game-sdk/src/speech/**/*.ts'],
+    ignores: ['**/*.test.ts'],
+    rules: {
+      'no-restricted-globals': [
+        'error',
+        ...['setTimeout', 'setInterval', 'setImmediate', 'queueMicrotask', 'fetch', 'process'].map(
+          (name) => ({ name, message: 'The speech helpers are pure.' }),
+        ),
+      ],
+      'no-restricted-properties': [
+        'error',
+        { object: 'Date', property: 'now', message: 'The speech helpers are pure.' },
+        { object: 'Math', property: 'random', message: 'The speech helpers are pure.' },
+      ],
+      'no-restricted-syntax': [
+        'error',
+        { selector: 'ExportDefaultDeclaration', message: 'Use named exports.' },
+        {
+          selector: "Program > VariableDeclaration[kind!='const']",
+          message: 'No module-level mutable state in the speech helpers.',
+        },
+      ],
+      'no-restricted-imports': [
+        'error',
+        {
+          paths: [...sharedBans, 'react', 'react-dom'],
+          patterns: [
+            {
+              group: ['node:*', 'fs', 'path', 'os', 'crypto', 'child_process'],
+              message: 'No I/O.',
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
     files: [
       'packages/client/src/**/*.{ts,tsx}',
       'packages/game-sdk/src/**/*.tsx',

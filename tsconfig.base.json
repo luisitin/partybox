@@ -25,6 +25,7 @@
       "@partybox/engine": ["./packages/engine/src/index.ts"],
       "@partybox/game-sdk": ["./packages/game-sdk/src/index.ts"],
       "@partybox/game-sdk/ui": ["./packages/game-sdk/src/ui.ts"],
+      "@partybox/game-sdk/speech": ["./packages/game-sdk/src/speech.ts"],
       "@partybox/game-sdk/testing": ["./packages/game-sdk/src/testing.ts"]
     }
   }

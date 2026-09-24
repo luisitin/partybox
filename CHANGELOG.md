@@ -205,6 +205,14 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Added
 
+- **Readings for the game pack** (F6, ADR-045 addendum): `@partybox/game-sdk/speech`, server-only —
+  `toSpeakable` turns a line into what the reader should hear (Part 00 §5.3: numbers, money, times
+  and years as words; abbreviations; acronyms spelled, as phonemes so a mid-line "A" is not "uh";
+  shouting and stretched words in player text; no emoji), with a global pronunciation list the
+  game's own list beats (case-sensitive unless `anyCase`); `speakableName`; `speechKey` (a content
+  hash, so `/api/speech/<key>.wav` is now cached for good) and `pendingCap`. Phoneme parts always
+  carry their words, so Zira says them instead of going silent; hyphenated game ids get readings.
+
 - **Blanks reads every card aloud** (READER-VOICES, ADR-045): a Reader setting (default Old British
   Man; Young British Man, American Woman, Soft-Spoken Woman, Original, or No reader for the players
   to read). Each finished card is synthesised on the host the moment it is played — with a beat

@@ -15,6 +15,7 @@ The only process. Fastify + Socket.IO host that wires the pure engine to real so
 - `src/dev-api.ts` — `/api/dev/*` (docs/DEV_API.md). I-753: `/state` carries no login tokens (A); only the host PC is answered, except `POST /reset` for the TV's 🏠 (B); sockets.ts refuses a socket whose Origin is another site (C). `src/bots.ts` — server-played bots.
 - `src/qr.ts` — SVG QR for the join URL. `src/lan-ip.ts` — LAN IPv4 detection.
 - `src/tuned.ts` — I-763 C: the VIP's per-game settings saved at `<recordings>/tuned-settings.json`; every new room starts from them.
+- `src/speech.ts` — the reader voices (ADR-045): Kokoro sidecar + Zira, one WAV per key (`SPEECH_KEY_PATTERN`: hyphenated `<gameId>-<hash>` keys, never a path), `/api/speech/<key>.wav` served `immutable`.
 - `src/games.generated.ts` — GENERATED registry (ADR-003). Do not edit.
 
 ## Test
