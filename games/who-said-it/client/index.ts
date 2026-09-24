@@ -13,7 +13,10 @@ export const clientModule: GameClientModule = {
   // SPEC §4.3: the prompt is a card on stage; write and guess are "pick up your phone" (the plain
   // phase chime); the reveal opens on the tally of taps landing (its flip plays reveal + cheer /
   // bust from the stage); the board is a tally.
-  sounds: { intro: 'start', prompt: 'card', reveal: 'tally', scores: 'tally' },
+  // Prompt and reveal move their own deadline (the prompt re-times to its reading; the reveal's
+  // flip is a second beat, ADR-033), and the shell re-chimes a mapped cue whenever that happens
+  // (TvApp 'reentered'): they map to silence and play their cue once per instance themselves.
+  sounds: { intro: 'start', prompt: 'silence', reveal: 'silence', scores: 'tally' },
   // The reveal's own entrance is the choreography: the TV cuts into it (the taps start flying).
   quickInto: ['reveal'],
   // The reveal draws every face itself: the strip drops to faces only, so 16 players' board and

@@ -246,6 +246,9 @@
   position: relative;
   flex: none;
   margin-top: var(--pb-space-4);
+  /* Its style and layout work stays inside it (no paint containment: the lifted author tile and
+     its badge draw past the box). */
+  contain: layout style;
 }
 .tile {
   position: absolute;

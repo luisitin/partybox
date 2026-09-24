@@ -1,8 +1,9 @@
 // TV title screens: the intro (the three steps, dealt one by one), the prompt (a card that swings
 // in and holds while the reader says it) and the writing stage (the prompt stays up; the count of
 // answers in is the one focal point, with pips and who we are waiting for).
+import { useEffect } from 'react';
 import type { CSSProperties, JSX } from 'react';
-import { BigText, Stage, useSecondsLeft, useT } from '@partybox/game-sdk/ui';
+import { BigText, Stage, useSecondsLeft, useSound, useT } from '@partybox/game-sdk/ui';
 import type { GameTvProps, Translator, ViewPlayer } from '@partybox/game-sdk/ui';
 import type { WsTvView } from '../server/views';
 import { STEPS } from './steps';
@@ -41,6 +42,9 @@ export function questionOf(L: Translator, view: WsTvView): string {
 
 export function TvPrompt({ view }: Props): JSX.Element {
   const L = useT(STRINGS);
+  const play = useSound();
+  // The card lands: one `card` per prompt instance (the shell maps this phase to silence).
+  useEffect(() => play('card'), [view.startedAt, play]);
   return (
     <Stage center>
       <p className={styles.kicker}>{questionOf(L, view)}</p>

@@ -3,7 +3,7 @@
 // hold; "It was…"; then — the server's `shown` beat — the author's tile lifts, turns and grows,
 // their name lands at h1, right guessers' minis glow ✓, wrong ones fade, "+2" pops over each
 // right guesser and "+4 · fooled 4" under the author. Transform and opacity only.
-import { useEffect } from 'react';
+import { memo, useEffect } from 'react';
 import type { CSSProperties, JSX } from 'react';
 import { Avatar, Stage, useSound, useT } from '@partybox/game-sdk/ui';
 import type { GameTvProps, ViewPlayer } from '@partybox/game-sdk/ui';
@@ -26,6 +26,12 @@ export function step(i: number, n: number): number {
 const VERDICT_H = 190;
 const VERDICT_TIGHT_H = 120;
 const CARD_H = 110;
+
+/** A face's SVG art, memoised: the flip's push (and every ✓) re-renders the board, and the 32
+ *  faces' SVG subtrees were most of that work on a weak TV (4x CPU trace, item 1). */
+const Face = memo(function Face(props: { avatarId: string; size: number; dim?: boolean }) {
+  return <Avatar avatarId={props.avatarId} size={props.size} dim={props.dim} />;
+});
 
 interface Mini {
   guesser: ViewPlayer;
@@ -92,7 +98,7 @@ function Minis({
             {overflow ? (
               <span className={styles.more}>+{m.count - cap + 1}</span>
             ) : (
-              <Avatar avatarId={m.guesser.avatarId} size={l.mini} />
+              <Face avatarId={m.guesser.avatarId} size={l.mini} />
             )}
             {shown && right && !overflow ? <span className={styles.tick}>✓</span> : null}
           </span>
@@ -109,6 +115,8 @@ export function TvReveal({ view }: Props): JSX.Element {
   const shown = r?.step === 'shown';
   const verdict = r && shown ? verdictOf(r) : null;
   const firstLine = view.say[0]?.ms ?? 0;
+  // The taps start landing: one `tally` per reveal instance (the shell maps it to silence).
+  useEffect(() => play('tally'), [view.startedAt, play]);
   useEffect(() => {
     if (!shown) return;
     play('reveal');
@@ -148,7 +156,7 @@ export function TvReveal({ view }: Props): JSX.Element {
                 style={{ '--k': step(i, order.length) } as CSSProperties}
               >
                 <span className={styles.face} style={{ width: l.avatar, height: l.avatar }}>
-                  <Avatar avatarId={p.avatarId} size={l.avatar} dim={!p.connected} />
+                  <Face avatarId={p.avatarId} size={l.avatar} dim={!p.connected} />
                 </span>
                 <span className={styles.tileName} style={{ height: l.nameH }}>
                   {p.name}
