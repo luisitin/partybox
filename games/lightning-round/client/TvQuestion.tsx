@@ -1,7 +1,7 @@
 // TV: the question, its four lettered choices in a 2×2 grid, and — in reveal — the correct one
 // marked with ✓ (never colour-only) plus one row per player with verdict, points and streak.
 import type { CSSProperties, JSX } from 'react';
-import { Avatar, BigText, useT } from '@partybox/game-sdk/ui';
+import { Avatar, BigText, LeadMark, useT } from '@partybox/game-sdk/ui';
 import type { Translator, ViewPlayer } from '@partybox/game-sdk/ui';
 import type { QuestionView, RevealRow, RoundView } from '../server/views';
 import { roundLabel, topicLine, waitingText } from './labels';
@@ -212,6 +212,8 @@ export function RevealRows({ rows }: { rows: RevealRow[] }): JSX.Element {
   const wide = rows.length <= 8;
   const crowned = rows.length <= 12;
   const top = Math.max(0, ...rows.map((r) => r.score));
+  // I-268 B: the roster's rule — no leader when nobody has scored or everyone is tied
+  const leads = top > 0 && rows.some((r) => r.score !== top);
   return (
     <ol className={`${styles.rows} ${rowsClass(rows.length)}`} aria-label={L('results')}>
       {rows.map((row, index) => {
@@ -230,11 +232,7 @@ export function RevealRows({ rows }: { rows: RevealRow[] }): JSX.Element {
             style={{ '--i': index } as CSSProperties}
           >
             <Avatar avatarId={row.avatarId} size={48} dim={!row.connected} />
-            {crowned && top > 0 && row.score === top ? (
-              <span className={styles.crown} aria-label={L('leader')}>
-                👑
-              </span>
-            ) : null}
+            {crowned && leads && row.score === top ? <LeadMark className={styles.crown} /> : null}
             <span className={styles.name}>{row.name}</span>
             {row.streak >= 2 ? (
               <span
