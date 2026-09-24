@@ -7,6 +7,7 @@ export const STRINGS: Strings = {
   es: {
     // Screen
     'scroll down': 'ver más abajo',
+    'more below': 'hay más abajo', // I-788 A: the footer's cue row
     // TextAnswer
     Submit: 'Enviar',
     Submitted: 'Enviado',
@@ -28,6 +29,8 @@ export const STRINGS: Strings = {
     '✓ Locking in…': '✓ Confirmando…',
     correct: 'correcta',
     incorrect: 'incorrecta',
+    // I-790 C: the reveal's tile tags
+    'the answer': 'la respuesta', // ("you" is in the table below)
     vote: 'votación',
     yours: 'tuya',
     // Avatar (ui/Avatar.tsx) and the faces' names (avatarNames.ts)
@@ -62,6 +65,7 @@ export const STRINGS: Strings = {
     spectator: 'mirando',
     reconnecting: 'reconectando',
     leading: 'va ganando',
+    '1st': '1.º',
     '{seconds} seconds before they drop out': '{seconds} segundos antes de que salga de la sala',
     you: 'tú',
     bot: 'bot',

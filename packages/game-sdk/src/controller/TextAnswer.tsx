@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import type { JSX, ReactNode } from 'react';
 import { useT } from '../ui/lang';
+import { useKeyboardInset } from './keyboardInset';
 import { PrimaryButton } from './PrimaryButton';
 import { Screen } from './Screen';
 import styles from './TextAnswer.module.css';
@@ -31,6 +32,12 @@ export interface TextAnswerProps {
   /** Under "You said …" once submitted (default: "Waiting for the others — look at the TV", or
    *  without the TV in a phone-only room — see `SDK_LINES`). */
   submittedHint?: ReactNode;
+  /**
+   * I-795 I: shown above the prompt and given whatever height the prompt, a one-line field and the
+   * button leave (a drawing to guess). With a lead the field starts one line tall (it grows as
+   * the text wraps), the counter is left out, and an open keyboard shrinks the lead, not the field.
+   */
+  lead?: ReactNode;
 }
 
 export function TextAnswer(props: TextAnswerProps): JSX.Element {
@@ -48,7 +55,9 @@ export function TextAnswer(props: TextAnswerProps): JSX.Element {
     promptKey,
     className,
     submittedHint,
+    lead,
   } = props;
+  const inset = useKeyboardInset(lead !== undefined && !submitted);
   const [text, setText] = useState('');
   const lastKey = useRef(promptKey);
   useEffect(() => {
@@ -103,7 +112,8 @@ export function TextAnswer(props: TextAnswerProps): JSX.Element {
   }
   return (
     <Screen
-      className={className}
+      className={`${className ?? ''} ${inset > 0 ? styles.squeezed : ''}`}
+      style={inset > 0 ? { paddingBottom: inset } : undefined}
       footer={
         <PrimaryButton
           onClick={() => canSubmit && onSubmit(trimmed)}
@@ -114,15 +124,16 @@ export function TextAnswer(props: TextAnswerProps): JSX.Element {
         </PrimaryButton>
       }
     >
+      {lead !== undefined ? <div className={styles.lead}>{lead}</div> : null}
       {kicker ? <p className={styles.kicker}>{kicker}</p> : null}
       <p className={styles.prompt}>{prompt}</p>
       <textarea
-        className={`${styles.input} ${stalled ? styles.stalled : ''}`}
+        className={`${styles.input} ${lead !== undefined ? styles.inputOne : ''} ${stalled ? styles.stalled : ''}`}
         value={text}
         onChange={(e) => setText(e.target.value.slice(0, maxLength))}
         placeholder={placeholder}
         maxLength={maxLength}
-        rows={3}
+        rows={lead !== undefined ? 1 : 3}
         disabled={submitted || disabled}
         autoCapitalize="sentences"
         enterKeyHint="done"
@@ -138,7 +149,7 @@ export function TextAnswer(props: TextAnswerProps): JSX.Element {
         <p className={styles.late} role="status">
           {L("Time's up — your answer wasn't sent.")}
         </p>
-      ) : (
+      ) : lead !== undefined ? null : (
         // I-001 B: keyed on the length so every keystroke remounts the counter and it bumps once.
         <p
           key={text.length}

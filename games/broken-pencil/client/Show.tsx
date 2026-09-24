@@ -30,9 +30,16 @@ export function Show({
     );
   const at = { page: s.page + 1, pages: view.pageCount };
   const where = L('page {page} of {pages}', at);
-  // A "phone only" room reads the book on the phone: the page on stage, for everyone.
-  const page =
-    tvOff && s.current ? <PhonePage key={`${s.book}:${s.page}`} page={s.current} /> : null;
+  // A "phone only" room reads the book on the phone: the page on stage, for everyone. A TV room's
+  // phone holds a thumbnail of it (I-796 K): the TV stays the stage, the phone is not a blank wall.
+  const page = !s.current ? null : tvOff ? (
+    <PhonePage key={`${s.book}:${s.page}`} page={s.current} />
+  ) : (
+    <div className={styles.thumb} data-page-thumb>
+      <span className={styles.thumbOn}>{L('On the TV now')}</span>
+      <PhonePage key={`${s.book}:${s.page}`} page={s.current} />
+    </div>
+  );
   // The VIP's "close enough" on a broken last page (the owner, 2026-09-21): the server takes the
   // veto from the VIP alone (ADR-042); the verdict on stage flips to intact.
   const vetoButton =
@@ -53,6 +60,7 @@ export function Show({
         </p>
         {page}
         {vetoButton}
+        {tvOff ? null : <p className={styles.hint}>{L('Your turn comes when your book is up.')}</p>}
       </Screen>
     ) : (
       <WaitingScreen

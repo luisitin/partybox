@@ -25,6 +25,35 @@
   resize: none;
 }
 
+/* I-795 I: a lead (the drawing to guess) takes the height left over; the field is one line that
+   grows with its text (field-sizing where supported), so the box and Send are always on screen. */
+.lead {
+  flex: 1 1 0;
+  min-height: 64px;
+  display: grid;
+  grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+}
+
+/* The keyboard is up (visual viewport short): the lead may shrink to nothing and the prompt
+   drops to body size, so the field and Send stay above the keys even on a 320 × 568 phone. */
+.squeezed .lead {
+  min-height: 0;
+  margin-top: calc(-1 * var(--pb-space-4)); /* the body's top padding goes to the field too */
+}
+
+.squeezed .prompt {
+  font-size: var(--pb-font-body);
+}
+
+.inputOne {
+  flex: none;
+  min-height: 0;
+  padding: var(--pb-space-2) var(--pb-space-3);
+  font-size: var(--pb-font-body);
+  field-sizing: content;
+  max-height: calc(3lh + 2 * var(--pb-space-2));
+}
+
 .input:focus {
   border-color: var(--pb-accent);
   outline: none;

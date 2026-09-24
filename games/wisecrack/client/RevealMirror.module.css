@@ -1,0 +1,108 @@
+/* I-796 K: the reveal in miniature on a TV room's phone — quiet, centred, two mini cards. */
+.mirror {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--pb-space-3);
+  text-align: center;
+}
+
+.kicker {
+  margin: 0;
+  text-wrap: balance;
+  color: var(--pb-text-muted);
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+}
+
+.prompt {
+  margin: 0;
+  font-size: var(--pb-font-h2);
+  line-height: 1.2;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+
+.cards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, calc(var(--pb-font-body) * 6.5)), 1fr));
+  gap: var(--pb-space-2);
+  text-align: left;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: var(--pb-surface);
+  transition: box-shadow var(--pb-motion-base) var(--pb-ease);
+}
+
+.won {
+  box-shadow: inset 0 0 0 3px var(--pb-accent-2);
+}
+
+.label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  color: var(--pb-text-muted);
+  font-size: calc(var(--pb-font-caption) * 0.8);
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+.tag {
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: var(--pb-accent-2);
+  color: var(--pb-on-accent-2-fill);
+  font-size: calc(var(--pb-font-caption) * 0.72);
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
+.text {
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.blank {
+  color: var(--pb-text-muted);
+  font-style: italic;
+  font-weight: 700;
+}
+
+.votes {
+  color: var(--pb-text-muted);
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.votesWon {
+  color: var(--pb-accent-2);
+}
+
+.where {
+  margin: 0;
+  color: var(--pb-text-muted);
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+  }
+}
