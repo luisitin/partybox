@@ -96,4 +96,9 @@ export const esPhone: Pick<Texts, keyof typeof enPhone> = {
     snag: 'Este juego tuvo un problema.',
     reload: 'Recargar',
   },
+  reclaim: {
+    tookOver: (name) => `${name} tomó el VIP mientras no estabas`,
+    someone: 'Alguien',
+    takeBack: 'Recuperarlo',
+  },
 };

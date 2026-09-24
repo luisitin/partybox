@@ -10,6 +10,7 @@ import { describe, expect, it } from 'vitest';
 import type { Strings } from '@partybox/game-sdk/ui';
 import { clientGames } from '../packages/client/src/games.generated';
 import { STRINGS as TV_SHELL } from '../packages/client/src/tv/strings';
+import { STRINGS as SURFACE } from '../packages/client/src/surface/strings';
 import { STRINGS as SDK_PHONE } from '../packages/game-sdk/src/controller/strings';
 import { STRINGS as SDK_TV } from '../packages/game-sdk/src/tv/strings';
 import { STRINGS as TEMPLATE_GAME } from '../games/_template/client/strings';
@@ -51,6 +52,12 @@ const AREAS: Area[] = [
     dir: 'packages/client/src/tv',
     table: TV_SHELL,
     tableFile: 'packages/client/src/tv/strings.ts',
+  },
+  // I-677: the wrong-screen hint (join page and TV page)
+  {
+    dir: 'packages/client/src/surface',
+    table: SURFACE,
+    tableFile: 'packages/client/src/surface/strings.ts',
   },
 ];
 

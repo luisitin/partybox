@@ -24,7 +24,8 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
   const list = useRef<HTMLDivElement>(null);
   const lang = useLang();
   useEffect(() => {
-    list.current?.querySelector('[aria-current="true"]')?.scrollIntoView({ block: 'nearest' });
+    // I-456 B: to the middle of the list, not its nearest edge (which was half under the footer)
+    list.current?.querySelector('[aria-current="true"]')?.scrollIntoView({ block: 'center' });
   }, []);
   const rows = scoreboardRows(room);
   const mine = myRow(room, me.id);
@@ -44,9 +45,37 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
       // The winner line is the sticky title: on a long board the body scrolls to your own row and a
       // hero inside the body scrolled off the top (review-loop #76).
       title={
-        <span className={styles.winner} data-screen="results">
-          {winnerLineFor(room, me.id, scoreless)}
-        </span>
+        <>
+          <span className={styles.winner} data-screen="results">
+            {winnerLineFor(room, me.id, scoreless)}
+          </span>
+          {/* I-456 B: your place stays in view while the board scrolls to your row */}
+          {mine && !over && !scoreless ? (
+            <span className={`pb-muted pb-caption ${styles.place}`}>
+              {t.results.yourPlace(mine.rank, mine.score)}
+            </span>
+          ) : null}
+          {/* I-456 C: the awards as chips, under your place — never scrolled away; I-155 A/B:
+              yours first, and reading as yours */}
+          {awardsForMe.length ? (
+            <span className={styles.awardChips}>
+              {awardsForMe.map((a) =>
+                a.playerId === me.id ? (
+                  <span key={a.id} className={`${styles.awardChip} ${styles.awardMine}`}>
+                    <strong>
+                      {t.results.yourAward(serverText(a.title, lang, room.results?.gameId))}
+                    </strong>
+                  </span>
+                ) : (
+                  <span key={a.id} className={styles.awardChip}>
+                    <strong>{serverText(a.title, lang, room.results?.gameId)}</strong>{' '}
+                    {room.results?.players.find((p) => p.id === a.playerId)?.name ?? '?'}
+                  </span>
+                ),
+              )}
+            </span>
+          ) : null}
+        </>
       }
       footer={
         me.isVip ? (
@@ -84,11 +113,7 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
       }
     >
       {over ? <p className="pb-muted pb-caption">{t.results.nobodyScored}</p> : null}
-      {mine && !over && !scoreless ? (
-        <p className={`pb-muted pb-caption ${styles.place}`}>
-          {t.results.yourPlace(mine.rank, mine.score)}
-        </p>
-      ) : null}
+      {/* (I-456 B: your place moved up under the winner line) */}
       {scoreless ? (
         // No points: a board of zeros says nothing; the TV holds the show's summary.
         <p className="pb-muted pb-caption">
@@ -99,9 +124,10 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
           <Scoreboard rows={rows} compact highlightId={me.id} noTrophy={over} />
         </div>
       )}
-      {/* I-155 B: your own awards come first — a receipt opens with you on it. */}
+      {/* (I-456 C: the awards are chips under your place; the long list only for a screen reader)
+          I-155 B: your own awards come first — a receipt opens with you on it. */}
       {room.results?.results.awards.length ? (
-        <ul className={styles.awards}>
+        <ul className={`${styles.awards} ${styles.srOnly}`}>
           {awardsForMe.map((a) => (
             <li
               key={a.id}

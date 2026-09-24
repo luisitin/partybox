@@ -131,7 +131,9 @@ export function createSocketLayer(server: HttpServer): SocketLayer {
       function resolveRoom(raw: string | undefined): string | null {
         if (raw !== undefined && raw !== '') {
           const code = normalizeRoomCode(raw);
-          return isRoomCode(code) && host.get(code) ? code : null;
+          if (isRoomCode(code) && host.get(code)) return code;
+          // I-658 A: a code the TV's "start over" retired leads to the new room for a while
+          return isRoomCode(code) ? (host.aliasOf(code) ?? null) : null;
         }
         const open = host.rooms().filter((r) => !r.locked);
         return open.length === 1

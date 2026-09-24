@@ -71,6 +71,21 @@ export interface RoomState {
   asleepSince?: number;
   /** I-746: the game was already paused (by the VIP) when everyone dropped — waking leaves it paused. */
   asleepKeptPause?: boolean;
+  /** I-652 B: tonight's finished games, newest last (a gap over 3 h starts a new night). */
+  tonight?: TonightGame[];
+  /** I-347 A: the VIP whose role passed on while their phone was away (cleared when a game starts
+   *  or the role moves again). */
+  formerVip?: string;
+}
+
+/** I-652 B: one finished game, as the lobby remembers it. */
+export interface TonightGame {
+  gameId: string;
+  endedAt: number;
+  /** The people who won (bots left out). */
+  winners: { name: string; avatarId: string }[];
+  /** Only bots won it (as opposed to nobody scoring). */
+  botsWon: boolean;
 }
 
 export type RoomEvent =

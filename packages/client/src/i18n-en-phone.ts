@@ -100,4 +100,10 @@ export const enPhone = {
     snag: 'This game hit a snag.',
     reload: 'Reload',
   },
+  /** I-347: the returning host whose VIP passed on mid-game (ControllerShell). */
+  reclaim: {
+    tookOver: (name: string) => `${name} took over as VIP while you were away`,
+    someone: 'Someone',
+    takeBack: 'Take it back',
+  },
 } as const;

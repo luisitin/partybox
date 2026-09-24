@@ -79,6 +79,16 @@ export function snapshot(room: RoomState, deps: EngineDeps): RoomSnapshot {
     listed: room.listed,
     phoneOnly: room.phoneOnly,
     ...(room.asleepSince !== undefined ? { asleep: true } : {}),
+    ...(room.tonight?.length
+      ? {
+          tonight: room.tonight.map((g) => ({
+            gameId: g.gameId,
+            winners: g.winners,
+            botsWon: g.botsWon,
+          })),
+        }
+      : {}),
+    ...(room.formerVip ? { formerVip: room.formerVip } : {}),
   };
 }
 

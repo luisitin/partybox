@@ -30,6 +30,9 @@ export function Screen({ children, footer, title, className }: ScreenProps): JSX
   // I-066 B: "more below" — true while the body can scroll further (scroll + resize watched).
   const body = useRef<HTMLDivElement>(null);
   const [more, setMore] = useState(false);
+  // I-456 A (the arrow clears the footer, however tall) is carried by I-187's zero-height anchor
+  // between the body and the footer: the pill sits var(--pb-space-2) above the footer's top edge,
+  // so a measured footer height would count it twice.
   useEffect(() => {
     const el = body.current;
     if (!el) return undefined;

@@ -27,6 +27,13 @@ export const STRINGS: Strings = {
     'no winner': 'sin ganador',
     '{names} won': '{names} ganó',
     '{names} tied': '{names} empataron',
+    // I-652: a bots-only win, and the night's list (Tonight.tsx)
+    '🤖 Bots took it': '🤖 Ganaron los bots',
+    '{name} led the humans · {place}': '{name}, mejor humano · {place}',
+    tonight: 'esta noche',
+    'Tonight · {n} games': 'Esta noche · {n} juegos',
+    '🤖 bots': '🤖 bots',
+    '👑 {name} leads tonight': '👑 {name} va ganando esta noche',
     'QR code for {url}': 'Código QR de {url}',
     // TvSelecting, TvPlaying, TvResults
     games: 'juegos',

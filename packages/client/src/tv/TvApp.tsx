@@ -16,6 +16,8 @@ import { createSoundEngine, joinSemitones, lockSemitones } from '../sound';
 import type { SoundEngine } from '../sound';
 import { AsleepBanner } from './AsleepBanner';
 import { AudioGate } from './AudioGate';
+import { PhoneOnTvHint } from '../surface/SurfaceHint';
+import { refreshServerInfo } from '../net/info';
 import { HostBar } from './HostBar';
 import { roomFullToast, seatOpenedToast, soundToast } from './own-toasts';
 import { TvFrame } from './TvFrame';
@@ -290,6 +292,11 @@ export function TvApp(): JSX.Element {
   }, [room, view, audio, music, homing, showLocalToast]);
 
   let content: JSX.Element;
+  // I-658 B: a new room (a start over) means a new QR — fetch it now, not within the minute
+  const liveCode = room?.code ?? null;
+  useEffect(() => {
+    if (liveCode) refreshServerInfo();
+  }, [liveCode]);
   if (!room) content = <TvLobby room={null} />;
   else if (room.status === 'lobby')
     content = (
@@ -341,6 +348,8 @@ export function TvApp(): JSX.Element {
         beds={beds}
         onToggle={(m) => showLocalToast({ kind: 'info', text: soundToast(m) })}
       />
+      {/* I-677: the TV page on a phone offers joining as a player */}
+      <PhoneOnTvHint code={room?.code ?? null} />
     </ServerClockProvider>
   );
 }

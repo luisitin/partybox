@@ -64,6 +64,8 @@ export interface Host {
   resend(code: string, playerId?: string): void;
   /** Drops every room and recreates the house room. */
   reset(): void;
+  /** I-658 A: a code a "start over" retired in the last 10 minutes leads to the new house room. */
+  aliasOf(code: string): string | undefined;
   mintPlayer(): { playerId: string; token: string };
   /** Called after every dispatch with the new room state (bots, metrics). */
   subscribe(listener: (room: RoomState) => void): () => void;
@@ -80,6 +82,8 @@ export function createHost(options: HostOptions): Host {
   const codeRng = createRng(randomBytes(4).readUInt32LE(0));
   const listeners = new Set<(room: RoomState) => void>();
   let houseCode = '';
+  /** I-658 A: codes retired by a start over → when (they alias the house room for 10 minutes). */
+  const retired = new Map<string, number>();
   /**
    * The last TV view sent per room, serialised. A push whose TV view is unchanged (most phone
    * inputs — a Bingo daub — touch nothing the TV shows) skips the TV, so the stage is not
@@ -239,8 +243,11 @@ export function createHost(options: HostOptions): Host {
     timers.clear();
     for (const room of rooms.values())
       for (const p of Object.values(room.players)) transport.disconnectPlayer(p.id);
+    const at = clock.now();
+    for (const code of rooms.keys()) retired.set(code, at);
     rooms.clear();
     houseCode = createNewRoom().code;
+    retired.delete(houseCode); // a new code that happens to match an old one is simply live
   }
 
   // A frozen clock that jumps forward must fire everything that became due.
@@ -259,6 +266,15 @@ export function createHost(options: HostOptions): Host {
     rooms: () => [...rooms.values()],
     get: (code) => rooms.get(code),
     house: () => rooms.get(houseCode) as RoomState,
+    aliasOf: (code) => {
+      const at = retired.get(code);
+      if (at === undefined) return undefined;
+      if (clock.now() - at > RETIRED_ALIAS_MS) {
+        retired.delete(code);
+        return undefined;
+      }
+      return houseCode;
+    },
     createRoom: createNewRoom,
     drop: (code) => {
       const room = rooms.get(code);
@@ -316,3 +332,6 @@ export function createHost(options: HostOptions): Host {
     },
   };
 }
+
+/** I-658 A: how long an old room code (a phone's address, a QR photo) still leads in. */
+export const RETIRED_ALIAS_MS = 10 * 60_000;

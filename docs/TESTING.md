@@ -54,6 +54,6 @@ stringify (`packages/game-sdk/src/contract-tests/hash.ts`). Any drift is a P1 bu
 ## Manual LAN check (before a release)
 
 `pnpm dev`, open `/tv` on the TV and `/` on two phones, play both games, lock a phone mid-phase (reconnect),
-close the VIP's tab for > 30 s (handover toast), join a third phone mid-game (spectator, included next game).
+close the VIP's tab for > 30 s mid-game (handover toast; back, the tab offers "Take it back"), join a third phone mid-game (spectator, included next game).
 
 Filled in during Phases 3, 6 and 7.

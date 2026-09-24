@@ -3,7 +3,8 @@
 import { avatarIdOf } from './avatar';
 import type { GameEvent, GameStateBase, PlayerInfo, Settings } from '@partybox/shared';
 import { LIMITS } from '@partybox/shared';
-import type { ApplyResult, Effect, EngineDeps, RoomState, RunningGame } from './types';
+import type { GameResults } from '@partybox/shared';
+import type { ApplyResult, Effect, EngineDeps, RoomState, RunningGame, TonightGame } from './types';
 
 export function playerInfos(room: RoomState): PlayerInfo[] {
   return Object.values(room.players)
@@ -79,11 +80,16 @@ export function applyGameEvent(
     return { room, effects };
   }
   const next: RoomState = { ...room, game: { ...running, state } };
-  return finishIfOver(next, deps, effects);
+  return finishIfOver(next, deps, effects, event.now);
 }
 
 /** Moves the room to `results` when the game reports it is over. */
-export function finishIfOver(room: RoomState, deps: EngineDeps, effects: Effect[]): ApplyResult {
+export function finishIfOver(
+  room: RoomState,
+  deps: EngineDeps,
+  effects: Effect[],
+  now = 0,
+): ApplyResult {
   const running = room.game;
   const game = running ? deps.games[running.gameId] : undefined;
   if (!running || !game) return { room, effects };
@@ -104,6 +110,11 @@ export function finishIfOver(room: RoomState, deps: EngineDeps, effects: Effect[
         results,
         players: Object.values(running.state.players),
       },
+      // I-652 B: the night's list (a gap over 3 hours starts a new night; the last 6 kept)
+      tonight: [
+        ...(room.tonight ?? []).filter((g) => now - g.endedAt < NIGHT_GAP_MS),
+        tonightEntry(running.gameId, results, running.state.players, now),
+      ].slice(-6),
     },
     effects: [...effects, { type: 'push' }],
   };
@@ -176,11 +187,13 @@ export function nextWakeAt(room: RoomState): number | null {
     if (p.disconnectedAt === null) continue;
     candidates.push(p.disconnectedAt + LIMITS.disconnectGraceMs);
     // I-746 A: the handover deadline only while someone could take over — with nobody connected it
-    // stayed in the past and the host's timer re-fired at once, over and over (a busy loop)
+    // stayed in the past and the host's timer re-fired at once, over and over (a busy loop).
+    // I-347 B: and the handover happens only during a game, so it is only scheduled then.
     const canHandOver = Object.values(room.players).some(
       (o) => o.connected && o.id !== p.id && !o.bot,
     );
-    if (p.isVip && canHandOver) candidates.push(p.disconnectedAt + LIMITS.vipHandoverMs);
+    if (p.isVip && canHandOver && room.status === 'playing')
+      candidates.push(p.disconnectedAt + LIMITS.vipHandoverMs);
   }
   // I-746 C: an empty room ends 5 minutes after the last phone dropped
   if (room.asleepSince !== undefined && room.status === 'playing')
@@ -190,3 +203,26 @@ export function nextWakeAt(room: RoomState): number | null {
 
 /** I-746 C: how long a room with every phone asleep waits before it ends the game. */
 export const ASLEEP_END_MS = 5 * 60_000;
+/** I-652 B: games more than this far apart belong to different nights. */
+export const NIGHT_GAP_MS = 3 * 60 * 60_000;
+
+/** I-652 B: one finished game for tonight's list — its human winners, or that bots won it. */
+function tonightEntry(
+  gameId: string,
+  results: GameResults,
+  players: Readonly<Record<string, PlayerInfo>>,
+  now: number,
+): TonightGame {
+  // a game where nobody scored has no winner (the Last-up line's rule), not a tie of everyone
+  const won = results.winnerIds
+    .filter((id) => (results.scores[id] ?? 0) > 0)
+    .map((id) => players[id])
+    .filter((p): p is PlayerInfo => p !== undefined);
+  const people = won.filter((p) => !p.bot);
+  return {
+    gameId,
+    endedAt: now,
+    winners: people.map((p) => ({ name: p.name, avatarId: p.avatarId })),
+    botsWon: won.length > 0 && people.length === 0,
+  };
+}

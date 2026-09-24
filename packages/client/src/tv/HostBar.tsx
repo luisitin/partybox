@@ -144,17 +144,22 @@ export function HostBar({ client, room, view }: HostBarProps): JSX.Element | nul
       buttons = (
         <>
           {botButtons}
-          <button
-            type="button"
-            className={`${styles.button} ${styles.primary}`}
-            disabled={!firstGame}
-            onClick={() => firstGame && client.act({ action: 'selectGame', gameId: firstGame.id })}
-          >
-            <span key={shelf} className={styles.turn}>
-              {shelfGame ? (GAME_GLYPH[shelfGame.id] ?? '🎮') : '🎮'}{' '}
-              {shelfGame ? shelfGame.name : t.host.pickGame}
-            </span>
-          </button>
+          {/* I-682 C: no game to pick until a person is in */}
+          {room.players.some((p) => !p.bot) ? (
+            <button
+              type="button"
+              className={`${styles.button} ${styles.primary}`}
+              disabled={!firstGame}
+              onClick={() =>
+                firstGame && client.act({ action: 'selectGame', gameId: firstGame.id })
+              }
+            >
+              <span key={shelf} className={styles.turn}>
+                {shelfGame ? (GAME_GLYPH[shelfGame.id] ?? '🎮') : '🎮'}{' '}
+                {shelfGame ? shelfGame.name : t.host.pickGame}
+              </span>
+            </button>
+          ) : null}
         </>
       );
       break;

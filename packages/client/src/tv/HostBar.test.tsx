@@ -48,3 +48,22 @@ describe('HostBar language switch', () => {
     expect(html).toContain('aria-label="Switch the TV to Spanish"');
   });
 });
+
+describe('I-682 C: no "Pick a game" for a room of nobody', () => {
+  const player = (id: string, bot: boolean) =>
+    ({ id, name: id, avatarId: 'fox', bot, connected: true, isVip: !bot }) as never;
+  const lobby = (players: never[]): RoomSnapshot => ({
+    ...room('lobby'),
+    players,
+    games: [{ id: 'bingo', name: 'Bingo' }] as never,
+  });
+  const html = (r: RoomSnapshot): string =>
+    renderToStaticMarkup(<HostBar client={client} room={r} view={null} />);
+  it('an empty room and a bots-only room offer Add a bot, not a game', () => {
+    expect(html(lobby([]))).not.toContain('Pick a game');
+    expect(html(lobby([player('b1', true)]))).not.toContain('Pick a game');
+  });
+  it('a person in the room brings the game back', () => {
+    expect(html(lobby([player('sam', false)]))).toContain('Pick a game');
+  });
+});

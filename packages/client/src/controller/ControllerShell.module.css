@@ -419,3 +419,23 @@
   font-weight: 800;
   text-align: center;
 }
+
+/* ── I-347 C: "Take it back" — a toast that stays until tapped or settled. */
+.reclaim {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--pb-space-2);
+}
+.reclaim button {
+  flex: none;
+  border: none;
+  border-radius: 999px;
+  padding: 6px 12px;
+  background: var(--pb-accent);
+  color: var(--pb-accent-ink, #1b0812);
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}

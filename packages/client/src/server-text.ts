@@ -83,6 +83,7 @@ const PATTERNS_ES: readonly [RegExp, (m: RegExpMatchArray) => string][] = [
     (m) => `Hola de nuevo, ${m[1]}: sigues donde lo dejaste`,
   ],
   [/^(.+) is back \(new phone\)$/, (m) => `${m[1]} volvió (con otro teléfono)`],
+  [/^(.+) is the VIP again$/, (m) => `${m[1]} vuelve a ser el VIP`], // I-347 C (vip.ts)
   [/^(.+) joined \(next game\)$/, (m) => `${m[1]} entró (para el próximo juego)`],
   [/^(.+) joined$/, (m) => `${m[1]} entró`],
   [/^(.+) left$/, (m) => `${m[1]} se fue`],

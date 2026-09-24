@@ -160,6 +160,7 @@ function resume(
           return { room: awake as RoomState, effects: [...woke.effects, ...r.effects] };
         })()
       : woke;
+  // I-347 C: no VIP toast here — the phone's "Take it back" pill says who took over
   return {
     room: game.room,
     effects: [
@@ -289,10 +290,16 @@ export function expirePlayers(room: RoomState, now: number, deps: EngineDeps): A
       const r = removePlayer(next, p.id, now, deps, 'left');
       next = r.room;
       effects.push(...r.effects);
-    } else if (p.isVip && now - p.disconnectedAt >= LIMITS.vipHandoverMs) {
+    } else if (
+      p.isVip &&
+      now - p.disconnectedAt >= LIMITS.vipHandoverMs &&
+      // I-347 B: only a game waits on the VIP; the lobby, the picker and the results have the TV
+      next.status === 'playing'
+    ) {
       const r = promoteVip(next, now);
       if (r.room !== next) {
-        next = r.room;
+        // I-347 A: remember whose role it was, so their phone can be told when it is back
+        next = { ...r.room, formerVip: p.id };
         effects.push(...r.effects, { type: 'push' });
       }
     }

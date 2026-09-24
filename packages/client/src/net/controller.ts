@@ -24,6 +24,7 @@ import { loadIdentity, loadSession, saveIdentity, saveSession } from './session-
 import type { Identity, Session } from './session-store';
 import { createStore, toastOnce } from './store';
 import type { Store, Toast } from './store';
+import { followHouseRoom, replaceRoomParam } from './room-param';
 
 export type Connection = 'connecting' | 'connected' | 'reconnecting';
 
@@ -178,6 +179,8 @@ export function createController(url?: string): Controller {
     if (reason === 'io server disconnect' && !holdReconnect) socket.connect();
   });
   socket.on('welcome', (payload: WelcomePayload) => {
+    // I-658 B: the address carries the room the phone is really in (a reload, a share)
+    replaceRoomParam(payload.room.code);
     const session = pending ?? loadSession();
     if (session) {
       saveSession({ ...session, token: payload.token, roomCode: payload.room.code });
@@ -269,6 +272,8 @@ export function createController(url?: string): Controller {
         toasts: [],
         restarted: true,
       });
+      // I-658 B: the form shows the new room, not the dead code in the address
+      followHouseRoom(() => store.set({ restarted: true }));
       return;
     }
     if (error.code === 'rate_limited') return;

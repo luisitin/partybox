@@ -139,12 +139,19 @@ describe('runner', () => {
   });
 
   it('nextWakeAt includes disconnect grace and VIP handover', () => {
+    // I-347 B: the VIP handover is scheduled only during a game; in the lobby only the grace is
     const room = applyRoomEvent(
-      roomWith(2),
+      { ...roomWith(2), status: 'playing' },
       { type: 'disconnect', now: T0 + 10, playerId: 'p1' },
       deps,
     ).room;
     expect(nextWakeAt(room)).toBe(T0 + 10 + LIMITS.vipHandoverMs);
+    const inLobby = applyRoomEvent(
+      roomWith(2),
+      { type: 'disconnect', now: T0 + 10, playerId: 'p1' },
+      deps,
+    ).room;
+    expect(nextWakeAt(inLobby)).toBe(T0 + 10 + LIMITS.disconnectGraceMs);
     const other = applyRoomEvent(
       roomWith(2),
       { type: 'disconnect', now: T0 + 10, playerId: 'p2' },

@@ -225,8 +225,9 @@
 
 /* ── I-072 A: the QR is 560 px while nobody has joined (the couch can scan it), 360 px after. */
 .qrBig {
-  width: 560px;
-  height: 560px;
+  /* I-682 B: 520 px on the side of a wide card (the upright card was taller than the stage) */
+  width: 520px;
+  height: 520px;
 }
 
 /* ── I-072 B: the first join shrinks the code — a 600 ms scale from the big size (rest = end). */
@@ -236,7 +237,7 @@
 }
 @keyframes pb-qr-shrink {
   from {
-    transform: scale(1.56);
+    transform: scale(1.44); /* I-682 B: 520 / 360 */
   }
   to {
     transform: scale(1);
@@ -351,4 +352,83 @@
 }
 :global(:root[data-motion='off']) .qrMarkBump {
   animation: none;
+}
+
+/* ── I-652 A: the best person, on its own line under "Bots took it". */
+.lastUpHuman {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+/* ── I-652 B: the last game and tonight's card side by side (TV tokens: px on a 1080p stage). */
+.afterRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--pb-space-4);
+}
+/* 9+ players (Tonight.tsx CROWDED_PLAYERS): side by side, never a second row under the roster */
+.afterRow[data-crowded] {
+  flex-wrap: nowrap;
+}
+.afterRow[data-crowded] .tonight {
+  min-width: 0;
+  flex: 1 1 0;
+}
+.afterRow:empty {
+  display: none;
+}
+.tonight {
+  max-width: 820px;
+}
+.tonightList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pb-space-2) var(--pb-space-4);
+}
+.tonightChip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+  font-size: var(--pb-font-caption);
+  white-space: nowrap;
+}
+.tonightGame {
+  color: var(--pb-text-muted);
+}
+.tonightTally {
+  margin: 0;
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+}
+.tonightTally strong {
+  color: var(--pb-accent-2);
+}
+
+/* ── I-682 B: the empty room's card on its side — the code left, the words to read aloud right. */
+.joinWide {
+  display: grid;
+  grid-template-columns: auto minmax(0, auto);
+  grid-auto-rows: auto;
+  column-gap: var(--pb-space-8);
+  row-gap: var(--pb-space-3);
+  align-content: center;
+  align-items: center;
+  justify-items: start;
+  text-align: left;
+}
+.joinWide .qrWrap {
+  grid-column: 1;
+  grid-row: 1 / span 4;
+}
+.joinWide > :not(.qrWrap) {
+  grid-column: 2;
+  margin: 0;
 }

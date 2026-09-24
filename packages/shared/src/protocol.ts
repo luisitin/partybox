@@ -51,6 +51,8 @@ export const vipPayloadSchema = z.discriminatedUnion('action', [
   z.object({ action: z.literal('end') }),
   z.object({ action: z.literal('kick'), playerId: z.string().max(64) }),
   z.object({ action: z.literal('transferVip'), playerId: z.string().max(64) }),
+  /** I-347 C: the VIP whose role passed on while away takes it back. */
+  z.object({ action: z.literal('reclaimVip') }),
   z.object({ action: z.literal('lock') }),
   z.object({ action: z.literal('unlock') }),
   z.object({ action: z.literal('playAgain') }),
@@ -146,6 +148,10 @@ export interface RoomSnapshot {
   phoneOnly: boolean;
   /** I-746 B: every phone is asleep and the game is paused until one is back. */
   asleep?: boolean;
+  /** I-652 B: tonight's finished games (newest last) and their human winners. */
+  tonight?: { gameId: string; winners: { name: string; avatarId: string }[]; botsWon: boolean }[];
+  /** I-347 C: the player who may take the VIP back (their role passed on while they were away). */
+  formerVip?: string;
   /** The owner (2026-09-22): a listed ("public") room appears in the join page's room list; a
    *  private one can still be joined by anyone who knows its code. */
   listed: boolean;
