@@ -209,7 +209,16 @@ export function Tv({ view }: GameTvProps<PencilTvView>): JSX.Element {
           <li>
             {L('Your drawing goes to the next player: they guess it, then draw their guess.')}
           </li>
-          <li>{L('That goes on round the circle; the last player only guesses.')}</li>
+          {/* I-507 A: the rule as this room will play it */}
+          <li>
+            {view.fullCircle
+              ? L('That goes on round the circle; the last player only guesses.')
+              : view.passes === 1
+                ? L('It passes to 1 player, who only guesses.')
+                : L('It passes to {n} players in turn; the last of them only guesses.', {
+                    n: view.passes,
+                  })}
+          </li>
           <li>{L('Then everyone presents their own book on the TV, page by page.')}</li>
         </ol>
         <p className={styles.count} role="status">
