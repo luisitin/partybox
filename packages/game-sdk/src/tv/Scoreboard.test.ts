@@ -1,6 +1,6 @@
 // The board's landing beat (what counts up, and what a game deals beside the board, wait for).
 import { describe, expect, it } from 'vitest';
-import { boardLandedMs, climbOffset, tierOf } from './Scoreboard';
+import { boardLandedMs, climbOffset, rankBand, tieEdges, tierOf } from './Scoreboard';
 
 describe('boardLandedMs', () => {
   it('lands one row per 150 ms in a single column, plus the last rise', () => {
@@ -41,5 +41,31 @@ describe('climbOffset (I-027)', () => {
     expect(climbOffset(before, 'a', 2)).toBe(-2); // first → third: fell two rows
     expect(climbOffset(before, 'b', 1)).toBe(0); // held its place
     expect(climbOffset(before, 'new', 1)).toBe(0); // not on the previous board
+  });
+});
+
+describe('tie brackets and rank bands (I-146)', () => {
+  it('caps a tie at its first and last row, and leaves a lone rank alone', () => {
+    const ranks = [1, 2, 2, 4, 4];
+    expect(tieEdges(ranks, 0, 5)).toBeNull();
+    expect(tieEdges(ranks, 1, 5)).toEqual({ top: true, end: false });
+    expect(tieEdges(ranks, 2, 5)).toEqual({ top: false, end: true });
+    expect(tieEdges(ranks, 4, 5)).toEqual({ top: false, end: true });
+  });
+
+  it('never carries a bracket across a column break', () => {
+    // 8 rows in two columns of four: rank 4 runs from the foot of column 1 into column 2.
+    const ranks = [1, 2, 2, 4, 4, 4, 4, 4];
+    expect(tieEdges(ranks, 3, 4)).toBeNull(); // alone at the foot of its column
+    expect(tieEdges(ranks, 4, 4)).toEqual({ top: true, end: false });
+    expect(tieEdges(ranks, 7, 4)).toEqual({ top: false, end: true });
+  });
+
+  it("labels each split column's first row with the ranks it covers", () => {
+    const ranks = [1, 2, 2, 4, 4, 4, 4, 4];
+    expect(rankBand(ranks, 0, 4)).toBe('1–4');
+    expect(rankBand(ranks, 4, 4)).toBe('4');
+    expect(rankBand(ranks, 1, 4)).toBeNull();
+    expect(rankBand([1, 2, 3, 4, 5, 6, 7], 4, 4)).toBe('5–7');
   });
 });

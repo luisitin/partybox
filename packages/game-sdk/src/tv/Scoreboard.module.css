@@ -261,3 +261,41 @@
 :global(:root[data-motion='off']) .climb .fell {
   animation-delay: 0ms;
 }
+
+/* ── I-146 B: the band a split column covers, over its first row. */
+.band {
+  position: absolute;
+  top: -1.35em;
+  left: var(--pb-space-3);
+  font-size: 0.62em;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--pb-muted, rgba(255, 255, 255, 0.55));
+}
+.board .row {
+  position: relative;
+}
+
+/* ── I-146 C: a tie is a bracket, not four identical digits — one "[" per tie group, its bar
+   running through the row gaps (every density's gap is under --pb-space-5), capped at both ends. */
+.tied {
+  position: relative;
+}
+.tied::before {
+  content: '';
+  position: absolute;
+  left: -0.55em;
+  top: 0;
+  bottom: calc(-1 * var(--pb-space-5));
+  width: 0.35em;
+  border-left: 3px solid var(--pb-accent);
+  pointer-events: none;
+}
+.tieTop::before {
+  top: 0.15em;
+  border-top: 3px solid var(--pb-accent);
+}
+.tieEnd::before {
+  bottom: 0.15em;
+  border-bottom: 3px solid var(--pb-accent);
+}

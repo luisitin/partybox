@@ -149,6 +149,34 @@ export function climbOffset(previous: readonly string[], id: string, index: numb
   return (was < 0 ? index : was) - index;
 }
 
+/**
+ * I-146 C: rows on the same rank are bracketed down the left edge — a four-way tie stops depending
+ * on four identical digits being noticed. `top` / `end` cap the bracket; null = not in a tie. A
+ * bracket never crosses a column break (the board flows column-major, `perCol` rows a column): it
+ * would dangle off the foot of one column and draw an uncapped bar down the gap of the next.
+ */
+export function tieEdges(
+  ranks: readonly number[],
+  i: number,
+  perCol: number,
+): { top: boolean; end: boolean } | null {
+  const r = ranks[i];
+  if (r === undefined) return null;
+  const up = i % perCol !== 0 && ranks[i - 1] === r;
+  const down = (i + 1) % perCol !== 0 && ranks[i + 1] === r;
+  return up || down ? { top: !up, end: !down } : null;
+}
+
+/** I-146 B: the rank band over a split column's first row ("1–6", or "4" when the column is one
+ *  tie), so a column edge reads as a continuation of the ranking, not a second list. */
+export function rankBand(ranks: readonly number[], index: number, perCol: number): string | null {
+  if (index % perCol !== 0) return null;
+  const first = ranks[index];
+  const last = ranks[Math.min(index + perCol - 1, ranks.length - 1)];
+  if (first === undefined || last === undefined) return null;
+  return first === last ? `${first}` : `${first}–${last}`;
+}
+
 export function Scoreboard({
   rows,
   compact,
@@ -175,6 +203,15 @@ export function Scoreboard({
   const from = (row: ScoreboardRow, index: number): number =>
     climbOffset(climbFrom, row.playerId, index);
   const countDelayMs = boardLandedMs(rows.length, { compact, dense, columns, stagger });
+  const perCol = Math.ceil(rows.length / cols);
+  const ranks = rows.map((r) => r.rank);
+  const tieClass = (i: number): string => {
+    const tie = noRanks ? null : tieEdges(ranks, i, perCol);
+    if (!tie) return '';
+    return `${styles.tied ?? ''} ${tie.top ? (styles.tieTop ?? '') : ''} ${tie.end ? (styles.tieEnd ?? '') : ''}`;
+  };
+  const bandFor = (index: number): string | null =>
+    cols < 2 || noRanks ? null : rankBand(ranks, index, perCol);
   return (
     <ol
       className={`${styles.board} ${tier === 'roomy' ? '' : styles[tier]} ${size === 'lg' ? styles.lg : size === 'sm' ? styles.sm : ''} ${staggered ? styles.staggered : ''} ${staggered && stagger === 'down' ? styles.down : ''} ${climb ? styles.climb : ''}`}
@@ -184,7 +221,7 @@ export function Scoreboard({
       {rows.map((row, index) => (
         <li
           key={row.playerId}
-          className={`${styles.row} ${row.rank === 1 && trophy ? styles.top : ''} ${row.playerId === highlightId ? styles.me : ''} ${climb && from(row, index) > 0 ? styles.rose : ''} ${climb && from(row, index) < 0 ? styles.fell : ''}`}
+          className={`${styles.row} ${tieClass(index)}${row.rank === 1 && trophy ? styles.top : ''} ${row.playerId === highlightId ? styles.me : ''} ${climb && from(row, index) > 0 ? styles.rose : ''} ${climb && from(row, index) < 0 ? styles.fell : ''}`}
           aria-current={row.playerId === highlightId ? 'true' : undefined}
           style={
             staggered
@@ -194,6 +231,11 @@ export function Scoreboard({
                 : undefined
           }
         >
+          {bandFor(index) ? (
+            <span className={styles.band} aria-hidden>
+              {bandFor(index)}
+            </span>
+          ) : null}
           <span className={styles.rank} aria-label={L('rank {rank}', { rank: row.rank })}>
             {noRanks ? '' : heldRanks ? '·' : row.rank === 1 && trophy ? '🏆' : row.rank}
           </span>

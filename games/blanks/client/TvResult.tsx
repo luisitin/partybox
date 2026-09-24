@@ -73,15 +73,16 @@ function TvFinal({ view }: Props): JSX.Element {
       <BigText level="h1">{L('Final scores')}</BigText>
       <div className={styles.finalRow}>
         <div className={styles.board}>
-          {/* Two columns from five rows and body-size rows from nine: beside the card of the
-              night, under a two- or three-row chip strip, a single column of six h2 rows ran
-              through the tease line and twelve rows off the stage (review-loop #354). */}
+          {/* I-146 A: five rows stay in ONE column — a split board draws rank 5 beside rank 1,
+              and the final screen is the one place order is the whole message. Two columns from
+              seven (the platform's own threshold); body-size rows from nine keep twelve on the
+              stage, which is what review-loop #354 was really protecting. */}
           <Scoreboard
             rows={view.standings}
             noTrophy
             holdMs={HOLD_MS}
             stagger="up"
-            dense={view.standings.length >= 5}
+            dense={view.standings.length >= 7}
             size={view.standings.length >= 9 ? 'sm' : 'md'}
           />
         </div>
