@@ -51,7 +51,7 @@ The TV shell sets the TV column; the controller shell sets the phone column; tok
 - Spacing scale `--pb-space-1…8` = 4, 8, 12, 16, 24, 32, 48, 64 px. Radius `--pb-radius` 12 px, `--pb-radius-lg` 24 px.
 - TV overscan: the stage pads `--pb-overscan-y --pb-overscan-x` (54 px 96 px = 5 % of 1920×1080); nothing important touches the edge.
 - Keyframes live in `global.css` (`pb-rise`, `pb-pop`, `pb-shake`, `pb-confetti`); a CSS module must reference them as `animation: global(pb-rise) …` — CSS Modules localise bare animation names, so `animation: pb-rise` silently never runs (every module did this until 2026-09-15).
-- TV chrome (`TvFrame`): 🏠 + brand top-left is Home — first click arms ("Click again to start over", danger colour, 4 s), second resets the room via the dev API; the corner controls (🎨 🔊 ⛶) sit top-right.
+- TV chrome (`TvFrame`): 🏠 + brand top-left is Home — first click arms ("Click again to start over", danger colour, 4 s), second resets the room via the dev API. For 10 minutes the retired code leads to the new room, so the phones that came in by the QR rejoin by themselves (I-658 A); each phone's address then carries the new code and the TV fetches its new QR at once (I-658 B). The corner controls (🎨 🔊 ⛶) sit top-right.
 - Phone: `env(safe-area-inset-*)` padding, `100dvh` layouts, `overscroll-behavior: none` in game views,
   the submit button lives in a sticky bottom bar so the iOS keyboard never hides it.
 - Touch targets ≥ 44 × 44 px (`--pb-touch` = 44 px), ≥ 8 px apart.

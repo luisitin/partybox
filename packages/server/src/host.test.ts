@@ -221,3 +221,27 @@ describe('TV view pushes', () => {
     host.close();
   });
 });
+
+describe('I-658: a start over keeps the old codes working for a while', () => {
+  it('an old code leads to the new house room for 10 minutes, then nowhere', async () => {
+    const { RETIRED_ALIAS_MS } = await import('./host');
+    const clock = createClock();
+    clock.freeze(1_000_000);
+    const host = createHost({
+      deps: { games: { tiny } },
+      clock,
+      transport: fakeTransport(),
+      log: () => {},
+    });
+    const old = host.house().code;
+    expect(host.aliasOf(old)).toBeUndefined();
+    host.reset();
+    const fresh = host.house().code;
+    expect(fresh).not.toBe(old);
+    expect(host.aliasOf(old)).toBe(fresh);
+    clock.set(1_000_000 + RETIRED_ALIAS_MS + 1);
+    expect(host.aliasOf(old)).toBeUndefined();
+    expect(host.aliasOf('ZZZZ')).toBeUndefined();
+    host.close();
+  });
+});
