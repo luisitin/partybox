@@ -1,0 +1,298 @@
+{
+  "phase": {
+    "id": "done",
+    "startedAt": 1700000211240,
+    "deadline": null
+  },
+  "rng": {
+    "seed": 1,
+    "step": 7
+  },
+  "players": {
+    "ana": {
+      "id": "ana",
+      "name": "Ana",
+      "avatarId": "face0",
+      "connected": true
+    },
+    "ben": {
+      "id": "ben",
+      "name": "Ben",
+      "avatarId": "face1",
+      "connected": true
+    },
+    "cy": {
+      "id": "cy",
+      "name": "Cy",
+      "avatarId": "face2",
+      "connected": true
+    },
+    "dee": {
+      "id": "dee",
+      "name": "Dee",
+      "avatarId": "face3",
+      "connected": true
+    },
+    "eli": {
+      "id": "eli",
+      "name": "Eli",
+      "avatarId": "face4",
+      "connected": true
+    },
+    "fay": {
+      "id": "fay",
+      "name": "Fay",
+      "avatarId": "face5",
+      "connected": true
+    },
+    "gus": {
+      "id": "gus",
+      "name": "Gus",
+      "avatarId": "face6",
+      "connected": true
+    },
+    "hal": {
+      "id": "hal",
+      "name": "Hal",
+      "avatarId": "face7",
+      "connected": true
+    }
+  },
+  "cfg": {
+    "flavour": "village",
+    "wolves": 0,
+    "seer": true,
+    "doctor": true,
+    "hunter": true,
+    "jester": true,
+    "revealRoles": true,
+    "ghostsSeeAll": false,
+    "hunches": true,
+    "townBoard": true,
+    "nightSeconds": 45,
+    "daySeconds": 150,
+    "voteSeconds": 30,
+    "maxDays": 6,
+    "reader": "none"
+  },
+  "presence": {
+    "mode": "remote-text",
+    "phoneOnly": false
+  },
+  "seats": ["ana", "ben", "cy", "dee", "eli", "fay", "gus", "hal"],
+  "roles": {
+    "ana": "seer",
+    "ben": "wolf",
+    "cy": "wolf",
+    "dee": "villager",
+    "eli": "doctor",
+    "fay": "hunter",
+    "gus": "jester",
+    "hal": "villager"
+  },
+  "alive": ["ana", "eli", "gus", "hal"],
+  "dead": [
+    {
+      "id": "dee",
+      "day": 1,
+      "how": "night",
+      "told": true
+    },
+    {
+      "id": "ben",
+      "day": 1,
+      "how": "vote",
+      "told": true
+    },
+    {
+      "id": "fay",
+      "day": 2,
+      "how": "night",
+      "told": true
+    },
+    {
+      "id": "cy",
+      "day": 2,
+      "how": "hunter",
+      "told": true
+    }
+  ],
+  "leaving": [],
+  "day": 2,
+  "ready": [],
+  "picks": {
+    "cy": "fay",
+    "eli": "hal"
+  },
+  "lastProtected": "hal",
+  "victim": "fay",
+  "saved": false,
+  "tally": [],
+  "seerLog": [
+    {
+      "night": 1,
+      "target": "ben",
+      "wolf": true
+    }
+  ],
+  "board": [
+    {
+      "day": 1,
+      "by": "ana",
+      "text": "I have a strong feeling about Ben."
+    },
+    {
+      "day": 1,
+      "by": "ben",
+      "text": "Me? I was asleep all night!"
+    },
+    {
+      "day": 1,
+      "by": "eli",
+      "text": "Cy has been really quiet today…"
+    },
+    {
+      "day": 1,
+      "by": "hal",
+      "text": "Ben, where were you last night?"
+    }
+  ],
+  "votes": {},
+  "runoff": null,
+  "verdict": null,
+  "lastWords": null,
+  "hunterPending": null,
+  "hunterFrom": null,
+  "shot": "cy",
+  "step": 0,
+  "stepAt": 1700000199240,
+  "dayEndsAt": null,
+  "beats": [],
+  "winner": "village",
+  "reason": "wolvesGone",
+  "nights": [
+    {
+      "night": 1,
+      "picks": {
+        "ben": "dee",
+        "cy": "dee",
+        "ana": "ben",
+        "dee": "cy",
+        "hal": "ben"
+      },
+      "victim": "dee",
+      "saved": false
+    },
+    {
+      "night": 2,
+      "picks": {
+        "cy": "fay",
+        "eli": "hal"
+      },
+      "victim": "fay",
+      "saved": false
+    }
+  ],
+  "days": [
+    {
+      "day": 1,
+      "ballots": [
+        {
+          "by": "ana",
+          "target": "ben"
+        },
+        {
+          "by": "eli",
+          "target": "ben"
+        },
+        {
+          "by": "fay",
+          "target": "cy"
+        },
+        {
+          "by": "hal",
+          "target": "ben"
+        }
+      ],
+      "out": "ben",
+      "board": [
+        {
+          "by": "ana",
+          "text": "I have a strong feeling about Ben."
+        },
+        {
+          "by": "ben",
+          "text": "Me? I was asleep all night!"
+        },
+        {
+          "by": "eli",
+          "text": "Cy has been really quiet today…"
+        },
+        {
+          "by": "hal",
+          "text": "Ben, where were you last night?"
+        }
+      ]
+    }
+  ],
+  "stats": {
+    "ana": {
+      "votesOnWolves": 1,
+      "votesReceived": 0,
+      "daysAlive": 1,
+      "saves": 0,
+      "wolvesFound": 1
+    },
+    "ben": {
+      "votesOnWolves": 0,
+      "votesReceived": 3,
+      "daysAlive": 1,
+      "saves": 0,
+      "wolvesFound": 0
+    },
+    "cy": {
+      "votesOnWolves": 0,
+      "votesReceived": 1,
+      "daysAlive": 1,
+      "saves": 0,
+      "wolvesFound": 0
+    },
+    "dee": {
+      "votesOnWolves": 0,
+      "votesReceived": 0,
+      "daysAlive": 0,
+      "saves": 0,
+      "wolvesFound": 0
+    },
+    "eli": {
+      "votesOnWolves": 1,
+      "votesReceived": 0,
+      "daysAlive": 1,
+      "saves": 0,
+      "wolvesFound": 0
+    },
+    "fay": {
+      "votesOnWolves": 1,
+      "votesReceived": 0,
+      "daysAlive": 1,
+      "saves": 0,
+      "wolvesFound": 0
+    },
+    "gus": {
+      "votesOnWolves": 0,
+      "votesReceived": 0,
+      "daysAlive": 1,
+      "saves": 0,
+      "wolvesFound": 0
+    },
+    "hal": {
+      "votesOnWolves": 1,
+      "votesReceived": 0,
+      "daysAlive": 1,
+      "saves": 0,
+      "wolvesFound": 0
+    }
+  },
+  "speechMs": {},
+  "ghostsDay": 1
+}

@@ -1,0 +1,170 @@
+{
+  "village": {
+    "roles": {
+      "wolf": {
+        "name": "Wolf",
+        "plural": "Wolves",
+        "icon": "🐺",
+        "desc": "Each night, choose a victim with your pack.",
+        "reveal": "A wolf!"
+      },
+      "seer": {
+        "name": "Seer",
+        "plural": "Seers",
+        "icon": "🔮",
+        "desc": "Each night, check one player: wolf or not.",
+        "reveal": "The seer."
+      },
+      "doctor": {
+        "name": "Doctor",
+        "plural": "Doctors",
+        "icon": "🩺",
+        "desc": "Each night, protect one player from the wolves.",
+        "reveal": "The doctor."
+      },
+      "villager": {
+        "name": "Villager",
+        "plural": "Villagers",
+        "icon": "🧑‍🌾",
+        "desc": "Find the wolves and vote them out.",
+        "reveal": "A villager."
+      },
+      "hunter": {
+        "name": "Hunter",
+        "plural": "Hunters",
+        "icon": "🏹",
+        "desc": "When you die, take someone with you.",
+        "reveal": "The hunter."
+      },
+      "jester": {
+        "name": "Jester",
+        "plural": "Jesters",
+        "icon": "🃏",
+        "desc": "Get the village to vote you out, and you win.",
+        "reveal": "The jester!"
+      }
+    },
+    "sides": { "wolves": "The wolves", "village": "The village", "jester": "The jester" },
+    "words": {
+      "aWolf": "a wolf",
+      "wolves": "the wolves",
+      "seer": "seer",
+      "villager": "villager",
+      "question": "Who's a wolf?",
+      "pack": "Your pack",
+      "packPicks": "Pack picks",
+      "isWolf": "{name} is a WOLF",
+      "notWolf": "{name} is not a wolf",
+      "packChose": "The pack chose {name}",
+      "victim": "Choose tonight's victim",
+      "packmate": "That's your packmate!"
+    },
+    "narrator": {
+      "nightFalls": "Night falls. Everyone, look at your phone.",
+      "sleeps": "The village sleeps.",
+      "dawn": "Dawn breaks.",
+      "survived": "Everyone survived the night!",
+      "discuss": "Discuss. Who's a wolf?",
+      "vote": "Time to vote.",
+      "votesIn": "The votes are in.",
+      "tie": "It's a tie. Vote again.",
+      "noAgree": "The village couldn't agree.",
+      "hunter": "The hunter takes aim…",
+      "ghosts": "Ghosts, stay silent.",
+      "wolvesWin": "The wolves win.",
+      "villageWin": "The village wins!",
+      "jesterWin": "The jester fooled you all!"
+    },
+    "live": {
+      "died": "{name} did not survive the night.",
+      "was": "{name} was…",
+      "left": "{name} packed up and left the village.",
+      "shot": "The hunter took {name} down.",
+      "lastWords": "{name}'s last words."
+    }
+  },
+  "mafia": {
+    "roles": {
+      "wolf": {
+        "name": "Mafia",
+        "plural": "Mafia",
+        "icon": "🕴️",
+        "desc": "Each night, choose a target with your family.",
+        "reveal": "The mafia!"
+      },
+      "seer": {
+        "name": "Detective",
+        "plural": "Detectives",
+        "icon": "🕵️",
+        "desc": "Each night, investigate one player: mafia or not.",
+        "reveal": "The detective."
+      },
+      "doctor": {
+        "name": "Doctor",
+        "plural": "Doctors",
+        "icon": "🩺",
+        "desc": "Each night, protect one player from the mafia.",
+        "reveal": "The doctor."
+      },
+      "villager": {
+        "name": "Townsperson",
+        "plural": "Townspeople",
+        "icon": "🏙️",
+        "desc": "Find the mafia and vote them out.",
+        "reveal": "A townsperson."
+      },
+      "hunter": {
+        "name": "Vigilante",
+        "plural": "Vigilantes",
+        "icon": "🎯",
+        "desc": "When you die, take someone with you.",
+        "reveal": "The vigilante."
+      },
+      "jester": {
+        "name": "Jester",
+        "plural": "Jesters",
+        "icon": "🃏",
+        "desc": "Get the town to vote you out, and you win.",
+        "reveal": "The jester!"
+      }
+    },
+    "sides": { "wolves": "The mafia", "village": "The town", "jester": "The jester" },
+    "words": {
+      "aWolf": "in the mafia",
+      "wolves": "the mafia",
+      "seer": "detective",
+      "villager": "townsperson",
+      "question": "Who's in the mafia?",
+      "pack": "Your family",
+      "packPicks": "Family picks",
+      "isWolf": "{name} is MAFIA",
+      "notWolf": "{name} is not mafia",
+      "packChose": "The family chose {name}",
+      "victim": "Choose tonight's target",
+      "packmate": "That's your family!"
+    },
+    "narrator": {
+      "nightFalls": "Night falls. Everyone, look at your phone.",
+      "sleeps": "The town sleeps.",
+      "dawn": "Dawn breaks.",
+      "survived": "Everyone survived the night!",
+      "discuss": "Discuss. Who's in the mafia?",
+      "vote": "Time to vote.",
+      "votesIn": "The votes are in.",
+      "tie": "It's a tie. Vote again.",
+      "noAgree": "The town couldn't agree.",
+      "hunter": "The vigilante takes aim…",
+      "ghosts": "Ghosts, stay silent.",
+      "wolvesWin": "The mafia wins.",
+      "villageWin": "The town wins!",
+      "jesterWin": "The jester fooled you all!"
+    },
+    "live": {
+      "died": "{name} did not survive the night.",
+      "was": "{name} was…",
+      "left": "{name} packed up and left town.",
+      "shot": "The vigilante took {name} down.",
+      "lastWords": "{name}'s last words."
+    }
+  }
+}

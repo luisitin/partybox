@@ -1,0 +1,180 @@
+{
+  "phase": {
+    "id": "roles",
+    "startedAt": 1700000000000,
+    "deadline": 1700000020000
+  },
+  "rng": {
+    "seed": 1,
+    "step": 7
+  },
+  "players": {
+    "ana": {
+      "id": "ana",
+      "name": "Ana",
+      "avatarId": "face0",
+      "connected": true
+    },
+    "ben": {
+      "id": "ben",
+      "name": "Ben",
+      "avatarId": "face1",
+      "connected": true
+    },
+    "cy": {
+      "id": "cy",
+      "name": "Cy",
+      "avatarId": "face2",
+      "connected": true
+    },
+    "dee": {
+      "id": "dee",
+      "name": "Dee",
+      "avatarId": "face3",
+      "connected": true
+    },
+    "eli": {
+      "id": "eli",
+      "name": "Eli",
+      "avatarId": "face4",
+      "connected": true
+    },
+    "fay": {
+      "id": "fay",
+      "name": "Fay",
+      "avatarId": "face5",
+      "connected": true
+    },
+    "gus": {
+      "id": "gus",
+      "name": "Gus",
+      "avatarId": "face6",
+      "connected": true
+    },
+    "hal": {
+      "id": "hal",
+      "name": "Hal",
+      "avatarId": "face7",
+      "connected": true
+    }
+  },
+  "cfg": {
+    "flavour": "village",
+    "wolves": 0,
+    "seer": true,
+    "doctor": true,
+    "hunter": true,
+    "jester": true,
+    "revealRoles": true,
+    "ghostsSeeAll": false,
+    "hunches": true,
+    "townBoard": true,
+    "nightSeconds": 45,
+    "daySeconds": 150,
+    "voteSeconds": 30,
+    "maxDays": 6,
+    "reader": "none"
+  },
+  "presence": {
+    "mode": "remote-text",
+    "phoneOnly": false
+  },
+  "seats": ["ana", "ben", "cy", "dee", "eli", "fay", "gus", "hal"],
+  "roles": {
+    "ana": "seer",
+    "ben": "wolf",
+    "cy": "wolf",
+    "dee": "villager",
+    "eli": "doctor",
+    "fay": "hunter",
+    "gus": "jester",
+    "hal": "villager"
+  },
+  "alive": ["ana", "ben", "cy", "dee", "eli", "fay", "gus", "hal"],
+  "dead": [],
+  "leaving": [],
+  "day": 0,
+  "ready": ["ana", "ben"],
+  "picks": {},
+  "lastProtected": null,
+  "victim": null,
+  "saved": false,
+  "tally": [],
+  "seerLog": [],
+  "board": [],
+  "votes": {},
+  "runoff": null,
+  "verdict": null,
+  "lastWords": null,
+  "hunterPending": null,
+  "hunterFrom": null,
+  "shot": null,
+  "step": 0,
+  "stepAt": 1700000000000,
+  "dayEndsAt": null,
+  "beats": [],
+  "winner": null,
+  "reason": null,
+  "nights": [],
+  "days": [],
+  "stats": {
+    "ana": {
+      "votesOnWolves": 0,
+      "votesReceived": 0,
+      "daysAlive": 0,
+      "saves": 0,
+      "wolvesFound": 0
+    },
+    "ben": {
+      "votesOnWolves": 0,
+      "votesReceived": 0,
+      "daysAlive": 0,
+      "saves": 0,
+      "wolvesFound": 0
+    },
+    "cy": {
+      "votesOnWolves": 0,
+      "votesReceived": 0,
+      "daysAlive": 0,
+      "saves": 0,
+      "wolvesFound": 0
+    },
+    "dee": {
+      "votesOnWolves": 0,
+      "votesReceived": 0,
+      "daysAlive": 0,
+      "saves": 0,
+      "wolvesFound": 0
+    },
+    "eli": {
+      "votesOnWolves": 0,
+      "votesReceived": 0,
+      "daysAlive": 0,
+      "saves": 0,
+      "wolvesFound": 0
+    },
+    "fay": {
+      "votesOnWolves": 0,
+      "votesReceived": 0,
+      "daysAlive": 0,
+      "saves": 0,
+      "wolvesFound": 0
+    },
+    "gus": {
+      "votesOnWolves": 0,
+      "votesReceived": 0,
+      "daysAlive": 0,
+      "saves": 0,
+      "wolvesFound": 0
+    },
+    "hal": {
+      "votesOnWolves": 0,
+      "votesReceived": 0,
+      "daysAlive": 0,
+      "saves": 0,
+      "wolvesFound": 0
+    }
+  },
+  "speechMs": {},
+  "ghostsDay": null
+}
