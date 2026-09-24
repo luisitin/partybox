@@ -1,0 +1,11 @@
+PASS mash: a double tap keeps the row placed (2 placed)
+PASS long-press: no text selected ("")
+PASS drags place nothing (3 vs 3)
+PASS drags scroll nothing (0px)
+PASS pinch / double-tap: no zoom (scale 1)
+PASS after every gesture the rows are exactly where they were (0,0 0,0 0,0 0,0 0,0)
+PASS all five placed
+PASS triple-tap Lock sends once (1 sent)
+PASS server holds the order (owl,knock,sneeze,stair,giggle)
+PASS Change + relock replaces the order (knock,sneeze,stair,giggle,owl)
+PASS sideways: nothing wider than the screen

@@ -66,5 +66,10 @@ export const STRINGS: Strings = {
     you: 'tú',
     bot: 'bot',
     remove: 'quitar',
+    // OrderPicker
+    Reset: 'Borrar',
+    '{label}: number {n}. Tap to take it out.': '{label}: número {n}. Toca para quitarlo.',
+    '{label}: not placed. Tap to make it number {n}.':
+      '{label}: sin número. Toca para darle el número {n}.',
   },
 };

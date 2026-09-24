@@ -1,0 +1,4652 @@
+[
+  {
+    "id": "hr-food-100",
+    "kind": "preference",
+    "prompt": "Tastiest to grossest pizza topping",
+    "say": "Rank these pizza toppings, from tastiest to grossest.",
+    "top": "Tastiest",
+    "bottom": "Grossest",
+    "items": [
+      {
+        "id": "pineapple",
+        "label": "Pineapple"
+      },
+      {
+        "id": "pepperoni",
+        "label": "Pepperoni"
+      },
+      {
+        "id": "anchovy",
+        "label": "Anchovies"
+      },
+      {
+        "id": "cheese",
+        "label": "Extra cheese"
+      },
+      {
+        "id": "mushroom",
+        "label": "Mushrooms"
+      }
+    ],
+    "expected": ["pepperoni", "cheese", "mushroom", "pineapple", "anchovy"]
+  },
+  {
+    "id": "hr-food-101",
+    "kind": "preference",
+    "prompt": "Best to worst breakfast",
+    "say": "Rank these breakfasts, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "oatmeal",
+        "label": "Oatmeal"
+      },
+      {
+        "id": "pizza",
+        "label": "Leftover pizza"
+      },
+      {
+        "id": "pancakes",
+        "label": "Pancakes"
+      },
+      {
+        "id": "cereal",
+        "label": "Cold cereal"
+      },
+      {
+        "id": "bacon",
+        "label": "Bacon and eggs"
+      }
+    ],
+    "expected": ["pancakes", "bacon", "pizza", "cereal", "oatmeal"]
+  },
+  {
+    "id": "hr-food-102",
+    "kind": "preference",
+    "prompt": "Best to worst ice cream flavor",
+    "say": "Rank these ice cream flavors, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "mint",
+        "label": "Mint chip"
+      },
+      {
+        "id": "vanilla",
+        "label": "Vanilla"
+      },
+      {
+        "id": "dough",
+        "label": "Cookie dough"
+      },
+      {
+        "id": "pistachio",
+        "label": "Pistachio"
+      },
+      {
+        "id": "choc",
+        "label": "Chocolate"
+      }
+    ],
+    "expected": ["dough", "choc", "mint", "vanilla", "pistachio"]
+  },
+  {
+    "id": "hr-food-103",
+    "kind": "preference",
+    "prompt": "Best to worst lunchbox sandwich",
+    "say": "Rank these lunchbox sandwiches, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "tuna",
+        "label": "Tuna salad"
+      },
+      {
+        "id": "grilled",
+        "label": "Grilled cheese"
+      },
+      {
+        "id": "eggsalad",
+        "label": "Egg salad"
+      },
+      {
+        "id": "hamch",
+        "label": "Ham and cheese"
+      },
+      {
+        "id": "club",
+        "label": "Turkey club"
+      }
+    ],
+    "expected": ["grilled", "club", "hamch", "tuna", "eggsalad"]
+  },
+  {
+    "id": "hr-food-104",
+    "kind": "preference",
+    "prompt": "Best to worst birthday cake",
+    "say": "Rank these birthday cakes, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "carrot",
+        "label": "Carrot cake"
+      },
+      {
+        "id": "icecream",
+        "label": "Ice cream cake"
+      },
+      {
+        "id": "fruitcake",
+        "label": "Fruitcake"
+      },
+      {
+        "id": "choc",
+        "label": "Chocolate cake"
+      },
+      {
+        "id": "cheese",
+        "label": "Cheesecake"
+      }
+    ],
+    "expected": ["choc", "icecream", "cheese", "carrot", "fruitcake"]
+  },
+  {
+    "id": "hr-food-105",
+    "kind": "preference",
+    "prompt": "Coziest to least cozy hot drink",
+    "say": "Rank these hot drinks, from coziest to least cozy.",
+    "top": "Coziest",
+    "bottom": "Least cozy",
+    "items": [
+      {
+        "id": "tea",
+        "label": "Tea"
+      },
+      {
+        "id": "lemon",
+        "label": "Hot lemon water"
+      },
+      {
+        "id": "cocoa",
+        "label": "Hot chocolate"
+      },
+      {
+        "id": "milk",
+        "label": "Warm milk"
+      },
+      {
+        "id": "coffee",
+        "label": "Coffee"
+      }
+    ],
+    "expected": ["cocoa", "tea", "coffee", "milk", "lemon"]
+  },
+  {
+    "id": "hr-food-106",
+    "kind": "preference",
+    "prompt": "Best to worst movie snack",
+    "say": "Rank these movie snacks, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "nachos",
+        "label": "Nachos"
+      },
+      {
+        "id": "celery",
+        "label": "Celery sticks"
+      },
+      {
+        "id": "popcorn",
+        "label": "Popcorn"
+      },
+      {
+        "id": "hotdog",
+        "label": "Hot dog"
+      },
+      {
+        "id": "gummy",
+        "label": "Gummy candy"
+      }
+    ],
+    "expected": ["popcorn", "gummy", "nachos", "hotdog", "celery"]
+  },
+  {
+    "id": "hr-food-107",
+    "kind": "preference",
+    "prompt": "Best to worst campfire food",
+    "say": "Rank these campfire foods, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "corn",
+        "label": "Roasted corn"
+      },
+      {
+        "id": "smores",
+        "label": "S'mores"
+      },
+      {
+        "id": "beans",
+        "label": "Baked beans"
+      },
+      {
+        "id": "chili",
+        "label": "Campfire chili"
+      },
+      {
+        "id": "potato",
+        "label": "Foil potatoes"
+      }
+    ],
+    "expected": ["smores", "corn", "chili", "potato", "beans"]
+  },
+  {
+    "id": "hr-food-108",
+    "kind": "preference",
+    "prompt": "Best to worst dessert",
+    "say": "Rank these desserts, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "fruit",
+        "label": "Fruit salad"
+      },
+      {
+        "id": "brownie",
+        "label": "Brownies"
+      },
+      {
+        "id": "pudding",
+        "label": "Rice pudding"
+      },
+      {
+        "id": "split",
+        "label": "Banana split"
+      },
+      {
+        "id": "pie",
+        "label": "Apple pie"
+      }
+    ],
+    "expected": ["brownie", "split", "pie", "fruit", "pudding"]
+  },
+  {
+    "id": "hr-food-109",
+    "kind": "preference",
+    "prompt": "Best to worst fruit",
+    "say": "Rank these fruits, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "banana",
+        "label": "Banana"
+      },
+      {
+        "id": "grapefr",
+        "label": "Grapefruit"
+      },
+      {
+        "id": "straw",
+        "label": "Strawberries"
+      },
+      {
+        "id": "mango",
+        "label": "Mango"
+      },
+      {
+        "id": "melon",
+        "label": "Watermelon"
+      }
+    ],
+    "expected": ["straw", "melon", "mango", "banana", "grapefr"]
+  },
+  {
+    "id": "hr-food-110",
+    "kind": "preference",
+    "prompt": "Tastiest to yuckiest vegetable",
+    "say": "Rank these vegetables, from tastiest to yuckiest.",
+    "top": "Tastiest",
+    "bottom": "Yuckiest",
+    "items": [
+      {
+        "id": "beets",
+        "label": "Beets"
+      },
+      {
+        "id": "carrots",
+        "label": "Carrots"
+      },
+      {
+        "id": "sprouts",
+        "label": "Brussels sprouts"
+      },
+      {
+        "id": "corn",
+        "label": "Corn"
+      },
+      {
+        "id": "broccoli",
+        "label": "Broccoli"
+      }
+    ],
+    "expected": ["corn", "carrots", "broccoli", "sprouts", "beets"]
+  },
+  {
+    "id": "hr-food-111",
+    "kind": "preference",
+    "prompt": "Best to worst soup on a cold day",
+    "say": "Rank these soups for a cold day, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "splitpea",
+        "label": "Split pea"
+      },
+      {
+        "id": "chicken",
+        "label": "Chicken noodle"
+      },
+      {
+        "id": "gazpacho",
+        "label": "Cold gazpacho"
+      },
+      {
+        "id": "tomato",
+        "label": "Tomato soup"
+      },
+      {
+        "id": "potato",
+        "label": "Potato soup"
+      }
+    ],
+    "expected": ["chicken", "tomato", "potato", "splitpea", "gazpacho"]
+  },
+  {
+    "id": "hr-food-112",
+    "kind": "preference",
+    "prompt": "Best to worst holiday cookie",
+    "say": "Rank these holiday cookies, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "shortbr",
+        "label": "Shortbread"
+      },
+      {
+        "id": "ginger",
+        "label": "Gingerbread man"
+      },
+      {
+        "id": "raisin",
+        "label": "Oatmeal raisin"
+      },
+      {
+        "id": "sugar",
+        "label": "Sugar cookie"
+      },
+      {
+        "id": "snicker",
+        "label": "Snickerdoodle"
+      }
+    ],
+    "expected": ["sugar", "snicker", "ginger", "shortbr", "raisin"]
+  },
+  {
+    "id": "hr-holiday-113",
+    "kind": "preference",
+    "prompt": "Best to worst day to celebrate",
+    "say": "Rank these special days, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "fools",
+        "label": "April Fools' Day"
+      },
+      {
+        "id": "halloween",
+        "label": "Halloween"
+      },
+      {
+        "id": "valentine",
+        "label": "Valentine's Day"
+      },
+      {
+        "id": "bday",
+        "label": "Your birthday"
+      },
+      {
+        "id": "newyear",
+        "label": "New Year's Eve"
+      }
+    ],
+    "expected": ["bday", "halloween", "newyear", "valentine", "fools"]
+  },
+  {
+    "id": "hr-time-114",
+    "kind": "preference",
+    "prompt": "Best to worst month for a birthday",
+    "say": "Rank these months for a birthday, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "feb",
+        "label": "February"
+      },
+      {
+        "id": "oct",
+        "label": "October"
+      },
+      {
+        "id": "jan",
+        "label": "January"
+      },
+      {
+        "id": "june",
+        "label": "June"
+      },
+      {
+        "id": "dec",
+        "label": "December"
+      }
+    ],
+    "expected": ["june", "oct", "feb", "jan", "dec"]
+  },
+  {
+    "id": "hr-weather-115",
+    "kind": "preference",
+    "prompt": "Coziest to least cozy weather to stay in",
+    "say": "Rank this weather for staying indoors, from coziest to least cozy.",
+    "top": "Coziest",
+    "bottom": "Least cozy",
+    "items": [
+      {
+        "id": "heat",
+        "label": "Heat wave"
+      },
+      {
+        "id": "thunder",
+        "label": "Thunderstorm"
+      },
+      {
+        "id": "fog",
+        "label": "Foggy morning"
+      },
+      {
+        "id": "snow",
+        "label": "Snowfall"
+      },
+      {
+        "id": "rain",
+        "label": "Gentle rain"
+      }
+    ],
+    "expected": ["snow", "rain", "thunder", "fog", "heat"]
+  },
+  {
+    "id": "hr-weather-116",
+    "kind": "preference",
+    "prompt": "Most fun to least fun weather to play in",
+    "say": "Rank this weather for playing outside, from most fun to least fun.",
+    "top": "Most fun",
+    "bottom": "Least fun",
+    "items": [
+      {
+        "id": "wind",
+        "label": "Windy day"
+      },
+      {
+        "id": "snow",
+        "label": "Fresh snow"
+      },
+      {
+        "id": "fog",
+        "label": "Thick fog"
+      },
+      {
+        "id": "sunny",
+        "label": "Sunny and warm"
+      },
+      {
+        "id": "rain",
+        "label": "Summer rain"
+      }
+    ],
+    "expected": ["snow", "sunny", "rain", "wind", "fog"]
+  },
+  {
+    "id": "hr-travel-117",
+    "kind": "preference",
+    "prompt": "Best to worst way to travel",
+    "say": "Rank these ways to travel, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "cruise",
+        "label": "Cruise ship"
+      },
+      {
+        "id": "bus",
+        "label": "Long bus ride"
+      },
+      {
+        "id": "train",
+        "label": "Train"
+      },
+      {
+        "id": "road",
+        "label": "Road trip"
+      },
+      {
+        "id": "plane",
+        "label": "Airplane"
+      }
+    ],
+    "expected": ["road", "plane", "train", "cruise", "bus"]
+  },
+  {
+    "id": "hr-travel-118",
+    "kind": "preference",
+    "prompt": "Best to worst seat on a plane",
+    "say": "Rank these airplane seats, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "middle",
+        "label": "Middle seat"
+      },
+      {
+        "id": "exit",
+        "label": "Exit row"
+      },
+      {
+        "id": "window",
+        "label": "Window seat"
+      },
+      {
+        "id": "restroom",
+        "label": "Back by the restroom"
+      },
+      {
+        "id": "aisle",
+        "label": "Aisle seat"
+      }
+    ],
+    "expected": ["window", "exit", "aisle", "middle", "restroom"]
+  },
+  {
+    "id": "hr-vacation-119",
+    "kind": "preference",
+    "prompt": "Best to worst family vacation",
+    "say": "Rank these family vacations, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "camping",
+        "label": "Camping trip"
+      },
+      {
+        "id": "ski",
+        "label": "Ski trip"
+      },
+      {
+        "id": "beach",
+        "label": "Beach resort"
+      },
+      {
+        "id": "relatives",
+        "label": "Visiting relatives"
+      },
+      {
+        "id": "park",
+        "label": "Theme park"
+      }
+    ],
+    "expected": ["beach", "park", "ski", "camping", "relatives"]
+  },
+  {
+    "id": "hr-vacation-120",
+    "kind": "preference",
+    "prompt": "Best to worst vacation souvenir",
+    "say": "Rank these vacation souvenirs, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "magnet",
+        "label": "Fridge magnet"
+      },
+      {
+        "id": "rock",
+        "label": "A rock you found"
+      },
+      {
+        "id": "globe",
+        "label": "Snow globe"
+      },
+      {
+        "id": "keychain",
+        "label": "Keychain"
+      },
+      {
+        "id": "tshirt",
+        "label": "T-shirt"
+      }
+    ],
+    "expected": ["tshirt", "globe", "magnet", "rock", "keychain"]
+  },
+  {
+    "id": "hr-home-121",
+    "kind": "preference",
+    "prompt": "Best to worst room in a house",
+    "say": "Rank these rooms, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "bath",
+        "label": "Bathroom"
+      },
+      {
+        "id": "kitchen",
+        "label": "Kitchen"
+      },
+      {
+        "id": "basement",
+        "label": "Basement"
+      },
+      {
+        "id": "bedroom",
+        "label": "Bedroom"
+      },
+      {
+        "id": "living",
+        "label": "Living room"
+      }
+    ],
+    "expected": ["bedroom", "living", "kitchen", "bath", "basement"]
+  },
+  {
+    "id": "hr-home-122",
+    "kind": "preference",
+    "prompt": "Least awful to worst household chore",
+    "say": "Rank these chores, from least awful to worst.",
+    "top": "Least awful",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "dishes",
+        "label": "Washing dishes"
+      },
+      {
+        "id": "toilet",
+        "label": "Cleaning the toilet"
+      },
+      {
+        "id": "cooking",
+        "label": "Cooking dinner"
+      },
+      {
+        "id": "vacuum",
+        "label": "Vacuuming"
+      },
+      {
+        "id": "laundry",
+        "label": "Folding laundry"
+      }
+    ],
+    "expected": ["cooking", "vacuum", "laundry", "dishes", "toilet"]
+  },
+  {
+    "id": "hr-home-123",
+    "kind": "preference",
+    "prompt": "Coziest to least cozy spot to read",
+    "say": "Rank these reading spots, from coziest to least cozy.",
+    "top": "Coziest",
+    "bottom": "Least cozy",
+    "items": [
+      {
+        "id": "hammock",
+        "label": "Hammock"
+      },
+      {
+        "id": "table",
+        "label": "Kitchen table"
+      },
+      {
+        "id": "bed",
+        "label": "Bed"
+      },
+      {
+        "id": "bathtub",
+        "label": "Bathtub"
+      },
+      {
+        "id": "couch",
+        "label": "Couch"
+      }
+    ],
+    "expected": ["bed", "couch", "hammock", "bathtub", "table"]
+  },
+  {
+    "id": "hr-music-124",
+    "kind": "preference",
+    "prompt": "Most fun to least fun instrument to play",
+    "say": "Rank these instruments, from most fun to least fun to play.",
+    "top": "Most fun",
+    "bottom": "Least fun",
+    "items": [
+      {
+        "id": "piano",
+        "label": "Piano"
+      },
+      {
+        "id": "triangle",
+        "label": "Triangle"
+      },
+      {
+        "id": "drums",
+        "label": "Drums"
+      },
+      {
+        "id": "tuba",
+        "label": "Tuba"
+      },
+      {
+        "id": "guitar",
+        "label": "Guitar"
+      }
+    ],
+    "expected": ["drums", "guitar", "piano", "tuba", "triangle"]
+  },
+  {
+    "id": "hr-music-125",
+    "kind": "preference",
+    "prompt": "Best to worst music for a road trip",
+    "say": "Rank these kinds of music for a road trip, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "country",
+        "label": "Country"
+      },
+      {
+        "id": "elevator",
+        "label": "Elevator music"
+      },
+      {
+        "id": "pop",
+        "label": "Pop hits"
+      },
+      {
+        "id": "classical",
+        "label": "Classical"
+      },
+      {
+        "id": "rock",
+        "label": "Rock"
+      }
+    ],
+    "expected": ["pop", "rock", "country", "classical", "elevator"]
+  },
+  {
+    "id": "hr-hobby-126",
+    "kind": "preference",
+    "prompt": "Most to least relaxing hobby",
+    "say": "Rank these hobbies, from most relaxing to least relaxing.",
+    "top": "Most chill",
+    "bottom": "Least chill",
+    "items": [
+      {
+        "id": "knitting",
+        "label": "Knitting"
+      },
+      {
+        "id": "skydive",
+        "label": "Skydiving"
+      },
+      {
+        "id": "fishing",
+        "label": "Fishing"
+      },
+      {
+        "id": "puzzle",
+        "label": "Jigsaw puzzles"
+      },
+      {
+        "id": "garden",
+        "label": "Gardening"
+      }
+    ],
+    "expected": ["fishing", "garden", "puzzle", "knitting", "skydive"]
+  },
+  {
+    "id": "hr-hobby-127",
+    "kind": "preference",
+    "prompt": "Best to worst thing to collect",
+    "say": "Rank these things to collect, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "stamps",
+        "label": "Stamps"
+      },
+      {
+        "id": "ducks",
+        "label": "Rubber ducks"
+      },
+      {
+        "id": "coins",
+        "label": "Coins"
+      },
+      {
+        "id": "rocks",
+        "label": "Cool rocks"
+      },
+      {
+        "id": "cards",
+        "label": "Trading cards"
+      }
+    ],
+    "expected": ["cards", "coins", "ducks", "rocks", "stamps"]
+  },
+  {
+    "id": "hr-school-128",
+    "kind": "preference",
+    "prompt": "Best to worst school subject",
+    "say": "Rank these school subjects, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "history",
+        "label": "History"
+      },
+      {
+        "id": "art",
+        "label": "Art"
+      },
+      {
+        "id": "math",
+        "label": "Math"
+      },
+      {
+        "id": "music",
+        "label": "Music"
+      },
+      {
+        "id": "science",
+        "label": "Science"
+      }
+    ],
+    "expected": ["art", "science", "music", "history", "math"]
+  },
+  {
+    "id": "hr-school-129",
+    "kind": "preference",
+    "prompt": "Best to worst part of the school day",
+    "say": "Rank these parts of the school day, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "quiz",
+        "label": "Pop quiz"
+      },
+      {
+        "id": "lunch",
+        "label": "Lunch"
+      },
+      {
+        "id": "group",
+        "label": "Group project"
+      },
+      {
+        "id": "recess",
+        "label": "Recess"
+      },
+      {
+        "id": "bell",
+        "label": "The last bell"
+      }
+    ],
+    "expected": ["recess", "bell", "lunch", "group", "quiz"]
+  },
+  {
+    "id": "hr-school-130",
+    "kind": "preference",
+    "prompt": "Coolest to least cool school supply",
+    "say": "Rank these school supplies, from coolest to least cool.",
+    "top": "Coolest",
+    "bottom": "Least cool",
+    "items": [
+      {
+        "id": "eraser",
+        "label": "Eraser"
+      },
+      {
+        "id": "glitter",
+        "label": "Glitter pens"
+      },
+      {
+        "id": "protract",
+        "label": "Protractor"
+      },
+      {
+        "id": "markers",
+        "label": "Scented markers"
+      },
+      {
+        "id": "crayons",
+        "label": "New crayons"
+      }
+    ],
+    "expected": ["markers", "glitter", "crayons", "eraser", "protract"]
+  },
+  {
+    "id": "hr-animal-131",
+    "kind": "preference",
+    "prompt": "Best to worst family pet",
+    "say": "Rank these family pets, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "goldfish",
+        "label": "Goldfish"
+      },
+      {
+        "id": "cat",
+        "label": "Cat"
+      },
+      {
+        "id": "tarantula",
+        "label": "Tarantula"
+      },
+      {
+        "id": "dog",
+        "label": "Dog"
+      },
+      {
+        "id": "hamster",
+        "label": "Hamster"
+      }
+    ],
+    "expected": ["dog", "cat", "hamster", "goldfish", "tarantula"]
+  },
+  {
+    "id": "hr-animal-132",
+    "kind": "preference",
+    "prompt": "Cutest to least cute baby animal",
+    "say": "Rank these baby animals, from cutest to least cute.",
+    "top": "Cutest",
+    "bottom": "Least cute",
+    "items": [
+      {
+        "id": "piglet",
+        "label": "Piglet"
+      },
+      {
+        "id": "puppy",
+        "label": "Puppy"
+      },
+      {
+        "id": "croc",
+        "label": "Baby crocodile"
+      },
+      {
+        "id": "duckling",
+        "label": "Duckling"
+      },
+      {
+        "id": "kitten",
+        "label": "Kitten"
+      }
+    ],
+    "expected": ["puppy", "kitten", "duckling", "piglet", "croc"]
+  },
+  {
+    "id": "hr-animal-133",
+    "kind": "preference",
+    "prompt": "Best to worst unusual pet",
+    "say": "Rank these unusual pets, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "goat",
+        "label": "Goat"
+      },
+      {
+        "id": "parrot",
+        "label": "Parrot"
+      },
+      {
+        "id": "llama",
+        "label": "Llama"
+      },
+      {
+        "id": "snake",
+        "label": "Snake"
+      },
+      {
+        "id": "pig",
+        "label": "Pet pig"
+      }
+    ],
+    "expected": ["parrot", "pig", "goat", "llama", "snake"]
+  },
+  {
+    "id": "hr-animal-134",
+    "kind": "preference",
+    "prompt": "Best to worst name for a dog",
+    "say": "Rank these dog names, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "steve",
+        "label": "Steve"
+      },
+      {
+        "id": "buddy",
+        "label": "Buddy"
+      },
+      {
+        "id": "dog",
+        "label": "Dog"
+      },
+      {
+        "id": "barks",
+        "label": "Sir Barks-a-Lot"
+      },
+      {
+        "id": "pickles",
+        "label": "Pickles"
+      }
+    ],
+    "expected": ["buddy", "barks", "pickles", "steve", "dog"]
+  },
+  {
+    "id": "hr-tech-135",
+    "kind": "preference",
+    "prompt": "Best to worst invention ever",
+    "say": "Rank these inventions, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "bread",
+        "label": "Sliced bread"
+      },
+      {
+        "id": "ac",
+        "label": "Air conditioning"
+      },
+      {
+        "id": "wrap",
+        "label": "Bubble wrap"
+      },
+      {
+        "id": "plumbing",
+        "label": "Indoor plumbing"
+      },
+      {
+        "id": "toaster",
+        "label": "Pop-up toaster"
+      }
+    ],
+    "expected": ["plumbing", "ac", "bread", "toaster", "wrap"]
+  },
+  {
+    "id": "hr-tech-136",
+    "kind": "preference",
+    "prompt": "Best to worst kitchen gadget",
+    "say": "Rank these kitchen gadgets, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "waffle",
+        "label": "Waffle maker"
+      },
+      {
+        "id": "eggslice",
+        "label": "Egg slicer"
+      },
+      {
+        "id": "microwave",
+        "label": "Microwave"
+      },
+      {
+        "id": "slowcook",
+        "label": "Slow cooker"
+      },
+      {
+        "id": "blender",
+        "label": "Blender"
+      }
+    ],
+    "expected": ["microwave", "blender", "waffle", "slowcook", "eggslice"]
+  },
+  {
+    "id": "hr-time-137",
+    "kind": "preference",
+    "prompt": "Best to worst day of the week",
+    "say": "Rank these days of the week, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "sunday",
+        "label": "Sunday"
+      },
+      {
+        "id": "monday",
+        "label": "Monday"
+      },
+      {
+        "id": "friday",
+        "label": "Friday"
+      },
+      {
+        "id": "thursday",
+        "label": "Thursday"
+      },
+      {
+        "id": "saturday",
+        "label": "Saturday"
+      }
+    ],
+    "expected": ["saturday", "friday", "sunday", "thursday", "monday"]
+  },
+  {
+    "id": "hr-time-138",
+    "kind": "preference",
+    "prompt": "Best to worst time of day",
+    "say": "Rank these times of day, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "midnight",
+        "label": "Midnight"
+      },
+      {
+        "id": "sunrise",
+        "label": "Sunrise"
+      },
+      {
+        "id": "threeam",
+        "label": "3 in the morning"
+      },
+      {
+        "id": "sunset",
+        "label": "Sunset"
+      },
+      {
+        "id": "lunch",
+        "label": "Lunchtime"
+      }
+    ],
+    "expected": ["sunset", "lunch", "sunrise", "midnight", "threeam"]
+  },
+  {
+    "id": "hr-clothes-139",
+    "kind": "preference",
+    "prompt": "Comfiest to least comfy outfit",
+    "say": "Rank these outfits, from comfiest to least comfy.",
+    "top": "Comfiest",
+    "bottom": "Least comfy",
+    "items": [
+      {
+        "id": "suit",
+        "label": "Suit and tie"
+      },
+      {
+        "id": "pajamas",
+        "label": "Pajamas"
+      },
+      {
+        "id": "armor",
+        "label": "Suit of armor"
+      },
+      {
+        "id": "jeans",
+        "label": "Jeans"
+      },
+      {
+        "id": "track",
+        "label": "Tracksuit"
+      }
+    ],
+    "expected": ["pajamas", "track", "jeans", "suit", "armor"]
+  },
+  {
+    "id": "hr-clothes-140",
+    "kind": "preference",
+    "prompt": "Best to worst hat",
+    "say": "Rank these hats, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "cowboy",
+        "label": "Cowboy hat"
+      },
+      {
+        "id": "cap",
+        "label": "Baseball cap"
+      },
+      {
+        "id": "propell",
+        "label": "Propeller hat"
+      },
+      {
+        "id": "beanie",
+        "label": "Beanie"
+      },
+      {
+        "id": "tophat",
+        "label": "Top hat"
+      }
+    ],
+    "expected": ["cap", "beanie", "cowboy", "tophat", "propell"]
+  },
+  {
+    "id": "hr-clothes-141",
+    "kind": "preference",
+    "prompt": "Best to worst shoes for a long walk",
+    "say": "Rank these shoes for a long walk, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "sandals",
+        "label": "Sandals"
+      },
+      {
+        "id": "slippers",
+        "label": "Fuzzy slippers"
+      },
+      {
+        "id": "sneakers",
+        "label": "Sneakers"
+      },
+      {
+        "id": "flipflop",
+        "label": "Flip-flops"
+      },
+      {
+        "id": "boots",
+        "label": "Hiking boots"
+      }
+    ],
+    "expected": ["sneakers", "boots", "sandals", "flipflop", "slippers"]
+  },
+  {
+    "id": "hr-game-142",
+    "kind": "preference",
+    "prompt": "Most fun to least fun party game",
+    "say": "Rank these party games, from most fun to least fun.",
+    "top": "Most fun",
+    "bottom": "Least fun",
+    "items": [
+      {
+        "id": "charades",
+        "label": "Charades"
+      },
+      {
+        "id": "pintail",
+        "label": "Pin the tail"
+      },
+      {
+        "id": "hide",
+        "label": "Hide and seek"
+      },
+      {
+        "id": "chairs",
+        "label": "Musical chairs"
+      },
+      {
+        "id": "tag",
+        "label": "Freeze tag"
+      }
+    ],
+    "expected": ["hide", "chairs", "charades", "tag", "pintail"]
+  },
+  {
+    "id": "hr-toy-143",
+    "kind": "preference",
+    "prompt": "Best to worst toy",
+    "say": "Rank these toys, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "kite",
+        "label": "Kite"
+      },
+      {
+        "id": "yoyo",
+        "label": "Yo-yo"
+      },
+      {
+        "id": "rccar",
+        "label": "Remote-control car"
+      },
+      {
+        "id": "top",
+        "label": "Spinning top"
+      },
+      {
+        "id": "blocks",
+        "label": "Building blocks"
+      }
+    ],
+    "expected": ["rccar", "blocks", "kite", "yoyo", "top"]
+  },
+  {
+    "id": "hr-smell-144",
+    "kind": "preference",
+    "prompt": "Best to worst smell",
+    "say": "Rank these smells, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "gas",
+        "label": "Gasoline"
+      },
+      {
+        "id": "rain",
+        "label": "Rain"
+      },
+      {
+        "id": "bread",
+        "label": "Fresh bread"
+      },
+      {
+        "id": "campfire",
+        "label": "Campfire"
+      },
+      {
+        "id": "grass",
+        "label": "Cut grass"
+      }
+    ],
+    "expected": ["bread", "rain", "grass", "campfire", "gas"]
+  },
+  {
+    "id": "hr-sound-145",
+    "kind": "preference",
+    "prompt": "Most to least relaxing sound",
+    "say": "Rank these sounds, from most relaxing to least relaxing.",
+    "top": "Calmest",
+    "bottom": "Least calm",
+    "items": [
+      {
+        "id": "purr",
+        "label": "Cat purring"
+      },
+      {
+        "id": "blower",
+        "label": "Leaf blower"
+      },
+      {
+        "id": "waves",
+        "label": "Ocean waves"
+      },
+      {
+        "id": "fire",
+        "label": "Crackling fire"
+      },
+      {
+        "id": "rain",
+        "label": "Rain on the roof"
+      }
+    ],
+    "expected": ["rain", "waves", "fire", "purr", "blower"]
+  },
+  {
+    "id": "hr-sound-146",
+    "kind": "preference",
+    "prompt": "Most to least annoying sound",
+    "say": "Rank these sounds, from most annoying to least annoying.",
+    "top": "Worst",
+    "bottom": "Mildest",
+    "items": [
+      {
+        "id": "door",
+        "label": "Squeaky door"
+      },
+      {
+        "id": "nails",
+        "label": "Nails on chalkboard"
+      },
+      {
+        "id": "chewing",
+        "label": "Loud chewing"
+      },
+      {
+        "id": "alarm",
+        "label": "Alarm clock"
+      },
+      {
+        "id": "mosquito",
+        "label": "Mosquito buzz"
+      }
+    ],
+    "expected": ["nails", "mosquito", "chewing", "alarm", "door"]
+  },
+  {
+    "id": "hr-color-147",
+    "kind": "preference",
+    "prompt": "Best to worst color for a car",
+    "say": "Rank these car colors, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "silver",
+        "label": "Silver"
+      },
+      {
+        "id": "lime",
+        "label": "Lime green"
+      },
+      {
+        "id": "red",
+        "label": "Red"
+      },
+      {
+        "id": "yellow",
+        "label": "Bright yellow"
+      },
+      {
+        "id": "black",
+        "label": "Black"
+      }
+    ],
+    "expected": ["black", "red", "silver", "yellow", "lime"]
+  },
+  {
+    "id": "hr-color-148",
+    "kind": "preference",
+    "prompt": "Best to worst color for a bedroom",
+    "say": "Rank these bedroom wall colors, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "orange",
+        "label": "Bright orange"
+      },
+      {
+        "id": "white",
+        "label": "White"
+      },
+      {
+        "id": "black",
+        "label": "Black"
+      },
+      {
+        "id": "blue",
+        "label": "Soft blue"
+      },
+      {
+        "id": "sage",
+        "label": "Sage green"
+      }
+    ],
+    "expected": ["blue", "sage", "white", "black", "orange"]
+  },
+  {
+    "id": "hr-season-149",
+    "kind": "preference",
+    "prompt": "Best to worst part of summer",
+    "say": "Rank these parts of summer, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "days",
+        "label": "Long days"
+      },
+      {
+        "id": "mosquito",
+        "label": "Mosquitoes"
+      },
+      {
+        "id": "noschool",
+        "label": "No school"
+      },
+      {
+        "id": "truck",
+        "label": "Ice cream truck"
+      },
+      {
+        "id": "swim",
+        "label": "Swimming"
+      }
+    ],
+    "expected": ["noschool", "swim", "truck", "days", "mosquito"]
+  },
+  {
+    "id": "hr-island-200",
+    "kind": "usefulness",
+    "prompt": "Most to least useful on a desert island",
+    "say": "Rank these from most to least useful on a desert island.",
+    "top": "Most useful",
+    "bottom": "Least useful",
+    "items": [
+      {
+        "id": "tramp",
+        "label": "A trampoline"
+      },
+      {
+        "id": "tarp",
+        "label": "A big tarp"
+      },
+      {
+        "id": "knife",
+        "label": "A pocketknife"
+      },
+      {
+        "id": "pot",
+        "label": "A cooking pot"
+      },
+      {
+        "id": "net",
+        "label": "A fishing net"
+      }
+    ],
+    "expected": ["knife", "net", "tarp", "pot", "tramp"]
+  },
+  {
+    "id": "hr-zombie-201",
+    "kind": "usefulness",
+    "prompt": "Most to least useful in a zombie outbreak",
+    "say": "Rank these from most to least useful in a zombie outbreak.",
+    "top": "Most useful",
+    "bottom": "Least useful",
+    "items": [
+      {
+        "id": "megaphone",
+        "label": "A megaphone"
+      },
+      {
+        "id": "bat",
+        "label": "A baseball bat"
+      },
+      {
+        "id": "leaf",
+        "label": "A leaf blower"
+      },
+      {
+        "id": "bike",
+        "label": "A bicycle"
+      },
+      {
+        "id": "beans",
+        "label": "A can of beans"
+      }
+    ],
+    "expected": ["bat", "bike", "beans", "leaf", "megaphone"]
+  },
+  {
+    "id": "hr-school-202",
+    "kind": "usefulness",
+    "prompt": "Most to least useful on your first school day",
+    "say": "Rank these from most to least useful on your first day at a new school.",
+    "top": "Most useful",
+    "bottom": "Least useful",
+    "items": [
+      {
+        "id": "pencil",
+        "label": "A spare pencil"
+      },
+      {
+        "id": "hamster",
+        "label": "A pet hamster"
+      },
+      {
+        "id": "smile",
+        "label": "A friendly smile"
+      },
+      {
+        "id": "backpack",
+        "label": "A cool backpack"
+      },
+      {
+        "id": "map",
+        "label": "A school map"
+      }
+    ],
+    "expected": ["smile", "map", "pencil", "backpack", "hamster"]
+  },
+  {
+    "id": "hr-power-203",
+    "kind": "usefulness",
+    "prompt": "Most to least useful in a long power outage",
+    "say": "Rank these from most to least useful in a long power outage.",
+    "top": "Most useful",
+    "bottom": "Least useful",
+    "items": [
+      {
+        "id": "board",
+        "label": "A board game"
+      },
+      {
+        "id": "glow",
+        "label": "A glow stick"
+      },
+      {
+        "id": "flash",
+        "label": "A flashlight"
+      },
+      {
+        "id": "solar",
+        "label": "A solar charger"
+      },
+      {
+        "id": "stove",
+        "label": "A camp stove"
+      }
+    ],
+    "expected": ["flash", "stove", "solar", "board", "glow"]
+  },
+  {
+    "id": "hr-camping-204",
+    "kind": "usefulness",
+    "prompt": "Most to least useful camping in the rain",
+    "say": "Rank these from most to least useful on a camping trip in the rain.",
+    "top": "Most useful",
+    "bottom": "Least useful",
+    "items": [
+      {
+        "id": "sunscreen",
+        "label": "Sunscreen"
+      },
+      {
+        "id": "cards",
+        "label": "Playing cards"
+      },
+      {
+        "id": "socks",
+        "label": "Dry socks"
+      },
+      {
+        "id": "marsh",
+        "label": "Marshmallows"
+      },
+      {
+        "id": "boots",
+        "label": "Rubber boots"
+      }
+    ],
+    "expected": ["socks", "boots", "cards", "marsh", "sunscreen"]
+  },
+  {
+    "id": "hr-forest-205",
+    "kind": "usefulness",
+    "prompt": "Most to least useful when lost in a forest",
+    "say": "Rank these from most to least useful when you are lost in a forest.",
+    "top": "Most useful",
+    "bottom": "Least useful",
+    "items": [
+      {
+        "id": "whistle",
+        "label": "A whistle"
+      },
+      {
+        "id": "candy",
+        "label": "A bag of candy"
+      },
+      {
+        "id": "compass",
+        "label": "A compass"
+      },
+      {
+        "id": "phone",
+        "label": "A nearly dead phone"
+      },
+      {
+        "id": "water",
+        "label": "A water bottle"
+      }
+    ],
+    "expected": ["compass", "water", "whistle", "phone", "candy"]
+  },
+  {
+    "id": "hr-math-206",
+    "kind": "usefulness",
+    "prompt": "Most to least useful in a surprise math test",
+    "say": "Rank these from most to least useful in a surprise math test.",
+    "top": "Most useful",
+    "bottom": "Least useful",
+    "items": [
+      {
+        "id": "eraser",
+        "label": "A big eraser"
+      },
+      {
+        "id": "sleep",
+        "label": "A good night's sleep"
+      },
+      {
+        "id": "sock",
+        "label": "A lucky sock"
+      },
+      {
+        "id": "calc",
+        "label": "A calculator"
+      },
+      {
+        "id": "pencil",
+        "label": "A sharp pencil"
+      }
+    ],
+    "expected": ["calc", "sleep", "pencil", "eraser", "sock"]
+  },
+  {
+    "id": "hr-snow-207",
+    "kind": "usefulness",
+    "prompt": "Most to least useful on a snow day",
+    "say": "Rank these from most to least useful on a snow day.",
+    "top": "Most useful",
+    "bottom": "Least useful",
+    "items": [
+      {
+        "id": "cocoa",
+        "label": "A thermos of cocoa"
+      },
+      {
+        "id": "flip",
+        "label": "A pair of flip-flops"
+      },
+      {
+        "id": "sled",
+        "label": "A sled"
+      },
+      {
+        "id": "shovel",
+        "label": "A snow shovel"
+      },
+      {
+        "id": "scarf",
+        "label": "A warm scarf"
+      }
+    ],
+    "expected": ["shovel", "scarf", "cocoa", "sled", "flip"]
+  },
+  {
+    "id": "hr-space-208",
+    "kind": "usefulness",
+    "prompt": "Most to least useful on a trip to space",
+    "say": "Rank these from most to least useful on a trip to space.",
+    "top": "Most useful",
+    "bottom": "Least useful",
+    "items": [
+      {
+        "id": "pillow",
+        "label": "A travel pillow"
+      },
+      {
+        "id": "kite",
+        "label": "A kite"
+      },
+      {
+        "id": "tape",
+        "label": "A roll of tape"
+      },
+      {
+        "id": "cards",
+        "label": "A deck of cards"
+      },
+      {
+        "id": "camera",
+        "label": "A camera"
+      }
+    ],
+    "expected": ["tape", "camera", "cards", "pillow", "kite"]
+  },
+  {
+    "id": "hr-moving-209",
+    "kind": "usefulness",
+    "prompt": "Most to least useful on moving day",
+    "say": "Rank these from most to least useful on the day you move to a new home.",
+    "top": "Most useful",
+    "bottom": "Least useful",
+    "items": [
+      {
+        "id": "pizza",
+        "label": "A box of pizza"
+      },
+      {
+        "id": "cat",
+        "label": "A cat"
+      },
+      {
+        "id": "friend",
+        "label": "A strong friend"
+      },
+      {
+        "id": "marker",
+        "label": "A marker pen"
+      },
+      {
+        "id": "tapegun",
+        "label": "A tape gun"
+      }
+    ],
+    "expected": ["friend", "tapegun", "marker", "pizza", "cat"]
+  },
+  {
+    "id": "hr-travel-210",
+    "kind": "usefulness",
+    "prompt": "Most to least useful on a long road trip",
+    "say": "Rank these from most to least useful on a long road trip.",
+    "top": "Most useful",
+    "bottom": "Least useful",
+    "items": [
+      {
+        "id": "map",
+        "label": "A road map"
+      },
+      {
+        "id": "snacks",
+        "label": "A bag of snacks"
+      },
+      {
+        "id": "harmonica",
+        "label": "A harmonica"
+      },
+      {
+        "id": "charger",
+        "label": "A phone charger"
+      },
+      {
+        "id": "game",
+        "label": "A travel game"
+      }
+    ],
+    "expected": ["charger", "snacks", "game", "map", "harmonica"]
+  },
+  {
+    "id": "hr-beach-211",
+    "kind": "usefulness",
+    "prompt": "Most to least useful at the beach",
+    "say": "Rank these from most to least useful at the beach.",
+    "top": "Most useful",
+    "bottom": "Least useful",
+    "items": [
+      {
+        "id": "snorkel",
+        "label": "A snorkel mask"
+      },
+      {
+        "id": "coat",
+        "label": "A winter coat"
+      },
+      {
+        "id": "umbrella",
+        "label": "A beach umbrella"
+      },
+      {
+        "id": "bucket",
+        "label": "A sand bucket"
+      },
+      {
+        "id": "cooler",
+        "label": "A cooler"
+      }
+    ],
+    "expected": ["umbrella", "cooler", "snorkel", "bucket", "coat"]
+  },
+  {
+    "id": "hr-spooky-212",
+    "kind": "usefulness",
+    "prompt": "Most to least useful in a haunted house",
+    "say": "Rank these from most to least useful in a haunted house.",
+    "top": "Most useful",
+    "bottom": "Least useful",
+    "items": [
+      {
+        "id": "salt",
+        "label": "A bag of salt"
+      },
+      {
+        "id": "friend",
+        "label": "A brave friend"
+      },
+      {
+        "id": "kazoo",
+        "label": "A kazoo"
+      },
+      {
+        "id": "map",
+        "label": "A map of the house"
+      },
+      {
+        "id": "lantern",
+        "label": "A bright lantern"
+      }
+    ],
+    "expected": ["friend", "lantern", "map", "salt", "kazoo"]
+  },
+  {
+    "id": "hr-home-213",
+    "kind": "usefulness",
+    "prompt": "Most to least useful on a sick day at home",
+    "say": "Rank these from most to least useful on a sick day at home.",
+    "top": "Most useful",
+    "bottom": "Least useful",
+    "items": [
+      {
+        "id": "cartoons",
+        "label": "Cartoons"
+      },
+      {
+        "id": "homework",
+        "label": "Homework"
+      },
+      {
+        "id": "soup",
+        "label": "Chicken soup"
+      },
+      {
+        "id": "blankets",
+        "label": "Warm blankets"
+      },
+      {
+        "id": "tissues",
+        "label": "Soft tissues"
+      }
+    ],
+    "expected": ["soup", "tissues", "blankets", "cartoons", "homework"]
+  },
+  {
+    "id": "hr-babysit-214",
+    "kind": "usefulness",
+    "prompt": "Most to least useful when babysitting",
+    "say": "Rank these from most to least useful when you are babysitting.",
+    "top": "Most useful",
+    "bottom": "Least useful",
+    "items": [
+      {
+        "id": "drums",
+        "label": "A drum set"
+      },
+      {
+        "id": "story",
+        "label": "A bedtime story"
+      },
+      {
+        "id": "firstaid",
+        "label": "A first aid kit"
+      },
+      {
+        "id": "bubbles",
+        "label": "A bubble wand"
+      },
+      {
+        "id": "snacks",
+        "label": "A snack drawer"
+      }
+    ],
+    "expected": ["firstaid", "snacks", "story", "bubbles", "drums"]
+  },
+  {
+    "id": "hr-home-215",
+    "kind": "usefulness",
+    "prompt": "Most to least useful at a sleepover",
+    "say": "Rank these from most to least useful at a sleepover.",
+    "top": "Most useful",
+    "bottom": "Least useful",
+    "items": [
+      {
+        "id": "movie",
+        "label": "A scary movie"
+      },
+      {
+        "id": "brush",
+        "label": "A toothbrush"
+      },
+      {
+        "id": "bag",
+        "label": "A sleeping bag"
+      },
+      {
+        "id": "fort",
+        "label": "A pillow fort"
+      },
+      {
+        "id": "popcorn",
+        "label": "A bowl of popcorn"
+      }
+    ],
+    "expected": ["bag", "popcorn", "brush", "movie", "fort"]
+  },
+  {
+    "id": "hr-fantasy-216",
+    "kind": "usefulness",
+    "prompt": "Most to least useful against a dragon",
+    "say": "Rank these from most to least useful when facing a dragon.",
+    "top": "Most useful",
+    "bottom": "Least useful",
+    "items": [
+      {
+        "id": "sheep",
+        "label": "A tasty sheep"
+      },
+      {
+        "id": "note",
+        "label": "A strongly worded note"
+      },
+      {
+        "id": "shield",
+        "label": "A metal shield"
+      },
+      {
+        "id": "bucket",
+        "label": "A bucket of water"
+      },
+      {
+        "id": "blanket",
+        "label": "A fire blanket"
+      }
+    ],
+    "expected": ["shield", "blanket", "sheep", "bucket", "note"]
+  },
+  {
+    "id": "hr-travel-217",
+    "kind": "usefulness",
+    "prompt": "Most to least useful at a theme park",
+    "say": "Rank these from most to least useful at a theme park.",
+    "top": "Most useful",
+    "bottom": "Least useful",
+    "items": [
+      {
+        "id": "poncho",
+        "label": "A rain poncho"
+      },
+      {
+        "id": "toy",
+        "label": "A giant stuffed toy"
+      },
+      {
+        "id": "shoes",
+        "label": "A comfy pair of shoes"
+      },
+      {
+        "id": "shades",
+        "label": "A pair of sunglasses"
+      },
+      {
+        "id": "map",
+        "label": "A park map"
+      }
+    ],
+    "expected": ["shoes", "map", "poncho", "shades", "toy"]
+  },
+  {
+    "id": "hr-jungle-218",
+    "kind": "usefulness",
+    "prompt": "Most to least useful in a jungle",
+    "say": "Rank these from most to least useful in a jungle.",
+    "top": "Most useful",
+    "bottom": "Least useful",
+    "items": [
+      {
+        "id": "hammock",
+        "label": "A hammock"
+      },
+      {
+        "id": "tux",
+        "label": "A tuxedo"
+      },
+      {
+        "id": "spray",
+        "label": "A can of bug spray"
+      },
+      {
+        "id": "monkey",
+        "label": "A monkey friend"
+      },
+      {
+        "id": "rope",
+        "label": "A rope"
+      }
+    ],
+    "expected": ["spray", "rope", "hammock", "monkey", "tux"]
+  },
+  {
+    "id": "hr-school-219",
+    "kind": "usefulness",
+    "prompt": "Most to least useful on a school field trip",
+    "say": "Rank these from most to least useful on a school field trip.",
+    "top": "Most useful",
+    "bottom": "Least useful",
+    "items": [
+      {
+        "id": "rock",
+        "label": "A pet rock"
+      },
+      {
+        "id": "lunch",
+        "label": "A packed lunch"
+      },
+      {
+        "id": "notebook",
+        "label": "A notebook"
+      },
+      {
+        "id": "slip",
+        "label": "A permission slip"
+      },
+      {
+        "id": "buddy",
+        "label": "A trusty buddy"
+      }
+    ],
+    "expected": ["slip", "lunch", "buddy", "notebook", "rock"]
+  },
+  {
+    "id": "hr-travel-220",
+    "kind": "usefulness",
+    "prompt": "Most to least useful when your car breaks down",
+    "say": "Rank these from most to least useful when your car breaks down.",
+    "top": "Most useful",
+    "bottom": "Least useful",
+    "items": [
+      {
+        "id": "flare",
+        "label": "A road flare"
+      },
+      {
+        "id": "cables",
+        "label": "A set of jumper cables"
+      },
+      {
+        "id": "fresh",
+        "label": "A car air freshener"
+      },
+      {
+        "id": "tire",
+        "label": "A spare tire"
+      },
+      {
+        "id": "stranger",
+        "label": "A kind stranger"
+      }
+    ],
+    "expected": ["tire", "stranger", "cables", "flare", "fresh"]
+  },
+  {
+    "id": "hr-pirate-221",
+    "kind": "usefulness",
+    "prompt": "Most to least useful on a pirate ship",
+    "say": "Rank these from most to least useful on a pirate ship.",
+    "top": "Most useful",
+    "bottom": "Least useful",
+    "items": [
+      {
+        "id": "parrot",
+        "label": "A parrot"
+      },
+      {
+        "id": "map",
+        "label": "A treasure map"
+      },
+      {
+        "id": "bathtub",
+        "label": "A bathtub"
+      },
+      {
+        "id": "jacket",
+        "label": "A life jacket"
+      },
+      {
+        "id": "scope",
+        "label": "A telescope"
+      }
+    ],
+    "expected": ["map", "scope", "jacket", "parrot", "bathtub"]
+  },
+  {
+    "id": "hr-arctic-222",
+    "kind": "usefulness",
+    "prompt": "Most to least useful at the North Pole",
+    "say": "Rank these from most to least useful at the North Pole.",
+    "top": "Most useful",
+    "bottom": "Least useful",
+    "items": [
+      {
+        "id": "fan",
+        "label": "An electric fan"
+      },
+      {
+        "id": "hat",
+        "label": "A thick fur hat"
+      },
+      {
+        "id": "rod",
+        "label": "A fishing rod"
+      },
+      {
+        "id": "tent",
+        "label": "A heated tent"
+      },
+      {
+        "id": "dogs",
+        "label": "A team of sled dogs"
+      }
+    ],
+    "expected": ["tent", "dogs", "hat", "rod", "fan"]
+  },
+  {
+    "id": "hr-party-223",
+    "kind": "usefulness",
+    "prompt": "Most to least useful at a birthday party",
+    "say": "Rank these from most to least useful at a birthday party.",
+    "top": "Most useful",
+    "bottom": "Least useful",
+    "items": [
+      {
+        "id": "balloons",
+        "label": "A bag of balloons"
+      },
+      {
+        "id": "test",
+        "label": "A spelling test"
+      },
+      {
+        "id": "cake",
+        "label": "A big cake"
+      },
+      {
+        "id": "playlist",
+        "label": "A party playlist"
+      },
+      {
+        "id": "bouncy",
+        "label": "A bouncy castle"
+      }
+    ],
+    "expected": ["cake", "bouncy", "playlist", "balloons", "test"]
+  },
+  {
+    "id": "hr-scifi-224",
+    "kind": "usefulness",
+    "prompt": "Most to least useful when meeting an alien",
+    "say": "Rank these from most to least useful when you meet an alien.",
+    "top": "Most useful",
+    "bottom": "Least useful",
+    "items": [
+      {
+        "id": "net",
+        "label": "A big net"
+      },
+      {
+        "id": "cookies",
+        "label": "A plate of cookies"
+      },
+      {
+        "id": "translator",
+        "label": "A translator"
+      },
+      {
+        "id": "photo",
+        "label": "A photo of Earth"
+      },
+      {
+        "id": "wave",
+        "label": "A friendly wave"
+      }
+    ],
+    "expected": ["translator", "wave", "cookies", "photo", "net"]
+  },
+  {
+    "id": "hr-social-225",
+    "kind": "social",
+    "prompt": "Best to worst stuck-elevator buddy",
+    "say": "Rank these people to be stuck in an elevator with, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "toddler",
+        "label": "A toddler"
+      },
+      {
+        "id": "chatty",
+        "label": "A chatty neighbor"
+      },
+      {
+        "id": "firefighter",
+        "label": "A firefighter"
+      },
+      {
+        "id": "mime",
+        "label": "A mime"
+      },
+      {
+        "id": "comedian",
+        "label": "A comedian"
+      }
+    ],
+    "expected": ["firefighter", "comedian", "chatty", "mime", "toddler"]
+  },
+  {
+    "id": "hr-social-226",
+    "kind": "social",
+    "prompt": "Best to worst person to sit next to on a flight",
+    "say": "Rank these people to sit next to on a long flight, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "nervous",
+        "label": "A nervous flyer"
+      },
+      {
+        "id": "baby",
+        "label": "A crying baby"
+      },
+      {
+        "id": "grandma",
+        "label": "A sleeping grandma"
+      },
+      {
+        "id": "kicker",
+        "label": "A seat kicker"
+      },
+      {
+        "id": "pilot",
+        "label": "An off-duty pilot"
+      }
+    ],
+    "expected": ["grandma", "pilot", "nervous", "kicker", "baby"]
+  },
+  {
+    "id": "hr-social-227",
+    "kind": "social",
+    "prompt": "Most to least annoying roommate habit",
+    "say": "Rank these roommate habits, from most to least annoying.",
+    "top": "Most",
+    "bottom": "Least",
+    "items": [
+      {
+        "id": "lights",
+        "label": "Leaving lights on"
+      },
+      {
+        "id": "singing",
+        "label": "Shower singing"
+      },
+      {
+        "id": "food",
+        "label": "Eating your food"
+      },
+      {
+        "id": "calls",
+        "label": "Loud phone calls"
+      },
+      {
+        "id": "dishes",
+        "label": "Dirty dishes"
+      }
+    ],
+    "expected": ["food", "dishes", "calls", "lights", "singing"]
+  },
+  {
+    "id": "hr-social-228",
+    "kind": "social",
+    "prompt": "Best to worst thing to hear from a dentist",
+    "say": "Rank these things a dentist might say, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "wider",
+        "label": "Open wider"
+      },
+      {
+        "id": "oops",
+        "label": "Oops"
+      },
+      {
+        "id": "nocav",
+        "label": "No cavities"
+      },
+      {
+        "id": "pinch",
+        "label": "This might pinch"
+      },
+      {
+        "id": "year",
+        "label": "See you in a year"
+      }
+    ],
+    "expected": ["nocav", "year", "wider", "pinch", "oops"]
+  },
+  {
+    "id": "hr-social-229",
+    "kind": "social",
+    "prompt": "Best to worst gift from a grandparent",
+    "say": "Rank these gifts from a grandparent, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "socks",
+        "label": "Knitted socks"
+      },
+      {
+        "id": "money",
+        "label": "Birthday money"
+      },
+      {
+        "id": "soap",
+        "label": "Soap on a rope"
+      },
+      {
+        "id": "cookies",
+        "label": "Homemade cookies"
+      },
+      {
+        "id": "coins",
+        "label": "Old coins"
+      }
+    ],
+    "expected": ["money", "cookies", "coins", "socks", "soap"]
+  },
+  {
+    "id": "hr-awkward-230",
+    "kind": "social",
+    "prompt": "Most to least awkward family dinner moment",
+    "say": "Rank these family dinner moments, from most to least awkward.",
+    "top": "Most",
+    "bottom": "Least",
+    "items": [
+      {
+        "id": "burp",
+        "label": "Someone burps loudly"
+      },
+      {
+        "id": "name",
+        "label": "Forgetting a name"
+      },
+      {
+        "id": "gravy",
+        "label": "Gravy on the carpet"
+      },
+      {
+        "id": "silence",
+        "label": "Silence after a joke"
+      },
+      {
+        "id": "photos",
+        "label": "Baby photos come out"
+      }
+    ],
+    "expected": ["silence", "name", "photos", "burp", "gravy"]
+  },
+  {
+    "id": "hr-social-231",
+    "kind": "social",
+    "prompt": "Best to worst person to share a tent with",
+    "say": "Rank these people to share a tent with, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "talker",
+        "label": "A sleep talker"
+      },
+      {
+        "id": "snorer",
+        "label": "A loud snorer"
+      },
+      {
+        "id": "chef",
+        "label": "A camp chef"
+      },
+      {
+        "id": "bug",
+        "label": "A bug magnet"
+      },
+      {
+        "id": "reader",
+        "label": "A quiet reader"
+      }
+    ],
+    "expected": ["chef", "reader", "talker", "bug", "snorer"]
+  },
+  {
+    "id": "hr-social-232",
+    "kind": "social",
+    "prompt": "Most to least annoying thing at the movies",
+    "say": "Rank these movie theater habits, from most to least annoying.",
+    "top": "Most",
+    "bottom": "Least",
+    "items": [
+      {
+        "id": "wrappers",
+        "label": "Crinkly wrappers"
+      },
+      {
+        "id": "leavers",
+        "label": "Early leavers"
+      },
+      {
+        "id": "talkers",
+        "label": "Loud talkers"
+      },
+      {
+        "id": "chewers",
+        "label": "Popcorn chewers"
+      },
+      {
+        "id": "phones",
+        "label": "Bright phones"
+      }
+    ],
+    "expected": ["talkers", "phones", "wrappers", "chewers", "leavers"]
+  },
+  {
+    "id": "hr-social-233",
+    "kind": "social",
+    "prompt": "Best to worst neighbor to have",
+    "say": "Rank these neighbors, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "drummer",
+        "label": "A teen drummer"
+      },
+      {
+        "id": "fixer",
+        "label": "A handy fixer"
+      },
+      {
+        "id": "rooster",
+        "label": "A rooster owner"
+      },
+      {
+        "id": "baker",
+        "label": "A retired baker"
+      },
+      {
+        "id": "gardener",
+        "label": "A nosy gardener"
+      }
+    ],
+    "expected": ["baker", "fixer", "gardener", "rooster", "drummer"]
+  },
+  {
+    "id": "hr-social-234",
+    "kind": "social",
+    "prompt": "Best to worst way to be woken up",
+    "say": "Rank these ways to be woken up, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "alarm",
+        "label": "Loud alarms"
+      },
+      {
+        "id": "birds",
+        "label": "Birds singing"
+      },
+      {
+        "id": "water",
+        "label": "Cold water"
+      },
+      {
+        "id": "pancake",
+        "label": "Pancake smell"
+      },
+      {
+        "id": "dog",
+        "label": "Dog kisses"
+      }
+    ],
+    "expected": ["pancake", "birds", "dog", "alarm", "water"]
+  },
+  {
+    "id": "hr-social-235",
+    "kind": "social",
+    "prompt": "Best to worst group project partner",
+    "say": "Rank these group project partners, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "clown",
+        "label": "A class clown"
+      },
+      {
+        "id": "worker",
+        "label": "A hard worker"
+      },
+      {
+        "id": "noshow",
+        "label": "A no-show"
+      },
+      {
+        "id": "knowitall",
+        "label": "A know-it-all"
+      },
+      {
+        "id": "bossy",
+        "label": "A bossy leader"
+      }
+    ],
+    "expected": ["worker", "bossy", "knowitall", "clown", "noshow"]
+  },
+  {
+    "id": "hr-social-236",
+    "kind": "social",
+    "prompt": "Best to worst dinner guest",
+    "say": "Rank these dinner guests, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "picky",
+        "label": "A picky eater"
+      },
+      {
+        "id": "joker",
+        "label": "A joke teller"
+      },
+      {
+        "id": "slurper",
+        "label": "A soup slurper"
+      },
+      {
+        "id": "helper",
+        "label": "A dish helper"
+      },
+      {
+        "id": "phone",
+        "label": "A phone checker"
+      }
+    ],
+    "expected": ["joker", "helper", "picky", "phone", "slurper"]
+  },
+  {
+    "id": "hr-awkward-237",
+    "kind": "social",
+    "prompt": "Most to least embarrassing thing in class",
+    "say": "Rank these classroom moments, from most to least embarrassing.",
+    "top": "Most",
+    "bottom": "Least",
+    "items": [
+      {
+        "id": "waving",
+        "label": "Waving at a stranger"
+      },
+      {
+        "id": "growl",
+        "label": "A loud stomach growl"
+      },
+      {
+        "id": "mom",
+        "label": "Calling teacher Mom"
+      },
+      {
+        "id": "trip",
+        "label": "Tripping on stairs"
+      },
+      {
+        "id": "snore",
+        "label": "Snoring at your desk"
+      }
+    ],
+    "expected": ["mom", "snore", "trip", "waving", "growl"]
+  },
+  {
+    "id": "hr-social-238",
+    "kind": "social",
+    "prompt": "Best to worst road trip passenger",
+    "say": "Rank these road trip passengers, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "karaoke",
+        "label": "A karaoke singer"
+      },
+      {
+        "id": "carsick",
+        "label": "A carsick cousin"
+      },
+      {
+        "id": "snack",
+        "label": "A snack sharer"
+      },
+      {
+        "id": "backseat",
+        "label": "A backseat driver"
+      },
+      {
+        "id": "map",
+        "label": "A map reader"
+      }
+    ],
+    "expected": ["snack", "map", "karaoke", "backseat", "carsick"]
+  },
+  {
+    "id": "hr-school-239",
+    "kind": "social",
+    "prompt": "Best to worst news from a teacher",
+    "say": "Rank these things a teacher might announce, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "group",
+        "label": "Group project time"
+      },
+      {
+        "id": "nohw",
+        "label": "No homework tonight"
+      },
+      {
+        "id": "quiz",
+        "label": "Pop quiz today"
+      },
+      {
+        "id": "pet",
+        "label": "The class gets a pet"
+      },
+      {
+        "id": "trip",
+        "label": "Field trip Friday"
+      }
+    ],
+    "expected": ["nohw", "trip", "pet", "group", "quiz"]
+  },
+  {
+    "id": "hr-social-240",
+    "kind": "social",
+    "prompt": "Most to least annoying sibling habit",
+    "say": "Rank these sibling habits, from most to least annoying.",
+    "top": "Most",
+    "bottom": "Least",
+    "items": [
+      {
+        "id": "humming",
+        "label": "Humming nonstop"
+      },
+      {
+        "id": "tattling",
+        "label": "Tattling"
+      },
+      {
+        "id": "stealing",
+        "label": "Stealing your snacks"
+      },
+      {
+        "id": "remote",
+        "label": "Hogging the remote"
+      },
+      {
+        "id": "copying",
+        "label": "Copying you"
+      }
+    ],
+    "expected": ["stealing", "copying", "tattling", "remote", "humming"]
+  },
+  {
+    "id": "hr-social-241",
+    "kind": "social",
+    "prompt": "Best to worst person to be snowed in with",
+    "say": "Rank these people to be snowed in with, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "whistler",
+        "label": "A nonstop whistler"
+      },
+      {
+        "id": "chef",
+        "label": "A pastry chef"
+      },
+      {
+        "id": "sleeper",
+        "label": "A heavy sleeper"
+      },
+      {
+        "id": "fire",
+        "label": "A fire builder"
+      },
+      {
+        "id": "games",
+        "label": "A board game fan"
+      }
+    ],
+    "expected": ["fire", "chef", "games", "sleeper", "whistler"]
+  },
+  {
+    "id": "hr-travel-242",
+    "kind": "social",
+    "prompt": "Best to worst thing to hear from a pilot",
+    "say": "Rank these things a pilot might say, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "seated",
+        "label": "Please stay seated"
+      },
+      {
+        "id": "keys",
+        "label": "Anyone seen my keys"
+      },
+      {
+        "id": "early",
+        "label": "We're landing early"
+      },
+      {
+        "id": "mars",
+        "label": "Next stop, the moon"
+      },
+      {
+        "id": "snacks",
+        "label": "Free snacks for all"
+      }
+    ],
+    "expected": ["early", "snacks", "seated", "mars", "keys"]
+  },
+  {
+    "id": "hr-awkward-243",
+    "kind": "social",
+    "prompt": "Most to least awkward video call moment",
+    "say": "Rank these video call moments, from most to least awkward.",
+    "top": "Most",
+    "bottom": "Least",
+    "items": [
+      {
+        "id": "sneeze",
+        "label": "Frozen mid-sneeze"
+      },
+      {
+        "id": "cat",
+        "label": "A cat on the keyboard"
+      },
+      {
+        "id": "camera",
+        "label": "Camera on by accident"
+      },
+      {
+        "id": "waving",
+        "label": "Waving goodbye forever"
+      },
+      {
+        "id": "mute",
+        "label": "Talking on mute"
+      }
+    ],
+    "expected": ["camera", "mute", "sneeze", "waving", "cat"]
+  },
+  {
+    "id": "hr-social-244",
+    "kind": "social",
+    "prompt": "Best to worst babysitter",
+    "say": "Rank these babysitters, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "clown",
+        "label": "A professional clown"
+      },
+      {
+        "id": "dog",
+        "label": "A pet dog"
+      },
+      {
+        "id": "teacher",
+        "label": "A retired teacher"
+      },
+      {
+        "id": "grandpa",
+        "label": "A strict grandpa"
+      },
+      {
+        "id": "sister",
+        "label": "A big sister"
+      }
+    ],
+    "expected": ["teacher", "sister", "grandpa", "clown", "dog"]
+  },
+  {
+    "id": "hr-social-245",
+    "kind": "social",
+    "prompt": "Best to worst compliment to get",
+    "say": "Rank these compliments, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "parking",
+        "label": "Great at parking"
+      },
+      {
+        "id": "soup",
+        "label": "You smell like soup"
+      },
+      {
+        "id": "kind",
+        "label": "You are so kind"
+      },
+      {
+        "id": "writing",
+        "label": "Nice handwriting"
+      },
+      {
+        "id": "funny",
+        "label": "You are hilarious"
+      }
+    ],
+    "expected": ["kind", "funny", "writing", "parking", "soup"]
+  },
+  {
+    "id": "hr-social-246",
+    "kind": "social",
+    "prompt": "Worst to best time for your phone to ring",
+    "say": "Rank these times for your phone to ring, from worst to best.",
+    "top": "Worst",
+    "bottom": "Best",
+    "items": [
+      {
+        "id": "shower",
+        "label": "In the shower"
+      },
+      {
+        "id": "movie",
+        "label": "At a movie"
+      },
+      {
+        "id": "dinner",
+        "label": "During dinner"
+      },
+      {
+        "id": "library",
+        "label": "In a quiet library"
+      },
+      {
+        "id": "dentist",
+        "label": "At the dentist"
+      }
+    ],
+    "expected": ["movie", "library", "dentist", "shower", "dinner"]
+  },
+  {
+    "id": "hr-social-247",
+    "kind": "social",
+    "prompt": "Best to worst one to tell a secret to",
+    "say": "Rank these, from best to worst to tell a secret to.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "goldfish",
+        "label": "A goldfish"
+      },
+      {
+        "id": "gossip",
+        "label": "A town gossip"
+      },
+      {
+        "id": "grandma",
+        "label": "A grandma"
+      },
+      {
+        "id": "best",
+        "label": "A best friend"
+      },
+      {
+        "id": "brother",
+        "label": "A little brother"
+      }
+    ],
+    "expected": ["best", "grandma", "goldfish", "brother", "gossip"]
+  },
+  {
+    "id": "hr-food-248",
+    "kind": "social",
+    "prompt": "Best to worst thing a waiter can say",
+    "say": "Rank these things a waiter might say, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "enjoy",
+        "label": "Enjoy your meal"
+      },
+      {
+        "id": "cook",
+        "label": "The cook just quit"
+      },
+      {
+        "id": "house",
+        "label": "It's on the house"
+      },
+      {
+        "id": "fries",
+        "label": "We're out of fries"
+      },
+      {
+        "id": "refills",
+        "label": "Free refills"
+      }
+    ],
+    "expected": ["house", "refills", "enjoy", "fries", "cook"]
+  },
+  {
+    "id": "hr-awkward-249",
+    "kind": "social",
+    "prompt": "Most to least awkward way to greet someone",
+    "say": "Rank these greetings, from most to least awkward.",
+    "top": "Most",
+    "bottom": "Least",
+    "items": [
+      {
+        "id": "salute",
+        "label": "A salute"
+      },
+      {
+        "id": "fist",
+        "label": "A fist bump"
+      },
+      {
+        "id": "missed",
+        "label": "A missed high five"
+      },
+      {
+        "id": "hug",
+        "label": "A surprise hug"
+      },
+      {
+        "id": "shake",
+        "label": "A too-long handshake"
+      }
+    ],
+    "expected": ["missed", "shake", "salute", "hug", "fist"]
+  },
+  {
+    "id": "hr-fight-300",
+    "kind": "hypothetical",
+    "prompt": "Most to least likely to win a pillow fight",
+    "say": "Who would win a pillow fight? Rank them from most to least likely.",
+    "top": "Most likely",
+    "bottom": "Least likely",
+    "items": [
+      {
+        "id": "grandma",
+        "label": "A grandma"
+      },
+      {
+        "id": "sumo",
+        "label": "A sumo wrestler"
+      },
+      {
+        "id": "toddler",
+        "label": "A toddler"
+      },
+      {
+        "id": "octopus",
+        "label": "An octopus"
+      },
+      {
+        "id": "knight",
+        "label": "A knight in armor"
+      }
+    ],
+    "expected": ["sumo", "octopus", "knight", "grandma", "toddler"]
+  },
+  {
+    "id": "hr-fight-301",
+    "kind": "hypothetical",
+    "prompt": "Most to least likely to win a fight",
+    "say": "Who would win in a silly fight? Rank them from most to least likely.",
+    "top": "Wins",
+    "bottom": "Loses",
+    "items": [
+      {
+        "id": "swan",
+        "label": "A very angry swan"
+      },
+      {
+        "id": "ducks",
+        "label": "100 ducks"
+      },
+      {
+        "id": "ninja",
+        "label": "A ninja"
+      },
+      {
+        "id": "gorilla",
+        "label": "A silverback gorilla"
+      },
+      {
+        "id": "knight",
+        "label": "A knight in armor"
+      }
+    ],
+    "expected": ["gorilla", "ducks", "knight", "ninja", "swan"]
+  },
+  {
+    "id": "hr-fight-302",
+    "kind": "hypothetical",
+    "prompt": "Most to least likely to win a snowball fight",
+    "say": "Who would win a snowball fight? Rank them from most to least likely.",
+    "top": "Wins",
+    "bottom": "Loses",
+    "items": [
+      {
+        "id": "penguin",
+        "label": "A penguin"
+      },
+      {
+        "id": "yeti",
+        "label": "A yeti"
+      },
+      {
+        "id": "plow",
+        "label": "A snowplow driver"
+      },
+      {
+        "id": "kid",
+        "label": "A kid on a snow day"
+      },
+      {
+        "id": "polar",
+        "label": "A polar bear"
+      }
+    ],
+    "expected": ["yeti", "kid", "polar", "plow", "penguin"]
+  },
+  {
+    "id": "hr-fight-303",
+    "kind": "hypothetical",
+    "prompt": "Most to least likely to win a staring contest",
+    "say": "Who would win a staring contest? Rank them from most to least likely.",
+    "top": "Wins",
+    "bottom": "Loses",
+    "items": [
+      {
+        "id": "cat",
+        "label": "A cat"
+      },
+      {
+        "id": "teacher",
+        "label": "A grumpy teacher"
+      },
+      {
+        "id": "owl",
+        "label": "An owl"
+      },
+      {
+        "id": "toddler",
+        "label": "A sleepy toddler"
+      },
+      {
+        "id": "goldfish",
+        "label": "A goldfish"
+      }
+    ],
+    "expected": ["owl", "cat", "goldfish", "teacher", "toddler"]
+  },
+  {
+    "id": "hr-fight-304",
+    "kind": "hypothetical",
+    "prompt": "Most to least likely to win a water fight",
+    "say": "Who would win a water balloon fight? Rank them from most to least likely.",
+    "top": "Wins",
+    "bottom": "Loses",
+    "items": [
+      {
+        "id": "cloud",
+        "label": "A rain cloud"
+      },
+      {
+        "id": "elephant",
+        "label": "An elephant"
+      },
+      {
+        "id": "kidhose",
+        "label": "A kid with a hose"
+      },
+      {
+        "id": "fire",
+        "label": "A firefighter"
+      },
+      {
+        "id": "squid",
+        "label": "A squid"
+      }
+    ],
+    "expected": ["fire", "elephant", "kidhose", "squid", "cloud"]
+  },
+  {
+    "id": "hr-fight-305",
+    "kind": "hypothetical",
+    "prompt": "Most to least likely to win a tickle fight",
+    "say": "Who would win a tickle fight? Rank them from most to least likely.",
+    "top": "Wins",
+    "bottom": "Loses",
+    "items": [
+      {
+        "id": "grandpa",
+        "label": "A grandpa"
+      },
+      {
+        "id": "monkey",
+        "label": "A monkey"
+      },
+      {
+        "id": "cat",
+        "label": "A house cat"
+      },
+      {
+        "id": "centipede",
+        "label": "A centipede"
+      },
+      {
+        "id": "robot",
+        "label": "A robot"
+      }
+    ],
+    "expected": ["centipede", "monkey", "robot", "grandpa", "cat"]
+  },
+  {
+    "id": "hr-fight-306",
+    "kind": "hypothetical",
+    "prompt": "Most to least likely to win a food fight",
+    "say": "Who would win a cafeteria food fight? Rank them from most to least likely.",
+    "top": "Wins",
+    "bottom": "Loses",
+    "items": [
+      {
+        "id": "picky",
+        "label": "A picky eater"
+      },
+      {
+        "id": "seagulls",
+        "label": "A gang of seagulls"
+      },
+      {
+        "id": "cook",
+        "label": "A school cook"
+      },
+      {
+        "id": "baby",
+        "label": "A baby in a high chair"
+      },
+      {
+        "id": "pizza",
+        "label": "A pizza chef"
+      }
+    ],
+    "expected": ["cook", "pizza", "baby", "seagulls", "picky"]
+  },
+  {
+    "id": "hr-fight-307",
+    "kind": "hypothetical",
+    "prompt": "Most to least likely to win tug-of-war",
+    "say": "Who would win a game of tug of war? Rank them from most to least likely.",
+    "top": "Wins",
+    "bottom": "Loses",
+    "items": [
+      {
+        "id": "strong",
+        "label": "A strongman"
+      },
+      {
+        "id": "sloth",
+        "label": "A sloth"
+      },
+      {
+        "id": "tugboat",
+        "label": "A tugboat"
+      },
+      {
+        "id": "kids",
+        "label": "A dozen kids"
+      },
+      {
+        "id": "horse",
+        "label": "A horse"
+      }
+    ],
+    "expected": ["tugboat", "horse", "kids", "strong", "sloth"]
+  },
+  {
+    "id": "hr-fight-308",
+    "kind": "hypothetical",
+    "prompt": "Most to least likely to win a dance battle",
+    "say": "Who would win a dance battle? Rank them from most to least likely.",
+    "top": "Wins",
+    "bottom": "Loses",
+    "items": [
+      {
+        "id": "flamingo",
+        "label": "A flamingo"
+      },
+      {
+        "id": "grandma",
+        "label": "A grandma at a wedding"
+      },
+      {
+        "id": "jelly",
+        "label": "A jellyfish"
+      },
+      {
+        "id": "peacock",
+        "label": "A peacock"
+      },
+      {
+        "id": "breaker",
+        "label": "A breakdancer"
+      }
+    ],
+    "expected": ["breaker", "grandma", "peacock", "flamingo", "jelly"]
+  },
+  {
+    "id": "hr-fight-309",
+    "kind": "hypothetical",
+    "prompt": "Most to least likely to win arm wrestling",
+    "say": "Who would win an arm wrestling match? Rank them from most to least likely.",
+    "top": "Wins",
+    "bottom": "Loses",
+    "items": [
+      {
+        "id": "crab",
+        "label": "A crab"
+      },
+      {
+        "id": "kangaroo",
+        "label": "A kangaroo"
+      },
+      {
+        "id": "baby",
+        "label": "A baby"
+      },
+      {
+        "id": "lumber",
+        "label": "A lumberjack"
+      },
+      {
+        "id": "squid",
+        "label": "A giant squid"
+      }
+    ],
+    "expected": ["lumber", "squid", "kangaroo", "crab", "baby"]
+  },
+  {
+    "id": "hr-fight-310",
+    "kind": "hypothetical",
+    "prompt": "Most to least likely to win hide-and-seek",
+    "say": "Who would win at hide and seek? Rank them from most to least likely.",
+    "top": "Wins",
+    "bottom": "Loses",
+    "items": [
+      {
+        "id": "giraffe",
+        "label": "A giraffe"
+      },
+      {
+        "id": "ninja",
+        "label": "A ninja"
+      },
+      {
+        "id": "band",
+        "label": "A marching band"
+      },
+      {
+        "id": "chameleon",
+        "label": "A chameleon"
+      },
+      {
+        "id": "cat",
+        "label": "A house cat"
+      }
+    ],
+    "expected": ["chameleon", "ninja", "cat", "giraffe", "band"]
+  },
+  {
+    "id": "hr-fight-311",
+    "kind": "hypothetical",
+    "prompt": "Most to least likely to win a sword fight",
+    "say": "Who would win a friendly sword fight? Rank them from most to least likely.",
+    "top": "Wins",
+    "bottom": "Loses",
+    "items": [
+      {
+        "id": "lobster",
+        "label": "A lobster"
+      },
+      {
+        "id": "pirate",
+        "label": "A pirate"
+      },
+      {
+        "id": "swordfish",
+        "label": "A swordfish"
+      },
+      {
+        "id": "samurai",
+        "label": "A samurai"
+      },
+      {
+        "id": "musket",
+        "label": "A musketeer"
+      }
+    ],
+    "expected": ["samurai", "musket", "pirate", "swordfish", "lobster"]
+  },
+  {
+    "id": "hr-fight-312",
+    "kind": "hypothetical",
+    "prompt": "Most to least likely to win a rap battle",
+    "say": "Who would win a rap battle? Rank them from most to least likely.",
+    "top": "Wins",
+    "bottom": "Loses",
+    "items": [
+      {
+        "id": "parrot",
+        "label": "A parrot"
+      },
+      {
+        "id": "librarian",
+        "label": "A shy librarian"
+      },
+      {
+        "id": "poet",
+        "label": "A poet"
+      },
+      {
+        "id": "toddler",
+        "label": "A grumpy toddler"
+      },
+      {
+        "id": "auction",
+        "label": "An auctioneer"
+      }
+    ],
+    "expected": ["auction", "poet", "parrot", "toddler", "librarian"]
+  },
+  {
+    "id": "hr-power-313",
+    "kind": "hypothetical",
+    "prompt": "Best to worst superpower to have for a week",
+    "say": "You get one superpower for a week. Rank them from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "animals",
+        "label": "Talking to animals"
+      },
+      {
+        "id": "socks",
+        "label": "Always-warm socks"
+      },
+      {
+        "id": "flying",
+        "label": "Flying"
+      },
+      {
+        "id": "invis",
+        "label": "Invisibility"
+      },
+      {
+        "id": "speed",
+        "label": "Super speed"
+      }
+    ],
+    "expected": ["flying", "speed", "invis", "animals", "socks"]
+  },
+  {
+    "id": "hr-power-314",
+    "kind": "hypothetical",
+    "prompt": "Best to worst superpower for school",
+    "say": "Rank these superpowers for a school day, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "glow",
+        "label": "Glowing in the dark"
+      },
+      {
+        "id": "teleport",
+        "label": "Teleporting"
+      },
+      {
+        "id": "pause",
+        "label": "Pausing time"
+      },
+      {
+        "id": "mind",
+        "label": "Reading minds"
+      },
+      {
+        "id": "memory",
+        "label": "Perfect memory"
+      }
+    ],
+    "expected": ["pause", "memory", "teleport", "mind", "glow"]
+  },
+  {
+    "id": "hr-power-315",
+    "kind": "hypothetical",
+    "prompt": "Best to worst superpower for doing chores",
+    "say": "Rank these superpowers for doing chores, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "strength",
+        "label": "Super strength"
+      },
+      {
+        "id": "whistle",
+        "label": "A very loud whistle"
+      },
+      {
+        "id": "clone",
+        "label": "Cloning yourself"
+      },
+      {
+        "id": "arms",
+        "label": "Four extra arms"
+      },
+      {
+        "id": "mind",
+        "label": "Moving things by mind"
+      }
+    ],
+    "expected": ["clone", "mind", "arms", "strength", "whistle"]
+  },
+  {
+    "id": "hr-power-316",
+    "kind": "hypothetical",
+    "prompt": "Best to worst superhero sidekick",
+    "say": "Rank these superhero sidekicks, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "pigeon",
+        "label": "A pigeon"
+      },
+      {
+        "id": "dog",
+        "label": "A talking dog"
+      },
+      {
+        "id": "goldfish",
+        "label": "A goldfish in a bowl"
+      },
+      {
+        "id": "butler",
+        "label": "A robot butler"
+      },
+      {
+        "id": "grandma",
+        "label": "A karate grandma"
+      }
+    ],
+    "expected": ["dog", "butler", "grandma", "pigeon", "goldfish"]
+  },
+  {
+    "id": "hr-spooky-317",
+    "kind": "hypothetical",
+    "prompt": "Most to least likely to survive a haunted house",
+    "say": "Who would make it through a haunted house? Rank them from most to least likely.",
+    "top": "Most likely",
+    "bottom": "Least likely",
+    "items": [
+      {
+        "id": "teen",
+        "label": "A teen on a phone"
+      },
+      {
+        "id": "hunter",
+        "label": "A ghost hunter"
+      },
+      {
+        "id": "chihuahua",
+        "label": "A nervous chihuahua"
+      },
+      {
+        "id": "grandma",
+        "label": "A brave grandma"
+      },
+      {
+        "id": "cat",
+        "label": "A black cat"
+      }
+    ],
+    "expected": ["hunter", "grandma", "cat", "teen", "chihuahua"]
+  },
+  {
+    "id": "hr-spooky-318",
+    "kind": "hypothetical",
+    "prompt": "Scariest to least scary sound at midnight",
+    "say": "Rank these midnight surprises, from scariest to least scary.",
+    "top": "Scariest",
+    "bottom": "Least scary",
+    "items": [
+      {
+        "id": "owl",
+        "label": "A hooting owl"
+      },
+      {
+        "id": "knock",
+        "label": "A knock at the window"
+      },
+      {
+        "id": "sneeze",
+        "label": "A cat sneezing"
+      },
+      {
+        "id": "stair",
+        "label": "A creaky stair"
+      },
+      {
+        "id": "giggle",
+        "label": "A giggle in the closet"
+      }
+    ],
+    "expected": ["giggle", "knock", "stair", "owl", "sneeze"]
+  },
+  {
+    "id": "hr-pet-319",
+    "kind": "hypothetical",
+    "prompt": "Best to worst pet if it could talk",
+    "say": "If your pet could talk, which would be best? Rank them from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "tortoise",
+        "label": "A tortoise"
+      },
+      {
+        "id": "cat",
+        "label": "A cat"
+      },
+      {
+        "id": "goldfish",
+        "label": "A goldfish"
+      },
+      {
+        "id": "dog",
+        "label": "A dog"
+      },
+      {
+        "id": "hamster",
+        "label": "A hamster"
+      }
+    ],
+    "expected": ["dog", "cat", "hamster", "tortoise", "goldfish"]
+  },
+  {
+    "id": "hr-pet-320",
+    "kind": "hypothetical",
+    "prompt": "Most to least likely to spill your secrets",
+    "say": "If these pets could talk, who would spill your secrets? Rank from most to least likely.",
+    "top": "Most likely",
+    "bottom": "Least likely",
+    "items": [
+      {
+        "id": "snake",
+        "label": "A snake"
+      },
+      {
+        "id": "parrot",
+        "label": "A parrot"
+      },
+      {
+        "id": "turtle",
+        "label": "A turtle"
+      },
+      {
+        "id": "puppy",
+        "label": "A puppy"
+      },
+      {
+        "id": "bunny",
+        "label": "A bunny"
+      }
+    ],
+    "expected": ["parrot", "puppy", "bunny", "snake", "turtle"]
+  },
+  {
+    "id": "hr-pocket-321",
+    "kind": "hypothetical",
+    "prompt": "Best to worst thing to find in your pocket",
+    "say": "Rank these things to find in your pocket, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "tissue",
+        "label": "A used tissue"
+      },
+      {
+        "id": "key",
+        "label": "A lost house key"
+      },
+      {
+        "id": "twenty",
+        "label": "A twenty-dollar bill"
+      },
+      {
+        "id": "frog",
+        "label": "A live frog"
+      },
+      {
+        "id": "candy",
+        "label": "A candy bar"
+      }
+    ],
+    "expected": ["twenty", "candy", "key", "frog", "tissue"]
+  },
+  {
+    "id": "hr-ride-322",
+    "kind": "hypothetical",
+    "prompt": "Best to worst animal to ride to school",
+    "say": "Rank these animals to ride to school, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "camel",
+        "label": "A camel"
+      },
+      {
+        "id": "tortoise",
+        "label": "A giant tortoise"
+      },
+      {
+        "id": "cheetah",
+        "label": "A cheetah"
+      },
+      {
+        "id": "ostrich",
+        "label": "An ostrich"
+      },
+      {
+        "id": "elephant",
+        "label": "An elephant"
+      }
+    ],
+    "expected": ["cheetah", "elephant", "ostrich", "camel", "tortoise"]
+  },
+  {
+    "id": "hr-time-323",
+    "kind": "hypothetical",
+    "prompt": "Best to worst era to time-travel to for a day",
+    "say": "You can time travel for one day. Rank these eras from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "wildwest",
+        "label": "The Wild West"
+      },
+      {
+        "id": "ice",
+        "label": "The Ice Age"
+      },
+      {
+        "id": "dinos",
+        "label": "The dinosaur days"
+      },
+      {
+        "id": "future",
+        "label": "The far future"
+      },
+      {
+        "id": "middle",
+        "label": "The Middle Ages"
+      }
+    ],
+    "expected": ["dinos", "future", "wildwest", "middle", "ice"]
+  },
+  {
+    "id": "hr-animal-324",
+    "kind": "hypothetical",
+    "prompt": "Most to least likely to secretly run the world",
+    "say": "Which animals are secretly running the world? Rank from most to least likely.",
+    "top": "Most likely",
+    "bottom": "Least likely",
+    "items": [
+      {
+        "id": "squirrels",
+        "label": "Squirrels"
+      },
+      {
+        "id": "cats",
+        "label": "Cats"
+      },
+      {
+        "id": "goldfish",
+        "label": "Goldfish"
+      },
+      {
+        "id": "dolphins",
+        "label": "Dolphins"
+      },
+      {
+        "id": "pigeons",
+        "label": "Pigeons"
+      }
+    ],
+    "expected": ["cats", "dolphins", "pigeons", "squirrels", "goldfish"]
+  },
+  {
+    "id": "hr-fantasy-325",
+    "kind": "hypothetical",
+    "prompt": "Best to worst magical creature as a roommate",
+    "say": "Rank these magical roommates, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "troll",
+        "label": "A troll"
+      },
+      {
+        "id": "unicorn",
+        "label": "A unicorn"
+      },
+      {
+        "id": "ghost",
+        "label": "A ghost"
+      },
+      {
+        "id": "fairy",
+        "label": "A fairy"
+      },
+      {
+        "id": "dragon",
+        "label": "A dragon"
+      }
+    ],
+    "expected": ["fairy", "unicorn", "ghost", "dragon", "troll"]
+  },
+  {
+    "id": "hr-animal-326",
+    "kind": "hypothetical",
+    "prompt": "Most to least likely to win a spelling bee",
+    "say": "Which animal would win a spelling bee? Rank from most to least likely.",
+    "top": "Wins",
+    "bottom": "Loses",
+    "items": [
+      {
+        "id": "chicken",
+        "label": "A chicken"
+      },
+      {
+        "id": "dolphin",
+        "label": "A dolphin"
+      },
+      {
+        "id": "owl",
+        "label": "A wise old owl"
+      },
+      {
+        "id": "dog",
+        "label": "A dog"
+      },
+      {
+        "id": "parrot",
+        "label": "A parrot"
+      }
+    ],
+    "expected": ["owl", "dolphin", "parrot", "dog", "chicken"]
+  },
+  {
+    "id": "hr-fantasy-327",
+    "kind": "hypothetical",
+    "prompt": "Best to worst job for a dragon",
+    "say": "Rank these jobs for a dragon, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "librarian",
+        "label": "Librarian"
+      },
+      {
+        "id": "pizza",
+        "label": "Pizza chef"
+      },
+      {
+        "id": "fire",
+        "label": "Firefighter"
+      },
+      {
+        "id": "vault",
+        "label": "Bank vault guard"
+      },
+      {
+        "id": "candle",
+        "label": "Candle lighter"
+      }
+    ],
+    "expected": ["vault", "pizza", "candle", "fire", "librarian"]
+  },
+  {
+    "id": "hr-weird-328",
+    "kind": "hypothetical",
+    "prompt": "Best to worst thing to rain from the sky",
+    "say": "For one day, something new falls from the sky. Rank these from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "pillows",
+        "label": "Pillows"
+      },
+      {
+        "id": "spaghetti",
+        "label": "Spaghetti"
+      },
+      {
+        "id": "money",
+        "label": "Dollar bills"
+      },
+      {
+        "id": "puppies",
+        "label": "Puppies"
+      },
+      {
+        "id": "candy",
+        "label": "Candy"
+      }
+    ],
+    "expected": ["money", "candy", "puppies", "pillows", "spaghetti"]
+  },
+  {
+    "id": "hr-alien-329",
+    "kind": "hypothetical",
+    "prompt": "Best to worst thing to show a visiting alien",
+    "say": "An alien is visiting. Rank these things to show it, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "traffic",
+        "label": "A traffic jam"
+      },
+      {
+        "id": "coaster",
+        "label": "A roller coaster"
+      },
+      {
+        "id": "dentist",
+        "label": "A dentist visit"
+      },
+      {
+        "id": "catvideo",
+        "label": "A cat video"
+      },
+      {
+        "id": "pizza",
+        "label": "A pizza"
+      }
+    ],
+    "expected": ["coaster", "pizza", "catvideo", "traffic", "dentist"]
+  },
+  {
+    "id": "hr-robot-330",
+    "kind": "hypothetical",
+    "prompt": "Best to worst job to hand to a robot",
+    "say": "You get a robot helper. Rank these jobs to give it, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "dog",
+        "label": "Walking the dog"
+      },
+      {
+        "id": "homework",
+        "label": "Doing homework"
+      },
+      {
+        "id": "toilet",
+        "label": "Scrubbing the toilet"
+      },
+      {
+        "id": "toys",
+        "label": "Picking up toys"
+      },
+      {
+        "id": "laundry",
+        "label": "Folding laundry"
+      }
+    ],
+    "expected": ["toilet", "laundry", "homework", "toys", "dog"]
+  },
+  {
+    "id": "hr-shrink-331",
+    "kind": "hypothetical",
+    "prompt": "Best to worst place to be shrunk to bug size",
+    "say": "You shrink to the size of a bug. Rank these places to be, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "bathtub",
+        "label": "A bathtub"
+      },
+      {
+        "id": "dollhouse",
+        "label": "A dollhouse"
+      },
+      {
+        "id": "catbed",
+        "label": "A cat bed"
+      },
+      {
+        "id": "cookiejar",
+        "label": "A cookie jar"
+      },
+      {
+        "id": "garden",
+        "label": "A garden"
+      }
+    ],
+    "expected": ["dollhouse", "cookiejar", "garden", "bathtub", "catbed"]
+  },
+  {
+    "id": "hr-animal-332",
+    "kind": "hypothetical",
+    "prompt": "Best to worst animal to swap lives with",
+    "say": "Swap lives with an animal for a day. Rank them from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "sloth",
+        "label": "A sloth"
+      },
+      {
+        "id": "eagle",
+        "label": "An eagle"
+      },
+      {
+        "id": "pigeon",
+        "label": "A city pigeon"
+      },
+      {
+        "id": "dolphin",
+        "label": "A dolphin"
+      },
+      {
+        "id": "spoiled",
+        "label": "A spoiled house cat"
+      }
+    ],
+    "expected": ["dolphin", "spoiled", "eagle", "sloth", "pigeon"]
+  },
+  {
+    "id": "hr-fantasy-333",
+    "kind": "hypothetical",
+    "prompt": "Best to worst butler to have",
+    "say": "Rank these butlers, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "ghost",
+        "label": "A ghost"
+      },
+      {
+        "id": "robot",
+        "label": "A robot"
+      },
+      {
+        "id": "monkey",
+        "label": "A monkey"
+      },
+      {
+        "id": "giant",
+        "label": "A friendly giant"
+      },
+      {
+        "id": "penguin",
+        "label": "A penguin"
+      }
+    ],
+    "expected": ["robot", "giant", "penguin", "ghost", "monkey"]
+  },
+  {
+    "id": "hr-weird-334",
+    "kind": "hypothetical",
+    "prompt": "Most to least likely to eat your homework",
+    "say": "Who is most likely to eat your homework? Rank from most to least likely.",
+    "top": "Most likely",
+    "bottom": "Least likely",
+    "items": [
+      {
+        "id": "ghost",
+        "label": "A hungry ghost"
+      },
+      {
+        "id": "goat",
+        "label": "A goat"
+      },
+      {
+        "id": "shredder",
+        "label": "A paper shredder"
+      },
+      {
+        "id": "dog",
+        "label": "A dog"
+      },
+      {
+        "id": "brother",
+        "label": "A little brother"
+      }
+    ],
+    "expected": ["goat", "dog", "brother", "shredder", "ghost"]
+  },
+  {
+    "id": "hr-sport-335",
+    "kind": "preference",
+    "prompt": "Best to worst sport to watch",
+    "say": "Rank these sports to watch, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "golf",
+        "label": "Golf"
+      },
+      {
+        "id": "swimming",
+        "label": "Swimming"
+      },
+      {
+        "id": "basket",
+        "label": "Basketball"
+      },
+      {
+        "id": "bowling",
+        "label": "Bowling"
+      },
+      {
+        "id": "soccer",
+        "label": "Soccer"
+      }
+    ],
+    "expected": ["basket", "soccer", "swimming", "bowling", "golf"]
+  },
+  {
+    "id": "hr-games-336",
+    "kind": "preference",
+    "prompt": "Best to worst role at board-game night",
+    "say": "Rank these board game night roles, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "rules",
+        "label": "The rule reader"
+      },
+      {
+        "id": "banker",
+        "label": "The banker"
+      },
+      {
+        "id": "sore",
+        "label": "The sore loser"
+      },
+      {
+        "id": "snacks",
+        "label": "The snack bringer"
+      },
+      {
+        "id": "score",
+        "label": "The scorekeeper"
+      }
+    ],
+    "expected": ["snacks", "banker", "score", "rules", "sore"]
+  },
+  {
+    "id": "hr-home-337",
+    "kind": "preference",
+    "prompt": "Best to worst part of bedtime",
+    "say": "Rank these parts of bedtime, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "teeth",
+        "label": "Brushing teeth"
+      },
+      {
+        "id": "story",
+        "label": "Bedtime story"
+      },
+      {
+        "id": "tidy",
+        "label": "Tidying up toys"
+      },
+      {
+        "id": "bath",
+        "label": "Warm bath"
+      },
+      {
+        "id": "pajamas",
+        "label": "Fresh pajamas"
+      }
+    ],
+    "expected": ["story", "pajamas", "bath", "teeth", "tidy"]
+  },
+  {
+    "id": "hr-home-338",
+    "kind": "preference",
+    "prompt": "Best to worst rainy-day activity",
+    "say": "Rank these rainy day activities, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "baking",
+        "label": "Baking cookies"
+      },
+      {
+        "id": "cleaning",
+        "label": "Cleaning your room"
+      },
+      {
+        "id": "movies",
+        "label": "Movie marathon"
+      },
+      {
+        "id": "board",
+        "label": "Board games"
+      },
+      {
+        "id": "fort",
+        "label": "Blanket fort"
+      }
+    ],
+    "expected": ["movies", "fort", "baking", "board", "cleaning"]
+  },
+  {
+    "id": "hr-school-339",
+    "kind": "preference",
+    "prompt": "Best to worst class pet",
+    "say": "Rank these class pets, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "tarantula",
+        "label": "A tarantula"
+      },
+      {
+        "id": "hamster",
+        "label": "A hamster"
+      },
+      {
+        "id": "stick",
+        "label": "A stick insect"
+      },
+      {
+        "id": "goldfish",
+        "label": "A goldfish"
+      },
+      {
+        "id": "lizard",
+        "label": "A bearded dragon"
+      }
+    ],
+    "expected": ["hamster", "goldfish", "lizard", "stick", "tarantula"]
+  },
+  {
+    "id": "hr-play-340",
+    "kind": "preference",
+    "prompt": "Best to worst playground equipment",
+    "say": "Rank these playground favorites, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "seesaw",
+        "label": "Seesaw"
+      },
+      {
+        "id": "slide",
+        "label": "Slide"
+      },
+      {
+        "id": "monkey",
+        "label": "Monkey bars"
+      },
+      {
+        "id": "swings",
+        "label": "Swings"
+      },
+      {
+        "id": "merry",
+        "label": "Merry-go-round"
+      }
+    ],
+    "expected": ["swings", "slide", "merry", "monkey", "seesaw"]
+  },
+  {
+    "id": "hr-snow-341",
+    "kind": "preference",
+    "prompt": "Best to worst way to spend a snow day",
+    "say": "Rank these ways to spend a snow day, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "snowman",
+        "label": "Building a snowman"
+      },
+      {
+        "id": "shovel",
+        "label": "Shoveling the drive"
+      },
+      {
+        "id": "sled",
+        "label": "Sledding"
+      },
+      {
+        "id": "cocoa",
+        "label": "Cocoa and a movie"
+      },
+      {
+        "id": "snowball",
+        "label": "Snowball fight"
+      }
+    ],
+    "expected": ["sled", "snowball", "cocoa", "snowman", "shovel"]
+  },
+  {
+    "id": "hr-travel-342",
+    "kind": "preference",
+    "prompt": "Best to worst way to pass a long flight",
+    "say": "Rank these ways to pass a long flight, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "chat",
+        "label": "Chat with a stranger"
+      },
+      {
+        "id": "movies",
+        "label": "Watch movies"
+      },
+      {
+        "id": "taxes",
+        "label": "Do your taxes"
+      },
+      {
+        "id": "sleep",
+        "label": "Sleep the whole way"
+      },
+      {
+        "id": "book",
+        "label": "Read a book"
+      }
+    ],
+    "expected": ["sleep", "movies", "book", "chat", "taxes"]
+  },
+  {
+    "id": "hr-social-343",
+    "kind": "preference",
+    "prompt": "Best to worst emoji to get as a reply",
+    "say": "You sent a long message. Rank these replies, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "shrug",
+        "label": "A shrug"
+      },
+      {
+        "id": "heart",
+        "label": "A heart"
+      },
+      {
+        "id": "letterk",
+        "label": "A lone letter K"
+      },
+      {
+        "id": "thumbs",
+        "label": "A thumbs up"
+      },
+      {
+        "id": "laugh",
+        "label": "A laughing face"
+      }
+    ],
+    "expected": ["heart", "laugh", "thumbs", "shrug", "letterk"]
+  },
+  {
+    "id": "hr-time-344",
+    "kind": "hypothetical",
+    "prompt": "Best to worst age to be for a week",
+    "say": "Rank these ages to be for a week, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "age40",
+        "label": "Age 40"
+      },
+      {
+        "id": "age7",
+        "label": "Age 7"
+      },
+      {
+        "id": "age90",
+        "label": "Age 90"
+      },
+      {
+        "id": "age25",
+        "label": "Age 25"
+      },
+      {
+        "id": "age17",
+        "label": "Age 17"
+      }
+    ],
+    "expected": ["age25", "age7", "age17", "age40", "age90"]
+  },
+  {
+    "id": "hr-music-345",
+    "kind": "preference",
+    "prompt": "Best to worst instrument to learn",
+    "say": "Rank these instruments to learn, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "violin",
+        "label": "Violin"
+      },
+      {
+        "id": "guitar",
+        "label": "Guitar"
+      },
+      {
+        "id": "recorder",
+        "label": "Recorder"
+      },
+      {
+        "id": "drums",
+        "label": "Drums"
+      },
+      {
+        "id": "piano",
+        "label": "Piano"
+      }
+    ],
+    "expected": ["guitar", "piano", "drums", "violin", "recorder"]
+  },
+  {
+    "id": "hr-weather-346",
+    "kind": "preference",
+    "prompt": "Best to worst weather for a weekend",
+    "say": "Rank these weekend weathers, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "fog",
+        "label": "Thick fog"
+      },
+      {
+        "id": "sunny",
+        "label": "Sunny and warm"
+      },
+      {
+        "id": "thunder",
+        "label": "Thunderstorm"
+      },
+      {
+        "id": "snow",
+        "label": "Light snow"
+      },
+      {
+        "id": "cloudy",
+        "label": "Cloudy and cool"
+      }
+    ],
+    "expected": ["sunny", "snow", "cloudy", "thunder", "fog"]
+  },
+  {
+    "id": "hr-beach-347",
+    "kind": "preference",
+    "prompt": "Best to worst beach activity",
+    "say": "Rank these beach activities, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "sunbathe",
+        "label": "Sunbathing"
+      },
+      {
+        "id": "castle",
+        "label": "Building sandcastles"
+      },
+      {
+        "id": "surf",
+        "label": "Surfing"
+      },
+      {
+        "id": "bury",
+        "label": "Burying a friend"
+      },
+      {
+        "id": "swim",
+        "label": "Swimming"
+      }
+    ],
+    "expected": ["swim", "castle", "bury", "surf", "sunbathe"]
+  },
+  {
+    "id": "hr-party-348",
+    "kind": "preference",
+    "prompt": "Best to worst birthday party place",
+    "say": "Rank these birthday party places, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "museum",
+        "label": "Museum"
+      },
+      {
+        "id": "trampo",
+        "label": "Trampoline park"
+      },
+      {
+        "id": "backyard",
+        "label": "Backyard"
+      },
+      {
+        "id": "pool",
+        "label": "Swimming pool"
+      },
+      {
+        "id": "bowling",
+        "label": "Bowling alley"
+      }
+    ],
+    "expected": ["trampo", "pool", "bowling", "backyard", "museum"]
+  },
+  {
+    "id": "hr-home-349",
+    "kind": "preference",
+    "prompt": "Best to worst thing to find in the fridge",
+    "say": "Rank these things to find in the fridge, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "soup",
+        "label": "Mystery soup"
+      },
+      {
+        "id": "pizza",
+        "label": "Leftover pizza"
+      },
+      {
+        "id": "milk",
+        "label": "An empty milk carton"
+      },
+      {
+        "id": "cake",
+        "label": "Chocolate cake"
+      },
+      {
+        "id": "melon",
+        "label": "A cold watermelon"
+      }
+    ],
+    "expected": ["cake", "pizza", "melon", "soup", "milk"]
+  }
+]
