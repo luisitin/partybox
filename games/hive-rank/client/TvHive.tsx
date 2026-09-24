@@ -120,9 +120,17 @@ export function TvHive({ view }: { view: HiveTvView }): JSX.Element {
   const perfect =
     view.spots.length === 5 &&
     (view.spots[0]?.faces ?? []).some((id) => view.spots.every((s) => s.faces.includes(id)));
+  // The reveal's sting on entry ("look at the TV"), a pluck as each spot lands, the jackpot on a
+  // perfect hive's number one. One key per moment, so a re-render never replays one.
   useCueOn(
-    view.step > 0 && newest ? `${view.round}:${view.step}` : null,
-    perfect ? 'jackpot' : 'card',
+    view.short
+      ? null
+      : view.step === 0
+        ? `${view.round}:reveal`
+        : newest
+          ? `${view.round}:${view.step}`
+          : null,
+    view.step === 0 ? 'reveal' : perfect ? 'jackpot' : 'card',
   );
   if (view.short) {
     return (

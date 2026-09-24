@@ -8,7 +8,15 @@ import type { GameEvent } from '@partybox/game-sdk';
 import { buildHive, lowsOf, queensOf, scoreRound } from '../hive';
 import { question } from '../round';
 import { lineRequest, msOf, spotRequest, voiceOf } from '../speech';
-import { DECIDED_MS, SHORT_MS, SPOT_BEAT_MS, SPOT_MS, TOP_SPOT_MS, VOICE_WAIT_MS } from '../types';
+import {
+  DECIDED_BEAT_MS,
+  DECIDED_MS,
+  SHORT_MS,
+  SPOT_BEAT_MS,
+  SPOT_MS,
+  TOP_SPOT_MS,
+  VOICE_WAIT_MS,
+} from '../types';
 import type { Input, State, Transition } from '../types';
 
 /** The number one spot's reading gets a longer beat after it: it is the moment. */
@@ -37,7 +45,9 @@ export function enterHive(state: State, now: number): State {
   };
   const decided = msOf(state, lineRequest(state, 'decided'));
   const hold =
-    decided !== undefined && decided >= 0 ? Math.max(DECIDED_MS, decided + 300) : DECIDED_MS;
+    decided !== undefined && decided >= 0
+      ? Math.max(DECIDED_MS, DECIDED_BEAT_MS + decided + 300)
+      : DECIDED_MS;
   return enterPhase({ ...state, q }, 'hive', now, hold);
 }
 

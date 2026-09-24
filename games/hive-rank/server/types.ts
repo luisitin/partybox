@@ -80,6 +80,8 @@ export type Input = z.infer<typeof inputSchema>;
 export const INTRO_MS = 8_000;
 /** `hive` step 0: "The hive has decided…" (at least this long; its clip is ~1.5 s). */
 export const DECIDED_MS = 1_800;
+/** The TV starts "The hive has decided." this far in, after its `reveal` sting (client timing.ts). */
+export const DECIDED_BEAT_MS = 400;
 /** Each of the 5th–2nd spots is held about this long, or its reading plus a beat. */
 export const SPOT_MS = 2_000;
 export const SPOT_BEAT_MS = 600;

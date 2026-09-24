@@ -8,9 +8,10 @@ export const clientModule: GameClientModule = {
   strings: STRINGS,
   Tv: lazy(() => import('./Tv').then((m) => ({ default: m.Tv }))),
   Controller: lazy(() => import('./Controller').then((m) => ({ default: m.Controller }))),
-  // `rank` keeps the shell's `phase` chime ("pick up your phone"); the reveal says "look at the
-  // TV"; the TV plays a `card` per spot itself (TvHive), so re-arming the step stays quiet.
-  sounds: { intro: 'silence', hive: 'reveal', score: 'tally' },
+  // `rank` keeps the shell's `phase` chime ("pick up your phone"). `hive` re-arms its deadline
+  // every step, and the shell re-chimes a mapped cue on each: so it maps to `silence` and TvHive
+  // plays its own `reveal` on entry and `card` (or `jackpot`) as each spot lands.
+  sounds: { intro: 'silence', hive: 'silence', score: 'tally' },
   beds: { intro: 'lofi', rank: 'lofi', hive: 'latenight', score: 'warm' },
   // The reveal's own entrance is the choreography (the ladder and "The hive has decided…").
   quickInto: ['hive'],

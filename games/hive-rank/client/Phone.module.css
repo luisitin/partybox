@@ -338,6 +338,44 @@
   text-align: center;
 }
 
+.ladderBox {
+  position: relative;
+}
+
+.scout {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  font-size: var(--pb-font-h2);
+  line-height: 1;
+  transform: translate3d(240px, -60px, 0);
+  transition: transform calc(var(--pb-motion-slow) * 2.3) cubic-bezier(0.45, 0, 0.25, 1);
+  transition-delay: calc(var(--pb-motion-slow) * 0.7);
+}
+
+.scoutInner {
+  display: inline-block;
+  animation: flutter calc(var(--pb-motion-pulse) * 1.1) ease-in-out infinite;
+}
+
+@keyframes flutter {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(-8deg);
+  }
+  25% {
+    transform: translate3d(6px, -6px, 0) rotate(6deg);
+  }
+  50% {
+    transform: translate3d(0, -2px, 0) rotate(-4deg);
+  }
+  75% {
+    transform: translate3d(-6px, -6px, 0) rotate(8deg);
+  }
+}
+
 .ladder {
   list-style: none;
   margin: 0;
@@ -446,13 +484,15 @@
 @media (prefers-reduced-motion: reduce) {
   .introBee,
   .watchBee,
-  .bigBee {
+  .bigBee,
+  .scoutInner {
     animation: none;
   }
 }
 
 :global(:root[data-motion='off']) .introBee,
 :global(:root[data-motion='off']) .watchBee,
-:global(:root[data-motion='off']) .bigBee {
+:global(:root[data-motion='off']) .bigBee,
+:global(:root[data-motion='off']) .scoutInner {
   animation: none;
 }

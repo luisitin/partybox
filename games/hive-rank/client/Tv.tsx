@@ -10,12 +10,12 @@ import { TvHive } from './TvHive';
 import { TvIntro, TvRank } from './TvRank';
 import { TvScore } from './TvScore';
 import { Honeycomb } from './Honeycomb';
-import { useReading } from './useReading';
+import { readingDelay, useReading } from './useReading';
 import styles from './Tv.module.css';
 
 export function Tv({ view, skip }: GameTvProps<HiveTvView>): JSX.Element {
   const L = useT(STRINGS);
-  useReading(view.speech);
+  useReading(view.speech, true, readingDelay(view.phaseId, view.step));
   const body =
     view.phaseId === 'intro' ? (
       <TvIntro skip={view.next ? skip : undefined} />

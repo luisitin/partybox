@@ -9,7 +9,7 @@ import type { Input } from '../server/types';
 import { PhoneRank } from './PhoneRank';
 import { NextButton, PhoneScore } from './PhoneScore';
 import { STRINGS } from './strings';
-import { useReading } from './useReading';
+import { readingDelay, useReading } from './useReading';
 import styles from './Phone.module.css';
 
 const STEPS = [
@@ -81,7 +81,11 @@ export function Controller({
   const L = useT(STRINGS);
   const phoneOnly = usePhoneOnly();
   // Phones speak only in a phone-only room (the TV reads otherwise).
-  useReading(view.speech, phoneOnly && view.phaseId !== 'hive');
+  useReading(
+    view.speech,
+    phoneOnly && view.phaseId !== 'hive',
+    readingDelay(view.phaseId, view.step),
+  );
   if (view.phaseId === 'intro') return <Intro view={view} skip={skip} />;
   if (view.me.role !== 'player')
     return (
