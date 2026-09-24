@@ -44,7 +44,7 @@ Five palettes re-declare the colour tokens (`tokens.css` → `[data-theme='…']
 
 Font: Nunito Variable (OFL, bundled via `@fontsource-variable/nunito`, weights 200–1000) with a
 system-UI fallback stack (`--pb-font-family`); bold weights for display/h1. Line height 1.2 display, 1.4 body.
-The TV shell sets the TV column; the controller shell sets the phone column; tokens switch by shell, not by media query.
+The TV shell sets the TV column; the controller shell sets the phone column; tokens switch by shell, not by media query. The phone column is declared in rem (1.125rem = 18 px at a 16 px root, I-100 C), so a phone's larger-text setting scales the words; the TV column stays px.
 
 ## Spacing, shape, layout
 

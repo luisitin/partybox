@@ -57,13 +57,14 @@
   --pb-motion-confetti: 3000ms;
   --pb-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
 
-  /* phone column by default; the TV shell overrides */
-  --pb-font-display: 48px;
-  --pb-font-h1: 28px;
-  --pb-font-h2: 22px;
-  --pb-font-body: 18px;
-  --pb-font-caption: 14px;
-  --pb-font-button: 20px;
+  /* phone column by default; the TV shell overrides. I-100 C: rem, so a phone's "larger text"
+     setting scales the words (16 px root = the same sizes as before). */
+  --pb-font-display: 3rem;
+  --pb-font-h1: 1.75rem;
+  --pb-font-h2: 1.375rem;
+  --pb-font-body: 1.125rem;
+  --pb-font-caption: 0.875rem;
+  --pb-font-button: 1.25rem;
   --pb-chip-size: 40px;
 }
 
