@@ -53,8 +53,8 @@ describe('winnerLineFor', () => {
         { playerId: 'Kenji', score: 10, rank: 3 },
       ],
     );
-    expect(winnerLineFor(shared, 'Sam')).toBe('You tie for first! 🏆');
-    expect(winnerLineFor(shared, 'Kenji')).toBe('Priya & Sam win!');
+    expect(winnerLineFor(shared, 'Sam')).toBe('You share first with Priya! 🏆');
+    expect(winnerLineFor(shared, 'Kenji')).toBe('Priya & Sam share first!');
   });
   it('counts the rest of a three-way tie in the singular (review-loop #215)', () => {
     const tied = room(
@@ -67,7 +67,7 @@ describe('winnerLineFor', () => {
         { playerId: 'Dev', score: 10, rank: 4 },
       ],
     );
-    expect(winnerLineFor(tied, 'Dev')).toBe('Kenji, Priya & 1 other tie!');
+    expect(winnerLineFor(tied, 'Dev')).toMatch(/^Kenji, Priya & \w+ share first!$/) // I-476 C: three are all named;
     const four = room(
       { Sam: 20, Priya: 20, Kenji: 20, Dev: 20, Ana: 10 },
       ['Sam', 'Priya', 'Kenji', 'Dev'],
@@ -79,7 +79,7 @@ describe('winnerLineFor', () => {
         { playerId: 'Ana', score: 10, rank: 5 },
       ],
     );
-    expect(winnerLineFor(four, 'Ana')).toBe('Dev, Kenji & 2 others tie!');
+    expect(winnerLineFor(four, 'Ana')).toBe('Dev, Kenji & 2 others share first!');
   });
 
   it('calls an all-way tie a tie for everyone', () => {
@@ -91,7 +91,7 @@ describe('winnerLineFor', () => {
         { playerId: 'Priya', score: 10, rank: 1 },
       ],
     );
-    expect(winnerLineFor(all, 'Sam')).toBe("It's a tie!");
+    expect(winnerLineFor(all, 'Sam')).toBe('Everyone shares first!');
   });
   it('calls a zero-score game "Nobody scored" (I-128: an honest state, not a tie), whoever asks', () => {
     const none = room({ Sam: 0, Priya: 0 }, [], []);
@@ -138,17 +138,40 @@ describe('winnerLine with bots in the tie (I-153)', () => {
 
   it('names the people and folds the bots into "the bots"', () => {
     expect(winnerLine(tieOf(['Bot 1', 'Bot 3', 'Sam', 'Priya']))).toBe(
-      'Priya, Sam & the bots tie!',
+      'Priya, Sam & the bots share first!',
     );
-    expect(winnerLine(tieOf(['Bot 2', 'Sam']))).toBe('Sam & the bot tie!');
+    expect(winnerLine(tieOf(['Bot 2', 'Sam']))).toBe('Sam & the bot share first!');
   });
 
   it('says so when only bots tie, and still names a lone bot winner', () => {
-    expect(winnerLine(tieOf(['Bot 1', 'Bot 3'], ['Sam']))).toBe('The bots tie — nobody home?');
+    expect(winnerLine(tieOf(['Bot 1', 'Bot 3'], ['Sam']))).toBe('The bots share first — nobody home?');
     expect(winnerLine(tieOf(['Bot 1'], ['Sam']))).toBe('Bot 1 wins!');
   });
 
   it('leaves a people-only tie as it was', () => {
-    expect(winnerLine(tieOf(['Sam', 'Priya']))).toBe('Priya & Sam win!');
+    expect(winnerLine(tieOf(['Sam', 'Priya']))).toBe('Priya & Sam share first!');
+  });
+});
+
+describe('I-476 C (I-455): three names, then a fold', () => {
+  const tie = (ids: string[], bots: string[] = []): RoomSnapshot =>
+    ({
+      players: ids.map((id) => ({ id, name: id, ...(bots.includes(id) ? { bot: { ownerId: null, strategy: 'random' } } : {}) })),
+      results: {
+        gameId: 'g',
+        results: {
+          scores: Object.fromEntries(ids.map((id) => [id, 5])).valueOf(),
+          ranking: ids.map((playerId) => ({ playerId, score: 5, rank: 1 })),
+          winnerIds: ids,
+          awards: [],
+        },
+        players: [...ids, 'Zed'].map((id) => ({ id, name: id, avatarId: 'fox' })),
+      },
+    }) as unknown as RoomSnapshot;
+  it('names all three', () => {
+    expect(winnerLineFor(tie(['Ana', 'Bo', 'Cy']), 'Zed')).toBe('Ana, Bo & Cy share first!');
+  });
+  it('folds from four', () => {
+    expect(winnerLineFor(tie(['Ana', 'Bo', 'Cy', 'Di']), 'Zed')).toBe('Ana, Bo & 2 others share first!');
   });
 });

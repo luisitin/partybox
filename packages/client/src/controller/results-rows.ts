@@ -73,6 +73,9 @@ export function winnerLine(room: RoomSnapshot, scoreless = false): string {
   if (names.length === 1) return t.results.winner(names[0] as string);
   if (names.length === 2)
     return t.results.winners(t.results.pair(names[0] as string, names[1] as string));
+  // I-476 C (I-455): three names fit; fold from four
+  if (names.length === 3)
+    return t.results.winners(t.results.trio(names[0] as string, names[1] as string, names[2] as string));
   return t.results.tieAmong(`${names[0]}, ${names[1]}`, names.length - 2);
 }
 
@@ -90,5 +93,13 @@ export function winnerLineFor(room: RoomSnapshot, meId: string, scoreless = fals
   if (!ids.includes(meId)) return winnerLine(room);
   if (ids.length === 1) return t.results.youWin;
   if (ids.length >= results.players.length) return t.results.tie;
-  return t.results.youTie;
+  // I-476: "You share first with Sam!" — the others, alphabetical like every list
+  const others = ids
+    .filter((id) => id !== meId)
+    .map((id) => results.players.find((p) => p.id === id)?.name ?? '?')
+    .sort((x, y) => x.localeCompare(y, undefined, { numeric: true, sensitivity: 'base' }));
+  const first = others[0] ?? '?';
+  return t.results.youTie(
+    others.length === 1 ? first : t.results.andOthers(first, others.length - 1),
+  );
 }

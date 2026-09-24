@@ -195,6 +195,8 @@ export function Scoreboard({
   const tier = tierOf(rows.length, compact, dense, columns);
   const cols = COLUMNS[tier];
   const winners = rows.filter((r) => r.rank === 1).length;
+  // I-476 B: a place held by more than one row reads "=3" on each of them
+  const shared = (rank: number): boolean => rows.filter((r) => r.rank === rank).length > 1;
   const trophy = !noTrophy && winners < rows.length;
   const climb = !compact && stagger === 'climb';
   const heldRanks = useHeld(holdMs); // I-019 A: ranks show "·" through the hold as well
@@ -236,8 +238,23 @@ export function Scoreboard({
               {bandFor(index)}
             </span>
           ) : null}
-          <span className={styles.rank} aria-label={L('rank {rank}', { rank: row.rank })}>
-            {noRanks ? '' : heldRanks ? '·' : row.rank === 1 && trophy ? '🏆' : row.rank}
+          <span
+            className={styles.rank}
+            aria-label={
+              shared(row.rank)
+                ? L('tied, rank {rank}', { rank: row.rank })
+                : L('rank {rank}', { rank: row.rank })
+            }
+          >
+            {noRanks
+              ? ''
+              : heldRanks
+                ? '·'
+                : row.rank === 1 && trophy
+                  ? '🏆'
+                  : shared(row.rank)
+                    ? `=${row.rank}`
+                    : row.rank}
           </span>
           <Avatar
             avatarId={row.avatarId}

@@ -125,17 +125,20 @@ export const en = {
   results: {
     title: 'Results',
     winner: (name: string) => `${name} wins!`,
-    winners: (names: string) => `${names} win!`,
+    // I-476: one word for a shared first place, whatever its size — "share first"
+    winners: (names: string) => `${names} share first!`,
     /** Two tied winners' names, for `winners`. */
     pair: (a: string, b: string) => `${a} & ${b}`,
+    /** I-455 (in I-476 C): three tied winners, all named. */
+    trio: (a: string, b: string, c: string) => `${a}, ${b} & ${c}`,
     tieAmong: (names: string, others: number) =>
-      `${names} & ${others} ${others === 1 ? 'other' : 'others'} tie!`,
+      `${names} & ${others} ${others === 1 ? 'other' : 'others'} share first!`,
     /** I-153 B: bots tied with people take no naming slot (`names` comma-joined). */
     tieWithBots: (names: string, bots: number) =>
-      `${names} & the ${bots === 1 ? 'bot' : 'bots'} tie!`,
+      `${names} & the ${bots === 1 ? 'bot' : 'bots'} share first!`,
     /** I-153 C: a tie with no person in it (a lone bot winner still gets its name). */
-    botTie: 'The bots tie — nobody home?',
-    tie: "It's a tie!",
+    botTie: 'The bots share first — nobody home?',
+    tie: 'Everyone shares first!',
     over: 'Game over',
     show: "That's the show!",
     scorelessHint: 'No points in this game — the books on the TV are the result.',
@@ -150,8 +153,14 @@ export const en = {
     waitingForVip: 'Waiting for the VIP…',
     waitingFor: (name: string) => `Waiting for ${name}…`,
     youWin: 'You win! 🏆',
-    youTie: 'You tie for first! 🏆',
+    /** I-476: a co-winner's own line — who they share it with ("Sam", "Sam & 1 other"). */
+    youTie: (with_: string) => `You share first with ${with_}! 🏆`,
     yourPlace: (rank: number, score: number) => `You finished ${ordinal(rank)} · ${score} pts`,
+    /** I-476: a place held with others. */
+    yourPlaceTied: (rank: number, score: number) => `Tied ${ordinal(rank)} · ${score} pts`,
+    /** "Sam & 2 others" (the rest of a shared first, for `youTie`). */
+    andOthers: (name: string, others: number) =>
+      `${name} & ${others} ${others === 1 ? 'other' : 'others'}`,
     /** I-155 A: an award you won, on your own phone ("Your card of the night"). */
     yourAward: (title: string) => `Your ${title.charAt(0).toLowerCase()}${title.slice(1)}`,
     /** I-155 C: the votes your cards took, round by round ("2 · 0 · 3"). */

@@ -9,6 +9,7 @@ export const STRINGS: Strings = {
     players: 'jugadores',
     scoreboard: 'marcador',
     'rank {rank}': 'puesto {rank}',
+    'tied, rank {rank}': 'empate, puesto {rank}', // I-476 B
     'wager placed': 'apuesta hecha',
     // Timer: one label for every count (the design harness finds the timer by "…seconds left"), so
     // the Spanish reads as a label and its value — right for 1 as for 30.
