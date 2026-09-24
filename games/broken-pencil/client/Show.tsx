@@ -52,14 +52,22 @@ export function Show({
         {L('close enough ✓ — count it')}
       </button>
     ) : null;
+  // I-490 B: the VIP can cut someone else's book short
+  const nextBookButton =
+    view.vip === view.me.id && !s.lastBook ? (
+      <button type="button" className={styles.nextBook} onClick={() => send({ type: 'nextBook' })}>
+        {L('⏭ Next book')}
+      </button>
+    ) : null;
   if (!s.presenting)
-    return page || vetoButton ? (
+    return page || vetoButton || nextBookButton ? (
       <Screen title={L('{name} is presenting', { name: s.ownerName })}>
         <p className={styles.kicker}>
           {L("{name}'s book · page {page} of {pages}", { name: s.ownerName, ...at })}
         </p>
         {page}
         {vetoButton}
+        {nextBookButton}
         {tvOff ? null : <p className={styles.hint}>{L('Your turn comes when your book is up.')}</p>}
       </Screen>
     ) : (

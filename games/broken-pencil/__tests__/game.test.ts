@@ -400,8 +400,11 @@ describe('encoding and bot', () => {
     const shown = enterShow(bots, T0 + 9000);
     expect(game.bot.sampleInput(shown, presenter, rng)).toBeNull();
     expect((shown.phase.deadline ?? 0) - shown.phase.startedAt).toBe(BOT_SHOW_MS.word);
-    const drawing = turnPage(shown, T0 + 9500, (st) => st);
-    expect((drawing.phase.deadline ?? 0) - drawing.phase.startedAt).toBe(BOT_SHOW_MS.draw);
+    // I-490 A: from the word straight to the book's last page — here a guess
+    // (its verdict beat and line keep a last page longer than BOT_SHOW_MS.guess — pacing rule)
+    const last = turnPage(shown, T0 + 9500, (st) => st);
+    expect(last.showing?.page).toBe(last.books[0]!.pages.length - 1);
+    expect((last.phase.deadline ?? 0) - last.phase.startedAt).toBeGreaterThan(BOT_SHOW_MS.guess);
     expect((s.phase.deadline ?? 0) - s.phase.startedAt).toBe(SHOW_MS.word);
   });
 });
