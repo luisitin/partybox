@@ -71,7 +71,7 @@ Pause freezes the caller (and a running check); daubs and claims are ignored whi
   passes to the next in line with a fresh 3 s from that moment (the armed phone sends `lapse`; the next
   event settles it anyway). A claim evaluates **that card only** against the pattern and the numbers called so far:
   - `red` = every daubed square whose number was never called (anywhere on the card);
-  - the completion shown is the one with the most green squares; **valid iff it is entirely green**.
+  - the completion shown is the one with the most **daubed** squares, ties to the most green (I-392 A: the line the player bet on — by green alone FREE made an untouched middle row beat a daubed top row); **valid iff it is entirely green**; the verdict names a checked line — "Top row: 15, 29 and 3 more were never called" (B, `lineName`).
   - Valid → `bingo` (+1, that card locked). Invalid → `check`: that card's daubs wiped (other cards keep
     theirs), `waitForCall = drawn + 1` (you may claim
     again once the next number is called). A `bingo` during a check is ignored (one check at a time).

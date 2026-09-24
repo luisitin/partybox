@@ -91,12 +91,15 @@ export function evaluate(
   const d = new Set([...daubs, FREE]);
   const c = new Set([...called, 0]);
   const red = card.map((_, i) => i).filter((i) => d.has(i) && !c.has(card[i] as number));
+  // I-392 A: judge the line the player bet on — the most DAUBED cells, ties to the most called.
+  // (By called cells alone, FREE made any line through the centre beat a daubed line of misses.)
   let best: { cells: readonly number[]; green: number[] } = { cells: [], green: [] };
-  let bestScore = -1;
+  let bestDaubed = -1;
   for (const cells of completions(pattern)) {
+    const daubed = cells.filter((i) => d.has(i)).length;
     const green = cells.filter((i) => d.has(i) && c.has(card[i] as number));
-    if (green.length > bestScore) {
-      bestScore = green.length;
+    if (daubed > bestDaubed || (daubed === bestDaubed && green.length > best.green.length)) {
+      bestDaubed = daubed;
       best = { cells, green };
     }
   }
