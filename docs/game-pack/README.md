@@ -21,7 +21,7 @@ at a time; nothing here is built until the owner says so.
 | 00   | [parts/00-FOUNDATION.md](parts/00-FOUNDATION.md)                     | platform (F1–F7)                                          | received 2026-09-24 |
 | 01   | [parts/01-IMPOSTER-HERD-MIND.md](parts/01-IMPOSTER-HERD-MIND.md)     | [🕵️ Imposter](imposter/) · [🐑 Herd Mind](herd-mind/)     | received 2026-09-24 |
 | 02   | [parts/02-FAKE-OUT-WHO-SAID-IT.md](parts/02-FAKE-OUT-WHO-SAID-IT.md) | [🎭 Fake-Out](fake-out/) · [🗣️ Who Said It](who-said-it/) | received 2026-09-24 |
-| 03   | —                                                                    | [📻 Tune In](tune-in/) · [🐝 Hive Rank](hive-rank/)       | waiting             |
+| 03   | [parts/03-TUNE-IN-HIVE-RANK.md](parts/03-TUNE-IN-HIVE-RANK.md)       | [📻 Tune In](tune-in/) · [🐝 Hive Rank](hive-rank/)       | received 2026-09-24 |
 | 04   | —                                                                    | [🔁 Echo](echo/) · [🔨 Blind Auction](blind-auction/)     | waiting             |
 | 05   | —                                                                    | [🗂️ Spy Grid](spy-grid/)                                  | waiting             |
 | 06   | —                                                                    | [🌙 Nightfall](nightfall/)                                | waiting             |
