@@ -186,6 +186,13 @@ export function ControllerHand({ view, me, send, skip }: Props): JSX.Element {
               ? L('Round {round} · pick {n}, in order', { round: view.round, n: pick })
               : L('Round {round} · pick one', { round: view.round })}
           </span>
+          {/* I-447 B: the TV says the VIP moves things on — here, while they are still choosing */}
+          {!view.timed && skip && view.playedCount > 0 ? (
+            <CloseRound
+              skip={skip}
+              waiting={Math.max(0, view.playersExpected - view.playedCount)}
+            />
+          ) : null}
           {/* I-159 B: Fan or List, this phone's own choice */}
           <button
             type="button"
@@ -293,5 +300,36 @@ export function ControllerHand({ view, me, send, skip }: Props): JSX.Element {
         </ul>
       </div>
     </Screen>
+  );
+}
+
+/** I-447 B: the VIP's "Close the round" while they choose: the first tap asks, the second closes
+ *  (the cards not yet played sit this round out); left alone, it forgets the ask after 3 s. */
+function CloseRound({ skip, waiting }: { skip: () => void; waiting: number }): JSX.Element {
+  const L = useT(STRINGS);
+  const [ask, setAsk] = useState(false);
+  const [sent, setSent] = useState(false);
+  useEffect(() => {
+    if (!ask) return undefined;
+    const h = setTimeout(() => setAsk(false), 3000);
+    return () => clearTimeout(h);
+  }, [ask]);
+  return (
+    <button
+      type="button"
+      className={`${styles.closeRound} ${ask ? styles.closeAsk : ''}`}
+      disabled={sent}
+      onClick={() => {
+        if (!ask) return setAsk(true);
+        setSent(true);
+        skip();
+      }}
+    >
+      {sent
+        ? L('Closing…')
+        : ask
+          ? L('Sure? {n} still choosing', { n: waiting })
+          : L('⏭ Close the round')}
+    </button>
   );
 }
