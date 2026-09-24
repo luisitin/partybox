@@ -126,3 +126,30 @@
   height: 0;
   z-index: 2;
 }
+
+/* ── I-788 A: the "more below" row — its own 40 px between the body and the footer, full width, the
+   whole row the button (the owner's 56 × 40 target, wider). Nothing sits under it. */
+.moreRow {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pb-space-2);
+  height: 40px;
+  margin: 0 var(--pb-space-4);
+  border-top: 1px solid var(--pb-border);
+  color: var(--pb-text-muted);
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  background: transparent;
+  animation: global(pb-fade-in) var(--pb-motion-base) var(--pb-ease) both;
+}
+.moreRow > span {
+  font-size: 18px;
+  line-height: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .moreRow {
+    animation: none;
+  }
+}

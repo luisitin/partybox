@@ -30,13 +30,18 @@ export function Screen({ children, footer, title, className }: ScreenProps): JSX
   // I-066 B: "more below" — true while the body can scroll further (scroll + resize watched).
   const body = useRef<HTMLDivElement>(null);
   const [more, setMore] = useState(false);
+  // I-788 B: the row stays while the body can scroll at all — "back to top" at the end
+  const [scrolls, setScrolls] = useState(false);
   // I-456 A (the arrow clears the footer, however tall) is carried by I-187's zero-height anchor
   // between the body and the footer: the pill sits var(--pb-space-2) above the footer's top edge,
   // so a measured footer height would count it twice.
   useEffect(() => {
     const el = body.current;
     if (!el) return undefined;
-    const check = (): void => setMore(el.scrollHeight - el.clientHeight - el.scrollTop > 24);
+    const check = (): void => {
+      setMore(el.scrollHeight - el.clientHeight - el.scrollTop > 24);
+      setScrolls(el.scrollHeight - el.clientHeight > 24);
+    };
     check();
     el.addEventListener('scroll', check, { passive: true });
     const ro = new ResizeObserver(check);
@@ -70,19 +75,21 @@ export function Screen({ children, footer, title, className }: ScreenProps): JSX
       <div ref={body} className={styles.body}>
         {children}
       </div>
-      {more ? (
-        <div className={styles.moreAnchor}>
-          <button
-            type="button"
-            className={styles.more}
-            aria-label={L('scroll down')}
-            onClick={() =>
-              body.current?.scrollBy({ top: body.current.clientHeight * 0.8, behavior: 'smooth' })
-            }
-          >
-            ▾
-          </button>
-        </div>
+      {/* I-788 A: the cue has a row of its own between the body and the footer — it never covers
+          content (it floated over the body's last line); B: it stays while the body scrolls at all */}
+      {scrolls ? (
+        <button
+          type="button"
+          className={styles.moreRow}
+          aria-label={more ? L('scroll down') : L('back to top')}
+          onClick={() =>
+            more
+              ? body.current?.scrollBy({ top: body.current.clientHeight * 0.8, behavior: 'smooth' })
+              : body.current?.scrollTo({ top: 0, behavior: 'smooth' })
+          }
+        >
+          <span aria-hidden>{more ? '▾' : '▴'}</span> {more ? L('more below') : L('back to top')}
+        </button>
       ) : null}
       {footer ? <div className={styles.footer}>{footer}</div> : null}
     </section>
