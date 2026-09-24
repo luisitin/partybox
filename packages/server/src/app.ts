@@ -1,6 +1,5 @@
 // Builds the Fastify app + Socket.IO + host. `createApp` is used by main.ts and by the e2e/server
 // tests (which pass port 0 and a frozen clock).
-import { existsSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import Fastify from 'fastify';
@@ -24,6 +23,7 @@ import type { Recorder } from './recorder';
 import { createPublicUrl } from './public-url';
 import { registerRoomsRoute } from './rooms-route';
 import { createSocketLayer } from './sockets';
+import { registerStatic } from './static-cache';
 import { createFunnelBook } from './funnel';
 import { attachSpeech } from './speech';
 import { createTunedBook } from './tuned';
@@ -286,7 +286,7 @@ export async function createApp(options: AppOptions): Promise<App> {
   } else if (options.dev) {
     await registerViteDev(fastify);
   } else {
-    await registerStatic(fastify);
+    await registerStatic(fastify, join(CLIENT_DIR, 'dist')); // cache + precompression rules inside
   }
 
   return app;
@@ -314,32 +314,5 @@ async function registerViteDev(fastify: FastifyInstance): Promise<void> {
   });
   fastify.addHook('onClose', async () => {
     await vite.close();
-  });
-}
-
-async function registerStatic(fastify: FastifyInstance): Promise<void> {
-  const dist = join(CLIENT_DIR, 'dist');
-  if (!existsSync(join(dist, 'index.html'))) {
-    throw new Error(`No built client at ${dist}. Run "pnpm build" first (or use "pnpm dev").`);
-  }
-  const fastifyStatic = (await import('@fastify/static')).default;
-  await fastify.register(fastifyStatic, {
-    root: dist,
-    wildcard: false,
-    index: ['index.html'],
-    cacheControl: true,
-    maxAge: '1h',
-    immutable: false,
-  });
-  // SPA fallback: any unknown GET that wants HTML gets index.html (routes are client-side).
-  fastify.setNotFoundHandler(async (req, reply) => {
-    if (
-      req.method === 'GET' &&
-      !req.url.startsWith('/api/') &&
-      (req.headers.accept ?? '').includes('text/html')
-    ) {
-      return reply.sendFile('index.html');
-    }
-    return reply.code(404).send({ error: 'not found' });
   });
 }
