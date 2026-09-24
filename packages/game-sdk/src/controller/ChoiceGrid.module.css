@@ -28,11 +28,16 @@
    the Screen body scrolls instead, and rows never overflow onto the "Locked in" line. */
 .fill {
   flex: 1;
+  /* I-789 A: the rows share the height left under the question — the grid may shrink */
+  min-height: 0;
 }
 
 .fill .choice {
   flex: 1 1 0;
-  max-height: 22dvh; /* only guards a future 2-3-choice grid; 4 x 22dvh exceeds any phone body */
+  /* I-789 A: 44 px at least (an SE fits four under a two-line question), 66 px at most */
+  min-height: 44px;
+  max-height: 66px;
+  padding: var(--pb-space-2) var(--pb-space-4);
 }
 
 .choice {
@@ -185,3 +190,9 @@
   background: var(--pb-accent-3);
   color: var(--pb-on-accent);
 }
+
+/* ── I-789 A: the status line's space, held before the tap. */
+.reserved {
+  visibility: hidden;
+}
+

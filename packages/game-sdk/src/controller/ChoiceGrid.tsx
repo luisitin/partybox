@@ -147,6 +147,13 @@ export function ChoiceGrid(props: ChoiceGridProps): JSX.Element {
         })}
       </div>
       {after}
+      {/* I-789 A: a fill grid keeps the status line's space before the tap (the rows shrank under
+          the finger when it appeared) */}
+      {fill && correctId === null && selectedId === null && pendingId === null && !pending?.failed ? (
+        <p className={`${styles.locked} ${styles.reserved}`} aria-hidden>
+          {'\u00a0'}
+        </p>
+      ) : null}
       {correctId === null ? (
         selectedId !== null ? (
           <p className={styles.locked} role="status">
