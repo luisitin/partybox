@@ -1,0 +1,102 @@
+{
+  "id": "blind-auction",
+  "name": "Blind Auction",
+  "tagline": "Bid on mystery lots. Treasure or trap?",
+  "description": "Everyone starts with 100 coins. A mystery lot comes up with a hint of what might be inside. Bid in secret: the highest bid wins the lot and pays for it. Then it flips: treasure, trap, heist or swap. Most coins at the end wins.",
+  "version": "0.1.0",
+  "minPlayers": 2,
+  "maxPlayers": 16,
+  "estimatedMinutes": 8,
+  "estimate": {
+    "fixedSeconds": 10,
+    "perRoundSeconds": 34,
+    "perPlayerPerRoundSeconds": 0.3,
+    "roundsSetting": "lots"
+  },
+  "tags": ["strategy", "bluff", "quick"],
+  "settings": [
+    {
+      "key": "lots",
+      "label": "Lots",
+      "description": "How many mystery lots go under the hammer",
+      "type": "number",
+      "default": 8,
+      "min": 5,
+      "max": 12,
+      "step": 1
+    },
+    {
+      "key": "startCoins",
+      "label": "Starting coins",
+      "description": "Every lot's value scales with it",
+      "type": "number",
+      "default": 100,
+      "min": 50,
+      "max": 300,
+      "step": 50
+    },
+    {
+      "key": "bidSeconds",
+      "label": "Bidding time",
+      "description": "Seconds to place a secret bid",
+      "type": "number",
+      "default": 20,
+      "min": 10,
+      "max": 40,
+      "step": 5
+    },
+    {
+      "key": "style",
+      "label": "Bidding",
+      "description": "Live bidding needs everyone in one room; otherwise bids are sealed",
+      "type": "select",
+      "default": "sealed",
+      "options": [
+        { "value": "sealed", "label": "Sealed (secret bids)" },
+        { "value": "live", "label": "Live (going once, going twice)" }
+      ]
+    },
+    {
+      "key": "chaos",
+      "label": "Chaos",
+      "description": "Calm has no heists or swaps; wild has lots of them",
+      "type": "select",
+      "default": "normal",
+      "options": [
+        { "value": "calm", "label": "Calm" },
+        { "value": "normal", "label": "Normal" },
+        { "value": "wild", "label": "Wild" }
+      ]
+    },
+    {
+      "key": "grandLot",
+      "label": "Grand Lot",
+      "description": "The last lot has bigger stakes",
+      "type": "boolean",
+      "default": true
+    },
+    {
+      "key": "spicy",
+      "label": "Spicy lots",
+      "description": "Adds grown-up lots; the rules stay the same",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "key": "reader",
+      "label": "Auctioneer voice",
+      "description": "Who calls the auction out loud",
+      "type": "select",
+      "default": "george",
+      "options": [
+        { "value": "george", "label": "Old British Man" },
+        { "value": "fable", "label": "Young British Man" },
+        { "value": "jessica", "label": "American Woman" },
+        { "value": "sky", "label": "Soft-Spoken Woman" },
+        { "value": "original", "label": "Original" },
+        { "value": "none", "label": "No voice" }
+      ]
+    }
+  ],
+  "supportsBots": true
+}

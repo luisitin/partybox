@@ -1,0 +1,56 @@
+// Spanish for what the server writes and the shell shows: the manifest's picker lines, the VIP's
+// Skip labels (`vipSkipLabel`) and the awards. Keyed by the English sentence (ADR-044).
+export const ES_GAME: Record<string, string> = {
+  // manifest.json — the game picker
+  'Bid on mystery lots. Treasure or trap?': 'Puja por lotes misteriosos. ¿Tesoro o trampa?',
+  'Everyone starts with 100 coins. A mystery lot comes up with a hint of what might be inside. Bid in secret: the highest bid wins the lot and pays for it. Then it flips: treasure, trap, heist or swap. Most coins at the end wins.':
+    'Todos empiezan con 100 monedas. Sale un lote misterioso con una pista de lo que podría tener dentro. Puja en secreto: la oferta más alta gana el lote y lo paga. Luego se revela: tesoro, trampa, atraco o intercambio. Gana quien tenga más monedas al final.',
+  Lots: 'Lotes',
+  'How many mystery lots go under the hammer': 'Cuántos lotes misteriosos salen a subasta',
+  'Starting coins': 'Monedas iniciales',
+  "Every lot's value scales with it": 'El valor de cada lote se ajusta a ellas',
+  'Bidding time': 'Tiempo para pujar',
+  'Seconds to place a secret bid': 'Segundos para hacer una oferta secreta',
+  Bidding: 'Pujas',
+  'Live bidding needs everyone in one room; otherwise bids are sealed':
+    'Las pujas en vivo necesitan a todos en la misma sala; si no, las ofertas son secretas',
+  'Sealed (secret bids)': 'Secretas (ofertas ocultas)',
+  'Live (going once, going twice)': 'En vivo (a la una, a las dos)',
+  Chaos: 'Caos',
+  'Calm has no heists or swaps; wild has lots of them':
+    'Tranquilo no tiene atracos ni intercambios; salvaje tiene muchos',
+  Calm: 'Tranquilo',
+  Normal: 'Normal',
+  Wild: 'Salvaje',
+  'Grand Lot': 'Gran Lote',
+  'The last lot has bigger stakes': 'El último lote se juega a lo grande',
+  'Spicy lots': 'Lotes picantes',
+  'Adds grown-up lots; the rules stay the same': 'Añade lotes para adultos; las reglas no cambian',
+  'Auctioneer voice': 'Voz del subastador',
+  'Who calls the auction out loud': 'Quién canta la subasta en voz alta',
+  'Old British Man': 'Señor británico',
+  'Young British Man': 'Joven británico',
+  'American Woman': 'Mujer estadounidense',
+  'Soft-Spoken Woman': 'Mujer de voz suave',
+  Original: 'Original',
+  'No voice': 'Sin voz',
+  // vipSkipLabel — the host bar and the ★ menu
+  "Let's go": '¡Vamos!',
+  'Skip to bidding': 'Ir a las pujas',
+  'Close bidding': 'Cerrar las pujas',
+  'SOLD!': '¡VENDIDO!',
+  'Flip the card': 'Voltear la carta',
+  'Next lot': 'Siguiente lote',
+  'See results': 'Ver resultados',
+  // awards
+  '🎲 High Roller': '🎲 Gran Apostador',
+  'The biggest winning bid': 'La oferta ganadora más alta',
+  '🧾 Bargain Hunter': '🧾 Cazagangas',
+  'The best profit on a single lot': 'La mejor ganancia en un solo lote',
+  '🦝 Master Thief': '🦝 Ladrón Maestro',
+  'The most coins gained from heists and swaps': 'Más monedas ganadas con atracos e intercambios',
+  '💀 Trap Magnet': '💀 Imán de Trampas',
+  'The most coins lost to traps': 'Más monedas perdidas en trampas',
+  '🛍️ Big Spender': '🛍️ Derrochador',
+  'The most coins spent on winning bids': 'Más monedas gastadas en ofertas ganadoras',
+};

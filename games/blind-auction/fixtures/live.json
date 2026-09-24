@@ -1,0 +1,321 @@
+{
+  "phase": {
+    "id": "live",
+    "startedAt": 1001000,
+    "deadline": 1005700
+  },
+  "rng": {
+    "seed": 7,
+    "step": 118
+  },
+  "players": {
+    "p1": {
+      "id": "p1",
+      "name": "Ana",
+      "avatarId": "fox",
+      "connected": true
+    },
+    "p2": {
+      "id": "p2",
+      "name": "Ben",
+      "avatarId": "fox",
+      "connected": true
+    },
+    "p3": {
+      "id": "p3",
+      "name": "Cy",
+      "avatarId": "fox",
+      "connected": true
+    },
+    "p4": {
+      "id": "p4",
+      "name": "Dee",
+      "avatarId": "fox",
+      "connected": true
+    }
+  },
+  "cfg": {
+    "lots": 8,
+    "startCoins": 100,
+    "bidSeconds": 20,
+    "live": true,
+    "liveRefused": false,
+    "chaos": "normal",
+    "grandLot": true,
+    "spicy": false,
+    "reader": "george"
+  },
+  "presence": {
+    "mode": "together",
+    "phoneOnly": false
+  },
+  "seats": ["p1", "p2", "p3", "p4"],
+  "left": [],
+  "lots": [
+    {
+      "item": {
+        "id": "ba-hot-potato",
+        "name": "Hot Potato",
+        "icon": "🥔",
+        "flavour": "Nobody wants to hold it for long.",
+        "outcomes": [
+          {
+            "type": "lose",
+            "amount": 30,
+            "chance": 60
+          },
+          {
+            "type": "gain",
+            "amount": 200,
+            "chance": 40
+          }
+        ],
+        "grand": false
+      },
+      "outcome": 1
+    },
+    {
+      "item": {
+        "id": "ba-crown-jewel",
+        "name": "Crown Jewel",
+        "icon": "👑",
+        "flavour": "Slightly used. The last owner lost their head.",
+        "outcomes": [
+          {
+            "type": "gain",
+            "amount": 160,
+            "chance": 60
+          },
+          {
+            "type": "lose",
+            "amount": 100,
+            "chance": 30
+          },
+          {
+            "type": "steal",
+            "percent": 30,
+            "chance": 10
+          }
+        ],
+        "grand": false
+      },
+      "outcome": 0
+    },
+    {
+      "item": {
+        "id": "ba-cursed-doll",
+        "name": "Cursed Doll",
+        "icon": "🪆",
+        "flavour": "Its eyes follow you around the room. So does its price.",
+        "outcomes": [
+          {
+            "type": "lose",
+            "amount": 60,
+            "chance": 50
+          },
+          {
+            "type": "gain",
+            "amount": 250,
+            "chance": 40
+          },
+          {
+            "type": "dud",
+            "chance": 10
+          }
+        ],
+        "grand": false
+      },
+      "outcome": 1
+    },
+    {
+      "item": {
+        "id": "ba-parrot-cage",
+        "name": "Parrot Cage",
+        "icon": "🦜",
+        "flavour": "The parrot knows where the gold is. It won't say.",
+        "outcomes": [
+          {
+            "type": "gain",
+            "amount": 100,
+            "chance": 60
+          },
+          {
+            "type": "swap",
+            "chance": 30
+          },
+          {
+            "type": "dud",
+            "chance": 10
+          }
+        ],
+        "grand": false
+      },
+      "outcome": 0
+    },
+    {
+      "item": {
+        "id": "ba-mystery-box",
+        "name": "Mystery Box",
+        "icon": "📦",
+        "flavour": "Shake it. Hear nothing. Bid anyway.",
+        "outcomes": [
+          {
+            "type": "gain",
+            "amount": 100,
+            "chance": 50
+          },
+          {
+            "type": "dud",
+            "chance": 30
+          },
+          {
+            "type": "gain",
+            "amount": 250,
+            "chance": 20
+          }
+        ],
+        "grand": false
+      },
+      "outcome": 1
+    },
+    {
+      "item": {
+        "id": "ba-rocket-crate",
+        "name": "Rocket Crate",
+        "icon": "🚀",
+        "flavour": "Handle with care. Or at least with oven mitts.",
+        "outcomes": [
+          {
+            "type": "gain",
+            "amount": 200,
+            "chance": 40
+          },
+          {
+            "type": "dud",
+            "chance": 40
+          },
+          {
+            "type": "lose",
+            "amount": 60,
+            "chance": 20
+          }
+        ],
+        "grand": false
+      },
+      "outcome": 0
+    },
+    {
+      "item": {
+        "id": "ba-magpie-nest",
+        "name": "Magpie Nest",
+        "icon": "🐦",
+        "flavour": "Everything shiny in town ends up in here.",
+        "outcomes": [
+          {
+            "type": "steal",
+            "percent": 20,
+            "chance": 50
+          },
+          {
+            "type": "gain",
+            "amount": 120,
+            "chance": 30
+          },
+          {
+            "type": "lose",
+            "amount": 50,
+            "chance": 20
+          }
+        ],
+        "grand": false
+      },
+      "outcome": 1
+    },
+    {
+      "item": {
+        "id": "ba-mega-box",
+        "name": "Mega Mystery Box",
+        "icon": "🎁",
+        "flavour": "The biggest box. The biggest question mark.",
+        "outcomes": [
+          {
+            "type": "gain",
+            "amount": 200,
+            "chance": 50
+          },
+          {
+            "type": "gain",
+            "amount": 500,
+            "chance": 30
+          },
+          {
+            "type": "lose",
+            "amount": 250,
+            "chance": 20
+          }
+        ],
+        "grand": true
+      },
+      "outcome": 0
+    }
+  ],
+  "l": {
+    "idx": 0,
+    "bids": {},
+    "high": {
+      "by": "p1",
+      "amount": 35
+    },
+    "stage": 0,
+    "openedAt": 1001000,
+    "winner": null,
+    "price": 0,
+    "tie": false,
+    "step": 0,
+    "effect": null,
+    "voiceAt": null
+  },
+  "coins": {
+    "p1": 100,
+    "p2": 100,
+    "p3": 100,
+    "p4": 100
+  },
+  "stats": {
+    "p1": {
+      "biggestBid": 0,
+      "bestProfit": null,
+      "thief": 0,
+      "trapped": 0,
+      "traps": 0,
+      "spent": 0
+    },
+    "p2": {
+      "biggestBid": 0,
+      "bestProfit": null,
+      "thief": 0,
+      "trapped": 0,
+      "traps": 0,
+      "spent": 0
+    },
+    "p3": {
+      "biggestBid": 0,
+      "bestProfit": null,
+      "thief": 0,
+      "trapped": 0,
+      "traps": 0,
+      "spent": 0
+    },
+    "p4": {
+      "biggestBid": 0,
+      "bestProfit": null,
+      "thief": 0,
+      "trapped": 0,
+      "traps": 0,
+      "spent": 0
+    }
+  },
+  "factors": {},
+  "notices": {},
+  "speechMs": {}
+}

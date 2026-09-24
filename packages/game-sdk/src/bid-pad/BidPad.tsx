@@ -1,0 +1,212 @@
+// BidPad (P00 §6, P6): a big bid in large digits with − / + steppers, quick chips (+5, +10, +25,
+// All in), the coins you have, a confirm button and an optional Pass. A bid above your coins
+// cannot be entered: everything clamps to `max`. Built for thumbs and fidgeting: steppers act on
+// press and repeat while held, nothing selects or zooms, and the confirm is inert while the shown
+// bid is the one already sent (no double send). Tokens only; motion off under reduced motion.
+// Imported from its own subpath (`@partybox/game-sdk/ui/bid-pad`) so it lands in its game's
+// chunk, never the entry (game-pack audit #23).
+import { useEffect, useLayoutEffect, useRef } from 'react';
+import type { JSX, PointerEvent, ReactNode } from 'react';
+import { PrimaryButton } from '../controller/PrimaryButton';
+import { Screen } from '../controller/Screen';
+import { buzz } from '../ui/haptics';
+import { useT } from '../ui/lang';
+import styles from './BidPad.module.css';
+import { chipTargets, clampBid, stepBid } from './bidPadMath';
+import { BID_PAD_STRINGS } from './strings';
+
+export interface BidPadProps {
+  value: number;
+  /** Your coins: the largest bid you can enter. */
+  max: number;
+  onChange: (value: number) => void;
+  onConfirm: (value: number) => void;
+  /** The bid already sent (null = none yet): the confirm reads "✓ Bid placed" while it matches. */
+  placed: number | null;
+  /** Sends a 0 bid. Omit to hide the Pass button. */
+  onPass?: () => void;
+  step?: number;
+  chips?: readonly number[];
+  /** What is being bid on, above the pad (the lot's name and hint). */
+  header?: ReactNode;
+  /** A line under the pad: a refusal from the server, or a reason the confirm is off. */
+  notice?: ReactNode;
+  /** Glyph before every amount. */
+  coin?: string;
+  className?: string;
+}
+
+const REPEAT_AFTER_MS = 420;
+const REPEAT_EVERY_MS = 90;
+
+/** Press-and-hold repeat for a stepper: acts on press, then repeats until the finger lifts. */
+function useRepeat(act: () => void): {
+  onPointerDown: (e: PointerEvent<HTMLButtonElement>) => void;
+  stop: () => void;
+} {
+  const timers = useRef<{ wait: number; tick: number }>({ wait: 0, tick: 0 });
+  const latest = useRef(act);
+  useLayoutEffect(() => {
+    latest.current = act;
+  });
+  const stop = (): void => {
+    window.clearTimeout(timers.current.wait);
+    window.clearInterval(timers.current.tick);
+  };
+  useEffect(() => stop, []);
+  return {
+    onPointerDown: (e) => {
+      if (e.button !== 0) return;
+      stop();
+      latest.current();
+      timers.current.wait = window.setTimeout(() => {
+        timers.current.tick = window.setInterval(() => latest.current(), REPEAT_EVERY_MS);
+      }, REPEAT_AFTER_MS);
+    },
+    stop,
+  };
+}
+
+export function BidPad({
+  value,
+  max,
+  onChange,
+  onConfirm,
+  placed,
+  onPass,
+  step = 5,
+  chips = [5, 10, 25],
+  header,
+  notice,
+  coin = '🪙',
+  className,
+}: BidPadProps): JSX.Element {
+  const L = useT(BID_PAD_STRINGS);
+  const bid = clampBid(value, max);
+  // Latest value for the repeat timers (a held stepper keeps counting from where it is).
+  const current = useRef(bid);
+  useLayoutEffect(() => {
+    current.current = bid;
+  }, [bid]);
+  const set = (next: number): void => {
+    const clamped = clampBid(next, max);
+    if (clamped === current.current) return;
+    current.current = clamped;
+    buzz(8);
+    onChange(clamped);
+  };
+  const down = useRepeat(() => set(stepBid(current.current, -1, step, max)));
+  const up = useRepeat(() => set(stepBid(current.current, 1, step, max)));
+  const sent = placed !== null && placed === bid;
+  const passed = placed === 0;
+  const confirmLabel =
+    bid === 0
+      ? L('Choose an amount')
+      : sent
+        ? L('Bid placed: {coin} {n}', { coin, n: bid })
+        : placed !== null && placed > 0
+          ? L('Change bid to {coin} {n}', { coin, n: bid })
+          : L('Place bid: {coin} {n}', { coin, n: bid });
+  const stepper = (dir: 1 | -1, handlers: ReturnType<typeof useRepeat>): JSX.Element => {
+    const inert = dir < 0 ? bid <= 0 : bid >= max;
+    return (
+      <button
+        type="button"
+        className={styles.step}
+        aria-label={
+          dir < 0 ? L('Lower the bid by {n}', { n: step }) : L('Raise the bid by {n}', { n: step })
+        }
+        aria-disabled={inert}
+        onPointerDown={handlers.onPointerDown}
+        onPointerUp={handlers.stop}
+        onPointerLeave={handlers.stop}
+        onPointerCancel={handlers.stop}
+        onContextMenu={(e) => e.preventDefault()}
+        // Keyboard and screen readers click (detail 0); a finger already acted on press.
+        onClick={(e) => {
+          if (e.detail === 0) set(stepBid(current.current, dir, step, max));
+        }}
+      >
+        {dir < 0 ? '−' : '+'}
+      </button>
+    );
+  };
+  return (
+    <Screen
+      className={`${styles.screen} ${className ?? ''}`}
+      footer={
+        <div className={styles.footer}>
+          <PrimaryButton
+            done={sent && !passed}
+            disabled={bid === 0}
+            onClick={() => {
+              if (bid > 0 && !sent) onConfirm(bid);
+            }}
+          >
+            {confirmLabel}
+          </PrimaryButton>
+          {onPass ? (
+            <button
+              type="button"
+              className={`${styles.pass} ${passed ? styles.passed : ''}`}
+              aria-disabled={passed}
+              onClick={() => {
+                if (!passed) onPass();
+              }}
+            >
+              {passed ? L('✓ Passed') : L('Pass (bid 0)')}
+            </button>
+          ) : null}
+        </div>
+      }
+    >
+      {header}
+      <div className={styles.pad} onContextMenu={(e) => e.preventDefault()}>
+        <p className={styles.have}>{L('You have {coin} {n}', { coin, n: max })}</p>
+        <div className={styles.dial}>
+          {stepper(-1, down)}
+          <output
+            className={styles.amount}
+            aria-live="polite"
+            aria-label={L('Your bid: {n}', { n: bid })}
+          >
+            <span className={styles.coin} aria-hidden>
+              {coin}
+            </span>
+            <span key={bid} className={styles.digits}>
+              {bid}
+            </span>
+          </output>
+          {stepper(1, up)}
+        </div>
+        <div className={styles.chips}>
+          {chipTargets(bid, chips, max).map((c) => (
+            <button
+              key={c.amount}
+              type="button"
+              className={styles.chip}
+              aria-disabled={!c.live}
+              aria-label={L('Add {n}', { n: c.amount })}
+              onClick={() => set(c.to)}
+            >
+              +{c.amount}
+            </button>
+          ))}
+          <button
+            type="button"
+            className={`${styles.chip} ${styles.allIn}`}
+            aria-disabled={bid >= max || max <= 0}
+            onClick={() => set(max)}
+          >
+            {L('All in')}
+          </button>
+        </div>
+        {notice ? (
+          <p className={styles.notice} role="status">
+            {notice}
+          </p>
+        ) : null}
+      </div>
+    </Screen>
+  );
+}

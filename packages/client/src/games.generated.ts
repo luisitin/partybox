@@ -2,6 +2,7 @@
 import type { GameClientModule } from '@partybox/game-sdk';
 import { clientModule as bingo } from '../../../games/bingo/client/index';
 import { clientModule as blanks } from '../../../games/blanks/client/index';
+import { clientModule as blindAuction } from '../../../games/blind-auction/client/index';
 import { clientModule as brokenPencil } from '../../../games/broken-pencil/client/index';
 import { clientModule as lightningRound } from '../../../games/lightning-round/client/index';
 import { clientModule as wisecrack } from '../../../games/wisecrack/client/index';
@@ -9,6 +10,7 @@ import { clientModule as wisecrack } from '../../../games/wisecrack/client/index
 export const clientGames: Readonly<Record<string, GameClientModule>> = {
   'bingo': bingo,
   'blanks': blanks,
+  'blind-auction': blindAuction,
   'broken-pencil': brokenPencil,
   'lightning-round': lightningRound,
   'wisecrack': wisecrack,
