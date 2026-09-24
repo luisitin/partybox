@@ -78,7 +78,7 @@ Pause freezes the caller (and a running check); daubs and claims are ignored whi
 
 ## Scoring
 
-`+1` per bingo; nothing else. Ties share the rank; no awards. **Scores never go down.** Bots score
+`+1` per bingo; nothing else. Ties share the rank. Awards (I-401, `awards()` in scoring.ts), each only when one player earned it — a tie or no trigger gives none (the owner's note): **Quick draw** — the fewest calls to a bingo (A, `history[].calls`); **Clean card** — the most wins with no never-called daubs (A, `history[].clean`); **Trigger finger** — the most wrong BINGO!s (B, `wrongClaims`). **Scores never go down.** Bots score
 exactly like humans.
 
 ## Edge cases
