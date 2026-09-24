@@ -69,6 +69,7 @@ export function Screen({ children, footer, title, className }: ScreenProps): JSX
         if (el.isConnected || !parent?.isConnected) return; // StrictMode rehearsal, or gone
         const host = el.ownerDocument.createElement('div');
         host.className = GHOST;
+        host.dataset.pbGhost = ''; // I-791 D: the phone shell hides it while the link card is up
         host.appendChild(snapshot);
         parent.appendChild(host);
         setTimeout(() => host.remove(), GHOST_MS);

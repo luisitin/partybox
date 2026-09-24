@@ -126,4 +126,32 @@ export const esPhone: Pick<Texts, keyof typeof enPhone> = {
     removeAllShort: (n) => (n === 1 ? 'quitar el bot' : `quitar los ${n} bots`),
     addShort: (n) => (n === 1 ? 'añadir 1 bot' : `añadir ${n} bots`),
   },
+  offline: {
+    title: 'Reconectando…',
+    lost: 'Tu teléfono perdió el Wi‑Fi de la fiesta.',
+    heldFor: 'Tu lugar está guardado durante',
+    heldPlain: 'Tu lugar está guardado.',
+    sent: '✓ Tu respuesta se envió',
+    notSent: 'Aún no respondiste: podrás hacerlo al volver',
+    back: 'Ya estás de vuelta',
+    movedOn: 'El juego avanzó mientras no estabas.',
+    nothingMissed: 'No te perdiste nada.',
+    missed: (unit, from, to) => {
+      const one = unit === 'question' ? 'la pregunta' : 'la ronda';
+      const many = unit === 'question' ? 'las preguntas' : 'las rondas';
+      return from === to
+        ? `Te perdiste ${one} ${from}.`
+        : to === from + 1
+          ? `Te perdiste ${many} ${from} y ${to}.`
+          : `Te perdiste ${many} ${from}–${to}.`;
+    },
+    where: (unit, n, of, seconds) => {
+      const what = `Esta es la ${unit === 'question' ? 'pregunta' : 'ronda'} ${n} de ${of}`;
+      return seconds === null
+        ? `${what}.`
+        : `${what}: ${seconds === 1 ? 'queda 1 segundo' : `quedan ${seconds} segundos`}.`;
+    },
+    secondsLeft: (seconds) => (seconds === 1 ? 'Queda 1 segundo.' : `Quedan ${seconds} segundos.`),
+    standing: (rank, score) => `Tú · ${rank}.º · ${score.toLocaleString('es-ES')}`,
+  },
 };

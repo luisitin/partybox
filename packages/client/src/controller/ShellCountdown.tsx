@@ -45,7 +45,7 @@ export function ShellCountdown({
       ) : null}
       {view.timerMode !== 'quiet' || view.paused ? (
         <span className={styles.seconds}>
-          {view.paused ? `⏸ ${t.tv.paused}` : t.connection.seconds(seconds)}
+          {view.paused ? `⏸ ${t.tv.paused}` : online ? t.connection.seconds(seconds) : '—'}
         </span>
       ) : null}
     </div>

@@ -272,6 +272,24 @@
   opacity: 0.5;
 }
 
+/* I-791 D: offline, the game dims and loses its colour under the offline card (the card's veil
+   takes every tap; `inert` keeps focus out too). */
+.offlineMain {
+  opacity: 0.5;
+  filter: saturate(0.3);
+}
+
+/* I-791 D: while the link card is up (offline, then "You're back"), no screen dissolves: the old
+   question never fades over the new one the phone caught up to. */
+.shell[data-resync] :global([data-pb-ghost]) {
+  display: none;
+}
+
+/* The "You're back" card lands crisp: the game's un-dim is not faded in under it. */
+.shell[data-resync='back'] .main {
+  transition: none;
+}
+
 .toasts {
   position: fixed;
   left: var(--pb-space-4);

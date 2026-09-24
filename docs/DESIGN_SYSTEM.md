@@ -9,7 +9,7 @@ same primitives. Games must not hard-code colours, sizes or durations — use th
 1. **10-foot first on the TV**: designed at 1920×1080 CSS px, viewed from ~3 m. Body ≥ 32 px, timers ≥ 96 px, one focal point. `packages/client/src/tv/fit.ts` zooms `<html>` so the design fits any viewport (a PC at 150 % scaling reports 1280×720, a 4K TV browser 3840×2160) — TV styles use px and %, never `vw`/`vh` (viewport units ignore the zoom).
 2. **Thumb first on the phone**: portrait, primary action in the bottom third, targets ≥ 44 px.
 3. **Never colour alone**: every state also has a shape, icon or word (chips show ✓ for submitted, ⟳ for reconnecting, a `🤖 bot` tag for bot seats).
-4. **Calm feedback**: reconnecting is a quiet banner, not a red alarm. Errors say what to do next.
+4. **Calm feedback**: reconnecting is calm, not a red alarm — on a phone the game dims and goes untappable under one card (seat held for m:ss, whether your answer was sent), and the return is one "You're back" beat naming where the game is now (the envelope's optional `progressStep`), with no screen dissolve while the card is up (I-791 D). Errors say what to do next.
 5. **The TV reveals, the phone never spoils**: controller views hide what the stage hasn't shown yet.
 
 ## Colour tokens (dark stage, fixed — TVs are in dim rooms; phones follow the same palette)

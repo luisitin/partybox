@@ -16,7 +16,9 @@ import { PhoneSettings, tvSoundsOn } from './PhoneSettings';
 import { ShareButton } from './ShareSheet';
 import { clientGames } from '../games.generated';
 import type { SoundCue } from '../sound';
-import { linkLabel, useLinkBanner } from './flapFree';
+import { linkLabel } from './flapFree';
+import { useGraceLeft } from './grace';
+import { BackCard, OfflineCard, snapshotOf, useLinkCard } from './OfflineCard';
 import { serverText } from '../server-text';
 import { usePhoneUrgency } from './urgency';
 import { VipMenu, vipMenuState } from './VipMenu';
@@ -91,14 +93,12 @@ export function ControllerShell({
   const myStatus = state.view?.players.find((p) => p.id === state.playerId)?.status ?? null;
   // Offline, the local countdown still runs (and parks at 0): show it muted, never urgent.
   const online = state.connection === 'connected';
-  // The link's own banner: one steady message across a flapping connection (the owner,
-  // 2026-09-22), ending in "Back online" instead of vanishing.
-  const { showBanner, text: reconnectingText } = useLinkBanner(
-    !online && state.joined && !state.otherTab, // I-755 A: stepping aside is not a lost link
-    state.joined,
-  );
-  // With a countdown row on screen, "Reconnecting…" takes its cue slot (review-loop #33): the
-  // overlay banner hid the first content line for the whole outage. No row → the banner.
+  // I-791 D: a lost link is a state you can see — the game dims under one card (seat held, answer
+  // sent or not), and the return is one "You're back" beat naming where the game is now. Steady
+  // across a flapping connection (the owner, 2026-09-22); I-755 A: stepping aside is not a lost link.
+  const trouble = !online && state.joined && !state.otherTab;
+  const { card, before } = useLinkCard(trouble, snapshotOf(state.view, myStatus));
+  const graceLeft = useGraceLeft(trouble); // I-089 C: the server's 120 s grace
   const countdownRow = view !== null && seconds !== null && view.timerMode !== 'hidden';
   const { candidate, shellRef, mainRef } = usePhoneUrgency({
     view,
@@ -181,7 +181,12 @@ export function ControllerShell({
   }, [room, state.view, state.error, state.playerId, myStatus, audio]);
 
   return (
-    <div ref={shellRef} className={styles.shell} data-surface="controller">
+    <div
+      ref={shellRef}
+      className={styles.shell}
+      data-surface="controller"
+      data-resync={card === 'off' ? undefined : card}
+    >
       <header className={styles.header}>
         <div className={styles.left}>
           <span className={styles.brand} aria-label={t.appName}>
@@ -259,7 +264,7 @@ export function ControllerShell({
           view={view}
           seconds={seconds}
           online={online}
-          banner={showBanner ? reconnectingText : null}
+          banner={null}
           hurry={candidate}
         />
       ) : null}
@@ -278,22 +283,24 @@ export function ControllerShell({
       ) : null}
       <main
         ref={mainRef}
-        className={`${styles.main} ${paused ? styles.pausedMain : ''}`}
-        inert={paused}
+        className={`${styles.main} ${paused ? styles.pausedMain : ''} ${card === 'offline' ? styles.offlineMain : ''}`}
+        inert={paused || card !== 'off'}
       >
         {/* Overlays the top of the body and slides in (review-loop #20): a banner in the flow shoved
             the drawing sheet under a finger mid-stroke. */}
-        {showBanner && !countdownRow ? (
-          <div className={styles.banner} role="status">
-            {reconnectingText}
-          </div>
-        ) : paused ? (
+        {paused && card === 'off' ? (
           <div className={styles.banner} role="status">
             {me?.isVip ? t.paused.vip : t.paused.other(vipName)}
           </div>
         ) : null}
         {children}
+        {card === 'back' ? (
+          <BackCard before={before} view={view} seconds={seconds} playerId={state.playerId} />
+        ) : null}
       </main>
+      {card === 'offline' ? (
+        <OfflineCard secondsLeft={graceLeft} before={before} playing={view !== null} />
+      ) : null}
       <div className={styles.toasts} aria-live="polite">
         {/* I-347 C: the host whose VIP passed on while they were away can take it back */}
         <ReclaimVip room={room} playerId={state.playerId} controller={controller} />

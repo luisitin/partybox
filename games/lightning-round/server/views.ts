@@ -268,6 +268,11 @@ export function controllerView(
       view.rows = revealRows(state, q.answerIndex, final);
     }
   }
+  // I-791 D: the phone coming back after a drop names the question ("question 3 of 10"); the
+  // final question has its own card, so it is not counted.
+  const round = view.round;
+  if (round && !round.final && round.total > 0)
+    view.progressStep = { unit: 'question', n: round.number, of: round.total };
   if (phase === 'wager' && me) view.wagerChoices = wagerOptions(score);
   const wagerVisible = phase === 'wager' || ((phase === 'question' || phase === 'reveal') && final);
   if (wagerVisible && me && Object.hasOwn(state.wagers, playerId))
