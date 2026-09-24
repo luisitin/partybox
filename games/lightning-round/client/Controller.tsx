@@ -111,10 +111,11 @@ export function Controller({
         lockedHint={lockedHint}
         // I-288 B: while it's open, what a right answer is worth now
         prompt={
-          view.worth && !locked && !revealed ? (
+          view.worth && !revealed ? (
             <>
               {view.question.text}
-              <Worth worth={view.worth} deadline={view.deadline} />
+              {/* I-789 B: after the tap the line keeps its space — locking in moves nothing */}
+              <Worth worth={view.worth} deadline={view.deadline} held={locked} />
             </>
           ) : (
             view.question.text
@@ -244,9 +245,12 @@ export function Controller({
 function Worth({
   worth,
   deadline,
+  held = false,
 }: {
   worth: NonNullable<LightningControllerView['worth']>;
   deadline: number | null;
+  /** Locked in: the line is hidden but keeps its height. */
+  held?: boolean;
 }): JSX.Element | null {
   const L = useT(STRINGS);
   // The server's clock (the shell's offset), not this phone's: a phone a second off would promise
@@ -255,5 +259,9 @@ function Worth({
   if (deadline === null) return null;
   const left = Math.max(0, Math.min(worth.windowMs, deadline - now));
   const points = worth.base + Math.round(worth.speedMax * (left / worth.windowMs)) + worth.bonus;
-  return <span className={styles.worth}>{L('+{points} now', { points })}</span>;
+  return (
+    <span className={`${styles.worth} ${held ? styles.worthHeld : ''}`} aria-hidden={held}>
+      {L('+{points} now', { points })}
+    </span>
+  );
 }

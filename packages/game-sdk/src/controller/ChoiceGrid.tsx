@@ -47,6 +47,8 @@ export interface ChoiceGridProps {
 }
 
 const LETTERS = 'ABCDEFGH';
+/** I-789 B: an answer this short fits half a phone's width. */
+const SHORT_ANSWER = 12;
 /** How long an unacknowledged tap stays locked before the grid offers a retry. */
 const ECHO_TIMEOUT_MS = 4000;
 
@@ -92,6 +94,10 @@ export function ChoiceGrid(props: ChoiceGridProps): JSX.Element {
   }, [pendingId, echoed]);
   const shownId = selectedId ?? pendingId;
   const locked = shownId !== null || disabled;
+  // I-789 B: four short answers sit two by two (sideways every fill grid does, in CSS)
+  const shortAnswers =
+    choices.length === 4 &&
+    choices.every((c) => typeof c.label === 'string' && c.label.length <= SHORT_ANSWER);
   const pick = (id: string): void => {
     buzz(15);
     setPending({ key: promptKey, id, failed: false });
@@ -99,54 +105,68 @@ export function ChoiceGrid(props: ChoiceGridProps): JSX.Element {
   };
   return (
     <Screen footer={footer} className={className}>
-      {kicker ? (
-        <p className={`${styles.kicker} ${tone === 'final' ? styles.kickerFinal : ''}`}>{kicker}</p>
-      ) : null}
-      {prompt ? <p className={styles.prompt}>{prompt}</p> : null}
-      <div
-        className={`${styles.grid} ${fill ? styles.fill : ''}`}
-        role="radiogroup"
-        aria-label={L('choices')}
-      >
-        {choices.map((choice, index) => {
-          const isSelected = choice.id === shownId;
-          const revealed = correctId !== null;
-          const isCorrect = revealed && choice.id === correctId;
-          const isWrongPick = revealed && isSelected && !isCorrect;
-          const classes = [
-            styles.choice,
-            letters ? '' : styles.noLetters,
-            isSelected ? styles.selected : '',
-            isCorrect ? styles.correct : '',
-            isWrongPick ? styles.wrong : '',
-            locked && !isSelected && !isCorrect ? styles.dim : '',
-          ].join(' ');
-          return (
-            <button
-              key={choice.id}
-              type="button"
-              role="radio"
-              aria-checked={isSelected}
-              className={classes}
-              disabled={locked}
-              onClick={() => pick(choice.id)}
-            >
-              {letters ? (
-                <span className={styles.letter} aria-hidden>
-                  {LETTERS[index] ?? index + 1}
+      {/* I-789 B: a fill grid is question over answers — sideways, question beside a 2×2 */}
+      <div className={fill ? styles.layout : styles.plain}>
+        <div className={fill ? styles.head : styles.plain}>
+          {kicker ? (
+            <p className={`${styles.kicker} ${tone === 'final' ? styles.kickerFinal : ''}`}>
+              {kicker}
+            </p>
+          ) : null}
+          {prompt ? <p className={styles.prompt}>{prompt}</p> : null}
+        </div>
+        <div
+          className={`${styles.grid} ${fill ? styles.fill : ''} ${fill && shortAnswers ? styles.two : ''}`}
+          role="radiogroup"
+          aria-label={L('choices')}
+        >
+          {choices.map((choice, index) => {
+            const isSelected = choice.id === shownId;
+            const revealed = correctId !== null;
+            const isCorrect = revealed && choice.id === correctId;
+            const isWrongPick = revealed && isSelected && !isCorrect;
+            const classes = [
+              styles.choice,
+              letters ? '' : styles.noLetters,
+              isSelected ? styles.selected : '',
+              isCorrect ? styles.correct : '',
+              isWrongPick ? styles.wrong : '',
+              locked && !isSelected && !isCorrect ? styles.dim : '',
+            ].join(' ');
+            return (
+              <button
+                key={choice.id}
+                type="button"
+                role="radio"
+                aria-checked={isSelected}
+                className={classes}
+                disabled={locked}
+                onClick={() => pick(choice.id)}
+              >
+                {letters ? (
+                  <span className={styles.letter} aria-hidden>
+                    {LETTERS[index] ?? index + 1}
+                  </span>
+                ) : null}
+                <span className={styles.label}>{choice.label}</span>
+                <span className={styles.mark} aria-hidden>
+                  {isCorrect ? '✓' : isWrongPick ? '✗' : isSelected ? '✓' : ''}
                 </span>
-              ) : null}
-              <span className={styles.label}>{choice.label}</span>
-              <span className={styles.mark} aria-hidden>
-                {isCorrect ? '✓' : isWrongPick ? '✗' : isSelected ? '✓' : ''}
-              </span>
-              {isCorrect ? <span className="pb-visually-hidden">{L('correct')}</span> : null}
-              {isWrongPick ? <span className="pb-visually-hidden">{L('incorrect')}</span> : null}
-            </button>
-          );
-        })}
+                {isCorrect ? <span className="pb-visually-hidden">{L('correct')}</span> : null}
+                {isWrongPick ? <span className="pb-visually-hidden">{L('incorrect')}</span> : null}
+              </button>
+            );
+          })}
+        </div>
       </div>
       {after}
+      {/* I-789 B: a fill grid holds the status line's space before the tap, so locking in moves
+          nothing (the rows shrank or drifted under the finger when it appeared) */}
+      {fill && correctId === null && shownId === null && !pending?.failed ? (
+        <p className={`${styles.locked} ${styles.reserved}`} aria-hidden>
+          {' '}
+        </p>
+      ) : null}
       {correctId === null ? (
         selectedId !== null ? (
           <p className={styles.locked} role="status">

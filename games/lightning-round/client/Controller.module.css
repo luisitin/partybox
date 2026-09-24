@@ -278,6 +278,10 @@
   color: var(--pb-accent-2);
   font-variant-numeric: tabular-nums;
 }
+/* I-789 B: locked in, the line keeps its space (the answers below never move on a tap) */
+.worthHeld {
+  visibility: hidden;
+}
 
 /* ── I-550 (the owner's note: the bet page was "a bit cramped and visually unappealing" — on an
    SE one preset showed, the rest sat under the ▾ behind a half-screen custom row). The presets go
@@ -375,6 +379,12 @@
 .customLead .amount {
   font-size: var(--pb-font-h2);
   line-height: 1;
+}
+
+/* The wager's presets never resize, so it needs no held status line (I-789 B holds one under
+   every fill grid): on an SE that space is the last row of stakes. The line itself still lands. */
+.wagerScreen > div:first-child > p[aria-hidden] {
+  display: none;
 }
 
 /* A short phone (a 568 px SE): the head tightens so the presets and the custom row share one look. */
