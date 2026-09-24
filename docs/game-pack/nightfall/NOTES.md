@@ -9,9 +9,9 @@ Started 2026-09-24 (after a 30-minute wait for the Foundation session).
 | ----------------------- | ----------------------------------------------------------------------------------------------------------- |
 | 1 Content               | done: flavours (both, EN+ES), 90 bot lines, pronunciations, pack tests                                      |
 | 2 Server logic          | done: 11 phases, 90 unit tests incl. non-interference leak tests, contract green, sim 200 random + 200 idle |
-| 3 Client                | not started                                                                                                 |
-| 4 Record → review → fix | not started                                                                                                 |
-| 5 Review package        | not started                                                                                                 |
+| 3 Client                | done: TV scenes (sky, village, 3D role cards), phone screens, PhoneStage, EN+ES                             |
+| 4 Record → review → fix | passes p01–p14 (see REVIEW.md): 0 dead spans / 0 hard cuts on the TV, voice ±30 ms on its frame; continuing |
+| 5 Review package        | REVIEW.md @ 583abb46; build served on 42400 for the owner's play-test                                       |
 
 Platform on `main` when I started (4bfd10eb): none of F1–F7 merged. The Foundation branch had F0
 (the owner's 20 rulings, `docs/game-pack/DECISIONS.md` on that branch) and F2 (catalog, about,
