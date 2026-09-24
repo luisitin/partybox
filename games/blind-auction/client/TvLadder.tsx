@@ -21,7 +21,8 @@ export function TvLadder({ view }: { view: PushedView<BlindAuctionTvView> }): JS
   const sale = view.sale;
   const all = sale?.ladder ?? [];
   // The top eight: a 16-player ladder keeps its rise without running off the stage.
-  const rungs = all.slice(-MAX_RUNGS);
+  // A full room's strip leaves less stage: five rungs then.
+  const rungs = all.slice(-(view.players.length > 10 ? 5 : MAX_RUNGS));
   const hidden = all.length - rungs.length;
   const step = ladderStepMs(all.length);
   const beats = view.live ? [0] : [0, ...rungs.map((_, i) => LADDER_LEAD_MS + (hidden + i) * step)];

@@ -9,9 +9,9 @@ harness port 42380. Started 2026-09-24 (after the 30-minute foundation wait).
 | ---------------------------------------- | --------------------------------------------------------------------------- |
 | 1 Content                                | done: 60 normal + 20 wild (`lots.json`), 12 grand, 20 spicy, pronunciations |
 | 2 Server logic + tests                   | done: 68 unit tests, contract suite green, sim 200 random + 200 idle clean  |
-| 3 Client (TV, phone, PhoneStage, BidPad) | in progress                                                                 |
-| 4 Record → review → fix                  | not started                                                                 |
-| 5 Review package                         | not started                                                                 |
+| 3 Client (TV, phone, PhoneStage, BidPad) | done: EN + ES, 5 themes, SE / 200 % / sideways fits, 16-player TV fit       |
+| 4 Record → review → fix                  | 15 passes so far (see REVIEW.md); keeps going                               |
+| 5 Review package                         | `REVIEW.md` round 1, waiting for the owner                                  |
 
 Measured: 16 players, wild + spicy, 12 lots → state 7.6 KB (budget 12 KB), largest view 2.3 KB
 (4 KB). Sim: 198 s simulated per game with random bots (max 215 s), 294 s all idle — far inside
@@ -65,3 +65,13 @@ Manifest fields to add with F2:
   always on the strip; what moves with the stage is the _value_ (see "Two beats").
 - Spec §8.5 phone "Four big buttons … Each one shows the amount it would bid" + §8.6 "opening bid
   is 5": the opening +5 / +10 / +25 bid 5 / 10 / 25.
+
+## Harness notes (for the next pass)
+
+- Probes (`capture-ba`, `touch-ba`, `es-ba`, `frames-ba`) live in the session scratchpad, copied into
+  `packages/e2e/src/design/*.tmp.ts` only while they run (typecheck sees them otherwise).
+  `capture-ba` = capture-loop + the platform's audio trace (`trace-tv.json`) + `PB_PHONE_ONLY=1`.
+- Two server tests are timing-based and fail only under this PC's load (push-dedupe "a VIP action
+  that changes nothing", sockets "rate limits a flood of inputs"); both pass alone every time.
+- Mapped TV phases re-chime whenever their deadline moves: every phase that re-arms (lot, live,
+  sold, flip) is mapped to `silence` or left unmapped, and the game plays its own cues.

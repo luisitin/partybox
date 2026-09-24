@@ -8,8 +8,8 @@
 }
 
 .tv {
-  width: 380px;
-  height: 532px;
+  height: var(--ba-card-h, 532px);
+  width: calc(var(--ba-card-h, 532px) * 5 / 7);
 }
 
 /* The phone's card is a picture, not words: fixed px, so large text never makes it push the
@@ -187,7 +187,7 @@
 }
 
 .lotIcon {
-  font-size: 120px;
+  font-size: calc(var(--ba-card-h, 532px) * 0.225);
   line-height: 1;
 }
 
@@ -217,19 +217,19 @@
 }
 
 .faceIcon {
-  font-size: 150px;
+  font-size: calc(var(--ba-card-h, 532px) * 0.28);
   line-height: 1;
 }
 
 .faceKicker {
-  font-size: var(--pb-font-h2);
+  font-size: calc(var(--ba-card-h, 532px) * 0.075);
   font-weight: 900;
   letter-spacing: 0.12em;
   color: var(--ba-tone, var(--pb-text));
 }
 
 .faceBig {
-  font-size: var(--pb-font-display);
+  font-size: calc(var(--ba-card-h, 532px) * 0.22);
   font-weight: 900;
   line-height: 1.05;
   color: var(--pb-text);

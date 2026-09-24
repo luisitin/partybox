@@ -110,11 +110,10 @@ function StageFlip({ view }: { view: View }): JSX.Element {
         {view.lot ? (
           <LotCard icon={view.lot.icon} grand={view.lot.grand} face={face} flipped size="phone" />
         ) : null}
-        {beat >= 1 && e ? (
-          <p className={styles.stageHeadline}>
-            {effectHeadline(L, e, winner?.name ?? '?', other?.name ?? '?')}
-          </p>
-        ) : null}
+        {/* Always there, so the card never slides when the words land beside it. */}
+        <p key={beat >= 1 ? 'on' : 'off'} className={styles.stageHeadline} aria-live="polite">
+          {beat >= 1 && e ? effectHeadline(L, e, winner?.name ?? '?', other?.name ?? '?') : ' '}
+        </p>
       </div>
       {view.step === 1 && view.line ? (
         <OwnLineCard line={view.line} coins={view.coins} from={view.coins} />

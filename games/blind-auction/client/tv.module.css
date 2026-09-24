@@ -3,9 +3,22 @@
    loop off (see the end). */
 
 /* ── the table ── */
+.frame {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  container-type: size;
+  /* The card is at most 532 px tall, and never more than 62 % of the stage it is given. */
+  --ba-card-h: min(532px, 62cqh);
+}
+
 .table {
   justify-content: safe center;
-  gap: var(--pb-space-5);
+  gap: var(--pb-space-4);
+  /* The strip above already sits inside the overscan: the table only keeps the bottom one (the
+     host bar), which gives a full room's short stage back ~40 px. */
+  padding-top: var(--pb-space-3);
 }
 
 .kicker {
@@ -41,7 +54,7 @@
   align-items: center;
   justify-content: center;
   gap: var(--pb-space-8);
-  min-height: 560px;
+  min-height: 0;
 }
 
 .cardCol {
@@ -175,8 +188,8 @@
   position: relative;
   display: grid;
   place-items: center;
-  width: 330px;
-  height: 330px;
+  width: min(330px, 38cqh);
+  height: min(330px, 38cqh);
   flex: none;
 }
 
@@ -224,7 +237,7 @@
   display: flex;
   align-items: center;
   gap: var(--pb-space-2);
-  font-size: var(--pb-font-display);
+  font-size: min(128px, 14cqh);
   font-weight: 1000;
   line-height: 1;
   color: var(--pb-text);
@@ -283,7 +296,7 @@
 }
 
 .stageCall {
-  font-size: var(--pb-font-h1);
+  font-size: min(72px, 9cqh);
   color: var(--pb-accent);
   animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
 }
@@ -429,7 +442,7 @@
   flex-direction: column;
   gap: var(--pb-space-4);
   /* Held open while the card turns, so the purses below never jump when the words land. */
-  min-height: 250px;
+  min-height: min(250px, 30cqh);
 }
 
 .good {
@@ -486,6 +499,18 @@
   align-items: center;
   gap: var(--pb-space-2);
   min-width: 200px;
+}
+
+.purseFace,
+.bidderFace {
+  display: block;
+  width: min(104px, 13cqh);
+  height: min(104px, 13cqh);
+}
+
+.bidderFace {
+  width: min(120px, 15cqh);
+  height: min(120px, 15cqh);
 }
 
 .purseName {

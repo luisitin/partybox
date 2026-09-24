@@ -61,7 +61,9 @@ function Purse({
   const shown = useCountUp(to, from, COUNT_MS, COUNT_AT_MS);
   return (
     <span className={`${styles.purse} ${className ?? ''}`}>
-      <Avatar avatarId={p.avatarId} size={104} />
+      <span className={styles.purseFace}>
+        <Avatar avatarId={p.avatarId} size="100%" />
+      </span>
       <span className={styles.purseName}>{p.name}</span>
       <span className={styles.purseCoins}>
         {COIN} {shown}

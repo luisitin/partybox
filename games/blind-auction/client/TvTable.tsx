@@ -102,33 +102,37 @@ export function TvTable({ view }: { view: View }): JSX.Element {
   const sale = view.sale;
   const face = flipped ? faceOf(L, view) : null;
   return (
-    <Stage className={styles.table}>
-      <Kicker view={view} />
-      <div className={styles.row}>
-        <div
-          className={`${styles.cardCol} ${phase === 'flip' && view.effect?.kind === 'lose' ? styles.shake : ''}`}
-        >
-          <LotCard
-            icon={lot?.icon ?? '📦'}
-            grand={lot?.grand ?? false}
-            face={face}
-            flipped={flipped}
-            deal={phase === 'lot'}
-            stamp={
-              soldStamp ? (
-                <span className={`${styles.stampMark} ${sale?.winner ? '' : styles.stampNone}`}>
-                  {sale?.winner ? `${L('SOLD')} 🔨` : L('NO TAKERS')}
-                </span>
-              ) : null
-            }
-          />
+    // The frame measures the stage the shell leaves (a 16-player strip takes four rows): the card
+    // and the panel size to it (container units, zoom-safe), so nothing runs under the host bar.
+    <div className={styles.frame}>
+      <Stage className={styles.table}>
+        <Kicker view={view} />
+        <div className={styles.row}>
+          <div
+            className={`${styles.cardCol} ${phase === 'flip' && view.effect?.kind === 'lose' ? styles.shake : ''}`}
+          >
+            <LotCard
+              icon={lot?.icon ?? '📦'}
+              grand={lot?.grand ?? false}
+              face={face}
+              flipped={flipped}
+              deal={phase === 'lot'}
+              stamp={
+                soldStamp ? (
+                  <span className={`${styles.stampMark} ${sale?.winner ? '' : styles.stampNone}`}>
+                    {sale?.winner ? `${L('SOLD')} 🔨` : L('NO TAKERS')}
+                  </span>
+                ) : null
+              }
+            />
+          </div>
+          {phase === 'lot' ? <LotPanel view={view} /> : null}
+          {phase === 'bid' ? <BidPanel view={view} /> : null}
+          {phase === 'live' ? <TvLive view={view} /> : null}
+          {phase === 'sold' ? <TvLadder view={view} /> : null}
+          {phase === 'flip' ? <TvFlip view={view} /> : null}
         </div>
-        {phase === 'lot' ? <LotPanel view={view} /> : null}
-        {phase === 'bid' ? <BidPanel view={view} /> : null}
-        {phase === 'live' ? <TvLive view={view} /> : null}
-        {phase === 'sold' ? <TvLadder view={view} /> : null}
-        {phase === 'flip' ? <TvFlip view={view} /> : null}
-      </div>
-    </Stage>
+      </Stage>
+    </div>
   );
 }

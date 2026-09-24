@@ -115,7 +115,9 @@ export function TvLive({ view }: { view: PushedView<BlindAuctionTvView> }): JSX.
         <div className={styles.bidder}>
           {bidder ? (
             <span key={bidder.id} className={styles.bidderIn}>
-              <Avatar avatarId={bidder.avatarId} size={120} />
+              <span className={styles.bidderFace}>
+                <Avatar avatarId={bidder.avatarId} size="100%" />
+              </span>
               <span className={styles.bidderName}>{bidder.name}</span>
             </span>
           ) : (
