@@ -103,6 +103,7 @@ export const STRINGS: Strings = {
     'Next page ▸': 'Pasar página ▸',
     'Finish ▸': 'Terminar ▸',
     'Next book ▸': 'Próximo libro ▸',
+    '⏭ Next book': '⏭ Próximo libro', // I-490 B
     'The show is next…': 'Ahora viene el show…',
     'Watch the TV': 'Mira la TV',
     'page {page} of {pages}': 'página {page} de {pages}',

@@ -321,3 +321,14 @@
   font-size: var(--pb-font-h2);
   overflow-wrap: normal;
 }
+
+/* ── I-490 B: the VIP's "Next book", a quiet pill under the page. */
+.nextBook {
+  align-self: center;
+  margin-top: var(--pb-space-3);
+  padding: var(--pb-space-2) var(--pb-space-4);
+  border-radius: 999px;
+  border: 1px solid var(--pb-border);
+  color: var(--pb-text);
+  font-weight: 700;
+}

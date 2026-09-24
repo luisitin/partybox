@@ -42,6 +42,10 @@ export function turnPage(state: State, now: number, next: Transition): State {
   const showing = state.showing;
   if (!showing) return next(state, now);
   const book = state.books[showing.book];
+  // I-490 A: a bot's book goes the short way — from its word straight to its last page
+  const botBook = book !== undefined && state.players[book.ownerId]?.bot === true;
+  if (book && botBook && showing.page === 0 && book.pages.length > 2)
+    return showPage(state, showing.book, book.pages.length - 1, now);
   if (book && showing.page + 1 < book.pages.length)
     return showPage(state, showing.book, showing.page + 1, now);
   if (showing.book + 1 < state.books.length) return showPage(state, showing.book + 1, 0, now);
@@ -79,6 +83,13 @@ export function reduceShow(state: State, event: GameEvent<Input>, next: Transiti
   if (event.type === 'input') {
     if (event.input.type === 'turn' && event.playerId === presenterOf(state))
       return turnPage(state, event.now, next);
+    // I-490 B: the VIP's "Next book" — the rest of this book is skipped (the side strip keeps it)
+    if (event.input.type === 'nextBook' && event.vip && state.showing) {
+      const nextBook = state.showing.book + 1;
+      return nextBook < state.books.length
+        ? showPage(state, nextBook, 0, event.now)
+        : next(state, event.now);
+    }
     return veto(state, event);
   }
   if (isTimerFor(state, event)) return turnPage(state, event.now, next);
