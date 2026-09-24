@@ -7,7 +7,11 @@ export const PHASES = ['intro', 'question', 'reveal', 'wager', 'done'] as const;
 export type PhaseId = (typeof PHASES)[number];
 
 export const INTRO_MS = 4_000;
-export const REVEAL_MS = 5_000;
+/** A regular reveal: the race (2 s), then the standings — the owner's note on I-589 asked for "a bit
+ *  more time at the standings page" (5 s → 8 s: the standings hold 6 s, not 3), plus a Next button. */
+export const REVEAL_MS = 8_000;
+/** The final reveal keeps its 5 s: it has its own beats and no standings page (the results follow). */
+export const FINAL_REVEAL_MS = 5_000;
 export const WAGER_MS = 15_000;
 
 /** Scoring constants (README "Scoring"). */

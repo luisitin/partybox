@@ -1,11 +1,13 @@
 // TV: the question, its four lettered choices in a 2×2 grid, and — in reveal — the correct one
 // marked with ✓ (never colour-only) plus one row per player with verdict, points and streak.
+import { useEffect, useState } from 'react';
 import type { CSSProperties, JSX } from 'react';
 import { Avatar, BigText, useT } from '@partybox/game-sdk/ui';
 import type { Translator, ViewPlayer } from '@partybox/game-sdk/ui';
 import type { QuestionView, RevealRow, RoundView } from '../server/views';
 import { roundLabel, topicLine, waitingText } from './labels';
 import { STRINGS } from './strings';
+import { RACE_MS } from './timing';
 import styles from './Tv.module.css';
 
 const LETTERS = ['A', 'B', 'C', 'D'];
@@ -13,9 +15,12 @@ const LETTERS = ['A', 'B', 'C', 'D'];
 export function RoundHeader({
   round,
   question,
+  aside,
 }: {
   round: RoundView | null;
   question: QuestionView | null;
+  /** I-589: the standings' Next button, in the topic's place. */
+  aside?: JSX.Element | null;
 }): JSX.Element {
   const L = useT(STRINGS);
   return (
@@ -23,7 +28,7 @@ export function RoundHeader({
       <span className={`${styles.kicker} ${round?.final ? styles.final : ''}`}>
         {roundLabel(round, L)}
       </span>
-      {question ? <span>{topicLine(question, L)}</span> : null}
+      {aside ?? (question ? <span>{topicLine(question, L)}</span> : null)}
     </div>
   );
 }
@@ -207,13 +212,32 @@ export function rowsClass(count: number): string {
   );
 }
 
-export function RevealRows({ rows }: { rows: RevealRow[] }): JSX.Element {
+export function RevealRows({ rows: raced }: { rows: RevealRow[] }): JSX.Element {
   const L = useT(STRINGS);
+  // I-589 B: the race first, then — 2 s on — the standings
+  const [standings, setStandings] = useState(false);
+  useEffect(() => {
+    const h = setTimeout(() => setStandings(true), RACE_MS);
+    return () => clearTimeout(h);
+  }, []);
+  const rows = standings
+    ? [...raced].sort((a, b) => b.score - a.score || a.playerId.localeCompare(b.playerId))
+    : raced;
+  const fastest = rows
+    .filter((r) => r.elapsedMs !== undefined)
+    .reduce<number | null>(
+      (m, r) => (m === null || (r.elapsedMs ?? 0) < m ? (r.elapsedMs ?? 0) : m),
+      null,
+    );
   const wide = rows.length <= 8;
   const crowned = rows.length <= 12;
   const top = Math.max(0, ...rows.map((r) => r.score));
   return (
-    <ol className={`${styles.rows} ${rowsClass(rows.length)}`} aria-label={L('results')}>
+    <ol
+      key={standings ? 'standings' : 'race'} /* I-589: each order deals in fresh */
+      className={`${styles.rows} ${rowsClass(rows.length)}`}
+      aria-label={L('results')}
+    >
       {rows.map((row, index) => {
         const verdict = verdictOf(row, L);
         const quiet = row.delta === 0;
@@ -247,6 +271,13 @@ export function RevealRows({ rows }: { rows: RevealRow[] }): JSX.Element {
             <span className={`${styles.verdict} ${verdictClass}`} aria-label={verdict.label}>
               {verdict.glyph}
             </span>
+            {/* I-589 A: how fast — the fastest gets the bolt */}
+            {row.elapsedMs !== undefined && !standings ? (
+              <span className={styles.raceTime}>
+                {row.elapsedMs === fastest ? '⚡ ' : ''}
+                {(row.elapsedMs / 1000).toFixed(1)} s
+              </span>
+            ) : null}
             <span className={`${styles.delta} ${deltaClass}`}>{deltaText(row.delta)}</span>
             {wide ? <span className={styles.score}>{row.score}</span> : null}
           </li>

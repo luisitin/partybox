@@ -3,7 +3,7 @@
 // game; the confirm state is loud (danger tone + "Confirm …"). Close is a ✕ in the sticky header.
 import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
-import type { PlayerPublic, RoomSnapshot } from '@partybox/shared';
+import type { PlayerPublic, RoomSnapshot, ViewEnvelope } from '@partybox/shared';
 import { Avatar, PrimaryButton, getLang } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import { serverText } from '../server-text';
@@ -20,6 +20,8 @@ export interface VipMenuProps {
   paused?: boolean;
   /** I-774 B: the game's words for Skip / Next in this phase. */
   skipLabel?: string;
+  /** I-589: the game has its own Next button in this phase — no generic Skip / Next here. */
+  skipHidden?: boolean;
   onClose: () => void;
 }
 
@@ -28,14 +30,11 @@ const CONFIRM_MS = 4000;
 /** The pushed view's part of the menu: pause state and (I-774 B) the game's words for Skip / Next,
  *  translated through the game's strings. */
 export function vipMenuState(
-  view: { paused?: boolean; vipSkipLabel?: string; gameId?: string } | null,
-): Pick<VipMenuProps, 'paused' | 'skipLabel'> {
-  return {
-    paused: view?.paused ?? false,
-    skipLabel: view?.vipSkipLabel
-      ? serverText(view.vipSkipLabel, getLang(), view.gameId)
-      : undefined,
-  };
+  view: Partial<Pick<ViewEnvelope, 'paused' | 'vipSkipLabel' | 'vipSkipHidden' | 'gameId'>> | null,
+): Pick<VipMenuProps, 'paused' | 'skipLabel' | 'skipHidden'> {
+  const label = view?.vipSkipLabel;
+  const skipLabel = label ? serverText(label, getLang(), view?.gameId) : undefined;
+  return { paused: view?.paused ?? false, skipLabel, skipHidden: view?.vipSkipHidden === true };
 }
 
 export function VipMenu({
@@ -44,6 +43,7 @@ export function VipMenu({
   me,
   paused,
   skipLabel,
+  skipHidden,
   onClose,
 }: VipMenuProps): JSX.Element {
   const [confirm, setConfirm] = useState<string | null>(null);
@@ -94,14 +94,17 @@ export function VipMenu({
           <section className={styles.section}>
             <h3 className={styles.label}>{t.vip.groupGame}</h3>
             <div className={styles.group}>
+              {skipHidden ? null : (
+                <PrimaryButton
+                  tone="neutral"
+                  onClick={() => act('skip', () => controller.vip({ action: 'skip' }))}
+                >
+                  {skipLabel ?? t.vip.skip}
+                </PrimaryButton>
+              )}
               <PrimaryButton
                 tone="neutral"
-                onClick={() => act('skip', () => controller.vip({ action: 'skip' }))}
-              >
-                {skipLabel ?? t.vip.skip}
-              </PrimaryButton>
-              <PrimaryButton
-                tone="neutral"
+                className={skipHidden ? styles.wide : undefined}
                 onClick={() => controller.vip({ action: paused ? 'resume' : 'pause' })}
               >
                 {paused ? t.vip.resume : t.vip.pause}

@@ -227,6 +227,11 @@ export interface ViewEnvelope {
    * TV's host bar and the ★ menu show it instead of the generic "Skip / Next".
    */
   vipSkipLabel?: string;
+  /**
+   * I-589 (the owner's note): the game shows its own Next button in this phase (on the stage and
+   * the VIP's phone), so the TV's host bar and the ★ menu leave out their generic "Skip / Next".
+   */
+  vipSkipHidden?: boolean;
 }
 
 export type TvView = ViewEnvelope;

@@ -14,3 +14,9 @@ export const REVEAL_BEAT_MS = 300;
  * verdicts + deltas from 1200 ms). Tv.tsx must import this when that choreography lands.
  */
 export const FINAL_REVEAL_HOLD_MS = 1200;
+
+/**
+ * I-589 B: a regular reveal shows the race (right answers fastest first, with times) this long,
+ * then re-deals into the standings; the Next button (the owner's note) arrives with the standings.
+ */
+export const RACE_MS = 2000;

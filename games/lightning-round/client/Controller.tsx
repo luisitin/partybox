@@ -15,6 +15,7 @@ import type { LightningControllerView } from '../server/index';
 import type { Input } from '../server/types';
 import { Outcome, RoomRows, Stake, wagerLabel } from './ControllerBits';
 import { CustomStake } from './CustomStake';
+import { PhoneNext } from './NextStep';
 import styles from './Controller.module.css';
 import { pointsText, roundLabel } from './labels';
 import { STRINGS } from './strings';
@@ -36,6 +37,7 @@ function lockedLine(spare: number, phoneOnly: boolean, L: Translator): string {
 export function Controller({
   view,
   send,
+  skip,
 }: GameControllerProps<LightningControllerView, Input>): JSX.Element {
   const L = useT(STRINGS);
   const { phaseId } = view;
@@ -117,7 +119,11 @@ export function Controller({
         }}
         footer={
           revealed && shown ? (
-            <Outcome view={view} streakBefore={streakBefore} spare={spare} />
+            <>
+              <Outcome view={view} streakBefore={streakBefore} spare={spare} />
+              {/* I-589: the owner's Next button, on the VIP's phone only */}
+              <PhoneNext next={view.next} skip={skip} phaseKey={view.deadline} />
+            </>
           ) : revealed && finalQ ? (
             <div className={styles.stake} role="status">
               🎲 {view.phoneOnly ? L('The bets are in…') : L('The bets are in — look at the TV')}
