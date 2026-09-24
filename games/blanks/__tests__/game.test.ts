@@ -90,7 +90,7 @@ describe('whole game', () => {
     expect(s.settings).toEqual({
       rounds: 15,
       answerSeconds: 30,
-      judge: 'vote',
+      judge: 'czar', // I-172 A: an unknown judge falls back to the default "auto" — at three players, a judge
       decks: 'wild',
       rando: false,
       timed: false,

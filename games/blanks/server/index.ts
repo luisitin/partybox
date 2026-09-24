@@ -42,7 +42,8 @@ function oneOf<T extends string>(raw: RawSettings, key: string, values: readonly
 export function readSettings(raw: RawSettings): Settings {
   return {
     decks: oneOf<DeckPreset>(raw, 'decks', DECK_PRESETS),
-    judge: oneOf<JudgeMode>(raw, 'judge', JUDGE_MODES),
+    // I-172 A: "auto" (the default) reads as a vote here; init makes it a judge at three players
+    judge: oneOf<JudgeMode>(raw, 'judge', JUDGE_MODES) === 'czar' ? 'czar' : 'vote',
     rounds: numberSetting(raw, 'rounds'),
     answerSeconds: numberSetting(raw, 'answerSeconds'),
     rando: raw['rando'] === true,
@@ -55,7 +56,11 @@ export function readSettings(raw: RawSettings): Settings {
 function init(ctx: InitContext): State {
   const players: State['players'] = {};
   for (const p of ctx.players) players[p.id] = p;
-  const settings = readSettings(ctx.settings);
+  const read = readSettings(ctx.settings);
+  // I-172 A: three players can't vote well (each picks between the two cards that aren't theirs,
+  // and a 1-1-1 split pays everyone) — the default plays a three-player game with a judge
+  const auto = ctx.settings['judge'] !== 'vote' && ctx.settings['judge'] !== 'czar';
+  const settings: Settings = auto && ctx.players.length === 3 ? { ...read, judge: 'czar' } : read;
   const [blackShuffled, r1] = shuffle(seedRng(ctx.seed), blackPool(settings.decks));
   const blackDeck = orderBlackDeck(blackShuffled, settings.rounds, 'one'); // I-158
   const [whiteDeck, rng] = shuffle(r1, whitePool(settings.decks));

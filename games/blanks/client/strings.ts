@@ -45,6 +45,7 @@ const PICKER_ES: Readonly<Record<string, string>> = {
   'Everyone votes on the cards, or one player judges each round in turn':
     'Todos votan las cartas, o un jugador juzga cada ronda por turnos',
   'Everyone votes': 'Votan todos',
+  'Everyone votes (a judge at three)': 'Votan todos (con tres, un juez)', // I-172 A
   'A rotating judge': 'Un juez por turnos',
   Rounds: 'Rondas',
   'Black cards to play; about a minute each in a small room, closer to two with a full one':

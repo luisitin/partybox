@@ -45,8 +45,12 @@
       "label": "Who picks the winner",
       "description": "Everyone votes on the cards, or one player judges each round in turn",
       "type": "select",
-      "default": "vote",
+      "default": "auto",
       "options": [
+        {
+          "value": "auto",
+          "label": "Everyone votes (a judge at three)"
+        },
         {
           "value": "vote",
           "label": "Everyone votes"
