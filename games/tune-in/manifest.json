@@ -1,0 +1,138 @@
+{
+  "id": "tune-in",
+  "name": "Tune In",
+  "tagline": "One clue. Everyone guesses where it lands.",
+  "description": "A dial runs between two opposites, like Cold and Hot. Only the psychic sees the secret target; they give a one-line clue, and everyone slides a dial to where they think it lands. The closer, the more points, for you and the psychic. Play solo, in two teams, or together against the dial.",
+  "version": "0.1.0",
+  "minPlayers": 2,
+  "maxPlayers": 16,
+  "estimatedMinutes": 12,
+  "tags": ["words", "co-op", "teams"],
+  "settings": [
+    {
+      "key": "mode",
+      "label": "Mode",
+      "description": "Auto plays together at 2 players and solo at 3+; teams needs 4+, co-op allows up to 8",
+      "type": "select",
+      "default": "auto",
+      "options": [
+        { "value": "auto", "label": "Auto" },
+        { "value": "solo", "label": "Solo" },
+        { "value": "teams", "label": "Teams" },
+        { "value": "coop", "label": "Co-op" }
+      ]
+    },
+    {
+      "key": "rounds",
+      "label": "Rounds",
+      "description": "Solo and co-op; auto gives everyone a turn as the psychic (8 with 2 or 9+ players)",
+      "type": "select",
+      "default": "auto",
+      "options": [
+        { "value": "auto", "label": "Auto" },
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" },
+        { "value": "5", "label": "5" },
+        { "value": "6", "label": "6" },
+        { "value": "7", "label": "7" },
+        { "value": "8", "label": "8" },
+        { "value": "9", "label": "9" },
+        { "value": "10", "label": "10" },
+        { "value": "11", "label": "11" },
+        { "value": "12", "label": "12" }
+      ]
+    },
+    {
+      "key": "targetScore",
+      "label": "Points to win",
+      "description": "Teams: the first team to this many points wins",
+      "type": "number",
+      "default": 10,
+      "min": 6,
+      "max": 15,
+      "step": 1
+    },
+    {
+      "key": "maxTurns",
+      "label": "Most turns",
+      "description": "Teams: the game ends after this many turns, catch-up turns included",
+      "type": "number",
+      "default": 12,
+      "min": 6,
+      "max": 12,
+      "step": 1
+    },
+    {
+      "key": "clueSeconds",
+      "label": "Clue time",
+      "description": "Seconds the psychic has to send a clue",
+      "type": "number",
+      "default": 45,
+      "min": 20,
+      "max": 75,
+      "step": 5
+    },
+    {
+      "key": "dialSeconds",
+      "label": "Dial time",
+      "description": "Seconds to slide your dial and lock in",
+      "type": "number",
+      "default": 25,
+      "min": 15,
+      "max": 45,
+      "step": 5
+    },
+    {
+      "key": "callSeconds",
+      "label": "Call time",
+      "description": "Teams: seconds for the other team to call left or right",
+      "type": "number",
+      "default": 15,
+      "min": 10,
+      "max": 30,
+      "step": 5
+    },
+    {
+      "key": "targetSize",
+      "label": "Target size",
+      "description": "How wide the scoring zones are",
+      "type": "select",
+      "default": "normal",
+      "options": [
+        { "value": "narrow", "label": "Narrow" },
+        { "value": "normal", "label": "Normal" },
+        { "value": "wide", "label": "Wide" }
+      ]
+    },
+    {
+      "key": "huddle",
+      "label": "Huddle",
+      "description": "Teams and co-op: teammates see each other's dials move and argue it out",
+      "type": "boolean",
+      "default": true
+    },
+    {
+      "key": "spicy",
+      "label": "Spicy dials",
+      "description": "Mix in adult dials (dates, exes, bad behaviour), never explicit",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "key": "reader",
+      "label": "Reader",
+      "description": "Who reads the dial's ends and the clue aloud",
+      "type": "select",
+      "default": "sky",
+      "options": [
+        { "value": "none", "label": "No reader" },
+        { "value": "george", "label": "Old British Man" },
+        { "value": "fable", "label": "Young British Man" },
+        { "value": "jessica", "label": "American Woman" },
+        { "value": "sky", "label": "Soft-Spoken Woman" },
+        { "value": "original", "label": "Original" }
+      ]
+    }
+  ],
+  "supportsBots": true
+}

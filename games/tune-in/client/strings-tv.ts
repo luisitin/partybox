@@ -1,0 +1,58 @@
+// Tune In's TV and shared sentences in Spanish, keyed by the English (ADR-044; see strings.ts).
+// "Psychic" is "vidente"; the teams are "Sol" and "Luna"; the call stays IZQUIERDA / DERECHA.
+export const STRINGS_TV: Record<string, string> = {
+  '📻 Tune In': '📻 Sintoniza',
+  'Solo · everyone for themselves': 'Solo · cada quien por su cuenta',
+  'Teams · ▲ Sun against ● Moon': 'Equipos · ▲ Sol contra ● Luna',
+  'Co-op · the whole room against the dial': 'Cooperativo · toda la sala contra el dial',
+  'The psychic secretly sees a target on a dial between two opposites.':
+    'El vidente ve en secreto un objetivo en un dial entre dos opuestos.',
+  'They give one clue; everyone else slides their own dial, in secret.':
+    'Da una pista; los demás mueven su propio dial, en secreto.',
+  'The closer to the target, the more points — for you and for the psychic.':
+    'Cuanto más cerca del objetivo, más puntos, para ti y para el vidente.',
+  'They give one clue; their team argues and sets one needle.':
+    'Da una pista; su equipo discute y coloca una sola aguja.',
+  'The other team calls LEFT or RIGHT of the needle. First to the target wins.':
+    'El otro equipo dice IZQUIERDA o DERECHA de la aguja. Gana el primero en llegar a la meta.',
+  'They give one clue; everyone else slides a dial, and the group needle is the average.':
+    'Da una pista; los demás mueven un dial y la aguja del grupo es el promedio.',
+  'Closer scores more for the group. Can the room reach a mind meld?':
+    'Más cerca, más puntos para el grupo. ¿Logrará la sala una conexión mental?',
+  Cold: 'Frío',
+  Hot: 'Caliente',
+  '▲ Sun': '▲ Sol',
+  '● Moon': '● Luna',
+  Sun: 'Sol',
+  Moon: 'Luna',
+  'Round {n} of {total}': 'Ronda {n} de {total}',
+  'Turn {n} · {team}': 'Turno {n} · {team}',
+  '{name} is the psychic': '{name} es el vidente',
+  '{name} is thinking': '{name} está pensando',
+  'Tuning in': 'Sintonizando',
+  'Group {total} / {max}': 'Grupo {total} / {max}',
+  'CATCH-UP!': '¡REMONTADA!',
+  'First to {n}': 'Primero a {n}',
+  '📺 No signal!': '📺 ¡Sin señal!',
+  'No clue came through. Nobody scores.': 'No llegó ninguna pista. Nadie puntúa.',
+  '{team}: is the target LEFT or RIGHT of the needle?':
+    '{team}: ¿el objetivo está a la IZQUIERDA o a la DERECHA de la aguja?',
+  '{team} called {side}': '{team} dijo {side}',
+  LEFT: 'IZQUIERDA',
+  RIGHT: 'DERECHA',
+  '✓ +1': '✓ +1',
+  '✗': '✗',
+  'Bullseye!': '¡En el blanco!',
+  'Close!': '¡Cerca!',
+  'Missed it.': 'Fallado.',
+  'Perfect tune!': '¡Sintonía perfecta!',
+  '🧠 Mind meld!': '🧠 ¡Conexión mental!',
+  '📡 Crystal clear!': '📡 ¡Clarísimo!',
+  '📻 Tuning in.': '📻 Sintonizando.',
+  '📺 Static.': '📺 Estática.',
+  'Final scores': 'Puntuación final',
+  'Final score': 'Resultado final',
+  'After round {n}': 'Tras la ronda {n}',
+  '{team} hit the bullseye and goes again!': '¡{team} dio en el blanco y vuelve a jugar!',
+  '+{n} for the group this round': '+{n} para el grupo en esta ronda',
+};

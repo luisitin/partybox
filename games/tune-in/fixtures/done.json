@@ -1,0 +1,523 @@
+{
+  "phase": {
+    "id": "done",
+    "startedAt": 1700000177070,
+    "deadline": null
+  },
+  "rng": {
+    "seed": 7,
+    "step": 161
+  },
+  "players": {
+    "p1": {
+      "id": "p1",
+      "name": "Player 1",
+      "avatarId": "fox",
+      "connected": true
+    },
+    "p2": {
+      "id": "p2",
+      "name": "Player 2",
+      "avatarId": "owl",
+      "connected": true
+    },
+    "p3": {
+      "id": "p3",
+      "name": "Player 3",
+      "avatarId": "frog",
+      "connected": true
+    },
+    "p4": {
+      "id": "p4",
+      "name": "Player 4",
+      "avatarId": "cat",
+      "connected": true
+    },
+    "p5": {
+      "id": "p5",
+      "name": "Player 5",
+      "avatarId": "panda",
+      "connected": true
+    },
+    "p6": {
+      "id": "p6",
+      "name": "Player 6",
+      "avatarId": "koala",
+      "connected": true
+    }
+  },
+  "cfg": {
+    "mode": "solo",
+    "rounds": 6,
+    "targetScore": 10,
+    "maxTurns": 12,
+    "clueSeconds": 45,
+    "dialSeconds": 25,
+    "callSeconds": 15,
+    "targetSize": "normal",
+    "huddle": false,
+    "spicy": false,
+    "reader": "sky"
+  },
+  "presence": {
+    "mode": "together",
+    "phoneOnly": false
+  },
+  "seats": ["p1", "p2", "p3", "p4", "p5", "p6"],
+  "left": [],
+  "mode": "solo",
+  "teams": null,
+  "psychicBag": {
+    "all": [],
+    "sun": [],
+    "moon": []
+  },
+  "spectra": [
+    {
+      "id": "tn-grandma-057",
+      "left": "Grandma approved",
+      "right": "Grandma horrified",
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "a thank-you card",
+          "pos": 2
+        },
+        {
+          "text": "cleaning your plate",
+          "pos": 6
+        },
+        {
+          "text": "a cardigan",
+          "pos": 14
+        },
+        {
+          "text": "a video call",
+          "pos": 22
+        },
+        {
+          "text": "store-bought pie",
+          "pos": 36
+        },
+        {
+          "text": "a mullet",
+          "pos": 46
+        },
+        {
+          "text": "sleeping till noon",
+          "pos": 54
+        },
+        {
+          "text": "ripped jeans",
+          "pos": 64
+        },
+        {
+          "text": "a motorcycle",
+          "pos": 74
+        },
+        {
+          "text": "a nose ring",
+          "pos": 84
+        },
+        {
+          "text": "pajamas at church",
+          "pos": 91
+        },
+        {
+          "text": "swearing at bingo",
+          "pos": 97
+        }
+      ]
+    },
+    {
+      "id": "tn-depth-058",
+      "left": "Shallow",
+      "right": "Deep",
+      "kind": "measurable",
+      "clues": [
+        {
+          "text": "a puddle",
+          "pos": 1
+        },
+        {
+          "text": "a birdbath",
+          "pos": 4
+        },
+        {
+          "text": "a kiddie pool",
+          "pos": 9
+        },
+        {
+          "text": "a swimming pool",
+          "pos": 26
+        },
+        {
+          "text": "a grave",
+          "pos": 36
+        },
+        {
+          "text": "a well",
+          "pos": 48
+        },
+        {
+          "text": "a lake",
+          "pos": 56
+        },
+        {
+          "text": "Loch Ness",
+          "pos": 66
+        },
+        {
+          "text": "the Grand Canyon",
+          "pos": 74
+        },
+        {
+          "text": "a shipwreck",
+          "pos": 84
+        },
+        {
+          "text": "the Mariana Trench",
+          "pos": 96
+        },
+        {
+          "text": "the Earth's core",
+          "pos": 100
+        }
+      ]
+    },
+    {
+      "id": "tn-memory-029",
+      "left": "Forgettable",
+      "right": "Unforgettable",
+      "kind": "opinion",
+      "clues": [
+        {
+          "text": "a random Tuesday",
+          "pos": 3
+        },
+        {
+          "text": "an elevator ride",
+          "pos": 9
+        },
+        {
+          "text": "a TV commercial",
+          "pos": 16
+        },
+        {
+          "text": "a dentist visit",
+          "pos": 24
+        },
+        {
+          "text": "a school play",
+          "pos": 35
+        },
+        {
+          "text": "your birthday last year",
+          "pos": 44
+        },
+        {
+          "text": "a snow day",
+          "pos": 52
+        },
+        {
+          "text": "getting stung by a bee",
+          "pos": 64
+        },
+        {
+          "text": "a family road trip",
+          "pos": 72
+        },
+        {
+          "text": "a hot-air balloon ride",
+          "pos": 85
+        },
+        {
+          "text": "a solar eclipse",
+          "pos": 88
+        },
+        {
+          "text": "your wedding day",
+          "pos": 97
+        }
+      ]
+    },
+    {
+      "id": "tn-spell-009",
+      "left": "Easy to spell",
+      "right": "Hard to spell",
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "cat",
+          "pos": 1
+        },
+        {
+          "text": "pizza",
+          "pos": 8
+        },
+        {
+          "text": "banana",
+          "pos": 18
+        },
+        {
+          "text": "broccoli",
+          "pos": 30
+        },
+        {
+          "text": "Mississippi",
+          "pos": 36
+        },
+        {
+          "text": "Wednesday",
+          "pos": 46
+        },
+        {
+          "text": "restaurant",
+          "pos": 54
+        },
+        {
+          "text": "necessary",
+          "pos": 64
+        },
+        {
+          "text": "rhythm",
+          "pos": 74
+        },
+        {
+          "text": "chihuahua",
+          "pos": 82
+        },
+        {
+          "text": "Albuquerque",
+          "pos": 90
+        },
+        {
+          "text": "Worcestershire",
+          "pos": 98
+        }
+      ]
+    },
+    {
+      "id": "tn-hidingspot-075",
+      "left": "Awful hiding spot",
+      "right": "Genius hiding spot",
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "behind a floor lamp",
+          "pos": 2
+        },
+        {
+          "text": "behind the curtains",
+          "pos": 8
+        },
+        {
+          "text": "under the bed",
+          "pos": 16
+        },
+        {
+          "text": "the coat closet",
+          "pos": 24
+        },
+        {
+          "text": "the shower",
+          "pos": 34
+        },
+        {
+          "text": "a kitchen cabinet",
+          "pos": 46
+        },
+        {
+          "text": "the laundry hamper",
+          "pos": 55
+        },
+        {
+          "text": "up a tree",
+          "pos": 64
+        },
+        {
+          "text": "under a pile of pillows",
+          "pos": 72
+        },
+        {
+          "text": "among the stuffed animals",
+          "pos": 86
+        },
+        {
+          "text": "on top of the fridge",
+          "pos": 91
+        },
+        {
+          "text": "a secret passage",
+          "pos": 97
+        }
+      ]
+    },
+    {
+      "id": "tn-dogcat-012",
+      "left": "Dog person",
+      "right": "Cat person",
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "a cowboy",
+          "pos": 4
+        },
+        {
+          "text": "goes jogging at dawn",
+          "pos": 10
+        },
+        {
+          "text": "a football coach",
+          "pos": 16
+        },
+        {
+          "text": "a firefighter",
+          "pos": 24
+        },
+        {
+          "text": "hosts big barbecues",
+          "pos": 32
+        },
+        {
+          "text": "a teacher",
+          "pos": 48
+        },
+        {
+          "text": "a gamer",
+          "pos": 56
+        },
+        {
+          "text": "works from home",
+          "pos": 64
+        },
+        {
+          "text": "a mail carrier",
+          "pos": 72
+        },
+        {
+          "text": "a librarian",
+          "pos": 84
+        },
+        {
+          "text": "a witch",
+          "pos": 94
+        },
+        {
+          "text": "an Egyptian pharaoh",
+          "pos": 97
+        }
+      ]
+    }
+  ],
+  "turn": {
+    "n": 6,
+    "psychic": "p1",
+    "team": null,
+    "catchUp": false,
+    "spectrum": 5,
+    "target": 67,
+    "clue": "works from home",
+    "clueAt": 1700000149937,
+    "clueDeadline": 1700000193081,
+    "rejected": null,
+    "dials": {
+      "p5": 59,
+      "p3": 59,
+      "p6": 67,
+      "p4": 68,
+      "p2": 67
+    },
+    "locked": ["p2", "p3", "p5", "p6", "p4"],
+    "needle": null,
+    "calls": {},
+    "points": {
+      "p2": 4,
+      "p3": 3,
+      "p4": 4,
+      "p5": 3,
+      "p6": 4,
+      "p1": 4
+    },
+    "teamPoints": {
+      "sun": 0,
+      "moon": 0
+    },
+    "void": false,
+    "step": 1
+  },
+  "nextTeam": "sun",
+  "scores": {
+    "p1": 18,
+    "p2": 23,
+    "p3": 16,
+    "p4": 22,
+    "p5": 21,
+    "p6": 18
+  },
+  "turnStartScores": {
+    "p1": 14,
+    "p2": 19,
+    "p3": 13,
+    "p4": 18,
+    "p5": 18,
+    "p6": 14
+  },
+  "team": {
+    "sun": 0,
+    "moon": 0
+  },
+  "coopTotal": 0,
+  "played": 6,
+  "stats": {
+    "p1": {
+      "bulls": 2,
+      "dials": 5,
+      "dist": 46,
+      "zeros": 0,
+      "psyTurns": 1,
+      "psyPts": 4
+    },
+    "p2": {
+      "bulls": 4,
+      "dials": 5,
+      "dist": 17,
+      "zeros": 0,
+      "psyTurns": 1,
+      "psyPts": 4
+    },
+    "p3": {
+      "bulls": 0,
+      "dials": 5,
+      "dist": 44,
+      "zeros": 0,
+      "psyTurns": 1,
+      "psyPts": 3
+    },
+    "p4": {
+      "bulls": 4,
+      "dials": 5,
+      "dist": 17,
+      "zeros": 0,
+      "psyTurns": 1,
+      "psyPts": 3
+    },
+    "p6": {
+      "bulls": 2,
+      "dials": 5,
+      "dist": 39,
+      "zeros": 0,
+      "psyTurns": 1,
+      "psyPts": 3
+    },
+    "p5": {
+      "bulls": 2,
+      "dials": 5,
+      "dist": 33,
+      "zeros": 0,
+      "psyTurns": 1,
+      "psyPts": 4
+    }
+  },
+  "speechMs": {}
+}

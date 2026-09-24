@@ -1,0 +1,459 @@
+/* Tune In's TV (1920 × 1080 design size; the shell zooms it to fit). Tokens only; transform and
+   opacity are the only animated properties. The round stage is a column: header, bubble, dial —
+   the dial takes whatever height is left and sits on the bottom edge. */
+.round {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-4);
+  min-height: 0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--pb-space-6);
+  min-height: 64px;
+}
+
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  color: var(--pb-text-muted);
+}
+
+.banner {
+  width: 100%;
+}
+
+/* One fixed slot for the bubble: whatever it says, the dial under it keeps its size. */
+.bubbleRow {
+  position: relative;
+  z-index: 1;
+  height: 164px;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* The speech bubble over the arc, its tail pointing down at the dial. */
+.bubble {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-4);
+  max-width: 72%;
+  padding: var(--pb-space-3) var(--pb-space-7) var(--pb-space-3) var(--pb-space-4);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface);
+  border: 2px solid var(--pb-border);
+}
+
+.bubble::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -18px;
+  width: 36px;
+  height: 36px;
+  background: var(--pb-surface);
+  transform: translateX(-50%) rotate(45deg);
+  border-radius: 6px;
+  z-index: -1;
+}
+
+.bubbleText {
+  display: grid;
+  gap: var(--pb-space-1);
+  min-width: 0;
+}
+
+.caption {
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  color: var(--pb-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.meterCorner {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.who {
+  flex: 0 0 auto;
+  display: grid;
+}
+
+.clue {
+  font-size: var(--pb-font-h1);
+  font-weight: 900;
+  line-height: 1.1;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+
+.clueLands {
+  animation: tune-clue-land var(--pb-motion-slow) var(--pb-ease) both;
+}
+
+@keyframes tune-clue-land {
+  0% {
+    transform: translateY(24px) scale(0.7);
+    opacity: 0.4;
+  }
+  60% {
+    transform: translateY(-4px) scale(1.06);
+    opacity: 1;
+  }
+  100% {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+.thinking {
+  font-size: var(--pb-font-h2);
+  font-weight: 800;
+  color: var(--pb-text-muted);
+}
+
+.dots span {
+  display: inline-block;
+  animation: tune-dot calc(var(--pb-motion-pulse) * 1.2) ease-in-out infinite;
+}
+
+.dots span:nth-child(2) {
+  animation-delay: 160ms;
+}
+
+.dots span:nth-child(3) {
+  animation-delay: 320ms;
+}
+
+@keyframes tune-dot {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.35;
+  }
+  40% {
+    transform: translateY(-10px);
+    opacity: 1;
+  }
+}
+
+/* Floats inside the arc, above the hub: the call's question, the verdict, "No signal!" — the
+   dial underneath never changes size. */
+.overlay {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: 58%;
+  transform: translate(-50%, -50%);
+  max-width: 52%;
+  pointer-events: none;
+  text-align: center;
+}
+
+.noSignal {
+  display: grid;
+  gap: var(--pb-space-2);
+  padding: var(--pb-space-5) var(--pb-space-7);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface);
+  border: 2px solid var(--pb-surface-2);
+  animation: tune-pop-center var(--pb-motion-slow) var(--pb-ease) both;
+}
+
+@keyframes tune-pop-center {
+  from {
+    transform: translate(-50%, -50%) scale(0.6);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+  }
+}
+
+.callout {
+  padding: var(--pb-space-3) var(--pb-space-5);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface);
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  line-height: 1.2;
+  color: var(--pb-accent);
+  text-wrap: balance;
+  animation: tune-pop-center var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.verdictRow {
+  display: grid;
+  justify-items: center;
+  gap: var(--pb-space-2);
+}
+
+.verdict {
+  padding: var(--pb-space-2) var(--pb-space-5);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface);
+  font-size: var(--pb-font-h1);
+  font-weight: 1000;
+  line-height: 1.1;
+  color: var(--pb-accent-2);
+  animation: tune-stamp var(--pb-motion-base) var(--pb-ease) both;
+}
+
+@keyframes tune-stamp {
+  from {
+    transform: scale(1.8) rotate(-8deg);
+    opacity: 0;
+  }
+  to {
+    transform: rotate(-3deg);
+    opacity: 1;
+  }
+}
+
+.callResult {
+  padding: var(--pb-space-1) var(--pb-space-3);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  color: var(--pb-text-muted);
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+  animation-delay: var(--pb-motion-base);
+}
+
+.dialRow {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
+
+/* ── co-op meter ── */
+.meter {
+  display: grid;
+  gap: var(--pb-space-2);
+  min-width: 560px;
+}
+
+.meterLabel {
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  color: var(--pb-text-muted);
+}
+
+.meterTrack {
+  position: relative;
+  display: block;
+  height: 28px;
+  border-radius: 999px;
+  background: var(--pb-surface-2);
+}
+
+.meterFill {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: var(--pb-accent-3);
+  transform-origin: left center;
+  transform: scaleX(var(--fill));
+  transition: transform var(--pb-motion-slow) var(--pb-ease);
+}
+
+.meterBand {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: var(--pb-font-caption);
+  line-height: 1;
+}
+
+.meterBand:first-of-type {
+  transform: translate(0, -50%);
+  padding-left: var(--pb-space-2);
+}
+
+/* ── intro ── */
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-5);
+}
+
+.introTop {
+  display: grid;
+  grid-template-columns: 1fr 560px;
+  align-items: center;
+  gap: var(--pb-space-6);
+}
+
+.introTitle {
+  display: grid;
+  gap: var(--pb-space-3);
+}
+
+.introDial {
+  height: 340px;
+  display: flex;
+}
+
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--pb-space-3);
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-4);
+  font-size: var(--pb-font-body);
+  font-weight: 700;
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.stepNo {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--pb-accent);
+  color: var(--pb-on-accent);
+  font-weight: 900;
+}
+
+.rosters {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--pb-space-5);
+}
+
+.roster {
+  --team: var(--pb-team-sun);
+  display: grid;
+  gap: var(--pb-space-2);
+  padding: var(--pb-space-3) var(--pb-space-4);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface);
+  border-left: 10px solid var(--team);
+}
+
+.rosterMoon {
+  --team: var(--pb-team-moon);
+}
+
+.rosterName {
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  color: var(--team);
+}
+
+.rosterList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pb-space-2) var(--pb-space-4);
+}
+
+.rosterRow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+/* ── scores and finale ── */
+.scores {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pb-space-5);
+}
+
+.scores > :last-child {
+  width: min(1200px, 100%);
+}
+
+.bigBanner {
+  width: min(1400px, 100%);
+}
+
+.deltas {
+  display: flex;
+  gap: var(--pb-space-8);
+  font-size: var(--pb-font-h2);
+  font-weight: 800;
+  color: var(--pb-text-muted);
+}
+
+.catchUp {
+  animation: global(pb-pop) var(--pb-motion-slow) var(--pb-ease) both;
+  animation-delay: var(--pb-motion-slow);
+}
+
+.bigMeter {
+  width: min(1200px, 100%);
+}
+
+.bigMeter .meterLabel {
+  font-size: var(--pb-font-h2);
+}
+
+.bigMeter .meterTrack {
+  height: 48px;
+}
+
+.bigMeter .meterBand {
+  font-size: var(--pb-font-h2);
+}
+
+.finale {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pb-space-5);
+}
+
+.rating {
+  animation: global(pb-pop) var(--pb-motion-slow) var(--pb-ease) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dots span {
+    animation: none;
+    opacity: 1;
+  }
+  .meterFill {
+    transition: none;
+  }
+}
+:global(:root[data-motion='off']) .dots span {
+  animation: none;
+  opacity: 1;
+}
+:global(:root[data-motion='off']) .meterFill {
+  transition: none;
+}

@@ -1,0 +1,332 @@
+/* Tune In's phone (320 × 568 first; rem-based type so 200 % text scales). Tokens only; no text is
+   selectable on the input screens and no control shows a callout or a tap flash. */
+.screen {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.kicker {
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  color: var(--pb-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.title {
+  font-size: var(--pb-font-h1);
+  font-weight: 900;
+}
+
+.role {
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+.clue {
+  font-size: var(--pb-font-h1);
+  font-weight: 900;
+  line-height: 1.15;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.yourClue {
+  font-size: var(--pb-font-body);
+  overflow-wrap: anywhere;
+}
+
+.tip,
+.hush {
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+  line-height: 1.4;
+}
+
+.hush {
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  color: var(--pb-accent-2);
+}
+
+/* ── the clue box ── */
+.clueForm {
+  position: relative;
+}
+
+.clueInput {
+  width: 100%;
+  min-height: 52px;
+  padding: var(--pb-space-3) 72px var(--pb-space-3) var(--pb-space-4);
+  border-radius: var(--pb-radius);
+  border: 2px solid var(--pb-surface-2);
+  background: var(--pb-surface);
+  color: var(--pb-text);
+  font: inherit;
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+}
+
+.clueInput:focus-visible {
+  outline: none;
+  border-color: var(--pb-focus);
+}
+
+.clueBad {
+  border-color: var(--pb-danger);
+}
+
+.counter {
+  position: absolute;
+  right: var(--pb-space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.legal,
+.legalBad {
+  min-height: 1.4em;
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.legal {
+  color: var(--pb-accent-3);
+}
+
+.legalBad {
+  color: var(--pb-danger);
+  animation: global(pb-shake) var(--pb-motion-base) var(--pb-ease);
+}
+
+/* ── hold to see ── */
+.hold {
+  position: relative;
+  width: 100%;
+  min-height: 132px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  perspective: 900px;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.holdInner {
+  position: relative;
+  display: block;
+  min-height: 132px;
+  transform-style: preserve-3d;
+  transition: transform var(--pb-motion-base) var(--pb-ease);
+}
+
+.holdOpen .holdInner {
+  transform: rotateY(180deg);
+}
+
+.holdBack,
+.holdFront {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  border-radius: var(--pb-radius-lg);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.holdBack {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pb-space-1);
+  background: var(--pb-surface);
+  border: 2px dashed var(--pb-surface-2);
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  color: var(--pb-text-muted);
+}
+
+.holdGlyph {
+  font-size: var(--pb-font-h1);
+}
+
+.holdFront {
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--pb-space-3) 0;
+  background: var(--pb-surface);
+  transform: rotateY(180deg);
+}
+
+/* ── the call ── */
+.calls {
+  display: grid;
+  gap: var(--pb-space-3);
+}
+
+.call {
+  min-height: 80px;
+  display: grid;
+  gap: var(--pb-space-1);
+  place-content: center;
+  padding: var(--pb-space-2) var(--pb-space-4);
+  border-radius: var(--pb-radius-lg);
+  border: 3px solid var(--pb-surface-2);
+  background: var(--pb-surface);
+  color: var(--pb-text);
+  font: inherit;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--pb-motion-fast) var(--pb-ease);
+}
+
+.call:active {
+  transform: scale(0.97);
+}
+
+.callChosen {
+  border-color: var(--pb-accent);
+  background: var(--pb-surface-2);
+}
+
+.callSide {
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+}
+
+.callEnd {
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+  overflow-wrap: anywhere;
+}
+
+/* ── results ── */
+.result {
+  display: grid;
+  justify-items: center;
+  gap: var(--pb-space-2);
+  padding: var(--pb-space-5) var(--pb-space-3);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface);
+  text-align: center;
+}
+
+.big {
+  font-size: var(--pb-font-display);
+  font-weight: 1000;
+  line-height: 1;
+  color: var(--pb-accent-2);
+  animation: global(pb-pop) var(--pb-motion-slow) var(--pb-ease) both;
+}
+
+.resultLine {
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  line-height: 1.3;
+  text-wrap: balance;
+}
+
+.total {
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  text-align: center;
+  color: var(--pb-text-muted);
+  text-wrap: balance;
+}
+
+.verdict {
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  color: var(--pb-accent-2);
+  text-align: center;
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+/* ── intro ── */
+.teamBadge {
+  --team: var(--pb-team-sun);
+  align-self: flex-start;
+  padding: var(--pb-space-1) var(--pb-space-3);
+  border-radius: var(--pb-radius);
+  border-left: 8px solid var(--team);
+  background: var(--pb-surface);
+  font-weight: 900;
+}
+
+.sun {
+  --team: var(--pb-team-sun);
+}
+
+.moon {
+  --team: var(--pb-team-moon);
+}
+
+.steps {
+  margin: 0;
+  padding-left: 1.4em;
+  display: grid;
+  gap: var(--pb-space-3);
+  font-size: var(--pb-font-body);
+  line-height: 1.35;
+}
+
+.step {
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+/* ── phone stage board ── */
+.board {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--pb-space-2);
+}
+
+.board li {
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+  padding: var(--pb-space-1) var(--pb-space-3);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+}
+
+.boardMe {
+  outline: 2px solid var(--pb-accent);
+}
+
+.boardName {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.boardScore {
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .holdInner {
+    transition: none;
+  }
+}
+:global(:root[data-motion='off']) .holdInner {
+  transition: none;
+}

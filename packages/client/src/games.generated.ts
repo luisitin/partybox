@@ -4,6 +4,7 @@ import { clientModule as bingo } from '../../../games/bingo/client/index';
 import { clientModule as blanks } from '../../../games/blanks/client/index';
 import { clientModule as brokenPencil } from '../../../games/broken-pencil/client/index';
 import { clientModule as lightningRound } from '../../../games/lightning-round/client/index';
+import { clientModule as tuneIn } from '../../../games/tune-in/client/index';
 import { clientModule as wisecrack } from '../../../games/wisecrack/client/index';
 
 export const clientGames: Readonly<Record<string, GameClientModule>> = {
@@ -11,5 +12,6 @@ export const clientGames: Readonly<Record<string, GameClientModule>> = {
   'blanks': blanks,
   'broken-pencil': brokenPencil,
   'lightning-round': lightningRound,
+  'tune-in': tuneIn,
   'wisecrack': wisecrack,
 };

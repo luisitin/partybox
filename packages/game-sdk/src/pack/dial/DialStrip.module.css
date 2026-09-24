@@ -1,0 +1,96 @@
+/* The horizontal dial read-out (DialStrip.tsx): phone sizes, tokens only. */
+.strip {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-2);
+}
+
+.marks {
+  position: relative;
+  height: calc(var(--rows) * 30px);
+  margin: 0 12px;
+}
+
+.mark {
+  position: absolute;
+  bottom: calc(var(--ring) * 30px);
+  width: 24px;
+  height: 24px;
+  transform: translateX(-50%);
+  animation: global(pb-land) var(--pb-motion-slow) var(--pb-ease) both;
+  animation-delay: calc(var(--i) * 70ms);
+}
+
+.pts {
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  transform: translateX(-50%);
+  padding: 0 var(--pb-space-1);
+  border-radius: var(--pb-radius);
+  background: var(--pb-accent-2-fill);
+  color: var(--pb-on-accent-2-fill);
+  font-size: var(--pb-font-caption);
+  font-weight: 900;
+  line-height: 1.3;
+}
+
+.bar {
+  position: relative;
+  height: 48px;
+  margin: 0 12px;
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface-2);
+  overflow: hidden;
+}
+
+.zone {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: grid;
+  place-items: center;
+  font-size: var(--pb-font-body);
+  font-weight: 900;
+  color: var(--pb-on-accent);
+  box-shadow: inset 1px 0 0 var(--pb-surface-2);
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.z2 {
+  background: var(--pb-info);
+}
+.z3 {
+  background: var(--pb-accent);
+}
+.z4 {
+  background: var(--pb-accent-2-fill);
+}
+
+.needle {
+  position: absolute;
+  top: -2px;
+  bottom: -2px;
+  width: 6px;
+  border-radius: 3px;
+  transform: translateX(-50%);
+  background: var(--pb-text);
+}
+
+.ends {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--pb-space-3);
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  color: var(--pb-text-muted);
+}
+
+.ends span {
+  max-width: 48%;
+  overflow-wrap: anywhere;
+}
+
+.endRight {
+  text-align: right;
+}

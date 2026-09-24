@@ -1,0 +1,806 @@
+{
+  "phase": {
+    "id": "call",
+    "startedAt": 1700000014359,
+    "deadline": 1700000029359
+  },
+  "rng": {
+    "seed": 11,
+    "step": 165
+  },
+  "players": {
+    "p1": {
+      "id": "p1",
+      "name": "Player 1",
+      "avatarId": "fox",
+      "connected": true
+    },
+    "p2": {
+      "id": "p2",
+      "name": "Player 2",
+      "avatarId": "owl",
+      "connected": true
+    },
+    "p3": {
+      "id": "p3",
+      "name": "Player 3",
+      "avatarId": "frog",
+      "connected": true
+    },
+    "p4": {
+      "id": "p4",
+      "name": "Player 4",
+      "avatarId": "cat",
+      "connected": true
+    },
+    "p5": {
+      "id": "p5",
+      "name": "Player 5",
+      "avatarId": "panda",
+      "connected": true
+    },
+    "p6": {
+      "id": "p6",
+      "name": "Player 6",
+      "avatarId": "koala",
+      "connected": true
+    }
+  },
+  "cfg": {
+    "mode": "teams",
+    "rounds": 6,
+    "targetScore": 10,
+    "maxTurns": 12,
+    "clueSeconds": 45,
+    "dialSeconds": 25,
+    "callSeconds": 15,
+    "targetSize": "normal",
+    "huddle": true,
+    "spicy": false,
+    "reader": "sky"
+  },
+  "presence": {
+    "mode": "together",
+    "phoneOnly": false
+  },
+  "seats": ["p1", "p2", "p3", "p4", "p5", "p6"],
+  "left": [],
+  "mode": "teams",
+  "teams": {
+    "sun": ["p5", "p3", "p6"],
+    "moon": ["p2", "p1", "p4"]
+  },
+  "psychicBag": {
+    "all": ["p2", "p1", "p4", "p6", "p3", "p5"],
+    "sun": ["p6", "p5", "p3"],
+    "moon": ["p1", "p2"]
+  },
+  "spectra": [
+    {
+      "id": "tn-crunch-042",
+      "left": "Squishy",
+      "right": "Crunchy",
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "a slug",
+          "pos": 2
+        },
+        {
+          "text": "a marshmallow",
+          "pos": 5
+        },
+        {
+          "text": "a water balloon",
+          "pos": 10
+        },
+        {
+          "text": "a gummy bear",
+          "pos": 22
+        },
+        {
+          "text": "a soft pretzel",
+          "pos": 30
+        },
+        {
+          "text": "a bagel",
+          "pos": 45
+        },
+        {
+          "text": "fresh snow",
+          "pos": 55
+        },
+        {
+          "text": "a cookie",
+          "pos": 62
+        },
+        {
+          "text": "a beetle",
+          "pos": 76
+        },
+        {
+          "text": "a raw carrot",
+          "pos": 86
+        },
+        {
+          "text": "autumn leaves",
+          "pos": 92
+        },
+        {
+          "text": "a potato chip",
+          "pos": 96
+        }
+      ]
+    },
+    {
+      "id": "tn-owl-015",
+      "left": "Morning person",
+      "right": "Night owl",
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "a rooster",
+          "pos": 1
+        },
+        {
+          "text": "a farmer",
+          "pos": 5
+        },
+        {
+          "text": "a yoga instructor",
+          "pos": 18
+        },
+        {
+          "text": "a kindergarten teacher",
+          "pos": 24
+        },
+        {
+          "text": "a golfer",
+          "pos": 30
+        },
+        {
+          "text": "a new parent",
+          "pos": 48
+        },
+        {
+          "text": "a nurse",
+          "pos": 52
+        },
+        {
+          "text": "a poet",
+          "pos": 66
+        },
+        {
+          "text": "a detective",
+          "pos": 72
+        },
+        {
+          "text": "a teenager",
+          "pos": 82
+        },
+        {
+          "text": "a bartender",
+          "pos": 88
+        },
+        {
+          "text": "a vampire",
+          "pos": 98
+        }
+      ]
+    },
+    {
+      "id": "tn-outdoor-109",
+      "left": "Indoors",
+      "right": "Outdoors",
+      "kind": "measurable",
+      "clues": [
+        {
+          "text": "a bathtub",
+          "pos": 2
+        },
+        {
+          "text": "a fireplace",
+          "pos": 6
+        },
+        {
+          "text": "bowling",
+          "pos": 12
+        },
+        {
+          "text": "a potted plant",
+          "pos": 22
+        },
+        {
+          "text": "a garage",
+          "pos": 32
+        },
+        {
+          "text": "a greenhouse",
+          "pos": 40
+        },
+        {
+          "text": "a swimming pool",
+          "pos": 52
+        },
+        {
+          "text": "tennis",
+          "pos": 66
+        },
+        {
+          "text": "a porch",
+          "pos": 74
+        },
+        {
+          "text": "a barbecue",
+          "pos": 84
+        },
+        {
+          "text": "a lawnmower",
+          "pos": 92
+        },
+        {
+          "text": "camping",
+          "pos": 97
+        }
+      ]
+    },
+    {
+      "id": "tn-messy-045",
+      "left": "Tidy to eat",
+      "right": "Messy to eat",
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "a grape",
+          "pos": 2
+        },
+        {
+          "text": "a cracker",
+          "pos": 6
+        },
+        {
+          "text": "popcorn",
+          "pos": 16
+        },
+        {
+          "text": "a hard-boiled egg",
+          "pos": 22
+        },
+        {
+          "text": "a slice of pizza",
+          "pos": 36
+        },
+        {
+          "text": "chips and salsa",
+          "pos": 45
+        },
+        {
+          "text": "a bowl of soup",
+          "pos": 54
+        },
+        {
+          "text": "a jelly donut",
+          "pos": 64
+        },
+        {
+          "text": "corn on the cob",
+          "pos": 72
+        },
+        {
+          "text": "a pomegranate",
+          "pos": 82
+        },
+        {
+          "text": "spaghetti",
+          "pos": 88
+        },
+        {
+          "text": "a sloppy joe",
+          "pos": 95
+        }
+      ]
+    },
+    {
+      "id": "tn-goodforyou-098",
+      "left": "Bad for you",
+      "right": "Good for you",
+      "kind": "opinion",
+      "clues": [
+        {
+          "text": "deep-fried butter",
+          "pos": 2
+        },
+        {
+          "text": "cotton candy",
+          "pos": 8
+        },
+        {
+          "text": "staying up all night",
+          "pos": 15
+        },
+        {
+          "text": "french fries",
+          "pos": 22
+        },
+        {
+          "text": "video games",
+          "pos": 32
+        },
+        {
+          "text": "cheese",
+          "pos": 42
+        },
+        {
+          "text": "coffee",
+          "pos": 48
+        },
+        {
+          "text": "dark chocolate",
+          "pos": 56
+        },
+        {
+          "text": "orange juice",
+          "pos": 62
+        },
+        {
+          "text": "a nap",
+          "pos": 72
+        },
+        {
+          "text": "a walk in the park",
+          "pos": 86
+        },
+        {
+          "text": "broccoli",
+          "pos": 96
+        }
+      ]
+    },
+    {
+      "id": "tn-animal-121",
+      "left": "Harmless animal",
+      "right": "Deadly animal",
+      "kind": "measurable",
+      "clues": [
+        {
+          "text": "a goldfish",
+          "pos": 2
+        },
+        {
+          "text": "a ladybug",
+          "pos": 5
+        },
+        {
+          "text": "a koala",
+          "pos": 10
+        },
+        {
+          "text": "a skunk",
+          "pos": 24
+        },
+        {
+          "text": "a swan",
+          "pos": 33
+        },
+        {
+          "text": "a porcupine",
+          "pos": 44
+        },
+        {
+          "text": "a honeybee",
+          "pos": 52
+        },
+        {
+          "text": "a moose",
+          "pos": 64
+        },
+        {
+          "text": "a wolf",
+          "pos": 72
+        },
+        {
+          "text": "a rattlesnake",
+          "pos": 84
+        },
+        {
+          "text": "a grizzly bear",
+          "pos": 90
+        },
+        {
+          "text": "a box jellyfish",
+          "pos": 95
+        }
+      ]
+    },
+    {
+      "id": "tn-value-020",
+      "left": "Overpriced",
+      "right": "Worth every penny",
+      "kind": "opinion",
+      "clues": [
+        {
+          "text": "movie theater popcorn",
+          "pos": 2
+        },
+        {
+          "text": "college textbooks",
+          "pos": 7
+        },
+        {
+          "text": "airport food",
+          "pos": 12
+        },
+        {
+          "text": "an extended warranty",
+          "pos": 20
+        },
+        {
+          "text": "a fancy wedding",
+          "pos": 30
+        },
+        {
+          "text": "a gym membership",
+          "pos": 38
+        },
+        {
+          "text": "a haircut",
+          "pos": 48
+        },
+        {
+          "text": "a birthday cake",
+          "pos": 56
+        },
+        {
+          "text": "a plumber",
+          "pos": 64
+        },
+        {
+          "text": "a family vacation",
+          "pos": 72
+        },
+        {
+          "text": "a good mattress",
+          "pos": 92
+        },
+        {
+          "text": "a library card",
+          "pos": 98
+        }
+      ]
+    },
+    {
+      "id": "tn-speed-013",
+      "left": "Slow",
+      "right": "Fast",
+      "kind": "measurable",
+      "clues": [
+        {
+          "text": "a glacier",
+          "pos": 1
+        },
+        {
+          "text": "a snail",
+          "pos": 4
+        },
+        {
+          "text": "a kid cleaning their room",
+          "pos": 10
+        },
+        {
+          "text": "the line at the DMV",
+          "pos": 14
+        },
+        {
+          "text": "rush hour traffic",
+          "pos": 22
+        },
+        {
+          "text": "a jogger",
+          "pos": 32
+        },
+        {
+          "text": "a bicycle",
+          "pos": 42
+        },
+        {
+          "text": "a horse",
+          "pos": 55
+        },
+        {
+          "text": "a startled cat",
+          "pos": 68
+        },
+        {
+          "text": "a cheetah",
+          "pos": 78
+        },
+        {
+          "text": "a race car",
+          "pos": 86
+        },
+        {
+          "text": "lightning",
+          "pos": 98
+        }
+      ]
+    },
+    {
+      "id": "tn-time-062",
+      "left": "Waste of time",
+      "right": "Time well spent",
+      "kind": "opinion",
+      "clues": [
+        {
+          "text": "arguing online",
+          "pos": 3
+        },
+        {
+          "text": "waiting on hold",
+          "pos": 9
+        },
+        {
+          "text": "ironing socks",
+          "pos": 15
+        },
+        {
+          "text": "folding fitted sheets",
+          "pos": 25
+        },
+        {
+          "text": "watching reruns",
+          "pos": 36
+        },
+        {
+          "text": "making the bed",
+          "pos": 45
+        },
+        {
+          "text": "a jigsaw puzzle",
+          "pos": 56
+        },
+        {
+          "text": "a family reunion",
+          "pos": 64
+        },
+        {
+          "text": "a road trip",
+          "pos": 76
+        },
+        {
+          "text": "reading a book",
+          "pos": 84
+        },
+        {
+          "text": "planting a tree",
+          "pos": 90
+        },
+        {
+          "text": "calling your mom",
+          "pos": 96
+        }
+      ]
+    },
+    {
+      "id": "tn-survive-078",
+      "left": "Lost in the woods",
+      "right": "Survival expert",
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "Hansel and Gretel",
+          "pos": 3
+        },
+        {
+          "text": "a cruise ship tourist",
+          "pos": 9
+        },
+        {
+          "text": "Little Red Riding Hood",
+          "pos": 16
+        },
+        {
+          "text": "a golden retriever",
+          "pos": 24
+        },
+        {
+          "text": "a nature documentary fan",
+          "pos": 33
+        },
+        {
+          "text": "your uncle with a compass",
+          "pos": 42
+        },
+        {
+          "text": "a pirate",
+          "pos": 52
+        },
+        {
+          "text": "a scout troop",
+          "pos": 64
+        },
+        {
+          "text": "a raccoon",
+          "pos": 74
+        },
+        {
+          "text": "a lumberjack",
+          "pos": 82
+        },
+        {
+          "text": "Robinson Crusoe",
+          "pos": 90
+        },
+        {
+          "text": "a grizzly bear",
+          "pos": 97
+        }
+      ]
+    },
+    {
+      "id": "tn-disaster-120",
+      "left": "Mild inconvenience",
+      "right": "Total disaster",
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "a hangnail",
+          "pos": 3
+        },
+        {
+          "text": "burnt toast",
+          "pos": 7
+        },
+        {
+          "text": "a wet sock",
+          "pos": 14
+        },
+        {
+          "text": "forgetting a name",
+          "pos": 22
+        },
+        {
+          "text": "a dead phone",
+          "pos": 32
+        },
+        {
+          "text": "a flat tire",
+          "pos": 42
+        },
+        {
+          "text": "no toilet paper",
+          "pos": 55
+        },
+        {
+          "text": "ripped pants",
+          "pos": 62
+        },
+        {
+          "text": "a burst pipe",
+          "pos": 74
+        },
+        {
+          "text": "a dropped wedding cake",
+          "pos": 82
+        },
+        {
+          "text": "a kitchen fire",
+          "pos": 88
+        },
+        {
+          "text": "a zombie apocalypse",
+          "pos": 98
+        }
+      ]
+    },
+    {
+      "id": "tn-sidekick-114",
+      "left": "Sidekick",
+      "right": "Superhero",
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "Little John",
+          "pos": 5
+        },
+        {
+          "text": "a bridesmaid",
+          "pos": 8
+        },
+        {
+          "text": "a co-pilot",
+          "pos": 14
+        },
+        {
+          "text": "a golden retriever",
+          "pos": 26
+        },
+        {
+          "text": "a substitute teacher",
+          "pos": 34
+        },
+        {
+          "text": "a crossing guard",
+          "pos": 45
+        },
+        {
+          "text": "a bodyguard",
+          "pos": 55
+        },
+        {
+          "text": "a nurse",
+          "pos": 66
+        },
+        {
+          "text": "a lifeguard",
+          "pos": 74
+        },
+        {
+          "text": "a firefighter",
+          "pos": 85
+        },
+        {
+          "text": "Mom",
+          "pos": 90
+        },
+        {
+          "text": "Hercules",
+          "pos": 97
+        }
+      ]
+    }
+  ],
+  "turn": {
+    "n": 1,
+    "psychic": "p4",
+    "team": "moon",
+    "catchUp": false,
+    "spectrum": 0,
+    "target": 56,
+    "clue": "a cookie",
+    "clueAt": 1700000009298,
+    "clueDeadline": 1700000053000,
+    "rejected": null,
+    "dials": {
+      "p1": 52,
+      "p2": 87
+    },
+    "locked": ["p2", "p1"],
+    "needle": 70,
+    "calls": {
+      "p3": "left",
+      "p5": "left"
+    },
+    "points": {},
+    "teamPoints": {
+      "sun": 0,
+      "moon": 0
+    },
+    "void": false,
+    "step": 0
+  },
+  "nextTeam": "moon",
+  "scores": {
+    "p1": 0,
+    "p2": 0,
+    "p3": 0,
+    "p4": 0,
+    "p5": 0,
+    "p6": 0
+  },
+  "turnStartScores": {
+    "p1": 0,
+    "p2": 0,
+    "p3": 0,
+    "p4": 0,
+    "p5": 0,
+    "p6": 0
+  },
+  "team": {
+    "sun": 0,
+    "moon": 0
+  },
+  "coopTotal": 0,
+  "played": 0,
+  "stats": {},
+  "speechMs": {}
+}

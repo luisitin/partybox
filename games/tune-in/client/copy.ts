@@ -1,0 +1,97 @@
+// Sentences both surfaces build from a view: the round line, the verdict, the clue rules' copy,
+// the mode's three steps. Every one goes through `L` (the device's language, ./strings).
+import type { Translator, ViewPlayer } from '@partybox/game-sdk/ui';
+import type { ClueReason } from '../server/clue';
+import type { TurnHeader } from '../server/view-common';
+
+export function nameOf(players: readonly ViewPlayer[], id: string): string {
+  return players.find((p) => p.id === id)?.name ?? '?';
+}
+
+export function avatarOf(players: readonly ViewPlayer[], id: string): string {
+  return players.find((p) => p.id === id)?.avatarId ?? 'fox';
+}
+
+export function teamName(L: Translator, team: 'sun' | 'moon' | null): string {
+  if (team === 'sun') return L('▲ Sun');
+  if (team === 'moon') return L('● Moon');
+  return '';
+}
+
+/** "Round 3 of 8" (solo, co-op) or "Turn 5 · ▲ Sun" (teams, catch-ups counted). */
+export function roundLine(L: Translator, turn: TurnHeader): string {
+  if (turn.mode === 'teams')
+    return L('Turn {n} · {team}', { n: turn.n, team: teamName(L, turn.team) });
+  return L('Round {n} of {total}', { n: turn.n, total: turn.total });
+}
+
+export function modeLine(L: Translator, mode: TurnHeader['mode']): string {
+  if (mode === 'teams') return L('Teams · ▲ Sun against ● Moon');
+  if (mode === 'coop') return L('Co-op · the whole room against the dial');
+  return L('Solo · everyone for themselves');
+}
+
+/** The three steps, told for the mode being played. */
+export function steps(L: Translator, mode: TurnHeader['mode']): [string, string, string] {
+  const first = L('The psychic secretly sees a target on a dial between two opposites.');
+  if (mode === 'teams')
+    return [
+      first,
+      L('They give one clue; their team argues and sets one needle.'),
+      L('The other team calls LEFT or RIGHT of the needle. First to the target wins.'),
+    ];
+  if (mode === 'coop')
+    return [
+      first,
+      L('They give one clue; everyone else slides a dial, and the group needle is the average.'),
+      L('Closer scores more for the group. Can the room reach a mind meld?'),
+    ];
+  return [
+    first,
+    L('They give one clue; everyone else slides their own dial, in secret.'),
+    L('The closer to the target, the more points — for you and for the psychic.'),
+  ];
+}
+
+export function clueMessage(L: Translator, reason: ClueReason): string {
+  switch (reason) {
+    case 'empty':
+      return L('Type a clue.');
+    case 'too-long':
+      return L('Keep it under 30 characters.');
+    case 'number':
+      return L('No numbers. Describe it instead.');
+    case 'label-word':
+      return L("Don't use the dial's own words.");
+    case 'position-word':
+      return L('Describe a thing, not a spot on the dial.');
+  }
+}
+
+export function verdictText(L: Translator, verdict: string | null): string {
+  switch (verdict) {
+    case 'bullseye':
+      return L('Bullseye!');
+    case 'close':
+      return L('Close!');
+    case 'missed':
+      return L('Missed it.');
+    case 'perfect':
+      return L('Perfect tune!');
+    default:
+      return '';
+  }
+}
+
+export function ratingText(L: Translator, rating: string): string {
+  switch (rating) {
+    case 'meld':
+      return L('🧠 Mind meld!');
+    case 'clear':
+      return L('📡 Crystal clear!');
+    case 'tuning':
+      return L('📻 Tuning in.');
+    default:
+      return L('📺 Static.');
+  }
+}
