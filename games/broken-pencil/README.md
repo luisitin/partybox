@@ -15,6 +15,9 @@ round a player × (55 s + 4 s a player) — ~5 min at 4, ~12 at 8; from the host
 - The pick screen's how-to says rule 3 as the room will play it: "round the circle" only when every
   book goes round, else "It passes to N players in turn" (I-507 A).
 - Under the how-to a row shows a book's pages as they will be — 📖 ✏️ ❓ ✏️ ❓ · 5 pages (I-507 B).
+- Drawing: whose book and the round ride in the phone's timer bar ("Maximiliano's book · 1/6", SDK
+  `useTimerLabel`); the prompt is one bold line ("Draw: “yoga class”"), and the sheet takes the height
+  left above the colours and one band of ink / pen size / Undo / Clear (design review H, I-794).
 
 ## Players
 

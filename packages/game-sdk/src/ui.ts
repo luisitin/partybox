@@ -38,6 +38,8 @@ export type { ClipOptions, PlayCue, PlayCueOptions, SoundApi, SoundCue } from '.
 export { buzz, hapticsEnabled, setHapticsEnabled } from './ui/haptics';
 export { DEFAULT_PAD_STYLE, getPadStyle, setPadStyle, usePadStyle } from './ui/pad';
 export type { PadPaper, PadPencil, PadStyle } from './ui/pad';
+export { useShellTimerLabel, useTimerLabel } from './ui/timerLabel';
+export type { TimerLabel } from './ui/timerLabel';
 export { trace } from './ui/trace';
 export type { TraceEvent } from './ui/trace';
 export {

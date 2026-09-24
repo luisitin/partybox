@@ -1,8 +1,9 @@
 // The phone's countdown row during play (the TV timer is 3 m away), split from ControllerShell (its
 // line cap). ADR-030: a quiet timer keeps the bar (a rhythm) but drops the digits and the urgency;
-// offline it is shown muted, never urgent, and "Reconnecting…" takes its cue slot.
+// offline it is shown muted, never urgent, and "Reconnecting…" takes its cue slot. I-794 H: a game
+// screen's own short line (whose book, which round) sits left of the bar; a cue hides it in place.
 import type { JSX } from 'react';
-import { DeadlineBar } from '@partybox/game-sdk/ui';
+import { DeadlineBar, useShellTimerLabel } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import type { ControllerState } from '../net/controller';
 import styles from './ControllerShell.module.css';
@@ -22,13 +23,23 @@ export function ShellCountdown({
   /** The phone's urgency cue ("Hurry!"). */
   hurry: boolean;
 }): JSX.Element {
+  const label = useShellTimerLabel();
   return (
     <div
       className={`${styles.deadline} ${online && seconds <= 5 && !view.paused && view.timerMode !== 'quiet' ? styles.urgent : ''} ${online ? '' : styles.stale}`}
       role="timer"
       aria-label={view.paused ? t.tv.paused : t.connection.secondsLeft(seconds)}
     >
+      {label !== null ? (
+        <span
+          className={`${styles.timerLabel} ${banner !== null || hurry ? styles.timerLabelHidden : ''}`}
+        >
+          <span className={styles.timerLabelText}>{label.text}</span>
+          {label.tail !== undefined ? <span>{` · ${label.tail}`}</span> : null}
+        </span>
+      ) : null}
       <DeadlineBar
+        className={styles.bar}
         deadline={view.deadline}
         phaseKey={view.phaseId}
         paused={view.paused}

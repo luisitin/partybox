@@ -58,8 +58,11 @@ export const STRINGS: Strings = {
     'That was the last page of this book.': 'Esa fue la última página de este libro.',
     'Send an empty sheet': 'Enviar hoja en blanco',
     'Done drawing': 'Dibujo listo',
-    'Draw your word: “{text}”': 'Dibuja tu palabra: “{text}”',
-    'Now draw your guess: “{text}”': 'Ahora dibuja tu respuesta: “{text}”',
+    // I-794 H: one bold line over the sheet (the word follows, in the accent), and whose book
+    // rides in the timer bar ("Max's book · 1/6").
+    'Draw:': 'Dibuja:',
+    'Draw your guess:': 'Dibuja tu respuesta:',
+    "Someone's book": 'El libro de alguien', // "{name}'s book" is the TV's (below)
     'the drawing to guess': 'el dibujo por adivinar',
     'Last guess — what is this?': 'Última respuesta: ¿qué es esto?',
     'What is this? (you draw it next)': '¿Qué es esto? (luego lo dibujas tú)',

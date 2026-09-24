@@ -17,8 +17,14 @@
 .prompt {
   margin: 0;
   font-size: var(--pb-font-h2); /* was h1: two lines of it cost the sheet 60 px (loop #9) */
+  font-weight: 800;
   line-height: 1.15;
   text-wrap: balance;
+}
+
+/* I-794 H: "Draw: “yoga class”" — one bold line, the word in the accent. */
+.promptWord {
+  color: var(--pb-accent-2);
 }
 
 .offers {
