@@ -20,19 +20,21 @@ export function PhoneTalk({ view, skip }: Props): JSX.Element {
       }
     >
       <h2 className={styles.title}>{L("Talk it over. Who's faking?")}</h2>
-      <ul className={`${styles.clueList} ${styles.tiles}`}>
-        {view.stage.board.map((c) => {
-          const p = who.get(c.by);
-          const clues = cluesOf(view.stage, c.by);
-          return (
-            <li key={c.by} className={c.by === view.me.id ? styles.meRow : ''}>
-              {p ? <Avatar avatarId={p.avatarId} size="2.25rem" /> : null}
-              <span className={styles.rowName}>{p?.name ?? '?'}</span>
-              <span className={styles.rowClue}>{clues.length ? clues.join(' · ') : '—'}</span>
-            </li>
-          );
-        })}
-      </ul>
+      <div className={styles.listFrame}>
+        <ul className={`${styles.clueList} ${styles.tiles}`}>
+          {view.stage.board.map((c) => {
+            const p = who.get(c.by);
+            const clues = cluesOf(view.stage, c.by);
+            return (
+              <li key={c.by} className={c.by === view.me.id ? styles.meRow : ''}>
+                {p ? <Avatar avatarId={p.avatarId} size="2.25rem" /> : null}
+                <span className={styles.rowName}>{p?.name ?? '?'}</span>
+                <span className={styles.rowClue}>{clues.length ? clues.join(' · ') : '—'}</span>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
       {!skip ? <p className={styles.hint}>{L('The VIP starts the vote.')}</p> : null}
     </Screen>
   );

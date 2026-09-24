@@ -66,73 +66,75 @@ export function FacePicker({
   };
 
   return (
-    <div
-      className={`${styles.grid} ${cols === 3 ? styles.three : cols === 1 ? styles.one : styles.two} ${locked ? styles.locked : ''}`}
-      role={picks > 1 ? 'group' : 'radiogroup'}
-      aria-label={label}
-    >
-      {options.map((o) => {
-        const order = selected.indexOf(o.id);
-        const on = order >= 0;
-        const off = o.disabledReason !== undefined;
-        return (
-          <button
-            key={o.id}
-            type="button"
-            role={picks > 1 ? 'checkbox' : 'radio'}
-            aria-checked={on}
-            aria-disabled={off || locked}
-            className={`${styles.tile} ${on ? styles.on : ''} ${off ? styles.off : ''} ${peek === o.id ? styles.peek : ''}`}
-            onPointerDown={() => {
-              held.current = false;
-              stop();
-              timer.current = setTimeout(() => {
-                held.current = true;
-                setPeek(o.id);
-              }, HOLD_MS);
-            }}
-            onPointerUp={stop}
-            onPointerLeave={() => {
-              stop();
-              if (peek === o.id) setPeek(null);
-            }}
-            onPointerCancel={() => {
-              stop();
-              setPeek(null);
-            }}
-            onContextMenu={(e) => e.preventDefault()}
-            onClick={() => {
-              // A press-and-hold was a read, not a pick.
-              if (held.current) {
+    <div className={styles.frame}>
+      <div
+        className={`${styles.grid} ${cols === 3 ? styles.three : cols === 1 ? styles.one : styles.two} ${locked ? styles.locked : ''}`}
+        role={picks > 1 ? 'group' : 'radiogroup'}
+        aria-label={label}
+      >
+        {options.map((o) => {
+          const order = selected.indexOf(o.id);
+          const on = order >= 0;
+          const off = o.disabledReason !== undefined;
+          return (
+            <button
+              key={o.id}
+              type="button"
+              role={picks > 1 ? 'checkbox' : 'radio'}
+              aria-checked={on}
+              aria-disabled={off || locked}
+              className={`${styles.tile} ${on ? styles.on : ''} ${off ? styles.off : ''} ${peek === o.id ? styles.peek : ''}`}
+              onPointerDown={() => {
                 held.current = false;
+                stop();
+                timer.current = setTimeout(() => {
+                  held.current = true;
+                  setPeek(o.id);
+                }, HOLD_MS);
+              }}
+              onPointerUp={stop}
+              onPointerLeave={() => {
+                stop();
+                if (peek === o.id) setPeek(null);
+              }}
+              onPointerCancel={() => {
+                stop();
                 setPeek(null);
-                return;
-              }
-              if (!off) toggle(o.id);
-            }}
-          >
-            <span className={styles.face}>
-              <Avatar avatarId={o.avatarId} size="var(--fp-face, 2.5rem)" dim={off} />
-              <span className={styles.check} aria-hidden="true">
-                {on ? (picks > 1 ? String(order + 1) : '✓') : ''}
+              }}
+              onContextMenu={(e) => e.preventDefault()}
+              onClick={() => {
+                // A press-and-hold was a read, not a pick.
+                if (held.current) {
+                  held.current = false;
+                  setPeek(null);
+                  return;
+                }
+                if (!off) toggle(o.id);
+              }}
+            >
+              <span className={styles.face}>
+                <Avatar avatarId={o.avatarId} size="var(--fp-face, 2.5rem)" dim={off} />
+                <span className={styles.check} aria-hidden="true">
+                  {on ? (picks > 1 ? String(order + 1) : '✓') : ''}
+                </span>
               </span>
-            </span>
-            <span className={styles.text}>
-              <span className={styles.name}>{o.name}</span>
-              {off ? (
-                <span className={styles.detail}>{o.disabledReason}</span>
-              ) : o.detail ? (
-                <span className={styles.detail}>{o.detail}</span>
+              <span className={styles.text}>
+                <span className={styles.name}>{o.name}</span>
+                {off ? (
+                  <span className={styles.detail}>{o.disabledReason}</span>
+                ) : o.detail ? (
+                  <span className={styles.detail}>{o.detail}</span>
+                ) : null}
+              </span>
+              {peek === o.id && o.detail ? (
+                <span className={styles.bubble} role="tooltip">
+                  {o.detail}
+                </span>
               ) : null}
-            </span>
-            {peek === o.id && o.detail ? (
-              <span className={styles.bubble} role="tooltip">
-                {o.detail}
-              </span>
-            ) : null}
-          </button>
-        );
-      })}
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }

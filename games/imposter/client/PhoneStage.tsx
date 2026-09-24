@@ -107,7 +107,7 @@ export function PhoneStageBody({ view }: { view: View }): JSX.Element | null {
         rank: r.rank,
         delta: pointsOf(s.delta?.[r.playerId]),
       }));
-      return <Scoreboard compact rows={rows} highlightId={view.me.id} noTrophy />;
+      return <Scoreboard compact size="sm" rows={rows} highlightId={view.me.id} noTrophy />;
     }
     default:
       return null;

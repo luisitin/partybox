@@ -406,3 +406,12 @@
 :global(:root[data-motion='off']) .steps li {
   animation: none;
 }
+.listFrame {
+  container-type: inline-size;
+  width: 100%;
+}
+@container (max-width: 15rem) {
+  .tiles {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

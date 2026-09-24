@@ -167,3 +167,27 @@
 .three .name {
   font-size: var(--pb-font-caption);
 }
+/* Larger text (the phone column is rem): when two tiles no longer have ~9rem each, one column —
+   a container query in rem follows the phone's text size, a viewport query would not. */
+.frame {
+  container-type: inline-size;
+  width: 100%;
+}
+@container (max-width: 15rem) {
+  .two,
+  .three {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .three .tile {
+    flex-direction: row;
+    text-align: left;
+  }
+  .three .text {
+    align-items: flex-start;
+  }
+}
+@container (min-width: 15rem) and (max-width: 22rem) {
+  .three {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
