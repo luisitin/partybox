@@ -3,7 +3,7 @@
 import { describe, expect, it } from 'vitest';
 import { game } from '../server/index';
 import type { State } from '../server/types';
-import { atClue, clue, input, skip, start, T0, timer, withClues } from './helpers';
+import { atClue, botRng, clue, input, skip, start, T0, timer, withClues } from './helpers';
 
 describe('phase order and exits', () => {
   it('intro → clue on the clock or the VIP; 8 s', () => {
@@ -51,6 +51,18 @@ describe('phase order and exits', () => {
     expect(tv).toMatchObject({ phaseId: 'guess', survivors: [], echoCount: 3 });
     expect(tv.say.map((x) => x.text)).toEqual(['Total echo!']);
     expect(input(s, 'p1', { type: 'guess', text: 'sky' }).phase.id).toBe('result');
+  });
+
+  it('a guess before the TV has shown every clue is held until the reveal ends', () => {
+    const g = skip(withClues(atClue(4), ['stars', 'lens', 'zoom']));
+    const held = input(g, 'p1', { type: 'guess', text: 'telescope' }, g.phase.startedAt + 900);
+    expect(held.phase.id).toBe('guess');
+    expect(held.phase.deadline).toBe(g.phase.startedAt + 1300 + 2 * 420 + 1400);
+    expect(game.tvView(held).guessIn).toBe(true);
+    expect(game.bot.sampleInput(held, 'p1', botRng())).toBeNull();
+    expect(input(held, 'p1', { type: 'pass' }, g.phase.startedAt + 950)).toBe(held);
+    expect(timer(held).w.guess).toMatchObject({ text: 'telescope', result: 'right' });
+    expect(skip(held).w.guess?.result).toBe('right');
   });
 
   it('only the guesser guesses; the VIP skip in guess is a pass', () => {

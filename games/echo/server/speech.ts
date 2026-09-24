@@ -129,6 +129,14 @@ export function speech(state: State): SpeechRequest[] {
   return want.map((text) => req(voice, text)).filter((r) => state.speechMs[r.key] === undefined);
 }
 
+/** The survivors' reading length, once the host has made it (null without a reader). */
+export function readingMs(state: State): number | null {
+  const voice = voiceOf(state);
+  const line = survivorsLine(state);
+  if (!voice || !line) return null;
+  return state.speechMs[keyOf(voice, line)] ?? null;
+}
+
 export function applySpeech(state: State, key: string, ms: number): State {
   if (state.speechMs[key] === ms) return state;
   return { ...state, speechMs: { ...state.speechMs, [key]: ms } };

@@ -33,6 +33,8 @@ export interface EchoResult {
 }
 
 export interface EchoTvFields {
+  /** When this phase began (server clock): the stage times its beats from here. */
+  phaseAt: number;
   wordNo: number;
   deckSize: number;
   counts: { left: number; won: number; lost: number };
@@ -40,12 +42,16 @@ export interface EchoTvFields {
   givers: string[];
   /** Who is in: clue written (`clue`) or Looks good (`check`). */
   ready: string[];
+  /** Clue-givers with a clue on the table (`clue` and `check`). */
+  wrote: string[];
   twoClues: boolean;
   swapped: boolean;
   /** `guess` on: the surviving clues (sorted, so seat order never hints at authors). */
   survivors: string[];
   echoCount: number;
   clueCount: number;
+  /** The guesser has answered; it lands when the TV has shown every clue. */
+  guessIn: boolean;
   result: EchoResult | null;
   final: { won: string[]; lost: number; rating: RatingId } | null;
   say: Say[];
@@ -125,17 +131,25 @@ function tvFields(state: State): EchoTvFields {
     phase === 'clue' ? Object.keys(state.w.clues) : phase === 'check' ? [...state.w.checkOk] : [];
   const deckEmpty = p.left === 0 && phase !== 'intro';
   return {
+    phaseAt: state.phase.startedAt,
     wordNo: Math.min(state.w.idx + 1, state.deck.length),
     deckSize: state.deck.length,
     counts: { left: p.left, won: p.won.length, lost: p.lost.length },
     guesser: phase === 'intro' || phase === 'done' ? null : state.w.guesser,
     givers: state.seats.filter((id) => isGiver(state, id)),
     ready: ready.filter((id) => state.seats.includes(id)).sort(byText),
+    wrote:
+      phase === 'clue' || phase === 'check'
+        ? Object.keys(state.w.clues)
+            .filter((id) => state.seats.includes(id))
+            .sort(byText)
+        : [],
     twoClues: state.twoClues,
     swapped: phase === 'clue' && state.w.swaps > 0,
     survivors,
     echoCount,
     clueCount: shown ? clueRefs(state).length : 0,
+    guessIn: phase === 'guess' && state.w.early !== null,
     result,
     final:
       phase === 'done' || (phase === 'result' && deckEmpty)
@@ -168,8 +182,9 @@ function skipLabel(state: State): string | undefined {
 
 function timerModeOf(state: State): TvView['timerMode'] {
   const phase = state.phase.id;
-  if (phase === 'check') return 'quiet';
-  if (phase === 'intro' || phase === 'result') return 'hidden';
+  // Paced stage moments get the draining bar: a rhythm (and "the next word is coming"), not a
+  // countdown.
+  if (phase === 'check' || phase === 'intro' || phase === 'result') return 'quiet';
   return 'normal';
 }
 

@@ -16,7 +16,7 @@ import { drawWords } from './content';
 import { piles } from './deck';
 import { enterCheck, recheckCheck, reduceCheck, wantsCheck } from './phases/check';
 import { enterClue, recheckClue, reduceClue } from './phases/clue';
-import { enterGuess, reduceGuess } from './phases/guess';
+import { closeGuess, enterGuess, reduceGuess } from './phases/guess';
 import { enterIntro, reduceIntro } from './phases/intro';
 import { enterDone, enterResult, reduceResult } from './phases/result';
 import { recap } from './recap';
@@ -84,6 +84,7 @@ function init(ctx: InitContext): State {
       groups: null,
       checkOk: [],
       guess: null,
+      early: null,
     },
     turns: [],
     speechMs: {},
@@ -101,7 +102,7 @@ export function advance(state: State, now: number): State {
     case 'check':
       return enterGuess(state, now);
     case 'guess':
-      return enterResult(state, now, 'pass', '');
+      return closeGuess(state, now, enterResult);
     case 'result':
       return piles(state).left === 0 ? enterDone(state, now) : enterClue(state, now);
     default:

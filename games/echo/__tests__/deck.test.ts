@@ -113,7 +113,7 @@ describe('rating and results', () => {
     expect(res?.scores).toEqual({ p1: 1, p2: 1, p3: 1, p4: 1, p5: 1 });
     expect(res?.winnerIds).toHaveLength(5);
     expect(game.tvView(s).final?.rating).toBe('again');
-    expect(res?.awards.map((a) => a.id)).toContain('sharp-guesser');
+    expect(res?.awards.map((a) => a.id)).toContain('sharp-guesser-p1');
   });
 
   it('a perfect deck is Flawless', () => {

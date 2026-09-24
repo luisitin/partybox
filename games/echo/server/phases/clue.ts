@@ -22,6 +22,7 @@ function freshWord(state: State, idx: number, swaps: number): Word {
     groups: null,
     checkOk: [],
     guess: null,
+    early: null,
   };
 }
 

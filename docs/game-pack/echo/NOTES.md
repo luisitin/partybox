@@ -42,6 +42,17 @@ Foundation work lives on branch `foundation` and does not merge until the owner 
 - **Result beat 6.5 s, +1.8 s when a word burns or a won word is lost** (the slide onto the pile).
 - **VIP "That counts" extends the result to at least half a beat** so the room sees the change.
 - **Deck piles are derived from the turn records**, so the VIP override recomputes everything.
+- **No `PhoneStage`**: the SDK's `PhoneStage` gets only `{ view }` — no `send`, no `skip` — so in a
+  phone-only room the VIP would lose ✓ That counts and Next word. The Controller renders the
+  result stage itself when `usePhoneOnly()` (word, guess, every clue with its author) and keeps the
+  VIP buttons; the intro's how-to-play is already on every phone. Same purpose as §7.4's
+  `phoneStagePhases: ['intro', 'result']`, without losing the controls.
+- **TV beats are timed from the phase's server start** (`view.phaseAt`), so a TV that reloads
+  mid-phase lands on the right beat instead of replaying the show; readings more than 1.5 s late
+  are dropped rather than read out of step with the cards.
+- **Phone result line waits 2.1 s** (the TV's ✓ / ✗ / PASS mark lands at 1.5 s) — never spoil it.
+- **Result cue is the stage's own** (`sounds.result = 'silence'`, then jackpot / bust / sweep on
+  the mark's beat), so the outcome sound lands with the mark, not with the phase change.
 - `state.won` / `state.lost` from §7.10 are derived (`piles()`), and per-player stats are derived
   from the turns (`tallies()`): smaller state, and nothing to keep in sync.
 

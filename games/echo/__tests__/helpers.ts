@@ -43,7 +43,8 @@ export function input(
   state: State,
   playerId: string,
   inp: Input,
-  now = state.phase.startedAt + 1000,
+  // 1 s in — or, in `guess`, after the TV has shown every clue (an earlier guess is held).
+  now = state.phase.startedAt + (state.phase.id === 'guess' ? 8000 : 1000),
   vip = false,
 ): State {
   const ev: GameEvent<Input> = {

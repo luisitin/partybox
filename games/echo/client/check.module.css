@@ -1,0 +1,106 @@
+/* The check list on a clue-giver's phone: one row per clue, 48 px or more, echoes bracketed. */
+
+.list {
+  display: grid;
+  gap: var(--pb-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--pb-space-3);
+  min-height: 48px;
+  padding: var(--pb-space-2) var(--pb-space-2) var(--pb-space-2) var(--pb-space-4);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  border: 1px solid var(--pb-border);
+  transition: border-color var(--pb-motion-fast) var(--pb-ease);
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+/* An echo group: a bracket down the left edge and the words struck through. */
+.row[data-echo='1'] {
+  border-left: 6px solid var(--pb-text-muted);
+  background: var(--pb-bg);
+  border-style: dashed;
+  border-left-style: solid;
+}
+
+.row[data-multi='1'][data-echo='0'] {
+  border-left: 6px solid var(--pb-accent-3);
+}
+
+.row[data-picked='1'] {
+  border-color: var(--pb-accent-2);
+}
+
+.texts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--pb-space-1) var(--pb-space-3);
+  min-width: 0;
+}
+
+.text,
+.struck {
+  font-size: var(--pb-font-body);
+  font-weight: 900;
+  overflow-wrap: anywhere;
+}
+
+.struck {
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+  color: var(--pb-text-muted);
+}
+
+.tag {
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  color: var(--pb-text-muted);
+}
+
+.act {
+  flex: none;
+  min-height: var(--pb-touch);
+  min-width: var(--pb-touch);
+  padding: 0 var(--pb-space-3);
+  border-radius: 999px;
+  border: 1px solid var(--pb-border);
+  background: var(--pb-surface-2);
+  color: var(--pb-text);
+  font: inherit;
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--pb-motion-fast) var(--pb-ease);
+}
+
+.act:active {
+  transform: scale(0.96);
+}
+
+.act:disabled {
+  opacity: 0.45;
+}
+
+.act[data-on='1'] {
+  border-color: var(--pb-accent-2);
+  color: var(--pb-accent-2);
+}
+
+.picking {
+  margin: 0;
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  color: var(--pb-accent-2);
+  text-align: center;
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}

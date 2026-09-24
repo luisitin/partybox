@@ -76,7 +76,7 @@ export function awardsFor(state: Pick<State, 'players' | 'turns'>): GameAward[] 
   const t = tallies(state);
   return AWARDS.flatMap((a) =>
     leaders(t, a.key, a.min).map((playerId) => ({
-      id: a.id,
+      id: `${a.id}-${playerId}`,
       title: a.title,
       description: a.description,
       playerId,

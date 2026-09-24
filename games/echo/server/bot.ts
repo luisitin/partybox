@@ -55,7 +55,7 @@ export function decide(view: EchoControllerView, rng: Rng): Input | null {
     case 'check':
       return view.role === 'giver' && view.check && !view.check.ok ? { type: 'ok' } : null;
     case 'guess':
-      return view.role === 'guesser' ? guessInput(view, rng) : null;
+      return view.role === 'guesser' && !view.tv.guessIn ? guessInput(view, rng) : null;
     default:
       return null;
   }
