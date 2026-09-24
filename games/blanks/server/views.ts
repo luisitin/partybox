@@ -40,6 +40,8 @@ export interface BlanksTvView extends TvView, Voice {
   timed: boolean;
   /** czar mode: this round's judge. */
   czar: PersonView | null;
+  /** I-172 B: the reader breaking a three-way split (their name), else null. */
+  tieBreakBy: string | null;
   /** I-773 A: this round's judge went; the room votes in their place, and the TV says why. */
   judgeGone: { name: string; why: 'dropped' | 'kicked' | 'left' } | null;
   /** vote mode, reveal only: the seat asked to read the cards out loud (review-loop #248). */
@@ -195,6 +197,7 @@ export function tvView(state: State, gameId: string): BlanksTvView {
     judgeMode: state.settings.judge,
     timed: state.settings.timed,
     czar: person(state, state.czarId),
+    tieBreakBy: state.tieBreakBy ? (state.players[state.tieBreakBy]?.name ?? null) : null,
     judgeGone: state.judgeGone ?? null,
     calledIt: calledIt(state),
     reader: phase === 'reveal' ? reader(state) : null,

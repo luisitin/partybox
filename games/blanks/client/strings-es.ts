@@ -147,6 +147,8 @@ export const SCREENS_ES: Readonly<Record<string, string>> = {
   '{name} dropped — a moment for them to come back…':
     '{name} se desconectó: un momento para que vuelva…',
   '{name} has decided — here it comes…': '{name} ya decidió: ahí viene…',
+  // I-172 B
+  'Split three ways — {name} breaks the tie…': 'Empate a tres: {name} desempata…',
   // I-773: the judge went, the room votes
   '{name} dropped — everyone votes this one · 0 / {expected}':
     '{name} se desconectó: esta la vota todo el mundo · 0 / {expected}',

@@ -115,11 +115,17 @@ export function startRound(state: State): State {
   const round = state.tied ? state.round : state.round + 1;
   const discard = [...state.discard, ...Object.values(state.submissions).flat()];
   // I-773 A: a round the room judged in the judge's place goes back to a judge
-  const settings = state.judgeGone ? { ...state.settings, judge: 'czar' as const } : state.settings;
+  // I-172 B: a round the reader judged to break a split goes back to the vote
+  const settings = state.judgeGone
+    ? { ...state.settings, judge: 'czar' as const }
+    : state.tieBreakBy
+      ? { ...state.settings, judge: 'vote' as const }
+      : state.settings;
   let next: State = {
     ...state,
     settings,
     judgeGone: null,
+    tieBreakBy: null,
     round,
     discard,
     submissions: {},

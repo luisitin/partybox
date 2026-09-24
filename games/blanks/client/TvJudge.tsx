@@ -47,6 +47,9 @@ function Progress({ view }: Props): JSX.Element {
   if (view.judgeMode === 'czar') {
     const judge = view.czar;
     if (!judge) return <>{L('Judging…')}</>;
+    // I-172 B: the three-way split goes to the reader
+    if (view.tieBreakBy && view.votedCount === 0)
+      return <>{L('Split three ways — {name} breaks the tie…', { name: view.tieBreakBy })}</>;
     // Their phone dropped: the round holds a grace for them (review-loop #351).
     if (judge.connected === false && view.votedCount === 0)
       return <>{L('{name} dropped — a moment for them to come back…', { name: judge.name })}</>;

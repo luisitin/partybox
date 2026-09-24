@@ -18,7 +18,7 @@ import { enterPick, reducePick } from './phases/pick';
 import { applySpeech, enterReveal, reduceReveal } from './phases/reveal';
 import { enterDone, enterFinal, enterResult, reduceFinal, reduceResult } from './phases/result';
 import { standings } from './scoring';
-import { closeAnswers, playersDone, settleBlack, voteIsFormality, votingDone } from './round';
+import { tally, closeAnswers, playersDone, settleBlack, voteIsFormality, votingDone } from './round';
 import type { Input, State } from './types';
 
 /** A phase nobody connected can act in ends at once — the judge who dropped during the reading
@@ -50,7 +50,40 @@ export function afterReveal(state: State, now: number): State {
 }
 
 export function afterJudge(state: State, now: number): State {
+  // I-172 B: three cards split 1-1-1 — the reader breaks the tie, between the two not theirs
+  if (splitThree(state)) return readerBreaks(state, now);
   return enterResult(state, now);
+}
+
+/** I-172 B: who breaks a split — the round's reader, or (when a voice reads the cards) the
+ *  person whose turn it would have been: the rotation, walking past bots and the gone. */
+function tieBreaker(state: State): string | null {
+  const reader = state.readerId;
+  if (reader && state.players[reader]?.connected) return reader;
+  const n = state.order.length;
+  for (let i = 0; i < n; i += 1) {
+    const id = state.order[(state.round - 1 + i) % n] as string;
+    const p = state.players[id];
+    if (p?.connected && p.bot !== true) return id;
+  }
+  return null;
+}
+
+/** I-172 B: a vote round whose three cards took one vote each, with someone here to break it. */
+function splitThree(state: State): boolean {
+  if (state.settings.judge !== 'vote' || state.tieBreakBy || state.slots.length !== 3) return false;
+  if (tieBreaker(state) === null) return false;
+  const rows = tally(state);
+  return rows.length === 3 && rows.every((r) => r.votes === 1);
+}
+
+/** I-172 B: the round turns to its tie-breaker as judge; startRound puts the vote back. */
+function readerBreaks(state: State, now: number): State {
+  const reader = tieBreaker(state) as string;
+  return enterJudge(
+    { ...state, settings: { ...state.settings, judge: 'czar' }, czarId: reader, votes: {}, guesses: {}, tieBreakBy: reader },
+    now,
+  );
 }
 
 /** I-147 A: the ids sharing the top rank after the last round — [] when someone has won it. */
