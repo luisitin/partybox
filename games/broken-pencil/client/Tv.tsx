@@ -8,6 +8,7 @@ import type { GameTvProps, Translator } from '@partybox/game-sdk/ui';
 import type { PageView, PencilTvView } from '../server/views';
 import { DrawingView } from './DrawingView';
 import { Summary } from './Finale';
+import { Verdict } from './Verdict';
 import { STRINGS } from './strings';
 import styles from './Tv.module.css';
 
@@ -308,21 +309,8 @@ export function Tv({ view }: GameTvProps<PencilTvView>): JSX.Element {
           </div>
           <div className={styles.current}>
             {current ? <CurrentPage page={current} /> : null}
-            {last ? (
-              <div
-                className={`${styles.verdict} ${s.verdict === 'intact' ? styles.intact : styles.broken} pb-enter`}
-              >
-                {/* The server picks the line (content/lines.json, or the VIP's "close enough"):
-                    it arrives in English and shows through the table. */}
-                <span className={styles.verdictLine}>
-                  {s.verdictLine === null ? null : L.sent(s.verdictLine)}
-                </span>
-                <span className={styles.verdictPair}>
-                  “{s.pages[0]?.kind === 'word' ? s.pages[0].text : '—'}” → “
-                  {current?.kind === 'guess' ? (current.text ?? '???') : '—'}”
-                </span>
-              </div>
-            ) : null}
+            {/* I-512 A: the guess alone first — the verdict lands a beat later (Verdict.tsx) */}
+            {last ? <Verdict showing={s} current={current} /> : null}
           </div>
         </div>
       </Stage>

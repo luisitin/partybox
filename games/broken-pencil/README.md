@@ -24,6 +24,9 @@ round a player × (55 s + 4 s a player) — ~5 min at 4, ~12 at 8; from the host
   `lead`); tap it to see it large; an open keyboard shrinks the drawing, not the field (review I, I-795).
 - I-211 A: on the TV show the book's title and "BOOK 1 OF 6 / PAGE 2 OF 5" sit in the left column.
 - I-211 B: "X drew" is a tag on the sheet's corner, so a drawing fills the page area's height (~650 px).
+- I-512 A: a book's last guess shows alone; its verdict rises 2.5 s later (3.5 s for UNBROKEN).
+- I-512 B: the server ignores the presenter's `turn` on a last page until that beat has passed
+  (`VERDICT_BEAT_MS` / `VERDICT_BEAT_INTACT_MS`); the TV's Skip and the fallback timer still turn.
 
 ## Players
 
