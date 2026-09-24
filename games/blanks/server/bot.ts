@@ -20,6 +20,7 @@ import type { Slot } from './fit';
 import { pairBonus, punch, topicsOf } from './topics';
 import type { Topic } from './topics';
 import { canVote, hasPlayed, isCzar, sitsOut } from './round';
+import { RANDO } from './types';
 import type { Input, State } from './types';
 
 /** How much a tier step is worth against the fit: a great gerund in a thing blank (0.7 + 0.25)
@@ -29,6 +30,23 @@ const TIER_WEIGHT = 0.2;
 const NOISE = 0.2;
 /** What a Pick 2's second card loses for repeating the first one's subject. */
 const SAME_SUBJECT = 0.1;
+/** I-445: what a person's card is worth over a bot's in a bot's vote, so a room of bots is not a
+ *  jury that only likes its own taste. Tuned by simulation (capture/sim_I445.ts, 400 games a room):
+ *  a full fit step (0.3) made a random person's card win 35–45 % against a fair share of 20–33 %;
+ *  0.2 with B's own tastes lands on the fair share (32/33, 20/20, 33/33, 22/20 %). */
+const PERSON_BONUS = 0.2;
+/** I-445 B: each bot's own lean on each card, fixed for the game: bots are not one mind. */
+const TASTE = 0.2;
+
+/** I-445 B: a lean in [-TASTE, TASTE] from the bot and the cards (FNV-1a), the same every time. */
+function taste(botId: string, cards: readonly string[]): number {
+  let h = 0x811c9dc5;
+  for (const ch of `${botId}|${cards.join(',')}`) {
+    h ^= ch.charCodeAt(0);
+    h = Math.imul(h, 0x01000193) >>> 0;
+  }
+  return ((h % 2001) / 1000 - 1) * TASTE;
+}
 
 /** One card's appeal in the blank: fit for the slot, plus its tier, plus the pair's topic nudge
  *  (topics.ts: on the prompt's subject from another angle is a hit, echoing its word a shrug),
@@ -140,10 +158,18 @@ export function botInput(state: State, playerId: string, rng: Rng): Input | null
       .filter((s) => canVote(state, playerId, s.index));
     if (open.length === 0) return null;
     const best = open
-      .map((s) => ({
-        index: s.index,
-        score: submissionAppeal(slots, s.cards, rng, blackCard(state.blackId).text),
-      }))
+      .map((s) => {
+        // I-445 A: a person's card (not a bot's, not Rando's) counts up by one fit step
+        const who = state.slots[s.index] ?? '';
+        const person = who !== RANDO && state.players[who] !== undefined && !state.players[who]?.bot;
+        return {
+          index: s.index,
+          score:
+            submissionAppeal(slots, s.cards, rng, blackCard(state.blackId).text) +
+            (person ? PERSON_BONUS : 0) +
+            taste(playerId, s.cards), // I-445 B: this bot's own lean
+        };
+      })
       .sort((a, b) => b.score - a.score)[0];
     return best ? { type: 'vote', slot: best.index } : null;
   }
