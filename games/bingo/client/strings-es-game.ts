@@ -129,6 +129,8 @@ export const ES_GAME: Readonly<Record<string, string>> = {
   'Trigger finger': 'Gatillo fácil',
   '1 wrong BINGO!': '1 ¡BINGO! equivocado',
   '{n} wrong BINGO!s': '{n} ¡BINGO! equivocados',
+  // I-433 B: a bot's claim
+  '{name} calls it — checking': '{name} lo canta: comprobando',
   '{list} was missed': 'faltó marcar {list}',
   '{list} were missed': 'faltó marcar {list}',
   'keep going — same pattern': 'seguir — misma figura',
