@@ -105,4 +105,6 @@ export const SCREENS_ES: Readonly<Record<string, string>> = {
   'High roller': 'Gran apuesta',
   'Won a {points}-point wager on the final question':
     'Ganó una apuesta de {points} puntos en la pregunta final',
+  // I-288 B
+  '+{points} now': '+{points} ahora',
 };

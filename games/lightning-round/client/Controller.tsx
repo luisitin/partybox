@@ -99,7 +99,6 @@ export function Controller({
             ? `${roundKicker(view, L)} · ${L('you bet {stake}', { stake })}`
             : roundKicker(view, L)
         } /* I-039 C */
-        prompt={view.question.text}
         choices={view.question.choices.map((label, index) => ({ id: String(index), label }))}
         selectedId={locked ? String(view.myPickIndex) : null}
         correctId={
@@ -107,6 +106,17 @@ export function Controller({
         }
         disabled={revealed}
         lockedHint={lockedHint}
+        // I-288 B: while it's open, what a right answer is worth now
+        prompt={
+          view.worth && !locked && !revealed ? (
+            <>
+              {view.question.text}
+              <Worth worth={view.worth} deadline={view.deadline} />
+            </>
+          ) : (
+            view.question.text
+          )
+        }
         // A "phone only" room: the TV's rows, on the phone under the answers (the owner).
         after={
           revealed && shown && view.phoneOnly && view.rows ? <RoomRows rows={view.rows} /> : null
@@ -214,4 +224,24 @@ export function Controller({
       mood="watch"
     />
   );
+}
+
+/** I-288 B: "+812 now" — a right answer's worth this instant, draining with the speed bonus. */
+function Worth({
+  worth,
+  deadline,
+}: {
+  worth: NonNullable<LightningControllerView['worth']>;
+  deadline: number | null;
+}): JSX.Element | null {
+  const L = useT(STRINGS);
+  const [now, setNow] = useState(() => Date.now());
+  useEffect(() => {
+    const h = window.setInterval(() => setNow(Date.now()), 100);
+    return () => window.clearInterval(h);
+  }, []);
+  if (deadline === null) return null;
+  const left = Math.max(0, Math.min(worth.windowMs, deadline - now));
+  const points = worth.base + Math.round(worth.speedMax * (left / worth.windowMs)) + worth.bonus;
+  return <span className={styles.worth}>{L('+{points} now', { points })}</span>;
 }
