@@ -8,8 +8,8 @@ Branch `game/fake-out`, worktree `C:/dev/partybox-game-fake-out`, harness port 4
 | ------------------ | ---------------------------------------------------------------------------------- |
 | 1. Content         | ✅ 158 family + 62 spicy facts, all sourced and checked; fillers; pack test green  |
 | 2. Server logic    | ✅ reducer, views, bot, recap, speech; 160+ unit tests; contract suite; sims clean |
-| 3. Client          | in progress                                                                        |
-| 4. Record → review | not started                                                                        |
+| 3. Client          | ✅ TV + phone + phone-only feed, EN + ES; read-along; deck reveal                  |
+| 4. Record → review | passes 1–3 done (see below); touch pass + matrix in progress                       |
 | 5. Review package  | not started                                                                        |
 
 ## Platform pieces not on main yet (stand-ins in use)
@@ -17,14 +17,14 @@ Branch `game/fake-out`, worktree `C:/dev/partybox-game-fake-out`, harness port 4
 The Foundation session's F-tasks were not on `main` when this session started (only F0's docs on
 branch `foundation`). Per the playbook, the game builds against thin local stand-ins:
 
-| Needed                                | Stand-in                                                                                                        | Swap when         |
-| ------------------------------------- | --------------------------------------------------------------------------------------------------------------- | ----------------- |
-| F5 `@partybox/game-sdk/match`         | `games/fake-out/server/match/` — Part 00 §4 + audit errata + ruling 16                                          | F5 lands          |
-| F6 `toSpeakable` + override lists     | `games/fake-out/server/speakable.ts` + `spoken-numbers.ts` (rules 1–13)                                         | F6 lands          |
-| F6 fixed clips (`render-clips`)       | the eight fixed lines are ordinary live readings, asked for at the intro and cached by the host for good        | F6 `render-clips` |
-| F2 manifest fields                    | not in `manifest.json` yet (zod strips unknown keys and the contract deep-equals the file) — values ready below | F2 lands          |
-| F1 lazy registry / `phone.ts`+`tv.ts` | the current eager `clientModule` with lazy surfaces                                                             | F1 lands          |
-| F4 presence / `useCanSeeTv`           | not needed by the rules (presence table is all "—"); PhoneStage follows `usePhoneOnly`                          | F4 lands          |
+| Needed                                | Stand-in                                                                                                                                                                                                                                                                                              | Swap when         |
+| ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------- |
+| F5 `@partybox/game-sdk/match`         | `games/fake-out/server/match/` — Part 00 §4 + audit errata + ruling 16. F5 now exists on branch `foundation` (6dbaa7cf) with the same `matchAnswer` / `sameAnswer(…, lang)` + `groupAnswers`; at the swap, rerun the pack + leak tests against it and keep a prepared path for Suggest's draws (perf) | F5 lands on main  |
+| F6 `toSpeakable` + override lists     | `games/fake-out/server/speakable.ts` + `spoken-numbers.ts` (rules 1–13)                                                                                                                                                                                                                               | F6 lands          |
+| F6 fixed clips (`render-clips`)       | the eight fixed lines are ordinary live readings, asked for at the intro and cached by the host for good                                                                                                                                                                                              | F6 `render-clips` |
+| F2 manifest fields                    | not in `manifest.json` yet (zod strips unknown keys and the contract deep-equals the file) — values ready below                                                                                                                                                                                       | F2 lands          |
+| F1 lazy registry / `phone.ts`+`tv.ts` | the current eager `clientModule` with lazy surfaces                                                                                                                                                                                                                                                   | F1 lands          |
+| F4 presence / `useCanSeeTv`           | not needed by the rules (presence table is all "—"); PhoneStage follows `usePhoneOnly`                                                                                                                                                                                                                | F4 lands          |
 
 Manifest fields ready for F2: `icon: "🎭"`, `howToPlay`: "A strange true fact appears with a blank.
 Type a fake answer that sounds real." / "All answers are mixed with the truth. Pick the one you
@@ -52,6 +52,13 @@ think is real." / "Score for finding the truth, and for every player your fake f
   is skipped when there are none.
 - **Points are applied as the reveal begins** (so a VIP "end" mid-reveal keeps them); the views
   subtract them until the reveal ends, so no running score gives a pick away early.
+- **`phoneStagePhases: ['reveal']`** (the spec lists intro, reveal, scores). The shell renders
+  `PhoneStage` with only the view — no `skip` — so on intro and scores it would take away the VIP's
+  in-context **Let's go** / **Next question**. The controller's intro and scores already show the
+  stage's content in full (how to play; the board with this question's points), so they stay.
+- **The question and the reveal map to the `silence` cue** and the stage plays `card`, `reveal`,
+  `bust` and `jackpot` itself: both phases move their deadline (the voice, each reveal step), and
+  the shell re-chimes a mapped phase whose deadline moves.
 - **Tied awards get one id per winner** (`master-liar`, `master-liar-2`): the results screens key
   awards by id.
 - **Performance:** the matcher is normalised once per string (`prepare`) and Suggest draws lazily;
@@ -76,3 +83,25 @@ Written by research agents with web access, each fact checked against its `sourc
 
 1. Display form folds case (above) — keep? (Recommended: yes; it closes a real tell.)
 2. Present-tense facts above — keep, or reword to past tense? (Recommended: keep; they are true today.)
+
+## Record → review passes
+
+Evidence under `reports/design/record-review/fake-out/<pass>/` (gitignored). Each pass: real-time
+game on port 42330 (TV 1920×1080 + two phones + bots, reader on), `dead-air.ts` on every video.
+
+| Pass | Found                                                                                                                                                                                                                                                                                                                      | Fixed                                                                                                                                                                                                                                                                                          |
+| ---- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| p01  | TV: 9 dead spans (question card static while the voice was read or made; the completed fact held 5.6 s still); the reveal spotlight sat on top of the dimmed grid (text collisions); pick → reveal jumped ~40 px (the clock column leaves the strip); first reveal step waited on the voice; lie slips overlapped the pill | read-along highlight (words light up with the reader; shimmer while the voice is made); reveal redesigned: stage in the middle, options as a deck along the bottom; reveal crossfades in instead of cutting; the fact is asked for before the fixed lines; truth word breathes during the hold |
+| p02  | reveal dead spans gone; the question still went silent: a late reading's start was "in the past", so every TV skipped the clip and the read-along                                                                                                                                                                          | `q.readAt`: a late reading starts when it arrives (test pinned)                                                                                                                                                                                                                                |
+| p03  | **TV 0 dead spans, 0 hard cuts**; phone: 2.2 s on the question (gate 3 s), 3.7 s on the shell's results                                                                                                                                                                                                                    | —                                                                                                                                                                                                                                                                                              |
+
+Sound (fo-audio probe, p03): `card` +20 ms after the question starts, the reading +10 ms after
+`readAt`; lie / pick lines 460 ms after the phone chime (by design, 450); each option's reading
++30 ms into its step; the stamp cue at reading + 0.8 s ±20 ms, its line 180 ms later; `jackpot`
+exactly when someone found the truth. One slow render (the completed fact, > 6 s under load) held
+its card with the shimmer and moved on — a missing voice never stalls the room.
+
+Frame timing: this machine's recorder is the noise floor — shipped Wisecrack under the same
+harness drops 7.97 % of frames (worst 133 ms); Fake-Out 5.43 % (worst 133 ms, the chunk load at
+the intro). The < 1 % / none over 100 ms gate needs a quiet machine to judge; nothing in the game
+animates anything but transform / opacity.

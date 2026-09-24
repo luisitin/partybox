@@ -6,7 +6,7 @@
   },
   "rng": {
     "seed": 1,
-    "step": 182
+    "step": 194
   },
   "players": {
     "p1": {
@@ -290,56 +290,57 @@
       "verified": true,
       "hardWords": []
     },
+    "readAt": 1700000008000,
     "lies": {
       "p4": "sausage",
-      "p1": "cake",
+      "p1": "pudding",
       "p3": "pie",
-      "p2": "ham"
+      "p2": "hay"
     },
     "truthTyped": [],
     "rejected": {},
     "suggestions": {
       "p4": ["sausage", "gingerbread"],
-      "p1": ["cake", "butter"],
-      "p3": ["pie", "pudding"],
-      "p2": ["ham", "hay"]
+      "p1": ["pudding", "cake"],
+      "p3": ["pie", "butter"],
+      "p2": ["hay", "ham"]
     },
-    "claimed": ["sausage", "gingerbread", "cake", "butter", "pie", "pudding", "ham", "hay"],
+    "claimed": ["sausage", "gingerbread", "pudding", "cake", "pie", "butter", "hay", "ham"],
     "options": [
-      {
-        "display": "Ham",
-        "authors": ["p2"],
-        "house": false,
-        "truth": false,
-        "id": "o38"
-      },
       {
         "display": "Sausage",
         "authors": ["p4"],
         "house": false,
         "truth": false,
-        "id": "o46"
+        "id": "o33"
       },
       {
-        "display": "Cake",
-        "authors": ["p1"],
+        "display": "Hay",
+        "authors": ["p2"],
         "house": false,
         "truth": false,
-        "id": "o93"
+        "id": "o89"
       },
       {
         "display": "Cheese",
         "authors": [],
         "house": false,
         "truth": true,
-        "id": "o76"
+        "id": "o12"
       },
       {
         "display": "Pie",
         "authors": ["p3"],
         "house": false,
         "truth": false,
-        "id": "o51"
+        "id": "o69"
+      },
+      {
+        "display": "Pudding",
+        "authors": ["p1"],
+        "house": false,
+        "truth": false,
+        "id": "o76"
       }
     ],
     "picks": {},
@@ -387,9 +388,9 @@
   },
   "offered": {
     "p4": ["sausage", "gingerbread"],
-    "p1": ["cake", "butter"],
-    "p3": ["pie", "pudding"],
-    "p2": ["ham", "hay"]
+    "p1": ["pudding", "cake"],
+    "p3": ["pie", "butter"],
+    "p2": ["hay", "ham"]
   },
   "speechMs": {
     "fo6ravkm1mgmjz4": -1

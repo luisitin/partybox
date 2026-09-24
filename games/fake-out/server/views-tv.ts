@@ -8,17 +8,26 @@ import {
   factView,
   leadNow,
   linesReady,
+  readAlongNow,
   readingNow,
   revealView,
   standingsView,
 } from './views-common';
-import type { FactView, ReadingView, RevealView, StandingView } from './views-common';
+import type {
+  FactView,
+  ReadAlongView,
+  ReadingView,
+  RevealView,
+  StandingView,
+} from './views-common';
 import type { State } from './types';
 
 export interface FakeOutTvView extends TvView {
   n: number;
   total: number;
   final: boolean;
+  /** scores: the next question is the Final Fake-Out (double points). */
+  finalNext: boolean;
   fact: FactView;
   /** pick + reveal: every option, anonymous, in the one seeded order. */
   options: { id: string; display: string }[];
@@ -29,6 +38,8 @@ export interface FakeOutTvView extends TvView {
   reading: ReadingView | null;
   /** The fixed line that opens this moment (question lead-in, lie, pick), once made. */
   lead: ReadingView | null;
+  /** The words of the text on stage light up with the reader. */
+  readAlong: ReadAlongView;
   lines: Partial<Record<LineId, string>>;
   likesOn: boolean;
   standings: StandingView[];
@@ -67,6 +78,7 @@ export function tvView(state: State, gameId: string): FakeOutTvView {
     n: state.q.n,
     total: state.cfg.questions,
     final: state.q.final,
+    finalNext: state.cfg.finalDouble && state.q.n + 1 === state.cfg.questions,
     fact: factView(state),
     options: opts.map((o) => ({ id: o.id, display: o.display })),
     inCount,
@@ -74,6 +86,7 @@ export function tvView(state: State, gameId: string): FakeOutTvView {
     reveal: revealView(state),
     reading: readingNow(state),
     lead: leadNow(state),
+    readAlong: readAlongNow(state),
     lines: linesReady(state),
     likesOn: state.cfg.likes,
     standings: phase === 'scores' || phase === 'done' ? standingsView(state) : [],

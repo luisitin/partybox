@@ -10,11 +10,18 @@ import {
   factView,
   leadNow,
   linesReady,
+  readAlongNow,
   readingNow,
   revealView,
   standingsView,
 } from './views-common';
-import type { FactView, ReadingView, RevealView, StandingView } from './views-common';
+import type {
+  FactView,
+  ReadAlongView,
+  ReadingView,
+  RevealView,
+  StandingView,
+} from './views-common';
 import { statusOf, timerModeOf } from './views-tv';
 import type { LineId } from './speech';
 import { FOOL_POINTS, TRUTH_POINTS } from './types';
@@ -54,6 +61,7 @@ export interface FakeOutControllerView extends ControllerView {
   reading: ReadingView | null;
   /** The fixed line that opens this moment (question lead-in, lie, pick), once made. */
   lead: ReadingView | null;
+  readAlong: ReadAlongView;
   lines: Partial<Record<LineId, string>>;
   myScore: number;
   myRank: number;
@@ -138,6 +146,7 @@ export function controllerView(state: State, gameId: string, p: string): FakeOut
     reveal: revealView(state),
     reading: readingNow(state),
     lead: leadNow(state),
+    readAlong: readAlongNow(state),
     lines: linesReady(state),
     myScore: onBoard ? (me?.score ?? 0) : 0,
     myRank: onBoard ? (me?.rank ?? 0) : 0,

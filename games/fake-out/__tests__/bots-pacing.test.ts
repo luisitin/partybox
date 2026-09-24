@@ -119,6 +119,16 @@ describe('pacing to the voice', () => {
     expect(s.phase.deadline).toBeGreaterThanOrEqual(s.phase.startedAt + 2_000 + 3_000 + 1_000);
   });
 
+  it('a late reading starts when it arrives: the voice and the read-along are not skipped', () => {
+    let s = timer(start({ fact: PENGUIN, settings: { reader: 'fable' } }));
+    expect(tv(s).readAlong).toBe('waiting');
+    const arrival = s.phase.startedAt + 5_000;
+    s = speech(s, factReading('fable', PENGUIN).key, 3_000, arrival);
+    expect(tv(s).reading?.at).toBe(arrival);
+    expect(tv(s).readAlong).toEqual({ at: arrival, ms: 3_000 });
+    expect(s.phase.deadline).toBe(arrival + 3_000 + 1_000);
+  });
+
   it('a failed voice never holds the room', () => {
     let s = timer(start({ fact: PENGUIN, settings: { reader: 'fable' } }));
     s = speech(s, factReading('fable', PENGUIN).key, -1);

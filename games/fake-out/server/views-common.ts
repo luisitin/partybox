@@ -8,6 +8,7 @@ import { multiplier, standings } from './scoring';
 import {
   LINE_IDS,
   completedReading,
+  estimateMs,
   factReading,
   factStep,
   lineReading,
@@ -127,7 +128,7 @@ export function readingNow(state: State): ReadingView | null {
   const { phase, q } = state;
   if (phase.id === 'question') {
     const url = readingUrl(state, factReading(voice, q.item));
-    return url ? { url, at: phase.startedAt + factStartMs(state) } : null;
+    return url ? { url, at: q.readAt || phase.startedAt + factStartMs(state) } : null;
   }
   if (phase.id !== 'reveal') return null;
   const option = optionOnStep(state, q.step);
@@ -138,6 +139,39 @@ export function readingNow(state: State): ReadingView | null {
       : null;
   const url = req ? readingUrl(state, req) : null;
   return url ? { url, at: q.stepAt } : null;
+}
+
+/** The read-along for the text on stage: when it starts (server time) and how long it takes —
+ *  the voice's length when made, the reading-time estimate with no voice (or a failed one);
+ *  'waiting' while the voice is still being made. Null when nothing is being read. */
+export type ReadAlongView = { at: number; ms: number } | 'waiting' | null;
+
+export function readAlongNow(state: State): ReadAlongView {
+  const voice = voiceOf(state);
+  const { phase, q } = state;
+  const timed = (
+    req: ReturnType<typeof factReading> | null,
+    text: string,
+    at: number,
+  ): ReadAlongView => {
+    if (!req) return { at, ms: estimateMs(text) };
+    const ms = state.speechMs[req.key];
+    if (ms === undefined) return 'waiting';
+    return { at, ms: ms >= 0 ? ms : estimateMs(text) };
+  };
+  if (phase.id === 'question')
+    return timed(
+      voice ? factReading(voice, q.item) : null,
+      q.item.fact,
+      q.readAt || phase.startedAt + factStartMs(state),
+    );
+  if (phase.id !== 'reveal') return null;
+  const option = optionOnStep(state, q.step);
+  if (option)
+    return timed(voice ? optionReading(voice, option.display) : null, option.display, q.stepAt);
+  if (q.step === factStep(state))
+    return timed(voice ? completedReading(voice, q.item) : null, q.item.fact, q.stepAt);
+  return null;
 }
 
 /** After the phase chime, before a spoken line: the chime and the voice never land together. */

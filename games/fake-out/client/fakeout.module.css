@@ -1,0 +1,174 @@
+/* Fake-Out — shared by the TV and the phone: the fact and its blank. Tokens only
+   (docs/DESIGN_SYSTEM.md); every duration derives from a motion token, so reduced motion (and the
+   in-app motion switch) stills it all; only transform and opacity animate. */
+
+.fact {
+  position: relative;
+  isolation: isolate; /* each word's highlight sits behind the text, never behind the card */
+  margin: 0;
+  font-weight: 800;
+  line-height: 1.28;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+
+/* ── the read-along: a soft highlight steps from word to word with the reader ─────────── */
+
+.word {
+  position: relative;
+}
+
+.word::before {
+  content: '';
+  position: absolute;
+  inset: -0.02em -0.16em;
+  z-index: -1;
+  border-radius: 0.28em;
+  background: color-mix(in srgb, var(--pb-accent-2) 30%, transparent);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.reading .word::before {
+  animation: word-lit var(--dur) linear both;
+  animation-delay: calc(var(--read-base) + var(--t));
+}
+
+@keyframes word-lit {
+  0% {
+    opacity: 0;
+  }
+
+  15%,
+  75% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+/* The voice is still being made: a shimmer wave runs through the words. */
+.waiting .word::before {
+  animation: word-wait calc(var(--pb-motion-pulse) * 1.8) ease-in-out infinite;
+  animation-delay: calc(var(--wi) * var(--pb-motion-fast) * 0.4);
+}
+
+@keyframes word-wait {
+  0%,
+  45%,
+  100% {
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 0.65;
+  }
+}
+
+.fact_h1 {
+  font-size: var(--pb-font-h1);
+}
+
+.fact_h2 {
+  font-size: var(--pb-font-h2);
+}
+
+.fact_phone {
+  font-size: var(--pb-font-h2);
+  line-height: 1.3;
+}
+
+/* The blank: a rounded box about four characters wide, never underscores. It breathes gently
+   (scaleX) so a card left on screen still lives. */
+.blank {
+  display: inline-block;
+  width: 4.2ch;
+  height: 0.92em;
+  margin-inline: 0.18em;
+  vertical-align: -0.1em;
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface-2);
+  border-bottom: 0.08em solid var(--pb-accent-2);
+  transform-origin: center;
+  animation: blank-breathe calc(var(--pb-motion-pulse) * 2.4) ease-in-out infinite;
+}
+
+.fact_phone .blank {
+  width: 3.4ch;
+}
+
+@keyframes blank-breathe {
+  0%,
+  100% {
+    transform: scaleX(1);
+  }
+
+  50% {
+    transform: scaleX(1.1);
+  }
+}
+
+/* The completed fact: the box opens around the truth, in the highlight colour. */
+.blankFilled {
+  display: inline-block;
+  margin-inline: 0.12em;
+  padding: 0 0.22em;
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface-2);
+  border-bottom: 0.08em solid var(--pb-accent-2);
+  animation: blank-open var(--pb-motion-slow) var(--pb-ease) both;
+}
+
+@keyframes blank-open {
+  from {
+    transform: scaleX(0.4);
+  }
+
+  to {
+    transform: none;
+  }
+}
+
+.truthWord {
+  display: inline-block;
+  color: var(--pb-accent-2);
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  animation:
+    global(pb-pop) var(--pb-motion-slow) var(--pb-ease) both,
+    truth-glow calc(var(--pb-motion-pulse) * 1.3) ease-in-out infinite;
+  animation-delay:
+    calc(var(--pb-motion-fast) * 1.5), calc(var(--pb-motion-slow) + var(--pb-motion-fast) * 1.5);
+}
+
+/* The truth keeps breathing while the room takes it in (the hold after the reading). */
+@keyframes truth-glow {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.07);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blank,
+  .blankFilled,
+  .truthWord,
+  .reading .word::before,
+  .waiting .word::before {
+    animation: none;
+  }
+}
+
+:global(:root[data-motion='off']) .blank,
+:global(:root[data-motion='off']) .blankFilled,
+:global(:root[data-motion='off']) .truthWord,
+:global(:root[data-motion='off']) .reading .word::before,
+:global(:root[data-motion='off']) .waiting .word::before {
+  animation: none;
+}

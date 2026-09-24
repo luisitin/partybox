@@ -1,12 +1,12 @@
 {
   "phase": {
     "id": "done",
-    "startedAt": 1700000310104,
+    "startedAt": 1700000315894,
     "deadline": null
   },
   "rng": {
     "seed": 1,
-    "step": 332
+    "step": 416
   },
   "players": {
     "p1": {
@@ -292,74 +292,88 @@
       "verified": true,
       "hardWords": ["Turkmenistan"]
     },
+    "readAt": 1700000275654,
     "lies": {
-      "p1": "may",
-      "p2": "june",
-      "p4": "september",
-      "p3": "october"
+      "p1": "september",
+      "p2": "october",
+      "p4": "may",
+      "p3": "march"
     },
     "truthTyped": [],
     "rejected": {},
     "suggestions": {
-      "p1": ["august", "may"],
-      "p3": ["february", "october"],
-      "p4": ["september", "december"],
-      "p2": ["march", "june"]
+      "p1": ["february", "september"],
+      "p3": ["august", "march"],
+      "p4": ["may", "december"],
+      "p2": ["june", "october"]
     },
-    "claimed": ["august", "may", "february", "october", "september", "december", "march", "june"],
+    "claimed": ["february", "september", "august", "march", "may", "december", "june", "october"],
     "options": [
       {
         "display": "April",
         "authors": [],
         "house": false,
         "truth": true,
-        "id": "o37"
+        "id": "o71"
       },
       {
         "display": "September",
-        "authors": ["p4"],
-        "house": false,
-        "truth": false,
-        "id": "o32"
-      },
-      {
-        "display": "June",
-        "authors": ["p2"],
-        "house": false,
-        "truth": false,
-        "id": "o16"
-      },
-      {
-        "display": "May",
         "authors": ["p1"],
         "house": false,
         "truth": false,
-        "id": "o72"
+        "id": "o33"
+      },
+      {
+        "display": "March",
+        "authors": ["p3"],
+        "house": false,
+        "truth": false,
+        "id": "o31"
+      },
+      {
+        "display": "May",
+        "authors": ["p4"],
+        "house": false,
+        "truth": false,
+        "id": "o56"
       },
       {
         "display": "October",
-        "authors": ["p3"],
+        "authors": ["p2"],
         "house": false,
         "truth": false,
         "id": "o36"
       }
     ],
     "picks": {
-      "p2": "o32",
-      "p3": "o37",
-      "p4": "o16",
-      "p1": "o16"
+      "p2": "o33",
+      "p3": "o71",
+      "p4": "o33",
+      "p1": "o56"
     },
     "likes": {},
-    "revealOrder": ["o32", "o16", "o37"],
+    "revealOrder": ["o56", "o33", "o71"],
     "step": 4,
-    "stepAt": 1700000302604,
+    "stepAt": 1700000308394,
     "delta": {
       "p3": {
         "pts": 2000,
         "why": [
           {
             "k": "truth",
+            "pts": 2000
+          },
+          {
+            "k": "final"
+          }
+        ]
+      },
+      "p1": {
+        "pts": 2000,
+        "why": [
+          {
+            "k": "fooled",
+            "n": 2,
             "pts": 2000
           },
           {
@@ -379,54 +393,41 @@
             "k": "final"
           }
         ]
-      },
-      "p2": {
-        "pts": 2000,
-        "why": [
-          {
-            "k": "fooled",
-            "n": 2,
-            "pts": 2000
-          },
-          {
-            "k": "final"
-          }
-        ]
       }
     }
   },
   "scores": {
-    "p1": 3500,
-    "p2": 4500,
-    "p3": 8000,
-    "p4": 4500
+    "p1": 8500,
+    "p2": 2000,
+    "p3": 3500,
+    "p4": 5500
   },
   "stats": {
     "p1": {
-      "fooled": 3,
-      "truths": 2,
-      "likes": 4,
+      "fooled": 9,
+      "truths": 3,
+      "likes": 2,
       "truthTyped": 0,
       "house": 0
     },
     "p2": {
-      "fooled": 5,
-      "truths": 1,
-      "likes": 1,
+      "fooled": 4,
+      "truths": 0,
+      "likes": 2,
       "truthTyped": 0,
       "house": 0
     },
     "p3": {
-      "fooled": 8,
-      "truths": 3,
-      "likes": 1,
+      "fooled": 3,
+      "truths": 1,
+      "likes": 2,
       "truthTyped": 0,
       "house": 0
     },
     "p4": {
-      "fooled": 4,
+      "fooled": 6,
       "truths": 2,
-      "likes": 6,
+      "likes": 3,
       "truthTyped": 0,
       "house": 0
     }
@@ -435,115 +436,114 @@
     "p4": [
       "sausage",
       "gingerbread",
-      "metal",
-      "march",
-      "glitter",
-      "fog",
-      "mars",
-      "venus",
-      "glue",
-      "explosives",
-      "wolf",
-      "monkey",
-      "september",
+      "dancing",
+      "thinking",
+      "radio waves",
+      "static",
+      "north pole",
+      "saturn",
+      "bandages",
+      "toothpaste",
+      "badger",
+      "pig",
+      "may",
       "december"
     ],
     "p1": [
+      "pudding",
       "cake",
-      "butter",
-      "dancing",
+      "metal",
       "silence",
       "smoke",
-      "static",
-      "moon",
-      "halley's comet",
-      "toothpaste",
+      "ink",
+      "venus",
+      "jupiter",
       "chewing gum",
-      "parrot",
+      "silk",
+      "monkey",
       "goat",
-      "august",
-      "may"
+      "february",
+      "september"
     ],
     "p3": [
       "pie",
-      "pudding",
-      "friendship",
+      "butter",
       "obedience",
-      "radio waves",
-      "ink",
+      "smile",
+      "electricity",
+      "glitter",
       "milky way",
-      "saturn",
-      "plastic",
-      "silk",
+      "mars",
+      "explosives",
+      "glue",
       "fox",
-      "badger",
-      "february",
-      "october"
+      "parrot",
+      "august",
+      "march"
     ],
     "p2": [
-      "ham",
       "hay",
-      "smile",
-      "thinking",
-      "steam",
-      "electricity",
-      "north pole",
-      "jupiter",
-      "leather",
-      "bandages",
-      "pig",
-      "raccoon",
+      "ham",
+      "friendship",
       "march",
-      "june"
+      "fog",
+      "steam",
+      "halley's comet",
+      "moon",
+      "leather",
+      "plastic",
+      "wolf",
+      "raccoon",
+      "june",
+      "october"
     ]
   },
   "speechMs": {
     "fo6ravkm1mgmjz4": -1,
-    "fop7u2lwgkg8ns": -1,
     "fo15kn60jo02tcj": -1,
-    "foekfd4q2wv2pw": -1,
+    "fotj0l8ogup9t0": -1,
     "fon8vu4x12w2hd": -1,
     "fohpu0kc1trpm5c": -1,
+    "fo1pi9flt5kfnd": -1,
     "forkrictnkdvrr": -1,
     "fovuzul61ry42eg": -1,
-    "fo1wzm638touyq": -1,
-    "fo1nle5w3iqaez1": -1,
-    "fo1bqx8bk15hpdw4": -1,
+    "fo1v5cmyuthtw8o": -1,
+    "fogd7wkr1p32ic9": -1,
     "fo1h0bcce1yzde94": -1,
-    "fo1qc4o36qknpug": -1,
+    "fo1nle5w3iqaez1": -1,
+    "fo1wzm638touyq": -1,
     "fo16r75ia707z9k": -1,
     "fo3sbbpj1ihvh99": -1,
-    "fo5lq8oqlnrn6i": -1,
-    "fobdtcja4dline": -1,
+    "fo1wwlqd0pvrcjw": -1,
+    "fo1uf6tty1scn24y": -1,
     "fo1wp6j0d1dwk9o7": -1,
-    "fo14l5ibi329zfg": -1,
-    "fo14hmfvp1safdzz": -1,
+    "fo5lq8oqlnrn6i": -1,
+    "fouo65kp6n8041": -1,
     "fo18aqhjpo30j5x": -1,
     "fo1nxrr8ql6zst6": -1,
-    "foqje2bd1k1dhd7": -1,
-    "fo6hqs751833k15": -1,
-    "fohxhu9s1s5ov98": -1,
     "fo188b65d1i1ipdn": -1,
+    "fohxhu9s1s5ov98": -1,
+    "foeh59ol19llyvd": -1,
     "forpa5j1afmz0z": -1,
+    "foqje2bd1k1dhd7": -1,
     "fo14d33i1em5r6s": -1,
     "fo19mbuzhbjgncr": -1,
-    "fog4ocip1yavh9d": -1,
     "fo1718slx1syvbh7": -1,
-    "fo1ql1yrd1lp7b63": -1,
     "fowbucq81d735m4": -1,
-    "fo1gbeljlz565xv": -1,
+    "fo19n88s01yfodcm": -1,
+    "fo1ljqkgzwaafmp": -1,
+    "fo1ql1yrd1lp7b63": -1,
     "fopo8v27pu13qx": -1,
     "fob8wd2b1smjp4v": -1,
-    "fo1vnwznj9uarc5": -1,
     "fo1l7mjfhf9eiq1": -1,
-    "fo9yjr221bvsqlq": -1,
-    "fo1mzzecc8ouy00": -1,
     "fol7l7mt14nutzh": -1,
+    "fo21shurqaloj7": -1,
+    "fo1mzzecc8ouy00": -1,
+    "fo1vnwznj9uarc5": -1,
     "fot2c6vppj4krl": -1,
     "foloa8lc1ozan5c": -1,
     "fo16ttac2bqddwy": -1,
     "fo1mfwe6v8recwr": -1,
-    "foi0xexirj0dms": -1,
     "fo1up2kb5yrxuwh": -1,
     "fo1ekuaai1vc8gd2": -1,
     "foe1rn4e1wx9sqg": -1

@@ -85,10 +85,12 @@ export function speech(state: State): SpeechRequest[] {
   const voice = voiceOf(state);
   if (!voice) return [];
   const phase = state.phase.id;
+  // The host makes readings one at a time, in the order asked: what is needed first goes first
+  // (the fact before the fixed lines, which wait until the lie; the options at the pick).
   const out: SpeechRequest[] = [];
-  if (phase === 'intro') out.push(...LINE_IDS.map((id) => lineReading(voice, id)));
   if (phase === 'intro' || phase === 'question' || phase === 'lie')
     out.push(factReading(voice, state.q.item));
+  if (phase === 'intro') out.push(...LINE_IDS.map((id) => lineReading(voice, id)));
   if ((phase === 'pick' || phase === 'reveal') && state.q.options)
     out.push(...state.q.options.map((o) => optionReading(voice, o.display)));
   if (phase === 'reveal' && state.q.step >= factStep(state) - 1)

@@ -47,6 +47,9 @@ export interface Question {
   final: boolean;
   /** SECRET: the truth, until the truth step. */
   item: FactItem;
+  /** When the fact's reading starts on the question card (server time): after the lead-in, or
+   *  when a late reading arrives — every TV starts the voice and the read-along from here. */
+  readAt: number;
   /** SECRET (authorship): player → the lie they locked in, as typed (trimmed). */
   lies: Record<string, string>;
   /** Players who typed the truth at least once this question (Lucky Guess). */

@@ -1,12 +1,12 @@
 {
   "phase": {
     "id": "scores",
-    "startedAt": 1700000053889,
-    "deadline": 1700000059889
+    "startedAt": 1700000051159,
+    "deadline": 1700000057159
   },
   "rng": {
     "seed": 1,
-    "step": 182
+    "step": 194
   },
   "players": {
     "p1": {
@@ -290,74 +290,75 @@
       "verified": true,
       "hardWords": []
     },
+    "readAt": 1700000008000,
     "lies": {
       "p4": "sausage",
-      "p1": "cake",
+      "p1": "pudding",
       "p3": "pie",
-      "p2": "ham"
+      "p2": "hay"
     },
     "truthTyped": [],
     "rejected": {},
     "suggestions": {
       "p4": ["sausage", "gingerbread"],
-      "p1": ["cake", "butter"],
-      "p3": ["pie", "pudding"],
-      "p2": ["ham", "hay"]
+      "p1": ["pudding", "cake"],
+      "p3": ["pie", "butter"],
+      "p2": ["hay", "ham"]
     },
-    "claimed": ["sausage", "gingerbread", "cake", "butter", "pie", "pudding", "ham", "hay"],
+    "claimed": ["sausage", "gingerbread", "pudding", "cake", "pie", "butter", "hay", "ham"],
     "options": [
-      {
-        "display": "Ham",
-        "authors": ["p2"],
-        "house": false,
-        "truth": false,
-        "id": "o38"
-      },
       {
         "display": "Sausage",
         "authors": ["p4"],
         "house": false,
         "truth": false,
-        "id": "o46"
+        "id": "o33"
       },
       {
-        "display": "Cake",
-        "authors": ["p1"],
+        "display": "Hay",
+        "authors": ["p2"],
         "house": false,
         "truth": false,
-        "id": "o93"
+        "id": "o89"
       },
       {
         "display": "Cheese",
         "authors": [],
         "house": false,
         "truth": true,
-        "id": "o76"
+        "id": "o12"
       },
       {
         "display": "Pie",
         "authors": ["p3"],
         "house": false,
         "truth": false,
-        "id": "o51"
+        "id": "o69"
+      },
+      {
+        "display": "Pudding",
+        "authors": ["p1"],
+        "house": false,
+        "truth": false,
+        "id": "o76"
       }
     ],
     "picks": {
-      "p4": "o93",
-      "p3": "o46",
-      "p2": "o51",
-      "p1": "o76"
+      "p4": "o12",
+      "p3": "o89",
+      "p2": "o76",
+      "p1": "o12"
     },
     "likes": {
-      "p2": ["o46"],
-      "p3": ["o46"],
-      "p1": ["o51"]
+      "p2": ["o33"],
+      "p3": ["o89"],
+      "p1": ["o69"]
     },
-    "revealOrder": ["o46", "o93", "o51", "o76"],
-    "step": 5,
-    "stepAt": 1700000052389,
+    "revealOrder": ["o89", "o76", "o12"],
+    "step": 4,
+    "stepAt": 1700000049659,
     "delta": {
-      "p4": {
+      "p2": {
         "pts": 500,
         "why": [
           {
@@ -371,23 +372,22 @@
         "pts": 1500,
         "why": [
           {
+            "k": "truth",
+            "pts": 1000
+          },
+          {
             "k": "fooled",
             "n": 1,
             "pts": 500
-          },
-          {
-            "k": "truth",
-            "pts": 1000
           }
         ]
       },
-      "p3": {
-        "pts": 500,
+      "p4": {
+        "pts": 1000,
         "why": [
           {
-            "k": "fooled",
-            "n": 1,
-            "pts": 500
+            "k": "truth",
+            "pts": 1000
           }
         ]
       }
@@ -395,9 +395,9 @@
   },
   "scores": {
     "p1": 1500,
-    "p2": 0,
-    "p3": 500,
-    "p4": 500
+    "p2": 500,
+    "p3": 0,
+    "p4": 1000
   },
   "stats": {
     "p1": {
@@ -408,40 +408,40 @@
       "house": 0
     },
     "p2": {
-      "fooled": 0,
-      "truths": 0,
-      "likes": 0,
-      "truthTyped": 0,
-      "house": 0
-    },
-    "p3": {
       "fooled": 1,
       "truths": 0,
       "likes": 1,
       "truthTyped": 0,
       "house": 0
     },
-    "p4": {
-      "fooled": 1,
+    "p3": {
+      "fooled": 0,
       "truths": 0,
-      "likes": 2,
+      "likes": 1,
+      "truthTyped": 0,
+      "house": 0
+    },
+    "p4": {
+      "fooled": 0,
+      "truths": 1,
+      "likes": 1,
       "truthTyped": 0,
       "house": 0
     }
   },
   "offered": {
     "p4": ["sausage", "gingerbread"],
-    "p1": ["cake", "butter"],
-    "p3": ["pie", "pudding"],
-    "p2": ["ham", "hay"]
+    "p1": ["pudding", "cake"],
+    "p3": ["pie", "butter"],
+    "p2": ["hay", "ham"]
   },
   "speechMs": {
     "fo6ravkm1mgmjz4": -1,
-    "fop7u2lwgkg8ns": -1,
     "fo15kn60jo02tcj": -1,
-    "foekfd4q2wv2pw": -1,
+    "fotj0l8ogup9t0": -1,
     "fon8vu4x12w2hd": -1,
     "fohpu0kc1trpm5c": -1,
+    "fo1pi9flt5kfnd": -1,
     "forkrictnkdvrr": -1
   }
 }
