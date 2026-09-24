@@ -6,7 +6,14 @@ import { allConnectedDone, applyVip, setConnected } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { enterAnswer, reduceAnswer } from './phases/answer';
 import { enterIntro, reduceIntro } from './phases/intro';
-import { enterJudge, holdForJudge, judgeAway, judgeReturns, reduceJudge } from './phases/judge';
+import {
+  roomVote,
+  enterJudge,
+  holdForJudge,
+  judgeAway,
+  judgeReturns,
+  reduceJudge,
+} from './phases/judge';
 import { enterPick, reducePick } from './phases/pick';
 import { applySpeech, enterReveal, reduceReveal } from './phases/reveal';
 import { enterDone, enterFinal, enterResult, reduceFinal, reduceResult } from './phases/result';
@@ -57,7 +64,12 @@ export function tiedAtTop(state: State): string[] {
 
 const MAX_TIE_BREAKS = 3;
 
-export function afterResult(state: State, now: number): State {
+export function afterResult(result: State, now: number): State {
+  // I-773: a round the room judged in the judge's place is over — the game is a judge game again,
+  // even when it was the last round (the final board and the awards read the judge mode).
+  const state: State = result.judgeGone
+    ? { ...result, settings: { ...result.settings, judge: 'czar' }, judgeGone: null }
+    : result;
   if (state.round < state.settings.rounds) return enterIntro(state, now);
   // I-147 A: the flattest ending the game has, turned into one more card.
   const tied = tiedAtTop(state);
@@ -66,7 +78,7 @@ export function afterResult(state: State, now: number): State {
   return enterIntro({ ...state, tied, tieBreaks: (state.tieBreaks ?? 0) + 1 }, now);
 }
 
-/** "Skip" = what the current phase's deadline would do (reveal: skip the whole reading). */
+/** "Skip" = what the current phase's deadline would do (reveal: the next card — I-774). */
 function skip(state: State, now: number): State {
   switch (state.phase.id) {
     case 'intro':
@@ -76,9 +88,8 @@ function skip(state: State, now: number): State {
     case 'answer':
       return afterAnswer(state, now);
     case 'reveal':
-      return voteIsFormality(state)
-        ? enterResult(state, now)
-        : closeIfDone(enterJudge(state, now), now);
+      // I-774: the next card, as its own timer would; the last card's Next opens the vote
+      return afterReveal(state, now);
     case 'judge':
       return afterJudge(state, now);
     case 'result':
@@ -109,6 +120,9 @@ export function reduce(state: State, event: GameEvent<Input>): State {
   if (event.type === 'player') {
     const after = setConnected(state, event);
     if (after.phase.paused) return after;
+    // I-773 B: a judge who left or was removed is not coming back — the room votes now
+    if (!event.connected && event.gone && after.phase.id === 'judge' && judgeAway(after))
+      return roomVote(after, event.now, event.gone);
     return event.connected
       ? judgeReturns(after, event.playerId, event.now)
       : closeIfDone(after, event.now);

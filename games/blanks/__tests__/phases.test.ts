@@ -123,7 +123,7 @@ describe('answer', () => {
 });
 
 describe('reveal', () => {
-  it('reads one card per phase instance, then opens the vote; VIP skip jumps to the vote', () => {
+  it('reads one card per phase instance, then opens the vote; VIP skip is the next card', () => {
     let s = playAll(toAnswer(start({ players: 4 })));
     const n = s.slots.length;
     for (let i = 0; i < n; i++) {
@@ -136,7 +136,11 @@ describe('reveal', () => {
     }
     expect(s.phase.id).toBe('judge');
     expect(tv(s).cards).toHaveLength(n);
-    const skipped = vip(playAll(toAnswer(start({ players: 4 }))), 'skip');
+    // I-774: a skip is one card forward; only the last card's skip opens the vote
+    let skipped = vip(playAll(toAnswer(start({ players: 4 }))), 'skip');
+    expect(skipped.phase.id).toBe('reveal');
+    expect(skipped.revealIndex).toBe(1);
+    while (skipped.phase.id === 'reveal') skipped = vip(skipped, 'skip');
     expect(skipped.phase.id).toBe('judge');
   });
 });
@@ -245,7 +249,7 @@ describe('judge (czar mode)', () => {
     expect(s.czarId).toBe('cleo');
   });
 
-  it('a judge who dropped during the reading gets the grace on entry, then no winner', () => {
+  it('a judge who dropped during the reading gets the grace on entry, then the room votes', () => {
     const s = readAll(playAll(toAnswer(start({ judge: 'czar', players: 4 }))));
     expect(s.phase.id).toBe('judge');
     // Replay: drop the judge one card before the end of the reading.
@@ -256,9 +260,10 @@ describe('judge (czar mode)', () => {
     expect(r.phase.id).toBe('judge');
     expect(r.phase.deadline).toBe(r.phase.startedAt + JUDGE_GRACE_MS);
     r = timer(r);
-    expect(r.phase.id).toBe('result');
-    expect(r.winners).toEqual([]);
-    expect(tv(r).czar?.connected).toBe(false);
+    // I-773 A: the grace ran out — the room votes on the cards it heard
+    expect(r.phase.id).toBe('judge');
+    expect(tv(r).judgeMode).toBe('vote');
+    expect(tv(r).judgeGone?.why).toBe('dropped');
     // Nobody left to answer: the answer phase ends on entry too (winnerless result).
     let a = start({ judge: 'czar', players: 3 });
     for (const id of a.order) if (id !== a.czarId) a = connect(a, id, false, a.phase.startedAt + 1);
@@ -267,15 +272,16 @@ describe('judge (czar mode)', () => {
     expect(tv(a).revealed).toEqual([]);
   });
 
-  it('the judge dropping mid-vote holds 20 s for them, then ends without a winner', () => {
+  it('the judge dropping mid-vote holds 20 s for them, then the room votes', () => {
     let s = readAll(playAll(toAnswer(start({ judge: 'czar', players: 4 }))));
     expect(s.phase.id).toBe('judge');
     s = connect(s, 'ana', false, s.phase.startedAt + 100);
     expect(s.phase.id).toBe('judge');
     expect(s.phase.deadline).toBe(s.phase.startedAt + 100 + JUDGE_GRACE_MS);
     s = timer(s);
-    expect(s.phase.id).toBe('result');
-    expect(s.winners).toEqual([]);
+    // I-773 A: a vote, not a write-off
+    expect(s.phase.id).toBe('judge');
+    expect(tv(s).judgeMode).toBe('vote');
   });
 });
 
@@ -378,7 +384,7 @@ describe('VIP', () => {
     s = vip(s, 'skip');
     expect(s.phase.id).toBe('reveal');
     expect(s.slots).toHaveLength(3);
-    s = vip(s, 'skip');
+    s = vip(vip(vip(s, 'skip'), 'skip'), 'skip'); // I-774: one card per skip
     expect(s.phase.id).toBe('judge');
     s = vip(s, 'skip');
     expect(s.phase.id).toBe('result');

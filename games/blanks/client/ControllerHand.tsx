@@ -10,7 +10,7 @@ import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { BlanksControllerView } from '../server/index';
 import type { Input } from '../server/types';
 import { FilledCard } from './Cards';
-import { FanDots, NewHandCard, useFan } from './HandFan';
+import { FanDots, NewHandCard, useFan, useHandList } from './HandFan';
 import { NextButton } from './NextButton';
 import { STRINGS } from './strings';
 import styles from './blanks.module.css';
@@ -72,7 +72,9 @@ export function ControllerHand({ view, me, send, skip }: Props): JSX.Element {
   useEffect(() => () => clearTimeout(flight.current ?? undefined), []);
   // I-141 (the owner's design B): the fan's shape and where it is; the New hand card is the last.
   const [fanEl, setFanEl] = useState<HTMLUListElement | null>(null);
-  const at = useFan(fanEl, view.hand.length + 1);
+  // I-160: the hand is a list when the fan can't show a readable card
+  const list = useHandList(fanEl);
+  const at = useFan(list ? null : fanEl, view.hand.length + 1);
   const black = view.black;
   const pick = black?.pick ?? 1;
   if (!black)
@@ -190,76 +192,79 @@ export function ControllerHand({ view, me, send, skip }: Props): JSX.Element {
         </PrimaryButton>
       }
     >
-      {/* Sticky: the sentence (and the live preview of the pick) stays in view while the hand
+      {/* I-160 B: on its side the phone splits — the black card left, the hand right */}
+      <div className={styles.handSplit}>
+        {/* Sticky: the sentence (and the live preview of the pick) stays in view while the hand
           scrolls under it — ten cards run past a phone's screen (review-loop #136). */}
-      <div className={styles.handBlack}>
-        <FilledCard
-          text={black.text}
-          pick={black.pick}
-          whites={picked.map((id) => view.hand.find((c) => c.id === id)?.text ?? '')}
-          size="phone"
-        />
-        <FanDots cards={view.hand.length} at={at} />
-      </div>
-      <ul
-        ref={setFanEl}
-        className={`${styles.hand} ${flying ? styles.handFlying : ''}`}
-        aria-label={L('your hand')}
-        data-picking={picked.length > 0 || undefined}
-      >
-        {view.hand.map((card, i) => {
-          const order = picked.indexOf(card.id);
-          const on = order !== -1;
-          // I-016 (owner's note): every card's whole text reads without a tap — a long card
-          // steps its type down one size rather than wrap past the card or be cut.
-          const long = card.text.length > LONG_CARD_CHARS;
-          return (
-            // Dealt 150 ms apart (the CSS sets the motion); a re-render on a tap keeps the <li>,
-            // so the deal plays once, when the hand arrives. --pb-i turns the card in the fan.
-            <li
-              key={card.id}
-              style={{ animationDelay: `${i * 150}ms`, '--pb-i': i } as CSSProperties}
-            >
-              <button
-                type="button"
-                className={`${styles.white} ${on ? styles.whiteOn : ''} ${long ? styles.whiteLong : ''}`}
-                aria-pressed={on}
-                disabled={sent}
-                onClick={() => toggle(card.id)}
+        <div className={styles.handBlack}>
+          <FilledCard
+            text={black.text}
+            pick={black.pick}
+            whites={picked.map((id) => view.hand.find((c) => c.id === id)?.text ?? '')}
+            size="phone"
+          />
+          {list ? null : <FanDots cards={view.hand.length} at={at} />}
+        </div>
+        <ul
+          ref={setFanEl}
+          className={`${styles.hand} ${list ? styles.handList : ''} ${flying ? styles.handFlying : ''}`}
+          aria-label={L('your hand')}
+          data-picking={picked.length > 0 || undefined}
+        >
+          {view.hand.map((card, i) => {
+            const order = picked.indexOf(card.id);
+            const on = order !== -1;
+            // I-016 (owner's note): every card's whole text reads without a tap — a long card
+            // steps its type down one size rather than wrap past the card or be cut.
+            const long = card.text.length > LONG_CARD_CHARS;
+            return (
+              // Dealt 150 ms apart (the CSS sets the motion); a re-render on a tap keeps the <li>,
+              // so the deal plays once, when the hand arrives. --pb-i turns the card in the fan.
+              <li
+                key={card.id}
+                style={{ animationDelay: `${i * 150}ms`, '--pb-i': i } as CSSProperties}
               >
-                <span className={styles.whiteText}>{card.text}</span>
-                {on ? (
-                  <span
-                    className={styles.order}
-                    aria-label={
-                      pick > 1
-                        ? L('picked {n} of {count}', { n: order + 1, count: pick })
-                        : L('picked')
-                    }
-                  >
-                    {pick > 1 ? order + 1 : '✓'}
-                  </span>
-                ) : null}
-              </button>
-            </li>
-          );
-        })}
-        {/* A whole new hand, three times a game (the owner, 2026-09-21), as the fan's last card
+                <button
+                  type="button"
+                  className={`${styles.white} ${on ? styles.whiteOn : ''} ${long ? styles.whiteLong : ''}`}
+                  aria-pressed={on}
+                  disabled={sent}
+                  onClick={() => toggle(card.id)}
+                >
+                  <span className={styles.whiteText}>{card.text}</span>
+                  {on ? (
+                    <span
+                      className={styles.order}
+                      aria-label={
+                        pick > 1
+                          ? L('picked {n} of {count}', { n: order + 1, count: pick })
+                          : L('picked')
+                      }
+                    >
+                      {pick > 1 ? order + 1 : '✓'}
+                    </span>
+                  ) : null}
+                </button>
+              </li>
+            );
+          })}
+          {/* A whole new hand, three times a game (the owner, 2026-09-21), as the fan's last card
             (I-141). The pick is dropped with the cards it pointed at; the fan goes back to card 1. */}
-        <NewHandCard
-          index={view.hand.length}
-          cards={view.hand.length}
-          left={view.redrawsLeft}
-          disabled={sent}
-          onRedraw={() => {
-            if (sent || view.redrawsLeft === 0) return;
-            setPicked([]);
-            send({ type: 'redraw' });
-            const still = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-            fanEl?.scrollTo({ left: 0, behavior: still ? 'auto' : 'smooth' });
-          }}
-        />
-      </ul>
+          <NewHandCard
+            index={view.hand.length}
+            cards={view.hand.length}
+            left={view.redrawsLeft}
+            disabled={sent}
+            onRedraw={() => {
+              if (sent || view.redrawsLeft === 0) return;
+              setPicked([]);
+              send({ type: 'redraw' });
+              const still = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+              fanEl?.scrollTo({ left: 0, behavior: still ? 'auto' : 'smooth' });
+            }}
+          />
+        </ul>
+      </div>
     </Screen>
   );
 }

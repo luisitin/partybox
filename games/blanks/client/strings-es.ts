@@ -147,6 +147,13 @@ export const SCREENS_ES: Readonly<Record<string, string>> = {
   '{name} dropped — a moment for them to come back…':
     '{name} se desconectó: un momento para que vuelva…',
   '{name} has decided — here it comes…': '{name} ya decidió: ahí viene…',
+  // I-773: the judge went, the room votes
+  '{name} dropped — everyone votes this one · 0 / {expected}':
+    '{name} se desconectó: esta la vota todo el mundo · 0 / {expected}',
+  '{name} was removed — everyone votes this one · 0 / {expected}':
+    'Sacaron a {name}: esta la vota todo el mundo · 0 / {expected}',
+  '{name} left — everyone votes this one · 0 / {expected}':
+    '{name} se fue: esta la vota todo el mundo · 0 / {expected}',
   'Vote on your phone · 0 / {expected}': 'Vota en tu teléfono · 0 / {expected}',
   'That’s everyone — here comes the result…': 'Ya votaron todos: ahora el resultado…',
   '{voted} / {expected} voted · waiting for': '{voted} / {expected} votaron · faltan',
@@ -207,4 +214,7 @@ export const SCREENS_ES: Readonly<Record<string, string>> = {
     '{played} / {expected} jugaron · la lectura empieza cuando jueguen todos o cuando toques Siguiente.',
   '{played} / {expected} in · the reading starts when everyone is in, or when {name} taps Next.':
     '{played} / {expected} jugaron · la lectura empieza cuando jueguen todos o cuando {name} toque Siguiente.',
+  // I-774 B: the VIP's Next during the reading
+  'Next card ({n} of {total})': 'Siguiente carta ({n} de {total})',
+  'Open the vote': 'Abrir la votación',
 };

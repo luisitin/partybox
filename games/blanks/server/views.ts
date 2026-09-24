@@ -40,6 +40,8 @@ export interface BlanksTvView extends TvView, Voice {
   timed: boolean;
   /** czar mode: this round's judge. */
   czar: PersonView | null;
+  /** I-773 A: this round's judge went; the room votes in their place, and the TV says why. */
+  judgeGone: { name: string; why: 'dropped' | 'kicked' | 'left' } | null;
   /** vote mode, reveal only: the seat asked to read the cards out loud (review-loop #248). */
   /** I-149 B: who called the winning card. */
   calledIt: { name: string; avatarId: string }[];
@@ -186,12 +188,14 @@ export function tvView(state: State, gameId: string): BlanksTvView {
   return {
     ...envelope(state, gameId, { statusOf: statusOf(state), scores: state.scores }),
     timerMode: timerMode(state),
+    ...skipLabel(state), // I-774 B
     round: state.round,
     tieBreak: state.tied ?? null,
     rounds: state.settings.rounds,
     judgeMode: state.settings.judge,
     timed: state.settings.timed,
     czar: person(state, state.czarId),
+    judgeGone: state.judgeGone ?? null,
     calledIt: calledIt(state),
     reader: phase === 'reveal' ? reader(state) : null,
     everyoneIsABot: everyoneIsABot(state),
@@ -231,6 +235,7 @@ export function controllerView(
       scores: state.scores,
     }),
     timerMode: timerMode(state),
+    ...skipLabel(state), // I-774 B
     round: state.round,
     rounds: state.settings.rounds,
     judgeMode: state.settings.judge,
@@ -329,4 +334,12 @@ function voiceView(state: State): Voice {
         ? { key: reading.key, url: `/api/speech/${reading.key}.wav` }
         : null,
   };
+}
+
+/** I-774 B: during the reading, the VIP's Next is "the next card" — the button says so. */
+function skipLabel(state: State): { vipSkipLabel?: string } {
+  if (state.phase.id !== 'reveal') return {};
+  const n = state.slots.length;
+  const next = state.revealIndex + 2;
+  return { vipSkipLabel: next <= n ? `Next card (${next} of ${n})` : 'Open the vote' };
 }

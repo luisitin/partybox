@@ -10,6 +10,7 @@ import { useServerInfo } from '../net/info';
 import { SettingField } from '../SettingField';
 import type { Controller } from '../net/controller';
 import styles from './Selecting.module.css';
+import { keySetting } from '../keySetting';
 
 export interface SelectingProps {
   controller: Controller;
@@ -38,6 +39,9 @@ export function Selecting({ controller, room, me }: SelectingProps): JSX.Element
   }
 
   const start = (): void => controller.vip({ action: 'start' });
+  // I-187 A: the one setting the room should know before Start (Blanks: the deck)
+  const key = selected ? keySetting(selected, room.settings) : null;
+  const keyWords = key && selected ? gameText(selected.id, lang, key.short) : null;
   const botCount = room.players.filter((p) => p.bot).length;
   return (
     <Screen
@@ -53,6 +57,7 @@ export function Selecting({ controller, room, me }: SelectingProps): JSX.Element
           <PrimaryButton onClick={start} disabled={!room.canStart.ok}>
             {t.selecting.start}
             {selected ? ` ${selected.name}` : ''}
+            {keyWords ? ` · ${keyWords}` : ''}
           </PrimaryButton>
           <button
             type="button"
@@ -144,6 +149,22 @@ export function Selecting({ controller, room, me }: SelectingProps): JSX.Element
                     </span>
                   )}
                 </span>
+                {/* I-187 B: the deck, on the card — a tap goes to the setting */}
+                {isSelected && key && keyWords ? (
+                  <span
+                    role="button"
+                    tabIndex={0}
+                    className={`${styles.keyChip} ${key.mark === '🔞' ? styles.keyChipHot : ''}`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      document
+                        .getElementById(`setting-${key.key}`)
+                        ?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+                    }}
+                  >
+                    {t.selecting.keyChip(key.mark, keyWords)}
+                  </span>
+                ) : null}
                 {isSelected ? (
                   <span className={styles.cardDescription}>
                     {gameText(g.id, lang, g.description)}

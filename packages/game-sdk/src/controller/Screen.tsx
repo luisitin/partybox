@@ -68,16 +68,18 @@ export function Screen({ children, footer, title, className }: ScreenProps): JSX
         {children}
       </div>
       {more ? (
-        <button
-          type="button"
-          className={styles.more}
-          aria-label={L('scroll down')}
-          onClick={() =>
-            body.current?.scrollBy({ top: body.current.clientHeight * 0.8, behavior: 'smooth' })
-          }
-        >
-          ▾
-        </button>
+        <div className={styles.moreAnchor}>
+          <button
+            type="button"
+            className={styles.more}
+            aria-label={L('scroll down')}
+            onClick={() =>
+              body.current?.scrollBy({ top: body.current.clientHeight * 0.8, behavior: 'smooth' })
+            }
+          >
+            ▾
+          </button>
+        </div>
       ) : null}
       {footer ? <div className={styles.footer}>{footer}</div> : null}
     </section>

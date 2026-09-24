@@ -1798,3 +1798,38 @@
   font: inherit;
   color: inherit;
 }
+
+/* ── I-160: the hand as a plain list (the fan's row undone): full-width cards, top to bottom, no
+   turn and no snap — every card's whole text reads with a scroll of the page. */
+.hand.handList {
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--pb-space-3);
+  overflow: visible;
+  scroll-snap-type: none;
+  touch-action: auto;
+  padding: var(--pb-space-3) 0 var(--pb-space-4);
+}
+.hand.handList > li {
+  flex: none;
+}
+.hand.handList .white {
+  min-height: 0;
+}
+
+/* I-160 B: a phone on its side: the black card holds the left, the hand scrolls on the right */
+@media (orientation: landscape) and (max-height: 500px) {
+  .handSplit {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    gap: var(--pb-space-4);
+    align-items: start;
+  }
+  .handSplit > .handBlack {
+    position: sticky;
+    top: 0;
+  }
+  .handSplit > .hand.handList {
+    padding-top: 0;
+  }
+}

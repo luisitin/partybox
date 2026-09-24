@@ -190,7 +190,10 @@ export function HostBar({ client, room, view }: HostBarProps): JSX.Element | nul
             className={styles.button}
             onClick={() => client.act({ action: 'skip' })}
           >
-            ⏭ {t.host.skip}
+            ⏭{' '}
+            {view?.vipSkipLabel
+              ? serverText(view.vipSkipLabel, L.lang, room.selectedGameId)
+              : t.host.skip}
           </button>
           <button
             type="button"

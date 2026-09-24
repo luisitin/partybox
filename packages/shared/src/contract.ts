@@ -147,7 +147,14 @@ export type GameEvent<I> =
    *  them (Broken Pencil's "close enough" veto) without ever learning who the VIP is otherwise. */
   | { type: 'input'; now: number; playerId: string; input: I; vip?: boolean }
   | { type: 'timer'; now: number; phaseId: string; startedAt: number }
-  | { type: 'player'; now: number; playerId: string; connected: boolean }
+  | {
+      type: 'player';
+      now: number;
+      playerId: string;
+      connected: boolean;
+      /** I-773 B: set when the player is gone for good — they left, or the VIP removed them. */
+      gone?: 'left' | 'kicked';
+    }
   | { type: 'vip'; now: number; action: VipGameAction }
   /** READER-VOICES (ADR-045): a reading the game asked for (`speech()`) is ready — `ms` is its
    *  length, or -1 when it could not be made (the game carries on without a voice). */
@@ -201,6 +208,11 @@ export interface ViewEnvelope {
     /** The live line — for Bingo, the call and its nickname. */
     line: string;
   };
+  /**
+   * I-774 B: what the VIP's Skip / Next does in this phase, in words ("Next card (2 of 4)"). The
+   * TV's host bar and the ★ menu show it instead of the generic "Skip / Next".
+   */
+  vipSkipLabel?: string;
 }
 
 export type TvView = ViewEnvelope;
@@ -224,6 +236,11 @@ export interface GameAward {
 }
 
 export interface GameResults {
+  /**
+   * I-155 C: optional per-player, per-round detail a CONTROLLER may show as a personal receipt
+   * ("your votes: 2 · 0 · 3"). The TV ignores it; a game that keeps no such history omits it.
+   */
+  perRoundVotes?: Record<string, number[]>;
   scores: Record<string, number>;
   ranking: { playerId: string; score: number; rank: number }[];
   winnerIds: string[];

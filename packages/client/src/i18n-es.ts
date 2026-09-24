@@ -79,6 +79,7 @@ export const es: Texts = {
     vipChoosing: (name) => `${name} está eligiendo un juego…`,
     back: 'Atrás',
     start: 'Empezar',
+    keyChip: (mark, deck) => `${mark} Mazo ${deck} — cambiar`,
     settings: 'Ajustes',
     players: (min, max) => `${min}–${max} jugadores`,
     minutes: (m) => `~${m} min`,
@@ -125,6 +126,8 @@ export const es: Texts = {
     youWin: '¡Ganaste! 🏆',
     youTie: '¡Empataste en primer lugar! 🏆',
     yourPlace: (rank, score) => `Quedaste ${rank}.º · ${score} pts`,
+    yourAward: (title) => `Tu ${title.charAt(0).toLowerCase()}${title.slice(1)}`,
+    myVotes: (list) => `tus votos: ${list}`,
   },
   vip: {
     menu: 'Menú VIP',

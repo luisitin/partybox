@@ -18,7 +18,7 @@ import type { SoundCue } from '../sound';
 import { linkLabel, useLinkBanner } from './flapFree';
 import { serverText } from '../server-text';
 import { usePhoneUrgency } from './urgency';
-import { VipMenu } from './VipMenu';
+import { VipMenu, vipMenuState } from './VipMenu';
 
 export interface ControllerShellProps {
   controller: Controller;
@@ -325,7 +325,7 @@ export function ControllerShell({
           controller={controller}
           room={room}
           me={me}
-          paused={view?.paused ?? false}
+          {...vipMenuState(view)}
           onClose={() => setMenuOpen(false)}
         />
       ) : null}

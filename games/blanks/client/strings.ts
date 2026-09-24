@@ -38,6 +38,9 @@ const PICKER_ES: Readonly<Record<string, string>> = {
   'Adults (Mild + Crude)': 'Adultos (Mild + Crude)',
   'WILD (all three decks)': 'WILD (los tres mazos)',
   'WILD only': 'Solo WILD',
+  // I-187: the deck's short name on the Start button and the deck chip
+  'Family night': 'Noche familiar',
+  Adults: 'Adultos',
   'Who picks the winner': 'Quién elige al ganador',
   'Everyone votes on the cards, or one player judges each round in turn':
     'Todos votan las cartas, o un jugador juzga cada ronda por turnos',

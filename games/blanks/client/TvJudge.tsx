@@ -63,6 +63,27 @@ function Progress({ view }: Props): JSX.Element {
   const n = view.votedCount;
   const m = view.votersExpected;
   const holdouts = view.players.filter((p) => p.status === 'active' && p.connected);
+  // I-773 A: the judge went — the room votes in their place, and the TV says why
+  const gone = view.judgeGone;
+  if (n === 0 && gone)
+    return (
+      <>
+        {gone.why === 'kicked'
+          ? L('{name} was removed — everyone votes this one · 0 / {expected}', {
+              name: gone.name,
+              expected: m,
+            })
+          : gone.why === 'left'
+            ? L('{name} left — everyone votes this one · 0 / {expected}', {
+                name: gone.name,
+                expected: m,
+              })
+            : L('{name} dropped — everyone votes this one · 0 / {expected}', {
+                name: gone.name,
+                expected: m,
+              })}
+      </>
+    );
   if (n === 0) return <>{L('Vote on your phone · 0 / {expected}', { expected: m })}</>;
   if (holdouts.length === 1)
     return around(L('Just waiting for {name}…'), <Holdout player={holdouts[0]!} />);
@@ -108,7 +129,9 @@ function VoteChips({ view }: { view: BlanksTvView }): JSX.Element | null {
 
 /** How many columns the judge grid needs so every card is readable at 1080p. */
 function gridClass(count: number): string {
-  if (count <= 2) return styles.grid2 ?? '';
+  // I-156 A: four cards are a 2 x 2. Three columns left card D alone on a second page while the
+  // TV showed A–C for six seconds and every phone listed all four.
+  if (count <= 2 || count === 4) return styles.grid2 ?? '';
   if (count <= 6) return styles.grid3 ?? '';
   return styles.grid4 ?? '';
 }
@@ -165,8 +188,10 @@ function JudgeGrid({ view }: Props): JSX.Element {
     const measure = (): void => {
       const next = pageStarts(grid);
       setStarts((prev) => (prev.join(',') === next.join(',') ? prev : next));
-      if (next.length > 1 && count <= 6) setTight(true);
-      if (next.length > 2 && count > 8 && performance.now() >= settledAt) setTiny(true);
+      // I-156 B: any count that would page takes the step down first — the seven- and eight-card
+      // rounds fell between the two latches and paged at full size.
+      if (next.length > 1) setTight(true);
+      if (next.length > 1 && performance.now() >= settledAt) setTiny(true);
     };
     // The grid and every card: the stage grows into its final height while the phase crossfades,
     // and a measurement taken in that first frame paged a four-card round that fits (loop #196).
@@ -248,8 +273,11 @@ function JudgeGrid({ view }: Props): JSX.Element {
               className={i >= from && i <= to ? styles.onPage : styles.offPage}
               style={{ '--pb-i': i } as CSSProperties}
             >
+              {/* I-156 C: past eight cards the setup is the same sentence on every one of them and
+                  the room has already heard it — the answers alone fit where the sentences did not (one blank
+                  per white, so a Pick 2 keeps both marks inline). */}
               <FilledCard
-                text={view.black?.text ?? ''}
+                text={count > 8 ? c.whites.map(() => '____').join(' ') : (view.black?.text ?? '')}
                 whites={c.whites}
                 size={dense ? 'mini' : 'grid'}
                 letter={LETTERS[c.slot]}

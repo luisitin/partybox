@@ -82,6 +82,8 @@ export const en = {
     vipChoosing: (name: string) => `${name} is choosing a game…`,
     back: 'Back',
     start: 'Start',
+    /** I-187 B: the deck chip on the selected card ("🔞 WILD deck — change"). */
+    keyChip: (mark: string, deck: string) => `${mark} ${deck} deck — change`,
     settings: 'Settings',
     players: (min: number, max: number) => `${min}–${max} players`,
     minutes: (m: number) => `~${m} min`,
@@ -133,6 +135,10 @@ export const en = {
     youWin: 'You win! 🏆',
     youTie: 'You tie for first! 🏆',
     yourPlace: (rank: number, score: number) => `You finished ${ordinal(rank)} · ${score} pts`,
+    /** I-155 A: an award you won, on your own phone ("Your card of the night"). */
+    yourAward: (title: string) => `Your ${title.charAt(0).toLowerCase()}${title.slice(1)}`,
+    /** I-155 C: the votes your cards took, round by round ("2 · 0 · 3"). */
+    myVotes: (list: string) => `your votes: ${list}`,
   },
   vip: {
     menu: 'VIP menu',
