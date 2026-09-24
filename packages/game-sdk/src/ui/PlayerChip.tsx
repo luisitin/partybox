@@ -1,9 +1,10 @@
 // A player chip: avatar + name + state glyph. Shared by the TV envelope, lobby, results and games.
 // State is never colour-only: submitted shows ✓, disconnected shows ⟳ and dims, spectator shows 👁.
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { CSSProperties, JSX } from 'react';
 import { STRINGS } from '../controller/strings';
 import { Avatar } from './Avatar';
+import { LeadMark } from './LeadMark';
 import { useT } from './lang';
 import type { Translator } from './lang';
 import styles from './PlayerChip.module.css';
@@ -17,7 +18,7 @@ export interface PlayerChipProps {
   score?: number;
   /** A held-over score (the strip is frozen for a beat): muted, no pop. */
   scoreMuted?: boolean;
-  /** Currently leading on points: a ▲ before the score. */
+  /** Currently leading on points: a "1st" tag before the score (I-268). */
   leader?: boolean;
   /** Highlight (e.g. it is this player's turn). */
   active?: boolean;
@@ -30,6 +31,10 @@ export interface PlayerChipProps {
   thinking?: boolean;
   /** This chip is the viewer: a small "you" tag (not the turn outline). */
   isMe?: boolean;
+  /** I-792 E: a tight grid cell (the phone lobby's two columns) gives the name the room: no "you"
+   *  tag (the label keeps "(you)"; the lobby rings your chip), the VIP tag is its ★ alone, and the
+   *  glyph slot only exists while there is a glyph. */
+  compact?: boolean;
   /** A bot player (ADR-028): shows a robot tag so nobody mistakes it for a person. */
   isBot?: boolean;
   /** Renders a ✕ inside the chip (e.g. remove a bot you own); 44 px hit area. */
@@ -77,6 +82,7 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
     awayLeft = null,
     thinking = false,
     isMe,
+    compact = false,
     isBot,
     onRemove,
     removeLabel,
@@ -113,6 +119,21 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
     status === 'spectator' ? styles.spectator : '',
     locked ? styles.locked : '',
   ].join(' ');
+  // I-268 C: a rise floats "+N" over the score for 2 s — the "went up" the ▲ used to be read as,
+  // now a mark of its own. Not while the strip is held (scoreMuted); the held number lands later.
+  const [rise, setRise] = useState<{ n: number; at: number } | null>(null);
+  const lastScore = useRef(score);
+  useEffect(() => {
+    const prev = lastScore.current;
+    lastScore.current = score;
+    if (score === undefined || prev === undefined || scoreMuted || score <= prev) return;
+    setRise({ n: score - prev, at: Date.now() });
+  }, [score, scoreMuted]);
+  useEffect(() => {
+    if (!rise) return undefined;
+    const t = window.setTimeout(() => setRise(null), 2000);
+    return () => window.clearTimeout(t);
+  }, [rise]);
   return (
     <div
       className={classes}
@@ -146,7 +167,7 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
           {Math.floor(awayLeft / 60)}:{String(awayLeft % 60).padStart(2, '0')}
         </span>
       ) : null}
-      {isMe ? (
+      {isMe && !compact ? (
         <span className={styles.you} aria-hidden>
           {L('you')}
         </span>
@@ -162,25 +183,30 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
           aria-hidden
           onAnimationEnd={() => setJustVip(false)}
         >
-          ★ VIP
+          {compact ? '★' : '★ VIP'}
         </span>
       ) : null}
-      {/* Always in the layout (a reserved slot), so a ✓ landing never shoves the neighbours. */}
-      <span
-        className={`${styles.glyph} ${glyph.text ? styles.shown : ''} ${locked ? styles.ok : ''} ${!connected ? styles.spin : ''}`}
-        aria-hidden
-      >
-        {glyph.text}
-      </span>
-      {leader && score !== undefined ? (
-        <span className={styles.leader} role="img" aria-label={L('leading')}>
-          ▲
+      {compact && !glyph.text ? null : (
+        // Always in the layout (a reserved slot), so a ✓ landing never shoves the neighbours.
+        <span
+          className={`${styles.glyph} ${glyph.text ? styles.shown : ''} ${locked ? styles.ok : ''} ${!connected ? styles.spin : ''}`}
+          aria-hidden
+        >
+          {glyph.text}
         </span>
-      ) : null}
+      )}
+      {leader && score !== undefined ? <LeadMark className={styles.leader} /> : null}
       {score !== undefined ? (
-        // keyed on the value so a change re-mounts and pops in place
-        <span key={score} className={`${styles.score} ${scoreMuted ? styles.scoreMuted : ''}`}>
-          {score}
+        <span className={styles.scoreBox}>
+          {/* keyed on the value so a change re-mounts and pops in place */}
+          <span key={score} className={`${styles.score} ${scoreMuted ? styles.scoreMuted : ''}`}>
+            {score}
+          </span>
+          {rise ? (
+            <span key={rise.at} className={styles.rise} aria-hidden>
+              +{rise.n}
+            </span>
+          ) : null}
         </span>
       ) : null}
       {onRemove ? (
