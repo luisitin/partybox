@@ -7,7 +7,7 @@
 // (no state, no extra render) so the ghost is there from the first frame; StrictMode's simulated
 // unmount leaves the node connected and is ignored. Reduced motion: no ghost.
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import type { JSX, ReactNode } from 'react';
+import type { CSSProperties, JSX, ReactNode } from 'react';
 import { useT } from '../ui/lang';
 import { sanitizeSnapshot, usePrefersReducedMotion } from '../ui/motion';
 import styles from './Screen.module.css';
@@ -19,12 +19,14 @@ export interface ScreenProps {
   footer?: ReactNode;
   title?: ReactNode;
   className?: string;
+  /** Inline style on the frame (TextAnswer pads it by the keyboard's height, I-795 I). */
+  style?: CSSProperties;
 }
 
 const GHOST_MS = 350;
 const GHOST = styles['ghost'] ?? 'ghost';
 
-export function Screen({ children, footer, title, className }: ScreenProps): JSX.Element {
+export function Screen({ children, footer, title, className, style }: ScreenProps): JSX.Element {
   const L = useT(STRINGS);
   const section = useRef<HTMLElement>(null);
   // I-066 B: "more below" — true while the body can scroll further (scroll + resize watched).
@@ -65,7 +67,7 @@ export function Screen({ children, footer, title, className }: ScreenProps): JSX
     };
   }, [reduced]);
   return (
-    <section ref={section} className={`${styles.screen} ${className ?? ''}`}>
+    <section ref={section} className={`${styles.screen} ${className ?? ''}`} style={style}>
       {title ? <h2 className={styles.title}>{title}</h2> : null}
       <div ref={body} className={styles.body}>
         {children}

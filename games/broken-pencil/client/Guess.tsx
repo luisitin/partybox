@@ -1,10 +1,13 @@
 // The guess screen and the timer bar's book line (split from Controller.tsx, its line cap).
 // I-794 H: whose book and which round ride in the shell's timer bar ("Max's book · 1/6") instead
-// of two lines of kicker above the sheet.
+// of two lines of kicker above the sheet. I-795 I: on a guess the field and Send are laid out
+// first and the drawing takes the height that is left (tap it to see it large); a keyboard that
+// opens shrinks the drawing, never the field.
+import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
 import { TextAnswer, useT, useTimerLabel } from '@partybox/game-sdk/ui';
 import type { GameControllerProps, Translator } from '@partybox/game-sdk/ui';
-import type { Input } from '../server/types';
+import type { Drawing, Input } from '../server/types';
 import type { PencilControllerView } from '../server/views';
 import styles from './Controller.module.css';
 import { DrawingView } from './DrawingView';
@@ -31,6 +34,33 @@ export function useBookInBar(L: Translator, view: PencilControllerView): boolean
   return inBar;
 }
 
+/** The drawing over the whole phone; any tap (or Escape) puts it back. */
+function DrawingLarge({
+  drawing,
+  onClose,
+}: {
+  drawing: Drawing | null;
+  onClose: () => void;
+}): JSX.Element {
+  const L = useT(STRINGS);
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent): void => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [onClose]);
+  return (
+    <button type="button" className={styles.large} onClick={onClose} aria-label={L('Close')}>
+      <DrawingView
+        drawing={drawing}
+        label={L('the drawing to guess')}
+        size="min(100%, calc(100dvh - 2 * var(--pb-space-4)))"
+      />
+    </button>
+  );
+}
+
 /** Guess the drawing that reached you; in a pass the DrawPad follows right after. */
 export function Guess({
   view,
@@ -40,25 +70,34 @@ export function Guess({
   const drawing = view.prompt?.kind === 'drawing' ? view.prompt.drawing : null;
   const last = view.phaseId === 'guess';
   const inBar = useBookInBar(L, view);
+  const [large, setLarge] = useState(false);
   return (
-    <TextAnswer
-      kicker={inBar ? undefined : stepKicker(L, view)}
-      prompt={
-        <span className={styles.guessPrompt}>
-          <span className={styles.guessDrawing}>
-            <DrawingView drawing={drawing} label={L('the drawing to guess')} />
-          </span>
-          <span className={styles.guessText}>
-            {last ? L('Last guess — what is this?') : L('What is this? (you draw it next)')}
-          </span>
-        </span>
-      }
-      placeholder={L('Your best guess…')}
-      maxLength={40}
-      submitted={false}
-      submitLabel={last ? L('Send guess') : L('Guess, then draw it')}
-      promptKey={`${view.step}:${view.deadline ?? ''}`}
-      onSubmit={(text) => send({ type: 'guess', text })}
-    />
+    <>
+      <TextAnswer
+        kicker={inBar ? undefined : stepKicker(L, view)}
+        lead={
+          <button
+            type="button"
+            className={styles.guessDrawing}
+            onClick={() => setLarge(true)}
+            aria-label={L('Show the drawing large')}
+          >
+            <DrawingView
+              drawing={drawing}
+              label={L('the drawing to guess')}
+              size="min(100cqw, 100cqh)"
+            />
+          </button>
+        }
+        prompt={last ? L('Last guess: what is this?') : L('What is this? (you draw it next)')}
+        placeholder={L('Your best guess…')}
+        maxLength={40}
+        submitted={false}
+        submitLabel={last ? L('Send guess') : L('Guess, then draw it')}
+        promptKey={`${view.step}:${view.deadline ?? ''}`}
+        onSubmit={(text) => send({ type: 'guess', text })}
+      />
+      {large ? <DrawingLarge drawing={drawing} onClose={() => setLarge(false)} /> : null}
+    </>
   );
 }

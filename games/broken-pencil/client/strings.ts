@@ -64,7 +64,10 @@ export const STRINGS: Strings = {
     'Draw your guess:': 'Dibuja tu respuesta:',
     "Someone's book": 'El libro de alguien', // "{name}'s book" is the TV's (below)
     'the drawing to guess': 'el dibujo por adivinar',
-    'Last guess — what is this?': 'Última respuesta: ¿qué es esto?',
+    // I-795 I: the drawing to guess opens large on a tap.
+    'Show the drawing large': 'Ver el dibujo en grande',
+    Close: 'Cerrar',
+    'Last guess: what is this?': 'Última respuesta: ¿qué es esto?',
     'What is this? (you draw it next)': '¿Qué es esto? (luego lo dibujas tú)',
     'Your best guess…': 'Tu mejor respuesta…',
     'Send guess': 'Responder',
