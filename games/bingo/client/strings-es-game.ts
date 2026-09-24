@@ -50,6 +50,10 @@ export const ES_GAME: Readonly<Record<string, string>> = {
   'Last call only': 'Solo el último',
   'Full board': 'Tablero completo',
   'One away': 'A un número',
+  // I-407: the slim preview bar
+  '{style}?': '¿{style}?',
+  Change: 'Cambiar',
+  'the game carries on': 'el juego sigue',
   'Tell the room when a player is one number from the pattern — a ring in the strip, a line under the call and a hush':
     'Avisa a la sala cuando a alguien le falta un número para la figura: un aro en la franja, una línea bajo el número y un susurro',
   'Cheeky caller': 'Locutor pícaro',

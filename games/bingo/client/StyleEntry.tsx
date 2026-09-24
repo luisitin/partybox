@@ -70,6 +70,7 @@ export function RoundStyleSheet({
   setPreview: (id: CardStyle | null) => void;
   onClose: () => void;
 }): JSX.Element {
+  const L = useT(STRINGS);
   const current = wide && tabletPick !== 'all' ? tabletPick : style;
   return (
     <StyleSheet
@@ -84,6 +85,7 @@ export function RoundStyleSheet({
       }}
       onClose={onClose}
       onBack={() => setPreview(null)}
+      note={L('the game carries on')} /* I-407 C: no hold */
       tablet={
         wide
           ? {

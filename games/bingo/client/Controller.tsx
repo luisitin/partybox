@@ -109,7 +109,7 @@ export function Controller({
   const openMenu = (): void => {
     setSheet(view.phaseId === 'intro' ? 'intro' : 'round');
     setPreview(null);
-    send({ type: 'menu', open: true });
+    // I-407 C: the style is this phone's own — the room is not held while it chooses
   };
   const closeMenu = (): void => {
     setSheet('');
@@ -273,7 +273,7 @@ export function Controller({
         }
       >
         <div
-          className={`${styles.roundBody} ${sheet && !preview ? styles.dimmed : ''} ${roundOver ? styles.deciding : ''}`}
+          className={`${styles.roundBody} ${sheet && !preview ? styles.dimmed : ''} ${roundOver ? styles.deciding : ''} ${preview ? styles.previewRoom : ''}`}
           style={{ '--pb-daub': `var(--pb-ink, ${avatarColorVar(me.avatarId)})` } as CSSProperties} // I-010: the blot's colour; S-002: the ink overrides
         >
           <div className={styles.topRow}>
