@@ -384,3 +384,48 @@
 .tallyFaces > * + * {
   margin-left: -12px;
 }
+
+/* ── I-646 C: the tunnel's code, small, under the Wi-Fi one. */
+.remoteQr {
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-3);
+  text-align: left;
+}
+.remoteCode {
+  display: block;
+  width: 150px;
+  height: 150px;
+  padding: 8px;
+  border-radius: var(--pb-radius);
+  background: #fff;
+}
+.remoteCode :global(svg) {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.remoteText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+}
+.remoteText strong {
+  color: var(--pb-text);
+}
+/* An empty room's card is already the stage's height (the 560 px code): the tunnel's code sits
+   beside the card instead of under it, so the address and the room code stay on screen. */
+.splitEmpty .join {
+  position: relative;
+}
+.splitEmpty .remoteQr {
+  position: absolute;
+  left: calc(100% + var(--pb-space-6));
+  top: 50%;
+  translate: 0 -50%;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 320px;
+}

@@ -200,6 +200,9 @@ export async function createApp(options: AppOptions): Promise<App> {
     // I-041 (the owner): the QR carries the house room's code (`/?room=KGVU`) so a scan goes
     // straight in; the URL the TV prints stays bare and a phone that types it asks for the code.
     const qrUrl = `${joinUrl.replace(/\/$/, '')}/?room=${host.house().code}`;
+    // I-646: the tunnel's join link and its QR, for the TV (only while a tunnel is live)
+    const pub = await publicUrl.get();
+    const publicQrUrl = pub ? `${pub.replace(/\/$/, '')}/?room=${host.house().code}` : null;
     return {
       version: PARTYBOX_VERSION,
       /** Boot time: a client that reconnects to a different value reloads (stale bundle guard). */
@@ -226,7 +229,9 @@ export async function createApp(options: AppOptions): Promise<App> {
         avatars: Object.values(r.players).map((p) => p.avatarId),
       })),
       houseRoom: host.house().code,
-      publicUrl: await publicUrl.get(),
+      publicUrl: pub,
+      publicQrUrl,
+      publicQrSvg: publicQrUrl ? await qrSvg(publicQrUrl) : null,
       funnel: funnel.get(host.house().code), // I-077 C
       // I-034 B: the last finished recap, for the phone's link.
       lastRecap: recorder?.latest()

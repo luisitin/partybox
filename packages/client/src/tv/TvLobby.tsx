@@ -159,6 +159,21 @@ export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
               </span>
             </span>
           ) : null}
+          {/* I-646 C: the tunnel's code beside the card — friends elsewhere scan this one */}
+          {info?.publicQrSvg && info.publicQrUrl ? (
+            <div className={styles.remoteQr}>
+              <span
+                className={styles.remoteCode}
+                dangerouslySetInnerHTML={{ __html: info.publicQrSvg }}
+                role="img"
+                aria-label={L('QR code for {url}', { url: info.publicQrUrl })}
+              />
+              <span className={styles.remoteText}>
+                <strong>🌍 {L('Not on this Wi-Fi?')}</strong>
+                <span>{L('Scan this one')}</span>
+              </span>
+            </div>
+          ) : null}
           <p className={styles.or}>{t.lobby.orOpen}</p>
           <BigText level="h2" tone="accent" className={styles.url}>
             {info ? info.joinUrl.replace(/^https?:\/\//, '').replace(/\/$/, '') : '…'}

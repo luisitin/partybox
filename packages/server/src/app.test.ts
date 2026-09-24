@@ -56,6 +56,30 @@ describe('http', () => {
     expect(info.houseRoom).toMatch(/^[A-Z]{4}$/);
   });
 
+  it('/api/info: a live tunnel brings its join link and QR (I-646)', async () => {
+    const before = process.env['PARTYBOX_PUBLIC_URL'];
+    process.env['PARTYBOX_PUBLIC_URL'] = 'https://party-demo.trycloudflare.com/';
+    const tunnel = await createApp({
+      port: 0,
+      dev: false,
+      devApi: false,
+      quiet: true,
+      serveClient: false,
+      publicHost: '127.0.0.1',
+    });
+    try {
+      await tunnel.listen();
+      const info = await (await fetch(`http://127.0.0.1:${tunnel.port}/api/info`)).json();
+      expect(info.publicUrl).toBe('https://party-demo.trycloudflare.com');
+      expect(info.publicQrUrl).toBe(`https://party-demo.trycloudflare.com/?room=${info.houseRoom}`);
+      expect(info.publicQrSvg).toContain('<svg');
+    } finally {
+      await tunnel.close();
+      if (before === undefined) delete process.env['PARTYBOX_PUBLIC_URL'];
+      else process.env['PARTYBOX_PUBLIC_URL'] = before;
+    }
+  });
+
   it('dev api answers 403 when disabled', async () => {
     const off = await createApp({
       port: 0,

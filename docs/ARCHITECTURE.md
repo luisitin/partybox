@@ -16,7 +16,9 @@ One Node process (`packages/server`) on one port (default **42069**, `--port` / 
 
 `/api/info` also carries `publicUrl`: the Cloudflare quick tunnel's address while one is live
 (`PARTYBOX_PUBLIC_URL`, else the newest address in `cloudflared.log` while a `cloudflared` process
-runs — `packages/server/src/public-url.ts`). Share hands it out; the QR stays on the LAN address.
+runs — `packages/server/src/public-url.ts`). Share hands it out; the TV's main QR stays on the LAN
+address, and while a tunnel is live `publicQrUrl` / `publicQrSvg` (the tunnel's join link with the
+house room, and its QR) put a second, smaller code on the TV's card for friends elsewhere (I-646).
 
 Dev mode (`pnpm dev`) mounts Vite in middleware mode inside Fastify (ADR-006) so phones still use one URL.
 Prod (`pnpm start`) serves `packages/client/dist`. Nothing touches the internet at runtime (ADR-012).
