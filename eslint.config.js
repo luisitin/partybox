@@ -20,8 +20,8 @@ const localeProperties = [
 const localeGlobals = [{ name: 'Intl', message: localeMessage }];
 /** The SDK's pure code: what game servers call inside `reduce`, and the matcher. */
 const sdkPureFiles = [
-  'packages/game-sdk/src/{index,timer,scoring,views,compare,answer-pack,match}.ts',
-  'packages/game-sdk/src/match/**/*.ts',
+  'packages/game-sdk/src/{index,timer,scoring,views,compare,answer-pack,match,speech}.ts',
+  'packages/game-sdk/src/{match,speech}/**/*.ts',
 ];
 
 /** Config files and generated files may use default exports and long lines. */
@@ -233,6 +233,45 @@ export default tseslint.config(
           patterns: [
             { group: ['node:*', 'fs', 'path', 'os'], message: 'The matcher is pure.' },
             { group: ['../*'], message: 'The matcher imports only its own files.' },
+          ],
+        },
+      ],
+    },
+  },
+  {
+    // `@partybox/game-sdk/speech` runs inside game server code, so it is held to the same purity:
+    // no clocks, randomness, timers, I/O or module state (ADR-045 addendum). Its tests may read files.
+    files: ['packages/game-sdk/src/speech.ts', 'packages/game-sdk/src/speech/**/*.ts'],
+    ignores: ['**/*.test.ts'],
+    rules: {
+      'no-restricted-globals': [
+        'error',
+        ...['setTimeout', 'setInterval', 'setImmediate', 'queueMicrotask', 'fetch', 'process'].map(
+          (name) => ({ name, message: 'The speech helpers are pure.' }),
+        ),
+      ],
+      'no-restricted-properties': [
+        'error',
+        { object: 'Date', property: 'now', message: 'The speech helpers are pure.' },
+        { object: 'Math', property: 'random', message: 'The speech helpers are pure.' },
+      ],
+      'no-restricted-syntax': [
+        'error',
+        { selector: 'ExportDefaultDeclaration', message: 'Use named exports.' },
+        {
+          selector: "Program > VariableDeclaration[kind!='const']",
+          message: 'No module-level mutable state in the speech helpers.',
+        },
+      ],
+      'no-restricted-imports': [
+        'error',
+        {
+          paths: [...sharedBans, 'react', 'react-dom'],
+          patterns: [
+            {
+              group: ['node:*', 'fs', 'path', 'os', 'crypto', 'child_process'],
+              message: 'No I/O.',
+            },
           ],
         },
       ],

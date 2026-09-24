@@ -11,6 +11,7 @@
     ".": "./src/index.ts",
     "./match": "./src/match.ts",
     "./ui": "./src/ui.ts",
+    "./speech": "./src/speech.ts",
     "./testing": "./src/testing.ts"
   },
   "dependencies": {

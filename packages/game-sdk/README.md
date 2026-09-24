@@ -12,6 +12,9 @@ primitives, and hosts the contract tests that run against every game.
   `groupAnswers`, `isLegalClue` (reason codes). Every call takes the content's `lang`. Files in `src/match/`.
 - `src/answer-pack.ts` — `answerItemSchema`, `answerPackSchema`, `checkAnswerPack` (the pack test), from the pure entry.
   `src/compare.ts` — `compareCodeUnits`, the locale-free sort game servers use instead of `localeCompare`.
+- `src/speech.ts` — `@partybox/game-sdk/speech` (server-only, pure; ADR-045): `toSpeakable` (Part 00 §5.3 rules, `src/speech/`),
+  `speakableName`, `parsePronunciations` + `pronunciationsSchema` (the SDK's `overrides.en.json`, then the game's), `speechKey`,
+  `SPEECH_ENGINE_VERSION`, `pendingCap`, `unknownPhonemes`. Never imported by client code (dependency-cruiser).
 - `src/client-module.ts` — `GameShared`, `GamePhoneModule`, `GameTvModule`, `GameSettingsModule`, `GameLoaders`, `GameTvProps`, `GameControllerProps` (what `games/<id>/client/*-entry.ts` export, ADR-050).
 - `src/ui/` — `Avatar` (16 inline SVGs), `PlayerChip`, `ServerClockProvider` + `useServerNow` / `useSecondsLeft` / `useServerOffset` (server-time-aware timers).
 - `src/rng.ts` — `nextFloat`, `nextInt`, `shuffle`, `pick` on `RngState` (`[value, next]`), `createRng` for bots.

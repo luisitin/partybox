@@ -38,7 +38,7 @@ module.exports = {
       comment: 'ADR-023: the pure sdk entry point must stay loadable by Node (no React/CSS).',
       severity: 'error',
       from: {
-        path: '^(games/[^/]+/server/|packages/game-sdk/src/((index|timer|scoring|views|compare|answer-pack|match)[.]ts|match/))',
+        path: '^(games/[^/]+/server/|packages/game-sdk/src/((index|timer|scoring|views|compare|answer-pack|match|speech)[.]ts|match/|speech/))',
       },
       to: { path: '^packages/game-sdk/src/(ui|tv|controller)/' },
     },
@@ -55,6 +55,16 @@ module.exports = {
       severity: 'error',
       from: { path: '^packages/game-sdk/src/match([.]ts$|/)', pathNot: '[.]test[.]ts$' },
       to: { dependencyTypes: ['core'] },
+    },
+    {
+      // Its purity (no node:*, clocks, randomness) is ESLint's: see eslint.config.js.
+      name: 'sdk-speech-is-server-only',
+      comment: 'It carries zod and the override lists: a phone or TV download never includes it.',
+      severity: 'error',
+      from: {
+        path: '^(packages/client/|games/[^/]+/client/|packages/game-sdk/src/(ui|tv|controller)/)',
+      },
+      to: { path: '^packages/game-sdk/src/(speech\\.ts|speech/)' },
     },
     {
       name: 'game-server-no-node-core',

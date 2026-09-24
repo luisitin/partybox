@@ -93,4 +93,10 @@ description, the three how-to-play steps, one line per setting, ≤ 2 KB) and `G
 (the manifest's sentences in that language, keyed by the English: the settings form). `GET /api/catalog`
 returns the catalog for tools.
 
+A game's spoken readings (ADR-045) reach the room as the game event `{ type: 'speech', key, ms }` and the
+audio as `GET /api/speech/<key>.wav`. A key matches `SPEECH_KEY_PATTERN` (`/^[a-z0-9][a-z0-9-]{5,63}$/`,
+so `fake-out-3f9a1c0b2d4e5f60` but never a path); anything else is a 404. The WAV is served
+`Cache-Control: public, max-age=31536000, immutable`: a key hashes the engine version, the voice and the
+parts, so its audio never changes.
+
 `canStart` is computed by the engine (`docs/GLOSSARY.md`). Exact shapes: `packages/shared/src/protocol.ts`.

@@ -209,12 +209,18 @@ export type GameEvent<I> =
   | { type: 'speech'; now: number; key: string; ms: number };
 
 /** A piece of a reading: text for the voice to say, or phonemes (espeak notation) said as given —
- *  with the written word beside them for a voice that cannot take phonemes (Zira). */
-export type SpeechPart = { text: string } | { ipa: string; text?: string };
+ *  with the words beside them, required: a voice that cannot take phonemes (Zira) says `text`
+ *  instead, so an ipa part is never silent (game-pack audit #17). */
+export type SpeechPart = { text: string } | { ipa: string; text: string };
+
+/** What a speech key may be: lowercase letters, digits and hyphens — room for `<gameId>-<hash>`
+ *  (`speechKey` in `@partybox/game-sdk/speech`) and never a path (game-pack audit #18). */
+export const SPEECH_KEY_PATTERN = /^[a-z0-9][a-z0-9-]{5,63}$/;
 
 /** A reading a game wants made (ADR-045): the host synthesises it once per `key`, serves it at
  *  /api/speech/<key>.wav and answers with a `speech` event. */
 export interface SpeechRequest {
+  /** SPEECH_KEY_PATTERN; a content hash, so the WAV behind a key never changes. */
   key: string;
   /** A voice id the host's speech service knows ('george', 'fable', 'jessica', 'sky', 'original'). */
   voice: string;
