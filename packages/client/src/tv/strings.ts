@@ -13,6 +13,13 @@ export const STRINGS: Strings = {
     // HostBar
     'Sure? {action}': '¿Seguro? {action}',
     'Remove all {n} bots': 'Quitar los {n} bots',
+    // I-667: the host bar's exact fix
+    'Remove 1 bot to play': 'Quitar 1 bot para jugar',
+    'Remove {n} bots to play': 'Quitar {n} bots para jugar',
+    'Remove the bot': 'Quitar el bot',
+    'Remove the {n} bots': 'Quitar los {n} bots',
+    'Add 1 bot to play': 'Añadir 1 bot para jugar',
+    'Add {n} bots to play': 'Añadir {n} bots para jugar',
     '{opened} opened · {joined} in': '{opened} abrieron · {joined} dentro',
     'phones that opened the join page · joined':
       'teléfonos que abrieron la página para entrar · los que entraron',

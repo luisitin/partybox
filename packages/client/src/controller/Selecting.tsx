@@ -11,6 +11,8 @@ import { SettingField } from '../SettingField';
 import type { Controller } from '../net/controller';
 import styles from './Selecting.module.css';
 import { VoteRow, voteCounts } from './VoteRow';
+import { MAX_BOTS_PER_OWNER } from '@partybox/shared';
+import { fixLabel, runFix, startFix } from '../startFix';
 
 export interface SelectingProps {
   controller: Controller;
@@ -42,6 +44,10 @@ export function Selecting({ controller, room, me }: SelectingProps): JSX.Element
   }
 
   const start = (): void => controller.vip({ action: 'start' });
+  // I-667 A: the red line's one-tap fix (the VIP's phone adds bots it owns — 4 at most)
+  const myBots = room.players.filter((p) => p.bot?.ownerId === me.id).length;
+  const fixFor = (g: (typeof room.games)[number]) => startFix(room, g, MAX_BOTS_PER_OWNER - myBots);
+  const fix = !room.canStart.ok && selected ? fixFor(selected) : null;
   const botCount = room.players.filter((p) => p.bot).length;
   // I-650 A: the votes on each game
   const counts = voteCounts(room);
@@ -57,6 +63,15 @@ export function Selecting({ controller, room, me }: SelectingProps): JSX.Element
             <p className={styles.reason}>
               {serverText(room.canStart.reason, lang, room.selectedGameId)}
             </p>
+          ) : null}
+          {fix ? (
+            <button
+              type="button"
+              className={styles.fix}
+              onClick={() => runFix(fix, (a) => controller.bot(a))}
+            >
+              {fix.kind === 'remove' ? '✕' : '🤖'} {fixLabel(fix, t.fix)}
+            </button>
           ) : null}
           <PrimaryButton onClick={start} disabled={!room.canStart.ok}>
             {t.selecting.start}
@@ -146,6 +161,22 @@ export function Selecting({ controller, room, me }: SelectingProps): JSX.Element
                   </span>
                 </span>
                 <span className={styles.cardTagline}>{gameText(g.id, lang, g.tagline)}</span>
+                {/* I-667 C: a game that doesn't fit the room says so, and what it would take */}
+                {(() => {
+                  const n = room.players.length;
+                  const off =
+                    (botCount > 0 && !g.supportsBots) || n > g.maxPlayers || n < g.minPlayers;
+                  if (!off) return null;
+                  const f = fixFor(g);
+                  return (
+                    <span className={styles.fit}>
+                      {t.fix.here(n)}
+                      {f
+                        ? ` · ${fixLabel(f, { removeToPlay: t.fix.removeShort, removeAll: t.fix.removeAllShort, addToPlay: t.fix.addShort })}`
+                        : ''}
+                    </span>
+                  );
+                })()}
                 <span className={styles.cardMeta}>
                   {t.selecting.players(g.minPlayers, g.maxPlayers)} ·{' '}
                   {t.selecting.minutes(g.estimatedMinutes)} ·{' '}

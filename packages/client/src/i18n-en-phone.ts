@@ -108,4 +108,14 @@ export const enPhone = {
     leads: (game: string, n: number) => `🙋 ${game} leads · ${n} ${n === 1 ? 'vote' : 'votes'}`,
     want: (n: number) => `${n} want this`,
   },
+  /** I-667: the one-tap fix under "can't start", and a card's fit line ("12 here · remove 4 bots"). */
+  fix: {
+    removeToPlay: (n: number) => (n === 1 ? 'Remove 1 bot to play' : `Remove ${n} bots to play`),
+    removeAll: (n: number) => (n === 1 ? 'Remove the bot' : `Remove the ${n} bots`),
+    addToPlay: (n: number) => (n === 1 ? 'Add 1 bot to play' : `Add ${n} bots to play`),
+    here: (n: number) => `${n} here`,
+    removeShort: (n: number) => (n === 1 ? 'remove 1 bot' : `remove ${n} bots`),
+    removeAllShort: (n: number) => (n === 1 ? 'remove the bot' : `remove the ${n} bots`),
+    addShort: (n: number) => (n === 1 ? 'add 1 bot' : `add ${n} bots`),
+  },
 } as const;
