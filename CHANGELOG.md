@@ -6,6 +6,92 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Fixed
 
+- **Blanks' votes land on the table** (I-144, option A): while the room votes, each vote drops a chip with the voter's face under the cards on the TV. You can see who has voted but never what they picked, and the "waiting for…" pill still names who is left.
+
+- **Blanks' final board reads straight down** (I-146, option C): up to six players stay in one column, so 5th place no longer sits beside 1st. When a board does split, each column is labelled with the ranks it holds ("1–4"), and tied players are joined by a bracket down the left edge.
+
+- **Your hand while the judge picks** (I-148, option C): in judge mode, while the judge picks the question, the other phones show their own hand, dimmed, under the three questions. Tapping a question drops your front card into its blank, and your hand lights up the moment the judge chooses.
+
+- **Blanks' filled cards read as one sentence** (I-150, option C): a card dropped into the middle of a sentence loses its stray capital ("came back with the Roomba ate the thong"), while names like Stalin or FBI keep theirs. A quoted card inside a quoted blank no longer ends in a doubled quote, and a test checks the whole wild deck for doubled quotes.
+
+- **Blanks says who taps Next** (I-152, option C): the settings sheet now says the VIP taps Next (it used to say anyone could). In untimed games the TV names that person: "Next on Sam's phone" on the result and "No clock — Sam taps Next when the room is ready" while cards come in. Sam's own phone says "when you tap Next".
+
+- **The results headline names the people, not the bots** (I-153, option C): a tie reads "Priya, Sam & the bots tie!" instead of "Bot 1, Bot 3 & 2 others tie!". A tie between bots only says "The bots tie — nobody home?", and a single bot winner still gets its name.
+
+- **Blanks' end-of-game awards go to people** (I-154, option B): bots can no longer win Crowd favourite or Quick draw; if no person qualifies, the award is left off. Quick draw is only given in timed games and says what it measured ("3 cards in under 30 s"). Card of the night can still go to a bot, because its votes were real.
+
+- **Blanks' results on your own phone read as yours** (I-155, option C): an award you won says "Your card of the night" in the accent colour and comes first, and under the awards your phone lists the votes your cards got each round ("your votes: 2 · 0 · 3"). The TV is unchanged.
+
+- **Blanks' vote fits on one TV screen** (I-156, option C): four cards now sit in a 2 × 2, any round that would have split the vote across pages uses smaller cards first, and past eight cards the TV shows only the answers so every card stays on screen.
+
+- **Blanks' Skip / Next during the reading goes to the next card** (I-774, option B): tapping it no longer throws away the unread cards. It shows the next one, only the last card's tap opens the vote, and the button says what it will do ("Next card (3 of 5)", "Open the vote") on the TV and in the VIP menu, in Spanish too.
+
+- **Blanks shows which deck is on before you start** (I-187, option C): the Start button reads "Start Blanks · WILD", the Blanks card gets a "🔞 WILD deck — change" chip that jumps to the deck setting, and the TV's game line says "🔞 WILD deck". The "more below" arrow on phones no longer sits on top of the Start button.
+
+- **Blanks on a sideways phone** (I-160, option B): turned on its side, the phone shows your hand as a readable list of wide cards on the right while the question, with your pick dropped in, stays on the left. Upright phones keep the fan.
+
+- **Blanks: when the judge goes, the room votes** (I-773, option B): if the judge's phone drops and they don't come back within 20 s, everyone votes on the cards instead of "nobody wins this round". If the judge is removed or leaves, the vote starts at once ("Priya was removed — everyone votes this one"). The next round has a judge again.
+
+- **Bingo at large text sizes** (I-100, option C): the phone's round body scrolls under the footer instead of clipping the card's bottom rows, the pattern hint stops at two lines, and the phone's text sizes now follow the phone's own larger-text setting.
+
+- **Lighter Bingo traffic** (I-750, option C): each phone and TV now gets only the room updates that changed, a slow phone skips straight to the newest update instead of falling behind, and large messages are compressed. A 16-player Bingo drops from about 130 KB/s per phone to about 1.5 KB/s.
+
+- **When every phone falls asleep** (I-746, option C): during a game a quiet phone keeps its seat and comes back to its own card and score. When the last phone drops, the game pauses and the TV says "Everyone's phone is asleep — wake one to carry on"; the first phone back resumes it, and if nobody returns within 5 minutes the game ends to the lobby.
+
+- **Bingo checks the line you bet on** (I-392, option B): a wrong claim is judged on the line with the most daubs, not the middle row through FREE, and the verdict names it: "Top row: 15, 29 and 3 more were never called".
+
+- **A wrong Bingo claim's verdict stays up longer** (I-394, option B + the owner's note): the verdict and its red squares stay on the card for 6 s, and the card is wiped only at the end, the last beat before the 3·2·1.
+
+- **Bingo awards** (I-401, option B + the owner's note): the results can show Quick draw (the fewest calls to a bingo), Clean card (a win with no stray daubs) and Trigger finger (the most wrong BINGO!s). Each appears only when one player earned it; a tie or nothing that triggers it shows no award.
+
+- **The Bingo winner screen moves on by itself** (I-400, option B): if nobody picks within 20 s of the verdict being read, the room goes to the next round (or finishes), with "Next round in 13…" counting down on the TV until the first vote.
+
+- **A wrong BINGO! no longer wipes the whole Bingo card** (I-435, option A): only the never-called daubs and the claimed line are wiped, and every other right daub stays. The TV says "Wrong daubs and that line wiped", and the game's description says what a wrong claim costs.
+
+- **A Bingo bot's BINGO! is its claim** (I-433, option B): bots skip the two-tap dibs step, so a bot's claim goes straight to the check, and the TV says "Bot 2 calls it — checking". From the claim on, a bot's claim is checked, read and wiped exactly like a person's, and after a bot's win the room still chooses what happens next.
+
+- **Settings stay with each game** (I-763, option C): browsing another game, New game or the lobby no longer resets what the VIP tuned. The picker card says "Your settings: Cards per player 4 · Seconds per number 3", the settings sheet has a "Reset to defaults" link, and the host PC remembers the numbers, so next week's party starts where this one left off.
+
+- **A borrowed phone gets your seat back** (I-741, option C): typing your name on another phone after yours died puts you back in your own seat, same score. The phone says "Welcome back, Priya — picking up where you left off" and the TV "Priya is back (new phone)". If the dead phone froze and the room still thinks it is there, the name-taken message comes with a "That's me — take my seat" button.
+
+- **One seat, one tab** (I-755, option C): opening the join link in a second tab no longer makes the two tabs fight over the seat dozens of times a second. The new tab steps aside and says "PartyBox is open in another tab" with "Play here instead". The tab that loses the seat stops reconnecting, and the server refuses a login that joins more than 3 times in 5 seconds.
+
+- **Developer controls locked to the host PC** (I-753, option C): other phones can no longer read everyone's login tokens or use the developer controls. Only the TV's 🏠 start-over works from another device, and pages from other websites can no longer open a connection to PartyBox.
+
+- **Surviving a server restart** (I-744, option B): after PartyBox restarts, phones forget the dead room code. If one room is open they fill it in ("The party started over — the room is VMDJ now. Tap Join to get back in."), so one tap gets you back in. The TV shows "PartyBox restarted — this is a new room, VMDJ. Phones: tap Join to get back in." until someone is back.
+
+- **Private rooms stay private** (I-785, option C): a "Private — code only" room no longer shows up in the server's public room list or join statistics, and nobody learns who is in a room unless their phone is joining it by code. Grandma still gets in through the private link.
+
+- **Each TV shows its own room's QR** (I-787, option A): scanning the QR on a second room's TV now puts you in that room, not the first one. The main TV is unchanged.
+
+- **Phones stop downloading the questions and the decks** (I-752, option C): Lightning's wager arithmetic and Blanks' card filling moved out of the files that load the content, so a phone no longer downloads every question with its answer or every card. A test in each game fails if phone code ever reaches the content again. Nothing changes on screen.
+
+- **Results at 12 players** (I-456, option C): the ▾ 'more below' arrow now sits just above whatever buttons a phone screen has, instead of on top of 'Play again'. The results board scrolls your row to the middle. 'You finished 6th · 550 pts' stays pinned under the winner line, and the awards are chips right under it.
+
+- **The lobby remembers the night** (I-652, option C): a win by bots alone now reads '🤖 Bots took it', with the best person under it ('Priya led the humans · 3rd'). A 'Tonight' card beside 'Last up' lists each game of the night and its winner, and names the night's leader ('👑 Sam leads tonight · Sam 2 · Priya 1'). Bots never count, and a gap over 3 hours starts a new night.
+
+- **The VIP comes back** (I-347, option C): in the lobby, the game picker and the results, the VIP role no longer passes on when the host's phone drops. During a game it still passes on after 30 s. When the host's phone comes back it says 'Priya took over as VIP while you were away' with a 'Take it back' button, and one tap tells the room 'Sam is the VIP again'.
+
+- **The wrong page on the wrong screen** (I-677, option C): the join page opened on a big screen with a mouse asks '📺 Is this the TV?'. The TV page opened on a phone offers '📱 Join as a player / Keep the TV page on this phone'. The device remembers the answer: a screen that was the TV goes to the TV view by itself after a 3-second countdown with 'Stay here', and 'keep' is never asked again.
+
+- **After the TV's 🏠 'start over'** (I-658, option B): for 10 minutes the old room code leads to the new room. Phones that came in by the QR get back in by themselves and an old QR still works. Each phone's address now carries the new code, and the TV shows the new room's QR right away instead of up to a minute later.
+
+- **The empty lobby's QR card fits the TV** (I-682, option C): with nobody in the room, the QR card lies on its side, with a big code on the left and 'Scan to join', the address and the room code on the right. Nothing runs under the sound pill or the host bar any more, and the first join stands the card back up. The host bar no longer offers 'Pick a game' until a person, not a bot, is in; 'Add a bot' stays.
+
+- **Vote for the next game** (I-650, option C): guests tap a chip per game to say what they want next. It's one vote each, you can change it, and tapping it again takes it back; bots never vote. The VIP's lobby shows the tally, and "Pick a game · 🙋 Bingo leads · 2 votes" opens the picker on the favourite with the most-wanted games first. Guests can vote again on the results screen. The TV shows who wants what (faces on each tally chip) and the counts on its game list. Votes clear when a game starts. The VIP still decides.
+
+- **"Can't start" offers its fix** (I-667, option C): under the phone's red line, one button fixes the room. It says "✕ Remove 4 bots to play" (the newest bots; people are never removed), "🤖 Add 1 bot to play", or "✕ Remove the 2 bots" for a game without bots. The TV host bar offers the same exact fix instead of removing every bot, and each game card that doesn't fit the room says what it would take ("12 here · remove 4 bots").
+
+- **Room switches leave the game picker** (I-642, option C): recap, music on every phone and phone only (plus the last-recap link) move to the ★ VIP menu's Room section. Recap and phone only are greyed there during a game. The picker opens straight on the games, under one slim "Room" row of chips (✓ when on) that opens the menu. When a switch changes, everyone gets a toast that says what it means ("📱 Phone-only room — the phones show what the TV would").
+
+- **The TV shows a code for friends elsewhere** (I-646, option C): while a tunnel is live, the TV's join card shows a second, smaller QR beside "🌍 Not on this Wi-Fi? Scan this one". It opens the tunnel's link with the room code, and /api/info carries that link and its QR. Without a tunnel nothing changes.
+
+- **One job per phone-header element** (I-666, option C): tap the room code in the header to share the room, on any screen. Once you've joined, the duplicate 🎨 goes (your face opens the same settings; the join page keeps its 🎨). A small phone keeps your name, shortened when it's long. The connection dot only appears when the phone isn't connected.
+
+- **The TV picker always shows all five games** (I-668, option C): at 12 players the roster used to push the picked game off the TV. The room is now one row of overlapping faces on the "Sam is choosing a game…" line. The left column holds the five games, and the two room switches become one line of toggle chips ("📼 Recap ✓ · 🎵 Phone music").
+
+- **The picker's minutes follow the game and the room** (I-189, option B): "~15 min" is no longer a fixed number for every game. Blanks, Lightning Round and Broken Pencil work their minutes out from their measured pace, the rounds setting and the number of players, live on the phone and the TV (Blanks ~6 → ~10 → ~13 min as rounds and players grow; Lightning ~3 min for 10 questions; Broken Pencil ~5 min at 4 players, ~12 at 8). Bingo and Wisecrack keep their fixed number.
+
 - **Music volume on an iPhone** (the owner, 2026-09-23: "at 5 % it's still quite loud"): iOS
   ignores a web page's audio volume, so the music always played at full level there — the slider,
   every game's level, the fades and the ducks did nothing. The music now plays through Web Audio,
