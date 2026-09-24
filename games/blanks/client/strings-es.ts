@@ -220,4 +220,9 @@ export const SCREENS_ES: Readonly<Record<string, string>> = {
   // I-159 B
   Fan: 'Abanico',
   List: 'Lista',
+  // I-447
+  'No clock — {name} can move on from their ★ VIP menu.':
+    'Sin reloj: {name} puede seguir desde su menú ★ VIP.',
+  'No clock — the VIP can move on from their ★ VIP menu.':
+    'Sin reloj: el VIP puede seguir desde su menú ★ VIP.',
 };

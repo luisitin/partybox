@@ -274,8 +274,8 @@ export function TvAnswer({ view }: Props): JSX.Element {
         <BigText level="h2" tone="muted">
           {/* I-152 C: the same line, with the same name on it. */}
           {vipName
-            ? L('No clock — {name} taps Next when the room is ready.', { name: vipName })
-            : L('No clock — the VIP taps Next when the room is ready.')}
+            ? L('No clock — {name} can move on from their ★ VIP menu.', { name: vipName }) // I-447: where the control really is
+            : L('No clock — the VIP can move on from their ★ VIP menu.')}
         </BigText>
       ) : null}
     </Stage>
