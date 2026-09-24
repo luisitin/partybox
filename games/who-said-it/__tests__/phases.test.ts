@@ -97,8 +97,8 @@ describe('exits', () => {
       s = vip(s, 'skip');
       path.push(`${s.phase.id}${s.phase.id === 'reveal' ? `:${s.p.step}` : ''}`);
     }
-    expect(path).toEqual(['intro', 'prompt', 'write', 'guess', 'reveal:land', 'guess', 'reveal:land', 'scores', 'done']); // prettier-ignore
-    // A skip in the landing scores the card before moving on.
+    expect(path).toEqual(['intro', 'prompt', 'write', 'guess', 'reveal:land', 'reveal:shown', 'guess', 'reveal:land', 'reveal:shown', 'scores', 'done']); // prettier-ignore
+    // A skip in the landing flips the card (scored once, the author shown); the next moves on.
     expect(s.log).toHaveLength(2);
   });
 

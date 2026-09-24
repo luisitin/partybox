@@ -37,8 +37,9 @@ export function advance(state: State, now: number): State {
     case 'guess':
       return enterReveal(state, now);
     case 'reveal':
-      // A skip during the landing still scores the card before moving on.
-      return afterReveal(state.p.step === 'land' ? flip(state, now) : state, now);
+      // A skip during the landing flips the card now (the room always sees who wrote it); a skip
+      // once it has flipped moves on (record-review s5: skipping straight past lost the author).
+      return state.p.step === 'land' ? flip(state, now) : afterReveal(state, now);
     case 'scores':
       return isLastPrompt(state) ? enterDone(state, now) : enterPrompt(state, now, state.p.n + 1);
     default:

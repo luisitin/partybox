@@ -23,6 +23,7 @@ export const STRINGS: Strings = {
     'Close answers': 'Cerrar respuestas',
     'Reveal now': 'Revelar ya',
     'Next card': 'Siguiente respuesta',
+    'Show who wrote it': 'Mostrar quién la escribió',
     'Next question': 'Siguiente pregunta',
     'See results': 'Ver resultados',
     'Skip / Next': 'Saltar / Siguiente',

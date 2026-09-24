@@ -120,7 +120,7 @@ export function vipSkipLabel(state: State, last: boolean): string {
     case 'guess':
       return 'Reveal now';
     case 'reveal':
-      return 'Next card';
+      return state.p.step === 'land' ? 'Show who wrote it' : 'Next card';
     case 'scores':
       return last ? 'See results' : 'Next question';
     default:
