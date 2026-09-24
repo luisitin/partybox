@@ -28,6 +28,10 @@ export const STRINGS: Strings = {
     // I-646: the tunnel's QR on the TV
     'Not on this Wi-Fi?': '¿No estás en este Wi-Fi?',
     'Scan this one': 'Escanea este',
+    // I-668 C: the picker's switch chips
+    Recap: 'Resumen',
+    'Phone music': 'Música en teléfonos',
+    '{n} players': '{n} jugadores',
     // TvLobby
     '{names} and {last}': '{names} y {last}',
     'last game': 'último juego',
