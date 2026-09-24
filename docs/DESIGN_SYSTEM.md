@@ -182,6 +182,8 @@ Shared (`ui/`): `DeadlineBar` (draining bar; danger in the last 5 s only when th
 Controller (`controller/`): `TextAnswer`, `ChoiceGrid`, `VoteList` (with a sticky `header` slot for what is being voted on), `WaitingScreen`, `Screen` (safe-area frame; a body that scrolls fades its bottom 28 px while there is more below and lifts the fade at the end, via a scroll-driven `--pb-fold` — browsers without scroll timelines keep the plain fold), `PrimaryButton`.
 Shared: `Avatar`, `Chip`. Each primitive's props are documented in its file header.
 
+Shell, not SDK (`packages/client/src/surface/`, I-677): the join page on a big screen with a mouse (≥ 1100 px, fine hovering pointer, no touch) floats "📺 Is this the TV?" (open the TV view / I'm playing here); the TV page on a phone (coarse pointer, short side < 800 px) covers the stage with a phone-sized card (join as a player / keep the TV page), un-zoomed from the TV fit. The answer is remembered on the device: a screen that chose the TV goes there by itself after a 3 s countdown with "Stay here"; "keep" / "playing here" is never asked again. A tablet is left alone.
+
 ## Performance budget
 
 `/tv` stays smooth in Chromium at 4× CPU throttling: no box-shadows on animated elements, no blur filters,

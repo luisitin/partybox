@@ -10,6 +10,7 @@ import { useStore } from '../net/store';
 import { PHONE_MUTE_KEY, createSoundEngine } from '../sound';
 import type { SoundEngine } from '../sound';
 import { ControllerShell } from './ControllerShell';
+import { BigScreenHint } from '../surface/SurfaceHint';
 import { CrossfadeSwap } from '../CrossfadeSwap';
 import { buzz } from '@partybox/game-sdk/ui';
 const SUBMIT_BUZZ = 20; // I-070 B: the same pattern a submit uses
@@ -230,6 +231,8 @@ export function ControllerApp(): JSX.Element {
             {screen}
           </CrossfadeSwap>
         </ControllerShell>
+        {/* I-677: the join page on a big screen offers the TV view */}
+        {!state.joined ? <BigScreenHint /> : null}
       </AvatarPhotos>
     </ServerClockProvider>
   );
