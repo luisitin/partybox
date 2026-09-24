@@ -6,6 +6,8 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Fixed
 
+- **The leader is "1st", everywhere** (I-268, option C): the roster's ▲ that nobody read as "leading" is now a small "1st" tag ("1.º" in Spanish); the same tag replaces the 👑 on Lightning's reveal rows and the 🏆 on a late joiner's bench, with no mark while nobody has scored or everyone is tied. A roster score that goes up shows "+N" over it for 2 seconds.
+
 - **"More below" is part of the footer now, not a pill on top of the page.** The ▾ arrow used to land on "Play again", "Start Bingo", the avatar grid and answer C. It is now a slim row at the top of the footer, with a grab bar and the words "more below", and the whole row is the button. It is laid out only while the page can scroll and fades out at the end, so nothing moves under your thumb. A screen with no footer shows the same row in the bottom safe area. (I-788, option A)
 
 - **When your phone loses the Wi‑Fi, you can see it, and coming back is one clean step.** The game dims and can't be tapped under one calm card: "Reconnecting…", "Your seat is held for 1:57", and whether your answer was sent. When the link holds again, a one-beat "You're back" card says where the game is ("You missed questions 1 and 2. This is question 3 of 10: 8 seconds left.", "You · 3rd · 1,000"). Then the live screen appears, with no old question fading over it. (I-791, option D)
