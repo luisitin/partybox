@@ -1,7 +1,7 @@
 // The Bingo phone's overlays: the card-style sheet (tap a style to see it behind the sheet, then
 // Confirm or Keep changing), the curtain while someone else is changing (with a way into your own
 // menu), the 3 · 2 · 1 before calling resumes (the turn gate and the reconnect toast: Notices.tsx).
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import type { JSX } from 'react';
 import {
   PrimaryButton,
@@ -51,14 +51,22 @@ export function StyleSheet({
   // Previewing: the sheet folds to a bar so the whole screen shows the style with the real cards.
   if (preview)
     return (
-      <div className={styles.previewBar} role="dialog" aria-label={L('Card style preview')}>
+      <div
+        className={`${styles.previewBar} ${styles.previewSlim}`}
+        role="dialog"
+        aria-label={L('Card style preview')}
+      >
+        {/* I-407 A: one slim row — the previewed cards stay in view */}
         <span className={styles.previewLabel}>
-          {/* I-013 C: the picked shape, big, pops in beside the question. */}
-          <StyleMini id={preview} big />
-          {L('{style}: like it?', { style: words[preview].label })}
+          <StyleMini id={preview} />
+          <span className={styles.previewWord}>
+            {L('{style}?', { style: words[preview].label })}
+          </span>
         </span>
+        {/* I-407 B: the preview confirms itself after 20 s — the line drains along the bar */}
+        <PreviewCap onDone={onConfirm} />
         <PrimaryButton tone="neutral" onClick={() => (onBack ? onBack() : onPreview(current))}>
-          {L('Keep changing')}
+          {L('Change')}
         </PrimaryButton>
         <PrimaryButton onClick={onConfirm}>{L('Confirm')}</PrimaryButton>
       </div>
@@ -209,4 +217,18 @@ export function Countdown({
       </p>
     </div>
   );
+}
+
+/** I-407 B: the preview's 20 s cap — then the pick is kept, and the room moves on. */
+function PreviewCap({ onDone }: { onDone: () => void }): JSX.Element {
+  // the latest callback in a ref: a re-render (every call) must not restart the 20 s
+  const done = useRef(onDone);
+  useEffect(() => {
+    done.current = onDone;
+  });
+  useEffect(() => {
+    const h = setTimeout(() => done.current(), 20_000);
+    return () => clearTimeout(h);
+  }, []);
+  return <span className={styles.previewCap} aria-hidden />;
 }
