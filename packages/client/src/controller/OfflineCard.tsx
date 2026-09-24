@@ -89,10 +89,13 @@ export function OfflineCard({
   secondsLeft,
   before,
   playing,
+  asleep = null,
 }: {
   secondsLeft: number | null;
   before: LinkSnapshot | null;
   playing: boolean;
+  /** I-387 A: after 20 s, the likely story — the PC, and where it is. */
+  asleep?: string | null;
 }): JSX.Element {
   const o = t.offline;
   const answer =
@@ -109,7 +112,7 @@ export function OfflineCard({
         <span className={styles.spin} aria-hidden />
         <strong className={styles.title}>{o.title}</strong>
         <p className={styles.body}>
-          {o.lost}{' '}
+          {asleep ?? o.lost}{' '}
           {secondsLeft === null ? (
             o.heldPlain
           ) : (

@@ -190,6 +190,9 @@ export const es: Texts = {
     dot: { connecting: 'conectando', connected: 'conectado', reconnecting: 'reconectando' },
     loadingGame: 'Preparando el juego…',
     lostServer: 'Se perdió la conexión con el servidor: reconectando…',
+    pcAsleep: (since, address) =>
+      `No se llega al PC de PartyBox (desde las ${since}). ¿Está dormido o cerrado? Está en ${address}`,
+    lostServerLong: 'No se llega al servidor de PartyBox: ¿el PC está dormido o se cerró PartyBox?',
     backOnline: '✓ Conectado de nuevo',
     seconds: (n) => `${n} s`,
     secondsLeft: (n) => (n === 1 ? 'Queda 1 segundo' : `Quedan ${n} segundos`),

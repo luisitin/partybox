@@ -92,3 +92,31 @@ export function useLinkBanner(
     ),
   };
 }
+
+/** I-387 A: this long without the server — while this phone itself is online — and the likely story
+ *  is the host PC (asleep, lid shut, PartyBox closed): the banner says so, and where it is. */
+export const ASLEEP_AFTER_MS = 20_000;
+
+/** The line for a phone that has been cut off `forMs`; null while it's still a plain reconnect. */
+export function asleepLine(forMs: number, online: boolean, since: string, address: string): string | null {
+  if (forMs < ASLEEP_AFTER_MS || !online) return null;
+  return strings.connection.pcAsleep(since, address);
+}
+
+/** I-387 A: the long line once the link has been gone 20 s (null before, and once it's back). */
+export function useAsleepLine(trouble: boolean): string | null {
+  const [lostAt, setLostAt] = useState<number | null>(null);
+  useEffect(() => {
+    if (!trouble) {
+      const h = setTimeout(() => setLostAt(null), 0);
+      return () => clearTimeout(h);
+    }
+    const at = Date.now();
+    const h = setTimeout(() => setLostAt(at), ASLEEP_AFTER_MS);
+    return () => clearTimeout(h);
+  }, [trouble]);
+  if (lostAt === null || typeof window === 'undefined') return null;
+  const since = new Date(lostAt).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+  return asleepLine(ASLEEP_AFTER_MS, navigator.onLine !== false, since, window.location.host);
+}
+

@@ -21,6 +21,7 @@ import { refreshServerInfo } from '../net/info';
 import { HostBar } from './HostBar';
 import { roomFullToast, seatOpenedToast, soundToast } from './own-toasts';
 import { TvFrame } from './TvFrame';
+import { useScreenWakeLock } from './wakeLock';
 import { tvContent } from './tvContent';
 import { CrossfadeSwap } from '../CrossfadeSwap';
 import styles from './TvApp.module.css';
@@ -63,6 +64,8 @@ export function TvApp(): JSX.Element {
   const state = useStore(client.store, (s) => s);
   const room = state.room;
   const view = state.view;
+  // I-387 B: keep the screen (and the PC) awake while anyone is in the room
+  useScreenWakeLock((room?.players.length ?? 0) > 0);
   // The last board of the game, kept for the results stage ("adjust state when a prop changes").
   const [lastView, setLastView] = useState<typeof view>(null);
   if (room?.status === 'playing' && view && view !== lastView) setLastView(view);

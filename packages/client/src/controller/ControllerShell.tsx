@@ -14,7 +14,7 @@ import { ThemePicker } from '../ThemePicker';
 import styles from './ControllerShell.module.css';
 import { PhoneSettings } from './PhoneSettings';
 import { ShareButton } from './ShareSheet';
-import { linkLabel } from './flapFree';
+import { linkLabel, useAsleepLine } from './flapFree';
 import { useGraceLeft } from './grace';
 import { BackCard, OfflineCard, snapshotOf, useLinkCard } from './OfflineCard';
 import { serverText } from '../server-text';
@@ -98,6 +98,8 @@ export function ControllerShell({
   const trouble = !online && state.joined && !state.otherTab;
   const { card, before } = useLinkCard(trouble, snapshotOf(state.view, myStatus));
   const graceLeft = useGraceLeft(trouble); // I-089 C: the server's 120 s grace
+  // I-387 A: 20 s without the server — say it's probably the PC, and where it is
+  const asleep = useAsleepLine(trouble);
   const countdownRow = view !== null && seconds !== null && view.timerMode !== 'hidden';
   const { candidate, shellRef, mainRef } = usePhoneUrgency({
     view,
@@ -230,7 +232,12 @@ export function ControllerShell({
         ) : null}
       </main>
       {card === 'offline' ? (
-        <OfflineCard secondsLeft={graceLeft} before={before} playing={view !== null} />
+        <OfflineCard
+          secondsLeft={graceLeft}
+          before={before}
+          playing={view !== null}
+          asleep={asleep}
+        />
       ) : null}
       <div className={styles.toasts} aria-live="polite">
         {/* I-347 C: the host whose VIP passed on while they were away can take it back */}

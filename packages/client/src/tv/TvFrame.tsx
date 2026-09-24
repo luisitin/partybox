@@ -81,6 +81,16 @@ export function TvFrame({
     return () => clearTimeout(handle);
   }, [connected]);
   const lost = lostAt && !connected;
+  // I-387 A: still gone after 20 s — say what it probably is
+  const [longLost, setLongLost] = useState(false);
+  useEffect(() => {
+    if (connected) {
+      const h = setTimeout(() => setLongLost(false), 0);
+      return () => clearTimeout(h);
+    }
+    const h = setTimeout(() => setLongLost(true), 20_000);
+    return () => clearTimeout(h);
+  }, [connected]);
   if (lostAt && connected) setLostAt(false);
   return (
     <div className={`${styles.frame} ${lost ? styles.lost : ''}`} data-surface="tv">
@@ -125,7 +135,7 @@ export function TvFrame({
       {footer ? <div className={styles.footer}>{footer}</div> : null}
       {lost ? (
         <div className={styles.lostBanner} role="status">
-          {t.connection.lostServer}
+          {longLost ? t.connection.lostServerLong : t.connection.lostServer}
         </div>
       ) : null}
       <div className={styles.toasts} aria-live="polite">
