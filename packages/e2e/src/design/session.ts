@@ -121,9 +121,10 @@ export async function openTv(
 
 /** Enable audio (first gesture) so the "tap for sound" pill does not appear in later stills. */
 export async function passAudioGate(tv: Page): Promise<void> {
-  const gate = tv.getByRole('button', {
-    name: /tap (to start|anywhere)|toca (para|en cualquier)/i,
-  });
+  // `.first()`: in Spanish the 🔇 control's label ("… toca para activarlo") matches too.
+  const gate = tv
+    .getByRole('button', { name: /tap (to start|anywhere)|toca (para|en cualquier)/i })
+    .first();
   // The TV app is its own chunk (ADR-050): the gate renders a moment after the page does.
   await gate.waitFor({ state: 'visible', timeout: 5000 }).catch(() => undefined);
   if (await gate.isVisible()) await gate.click();

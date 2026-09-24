@@ -43,6 +43,23 @@
   min-height: 0;
   overflow-y: auto;
 }
+
+/* The edge a row is cut at fades: there are more games that way (useScrollEdges). */
+.fadeDown {
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 64px), transparent);
+}
+.fadeUp {
+  mask-image: linear-gradient(to top, #000 calc(100% - 64px), transparent);
+}
+.fadeUp.fadeDown {
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    #000 64px,
+    #000 calc(100% - 64px),
+    transparent
+  );
+}
 .left > :not(.games) {
   flex: none;
 }

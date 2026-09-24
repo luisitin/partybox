@@ -238,15 +238,24 @@
   gap: var(--pb-space-4);
 }
 
+/* The name with its players and minutes under it: the facts sit at the top, where the longest
+   Spanish steps can never push them out of the card (they used to close it and got cut). */
+.spotTitle {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-1);
+}
+
 .spotIcon {
   flex-shrink: 0;
   display: grid;
   place-items: center;
-  width: 96px;
-  height: 96px;
+  width: 80px;
+  height: 80px;
   border-radius: var(--pb-radius-lg);
   background: var(--pb-surface-2);
-  font-size: 60px;
+  font-size: 52px;
   line-height: 1;
   animation: global(pb-pop) var(--pb-motion-slow) var(--pb-ease) both;
 }
@@ -260,11 +269,17 @@
 
 .spotTagline {
   margin: 0;
-  font-size: 30px;
+  font-size: 28px;
   font-weight: 800;
   line-height: 1.2;
   color: var(--pb-accent-2);
   text-wrap: balance;
+  /* A tagline is ≤ 60 characters: two lines at this size; the clamp only guards the budget. */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
 }
 
 .steps {
@@ -314,7 +329,7 @@
 }
 
 .spotMeta {
-  margin: auto 0 0;
+  margin: 0;
   font-size: 24px;
   font-weight: 800;
   color: var(--pb-text-muted);

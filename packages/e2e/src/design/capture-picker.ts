@@ -4,8 +4,8 @@
 // surface downloaded at each stage (net-log.ts). Stages: load → join → lobby → picker → browse →
 // about → choose → start → play. Works on the old picker (radio cards) and the new one (rows + ⓘ).
 // Usage: tsx packages/e2e/src/design/capture-picker.ts --out <dir> [--port 42300] [--prod] [--build]
-//        [--game wisecrack] [--vip iphone] [--guest iphone-se] [--lang es] [--bots 3]
-import { mkdirSync, readdirSync, renameSync, rmSync, writeFileSync } from 'node:fs';
+//        [--game wisecrack] [--vip iphone] [--guest iphone-se] [--lang es] [--bots 3] [--no-video]
+import { existsSync, mkdirSync, readdirSync, renameSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { parseArgs } from 'node:util';
 import { spawnSync } from 'node:child_process';
@@ -33,6 +33,9 @@ const { values } = parseArgs({
     bots: { type: 'string', default: '3' },
     /** The pack's nine games in the catalog too (PARTYBOX_DEMO_CATALOG): the picker at 14. */
     demo: { type: 'boolean', default: false },
+    /** No video: the recorder's own screencast costs frames on a loaded box, so the frame-timing
+     *  gate is judged on a run without it (no strips or dead air then). */
+    'no-video': { type: 'boolean', default: false },
   },
 });
 const OUT =
@@ -65,7 +68,7 @@ async function open(
     ...spec.options,
     ...CONTEXT_BASE,
     ...(values.lang === 'es' ? { locale: 'es-ES' } : {}),
-    recordVideo: { dir: join(OUT, 'video', id), size },
+    ...(values['no-video'] ? {} : { recordVideo: { dir: join(OUT, 'video', id), size } }),
   });
   await context.addInitScript(HOOKS);
   const t0 = Date.now();
@@ -246,7 +249,7 @@ async function main(): Promise<void> {
     // Videos → <surface>.webm, strips from every stage mark, dead air per surface.
     for (const s of surfaces) {
       const dir = join(OUT, 'video', s.id);
-      const file = readdirSync(dir).find((f) => f.endsWith('.webm'));
+      const file = existsSync(dir) ? readdirSync(dir).find((f) => f.endsWith('.webm')) : undefined;
       if (!file) continue;
       const video = join(OUT, 'video', `${s.id}.webm`);
       renameSync(join(dir, file), video);

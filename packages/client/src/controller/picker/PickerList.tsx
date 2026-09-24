@@ -68,7 +68,7 @@ export function PickerList({ controller, room, me, lang }: PickerListProps): JSX
     <Screen
       title={
         <span className={styles.head}>
-          <span>{t.lobby.pickGame}</span>
+          <span className={styles.headTitle}>{t.lobby.pickGame}</span>
           <span className={styles.pill}>{t.picker.playersPill(room.players.length)}</span>
         </span>
       }

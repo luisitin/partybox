@@ -1,6 +1,7 @@
 // A game is chosen (Part 00 §1.6, ruling 7: today's editable settings card, ADR-031): the game list
 // on the left stays clickable, with "‹ All games" back to the grid, and the right shows the chosen
 // game big — its words from the host (`about`), its settings editable from the TV.
+import { useEffect, useRef } from 'react';
 import type { JSX } from 'react';
 import type { RoomSnapshot } from '@partybox/shared';
 import { BigText, useT } from '@partybox/game-sdk/ui';
@@ -16,6 +17,7 @@ import { SettingField } from '../SettingField';
 import { useStepCycle } from '../useStepCycle';
 import { STRINGS } from './strings';
 import { TvRoomSwitches } from './TvRoomSwitches';
+import { useScrollEdges } from './useScrollEdges';
 import styles from './TvSelecting.module.css';
 
 export function TvChosen({ room, client }: { room: RoomSnapshot; client: TvClient }): JSX.Element {
@@ -31,6 +33,18 @@ export function TvChosen({ room, client }: { room: RoomSnapshot; client: TvClien
   const settings = form?.id === game?.id ? (form?.settings ?? []) : [];
   const key = form ? keySetting(form, room.settings) : null;
   const lit = useStepCycle(about !== null);
+  // Fourteen games do not fit beside a settings card: the chosen one is scrolled to the middle of
+  // the list (it was off the bottom), and a cut edge fades.
+  const list = useRef<HTMLUListElement>(null);
+  const edges = useScrollEdges(list);
+  useEffect(() => {
+    // The list's own scrollTop: scrollIntoView would also move the clipped column around it.
+    const ul = list.current;
+    const row = ul?.querySelector('[aria-checked="true"]')?.getBoundingClientRect();
+    if (!ul || !row) return;
+    const box = ul.getBoundingClientRect();
+    ul.scrollTop += row.top - box.top - (box.height - row.height) / 2;
+  }, [room.selectedGameId]);
   return (
     <div className={styles.columns}>
       <div className={styles.left}>
@@ -41,7 +55,12 @@ export function TvChosen({ room, client }: { room: RoomSnapshot; client: TvClien
         >
           {t.picker.allGames}
         </button>
-        <ul className={styles.games} role="radiogroup" aria-label={L('games')}>
+        <ul
+          ref={list}
+          className={`${styles.games} ${edges.up ? styles.fadeUp : ''} ${edges.down ? styles.fadeDown : ''}`}
+          role="radiogroup"
+          aria-label={L('games')}
+        >
           {games.map((g) => {
             const selected = g.id === room.selectedGameId;
             return (

@@ -155,7 +155,14 @@ function Spotlight(p: {
         <span className={styles.spotIcon} aria-hidden>
           {g.icon}
         </span>
-        <h2 className={styles.spotName}>{g.name}</h2>
+        <span className={styles.spotTitle}>
+          <h2 className={styles.spotName}>{g.name}</h2>
+          <span className={styles.spotMeta}>
+            {t.picker.players(g.minPlayers, g.maxPlayers)} ·{' '}
+            {t.picker.minutes(minutesFor(g, p.room.tuned?.[g.id], p.room.players.length))}
+            {g.supportsBots ? ' · 🤖' : ''}
+          </span>
+        </span>
       </span>
       <p className={styles.spotTagline}>{taglineOf(g, p.lang)}</p>
       {about ? (
@@ -169,11 +176,6 @@ function Spotlight(p: {
       ) : (
         <div className={styles.stepsWait} />
       )}
-      <p className={styles.spotMeta}>
-        {t.picker.players(g.minPlayers, g.maxPlayers)} ·{' '}
-        {t.picker.minutes(minutesFor(g, p.room.tuned?.[g.id], p.room.players.length))}
-        {g.supportsBots ? ' · 🤖' : ''}
-      </p>
       {p.turning ? <span className={styles.turn} aria-hidden /> : null}
     </aside>
   );
