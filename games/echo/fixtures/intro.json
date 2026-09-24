@@ -1,0 +1,435 @@
+{
+  "phase": {
+    "id": "intro",
+    "startedAt": 1700000000000,
+    "deadline": 1700000008000
+  },
+  "rng": {
+    "seed": 1,
+    "step": 300
+  },
+  "players": {
+    "p1": {
+      "id": "p1",
+      "name": "Player 1",
+      "avatarId": "fox",
+      "connected": true
+    },
+    "p2": {
+      "id": "p2",
+      "name": "Player 2",
+      "avatarId": "owl",
+      "connected": true
+    },
+    "p3": {
+      "id": "p3",
+      "name": "Player 3",
+      "avatarId": "frog",
+      "connected": true
+    },
+    "p4": {
+      "id": "p4",
+      "name": "Player 4",
+      "avatarId": "cat",
+      "connected": true
+    },
+    "p5": {
+      "id": "p5",
+      "name": "Player 5",
+      "avatarId": "panda",
+      "connected": true
+    }
+  },
+  "cfg": {
+    "words": 10,
+    "clueSeconds": 35,
+    "guessSeconds": 25,
+    "check": true,
+    "categories": [],
+    "spicy": false,
+    "reader": "george"
+  },
+  "twoClues": false,
+  "seats": ["p1", "p2", "p3", "p4", "p5"],
+  "left": [],
+  "deck": [
+    {
+      "id": "echo-house-004",
+      "category": "house",
+      "answer": "pillow",
+      "accept": ["pillows", "pilow", "pillo", "pilloe", "pilliow", "pellow"],
+      "reject": ["willow", "pillar"],
+      "family": [],
+      "clues": [
+        "sleep",
+        "bed",
+        "soft",
+        "head",
+        "feathers",
+        "fight",
+        "fluffy",
+        "dream",
+        "case",
+        "nap"
+      ]
+    },
+    {
+      "id": "echo-fantasy-019",
+      "category": "fantasy",
+      "answer": "superhero",
+      "accept": ["superheroes", "superheros", "superheroe", "superhereo", "superheroine", "hero"],
+      "reject": ["supervillain", "villain"],
+      "family": ["super", "hero"],
+      "clues": [
+        "cape",
+        "powers",
+        "mask",
+        "flying",
+        "comics",
+        "costume",
+        "strength",
+        "rescue",
+        "Batman",
+        "sidekick"
+      ]
+    },
+    {
+      "id": "echo-animals-018",
+      "category": "animals",
+      "answer": "bat",
+      "accept": ["bats", "batt", "batz"],
+      "reject": ["cat", "rat"],
+      "family": [],
+      "clues": [
+        "cave",
+        "night",
+        "wings",
+        "vampire",
+        "upside-down",
+        "echolocation",
+        "fangs",
+        "Dracula",
+        "flying",
+        "Halloween"
+      ]
+    },
+    {
+      "id": "echo-house-002",
+      "category": "house",
+      "answer": "fridge",
+      "accept": [
+        "refrigerator",
+        "fridges",
+        "frige",
+        "frigde",
+        "refridgerator",
+        "icebox",
+        "refrigerater"
+      ],
+      "reject": ["bridge", "ridge", "freezer"],
+      "family": [],
+      "clues": [
+        "cold",
+        "food",
+        "milk",
+        "kitchen",
+        "magnets",
+        "leftovers",
+        "ice",
+        "snack",
+        "door",
+        "chill"
+      ]
+    },
+    {
+      "id": "echo-animals-020",
+      "category": "animals",
+      "answer": "flamingo",
+      "accept": ["flamingos", "flamingoes", "flamengo", "flamingoe", "flamigo", "flamino"],
+      "reject": [],
+      "family": [],
+      "clues": [
+        "pink",
+        "bird",
+        "leg",
+        "shrimp",
+        "lawn",
+        "Florida",
+        "tropical",
+        "feathers",
+        "balance",
+        "wading"
+      ]
+    },
+    {
+      "id": "echo-sports-004",
+      "category": "sports",
+      "answer": "golf",
+      "accept": ["golfing", "golff", "goff", "golfs", "gollf", "golfe"],
+      "reject": ["gulf", "gold", "wolf"],
+      "family": [],
+      "clues": [
+        "club",
+        "ball",
+        "hole",
+        "tee",
+        "putt",
+        "caddie",
+        "green",
+        "course",
+        "birdie",
+        "flag"
+      ]
+    },
+    {
+      "id": "echo-activities-019",
+      "category": "activities",
+      "answer": "whistling",
+      "accept": ["whistle", "wistling", "whisling", "whisteling", "whistlin", "whistles"],
+      "reject": ["wrestling", "whisking", "bristling", "twisting"],
+      "family": ["whistl"],
+      "clues": [
+        "lips",
+        "tune",
+        "blow",
+        "referee",
+        "song",
+        "bird",
+        "pucker",
+        "sound",
+        "dog",
+        "kettle"
+      ]
+    },
+    {
+      "id": "echo-fantasy-010",
+      "category": "fantasy",
+      "answer": "giant",
+      "accept": ["giants", "gaint", "gient", "gyant", "giantess", "titan"],
+      "reject": ["grant", "gnat", "infant"],
+      "family": [],
+      "clues": [
+        "big",
+        "tall",
+        "beanstalk",
+        "huge",
+        "Jack",
+        "Goliath",
+        "stomp",
+        "castle",
+        "footsteps",
+        "clouds"
+      ]
+    },
+    {
+      "id": "echo-sports-011",
+      "category": "sports",
+      "answer": "archery",
+      "accept": ["archer", "archers", "archey", "archary", "archerey", "arhcery"],
+      "reject": ["artery", "archway"],
+      "family": [],
+      "clues": [
+        "bow",
+        "arrow",
+        "target",
+        "bullseye",
+        "quiver",
+        "aim",
+        "Robin",
+        "feathers",
+        "string",
+        "Cupid"
+      ]
+    },
+    {
+      "id": "echo-places-014",
+      "category": "places",
+      "answer": "prison",
+      "accept": ["prisons", "jail", "prisson", "prisen", "prision", "penitentiary"],
+      "reject": ["poison", "prism", "person"],
+      "family": [],
+      "clues": [
+        "bars",
+        "criminal",
+        "cell",
+        "guard",
+        "escape",
+        "inmate",
+        "sentence",
+        "Alcatraz",
+        "handcuffs",
+        "warden"
+      ]
+    }
+  ],
+  "spares": [
+    {
+      "id": "echo-nature-020",
+      "category": "nature",
+      "answer": "iceberg",
+      "accept": ["icebergs", "iseberg", "icburg", "iceburg", "icebrg"],
+      "reject": [],
+      "family": ["ice", "berg"],
+      "clues": [
+        "Titanic",
+        "cold",
+        "Arctic",
+        "float",
+        "ocean",
+        "tip",
+        "glacier",
+        "polar",
+        "penguin",
+        "ship"
+      ]
+    },
+    {
+      "id": "echo-food-010",
+      "category": "food",
+      "answer": "watermelon",
+      "accept": [
+        "watermelons",
+        "watermellon",
+        "watermelone",
+        "watermeln",
+        "watermelen",
+        "wattermelon"
+      ],
+      "reject": [],
+      "family": ["water", "melon"],
+      "clues": [
+        "seeds",
+        "summer",
+        "red",
+        "green",
+        "juicy",
+        "picnic",
+        "fruit",
+        "slice",
+        "rind",
+        "stripes"
+      ]
+    },
+    {
+      "id": "echo-places-018",
+      "category": "places",
+      "answer": "cave",
+      "accept": ["caves", "cavern", "caev", "cavve", "grotto", "caverns"],
+      "reject": ["cafe", "cove", "cane"],
+      "family": [],
+      "clues": [
+        "dark",
+        "bat",
+        "rock",
+        "bear",
+        "echo",
+        "stalactite",
+        "explore",
+        "underground",
+        "hibernate",
+        "damp"
+      ]
+    },
+    {
+      "id": "echo-animals-025",
+      "category": "animals",
+      "answer": "parrot",
+      "accept": ["parrots", "parot", "parrott", "parret", "perrot", "parrit"],
+      "reject": ["carrot"],
+      "family": [],
+      "clues": [
+        "talk",
+        "pirate",
+        "colorful",
+        "bird",
+        "repeat",
+        "feathers",
+        "cracker",
+        "tropical",
+        "beak",
+        "green"
+      ]
+    },
+    {
+      "id": "echo-activities-029",
+      "category": "activities",
+      "answer": "hide and seek",
+      "accept": [
+        "hide n go seek",
+        "hide n seek",
+        "hide and go seek",
+        "hide and seak",
+        "hid and seek",
+        "hide an seek"
+      ],
+      "reject": ["tag", "hopscotch"],
+      "family": ["hide", "seek"],
+      "clues": [
+        "counting",
+        "kids",
+        "closet",
+        "game",
+        "found",
+        "ready",
+        "quiet",
+        "playground",
+        "backyard",
+        "peekaboo"
+      ]
+    },
+    {
+      "id": "echo-animals-001",
+      "category": "animals",
+      "answer": "penguin",
+      "accept": ["penguins", "pengiun", "penquin", "pinguin", "pengin", "penguine"],
+      "reject": ["puffin"],
+      "family": ["pengu"],
+      "clues": [
+        "ice",
+        "antarctica",
+        "tuxedo",
+        "waddle",
+        "cold",
+        "bird",
+        "fish",
+        "emperor",
+        "flippers",
+        "iceberg"
+      ]
+    }
+  ],
+  "rotation": ["p2", "p3", "p4", "p5", "p1"],
+  "w": {
+    "idx": 0,
+    "word": {
+      "id": "echo-house-004",
+      "category": "house",
+      "answer": "pillow",
+      "accept": ["pillows", "pilow", "pillo", "pilloe", "pilliow", "pellow"],
+      "reject": ["willow", "pillar"],
+      "family": [],
+      "clues": [
+        "sleep",
+        "bed",
+        "soft",
+        "head",
+        "feathers",
+        "fight",
+        "fluffy",
+        "dream",
+        "case",
+        "nap"
+      ]
+    },
+    "guesser": "p2",
+    "clues": {},
+    "rejects": {},
+    "dontKnow": [],
+    "swaps": 0,
+    "groups": null,
+    "checkOk": [],
+    "guess": null
+  },
+  "turns": [],
+  "speechMs": {}
+}
