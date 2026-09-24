@@ -54,7 +54,7 @@ export function useFan(fan: HTMLUListElement | null, items: number): number {
     window.addEventListener('resize', onScroll);
     return () => {
       cancelAnimationFrame(raf);
-      // I-160: the list takes over — no card keeps the fan's turn
+      // I-159/I-160: the list takes over — no card keeps the fan's turn
       for (const card of [...fan.children] as HTMLElement[]) {
         card.style.translate = '';
         card.style.rotate = '';
@@ -122,13 +122,23 @@ export function NewHandCard({
   );
 }
 
-/** I-160: true when the fan can't show a readable card (a phone on its side): the hand is a plain list then. */
+/** I-159: under this many card-type widths the fan shows one card a screen — the hand is a list. */
+const BIG_TEXT_EM = 15;
+
+/** I-159/I-160: true when the fan can't show a readable card — a phone on its side (I-160) or
+ *  big type (I-159): the hand is a plain list then. */
 export function useHandList(fan: HTMLUListElement | null): boolean {
   const [list, setList] = useState(false);
   useEffect(() => {
     if (!fan) return undefined;
     const check = (): void => {
-      setList(window.matchMedia('(orientation: landscape) and (max-height: 500px)').matches);
+      const sideways = window.matchMedia(
+        '(orientation: landscape) and (max-height: 500px)',
+      ).matches;
+      // the type of an ordinary white card (a long card steps a size down)
+      const card = fan.querySelector(`button.${styles.white}:not(.${styles.whiteLong})`);
+      const px = card ? parseFloat(getComputedStyle(card).fontSize) : 18;
+      setList(sideways || fan.clientWidth / (px || 18) < BIG_TEXT_EM);
     };
     check();
     const ro = new ResizeObserver(check);

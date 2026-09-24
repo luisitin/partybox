@@ -217,4 +217,7 @@ export const SCREENS_ES: Readonly<Record<string, string>> = {
   // I-774 B: the VIP's Next during the reading
   'Next card ({n} of {total})': 'Siguiente carta ({n} de {total})',
   'Open the vote': 'Abrir la votación',
+  // I-159 B
+  Fan: 'Abanico',
+  List: 'Lista',
 };

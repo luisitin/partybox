@@ -6,6 +6,10 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Fixed
 
+- **Blanks' hand at big text sizes** (I-159, option B): when the phone's text is so big the fan
+  would show one unreadable card per screen, the hand becomes a list you scroll, every card whole.
+  A small Fan / List switch at the end of the round line lets any phone choose, and remembers it.
+
 - **Blanks' reader in a second game** (game-pack audit #19): a later game in the same room that
   needed a reading an earlier game had asked for (most often the same black card read alone) never
   got it and held the card for the full 12 s fallback. The server now forgets a reading a moment
