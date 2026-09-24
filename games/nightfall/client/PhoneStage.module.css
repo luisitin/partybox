@@ -1,0 +1,76 @@
+/* The TV's moments at phone size (phone-only rooms). Tokens only. */
+.line {
+  animation: global(pb-rise) var(--pb-motion-slow) var(--pb-ease) backwards;
+}
+
+.cards {
+  display: flex;
+  justify-content: center;
+  gap: var(--pb-space-3);
+  perspective: 900px;
+}
+
+.ballots {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-3);
+  padding: var(--pb-space-2) var(--pb-space-3);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  border: 2px solid transparent;
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) backwards;
+}
+
+.out {
+  border-color: var(--pb-accent-2);
+}
+
+.face {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  font-size: var(--pb-font-h2);
+}
+
+.who {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  font-size: var(--pb-font-body);
+}
+
+.voters {
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.n {
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .line,
+  .row {
+    animation: none;
+  }
+}
+:global(:root[data-motion='off']) .line,
+:global(:root[data-motion='off']) .row {
+  animation: none;
+}

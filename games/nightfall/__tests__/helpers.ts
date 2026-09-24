@@ -31,11 +31,31 @@ export const NAMES = [
   'Pia',
 ];
 
+/** Real faces (AVATAR_IDS), so fixtures and previews look like a room. */
+const FACES = [
+  'fox',
+  'owl',
+  'frog',
+  'cat',
+  'panda',
+  'koala',
+  'penguin',
+  'octopus',
+  'lion',
+  'bee',
+  'whale',
+  'sloth',
+  'dino',
+  'unicorn',
+  'ghost',
+  'robot',
+];
+
 /** Ids are lower-case names: 'ana', 'ben', … */
 export function players(n: number, bots: readonly string[] = []): PlayerInfo[] {
   return NAMES.slice(0, n).map((name, i) => {
     const id = name.toLowerCase();
-    const p: PlayerInfo = { id, name, avatarId: `face${i}`, connected: true };
+    const p: PlayerInfo = { id, name, avatarId: FACES[i] ?? 'fox', connected: true };
     return bots.includes(id) ? { ...p, bot: true, avatarId: `robot:${i}` } : p;
   });
 }

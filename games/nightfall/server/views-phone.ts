@@ -70,7 +70,7 @@ export interface NightfallControllerView extends ControllerView {
   stage: StageView | null;
 }
 
-const STAGE_PHASES = new Set(['dawn', 'verdict', 'hunter', 'lastWords', 'end', 'done']);
+const STAGE_PHASES = new Set(['dawn', 'verdict', 'hunter', 'last-words', 'end', 'done']);
 
 function jobOf(state: State, role: Role): string {
   const f = flavourOf(state.cfg.flavour);
@@ -206,7 +206,7 @@ export function phoneView(state: State, playerId: string): NightfallControllerVi
       phase === 'hunter' && state.step === 0 && state.hunterPending === playerId
         ? { targets: state.alive.filter((id) => id !== playerId) }
         : null,
-    speak: phase === 'lastWords' && state.step === 0 && state.verdict?.out === playerId,
+    speak: phase === 'last-words' && state.step === 0 && state.verdict?.out === playerId,
     roles: rolesFor(state, ghost),
     result:
       over(state) && state.winner

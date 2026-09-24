@@ -10,7 +10,7 @@ import type { Input, State, Transition } from '../types';
 
 export function enterLastWords(state: State, now: number): State {
   const at: State = { ...state, lastWords: null, step: 0, stepAt: now };
-  return enterPhase(at, 'lastWords', now, LAST_WORDS_MS);
+  return enterPhase(at, 'last-words', now, LAST_WORDS_MS);
 }
 
 export function reduceLastWords(state: State, event: GameEvent<Input>, next: Transition): State {

@@ -3,6 +3,7 @@
 import { describe, expect, it } from 'vitest';
 import { game } from '../server/index';
 import { readableName, readingNow, speakable, speech } from '../server/speech';
+import { HOLD_NEXT_MS } from '../server/steps';
 import type { State } from '../server/types';
 import { EIGHT, input, night, start, timer, toNight } from './helpers';
 
@@ -39,20 +40,47 @@ describe('speech', () => {
     expect(keysIn(game.tvView(s))).toContain(key);
   });
 
-  it('a step waits for its reading (12 s at most) and re-times when it arrives', () => {
-    let s = night(toNight(voiced()), { ben: 'dee', cy: 'dee' });
-    s = timer(s); // step 1, reading unknown
-    const r = readingNow(s);
-    expect(s.phase.deadline).toBe(s.stepAt + 12_000);
-    s = game.reduce(s, { type: 'speech', now: s.stepAt + 500, key: r?.key as string, ms: 2000 });
-    expect(s.phase.deadline).toBe(s.stepAt + 3_400); // the visual minimum still holds
-    const failed = game.reduce(timer(night(toNight(voiced()), { ben: 'eli', cy: 'eli' })), {
+  it("a step holds for the next step's reading (9 s at most), so words and voice land together", () => {
+    let s = night(toNight(voiced()), { ben: 'dee', cy: 'dee' }); // dawn, step 0
+    expect(s.phase.deadline).toBe(s.stepAt + HOLD_NEXT_MS);
+    const died = readingNow({ ...s, step: 1 });
+    s = game.reduce(s, { type: 'speech', now: s.stepAt + 500, key: died?.key as string, ms: 1800 });
+    expect(s.phase.deadline).toBe(s.stepAt + 2_600); // the sunrise's own minimum
+    s = timer(s); // step 1: the news, its voice ready on its first frame
+    expect(keysIn(game.tvView(s))).toContain(died?.key);
+    // A reading that fails never holds the room.
+    const own = readingNow(s);
+    const failed = game.reduce(s, {
       type: 'speech',
-      now: T(),
-      key: 'nfnope000',
+      now: s.stepAt + 100,
+      key: own?.key as string,
       ms: -1,
     });
-    expect(failed.phase.id).toBe('dawn');
+    expect(failed.phase.deadline).toBeLessThanOrEqual(s.stepAt + HOLD_NEXT_MS);
+  });
+
+  it("the hunter's shot waits for its line, then lands; the TV never sees the target early", () => {
+    const roles = { ben: 'wolf', cy: 'wolf', fay: 'hunter' } as const;
+    let s = night(toNight(start({ roles, settings: { reader: 'fable', roles: 'hunter' } })), {
+      ben: 'fay',
+      cy: 'fay',
+    });
+    while (s.phase.id === 'dawn') s = timer(s);
+    expect(s.phase.id).toBe('hunter');
+    s = input(s, 'fay', { type: 'shoot', target: 'ben' });
+    expect(s.step).toBe(0);
+    expect(game.tvView(s).stage.hunter?.shot).toBeNull();
+    expect(JSON.stringify(game.tvView(s).stage)).not.toContain('"wolf"');
+    const line = readingNow({ ...s, step: 1 });
+    s = game.reduce(s, {
+      type: 'speech',
+      now: s.phase.startedAt + 900,
+      key: line?.key as string,
+      ms: 2400,
+    });
+    s = timer(s);
+    expect(s.step).toBe(1);
+    expect(game.tvView(s).stage.hunter).toMatchObject({ shot: 'ben', role: 'wolf' });
   });
 
   it('at most 10 pending keys, never a key already known', () => {
@@ -72,7 +100,3 @@ describe('speech', () => {
     expect(readableName('Maya')).toBe(true);
   });
 });
-
-function T(): number {
-  return 1_700_000_100_000;
-}

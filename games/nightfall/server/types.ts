@@ -16,7 +16,7 @@ export const PHASES = [
   'vote',
   'runoff',
   'verdict',
-  'lastWords',
+  'last-words',
   'end',
   'done',
 ] as const;

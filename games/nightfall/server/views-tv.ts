@@ -40,7 +40,7 @@ export function statusOf(state: State): (id: string) => PlayerStatus {
     if (phase === 'vote' || phase === 'runoff')
       return Object.hasOwn(state.votes, id) ? 'submitted' : 'active';
     if (phase === 'hunter') return id === state.hunterPending ? 'active' : 'waiting';
-    if (phase === 'lastWords') return id === state.verdict?.out ? 'active' : 'waiting';
+    if (phase === 'last-words') return id === state.verdict?.out ? 'active' : 'waiting';
     return 'waiting';
   };
 }
@@ -50,7 +50,7 @@ export function nightfallEnvelope(state: State): ReturnType<typeof envelope> {
   const env = envelope(state, GAME_ID, { statusOf: statusOf(state) });
   const deadline = state.phase.id === 'day' ? state.dayEndsAt : state.phase.deadline;
   const paced = ['dawn', 'verdict', 'end', 'done'].includes(state.phase.id);
-  const lastWordsShown = state.phase.id === 'lastWords' && state.step === 1;
+  const lastWordsShown = state.phase.id === 'last-words' && state.step === 1;
   const hunterShot = state.phase.id === 'hunter' && state.step === 1;
   return {
     ...env,

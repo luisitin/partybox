@@ -3,7 +3,7 @@
 // appears only once its card has flipped, a death only once it was announced (§10.10).
 import { fillIn, flavourOf } from './content';
 import { knownAlive, knownDead, nameOf, roleOf } from './rules';
-import { readingNow, tonightsDeaths } from './speech';
+import { readingNow, spokenNow, tonightsDeaths } from './speech';
 import { ROLES } from '../content/schema';
 import type { Ballot, DeathHow, FlavourId, Role, Side, State } from './types';
 
@@ -137,16 +137,18 @@ function stageLines(state: State): string[] {
   }
   if (phase === 'verdict' && state.step >= 1 && state.verdict) {
     const out = state.verdict.out;
+    const role = out && state.step >= 2 && state.cfg.revealRoles ? roleOf(state, out) : undefined;
     const lines = out ? [fillIn(f.live.was, { name: nameOf(state, out) })] : [f.narrator.noAgree];
+    if (role) lines.push(f.roles[role].reveal);
     const left = state.dead.filter((d) => d.day === state.day && d.how === 'left' && d.told);
     return [...lines, ...left.map((d) => fillIn(f.live.left, { name: nameOf(state, d.id) }))];
   }
   if (phase === 'hunter' && state.step === 1 && state.shot)
     return [fillIn(f.live.shot, { name: nameOf(state, state.shot) })];
-  if (phase === 'lastWords' && state.verdict?.out)
+  if (phase === 'last-words' && state.verdict?.out)
     return [fillIn(f.live.lastWords, { name: nameOf(state, state.verdict.out) })];
-  const r = readingNow(state);
-  return r ? [r.text] : [];
+  const text = spokenNow(state);
+  return text ? [text] : [];
 }
 
 /** The say-this-now reading, only once the host has made it (the key never shows early). */
@@ -208,12 +210,16 @@ export function stageOf(state: State): StageView {
       phase === 'hunter' && state.hunterPending
         ? {
             id: state.hunterPending,
-            shot: state.shot,
-            role: state.shot && state.cfg.revealRoles ? (roleOf(state, state.shot) ?? null) : null,
+            // The shot is public only once it lands (step 1); while the line is made it is not.
+            shot: state.step >= 1 ? state.shot : null,
+            role:
+              state.step >= 1 && state.shot && state.cfg.revealRoles
+                ? (roleOf(state, state.shot) ?? null)
+                : null,
           }
         : null,
     lastWords:
-      phase === 'lastWords' && v?.out
+      phase === 'last-words' && v?.out
         ? { by: v.out, text: state.step >= 1 ? state.lastWords : null }
         : null,
     end: over(state)

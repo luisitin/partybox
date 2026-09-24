@@ -182,7 +182,7 @@ export function botInput(v: View, r: Roll, selfBot = true): Input | null {
       const target = namedWolf(v, v.shoot.targets) ?? one(v.shoot.targets, r);
       return target ? { type: 'shoot', target } : null;
     }
-    case 'lastWords': {
+    case 'last-words': {
       if (!v.speak) return null;
       const text = say(v, BOTLINES.lastWords, r, null);
       return text ? { type: 'lastWords', text } : null;

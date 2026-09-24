@@ -136,7 +136,7 @@ export function advance(state: State, now: number): State {
     }
     case 'verdict':
       return afterVerdict(tellAll(state), now);
-    case 'lastWords':
+    case 'last-words':
       return afterDeaths(state, now, 'verdict');
     case 'end':
       return enterDone(state, now);
@@ -194,7 +194,7 @@ function reduce(state: State, event: GameEvent<Input>): State {
       return reduceVote(state, event, advance);
     case 'verdict':
       return reduceVerdict(state, event, advance);
-    case 'lastWords':
+    case 'last-words':
       return reduceLastWords(state, event, advance);
     case 'end':
       return reduceEnd(state, event, advance);

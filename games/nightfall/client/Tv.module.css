@@ -1,0 +1,443 @@
+/* TV layout for Nightfall. Tokens only; transform + opacity animations only. The sky sits behind
+   `.scene`; every scene is a centred column that fits the stage at 1920×1080 with 16 players. */
+.tv {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  overflow: hidden;
+  border-radius: var(--pb-radius-lg);
+}
+
+.scene {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: var(--pb-space-5) var(--pb-space-7);
+}
+
+.column {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pb-space-5);
+  text-align: center;
+}
+
+.centered {
+  justify-content: center;
+}
+
+.kicker {
+  margin: 0;
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--pb-accent-2);
+  animation: global(pb-rise) var(--pb-motion-slow) var(--pb-ease) backwards;
+}
+
+.display,
+.h1,
+.h2 {
+  margin: 0;
+  color: var(--pb-text);
+  font-weight: 900;
+  line-height: 1.12;
+  text-wrap: balance;
+  animation: global(pb-rise) var(--pb-motion-slow) var(--pb-ease) backwards;
+}
+
+.display {
+  font-size: var(--pb-font-display);
+}
+
+.h1 {
+  font-size: var(--pb-font-h1);
+}
+
+.h2 {
+  font-size: var(--pb-font-h2);
+}
+
+.lines {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-2);
+  align-items: center;
+}
+
+.nightTitle {
+  letter-spacing: 0.02em;
+}
+
+.lead {
+  margin: 0;
+  max-width: 1400px;
+  font-size: var(--pb-font-body);
+  color: var(--pb-text-muted);
+  font-weight: 700;
+  animation: global(pb-rise) var(--pb-motion-slow) var(--pb-ease) 150ms backwards;
+}
+
+.caption {
+  margin: 0;
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+  font-weight: 800;
+}
+
+.cast {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--pb-space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pill {
+  padding: var(--pb-space-2) var(--pb-space-5);
+  border-radius: 999px;
+  background: var(--pb-surface);
+  border: 1px solid var(--pb-border);
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  color: var(--pb-text);
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) backwards;
+}
+
+/* Day: the question, the village and (town board on) the feed in the right third. */
+.day {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--pb-space-6);
+}
+
+.withBoard {
+  grid-template-columns: 2fr 1fr;
+}
+
+.dayHead {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pb-space-2);
+}
+
+.ready {
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  color: var(--pb-accent-2);
+}
+
+.board {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-3);
+  padding: var(--pb-space-5);
+  border-radius: var(--pb-radius-lg);
+  background: color-mix(in srgb, var(--pb-surface) 88%, transparent);
+  border: 1px solid var(--pb-border);
+  overflow: hidden;
+  animation: global(pb-rise) var(--pb-motion-slow) var(--pb-ease) backwards;
+}
+
+.boardTitle {
+  margin: 0;
+  font-size: var(--pb-font-caption);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--pb-accent-2);
+}
+
+.boardEmpty {
+  margin: auto 0;
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+}
+
+.posts {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: var(--pb-space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow: hidden;
+}
+
+.post {
+  display: flex;
+  gap: var(--pb-space-3);
+  align-items: flex-start;
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) backwards;
+}
+
+.postFace {
+  flex: none;
+  width: 48px;
+  height: 48px;
+}
+
+.postBody {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  text-align: left;
+}
+
+.postName {
+  font-size: var(--pb-font-caption);
+  font-weight: 900;
+  color: var(--pb-text-muted);
+}
+
+.postText {
+  font-size: var(--pb-font-body);
+  font-weight: 700;
+  color: var(--pb-text);
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+/* Reveal cards in a row; the hunter aiming; the verdict's overlay card. */
+.cards {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--pb-space-6);
+  perspective: 1600px;
+}
+
+.endCards {
+  flex-wrap: wrap;
+  gap: var(--pb-space-4);
+  max-width: 1600px;
+}
+
+.aimer {
+  position: relative;
+  width: 168px;
+  height: 168px;
+}
+
+.bow {
+  position: absolute;
+  right: -64px;
+  bottom: -4px;
+  font-size: var(--pb-font-h1);
+  line-height: 1;
+  animation: draw 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes draw {
+  from {
+    transform: rotate(-8deg) translateX(0);
+  }
+  to {
+    transform: rotate(4deg) translateX(-10px);
+  }
+}
+
+.aimWrap {
+  position: relative;
+  width: 100%;
+}
+
+.crosshair {
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 6px solid var(--pb-danger);
+  opacity: 0.7;
+  animation: sweep 5.5s ease-in-out infinite alternate;
+}
+
+.crosshair::before,
+.crosshair::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  background: var(--pb-danger);
+}
+
+.crosshair::before {
+  width: 6px;
+  height: 180px;
+  transform: translate(-50%, -50%);
+}
+
+.crosshair::after {
+  width: 180px;
+  height: 6px;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes sweep {
+  0% {
+    transform: translate(0, 0);
+  }
+  33% {
+    transform: translate(900px, 40px);
+  }
+  66% {
+    transform: translate(420px, 120px);
+  }
+  100% {
+    transform: translate(1300px, 10px);
+  }
+}
+
+.court {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.overlay {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.speaker {
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-6);
+  max-width: 1500px;
+}
+
+.speakerFace {
+  flex: none;
+  width: 200px;
+  height: 200px;
+}
+
+.bubble {
+  margin: 0;
+  padding: var(--pb-space-5) var(--pb-space-6);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface);
+  border: 1px solid var(--pb-border);
+  font-size: var(--pb-font-h2);
+  font-weight: 800;
+  color: var(--pb-text);
+  text-align: left;
+  overflow-wrap: anywhere;
+  animation: global(pb-pop) var(--pb-motion-slow) var(--pb-ease) backwards;
+}
+
+.typing {
+  display: flex;
+  gap: var(--pb-space-3);
+}
+
+.typing span {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--pb-text-muted);
+  animation: bob 1.2s ease-in-out infinite;
+}
+
+.typing span:nth-child(2) {
+  animation-delay: 150ms;
+}
+
+.typing span:nth-child(3) {
+  animation-delay: 300ms;
+}
+
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translateY(-14px);
+    opacity: 1;
+  }
+}
+
+.banner {
+  color: var(--pb-accent-2);
+}
+
+.timeline {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--pb-space-2) var(--pb-space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.step {
+  padding: var(--pb-space-1) var(--pb-space-4);
+  border-radius: 999px;
+  background: var(--pb-surface);
+  border: 1px solid var(--pb-border);
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  color: var(--pb-text);
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) 1.6s backwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kicker,
+  .display,
+  .h1,
+  .h2,
+  .lead,
+  .pill,
+  .board,
+  .post,
+  .bow,
+  .crosshair,
+  .bubble,
+  .typing span,
+  .step {
+    animation: none;
+  }
+}
+:global(:root[data-motion='off']) .kicker,
+:global(:root[data-motion='off']) .display,
+:global(:root[data-motion='off']) .h1,
+:global(:root[data-motion='off']) .h2,
+:global(:root[data-motion='off']) .lead,
+:global(:root[data-motion='off']) .pill,
+:global(:root[data-motion='off']) .board,
+:global(:root[data-motion='off']) .post,
+:global(:root[data-motion='off']) .bow,
+:global(:root[data-motion='off']) .crosshair,
+:global(:root[data-motion='off']) .bubble,
+:global(:root[data-motion='off']) .typing span,
+:global(:root[data-motion='off']) .step {
+  animation: none;
+}

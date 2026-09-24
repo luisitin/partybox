@@ -1,0 +1,329 @@
+/* Nightfall's phone screens. Designed at 320×568 and 200 % text; tokens only; nothing selects,
+   zooms, rubber-bands or leaves a highlight under a thumb. */
+.screen {
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior: none;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-3);
+  width: 100%;
+}
+
+.head {
+  margin: 0;
+  font-size: var(--pb-font-body);
+  font-weight: 900;
+  line-height: 1.2;
+  color: var(--pb-text);
+  text-align: center;
+  text-wrap: balance;
+}
+
+.sub {
+  margin: 0;
+  font-size: var(--pb-font-body);
+  color: var(--pb-text-muted);
+  text-align: center;
+  line-height: 1.35;
+}
+
+.status {
+  min-height: 2.8em;
+  margin: 0;
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  color: var(--pb-text-muted);
+  text-align: center;
+  line-height: 1.4;
+}
+
+.refused {
+  color: var(--pb-danger);
+  animation: global(pb-shake) var(--pb-motion-base) var(--pb-ease);
+}
+
+.roleIcon {
+  font-size: var(--pb-font-display);
+  line-height: 1;
+}
+
+.roleName {
+  margin: 0;
+  font-size: var(--pb-font-h1);
+  font-weight: 900;
+  line-height: 1.1;
+}
+
+.roleDesc {
+  margin: 0;
+  font-size: var(--pb-font-body);
+  line-height: 1.35;
+}
+
+.roleExtra {
+  margin: 0;
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  color: var(--pb-accent-2);
+}
+
+.jobLine {
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.castLine {
+  margin: 0;
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+  text-align: center;
+  line-height: 1.5;
+}
+
+.watch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pb-space-2);
+  padding: var(--pb-space-5) var(--pb-space-3);
+  text-align: center;
+}
+
+.watchGlyph {
+  font-size: var(--pb-font-display);
+  line-height: 1;
+  animation: look 2.4s ease-in-out infinite;
+}
+
+@keyframes look {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  30% {
+    transform: translateX(-6px);
+  }
+  60% {
+    transform: translateX(6px);
+  }
+}
+
+.ghost {
+  opacity: 0.92;
+}
+
+.ghostGlyph {
+  font-size: var(--pb-font-display);
+  line-height: 1;
+  animation: float 3.2s ease-in-out infinite alternate;
+}
+
+@keyframes float {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-10px);
+  }
+}
+
+.faces {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--pb-space-3) var(--pb-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mini {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 64px;
+  gap: 2px;
+}
+
+.miniFace {
+  position: relative;
+  width: 40px;
+  height: 40px;
+}
+
+.miniName {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+}
+
+.miniDead .miniFace {
+  filter: grayscale(1);
+  opacity: 0.6;
+}
+
+.miniTag {
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+  font-weight: 700;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hunchBar {
+  display: block;
+  width: 100%;
+  height: 5px;
+  border-radius: 3px;
+  background: var(--pb-accent-2);
+  transform-origin: left center;
+}
+
+.feed {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.post {
+  display: flex;
+  gap: var(--pb-space-2);
+  align-items: flex-start;
+  padding: var(--pb-space-2);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) backwards;
+}
+
+.postFace {
+  flex: none;
+  width: 28px;
+  height: 28px;
+}
+
+.postBody {
+  min-width: 0;
+  font-size: var(--pb-font-caption);
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+.postName {
+  font-weight: 900;
+  color: var(--pb-text-muted);
+  margin-right: var(--pb-space-1);
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-2);
+  width: 100%;
+}
+
+.postRow {
+  display: flex;
+  gap: var(--pb-space-2);
+  align-items: stretch;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  min-height: var(--pb-touch);
+  padding: var(--pb-space-2) var(--pb-space-3);
+  border-radius: var(--pb-radius);
+  border: 2px solid var(--pb-surface-2);
+  background: var(--pb-surface);
+  color: var(--pb-text);
+  /* 16 px minimum: iOS zooms into smaller inputs on focus */
+  font: inherit;
+  font-size: max(16px, var(--pb-font-body));
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--pb-accent);
+}
+
+.small {
+  min-height: var(--pb-touch);
+  min-width: 72px;
+  padding: 0 var(--pb-space-3);
+  border: none;
+  border-radius: var(--pb-radius);
+  background: var(--pb-accent);
+  color: var(--pb-on-accent);
+  font: inherit;
+  font-weight: 900;
+  font-size: var(--pb-font-body);
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.small[aria-disabled='true'] {
+  opacity: 0.45;
+}
+
+.counter {
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+  font-weight: 800;
+  text-align: right;
+}
+
+.result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pb-space-3);
+  padding: var(--pb-space-5) var(--pb-space-3);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface);
+  text-align: center;
+  animation: global(pb-pop) var(--pb-motion-slow) var(--pb-ease) backwards;
+}
+
+.won {
+  box-shadow: inset 0 0 0 3px var(--pb-accent-3);
+}
+
+.lost {
+  box-shadow: inset 0 0 0 3px var(--pb-surface-2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .refused,
+  .watchGlyph,
+  .ghostGlyph,
+  .post,
+  .result {
+    animation: none;
+  }
+}
+:global(:root[data-motion='off']) .refused,
+:global(:root[data-motion='off']) .watchGlyph,
+:global(:root[data-motion='off']) .ghostGlyph,
+:global(:root[data-motion='off']) .post,
+:global(:root[data-motion='off']) .result {
+  animation: none;
+}

@@ -1,0 +1,220 @@
+/* The TV's role card: face side, then the role side turned in 3D. Transform only while turning
+   (opacity alongside rotateY flattens Chromium's 3D context and mirrors the face). */
+/* Dealt in, then a slow float (a held card is never a frozen frame); both are transforms on the
+   outer box, one after the other, while the turn lives on the inner flipper. */
+.card {
+  position: relative;
+  perspective: 1400px;
+  animation:
+    global(pb-deal) var(--pb-motion-slow) var(--pb-ease) var(--delay) backwards,
+    float 3.4s ease-in-out calc(var(--delay) + 700ms) infinite alternate;
+}
+
+@keyframes float {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-10px);
+  }
+}
+
+.hero {
+  width: 300px;
+  height: 400px;
+}
+
+.medium {
+  width: 240px;
+  height: 320px;
+}
+
+.small {
+  width: 150px;
+  height: 200px;
+}
+
+.flipper {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transition: transform 700ms var(--pb-ease);
+  transition-delay: var(--delay);
+}
+
+.flipped .flipper {
+  transform: rotateY(180deg);
+}
+
+.side {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pb-space-3);
+  padding: var(--pb-space-4);
+  border-radius: var(--pb-radius-lg);
+  border: 1px solid var(--pb-border);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: hidden;
+}
+
+/* A sheen sweeps across a big card now and then (not the end board's small cards: sixteen at once
+   cost frames, p02 probe). */
+.hero .side::after,
+.medium .side::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 35%,
+    color-mix(in srgb, var(--pb-text) 14%, transparent) 50%,
+    transparent 65%
+  );
+  transform: translateX(-110%);
+  animation: sheen 3.8s var(--pb-ease) calc(var(--delay) + 900ms) infinite;
+}
+
+@keyframes sheen {
+  0%,
+  45% {
+    transform: translateX(-110%);
+  }
+  100% {
+    transform: translateX(110%);
+  }
+}
+
+.front {
+  background: var(--pb-surface);
+  box-shadow: inset 0 0 0 3px color-mix(in srgb, var(--pb-text) 12%, transparent);
+}
+
+.back {
+  transform: rotateY(180deg);
+  background:
+    radial-gradient(
+      circle at 50% 30%,
+      color-mix(in srgb, var(--pb-accent-2-fill) 26%, transparent),
+      transparent 62%
+    ),
+    var(--pb-surface-2);
+  box-shadow: inset 0 0 0 3px var(--pb-accent-2);
+}
+
+.wolf {
+  background:
+    radial-gradient(
+      circle at 50% 30%,
+      color-mix(in srgb, var(--pb-danger) 34%, transparent),
+      transparent 62%
+    ),
+    var(--pb-surface-2);
+  box-shadow: inset 0 0 0 3px var(--pb-danger);
+}
+
+.avatar {
+  width: 62%;
+  aspect-ratio: 1;
+}
+
+.name {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  color: var(--pb-text);
+}
+
+.small .name {
+  font-size: var(--pb-font-caption);
+}
+
+.icon {
+  font-size: 128px;
+  line-height: 1;
+}
+
+.small .icon {
+  font-size: 64px;
+}
+
+.medium .icon {
+  font-size: 96px;
+}
+
+.role {
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  color: var(--pb-text);
+  text-align: center;
+  line-height: 1.1;
+}
+
+.small .role {
+  font-size: var(--pb-font-caption);
+}
+
+.owner {
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+  font-weight: 700;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.won .back {
+  box-shadow: inset 0 0 0 5px var(--pb-accent-3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .side::after {
+    animation: none;
+  }
+  .flipper {
+    transition: none;
+    transform: none !important;
+  }
+  .side {
+    transform: none;
+    transition: opacity var(--pb-motion-fast) linear;
+  }
+  .back {
+    opacity: 0;
+  }
+  .flipped .back {
+    opacity: 1;
+  }
+  .flipped .front {
+    opacity: 0;
+  }
+}
+:global(:root[data-motion='off']) .card,
+:global(:root[data-motion='off']) .side::after {
+  animation: none;
+}
+:global(:root[data-motion='off']) .flipper {
+  transition: none;
+  transform: none !important;
+}
+:global(:root[data-motion='off']) .side {
+  transform: none;
+}
+:global(:root[data-motion='off']) .back {
+  opacity: 0;
+}
+:global(:root[data-motion='off']) .flipped .back {
+  opacity: 1;
+}
+:global(:root[data-motion='off']) .flipped .front {
+  opacity: 0;
+}

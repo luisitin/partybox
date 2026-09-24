@@ -30,7 +30,7 @@ describe('presence', () => {
     let s = finish(night(toNight(start({ roles: EIGHT, presence: TEXT })), {}));
     expect(s.cfg.townBoard).toBe(true);
     s = finish(votes(vip(s, 'skip'), { ana: 'dee', eli: 'dee', fay: 'dee' }));
-    expect(s.phase.id).toBe('lastWords');
+    expect(s.phase.id).toBe('last-words');
     expect(phone(s, 'dee').speak).toBe(true);
     expect(phone(s, 'ana').speak).toBe(false);
     expect(input(s, 'ana', { type: 'lastWords', text: 'not me' }).lastWords).toBeNull();
@@ -141,7 +141,7 @@ describe('edge cases', () => {
       'day',
       'vote',
       'verdict',
-      'lastWords',
+      'last-words',
       'end',
     ])
       expect(phases, p).toContain(p);

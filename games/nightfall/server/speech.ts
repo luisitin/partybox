@@ -11,8 +11,6 @@ import type { State } from './types';
 
 /** After a reading, a beat before the next step. */
 export const VOICE_BEAT_MS = 700;
-/** A reading not made yet holds a step this long at most; a stuck synth never holds the room. */
-export const VOICE_WAIT_MS = 12_000;
 
 export interface Reading {
   key: string;
@@ -99,62 +97,65 @@ export function verdictLeavers(state: State): string[] {
   return state.dead.filter((d) => d.day === state.day && d.how === 'left').map((d) => d.id);
 }
 
-/** The reading for the current phase and step (what the TV plays now), or null. */
-export function readingNow(state: State): Reading | null {
+/** What the narrator says in the current phase and step (shown as text even with no voice). */
+export function spokenNow(state: State): string | null {
   const f = flavourOf(state.cfg.flavour);
   const n = f.narrator;
   const phase = state.phase.id;
   const step = state.step;
-  if (phase === 'night') return reading(state, state.day <= 1 ? n.nightFalls : n.sleeps);
+  if (phase === 'night') return state.day <= 1 ? n.nightFalls : n.sleeps;
   if (phase === 'dawn') {
-    if (step === 0) return reading(state, n.dawn);
+    if (step === 0) return n.dawn;
     const deaths = tonightsDeaths(state);
-    if (step === 1) return reading(state, deaths.length === 0 ? n.survived : newsText(state));
-    return reading(
+    if (step === 1) return deaths.length === 0 ? n.survived : newsText(state);
+    return revealText(
       state,
-      revealText(
-        state,
-        deaths.map((d) => d.id),
-      ),
+      deaths.map((d) => d.id),
     );
   }
   if (phase === 'hunter') {
-    if (step === 0) return reading(state, n.hunter);
+    if (step === 0) return n.hunter;
     const shot = state.shot;
     if (!shot) return null;
     const name = nameOf(state, shot);
     const line = readableName(name) ? fillIn(f.live.shot, { name }) : '';
     const role = state.cfg.revealRoles ? revealText(state, [shot]) : '';
-    return reading(state, `${line} ${role}`.trim());
+    return `${line} ${role}`.trim();
   }
   if (phase === 'day')
-    return reading(state, state.ghostsDay === state.day ? `${n.ghosts} ${n.discuss}` : n.discuss);
-  if (phase === 'vote') return reading(state, n.vote);
-  if (phase === 'runoff') return reading(state, n.tie);
-  if (phase === 'verdict') return verdictReading(state);
-  if (phase === 'lastWords' && step === 1 && state.verdict?.out) {
+    return state.ghostsDay === state.day ? `${n.ghosts} ${n.discuss}` : n.discuss;
+  if (phase === 'vote') return n.vote;
+  if (phase === 'runoff') return n.tie;
+  if (phase === 'verdict') return verdictText(state);
+  if (phase === 'last-words' && step === 1 && state.verdict?.out) {
     const name = nameOf(state, state.verdict.out);
-    return readableName(name) ? reading(state, fillIn(f.live.lastWords, { name })) : null;
+    return readableName(name) ? fillIn(f.live.lastWords, { name }) : null;
   }
   if (phase === 'end') {
-    if (state.winner === 'jester') return reading(state, n.jesterWin);
-    return reading(state, state.winner === 'wolves' ? n.wolvesWin : n.villageWin);
+    if (state.winner === 'jester') return n.jesterWin;
+    return state.winner === 'wolves' ? n.wolvesWin : n.villageWin;
   }
   return null;
 }
 
-function verdictReading(state: State): Reading | null {
+function verdictText(state: State): string | null {
   const f = flavourOf(state.cfg.flavour);
   const v = state.verdict;
   if (!v) return null;
-  if (state.step === 0) return reading(state, f.narrator.votesIn);
+  if (state.step === 0) return f.narrator.votesIn;
   if (state.step === 1) {
-    if (!v.out) return reading(state, f.narrator.noAgree);
+    if (!v.out) return f.narrator.noAgree;
     const name = nameOf(state, v.out);
-    return readableName(name) ? reading(state, fillIn(f.live.was, { name })) : null;
+    return readableName(name) ? fillIn(f.live.was, { name }) : null;
   }
   const role = v.out ? roleOf(state, v.out) : undefined;
-  return role ? reading(state, f.roles[role].reveal) : null;
+  return role ? f.roles[role].reveal : null;
+}
+
+/** The reading for the current phase and step (what the TV plays now), or null. */
+export function readingNow(state: State): Reading | null {
+  const text = spokenNow(state);
+  return text ? reading(state, text) : null;
 }
 
 /** What this state wants made (ADR-045): the reading on stage, this phase's later steps once
@@ -167,6 +168,8 @@ export function speech(state: State): SpeechRequest[] {
   const wanted: (Reading | null)[] = [readingNow(state)];
   const later = (step: number): Reading | null => readingNow({ ...state, step });
   if (phase === 'dawn' || phase === 'verdict') wanted.push(later(1), later(2));
+  // The shot (once taken) and "Ben's last words" (public since the verdict) come next.
+  if (phase === 'hunter' || phase === 'last-words') wanted.push(later(1));
   const fixed: Record<string, string[]> = {
     roles: [n.nightFalls],
     night: [n.dawn, n.survived],
@@ -179,6 +182,15 @@ export function speech(state: State): SpeechRequest[] {
     lastWords: [n.sleeps, n.hunter],
   };
   for (const text of fixed[phase] ?? []) wanted.push(reading(state, text));
+  // "Ben was…" for everyone who could be voted out: no secret (it names every living player),
+  // and ready long before the verdict's spotlight needs it (p04: one came 1.5 s late).
+  if (phase === 'day' || phase === 'vote' || phase === 'runoff') {
+    const f = flavourOf(state.cfg.flavour);
+    for (const id of state.runoff ?? state.alive) {
+      const name = nameOf(state, id);
+      if (readableName(name)) wanted.push(reading(state, fillIn(f.live.was, { name })));
+    }
+  }
   const out: SpeechRequest[] = [];
   const seen = new Set<string>();
   for (const r of wanted) {
@@ -187,13 +199,4 @@ export function speech(state: State): SpeechRequest[] {
     out.push({ key: r.key, voice: r.voice, parts: r.parts });
   }
   return out.slice(0, 10);
-}
-
-/** How long a paced step stays up: its reading plus a beat, never under `minMs`. */
-export function stayMs(state: State, minMs: number): number {
-  const r = readingNow(state);
-  if (!r) return minMs;
-  const ms = state.speechMs[r.key];
-  if (ms === undefined) return Math.max(minMs, VOICE_WAIT_MS);
-  return ms < 0 ? minMs : Math.max(minMs, ms + VOICE_BEAT_MS);
 }
