@@ -1,0 +1,307 @@
+{
+  "phase": {
+    "id": "done",
+    "startedAt": 1700000345919,
+    "deadline": null
+  },
+  "rng": {
+    "seed": 1,
+    "step": 232
+  },
+  "players": {
+    "p1": {
+      "id": "p1",
+      "name": "Player 1",
+      "avatarId": "fox",
+      "connected": true
+    },
+    "p2": {
+      "id": "p2",
+      "name": "Player 2",
+      "avatarId": "owl",
+      "connected": true
+    },
+    "p3": {
+      "id": "p3",
+      "name": "Player 3",
+      "avatarId": "frog",
+      "connected": true
+    },
+    "p4": {
+      "id": "p4",
+      "name": "Player 4",
+      "avatarId": "cat",
+      "connected": true
+    },
+    "p5": {
+      "id": "p5",
+      "name": "Player 5",
+      "avatarId": "panda",
+      "connected": true
+    },
+    "p6": {
+      "id": "p6",
+      "name": "Player 6",
+      "avatarId": "koala",
+      "connected": true
+    }
+  },
+  "cfg": {
+    "rounds": 3,
+    "imposters": "auto",
+    "clueRounds": 1,
+    "clueSeconds": 40,
+    "talk": true,
+    "talkSeconds": 60,
+    "voteSeconds": 30,
+    "hint": "category",
+    "lastChance": "choices",
+    "categories": [],
+    "spicy": false,
+    "reader": "george"
+  },
+  "presence": {
+    "mode": "together",
+    "phoneOnly": false
+  },
+  "seats": ["p1", "p2", "p3", "p4", "p5", "p6"],
+  "left": [],
+  "imposterBag": ["p2", "p3", "p1"],
+  "words": [
+    {
+      "id": "food-pancake",
+      "answer": "pancake",
+      "accept": ["pancakes", "hotcake", "hotcakes", "pankake", "pankakes", "pancackes"],
+      "reject": ["cupcake"],
+      "family": ["pancak"],
+      "cat": "food",
+      "label": "Food"
+    },
+    {
+      "id": "clothes-swimsuit",
+      "answer": "swimsuit",
+      "accept": [
+        "swimsuits",
+        "swimming costume",
+        "bathing suit",
+        "swimwear",
+        "swimsut",
+        "swimsiut",
+        "bathers"
+      ],
+      "reject": ["wetsuit", "sweatsuit"],
+      "family": ["swim"],
+      "cat": "clothes",
+      "label": "Clothes"
+    },
+    {
+      "id": "tech-hashtag",
+      "answer": "hashtag",
+      "accept": ["hashtags", "hastag", "hashtage", "hashteg", "pound sign", "hash sign"],
+      "reject": ["hashbrown"],
+      "family": ["hash"],
+      "cat": "tech",
+      "label": "Tech"
+    },
+    {
+      "id": "animals-penguin",
+      "answer": "penguin",
+      "accept": ["penguins", "pengiun", "pinguin", "penguine", "pengin", "emperor penguin"],
+      "reject": ["pelican"],
+      "family": ["pengu"],
+      "cat": "animals",
+      "label": "Animals"
+    },
+    {
+      "id": "vehicles-ambulance",
+      "answer": "ambulance",
+      "accept": ["ambulances", "ambulence", "ambulanse", "amberlance", "amblance", "ambulanz"],
+      "reject": ["ambulant", "ambience"],
+      "family": ["ambul"],
+      "cat": "vehicles",
+      "label": "Vehicles"
+    }
+  ],
+  "round": {
+    "n": 3,
+    "w": 2,
+    "category": {
+      "id": "tech",
+      "label": "Tech"
+    },
+    "imposters": ["p4"],
+    "clueRound": 1,
+    "clues": [
+      {
+        "by": "p3",
+        "text": "grid",
+        "r": 1
+      },
+      {
+        "by": "p6",
+        "text": "trending",
+        "r": 1
+      },
+      {
+        "by": "p4",
+        "text": "internet",
+        "r": 1
+      },
+      {
+        "by": "p2",
+        "text": "caption",
+        "r": 1
+      },
+      {
+        "by": "p1",
+        "text": "trending",
+        "r": 1
+      },
+      {
+        "by": "p5",
+        "text": "caption",
+        "r": 1
+      }
+    ],
+    "revealOrder": ["p4", "p6", "p2", "p3", "p5", "p1"],
+    "revealed": 6,
+    "ready": ["p5", "p1", "p4", "p3", "p6", "p2"],
+    "votes": {
+      "p1": ["p4"],
+      "p6": ["p4"],
+      "p2": ["p4"],
+      "p4": ["p6"],
+      "p5": ["p4"],
+      "p3": ["p4"]
+    },
+    "runoff": null,
+    "showing": "main",
+    "accused": ["p4"],
+    "spot": 0,
+    "flipped": true,
+    "options": ["selfie", "spam", "hashtag", "screenshot", "emoji", "charger"],
+    "guesses": {
+      "p4": {
+        "said": "hashtag",
+        "ok": true,
+        "byVip": false
+      }
+    },
+    "delta": {
+      "p1": {
+        "pts": 3,
+        "why": ["read", "caught"]
+      },
+      "p2": {
+        "pts": 3,
+        "why": ["read", "caught"]
+      },
+      "p3": {
+        "pts": 3,
+        "why": ["read", "caught"]
+      },
+      "p4": {
+        "pts": 3,
+        "why": ["stole"]
+      },
+      "p5": {
+        "pts": 3,
+        "why": ["read", "caught"]
+      },
+      "p6": {
+        "pts": 3,
+        "why": ["read", "caught"]
+      }
+    },
+    "void": false,
+    "step": 1,
+    "rejects": {}
+  },
+  "scores": {
+    "p1": 9,
+    "p2": 9,
+    "p3": 9,
+    "p4": 9,
+    "p5": 6,
+    "p6": 9
+  },
+  "said": {
+    "p6": ["fork", "lifeguard", "trending"],
+    "p5": ["stack", "style", "caption"],
+    "p4": ["stack", "lifeguard", "internet"],
+    "p2": ["flip", "sunscreen", "caption"],
+    "p3": ["flip", "tan", "grid"],
+    "p1": ["batter", "wet", "trending"]
+  },
+  "stats": {
+    "p1": {
+      "escapes": 0,
+      "reads": 3,
+      "steals": 0,
+      "suspicion": 1
+    },
+    "p2": {
+      "escapes": 0,
+      "reads": 3,
+      "steals": 0,
+      "suspicion": 1
+    },
+    "p3": {
+      "escapes": 0,
+      "reads": 3,
+      "steals": 0,
+      "suspicion": 0
+    },
+    "p4": {
+      "escapes": 0,
+      "reads": 2,
+      "steals": 1,
+      "suspicion": 0
+    },
+    "p5": {
+      "escapes": 0,
+      "reads": 2,
+      "steals": 0,
+      "suspicion": 0
+    },
+    "p6": {
+      "escapes": 0,
+      "reads": 2,
+      "steals": 1,
+      "suspicion": 1
+    }
+  },
+  "speechMs": {
+    "imp2896mc1zbvkq": -1,
+    "imp1ka2gh618kykle": -1,
+    "imp1y6i0ar78zar9": -1,
+    "imp1lvko6t1adf7i9": -1,
+    "impirldu9ogj6en": -1,
+    "imp14blf3vdz2p7l": -1,
+    "imp15n6hn81qf9mfk": -1,
+    "imp1myir931yikemv": -1,
+    "imp15cozm94k2903": -1,
+    "impq1b8pb1o78owx": -1,
+    "imp1fr53m1184m8nv": -1,
+    "impwcxl6717pli8d": -1,
+    "imphi8psy19oa988": -1,
+    "imp1btomyj1yregpn": -1,
+    "imp19kck8u1r03ci6": -1,
+    "impmavxuxvnezr9": -1,
+    "imp1gli6rqiem7ri": -1,
+    "imprxhjcs2gu9fg": -1,
+    "imp4rqmrr1v6epc5": -1,
+    "imp8rh1aeh7vkk": -1,
+    "impcrnprlsowphj": -1,
+    "imp1gon4z41dwzsv8": -1,
+    "imp1900gigt2hs58": -1,
+    "imporupfo938cn6": -1,
+    "impjq467a18tjjp2": -1,
+    "imp1fg8s1l1uztc63": -1,
+    "imp1jbgjwo1fzoz6": -1,
+    "imp15nn8v415du85g": -1,
+    "imp1j1zub11yqjk6h": -1,
+    "imps7jykn4pwcqn": -1,
+    "imp1u4qi9xei6uth": -1
+  }
+}

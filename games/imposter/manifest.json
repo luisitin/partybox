@@ -1,0 +1,280 @@
+{
+  "id": "imposter",
+  "name": "Imposter",
+  "tagline": "One of you doesn't know the word.",
+  "description": "Everyone gets the secret word except the imposter, who only knows the category. Everyone types one word about it, the TV deals the clues, and the room votes. A caught imposter can still steal the round by naming the word.",
+  "version": "0.1.0",
+  "minPlayers": 4,
+  "maxPlayers": 16,
+  "estimatedMinutes": 10,
+  "estimate": {
+    "fixedSeconds": 8,
+    "perRoundSeconds": 150,
+    "perPlayerPerRoundSeconds": 2,
+    "roundsSetting": "rounds"
+  },
+  "tags": ["bluff", "hidden-roles", "words"],
+  "settings": [
+    {
+      "key": "rounds",
+      "label": "Rounds",
+      "description": "How many secret words",
+      "type": "number",
+      "default": 3,
+      "min": 1,
+      "max": 8,
+      "step": 1
+    },
+    {
+      "key": "imposters",
+      "label": "Imposters",
+      "description": "Auto = one up to 9 players, two from 10; two needs 7 or more players",
+      "type": "select",
+      "default": "auto",
+      "options": [
+        {
+          "value": "auto",
+          "label": "Auto"
+        },
+        {
+          "value": "1",
+          "label": "One"
+        },
+        {
+          "value": "2",
+          "label": "Two"
+        }
+      ]
+    },
+    {
+      "key": "clueRounds",
+      "label": "Clue rounds",
+      "description": "Auto = one with talk, two without",
+      "type": "select",
+      "default": "auto",
+      "options": [
+        {
+          "value": "auto",
+          "label": "Auto"
+        },
+        {
+          "value": "1",
+          "label": "One"
+        },
+        {
+          "value": "2",
+          "label": "Two"
+        },
+        {
+          "value": "3",
+          "label": "Three"
+        }
+      ]
+    },
+    {
+      "key": "clueSeconds",
+      "label": "Clue time",
+      "description": "Seconds to type a clue",
+      "type": "number",
+      "default": 40,
+      "min": 20,
+      "max": 90,
+      "step": 5
+    },
+    {
+      "key": "talk",
+      "label": "Talk it over",
+      "description": "A talk timer before the vote (off when remote players have no call)",
+      "type": "boolean",
+      "default": true
+    },
+    {
+      "key": "talkSeconds",
+      "label": "Talk time",
+      "description": "Seconds to talk before the vote",
+      "type": "number",
+      "default": 60,
+      "min": 30,
+      "max": 180,
+      "step": 15
+    },
+    {
+      "key": "voteSeconds",
+      "label": "Vote time",
+      "description": "Seconds to vote",
+      "type": "number",
+      "default": 30,
+      "min": 15,
+      "max": 60,
+      "step": 5
+    },
+    {
+      "key": "hint",
+      "label": "Imposter's hint",
+      "description": "None = the imposter doesn't even get the category (hard mode)",
+      "type": "select",
+      "default": "category",
+      "options": [
+        {
+          "value": "category",
+          "label": "The category"
+        },
+        {
+          "value": "none",
+          "label": "No hint"
+        }
+      ]
+    },
+    {
+      "key": "lastChance",
+      "label": "Last chance",
+      "description": "How a caught imposter guesses the word",
+      "type": "select",
+      "default": "choices",
+      "options": [
+        {
+          "value": "choices",
+          "label": "Pick from six"
+        },
+        {
+          "value": "typed",
+          "label": "Type it"
+        },
+        {
+          "value": "off",
+          "label": "Off"
+        }
+      ]
+    },
+    {
+      "key": "categories",
+      "label": "Categories",
+      "description": "None picked = all of them (🌶 ones need Spicy)",
+      "type": "multiselect",
+      "default": "",
+      "options": [
+        {
+          "value": "food",
+          "label": "Food"
+        },
+        {
+          "value": "drinks",
+          "label": "Drinks"
+        },
+        {
+          "value": "animals",
+          "label": "Animals"
+        },
+        {
+          "value": "home",
+          "label": "Around the house"
+        },
+        {
+          "value": "places",
+          "label": "Places"
+        },
+        {
+          "value": "jobs",
+          "label": "Jobs"
+        },
+        {
+          "value": "sports",
+          "label": "Sports"
+        },
+        {
+          "value": "vehicles",
+          "label": "Vehicles"
+        },
+        {
+          "value": "nature",
+          "label": "Nature and weather"
+        },
+        {
+          "value": "clothes",
+          "label": "Clothes"
+        },
+        {
+          "value": "holidays",
+          "label": "Holidays and parties"
+        },
+        {
+          "value": "music",
+          "label": "Music"
+        },
+        {
+          "value": "fantasy",
+          "label": "Fantasy"
+        },
+        {
+          "value": "tech",
+          "label": "Tech"
+        },
+        {
+          "value": "dating",
+          "label": "🌶 Dating"
+        },
+        {
+          "value": "night-out",
+          "label": "🌶 Night out"
+        },
+        {
+          "value": "guilty-pleasures",
+          "label": "🌶 Guilty pleasures"
+        },
+        {
+          "value": "awkward",
+          "label": "🌶 Awkward moments"
+        },
+        {
+          "value": "party-fouls",
+          "label": "🌶 Party fouls"
+        },
+        {
+          "value": "bad-habits",
+          "label": "🌶 Bad habits"
+        }
+      ]
+    },
+    {
+      "key": "spicy",
+      "label": "Spicy",
+      "description": "Adds adult (not explicit) categories",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "key": "reader",
+      "label": "Reader",
+      "description": "Who reads the category and each clue aloud",
+      "type": "select",
+      "default": "george",
+      "options": [
+        {
+          "value": "none",
+          "label": "No reader"
+        },
+        {
+          "value": "george",
+          "label": "Old British Man"
+        },
+        {
+          "value": "fable",
+          "label": "Young British Man"
+        },
+        {
+          "value": "jessica",
+          "label": "American Woman"
+        },
+        {
+          "value": "sky",
+          "label": "Soft-Spoken Woman"
+        },
+        {
+          "value": "original",
+          "label": "Original"
+        }
+      ]
+    }
+  ],
+  "supportsBots": true
+}

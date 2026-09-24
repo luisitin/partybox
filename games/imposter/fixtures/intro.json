@@ -1,0 +1,162 @@
+{
+  "phase": {
+    "id": "intro",
+    "startedAt": 1700000000000,
+    "deadline": 1700000008000
+  },
+  "rng": {
+    "seed": 1,
+    "step": 167
+  },
+  "players": {
+    "p1": {
+      "id": "p1",
+      "name": "Player 1",
+      "avatarId": "fox",
+      "connected": true
+    },
+    "p2": {
+      "id": "p2",
+      "name": "Player 2",
+      "avatarId": "owl",
+      "connected": true
+    },
+    "p3": {
+      "id": "p3",
+      "name": "Player 3",
+      "avatarId": "frog",
+      "connected": true
+    },
+    "p4": {
+      "id": "p4",
+      "name": "Player 4",
+      "avatarId": "cat",
+      "connected": true
+    },
+    "p5": {
+      "id": "p5",
+      "name": "Player 5",
+      "avatarId": "panda",
+      "connected": true
+    },
+    "p6": {
+      "id": "p6",
+      "name": "Player 6",
+      "avatarId": "koala",
+      "connected": true
+    }
+  },
+  "cfg": {
+    "rounds": 3,
+    "imposters": "auto",
+    "clueRounds": 1,
+    "clueSeconds": 40,
+    "talk": true,
+    "talkSeconds": 60,
+    "voteSeconds": 30,
+    "hint": "category",
+    "lastChance": "choices",
+    "categories": [],
+    "spicy": false,
+    "reader": "george"
+  },
+  "presence": {
+    "mode": "together",
+    "phoneOnly": false
+  },
+  "seats": ["p1", "p2", "p3", "p4", "p5", "p6"],
+  "left": [],
+  "imposterBag": [],
+  "words": [
+    {
+      "id": "food-pancake",
+      "answer": "pancake",
+      "accept": ["pancakes", "hotcake", "hotcakes", "pankake", "pankakes", "pancackes"],
+      "reject": ["cupcake"],
+      "family": ["pancak"],
+      "cat": "food",
+      "label": "Food"
+    },
+    {
+      "id": "clothes-swimsuit",
+      "answer": "swimsuit",
+      "accept": [
+        "swimsuits",
+        "swimming costume",
+        "bathing suit",
+        "swimwear",
+        "swimsut",
+        "swimsiut",
+        "bathers"
+      ],
+      "reject": ["wetsuit", "sweatsuit"],
+      "family": ["swim"],
+      "cat": "clothes",
+      "label": "Clothes"
+    },
+    {
+      "id": "tech-hashtag",
+      "answer": "hashtag",
+      "accept": ["hashtags", "hastag", "hashtage", "hashteg", "pound sign", "hash sign"],
+      "reject": ["hashbrown"],
+      "family": ["hash"],
+      "cat": "tech",
+      "label": "Tech"
+    },
+    {
+      "id": "animals-penguin",
+      "answer": "penguin",
+      "accept": ["penguins", "pengiun", "pinguin", "penguine", "pengin", "emperor penguin"],
+      "reject": ["pelican"],
+      "family": ["pengu"],
+      "cat": "animals",
+      "label": "Animals"
+    },
+    {
+      "id": "vehicles-ambulance",
+      "answer": "ambulance",
+      "accept": ["ambulances", "ambulence", "ambulanse", "amberlance", "amblance", "ambulanz"],
+      "reject": ["ambulant", "ambience"],
+      "family": ["ambul"],
+      "cat": "vehicles",
+      "label": "Vehicles"
+    }
+  ],
+  "round": {
+    "n": 0,
+    "w": 0,
+    "category": {
+      "id": "food",
+      "label": "Food"
+    },
+    "imposters": [],
+    "clueRound": 1,
+    "clues": [],
+    "revealOrder": [],
+    "revealed": 0,
+    "ready": [],
+    "votes": {},
+    "runoff": null,
+    "showing": "main",
+    "accused": [],
+    "spot": 0,
+    "flipped": false,
+    "options": null,
+    "guesses": {},
+    "delta": {},
+    "void": false,
+    "step": 0,
+    "rejects": {}
+  },
+  "scores": {
+    "p1": 0,
+    "p2": 0,
+    "p3": 0,
+    "p4": 0,
+    "p5": 0,
+    "p6": 0
+  },
+  "said": {},
+  "stats": {},
+  "speechMs": {}
+}

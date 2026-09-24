@@ -1,0 +1,1967 @@
+{
+  "lang": "en",
+  "categories": [
+    {
+      "category": "dating",
+      "label": "Dating",
+      "imposterClues": [
+        "romance",
+        "love",
+        "relationship",
+        "heart",
+        "feelings",
+        "awkward",
+        "nervous",
+        "single",
+        "texting",
+        "emotions",
+        "couple",
+        "chemistry",
+        "drama"
+      ],
+      "words": [
+        {
+          "id": "dating-first-date",
+          "answer": "first date",
+          "accept": [
+            "first dates",
+            "1st date",
+            "frist date",
+            "firts date",
+            "first date night",
+            "first dait"
+          ],
+          "reject": ["first mate"],
+          "family": ["first"],
+          "clues": [
+            "dinner",
+            "outfit",
+            "restaurant",
+            "impression",
+            "small-talk",
+            "cologne",
+            "goodnight",
+            "questions",
+            "jitters"
+          ]
+        },
+        {
+          "id": "dating-ghosting",
+          "answer": "ghosting",
+          "accept": ["ghosted", "ghost", "got ghosted", "ghostin", "gosting", "ghostng"],
+          "reject": ["hosting", "toasting", "boasting"],
+          "family": ["ghost"],
+          "clues": [
+            "disappear",
+            "unread",
+            "silence",
+            "vanish",
+            "blocked",
+            "left-on-read",
+            "ignored",
+            "invisible",
+            "poof",
+            "crickets"
+          ]
+        },
+        {
+          "id": "dating-crush",
+          "answer": "crush",
+          "accept": ["crushes", "crushing", "secret crush", "infatuation", "puppy love", "crsh"],
+          "reject": ["brush", "crust", "crash"],
+          "family": [],
+          "clues": [
+            "blushing",
+            "butterflies",
+            "admire",
+            "school",
+            "daydream",
+            "staring",
+            "pining",
+            "obsessed",
+            "heart-eyes"
+          ]
+        },
+        {
+          "id": "dating-blind-date",
+          "answer": "blind date",
+          "accept": [
+            "blind dates",
+            "blined date",
+            "blind dait",
+            "blin date",
+            "setup date",
+            "arranged date"
+          ],
+          "reject": ["blind spot"],
+          "family": ["blind"],
+          "clues": [
+            "stranger",
+            "setup",
+            "matchmaker",
+            "surprise",
+            "mystery",
+            "cousin",
+            "unknown",
+            "favor"
+          ]
+        },
+        {
+          "id": "dating-flirting",
+          "answer": "flirting",
+          "accept": ["flirt", "flirted", "flirty", "flirtation", "flurting", "flrting"],
+          "reject": ["fitting", "flitting"],
+          "family": [],
+          "clues": [
+            "wink",
+            "compliment",
+            "eyebrows",
+            "smirk",
+            "tease",
+            "charm",
+            "eye-contact",
+            "banter",
+            "cheeky",
+            "playful"
+          ]
+        },
+        {
+          "id": "dating-ex",
+          "answer": "ex",
+          "accept": [
+            "exes",
+            "ex boyfriend",
+            "ex girlfriend",
+            "ex partner",
+            "former partner",
+            "old flame"
+          ],
+          "reject": ["next", "sex"],
+          "family": [],
+          "clues": [
+            "baggage",
+            "closure",
+            "history",
+            "toxic",
+            "memories",
+            "bitter",
+            "past",
+            "unfollow",
+            "former"
+          ]
+        },
+        {
+          "id": "dating-breakup",
+          "answer": "breakup",
+          "accept": ["breakups", "broke up", "breaking up", "split up", "dumped", "brakeup"],
+          "reject": ["makeup"],
+          "family": [],
+          "clues": [
+            "tears",
+            "heartbroken",
+            "ice-cream",
+            "speech",
+            "rebound",
+            "boxes",
+            "over",
+            "sobbing",
+            "sad-songs"
+          ]
+        },
+        {
+          "id": "dating-wingman",
+          "answer": "wingman",
+          "accept": ["wingmen", "wingwoman", "wingmn", "wingmann", "winman", "wingperson"],
+          "reject": ["winger"],
+          "family": ["wing"],
+          "clues": [
+            "buddy",
+            "backup",
+            "introduce",
+            "sidekick",
+            "assist",
+            "hype",
+            "loyal",
+            "distraction",
+            "bar"
+          ]
+        },
+        {
+          "id": "dating-pickup-line",
+          "answer": "pickup line",
+          "accept": [
+            "pickup lines",
+            "chat-up line",
+            "cheesy line",
+            "opening line",
+            "opener",
+            "pikup line"
+          ],
+          "reject": ["punchline"],
+          "family": ["pickup"],
+          "clues": [
+            "cheesy",
+            "corny",
+            "rejected",
+            "angel",
+            "smooth",
+            "groan",
+            "rehearsed",
+            "puns",
+            "did-it-hurt"
+          ]
+        },
+        {
+          "id": "dating-soulmate",
+          "answer": "soulmate",
+          "accept": ["soulmates", "sole mate", "soulmat", "the one", "true love", "twin flame"],
+          "reject": ["roommate", "classmate"],
+          "family": ["soul"],
+          "clues": [
+            "destiny",
+            "forever",
+            "meant-to-be",
+            "perfect",
+            "eternal",
+            "lifetime",
+            "universe",
+            "connection",
+            "grow-old"
+          ]
+        },
+        {
+          "id": "dating-double-date",
+          "answer": "double date",
+          "accept": [
+            "double dates",
+            "double dating",
+            "dubble date",
+            "doubel date",
+            "couples date",
+            "double dait"
+          ],
+          "reject": ["double take"],
+          "family": ["double"],
+          "clues": [
+            "four",
+            "pairs",
+            "bowling",
+            "best-friends",
+            "booth",
+            "comparing",
+            "minigolf",
+            "chaperone",
+            "tagalong"
+          ]
+        },
+        {
+          "id": "dating-friend-zone",
+          "answer": "friend zone",
+          "accept": [
+            "friendzoned",
+            "friend zones",
+            "just friends",
+            "frend zone",
+            "freind zone",
+            "friendzoning"
+          ],
+          "reject": ["free zone"],
+          "family": ["friend", "zone"],
+          "clues": [
+            "platonic",
+            "unrequited",
+            "pal",
+            "trapped",
+            "one-sided",
+            "nice-guy",
+            "hopeless",
+            "stuck",
+            "sibling"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "night-out",
+      "label": "Night out",
+      "imposterClues": [
+        "party",
+        "weekend",
+        "saturday",
+        "friends",
+        "night",
+        "drinks",
+        "club",
+        "downtown",
+        "bar",
+        "wild",
+        "celebrate",
+        "messy",
+        "loud"
+      ],
+      "words": [
+        {
+          "id": "night-out-hangover",
+          "answer": "hangover",
+          "accept": [
+            "hangovers",
+            "hungover",
+            "hangovr",
+            "hangoever",
+            "morning after",
+            "hangover headache"
+          ],
+          "reject": ["handover", "changeover"],
+          "family": [],
+          "clues": [
+            "headache",
+            "sunglasses",
+            "regret",
+            "greasy",
+            "aspirin",
+            "nausea",
+            "dehydrated",
+            "groggy",
+            "sunday"
+          ]
+        },
+        {
+          "id": "night-out-bouncer",
+          "answer": "bouncer",
+          "accept": ["bouncers", "bounser", "bouncr", "doorman", "door staff", "club security"],
+          "reject": ["pouncer"],
+          "family": ["bounc"],
+          "clues": [
+            "rope",
+            "guestlist",
+            "muscles",
+            "earpiece",
+            "dress-code",
+            "id",
+            "tough",
+            "entrance",
+            "kicked-out",
+            "arms-crossed"
+          ]
+        },
+        {
+          "id": "night-out-shots",
+          "answer": "shots",
+          "accept": ["shot", "shooter", "shooters", "shotz", "shotts", "round of shots"],
+          "reject": ["shorts", "shoots", "slots"],
+          "family": [],
+          "clues": [
+            "tequila",
+            "lime",
+            "salt",
+            "burn",
+            "cheers",
+            "jello",
+            "vodka",
+            "lineup",
+            "round",
+            "sambuca"
+          ]
+        },
+        {
+          "id": "night-out-coat-check",
+          "answer": "coat check",
+          "accept": [
+            "coat checks",
+            "cloakroom",
+            "coat room",
+            "coat chek",
+            "cote check",
+            "coat check ticket"
+          ],
+          "reject": ["coat rack"],
+          "family": ["coat"],
+          "clues": [
+            "ticket",
+            "hanger",
+            "jacket",
+            "tip",
+            "lost",
+            "number",
+            "attendant",
+            "counter",
+            "winter",
+            "scarf"
+          ]
+        },
+        {
+          "id": "night-out-designated-driver",
+          "answer": "designated driver",
+          "accept": [
+            "designated drivers",
+            "dd",
+            "sober driver",
+            "desginated driver",
+            "designated drivr",
+            "designated driving"
+          ],
+          "reject": ["delivery driver"],
+          "family": ["designat", "driver"],
+          "clues": [
+            "sober",
+            "keys",
+            "soda",
+            "car",
+            "responsible",
+            "mocktail",
+            "hero",
+            "seatbelt",
+            "volunteer",
+            "pickup"
+          ]
+        },
+        {
+          "id": "night-out-dance-floor",
+          "answer": "dance floor",
+          "accept": [
+            "dance floors",
+            "dnace floor",
+            "dance flor",
+            "disco floor",
+            "club floor",
+            "dancing area"
+          ],
+          "reject": ["dance hall"],
+          "family": ["dance", "floor"],
+          "clues": [
+            "moves",
+            "sticky",
+            "grooving",
+            "crowded",
+            "disco-ball",
+            "sweaty",
+            "conga",
+            "strobe",
+            "limbo"
+          ]
+        },
+        {
+          "id": "night-out-cocktail",
+          "answer": "cocktail",
+          "accept": ["cocktails", "coctail", "cocktial", "cocktale", "mixed drink", "mixed drinks"],
+          "reject": ["cockatiel"],
+          "family": [],
+          "clues": [
+            "umbrella",
+            "mojito",
+            "straw",
+            "garnish",
+            "martini",
+            "shaker",
+            "fancy",
+            "olive",
+            "margarita"
+          ]
+        },
+        {
+          "id": "night-out-last-call",
+          "answer": "last call",
+          "accept": [
+            "last orders",
+            "last calls",
+            "final call",
+            "last round",
+            "closing time",
+            "last drinks"
+          ],
+          "reject": ["last caller"],
+          "family": ["last"],
+          "clues": [
+            "bell",
+            "lights-on",
+            "closing",
+            "bartender",
+            "hurry",
+            "one-more",
+            "rush",
+            "stragglers",
+            "scramble"
+          ]
+        },
+        {
+          "id": "night-out-pub-crawl",
+          "answer": "pub crawl",
+          "accept": [
+            "pub crawls",
+            "bar crawl",
+            "bar crawls",
+            "bar hopping",
+            "bar hop",
+            "pub hopping"
+          ],
+          "reject": ["pub quiz"],
+          "family": ["crawl"],
+          "clues": [
+            "route",
+            "stops",
+            "matching-shirts",
+            "stumbling",
+            "marathon",
+            "tour",
+            "checklist",
+            "walking",
+            "group"
+          ]
+        },
+        {
+          "id": "night-out-dj",
+          "answer": "dj",
+          "accept": ["djs", "deejay", "deejays", "disc jockey", "disk jockey", "dj set"],
+          "reject": ["jd", "mc"],
+          "family": [],
+          "clues": [
+            "turntables",
+            "remix",
+            "headphones",
+            "playlist",
+            "request",
+            "drop",
+            "beat",
+            "booth",
+            "decks"
+          ]
+        },
+        {
+          "id": "night-out-kebab",
+          "answer": "kebab",
+          "accept": ["kebabs", "kabob", "kebob", "kabab", "kebap", "shish kebab"],
+          "reject": ["cabana"],
+          "family": [],
+          "clues": [
+            "skewer",
+            "meat",
+            "garlic-sauce",
+            "pita",
+            "rotisserie",
+            "spit",
+            "onions",
+            "wrap",
+            "grill"
+          ]
+        },
+        {
+          "id": "night-out-happy-hour",
+          "answer": "happy hour",
+          "accept": [
+            "happy hours",
+            "hapy hour",
+            "happy houre",
+            "drink specials",
+            "half-price drinks",
+            "after work drinks"
+          ],
+          "reject": ["rush hour"],
+          "family": ["happy"],
+          "clues": [
+            "discount",
+            "cheap",
+            "after-work",
+            "coworkers",
+            "two-for-one",
+            "afternoon",
+            "appetizers",
+            "office",
+            "half-off"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "guilty-pleasures",
+      "label": "Guilty pleasures",
+      "imposterClues": [
+        "indulgent",
+        "secret",
+        "treat",
+        "comfort",
+        "shameless",
+        "alone",
+        "evening",
+        "unwind",
+        "addictive",
+        "lazy",
+        "hidden",
+        "reward",
+        "weakness",
+        "cozy"
+      ],
+      "words": [
+        {
+          "id": "guilty-pleasures-reality-tv",
+          "answer": "reality tv",
+          "accept": [
+            "reality television",
+            "reality show",
+            "reality shows",
+            "reality tv shows",
+            "realty tv",
+            "reality telly"
+          ],
+          "reject": ["reality check", "virtual reality"],
+          "family": ["reality"],
+          "clues": [
+            "drama",
+            "contestants",
+            "dating",
+            "island",
+            "confessional",
+            "eliminated",
+            "unscripted",
+            "villain",
+            "housewives",
+            "rose"
+          ]
+        },
+        {
+          "id": "guilty-pleasures-midnight-snack",
+          "answer": "midnight snack",
+          "accept": [
+            "midnight snacks",
+            "late night snack",
+            "late night snacking",
+            "midnight snacking",
+            "midnite snack",
+            "night snack"
+          ],
+          "reject": ["midnight mass", "snack bar"],
+          "family": ["midnight", "snack"],
+          "clues": [
+            "fridge",
+            "leftovers",
+            "cereal",
+            "crumbs",
+            "pajamas",
+            "hungry",
+            "toast",
+            "sneaky",
+            "kitchen",
+            "cookies"
+          ]
+        },
+        {
+          "id": "guilty-pleasures-bubble-bath",
+          "answer": "bubble bath",
+          "accept": [
+            "bubble baths",
+            "bath bubbles",
+            "bubble bathing",
+            "bubbel bath",
+            "buble bath",
+            "foam bath"
+          ],
+          "reject": ["bubble tea", "bird bath"],
+          "family": ["bubble", "bath"],
+          "clues": [
+            "candles",
+            "tub",
+            "foam",
+            "soak",
+            "rubber-duck",
+            "wine",
+            "salts",
+            "steam",
+            "relaxing",
+            "lavender"
+          ]
+        },
+        {
+          "id": "guilty-pleasures-trashy-novel",
+          "answer": "trashy novel",
+          "accept": [
+            "trashy novels",
+            "trashy book",
+            "trashy books",
+            "trashy romance",
+            "paperback romance",
+            "bodice ripper",
+            "trashy read"
+          ],
+          "reject": ["graphic novel", "trash can"],
+          "family": ["trash", "novel"],
+          "clues": [
+            "paperback",
+            "beach",
+            "airport",
+            "steamy",
+            "chapters",
+            "cover",
+            "bookmark",
+            "library",
+            "author",
+            "page-turner"
+          ]
+        },
+        {
+          "id": "guilty-pleasures-cat-videos",
+          "answer": "cat videos",
+          "accept": [
+            "cat video",
+            "kitten videos",
+            "funny cat videos",
+            "cat clips",
+            "cat vids",
+            "kitty videos",
+            "cat vidoes"
+          ],
+          "reject": ["dog videos", "cat food"],
+          "family": ["cat", "kitten", "kitty", "video"],
+          "clues": [
+            "whiskers",
+            "meow",
+            "internet",
+            "purring",
+            "compilation",
+            "funny",
+            "paws",
+            "cute",
+            "viral",
+            "fluffy"
+          ]
+        },
+        {
+          "id": "guilty-pleasures-fast-food",
+          "answer": "fast food",
+          "accept": [
+            "fast foods",
+            "junk food",
+            "takeout",
+            "takeaway",
+            "drive thru",
+            "drive through",
+            "greasy food"
+          ],
+          "reject": ["slow food", "fast"],
+          "family": ["fast", "food"],
+          "clues": [
+            "burger",
+            "fries",
+            "drive-in",
+            "greasy",
+            "nuggets",
+            "milkshake",
+            "combo",
+            "ketchup",
+            "window",
+            "value"
+          ]
+        },
+        {
+          "id": "guilty-pleasures-soap-opera",
+          "answer": "soap opera",
+          "accept": [
+            "soap operas",
+            "soaps",
+            "soap",
+            "daytime soap",
+            "telenovela",
+            "daytime drama",
+            "soap oprah"
+          ],
+          "reject": ["opera", "soap bar"],
+          "family": ["soap", "opera"],
+          "clues": [
+            "amnesia",
+            "twins",
+            "daytime",
+            "cliffhanger",
+            "affair",
+            "episodes",
+            "dramatic",
+            "wedding",
+            "coma",
+            "slap"
+          ]
+        },
+        {
+          "id": "guilty-pleasures-binge-watching",
+          "answer": "binge watching",
+          "accept": [
+            "binge watch",
+            "binge watcher",
+            "bingeing",
+            "binging",
+            "binge viewing",
+            "binge watched",
+            "bing watching"
+          ],
+          "reject": ["binge drinking", "binge eating"],
+          "family": ["binge", "binging"],
+          "clues": [
+            "season",
+            "streaming",
+            "couch",
+            "remote",
+            "autoplay",
+            "finale",
+            "all-nighter",
+            "series",
+            "subscription",
+            "spoilers"
+          ]
+        },
+        {
+          "id": "guilty-pleasures-online-shopping",
+          "answer": "online shopping",
+          "accept": [
+            "shopping online",
+            "internet shopping",
+            "online shop",
+            "web shopping",
+            "online shoping",
+            "online orders",
+            "online purchases"
+          ],
+          "reject": ["window shopping", "online banking"],
+          "family": ["online", "shop"],
+          "clues": [
+            "cart",
+            "checkout",
+            "delivery",
+            "parcel",
+            "sale",
+            "credit",
+            "returns",
+            "wishlist",
+            "tracking",
+            "doorstep"
+          ]
+        },
+        {
+          "id": "guilty-pleasures-sleeping-in",
+          "answer": "sleeping in",
+          "accept": [
+            "sleep in",
+            "slept in",
+            "lie in",
+            "lying in",
+            "sleeping late",
+            "sleep late",
+            "having a lie in"
+          ],
+          "reject": ["sleepwalking", "sleeping bag"],
+          "family": ["sleep", "slept"],
+          "clues": [
+            "alarm",
+            "snooze",
+            "saturday",
+            "pillow",
+            "duvet",
+            "noon",
+            "blanket",
+            "curtains",
+            "brunch",
+            "yawn"
+          ]
+        },
+        {
+          "id": "guilty-pleasures-celebrity-gossip",
+          "answer": "celebrity gossip",
+          "accept": [
+            "celebrity news",
+            "celeb gossip",
+            "gossip magazine",
+            "gossip magazines",
+            "tabloids",
+            "tabloid",
+            "celebrity gossips",
+            "gossip mags"
+          ],
+          "reject": ["gossip girl", "celebrity chef"],
+          "family": ["celeb", "gossip"],
+          "clues": [
+            "rumors",
+            "magazine",
+            "paparazzi",
+            "scandal",
+            "breakup",
+            "famous",
+            "headlines",
+            "juicy",
+            "hollywood",
+            "divorce"
+          ]
+        },
+        {
+          "id": "guilty-pleasures-romcom",
+          "answer": "romcom",
+          "accept": [
+            "romcoms",
+            "romantic comedy",
+            "romantic comedies",
+            "chick flick",
+            "chick flicks",
+            "romcomm",
+            "romance movie"
+          ],
+          "reject": ["sitcom", "horror movie"],
+          "family": ["romcom", "romantic", "flick"],
+          "clues": [
+            "meet-cute",
+            "kiss",
+            "sappy",
+            "popcorn",
+            "cheesy",
+            "valentine",
+            "cinema",
+            "heartthrob",
+            "predictable",
+            "montage"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "awkward",
+      "label": "Awkward moments",
+      "imposterClues": [
+        "cringe",
+        "blush",
+        "embarrassing",
+        "oops",
+        "yikes",
+        "public",
+        "mortified",
+        "red-faced",
+        "witnesses",
+        "laugh",
+        "moment",
+        "accident",
+        "social",
+        "humiliating"
+      ],
+      "words": [
+        {
+          "id": "awkward-wrong-name",
+          "answer": "wrong name",
+          "accept": [
+            "wrong names",
+            "calling the wrong name",
+            "called the wrong name",
+            "misnaming",
+            "forgetting names",
+            "forgot their name",
+            "name mixup"
+          ],
+          "reject": ["nickname", "wrong number"],
+          "family": ["wrong", "name"],
+          "clues": [
+            "forgot",
+            "introduction",
+            "blank",
+            "mumble",
+            "ex",
+            "memory",
+            "colleague",
+            "mixup",
+            "mistaken"
+          ]
+        },
+        {
+          "id": "awkward-open-fly",
+          "answer": "open fly",
+          "accept": [
+            "fly open",
+            "fly down",
+            "flies down",
+            "unzipped",
+            "unzipped fly",
+            "zipper down",
+            "undone fly",
+            "open zipper"
+          ],
+          "reject": ["open mic", "fruit fly"],
+          "family": ["fly", "zipper", "unzip"],
+          "clues": [
+            "trousers",
+            "jeans",
+            "draft",
+            "breezy",
+            "crotch",
+            "button",
+            "tug",
+            "glance",
+            "underwear",
+            "peek"
+          ]
+        },
+        {
+          "id": "awkward-reply-all",
+          "answer": "reply all",
+          "accept": [
+            "replied all",
+            "reply to all",
+            "replying to all",
+            "reply alls",
+            "hit reply all",
+            "reply all email",
+            "email reply all"
+          ],
+          "reject": ["reply", "call all"],
+          "family": ["reply", "replied"],
+          "clues": [
+            "email",
+            "inbox",
+            "coworkers",
+            "unsend",
+            "thread",
+            "cc",
+            "boss",
+            "company-wide",
+            "typo",
+            "recall"
+          ]
+        },
+        {
+          "id": "awkward-spinach-in-teeth",
+          "answer": "spinach in teeth",
+          "accept": [
+            "spinach in your teeth",
+            "food in teeth",
+            "food in your teeth",
+            "spinach teeth",
+            "something in your teeth",
+            "food stuck in teeth",
+            "spinich in teeth"
+          ],
+          "reject": ["spinach salad", "teething"],
+          "family": ["spinach", "teeth", "tooth"],
+          "clues": [
+            "smile",
+            "green",
+            "floss",
+            "lunch",
+            "salad",
+            "grin",
+            "mirror",
+            "leafy",
+            "gap",
+            "dentist"
+          ]
+        },
+        {
+          "id": "awkward-wave-back",
+          "answer": "wave back",
+          "accept": [
+            "waving back",
+            "waved back",
+            "wave at a stranger",
+            "waving at a stranger",
+            "wrong wave",
+            "waving at the wrong person",
+            "wave back at a stranger"
+          ],
+          "reject": ["heat wave", "wave goodbye"],
+          "family": ["wave", "waving"],
+          "clues": [
+            "stranger",
+            "behind",
+            "hand",
+            "street",
+            "greeting",
+            "hi",
+            "pretend",
+            "scratch",
+            "crowd",
+            "arm"
+          ]
+        },
+        {
+          "id": "awkward-awkward-silence",
+          "answer": "awkward silence",
+          "accept": [
+            "awkward silences",
+            "awkward pause",
+            "uncomfortable silence",
+            "dead silence",
+            "awkard silence",
+            "akward silence"
+          ],
+          "reject": ["silent treatment", "moment of silence"],
+          "family": ["silence", "silent"],
+          "clues": [
+            "crickets",
+            "pause",
+            "quiet",
+            "staring",
+            "cough",
+            "elevator",
+            "tumbleweed",
+            "conversation",
+            "small-talk",
+            "clock"
+          ]
+        },
+        {
+          "id": "awkward-walk-of-shame",
+          "answer": "walk of shame",
+          "accept": [
+            "walks of shame",
+            "shame walk",
+            "stride of pride",
+            "walk of shaim",
+            "walking of shame",
+            "morning walk of shame",
+            "walk o shame"
+          ],
+          "reject": ["walk of fame", "hall of shame"],
+          "family": ["walk", "shame"],
+          "clues": [
+            "morning",
+            "heels",
+            "hungover",
+            "sunrise",
+            "mascara",
+            "taxi",
+            "sneaking",
+            "smudged",
+            "outfit",
+            "rumpled"
+          ]
+        },
+        {
+          "id": "awkward-butt-dial",
+          "answer": "butt dial",
+          "accept": [
+            "butt dialed",
+            "butt dialing",
+            "butt dialling",
+            "butt dials",
+            "pocket dial",
+            "pocket dialed",
+            "pocket dialing",
+            "bum dial"
+          ],
+          "reject": ["speed dial", "dial tone"],
+          "family": ["butt", "dial"],
+          "clues": [
+            "pocket",
+            "phone",
+            "accidental",
+            "voicemail",
+            "muffled",
+            "call",
+            "sitting",
+            "ringing",
+            "rustling",
+            "eavesdrop"
+          ]
+        },
+        {
+          "id": "awkward-voice-crack",
+          "answer": "voice crack",
+          "accept": [
+            "voice cracks",
+            "voice cracking",
+            "cracking voice",
+            "cracked voice",
+            "voice broke",
+            "voice breaking",
+            "squeaky voice"
+          ],
+          "reject": ["crack", "voicemail"],
+          "family": ["voice", "crack"],
+          "clues": [
+            "puberty",
+            "squeak",
+            "singing",
+            "teenager",
+            "pitch",
+            "high-note",
+            "speech",
+            "choir",
+            "presentation",
+            "nervous"
+          ]
+        },
+        {
+          "id": "awkward-stomach-growl",
+          "answer": "stomach growl",
+          "accept": [
+            "stomach growling",
+            "growling stomach",
+            "tummy rumble",
+            "stomach rumble",
+            "rumbling stomach",
+            "belly growl",
+            "tummy growl",
+            "stomach grumble"
+          ],
+          "reject": ["stomach ache", "growl"],
+          "family": ["stomach", "growl"],
+          "clues": [
+            "hungry",
+            "exam",
+            "skipped",
+            "breakfast",
+            "gurgle",
+            "noise",
+            "library",
+            "lunchtime",
+            "empty",
+            "rumble"
+          ]
+        },
+        {
+          "id": "awkward-tripping",
+          "answer": "tripping",
+          "accept": [
+            "trip",
+            "tripped",
+            "trips",
+            "tripping over",
+            "stumbling",
+            "stumble",
+            "falling over",
+            "tripping up",
+            "faceplant"
+          ],
+          "reject": ["road trip", "stripping"],
+          "family": ["trip"],
+          "clues": [
+            "stairs",
+            "curb",
+            "shoelace",
+            "clumsy",
+            "ground",
+            "knees",
+            "pavement",
+            "graceful",
+            "audience",
+            "bruise"
+          ]
+        },
+        {
+          "id": "awkward-left-hanging",
+          "answer": "left hanging",
+          "accept": [
+            "leave hanging",
+            "leaving hanging",
+            "leaving someone hanging",
+            "left someone hanging",
+            "high five fail",
+            "failed high five",
+            "hanging high five",
+            "left hangin"
+          ],
+          "reject": ["hangover", "hang glider"],
+          "family": ["hanging"],
+          "clues": [
+            "palm",
+            "slap",
+            "ignored",
+            "fist-bump",
+            "raised",
+            "hug",
+            "handshake",
+            "air",
+            "snub",
+            "celebrate"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "party-fouls",
+      "label": "Party fouls",
+      "imposterClues": [
+        "rude",
+        "messy",
+        "tipsy",
+        "regret",
+        "guests",
+        "saturday",
+        "friends",
+        "scene",
+        "drama",
+        "awkward",
+        "late",
+        "booze",
+        "hosts",
+        "cringe"
+      ],
+      "words": [
+        {
+          "id": "party-fouls-spilled-drink",
+          "answer": "spilled drink",
+          "accept": [
+            "spilt drink",
+            "spilt drinks",
+            "spilled drinks",
+            "spilling drinks",
+            "drink spill",
+            "spilled beer",
+            "spilled wine"
+          ],
+          "reject": ["mixed drink", "spilled milk"],
+          "family": ["spill", "spilt"],
+          "clues": [
+            "carpet",
+            "sticky",
+            "stain",
+            "towel",
+            "clumsy",
+            "napkin",
+            "elbow",
+            "wet",
+            "mop",
+            "soaked"
+          ]
+        },
+        {
+          "id": "party-fouls-double-dipping",
+          "answer": "double dipping",
+          "accept": [
+            "double dip",
+            "double dipped",
+            "double dipper",
+            "double dips",
+            "dipping twice",
+            "double dipping chips",
+            "duble dipping"
+          ],
+          "reject": ["skinny dipping", "double take"],
+          "family": ["double", "dipp"],
+          "clues": [
+            "chip",
+            "salsa",
+            "guacamole",
+            "bite",
+            "gross",
+            "germs",
+            "bowl",
+            "nachos",
+            "saliva",
+            "crackers"
+          ]
+        },
+        {
+          "id": "party-fouls-broken-glass",
+          "answer": "broken glass",
+          "accept": [
+            "broke a glass",
+            "smashed glass",
+            "smashed a glass",
+            "shattered glass",
+            "dropped a glass",
+            "glass broken",
+            "brokn glass"
+          ],
+          "reject": ["broken glasses", "glass eye"],
+          "family": ["broke", "glass"],
+          "clues": [
+            "shards",
+            "broom",
+            "barefoot",
+            "crash",
+            "dustpan",
+            "cut",
+            "sharp",
+            "shatter",
+            "clink"
+          ]
+        },
+        {
+          "id": "party-fouls-passing-out",
+          "answer": "passing out",
+          "accept": [
+            "passed out",
+            "pass out",
+            "passes out",
+            "blacking out",
+            "blacked out",
+            "conking out",
+            "zonked out",
+            "out cold"
+          ],
+          "reject": ["passing by", "passing over"],
+          "family": ["passing", "passed"],
+          "clues": [
+            "couch",
+            "marker",
+            "snoring",
+            "floor",
+            "doodles",
+            "asleep",
+            "unconscious",
+            "drool",
+            "shots",
+            "lightweight"
+          ]
+        },
+        {
+          "id": "party-fouls-sneaking-out",
+          "answer": "sneaking out",
+          "accept": [
+            "sneak out",
+            "snuck out",
+            "sneaked out",
+            "irish goodbye",
+            "french exit",
+            "slipping out",
+            "sneaking off",
+            "leaving without saying bye"
+          ],
+          "reject": ["sneaking in", "breaking out"],
+          "family": ["sneak", "snuck"],
+          "clues": [
+            "farewell",
+            "door",
+            "quietly",
+            "tiptoe",
+            "early",
+            "coat",
+            "vanish",
+            "unnoticed",
+            "escape"
+          ]
+        },
+        {
+          "id": "party-fouls-drunk-texting",
+          "answer": "drunk texting",
+          "accept": [
+            "drunk text",
+            "drunk texts",
+            "drunk texted",
+            "drunk dialing",
+            "drunk dial",
+            "texting drunk",
+            "drunk messaging",
+            "drunk txt"
+          ],
+          "reject": ["texting", "drink"],
+          "family": ["drunk", "text"],
+          "clues": [
+            "ex",
+            "phone",
+            "regret",
+            "typos",
+            "midnight",
+            "autocorrect",
+            "send",
+            "screenshot",
+            "apology",
+            "emoji"
+          ]
+        },
+        {
+          "id": "party-fouls-dancing-on-tables",
+          "answer": "dancing on tables",
+          "accept": [
+            "table dancing",
+            "dance on tables",
+            "dancing on the table",
+            "dancing on a table",
+            "danced on the table",
+            "table dance",
+            "tabletop dancing"
+          ],
+          "reject": ["table tennis", "dance floor"],
+          "family": ["danc", "table"],
+          "clues": [
+            "wobbly",
+            "heels",
+            "stage",
+            "crowd",
+            "cheering",
+            "song",
+            "moves",
+            "falling",
+            "spotlight",
+            "stomping"
+          ]
+        },
+        {
+          "id": "party-fouls-throwing-up",
+          "answer": "throwing up",
+          "accept": [
+            "throw up",
+            "threw up",
+            "vomiting",
+            "vomit",
+            "puking",
+            "puke",
+            "being sick",
+            "hurling",
+            "barfing"
+          ],
+          "reject": ["throwing", "throw pillow"],
+          "family": ["throw", "threw"],
+          "clues": [
+            "toilet",
+            "bucket",
+            "hair",
+            "nausea",
+            "stomach",
+            "bushes",
+            "queasy",
+            "sink",
+            "green"
+          ]
+        },
+        {
+          "id": "party-fouls-party-crasher",
+          "answer": "party crasher",
+          "accept": [
+            "party crashers",
+            "party crashing",
+            "crashing a party",
+            "gatecrasher",
+            "gatecrashing",
+            "uninvited guest",
+            "crashed the party",
+            "crash a party"
+          ],
+          "reject": ["party pooper", "car crash"],
+          "family": ["crash", "party"],
+          "clues": [
+            "uninvited",
+            "stranger",
+            "sneaky",
+            "doorman",
+            "invitation",
+            "guestlist",
+            "plus-one",
+            "freeloader",
+            "doorbell",
+            "nobody"
+          ]
+        },
+        {
+          "id": "party-fouls-overstaying",
+          "answer": "overstaying",
+          "accept": [
+            "overstay",
+            "overstayed",
+            "overstaying your welcome",
+            "outstaying",
+            "staying too late",
+            "last to leave",
+            "wont leave"
+          ],
+          "reject": ["overslept", "overstepping"],
+          "family": ["overstay"],
+          "clues": [
+            "hints",
+            "yawning",
+            "cleanup",
+            "lingering",
+            "clock",
+            "sunrise",
+            "pajamas",
+            "leftovers",
+            "goodnight",
+            "welcome"
+          ]
+        },
+        {
+          "id": "party-fouls-starting-a-fight",
+          "answer": "starting a fight",
+          "accept": [
+            "start a fight",
+            "started a fight",
+            "picking a fight",
+            "pick a fight",
+            "bar fight",
+            "brawl",
+            "fist fight",
+            "punch up"
+          ],
+          "reject": ["pillow fight", "food fight"],
+          "family": ["fight"],
+          "clues": [
+            "punch",
+            "shove",
+            "yelling",
+            "bouncer",
+            "black-eye",
+            "argument",
+            "tempers",
+            "swinging",
+            "security",
+            "insult"
+          ]
+        },
+        {
+          "id": "party-fouls-empty-handed",
+          "answer": "empty handed",
+          "accept": [
+            "came empty handed",
+            "coming empty handed",
+            "showed up empty handed",
+            "show up empty handed",
+            "arriving empty handed",
+            "emtpy handed",
+            "empty handded"
+          ],
+          "reject": ["empty glass", "heavy handed"],
+          "family": ["empty", "handed"],
+          "clues": [
+            "bottle",
+            "gift",
+            "host",
+            "rude",
+            "chips",
+            "contribution",
+            "potluck",
+            "snacks",
+            "wine",
+            "cheap"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "bad-habits",
+      "label": "Bad habits",
+      "imposterClues": [
+        "annoying",
+        "daily",
+        "quit",
+        "guilty",
+        "routine",
+        "stop",
+        "compulsive",
+        "unconscious",
+        "parents",
+        "lazy",
+        "trying",
+        "relapse",
+        "automatic",
+        "struggle"
+      ],
+      "words": [
+        {
+          "id": "bad-habits-nail-biting",
+          "answer": "nail biting",
+          "accept": [
+            "biting nails",
+            "biting your nails",
+            "nail biter",
+            "nail biters",
+            "bite your nails",
+            "bites nails",
+            "nail bitting"
+          ],
+          "reject": ["nail polish", "nail filing"],
+          "family": ["nail", "biting", "biter"],
+          "clues": [
+            "fingers",
+            "teeth",
+            "nervous",
+            "cuticles",
+            "chewing",
+            "manicure",
+            "stubs",
+            "tense",
+            "gnaw",
+            "jagged"
+          ]
+        },
+        {
+          "id": "bad-habits-snoozing",
+          "answer": "snoozing",
+          "accept": [
+            "snooze",
+            "snoozed",
+            "snoozes",
+            "hitting snooze",
+            "snooze button",
+            "hitting the snooze button",
+            "snoozing alarm"
+          ],
+          "reject": ["sneezing", "snoring"],
+          "family": ["snooz"],
+          "clues": [
+            "alarm",
+            "morning",
+            "button",
+            "late",
+            "again",
+            "bed",
+            "groggy",
+            "beeping",
+            "pillow"
+          ]
+        },
+        {
+          "id": "bad-habits-knuckle-cracking",
+          "answer": "knuckle cracking",
+          "accept": [
+            "cracking knuckles",
+            "cracking your knuckles",
+            "knuckle cracker",
+            "crack knuckles",
+            "knuckles cracking",
+            "knuckle popping",
+            "popping knuckles",
+            "nuckle cracking"
+          ],
+          "reject": ["knuckle sandwich", "brass knuckles"],
+          "family": ["knuckle", "cracking"],
+          "clues": [
+            "pop",
+            "joints",
+            "hands",
+            "arthritis",
+            "snap",
+            "stretch",
+            "noise",
+            "neck",
+            "wince",
+            "fidget"
+          ]
+        },
+        {
+          "id": "bad-habits-procrastination",
+          "answer": "procrastination",
+          "accept": [
+            "procrastinating",
+            "procrastinate",
+            "procrastinator",
+            "procastination",
+            "putting things off",
+            "putting it off",
+            "stalling"
+          ],
+          "reject": ["prognostication", "proclamation"],
+          "family": ["procrast", "procast"],
+          "clues": [
+            "deadline",
+            "tomorrow",
+            "later",
+            "last-minute",
+            "delay",
+            "distracted",
+            "homework",
+            "someday",
+            "cramming",
+            "excuses"
+          ]
+        },
+        {
+          "id": "bad-habits-oversharing",
+          "answer": "oversharing",
+          "accept": [
+            "overshare",
+            "overshared",
+            "overshares",
+            "oversharer",
+            "too much information",
+            "tmi",
+            "saying too much"
+          ],
+          "reject": ["sharing", "oversleeping"],
+          "family": ["share"],
+          "clues": [
+            "personal",
+            "details",
+            "stranger",
+            "awkward",
+            "diary",
+            "confessing",
+            "rash",
+            "medical",
+            "gossip",
+            "secrets"
+          ]
+        },
+        {
+          "id": "bad-habits-swearing",
+          "answer": "swearing",
+          "accept": [
+            "cursing",
+            "cussing",
+            "swear",
+            "swears",
+            "swore",
+            "potty mouth",
+            "foul language",
+            "bad language",
+            "profanity"
+          ],
+          "reject": ["sweating", "wearing"],
+          "family": ["swear", "swore"],
+          "clues": [
+            "jar",
+            "bleep",
+            "language",
+            "mouth",
+            "soap",
+            "sailor",
+            "f-word",
+            "censored",
+            "toddler",
+            "rude"
+          ]
+        },
+        {
+          "id": "bad-habits-impulse-buying",
+          "answer": "impulse buying",
+          "accept": [
+            "impulse buy",
+            "impulse buys",
+            "impulse purchase",
+            "impulse purchases",
+            "impulse shopping",
+            "impulsive buying",
+            "impulse buyer"
+          ],
+          "reject": ["impulse control"],
+          "family": ["impuls"],
+          "clues": [
+            "checkout",
+            "cart",
+            "sale",
+            "credit",
+            "receipt",
+            "regret",
+            "splurge",
+            "gadget",
+            "unboxing",
+            "returns"
+          ]
+        },
+        {
+          "id": "bad-habits-nose-picking",
+          "answer": "nose picking",
+          "accept": [
+            "picking your nose",
+            "picking nose",
+            "nose picker",
+            "pick your nose",
+            "nose pickers",
+            "booger picking",
+            "picks nose"
+          ],
+          "reject": ["nose piercing", "nosebleed"],
+          "family": ["nose", "picking", "picker"],
+          "clues": [
+            "booger",
+            "finger",
+            "gross",
+            "flick",
+            "tissue",
+            "sneaky",
+            "car",
+            "kids",
+            "eat",
+            "nostril"
+          ]
+        },
+        {
+          "id": "bad-habits-doomscrolling",
+          "answer": "doomscrolling",
+          "accept": [
+            "doomscroll",
+            "doomscrolled",
+            "doomscroller",
+            "endless scrolling",
+            "scrolling",
+            "mindless scrolling",
+            "doomscrolls"
+          ],
+          "reject": ["doomsday"],
+          "family": ["doom", "scroll"],
+          "clues": [
+            "phone",
+            "news",
+            "thumb",
+            "bedtime",
+            "feed",
+            "notifications",
+            "screen",
+            "refresh",
+            "insomnia",
+            "depressing"
+          ]
+        },
+        {
+          "id": "bad-habits-running-late",
+          "answer": "running late",
+          "accept": [
+            "always late",
+            "being late",
+            "tardiness",
+            "tardy",
+            "lateness",
+            "late",
+            "chronically late",
+            "runs late"
+          ],
+          "reject": ["running", "latte"],
+          "family": ["late", "running"],
+          "clues": [
+            "clock",
+            "traffic",
+            "apology",
+            "watch",
+            "rushing",
+            "waiting",
+            "minutes",
+            "meeting",
+            "hurry"
+          ]
+        },
+        {
+          "id": "bad-habits-loud-chewing",
+          "answer": "loud chewing",
+          "accept": [
+            "loud chewer",
+            "chewing with mouth open",
+            "open mouth chewing",
+            "smacking lips",
+            "lip smacking",
+            "noisy chewing",
+            "chomping loudly"
+          ],
+          "reject": ["chewing gum"],
+          "family": ["chew"],
+          "clues": [
+            "smacking",
+            "mouth",
+            "noisy",
+            "gum",
+            "crunch",
+            "slurp",
+            "dinner",
+            "misophonia",
+            "popcorn",
+            "annoying"
+          ]
+        },
+        {
+          "id": "bad-habits-day-drinking",
+          "answer": "day drinking",
+          "accept": [
+            "day drunk",
+            "daytime drinking",
+            "day drinker",
+            "day drinkers",
+            "drinking during the day",
+            "drinking in the day",
+            "day drank"
+          ],
+          "reject": ["drinking water", "daydreaming"],
+          "family": ["drink", "drunk", "drank"],
+          "clues": [
+            "mimosa",
+            "brunch",
+            "patio",
+            "noon",
+            "afternoon",
+            "beer",
+            "sunshine",
+            "bottomless",
+            "hangover",
+            "tipsy"
+          ]
+        }
+      ]
+    }
+  ]
+}
