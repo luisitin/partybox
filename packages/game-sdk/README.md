@@ -51,3 +51,9 @@ sibling `key` has `value`, the picker (phone and TV) greys the field out, checke
 
 `PlayerChip` takes `compact` (I-792 E, 2026-09-24): for a tight grid cell — no "you" tag (the label
 keeps "(you)"), the VIP tag is its ★ alone, and the glyph slot exists only while a glyph shows.
+
+`LeadMark` (I-268, 2026-09-24): the one "in the lead" mark — a "1st" tag ("1.º") in a ring of the
+text's colour, aria "leading"; the caller sets size and colour. `PlayerChip` `leader` draws it where
+the ▲ was, and a chip whose `score` rises floats "+N" over the number for 2 s (not while `scoreMuted`).
+The phone bench and Lightning's reveal rows use it too, with the roster's rule: no mark while nobody
+has scored or everyone is tied. 🏆 stays "won", 👑 the VIP handover.

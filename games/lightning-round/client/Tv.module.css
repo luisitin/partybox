@@ -326,8 +326,8 @@
 }
 
 .crown {
-  flex-shrink: 0;
   font-size: var(--pb-font-caption);
+  color: var(--pb-accent-2);
 }
 
 .name {

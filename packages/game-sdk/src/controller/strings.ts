@@ -65,6 +65,7 @@ export const STRINGS: Strings = {
     spectator: 'mirando',
     reconnecting: 'reconectando',
     leading: 'va ganando',
+    '1st': '1.º',
     '{seconds} seconds before they drop out': '{seconds} segundos antes de que salga de la sala',
     you: 'tú',
     bot: 'bot',

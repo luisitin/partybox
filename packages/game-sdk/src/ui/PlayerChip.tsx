@@ -1,9 +1,10 @@
 // A player chip: avatar + name + state glyph. Shared by the TV envelope, lobby, results and games.
 // State is never colour-only: submitted shows ✓, disconnected shows ⟳ and dims, spectator shows 👁.
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { CSSProperties, JSX } from 'react';
 import { STRINGS } from '../controller/strings';
 import { Avatar } from './Avatar';
+import { LeadMark } from './LeadMark';
 import { useT } from './lang';
 import type { Translator } from './lang';
 import styles from './PlayerChip.module.css';
@@ -17,7 +18,7 @@ export interface PlayerChipProps {
   score?: number;
   /** A held-over score (the strip is frozen for a beat): muted, no pop. */
   scoreMuted?: boolean;
-  /** Currently leading on points: a ▲ before the score. */
+  /** Currently leading on points: a "1st" tag before the score (I-268). */
   leader?: boolean;
   /** Highlight (e.g. it is this player's turn). */
   active?: boolean;
@@ -118,6 +119,21 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
     status === 'spectator' ? styles.spectator : '',
     locked ? styles.locked : '',
   ].join(' ');
+  // I-268 C: a rise floats "+N" over the score for 2 s — the "went up" the ▲ used to be read as,
+  // now a mark of its own. Not while the strip is held (scoreMuted); the held number lands later.
+  const [rise, setRise] = useState<{ n: number; at: number } | null>(null);
+  const lastScore = useRef(score);
+  useEffect(() => {
+    const prev = lastScore.current;
+    lastScore.current = score;
+    if (score === undefined || prev === undefined || scoreMuted || score <= prev) return;
+    setRise({ n: score - prev, at: Date.now() });
+  }, [score, scoreMuted]);
+  useEffect(() => {
+    if (!rise) return undefined;
+    const t = window.setTimeout(() => setRise(null), 2000);
+    return () => window.clearTimeout(t);
+  }, [rise]);
   return (
     <div
       className={classes}
@@ -179,15 +195,18 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
           {glyph.text}
         </span>
       )}
-      {leader && score !== undefined ? (
-        <span className={styles.leader} role="img" aria-label={L('leading')}>
-          ▲
-        </span>
-      ) : null}
+      {leader && score !== undefined ? <LeadMark className={styles.leader} /> : null}
       {score !== undefined ? (
-        // keyed on the value so a change re-mounts and pops in place
-        <span key={score} className={`${styles.score} ${scoreMuted ? styles.scoreMuted : ''}`}>
-          {score}
+        <span className={styles.scoreBox}>
+          {/* keyed on the value so a change re-mounts and pops in place */}
+          <span key={score} className={`${styles.score} ${scoreMuted ? styles.scoreMuted : ''}`}>
+            {score}
+          </span>
+          {rise ? (
+            <span key={rise.at} className={styles.rise} aria-hidden>
+              +{rise.n}
+            </span>
+          ) : null}
         </span>
       ) : null}
       {onRemove ? (

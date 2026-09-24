@@ -502,3 +502,10 @@
 .codeButton:active {
   transform: scale(0.96);
 }
+
+/* ── I-268 B: the bench's leader tag (was 🏆, which means "won" everywhere else). */
+.benchMark {
+  margin-right: var(--pb-space-1);
+  font-size: 0.72em;
+  vertical-align: 0.1em;
+}
