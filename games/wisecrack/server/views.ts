@@ -89,8 +89,14 @@ export interface WisecrackControllerView extends ControllerView {
   /** scores + done: the same rows the TV shows, for the compact phone scoreboard. */
   standings: StandingsRow[];
   /** reveal: the prompt on stage and both authors as the TV shows them — a "phone only" room
-   *  reads the reveal on the phone (the owner, 2026-09-21). */
-  reveal: { promptText: string; revealed: RevealedAuthor[] } | null;
+   *  reads the reveal on the phone (the owner, 2026-09-21); a TV room's phone mirrors it in
+   *  miniature (I-796 K), with the prompt's place in the round (`number` of `count`). */
+  reveal: {
+    promptText: string;
+    number: number;
+    count: number;
+    revealed: RevealedAuthor[];
+  } | null;
 }
 
 function optionsOf(state: State, prompt: RoundPrompt): AnonymousOption[] {
@@ -230,6 +236,13 @@ export function controllerView(
     myRank: me?.rank ?? 0,
     myDelta: me?.delta ?? 0,
     standings: phase === 'scores' || phase === 'done' ? standingsRows(state) : [],
-    reveal: staged ? { promptText: staged.text, revealed: revealedAuthors(state, staged) } : null,
+    reveal: staged
+      ? {
+          promptText: staged.text,
+          number: state.promptIndex + 1,
+          count: state.prompts.length,
+          revealed: revealedAuthors(state, staged),
+        }
+      : null,
   };
 }

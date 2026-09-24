@@ -12,7 +12,7 @@ import {
   useLang,
 } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
-import { joinStrings, roomStrings, setJoinLang } from '../i18n-join';
+import { joinStrings, roomStrings } from '../i18n-join';
 import { serverText } from '../server-text';
 import type { JoinLang } from '../i18n-join';
 import type { Controller, ControllerState } from '../net/controller';
@@ -23,7 +23,6 @@ import { useJoinShake } from './useJoinShake';
 import type { SoundEngine } from '../sound';
 import styles from './Join.module.css';
 import { JoinAvatars } from './JoinAvatars';
-import { JoinLangs } from './JoinLangs';
 import { JoinPortrait } from './JoinPortrait';
 import { RoomPicker } from './RoomPicker';
 import { joinGrid, roomFromUrl } from './joinUrl';
@@ -42,7 +41,6 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
   // I-076 A: the join strings in the phone's language (B: the remembered choice).
   // The device's language store (shared with every screen after this one and the 🎨 sheet).
   const lang: JoinLang = useLang();
-  const setLang = setJoinLang;
   const j = joinStrings(lang);
   const session = controller.session() ?? controller.identity();
   const [name, setName] = useState(session?.name ?? '');
@@ -101,6 +99,7 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
   const [nameFocused, setNameFocused] = useState(false);
   // I-785 C: names come only with the room asked for by code (the link's), so read that room's
   const linkRoom = info?.rooms.find((r) => r.code === (urlRoom ?? '')) ?? info?.rooms[0];
+  const urlInfo = urlRoom ? info?.rooms.find((r) => r.code === urlRoom) : undefined;
   const placeholder = j.example(useExampleName(linkRoom?.names, name === '' && !nameFocused));
   const [submittedAt, setSubmittedAt] = useState<number | null>(null);
   const needsCode = urlRoom === null;
@@ -180,7 +179,13 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
         title={
           <span className={styles.head}>
             <span className={styles.headTitle}>{j.title}</span>
-            <JoinLangs lang={lang} onPick={setLang} />
+            {/* I-793 F: "Room XPVW · 5 people are in" under the title (the code came with the QR) */}
+            {urlRoom ? (
+              <span className={styles.joiningRoom} role="status">
+                {j.roomLabel} <strong>{urlRoom}</strong>
+                {urlInfo ? ` · ${j.peopleIn(urlInfo.players)}` : ''}
+              </span>
+            ) : null}
           </span>
         }
         footer={
@@ -227,56 +232,48 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
           </p>
         ) : null}
         {info && info.rooms.length === 0 ? <p className={styles.hint}>{t.join.noRooms}</p> : null}
-        {urlRoom ? (
-          <p className={styles.joiningRoom} role="status">
-            {j.joiningRoom} <strong>{urlRoom}</strong>
-          </p>
-        ) : null}
-        {/* I-031 B: the portrait — the chosen face (or the photo), large, beside the name. */}
-        {/* I-067 B: sideways, the portrait + field sit in a left column beside the grid. */}
+        {/* I-031 B: the portrait — the chosen face (or the photo) — and (I-793 F) the name field
+            on one row. I-067 B: sideways, they sit in a left column beside the pickers. */}
         <div className={styles.sideways}>
-          <JoinPortrait
-            avatarId={`${avatarId}#${tint}`}
-            name={name}
-            photo={photo}
-            onPhoto={setPhoto}
-          />
-          <label className={styles.field}>
-            <span className={styles.label}>{j.name}</span>
-            <input
-              ref={nameRef}
-              className={`${styles.input} ${nameError ? styles.inputError : ''} ${shaking && nameError ? styles.shake : ''} ${name === '' && !nameFocused ? styles.placeholderFade : ''}`}
-              onAnimationEnd={() => setShaking(false)}
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              aria-invalid={nameError}
-              aria-describedby={nameError ? 'join-error' : undefined}
-              placeholder={placeholder}
-              onFocus={() => setNameFocused(true)}
-              onBlur={() => setNameFocused(false)}
-              maxLength={PLAYER_NAME_MAX}
-              autoComplete="nickname"
-              autoCapitalize="words"
-              enterKeyHint="done"
-              required
-            />
-            {nameError && state.error ? (
-              <span id="join-error" className={styles.error} role="alert">
-                {/* I-040 C: a taken name shows who has it. */}
-                {state.error.player ? (
-                  <>
-                    <Avatar avatarId={state.error.player.avatarId} size={22} />
-                    {j.nameTakenBy(state.error.player.name)}
-                  </>
-                ) : (
-                  <>
-                    <span aria-hidden>⚠ </span>
-                    {serverText(state.error.message, lang)} {t.join.tryAgain}
-                  </>
-                )}
-              </span>
-            ) : null}
-          </label>
+          <div className={styles.nameRow}>
+            <JoinPortrait avatarId={`${avatarId}#${tint}`} photo={photo} onPhoto={setPhoto} />
+            <label className={`${styles.field} ${styles.nameField}`}>
+              <span className={styles.label}>{j.name}</span>
+              <input
+                ref={nameRef}
+                className={`${styles.input} ${nameError ? styles.inputError : ''} ${shaking && nameError ? styles.shake : ''} ${name === '' && !nameFocused ? styles.placeholderFade : ''}`}
+                onAnimationEnd={() => setShaking(false)}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                aria-invalid={nameError}
+                aria-describedby={nameError ? 'join-error' : undefined}
+                placeholder={placeholder}
+                onFocus={() => setNameFocused(true)}
+                onBlur={() => setNameFocused(false)}
+                maxLength={PLAYER_NAME_MAX}
+                autoComplete="nickname"
+                autoCapitalize="words"
+                enterKeyHint="done"
+                required
+              />
+              {nameError && state.error ? (
+                <span id="join-error" className={styles.error} role="alert">
+                  {/* I-040 C: a taken name shows who has it. */}
+                  {state.error.player ? (
+                    <>
+                      <Avatar avatarId={state.error.player.avatarId} size={22} />
+                      {j.nameTakenBy(state.error.player.name)}
+                    </>
+                  ) : (
+                    <>
+                      <span aria-hidden>⚠ </span>
+                      {serverText(state.error.message, lang)} {t.join.tryAgain}
+                    </>
+                  )}
+                </span>
+              ) : null}
+            </label>
+          </div>
           {needsCode ? (
             <label className={styles.field}>
               <span className={styles.label}>{roomStrings(lang).code}</span>
@@ -305,16 +302,20 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
           {/* The owner (2026-09-22): which rooms are open, and a way to open your own. */}
           {needsCode ? <RoomPicker info={info} code={code} onPick={setCode} lang={lang} /> : null}
         </div>
-        <JoinTints tint={tint} taken={takenTints} onPick={setTint} />
-        <JoinAvatars
-          legend={j.avatar}
-          ids={gridIds}
-          avatarId={avatarId}
-          onPick={setAvatarId}
-          taken={badged}
-          season={season}
-          photo={photo !== null}
-        />
+        {/* I-793 F: the faces as one sideways strip, then the colours as one row of dots. */}
+        <div className={styles.pickers}>
+          <JoinAvatars
+            legend={j.faceSwipe}
+            ids={gridIds}
+            avatarId={avatarId}
+            tint={tint}
+            onPick={setAvatarId}
+            taken={badged}
+            season={season}
+            photo={photo !== null}
+          />
+          <JoinTints label={j.colourLabel} tint={tint} taken={takenTints} onPick={setTint} />
+        </div>
       </Screen>
       {/* I-059 A: a tablet's spare width is a preview stage — your chip as the room will see it. */}
       <aside className={styles.stage} aria-label={j.preview}>
