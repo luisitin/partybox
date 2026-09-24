@@ -97,7 +97,7 @@ export function ControllerShell({
   // The link's own banner: one steady message across a flapping connection (the owner,
   // 2026-09-22), ending in "Back online" instead of vanishing.
   const { showBanner, text: reconnectingText } = useLinkBanner(
-    !online && state.joined,
+    !online && state.joined && !state.otherTab, // I-755 A: stepping aside is not a lost link
     state.joined,
   );
   // With a countdown row on screen, "Reconnecting…" takes its cue slot (review-loop #33): the

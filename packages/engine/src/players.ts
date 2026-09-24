@@ -50,7 +50,15 @@ export function join(room: RoomState, event: JoinEvent, deps: EngineDeps): Apply
   // A closed tab loses its token. A token-less join under the name of a player who is currently
   // DISCONNECTED resumes that player (living-room trust model, ADR-029) instead of "name taken".
   const orphan = findDisconnectedByName(room, event.name);
-  if (orphan) return resume(room, orphan, event.now, deps);
+  // I-741 A: the seat's login moves to the phone that took it back (the minted token)
+  if (orphan) return resume(room, orphan, event.now, deps, { token: event.token, byName: true });
+  // I-741 C: "That's me — take my seat": the seat still reads connected (its phone died inside the
+  // ping window), and this phone claims it; the server drops the old connection.
+  if (event.takeOver) {
+    const key = nameKey(normalizeName(event.name) ?? '');
+    const seat = Object.values(room.players).find((p) => !p.bot && nameKey(p.name) === key);
+    if (seat) return resume(room, seat, event.now, deps, { token: event.token, byName: true });
+  }
 
   if (room.locked)
     return { room, effects: [error(event.playerId, 'room_locked', 'This room is locked.')] };
@@ -122,8 +130,20 @@ export function join(room: RoomState, event: JoinEvent, deps: EngineDeps): Apply
   };
 }
 
-function resume(room: RoomState, player: RoomPlayer, now: number, deps: EngineDeps): ApplyResult {
-  const updated: RoomPlayer = { ...player, connected: true, disconnectedAt: null };
+function resume(
+  room: RoomState,
+  player: RoomPlayer,
+  now: number,
+  deps: EngineDeps,
+  /** I-741: a seat taken back by name (another phone) — its login moves to that phone. */
+  byName?: { token: string; byName: true },
+): ApplyResult {
+  const updated: RoomPlayer = {
+    ...player,
+    ...(byName ? { token: byName.token } : {}),
+    connected: true,
+    disconnectedAt: null,
+  };
   const next: RoomState = { ...room, players: { ...room.players, [player.id]: updated } };
   const woke = notifyGame(next, player.id, true, now, deps);
   // I-746 B: the first phone back wakes the room: the game carries on
@@ -142,7 +162,29 @@ function resume(room: RoomState, player: RoomPlayer, now: number, deps: EngineDe
       : woke;
   return {
     room: game.room,
-    effects: [{ type: 'welcome', playerId: player.id }, ...game.effects, { type: 'push' }],
+    effects: [
+      { type: 'welcome', playerId: player.id },
+      ...game.effects,
+      { type: 'push' },
+      // I-741 B: say it — the phone that came back, and the room
+      ...(byName
+        ? ([
+            {
+              type: 'toast',
+              to: player.id,
+              kind: 'success',
+              text: `Welcome back, ${player.name} — picking up where you left off`,
+            },
+            {
+              type: 'toast',
+              to: 'tvs',
+              kind: 'info',
+              text: `${player.name} is back (new phone)`,
+              playerId: player.id,
+            },
+          ] as const)
+        : []),
+    ],
   };
 }
 

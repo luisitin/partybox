@@ -70,6 +70,7 @@ export function snapshot(room: RoomState, deps: EngineDeps): RoomSnapshot {
     vip: room.vipId,
     selectedGameId: room.selectedGameId,
     settings: room.settings,
+    ...(room.settingsByGame ? { tuned: room.settingsByGame } : {}),
     games: gameSummaries(deps),
     results: room.results,
     canStart: canStart(room, deps),

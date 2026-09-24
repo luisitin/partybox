@@ -14,10 +14,14 @@ import type {
   VipAction,
   WelcomePayload,
   BotAction,
+  JoinPayload,
 } from '@partybox/shared';
 import { createLinkWatch } from './link-watch';
 import { dropRoomFromUrl } from './leave-url';
 import { createRestartWatch } from './stale';
+import { createSeatChannel } from './seat-channel';
+import { loadIdentity, loadSession, saveIdentity, saveSession } from './session-store';
+import type { Identity, Session } from './session-store';
 import { createStore, toastOnce } from './store';
 import type { Store, Toast } from './store';
 
@@ -37,64 +41,16 @@ export interface ControllerState {
   error: ErrorPayload | null;
   toasts: Toast[];
   kicked: string | null;
+  /** I-755 A: this phone has PartyBox open in another tab, which holds the seat. */
+  otherTab: boolean;
   /** The stored session was rejected (server restarted, room gone): the join form explains why. */
   restarted: boolean;
 }
 
-const SESSION_KEY = 'partybox:session';
-
-interface Session {
-  token: string;
-  name: string;
-  avatarId: string;
-  /** The photo avatar (I-031), a small JPEG data URL. */
-  photo?: string;
-  roomCode?: string;
-}
-
-function loadSession(): Session | null {
-  try {
-    const raw = localStorage.getItem(SESSION_KEY);
-    return raw ? (JSON.parse(raw) as Session) : null;
-  } catch {
-    return null;
-  }
-}
-
-function saveSession(session: Session | null): void {
-  try {
-    if (session) localStorage.setItem(SESSION_KEY, JSON.stringify(session));
-    else localStorage.removeItem(SESSION_KEY);
-  } catch {
-    /* private mode: reconnect just won't survive a reload */
-  }
-}
-
-// Name + avatar outlive the session: after a kick, a server restart or the TV's Home the join form
-// is prefilled and getting back in is one tap.
-const IDENTITY_KEY = 'partybox:identity';
-export type Identity = Pick<Session, 'name' | 'avatarId' | 'photo'>;
-
-function loadIdentity(): Identity | null {
-  try {
-    const raw = localStorage.getItem(IDENTITY_KEY);
-    return raw ? (JSON.parse(raw) as Identity) : null;
-  } catch {
-    return null;
-  }
-}
-
-function saveIdentity(identity: Identity): void {
-  try {
-    localStorage.setItem(IDENTITY_KEY, JSON.stringify(identity));
-  } catch {
-    /* private mode */
-  }
-}
-
 export interface Controller {
   store: Store<ControllerState>;
-  join(input: { name: string; avatarId: string; roomCode?: string; photo?: string }): void;
+  /** `takeOver` (I-741 C): "That's me — take my seat". */
+  join(input: Omit<JoinPayload, 'token'>): void;
   sendInput(input: unknown): void;
   vip(action: VipAction): void;
   /** Add a bot you own, or remove one of yours (VIPs may remove any). */
@@ -102,12 +58,16 @@ export interface Controller {
   /** I-070 A: nudge the VIP (lobby only; the server rate-limits it). */
   nudge(): void;
   leave(): void;
+  /** I-755 A: take the seat back from the other tab. */
+  playHere(): void;
   dismissError(): void;
   dismissToast(id: number): void;
   session(): Session | null;
   /** Last name + avatar this phone joined with (survives the session). */
   identity(): Identity | null;
 }
+
+export type { Identity } from './session-store';
 
 export function createController(url?: string): Controller {
   const store = createStore<ControllerState>({
@@ -123,6 +83,7 @@ export function createController(url?: string): Controller {
     toasts: [],
     kicked: null,
     restarted: false,
+    otherTab: false,
   });
   const socket: Socket = io(url ?? '/', { transports: ['websocket', 'polling'] });
   let seq = 0;
@@ -169,17 +130,25 @@ export function createController(url?: string): Controller {
     if (serverNow > deadline + 2000 && lastPushAt + 2000 < Date.now()) goStale();
   }, 1000);
 
-  const sendJoin = (session: Session, token?: string): void => {
+  const sendJoin = (session: Session, token?: string, takeOver?: boolean): void => {
     socket.emit('join', {
       name: session.name,
       avatarId: session.avatarId,
       roomCode: session.roomCode,
       token,
+      ...(takeOver ? { takeOver: true } : {}),
       ...(session.photo ? { photo: session.photo } : {}),
     });
   };
 
   const restarts = createRestartWatch();
+  // I-755 A: set when another tab holds the seat; cleared by "Play here"
+  let holdReconnect = false;
+  let forceHere = false;
+  // I-755 B: this browser's tabs talk: "who has the seat?" / "I do" (a playing tab answers)
+  const askOtherTabs = createSeatChannel(() =>
+    store.get().joined && !holdReconnect ? (loadSession()?.token ?? null) : null,
+  );
   socket.on('connect', () => {
     link.onConnect();
     restarts.onConnect();
@@ -189,14 +158,24 @@ export function createController(url?: string): Controller {
     const session = loadSession();
     if (session) {
       store.set({ resuming: !wasJoined });
-      sendJoin(session, session.token);
+      // I-755 B: first ask this browser's other tabs; if one is playing, this (new) tab steps aside
+      (forceHere ? Promise.resolve(false) : askOtherTabs(session.token)).then((taken) => {
+        forceHere = false;
+        if (taken && !wasJoined) {
+          holdReconnect = true;
+          store.set({ otherTab: true, resuming: false });
+          socket.disconnect();
+          return;
+        }
+        sendJoin(session, session.token);
+      });
     }
   });
   socket.on('disconnect', (reason) => {
     store.set({ connection: store.get().joined ? 'reconnecting' : 'connecting' });
     // A kick closes the socket from the server side; socket.io treats that as final, but the
     // person still needs a live connection to join again (or another room) without reloading.
-    if (reason === 'io server disconnect') socket.connect();
+    if (reason === 'io server disconnect' && !holdReconnect) socket.connect();
   });
   socket.on('welcome', (payload: WelcomePayload) => {
     const session = pending ?? loadSession();
@@ -276,6 +255,9 @@ export function createController(url?: string): Controller {
       (s.resuming || (s.joined && (error.code === 'room_not_found' || error.code === 'bad_token')));
     if (staleSession) {
       saveSession(null);
+      // I-744 A: the room in the QR link is gone (a restart or a reset) — drop it, so the join
+      // screen asks for a room (or offers the one that is open) instead of re-sending the dead code.
+      dropRoomFromUrl();
       store.set({
         joined: false,
         resuming: false,
@@ -298,6 +280,12 @@ export function createController(url?: string): Controller {
     store.set({ error });
   });
   socket.on('kicked', (payload: KickedPayload) => {
+    // I-755 A: another tab took the seat — keep the login (the tabs share it), stop reconnecting
+    if (payload.reason === 'another_tab') {
+      holdReconnect = true;
+      store.set({ otherTab: true });
+      return;
+    }
     saveSession(null);
     store.set({ joined: false, playerId: null, room: null, view: null, kicked: payload.reason });
   });
@@ -314,7 +302,7 @@ export function createController(url?: string): Controller {
       };
       pending = session;
       store.set({ error: null, kicked: null });
-      sendJoin(session);
+      sendJoin(session, undefined, input.takeOver);
     },
     sendInput(input) {
       seq += 1;
@@ -334,6 +322,15 @@ export function createController(url?: string): Controller {
       saveSession(null);
       dropRoomFromUrl();
       store.set({ joined: false, playerId: null, room: null, view: null, rev: -1 });
+    },
+    playHere() {
+      holdReconnect = false;
+      forceHere = true;
+      store.set({ otherTab: false });
+      const session = loadSession();
+      if (socket.connected && session) sendJoin(session, session.token);
+      else socket.connect(); // the connect handler joins with the stored login
+      // (B: "Play here" is a deliberate take-over, so it does not ask the other tabs)
     },
     dismissError: () => store.set({ error: null }),
     dismissToast: (id) => store.set((prev) => ({ toasts: prev.toasts.filter((t) => t.id !== id) })),

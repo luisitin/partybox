@@ -11,6 +11,7 @@ export const es: Texts = {
     title: 'Únete a la fiesta',
     name: 'Tu nombre',
     namePlaceholder: 'p. ej. Sam',
+    takeSeat: 'Soy yo: recuperar mi sitio',
     avatar: 'Elige un avatar',
     usePhoto: 'Usar una foto',
     useFace: 'Usar una cara',
@@ -27,6 +28,8 @@ export const es: Texts = {
     offline: 'Conectando…',
     kicked: 'El VIP te sacó de la sala. Puedes volver a entrar.',
     restarted: 'La fiesta empezó de nuevo: toca Entrar para volver.',
+    restartedTo: (code) =>
+      `La fiesta empezó de nuevo: ahora la sala es ${code}. Toca Entrar para volver.`,
     noRooms: 'No hay ninguna sala abierta. Inicia el servidor y abre /tv en la pantalla grande.',
     askRoom: 'Pídele al VIP que haga espacio.',
     askUnlock: 'Pídele al VIP que la abra.',
@@ -100,6 +103,11 @@ export const es: Texts = {
     phoneOnlyOn: 'los teléfonos muestran lo que mostraría la TV',
     phoneOnlyOff: 'la TV es el escenario',
     games: 'juegos',
+    tuned: (list) => `Tus ajustes: ${list}`,
+    tunedMore: (n) => `+${n} más`,
+    tunedOn: 'sí',
+    tunedOff: 'no',
+    resetDefaults: 'Volver a los de fábrica',
   },
   results: {
     title: 'Resultados',
@@ -164,6 +172,11 @@ export const es: Texts = {
     title: 'Esperando al próximo juego',
     hint: 'Entraste a mitad de juego: juegas en cuanto termine este.',
   },
+  otherTab: {
+    title: 'PartyBox está abierto en otra pestaña',
+    body: 'Este teléfono ya está en el juego en otra pestaña. Usa esa, o toca abajo para jugar aquí (la otra pestaña se hará a un lado).',
+    playHere: 'Jugar aquí',
+  },
   connection: {
     reconnecting: 'Reconectando…',
     reconnectingLeft: (mmss) => `Reconectando… quedan ${mmss}`,
@@ -205,6 +218,8 @@ export const es: Texts = {
     vipAwayNobody: 'VIP ausente: no hay nadie más a quien pasarlo',
   },
   tv: {
+    restartedBefore: 'PartyBox se reinició: esta es una sala nueva,',
+    restartedAfter: 'Teléfonos: toquen Entrar para volver.',
     tapToStart: 'Toca para activar el sonido',
     tapHint: 'la fiesta funciona sin él',
     mute: 'Silenciar',

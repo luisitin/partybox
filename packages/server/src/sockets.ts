@@ -15,6 +15,8 @@ import {
   tvJoinPayloadSchema,
   vipPayloadSchema,
   botPayloadSchema,
+  nameKey,
+  normalizeName,
 } from '@partybox/shared';
 import type { ErrorPayload } from '@partybox/shared';
 import type { Host, Transport } from './host';
@@ -41,10 +43,21 @@ export function createSocketLayer(server: HttpServer): SocketLayer {
     pingTimeout: LIMITS.pingTimeoutMs,
     serveClient: false,
     cors: { origin: true },
-    // I-750 C: compress messages over 1 KB (the room snapshot is repeated keys and text)
-    perMessageDeflate: { threshold: 1024 },
+    // I-753 C: a browser page from another website may not open a PartyBox socket (browsers do not
+    // apply CORS to WebSockets, so the Origin is checked here); tools without an Origin are fine
+    allowRequest: (req, callback) => {
+      const from = req.headers.origin;
+      if (!from) return callback(null, true);
+      try {
+        callback(null, new URL(from).host === req.headers.host);
+      } catch {
+        callback(null, false);
+      }
+    },
   });
   const byPlayer = new Map<string, Socket>();
+  /** I-755 C: recent join times per login token. */
+  const joinsByToken = new Map<string, number[]>();
   /** I-750 B: the newest room/view push waiting for a busy connection, per socket. */
   const latest = new Map<Socket, Map<string, unknown>>();
   const ticking = new Set<Socket>();
@@ -133,17 +146,47 @@ export function createSocketLayer(server: HttpServer): SocketLayer {
         if (!parsed.success) return sendError('invalid_payload', 'Bad join payload.');
         const code = resolveRoom(parsed.data.roomCode);
         if (!code) return sendError('room_not_found', 'No room with that code.');
+        // I-755 C: a login that joins more than 3 times in 5 s is two tabs fighting — the newest
+        // attempt is told so instead of taking the seat
+        if (parsed.data.token) {
+          const now = Date.now();
+          const recent = (joinsByToken.get(parsed.data.token) ?? []).filter((t) => now - t < 5000);
+          recent.push(now);
+          joinsByToken.set(parsed.data.token, recent);
+          if (joinsByToken.size > 500)
+            for (const [k, v] of joinsByToken)
+              if (now - (v.at(-1) ?? 0) > 5000) joinsByToken.delete(k);
+          if (recent.length > 3) {
+            socket.emit('kicked', { reason: 'another_tab' });
+            return;
+          }
+        }
         const { playerId, token } = host.mintPlayer();
         // Map this socket to both the provisional id and (for a resume) the existing player BEFORE
         // dispatching, so the engine's welcome/error effects land on this socket.
+        const seats = Object.values(host.get(code)?.players ?? {});
+        // I-741 A: a token-less join under the name of a disconnected player resumes that seat
+        // (ADR-029) — so this socket must be mapped to it too, or the welcome goes to the dead one.
+        // I-741 C: "That's me — take my seat" (takeOver) also claims a seat that still reads connected.
+        const key = nameKey(normalizeName(parsed.data.name) ?? '');
         const resumed = parsed.data.token
-          ? Object.values(host.get(code)?.players ?? {}).find((p) => p.token === parsed.data.token)
-          : undefined;
+          ? seats.find((p) => p.token === parsed.data.token)
+          : key
+            ? seats.find(
+                (p) =>
+                  !p.bot &&
+                  nameKey(p.name) === key &&
+                  (parsed.data.takeOver === true || !p.connected),
+              )
+            : undefined;
         for (const id of [playerId, resumed?.id]) {
           if (!id) continue;
           const previous = byPlayer.get(id);
           if (previous && previous !== socket) {
             (previous.data as SocketData).playerId = null;
+            // I-755 A: say why, so the other tab stops reconnecting (else two tabs trade the seat
+            // ~35 times a second, forever)
+            previous.emit('kicked', { reason: 'another_tab' });
             previous.disconnect(true);
           }
           byPlayer.set(id, socket);
@@ -157,6 +200,7 @@ export function createSocketLayer(server: HttpServer): SocketLayer {
           avatarId: parsed.data.avatarId,
           ...(parsed.data.photo ? { photo: parsed.data.photo } : {}),
           existingToken: parsed.data.token,
+          ...(parsed.data.takeOver ? { takeOver: true } : {}),
         });
         const welcome = result?.effects.find((e) => e.type === 'welcome');
         if (welcome) funnel?.joined(code);

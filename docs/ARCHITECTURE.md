@@ -4,15 +4,15 @@
 
 One Node process (`packages/server`) on one port (default **42069**, `--port` / `PORT`), bound to `0.0.0.0`.
 
-| Route                                                       | Who                                     | What                                                                                          |
-| ----------------------------------------------------------- | --------------------------------------- | --------------------------------------------------------------------------------------------- |
-| `/tv`                                                       | any TV / monitor browser (many at once) | read-only stage: join URL + QR, room code, lobby, game                                        |
-| `/`                                                         | phones                                  | controller: join → lobby → per-game controls                                                  |
-| `/preview/:gameId/:fixture?view=tv\|controller&player=<id>` | tools, dev                              | renders a fixture with no live state (dev only)                                               |
-| `/api/dev/*`                                                | tools, AI sessions                      | deterministic control API (`docs/DEV_API.md`), dev only                                       |
-| `/healthz`                                                  | anyone                                  | `{ ok, version, rooms, uptime }`                                                              |
-| `/api/funnel`                                               | the host, tools                         | per-room join counts (I-077): opened / attempted / joined / failed                            |
-| `POST /api/rooms`                                           | phones                                  | opens a room (ADR-043), a chosen 4-letter code or a fresh one; 3 per address, then 1 per 20 s |
+| Route                                                       | Who                                     | What                                                                                                 |
+| ----------------------------------------------------------- | --------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `/tv`                                                       | any TV / monitor browser (many at once) | read-only stage: join URL + QR, room code, lobby, game                                               |
+| `/`                                                         | phones                                  | controller: join → lobby → per-game controls                                                         |
+| `/preview/:gameId/:fixture?view=tv\|controller&player=<id>` | tools, dev                              | renders a fixture with no live state (dev only)                                                      |
+| `/api/dev/*`                                                | tools, AI sessions                      | deterministic control API (`docs/DEV_API.md`), dev only                                              |
+| `/healthz`                                                  | anyone                                  | `{ ok, version, rooms, uptime }`                                                                     |
+| `/api/funnel`                                               | the host, tools                         | per-room join counts (I-077): opened / attempted / joined / failed; private rooms left out (I-785 B) |
+| `POST /api/rooms`                                           | phones                                  | opens a room (ADR-043), a chosen 4-letter code or a fresh one; 3 per address, then 1 per 20 s        |
 
 `/api/info` also carries `publicUrl`: the Cloudflare quick tunnel's address while one is live
 (`PARTYBOX_PUBLIC_URL`, else the newest address in `cloudflared.log` while a `cloudflared` process

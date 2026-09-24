@@ -54,6 +54,11 @@ export interface RoomState {
   results: RoomResults | null;
   /** For "play again". */
   lastGame: { gameId: string; settings: Settings } | null;
+  /**
+   * I-763 A: what the VIP tuned, per game, for the night — picking a game reads it, a settings
+   * change writes it. Optional so saved room states from before it still load. Never on the wire.
+   */
+  settingsByGame?: Record<string, Settings>;
   /** The host records each game to disk while true (ADR-035); the VIP toggles it in the picker. */
   recording: boolean;
   /** S-004: the VIP's room-wide phone-music switch. */
@@ -80,6 +85,8 @@ export type RoomEvent =
       /** A photo avatar (I-031): a JPEG data URL the socket already validated. */
       photo?: string;
       existingToken?: string;
+      /** I-741 C: "That's me — take my seat": claim the seat of this name even if it reads connected. */
+      takeOver?: boolean;
     }
   | {
       /** A player (or the dev API, ownerId null) adds a bot; the host mints id + token. */

@@ -49,7 +49,17 @@ let countedThisPage = false;
 export async function fetchInfo(opts: { countOpen?: boolean } = {}): Promise<ServerInfo> {
   const count = opts.countOpen === true && !countedThisPage;
   if (count) countedThisPage = true;
-  const res = await fetch(`/api/info${count ? '?from=phone' : ''}`);
+  // I-785 A: a phone that came in by a room's link asks for that room by its code (a private room
+  // is not in the public list); I-787 A: a second room's TV (/tv?room=CODE) does too, so its QR
+  // is that room's
+  const room = new URLSearchParams(typeof window === 'undefined' ? '' : window.location.search).get(
+    'room',
+  );
+  const params = new URLSearchParams();
+  if (count) params.set('from', 'phone');
+  if (room) params.set('room', room);
+  const query = params.toString();
+  const res = await fetch(`/api/info${query ? `?${query}` : ''}`);
   if (!res.ok) throw new Error(`info ${res.status}`);
   cached = (await res.json()) as ServerInfo;
   return cached;

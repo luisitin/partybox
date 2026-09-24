@@ -1,6 +1,6 @@
 // Join form: name, avatar grid, room code (only when more than one room exists), and the
 // resume/kicked states. The submit button lives in the sticky footer so the keyboard never hides it.
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { FormEvent, JSX } from 'react';
 import { EVERYDAY_AVATAR_IDS, PLAYER_NAME_MAX, avatarFace, normalizeName } from '@partybox/shared';
 import {
@@ -19,6 +19,7 @@ import type { Controller, ControllerState } from '../net/controller';
 import { useServerInfo } from '../net/info';
 import { JoinTints, useTint } from './JoinTints';
 import { useExampleName } from './useExampleName';
+import { useJoinShake } from './useJoinShake';
 import type { SoundEngine } from '../sound';
 import styles from './Join.module.css';
 import { JoinAvatars } from './JoinAvatars';
@@ -81,48 +82,35 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
   // I-031 (the owner): a photo avatar from the phone, kept with the name and face across sessions.
   const [photo, setPhoto] = useState<string | null>(session?.photo ?? null);
   const [code, setCode] = useState(urlRoom ?? '');
+  // I-744 A: after a restart, the one open room is the party — fill it in (the home case). With
+  // more than one, the room list below asks.
+  const onlyRoom = state.restarted && info && info.rooms.length === 1 ? info.rooms[0]?.code : null;
+  // (SECOND BUILD: the recording showed the form mounting with the dead code already in it, so
+  //  a code that is not an open room is replaced, not only an empty one.)
+  if (
+    onlyRoom &&
+    code !== onlyRoom &&
+    !info?.rooms.some((r) => r.code === code.trim().toUpperCase())
+  )
+    setCode(onlyRoom);
   // The badges follow the room actually being joined — a code typed or a room tapped in the list
   // (ADR-043) — while the default face above stays keyed on the first room, so it does not change
   // under the person's thumb as they type.
   const picked = info?.rooms.find((r) => r.code === code.trim().toUpperCase());
   const badged = picked ? new Set((picked.avatars ?? []).map(avatarFace)) : taken;
   const [nameFocused, setNameFocused] = useState(false);
-  const placeholder = j.example(useExampleName(info?.rooms[0]?.names, name === '' && !nameFocused));
+  // I-785 C: names come only with the room asked for by code (the link's), so read that room's
+  const linkRoom = info?.rooms.find((r) => r.code === (urlRoom ?? '')) ?? info?.rooms[0];
+  const placeholder = j.example(useExampleName(linkRoom?.names, name === '' && !nameFocused));
   const [submittedAt, setSubmittedAt] = useState<number | null>(null);
   const needsCode = urlRoom === null;
-  // A rejected join shakes the name field and hands the taken/invalid name back selected (or the
-  // code, for a room that does not exist) so the retry is one keystroke away. "Adjust state when
-  // a prop changes": every new error object shakes once; the one already on screen at mount (a
-  // stale error left by leave()) does not. The shell plays `error` and buzzes for it.
-  const nameRef = useRef<HTMLInputElement>(null);
-  const codeRef = useRef<HTMLInputElement>(null);
-  const [shaking, setShaking] = useState(false);
-  const [seenError, setSeenError] = useState(state.error);
-  if (state.error !== seenError) {
-    setSeenError(state.error);
-    if (state.error && !state.joined) setShaking(true);
-  }
-  useEffect(() => {
-    if (!shaking) return;
-    const code = state.error?.code;
-    const target =
-      code === 'name_taken' || code === 'name_invalid'
-        ? nameRef.current
-        : code === 'room_not_found' && needsCode
-          ? codeRef.current
-          : null;
-    if (target) {
-      target.focus();
-      // setSelectionRange, not select(): iOS ignores select().
-      target.setSelectionRange(0, target.value.length);
-    }
-    // Reduced motion runs the animation at 0 ms and may never fire animationend.
-    const fallback = setTimeout(() => setShaking(false), 400);
-    return () => clearTimeout(fallback);
-  }, [shaking, state.error, needsCode]);
+  // A rejected join shakes the name field (or the code) and hands it back selected; I-741 C's
+  // "take my seat" name rides along (useJoinShake.ts).
+  const { nameRef, codeRef, shaking, setShaking, takenName } = useJoinShake(state, name, needsCode);
   // "Joining…" until the server answers: a welcome unmounts this screen, an error (or a 6 s safety
   // timeout, for a server that never answers) re-enables the button.
   const submitting = submittedAt !== null;
+  const takeSeat = takenName !== null && name === takenName && state.error?.code === 'name_taken';
   // I-056 A: a rejection about the ROOM (full / locked) is not about what was typed.
   const roomError =
     state.error?.code === 'room_full' || state.error?.code === 'room_locked'
@@ -168,12 +156,13 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
     (!needsCode || code.trim().length === 4) &&
     state.connection === 'connected';
 
-  const submit = (e: FormEvent): void => {
+  const submit = (e: FormEvent, takeOver = false): void => {
     e.preventDefault();
     if (!canSubmit) return;
     void audio?.enable();
     setSubmittedAt(Date.now());
     controller.join({
+      ...(takeOver ? { takeOver: true } : {}),
       name: cleanName ?? name.trim(),
       // I-086 B: the face and the colour travel as one id.
       avatarId: `${avatarId}#${tint}`,
@@ -183,7 +172,10 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
   };
 
   return (
-    <form className={`${styles.form} ${roomError ? styles.formDim : ''}`} onSubmit={submit}>
+    <form
+      className={`${styles.form} ${roomError ? styles.formDim : ''}`}
+      onSubmit={(e) => submit(e, takeSeat)}
+    >
       <Screen
         title={
           <span className={styles.head}>
@@ -207,17 +199,19 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
             >
               {submitting
                 ? j.joining
-                : state.connection !== 'connected'
-                  ? t.join.offline
-                  : cleanName === null
-                    ? j.needName
-                    : needsCode && code.trim().length !== 4
-                      ? t.join.needCode
-                      : roomError === 'room_full' && !retryOpen
-                        ? j.roomFull
-                        : roomError === 'room_locked' && !retryOpen
-                          ? j.roomLocked
-                          : j.submit}
+                : takeSeat
+                  ? t.join.takeSeat
+                  : state.connection !== 'connected'
+                    ? t.join.offline
+                    : cleanName === null
+                      ? j.needName
+                      : needsCode && code.trim().length !== 4
+                        ? t.join.needCode
+                        : roomError === 'room_full' && !retryOpen
+                          ? j.roomFull
+                          : roomError === 'room_locked' && !retryOpen
+                            ? j.roomLocked
+                            : j.submit}
             </PrimaryButton>
           </>
         }
@@ -229,7 +223,7 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
         ) : null}
         {state.restarted && !state.kicked ? (
           <p className={styles.kicked} role="status">
-            {t.join.restarted}
+            {onlyRoom ? t.join.restartedTo(onlyRoom) : t.join.restarted}
           </p>
         ) : null}
         {info && info.rooms.length === 0 ? <p className={styles.hint}>{t.join.noRooms}</p> : null}

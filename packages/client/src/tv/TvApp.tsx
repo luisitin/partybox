@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { JSX } from 'react';
 import { AvatarPhotos, ServerClockProvider, isSoundCue, useLang } from '@partybox/game-sdk/ui';
 import { clientGames } from '../games.generated';
+import { t } from '../i18n';
 import { useStore } from '../net/store';
 import { createTvClient } from '../net/tv';
 import { bedFor, createBedEngine } from '../beds';
@@ -156,9 +157,22 @@ export function TvApp(): JSX.Element {
   );
   const lastLockAt = useRef(-Infinity);
   const homing = state.homing;
+  // I-744 B: the room code changed without the TV's own 🏠 reset — the server restarted
+  // (SECOND BUILD: a restarted dev server reloads the TV page, so the last code is kept in
+  //  sessionStorage, not only in memory.)
+  const [restarted, setRestarted] = useState<string | null>(null);
   useEffect(() => {
     if (!room) return;
     const p = prev.current;
+    let last: string | null = null;
+    try {
+      last = sessionStorage.getItem('pb:tvRoom');
+      sessionStorage.setItem('pb:tvRoom', room.code);
+    } catch {
+      /* no storage: the in-memory check below still works without a reload */
+    }
+    const before = p.status !== '' ? p.code : last;
+    if (before && before !== room.code && !homing) setRestarted(room.code);
     // One `leave` per snapshot (a human leaving takes their bots with them, ADR-028) and never
     // more than one per 300 ms, so "Remove 4 bots" is one note, not four. A new room (Home reset)
     // is not a departure.
@@ -314,6 +328,12 @@ export function TvApp(): JSX.Element {
           </CrossfadeSwap>
         </TvFrame>
         <AsleepBanner asleep={room?.asleep === true} />
+        {/* I-744 B: say what happened, until someone is back in */}
+        {restarted && room?.code === restarted && !room.players.some((pl) => !pl.bot) ? (
+          <div className={styles.restartBanner} role="status">
+            {t.tv.restartedBefore} <strong>{restarted}</strong>. {t.tv.restartedAfter}
+          </div>
+        ) : null}
       </AvatarPhotos>
       <AudioGate
         audio={audio}

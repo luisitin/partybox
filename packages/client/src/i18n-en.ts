@@ -12,6 +12,8 @@ export const en = {
     title: 'Join the party',
     name: 'Your name',
     namePlaceholder: 'e.g. Sam',
+    // I-741 C: the name is taken because your own phone froze — claim the seat
+    takeSeat: 'That’s me — take my seat',
     avatar: 'Pick an avatar',
     usePhoto: 'Use a photo',
     useFace: 'Use a face instead',
@@ -28,6 +30,9 @@ export const en = {
     offline: 'Connecting…',
     kicked: 'The VIP removed you from the room. You can join again.',
     restarted: 'The party started over — tap Join to get back in.',
+    /** I-744 A: after a restart with one open room, that room is filled in. */
+    restartedTo: (code: string) =>
+      `The party started over — the room is ${code} now. Tap Join to get back in.`,
     noRooms: 'No room is open right now. Start the server and open /tv on the big screen.',
     askRoom: 'Ask the VIP to make room.',
     askUnlock: 'Ask the VIP to unlock it.',
@@ -104,6 +109,12 @@ export const en = {
     phoneOnlyOn: 'the phones show what the TV would',
     phoneOnlyOff: 'the TV is the stage',
     games: 'games',
+    // I-763 B: the picker card's tuned line and the sheet's reset link
+    tuned: (list: string) => `Your settings: ${list}`,
+    tunedMore: (n: number) => `+${n} more`,
+    tunedOn: 'on',
+    tunedOff: 'off',
+    resetDefaults: 'Reset to defaults',
   },
   results: {
     title: 'Results',
@@ -174,6 +185,12 @@ export const en = {
     title: 'Waiting for the next game',
     hint: 'You joined mid-game — you are in as soon as this one ends.',
   },
+  /** I-755 A: this phone has PartyBox open in another tab, which holds the seat. */
+  otherTab: {
+    title: 'PartyBox is open in another tab',
+    body: 'This phone is already in the game in another tab. Use that one — or tap below to play here (the other tab will step aside).',
+    playHere: 'Play here instead',
+  },
   connection: {
     reconnecting: 'Reconnecting…',
     /** The link banner with the server's grace left ("Reconnecting… 1:42 left", I-089 C). */
@@ -218,6 +235,9 @@ export const en = {
     vipAwayNobody: 'VIP away — nobody else to hand over to',
   },
   tv: {
+    /** I-744 B: the banner after a server restart, around the new room code. */
+    restartedBefore: 'PartyBox restarted — this is a new room,',
+    restartedAfter: 'Phones: tap Join to get back in.',
     tapToStart: 'Tap anywhere for sound',
     tapHint: 'the party works without it',
     mute: 'Mute',

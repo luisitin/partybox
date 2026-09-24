@@ -171,3 +171,21 @@
   border-color: var(--pb-danger);
   color: var(--pb-danger);
 }
+/* ── I-763 B: the tuned settings on the picker card, and the reset link on the sheet. */
+.cardTuned {
+  display: block;
+  margin-top: var(--pb-space-1);
+  font-size: var(--pb-font-caption);
+  color: var(--pb-good, #4ce0a4);
+  font-weight: 700;
+}
+.resetDefaults {
+  float: right;
+  background: none;
+  border: none;
+  color: var(--pb-accent);
+  font: inherit;
+  text-transform: none;
+  text-decoration: underline;
+  cursor: pointer;
+}

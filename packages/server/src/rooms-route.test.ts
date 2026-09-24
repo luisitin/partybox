@@ -67,7 +67,10 @@ describe('POST /api/rooms', () => {
     const statuses: number[] = [];
     for (let i = 0; i < 20; i++) statuses.push((await open({}, `10.1.0.${i}`)).status);
     const info = (await (await fetch(`${url}/api/info`)).json()) as { rooms: unknown[] };
-    expect(info.rooms.length).toBe(12);
+    // I-785: a private room opened earlier in this file is no longer published, so the public list
+    // shows at most twelve (the cap still holds: the 429s below prove it)
+    expect(info.rooms.length).toBeLessThanOrEqual(12);
+    expect(info.rooms.length).toBeGreaterThanOrEqual(11);
     expect(statuses.filter((s) => s === 429).length).toBeGreaterThan(0);
   });
 });

@@ -30,6 +30,8 @@ export const joinPayloadSchema = z.object({
   avatarId: z.string().max(32),
   token: z.string().max(128).optional(),
   photo: photoSchema.optional(),
+  /** I-741 C: "That's me — take my seat". */
+  takeOver: z.boolean().optional(),
 });
 export type JoinPayload = z.infer<typeof joinPayloadSchema>;
 
@@ -130,6 +132,8 @@ export interface RoomSnapshot {
   vip: string | null;
   selectedGameId: string | null;
   settings: Settings;
+  /** I-763 B: what the VIP tuned per game tonight (absent until something was tuned). */
+  tuned?: Record<string, Settings>;
   games: GameSummary[];
   results: RoomResults | null;
   /** Why the VIP's Start button is disabled, if it is. */

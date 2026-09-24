@@ -14,6 +14,7 @@ import { CrossfadeSwap } from '../CrossfadeSwap';
 import { buzz } from '@partybox/game-sdk/ui';
 const SUBMIT_BUZZ = 20; // I-070 B: the same pattern a submit uses
 import { Join } from './Join';
+import { OtherTab } from './OtherTab';
 import { useSyncExternalStore } from 'react';
 import type { PushedView, TvView } from '@partybox/shared';
 import { clientGames } from '../games.generated';
@@ -173,7 +174,9 @@ export function ControllerApp(): JSX.Element {
   const [setupOpen, setSetupOpen] = useState(0);
 
   let screen: JSX.Element;
-  if (!state.joined || !state.room || !me) {
+  if (state.otherTab) {
+    screen = <OtherTab onPlayHere={controller.playHere} />; // I-755 A
+  } else if (!state.joined || !state.room || !me) {
     screen = <Join controller={controller} state={state} audio={audio} />;
   } else {
     switch (state.room.status) {
