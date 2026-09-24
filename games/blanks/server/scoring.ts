@@ -75,17 +75,35 @@ const count = (n: number, noun: string): string => `${n} ${noun}${n === 1 ? '' :
  * "Quick draw" was decided before anyone had read the black card. Awards are for the people who
  * were in the room; with no human in the running, the award is simply not shown.
  */
-function leader(state: State, stat: Record<string, number>): string | null {
+function leader(
+  state: State,
+  stat: Record<string, number>,
+  won: Set<string> = new Set(),
+): string | null {
   const ids = Object.keys(state.players).filter(
     (id) => (stat[id] ?? 0) > 0 && state.players[id]?.bot !== true,
   );
+  // I-474 A: a tied stat goes to someone without an award yet, before the higher score
   ids.sort(
     (a, b) =>
       (stat[b] ?? 0) - (stat[a] ?? 0) ||
+      Number(won.has(a)) - Number(won.has(b)) ||
       (state.scores[b] ?? 0) - (state.scores[a] ?? 0) ||
       a.localeCompare(b),
   );
-  return ids[0] ?? null;
+  const top = ids[0];
+  // I-474 B: a later award goes to someone without one when their stat is within 80 % of the best
+  if (top !== undefined && won.has(top)) {
+    const near = ids.find((id) => !won.has(id) && (stat[id] ?? 0) >= 0.8 * (stat[top] ?? 0));
+    if (near !== undefined) return claim(won, near);
+  }
+  return top === undefined ? null : claim(won, top);
+}
+
+/** I-474: an award is taken — remembered so the next award prefers someone else on a tie. */
+function claim(won: Set<string>, id: string): string {
+  won.add(id);
+  return id;
 }
 
 /** An award line is one or two lines on the results screen: a long Pick 3 sentence is cut on a
@@ -99,6 +117,8 @@ function shorten(text: string, max = 96): string {
 
 export function awardsFor(state: State): GameAward[] {
   const out: GameAward[] = [];
+  // I-474: who already holds an award tonight
+  const won = new Set<string>();
   // The card of the night leads: it rides the results screen so the funniest thing anyone played
   // is still on the TV while the room talks about it, and on a phone the first award is the one
   // above the sticky button (review-loop #215). Rando's wins pay nobody, and a player who has left
@@ -117,8 +137,9 @@ export function awardsFor(state: State): GameAward[] {
       description: `“${innerQuotes(shorten(fillText(blackCard(best.blackId).text, best.cards.map(whiteText))))}” · ${czar ? `round ${best.round}` : count(best.votes, 'vote')}`,
       playerId: best.submitterId,
     });
+  if (best && Object.hasOwn(state.players, best.submitterId)) won.add(best.submitterId); // I-474
   // I-149 C: judge mode's own award — who read the judge best.
-  const reader = czar ? leader(state, state.calls ?? {}) : null;
+  const reader = czar ? leader(state, state.calls ?? {}, won) : null;
   if (reader)
     out.push({
       id: 'read-the-room',
@@ -126,7 +147,7 @@ export function awardsFor(state: State): GameAward[] {
       description: `${count(state.calls?.[reader] ?? 0, 'call')} called right`,
       playerId: reader,
     });
-  const crowd = czar ? null : leader(state, state.stats.votesReceived);
+  const crowd = czar ? null : leader(state, state.stats.votesReceived, won);
   if (crowd)
     out.push({
       id: 'crowd-favourite',
@@ -146,7 +167,7 @@ export function awardsFor(state: State): GameAward[] {
   // I-154 B: a speed award needs a bar the room could see. An untimed round has none — the
   // shipped stat measured against half of `answerSeconds` even with the clock off, so "half time"
   // was half of a clock nobody was shown.
-  const quick = state.settings.timed ? leader(state, state.stats.fastPlays) : null;
+  const quick = state.settings.timed ? leader(state, state.stats.fastPlays, won) : null;
   if (quick)
     out.push({
       id: 'quick-draw',
