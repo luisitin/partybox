@@ -1,0 +1,38 @@
+/* I-648 A: the game's settings on a guest's phone — label left, value right, one quiet card. */
+.glance {
+  margin: var(--pb-space-3) 0 0;
+  padding: var(--pb-space-2) var(--pb-space-3);
+  width: 100%;
+  max-width: 420px;
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  font-size: var(--pb-font-caption);
+  text-align: left;
+}
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--pb-space-3);
+  padding: 3px 6px;
+  border-radius: 6px;
+}
+.row dt {
+  color: var(--pb-text-muted);
+  min-width: 0;
+}
+.row dd {
+  margin: 0;
+  font-weight: 800;
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* I-648 B: a row the VIP just changed */
+.lit {
+  background: var(--pb-accent-2-fill);
+  color: var(--pb-on-accent-2-fill);
+  transition: background 0.3s ease;
+}
+.lit dt {
+  color: inherit;
+}
