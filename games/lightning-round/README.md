@@ -27,6 +27,8 @@ Leader mark (I-268): A — the roster's ▲ became a small "1st" tag ("1.º"); B
 reveal rows (was 👑) and the late joiner's bench (was 🏆), none while nobody has scored or all tie;
 C — a roster score that goes up shows "+N" over it for 2 s.
 
+Room line (I-565): B — while choosing, the phone's top line ends "· 4/8 in" and the last one reads "Everyone's waiting on you" (one 40 ms buzz); a phone that is in says "waiting for Priya" (1–2 left).
+
 ## Inputs
 
 `{ type: 'pick', index: 0–3 }` — once per player during `question`. `{ type: 'wager', percent: 0 | 25
