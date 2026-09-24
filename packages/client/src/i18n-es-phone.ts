@@ -96,4 +96,11 @@ export const esPhone: Pick<Texts, keyof typeof enPhone> = {
     snag: 'Este juego tuvo un problema.',
     reload: 'Recargar',
   },
+  vote: {
+    ask: '¿A qué jugamos ahora?',
+    voted: '✓ Votado — toca otro para cambiar',
+    label: 'Vota el próximo juego',
+    leads: (game, n) => `🙋 ${game} va ganando · ${n} ${n === 1 ? 'voto' : 'votos'}`,
+    want: (n) => `${n} lo quieren`,
+  },
 };

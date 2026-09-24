@@ -304,3 +304,17 @@
   font-size: var(--pb-font-small);
   color: var(--pb-text-muted);
 }
+
+/* ── I-650 A: the VIP's view of the votes. */
+.tally {
+  margin: var(--pb-space-2) 0;
+  font-weight: 800;
+}
+
+/* ── I-650 B: the room's favourite, under "Pick a game". */
+.leads {
+  display: block;
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  opacity: 0.85;
+}

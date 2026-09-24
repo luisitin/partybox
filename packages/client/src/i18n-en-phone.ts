@@ -100,4 +100,12 @@ export const enPhone = {
     snag: 'This game hit a snag.',
     reload: 'Reload',
   },
+  /** I-650: the vote for the next game (VoteRow, the lobby's tally, the picker's pills). */
+  vote: {
+    ask: 'What should we play next?',
+    voted: '✓ Voted — tap another to change',
+    label: 'Vote for the next game',
+    leads: (game: string, n: number) => `🙋 ${game} leads · ${n} ${n === 1 ? 'vote' : 'votes'}`,
+    want: (n: number) => `${n} want this`,
+  },
 } as const;

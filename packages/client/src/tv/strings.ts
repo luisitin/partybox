@@ -26,6 +26,9 @@ export const STRINGS: Strings = {
     '{names} won': '{names} ganó',
     '{names} tied': '{names} empataron',
     'QR code for {url}': 'Código QR de {url}',
+    // I-650: the vote tally
+    'votes for the next game': 'votos para el próximo juego',
+    'Wants to play next': 'Quieren jugar ahora',
     // TvSelecting, TvPlaying, TvResults
     games: 'juegos',
     'Unknown game "{id}"': 'Juego desconocido "{id}"',
