@@ -13,7 +13,7 @@ import { BALL_LAND_MS, hushCaller, speakCall } from './caller';
 import { PatternIcon } from './Card';
 
 import { botLine, holdLine, pendingLine, whyNot, winHeadline } from './copy';
-import { VoteClock, VoteTally } from './Vote';
+import { NoPickClock, VoteClock, VoteTally } from './Vote';
 import { hopelessClaim } from '../server/reveal';
 import { IntroStage, Resume } from './TvCountdown';
 import { Call, CalledBoard, ClaimStage, DibsLine, whichCard } from './TvParts';
@@ -276,6 +276,10 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
                   <span className={styles.decideWho}>{L('Everyone')}</span> {decideText(view, L)}
                   {/* I-105 C: the vote's clock, once someone has voted. */}
                   <VoteClock endsAt={view.voteEndsAt} />
+                  {/* I-400 B: before anyone votes, the clock to "nobody picked" */}
+                  {!view.voteEndsAt ? (
+                    <NoPickClock endsAt={view.deadline} last={view.round >= view.totalRounds} />
+                  ) : null}
                   {/* I-105 B: the room's votes, live. */}
                   <VoteTally votes={view.votes} className={styles.votes} />
                 </p>

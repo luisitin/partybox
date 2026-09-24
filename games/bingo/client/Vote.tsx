@@ -130,3 +130,21 @@ export function DecideFooter({
     </div>
   );
 }
+
+/** I-400 B: nobody has picked yet — when the room moves on by itself. */
+export function NoPickClock({
+  endsAt,
+  last,
+}: {
+  endsAt: number | null;
+  last: boolean;
+}): JSX.Element | null {
+  const left = useSecondsLeft(endsAt);
+  const L = useT(STRINGS);
+  if (endsAt === null || left === null || left > 20) return null;
+  return (
+    <span className={styles.voteClock} role="timer">
+      {last ? L('Finishing in {n}', { n: left }) : L('Next round in {n}', { n: left })}
+    </span>
+  );
+}

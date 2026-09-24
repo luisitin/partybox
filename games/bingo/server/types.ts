@@ -242,6 +242,8 @@ export const BINGO_MS = 10_000;
  * so an abandoned room (a bots-only game) does not sit on the verdict forever.
  */
 export const BINGO_ABANDONED_MS = 5 * 60_000;
+/** I-400 A: after the verdict is read, nobody picking for this long moves the room on. */
+export const NO_PICK_MS = 20_000;
 /** I-105 A: the vote after a bingo runs this long from its first choice (the note's six seconds). */
 export const VOTE_MS = 6_000;
 export const SCOREBOARD_MS = 6_000;

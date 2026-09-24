@@ -5,7 +5,7 @@
 import { describe, expect, it } from 'vitest';
 import { game } from '../server/index';
 import { AUTO_END_MS, VERDICT_READ_MS, WRONG_READ_MS, claimRevealMs } from '../server/reveal';
-import { RESUME_MS } from '../server/types';
+import { NO_PICK_MS, RESUME_MS } from '../server/types';
 import { pointsFor } from '../server/scoring';
 import {
   PLAYERS,
@@ -194,8 +194,9 @@ describe('the points land with the verdict (loop 257)', () => {
     expect(scored.round.judged).toBe(true);
     expect(scored.wins['a']).toBe(3);
     expect(game.tvView(scored).players.find((p) => p.id === 'a')?.status).toBe('submitted');
-    // With a choice to make, the room is unpaced after the verdict (the abandoned valve only).
-    expect(scored.phase.deadline).toBeGreaterThan(verdictAt + VERDICT_READ_MS + AUTO_END_MS);
+    // I-400 A: with a choice to make, nobody picking for 20 s after the read moves the room on.
+    expect(scored.phase.deadline).toBe(verdictAt + VERDICT_READ_MS + NO_PICK_MS);
+    expect(timer(scored).phase.id).toBe('scoreboard');
   });
 
   it('a choice made before the verdict waits for it, then a moment to read, then applies', () => {
