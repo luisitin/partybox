@@ -11,6 +11,7 @@ export const es: Texts = {
     title: 'Únete a la fiesta',
     name: 'Tu nombre',
     namePlaceholder: 'p. ej. Sam',
+    takeSeat: 'Soy yo: recuperar mi sitio',
     avatar: 'Elige un avatar',
     usePhoto: 'Usar una foto',
     useFace: 'Usar una cara',

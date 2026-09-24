@@ -12,6 +12,8 @@ export const en = {
     title: 'Join the party',
     name: 'Your name',
     namePlaceholder: 'e.g. Sam',
+    // I-741 C: the name is taken because your own phone froze — claim the seat
+    takeSeat: 'That’s me — take my seat',
     avatar: 'Pick an avatar',
     usePhoto: 'Use a photo',
     useFace: 'Use a face instead',

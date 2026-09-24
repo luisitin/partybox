@@ -76,6 +76,12 @@ const PATTERNS_ES: readonly [RegExp, (m: RegExpMatchArray) => string][] = [
   [/^You can add at most (\d+) bots\.$/, (m) => `Puedes añadir como máximo ${m[1]} bots.`],
   [/^(.+) was kicked$/, (m) => `Expulsaron a ${m[1]}`],
   [/^(.+) is now the VIP$/, (m) => `${m[1]} ahora es el VIP`],
+  // I-741 B: a seat taken back from another phone (engine players.ts)
+  [
+    /^Welcome back, (.+) — picking up where you left off$/,
+    (m) => `Hola de nuevo, ${m[1]}: sigues donde lo dejaste`,
+  ],
+  [/^(.+) is back \(new phone\)$/, (m) => `${m[1]} volvió (con otro teléfono)`],
   [/^(.+) joined \(next game\)$/, (m) => `${m[1]} entró (para el próximo juego)`],
   [/^(.+) joined$/, (m) => `${m[1]} entró`],
   [/^(.+) left$/, (m) => `${m[1]} se fue`],

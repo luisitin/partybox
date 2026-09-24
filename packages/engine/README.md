@@ -7,6 +7,7 @@ the effects the engine returns (ADR-010). Everything here is unit-tested to ≥ 
 
 - `src/room.ts` — `createRoom`, `applyRoomEvent(room, event, deps) → { room, effects }`; dispatch + push collapsing + `rev`.
 - `src/players.ts` — join (name rules, capacity, lock), resume by token, disconnect, removal, spectators, 120 s expiry, 30 s VIP handover.
+- I-741: a token-less join under a dropped player's name takes that seat and its login moves to the new phone (A), with a "Welcome back" toast and "back (new phone)" on the TV (B); `takeOver` claims a seat that still reads connected (C).
 - `src/vip.ts` — VIP powers, validation, 30 s handover to the longest-connected player.
 - `src/runner.ts` — GameRunner: `startGame`, `applyGameEvent` (catches throwing reducers), `fireDueTimer` (once per phase instance), `nextWakeAt`.
 - `src/settings.ts` — defaults + coercion against a manifest `settings` spec.
