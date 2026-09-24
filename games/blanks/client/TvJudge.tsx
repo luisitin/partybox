@@ -164,7 +164,13 @@ function JudgeGrid({ view }: Props): JSX.Element {
   // #171). Measured: a 560 px column fits ~110 characters in two rows of the grid size.
   const longest = Math.max(
     0,
-    ...view.cards.map((c) => fillText(view.black?.text ?? '', c.whites).length),
+    ...view.cards.map(
+      (c) =>
+        fillText(
+          view.black?.pick === 1 ? anchorOf(view.black.text) : (view.black?.text ?? ''),
+          c.whites,
+        ).length,
+    ),
   );
   // A small room never pages: six cards or fewer that do not fit step down to the small card and
   // stay there for the round (latched, so measuring the smaller cards cannot bounce them back —
@@ -229,6 +235,10 @@ function JudgeGrid({ view }: Props): JSX.Element {
   useEffect(() => {
     if (everyone) play('tally');
   }, [everyone, play]);
+  // I-179 A: a Pick 1 round's cards differ only in the answer — the question is said once
+  const answersOnly = view.black?.pick === 1;
+  // I-179 B: the answer in the words either side of its blank ("…boring page ____ about?")
+  const anchor = anchorOf(view.black?.text ?? '');
   return (
     <>
       <div className={styles.kickerRow}>
@@ -255,6 +265,10 @@ function JudgeGrid({ view }: Props): JSX.Element {
           </span>
         </span>
       </div>
+      {/* I-179 A: a Pick 1 question once, above the answers */}
+      {answersOnly && view.black ? (
+        <FilledCard text={view.black.text} pick={view.black.pick} size="grid" className={styles.judgeQuestion} />
+      ) : null}
       <ul
         ref={ref}
         className={`${styles.judgeGrid} ${gridClass(count)} ${pages > 1 ? '' : styles.judgeGridFits} ${tiny ? styles.judgeGridTiny : ''} ${everyone ? styles.judgeGridDone : ''}`}
@@ -277,9 +291,16 @@ function JudgeGrid({ view }: Props): JSX.Element {
                   the room has already heard it — the answers alone fit where the sentences did not (one blank
                   per white, so a Pick 2 keeps both marks inline). */}
               <FilledCard
-                text={count > 8 ? c.whites.map(() => '____').join(' ') : (view.black?.text ?? '')}
+                text={
+                  answersOnly
+                    ? anchor
+                    : count > 8
+                      ? c.whites.map(() => '____').join(' ')
+                      : (view.black?.text ?? '')
+                }
                 whites={c.whites}
                 size={dense ? 'mini' : 'grid'}
+                className={answersOnly && anchor !== '____' ? styles.anchored : undefined}
                 letter={LETTERS[c.slot]}
               />
             </span>
@@ -298,4 +319,16 @@ export function TvJudge({ view }: Props): JSX.Element {
       <JudgeGrid key={`${view.round}:${view.cards.length}`} view={view} />
     </Stage>
   );
+}
+
+/** I-179 B: the two words either side of a sentence's blank, around the blank — or the bare blank
+ *  for a question card (no blank: the answer stands alone). */
+function anchorOf(text: string): string {
+  const m = /_{2,}/.exec(text);
+  if (!m) return '____';
+  const before = text.slice(0, m.index).trim().split(/\s+/).filter(Boolean).slice(-2).join(' ');
+  const after = text.slice(m.index + m[0].length).trim().split(/\s+/).filter(Boolean).slice(0, 2).join(' ');
+  const head = before ? `…${before} ` : '';
+  const tail = after ? ` ${after}…` : '';
+  return `${head}____${tail}`;
 }
