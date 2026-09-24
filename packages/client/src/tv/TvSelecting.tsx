@@ -14,6 +14,7 @@ import { STRINGS } from './strings';
 import styles from './TvSelecting.module.css';
 import { keySetting } from '../keySetting';
 import { voteCounts } from '../controller/VoteRow';
+import { gameEntry, taglineOf, useAbout, useCatalog, useGameText } from '../catalog';
 
 export interface TvSelectingProps {
   room: RoomSnapshot;
@@ -21,12 +22,17 @@ export interface TvSelectingProps {
 }
 
 export function TvSelecting({ room, client }: TvSelectingProps): JSX.Element {
-  const game = room.games.find((g) => g.id === room.selectedGameId);
+  const { games } = useCatalog();
+  const game = gameEntry(room.selectedGameId);
+  const form = room.selectedGame;
   const vip = room.players.find((p) => p.isVip);
   const botCount = room.players.filter((p) => p.bot).length;
   const counts = voteCounts(room); // I-650 C: the room's votes, shown while the VIP picks
   const L = useT(STRINGS);
   const lang = L.lang;
+  useGameText(room.selectedGameId, lang);
+  const about = useAbout(room.selectedGameId, lang);
+  const settings = form?.id === game?.id ? (form?.settings ?? []) : [];
   return (
     <Stage>
       <p className={`pb-muted ${styles.choosing}`}>
@@ -45,7 +51,7 @@ export function TvSelecting({ room, client }: TvSelectingProps): JSX.Element {
       <div className={styles.columns}>
         <div className={styles.left}>
           <ul className={styles.games} role="radiogroup" aria-label={L('games')}>
-            {room.games.map((g) => {
+            {games.map((g) => {
               const selected = g.id === room.selectedGameId;
               return (
                 <li key={g.id}>
@@ -104,12 +110,12 @@ export function TvSelecting({ room, client }: TvSelectingProps): JSX.Element {
           // Nobody scrolls a TV: a game with many settings (bingo's ten) packs three columns and a
           // clamped description so every field stays above the host bar (review-loop #2).
           <div
-            className={`${styles.card} ${game.settings.length > 8 ? styles.dense : ''} pb-enter`}
+            className={`${styles.card} ${settings.length > 8 ? styles.dense : ''} pb-enter`}
             key={game.id}
           >
             <BigText level="h1">{game.name}</BigText>
-            <p className={styles.tagline}>{gameText(game.id, lang, game.tagline)}</p>
-            <p className={styles.description}>{gameText(game.id, lang, game.description)}</p>
+            <p className={styles.tagline}>{taglineOf(game, lang)}</p>
+            <p className={styles.description}>{about?.description ?? ''}</p>
             <p className={styles.meta}>
               {t.selecting.players(game.minPlayers, game.maxPlayers)} ·{' '}
               {
@@ -120,7 +126,7 @@ export function TvSelecting({ room, client }: TvSelectingProps): JSX.Element {
               {/* I-187 C: the room sees the deck before the VIP starts — on the meta line, so the
                   settings below keep their room */}
               {(() => {
-                const key = keySetting(game, room.settings);
+                const key = form ? keySetting(form, room.settings) : null;
                 return key ? (
                   <>
                     {' · '}
@@ -136,9 +142,9 @@ export function TvSelecting({ room, client }: TvSelectingProps): JSX.Element {
                 ) : null;
               })()}
             </p>
-            {game.settings.length > 0 ? (
+            {settings.length > 0 ? (
               <div className={styles.settings} aria-label={t.selecting.settings}>
-                {game.settings.map((spec) => (
+                {settings.map((spec) => (
                   <SettingField
                     key={spec.key}
                     spec={spec}

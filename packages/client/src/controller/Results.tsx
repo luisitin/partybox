@@ -13,6 +13,7 @@ import type { Controller } from '../net/controller';
 import { myRow, nobodyScored, scoreboardRows, winnerLineFor } from './results-rows';
 import styles from './Results.module.css';
 import { VoteRow } from './VoteRow';
+import { getCatalog } from '../catalog';
 
 export interface ResultsProps {
   controller: Controller;
@@ -91,7 +92,7 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
                 onClick={() =>
                   controller.vip({
                     action: 'selectGame',
-                    gameId: room.selectedGameId ?? room.games[0]?.id ?? '',
+                    gameId: room.selectedGameId ?? getCatalog().games[0]?.id ?? '',
                   })
                 }
               >

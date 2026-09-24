@@ -1,26 +1,13 @@
-// Bingo in Spanish, part 1: the picker's manifest lines, what the server writes (the pattern names
-// and hints, read through `L.sent`), the lines both surfaces share (copy.ts), and the names of the
+// Bingo in Spanish, part 1: what the server writes (the pattern names and hints, read through
+// `L.sent`), the lines both surfaces share (copy.ts), and the names of the
 // per-phone settings (words.ts, styles.ts). Vocabulary: card → cartón, daub → marcar, pattern →
 // figura, call → bola / número, caller → locutor, blackout → cartón lleno, FREE → LIBRE.
 export const ES_GAME: Readonly<Record<string, string>> = {
-  // The manifest (the game picker and its settings).
-  'Daub what you hear. Press BINGO! Everyone checks.':
-    'Marca lo que oyes. Toca ¡BINGO! Todos lo revisan.',
-  'Plain 75-ball bingo. The TV calls a number every few seconds; you daub your own card however you like. Press BINGO! and the caller stops while your card goes on the TV for everyone to check: the pattern in green, every square you daubed that was never called in red. Right — you win the round. Wrong — your wrong daubs and that line are wiped, and the caller carries on.':
-    'Bingo clásico de 75 bolas. La TV canta un número cada pocos segundos; tú marcas tu cartón como quieras. Toca ¡BINGO! y el locutor se detiene mientras tu cartón sale en la TV para que todos lo revisen: la figura en verde y, en rojo, cada casilla que marcaste y nunca salió. ¿Acertaste? Ganas la ronda. ¿Fallaste? Se borran tus marcas equivocadas y esa línea, y el locutor sigue.',
-  Rounds: 'Rondas',
-  'Each round deals fresh cards and a fresh deck': 'Cada ronda reparte cartones y bolas nuevos',
-  'Round 1 pattern': 'Figura de la ronda 1',
-  'Round 2 pattern': 'Figura de la ronda 2',
-  'Round 3 pattern': 'Figura de la ronda 3',
-  'Round 4 pattern': 'Figura de la ronda 4',
-  'Round 5 pattern': 'Figura de la ronda 5',
-  'Only used when Rounds is 4 or more': 'Solo se usa con 4 rondas o más',
-  'Only used when Rounds is 5': 'Solo se usa con 5 rondas',
   // I-134 A: the waiting phone's line, written by the server (the call itself — letter, number,
   // nickname — is content and stays as sent).
   'the cards are going out…': 'se están repartiendo los cartones…',
   'the first number is coming…': 'ya viene el primer número…',
+  // The pattern names (the manifest's Round N options), which the server also writes.
   'Any line': 'Línea', // Spanish bingo's own word for "any line" (the hint spells it out)
   'Four corners': 'Cuatro esquinas',
   'The X': 'La X',
@@ -28,15 +15,7 @@ export const ES_GAME: Readonly<Record<string, string>> = {
   'Picture frame': 'Marco',
   'Postage stamp': 'Sello postal',
   'The T': 'La T',
-  'Cards per player': 'Cartones por jugador',
-  'How many cards everyone plays each round — one BINGO! button checks your best card':
-    'Cuántos cartones juega cada uno por ronda: un solo botón de ¡BINGO! revisa tu mejor cartón',
-  'Seconds per number': 'Segundos por número',
-  'How long each number stays up before the next one is called':
-    'Cuánto se ve cada número antes de cantar el siguiente',
   // READER-VOICES: whose voice calls the numbers.
-  Reader: 'Locutor',
-  'Whose voice calls the numbers': 'Qué voz canta los números',
   'No reader': 'Sin locutor',
   'Old British Man': 'Señor británico',
   'Young British Man': 'Joven británico',
@@ -44,16 +23,9 @@ export const ES_GAME: Readonly<Record<string, string>> = {
   'Soft-Spoken Woman': 'Mujer de voz suave',
   Original: 'Original',
   // I-112 C: one three-way choice replaced "Called board" and "Previous number".
-  'Calls shown': 'Números a la vista',
-  'How much of the call history the TV keeps up': 'Cuántos números ya cantados muestra la TV',
   'Memory test (nothing)': 'Prueba de memoria (nada)',
   'Last call only': 'Solo el último',
   'Full board': 'Tablero completo',
-  'One away': 'A un número',
-  'Tell the room when a player is one number from the pattern — a ring in the strip, a line under the call and a hush':
-    'Avisa a la sala cuando a alguien le falta un número para la figura: un aro en la franja, una línea bajo el número y un susurro',
-  'Cheeky caller': 'Locutor pícaro',
-  'Cheekier nicknames for some numbers (PG-13)': 'Apodos más pícaros para algunos números (+13)',
 
   // What the server writes: the pattern's hint (its name is one of the manifest's options above).
   'Five in a row — across, down or diagonal. FREE counts.':

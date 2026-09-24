@@ -154,22 +154,23 @@ export async function joinViaForm(
   options: { avatarIndex?: number; code?: string; expectError?: boolean } = {},
 ): Promise<void> {
   const { page } = phone;
-  await page.getByLabel(/your name/i).fill(phone.name);
+  // English or Spanish (a capture may run with an es-ES locale).
+  await page.getByLabel(/your name|tu nombre/i).fill(phone.name);
   const avatars = page.getByRole('radio');
   const count = await avatars.count();
   if (count > 0) await avatars.nth((options.avatarIndex ?? 0) % count).click();
-  const codeField = page.getByLabel(/room code/i);
+  const codeField = page.getByLabel(/room code|código/i);
   if ((await codeField.count()) > 0) {
     // I-041: a bare-URL phone types the code from the TV (the house room's unless given)
     const code = options.code ?? (await api.state()).room?.code ?? '';
     if (code) await codeField.fill(code);
   }
-  await page.getByRole('button', { name: /^join$/i }).click();
+  await page.getByRole('button', { name: /^(join|entrar)$/i }).click();
   if (options.expectError) {
     await page.waitForTimeout(600);
     return;
   }
-  await page.getByLabel(/your name/i).waitFor({ state: 'detached', timeout: 8000 });
+  await page.getByLabel(/your name|tu nombre/i).waitFor({ state: 'detached', timeout: 8000 });
   phone.playerId = await api.playerId(phone.name);
 }
 

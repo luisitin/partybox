@@ -14,15 +14,7 @@ import { serverText } from '../server-text';
 import { STRINGS } from './strings';
 import styles from './HostBar.module.css';
 import { fixLabel, runFix, startFix } from '../startFix';
-
-/** I-053 B: a glyph per game on the shelf (games carry no icon of their own). */
-const GAME_GLYPH: Record<string, string> = {
-  bingo: '🎱',
-  blanks: '✍️',
-  'lightning-round': '⚡',
-  wisecrack: '😂',
-  'broken-pencil': '✏️',
-};
+import { gameEntry, useCatalog } from '../catalog';
 
 export interface HostBarProps {
   client: TvClient;
@@ -88,20 +80,21 @@ export function HostBar({ client, room, view }: HostBarProps): JSX.Element | nul
   const vipName = room.players.find((p) => p.id === room.vip)?.name ?? null;
   const bots = room.players.filter((p) => p.bot);
   // I-667 B: what would let the picked game start — the exact bots, not all of them
-  const picked = room.games.find((g) => g.id === room.selectedGameId);
+  const { games } = useCatalog();
+  const picked = gameEntry(room.selectedGameId);
   const fix =
     room.status === 'selecting' && !room.canStart.ok && picked ? startFix(room, picked) : null;
   const full = room.players.length >= room.capacity;
-  const firstGame = room.games[0];
+  const firstGame = games[0];
   // I-053 A: the game button turns its label over — the shelf, one game at a time (0 = the label).
   const [shelf, setShelf] = useState(0);
   useEffect(() => {
-    if (room.status !== 'lobby' || room.games.length === 0) return undefined;
-    const h = setInterval(() => setShelf((s) => (s + 1) % (room.games.length + 1)), 2200);
+    if (room.status !== 'lobby' || games.length === 0) return undefined;
+    const h = setInterval(() => setShelf((s) => (s + 1) % (games.length + 1)), 2200);
     return () => clearInterval(h);
-  }, [room.status, room.games.length]);
-  const shelfGame = shelf === 0 ? null : (room.games[shelf - 1] ?? null);
-  const game = room.games.find((g) => g.id === room.selectedGameId);
+  }, [room.status, games.length]);
+  const shelfGame = shelf === 0 ? null : (games[shelf - 1] ?? null);
+  const game = picked;
   // Why Start is off: the engine's sentence, in the TV's language.
   const cannotStart = room.canStart.ok
     ? undefined
@@ -175,8 +168,7 @@ export function HostBar({ client, room, view }: HostBarProps): JSX.Element | nul
               }
             >
               <span key={shelf} className={styles.turn}>
-                {shelfGame ? (GAME_GLYPH[shelfGame.id] ?? '🎮') : '🎮'}{' '}
-                {shelfGame ? shelfGame.name : t.host.pickGame}
+                {shelfGame ? shelfGame.icon : '🎮'} {shelfGame ? shelfGame.name : t.host.pickGame}
               </span>
             </button>
           ) : null}

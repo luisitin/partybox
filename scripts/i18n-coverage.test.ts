@@ -96,21 +96,39 @@ function calls(dir: string): { keys: Map<string, string>; dynamic: string[] } {
 interface Manifest {
   tagline: string;
   description: string;
-  settings?: { label: string; description?: string; options?: { label: string }[] }[];
+  howToPlay?: string[];
+  presence?: { note?: string };
+  settings?: {
+    label: string;
+    description?: string;
+    impliedBy?: { note: string };
+    options?: { label: string }[];
+  }[];
 }
 
+/** Every sentence of a manifest the shell shows (the picker, About, the settings form). */
 function manifestLines(path: string): string[] {
   const m = JSON.parse(readFileSync(join(ROOT, path), 'utf8')) as Manifest;
   return [
     m.tagline,
     m.description,
+    ...(m.howToPlay ?? []),
+    ...(m.presence?.note ? [m.presence.note] : []),
     ...(m.settings ?? []).flatMap((s) => [
       s.label,
       ...(s.description ? [s.description] : []),
+      ...(s.impliedBy ? [s.impliedBy.note] : []),
       ...(s.options ?? []).map((o) => o.label),
     ]),
   ];
 }
+
+/** ADR-049: a game's manifest Spanish lives next to the manifest, served by the host. */
+const esTable = (manifest: string): Record<string, string> =>
+  JSON.parse(readFileSync(join(ROOT, manifest.replace(/\.json$/, '.es.json')), 'utf8')) as Record<
+    string,
+    string
+  >;
 
 const holes = (text: string): string =>
   [...text.matchAll(/\{(\w+)\}/g)]
@@ -134,10 +152,18 @@ describe.each(AREAS)('$dir', (area) => {
   });
 
   it.runIf(area.manifest !== undefined)(
-    `has the Spanish for the manifest's picker lines — add them to ${area.tableFile}`,
+    `has the Spanish for every manifest sentence — add them to ${area.manifest?.replace('.json', '.es.json')}`,
     () => {
-      const missing = manifestLines(area.manifest!).filter((en) => es[en] === undefined);
-      expect(missing).toEqual([]);
+      const table = esTable(area.manifest!);
+      const lines = manifestLines(area.manifest!);
+      expect(lines.filter((en) => table[en] === undefined)).toEqual([]);
+      // …and nothing stale: every key is a sentence the manifest still has (or an option's
+      // short name — the label without its "(…)", which the key-setting chip shows: I-187).
+      const shorts = lines.map((l) => l.replace(/\s*\(.*\)\s*$/, ''));
+      expect(
+        Object.keys(table).filter((en) => !lines.includes(en) && !shorts.includes(en)),
+      ).toEqual([]);
+      expect(Object.entries(table).filter(([en, tr]) => holes(en) !== holes(tr))).toEqual([]);
     },
   );
 

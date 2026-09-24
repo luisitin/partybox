@@ -11,8 +11,11 @@ TypeScript plus content. Everything below is checked by `pnpm verify`; nothing i
    the headings, in this order — also checked: `## Overview`, `## Players`, `## Phases`, `## Inputs`,
    `## Scoring`, `## Edge cases`, `## Settings`, `## Content`. This README is _the_ spec: the
    stress-test session treats it as truth, so say explicitly when a score can go down.
-3. **Manifest**: `manifest.json` — `id` (must equal the folder), `name`, `tagline`, `description`,
-   `version`, `minPlayers`, `maxPlayers`, `estimatedMinutes`, `tags`, `settings[]`. `server/index.ts`
+3. **Manifest**: `manifest.json` — `id` (must equal the folder), `name`, `icon` (one emoji),
+   `tagline` (≤ 60), `description` (≤ 300, shown only in About), `howToPlay` (three steps ≤ 90),
+   `version`, `minPlayers`, `maxPlayers`, `estimatedMinutes`, `tags` (1–3 of `GAME_TAGS`; `quick` is
+   derived), `presence.needs`, `addedOn` (`pnpm new-game` stamps today), `settings[]`. Every one of its
+   sentences also goes in `manifest.es.json`, keyed by the English (ADR-049). `server/index.ts`
    imports it and parses it with `gameManifestSchema` (as the template does); the contract test asserts
    `game.manifest` deep-equals the file.
    Optional `estimate` (I-189): the game's measured pace, so the picker's "~N min" follows the
@@ -73,6 +76,7 @@ TypeScript plus content. Everything below is checked by `pnpm verify`; nothing i
 | File                                                                 | Purpose                                                                                                        |
 | -------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
 | `manifest.json`                                                      | metadata, player bounds, settings spec, `supportsBots` (parsed with `gameManifestSchema` in `server/index.ts`) |
+| `manifest.es.json`                                                   | the manifest's sentences in Spanish, keyed by the English: the catalog, About and the settings form (ADR-049)  |
 | `README.md`                                                          | the spec (required headings above)                                                                             |
 | `CLAUDE.md`                                                          | ≤ 30 lines: local rules and commands for this game                                                             |
 | `server/index.ts`                                                    | exports `game: GameDefinition<State, Input>`: `init`, `reduce` (composes the phases), views, `results`, `bot`  |

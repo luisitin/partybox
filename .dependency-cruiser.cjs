@@ -73,10 +73,11 @@ module.exports = {
     },
     {
       name: 'server-imports-only-game-server-code',
-      comment: 'The generated registry is the only bridge and it points at games/<id>/server.',
+      comment:
+        'The generated registry is the only bridge: games/<id>/server, plus each manifest.es.json (ADR-049).',
       severity: 'error',
       from: { path: '^packages/server/' },
-      to: { path: '^games/', pathNot: '^games/[^/]+/server/' },
+      to: { path: '^games/', pathNot: '^games/[^/]+/(server/|manifest\.es\.json$)' },
     },
     {
       name: 'client-imports-only-sdk-shared',

@@ -15,6 +15,8 @@ import { keySetting } from '../keySetting';
 import { VoteRow, voteCounts } from './VoteRow';
 import { MAX_BOTS_PER_OWNER } from '@partybox/shared';
 import { fixLabel, runFix, startFix } from '../startFix';
+import { gameEntry, taglineOf, useAbout, useCatalog, useGameText } from '../catalog';
+import type { CatalogEntry } from '@partybox/shared';
 
 export interface SelectingProps {
   controller: Controller;
@@ -23,19 +25,20 @@ export interface SelectingProps {
 }
 
 export function Selecting({ controller, room, me }: SelectingProps): JSX.Element {
-  const selected = room.games.find((g) => g.id === room.selectedGameId) ?? null;
+  const catalog = useCatalog();
+  const selected = gameEntry(room.selectedGameId) ?? null;
+  // The chosen game's settings form rides in the snapshot; its words come from the host.
+  const form = room.selectedGame ?? null;
   const vip = room.players.find((p) => p.isVip);
   const lang = useLang();
+  useGameText(room.selectedGameId, lang);
+  const about = useAbout(me.isVip ? room.selectedGameId : null, lang);
 
   if (!me.isVip) {
     return (
       <WaitingScreen
         title={t.selecting.vipChoosing(vip?.name ?? t.selecting.theVip)}
-        hint={
-          selected
-            ? `${selected.name} — ${gameText(selected.id, lang, selected.tagline)}`
-            : undefined
-        }
+        hint={selected ? `${selected.name} — ${taglineOf(selected, lang)}` : undefined}
         mood="wait"
       >
         {/* I-650 A: the vote stays open while the VIP picks */}
@@ -46,17 +49,19 @@ export function Selecting({ controller, room, me }: SelectingProps): JSX.Element
 
   const start = (): void => controller.vip({ action: 'start' });
   // I-187 A: the one setting the room should know before Start (Blanks: the deck)
-  const key = selected ? keySetting(selected, room.settings) : null;
+  const key = form ? keySetting(form, room.settings) : null;
   const keyWords = key && selected ? gameText(selected.id, lang, key.short) : null;
   // I-667 A: the red line's one-tap fix (the VIP's phone adds bots it owns — 4 at most)
   const myBots = room.players.filter((p) => p.bot?.ownerId === me.id).length;
-  const fixFor = (g: (typeof room.games)[number]) => startFix(room, g, MAX_BOTS_PER_OWNER - myBots);
+  const fixFor = (g: CatalogEntry) => startFix(room, g, MAX_BOTS_PER_OWNER - myBots);
   const fix = !room.canStart.ok && selected ? fixFor(selected) : null;
   const botCount = room.players.filter((p) => p.bot).length;
   // I-650 A: the votes on each game
   const counts = voteCounts(room);
   // I-650 B: the most-wanted games first (a tie keeps the usual order)
-  const games = [...room.games].sort((a, b) => (counts.get(b.id) ?? 0) - (counts.get(a.id) ?? 0));
+  const games = [...catalog.games].sort(
+    (a, b) => (counts.get(b.id) ?? 0) - (counts.get(a.id) ?? 0),
+  );
   return (
     <Screen
       title={t.lobby.pickGame}
@@ -140,7 +145,7 @@ export function Selecting({ controller, room, me }: SelectingProps): JSX.Element
                     {isSelected ? '✓' : ''}
                   </span>
                 </span>
-                <span className={styles.cardTagline}>{gameText(g.id, lang, g.tagline)}</span>
+                <span className={styles.cardTagline}>{taglineOf(g, lang)}</span>
                 {/* I-667 C: a game that doesn't fit the room says so, and what it would take */}
                 {(() => {
                   const n = room.players.length;
@@ -194,32 +199,32 @@ export function Selecting({ controller, room, me }: SelectingProps): JSX.Element
                   </span>
                 ) : null}
                 {/* I-763 B: the card says what is tuned, so the VIP can see it stuck */}
-                {tunedLine(g, room.tuned?.[g.id], lang) ? (
-                  <span className={styles.cardTuned}>{tunedLine(g, room.tuned?.[g.id], lang)}</span>
-                ) : null}
-                {isSelected ? (
-                  <span className={styles.cardDescription}>
-                    {gameText(g.id, lang, g.description)}
+                {isSelected && form && tunedLine(form, room.tuned?.[g.id], lang) ? (
+                  <span className={styles.cardTuned}>
+                    {tunedLine(form, room.tuned?.[g.id], lang)}
                   </span>
+                ) : null}
+                {isSelected && about ? (
+                  <span className={styles.cardDescription}>{about.description}</span>
                 ) : null}
               </button>
             </li>
           );
         })}
       </ul>
-      {selected && selected.settings.length > 0 ? (
+      {form && form.settings.length > 0 ? (
         <section className={styles.settings} aria-label={t.selecting.settings}>
           <h3 className={styles.settingsTitle}>
             {t.selecting.settings}
             {/* I-763 B: the factory numbers, one tap away */}
-            {tunedSettings(selected, room.settings).length > 0 ? (
+            {tunedSettings(form, room.settings).length > 0 ? (
               <button
                 type="button"
                 className={styles.resetDefaults}
                 onClick={() =>
                   controller.vip({
                     action: 'updateSettings',
-                    settings: Object.fromEntries(selected.settings.map((s) => [s.key, s.default])),
+                    settings: Object.fromEntries(form.settings.map((s) => [s.key, s.default])),
                   })
                 }
               >
@@ -227,14 +232,14 @@ export function Selecting({ controller, room, me }: SelectingProps): JSX.Element
               </button>
             ) : null}
           </h3>
-          {selected.settings.map((spec) => (
+          {form.settings.map((spec) => (
             <SettingField
               key={spec.key}
               spec={spec}
               value={room.settings[spec.key]}
               players={room.players.length}
               settings={room.settings}
-              gameId={selected.id}
+              gameId={form.id}
               onChange={(v) =>
                 controller.vip({ action: 'updateSettings', settings: { [spec.key]: v } })
               }

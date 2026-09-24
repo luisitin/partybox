@@ -20,6 +20,7 @@ The server never crashes on client input. The server is authoritative; clients r
 
 | Event     | Payload                                   | When                                                         |
 | --------- | ----------------------------------------- | ------------------------------------------------------------ |
+| `catalog` | `Catalog { rev, games: CatalogEntry[] }`  | once per connection, before anything else (ADR-049)          |
 | `welcome` | `{ playerId, token, room: RoomSnapshot }` | after a successful `join`                                    |
 | `room`    | `{ rev, room: RoomSnapshot }`             | lobby / selecting / results changes                          |
 | `view`    | `{ rev, view: ControllerView & { vip } }` | during play, whenever the player's view changes              |
@@ -29,7 +30,7 @@ The server never crashes on client input. The server is authoritative; clients r
 
 ## TV → server / server → TV
 
-`tv:join { roomCode? }` → server pushes `room`, `view { rev, view: TvView & { vip }, at }`, `toast`. `roomCode` defaults to the house room.
+`tv:join { roomCode? }` → server pushes `room`, `view { rev, view: TvView & { vip }, at }`, `toast`. `roomCode` defaults to the house room. A TV socket gets the `catalog` on connect, like a phone.
 TVs never send _player_ events (`join`, `input`, `leave`, `vip`, `bot` from a TV socket are ignored). The TV
 is the host's screen (ADR-031): `tv:vip { action, … }` (same payload as `vip`) runs any VIP action with the
 engine's `host` flag — no VIP check, every other rule intact — and `tv:bot { action: 'add' }` /
@@ -74,12 +75,19 @@ the host timer back-to-back.
 
 ```ts
 { code, status: 'lobby' | 'selecting' | 'playing' | 'results', locked, players: PlayerPublic[], vip: string | null,
-  selectedGameId: string | null, settings: Settings, results: GameResults | null, capacity: number, games: GameSummary[],
+  selectedGameId: string | null, selectedGame?: { id, settings: SettingSpec[] }, settings: Settings,
+  results: GameResults | null, capacity: number,
   recording: boolean, tonight?: TonightGame[] /* I-652 */, formerVip?: string /* I-347 */ }
 ```
 
 `tuned?: Record<gameId, Settings>` (I-763, 2026-09-24) is what the VIP tuned per game tonight —
 seeded from `<recordings>/tuned-settings.json` on the host PC, so the next party opens at the same
 numbers; picking a game reads it, a settings change writes it. Absent until something was tuned.
+
+The game list is not in the snapshot (ADR-049): it is the `catalog`, sent once per connection. A game's
+long words come over HTTP when needed: `GET /api/games/:id/about?lang=` (the About sheet: tagline,
+description, the three how-to-play steps, one line per setting, ≤ 2 KB) and `GET /api/games/:id/text?lang=`
+(the manifest's sentences in that language, keyed by the English: the settings form). `GET /api/catalog`
+returns the catalog for tools.
 
 `canStart` is computed by the engine (`docs/GLOSSARY.md`). Exact shapes: `packages/shared/src/protocol.ts`.

@@ -22,6 +22,7 @@ import type { SoundCue, SoundEngine } from '../sound';
 import { CrossfadeSwap } from '../CrossfadeSwap';
 import { STRINGS } from './strings';
 import styles from './TvPlaying.module.css';
+import { gameEntry } from '../catalog';
 
 export interface TvPlayingProps {
   room: RoomSnapshot;
@@ -90,7 +91,7 @@ export function TvPlaying({ room, view, audio, onGameReady, music }: TvPlayingPr
   );
   const hush = useCallback(() => audio.hushClips(), [audio]);
   const module = room.selectedGameId ? clientGames[room.selectedGameId] : undefined;
-  const gameName = room.games.find((g) => g.id === room.selectedGameId)?.name ?? '';
+  const gameName = gameEntry(room.selectedGameId)?.name ?? '';
   const vip = room.players.find((p) => p.id === (view?.vip ?? room.vip));
   // While a game withholds the strip (Wisecrack's reveal), the chips keep the numbers they last
   // showed, muted: the tally is not spoiled and the row does not reflow (review-loop #32).

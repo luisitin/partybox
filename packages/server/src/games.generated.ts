@@ -5,6 +5,11 @@ import { game as blanks } from '../../../games/blanks/server/index';
 import { game as brokenPencil } from '../../../games/broken-pencil/server/index';
 import { game as lightningRound } from '../../../games/lightning-round/server/index';
 import { game as wisecrack } from '../../../games/wisecrack/server/index';
+import bingoEs from '../../../games/bingo/manifest.es.json' with { type: 'json' };
+import blanksEs from '../../../games/blanks/manifest.es.json' with { type: 'json' };
+import brokenPencilEs from '../../../games/broken-pencil/manifest.es.json' with { type: 'json' };
+import lightningRoundEs from '../../../games/lightning-round/manifest.es.json' with { type: 'json' };
+import wisecrackEs from '../../../games/wisecrack/manifest.es.json' with { type: 'json' };
 
 export const serverGames: Readonly<Record<string, AnyGameDefinition>> = {
   'bingo': bingo,
@@ -12,4 +17,12 @@ export const serverGames: Readonly<Record<string, AnyGameDefinition>> = {
   'broken-pencil': brokenPencil,
   'lightning-round': lightningRound,
   'wisecrack': wisecrack,
+};
+
+export const serverGameText: Readonly<Record<string, Readonly<Record<string, Readonly<Record<string, string>>>>>> = {
+  'bingo': { es: bingoEs },
+  'blanks': { es: blanksEs },
+  'broken-pencil': { es: brokenPencilEs },
+  'lightning-round': { es: lightningRoundEs },
+  'wisecrack': { es: wisecrackEs },
 };

@@ -77,12 +77,48 @@ export type SettingSpec = z.infer<typeof settingSpecSchema>;
 export const DEFAULT_MAX_INPUT_BYTES = 16 * 1024;
 export const HARD_MAX_INPUT_BYTES = 256 * 1024;
 
+/**
+ * The picker's filter chips (game pack Part 00 §1.2, the owner's ruling 4): 1–3 per game. `quick`
+ * is not on the list — the catalog derives it from `estimatedMinutes ≤ QUICK_MINUTES`.
+ */
+export const GAME_TAGS = [
+  'words',
+  'drawing',
+  'trivia',
+  'bluff',
+  'hidden-roles',
+  'teams',
+  'co-op',
+  'comedy',
+  'strategy',
+  'classic',
+] as const;
+export type GameTag = (typeof GAME_TAGS)[number];
+export const QUICK_MINUTES = 8;
+/** Where the players must be (Part 00 §3.5): the picker's badge and the notice on choosing. */
+export const PRESENCE_NEEDS = ['anywhere', 'voice-if-remote', 'same-room'] as const;
+export type PresenceNeeds = (typeof PRESENCE_NEEDS)[number];
+
+/** One user-perceived character: `icon` is a single emoji (flags and ZWJ sequences included). */
+function oneGrapheme(s: string): boolean {
+  return [...new Intl.Segmenter('en', { granularity: 'grapheme' }).segment(s)].length === 1;
+}
+
 export const gameManifestSchema = z
   .object({
     id: z.string().regex(GAME_ID_PATTERN),
     name: z.string().min(1).max(40),
-    tagline: z.string().min(1).max(80),
-    description: z.string().min(1).max(500),
+    /** One emoji: the picker's icon tile and the TV card. */
+    icon: z.string().min(1).max(16).refine(oneGrapheme, { message: 'icon must be one emoji' }),
+    tagline: z.string().min(1).max(60),
+    /** Served only through `about` (never in the catalog). */
+    description: z.string().min(1).max(300),
+    /** The About sheet's 1-2-3 (and the TV mirror's), each step one short sentence. */
+    howToPlay: z.tuple([
+      z.string().min(1).max(90),
+      z.string().min(1).max(90),
+      z.string().min(1).max(90),
+    ]),
     version: z.string().regex(SEMVER),
     minPlayers: z.number().int().min(1).max(16),
     maxPlayers: z.number().int().min(1).max(16),
@@ -101,7 +137,16 @@ export const gameManifestSchema = z
         roundsSetting: z.string().min(1).max(40),
       })
       .optional(),
-    tags: z.array(z.string().min(1).max(20)).max(10),
+    tags: z.array(z.enum(GAME_TAGS)).min(1).max(3),
+    presence: z.object({
+      needs: z.enum(PRESENCE_NEEDS),
+      /** One sentence for the lobby notice when this game is chosen in a room that conflicts. */
+      note: z.string().min(1).max(140).optional(),
+    }),
+    /** ISO date the game joined PartyBox: the catalog's NEW badge for 30 days. */
+    addedOn: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+    /** The game ships a `PhoneSettings` panel for the lobby's 🎨 sheet (loaded on expand). */
+    phoneSettings: z.boolean().optional(),
     settings: z.array(settingSpecSchema).max(12),
     /** ADR-002: raise for stroke-list inputs (drawing games). */
     maxInputBytes: z.number().int().min(1024).max(HARD_MAX_INPUT_BYTES).optional(),

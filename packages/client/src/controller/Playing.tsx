@@ -18,6 +18,7 @@ import type { Controller } from '../net/controller';
 import type { PlayCueOptions } from '@partybox/game-sdk/ui';
 import type { SoundCue, SoundEngine } from '../sound';
 import { GameErrorBoundary } from './GameErrorBoundary';
+import { gameName as gameName_ } from '../catalog';
 
 export interface PlayingProps {
   controller: Controller;
@@ -89,8 +90,7 @@ function Bench({
   }, [seen, play]);
   if (rows.length === 0) return null;
   const top = rows[0]?.score ?? 0;
-  const gameName =
-    room.games.find((g) => g.id === room.selectedGameId)?.name ?? room.selectedGameId ?? '';
+  const gameName = gameName_(room.selectedGameId);
   // The phase id as a word in the device's language (the id itself in English, or when unknown).
   const phaseId = view?.phaseId ?? '';
   const phase = (t.phases as Readonly<Record<string, string>>)[phaseId] ?? phaseId;

@@ -1,7 +1,7 @@
 // Socket.IO protocol (docs/PROTOCOL.md): every client → server payload has a zod schema here; the
 // server → client shapes are plain types (the server builds them, clients trust them).
 import { z } from 'zod';
-import type { GameResults, PlayerInfo, SettingSpec, Settings } from './contract';
+import type { GameResults, PlayerInfo, PresenceNeeds, SettingSpec, Settings } from './contract';
 import { settingsSchema } from './contract';
 
 export const LIMITS = {
@@ -108,24 +108,66 @@ export interface PlayerPublic {
   bot?: { ownerId: string | null; strategy: BotStrategy };
 }
 
-export interface GameSummary {
+/** I-189: a game's measured pace — minutes = (fixedSeconds + rounds × (perRoundSeconds + players ×
+ *  perPlayerPerRoundSeconds)) / 60, `rounds` read from the named setting (its default when the room
+ *  has not set it), or the player count for "players". A tuple: it rides in every catalog entry. */
+export type GamePace = readonly [
+  fixedSeconds: number,
+  perRoundSeconds: number,
+  perPlayerPerRoundSeconds: number,
+  roundsSetting: string,
+  roundsDefault?: number,
+];
+
+/**
+ * One game in the lobby's catalog (game pack Part 00 §1.2): what the picker lists, built once by the
+ * host and sent once per connection (`catalog`). No long text — the description, the how-to-play
+ * steps and the settings' words come through `about` when someone opens it. ≤ 400 B per entry.
+ */
+export interface CatalogEntry {
   id: string;
   name: string;
+  /** One emoji. */
+  icon: string;
   tagline: string;
-  description: string;
   minPlayers: number;
   maxPlayers: number;
   estimatedMinutes: number;
-  /** I-189: the measured pace (see the manifest schema); absent = estimatedMinutes. */
-  estimate?: {
-    fixedSeconds: number;
-    perRoundSeconds: number;
-    perPlayerPerRoundSeconds: number;
-    roundsSetting: string;
-  };
+  pace?: GamePace;
+  /** The manifest's 1–3 tags, plus `quick` when the game runs 8 minutes or less. */
   tags: string[];
-  settings: SettingSpec[];
+  presence: PresenceNeeds;
   supportsBots: boolean;
+  /** Joined PartyBox in the last 30 days (by the host's clock when the catalog was built). */
+  isNew?: true;
+  /** The game has a panel in the lobby's 🎨 sheet. */
+  phoneSettings?: true;
+  /** The tagline in the other languages the game ships (the picker's only per-row sentence). */
+  i18n?: Partial<Record<string, { tagline: string }>>;
+}
+
+export interface Catalog {
+  /** Changes whenever the host's game list does (a restart with a new game). */
+  rev: string;
+  games: CatalogEntry[];
+}
+
+/** `GET /api/games/:id/about?lang=` — the About sheet's words, already in `lang` (≤ 2 KB). */
+export interface GameAbout {
+  id: string;
+  lang: string;
+  tagline: string;
+  description: string;
+  howToPlay: [string, string, string];
+  /** One plain-language line per setting ("Rounds — Rounds to play; …"). */
+  settings: { key: string; label: string; line?: string }[];
+  presenceNote?: string;
+}
+
+/** The chosen game's settings form, in the room snapshot while a game is chosen. */
+export interface SelectedGame {
+  id: string;
+  settings: SettingSpec[];
 }
 
 export interface RoomResults {
@@ -146,7 +188,9 @@ export interface RoomSnapshot {
   settings: Settings;
   /** I-763 B: what the VIP tuned per game tonight (absent until something was tuned). */
   tuned?: Record<string, Settings>;
-  games: GameSummary[];
+  /** The chosen game's settings form (absent while nothing is chosen). The game list itself is
+   *  the catalog, sent once per connection. */
+  selectedGame?: SelectedGame;
   results: RoomResults | null;
   /** Why the VIP's Start button is disabled, if it is. */
   canStart: { ok: true } | { ok: false; reason: string };

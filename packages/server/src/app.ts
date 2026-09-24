@@ -7,13 +7,13 @@ import Fastify from 'fastify';
 import type { FastifyInstance } from 'fastify';
 import type { EngineDeps } from '@partybox/engine';
 import { PARTYBOX_VERSION, gameManifestSchema } from '@partybox/shared';
-import { gameSummaries } from '@partybox/engine';
 import { createBotManager } from './bots';
+import { serveCatalog } from './catalog';
 import type { BotManager } from './bots';
 import { createClock } from './clock';
 import type { Clock } from './clock';
 import { registerDevApi } from './dev-api';
-import { serverGames } from './games.generated';
+import { serverGameText, serverGames } from './games.generated';
 import { createHost } from './host';
 import type { Host } from './host';
 import { detectLanIp } from './lan-ip';
@@ -116,7 +116,9 @@ export async function createApp(options: AppOptions): Promise<App> {
           log: options.quiet ? () => {} : undefined,
         });
   const funnel = createFunnelBook(recordingsDir); // I-077
-  sockets.attach(host, deps, funnel);
+  // Part 00 §1.2 (ADR-049): the lobby's catalog, built once with the host's clock for NEW.
+  const catalog = serveCatalog(fastify, Object.values(deps.games), serverGameText, clock.now());
+  sockets.attach(host, deps, funnel, catalog);
   const detachSpeech = attachSpeech(fastify, host, deps); // READER-VOICES (ADR-045)
   // I-785 B: keyed by room code — so only the rooms anyone may see
   fastify.get('/api/funnel', async () =>
@@ -268,9 +270,6 @@ export async function createApp(options: AppOptions): Promise<App> {
       dev: options.dev,
     };
   });
-
-  // Public: the registered games (what the lobby's picker shows), for tools and tests.
-  fastify.get('/api/games', async () => gameSummaries(deps));
 
   registerDevApi(fastify, {
     enabled: options.dev || options.devApi,

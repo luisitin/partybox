@@ -29,8 +29,18 @@ const targets: Target[] = [
       games
         .map((g) => `import { game as ${g.ident} } from '../../../games/${g.id}/server/index';\n`)
         .join('') +
+      // ADR-049: each game's manifest sentences in Spanish (the catalog, About, the settings form).
+      games
+        .map(
+          (g) =>
+            `import ${g.ident}Es from '../../../games/${g.id}/manifest.es.json' with { type: 'json' };\n`,
+        )
+        .join('') +
       `\nexport const serverGames: Readonly<Record<string, AnyGameDefinition>> = {\n` +
       games.map((g) => `  '${g.id}': ${g.ident},\n`).join('') +
+      `};\n` +
+      `\nexport const serverGameText: Readonly<Record<string, Readonly<Record<string, Readonly<Record<string, string>>>>>> = {\n` +
+      games.map((g) => `  '${g.id}': { es: ${g.ident}Es },\n`).join('') +
       `};\n`,
   },
   {

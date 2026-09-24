@@ -7,13 +7,17 @@ import { coerceSettings, defaultSettings } from './settings';
 const manifest = gameManifestSchema.parse({
   id: 'quiz',
   name: 'Quiz',
+  icon: '❓',
   tagline: 'q',
   description: 'q',
+  howToPlay: ['a', 'b', 'c'],
   version: '1.0.0',
   minPlayers: 1,
   maxPlayers: 4,
   estimatedMinutes: 5,
-  tags: [],
+  tags: ['trivia'],
+  presence: { needs: 'anywhere' },
+  addedOn: '2026-01-01',
   settings: [
     {
       key: 'category',

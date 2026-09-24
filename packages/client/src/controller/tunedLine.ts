@@ -1,17 +1,17 @@
 // I-763 B: "Your settings: Cards per player 4 · Seconds per number 3" — the settings that differ
 // from the game's defaults, up to three, in the phone's language; null when nothing is tuned.
 import { multiselectPicks } from '@partybox/shared';
-import type { GameSummary, Settings } from '@partybox/shared';
+import type { SelectedGame, Settings } from '@partybox/shared';
 import type { Lang } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import { gameText } from '../i18n-games';
 
-type Spec = GameSummary['settings'][number];
+type Spec = SelectedGame['settings'][number];
 
 /** A multiselect's default is an array: compare by value, not by reference. */
 const same = (a: unknown, b: unknown): boolean => JSON.stringify(a) === JSON.stringify(b);
 
-export function tunedSettings(game: GameSummary, values: Settings | undefined): Spec[] {
+export function tunedSettings(game: SelectedGame, values: Settings | undefined): Spec[] {
   if (!values) return [];
   return game.settings.filter(
     (s) => values[s.key] !== undefined && !same(values[s.key], s.default),
@@ -19,7 +19,7 @@ export function tunedSettings(game: GameSummary, values: Settings | undefined): 
 }
 
 export function tunedLine(
-  game: GameSummary,
+  game: SelectedGame,
   values: Settings | undefined,
   lang: Lang,
 ): string | null {

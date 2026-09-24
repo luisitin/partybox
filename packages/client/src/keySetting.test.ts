@@ -1,6 +1,6 @@
 // I-187: the key setting's words.
 import { describe, expect, it } from 'vitest';
-import type { GameSummary } from '@partybox/shared';
+import type { SelectedGame } from '@partybox/shared';
 import { keySetting } from './keySetting';
 
 const blanks = {
@@ -17,7 +17,7 @@ const blanks = {
       ],
     },
   ],
-} as unknown as GameSummary;
+} as unknown as SelectedGame;
 
 describe('I-187: the key setting', () => {
   it('names the deck in short words, from the default or the pick', () => {

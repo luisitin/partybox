@@ -32,6 +32,7 @@ import { Lobby } from './Lobby';
 import { Playing } from './Playing';
 import { Results } from './Results';
 import { Selecting } from './Selecting';
+import { gameEntry } from '../catalog';
 
 let singleton: Controller | null = null;
 function controllerInstance(): Controller {
@@ -118,7 +119,7 @@ export function ControllerApp(): JSX.Element {
   const musicWanted = phoneMusicWanted(musicChoice, room);
   const gameMusic = room?.selectedGameId ? clientGames[room.selectedGameId]?.music : undefined;
   const plan = musicWanted ? planFor(room, view, gameMusic) : null;
-  const gameName = room?.games.find((g) => g.id === room.selectedGameId)?.name;
+  const gameName = gameEntry(room?.selectedGameId)?.name;
   const musicWhat = !musicWanted
     ? null
     : plan

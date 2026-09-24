@@ -135,7 +135,7 @@ async function main(): Promise<void> {
     await stage('lobby', 1500);
 
     // Into the picker: the VIP's footer button.
-    await vip.page.getByRole('button', { name: /pick a game|elige un juego|elegir juego/i }).first().click(); // prettier-ignore
+    await vip.page.getByRole('button', { name: /pick a game|elegir un juego/i }).first().click(); // prettier-ignore
     await stage('picker', 1500);
 
     // Browse: a real touch scroll down the list and back (smoothness + overscroll at both ends).

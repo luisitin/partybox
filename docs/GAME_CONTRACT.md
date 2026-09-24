@@ -205,8 +205,10 @@ Every sentence a player or the room reads goes through the device's language (AD
 useT(STRINGS)` at the top of a component, then `L('Waiting for {name}…', { name })` — the key is the
 literal English, placeholders instead of template strings, one key per plural form. A sentence your
 server writes renders through `L.sent(text)` (the table's exact entry, or a `{placeholder}` entry that
-matches it). `STRINGS.es` also carries the manifest's tagline, description and setting labels for the
-game picker. `scripts/i18n-coverage.test.ts` fails until each has its Spanish. Content stays as written.
+matches it). The manifest's own sentences (tagline, description, how-to-play, setting labels) go in
+`manifest.es.json` next to it: the host serves them to the picker, About and the settings form, so the
+picker never loads game code (ADR-049). `scripts/i18n-coverage.test.ts` fails until each has its
+Spanish. Content stays as written.
 
 ## Worked example — the template game (`games/_template`)
 

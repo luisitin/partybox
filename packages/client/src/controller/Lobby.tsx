@@ -13,6 +13,7 @@ import type { SoundEngine } from '../sound';
 import styles from './Lobby.module.css';
 import { ShareButton } from './ShareSheet';
 import { VoteRow, tallyLine, voteLeader } from './VoteRow';
+import { useCatalog } from '../catalog';
 import { VIP_TIPS, setTipsSeen, tipsSeen } from './vipTips';
 
 export interface LobbyProps {
@@ -60,9 +61,10 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
       setPoofing(null);
     }, 450);
   };
-  const first = room.games[0];
+  const { games } = useCatalog();
+  const first = games[0];
   // I-650 B: the picker opens on the room's favourite (the VIP can still pick any game)
-  const leader = voteLeader(room);
+  const leader = voteLeader(room, games);
   const pick = (): void => {
     const gameId = leader?.id ?? first?.id;
     if (gameId) controller.vip({ action: 'selectGame', gameId });
