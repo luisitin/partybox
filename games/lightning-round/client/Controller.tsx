@@ -8,6 +8,7 @@ import {
   buzz,
   useHold,
   useSecondsLeft,
+  useServerNow,
   useT,
 } from '@partybox/game-sdk/ui';
 import type { GameControllerProps, Translator } from '@partybox/game-sdk/ui';
@@ -15,6 +16,7 @@ import type { LightningControllerView } from '../server/index';
 import type { Input } from '../server/types';
 import { Outcome, RoomRows, Stake, wagerLabel } from './ControllerBits';
 import { CustomStake } from './CustomStake';
+import { PhoneNext } from './NextStep';
 import styles from './Controller.module.css';
 import { pointsText, roundLabel } from './labels';
 import { STRINGS } from './strings';
@@ -36,6 +38,7 @@ function lockedLine(spare: number, phoneOnly: boolean, L: Translator): string {
 export function Controller({
   view,
   send,
+  skip,
 }: GameControllerProps<LightningControllerView, Input>): JSX.Element {
   const L = useT(STRINGS);
   const { phaseId } = view;
@@ -99,7 +102,6 @@ export function Controller({
             ? `${roundKicker(view, L)} · ${L('you bet {stake}', { stake })}`
             : roundKicker(view, L)
         } /* I-039 C */
-        prompt={view.question.text}
         choices={view.question.choices.map((label, index) => ({ id: String(index), label }))}
         selectedId={locked ? String(view.myPickIndex) : null}
         correctId={
@@ -107,6 +109,17 @@ export function Controller({
         }
         disabled={revealed}
         lockedHint={lockedHint}
+        // I-288 B: while it's open, what a right answer is worth now
+        prompt={
+          view.worth && !locked && !revealed ? (
+            <>
+              {view.question.text}
+              <Worth worth={view.worth} deadline={view.deadline} />
+            </>
+          ) : (
+            view.question.text
+          )
+        }
         // A "phone only" room: the TV's rows, on the phone under the answers (the owner).
         after={
           revealed && shown && view.phoneOnly && view.rows ? <RoomRows rows={view.rows} /> : null
@@ -117,7 +130,11 @@ export function Controller({
         }}
         footer={
           revealed && shown ? (
-            <Outcome view={view} streakBefore={streakBefore} spare={spare} />
+            <>
+              <Outcome view={view} streakBefore={streakBefore} spare={spare} />
+              {/* I-589: the owner's Next button, on the VIP's phone only */}
+              <PhoneNext next={view.next} skip={skip} phaseKey={view.deadline} />
+            </>
           ) : revealed && finalQ ? (
             <div className={styles.stake} role="status">
               🎲 {view.phoneOnly ? L('The bets are in…') : L('The bets are in — look at the TV')}
@@ -214,4 +231,22 @@ export function Controller({
       mood="watch"
     />
   );
+}
+
+/** I-288 B: "+812 now" — a right answer's worth this instant, draining with the speed bonus. */
+function Worth({
+  worth,
+  deadline,
+}: {
+  worth: NonNullable<LightningControllerView['worth']>;
+  deadline: number | null;
+}): JSX.Element | null {
+  const L = useT(STRINGS);
+  // The server's clock (the shell's offset), not this phone's: a phone a second off would promise
+  // points the server does not give. Ten looks a second, like the branch.
+  const now = useServerNow(100);
+  if (deadline === null) return null;
+  const left = Math.max(0, Math.min(worth.windowMs, deadline - now));
+  const points = worth.base + Math.round(worth.speedMax * (left / worth.windowMs)) + worth.bonus;
+  return <span className={styles.worth}>{L('+{points} now', { points })}</span>;
 }

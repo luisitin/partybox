@@ -485,3 +485,42 @@
 .crowdFace:first-child {
   margin-left: 0;
 }
+
+/* ── I-589 A: a right answer's time on its reveal row; the fastest wears the bolt. */
+.raceTime {
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  color: var(--pb-accent-2);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* ── I-589 (the owner's note): the standings' Next button, in the header's topic slot. The header
+   is caption text; the pill's padding is cancelled by negative margins so the line keeps its height
+   (nothing below moves when it arrives). It rises in with the standings (pb-rise, one easing, the
+   base token — reduced motion collapses it). */
+.nextButton {
+  margin-block: calc(-1 * var(--pb-space-2));
+  padding: var(--pb-space-2) var(--pb-space-5);
+  border-radius: 999px;
+  border: 0;
+  background: var(--pb-accent);
+  color: var(--pb-on-accent);
+  font: inherit;
+  font-weight: 800;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.nextButton:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.nextButton:focus-visible {
+  outline: 3px solid var(--pb-focus);
+  outline-offset: 2px;
+}

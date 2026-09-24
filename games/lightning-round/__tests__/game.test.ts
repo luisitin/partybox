@@ -120,7 +120,8 @@ describe('phase flow', () => {
     expect(s.phase.id).toBe('question');
     s = pick(s, 'c', true);
     expect(s.phase.id).toBe('reveal');
-    expect(s.phase.deadline).toBe(s.phase.startedAt + 5_000);
+    // I-589 (the owner's note): a regular reveal holds 8 s (the standings get the extra time)
+    expect(s.phase.deadline).toBe(s.phase.startedAt + 8_000);
   });
 
   it('the wager phase lasts 15 s and ends early once everyone wagered', () => {

@@ -6,6 +6,13 @@ import type { Strings } from './ui/lang';
 
 export interface GameTvProps<V extends TvView = TvView> {
   view: PushedView<V>;
+  /**
+   * I-589 (the owner: "a next question button the vip or tv can click"): ends the current phase
+   * the way the host bar's "Skip / Next" does. The TV is the screen the party is run from
+   * (ADR-031), so the shell passes it; a game renders a button with it only in a phase whose view
+   * sets `vipSkipHidden`, so the room never sees two buttons for one action.
+   */
+  skip?: () => void;
 }
 
 /** Props of a game's optional `Finale` (rendered on the results stage under the winner line). */

@@ -31,6 +31,8 @@ export interface TvPlayingProps {
   music?: MusicEngine;
   /** Fires once the game's own component has mounted (module loaded, first view rendered). */
   onGameReady?: () => void;
+  /** I-589: the host's skip, handed to the game for its own on-stage Next button. */
+  onSkip?: () => void;
 }
 
 /** Mounts next to the game inside Suspense, so it reports exactly when the game painted. */
@@ -54,7 +56,14 @@ function DelayedFallback({ children }: { children: ReactNode }): JSX.Element | n
   return show ? <>{children}</> : null;
 }
 
-export function TvPlaying({ room, view, audio, onGameReady, music }: TvPlayingProps): JSX.Element {
+export function TvPlaying({
+  room,
+  view,
+  audio,
+  onGameReady,
+  music,
+  onSkip,
+}: TvPlayingProps): JSX.Element {
   const L = useT(STRINGS);
   // The curtain stays mounted while it fades out after a resume ("adjust state during render":
   // the paused flag flipping true → false starts the leave; animationend or 400 ms clears it).
@@ -103,7 +112,7 @@ export function TvPlaying({ room, view, audio, onGameReady, music }: TvPlayingPr
     );
   }
   const GameTv = module?.Tv as unknown as
-    ((props: { view: PushedView<TvView> }) => JSX.Element) | undefined;
+    ((props: { view: PushedView<TvView>; skip?: () => void }) => JSX.Element) | undefined;
   // A phase the game cuts into (its own entrance is the choreography — loop 296).
   const quick = module?.quickInto?.includes(view.phaseId) === true;
   // ADR-030: a game may ask for a quiet timer (bar only — a rhythm, not a countdown) or none.
@@ -196,7 +205,7 @@ export function TvPlaying({ room, view, audio, onGameReady, music }: TvPlayingPr
                 }
               >
                 <SoundProvider play={play} clip={clip} hush={hush}>
-                  <GameTv view={view} />
+                  <GameTv view={view} skip={onSkip} />
                   <Ready onReady={onGameReady} />
                 </SoundProvider>
               </Suspense>

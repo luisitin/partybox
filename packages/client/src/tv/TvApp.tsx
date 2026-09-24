@@ -21,11 +21,8 @@ import { refreshServerInfo } from '../net/info';
 import { HostBar } from './HostBar';
 import { roomFullToast, seatOpenedToast, soundToast } from './own-toasts';
 import { TvFrame } from './TvFrame';
+import { tvContent } from './tvContent';
 import { CrossfadeSwap } from '../CrossfadeSwap';
-import { TvLobby } from './TvLobby';
-import { TvPlaying } from './TvPlaying';
-import { TvResults } from './TvResults';
-import { TvSelecting } from './TvSelecting';
 import styles from './TvApp.module.css';
 
 let bedEngine: BedEngine | null = null;
@@ -291,26 +288,21 @@ export function TvApp(): JSX.Element {
     };
   }, [room, view, audio, music, homing, showLocalToast]);
 
-  let content: JSX.Element;
   // I-658 B: a new room (a start over) means a new QR — fetch it now, not within the minute
   const liveCode = room?.code ?? null;
   useEffect(() => {
     if (liveCode) refreshServerInfo();
   }, [liveCode]);
-  if (!room) content = <TvLobby room={null} />;
-  else if (room.status === 'lobby')
-    content = (
-      <TvLobby
-        room={room}
-        nudgeIds={state.toasts.flatMap((t) => (t.playerId ? [t.playerId] : []))}
-      />
-    );
-  else if (room.status === 'selecting') content = <TvSelecting room={room} client={client} />;
-  else if (room.status === 'playing')
-    content = (
-      <TvPlaying room={room} view={view} audio={audio} onGameReady={markGameReady} music={music} />
-    );
-  else content = <TvResults room={room} lastView={lastView} />;
+  const content = tvContent({
+    room,
+    view,
+    lastView,
+    toasts: state.toasts,
+    client,
+    audio,
+    music,
+    onGameReady: markGameReady,
+  });
 
   return (
     <ServerClockProvider offsetMs={state.offsetMs}>

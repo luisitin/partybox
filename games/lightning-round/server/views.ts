@@ -1,11 +1,12 @@
 // TV and controller views (docs/GAME_CONTRACT.md "Views"). Hidden information is omitted by KEY,
 // never nulled: `correctIndex`, `pickIndex` and `wagerAmount` only exist once the stage may show
 // them (__tests__/contract.config.ts asserts those key names never leak early).
+import { BASE_POINTS, SPEED_MAX_POINTS } from './types';
 import { controllerEnvelope, envelope, rank } from '@partybox/game-sdk';
 import type { ControllerView, PlayerStatus, TvView } from '@partybox/game-sdk';
 import { categoryLabel, drawLabel, questionById } from './content';
 import { labelOf } from '../content/schema';
-import { wagerOptions } from './scoring';
+import { questionPoints, wagerOptions } from './scoring';
 import type { WagerOption } from './scoring';
 import { isFinalIndex } from './types';
 import type { State } from './types';
@@ -41,6 +42,8 @@ export interface RevealRow {
   score: number;
   /** Final reveal only. */
   wagerAmount?: number;
+  /** I-589 A: how long a right answer took (ms); absent for a wrong or missing one. */
+  elapsedMs?: number;
 }
 
 export interface StandingRow {
@@ -61,10 +64,12 @@ export interface LightningTvView extends TvView {
   answeredCount: number;
   totalCount: number;
   correctIndex?: number;
-  /** `reveal`: one row per player, correct first, then by score. */
+  /** `reveal`: one row per player — right answers fastest first (I-589 A), then by score. */
   rows?: RevealRow[];
   /** `reveal`, `wager` and `done`: ranked standings. */
   standings?: StandingRow[];
+  /** I-589 (the owner's note): a regular reveal's Next button — what it moves on to. */
+  next?: RevealNext;
 }
 
 export interface LightningControllerView extends ControllerView {
@@ -79,11 +84,26 @@ export interface LightningControllerView extends ControllerView {
   /** `reveal`: the room's rows as the TV shows them — a "phone only" room reads them on the phone
    *  (the owner, 2026-09-21: Lightning was not optimised for phone only). */
   rows?: RevealRow[];
+  /** I-589: a regular reveal's Next button (the VIP's phone shows it) — what it moves on to. */
+  next?: RevealNext;
+  /** I-288 B: `question`: what a right answer is worth, as a function of time — the phone ticks it. */
+  worth?: { base: number; speedMax: number; bonus: number; windowMs: number };
   /** `wager`: the buttons for this player (0-score players only see 0). */
   wagerChoices?: WagerOption[];
   /** Own wager once placed (from `wager` through the final reveal). */
   myWagerAmount?: number;
   myRank?: number;
+}
+
+/** I-589: where a regular reveal's Next goes — the next question, or the wager before the final. */
+export type RevealNext = 'question' | 'wager';
+
+/** I-589 (the owner's note): a regular reveal carries its own Next button on the TV and the VIP's
+ *  phone, so the shell's generic Skip / Next is hidden there. The final reveal keeps the shell's. */
+function nextOf(state: State): { next: RevealNext; vipSkipHidden: true } | Record<string, never> {
+  if (state.phase.id !== 'reveal' || state.index < 0 || isFinalIndex(state, state.index)) return {};
+  const lastRegular = state.index === state.questionIds.length - 2;
+  return { next: lastRegular ? 'wager' : 'question', vipSkipHidden: true };
 }
 
 export function statusOf(state: State): (id: string) => PlayerStatus {
@@ -154,11 +174,15 @@ function revealRows(state: State, correctIndex: number, final: boolean): RevealR
       score: state.scores[p.id] ?? 0,
     };
     if (final) row.wagerAmount = state.wagers[p.id] ?? 0;
+    const pick = state.picks[p.id];
+    if (row.correct && pick) row.elapsedMs = pick.elapsedMs; // I-589 A
     return row;
   });
+  // I-589 A: the race — right answers fastest first, then the rest by score
   return rows.sort(
     (a, b) =>
       Number(b.correct) - Number(a.correct) ||
+      (a.correct && b.correct ? (a.elapsedMs ?? 0) - (b.elapsedMs ?? 0) : 0) ||
       b.score - a.score ||
       a.playerId.localeCompare(b.playerId),
   );
@@ -181,6 +205,7 @@ export function tvView(state: State, gameId: string): LightningTvView {
     // Passive phases (nobody can act): a quiet bar instead of red digits and countdown ticks
     // (ADR-030) — the reveal has its own beats and the intro is a title card.
     timerMode: phase === 'intro' || phase === 'reveal' ? 'quiet' : 'normal',
+    ...nextOf(state),
   };
   if (phase === 'reveal') {
     const q = questionById(state.questionIds[state.index] ?? '');
@@ -209,13 +234,29 @@ export function controllerView(
       statusOf: statusOf(state),
       scores: state.scores,
     }),
+    // I-288 A: the phone's clock is quiet when the TV's is — nothing to press in the intro or reveal
+    timerMode: phase === 'intro' || phase === 'reveal' ? 'quiet' : 'normal',
     round: roundOf(state),
     question: phase === 'question' || phase === 'reveal' ? questionOf(state) : null,
     myPickIndex: myPick?.index ?? null,
     myScore: score,
     myStreak: me ? (state.streaks[playerId] ?? 0) : 0,
+    ...nextOf(state),
   };
   const final = isFinalIndex(state, state.index);
+  // I-288 B: the live worth of a right answer (the regular questions: the final is the bet)
+  if (phase === 'question' && me && !final)
+    view.worth = {
+      base: BASE_POINTS,
+      speedMax: SPEED_MAX_POINTS,
+      bonus:
+        questionPoints(
+          state.settings.answerSeconds * 1000,
+          state.settings.answerSeconds,
+          (state.streaks[playerId] ?? 0) + 1,
+        ) - BASE_POINTS,
+      windowMs: state.settings.answerSeconds * 1000,
+    };
   if (phase === 'reveal') {
     const q = questionById(state.questionIds[state.index] ?? '');
     if (q) {
