@@ -8,20 +8,28 @@ import { enterPhase, isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { toggleDaub } from '../cards';
 import { clearClaims, menusOpen, setMenu } from '../claims';
-import { VERDICT_READ_MS, claimRevealMs } from '../reveal';
+import { WRONG_READ_MS, claimRevealMs } from '../reveal';
 import { RESUME_MS } from '../types';
 import type { Claim, Input, State } from '../types';
 
 export function enterCheck(state: State, now: number, claim: Claim): State {
   const round = state.round;
   const mine = round.daubs[claim.playerId] ?? [];
-  const wiped = mine.map((d, i) => (i === claim.cardIndex ? [] : d));
+  // I-435 A: the wrong daubs and the claimed line go; the other called daubs stay
+  const drop = new Set([...claim.red, ...claim.cells.filter((i) => i !== 12)]);
+  const lost = (mine[claim.cardIndex] ?? []).filter((c) => drop.has(c));
+  const wiped = mine.map((d, i) => (i === claim.cardIndex ? d.filter((c) => !drop.has(c)) : d));
   return enterPhase(
     clearClaims({
       ...state,
+      // I-401 B: counted for "Trigger finger"
+      wrongClaims: {
+        ...state.wrongClaims,
+        [claim.playerId]: (state.wrongClaims?.[claim.playerId] ?? 0) + 1,
+      },
       round: {
         ...round,
-        claim,
+        claim: { ...claim, wiped: lost },
         daubs: { ...round.daubs, [claim.playerId]: wiped },
         waitForCall: { ...round.waitForCall, [claim.playerId]: round.drawn + 1 },
         judged: false,
@@ -59,6 +67,6 @@ export function reduceCheck(state: State, event: GameEvent<Input>): State {
   return {
     ...state,
     round: { ...state.round, judged: true },
-    phase: { ...state.phase, deadline: (state.phase.deadline ?? event.now) + VERDICT_READ_MS },
+    phase: { ...state.phase, deadline: (state.phase.deadline ?? event.now) + WRONG_READ_MS },
   };
 }

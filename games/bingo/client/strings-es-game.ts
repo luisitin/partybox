@@ -6,8 +6,8 @@ export const ES_GAME: Readonly<Record<string, string>> = {
   // The manifest (the game picker and its settings).
   'Daub what you hear. Press BINGO! Everyone checks.':
     'Marca lo que oyes. Toca ¡BINGO! Todos lo revisan.',
-  'Plain 75-ball bingo. The TV calls a number every few seconds; you daub your own card however you like. Press BINGO! and the caller stops while your card goes on the TV for everyone to check: the pattern in green, every square you daubed that was never called in red. Right — you win the round. Wrong — your whole card is wiped blank, and the caller carries on.':
-    'Bingo clásico de 75 bolas. La TV canta un número cada pocos segundos; tú marcas tu cartón como quieras. Toca ¡BINGO! y el locutor se detiene mientras tu cartón sale en la TV para que todos lo revisen: la figura en verde y, en rojo, cada casilla que marcaste y nunca salió. ¿Acertaste? Ganas la ronda. ¿Fallaste? Tu cartón se borra entero y el locutor sigue.',
+  'Plain 75-ball bingo. The TV calls a number every few seconds; you daub your own card however you like. Press BINGO! and the caller stops while your card goes on the TV for everyone to check: the pattern in green, every square you daubed that was never called in red. Right — you win the round. Wrong — your wrong daubs and that line are wiped, and the caller carries on.':
+    'Bingo clásico de 75 bolas. La TV canta un número cada pocos segundos; tú marcas tu cartón como quieras. Toca ¡BINGO! y el locutor se detiene mientras tu cartón sale en la TV para que todos lo revisen: la figura en verde y, en rojo, cada casilla que marcaste y nunca salió. ¿Acertaste? Ganas la ronda. ¿Fallaste? Se borran tus marcas equivocadas y esa línea, y el locutor sigue.',
   Rounds: 'Rondas',
   'Each round deals fresh cards and a fresh deck': 'Cada ronda reparte cartones y bolas nuevos',
   'Round 1 pattern': 'Figura de la ronda 1',
@@ -71,6 +71,13 @@ export const ES_GAME: Readonly<Record<string, string>> = {
   '{name} says BINGO!': '{name} canta ¡BINGO!',
   'NOT A BINGO': 'NO ES BINGO',
   'Card wiped. Next number in a moment…': 'Cartón borrado. Enseguida sale otro número…',
+  // I-435: what a wrong claim took
+  'Wrong daubs and that line wiped. Next number in a moment…':
+    'Marcas equivocadas y esa línea borradas. Enseguida sale otro número…',
+  'Card {n}: the wrong daubs and that line are wiped — the rest stay.':
+    'Cartón {n}: se borran las marcas equivocadas y esa línea; el resto se queda.',
+  'Card {n}: the wrong daubs are wiped — the rest stay.':
+    'Cartón {n}: se borran las marcas equivocadas; el resto se queda.',
   'checking against {n} calls': 'comprobando con {n} bolas',
   'Final points': 'Puntos finales',
   'Next: round {round} — {pattern}': 'Siguiente: ronda {round} — {pattern}',
@@ -104,6 +111,26 @@ export const ES_GAME: Readonly<Record<string, string>> = {
   '{a}, {b} and {n} more': '{a}, {b} y {n} más',
   '{list} was never called': '{list} nunca salió',
   '{list} were never called': '{list} nunca salieron',
+  // I-392 B: the checked line
+  '{line}: {why}': '{line}: {why}',
+  'Top row': 'Fila de arriba',
+  'Row 2': 'Fila 2',
+  'Middle row': 'Fila del medio',
+  'Row 4': 'Fila 4',
+  'Bottom row': 'Fila de abajo',
+  'The {letter} column': 'La columna {letter}',
+  'The diagonal': 'La diagonal',
+  // I-401: the awards
+  'Quick draw': 'Mano rápida',
+  'Bingo on call {n}': 'Bingo en la bola {n}',
+  'Clean card': 'Cartón limpio',
+  'Won with no stray daubs': 'Ganó sin marcas de más',
+  '{n} wins with no stray daubs': '{n} victorias sin marcas de más',
+  'Trigger finger': 'Gatillo fácil',
+  '1 wrong BINGO!': '1 ¡BINGO! equivocado',
+  '{n} wrong BINGO!s': '{n} ¡BINGO! equivocados',
+  // I-433 B: a bot's claim
+  '{name} calls it — checking': '{name} lo canta: comprobando',
   '{list} was missed': 'faltó marcar {list}',
   '{list} were missed': 'faltó marcar {list}',
   'keep going — same pattern': 'seguir — misma figura',

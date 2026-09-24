@@ -33,6 +33,7 @@ const EXACT_ES: Readonly<Record<string, string>> = {
   'That was a lot of rooms — try again in a moment.':
     'Eso fueron muchas salas: inténtalo de nuevo en un momento.',
   'The game was ended.': 'Se terminó el juego.',
+  'Nobody came back — the game ended.': 'Nadie volvió: se terminó el juego.', // I-746 C
   "You're the VIP now — tap ★ VIP for host controls":
     'Ahora eres el VIP: toca ★ VIP para los controles',
   'Back online': 'Conectado de nuevo',

@@ -57,6 +57,8 @@ export interface Claim {
   /** Cells of that completion not daubed. */
   missing: number[];
   valid: boolean;
+  /** I-435: the daubs a wrong claim took off the card (the TV lifts exactly these). */
+  wiped?: number[];
 }
 
 export interface RoundState {
@@ -141,7 +143,15 @@ export interface State extends GameStateBase {
   round: RoundState;
   /** Bingos won. */
   wins: Record<string, number>;
-  history: { round: number; winnerId: string | null; calls: number }[];
+  history: {
+    round: number;
+    winnerId: string | null;
+    calls: number;
+    /** I-401: the win had no never-called daubs (the "Clean card" award). */
+    clean?: boolean;
+  }[];
+  /** I-401 B: wrong BINGO!s per player (the "Trigger finger" award). */
+  wrongClaims?: Record<string, number>;
   /** Points at the start of the current round: the scoreboard shows each row's gain as a delta. */
   winsAtRoundStart: Record<string, number>;
 }
@@ -234,6 +244,8 @@ export const BINGO_MS = 10_000;
  * so an abandoned room (a bots-only game) does not sit on the verdict forever.
  */
 export const BINGO_ABANDONED_MS = 5 * 60_000;
+/** I-400 A: after the verdict is read, nobody picking for this long moves the room on. */
+export const NO_PICK_MS = 20_000;
 /** I-105 A: the vote after a bingo runs this long from its first choice (the note's six seconds). */
 export const VOTE_MS = 6_000;
 export const SCOREBOARD_MS = 6_000;

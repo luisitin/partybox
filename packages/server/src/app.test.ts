@@ -117,7 +117,16 @@ describe('sockets', () => {
     expect(welcomeA.room.vip).toBe(welcomeA.playerId);
     expect(welcomeA.token).toHaveLength(48);
     const b = client();
-    const pushToA = once<RoomPush>(a, 'room');
+    // I-750 B: A's own join push can land just after its welcome (a busy socket defers it), so
+    // wait for the push that carries Ben rather than the next one.
+    const pushToA = new Promise<RoomPush>((resolve) => {
+      const on = (p: RoomPush): void => {
+        if (p.room.players.length < 2) return;
+        a.off('room', on);
+        resolve(p);
+      };
+      a.on('room', on);
+    });
     const welcomeB = await join(b, 'Ben');
     expect(welcomeB.room.players.map((p) => p.name)).toEqual(['Ana', 'Ben']);
     expect((await pushToA).room.players).toHaveLength(2);

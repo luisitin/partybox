@@ -69,14 +69,14 @@ export function decideText(view: BingoTvView, L: Translator): string {
   const choice = view.decide?.blackout
     ? last
       ? L(
-          'votes on their phone: keep going (same pattern or blackout) or finish. The caller waits.',
+          'votes on their phone: keep going (same pattern or blackout) or finish — no pick in 20 s: finish.',
         )
       : L(
-          'votes on their phone: keep going (same pattern or blackout) or next round. The caller waits.',
+          'votes on their phone: keep going (same pattern or blackout) or next round — no pick in 20 s: next round.',
         )
     : last
-      ? L('votes on their phone: keep going or finish. The caller waits.')
-      : L('votes on their phone: keep going or next round. The caller waits.');
+      ? L('votes on their phone: keep going or finish — no pick in 20 s: finish.')
+      : L('votes on their phone: keep going or next round — no pick in 20 s: next round.');
   const sitsOut =
     view.decide?.same && (view.claim?.cardCount ?? 1) > 1
       ? ` ${L('The winning card sits the pattern out; the rest play on.')}`

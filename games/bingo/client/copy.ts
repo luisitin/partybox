@@ -68,7 +68,7 @@ export function otherTitle(view: Win, name: string, L: Translator): string {
  * were never called", or nothing when the card is simply short of the pattern.
  */
 export function whyNot(
-  claim: { card: number[]; red: number[]; missing: number[] },
+  claim: { card: number[]; red: number[]; missing: number[]; cells?: number[] },
   L: Translator,
 ): string {
   const num = (i: number): string => (i === 12 ? L('FREE') : String(claim.card[i] ?? '?'));
@@ -96,7 +96,39 @@ export function whyNot(
         : L('{list} were missed', { list: l }),
     );
   }
-  return parts.join(' · ');
+  // I-392 B: say which line was checked — the one the player bet on
+  const line = claim.cells ? lineName(claim.cells, L) : null;
+  const why = parts.join(' · ');
+  return line && why ? L('{line}: {why}', { line, why }) : why;
+}
+
+/** I-392 B: a checked line in words, or null for a pattern that isn't one line (corners, X…). */
+export function lineName(cells: readonly number[], L: Translator): string | null {
+  if (cells.length !== 5) return null;
+  const rows = cells.map((i) => Math.floor(i / 5));
+  const cols = cells.map((i) => i % 5);
+  if (rows.every((r) => r === rows[0]))
+    return (
+      [L('Top row'), L('Row 2'), L('Middle row'), L('Row 4'), L('Bottom row')][rows[0] ?? 0] ?? null
+    );
+  if (cols.every((c) => c === cols[0]))
+    return L('The {letter} column', { letter: 'BINGO'[cols[0] ?? 0] ?? '' });
+  return L('The diagonal');
+}
+
+/** I-435: what a wrong claim took — the whole card, the wrong daubs and the line, or the wrong daubs. */
+export function wipeKind(claim: {
+  daubs: number[];
+  cells: number[];
+  wiped?: number[];
+}): 'card' | 'line' | 'wrong' {
+  const lost = new Set(claim.wiped ?? claim.daubs);
+  const daubed = claim.daubs.filter((i) => i !== 12);
+  if (daubed.every((i) => lost.has(i))) return 'card';
+  return claim.cells.some((i) => i !== 12 && claim.daubs.includes(i) && lost.has(i)) &&
+    claim.cells.every((i) => i === 12 || !claim.daubs.includes(i) || lost.has(i))
+    ? 'line'
+    : 'wrong';
 }
 
 /** A choice made mid-celebration, as the room reads it: who picked what, and when it starts. */

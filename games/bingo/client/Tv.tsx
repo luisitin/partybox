@@ -12,8 +12,8 @@ import type { BingoTvView } from '../server/views';
 import { BALL_LAND_MS, hushCaller, speakCall } from './caller';
 import { PatternIcon } from './Card';
 
-import { botLine, holdLine, pendingLine, whyNot, winHeadline } from './copy';
-import { VoteClock, VoteTally } from './Vote';
+import { botLine, holdLine, pendingLine, whyNot, winHeadline, wipeKind } from './copy';
+import { NoPickClock, VoteClock, VoteTally } from './Vote';
 import { hopelessClaim } from '../server/reveal';
 import { IntroStage, Resume } from './TvCountdown';
 import { Call, CalledBoard, ClaimStage, DibsLine, whichCard } from './TvParts';
@@ -154,7 +154,9 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
       <Stage className={crowd}>
         <div className={`${styles.checkHead} pb-enter`}>
           <BigText level="h2" tone="accent">
-            {L('{name} says BINGO!', { name: view.claim.name })}
+            {view.claim.bot
+              ? L('{name} calls it — checking', { name: view.claim.name }) /* I-433 B */
+              : L('{name} says BINGO!', { name: view.claim.name })}
           </BigText>
           <p className={styles.kicker}>
             {patternLabel}
@@ -186,7 +188,9 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
                 </BigText>
               ) : null}
               <BigText level="h2" tone="muted">
-                {L('Card wiped. Next number in a moment…')}
+                {view.claim && wipeKind(view.claim) !== 'card'
+                  ? L('Wrong daubs and that line wiped. Next number in a moment…')
+                  : L('Card wiped. Next number in a moment…')}
               </BigText>
             </>
           }
@@ -205,7 +209,9 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
         <Stage className={`${crowd} ${tight}`}>
           <div className={`${styles.checkHead} pb-enter`}>
             <BigText level="h2" tone="accent">
-              {L('{name} says BINGO!', { name: view.winnerName })}
+              {view.claim.bot
+                ? L('{name} calls it — checking', { name: view.winnerName }) /* I-433 B */
+                : L('{name} says BINGO!', { name: view.winnerName })}
             </BigText>
             <p className={styles.kicker}>
               {patternLabel}
@@ -276,6 +282,10 @@ export function Tv({ view }: GameTvProps<BingoTvView>): JSX.Element {
                   <span className={styles.decideWho}>{L('Everyone')}</span> {decideText(view, L)}
                   {/* I-105 C: the vote's clock, once someone has voted. */}
                   <VoteClock endsAt={view.voteEndsAt} />
+                  {/* I-400 B: before anyone votes, the clock to "nobody picked" */}
+                  {!view.voteEndsAt ? (
+                    <NoPickClock endsAt={view.deadline} last={view.round >= view.totalRounds} />
+                  ) : null}
                   {/* I-105 B: the room's votes, live. */}
                   <VoteTally votes={view.votes} className={styles.votes} />
                 </p>

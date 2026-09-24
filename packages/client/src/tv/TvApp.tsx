@@ -13,6 +13,7 @@ import { nobodyScored } from '../controller/results-rows';
 import type { MusicEngine } from '../music';
 import { createSoundEngine, joinSemitones, lockSemitones } from '../sound';
 import type { SoundEngine } from '../sound';
+import { AsleepBanner } from './AsleepBanner';
 import { AudioGate } from './AudioGate';
 import { HostBar } from './HostBar';
 import { roomFullToast, seatOpenedToast, soundToast } from './own-toasts';
@@ -312,6 +313,7 @@ export function TvApp(): JSX.Element {
             {content}
           </CrossfadeSwap>
         </TvFrame>
+        <AsleepBanner asleep={room?.asleep === true} />
       </AvatarPhotos>
       <AudioGate
         audio={audio}

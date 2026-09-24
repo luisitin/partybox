@@ -5,7 +5,7 @@ import { LIMITS } from '@partybox/shared';
 import type { GameEvent, GameStateBase } from '@partybox/shared';
 import { addBot, removeBot } from './bots';
 import { disconnect, expirePlayers, join, removePlayer } from './players';
-import { applyGameEvent, fireDueTimer } from './runner';
+import { ASLEEP_END_MS, abortGame, applyGameEvent, fireDueTimer } from './runner';
 import type { ApplyResult, Effect, EngineDeps, RoomEvent, RoomState } from './types';
 import { applyVip } from './vip';
 
@@ -95,6 +95,21 @@ function handleInput(
 }
 
 function handleTick(room: RoomState, now: number, deps: EngineDeps): ApplyResult {
+  // I-746 C: nobody came back — end the game to the lobby
+  if (
+    room.asleepSince !== undefined &&
+    room.status === 'playing' &&
+    now >= room.asleepSince + ASLEEP_END_MS
+  ) {
+    const ended = abortGame(room); // awakeOutsideGames clears the flag
+    return {
+      room: ended.room,
+      effects: [
+        ...ended.effects.filter((e) => e.type !== 'toast'),
+        { type: 'toast', to: 'all', kind: 'info', text: 'Nobody came back — the game ended.' },
+      ],
+    };
+  }
   let result = expirePlayers(room, now, deps);
   const effects = [...result.effects];
   for (let i = 0; i < MAX_TIMERS_PER_TICK; i++) {
@@ -212,5 +227,16 @@ function normalise(before: RoomState, result: ApplyResult): ApplyResult {
 }
 
 export function applyRoomEvent(room: RoomState, event: RoomEvent, deps: EngineDeps): ApplyResult {
-  return normalise(room, dispatch(room, event, deps));
+  return normalise(room, awakeOutsideGames(dispatch(room, event, deps)));
+}
+
+/** I-746: "asleep" belongs to a running game — however the game ended (VIP end, the TV's Home,
+ *  the 5-minute valve), the flag goes with it, so the next game never starts asleep. */
+function awakeOutsideGames(result: ApplyResult): ApplyResult {
+  const r = result.room;
+  if (r.status === 'playing' || (r.asleepSince === undefined && !r.asleepKeptPause)) return result;
+  const { asleepSince: _gone, asleepKeptPause: _kept, ...awake } = r;
+  void _gone;
+  void _kept;
+  return { ...result, room: awake };
 }

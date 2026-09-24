@@ -37,6 +37,8 @@ export function tapBingo(
 ): { state: State; claim: boolean } {
   const settled = settle(state, now);
   const round = settled.round;
+  // I-433 A: a bot has no thumb to slip — with nobody holding dibs, its BINGO! is the claim
+  if (!round.arm && settled.players[playerId]?.bot === true) return { state: settled, claim: true };
   if (round.arm && round.arm.playerId === playerId) {
     if (round.arm.card === card) return { state: settled, claim: true };
     return {

@@ -229,6 +229,10 @@ export const en = {
     fullscreen: 'Fullscreen',
     paused: 'Paused',
     pausedHint: (name: string) => `${name} can resume from the VIP menu`,
+    // I-746 B/C: every phone went quiet mid-game
+    asleep: "Everyone's phone is asleep — wake one to carry on.",
+    asleepEnds: 'If nobody is back in 5 minutes, the game ends.',
+    asleepHint: 'It carries on as soon as a phone is back',
     home: 'Home',
     homeTitle: 'Home: back to the lobby (from the lobby: start over, everyone rejoins)',
     homeConfirm: 'Click again to go home',

@@ -177,6 +177,8 @@
   display: flex;
   flex-direction: column;
   gap: var(--pb-space-3);
+  overflow-y: auto; /* I-100 A: a tall layout scrolls under the footer instead of clipping */
+  -webkit-overflow-scrolling: touch;
 }
 .dimmed > :not(:last-child) {
   opacity: 0.35;
@@ -427,6 +429,7 @@
 .wipeNote {
   margin: 0 0 var(--pb-space-1);
   min-height: calc(var(--pb-font-caption) * 1.2 * 2); /* two lines, held from the claim */
+  flex-shrink: 0; /* I-435: the what-went line can run to four; it never draws over the card */
   line-height: 1.2;
   font-size: var(--pb-font-caption);
   font-weight: 700;
@@ -659,6 +662,11 @@
   margin: 0;
   font-size: var(--pb-font-caption);
   color: var(--pb-text-muted);
+  /* I-100 B: never more than two lines — the card keeps the room at large text sizes. */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 /* The keep-going screen: three footer buttons take ~150 px more than one BINGO!, so the card
@@ -1003,7 +1011,9 @@
 /* The card-pick step's two buttons on one row (loop 344): swap on the left, Ready on the right. */
 .introActions {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  /* I-100 C: side by side at any usual size; at a large text setting "Another" and Ready stack
+     rather than pushing Ready off the right edge. */
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 7rem), 1fr));
   gap: var(--pb-space-2);
   /* Hidden until the deal is down (loop 368), then the two buttons rise together. */
   opacity: 0;
@@ -1028,6 +1038,7 @@
 .introCount {
   margin: 0;
   min-height: 28px;
+  flex-shrink: 0; /* I-100: in the scrolling body a wrapped line keeps its height, never overlaps the card */
   font-size: var(--pb-font-body);
   color: var(--pb-text-muted);
   text-align: center;

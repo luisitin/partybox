@@ -53,6 +53,8 @@ export interface CardProps {
   sweep?: { kind: SweepKind; index: number; ms: number } | null;
   /** The claim was wrong: the daubs lift off one by one in reading order (the TV's wipe, I-006 B). */
   wiped?: boolean;
+  /** I-435: which daubs the wipe takes (all of them when absent). */
+  wipeOnly?: readonly number[];
 }
 
 export type SweepKind = 'row' | 'col' | 'diagA' | 'diagB';
@@ -89,6 +91,7 @@ export function Card({
   sweep = null,
   sent = false,
   wiped = false,
+  wipeOnly,
 }: CardProps): JSX.Element {
   const L = useT(STRINGS);
   const turnAt = new Map((revealOrder ?? []).map((i, k) => [i, k * revealStepMs]));
@@ -178,7 +181,7 @@ export function Card({
             lineHit.has(i) ? styles.lineHit : '',
             sent && isDaubed ? styles.sent : '',
             lifted.has(i) ? styles.unstamp : '',
-            wiped && isDaubed && !isFree ? styles.wipe : '',
+            wiped && isDaubed && !isFree && (!wipeOnly || wipeOnly.includes(i)) ? styles.wipe : '',
           ].join(' ');
           const mark = !showColour ? null : greenSet.has(i) ? '✓' : redSet.has(i) ? '✕' : null;
           const label = isFree ? L('FREE') : String(n);
@@ -186,7 +189,7 @@ export function Card({
           const shown = isFree && size === 'compact' ? '★' : label;
           const Tag = interactive && (!isFree || onTapFree) ? 'button' : 'div';
           const style =
-            wiped && isDaubed && !isFree
+            wiped && isDaubed && !isFree && (!wipeOnly || wipeOnly.includes(i))
               ? ({ animationDelay: `${i * WIPE_STEP_MS}ms` } as CSSProperties)
               : reveal
                 ? ({ animationDelay: `${i * REVEAL_STEP_MS}ms` } as CSSProperties)

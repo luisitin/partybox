@@ -83,15 +83,32 @@ export function createHost(options: HostOptions): Host {
    * push through `resend`, which never consults this.
    */
   const lastTvView = new Map<string, string>();
+  /**
+   * I-750 A: the last room snapshot and game view sent to each phone (by player id) and the last
+   * room snapshot sent to each room's TVs, serialised. An identical one is not sent again — most
+   * pushes (a Bingo daub by someone else) change nothing a given phone shows. A (re)join or a
+   * reconnect clears the phone's entries (welcome, resend), so it always gets a full refresh.
+   */
+  const lastSent = new Map<string, string>();
+  const forget = (playerId: string): void => {
+    lastSent.delete(`room:${playerId}`);
+    lastSent.delete(`view:${playerId}`);
+  };
+  const changed = (key: string, wire: string): boolean => {
+    if (lastSent.get(key) === wire) return false;
+    lastSent.set(key, wire);
+    return true;
+  };
 
   function push(room: RoomState): void {
     const roomPush: RoomPush = { rev: room.rev, room: snapshot(room, deps), at: clock.now() };
+    const roomWire = JSON.stringify(roomPush.room); // I-750 A: rev/at left out of the compare
     const playing = room.status === 'playing';
     for (const player of Object.values(room.players)) {
-      transport.toPlayer(player.id, 'room', roomPush);
+      if (changed(`room:${player.id}`, roomWire)) transport.toPlayer(player.id, 'room', roomPush);
       if (playing) {
         const view = controllerView(room, player.id, deps);
-        if (view)
+        if (view && changed(`view:${player.id}`, JSON.stringify(view)))
           transport.toPlayer(player.id, 'view', {
             rev: room.rev,
             view,
@@ -99,7 +116,7 @@ export function createHost(options: HostOptions): Host {
           } satisfies ViewPush<unknown>);
       }
     }
-    transport.toTvs(room.code, 'room', roomPush);
+    if (changed(`tvroom:${room.code}`, roomWire)) transport.toTvs(room.code, 'room', roomPush);
     if (playing) {
       const view = tvView(room, deps);
       if (view) {
@@ -122,6 +139,7 @@ export function createHost(options: HostOptions): Host {
         case 'welcome': {
           const player = room.players[effect.playerId];
           if (!player) break;
+          forget(player.id); // I-750 A: a (re)joined phone gets the next room and view in full
           const payload: WelcomePayload = {
             playerId: player.id,
             token: player.token,
@@ -247,6 +265,9 @@ export function createHost(options: HostOptions): Host {
     resend(code, playerId) {
       const room = rooms.get(code);
       if (!room) return;
+      // I-750 A: what is resent now is what the phone / TV has
+      if (playerId) forget(playerId);
+      else lastSent.delete(`tvroom:${code}`);
       if (playerId) {
         transport.toPlayer(playerId, 'room', {
           rev: room.rev,

@@ -351,6 +351,7 @@ export function ClaimStage({
               restShown={restShown}
               settled={decided}
               wiped={wiped}
+              wipeOnly={claim.wiped} /* I-435: only the daubs that go lift off */
               sweep={turning && line && !reduced ? { ...line, ms: lineMs } : null}
             />
           </div>

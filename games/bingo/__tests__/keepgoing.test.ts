@@ -4,8 +4,8 @@
 // made mid-celebration waits for the reveal.
 import { describe, expect, it } from 'vitest';
 import { game } from '../server/index';
-import { AUTO_END_MS, VERDICT_READ_MS, claimRevealMs } from '../server/reveal';
-import { RESUME_MS } from '../server/types';
+import { AUTO_END_MS, VERDICT_READ_MS, WRONG_READ_MS, claimRevealMs } from '../server/reveal';
+import { NO_PICK_MS, RESUME_MS } from '../server/types';
 import { pointsFor } from '../server/scoring';
 import {
   PLAYERS,
@@ -194,8 +194,9 @@ describe('the points land with the verdict (loop 257)', () => {
     expect(scored.round.judged).toBe(true);
     expect(scored.wins['a']).toBe(3);
     expect(game.tvView(scored).players.find((p) => p.id === 'a')?.status).toBe('submitted');
-    // With a choice to make, the room is unpaced after the verdict (the abandoned valve only).
-    expect(scored.phase.deadline).toBeGreaterThan(verdictAt + VERDICT_READ_MS + AUTO_END_MS);
+    // I-400 A: with a choice to make, nobody picking for 20 s after the read moves the room on.
+    expect(scored.phase.deadline).toBe(verdictAt + VERDICT_READ_MS + NO_PICK_MS);
+    expect(timer(scored).phase.id).toBe('scoreboard');
   });
 
   it('a choice made before the verdict waits for it, then a moment to read, then applies', () => {
@@ -244,7 +245,7 @@ describe('the verdict is the server’s word (loop 258)', () => {
     expect(judged.phase.id).toBe('check');
     expect(judged.round.judged).toBe(true);
     expect(game.controllerView(judged, 'a').verdictShown).toBe(true);
-    expect(judged.phase.deadline).toBe(verdictAt + VERDICT_READ_MS);
+    expect(judged.phase.deadline).toBe(verdictAt + WRONG_READ_MS); // I-394: a wrong claim reads 6 s
     expect(timer(judged).phase.id).toBe('play');
   });
 
