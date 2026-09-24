@@ -1,48 +1,48 @@
 {
   "phase": {
     "id": "done",
-    "startedAt": 1700000294500,
+    "startedAt": 1700000054300,
     "deadline": null
   },
   "rng": {
-    "seed": 1,
-    "step": 335
+    "seed": 11,
+    "step": 248
   },
   "players": {
     "p1": {
       "id": "p1",
-      "name": "Player 1",
+      "name": "Ana",
       "avatarId": "fox",
       "connected": true
     },
     "p2": {
       "id": "p2",
-      "name": "Player 2",
+      "name": "Ben",
       "avatarId": "owl",
       "connected": true
     },
     "p3": {
       "id": "p3",
-      "name": "Player 3",
+      "name": "Cy",
       "avatarId": "frog",
       "connected": true
     },
     "p4": {
       "id": "p4",
-      "name": "Player 4",
+      "name": "Dee",
       "avatarId": "cat",
       "connected": true
     },
     "p5": {
       "id": "p5",
-      "name": "Player 5",
-      "avatarId": "panda",
+      "name": "Eli",
+      "avatarId": "bear",
       "connected": true
     },
     "p6": {
       "id": "p6",
-      "name": "Player 6",
-      "avatarId": "koala",
+      "name": "Fay",
+      "avatarId": "panda",
       "connected": true
     }
   },
@@ -52,644 +52,306 @@
     "maxQuestions": 12,
     "pace": "normal",
     "spicy": false,
-    "reader": "jessica"
+    "reader": "none"
   },
   "seats": ["p1", "p2", "p3", "p4", "p5", "p6"],
   "left": [],
   "questions": [
     {
-      "id": "hm-food-010",
-      "style": "name",
-      "prompt": "Name a kind of sandwich.",
+      "id": "hm-sport-006",
+      "style": "pick",
+      "prompt": "Pick a jersey number from 1 to 10.",
       "answers": [
         {
-          "id": "pbj",
-          "answer": "pb&j",
-          "display": "PB&J",
-          "weight": 22,
-          "accept": [
-            "peanut butter and jelly",
-            "pbj",
-            "pbnj",
-            "peanut butter jelly",
-            "peanut butter",
-            "pb and jelly",
-            "peanut butter and jam"
-          ]
+          "id": "n7",
+          "answer": "7",
+          "weight": 20,
+          "accept": ["lucky 7", "sevn", "no 7", "#7 jersey"]
         },
         {
-          "id": "grilled-cheese",
-          "answer": "grilled cheese",
+          "id": "n10",
+          "answer": "10",
           "weight": 18,
-          "accept": [
-            "grill cheese",
-            "grilled cheeses",
-            "griled cheese",
-            "cheese toastie",
-            "toasted cheese",
-            "grilled chesse"
-          ]
+          "accept": ["no 10", "tenn", "number 10 jersey"]
         },
         {
-          "id": "turkey",
-          "answer": "turkey",
+          "id": "n1",
+          "answer": "1",
           "weight": 12,
-          "accept": [
-            "turkey club",
-            "turkey sandwich",
-            "turkey and cheese",
-            "turky",
-            "smoked turkey",
-            "turkey on rye"
-          ]
+          "accept": ["no 1", "numero uno", "number one jersey"]
         },
         {
-          "id": "ham-and-cheese",
-          "answer": "ham and cheese",
+          "id": "n3",
+          "answer": "3",
           "weight": 10,
-          "accept": [
-            "ham",
-            "ham n cheese",
-            "ham sandwich",
-            "ham & swiss",
-            "hamncheese sub",
-            "ham sandwhich"
-          ]
+          "accept": ["no 3", "thre", "tree"]
         },
         {
-          "id": "blt",
-          "answer": "blt",
-          "display": "BLT",
+          "id": "n5",
+          "answer": "5",
+          "weight": 9,
+          "accept": ["no 5", "fiv", "number 5 jersey"]
+        },
+        {
+          "id": "n2",
+          "answer": "2",
           "weight": 8,
-          "accept": ["bacon lettuce tomato", "bacon lettuce and tomato", "bacon sandwich"]
+          "accept": ["no 2", "tow", "number 2 jersey"]
         },
         {
-          "id": "tuna",
-          "answer": "tuna",
-          "weight": 5,
-          "accept": ["tuna salad", "tuna melt", "tuna fish"]
+          "id": "n8",
+          "answer": "8",
+          "weight": 7,
+          "accept": ["no 8", "eigth", "number 8 jersey"]
         },
         {
-          "id": "club",
-          "answer": "club",
-          "weight": 5,
-          "accept": ["club sandwich", "clubhouse", "triple decker"]
-        },
-        {
-          "id": "cheesesteak",
-          "answer": "cheesesteak",
-          "weight": 3,
-          "accept": ["philly cheesesteak", "philly", "steak and cheese"]
-        },
-        {
-          "id": "reuben",
-          "answer": "reuben",
-          "weight": 3,
-          "accept": ["ruben", "rueben", "corned beef"]
-        },
-        {
-          "id": "chicken",
-          "answer": "chicken",
-          "weight": 3,
-          "accept": ["chicken sandwich", "chicken salad", "fried chicken sandwich"]
-        },
-        {
-          "id": "egg-salad",
-          "answer": "egg salad",
-          "weight": 2,
-          "accept": ["egg salad sandwich", "egg sandwich", "egg"]
-        },
-        {
-          "id": "meatball",
-          "answer": "meatball",
-          "weight": 2,
-          "accept": ["meatball sub", "meatballs", "meatball sandwich"]
-        }
-      ]
-    },
-    {
-      "id": "hm-toy-001",
-      "style": "name",
-      "prompt": "Name a board game.",
-      "answers": [
-        {
-          "id": "monopoly",
-          "answer": "monopoly",
-          "display": "Monopoly",
-          "weight": 35,
-          "accept": ["monopolly", "monoply", "monopely", "monopoli", "monopoley", "monopolie"]
-        },
-        {
-          "id": "chess",
-          "answer": "chess",
-          "weight": 12,
-          "accept": ["ches", "chesss", "chess game", "chesse", "chss", "chess set"]
-        },
-        {
-          "id": "candy-land",
-          "answer": "candy land",
-          "display": "Candy Land",
-          "weight": 10,
-          "accept": [
-            "candy lands",
-            "candie land",
-            "candi land",
-            "candy lnd",
-            "kandy land",
-            "candyland game"
-          ]
-        },
-        {
-          "id": "scrabble",
-          "answer": "scrabble",
-          "display": "Scrabble",
-          "weight": 10,
-          "accept": ["scrable", "scrabbel", "scrabble game", "scrabel", "scrabbles", "skrabble"]
-        },
-        {
-          "id": "checkers",
-          "answer": "checkers",
-          "weight": 8,
-          "accept": ["checker", "chequers", "draughts", "checkerz"]
-        },
-        {
-          "id": "clue",
-          "answer": "clue",
-          "display": "Clue",
+          "id": "n4",
+          "answer": "4",
           "weight": 6,
-          "accept": ["cluedo", "clues", "clu"]
+          "accept": ["no 4", "foor", "number 4 jersey"]
         },
         {
-          "id": "sorry",
-          "answer": "sorry",
-          "display": "Sorry",
-          "weight": 5,
-          "accept": ["sorry game", "sory", "sorrie"]
+          "id": "n9",
+          "answer": "9",
+          "weight": 6,
+          "accept": ["no 9", "nien", "number 9 jersey"]
         },
         {
-          "id": "life",
-          "answer": "life",
-          "display": "Life",
-          "weight": 5,
-          "accept": ["game of life", "life game", "lif"]
-        },
-        {
-          "id": "trouble",
-          "answer": "trouble",
-          "display": "Trouble",
-          "weight": 3,
-          "accept": ["troubles", "pop o matic", "trubble"]
-        },
-        {
-          "id": "chutes-and-ladders",
-          "answer": "chutes & ladders",
-          "display": "Chutes & Ladders",
-          "weight": 3,
-          "accept": ["snakes and ladders", "chutes", "ladders"]
-        },
-        {
-          "id": "operation",
-          "answer": "operation",
-          "display": "Operation",
-          "weight": 1,
-          "accept": ["operations", "operation game"]
-        },
-        {
-          "id": "battleship",
-          "answer": "battleship",
-          "display": "Battleship",
-          "weight": 1,
-          "accept": ["battleships"]
-        },
-        {
-          "id": "connect-four",
-          "answer": "connect four",
-          "display": "Connect Four",
-          "weight": 1,
-          "accept": ["connect", "four in a row"]
+          "id": "n6",
+          "answer": "6",
+          "weight": 4,
+          "accept": ["no 6", "sixx", "number 6 jersey"]
         }
       ]
     },
     {
-      "id": "hm-snack-004",
+      "id": "hm-food-017",
       "style": "finish",
-      "prompt": "Finish this: Chips and ___.",
+      "prompt": "Finish this: Chicken and ___.",
       "answers": [
         {
-          "id": "salsa",
-          "answer": "salsa",
-          "weight": 50,
-          "accept": ["salza", "salsas", "salca", "hot salsa", "mild salsa", "pico de gallo"]
+          "id": "waffles",
+          "answer": "waffles",
+          "weight": 40,
+          "accept": ["waffle", "wafles", "waffels", "waffels and syrup", "wafels", "waffls"]
         },
         {
-          "id": "dip",
-          "answer": "dip",
+          "id": "rice",
+          "answer": "rice",
           "weight": 20,
-          "accept": [
-            "dips",
-            "onion dip",
-            "french onion dip",
-            "bean dip",
-            "chip dip",
-            "sour cream dip"
-          ]
+          "accept": ["white rice", "fried rice", "ryce", "rise", "rices", "yellow rice"]
         },
         {
-          "id": "guacamole",
-          "answer": "guacamole",
-          "weight": 10,
-          "accept": ["guac", "guacamol", "guacomole", "gwacamole", "avocado", "guacamole dip"]
-        },
-        {
-          "id": "queso",
-          "answer": "queso",
-          "weight": 8,
-          "accept": ["queso dip", "kayso", "quesso", "nacho cheese"]
-        },
-        {
-          "id": "fish",
-          "answer": "fish",
-          "weight": 3,
-          "accept": ["fishes", "fish and chips", "fsh"]
-        },
-        {
-          "id": "cheese",
-          "answer": "cheese",
-          "weight": 3,
-          "accept": ["cheeze", "chese", "cheddar"]
-        },
-        {
-          "id": "soda",
-          "answer": "soda",
-          "weight": 1,
-          "accept": ["pop", "coke"]
-        },
-        {
-          "id": "ranch",
-          "answer": "ranch",
-          "weight": 1,
-          "accept": ["ranch dressing", "rench"]
-        },
-        {
-          "id": "sandwich",
-          "answer": "sandwich",
-          "weight": 1,
-          "accept": ["sandwiches", "sammich"]
-        },
-        {
-          "id": "hummus",
-          "answer": "hummus",
-          "weight": 1,
-          "accept": ["humus", "hummous"]
-        }
-      ]
-    },
-    {
-      "id": "hm-toy-005",
-      "style": "name",
-      "prompt": "Name a toy you play with outside.",
-      "answers": [
-        {
-          "id": "ball",
-          "answer": "ball",
-          "weight": 25,
-          "accept": ["balls", "soccer ball", "basketball", "football", "kickball", "beach ball"]
-        },
-        {
-          "id": "bike",
-          "answer": "bike",
-          "weight": 18,
-          "accept": ["bicycle", "bikes", "bicycles", "tricycle", "trike", "biking"],
-          "reject": ["kite"]
-        },
-        {
-          "id": "jump-rope",
-          "answer": "jump rope",
-          "weight": 10,
-          "accept": ["skipping rope", "jump ropes", "jumping rope", "rope", "jump rop", "skip rope"]
-        },
-        {
-          "id": "frisbee",
-          "answer": "frisbee",
-          "weight": 8,
-          "accept": ["frisbe", "frisbie", "flying disc", "frizbee", "disc"]
-        },
-        {
-          "id": "sidewalk-chalk",
-          "answer": "sidewalk chalk",
-          "weight": 8,
-          "accept": ["chalk", "chalks", "street chalk", "sidewalk chaulk"]
-        },
-        {
-          "id": "scooter",
-          "answer": "scooter",
-          "weight": 7,
-          "accept": ["scooters", "razor scooter", "kick scooter"]
-        },
-        {
-          "id": "water-gun",
-          "answer": "water gun",
-          "weight": 6,
-          "accept": ["squirt gun", "super soaker", "water guns", "water pistol", "squirt guns"]
-        },
-        {
-          "id": "kite",
-          "answer": "kite",
-          "weight": 5,
-          "accept": ["kites", "kyte", "kite string"],
-          "reject": ["bike"]
-        },
-        {
-          "id": "hula-hoop",
-          "answer": "hula hoop",
-          "weight": 4,
-          "accept": ["hoola hoop", "hula hoops", "hoop"]
-        },
-        {
-          "id": "skateboard",
-          "answer": "skateboard",
-          "weight": 3,
-          "accept": ["skateboards", "skate"]
-        },
-        {
-          "id": "bubbles",
-          "answer": "bubbles",
-          "weight": 3,
-          "accept": ["bubble", "bubble wand", "blowing bubbles"]
-        },
-        {
-          "id": "trampoline",
-          "answer": "trampoline",
-          "weight": 2,
-          "accept": ["trampolines", "trampolene"]
-        }
-      ]
-    },
-    {
-      "id": "hm-holiday-008",
-      "style": "name",
-      "prompt": "Name something you do on New Year's Eve.",
-      "answers": [
-        {
-          "id": "countdown",
-          "answer": "countdown",
-          "weight": 20,
-          "accept": [
-            "counting down",
-            "count to midnight",
-            "countdown to midnight",
-            "countdown clock",
-            "countdwn",
-            "10 second countdown"
-          ]
-        },
-        {
-          "id": "ball-drop",
-          "answer": "ball drop",
-          "weight": 18,
-          "accept": [
-            "watch the ball drop",
-            "watch ball drop",
-            "times square",
-            "ball dropping",
-            "ball",
-            "new years ball"
-          ]
-        },
-        {
-          "id": "party",
-          "answer": "party",
-          "weight": 15,
-          "accept": [
-            "parties",
-            "partying",
-            "go to a party",
-            "new years party",
-            "celebrate",
-            "party hard"
-          ]
-        },
-        {
-          "id": "kiss",
-          "answer": "kiss",
-          "weight": 10,
-          "accept": [
-            "kissing",
-            "midnight kiss",
-            "kiss at midnight",
-            "smooch",
-            "kiss someone",
-            "kisses"
-          ]
-        },
-        {
-          "id": "fireworks",
-          "answer": "fireworks",
-          "weight": 10,
-          "accept": [
-            "firework",
-            "set off fireworks",
-            "watch fireworks",
-            "sparklers",
-            "firecrackers",
-            "watch the fireworks"
-          ]
-        },
-        {
-          "id": "stay-up-late",
-          "answer": "stay up late",
-          "weight": 8,
-          "accept": ["stay up", "stay up till midnight", "stay awake", "up late", "late night"]
-        },
-        {
-          "id": "champagne",
-          "answer": "champagne",
-          "weight": 7,
-          "accept": ["drink champagne", "drink", "drinking", "toast", "champagne toast", "champane"]
-        },
-        {
-          "id": "resolutions",
-          "answer": "resolutions",
-          "weight": 5,
-          "accept": ["resolution", "make resolutions", "new years resolution", "resolutons"]
-        },
-        {
-          "id": "sleep",
-          "answer": "sleep",
-          "weight": 3,
-          "accept": ["go to bed", "sleep through it", "nap", "bed early"]
-        },
-        {
-          "id": "eat",
-          "answer": "eat",
-          "weight": 2,
-          "accept": ["snacks", "eat food", "food"]
-        },
-        {
-          "id": "sing",
-          "answer": "sing",
-          "weight": 1,
-          "accept": ["auld lang syne", "sing auld lang syne", "singing"]
-        }
-      ]
-    },
-    {
-      "id": "hm-food-001",
-      "style": "name",
-      "prompt": "Name something you put on a hot dog.",
-      "answers": [
-        {
-          "id": "ketchup",
-          "answer": "ketchup",
-          "weight": 30,
-          "accept": ["catsup", "kechup", "ketchop", "katchup", "ketsup", "tomato sauce", "ketchupp"]
-        },
-        {
-          "id": "mustard",
-          "answer": "mustard",
-          "weight": 28,
-          "accept": [
-            "yellow mustard",
-            "mustered",
-            "mustart",
-            "spicy mustard",
-            "brown mustard",
-            "musturd"
-          ]
-        },
-        {
-          "id": "relish",
-          "answer": "relish",
+          "id": "dumplings",
+          "answer": "dumplings",
           "weight": 12,
-          "accept": ["sweet relish", "pickle relish", "relesh", "rellish", "relsh", "green relish"]
+          "accept": ["dumpling", "dumplins", "dumplin", "dumplngs", "dumpings", "dumplimgs"]
         },
         {
-          "id": "onions",
-          "answer": "onions",
-          "weight": 8,
-          "accept": ["onion", "chopped onions", "grilled onions", "onoins"]
-        },
-        {
-          "id": "chili",
-          "answer": "chili",
-          "weight": 6,
-          "accept": ["chilli", "chile", "chili sauce", "chili dog"]
-        },
-        {
-          "id": "cheese",
-          "answer": "cheese",
-          "weight": 5,
-          "accept": ["shredded cheese", "cheese sauce", "cheeze", "nacho cheese"]
-        },
-        {
-          "id": "sauerkraut",
-          "answer": "sauerkraut",
+          "id": "biscuits",
+          "answer": "biscuits",
           "weight": 4,
-          "accept": ["kraut", "saurkraut", "sour kraut"]
+          "accept": ["biscuit", "biscits", "bisquits"]
         },
         {
-          "id": "mayo",
-          "answer": "mayo",
+          "id": "potatoes",
+          "answer": "potatoes",
+          "weight": 4,
+          "accept": ["potato", "mashed potatoes", "potatos"]
+        },
+        {
+          "id": "broccoli",
+          "answer": "broccoli",
+          "weight": 3,
+          "accept": ["brocoli", "brocolli", "broccolli"]
+        },
+        {
+          "id": "egg",
+          "answer": "egg",
+          "weight": 3,
+          "accept": ["eggs", "chicken and the egg"]
+        },
+        {
+          "id": "noodles",
+          "answer": "noodles",
+          "weight": 3,
+          "accept": ["noodle", "noodels", "pasta"]
+        },
+        {
+          "id": "gravy",
+          "answer": "gravy",
           "weight": 2,
-          "accept": ["mayonnaise", "mayonaise", "mayonase"]
+          "accept": ["gravey", "gravies"]
         },
         {
-          "id": "jalapenos",
-          "answer": "jalapenos",
+          "id": "fries",
+          "answer": "fries",
           "weight": 2,
-          "accept": ["jalapeno", "jalepenos", "peppers"]
-        },
-        {
-          "id": "bacon",
-          "answer": "bacon",
-          "weight": 1,
-          "accept": ["bacon bits", "bacon wrapped"]
-        },
-        {
-          "id": "pickles",
-          "answer": "pickles",
-          "weight": 1,
-          "accept": ["pickle", "pickle spear", "dill pickle"]
+          "accept": ["french fries", "chips", "frys"]
         }
       ]
     },
     {
-      "id": "hm-kid-003",
-      "style": "name",
-      "prompt": "Name something kids beg for at the grocery store.",
+      "id": "hm-animal-005",
+      "style": "best",
+      "prompt": "Which baby animal is the cutest?",
       "answers": [
         {
-          "id": "candy",
-          "answer": "candy",
-          "weight": 44,
-          "accept": ["candies", "chocolate", "candy bar", "sweets", "lollipop", "candys", "suckers"]
+          "id": "puppy",
+          "answer": "puppy",
+          "weight": 35,
+          "accept": ["puppies", "pup", "pups", "puppie", "puppy dog", "baby dog"]
         },
         {
-          "id": "cereal",
-          "answer": "cereal",
-          "weight": 10,
-          "accept": [
-            "sugary cereal",
-            "cereals",
-            "serial",
-            "cocoa puffs",
-            "froot loops",
-            "lucky charms"
-          ]
+          "id": "kitten",
+          "answer": "kitten",
+          "weight": 25,
+          "accept": ["kittens", "kitty", "kitties", "baby cat", "kiten", "kitteh"]
         },
         {
-          "id": "cookies",
-          "answer": "cookies",
-          "weight": 10,
-          "accept": ["cookie", "oreos", "oreo", "cookes", "chocolate chip cookies", "cookis"]
-        },
-        {
-          "id": "toys",
-          "answer": "toys",
+          "id": "bunny",
+          "answer": "bunny",
           "weight": 8,
-          "accept": ["toy", "toy aisle", "balloon", "balloons"]
+          "accept": ["bunnies", "baby rabbit", "bunny rabbit", "baby bunny"]
         },
         {
-          "id": "ice-cream",
-          "answer": "ice cream",
-          "weight": 7,
-          "accept": ["popsicle", "popsicles", "ice cream cone"]
+          "id": "duckling",
+          "answer": "duckling",
+          "weight": 6,
+          "accept": ["ducklings", "baby duck", "ducky"]
         },
         {
-          "id": "gum",
-          "answer": "gum",
+          "id": "piglet",
+          "answer": "piglet",
+          "weight": 5,
+          "accept": ["piglets", "baby pig", "piggy"]
+        },
+        {
+          "id": "panda",
+          "answer": "panda",
           "weight": 4,
-          "accept": ["bubble gum", "chewing gum", "gumball"]
+          "accept": ["baby panda", "panda cub", "pandas"]
         },
         {
-          "id": "chips",
-          "answer": "chips",
-          "weight": 4,
-          "accept": ["chip", "doritos", "cheetos"]
-        },
-        {
-          "id": "soda",
-          "answer": "soda",
+          "id": "lamb",
+          "answer": "lamb",
           "weight": 3,
-          "accept": ["pop", "coke", "sodas"]
+          "accept": ["lambs", "baby sheep", "lamby"]
         },
         {
-          "id": "donuts",
-          "answer": "donuts",
+          "id": "chick",
+          "answer": "chick",
           "weight": 3,
-          "accept": ["donut", "doughnuts", "doughnut"]
+          "accept": ["chicks", "baby chicken", "baby chick"]
         },
         {
-          "id": "fruit-snacks",
-          "answer": "fruit snacks",
-          "weight": 3,
-          "accept": ["fruit snack", "gummies", "gummy bears"]
-        },
-        {
-          "id": "cart-ride",
-          "answer": "cart ride",
+          "id": "fawn",
+          "answer": "fawn",
           "weight": 2,
-          "accept": ["ride in the cart", "car cart", "cart"]
+          "accept": ["baby deer", "fawns"]
+        },
+        {
+          "id": "foal",
+          "answer": "foal",
+          "weight": 2,
+          "accept": ["baby horse", "foals"]
+        },
+        {
+          "id": "baby-elephant",
+          "answer": "baby elephant",
+          "weight": 2,
+          "accept": ["elephant", "elephant calf"]
+        },
+        {
+          "id": "otter",
+          "answer": "otter",
+          "weight": 1,
+          "accept": ["otters", "baby otter", "sea otter"]
+        },
+        {
+          "id": "human-baby",
+          "answer": "human baby",
+          "weight": 1,
+          "accept": ["baby", "human", "my baby", "babies"]
+        }
+      ]
+    },
+    {
+      "id": "hm-home-008",
+      "style": "pick",
+      "prompt": "Pick a color to paint your bedroom.",
+      "answers": [
+        {
+          "id": "blue",
+          "answer": "blue",
+          "weight": 34,
+          "accept": ["light blue", "navy", "sky blue", "baby blue", "blu"]
+        },
+        {
+          "id": "green",
+          "answer": "green",
+          "weight": 12,
+          "accept": ["sage", "mint", "sage green", "grean"]
+        },
+        {
+          "id": "grey",
+          "answer": "grey",
+          "weight": 12,
+          "accept": ["gray", "light grey", "light gray", "charcoal"]
+        },
+        {
+          "id": "white",
+          "answer": "white",
+          "weight": 10,
+          "accept": ["off white", "cream", "eggshell"]
+        },
+        {
+          "id": "purple",
+          "answer": "purple",
+          "weight": 8,
+          "accept": ["lavender", "lilac", "violet"]
+        },
+        {
+          "id": "pink",
+          "answer": "pink",
+          "weight": 5,
+          "accept": ["light pink", "blush", "pinks"]
+        },
+        {
+          "id": "yellow",
+          "answer": "yellow",
+          "weight": 5,
+          "accept": ["pale yellow", "yelow", "butter yellow"]
+        },
+        {
+          "id": "beige",
+          "answer": "beige",
+          "weight": 4,
+          "accept": ["tan", "taupe", "biege"]
+        },
+        {
+          "id": "black",
+          "answer": "black",
+          "weight": 3,
+          "accept": ["matte black", "jet black", "blak"]
+        },
+        {
+          "id": "red",
+          "answer": "red",
+          "weight": 2,
+          "accept": ["maroon", "burgundy", "crimson"]
+        },
+        {
+          "id": "orange",
+          "answer": "orange",
+          "weight": 1,
+          "accept": ["peach", "coral", "orang"]
+        },
+        {
+          "id": "teal",
+          "answer": "teal",
+          "weight": 2,
+          "accept": ["turquoise", "aqua", "teel"]
         }
       ]
     },
@@ -768,510 +430,743 @@
       ]
     },
     {
-      "id": "hm-drink-002",
-      "style": "name",
-      "prompt": "Name something people drink in the morning.",
+      "id": "hm-food-018",
+      "style": "finish",
+      "prompt": "Finish this: Milk and ___.",
       "answers": [
         {
-          "id": "coffee",
-          "answer": "coffee",
-          "weight": 55,
+          "id": "cookies",
+          "answer": "cookies",
+          "weight": 60,
           "accept": [
-            "cofee",
-            "coffe",
-            "latte",
-            "cup of coffee",
-            "iced coffee",
-            "cappuccino",
-            "espresso",
-            "joe"
+            "cookie",
+            "cookis",
+            "cookeis",
+            "oreos",
+            "oreo",
+            "cookes",
+            "chocolate chip cookies"
           ]
         },
         {
-          "id": "orange-juice",
-          "answer": "orange juice",
-          "weight": 15,
-          "accept": [
-            "oj",
-            "orange juce",
-            "orangejuice glass",
-            "juice",
-            "fresh squeezed orange juice",
-            "fresh oj"
-          ]
-        },
-        {
-          "id": "tea",
-          "answer": "tea",
-          "weight": 10,
-          "accept": [
-            "hot tea",
-            "green tea",
-            "black tea",
-            "chai",
-            "cup of tea",
-            "english breakfast tea",
-            "teas"
-          ]
-        },
-        {
-          "id": "water",
-          "answer": "water",
-          "weight": 7,
-          "accept": ["glass of water", "watter", "wather", "lemon water"]
-        },
-        {
-          "id": "milk",
-          "answer": "milk",
-          "weight": 5,
-          "accept": ["glass of milk", "whole milk", "mlk", "almond milk"]
-        },
-        {
-          "id": "hot-chocolate",
-          "answer": "hot chocolate",
-          "weight": 2,
-          "accept": ["hot cocoa", "cocoa", "hot choclate"]
-        },
-        {
-          "id": "smoothie",
-          "answer": "smoothie",
-          "weight": 2,
-          "accept": ["smoothies", "smoothy", "fruit smoothie"]
-        },
-        {
-          "id": "apple-juice",
-          "answer": "apple juice",
-          "weight": 1,
-          "accept": ["apple juce", "applejuice box"]
-        },
-        {
-          "id": "energy-drink",
-          "answer": "energy drink",
-          "weight": 1,
-          "accept": ["red bull", "monster", "energy drinks"]
-        },
-        {
-          "id": "protein-shake",
-          "answer": "protein shake",
-          "weight": 1,
-          "accept": ["protien shake", "shake"]
-        },
-        {
-          "id": "chocolate-milk",
-          "answer": "chocolate milk",
-          "weight": 1,
-          "accept": ["choc milk", "chocolate milks"]
-        }
-      ]
-    },
-    {
-      "id": "hm-dessert-006",
-      "style": "rather",
-      "prompt": "Would you rather have ice cream or cake?",
-      "tiles": "all",
-      "answers": [
-        {
-          "id": "ice-cream",
-          "answer": "ice cream",
-          "weight": 55,
-          "accept": ["icecream cone", "ice creme", "ice cream please", "ice-cream sundae"]
-        },
-        {
-          "id": "cake",
-          "answer": "cake",
-          "weight": 40,
-          "accept": ["cakes", "birthday cake", "cack", "chocolate cake"]
-        },
-        {
-          "id": "both",
-          "answer": "both",
-          "weight": 5,
-          "accept": ["both please", "why not both", "both of them"]
-        }
-      ]
-    },
-    {
-      "id": "hm-food-013",
-      "style": "name",
-      "prompt": "Name something that goes in a salad.",
-      "answers": [
-        {
-          "id": "tomatoes",
-          "answer": "tomatoes",
-          "weight": 20,
-          "accept": [
-            "tomato",
-            "tomatos",
-            "cherry tomatoes",
-            "grape tomatoes",
-            "tomatoe",
-            "tomaters"
-          ]
-        },
-        {
-          "id": "lettuce",
-          "answer": "lettuce",
-          "weight": 18,
-          "accept": ["letuce", "lettace", "romaine", "iceberg", "iceberg lettuce", "greens"]
-        },
-        {
-          "id": "cucumbers",
-          "answer": "cucumbers",
+          "id": "honey",
+          "answer": "honey",
           "weight": 12,
-          "accept": ["cucumber", "cukes", "cucumbr", "cucumer", "cucumbers slices", "cuccumber"]
+          "accept": ["hunny", "honney", "hony", "honeys", "honie", "land of milk and honey"]
         },
         {
-          "id": "croutons",
-          "answer": "croutons",
-          "weight": 10,
-          "accept": ["crouton", "crutons", "crootons", "croutins", "croûtons bag", "crotons"]
+          "id": "cereal",
+          "answer": "cereal",
+          "weight": 12,
+          "accept": ["cerial", "serial", "cereals", "ceral", "bowl of cereal", "cerael"]
         },
         {
-          "id": "dressing",
-          "answer": "dressing",
-          "weight": 8,
-          "accept": ["salad dressing", "dresing", "ranch", "vinaigrette"]
-        },
-        {
-          "id": "cheese",
-          "answer": "cheese",
-          "weight": 6,
-          "accept": ["shredded cheese", "parmesan", "feta", "cheeze"]
-        },
-        {
-          "id": "carrots",
-          "answer": "carrots",
-          "weight": 6,
-          "accept": ["carrot", "shredded carrots", "carots"]
-        },
-        {
-          "id": "onions",
-          "answer": "onions",
-          "weight": 4,
-          "accept": ["onion", "red onion", "red onions"]
-        },
-        {
-          "id": "chicken",
-          "answer": "chicken",
+          "id": "bread",
+          "answer": "bread",
           "weight": 3,
-          "accept": ["grilled chicken", "chiken", "chicken strips"]
-        },
-        {
-          "id": "bacon-bits",
-          "answer": "bacon bits",
-          "weight": 3,
-          "accept": ["bacon", "bacon bit", "bacn bits"]
+          "accept": ["breads", "bred", "loaf of bread"]
         },
         {
           "id": "eggs",
           "answer": "eggs",
-          "weight": 2,
-          "accept": ["egg", "boiled egg", "hard boiled eggs"]
+          "weight": 3,
+          "accept": ["egg", "egs", "dozen eggs"]
         },
         {
-          "id": "peppers",
-          "answer": "peppers",
+          "id": "sugar",
+          "answer": "sugar",
           "weight": 2,
-          "accept": ["pepper", "bell peppers", "green peppers"]
+          "accept": ["suger", "shugar"]
         },
         {
-          "id": "olives",
-          "answer": "olives",
+          "id": "brownies",
+          "answer": "brownies",
           "weight": 2,
-          "accept": ["olive", "black olives"]
+          "accept": ["brownie", "browines"]
+        },
+        {
+          "id": "crackers",
+          "answer": "crackers",
+          "weight": 1,
+          "accept": ["graham crackers", "cracker"]
+        },
+        {
+          "id": "cream",
+          "answer": "cream",
+          "weight": 1,
+          "accept": ["creme", "creamer"]
+        },
+        {
+          "id": "juice",
+          "answer": "juice",
+          "weight": 1,
+          "accept": ["juce", "orange juice"]
         }
       ]
     },
     {
-      "id": "hm-drink-001",
+      "id": "hm-kid-004",
       "style": "name",
-      "prompt": "Name a soda.",
+      "prompt": "Name a food kids refuse to eat.",
       "answers": [
         {
-          "id": "coke",
-          "answer": "coke",
-          "display": "Coke",
-          "weight": 35,
+          "id": "broccoli",
+          "answer": "broccoli",
+          "weight": 34,
+          "accept": ["brocolli", "brocoli", "broccolli", "brocoli florets", "trees", "little trees"]
+        },
+        {
+          "id": "brussels-sprouts",
+          "answer": "brussels sprouts",
+          "weight": 13,
           "accept": [
-            "coca cola",
-            "coca-cola classic",
-            "coke zero",
-            "diet coke",
-            "cola",
-            "koke",
-            "cocoa cola"
+            "brussel sprouts",
+            "sprouts",
+            "brussels",
+            "brussel sprout",
+            "brussles sprouts",
+            "brussel",
+            "brusel sprouts"
           ]
         },
         {
-          "id": "sprite",
-          "answer": "sprite",
-          "display": "Sprite",
-          "weight": 14,
-          "accept": ["sprit", "spright", "sprite zero", "sprit soda", "spirte", "sprinte"]
+          "id": "vegetables",
+          "answer": "vegetables",
+          "weight": 9,
+          "accept": ["veggies", "vegetable", "veggie", "greens"]
         },
         {
-          "id": "pepsi",
-          "answer": "pepsi",
-          "display": "Pepsi",
-          "weight": 12,
-          "accept": ["diet pepsi", "pepsi cola", "pepsie", "pespi", "pepsy", "pepsi max"]
+          "id": "spinach",
+          "answer": "spinach",
+          "weight": 8,
+          "accept": ["spinich", "spinnach", "spinaches"]
         },
         {
-          "id": "dr-pepper",
-          "answer": "dr pepper",
-          "display": "Dr Pepper",
-          "weight": 10,
-          "accept": [
-            "doctor pepper",
-            "dr peper",
-            "dr pepper soda",
-            "diet dr pepper",
-            "doc pepper",
-            "drpepper cherry"
-          ]
+          "id": "peas",
+          "answer": "peas",
+          "weight": 8,
+          "accept": ["pea", "green peas", "peeas"]
         },
         {
-          "id": "root-beer",
-          "answer": "root beer",
-          "weight": 7,
-          "accept": ["a&w", "rootbeer float", "barqs", "mug root beer", "root bear"]
+          "id": "mushrooms",
+          "answer": "mushrooms",
+          "weight": 5,
+          "accept": ["mushroom", "mushies", "shrooms"]
         },
         {
-          "id": "mountain-dew",
-          "answer": "mountain dew",
-          "display": "Mountain Dew",
-          "weight": 6,
-          "accept": ["mtn dew", "dew", "mountian dew", "mt dew", "code red"]
-        },
-        {
-          "id": "ginger-ale",
-          "answer": "ginger ale",
+          "id": "fish",
+          "answer": "fish",
           "weight": 4,
-          "accept": ["gingerale soda", "canada dry", "ginger beer", "ginger ail"]
+          "accept": ["seafood", "salmon", "fishes"]
         },
         {
-          "id": "fanta",
-          "answer": "fanta",
-          "display": "Fanta",
-          "weight": 4,
-          "accept": ["orange fanta", "fanta orange", "fant"]
-        },
-        {
-          "id": "7up",
-          "answer": "7up",
-          "display": "7Up",
+          "id": "liver",
+          "answer": "liver",
           "weight": 3,
-          "accept": ["sevenup", "7 upp", "diet 7up"]
+          "accept": ["liver and onions", "livers", "organ meat"]
         },
         {
-          "id": "orange-soda",
-          "answer": "orange soda",
+          "id": "onions",
+          "answer": "onions",
+          "weight": 3,
+          "accept": ["onion", "oinions", "red onions"]
+        },
+        {
+          "id": "tomatoes",
+          "answer": "tomatoes",
+          "weight": 3,
+          "accept": ["tomato", "tomatos", "tomatoe"]
+        },
+        {
+          "id": "asparagus",
+          "answer": "asparagus",
+          "weight": 3,
+          "accept": ["asparagas", "aspargus", "asparugus"]
+        },
+        {
+          "id": "cauliflower",
+          "answer": "cauliflower",
+          "weight": 3,
+          "accept": ["califlower", "cauliflour", "caulliflower"]
+        }
+      ]
+    },
+    {
+      "id": "hm-tech-007",
+      "style": "finish",
+      "prompt": "Finish this: My phone is always ___.",
+      "say": "Finish this: My phone is always… blank.",
+      "answers": [
+        {
+          "id": "dead",
+          "answer": "dead",
+          "weight": 34,
+          "accept": ["dying", "low battery", "out of battery", "died", "at 1%", "almost dead"]
+        },
+        {
+          "id": "charging",
+          "answer": "charging",
+          "weight": 12,
+          "accept": [
+            "on the charger",
+            "plugged in",
+            "charged",
+            "charging up",
+            "chargin",
+            "on charge"
+          ]
+        },
+        {
+          "id": "lost",
+          "answer": "lost",
+          "weight": 10,
+          "accept": ["missing", "losing it", "gone", "lost somewhere", "misplaced", "loosing"]
+        },
+        {
+          "id": "in-my-hand",
+          "answer": "in my hand",
+          "weight": 10,
+          "accept": ["in my hands", "with me", "in hand", "on me", "attached", "glued to me"]
+        },
+        {
+          "id": "cracked",
+          "answer": "cracked",
+          "weight": 7,
+          "accept": ["broken", "smashed", "shattered", "craked"]
+        },
+        {
+          "id": "buzzing",
+          "answer": "buzzing",
+          "weight": 6,
+          "accept": ["ringing", "vibrating", "going off", "beeping"]
+        },
+        {
+          "id": "slow",
+          "answer": "slow",
+          "weight": 5,
+          "accept": ["laggy", "lagging", "freezing"]
+        },
+        {
+          "id": "full",
+          "answer": "full",
+          "weight": 4,
+          "accept": ["storage full", "out of storage", "no storage"]
+        },
+        {
+          "id": "on-silent",
+          "answer": "on silent",
+          "weight": 4,
+          "accept": ["silent", "muted", "on mute"]
+        },
+        {
+          "id": "updating",
+          "answer": "updating",
+          "weight": 3,
+          "accept": ["needs updating", "update", "updates"]
+        },
+        {
+          "id": "old",
+          "answer": "old",
           "weight": 2,
-          "accept": ["crush", "orange crush", "sunkist"]
+          "accept": ["outdated", "ancient"]
+        }
+      ]
+    },
+    {
+      "id": "hm-life-001",
+      "style": "name",
+      "prompt": "Name something you do at a birthday party.",
+      "answers": [
+        {
+          "id": "eat-cake",
+          "answer": "eat cake",
+          "weight": 34,
+          "accept": [
+            "cake",
+            "eating cake",
+            "birthday cake",
+            "cut the cake",
+            "eat the cake",
+            "have cake"
+          ]
         },
         {
-          "id": "cream-soda",
-          "answer": "cream soda",
+          "id": "sing",
+          "answer": "sing",
+          "weight": 18,
+          "accept": [
+            "singing",
+            "sing happy birthday",
+            "happy birthday",
+            "sing the song",
+            "sing songs",
+            "sang"
+          ]
+        },
+        {
+          "id": "open-presents",
+          "answer": "open presents",
+          "weight": 16,
+          "accept": [
+            "presents",
+            "gifts",
+            "open gifts",
+            "opening presents",
+            "unwrap presents",
+            "present"
+          ]
+        },
+        {
+          "id": "play-games",
+          "answer": "play games",
+          "weight": 8,
+          "accept": ["games", "party games", "play", "pin the tail"]
+        },
+        {
+          "id": "blow-out-candles",
+          "answer": "blow out candles",
+          "weight": 8,
+          "accept": ["candles", "blow candles", "blow out the candles", "make a wish"]
+        },
+        {
+          "id": "dance",
+          "answer": "dance",
+          "weight": 5,
+          "accept": ["dancing", "danse", "dance party"]
+        },
+        {
+          "id": "hit-a-pinata",
+          "answer": "hit a piñata",
+          "weight": 3,
+          "accept": ["pinata", "smash the pinata", "break the pinata"]
+        },
+        {
+          "id": "take-photos",
+          "answer": "take photos",
+          "weight": 2,
+          "accept": ["photos", "pictures"]
+        },
+        {
+          "id": "eat-ice-cream",
+          "answer": "eat ice cream",
+          "weight": 2,
+          "accept": ["ice cream", "sundae"]
+        },
+        {
+          "id": "wear-party-hats",
+          "answer": "wear party hats",
+          "weight": 2,
+          "accept": ["party hats", "party hat"]
+        },
+        {
+          "id": "bounce-house",
+          "answer": "bounce house",
           "weight": 1,
-          "accept": ["creme soda", "vanilla cream soda"]
+          "accept": ["bouncy castle", "bounce"]
+        }
+      ]
+    },
+    {
+      "id": "hm-food-011",
+      "style": "name",
+      "prompt": "Name something you roast over a campfire.",
+      "answers": [
+        {
+          "id": "marshmallows",
+          "answer": "marshmallows",
+          "weight": 60,
+          "accept": [
+            "marshmallow",
+            "marshmellows",
+            "marshmellow",
+            "mallows",
+            "marshmallos",
+            "marshmelows"
+          ]
+        },
+        {
+          "id": "hot-dogs",
+          "answer": "hot dogs",
+          "weight": 25,
+          "accept": ["hot dog", "wieners", "weenies", "franks", "hot dgs", "frankfurters"]
+        },
+        {
+          "id": "smores",
+          "answer": "s'mores",
+          "weight": 6,
+          "accept": ["smore", "some mores", "smors", "smoores"]
+        },
+        {
+          "id": "corn",
+          "answer": "corn",
+          "weight": 2,
+          "accept": ["corn on the cob", "roasted corn", "ear of corn"]
+        },
+        {
+          "id": "sausage",
+          "answer": "sausage",
+          "weight": 2,
+          "accept": ["sausages", "bratwurst", "brats"]
+        },
+        {
+          "id": "potatoes",
+          "answer": "potatoes",
+          "weight": 1,
+          "accept": ["potato", "baked potato"]
+        },
+        {
+          "id": "bread",
+          "answer": "bread",
+          "weight": 1,
+          "accept": ["bannock", "campfire bread"]
+        },
+        {
+          "id": "chestnuts",
+          "answer": "chestnuts",
+          "weight": 1,
+          "accept": ["chestnut", "chesnuts"]
+        },
+        {
+          "id": "kebabs",
+          "answer": "kebabs",
+          "weight": 1,
+          "accept": ["kebab", "shish kabob", "kabobs"]
+        },
+        {
+          "id": "pineapple",
+          "answer": "pineapple",
+          "weight": 1,
+          "accept": ["pinapple", "pineapples"]
+        }
+      ]
+    },
+    {
+      "id": "hm-chore-005",
+      "style": "best",
+      "prompt": "What's the worst household chore?",
+      "answers": [
+        {
+          "id": "dishes",
+          "answer": "dishes",
+          "weight": 24,
+          "accept": [
+            "doing dishes",
+            "washing dishes",
+            "dish",
+            "dishwashing",
+            "wash dishes",
+            "dirty dishes",
+            "dishez"
+          ]
+        },
+        {
+          "id": "toilet",
+          "answer": "cleaning toilets",
+          "weight": 18,
+          "accept": [
+            "toilet",
+            "toilets",
+            "bathroom",
+            "cleaning the bathroom",
+            "scrubbing the toilet",
+            "clean the toilet",
+            "bathrooms"
+          ]
+        },
+        {
+          "id": "laundry",
+          "answer": "laundry",
+          "weight": 15,
+          "accept": [
+            "folding laundry",
+            "doing laundry",
+            "folding clothes",
+            "washing clothes",
+            "landry",
+            "loundry"
+          ]
+        },
+        {
+          "id": "trash",
+          "answer": "taking out trash",
+          "weight": 8,
+          "accept": ["trash", "garbage", "take out the trash", "taking out the garbage"]
+        },
+        {
+          "id": "vacuuming",
+          "answer": "vacuuming",
+          "weight": 6,
+          "accept": ["vacuum", "vaccuming", "hoovering", "vacuming"]
+        },
+        {
+          "id": "mopping",
+          "answer": "mopping",
+          "weight": 6,
+          "accept": ["mop", "mopping floors", "moping"],
+          "reject": ["mowing"]
+        },
+        {
+          "id": "ironing",
+          "answer": "ironing",
+          "weight": 5,
+          "accept": ["iron", "ironing clothes", "irons"]
+        },
+        {
+          "id": "dusting",
+          "answer": "dusting",
+          "weight": 5,
+          "accept": ["dust", "dustin", "dusting furniture"]
+        },
+        {
+          "id": "mowing",
+          "answer": "mowing",
+          "weight": 3,
+          "accept": ["mowing the lawn", "mow the lawn", "yard work"],
+          "reject": ["moping", "mopping"]
+        },
+        {
+          "id": "making-the-bed",
+          "answer": "making the bed",
+          "weight": 3,
+          "accept": ["make the bed", "making beds", "bed making"]
+        },
+        {
+          "id": "litter-box",
+          "answer": "litter box",
+          "weight": 3,
+          "accept": ["scooping litter", "cat litter", "kitty litter"]
+        },
+        {
+          "id": "cleaning-the-oven",
+          "answer": "oven cleaning",
+          "weight": 2,
+          "accept": ["oven", "clean the oven", "scrubbing the oven"]
+        }
+      ]
+    },
+    {
+      "id": "hm-travel-008",
+      "style": "name",
+      "prompt": "Name something you buy at a souvenir shop.",
+      "answers": [
+        {
+          "id": "t-shirt",
+          "answer": "t-shirt",
+          "weight": 30,
+          "accept": ["shirt", "shirts", "t-shirts", "tee", "tees", "tee shirt"]
+        },
+        {
+          "id": "keychain",
+          "answer": "keychain",
+          "weight": 15,
+          "accept": ["keychains", "key ring", "key rings", "keychian", "keychan", "key fob"]
+        },
+        {
+          "id": "magnet",
+          "answer": "magnet",
+          "weight": 12,
+          "accept": [
+            "magnets",
+            "fridge magnet",
+            "fridge magnets",
+            "refrigerator magnet",
+            "magent",
+            "magnit"
+          ]
+        },
+        {
+          "id": "postcard",
+          "answer": "postcard",
+          "weight": 8,
+          "accept": ["postcards", "cards", "picture postcard", "postcrd"]
+        },
+        {
+          "id": "mug",
+          "answer": "mug",
+          "weight": 7,
+          "accept": ["mugs", "coffee mug", "cup", "coffee cup"]
+        },
+        {
+          "id": "hat",
+          "answer": "hat",
+          "weight": 6,
+          "accept": ["hats", "cap", "baseball cap", "ball cap"]
+        },
+        {
+          "id": "snow-globe",
+          "answer": "snow globe",
+          "weight": 5,
+          "accept": ["snow globes", "globe", "globes"]
+        },
+        {
+          "id": "pencil",
+          "answer": "pencil",
+          "weight": 4,
+          "accept": ["pencils", "pen", "pens"]
+        },
+        {
+          "id": "stuffed-animal",
+          "answer": "stuffed animal",
+          "weight": 3,
+          "accept": ["plush", "stuffed toy", "teddy bear", "plushie"]
+        },
+        {
+          "id": "candy",
+          "answer": "candy",
+          "weight": 2,
+          "accept": ["fudge", "sweets", "candies"]
+        },
+        {
+          "id": "sticker",
+          "answer": "sticker",
+          "weight": 2,
+          "accept": ["stickers", "decal", "bumper sticker"]
+        },
+        {
+          "id": "hoodie",
+          "answer": "hoodie",
+          "weight": 2,
+          "accept": ["sweatshirt", "hoodies", "sweater"]
         }
       ]
     }
   ],
   "q": {
-    "n": 11,
+    "n": 3,
     "tiles": [
       {
-        "id": "coke",
-        "label": "Coke"
+        "id": "green",
+        "label": "Green"
       },
       {
-        "id": "fanta",
-        "label": "Fanta"
+        "id": "white",
+        "label": "White"
       },
       {
-        "id": "cream-soda",
-        "label": "Cream soda"
+        "id": "purple",
+        "label": "Purple"
       },
       {
-        "id": "7up",
-        "label": "7Up"
+        "id": "yellow",
+        "label": "Yellow"
       },
       {
-        "id": "pepsi",
-        "label": "Pepsi"
+        "id": "grey",
+        "label": "Grey"
       },
       {
-        "id": "dr-pepper",
-        "label": "Dr Pepper"
+        "id": "pink",
+        "label": "Pink"
       },
       {
-        "id": "sprite",
-        "label": "Sprite"
+        "id": "teal",
+        "label": "Teal"
       },
       {
-        "id": "root-beer",
-        "label": "Root beer"
+        "id": "blue",
+        "label": "Blue"
       }
     ],
-    "answers": {},
+    "answers": {
+      "p1": {
+        "tile": "green"
+      },
+      "p2": {
+        "tile": "green"
+      },
+      "p3": {
+        "tile": "green"
+      },
+      "p4": {
+        "tile": "green"
+      },
+      "p5": {
+        "tile": "purple"
+      },
+      "p6": {
+        "tile": "yellow"
+      }
+    },
     "merges": [],
-    "groups": [],
-    "outcome": "empty",
-    "herd": null,
+    "groups": [
+      {
+        "key": "a:green",
+        "label": "Green",
+        "members": ["p1", "p2", "p3", "p4"],
+        "raw": {},
+        "merged": []
+      },
+      {
+        "key": "a:purple",
+        "label": "Purple",
+        "members": ["p5"],
+        "raw": {},
+        "merged": []
+      },
+      {
+        "key": "a:yellow",
+        "label": "Yellow",
+        "members": ["p6"],
+        "raw": {},
+        "merged": []
+      }
+    ],
+    "outcome": "herd",
+    "herd": "a:green",
     "lone": null,
-    "scored": [],
-    "sheepFrom": null
+    "scored": ["p1", "p2", "p3", "p4"],
+    "sheepFrom": "p6"
   },
   "scores": {
-    "p1": 0,
-    "p2": 0,
-    "p3": 0,
-    "p4": 0,
-    "p5": 0,
-    "p6": 0
+    "p1": 8,
+    "p2": 8,
+    "p3": 8,
+    "p4": 5,
+    "p5": 4,
+    "p6": 4
   },
-  "sheep": null,
-  "winners": ["p1", "p2", "p3", "p4", "p5", "p6"],
+  "sheep": "p6",
+  "winners": ["p1", "p2", "p3"],
   "stats": {
     "p1": {
-      "herd": 0,
+      "herd": 4,
       "alone": 0,
       "sheepHeld": 0
     },
     "p2": {
-      "herd": 0,
+      "herd": 4,
       "alone": 0,
       "sheepHeld": 0
     },
     "p3": {
-      "herd": 0,
+      "herd": 4,
       "alone": 0,
       "sheepHeld": 0
     },
     "p4": {
-      "herd": 0,
+      "herd": 1,
       "alone": 0,
       "sheepHeld": 0
     },
     "p5": {
       "herd": 0,
-      "alone": 0,
+      "alone": 1,
       "sheepHeld": 0
     },
     "p6": {
       "herd": 0,
-      "alone": 0,
-      "sheepHeld": 0
+      "alone": 4,
+      "sheepHeld": 4
     }
   },
-  "pairs": {},
-  "speechMs": {
-    "hmiwnr25trs5dv": -1,
-    "hmnd49v61oj6rik": -1,
-    "hmjs6cz211d3oi4": -1,
-    "hm1tehax0r8vrp8": -1,
-    "hmpwpjmsl1h0l6": -1,
-    "hmlaobb4bm0zxg": -1,
-    "hmihpepopfmjuu": -1,
-    "hm1j47zx2uice6a": -1,
-    "hm4a70dsdit2xg": -1,
-    "hm1vhj0ib9nmjjh": -1,
-    "hm975dkt18o8vqh": -1,
-    "hm10zy2581g9oj5m": -1,
-    "hm17hcee9189iw8z": -1,
-    "hm4ynp1rr15qz5": -1,
-    "hm2r4tdfashlsf": -1,
-    "hmhy00gg1l9negs": -1,
-    "hm112b64p9jzxen": -1,
-    "hmyiij77tvnvt3": -1,
-    "hm5c9gfuge27tw": -1,
-    "hm1r6u3vw1ry7gjo": -1,
-    "hmyt8331x2qfst": -1,
-    "hm166mc4415o7lnw": -1,
-    "hm1q83jne1lzjiyk": -1,
-    "hm167uwes1aya1su": -1,
-    "hm1dqkavhb54i2j": -1,
-    "hm1x6z99sujar54": -1,
-    "hmw2p2z51lw4nwh": -1,
-    "hm19l7ink1kmiefe": -1,
-    "hm19nr4st19l0abf": -1,
-    "hm1gqzszx1x5xgq7": -1,
-    "hm1r1cs9clv1fbe": -1,
-    "hm1ss6ktjndoamf": -1,
-    "hmo6hdat1lkik81": -1,
-    "hmj0g57p1l1paq1": -1,
-    "hmtjclaeyb08ga": -1,
-    "hmm3iges1upzsoi": -1,
-    "hm1rf8sotcuv2kr": -1,
-    "hm1dclgxb19bnlpv": -1,
-    "hmya7n4g53ahfc": -1,
-    "hmw3izvw1tww2k8": -1,
-    "hmz0pull1tdchjh": -1,
-    "hm45byauxnie4i": -1,
-    "hmddtkya9kjvgi": -1,
-    "hmr0w4iw1i1wi00": -1,
-    "hm16b4cz61k5xrcs": -1,
-    "hm1ig0tvl35lhin": -1,
-    "hmzqwg7y15lcr50": -1,
-    "hmle6v1o16orxr0": -1,
-    "hm1f7s4v94cowjx": -1,
-    "hm1fgkqok8361tw": -1,
-    "hm1mu6381afiy3": -1,
-    "hm7s4igdodjoo": -1,
-    "hm1dg0a56b0b5bq": -1,
-    "hm1f8jk07196nd5": -1,
-    "hm151wjte7f9b3m": -1,
-    "hm1mdj67d26mnyn": -1,
-    "hm9iuzipz6i8wv": -1,
-    "hmbev1fg1ikpir4": -1,
-    "hmlohy11113ald": -1,
-    "hmh0tr161hqkz04": -1,
-    "hm1bs4vql1jjeea1": -1,
-    "hm1lc99i5ikaibz": -1,
-    "hm12480d51yyrhtp": -1,
-    "hmgsh67rz86ngp": -1,
-    "hmk0gb6bc55inf": -1,
-    "hm1o9af8xfkm6nx": -1,
-    "hm15bsah5fdo73j": -1,
-    "hmtt7lla1891v6m": -1,
-    "hmgs4xfbqrpcor": -1,
-    "hmspfysbz1moq9": -1,
-    "hm1791ihsrjphqq": -1,
-    "hm1fftmt91bx8331": -1,
-    "hm1s1i8sv1ae90j7": -1,
-    "hm8nogzqeg2obg": -1,
-    "hmpnim05szc8v5": -1,
-    "hm1dhdknb1qk6t9n": -1,
-    "hm1uokofnm9f8ff": -1,
-    "hm1yjz44v3aoj7n": -1,
-    "hmy61tu01qu86r2": -1,
-    "hmwejj2y1y35cmm": -1,
-    "hmto4a06qojaaq": -1,
-    "hm192pcs71xbxsgd": -1,
-    "hmxiprawypdrom": -1,
-    "hm6el6u11mf3q1n": -1,
-    "hm16tfoy5zypbp1": -1,
-    "hmidvetjsm7zkx": -1,
-    "hm18ue0fq18qiaji": -1,
-    "hm5jv68yxnb1xy": -1,
-    "hmu6mo6zgy8d6j": -1,
-    "hmdki1k81u4fahc": -1,
-    "hm1kljidvgwou2v": -1,
-    "hm1j50u0o14ycvn4": -1,
-    "hmidgc9u14zu7a4": -1,
-    "hm78fwnj1hnj3h1": -1,
-    "hm1mm9c6c1j36gwo": -1,
-    "hm9ikhdi1ao7dgc": -1,
-    "hm1wcm26h19vmqjt": -1,
-    "hmv3bahqui66qy": -1,
-    "hm16an7wgo1brc": -1,
-    "hm2vcl2m10pk9hy": -1,
-    "hmflxm6r1w73pdf": -1,
-    "hmu54uo010qcz54": -1,
-    "hm1bxdz6v1sdhqqx": -1,
-    "hm17yn6p61w2z2fq": -1,
-    "hm1ttxpwh545sfb": -1,
-    "hm1mee8vurodj0w": -1
-  }
+  "pairs": {
+    "p1|p2": 4,
+    "p1|p3": 4,
+    "p2|p3": 4,
+    "p4|p5": 3,
+    "p1|p4": 1,
+    "p2|p4": 1,
+    "p3|p4": 1
+  },
+  "speechMs": {}
 }

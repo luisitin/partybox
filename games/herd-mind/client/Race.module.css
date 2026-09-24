@@ -1,0 +1,252 @@
+/* TV score: summary, the lanes, the next-question card / winner banner. Tokens only. */
+.page {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-4);
+  container-type: size;
+}
+
+.paused,
+.paused * {
+  animation-play-state: paused !important;
+}
+
+.top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pb-space-1);
+  text-align: center;
+}
+
+.kicker {
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--pb-accent-2);
+}
+
+.summary {
+  margin: 0;
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  line-height: 1.2;
+  max-width: 1600px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sheepLine {
+  margin: 0;
+  min-height: calc(var(--pb-font-body) * 1.4);
+  font-size: var(--pb-font-body);
+  font-weight: 700;
+  color: var(--pb-text-muted);
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+/* The track: a pasture on the left, one lane per player, the finish line on the right. */
+.track {
+  --face: 72px;
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 120px 1fr 110px;
+  gap: var(--pb-space-3);
+  align-items: stretch;
+}
+
+.pasture {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pb-space-2);
+  border-radius: var(--pb-radius-lg);
+  border: 4px dashed var(--pb-surface-2);
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  color: var(--pb-text-muted);
+}
+
+.lanes {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: repeat(var(--lanes), minmax(0, 1fr));
+  gap: 4px;
+}
+
+.lane {
+  position: relative;
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  align-items: center;
+  gap: var(--pb-space-3);
+  min-height: 0;
+  padding: 0 var(--pb-space-3);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+}
+
+.lane:nth-child(even) {
+  background: var(--pb-surface-2);
+}
+
+.won {
+  outline: 4px solid var(--pb-accent-2);
+}
+
+.who {
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.run {
+  position: relative;
+  height: 100%;
+  min-height: 0;
+  container-type: size;
+  /* the lane's own finish line */
+  border-right: 4px dotted var(--pb-text-muted);
+}
+
+/* The face travels across the run: --x is the share of the target reached (0..1). */
+.slide {
+  position: absolute;
+  inset: 0 auto 0 0;
+  /* the face is as big as the lane allows, up to --face */
+  width: calc(100% - min(var(--face), 90cqh));
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+  transform: translateX(calc(var(--x) * 100%));
+  transition: transform var(--pb-motion-slow) var(--pb-ease);
+}
+
+.face {
+  position: relative;
+  flex: none;
+  width: min(var(--face), 90cqh);
+  aspect-ratio: 1;
+  display: grid;
+}
+
+.points {
+  font-size: var(--pb-font-body);
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+}
+
+.blocked {
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  color: var(--pb-accent-2);
+  white-space: nowrap;
+}
+
+.plus {
+  position: absolute;
+  top: -30%;
+  left: 60%;
+  padding: 0 var(--pb-space-2);
+  border-radius: 999px;
+  background: var(--pb-accent-3);
+  color: var(--pb-on-accent);
+  font-size: var(--pb-font-caption);
+  font-weight: 900;
+  animation: global(pb-pop) var(--pb-motion-slow) var(--pb-ease) both;
+}
+
+.badge {
+  position: absolute;
+  bottom: -12%;
+  right: -18%;
+  z-index: 2;
+}
+
+.flying {
+  z-index: 5;
+}
+
+.finish {
+  display: grid;
+  place-items: center;
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+}
+
+.bottom {
+  position: relative;
+  min-height: 84px;
+  display: grid;
+  place-items: center;
+}
+
+.winner {
+  margin: 0;
+  font-size: var(--pb-font-h1);
+  font-weight: 900;
+  animation: global(pb-crown) var(--pb-motion-slow) var(--pb-ease) both;
+}
+
+.next {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pb-space-2);
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  color: var(--pb-text-muted);
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.nextBar {
+  width: 480px;
+}
+
+/* A full room: slimmer faces, the summary a size down. */
+@container (max-height: 640px) {
+  .track {
+    --face: 48px;
+  }
+  .summary {
+    font-size: var(--pb-font-body);
+  }
+  .lane {
+    grid-template-columns: 150px 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slide {
+    transition: none;
+  }
+  .plus,
+  .sheepLine,
+  .winner,
+  .next {
+    animation: none;
+  }
+}
+
+:global(:root[data-motion='off']) .slide {
+  transition: none;
+}
+
+:global(:root[data-motion='off']) .plus,
+:global(:root[data-motion='off']) .sheepLine,
+:global(:root[data-motion='off']) .winner,
+:global(:root[data-motion='off']) .next {
+  animation: none;
+}

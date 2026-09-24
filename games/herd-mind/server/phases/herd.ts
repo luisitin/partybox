@@ -4,7 +4,7 @@
 import { enterPhase, isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { baseGroups, regroup } from '../group';
-import { herdReading, readyMs } from '../speech';
+import { fixedReading, herdReading, readyMs } from '../speech';
 import { herdMs } from '../timing';
 import { TYPED_HERD_MS } from '../types';
 import type { Input, State, Transition } from '../types';
@@ -21,6 +21,11 @@ function verdictMs(state: State): number | null {
   return herd ? readyMs(state, herdReading(state, herd.label)) : null;
 }
 
+/** "The herd has spoken." — its length, when made (the verdict waits for it to finish). */
+function spokenMs(state: State): number | null {
+  return readyMs(state, fixedReading(state, 'spoken'));
+}
+
 /** Typed answers wait for the VIP only when there is something to merge. */
 export function waitsForVip(state: State): boolean {
   return state.cfg.mode === 'typed' && (state.q.groups?.length ?? 0) >= 2;
@@ -28,7 +33,9 @@ export function waitsForVip(state: State): boolean {
 
 export function enterHerd(state: State, now: number): State {
   const grouped = regroup(state);
-  const ms = waitsForVip(grouped) ? TYPED_HERD_MS : herdMs(cardCount(grouped), verdictMs(grouped));
+  const ms = waitsForVip(grouped)
+    ? TYPED_HERD_MS
+    : herdMs(cardCount(grouped), verdictMs(grouped), spokenMs(grouped));
   return enterPhase(grouped, 'herd', now, ms);
 }
 
@@ -38,7 +45,7 @@ export function retimeHerd(state: State, now: number): State {
     return state;
   const deadline = Math.max(
     now,
-    state.phase.startedAt + herdMs(cardCount(state), verdictMs(state)),
+    state.phase.startedAt + herdMs(cardCount(state), verdictMs(state), spokenMs(state)),
   );
   return deadline > state.phase.deadline
     ? { ...state, phase: { ...state.phase, deadline } }

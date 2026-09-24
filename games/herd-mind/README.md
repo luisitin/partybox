@@ -53,7 +53,8 @@ After each question, in order:
    takes it; with no lonely players or 2+, it stays where it is.
 4. **Win.** Every player at or above the target who is not holding the sheep wins at once
    (shared). A holder at the target keeps playing and wins the moment the sheep moves on.
-5. **Limit.** After the last question, the top scorers without the sheep win.
+5. **Limit.** After the last question, the top scorers without the sheep win (a room that never
+   scored shares a quiet draw — no fanfare).
 
 Scores never go down. Ranking is by points, except a sheep holder who would outrank the winners
 sits right below them. Awards (skipped when unearned, shared on ties): 🐑 Head of the Herd (most

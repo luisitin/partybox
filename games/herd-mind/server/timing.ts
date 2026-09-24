@@ -17,9 +17,16 @@ export function cardAtMs(i: number, cards: number): number {
   return HERD_OPEN_MS + i * cardStaggerMs(cards);
 }
 
-/** The herd rises (or the tie shakes) once the last card has landed and settled. */
-export function bannerAtMs(cards: number): number {
-  return cardAtMs(Math.max(0, cards - 1), cards) + CARD_LAND_MS + 250;
+/** "The herd has spoken." starts as the first cards take off. */
+export const SPOKEN_AT_MS = 250;
+
+/** The herd rises (or the tie shakes) once the last card has landed and settled — and never over
+ *  "The herd has spoken." (a small room's cards land before the line ends). */
+export function bannerAtMs(cards: number, spokenMs: number | null = null): number {
+  const settled = cardAtMs(Math.max(0, cards - 1), cards) + CARD_LAND_MS + 250;
+  return spokenMs !== null && spokenMs > 0
+    ? Math.max(settled, SPOKEN_AT_MS + spokenMs + 150)
+    : settled;
 }
 
 /** How long the verdict holds after the banner: long enough to read it, and for its voice. */
@@ -27,12 +34,16 @@ export const BANNER_HOLD_MS = 2_600;
 export const VOICE_BEAT_MS = 700;
 
 /** The whole tiles-mode `herd` phase: the landing, the banner, and the hold (voice-aware). */
-export function herdMs(cards: number, readingMs: number | null): number {
+export function herdMs(
+  cards: number,
+  readingMs: number | null,
+  spokenMs: number | null = null,
+): number {
   const hold =
     readingMs !== null && readingMs > 0
       ? Math.max(BANNER_HOLD_MS, readingMs + VOICE_BEAT_MS)
       : BANNER_HOLD_MS;
-  return bannerAtMs(cards) + hold;
+  return bannerAtMs(cards, spokenMs) + hold;
 }
 
 /** `score`: +1 badges pop, then the sheep flies, then the race track slides. */

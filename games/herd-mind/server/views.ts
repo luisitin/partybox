@@ -10,6 +10,8 @@ export interface Line {
   cue: LineCue;
   key: string;
   url: string;
+  /** The clip's length: the stage times the next beat after it. */
+  ms: number;
 }
 export interface GroupView {
   key: string;
@@ -62,8 +64,14 @@ function statusOf(state: State): (id: string) => PlayerStatus {
 }
 
 function line(cue: LineCue, req: SpeechRequest | null, state: State): Line[] {
-  if (!req || readyMs(state, req) === null) return [];
-  return [{ cue, key: req.key, url: `/api/speech/${req.key}.wav` }];
+  const ms = readyMs(state, req);
+  if (!req || ms === null) return [];
+  return [{ cue, key: req.key, url: `/api/speech/${req.key}.wav`, ms }];
+}
+
+/** A real win to cheer: somebody won with points (a 0–0 room just ends). */
+export function celebrated(state: State): boolean {
+  return state.winners.some((id) => (state.scores[id] ?? 0) > 0);
 }
 
 /** The readings the stage plays in this phase (only ones already made; the stage never waits). */
@@ -86,7 +94,7 @@ function lines(state: State): Line[] {
     const moved = state.q.lone !== null && state.q.lone !== state.q.sheepFrom;
     return [
       ...(moved ? line('sheep', fixedReading(state, 'sheep'), state) : []),
-      ...(state.winners.length > 0 ? line('winner', fixedReading(state, 'winner'), state) : []),
+      ...(celebrated(state) ? line('winner', fixedReading(state, 'winner'), state) : []),
     ];
   }
   return [];

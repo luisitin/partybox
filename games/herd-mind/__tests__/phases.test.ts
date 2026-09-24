@@ -207,7 +207,7 @@ describe('the voice', () => {
     const q = (game.speech?.(s) ?? [])[0];
     s = game.reduce(s, { type: 'speech', now: T0 + 100, key: q?.key ?? '', ms: 2_000 });
     expect(tvView(s, ID).lines).toEqual([
-      { cue: 'question', key: q?.key, url: `/api/speech/${q?.key}.wav` },
+      { cue: 'question', key: q?.key, url: `/api/speech/${q?.key}.wav`, ms: 2_000 },
     ]);
   });
 });

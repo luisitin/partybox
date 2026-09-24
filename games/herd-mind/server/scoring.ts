@@ -15,7 +15,9 @@ function eligible(state: State): string[] {
 export function winnersOf(state: State, last: boolean): string[] {
   const reached = eligible(state).filter((id) => (state.scores[id] ?? 0) >= state.cfg.target);
   if (reached.length > 0 || !last) return reached;
-  const pool = eligible(state);
+  // Someone always wins (the contract): without the sheep if anyone can, else whoever is left.
+  const present = state.seats.filter((id) => !state.left.includes(id));
+  const pool = [eligible(state), present, state.seats].find((ids) => ids.length > 0) ?? [];
   const top = Math.max(0, ...pool.map((id) => state.scores[id] ?? 0));
   return pool.filter((id) => (state.scores[id] ?? 0) === top);
 }

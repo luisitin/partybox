@@ -1,6 +1,7 @@
 // SPEC §2.6 and §2.17: the herd, ties, the Black Sheep, the win check and the ranking.
 import { describe, expect, it } from 'vitest';
 import { game } from '../server/index';
+import { celebrated } from '../server/views';
 import type { State } from '../server/types';
 import { atAnswer, input, nextQuestion, scoreWith, skip, timer } from './helpers';
 
@@ -127,6 +128,16 @@ describe('the end', () => {
     s = timer(s);
     expect(s.phase.id).toBe('done');
     expect(game.results(s)?.winnerIds).toEqual(['ana', 'ben']);
+  });
+
+  it('nobody scoring all game: a quiet shared draw, never a celebration', () => {
+    let s = atAnswer({ maxQuestions: 5, target: 15, reader: 'jessica' }, 3);
+    for (let i = 0; i < 5; i++) {
+      s = scoreWith(s, [0, 1, 2]); // everyone different, every time
+      if (i < 4) s = nextQuestion(s);
+    }
+    expect(s.winners).toEqual(['ana', 'ben', 'cy']);
+    expect(celebrated(s)).toBe(false);
   });
 
   it('a sheep holder with the most points ranks right below the winners', () => {

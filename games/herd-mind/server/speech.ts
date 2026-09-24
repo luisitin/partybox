@@ -72,31 +72,44 @@ export function fixedReading(state: State, line: FixedLine): SpeechRequest | nul
   return voice ? request(voice, FIXED[line]) : null;
 }
 
-/** The labels the herd could have this question: the tiles, or the list's likeliest answers. */
+/** How many likely herd answers are voiced ahead: enough to cover most verdicts, few enough that
+ *  the next question is never stuck behind them on a busy host. */
+const LIKELY = 4;
+
+/** The labels the herd most likely gets this question: the heaviest answers on show. */
 function likelyLabels(state: State): string[] {
-  if (state.q.tiles) return state.q.tiles.map((t) => t.label);
   const item = state.questions[state.q.n];
   if (!item) return [];
-  return [...item.answers]
+  const shown = state.q.tiles ? new Set(state.q.tiles.map((t) => t.id)) : null;
+  return item.answers
+    .filter((a) => !shown || shown.has(a.id))
     .sort((x, y) => y.weight - x.weight)
-    .slice(0, 6)
+    .slice(0, LIKELY)
     .map(answerLabel);
 }
 
-/** Every reading this state wants, most urgent first, minus the ones already made. */
+/**
+ * Every reading this state wants, most urgent first, minus the ones already made: the question
+ * on stage, the herd's answer once known, the fixed lines, the likely herd answers — and the NEXT
+ * question a whole question ahead, so it is made long before its `answer` starts.
+ */
 export function speech(state: State): SpeechRequest[] {
   if (!voiceOf(state) || state.phase.id === 'done') return [];
   const want: (SpeechRequest | null)[] = [];
   const phase = state.phase.id;
-  if (phase === 'intro') want.push(questionReading(state, 0));
+  const n = state.q.n;
+  const fixed = (Object.keys(FIXED) as FixedLine[]).map((line) => fixedReading(state, line));
+  if (phase === 'intro') want.push(questionReading(state, 0), ...fixed, questionReading(state, 1));
   if (phase === 'answer' || phase === 'herd') {
-    want.push(questionReading(state, state.q.n));
+    want.push(questionReading(state, n));
     const herd = state.q.groups?.find((g) => g.key === state.q.herd);
     if (herd) want.push(herdReading(state, herd.label));
+    want.push(...fixed);
     for (const label of likelyLabels(state)) want.push(herdReading(state, label));
+    want.push(questionReading(state, n + 1));
   }
-  if (phase === 'score') want.push(questionReading(state, state.q.n + 1));
-  for (const line of Object.keys(FIXED) as FixedLine[]) want.push(fixedReading(state, line));
+  if (phase === 'score')
+    want.push(questionReading(state, n + 1), ...fixed, questionReading(state, n + 2));
   const seen = new Set<string>();
   const out: SpeechRequest[] = [];
   for (const r of want) {
