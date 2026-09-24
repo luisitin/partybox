@@ -24,7 +24,23 @@ at a time; nothing here is built until the owner says so.
 | 03   | [parts/03-TUNE-IN-HIVE-RANK.md](parts/03-TUNE-IN-HIVE-RANK.md)       | [📻 Tune In](tune-in/) · [🐝 Hive Rank](hive-rank/)       | received 2026-09-24 |
 | 04   | [parts/04-ECHO-BLIND-AUCTION.md](parts/04-ECHO-BLIND-AUCTION.md)     | [🔁 Echo](echo/) · [🔨 Blind Auction](blind-auction/)     | received 2026-09-24 |
 | 05   | [parts/05-SPY-GRID.md](parts/05-SPY-GRID.md)                         | [🗂️ Spy Grid](spy-grid/)                                  | received 2026-09-24 |
-| 06   | —                                                                    | [🌙 Nightfall](nightfall/)                                | waiting             |
+| 06   | [parts/06-NIGHTFALL.md](parts/06-NIGHTFALL.md)                       | [🌙 Nightfall](nightfall/)                                | received 2026-09-24 |
+
+## Build order (from Part 06, "The pack, complete")
+
+| Part | Contents                                                                                | Build order                                                       |
+| ---- | --------------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
+| 00   | Foundation: game picker, download-on-pick, presence, matcher, voices, shared components | 1st. F1–F3 first, on their own; then F4–F7 as the games need them |
+| 01   | Imposter, Herd Mind                                                                     | 2nd                                                               |
+| 02   | Fake-Out, Who Said It                                                                   | 3rd (Fake-Out's facts need checking)                              |
+| 03   | Tune In, Hive Rank                                                                      | 4th                                                               |
+| 04   | Echo, Blind Auction                                                                     | 5th                                                               |
+| 05   | Spy Grid                                                                                | 6th (the largest game)                                            |
+| 06   | Nightfall                                                                               | 7th (reuses Imposter's hidden-role plumbing)                      |
+
+Each game gets its own session, which reads Part 00 plus the game's part, finishes the Definition
+of Done (Part 00 §8) and posts a screenshot review before the next game starts. All seven parts
+were received on 2026-09-24; nothing is built until the owner says so.
 
 ## Tools and skills
 
