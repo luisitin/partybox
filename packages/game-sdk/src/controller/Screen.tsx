@@ -28,15 +28,26 @@ export function Screen({ children, footer, title, className }: ScreenProps): JSX
   const L = useT(STRINGS);
   const section = useRef<HTMLElement>(null);
   // I-066 B: "more below" — true while the body can scroll further (scroll + resize watched).
+  // I-788 A: the cue is a row of its own at the top of the footer. `room` lays the row out while
+  // the body overflows (measured as if the row were absent, so laying it out never flips it back);
+  // `more` only fades it, so reaching the end shifts nothing under the finger.
   const body = useRef<HTMLDivElement>(null);
+  const cue = useRef<HTMLButtonElement>(null);
+  const [room, setRoom] = useState(false);
   const [more, setMore] = useState(false);
-  // I-456 A (the arrow clears the footer, however tall) is carried by I-187's zero-height anchor
-  // between the body and the footer: the pill sits var(--pb-space-2) above the footer's top edge,
-  // so a measured footer height would count it twice.
   useEffect(() => {
     const el = body.current;
     if (!el) return undefined;
-    const check = (): void => setMore(el.scrollHeight - el.clientHeight - el.scrollTop > 24);
+    const check = (): void => {
+      // What the laid-out row takes from the body: the row itself inside a footer, or the whole
+      // safe-area strip when the Screen has no footer (the strip holds the row alone).
+      const btn = cue.current;
+      const strip = btn?.parentElement;
+      const alone = !!strip && strip.children.length === 1;
+      const taken = !btn ? 0 : alone ? (strip?.offsetHeight ?? 0) : btn.offsetHeight + 2;
+      setRoom(el.scrollHeight - el.clientHeight - taken > 24);
+      setMore(el.scrollHeight - el.clientHeight - el.scrollTop > 24);
+    };
     check();
     el.addEventListener('scroll', check, { passive: true });
     const ro = new ResizeObserver(check);
@@ -70,21 +81,26 @@ export function Screen({ children, footer, title, className }: ScreenProps): JSX
       <div ref={body} className={styles.body}>
         {children}
       </div>
-      {more ? (
-        <div className={styles.moreAnchor}>
-          <button
-            type="button"
-            className={styles.more}
-            aria-label={L('scroll down')}
-            onClick={() =>
-              body.current?.scrollBy({ top: body.current.clientHeight * 0.8, behavior: 'smooth' })
-            }
-          >
-            ▾
-          </button>
+      {footer || room ? (
+        <div className={footer ? styles.footer : styles.cueOnly}>
+          {room ? (
+            <button
+              ref={cue}
+              type="button"
+              className={styles.cue}
+              data-on={more}
+              aria-label={L('scroll down')}
+              tabIndex={more ? 0 : -1}
+              onClick={() =>
+                body.current?.scrollBy({ top: body.current.clientHeight * 0.8, behavior: 'smooth' })
+              }
+            >
+              {L('more below')}
+            </button>
+          ) : null}
+          {footer}
         </div>
       ) : null}
-      {footer ? <div className={styles.footer}>{footer}</div> : null}
     </section>
   );
 }

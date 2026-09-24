@@ -7,6 +7,7 @@ export const STRINGS: Strings = {
   es: {
     // Screen
     'scroll down': 'ver más abajo',
+    'more below': 'hay más abajo', // I-788 A: the footer's cue row
     // TextAnswer
     Submit: 'Enviar',
     Submitted: 'Enviado',
