@@ -12,6 +12,10 @@ phone, page by page. A book whose last guess matches its word is **UNBROKEN**; o
 BROKEN**. No points — the show is the game. The picker's minutes follow the room (I-189 B: 30 s + one
 round a player × (55 s + 4 s a player) — ~5 min at 4, ~12 at 8; from the host PC's recaps).
 
+- The pick screen's how-to says rule 3 as the room will play it: "round the circle" only when every
+  book goes round, else "It passes to N players in turn" (I-507 A).
+- Under the how-to a row shows a book's pages as they will be — 📖 ✏️ ❓ ✏️ ❓ · 5 pages (I-507 B).
+
 ## Players
 
 3–8 (state cap: drawings are ≤ 2 600 ink chars / 64 strokes each; 8 books × 7 drawings stays under 256 KB). Late

@@ -209,9 +209,28 @@ export function Tv({ view }: GameTvProps<PencilTvView>): JSX.Element {
           <li>
             {L('Your drawing goes to the next player: they guess it, then draw their guess.')}
           </li>
-          <li>{L('That goes on round the circle; the last player only guesses.')}</li>
+          {/* I-507 A: the rule as this room will play it */}
+          <li>
+            {view.fullCircle
+              ? L('That goes on round the circle; the last player only guesses.')
+              : view.passes === 1
+                ? L('It passes to 1 player, who only guesses.')
+                : L('It passes to {n} players in turn; the last of them only guesses.', {
+                    n: view.passes,
+                  })}
+          </li>
           <li>{L('Then everyone presents their own book on the TV, page by page.')}</li>
         </ol>
+        {/* I-507 B: the book as it will be — the word, then drawing, guess, drawing… */}
+        <p className={styles.chain} aria-label={L('{n} pages', { n: view.pageCount })}>
+          <span aria-hidden>
+            📖
+            {Array.from({ length: view.pageCount - 1 }, (_, i) =>
+              i % 2 === 0 ? ' ✏️' : ' ❓',
+            ).join('')}
+          </span>
+          <span className={styles.chainCount}>{L('{n} pages', { n: view.pageCount })}</span>
+        </p>
         <p className={styles.count} role="status">
           {picked === 1
             ? L('1 of {total} picked', { total: view.progress.length })
