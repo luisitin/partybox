@@ -75,7 +75,18 @@ function selectionCopy(text: string): boolean {
   return ok;
 }
 
-export function ShareButton({ code }: { code: string }): JSX.Element {
+export function ShareButton({
+  code,
+  className,
+  label,
+  ariaLabel,
+}: {
+  code: string;
+  /** I-666 A: the header's room code opens the same sheet, in its own look. */
+  className?: string;
+  label?: string;
+  ariaLabel?: string;
+}): JSX.Element {
   const [open, setOpen] = useState(false);
   const [said, setSaid] = useState<string | null>(null);
   const info = useServerInfo();
@@ -102,8 +113,13 @@ export function ShareButton({ code }: { code: string }): JSX.Element {
   };
   return (
     <>
-      <button type="button" className={styles.sharePill} onClick={tap}>
-        {said ? `✓ ${said}` : t.share.button}
+      <button
+        type="button"
+        className={className ?? styles.sharePill}
+        onClick={tap}
+        aria-label={ariaLabel}
+      >
+        {said ? `✓ ${said}` : (label ?? t.share.button)}
       </button>
       {open ? (
         <div className={styles.shareBack} role="dialog" aria-label={t.share.sheet}>
