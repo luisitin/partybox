@@ -8,7 +8,7 @@ import { topicLine, drawText } from './labels';
 import { STRINGS } from './strings';
 import { FinalReveal } from './TvFinal';
 import { TvNext, useStandingsUp } from './NextStep';
-import { AnswerCard, RevealRows, RoundHeader, TvQuestion } from './TvQuestion';
+import { ChoiceBoard, RevealRows, RoundHeader, TvQuestion } from './TvQuestion';
 import styles from './Tv.module.css';
 
 /** Inline bolt (precedent: game-sdk Avatar), currentColor so every theme's accent-2 paints it. */
@@ -86,8 +86,15 @@ export function Tv({ view, skip }: GameTvProps<LightningTvView>): JSX.Element {
           aside={standingsUp && view.next && skip ? <TvNext next={view.next} skip={skip} /> : null}
         />
         <p className={styles.asked}>{view.question?.text ?? '…'}</p>
+        {/* I-544 A: the four cards stay, lit and counted — the room sees how it split */}
         {view.question && view.correctIndex !== undefined ? (
-          <AnswerCard question={view.question} correctIndex={view.correctIndex} />
+          <ChoiceBoard
+            question={view.question}
+            correctIndex={view.correctIndex}
+            pickers={view.question.choices.map((_, i) =>
+              (view.rows ?? []).filter((r) => r.pickIndex === i),
+            )}
+          />
         ) : null}
         <RevealRows rows={view.rows ?? []} />
       </Stage>
