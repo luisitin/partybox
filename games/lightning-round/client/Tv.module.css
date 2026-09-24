@@ -485,3 +485,12 @@
 .crowdFace:first-child {
   margin-left: 0;
 }
+
+/* ── I-589 A: a right answer's time on its reveal row; the fastest wears the bolt. */
+.raceTime {
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  color: var(--pb-accent-2);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}

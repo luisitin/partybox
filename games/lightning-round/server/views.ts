@@ -41,6 +41,8 @@ export interface RevealRow {
   score: number;
   /** Final reveal only. */
   wagerAmount?: number;
+  /** I-589 A: how long a right answer took (ms); absent for a wrong or missing one. */
+  elapsedMs?: number;
 }
 
 export interface StandingRow {
@@ -154,11 +156,15 @@ function revealRows(state: State, correctIndex: number, final: boolean): RevealR
       score: state.scores[p.id] ?? 0,
     };
     if (final) row.wagerAmount = state.wagers[p.id] ?? 0;
+    const pick = state.picks[p.id];
+    if (row.correct && pick) row.elapsedMs = pick.elapsedMs; // I-589 A
     return row;
   });
+  // I-589 A: the race — right answers fastest first, then the rest by score
   return rows.sort(
     (a, b) =>
       Number(b.correct) - Number(a.correct) ||
+      (a.correct && b.correct ? (a.elapsedMs ?? 0) - (b.elapsedMs ?? 0) : 0) ||
       b.score - a.score ||
       a.playerId.localeCompare(b.playerId),
   );
