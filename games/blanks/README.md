@@ -110,7 +110,7 @@ number 6 (3–15) · `handSize` select `10` (7 · 10 · 12 · 15 cards a hand, I
 
 Three decks, `mild.json` (clean, 1259 black / 2601 white), `crude.json` (adult, 987 / 2053) and `wild.json`
 (explicit 924 / 2501) — 10 325 cards, about one black card in nine a Pick 2 or Pick 3 (every game deals exactly one, mid-game — round 4 of 6, 8 of 15; I-158 B): `{ id, name, rating, black: [{ id, text, pick, draw }], white: [{ id, text }] }`,
-blanks written `____`, `pick` ≥ blanks (a question card has none), `draw` 2 on Pick 3 cards. Mainstream
+blanks written `____`, `pick` ≥ blanks (a question card has none), `draw` 2 on Pick 3 cards. Filled mid-sentence, a card's everyday opening capital comes down (a gerund or a listed opener; names, acronyms and "I" keep theirs — I-150 A), a quoted card inside a quotation steps its double quotes down to single ones (B), and `__tests__/join.test.ts` sweeps the deck for doubled quotes (C). Mainstream
 real-world references are fine in crude and wild (heads of state past and present, well-known events);
 no obscure ones; no slurs or hate, nothing sexual involving minors, no non-consent. Add cards with
 `pnpm exec tsx scripts/blanks-add-cards.ts <deck> black.txt white.txt` (ids, pick/draw and dedupe are automatic).
