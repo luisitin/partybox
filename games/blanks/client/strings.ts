@@ -47,8 +47,8 @@ const PICKER_ES: Readonly<Record<string, string>> = {
   'Black cards to play; about a minute each in a small room, closer to two with a full one':
     'Cartas negras que se juegan; cerca de un minuto cada una con pocos jugadores, casi dos con la sala llena',
   'Timed rounds': 'Rondas con reloj',
-  'Put a clock on picking, voting and the result; off = play at your own pace, anyone taps Next':
-    'Pon reloj al elegir, al votar y al resultado; apagado = a tu ritmo, alguien toca Siguiente',
+  'Put a clock on picking, voting and the result; off = play at your own pace, the VIP taps Next':
+    'Pon reloj al elegir, al votar y al resultado; apagado = a tu ritmo, el VIP toca Siguiente',
   'Answer time (timed rounds)': 'Tiempo de respuesta (con reloj)',
   'Seconds to pick a card when rounds are timed; Pick 2 and Pick 3 cards get 15 s more each':
     'Segundos para elegir carta en rondas con reloj; las cartas Elige 2 y Elige 3 tienen 15 s más cada una',

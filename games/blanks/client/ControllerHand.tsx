@@ -41,7 +41,27 @@ function Table({ view }: { view: BlanksControllerView }): JSX.Element {
   );
 }
 
-export function ControllerHand({ view, send, skip }: Props): JSX.Element {
+/** I-152 C: the untimed hint names who taps Next — "you" on the VIP's own phone, the VIP's name
+ *  elsewhere (right after a handover nobody is sure who that is), the role when nobody holds it. */
+function nextLine(L: ReturnType<typeof useT>, view: Props['view'], meId: string): string {
+  if (view.vip === meId)
+    return L(
+      '{played} / {expected} in · the reading starts when everyone is in, or when you tap Next.',
+      progress(view),
+    );
+  const name = view.players.find((p) => p.id === view.vip)?.name;
+  return name
+    ? L(
+        '{played} / {expected} in · the reading starts when everyone is in, or when {name} taps Next.',
+        { ...progress(view), name },
+      )
+    : L(
+        '{played} / {expected} in · the reading starts when everyone is in, or when the VIP taps Next.',
+        progress(view),
+      );
+}
+
+export function ControllerHand({ view, me, send, skip }: Props): JSX.Element {
   const L = useT(STRINGS);
   const [picked, setPicked] = useState<string[]>([]);
   const [sent, setSent] = useState(false);
@@ -103,10 +123,7 @@ export function ControllerHand({ view, send, skip }: Props): JSX.Element {
                   "{played} / {expected} in · the reading starts when everyone's in.",
                   progress(view),
                 )
-              : L(
-                  '{played} / {expected} in · the reading starts when everyone is in, or when the VIP taps Next.',
-                  progress(view),
-                )
+              : nextLine(L, view, me.id)
         }
         mood="done"
       >

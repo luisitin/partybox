@@ -133,6 +133,7 @@ function TvFinal({ view }: Props): JSX.Element {
 
 export function TvResult({ view }: Props): JSX.Element {
   const L = useT(STRINGS);
+  const vipName = view.players.find((p) => p.id === view.vip)?.name;
   const play = useSound();
   const beat = useBeats(RESULT_BEATS_MS);
   const winners = view.revealed.filter((r) => r.winner);
@@ -194,8 +195,13 @@ export function TvResult({ view }: Props): JSX.Element {
         <p className={styles.kicker}>
           {L('Round {round} of {rounds} · result', { round: view.round, rounds: view.rounds })}
         </p>
+        {/* I-152 B: after a VIP handover "the VIP" is whoever it has just become — name them. */}
         {!view.timed ? (
-          <span className={styles.progressPill}>{L("Next on the VIP's phone")}</span>
+          <span className={styles.progressPill}>
+            {vipName
+              ? L("Next on {name}'s phone", { name: vipName })
+              : L("Next on the VIP's phone")}
+          </span>
         ) : null}
       </div>
       <div

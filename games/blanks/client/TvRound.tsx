@@ -191,6 +191,7 @@ function waitingLine(outstanding: ViewPlayer[], L: Translator): string {
 
 export function TvAnswer({ view }: Props): JSX.Element {
   const L = useT(STRINGS);
+  const vipName = view.players.find((p) => p.id === view.vip)?.name;
   const left = useSecondsLeft(view.deadline, view.paused);
   const connected = view.players.filter((p) => p.connected && p.status !== 'waiting');
   const outstanding = connected.filter((p) => p.status !== 'submitted');
@@ -271,7 +272,10 @@ export function TvAnswer({ view }: Props): JSX.Element {
       </div>
       {!view.timed && !nobodyDone && outstanding.length > 0 ? (
         <BigText level="h2" tone="muted">
-          {L('No clock — the VIP taps Next when the room is ready.')}
+          {/* I-152 C: the same line, with the same name on it. */}
+          {vipName
+            ? L('No clock — {name} taps Next when the room is ready.', { name: vipName })
+            : L('No clock — the VIP taps Next when the room is ready.')}
         </BigText>
       ) : null}
     </Stage>

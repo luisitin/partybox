@@ -199,4 +199,12 @@ export const SCREENS_ES: Readonly<Record<string, string>> = {
   'votes in': 'votos emitidos',
   // I-148 B: try your front card in a setup while the judge picks.
   'try your first card in this question': 'prueba tu primera carta en esta pregunta',
+  // I-152: the Next line names whoever holds the VIP role.
+  "Next on {name}'s phone": '{name} toca Siguiente',
+  'No clock — {name} taps Next when the room is ready.':
+    'Sin reloj: {name} toca Siguiente cuando estén todos listos.',
+  '{played} / {expected} in · the reading starts when everyone is in, or when you tap Next.':
+    '{played} / {expected} jugaron · la lectura empieza cuando jueguen todos o cuando toques Siguiente.',
+  '{played} / {expected} in · the reading starts when everyone is in, or when {name} taps Next.':
+    '{played} / {expected} jugaron · la lectura empieza cuando jueguen todos o cuando {name} toque Siguiente.',
 };

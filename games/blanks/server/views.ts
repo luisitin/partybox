@@ -36,7 +36,7 @@ export interface BlanksTvView extends TvView, Voice {
   tieBreak: string[] | null;
   rounds: number;
   judgeMode: JudgeMode;
-  /** Clocks on picking, voting and the result; false = anyone taps Next (the shells hide the timer). */
+  /** Clocks on picking, voting and the result; false = the VIP taps Next (the shells hide the timer). */
   timed: boolean;
   /** czar mode: this round's judge. */
   czar: PersonView | null;
