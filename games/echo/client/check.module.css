@@ -10,6 +10,7 @@
 
 .row {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: var(--pb-space-3);
@@ -43,14 +44,13 @@
   flex-wrap: wrap;
   align-items: center;
   gap: var(--pb-space-1) var(--pb-space-3);
-  min-width: 0;
 }
 
 .text,
 .struck {
   font-size: var(--pb-font-body);
   font-weight: 900;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
 }
 
 .struck {
@@ -67,6 +67,7 @@
 
 .act {
   flex: none;
+  margin-left: auto;
   min-height: var(--pb-touch);
   min-width: var(--pb-touch);
   padding: 0 var(--pb-space-3);

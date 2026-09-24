@@ -99,7 +99,8 @@
 }
 
 .table[data-rows='2'] {
-  gap: var(--pb-space-4) var(--pb-space-5);
+  /* Rows leave room for the author tags that hang under each card at the result. */
+  gap: var(--pb-space-6) var(--pb-space-4);
 }
 
 .card {
@@ -117,8 +118,8 @@
 }
 
 .table[data-rows='2'] .card {
-  --card-w: 272px;
-  --card-h: 150px;
+  --card-w: 232px;
+  --card-h: 118px;
 }
 
 .cardInner {

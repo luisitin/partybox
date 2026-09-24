@@ -138,6 +138,8 @@ export const CHECK_MS = 12_000;
 /** The result beat: the word, the guess, the uncovered echoes. A burn adds its slide. */
 export const RESULT_MS = 6_500;
 export const BURN_EXTRA_MS = 1_800;
+/** A word nobody wrote a clue for: the word and the mark, nothing to turn over. */
+export const EMPTY_RESULT_MS = 4_500;
 /** "Don't know it" counts only this early in `clue` (§7.6). */
 export const DONT_KNOW_WINDOW_MS = 15_000;
 export const MAX_SWAPS = 2;

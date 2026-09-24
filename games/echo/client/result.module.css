@@ -194,6 +194,7 @@
   border: 1px solid var(--pb-border);
   font-size: var(--pb-font-body);
   font-weight: 700;
+  text-align: left;
   animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
   animation-delay: calc(1500ms + var(--i) * 700ms);
 }

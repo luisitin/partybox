@@ -49,7 +49,7 @@ export function PhoneGuess({
   if (view.role !== 'guesser') {
     return (
       <Screen className={styles.screen}>
-        <div className={styles.stack}>
+        <div className={`${styles.stack} ${styles.center}`}>
           <p className={styles.kicker}>{L('The clues')}</p>
           <Clues view={view} />
           <p className={styles.hint}>{L('{name} is guessing…', { name: guesser })}</p>
@@ -70,7 +70,7 @@ export function PhoneGuess({
         <div className={styles.footerRow} data-two="1">
           <button
             type="button"
-            className={styles.ghost}
+            className={styles.second}
             disabled={sent}
             onClick={() => go({ type: 'pass' })}
           >

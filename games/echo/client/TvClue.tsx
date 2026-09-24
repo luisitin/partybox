@@ -85,31 +85,33 @@ export function TvClue({ view }: GameTvProps<EchoTvView>): JSX.Element {
         </span>
         <Deck counts={view.counts} />
       </div>
-      <div className={stage.hero} key={`${view.phaseId}:${view.wordNo}`}>
-        {guesser ? (
-          <span className={stage.heroFace}>
-            <span className={stage.heroRing} aria-hidden />
-            <Avatar avatarId={guesser.avatarId} size={148} />
+      <div className={stage.body}>
+        <div className={stage.hero} key={`${view.phaseId}:${view.wordNo}`}>
+          {guesser ? (
+            <span className={stage.heroFace}>
+              <span className={stage.heroRing} aria-hidden />
+              <Avatar avatarId={guesser.avatarId} size={148} />
+            </span>
+          ) : null}
+          <span className={stage.heroText}>
+            <span className={stage.heroLine}>
+              {L('{name} is guessing', { name: guesser?.name ?? '?' })}
+            </span>
+            <span className={stage.heroHint}>{hint}</span>
           </span>
-        ) : null}
-        <span className={stage.heroText}>
-          <span className={stage.heroLine}>
-            {L('{name} is guessing', { name: guesser?.name ?? '?' })}
-          </span>
-          <span className={stage.heroHint}>{hint}</span>
-        </span>
-      </div>
-      {view.swapped ? <span className={stage.banner}>{L('Word swapped!')}</span> : null}
-      {checking ? (
-        <div className={stage.listen}>
-          <span className={stage.ring} aria-hidden />
-          <span className={stage.ring} aria-hidden />
-          <span className={stage.ring} aria-hidden />
-          {slots}
         </div>
-      ) : (
-        slots
-      )}
+        {view.swapped ? <span className={stage.banner}>{L('Word swapped!')}</span> : null}
+        {checking ? (
+          <div className={stage.listen}>
+            <span className={stage.ring} aria-hidden />
+            <span className={stage.ring} aria-hidden />
+            <span className={stage.ring} aria-hidden />
+            {slots}
+          </div>
+        ) : (
+          slots
+        )}
+      </div>
     </Stage>
   );
 }

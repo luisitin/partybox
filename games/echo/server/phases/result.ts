@@ -6,7 +6,7 @@ import { PACK_LANG } from '../content';
 import { settle } from '../deck';
 import { echoedRefs, survivorRefs } from '../echoes';
 import { matchAnswer } from '../match/index';
-import { BURN_EXTRA_MS, RESULT_MS } from '../types';
+import { BURN_EXTRA_MS, EMPTY_RESULT_MS, RESULT_MS } from '../types';
 import type { Input, Outcome, State, Transition, Turn } from '../types';
 
 /** Right when the matcher says fuzzy or better (§7.7). */
@@ -15,6 +15,8 @@ export function judge(state: State, text: string): Outcome {
 }
 
 function stayMs(turn: Turn): number {
+  // Nothing was written: no cards to turn over, so the beat is shorter (no dead air).
+  if (turn.kept.length + turn.echoed.length === 0) return EMPTY_RESULT_MS;
   return RESULT_MS + (turn.burned || turn.unwon ? BURN_EXTRA_MS : 0);
 }
 

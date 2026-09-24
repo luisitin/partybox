@@ -4,6 +4,20 @@
   gap: var(--pb-space-6);
 }
 
+/* Everything under the header row sits in the middle of the space that is left. */
+.body {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pb-space-6);
+  /* The TV's host bar sits over the bottom overscan: keep the table clear of it. */
+  padding-bottom: var(--pb-space-7);
+}
+
 .hero {
   display: flex;
   align-items: center;
@@ -67,8 +81,8 @@
   position: relative;
   display: grid;
   place-items: center;
-  width: 200px;
-  height: 128px;
+  width: 240px;
+  height: 152px;
   border-radius: var(--pb-radius-lg);
   border: 3px dashed color-mix(in srgb, var(--pb-text-muted) 55%, transparent);
   background: color-mix(in srgb, var(--pb-surface) 60%, transparent);
@@ -77,8 +91,8 @@
 }
 
 .slot[data-many='1'] .slotHole {
-  width: 160px;
-  height: 104px;
+  width: 180px;
+  height: 116px;
 }
 
 /* Three dots take turns while a clue is being written. */

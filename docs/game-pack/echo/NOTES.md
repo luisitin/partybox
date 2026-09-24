@@ -56,6 +56,25 @@ Foundation work lives on branch `foundation` and does not merge until the owner 
 - `state.won` / `state.lost` from §7.10 are derived (`piles()`), and per-player stats are derived
   from the turns (`tallies()`): smaller state, and nothing to keep in sync.
 
+## Record-review findings fixed so far
+
+- Bots (and quick humans) guessed ~1 s into `guess`, before the TV had turned the clues over →
+  the server now holds an early answer until the reveal ends (`w.early`, "🔒 has an answer…").
+- The survivors' cards turned every 420 ms while the reading took ~2.4 s → the card steps now
+  follow the reading's length (420–900 ms each), on the TV and in the server's hold.
+- The last "Looks good" tick swallowed the `guess` chime (the shell drops a cue within 50 ms of
+  another) → the guess stage plays its own chime, then a soft pluck per card.
+- 1.6–2.9 s of dead TV / 4 s of dead phone in `result` → quiet draining bar + a card flying to its
+  pile; phone waiting screens centred.
+- "glowin / g" mid-word breaks on cards → size steps by word length; check rows at 200 % text
+  wrapped mid-word → the button drops to its own line.
+- Tied awards shared an id → duplicate React keys on the shell's results screen; ids carry the
+  player now.
+- 200 % text: the intro's first step was clipped above the scroll area (centred overflow) →
+  `align-content: safe center`.
+- Touch pass (iPhone SE): no selection, zoom, page scroll or double send anywhere; the clue
+  screen overflowed 10 px (drag jiggle) → a lower word card on short phones.
+
 ## Open questions for the owner
 
 1. **Co-op results headline.** The contract suite requires a winner, so every player shares rank 1

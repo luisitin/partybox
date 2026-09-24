@@ -61,51 +61,53 @@ export function TvGuess({ view }: GameTvProps<EchoTvView>): JSX.Element {
         </span>
         <Deck counts={view.counts} />
       </div>
-      <div className={stage.hero}>
-        {guesser ? <Avatar avatarId={guesser.avatarId} size={96} /> : null}
-        <span className={stage.heroLine}>
-          {L("{name}, what's the word?", { name: guesser?.name ?? '?' })}
-        </span>
-      </div>
-      {view.guessIn ? (
-        <span className={stage.banner}>
-          {L('🔒 {name} has an answer…', { name: guesser?.name ?? '?' })}
-        </span>
-      ) : null}
-      {empty ? (
-        <span className={stage.line}>{L('No clues!')}</span>
-      ) : (
-        <div className={styles.table} data-rows={rows}>
-          {survivors.map((text, i) => (
-            <Card
-              key={`s${i}`}
-              up={beat >= 2 + i}
-              dealMs={GUESS.deal + i * GUESS.dealStep}
-              skipMs={skip}
-              label={beat >= 2 + i ? text : undefined}
-            >
-              <ClueText text={text} />
-            </Card>
-          ))}
-          {Array.from({ length: echoes }, (_, i) => (
-            <Card
-              key={`e${i}`}
-              up={beat >= 1}
-              dealMs={GUESS.deal + (survivors.length + i) * GUESS.dealStep}
-              skipMs={skip}
-              faceClass={styles.echoFace}
-              label={L('echo')}
-            >
-              <EchoFace />
-            </Card>
-          ))}
+      <div className={stage.body}>
+        <div className={stage.hero}>
+          {guesser ? <Avatar avatarId={guesser.avatarId} size={96} /> : null}
+          <span className={stage.heroLine}>
+            {L("{name}, what's the word?", { name: guesser?.name ?? '?' })}
+          </span>
         </div>
-      )}
-      {survivors.length === 0 && echoes > 0 && beat >= 1 ? (
-        <span className={stage.line}>
-          {L("Total echo! {name}'s on their own.", { name: guesser?.name ?? '?' })}
-        </span>
-      ) : null}
+        {view.guessIn ? (
+          <span className={stage.banner}>
+            {L('🔒 {name} has an answer…', { name: guesser?.name ?? '?' })}
+          </span>
+        ) : null}
+        {empty ? (
+          <span className={stage.line}>{L('No clues!')}</span>
+        ) : (
+          <div className={styles.table} data-rows={rows}>
+            {survivors.map((text, i) => (
+              <Card
+                key={`s${i}`}
+                up={beat >= 2 + i}
+                dealMs={GUESS.deal + i * GUESS.dealStep}
+                skipMs={skip}
+                label={beat >= 2 + i ? text : undefined}
+              >
+                <ClueText text={text} />
+              </Card>
+            ))}
+            {Array.from({ length: echoes }, (_, i) => (
+              <Card
+                key={`e${i}`}
+                up={beat >= 1}
+                dealMs={GUESS.deal + (survivors.length + i) * GUESS.dealStep}
+                skipMs={skip}
+                faceClass={styles.echoFace}
+                label={L('echo')}
+              >
+                <EchoFace />
+              </Card>
+            ))}
+          </div>
+        )}
+        {survivors.length === 0 && echoes > 0 && beat >= 1 ? (
+          <span className={stage.line}>
+            {L("Total echo! {name}'s on their own.", { name: guesser?.name ?? '?' })}
+          </span>
+        ) : null}
+      </div>
     </Stage>
   );
 }

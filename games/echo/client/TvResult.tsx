@@ -12,6 +12,7 @@ import { usePhaseBeat, useMountElapsed } from './usePhaseBeat';
 import { useLine } from './useLine';
 import { STRINGS } from './strings';
 import res from './result.module.css';
+import stage from './stage.module.css';
 import styles from './tv.module.css';
 
 const BEATS = [RESULT.word, RESULT.mark, RESULT.authors, RESULT.pile, RESULT.burn];
@@ -57,59 +58,61 @@ export function TvResult({ view }: GameTvProps<EchoTvView>): JSX.Element | null 
         </span>
         <Deck counts={counts} />
       </div>
-      <div className={res.head}>
-        <span className={res.was}>{L('The word was')}</span>
-        <span className={res.word}>{r.word}</span>
-      </div>
-      <div className={res.guessRow} data-on={beat >= 1 ? '1' : '0'}>
-        <span className={res.guess}>
-          {r.outcome === 'pass'
-            ? L('{name} passed', { name: guesser?.name ?? '?' })
-            : L('{name} guessed “{guess}”', { name: guesser?.name ?? '?', guess: r.guess })}
-        </span>
-        <span className={res.mark} data-outcome={r.outcome}>
-          {mark}
-        </span>
-        {r.byVip ? <span className={res.vip}>{L('Counted by the VIP')}</span> : null}
-      </div>
-      <div className={styles.table} data-rows={rows}>
-        {r.clues.map((c, i) => (
-          <Card
-            key={`${c.by}:${i}`}
-            still
-            up={!c.echo || beat >= 2}
-            back={c.echo ? <EchoFace /> : undefined}
-            backClass={c.echo ? styles.echoFace : undefined}
-            below={beat >= 2 ? <AuthorTag player={byId(c.by)} /> : null}
-            label={c.echo && beat < 2 ? L('echo') : c.text}
-          >
-            {c.echo ? (
-              <span className={styles.struck}>
+      <div className={stage.body}>
+        <div className={res.head}>
+          <span className={res.was}>{L('The word was')}</span>
+          <span className={res.word}>{r.word}</span>
+        </div>
+        <div className={res.guessRow} data-on={beat >= 1 ? '1' : '0'}>
+          <span className={res.guess}>
+            {r.outcome === 'pass'
+              ? L('{name} passed', { name: guesser?.name ?? '?' })
+              : L('{name} guessed “{guess}”', { name: guesser?.name ?? '?', guess: r.guess })}
+          </span>
+          <span className={res.mark} data-outcome={r.outcome}>
+            {mark}
+          </span>
+          {r.byVip ? <span className={res.vip}>{L('Counted by the VIP')}</span> : null}
+        </div>
+        <div className={styles.table} data-rows={rows}>
+          {r.clues.map((c, i) => (
+            <Card
+              key={`${c.by}:${i}`}
+              still
+              up={!c.echo || beat >= 2}
+              back={c.echo ? <EchoFace /> : undefined}
+              backClass={c.echo ? styles.echoFace : undefined}
+              below={beat >= 2 ? <AuthorTag player={byId(c.by)} /> : null}
+              label={c.echo && beat < 2 ? L('echo') : c.text}
+            >
+              {c.echo ? (
+                <span className={styles.struck}>
+                  <ClueText text={c.text} />
+                </span>
+              ) : (
                 <ClueText text={c.text} />
-              </span>
-            ) : (
-              <ClueText text={c.text} />
-            )}
-          </Card>
-        ))}
-        {r.clues.length === 0 ? <span className={res.burn}>{L('No clues!')}</span> : null}
+              )}
+            </Card>
+          ))}
+          {r.clues.length === 0 ? <span className={res.burn}>{L('No clues!')}</span> : null}
+        </div>
+        {beat === 3 ? (
+          <span className={res.flyer} data-to={r.outcome === 'right' ? 'won' : 'lost'} aria-hidden>
+            {r.outcome === 'right' ? '✓' : '✗'}
+          </span>
+        ) : null}
+        {beat >= 4 && (r.burned || r.unwon) ? (
+          <span className={res.flyer} data-to="lost" aria-hidden>
+            ✗
+          </span>
+        ) : null}
+        {r.burned && beat >= 4 ? (
+          <span className={res.burn}>{L('…and it burned the next word.')}</span>
+        ) : null}
+        {r.unwon && beat >= 4 ? (
+          <span className={res.burn}>{L('…and it cost a word we had won.')}</span>
+        ) : null}
       </div>
-      {beat === 3 ? (
-        <span className={res.flyer} data-to={r.outcome === 'right' ? 'won' : 'lost'} aria-hidden>
-          {r.outcome === 'right' ? '✓' : '✗'}
-        </span>
-      ) : null}
-      {beat >= 4 && (r.burned || r.unwon) ? (
-        <span className={res.flyer} data-to="lost" aria-hidden>
-          ✗
-        </span>
-      ) : null}
-      {r.burned && beat >= 4 ? (
-        <span className={res.burn}>{L('…and it burned the next word.')}</span>
-      ) : null}
-      {r.unwon && beat >= 4 ? (
-        <span className={res.burn}>{L('…and it cost a word we had won.')}</span>
-      ) : null}
     </Stage>
   );
 }

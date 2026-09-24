@@ -19,6 +19,7 @@
 }
 
 .prompt {
+  text-wrap: balance;
   margin: 0;
   font-size: var(--pb-font-h2);
   font-weight: 800;
@@ -27,6 +28,7 @@
 }
 
 .hint {
+  text-wrap: balance;
   margin: 0;
   font-size: var(--pb-font-body);
   color: var(--pb-text-muted);
@@ -42,7 +44,8 @@
 /* Waiting screens sit in the middle of the phone, not stuck to the top. */
 .center {
   min-height: 100%;
-  align-content: center;
+  /* `safe`: a stack taller than the screen starts at the top (scrollable), never above it. */
+  align-content: safe center;
 }
 
 /* ── The clue boxes ────────────────────────────────────────────────────────────────────────── */
@@ -164,7 +167,32 @@
 }
 
 .footerRow[data-two='1'] {
-  grid-template-columns: auto 1fr;
+  grid-template-columns: minmax(5.5em, auto) 1fr;
+}
+
+/* The footer's secondary action (Pass, That counts): a real button beside the primary one. */
+.second {
+  min-height: var(--pb-touch);
+  padding: 0 var(--pb-space-4);
+  border-radius: var(--pb-radius);
+  border: 2px solid var(--pb-border);
+  background: var(--pb-surface);
+  color: var(--pb-text);
+  font: inherit;
+  font-size: var(--pb-font-button);
+  font-weight: 800;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--pb-motion-fast) var(--pb-ease);
+}
+
+.second:active {
+  transform: scale(0.97);
+}
+
+.second:disabled {
+  opacity: 0.5;
 }
 
 .errorLine {
@@ -271,4 +299,10 @@
   background: var(--pb-accent);
   color: var(--pb-on-accent);
   font-weight: 900;
+}
+
+@media (max-height: 620px) {
+  .stack {
+    gap: var(--pb-space-3);
+  }
 }

@@ -28,7 +28,11 @@ export function PhoneResult(props: GameControllerProps<EchoControllerView, Input
   const footer = vip ? (
     <div className={styles.footerRow} data-two={view.canCount ? '1' : '0'}>
       {view.canCount ? (
-        <button type="button" className={styles.ghost} onClick={() => send({ type: 'countGuess' })}>
+        <button
+          type="button"
+          className={styles.second}
+          onClick={() => send({ type: 'countGuess' })}
+        >
           {L('✓ That counts')}
         </button>
       ) : null}
