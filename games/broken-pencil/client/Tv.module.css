@@ -451,3 +451,22 @@
   color: var(--pb-text-muted);
   letter-spacing: normal;
 }
+
+/* ── I-211 B: the book's title in the left column, the page area gets the full height. */
+.showSide {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-4);
+  min-height: 0;
+  overflow: hidden;
+}
+.sideHead {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--pb-space-2);
+}
+.sideHead .kicker {
+  font-size: var(--pb-font-caption);
+  /* the page count wraps in the 300 px column (a first build clipped it to "BOT 4 TURNS THE P") */
+  white-space: normal;
+}

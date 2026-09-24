@@ -270,36 +270,39 @@ export function Tv({ view }: GameTvProps<PencilTvView>): JSX.Element {
     const earlier = s.pages.length - 1 - STRIP_MAX;
     return (
       <Stage>
-        <div className={styles.head}>
-          <BigText level="h1" tone="accent">
-            {L("{name}'s book", { name: s.ownerName })}
-          </BigText>
-          <p className={styles.kicker}>
-            {L('{name} turns the pages · book {book} of {books} · page {page} of {pages}', {
-              name: s.ownerName,
-              book: s.book + 1,
-              books: view.bookCount,
-              page: s.page + 1,
-              pages: view.pageCount,
-            })}
-          </p>
-        </div>
         <div className={styles.showBody}>
-          <ul className={styles.strip} aria-label={L('pages so far')}>
-            {/* The stage fits about six thumbnails; a long chain keeps its newest pages (the context
-                for the current one) and folds the rest into a count (review-loop #67). */}
-            {earlier > 0 ? (
-              <li className={styles.thumbMore}>
-                {earlier === 1 ? L('1 earlier page…') : L('{n} earlier pages…', { n: earlier })}
-              </li>
-            ) : null}
-            {s.pages
-              .slice(0, -1)
-              .slice(-STRIP_MAX)
-              .map((p, i) => (
-                <Thumb key={i} page={p} />
-              ))}
-          </ul>
+          {/* I-211 B: the title and page count sit above the thumbnails — the page gets the height */}
+          <div className={styles.showSide}>
+            <div className={`${styles.head} ${styles.sideHead}`}>
+              <BigText level="h2" tone="accent">
+                {L("{name}'s book", { name: s.ownerName })}
+              </BigText>
+              <p className={styles.kicker}>
+                {L('{name} turns the pages · book {book} of {books} · page {page} of {pages}', {
+                  name: s.ownerName,
+                  book: s.book + 1,
+                  books: view.bookCount,
+                  page: s.page + 1,
+                  pages: view.pageCount,
+                })}
+              </p>
+            </div>
+            <ul className={styles.strip} aria-label={L('pages so far')}>
+              {/* The stage fits about six thumbnails; a long chain keeps its newest pages (the context
+                  for the current one) and folds the rest into a count (review-loop #67). */}
+              {earlier > 0 ? (
+                <li className={styles.thumbMore}>
+                  {earlier === 1 ? L('1 earlier page…') : L('{n} earlier pages…', { n: earlier })}
+                </li>
+              ) : null}
+              {s.pages
+                .slice(0, -1)
+                .slice(-STRIP_MAX)
+                .map((p, i) => (
+                  <Thumb key={i} page={p} />
+                ))}
+            </ul>
+          </div>
           <div className={styles.current}>
             {current ? <CurrentPage page={current} /> : null}
             {last ? (
