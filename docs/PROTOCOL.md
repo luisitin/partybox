@@ -39,6 +39,14 @@ engine's `host` flag — no VIP check, every other rule intact — and `tv:bot {
 Every `room` and `view` push carries a per-room, monotonically increasing `rev`. Clients keep the last
 `rev` they applied and drop anything lower or equal. Views are pushed in full (they are small).
 
+I-750 (`host.ts`, `sockets.ts`): the host remembers the room snapshot and view it last sent to each phone
+and the snapshot it last sent a room's TVs, and skips an identical one (`rev`/`at` are left out of the
+compare), so a Bingo daub by someone else no longer re-sends ~16 KB to every phone; a welcome or a
+`resend` clears a phone's entries, so a (re)joined phone always gets both in full (A). While a phone's
+connection is busy (not writable, or over 16 KB buffered) its `room`/`view` pushes wait and the newest
+of each replaces the waiting one — a slow phone renders the present, not a backlog (B). Messages over
+1 KB are deflated (`perMessageDeflate`, 3.6× on a room snapshot, C).
+
 ## Limits
 
 | Limit             | Value                                                           | Where                                           |
