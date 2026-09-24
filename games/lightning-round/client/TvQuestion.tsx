@@ -207,13 +207,22 @@ export function rowsClass(count: number): string {
   );
 }
 
-export function RevealRows({ rows }: { rows: RevealRow[] }): JSX.Element {
+export function RevealRows({ rows: raced }: { rows: RevealRow[] }): JSX.Element {
   const L = useT(STRINGS);
+  const rows = raced;
+  const fastest = rows.filter((r) => r.elapsedMs !== undefined).reduce<number | null>(
+    (m, r) => (m === null || (r.elapsedMs ?? 0) < m ? (r.elapsedMs ?? 0) : m),
+    null,
+  );
   const wide = rows.length <= 8;
   const crowned = rows.length <= 12;
   const top = Math.max(0, ...rows.map((r) => r.score));
   return (
-    <ol className={`${styles.rows} ${rowsClass(rows.length)}`} aria-label={L('results')}>
+    <ol
+      key='race' /* I-589: each order deals in fresh */
+      className={`${styles.rows} ${rowsClass(rows.length)}`}
+      aria-label={L('results')}
+    >
       {rows.map((row, index) => {
         const verdict = verdictOf(row, L);
         const quiet = row.delta === 0;
@@ -247,6 +256,13 @@ export function RevealRows({ rows }: { rows: RevealRow[] }): JSX.Element {
             <span className={`${styles.verdict} ${verdictClass}`} aria-label={verdict.label}>
               {verdict.glyph}
             </span>
+            {/* I-589 A: how fast — the fastest gets the bolt */}
+            {row.elapsedMs !== undefined ? (
+              <span className={styles.raceTime}>
+                {row.elapsedMs === fastest ? '⚡ ' : ''}
+                {(row.elapsedMs / 1000).toFixed(1)} s
+              </span>
+            ) : null}
             <span className={`${styles.delta} ${deltaClass}`}>{deltaText(row.delta)}</span>
             {wide ? <span className={styles.score}>{row.score}</span> : null}
           </li>
