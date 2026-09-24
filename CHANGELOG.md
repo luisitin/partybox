@@ -6,6 +6,16 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Fixed
 
+- **Bingo's style preview no longer covers your cards, and it can't hold the room forever** — the "like it?" block is now one slim row (the style's mark, "Stack?", Change, Confirm), so both cards show whole in the new style, and a line drains along the bar and confirms the pick by itself after 20 s, so a slow chooser holds the caller for 20 seconds at most (I-407, option B).
+
+- **The how-to says how this room will play** — Broken Pencil's rule 3 was always "round the circle", which is wrong when players per book is set below the number of players. It now follows the setting ("It passes to 2 players in turn; the last of them only guesses."), and a row under the how-to shows the book's pages as they will be: 📖 ✏️ ❓ ✏️ ❓ · 5 pages (I-507, option B).
+
+- **Lightning Round: the reveal shows the race, then the standings, with a Next button.** Right answers are dealt fastest first, each with its time (⚡ on the fastest). After 2 s the rows re-deal into score order. The standings now get "a bit more time": a regular reveal lasts 8 s instead of 5, and the final reveal stays at 5 s. When the standings arrive, a "next question" button shows up that "the vip or tv can click to go next": it sits on the TV in the header and on the VIP's phone. The usual Skip / Next is hidden on those screens. (I-589, option B)
+
+- **Lightning Round: the phone's clock no longer counts down when there is nothing to press, and it shows what an answer is worth right now.** During the intro and the reveal the phone keeps the bar but drops the seconds, like the TV. Wisecrack's phones now do the same outside answering and voting. While a question is open, "+974 now" sits under it and drops as time runs. (I-288, option B)
+
+- **Bots no longer gang up on a person's joke in Blanks.** A bot's vote leans a little toward cards from people, and each bot now has its own taste, so a person wins about their fair share of a bot room (I-445, option B).
+
 - **Blanks' hand at big text sizes** (I-159, option B): when the phone's text is so big the fan
   would show one unreadable card per screen, the hand becomes a list you scroll, every card whole.
   A small Fan / List switch at the end of the round line lets any phone choose, and remembers it.
