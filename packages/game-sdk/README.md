@@ -19,6 +19,7 @@ primitives, and hosts the contract tests that run against every game.
 - `src/ui/` — `Avatar` (16 inline SVGs), `PlayerChip`, `ServerClockProvider` + `useServerNow` / `useSecondsLeft` / `useServerOffset` (server-time-aware timers).
 - `src/rng.ts` — `nextFloat`, `nextInt`, `shuffle`, `pick` on `RngState` (`[value, next]`), `createRng` for bots.
 - `src/timer.ts` — `enterPhase`, `isTimerFor`, `applyVip` (pause/resume + skip/end handlers), `setConnected`, `allConnectedDone`, `connectedIds`.
+- `src/turns.ts` — `teamsFromSeed` (▲ Sun / ● Moon, even sizes, bots spread), `majorityPick` (seeded tie-break, `null` with no votes), `rotation` (whose turn, skipping who left). Pure, never throw.
 - `src/scoring.ts` — `rank` (shared ranks on ties), `buildResults`, `speedPoints`, `addScores`. `src/views.ts` — `envelope`, `controllerEnvelope`, `viewPlayers`.
 - `src/controller/` — `Screen` (safe-area frame + sticky footer), `PrimaryButton`, `WaitingScreen`; Phase 3 adds `TextAnswer`, `ChoiceGrid`, `VoteList`.
   `usePhoneOnly()` (S-005, 2026-09-22) is true in a "phone only" room — the shell provides it —

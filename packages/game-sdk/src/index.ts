@@ -70,6 +70,8 @@ export type { RankedRow } from './scoring';
 export { controllerEnvelope, envelope, viewPlayers } from './views';
 export type { EnvelopeOptions } from './views';
 export { compareCodeUnits } from './compare';
+export { majorityPick, rotation, teamsFromSeed } from './turns';
+export type { Teams } from './turns';
 
 // ── answer packs (ADR-048); the matcher itself is `@partybox/game-sdk/match` ─────────────────
 export {

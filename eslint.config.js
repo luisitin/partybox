@@ -20,7 +20,7 @@ const localeProperties = [
 const localeGlobals = [{ name: 'Intl', message: localeMessage }];
 /** The SDK's pure code: what game servers call inside `reduce`, and the matcher. */
 const sdkPureFiles = [
-  'packages/game-sdk/src/{index,timer,scoring,views,compare,answer-pack,match,speech}.ts',
+  'packages/game-sdk/src/{index,timer,scoring,views,compare,answer-pack,match,speech,turns}.ts',
   'packages/game-sdk/src/{match,speech}/**/*.ts',
 ];
 
@@ -197,7 +197,7 @@ export default tseslint.config(
             },
             { group: ['../client/**', '**/client/**'], message: 'Server code never imports UI.' },
             {
-              group: ['@partybox/game-sdk/ui'],
+              group: ['@partybox/game-sdk/ui', '@partybox/game-sdk/ui/*'],
               message: 'Server code never imports UI (ADR-023): use @partybox/game-sdk.',
             },
           ],
