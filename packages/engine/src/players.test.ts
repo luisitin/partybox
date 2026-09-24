@@ -164,8 +164,9 @@ describe('disconnect / leave / expiry', () => {
     );
     expect(back.room.vipId).toBe('p2');
     expect(back.room.players['p1']?.isVip).toBe(false);
+    // I-746 A: during a game a quiet seat is kept; once the game is over the 120 s grace applies
     room = applyRoomEvent(
-      handover.room,
+      { ...handover.room, status: 'lobby' },
       { type: 'disconnect', now: T0 + 100, playerId: 'p3' },
       deps,
     ).room;

@@ -215,9 +215,7 @@ export async function createApp(options: AppOptions): Promise<App> {
     // straight in; the URL the TV prints stays bare and a phone that types it asks for the code.
     // I-785 A: a private room is not published — only the one asked for by its exact code (a QR
     // link), and the house room (its code is on the TV and in the QR anyway)
-    const asked = String((req.query as { room?: string }).room ?? '')
-      .trim()
-      .toUpperCase();
+    const asked = `${(req.query as { room?: unknown }).room ?? ''}`.trim().toUpperCase();
     // I-787 A: the QR of the room the caller is looking at (a second room's TV passes its own code);
     // without one, the house room's, as before
     const qrRoom = host.get(asked) ? asked : host.house().code;
@@ -225,8 +223,7 @@ export async function createApp(options: AppOptions): Promise<App> {
     const visible = host
       .rooms()
       .filter((r) => r.listed !== false || r.code === asked || r.code === host.house().code);
-    // I-646: the tunnel's join link and its QR, for the TV (only while a tunnel is live) — the same
-    // room as the Wi-Fi QR (I-787 A)
+    // I-646: the tunnel's join link + QR for the TV while a tunnel is live (same room, I-787 A)
     const pub = await publicUrl.get();
     const publicQrUrl = pub ? `${pub.replace(/\/$/, '')}/?room=${qrRoom}` : null;
     return {
