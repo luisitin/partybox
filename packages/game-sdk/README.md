@@ -7,6 +7,11 @@ primitives, and hosts the contract tests that run against every game.
 
 - `src/index.ts` — the PURE public surface: contract types, `z`, rng, reducer/view helpers (what `games/*/server` imports).
 - `src/ui.ts` — `@partybox/game-sdk/ui`: the React primitives (what `games/*/client` and the client shells import, ADR-023).
+- `src/match.ts` — `@partybox/game-sdk/match` (ADR-048): the typed-answer matcher, pure and free of zod and React so
+  server and phone share it: `normalize`, `stem`, `matchAnswer` (`exact`/`stem`/`fuzzy`/`none`), `sameAnswer`,
+  `groupAnswers`, `isLegalClue` (reason codes). Every call takes the content's `lang`. Files in `src/match/`.
+- `src/answer-pack.ts` — `answerItemSchema`, `answerPackSchema`, `checkAnswerPack` (the pack test), from the pure entry.
+  `src/compare.ts` — `compareCodeUnits`, the locale-free sort game servers use instead of `localeCompare`.
 - `src/client-module.ts` — `GameShared`, `GamePhoneModule`, `GameTvModule`, `GameSettingsModule`, `GameLoaders`, `GameTvProps`, `GameControllerProps` (what `games/<id>/client/*-entry.ts` export, ADR-050).
 - `src/ui/` — `Avatar` (16 inline SVGs), `PlayerChip`, `ServerClockProvider` + `useServerNow` / `useSecondsLeft` / `useServerOffset` (server-time-aware timers).
 - `src/rng.ts` — `nextFloat`, `nextInt`, `shuffle`, `pick` on `RngState` (`[value, next]`), `createRng` for bots.

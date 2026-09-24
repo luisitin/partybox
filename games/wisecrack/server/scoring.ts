@@ -1,7 +1,7 @@
 // Scoring for Wisecrack: 100 x multiplier per vote, +50 x multiplier for a unanimous win with at
 // least two votes cast ("sweep"); the last round doubles. A walkover (the other answer is blank)
 // pays one vote's worth without a vote. Awards and results() live here too.
-import { buildResults, rank } from '@partybox/game-sdk';
+import { buildResults, compareCodeUnits, rank } from '@partybox/game-sdk';
 import type { GameAward, GameResults } from '@partybox/game-sdk';
 import { answerOf, isLastRound, isWalkover } from './round';
 import { SWEEP_BONUS, VOTE_POINTS } from './types';
@@ -76,7 +76,7 @@ function leader(state: State, stat: Record<string, number>): string | null {
     (a, b) =>
       (stat[b] ?? 0) - (stat[a] ?? 0) ||
       (state.scores[b] ?? 0) - (state.scores[a] ?? 0) ||
-      a.localeCompare(b),
+      compareCodeUnits(a, b),
   );
   return ids[0] ?? null;
 }

@@ -37,8 +37,24 @@ module.exports = {
       name: 'game-server-never-imports-sdk-ui',
       comment: 'ADR-023: the pure sdk entry point must stay loadable by Node (no React/CSS).',
       severity: 'error',
-      from: { path: '^(games/[^/]+/server/|packages/game-sdk/src/(index|timer|scoring|views).ts)' },
+      from: {
+        path: '^(games/[^/]+/server/|packages/game-sdk/src/((index|timer|scoring|views|compare|answer-pack|match)[.]ts|match/))',
+      },
       to: { path: '^packages/game-sdk/src/(ui|tv|controller)/' },
+    },
+    {
+      name: 'match-imports-only-match',
+      comment:
+        'ADR-048: phones run isLegalClue as the player types, so @partybox/game-sdk/match pulls no zod (shared), UI or Node.',
+      severity: 'error',
+      from: { path: '^packages/game-sdk/src/match([.]ts$|/)', pathNot: '[.]test[.]ts$' },
+      to: { path: '^packages/(?!game-sdk/src/match/)' },
+    },
+    {
+      name: 'match-no-node-core',
+      severity: 'error',
+      from: { path: '^packages/game-sdk/src/match([.]ts$|/)', pathNot: '[.]test[.]ts$' },
+      to: { dependencyTypes: ['core'] },
     },
     {
       name: 'game-server-no-node-core',
