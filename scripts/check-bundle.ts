@@ -1,4 +1,4 @@
-// `pnpm check-bundle [--update]` — what phones download, measured on the real client build
+// `pnpm check-bundle [--update] [--list <game>]` — what phones download, measured on the real client build
 // (Part 00 §2.2, FOUNDATION-AUDIT #7). Runs Vite's build() in memory with the client's own config
 // (nothing is written) and reads the output bundle, never Vite's manifest.json (it cannot see
 // modules inlined into the entry). The bundle is the one build() returns, not the one a plugin's
@@ -6,9 +6,10 @@
 // file name, so it grows per game) after every plugin's generateBundle, `enforce: 'post'` included,
 // and a hook would undercount the entry by that much (1.3 KB raw on 2026-09-24). Fails when:
 //   - an entry chunk carries more game modules than the ratchet allows (F1 drives it to 0);
-//   - the entry chunk's gzip grew more than 1 KB over the recorded size;
+//   - what a page loads at join (the entry and its static imports, JS + CSS) grew more than 1 KB;
 //   - a game's phone closure (JS + CSS gzip, ruling 12) is over the phone budget;
-//   - the build would write a manifest into dist (the errata: none is ever shipped).
+//   - the build would write a manifest into dist (the errata: none is ever shipped);
+//   - a content pack or a game's server/content.ts is in any client chunk (audit #46).
 // The ratchet lives in scripts/bundle-budget.json (bytes); --update rewrites it with today's numbers.
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
@@ -16,7 +17,9 @@ import { dirname, join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { parseArgs } from 'node:util';
 import {
+  atJoin,
   closure,
+  contentModules,
   entryChunks,
   entryGameModules,
   gzipBytes,
@@ -34,7 +37,8 @@ interface Budget {
   entryGameModules: number;
   /** The largest phone closure allowed, JS + CSS gzip, bytes. */
   phoneBudgetGzip: number;
-  /** The entry chunk's gzip, bytes; it may not grow by more than ENTRY_SLACK. */
+  /** What a page loads at join (the entry and its static imports, JS + CSS), gzip bytes; it may
+   *  not grow by more than ENTRY_SLACK. */
   entryGzip: number;
 }
 
@@ -94,7 +98,9 @@ function readBudget(): Budget | null {
 }
 
 async function main(): Promise<void> {
-  const { values } = parseArgs({ options: { update: { type: 'boolean', default: false } } });
+  const { values } = parseArgs({
+    options: { update: { type: 'boolean', default: false }, list: { type: 'string' } },
+  });
   const vite = await loadClientVite();
   const problems: string[] = [];
   const bundle = await buildBundle(vite, problems);
@@ -106,14 +112,15 @@ async function main(): Promise<void> {
 
   // 1. The entry chunk: game modules in it, and its size.
   const entries = entryChunks(bundle);
-  const entryGzip = entries.reduce((sum, chunk) => sum + gzipBytes(chunk), 0);
-  const entryCss = [...new Set(entries.flatMap((c) => [...(c.viteMetadata?.importedCss ?? [])]))];
   for (const chunk of entries)
     console.log(`entry ${chunk.fileName}: ${kb(gzipBytes(chunk))} KB gz`);
+  // What every page downloads at join: the entry and what it imports statically, JS and CSS —
+  // the ratchet counts all of it, so code moved into a shared chunk still counts.
+  const joinFiles = [...atJoin(bundle)];
+  const entryGzip = gzipTotal(bundle, joinFiles);
   console.log(
-    `entry JS ${kb(entryGzip)} KB gz` +
-      (budget ? ` (recorded ${kb(budget.entryGzip)} KB, +1 KB allowed)` : '') +
-      ` · entry CSS ${kb(gzipTotal(bundle, entryCss))} KB gz`,
+    `at join: ${joinFiles.length} files, ${kb(entryGzip)} KB gz (JS + CSS)` +
+      (budget ? ` (recorded ${kb(budget.entryGzip)} KB, +1 KB allowed)` : ''),
   );
   const inEntry = entryGameModules(bundle);
   console.log(
@@ -121,6 +128,10 @@ async function main(): Promise<void> {
       (budget ? ` (ratchet ${budget.entryGameModules})` : ''),
   );
   for (const m of inEntry) console.log(`  ${m.game.padEnd(16)} ${m.path}`);
+
+  // Content stays on the host (Part 00 §2.5): no pack and no content loader in any chunk.
+  for (const id of contentModules(bundle))
+    problems.push(`${id} is in the client bundle: content stays on the host (audit #46)`);
 
   // 2. Per-game closures.
   const surfaces = surfaceChunks(bundle);
@@ -150,6 +161,19 @@ async function main(): Promise<void> {
     { game: '—', bytes: 0 },
   );
   console.log(`largest phone closure: ${largest.game} ${kb(largest.bytes)} KB gz`);
+  // --list <game>: what that game's phone and TV downloads are made of, file by file.
+  const listed = values.list ? surfaces.get(values.list) : undefined;
+  for (const [surface, roots] of Object.entries(listed ?? {})) {
+    console.log(`
+${values.list} ${surface}:`);
+    for (const file of closure(bundle, roots)) {
+      const item = bundle[file];
+      const mods = item?.type === 'chunk' ? item.moduleIds.length : 0;
+      console.log(
+        `  ${kb(item ? gzipBytes(item) : 0).padStart(6)} KB gz  ${file}${mods ? ` (${mods} modules)` : ''}`,
+      );
+    }
+  }
 
   if (values.update) {
     const next: Budget = {
@@ -171,11 +195,11 @@ async function main(): Promise<void> {
       );
     if (entryGzip > budget.entryGzip + ENTRY_SLACK)
       problems.push(
-        `the entry chunk grew to ${kb(entryGzip)} KB gz (recorded ${kb(budget.entryGzip)} KB, +1 KB allowed)`,
+        `the join download grew to ${kb(entryGzip)} KB gz (recorded ${kb(budget.entryGzip)} KB, +1 KB allowed)`,
       );
     else if (entryGzip < budget.entryGzip - ENTRY_SLACK)
       console.log(
-        `note: the entry shrank to ${kb(entryGzip)} KB gz: lock it in (pnpm check-bundle --update)`,
+        `note: the join download shrank to ${kb(entryGzip)} KB gz: lock it in (pnpm check-bundle --update)`,
       );
     for (const r of rows)
       if (r.phone !== null && r.phone > budget.phoneBudgetGzip)

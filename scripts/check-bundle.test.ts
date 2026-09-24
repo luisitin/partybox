@@ -2,7 +2,9 @@
 // game modules ride in the entry, which chunks a surface pulls in, and a TV chunk on a phone.
 import { describe, expect, it } from 'vitest';
 import {
+  atJoin,
   closure,
+  contentModules,
   entryGameModules,
   gzipTotal,
   relativeIds,
@@ -93,17 +95,20 @@ function fakeBundle(): Bundle {
   // The new layout: a per-surface entry is the facade.
   put(
     chunk('assets/phone-w.js', {
-      facadeModuleId: `${ROOT}/games/wisecrack/client/phone.ts`,
+      facadeModuleId: `${ROOT}/games/wisecrack/client/phone-entry.ts`,
       moduleIds: [
-        `${ROOT}/games/wisecrack/client/phone.ts`,
+        `${ROOT}/games/wisecrack/client/phone-entry.ts`,
         `${ROOT}/games/wisecrack/client/Controller.tsx`,
       ],
     }),
   );
   put(
     chunk('assets/tv-w.js', {
-      facadeModuleId: `${ROOT}/games/wisecrack/client/tv.ts`,
-      moduleIds: [`${ROOT}/games/wisecrack/client/tv.ts`, `${ROOT}/games/wisecrack/client/Tv.tsx`],
+      facadeModuleId: `${ROOT}/games/wisecrack/client/tv-entry.ts`,
+      moduleIds: [
+        `${ROOT}/games/wisecrack/client/tv-entry.ts`,
+        `${ROOT}/games/wisecrack/client/Tv.tsx`,
+      ],
     }),
   );
   for (const css of [
@@ -182,5 +187,44 @@ describe('check-bundle', () => {
     expect(js).toBeGreaterThan(0);
     expect(css).toBeGreaterThan(0);
     expect(gzipTotal(bundle, files)).toBe(js + css);
+  });
+
+  it('counts nothing the page already loaded at join', () => {
+    const shared = chunk('assets/lang-s.js', {
+      moduleIds: [`${ROOT}/packages/game-sdk/src/ui/lang.ts`],
+    });
+    const withShared: Bundle = {
+      ...bundle,
+      [shared.fileName]: shared,
+      'assets/index-1.js': {
+        ...(bundle['assets/index-1.js'] as BundleChunk),
+        imports: [shared.fileName],
+      },
+      'assets/Controller-g.js': {
+        ...(bundle['assets/Controller-g.js'] as BundleChunk),
+        imports: ['assets/copy-g.js', shared.fileName],
+      },
+    };
+    expect(atJoin(withShared).has(shared.fileName)).toBe(true);
+    expect(closure(withShared, ['assets/Controller-g.js'])).not.toContain(shared.fileName);
+  });
+
+  it('finds a content pack or a content loader in any chunk', () => {
+    expect(contentModules(bundle)).toEqual([]);
+    const leak = relativeIds(
+      [
+        chunk('assets/leak.js', {
+          moduleIds: [
+            `${ROOT}/games/blanks/content/wild.json`,
+            `${ROOT}/games/blanks/server/content.ts`,
+          ],
+        }),
+      ],
+      ROOT,
+    );
+    expect(contentModules({ ...bundle, ...leak })).toEqual([
+      'games/blanks/content/wild.json',
+      'games/blanks/server/content.ts',
+    ]);
   });
 });

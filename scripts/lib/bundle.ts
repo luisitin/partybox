@@ -41,13 +41,13 @@ export interface EntryGameModule {
 // sits under a `games` folder cannot confuse these.
 const GAME_MODULE = /(?:^|\/)games\/([^/]+)\/(.+)$/;
 /**
- * A game's surface modules: the per-surface entries of the lazy registry (`phone.ts` / `tv.ts`,
- * ruling 10) or, in today's layout, the components the registry imports lazily.
+ * A game's surface modules: the per-surface entries of the lazy registry (`phone-entry.ts` /
+ * `tv-entry.ts`, ADR-050) and the views they carry.
  */
 const SURFACE_MODULE =
-  /(?:^|\/)games\/([^/]+)\/client\/(phone\.ts|Controller\.tsx|tv\.ts|Tv\.tsx)$/;
+  /(?:^|\/)games\/([^/]+)\/client\/(phone-entry\.ts|Controller\.tsx|tv-entry\.ts|Tv\.tsx)$/;
 /** TV code: the `Tv*` components or the TV entry. Found in a phone closure, it is dead weight. */
-const TV_MODULE = /(?:^|\/)games\/[^/]+\/client\/(Tv[^/]*|tv\.ts)$/;
+const TV_MODULE = /(?:^|\/)games\/[^/]+\/client\/(Tv[^/]*|tv-entry\.ts)$/;
 
 export const normalizeId = (id: string): string => id.replaceAll('\\', '/');
 
@@ -105,7 +105,7 @@ export function entryGameModules(bundle: Bundle): EntryGameModule[] {
 }
 
 function surfaceOf(file: string): Surface {
-  return file === 'phone.ts' || file === 'Controller.tsx' ? 'phone' : 'tv';
+  return file === 'phone-entry.ts' || file === 'Controller.tsx' ? 'phone' : 'tv';
 }
 
 /**
@@ -130,18 +130,14 @@ export function surfaceChunks(bundle: Bundle): Map<string, Record<Surface, strin
   return games;
 }
 
-/**
- * What a device downloads to show a surface: its chunks, every chunk they reach through static
- * imports (not dynamic ones), minus entry chunks (already loaded at join), plus the CSS each of
- * those chunks imports. File names: the JS in walk order, then the CSS.
- */
-export function closure(bundle: Bundle, roots: readonly string[]): string[] {
+/** Every chunk reachable from `roots` through static imports (never dynamic ones), and its CSS. */
+function reach(bundle: Bundle, roots: readonly string[], skip: ReadonlySet<string>): string[] {
   const seen = new Set<string>();
   const queue = [...roots];
   while (queue.length > 0) {
     const name = queue.shift() ?? '';
     const chunk = bundle[name];
-    if (seen.has(name) || chunk?.type !== 'chunk' || chunk.isEntry) continue;
+    if (seen.has(name) || skip.has(name) || chunk?.type !== 'chunk') continue;
     seen.add(name);
     queue.push(...chunk.imports);
   }
@@ -149,12 +145,33 @@ export function closure(bundle: Bundle, roots: readonly string[]): string[] {
   for (const name of seen) {
     const chunk = bundle[name];
     if (chunk?.type === 'chunk')
-      for (const file of chunk.viteMetadata?.importedCss ?? []) css.add(file);
+      for (const file of chunk.viteMetadata?.importedCss ?? []) if (!skip.has(file)) css.add(file);
   }
   return [...seen, ...css];
 }
 
-/** The TV modules (`Tv*`, `tv.ts`) inside a set of chunks: in a phone closure, a leak. */
+/** What every page loads at join: the entry chunks and whatever they import statically. */
+export function atJoin(bundle: Bundle): Set<string> {
+  return new Set(
+    reach(
+      bundle,
+      entryChunks(bundle).map((c) => c.fileName),
+      new Set(),
+    ),
+  );
+}
+
+/**
+ * What a device downloads to show a surface: its chunks, every chunk they reach through static
+ * imports (not dynamic ones), plus the CSS each of those chunks imports — minus what the page
+ * already loaded at join (the entry and its own static imports: shared SDK chunks such as the
+ * avatar or the language store). File names: the JS in walk order, then the CSS.
+ */
+export function closure(bundle: Bundle, roots: readonly string[]): string[] {
+  return reach(bundle, roots, atJoin(bundle));
+}
+
+/** The TV modules (`Tv*`, `tv-entry.ts`) inside a set of chunks: in a phone closure, a leak. */
 export function tvModulesIn(bundle: Bundle, files: readonly string[]): string[] {
   const found = new Set<string>();
   for (const name of files) {
@@ -163,6 +180,16 @@ export function tvModulesIn(bundle: Bundle, files: readonly string[]): string[] 
     for (const id of chunk.moduleIds)
       if (TV_MODULE.test(normalizeId(id))) found.add(gameModule(id)?.path ?? normalizeId(id));
   }
+  return [...found].sort();
+}
+
+/** Part 00 §2.5 (audit #46): a content pack or a game's content loader inside any client chunk. */
+const CONTENT_MODULE = /(?:^|\/)games\/[^/]+\/(content\/[^/]+\.json|server\/content\.ts)$/;
+export function contentModules(bundle: Bundle): string[] {
+  const found = new Set<string>();
+  for (const chunk of chunks(bundle))
+    for (const id of chunk.moduleIds)
+      if (CONTENT_MODULE.test(normalizeId(id))) found.add(normalizeId(id));
   return [...found].sort();
 }
 

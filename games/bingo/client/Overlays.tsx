@@ -11,7 +11,7 @@ import {
   useSound,
   useT,
 } from '@partybox/game-sdk/ui';
-import { RESUME_MS } from '../server/types';
+import { RESUME_MS } from '../server/constants';
 import { StyleMini } from './StyleMini';
 import { STYLES, styleReason } from './styles';
 import { DaubRows } from './DaubRows';
