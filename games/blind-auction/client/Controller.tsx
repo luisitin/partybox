@@ -9,7 +9,8 @@ import { BidPad } from '@partybox/game-sdk/ui/bid-pad';
 import type { Input } from '../server/types';
 import type { BlindAuctionControllerView } from '../server/views';
 import { COIN } from './copy';
-import { HowTo, LotSummary, PhoneLot } from './PhoneLot';
+import { HintChips } from './LotCard';
+import { HowTo, LotTitle, PhoneLot } from './PhoneLot';
 import { PhoneLive } from './PhoneLive';
 import { PhoneResult } from './PhoneResult';
 import { STRINGS } from './strings';
@@ -37,7 +38,8 @@ function PhoneBid({ view, send }: Props): JSX.Element {
         setValue(0);
         send({ type: 'bid', amount: 0 });
       }}
-      header={view.lot ? <LotSummary lot={view.lot} /> : null}
+      header={view.lot ? <LotTitle lot={view.lot} /> : null}
+      below={view.lot ? <HintChips hints={view.lot.hints} size="phone" compact /> : null}
       notice={notice}
     />
   );

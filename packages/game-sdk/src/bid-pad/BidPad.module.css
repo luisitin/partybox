@@ -8,6 +8,16 @@
   -webkit-touch-callout: none;
 }
 
+.layout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-3);
+}
+
+.below {
+  min-width: 0;
+}
+
 .pad {
   display: flex;
   flex-direction: column;
@@ -162,4 +172,38 @@
 :global(:root[data-motion='off']) .digits,
 :global(:root[data-motion='off']) .notice {
   animation: none;
+}
+
+/* Sideways on a phone: the pad and what is being bid on sit side by side, and Pass joins the
+   confirm on one row, so nothing needs a scroll. */
+@media (orientation: landscape) and (max-height: 540px) {
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    align-items: center;
+    gap: var(--pb-space-5);
+  }
+  .footer {
+    flex-direction: row;
+    align-items: center;
+  }
+  .footer > :first-child {
+    flex: 1 1 auto;
+  }
+  .pass {
+    flex: none;
+    padding-inline: var(--pb-space-4);
+  }
+  .pad {
+    gap: var(--pb-space-2);
+    margin-top: 0;
+  }
+  .step {
+    width: var(--pb-touch);
+    height: var(--pb-touch);
+    font-size: var(--pb-font-h2);
+  }
+  .amount {
+    font-size: var(--pb-font-h1);
+  }
 }

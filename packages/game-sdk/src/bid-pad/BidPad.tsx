@@ -27,8 +27,11 @@ export interface BidPadProps {
   onPass?: () => void;
   step?: number;
   chips?: readonly number[];
-  /** What is being bid on, above the pad (the lot's name and hint). */
+  /** What is being bid on, one short line above the pad (the lot's name). */
   header?: ReactNode;
+  /** More about it, under the pad (the lot's hint): the pad itself always comes first, so on a
+   *  small or sideways phone, or at large text, the thumb finds it without scrolling. */
+  below?: ReactNode;
   /** A line under the pad: a refusal from the server, or a reason the confirm is off. */
   notice?: ReactNode;
   /** Glyph before every amount. */
@@ -77,6 +80,7 @@ export function BidPad({
   step = 5,
   chips = [5, 10, 25],
   header,
+  below,
   notice,
   coin = '🪙',
   className,
@@ -161,51 +165,54 @@ export function BidPad({
       }
     >
       {header}
-      <div className={styles.pad} onContextMenu={(e) => e.preventDefault()}>
-        <p className={styles.have}>{L('You have {coin} {n}', { coin, n: max })}</p>
-        <div className={styles.dial}>
-          {stepper(-1, down)}
-          <output
-            className={styles.amount}
-            aria-live="polite"
-            aria-label={L('Your bid: {n}', { n: bid })}
-          >
-            <span className={styles.coin} aria-hidden>
-              {coin}
-            </span>
-            <span key={bid} className={styles.digits}>
-              {bid}
-            </span>
-          </output>
-          {stepper(1, up)}
-        </div>
-        <div className={styles.chips}>
-          {chipTargets(bid, chips, max).map((c) => (
-            <button
-              key={c.amount}
-              type="button"
-              className={styles.chip}
-              aria-disabled={!c.live}
-              aria-label={L('Add {n}', { n: c.amount })}
-              onClick={() => set(c.to)}
+      <div className={styles.layout}>
+        <div className={styles.pad} onContextMenu={(e) => e.preventDefault()}>
+          <p className={styles.have}>{L('You have {coin} {n}', { coin, n: max })}</p>
+          <div className={styles.dial}>
+            {stepper(-1, down)}
+            <output
+              className={styles.amount}
+              aria-live="polite"
+              aria-label={L('Your bid: {n}', { n: bid })}
             >
-              +{c.amount}
+              <span className={styles.coin} aria-hidden>
+                {coin}
+              </span>
+              <span key={bid} className={styles.digits}>
+                {bid}
+              </span>
+            </output>
+            {stepper(1, up)}
+          </div>
+          <div className={styles.chips}>
+            {chipTargets(bid, chips, max).map((c) => (
+              <button
+                key={c.amount}
+                type="button"
+                className={styles.chip}
+                aria-disabled={!c.live}
+                aria-label={L('Add {n}', { n: c.amount })}
+                onClick={() => set(c.to)}
+              >
+                +{c.amount}
+              </button>
+            ))}
+            <button
+              type="button"
+              className={`${styles.chip} ${styles.allIn}`}
+              aria-disabled={bid >= max || max <= 0}
+              onClick={() => set(max)}
+            >
+              {L('All in')}
             </button>
-          ))}
-          <button
-            type="button"
-            className={`${styles.chip} ${styles.allIn}`}
-            aria-disabled={bid >= max || max <= 0}
-            onClick={() => set(max)}
-          >
-            {L('All in')}
-          </button>
+          </div>
+          {notice ? (
+            <p className={styles.notice} role="status">
+              {notice}
+            </p>
+          ) : null}
         </div>
-        {notice ? (
-          <p className={styles.notice} role="status">
-            {notice}
-          </p>
-        ) : null}
+        {below ? <div className={styles.below}>{below}</div> : null}
       </div>
     </Screen>
   );

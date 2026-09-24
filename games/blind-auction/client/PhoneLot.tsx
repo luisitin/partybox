@@ -22,6 +22,21 @@ export function Purse({ coins }: { coins: number }): JSX.Element {
   );
 }
 
+/** The lot in one line: "Lot 3/8 · 🏴‍☠️ Pirate's Chest" (the bid screen's header). */
+export function LotTitle({ lot }: { lot: LotView }): JSX.Element {
+  const L = useT(STRINGS);
+  return (
+    <p className={`${styles.lotTitle} ${lot.grand ? styles.grand : ''}`}>
+      <span className={styles.lotTitleKicker}>
+        {lot.grand ? `★ ${L('Grand Lot')}` : L('Lot {n}/{total}', { n: lot.n, total: lot.of })}
+      </span>
+      <span className={styles.lotTitleName}>
+        <span aria-hidden>{lot.icon}</span> {lot.name}
+      </span>
+    </p>
+  );
+}
+
 /** The lot in a few lines: kicker, icon and name, hint chips. */
 export function LotSummary({
   lot,

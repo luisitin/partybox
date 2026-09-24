@@ -1,36 +1,42 @@
 {
   "phase": {
     "id": "bid",
-    "startedAt": 1700000014000,
-    "deadline": 1700000034000
+    "startedAt": 1001000,
+    "deadline": 1021000
   },
   "rng": {
-    "seed": 1,
+    "seed": 21,
     "step": 118
   },
   "players": {
     "p1": {
       "id": "p1",
-      "name": "Player 1",
+      "name": "Ana",
       "avatarId": "fox",
       "connected": true
     },
     "p2": {
       "id": "p2",
-      "name": "Player 2",
-      "avatarId": "owl",
+      "name": "Ben",
+      "avatarId": "cat",
       "connected": true
     },
     "p3": {
       "id": "p3",
-      "name": "Player 3",
-      "avatarId": "frog",
+      "name": "Cy",
+      "avatarId": "owl",
       "connected": true
     },
     "p4": {
       "id": "p4",
-      "name": "Player 4",
-      "avatarId": "cat",
+      "name": "Dee",
+      "avatarId": "bear",
+      "connected": true
+    },
+    "p5": {
+      "id": "p5",
+      "name": "Eli",
+      "avatarId": "frog",
       "connected": true
     }
   },
@@ -49,50 +55,30 @@
     "mode": "together",
     "phoneOnly": false
   },
-  "seats": ["p1", "p2", "p3", "p4"],
+  "seats": ["p1", "p2", "p3", "p4", "p5"],
   "left": [],
   "lots": [
     {
       "item": {
-        "id": "ba-piggy-bank",
-        "name": "Old Piggy Bank",
-        "icon": "🐷",
-        "flavour": "Rattles like it's full of promises.",
+        "id": "ba-pirate-chest",
+        "name": "Pirate's Chest",
+        "icon": "🏴‍☠️",
+        "flavour": "Found under a palm tree. Smells faintly of seaweed.",
         "outcomes": [
           {
             "type": "gain",
-            "amount": 60,
-            "chance": 70
+            "amount": 120,
+            "chance": 60
           },
-          {
-            "type": "double",
-            "chance": 30
-          }
-        ],
-        "grand": false
-      },
-      "outcome": 1
-    },
-    {
-      "item": {
-        "id": "ba-wizard-trunk",
-        "name": "Wizard's Trunk",
-        "icon": "🧙",
-        "flavour": "Do not open before midnight. It's 11:58.",
-        "outcomes": [
           {
             "type": "gain",
-            "amount": 100,
-            "chance": 50
-          },
-          {
-            "type": "double",
+            "amount": 300,
             "chance": 30
           },
           {
             "type": "lose",
-            "amount": 80,
-            "chance": 20
+            "amount": 60,
+            "chance": 10
           }
         ],
         "grand": false
@@ -101,22 +87,43 @@
     },
     {
       "item": {
-        "id": "ba-casino-chip",
-        "name": "Casino Chip",
-        "icon": "🎰",
-        "flavour": "Worth something. At a casino. Somewhere.",
+        "id": "ba-plain-envelope",
+        "name": "Plain Envelope",
+        "icon": "✉️",
+        "flavour": "Addressed to \"Whoever wins this.\"",
         "outcomes": [
           {
-            "type": "double",
+            "type": "gain",
+            "amount": 100,
             "chance": 50
           },
           {
             "type": "dud",
-            "chance": 30
-          },
+            "chance": 50
+          }
+        ],
+        "grand": false
+      },
+      "outcome": 1
+    },
+    {
+      "item": {
+        "id": "ba-golden-ticket",
+        "name": "Golden Ticket",
+        "icon": "🎫",
+        "flavour": "Admits one. To what, nobody's saying.",
+        "outcomes": [
           {
             "type": "gain",
-            "amount": 100,
+            "amount": 200,
+            "chance": 40
+          },
+          {
+            "type": "refund",
+            "chance": 40
+          },
+          {
+            "type": "dud",
             "chance": 20
           }
         ],
@@ -126,24 +133,50 @@
     },
     {
       "item": {
-        "id": "ba-volcano-rock",
-        "name": "Volcano Rock",
-        "icon": "🌋",
-        "flavour": "Still warm. Please don't lick it.",
+        "id": "ba-grandma-suitcase",
+        "name": "Grandma's Suitcase",
+        "icon": "🧳",
+        "flavour": "Heavier than it looks. Something inside is ticking.",
         "outcomes": [
           {
             "type": "gain",
-            "amount": 180,
-            "chance": 50
+            "amount": 90,
+            "chance": 60
           },
           {
             "type": "lose",
-            "amount": 70,
-            "chance": 30
+            "amount": 50,
+            "chance": 25
           },
           {
             "type": "double",
-            "chance": 20
+            "chance": 15
+          }
+        ],
+        "grand": false
+      },
+      "outcome": 0
+    },
+    {
+      "item": {
+        "id": "ba-cursed-doll",
+        "name": "Cursed Doll",
+        "icon": "🪆",
+        "flavour": "Its eyes follow you around the room. So does its price.",
+        "outcomes": [
+          {
+            "type": "lose",
+            "amount": 60,
+            "chance": 50
+          },
+          {
+            "type": "gain",
+            "amount": 250,
+            "chance": 40
+          },
+          {
+            "type": "dud",
+            "chance": 10
           }
         ],
         "grand": false
@@ -173,14 +206,14 @@
         ],
         "grand": false
       },
-      "outcome": 1
+      "outcome": 0
     },
     {
       "item": {
-        "id": "ba-carpet-bag",
-        "name": "Carpet Bag",
-        "icon": "👜",
-        "flavour": "Deeper on the inside than the outside.",
+        "id": "ba-parrot-cage",
+        "name": "Parrot Cage",
+        "icon": "🦜",
+        "flavour": "The parrot knows where the gold is. It won't say.",
         "outcomes": [
           {
             "type": "gain",
@@ -188,80 +221,54 @@
             "chance": 60
           },
           {
-            "type": "refund",
+            "type": "swap",
             "chance": 30
           },
           {
-            "type": "gain",
-            "amount": 300,
+            "type": "dud",
             "chance": 10
           }
         ],
         "grand": false
       },
-      "outcome": 1
+      "outcome": 0
     },
     {
       "item": {
-        "id": "ba-chocolate-box",
-        "name": "Chocolate Box",
-        "icon": "🍫",
-        "flavour": "One of these is not chocolate.",
+        "id": "ba-lost-city",
+        "name": "Lost City",
+        "icon": "🏛️",
+        "flavour": "Streets paved with gold. Mostly.",
         "outcomes": [
           {
             "type": "gain",
-            "amount": 70,
-            "chance": 60
-          },
-          {
-            "type": "lose",
-            "amount": 20,
-            "chance": 30
-          },
-          {
-            "type": "gain",
-            "amount": 200,
-            "chance": 10
-          }
-        ],
-        "grand": false
-      },
-      "outcome": 1
-    },
-    {
-      "item": {
-        "id": "ba-mega-box",
-        "name": "Mega Mystery Box",
-        "icon": "🎁",
-        "flavour": "The biggest box. The biggest question mark.",
-        "outcomes": [
-          {
-            "type": "gain",
-            "amount": 200,
+            "amount": 350,
             "chance": 50
           },
           {
-            "type": "gain",
-            "amount": 500,
+            "type": "lose",
+            "amount": 200,
             "chance": 30
           },
           {
-            "type": "lose",
-            "amount": 250,
+            "type": "double",
             "chance": 20
           }
         ],
         "grand": true
       },
-      "outcome": 1
+      "outcome": 2
     }
   ],
   "l": {
     "idx": 0,
-    "bids": {},
+    "bids": {
+      "p2": 40,
+      "p4": 75
+    },
     "high": null,
     "stage": 0,
-    "openedAt": 1700000014000,
+    "openedAt": 1001000,
     "winner": null,
     "price": 0,
     "tie": false,
@@ -273,7 +280,8 @@
     "p1": 100,
     "p2": 100,
     "p3": 100,
-    "p4": 100
+    "p4": 100,
+    "p5": 100
   },
   "stats": {
     "p1": {
@@ -307,25 +315,17 @@
       "trapped": 0,
       "traps": 0,
       "spent": 0
+    },
+    "p5": {
+      "biggestBid": 0,
+      "bestProfit": null,
+      "thief": 0,
+      "trapped": 0,
+      "traps": 0,
+      "spent": 0
     }
   },
   "factors": {},
   "notices": {},
-  "speechMs": {
-    "ba1y5o1au1baskha": -1,
-    "baz88dsx1nhos8j": -1,
-    "ba12s9vjfnh4xux": -1,
-    "ba1ejt8nt11azqgl": -1,
-    "bao9zoro187yvmm": -1,
-    "ba7j5ybp1mmmmon": -1,
-    "ba1qr4n7a8btg4": -1,
-    "bajvdb761yvg8ym": -1,
-    "bapajlf5xw8dpd": -1,
-    "ba1u5n9x9c9ty73": -1,
-    "ba1ypdd32nmub3c": -1,
-    "ba4zkibt14aazq9": -1,
-    "ba10pgd2bn2rci1": -1,
-    "ba2aggnkoqpbdq": -1,
-    "ba1gi40x1lft26h": -1
-  }
+  "speechMs": {}
 }

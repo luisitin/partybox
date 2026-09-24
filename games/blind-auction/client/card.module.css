@@ -12,9 +12,11 @@
   height: 532px;
 }
 
+/* The phone's card is a picture, not words: fixed px, so large text never makes it push the
+   lot's hint off the screen. */
 .phone {
-  width: 7.5rem;
-  height: 10.5rem;
+  width: 96px;
+  height: 134px;
 }
 
 /* A new lot is dealt in: from the right, turned away, landing with a small overshoot. */
@@ -41,16 +43,24 @@
   width: 100%;
   height: 100%;
   transform-style: preserve-3d;
-  animation: ba-sway 6s ease-in-out var(--ba-sway-delay, 0ms) infinite;
+  animation: ba-sway 6s linear var(--ba-sway-delay, 0ms) infinite;
 }
 
+/* An orbit, not a pendulum: yaw and pitch are a quarter-turn apart, so the card is always moving
+   (a back-and-forth sway parks at each end, and a TV that holds still reads as dead). */
 @keyframes ba-sway {
   0%,
   100% {
-    transform: rotateY(-7deg) rotateX(3deg) translateY(0);
+    transform: rotateY(-7deg) rotateX(0deg) translateY(-5px);
+  }
+  25% {
+    transform: rotateY(0deg) rotateX(3deg) translateY(0);
   }
   50% {
-    transform: rotateY(7deg) rotateX(-3deg) translateY(-10px);
+    transform: rotateY(7deg) rotateX(0deg) translateY(-5px);
+  }
+  75% {
+    transform: rotateY(0deg) rotateX(-3deg) translateY(-10px);
   }
 }
 
@@ -141,7 +151,7 @@
     transparent 62%
   );
   transform: translateX(-80%);
-  animation: ba-sheen 3.6s var(--pb-ease) var(--ba-sway-delay, 0ms) infinite;
+  animation: ba-sheen 3s var(--pb-ease) var(--ba-sway-delay, 0ms) infinite;
 }
 
 @keyframes ba-sheen {
@@ -182,7 +192,7 @@
 }
 
 .phone .lotIcon {
-  font-size: 2.5rem;
+  font-size: 36px;
 }
 
 .mark {
@@ -193,7 +203,7 @@
 }
 
 .phone .mark {
-  font-size: var(--pb-font-body);
+  font-size: 16px;
 }
 
 /* ── the face (the outcome) ── */
@@ -233,15 +243,15 @@
 }
 
 .phone .faceIcon {
-  font-size: 2.5rem;
+  font-size: 34px;
 }
 
 .phone .faceKicker {
-  font-size: var(--pb-font-caption);
+  font-size: 11px;
 }
 
 .phone .faceBig {
-  font-size: var(--pb-font-h2);
+  font-size: 20px;
 }
 
 .good {
@@ -287,6 +297,8 @@
   align-items: center;
   gap: var(--pb-space-1);
   border-radius: var(--pb-radius);
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease)
+    calc(var(--ba-i, 0) * 180ms + 250ms) both;
   background: var(--pb-surface);
   box-shadow: inset 0 0 0 3px var(--ba-tone, var(--pb-surface-2));
   text-align: center;
@@ -335,7 +347,28 @@
   overflow-wrap: anywhere;
 }
 
+.compact {
+  flex-wrap: nowrap;
+  gap: var(--pb-space-1);
+}
+
+.compact .chip {
+  flex: 1 1 0;
+  gap: 0;
+  padding: var(--pb-space-1);
+}
+
+.compact .what {
+  font-size: var(--pb-font-caption);
+}
+
+.compact .tier {
+  font-size: 0.625rem;
+  letter-spacing: 0.04em;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .chip,
   .deal,
   .sway,
   .back::after,
@@ -344,6 +377,7 @@
   }
 }
 
+:global(:root[data-motion='off']) .chip,
 :global(:root[data-motion='off']) .deal,
 :global(:root[data-motion='off']) .sway,
 :global(:root[data-motion='off']) .back::after,

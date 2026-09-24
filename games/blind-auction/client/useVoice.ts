@@ -19,13 +19,20 @@ export function useReading(voice: { url: string; at: number } | null): void {
   }, [url, at, offset, sound]);
 }
 
-/** Plays a fixed line once when `on` turns true (and it is made). */
-export function useLine(url: string | undefined, on: boolean, delayMs = 0): void {
+/** Plays a fixed line once per `occasion` when `on` turns true (and it is made): "Going once…"
+ *  sounds again after a new bid resets the clock, because the occasion (the standing bid) moved. */
+export function useLine(
+  url: string | undefined,
+  on: boolean,
+  delayMs = 0,
+  occasion: string | number = '',
+): void {
   const sound = useSoundApi();
   const said = useRef(new Set<string>());
   useEffect(() => {
-    if (!on || !url || said.current.has(url)) return;
-    said.current.add(url);
+    const key = `${url ?? ''}|${occasion}`;
+    if (!on || !url || said.current.has(key)) return;
+    said.current.add(key);
     sound.clip(url, { gain: 1, duck: false, delayMs });
-  }, [url, on, delayMs, sound]);
+  }, [url, on, delayMs, occasion, sound]);
 }

@@ -15,6 +15,7 @@ import styles from './tv.module.css';
 import { useLine } from './useVoice';
 
 const RING = 2 * Math.PI * 170;
+const WAGER_GAP_MS = 400;
 
 /** The ring clock: drains from `from` to `to` (server times), restarted by a key on `from`. The
  *  start point is read once at mount, so a push mid-stage never makes it jump. */
@@ -59,16 +60,29 @@ export function TvLive({ view }: { view: PushedView<BlindAuctionTvView> }): JSX.
   const high = auction?.high ?? null;
   const stage = auction?.stage ?? 0;
   const bidder = high ? view.players.find((p) => p.id === high.by) : undefined;
-  const last = useRef<{ amount: number; stage: number }>({ amount: high?.amount ?? 0, stage });
+  const last = useRef<{ amount: number; stage: number; wagerAt: number }>({
+    amount: high?.amount ?? 0,
+    stage,
+    wagerAt: 0,
+  });
   useEffect(() => play('phase'), [play]);
   useLine(view.clips.bids, true, 350);
-  useLine(view.clips.once, stage === 1);
-  useLine(view.clips.twice, stage === 2);
+  // Each call belongs to the bid it is calling: a new bid, and "Going once…" comes round again.
+  useLine(view.clips.once, stage === 1, 0, high?.amount ?? 0);
+  useLine(view.clips.twice, stage === 2, 0, high?.amount ?? 0);
   // Cues on the frame the change lands (the phase re-arms its deadline per stage, ADR-033).
+  // A bidding war can land several bids a second: one `wager` per 400 ms at most (the number pops
+  // on every bid regardless), so the frenzy reads as a rhythm, not a buzz.
   useEffect(() => {
-    if (high && high.amount !== last.current.amount) play('wager');
-    else if (stage > 0 && stage !== last.current.stage) play('countdown');
-    last.current = { amount: high?.amount ?? 0, stage };
+    const now = performance.now();
+    const prev = last.current;
+    if (high && high.amount !== prev.amount) {
+      if (now - prev.wagerAt >= WAGER_GAP_MS) {
+        play('wager');
+        prev.wagerAt = now;
+      }
+    } else if (stage > 0 && stage !== prev.stage) play('countdown');
+    last.current = { amount: high?.amount ?? 0, stage, wagerAt: prev.wagerAt };
   }, [high, stage, play]);
   if (!auction || !view.lot) return null;
   const line =

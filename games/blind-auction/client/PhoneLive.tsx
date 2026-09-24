@@ -69,7 +69,10 @@ export function PhoneLive({ view, send, me }: Props): JSX.Element {
       <div className={styles.standing} aria-live="polite">
         <p className={styles.standingLabel}>{high ? L('Current bid') : L('No bids yet')}</p>
         <p key={standing} className={styles.standingAmount}>
-          {COIN} {standing}
+          <span className={styles.standingCoin} aria-hidden>
+            {COIN}
+          </span>{' '}
+          {standing}
         </p>
         {bidder ? (
           <p key={bidder.id} className={styles.standingWho}>

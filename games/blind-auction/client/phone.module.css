@@ -81,6 +81,36 @@
   animation: global(pb-breathe) 2s ease-in-out infinite;
 }
 
+.lotTitle {
+  display: flex;
+  align-items: baseline;
+  gap: var(--pb-space-2);
+  min-width: 0;
+  margin: var(--pb-space-1) 0 0;
+}
+
+.lotTitleKicker {
+  flex: none;
+  font-size: var(--pb-font-caption);
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--pb-text-muted);
+}
+
+.lotTitle.grand .lotTitleKicker {
+  color: var(--pb-accent-2);
+}
+
+.lotTitleName {
+  min-width: 0;
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 /* The lot, centred in the phone's height: the dealt card over its name and hint. */
 .lotStage {
   display: flex;
@@ -174,6 +204,11 @@
   animation: global(pb-tick) var(--pb-motion-fast) var(--pb-ease);
 }
 
+.standingCoin {
+  font-size: var(--pb-font-h2);
+  vertical-align: middle;
+}
+
 .standingWho {
   display: flex;
   align-items: center;
@@ -246,6 +281,7 @@
   font-size: var(--pb-font-h2);
   font-weight: 1000;
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 .raiseWhy {
@@ -255,7 +291,7 @@
 .winning {
   display: grid;
   place-items: center;
-  min-height: 9.5rem;
+  min-height: 140px;
   padding: var(--pb-space-4);
   border-radius: var(--pb-radius-lg);
   background: var(--pb-surface-2);
@@ -444,4 +480,28 @@
     .stageHeadline
   ) {
   animation: none;
+}
+
+/* A short phone (iPhone SE and smaller): the lot's picture gives way to its words, and the live
+   screen tightens, so the hint is never below the fold. */
+@media (max-height: 640px) {
+  .lotStage > :first-child {
+    display: none;
+  }
+  .standingAmount {
+    font-size: var(--pb-font-h1);
+  }
+  .raise {
+    min-height: 56px;
+    padding-block: var(--pb-space-1);
+  }
+  .raiseAmount {
+    font-size: var(--pb-font-body);
+  }
+  .standing {
+    margin-bottom: var(--pb-space-2);
+  }
+  .winning {
+    min-height: 124px;
+  }
 }

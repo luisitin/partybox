@@ -62,12 +62,11 @@ export function TvLadder({ view }: { view: PushedView<BlindAuctionTvView> }): JS
                 className={`${styles.rung} ${top && stamped ? styles.rungWon : ''}`}
                 style={{ '--ba-i': i } as CSSProperties}
               >
-                {p ? <Avatar avatarId={p.avatarId} size={compact ? 44 : 64} /> : null}
+                {p ? <Avatar avatarId={p.avatarId} size={compact ? 40 : 52} /> : null}
                 <span className={styles.rungName}>{p?.name ?? '?'}</span>
                 <span className={styles.rungAmount}>
                   {COIN} {r.amount}
                 </span>
-                {top && stamped ? <span className={styles.rungStamp}>{L('SOLD')}</span> : null}
               </li>
             );
           })}

@@ -81,22 +81,26 @@ export function LotCard({
 export function HintChips({
   hints,
   size = 'tv',
+  compact = false,
   className,
 }: {
   hints: readonly Hint[];
   size?: 'tv' | 'phone';
+  /** One row that never wraps (the bid screen). */
+  compact?: boolean;
   className?: string;
 }): JSX.Element {
   const L = useT(STRINGS);
   return (
     <ul
-      className={`${styles.chips} ${styles[`chips-${size}`]} ${className ?? ''}`}
+      className={`${styles.chips} ${styles[`chips-${size}`]} ${compact ? styles.compact : ''} ${className ?? ''}`}
       aria-label={L('What might be inside')}
     >
       {hints.map((h, i) => (
         <li
           key={`${h.type}-${h.n}-${i}`}
           className={`${styles.chip} ${styles[toneOf(h.type)]}`}
+          style={{ '--ba-i': i } as CSSProperties}
           aria-label={hintLabel(L, h)}
         >
           <span className={styles.tier}>{tierWord(L, h.tier)}</span>

@@ -55,25 +55,24 @@ export function hintLabel(L: Translator, h: Hint): string {
   return `${tierWord(L, h.tier)}: ${ICON[h.type]} ${hintText(L, h)}`;
 }
 
-/** The flip's headline on the TV (and PhoneStage). */
+/** The flip's headline on the TV (and PhoneStage), under its kicker ("🦝 HEIST"): the story only. */
 export function effectHeadline(L: Translator, e: Effect, winner: string, other: string): string {
   switch (e.kind) {
     case 'gain':
-      return L('+{n}!', { n: e.amount });
     case 'double':
-      return L('DOUBLE! +{n}', { n: e.amount });
+      return L('+{n}!', { n: e.amount });
     case 'lose':
-      return e.amount > 0 ? L('TRAP! −{n}', { n: e.amount }) : L('TRAP! Nothing left to lose');
+      return e.amount > 0 ? `−${e.amount}` : L('Nothing left to lose');
     case 'steal':
       return e.amount > 0
-        ? L('HEIST! {a} steals {n} from {b}', { a: winner, b: other, n: e.amount })
-        : L('HEIST! Nothing to steal!');
+        ? L('{a} steals {n} from {b}', { a: winner, b: other, n: e.amount })
+        : L('Nothing to steal!');
     case 'swap':
-      return L('SWAP! {a} ⇄ {b}', { a: winner, b: other });
+      return `${winner} ⇄ ${other}`;
     case 'refund':
-      return L('Money back: +{n}', { n: e.amount });
+      return L('+{n} back', { n: e.amount });
     case 'dud':
-      return L('A dud.');
+      return L('Nothing inside.');
     case 'none':
       return L('Nobody bought it.');
   }
