@@ -209,6 +209,8 @@ export function controllerView(
       statusOf: statusOf(state),
       scores: state.scores,
     }),
+    // I-288 A: the phone's clock is quiet when the TV's is — nothing to press in the intro or reveal
+    timerMode: phase === 'intro' || phase === 'reveal' ? 'quiet' : 'normal',
     round: roundOf(state),
     question: phase === 'question' || phase === 'reveal' ? questionOf(state) : null,
     myPickIndex: myPick?.index ?? null,
