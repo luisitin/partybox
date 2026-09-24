@@ -4,7 +4,7 @@ import type { GameManifest, VipAction } from '@partybox/shared';
 import { removePlayer } from './players';
 import { abortGame, applyGameEvent, startGame } from './runner';
 import { coerceSettings, defaultSettings } from './settings';
-import type { ApplyResult, EngineDeps, RoomState } from './types';
+import type { ApplyResult, Effect, EngineDeps, RoomState } from './types';
 
 function reject(
   room: RoomState,
@@ -221,12 +221,28 @@ export function applyVip(
       if (room.status === 'playing')
         return reject(room, playerId, 'cannot_start', 'Change that before the next game.');
       if (room.recording === action.on) return { room, effects: [] };
-      return { room: { ...room, recording: action.on }, effects: [{ type: 'push' }] };
+      return {
+        room: { ...room, recording: action.on },
+        effects: [
+          switchToast(action.on ? '📼 Saving a recap of each game' : '📼 Not saving recaps'),
+          { type: 'push' },
+        ],
+      };
     }
     case 'setMusicOnPhones': {
       // S-004 (the owner): "If VIP enables it, then it is auto for everyone" — any time.
       if (room.musicOnPhones === action.on) return { room, effects: [] };
-      return { room: { ...room, musicOnPhones: action.on }, effects: [{ type: 'push' }] };
+      return {
+        room: { ...room, musicOnPhones: action.on },
+        effects: [
+          switchToast(
+            action.on
+              ? '🎵 Music on every phone'
+              : '🎵 Music on the TV only — a phone can turn its own on',
+          ),
+          { type: 'push' },
+        ],
+      };
     }
     case 'setListed': {
       // The owner (2026-09-22): public rooms are browsable; a private one still joins by code.
@@ -238,7 +254,17 @@ export function applyVip(
       if (room.status === 'playing')
         return reject(room, playerId, 'cannot_start', 'Change that before the next game.');
       if (room.phoneOnly === action.on) return { room, effects: [] };
-      return { room: { ...room, phoneOnly: action.on }, effects: [{ type: 'push' }] };
+      return {
+        room: { ...room, phoneOnly: action.on },
+        effects: [
+          switchToast(
+            action.on
+              ? '📱 Phone-only room — the phones show what the TV would'
+              : '📺 The TV is the stage again',
+          ),
+          { type: 'push' },
+        ],
+      };
     }
     case 'toLobby': {
       if (room.status === 'playing')
@@ -247,4 +273,9 @@ export function applyVip(
       return { room: { ...room, status: 'lobby' }, effects: [{ type: 'push' }] };
     }
   }
+}
+
+/** I-642 C: a room switch changed — everyone is told what it means. */
+function switchToast(text: string): Effect {
+  return { type: 'toast', to: 'all', kind: 'info', text };
 }

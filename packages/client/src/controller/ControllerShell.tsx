@@ -6,13 +6,14 @@
 import { useEffect, useRef, useState } from 'react';
 import type { JSX, ReactNode } from 'react';
 import type { PlayerPublic } from '@partybox/shared';
-import { Avatar, DeadlineBar, buzz, getLang, useSecondsLeft } from '@partybox/game-sdk/ui';
+import { Avatar, buzz, getLang, useSecondsLeft } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import type { Controller, ControllerState } from '../net/controller';
 import type { SoundEngine } from '../sound';
 import { ThemePicker } from '../ThemePicker';
 import styles from './ControllerShell.module.css';
 import { PhoneSettings, tvSoundsOn } from './PhoneSettings';
+import { ShareButton } from './ShareSheet';
 import { clientGames } from '../games.generated';
 import type { SoundCue } from '../sound';
 import { linkLabel, useLinkBanner } from './flapFree';
@@ -21,6 +22,7 @@ import { usePhoneUrgency } from './urgency';
 import { VipMenu, vipMenuState } from './VipMenu';
 import { ReclaimVip } from './ReclaimVip';
 import { BUZZ } from './haptics';
+import { ShellCountdown } from './ShellCountdown';
 
 export interface ControllerShellProps {
   controller: Controller;
@@ -45,6 +47,12 @@ export function ControllerShell({
   children,
 }: ControllerShellProps): JSX.Element {
   const [menuOpen, setMenuOpen] = useState(false);
+  // I-642 B: the picker's Room row opens this menu
+  useEffect(() => {
+    const open = (): void => setMenuOpen(true);
+    window.addEventListener('pb:vip-menu', open);
+    return () => window.removeEventListener('pb:vip-menu', open);
+  }, []);
   const [themeOpen, setThemeOpen] = useState(false);
   const [seenOpen, setSeenOpen] = useState(openTheme);
   if (openTheme !== seenOpen) {
@@ -183,26 +191,37 @@ export function ControllerShell({
             </span>
           </span>
           {room ? (
-            <span className={styles.code} aria-label={`${t.lobby.room} ${room.code}`}>
-              {room.code}
-            </span>
+            // I-666 A: the code is the thing people ask for — tap it to share the room
+            <ShareButton
+              code={room.code}
+              className={`${styles.code} ${styles.codeButton}`}
+              label={room.code}
+              ariaLabel={`${t.lobby.room} ${room.code} — ${t.share.button}`}
+            />
           ) : null}
         </div>
         <div className={styles.right}>
-          <button
-            type="button"
-            className={styles.iconButton}
-            onClick={() => setThemeOpen(true)}
-            aria-haspopup="dialog"
-            aria-label={t.theme.title}
-          >
-            🎨
-          </button>
-          <span
-            className={`${styles.dot} ${state.connection === 'connected' ? `${styles.on} ${styles.beat}` : styles.off}`}
-            role="status"
-            aria-label={linkLabel(state.connection)}
-          />
+          {/* I-666 B: once you're in, no 🎨 — your face opens the same sheet (the join page, with
+              no face yet, keeps it) */}
+          {!me ? (
+            <button
+              type="button"
+              className={styles.iconButton}
+              onClick={() => setThemeOpen(true)}
+              aria-haspopup="dialog"
+              aria-label={t.theme.title}
+            >
+              🎨
+            </button>
+          ) : null}
+          {/* I-666 C: the dot only when something is wrong */}
+          {state.connection !== 'connected' ? (
+            <span
+              className={`${styles.dot} ${styles.off}`}
+              role="status"
+              aria-label={linkLabel(state.connection)}
+            />
+          ) : null}
           {me ? (
             <>
               {/* Offline, the badge may already be stale (the server hands the VIP over after 30 s):
@@ -236,33 +255,13 @@ export function ControllerShell({
         </div>
       </header>
       {countdownRow ? (
-        // ADR-030: a quiet timer keeps the bar (a rhythm) but drops the digits and the urgency.
-        <div
-          className={`${styles.deadline} ${online && seconds <= 5 && !view.paused && view.timerMode !== 'quiet' ? styles.urgent : ''} ${online ? '' : styles.stale}`}
-          role="timer"
-          aria-label={view.paused ? t.tv.paused : t.connection.secondsLeft(seconds)}
-        >
-          <DeadlineBar
-            deadline={view.deadline}
-            phaseKey={view.phaseId}
-            paused={view.paused}
-            urgentAt={online ? 5 : 0}
-          />
-          {showBanner ? (
-            <span className={`${styles.cue} ${styles.cueStale}`} role="status">
-              {reconnectingText}
-            </span>
-          ) : candidate ? (
-            <span className={styles.cue} aria-hidden>
-              {t.connection.hurry}
-            </span>
-          ) : null}
-          {view.timerMode !== 'quiet' || view.paused ? (
-            <span className={styles.seconds}>
-              {view.paused ? `⏸ ${t.tv.paused}` : t.connection.seconds(seconds)}
-            </span>
-          ) : null}
-        </div>
+        <ShellCountdown
+          view={view}
+          seconds={seconds}
+          online={online}
+          banner={showBanner ? reconnectingText : null}
+          hurry={candidate}
+        />
       ) : null}
       {state.error && state.joined ? (
         <button

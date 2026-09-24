@@ -9,7 +9,8 @@ book moves one seat: the holder looks at the drawing, writes a guess, and **draw
 the next seat — round after round until the last player, who only guesses (a drawing there would
 come straight back to the owner). Then every owner **presents their own book** on the TV from their
 phone, page by page. A book whose last guess matches its word is **UNBROKEN**; otherwise **CHAIN
-BROKEN**. No points — the show is the game.
+BROKEN**. No points — the show is the game. The picker's minutes follow the room (I-189 B: 30 s + one
+round a player × (55 s + 4 s a player) — ~5 min at 4, ~12 at 8; from the host PC's recaps).
 
 ## Players
 

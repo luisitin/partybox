@@ -106,4 +106,32 @@ export const enPhone = {
     someone: 'Someone',
     takeBack: 'Take it back',
   },
+  /** I-650: the vote for the next game (VoteRow, the lobby's tally, the picker's pills). */
+  vote: {
+    ask: 'What should we play next?',
+    voted: '✓ Voted — tap another to change',
+    label: 'Vote for the next game',
+    leads: (game: string, n: number) => `🙋 ${game} leads · ${n} ${n === 1 ? 'vote' : 'votes'}`,
+    want: (n: number) => `${n} want this`,
+  },
+  /** I-642 B: the picker's one-line Room row (the switches live in the ★ menu). */
+  roomRow: {
+    label: 'Room',
+    recap: '📼 Recap',
+    music: '🎵 Phone music',
+    phoneOnly: '📱 Phone only',
+    aria: (recap: boolean, music: boolean, phoneOnly: boolean) =>
+      `Room: recap ${recap ? 'on' : 'off'}, music on every phone ${music ? 'on' : 'off'}, phone only ${phoneOnly ? 'on' : 'off'} — change`,
+    betweenGames: 'Recap and Phone only change between games.',
+  },
+  /** I-667: the one-tap fix under "can't start", and a card's fit line ("12 here · remove 4 bots"). */
+  fix: {
+    removeToPlay: (n: number) => (n === 1 ? 'Remove 1 bot to play' : `Remove ${n} bots to play`),
+    removeAll: (n: number) => (n === 1 ? 'Remove the bot' : `Remove the ${n} bots`),
+    addToPlay: (n: number) => (n === 1 ? 'Add 1 bot to play' : `Add ${n} bots to play`),
+    here: (n: number) => `${n} here`,
+    removeShort: (n: number) => (n === 1 ? 'remove 1 bot' : `remove ${n} bots`),
+    removeAllShort: (n: number) => (n === 1 ? 'remove the bot' : `remove the ${n} bots`),
+    addShort: (n: number) => (n === 1 ? 'add 1 bot' : `add ${n} bots`),
+  },
 } as const;

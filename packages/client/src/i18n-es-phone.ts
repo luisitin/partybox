@@ -101,4 +101,29 @@ export const esPhone: Pick<Texts, keyof typeof enPhone> = {
     someone: 'Alguien',
     takeBack: 'Recuperarlo',
   },
+  vote: {
+    ask: '¿A qué jugamos ahora?',
+    voted: '✓ Votado — toca otro para cambiar',
+    label: 'Vota el próximo juego',
+    leads: (game, n) => `🙋 ${game} va ganando · ${n} ${n === 1 ? 'voto' : 'votos'}`,
+    want: (n) => `${n} lo quieren`,
+  },
+  roomRow: {
+    label: 'Sala',
+    recap: '📼 Resumen',
+    music: '🎵 Música en teléfonos',
+    phoneOnly: '📱 Solo teléfonos',
+    aria: (recap, music, phoneOnly) =>
+      `Sala: resumen ${recap ? 'sí' : 'no'}, música en todos los teléfonos ${music ? 'sí' : 'no'}, solo teléfonos ${phoneOnly ? 'sí' : 'no'} — cambiar`,
+    betweenGames: 'El resumen y Solo teléfonos cambian entre juegos.',
+  },
+  fix: {
+    removeToPlay: (n) => (n === 1 ? 'Quitar 1 bot para jugar' : `Quitar ${n} bots para jugar`),
+    removeAll: (n) => (n === 1 ? 'Quitar el bot' : `Quitar los ${n} bots`),
+    addToPlay: (n) => (n === 1 ? 'Añadir 1 bot para jugar' : `Añadir ${n} bots para jugar`),
+    here: (n) => `${n} aquí`,
+    removeShort: (n) => (n === 1 ? 'quitar 1 bot' : `quitar ${n} bots`),
+    removeAllShort: (n) => (n === 1 ? 'quitar el bot' : `quitar los ${n} bots`),
+    addShort: (n) => (n === 1 ? 'añadir 1 bot' : `añadir ${n} bots`),
+  },
 };

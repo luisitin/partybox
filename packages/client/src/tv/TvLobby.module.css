@@ -432,3 +432,80 @@
   grid-column: 2;
   margin: 0;
 }
+
+/* ── I-650 A: the vote tally under the roster (TV tokens: px on the 1080p stage). */
+.tally {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-2);
+  margin-top: var(--pb-space-4);
+}
+.tallyRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pb-space-2) var(--pb-space-3);
+}
+.tallyChip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+  padding: 6px 20px;
+  border-radius: 999px;
+  background: var(--pb-surface);
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+}
+.tallyCount {
+  color: var(--pb-accent-2);
+}
+.tallyFaces {
+  display: inline-flex;
+}
+.tallyFaces > * + * {
+  margin-left: -12px;
+}
+
+/* ── I-646 C: the tunnel's code, small, under the Wi-Fi one. */
+.remoteQr {
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-3);
+  text-align: left;
+}
+.remoteCode {
+  display: block;
+  width: 150px;
+  height: 150px;
+  padding: 8px;
+  border-radius: var(--pb-radius);
+  background: #fff;
+}
+.remoteCode :global(svg) {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.remoteText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+}
+.remoteText strong {
+  color: var(--pb-text);
+}
+/* An empty room's card is already the stage's height (the 560 px code): the tunnel's code sits
+   beside the card instead of under it, so the address and the room code stay on screen. */
+.splitEmpty .join {
+  position: relative;
+}
+.splitEmpty .remoteQr {
+  position: absolute;
+  left: calc(100% + var(--pb-space-6));
+  top: 50%;
+  translate: 0 -50%;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 320px;
+}

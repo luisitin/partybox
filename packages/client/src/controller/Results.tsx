@@ -12,6 +12,7 @@ import { serverText } from '../server-text';
 import type { Controller } from '../net/controller';
 import { myRow, nobodyScored, scoreboardRows, winnerLineFor } from './results-rows';
 import styles from './Results.module.css';
+import { VoteRow } from './VoteRow';
 
 export interface ResultsProps {
   controller: Controller;
@@ -106,9 +107,13 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
             </div>
           </div>
         ) : (
-          <p className={`pb-muted ${styles.wait}`}>
-            {vipName ? t.results.waitingFor(vipName) : t.results.waitingForVip}
-          </p>
+          <>
+            <p className={`pb-muted ${styles.wait}`}>
+              {vipName ? t.results.waitingFor(vipName) : t.results.waitingForVip}
+            </p>
+            {/* I-650 B: "what next?" is asked here — the vote row under the waiting line */}
+            <VoteRow controller={controller} room={room} me={me} row />
+          </>
         )
       }
     >

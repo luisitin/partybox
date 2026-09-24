@@ -125,9 +125,13 @@
   font-size: min(var(--pb-font-caption), 16px);
 }
 
+/* I-666 B: a small phone keeps your name (the 🎨 is gone, so there is room) */
 @media (max-width: 359px) {
   .meName {
-    display: none;
+    max-width: 72px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 
@@ -438,4 +442,14 @@
   font: inherit;
   font-weight: 800;
   cursor: pointer;
+}
+
+/* ── I-666 A: the room code is a button (it opens Share). */
+.codeButton {
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+}
+.codeButton:active {
+  transform: scale(0.96);
 }

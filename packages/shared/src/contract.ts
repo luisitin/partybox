@@ -87,6 +87,20 @@ export const gameManifestSchema = z
     minPlayers: z.number().int().min(1).max(16),
     maxPlayers: z.number().int().min(1).max(16),
     estimatedMinutes: z.number().int().min(1).max(60),
+    /**
+     * I-189: the game's measured pace, so the picker can say how long THIS game will take:
+     * fixedSeconds + rounds × (perRoundSeconds + players × perPlayerPerRoundSeconds), where
+     * `rounds` is the named setting's value (or the player count, for "players"). Without it the
+     * picker shows estimatedMinutes.
+     */
+    estimate: z
+      .object({
+        fixedSeconds: z.number().min(0).max(600),
+        perRoundSeconds: z.number().min(0).max(600),
+        perPlayerPerRoundSeconds: z.number().min(0).max(120),
+        roundsSetting: z.string().min(1).max(40),
+      })
+      .optional(),
     tags: z.array(z.string().min(1).max(20)).max(10),
     settings: z.array(settingSpecSchema).max(12),
     /** ADR-002: raise for stroke-list inputs (drawing games). */

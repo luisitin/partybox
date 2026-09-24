@@ -13,6 +13,13 @@ export const STRINGS: Strings = {
     // HostBar
     'Sure? {action}': '¿Seguro? {action}',
     'Remove all {n} bots': 'Quitar los {n} bots',
+    // I-667: the host bar's exact fix
+    'Remove 1 bot to play': 'Quitar 1 bot para jugar',
+    'Remove {n} bots to play': 'Quitar {n} bots para jugar',
+    'Remove the bot': 'Quitar el bot',
+    'Remove the {n} bots': 'Quitar los {n} bots',
+    'Add 1 bot to play': 'Añadir 1 bot para jugar',
+    'Add {n} bots to play': 'Añadir {n} bots para jugar',
     '{opened} opened · {joined} in': '{opened} abrieron · {joined} dentro',
     'phones that opened the join page · joined':
       'teléfonos que abrieron la página para entrar · los que entraron',
@@ -20,6 +27,13 @@ export const STRINGS: Strings = {
     'Switch the TV to English': 'Cambiar la TV a inglés',
     // I-187 C
     '{mark} {deck} deck': '{mark} mazo {deck}',
+    // I-646: the tunnel's QR on the TV
+    'Not on this Wi-Fi?': '¿No estás en este Wi-Fi?',
+    'Scan this one': 'Escanea este',
+    // I-668 C: the picker's switch chips
+    Recap: 'Resumen',
+    'Phone music': 'Música en teléfonos',
+    '{n} players': '{n} jugadores',
     // TvLobby
     '{names} and {last}': '{names} y {last}',
     'last game': 'último juego',
@@ -35,6 +49,9 @@ export const STRINGS: Strings = {
     '🤖 bots': '🤖 bots',
     '👑 {name} leads tonight': '👑 {name} va ganando esta noche',
     'QR code for {url}': 'Código QR de {url}',
+    // I-650: the vote tally
+    'votes for the next game': 'votos para el próximo juego',
+    'Wants to play next': 'Quieren jugar ahora',
     // TvSelecting, TvPlaying, TvResults
     games: 'juegos',
     'Unknown game "{id}"': 'Juego desconocido "{id}"',

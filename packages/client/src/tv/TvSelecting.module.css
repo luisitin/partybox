@@ -201,3 +201,46 @@
 .keyTagHot {
   color: var(--pb-danger);
 }
+
+/* ── I-650 C: the votes on each game in the TV's list. */
+.votes {
+  margin-left: 0.6em;
+  padding: 0.1em 0.6em;
+  border-radius: 999px;
+  background: var(--pb-surface-2);
+  font-size: 0.8em;
+  font-weight: 800;
+}
+
+/* ── I-668: the room as a row of overlapping faces. */
+.faces {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  margin-left: var(--pb-space-4);
+}
+.faces > * + * {
+  margin-left: -12px;
+}
+
+/* ── I-668 C: the switches as toggle chips on one line. */
+.switches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pb-space-2);
+}
+.switchChip {
+  padding: 6px 16px;
+  border-radius: 999px;
+  border: 2px solid var(--pb-border);
+  background: var(--pb-surface);
+  color: var(--pb-text-muted);
+  font: inherit;
+  font-size: 0.85em;
+  white-space: nowrap; /* a chip is one line: a long language wraps the row, never the chip */
+  cursor: pointer;
+}
+.switchOn {
+  border-color: var(--pb-accent);
+  color: var(--pb-text);
+}

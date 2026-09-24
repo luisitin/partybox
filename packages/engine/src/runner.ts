@@ -52,6 +52,7 @@ export function startGame(
       game: running,
       results: null,
       lastGame: { gameId, settings },
+      votes: {}, // I-650: a new game, a new vote
     },
     effects: [{ type: 'push' }],
   };

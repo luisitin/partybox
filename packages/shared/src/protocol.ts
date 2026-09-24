@@ -80,6 +80,9 @@ export const botPayloadSchema = z.discriminatedUnion('action', [
 ]);
 export type BotAction = z.infer<typeof botPayloadSchema>;
 
+/** I-650: a person's vote for the next game (null takes it back). */
+export const votePayloadSchema = z.object({ gameId: z.string().max(32).nullable() });
+
 /** How a bot decides when to act; `random` is what the lobby button creates. */
 export const BOT_STRATEGIES = ['random', 'fast', 'slow', 'idle', 'chaos'] as const;
 export type BotStrategy = (typeof BOT_STRATEGIES)[number];
@@ -113,6 +116,13 @@ export interface GameSummary {
   minPlayers: number;
   maxPlayers: number;
   estimatedMinutes: number;
+  /** I-189: the measured pace (see the manifest schema); absent = estimatedMinutes. */
+  estimate?: {
+    fixedSeconds: number;
+    perRoundSeconds: number;
+    perPlayerPerRoundSeconds: number;
+    roundsSetting: string;
+  };
   tags: string[];
   settings: SettingSpec[];
   supportsBots: boolean;
@@ -152,6 +162,8 @@ export interface RoomSnapshot {
   tonight?: { gameId: string; winners: { name: string; avatarId: string }[]; botsWon: boolean }[];
   /** I-347 C: the player who may take the VIP back (their role passed on while they were away). */
   formerVip?: string;
+  /** I-650: who wants to play what next (player id → game id) — people still here, never bots. */
+  votes?: Record<string, string>;
   /** The owner (2026-09-22): a listed ("public") room appears in the join page's room list; a
    *  private one can still be joined by anyone who knows its code. */
   listed: boolean;

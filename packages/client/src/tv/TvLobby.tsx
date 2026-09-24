@@ -185,6 +185,21 @@ export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
               </span>
             </span>
           ) : null}
+          {/* I-646 C: the tunnel's code beside the card — friends elsewhere scan this one */}
+          {info?.publicQrSvg && info.publicQrUrl ? (
+            <div className={styles.remoteQr}>
+              <span
+                className={styles.remoteCode}
+                dangerouslySetInnerHTML={{ __html: info.publicQrSvg }}
+                role="img"
+                aria-label={L('QR code for {url}', { url: info.publicQrUrl })}
+              />
+              <span className={styles.remoteText}>
+                <strong>🌍 {L('Not on this Wi-Fi?')}</strong>
+                <span>{L('Scan this one')}</span>
+              </span>
+            </div>
+          ) : null}
           <p className={styles.or}>{t.lobby.orOpen}</p>
           <BigText level="h2" tone="accent" className={styles.url}>
             {info ? info.joinUrl.replace(/^https?:\/\//, '').replace(/\/$/, '') : '…'}
@@ -237,6 +252,8 @@ export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
           ) : room && vip ? (
             <p className="pb-muted">{t.lobby.waitingFor(vip.name)}</p>
           ) : null}
+          {/* I-650 A: what the room wants to play next */}
+          {room ? <VoteTally room={room} /> : null}
           {/* I-073 A: the last game, still on the table until the next one starts. */}
           {/* I-652 B: the last game and the night so far, side by side */}
           <div
@@ -249,5 +266,35 @@ export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
         </div>
       </div>
     </Stage>
+  );
+}
+
+/** I-650 A: the votes for the next game, most-wanted first — with the voters' faces (C). */
+function VoteTally({ room }: { room: RoomSnapshot }): JSX.Element | null {
+  const L = useT(STRINGS);
+  const votes = Object.entries(room.votes ?? {});
+  if (votes.length === 0) return null;
+  const rows = room.games
+    .map((g) => ({ g, ids: votes.filter(([, v]) => v === g.id).map(([id]) => id) }))
+    .filter((r) => r.ids.length > 0)
+    .sort((a, b) => b.ids.length - a.ids.length);
+  return (
+    <aside className={styles.tally} aria-label={L('votes for the next game')}>
+      <span className={styles.lastUpKicker}>🙋 {L('Wants to play next')}</span>
+      <span className={styles.tallyRow}>
+        {rows.map(({ g, ids }) => (
+          <span key={g.id} className={styles.tallyChip}>
+            <span className={styles.tallyFaces}>
+              {ids.slice(0, 4).map((id) => {
+                const p = room.players.find((x) => x.id === id);
+                return p ? <Avatar key={id} avatarId={p.avatarId} size={40} /> : null;
+              })}
+            </span>
+            {g.name}
+            <strong className={styles.tallyCount}>{ids.length}</strong>
+          </span>
+        ))}
+      </span>
+    </aside>
   );
 }

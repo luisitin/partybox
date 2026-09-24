@@ -7,6 +7,12 @@
   "minPlayers": 3,
   "maxPlayers": 12,
   "estimatedMinutes": 15,
+  "estimate": {
+    "fixedSeconds": 20,
+    "perRoundSeconds": 45,
+    "perPlayerPerRoundSeconds": 3,
+    "roundsSetting": "rounds"
+  },
   "tags": ["cards", "voting", "comedy", "adult"],
   "settings": [
     {

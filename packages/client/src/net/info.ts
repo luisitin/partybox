@@ -30,6 +30,9 @@ export interface ServerInfo {
   /** The host's public (tunnel) address while one is live — what Share hands out (the owner,
    *  2026-09-22: friends on another Wi-Fi need it). Null without a tunnel. */
   publicUrl?: string | null;
+  /** I-646: the tunnel's join link (with the house room) and its QR, while a tunnel is live. */
+  publicQrUrl?: string | null;
+  publicQrSvg?: string | null;
   /** I-041: the join URL with the house room's code — what the TV's QR encodes. */
   qrUrl?: string;
   dev: boolean;

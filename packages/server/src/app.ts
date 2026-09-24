@@ -225,6 +225,10 @@ export async function createApp(options: AppOptions): Promise<App> {
     const visible = host
       .rooms()
       .filter((r) => r.listed !== false || r.code === asked || r.code === host.house().code);
+    // I-646: the tunnel's join link and its QR, for the TV (only while a tunnel is live) — the same
+    // room as the Wi-Fi QR (I-787 A)
+    const pub = await publicUrl.get();
+    const publicQrUrl = pub ? `${pub.replace(/\/$/, '')}/?room=${qrRoom}` : null;
     return {
       version: PARTYBOX_VERSION,
       /** Boot time: a client that reconnects to a different value reloads (stale bundle guard). */
@@ -256,7 +260,9 @@ export async function createApp(options: AppOptions): Promise<App> {
           : {}),
       })),
       houseRoom: host.house().code,
-      publicUrl: await publicUrl.get(),
+      publicUrl: pub,
+      publicQrUrl,
+      publicQrSvg: publicQrUrl ? await qrSvg(publicQrUrl) : null,
       funnel: funnel.get(host.house().code), // I-077 C
       // I-034 B: the last finished recap, for the phone's link.
       lastRecap: recorder?.latest()

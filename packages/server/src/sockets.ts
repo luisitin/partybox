@@ -17,6 +17,7 @@ import {
   botPayloadSchema,
   nameKey,
   normalizeName,
+  votePayloadSchema,
 } from '@partybox/shared';
 import type { ErrorPayload } from '@partybox/shared';
 import type { Host, Transport } from './host';
@@ -283,6 +284,19 @@ export function createSocketLayer(server: HttpServer): SocketLayer {
         if (!data.playerId || !data.code) return sendError('not_in_room', 'Join a room first.');
         if (!limiter.take(10)) return sendError('rate_limited', 'Slow down.');
         host.dispatch(data.code, { type: 'nudge', playerId: data.playerId });
+      });
+
+      // I-650: a vote for the next game — 2 tokens, so a thumb can change its mind a few times.
+      socket.on('vote', (raw: unknown) => {
+        if (!data.playerId || !data.code) return sendError('not_in_room', 'Join a room first.');
+        const parsed = votePayloadSchema.safeParse(raw);
+        if (!parsed.success) return sendError('invalid_payload', 'Bad vote payload.');
+        if (!limiter.take(2)) return sendError('rate_limited', 'Slow down.');
+        host.dispatch(data.code, {
+          type: 'vote',
+          playerId: data.playerId,
+          gameId: parsed.data.gameId,
+        });
       });
 
       socket.on('leave', () => {

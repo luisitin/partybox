@@ -26,6 +26,7 @@ export function gameSummaries(deps: EngineDeps): GameSummary[] {
         minPlayers,
         maxPlayers,
         estimatedMinutes,
+        estimate,
         tags,
         settings,
         supportsBots,
@@ -37,6 +38,7 @@ export function gameSummaries(deps: EngineDeps): GameSummary[] {
         minPlayers,
         maxPlayers,
         estimatedMinutes,
+        ...(estimate ? { estimate } : {}), // I-189
         tags,
         settings,
         supportsBots: supportsBots === true,
@@ -89,6 +91,7 @@ export function snapshot(room: RoomState, deps: EngineDeps): RoomSnapshot {
         }
       : {}),
     ...(room.formerVip ? { formerVip: room.formerVip } : {}),
+    ...(room.votes ? { votes: peopleVotes(room) } : {}),
   };
 }
 
@@ -134,4 +137,14 @@ export function controllerView(
   } catch {
     return { ...fallbackEnvelope(room), me: { id: playerId, role }, vip: room.vipId };
   }
+}
+
+/** I-650: the votes of the people still in the room (a vote leaves with its voter). */
+function peopleVotes(room: RoomState): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const [id, gameId] of Object.entries(room.votes ?? {})) {
+    const p = room.players[id];
+    if (p && !p.bot) out[id] = gameId;
+  }
+  return out;
 }

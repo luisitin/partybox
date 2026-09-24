@@ -1,9 +1,10 @@
 // Choosing a game. The TV is the host's screen (ADR-031): the game list on the left is clickable
 // and the settings on the right are editable — the same picks the VIP phone makes, on the same
 // room state. The room sees the highlighted game big, its settings, and who is here.
+import { minutesFor } from '../estimate';
 import type { JSX } from 'react';
 import type { RoomSnapshot } from '@partybox/shared';
-import { Avatar, BigText, PlayerChips, Stage, useT } from '@partybox/game-sdk/ui';
+import { Avatar, BigText, Stage, useT } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import { gameText } from '../i18n-games';
 import type { TvClient } from '../net/tv';
@@ -12,6 +13,7 @@ import { serverText } from '../server-text';
 import { STRINGS } from './strings';
 import styles from './TvSelecting.module.css';
 import { keySetting } from '../keySetting';
+import { voteCounts } from '../controller/VoteRow';
 
 export interface TvSelectingProps {
   room: RoomSnapshot;
@@ -22,6 +24,7 @@ export function TvSelecting({ room, client }: TvSelectingProps): JSX.Element {
   const game = room.games.find((g) => g.id === room.selectedGameId);
   const vip = room.players.find((p) => p.isVip);
   const botCount = room.players.filter((p) => p.bot).length;
+  const counts = voteCounts(room); // I-650 C: the room's votes, shown while the VIP picks
   const L = useT(STRINGS);
   const lang = L.lang;
   return (
@@ -36,6 +39,8 @@ export function TvSelecting({ room, client }: TvSelectingProps): JSX.Element {
         ) : (
           t.host.choosing
         )}
+        {/* I-668 B: the room on the sentence's line — the column is the games and the switches */}
+        <FaceStack room={room} />
       </p>
       <div className={styles.columns}>
         <div className={styles.left}>
@@ -51,10 +56,23 @@ export function TvSelecting({ room, client }: TvSelectingProps): JSX.Element {
                     className={`${styles.gameButton} ${selected ? styles.gameSelected : ''}`}
                     onClick={() => client.act({ action: 'selectGame', gameId: g.id })}
                   >
-                    <span className={styles.gameName}>{g.name}</span>
+                    <span className={styles.gameName}>
+                      {g.name}
+                      {counts.get(g.id) ? (
+                        <span className={styles.votes}>🙋 {counts.get(g.id)}</span>
+                      ) : null}
+                    </span>
                     <span className={styles.gameMeta}>
                       {t.selecting.players(g.minPlayers, g.maxPlayers)} ·{' '}
-                      {t.selecting.minutes(g.estimatedMinutes)}
+                      {
+                        t.selecting.minutes(
+                          minutesFor(
+                            g,
+                            g.id === room.selectedGameId ? room.settings : null,
+                            room.players.length,
+                          ),
+                        ) /* I-189 */
+                      }
                       {g.supportsBots ? ' · 🤖' : botCount > 0 ? ` · ${t.lobby.noBots}` : ''}
                     </span>
                   </button>
@@ -62,41 +80,25 @@ export function TvSelecting({ room, client }: TvSelectingProps): JSX.Element {
               );
             })}
           </ul>
-          <label className={styles.recording} htmlFor="tv-recording">
-            <input
-              id="tv-recording"
-              type="checkbox"
-              checked={room.recording}
-              onChange={(e) => client.act({ action: 'setRecording', on: e.target.checked })}
-            />
-            {room.recording ? t.selecting.recording : t.selecting.recordingOff}
-          </label>
-          <label className={styles.recording} htmlFor="tv-music-all">
-            <input
-              id="tv-music-all"
-              type="checkbox"
-              checked={room.musicOnPhones}
-              onChange={(e) => client.act({ action: 'setMusicOnPhones', on: e.target.checked })}
-            />
-            {t.selecting.musicOnPhones}
-          </label>
-          <PlayerChips
-            players={room.players.map((p) => ({
-              id: p.id,
-              name: p.name,
-              avatarId: p.avatarId,
-              connected: p.connected,
-              status: p.spectator ? 'spectator' : 'active',
-            }))}
-            vip={room.vip}
-            // I-045 A + B (the owner's note): the VIP is picking — ringed, thinking dots over
-            // their portrait; the plain lobby shows the ring alone.
-            activeIds={vip ? [vip.id] : []}
-            thinkingIds={vip ? [vip.id] : []}
-            botIds={room.players.filter((p) => p.bot).map((p) => p.id)}
-            layout="grid"
-            size="sm"
-          />
+          {/* I-668 C: the room's switches, one line of toggles — the list keeps the column */}
+          <div className={styles.switches}>
+            <button
+              type="button"
+              aria-pressed={room.recording}
+              className={`${styles.switchChip} ${room.recording ? styles.switchOn : ''}`}
+              onClick={() => client.act({ action: 'setRecording', on: !room.recording })}
+            >
+              📼 {L('Recap')} {room.recording ? '✓' : ''}
+            </button>
+            <button
+              type="button"
+              aria-pressed={room.musicOnPhones}
+              className={`${styles.switchChip} ${room.musicOnPhones ? styles.switchOn : ''}`}
+              onClick={() => client.act({ action: 'setMusicOnPhones', on: !room.musicOnPhones })}
+            >
+              🎵 {L('Phone music')} {room.musicOnPhones ? '✓' : ''}
+            </button>
+          </div>
         </div>
         {game ? (
           // Nobody scrolls a TV: a game with many settings (bingo's ten) packs three columns and a
@@ -110,7 +112,11 @@ export function TvSelecting({ room, client }: TvSelectingProps): JSX.Element {
             <p className={styles.description}>{gameText(game.id, lang, game.description)}</p>
             <p className={styles.meta}>
               {t.selecting.players(game.minPlayers, game.maxPlayers)} ·{' '}
-              {t.selecting.minutes(game.estimatedMinutes)}
+              {
+                t.selecting.minutes(
+                  minutesFor(game, room.settings, room.players.length),
+                ) /* I-189 */
+              }
               {/* I-187 C: the room sees the deck before the VIP starts — on the meta line, so the
                   settings below keep their room */}
               {(() => {
@@ -157,5 +163,17 @@ export function TvSelecting({ room, client }: TvSelectingProps): JSX.Element {
         ) : null}
       </div>
     </Stage>
+  );
+}
+
+/** I-668: the room as one row of overlapping faces — never taller than one line. */
+function FaceStack({ room }: { room: RoomSnapshot }): JSX.Element {
+  const L = useT(STRINGS);
+  return (
+    <span className={styles.faces} aria-label={L('{n} players', { n: room.players.length })}>
+      {room.players.map((p) => (
+        <Avatar key={p.id} avatarId={p.avatarId} size={40} dim={!p.connected} />
+      ))}
+    </span>
   );
 }

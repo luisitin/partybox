@@ -58,6 +58,8 @@ export interface Controller {
   bot(action: BotAction): void;
   /** I-070 A: nudge the VIP (lobby only; the server rate-limits it). */
   nudge(): void;
+  /** I-650: vote for the next game (null takes the vote back). */
+  vote(gameId: string | null): void;
   leave(): void;
   /** I-755 A: take the seat back from the other tab. */
   playHere(): void;
@@ -321,6 +323,9 @@ export function createController(url?: string): Controller {
     },
     nudge() {
       socket.emit('nudge', {});
+    },
+    vote(gameId) {
+      socket.emit('vote', { gameId });
     },
     leave() {
       socket.emit('leave', {});

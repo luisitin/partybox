@@ -1,17 +1,20 @@
 // Game selection. VIP: browse game cards, tweak settings from the manifest spec, start (disabled
 // with the server's reason). Everyone else: a calm "X is choosing…" with the current pick.
+import { minutesFor } from '../estimate';
 import type { JSX } from 'react';
 import type { PlayerPublic, RoomSnapshot } from '@partybox/shared';
 import { PrimaryButton, Screen, WaitingScreen, useLang } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import { gameText } from '../i18n-games';
 import { serverText } from '../server-text';
-import { useServerInfo } from '../net/info';
 import { SettingField } from '../SettingField';
 import type { Controller } from '../net/controller';
 import { tunedLine, tunedSettings } from './tunedLine';
 import styles from './Selecting.module.css';
 import { keySetting } from '../keySetting';
+import { VoteRow, voteCounts } from './VoteRow';
+import { MAX_BOTS_PER_OWNER } from '@partybox/shared';
+import { fixLabel, runFix, startFix } from '../startFix';
 
 export interface SelectingProps {
   controller: Controller;
@@ -20,7 +23,6 @@ export interface SelectingProps {
 }
 
 export function Selecting({ controller, room, me }: SelectingProps): JSX.Element {
-  const info = useServerInfo(); // I-034 B
   const selected = room.games.find((g) => g.id === room.selectedGameId) ?? null;
   const vip = room.players.find((p) => p.isVip);
   const lang = useLang();
@@ -35,7 +37,10 @@ export function Selecting({ controller, room, me }: SelectingProps): JSX.Element
             : undefined
         }
         mood="wait"
-      />
+      >
+        {/* I-650 A: the vote stays open while the VIP picks */}
+        <VoteRow controller={controller} room={room} me={me} />
+      </WaitingScreen>
     );
   }
 
@@ -43,7 +48,15 @@ export function Selecting({ controller, room, me }: SelectingProps): JSX.Element
   // I-187 A: the one setting the room should know before Start (Blanks: the deck)
   const key = selected ? keySetting(selected, room.settings) : null;
   const keyWords = key && selected ? gameText(selected.id, lang, key.short) : null;
+  // I-667 A: the red line's one-tap fix (the VIP's phone adds bots it owns — 4 at most)
+  const myBots = room.players.filter((p) => p.bot?.ownerId === me.id).length;
+  const fixFor = (g: (typeof room.games)[number]) => startFix(room, g, MAX_BOTS_PER_OWNER - myBots);
+  const fix = !room.canStart.ok && selected ? fixFor(selected) : null;
   const botCount = room.players.filter((p) => p.bot).length;
+  // I-650 A: the votes on each game
+  const counts = voteCounts(room);
+  // I-650 B: the most-wanted games first (a tie keeps the usual order)
+  const games = [...room.games].sort((a, b) => (counts.get(b.id) ?? 0) - (counts.get(a.id) ?? 0));
   return (
     <Screen
       title={t.lobby.pickGame}
@@ -54,6 +67,15 @@ export function Selecting({ controller, room, me }: SelectingProps): JSX.Element
             <p className={styles.reason}>
               {serverText(room.canStart.reason, lang, room.selectedGameId)}
             </p>
+          ) : null}
+          {fix ? (
+            <button
+              type="button"
+              className={styles.fix}
+              onClick={() => runFix(fix, (a) => controller.bot(a))}
+            >
+              {fix.kind === 'remove' ? '✕' : '🤖'} {fixLabel(fix, t.fix)}
+            </button>
           ) : null}
           <PrimaryButton onClick={start} disabled={!room.canStart.ok}>
             {t.selecting.start}
@@ -70,58 +92,34 @@ export function Selecting({ controller, room, me }: SelectingProps): JSX.Element
         </div>
       }
     >
-      <label className={styles.recording} htmlFor="phone-recording">
-        <span className={styles.recordingLabel}>
-          {t.selecting.recording}
-          <small>{room.recording ? t.selecting.recordingHint : t.selecting.recordingOff}</small>
+      {/* I-642 B: the room's switches, one row — they are changed in the ★ menu */}
+      <button
+        type="button"
+        className={styles.roomRow}
+        aria-label={t.roomRow.aria(room.recording, room.musicOnPhones, room.phoneOnly)}
+        onClick={() => window.dispatchEvent(new Event('pb:vip-menu'))}
+      >
+        <span className={styles.roomLabel}>{t.roomRow.label}</span>
+        <span className={`${styles.roomChip} ${room.recording ? styles.roomOn : ''}`}>
+          {room.recording ? '✓ ' : ''}
+          {t.roomRow.recap}
         </span>
-        <input
-          id="phone-recording"
-          type="checkbox"
-          className={styles.recordingBox}
-          checked={room.recording}
-          onChange={(e) => controller.vip({ action: 'setRecording', on: e.target.checked })}
-        />
-      </label>
-      {/* I-034 B: a way into the last recap from the phone. */}
-      {info?.lastRecap ? (
-        <a className="pb-caption" href="/api/recaps/latest/page" target="_blank" rel="noreferrer">
-          {t.selecting.lastRecap(info.lastRecap.gameId, info.lastRecap.code)}
-        </a>
-      ) : null}
-      {/* S-004 (the owner): the VIP's switch — music on every phone. */}
-      <label className={styles.recording} htmlFor="phone-music-all">
-        <span className={styles.recordingLabel}>
-          {t.selecting.musicOnPhones}
-          <small>
-            {room.musicOnPhones ? t.selecting.musicOnPhonesHint : t.selecting.musicOnPhonesOff}
-          </small>
+        <span className={`${styles.roomChip} ${room.musicOnPhones ? styles.roomOn : ''}`}>
+          {room.musicOnPhones ? '✓ ' : ''}
+          {t.roomRow.music}
         </span>
-        <input
-          id="phone-music-all"
-          type="checkbox"
-          className={styles.recordingBox}
-          checked={room.musicOnPhones}
-          onChange={(e) => controller.vip({ action: 'setMusicOnPhones', on: e.target.checked })}
-        />
-      </label>
-      {/* S-005 A: phone only — the TV's moments go to the phones. */}
-      <label className={styles.recording} htmlFor="phone-only">
-        <span className={styles.recordingLabel}>
-          {t.selecting.phoneOnly}
-          <small>{room.phoneOnly ? t.selecting.phoneOnlyOn : t.selecting.phoneOnlyOff}</small>
+        <span className={`${styles.roomChip} ${room.phoneOnly ? styles.roomOn : ''}`}>
+          {room.phoneOnly ? '✓ ' : ''}
+          {t.roomRow.phoneOnly}
         </span>
-        <input
-          id="phone-only"
-          type="checkbox"
-          className={styles.recordingBox}
-          checked={room.phoneOnly}
-          onChange={(e) => controller.vip({ action: 'setPhoneOnly', on: e.target.checked })}
-        />
-      </label>
+        <span className={styles.roomEdit} aria-hidden>
+          ›
+        </span>
+      </button>
       <ul className={styles.games} role="radiogroup" aria-label={t.selecting.games}>
-        {room.games.map((g) => {
+        {games.map((g) => {
           const isSelected = g.id === room.selectedGameId;
+          const wants = counts.get(g.id) ?? 0;
           return (
             <li key={g.id}>
               <button
@@ -133,14 +131,43 @@ export function Selecting({ controller, room, me }: SelectingProps): JSX.Element
               >
                 <span className={styles.cardHead}>
                   <span className={styles.cardTitle}>{g.name}</span>
+                  {wants > 0 ? (
+                    <span className={styles.votes} aria-label={t.vote.want(wants)}>
+                      🙋 {wants}
+                    </span>
+                  ) : null}
                   <span className={styles.check} aria-hidden>
                     {isSelected ? '✓' : ''}
                   </span>
                 </span>
                 <span className={styles.cardTagline}>{gameText(g.id, lang, g.tagline)}</span>
+                {/* I-667 C: a game that doesn't fit the room says so, and what it would take */}
+                {(() => {
+                  const n = room.players.length;
+                  const off =
+                    (botCount > 0 && !g.supportsBots) || n > g.maxPlayers || n < g.minPlayers;
+                  if (!off) return null;
+                  const f = fixFor(g);
+                  return (
+                    <span className={styles.fit}>
+                      {t.fix.here(n)}
+                      {f
+                        ? ` · ${fixLabel(f, { removeToPlay: t.fix.removeShort, removeAll: t.fix.removeAllShort, addToPlay: t.fix.addShort })}`
+                        : ''}
+                    </span>
+                  );
+                })()}
                 <span className={styles.cardMeta}>
                   {t.selecting.players(g.minPlayers, g.maxPlayers)} ·{' '}
-                  {t.selecting.minutes(g.estimatedMinutes)} ·{' '}
+                  {/* I-189: from the game's pace, the settings and the room */}
+                  {t.selecting.minutes(
+                    minutesFor(
+                      g,
+                      g.id === room.selectedGameId ? room.settings : null,
+                      room.players.length,
+                    ),
+                  )}{' '}
+                  ·{' '}
                   {g.supportsBots ? (
                     <span className={styles.botsOk}>🤖 {t.lobby.botsWelcome}</span>
                   ) : (
