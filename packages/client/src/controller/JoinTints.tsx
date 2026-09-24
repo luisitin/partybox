@@ -24,28 +24,36 @@ export function useTint(
 }
 
 export function JoinTints({
+  label,
   tint,
   taken,
   onPick,
 }: {
+  /** I-793 F: the row's visible label ("Colour"). */
+  label: string;
   tint: number;
   taken: ReadonlySet<number>;
   onPick: (n: number) => void;
 }): JSX.Element {
   return (
-    <div className={styles.tints} role="radiogroup" aria-label={t.join.pickColour}>
-      {TINTS.map((n) => (
-        <button
-          key={n}
-          type="button"
-          role="radio"
-          aria-checked={tint === n}
-          aria-label={t.join.colour(n + 1, taken.has(n))}
-          className={`${styles.tint} ${tint === n ? styles.tintOn : ''} ${taken.has(n) ? styles.tintTaken : ''}`}
-          style={{ background: `var(--pb-player-${n + 1})` }}
-          onClick={() => onPick(n)}
-        />
-      ))}
+    <div className={styles.tintRow}>
+      <span className={styles.label} aria-hidden>
+        {label}
+      </span>
+      <div className={styles.tints} role="radiogroup" aria-label={t.join.pickColour}>
+        {TINTS.map((n) => (
+          <button
+            key={n}
+            type="button"
+            role="radio"
+            aria-checked={tint === n}
+            aria-label={t.join.colour(n + 1, taken.has(n))}
+            className={`${styles.tint} ${tint === n ? styles.tintOn : ''} ${taken.has(n) ? styles.tintTaken : ''}`}
+            style={{ background: `var(--pb-player-${n + 1})` }}
+            onClick={() => onPick(n)}
+          />
+        ))}
+      </div>
     </div>
   );
 }

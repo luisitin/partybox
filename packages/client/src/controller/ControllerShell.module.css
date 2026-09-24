@@ -134,6 +134,13 @@
     white-space: nowrap;
   }
 }
+/* I-792 E: …but the VIP's SE header (PB, code, ★ VIP, face) has no room for it: the name clipped
+   the room code to "FFF". Your face stays; the name is on your chip right below. */
+@media (max-width: 359px) {
+  .right:has(.vipBadge) .meName {
+    display: none;
+  }
+}
 
 /* Offline: the countdown is a guess, not a demand (review-loop #27). */
 .stale {

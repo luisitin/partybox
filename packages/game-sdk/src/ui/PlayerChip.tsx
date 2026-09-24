@@ -30,6 +30,10 @@ export interface PlayerChipProps {
   thinking?: boolean;
   /** This chip is the viewer: a small "you" tag (not the turn outline). */
   isMe?: boolean;
+  /** I-792 E: a tight grid cell (the phone lobby's two columns) gives the name the room: no "you"
+   *  tag (the label keeps "(you)"; the lobby rings your chip), the VIP tag is its ★ alone, and the
+   *  glyph slot only exists while there is a glyph. */
+  compact?: boolean;
   /** A bot player (ADR-028): shows a robot tag so nobody mistakes it for a person. */
   isBot?: boolean;
   /** Renders a ✕ inside the chip (e.g. remove a bot you own); 44 px hit area. */
@@ -77,6 +81,7 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
     awayLeft = null,
     thinking = false,
     isMe,
+    compact = false,
     isBot,
     onRemove,
     removeLabel,
@@ -146,7 +151,7 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
           {Math.floor(awayLeft / 60)}:{String(awayLeft % 60).padStart(2, '0')}
         </span>
       ) : null}
-      {isMe ? (
+      {isMe && !compact ? (
         <span className={styles.you} aria-hidden>
           {L('you')}
         </span>
@@ -162,16 +167,18 @@ export function PlayerChip(props: PlayerChipProps): JSX.Element {
           aria-hidden
           onAnimationEnd={() => setJustVip(false)}
         >
-          ★ VIP
+          {compact ? '★' : '★ VIP'}
         </span>
       ) : null}
-      {/* Always in the layout (a reserved slot), so a ✓ landing never shoves the neighbours. */}
-      <span
-        className={`${styles.glyph} ${glyph.text ? styles.shown : ''} ${locked ? styles.ok : ''} ${!connected ? styles.spin : ''}`}
-        aria-hidden
-      >
-        {glyph.text}
-      </span>
+      {compact && !glyph.text ? null : (
+        // Always in the layout (a reserved slot), so a ✓ landing never shoves the neighbours.
+        <span
+          className={`${styles.glyph} ${glyph.text ? styles.shown : ''} ${locked ? styles.ok : ''} ${!connected ? styles.spin : ''}`}
+          aria-hidden
+        >
+          {glyph.text}
+        </span>
+      )}
       {leader && score !== undefined ? (
         <span className={styles.leader} role="img" aria-label={L('leading')}>
           ▲

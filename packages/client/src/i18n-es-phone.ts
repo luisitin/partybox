@@ -33,6 +33,11 @@ export const esPhone: Pick<Texts, keyof typeof enPhone> = {
     quietForNow: 'en silencio por ahora',
     roomQuiet: 'la sala está en silencio',
   },
+  lobbyTop: {
+    count: (n, cap) => `${n} de ${cap}`,
+    more: 'Más',
+    everyoneIn: '¿Están todos? Elige un juego. Los bots pueden llenar asientos vacíos.',
+  },
   tips: {
     bots: 'Añade bots para llenar los asientos vacíos: juegan de verdad.',
     crown: 'Toca tu insignia ★ VIP para pausar, cerrar la sala o expulsar.',

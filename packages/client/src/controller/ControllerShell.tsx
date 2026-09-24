@@ -23,6 +23,7 @@ import { serverText } from '../server-text';
 import { usePhoneUrgency } from './urgency';
 import { VipMenu, vipMenuState } from './VipMenu';
 import { ReclaimVip } from './ReclaimVip';
+import { JoinLangPick } from './JoinLangs';
 import { BUZZ } from './haptics';
 import { ShellCountdown } from './ShellCountdown';
 
@@ -206,6 +207,8 @@ export function ControllerShell({
           ) : null}
         </div>
         <div className={styles.right}>
+          {/* I-793 F: the join page's language is one "🌐 EN ▾" up here, not a row of pills */}
+          {!me ? <JoinLangPick /> : null}
           {/* I-666 B: once you're in, no 🎨 — your face opens the same sheet (the join page, with
               no face yet, keeps it) */}
           {!me ? (

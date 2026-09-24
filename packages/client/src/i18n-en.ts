@@ -52,6 +52,12 @@ export const en = {
     takenBadge: 'in',
     thisMonth: 'this month',
     yourPhoto: 'your photo',
+    // I-793 F: the one-screen join — the room line, the strip's and the dots' labels
+    roomLabel: 'Room',
+    peopleIn: (n: number) =>
+      n === 0 ? 'nobody is in yet' : n === 1 ? '1 person is in' : `${n} people are in`,
+    faceSwipe: 'Face · swipe for more',
+    colourLabel: 'Colour',
     openFailed: 'Could not open a room.',
     noAnswer: 'The host did not answer.',
   },

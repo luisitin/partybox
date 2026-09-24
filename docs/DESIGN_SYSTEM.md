@@ -98,8 +98,9 @@ Bingo's daub (loop 238) lands as a stamp; on the phone the ink then stays as an 
 The theme sheet (I-035): a tap recolours the page behind it and moves the ✓ but leaves the sheet up (Done closes it;
 the compact menu still closes itself); each row's swatch is a tiny screen — header strip, body, accent button, gold chip
 — in that theme's colours; the sheet's surface, rows, title and buttons fade to the new colours over `--pb-motion-base`.
-Photo avatars (I-031, ADR-037): the join form's portrait row — the picked face at 96 px beside the name, popping on each
-pick while the grid's other cells step back to 55 % — carries "Use a photo": the phone's own camera / gallery sheet, a
+Photo avatars (I-031, ADR-037): the join form's portrait — the picked face at 64 px beside the name field (I-793 F),
+popping on each pick while the strip's other faces step back to 80 % — is itself "Use a photo" (📷 in its corner, ✕ with
+a photo up): the phone's own camera / gallery sheet, a
 128 × 128 JPEG made on the phone, shown at once and sent with the join. `Avatar` renders a `photo:<id>` avatar id as a
 circular `<img>` (object-fit cover) from the shell's `AvatarPhotos` context, the face otherwise; `dim` still applies.
 The lobby (I-029): a fresh chip walks in from the QR's side as it pops (`pb-chip-walk`, `--pb-motion-base`) and wears a
