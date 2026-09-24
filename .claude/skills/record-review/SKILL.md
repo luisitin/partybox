@@ -59,6 +59,25 @@ spoiling what the TV has not revealed yet, a transition that stutters or snaps, 
 reduced-motion, a screen with nothing to do and nothing moving, a cue that is late, doubled or
 missing, the reader cut off or talking over another clip.
 
+## 3b. Hands on the phone (touch and gesture abuse)
+
+Real players drag, mash and fidget. On every phone screen of every phase, drive Playwright's touch
+(`page.touchscreen`, `hasTouch: true` contexts, `mouse.down/move/up` for drags) and check nothing
+breaks, jumps or leaves artifacts:
+
+- drag a finger across the whole screen in every direction, slow and fast; scroll past both ends;
+- long-press on text, buttons, cards and empty space (no text selection, no callout, no stuck
+  pressed state, no ghost highlight);
+- rapid double and triple taps on every button (no double send, no zoom);
+- pinch and double-tap zoom (the page must not zoom or shift);
+- start a drag on a control and release outside it; tap during a transition or a deal animation;
+- rotate the phone mid-phase; open and close the keyboard on every text box;
+- pull-to-refresh / overscroll at the top and bottom (no rubber-band showing the page behind).
+
+After each, screenshot and compare with the at-rest screenshot: nothing moved off-centre, nothing
+overlaps, no stray outline, blur, half-finished animation or leftover transform, and the state is
+the same (or the one intended). A layout that shifts under a finger is a bug, not a quirk.
+
 ## 4. Fix → re-record → re-measure
 
 Fix the worst first. After ANY visual, motion, timing or sound change, re-record the affected
