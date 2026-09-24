@@ -19,14 +19,13 @@ import type { PushedView, TvView } from '@partybox/shared';
 import { clientGames } from '../games.generated';
 import { bedFor, createBedEngine } from '../beds';
 import type { MusicEngine } from '../music';
+import { createMusicEngine, planFor } from '../music';
 import {
-  createMusicEngine,
-  planFor,
   phoneMusicChoice,
   phoneMusicWanted,
   subscribePhoneMusic,
   phoneMusicVolume,
-} from '../music';
+} from '../phone-music';
 import { Lobby } from './Lobby';
 import { Playing } from './Playing';
 import { Results } from './Results';

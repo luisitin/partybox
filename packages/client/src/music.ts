@@ -97,6 +97,36 @@ export function createMusicEngine(): MusicEngine {
   let paused = false;
   let unlocked = false;
   let timer: ReturnType<typeof setTimeout> | null = null;
+  // The level goes through Web Audio, not `el.volume`: iOS Safari ignores a media element's
+  // volume (always 1), so on an iPhone every level, fade and duck did nothing and the phone's
+  // Music volume slider changed nothing (the owner, 2026-09-23: "at 5 % it is still quite loud").
+  // Each element feeds its own gain node; without a context (no Web Audio) `el.volume` stays.
+  let ctx: AudioContext | null = null;
+  const gains = new WeakMap<HTMLAudioElement, GainNode>();
+  const wire = (el: HTMLAudioElement): void => {
+    if (!ctx) return;
+    try {
+      const gain = ctx.createGain();
+      ctx.createMediaElementSource(el).connect(gain).connect(ctx.destination);
+      gains.set(el, gain);
+    } catch {
+      // not wireable: `el.volume` carries the level (fine everywhere but iOS)
+    }
+  };
+  const volumeOf = (el: HTMLAudioElement): number => gains.get(el)?.gain.value ?? el.volume;
+  const setVolume = (el: HTMLAudioElement, v: number): void => {
+    const gain = gains.get(el);
+    if (gain) gain.gain.value = v;
+    else el.volume = v;
+  };
+  // The design harness reads the level that really plays (evidence, never a control); set by
+  // the engine that starts a track (React may build a spare engine that never plays).
+  const expose = (): void => {
+    (window as unknown as { __pbMusic?: unknown }).__pbMusic = {
+      level: () => (audio && !audio.paused ? volumeOf(audio) : null),
+      wired: () => (audio ? gains.has(audio) : false),
+    };
+  };
   // One ramp per element: an outgoing track keeps fading while the next one fades in.
   const fades = new Map<HTMLAudioElement, ReturnType<typeof setInterval>>();
   // Every element that ever started; `stop()` retires them all, so a switch can never leave an
@@ -115,15 +145,15 @@ export function createMusicEngine(): MusicEngine {
     fades.delete(el);
   };
 
-  /** Ramp `el.volume` to `to` over `ms`, then `done`. */
+  /** Ramp the element's level to `to` over `ms`, then `done`. */
   const rampTo = (el: HTMLAudioElement, to: number, ms: number, done?: () => void): void => {
     clearFade(el);
-    const from = el.volume;
+    const from = volumeOf(el);
     const steps = Math.max(1, Math.round(ms / 50));
     let i = 0;
     const handle = setInterval(() => {
       i += 1;
-      el.volume = Math.max(0, Math.min(1, from + ((to - from) * i) / steps));
+      setVolume(el, Math.max(0, Math.min(1, from + ((to - from) * i) / steps)));
       if (i >= steps) {
         clearFade(el);
         done?.();
@@ -163,7 +193,9 @@ export function createMusicEngine(): MusicEngine {
     el.muted = muted;
     // rotate fades every segment in; chain starts hard track to track but eases the first one in
     // under the outgoing plan's fade (loop 402: the writing tune jumped in at full level).
-    el.volume = p.mode === 'rotate' || first ? 0 : level;
+    wire(el);
+    expose();
+    setVolume(el, p.mode === 'rotate' || first ? 0 : level);
     audio = el;
     live.add(el);
     el.addEventListener('ended', () => {
@@ -245,6 +277,17 @@ export function createMusicEngine(): MusicEngine {
       if (plan && unlocked) start(plan, generation, true);
     },
     enable() {
+      // Called from a gesture (every tap on a phone): the context is made, or resumed after iOS
+      // suspended it while the phone was locked.
+      try {
+        const Ctor =
+          window.AudioContext ??
+          (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+        if (!ctx && Ctor) ctx = new Ctor();
+        if (ctx && ctx.state !== 'running') void ctx.resume().catch(() => undefined);
+      } catch {
+        ctx = null;
+      }
       const first = !unlocked;
       unlocked = true;
       if (plan && !audio && first) start(plan, generation, true);
@@ -274,68 +317,4 @@ export function createMusicEngine(): MusicEngine {
     },
     current: () => (audio ? (last ?? null) : null),
   };
-}
-
-// ── S-004: music on this phone — a per-phone choice (localStorage), read by the controller app.
-const PHONE_MUSIC_KEY = 'partybox:phone-music';
-const PHONE_MUSIC_LEVEL_KEY = 'partybox:phone-music-level';
-const phoneMusicListeners = new Set<() => void>();
-/** The old three-step level, read once into the volume (soft 35 %, normal 70 %, loud 100 %). */
-const OLD_LEVELS: Readonly<Record<string, number>> = { soft: 35, normal: 70, loud: 100 };
-const PHONE_MUSIC_VOLUME_KEY = 'partybox:phone-music-volume';
-export const PHONE_MUSIC_DEFAULT_VOLUME = 70;
-
-/** This phone's own music choice: 'on', 'off', or null (never touched — the room decides). An
- *  explicit 'off' wins over the room: until 2026-09-23 a phone-only room (or the VIP's "music on
- *  every phone") played on regardless, so the switch looked broken (the owner). */
-export function phoneMusicChoice(): 'on' | 'off' | null {
-  try {
-    const v = localStorage.getItem(PHONE_MUSIC_KEY);
-    return v === 'on' || v === 'off' ? v : null;
-  } catch {
-    return null;
-  }
-}
-export function phoneMusicOn(): boolean {
-  return phoneMusicChoice() === 'on';
-}
-/** Whether this phone plays music: its own choice, else the room's ask (phone only / VIP switch). */
-export function phoneMusicWanted(
-  choice: 'on' | 'off' | null,
-  room: { phoneOnly?: boolean; musicOnPhones?: boolean } | null | undefined,
-): boolean {
-  if (choice !== null) return choice === 'on';
-  return (room?.phoneOnly ?? false) || (room?.musicOnPhones ?? false);
-}
-export function setPhoneMusicOn(on: boolean): void {
-  try {
-    localStorage.setItem(PHONE_MUSIC_KEY, on ? 'on' : 'off');
-  } catch {
-    // private mode: the session
-  }
-  for (const l of phoneMusicListeners) l();
-}
-/** This phone's music volume, 0–100 (the owner, 2026-09-23: turn it down to hear the reader). */
-export function phoneMusicVolume(): number {
-  try {
-    const v = localStorage.getItem(PHONE_MUSIC_VOLUME_KEY);
-    if (v !== null && Number.isFinite(Number(v))) return Math.max(0, Math.min(100, Number(v)));
-    return (
-      OLD_LEVELS[localStorage.getItem(PHONE_MUSIC_LEVEL_KEY) ?? ''] ?? PHONE_MUSIC_DEFAULT_VOLUME
-    );
-  } catch {
-    return PHONE_MUSIC_DEFAULT_VOLUME;
-  }
-}
-export function setPhoneMusicVolume(volume: number): void {
-  try {
-    localStorage.setItem(PHONE_MUSIC_VOLUME_KEY, String(Math.round(volume)));
-  } catch {
-    // private mode
-  }
-  for (const l of phoneMusicListeners) l();
-}
-export function subscribePhoneMusic(cb: () => void): () => void {
-  phoneMusicListeners.add(cb);
-  return () => phoneMusicListeners.delete(cb);
 }

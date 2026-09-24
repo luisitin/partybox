@@ -31,7 +31,7 @@ import {
   subscribePhoneMusic,
   phoneMusicVolume,
   setPhoneMusicVolume,
-} from '../music';
+} from '../phone-music';
 import pickerStyles from '../ThemePicker.module.css';
 
 const SUBMIT_BUZZ = 20;

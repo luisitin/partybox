@@ -6,6 +6,11 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Fixed
 
+- **Music volume on an iPhone** (the owner, 2026-09-23: "at 5 % it's still quite loud"): iOS
+  ignores a web page's audio volume, so the music always played at full level there — the slider,
+  every game's level, the fades and the ducks did nothing. The music now plays through Web Audio,
+  whose level iOS does follow.
+
 - **Music on a phone** (the owner, 2026-09-23): the phone's Music switch now really turns the music
   off in a phone-only room (or when the VIP put music on every phone) — the phone's own choice wins
   once touched. The soft / normal / loud buttons are a **Music volume** slider (0–100 %), shown
