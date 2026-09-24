@@ -63,6 +63,8 @@ export interface LightningTvView extends TvView {
   correctIndex?: number;
   /** `reveal`: one row per player, correct first, then by score. */
   rows?: RevealRow[];
+  /** I-550 A: `wager`: the final question's topic. */
+  finalTopic?: Topic | null;
   /** `reveal`, `wager` and `done`: ranked standings. */
   standings?: StandingRow[];
 }
@@ -79,6 +81,8 @@ export interface LightningControllerView extends ControllerView {
   /** `reveal`: the room's rows as the TV shows them — a "phone only" room reads them on the phone
    *  (the owner, 2026-09-21: Lightning was not optimised for phone only). */
   rows?: RevealRow[];
+  /** I-550 A: `wager`: the final question's topic. */
+  finalTopic?: Topic | null;
   /** `wager`: the buttons for this player (0-score players only see 0). */
   wagerChoices?: WagerOption[];
   /** Own wager once placed (from `wager` through the final reveal). */
@@ -191,6 +195,7 @@ export function tvView(state: State, gameId: string): LightningTvView {
     view.standings = standingsOf(state);
   }
   if (phase === 'wager' || phase === 'done') view.standings = standingsOf(state);
+  if (phase === 'wager') view.finalTopic = finalTopicOf(state); // I-550 A
   return view;
 }
 
@@ -228,9 +233,19 @@ export function controllerView(
     }
   }
   if (phase === 'wager' && me) view.wagerChoices = wagerOptions(score);
+  if (phase === 'wager') view.finalTopic = finalTopicOf(state); // I-550 A
   const wagerVisible = phase === 'wager' || ((phase === 'question' || phase === 'reveal') && final);
   if (wagerVisible && me && Object.hasOwn(state.wagers, playerId))
     view.myWagerAmount = state.wagers[playerId];
   if (phase === 'done') view.myRank = standingsOf(state).find((r) => r.playerId === playerId)?.rank;
   return view;
+}
+
+/** I-550 A: the final question's topic — known since the draw, shown while the wagers are placed. */
+export type Topic = Pick<QuestionView, 'categoryLabel' | 'subcategoryLabel' | 'difficulty'>;
+
+function finalTopicOf(state: State): Topic | null {
+  const q = questionById(state.questionIds[state.questionIds.length - 1] ?? '');
+  if (!q) return null;
+  return { categoryLabel: categoryLabel(q.category), subcategoryLabel: labelOf(q.subcategory), difficulty: q.difficulty };
 }
