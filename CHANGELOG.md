@@ -6,6 +6,12 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Fixed
 
+- **Broken Pencil: the drawing on the show fills its stage.** The book's title and page count move to the left column above the WORD tile, and "X drew" becomes a tag on the sheet's corner. A drawing is now about 650 px tall on the 1080-px TV instead of 480. The crammed text under the title is shortened to two lines, "BOOK 1 OF 6" / "PAGE 2 OF 5". (I-211, option B)
+
+- **Broken Pencil: the verdict lands a beat after the last guess.** On a book's last page the guess shows alone, and the CHAIN BROKEN / UNBROKEN box rises 2.5 s later (3.5 s for a book that survived). The presenter's Next is held for that beat too, so a quick thumb can't skip the verdict. (I-512, option B)
+
+- **The night's leader no longer sweeps every tied award.** A tied stat now goes to a player who has no award yet, and only then to the higher score, so one player can no longer take all three on ties. This applies to Blanks, and to Wisecrack, which uses the same award code. (I-474, option A)
+
 - **The leader is "1st", everywhere** (I-268, option C): the roster's ▲ that nobody read as "leading" is now a small "1st" tag ("1.º" in Spanish); the same tag replaces the 👑 on Lightning's reveal rows and the 🏆 on a late joiner's bench, with no mark while nobody has scored or everyone is tied. A roster score that goes up shows "+N" over it for 2 seconds.
 
 - **"More below" is part of the footer now, not a pill on top of the page.** The ▾ arrow used to land on "Play again", "Start Bingo", the avatar grid and answer C. It is now a slim row at the top of the footer, with a grab bar and the words "more below", and the whole row is the button. It is laid out only while the page can scroll and fades out at the end, so nothing moves under your thumb. A screen with no footer shows the same row in the bottom safe area. (I-788, option A)
