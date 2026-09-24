@@ -36,15 +36,18 @@ export function RoundHeader({
 export function ChoiceBoard({
   question,
   correctIndex,
+  pickers,
 }: {
   question: QuestionView;
   /** Undefined until the reveal. */
   correctIndex?: number;
+  /** I-544 A: at the reveal, who picked each card (index → rows). */
+  pickers?: RevealRow[][];
 }): JSX.Element {
   const L = useT(STRINGS);
   const revealed = correctIndex !== undefined;
   return (
-    <div className={styles.grid} role="list" aria-label={L('choices')}>
+    <div className={`${styles.grid} ${pickers ? styles.gridCounted : ''}`} role="list" aria-label={L('choices')}>
       {question.choices.map((text, index) => {
         const isCorrect = revealed && index === correctIndex;
         const classes = [
@@ -66,6 +69,16 @@ export function ChoiceBoard({
             <span className={styles.mark} aria-hidden>
               {isCorrect ? '✓' : ''}
             </span>
+            {/* I-544 A: how many picked this card */}
+            {pickers ? (
+              <span className={styles.pickCount}>
+                {(pickers[index] ?? []).slice(0, 4).map((r) => (
+                  <Avatar key={r.playerId} avatarId={r.avatarId} size={28} />
+                ))}
+                {(pickers[index]?.length ?? 0) > 4 ? ` +${(pickers[index]?.length ?? 0) - 4}` : ''}
+                ×{pickers[index]?.length ?? 0}
+              </span>
+            ) : null}
             {isCorrect ? <span className="pb-visually-hidden">{L('correct answer')}</span> : null}
           </div>
         );

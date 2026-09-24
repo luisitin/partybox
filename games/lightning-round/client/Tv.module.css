@@ -532,3 +532,44 @@
   font-size: var(--pb-font-h2);
   font-weight: 800;
 }
+
+/* ── I-544 A: the reveal's counted board — four compact cards in one row, the count its own column. */
+.gridCounted {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--pb-space-2);
+}
+.gridCounted .choice {
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  gap: var(--pb-space-2);
+  min-height: 0;
+  padding: 6px var(--pb-space-3);
+  border-width: 3px;
+}
+.gridCounted .letter {
+  width: 40px;
+  height: 40px;
+}
+/* ── I-544 A: the pick count on each reveal card (B: with the pickers' faces). */
+.pickCount {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 12px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--pb-bg) 55%, transparent);
+  font-size: var(--pb-font-body);
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+/* I-544 B: the faces and the count take the card's second line — beside the label they squeezed
+   "Guillemot" into "Guil / lem / ot" (first take); the faces overlap a little, like a hand of cards. */
+.gridCounted .pickCount {
+  grid-column: 1 / -1;
+  justify-self: end;
+  margin-left: 0;
+}
+.gridCounted .pickCount > * + * {
+  margin-left: -6px;
+}
