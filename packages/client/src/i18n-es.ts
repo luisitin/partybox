@@ -101,6 +101,8 @@ export const es: Texts = {
     less: (label) => `menos ${label}`,
     more: (label) => `más ${label}`,
     noneTicked: 'Nada marcado: toda la categoría',
+    pickGroupFirst: (group, list) =>
+      `Elige una opción de ${String(group).toLowerCase()} arriba para escoger ${String(list).toLowerCase()}`,
     ticked: (n) => `${n} marcado${n === 1 ? '' : 's'}`,
     theVip: 'El VIP',
     lastRecap: (game, code) => `📼 Abrir el último resumen (${game}, sala ${code})`,

@@ -21,6 +21,8 @@ export interface SettingFieldProps {
   settings?: Settings;
   /** Whose manifest this is: its labels read in the device's language from the game's table. */
   gameId?: string;
+  /** I-259 A: the game's other settings — a grouped multiselect names the select it waits on. */
+  siblings?: readonly SettingSpec[];
 }
 
 export function SettingField({
@@ -31,6 +33,7 @@ export function SettingField({
   players,
   settings,
   gameId,
+  siblings,
 }: SettingFieldProps): JSX.Element {
   const id = `${idPrefix}-${spec.key}`;
   const lang = useLang();
@@ -106,8 +109,20 @@ export function SettingField({
       const group = spec.groupBy !== undefined ? settings?.[spec.groupBy] : undefined;
       const options =
         spec.groupBy === undefined ? spec.options : spec.options.filter((o) => o.group === group);
-      // Nothing to pick from (the sibling select says "all"): the field steps aside.
-      if (options.length === 0) return <></>;
+      // I-259 A: nothing to pick from (the sibling select says "all") — the field says how to get
+      // there instead of stepping aside, so the host learns the list exists
+      if (options.length === 0) {
+        const groupSpec = siblings?.find((s) => s.key === spec.groupBy);
+        const group = groupSpec ? L(groupSpec.label) : '';
+        return (
+          <div className={`${styles.setting} ${styles.multi}`}>
+            <span className={styles.settingLabel}>
+              {label}
+              <small>{t.selecting.pickGroupFirst(group, label)}</small>
+            </span>
+          </div>
+        );
+      }
       const picked = multiselectPicks(value, spec);
       const toggle = (v: string): void => {
         const next = picked.includes(v) ? picked.filter((p) => p !== v) : [...picked, v];

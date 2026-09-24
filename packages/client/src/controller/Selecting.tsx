@@ -234,6 +234,7 @@ export function Selecting({ controller, room, me }: SelectingProps): JSX.Element
               value={room.settings[spec.key]}
               players={room.players.length}
               settings={room.settings}
+              siblings={selected.settings} /* I-259 A */
               gameId={selected.id}
               onChange={(v) =>
                 controller.vip({ action: 'updateSettings', settings: { [spec.key]: v } })

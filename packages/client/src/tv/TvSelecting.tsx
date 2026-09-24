@@ -145,6 +145,7 @@ export function TvSelecting({ room, client }: TvSelectingProps): JSX.Element {
                     value={room.settings[spec.key]}
                     players={room.players.length}
                     settings={room.settings}
+                    siblings={game.settings} /* I-259 A */
                     idPrefix="tv-setting"
                     gameId={game.id}
                     onChange={(v) =>

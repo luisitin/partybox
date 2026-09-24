@@ -108,6 +108,9 @@ export const en = {
     less: (label: string) => `less ${label}`,
     more: (label: string) => `more ${label}`,
     noneTicked: 'None ticked: the whole category',
+    // I-259 A: a grouped list with nothing to offer yet
+    pickGroupFirst: (group: string, list: string) =>
+      `Choose one ${String(group).toLowerCase()} above to pick ${String(list).toLowerCase()}`,
     ticked: (n: number) => `${n} ticked`,
     theVip: 'The VIP',
     lastRecap: (game: string, code: string) => `📼 Open the last recap (${game}, room ${code})`,
