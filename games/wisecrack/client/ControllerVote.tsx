@@ -9,6 +9,7 @@ import type { WisecrackControllerView } from '../server/index';
 import type { Input } from '../server/types';
 import { BLANK, answerText } from './blank';
 import { PhoneReveal } from './PhoneReveal';
+import { RevealMirror } from './RevealMirror';
 import { STRINGS } from './strings';
 import { REVEAL_HOLD_MS, useHold } from './timing';
 import styles from './wisecrack.module.css';
@@ -87,6 +88,13 @@ export function ControllerReveal({
   const onPhone = view.phoneOnly === true && view.reveal ? view.reveal : null;
   // The words follow the ROOM (no TV at all), not whether the reveal data has arrived yet.
   const noTv = view.phoneOnly === true;
+  // I-796 K: a TV room's phone mirrors the moment in miniature instead of "Look at the TV".
+  const mirror =
+    !noTv && view.reveal ? (
+      <Screen>
+        <RevealMirror reveal={view.reveal} meId={view.me.id} pickedSlot={lastVote?.slot ?? null} />
+      </Screen>
+    ) : null;
   if (!mine) {
     const picked = lastVote
       ? L('You picked {letter}', { letter: LETTERS[lastVote.slot] ?? '?' })
@@ -98,6 +106,7 @@ export function ControllerReveal({
           <PhoneReveal reveal={onPhone} meId={view.me.id} />
         </Screen>
       );
+    if (mirror) return mirror;
     if (lastVote) {
       return (
         <WaitingScreen
@@ -118,6 +127,7 @@ export function ControllerReveal({
     );
   }
   if (!shown) {
+    if (mirror) return mirror;
     return (
       <WaitingScreen
         title={L('Your answer is up')}

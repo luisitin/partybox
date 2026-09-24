@@ -174,24 +174,28 @@ export function DrawPad({ onChange, onProgress, initial, disabled }: DrawPadProp
 
   const colours = colourNames(L);
   const sizeNames = [L('thin'), L('medium'), L('thick')];
+  // I-794 H: the sheet first and as tall as the screen allows; the colours and then one band of
+  // tools (ink, pen size, Undo, Clear) under it, so nothing sinks under the footer.
+  const swatches = (
+    <div className={styles.tools} role="toolbar" aria-label={L('pen')}>
+      <div className={styles.swatches}>
+        {PALETTE.map((hex, i) => (
+          <button
+            key={hex}
+            type="button"
+            className={`${styles.swatch} ${i === color ? styles.swatchOn : ''}`}
+            style={{ background: hex, '--pb-i': i } as CSSProperties}
+            aria-label={colours[i]}
+            aria-pressed={i === color}
+            onClick={() => setColor(i)}
+            disabled={disabled}
+          />
+        ))}
+      </div>
+    </div>
+  );
   return (
     <div className={styles.pad}>
-      <div className={styles.tools} role="toolbar" aria-label={L('pen')}>
-        <div className={styles.swatches}>
-          {PALETTE.map((hex, i) => (
-            <button
-              key={hex}
-              type="button"
-              className={`${styles.swatch} ${i === color ? styles.swatchOn : ''}`}
-              style={{ background: hex, '--pb-i': i } as CSSProperties}
-              aria-label={colours[i]}
-              aria-pressed={i === color}
-              onClick={() => setColor(i)}
-              disabled={disabled}
-            />
-          ))}
-        </div>
-      </div>
       <div ref={boxRef} className={styles.box}>
         <canvas
           ref={canvasRef}
@@ -205,6 +209,7 @@ export function DrawPad({ onChange, onProgress, initial, disabled }: DrawPadProp
           aria-label={L('drawing sheet')}
         />
       </div>
+      {swatches}
       <div className={styles.bottom}>
         <div
           className={styles.ink}
@@ -217,15 +222,13 @@ export function DrawPad({ onChange, onProgress, initial, disabled }: DrawPadProp
             style={{ width: `${Math.max(0, 100 - (ink / INK_CHARS) * 100)}%` }}
           />
         </div>
-        <span className={styles.inkLabel}>
-          {outOfInk
-            ? L('Out of ink — undo to get some back')
-            : tooMany
-              ? L('Too many strokes')
-              : L('ink')}
-        </span>
-        {/* Pen sizes live down here so the colour row is a single line and the sheet gets the
-            height back (review-loop #9). */}
+        {/* The meter is a thin line under the colours; its words show only when they matter. */}
+        {outOfInk || tooMany ? (
+          <span className={styles.inkLabel} role="status">
+            {outOfInk ? L('Out of ink — undo to get some back') : L('Too many strokes')}
+          </span>
+        ) : null}
+        {/* Pen sizes share the band with Undo and Clear (review-loop #9, I-794 H). */}
         <div className={styles.sizes}>
           {WIDTHS.map((w, i) => (
             <button

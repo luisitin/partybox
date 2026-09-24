@@ -21,6 +21,22 @@ const join = (s: Socket, name: string): Promise<WelcomePayload> =>
     s.emit('join', { name, avatarId: 'fox' });
   });
 
+/** Resolves once `s` has had no `room` push for `ms` (fixed sleeps flaked under load: a late push
+ *  from the joins landed inside the counting window — 2026-09-24). */
+const quiet = (s: Socket, ms = 300): Promise<void> =>
+  new Promise((done) => {
+    let timer = setTimeout(finish, ms);
+    const bump = (): void => {
+      clearTimeout(timer);
+      timer = setTimeout(finish, ms);
+    };
+    function finish(): void {
+      s.off('room', bump);
+      done();
+    }
+    s.on('room', bump);
+  });
+
 beforeAll(async () => {
   app = await createApp({
     port: 0,
@@ -45,14 +61,14 @@ describe('I-750 A: only what changed is sent', () => {
     await join(ana, 'Ana');
     const ben = client();
     await join(ben, 'Ben');
-    await new Promise((r) => setTimeout(r, 100));
+    await quiet(ben); // the joins' own pushes have all arrived
     let rooms = 0;
     ben.on('room', () => (rooms += 1));
     ana.emit('vip', { action: 'selectGame', gameId: 'bingo' });
-    await new Promise((r) => setTimeout(r, 150));
+    await quiet(ben);
     expect(rooms).toBe(1); // the pick changed the room: sent once
     ana.emit('vip', { action: 'updateSettings', settings: {} }); // an empty change: the room is the same
-    await new Promise((r) => setTimeout(r, 150));
+    await quiet(ben);
     expect(rooms).toBe(1);
   });
 });
