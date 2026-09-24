@@ -62,6 +62,10 @@ export interface RoomState {
   listed: boolean;
   /** S-005: "phone only" — the TV's moments go to the phones. */
   phoneOnly: boolean;
+  /** I-746 B: when the last person's phone dropped mid-game (the game is paused until one is back). */
+  asleepSince?: number;
+  /** I-746: the game was already paused (by the VIP) when everyone dropped — waking leaves it paused. */
+  asleepKeptPause?: boolean;
 }
 
 export type RoomEvent =

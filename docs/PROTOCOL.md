@@ -47,15 +47,27 @@ connection is busy (not writable, or over 16 KB buffered) its `room`/`view` push
 of each replaces the waiting one — a slow phone renders the present, not a backlog (B). Messages over
 1 KB are deflated (`perMessageDeflate`, 3.6× on a room snapshot, C).
 
+## Everyone asleep (I-746)
+
+During a game a quiet phone keeps its seat: the grace restarts instead of removing it, so a phone that
+wakes comes back to its own cards and score (A; after the game the 120 s grace applies). When the last
+person's phone drops mid-game the engine pauses the game (the game's own pause) and the snapshot
+carries `asleep: true` — the TV shows "Everyone's phone is asleep — wake one to carry on" and the
+paused card says it carries on when a phone is back; the first phone back resumes it with the usual
+3 · 2 · 1 (B; a pause the VIP had made stays theirs). Nobody back in 5 minutes (`ASLEEP_END_MS`) ends
+the game to the lobby with "Nobody came back — the game ended." (C). The VIP-handover deadline is
+only scheduled while someone could take over — with nobody connected it sat in the past and re-fired
+the host timer back-to-back.
+
 ## Limits
 
-| Limit             | Value                                                           | Where                                           |
-| ----------------- | --------------------------------------------------------------- | ----------------------------------------------- |
-| inputs per socket | 20 / s (token bucket)                                           | `packages/server/src/sockets.ts`                |
-| max payload       | 16 KB (game may raise via `manifest.maxInputBytes`, cap 256 KB) | Socket.IO `maxHttpBufferSize` + per-event check |
-| heartbeat         | Socket.IO ping 10 s / timeout 20 s                              | server options                                  |
-| disconnect grace  | 120 s, then the player is marked left (still in results)        | engine                                          |
-| VIP handover      | VIP disconnected > 30 s → longest-connected player              | engine                                          |
+| Limit             | Value                                                                                              | Where                                           |
+| ----------------- | -------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
+| inputs per socket | 20 / s (token bucket)                                                                              | `packages/server/src/sockets.ts`                |
+| max payload       | 16 KB (game may raise via `manifest.maxInputBytes`, cap 256 KB)                                    | Socket.IO `maxHttpBufferSize` + per-event check |
+| heartbeat         | Socket.IO ping 10 s / timeout 20 s                                                                 | server options                                  |
+| disconnect grace  | 120 s, then the player is marked left (still in results); during a game the seat is kept (I-746 A) | engine                                          |
+| VIP handover      | VIP disconnected > 30 s → longest-connected player                                                 | engine                                          |
 
 ## RoomSnapshot
 
