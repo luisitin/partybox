@@ -143,8 +143,11 @@ function stageLines(state: State): string[] {
     const left = state.dead.filter((d) => d.day === state.day && d.how === 'left' && d.told);
     return [...lines, ...left.map((d) => fillIn(f.live.left, { name: nameOf(state, d.id) }))];
   }
-  if (phase === 'hunter' && state.step === 1 && state.shot)
-    return [fillIn(f.live.shot, { name: nameOf(state, state.shot) })];
+  if (phase === 'hunter' && state.step >= 1 && state.shot) {
+    const lines = [fillIn(f.live.shot, { name: nameOf(state, state.shot) })];
+    const role = state.step >= 2 && state.cfg.revealRoles ? roleOf(state, state.shot) : undefined;
+    return role ? [...lines, f.roles[role].reveal] : lines;
+  }
   if (phase === 'last-words' && state.verdict?.out)
     return [fillIn(f.live.lastWords, { name: nameOf(state, state.verdict.out) })];
   const text = spokenNow(state);
@@ -154,7 +157,7 @@ function stageLines(state: State): string[] {
 /** The say-this-now reading, only once the host has made it (the key never shows early). */
 export function sayNow(state: State): StageView['say'] {
   const r = readingNow(state);
-  if (!r) return null;
+  if (!r || state.lateKeys.includes(r.key)) return null;
   const ms = state.speechMs[r.key];
   return ms !== undefined && ms >= 0 ? { key: r.key, url: `/api/speech/${r.key}.wav` } : null;
 }
@@ -213,7 +216,7 @@ export function stageOf(state: State): StageView {
             // The shot is public only once it lands (step 1); while the line is made it is not.
             shot: state.step >= 1 ? state.shot : null,
             role:
-              state.step >= 1 && state.shot && state.cfg.revealRoles
+              state.step >= 2 && state.shot && state.cfg.revealRoles
                 ? (roleOf(state, state.shot) ?? null)
                 : null,
           }

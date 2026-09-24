@@ -10,16 +10,18 @@ export const clientModule: GameClientModule = {
   Tv: lazy(() => import('./Tv').then((m) => ({ default: m.Tv }))),
   Controller: lazy(() => import('./Controller').then((m) => ({ default: m.Controller }))),
   // SPEC §10.4: the plain `phase` chime means "pick up your phone" (night, vote); the reveals
-  // sound like "look at the TV". Steps inside a reveal cue themselves (useStepCue).
+  // sound like "look at the TV". The stepped phases (dawn, verdict, hunter, last words) move their
+  // deadline on every step, and the shell re-chimes a mapped cue on each move — so they map to
+  // `silence` and every one of their cues, the opening one included, is the scene's (useStepCue).
   sounds: {
     roles: 'card',
     night: 'phase',
-    dawn: 'reveal',
-    hunter: 'wager',
+    dawn: 'silence',
+    hunter: 'silence',
     day: 'start',
     vote: 'phase',
     runoff: 'phase',
-    verdict: 'tally',
+    verdict: 'silence',
     'last-words': 'silence',
     end: 'fanfare',
   },

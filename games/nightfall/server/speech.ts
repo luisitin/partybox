@@ -117,10 +117,14 @@ export function spokenNow(state: State): string | null {
     if (step === 0) return n.hunter;
     const shot = state.shot;
     if (!shot) return null;
-    const name = nameOf(state, shot);
-    const line = readableName(name) ? fillIn(f.live.shot, { name }) : '';
-    const role = state.cfg.revealRoles ? revealText(state, [shot]) : '';
-    return `${line} ${role}`.trim();
+    // Step 1 names the victim (no secret: any living player could be named, so every such line is
+    // made while the hunter aims); step 2 flips their card with the role's own clip.
+    if (step === 1) {
+      const name = nameOf(state, shot);
+      return readableName(name) ? fillIn(f.live.shot, { name }) : null;
+    }
+    const role = roleOf(state, shot);
+    return role && state.cfg.revealRoles ? f.roles[role].reveal : null;
   }
   if (phase === 'day')
     return state.ghostsDay === state.day ? `${n.ghosts} ${n.discuss}` : n.discuss;
@@ -158,6 +162,13 @@ export function readingNow(state: State): Reading | null {
   return text ? reading(state, text) : null;
 }
 
+/** The role clips of the roles in play ("A wolf!"): public, since the role list is. */
+function castClips(state: State): string[] {
+  const f = flavourOf(state.cfg.flavour);
+  const roles = new Set(Object.values(state.roles));
+  return [...roles].map((r) => f.roles[r].reveal);
+}
+
 /** What this state wants made (ADR-045): the reading on stage, this phase's later steps once
  *  they are known, and the next phase's fixed lines. Never a line about a secret before it has
  *  resolved; at most 10 pending keys. */
@@ -169,12 +180,23 @@ export function speech(state: State): SpeechRequest[] {
   const later = (step: number): Reading | null => readingNow({ ...state, step });
   if (phase === 'dawn' || phase === 'verdict') wanted.push(later(1), later(2));
   // The shot (once taken) and "Ben's last words" (public since the verdict) come next.
-  if (phase === 'hunter' || phase === 'last-words') wanted.push(later(1));
+  if (phase === 'hunter' || phase === 'last-words') wanted.push(later(1), later(2));
+  // While the hunter aims: "The hunter took X down." for every possible target, and the cast's
+  // role clips — none of it tells anyone anything (p13b: made after the shot, the line came 14 s
+  // late on a loaded host).
+  if (phase === 'hunter' && state.step === 0 && !state.shot) {
+    const f = flavourOf(state.cfg.flavour);
+    for (const id of state.alive) {
+      const name = nameOf(state, id);
+      if (id !== state.hunterPending && readableName(name))
+        wanted.push(reading(state, fillIn(f.live.shot, { name })));
+    }
+  }
   const fixed: Record<string, string[]> = {
     roles: [n.nightFalls],
     night: [n.dawn, n.survived],
     dawn: [n.discuss, `${n.ghosts} ${n.discuss}`, n.hunter],
-    hunter: [n.discuss, n.sleeps],
+    hunter: [n.discuss, n.sleeps, ...castClips(state)],
     day: [n.vote],
     vote: [n.votesIn, n.tie],
     runoff: [n.votesIn, n.noAgree],

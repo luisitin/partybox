@@ -180,6 +180,9 @@
   padding: 0;
   list-style: none;
   overflow: hidden;
+  /* The oldest post fades out at the top instead of being sliced mid-line. */
+  -webkit-mask-image: linear-gradient(to bottom, transparent, var(--pb-text) 72px);
+  mask-image: linear-gradient(to bottom, transparent, var(--pb-text) 72px);
 }
 
 .post {
@@ -308,9 +311,11 @@
   }
 }
 
+/* Tall enough for the verdict's card, so it never covers the lines above ("A wolf!"). */
 .court {
   position: relative;
   width: 100%;
+  min-height: 340px;
   display: flex;
   justify-content: center;
 }

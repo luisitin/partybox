@@ -167,6 +167,19 @@
   font-weight: 800;
 }
 
+.miniDead {
+  width: 84px;
+}
+
+/* A grave's name and role may take two lines rather than being cut ("Vill…"). */
+.miniDead .miniName,
+.miniDead .miniTag {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-align: center;
+  line-height: 1.15;
+}
+
 .miniDead .miniFace {
   filter: grayscale(1);
   opacity: 0.6;
@@ -326,4 +339,36 @@
 :global(:root[data-motion='off']) .post,
 :global(:root[data-motion='off']) .result {
   animation: none;
+}
+
+/* A sideways phone (short and wide): the footer's post box and Ready sit side by side, and the
+   stack tightens, so the village stays above the fold. */
+@media (max-height: 500px) and (min-width: 560px) {
+  .stack {
+    gap: var(--pb-space-2);
+  }
+  .status {
+    min-height: 0;
+  }
+  .footer {
+    flex-direction: row;
+    align-items: stretch;
+  }
+  .footer > .postRow {
+    flex: 1;
+  }
+  .footer > :last-child {
+    flex: 1;
+  }
+}
+
+/* An iPhone SE (568 px tall): tighter rhythm, so eight faces, the strip and the status line fit
+   without the "more below" pill landing on the status line. */
+@media (max-height: 620px) {
+  .stack {
+    gap: var(--pb-space-2);
+  }
+  .status {
+    min-height: 2.6em;
+  }
 }

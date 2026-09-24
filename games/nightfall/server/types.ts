@@ -155,6 +155,8 @@ export interface State extends GameStateBase {
   stats: Record<string, Stats>;
   /** Reading lengths by key (ADR-045); -1 = could not be made. */
   speechMs: Record<string, number>;
+  /** Readings that came too late for their step: never played (reset each night). */
+  lateKeys: string[];
   /** The day the narrator says "Ghosts, stay silent" (the first day after the first death). */
   ghostsDay: number | null;
 }

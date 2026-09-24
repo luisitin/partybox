@@ -22,6 +22,7 @@ export function enterNight(state: State, now: number): State {
     stepAt: now,
     dayEndsAt: null,
     beats: [],
+    lateKeys: [],
   };
   return enterPhase(fresh, 'night', now, state.cfg.nightSeconds * 1000);
 }

@@ -11,8 +11,10 @@ import { useStepCue } from './useNarrator';
 import { Village } from './Village';
 import styles from './Tv.module.css';
 
+/** One cue per step. Not keyed on the deadline: a step re-times when its line arrives (or the
+ *  hunter shoots) and must not cue twice; each phase instance mounts the scene afresh. */
 function beat(view: NightfallTvView): string {
-  return `${view.phaseId}:${view.deadline ?? ''}:${view.step}`;
+  return `${view.phaseId}:${view.step}`;
 }
 
 function Lines({ view, big }: { view: NightfallTvView; big?: boolean }): JSX.Element {
@@ -35,8 +37,9 @@ function Lines({ view, big }: { view: NightfallTvView; big?: boolean }): JSX.Ele
 export function DawnScene({ view }: { view: NightfallTvView }): JSX.Element {
   const news = view.stage.news;
   const deaths = news ?? [];
+  // The phase maps to `silence` (its deadline moves each step): every cue is ours, the first too.
   const cue =
-    view.step === 1 ? (deaths.length > 0 ? 'bust' : 'cheer') : view.step === 2 ? 'card' : null;
+    view.step === 0 ? 'reveal' : view.step === 2 ? 'card' : deaths.length > 0 ? 'bust' : 'cheer';
   useStepCue(beat(view), cue);
   if (view.step === 0) {
     return (
@@ -95,7 +98,7 @@ export function DawnScene({ view }: { view: NightfallTvView }): JSX.Element {
 export function HunterScene({ view }: { view: NightfallTvView }): JSX.Element {
   const L = useT(STRINGS);
   const h = view.stage.hunter;
-  useStepCue(beat(view), view.step === 1 ? 'bust' : null);
+  useStepCue(beat(view), view.step === 0 ? 'wager' : view.step === 1 ? 'bust' : 'card');
   const hunter = h ? playerOf(view.players, h.id) : undefined;
   const shot = h?.shot ? playerOf(view.players, h.shot) : undefined;
   return (
@@ -116,7 +119,7 @@ export function HunterScene({ view }: { view: NightfallTvView }): JSX.Element {
             avatarId={shot.avatarId}
             cast={view.cast}
             role={h.role}
-            flipped={h.role !== null}
+            flipped={view.step >= 2 && h.role !== null}
             size="medium"
             dead
           />
@@ -145,18 +148,8 @@ export function VerdictScene({ view }: { view: NightfallTvView }): JSX.Element {
   const L = useT(STRINGS);
   const v = view.stage.verdict;
   const out = v?.out ?? null;
-  const cue =
-    view.step === 1
-      ? out
-        ? 'reveal'
-        : 'tie'
-      : view.step === 2
-        ? v?.role === 'wolf'
-          ? 'cheer'
-          : v?.role === 'jester'
-            ? 'jackpot'
-            : 'bust'
-        : null;
+  const flipCue = v?.role === 'wolf' ? 'cheer' : v?.role === 'jester' ? 'jackpot' : 'bust';
+  const cue = view.step === 0 ? 'tally' : view.step === 1 ? (out ? 'reveal' : 'tie') : flipCue;
   useStepCue(beat(view), cue);
   const who = out ? playerOf(view.players, out) : undefined;
   const reason =
@@ -167,6 +160,8 @@ export function VerdictScene({ view }: { view: NightfallTvView }): JSX.Element {
         : null;
   // The eliminated player stands with the living until the TV has shown the result.
   const standing = out && !view.living.includes(out) ? [...view.living, out] : view.living;
+  // A big room: smaller faces, and the graveyard waits for the day (the ballots need the room).
+  const crowded = standing.length > 10;
   return (
     <div className={styles.column}>
       {view.step === 0 ? (
@@ -181,11 +176,11 @@ export function VerdictScene({ view }: { view: NightfallTvView }): JSX.Element {
         <Village
           players={view.players}
           living={view.step >= 2 && out ? view.living : standing}
-          graveyard={view.step >= 2 ? [] : view.graveyard.filter((g) => g.id !== out)}
+          graveyard={view.step >= 2 || crowded ? [] : view.graveyard.filter((g) => g.id !== out)}
           cast={view.cast}
           ballots={v?.ballots ?? []}
           spotlight={view.step >= 1 ? out : null}
-          narrow={view.step >= 2 && out !== null}
+          narrow={crowded || (view.step >= 2 && out !== null)}
         />
         {view.step >= 2 && who ? (
           <div className={styles.overlay}>
@@ -196,6 +191,7 @@ export function VerdictScene({ view }: { view: NightfallTvView }): JSX.Element {
               role={v?.role ?? null}
               flipped
               flipAfterMs={520}
+              size="medium"
               dead
             />
           </div>

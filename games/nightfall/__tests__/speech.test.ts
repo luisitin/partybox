@@ -80,6 +80,8 @@ describe('speech', () => {
     });
     s = timer(s);
     expect(s.step).toBe(1);
+    expect(game.tvView(s).stage.hunter).toMatchObject({ shot: 'ben', role: null });
+    s = timer(s);
     expect(game.tvView(s).stage.hunter).toMatchObject({ shot: 'ben', role: 'wolf' });
   });
 

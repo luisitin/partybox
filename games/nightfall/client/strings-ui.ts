@@ -32,7 +32,7 @@ export const STRINGS_UI_ES: Record<string, string> = {
   "That's your 3 posts for today": 'Ya usaste tus 3 mensajes de hoy',
   'Write something first.': 'Escribe algo primero.',
   'Post to the town board': 'Publicar en el tablón del pueblo',
-  'Post… ({left} left)': 'Publica… (quedan {left})',
+  'Post… ({left} left)': 'Publica… ({left})',
   'No posts left today': 'Hoy ya no te quedan mensajes',
   Post: 'Publicar',
   '{ready} of {living} ready to vote': '{ready} de {living} listos para votar',

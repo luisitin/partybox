@@ -140,3 +140,10 @@
 :global(:root[data-motion='off']) .on .check {
   animation: none;
 }
+
+/* Sideways: six faces a row, so a whole village fits the short screen. */
+@media (max-height: 500px) and (min-width: 700px) {
+  .grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}

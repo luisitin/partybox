@@ -8,7 +8,9 @@ import { VOICE_BEAT_MS, readingNow, tonightsDeaths } from './speech';
 import type { State } from './types';
 
 /** The longest a step waits for the next step's reading. */
-export const HOLD_NEXT_MS = 6_000;
+export const HOLD_NEXT_MS = 8_000;
+/** A step's own reading that lands this late is not played: the words are up, the moment moved on. */
+export const LATE_MS = 1_500;
 
 /** The shortest time each step stays up, by phase and step. */
 export function stepMin(state: State): number | null {
@@ -21,7 +23,7 @@ export function stepMin(state: State): number | null {
       return [Math.min(5_200, 1_800 + ballots * 260), 2_800, 3_400][step] ?? null;
     }
     case 'hunter':
-      return step === 1 ? 4_600 : null;
+      return [null, 2_800, 3_400][step] ?? null;
     case 'last-words':
       return step === 1 ? 5_200 : null;
     default:
@@ -40,7 +42,8 @@ export function nextStep(state: State): number | null {
       if (step === 0) return 1;
       return step === 1 && state.cfg.revealRoles && state.verdict?.out ? 2 : null;
     case 'hunter':
-      return step === 0 && state.shot ? 1 : null;
+      if (step === 0) return state.shot ? 1 : null;
+      return step === 1 && state.cfg.revealRoles ? 2 : null;
     default:
       return null;
   }
@@ -92,6 +95,8 @@ export function applySpeech(state: State, key: string, ms: number, now: number):
   const step = nextStep(next);
   const upcoming = step !== null && readingNow({ ...next, step })?.key === key;
   if (!own && !upcoming) return next;
+  if (own && ms >= 0 && now - next.stepAt > LATE_MS)
+    return { ...next, lateKeys: [...next.lateKeys, key] };
   let until = next.stepAt + stepStay(next, min);
   if (own && ms >= 0) until = Math.max(until, now + ms + VOICE_BEAT_MS);
   return { ...next, phase: { ...next.phase, deadline: Math.max(until, now + 60) } };

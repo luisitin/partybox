@@ -33,6 +33,8 @@ describe('hunter', () => {
     expect(input(s, 'ana', { type: 'shoot', target: 'ben' }).shot).toBeNull();
     s = input(s, 'fay', { type: 'shoot', target: 'ben' });
     expect(s.step).toBe(1);
+    expect(game.tvView(s).stage.hunter).toEqual({ id: 'fay', shot: 'ben', role: null });
+    s = timer(s); // step 2: the card flips
     expect(game.tvView(s).stage.hunter).toEqual({ id: 'fay', shot: 'ben', role: 'wolf' });
     s = timer(s);
     expect(s.phase.id).toBe('day');
@@ -53,8 +55,7 @@ describe('hunter', () => {
     const roles = { ben: 'wolf', fay: 'hunter', ana: 'seer' } as const;
     let s = finish(night(toNight(start({ n: 6, roles })), {}));
     s = voteDay(s, { ana: 'fay', cy: 'fay', dee: 'fay' });
-    s = input(finish(s), 'fay', { type: 'shoot', target: 'ben' });
-    s = timer(s);
+    s = finish(input(finish(s), 'fay', { type: 'shoot', target: 'ben' }));
     expect(s.phase.id).toBe('end');
     expect(s.winner).toBe('village');
   });

@@ -71,7 +71,6 @@ export function PhoneStage({ view }: { view: PushedView<ControllerView> }): JSX.
             {L.sent(line)}
           </p>
         ))}
-        {s?.end ? <p className={styles.sub}>{L.sent(s.end.headline)}</p> : null}
         {dawnDeaths.length > 0 ? (
           <div className={stage.cards}>
             {dawnDeaths.map((d) => {
@@ -91,7 +90,6 @@ export function PhoneStage({ view }: { view: PushedView<ControllerView> }): JSX.
             })}
           </div>
         ) : null}
-        {v.phaseId === 'verdict' ? <Ballots view={v} /> : null}
         {outWho ? (
           <div className={stage.cards}>
             <RoleCard
@@ -105,6 +103,7 @@ export function PhoneStage({ view }: { view: PushedView<ControllerView> }): JSX.
             />
           </div>
         ) : null}
+        {v.phaseId === 'verdict' ? <Ballots view={v} /> : null}
         {v.report ? (
           <HoldCard strip back={L('Hold: night report')} label={L('Hold to see your night report')}>
             <span className={styles.jobLine}>{L.sent(v.report)}</span>

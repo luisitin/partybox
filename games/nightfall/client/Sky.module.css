@@ -249,8 +249,8 @@
     color-mix(in srgb, var(--pb-accent-2-fill) 22%, transparent) 0deg 7deg,
     transparent 7deg 22deg
   );
-  -webkit-mask-image: radial-gradient(circle, #000 20%, transparent 70%);
-  mask-image: radial-gradient(circle, #000 20%, transparent 70%);
+  -webkit-mask-image: radial-gradient(circle, var(--pb-text) 20%, transparent 70%);
+  mask-image: radial-gradient(circle, var(--pb-text) 20%, transparent 70%);
   animation: spin 40s linear infinite;
 }
 

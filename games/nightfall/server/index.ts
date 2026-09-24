@@ -80,6 +80,7 @@ function init(ctx: InitContext): State {
     days: [],
     stats,
     speechMs: {},
+    lateKeys: [],
     ghostsDay: null,
   };
   return enterRoles(base, ctx.now);

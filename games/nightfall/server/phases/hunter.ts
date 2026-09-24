@@ -24,6 +24,7 @@ function land(state: State, now: number): State {
 export function reduceHunter(state: State, event: GameEvent<Input>, next: Transition): State {
   if (isTimerFor(state, event)) {
     if (state.step === 0 && state.shot && isAlive(state, state.shot)) return land(state, event.now);
+    if (state.step === 1 && state.cfg.revealRoles) return enterStep(state, event.now, 2);
     return next(state, event.now);
   }
   if (event.type !== 'input' || event.input.type !== 'shoot' || state.step !== 0) return state;
@@ -35,5 +36,6 @@ export function reduceHunter(state: State, event: GameEvent<Input>, next: Transi
   const step = nextStep(aimed);
   const line = step === null ? null : readingNow({ ...aimed, step });
   if (!line || aimed.speechMs[line.key] !== undefined) return land(aimed, event.now);
-  return { ...aimed, phase: { ...aimed.phase, deadline: event.now + HOLD_NEXT_MS } };
+  // The room is watching the hunter take aim: the line may take longer here than at a reveal.
+  return { ...aimed, phase: { ...aimed.phase, deadline: event.now + HOLD_NEXT_MS + 3_000 } };
 }
