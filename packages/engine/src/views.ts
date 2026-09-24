@@ -77,6 +77,15 @@ export function snapshot(room: RoomState, deps: EngineDeps): RoomSnapshot {
     musicOnPhones: room.musicOnPhones,
     listed: room.listed,
     phoneOnly: room.phoneOnly,
+    ...(room.tonight?.length
+      ? {
+          tonight: room.tonight.map((g) => ({
+            gameId: g.gameId,
+            winners: g.winners,
+            botsWon: g.botsWon,
+          })),
+        }
+      : {}),
   };
 }
 

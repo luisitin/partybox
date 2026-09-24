@@ -5,12 +5,13 @@ import type { JSX } from 'react';
 import { LIMITS } from '@partybox/shared';
 import type { RoomSnapshot } from '@partybox/shared';
 import { useEffect, useState } from 'react';
-import { Avatar, BigText, PlayerChips, Stage, useT } from '@partybox/game-sdk/ui';
+import { Avatar, BigText, PlayerChips, Stage, useLang, useT } from '@partybox/game-sdk/ui';
 import type { Translator } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import { useServerInfo } from '../net/info';
 import { STRINGS } from './strings';
 import styles from './TvLobby.module.css';
+import { CROWDED_PLAYERS, Tonight, ordinal } from './Tonight';
 
 export interface TvLobbyProps {
   room: RoomSnapshot | null;
@@ -34,6 +35,7 @@ const LAST_UP_FACES = 4;
  *  scoreless game "no winner" in the muted colour with no face. */
 function LastUp({ room }: { room: RoomSnapshot }): JSX.Element | null {
   const L = useT(STRINGS);
+  const lang = useLang();
   const r = room.results;
   if (!r) return null;
   const game = room.games.find((g) => g.id === r.gameId)?.name ?? r.gameId;
@@ -43,6 +45,13 @@ function LastUp({ room }: { room: RoomSnapshot }): JSX.Element | null {
   const winners = (scored ? r.results.winnerIds : [])
     .map((id) => r.players.find((p) => p.id === id))
     .filter((p): p is NonNullable<typeof p> => p !== undefined);
+  // I-652 A: a win by bots only reads as what it is, with the best person named
+  const botsOnly = winners.length > 0 && winners.every((w) => w.bot === true);
+  const bestHuman = botsOnly
+    ? r.results.ranking
+        .map((row) => ({ row, p: r.players.find((p) => p.id === row.playerId) }))
+        .find((x) => x.p && !x.p.bot)
+    : undefined;
   const shown = winners.slice(0, LAST_UP_FACES);
   const more = winners.length - shown.length;
   const names = [...shown.map((w) => w.name), ...(more > 0 ? [`+${more}`] : [])];
@@ -51,6 +60,21 @@ function LastUp({ room }: { room: RoomSnapshot }): JSX.Element | null {
       <span className={styles.lastUpKicker}>{L('Last up · {game}', { game })}</span>
       {winners.length === 0 ? (
         <span className={`${styles.lastUpWinner} ${styles.lastUpNone}`}>{L('no winner')}</span>
+      ) : botsOnly ? (
+        <>
+          <span className={`${styles.lastUpWinner} ${styles.lastUpNone}`}>
+            {L('🤖 Bots took it')}
+          </span>
+          {bestHuman?.p ? (
+            <span className={styles.lastUpHuman}>
+              <Avatar avatarId={bestHuman.p.avatarId} size={32} />
+              {L('{name} led the humans · {place}', {
+                name: bestHuman.p.name,
+                place: ordinal(bestHuman.row.rank, lang),
+              })}
+            </span>
+          ) : null}
+        </>
       ) : (
         <span className={styles.lastUpWinner}>
           <span className={styles.lastUpFaces}>
@@ -212,7 +236,14 @@ export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
             <p className="pb-muted">{t.lobby.waitingFor(vip.name)}</p>
           ) : null}
           {/* I-073 A: the last game, still on the table until the next one starts. */}
-          {room?.results ? <LastUp room={room} /> : null}
+          {/* I-652 B: the last game and the night so far, side by side */}
+          <div
+            className={styles.afterRow}
+            data-crowded={players.length >= CROWDED_PLAYERS ? '' : undefined}
+          >
+            {room?.results ? <LastUp room={room} /> : null}
+            {room?.tonight && room.tonight.length > 1 ? <Tonight room={room} /> : null}
+          </div>
         </div>
       </div>
     </Stage>

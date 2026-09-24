@@ -232,6 +232,7 @@ session might want to undo. Never edit an old one — supersede it.
 **Context.** "Back to lobby" nulled `room.results`, so a room returning to the lobby carried no trace the game happened (I-073, the owner's pick A, 2026-09-21).
 **Decision.** The VIP's `toLobby` keeps `room.results`; the runner's start of the next game clears it as it already did. `RoomSnapshot.results` may therefore be non-null while `status` is `lobby`. The TV lobby shows a "Last up · <game>" card from it — one winner "won", several "tied" (faces first, four at most then "+n"), none "no winner" (the owner's note).
 **Consequences.** A phone ignores `results` outside the results stage today; a game never sees the snapshot. A reset (Home) still starts from a null result.
+**Addendum (I-652, the owner's pick C, 2026-09-24).** The room also keeps `tonight` — each finished game's id, its human winners and whether only bots won, the last six, a gap over 3 h starting a new night — and the snapshot carries it (optional, additive). The lobby reads a bots-only win as "🤖 Bots took it" with the best person under it, lays a "Tonight" card beside "Last up" (each game and its winner) and tallies the night's leader (bots never count). From 9 players the card sits beside "Last up" and keeps only the tally.
 
 ## ADR-040 — Phones can play the room's music; the VIP can turn it on for everyone
 
