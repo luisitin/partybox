@@ -76,4 +76,6 @@ each) and 59 topics (`SUBCATEGORIES` in `content/schema.ts`, 30+ questions each)
 `choices`, `answerIndex`, `source`. Widely documented, non-time-sensitive, family-friendly, mainstream
 (pub-quiz, not specialist), no question text repeated. `content/schema.ts` enforces ≥ 200 items, ≥ 6
 categories, unique ids, and that every topic belongs to its category; `__tests__/content.test.ts`
-enforces the balance.
+enforces the balance. The phone never downloads the questions (I-752): the wager arithmetic lives in
+`server/wager.ts`, which imports no content (A), and `__tests__/phone-bundle.test.ts` fails if any client
+file reaches the content (C).
