@@ -7,7 +7,7 @@
 // Transform-only flip (opacity beside a 3D turn flattens Chromium's 3D context — DESIGN_SYSTEM).
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import type { JSX, KeyboardEvent, ReactNode } from 'react';
-import { buzz } from '../ui/haptics';
+import { buzz } from '../../ui/haptics';
 import styles from './SecretCard.module.css';
 
 export type SecretCardMode = 'hold' | 'tap';

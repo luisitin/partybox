@@ -6,8 +6,8 @@
 // colour alone. The confirm button is the caller's (a Screen footer), so the grid stays a grid.
 import { useEffect, useRef, useState } from 'react';
 import type { JSX } from 'react';
-import { Avatar } from '../ui/Avatar';
-import { buzz } from '../ui/haptics';
+import { Avatar } from '../../ui/Avatar';
+import { buzz } from '../../ui/haptics';
 import styles from './FacePicker.module.css';
 
 export interface FaceOption {

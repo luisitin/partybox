@@ -5,5 +5,5 @@ export {
   getSecretCardMode,
   setSecretCardMode,
   useSecretCardMode,
-} from './pack/SecretCard';
-export type { SecretCardMode, SecretCardProps } from './pack/SecretCard';
+} from './pack/secret-card/SecretCard';
+export type { SecretCardMode, SecretCardProps } from './pack/secret-card/SecretCard';
