@@ -89,7 +89,8 @@ export function Show({
             ? L('a drawing')
             : L('a guess')}
       </p>
-      {page}
+      {/* I-228 A: the presenter holds the page they're reading out — a TV room too */}
+      {s.current ? <PhonePage key={`${s.book}:${s.page}`} page={s.current} /> : null}
       {vetoButton}
       <p className={styles.hint}>
         {L('Read it out, let everyone look, then turn the page.')}{' '}
@@ -116,7 +117,9 @@ function PhonePage({ page }: { page: PageView }): JSX.Element {
     return (
       <p className={styles.phonePage}>
         <span className={styles.phonePageWho}>{L('{name} drew', { name })}</span>
-        <DrawingView drawing={page.drawing} size="100%" label={L("{name}'s drawing", { name })} />
+        <span className={styles.phoneSheet}>
+          <DrawingView drawing={page.drawing} size="100%" label={L("{name}'s drawing", { name })} />
+        </span>
       </p>
     );
   return (
