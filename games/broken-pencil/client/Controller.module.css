@@ -271,3 +271,32 @@
   font-weight: 800;
   white-space: nowrap;
 }
+
+/* I-796 K: the page on the TV, in miniature on a TV room's phone — framed, quieter, capped so a
+   drawing never outgrows a thumbnail. */
+.thumb {
+  align-self: stretch;
+  display: grid;
+  gap: 4px;
+  padding: var(--pb-space-2) var(--pb-space-3);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  text-align: center;
+}
+.thumbOn {
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  color: var(--pb-text-muted);
+}
+.thumb .phonePage {
+  margin: 0;
+  justify-items: center;
+}
+/* the drawing is a thumbnail (a word keeps the full width, so it never breaks mid-word) */
+.thumb .phonePage > span:has(> svg) {
+  max-width: 220px;
+}
+.thumb .phoneWord {
+  font-size: var(--pb-font-h2);
+  overflow-wrap: normal;
+}

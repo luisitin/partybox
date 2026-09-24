@@ -55,6 +55,10 @@ measured against the deadline; if > 0).
   deadline. Every phase but `done` has a deadline, so an idle room finishes on timers alone.
 - I-288 A (a Lightning Round pick): the phones' clock follows the TV's `timerMode` — digits only in
   `answer` and `vote`, a quiet bar in the phases with nothing to press.
+- I-796 K (design review K): in a TV room the `reveal` phone is a quiet mirror, not "Look at the TV" —
+  "On the TV now · prompt n of 6", the prompt, both answers as mini cards ("yours" / "your pick"), the
+  authors at the TV's author beat and votes + points at its last (the winner outlined), and "You
+  weren't in this one: 1 more to go." An author's own result still follows the hold.
 
 ## Settings
 

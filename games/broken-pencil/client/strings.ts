@@ -106,6 +106,9 @@ export const STRINGS: Strings = {
     "{name}'s book · page {page} of {pages}. Your turn comes when your book is up.":
       'Libro de {name} · página {page} de {pages}. Te tocará cuando salga tu libro.',
     'Your book is up': '¡Sale tu libro!',
+    // I-796 K: a TV room's phone holds a thumbnail of the page on stage.
+    'On the TV now': 'Ahora en la TV',
+    'Your turn comes when your book is up.': 'Te tocará cuando salga tu libro.',
     'Your book is on the TV': 'Tu libro está en la TV',
     'your word': 'tu palabra',
     'a guess': 'una respuesta',

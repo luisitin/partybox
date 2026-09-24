@@ -15,6 +15,8 @@ round a player × (55 s + 4 s a player) — ~5 min at 4, ~12 at 8; from the host
 - The pick screen's how-to says rule 3 as the room will play it: "round the circle" only when every
   book goes round, else "It passes to N players in turn" (I-507 A).
 - Under the how-to a row shows a book's pages as they will be — 📖 ✏️ ❓ ✏️ ❓ · 5 pages (I-507 B).
+- I-796 K: in a TV room the `show` phones hold a framed thumbnail of the page on the TV ("On the TV
+  now", the drawing capped at 220 px) instead of a blank "X is presenting" wait.
 
 ## Players
 
