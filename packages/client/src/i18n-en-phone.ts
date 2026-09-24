@@ -32,6 +32,12 @@ export const enPhone = {
     quietForNow: 'quiet for now',
     roomQuiet: 'the room is quiet',
   },
+  /** I-792 E: the lobby's title row ("Lobby · 6 of 16"), its ⋯ menu and the rotating line. */
+  lobbyTop: {
+    count: (n: number, cap: number) => `${n} of ${cap}`,
+    more: 'More',
+    everyoneIn: "Everyone's in? Pick a game. Bots can fill empty seats.",
+  },
   /** I-082 A: the VIP's first-room tips, by id (vipTips.ts). */
   tips: {
     bots: 'Add bots to fill empty seats — they play for real.',

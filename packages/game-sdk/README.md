@@ -48,3 +48,6 @@ id without `#` behaves as before.
 
 A manifest setting may declare `impliedBy: { key, value, note }` (I-112 A, 2026-09-23): while the
 sibling `key` has `value`, the picker (phone and TV) greys the field out, checked, with `note`.
+
+`PlayerChip` takes `compact` (I-792 E, 2026-09-24): for a tight grid cell — no "you" tag (the label
+keeps "(you)"), the VIP tag is its ★ alone, and the glyph slot exists only while a glyph shows.
