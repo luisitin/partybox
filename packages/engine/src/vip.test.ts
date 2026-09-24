@@ -18,7 +18,7 @@ describe('VIP validation', () => {
     expect(room.musicOnPhones).toBe(false);
     const on = vip(room, { action: 'setMusicOnPhones', on: true });
     expect(on.room.musicOnPhones).toBe(true);
-    expect(effectTypes(on.effects)).toEqual(['push']);
+    expect(effectTypes(on.effects)).toEqual(['toast', 'push']); // I-642 C: the room is told
     expect(vip(on.room, { action: 'setMusicOnPhones', on: true }).effects).toEqual([]);
     expect(vip(playingRoom(2), { action: 'setMusicOnPhones', on: true }).room.musicOnPhones).toBe(
       true,
@@ -29,7 +29,7 @@ describe('VIP validation', () => {
     expect(room.recording).toBe(true);
     const off = vip(room, { action: 'setRecording', on: false });
     expect(off.room.recording).toBe(false);
-    expect(effectTypes(off.effects)).toEqual(['push']);
+    expect(effectTypes(off.effects)).toEqual(['toast', 'push']); // I-642 C: the room is told
     expect(vip(off.room, { action: 'setRecording', on: false }).effects).toEqual([]);
     expect(errorsOf(vip(playingRoom(2), { action: 'setRecording', on: false }).effects)).toEqual([
       'cannot_start',

@@ -186,3 +186,39 @@
   font-weight: 800;
   color: var(--pb-accent-2);
 }
+
+/* ── I-642 B: the room's switches as one row of state chips; it opens the ★ menu. */
+.roomRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  margin-bottom: var(--pb-space-3);
+  padding: var(--pb-space-2) var(--pb-space-3);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  text-align: left;
+}
+.roomLabel {
+  font-weight: 800;
+  margin-right: 2px;
+}
+.roomChip {
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--pb-text-muted) 45%, transparent);
+  color: var(--pb-text-muted);
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+}
+.roomOn {
+  border-color: var(--pb-accent);
+  color: var(--pb-text);
+}
+.roomEdit {
+  margin-left: auto;
+  font-size: var(--pb-font-h2);
+  line-height: 1;
+  color: var(--pb-text-muted);
+}

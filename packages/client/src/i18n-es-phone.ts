@@ -103,6 +103,15 @@ export const esPhone: Pick<Texts, keyof typeof enPhone> = {
     leads: (game, n) => `🙋 ${game} va ganando · ${n} ${n === 1 ? 'voto' : 'votos'}`,
     want: (n) => `${n} lo quieren`,
   },
+  roomRow: {
+    label: 'Sala',
+    recap: '📼 Resumen',
+    music: '🎵 Música en teléfonos',
+    phoneOnly: '📱 Solo teléfonos',
+    aria: (recap, music, phoneOnly) =>
+      `Sala: resumen ${recap ? 'sí' : 'no'}, música en todos los teléfonos ${music ? 'sí' : 'no'}, solo teléfonos ${phoneOnly ? 'sí' : 'no'} — cambiar`,
+    betweenGames: 'El resumen y Solo teléfonos cambian entre juegos.',
+  },
   fix: {
     removeToPlay: (n) => (n === 1 ? 'Quitar 1 bot para jugar' : `Quitar ${n} bots para jugar`),
     removeAll: (n) => (n === 1 ? 'Quitar el bot' : `Quitar los ${n} bots`),

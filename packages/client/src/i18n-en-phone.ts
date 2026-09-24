@@ -108,6 +108,16 @@ export const enPhone = {
     leads: (game: string, n: number) => `🙋 ${game} leads · ${n} ${n === 1 ? 'vote' : 'votes'}`,
     want: (n: number) => `${n} want this`,
   },
+  /** I-642 B: the picker's one-line Room row (the switches live in the ★ menu). */
+  roomRow: {
+    label: 'Room',
+    recap: '📼 Recap',
+    music: '🎵 Phone music',
+    phoneOnly: '📱 Phone only',
+    aria: (recap: boolean, music: boolean, phoneOnly: boolean) =>
+      `Room: recap ${recap ? 'on' : 'off'}, music on every phone ${music ? 'on' : 'off'}, phone only ${phoneOnly ? 'on' : 'off'} — change`,
+    betweenGames: 'Recap and Phone only change between games.',
+  },
   /** I-667: the one-tap fix under "can't start", and a card's fit line ("12 here · remove 4 bots"). */
   fix: {
     removeToPlay: (n: number) => (n === 1 ? 'Remove 1 bot to play' : `Remove ${n} bots to play`),

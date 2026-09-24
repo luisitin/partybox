@@ -53,6 +53,16 @@ const EXACT_ES: Readonly<Record<string, string>> = {
   'Bad bot payload.': 'No se pudo procesar esa acción del bot.',
   'Bad TV payload.': 'No se pudo procesar esa acción de la TV.',
   'This TV is not watching a room.': 'Esta TV no está mostrando ninguna sala.',
+  'Bad vote payload.': 'No se pudo procesar ese voto.',
+  // I-642 C: a room switch changed — the room is told (engine vip.ts).
+  '📼 Saving a recap of each game': '📼 Se guarda un resumen de cada juego',
+  '📼 Not saving recaps': '📼 No se guardan resúmenes',
+  '🎵 Music on every phone': '🎵 Música en todos los teléfonos',
+  '🎵 Music on the TV only — a phone can turn its own on':
+    '🎵 Música solo en la TV: cada teléfono puede activar la suya',
+  '📱 Phone-only room — the phones show what the TV would':
+    '📱 Sala solo con teléfonos: los teléfonos muestran lo que mostraría la TV',
+  '📺 The TV is the stage again': '📺 La TV vuelve a ser el escenario',
 };
 
 const PATTERNS_ES: readonly [RegExp, (m: RegExpMatchArray) => string][] = [
