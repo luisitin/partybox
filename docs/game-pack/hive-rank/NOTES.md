@@ -18,7 +18,14 @@ uses thin local stand-ins listed below.
   audit #23, so it lands in this game's chunk, never the entry). Test: `packages/client/src/order-picker.test.tsx`.
 - Record-review log: `reports/design/record-review/hive-rank/README.md`.
 
-## Decisions (made here, flagged for the owner)
+## The owner's rulings (2026-09-24)
+
+All five REVIEW.md recommendations approved ("go ahead with your initial build with all your
+recommendations"): bots' `hint` from their own view; spicy = half the rounds; phone-only keeps the
+Controller at `intro`/`score`; 200 % text may scroll the rank screen; OrderPicker ships with the
+game rather than ahead of it.
+
+## Decisions (made here, approved as above)
 
 1. **Bots read the writer's `expected` order from their own view** (`hint`, present only in a bot
    seat's controller view). Foundation §7.9 wants bots to decide from `controllerView`; SPEC §6.9
