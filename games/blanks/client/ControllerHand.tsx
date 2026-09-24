@@ -10,7 +10,7 @@ import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { BlanksControllerView } from '../server/index';
 import type { Input } from '../server/types';
 import { FilledCard } from './Cards';
-import { FanDots, NewHandCard, useFan } from './HandFan';
+import { FanDots, NewHandCard, useFan, useHandList } from './HandFan';
 import { NextButton } from './NextButton';
 import { STRINGS } from './strings';
 import styles from './blanks.module.css';
@@ -124,7 +124,18 @@ export function ControllerHand({ view, send, skip }: Props): JSX.Element {
   useEffect(() => () => clearTimeout(flight.current ?? undefined), []);
   // I-141 (the owner's design B): the fan's shape and where it is; the New hand card is the last.
   const [fanEl, setFanEl] = useState<HTMLUListElement | null>(null);
-  const at = useFan(fanEl, view.hand.length + 1);
+  // I-159: the hand is a list when the fan can't show a readable card — or when this phone says so
+  const auto = useHandList(fanEl);
+  const [mode, setMode] = useState<'fan' | 'list' | null>(() => {
+    try {
+      const m = localStorage.getItem('pb.blanks.hand');
+      return m === 'fan' || m === 'list' ? m : null;
+    } catch {
+      return null;
+    }
+  });
+  const list = mode ? mode === 'list' : auto;
+  const at = useFan(list ? null : fanEl, view.hand.length + 1);
   const black = view.black;
   const pick = black?.pick ?? 1;
   if (!black)
@@ -224,10 +235,28 @@ export function ControllerHand({ view, send, skip }: Props): JSX.Element {
     <Screen
       className="pb-enter"
       title={
-        <span className={styles.kicker}>
-          {pick > 1
-            ? L('Round {round} · pick {n}, in order', { round: view.round, n: pick })
-            : L('Round {round} · pick one', { round: view.round })}
+        <span className={styles.handTitle}>
+          <span className={styles.kicker}>
+            {pick > 1
+              ? L('Round {round} · pick {n}, in order', { round: view.round, n: pick })
+              : L('Round {round} · pick one', { round: view.round })}
+          </span>
+          {/* I-159 B: Fan or List, this phone's own choice */}
+          <button
+            type="button"
+            className={styles.handMode}
+            onClick={() => {
+              const next = list ? 'fan' : 'list';
+              setMode(next);
+              try {
+                localStorage.setItem('pb.blanks.hand', next);
+              } catch {
+                /* private mode: the choice lasts this visit */
+              }
+            }}
+          >
+            {list ? L('Fan') : L('List')}
+          </button>
         </span>
       }
       footer={
@@ -254,11 +283,11 @@ export function ControllerHand({ view, send, skip }: Props): JSX.Element {
           whites={picked.map((id) => view.hand.find((c) => c.id === id)?.text ?? '')}
           size="phone"
         />
-        <FanDots cards={view.hand.length} at={at} />
+        {list ? null : <FanDots cards={view.hand.length} at={at} />}
       </div>
       <ul
         ref={setFanEl}
-        className={`${styles.hand} ${flying ? styles.handFlying : ''}`}
+        className={`${styles.hand} ${list ? styles.handList : ''} ${flying ? styles.handFlying : ''}`}
         aria-label={L('your hand')}
         data-picking={picked.length > 0 || undefined}
       >

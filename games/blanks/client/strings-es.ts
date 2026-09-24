@@ -195,4 +195,7 @@ export const SCREENS_ES: Readonly<Record<string, string>> = {
   'called it:': 'acertaron:',
   // READER-VOICES: the voice reads the card.
   '🔊 Listen': '🔊 Escucha',
+  // I-159 B
+  Fan: 'Abanico',
+  List: 'Lista',
 };
