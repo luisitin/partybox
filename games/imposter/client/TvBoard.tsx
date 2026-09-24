@@ -34,6 +34,11 @@ export function TvBoard({
   const runoff = stage.runoff?.candidates ?? [];
   // One `card` pluck per dealt card, on the frame it turns (the shell's phase cue opens the reveal).
   const sound = useSound();
+  // clueReveal is mapped to 'silence' (it steps its deadline): its opening cue plays here, once.
+  useEffect(() => {
+    if (view.phaseId === 'clueReveal') sound('reveal', { gain: 0.8 });
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- once per mount (per phase)
+  }, []);
   const dealt = stage.board.filter((c) => c.dealt > 0).length;
   const last = useRef(dealt);
   useEffect(() => {

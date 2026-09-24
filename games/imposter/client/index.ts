@@ -29,12 +29,14 @@ export const clientModule: GameClientModule = {
   sounds: {
     intro: 'start',
     deal: 'card',
-    clueReveal: 'reveal',
+    // Paced reveals step their deadline (ADR-033), and the shell re-chimes a mapped cue on every
+    // step: these stay 'silence' and their scenes play 'reveal' once, on mount.
+    clueReveal: 'silence',
     talk: 'sweep',
     voteReveal: 'tally',
-    accuse: 'reveal',
+    accuse: 'silence',
     lastChance: 'wager',
-    wordReveal: 'reveal',
+    wordReveal: 'silence',
     scores: 'tally',
   },
   beds: {

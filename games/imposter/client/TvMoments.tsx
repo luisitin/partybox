@@ -8,13 +8,14 @@ import { Avatar, BigText, Scoreboard, Stage, useSound, useT } from '@partybox/ga
 import type { PushedView } from '@partybox/game-sdk/ui';
 import type { ImposterTvView } from '../server/index';
 import type { Why } from '../server/types';
-import { byId, pointsOf } from './shared';
+import { byId, pointsOf, useOpeningCue } from './shared';
 import { STRINGS } from './strings';
 import styles from './tv.module.css';
 
 type V = { view: PushedView<ImposterTvView> };
 
 export function TvAccuse({ view }: V): JSX.Element {
+  useOpeningCue('reveal');
   const L = useT(STRINGS);
   const play = useSound();
   const a = view.stage.accuse;
@@ -105,6 +106,7 @@ export function TvLastChance({ view }: V): JSX.Element {
 }
 
 export function TvWordReveal({ view }: V): JSX.Element {
+  useOpeningCue('reveal');
   const L = useT(STRINGS);
   const play = useSound();
   const r = view.stage.reveal;

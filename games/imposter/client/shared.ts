@@ -1,7 +1,7 @@
 // Small helpers shared by the TV, the phone and PhoneStage: who is who, points from reason chips,
 // the card's clue size, and the reader's clip (played once per key, never two at once).
 import { useEffect, useRef } from 'react';
-import { useSoundApi } from '@partybox/game-sdk/ui';
+import { useSound, useSoundApi } from '@partybox/game-sdk/ui';
 import type { ViewPlayer } from '@partybox/game-sdk/ui';
 import type { ImposterStage } from '../server/index';
 import type { Why } from '../server/types';
@@ -27,6 +27,14 @@ export function clueFontPx(text: string, players: number, cardWidth: number): nu
 export function cluesOf(stage: ImposterStage, id: string): string[] {
   const card = stage.board.find((c) => c.by === id);
   return card ? [...card.before, ...(card.now ? [card.now] : [])] : [];
+}
+
+/** The scene's opening cue, once per mount (for phases mapped to 'silence'). */
+export function useOpeningCue(cue: 'reveal' | 'tally'): void {
+  const play = useSound();
+  useEffect(() => {
+    play(cue, { gain: 0.8 });
+  }, [play, cue]);
 }
 
 /** Plays the reader's line once, the moment its clip is ready (ADR-045; mute-aware). */
