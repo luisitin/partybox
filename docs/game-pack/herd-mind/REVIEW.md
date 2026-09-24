@@ -27,7 +27,7 @@ Media is under `reports/design/record-review/herd-mind/` (gitignored images and 
 | Phone-only room                              | `p10-phoneonly/sheet.png`                                         |
 | Voice timing                                 | `p03/voice.json`, `p03/voice-sky3.json`                           |
 
-## Open questions (my recommendation first)
+## Decisions (owner, 2026-09-24: "go with whatever you think is appropriate" — all four recommendations stand)
 
 1. **Race track during `answer`.** The spec puts it along the bottom of the answer screen; the chip strip there already shows every score and ✓, and at 16 players the room is tight. I show the full race at `score` (lanes, +1, the sheep's flight). **Recommend: keep it at `score` only.**
 2. **Spicy pack tone.** It's R-rated party humour: dating, drinking, bathroom, suggestive bedroom questions, mild profanity in some answers. No slurs, no real people, nothing graphic. **Recommend: keep, and you skim `content/spicy.json` once.**

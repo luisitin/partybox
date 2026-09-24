@@ -46,6 +46,13 @@ interface Shared {
   sheepFrom: string | null;
   winners: string[];
   lines: Line[];
+  /** intro: who has tapped Ready, and when the 3 · 2 · 1 to question 1 ends (null: not yet). */
+  ready: string[];
+  startAt: number | null;
+  /** Who has their settings open (the room holds while this is not empty). */
+  holdBy: string[];
+  /** The last menu closed: the 3 · 2 · 1 back into the game ends at this time. */
+  resumeAt: number | null;
 }
 export type HerdTvView = TvView & Shared;
 export type HerdControllerView = ControllerView &
@@ -53,6 +60,8 @@ export type HerdControllerView = ControllerView &
     mine: { tile: string | null; text: string | null } | null;
     result: MyResult | null;
     points: number;
+    /** This phone's settings menu is open (the server's word, so a reload reopens it). */
+    menuOpen: boolean;
   };
 
 function statusOf(state: State): (id: string) => PlayerStatus {
@@ -132,6 +141,10 @@ function shared(state: State): Shared {
     sheepFrom: scoring ? state.q.sheepFrom : null,
     winners: state.winners,
     lines: lines(state),
+    ready: state.phase.id === 'intro' ? state.ready : [],
+    startAt: state.phase.id === 'intro' ? state.startAt : null,
+    holdBy: state.menus,
+    resumeAt: state.resumeAt,
   };
 }
 
@@ -168,5 +181,6 @@ export function controllerView(state: State, playerId: string, gameId: string): 
     mine: own ? { tile: own.tile ?? null, text: own.text ?? null } : null,
     result: scoring && state.phase.id === 'score' ? resultFor(state, playerId) : null,
     points: Object.hasOwn(state.scores, playerId) ? (state.scores[playerId] ?? 0) : 0,
+    menuOpen: state.menus.includes(playerId),
   };
 }

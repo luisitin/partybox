@@ -17,6 +17,7 @@ import type { HerdControllerView } from '../server/views';
 import { bannerAtMs, SPOKEN_AT_MS } from '../server/timing';
 import { useLines, useStageBeats } from './beats';
 import { kicker, resultLine, verdictLine } from './labels';
+import { SettingsPill } from './Settings';
 import { SheepCoin } from './SheepCoin';
 import { STRINGS } from './strings';
 import styles from './Controller.module.css';
@@ -25,26 +26,6 @@ type V = PushedView<HerdControllerView>;
 
 function vipButton(label: string, skip: (() => void) | undefined): JSX.Element | undefined {
   return skip ? <PrimaryButton onClick={skip}>{label}</PrimaryButton> : undefined;
-}
-
-export function PhoneIntro({ view, skip }: { view: V; skip?: () => void }): JSX.Element {
-  const L = useT(STRINGS);
-  return (
-    <Screen footer={vipButton(L("Let's go"), skip)}>
-      <div className={styles.introHead}>
-        <SheepCoin size="md" spin />
-        <h1 className={styles.title}>{L('Herd Mind')}</h1>
-      </div>
-      <ol className={styles.steps}>
-        <li>{L('Pick the answer you think most people will pick.')}</li>
-        <li>{L('The biggest group scores a point. A tie for biggest scores nothing.')}</li>
-        <li>
-          {L("Alone with your answer? You take the Black Sheep, and can't win while you hold it.")}
-        </li>
-      </ol>
-      <p className={styles.note}>{L('First to {target} points wins.', { target: view.target })}</p>
-    </Screen>
-  );
 }
 
 function GroupList({
@@ -101,6 +82,9 @@ export function PhoneHerd({
   if (!phoneOnly) {
     return (
       <Screen footer={vipButton(L('Next'), skip)}>
+        <div className={styles.topRight}>
+          <SettingsPill />
+        </div>
         <div className={styles.watch}>
           <span className={styles.eyes} aria-hidden>
             👀
@@ -115,7 +99,10 @@ export function PhoneHerd({
   }
   return (
     <Screen footer={vipButton(L('Next'), skip)}>
-      <p className={styles.kicker}>{kicker(view.n, view.total, view.target, L)}</p>
+      <div className={styles.kickerRow}>
+        <p className={styles.kicker}>{kicker(view.n, view.total, view.target, L)}</p>
+        <SettingsPill />
+      </div>
       <h2 className={styles.promptSmall}>{view.prompt}</h2>
       <p className={styles.verdict} aria-live="polite">
         {beat >= 2 ? verdictLine(view.outcome, herd?.label ?? '', L) : L('The answers are in…')}
@@ -147,6 +134,9 @@ export function PhoneScore({
     .sort((a, b) => (b.score ?? 0) - (a.score ?? 0) || a.name.localeCompare(b.name));
   return (
     <Screen footer={vipButton(last ? L('See the results') : L('Next question'), skip)}>
+      <div className={styles.topRight}>
+        <SettingsPill />
+      </div>
       <div className={styles.scoreBody}>
         {r ? (
           <div className={`${styles.result} ${styles[`r_${r.kind}`] ?? ''}`}>

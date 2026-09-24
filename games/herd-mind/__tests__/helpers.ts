@@ -76,13 +76,14 @@ export function timer(state: State): State {
   });
 }
 
-/** Past the intro, into question 1's `answer`. */
+/** Past the ready-up and its 3 · 2 · 1, into question 1's `answer`. */
 export function atAnswer(
   settings: Record<string, number | string | boolean> = {},
   n = 6,
   seed = 1,
 ): State {
-  return skip(start(settings, n, seed));
+  // the first skip starts the 3 · 2 · 1, the second ends it
+  return skip(skip(start(settings, n, seed)));
 }
 
 /** Tile ids in the order the current question shows them. */

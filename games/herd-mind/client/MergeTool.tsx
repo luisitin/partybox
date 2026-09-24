@@ -8,6 +8,7 @@ import { buzz, DeadlineBar, PrimaryButton, Screen, useT } from '@partybox/game-s
 import type { PushedView } from '@partybox/game-sdk/ui';
 import type { Input } from '../server/types';
 import type { GroupView, HerdControllerView } from '../server/views';
+import { SettingsPill } from './Settings';
 import { STRINGS } from './strings';
 import styles from './Controller.module.css';
 
@@ -68,7 +69,10 @@ export function MergeTool({
         </div>
       }
     >
-      <p className={styles.kicker}>{L('Same answer, different words? Tap two, then Merge.')}</p>
+      <div className={styles.kickerRow}>
+        <p className={styles.kicker}>{L('Same answer, different words? Tap two, then Merge.')}</p>
+        <SettingsPill />
+      </div>
       <ul className={styles.mergeList}>
         {groups.map((g) => {
           const on = live.includes(g.key);

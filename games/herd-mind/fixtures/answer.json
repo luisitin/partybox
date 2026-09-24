@@ -1,8 +1,8 @@
 {
   "phase": {
     "id": "answer",
-    "startedAt": 1700000030400,
-    "deadline": 1700000045400
+    "startedAt": 1700000085800,
+    "deadline": 1700000100800
   },
   "rng": {
     "seed": 11,
@@ -1140,5 +1140,10 @@
     "p2|p3": 2,
     "p4|p5": 2
   },
-  "speechMs": {}
+  "speechMs": {},
+  "ready": ["p1", "p2", "p3"],
+  "startAt": 1700000063400,
+  "menus": [],
+  "hold": null,
+  "resumeAt": null
 }

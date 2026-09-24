@@ -7,7 +7,8 @@ import { botInput } from './bot';
 import { drawQuestions } from './content';
 import { enterAnswer, freshQuestion, closeWhenAllIn, reduceAnswer } from './phases/answer';
 import { enterHerd, reduceHerd, retimeHerd } from './phases/herd';
-import { enterIntro, reduceIntro } from './phases/intro';
+import { checkReady, enterIntro, reduceIntro, startCountdown } from './phases/intro';
+import { applyMenu, clearHold, releaseMenu } from './hold';
 import { enterDone, enterScore, reduceScore } from './phases/score';
 import { recap } from './recap';
 import { results } from './scoring';
@@ -60,6 +61,11 @@ function init(ctx: InitContext): State {
     stats: Object.fromEntries(ctx.players.map((p) => [p.id, { herd: 0, alone: 0, sheepHeld: 0 }])),
     pairs: {},
     speechMs: {},
+    ready: [],
+    startAt: null,
+    menus: [],
+    hold: null,
+    resumeAt: null,
   };
   return enterIntro(base, ctx.now);
 }
@@ -68,7 +74,8 @@ function init(ctx: InitContext): State {
 export function advance(state: State, now: number): State {
   switch (state.phase.id) {
     case 'intro':
-      return enterAnswer(state, now, 0);
+      // The VIP's Start now (or the ready-up running out) starts the 3 · 2 · 1; its end, question 1.
+      return state.startAt === null ? startCountdown(state, now) : enterAnswer(state, now, 0);
     case 'answer':
       return enterHerd(state, now);
     case 'herd':
@@ -93,7 +100,9 @@ function onPlayer(state: State, event: GameEvent<Input>): State {
       sheep: next.sheep === event.playerId ? null : next.sheep,
     };
   }
-  return next.phase.paused ? next : closeWhenAllIn(next, event.now);
+  // A phone that drops or leaves with its settings open no longer holds the room.
+  if (!event.connected || event.gone) next = releaseMenu(next, event.playerId, event.now);
+  return next.phase.paused ? next : checkReady(closeWhenAllIn(next, event.now), event.now);
 }
 
 function reduce(state: State, event: GameEvent<Input>): State {
@@ -104,9 +113,13 @@ function reduce(state: State, event: GameEvent<Input>): State {
     return retimeHerd({ ...state, speechMs: { ...state.speechMs, [event.key]: ms } }, event.now);
   }
   // VIP skip = the phase's normal exit; VIP end always jumps to done. Pause/resume shift the deadline.
-  const vip = applyVip(state, event, { skip: advance, end: enterDone });
+  // Skip and end move the room on, so nobody's settings menu holds what comes next.
+  const moving = event.type === 'vip' && (event.action === 'skip' || event.action === 'end');
+  const vip = applyVip(moving ? clearHold(state) : state, event, { skip: advance, end: enterDone });
   if (vip) return vip;
   if (state.phase.paused) return state; // inputs and timers wait while paused
+  if (event.type === 'input' && event.input.type === 'menu')
+    return applyMenu(state, event.playerId, event.input.open, event.now);
   switch (state.phase.id) {
     case 'intro':
       return reduceIntro(state, event, advance);

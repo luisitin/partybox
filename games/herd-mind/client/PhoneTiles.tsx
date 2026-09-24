@@ -8,6 +8,7 @@ import type { PushedView } from '@partybox/game-sdk/ui';
 import type { Input } from '../server/types';
 import type { HerdControllerView } from '../server/views';
 import { kicker } from './labels';
+import { SettingsPill } from './Settings';
 import { WaitingFor } from './WaitingFor';
 import { STRINGS } from './strings';
 import styles from './Controller.module.css';
@@ -63,7 +64,10 @@ export function PhoneTiles({
       }
     >
       <header className={styles.ask}>
-        <p className={styles.kicker}>{kicker(view.n, view.total, view.target, L)}</p>
+        <div className={styles.kickerRow}>
+          <p className={styles.kicker}>{kicker(view.n, view.total, view.target, L)}</p>
+          <SettingsPill />
+        </div>
         <h2 className={styles.prompt} lang="en">
           {view.prompt}
         </h2>

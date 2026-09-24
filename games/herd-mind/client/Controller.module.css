@@ -9,6 +9,66 @@
   gap: var(--pb-space-1);
 }
 
+/* The kicker and the ⚙️ share a row, so the settings button costs no height. */
+.kickerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--pb-space-2);
+  min-width: 0;
+}
+
+.topRight {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.pushRight {
+  margin-left: auto;
+}
+
+.readyBar {
+  display: grid;
+  gap: var(--pb-space-2);
+}
+
+.readyLine {
+  margin: 0;
+  min-height: var(--pb-touch);
+  display: grid;
+  place-items: center;
+  text-align: center;
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  color: var(--pb-accent-3);
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.sheepCard {
+  display: grid;
+  gap: var(--pb-space-2);
+  padding: var(--pb-space-3) var(--pb-space-4);
+  border-radius: var(--pb-radius-lg);
+  border: 3px solid var(--pb-accent-2-fill);
+  background: var(--pb-surface);
+  font-size: var(--pb-font-body);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.sheepCard p {
+  margin: 0;
+}
+
+.sheepTitle {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+}
+
 .kicker {
   margin: 0;
   font-size: var(--pb-font-caption);

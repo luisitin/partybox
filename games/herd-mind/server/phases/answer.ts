@@ -36,7 +36,8 @@ export function enterAnswer(state: State, now: number, n: number): State {
 /** Everyone connected is in: close the phase after a beat (never later than it already would). */
 export function closeWhenAllIn(state: State, now: number): State {
   const answered = Object.keys(state.q.answers).filter((id) => !state.left.includes(id));
-  if (state.phase.id !== 'answer' || !allConnectedDone(state, answered)) return state;
+  // Never during a settings hold: the clock is stopped and must stay stopped.
+  if (state.phase.id !== 'answer' || state.hold || !allConnectedDone(state, answered)) return state;
   const deadline = Math.min(state.phase.deadline ?? now + ALL_IN_MS, now + ALL_IN_MS);
   return deadline === state.phase.deadline
     ? state

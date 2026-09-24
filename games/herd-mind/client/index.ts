@@ -10,9 +10,11 @@ export const clientModule: GameClientModule = {
   strings: STRINGS,
   Tv: lazy(() => import('./Tv').then((m) => ({ default: m.Tv }))),
   Controller: lazy(() => import('./Controller').then((m) => ({ default: m.Controller }))),
-  // SPEC §2.4: `phase` (pick up your phone) for each question; `tally` as the answers land (the
-  // game adds a cheer or a bust on the verdict and a sweep when the sheep moves).
-  sounds: { herd: 'tally', score: 'silence' },
+  // SPEC §2.4: `phase` (pick up your phone) for each question. `herd` and `score` play their own
+  // cues (TvHerd: the tally as the cards take off, then a cheer or a bust; TvScore: the sweep):
+  // the shell re-chimes a mapped phase whenever its deadline moves, and both re-time (the voice,
+  // the settings hold), so they map to `silence`.
+  sounds: { herd: 'silence', score: 'silence' },
   // The herd's own entrance is the choreography: cut into it, don't rise under a ghost.
   quickInto: ['herd'],
   // The strip never leads the stage: no running totals while the herd lands.
@@ -23,6 +25,7 @@ export const clientModule: GameClientModule = {
     return view.phaseId === 'score' && sheep ? [sheep] : [];
   },
   // The pens and the lanes show every face: the stage takes the room there.
-  stripHidden: ['herd', 'score'],
+  // The ready-up shows every face in its own row; the pens and the lanes show them too.
+  stripHidden: ['intro', 'herd', 'score'],
   beds: { intro: 'bossa', answer: 'bossa', herd: 'bossa', score: 'warm' },
 };

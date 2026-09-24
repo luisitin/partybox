@@ -1,0 +1,267 @@
+/* In-game settings: the ⚙️ button, the sheet, the hold curtain and the 3 · 2 · 1. Tokens only;
+   transform/opacity motion. The scrim covers the screen so nothing behind takes a stray tap. */
+.pill {
+  flex: none;
+  width: var(--pb-touch);
+  height: var(--pb-touch);
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  border: 2px solid var(--pb-surface-2);
+  background: var(--pb-surface);
+  color: var(--pb-text);
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--pb-motion-fast) var(--pb-ease);
+}
+
+.pill:active {
+  transform: scale(0.92);
+}
+
+.pill:focus-visible {
+  outline: 3px solid var(--pb-focus);
+  outline-offset: 2px;
+}
+
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--pb-space-4);
+  padding-bottom: calc(var(--pb-space-4) + env(safe-area-inset-bottom));
+  /* near-solid: the screen behind must not read through the words on top */
+  background: color-mix(in srgb, var(--pb-bg) 92%, transparent);
+  overscroll-behavior: contain;
+  touch-action: manipulation;
+  animation: global(pb-fade-in) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.sheet {
+  align-self: stretch;
+  margin-top: auto;
+  max-height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--pb-space-2);
+  padding: var(--pb-space-4);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-bg);
+  border: 3px solid var(--pb-surface-2);
+  animation: settings-sheet-up var(--pb-motion-base) var(--pb-ease) both;
+}
+
+@keyframes settings-sheet-up {
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+.title {
+  margin: 0 0 var(--pb-space-2);
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+}
+
+.title small {
+  display: block;
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  color: var(--pb-text-muted);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--pb-space-3);
+  min-height: 56px;
+  padding: var(--pb-space-2) var(--pb-space-3);
+  border-radius: var(--pb-radius);
+  border: 2px solid var(--pb-border);
+  background: var(--pb-surface);
+  color: var(--pb-text);
+  font: inherit;
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  text-align: left;
+  cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.rowText {
+  display: grid;
+  min-width: 0;
+}
+
+.rowText small {
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  color: var(--pb-text-muted);
+  overflow-wrap: anywhere;
+}
+
+/* A switch that reads without colour: the knob sits left (off) or right (on). */
+.switch {
+  position: relative;
+  width: 52px;
+  height: 30px;
+  border-radius: 999px;
+  background: var(--pb-surface-2);
+  border: 2px solid var(--pb-text-muted);
+  transition: background-color var(--pb-motion-fast) var(--pb-ease);
+}
+
+.knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--pb-text-muted);
+  transition: transform var(--pb-motion-fast) var(--pb-ease);
+}
+
+.rowOn .switch {
+  background: var(--pb-accent-3);
+  border-color: var(--pb-accent-3);
+}
+
+.rowOn .knob {
+  background: var(--pb-on-accent);
+  transform: translateX(22px);
+}
+
+.note {
+  margin: var(--pb-space-1) 0 var(--pb-space-2);
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+  text-align: center;
+}
+
+.curtain {
+  display: grid;
+  justify-items: center;
+  gap: var(--pb-space-4);
+  max-width: 22rem;
+  text-align: center;
+  animation: global(pb-land) var(--pb-motion-slow) var(--pb-ease) both;
+}
+
+.pauseGlyph {
+  font-size: var(--pb-font-display);
+  line-height: 1;
+}
+
+.curtainLine {
+  margin: 0;
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  line-height: 1.3;
+}
+
+/* The 3 · 2 · 1: a gold ring drains over the three seconds while each digit pops in. A 52 px
+   radius has a 326.7 px circumference. */
+.countWrap {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  display: grid;
+  place-items: center;
+}
+
+.tv .countWrap {
+  width: 320px;
+  height: 320px;
+}
+
+.ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.ringTrack,
+.ringFill {
+  fill: none;
+  stroke-width: 8;
+  stroke-linecap: round;
+}
+
+.ringTrack {
+  stroke: var(--pb-surface-2);
+}
+
+.ringFill {
+  stroke: var(--pb-accent-2-fill);
+  stroke-dasharray: 326.7;
+  animation: settings-ring 3s linear both;
+}
+
+@keyframes settings-ring {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: 326.7;
+  }
+}
+
+.count {
+  font-size: var(--pb-font-display);
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  animation: global(pb-tick) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.tv .count {
+  font-size: 180px;
+}
+
+.countLine {
+  margin: var(--pb-space-4) 0 0;
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrim,
+  .sheet,
+  .curtain,
+  .count,
+  .ringFill {
+    animation: none;
+  }
+}
+
+:global(:root[data-motion='off']) .scrim,
+:global(:root[data-motion='off']) .sheet,
+:global(:root[data-motion='off']) .curtain,
+:global(:root[data-motion='off']) .count,
+:global(:root[data-motion='off']) .ringFill {
+  animation: none;
+}

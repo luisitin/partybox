@@ -125,5 +125,53 @@ export const STRINGS: Strings = {
     'Watching this game': 'Estás mirando este juego',
     'You can play in the next one.': 'Puedes jugar en el siguiente.',
     'Thanks for playing!': '¡Gracias por jugar!',
+    // the ready-up (owner's play-test, 2026-09-24)
+    "I'm ready": '¡Estoy listo!',
+    'Start now': 'Empezar ya',
+    '✓ Ready · waiting for {names}': '✓ Listo · esperando a {names}',
+    '✓ Everyone is ready': '✓ Todos están listos',
+    'Everyone is ready!': '¡Todos están listos!',
+    '{name} is ready': '{name} está listo',
+    '{ready} of {total} ready · tap “I’m ready” on your phone':
+      '{ready} de {total} listos · toca «¡Estoy listo!» en tu teléfono',
+    'Question 1 coming up': 'Ya viene la pregunta 1',
+    'Back to the game': 'Volvemos al juego',
+    'Pick the answer you think MOST people will pick — not your favourite.':
+      'Elige la respuesta que crees que elegirá la MAYORÍA, no tu favorita.',
+    'The biggest group scores 1 point each. A tie for biggest? Nobody scores.':
+      'El grupo más grande suma 1 punto cada quien. ¿Empate por el más grande? Nadie suma.',
+    'You can change your pick until time runs out.':
+      'Puedes cambiar tu respuesta hasta que se acabe el tiempo.',
+    'The Black Sheep': 'La Oveja Negra',
+    'The only one alone on an answer gets the Black Sheep.':
+      'Quien se quede solo con una respuesta se lleva la Oveja Negra.',
+    "While you hold it, you can't win — even at {target} points.":
+      'Mientras la tengas no puedes ganar, ni siquiera con {target} puntos.',
+    'It leaves you when someone else is the only one alone. Two or more alone? It stays put.':
+      'Se va cuando otra persona es la única que queda sola. ¿Dos o más solos? Se queda donde está.',
+    'First to {target} points without the sheep wins.':
+      'Gana quien llegue primero a {target} puntos sin la oveja.',
+    // in-game settings (owner's play-test, 2026-09-24)
+    Settings: 'Ajustes',
+    on: 'sí',
+    off: 'no',
+    'the game waits for you': 'el juego te espera',
+    Music: 'Música',
+    'on this phone': 'en este teléfono',
+    Sounds: 'Sonidos',
+    'taps, the reader': 'toques, el lector',
+    Vibration: 'Vibración',
+    'a buzz when you tap': 'vibra al tocar',
+    Motion: 'Movimiento',
+    'cards fly, pens rise': 'las tarjetas vuelan, los corrales suben',
+    'Theme: the 🎨 in the top bar, any time.': 'Tema: el 🎨 de la barra de arriba, cuando quieras.',
+    Done: 'Listo',
+    '{name} is changing their settings. The game waits.':
+      '{name} está cambiando sus ajustes. El juego espera.',
+    '{count} people are changing their settings. The game waits.':
+      '{count} personas están cambiando sus ajustes. El juego espera.',
+    'Change my settings too': 'Cambiar mis ajustes también',
+    'Anyone can change theirs: tap ⚙️ on your phone.':
+      'Cualquiera puede cambiar los suyos: toca ⚙️ en tu teléfono.',
   },
 };

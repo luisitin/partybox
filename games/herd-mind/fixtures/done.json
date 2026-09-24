@@ -1,7 +1,7 @@
 {
   "phase": {
     "id": "done",
-    "startedAt": 1700000054300,
+    "startedAt": 1700000109700,
     "deadline": null
   },
   "rng": {
@@ -1168,5 +1168,10 @@
     "p2|p4": 1,
     "p3|p4": 1
   },
-  "speechMs": {}
+  "speechMs": {},
+  "ready": ["p1", "p2", "p3"],
+  "startAt": 1700000063400,
+  "menus": [],
+  "hold": null,
+  "resumeAt": null
 }

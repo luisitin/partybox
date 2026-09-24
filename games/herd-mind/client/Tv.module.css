@@ -11,8 +11,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: var(--pb-space-7);
+  justify-content: safe center;
+  gap: var(--pb-space-4);
 }
 
 .titleRow {
@@ -23,8 +23,8 @@
 }
 
 .tagline {
-  margin: var(--pb-space-2) 0 0;
-  font-size: var(--pb-font-h2);
+  margin: var(--pb-space-1) 0 0;
+  font-size: var(--pb-font-body);
   font-weight: 700;
   color: var(--pb-text-muted);
 }
@@ -46,8 +46,8 @@
   grid-template-columns: auto 1fr;
   grid-template-rows: auto auto;
   align-items: center;
-  gap: var(--pb-space-3) var(--pb-space-4);
-  padding: var(--pb-space-5);
+  gap: var(--pb-space-2) var(--pb-space-4);
+  padding: var(--pb-space-4) var(--pb-space-5);
   border-radius: var(--pb-radius-lg);
   background: var(--pb-surface);
   border: 4px solid var(--pb-border);
@@ -104,12 +104,123 @@
   font-size: var(--pb-font-h2);
 }
 
-.firstTo {
+.sheepRule {
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-5);
+  width: 100%;
+  max-width: 1600px;
+  padding: var(--pb-space-4) var(--pb-space-5);
+  border-radius: var(--pb-radius-lg);
+  border: 4px solid var(--pb-accent-2-fill);
+  background: var(--pb-surface);
+  font-size: var(--pb-font-body);
+  font-weight: 700;
+  line-height: 1.3;
+  animation: tv-rule-deal var(--pb-motion-slow) var(--pb-ease) calc(500ms + var(--i) * 450ms) both;
+}
+
+.sheepRule p {
+  margin: 0;
+}
+
+.sheepRuleTitle {
+  margin: 0 0 var(--pb-space-1);
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+}
+
+.readyRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pb-space-3) var(--pb-space-5);
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) 2300ms both;
+}
+
+.readyFaces {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--pb-space-3);
+}
+
+.readyFaces li {
+  position: relative;
+}
+
+.readyOff {
+  opacity: 0.55;
+}
+
+.readyOn {
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+/* A ✓ badge on the face: ready never reads by colour or dimming alone. */
+.readyTick {
+  position: absolute;
+  right: -6px;
+  bottom: -6px;
+  min-width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--pb-accent-3);
+  color: var(--pb-on-accent);
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.readyOff .readyTick {
+  display: none;
+}
+
+.readyCount {
   margin: 0;
   font-size: var(--pb-font-body);
   font-weight: 800;
   color: var(--pb-accent-2);
-  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) 1900ms both;
+  animation: global(pb-tick) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+/* The settings hold: the stage waits under a curtain that says who and why. */
+.hold {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pb-space-4);
+  padding: var(--pb-space-8);
+  background: color-mix(in srgb, var(--pb-bg) 92%, transparent);
+  text-align: center;
+  animation: global(pb-fade-in) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.holdGlyph {
+  font-size: 140px;
+  line-height: 1;
+}
+
+.holdLine {
+  margin: 0;
+  font-size: var(--pb-font-h1);
+  font-weight: 900;
+}
+
+.holdHint {
+  margin: 0;
+  font-size: var(--pb-font-body);
+  font-weight: 700;
+  color: var(--pb-text-muted);
 }
 
 /* ── answer ── */
@@ -260,7 +371,11 @@
 
 @media (prefers-reduced-motion: reduce) {
   .rule,
-  .firstTo,
+  .sheepRule,
+  .readyRow,
+  .readyOn,
+  .readyCount,
+  .hold,
   .prompt,
   .tile,
   .typeCard,
@@ -270,7 +385,11 @@
 }
 
 :global(:root[data-motion='off']) .rule,
-:global(:root[data-motion='off']) .firstTo,
+:global(:root[data-motion='off']) .sheepRule,
+:global(:root[data-motion='off']) .readyRow,
+:global(:root[data-motion='off']) .readyOn,
+:global(:root[data-motion='off']) .readyCount,
+:global(:root[data-motion='off']) .hold,
 :global(:root[data-motion='off']) .prompt,
 :global(:root[data-motion='off']) .tile,
 :global(:root[data-motion='off']) .typeCard,

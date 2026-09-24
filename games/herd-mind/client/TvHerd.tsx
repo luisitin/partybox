@@ -71,6 +71,13 @@ export function TvHerd({ view }: { view: PushedView<HerdTvView> }): JSX.Element 
   const herdGroup = groups.find((g) => g.key === view.herd);
   useLines(view.lines, { spoken: 1, herd: 2, tie: 2, baa: 2 }, beat);
   // The verdict's sound: a cheer for a herd, a bust for a tie or a scatter (once per outcome).
+  // The tally as the first cards take off (once, here — see client/index.ts `sounds`).
+  const tallied = useRef(false);
+  useEffect(() => {
+    if (tallied.current || view.paused) return;
+    tallied.current = true;
+    play('tally');
+  }, [view.paused, play]);
   const cued = useRef('');
   const outcomeKey = `${view.outcome}:${view.herd ?? ''}`;
   useEffect(() => {
