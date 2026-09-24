@@ -1744,3 +1744,57 @@
   background: var(--pb-surface-3, rgba(255, 255, 255, 0.16));
   box-shadow: inset 0 0 0 2px var(--pb-surface-2);
 }
+
+/* ── I-148 A: the hand, dimmed, while the judge decides. */
+.peekHand {
+  display: flex;
+  gap: var(--pb-space-2);
+  overflow-x: auto;
+  margin: var(--pb-space-3) 0 0;
+  padding: 0 var(--pb-space-3) var(--pb-space-2);
+  list-style: none;
+  opacity: 0.55;
+  transition: opacity var(--pb-motion-base) var(--pb-ease);
+  scrollbar-width: none;
+  /* The waiting screen centres its children: without a width the row grew to all ten cards and
+     hung off both edges of the phone, the first card cut in half and out of reach (probe on an
+     iPhone SE, Session C). As wide as the questions above it, scrolling inside. */
+  width: 100%;
+  max-width: 34rem;
+  text-align: left;
+}
+.peekHand > li {
+  flex: none;
+}
+.peekHandCard {
+  display: block;
+  width: 9.5rem;
+  min-height: 5.5rem;
+  padding: var(--pb-space-2);
+  border-radius: var(--pb-radius-sm, 8px);
+  background: var(--pb-card, #f2ede3);
+  color: #15121b;
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+/* ── I-148 C: the judge has taken one — the hand comes up as the losers step back. */
+.peekHandLit {
+  opacity: 1;
+}
+
+/* ── I-148 B: a setup you can try your card in. */
+.tryOn {
+  /* FIRST BUILD WAS WRONG (audit 2026-09-22): without a width and an alignment the button's own
+     defaults centred each setup and shrank a one-line one to its text — B no longer looked like A. */
+  display: block;
+  width: 100%;
+  text-align: start;
+  cursor: pointer;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+}

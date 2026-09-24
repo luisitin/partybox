@@ -64,3 +64,21 @@ describe('pick (czar mode)', () => {
     expect(tv(untimed).timerMode).toBe('hidden');
   });
 });
+
+describe('the hand while the judge picks (I-148 A)', () => {
+  it('reaches every answerer during pick, never the judge, and nothing is playable yet', () => {
+    const s = timer(start({ judge: 'czar', players: 4, timed: true }));
+    expect(s.phase.id).toBe('pick');
+    const judge = s.czarId as string;
+    const other = s.order.find((id) => id !== judge) as string;
+    expect(cv(s, judge).hand).toEqual([]);
+    const hand = cv(s, other).hand;
+    expect(hand.length).toBe(s.hands[other]?.length);
+    expect(hand.length).toBeGreaterThan(0);
+    // A play during pick is still refused.
+    const ids = hand.slice(0, 1).map((c) => c.id);
+    expect(
+      reduce(s, { type: 'input', now: T0, playerId: other, input: { type: 'play', cards: ids } }),
+    ).toBe(s);
+  });
+});

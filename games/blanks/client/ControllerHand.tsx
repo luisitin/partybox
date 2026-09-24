@@ -5,7 +5,7 @@
 // sees the black card and the count instead of a hand.
 import { useEffect, useRef, useState } from 'react';
 import type { CSSProperties, JSX } from 'react';
-import { Avatar, PrimaryButton, Screen, WaitingScreen, useT } from '@partybox/game-sdk/ui';
+import { PrimaryButton, Screen, WaitingScreen, useT } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { BlanksControllerView } from '../server/index';
 import type { Input } from '../server/types';
@@ -38,78 +38,6 @@ function Table({ view }: { view: BlanksControllerView }): JSX.Element {
         />
       ))}
     </div>
-  );
-}
-
-/** czar mode: the judge taps one of three black cards; everyone else sees who is choosing. */
-export function ControllerPick({ view, send }: Props): JSX.Element {
-  const L = useT(STRINGS);
-  const [sent, setSent] = useState<number | null>(null);
-  // Until the judge has taken one, all three read the same: dimming them before that made the
-  // waiting screen look disabled (loop #204).
-  const taken = view.blackChoices.some((b) => b.chosen);
-  if (view.role !== 'judge') {
-    return (
-      <WaitingScreen
-        title={
-          view.czar
-            ? L('{name} is picking the question', { name: view.czar.name })
-            : L('The judge is picking the question')
-        }
-        hint={L('Your hand is next — the card they choose is the one you play on.')}
-        mood="watch"
-      >
-        {view.czar ? (
-          <span className={styles.judgeChip}>
-            <Avatar avatarId={view.czar.avatarId} size="var(--pb-chip-size)" />
-            {view.czar.name}
-          </span>
-        ) : null}
-        {/* The three questions are on the TV for everyone anyway: a phone-only room sees them
-            here too, and the one the judge takes lights up while the others step back (loop
-            #204). */}
-        {view.blackChoices.length > 0 ? (
-          <ul className={styles.peekList} aria-label={L('the questions on the table')}>
-            {view.blackChoices.map((b, i) => (
-              <li key={i} className={b.chosen ? styles.peekOn : taken ? styles.peekOff : undefined}>
-                <FilledCard text={b.text} pick={b.pick} size="mini" winner={b.chosen} />
-              </li>
-            ))}
-          </ul>
-        ) : null}
-      </WaitingScreen>
-    );
-  }
-  return (
-    <Screen
-      className="pb-enter"
-      title={
-        <span className={styles.kicker}>
-          {L('Round {round} · you judge — pick the question', { round: view.round })}
-        </span>
-      }
-    >
-      <ul className={styles.choiceList} aria-label={L('the black cards')}>
-        {view.blackChoices.map((b, i) => (
-          <li key={i}>
-            <button
-              type="button"
-              className={`${styles.choice} ${sent === i ? styles.choiceOn : ''}`}
-              disabled={sent !== null}
-              aria-pressed={sent === i}
-              onClick={() => {
-                if (sent !== null) return;
-                setSent(i);
-                send({ type: 'choose', index: i });
-              }}
-            >
-              <FilledCard text={b.text} pick={b.pick} size="phone" />
-            </button>
-          </li>
-        ))}
-      </ul>
-      <p className="pb-caption pb-muted">{L('Tap the one the room should answer.')}</p>
-    </Screen>
   );
 }
 

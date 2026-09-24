@@ -197,4 +197,6 @@ export const SCREENS_ES: Readonly<Record<string, string>> = {
   '🔊 Listen': '🔊 Escucha',
   // I-144 A: the vote chips under the cards.
   'votes in': 'votos emitidos',
+  // I-148 B: try your front card in a setup while the judge picks.
+  'try your first card in this question': 'prueba tu primera carta en esta pregunta',
 };

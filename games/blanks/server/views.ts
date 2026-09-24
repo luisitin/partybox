@@ -244,8 +244,13 @@ export function controllerView(
     role: !player ? 'spectator' : isCzar(state, playerId) ? 'judge' : 'player',
     sitsOut: phase === 'answer' && !!player && sitsOut(state, playerId),
     // The judge keeps their hand for later rounds but has nothing to play now: no list.
+    // I-148 A: the hand also travels during "pick", so the wait can be spent reading it. The
+    // judge is still excluded, and nothing is playable until the answer phase opens.
     hand:
-      phase === 'answer' && player && !isCzar(state, playerId) && !sitsOut(state, playerId)
+      (phase === 'answer' || phase === 'pick') &&
+      player &&
+      !isCzar(state, playerId) &&
+      !sitsOut(state, playerId)
         ? (state.hands[playerId] ?? []).map((id) => ({ id, text: whiteText(id) }))
         : [],
     redrawsLeft:
