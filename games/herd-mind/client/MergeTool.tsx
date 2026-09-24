@@ -4,7 +4,7 @@
 // ever renders this, and the server takes merges only with the VIP stamp.
 import { useState } from 'react';
 import type { JSX } from 'react';
-import { buzz, PrimaryButton, Screen, useT } from '@partybox/game-sdk/ui';
+import { buzz, DeadlineBar, PrimaryButton, Screen, useT } from '@partybox/game-sdk/ui';
 import type { PushedView } from '@partybox/game-sdk/ui';
 import type { Input } from '../server/types';
 import type { GroupView, HerdControllerView } from '../server/views';
@@ -54,6 +54,13 @@ export function MergeTool({
     <Screen
       footer={
         <div className={styles.mergeBar}>
+          {/* When the groups score themselves if nobody taps Score it (20 s). */}
+          <DeadlineBar
+            deadline={view.deadline}
+            phaseKey={`herd:${view.n}`}
+            paused={view.paused}
+            className={styles.mergeClock}
+          />
           <PrimaryButton tone="neutral" disabled={live.length < 2} onClick={merge}>
             {L('Merge')}
           </PrimaryButton>

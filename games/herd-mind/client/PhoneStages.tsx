@@ -163,9 +163,9 @@ export function PhoneScore({
           </p>
         ) : null}
         {/* The wait has a shape: the bar drains to the next question (never a frozen screen). */}
-        {!last ? (
+        {view.phaseId === 'score' ? (
           <div className={styles.nextLine}>
-            <span>{L('Next question coming up')}</span>
+            <span>{last ? L('The results are coming up') : L('Next question coming up')}</span>
             <DeadlineBar
               deadline={view.deadline}
               phaseKey={`score:${view.n}`}

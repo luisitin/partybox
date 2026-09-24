@@ -7,10 +7,10 @@ Session: branch `game/herd-mind`, worktree `C:/dev/partybox-game-herd-mind`, har
 | Stage              | State                                                                                          |
 | ------------------ | ---------------------------------------------------------------------------------------------- |
 | 1. Content         | **Done.** 200 family + 80 spicy questions; pack test green (dedupe, accept → exact, style mix) |
-| 2. Server logic    | **Done.** 5 phases, typed grouping + VIP merges, sheep, awards, recap, voice; 94 unit tests    |
-| 3. Client          | In progress (built against today's main; entry files follow F1 when it lands)                  |
-| 4. Record → review | Not started                                                                                    |
-| 5. Review package  | Not started                                                                                    |
+| 2. Server logic    | **Done.** 5 phases, typed grouping + VIP merges, sheep, awards, recap, voice; 95 unit tests    |
+| 3. Client          | **Done** against today's main (entry files follow F1 when it lands)                            |
+| 4. Record → review | Passes p02–p10: TV dead air 0 / hard cuts 0 (6p, 16p, typed); voice on its beats; touch clean  |
+| 5. Review package  | **Written:** `REVIEW.md` — waiting for the owner                                               |
 
 Sims: 200 random + 200 idle at 6 players, 50 at 16, 50 at 3 — 0 failures. Contract suite green.
 
@@ -57,5 +57,18 @@ Sims: 200 random + 200 idle at 6 players, 50 at 16, 50 at 3 — 0 failures. Cont
 
 ## Left to do
 
-Client (TV + phone + PhoneStage), EN/ES strings, speech-lab pass (after F6), record-review passes,
-screenshots, review package (`REVIEW.md`).
+- Re-measure frame timing on a quiet machine (today's numbers are dominated by other sessions' load).
+- After F1/F2a/F5/F6 land: swap the stand-ins, add the manifest fields, speech-lab pass.
+- Remote phone (`canSeeTv = false`) once F4 lands — the phone-only path already renders the stage.
+- Probes used for the passes (kept in the session scratchpad, not the repo): herd-fixtures,
+  herd-voice (clip/cue timing), herd-matrix (themes × devices × EN/ES), herd-touch (gesture abuse),
+  herd-phoneonly, contact (frame sheets).
+
+## Choices made while reviewing (record-review passes)
+
+- Phone-only stage is rendered inline by the Controller (like four of the five existing games), not
+  through `PhoneStage`, so the VIP keeps Next / Next question / the merge tool on a phone-only room.
+- The verdict waits for "The herd has spoken." to finish (server and TV share `bannerAtMs`).
+- Readings that arrive too late for their beat are dropped (question: 3 s grace; others 0.8 s).
+- Idle motion is informative, not decoration: rules take turns lifting, the herd hops, a tie sways,
+  the phone shows "Waiting for 3 more" and a next-question bar.

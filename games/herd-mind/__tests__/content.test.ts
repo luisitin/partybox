@@ -78,7 +78,7 @@ describe('content packs', () => {
 
   it('every form is unique after normalizing, every accept is exact, no answer overlaps another', () => {
     expect(ALL.flatMap(problems)).toEqual([]);
-  });
+  }, 60_000); // ~4,000 forms × every other answer: seconds on a busy host
 
   it('every prompt ends with punctuation and fits (≤ 90 characters)', () => {
     for (const q of ALL) expect(q.prompt, q.id).toMatch(/^.{8,90}[.?!:…]$/u);

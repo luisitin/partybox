@@ -60,12 +60,15 @@ export const STRINGS: Strings = {
     'No herd. Everyone went their own way!': 'No hay rebaño. ¡Cada quien por su lado!',
     'Nobody answered.': 'Nadie respondió.',
     'Nobody answered this one.': 'Nadie respondió esta.',
+    'Same answer in other words? The VIP can merge them, then Score it.':
+      '¿La misma respuesta con otras palabras? El VIP puede unirlas y luego Puntuar.',
     HERD: 'REBAÑO',
     Alone: 'Solos',
     merged: 'unidos',
     '{list} and {last}': '{list} y {last}',
     // TV: score
     '{answer}: {names} +1': '{answer}: {names} +1',
+    '{answer}: {count} in the herd, +1 each': '{answer}: {count} en el rebaño, +1 cada quien',
     "No herd. It's a tie. Nobody scores.": 'No hay rebaño. Es un empate. Nadie suma.',
     'No herd. Nobody scores.': 'No hay rebaño. Nadie suma.',
     '🐑 The Black Sheep goes to {name}.': '🐑 La Oveja Negra es para {name}.',
@@ -88,6 +91,8 @@ export const STRINGS: Strings = {
     'What will most people say?': '¿Qué dirá la mayoría?',
     'Your answer': 'Tu respuesta',
     'Type an answer.': 'Escribe una respuesta.',
+    'Waiting for 1 more': 'Falta 1 persona',
+    'Waiting for {n} more': 'Faltan {n} personas',
     // phone: stage phases
     "Let's go": '¡Vamos!',
     Next: 'Siguiente',
@@ -98,6 +103,7 @@ export const STRINGS: Strings = {
     'Next question': 'Siguiente pregunta',
     'See the results': 'Ver los resultados',
     'Next question coming up': 'Ya viene la siguiente pregunta',
+    'The results are coming up': 'Ya vienen los resultados',
     '🐑 In the herd! +1 ({answer}, {count} of you)':
       '🐑 ¡En el rebaño! +1 ({answer}, {count} de ustedes)',
     "Alone with {answer}. You've got the Black Sheep.":

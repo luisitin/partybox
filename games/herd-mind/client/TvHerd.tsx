@@ -5,7 +5,7 @@
 // sheep outline. Typed mode: the VIP's merges re-pen cards live.
 import { useEffect, useRef } from 'react';
 import type { CSSProperties, JSX } from 'react';
-import { Avatar, BigText, useSound, useT } from '@partybox/game-sdk/ui';
+import { Avatar, BigText, DeadlineBar, useSound, useT } from '@partybox/game-sdk/ui';
 import type { PushedView, ViewPlayer } from '@partybox/game-sdk/ui';
 import type { GroupView, HerdTvView } from '../server/views';
 import { bannerAtMs, cardAtMs, CARD_LAND_MS, SPOKEN_AT_MS } from '../server/timing';
@@ -177,6 +177,19 @@ export function TvHerd({ view }: { view: PushedView<HerdTvView> }): JSX.Element 
           <p className={styles.empty}>{L('Nobody answered this one.')}</p>
         ) : null}
       </div>
+      {/* Typed answers: the room waits on the VIP's merges — say so, and show how long. */}
+      {view.mode === 'typed' && groups.length >= 2 && verdict ? (
+        <div className={styles.vipWait}>
+          <span>{L('Same answer in other words? The VIP can merge them, then Score it.')}</span>
+          <DeadlineBar
+            deadline={view.deadline}
+            phaseKey={`herd:${view.n}`}
+            paused={view.paused}
+            urgentAt={0}
+            className={styles.vipBar}
+          />
+        </div>
+      ) : null}
     </div>
   );
 }

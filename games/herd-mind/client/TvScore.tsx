@@ -41,12 +41,14 @@ export function TvScore({ view }: { view: PushedView<HerdTvView> }): JSX.Element
 
   const herd = view.groups?.find((g) => g.key === view.herd);
   const name = (id: string | null): string => view.players.find((p) => p.id === id)?.name ?? '';
+  // A big herd is a count, not a list of nine names.
+  const herdLine = (label: string): string =>
+    view.scored.length > 4
+      ? L('{answer}: {count} in the herd, +1 each', { answer: label, count: view.scored.length })
+      : L('{answer}: {names} +1', { answer: label, names: nameList(view.scored, view.players, L) });
   const summary =
     view.outcome === 'herd' && herd
-      ? L('{answer}: {names} +1', {
-          answer: herd.label,
-          names: nameList(view.scored, view.players, L),
-        })
+      ? herdLine(herd.label)
       : view.outcome === 'tie'
         ? L("No herd. It's a tie. Nobody scores.")
         : view.outcome === 'scattered'

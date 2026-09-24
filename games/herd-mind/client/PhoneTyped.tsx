@@ -10,6 +10,7 @@ import { TYPED_MAX_CHARS } from '../server/types';
 import type { Input } from '../server/types';
 import type { HerdControllerView } from '../server/views';
 import { kicker } from './labels';
+import { WaitingFor } from './WaitingFor';
 import { STRINGS } from './strings';
 import styles from './Controller.module.css';
 
@@ -67,9 +68,12 @@ export function PhoneTyped({
         </h2>
       </header>
       {locked ? (
-        <p className={styles.lockedText} role="status">
-          {L('Locked: “{answer}”', { answer: sent })}
-        </p>
+        <div className={styles.lockedWrap}>
+          <p className={styles.lockedText} role="status">
+            {L('Locked: “{answer}”', { answer: sent })}
+          </p>
+          <WaitingFor view={view} me={view.me.id} />
+        </div>
       ) : (
         <form id="herd-typed" className={styles.typedForm} onSubmit={submit}>
           <input

@@ -8,6 +8,7 @@ import type { PushedView } from '@partybox/game-sdk/ui';
 import type { Input } from '../server/types';
 import type { HerdControllerView } from '../server/views';
 import { kicker } from './labels';
+import { WaitingFor } from './WaitingFor';
 import { STRINGS } from './strings';
 import styles from './Controller.module.css';
 
@@ -57,6 +58,7 @@ export function PhoneTiles({
             : chosen
               ? L('Locked: {answer} · tap another to change', { answer: label })
               : L('Tap what most people will pick')}
+          {chosen && !stuck ? <WaitingFor view={view} me={view.me.id} /> : null}
         </p>
       }
     >
@@ -67,7 +69,11 @@ export function PhoneTiles({
         </h2>
       </header>
       <div className={styles.tilesWrap}>
-        <div className={styles.tiles} role="group" aria-label={L('answers')}>
+        <div
+          className={`${styles.tiles} ${(view.tiles?.length ?? 0) <= 4 ? styles.few : ''}`}
+          role="group"
+          aria-label={L('answers')}
+        >
           {(view.tiles ?? []).map((t) => {
             const on = t.id === chosen;
             return (

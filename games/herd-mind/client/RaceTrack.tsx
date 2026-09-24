@@ -76,7 +76,16 @@ export function RaceTrack(props: RaceProps): JSX.Element {
   // is on its new holder.
   const holder = moving && !props.fly ? props.sheepFrom : props.sheep;
   return (
-    <div ref={track} className={styles.track} style={{ '--lanes': lanes.length } as CSSProperties}>
+    <div
+      ref={track}
+      className={styles.track}
+      style={
+        {
+          '--cols': lanes.length > 8 ? 2 : 1,
+          '--rows': Math.ceil(lanes.length / (lanes.length > 8 ? 2 : 1)),
+        } as CSSProperties
+      }
+    >
       <div className={styles.pasture} data-sheep-spot="pasture">
         {holder === null ? <SheepCoin size="sm" /> : null}
         <span>{L('Pasture')}</span>
