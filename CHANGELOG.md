@@ -6,6 +6,11 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Fixed
 
+- **Blanks' reader in a second game** (game-pack audit #19): a later game in the same room that
+  needed a reading an earlier game had asked for (most often the same black card read alone) never
+  got it and held the card for the full 12 s fallback. The server now forgets a reading a moment
+  after answering it, so the next game asks again and plays it from the cache.
+
 - **Blanks' votes land on the table** (I-144, option A): while the room votes, each vote drops a chip with the voter's face under the cards on the TV. You can see who has voted but never what they picked, and the "waiting for…" pill still names who is left.
 
 - **Blanks' final board reads straight down** (I-146, option C): up to six players stay in one column, so 5th place no longer sits beside 1st. When a board does split, each column is labelled with the ranks it holds ("1–4"), and tied players are joined by a bracket down the left edge.

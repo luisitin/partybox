@@ -177,22 +177,40 @@ export function createSpeechService(cacheDir = join(tmpdir(), 'partybox-speech')
 }
 
 /** Wires the service to the host (every state change: ask for what the game wants) and the route. */
-export function attachSpeech(fastify: FastifyInstance, host: Host, deps: EngineDeps): () => void {
+export function attachSpeech(
+  fastify: FastifyInstance,
+  host: Host,
+  deps: EngineDeps,
+  service: SpeechService = createSpeechService(),
+): () => void {
   if (process.env['PARTYBOX_SPEECH'] === 'off') return () => undefined;
-  const service = createSpeechService();
-  const asked = new Set<string>();
+  // In flight, or answered this recently: a room's request is made once and answered once. It is
+  // forgotten a moment after the answer (the game has recorded it by then), so a later game in the
+  // same room that needs the same reading asks again and gets it from the cache — remembering it
+  // forever left that game waiting the full fallback for an answer that never came (game-pack
+  // audit #19), and grew without bound.
+  const asked = new Map<string, number>();
+  const FORGET_MS = 5000;
   const unsubscribe = host.subscribe((room) => {
     const running = room.game;
     if (!running || room.status !== 'playing') return;
     const game = deps.games[running.gameId];
     if (!game?.speech) return;
+    const now = Date.now();
     for (const req of game.speech(running.state)) {
       const tag = `${room.code}:${req.key}`;
-      if (asked.has(tag)) continue;
-      asked.add(tag);
+      const at = asked.get(tag);
+      if (at !== undefined && (at === Infinity || now - at < FORGET_MS)) continue;
+      asked.set(tag, Infinity);
       // A cached reading answers at once — inside this listener's own dispatch: defer it.
       service.want(req, (ms) =>
-        queueMicrotask(() => host.dispatch(room.code, { type: 'speech', key: req.key, ms })),
+        queueMicrotask(() => {
+          host.dispatch(room.code, { type: 'speech', key: req.key, ms });
+          asked.set(tag, Date.now());
+          setTimeout(() => {
+            if (asked.get(tag) !== Infinity) asked.delete(tag);
+          }, FORGET_MS).unref?.();
+        }),
       );
     }
   });
