@@ -53,7 +53,10 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
           {/* I-456 B: your place stays in view while the board scrolls to your row */}
           {mine && !over && !scoreless ? (
             <span className={`pb-muted pb-caption ${styles.place}`}>
-              {t.results.yourPlace(mine.rank, mine.score)}
+              {/* I-476: a shared place says so */}
+          {rows.filter((r) => r.rank === mine.rank).length > 1
+            ? t.results.yourPlaceTied(mine.rank, mine.score)
+            : t.results.yourPlace(mine.rank, mine.score)}
             </span>
           ) : null}
           {/* I-456 C: the awards as chips, under your place — never scrolled away; I-155 A/B:
