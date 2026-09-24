@@ -15,8 +15,10 @@ Branch `game/imposter`, worktree `C:/dev/partybox-game-imposter`, harness port 4
   - 117 game tests and the contract suite (85) pass.
   - `pnpm sim` 200 seeds × random and idle × 4/10/16 players: 0 failures, longest game 682 s.
   - At 16 players (8 rounds × 3 clue rounds): state ≈ 10 KB, TV view ≈ 3.9 KB, phone view < 4 KB.
-- **Client: next.** SecretCard and FacePicker (mine to build in the SDK), then the TV, the
-  controller and PhoneStage, then record-review.
+- **Client: done** (TV, phone, PhoneStage, EN + ES); SecretCard and FacePicker in the SDK as
+  subpaths. Record-review passes 0–7 and the review package: [REVIEW.md](REVIEW.md).
+- **F5/F6 on branch `foundation`** (not main yet): signatures match `match/` and `speakable.ts`;
+  swap when they reach main.
 
 ## Stand-ins until the Foundation lands (swap each when its F-task reaches main)
 
