@@ -112,6 +112,13 @@ export interface GameSummary {
   minPlayers: number;
   maxPlayers: number;
   estimatedMinutes: number;
+  /** I-189: the measured pace (see the manifest schema); absent = estimatedMinutes. */
+  estimate?: {
+    fixedSeconds: number;
+    perRoundSeconds: number;
+    perPlayerPerRoundSeconds: number;
+    roundsSetting: string;
+  };
   tags: string[];
   settings: SettingSpec[];
   supportsBots: boolean;

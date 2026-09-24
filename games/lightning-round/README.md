@@ -3,7 +3,7 @@
 ## Overview
 
 Speed trivia, four choices per question: faster correct answers earn more, streaks add a bonus, before
-the last question everyone wagers part of their score. Highest score wins. ~8 min. This is the spec.
+the last question everyone wagers part of their score. Highest score wins. ~3 min for 10 questions (I-189 B: the picker's minutes follow the question count: 25 s + 16 s a question, from the host PC's recaps). This is the spec.
 
 **Sound.** Synthesized beds only (the phases flip too fast for tracks): marimba on the intro, the quiz-show
 `pulse` under every question and reveal (one bed, so it carries through the cut), late-night chords under the

@@ -15,6 +15,11 @@ TypeScript plus content. Everything below is checked by `pnpm verify`; nothing i
    `version`, `minPlayers`, `maxPlayers`, `estimatedMinutes`, `tags`, `settings[]`. `server/index.ts`
    imports it and parses it with `gameManifestSchema` (as the template does); the contract test asserts
    `game.manifest` deep-equals the file.
+   Optional `estimate` (I-189): the game's measured pace, so the picker's "~N min" follows the
+   settings and the room — seconds = `fixedSeconds` + rounds × (`perRoundSeconds` + players ×
+   `perPlayerPerRoundSeconds`), rounds being the setting named by `roundsSetting` (or the player
+   count for `"players"`). Measure it from the host PC's recaps; without it the picker shows
+   `estimatedMinutes`.
 4. **State + phases**: declare `State`, the `Input` union and `Transition` in `server/types.ts`; one file
    per phase in `server/phases/<phaseId>.ts` exporting `enterX(state, now)` and
    `reduceX(state, event, next: Transition)`. **Phase files never import each other** (dependency-cruiser

@@ -7,6 +7,12 @@
   "minPlayers": 1,
   "maxPlayers": 16,
   "estimatedMinutes": 8,
+  "estimate": {
+    "fixedSeconds": 25,
+    "perRoundSeconds": 16,
+    "perPlayerPerRoundSeconds": 0,
+    "roundsSetting": "questions"
+  },
   "tags": ["trivia", "choice", "speed"],
   "settings": [
     {

@@ -7,6 +7,12 @@
   "minPlayers": 3,
   "maxPlayers": 8,
   "estimatedMinutes": 20,
+  "estimate": {
+    "fixedSeconds": 30,
+    "perRoundSeconds": 55,
+    "perPlayerPerRoundSeconds": 4,
+    "roundsSetting": "players"
+  },
   "tags": ["drawing", "party", "creative", "no-scores"],
   "maxInputBytes": 6144,
   "settings": [
