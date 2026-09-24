@@ -135,7 +135,9 @@ export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
   const players = room?.players ?? [];
   const awayLeft = useAwayLeft(players); // I-089 A
   const vip = players.find((p) => p.isVip);
-  const full = room !== null && players.length >= room.capacity;
+  // I-644 B: the room is full only when every seat is a person — a bot gives way to a guest
+  const botSeats = room !== null && players.length >= room.capacity && players.some((p) => p.bot);
+  const full = room !== null && players.length >= room.capacity && !botSeats;
   // I-055 A: a locked room reads on the QR panel, like a full one.
   const locked = room?.locked ?? false;
   const empty = players.length === 0;
@@ -162,7 +164,13 @@ export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
             tone={full || locked ? 'accent' : 'muted'}
             className={empty ? styles.scanIdle : ''}
           >
-            {locked ? t.lobby.locked : full ? t.lobby.full : t.lobby.scan}
+            {locked
+              ? t.lobby.locked
+              : full
+                ? t.lobby.full
+                : botSeats
+                  ? L('Scan to join — a bot makes room')
+                  : t.lobby.scan}
           </BigText>
           {info ? (
             <span

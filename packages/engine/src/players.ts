@@ -62,8 +62,33 @@ export function join(room: RoomState, event: JoinEvent, deps: EngineDeps): Apply
 
   if (room.locked)
     return { room, effects: [error(event.playerId, 'room_locked', 'This room is locked.')] };
-  if (Object.keys(room.players).length >= room.capacity)
-    return { room, effects: [error(event.playerId, 'room_full', 'This room is full.')] };
+  if (Object.keys(room.players).length >= room.capacity) {
+    // I-644 A: in the lobby a person never loses a seat to a bot — the newest bot makes room
+    const bot =
+      room.status === 'playing'
+        ? undefined
+        : Object.values(room.players)
+            .filter((p) => p.bot)
+            // bots added in one burst share a millisecond: the later-added of them is the newer
+            .reduce<(typeof room.players)[string] | undefined>(
+              (newest, p) => (!newest || p.joinedAt >= newest.joinedAt ? p : newest),
+              undefined,
+            );
+    if (!bot) return { room, effects: [error(event.playerId, 'room_full', 'This room is full.')] };
+    const made = removePlayer(room, bot.id, event.now, deps, 'left');
+    const joined = join(made.room, event, deps);
+    // a refused join (a taken name, a bad avatar) keeps the bot where it was
+    if (!joined.effects.some((e) => e.type === 'welcome')) return { room, effects: joined.effects };
+    return {
+      room: joined.room,
+      effects: [
+        ...made.effects.filter((e) => e.type !== 'toast'),
+        ...joined.effects,
+        // its own line: the TV and phones drop "… joined" toasts (the chips already show a join)
+        { type: 'toast', to: 'all', kind: 'info', text: `${bot.name} made room for ${normalizeName(event.name) ?? event.name}` },
+      ],
+    };
+  }
   const name = normalizeName(event.name);
   if (!name)
     return {

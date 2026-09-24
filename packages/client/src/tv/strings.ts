@@ -7,6 +7,7 @@ export const STRINGS: Strings = {
   es: {
     // TvApp: the TV's own toasts (I-054)
     'Room full — {n} / {cap}': 'Sala llena: {n} / {cap}',
+    'Scan to join — a bot makes room': 'Escanea para entrar: un bot te deja su sitio', // I-644 B
     'A seat opened — {n} / {cap}': 'Se liberó un lugar: {n} / {cap}',
     // TvFrame
     '👑 {name} is the VIP now': '👑 {name} ahora es el VIP',

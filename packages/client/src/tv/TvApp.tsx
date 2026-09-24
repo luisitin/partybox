@@ -121,6 +121,8 @@ export function TvApp(): JSX.Element {
   // Sound cues from state transitions (docs/DESIGN_SYSTEM.md).
   const prev = useRef<{
     players: number;
+    /** I-644 B: bots in the room last snapshot — a room with a bot in it isn't "full". */
+    bots: number;
     ids: Set<string>;
     status: string;
     phase: string | null;
@@ -132,6 +134,7 @@ export function TvApp(): JSX.Element {
     offline: Set<string>;
   }>({
     players: 0,
+    bots: 0,
     ids: new Set(),
     offline: new Set(),
     status: '',
@@ -203,8 +206,9 @@ export function TvApp(): JSX.Element {
     if (room.players.length > p.players && p.status !== '')
       audio.play('join', { semitones: joinSemitones(room.players.length) });
     // I-054 A: the room closing — the hushed `close` chord after the join note at capacity.
-    const fullNow = room.players.length >= room.capacity;
-    const fullBefore = p.players >= room.capacity;
+    // I-644 B: full means every seat is a person
+    const fullNow = room.players.length >= room.capacity && !room.players.some((pl) => pl.bot);
+    const fullBefore = p.players >= room.capacity && p.bots === 0;
     if (p.status !== '' && fullNow && !fullBefore) {
       setTimeout(() => audio.play('close'), 500);
       showLocalToast({
@@ -277,6 +281,7 @@ export function TvApp(): JSX.Element {
     }
     prev.current = {
       players: room.players.length,
+      bots: room.players.filter((pl) => pl.bot).length,
       ids: new Set(room.players.map((pl) => pl.id)),
       offline: new Set(room.players.filter((pl) => !pl.connected).map((pl) => pl.id)),
       status: room.status,
