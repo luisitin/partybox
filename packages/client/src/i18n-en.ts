@@ -200,6 +200,9 @@ export const en = {
     /** The header dot's label, by the link's state (flapFree.ts `linkLabel`). */
     dot: { connecting: 'connecting', connected: 'connected', reconnecting: 'reconnecting' },
     loadingGame: 'Getting the game ready…',
+    /** Part 00 §2.3: the game's download failed three times over (1, 3, 6 s apart). */
+    loadFailed: "Couldn't load the game.",
+    tapRetry: 'Tap to retry',
     lostServer: 'Lost the PartyBox server — reconnecting…',
     /** The owner (2026-09-22): the banner ends here instead of vanishing, so a flapping link
      *  cannot strobe "Reconnecting…" over and over. */

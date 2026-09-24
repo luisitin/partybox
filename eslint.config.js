@@ -87,7 +87,8 @@ export default tseslint.config(
     },
   },
   {
-    // Client never touches engine or server internals; games arrive via games.generated.ts.
+    // Client never touches engine or server internals; games arrive via games.generated.ts —
+    // as dynamic imports only (ADR-050), so no static import of a game may exist in the client.
     files: ['packages/client/src/**/*.{ts,tsx}'],
     rules: {
       'no-restricted-imports': [
@@ -97,6 +98,11 @@ export default tseslint.config(
           patterns: [
             { group: ['**/packages/server/**', '**/packages/engine/**'] },
             { group: ['node:*', 'fs', 'path', 'os'], message: 'client runs in the browser.' },
+            {
+              group: ['**/games/**'],
+              message:
+                'games load lazily through games.generated.ts (ADR-050): use game-loader.ts.',
+            },
           ],
         },
       ],

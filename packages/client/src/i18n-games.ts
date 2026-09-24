@@ -4,13 +4,13 @@
 // `strings` table still covers its server's sentences while it plays (server-text.ts).
 import type { Lang, Strings } from '@partybox/game-sdk/ui';
 import { textTable } from './catalog';
-import { clientGames } from './games.generated';
+import { peekGame } from './game-loader';
 
 const NONE: Strings = {};
 
-/** The game's table, or an empty one. */
+/** The game's table once its code is here (a phone's or a TV's entry), or an empty one. */
 export function gameStrings(gameId: string | null | undefined): Strings {
-  return (gameId ? clientGames[gameId]?.strings : undefined) ?? NONE;
+  return (peekGame(gameId, 'phone') ?? peekGame(gameId, 'tv'))?.strings ?? NONE;
 }
 
 /** One of the game's manifest sentences in `lang` (English until the host's words arrive: a

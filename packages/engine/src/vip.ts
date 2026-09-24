@@ -66,10 +66,17 @@ export function applyVip(
 
   switch (action.action) {
     case 'selectGame': {
-      const game = deps.games[action.gameId];
-      if (!game) return reject(room, playerId, 'unknown_game', 'Unknown game.');
       if (room.status === 'playing')
         return reject(room, playerId, 'cannot_start', 'End the current game first.');
+      // Part 00 §1.3 (the owner's ruling 6): the list with nothing chosen — no game is preloaded
+      // and nothing downloads until someone picks one.
+      if (action.gameId === null)
+        return {
+          room: { ...room, status: 'selecting', selectedGameId: null, settings: {}, results: null },
+          effects: [{ type: 'push' }],
+        };
+      const game = deps.games[action.gameId];
+      if (!game) return reject(room, playerId, 'unknown_game', 'Unknown game.');
       return {
         room: {
           ...room,

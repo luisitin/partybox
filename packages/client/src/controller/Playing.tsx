@@ -1,17 +1,19 @@
-// During a game: spectators wait; players get the game's lazy Controller component with
-// `{ view, me, send }`. Unknown game ids (registry drift) show a plain message instead of crashing.
+// During a game: spectators wait; players get the game's Controller (its phone entry, loaded on
+// demand — ADR-050) with `{ view, me, send }`. Unknown game ids (registry drift) show a plain message instead of crashing.
 import { Suspense, useCallback, useEffect, useState } from 'react';
 import type { JSX } from 'react';
 import type { ControllerView, PlayerPublic, PushedView, RoomSnapshot } from '@partybox/shared';
 import {
   Avatar,
   PhoneOnlyProvider,
+  PrimaryButton,
   SoundProvider,
   WaitingScreen,
   getLang,
 } from '@partybox/game-sdk/ui';
 import styles from './ControllerShell.module.css';
-import { clientGames } from '../games.generated';
+import { useGame } from '../game-loader';
+import { gameLoaders } from '../games.generated';
 import { t } from '../i18n';
 import { serverText } from '../server-text';
 import type { Controller } from '../net/controller';
@@ -133,6 +135,8 @@ export function Playing({
     (cue: SoundCue, opts?: PlayCueOptions) => audio?.play(cue, opts),
     [audio],
   );
+  // ADR-050: the game's phone entry (usually already here: it downloads once the game is chosen).
+  const game = useGame(room.selectedGameId, 'phone');
   if (me.spectator || view?.me.role === 'spectator') {
     // A spectator's screen is the game screen for them: release the game-start hold (loop #22).
     return (
@@ -152,8 +156,7 @@ export function Playing({
   }
   // The socket is up; we are waiting for the first view push or the lazy chunk — say so.
   if (!view) return <DelayedWaiting title={t.connection.loadingGame} />;
-  const module = room.selectedGameId ? clientGames[room.selectedGameId] : undefined;
-  if (!module)
+  if (!room.selectedGameId || !gameLoaders[room.selectedGameId])
     return (
       <WaitingScreen
         title={t.playing.unknownGame(room.selectedGameId ?? '')}
@@ -161,6 +164,15 @@ export function Playing({
         mood="wait"
       />
     );
+  // Part 00 §2.3: three tries failed — the player taps to try again (the room carries on).
+  if (game.failed)
+    return (
+      <WaitingScreen title={t.connection.loadFailed} mood="oops">
+        <PrimaryButton onClick={game.retry}>{t.connection.tapRetry}</PrimaryButton>
+      </WaitingScreen>
+    );
+  const module = game.module;
+  if (!module) return <DelayedWaiting title={t.connection.loadingGame} />;
   // S-005 A: a "phone only" room hands the phones the TV's moment for the phases the game names.
   const PhoneStage =
     room.phoneOnly && module.PhoneStage && module.phoneStagePhases?.includes(view.phaseId)

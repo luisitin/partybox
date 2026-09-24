@@ -38,7 +38,9 @@ TypeScript plus content. Everything below is checked by `pnpm verify`; nothing i
    with the first state seen per phase, so re-run it after any change to the state shape and hand-edit
    the JSON where you want a more interesting moment). Fixtures feed `/preview` and the contract tests.
 7. **Client**: `client/Tv.tsx` and `client/Controller.tsx` built from `@partybox/game-sdk/ui` primitives;
-   `client/index.ts` exports `clientModule`. No sockets, no game logic, no global state.
+   `client/phone-entry.ts` exports `phone`, `client/tv-entry.ts` exports `tv`, both spreading
+   `client/shared.ts` (ADR-050: each is its own download; the phone side never imports a TV file).
+   No sockets, no game logic, no global state.
 8. **Bot**: `bot.sampleInput` must return a valid input in every phase (or `null`). The sim, e2e and the
    contract tests all depend on it. When the bot is a fair opponent (acts in every input phase, varied
    inputs), declare `"supportsBots": true` in `manifest.json` so players can add bot seats in the lobby
@@ -85,7 +87,8 @@ TypeScript plus content. Everything below is checked by `pnpm verify`; nothing i
 | `server/scoring.ts`                                                  | pure scoring + `results()`                                                                                     |
 | `server/content.ts`                                                  | typed, validated access to `content/*.json`                                                                    |
 | `content/schema.ts`, `content/words.json`                            | `packs` (pack name → zod schema) + the pack itself                                                             |
-| `client/index.ts`, `client/Tv.tsx`, `client/Controller.tsx`          | lazy `clientModule` + the two dumb views (they import `@partybox/game-sdk/ui`)                                 |
+| `client/phone-entry.ts`, `client/tv-entry.ts`, `client/shared.ts`    | the phone and TV downloads (ADR-050) and what both carry (sounds, music, strings)                              |
+| `client/Tv.tsx`, `client/Controller.tsx`                             | the two dumb views (they import `@partybox/game-sdk/ui`)                                                       |
 | `client/strings.ts`                                                  | the game's Spanish, keyed by the English sentence (`useT(STRINGS)` → `L('…')`, ADR-044)                        |
 | `fixtures/answer.json`, `fixtures/reveal.json`, `fixtures/done.json` | one full state per phase                                                                                       |
 | `__tests__/game.test.ts`                                             | unit tests pinning the README rules                                                                            |

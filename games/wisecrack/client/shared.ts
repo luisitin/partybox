@@ -1,13 +1,10 @@
-// What the client registry imports (ADR-003). Components are lazy so unplayed games cost nothing.
-import { lazy } from 'react';
-import type { GameClientModule } from '@partybox/game-sdk/ui';
+// What Wisecrack's phone and TV entries both carry (ADR-050): the sound plan and the words.
+import type { GameShared } from '@partybox/game-sdk/ui';
 import { STRINGS } from './strings';
 
-export const clientModule: GameClientModule = {
+export const shared: GameShared = {
   id: 'wisecrack',
   strings: STRINGS,
-  Tv: lazy(() => import('./Tv').then((m) => ({ default: m.Tv }))),
-  Controller: lazy(() => import('./Controller').then((m) => ({ default: m.Controller }))),
   sounds: { reveal: 'reveal', scores: 'tally' },
   // Background music (owner request 2026-09-18, like the lobby / Bingo / Blanks): playful comic
   // tracks while everyone writes (the long phase, a real tune suits it — chained, quiet), and the
@@ -27,7 +24,4 @@ export const clientModule: GameClientModule = {
     reveal: ['marimba', 'lofi'],
     scores: 'lounge',
   },
-  // Points land on reveal entry but the stage reveals authors 700 ms apart: the strip waits for
-  // the scores phase (R-068).
-  stripScores: (view) => view.phaseId !== 'reveal',
 };

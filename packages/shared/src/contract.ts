@@ -61,17 +61,6 @@ export const settingSpecSchema = z.discriminatedUnion('type', [
   }),
 ]);
 
-/** A multiselect value → its picks (deduped, in option order when `spec` is given). */
-export function multiselectPicks(
-  value: unknown,
-  spec?: { options: { value: string }[] },
-): string[] {
-  const raw = typeof value === 'string' ? value.split(',') : [];
-  const picks = [...new Set(raw.map((v) => v.trim()).filter((v) => v.length > 0))];
-  if (!spec) return picks;
-  const known = spec.options.map((o) => o.value);
-  return known.filter((v) => picks.includes(v));
-}
 export type SettingSpec = z.infer<typeof settingSpecSchema>;
 
 export const DEFAULT_MAX_INPUT_BYTES = 16 * 1024;

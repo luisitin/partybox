@@ -8,7 +8,7 @@ import type { PushedView, RoomSnapshot, TvView } from '@partybox/shared';
 import { Avatar, BigText, Confetti, Scoreboard, Stage, useT } from '@partybox/game-sdk/ui';
 import { GameErrorBoundary } from '../controller/GameErrorBoundary';
 import { nobodyScored, scoreboardRows, winnerLine } from '../controller/results-rows';
-import { clientGames } from '../games.generated';
+import { useGame } from '../game-loader';
 import { t } from '../i18n';
 import { serverText } from '../server-text';
 import { STRINGS } from './strings';
@@ -29,7 +29,7 @@ export function TvResults({ room, lastView = null }: TvResultsProps): JSX.Elemen
   const many = rows.length >= 7;
   const nameOf = (id: string): string =>
     room.results?.players.find((p) => p.id === id)?.name ?? '?';
-  const module = room.results ? clientGames[room.results.gameId] : undefined;
+  const module = useGame(room.results?.gameId, 'tv').module;
   const Finale = module?.Finale;
   const keepBoard = Boolean(Finale && lastView && module?.finale?.(lastView));
   const scoreless = module?.scoreless === true;

@@ -176,23 +176,46 @@ never needs information a phone would not have. Bots are never VIP and count tow
 value are offered and kept, ADR-034). The VIP edits them in the lobby; the engine validates against the
 spec and passes `settings` to `init` (`multiselectPicks(value)` from `@partybox/shared` splits one).
 
-## Client side — `games/<id>/client/index.ts`
+## Client side — `games/<id>/client/{shared,phone-entry,tv-entry}.ts` (ADR-050)
+
+Each surface is its own download: a phone fetches the game's phone entry once the game is chosen
+(and never a TV entry), the TV fetches the TV entry. The generated registry imports them lazily;
+nothing in `packages/client` may import a game statically (lint).
 
 ```ts
-export const clientModule: GameClientModule = {
+// shared.ts — what both surfaces carry
+export const shared: GameShared = {
   id: 'my-game',
   strings: STRINGS, // from ./strings.ts: the game's Spanish, keyed by the English sentence (ADR-044)
-  Tv: lazy(() => import('./Tv').then((m) => ({ default: m.Tv }))),
-  Controller: lazy(() => import('./Controller').then((m) => ({ default: m.Controller }))),
   sounds: { reveal: 'reveal' }, // optional: map your moments to design-system cue names
-  quickInto: ['play'], // optional: phases the TV cuts into (their own entrance is the choreography)
-  stripActive: (view) => [], // optional: player ids the TV strip rings as "on" — whoever the room should look at (I-017)
-  ownLocks: ['answer'], // optional: TV phases where the game sounds its own lock-ins; the shell's `lock` tick stays quiet there (I-020)
-  PhoneSettings: lazy(() => import('./PhonePanel')), // optional: the game's per-phone settings panel for the lobby's 🎨 sheet, under the game's name (S-003)
+  music,
+  beds,
+  scoreless, // optional: the sound plan (a phone plays it in a phone-only room)
+};
+// phone-entry.ts
+export const phone: GamePhoneModule = {
+  ...shared,
+  Controller,
   PhoneStage: lazy(() => import('./PhoneStage')), // optional: in a "phone only" room the phones show what the TV would for `phoneStagePhases`, in place of the Controller (S-005)
   phoneStagePhases: ['bingo'],
 };
+// tv-entry.ts
+export const tv: GameTvModule = {
+  ...shared,
+  Tv,
+  quickInto: ['play'], // optional: phases the TV cuts into (their own entrance is the choreography)
+  stripActive: (view) => [], // optional: player ids the TV strip rings as "on" — whoever the room should look at (I-017)
+  ownLocks: ['answer'], // optional: TV phases where the game sounds its own lock-ins; the shell's `lock` tick stays quiet there (I-020)
+  finale,
+  Finale, // optional: keep the game's last board on the results stage
+};
+// settings-entry.ts (optional; `"phoneSettings": true` in the manifest): the game's per-phone
+// panel for the lobby's 🎨 sheet — a closed row until a player opens it (S-003)
+export const settings: GameSettingsModule = { PhoneSettings: PhonePanel };
 ```
+
+Never import a TV file from the phone side (a constant both need goes in its own file, like Blanks'
+`timing.ts`): the phone would download the TV screen with it.
 
 Components receive `{ view, send(input), me, skip? }` and are dumb (`skip` is set on the VIP's phone only and
 fires the engine's VIP skip, so a game's own "Next" button is the VIP's without the game knowing who that is — ADR-036): no sockets, no global state, no game logic —

@@ -45,3 +45,29 @@ describe('I-763: settings are kept per game', () => {
     expect(room.settings['spicy']).toBe(false);
   });
 });
+
+describe('Part 00 §1.3: the list opens with nothing chosen', () => {
+  it('selectGame(null) is the list: no game, no settings, Start says why', () => {
+    const room = act(lobby(), { action: 'selectGame', gameId: null });
+    expect(room.status).toBe('selecting');
+    expect(room.selectedGameId).toBeNull();
+    expect(room.settings).toEqual({});
+  });
+
+  it('back to the list from a chosen game keeps what was tuned for it', () => {
+    let room = act(lobby(), { action: 'selectGame', gameId: 'fake' });
+    room = act(room, { action: 'updateSettings', settings: { rounds: 5 } });
+    room = act(room, { action: 'selectGame', gameId: null });
+    expect(room.selectedGameId).toBeNull();
+    room = act(room, { action: 'selectGame', gameId: 'fake' });
+    expect(room.settings['rounds']).toBe(5);
+  });
+
+  it('settings cannot change while nothing is chosen', () => {
+    const room = act(act(lobby(), { action: 'selectGame', gameId: null }), {
+      action: 'updateSettings',
+      settings: { rounds: 5 },
+    });
+    expect(room.settings).toEqual({});
+  });
+});

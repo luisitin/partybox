@@ -2,23 +2,12 @@
 // server → client shapes are plain types (the server builds them, clients trust them).
 import { z } from 'zod';
 import type { GameResults, PlayerInfo, PresenceNeeds, SettingSpec, Settings } from './contract';
+import { PHOTO_MAX_BYTES } from './constants';
 import { settingsSchema } from './contract';
-
-export const LIMITS = {
-  roomCapacity: 16,
-  maxPayloadBytes: 16 * 1024,
-  inputsPerSecond: 20,
-  disconnectGraceMs: 120_000,
-  vipHandoverMs: 30_000,
-  pingIntervalMs: 10_000,
-  pingTimeoutMs: 20_000,
-} as const;
 
 // ─── client → server ────────────────────────────────────────────────────────────────────────────
 
-/** A photo avatar (I-031, the owner): a 128 × 128 JPEG the phone made, as a data URL, capped at
- *  24 KB. `avatarId` stays required — the face is the fallback wherever the photo is absent. */
-export const PHOTO_MAX_BYTES = 24 * 1024;
+/** A photo avatar (I-031): a data URL of at most PHOTO_MAX_BYTES (constants.ts). */
 export const photoSchema = z
   .string()
   .max(PHOTO_MAX_BYTES)
@@ -42,7 +31,8 @@ export const inputPayloadSchema = z.object({
 export type InputPayload = z.infer<typeof inputPayloadSchema>;
 
 export const vipPayloadSchema = z.discriminatedUnion('action', [
-  z.object({ action: z.literal('selectGame'), gameId: z.string().max(32) }),
+  /** `null`: the game list with nothing chosen (Part 00 §1.3; nothing downloads until a pick). */
+  z.object({ action: z.literal('selectGame'), gameId: z.string().max(32).nullable() }),
   z.object({ action: z.literal('updateSettings'), settings: settingsSchema }),
   z.object({ action: z.literal('start') }),
   z.object({ action: z.literal('skip') }),
@@ -86,7 +76,6 @@ export const votePayloadSchema = z.object({ gameId: z.string().max(32).nullable(
 /** How a bot decides when to act; `random` is what the lobby button creates. */
 export const BOT_STRATEGIES = ['random', 'fast', 'slow', 'idle', 'chaos'] as const;
 export type BotStrategy = (typeof BOT_STRATEGIES)[number];
-export const MAX_BOTS_PER_OWNER = 4;
 
 // ─── server → client ────────────────────────────────────────────────────────────────────────────
 

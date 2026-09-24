@@ -8,7 +8,7 @@ import { join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import type { Strings } from '@partybox/game-sdk/ui';
-import { clientGames } from '../packages/client/src/games.generated';
+import { listGameFolders } from './lib/games';
 import { STRINGS as TV_SHELL } from '../packages/client/src/tv/strings';
 import { STRINGS as SURFACE } from '../packages/client/src/surface/strings';
 import { STRINGS as SDK_PHONE } from '../packages/game-sdk/src/controller/strings';
@@ -24,10 +24,22 @@ interface Area {
   manifest?: string;
 }
 
+/** Each registered game's table, from the part both of its entries share (ADR-050). */
+const GAMES = await Promise.all(
+  listGameFolders()
+    .filter((f) => f.registered)
+    .map(async (f) => {
+      const { shared } = (await import(`../games/${f.id}/client/shared.ts`)) as {
+        shared: { strings?: Strings };
+      };
+      return { id: f.id, table: shared.strings ?? {} };
+    }),
+);
+
 const AREAS: Area[] = [
-  ...Object.values(clientGames).map((g) => ({
+  ...GAMES.map((g) => ({
     dir: `games/${g.id}/client`,
-    table: g.strings ?? {},
+    table: g.table,
     tableFile: `games/${g.id}/client/strings.ts`,
     manifest: `games/${g.id}/manifest.json`,
   })),

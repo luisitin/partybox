@@ -3,10 +3,14 @@
 
 // Types client code needs (also available from the pure entry point).
 export type {
-  GameClientModule,
   GameControllerProps,
   GameFinaleProps,
+  GameLoaders,
   GameMusic,
+  GamePhoneModule,
+  GameSettingsModule,
+  GameShared,
+  GameTvModule,
   GameTvProps,
 } from './client-module';
 export type {

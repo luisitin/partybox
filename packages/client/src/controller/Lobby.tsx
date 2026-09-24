@@ -63,12 +63,9 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
   };
   const { games } = useCatalog();
   const first = games[0];
-  // I-650 B: the picker opens on the room's favourite (the VIP can still pick any game)
   const leader = voteLeader(room, games);
-  const pick = (): void => {
-    const gameId = leader?.id ?? first?.id;
-    if (gameId) controller.vip({ action: 'selectGame', gameId });
-  };
+  // Part 00 §1.3: the list opens with nothing chosen (the room's favourites sort first there).
+  const pick = (): void => controller.vip({ action: 'selectGame', gameId: null });
   const myBots = room.players.filter((p) => p.bot?.ownerId === me.id);
   const full = room.players.length >= room.capacity;
   const maxed = myBots.length >= MAX_BOTS_PER_OWNER;

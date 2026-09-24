@@ -7,7 +7,7 @@ primitives, and hosts the contract tests that run against every game.
 
 - `src/index.ts` — the PURE public surface: contract types, `z`, rng, reducer/view helpers (what `games/*/server` imports).
 - `src/ui.ts` — `@partybox/game-sdk/ui`: the React primitives (what `games/*/client` and the client shells import, ADR-023).
-- `src/client-module.ts` — `GameClientModule`, `GameTvProps`, `GameControllerProps` (what `games/<id>/client/index.ts` exports).
+- `src/client-module.ts` — `GameShared`, `GamePhoneModule`, `GameTvModule`, `GameSettingsModule`, `GameLoaders`, `GameTvProps`, `GameControllerProps` (what `games/<id>/client/*-entry.ts` export, ADR-050).
 - `src/ui/` — `Avatar` (16 inline SVGs), `PlayerChip`, `ServerClockProvider` + `useServerNow` / `useSecondsLeft` / `useServerOffset` (server-time-aware timers).
 - `src/rng.ts` — `nextFloat`, `nextInt`, `shuffle`, `pick` on `RngState` (`[value, next]`), `createRng` for bots.
 - `src/timer.ts` — `enterPhase`, `isTimerFor`, `applyVip` (pause/resume + skip/end handlers), `setConnected`, `allConnectedDone`, `connectedIds`.
@@ -27,7 +27,7 @@ primitives, and hosts the contract tests that run against every game.
 
 Engine or server imports, sockets, game-specific logic, anything a game shouldn't be allowed to call.
 
-`GameClientModule` strip flags (I-131, 2026-09-22): `stripCompact` (phase ids) drops the TV strip to
+`GameTvModule` strip flags (I-131, 2026-09-22): `stripCompact` (phase ids) drops the TV strip to
 faces only on those phases — the claimant's chip (`PlayerChips` `leadId`) keeps its name and is drawn
 a size up — and `stripHidden` removes the strip entirely so the stage takes the room. Bingo uses both
 for a claim and its verdict.

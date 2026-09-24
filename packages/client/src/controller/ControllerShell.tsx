@@ -14,7 +14,7 @@ import { ThemePicker } from '../ThemePicker';
 import styles from './ControllerShell.module.css';
 import { PhoneSettings, tvSoundsOn } from './PhoneSettings';
 import { ShareButton } from './ShareSheet';
-import { clientGames } from '../games.generated';
+import { peekGame } from '../game-loader';
 import type { SoundCue } from '../sound';
 import { linkLabel, useLinkBanner } from './flapFree';
 import { serverText } from '../server-text';
@@ -144,9 +144,7 @@ export function ControllerShell({
       tvSoundsOn() &&
       audio
     ) {
-      const mapped = room.selectedGameId
-        ? clientGames[room.selectedGameId]?.sounds?.[phase]
-        : undefined;
+      const mapped = peekGame(room.selectedGameId, 'phone')?.sounds?.[phase];
       if (mapped && mapped !== 'silence') audio.play(mapped as SoundCue);
     }
     // A rejected join or input, once per error object: the strip goes red (Join renders the

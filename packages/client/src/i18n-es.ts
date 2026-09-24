@@ -184,6 +184,8 @@ export const es: Texts = {
     connected: 'Conectado',
     dot: { connecting: 'conectando', connected: 'conectado', reconnecting: 'reconectando' },
     loadingGame: 'Preparando el juego…',
+    loadFailed: 'No se pudo cargar el juego.',
+    tapRetry: 'Toca para reintentar',
     lostServer: 'Se perdió la conexión con el servidor: reconectando…',
     backOnline: '✓ Conectado de nuevo',
     seconds: (n) => `${n} s`,

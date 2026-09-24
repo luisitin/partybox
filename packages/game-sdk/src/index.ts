@@ -32,7 +32,15 @@ export type {
   ViewPlayer,
   VipGameAction,
 } from '@partybox/shared';
-export type { GameClientModule, GameControllerProps, GameTvProps } from './client-module';
+export type {
+  GameControllerProps,
+  GameLoaders,
+  GamePhoneModule,
+  GameSettingsModule,
+  GameShared,
+  GameTvModule,
+  GameTvProps,
+} from './client-module';
 
 // ── randomness (pure `[value, next]` helpers; `createRng` only for bots) ──────────────────────
 export {

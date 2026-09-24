@@ -163,9 +163,7 @@ export function HostBar({ client, room, view }: HostBarProps): JSX.Element | nul
               type="button"
               className={`${styles.button} ${styles.primary}`}
               disabled={!firstGame}
-              onClick={() =>
-                firstGame && client.act({ action: 'selectGame', gameId: firstGame.id })
-              }
+              onClick={() => client.act({ action: 'selectGame', gameId: null })}
             >
               <span key={shelf} className={styles.turn}>
                 {shelfGame ? shelfGame.icon : '🎮'} {shelfGame ? shelfGame.name : t.host.pickGame}
@@ -238,12 +236,7 @@ export function HostBar({ client, room, view }: HostBarProps): JSX.Element | nul
             type="button"
             className={styles.button}
             disabled={!firstGame}
-            onClick={() =>
-              client.act({
-                action: 'selectGame',
-                gameId: room.selectedGameId ?? firstGame?.id ?? '',
-              })
-            }
+            onClick={() => client.act({ action: 'selectGame', gameId: null })}
           >
             🎮 {t.results.newGame}
           </button>

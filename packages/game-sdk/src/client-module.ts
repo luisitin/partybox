@@ -1,5 +1,8 @@
-// What `games/<id>/client/index.ts` exports and the client registry lists. Components are lazy so
-// a game's UI is only downloaded when it is played.
+// What a game's client entries export and the client registry loads (ADR-050). Each game has a
+// phone entry (`games/<id>/client/phone-entry.ts` → `phone`) and a TV entry (`tv-entry.ts` → `tv`), each its
+// own download: a phone fetches its game's phone entry only once the game is chosen, and never a
+// TV entry. The part both need (`shared.ts`) is spread into both. A game with a panel in the
+// lobby's 🎨 sheet also has `settings-entry.ts` → `settings`, fetched when a player opens that panel.
 import type { ComponentType, LazyExoticComponent } from 'react';
 import type { ControllerView, PushedView, RoomSnapshot, TvView } from '@partybox/shared';
 import type { Strings } from './ui/lang';
@@ -30,16 +33,55 @@ export interface GameControllerProps<V extends ControllerView = ControllerView, 
 }
 
 /* eslint-disable @typescript-eslint/no-explicit-any -- each game narrows its own view/input types */
-export interface GameClientModule {
+
+/** What both surfaces read: the room's sound plan (a phone plays it in a phone-only room or with
+ *  phone music on) and the game's words. `games/<id>/client/shared.ts`. */
+export interface GameShared {
   id: string;
-  Tv: LazyExoticComponent<ComponentType<GameTvProps<any>>>;
-  Controller: LazyExoticComponent<ComponentType<GameControllerProps<any, any>>>;
   /**
    * Optional map from TV phase id (`view.phaseId`) to a design-system cue name
    * (docs/DESIGN_SYSTEM.md): the TV shell plays it when that phase begins. Unmapped phases play
    * `phase`, which is reserved for "your phone needs you"; unknown cue names fall back to it too.
    */
   sounds?: Record<string, string>;
+  /**
+   * Background music on the TV while this game plays (the shell's music engine: tracks are ids
+   * under /music/, fetched by scripts/fetch-music.ts). `phases` limits it to those phase ids.
+   */
+  music?: GameMusic;
+  /**
+   * Synthesized music beds on the TV, by phase id (ADR-032): a bed id per phase the shell should
+   * play under that phase; unmapped phases are silent. Bed ids live in the client ();
+   * unknown ids are ignored. A bed that returns resumes where it left off. A phase may name
+   * several beds: the shell takes the next one each time that phase begins (loop #197).
+   */
+  beds?: Readonly<Record<string, string | readonly string[]>>;
+  /** No points in this game: the results headline says the show is over instead of calling an
+   *  all-zero scoreboard a tie (review-loop #63). */
+  scoreless?: boolean;
+  /**
+   * The game's own words in other languages (the owner, 2026-09-22: every screen translatable to
+   * Spanish), keyed by the English sentence: its screens read them through `useT(strings)`, and
+   * the shell translates what the game's server writes (errors, awards) from the same table. The
+   * manifest's sentences live in `manifest.es.json` (ADR-049). Content stays in the deck's language.
+   */
+  strings?: Strings;
+}
+
+/** `games/<id>/client/phone-entry.ts` exports `phone`. */
+export interface GamePhoneModule extends GameShared {
+  Controller: ComponentType<GameControllerProps<any, any>>;
+  /**
+   * S-005: in a "phone only" room the phones show what the TV would for these phases — a lazy
+   * component taking the controller view, rendered by the shell in place of the Controller.
+   */
+  PhoneStage?: LazyExoticComponent<ComponentType<{ view: PushedView<ControllerView> }>>;
+  phoneStagePhases?: readonly string[];
+}
+
+/** `games/<id>/client/tv-entry.ts` exports `tv`. */
+export interface GameTvModule extends GameShared {
+  Tv: ComponentType<GameTvProps<any>>;
   /**
    * TV phase ids the shell should cut INTO quickly (loop 296): the outgoing screen's ghost fades
    * over `--pb-motion-fast` instead of `--pb-motion-base` and the incoming screen does not rise,
@@ -64,54 +106,34 @@ export interface GameClientModule {
   /** I-131 C: phases where the strip goes entirely (the stage takes the room). */
   stripHidden?: readonly string[];
   /**
-   * S-003: the game's own phone settings (per phone: a card style, a pad …) for the lobby's 🎨
-   * sheet, so a player sets up while they wait. Lazy like the surfaces. Default: none.
-   */
-  PhoneSettings?: LazyExoticComponent<ComponentType>;
-  /** S-003 C: one line of the current setup for the lobby ("Focus · Motion on"). */
-  phoneSetup?: () => string;
-  /**
-   * S-005: in a "phone only" room the phones show what the TV would for these phases — a lazy
-   * component taking the controller view, rendered by the shell in place of the Controller.
-   */
-  PhoneStage?: LazyExoticComponent<ComponentType<{ view: PushedView<ControllerView> }>>;
-  phoneStagePhases?: readonly string[];
-  /**
    * TV phase ids where the game plays its own lock-in sound (I-020: Blanks' `card` pluck as a
    * submission lands on the table); the shell's per-push `lock` tick stays quiet there so one
    * lock-in is one note. Default: the shell ticks.
    */
   ownLocks?: readonly string[];
   /**
-   * Background music on the TV while this game plays (the shell's music engine: tracks are ids
-   * under /music/, fetched by scripts/fetch-music.ts). `phases` limits it to those phase ids.
-   */
-  music?: GameMusic;
-  /**
-   * Synthesized music beds on the TV, by phase id (ADR-032): a bed id per phase the shell should
-   * play under that phase; unmapped phases are silent. Bed ids live in the client ();
-   * unknown ids are ignored. A bed that returns resumes where it left off. A phase may name
-   * several beds: the shell takes the next one each time that phase begins (loop #197).
-   */
-  beds?: Readonly<Record<string, string | readonly string[]>>;
-  /**
    * The results stage keeps the game's last board up instead of the generic scoreboard when
    * `finale(lastView)` says so — a Lightning final-wager board stays until Play again / Home.
    */
   finale?: (lastView: PushedView<any>) => boolean;
   Finale?: LazyExoticComponent<ComponentType<GameFinaleProps<any>>>;
-  /** No points in this game: the results headline says the show is over instead of calling an
-   *  all-zero scoreboard a tie (review-loop #63). */
-  scoreless?: boolean;
-  /**
-   * The game's own words in other languages (the owner, 2026-09-22: every screen translatable to
-   * Spanish), keyed by the English sentence: its phone and TV screens read them through
-   * `useT(strings)`, and the shell's game picker translates the manifest's tagline, description and
-   * setting labels from the same table. Content (cards, questions) stays in the deck's language.
-   */
-  strings?: Strings;
+}
+
+/** `games/<id>/client/settings-entry.ts` exports `settings` (S-003: the game's own per-phone setup). */
+export interface GameSettingsModule {
+  /** The panel in the lobby's 🎨 sheet, so a player sets up while they wait. */
+  PhoneSettings: ComponentType;
+  /** S-003 C: one line of the current setup for the lobby ("Focus · Motion on"). */
+  phoneSetup?: () => string;
 }
 /* eslint-enable @typescript-eslint/no-explicit-any */
+
+/** One game's downloads, as the generated registry lists them (ADR-050). */
+export interface GameLoaders {
+  phone: () => Promise<GamePhoneModule>;
+  tv: () => Promise<GameTvModule>;
+  settings?: () => Promise<GameSettingsModule>;
+}
 
 export interface GameMusic {
   tracks: readonly string[];
