@@ -25,7 +25,9 @@
       "@partybox/engine": ["./packages/engine/src/index.ts"],
       "@partybox/game-sdk": ["./packages/game-sdk/src/index.ts"],
       "@partybox/game-sdk/ui": ["./packages/game-sdk/src/ui.ts"],
-      "@partybox/game-sdk/testing": ["./packages/game-sdk/src/testing.ts"]
+      "@partybox/game-sdk/testing": ["./packages/game-sdk/src/testing.ts"],
+      "@partybox/game-sdk/ui/secret-card": ["./packages/game-sdk/src/ui-secret-card.ts"],
+      "@partybox/game-sdk/ui/face-picker": ["./packages/game-sdk/src/ui-face-picker.ts"]
     }
   }
 }

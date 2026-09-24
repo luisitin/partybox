@@ -32,7 +32,8 @@ interface Route {
 }
 
 function parseRoute(): Route | null {
-  const match = /^\/preview\/([a-z0-9-]+)\/([a-z0-9-]+)\/?$/.exec(location.pathname);
+  // Fixture names are phase ids, and those may be camelCase (Imposter's clueReveal).
+  const match = /^\/preview\/([a-z0-9-]+)\/([a-zA-Z0-9-]+)\/?$/.exec(location.pathname);
   if (!match) return null;
   const params = new URLSearchParams(location.search);
   return {

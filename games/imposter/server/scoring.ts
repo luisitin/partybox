@@ -81,6 +81,9 @@ export function awards(state: State): GameAward[] {
   for (const a of AWARDS) {
     const best = Math.max(0, ...state.seats.map((id) => state.stats[id]?.[a.stat] ?? 0));
     if (best <= 0) continue;
+    const holders = state.seats.filter((id) => (state.stats[id]?.[a.stat] ?? 0) === best);
+    // An award most of the table shares singles nobody out (a whole crew reading it right).
+    if (holders.length * 2 > state.seats.length) continue;
     for (const id of state.seats)
       if ((state.stats[id]?.[a.stat] ?? 0) === best)
         out.push({ id: a.id, title: a.title, description: a.description, playerId: id });

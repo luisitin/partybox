@@ -1,0 +1,408 @@
+/* Imposter phone. rem-based so a larger-text phone scales the words (the column is rem, I-100 C);
+   every target ≥ 44 px; nothing selectable or zoomable under a thumb. */
+.kicker {
+  margin: 0;
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--pb-accent-2);
+  text-align: center;
+}
+.title {
+  margin: 0;
+  font-size: var(--pb-font-h1);
+  font-weight: 900;
+  line-height: 1.15;
+  text-align: center;
+}
+.glyph {
+  margin: 0;
+  font-size: 3rem;
+  line-height: 1;
+  text-align: center;
+}
+.hint {
+  margin: 0;
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+  text-align: center;
+}
+.prompt {
+  margin: var(--pb-space-2) 0 0;
+  font-size: var(--pb-font-h2);
+  font-weight: 800;
+  text-align: center;
+}
+.watch {
+  margin: var(--pb-space-6) 0;
+  font-size: var(--pb-font-h2);
+  font-weight: 800;
+  text-align: center;
+  color: var(--pb-text-muted);
+}
+
+/* The secret card's faces. */
+.faceCaption {
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.faceWord {
+  font-size: var(--pb-font-h1);
+  font-weight: 900;
+  line-height: 1.1;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+.faceCat {
+  font-size: var(--pb-font-body);
+  font-weight: 700;
+}
+.faceHint {
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+}
+.miniFace {
+  display: flex;
+  align-items: baseline;
+  gap: var(--pb-space-2);
+  min-width: 0;
+  font-size: var(--pb-font-body);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.miniFace b {
+  text-transform: uppercase;
+}
+.miniFace span {
+  color: var(--pb-text-muted);
+  font-size: var(--pb-font-caption);
+}
+
+/* The clue box: one line, big, no zoom on focus (≥ 16 px), no autocorrect artefacts. */
+.clueBox {
+  width: 100%;
+  min-height: 3.25rem;
+  padding: var(--pb-space-3) var(--pb-space-4);
+  border: 2px solid var(--pb-surface-2);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  color: var(--pb-text);
+  font: inherit;
+  font-size: max(1rem, var(--pb-font-h2));
+  font-weight: 800;
+  text-align: center;
+  outline: none;
+  transition: border-color var(--pb-motion-fast) ease;
+}
+.clueBox:focus {
+  border-color: var(--pb-accent-2);
+}
+.clueBox[aria-invalid='true'] {
+  border-color: var(--pb-danger);
+}
+.legal {
+  min-height: 1.4em;
+  margin: 0;
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+  text-align: center;
+}
+.bad {
+  color: var(--pb-danger);
+  font-weight: 800;
+}
+.locked {
+  margin: var(--pb-space-2) 0 0;
+  padding: var(--pb-space-3);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  font-size: var(--pb-font-body);
+  text-align: center;
+  animation: global(pb-pop) var(--pb-motion-base) both;
+}
+.locked b {
+  font-size: var(--pb-font-h2);
+}
+.soFar {
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  padding: var(--pb-space-2) var(--pb-space-3);
+}
+.soFar summary {
+  min-height: 2.75rem;
+  display: flex;
+  align-items: center;
+  font-weight: 800;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.soFar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 var(--pb-space-2);
+  display: grid;
+  gap: var(--pb-space-1);
+  font-size: var(--pb-font-caption);
+}
+
+/* Lists: the talk, PhoneStage's cards and votes. */
+.clueList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--pb-space-2);
+}
+.clueList li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-areas:
+    'face name'
+    'face clues';
+  align-items: center;
+  column-gap: var(--pb-space-3);
+  min-height: 3.25rem;
+  padding: var(--pb-space-2) var(--pb-space-3);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+}
+.clueList li > :first-child {
+  grid-area: face;
+}
+.rowName {
+  grid-area: name;
+  font-weight: 800;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.rowClues,
+.rowClue {
+  grid-area: clues;
+  color: var(--pb-text-muted);
+  font-size: var(--pb-font-caption);
+  overflow-wrap: anywhere;
+}
+.rowClue {
+  color: var(--pb-text);
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+}
+.meRow {
+  outline: 2px solid var(--pb-accent-2);
+}
+.dealt {
+  animation: global(pb-deal) var(--pb-motion-base) cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.steps {
+  margin: 0;
+  padding-left: 1.4em;
+  display: grid;
+  gap: var(--pb-space-3);
+  font-size: var(--pb-font-body);
+}
+.sayLine {
+  margin: 0;
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+  text-align: center;
+  font-style: italic;
+}
+
+/* After the vote. */
+.accused {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pb-space-2);
+  text-align: center;
+}
+.role {
+  margin: 0;
+  min-width: 12rem;
+  padding: var(--pb-space-3) var(--pb-space-4);
+  border-radius: var(--pb-radius);
+  border: 3px dashed var(--pb-text-muted);
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+}
+.isImp {
+  border: 3px solid var(--pb-accent-3);
+  color: var(--pb-accent-3);
+  animation: global(pb-flip) var(--pb-motion-slow) both;
+}
+.isCrew {
+  border: 3px solid var(--pb-danger);
+  color: var(--pb-danger);
+  animation: global(pb-flip) var(--pb-motion-slow) both;
+}
+.bigWord {
+  margin: 0;
+  font-size: var(--pb-font-display);
+  font-weight: 900;
+  line-height: 1.1;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+.impLine {
+  margin: 0;
+  font-size: var(--pb-font-body);
+}
+.optionsLine {
+  margin: 0;
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  text-align: center;
+}
+.result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pb-space-2);
+  margin: var(--pb-space-4) 0;
+  text-align: center;
+  animation: global(pb-rise) var(--pb-motion-base) both;
+}
+.resultPts {
+  margin: 0;
+  font-size: var(--pb-font-display);
+  font-weight: 900;
+  line-height: 1;
+  color: var(--pb-accent-2);
+}
+.resultLine {
+  margin: 0;
+  font-size: var(--pb-font-h2);
+  font-weight: 800;
+}
+.vipRow {
+  display: grid;
+  gap: var(--pb-space-2);
+}
+
+/* Talk: two columns of tiles, the clue in front (fits 12 players on a 320×568 phone). */
+.tiles {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.tiles li {
+  min-height: 3rem;
+  padding: var(--pb-space-1) var(--pb-space-2);
+  column-gap: var(--pb-space-2);
+}
+.tiles .rowName {
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+}
+.tiles .rowClue {
+  font-size: var(--pb-font-body);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.voteHead {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  margin: 0;
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+}
+@media (max-height: 640px) {
+  .tallOnly,
+  .glyph {
+    display: none;
+  }
+}
+.optionsLine {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--pb-space-2);
+}
+.optionsLine span {
+  padding: var(--pb-space-1) var(--pb-space-3);
+  border-radius: 999px;
+  background: var(--pb-surface-2);
+}
+.centerFill {
+  flex: 1;
+  min-height: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pb-space-3);
+  text-align: center;
+}
+.eye {
+  display: grid;
+  place-items: center;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background: var(--pb-surface);
+  color: var(--pb-info);
+  font-size: 2rem;
+}
+.optionGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--pb-space-2);
+}
+.optionBtn {
+  min-height: 3.5rem;
+  padding: var(--pb-space-2);
+  border: 2px solid var(--pb-surface-2);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  color: var(--pb-text);
+  font: inherit;
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  overflow-wrap: anywhere;
+}
+.optionBtn:active {
+  transform: scale(0.97);
+  border-color: var(--pb-accent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .steps li {
+    animation:
+      global(pb-rise) var(--pb-motion-base) both,
+      imp-step 6.6s ease-in-out infinite;
+  }
+  .steps li:nth-child(1) {
+    animation-delay: 0ms, 1.4s;
+  }
+  .steps li:nth-child(2) {
+    animation-delay: 120ms, 3.6s;
+  }
+  .steps li:nth-child(3) {
+    animation-delay: 240ms, 5.8s;
+  }
+}
+@keyframes imp-step {
+  0%,
+  28%,
+  100% {
+    color: var(--pb-text);
+  }
+  8%,
+  20% {
+    color: var(--pb-accent-2);
+  }
+}
+:global(:root[data-motion='off']) .steps li {
+  animation: none;
+}

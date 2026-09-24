@@ -1,12 +1,12 @@
 {
   "phase": {
     "id": "done",
-    "startedAt": 1700000345919,
+    "startedAt": 1700000350591,
     "deadline": null
   },
   "rng": {
-    "seed": 1,
-    "step": 232
+    "seed": 3,
+    "step": 240
   },
   "players": {
     "p1": {
@@ -44,6 +44,18 @@
       "name": "Player 6",
       "avatarId": "koala",
       "connected": true
+    },
+    "p7": {
+      "id": "p7",
+      "name": "Player 7",
+      "avatarId": "penguin",
+      "connected": true
+    },
+    "p8": {
+      "id": "p8",
+      "name": "Player 8",
+      "avatarId": "octopus",
+      "connected": true
     }
   },
   "cfg": {
@@ -64,10 +76,35 @@
     "mode": "together",
     "phoneOnly": false
   },
-  "seats": ["p1", "p2", "p3", "p4", "p5", "p6"],
+  "seats": ["p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8"],
   "left": [],
-  "imposterBag": ["p2", "p3", "p1"],
+  "imposterBag": ["p8", "p2", "p1", "p5", "p4"],
   "words": [
+    {
+      "id": "clothes-tie",
+      "answer": "tie",
+      "accept": ["ties", "necktie", "neckties", "tye", "cravat", "tei"],
+      "reject": ["toe", "pie", "tile"],
+      "family": [],
+      "cat": "clothes",
+      "label": "Clothes"
+    },
+    {
+      "id": "places-supermarket",
+      "answer": "supermarket",
+      "accept": [
+        "supermarkets",
+        "grocery store",
+        "grocery shop",
+        "grocers",
+        "supermaket",
+        "supermarkt"
+      ],
+      "reject": ["hypermarket", "flea market"],
+      "family": ["market"],
+      "cat": "places",
+      "label": "Places"
+    },
     {
       "id": "food-pancake",
       "answer": "pancake",
@@ -78,111 +115,97 @@
       "label": "Food"
     },
     {
-      "id": "clothes-swimsuit",
-      "answer": "swimsuit",
-      "accept": [
-        "swimsuits",
-        "swimming costume",
-        "bathing suit",
-        "swimwear",
-        "swimsut",
-        "swimsiut",
-        "bathers"
-      ],
-      "reject": ["wetsuit", "sweatsuit"],
-      "family": ["swim"],
-      "cat": "clothes",
-      "label": "Clothes"
-    },
-    {
-      "id": "tech-hashtag",
-      "answer": "hashtag",
-      "accept": ["hashtags", "hastag", "hashtage", "hashteg", "pound sign", "hash sign"],
-      "reject": ["hashbrown"],
-      "family": ["hash"],
-      "cat": "tech",
-      "label": "Tech"
-    },
-    {
-      "id": "animals-penguin",
-      "answer": "penguin",
-      "accept": ["penguins", "pengiun", "pinguin", "penguine", "pengin", "emperor penguin"],
-      "reject": ["pelican"],
-      "family": ["pengu"],
-      "cat": "animals",
-      "label": "Animals"
-    },
-    {
-      "id": "vehicles-ambulance",
-      "answer": "ambulance",
-      "accept": ["ambulances", "ambulence", "ambulanse", "amberlance", "amblance", "ambulanz"],
-      "reject": ["ambulant", "ambience"],
-      "family": ["ambul"],
+      "id": "vehicles-bicycle",
+      "answer": "bicycle",
+      "accept": ["bike", "bikes", "bicycles", "pushbike", "bycicle", "bicycel", "cycle"],
+      "reject": ["tricycle", "unicycle"],
+      "family": [],
       "cat": "vehicles",
       "label": "Vehicles"
+    },
+    {
+      "id": "fantasy-castle",
+      "answer": "castle",
+      "accept": ["castles", "castel", "castl", "cassle", "fortress", "citadel"],
+      "reject": ["cattle", "hassle"],
+      "family": [],
+      "cat": "fantasy",
+      "label": "Fantasy"
     }
   ],
   "round": {
     "n": 3,
     "w": 2,
     "category": {
-      "id": "tech",
-      "label": "Tech"
+      "id": "food",
+      "label": "Food"
     },
-    "imposters": ["p4"],
+    "imposters": ["p3"],
     "clueRound": 1,
     "clues": [
       {
-        "by": "p3",
-        "text": "grid",
-        "r": 1
-      },
-      {
-        "by": "p6",
-        "text": "trending",
-        "r": 1
-      },
-      {
         "by": "p4",
-        "text": "internet",
+        "text": "stack",
         "r": 1
       },
       {
-        "by": "p2",
-        "text": "caption",
+        "by": "p3",
+        "text": "dinner",
         "r": 1
       },
       {
-        "by": "p1",
-        "text": "trending",
+        "by": "p7",
+        "text": "flip",
         "r": 1
       },
       {
         "by": "p5",
-        "text": "caption",
+        "text": "stack",
+        "r": 1
+      },
+      {
+        "by": "p2",
+        "text": "flip",
+        "r": 1
+      },
+      {
+        "by": "p6",
+        "text": "batter",
+        "r": 1
+      },
+      {
+        "by": "p8",
+        "text": "tossing",
+        "r": 1
+      },
+      {
+        "by": "p1",
+        "text": "syrup",
         "r": 1
       }
     ],
-    "revealOrder": ["p4", "p6", "p2", "p3", "p5", "p1"],
-    "revealed": 6,
-    "ready": ["p5", "p1", "p4", "p3", "p6", "p2"],
+    "revealOrder": ["p7", "p4", "p2", "p5", "p6", "p3", "p8", "p1"],
+    "revealed": 8,
+    "ready": ["p7", "p5", "p2", "p6", "p1", "p3", "p8", "p4"],
     "votes": {
-      "p1": ["p4"],
-      "p6": ["p4"],
-      "p2": ["p4"],
-      "p4": ["p6"],
-      "p5": ["p4"],
-      "p3": ["p4"]
+      "p6": ["p3"],
+      "p5": ["p3"],
+      "p4": ["p3"],
+      "p8": ["p3"],
+      "p3": ["p2"],
+      "p2": ["p3"],
+      "p1": ["p3"],
+      "p7": ["p3"]
     },
     "runoff": null,
     "showing": "main",
-    "accused": ["p4"],
+    "accused": ["p3"],
     "spot": 0,
     "flipped": true,
-    "options": ["selfie", "spam", "hashtag", "screenshot", "emoji", "charger"],
+    "options": ["pancake", "taco", "sandwich", "salad", "pizza", "sushi"],
     "guesses": {
-      "p4": {
-        "said": "hashtag",
+      "p3": {
+        "said": "pancake",
         "ok": true,
         "byVip": false
       }
@@ -198,17 +221,25 @@
       },
       "p3": {
         "pts": 3,
-        "why": ["read", "caught"]
+        "why": ["stole"]
       },
       "p4": {
         "pts": 3,
-        "why": ["stole"]
+        "why": ["read", "caught"]
       },
       "p5": {
         "pts": 3,
         "why": ["read", "caught"]
       },
       "p6": {
+        "pts": 3,
+        "why": ["read", "caught"]
+      },
+      "p7": {
+        "pts": 3,
+        "why": ["read", "caught"]
+      },
+      "p8": {
         "pts": 3,
         "why": ["read", "caught"]
       }
@@ -222,23 +253,27 @@
     "p2": 9,
     "p3": 9,
     "p4": 9,
-    "p5": 6,
-    "p6": 9
+    "p5": 9,
+    "p6": 6,
+    "p7": 6,
+    "p8": 9
   },
   "said": {
-    "p6": ["fork", "lifeguard", "trending"],
-    "p5": ["stack", "style", "caption"],
-    "p4": ["stack", "lifeguard", "internet"],
-    "p2": ["flip", "sunscreen", "caption"],
-    "p3": ["flip", "tan", "grid"],
-    "p1": ["batter", "wet", "trending"]
+    "p6": ["thrift", "checkout", "batter"],
+    "p2": ["loosen", "basket", "flip"],
+    "p7": ["collar", "weekend", "flip"],
+    "p3": ["loosen", "aisles", "dinner"],
+    "p8": ["clip", "checkout", "tossing"],
+    "p1": ["knot", "frozen", "syrup"],
+    "p4": ["interview", "cashier", "stack"],
+    "p5": ["clip", "checkout", "stack"]
   },
   "stats": {
     "p1": {
       "escapes": 0,
       "reads": 3,
       "steals": 0,
-      "suspicion": 1
+      "suspicion": 0
     },
     "p2": {
       "escapes": 0,
@@ -248,31 +283,43 @@
     },
     "p3": {
       "escapes": 0,
+      "reads": 2,
+      "steals": 1,
+      "suspicion": 1
+    },
+    "p4": {
+      "escapes": 0,
       "reads": 3,
       "steals": 0,
       "suspicion": 0
     },
-    "p4": {
-      "escapes": 0,
-      "reads": 2,
-      "steals": 1,
-      "suspicion": 0
-    },
     "p5": {
       "escapes": 0,
-      "reads": 2,
+      "reads": 3,
       "steals": 0,
       "suspicion": 0
     },
     "p6": {
       "escapes": 0,
       "reads": 2,
-      "steals": 1,
+      "steals": 0,
       "suspicion": 1
+    },
+    "p7": {
+      "escapes": 0,
+      "reads": 2,
+      "steals": 0,
+      "suspicion": 0
+    },
+    "p8": {
+      "escapes": 0,
+      "reads": 3,
+      "steals": 0,
+      "suspicion": 0
     }
   },
   "speechMs": {
-    "imp2896mc1zbvkq": -1,
+    "impi5augk1ai26ea": -1,
     "imp1ka2gh618kykle": -1,
     "imp1y6i0ar78zar9": -1,
     "imp1lvko6t1adf7i9": -1,
@@ -282,26 +329,31 @@
     "imp1myir931yikemv": -1,
     "imp15cozm94k2903": -1,
     "impq1b8pb1o78owx": -1,
-    "imp1fr53m1184m8nv": -1,
+    "impnqnq7m1s42a16": -1,
+    "imp6icsrx1qnyfhj": -1,
+    "imp1du8rpg1t7owfc": -1,
+    "impqcy8fbl0yhjx": -1,
+    "imphytgxf1xkfdut": -1,
+    "impo3nfig13vrizm": -1,
+    "imp1rsymza32yxyg": -1,
+    "impmavxuxvnezr9": -1,
+    "imp17pc0u71efsxp5": -1,
+    "imp11ivik71hctw1t": -1,
+    "imp1dy2wvg1rs88xm": -1,
+    "imp4wh1up1051rsr": -1,
+    "imp7i0xdmrw24w8": -1,
+    "imp1ku6mbm1waazj0": -1,
+    "impm8v7zzn94tpt": -1,
+    "impuu79hweg5bf0": -1,
+    "imp1pv0p5ah857ew": -1,
+    "imp134s5q2tlytw4": -1,
     "impwcxl6717pli8d": -1,
+    "imp1bkscs9xjtqn1": -1,
     "imphi8psy19oa988": -1,
     "imp1btomyj1yregpn": -1,
-    "imp19kck8u1r03ci6": -1,
-    "impmavxuxvnezr9": -1,
-    "imp1gli6rqiem7ri": -1,
-    "imprxhjcs2gu9fg": -1,
-    "imp4rqmrr1v6epc5": -1,
-    "imp8rh1aeh7vkk": -1,
-    "impcrnprlsowphj": -1,
-    "imp1gon4z41dwzsv8": -1,
-    "imp1900gigt2hs58": -1,
-    "imporupfo938cn6": -1,
-    "impjq467a18tjjp2": -1,
-    "imp1fg8s1l1uztc63": -1,
-    "imp1jbgjwo1fzoz6": -1,
-    "imp15nn8v415du85g": -1,
-    "imp1j1zub11yqjk6h": -1,
-    "imps7jykn4pwcqn": -1,
-    "imp1u4qi9xei6uth": -1
+    "impvk9lm61g9uq94": -1,
+    "imp1xszyb4scrz4e": -1,
+    "imphbqyhuxaal3o": -1,
+    "imp1gli6rqiem7ri": -1
   }
 }

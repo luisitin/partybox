@@ -5,7 +5,7 @@
     "deadline": 1700000008000
   },
   "rng": {
-    "seed": 1,
+    "seed": 3,
     "step": 167
   },
   "players": {
@@ -44,6 +44,18 @@
       "name": "Player 6",
       "avatarId": "koala",
       "connected": true
+    },
+    "p7": {
+      "id": "p7",
+      "name": "Player 7",
+      "avatarId": "penguin",
+      "connected": true
+    },
+    "p8": {
+      "id": "p8",
+      "name": "Player 8",
+      "avatarId": "octopus",
+      "connected": true
     }
   },
   "cfg": {
@@ -64,10 +76,35 @@
     "mode": "together",
     "phoneOnly": false
   },
-  "seats": ["p1", "p2", "p3", "p4", "p5", "p6"],
+  "seats": ["p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8"],
   "left": [],
   "imposterBag": [],
   "words": [
+    {
+      "id": "clothes-tie",
+      "answer": "tie",
+      "accept": ["ties", "necktie", "neckties", "tye", "cravat", "tei"],
+      "reject": ["toe", "pie", "tile"],
+      "family": [],
+      "cat": "clothes",
+      "label": "Clothes"
+    },
+    {
+      "id": "places-supermarket",
+      "answer": "supermarket",
+      "accept": [
+        "supermarkets",
+        "grocery store",
+        "grocery shop",
+        "grocers",
+        "supermaket",
+        "supermarkt"
+      ],
+      "reject": ["hypermarket", "flea market"],
+      "family": ["market"],
+      "cat": "places",
+      "label": "Places"
+    },
     {
       "id": "food-pancake",
       "answer": "pancake",
@@ -78,56 +115,30 @@
       "label": "Food"
     },
     {
-      "id": "clothes-swimsuit",
-      "answer": "swimsuit",
-      "accept": [
-        "swimsuits",
-        "swimming costume",
-        "bathing suit",
-        "swimwear",
-        "swimsut",
-        "swimsiut",
-        "bathers"
-      ],
-      "reject": ["wetsuit", "sweatsuit"],
-      "family": ["swim"],
-      "cat": "clothes",
-      "label": "Clothes"
-    },
-    {
-      "id": "tech-hashtag",
-      "answer": "hashtag",
-      "accept": ["hashtags", "hastag", "hashtage", "hashteg", "pound sign", "hash sign"],
-      "reject": ["hashbrown"],
-      "family": ["hash"],
-      "cat": "tech",
-      "label": "Tech"
-    },
-    {
-      "id": "animals-penguin",
-      "answer": "penguin",
-      "accept": ["penguins", "pengiun", "pinguin", "penguine", "pengin", "emperor penguin"],
-      "reject": ["pelican"],
-      "family": ["pengu"],
-      "cat": "animals",
-      "label": "Animals"
-    },
-    {
-      "id": "vehicles-ambulance",
-      "answer": "ambulance",
-      "accept": ["ambulances", "ambulence", "ambulanse", "amberlance", "amblance", "ambulanz"],
-      "reject": ["ambulant", "ambience"],
-      "family": ["ambul"],
+      "id": "vehicles-bicycle",
+      "answer": "bicycle",
+      "accept": ["bike", "bikes", "bicycles", "pushbike", "bycicle", "bicycel", "cycle"],
+      "reject": ["tricycle", "unicycle"],
+      "family": [],
       "cat": "vehicles",
       "label": "Vehicles"
+    },
+    {
+      "id": "fantasy-castle",
+      "answer": "castle",
+      "accept": ["castles", "castel", "castl", "cassle", "fortress", "citadel"],
+      "reject": ["cattle", "hassle"],
+      "family": [],
+      "cat": "fantasy",
+      "label": "Fantasy"
     }
   ],
   "round": {
     "n": 0,
     "w": 0,
     "category": {
-      "id": "food",
-      "label": "Food"
+      "id": "clothes",
+      "label": "Clothes"
     },
     "imposters": [],
     "clueRound": 1,
@@ -154,7 +165,9 @@
     "p3": 0,
     "p4": 0,
     "p5": 0,
-    "p6": 0
+    "p6": 0,
+    "p7": 0,
+    "p8": 0
   },
   "said": {},
   "stats": {},
