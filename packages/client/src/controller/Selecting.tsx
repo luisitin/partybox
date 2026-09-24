@@ -10,6 +10,7 @@ import { serverText } from '../server-text';
 import { SettingField } from '../SettingField';
 import type { Controller } from '../net/controller';
 import { tunedLine, tunedSettings } from './tunedLine';
+import { SettingsGlance } from './SettingsGlance';
 import styles from './Selecting.module.css';
 import { keySetting } from '../keySetting';
 import { VoteRow, voteCounts } from './VoteRow';
@@ -38,6 +39,8 @@ export function Selecting({ controller, room, me }: SelectingProps): JSX.Element
         }
         mood="wait"
       >
+        {/* I-648 A: what the VIP has set, read-only, live */}
+        {selected ? <SettingsGlance game={selected} values={room.settings} lang={lang} /> : null}
         {/* I-650 A: the vote stays open while the VIP picks */}
         <VoteRow controller={controller} room={room} me={me} />
       </WaitingScreen>

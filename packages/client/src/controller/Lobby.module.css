@@ -6,10 +6,24 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+  /* I-792 E: the roster as a two-column grid right under the title row; a column per ~7 em, so
+     200 % text (or a narrow phone at 16 px type) falls back to one column instead of crushing
+     names to two letters. */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(max(120px, 6.5em), 1fr));
   gap: var(--pb-space-2);
+}
+.list > li {
+  display: flex;
+  min-width: 0;
+}
+.list > li > * {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+/* your own chip: a ring instead of the "you" tag (the name keeps the cell's width) */
+.mine > * {
+  box-shadow: inset 0 0 0 2px var(--pb-accent);
 }
 
 /* A new player pops in (keys are ids: only a fresh chip animates). */
@@ -21,6 +35,7 @@
 /* The last "chip" in the grid is the add-a-bot action: dashed so it reads as a slot, not a player. */
 .addBot {
   display: inline-flex;
+  width: 100%;
   align-items: center;
   gap: var(--pb-space-2);
   min-height: var(--pb-touch);
@@ -28,6 +43,7 @@
   border-radius: 999px;
   border: 2px dashed var(--pb-text-muted);
   color: var(--pb-text);
+  font-size: var(--pb-font-caption);
   font-weight: 700;
 }
 
@@ -119,56 +135,40 @@
   animation: none;
 }
 
-/* ── S-003 B: the setup pill under the lobby's line. */
-.setup {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 2px;
-  margin: var(--pb-space-2) 0;
-  padding: var(--pb-space-2) var(--pb-space-4);
-  border-radius: 999px;
-  border: 2px solid var(--pb-border);
-  background: var(--pb-surface-2);
-  color: var(--pb-text);
-  font-weight: 700;
-}
-.setupNow {
-  color: var(--pb-text-muted);
-  font-weight: 600;
-}
-
-/* The lobby's pills (Share, Set up) in a row that wraps on a narrow phone. */
-.pills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--pb-space-2);
-  margin: var(--pb-space-2) 0;
-}
-.pills > .setup {
-  margin: 0;
-}
-
-/* ── I-070 A: the nudge pill — the setup pill's shape, disabled while it cools down. */
-.nudge {
-  flex-direction: row;
-  font-weight: 800;
-}
-.nudge:disabled {
-  opacity: 0.55;
-}
-
-/* ── I-082 A: the first-VIP tips strip (keyed: each tip fades in). */
-.tip {
+/* ── I-792 E: the one rotating line under the roster (I-082 A's tips strip, and every other
+   hint). All lines share one grid cell: the row is as tall as the longest, so a change never
+   moves anything; the one on show fades in (opacity only). */
+.line {
   display: flex;
   align-items: center;
   gap: var(--pb-space-2);
-  margin: var(--pb-space-2) 0;
   padding: var(--pb-space-2) var(--pb-space-3);
   border-radius: var(--pb-radius);
   background: var(--pb-surface-2);
   font-size: var(--pb-font-caption);
-  animation: global(pb-fade-in) var(--pb-motion-base) var(--pb-ease) both;
+  font-weight: 600;
+}
+.lineIcon {
+  flex: none;
+  align-self: flex-start;
+}
+.lineStack {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+}
+.lineText {
+  grid-area: 1 / 1;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--pb-motion-base) var(--pb-ease),
+    visibility 0s linear var(--pb-motion-base);
+}
+.lineOn {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity var(--pb-motion-base) var(--pb-ease);
 }
 .tipClose {
   margin-left: auto;
@@ -180,59 +180,107 @@
   font: inherit;
 }
 @media (prefers-reduced-motion: reduce) {
-  .tip {
-    animation: none;
+  .lineText {
+    transition: none;
   }
 }
-:global(:root[data-motion='off']) .tip {
-  animation: none;
+:global(:root[data-motion='off']) .lineText {
+  transition: none;
 }
 
-/* ── The owner (2026-09-22): the lobby's title row carries the Share pill and the way out. */
+/* ── I-792 E: the title row — "Lobby 6 of 16", then Share and ⋯ at the right. One line on every
+   phone: the count gives way first (the pills' type is capped, so 200 % text still fits). */
 .head {
   display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--pb-space-2) var(--pb-space-3);
-}
-/* The title keeps its width: on an iPhone SE the pills (never shrinking) squeezed "Lobby" under
-   "🚪 Leave" — now they wrap to their own line, still right-aligned (2026-09-23). */
-.headTitle {
-  flex: 1 0 auto;
-  text-wrap: balance;
-}
-.headPills {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
+  align-items: center;
   gap: var(--pb-space-2);
-  flex: 0 0 auto;
-  margin-left: auto; /* right-aligned on its own line too */
+}
+.headTitle {
+  flex: none;
+}
+.headCount {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  color: var(--pb-text-muted);
 }
 .sharePill,
-.leavePill {
-  min-height: 40px;
+.morePill {
+  flex: none;
+  min-height: 36px;
+  min-width: 44px;
   padding: 0 var(--pb-space-3);
   border-radius: 999px;
   border: 2px solid transparent;
   font: inherit;
-  font-size: var(--pb-font-small);
+  /* chrome, not content: capped so 200 % text keeps the row on one line */
+  font-size: min(var(--pb-font-caption), 15px);
   font-weight: 800;
   white-space: nowrap;
+  background: var(--pb-surface-2);
+  color: var(--pb-text);
   transition: transform var(--pb-motion-fast) var(--pb-ease);
 }
-.sharePill {
-  background: var(--pb-accent);
-  color: var(--pb-on-accent);
-}
-.sharePill:active {
+.sharePill:active,
+.morePill:active {
   transform: scale(0.96);
 }
-.leavePill {
+
+/* The ⋯ menu: a small card under the button, over a clear backdrop that closes it. */
+.moreWrap {
+  position: relative;
+  flex: none;
+  display: inline-flex;
+}
+.moreBack {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+}
+.moreMenu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 31;
+  display: grid;
+  gap: 4px;
+  width: max-content;
+  max-width: min(280px, calc(100vw - 32px));
+  padding: 6px;
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  border: 1px solid var(--pb-border);
+  box-shadow: 0 12px 32px rgb(0 0 0 / 0.45);
+  animation: global(pb-fade-in) var(--pb-motion-fast) var(--pb-ease) both;
+}
+.moreItem {
+  min-height: var(--pb-touch);
+  padding: var(--pb-space-2) var(--pb-space-3);
+  border-radius: calc(var(--pb-radius) - 4px);
   background: transparent;
-  border-color: var(--pb-border);
-  color: var(--pb-text-muted);
+  color: var(--pb-text);
+  font: inherit;
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  text-align: left;
+  white-space: normal;
+}
+.moreItem:hover,
+.moreItem:focus-visible {
+  background: var(--pb-surface-2);
+}
+.moreItem:disabled {
+  opacity: 0.55;
+}
+.moreLeave {
+  color: var(--pb-danger);
+}
+:global(:root[data-motion='off']) .moreMenu {
+  animation: none;
 }
 
 /* The phone's own share chooser, where the system sheet does not exist (a plain-http origin). */
@@ -303,12 +351,6 @@
   margin: 0;
   font-size: var(--pb-font-small);
   color: var(--pb-text-muted);
-}
-
-/* ── I-650 A: the VIP's view of the votes. */
-.tally {
-  margin: var(--pb-space-2) 0;
-  font-weight: 800;
 }
 
 /* ── I-650 B: the room's favourite, under "Pick a game". */

@@ -96,6 +96,15 @@ export const STRINGS: Strings = {
     'the reveal': 'el resultado',
     '(you)': '(tú)',
     'by default': 'sin rival',
+    // The reveal in miniature on a TV room's phone (RevealMirror.tsx, I-796 K).
+    'On the TV now · prompt {n} of {count}': 'Ahora en la TV · pregunta {n} de {count}',
+    yours: 'la tuya',
+    'your pick': 'tu voto',
+    'Your answer is in this one': 'Esta tiene tu respuesta',
+    "You weren't in this one": 'No participabas en esta',
+    'scores are next.': 'ahora, el marcador.',
+    '1 more to go.': 'queda 1 más.',
+    '{n} more to go.': 'quedan {n} más.',
 
     // TV: the round card and the writing progress (TvRound.tsx).
     'Final round — double points!': '¡Ronda final: puntos dobles!',

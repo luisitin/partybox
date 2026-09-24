@@ -17,8 +17,14 @@
 .prompt {
   margin: 0;
   font-size: var(--pb-font-h2); /* was h1: two lines of it cost the sheet 60 px (loop #9) */
+  font-weight: 800;
   line-height: 1.15;
   text-wrap: balance;
+}
+
+/* I-794 H: "Draw: “yoga class”" — one bold line, the word in the accent. */
+.promptWord {
+  color: var(--pb-accent-2);
 }
 
 .offers {
@@ -91,20 +97,35 @@
   flex: 0 0 auto;
 }
 
-.guessPrompt {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--pb-space-3);
-}
-
-/* The drawing to guess is capped at 40 % of the viewport so the field and button stay in view. */
+/* I-795 I: the drawing to guess fills the height the prompt, field and Send leave (TextAnswer's
+   `lead`), square, as large as that box allows (min(100cqw, 100cqh), Guess.tsx); a tap shows it
+   over the whole phone. */
 .guessDrawing {
-  width: min(100%, 40dvh);
+  container-type: size;
+  display: grid;
+  place-items: end center; /* sits on the question; a tall phone's slack goes above */
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
 }
 
-.guessText {
-  align-self: stretch;
+.large {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: var(--pb-space-4);
+  border: 0;
+  background: var(--pb-scrim);
+  backdrop-filter: blur(8px);
+  cursor: zoom-out;
+  animation: global(pb-fade-in) var(--pb-motion-fast) var(--pb-ease) both;
+}
+
+:global(:root[data-motion='off']) .large {
+  animation: none;
 }
 
 .bookLine {
@@ -270,4 +291,33 @@
   font-size: var(--pb-font-small);
   font-weight: 800;
   white-space: nowrap;
+}
+
+/* I-796 K: the page on the TV, in miniature on a TV room's phone — framed, quieter, capped so a
+   drawing never outgrows a thumbnail. */
+.thumb {
+  align-self: stretch;
+  display: grid;
+  gap: 4px;
+  padding: var(--pb-space-2) var(--pb-space-3);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  text-align: center;
+}
+.thumbOn {
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  color: var(--pb-text-muted);
+}
+.thumb .phonePage {
+  margin: 0;
+  justify-items: center;
+}
+/* the drawing is a thumbnail (a word keeps the full width, so it never breaks mid-word) */
+.thumb .phonePage > span:has(> svg) {
+  max-width: 220px;
+}
+.thumb .phoneWord {
+  font-size: var(--pb-font-h2);
+  overflow-wrap: normal;
 }

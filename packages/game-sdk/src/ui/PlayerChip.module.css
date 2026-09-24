@@ -150,11 +150,8 @@
 }
 
 .leader {
-  flex-shrink: 0;
   margin-left: var(--pb-space-2);
-  font-size: 0.8em;
-  font-weight: 900;
-  line-height: 1;
+  font-size: 0.62em;
   color: var(--pb-accent-2);
 }
 
@@ -330,4 +327,50 @@
   -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px));
   mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px));
   pointer-events: none;
+}
+
+/* ── I-268 C: "+N" rises over a score that just went up, and fades (2 s, the component's timer). */
+.scoreBox {
+  position: relative;
+  display: inline-flex;
+}
+.leader + .scoreBox > .score {
+  margin-left: var(--pb-space-1);
+}
+.rise {
+  position: absolute;
+  left: 50%;
+  bottom: 78%;
+  font-size: 0.7em;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--pb-accent-2);
+  white-space: nowrap;
+  pointer-events: none;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  animation: rise 2s var(--pb-ease) both;
+}
+@keyframes rise {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 0.4em);
+  }
+  15% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  80% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -0.3em);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rise {
+    animation: none;
+    transform: translateX(-50%);
+  }
 }

@@ -232,6 +232,12 @@ export interface ViewEnvelope {
    * the VIP's phone), so the TV's host bar and the ★ menu leave out their generic "Skip / Next".
    */
   vipSkipHidden?: boolean;
+  /**
+   * I-791 D: where the game is, as a count ("question 3 of 10"). A phone coming back after a drop
+   * names it ("You missed questions 1 and 2. This is question 3 of 10"); a game without numbered
+   * steps omits it and the phone says only whether the game moved on.
+   */
+  progressStep?: { unit: 'question' | 'round'; n: number; of: number };
 }
 
 export type TvView = ViewEnvelope;

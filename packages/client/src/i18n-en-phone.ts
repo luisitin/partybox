@@ -1,6 +1,11 @@
 // English for the phone's newer sections — the share sheet, the 🎨 sheet's rows, the tips, the
 // theme and avatar names — split from i18n-en.ts (its line cap) and spread into `en` there, so `t`
-// and the Spanish twin (i18n-es-phone.ts) see one shape. Imports nothing.
+// and the Spanish twin (i18n-es-phone.ts) see one shape. Imports only the ordinal helper.
+import { ordinal } from './ordinal';
+
+type StepUnit = 'question' | 'round';
+const plural = (unit: StepUnit): string => (unit === 'question' ? 'questions' : 'rounds');
+
 export const enPhone = {
   share: {
     button: '🔗 Share',
@@ -31,6 +36,12 @@ export const enPhone = {
     anyGameSet: "the game's set",
     quietForNow: 'quiet for now',
     roomQuiet: 'the room is quiet',
+  },
+  /** I-792 E: the lobby's title row ("Lobby · 6 of 16"), its ⋯ menu and the rotating line. */
+  lobbyTop: {
+    count: (n: number, cap: number) => `${n} of ${cap}`,
+    more: 'More',
+    everyoneIn: "Everyone's in? Pick a game. Bots can fill empty seats.",
   },
   /** I-082 A: the VIP's first-room tips, by id (vipTips.ts). */
   tips: {
@@ -133,5 +144,30 @@ export const enPhone = {
     removeShort: (n: number) => (n === 1 ? 'remove 1 bot' : `remove ${n} bots`),
     removeAllShort: (n: number) => (n === 1 ? 'remove the bot' : `remove the ${n} bots`),
     addShort: (n: number) => (n === 1 ? 'add 1 bot' : `add ${n} bots`),
+  },
+  /** I-791 D: the offline card and the one-beat "You're back" card (OfflineCard.tsx). */
+  offline: {
+    title: 'Reconnecting…',
+    lost: "Your phone lost the party's Wi‑Fi.",
+    heldFor: 'Your seat is held for',
+    heldPlain: 'Your seat is held.',
+    sent: '✓ Your answer was sent',
+    notSent: "You haven't answered yet — you still can once you're back",
+    back: "You're back",
+    movedOn: 'The game moved on while you were away.',
+    nothingMissed: "You didn't miss anything.",
+    missed: (unit: StepUnit, from: number, to: number) =>
+      from === to
+        ? `You missed ${unit} ${from}.`
+        : to === from + 1
+          ? `You missed ${plural(unit)} ${from} and ${to}.`
+          : `You missed ${plural(unit)} ${from}–${to}.`,
+    where: (unit: StepUnit, n: number, of: number, seconds: number | null) =>
+      seconds === null
+        ? `This is ${unit} ${n} of ${of}.`
+        : `This is ${unit} ${n} of ${of}: ${seconds} ${seconds === 1 ? 'second' : 'seconds'} left.`,
+    secondsLeft: (seconds: number) => `${seconds} ${seconds === 1 ? 'second' : 'seconds'} left.`,
+    standing: (rank: number, score: number) =>
+      `You · ${ordinal(rank)} · ${score.toLocaleString('en-US')}`,
   },
 } as const;

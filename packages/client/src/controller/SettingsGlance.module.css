@@ -1,0 +1,80 @@
+/* I-648 A: the game's settings on a guest's phone — label left, value right, one quiet card. */
+.glance {
+  margin: var(--pb-space-3) 0 0;
+  padding: var(--pb-space-2) var(--pb-space-3);
+  width: 100%;
+  max-width: 420px;
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  font-size: var(--pb-font-caption);
+  text-align: left;
+}
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--pb-space-3);
+  padding: 3px 6px;
+  border-radius: 6px;
+}
+.row dt {
+  color: var(--pb-text-muted);
+}
+/* both sides keep their min-content width and wrap inside it, so a long value ("WILD (all three
+   decks)" at 200 % text) breaks onto a second line instead of running over its label */
+.row dd {
+  margin: 0;
+  font-weight: 800;
+  text-align: right;
+  overflow-wrap: break-word;
+}
+
+/* I-648 B: a row the VIP just changed takes one slow breath (owner: "smoother, like a breathe") —
+   the yellow fill and its dark ink swell in and ease out again over 2 s (--pb-motion-pulse x 2,
+   ease-in-out like the shell's pb-breathe); colour only, no layout moves. The value's own new
+   words stay the non-colour signal. Reduced motion: the tokens collapse to 0 ms, so the row
+   simply holds the fill for the 2 s instead. */
+.lit {
+  animation: glance-breathe calc(var(--pb-motion-pulse) * 2) ease-in-out both;
+}
+.lit dt {
+  animation: glance-breathe-label calc(var(--pb-motion-pulse) * 2) ease-in-out both;
+}
+@keyframes glance-breathe {
+  0%,
+  100% {
+    background-color: transparent;
+    color: var(--pb-text);
+  }
+  50% {
+    background-color: var(--pb-accent-2-fill);
+    color: var(--pb-on-accent-2-fill);
+  }
+}
+@keyframes glance-breathe-label {
+  0%,
+  100% {
+    color: var(--pb-text-muted);
+  }
+  50% {
+    color: var(--pb-on-accent-2-fill);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lit,
+  .lit dt {
+    animation: none;
+    background-color: var(--pb-accent-2-fill);
+    color: var(--pb-on-accent-2-fill);
+  }
+  .lit dt {
+    background-color: transparent;
+  }
+}
+:global(:root[data-motion='off']) .lit,
+:global(:root[data-motion='off']) .lit dt {
+  animation: none;
+  color: var(--pb-on-accent-2-fill);
+}
+:global(:root[data-motion='off']) .lit {
+  background-color: var(--pb-accent-2-fill);
+}

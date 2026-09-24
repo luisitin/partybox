@@ -1,6 +1,7 @@
 // Pins the README rules with hand-built events: the draw → pass… → guess routing for every
 // N × passes, guess-then-draw inside a pass, never-spoil views, placeholders at the deadline, the
 // presenter's page turns, verdicts and results.
+import { VERDICT_BEAT_MS } from '../server/types';
 import { describe, expect, it } from 'vitest';
 import { createRng } from '@partybox/game-sdk';
 import { game } from '../server/index';
@@ -285,7 +286,8 @@ describe('the show', () => {
     s = timer(s);
     expect(s.showing).toMatchObject({ book: 0, page: 4, verdict: 'broken' });
     expect(game.controllerView(s, a).showing).toMatchObject({ lastPage: true, lastBook: false });
-    s = input(s, a, { type: 'turn' });
+    expect(input(s, a, { type: 'turn' }, s.phase.startedAt + 100)).toBe(s); // I-512 B: the verdict's beat
+    s = input(s, a, { type: 'turn' }, s.phase.startedAt + VERDICT_BEAT_MS);
     expect(s.showing).toMatchObject({ book: 1, page: 0 });
     expect(game.controllerView(s, b).showing?.presenting).toBe(true);
     while (s.phase.id === 'show') s = vip(s, 'skip');
