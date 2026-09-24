@@ -125,6 +125,8 @@ export const SHOW_MS = { word: 12_000, draw: 20_000, guess: 12_000 } as const;
  * page, so a bot that "sometimes" sent Next left its pages on the 12–20 s fallbacks).
  */
 export const BOT_SHOW_MS = { word: 5_000, draw: 8_000, guess: 5_000 } as const;
+/** I-512 B: a book's last page can't be turned in its first this-many ms — the verdict's beat. */
+export const VERDICT_BEAT_MS = 2_500;
 /** The closing screen (every word → last guess) before the engine's results take over. */
 export const SUMMARY_MS = 15_000;
 /** `passes` at this value (the manifest max) means "everyone" — always capped to N − 1. */
