@@ -207,6 +207,10 @@ export const en = {
     dot: { connecting: 'connecting', connected: 'connected', reconnecting: 'reconnecting' },
     loadingGame: 'Getting the game ready…',
     lostServer: 'Lost the PartyBox server — reconnecting…',
+    /** I-387: 20 s on, the likely story — the PC, and where it is. */
+    pcAsleep: (since: string, address: string) =>
+      `Can't reach the PartyBox PC (since ${since}). Is it asleep or closed? It's at ${address}`,
+    lostServerLong: "Can't reach the PartyBox server — is the PC asleep, or was PartyBox closed?",
     /** The owner (2026-09-22): the banner ends here instead of vanishing, so a flapping link
      *  cannot strobe "Reconnecting…" over and over. */
     backOnline: '✓ Back online',
