@@ -152,6 +152,11 @@ export const en = {
     youWin: 'You win! 🏆',
     youTie: 'You tie for first! 🏆',
     yourPlace: (rank: number, score: number) => `You finished ${ordinal(rank)} · ${score} pts`,
+    // I-329 A: the non-winner's line, by how the game went for them
+    placeBot: 'A robot beat you. Think about that.',
+    placeLast: 'Last. Somebody has to be.',
+    placeRunnerUp: (gap: number) => `So close — ${gap} ${gap === 1 ? 'pt' : 'pts'} off first.`,
+    placeMiddle: (rank: number) => `${ordinal(rank)} — solidly in the pack.`,
     /** I-155 A: an award you won, on your own phone ("Your card of the night"). */
     yourAward: (title: string) => `Your ${title.charAt(0).toLowerCase()}${title.slice(1)}`,
     /** I-155 C: the votes your cards took, round by round ("2 · 0 · 3"). */

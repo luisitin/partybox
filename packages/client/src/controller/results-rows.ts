@@ -92,3 +92,25 @@ export function winnerLineFor(room: RoomSnapshot, meId: string, scoreless = fals
   if (ids.length >= results.players.length) return t.results.tie;
   return t.results.youTie;
 }
+
+/**
+ * I-329: a line for a player who didn't win, by how the game went for them — lost to a bot, last,
+ * runner-up (with the gap), or the middle of the table. Null for a winner, a spectator, a board
+ * where nobody scored, or a room of two (second is last, and says so as the runner-up).
+ */
+export function placeLine(room: RoomSnapshot, meId: string): string | null {
+  const results = room.results;
+  if (!results || nobodyScored(room)) return null;
+  const rows = scoreboardRows(room);
+  const mine = rows.find((r) => r.playerId === meId);
+  if (!mine || results.results.winnerIds.includes(meId)) return null;
+  const botWon = results.results.winnerIds.some((id) => room.players.find((p) => p.id === id)?.bot);
+  const meBot = room.players.find((p) => p.id === meId)?.bot;
+  const lastRank = Math.max(...rows.map((r) => r.rank));
+  const top = Math.max(...rows.map((r) => r.score));
+  if (botWon && !meBot && mine.rank === 2) return t.results.placeBot;
+  if (mine.rank === 2) return t.results.placeRunnerUp(top - mine.score);
+  if (mine.rank === lastRank) return t.results.placeLast;
+  if (botWon && !meBot) return t.results.placeBot;
+  return t.results.placeMiddle(mine.rank);
+}
