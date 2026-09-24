@@ -39,7 +39,7 @@ once per prompt; trimmed, whitespace-only ignored. `{ type: 'vote', promptId, sl
 `m` = 2 in round `rounds` (the last), else 1. Each vote received = 100 × m; a **sweep** (every vote
 cast went to one answer, ≥ 2 cast; impossible with 3 players) adds 50 × m. Points lock in when `reveal`
 starts, once per prompt. Ties share a rank, no tie-break; winners = every rank-1 player. Awards (a real
-player each; ties → higher score, then lower id): **Crowd favourite** (most votes received, if > 0),
+player each; a tied stat → a player with no award yet — I-474 A — then higher score, then lower id): **Crowd favourite** (most votes received, if > 0),
 **Sweep master** (most sweeps, if ≥ 1), **Speed writer** (most answers in before half the answer time,
 measured against the deadline; if > 0).
 
