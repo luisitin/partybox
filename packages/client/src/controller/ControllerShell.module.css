@@ -157,9 +157,33 @@
   background: var(--pb-surface);
 }
 
-.deadline > :first-child {
+.deadline .bar {
   flex: 1;
+  min-width: 32px;
   height: 4px;
+}
+
+/* I-794 H: the game's line left of the bar ("Max's book · 1/6"). The name gives way ("…") before
+   the round does, and the bar keeps at least 32 px. Under "Reconnecting…" or the hurry cue it is
+   hidden in place (visibility), so the bar never jumps. */
+.timerLabel {
+  flex: 0 1 auto;
+  min-width: 0;
+  display: flex;
+  white-space: nowrap;
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  color: var(--pb-text);
+}
+
+.timerLabelHidden {
+  visibility: hidden;
+}
+
+.timerLabelText {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .seconds {

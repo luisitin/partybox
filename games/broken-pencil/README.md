@@ -17,6 +17,11 @@ round a player × (55 s + 4 s a player) — ~5 min at 4, ~12 at 8; from the host
 - Under the how-to a row shows a book's pages as they will be — 📖 ✏️ ❓ ✏️ ❓ · 5 pages (I-507 B).
 - I-796 K: in a TV room the `show` phones hold a framed thumbnail of the page on the TV ("On the TV
   now", the drawing capped at 220 px) instead of a blank "X is presenting" wait.
+- Drawing: whose book and the round ride in the phone's timer bar ("Maximiliano's book · 1/6", SDK
+  `useTimerLabel`); the prompt is one bold line ("Draw: “yoga class”"), and the sheet takes the height
+  left above the colours and one band of ink / pen size / Undo / Clear (design review H, I-794).
+- Guessing: the field and Send are laid out first and the drawing takes what is left (TextAnswer
+  `lead`); tap it to see it large; an open keyboard shrinks the drawing, not the field (review I, I-795).
 
 ## Players
 
