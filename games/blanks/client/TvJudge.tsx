@@ -164,7 +164,13 @@ function JudgeGrid({ view }: Props): JSX.Element {
   // #171). Measured: a 560 px column fits ~110 characters in two rows of the grid size.
   const longest = Math.max(
     0,
-    ...view.cards.map((c) => fillText(view.black?.text ?? '', c.whites).length),
+    ...view.cards.map(
+      (c) =>
+        fillText(
+          view.black?.pick === 1 ? '____' : (view.black?.text ?? ''),
+          c.whites,
+        ).length,
+    ),
   );
   // A small room never pages: six cards or fewer that do not fit step down to the small card and
   // stay there for the round (latched, so measuring the smaller cards cannot bounce them back —
@@ -229,6 +235,8 @@ function JudgeGrid({ view }: Props): JSX.Element {
   useEffect(() => {
     if (everyone) play('tally');
   }, [everyone, play]);
+  // I-179 A: a Pick 1 round's cards differ only in the answer — the question is said once
+  const answersOnly = view.black?.pick === 1;
   return (
     <>
       <div className={styles.kickerRow}>
@@ -255,6 +263,10 @@ function JudgeGrid({ view }: Props): JSX.Element {
           </span>
         </span>
       </div>
+      {/* I-179 A: a Pick 1 question once, above the answers */}
+      {answersOnly && view.black ? (
+        <FilledCard text={view.black.text} pick={view.black.pick} size="grid" className={styles.judgeQuestion} />
+      ) : null}
       <ul
         ref={ref}
         className={`${styles.judgeGrid} ${gridClass(count)} ${pages > 1 ? '' : styles.judgeGridFits} ${tiny ? styles.judgeGridTiny : ''} ${everyone ? styles.judgeGridDone : ''}`}
@@ -277,7 +289,13 @@ function JudgeGrid({ view }: Props): JSX.Element {
                   the room has already heard it — the answers alone fit where the sentences did not (one blank
                   per white, so a Pick 2 keeps both marks inline). */}
               <FilledCard
-                text={count > 8 ? c.whites.map(() => '____').join(' ') : (view.black?.text ?? '')}
+                text={
+                  answersOnly
+                    ? '____'
+                    : count > 8
+                      ? c.whites.map(() => '____').join(' ')
+                      : (view.black?.text ?? '')
+                }
                 whites={c.whites}
                 size={dense ? 'mini' : 'grid'}
                 letter={LETTERS[c.slot]}

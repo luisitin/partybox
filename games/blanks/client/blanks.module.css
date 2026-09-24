@@ -1850,3 +1850,9 @@
   font-size: var(--pb-font-caption);
   font-weight: 700;
 }
+
+/* ── I-179 A: the question once, a wide black strip above the answers. */
+.judgeQuestion {
+  width: 100%;
+  margin-bottom: var(--pb-space-3);
+}
