@@ -48,6 +48,7 @@ were received on 2026-09-24; nothing is built until the owner says so.
 - `.claude/skills/record-review` — the recording + review loop and its smoothness gates.
 - `.claude/skills/ship-spec` — the Idea Forge pipeline's shipping steps.
 - `packages/e2e/src/design/dead-air.ts` — frozen stretches and hard cuts in a recorded surface.
+- [SESSION-PLAYBOOK.md](SESSION-PLAYBOOK.md) + [SESSION-PROMPTS.md](SESSION-PROMPTS.md) — one Claude session per game (plus Foundation): the shared rules and the prompt for each.
 - `docs/game-pack/file_part.py <upload.md> <NN-NAME.md> <date>` — files a new part: copies it into
   `parts/`, cuts each game into its folder's `SPEC.md`, updates the READMEs and this index.
 
