@@ -302,7 +302,9 @@ export function Tv({ view }: GameTvProps<PencilTvView>): JSX.Element {
           </ul>
           <div className={styles.current}>
             {current ? <CurrentPage page={current} /> : null}
+            {/* I-512 A: the guess alone first — the verdict lands a beat later */}
             {last ? (
+              <Beat key={s.book} ms={s.verdict === 'intact' ? 3500 : 2500}>
               <div
                 className={`${styles.verdict} ${s.verdict === 'intact' ? styles.intact : styles.broken} pb-enter`}
               >
@@ -316,6 +318,7 @@ export function Tv({ view }: GameTvProps<PencilTvView>): JSX.Element {
                   {current?.kind === 'guess' ? (current.text ?? '???') : '—'}”
                 </span>
               </div>
+              </Beat>
             ) : null}
           </div>
         </div>
@@ -328,4 +331,14 @@ export function Tv({ view }: GameTvProps<PencilTvView>): JSX.Element {
       <Summary view={view} />
     </Stage>
   );
+}
+
+/** I-512 A: its children appear after `ms` — a beat for the room to read the guess first. */
+function Beat({ ms, children }: { ms: number; children: JSX.Element }): JSX.Element | null {
+  const [on, setOn] = useState(false);
+  useEffect(() => {
+    const h = setTimeout(() => setOn(true), ms);
+    return () => clearTimeout(h);
+  }, [ms]);
+  return on ? children : null;
 }
