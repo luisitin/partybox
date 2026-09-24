@@ -12,8 +12,14 @@ there, then fix.
 
 ## `pnpm verify` (the gate — runs before every commit, < 3 min)
 
-`registry check → typecheck → eslint → dependency-cruiser → prettier --check → unit + contract → sim smoke (50 runs/game) → vite build → doc-drift checks`.
+`registry check → typecheck → eslint → dependency-cruiser → prettier --check → unit + contract → sim smoke (50 runs/game) → vite build → bundle check → doc-drift checks`.
 Implemented in `scripts/verify.ts`; each step is also a plain `pnpm` script you can run alone.
+Bundle check (`pnpm check-bundle`, FOUNDATION-AUDIT #7): builds the client in memory and reads the
+output bundle (never Vite's manifest, which cannot see modules inlined into the entry). It fails when
+the entry chunk carries more `games/*` modules than `scripts/bundle-budget.json` allows, when the
+entry's gzip grows over 1 KB, when a game's phone closure (JS + CSS gzip) is over the phone budget,
+or when a manifest would ship; it prints each game's phone and TV gzip and any `Tv*` code riding on
+a phone. After a deliberate change, `pnpm check-bundle --update` and commit the budget file.
 Doc-drift checks (`scripts/check-drift.ts`): registry current; required docs exist; `CLAUDE.md` ≤ 120 lines;
 every folder has a `README.md` ≤ 60 lines and every package/game a `CLAUDE.md` ≤ 30 lines; game READMEs
 have the required headings; every phase has a fixture; `ADDING_A_GAME.md` mentions every `_template` file;

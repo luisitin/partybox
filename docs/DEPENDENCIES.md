@@ -14,7 +14,7 @@ line here (match is on the backticked name). Versions live in `pnpm-workspace.ya
 | `socket.io`                   | server                                  | rooms, reconnection, heartbeats and binary-safe events out of the box                                              |
 | `socket.io-client`            | client                                  | matching client with auto-reconnect                                                                                |
 | `qrcode`                      | server                                  | renders the join URL as an SVG QR code locally (no network, ADR-012)                                               |
-| `vite`                        | client (build), server (dev middleware) | bundler + dev server with HMR; middleware mode keeps one port                                                      |
+| `vite`                        | client (build), server (dev middleware) | bundler + dev server with HMR; middleware mode keeps one port; `scripts/check-bundle.ts` loads the client's copy   |
 | `react`, `react-dom`          | client, game-sdk, games                 | UI; lazy-loaded game modules; the most widely known choice for AI sessions                                         |
 | `@fontsource-variable/nunito` | client                                  | the display font (OFL-1.1) bundled as woff2 so TVs and phones never fetch fonts from the internet (ADR-012)        |
 | `tsx`                         | root                                    | runs TypeScript directly for the server, scripts, sim and e2e (ADR-007)                                            |

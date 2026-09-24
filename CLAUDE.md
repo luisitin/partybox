@@ -29,7 +29,8 @@ can add a game correctly by reading a few short docs. Everything else serves tha
 pnpm install                 # once (Node >= 24, pnpm via corepack)
 pnpm dev [--port 42071]      # one process, one port (default 42069), Vite middleware, dev API on
 pnpm start                   # production: serves packages/client/dist (run pnpm build first)
-pnpm verify                  # THE gate: typecheck → lint → boundaries → format → unit+contract → sim smoke → build → doc drift
+pnpm verify                  # THE gate: typecheck → lint → boundaries → format → unit+contract → sim smoke → build → bundle → doc drift
+pnpm check-bundle [--update] # game code in the entry chunk, per-game phone/TV gzip, budgets in scripts/bundle-budget.json
 pnpm new-game <id>           # scaffold games/<id> from games/_template, then regenerates the registry
 pnpm gen-registry            # regenerate packages/{server,client}/src/games.generated.ts
 pnpm sim --game <id> --players 6 --runs 200 --seed 1     # headless games; --replay <file> reproduces a failure

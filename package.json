@@ -28,6 +28,7 @@
     "new-game": "tsx scripts/new-game.ts",
     "gen-registry": "tsx scripts/gen-registry.ts",
     "check-drift": "tsx scripts/check-drift.ts",
+    "check-bundle": "tsx scripts/check-bundle.ts",
     "lan-ip": "tsx scripts/lan-ip.ts",
     "blanks-fit-report": "tsx scripts/blanks-fit-report.ts",
     "blanks-kinds": "tsx scripts/blanks-kinds.ts",
