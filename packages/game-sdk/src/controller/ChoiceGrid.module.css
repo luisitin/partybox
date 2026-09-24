@@ -28,11 +28,16 @@
    the Screen body scrolls instead, and rows never overflow onto the "Locked in" line. */
 .fill {
   flex: 1;
+  /* I-789 A: the rows share the height left under the question — the grid may shrink */
+  min-height: 0;
 }
 
 .fill .choice {
   flex: 1 1 0;
-  max-height: 22dvh; /* only guards a future 2-3-choice grid; 4 x 22dvh exceeds any phone body */
+  /* I-789 A: 44 px at least (an SE fits four under a two-line question), 66 px at most */
+  min-height: 44px;
+  max-height: 66px;
+  padding: var(--pb-space-2) var(--pb-space-4);
 }
 
 .choice {
@@ -185,3 +190,67 @@
   background: var(--pb-accent-3);
   color: var(--pb-on-accent);
 }
+
+/* ── I-789 A: the status line's space, held before the tap. */
+.reserved {
+  visibility: hidden;
+}
+
+/* ── I-789 B: two by two — short answers, or a short screen; sideways, question | answers. */
+.plain {
+  display: contents;
+}
+.layout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-4);
+  flex: 1;
+  min-height: 0;
+}
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-2);
+}
+.fill.two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: minmax(64px, 1fr);
+  align-content: end;
+}
+.fill.two .choice {
+  max-height: none;
+}
+@media (max-height: 700px) {
+  .fill.four {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: minmax(64px, 1fr);
+    align-content: end;
+  }
+  .fill.four .choice {
+    max-height: none;
+    font-size: var(--pb-font-caption);
+  }
+}
+@media (orientation: landscape) and (max-height: 500px) {
+  .layout {
+    flex-direction: row;
+    align-items: stretch;
+  }
+  .layout > .head {
+    flex: 1 1 0;
+    justify-content: center;
+  }
+  .layout > .fill {
+    flex: 1.3 1 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: 1fr;
+  }
+  .layout > .fill .choice {
+    max-height: none;
+    min-height: 0;
+  }
+}
+

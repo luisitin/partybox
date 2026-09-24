@@ -92,6 +92,9 @@ export function ChoiceGrid(props: ChoiceGridProps): JSX.Element {
   }, [pendingId, echoed]);
   const shownId = selectedId ?? pendingId;
   const locked = shownId !== null || disabled;
+  // I-789 B: short answers (or a short screen, in CSS) sit two by two — all four under the thumb
+  const shortAnswers =
+    choices.length === 4 && choices.every((c) => typeof c.label === 'string' && c.label.length <= 18);
   const pick = (id: string): void => {
     buzz(15);
     setPending({ key: promptKey, id, failed: false });
@@ -99,12 +102,16 @@ export function ChoiceGrid(props: ChoiceGridProps): JSX.Element {
   };
   return (
     <Screen footer={footer} className={className}>
+      {/* I-789 B: sideways, the question holds the left and the answers the right */}
+      <div className={fill ? styles.layout : styles.plain}>
+      <div className={styles.head}>
       {kicker ? (
         <p className={`${styles.kicker} ${tone === 'final' ? styles.kickerFinal : ''}`}>{kicker}</p>
       ) : null}
       {prompt ? <p className={styles.prompt}>{prompt}</p> : null}
+      </div>
       <div
-        className={`${styles.grid} ${fill ? styles.fill : ''}`}
+        className={`${styles.grid} ${fill ? styles.fill : ''} ${fill && shortAnswers ? styles.two : ''} ${fill && choices.length === 4 ? styles.four : ''}`}
         role="radiogroup"
         aria-label={L('choices')}
       >
@@ -146,7 +153,15 @@ export function ChoiceGrid(props: ChoiceGridProps): JSX.Element {
           );
         })}
       </div>
+      </div>
       {after}
+      {/* I-789 A: a fill grid keeps the status line's space before the tap (the rows shrank under
+          the finger when it appeared) */}
+      {fill && correctId === null && selectedId === null && pendingId === null && !pending?.failed ? (
+        <p className={`${styles.locked} ${styles.reserved}`} aria-hidden>
+          {'\u00a0'}
+        </p>
+      ) : null}
       {correctId === null ? (
         selectedId !== null ? (
           <p className={styles.locked} role="status">
