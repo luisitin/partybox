@@ -187,7 +187,8 @@ export function Controller({
             />
           ) : null
         }
-        className={potAmount !== null ? styles.placed : undefined}
+        // I-248: all five presets above Custom — "All in" never below the fold
+        className={`${styles.wagerScreen} ${potAmount !== null ? styles.placed : ''}`}
       />
     );
   }
