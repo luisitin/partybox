@@ -18,8 +18,7 @@ export function PhoneLast({ view, send }: Props): JSX.Element {
   const last = view.stage.last;
   const who = byId(view.players);
   const [text, setText] = useState('');
-  const g = last?.guessers[0];
-  const name = g ? (who.get(g)?.name ?? '?') : '?';
+  const name = (last?.guessers ?? []).map((g) => who.get(g)?.name ?? '?').join(' & ') || '?';
   if (view.guessing && last) {
     if (last.options)
       return (
@@ -73,6 +72,7 @@ export function PhoneLast({ view, send }: Props): JSX.Element {
     <WaitingScreen
       title={view.mine.guess ? L('Guess is in…') : L('{name} is guessing…', { name })}
       mood="watch"
+      className={styles.breathing}
     >
       {last?.options ? (
         <p className={styles.optionsLine}>

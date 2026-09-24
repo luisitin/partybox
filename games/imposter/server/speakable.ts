@@ -34,14 +34,13 @@ export function toSpeakable(
 ): SpeechPart[] {
   const s = clean(text, opts.playerText === true);
   const over = opts.overrides ?? {};
+  // One pass over the list per line, then a lookup per word (was a scan per word).
+  const anyCase = new Map<string, Overrides[string]>();
+  for (const [k, v] of Object.entries(over)) if (v.anyCase) anyCase.set(k.toLowerCase(), v);
   const parts: SpeechPart[] = [];
   let buf = '';
   for (const token of s.split(/(\s+|[,.!?])/)) {
-    const hit =
-      over[token] ??
-      Object.entries(over).find(
-        ([k, v]) => v.anyCase && k.toLowerCase() === token.toLowerCase(),
-      )?.[1];
+    const hit = Object.hasOwn(over, token) ? over[token] : anyCase.get(token.toLowerCase());
     if (!hit) {
       buf += token;
       continue;

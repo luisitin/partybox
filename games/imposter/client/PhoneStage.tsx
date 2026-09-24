@@ -33,10 +33,14 @@ export function PhoneStageBody({ view }: { view: View }): JSX.Element | null {
       );
     case 'clueReveal': {
       const dealt = s.board.filter((c) => c.dealt > 0).sort((a, b) => a.dealt - b.dealt);
+      const latest = dealt[dealt.length - 1]?.by;
       return (
         <ul className={styles.clueList}>
           {dealt.map((c) => (
-            <li key={c.by} className={styles.dealt}>
+            <li
+              key={c.by}
+              className={`${styles.dealt} ${c.by === latest ? styles.speakingRow : ''}`}
+            >
               <Avatar avatarId={who.get(c.by)?.avatarId ?? ''} size="2.25rem" />
               <span className={styles.rowName}>{name(c.by)}</span>
               <span className={styles.rowClue}>{c.now || '—'}</span>
@@ -50,12 +54,16 @@ export function PhoneStageBody({ view }: { view: View }): JSX.Element | null {
       const targets = Object.keys(counts).sort((a, b) => (counts[b] ?? 0) - (counts[a] ?? 0));
       return (
         <ul className={styles.clueList}>
-          {targets.map((t) => {
+          {targets.map((t, i) => {
             const voters = Object.entries(s.tally?.votes ?? {})
               .filter(([, ts]) => ts.includes(t))
               .map(([v]) => name(v));
             return (
-              <li key={t} className={styles.dealt}>
+              <li
+                key={t}
+                className={`${styles.dealt} ${i === 0 ? styles.speakingRow : ''}`}
+                style={{ animationDelay: `${i * 350}ms` }}
+              >
                 <Avatar avatarId={who.get(t)?.avatarId ?? ''} size="2.25rem" />
                 <span className={styles.rowName}>{name(t)}</span>
                 <span className={styles.rowClues}>← {voters.join(', ')}</span>
@@ -120,8 +128,10 @@ export function PhoneStage({ view }: { view: PushedView<ControllerView> }): JSX.
   useSay(v.stage.say);
   return (
     <Screen>
-      {v.stage.say?.text ? <p className={styles.sayLine}>“{v.stage.say.text}”</p> : null}
-      <PhoneStageBody view={v} />
+      <div className={styles.stageCenter}>
+        {v.stage.say?.text ? <p className={styles.sayLine}>“{v.stage.say.text}”</p> : null}
+        <PhoneStageBody view={v} />
+      </div>
     </Screen>
   );
 }

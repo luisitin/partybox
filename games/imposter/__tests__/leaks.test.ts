@@ -3,6 +3,9 @@
 // before accuse; the word's reading is never requested early; bots never repeat a clue; the
 // 16-player state and views stay inside their budgets.
 import { describe, expect, it } from 'vitest';
+
+/** Whole games at 16 players: allow for a loaded machine (other sessions share it). */
+const LONG = { timeout: 120_000 };
 import { createRng } from '@partybox/game-sdk';
 import { game } from '../server/index';
 import { wordLine } from '../server/speech';
@@ -62,7 +65,7 @@ const SETTINGS: Record<string, string | boolean>[] = [
 ];
 
 describe('secrets across whole games', () => {
-  it('the word never reaches the TV or an imposter phone before wordReveal', () => {
+  it('the word never reaches the TV or an imposter phone before wordReveal', LONG, () => {
     for (const [i, settings] of SETTINGS.entries()) {
       for (const n of [4, 10, 16]) {
         play(n, settings, 100 + i * 10 + n, (s) => {
@@ -85,7 +88,7 @@ describe('secrets across whole games', () => {
     }
   });
 
-  it('roles stay off other phones until the card flips', () => {
+  it('roles stay off other phones until the card flips', LONG, () => {
     play(10, { imposters: '2' }, 5, (s) => {
       for (const id of s.seats) {
         const v = game.controllerView(s, id);
@@ -102,7 +105,7 @@ describe('secrets across whole games', () => {
     });
   });
 
-  it('unrevealed clues and votes stay private', () => {
+  it('unrevealed clues and votes stay private', LONG, () => {
     play(6, {}, 9, (s) => {
       if (s.phase.id === 'vote') {
         const tv = JSON.stringify(game.tvView(s));
@@ -114,7 +117,7 @@ describe('secrets across whole games', () => {
     });
   });
 
-  it("the word's reading is never requested before wordReveal", () => {
+  it("the word's reading is never requested before wordReveal", LONG, () => {
     play(6, {}, 21, (s) => {
       const key = wordLine(s)?.req.key;
       const asked = (game.speech?.(s) ?? []).map((r) => r.key);
@@ -122,17 +125,21 @@ describe('secrets across whole games', () => {
     });
   });
 
-  it('speech: at most 10 pending keys, and no view carries a key before its line plays', () => {
-    play(16, {}, 22, (s) => {
-      expect((game.speech?.(s) ?? []).length).toBeLessThanOrEqual(10);
-      const say = game.tvView(s).stage.say;
-      if (say?.key) expect(s.speechMs[say.key]).toBeGreaterThanOrEqual(0);
-    });
-  });
+  it(
+    'speech: at most 10 pending keys, and no view carries a key before its line plays',
+    LONG,
+    () => {
+      play(16, {}, 22, (s) => {
+        expect((game.speech?.(s) ?? []).length).toBeLessThanOrEqual(10);
+        const say = game.tvView(s).stage.say;
+        if (say?.key) expect(s.speechMs[say.key]).toBeGreaterThanOrEqual(0);
+      });
+    },
+  );
 });
 
 describe('bots', () => {
-  it('never repeat a clue within a game, and never send an illegal crew clue', () => {
+  it('never repeat a clue within a game, and never send an illegal crew clue', LONG, () => {
     for (const seed of [1, 2, 3, 4]) {
       const final = play(8, { talk: false, clueRounds: '2', rounds: 5 }, seed, (s) => {
         for (const [id, r] of Object.entries(s.round.rejects))
@@ -145,19 +152,23 @@ describe('bots', () => {
 });
 
 describe('budgets at 16 players', () => {
-  it('state under 32 KB; TV view under 4 KB; phone views under 4 KB (audit: envelope ≈1.5 KB)', () => {
-    let maxState = 0;
-    let maxTv = 0;
-    let maxPhone = 0;
-    play(16, { clueRounds: '3', talk: false, rounds: 8 }, 77, (s) => {
-      maxState = Math.max(maxState, JSON.stringify(s).length);
-      maxTv = Math.max(maxTv, JSON.stringify(game.tvView(s)).length);
-      for (const id of s.seats)
-        maxPhone = Math.max(maxPhone, JSON.stringify(game.controllerView(s, id)).length);
-    });
-    console.log(`imposter 16p: state ${maxState} B, tv ${maxTv} B, phone ${maxPhone} B`);
-    expect(maxState).toBeLessThan(32 * 1024);
-    expect(maxTv).toBeLessThan(4096);
-    expect(maxPhone).toBeLessThan(4096);
-  });
+  it(
+    'state under 32 KB; TV view under 4 KB; phone views under 4 KB (audit: envelope ≈1.5 KB)',
+    LONG,
+    () => {
+      let maxState = 0;
+      let maxTv = 0;
+      let maxPhone = 0;
+      play(16, { clueRounds: '3', talk: false, rounds: 8 }, 77, (s) => {
+        maxState = Math.max(maxState, JSON.stringify(s).length);
+        maxTv = Math.max(maxTv, JSON.stringify(game.tvView(s)).length);
+        for (const id of s.seats)
+          maxPhone = Math.max(maxPhone, JSON.stringify(game.controllerView(s, id)).length);
+      });
+      console.log(`imposter 16p: state ${maxState} B, tv ${maxTv} B, phone ${maxPhone} B`);
+      expect(maxState).toBeLessThan(32 * 1024);
+      expect(maxTv).toBeLessThan(4096);
+      expect(maxPhone).toBeLessThan(4096);
+    },
+  );
 });

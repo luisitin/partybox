@@ -61,15 +61,19 @@ export function TvLastChance({ view }: V): JSX.Element {
   const L = useT(STRINGS);
   const last = view.stage.last;
   const who = byId(view.players);
-  const g = last?.guessers[0];
-  const p = g ? who.get(g) : undefined;
+  const ids = last?.guessers ?? [];
   const guessed = last?.guessed ?? [];
+  const first = ids[0] ? who.get(ids[0]) : undefined;
   return (
     <Stage center>
-      <div className={styles.guesser}>
-        {p ? <Avatar avatarId={p.avatarId} size={120} /> : null}
-        <BigText level="h1">{L("{name}'s last chance", { name: p?.name ?? '?' })}</BigText>
-      </div>
+      {ids.length === 1 ? (
+        <div className={styles.guesser}>
+          {first ? <Avatar avatarId={first.avatarId} size={120} /> : null}
+          <BigText level="h1">{L("{name}'s last chance", { name: first?.name ?? '?' })}</BigText>
+        </div>
+      ) : (
+        <BigText level="h1">{L('Last chance')}</BigText>
+      )}
       {last?.options ? (
         <div className={styles.options}>
           {last.options.map((o, i) => (
@@ -78,13 +82,24 @@ export function TvLastChance({ view }: V): JSX.Element {
             </span>
           ))}
         </div>
-      ) : (
-        <p className={styles.typing}>
-          {L('{name} is typing', { name: p?.name ?? '?' })}
-          <span className={styles.dots} aria-hidden="true" />
-        </p>
-      )}
-      {g && guessed.includes(g) ? <p className={styles.sub}>{L('Guess is in…')}</p> : null}
+      ) : null}
+      <div className={styles.guessers}>
+        {ids.map((id) => {
+          const p = who.get(id);
+          const done = guessed.includes(id);
+          return (
+            <p key={id} className={styles.typing}>
+              {ids.length > 1 && p ? <Avatar avatarId={p.avatarId} size={64} /> : null}
+              {done
+                ? `✓ ${L('{name} has guessed', { name: p?.name ?? '?' })}`
+                : last?.options
+                  ? L('{name} is choosing', { name: p?.name ?? '?' })
+                  : L('{name} is typing', { name: p?.name ?? '?' })}
+              {done ? null : <span className={styles.dots} aria-hidden="true" />}
+            </p>
+          );
+        })}
+      </div>
     </Stage>
   );
 }

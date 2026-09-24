@@ -789,3 +789,15 @@
   left: auto;
   right: 10px;
 }
+.guessers {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--pb-space-3) var(--pb-space-6);
+}
+.guessers .typing {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-3);
+  margin: 0;
+}
