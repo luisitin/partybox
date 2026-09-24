@@ -5,7 +5,13 @@ import { enterPhase, isTimerFor, pick } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { isIntact } from '../books';
 import { LINES } from '../content';
-import { BOT_SHOW_MS, SHOW_MS, SUMMARY_MS } from '../types';
+import {
+  BOT_SHOW_MS,
+  SHOW_MS,
+  SUMMARY_MS,
+  VERDICT_BEAT_INTACT_MS,
+  VERDICT_BEAT_MS,
+} from '../types';
 import type { Input, State, Transition } from '../types';
 
 export function showPage(state: State, b: number, page: number, now: number): State {
@@ -77,8 +83,14 @@ const VETO_LINE = 'Close enough — the VIP allows it.';
 
 export function reduceShow(state: State, event: GameEvent<Input>, next: Transition): State {
   if (event.type === 'input') {
-    if (event.input.type === 'turn' && event.playerId === presenterOf(state))
+    if (event.input.type === 'turn' && event.playerId === presenterOf(state)) {
+      // I-512 B: the last page's verdict gets its beat before the presenter can move on
+      // (3.5 s for an UNBROKEN book — the TV's beat for it — so a turn never skips an unseen verdict)
+      const verdict = state.showing?.verdict;
+      const beat = verdict === 'intact' ? VERDICT_BEAT_INTACT_MS : VERDICT_BEAT_MS;
+      if (verdict && event.now - state.phase.startedAt < beat) return state;
       return turnPage(state, event.now, next);
+    }
     return veto(state, event);
   }
   if (isTimerFor(state, event)) return turnPage(state, event.now, next);

@@ -451,3 +451,42 @@
   color: var(--pb-text-muted);
   letter-spacing: normal;
 }
+
+/* ── I-211 B: the book's title in the left column, the page area gets the full height. */
+.showSide {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-4);
+  min-height: 0;
+  overflow: hidden;
+}
+.sideHead {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--pb-space-2);
+}
+.sideHead .kicker {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-1);
+  font-size: var(--pb-font-caption);
+}
+/* The owner's note on I-211: one short fact per line ("BOOK 1 OF 6", "PAGE 2 OF 5"), never wrapped. */
+.kickerLine {
+  white-space: nowrap;
+}
+
+/* ── I-211 B: the author's tag sits on the sheet's top-left corner. */
+.sheetWrap {
+  position: relative;
+}
+.sheetTag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  margin: 0;
+  padding: 4px 14px;
+  border-radius: 999px;
+  background: var(--pb-surface);
+  color: var(--pb-accent-2);
+}

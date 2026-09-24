@@ -1,8 +1,9 @@
-/* DrawPad: toolbar, square sheet, ink meter + undo/clear. Tokens only; the paper stays white. */
+/* DrawPad: the square sheet, then the colours, then one band — ink, pen size, Undo, Clear
+   (I-794 H: the sheet takes whatever height is left). Tokens only; the paper stays white. */
 .pad {
   display: flex;
   flex-direction: column;
-  gap: var(--pb-space-3);
+  gap: var(--pb-space-2);
   flex: 1;
   min-height: 0;
 }
@@ -14,8 +15,13 @@
   gap: var(--pb-space-3);
 }
 
+.tools > .swatches {
+  flex: 1;
+}
+
 .swatches {
   display: flex;
+  justify-content: space-between;
   gap: 6px;
   flex-wrap: wrap;
 }
@@ -48,20 +54,27 @@
   transform: scale(1.12);
 }
 
+/* The three pen sizes as one pill (the mock-up's "● ● ⬤"), the band's first third. */
 .sizes {
   grid-area: sizes;
   display: flex;
-  gap: var(--pb-space-1);
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+  padding: 2px 4px;
+  min-height: var(--pb-touch);
+  border-radius: 999px;
+  background: var(--pb-surface);
 }
 
 .size {
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   display: grid;
   place-items: center;
-  border-radius: var(--pb-radius);
+  border-radius: 50%;
   border: 2px solid transparent;
-  background: var(--pb-surface);
+  background: transparent;
   padding: 0;
   cursor: pointer;
 }
@@ -79,13 +92,12 @@
 
 .box {
   width: 100%;
-  max-width: min(100%, 60vh);
   align-self: center;
   flex: 1;
   min-height: 0;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: flex-end; /* a tall phone: the sheet sits on its colours; the slack goes above */
 }
 
 /* Upright, the sheet never goes under 180 px: the box holds that height so the body scrolls
@@ -115,17 +127,20 @@
 
 .bottom {
   display: grid;
-  grid-template-columns: 1fr auto auto auto;
+  grid-template-columns: minmax(auto, 1fr) minmax(0, 1fr) minmax(0, 1fr);
   grid-template-areas:
-    'ink sizes undo clear'
-    'label sizes undo clear';
+    'ink ink ink'
+    'label label label'
+    'sizes undo clear';
   align-items: center;
-  column-gap: var(--pb-space-2);
+  gap: 0 var(--pb-space-2); /* rows spaced by margins: the empty label row costs nothing */
 }
 
+/* The ink left, a thin line across the band (its words only when out of ink). */
 .ink {
   grid-area: ink;
-  height: 10px;
+  margin-bottom: var(--pb-space-2);
+  height: 4px;
   border-radius: 999px;
   background: var(--pb-surface-2);
   overflow: hidden;
@@ -145,18 +160,23 @@
 .inkLabel {
   grid-area: label;
   font-size: var(--pb-font-caption);
-  color: var(--pb-text-muted);
+  font-weight: 700;
+  color: var(--pb-danger);
+  margin-bottom: var(--pb-space-2);
 }
 
 .tool {
+  min-width: 0;
   min-height: var(--pb-touch);
-  padding: 0 var(--pb-space-4);
-  border-radius: var(--pb-radius);
+  padding: 0 var(--pb-space-2);
+  border-radius: 999px;
   border: 0;
   background: var(--pb-surface);
   color: var(--pb-text);
   font: inherit;
-  font-weight: 700;
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  line-height: 1.1;
   cursor: pointer;
 }
 
@@ -173,25 +193,14 @@
   cursor: default;
 }
 
-/* Spanish (<html lang> follows the phone's): "Deshacer" / "Borrar" / "tinta" are wider than
-   Undo / Clear / ink, so the ink column gives way first (its label wraps inside it) and, on a
-   narrow phone, the row's gaps and Undo / Clear's side padding halve — it fits 360 px instead of
-   running off the screen, with the ink bar still ~35 px. English — and a language with no table
-   yet, which shows the English — keeps its layout; a new table adds its :lang() here. */
-.bottom:lang(es) {
-  grid-template-columns: minmax(0, 1fr) auto auto auto;
-}
-
-.bottom:lang(es) .inkLabel {
-  overflow-wrap: anywhere;
-}
-
-@media (max-width: 400px) {
-  .bottom:lang(es) {
-    column-gap: var(--pb-space-1);
+/* A 320 px phone: the pen pill tightens so "↶ Deshacer" / "Borrar" keep a third each. */
+@media (max-width: 359px) {
+  .size {
+    width: 28px;
+    height: 28px;
   }
-  .bottom:lang(es) .tool {
-    padding: 0 var(--pb-space-2);
+  .tool {
+    padding: 0 4px;
   }
 }
 
@@ -206,6 +215,7 @@
   }
   .tools {
     flex: none;
+    order: -1; /* colours down the left, as before I-794 H moved them under the sheet */
   }
   .swatches {
     display: grid;
@@ -229,7 +239,7 @@
   }
   .bottom {
     flex: none;
-    width: 132px;
+    width: 148px;
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
       'ink ink'
@@ -251,7 +261,8 @@
   }
   .tool {
     min-height: 32px;
-    padding: 0 var(--pb-space-2);
+    padding: 0 var(--pb-space-1);
+    white-space: nowrap;
   }
   .size {
     width: 28px;

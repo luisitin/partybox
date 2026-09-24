@@ -2,20 +2,14 @@
 // then watch the TV. `send` is the only way out; the server validates every input first.
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { JSX } from 'react';
-import {
-  PrimaryButton,
-  Screen,
-  TextAnswer,
-  WaitingScreen,
-  useServerOffset,
-  useT,
-} from '@partybox/game-sdk/ui';
+import { PrimaryButton, Screen, WaitingScreen, useServerOffset, useT } from '@partybox/game-sdk/ui';
 import type { GameControllerProps, Translator } from '@partybox/game-sdk/ui';
 import type { Input, Stroke } from '../server/types';
 import type { PencilControllerView } from '../server/views';
 import { DrawPad } from './DrawPad';
 import { DrawingView } from './DrawingView';
 import styles from './Controller.module.css';
+import { Guess, stepKicker, useBookInBar } from './Guess';
 import { Offers } from './Offers';
 import { Show } from './Show';
 import { STRINGS } from './strings';
@@ -86,13 +80,6 @@ function Pick({ view, send }: GameControllerProps<PencilControllerView, Input>):
       />
     </Screen>
   );
-}
-
-function stepKicker(L: Translator, view: PencilControllerView): string {
-  const at = { step: view.step, count: view.stepCount };
-  const name = view.bookOwnerName ?? null;
-  if (name === null) return L("Someone's book · round {step} of {count}", at);
-  return L("{name}'s book · round {step} of {count}", { name, ...at });
 }
 
 /** After both pages of a step are in: what I sent, and who gets the book next. */
@@ -177,6 +164,8 @@ function Draw({ view, send }: GameControllerProps<PencilControllerView, Input>):
   const draft = useDraftSender(send, view.deadline);
   // The draft the server kept, read once at mount (the pad's initializer ignores later values).
   const [initial] = useState(() => view.draft?.strokes ?? []);
+  // I-794 H: whose book and the round ride in the timer bar; the prompt is one bold line.
+  const inBar = useBookInBar(L, view);
   return (
     <Screen
       footer={
@@ -190,11 +179,10 @@ function Draw({ view, send }: GameControllerProps<PencilControllerView, Input>):
         </PrimaryButton>
       }
     >
-      <p className={styles.kicker}>{stepKicker(L, view)}</p>
+      {inBar ? null : <p className={styles.kicker}>{stepKicker(L, view)}</p>}
       <h2 className={styles.prompt}>
-        {own
-          ? L('Draw your word: “{text}”', { text })
-          : L('Now draw your guess: “{text}”', { text })}
+        {own ? L('Draw:') : L('Draw your guess:')}{' '}
+        <span className={styles.promptWord}>“{text}”</span>
       </h2>
       <DrawPad
         initial={initial}
@@ -206,34 +194,6 @@ function Draw({ view, send }: GameControllerProps<PencilControllerView, Input>):
         onProgress={draft}
       />
     </Screen>
-  );
-}
-
-/** Guess the drawing that reached you; in a pass the DrawPad follows right after. */
-function Guess({ view, send }: GameControllerProps<PencilControllerView, Input>): JSX.Element {
-  const L = useT(STRINGS);
-  const drawing = view.prompt?.kind === 'drawing' ? view.prompt.drawing : null;
-  const last = view.phaseId === 'guess';
-  return (
-    <TextAnswer
-      kicker={stepKicker(L, view)}
-      prompt={
-        <span className={styles.guessPrompt}>
-          <span className={styles.guessDrawing}>
-            <DrawingView drawing={drawing} label={L('the drawing to guess')} />
-          </span>
-          <span className={styles.guessText}>
-            {last ? L('Last guess — what is this?') : L('What is this? (you draw it next)')}
-          </span>
-        </span>
-      }
-      placeholder={L('Your best guess…')}
-      maxLength={40}
-      submitted={false}
-      submitLabel={last ? L('Send guess') : L('Guess, then draw it')}
-      promptKey={`${view.step}:${view.deadline ?? ''}`}
-      onSubmit={(text) => send({ type: 'guess', text })}
-    />
   );
 }
 

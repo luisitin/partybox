@@ -127,6 +127,7 @@ export function CrossfadeSwap({
         ghost.current.host.remove();
       }
       const host = parent.ownerDocument.createElement('div');
+      host.dataset.pbGhost = ''; // I-791 D: the phone shell hides it while the link card is up
       host.className = quickRef.current
         ? `${GHOST} ${GHOST_QUICK}`
         : curtainRef.current
