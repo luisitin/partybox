@@ -70,19 +70,19 @@ export function Screen({ children, footer, title, className }: ScreenProps): JSX
       <div ref={body} className={styles.body}>
         {children}
       </div>
+      {/* I-788 A: the cue has a row of its own between the body and the footer — it never covers
+          content (it floated over the body's last line) */}
       {more ? (
-        <div className={styles.moreAnchor}>
-          <button
-            type="button"
-            className={styles.more}
-            aria-label={L('scroll down')}
-            onClick={() =>
-              body.current?.scrollBy({ top: body.current.clientHeight * 0.8, behavior: 'smooth' })
-            }
-          >
-            ▾
-          </button>
-        </div>
+        <button
+          type="button"
+          className={styles.moreRow}
+          aria-label={L('scroll down')}
+          onClick={() =>
+            body.current?.scrollBy({ top: body.current.clientHeight * 0.8, behavior: 'smooth' })
+          }
+        >
+          <span aria-hidden>▾</span> {L('more below')}
+        </button>
       ) : null}
       {footer ? <div className={styles.footer}>{footer}</div> : null}
     </section>
