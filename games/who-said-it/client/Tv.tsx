@@ -11,7 +11,7 @@ import { TvIntro, TvPrompt, TvWrite } from './TvTitles';
 import { useSay } from './useSay';
 
 export function Tv({ view }: GameTvProps<WsTvView>): JSX.Element {
-  useSay(view.say, `${view.phaseId}@${view.startedAt}`, view.deadline);
+  useSay(view.say, view.startedAt, view.phaseId, view.deadline);
   switch (view.phaseId) {
     case 'intro':
       return <TvIntro view={view} />;

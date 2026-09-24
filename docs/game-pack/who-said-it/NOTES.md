@@ -8,9 +8,9 @@ Branch `game/who-said-it`, worktree `C:/dev/partybox-game-who-said-it`, harness 
 | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 1 Content         | done: 120 family + 50 spicy prompts, 14 bot answers each, pack tests                                                                                                      |
 | 2 Server + tests  | done: 7 phases, scoring, awards, recap, voice, bot from its own view; 73 unit tests; contract green; sim 800 games (random, idle, chaos, mixed × 200, 3–16 players) clean |
-| 3 Client          | in progress                                                                                                                                                               |
-| 4 Record → review | not started                                                                                                                                                               |
-| 5 Review package  | not started                                                                                                                                                               |
+| 3 Client          | done: TV (7 screens), phone (write, guess, own line, scores), PhoneStage, EN + ES                                                                                         |
+| 4 Record → review | 23 passes, see REVIEW.md; frame timing to re-measure on a quiet machine                                                                                                   |
+| 5 Review package  | REVIEW.md written; waiting for the owner                                                                                                                                  |
 
 ## Stand-ins (swap when the owner's piece lands on main)
 
@@ -20,7 +20,7 @@ Branch `game/who-said-it`, worktree `C:/dev/partybox-game-who-said-it`, harness 
 | `toSpeakable` + overrides                                               | Foundation F6    | `games/who-said-it/server/speakable.ts`                                                                                                                                         |
 | `speechKey` / engine version                                            | Foundation F6    | `server/speech.ts` (`ws` + FNV over version, voice, parts)                                                                                                                      |
 | Fixed clips (render-clips pipeline)                                     | Foundation F6    | the five fixed lines are live readings with constant text (cached forever by key)                                                                                               |
-| `FacePicker`                                                            | Imposter session | a local picker in `client/` (to build)                                                                                                                                          |
+| `FacePicker`                                                            | Imposter session | `client/FacePicker.tsx` (2 / 3 columns, 4 / 5 sideways)                                                                                                                         |
 | Manifest `icon`, `howToPlay`, `presence`, `addedOn`; `manifest.es.json` | Foundation F2    | not added yet: the schema on main strips them and the contract deep-equals the JSON (audit #58). Values ready: 🗣️; the three spec steps; `{ needs: 'anywhere' }`; `2026-09-24`. |
 | Per-phone stage (`canSeeTv`, P1/P2)                                     | Foundation F4    | PhoneStage works for phone-only rooms today                                                                                                                                     |
 
@@ -49,3 +49,9 @@ Branch `game/who-said-it`, worktree `C:/dev/partybox-game-who-said-it`, harness 
 ## Open questions for the owner
 
 - None blocking. The deviations above are reversible if the owner prefers the spec's letter.
+
+## Review tooling (probes, not committed)
+
+`packages/e2e/src/design/cap-wsi.tmp.ts` (focused recorder: TV + phone video, stills, strips, cue log,
+clip trace via `window.__pbTrace`, `--phone-only`, `--lang`, `--theme`) and `cap-wsi-touch.tmp.ts`
+(CDP finger abuse). `client/useSay.ts` traces `ws-say` booked / fired / skipped (no-op in production).

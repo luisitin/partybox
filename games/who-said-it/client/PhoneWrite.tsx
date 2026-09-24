@@ -2,7 +2,7 @@
 // 💡 Need an idea? (once per question: two ready-made answers as chips; a tap fills the box), and a
 // sticky Lock it in → Change. The draft lives here so a push never wipes it; "Lock it in" is inert
 // while a send is in flight, so a mash sends one answer.
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { JSX } from 'react';
 import { PrimaryButton, Screen, useT } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
@@ -12,6 +12,8 @@ import { STRINGS } from './strings';
 import styles from './phone.module.css';
 
 const MAX = 60;
+/** The chips pop in where the 💡 button was: taps this soon after are the same mash, not a pick. */
+const CHIP_GUARD_MS = 450;
 
 export function PhoneWrite({ view, send }: GameControllerProps<WsPhoneView, Input>): JSX.Element {
   const L = useT(STRINGS);
@@ -22,6 +24,13 @@ export function PhoneWrite({ view, send }: GameControllerProps<WsPhoneView, Inpu
   const [sent, setSent] = useState<string | null>(null);
   const [nudge, setNudge] = useState(false);
   const [asked, setAsked] = useState(false);
+  const chipsAt = useRef(0);
+  const chipsRef = useRef<HTMLDivElement>(null);
+  const hasIdeas = view.ideas.length > 0;
+  // The chips arrive below the fold on a small phone: bring them up so the answer is seen.
+  useEffect(() => {
+    if (hasIdeas) chipsRef.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }, [hasIdeas]);
   const held = view.myAnswer;
   // The server confirmed the send: leave editing (adjust state on a prop change, in render).
   if (sent !== null && held === sent) {
@@ -118,7 +127,7 @@ export function PhoneWrite({ view, send }: GameControllerProps<WsPhoneView, Inpu
         </span>
       </div>
       {view.ideas.length > 0 ? (
-        <div className={styles.ideas}>
+        <div className={styles.ideas} ref={chipsRef}>
           <p className={styles.ideasLabel}>{L('Tap one to use it:')}</p>
           {view.ideas.map((idea) => (
             <button
@@ -126,6 +135,7 @@ export function PhoneWrite({ view, send }: GameControllerProps<WsPhoneView, Inpu
               type="button"
               className={`${styles.chip} ${draft === idea ? styles.chipOn : ''}`}
               onClick={() => {
+                if (performance.now() - chipsAt.current < CHIP_GUARD_MS) return;
                 setDraft(idea.slice(0, MAX));
                 setNudge(false);
               }}
@@ -142,6 +152,7 @@ export function PhoneWrite({ view, send }: GameControllerProps<WsPhoneView, Inpu
           onClick={() => {
             if (asked) return;
             setAsked(true);
+            chipsAt.current = performance.now();
             send({ type: 'idea' });
           }}
         >

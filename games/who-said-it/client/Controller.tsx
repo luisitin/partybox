@@ -53,7 +53,7 @@ export function PhonePrompt({ view }: { view: WsPhoneView }): JSX.Element {
 export function Controller(props: Props): JSX.Element {
   const { view } = props;
   const L = useT(STRINGS);
-  useSay(view.say, `${view.phaseId}@${view.startedAt}`, view.deadline);
+  useSay(view.say, view.startedAt, view.phaseId, view.deadline);
   if (view.me.role !== 'player')
     return <WaitingScreen title={L("You're in as soon as this one ends")} mood="watch" />;
   switch (view.phaseId) {

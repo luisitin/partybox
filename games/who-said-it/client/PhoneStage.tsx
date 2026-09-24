@@ -26,26 +26,6 @@ function PhoneReveal({ view }: { view: WsPhoneView }): JSX.Element {
       <div className={styles.quote}>
         <p className={styles.quoteText}>{view.card.text}</p>
       </div>
-      <ul className={styles.picks}>
-        {picked.map((id) => {
-          const p = byId.get(id) as ViewPlayer;
-          const author = shown && r.authors.includes(id);
-          const guessers = Object.keys(r.guesses).filter((g) => r.guesses[g] === id);
-          return (
-            <li key={id} className={`${styles.pick} ${author ? styles.pickAuthor : ''}`}>
-              <Avatar avatarId={p.avatarId} size={40} />
-              <span className={styles.pickName}>{p.name}</span>
-              <span className={styles.pickers}>
-                {guessers.map((g, i) => (
-                  <span key={g} className={styles.picker} style={{ '--i': i } as CSSProperties}>
-                    <Avatar avatarId={byId.get(g)?.avatarId ?? 'ghost'} size={28} />
-                  </span>
-                ))}
-              </span>
-            </li>
-          );
-        })}
-      </ul>
       <div className={styles.flipArea} aria-live="polite">
         {shown ? (
           <div className={styles.flipCard}>
@@ -65,6 +45,26 @@ function PhoneReveal({ view }: { view: WsPhoneView }): JSX.Element {
           <p className={styles.itWas}>{L('It was…')}</p>
         )}
       </div>
+      <ul className={styles.picks}>
+        {picked.map((id) => {
+          const p = byId.get(id) as ViewPlayer;
+          const author = shown && r.authors.includes(id);
+          const guessers = Object.keys(r.guesses).filter((g) => r.guesses[g] === id);
+          return (
+            <li key={id} className={`${styles.pick} ${author ? styles.pickAuthor : ''}`}>
+              <Avatar avatarId={p.avatarId} size={32} />
+              <span className={styles.pickName}>{p.name}</span>
+              <span className={styles.pickers}>
+                {guessers.map((g, i) => (
+                  <span key={g} className={styles.picker} style={{ '--i': i } as CSSProperties}>
+                    <Avatar avatarId={byId.get(g)?.avatarId ?? 'ghost'} size={24} />
+                  </span>
+                ))}
+              </span>
+            </li>
+          );
+        })}
+      </ul>
     </Screen>
   );
 }
@@ -87,7 +87,7 @@ function StageBoard({ view }: { view: WsPhoneView }): JSX.Element {
 export function PhoneStage({ view: pushed }: { view: PushedView<ControllerView> }): JSX.Element {
   // The shell types the slot with the bare envelope; this game's controller view is what arrives.
   const view = pushed as PushedView<WsPhoneView>;
-  useSay(view.say, `${view.phaseId}@${view.startedAt}`, view.deadline);
+  useSay(view.say, view.startedAt, view.phaseId, view.deadline);
   switch (view.phaseId) {
     case 'intro':
       return <PhoneIntro />;

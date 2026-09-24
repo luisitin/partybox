@@ -104,6 +104,8 @@
 .ideas {
   display: grid;
   gap: var(--pb-space-2);
+  /* Scrolled into view clear of the body's bottom fade. */
+  scroll-margin-bottom: var(--pb-space-7);
 }
 .ideasLabel {
   margin: 0;
@@ -397,10 +399,10 @@
 }
 .pick {
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: auto auto 1fr;
   align-items: center;
-  gap: var(--pb-space-1) var(--pb-space-3);
-  padding: var(--pb-space-2) var(--pb-space-3);
+  gap: var(--pb-space-2);
+  padding: var(--pb-space-1) var(--pb-space-3);
   border: 2px solid transparent;
   border-radius: var(--pb-radius);
   background: var(--pb-surface);
@@ -415,9 +417,9 @@
   overflow-wrap: anywhere;
 }
 .pickers {
-  grid-column: 2;
   display: flex;
   flex-wrap: wrap;
+  justify-content: flex-end;
   gap: var(--pb-space-1);
 }
 .picker {
@@ -426,7 +428,8 @@
 }
 .flipArea {
   perspective: 900px;
-  min-height: 8rem;
+  min-height: 7.5rem;
+  margin-bottom: var(--pb-space-4);
   display: grid;
   place-items: center;
 }
@@ -471,5 +474,19 @@
   }
   100% {
     transform: none;
+  }
+}
+
+/* A sideways phone has width to spare and no height: more columns, so the faces fit without a
+   scroll (record-review p09). */
+@media (orientation: landscape) and (min-width: 560px) {
+  .faces {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .facesThree {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+  .quote {
+    padding: var(--pb-space-2) var(--pb-space-4);
   }
 }
