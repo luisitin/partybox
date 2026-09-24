@@ -326,8 +326,8 @@
 }
 
 .crown {
-  flex-shrink: 0;
   font-size: var(--pb-font-caption);
+  color: var(--pb-accent-2);
 }
 
 .name {
@@ -523,4 +523,12 @@
 .nextButton:focus-visible {
   outline: 3px solid var(--pb-focus);
   outline-offset: 2px;
+}
+
+/* ── I-550 A: the final's topic under "Place your wagers". */
+.finalTopic {
+  margin: 0;
+  color: var(--pb-accent-2);
+  font-size: var(--pb-font-h2);
+  font-weight: 800;
 }

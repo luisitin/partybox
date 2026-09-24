@@ -134,6 +134,13 @@
     white-space: nowrap;
   }
 }
+/* I-792 E: …but the VIP's SE header (PB, code, ★ VIP, face) has no room for it: the name clipped
+   the room code to "FFF". Your face stays; the name is on your chip right below. */
+@media (max-width: 359px) {
+  .right:has(.vipBadge) .meName {
+    display: none;
+  }
+}
 
 /* Offline: the countdown is a guess, not a demand (review-loop #27). */
 .stale {
@@ -150,9 +157,33 @@
   background: var(--pb-surface);
 }
 
-.deadline > :first-child {
+.deadline .bar {
   flex: 1;
+  min-width: 32px;
   height: 4px;
+}
+
+/* I-794 H: the game's line left of the bar ("Max's book · 1/6"). The name gives way ("…") before
+   the round does, and the bar keeps at least 32 px. Under "Reconnecting…" or the hurry cue it is
+   hidden in place (visibility), so the bar never jumps. */
+.timerLabel {
+  flex: 0 1 auto;
+  min-width: 0;
+  display: flex;
+  white-space: nowrap;
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  color: var(--pb-text);
+}
+
+.timerLabelHidden {
+  visibility: hidden;
+}
+
+.timerLabelText {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .seconds {
@@ -270,6 +301,24 @@
    the `inert` attribute on <main> does the real work (no taps, no focus). */
 .pausedMain {
   opacity: 0.5;
+}
+
+/* I-791 D: offline, the game dims and loses its colour under the offline card (the card's veil
+   takes every tap; `inert` keeps focus out too). */
+.offlineMain {
+  opacity: 0.5;
+  filter: saturate(0.3);
+}
+
+/* I-791 D: while the link card is up (offline, then "You're back"), no screen dissolves: the old
+   question never fades over the new one the phone caught up to. */
+.shell[data-resync] :global([data-pb-ghost]) {
+  display: none;
+}
+
+/* The "You're back" card lands crisp: the game's un-dim is not faded in under it. */
+.shell[data-resync='back'] .main {
+  transition: none;
 }
 
 .toasts {
@@ -452,4 +501,11 @@
 }
 .codeButton:active {
   transform: scale(0.96);
+}
+
+/* ── I-268 B: the bench's leader tag (was 🏆, which means "won" everywhere else). */
+.benchMark {
+  margin-right: var(--pb-space-1);
+  font-size: 0.72em;
+  vertical-align: 0.1em;
 }
