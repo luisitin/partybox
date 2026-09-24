@@ -44,6 +44,8 @@ export function createSocketLayer(server: HttpServer): SocketLayer {
     pingTimeout: LIMITS.pingTimeoutMs,
     serveClient: false,
     cors: { origin: true },
+    // I-750 C: compress messages over 1 KB (the room snapshot is repeated keys and text)
+    perMessageDeflate: { threshold: 1024 },
     // I-753 C: a browser page from another website may not open a PartyBox socket (browsers do not
     // apply CORS to WebSockets, so the Origin is checked here); tools without an Origin are fine
     allowRequest: (req, callback) => {
