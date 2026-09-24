@@ -4,6 +4,10 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ## [Unreleased]
 
+### Added
+
+- **Hive Rank** 🐝 (game pack, game 6): five things and a question ("Best to worst road-trip snack"); everyone taps them into order on their phone, the orders are combined into the hive's order, and the TV counts it down from fifth to first with the reader, a scout bee flying to each next spot. Score 2 per thing in the hive's exact spot, 1 if one spot off, +2 for all five; the round's top scorer is crowned Queen Bee. 2–16 players, about 5 minutes, bots welcome, 150 family + 50 spicy questions, phone-only rooms, English + Spanish. The phone's ranking control is a new SDK piece, `@partybox/game-sdk/ui/order-picker`.
+
 ### Fixed
 
 - **Everyone sees the settings while the VIP tunes** (I-648, option B): while the VIP picks a game, every other phone lists that game's settings under its name, read-only, updating as the VIP changes them — so nobody finds out spicy is ON after the first card. The setting that just changed breathes yellow once over 2 s (held still under reduced motion).

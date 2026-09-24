@@ -9,8 +9,8 @@
 // taken out before it) ticks to its new value instead of blinking.
 import { useRef, useState } from 'react';
 import type { JSX, ReactNode } from 'react';
-import { buzz } from '../ui/haptics';
-import { useT } from '../ui/lang';
+import { buzz } from '../../ui/haptics';
+import { useT } from '../../ui/lang';
 import styles from './OrderPicker.module.css';
 import { STRINGS } from './strings';
 
