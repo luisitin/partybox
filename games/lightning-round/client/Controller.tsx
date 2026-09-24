@@ -62,6 +62,15 @@ export function Controller({
     if (phaseId !== 'reveal' || !shown || correct === undefined) return;
     buzz(correct ? [30, 40, 30] : 120);
   }, [phaseId, shown, correct]);
+  // I-565 A: one short buzz the moment the room is waiting on me alone
+  const pending = view.players.filter(
+    (p) => p.connected && (p.status === 'active'),
+  );
+  const waitedOn =
+    phaseId === 'question' && view.myPickIndex === null && pending.length === 1 && pending[0]?.id === view.me.id;
+  useEffect(() => {
+    if (waitedOn) buzz(40);
+  }, [waitedOn]);
   if (view.me.role === 'spectator') {
     return (
       <WaitingScreen
@@ -89,6 +98,23 @@ export function Controller({
     // Comparing the id at render is the reset; a reconnect after picking gets the default line.
     const spare = locked && lockedAt?.questionId === view.question.id ? lockedAt.seconds : null;
     const lockedHint = spare === null ? undefined : lockedLine(spare, view.phoneOnly === true, L);
+    // I-565 A: the room, on the phone — how many are in, and whether it's me they're waiting on
+    const playing = view.players.filter(
+      (p) => p.connected && p.status !== 'waiting' && p.status !== 'spectator',
+    );
+    const inCount = playing.filter((p) => p.status === 'submitted').length;
+    const holdouts = playing.filter((p) => p.status !== 'submitted');
+    const lastOne = !locked && holdouts.length === 1 && holdouts[0]?.id === view.me.id;
+    const roomLine =
+      phaseId !== 'question' || revealed
+        ? null
+        : !locked
+          ? lastOne
+            ? L("Everyone's waiting on you")
+            : L('{n}/{total} in', { n: inCount, total: playing.length })
+          : holdouts.length > 0 && holdouts.length <= 2
+            ? L('waiting for {names}', { names: holdouts.map((p) => p.name).join(', ') })
+          : null;
     const questionId = view.question.id;
     return (
       // A new question rises as a new screen; question → reveal keeps the same node.
@@ -98,10 +124,14 @@ export function Controller({
         promptKey={`${phaseId}:${view.round?.number ?? 0}`}
         tone={finalQ ? 'final' : undefined}
         kicker={
-          finalQ && stake !== null && stake > 0
-            ? `${roundKicker(view, L)} · ${L('you bet {stake}', { stake })}`
-            : roundKicker(view, L)
-        } /* I-039 C */
+          lastOne && roomLine
+            ? roomLine
+            : `${
+                finalQ && stake !== null && stake > 0
+                  ? `${roundKicker(view, L)} · ${L('you bet {stake}', { stake })}`
+                  : roundKicker(view, L)
+              }${roomLine ? ` · ${roomLine}` : ''}`
+        } /* I-039 C; I-565: the room's count (or "Everyone's waiting on you") */
         choices={view.question.choices.map((label, index) => ({ id: String(index), label }))}
         selectedId={locked ? String(view.myPickIndex) : null}
         correctId={
