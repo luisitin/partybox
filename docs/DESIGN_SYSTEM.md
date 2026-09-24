@@ -81,6 +81,9 @@ TV status swaps (lobby / selecting / playing / results) are keyed and rise (`pb-
 takes > 150 ms shows a centred "<game> — Getting the game ready…" card, never a stray glyph.
 `ChoiceGrid` takes a `className` for its Screen (I-026), so a game can style a state of the grid — Lightning's placed
 wager steps the other rows back to 60 % and bumps the chosen row's chips.
+A `fill` ChoiceGrid (I-789 B) shares the height left under the question: tiles 66 px, down to their content on a short
+phone; four short answers go two by two (one column at 200 % text, by container query); sideways the question sits left
+of the answers; the "Locked in" line's space is held from the first frame, so a tap moves nothing.
 The pause curtain (I-030, every game): the scrim drops from the top edge over `--pb-motion-slow` (transform only) and
 lifts back on resume; the Paused card lands (`pb-land`) once it is down; behind it the stage scales to 0.96 and the chip
 strip dims to 60 % (`.held`), and as the curtain lifts the stage lands back to full (`.resumed`, `pb-land`) on the
