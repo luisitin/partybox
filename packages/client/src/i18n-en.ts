@@ -111,6 +111,11 @@ export const en = {
     pair: (a: string, b: string) => `${a} & ${b}`,
     tieAmong: (names: string, others: number) =>
       `${names} & ${others} ${others === 1 ? 'other' : 'others'} tie!`,
+    /** I-153 B: bots tied with people take no naming slot (`names` comma-joined). */
+    tieWithBots: (names: string, bots: number) =>
+      `${names} & the ${bots === 1 ? 'bot' : 'bots'} tie!`,
+    /** I-153 C: a tie with no person in it (a lone bot winner still gets its name). */
+    botTie: 'The bots tie — nobody home?',
     tie: "It's a tie!",
     over: 'Game over',
     show: "That's the show!",

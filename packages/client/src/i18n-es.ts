@@ -107,6 +107,8 @@ export const es: Texts = {
     pair: (a, b) => `${a} y ${b}`,
     tieAmong: (names, others) =>
       `¡Empate entre ${names} y ${others} ${others === 1 ? 'persona más' : 'personas más'}!`,
+    tieWithBots: (names, bots) => `¡Empate entre ${names} y ${bots === 1 ? 'el bot' : 'los bots'}!`,
+    botTie: 'Empatan los bots: ¿no hay nadie en casa?',
     tie: '¡Empate!',
     over: 'Fin del juego',
     show: '¡Y eso fue todo!',

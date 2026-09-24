@@ -104,6 +104,7 @@ wherever `PlayerChips` uses it (the lobby, the game select).
 `PlayerChip` (I-009): a link dropping on a mounted chip flickers it out (opacity steps over `--pb-motion-slow`) to a 0.6 ghost; the return pops it back with a green ring fading over `--pb-motion-pulse` (never on a screen swap; the ring skips an `.active` chip). The phone's "Reconnecting…" breathes (`pb-breathe`).
 `TextAnswer` (I-001): under the shell's `data-urgent` the textarea takes the danger border and the once-a-second beat like the primary button (border alone under reduced motion); the "n / max" counter remounts on every keystroke and bumps once (`pb-bump`, `--pb-motion-fast`); a field left empty 3 s breathes (`pb-breathe`, absent under reduced motion) until a character lands — urgency outranks it.
 Timer: in the last 5 s it switches to `--pb-danger`, scales 1.15×, pulses once per second (`--pb-motion-pulse`, 0 under reduced motion) and ticks (sound `countdown`).
+The results headline (`winnerLine`, I-153) names people before bots: tied with people, bots fold into "& the bots" ("Priya, Sam & the bots tie!", B), a tie of bots alone reads "The bots tie — nobody home?" (C), and a lone bot winner keeps its name.
 
 ## Sound cues (Web Audio, synthesized — no files)
 

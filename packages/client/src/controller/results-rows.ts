@@ -45,10 +45,31 @@ export function winnerLine(room: RoomSnapshot, scoreless = false): string {
   const ids = results.results.winnerIds;
   if (ids.length === 0) return '';
   if (ids.length >= results.players.length && ids.length > 1) return t.results.tie;
-  // Tied winners read alphabetically (numeric-aware), like every other player list (review-loop #36).
-  const names = ids
-    .map((id) => results.players.find((p) => p.id === id)?.name ?? '?')
-    .sort((x, y) => x.localeCompare(y, undefined, { numeric: true, sensitivity: 'base' }));
+  // I-153 A: people first. Tied winners still read alphabetically (numeric-aware) within their
+  // group, but a bot never takes a naming slot from someone who was actually in the room — "Bot 1,
+  // Bot 3 & 2 others" named the robots and hid the only two guests.
+  const tiedPlayers = ids
+    .map((id) => results.players.find((p) => p.id === id))
+    .filter((p): p is NonNullable<typeof p> => p !== undefined)
+    .sort(
+      (x, y) =>
+        Number(x.bot ?? false) - Number(y.bot ?? false) ||
+        x.name.localeCompare(y.name, undefined, { numeric: true, sensitivity: 'base' }),
+    );
+  const people = tiedPlayers.filter((p) => p.bot !== true);
+  const bots = tiedPlayers.filter((p) => p.bot === true);
+  // I-153 C: a tie nobody was there for — a TIE, not a lone bot winner, which still gets its
+  // name ("Bot 1 wins!"). Recording this caught it: the first draft crowned a single bot with
+  // "The bots tie — nobody home?" over a board showing Bot 1 alone on 3.
+  if (ids.length > 1 && people.length === 0 && bots.length > 0) return t.results.botTie;
+  // I-153 B: bots tied with people are "the bots" — furniture does not get billing.
+  if (bots.length > 0 && people.length > 0) {
+    const named = people.map((p) => p.name);
+    // The copy supplies the final "& the bots", so the names are comma-joined — "Priya & Sam &
+    // the bots" read as two ampersands in a row.
+    return t.results.tieWithBots(named.join(', '), bots.length);
+  }
+  const names = (people.length > 0 ? people : bots).map((p) => p.name);
   if (names.length === 1) return t.results.winner(names[0] as string);
   if (names.length === 2)
     return t.results.winners(t.results.pair(names[0] as string, names[1] as string));

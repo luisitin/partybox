@@ -2,12 +2,17 @@
 import { describe, expect, it } from 'vitest';
 import type { RoomSnapshot } from '@partybox/shared';
 import { ordinal } from '../i18n';
-import { myRow, winnerLineFor } from './results-rows';
+import { myRow, winnerLine, winnerLineFor } from './results-rows';
 
 type Rank = { playerId: string; score: number; rank: number };
 
 function room(scores: Record<string, number>, winnerIds: string[], ranking: Rank[]): RoomSnapshot {
-  const players = Object.keys(scores).map((id) => ({ id, name: id, avatarId: 'fox' }));
+  const players = Object.keys(scores).map((id) => ({
+    id,
+    name: id,
+    avatarId: 'fox',
+    bot: id.startsWith('Bot'),
+  }));
   return {
     code: 'ABCD',
     status: 'results',
@@ -121,5 +126,29 @@ describe('ordinal', () => {
       '101st',
       '111th',
     ]);
+  });
+});
+
+describe('winnerLine with bots in the tie (I-153)', () => {
+  const tieOf = (ids: string[], losers: string[] = ['Ana']): RoomSnapshot =>
+    room(Object.fromEntries([...ids.map((id) => [id, 2]), ...losers.map((id) => [id, 0])]), ids, [
+      ...ids.map((playerId) => ({ playerId, score: 2, rank: 1 })),
+      ...losers.map((playerId, i) => ({ playerId, score: 0, rank: ids.length + 1 + i })),
+    ]);
+
+  it('names the people and folds the bots into "the bots"', () => {
+    expect(winnerLine(tieOf(['Bot 1', 'Bot 3', 'Sam', 'Priya']))).toBe(
+      'Priya, Sam & the bots tie!',
+    );
+    expect(winnerLine(tieOf(['Bot 2', 'Sam']))).toBe('Sam & the bot tie!');
+  });
+
+  it('says so when only bots tie, and still names a lone bot winner', () => {
+    expect(winnerLine(tieOf(['Bot 1', 'Bot 3'], ['Sam']))).toBe('The bots tie — nobody home?');
+    expect(winnerLine(tieOf(['Bot 1'], ['Sam']))).toBe('Bot 1 wins!');
+  });
+
+  it('leaves a people-only tie as it was', () => {
+    expect(winnerLine(tieOf(['Sam', 'Priya']))).toBe('Priya & Sam win!');
   });
 });
