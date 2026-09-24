@@ -111,16 +111,19 @@ export function Controller({
         lockedHint={lockedHint}
         // I-288 B: while it's open, what a right answer is worth now
         prompt={
-          view.worth && !revealed ? (
+          view.worth && !(revealed && shown) ? (
             <>
               {view.question.text}
-              {/* I-789 B: after the tap the line keeps its space — locking in moves nothing */}
-              <Worth worth={view.worth} deadline={view.deadline} held={locked} />
+              {/* I-789 B: after the tap the line keeps its space — locking in moves nothing;
+                  I-790 C: the reveal band takes its place */}
+              <Worth worth={view.worth} deadline={view.deadline} held={locked || revealed} />
             </>
           ) : (
             view.question.text
           )
         }
+        // I-790 C: the verdict and the two numbers, one band under the question
+        band={revealed && shown ? <Outcome view={view} streakBefore={streakBefore} /> : undefined}
         // A "phone only" room: the TV's rows, on the phone under the answers (the owner).
         after={
           revealed && shown && view.phoneOnly && view.rows ? <RoomRows rows={view.rows} /> : null
@@ -131,11 +134,10 @@ export function Controller({
         }}
         footer={
           revealed && shown ? (
-            <>
-              <Outcome view={view} streakBefore={streakBefore} spare={spare} />
-              {/* I-589: the owner's Next button, on the VIP's phone only */}
+            // I-589: the owner's Next button, on the VIP's phone only
+            view.next && skip ? (
               <PhoneNext next={view.next} skip={skip} phaseKey={view.deadline} />
-            </>
+            ) : null
           ) : revealed && finalQ ? (
             <div className={styles.stake} role="status">
               🎲 {view.phoneOnly ? L('The bets are in…') : L('The bets are in — look at the TV')}

@@ -28,6 +28,8 @@ export const STRINGS: Strings = {
     '✓ Locking in…': '✓ Confirmando…',
     correct: 'correcta',
     incorrect: 'incorrecta',
+    // I-790 C: the reveal's tile tags
+    'the answer': 'la respuesta', // ("you" is in the table below)
     vote: 'votación',
     yours: 'tuya',
     // Avatar (ui/Avatar.tsx) and the faces' names (avatarNames.ts)

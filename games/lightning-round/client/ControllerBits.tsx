@@ -1,11 +1,10 @@
-// Small presentational pieces for the phone: the reveal outcome card and wager button labels.
+// Small presentational pieces for the phone: the reveal band (I-790 C) and wager button labels.
 import type { JSX } from 'react';
 import { Avatar, useT } from '@partybox/game-sdk/ui';
 import type { Translator } from '@partybox/game-sdk/ui';
 import type { WagerOption } from '../server/scoring';
 import type { LightningControllerView, RevealRow } from '../server/views';
 import styles from './Controller.module.css';
-import { pointsText } from './labels';
 import { STRINGS } from './strings';
 
 // The amount is the decision, so it leads at h1; the share is the caption. Plain digits, no
@@ -57,51 +56,26 @@ export function Stake({ amount, live = false }: { amount: number; live?: boolean
   );
 }
 
-function deltaText(delta: number): string {
+/** "+850", "−240", "0" ("+0" with `signed`: the band's "+0 this round"). */
+function deltaText(delta: number, signed = false): string {
   if (delta > 0) return `+${delta}`;
   if (delta < 0) return `−${-delta}`;
-  return '0';
+  return signed ? '+0' : '0';
 }
 
 export interface OutcomeProps {
   view: LightningControllerView;
   /** The streak this player carried into the question (myStreak is already reset at reveal). */
   streakBefore: number;
-  /** Seconds left on the clock when this player locked in (null: unknown, e.g. after a reconnect). */
-  spare?: number | null;
 }
 
-/** The caption under the delta: the wager's fate on the final, else streak · speed · total. */
-function detailLine(
-  view: LightningControllerView,
-  correct: boolean,
-  streakBefore: number,
-  spare: number | null,
-  L: Translator,
-): string {
-  const score = view.myScore;
-  if (view.round?.final === true) {
-    const bet = view.myWagerAmount ?? 0;
-    if (bet === 0) return L('Wagered nothing · final score {score}', { score });
-    return correct
-      ? L('Won the wager · you bet {bet} · final score {score}', { bet, score })
-      : L('Lost the wager · you bet {bet} · final score {score}', { bet, score });
-  }
-  const parts: string[] = [];
-  if (correct) {
-    if (view.myStreak >= 2) parts.push(L('🔥 streak {streak}', { streak: view.myStreak }));
-    if (spare !== null) parts.push(L('{seconds} s to spare', { seconds: spare }));
-  } else if (streakBefore >= 2) {
-    parts.push(L('Streak of {streak} over', { streak: streakBefore }));
-  }
-  parts.push(pointsText(score, L));
-  return parts.join(' · ');
-}
-
-// The reveal is the best moment of the round: verdict as a headline, the delta at display size
-// toned by its sign (gold is not for losses), the right answer in words (the ✓ card can sit
-// below the fold), streak and running total as a caption.
-export function Outcome({ view, streakBefore, spare = null }: OutcomeProps): JSX.Element {
+/**
+ * I-790 C (the design review): the reveal is one band under the question — the verdict, then the
+ * two numbers kept apart ("+0 this round · 1000 total": the old card's "Wrong … 1000 points" read
+ * as if a wrong answer paid 1000). The tiles carry the rest: a green ring and "the answer" on the
+ * right one, a red ring and "you" on a wrong pick. Plain digits, like every number in the game.
+ */
+export function Outcome({ view, streakBefore }: OutcomeProps): JSX.Element {
   const L = useT(STRINGS);
   const outcome = view.outcome;
   if (!outcome) {
@@ -121,23 +95,23 @@ export function Outcome({ view, streakBefore, spare = null }: OutcomeProps): JSX
         : L('Too slow')
       : L('Wrong');
   const tone = outcome.correct ? styles.good : styles.bad;
-  const sign = outcome.delta > 0 ? styles.up : outcome.delta < 0 ? styles.down : styles.zero;
-  const answer =
-    !outcome.correct && view.correctIndex !== undefined && view.question
-      ? L('It was {letter} · {answer}', {
-          letter: 'ABCDEFGH'[view.correctIndex] ?? view.correctIndex + 1,
-          answer: view.question.choices[view.correctIndex] ?? '',
-        })
-      : null;
-  const detail = detailLine(view, outcome.correct, streakBefore, spare, L);
+  // a streak is still news: 🔥 n after a right answer, and a broken one says so
+  const streak =
+    outcome.correct && view.myStreak >= 2
+      ? ` 🔥${view.myStreak}`
+      : !outcome.correct && streakBefore >= 2
+        ? ` · ${L('Streak of {streak} over', { streak: streakBefore })}`
+        : '';
   return (
-    <div className={`${styles.outcome} ${tone} ${sign}`} role="status">
-      <span className={styles.verdict}>{verdict}</span>
-      <span className={styles.delta} aria-label={L('{n} points', { n: deltaText(outcome.delta) })}>
-        {deltaText(outcome.delta)}
+    <div className={`${styles.band} ${tone}`} role="status">
+      <span className={styles.bandVerdict}>
+        {verdict}
+        {streak ? <span className={styles.bandStreak}>{streak}</span> : null}
       </span>
-      {answer ? <span className={styles.detail}>{answer}</span> : null}
-      <span className={styles.detail}>{detail}</span>
+      <span className={styles.bandDelta}>
+        {L('{delta} this round', { delta: deltaText(outcome.delta, true) })}
+      </span>
+      <span className={styles.bandTotal}>{L('{total} total', { total: view.myScore })}</span>
     </div>
   );
 }

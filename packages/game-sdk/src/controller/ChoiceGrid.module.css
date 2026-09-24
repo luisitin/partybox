@@ -251,6 +251,27 @@
   font-weight: 900;
   min-width: 1em;
   text-align: right;
+  white-space: nowrap;
+}
+
+/* I-790 C: the reveal's words on the tiles ("✓ the answer", "you"); a two-by-two tile keeps the
+   glyph only (its mark is a corner badge), where a wrong pick shows ✗ instead of the word. */
+.tag {
+  margin-left: 0.35em;
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+}
+
+.glyphTight {
+  display: none;
+}
+
+.two .tag {
+  display: none;
+}
+
+.two .glyphTight {
+  display: inline;
 }
 
 /* Lock-in: the chosen card settles with a small pop and its ✓ pops in (both 0 ms under reduced

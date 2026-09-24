@@ -44,6 +44,8 @@ export interface ChoiceGridProps {
   className?: string;
   /** Rendered in the scrolling body under the grid (a "phone only" room's results list — S-005). */
   after?: ReactNode;
+  /** I-790 C: a band under the prompt, over the answers (Lightning's reveal verdict). */
+  band?: ReactNode;
 }
 
 const LETTERS = 'ABCDEFGH';
@@ -65,6 +67,7 @@ export function ChoiceGrid(props: ChoiceGridProps): JSX.Element {
   const {
     className,
     after,
+    band,
     prompt,
     kicker,
     choices,
@@ -114,6 +117,7 @@ export function ChoiceGrid(props: ChoiceGridProps): JSX.Element {
             </p>
           ) : null}
           {prompt ? <p className={styles.prompt}>{prompt}</p> : null}
+          {band}
         </div>
         <div
           className={`${styles.grid} ${fill ? styles.fill : ''} ${fill && shortAnswers ? styles.two : ''}`}
@@ -150,7 +154,20 @@ export function ChoiceGrid(props: ChoiceGridProps): JSX.Element {
                 ) : null}
                 <span className={styles.label}>{choice.label}</span>
                 <span className={styles.mark} aria-hidden>
-                  {isCorrect ? '✓' : isWrongPick ? '✗' : isSelected ? '✓' : ''}
+                  {isCorrect || isWrongPick ? (
+                    // I-790 C: the verdict is on the tiles — "✓ the answer", "you" (a two-by-two
+                    // tile keeps the glyph only)
+                    <>
+                      <span className={isWrongPick ? styles.glyphTight : undefined}>
+                        {isCorrect ? '✓' : '✗'}
+                      </span>
+                      <span className={styles.tag}>{isSelected ? L('you') : L('the answer')}</span>
+                    </>
+                  ) : isSelected ? (
+                    '✓'
+                  ) : (
+                    ''
+                  )}
                 </span>
                 {isCorrect ? <span className="pb-visually-hidden">{L('correct')}</span> : null}
                 {isWrongPick ? <span className="pb-visually-hidden">{L('incorrect')}</span> : null}

@@ -1,75 +1,61 @@
 /* Phone-only pieces for Lightning Round. Tokens only (docs/DESIGN_SYSTEM.md). */
-/* The card rises 150 ms after the ✓/✗ marks land; at 200 % OS text the number wraps to its own
-   right-aligned line instead of clipping. All durations are tokens (0 ms under reduced motion). */
-.outcome {
+/* ── I-790 C: the reveal band under the question — verdict, "+n this round", "n total" on one
+   line (it wraps at 200 % text), tinted by the verdict; it rises a beat after the tiles' marks
+   land (tokens: 0 ms under reduced motion). Never colour alone: the verdict is a word. */
+.band {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  column-gap: var(--pb-space-3);
+  column-gap: var(--pb-space-2);
   row-gap: var(--pb-space-1);
-  padding: var(--pb-space-3) var(--pb-space-4);
+  padding: var(--pb-space-2) var(--pb-space-3);
   border-radius: var(--pb-radius);
   background: var(--pb-surface);
-  border: 3px solid var(--pb-surface-2);
+  font-variant-numeric: tabular-nums;
   animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) var(--pb-motion-fast) both;
 }
 
-.good {
-  border-color: var(--pb-accent-3);
+.band.good {
+  background: color-mix(in oklab, var(--pb-accent-3) 18%, var(--pb-surface));
 }
 
-.bad {
-  border-color: var(--pb-danger);
+.band.bad {
+  background: color-mix(in oklab, var(--pb-danger) 18%, var(--pb-surface));
 }
 
-.verdict {
-  flex: 1 1 8ch;
-  font-size: var(--pb-font-h2);
+.bandVerdict {
+  font-size: var(--pb-font-body);
   font-weight: 800;
 }
 
-.good .verdict {
+.bandStreak {
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+}
+
+.bandDelta {
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+}
+
+.good .bandDelta {
   color: var(--pb-accent-3);
 }
 
-.bad .verdict {
+.bad .bandDelta {
   color: var(--pb-danger);
 }
 
-.delta {
+.bandTotal {
   margin-left: auto;
-  font-size: var(--pb-font-display);
-  font-weight: 900;
-  line-height: 1;
-  font-variant-numeric: tabular-nums;
-}
-
-/* Tone follows the sign of the delta, not the verdict: a lost wager is never winner's gold. */
-.up .delta {
-  color: var(--pb-accent-3);
-  animation: global(pb-pop) var(--pb-motion-slow) var(--pb-ease) var(--pb-motion-base) both;
-}
-
-.down .delta {
-  color: var(--pb-danger);
-  animation: global(pb-shake) var(--pb-motion-base) var(--pb-ease) var(--pb-motion-base) both;
-}
-
-.zero .delta {
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
   color: var(--pb-text-muted);
 }
 
-.detail,
 .footnote {
   font-size: var(--pb-font-caption);
   color: var(--pb-text-muted);
-}
-
-.detail {
-  flex-basis: 100%;
-}
-
-.footnote {
   text-align: center;
 }
 

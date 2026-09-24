@@ -62,14 +62,6 @@ export const SCREENS_ES: Readonly<Record<string, string>> = {
   'No answer': 'Sin respuesta',
   'Too slow': 'Muy tarde',
   Wrong: 'Incorrecto',
-  'It was {letter} · {answer}': 'Era la {letter} · {answer}',
-  'Wagered nothing · final score {score}': 'Sin apuesta · puntuación final {score}',
-  'Won the wager · you bet {bet} · final score {score}':
-    'Ganaste la apuesta · apostaste {bet} · puntuación final {score}',
-  'Lost the wager · you bet {bet} · final score {score}':
-    'Perdiste la apuesta · apostaste {bet} · puntuación final {score}',
-  '🔥 streak {streak}': '🔥 racha de {streak}',
-  '{seconds} s to spare': '{seconds} s de sobra',
   'Streak of {streak} over': 'Se cortó tu racha de {streak}',
   "everyone's results": 'resultados de todos',
 
@@ -112,4 +104,7 @@ export const SCREENS_ES: Readonly<Record<string, string>> = {
   '+{points} now': '+{points} ahora',
   // I-550 A
   'Final question: {topic}': 'Pregunta final: {topic}',
+  // I-790 C: the reveal band
+  '{delta} this round': '{delta} en esta ronda',
+  '{total} total': '{total} en total',
 };
