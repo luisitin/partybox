@@ -18,7 +18,7 @@ import { Outcome, RoomRows, Stake, wagerLabel } from './ControllerBits';
 import { CustomStake } from './CustomStake';
 import { PhoneNext } from './NextStep';
 import styles from './Controller.module.css';
-import { pointsText, roundLabel } from './labels';
+import { topicLine, pointsText, roundLabel } from './labels';
 import { STRINGS } from './strings';
 import { FINAL_REVEAL_HOLD_MS, REVEAL_BEAT_MS } from './timing';
 
@@ -162,7 +162,11 @@ export function Controller({
         letters={false}
         tone="final"
         promptKey="wager"
-        kicker={L('Final question next')}
+        kicker={
+          view.finalTopic
+            ? L('Final question: {topic}', { topic: topicLine(view.finalTopic, L) }) // I-550 A
+            : L('Final question next')
+        }
         prompt={
           <>
             {/* I-026 B: once placed, the prompt is the pot. */}
@@ -170,10 +174,12 @@ export function Controller({
               <span key="pot" className={`${styles.pot} pb-pop`}>
                 {L('{amount} in the pot', { amount: potAmount })}
               </span>
-            ) : view.myScore > 0 ? (
-              L('Wager part of your {points}', { points: pointsText(view.myScore, L) })
             ) : (
-              L('No points yet — you can only wager 0')
+              <span className={styles.wagerPrompt}>
+                {view.myScore > 0
+                  ? L('Wager part of your {points}', { points: pointsText(view.myScore, L) })
+                  : L('No points yet — you can only wager 0')}
+              </span>
             )}
             <span className={styles.rule}>
               {L('Right answer: +wager. Wrong or no answer: −wager.')}
@@ -182,7 +188,7 @@ export function Controller({
         }
         choices={options.map((o) => ({
           id: String(o.percent),
-          label: wagerLabel(o, view.myScore, L),
+          label: wagerLabel(o, L),
         }))}
         selectedId={selected ? String(selected.percent) : null}
         disabled={customPlaced !== null}
@@ -204,7 +210,8 @@ export function Controller({
             />
           ) : null
         }
-        className={potAmount !== null ? styles.placed : undefined}
+        // I-550 (the owner's note): the bet page is laid out to fit — presets two by two
+        className={`${styles.wagerScreen} ${potAmount !== null ? styles.placed : ''}`}
       />
     );
   }

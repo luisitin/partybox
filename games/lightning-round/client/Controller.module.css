@@ -278,3 +278,118 @@
   color: var(--pb-accent-2);
   font-variant-numeric: tabular-nums;
 }
+
+/* ── I-550 (the owner's note: the bet page was "a bit cramped and visually unappealing" — on an
+   SE one preset showed, the rest sat under the ▾ behind a half-screen custom row). The presets go
+   two by two, amount over share with the chips beside it; an odd one out (the 0 of five, or a
+   lone 0) spans the row on one line; the open custom row is one line. */
+.wagerScreen [role='radiogroup'] {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--pb-space-2);
+  align-content: start;
+}
+.wagerScreen [role='radio'] {
+  position: relative;
+  grid-template-columns: minmax(0, 1fr);
+  min-height: 48px;
+  padding: var(--pb-space-2) var(--pb-space-2) var(--pb-space-2) var(--pb-space-3);
+}
+/* the ✓ of a taken stake sits in the tile's corner, so the row's width goes to amount and chips
+   and nothing shifts when it lands */
+.wagerScreen [role='radio'] > span[aria-hidden] {
+  position: absolute;
+  right: var(--pb-space-2);
+  bottom: var(--pb-space-1);
+}
+.wagerScreen [role='radio'] .wagerRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: 'amount chips' 'pct pct';
+  align-items: center;
+  column-gap: var(--pb-space-2);
+}
+.wagerScreen [role='radio'] .amount {
+  grid-area: amount;
+  font-size: var(--pb-font-h2);
+  white-space: nowrap;
+}
+.wagerScreen [role='radio'] .chips {
+  grid-area: chips;
+  margin-right: 0;
+}
+/* in a tile the stack is smaller: four chips fit beside a four-digit amount on a 320 px phone */
+.wagerScreen [role='radio'] .chip {
+  width: 16px;
+  height: 16px;
+  margin-left: -6px;
+  border-width: 2px;
+}
+.wagerScreen [role='radio'] .chip:first-child {
+  margin-left: 0;
+}
+.wagerScreen [role='radio'] .pct {
+  grid-area: pct;
+}
+.wagerPrompt {
+  display: block;
+}
+.wagerScreen [role='radio']:first-child:nth-last-child(odd) {
+  grid-column: 1 / -1;
+}
+.wagerScreen [role='radio']:first-child:nth-last-child(odd) .wagerRow {
+  grid-template-columns: auto auto minmax(0, 1fr);
+  grid-template-areas: 'chips amount pct';
+}
+.customOpen {
+  flex-direction: row;
+  flex-wrap: wrap; /* at 200 % text the form drops under "Custom" instead of crushing the field */
+  align-items: center;
+  gap: var(--pb-space-2);
+  padding: var(--pb-space-2);
+}
+.customOpen .customForm {
+  flex: 1 1 0;
+}
+.customOpen .customInput {
+  min-width: 3.2em;
+  padding: 0 var(--pb-space-2);
+  font-size: var(--pb-font-body);
+}
+.customOpen .customInput::placeholder {
+  font-size: var(--pb-font-caption);
+}
+.customOpen .unit {
+  min-width: 44px;
+}
+/* never narrower than its word: a crushed row wraps instead of clipping "Place" */
+.customOpen .place {
+  min-width: max-content;
+  padding: 0 var(--pb-space-2);
+}
+.customLead {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.customLead .amount {
+  font-size: var(--pb-font-h2);
+  line-height: 1;
+}
+
+/* A short phone (a 568 px SE): the head tightens so the presets and the custom row share one look. */
+@media (max-height: 600px) {
+  .wagerScreen > div:first-child {
+    gap: var(--pb-space-2);
+    padding-block: var(--pb-space-2);
+  }
+  .wagerScreen [role='radio'] {
+    padding-block: 6px;
+  }
+  .wagerScreen .rule {
+    margin-top: var(--pb-space-1);
+  }
+  .wagerPrompt {
+    font-size: var(--pb-font-body);
+  }
+}

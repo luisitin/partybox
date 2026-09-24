@@ -42,8 +42,7 @@ export const SCREENS_ES: Readonly<Record<string, string>> = {
   'Right answer: +wager. Wrong or no answer: −wager.':
     'Acierto: +apuesta. Fallo o sin respuesta: −apuesta.',
   'nothing at stake': 'nada en juego',
-  'All in · 100 %': 'Con todo · 100 %',
-  '{percent} % of your {score}': '{percent} % de tus {score}',
+  'All in': 'Con todo',
   'Your bet: {amount}': 'Tu apuesta: {amount}',
   'right +{amount} · wrong −{amount}': 'acierto +{amount} · fallo −{amount}',
   'Nothing riding on this one — play for pride': 'Sin apuesta: juega por orgullo',
@@ -111,4 +110,6 @@ export const SCREENS_ES: Readonly<Record<string, string>> = {
   'Moving on…': 'Avanzando…',
   // I-288 B
   '+{points} now': '+{points} ahora',
+  // I-550 A
+  'Final question: {topic}': 'Pregunta final: {topic}',
 };
