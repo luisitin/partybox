@@ -3,6 +3,7 @@ import type { GameClientModule } from '@partybox/game-sdk';
 import { clientModule as bingo } from '../../../games/bingo/client/index';
 import { clientModule as blanks } from '../../../games/blanks/client/index';
 import { clientModule as brokenPencil } from '../../../games/broken-pencil/client/index';
+import { clientModule as fakeOut } from '../../../games/fake-out/client/index';
 import { clientModule as lightningRound } from '../../../games/lightning-round/client/index';
 import { clientModule as wisecrack } from '../../../games/wisecrack/client/index';
 
@@ -10,6 +11,7 @@ export const clientGames: Readonly<Record<string, GameClientModule>> = {
   'bingo': bingo,
   'blanks': blanks,
   'broken-pencil': brokenPencil,
+  'fake-out': fakeOut,
   'lightning-round': lightningRound,
   'wisecrack': wisecrack,
 };

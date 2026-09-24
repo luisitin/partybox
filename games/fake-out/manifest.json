@@ -1,0 +1,110 @@
+{
+  "id": "fake-out",
+  "name": "Fake-Out",
+  "tagline": "Write a fake answer. Find the real one.",
+  "description": "A strange true fact appears with a blank. Everyone types a fake answer that sounds real, then all the answers are mixed with the truth and everyone picks the one they believe. Score for finding the truth and for every player your fake fools. The last question is worth double.",
+  "version": "0.1.0",
+  "minPlayers": 2,
+  "maxPlayers": 12,
+  "estimatedMinutes": 12,
+  "tags": ["bluff", "trivia", "comedy"],
+  "settings": [
+    {
+      "key": "questions",
+      "label": "Questions",
+      "description": "How many facts to play; the last one is the Final Fake-Out",
+      "type": "number",
+      "default": 7,
+      "min": 3,
+      "max": 10,
+      "step": 1
+    },
+    {
+      "key": "lieSeconds",
+      "label": "Lying time",
+      "description": "Seconds to write a fake answer",
+      "type": "number",
+      "default": 45,
+      "min": 30,
+      "max": 75,
+      "step": 5
+    },
+    {
+      "key": "pickSeconds",
+      "label": "Picking time",
+      "description": "Seconds to pick the answer you believe",
+      "type": "number",
+      "default": 25,
+      "min": 15,
+      "max": 40,
+      "step": 5
+    },
+    {
+      "key": "finalDouble",
+      "label": "Final Fake-Out",
+      "description": "The last question doubles all points",
+      "type": "boolean",
+      "default": true
+    },
+    {
+      "key": "suggestions",
+      "label": "Suggest a lie",
+      "description": "Show the 💡 button that offers two ready-made fakes",
+      "type": "boolean",
+      "default": true
+    },
+    {
+      "key": "likes",
+      "label": "Likes",
+      "description": "Let players 👍 the funniest answers while they pick",
+      "type": "boolean",
+      "default": true
+    },
+    {
+      "key": "categories",
+      "label": "Categories",
+      "description": "Tick the categories to play; nothing ticked plays them all",
+      "type": "multiselect",
+      "default": "",
+      "options": [
+        { "value": "animals", "label": "Animals" },
+        { "value": "history", "label": "History" },
+        { "value": "food", "label": "Food" },
+        { "value": "science", "label": "Science" },
+        { "value": "geography", "label": "Geography" },
+        { "value": "weird-laws", "label": "Weird laws" },
+        { "value": "sports", "label": "Sports" },
+        { "value": "inventions", "label": "Inventions" },
+        { "value": "space", "label": "Space" },
+        { "value": "body", "label": "The human body" },
+        { "value": "words", "label": "Words" },
+        { "value": "holidays", "label": "Holidays" },
+        { "value": "drinking", "label": "Drinking (spicy)" },
+        { "value": "dating", "label": "Dating (spicy)" }
+      ]
+    },
+    {
+      "key": "spicy",
+      "label": "Spicy facts",
+      "description": "Mix in adult facts (drinking, dating, bawdy history; never explicit)",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "key": "reader",
+      "label": "Reader",
+      "description": "The voice that reads each fact and answer aloud",
+      "type": "select",
+      "default": "fable",
+      "options": [
+        { "value": "none", "label": "No reader" },
+        { "value": "george", "label": "Old British Man" },
+        { "value": "fable", "label": "Young British Man" },
+        { "value": "jessica", "label": "American Woman" },
+        { "value": "sky", "label": "Soft-Spoken Woman" },
+        { "value": "original", "label": "Original" }
+      ]
+    }
+  ],
+  "supportsBots": true
+}

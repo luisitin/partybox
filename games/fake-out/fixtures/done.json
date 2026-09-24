@@ -1,0 +1,551 @@
+{
+  "phase": {
+    "id": "done",
+    "startedAt": 1700000310104,
+    "deadline": null
+  },
+  "rng": {
+    "seed": 1,
+    "step": 332
+  },
+  "players": {
+    "p1": {
+      "id": "p1",
+      "name": "Player 1",
+      "avatarId": "fox",
+      "connected": true
+    },
+    "p2": {
+      "id": "p2",
+      "name": "Player 2",
+      "avatarId": "owl",
+      "connected": true
+    },
+    "p3": {
+      "id": "p3",
+      "name": "Player 3",
+      "avatarId": "frog",
+      "connected": true
+    },
+    "p4": {
+      "id": "p4",
+      "name": "Player 4",
+      "avatarId": "cat",
+      "connected": true
+    }
+  },
+  "cfg": {
+    "questions": 7,
+    "lieSeconds": 45,
+    "pickSeconds": 25,
+    "finalDouble": true,
+    "suggestions": true,
+    "likes": true,
+    "categories": [],
+    "spicy": false,
+    "reader": "fable"
+  },
+  "seats": ["p1", "p2", "p3", "p4"],
+  "left": [],
+  "questions": [
+    {
+      "id": "fo-holidays-006",
+      "category": "holidays",
+      "kind": "food",
+      "fact": "At Cooper's Hill in England, racers chase a rolling wheel of ___ down a steep slope.",
+      "truth": {
+        "answer": "cheese",
+        "accept": [
+          "cheeses",
+          "chese",
+          "cheeze",
+          "double gloucester",
+          "double gloucester cheese",
+          "cheese wheel"
+        ],
+        "reject": []
+      },
+      "houseLies": ["pie", "ham", "butter", "cake", "pudding", "sausage", "hay", "gingerbread"],
+      "source": "Wikipedia: Cooper's Hill Cheese-Rolling and Wake",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-words-003",
+      "category": "words",
+      "kind": "activity",
+      "fact": "The word 'robot' comes from a Czech word meaning forced ___.",
+      "truth": {
+        "answer": "labor",
+        "accept": [
+          "labour",
+          "work",
+          "drudgery",
+          "hard work",
+          "labor work",
+          "laboring",
+          "compulsory service"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "obedience",
+        "silence",
+        "march",
+        "smile",
+        "metal",
+        "thinking",
+        "dancing",
+        "friendship"
+      ],
+      "source": "Etymonline: robot (https://www.etymonline.com/word/robot)",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-animals-006",
+      "category": "animals",
+      "kind": "substance",
+      "fact": "The snap of a pistol shrimp makes a bubble that gives off a tiny flash of ___.",
+      "truth": {
+        "answer": "light",
+        "accept": ["lights", "lite", "ligth", "lght", "sonoluminescence", "shrimpoluminescence"],
+        "reject": []
+      },
+      "houseLies": [
+        "electricity",
+        "smoke",
+        "steam",
+        "ink",
+        "static",
+        "radio waves",
+        "glitter",
+        "fog"
+      ],
+      "source": "Wikipedia: Alpheidae",
+      "verified": true
+    },
+    {
+      "id": "fo-science-002",
+      "category": "science",
+      "kind": "place",
+      "fact": "Helium was spotted on the ___ decades before anyone found it on Earth.",
+      "truth": {
+        "answer": "sun",
+        "accept": ["the sun", "sol", "suns", "solar", "sunn", "our sun", "sunlight"],
+        "reject": []
+      },
+      "houseLies": [
+        "moon",
+        "mars",
+        "saturn",
+        "jupiter",
+        "north pole",
+        "venus",
+        "halley's comet",
+        "milky way"
+      ],
+      "source": "Wikipedia: Helium",
+      "verified": true
+    },
+    {
+      "id": "fo-science-004",
+      "category": "science",
+      "kind": "substance",
+      "fact": "Silly Putty was invented during World War II by scientists trying to make fake ___.",
+      "truth": {
+        "answer": "rubber",
+        "accept": [
+          "synthetic rubber",
+          "artificial rubber",
+          "rubbers",
+          "ruber",
+          "rubbber",
+          "substitute rubber"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "glue",
+        "chewing gum",
+        "plastic",
+        "leather",
+        "silk",
+        "toothpaste",
+        "explosives",
+        "bandages"
+      ],
+      "source": "Wikipedia: Silly Putty",
+      "verified": true
+    },
+    {
+      "id": "fo-history-015",
+      "category": "history",
+      "kind": "animal",
+      "fact": "Banned from keeping a dog at Cambridge, the poet Lord Byron kept a tame ___ instead.",
+      "truth": {
+        "answer": "bear",
+        "accept": ["bears", "brown bear", "tame bear", "bear cub", "baer", "bare"],
+        "reject": []
+      },
+      "houseLies": ["fox", "badger", "monkey", "goat", "wolf", "parrot", "raccoon", "pig"],
+      "source": "University of Cambridge: Lord Byron and the bears beneath Cambridge (cam.ac.uk/research/news/lord-byron-and-the-bears-beneath-cambridge)",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-weird-laws-008",
+      "category": "weird-laws",
+      "kind": "other",
+      "fact": "A 2002 law in Turkmenistan renamed the month of ___ after the president's mother.",
+      "truth": {
+        "answer": "april",
+        "accept": ["apr", "aprill", "apirl", "aprl", "fourth month", "4th month"],
+        "reject": []
+      },
+      "houseLies": [
+        "may",
+        "march",
+        "june",
+        "october",
+        "december",
+        "august",
+        "february",
+        "september"
+      ],
+      "source": "Wikipedia: Renaming of Turkmen months and days of week",
+      "verified": true,
+      "hardWords": ["Turkmenistan"]
+    },
+    {
+      "id": "fo-words-002",
+      "category": "words",
+      "kind": "word",
+      "fact": "When it first appeared in English, the word 'nice' meant ___.",
+      "truth": {
+        "answer": "foolish",
+        "accept": [
+          "silly",
+          "stupid",
+          "ignorant",
+          "senseless",
+          "frivolous",
+          "dumb",
+          "foolsh",
+          "fool"
+        ],
+        "reject": []
+      },
+      "houseLies": ["shiny", "rich", "holy", "sleepy", "tiny", "cold", "brave", "sweet"],
+      "source": "Etymonline: nice (https://www.etymonline.com/word/nice)",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-animals-003",
+      "category": "animals",
+      "kind": "animal",
+      "fact": "Koala fingerprints look so much like ___ fingerprints that experts struggle to tell them apart.",
+      "truth": {
+        "answer": "human",
+        "accept": [
+          "humans",
+          "human's",
+          "humans'",
+          "people",
+          "people's",
+          "person",
+          "hooman",
+          "humen"
+        ],
+        "reject": []
+      },
+      "houseLies": ["dog", "cat", "kangaroo", "raccoon", "bear", "squirrel", "panda", "owl"],
+      "source": "PBS NOVA: Koalas have fingerprints almost identical to ours (https://www.pbs.org/wgbh/nova/article/koala-fingerprints/)",
+      "verified": true
+    }
+  ],
+  "q": {
+    "n": 7,
+    "final": true,
+    "item": {
+      "id": "fo-weird-laws-008",
+      "category": "weird-laws",
+      "kind": "other",
+      "fact": "A 2002 law in Turkmenistan renamed the month of ___ after the president's mother.",
+      "truth": {
+        "answer": "april",
+        "accept": ["apr", "aprill", "apirl", "aprl", "fourth month", "4th month"],
+        "reject": []
+      },
+      "houseLies": [
+        "may",
+        "march",
+        "june",
+        "october",
+        "december",
+        "august",
+        "february",
+        "september"
+      ],
+      "source": "Wikipedia: Renaming of Turkmen months and days of week",
+      "verified": true,
+      "hardWords": ["Turkmenistan"]
+    },
+    "lies": {
+      "p1": "may",
+      "p2": "june",
+      "p4": "september",
+      "p3": "october"
+    },
+    "truthTyped": [],
+    "rejected": {},
+    "suggestions": {
+      "p1": ["august", "may"],
+      "p3": ["february", "october"],
+      "p4": ["september", "december"],
+      "p2": ["march", "june"]
+    },
+    "claimed": ["august", "may", "february", "october", "september", "december", "march", "june"],
+    "options": [
+      {
+        "display": "April",
+        "authors": [],
+        "house": false,
+        "truth": true,
+        "id": "o37"
+      },
+      {
+        "display": "September",
+        "authors": ["p4"],
+        "house": false,
+        "truth": false,
+        "id": "o32"
+      },
+      {
+        "display": "June",
+        "authors": ["p2"],
+        "house": false,
+        "truth": false,
+        "id": "o16"
+      },
+      {
+        "display": "May",
+        "authors": ["p1"],
+        "house": false,
+        "truth": false,
+        "id": "o72"
+      },
+      {
+        "display": "October",
+        "authors": ["p3"],
+        "house": false,
+        "truth": false,
+        "id": "o36"
+      }
+    ],
+    "picks": {
+      "p2": "o32",
+      "p3": "o37",
+      "p4": "o16",
+      "p1": "o16"
+    },
+    "likes": {},
+    "revealOrder": ["o32", "o16", "o37"],
+    "step": 4,
+    "stepAt": 1700000302604,
+    "delta": {
+      "p3": {
+        "pts": 2000,
+        "why": [
+          {
+            "k": "truth",
+            "pts": 2000
+          },
+          {
+            "k": "final"
+          }
+        ]
+      },
+      "p4": {
+        "pts": 1000,
+        "why": [
+          {
+            "k": "fooled",
+            "n": 1,
+            "pts": 1000
+          },
+          {
+            "k": "final"
+          }
+        ]
+      },
+      "p2": {
+        "pts": 2000,
+        "why": [
+          {
+            "k": "fooled",
+            "n": 2,
+            "pts": 2000
+          },
+          {
+            "k": "final"
+          }
+        ]
+      }
+    }
+  },
+  "scores": {
+    "p1": 3500,
+    "p2": 4500,
+    "p3": 8000,
+    "p4": 4500
+  },
+  "stats": {
+    "p1": {
+      "fooled": 3,
+      "truths": 2,
+      "likes": 4,
+      "truthTyped": 0,
+      "house": 0
+    },
+    "p2": {
+      "fooled": 5,
+      "truths": 1,
+      "likes": 1,
+      "truthTyped": 0,
+      "house": 0
+    },
+    "p3": {
+      "fooled": 8,
+      "truths": 3,
+      "likes": 1,
+      "truthTyped": 0,
+      "house": 0
+    },
+    "p4": {
+      "fooled": 4,
+      "truths": 2,
+      "likes": 6,
+      "truthTyped": 0,
+      "house": 0
+    }
+  },
+  "offered": {
+    "p4": [
+      "sausage",
+      "gingerbread",
+      "metal",
+      "march",
+      "glitter",
+      "fog",
+      "mars",
+      "venus",
+      "glue",
+      "explosives",
+      "wolf",
+      "monkey",
+      "september",
+      "december"
+    ],
+    "p1": [
+      "cake",
+      "butter",
+      "dancing",
+      "silence",
+      "smoke",
+      "static",
+      "moon",
+      "halley's comet",
+      "toothpaste",
+      "chewing gum",
+      "parrot",
+      "goat",
+      "august",
+      "may"
+    ],
+    "p3": [
+      "pie",
+      "pudding",
+      "friendship",
+      "obedience",
+      "radio waves",
+      "ink",
+      "milky way",
+      "saturn",
+      "plastic",
+      "silk",
+      "fox",
+      "badger",
+      "february",
+      "october"
+    ],
+    "p2": [
+      "ham",
+      "hay",
+      "smile",
+      "thinking",
+      "steam",
+      "electricity",
+      "north pole",
+      "jupiter",
+      "leather",
+      "bandages",
+      "pig",
+      "raccoon",
+      "march",
+      "june"
+    ]
+  },
+  "speechMs": {
+    "fo6ravkm1mgmjz4": -1,
+    "fop7u2lwgkg8ns": -1,
+    "fo15kn60jo02tcj": -1,
+    "foekfd4q2wv2pw": -1,
+    "fon8vu4x12w2hd": -1,
+    "fohpu0kc1trpm5c": -1,
+    "forkrictnkdvrr": -1,
+    "fovuzul61ry42eg": -1,
+    "fo1wzm638touyq": -1,
+    "fo1nle5w3iqaez1": -1,
+    "fo1bqx8bk15hpdw4": -1,
+    "fo1h0bcce1yzde94": -1,
+    "fo1qc4o36qknpug": -1,
+    "fo16r75ia707z9k": -1,
+    "fo3sbbpj1ihvh99": -1,
+    "fo5lq8oqlnrn6i": -1,
+    "fobdtcja4dline": -1,
+    "fo1wp6j0d1dwk9o7": -1,
+    "fo14l5ibi329zfg": -1,
+    "fo14hmfvp1safdzz": -1,
+    "fo18aqhjpo30j5x": -1,
+    "fo1nxrr8ql6zst6": -1,
+    "foqje2bd1k1dhd7": -1,
+    "fo6hqs751833k15": -1,
+    "fohxhu9s1s5ov98": -1,
+    "fo188b65d1i1ipdn": -1,
+    "forpa5j1afmz0z": -1,
+    "fo14d33i1em5r6s": -1,
+    "fo19mbuzhbjgncr": -1,
+    "fog4ocip1yavh9d": -1,
+    "fo1718slx1syvbh7": -1,
+    "fo1ql1yrd1lp7b63": -1,
+    "fowbucq81d735m4": -1,
+    "fo1gbeljlz565xv": -1,
+    "fopo8v27pu13qx": -1,
+    "fob8wd2b1smjp4v": -1,
+    "fo1vnwznj9uarc5": -1,
+    "fo1l7mjfhf9eiq1": -1,
+    "fo9yjr221bvsqlq": -1,
+    "fo1mzzecc8ouy00": -1,
+    "fol7l7mt14nutzh": -1,
+    "fot2c6vppj4krl": -1,
+    "foloa8lc1ozan5c": -1,
+    "fo16ttac2bqddwy": -1,
+    "fo1mfwe6v8recwr": -1,
+    "foi0xexirj0dms": -1,
+    "fo1up2kb5yrxuwh": -1,
+    "fo1ekuaai1vc8gd2": -1,
+    "foe1rn4e1wx9sqg": -1
+  }
+}

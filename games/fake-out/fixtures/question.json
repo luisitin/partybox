@@ -1,0 +1,344 @@
+{
+  "phase": {
+    "id": "question",
+    "startedAt": 1700000008000,
+    "deadline": 1700000020000
+  },
+  "rng": {
+    "seed": 1,
+    "step": 157
+  },
+  "players": {
+    "p1": {
+      "id": "p1",
+      "name": "Player 1",
+      "avatarId": "fox",
+      "connected": true
+    },
+    "p2": {
+      "id": "p2",
+      "name": "Player 2",
+      "avatarId": "owl",
+      "connected": true
+    },
+    "p3": {
+      "id": "p3",
+      "name": "Player 3",
+      "avatarId": "frog",
+      "connected": true
+    },
+    "p4": {
+      "id": "p4",
+      "name": "Player 4",
+      "avatarId": "cat",
+      "connected": true
+    }
+  },
+  "cfg": {
+    "questions": 7,
+    "lieSeconds": 45,
+    "pickSeconds": 25,
+    "finalDouble": true,
+    "suggestions": true,
+    "likes": true,
+    "categories": [],
+    "spicy": false,
+    "reader": "fable"
+  },
+  "seats": ["p1", "p2", "p3", "p4"],
+  "left": [],
+  "questions": [
+    {
+      "id": "fo-holidays-006",
+      "category": "holidays",
+      "kind": "food",
+      "fact": "At Cooper's Hill in England, racers chase a rolling wheel of ___ down a steep slope.",
+      "truth": {
+        "answer": "cheese",
+        "accept": [
+          "cheeses",
+          "chese",
+          "cheeze",
+          "double gloucester",
+          "double gloucester cheese",
+          "cheese wheel"
+        ],
+        "reject": []
+      },
+      "houseLies": ["pie", "ham", "butter", "cake", "pudding", "sausage", "hay", "gingerbread"],
+      "source": "Wikipedia: Cooper's Hill Cheese-Rolling and Wake",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-words-003",
+      "category": "words",
+      "kind": "activity",
+      "fact": "The word 'robot' comes from a Czech word meaning forced ___.",
+      "truth": {
+        "answer": "labor",
+        "accept": [
+          "labour",
+          "work",
+          "drudgery",
+          "hard work",
+          "labor work",
+          "laboring",
+          "compulsory service"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "obedience",
+        "silence",
+        "march",
+        "smile",
+        "metal",
+        "thinking",
+        "dancing",
+        "friendship"
+      ],
+      "source": "Etymonline: robot (https://www.etymonline.com/word/robot)",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-animals-006",
+      "category": "animals",
+      "kind": "substance",
+      "fact": "The snap of a pistol shrimp makes a bubble that gives off a tiny flash of ___.",
+      "truth": {
+        "answer": "light",
+        "accept": ["lights", "lite", "ligth", "lght", "sonoluminescence", "shrimpoluminescence"],
+        "reject": []
+      },
+      "houseLies": [
+        "electricity",
+        "smoke",
+        "steam",
+        "ink",
+        "static",
+        "radio waves",
+        "glitter",
+        "fog"
+      ],
+      "source": "Wikipedia: Alpheidae",
+      "verified": true
+    },
+    {
+      "id": "fo-science-002",
+      "category": "science",
+      "kind": "place",
+      "fact": "Helium was spotted on the ___ decades before anyone found it on Earth.",
+      "truth": {
+        "answer": "sun",
+        "accept": ["the sun", "sol", "suns", "solar", "sunn", "our sun", "sunlight"],
+        "reject": []
+      },
+      "houseLies": [
+        "moon",
+        "mars",
+        "saturn",
+        "jupiter",
+        "north pole",
+        "venus",
+        "halley's comet",
+        "milky way"
+      ],
+      "source": "Wikipedia: Helium",
+      "verified": true
+    },
+    {
+      "id": "fo-science-004",
+      "category": "science",
+      "kind": "substance",
+      "fact": "Silly Putty was invented during World War II by scientists trying to make fake ___.",
+      "truth": {
+        "answer": "rubber",
+        "accept": [
+          "synthetic rubber",
+          "artificial rubber",
+          "rubbers",
+          "ruber",
+          "rubbber",
+          "substitute rubber"
+        ],
+        "reject": []
+      },
+      "houseLies": [
+        "glue",
+        "chewing gum",
+        "plastic",
+        "leather",
+        "silk",
+        "toothpaste",
+        "explosives",
+        "bandages"
+      ],
+      "source": "Wikipedia: Silly Putty",
+      "verified": true
+    },
+    {
+      "id": "fo-history-015",
+      "category": "history",
+      "kind": "animal",
+      "fact": "Banned from keeping a dog at Cambridge, the poet Lord Byron kept a tame ___ instead.",
+      "truth": {
+        "answer": "bear",
+        "accept": ["bears", "brown bear", "tame bear", "bear cub", "baer", "bare"],
+        "reject": []
+      },
+      "houseLies": ["fox", "badger", "monkey", "goat", "wolf", "parrot", "raccoon", "pig"],
+      "source": "University of Cambridge: Lord Byron and the bears beneath Cambridge (cam.ac.uk/research/news/lord-byron-and-the-bears-beneath-cambridge)",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-weird-laws-008",
+      "category": "weird-laws",
+      "kind": "other",
+      "fact": "A 2002 law in Turkmenistan renamed the month of ___ after the president's mother.",
+      "truth": {
+        "answer": "april",
+        "accept": ["apr", "aprill", "apirl", "aprl", "fourth month", "4th month"],
+        "reject": []
+      },
+      "houseLies": [
+        "may",
+        "march",
+        "june",
+        "october",
+        "december",
+        "august",
+        "february",
+        "september"
+      ],
+      "source": "Wikipedia: Renaming of Turkmen months and days of week",
+      "verified": true,
+      "hardWords": ["Turkmenistan"]
+    },
+    {
+      "id": "fo-words-002",
+      "category": "words",
+      "kind": "word",
+      "fact": "When it first appeared in English, the word 'nice' meant ___.",
+      "truth": {
+        "answer": "foolish",
+        "accept": [
+          "silly",
+          "stupid",
+          "ignorant",
+          "senseless",
+          "frivolous",
+          "dumb",
+          "foolsh",
+          "fool"
+        ],
+        "reject": []
+      },
+      "houseLies": ["shiny", "rich", "holy", "sleepy", "tiny", "cold", "brave", "sweet"],
+      "source": "Etymonline: nice (https://www.etymonline.com/word/nice)",
+      "verified": true,
+      "hardWords": []
+    },
+    {
+      "id": "fo-animals-003",
+      "category": "animals",
+      "kind": "animal",
+      "fact": "Koala fingerprints look so much like ___ fingerprints that experts struggle to tell them apart.",
+      "truth": {
+        "answer": "human",
+        "accept": [
+          "humans",
+          "human's",
+          "humans'",
+          "people",
+          "people's",
+          "person",
+          "hooman",
+          "humen"
+        ],
+        "reject": []
+      },
+      "houseLies": ["dog", "cat", "kangaroo", "raccoon", "bear", "squirrel", "panda", "owl"],
+      "source": "PBS NOVA: Koalas have fingerprints almost identical to ours (https://www.pbs.org/wgbh/nova/article/koala-fingerprints/)",
+      "verified": true
+    }
+  ],
+  "q": {
+    "n": 1,
+    "final": false,
+    "item": {
+      "id": "fo-holidays-006",
+      "category": "holidays",
+      "kind": "food",
+      "fact": "At Cooper's Hill in England, racers chase a rolling wheel of ___ down a steep slope.",
+      "truth": {
+        "answer": "cheese",
+        "accept": [
+          "cheeses",
+          "chese",
+          "cheeze",
+          "double gloucester",
+          "double gloucester cheese",
+          "cheese wheel"
+        ],
+        "reject": []
+      },
+      "houseLies": ["pie", "ham", "butter", "cake", "pudding", "sausage", "hay", "gingerbread"],
+      "source": "Wikipedia: Cooper's Hill Cheese-Rolling and Wake",
+      "verified": true,
+      "hardWords": []
+    },
+    "lies": {},
+    "truthTyped": [],
+    "rejected": {},
+    "suggestions": {},
+    "claimed": [],
+    "options": null,
+    "picks": {},
+    "likes": {},
+    "revealOrder": [],
+    "step": 0,
+    "stepAt": 0,
+    "delta": {}
+  },
+  "scores": {
+    "p1": 0,
+    "p2": 0,
+    "p3": 0,
+    "p4": 0
+  },
+  "stats": {
+    "p1": {
+      "fooled": 0,
+      "truths": 0,
+      "likes": 0,
+      "truthTyped": 0,
+      "house": 0
+    },
+    "p2": {
+      "fooled": 0,
+      "truths": 0,
+      "likes": 0,
+      "truthTyped": 0,
+      "house": 0
+    },
+    "p3": {
+      "fooled": 0,
+      "truths": 0,
+      "likes": 0,
+      "truthTyped": 0,
+      "house": 0
+    },
+    "p4": {
+      "fooled": 0,
+      "truths": 0,
+      "likes": 0,
+      "truthTyped": 0,
+      "house": 0
+    }
+  },
+  "offered": {},
+  "speechMs": {}
+}
