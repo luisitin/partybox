@@ -122,6 +122,7 @@ function resume(room: RoomState, player: RoomPlayer, now: number, deps: EngineDe
   const updated: RoomPlayer = { ...player, connected: true, disconnectedAt: null };
   const next: RoomState = { ...room, players: { ...room.players, [player.id]: updated } };
   const game = notifyGame(next, player.id, true, now, deps);
+  // I-347 C: no toast here — the phone's "Take it back" pill says who took over
   return {
     room: game.room,
     effects: [{ type: 'welcome', playerId: player.id }, ...game.effects, { type: 'push' }],
@@ -212,10 +213,16 @@ export function expirePlayers(room: RoomState, now: number, deps: EngineDeps): A
       const r = removePlayer(next, p.id, now, deps, 'left');
       next = r.room;
       effects.push(...r.effects);
-    } else if (p.isVip && now - p.disconnectedAt >= LIMITS.vipHandoverMs) {
+    } else if (
+      p.isVip &&
+      now - p.disconnectedAt >= LIMITS.vipHandoverMs &&
+      // I-347 B: only a game waits on the VIP; the lobby, the picker and the results have the TV
+      next.status === 'playing'
+    ) {
       const r = promoteVip(next, now);
       if (r.room !== next) {
-        next = r.room;
+        // I-347 A: remember whose role it was, so their phone can be told when it is back
+        next = { ...r.room, formerVip: p.id };
         effects.push(...r.effects, { type: 'push' });
       }
     }

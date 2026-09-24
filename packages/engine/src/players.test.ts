@@ -141,7 +141,8 @@ describe('disconnect / leave / expiry', () => {
   });
 
   it('VIP handover after 30 s, never back automatically; removal after 120 s', () => {
-    let room = roomWith(3);
+    // I-347 B: the handover is a game rule — only a game waits on the VIP
+    let room: ReturnType<typeof roomWith> = { ...roomWith(3), status: 'playing' };
     room = applyRoomEvent(room, { type: 'disconnect', now: T0 + 10, playerId: 'p1' }, deps).room;
     const early = applyRoomEvent(
       room,

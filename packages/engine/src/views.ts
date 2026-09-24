@@ -86,6 +86,7 @@ export function snapshot(room: RoomState, deps: EngineDeps): RoomSnapshot {
           })),
         }
       : {}),
+    ...(room.formerVip ? { formerVip: room.formerVip } : {}),
   };
 }
 
