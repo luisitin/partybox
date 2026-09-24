@@ -485,3 +485,11 @@
 .crowdFace:first-child {
   margin-left: 0;
 }
+
+/* ── I-550 A: the final's topic under "Place your wagers". */
+.finalTopic {
+  margin: 0;
+  color: var(--pb-accent-2);
+  font-size: var(--pb-font-h2);
+  font-weight: 800;
+}

@@ -268,3 +268,58 @@
 .roomScore {
   color: var(--pb-text);
 }
+
+/* ── I-248: the wager screen fits five presets above Custom on an SE. */
+.wagerScreen p:has(> .rule) {
+  font-size: var(--pb-font-body);
+}
+.wagerScreen .rule {
+  margin-top: 2px;
+}
+.wagerScreen [role='radio'] {
+  flex: 0 0 auto;
+  min-height: 0;
+  max-height: none;
+  padding: 6px var(--pb-space-3);
+}
+.wagerScreen .amount {
+  font-size: var(--pb-font-h2);
+  white-space: nowrap;
+}
+.wagerScreen .pct {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── I-248 A: the presets in two columns, "All in" across the last row; the caption under the amount. */
+.wagerScreen [role='radiogroup'] {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--pb-space-2);
+}
+.wagerScreen [role='radio']:last-child {
+  grid-column: 1 / -1;
+}
+.wagerScreen .wagerRow {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  column-gap: var(--pb-space-2);
+}
+.wagerScreen .wagerRow .pct {
+  grid-column: 1 / -1;
+}
+
+/* ── I-550 C: the Custom row fits — the placeholder at body size, a slimmer box, no cut "1–10(". */
+.wagerScreen .custom {
+  padding: var(--pb-space-2) var(--pb-space-3);
+}
+.wagerScreen .customInput {
+  padding: 0 var(--pb-space-2);
+  font-size: var(--pb-font-body);
+}
+.wagerScreen .customInput::placeholder {
+  font-size: var(--pb-font-body);
+}

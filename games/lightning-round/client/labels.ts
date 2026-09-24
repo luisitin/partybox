@@ -28,7 +28,11 @@ export function difficultyText(difficulty: string, L: Translator): string {
 }
 
 /** "Sports · Basketball · hard" — the TV's header line over a question. */
-export function topicLine(question: QuestionView, L: Translator): string {
+// I-550: a topic alone (the final's, on the wager screens) reads the same way
+export function topicLine(
+  question: Pick<QuestionView, 'categoryLabel' | 'subcategoryLabel' | 'difficulty'>,
+  L: Translator,
+): string {
   return [
     L.sent(question.categoryLabel),
     L.sent(question.subcategoryLabel),

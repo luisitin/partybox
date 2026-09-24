@@ -4,7 +4,7 @@ import type { CSSProperties, JSX } from 'react';
 import { BigText, Scoreboard, Stage, useT } from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
 import type { LightningTvView } from '../server/index';
-import { drawText } from './labels';
+import { topicLine, drawText } from './labels';
 import { STRINGS } from './strings';
 import { FinalReveal } from './TvFinal';
 import { AnswerCard, RevealRows, RoundHeader, TvQuestion } from './TvQuestion';
@@ -100,6 +100,12 @@ export function Tv({ view }: GameTvProps<LightningTvView>): JSX.Element {
           </span>
         </div>
         <BigText level="h2">{L('Place your wagers')}</BigText>
+        {/* I-550 A: the bet is on a topic the room can see */}
+        {view.finalTopic ? (
+          <p className={styles.finalTopic}>
+            {L('Final question: {topic}', { topic: topicLine(view.finalTopic, L) })}
+          </p>
+        ) : null}
         <p className={`pb-muted pb-caption ${styles.rules}`}>
           {L('Right answer wins the bet · wrong answer loses it')}
           {gap > 0 ? ` · ${L('{name} leads by {gap}', { name: standings[0]!.name, gap })}` : ''}

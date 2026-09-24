@@ -16,7 +16,7 @@ import type { Input } from '../server/types';
 import { Outcome, RoomRows, Stake, wagerLabel } from './ControllerBits';
 import { CustomStake } from './CustomStake';
 import styles from './Controller.module.css';
-import { pointsText, roundLabel } from './labels';
+import { topicLine, pointsText, roundLabel } from './labels';
 import { STRINGS } from './strings';
 import { FINAL_REVEAL_HOLD_MS, REVEAL_BEAT_MS } from './timing';
 
@@ -145,7 +145,11 @@ export function Controller({
         letters={false}
         tone="final"
         promptKey="wager"
-        kicker={L('Final question next')}
+        kicker={
+          view.finalTopic
+            ? L('Final question: {topic}', { topic: topicLine(view.finalTopic, L) }) // I-550 A
+            : L('Final question next')
+        }
         prompt={
           <>
             {/* I-026 B: once placed, the prompt is the pot. */}
@@ -187,7 +191,8 @@ export function Controller({
             />
           ) : null
         }
-        className={potAmount !== null ? styles.placed : undefined}
+        // I-248: all five presets above Custom — "All in" never below the fold
+        className={`${styles.wagerScreen} ${potAmount !== null ? styles.placed : ''}`}
       />
     );
   }
