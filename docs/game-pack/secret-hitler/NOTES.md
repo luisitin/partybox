@@ -1,0 +1,76 @@
+# Secret Hitler — build notes
+
+Branch `game/secret-hitler` (off main `fa3e9996`), worktree `C:/dev/partybox-game-secret-hitler`,
+harness port 42410.
+
+## Status
+
+| Milestone                       | State                                                                                                                                                                                                                            |
+| ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| M1 rules engine + plain screens | done: 15 phases, every R1–R22 and D1–D11 rule has a named test (81 tests), contract green (random / fast / idle / skipper × normal / relaxed / fast), sim 4,800 games clean (5–10 players × random / idle / mixed / chaos × 200) |
+| M2 Parliament Noir              | not started                                                                                                                                                                                                                      |
+| M3 variants + S1                | not started                                                                                                                                                                                                                      |
+| M4 polish                       | not started                                                                                                                                                                                                                      |
+
+## The owner's rulings on the M1 plan (2026-09-24)
+
+1. **Stand-ins** for SecretCard and FacePicker live in `games/secret-hitler/client/standin/`, with
+   the real ones' prop names; swap when Imposter's land on main.
+2. **D4 Last call = the VIP's Skip** in a choosing phase (`nominate`, `vote`, `presDraw`,
+   `chanEnact`, `vetoAsk`, `power`): the deadline becomes min(deadline, now + 10 s) and
+   `vipSkipLabel` reads "Last call"; a second Skip does nothing (`vipSkipHidden`). No new input,
+   and the TV's host bar gets it for free.
+3. **`relaxed` pace is contract-tested**, so `estimatedMinutes` is **40** (spec: 35). Worst idle
+   game: ~73 min normal, ~108 min relaxed; the budget is 3 × 40 = 120.
+4. **D7 exile after 120 s is counted by the game.** Main keeps a dropped seat for the whole game
+   (I-746 A, `engine/src/players.ts` `expirePlayers`), and sends `gone` only on leave/kick. The
+   game stores `droppedAt` and exiles on the first event at or after 120 s; every phase has a
+   deadline ≤ 135 s, so an exile lands at most one phase late.
+
+## Conflicts with main / the brief, and what was done
+
+| #   | Spec                                                | Main                                                                                                     | Done                                                                                                                                                                                                                                                             |
+| --- | --------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | §1, §13 manifest `icon`, `howToPlay`, `presence`    | not in `gameManifestSchema` on main (Foundation F2/F4, unmerged); the contract deep-equals manifest.json | left out; the credit is in `description` (§20.1's minimum), the three steps in `content/about.json`. Values ready: 🏛️; `{ needs: 'voice-if-remote' }`; `addedOn` at ship                                                                                         |
+| 2   | §14 has no input for D4                             | games only see `vip: true` on inputs                                                                     | ruling 2 above                                                                                                                                                                                                                                                   |
+| 3   | D7 "after the 120 s hold"                           | seats are held all game                                                                                  | ruling 4 above                                                                                                                                                                                                                                                   |
+| 4   | §21 "3 × 35"                                        | relaxed idle ≈ 107 min                                                                                   | ruling 3 above                                                                                                                                                                                                                                                   |
+| 5   | Ruling 20: 4 KB views, `bot.decide(controllerView)` | main's API is `sampleInput(state)`                                                                       | `sampleInput` = `decide(controllerView(state, id))`. Views measured with UUID ids, photo avatars and 12-char names at 10 players: TV 3.6 KB, phone 4.0 KB (`leaks.test.ts` pins ≤ 4096). Seat flags are a `tags` list and Record rows name seats by index to fit |
+| 6   | §4 "manhunt" is a phase                             | V8 is M3                                                                                                 | not in `phases` yet (every declared phase needs a fixture)                                                                                                                                                                                                       |
+
+## Spec errata found while building
+
+- **D7 "during `nominate` … if they were the nominee"** can't happen: `nominate` ends the moment a
+  nominee is chosen. The nominee case is handled in `vote`.
+- **D7 says nothing about the President exiled during `vote`.** Done: the candidacy passes on (no
+  tracker change), as in `nominate`.
+- **D8 with Hitler already exiled** never arises: Hitler's exile ends the game first.
+- **`claims` in M1** is the timed "Discuss" beat only; the claim builder, the Record rows' claims
+  and the ⚡ checks are M2 (§22).
+
+## Decisions (small, mine)
+
+- Chaos with a veto behind it goes to `claims`, where no power fires (the government enacted
+  nothing), then `nominate`.
+- An investigation's file reaches the President at the end of the 3 s pause (the second beat of
+  `powerReveal`, ADR-033); a VIP skip of the pause still delivers it.
+- The tracker moves at `voteReveal` entry, so the TV shows the rivet with the REJECTED line.
+- History (the Record) keeps the last 40 rows in state; views carry the last 7.
+- The card row on the phone: hold to see, slide onto a card and let go to mark it (one finger);
+  numbered "Card n" keys for keyboards and screen readers never name the card.
+
+## Stand-ins in use
+
+| Needed                               | Owner         | Stand-in                                                       |
+| ------------------------------------ | ------------- | -------------------------------------------------------------- |
+| `SecretCard`                         | Imposter      | `client/standin/SecretCard.tsx` (hold to see, no 3D)           |
+| `FacePicker`                         | Imposter      | `client/standin/FacePicker.tsx` (2/3 columns, reason captions) |
+| `toSpeakable`, clips                 | Foundation F6 | none needed in M1 (no narrator yet)                            |
+| presence (P7), PhoneStage per player | Foundation F4 | none in M1                                                     |
+
+## Left for later milestones
+
+M2: `--sh-*` tokens (S2) and fonts, the art, motion and signature moments, claims + ⚡ + the full
+Record, narrator, chat, PhoneStage, tabs. M3: power cards, toggles, presets, S1 conditional
+settings, `manhunt`. M4: bots per §16 in full + the honesty property test, presence modes, finale +
+Truth panel + recap, awards, speech lab, the full screenshot matrix.

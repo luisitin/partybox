@@ -1,0 +1,60 @@
+/* Plain policy cards (M1). Tokens only; the Parliament Noir art and --sh-* tokens arrive in M2. */
+
+.card,
+.back {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pb-space-1);
+  border-radius: var(--pb-radius);
+  border: 3px solid var(--pb-border);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  width: 5.5em;
+  height: 7.5em;
+  font-size: var(--pb-font-caption);
+  padding: var(--pb-space-1);
+  box-sizing: border-box;
+}
+
+.card[data-size='sm'] {
+  width: 3.2em;
+  height: 4.2em;
+  font-size: 0.7em;
+}
+
+.card[data-party='L'] {
+  background: var(--pb-info);
+  color: var(--pb-bg);
+  border-color: var(--pb-info);
+}
+
+.card[data-party='F'] {
+  background: var(--pb-danger);
+  color: var(--pb-bg);
+  border-color: var(--pb-danger);
+  border-style: double;
+}
+
+.card[data-marked] {
+  opacity: 0.5;
+  transform: rotate(-6deg);
+}
+
+.mark {
+  font-size: 2em;
+  line-height: 1;
+}
+
+.word {
+  font-size: 0.85em;
+}
+
+.back {
+  background: var(--pb-surface-2);
+  color: var(--pb-text-muted);
+  border-style: dashed;
+  text-align: center;
+}

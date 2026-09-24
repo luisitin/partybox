@@ -1,0 +1,216 @@
+/* Secret Hitler TV, plain for M1 (§8.1 zones, simplified). Tokens only (docs/DESIGN_SYSTEM.md). */
+
+.tv {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: var(--pb-space-4);
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pb-space-2);
+  text-align: center;
+  padding: var(--pb-space-3) var(--pb-space-5);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface);
+}
+
+.head[data-silence] {
+  border: 3px dashed var(--pb-accent-2);
+}
+
+.line {
+  font-size: var(--pb-font-body);
+  color: var(--pb-text);
+}
+
+.lastCall {
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  color: var(--pb-danger);
+}
+
+.credit,
+.muted {
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+}
+
+.main {
+  display: grid;
+  grid-template-columns: 1fr 26rem;
+  gap: var(--pb-space-5);
+  min-height: 0;
+}
+
+.boards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-3);
+  min-height: 0;
+}
+
+.track {
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-4);
+}
+
+.trackTitle {
+  width: 7em;
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--pb-text-muted);
+}
+
+.slots {
+  display: flex;
+  gap: var(--pb-space-3);
+}
+
+.slot {
+  position: relative;
+  display: flex;
+}
+
+.zone {
+  position: absolute;
+  left: calc(-1 * var(--pb-space-3));
+  top: -1.4em;
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  white-space: nowrap;
+  color: var(--pb-text-muted);
+}
+
+.zone[data-on] {
+  color: var(--pb-danger);
+}
+
+.band {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pb-space-3) var(--pb-space-6);
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text);
+}
+
+.rivets {
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: var(--pb-danger);
+}
+
+.record {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-2);
+  padding: var(--pb-space-3);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  min-height: 0;
+  overflow: hidden;
+}
+
+.rows {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-2);
+  font-family: var(--pb-font-mono);
+  font-size: calc(var(--pb-font-caption) * 0.8);
+}
+
+.seats {
+  display: flex;
+  justify-content: center;
+  gap: var(--pb-space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.seat {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pb-space-1);
+  width: 160px;
+  font-size: var(--pb-font-caption);
+}
+
+.seat[data-gone] {
+  opacity: 0.55;
+}
+
+.seatName {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 700;
+}
+
+.plate {
+  padding: 0 var(--pb-space-2);
+  border-radius: var(--pb-radius);
+  background: var(--pb-accent-2);
+  color: var(--pb-on-accent-2-fill);
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.plate[data-plate='nominee'] {
+  background: var(--pb-surface-2);
+  color: var(--pb-text);
+}
+
+.next {
+  font-weight: 800;
+  color: var(--pb-accent);
+}
+
+.tag,
+.voted {
+  color: var(--pb-text-muted);
+  text-align: center;
+  font-size: calc(var(--pb-font-caption) * 0.85);
+}
+
+.role {
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--pb-accent-2);
+}
+
+.placard {
+  position: absolute;
+  top: -2.4em;
+  padding: var(--pb-space-1) var(--pb-space-2);
+  border-radius: var(--pb-radius);
+  font-weight: 800;
+  background: var(--pb-text);
+  color: var(--pb-bg);
+}
+
+.placard[data-vote='nein'] {
+  background: var(--pb-bg);
+  color: var(--pb-text);
+  border: 2px solid var(--pb-text);
+}
+
+.arrow {
+  position: absolute;
+  right: calc(-1 * var(--pb-space-3));
+  top: 32px;
+  color: var(--pb-text-muted);
+}

@@ -4,6 +4,7 @@ import { game as bingo } from '../../../games/bingo/server/index';
 import { game as blanks } from '../../../games/blanks/server/index';
 import { game as brokenPencil } from '../../../games/broken-pencil/server/index';
 import { game as lightningRound } from '../../../games/lightning-round/server/index';
+import { game as secretHitler } from '../../../games/secret-hitler/server/index';
 import { game as wisecrack } from '../../../games/wisecrack/server/index';
 
 export const serverGames: Readonly<Record<string, AnyGameDefinition>> = {
@@ -11,5 +12,6 @@ export const serverGames: Readonly<Record<string, AnyGameDefinition>> = {
   'blanks': blanks,
   'broken-pencil': brokenPencil,
   'lightning-round': lightningRound,
+  'secret-hitler': secretHitler,
   'wisecrack': wisecrack,
 };

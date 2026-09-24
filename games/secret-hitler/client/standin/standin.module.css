@@ -1,0 +1,99 @@
+/* Stand-ins for the SDK's SecretCard + FacePicker (see the .tsx files). Tokens only. */
+
+.secret {
+  width: 100%;
+  min-height: 7rem;
+  display: grid;
+  place-items: center;
+  padding: var(--pb-space-4);
+  border: 2px dashed var(--pb-border);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface-2);
+  color: var(--pb-text);
+  font: inherit;
+  font-size: var(--pb-font-body);
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  touch-action: none;
+  cursor: pointer;
+}
+
+.secret[aria-pressed='true'] {
+  border-style: solid;
+  border-color: var(--pb-accent-2);
+  background: var(--pb-surface);
+}
+
+.back {
+  color: var(--pb-text-muted);
+  font-weight: 700;
+}
+
+.face {
+  width: 100%;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--pb-space-2);
+  width: 100%;
+}
+
+.grid[data-cols='3'] {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.grid[data-cols='1'] {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pb-space-1);
+  min-height: var(--pb-touch);
+  padding: var(--pb-space-2);
+  border: 2px solid var(--pb-border);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  color: var(--pb-text);
+  font: inherit;
+  cursor: pointer;
+}
+
+.tile[data-on] {
+  border-color: var(--pb-accent);
+  box-shadow: 0 0 0 2px var(--pb-accent);
+}
+
+.tile:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+
+.name {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+}
+
+.reason {
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+  text-align: center;
+}
+
+.check {
+  position: absolute;
+  top: var(--pb-space-1);
+  right: var(--pb-space-2);
+  color: var(--pb-accent);
+  font-weight: 800;
+}

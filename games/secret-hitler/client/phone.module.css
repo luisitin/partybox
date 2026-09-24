@@ -1,0 +1,158 @@
+/* Secret Hitler phone, plain for M1. Tokens only; fits 320×568 at 18 px body text. */
+
+.hint {
+  margin: var(--pb-space-2) 0;
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+  text-align: center;
+}
+
+.waiting {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-3);
+  width: 100%;
+}
+
+.lastCall {
+  padding: var(--pb-space-2);
+  background: var(--pb-danger);
+  color: var(--pb-bg);
+  font-weight: 800;
+  text-align: center;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-2);
+  width: 100%;
+}
+
+.dossier {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--pb-space-1) var(--pb-space-3);
+  margin: 0;
+  text-align: left;
+  font-size: var(--pb-font-caption);
+}
+
+.dossier dt {
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--pb-text-muted);
+}
+
+.dossier dd {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--pb-space-1);
+}
+
+.intel {
+  display: block;
+  width: 100%;
+}
+
+.placards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--pb-space-3);
+  width: 100%;
+}
+
+.placard {
+  min-height: 12.5rem;
+  border: 3px solid var(--pb-border);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-text);
+  color: var(--pb-bg);
+  font: inherit;
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.placard[data-no] {
+  background: var(--pb-bg);
+  color: var(--pb-text);
+  border-color: var(--pb-text);
+}
+
+.placard[data-on] {
+  outline: 4px solid var(--pb-accent);
+  outline-offset: 3px;
+  transform: translateY(-6px);
+}
+
+.cardRowWrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-2);
+  width: 100%;
+}
+
+.cardRow {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  gap: var(--pb-space-2);
+  padding: var(--pb-space-3) var(--pb-space-2);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface-2);
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  touch-action: none;
+}
+
+.cardRow[data-open] {
+  background: var(--pb-surface);
+  outline: 2px solid var(--pb-accent-2);
+}
+
+.cardHint {
+  position: absolute;
+  bottom: var(--pb-space-1);
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+}
+
+.cardKeys {
+  display: flex;
+  gap: var(--pb-space-2);
+}
+
+.cardKey {
+  flex: 1;
+  min-height: var(--pb-touch);
+  border: 2px solid var(--pb-border);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  color: var(--pb-text);
+  font: inherit;
+  font-size: var(--pb-font-caption);
+}
+
+.cardKey[data-on] {
+  border-color: var(--pb-accent);
+  font-weight: 800;
+}
+
+.mini {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: var(--pb-space-3);
+  font-size: var(--pb-font-caption);
+}
+
+.miniRow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-1);
+}

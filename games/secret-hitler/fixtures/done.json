@@ -1,0 +1,238 @@
+{
+  "phase": {
+    "id": "done",
+    "startedAt": 1700000755842,
+    "deadline": null
+  },
+  "rng": {
+    "seed": 1,
+    "step": 47
+  },
+  "players": {
+    "p1": {
+      "id": "p1",
+      "name": "Player 1",
+      "avatarId": "fox",
+      "connected": true
+    },
+    "p2": {
+      "id": "p2",
+      "name": "Player 2",
+      "avatarId": "owl",
+      "connected": true
+    },
+    "p3": {
+      "id": "p3",
+      "name": "Player 3",
+      "avatarId": "frog",
+      "connected": true
+    },
+    "p4": {
+      "id": "p4",
+      "name": "Player 4",
+      "avatarId": "cat",
+      "connected": true
+    },
+    "p5": {
+      "id": "p5",
+      "name": "Player 5",
+      "avatarId": "panda",
+      "connected": true
+    },
+    "p6": {
+      "id": "p6",
+      "name": "Player 6",
+      "avatarId": "koala",
+      "connected": true
+    },
+    "p7": {
+      "id": "p7",
+      "name": "Player 7",
+      "avatarId": "penguin",
+      "connected": true
+    }
+  },
+  "cfg": {
+    "pace": "normal"
+  },
+  "seats": ["p7", "p1", "p3", "p4", "p5", "p6", "p2"],
+  "role": {
+    "p6": "hitler",
+    "p5": "fascist",
+    "p3": "fascist",
+    "p4": "liberal",
+    "p1": "liberal",
+    "p2": "liberal",
+    "p7": "liberal"
+  },
+  "alive": ["p7", "p1", "p3", "p5", "p6", "p2"],
+  "executed": ["p4"],
+  "exiled": [],
+  "droppedAt": {},
+  "ready": ["p1", "p6", "p4", "p5", "p2", "p7", "p3"],
+  "deck": ["F", "F", "F", "F", "L", "F", "F", "F"],
+  "discards": [],
+  "board": {
+    "L": 5,
+    "F": 4
+  },
+  "tracker": 0,
+  "chaosCount": 0,
+  "vetoUnlocked": false,
+  "presPointer": 5,
+  "special": null,
+  "lastElected": {
+    "president": "p6",
+    "chancellor": "p7"
+  },
+  "investigated": ["p7"],
+  "notHitler": ["p7", "p5"],
+  "intel": {
+    "p5": [
+      {
+        "n": 2,
+        "k": "investigate",
+        "who": "p7",
+        "party": "L"
+      }
+    ]
+  },
+  "round": {
+    "n": 10,
+    "president": "p6",
+    "nominee": "p7",
+    "votes": {
+      "p3": true,
+      "p1": true,
+      "p6": true,
+      "p7": true,
+      "p5": true,
+      "p2": true
+    },
+    "elected": true,
+    "draw": ["F", "L", "F"],
+    "passed": ["L", "F"],
+    "vetoRequested": false,
+    "vetoAgreed": null,
+    "enacted": "L",
+    "chaosCard": null,
+    "chaosAfter": null,
+    "power": null,
+    "lastCall": false
+  },
+  "history": [
+    {
+      "n": 1,
+      "president": "p4",
+      "chancellor": "p3",
+      "ja": 6,
+      "nein": 1,
+      "elected": true,
+      "enacted": "F",
+      "veto": false,
+      "chaos": null
+    },
+    {
+      "n": 2,
+      "president": "p5",
+      "chancellor": "p7",
+      "ja": 7,
+      "nein": 0,
+      "elected": true,
+      "enacted": "F",
+      "veto": false,
+      "chaos": null
+    },
+    {
+      "n": 3,
+      "president": "p6",
+      "chancellor": "p2",
+      "ja": 7,
+      "nein": 0,
+      "elected": true,
+      "enacted": "L",
+      "veto": false,
+      "chaos": null
+    },
+    {
+      "n": 4,
+      "president": "p2",
+      "chancellor": "p1",
+      "ja": 6,
+      "nein": 1,
+      "elected": true,
+      "enacted": "L",
+      "veto": false,
+      "chaos": null
+    },
+    {
+      "n": 5,
+      "president": "p7",
+      "chancellor": "p6",
+      "ja": 7,
+      "nein": 0,
+      "elected": true,
+      "enacted": "L",
+      "veto": false,
+      "chaos": null
+    },
+    {
+      "n": 6,
+      "president": "p1",
+      "chancellor": "p2",
+      "ja": 5,
+      "nein": 2,
+      "elected": true,
+      "enacted": "F",
+      "veto": false,
+      "chaos": null
+    },
+    {
+      "n": 7,
+      "president": "p6",
+      "chancellor": "p7",
+      "ja": 7,
+      "nein": 0,
+      "elected": true,
+      "enacted": "L",
+      "veto": false,
+      "chaos": null
+    },
+    {
+      "n": 8,
+      "president": "p3",
+      "chancellor": "p5",
+      "ja": 6,
+      "nein": 1,
+      "elected": true,
+      "enacted": "F",
+      "veto": false,
+      "chaos": null
+    },
+    {
+      "n": 9,
+      "president": "p5",
+      "chancellor": "p6",
+      "ja": 3,
+      "nein": 3,
+      "elected": false,
+      "enacted": null,
+      "veto": false,
+      "chaos": null
+    },
+    {
+      "n": 10,
+      "president": "p6",
+      "chancellor": "p7",
+      "ja": 6,
+      "nein": 0,
+      "elected": true,
+      "enacted": "L",
+      "veto": false,
+      "chaos": null
+    }
+  ],
+  "announce": null,
+  "winner": "liberals",
+  "winReason": "liberalPolicies"
+}
