@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "partybox/game-pack/answer-item",
+  "title": "Anything a player might type (foundation §4.2)",
+  "description": "Every answer or secret word ships with its variants. All lowercase. The pack test normalizes every entry (§4.3), fails on any clash between entries, fails when an `accept` does not match `exact`, and warns under three accepted forms for a common word (aim for six or more where they honestly exist).",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["id", "answer"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Stable forever (recaps, flags, overrides key on it)."
+    },
+    "answer": { "type": "string", "pattern": "^[^A-Z]*$", "description": "The display form." },
+    "accept": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[^A-Z]*$" },
+      "description": "Same answer: plurals, common misspellings, US/UK spellings, abbreviations, with/without spaces and hyphens, true synonyms, brand vs generic."
+    },
+    "reject": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[^A-Z]*$" },
+      "description": "Looks close but is wrong; blocks a fuzzy match (cat for car, puffin for penguin)."
+    },
+    "family": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 3, "pattern": "^[^A-Z]*$" },
+      "description": "Word games only: roots that give the secret away as a clue (sunflower → sun, flower)."
+    }
+  },
+  "examples": [
+    {
+      "id": "animals-017",
+      "answer": "penguin",
+      "accept": ["penguins", "pengiun", "penquin", "pinguin", "penguine", "emperor penguin"],
+      "reject": ["puffin", "pelican"],
+      "family": ["pengu"]
+    }
+  ]
+}

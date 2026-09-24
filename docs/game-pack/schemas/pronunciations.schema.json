@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "partybox/game-pack/pronunciations",
+  "title": "Pronunciation overrides (foundation §5.4)",
+  "description": "Two lists: the SDK's global speech/overrides.en.json and a game's content/pronunciations.json (the game's wins). Keys are whole words, matched case-insensitively, applied after toSpeakable rule 1 (straighten quotes) and before rules 2–13. `say` is always required — Zira cannot read Kokoro phonemes. NOTE: the existing Blanks lexicon (games/blanks/content/pronounce.json) uses {ipa, say, spell} and per-card entries; F6 decides whether it migrates to this shape or this shape grows `ipa`/`spell` (see FOUNDATION-AUDIT).",
+  "type": "object",
+  "additionalProperties": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["say"],
+    "properties": {
+      "say": {
+        "type": "string",
+        "minLength": 1,
+        "description": "Plain respelling every voice can read: \"Wuss-ter-sher\"."
+      },
+      "phonemes": {
+        "type": "string",
+        "minLength": 1,
+        "description": "Kokoro phonemes (espeak notation); used by the Kokoro voices, `say` by the rest."
+      }
+    }
+  },
+  "examples": [{ "Worcestershire": { "say": "Wuss-ter-sher" } }]
+}

@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "partybox/game-pack/catalog-entry",
+  "title": "Catalog entry (foundation §1.2)",
+  "description": "What every phone and TV downloads for the lobby, built by the server at startup from the manifests. Budget: ≤ 400 bytes per entry (UTF-8 JSON) and ≤ 8 KB for the whole catalog. Long text is NOT here — it comes from about(gameId, lang).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "name",
+    "tagline",
+    "icon",
+    "minPlayers",
+    "maxPlayers",
+    "estimatedMinutes",
+    "tags",
+    "presence",
+    "supportsBots",
+    "isNew"
+  ],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,39}$" },
+    "name": { "type": "string", "maxLength": 40 },
+    "tagline": { "type": "string", "maxLength": 60 },
+    "icon": { "type": "string", "maxLength": 16 },
+    "minPlayers": { "type": "integer", "minimum": 1, "maximum": 16 },
+    "maxPlayers": { "type": "integer", "minimum": 1, "maximum": 16 },
+    "estimatedMinutes": { "type": "integer", "minimum": 1, "maximum": 60 },
+    "tags": { "$ref": "manifest-pack-fields.schema.json#/properties/tags" },
+    "presence": { "enum": ["anywhere", "voice-if-remote", "same-room"] },
+    "supportsBots": { "type": "boolean" },
+    "isNew": {
+      "type": "boolean",
+      "description": "Server-computed: addedOn within the last 30 days."
+    }
+  },
+  "$defs": {
+    "about": {
+      "title": "about(gameId, lang) response (§1.2, §1.4)",
+      "description": "Fetched only when someone opens About; ≤ 2 KB; cached by the phone for the session. Socket `about` or GET /api/games/:id/about?lang=.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "description", "howToPlay", "settings"],
+      "properties": {
+        "id": { "type": "string" },
+        "description": { "type": "string", "maxLength": 300 },
+        "howToPlay": { "$ref": "manifest-pack-fields.schema.json#/properties/howToPlay" },
+        "settings": {
+          "type": "array",
+          "description": "One plain-language line per setting.",
+          "items": {
+            "type": "object",
+            "required": ["key", "line"],
+            "properties": {
+              "key": { "type": "string" },
+              "line": { "type": "string", "maxLength": 120 }
+            }
+          }
+        }
+      }
+    }
+  }
+}
