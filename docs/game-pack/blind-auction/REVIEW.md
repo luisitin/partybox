@@ -52,19 +52,22 @@ BidPad pad-first with a one-line title and compact hints, two columns sideways; 
 SE and Spanish fits; the table sizes to the stage (a 16-player strip takes four rows); a continuous
 card orbit and staggered chips so a lot never reads as dead air; "No takers!" has a rocking gavel.
 
-## Open questions (my recommendation first)
+## Decisions (round 2 — the owner: "use your intuition, document it")
 
-1. **Beds under the reveals.** The spec names beds only for intro/lot/bid/live. I kept the lounge
-   under sold and flip — a bed stopping and restarting every ten seconds read as choppy.
-   _Recommend: keep._
-2. **VIP skip in `sold`** goes to the flip ("Flip the card"), not straight to the next lot, so the
-   outcome still applies. _Recommend: keep._
-3. **Heists skip players who left** (like the spec's swap rule). _Recommend: keep._
-4. **Strip count-up.** The spec wants the strip's coins to count up; the shell's chip pops to the
-   new number instead. I count up on the stage (the purses). A shell change to count every game's
-   strip would be platform work. _Recommend: leave the shell as it is._
-5. **Ship BidPad early?** The playbook says a shared piece ships before its game; the owner's pacing
-   says nothing merges until you say so. It lives on its own SDK subpath and only this game uses
-   it. _Recommend: ship it with the game._
-6. **Fixed voice lines** come from the host's speech cache (every voice, rendered once per host)
-   instead of pre-rendered WAVs, until F6's `render-clips` lands. _Recommend: switch when F6 lands._
+1. **Music never stops.** One low caper playlist (Sneaky Snitch, Hep Cats, George Street Shuffle,
+   chained, level 0.18) plays from the intro to the last flip without a break — no per-phase beds.
+   Proven in `p16-music/trace-tv.json`: one `music:start` at the intro, no stop until the results.
+   The auctioneer and every cue play over it (clips never duck it).
+2. **What the VIP's Skip does** (the host bar and the ★ menu show the label):
+   intro "Let's go" → the first lot · lot "Skip to bidding" → bidding opens · bid "Close bidding" →
+   the ladder with the bids so far · live "SOLD!" → the hammer at the standing bid (no bid: no
+   takers) · sold "Flip the card" → the flip (the outcome still applies) · flip "Next lot" / "See
+   results". Pause freezes every clock, the going-once clock included.
+3. **Heists skip players who have left**; a player who is only reconnecting can still be robbed.
+   Swaps already skip players who left (spec).
+4. **Strip coins pop** to their new value (the shell's chip); the count-up happens on the stage's
+   purses. No shell change.
+5. **BidPad ships with the game** (subpath `@partybox/game-sdk/ui/bid-pad`, pack layout
+   `packages/game-sdk/src/pack/bid-pad/`, the same shape Imposter and Tune In use).
+6. **Fixed voice lines** come from the host's speech cache until F6's `render-clips` reaches main;
+   then they move to rendered WAVs.

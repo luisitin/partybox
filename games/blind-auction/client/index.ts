@@ -24,16 +24,14 @@ export const clientModule: GameClientModule = {
     sold: 'silence',
     flip: 'silence',
   },
-  // The lounge under the reading and the reveals, the quiz-show pulse under the bidding. The reveals
-  // keep the lounge (the spec names none): a bed that stopped and restarted every ten seconds read
-  // as choppy.
-  beds: {
-    intro: 'lounge',
-    lot: 'lounge',
-    bid: 'pulse',
-    live: 'pulse',
-    sold: 'lounge',
-    flip: 'lounge',
+  // The owner (2026-09-24): the music never stops — one low, continuous caper playlist under the
+  // whole auction (no per-phase beds: a bed swapping every ten seconds read as choppy). Whole tracks
+  // back to back, quiet under the auctioneer and the cues.
+  music: {
+    tracks: ['sneaky-snitch', 'hep-cats', 'george-street-shuffle'],
+    weights: [3, 2, 2],
+    volume: 0.18,
+    mode: 'chain',
   },
   // Every lot phase keeps the same table: cut between them, the card never re-rises.
   quickInto: ['lot', 'bid', 'live', 'sold', 'flip'],

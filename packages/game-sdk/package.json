@@ -7,7 +7,7 @@
   "exports": {
     ".": "./src/index.ts",
     "./ui": "./src/ui.ts",
-    "./ui/bid-pad": "./src/bid-pad.ts",
+    "./ui/bid-pad": "./src/ui-bid-pad.ts",
     "./testing": "./src/testing.ts"
   },
   "dependencies": {

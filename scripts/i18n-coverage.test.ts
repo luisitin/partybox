@@ -13,7 +13,7 @@ import { STRINGS as TV_SHELL } from '../packages/client/src/tv/strings';
 import { STRINGS as SURFACE } from '../packages/client/src/surface/strings';
 import { STRINGS as SDK_PHONE } from '../packages/game-sdk/src/controller/strings';
 import { STRINGS as SDK_TV } from '../packages/game-sdk/src/tv/strings';
-import { BID_PAD_STRINGS } from '../packages/game-sdk/src/bid-pad/strings';
+import { BID_PAD_STRINGS } from '../packages/game-sdk/src/pack/bid-pad/strings';
 import { STRINGS as TEMPLATE_GAME } from '../games/_template/client/strings';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
@@ -46,9 +46,9 @@ const AREAS: Area[] = [
   },
   // P00 §6: the pack's own SDK pieces live on subpaths with their own tables (audit #23).
   {
-    dir: 'packages/game-sdk/src/bid-pad',
+    dir: 'packages/game-sdk/src/pack/bid-pad',
     table: BID_PAD_STRINGS,
-    tableFile: 'packages/game-sdk/src/bid-pad/strings.ts',
+    tableFile: 'packages/game-sdk/src/pack/bid-pad/strings.ts',
   },
   {
     dir: 'packages/game-sdk/src/tv',

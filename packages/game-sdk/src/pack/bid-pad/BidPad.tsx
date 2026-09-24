@@ -7,10 +7,10 @@
 // chunk, never the entry (game-pack audit #23).
 import { useEffect, useLayoutEffect, useRef } from 'react';
 import type { JSX, PointerEvent, ReactNode } from 'react';
-import { PrimaryButton } from '../controller/PrimaryButton';
-import { Screen } from '../controller/Screen';
-import { buzz } from '../ui/haptics';
-import { useT } from '../ui/lang';
+import { PrimaryButton } from '../../controller/PrimaryButton';
+import { Screen } from '../../controller/Screen';
+import { buzz } from '../../ui/haptics';
+import { useT } from '../../ui/lang';
 import styles from './BidPad.module.css';
 import { chipTargets, clampBid, stepBid } from './bidPadMath';
 import { BID_PAD_STRINGS } from './strings';

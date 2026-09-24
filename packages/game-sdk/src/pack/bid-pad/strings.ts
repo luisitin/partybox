@@ -1,6 +1,6 @@
 // BidPad's words in Spanish, keyed by the English sentence (ADR-044). Its own table so it travels
 // with the BidPad subpath and never with the entry chunk.
-import type { Strings } from '../ui/lang';
+import type { Strings } from '../../ui/lang';
 
 export const BID_PAD_STRINGS: Strings = {
   es: {

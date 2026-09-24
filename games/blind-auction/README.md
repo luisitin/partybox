@@ -30,7 +30,9 @@ is `together` (read from the init context once F4 lands; until then a room count
 | `flip`  | card flips; outcome big; heist/swap faces; strip coins count up         | Watch the TV → own line once the outcome is up | step 0 (1.1 s) → step 1 (≥ 5.2 s, waits for the amount reading) → next `lot` / `done`    |
 | `done`  | results                                                                 | results                                        | terminal                                                                                 |
 
-`sold` and `flip` each have two beats in one phase (ADR-033); phones get their own line only at
+VIP Skip: intro → first lot; lot → bidding; bid → close bidding; live → SOLD at the standing bid;
+sold → the flip (the outcome still applies); flip → next lot / results. Music: one continuous low
+playlist under the whole game (no per-phase beds). `sold` and `flip` each have two beats in one phase (ADR-033); phones get their own line only at
 step 1, after the TV has shown it. Strip coins follow the stage: the price leaves at the stamp, the
 flip's coins move at its step 1.
 

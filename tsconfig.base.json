@@ -25,7 +25,7 @@
       "@partybox/engine": ["./packages/engine/src/index.ts"],
       "@partybox/game-sdk": ["./packages/game-sdk/src/index.ts"],
       "@partybox/game-sdk/ui": ["./packages/game-sdk/src/ui.ts"],
-      "@partybox/game-sdk/ui/bid-pad": ["./packages/game-sdk/src/bid-pad.ts"],
+      "@partybox/game-sdk/ui/bid-pad": ["./packages/game-sdk/src/ui-bid-pad.ts"],
       "@partybox/game-sdk/testing": ["./packages/game-sdk/src/testing.ts"]
     }
   }

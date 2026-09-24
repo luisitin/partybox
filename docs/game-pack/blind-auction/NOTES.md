@@ -25,7 +25,7 @@ Measured: 16 players, wild + spicy, 12 lots → state 7.6 KB (budget 12 KB), lar
 | F4 presence in `init`       | `server/index.ts` `presenceOf` reads `ctx.presence` if present (the ADR-047 shape) and defaults to together. PhoneStage follows the engine's `phoneOnly` stamp, which F4 makes per-phone (audit #13) — no game change needed.   | F4 lands: drop the cast            |
 | F6 `toSpeakable`            | `server/speak.ts`: the rules this game's lines need (quotes, overrides, possessives, years, times, numbers, a.m.). Pack test checks every name and flavour line.                                                                | F6 lands: import the SDK's         |
 | F6 fixed clips pipeline     | Fixed lines ("Going once…") are requested through `speech()` early (intro, then 10 at a time) and served from the host's speech cache — every voice, Zira included, no out-of-repo script. They play by URL like Bingo's clips. | `render-clips` lands: move to WAVs |
-| F7 `BidPad` (mine to build) | Built in `packages/game-sdk` as a subpath export (`@partybox/game-sdk/ui/bid-pad`, audit #23) so it never lands in the entry chunk.                                                                                             | —                                  |
+| F7 `BidPad` (mine to build) | Built in `packages/game-sdk/src/pack/bid-pad/` as a subpath export (`@partybox/game-sdk/ui/bid-pad`, audit #23) so it never lands in the entry chunk.                                                                           | —                                  |
 
 Manifest fields to add with F2:
 
@@ -40,7 +40,9 @@ Manifest fields to add with F2:
 "addedOn": "2026-09-24"
 ```
 
-## Decisions (made here; tell the owner in the review)
+## Decisions (owner, round 2: "use your intuition, document it" — see REVIEW.md)
+
+- **Music:** one continuous low playlist for the whole game (owner: never stop the music).
 
 - **Chaos mix:** calm = only calm-tagged lots; normal = 20 % of the ordinary slots from the wild pool;
   wild = 50 %. Spicy on = half the ordinary slots from the spicy pack (its wild-tagged lots join the
