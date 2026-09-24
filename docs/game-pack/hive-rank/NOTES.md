@@ -62,4 +62,6 @@ uses thin local stand-ins listed below.
 - **Long frames**: ~5 % on the TV in every recording, identical to Lightning Round recorded the
   same minute (the machine runs many sessions). A static preview holds 60 fps with 0 long frames.
   Re-measure on a quiet machine before the review package.
+- Phone-only rooms on an SE: the score screen (my five marks + the room's board) scrolls under
+  the sticky Next.
 - Shell: the "Not saving recaps" toast covers a rank row for a moment at game start on an SE.

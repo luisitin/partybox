@@ -102,6 +102,7 @@
 
 .change {
   flex: none;
+  margin-left: auto;
   width: auto;
   padding-inline: var(--pb-space-5);
 }
