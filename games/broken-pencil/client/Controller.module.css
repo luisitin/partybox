@@ -321,3 +321,33 @@
   font-size: var(--pb-font-h2);
   overflow-wrap: normal;
 }
+
+/* ── the show's page on a phone: a square that fits the screen's height as well as its width. */
+.phoneSheet {
+  justify-self: center;
+  width: min(100%, calc(100svh - 360px));
+  min-width: 200px;
+}
+
+/* ── I-228 B: the next page, face down — a dashed card the presenter taps to peek. */
+.peek {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-2);
+  width: 100%;
+  margin-top: var(--pb-space-3);
+  padding: var(--pb-space-3);
+  border: 2px dashed var(--pb-border);
+  border-radius: var(--pb-radius);
+  color: var(--pb-text);
+  text-align: left;
+}
+.peekWho {
+  font-weight: 800;
+  text-align: left;
+  color: var(--pb-text);
+}
+.peekHint {
+  color: var(--pb-text-muted);
+  font-size: var(--pb-font-caption);
+}

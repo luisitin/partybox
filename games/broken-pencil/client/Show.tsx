@@ -1,6 +1,7 @@
 // The show phase on a phone: the presenter turns the pages of their own book; everyone else
 // watches the TV — or, in a "phone only" room, reads the page on the phone. Split from
 // Controller.tsx at the 300-line cap.
+import { useState } from 'react';
 import type { JSX } from 'react';
 import { PrimaryButton, Screen, WaitingScreen, useT } from '@partybox/game-sdk/ui';
 import type { GameControllerProps, Translator } from '@partybox/game-sdk/ui';
@@ -89,7 +90,10 @@ export function Show({
             ? L('a drawing')
             : L('a guess')}
       </p>
-      {page}
+      {/* I-228 A: the presenter holds the page they're reading out — a TV room too */}
+      {s.current ? <PhonePage key={`${s.book}:${s.page}`} page={s.current} /> : null}
+      {/* I-228 B: the next page, face down — the presenter can set up the beat */}
+      {s.next ? <NextPeek key={`${s.book}:${s.page}:next`} page={s.next} /> : null}
       {vetoButton}
       <p className={styles.hint}>
         {L('Read it out, let everyone look, then turn the page.')}{' '}
@@ -116,7 +120,9 @@ function PhonePage({ page }: { page: PageView }): JSX.Element {
     return (
       <p className={styles.phonePage}>
         <span className={styles.phonePageWho}>{L('{name} drew', { name })}</span>
-        <DrawingView drawing={page.drawing} size="100%" label={L("{name}'s drawing", { name })} />
+        <span className={styles.phoneSheet}>
+          <DrawingView drawing={page.drawing} size="100%" label={L("{name}'s drawing", { name })} />
+        </span>
       </p>
     );
   return (
@@ -126,5 +132,23 @@ function PhonePage({ page }: { page: PageView }): JSX.Element {
         {page.text ?? '???'}
       </span>
     </p>
+  );
+}
+
+/** I-228 B: the presenter's next page, face down until tapped. */
+function NextPeek({ page }: { page: PageView }): JSX.Element {
+  const L = useT(STRINGS);
+  const [open, setOpen] = useState(false);
+  const who =
+    page.kind === 'draw'
+      ? L("Next: {name}'s drawing", { name: page.authorName })
+      : L("Next: {name}'s guess", { name: page.authorName });
+  return (
+    <div className={styles.peek}>
+      <button type="button" className={styles.peekWho} onClick={() => setOpen((o) => !o)} aria-expanded={open}>
+        {who} · <span className={styles.peekHint}>{open ? L('hide') : L('tap to peek')}</span>
+      </button>
+      {open ? <PhonePage page={page} /> : null}
+    </div>
   );
 }

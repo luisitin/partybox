@@ -31,6 +31,11 @@ export const STRINGS: Strings = {
     '{passes} of your {others} friends will touch your book.':
       'Tu libro pasará por las manos de {passes} de tus {others} amigos.',
     'Pick something drawable.': 'Elige algo que se pueda dibujar.',
+    // I-228 B
+    "Next: {name}'s drawing": 'Luego: el dibujo de {name}',
+    "Next: {name}'s guess": 'Luego: lo que adivinó {name}',
+    'tap to peek': 'toca para espiar',
+    hide: 'ocultar',
     // I-507 A
     'It passes to 1 player, who only guesses.': 'Pasa a 1 jugador, que solo adivina.',
     'It passes to {n} players in turn; the last of them only guesses.':

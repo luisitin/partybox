@@ -56,7 +56,12 @@ export const contractConfig = {
         page.authorId === playerId ||
         mine.has(textOf(page) ?? '') ||
         (b === inHands && i === promptPage) ||
-        (showing !== null && (b < showing.book || (b === showing.book && i <= showing.page))),
+        (showing !== null && (b < showing.book || (b === showing.book && i <= showing.page))) ||
+        // I-228 B: the presenter's next page of their own book (face down on their phone)
+        (showing !== null &&
+          b === showing.book &&
+          i === showing.page + 1 &&
+          state.books[b]?.ownerId === playerId),
     );
   },
   settingsVariants: [
