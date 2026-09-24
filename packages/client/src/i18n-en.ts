@@ -152,6 +152,27 @@ export const en = {
     youWin: 'You win! 🏆',
     youTie: 'You tie for first! 🏆',
     yourPlace: (rank: number, score: number) => `You finished ${ordinal(rank)} · ${score} pts`,
+    // I-329 B: the non-winner's line, by how the game went for them — one of three, per game
+    placeBot: [
+      'A robot beat you. Think about that.',
+      'Outplayed by a bot. It will not let this go.',
+      'Beaten by software. Rematch?',
+    ],
+    placeLast: [
+      'Last. Somebody has to be.',
+      'Bottom of the table — the only way is up.',
+      'Last place, first in line for a rematch.',
+    ],
+    placeRunnerUp: [
+      (gap: number) => `So close — ${gap} ${gap === 1 ? 'pt' : 'pts'} off first.`,
+      (gap: number) => `Second, ${gap} ${gap === 1 ? 'pt' : 'pts'} behind. One more round…`,
+      (gap: number) => `Silver. ${gap} ${gap === 1 ? 'pt' : 'pts'} from gold.`,
+    ],
+    placeMiddle: [
+      (rank: number) => `${ordinal(rank)} — solidly in the pack.`,
+      (rank: number) => `${ordinal(rank)}: not first, not last.`,
+      (rank: number) => `${ordinal(rank)} — a respectable finish.`,
+    ],
     /** I-155 A: an award you won, on your own phone ("Your card of the night"). */
     yourAward: (title: string) => `Your ${title.charAt(0).toLowerCase()}${title.slice(1)}`,
     /** I-155 C: the votes your cards took, round by round ("2 · 0 · 3"). */

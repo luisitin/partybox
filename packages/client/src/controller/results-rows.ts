@@ -92,3 +92,36 @@ export function winnerLineFor(room: RoomSnapshot, meId: string, scoreless = fals
   if (ids.length >= results.players.length) return t.results.tie;
   return t.results.youTie;
 }
+
+/** I-329 B: one of a pool, the same on every render — per player and per game (the final scores). */
+function pickOf<T>(pool: readonly T[], room: RoomSnapshot, meId: string): T {
+  const scores = Object.entries(room.results?.results.scores ?? {})
+    .map(([id, s]) => `${id}:${s}`)
+    .sort()
+    .join(',');
+  let h = 0;
+  for (const ch of `${meId}|${room.results?.gameId ?? ''}|${scores}`) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+  return pool[h % pool.length] as T;
+}
+
+/**
+ * I-329: a line for a player who didn't win, by how the game went for them — lost to a bot, last,
+ * runner-up (with the gap), or the middle of the table. Null for a winner, a spectator, a board
+ * where nobody scored, or a room of two (second is last, and says so as the runner-up).
+ */
+export function placeLine(room: RoomSnapshot, meId: string): string | null {
+  const results = room.results;
+  if (!results || nobodyScored(room)) return null;
+  const rows = scoreboardRows(room);
+  const mine = rows.find((r) => r.playerId === meId);
+  if (!mine || results.results.winnerIds.includes(meId)) return null;
+  const botWon = results.results.winnerIds.some((id) => room.players.find((p) => p.id === id)?.bot);
+  const meBot = room.players.find((p) => p.id === meId)?.bot;
+  const lastRank = Math.max(...rows.map((r) => r.rank));
+  const top = Math.max(...rows.map((r) => r.score));
+  if (botWon && !meBot && mine.rank === 2) return pickOf(t.results.placeBot, room, meId);
+  if (mine.rank === 2) return pickOf(t.results.placeRunnerUp, room, meId)(top - mine.score);
+  if (mine.rank === lastRank) return pickOf(t.results.placeLast, room, meId);
+  if (botWon && !meBot) return pickOf(t.results.placeBot, room, meId);
+  return pickOf(t.results.placeMiddle, room, meId)(mine.rank);
+}

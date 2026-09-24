@@ -10,7 +10,7 @@ import { clientGames } from '../games.generated';
 import { t } from '../i18n';
 import { serverText } from '../server-text';
 import type { Controller } from '../net/controller';
-import { myRow, nobodyScored, scoreboardRows, winnerLineFor } from './results-rows';
+import { myRow, nobodyScored, placeLine, scoreboardRows, winnerLineFor } from './results-rows';
 import styles from './Results.module.css';
 import { VoteRow } from './VoteRow';
 
@@ -32,6 +32,8 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
   const mine = myRow(room, me.id);
   const scoreless = room.results ? clientGames[room.results.gameId]?.scoreless === true : false;
   const over = nobodyScored(room) && !scoreless;
+  // I-329: a non-winner's own line, above the rank and points
+  const quip = scoreless ? null : placeLine(room, me.id);
   const vipName = room.players.find((p) => p.id === room.vip)?.name;
   const awardsForMe = [...(room.results?.results.awards ?? [])].sort(
     (x, y) => Number(y.playerId === me.id) - Number(x.playerId === me.id),
@@ -51,6 +53,7 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
             {winnerLineFor(room, me.id, scoreless)}
           </span>
           {/* I-456 B: your place stays in view while the board scrolls to your row */}
+          {quip ? <span className={styles.quip}>{quip}</span> : null}
           {mine && !over && !scoreless ? (
             <span className={`pb-muted pb-caption ${styles.place}`}>
               {t.results.yourPlace(mine.rank, mine.score)}

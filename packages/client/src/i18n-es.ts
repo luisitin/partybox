@@ -139,6 +139,26 @@ export const es: Texts = {
     youWin: '¡Ganaste! 🏆',
     youTie: '¡Empataste en primer lugar! 🏆',
     yourPlace: (rank, score) => `Quedaste ${rank}.º · ${score} pts`,
+    placeBot: [
+      'Te ganó un robot. Piénsalo.',
+      'Un bot jugó mejor que tú. No lo va a olvidar.',
+      'Te ganó un programa. ¿Revancha?',
+    ],
+    placeLast: [
+      'Último. Alguien tenía que serlo.',
+      'Al fondo de la tabla: solo queda subir.',
+      'Último puesto, primero en la fila para la revancha.',
+    ],
+    placeRunnerUp: [
+      (gap) => `Casi: a ${gap} ${gap === 1 ? 'punto' : 'puntos'} del primero.`,
+      (gap) => `Segundo, a ${gap} ${gap === 1 ? 'punto' : 'puntos'}. Una ronda más…`,
+      (gap) => `Plata. A ${gap} ${gap === 1 ? 'punto' : 'puntos'} del oro.`,
+    ],
+    placeMiddle: [
+      (rank) => `${rank}.º: en pleno pelotón.`,
+      (rank) => `${rank}.º: ni primero ni último.`,
+      (rank) => `${rank}.º: un final digno.`,
+    ],
     yourAward: (title) => `Tu ${title.charAt(0).toLowerCase()}${title.slice(1)}`,
     myVotes: (list) => `tus votos: ${list}`,
   },
