@@ -16,7 +16,7 @@ import { sampleInput } from './bot';
 import { subcategoriesOf } from './content';
 import { drawQuestions } from './draw';
 import { enterIntro, reduceIntro } from './phases/intro';
-import { enterQuestion, reduceQuestion } from './phases/question';
+import { noteReturn, enterQuestion, reduceQuestion } from './phases/question';
 import { enterDone, enterReveal, reduceReveal } from './phases/reveal';
 import { enterWager, reduceWager } from './phases/wager';
 import { EMPTY_STATS, results } from './scoring';
@@ -120,7 +120,9 @@ function closeIfDone(state: State, now: number): State {
 function reduce(state: State, event: GameEvent<Input>): State {
   if (event.type === 'player') {
     const after = setConnected(state, event);
-    return event.connected || after.phase.paused ? after : closeIfDone(after, event.now);
+    // I-264 A: a return during a question is remembered — the pick is timed from it
+    if (event.connected) return noteReturn(after, event.playerId, event.now);
+    return after.phase.paused ? after : closeIfDone(after, event.now);
   }
   const vip = applyVip(state, event, { skip: advance, end: enterDone });
   if (vip) return vip;

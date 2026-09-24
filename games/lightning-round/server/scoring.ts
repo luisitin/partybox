@@ -60,7 +60,9 @@ export function scoreCurrentQuestion(state: State): State {
     const correct =
       question !== undefined && pick !== undefined && pick.index === question.answerIndex;
     const previous = stats[id] ?? EMPTY_STATS;
-    const streak = correct ? (streaks[id] ?? 0) + 1 : 0;
+    // I-264 B: back with under 3 s left — a miss keeps the streak
+    const noFault = !correct && (state.noFault ?? []).includes(id);
+    const streak = correct ? (streaks[id] ?? 0) + 1 : noFault ? (streaks[id] ?? 0) : 0;
     const wager = state.wagers[id] ?? 0;
     let delta: number;
     // `0 - wager` (not `-wager`) so a lost 0 wager is +0, keeping views JSON-round-trippable.
