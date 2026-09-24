@@ -67,6 +67,8 @@ export interface State extends GameStateBase {
   /** Score change per player at the last reveal (negative on a lost wager). */
   lastDelta: Record<string, number>;
   stats: Record<string, PlayerStats>;
+  /** I-264 A: when a player came back during the current question (cleared at the next one). */
+  returnedAt?: Record<string, number>;
 }
 
 export const inputSchema = z.discriminatedUnion('type', [

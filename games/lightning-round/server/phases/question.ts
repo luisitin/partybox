@@ -10,7 +10,7 @@ import type { Advance } from './intro';
 export function enterQuestion(state: State, now: number): State {
   const index = Math.min(state.index + 1, state.questionIds.length - 1);
   return enterPhase(
-    { ...state, index, picks: {} },
+    { ...state, index, picks: {}, returnedAt: {} },
     'question',
     now,
     state.settings.answerSeconds * 1000,
@@ -40,11 +40,34 @@ export function reduceQuestion(state: State, event: GameEvent<Input>, next: Adva
       ...state,
       picks: {
         ...state.picks,
-        [event.playerId]: { index: event.input.index, elapsedMs: elapsedMs(state, event.now) },
+        [event.playerId]: { index: event.input.index, elapsedMs: pickElapsed(state, event.playerId, event.now) },
       },
     };
     return allConnectedDone(picked, Object.keys(picked.picks)) ? next(picked, event.now) : picked;
   }
   if (isTimerFor(state, event)) return next(state, event.now);
   return state;
+}
+
+/**
+ * I-264 A: how far into the window a pick counts. A player who came back mid-question is timed from
+ * their return, scaled to the time that was left — never better than half the window (half the
+ * speed bonus), so a drop can't be used to buy time.
+ */
+export function pickElapsed(state: State, playerId: string, now: number): number {
+  const plain = elapsedMs(state, now);
+  const back = state.returnedAt?.[playerId];
+  const deadline = state.phase.deadline;
+  if (back === undefined || deadline === null || back <= state.phase.startedAt) return plain;
+  const window = state.settings.answerSeconds * 1000;
+  const left = Math.max(1, deadline - back);
+  const scaled = window * Math.min(1, Math.max(0, now - back) / left);
+  return Math.min(plain, Math.max(scaled, window / 2));
+}
+
+/** I-264 A: a player's return during an open question, remembered for their pick. */
+export function noteReturn(state: State, playerId: string, now: number): State {
+  if (state.phase.id !== 'question' || Object.hasOwn(state.picks, playerId)) return state;
+  const returned = { ...state, returnedAt: { ...state.returnedAt, [playerId]: now } };
+  return returned;
 }
