@@ -24,6 +24,7 @@
       "@partybox/shared": ["./packages/shared/src/index.ts"],
       "@partybox/engine": ["./packages/engine/src/index.ts"],
       "@partybox/game-sdk": ["./packages/game-sdk/src/index.ts"],
+      "@partybox/game-sdk/match": ["./packages/game-sdk/src/match.ts"],
       "@partybox/game-sdk/ui": ["./packages/game-sdk/src/ui.ts"],
       "@partybox/game-sdk/testing": ["./packages/game-sdk/src/testing.ts"]
     }

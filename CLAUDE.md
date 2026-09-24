@@ -53,7 +53,7 @@ pnpm test | pnpm vitest --project engine                 # all unit tests / one 
 
 `games → game-sdk → shared` · `engine → shared` · `server → engine, shared, games/*/server (generated registry)`
 · `client → game-sdk, shared, games/*/client (generated registry)` · `sim, e2e → anything` · **nothing → sim, e2e**.
-Games import **only** `@partybox/game-sdk` (server, pure) and `@partybox/game-sdk/ui` (client, React) — plus `react`.
+Games import **only** `@partybox/game-sdk` (server, pure), `@partybox/game-sdk/match` (typed answers, pure, both sides) and `@partybox/game-sdk/ui` (client, React) — plus `react`.
 
 ## Where things are NOT
 

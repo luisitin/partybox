@@ -44,7 +44,7 @@ interface GameStateBase {
 
 ```ts
 type GameEvent<I> =
-  | { type: 'input'; now: number; playerId: string; input: I } // schema-valid input
+  | { type: 'input'; now: number; playerId: string; input: I; vip?: boolean } // schema-valid input; `vip` = sent by the VIP (ADR-042)
   | { type: 'timer'; now: number; phaseId: string; startedAt: number } // once per deadline (ADR-033)
   | { type: 'player'; now: number; playerId: string; connected: boolean; gone?: 'left' | 'kicked' } // (re)connect / leave; `gone` = for good (ADR-046)
   | { type: 'vip'; now: number; action: 'skip' | 'pause' | 'resume' | 'end' };
@@ -175,6 +175,43 @@ never needs information a phone would not have. Bots are never VIP and count tow
 `groupBy: '<select key>'` and a `group` per option only the options of the sibling select's current
 value are offered and kept, ADR-034). The VIP edits them in the lobby; the engine validates against the
 spec and passes `settings` to `init` (`multiselectPicks(value)` from `@partybox/shared` splits one).
+
+### Typed answers — `@partybox/game-sdk/match` (ADR-048)
+
+Whatever a player types that the game compares — a guess, a clue, a lie, a free-text answer — goes
+through the shared matcher, never `===` on raw text. It is pure and gives the same answer on every
+machine, so `reduce` may call it and a phone may run the same check as the player types. Every
+function takes the content's `lang` (`'en' | 'es'`), read from the pack's required `lang` field.
+
+| Function                                                   | Returns                                                                                                                                                                          |
+| ---------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `normalize(text, lang)`                                    | `{ norm, compact }`: lowercase, no accents, quotes or punctuation, one leading article dropped, number words to 99 as digits ("The Twenty-One Pilots" → `21 pilots`, `21pilots`) |
+| `stem(word, lang)`                                         | a key where singular and plural meet (movies, movie → `movi`; luces, luz → `luz`)                                                                                                |
+| `matchAnswer(input, item, lang)`                           | `'exact' \| 'stem' \| 'fuzzy' \| 'none'` against `{ answer, accept?, reject?, family? }`; a reject blocks every level, digits never fuzz                                         |
+| `sameAnswer(a, b, lang)`                                   | one player's text against another's: the same compact form, the same stems, or 6+ letters one edit apart                                                                         |
+| `groupAnswers(texts, lang)`                                | `number[][]`: indices grouped by chains of `sameAnswer`, in submission order                                                                                                     |
+| `isLegalClue(clue, secret, { lang, maxChars?, oneWord? })` | `{ ok: true }` or `{ ok: false, reason }`: `empty`, `too-long`, `not-one-word`, `is-secret`, `contains-secret` (the game words the message, in both languages)                   |
+
+Each game picks the level it accepts (a guess usually scores at `fuzzy` or better); `isLegalClue`
+calls a clue the secret at `stem` or better. Pass `secret: null` for a player who does not know the
+secret (Imposter's imposter): the error itself would tell them their clue is close. Sort ids with
+`compareCodeUnits` (`@partybox/game-sdk`): `localeCompare`, `toLocale*` and `Intl` are banned under
+`games/*/server`.
+
+**Answer packs.** A content file with typed answers carries `lang` and items `{ id, answer, accept,
+reject, family }`, all lowercase (`docs/game-pack/schemas/answer-item.schema.json`); spacing, case,
+accent and apostrophe variants are automatic and never listed. Build the content schema with
+`answerItemSchema` and test the pack with `checkAnswerPack({ lang, items }, { isCommon? })` (both from
+`@partybox/game-sdk`, not `./match`, so zod stays off phones): it fails on two entries equal after
+normalization and on an accept that does not come back `exact`, and warns on common words with fewer
+than 3 accepts.
+
+**"That counts" (game pack §4.8).** When a guess is judged below the game's bar, the reveal shows what
+was typed and the VIP's phone (`view.vip === me.id`) shows ✓ That counts until Next. The button sends a
+game input the reducer honours only when `event.vip === true` (ADR-042); it re-scores through the same
+`judged()` helper that feeds the score, awards, views and recap, and the TV tags the answer "Counted by
+the VIP". Store what was counted, never who counted it. Only a phone sends game inputs, so a room run
+from the TV host bar has no override. The contract fuzz sends every input stamped `vip: true` too.
 
 ## Client side — `games/<id>/client/{shared,phone-entry,tv-entry}.ts` (ADR-050)
 

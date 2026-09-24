@@ -1,7 +1,7 @@
 // TV and controller views (docs/GAME_CONTRACT.md "Views"). Hidden information is omitted by KEY,
 // never nulled: `correctIndex`, `pickIndex` and `wagerAmount` only exist once the stage may show
 // them (__tests__/contract.config.ts asserts those key names never leak early).
-import { controllerEnvelope, envelope, rank } from '@partybox/game-sdk';
+import { compareCodeUnits, controllerEnvelope, envelope, rank } from '@partybox/game-sdk';
 import type { ControllerView, PlayerStatus, TvView } from '@partybox/game-sdk';
 import { categoryLabel, drawLabel, questionById } from './content';
 import { labelOf } from '../content/schema';
@@ -160,7 +160,7 @@ function revealRows(state: State, correctIndex: number, final: boolean): RevealR
     (a, b) =>
       Number(b.correct) - Number(a.correct) ||
       b.score - a.score ||
-      a.playerId.localeCompare(b.playerId),
+      compareCodeUnits(a.playerId, b.playerId),
   );
 }
 

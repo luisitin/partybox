@@ -69,6 +69,16 @@ export { addScores, buildResults, rank, speedPoints } from './scoring';
 export type { RankedRow } from './scoring';
 export { controllerEnvelope, envelope, viewPlayers } from './views';
 export type { EnvelopeOptions } from './views';
+export { compareCodeUnits } from './compare';
+
+// ── answer packs (ADR-048); the matcher itself is `@partybox/game-sdk/match` ─────────────────
+export {
+  answerItemSchema,
+  answerLangSchema,
+  answerPackSchema,
+  checkAnswerPack,
+} from './answer-pack';
+export type { AnswerItem, AnswerPack, AnswerPackOptions, AnswerPackReport } from './answer-pack';
 
 // UI primitives live in `@partybox/game-sdk/ui` (ADR-023): this entry point stays free of React
 // and CSS so game server code can be loaded by Node (server, sim, contract tests).
