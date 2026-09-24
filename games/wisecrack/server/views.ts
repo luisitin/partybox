@@ -216,6 +216,8 @@ export function controllerView(
       statusOf: statusOf(state),
       scores: state.scores,
     }),
+    // I-288 A: the phone's clock is quiet when the TV's is
+    timerMode: phase === 'answer' || phase === 'vote' ? 'normal' : 'quiet',
     round: state.round,
     rounds: state.settings.rounds,
     multiplier: multiplierFor(state),

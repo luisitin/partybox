@@ -268,3 +268,13 @@
 .roomScore {
   color: var(--pb-text);
 }
+
+/* ── I-288 B: the live worth of a right answer, under the question. */
+.worth {
+  display: block;
+  margin-top: var(--pb-space-1);
+  font-size: var(--pb-font-caption);
+  font-weight: 900;
+  color: var(--pb-accent-2);
+  font-variant-numeric: tabular-nums;
+}

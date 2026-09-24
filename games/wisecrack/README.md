@@ -53,6 +53,8 @@ measured against the deadline; if > 0).
   `reveal` with the votes so far; `reveal` → next `vote` or `scores`; `scores` → next `intro` or `done`.
   VIP end → `done` from anywhere (a prompt whose `reveal` never ran scores nothing). Pause holds the
   deadline. Every phase but `done` has a deadline, so an idle room finishes on timers alone.
+- I-288 A (a Lightning Round pick): the phones' clock follows the TV's `timerMode` — digits only in
+  `answer` and `vote`, a quiet bar in the phases with nothing to press.
 
 ## Settings
 

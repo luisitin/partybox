@@ -109,4 +109,6 @@ export const SCREENS_ES: Readonly<Record<string, string>> = {
   'Next question': 'Siguiente pregunta',
   'On to the wager': 'A las apuestas',
   'Moving on…': 'Avanzando…',
+  // I-288 B
+  '+{points} now': '+{points} ahora',
 };

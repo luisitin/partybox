@@ -1,11 +1,12 @@
 // TV and controller views (docs/GAME_CONTRACT.md "Views"). Hidden information is omitted by KEY,
 // never nulled: `correctIndex`, `pickIndex` and `wagerAmount` only exist once the stage may show
 // them (__tests__/contract.config.ts asserts those key names never leak early).
+import { BASE_POINTS, SPEED_MAX_POINTS } from './types';
 import { controllerEnvelope, envelope, rank } from '@partybox/game-sdk';
 import type { ControllerView, PlayerStatus, TvView } from '@partybox/game-sdk';
 import { categoryLabel, drawLabel, questionById } from './content';
 import { labelOf } from '../content/schema';
-import { wagerOptions } from './scoring';
+import { questionPoints, wagerOptions } from './scoring';
 import type { WagerOption } from './scoring';
 import { isFinalIndex } from './types';
 import type { State } from './types';
@@ -85,6 +86,8 @@ export interface LightningControllerView extends ControllerView {
   rows?: RevealRow[];
   /** I-589: a regular reveal's Next button (the VIP's phone shows it) — what it moves on to. */
   next?: RevealNext;
+  /** I-288 B: `question`: what a right answer is worth, as a function of time — the phone ticks it. */
+  worth?: { base: number; speedMax: number; bonus: number; windowMs: number };
   /** `wager`: the buttons for this player (0-score players only see 0). */
   wagerChoices?: WagerOption[];
   /** Own wager once placed (from `wager` through the final reveal). */
@@ -231,6 +234,8 @@ export function controllerView(
       statusOf: statusOf(state),
       scores: state.scores,
     }),
+    // I-288 A: the phone's clock is quiet when the TV's is — nothing to press in the intro or reveal
+    timerMode: phase === 'intro' || phase === 'reveal' ? 'quiet' : 'normal',
     round: roundOf(state),
     question: phase === 'question' || phase === 'reveal' ? questionOf(state) : null,
     myPickIndex: myPick?.index ?? null,
@@ -239,6 +244,19 @@ export function controllerView(
     ...nextOf(state),
   };
   const final = isFinalIndex(state, state.index);
+  // I-288 B: the live worth of a right answer (the regular questions: the final is the bet)
+  if (phase === 'question' && me && !final)
+    view.worth = {
+      base: BASE_POINTS,
+      speedMax: SPEED_MAX_POINTS,
+      bonus:
+        questionPoints(
+          state.settings.answerSeconds * 1000,
+          state.settings.answerSeconds,
+          (state.streaks[playerId] ?? 0) + 1,
+        ) - BASE_POINTS,
+      windowMs: state.settings.answerSeconds * 1000,
+    };
   if (phase === 'reveal') {
     const q = questionById(state.questionIds[state.index] ?? '');
     if (q) {
