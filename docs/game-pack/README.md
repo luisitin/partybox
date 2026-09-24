@@ -22,7 +22,7 @@ at a time; nothing here is built until the owner says so.
 | 01   | [parts/01-IMPOSTER-HERD-MIND.md](parts/01-IMPOSTER-HERD-MIND.md)     | [🕵️ Imposter](imposter/) · [🐑 Herd Mind](herd-mind/)     | received 2026-09-24 |
 | 02   | [parts/02-FAKE-OUT-WHO-SAID-IT.md](parts/02-FAKE-OUT-WHO-SAID-IT.md) | [🎭 Fake-Out](fake-out/) · [🗣️ Who Said It](who-said-it/) | received 2026-09-24 |
 | 03   | [parts/03-TUNE-IN-HIVE-RANK.md](parts/03-TUNE-IN-HIVE-RANK.md)       | [📻 Tune In](tune-in/) · [🐝 Hive Rank](hive-rank/)       | received 2026-09-24 |
-| 04   | —                                                                    | [🔁 Echo](echo/) · [🔨 Blind Auction](blind-auction/)     | waiting             |
+| 04   | [parts/04-ECHO-BLIND-AUCTION.md](parts/04-ECHO-BLIND-AUCTION.md)     | [🔁 Echo](echo/) · [🔨 Blind Auction](blind-auction/)     | received 2026-09-24 |
 | 05   | —                                                                    | [🗂️ Spy Grid](spy-grid/)                                  | waiting             |
 | 06   | —                                                                    | [🌙 Nightfall](nightfall/)                                | waiting             |
 
