@@ -3,8 +3,8 @@
 import { useSyncExternalStore } from 'react';
 import type { SpyControllerView, SpyTvView } from '../server/views';
 import type { Translator } from '@partybox/game-sdk/ui';
-import { coord } from './WordGrid';
-import type { GridCard, GridFace } from './WordGrid';
+import { coord } from '@partybox/game-sdk/ui/word-grid';
+import type { GridCard, GridFace } from '@partybox/game-sdk/ui/word-grid';
 
 type AnyView = SpyTvView | SpyControllerView;
 export type Team = 'sun' | 'moon';

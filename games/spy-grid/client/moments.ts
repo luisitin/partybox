@@ -18,7 +18,8 @@ export function useVoice(view: SpyTvView | SpyControllerView, on = true): void {
   const said = useRef(new Set<string>());
   const key = on ? (view.voice?.key ?? null) : null;
   const url = view.voice?.url ?? null;
-  const delayMs = view.phaseId === 'flip' ? FACE_AT_MS : 0;
+  // The flip's line lands with the face; the turn's end lets its sweep speak first.
+  const delayMs = view.phaseId === 'flip' ? FACE_AT_MS : view.phaseId === 'turn-end' ? 300 : 0;
   useEffect(() => {
     if (!key || !url || said.current.has(key)) return;
     said.current.add(key);
@@ -49,8 +50,12 @@ export function useTvMoments(view: SpyTvView): void {
   const rippleEnd = view.ripple.length * RIPPLE_MS + TURN_MS;
   const winOnMount = phase === 'win';
   const flipOnMount = phase === 'flip';
+  const turnEndOnMount = phase === 'turn-end';
   useEffect(() => {
     if (turnStart) sound.play('phase');
+    // The turn's end sweeps before the reader names the next team (a mapped cue would be
+    // skipped: the shell drops its chime within 50 ms of a clip).
+    if (turnEndOnMount) sound.play('sweep');
     if (flipOnMount) {
       sound.play('reveal');
       return after(FACE_AT_MS, () => flipSting(view, sound));

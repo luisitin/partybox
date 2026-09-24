@@ -7,6 +7,7 @@
   "exports": {
     ".": "./src/index.ts",
     "./ui": "./src/ui.ts",
+    "./ui/word-grid": "./src/ui-word-grid.ts",
     "./testing": "./src/testing.ts"
   },
   "dependencies": {

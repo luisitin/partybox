@@ -7,7 +7,7 @@ import type { SpyControllerView } from '../server/views';
 import { SHAPE, other } from './model';
 import { useVoice } from './moments';
 import { ClueLine, PhoneBoard, Scores } from './PhoneParts';
-import { KIND_ICON } from './WordGrid';
+import { KIND_ICON } from '@partybox/game-sdk/ui/word-grid';
 import styles from './Controller.module.css';
 import stage from './PhoneStage.module.css';
 import { STRINGS } from './strings';

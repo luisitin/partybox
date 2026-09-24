@@ -5,7 +5,7 @@ import type { JSX } from 'react';
 import { useT } from '@partybox/game-sdk/ui';
 import type { SpyControllerView } from '../server/views';
 import { SHAPE, cardsOf, coordLabel, useBoardLayout } from './model';
-import { WordGrid } from './WordGrid';
+import { WordGrid } from '@partybox/game-sdk/ui/word-grid';
 import styles from './Controller.module.css';
 import { STRINGS } from './strings';
 

@@ -2,11 +2,12 @@
 // taps out. A card turns over in 3D (transform only, both faces back-to-back) to show what it is;
 // under reduced motion the faces crossfade instead. Never colour alone: every identity has its
 // icon, every pointer its face, rows and columns their letters and numbers.
-// STAND-IN location: this moves to `@partybox/game-sdk/ui/word-grid` once F1's per-component
-// subpath exports land (audit #23); until then it lives with its only user (NOTES.md).
+// Owned by Spy Grid (SESSION-PLAYBOOK §3); served as the subpath `@partybox/game-sdk/ui/word-grid`
+// so it lands in its game's chunk, never the entry (audit #23).
 import { useRef, useState } from 'react';
 import type { CSSProperties, JSX, ReactNode } from 'react';
-import { Avatar, useServerNow } from '@partybox/game-sdk/ui';
+import { Avatar } from '../../ui/Avatar';
+import { useServerNow } from '../../ui/clock';
 import styles from './WordGrid.module.css';
 
 export type CardKind = 'sun' | 'moon' | 'bystander' | 'assassin';

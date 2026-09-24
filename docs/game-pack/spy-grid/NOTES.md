@@ -44,17 +44,28 @@ F1, F3–F7 are not built yet, so everything below that needs them runs on a sta
 
 ## Stand-ins (swap when the owner's piece lands)
 
-| Piece                                                            | Owner                  | Stand-in                                                                                                                   |
-| ---------------------------------------------------------------- | ---------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| `match` (normalize, stem, sameAnswer, isLegalClue)               | Foundation F5          | `games/spy-grid/server/match.ts` — written to audit errata #15/#16/#25–#27/#31                                             |
-| `teamsFromSeed`, `majorityPick`, `rotation`                      | Foundation F7          | `server/helpers.ts` (`[value, rng]` returns)                                                                               |
-| `toSpeakable` + fixed-clip pipeline                              | Foundation F6          | `server/speech.ts`: fixed lines are live readings prefetched at start (≤ 10 pending)                                       |
-| presence (`ctx.presence`, `canSeeTv`, per-player stage)          | Foundation F4          | none: phone-only rooms use PhoneStage; remote phones wait for F4                                                           |
-| manifest `icon` 🗂️, `howToPlay`, `presence: anywhere`, `addedOn` | Foundation F2          | not in `manifest.json` (main's schema would strip them) — add on merge                                                     |
-| `WordGrid`                                                       | Spy Grid (mine)        | `client/WordGrid.tsx`; moves to `@partybox/game-sdk/ui/word-grid` once F1's per-component subpath exports land (audit #23) |
-| `TeamBanner`                                                     | Tune In                | `client/TeamBanner.tsx`                                                                                                    |
-| `SecretCard`                                                     | Imposter               | the Show key cover in `client/SpyKey.tsx` (tap to toggle, hides 20 s after the last touch)                                 |
-| team tokens `--pb-team-sun/moon`                                 | Foundation (audit #52) | CSS falls back to `--pb-accent` / `--pb-info`                                                                              |
+| Piece                                                            | Owner                  | Stand-in                                                                                                                                |
+| ---------------------------------------------------------------- | ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `match` (normalize, stem, sameAnswer, isLegalClue)               | Foundation F5          | `games/spy-grid/server/match.ts` — written to audit errata #15/#16/#25–#27/#31                                                          |
+| `teamsFromSeed`, `majorityPick`, `rotation`                      | Foundation F7          | `server/helpers.ts` (`[value, rng]` returns)                                                                                            |
+| `toSpeakable` + fixed-clip pipeline                              | Foundation F6          | `server/speech.ts`: fixed lines are live readings prefetched at start (≤ 10 pending)                                                    |
+| presence (`ctx.presence`, `canSeeTv`, per-player stage)          | Foundation F4          | none: phone-only rooms use PhoneStage; remote phones wait for F4                                                                        |
+| manifest `icon` 🗂️, `howToPlay`, `presence: anywhere`, `addedOn` | Foundation F2          | not in `manifest.json` (main's schema would strip them) — add on merge                                                                  |
+| `WordGrid`                                                       | Spy Grid (mine)        | **done**: `packages/game-sdk/src/pack/word-grid/` → `@partybox/game-sdk/ui/word-grid` (tests: `packages/client/src/word-grid.test.tsx`) |
+| `TeamBanner`                                                     | Tune In                | `client/TeamBanner.tsx`                                                                                                                 |
+| `SecretCard`                                                     | Imposter               | the Show key cover in `client/SpyKey.tsx` (tap to toggle, hides 20 s after the last touch)                                              |
+| team tokens `--pb-team-sun/moon`                                 | Foundation (audit #52) | CSS falls back to `--pb-accent` / `--pb-info`                                                                                           |
+
+## Harness notes
+
+- Contract `settingsVariants` are two (co-op; random teams + 2 rounds + 2 assassins + spicy + no reader).
+  With four, the 16-player "terminates" runs took 10–31 s inside the suite on a loaded box (the same
+  games replay in < 1 s outside it) and hit the 20 s limit. Bingo's contract run timed out the same way
+  under load and passes alone in 1.2 s.
+- Recording frame timing on this box: a shipped game (Lightning Round) reads 5.7 % long frames; Spy
+  Grid now 5.5 %. Board cards are flat until they turn (25 permanent 3D layers cost frames).
+- The reader is audible in recordings (TV trace: clips for "Sun goes first", each clue, each flip line
+  330 ms in, the turn's end 300 ms after its sweep).
 
 ## Decisions made
 

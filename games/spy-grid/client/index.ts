@@ -16,12 +16,12 @@ export const clientModule: GameClientModule = {
   PhoneSettings: lazy(() => import('./PhonePanel').then((m) => ({ default: m.PhonePanel }))),
   // SPEC §9.4 sound column. The board phases cue themselves on their frames (client/moments.ts:
   // `phase` only when a turn's guessing opens, the flip's reveal and sting, the fanfare), so the
-  // shell's per-phase chime stays out of their way; the turn's end sweeps.
+  // shell's per-phase chime stays out of their way; the turn's end sweeps (moments.ts too).
   sounds: {
     clue: 'silence',
     guess: 'silence',
     flip: 'silence',
-    'turn-end': 'sweep',
+    'turn-end': 'silence',
     win: 'silence',
   },
   // Beds (ADR-032): the lounge while teams form, held late-night chords while a spymaster

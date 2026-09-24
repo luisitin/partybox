@@ -13,7 +13,7 @@ import { TeamBanner } from './TeamBanner';
 import type { TeamSide } from './TeamBanner';
 import { ClueBar, History, TurnEndCard, WinBanner } from './TvParts';
 import { TvTeams } from './TvTeams';
-import { WordGrid } from './WordGrid';
+import { WordGrid } from '@partybox/game-sdk/ui/word-grid';
 import styles from './Tv.module.css';
 import { STRINGS } from './strings';
 
@@ -48,11 +48,7 @@ function Board({ view }: { view: SpyTvView }): JSX.Element {
         <header className={styles.header}>
           <TeamBanner side={sideOf(view, 'sun')} surface="tv" />
           <ClueBar view={view} />
-          {coop ? (
-            <div className={styles.coopSlot} />
-          ) : (
-            <TeamBanner side={sideOf(view, 'moon')} surface="tv" align="end" />
-          )}
+          {coop ? null : <TeamBanner side={sideOf(view, 'moon')} surface="tv" align="end" />}
         </header>
       )}
       <div className={styles.gridArea}>

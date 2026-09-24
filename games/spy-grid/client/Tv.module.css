@@ -27,10 +27,6 @@
   min-height: 150px;
 }
 
-.coopSlot {
-  visibility: hidden;
-}
-
 /* ── clue bar ─────────────────────────────────────────────────────────────────────────── */
 .clueBar {
   position: relative;
@@ -505,4 +501,9 @@
 .clockUrgent {
   color: var(--pb-danger);
   animation: global(pb-tick) var(--pb-motion-fast) var(--pb-ease) both;
+}
+
+/* co-op: one team, so the clue bar takes the other two thirds */
+.coop .header {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2.55fr);
 }
