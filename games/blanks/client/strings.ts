@@ -18,8 +18,8 @@ const AWARDS_ES: Readonly<Record<string, string>> = {
   '1 vote across the night': '1 voto en toda la noche',
   '{n} votes across the night': '{n} votos en toda la noche',
   '{n} rounds in a row': '{n} rondas seguidas',
-  '1 card in before half time': '1 carta antes de la mitad del tiempo',
-  '{n} cards in before half time': '{n} cartas antes de la mitad del tiempo',
+  '1 card in under {s} s': '1 carta en menos de {s} s',
+  '{n} cards in under {s} s': '{n} cartas en menos de {s} s',
   // I-149 C
   'Read the room': 'Buen olfato',
   '{n} call called right': '{n} acierto',

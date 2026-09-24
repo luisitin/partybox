@@ -71,8 +71,8 @@ lock in when `result` starts, once per round. Ties share a rank; winners = every
 (a real player each; ties → higher score, then lower id): **Card of the night** (the night’s best-liked
 card, quoted with its vote count — never Rando’s; with a judge, its round instead: every pick is one
 "vote"), **Crowd favourite** (most votes received, if any; not in judge mode, where it would only
-restate the score), **On a roll** (the longest run of rounds won outright, two or more), **Quick draw** (most cards played within half the answer time — `answerSeconds` / 2 from the phase's start,
-measured against the deadline so a pause never cheats it; the same yardstick when untimed).
+restate the score), **On a roll** (the longest run of rounds won outright, two or more), **Quick draw** (timed rooms only, "3 cards in under 30 s" — I-154 B; most cards played within half the answer time — `answerSeconds` / 2 from the phase's start,
+measured against the deadline so a pause never cheats it). Crowd favourite, Quick draw and Read the room go to people only — a bot never takes one, and with no person in the running the award is not shown (I-154 A).
 
 A **streak** — one player winning outright round after round — is kept in `stats.streak` and named on the round card from the second win (“Sam is on a 2-round streak”, TV and phones); a shared point, a Rando win or a round nobody won ends it. The final board (I-019) holds every total as "—" for 1.6 s (A), an envelope beside "And the winner is…" turns open under eight accelerating `tick`s as the hold ends (B), then the totals count up and the top row lifts with the `fanfare` (C). Submissions (I-020) land in named slots in roster order with the player's face in the corner (A), a puff and the `card` pluck at the landing — the shell's `lock` is quiet here, `ownLocks` (B), and every card turns face-up together on "Everyone's in!" (C).
 

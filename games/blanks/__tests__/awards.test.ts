@@ -63,9 +63,7 @@ describe('count awards', () => {
       stats: { ...fresh.stats, fastPlays: { [a]: 1 }, votesReceived: { [b]: 1 } },
     };
     const awards = awardsFor(one);
-    expect(awards.find((x) => x.id === 'quick-draw')?.description).toBe(
-      '1 card in before half time',
-    );
+    expect(awards.find((x) => x.id === 'quick-draw')?.description).toBe('1 card in under 30 s');
     expect(awards.find((x) => x.id === 'crowd-favourite')?.description).toBe(
       '1 vote across the night',
     );
@@ -74,7 +72,7 @@ describe('count awards', () => {
       stats: { ...fresh.stats, fastPlays: { [a]: 3 }, votesReceived: { [b]: 4 } },
     };
     expect(awardsFor(three).find((x) => x.id === 'quick-draw')?.description).toBe(
-      '3 cards in before half time',
+      '3 cards in under 30 s',
     );
     expect(awardsFor(three).find((x) => x.id === 'crowd-favourite')?.description).toBe(
       '4 votes across the night',
@@ -97,5 +95,41 @@ describe('awards with a judge (czar mode)', () => {
     expect(awardsFor(v).find((a) => a.id === 'card-of-the-night')?.description).toMatch(
       /^“.+” · \d+ votes?$/,
     );
+  });
+});
+
+describe('awards are for people (I-154)', () => {
+  it('skips a bot for Quick draw and Crowd favourite, and drops the award with no person in it', () => {
+    const fresh = start({ rounds: 3 });
+    const [a, b] = Object.keys(fresh.players) as [string, string];
+    const withBot: State = {
+      ...fresh,
+      players: { ...fresh.players, [a]: { ...fresh.players[a]!, bot: true } },
+      stats: {
+        ...fresh.stats,
+        fastPlays: { [a]: 5, [b]: 1 },
+        votesReceived: { [a]: 6, [b]: 2 },
+      },
+    };
+    const awards = awardsFor(withBot);
+    expect(awards.find((x) => x.id === 'quick-draw')?.playerId).toBe(b);
+    expect(awards.find((x) => x.id === 'crowd-favourite')?.playerId).toBe(b);
+    const botOnly: State = {
+      ...withBot,
+      stats: { ...withBot.stats, fastPlays: { [a]: 5 }, votesReceived: { [a]: 6 } },
+    };
+    expect(awardsFor(botOnly).some((x) => x.id === 'quick-draw')).toBe(false);
+    expect(awardsFor(botOnly).some((x) => x.id === 'crowd-favourite')).toBe(false);
+  });
+
+  it('gives no speed award in an untimed room, and names the bar it measured in a timed one', () => {
+    const timed = start({ rounds: 3, timed: true, answerSeconds: 90 });
+    const [a] = Object.keys(timed.players) as [string];
+    const fast = (s: State): State => ({ ...s, stats: { ...s.stats, fastPlays: { [a]: 2 } } });
+    expect(awardsFor(fast(timed)).find((x) => x.id === 'quick-draw')?.description).toBe(
+      '2 cards in under 45 s',
+    );
+    const untimed = start({ rounds: 3, timed: false });
+    expect(awardsFor(fast(untimed)).some((x) => x.id === 'quick-draw')).toBe(false);
   });
 });
