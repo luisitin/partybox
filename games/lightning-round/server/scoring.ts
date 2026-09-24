@@ -78,7 +78,18 @@ export function scoreCurrentQuestion(state: State): State {
       wagerWon: final && correct ? wager : previous.wagerWon,
     };
   }
-  return { ...state, scores, streaks, stats, lastDelta };
+  // I-550 B: each player's record by category (regular questions — the final is the bet)
+  const record = { ...(state.record ?? {}) };
+  if (question && !final) {
+    for (const id of Object.keys(state.players)) {
+      const mine = { ...(record[id] ?? {}) };
+      const was = mine[question.category] ?? { right: 0, asked: 0 };
+      const right = state.picks[id]?.index === question.answerIndex;
+      mine[question.category] = { right: was.right + (right ? 1 : 0), asked: was.asked + 1 };
+      record[id] = mine;
+    }
+  }
+  return { ...state, scores, streaks, stats, lastDelta, record };
 }
 
 function best(

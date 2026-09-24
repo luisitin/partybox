@@ -268,3 +268,12 @@
 .roomScore {
   color: var(--pb-text);
 }
+
+/* ── I-550 B: my record in the final's category, one line under the rule. */
+.record {
+  display: block;
+  margin-top: var(--pb-space-1);
+  color: var(--pb-accent-2);
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+}
