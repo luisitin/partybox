@@ -168,8 +168,7 @@ export const STRINGS: Strings = {
 
     // TV: the show.
     "{name}'s book": 'El libro de {name}',
-    '{name} turns the pages · book {book} of {books} · page {page} of {pages}':
-      '{name} pasa las páginas · libro {book} de {books} · página {page} de {pages}',
+    'book {book} of {books}': 'libro {book} de {books}',
     'pages so far': 'páginas hasta ahora',
     '1 earlier page…': '1 página anterior…',
     '{n} earlier pages…': '{n} páginas anteriores…',

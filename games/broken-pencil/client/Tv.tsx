@@ -158,7 +158,8 @@ function Thumb({ page }: { page: PageView }): JSX.Element {
 
 /** The show's sheet: 560 px when the stage has it, else what is left under the "X drew" caption
  * (an eight-player roster leaves ~480 px; `.current` is the size container). */
-const SHEET_SIZE = 'min(560px, calc(100cqh - 72px))';
+// I-211 B: the sheet fills the page area's height (no caption row above it any more), never wider
+const SHEET_SIZE = 'min(calc(100cqh - 16px), 100cqw)';
 
 function CurrentPage({ page }: { page: PageView }): JSX.Element {
   const L = useT(STRINGS);
@@ -175,13 +176,14 @@ function CurrentPage({ page }: { page: PageView }): JSX.Element {
     );
   if (page.kind === 'draw')
     return (
-      <div className={`${styles.page} ${styles.flip}`}>
-        <p className={styles.pageWho}>{L('{name} drew', { name })}</p>
+      <div className={`${styles.page} ${styles.flip} ${styles.sheetWrap}`}>
         <DrawingView
           drawing={page.drawing}
           size={SHEET_SIZE}
           label={L("{name}'s drawing", { name })}
         />
+        {/* I-211 B: who drew it, on the sheet's corner */}
+        <p className={`${styles.pageWho} ${styles.sheetTag}`}>{L('{name} drew', { name })}</p>
       </div>
     );
   return (
@@ -270,36 +272,40 @@ export function Tv({ view }: GameTvProps<PencilTvView>): JSX.Element {
     const earlier = s.pages.length - 1 - STRIP_MAX;
     return (
       <Stage>
-        <div className={styles.head}>
-          <BigText level="h1" tone="accent">
-            {L("{name}'s book", { name: s.ownerName })}
-          </BigText>
-          <p className={styles.kicker}>
-            {L('{name} turns the pages · book {book} of {books} · page {page} of {pages}', {
-              name: s.ownerName,
-              book: s.book + 1,
-              books: view.bookCount,
-              page: s.page + 1,
-              pages: view.pageCount,
-            })}
-          </p>
-        </div>
         <div className={styles.showBody}>
-          <ul className={styles.strip} aria-label={L('pages so far')}>
-            {/* The stage fits about six thumbnails; a long chain keeps its newest pages (the context
-                for the current one) and folds the rest into a count (review-loop #67). */}
-            {earlier > 0 ? (
-              <li className={styles.thumbMore}>
-                {earlier === 1 ? L('1 earlier page…') : L('{n} earlier pages…', { n: earlier })}
-              </li>
-            ) : null}
-            {s.pages
-              .slice(0, -1)
-              .slice(-STRIP_MAX)
-              .map((p, i) => (
-                <Thumb key={i} page={p} />
-              ))}
-          </ul>
+          {/* I-211 B: the title and page count sit above the thumbnails — the page gets the height */}
+          <div className={styles.showSide}>
+            <div className={`${styles.head} ${styles.sideHead}`}>
+              <BigText level="h2" tone="accent">
+                {L("{name}'s book", { name: s.ownerName })}
+              </BigText>
+              {/* The owner's note on I-211: the three-line kicker was crammed — the title already names
+                  who turns the pages, so the column keeps "book 1 of 6" and "page 2 of 5". */}
+              <p className={styles.kicker}>
+                <span className={styles.kickerLine}>
+                  {L('book {book} of {books}', { book: s.book + 1, books: view.bookCount })}
+                </span>
+                <span className={styles.kickerLine}>
+                  {L('page {page} of {pages}', { page: s.page + 1, pages: view.pageCount })}
+                </span>
+              </p>
+            </div>
+            <ul className={styles.strip} aria-label={L('pages so far')}>
+              {/* The stage fits about six thumbnails; a long chain keeps its newest pages (the context
+                  for the current one) and folds the rest into a count (review-loop #67). */}
+              {earlier > 0 ? (
+                <li className={styles.thumbMore}>
+                  {earlier === 1 ? L('1 earlier page…') : L('{n} earlier pages…', { n: earlier })}
+                </li>
+              ) : null}
+              {s.pages
+                .slice(0, -1)
+                .slice(-STRIP_MAX)
+                .map((p, i) => (
+                  <Thumb key={i} page={p} />
+                ))}
+            </ul>
+          </div>
           <div className={styles.current}>
             {current ? <CurrentPage page={current} /> : null}
             {last ? (
