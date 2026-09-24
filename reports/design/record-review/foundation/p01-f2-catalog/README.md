@@ -9,13 +9,13 @@ the new data path.
 
 | Moment                        | p00 (main)                      | p01                                                      |
 | ----------------------------- | ------------------------------- | -------------------------------------------------------- |
-| Game list                     | in every room push              | `catalog`, once per connection: 2.0 KB for 5 games       |
+| Game list                     | in every room push              | `catalog`, once per connection: 1.7 KB for 5 games       |
 | A room push (lobby)           | ~16 KB                          | **1.2 KB**                                               |
 | A room push, game chosen      | ~16 KB                          | 1.7 KB (Wisecrack's form) · 4.7 KB (Bingo's 12 settings) |
 | Opening the picker / choosing | nothing (all text in the entry) | `about` 1.8 KB; in Spanish also `text` ≈ 1–3 KB          |
 | Join page load                | 1,143 KB                        | 1,139 KB (unchanged: F1 is next)                         |
 
-Budgets asserted in tests: every catalog entry ≤ 400 B (largest: Lightning Round 391 B), a 20-game
+Budgets asserted in tests: every catalog entry ≤ 400 B (largest: Lightning Round 367 B), a 20-game
 catalog ≤ 8 KB, every About ≤ 2 KB in English and Spanish.
 
 ## Looked at
