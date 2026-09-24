@@ -15,7 +15,10 @@ import type { Claim, Input, State } from '../types';
 export function enterCheck(state: State, now: number, claim: Claim): State {
   const round = state.round;
   const mine = round.daubs[claim.playerId] ?? [];
-  const wiped = mine.map((d, i) => (i === claim.cardIndex ? [] : d));
+  // I-435 A: the wrong daubs and the claimed line go; the other called daubs stay
+  const drop = new Set([...claim.red, ...claim.cells.filter((i) => i !== 12)]);
+  const lost = (mine[claim.cardIndex] ?? []).filter((c) => drop.has(c));
+  const wiped = mine.map((d, i) => (i === claim.cardIndex ? d.filter((c) => !drop.has(c)) : d));
   return enterPhase(
     clearClaims({
       ...state,
@@ -26,7 +29,7 @@ export function enterCheck(state: State, now: number, claim: Claim): State {
       },
       round: {
         ...round,
-        claim,
+        claim: { ...claim, wiped: lost },
         daubs: { ...round.daubs, [claim.playerId]: wiped },
         waitForCall: { ...round.waitForCall, [claim.playerId]: round.drawn + 1 },
         judged: false,

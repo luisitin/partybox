@@ -116,6 +116,21 @@ export function lineName(cells: readonly number[], L: Translator): string | null
   return L('The diagonal');
 }
 
+/** I-435: what a wrong claim took — the whole card, the wrong daubs and the line, or the wrong daubs. */
+export function wipeKind(claim: {
+  daubs: number[];
+  cells: number[];
+  wiped?: number[];
+}): 'card' | 'line' | 'wrong' {
+  const lost = new Set(claim.wiped ?? claim.daubs);
+  const daubed = claim.daubs.filter((i) => i !== 12);
+  if (daubed.every((i) => lost.has(i))) return 'card';
+  return claim.cells.some((i) => i !== 12 && claim.daubs.includes(i) && lost.has(i)) &&
+    claim.cells.every((i) => i === 12 || !claim.daubs.includes(i) || lost.has(i))
+    ? 'line'
+    : 'wrong';
+}
+
 /** A choice made mid-celebration, as the room reads it: who picked what, and when it starts. */
 export function pendingLine(
   pending: 'same' | 'blackout' | 'next' | null,

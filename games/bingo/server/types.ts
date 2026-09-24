@@ -57,6 +57,8 @@ export interface Claim {
   /** Cells of that completion not daubed. */
   missing: number[];
   valid: boolean;
+  /** I-435: the daubs a wrong claim took off the card (the TV lifts exactly these). */
+  wiped?: number[];
 }
 
 export interface RoundState {

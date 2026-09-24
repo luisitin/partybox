@@ -5,7 +5,7 @@ import type { JSX } from 'react';
 import { WaitingScreen, useT } from '@partybox/game-sdk/ui';
 import type { BingoControllerView, CallView } from '../server/views';
 import { Ball } from './ControllerParts';
-import { whyNot } from './copy';
+import { wipeKind, whyNot } from './copy';
 import { STRINGS } from './strings';
 import type { Orientation } from './styles';
 import styles from './Controller.module.css';
@@ -101,7 +101,14 @@ export function ClaimNote({
   return (
     <p className={`${styles.wipeNote} ${verdictShown ? '' : styles.wipeNotePending}`}>
       {verdictShown
-        ? `${why ? `${why}. ` : ''}${L('Card {n} wiped — re-daub from memory when play resumes.', { n })}`
+        ? `${why ? `${why}. ` : ''}${
+            // I-435: say what went — the rest of the card stays
+            wipeKind(claim) === 'card'
+              ? L('Card {n} wiped — re-daub from memory when play resumes.', { n })
+              : wipeKind(claim) === 'line'
+                ? L('Card {n}: the wrong daubs and that line are wiped — the rest stay.', { n })
+                : L('Card {n}: the wrong daubs are wiped — the rest stay.', { n })
+          }`
         : view.phoneOnly
           ? L('Card {n} is up — everyone is checking it.', { n })
           : L('Card {n} is on the TV — everyone is checking it.', { n })}

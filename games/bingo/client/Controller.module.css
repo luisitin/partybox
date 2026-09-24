@@ -429,6 +429,7 @@
 .wipeNote {
   margin: 0 0 var(--pb-space-1);
   min-height: calc(var(--pb-font-caption) * 1.2 * 2); /* two lines, held from the claim */
+  flex-shrink: 0; /* I-435: the what-went line can run to four; it never draws over the card */
   line-height: 1.2;
   font-size: var(--pb-font-caption);
   font-weight: 700;
