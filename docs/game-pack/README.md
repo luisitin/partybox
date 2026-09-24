@@ -32,6 +32,8 @@ at a time; nothing here is built until the owner says so.
 - `.claude/skills/record-review` — the recording + review loop and its smoothness gates.
 - `.claude/skills/ship-spec` — the Idea Forge pipeline's shipping steps.
 - `packages/e2e/src/design/dead-air.ts` — frozen stretches and hard cuts in a recorded surface.
+- `docs/game-pack/file_part.py <upload.md> <NN-NAME.md> <date>` — files a new part: copies it into
+  `parts/`, cuts each game into its folder's `SPEC.md`, updates the READMEs and this index.
 
 ## The owner's bar
 
