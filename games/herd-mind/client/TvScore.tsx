@@ -61,6 +61,12 @@ export function TvScore({ view }: { view: PushedView<HerdTvView> }): JSX.Element
       : L('🐑 The Black Sheep stays in the pasture.');
   return (
     <div className={`${styles.page} ${view.paused ? styles.paused : ''}`}>
+      {/* Its own layer at z 0, first, so the rain falls behind the words and the board. */}
+      {won && beat >= 4 ? (
+        <div className={styles.confettiLayer}>
+          <Confetti />
+        </div>
+      ) : null}
       <div className={styles.top}>
         <span className={styles.kicker}>{kicker(view.n, view.total, view.target, L)}</span>
         <p className={styles.summary}>{summary}</p>
@@ -74,7 +80,7 @@ export function TvScore({ view }: { view: PushedView<HerdTvView> }): JSX.Element
         scored={view.scored}
         sheepFrom={view.sheepFrom}
         sheep={view.sheep}
-        plus={beat >= 1}
+        plus={beat >= 1 && beat < 3}
         fly={beat >= 2}
         moved={beat >= 3}
         winners={view.winners}
@@ -82,7 +88,6 @@ export function TvScore({ view }: { view: PushedView<HerdTvView> }): JSX.Element
       <div className={styles.bottom}>
         {won && beat >= 4 ? (
           <>
-            <Confetti />
             <p className={styles.winner}>
               {view.winners.length === 1
                 ? L('{name} wins!', { name: name(view.winners[0] ?? null) })

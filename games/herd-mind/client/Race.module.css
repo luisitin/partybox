@@ -6,6 +6,7 @@
   flex-direction: column;
   gap: var(--pb-space-4);
   container-type: size;
+  position: relative;
 }
 
 .paused,
@@ -253,4 +254,24 @@
 :global(:root[data-motion='off']) .winner,
 :global(:root[data-motion='off']) .next {
   animation: none;
+}
+
+/* A stacking context of its own: the SDK confetti's z 5 stays inside it, under the page's words. */
+.confettiLayer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  /* The headlines have no card behind them: the rain keeps to the sides, clear of the words. */
+  mask-image: linear-gradient(to right, #000 0 16%, transparent 24% 76%, #000 84%);
+}
+
+/* The words and the board sit above the SDK's confetti layer (z 5): the rain falls behind the
+   winner line and the names, never across them (blind-auction 7975d3). */
+.top,
+.track,
+.winner,
+.next {
+  position: relative;
+  z-index: 6;
 }

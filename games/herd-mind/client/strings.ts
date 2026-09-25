@@ -47,8 +47,7 @@ export const STRINGS: Strings = {
     'First to {target} points wins.': 'Gana quien llegue primero a {target} puntos.',
     'the Black Sheep': 'la Oveja Negra',
     // TV: answer
-    'Question {n} of {total} · First to {target}':
-      'Pregunta {n} de {total} · Gana quien llegue a {target}',
+    'Question {n} of {total} · First to {target}': 'Pregunta {n} de {total} · Meta: {target}',
     '{name} has the Black Sheep': '{name} tiene la Oveja Negra',
     answers: 'respuestas',
     'Type what you think most people will say.': 'Escribe lo que crees que dirá la mayoría.',
