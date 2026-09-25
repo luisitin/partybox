@@ -188,10 +188,11 @@ recipe: `docs/ADDING_A_GAME.md`.
   `OrderPicker` to hive-rank; `WordGrid` to spy-grid; `BidPad` to blind-auction. Never write
   another owner's piece. Build a stand-in inside your game folder and swap it when theirs lands
   (`docs/game-pack/SESSION-PLAYBOOK.md` §3).
-- **Games on main:** bingo, blanks, broken-pencil, lightning-round, wisecrack (the original five), and
-  hive-rank, imposter, spy-grid, tune-in, fake-out, who-said-it (the pack). Follow-ups for those go on
-  a new branch from main. **In review, on their own branches:** echo, herd-mind, nightfall,
-  secret-hitler, blind-auction (being renamed **Mystery Box**, #decisions [1a5b76]).
+- **Which games are where:** `games/` on main holds the shipped ones: the original five (bingo, blanks,
+  broken-pencil, lightning-round, wisecrack) and the pack games merged so far. A pack game still in review
+  lives on its own branch (`git -C C:/dev/partybox branch --list "game/*"`) and has a REVIEW REQUEST in
+  #merges. Follow-ups to a shipped game go on a new branch from main. Blind Auction is being renamed
+  **Mystery Box** (#decisions [1a5b76]).
 - **Each game's owner agent** is `partybox-game-<id>`, with its worktree at `C:/dev/partybox-game-<id>`
   and its port in §4. Its state lives in `docs/game-pack/<id>/NOTES.md` (on its branch) and its
   handoff in `C:/dev/agent-hub/handoffs/`. Other agents: `reviewer` (dedicated code and design
