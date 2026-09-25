@@ -78,11 +78,7 @@ export function TvScore({
         <span className={styles.kicker}>
           {L('Round {n} of {total}', { n: view.round, total: view.rounds })} · {L('Scores')}
         </span>
-        <span className={styles.legend}>
-          <span>{L('✓ Exact spot +2')}</span>
-          <span>{L('±1 One spot off +1')}</span>
-          <span>{L('★ All five +2')}</span>
-        </span>
+
         {view.score?.perfect ? (
           <span className={styles.perfect} role="status">
             {L('PERFECT HIVE')}
@@ -90,6 +86,11 @@ export function TvScore({
         ) : null}
         {view.next && skip ? <TvButton label={next} skip={skip} delayMs={2000} /> : null}
       </header>
+      <p className={styles.legend}>
+        <span>{L('✓ Exact spot +2')}</span>
+        <span>{L('±1 One spot off +1')}</span>
+        <span>{L('★ All five +2')}</span>
+      </p>
       <div
         className={styles.scoreBody}
         style={{ '--queen-w': rows.length > 8 ? '400px' : '540px' } as CSSProperties}

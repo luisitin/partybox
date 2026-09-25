@@ -559,7 +559,7 @@
 }
 
 .scoreHeader {
-  margin-bottom: var(--pb-space-3);
+  white-space: nowrap;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -677,21 +677,21 @@
 
 /* A slow loop over the standings (right of the Queen card), transform only. */
 @keyframes patrol {
-  /* Along the header band only (above the standings), never over a row or a score. */
+  /* The header's clear middle only: between the kicker and the PERFECT stamp / Next button. */
   0% {
-    transform: translate3d(1760px, 150px, 0);
+    transform: translate3d(1180px, 140px, 0);
   }
   25% {
-    transform: translate3d(1300px, 120px, 0) scale(0.9);
+    transform: translate3d(900px, 110px, 0) scale(0.9);
   }
   50% {
-    transform: translate3d(700px, 160px, 0);
+    transform: translate3d(620px, 150px, 0);
   }
   75% {
-    transform: translate3d(1150px, 110px, 0) scale(1.1);
+    transform: translate3d(1000px, 105px, 0) scale(1.1);
   }
   100% {
-    transform: translate3d(1760px, 150px, 0);
+    transform: translate3d(1180px, 140px, 0);
   }
 }
 
@@ -717,8 +717,10 @@
 /* How points are made, always in view on the score screen (the owner: make it clear). */
 .legend {
   display: flex;
-  justify-content: center;
-  gap: var(--pb-space-5);
+  justify-content: flex-start;
+  gap: var(--pb-space-6);
+  margin-bottom: var(--pb-space-2);
+  white-space: nowrap;
   font-size: var(--pb-font-caption);
   font-weight: 800;
   color: var(--pb-text-muted);
