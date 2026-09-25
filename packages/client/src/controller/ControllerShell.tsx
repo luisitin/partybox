@@ -3,7 +3,7 @@
 // the header is the current screen. The shell also turns state transitions into the phone's own
 // cues and haptics (docs/DESIGN_SYSTEM.md): the TV stays the audible focal point, so the phone
 // only sounds for what happened in the player's hand (submit, error) and buzzes for the rest.
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { JSX, ReactNode } from 'react';
 import type { PlayerPublic } from '@partybox/shared';
 import { Avatar, getLang, useSecondsLeft } from '@partybox/game-sdk/ui';
@@ -38,6 +38,9 @@ export interface ControllerShellProps {
   musicWhat?: string | null;
   children: ReactNode;
 }
+
+/** I-674 A: how long a refusal stays on the phone. */
+const ERROR_MS = 6000;
 
 export function ControllerShell({
   controller,
@@ -80,6 +83,21 @@ export function ControllerShell({
     setSeenError(state.error);
     if (state.error && state.joined) setStripShaking(true);
   }
+  // I-674 A: a refusal is news for a moment, not for the rest of the night — it goes after 6 s,
+  // or as soon as the room moves on (a new status or a new phase)
+  const errorNow = state.error;
+  useEffect(() => {
+    if (!errorNow) return undefined;
+    const h = setTimeout(controller.dismissError, ERROR_MS);
+    return () => clearTimeout(h);
+  }, [errorNow, controller]);
+  const sceneKey = `${room?.status ?? ''}:${state.view?.phaseId ?? ''}`;
+  const lastScene = useRef(sceneKey);
+  useEffect(() => {
+    if (lastScene.current === sceneKey) return;
+    lastScene.current = sceneKey;
+    controller.dismissError();
+  }, [sceneKey, controller]);
   useEffect(() => {
     if (!stripShaking) return;
     const fallback = setTimeout(() => setStripShaking(false), 400);
