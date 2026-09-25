@@ -141,6 +141,10 @@ export interface RoundState {
 
 export interface State extends GameStateBase {
   settings: Settings;
+  /** ADR-054: the language of the calls, fixed at init. Absent (older states, fixtures) =
+   *  English. The recorded call clips are English only, so a Spanish game calls silently
+   *  (views.ts `reader`) until Spanish recordings exist. */
+  contentLang?: 'en' | 'es';
   round: RoundState;
   /** Bingos won. */
   wins: Record<string, number>;

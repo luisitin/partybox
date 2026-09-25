@@ -78,6 +78,8 @@ function init(ctx: InitContext): State {
     rng: seedRng(ctx.seed),
     players,
     settings: readSettings(ctx.settings),
+    // ADR-054: the calls' language, fixed for the game (absent = English).
+    ...(ctx.contentLang === 'es' ? { contentLang: 'es' as const } : {}),
     round: {
       number: 0,
       pattern: 'line',
