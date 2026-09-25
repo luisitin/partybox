@@ -118,7 +118,8 @@ export const LINE_GAP_MS = 250;
 export const LAND_MS = 3_200;
 /** The `shown` beat with no voice: the author, the glows, the points. */
 export const SHOWN_MS = 4_200;
-export const SCORES_MS = 6_000;
+/** The board with this question's points: a slow read at 16 players (the VIP can go on sooner). */
+export const SCORES_MS = 10_000;
 /** "Everyone is done" never cuts a phase instantly: the last ✓ lands and a change still counts. */
 export const DONE_GRACE_MS = 900;
 /** The most answer cards one game plays (§4.7). */

@@ -8,10 +8,11 @@ import { msOf, promptReading } from '../speech';
 import { PROMPT_AFTER_MS, PROMPT_MAX_MS, VOICE_LEAD_MS } from '../types';
 import type { Input, State, Transition } from '../types';
 
-/** Time to read `text` on a screen: 1.5 s plus a third of a second per word, 3–10 s. */
+/** Time for a slow reader to read `text` (the owner's pacing rule [cc45f4]): 2.5 s plus 0.45 s a
+ *  word, 4–10 s. */
 export function readingTimeMs(text: string): number {
   const words = text.split(/\s+/).filter(Boolean).length;
-  return Math.min(PROMPT_MAX_MS, Math.max(3_000, 1_500 + words * 330));
+  return Math.min(PROMPT_MAX_MS, Math.max(4_000, 2_500 + words * 450));
 }
 
 function stayMs(state: State): number {
