@@ -277,7 +277,7 @@ describe('the show', () => {
     expect(game.controllerView(s, b).showing?.presenting).toBe(false);
     expect(input(s, b, { type: 'turn' })).toBe(s); // not their book
     expect(JSON.stringify(game.tvView(s))).not.toContain('a thing');
-    s = input(s, a, { type: 'turn' });
+    s = input(s, a, { type: 'turn' }, s.phase.startedAt + 1500); // I-491: past the 1.2 s guard
     expect(s.showing).toMatchObject({ book: 0, page: 1 });
     expect(game.tvView(s).showing?.pages).toHaveLength(2);
     s = vip(s, 'skip'); // the TV's Skip / the VIP still work

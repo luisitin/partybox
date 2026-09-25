@@ -101,6 +101,7 @@ export const STRINGS: Strings = {
 
     // The show, on the phone.
     'Next page ▸': 'Pasar página ▸',
+    '◂ Back': '◂ Atrás', // I-491 B
     'Finish ▸': 'Terminar ▸',
     'Next book ▸': 'Próximo libro ▸',
     'The show is next…': 'Ahora viene el show…',

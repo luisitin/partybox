@@ -1,6 +1,7 @@
 // The show phase on a phone: the presenter turns the pages of their own book; everyone else
 // watches the TV — or, in a "phone only" room, reads the page on the phone. Split from
 // Controller.tsx at the 300-line cap.
+import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
 import { PrimaryButton, Screen, WaitingScreen, useT } from '@partybox/game-sdk/ui';
 import type { GameControllerProps, Translator } from '@partybox/game-sdk/ui';
@@ -76,9 +77,24 @@ export function Show({
     <Screen
       title={tvOff ? L('Your book is up') : L('Your book is on the TV')}
       footer={
-        <PrimaryButton onClick={() => send({ type: 'turn' })} disabled={view.paused}>
-          {turnLabel(L, s.lastPage, s.lastBook)}
-        </PrimaryButton>
+        <div className={styles.turnRow}>
+          {/* I-491 B: the previous page back up */}
+          <PrimaryButton
+            tone="neutral"
+            className={styles.backButton}
+            onClick={() => send({ type: 'back' })}
+            disabled={view.paused || s.page === 0}
+          >
+            {L('◂ Back')}
+          </PrimaryButton>
+          {/* I-491 A: a new page's Next wakes after 1.2 s — it fills while it waits */}
+          <TurnButton
+            key={`${s.book}:${s.page}`}
+            label={turnLabel(L, s.lastPage, s.lastBook)}
+            disabled={view.paused}
+            onTurn={() => send({ type: 'turn' })}
+          />
+        </div>
       }
     >
       <p className={styles.kicker}>
@@ -126,5 +142,31 @@ function PhonePage({ page }: { page: PageView }): JSX.Element {
         {page.text ?? '???'}
       </span>
     </p>
+  );
+}
+
+/** I-491 A: Next, asleep for the page's first 1.2 s (the server ignores a turn then, too). */
+function TurnButton({
+  label,
+  disabled,
+  onTurn,
+}: {
+  label: string;
+  disabled: boolean;
+  onTurn: () => void;
+}): JSX.Element {
+  const [awake, setAwake] = useState(false);
+  useEffect(() => {
+    const h = setTimeout(() => setAwake(true), 1200);
+    return () => clearTimeout(h);
+  }, []);
+  return (
+    <PrimaryButton
+      onClick={onTurn}
+      disabled={disabled || !awake}
+      className={`${styles.turnButton} ${awake ? '' : styles.turnWaking}`}
+    >
+      {label}
+    </PrimaryButton>
   );
 }

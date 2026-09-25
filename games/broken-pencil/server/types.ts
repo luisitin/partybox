@@ -107,6 +107,7 @@ export const inputSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('pick'), option: z.number().int().min(0).max(2) }),
   /** show: the book's owner turns the page from their phone. */
   z.object({ type: z.literal('turn') }),
+  z.object({ type: z.literal('back') }), // I-491 B: the previous page of the presenter's book
   z.object({ type: z.literal('pickCustom'), text: z.string().trim().min(1).max(30) }),
   z.object({ type: z.literal('draw'), strokes: strokesSchema }),
   /** The sheet so far, while still drawing: what the deadline keeps if "Done" never comes. */
@@ -137,3 +138,6 @@ export const EVERYONE = 15;
 
 /** "Leave the current phase now" — injected into phase reducers by server/index.ts. */
 export type Transition = (state: State, now: number) => State;
+
+/** I-491 A: a page can't be turned in its first this-many ms (a pocket's double tap turns one). */
+export const MIN_PAGE_MS = 1_200;

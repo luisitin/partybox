@@ -7,6 +7,7 @@ import { isIntact } from '../books';
 import { LINES } from '../content';
 import {
   BOT_SHOW_MS,
+  MIN_PAGE_MS,
   SHOW_MS,
   SUMMARY_MS,
   VERDICT_BEAT_INTACT_MS,
@@ -89,7 +90,14 @@ export function reduceShow(state: State, event: GameEvent<Input>, next: Transiti
       const verdict = state.showing?.verdict;
       const beat = verdict === 'intact' ? VERDICT_BEAT_INTACT_MS : VERDICT_BEAT_MS;
       if (verdict && event.now - state.phase.startedAt < beat) return state;
+      // I-491 A: a turn in any page's first moment is a pocket, not a person
+      if (event.now - state.phase.startedAt < MIN_PAGE_MS) return state;
       return turnPage(state, event.now, next);
+    }
+    // I-491 B: back one page, within the presenter's own book
+    if (event.input.type === 'back' && event.playerId === presenterOf(state) && state.showing) {
+      const { book, page } = state.showing;
+      return page > 0 ? showPage(state, book, page - 1, event.now) : state;
     }
     return veto(state, event);
   }

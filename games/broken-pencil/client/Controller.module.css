@@ -321,3 +321,43 @@
   font-size: var(--pb-font-h2);
   overflow-wrap: normal;
 }
+
+/* ── I-491: the presenter's buttons — Next wakes after 1.2 s (a fill runs across it). */
+.turnRow {
+  display: flex;
+  gap: var(--pb-space-2);
+}
+.turnRow > * {
+  flex: 1 1 0;
+  min-width: 0;
+  width: auto;
+  /* one line each (the labels wrapped to "◂ / Back" and "Next page / ▸" in a take) */
+  white-space: nowrap;
+  padding-inline: var(--pb-space-3);
+}
+/* B: Back is a third of the row, Next the rest (PrimaryButton is full-width on its own) */
+.turnRow > .backButton {
+  flex: 0 0 34%;
+  width: auto;
+}
+.turnButton {
+  position: relative;
+  overflow: hidden;
+}
+.turnWaking::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 5px;
+  background: color-mix(in srgb, var(--pb-on-accent, #fff) 70%, transparent);
+  transform-origin: left center;
+  animation: turn-wake 1.2s linear both;
+}
+@keyframes turn-wake {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
