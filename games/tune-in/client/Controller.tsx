@@ -123,7 +123,14 @@ export function Controller({ view: raw, send, skip }: Props): JSX.Element {
         <WatchTv key={`${key}w`} />
       );
     case 'scores':
-      return <PhoneResult key={`${key}s`} view={view} skip={skip} />;
+      return (
+        <PhoneResult
+          key={`${key}s`}
+          view={view}
+          skip={skip}
+          vipName={view.vip ? nameOf(view.players, view.vip) : null}
+        />
+      );
     default:
       return <WaitingScreen mood="done" title={L('Thanks for playing!')} />;
   }
