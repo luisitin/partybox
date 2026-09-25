@@ -6,6 +6,7 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Added
 
+- **Spy Grid** 🗂️ (game pack, game 9): Codenames-style teams. 25 words on the TV; only the two spymasters see which are their agents. A spymaster sends one word and a number ("Ocean, 3", read aloud); the team points on their phones and a card flips when most of them agree — own agent, bystander, enemy agent or the assassin. First team to find all its agents wins. 4–16 players in teams, a co-op mission at 2–3, about 18 minutes, bots welcome, 604 family + 122 spicy words, phone-only rooms, English + Spanish. The board is a new SDK piece, `@partybox/game-sdk/ui/word-grid`.
 - **Hive Rank** 🐝 (game pack, game 6): five things and a question ("Best to worst road-trip snack"); everyone taps them into order on their phone, the orders are combined into the hive's order, and the TV counts it down from fifth to first with the reader, a scout bee flying to each next spot. Score 2 per thing in the hive's exact spot, 1 if one spot off, +2 for all five; the round's top scorer is crowned Queen Bee. 2–16 players, about 5 minutes, bots welcome, 150 family + 50 spicy questions, phone-only rooms, English + Spanish. The phone's ranking control is a new SDK piece, `@partybox/game-sdk/ui/order-picker`.
 
 ### Fixed
