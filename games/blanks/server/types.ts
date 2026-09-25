@@ -1,4 +1,5 @@
 // State and input types for Blanks. Everything is JSON-serializable (docs/GAME_CONTRACT.md).
+import { readingMs, wordCount } from '@partybox/game-sdk';
 import { z } from '@partybox/game-sdk';
 import type { GameStateBase } from '@partybox/game-sdk';
 
@@ -160,11 +161,10 @@ export const READ_PER_WORD_MS = 333;
 export const READ_UI_FACTOR = 1.3;
 /** How long `words` words take a slow reader (`factor` 1 for deck text, which is never translated). */
 export function readMs(words: number, factor = READ_UI_FACTOR): number {
+  if (factor === 1 || factor === READ_UI_FACTOR) return readingMs(words, { ui: factor !== 1 });
   return Math.round((READ_BASE_MS + words * READ_PER_WORD_MS) * factor);
 }
-export function wordCount(text: string): number {
-  return text.split(/\s+/).filter((w) => w.length > 0).length;
-}
+export { wordCount };
 /** The round card: up to ~12 words over three beats (title, judge line, leader line at ~1.2 s):
  *  1.2 s + readMs(12) ≈ 8.3 s (was 5 s). */
 export const INTRO_MS = 8_000;

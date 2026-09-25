@@ -112,7 +112,7 @@ describe('state budget', () => {
 
 describe('pacing to the voice', () => {
   it('the question card waits for a slow reading, then holds for it plus a beat', () => {
-    let s = timer(start({ fact: PENGUIN, settings: { reader: 'fable' } }));
+    let s = start({ fact: PENGUIN, settings: { reader: 'fable' } });
     expect(s.phase.id).toBe('question');
     expect((s.phase.deadline ?? 0) - s.phase.startedAt).toBe(12_000);
     s = speech(s, factReading('fable', PENGUIN).key, 3_000, s.phase.startedAt + 2_000);
@@ -121,7 +121,7 @@ describe('pacing to the voice', () => {
   });
 
   it('a late reading starts when it arrives: the voice and the read-along are not skipped', () => {
-    let s = timer(start({ fact: PENGUIN, settings: { reader: 'fable' } }));
+    let s = start({ fact: PENGUIN, settings: { reader: 'fable' } });
     expect(tv(s).readAlong).toBe('waiting');
     const arrival = s.phase.startedAt + 5_000;
     s = speech(s, factReading('fable', PENGUIN).key, 3_000, arrival);
@@ -131,7 +131,7 @@ describe('pacing to the voice', () => {
   });
 
   it('a failed voice never holds the room', () => {
-    let s = timer(start({ fact: PENGUIN, settings: { reader: 'fable' } }));
+    let s = start({ fact: PENGUIN, settings: { reader: 'fable' } });
     s = speech(s, factReading('fable', PENGUIN).key, -1);
     expect(tv(s).reading).toBeNull();
     expect(timer(s).phase.id).toBe('lie');
