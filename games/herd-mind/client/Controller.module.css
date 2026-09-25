@@ -296,7 +296,9 @@
 
 /* ── herd ── */
 .watch {
-  min-height: 100%;
+  /* fills what the ⚙️ row leaves: a min-height of 100 % overflowed and raised "more below" */
+  flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
