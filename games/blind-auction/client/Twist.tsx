@@ -11,9 +11,12 @@ import { STRINGS } from './strings';
 export function TwistNote({
   twist,
   size = 'tv',
+  short = false,
 }: {
   twist?: Twist;
   size?: 'tv' | 'phone';
+  /** Once a card is picked the phone keeps only the twist's name ('✂️ Split'): room for the stake. */
+  short?: boolean;
 }): JSX.Element | null {
   const L = useT(STRINGS);
   if (!twist) return null;
@@ -31,9 +34,10 @@ export function TwistNote({
               : L(
                   '🧮 The crowd sets the odds: right calls split the whole pot — back the unpopular pick!',
                 );
+  const shown = short ? text.split(':')[0] : text;
   return (
     <p className={`${styles.twist} ${size === 'phone' ? styles.twistPhone : ''}`}>
-      <span className={styles.twistTag}>{L('Twist')}</span> {text}
+      <span className={styles.twistTag}>{L('Twist')}</span> {shown}
     </p>
   );
 }

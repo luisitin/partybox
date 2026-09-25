@@ -1403,3 +1403,11 @@
     line-height: 1.25;
   }
 }
+
+/* The twist's control sits in the bet header now (review [cf1052] #1): a compact one-line pill. */
+.insure {
+  min-height: 36px;
+  padding: 0 var(--pb-space-3);
+  font-size: var(--pb-font-caption);
+  line-height: 1.2;
+}

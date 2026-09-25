@@ -106,6 +106,8 @@ export function OptionBoard({
                 <span className={styles.pay}>
                   {o.pay > 0 ? L('pays {x}', { x: payText(L, o.pay) }) : L('splits the pot')}
                 </span>
+                {/* A folded pill keeps the payout to compare (review [cf1052] nit). */}
+                {o.pay > 0 ? <span className={styles.payShort}>{payText(L, o.pay)}</span> : null}
               </>
             )}
             {bets ? (

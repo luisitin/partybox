@@ -20,6 +20,16 @@ import { STRINGS } from './strings';
 
 type Props = GameControllerProps<BlindAuctionControllerView, Input>;
 
+/** The fold (the pick on top, the rest to pills) eases instead of snapping (review [cf1052] #3). */
+function eased(change: () => void): void {
+  const doc = document as Document & { startViewTransition?: (cb: () => void) => unknown };
+  const still =
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+    document.documentElement.dataset['motion'] === 'off';
+  if (doc.startViewTransition && !still) doc.startViewTransition(change);
+  else change();
+}
+
 /** A short phone (an SE): the Bet button drops the pick's name, which the ticked card shows. */
 function useShortPhone(): boolean {
   const query = '(max-height: 640px)';
@@ -92,6 +102,21 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
     ) : view.topped ? (
       L('You ran out of coins: here are {coin} {n} to play with', { coin: COIN, n: PITY_COINS })
     ) : null;
+  // The twist's own control sits in the header, under its line (before a pick) or in place of it
+  // (after): never below the chips, where an SE's fade covered it (review [cf1052] #1).
+  const control =
+    box.twist === 'insure' ? (
+      <InsureSwitch on={insured} amount={amount} onToggle={() => setInsured((v) => !v)} />
+    ) : box.twist === 'double' ? (
+      <DoubleSwitch on={doubled} onToggle={() => setDoubled((v) => !v)} />
+    ) : box.twist === 'peek' ? (
+      <PeekButton
+        price={view.peekPrice}
+        done={view.myPeek !== null}
+        struck={struck ? nameOf(L, struck) : ''}
+        onPeek={() => send({ type: 'peek' })}
+      />
+    ) : undefined;
   return (
     <BidPad
       value={amount}
@@ -153,7 +178,10 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
       header={
         <div className={styles.betHead}>
           <LotTitle box={box} coins={view.coins} />
-          <TwistNote twist={box.twist} size="phone" />
+          {option === null || !control ? (
+            <TwistNote twist={box.twist} size="phone" short={option !== null} />
+          ) : null}
+          {control}
           {/* A twist's own line is the instruction on that box (review [2a24d2] #2: one line, not two). */}
           {option === null && !box.twist && box.event !== 'shells' && box.event !== 'keno' ? (
             // Above the cards, never in the fade (review). A first-timer didn't know to tap a card or where the stake goes.
@@ -173,16 +201,18 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
               size="phone"
               selected={option}
               also={box.twist === 'split' ? also : null}
-              onSelect={(i) => {
-                if (box.twist !== 'split') return setOption(i);
-                // Split: the first tap picks, a second card adds a half; tapping a lit card lets it go.
-                if (option === null) return setOption(i);
-                if (i === option) {
-                  setOption(also);
-                  return setAlso(null);
-                }
-                setAlso(i === also ? null : i);
-              }}
+              onSelect={(i) =>
+                eased(() => {
+                  if (box.twist !== 'split') return setOption(i);
+                  // Split: the first tap picks, a second card adds a half; tapping a lit card lets it go.
+                  if (option === null) return setOption(i);
+                  if (i === option) {
+                    setOption(also);
+                    return setAlso(null);
+                  }
+                  setAlso(i === also ? null : i);
+                })
+              }
               locked={
                 box.event === 'potato'
                   ? view.mySeat
@@ -194,20 +224,6 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
             />
           )}
         </div>
-      }
-      below={
-        box.twist === 'insure' ? (
-          <InsureSwitch on={insured} amount={amount} onToggle={() => setInsured((v) => !v)} />
-        ) : box.twist === 'double' ? (
-          <DoubleSwitch on={doubled} onToggle={() => setDoubled((v) => !v)} />
-        ) : box.twist === 'peek' ? (
-          <PeekButton
-            price={view.peekPrice}
-            done={view.myPeek !== null}
-            struck={struck ? nameOf(L, struck) : ''}
-            onPeek={() => send({ type: 'peek' })}
-          />
-        ) : undefined
       }
       notice={notice}
     />

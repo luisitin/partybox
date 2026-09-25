@@ -411,36 +411,56 @@ button.option:focus-visible {
   }
 }
 
-/* A short phone, once a card is picked: the pick stays a full row on top and the others fold to
-   one-line pills two abreast (tap one to switch), so the stake stepper and its chips sit above the
-   fold (review [14bbfe] #1 / [02ce10]). */
-@media (max-height: 640px) {
-  .phone.picked {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-auto-flow: row dense;
-    gap: 6px;
-  }
-  .phone.picked .selected {
-    grid-column: 1 / -1;
-    order: -1;
-  }
-  .phone.picked .option:not(.selected) {
-    grid-template-columns: auto minmax(0, 1fr);
-    grid-template-areas: 'icon name';
-    padding-block: 2px;
-    column-gap: var(--pb-space-1);
-  }
-  .phone.picked .option:not(.selected) .odds,
-  .phone.picked .option:not(.selected) .pay {
-    display: none;
-  }
-  .phone.picked .option:not(.selected) .icon {
-    font-size: 1.125rem;
-  }
-  .phone.picked .option:not(.selected) .name {
-    overflow: hidden;
-    font-size: var(--pb-font-caption);
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
+/* Once a card is picked (every phone, so a 200 % phone folds too; review [cf1052] #2): the pick
+   stays a full row on top and the others fold to one-line pills two abreast (icon · name · ×N; tap
+   one to switch), so the stake stepper and its chips sit above the fold (review [14bbfe] #1). */
+.payShort {
+  display: none;
+}
+
+.phone.picked {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-flow: row dense;
+  gap: 6px;
+}
+
+.phone.picked .selected {
+  grid-column: 1 / -1;
+  order: -1;
+}
+
+.phone.picked .option:not(.selected) {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas: 'icon name short';
+  padding-block: 2px;
+  column-gap: var(--pb-space-1);
+}
+
+.phone.picked .option:not(.selected) .odds,
+.phone.picked .option:not(.selected) .pay {
+  display: none;
+}
+
+.phone.picked .option:not(.selected) .payShort {
+  display: block;
+  grid-area: short;
+  font-size: var(--pb-font-caption);
+  font-weight: 900;
+  color: var(--pb-accent-2);
+}
+
+.phone.picked .option:not(.selected) .icon {
+  font-size: 1.125rem;
+}
+
+.phone.picked .option:not(.selected) .name {
+  overflow: hidden;
+  font-size: var(--pb-font-caption);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* Every option pays the same (a uniform board): once one is picked, that shared line was read. */
+.phone.picked .uniform {
+  display: none;
 }
