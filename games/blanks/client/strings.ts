@@ -37,6 +37,7 @@ const PICKER_ES: Readonly<Record<string, string>> = {
   'Family night': 'Noche familiar',
   Adults: 'Adultos',
   'Everyone votes': 'Votan todos',
+  'Everyone votes (a judge at three)': 'Votan todos (con tres, un juez)', // I-172 A
   'A rotating judge': 'Un juez por turnos',
   'No reader': 'Sin lector',
   'Old British Man': 'Señor británico',
