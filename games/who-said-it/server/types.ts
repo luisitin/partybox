@@ -115,9 +115,9 @@ export const VOICE_LEAD_MS = 600;
 /** Between two lines of the reader ("Who said it?" → the answer; the name → "Everyone knew!"). */
 export const LINE_GAP_MS = 250;
 /** The reveal's `land` beat: guesses fly (≈ 0.9 s), a 1 s hold, "It was…" — then the flip. */
-export const LAND_MS = 2_600;
+export const LAND_MS = 3_200;
 /** The `shown` beat with no voice: the author, the glows, the points. */
-export const SHOWN_MS = 2_200;
+export const SHOWN_MS = 4_200;
 export const SCORES_MS = 6_000;
 /** "Everyone is done" never cuts a phase instantly: the last ✓ lands and a change still counts. */
 export const DONE_GRACE_MS = 900;

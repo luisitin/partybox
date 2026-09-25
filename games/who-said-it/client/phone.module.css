@@ -175,7 +175,7 @@
   color: var(--pb-accent);
 }
 .guessFoot {
-  margin: 0;
+  margin: var(--pb-space-3) 0 0;
   min-height: var(--pb-touch);
   display: flex;
   align-items: center;

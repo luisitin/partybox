@@ -44,18 +44,7 @@ export function PhoneGuess({ view, send }: GameControllerProps<WsPhoneView, Inpu
       </Screen>
     );
   return (
-    <Screen
-      className={styles.guessScreen}
-      footer={
-        <p className={styles.guessFoot} role="status">
-          {picked
-            ? L('Picked {name} · tap another face to change', {
-                name: byId.get(picked)?.name ?? '',
-              })
-            : L('Tap who you think wrote it')}
-        </p>
-      }
-    >
+    <Screen className={styles.guessScreen}>
       <p className={styles.kicker}>
         {L('Who said it?')}
         {card ? ` · ${L('Answer {n} of {total}', { n: card.number, total: card.count })}` : ''}
@@ -76,6 +65,13 @@ export function PhoneGuess({ view, send }: GameControllerProps<WsPhoneView, Inpu
           send({ type: 'guess', target: id });
         }}
       />
+      <p className={styles.guessFoot} role="status">
+        {picked
+          ? L('Picked {name} · tap another face to change', {
+              name: byId.get(picked)?.name ?? '',
+            })
+          : L('Tap who you think wrote it')}
+      </p>
     </Screen>
   );
 }

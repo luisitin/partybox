@@ -158,9 +158,10 @@
   width: 1000px;
   max-width: 1000px;
   box-sizing: border-box;
-  padding: var(--pb-space-3) var(--pb-space-7);
+  /* Every horizontal measure is the guess card's × 2/3, so the text wraps at the same words. */
+  padding: var(--pb-space-3) calc(var(--pb-space-8) * 2 / 3);
   margin-bottom: var(--pb-space-5);
-  border-width: 3px;
+  border-width: calc(4px * 2 / 3);
 }
 .answerText {
   margin: 0;
@@ -191,24 +192,24 @@
   pointer-events: none;
 }
 .quoteOpen {
-  top: -36px;
+  top: -12px;
   left: 20px;
 }
 .quoteClose {
-  bottom: -104px;
+  bottom: -76px;
   right: 24px;
 }
 .answerSmall .quoteOpen,
 .answerSmall .quoteClose {
-  font-size: 88px;
+  font-size: calc(160px * 2 / 3);
 }
 .answerSmall .quoteOpen {
-  top: -22px;
-  left: 8px;
+  top: -6px;
+  left: 10px;
 }
 .answerSmall .quoteClose {
-  bottom: -58px;
-  right: 8px;
+  bottom: -42px;
+  right: 12px;
 }
 /* Each answer is dealt in from the right of the deck, turning face-on (3D, transform only). */
 .dealIn {
