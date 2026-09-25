@@ -149,7 +149,7 @@ export function History({ view }: { view: SpyTvView }): JSX.Element {
           <b>{SHAPE[h.team]}</b>
           <span className={styles.chipWord}>{h.word}</span>
           <span>{h.number}</span>
-          <span className={styles.chipFound} aria-label={L('{n} found', { n: h.found })}>
+          <span className={styles.chipFound} role="img" aria-label={L('{n} found', { n: h.found })}>
             <span className={styles.arrow}>→</span> {h.found} ✓
           </span>
         </span>

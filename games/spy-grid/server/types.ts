@@ -128,9 +128,15 @@ export interface State extends GameStateBase {
   speechMs: Record<string, number>;
   /** Themes drawn this game (a new round avoids them while it can). */
   usedThemes: string[];
+  /** Someone has tapped in the teams phase (join / volunteer / shuffle): its net re-arms. */
+  teamsTouched?: boolean;
 }
 
-export const TEAMS_MS = 45_000;
+/** The teams phase has no visible clock: the VIP starts when the teams are set. A hidden net per
+ *  the group standard [e67ec9]: nobody tapped → start at the net; someone tapped → re-arm, up to
+ *  TEAMS_GIVE_UP_MS from the phase start (so an idle room can never hang). */
+export const TEAMS_MS = 60_000;
+export const TEAMS_GIVE_UP_MS = 600_000;
 /** Stage 0 → stage 1 of a flip: the TV turns the card before any phone learns what it is. */
 export const FLIP_STAGE_MS = 800;
 /** Stage 1 → the result: the identity on every screen, the voice saying it. */

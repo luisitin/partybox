@@ -145,6 +145,17 @@ describe('teams phase', () => {
     expect(s.teams.sun.length - s.teams.moon.length).toBeLessThanOrEqual(1);
   });
 
+  it('teams has no fixed clock: an untouched room starts at the net, a touched one re-arms (10 min cap)', () => {
+    const idle = tick(start(6));
+    expect(idle.phase.id).toBe('clue');
+    let s = send(start(6), 'p1', { type: 'join', team: 'sun' });
+    s = tick(s);
+    expect(s.phase.id).toBe('teams');
+    for (let i = 0; i < 12 && s.phase.id === 'teams'; i++) s = tick(s);
+    expect(s.phase.id).toBe('clue');
+    expect(s.phase.startedAt - start(6).phase.startedAt).toBeLessThanOrEqual(600_000 + 60_000);
+  });
+
   it('awards: Trap Door goes to the first pointer at a flipped assassin', () => {
     let s = rigged();
     s = send(clue(s, 2), 'p2', { type: 'point', target: 24 });

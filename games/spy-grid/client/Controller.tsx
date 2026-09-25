@@ -112,6 +112,7 @@ function Result({ view, skip }: { view: V; skip?: () => void }): JSX.Element {
   // The TV shows the result first (its banner lands, then the ripple); the phone follows.
   const shown = useHold(view.deadline, 1200);
   const w = view.winner;
+  const why = reasonLine(view, L);
   const won = view.mode === 'coop' ? w === 'sun' : w !== null && w === view.team;
   const head =
     view.mode === 'coop'
@@ -138,9 +139,7 @@ function Result({ view, skip }: { view: V; skip?: () => void }): JSX.Element {
         {shown ? (
           <div className={`${styles.result} ${won ? styles.won : ''}`}>
             <div className={styles.resultHead}>{head}</div>
-            {reasonLine(view, L) ? (
-              <div className={styles.resultWhy}>{reasonLine(view, L)}</div>
-            ) : null}
+            {why ? <div className={styles.resultWhy}>{why}</div> : null}
           </div>
         ) : (
           <div className={styles.watch}>{L('👀 Watch the TV')}</div>

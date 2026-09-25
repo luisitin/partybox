@@ -1,6 +1,7 @@
 // View → what the screens draw: WordGrid cards (faces from pointers, the team's ring, the card
 // turning, the latest reaction per card) and the phone's grid/list preference. Pure helpers.
 import { useSyncExternalStore } from 'react';
+import { TEAM_MARK, TEAM_NAME } from '../names';
 import type { SpyControllerView, SpyTvView } from '../server/views';
 import type { Translator } from '@partybox/game-sdk/ui';
 import { coord } from '@partybox/game-sdk/ui/word-grid';
@@ -9,7 +10,7 @@ import type { GridCard, GridFace } from '@partybox/game-sdk/ui/word-grid';
 type AnyView = SpyTvView | SpyControllerView;
 export type Team = 'sun' | 'moon';
 
-export const SHAPE: Record<Team, string> = { sun: '▲', moon: '●' };
+export const SHAPE: Record<Team, string> = TEAM_MARK;
 export const other = (t: Team): Team => (t === 'sun' ? 'moon' : 'sun');
 
 export function faceOf(view: AnyView, id: string): GridFace | null {
@@ -138,7 +139,7 @@ export function useBoardLayout(): 'grid' | 'list' {
 }
 
 export function teamName(t: Team, L: Translator): string {
-  return t === 'sun' ? L('Sun') : L('Moon');
+  return L(TEAM_NAME[t]);
 }
 
 /** Why a round ended, for the TV banner and the phone's result card. */

@@ -166,7 +166,7 @@ function statusOf(state: State): (id: string) => PlayerStatus {
 }
 
 const TIMER: Record<string, 'normal' | 'quiet' | 'hidden'> = {
-  teams: 'normal',
+  teams: 'hidden',
   // The board phases keep one shell height (a normal timer's digits row would push the whole
   // board down as guessing opens and back up at the next clue); the guess clock's digits live in
   // the clue bar instead (client/TvParts.tsx).

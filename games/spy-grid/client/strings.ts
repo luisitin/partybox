@@ -191,7 +191,18 @@ export const STRINGS: Strings = {
       'Las pistas van por el significado, no por letras ni casillas.',
     'Sending…': 'Enviando…',
     'Send clue': 'Enviar pista',
-    '🗝 {n} clues': '🗝 {n} pistas',
+    'Sun wins! ▲': '¡Gana Sol! ▲',
+    'Moon wins! ●': '¡Gana Luna! ●',
+    '🕶️ Master Spy': '🕶️ Maestro espía',
+    'Best average of own agents found per clue':
+      'Mejor promedio de agentes propios encontrados por pista',
+    '🔗 Big Link': '🔗 Gran enlace',
+    'One clue that found the most agents': 'La pista que encontró más agentes',
+    '🎯 Sharp Eye': '🎯 Buen ojo',
+    'First to point at the most of their own agents':
+      'Primero en señalar la mayoría de sus agentes',
+    '💀 Trap Door': '💀 Trampilla',
+    'First to point at the assassin': 'Primero en señalar al asesino',
     'End turn opens after the first card': 'Terminar turno se abre tras la primera carta',
     'Teams even out at the start: bots move first.':
       'Los equipos se igualan al empezar: primero se mueven los bots.',

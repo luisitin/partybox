@@ -1,5 +1,6 @@
 // Results and awards (SPEC §9.10, §9.11). Teams: each player scores their team's round wins, so a
 // team ranks together and a draw crowns both. Co-op: everyone scores the agents found; a lost mission has no winner (ADR-052).
+import { TEAM_MARK, TEAM_NAME } from '../names';
 import { buildResults } from '@partybox/game-sdk';
 import type { GameAward, GameResults } from '@partybox/game-sdk';
 import { teamOf } from './teams';
@@ -98,11 +99,16 @@ export function results(state: State): GameResults | null {
     outcome: {
       kind: 'teams',
       winner,
-      teams: [
-        { id: 'sun', name: 'Sun', mark: '▲', members: [...state.teams.sun] },
-        { id: 'moon', name: 'Moon', mark: '●', members: [...state.teams.moon] },
-      ],
+      teams: (['sun', 'moon'] as const).map((t) => ({
+        id: t,
+        name: TEAM_NAME[t],
+        mark: TEAM_MARK[t],
+        members: [...state.teams[t]],
+      })),
     },
+    // The headline names the team with its mark at the end, so no language puts the dot
+    // mid-sentence (reviewer [2e0f9d] #2); client/strings.ts translates it.
+    headline: winner === null ? "It's a draw" : `${TEAM_NAME[winner]} wins! ${TEAM_MARK[winner]}`,
   };
 }
 
