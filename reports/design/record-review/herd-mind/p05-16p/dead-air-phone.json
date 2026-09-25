@@ -1,0 +1,57 @@
+{
+  "video": "C:\\dev\\partybox-game-herd-mind\\reports\\design\\record-review\\herd-mind\\p05-16p\\video\\phone\\round.webm",
+  "bytes": 3733951,
+  "durationS": 117.3,
+  "fps": 10,
+  "thresholds": {
+    "stillMeanDiff": 0.0025,
+    "minDeadMs": 1500,
+    "cutMeanDiff": 0.22
+  },
+  "deadSpans": [
+    {
+      "fromS": 90.5,
+      "toS": 94.5,
+      "ms": 4000,
+      "during": "score",
+      "cueInside": false
+    },
+    {
+      "fromS": 97.1,
+      "toS": 100.5,
+      "ms": 3400,
+      "during": "results",
+      "cueInside": false
+    },
+    {
+      "fromS": 100.8,
+      "toS": 105.8,
+      "ms": 5000,
+      "during": "results",
+      "cueInside": false
+    },
+    {
+      "fromS": 107.5,
+      "toS": 111.7,
+      "ms": 4200,
+      "during": "results",
+      "cueInside": false
+    },
+    {
+      "fromS": 112.8,
+      "toS": 117.2,
+      "ms": 4400,
+      "during": "results",
+      "cueInside": false
+    }
+  ],
+  "deadMsTotal": 21000,
+  "hardCuts": [],
+  "samples": 1172,
+  "motion": {
+    "p50": 0.0002,
+    "p90": 0.0038,
+    "p99": 0.0673,
+    "max": 0.1383
+  }
+}
