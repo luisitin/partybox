@@ -31,7 +31,11 @@ export type {
   ViewEnvelope,
   ViewPlayer,
   VipGameAction,
+  GamePresence,
+  PresenceMode,
 } from '@partybox/shared';
+// ADR-047: where everyone is, for games that switch features on it
+export { PRESENCE_MODES } from '@partybox/shared';
 export type {
   GameControllerProps,
   GameLoaders,
@@ -65,6 +69,8 @@ export {
   setConnected,
 } from './timer';
 export type { VipHandlers } from './timer';
+export { readingMs, wordCount } from './reading';
+export type { ReadingOpts } from './reading';
 export { addScores, buildResults, rank, speedPoints } from './scoring';
 export type { RankedRow } from './scoring';
 export { controllerEnvelope, envelope, viewPlayers } from './views';

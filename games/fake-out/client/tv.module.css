@@ -1,0 +1,870 @@
+/* Fake-Out TV (1920 × 1080, overscan-safe via Stage). Tokens only; transform + opacity only in
+   animations (the TV performance budget: no box-shadow or filter on anything that moves). Local
+   beats derive from the motion tokens, so reduced motion lands everything at once. */
+
+.kicker {
+  margin: 0;
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  color: var(--pb-accent-2);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.kickerFinal {
+  font-size: var(--pb-font-h2);
+  color: var(--pb-accent);
+  letter-spacing: 0.06em;
+  animation: final-throb calc(var(--pb-motion-pulse) * 1.6) ease-in-out infinite;
+}
+
+@keyframes final-throb {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.06);
+  }
+}
+
+/* ── intro ─────────────────────────────────────────────────────────────────────────────── */
+
+.intro {
+  gap: var(--pb-space-3);
+  /* the ready row sits clear of the host bar along the bottom */
+  padding-bottom: calc(var(--pb-space-7) * 3);
+}
+
+.mask {
+  display: inline-block;
+  font-size: calc(var(--pb-font-display) * 0.8);
+  line-height: 1;
+  animation: mask-float calc(var(--pb-motion-pulse) * 3) ease-in-out infinite;
+}
+
+@keyframes mask-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-5deg);
+  }
+
+  50% {
+    transform: translateY(-16px) rotate(5deg);
+  }
+}
+
+.title {
+  margin: 0;
+  font-size: var(--pb-font-display);
+  font-weight: 900;
+  line-height: 1;
+  animation: global(pb-rise) var(--pb-motion-slow) var(--pb-ease) both;
+}
+
+.tagline {
+  margin: 0;
+  font-size: var(--pb-font-h2);
+  font-weight: 700;
+  color: var(--pb-text-muted);
+  animation: global(pb-rise) var(--pb-motion-slow) var(--pb-ease) both;
+  animation-delay: var(--pb-motion-base);
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--pb-space-5);
+  width: min(100%, 1640px);
+  margin: var(--pb-space-3) 0 0;
+  padding: 0;
+  list-style: none;
+  perspective: 1400px;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-2);
+  padding: var(--pb-space-4) var(--pb-space-5);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface);
+  border: 1px solid var(--pb-border);
+  text-align: left;
+  font-size: var(--pb-font-body);
+  font-weight: 700;
+  line-height: 1.3;
+  transform-origin: 50% 0;
+  animation: step-in var(--pb-motion-slow) var(--pb-ease) both;
+  animation-delay: calc(var(--pb-motion-slow) + var(--i) * var(--pb-motion-slow) * 0.75);
+}
+
+@keyframes step-in {
+  from {
+    opacity: 0;
+    transform: translateY(28px) rotateX(-40deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.stepNo {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--pb-accent);
+  color: var(--pb-on-accent);
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+}
+
+/* ── question ──────────────────────────────────────────────────────────────────────────── */
+
+.question {
+  gap: var(--pb-space-6);
+}
+
+.flipScene {
+  width: min(100%, 1600px);
+  perspective: 1600px;
+}
+
+.questionCard {
+  padding: var(--pb-space-7) var(--pb-space-8);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface);
+  border: 1px solid var(--pb-border);
+  transform-origin: 50% 0;
+  animation: card-tip var(--pb-motion-slow) var(--pb-ease) both;
+}
+
+@keyframes card-tip {
+  from {
+    opacity: 0;
+    transform: translateY(40px) rotateX(-60deg) scale(0.94);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ── lie / pick / reveal: the fact on top, the phase below ─────────────────────────────── */
+
+.round {
+  height: 100%;
+  gap: var(--pb-space-4);
+}
+
+.factPanel {
+  padding: var(--pb-space-4) var(--pb-space-6);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface);
+  border: 1px solid var(--pb-border);
+  text-align: center;
+  transition: opacity var(--pb-motion-base) var(--pb-ease);
+}
+
+.factPanel[data-hidden] {
+  opacity: 0;
+}
+
+.callout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pb-space-4);
+  margin: 0;
+  font-size: var(--pb-font-h1);
+  font-weight: 900;
+  text-align: center;
+}
+
+.pen {
+  display: inline-block;
+  animation: pen-write calc(var(--pb-motion-pulse) * 1.4) ease-in-out infinite;
+}
+
+@keyframes pen-write {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+
+  25% {
+    transform: translate(8px, -5px) rotate(-8deg);
+  }
+
+  50% {
+    transform: translate(16px, 0) rotate(5deg);
+  }
+
+  75% {
+    transform: translate(8px, 5px) rotate(-3deg);
+  }
+}
+
+.lieBody {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--pb-space-4);
+  /* call + tray + count read as one block under the card, clear of it and of the host bar
+     (reviewer [a62642] #2): content that is too tall must never centre up over the card */
+  margin-top: var(--pb-space-5);
+}
+
+.lieBody .callout {
+  font-size: var(--pb-font-h2);
+}
+
+/* Face-down slips pile up as lies come in; each drops in from above and settles skewed. */
+.pile {
+  position: relative;
+  flex: none;
+  width: 420px;
+  height: 210px;
+}
+
+/* The tray the lies land in: visible before the first one, so the space reads as a place. */
+.pile::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 300px;
+  height: 190px;
+  margin: -95px 0 0 -150px;
+  border-radius: var(--pb-radius-lg);
+  /* visible before the first lie: the tray reads as a place, not an empty band */
+  border: 4px dashed color-mix(in srgb, var(--pb-text-muted) 60%, transparent);
+  background: color-mix(in srgb, var(--pb-surface) 60%, transparent);
+}
+
+.slip {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  width: 260px;
+  height: 150px;
+  margin: -75px 0 0 -130px;
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface-2);
+  border: 3px solid var(--pb-border);
+  font-size: 72px;
+  transform: translateX(var(--x)) rotate(var(--r));
+  animation: slip-drop var(--pb-motion-slow) var(--pb-ease) both;
+}
+
+@keyframes slip-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-260px) rotate(0deg) scale(1.15);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(var(--x)) rotate(var(--r));
+  }
+}
+
+.progress {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-3);
+  padding: var(--pb-space-2) var(--pb-space-5);
+  border-radius: 999px;
+  background: var(--pb-surface-2);
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  white-space: nowrap;
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.progressDot {
+  color: var(--pb-text-muted);
+}
+
+.holdout {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+}
+
+.pickHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--pb-space-5);
+}
+
+.pickHead .callout {
+  font-size: var(--pb-font-h2);
+}
+
+/* ── the option grid: three columns, a short last row centred ──────────────────────────── */
+
+.grid {
+  flex: 1;
+  min-height: 0;
+  max-height: calc(var(--rows) * 190px + (var(--rows) - 1) * var(--pb-space-4));
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-rows: repeat(var(--rows), minmax(0, 1fr));
+  gap: var(--pb-space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  align-self: stretch;
+}
+
+.option {
+  grid-column: span 2;
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 0;
+  padding: var(--pb-space-3) var(--pb-space-5);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface);
+  border: 3px solid var(--pb-border);
+  text-align: center;
+  transition:
+    opacity var(--pb-motion-base) var(--pb-ease),
+    transform var(--pb-motion-base) var(--pb-ease);
+}
+
+.option:nth-child(3n + 1):nth-last-child(2) {
+  grid-column: 2 / span 2;
+}
+
+.option:nth-child(3n + 1):last-child {
+  grid-column: 3 / span 2;
+}
+
+.grid .option {
+  animation: global(pb-deal) var(--pb-motion-slow) var(--pb-ease) both;
+  animation-delay: calc(var(--i) * var(--pb-motion-fast) * 0.6);
+}
+
+.optionText {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  font-weight: 900;
+  line-height: 1.12;
+  letter-spacing: 0.01em;
+  overflow-wrap: anywhere;
+}
+
+.option[data-size='lg'] .optionText {
+  font-size: var(--pb-font-h2);
+}
+
+.option[data-size='md'] .optionText {
+  font-size: calc(var(--pb-font-h2) * 0.875);
+}
+
+.option[data-size='sm'] .optionText {
+  font-size: calc(var(--pb-font-h2) * 0.75);
+}
+
+/* ── reveal: the stage in the middle, the deck along the bottom ────────────────────────── */
+
+.revealArea {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+
+/* The completed fact stands alone: it centres on the whole stage, and the kicker leaves with the
+   small fact panel, so no hole opens above it (reviewer [d738fb] #4). */
+.revealRound {
+  position: relative;
+}
+
+.revealRound > .kicker {
+  transition: opacity var(--pb-motion-base) var(--pb-ease);
+}
+
+.revealFact > .kicker {
+  opacity: 0;
+}
+
+.revealFact .revealArea {
+  position: static;
+}
+
+/* Every option as a compact chip; the one on stage leaves a dashed gap, shown ones carry their
+   verdict as a glyph (and a strike for a lie) — never colour alone. */
+.deck {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--pb-space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.deckChip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+  max-width: 560px;
+  padding: var(--pb-space-2) var(--pb-space-4);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  border: 3px solid var(--pb-border);
+  font-size: var(--pb-font-caption);
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  animation: deck-in var(--pb-motion-slow) var(--pb-ease) both;
+  animation-delay: calc(var(--i) * var(--pb-motion-fast) * 0.3);
+  transition:
+    opacity var(--pb-motion-base) var(--pb-ease),
+    border-color var(--pb-motion-base) var(--pb-ease);
+}
+
+/* No opacity at the end: a held 1 would override the chip's own dimming (on stage, stamped). */
+@keyframes deck-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.9);
+  }
+
+  to {
+    transform: none;
+  }
+}
+
+.deckText {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.deckChip[data-away] {
+  border-style: dashed;
+  background: transparent;
+  opacity: 0.35;
+}
+
+.deckChip[data-stamp] {
+  opacity: 0.6;
+}
+
+.deckChip[data-stamp='lie'] .deckText {
+  text-decoration: line-through;
+  text-decoration-thickness: 3px;
+}
+
+.deckChip[data-stamp='lie'] .deckGlyph {
+  color: var(--pb-danger);
+}
+
+.deckChip[data-stamp='truth'] {
+  opacity: 1;
+  border-color: var(--pb-accent-3);
+}
+
+.deckChip[data-stamp='truth'] .deckGlyph {
+  color: var(--pb-accent-3);
+}
+
+.deckGlyph {
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.spotlight {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pb-space-4);
+  pointer-events: none;
+}
+
+.pickedBy,
+.payoff {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pb-space-4);
+  min-height: 118px;
+}
+
+.payoff > * {
+  animation: payoff-rise var(--pb-motion-slow) var(--pb-ease) both;
+}
+
+@keyframes payoff-rise {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.caption {
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  color: var(--pb-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.faces {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--pb-space-4);
+}
+
+.face {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pb-space-1);
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+  animation-delay: calc(var(--pb-motion-base) + var(--i) * var(--pb-motion-fast) * 0.6);
+}
+
+.faceName {
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+}
+
+.spotScene {
+  perspective: 1400px;
+}
+
+.spotCard {
+  position: relative;
+  min-width: 760px;
+  max-width: 1320px;
+  padding: var(--pb-space-6) var(--pb-space-8);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface-2);
+  border: 4px solid var(--pb-border);
+  text-align: center;
+  transform-origin: 50% 60%;
+  transition: border-color var(--pb-motion-base) var(--pb-ease);
+}
+
+.spotText {
+  position: relative;
+  isolation: isolate; /* the read-along highlight sits behind the letters */
+  font-size: var(--pb-font-h1);
+  font-weight: 900;
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+}
+
+.likes {
+  position: absolute;
+  top: -26px;
+  left: -22px;
+  padding: var(--pb-space-1) var(--pb-space-4);
+  border-radius: 999px;
+  background: var(--pb-accent);
+  color: var(--pb-on-accent);
+  font-size: var(--pb-font-body);
+  font-weight: 900;
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+  animation-delay: var(--pb-motion-slow);
+}
+
+/* The stamp: a rubber stamp slammed across the card's corner — the word and a glyph, never colour
+   alone. */
+.stamp {
+  position: absolute;
+  right: -40px;
+  bottom: -34px;
+  padding: var(--pb-space-2) var(--pb-space-5);
+  border-radius: var(--pb-radius);
+  border: 6px solid currentcolor;
+  background: var(--pb-bg);
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  transform: rotate(-9deg);
+  animation: stamp-slam calc(var(--pb-motion-base) * 0.9) cubic-bezier(0.3, 1.4, 0.5, 1) both;
+}
+
+.stamp[data-kind='lie'] {
+  color: var(--pb-danger);
+}
+
+.stamp[data-kind='house'] {
+  color: var(--pb-info);
+}
+
+.stamp[data-kind='truth'] {
+  color: var(--pb-accent-3);
+}
+
+@keyframes stamp-slam {
+  0% {
+    opacity: 0;
+    transform: rotate(-9deg) scale(2.4);
+  }
+
+  60% {
+    opacity: 1;
+    transform: rotate(-9deg) scale(0.9);
+  }
+
+  100% {
+    opacity: 1;
+    transform: rotate(-9deg) scale(1);
+  }
+}
+
+.spotlight[data-stamp='truth'] .spotCard {
+  border-color: var(--pb-accent-3);
+}
+
+.points {
+  font-size: var(--pb-font-h1);
+  font-weight: 900;
+  color: var(--pb-accent-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.payLine {
+  font-size: var(--pb-font-h2);
+  font-weight: 800;
+  color: var(--pb-text-muted);
+}
+
+/* The completed fact takes the stage: the card tips up to the centre and the truth pops into the
+   blank. */
+.completed {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 0 var(--pb-space-6);
+  text-align: center;
+}
+
+.completed > p {
+  padding: var(--pb-space-7) var(--pb-space-8);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface);
+  border: 3px solid var(--pb-accent-2);
+  animation: card-tip var(--pb-motion-slow) var(--pb-ease) both;
+}
+
+.unpicked {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pb-space-5);
+}
+
+.unpickedList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--pb-space-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.unpickedItem {
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-4);
+  padding: var(--pb-space-3) var(--pb-space-5);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-surface);
+  border: 2px solid var(--pb-border);
+  animation: slide-in var(--pb-motion-base) var(--pb-ease) both;
+  animation-delay: calc(var(--i) * var(--pb-motion-fast));
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(-60px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.unpickedText {
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+}
+
+/* ── scores ────────────────────────────────────────────────────────────────────────────── */
+
+.scores {
+  gap: var(--pb-space-4);
+}
+
+.board {
+  display: flex;
+  justify-content: center;
+  width: min(100%, 1500px);
+}
+
+.board > * {
+  flex: 0 1 auto;
+  min-width: min(100%, 1100px);
+}
+
+.howList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--pb-space-3) var(--pb-space-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.how {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+  animation-delay: calc(var(--pb-motion-pulse) * 1.6 + var(--i) * var(--pb-motion-fast));
+}
+
+.howName {
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+}
+
+.chip {
+  padding: 2px var(--pb-space-3);
+  border-radius: 999px;
+  background: var(--pb-surface-2);
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.chip[data-k='truth'] {
+  color: var(--pb-accent-3);
+}
+
+.chip[data-k='final'] {
+  color: var(--pb-accent);
+}
+
+.nextFinal {
+  animation: final-throb calc(var(--pb-motion-pulse) * 1.6) ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kickerFinal,
+  .mask,
+  .pen,
+  .nextFinal {
+    animation: none;
+  }
+}
+
+:global(:root[data-motion='off']) .kickerFinal,
+:global(:root[data-motion='off']) .mask,
+:global(:root[data-motion='off']) .pen,
+:global(:root[data-motion='off']) .nextFinal {
+  animation: none;
+}
+
+/* Intro ready-up (owner, [cc45f4]): a chip per connected player; the check pops in on Ready. */
+.readyRow {
+  display: grid;
+  justify-items: center;
+  gap: var(--pb-space-3);
+  margin-top: var(--pb-space-4);
+  animation: global(pb-rise) var(--pb-motion-slow) var(--pb-ease) both;
+  animation-delay: calc(var(--pb-motion-slow) * 2);
+}
+
+.readyLine {
+  margin: 0;
+  font-size: var(--pb-font-h3);
+  font-weight: 700;
+  color: var(--pb-text-muted);
+}
+
+.readyList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--pb-space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.readyChip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+  padding: var(--pb-space-2) var(--pb-space-4) var(--pb-space-2) var(--pb-space-2);
+  border-radius: 999px;
+  background: var(--pb-surface-2);
+  font-size: var(--pb-font-h3);
+  font-weight: 700;
+  opacity: 0.6;
+  transition:
+    opacity var(--pb-motion-base) var(--pb-ease),
+    transform var(--pb-motion-base) var(--pb-ease),
+    background var(--pb-motion-base) var(--pb-ease);
+}
+
+.readyOn {
+  opacity: 1;
+  transform: translateY(-4px);
+  background: var(--pb-accent);
+  color: var(--pb-on-accent);
+}
+
+.readyMark {
+  display: inline-block;
+  min-width: 1.2em;
+  text-align: center;
+}
+
+.readyOn .readyMark {
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+/* Who picked it reads at the answer's scale, not as a footnote (blind-auction [ca5b28] #5). */
+.pickedBy .caption,
+.pickedBy .faceName {
+  font-size: var(--pb-font-h3);
+}

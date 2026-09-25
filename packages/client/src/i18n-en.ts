@@ -4,11 +4,15 @@
 // file's line cap); both are spread in.
 import { enPhone } from './i18n-en-phone';
 import { enPicker } from './i18n-en-picker';
+import { enPresence } from './i18n-en-presence';
+import { enStage } from './i18n-en-stage';
 import { ordinal } from './ordinal';
 
 export const en = {
   ...enPhone,
   ...enPicker,
+  ...enPresence,
+  ...enStage,
   appName: 'PartyBox',
   appShort: 'PB',
   join: {

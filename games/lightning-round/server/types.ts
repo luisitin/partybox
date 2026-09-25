@@ -1,17 +1,32 @@
 // State and input types for Lightning Round. Everything is JSON-serializable (docs/GAME_CONTRACT.md);
 // questions are referenced by id so the state stays small and the content pack stays the truth.
+import { readingMs, wordCount } from '@partybox/game-sdk';
 import { z } from '@partybox/game-sdk';
 import type { GameStateBase } from '@partybox/game-sdk';
 
 export const PHASES = ['intro', 'question', 'reveal', 'wager', 'done'] as const;
 export type PhaseId = (typeof PHASES)[number];
 
-export const INTRO_MS = 4_000;
-/** A regular reveal: the race (2 s), then the standings — the owner's note on I-589 asked for "a bit
- *  more time at the standings page" (5 s → 8 s: the standings hold 6 s, not 3), plus a Next button. */
+/** Owner's pacing rule (Agent Hub #decisions cc45f4, 2026-09-25): "Enough time to read" — a
+ *  screen of words stays up 1.5 s + 1/3 s a word, x1.3 because a Spanish phone or 200 % text
+ *  reads longer (the server cannot see the phones' languages, so the margin is always on). */
+export function readMs(words: number): number {
+  return readingMs(words, { ui: true });
+}
+export { wordCount };
+/** The title card: a 2 s beat — the name and the topic pill (~5 words). ADR-053: the shell's start
+ *  stage has just shown the rules and counted 3 · 2 · 1, so the tagline is gone (was 9 s). */
+export const INTRO_MS = 2_000;
+/** A regular reveal: the race (2 s), then the standings with the VIP's Next (the owner's note on
+ *  I-589). The standings stay up long enough to read every row (~3 words a player) and the answer
+ *  — at least REVEAL_MS (was a flat 8 s: short at 8+ players; pacing rule 2026-09-25). */
 export const REVEAL_MS = 8_000;
-/** The final reveal keeps its 5 s: it has its own beats and no standings page (the results follow). */
-export const FINAL_REVEAL_MS = 5_000;
+export const RACE_SERVER_MS = 2_000;
+/** The final reveal: its verdict beats (1.2 s), then every player's bet, verdict and delta (~4
+ *  words each) and the answer, at least FINAL_REVEAL_MS — no standings page, the results follow
+ *  (was a flat 5 s). */
+export const FINAL_REVEAL_MS = 8_000;
+export const FINAL_BEAT_MS = 1_200;
 export const WAGER_MS = 15_000;
 
 /** Scoring constants (README "Scoring"). */

@@ -12,6 +12,7 @@ import type {
 } from '@partybox/shared';
 import type { EngineDeps, RoomState } from './types';
 import { highlightedGameId } from './picker';
+import { stageOnPhone } from './presence';
 import { canStart } from './vip';
 
 /** The chosen game's settings form (the list itself is the host's catalog, sent once). */
@@ -33,6 +34,7 @@ export function publicPlayers(room: RoomState): PlayerPublic[] {
       spectator: p.spectator,
       joinedAt: p.joinedAt,
       ...(p.bot ? { bot: p.bot } : {}),
+      ...(p.canSeeTv === false ? { canSeeTv: false as const } : {}),
     }));
 }
 
@@ -54,6 +56,9 @@ export function snapshot(room: RoomState, deps: EngineDeps): RoomSnapshot {
     musicOnPhones: room.musicOnPhones,
     listed: room.listed,
     phoneOnly: room.phoneOnly,
+    ...(room.presenceMode && room.presenceMode !== 'together'
+      ? { presenceMode: room.presenceMode }
+      : {}),
     ...(room.asleepSince !== undefined ? { asleep: true } : {}),
     ...(room.tonight?.length
       ? {
@@ -67,6 +72,16 @@ export function snapshot(room: RoomState, deps: EngineDeps): RoomSnapshot {
     ...(room.formerVip ? { formerVip: room.formerVip } : {}),
     ...(room.votes ? { votes: peopleVotes(room) } : {}),
     ...(highlightedGameId(room) ? { highlightedGameId: highlightedGameId(room) ?? undefined } : {}),
+    ...(room.starting
+      ? {
+          starting: {
+            gameId: room.starting.gameId,
+            ready: room.starting.ready.filter((id) => room.players[id]),
+            countdownAt: room.starting.countdownAt,
+            ...(room.starting.held ? { held: true } : {}),
+          },
+        }
+      : {}),
   };
 }
 
@@ -107,7 +122,8 @@ export function controllerView(
     return {
       ...game.controllerView(running.state, playerId),
       vip: room.vipId,
-      phoneOnly: room.phoneOnly,
+      // ADR-047: per phone — a remote phone in a TV room is the stage too (live, not the game's copy)
+      phoneOnly: stageOnPhone(room, playerId),
     };
   } catch {
     return { ...fallbackEnvelope(room), me: { id: playerId, role }, vip: room.vipId };

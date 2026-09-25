@@ -17,7 +17,7 @@ export interface GameDefinition<
   manifest: GameManifest; // must deep-equal games/<id>/manifest.json (contract test)
   phases: readonly string[]; // every phase id, in typical order; each needs fixtures/<id>.json
   inputSchema: z.ZodType<I>; // validated at the socket BEFORE reduce sees the input
-  init(ctx: InitContext): S; // { players, settings, seed, now }
+  init(ctx: InitContext): S; // { players, settings, seed, now, presence? } — presence (ADR-047): { mode: 'together' | 'remote-voice' | 'remote-text', phoneOnly }, fixed for the game; absent = together with a TV
   reduce(state: S, event: GameEvent<I>): S; // PURE + TOTAL — never throws
   tvView(state: S): TV; // JSON; identical for every TV
   controllerView(state: S, playerId: string): CV; // JSON; per player
@@ -32,7 +32,7 @@ export interface GameDefinition<
 interface GameStateBase {
   phase: { id: string; startedAt: number; deadline: number | null; paused?: { at: number } };
   rng: RngState; // { seed, step } — pure PRNG state lives IN the state
-  players: Record<string, PlayerInfo>; // { id, name, avatarId, connected, bot? } — who is playing; bot: true for a bot (ADR-028) so a game can act for it where a person taps (Bingo's ready-up); avatarId is a face id or `photo:<id>` for a photo avatar (ADR-037) — pass it to `Avatar` as is
+  players: Record<string, PlayerInfo>; // { id, name, avatarId, connected, bot?, canSeeTv? } — who is playing; bot: true for a bot (ADR-028) so a game can act for it where a person taps (Bingo's ready-up); avatarId is a face id or `photo:<id>` for a photo avatar (ADR-037) — pass it to `Avatar` as is; canSeeTv (ADR-047) is whether the player could see the TV at start (bots always) — switch features with it and with ctx.presence, never branch view content on it (a remote phone needs every input phase on its own screen)
 }
 ```
 
@@ -110,6 +110,20 @@ stale timers, VIP actions in any order.
 
 On `vip.pause` the shared helper stores `phase.paused = { at: now }`; on `resume` it shifts `deadline` by
 the paused duration and clears `paused`. While paused, ignore inputs and timers (the helper does this for you).
+
+### Enough time to read [cc45f4]
+
+The owner's pacing rule: no screen with words moves on before a slow reader could read it. Size such a
+deadline with `readingMs(words, { ui, lang, largeText })` from `@partybox/game-sdk` (1.5 s + 333 ms a word;
+x1.3 for the UI's own words, x1.1 Spanish, x1.2 large text) and `wordCount(text)`; don't keep a per-game copy.
+
+### The start is the shell's (ADR-053)
+
+`init` runs after the shell's start stage: the room has read the manifest's three `howToPlay` steps,
+everyone connected has tapped READY, and the 3·2·1 has played on the TV and every phone. A game does
+not show its own rules, READY or countdown, and needs no idle timeout for them. Its first phase may
+still hold game content that has to follow the start (a card pick, a secret role to read, teams) —
+never a second READY for the rules.
 
 ### Views
 

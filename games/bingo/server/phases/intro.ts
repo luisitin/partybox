@@ -1,13 +1,13 @@
 // Phase "intro" (up to 15 s): the TV announces the round and its pattern; phones show their new
 // cards, swap them, and tap Ready — when every person with cards has (loop 344, the owner), the
-// first number is 3 s away, and never sooner than the deal plus the 3 · 2 · 1 (`introMinMs`). Entering it deals the
+// first number comes 1.4 s later with no count-in (ADR-053: the shell's stage counted 3 · 2 · 1), never sooner than the deal plus that (`introMinMs`). Entering it deals the
 // round: one deck shuffle, then `settings.cards` cards per player in sorted-id order so the same
 // seed always deals the same cards. Exits on the deadline (or VIP skip) via `next`.
 import { enterPhase, hasPlayer, isTimerFor, shuffle } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { dealCard, dealCards, range } from '../cards';
 import { setMenu } from '../claims';
-import { DECK, INTRO_BREATH_MS, INTRO_MS, INTRO_READY_MS, introMinMs } from '../types';
+import { DECK, INTRO_BREATH_MS, INTRO_MS, PICKED_HOLD_MS, introMinMs } from '../types';
 import type { Input, Pattern, RoundState, State, Transition } from '../types';
 
 export function enterIntro(state: State, number: number, now: number): State {
@@ -90,14 +90,14 @@ export function waitingOn(state: State): string[] {
 }
 
 /**
- * Everyone ready (or a straggler gone): the first number comes INTRO_READY_MS from now — the
- * 3 · 2 · 1 on every screen — unless the deal itself still needs the time (`introMinMs`), and
+ * Everyone ready (or a straggler gone): the first number comes PICKED_HOLD_MS from now — the
+ * "everyone has picked" hold — unless the deal itself still needs the time (`introMinMs`), and
  * never later than the deadline already set. Safe to call from any intro event.
  */
 export function settleIntro(state: State, now: number): State {
   if (state.phase.id !== 'intro' || waitingOn(state).length > 0) return state;
   const at = Math.max(
-    now + INTRO_BREATH_MS + INTRO_READY_MS,
+    now + INTRO_BREATH_MS + PICKED_HOLD_MS,
     state.phase.startedAt + introMinMs(state.settings.cards),
   );
   if (state.phase.deadline !== null && at >= state.phase.deadline) return state;

@@ -13,6 +13,7 @@ import type { SoundEngine } from '../sound';
 import { ThemePicker } from '../ThemePicker';
 import styles from './ControllerShell.module.css';
 import { PhoneSettings } from './PhoneSettings';
+import { ThisPhone } from './ThisPhone';
 import { ShareButton } from './ShareSheet';
 import { linkLabel } from './flapFree';
 import { useGraceLeft } from './grace';
@@ -232,18 +233,16 @@ export function ControllerShell({
       {card === 'offline' ? (
         <OfflineCard secondsLeft={graceLeft} before={before} playing={view !== null} />
       ) : null}
-      <div className={styles.toasts} aria-live="polite">
-        {/* I-347 C: the host whose VIP passed on while they were away can take it back */}
+      {/* I-347 C: the host whose VIP passed on while they were away can take it back */}
+      <div className={styles.pinned}>
         <ReclaimVip room={room} playerId={state.playerId} controller={controller} />
+      </div>
+      {/* S2: a toast drops over the header bar, never over what the player is reading or typing */}
+      <div className={styles.toasts} aria-live="polite">
         {state.toasts.map((toast) => (
           // A status line, not a button: screen readers announce it once and it never masquerades
           // as an action (a "… is now the VIP" toast used to match button lookups for /VIP/).
-          <div
-            key={toast.id}
-            role="status"
-            className={`${styles.toast} ${styles[toast.kind]}`}
-            onClick={() => controller.dismissToast(toast.id)}
-          >
+          <div key={toast.id} role="status" className={`${styles.toast} ${styles[toast.kind]}`}>
             {serverText(toast.text, getLang(), room?.selectedGameId)}
           </div>
         ))}
@@ -261,6 +260,16 @@ export function ControllerShell({
         <ThemePicker
           variant="sheet"
           onClose={() => setThemeOpen(false)}
+          title={t.phone.thisPhone}
+          header={
+            <ThisPhone
+              seeTv={
+                me
+                  ? { on: me.canSeeTv !== false, set: (on) => controller.setCanSeeTv(on) }
+                  : undefined
+              }
+            />
+          }
           footer={<PhoneSettings audio={audio} what={musicWhat} room={room} onLeave={leave} />}
         />
       ) : null}

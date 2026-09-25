@@ -163,3 +163,9 @@ export function CrossfadeSwap({
     </div>
   );
 }
+
+/** The key a room's screen swaps on: its status, with the start stage (ADR-053) a screen of its
+ *  own inside 'selecting', so picker → stage cross-fades like any other change. */
+export function screenKey(room: { status: string; starting?: unknown }): string {
+  return room.status === 'selecting' && room.starting ? 'starting' : room.status;
+}
