@@ -27,7 +27,7 @@ export interface ImposterStage {
   rounds: number;
   clueRound: number;
   clueRounds: number;
-  /** The category label when the imposter is hinted (else null). */
+  /** Always null on the table (owner 2026-09-24: only the imposter's phone gets the category). */
   category: string | null;
   imposterCount: number;
   board: BoardCard[];
@@ -145,7 +145,7 @@ export function stageOf(state: State): ImposterStage {
     rounds: state.cfg.rounds,
     clueRound: r.clueRound,
     clueRounds: state.cfg.clueRounds,
-    category: state.cfg.hint === 'category' ? r.category.label : null,
+    category: null,
     imposterCount: r.imposters.length,
     board: p === 'intro' || p === 'scores' ? [] : board(state),
     tally,
@@ -257,8 +257,9 @@ export function controllerView(state: State, playerId: string): ImposterControll
     role: inRound ? (imp ? 'imposter' : 'crew') : null,
     word:
       crew && w ? { answer: w.answer, accept: w.accept, reject: w.reject, family: w.family } : null,
-    catId: crew || (inRound && hinted) ? r.category.id : null,
-    catLabel: crew || (inRound && hinted) ? r.category.label : null,
+    // Only the imposter needs the category (owner 2026-09-24): the crew knows the word.
+    catId: inRound && imp && hinted ? r.category.id : null,
+    catLabel: inRound && imp && hinted ? r.category.label : null,
     mine: {
       ready: r.ready.includes(playerId),
       clue: clue?.text ?? null,

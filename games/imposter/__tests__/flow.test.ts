@@ -235,3 +235,15 @@ describe('edge cases', () => {
     expect(s.round.revealed).toBe(k + 1);
   });
 });
+
+describe('the category (owner 2026-09-24)', () => {
+  it('only the hinted imposter sees it: never the crew, the TV or the reader', () => {
+    const s = until(start(6), 'clue');
+    const { imps, crew } = roles(s);
+    expect(game.tvView(s).stage.category).toBeNull();
+    for (const id of crew) expect(game.controllerView(s, id).catLabel).toBeNull();
+    expect(game.controllerView(s, imps[0] as string).catLabel).toBe(s.round.category.label);
+    const none = until(start(6, { hint: 'none' }), 'clue');
+    expect(game.controllerView(none, roles(none).imps[0] as string).catLabel).toBeNull();
+  });
+});

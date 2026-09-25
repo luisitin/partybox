@@ -4,7 +4,7 @@
 // see, and never send the same clue twice in a game.
 import type { Rng } from '@partybox/game-sdk';
 import { normalize, sameAnswer } from '../match';
-import { FAMILY, PACK_LANG, SPICY, categoryById, wordByAnswer } from './content';
+import { FAMILY, PACK_LANG, SPICY, categoryById, wordAnywhere } from './content';
 import type { Category, WordItem } from '../content/schema';
 import type { ImposterControllerView } from './views';
 import type { Input } from './types';
@@ -37,15 +37,26 @@ function bestGuess(cats: readonly Category[], texts: readonly string[], rng: Rng
 
 function imposterCats(view: ImposterControllerView): Category[] {
   const cat = view.catId ? categoryById(view.catId) : undefined;
-  return cat ? [cat] : [...ALL_CATS];
+  if (cat) return [cat];
+  // No hint: read the board — the categories whose words its clues fit best, like a person would.
+  const texts = boardTexts(view);
+  if (texts.length === 0) return [...ALL_CATS];
+  const score = (c: Category): number => Math.max(0, ...c.words.map((w) => overlap(w, texts)));
+  const best = Math.max(...ALL_CATS.map(score));
+  return best > 0 ? ALL_CATS.filter((c) => score(c) === best) : [...ALL_CATS];
 }
 
 function clueFor(view: ImposterControllerView, rng: Rng): Input | null {
   if (view.mine.clue !== null && view.mine.reject === null) return null;
   let pool: string[];
   if (view.role === 'crew') {
-    const word = view.catId && view.word ? wordByAnswer(view.catId, view.word.answer) : undefined;
+    const word = view.word ? wordAnywhere(view.word.answer) : undefined;
     pool = fresh(word?.clues ?? [], view);
+    // Each bot leans on its own slice of the bank, so a table of bots doesn't all say "cheese".
+    const k =
+      [...view.me.id].reduce((h, ch) => (h * 31 + ch.charCodeAt(0)) >>> 0, 7) %
+      Math.max(1, pool.length);
+    pool = [...pool.slice(k), ...pool.slice(0, k)].slice(0, 3);
   } else {
     const cats = imposterCats(view);
     const generic = fresh(
@@ -69,8 +80,8 @@ function voteFor(view: ImposterControllerView, rng: Rng): Input | null {
     return card ? [...card.before, ...(card.now ? [card.now] : [])] : [];
   };
   let ranked: string[];
-  if (view.role === 'crew' && view.word && view.catId) {
-    const word = wordByAnswer(view.catId, view.word.answer);
+  if (view.role === 'crew' && view.word) {
+    const word = wordAnywhere(view.word.answer);
     const known = new Set(
       [...(word?.clues ?? []), ...view.word.accept, ...view.word.family].map(compact),
     );

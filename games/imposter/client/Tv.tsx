@@ -48,7 +48,6 @@ function Headline({ view }: Props): JSX.Element {
     s.clueRounds > 1
       ? ` · ${L('clue round {n} of {of}', { n: s.clueRound, of: s.clueRounds })}`
       : '';
-  const cat = s.category ? L('Category: {c}', { c: L.sent(s.category) }) : L('No hint this round');
   const imps = s.imposterCount > 1 ? ` · ${L('2 imposters')}` : '';
   let line: string;
   switch (view.phaseId) {
@@ -85,7 +84,6 @@ function Headline({ view }: Props): JSX.Element {
         {clueRound}
         {imps}
       </p>
-      <p className={styles.cat}>{cat}</p>
       <h1 key={`${view.phaseId}-${s.clueRound}`} className={styles.line}>
         {line}
       </h1>

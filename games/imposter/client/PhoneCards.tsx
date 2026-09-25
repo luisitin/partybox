@@ -44,14 +44,12 @@ function Face({ view, mini }: { view: Props['view']; mini: boolean }): JSX.Eleme
     return (
       <span className={styles.miniFace}>
         <b>{word}</b>
-        <span>{view.catLabel ? L.sent(view.catLabel) : ''}</span>
       </span>
     );
   return (
     <>
       <span className={styles.faceCaption}>{L('Your word')}</span>
       <span className={styles.faceWord}>{word}</span>
-      <span className={styles.faceCat}>{cat}</span>
     </>
   );
 }

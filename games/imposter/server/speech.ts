@@ -57,13 +57,9 @@ export function fixedLine(state: State, id: FixedLine): Line | null {
   return line(state, FIXED[id]);
 }
 
-/** "Round two. The category is food." (no category when the imposter gets no hint). */
+/** "Round two." — the category is the imposter's alone (owner 2026-09-24), never read to the room. */
 export function dealLine(state: State, n: number): Line | null {
-  const word = state.words[Math.min(n - 1, state.words.length - 1)];
-  const round = `Round ${NUMBER_WORDS[n - 1] ?? String(n)}.`;
-  const cat =
-    state.cfg.hint === 'category' && word ? ` The category is ${word.label.toLowerCase()}.` : '';
-  return line(state, `${round}${cat}`);
+  return line(state, `Round ${NUMBER_WORDS[n - 1] ?? String(n)}.`);
 }
 
 /** One clue, read on its own ("Pepperoni."). */

@@ -41,6 +41,15 @@ export function wordById(id: string): WordItem | undefined {
   return BY_WORD.get(id)?.word;
 }
 
+/** The pack entry for a word a crew phone was dealt (what a crew bot "knows"). */
+export function wordAnywhere(answer: string): WordItem | undefined {
+  for (const cat of ALL) {
+    const w = cat.words.find((x) => x.answer === answer);
+    if (w) return w;
+  }
+  return undefined;
+}
+
 /** The pack entry whose answer is `answer` inside `category` (what a crew bot "knows"). */
 export function wordByAnswer(category: string, answer: string): WordItem | undefined {
   return categoryById(category)?.words.find((w) => w.answer === answer);
