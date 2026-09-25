@@ -1,8 +1,9 @@
 // Phone during "reveal" (the same card the TV is reading, so a phone-only room can read along)
 // and "judge" (voters get the list; the judge in czar mode is the only voter; everyone else reads
 // the cards and waits). A voter's own card is listed but not votable.
+import { useState } from 'react';
 import type { JSX } from 'react';
-import { Avatar, Screen, VoteList, WaitingScreen, useT } from '@partybox/game-sdk/ui';
+import { Avatar, PrimaryButton, Screen, VoteList, WaitingScreen, useT } from '@partybox/game-sdk/ui';
 import type { GameControllerProps, Translator } from '@partybox/game-sdk/ui';
 import type { BlanksControllerView } from '../server/index';
 import type { Input } from '../server/types';
@@ -91,6 +92,9 @@ export function ControllerReveal({ view, me, send }: Props): JSX.Element {
 
 export function ControllerJudge({ view, send, skip }: Props): JSX.Element {
   const L = useT(STRINGS);
+  // I-168: the judge's pick this round (a tap picks; "Crown" sends it)
+  const [picked, setPicked] = useState<{ round: number; slot: number; at: number } | null>(null);
+  const pickSlot = picked?.round === view.round ? picked.slot : null;
   const black = view.black;
   const vote = view.vote;
   if (!black || view.cards.length === 0) return <Elsewhere view={view} L={L} />;
@@ -161,6 +165,15 @@ export function ControllerJudge({ view, send, skip }: Props): JSX.Element {
         }))}
         votedId={vote.votedSlot === null ? null : String(vote.votedSlot)}
         onVote={(id) => send({ type: 'vote', slot: Number(id) })}
+        // I-168: the judge's tap picks; the Crown button (below) decides the round
+        pick={
+          view.judgeMode === 'czar'
+            ? {
+                selectedId: pickSlot === null ? null : String(pickSlot),
+                onSelect: (id) => setPicked({ round: view.round, slot: Number(id), at: Date.now() }),
+              }
+            : undefined
+        }
         // The confirmation rides in the footer, above the Next button: a long list pushed the
         // list's own line under the sticky bar. The result lands on this phone too (Blanks plays
         // without a TV), so it counts the room, not the screen across it (review-loop #138).
@@ -175,6 +188,18 @@ export function ControllerJudge({ view, send, skip }: Props): JSX.Element {
                   : L('✓ Vote in · {voted} / {expected} voted', count)}
               </p>
               <NextButton skip={skip} timed={view.timed} label={L('Close the vote now')} />
+            </>
+          ) : view.judgeMode === 'czar' && pickSlot !== null ? (
+            // I-168: the verdict is its own button — a slip on the list is not final
+            <>
+              <PrimaryButton
+                key={picked?.at}
+                className={undefined}
+                onClick={() => send({ type: 'vote', slot: pickSlot })}
+              >
+                {L('👑 Crown {letter}', { letter: LETTERS[pickSlot] ?? '?' })}
+              </PrimaryButton>
+              <p className="pb-caption pb-muted">{L('Tap another card to change your mind')}</p>
             </>
           ) : undefined
         }
