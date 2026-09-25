@@ -1,0 +1,104 @@
+/* ADR-053: the 3·2·1 over the dimmed rules, one number at a time. */
+.count {
+  position: fixed;
+  inset: 0;
+  z-index: 8;
+  display: grid;
+  place-items: center;
+  background: color-mix(in srgb, var(--pb-bg) 90%, transparent);
+  pointer-events: none;
+  animation: count-dim var(--pb-motion-base) var(--pb-ease) both;
+}
+
+/* the TV's count dims the stage only: the header and the host bar (⏸ Wait) stay readable */
+.tv {
+  position: absolute;
+  border-radius: var(--pb-radius-lg);
+}
+
+/* the VIP's Wait sits under the number, clear of the footer's (fading) button (tune-in's nit) */
+.action {
+  position: absolute;
+  top: calc(50% + min(24vw, 20vh) + var(--pb-space-4));
+  pointer-events: auto;
+}
+
+.action button {
+  min-height: var(--pb-touch);
+  padding: 0 var(--pb-space-6);
+  border: 2px solid var(--pb-text);
+  border-radius: 999px;
+  background: var(--pb-surface);
+  color: var(--pb-text);
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.number {
+  font-weight: 900;
+  line-height: 1;
+  color: var(--pb-accent);
+  text-shadow: 0 8px 40px rgb(0 0 0 / 45%);
+  font-variant-numeric: tabular-nums;
+  animation: count-rise 900ms var(--pb-ease) both;
+}
+
+.phone .number {
+  font-size: min(48vw, 40vh);
+}
+
+.tv .number {
+  font-size: 420px;
+}
+
+@keyframes count-dim {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* in, hold, and a soft fade into the next: never a snap */
+@keyframes count-rise {
+  0% {
+    opacity: 0;
+    transform: scale(1.35);
+  }
+  18% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  80% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0.15;
+    transform: scale(0.92);
+  }
+}
+
+@keyframes count-still {
+  0% {
+    opacity: 0;
+  }
+  18%,
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.15;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .number {
+    animation-name: count-still;
+  }
+}
+:global(:root[data-motion='off']) .number {
+  animation-name: count-still;
+}

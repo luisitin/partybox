@@ -87,7 +87,7 @@ export function credit(state: State, now: number): State {
  */
 function deadlineAfterVerdict(state: State, now: number): number {
   if (state.round.decision) return now + VERDICT_READ_MS;
-  // I-105 A: a vote cast before the verdict closes after the read, at its own 6 s mark at the
+  // I-105 A: a vote cast before the verdict closes after the read, at its own VOTE_MS mark at the
   // earliest — or at the read if everyone has voted already.
   const votes = state.round.votes ?? {};
   if (Object.keys(votes).length > 0)
@@ -186,14 +186,14 @@ export function reduceBingo(state: State, event: GameEvent<Input>, exits: BingoE
     if (!(input.pattern === 'blackout' ? can.blackout : can.same)) return state;
   }
   if (state.round.decision) return state; // decided already (held for the end of the read)
-  // I-105 A: every tap is a vote. The first opens a 6 s vote; each phone may change its mind.
+  // I-105 A: every tap is a vote. The first opens a VOTE_MS (15 s) vote; each phone may change its mind.
   const vote = { choice: { ...input, by: event.playerId }, at: event.now, vip: event.vip === true };
   const votes = { ...(state.round.votes ?? {}), [event.playerId]: vote };
   const voteEndsAt = state.round.voteEndsAt ?? event.now + VOTE_MS;
   const next: State = { ...state, round: { ...state.round, votes, voteEndsAt } };
   const endsAt = celebrationEndsAt(state);
   if (endsAt === null) return next; // the verdict tick sets the deadline
-  // It closes at 6 s — or as soon as every connected person with cards has voted — but never
+  // It closes at VOTE_MS — or as soon as every connected person with cards has voted — but never
   // before the celebration's read is over.
   const closeAt = Math.max(endsAt, everyoneVoted(state, votes) ? event.now : voteEndsAt);
   if (event.now >= closeAt) return decide(next, winner(votes), event.now, exits);

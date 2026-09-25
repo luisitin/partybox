@@ -226,13 +226,13 @@ describe('sockets', () => {
     expect(app.host.house().vipId).toBeNull();
     tv.emit('tv:vip', { action: 'selectGame', gameId: 'bingo' });
     tv.emit('tv:vip', { action: 'updateSettings', settings: { rounds: 1, callSeconds: 3 } });
-    tv.emit('tv:vip', { action: 'start' });
+    tv.emit('tv:vip', { action: 'startNow' });
     await new Promise((r) => setTimeout(r, 120));
     expect(app.host.house().status).toBe('playing');
     expect(app.host.house().settings['rounds']).toBe(1);
     // Refusals come back to the TV as errors (a TV cannot start twice).
     const refused = once<ErrorPayload>(tv, 'error');
-    tv.emit('tv:vip', { action: 'start' });
+    tv.emit('tv:vip', { action: 'startNow' });
     expect((await refused).code).toBe('cannot_start');
     tv.emit('tv:vip', { action: 'end' });
     tv.emit('tv:vip', { action: 'toLobby' });

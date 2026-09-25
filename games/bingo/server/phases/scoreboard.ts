@@ -1,13 +1,14 @@
-// Phase "scoreboard" (6 s): rounds won so far and the next round's pattern, between rounds only.
+// Phase "scoreboard" (scoreboardMs: time to read every row, >= 10 s): rounds won so far and the
+// next round's pattern, between rounds only.
 // Exits on the deadline via `next` (the next round's intro). `done` is the terminal phase.
 import { enterPhase, isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { setMenu } from '../claims';
-import { FINAL_MS, SCOREBOARD_MS } from '../types';
+import { FINAL_MS, scoreboardMs } from '../types';
 import type { Input, State, Transition } from '../types';
 
 export function enterScoreboard(state: State, now: number): State {
-  return enterPhase(state, 'scoreboard', now, SCOREBOARD_MS);
+  return enterPhase(state, 'scoreboard', now, scoreboardMs(Object.keys(state.players).length));
 }
 
 /** After the last round: the final board with the crown withheld for FINAL_MS, then done. */
