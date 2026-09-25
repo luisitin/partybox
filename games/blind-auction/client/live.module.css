@@ -858,7 +858,9 @@
   box-shadow:
     inset 0 0 0 6px #e0a100,
     0 10px 24px rgb(0 0 0 / 45%);
-  font-size: calc(var(--ba-card-h) * 0.18);
+  font-size: calc(var(--ba-card-h) * 0.2);
+  font-weight: 1000;
+  color: #7a5200;
 }
 
 .coinSpin {

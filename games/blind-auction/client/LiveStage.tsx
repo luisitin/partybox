@@ -280,9 +280,9 @@ function Coins({ run, bets }: Props): JSX.Element {
         className={`${styles.coin} ${shown < flips.length ? styles.coinSpin : ''} ${last === 0 ? styles.coinTails : ''}`}
         aria-hidden
       >
-        {last === 0 ? '🪙' : '🔥'}
+        {last === null ? '?' : last === 0 ? 'T' : 'H'}
       </span>
-      <p className={styles.sum} aria-live="polite">
+      <p className={`${styles.sum} ${shown > 0 ? styles.sumOn : ''}`} aria-live="polite">
         {shown === 0
           ? ' '
           : done
