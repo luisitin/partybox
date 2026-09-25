@@ -6,14 +6,15 @@ import { waitingLine } from './controller/StartStage';
 import { countAt } from './StageCount';
 
 describe('the 3·2·1', () => {
-  it('shows nothing during the breath, then 3, 2, 1 a second each, then nothing', () => {
+  it('shows nothing during the breath, then 3, 2, 1 a second each, and holds 1 until the game', () => {
     expect(countAt(null, 5_000)).toBeNull();
     expect(countAt(1_000, 999)).toBeNull();
     expect(countAt(1_000, 1_000)).toBe(3);
     expect(countAt(1_000, 1_999)).toBe(3);
     expect(countAt(1_000, 2_000)).toBe(2);
     expect(countAt(1_000, 3_500)).toBe(1);
-    expect(countAt(1_000, 4_000)).toBeNull();
+    expect(countAt(1_000, 4_000)).toBe(1);
+    expect(countAt(1_000, 4_400)).toBe(1); // the host's tick is late: the dim holds, never the rules
   });
 });
 

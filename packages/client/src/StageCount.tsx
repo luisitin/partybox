@@ -7,11 +7,13 @@ import type { JSX, ReactNode } from 'react';
 import { useServerNow } from '@partybox/game-sdk/ui';
 import styles from './StageCount.module.css';
 
-/** The number showing at server time `now` (3, 2, 1), or null outside the count. */
+/** The number showing at server time `now` (3, 2, 1), or null before the count. Past the "1" it
+ *  stays on 1 (its fade settled, the dim held) until the game replaces the stage: the host's tick
+ *  lands a beat after 3 s, and dropping the overlay then showed the undimmed rules for ~250 ms
+ *  (Session C, all five games). */
 export function countAt(countdownAt: number | null, now: number): number | null {
   if (countdownAt === null || now < countdownAt) return null;
-  const n = 3 - Math.floor((now - countdownAt) / 1000);
-  return n >= 1 ? n : null;
+  return Math.max(1, 3 - Math.floor((now - countdownAt) / 1000));
 }
 
 export function StageCount({
@@ -28,6 +30,9 @@ export function StageCount({
 }): JSX.Element | null {
   const now = useServerNow(40);
   const n = countAt(at, now);
+  // the "1" has faded by 2.9 s (its rise lasts 900 ms); marking it a little early keeps a clock a few
+  // ms behind the server's tick from snapshotting it bright
+  const past = at !== null && now >= at + 2850;
   const said = useRef<number | null>(null);
   useEffect(() => {
     if (n === null || said.current === n) return;
@@ -37,7 +42,9 @@ export function StageCount({
   if (n === null) return null;
   return (
     <div className={`${styles.count} ${styles[surface]}`} role="timer" aria-live="assertive">
-      <span key={n} className={styles.number}>
+      {/* past the count the "1" is faded for good, as a class, not only as an animation's end:
+          the game's curtain snapshots the stage with animations off and showed it bright again */}
+      <span key={n} className={`${styles.number} ${past ? styles.past : ''}`}>
         {n}
       </span>
       {action ? <div className={styles.action}>{action}</div> : null}
