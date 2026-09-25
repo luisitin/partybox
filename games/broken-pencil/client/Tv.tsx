@@ -207,23 +207,17 @@ export function Tv({ view }: GameTvProps<PencilTvView>): JSX.Element {
           Broken Pencil
         </BigText>
         <BigText level="h2">{L('Pick a secret word on your phone.')}</BigText>
-        <ol className={styles.howto}>
-          <li>{L('Everyone draws their word.')}</li>
-          <li>
-            {L('Your drawing goes to the next player: they guess it, then draw their guess.')}
-          </li>
-          {/* I-507 A: the rule as this room will play it */}
-          <li>
-            {view.fullCircle
-              ? L('That goes on round the circle; the last player only guesses.')
-              : view.passes === 1
-                ? L('It passes to 1 player, who only guesses.')
-                : L('It passes to {n} players in turn; the last of them only guesses.', {
-                    n: view.passes,
-                  })}
-          </li>
-          <li>{L('Then everyone presents their own book on the TV, page by page.')}</li>
-        </ol>
+        {/* ADR-053: the shell's start stage showed the three rules; what stays is the one rule
+            only this room's settings decide (I-507 A). */}
+        <BigText level="h2" tone="muted">
+          {view.fullCircle
+            ? L('That goes on round the circle; the last player only guesses.')
+            : view.passes === 1
+              ? L('It passes to 1 player, who only guesses.')
+              : L('It passes to {n} players in turn; the last of them only guesses.', {
+                  n: view.passes,
+                })}
+        </BigText>
         {/* I-507 B: the book as it will be — the word, then drawing, guess, drawing… */}
         <p className={styles.chain} aria-label={L('{n} pages', { n: view.pageCount })}>
           <span aria-hidden>

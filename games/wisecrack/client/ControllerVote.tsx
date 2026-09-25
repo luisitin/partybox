@@ -5,6 +5,7 @@
 import type { JSX } from 'react';
 import { Screen, VoteList, WaitingScreen, useT } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
+import { EnglishNote } from './EnglishNote';
 import type { WisecrackControllerView } from '../server/index';
 import type { Input } from '../server/types';
 import { BLANK, answerText } from './blank';
@@ -60,7 +61,12 @@ export function ControllerVote({
   return (
     <VoteList
       kicker={view.multiplier > 1 ? `${kicker} · ${L('double points')}` : kicker}
-      prompt={vote.promptText}
+      prompt={
+        <>
+          {vote.promptText}
+          <EnglishNote />
+        </>
+      }
       size="large"
       options={vote.options.map((o) => ({
         id: String(o.slot),

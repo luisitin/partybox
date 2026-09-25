@@ -12,9 +12,10 @@ phone, page by page. A book whose last guess matches its word is **UNBROKEN**; o
 BROKEN**. No points — the show is the game. The picker's minutes follow the room (I-189 B: 30 s + one
 round a player × (55 s + 4 s a player) — ~5 min at 4, ~12 at 8; from the host PC's recaps).
 
-- The pick screen's how-to says rule 3 as the room will play it: "round the circle" only when every
-  book goes round, else "It passes to N players in turn" (I-507 A).
-- Under the how-to a row shows a book's pages as they will be — 📖 ✏️ ❓ ✏️ ❓ · 5 pages (I-507 B).
+- The rules are the shell's start stage (ADR-053, the manifest's three `howToPlay` steps); the TV's
+  pick screen keeps no how-to list, only the one rule this room's settings decide: "round the
+  circle" only when every book goes round, else "It passes to N players in turn" (I-507 A).
+- Under it a row shows a book's pages as they will be — 📖 ✏️ ❓ ✏️ ❓ · 5 pages (I-507 B).
 - I-796 K: in a TV room the `show` phones hold a framed thumbnail of the page on the TV ("On the TV
   now", the drawing capped at 220 px) instead of a blank "X is presenting" wait.
 - Drawing: whose book and the round ride in the phone's timer bar ("Maximiliano's book · 1/6", SDK
