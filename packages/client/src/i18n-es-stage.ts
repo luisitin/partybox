@@ -13,6 +13,7 @@ export const esStage: Pick<Texts, 'stage'> = {
   stage: {
     ready: '¡Listo!',
     youAreReady: 'Listo',
+    readAll: '↓ Lee los 3 pasos',
     waitingFor: (names, more) => `Esperando a ${list(names, more)}`,
     everyoneReady: '¡Todo el mundo listo!',
     everyoneElseReady: 'Los demás ya están listos',

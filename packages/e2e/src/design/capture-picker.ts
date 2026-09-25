@@ -223,6 +223,8 @@ async function main(): Promise<void> {
     // TV's faces light one by one), then the 3·2·1
     await stage('rules', 3000);
     for (const s of surfaces.filter((x) => x.id !== 'tv')) {
+      // on a short screen the button first scrolls to the last step (reviewer D1)
+      if (await clickFirst([s.page.getByRole('button', { name: /^↓ (read all|lee los)/i })])) await settle(900); // prettier-ignore
       const tapped = await clickFirst([s.page.getByRole('button', { name: /^(i.m ready|¡listo!)/i })]); // prettier-ignore
       if (!tapped) notes.push(`ready: no READY button on ${s.id}`);
       await settle(1500);

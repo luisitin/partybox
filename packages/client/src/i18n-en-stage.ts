@@ -10,7 +10,9 @@ const list = (names: string[], more: number): string => {
 export const enStage = {
   stage: {
     ready: 'I’m ready',
-    youAreReady: 'You’re ready',
+    youAreReady: 'Ready',
+    /** READY while the last step is still below the fold: a tap scrolls to it (reviewer D1). */
+    readAll: '↓ Read all 3 steps',
     waitingFor: (names: string[], more: number): string => `Waiting for ${list(names, more)}`,
     everyoneReady: 'Everyone’s ready!',
     everyoneElseReady: 'Everyone else is ready',

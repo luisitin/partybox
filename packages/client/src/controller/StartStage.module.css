@@ -108,3 +108,8 @@
   font-weight: 700;
   cursor: pointer;
 }
+
+/* the rules' last line, watched: READY is offered once it has been on screen (reviewer D1) */
+.end {
+  height: 1px;
+}

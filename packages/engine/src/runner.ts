@@ -176,10 +176,10 @@ export function fireDueTimer(room: RoomState, now: number, deps: EngineDeps): Ap
     : result;
 }
 
-/** When the host should next send a `tick`, or null when nothing is pending. */
 /** ADR-053: the start stage's 3·2·1, a second each (start-stage.ts; here for nextWakeAt). */
 export const STAGE_COUNT_MS = 3000;
 
+/** When the host should next send a `tick`, or null when nothing is pending. */
 export function nextWakeAt(room: RoomState): number | null {
   const candidates: number[] = [];
   const running = room.game;

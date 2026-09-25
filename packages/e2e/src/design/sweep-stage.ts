@@ -36,6 +36,17 @@ const DEVICE_IDS = (values.devices ?? '').split(',') as DeviceId[];
 const LANGS = (values.langs ?? 'en').split(',');
 const GAME = values.game ?? 'wisecrack';
 const READY = /^(i.m ready|¡listo!)/i;
+/** READY while the last step is below the fold (reviewer D1): a tap scrolls to the end first. */
+const READ_ALL = /^↓ (read all|lee los)/i;
+
+async function tapReady(page: Page): Promise<void> {
+  const readAll = page.getByRole('button', { name: READ_ALL });
+  if (await readAll.isVisible().catch(() => false)) {
+    await readAll.click();
+    await settle(900);
+  }
+  await page.getByRole('button', { name: READY }).click();
+}
 
 interface Still {
   file: string;
@@ -105,15 +116,15 @@ async function sweep(
   try {
     // Start through the stage, as the VIP's Start does.
     await api.post('/api/dev/start', { gameId: GAME, seed: 3, stage: true });
-    await vip.page.getByRole('button', { name: READY }).waitFor();
+    await vip.page.getByRole('button', { name: new RegExp(`${READY.source}|${READ_ALL.source}`, 'i') }).waitFor(); // prettier-ignore
     await settle(900); // the swap and the steps' download
     await shoot(vip.page, lang, device, 'rules-vip');
     await shoot(guest.page, lang, device, 'rules-guest');
     if (tv) await shoot(tv, lang, 'tv', 'tv-rules');
-    await vip.page.getByRole('button', { name: READY }).click();
+    await tapReady(vip.page);
     await shoot(vip.page, lang, device, 'vip-ready');
     if (tv) await shoot(tv, lang, 'tv', 'tv-half-ready');
-    await guest.page.getByRole('button', { name: READY }).click();
+    await tapReady(guest.page);
     await settle(1100); // the 0.4 s breath, then into the count
     await shoot(guest.page, lang, device, 'count');
     if (tv) await shoot(tv, lang, 'tv', 'tv-count');

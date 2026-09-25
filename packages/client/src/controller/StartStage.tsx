@@ -2,7 +2,7 @@
 // up or hides on a timer, so a slow reader is never cut off), a sticky READY with who the room is
 // still waiting for above it; the VIP's READY turns into Start now, and ‹ Back sits above the game.
 // Then the 3·2·1 over the rules (the VIP can Wait), from the server clock: the TV's frame.
-import { useCallback } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import type { JSX } from 'react';
 import type { PlayerPublic, RoomSnapshot } from '@partybox/shared';
 import { PrimaryButton, Screen, useLang } from '@partybox/game-sdk/ui';
@@ -47,13 +47,29 @@ export function StartStage({
   const onNumber = useCallback(() => {
     if (carries) audio?.play('countdown');
   }, [carries, audio]);
+  // Reviewer D1: READY is only offered once the last step has been on screen. While it is below the
+  // fold (an SE, 200 % text) the button says so and a tap scrolls to it; where all three fit, the
+  // end is seen at once and nothing changes.
+  const end = useRef<HTMLDivElement>(null);
+  // (no IntersectionObserver, e.g. a render test: nothing to watch, READY at once)
+  const [seenAll, setSeenAll] = useState(() => typeof IntersectionObserver === 'undefined');
+  useEffect(() => {
+    const el = end.current;
+    if (!el || seenAll) return undefined;
+    const io = new IntersectionObserver((entries) => {
+      if (entries.some((e) => e.isIntersecting)) setSeenAll(true);
+    });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [seenAll, about]);
   const game = gameEntry(stage?.gameId);
   if (!stage || !game) return null;
   const iAmReady = stage.ready.includes(me.id);
   const counting = stage.countdownAt !== null;
   // One line and one button for everyone, so the steps keep the screen: READY, then (the VIP)
-  // Start now with "✓ You're ready · Waiting for Maya" above it, or (a guest) the done button.
-  const vipStarts = me.isVip && iAmReady && !counting;
+  // Start now with "✓ Ready · Waiting for Maya" above it, or (a guest) the done button. After the
+  // VIP's Wait it is Start now at once, READY or not (one tap to go again).
+  const vipStarts = me.isVip && !counting && (iAmReady || stage.held === true);
   const line = vipStarts
     ? stage.held
       ? t.stage.heldVip
@@ -78,9 +94,17 @@ export function StartStage({
               <PrimaryButton
                 done={iAmReady || counting}
                 tone={iAmReady ? 'success' : 'accent'}
-                onClick={() => controller.ready()}
+                onClick={() =>
+                  iAmReady || seenAll || counting
+                    ? controller.ready()
+                    : end.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
+                }
               >
-                {iAmReady ? t.stage.youAreReady : t.stage.ready}
+                {iAmReady
+                  ? t.stage.youAreReady
+                  : seenAll || counting
+                    ? t.stage.ready
+                    : t.stage.readAll}
               </PrimaryButton>
             )}
           </div>
@@ -112,6 +136,8 @@ export function StartStage({
           ) : (
             <div className={styles.wait} aria-label={t.picker.loading} />
           )}
+          {/* the end of the rules: READY is offered once this has been on screen */}
+          {about ? <div ref={end} className={styles.end} aria-hidden /> : null}
         </div>
       </Screen>
       <StageCount

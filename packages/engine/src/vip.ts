@@ -9,9 +9,9 @@ import { coerceSettings, defaultSettings } from './settings';
 import { canStart } from './can-start';
 import { backFromStage, beginStage, holdStage, startNow } from './start-stage';
 import { switchToast } from './switch-toast';
+import type { ApplyResult, EngineDeps, RoomState } from './types';
 
 export { canStart };
-import type { ApplyResult, EngineDeps, RoomState } from './types';
 
 function reject(
   room: RoomState,

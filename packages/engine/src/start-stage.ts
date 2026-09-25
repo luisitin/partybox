@@ -76,22 +76,43 @@ export function backFromStage(room: RoomState): ApplyResult {
   return { room: rest, effects: [{ type: 'push' }] };
 }
 
-/** After every event: the stage ends with the picker (another game, the lobby, a game running),
- *  and the count begins once nobody is left to wait for. */
+/** Every person's phone has dropped (the room has people, none here): nothing may start — a game
+ *  would run for nobody, and the 5-minute "nobody came back" end is only armed during a game
+ *  (reviewer C1: phones auto-locking while the room reads the rules). A room of bots and a TV is
+ *  not empty. */
+function nobodyHere(room: RoomState): boolean {
+  const people = Object.values(room.players).filter((p) => !p.bot);
+  return people.length > 0 && people.every((p) => !p.connected);
+}
+
+/** After every event: the stage ends with the picker (another game, the lobby, a game running);
+ *  the count begins once nobody is left to wait for, and stops if everyone's phone drops; a Wait
+ *  ends when the VIP who said it drops (nobody else could lift it but the TV). */
 export function settleStage(result: ApplyResult, now: number): ApplyResult {
   const { room } = result;
-  const stage = room.starting;
+  let stage = room.starting;
   if (!stage) return result;
   if (room.status !== 'selecting' || room.selectedGameId !== stage.gameId) {
     const { starting: _gone, ...rest } = room;
     void _gone;
     return { room: rest, effects: [...result.effects, { type: 'push' }] };
   }
-  if (stage.countdownAt !== null || stage.held || waitingFor(room, stage).length > 0) return result;
-  return {
-    room: { ...room, starting: { ...stage, countdownAt: now + BREATH_MS } },
+  const push = (next: StartStage): ApplyResult => ({
+    room: { ...room, starting: next },
     effects: [...result.effects, { type: 'push' }],
-  };
+  });
+  if (nobodyHere(room))
+    return stage.countdownAt === null ? result : push({ ...stage, countdownAt: null });
+  const vip = room.vipId ? room.players[room.vipId] : undefined;
+  if (stage.held && !vip?.connected) {
+    const { held: _held, ...unheld } = stage;
+    void _held;
+    stage = unheld;
+    if (waitingFor(room, stage).length > 0) return push(stage);
+  }
+  if (stage.countdownAt !== null || stage.held || waitingFor(room, stage).length > 0)
+    return stage === room.starting ? result : push(stage);
+  return push({ ...stage, countdownAt: now + BREATH_MS });
 }
 
 /** When the stage's count ends (the host arms a tick for it), or null. */
@@ -106,6 +127,8 @@ export function fireStage(room: RoomState, now: number, deps: EngineDeps): Apply
   const stage = room.starting;
   const at = stageWakeAt(room);
   if (!stage || at === null || now < at) return null;
+  // everyone's phone dropped in the last second: the room keeps reading instead (C1)
+  if (nobodyHere(room)) return { room: { ...room, starting: { ...stage, countdownAt: null } }, effects: [{ type: 'push' }] }; // prettier-ignore
   const { starting: _done, formerVip: _settled, ...rest } = room;
   void _done;
   void _settled;

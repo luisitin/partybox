@@ -121,4 +121,26 @@ describe('the start stage', () => {
     expect(again.starting?.countdownAt).toBe(T0 + 5000);
     expect(again.starting?.held).toBeUndefined();
   });
+
+  it('never counts for an empty room: everyone dropping stops the count (reviewer C1)', () => {
+    const drop = (room: RoomState, id: string, now: number): RoomState =>
+      applyRoomEvent(room, { type: 'disconnect', now, playerId: id }, deps).room;
+    // all three drop while reading: nobody left to wait for, but nobody here either
+    let room = drop(drop(drop(staged(), 'p1', T0 + 300), 'p2', T0 + 301), 'p3', T0 + 302);
+    expect(room.starting?.countdownAt).toBeNull();
+    expect(nextWakeAt(room) === null || (nextWakeAt(room) as number) > T0 + 10_000).toBe(true);
+    // everyone ready, the count runs, then everyone drops: the count stops, the rules stay
+    room = ready(ready(ready(staged(), 'p1'), 'p2'), 'p3', T0 + 1000);
+    room = drop(drop(drop(room, 'p1', T0 + 1500), 'p2', T0 + 1501), 'p3', T0 + 1502);
+    expect(room.starting?.countdownAt).toBeNull();
+    expect(tick(room, T0 + 1000 + BREATH_MS + COUNT_MS).status).toBe('selecting');
+  });
+
+  it('a Wait ends when the VIP who said it drops', () => {
+    const counting = ready(ready(ready(staged(), 'p1'), 'p2'), 'p3', T0 + 1000);
+    const held = vip(counting, { action: 'pause' }, T0 + 2000).room;
+    const gone = applyRoomEvent(held, { type: 'disconnect', now: T0 + 3000, playerId: 'p1' }, deps).room; // prettier-ignore
+    expect(gone.starting?.held).toBeUndefined();
+    expect(gone.starting?.countdownAt).toBe(T0 + 3000 + BREATH_MS);
+  });
 });

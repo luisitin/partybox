@@ -92,6 +92,12 @@ class Case {
   }
 
   async ready(page: Page, who: string): Promise<void> {
+    // READY while the last step is below the fold: a tap scrolls to the end first (reviewer D1)
+    const readAll = page.getByRole('button', { name: /^↓ (read all|lee los)/i });
+    if (await readAll.isVisible().catch(() => false)) {
+      await readAll.click();
+      await settle(900);
+    }
     const button = page.getByRole('button', { name: READY });
     if (!(await button.isVisible().catch(() => false))) this.notes.push(`${who}: no READY`);
     else await button.click();
