@@ -232,3 +232,28 @@
   margin-top: 0;
   gap: var(--pb-space-2);
 }
+
+/* Pinned, the pad is compact: a footer that grows past ~45 % of a large-text phone pushes the
+   thing being bet on under the fade (review [84a77f]). */
+.footer .dial {
+  gap: var(--pb-space-2);
+}
+
+.footer .step {
+  height: var(--pb-touch);
+  font-size: var(--pb-font-h2);
+}
+
+.footer .amount {
+  font-size: var(--pb-font-h1);
+}
+
+.footer .chip {
+  min-height: 36px;
+  padding: 2px var(--pb-space-1);
+  font-size: var(--pb-font-caption);
+}
+
+.footer .pass {
+  min-height: 36px;
+}

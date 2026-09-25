@@ -4,7 +4,6 @@ export const ES_TWISTS: Record<string, string> = {
   'Beat the dealer': 'Ganarle a la banca',
   'Bet {coin} {n}': 'Apostar {coin} {n}',
   'Change to {coin} {n}': 'Cambiar a {coin} {n}',
-  '{coin} {n} placed': '{coin} {n} apostadas',
   'Sat out, the peek cost −{n}': 'Pasaste; espiar costó −{n}',
   Twist: 'Giro',
   '⏰ Early bird: bet now for up to ×1.25 more — it slides to ×1.00 at the buzzer.':

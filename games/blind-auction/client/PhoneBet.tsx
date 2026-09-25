@@ -30,15 +30,31 @@ function eased(change: () => void): void {
   else change();
 }
 
-/** A short phone (an SE): the Bet button drops the pick's name, which the ticked card shows. */
+/** Body text at 1.5× its normal size or more: a large-text phone (the font200 preset doubles the
+ *  type tokens, which no media query sees). */
+function largeText(): boolean {
+  if (typeof document === 'undefined') return false;
+  const probe = document.createElement('span');
+  probe.style.fontSize = 'var(--pb-font-body)';
+  probe.style.position = 'absolute';
+  probe.style.visibility = 'hidden';
+  document.body.appendChild(probe);
+  const px = parseFloat(getComputedStyle(probe).fontSize);
+  probe.remove();
+  return px >= 24;
+}
+
+/** A short phone (an SE) or large text: the Bet button drops the pick's name, which the ticked
+ *  card shows, so it stays one line (review [84a77f]). */
 function useShortPhone(): boolean {
   const query = '(max-height: 640px)';
   const [short, setShort] = useState(
-    () => typeof window !== 'undefined' && window.matchMedia(query).matches,
+    () => typeof window !== 'undefined' && (window.matchMedia(query).matches || largeText()),
   );
   useEffect(() => {
     const m = window.matchMedia(query);
-    const on = (): void => setShort(m.matches);
+    const on = (): void => setShort(m.matches || largeText());
+    on();
     m.addEventListener('change', on);
     return () => m.removeEventListener('change', on);
   }, []);
@@ -170,7 +186,8 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
             : L('Change to {coin} {n} on {what}', { coin: COIN, n, what: label }),
         placed: (n) =>
           short
-            ? L('{coin} {n} placed', { coin: COIN, n })
+            ? // The button's own ✓ says 'placed': the amount alone keeps it one line at any size.
+              `${COIN} ${n}`
             : L('{coin} {n} on {what}', { coin: COIN, n, what: label }),
         zero:
           option === null
