@@ -1,7 +1,7 @@
 // What Fake-Out's reader says (SPEC §3.13) and when it is asked for (§3.5 "Speech", Part 00 §5.7):
-// the fact (with "blank") from the intro or the scores before it; every option all together at
+// the fact (with "blank") from its question card or the scores before it; every option all together at
 // `pick`, so the cache cannot single out the truth; the completed fact only once the truth step is
-// on stage. The eight fixed lines are readings too, asked for at the intro (and cached for good).
+// on stage. The eight fixed lines are readings too, asked for at question 1 (and cached for good).
 // Pure: the host renders; `speechMs` records each length.
 import type { SpeechPart, SpeechRequest } from '@partybox/game-sdk';
 import { speechKey, toSpeakable } from '@partybox/game-sdk/speech';
@@ -75,9 +75,10 @@ export function speech(state: State): SpeechRequest[] {
   // The host makes readings one at a time, in the order asked: what is needed first goes first
   // (the fact before the fixed lines, which wait until the lie; the options at the pick).
   const out: SpeechRequest[] = [];
-  if (phase === 'intro' || phase === 'question' || phase === 'lie')
-    out.push(factReading(voice, state.q.item));
-  if (phase === 'intro') out.push(...LINE_IDS.map((id) => lineReading(voice, id)));
+  if (phase === 'question' || phase === 'lie') out.push(factReading(voice, state.q.item));
+  // The shell's start stage runs before init, so question 1 asks for the fixed lines, after the fact.
+  if (phase === 'question' && state.q.n === 1)
+    out.push(...LINE_IDS.map((id) => lineReading(voice, id)));
   if ((phase === 'pick' || phase === 'reveal') && state.q.options)
     out.push(...state.q.options.map((o) => optionReading(voice, o.display)));
   if (phase === 'reveal' && state.q.step >= factStep(state) - 1)

@@ -10,5 +10,5 @@ export const shared: GameShared = {
   // reveal step), and a mapped phase whose deadline moves chimes again — so they map to silence
   // and the stage plays `card`, `reveal`, `bust` and `jackpot` itself, each on its own frame.
   sounds: { question: 'silence', reveal: 'silence', scores: 'tally' },
-  beds: { intro: 'lounge', lie: 'marimba', pick: 'pulse', scores: 'warm' },
+  beds: { lie: 'marimba', pick: 'pulse', scores: 'warm' },
 };

@@ -54,22 +54,8 @@ export const STRINGS: Strings = {
     'American Woman': 'Mujer estadounidense',
     'Soft-Spoken Woman': 'Mujer de voz suave',
     Original: 'Original',
-    // how to play (TV intro + phone)
-    'A strange true fact appears with a blank. Type a fake answer that sounds real.':
-      'Aparece un dato real y extraño con un hueco. Escribe una respuesta falsa que suene real.',
-    'All answers are mixed with the truth. Pick the one you think is real.':
-      'Todas las respuestas se mezclan con la verdad. Elige la que crees que es real.',
-    'Score for finding the truth, and for every player your fake fools.':
-      'Sumas por encontrar la verdad y por cada jugador que cae con tu mentira.',
-    'I’m ready': 'Estoy listo',
-    'Start now': 'Empezar ya',
-    'Ready! Waiting for the others…': '¡Listo! Esperando a los demás…',
-    'Tap I’m ready on your phone · {n} / {total} ready':
-      'Toca «Estoy listo» en tu teléfono · {n} / {total} listos',
-    ready: 'listo',
-    'not ready': 'no listo',
-    'Everyone is ready!': '¡Todos listos!',
     'The facts and answers are in English.': 'Los datos y las respuestas están en inglés.',
+    'in English': 'en inglés',
     // TV
     'Final Fake-Out · double points': 'Engaño Final · puntos dobles',
     'Question {n} of {total}': 'Pregunta {n} de {total}',

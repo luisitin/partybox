@@ -1,8 +1,10 @@
-/* Non-blocking prompt, bottom-centre just above the host toolbar row; gone after the first click. */
+/* Non-blocking prompt, gone after the first click. It sits in the header row's empty middle (between
+   the room code and the address), never on the stage: bottom-centre it covered the last ~90 px of
+   every game (blind-auction's event cards, imposter's clue row). */
 .pill {
   position: fixed;
   left: 50%;
-  bottom: calc(var(--pb-overscan-y) + var(--pb-space-6));
+  top: calc(var(--pb-overscan-y) + var(--pb-space-2));
   /* `translate`, not `transform`: the pb-rise keyframes own `transform` and would cancel it. */
   translate: -50% 0;
   display: flex;
@@ -18,9 +20,15 @@
   animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
 }
 
+/* In the header row the pill has to stay clear of the room code and the address: the reassurance
+   ("the party works without it") is read out, not shown. */
 .pillHint {
-  color: var(--pb-text-muted);
-  font-weight: 600;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
 
 /* Sound is on: the pill says so once, fades, and unmounts on animationend. */
