@@ -123,7 +123,8 @@
 
 .row {
   display: grid;
-  grid-template-columns: 4.6rem 1fr;
+  /* The label column gives way at 200 % text, so a row never runs past the card (review, font200). */
+  grid-template-columns: fit-content(34%) minmax(0, 1fr);
   gap: 0.5rem;
   align-items: center;
 }
@@ -138,9 +139,11 @@
 .row dd {
   margin: 0;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem;
   min-width: 0;
+  overflow-wrap: break-word;
 }
 
 /* A small phone (SE 320): each section's label sits above it, so the words get the full width. */

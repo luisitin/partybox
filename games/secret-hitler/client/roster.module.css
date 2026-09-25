@@ -52,7 +52,9 @@
   flex-direction: column;
   align-items: center;
   gap: 0.1rem;
-  width: 3rem;
+  /* Grows to fit a one-word name ('Casey200') instead of breaking it mid-word. */
+  min-width: 3rem;
+  max-width: 5.2rem;
   color: var(--sh-text);
 }
 
@@ -146,7 +148,8 @@
   -webkit-box-orient: vertical;
   line-height: 1.1;
   text-align: center;
-  overflow-wrap: break-word;
+  overflow-wrap: normal;
+  word-break: normal;
   font-size: var(--pb-font-caption);
   font-weight: 700;
 }
