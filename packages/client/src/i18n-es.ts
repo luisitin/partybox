@@ -161,10 +161,10 @@ export const es: Texts = {
     ],
     placeRunnerUp: [
       (gap: number): string =>
-        `Casi: a ${gap} ${gap === 1 ? 'punto' : 'puntos'} del primer puesto.`,
+        `Casi: a ${gap}\u00a0${gap === 1 ? 'punto' : 'puntos'} del primer puesto.`,
       (gap: number): string =>
-        `Segundo puesto, a ${gap} ${gap === 1 ? 'punto' : 'puntos'}. Una ronda más…`,
-      (gap: number): string => `Plata. A ${gap} ${gap === 1 ? 'punto' : 'puntos'} del oro.`,
+        `Segundo puesto, a ${gap}\u00a0${gap === 1 ? 'punto' : 'puntos'}. Una ronda más…`,
+      (gap: number): string => `Plata. A ${gap}\u00a0${gap === 1 ? 'punto' : 'puntos'} del oro.`,
     ],
     placeMiddle: [
       (rank: number): string => `${rank}.º: en pleno pelotón.`,

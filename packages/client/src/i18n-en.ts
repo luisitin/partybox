@@ -176,9 +176,9 @@ export const en = {
       'Last place, first in line for a rematch.',
     ],
     placeRunnerUp: [
-      (gap: number) => `So close — ${gap} ${gap === 1 ? 'pt' : 'pts'} off first.`,
-      (gap: number) => `Second, ${gap} ${gap === 1 ? 'pt' : 'pts'} behind. One more round…`,
-      (gap: number) => `Silver. ${gap} ${gap === 1 ? 'pt' : 'pts'} from gold.`,
+      (gap: number) => `So close — ${gap}\u00a0${gap === 1 ? 'pt' : 'pts'} off first.`,
+      (gap: number) => `Second, ${gap}\u00a0${gap === 1 ? 'pt' : 'pts'} behind. One more round…`,
+      (gap: number) => `Silver. ${gap}\u00a0${gap === 1 ? 'pt' : 'pts'} from gold.`,
     ],
     placeMiddle: [
       (rank: number) => `${ordinal(rank)} — solidly in the pack.`,

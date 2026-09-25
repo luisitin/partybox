@@ -107,6 +107,9 @@
   line-height: 1.25;
   text-wrap: balance;
   text-align: center;
+  /* full width in the title stack, so a wrapped line centres too (review ebcc7f) */
+  width: 100%;
+  align-self: stretch;
 }
 .quip + .place {
   margin-top: 0;

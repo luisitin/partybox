@@ -39,7 +39,7 @@ describe('I-329: placeLine', () => {
     expect(placeLine(four(), 'Sam')).toBeNull();
   });
   it('runner-up gets the gap, the middle its place, last is last', () => {
-    expect(placeLine(four(), 'Priya')).toMatch(/40 pts/);
+    expect(placeLine(four(), 'Priya')).toMatch(/40 pts/); // the gap never splits from its unit
     expect(placeLine(four(), 'Kenji')).toMatch(/^3rd/);
     expect(all(t.results.placeLast)).toContain(placeLine(four(), 'Lou'));
   });
@@ -99,7 +99,7 @@ describe('I-329: placeLine', () => {
       ],
       ['Sam'],
     );
-    expect(placeLine(two, 'Priya')).toMatch(/ 1 pt /);
+    expect(placeLine(two, 'Priya')).toMatch(/ 1 pt /);
   });
   it('co-op and teams games: the outcome headline speaks, no line', () => {
     const coop = four(['Sam']);
