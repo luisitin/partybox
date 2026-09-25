@@ -13,6 +13,7 @@ import type { TvClient } from '../net/tv';
 import { serverText } from '../server-text';
 import { STRINGS } from './strings';
 import styles from './HostBar.module.css';
+import { StageHostButtons } from './TvStartStage';
 import { fixLabel, runFix, startFix } from '../startFix';
 import { gameEntry, useCatalog } from '../catalog';
 
@@ -174,7 +175,10 @@ export function HostBar({ client, room, view }: HostBarProps): JSX.Element | nul
       );
       break;
     case 'selecting':
-      buttons = (
+      // ADR-053: in the start stage the host may go back or start the count now
+      buttons = room.starting ? (
+        <StageHostButtons client={client} room={room} />
+      ) : (
         <>
           {botButtons}
           <button

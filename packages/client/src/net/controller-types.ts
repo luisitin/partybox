@@ -44,6 +44,8 @@ export interface Controller {
   bot(action: BotAction): void;
   /** I-070 A: nudge the VIP (lobby only; the server rate-limits it). */
   nudge(): void;
+  /** ADR-053: this person has read the start stage's rules. */
+  ready(): void;
   /** I-650: vote for the next game (null takes the vote back). */
   vote(gameId: string | null): void;
   /** ADR-047: this phone's "I can see the TV" (remembered here, told to the room). */

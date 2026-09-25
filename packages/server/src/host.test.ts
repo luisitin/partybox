@@ -91,7 +91,7 @@ describe('host', () => {
       playerId: 'a',
       action: { action: 'selectGame', gameId: 'tiny' },
     });
-    host.dispatch(code, { type: 'vip', playerId: 'a', action: { action: 'start' }, seed: 1 });
+    host.dispatch(code, { type: 'vip', playerId: 'a', action: { action: 'startNow' }, seed: 1 });
     expect(host.house().status).toBe('playing');
     expect(transport.sent.filter((s) => s.event === 'view' && s.to === 'a')).toHaveLength(1);
     await vi.advanceTimersByTimeAsync(4999);
@@ -114,7 +114,7 @@ describe('host', () => {
       playerId: 'a',
       action: { action: 'selectGame', gameId: 'tiny' },
     });
-    host.dispatch(code, { type: 'vip', playerId: 'a', action: { action: 'start' }, seed: 1 });
+    host.dispatch(code, { type: 'vip', playerId: 'a', action: { action: 'startNow' }, seed: 1 });
     vi.advanceTimersByTime(60_000);
     expect(host.house().status).toBe('playing');
     clock.set(1_005_000);
@@ -169,7 +169,7 @@ describe('host', () => {
       playerId: 'a',
       action: { action: 'selectGame', gameId: 'tiny' },
     });
-    host.dispatch(code, { type: 'vip', playerId: 'a', action: { action: 'start' }, seed: 1 });
+    host.dispatch(code, { type: 'vip', playerId: 'a', action: { action: 'startNow' }, seed: 1 });
     await vi.advanceTimersByTimeAsync(400);
     expect((host.house().game?.state as S).hits).toBeGreaterThanOrEqual(3);
     bots.removeAll(code);
@@ -210,7 +210,7 @@ describe('TV view pushes', () => {
       playerId: 'a',
       action: { action: 'selectGame', gameId: 'tiny' },
     });
-    host.dispatch(code, { type: 'vip', playerId: 'a', action: { action: 'start' }, seed: 1 });
+    host.dispatch(code, { type: 'vip', playerId: 'a', action: { action: 'startNow' }, seed: 1 });
     const tvViews = (): number =>
       transport.sent.filter((s) => s.event === 'view' && s.to === `tv:${code}`).length;
     expect(tvViews()).toBe(1);

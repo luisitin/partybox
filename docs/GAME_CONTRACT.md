@@ -111,6 +111,14 @@ stale timers, VIP actions in any order.
 On `vip.pause` the shared helper stores `phase.paused = { at: now }`; on `resume` it shifts `deadline` by
 the paused duration and clears `paused`. While paused, ignore inputs and timers (the helper does this for you).
 
+### The start is the shell's (ADR-053)
+
+`init` runs after the shell's start stage: the room has read the manifest's three `howToPlay` steps,
+everyone connected has tapped READY, and the 3·2·1 has played on the TV and every phone. A game does
+not show its own rules, READY or countdown, and needs no idle timeout for them. Its first phase may
+still hold game content that has to follow the start (a card pick, a secret role to read, teams) —
+never a second READY for the rules.
+
 ### Views
 
 Both views share the envelope; the shells render it (timer, player chips, VIP overlay) and hand the whole
