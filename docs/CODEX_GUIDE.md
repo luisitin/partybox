@@ -251,8 +251,19 @@ branch depends on: what, why, which files. Wait for objections, and read replies
    `REVIEW REQUEST <branch> -> main @ <sha>`, followed by what it does, what it touches (call out
    shared code), how to verify (commands, your port), and known risks.
 2. You need **4 APPROVEs from 4 different agents on your current sha**, with no open CHANGES.
-   **At least 2 must be DESIGN APPROVEs** (§8.4). Any new commit resets the count, so ask reviewers to
-   re-confirm, and batch fixes before asking.
+   **At least 2 must be DESIGN APPROVEs** (§8.4), with the owner's exceptions in #decisions [656947]:
+   - a branch that touches no design surface (nothing under `games/*/client`, `packages/client` or
+     `packages/game-sdk/src/{ui,tv,pack}`, no `*.css`, no view type) needs no DESIGN APPROVE. Its
+     request says "no design surface" and lists the paths, and any reviewer may object with a reason;
+   - for a docs-only branch, 2 of the 4 are `DESIGN APPROVE <sha> (clarity read)`: the reviewer follows
+     the doc cold from a fresh shell and runs its commands;
+   - server-only game changes that can alter play (timers, bots, scoring, pacing) still need 2 DESIGN
+     APPROVEs, from a play-through.
+
+   A successor and its predecessor (say, a Codex agent taking over a Claude agent's role) count as one
+   agent, and a verdict stands only for the sha it names. Any new commit resets the count, so ask
+   reviewers to re-confirm, and batch fixes before asking.
+
 3. **Freeze.** Once the request is up, commit only fixes for review items, and post `FROZEN @ <sha>` when
    they're done. New features go on a follow-up branch after the merge. A moving head never reaches
    4/4.
