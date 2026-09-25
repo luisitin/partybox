@@ -12,24 +12,16 @@ Branch `game/fake-out`, worktree `C:/dev/partybox-game-fake-out`, harness port 4
 | 4. Record → review | passes 1–3 done (see below); touch pass + matrix in progress                       |
 | 5. Review package  | not started                                                                        |
 
-## Platform pieces not on main yet (stand-ins in use)
+## Platform pieces (foundation on main since 2026-09-24, 00331644)
 
-The Foundation session's F-tasks were not on `main` when this session started (only F0's docs on
-branch `foundation`). Per the playbook, the game builds against thin local stand-ins:
-
-| Needed                                | Stand-in                                                                                                                                                                                                                                                                                              | Swap when         |
-| ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------- |
-| F5 `@partybox/game-sdk/match`         | `games/fake-out/server/match/` — Part 00 §4 + audit errata + ruling 16. F5 now exists on branch `foundation` (6dbaa7cf) with the same `matchAnswer` / `sameAnswer(…, lang)` + `groupAnswers`; at the swap, rerun the pack + leak tests against it and keep a prepared path for Suggest's draws (perf) | F5 lands on main  |
-| F6 `toSpeakable` + override lists     | `games/fake-out/server/speakable.ts` + `spoken-numbers.ts` (rules 1–13)                                                                                                                                                                                                                               | F6 lands          |
-| F6 fixed clips (`render-clips`)       | the eight fixed lines are ordinary live readings, asked for at the intro and cached by the host for good                                                                                                                                                                                              | F6 `render-clips` |
-| F2 manifest fields                    | not in `manifest.json` yet (zod strips unknown keys and the contract deep-equals the file) — values ready below                                                                                                                                                                                       | F2 lands          |
-| F1 lazy registry / `phone.ts`+`tv.ts` | the current eager `clientModule` with lazy surfaces                                                                                                                                                                                                                                                   | F1 lands          |
-| F4 presence / `useCanSeeTv`           | not needed by the rules (presence table is all "—"); PhoneStage follows `usePhoneOnly`                                                                                                                                                                                                                | F4 lands          |
-
-Manifest fields ready for F2: `icon: "🎭"`, `howToPlay`: "A strange true fact appears with a blank.
-Type a fake answer that sounds real." / "All answers are mixed with the truth. Pick the one you
-think is real." / "Score for finding the truth, and for every player your fake fools.",
-`presence: { needs: "anywhere" }`, `addedOn: "2026-09-24"`, tags `bluff`, `trivia`, `comedy`.
+Migrated in the merge of main: the ADR-050 layout (`client/shared.ts`, `phone-entry.ts`,
+`tv-entry.ts`; `client/index.ts` gone), the F2 manifest fields (icon 🎭, howToPlay, presence
+`anywhere`, addedOn 2026-09-24) and `manifest.es.json`. The stand-ins are gone: `server/lies.ts`
+and `server/options.ts` use `@partybox/game-sdk/match` (`matchAnswer`, `sameAnswer`,
+`groupAnswers` for merging lies in seat order), `server/speech.ts` uses `@partybox/game-sdk/speech`
+(`toSpeakable`, `speechKey`, `parsePronunciations`). Before the swap, all 220 facts were run
+through F5 with the §3.7 rules: 0 differences from the stand-in. Phone download within the 33 KB
+budget; no TV code on phones.
 
 ## Decisions made while building (not in the spec, or sharpened)
 

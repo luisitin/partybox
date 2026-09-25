@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "partybox/game-pack/answer-item",
   "title": "Anything a player might type (foundation §4.2)",
-  "description": "Every answer or secret word ships with its variants. All lowercase. The pack test normalizes every entry (§4.3), fails on any clash between entries, fails when an `accept` does not match `exact`, and warns under three accepted forms for a common word (aim for six or more where they honestly exist).",
+  "description": "Every answer or secret word ships with its variants. All lowercase. The file that holds the items carries the pack's `lang` at its top level ($defs/pack, ruling 15): every match function is called with it. The pack test (`checkAnswerPack` in @partybox/game-sdk, ADR-048) normalizes every entry (§4.3), fails on any clash between entries on their compact form (spacing, case, accent and apostrophe variants are automatic, so listing one is a clash), fails when an answer or `accept` does not match its own item as `exact`, and warns under three accepted forms for a common word (aim for six or more where they honestly exist). Code: `answerItemSchema` / `answerPackSchema` mirror this file.",
   "type": "object",
   "additionalProperties": true,
   "required": ["id", "answer"],
@@ -17,19 +17,32 @@
       "type": "array",
       "uniqueItems": true,
       "items": { "type": "string", "pattern": "^[^A-Z]*$" },
-      "description": "Same answer: plurals, common misspellings, US/UK spellings, abbreviations, with/without spaces and hyphens, true synonyms, brand vs generic."
+      "description": "Same answer: plurals, common misspellings, US/UK spellings, abbreviations, true synonyms, brand vs generic. Not spacing, hyphen, case, accent or apostrophe variants, nor number words for digits: the matcher already treats those as the same, and the pack test fails on them."
     },
     "reject": {
       "type": "array",
       "uniqueItems": true,
       "items": { "type": "string", "pattern": "^[^A-Z]*$" },
-      "description": "Looks close but is wrong; blocks a fuzzy match (cat for car, puffin for penguin)."
+      "description": "Looks close but is wrong (cat for car, puffin for penguin). Blocks exact and stem matches, and a fuzzy match whenever the input is at least as close to the reject as to the answer (ruling 16)."
     },
     "family": {
       "type": "array",
       "uniqueItems": true,
       "items": { "type": "string", "minLength": 3, "pattern": "^[^A-Z]*$" },
       "description": "Word games only: roots that give the secret away as a clue (sunflower → sun, flower)."
+    }
+  },
+  "$defs": {
+    "lang": {
+      "enum": ["en", "es"],
+      "description": "The content's language: it decides the articles, the number words and the stems."
+    },
+    "pack": {
+      "type": "object",
+      "description": "The top level of any content file that holds answer items: a required `lang`, then the game's own shape (a word list, categories, questions) around the items.",
+      "additionalProperties": true,
+      "required": ["lang"],
+      "properties": { "lang": { "$ref": "#/$defs/lang" } }
     }
   },
   "examples": [

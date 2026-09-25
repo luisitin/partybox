@@ -1,7 +1,6 @@
 // Bingo's words in other languages, keyed by the English sentence (the owner, 2026-09-22: every
 // screen translatable to Spanish). Screens read them through `useT(STRINGS)` as `L('…')`; the
-// shell's game picker reads the manifest's tagline, description and setting labels from here too,
-// and `L.sent` the pattern names and hints the server writes. `{name}` marks a placeholder.
+// manifest's own sentences live in manifest.es.json (ADR-049); `L.sent` reads the pattern names and hints the server writes. `{name}` marks a placeholder.
 // Content (the caller's nicknames, the recorded calls) stays in the deck's language.
 import type { Strings } from '@partybox/game-sdk/ui';
 import { ES_GAME } from './strings-es-game';

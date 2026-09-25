@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { JSX } from 'react';
 import { AvatarPhotos, ServerClockProvider, isSoundCue, useLang } from '@partybox/game-sdk/ui';
-import { clientGames } from '../games.generated';
+import { useGame } from '../game-loader';
 import { t } from '../i18n';
 import { useStore } from '../net/store';
 import { createTvClient } from '../net/tv';
@@ -63,6 +63,8 @@ export function TvApp(): JSX.Element {
   const state = useStore(client.store, (s) => s);
   const room = state.room;
   const view = state.view;
+  // ADR-050: the chosen game's TV entry — downloading from the moment it is chosen (§2.3).
+  const tvGame = useGame(room?.selectedGameId, 'tv').module;
   // The last board of the game, kept for the results stage ("adjust state when a prop changes").
   const [lastView, setLastView] = useState<typeof view>(null);
   if (room?.status === 'playing' && view && view !== lastView) setLastView(view);
@@ -77,17 +79,19 @@ export function TvApp(): JSX.Element {
   const status = room?.status ?? null;
   useEffect(() => {
     if (status !== 'playing' && typeof speechSynthesis !== 'undefined') speechSynthesis.cancel();
-  }, [status]);
+    // The winner's cheer and horn arrive while the game plays, minutes before they are needed.
+    if (status === 'playing') audio.warm();
+  }, [status, audio]);
 
   // Background music follows the room (owner picks 2026-09-15): the lobby set while people gather
   // or the host picks a game, a game's own set while it plays, silence on results; a paused game
   // holds the track. It starts on the audio gate's first tap like the cues.
   useEffect(() => {
-    const gameMusic = room?.selectedGameId ? clientGames[room.selectedGameId]?.music : undefined;
+    const gameMusic = tvGame?.music;
     music.play(planFor(room, view, gameMusic));
     music.setPaused(room?.status === 'playing' && (view?.paused ?? false));
     // Synthesized beds by phase (ADR-032): same gate, same mute, same pause.
-    const gameBeds = room?.selectedGameId ? clientGames[room.selectedGameId]?.beds : undefined;
+    const gameBeds = tvGame?.beds;
     // How often each phase has begun, so a phase that names several beds rotates through them
     // instead of replaying one bed every round (loop #197).
     const phase = room?.status === 'playing' ? (view?.phaseId ?? null) : null;
@@ -101,7 +105,7 @@ export function TvApp(): JSX.Element {
     if (phase === null) bedTurns.current = {};
     beds.play(bedFor(room, view, gameBeds, bedTurns.current));
     beds.setPaused(room?.status === 'playing' && (view?.paused ?? false));
-  }, [room, view, music, beds]);
+  }, [room, view, music, beds, tvGame]);
   // I-032 A: tension from the deadline — the last ten seconds ramp 0 → 1; none without a deadline.
   useEffect(() => {
     const deadline = room?.status === 'playing' && !view?.paused ? (view?.deadline ?? null) : null;
@@ -230,16 +234,22 @@ export function TvApp(): JSX.Element {
       else {
         music.duck(9000);
         // I-037 C: several winners — the suspended chord, not the horn.
-        audio.play((room.results?.results.winnerIds.length ?? 0) > 1 ? 'tie' : 'cheer');
+        const outcome = room.results?.results.outcome;
+        // ADR-052: co-op / teams — the cheer for a win, the tie chord for a draw or a loss.
+        const won =
+          outcome &&
+          (outcome.kind === 'coop'
+            ? outcome.won
+            : outcome.teams.some((x) => x.id === outcome.winner));
+        if (outcome) audio.play(won ? 'cheer' : 'tie');
+        else audio.play((room.results?.results.winnerIds.length ?? 0) > 1 ? 'tie' : 'cheer');
       }
     }
     // A game that cued this phase itself (useSound, child effects run first) keeps the stage's
-    // generic chime out of its way. `clientModule.sounds` maps a phase id to its own cue (reveal,
+    // generic chime out of its way. `tv.sounds` maps a phase id to its own cue (reveal,
     // wager, tally…); unmapped phases play `phase`, reserved for "your phone needs you".
     if (view && p.phase !== null && room.status === 'playing') {
-      const mapped = room.selectedGameId
-        ? clientGames[room.selectedGameId]?.sounds?.[view.phaseId]
-        : undefined;
+      const mapped = tvGame?.sounds?.[view.phaseId];
       // A phase that re-enters itself (Blanks reads one card per instance) chimes again, but only
       // when the game mapped a cue for it: the deadline moves with the instance, never on a pause.
       const reentered =
@@ -259,10 +269,7 @@ export function TvApp(): JSX.Element {
       view && room.status === 'playing'
         ? view.players.filter((pl) => pl.status === 'submitted').length
         : 0;
-    const ownLock =
-      view && room.selectedGameId
-        ? (clientGames[room.selectedGameId]?.ownLocks?.includes(view.phaseId) ?? false)
-        : false;
+    const ownLock = view ? (tvGame?.ownLocks?.includes(view.phaseId) ?? false) : false;
     if (
       view &&
       room.status === 'playing' &&
@@ -286,7 +293,7 @@ export function TvApp(): JSX.Element {
       code: room.code,
       locked: view && view.phaseId === p.phase ? locked : 0,
     };
-  }, [room, view, audio, music, homing, showLocalToast]);
+  }, [room, view, audio, music, homing, showLocalToast, tvGame]);
 
   // I-658 B: a new room (a start over) means a new QR — fetch it now, not within the minute
   const liveCode = room?.code ?? null;

@@ -1,13 +1,21 @@
 {
   "id": "wisecrack",
   "name": "Wisecrack",
+  "icon": "😂",
   "tagline": "Write the funniest answer. Win the room's votes.",
   "description": "Everyone gets two prompts and writes a one-liner for each. Each prompt then goes on the TV with its two answers, anonymously; everyone else votes for the funnier one. 100 points per vote, a bonus for a clean sweep, and with two or more rounds the last one counts double.",
+  "howToPlay": [
+    "You get two prompts. Write a funny one-liner for each.",
+    "Each prompt goes on the TV with two answers, and nobody knows whose.",
+    "Vote for the funnier one. 100 points a vote; a clean sweep earns a bonus."
+  ],
   "version": "0.1.0",
   "minPlayers": 3,
   "maxPlayers": 8,
   "estimatedMinutes": 10,
-  "tags": ["text", "voting", "comedy"],
+  "tags": ["words", "comedy"],
+  "presence": { "needs": "anywhere" },
+  "addedOn": "2026-01-01",
   "settings": [
     {
       "key": "rounds",

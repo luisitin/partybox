@@ -32,6 +32,8 @@ const replacements: [RegExp, string][] = [
   [/games\/_template/g, `games/${id}`],
   [/--game template/g, `--game ${id}`],
   [/QuickPoll/g, title.replace(/\s+/g, '')],
+  // The catalog's NEW badge counts from the day the game was made (Part 00 §1.2).
+  [/"addedOn": "\d{4}-\d{2}-\d{2}"/g, `"addedOn": "${new Date().toISOString().slice(0, 10)}"`],
 ];
 
 function walk(dir: string): string[] {

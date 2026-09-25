@@ -4,9 +4,8 @@
 import { nextInt, shuffle } from '@partybox/game-sdk';
 import type { RngState } from '@partybox/game-sdk';
 import { fillersFor } from './content';
-import { displayForm, isTruthPrepared, matchesAny } from './lies';
-import { prepare, prepareItem, samePrepared } from './match';
-import type { Prepared } from './match';
+import { groupAnswers } from '@partybox/game-sdk/match';
+import { displayForm, isTruth, matchesAny } from './lies';
 import { MIN_OPTIONS } from './types';
 import type { FactItem, OptionEntry, State } from './types';
 
@@ -17,25 +16,10 @@ export function mergeLies(
   lies: Readonly<Record<string, string>>,
 ): { text: string; authors: string[] }[] {
   const order = seats.filter((p) => Object.hasOwn(lies, p));
-  const prepared = order.map((p) => prepare(lies[p] ?? ''));
-  const parent = order.map((_, i) => i);
-  const root = (i: number): number => {
-    let r = i;
-    while (parent[r] !== r) r = parent[r] ?? r;
-    return r;
-  };
-  for (let i = 0; i < order.length; i++)
-    for (let j = i + 1; j < order.length; j++)
-      if (samePrepared(prepared[i] as Prepared, prepared[j] as Prepared)) {
-        const a = root(i);
-        const b = root(j);
-        if (a !== b) parent[Math.max(a, b)] = Math.min(a, b);
-      }
-  const groups = new Map<number, string[]>();
-  order.forEach((p, i) => groups.set(root(i), [...(groups.get(root(i)) ?? []), p]));
-  return [...groups.values()].map((authors) => ({
-    text: lies[authors[0] as string] ?? '',
-    authors,
+  const texts = order.map((p) => lies[p] ?? '');
+  return groupAnswers(texts, 'en').map((group) => ({
+    text: texts[group[0] ?? 0] ?? '',
+    authors: group.map((i) => order[i] as string),
   }));
 }
 
@@ -49,10 +33,7 @@ function drawFakes(
   avoid: readonly string[],
   count: number,
 ): [string[], RngState] {
-  const truth = prepareItem(item.truth);
-  const avoided = avoid.map((a) => prepare(a));
   const out: string[] = [];
-  const drawn: Prepared[] = [];
   let r = rng;
   for (const group of [item.houseLies, fillersFor(item)]) {
     if (out.length >= count) break;
@@ -60,10 +41,8 @@ function drawFakes(
     r = next;
     for (const fake of order) {
       if (out.length >= count) break;
-      const p = prepare(fake);
-      if (matchesAny(p, avoided) || matchesAny(p, drawn) || isTruthPrepared(p, truth)) continue;
+      if (matchesAny(fake, avoid) || matchesAny(fake, out) || isTruth(fake, item)) continue;
       out.push(fake);
-      drawn.push(p);
     }
   }
   return [out, r];

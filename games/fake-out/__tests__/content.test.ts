@@ -6,7 +6,7 @@ import { BLANK, CATEGORIES, LIE_MAX_CHARS } from '../content/schema';
 import type { FactItem } from '../content/schema';
 import { FAMILY, FILLERS, SPICY } from '../server/content';
 import { checkLie } from '../server/lies';
-import { matchAnswer, normalize, sameAnswer } from '../server/match';
+import { matchAnswer, normalize, sameAnswer } from '@partybox/game-sdk/match';
 import unverifiedJson from '../content/unverified.json' with { type: 'json' };
 
 const PLAYED: readonly FactItem[] = [...FAMILY.facts, ...SPICY.facts];
@@ -17,16 +17,16 @@ function problems(f: FactItem): string[] {
   if (f.source.trim().length < 3) out.push('no source');
   if (f.fact.split(BLANK).length !== 2) out.push('needs exactly one blank');
   const forms = [f.truth.answer, ...f.truth.accept];
-  const compacts = new Set(forms.map((a) => normalize(a).compact));
+  const compacts = new Set(forms.map((a) => normalize(a, 'en').compact));
   if (compacts.size - 1 < 6) out.push(`only ${compacts.size - 1} distinct accepted forms`);
   for (const a of f.truth.accept)
-    if (matchAnswer(a, f.truth) !== 'exact') out.push(`accept "${a}" is not exact`);
+    if (matchAnswer(a, f.truth, 'en') !== 'exact') out.push(`accept "${a}" is not exact`);
   if (f.truth.answer.length > LIE_MAX_CHARS) out.push('truth too long to be an option');
   f.houseLies.forEach((lie, i) => {
     const why = checkLie(lie, f);
     if (why) out.push(`house lie "${lie}" fails: ${why}`);
     f.houseLies.slice(i + 1).forEach((other) => {
-      if (sameAnswer(lie, other)) out.push(`house lies "${lie}" and "${other}" merge`);
+      if (sameAnswer(lie, other, 'en')) out.push(`house lies "${lie}" and "${other}" merge`);
     });
   });
   return out;
@@ -56,13 +56,13 @@ describe('fact packs', () => {
     const seen = new Map<string, string>();
     const dupes: string[] = [];
     for (const f of PLAYED) {
-      const words = normalize(f.fact.replace(BLANK, ''))
+      const words = normalize(f.fact.replace(BLANK, ''), 'en')
         .norm.split(' ')
         .filter((w) => w.length >= 6)
         .sort()
         .slice(0, 3)
         .join(' ');
-      const key = `${normalize(f.truth.answer).compact}|${words}`;
+      const key = `${normalize(f.truth.answer, 'en').compact}|${words}`;
       const other = seen.get(key);
       if (other) dupes.push(`${other} ~ ${f.id}`);
       seen.set(key, f.id);
@@ -88,7 +88,7 @@ describe('fillers', () => {
   it('have 20+ distinct fakes per kind and per category', () => {
     for (const list of [...Object.values(FILLERS.byKind), ...Object.values(FILLERS.byCategory)]) {
       expect(list.length).toBeGreaterThanOrEqual(20);
-      expect(new Set(list.map((x) => normalize(x).compact)).size).toBe(list.length);
+      expect(new Set(list.map((x) => normalize(x, 'en').compact)).size).toBe(list.length);
     }
     expect(Object.keys(FILLERS.byCategory).sort()).toEqual([...CATEGORIES].sort());
   });

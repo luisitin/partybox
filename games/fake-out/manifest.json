@@ -2,12 +2,22 @@
   "id": "fake-out",
   "name": "Fake-Out",
   "tagline": "Write a fake answer. Find the real one.",
+  "icon": "🎭",
+  "howToPlay": [
+    "A strange true fact appears with a blank. Type a fake answer that sounds real.",
+    "All answers are mixed with the truth. Pick the one you think is real.",
+    "Score for finding the truth, and for every player your fake fools."
+  ],
   "description": "A strange true fact appears with a blank. Everyone types a fake answer that sounds real, then all the answers are mixed with the truth and everyone picks the one they believe. Score for finding the truth and for every player your fake fools. The last question is worth double.",
   "version": "0.1.0",
   "minPlayers": 2,
   "maxPlayers": 12,
   "estimatedMinutes": 12,
   "tags": ["bluff", "trivia", "comedy"],
+  "presence": {
+    "needs": "anywhere"
+  },
+  "addedOn": "2026-09-24",
   "settings": [
     {
       "key": "questions",
@@ -67,20 +77,62 @@
       "type": "multiselect",
       "default": "",
       "options": [
-        { "value": "animals", "label": "Animals" },
-        { "value": "history", "label": "History" },
-        { "value": "food", "label": "Food" },
-        { "value": "science", "label": "Science" },
-        { "value": "geography", "label": "Geography" },
-        { "value": "weird-laws", "label": "Weird laws" },
-        { "value": "sports", "label": "Sports" },
-        { "value": "inventions", "label": "Inventions" },
-        { "value": "space", "label": "Space" },
-        { "value": "body", "label": "The human body" },
-        { "value": "words", "label": "Words" },
-        { "value": "holidays", "label": "Holidays" },
-        { "value": "drinking", "label": "Drinking (spicy)" },
-        { "value": "dating", "label": "Dating (spicy)" }
+        {
+          "value": "animals",
+          "label": "Animals"
+        },
+        {
+          "value": "history",
+          "label": "History"
+        },
+        {
+          "value": "food",
+          "label": "Food"
+        },
+        {
+          "value": "science",
+          "label": "Science"
+        },
+        {
+          "value": "geography",
+          "label": "Geography"
+        },
+        {
+          "value": "weird-laws",
+          "label": "Weird laws"
+        },
+        {
+          "value": "sports",
+          "label": "Sports"
+        },
+        {
+          "value": "inventions",
+          "label": "Inventions"
+        },
+        {
+          "value": "space",
+          "label": "Space"
+        },
+        {
+          "value": "body",
+          "label": "The human body"
+        },
+        {
+          "value": "words",
+          "label": "Words"
+        },
+        {
+          "value": "holidays",
+          "label": "Holidays"
+        },
+        {
+          "value": "drinking",
+          "label": "Drinking (spicy)"
+        },
+        {
+          "value": "dating",
+          "label": "Dating (spicy)"
+        }
       ]
     },
     {
@@ -97,12 +149,30 @@
       "type": "select",
       "default": "fable",
       "options": [
-        { "value": "none", "label": "No reader" },
-        { "value": "george", "label": "Old British Man" },
-        { "value": "fable", "label": "Young British Man" },
-        { "value": "jessica", "label": "American Woman" },
-        { "value": "sky", "label": "Soft-Spoken Woman" },
-        { "value": "original", "label": "Original" }
+        {
+          "value": "none",
+          "label": "No reader"
+        },
+        {
+          "value": "george",
+          "label": "Old British Man"
+        },
+        {
+          "value": "fable",
+          "label": "Young British Man"
+        },
+        {
+          "value": "jessica",
+          "label": "American Woman"
+        },
+        {
+          "value": "sky",
+          "label": "Soft-Spoken Woman"
+        },
+        {
+          "value": "original",
+          "label": "Original"
+        }
       ]
     }
   ],

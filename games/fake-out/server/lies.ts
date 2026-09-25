@@ -2,8 +2,7 @@
 // option"). The display form must make the truth and the lies indistinguishable: same case, no
 // leading article, no trailing punctuation — spelling is left exactly as typed.
 import { LIE_MAX_CHARS } from '../content/schema';
-import { atLeast, matchPrepared, normalize, prepare, prepareItem, samePrepared } from './match';
-import type { Prepared, PreparedItem } from './match';
+import { matchAnswer, normalize, sameAnswer } from '@partybox/game-sdk/match';
 import type { FactItem, LieRejection } from './types';
 
 /** Characters as a person counts them (code points, so an emoji is one). */
@@ -26,30 +25,30 @@ export function displayForm(text: string): string {
   return first.toUpperCase() + t.slice(1);
 }
 
-/** True when a prepared lie is (or contains) the prepared truth, by the two truth checks of §3.7.
- *  The containment check applies only to truths of 5+ letters, so "ant" never blocks "elephant". */
-export function isTruthPrepared(lie: Prepared, truth: PreparedItem): boolean {
-  if (atLeast(matchPrepared(lie, truth), 'fuzzy')) return true;
-  return truth.forms.some(
-    (f) => f.compact.length >= 5 && lie.compact !== f.compact && lie.compact.includes(f.compact),
-  );
-}
-
+/** True when `lie` is (or contains) the truth, by the two truth checks of §3.7 (F5 matcher,
+ *  `fuzzy` or better). The containment check applies only to truths of 5+ letters, so "ant" never
+ *  blocks "elephant". */
 export function isTruth(lie: string, item: FactItem): boolean {
-  return isTruthPrepared(prepare(lie), prepareItem(item.truth));
+  const truth = { answer: item.truth.answer, accept: item.truth.accept, reject: item.truth.reject };
+  if (matchAnswer(lie, truth, 'en') !== 'none') return true;
+  const lieCompact = normalize(lie, 'en').compact;
+  return [item.truth.answer, ...item.truth.accept].some((f) => {
+    const c = normalize(f, 'en').compact;
+    return c.length >= 5 && lieCompact !== c && lieCompact.includes(c);
+  });
 }
 
 /** The §3.7 checks in order; null = accepted. (`sameAnswer` merges and padding matches are
  *  accepted silently — saying so would leak another player's lie.) */
 export function checkLie(text: string, item: FactItem): LieRejection | null {
   const trimmed = text.trim();
-  if (normalize(trimmed).compact.length === 0) return 'empty';
+  if (normalize(trimmed, 'en').compact.length === 0) return 'empty';
   if (charCount(trimmed) > LIE_MAX_CHARS) return 'too-long';
   if (isTruth(trimmed, item)) return 'truth';
   return null;
 }
 
-/** True when `candidate` is the same answer as any prepared text in `taken`. */
-export function matchesAny(candidate: Prepared, taken: readonly Prepared[]): boolean {
-  return taken.some((t) => samePrepared(candidate, t));
+/** True when `candidate` is the same answer as any text in `taken`. */
+export function matchesAny(candidate: string, taken: readonly string[]): boolean {
+  return taken.some((t) => sameAnswer(candidate, t, 'en'));
 }

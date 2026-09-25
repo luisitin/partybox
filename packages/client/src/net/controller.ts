@@ -1,6 +1,5 @@
 // The phone's single source of truth: one socket, one store. Handles join/resume by token,
 // `rev` gating, clock offset, toasts, errors and kicks (docs/PROTOCOL.md).
-import { io } from 'socket.io-client';
 import type { Socket } from 'socket.io-client';
 import type {
   ControllerView,
@@ -25,6 +24,7 @@ import type { Identity, Session } from './session-store';
 import { createStore, toastOnce } from './store';
 import type { Store, Toast } from './store';
 import { followHouseRoom, replaceRoomParam } from './room-param';
+import { openSocket } from './socket';
 
 export type Connection = 'connecting' | 'connected' | 'reconnecting';
 
@@ -88,7 +88,7 @@ export function createController(url?: string): Controller {
     restarted: false,
     otherTab: false,
   });
-  const socket: Socket = io(url ?? '/', { transports: ['websocket', 'polling'] });
+  const socket: Socket = openSocket(url);
   let seq = 0;
   let pending: Session | null = null;
 

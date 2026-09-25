@@ -2,6 +2,7 @@
 // contract suite validates every pack with it. The deeper checks (house lies against the truth
 // through the matcher, accepts that must come back exact) live in __tests__/content.test.ts.
 import { z } from '@partybox/game-sdk';
+import { pronunciationsSchema } from '@partybox/game-sdk/speech';
 
 /** Max characters of a player's lie (SPEC §3.7); the truth and house lies stay well inside it. */
 export const LIE_MAX_CHARS = 40;
@@ -106,25 +107,10 @@ export const fillersPackSchema = z.object({
 });
 export type FillersPack = z.infer<typeof fillersPackSchema>;
 
-/** Per-game pronunciation overrides (Part 00 §5.4 as amended: case-sensitive unless `anyCase`,
- *  `ipa` on the wire with `phonemes` accepted as an alias, `say` required for Zira). */
-export const pronunciationsPackSchema = z.object({
-  words: z.record(
-    z.string().min(1),
-    z.object({
-      say: z.string().min(1),
-      ipa: z.string().min(1).optional(),
-      phonemes: z.string().min(1).optional(),
-      anyCase: z.boolean().optional(),
-    }),
-  ),
-});
-export type PronunciationsPack = z.infer<typeof pronunciationsPackSchema>;
-
 export const packs = {
   family: familyPackSchema,
   spicy: spicyPackSchema,
   unverified: unverifiedPackSchema,
   fillers: fillersPackSchema,
-  pronunciations: pronunciationsPackSchema,
+  pronunciations: pronunciationsSchema,
 } as const;

@@ -1,25 +1,97 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "partybox/game-pack/pronunciations",
-  "title": "Pronunciation overrides (foundation §5.4)",
-  "description": "Two lists: the SDK's global speech/overrides.en.json and a game's content/pronunciations.json (the game's wins). Keys are whole words, matched case-insensitively, applied after toSpeakable rule 1 (straighten quotes) and before rules 2–13. `say` is always required — Zira cannot read Kokoro phonemes. NOTE: the existing Blanks lexicon (games/blanks/content/pronounce.json) uses {ipa, say, spell} and per-card entries; F6 decides whether it migrates to this shape or this shape grows `ipa`/`spell` (see FOUNDATION-AUDIT).",
+  "title": "Pronunciation overrides (foundation §5.4, as amended by audit #17/#21 and ruling 17)",
+  "description": "Two lists: the SDK's global packages/game-sdk/src/speech/overrides.en.json and a game's content/pronunciations.json (the game's wins; an item's own fixes win over both). Applied after toSpeakable rule 1 (straighten quotes) and before rules 2–13; what an entry produces is final. Word keys match whole words (a possessive 's may follow) and CASE-SENSITIVELY — an entry for \"US\" never touches \"us\" — unless the entry sets anyCase. A superset of Blanks' lexicon (games/blanks/content/pronounce.json parses unchanged). The code's copy is the zod `pronunciationsSchema` in @partybox/game-sdk/speech; this file mirrors it.",
   "type": "object",
-  "additionalProperties": {
-    "type": "object",
-    "additionalProperties": false,
-    "required": ["say"],
-    "properties": {
-      "say": {
-        "type": "string",
-        "minLength": 1,
-        "description": "Plain respelling every voice can read: \"Wuss-ter-sher\"."
-      },
-      "phonemes": {
-        "type": "string",
-        "minLength": 1,
-        "description": "Kokoro phonemes (espeak notation); used by the Kokoro voices, `say` by the rest."
+  "additionalProperties": false,
+  "properties": {
+    "_about": { "type": "string" },
+    "words": {
+      "type": "object",
+      "description": "Word or phrase → entry.",
+      "additionalProperties": { "$ref": "#/$defs/entry" }
+    },
+    "patterns": {
+      "type": "array",
+      "description": "Regular expressions (JavaScript, u flag) over what the word lists left, game list first; the replacement is final.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["match", "say"],
+        "properties": {
+          "match": { "type": "string", "minLength": 1 },
+          "say": {
+            "type": "string",
+            "description": "The replacement; $1…$9 and $& are filled in."
+          },
+          "anyCase": { "type": "boolean" },
+          "why": { "type": "string" }
+        }
+      }
+    },
+    "items": { "$ref": "#/$defs/itemFixes" },
+    "cards": {
+      "$ref": "#/$defs/itemFixes",
+      "description": "Blanks' name for items; read as items (items win on the same id)."
+    }
+  },
+  "$defs": {
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "anyOf": [
+        { "required": ["say"] },
+        { "required": ["ipa"] },
+        { "required": ["phonemes"] },
+        { "required": ["spell"], "properties": { "spell": { "const": true } } }
+      ],
+      "not": { "required": ["ipa", "phonemes"] },
+      "properties": {
+        "say": {
+          "type": "string",
+          "minLength": 1,
+          "description": "What every voice reads instead, as a lowercase respelling (\"keen-wah\"): espeak spells a capitalised syllable (\"YON\") letter by letter. With ipa, what Zira reads."
+        },
+        "ipa": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Kokoro phonemes (espeak notation), said as given. The part sent is { ipa, text: say ?? the word } — text is required on the wire so Zira is never silent. Every symbol must be in Kokoro's vocabulary (unknownPhonemes() is empty): Kokoro drops unknown symbols without an error."
+        },
+        "phonemes": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Part 00's name for ipa, accepted and read as ipa. Give one or the other."
+        },
+        "spell": {
+          "type": "boolean",
+          "description": "Letter by letter (letters go as phonemes, digits as words)."
+        },
+        "anyCase": {
+          "type": "boolean",
+          "description": "Match the key in any case (quinoa, Quinoa, QUINOA). Default: the exact case."
+        },
+        "why": { "type": "string", "description": "Why the entry exists; not read." }
+      }
+    },
+    "itemFixes": {
+      "type": "object",
+      "description": "Content item id (card, prompt, question) → word → entry, for that item only; the word `_whole` replaces the item's whole text. toSpeakable reads them with { itemId }.",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": { "$ref": "#/$defs/entry" }
       }
     }
   },
-  "examples": [{ "Worcestershire": { "say": "Wuss-ter-sher" } }]
+  "examples": [
+    {
+      "words": {
+        "quinoa": { "ipa": "kˈiːnwɑː", "say": "keen-wah", "anyCase": true },
+        "US": { "say": "United States" },
+        "AITA": { "spell": true }
+      },
+      "patterns": [{ "match": "\\b19(\\d\\d)\\b", "say": "19 $1" }],
+      "items": { "fo12": { "Bass": { "ipa": "bˈas", "why": "the fish" } } }
+    }
+  ]
 }

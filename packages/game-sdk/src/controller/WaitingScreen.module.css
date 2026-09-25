@@ -30,6 +30,10 @@
   color: var(--pb-info);
 }
 
+.oops {
+  color: var(--pb-accent-2);
+}
+
 .title {
   text-wrap: balance;
 }
