@@ -47,7 +47,7 @@ export const ES_SCREENS: Record<string, string> = {
   'Choose your stake': 'Elige tu apuesta',
   'Bet {coin} {n} on {what}': 'Apostar {coin} {n} a {what}',
   'Change to {coin} {n} on {what}': 'Cambiar a {coin} {n} a {what}',
-  '✓ {coin} {n} on {what}': '✓ {coin} {n} a {what}',
+  '{coin} {n} on {what}': '{coin} {n} a {what}',
   'Sit this one out': 'Paso esta ronda',
   '✓ Sitting this one out': '✓ Pasas esta ronda',
   'You only have {coin} {n}': 'Solo tienes {coin} {n}',
@@ -71,7 +71,7 @@ export const ES_SCREENS: Record<string, string> = {
   'One moment…': 'Un momento…',
   'Look at the TV': 'Mira la TV',
   "That's the last box!": '¡Esa fue la última caja!',
-  'Tap a card, then choose your coins': 'Toca una carta y luego elige tus monedas',
+  'Tap a card, then set your coins': 'Toca una carta y elige tus monedas',
   // live events
   'A goat behind door {n}! You are switching to door {m}.':
     '¡Una cabra tras la puerta {n}! Vas a cambiar a la puerta {m}.',

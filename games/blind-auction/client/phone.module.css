@@ -520,6 +520,35 @@
   .winning {
     min-height: 124px;
   }
+  /* The box's name and the coin pill share one row ("Box n/N" is on the TV; the grand box keeps
+     its ★ kicker): the bet's cards and stake fit above the fold on an SE (review [4ba285]). */
+  .lotTitle {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: var(--pb-space-2);
+    margin-top: 0;
+  }
+  .lotTitle .kickerRow {
+    display: contents;
+  }
+  .lotTitle:not(.grand) .lotTitleKicker {
+    display: none;
+  }
+  .lotTitle .lotTitleKicker {
+    flex-basis: 100%;
+  }
+  .lotTitleName {
+    flex: 1 1 0;
+    order: 1;
+    font-size: calc(var(--pb-font-h2) * 0.85);
+  }
+  .lotTitle .kickerRow > :last-child {
+    order: 2;
+  }
+  .betHead {
+    gap: var(--pb-space-1);
+  }
 }
 
 .betHead {

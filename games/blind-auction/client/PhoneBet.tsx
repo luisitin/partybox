@@ -9,7 +9,7 @@ import { BidPad } from '@partybox/game-sdk/ui/bid-pad';
 import { PITY_COINS } from '../server/timing';
 import type { Input } from '../server/types';
 import type { BlindAuctionControllerView } from '../server/views';
-import { COIN, iconOf, nameOf } from './copy';
+import { COIN, nameOf } from './copy';
 import { OptionBoard } from './Options';
 import { KenoPad } from './Keno';
 import { DoubleSwitch, InsureSwitch, PeekButton, TwistNote } from './Twist';
@@ -40,9 +40,8 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
   if (!box) return null;
   const what = option !== null ? box.options[option] : undefined;
   const second = box.twist === 'split' && also !== null ? box.options[also] : undefined;
-  const label =
-    (what ? `${iconOf(what)} ${nameOf(L, what)}` : '') +
-    (second ? ` + ${iconOf(second)} ${nameOf(L, second)}` : '');
+  // Names only: the icon is on the ticked card above, and the button stays one line on an SE.
+  const label = (what ? nameOf(L, what) : '') + (second ? ` + ${nameOf(L, second)}` : '');
   // "Placed" only while the shown bet is the one sent: picking another content re-arms the button.
   // Sitting out is sitting out whatever card is picked.
   const placed = !view.myBet
@@ -110,7 +109,7 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
             ? L('Put {coin} {n} in the pot', { coin: COIN, n })
             : L('Bet {coin} {n} on {what}', { coin: COIN, n, what: label }),
         change: (n) => L('Change to {coin} {n} on {what}', { coin: COIN, n, what: label }),
-        placed: (n) => L('✓ {coin} {n} on {what}', { coin: COIN, n, what: label }),
+        placed: (n) => L('{coin} {n} on {what}', { coin: COIN, n, what: label }),
         zero:
           option === null
             ? box.event === 'potato'
@@ -128,7 +127,7 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
           <TwistNote twist={box.twist} size="phone" />
           {option === null && box.event !== 'shells' && box.event !== 'keno' ? (
             // Above the cards, never in the fade (review). A first-timer didn't know to tap a card or where the stake goes.
-            <p className={styles.betHint}>{L('Tap a card, then choose your coins')}</p>
+            <p className={styles.betHint}>{L('Tap a card, then set your coins')}</p>
           ) : null}
           {box.event === 'keno' ? (
             <KenoPad spots={view.mySpots} onSpots={(spots) => send({ type: 'spots', spots })} />
