@@ -15,6 +15,10 @@ export const gameLoaders: Readonly<Record<string, GameLoaders>> = {
     phone: () => import('../../../games/broken-pencil/client/phone-entry').then((m) => m.phone),
     tv: () => import('../../../games/broken-pencil/client/tv-entry').then((m) => m.tv),
   },
+  'echo': {
+    phone: () => import('../../../games/echo/client/phone-entry').then((m) => m.phone),
+    tv: () => import('../../../games/echo/client/tv-entry').then((m) => m.tv),
+  },
   'fake-out': {
     phone: () => import('../../../games/fake-out/client/phone-entry').then((m) => m.phone),
     tv: () => import('../../../games/fake-out/client/tv-entry').then((m) => m.tv),
@@ -35,6 +39,14 @@ export const gameLoaders: Readonly<Record<string, GameLoaders>> = {
     phone: () => import('../../../games/spy-grid/client/phone-entry').then((m) => m.phone),
     tv: () => import('../../../games/spy-grid/client/tv-entry').then((m) => m.tv),
     settings: () => import('../../../games/spy-grid/client/settings-entry').then((m) => m.settings),
+  },
+  'tune-in': {
+    phone: () => import('../../../games/tune-in/client/phone-entry').then((m) => m.phone),
+    tv: () => import('../../../games/tune-in/client/tv-entry').then((m) => m.tv),
+  },
+  'who-said-it': {
+    phone: () => import('../../../games/who-said-it/client/phone-entry').then((m) => m.phone),
+    tv: () => import('../../../games/who-said-it/client/tv-entry').then((m) => m.tv),
   },
   'wisecrack': {
     phone: () => import('../../../games/wisecrack/client/phone-entry').then((m) => m.phone),

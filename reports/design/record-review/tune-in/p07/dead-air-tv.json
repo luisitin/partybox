@@ -1,0 +1,36 @@
+{
+  "video": "C:\\dev\\partybox-game-tune-in\\reports\\design\\record-review\\tune-in\\p07\\video\\tv\\round.webm",
+  "bytes": 16828528,
+  "durationS": 158.1,
+  "fps": 25,
+  "thresholds": {
+    "stillMeanDiff": 0.0025,
+    "minDeadMs": 1500,
+    "cutMeanDiff": 0.22
+  },
+  "deadSpans": [
+    {
+      "fromS": 0,
+      "toS": 1.9,
+      "ms": 1920,
+      "during": "(start)",
+      "cueInside": false
+    },
+    {
+      "fromS": 2,
+      "toS": 3.9,
+      "ms": 1960,
+      "during": "(start)",
+      "cueInside": false
+    }
+  ],
+  "deadMsTotal": 3880,
+  "hardCuts": [],
+  "samples": 3931,
+  "motion": {
+    "p50": 0,
+    "p90": 0.001,
+    "p99": 0.015,
+    "max": 0.1176
+  }
+}

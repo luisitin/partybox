@@ -1,0 +1,1769 @@
+{
+  "lang": "en",
+  "words": [
+    {
+      "id": "echo-spicy-001",
+      "category": "activities",
+      "answer": "hangover",
+      "accept": ["hangovers", "hungover", "hangovr", "hanngover", "hangoever", "hangove"],
+      "reject": ["hanover"],
+      "family": ["hang", "over"],
+      "clues": [
+        "headache",
+        "drunk",
+        "aspirin",
+        "morning",
+        "water",
+        "nausea",
+        "regret",
+        "sunglasses",
+        "greasy",
+        "Vegas"
+      ]
+    },
+    {
+      "id": "echo-spicy-002",
+      "category": "food",
+      "answer": "tequila",
+      "accept": ["tequilas", "tequilla", "tekila", "tequlia", "taquila", "tekilla"],
+      "reject": [],
+      "family": [],
+      "clues": [
+        "Mexico",
+        "shot",
+        "lime",
+        "salt",
+        "agave",
+        "margarita",
+        "worm",
+        "cactus",
+        "sombrero",
+        "Jalisco"
+      ]
+    },
+    {
+      "id": "echo-spicy-003",
+      "category": "activities",
+      "answer": "flirt",
+      "accept": ["flirting", "flirts", "flert", "flirty", "flurt", "flirtation"],
+      "reject": ["flint"],
+      "family": [],
+      "clues": [
+        "wink",
+        "crush",
+        "compliment",
+        "smile",
+        "tease",
+        "charm",
+        "eyebrows",
+        "date",
+        "giggle",
+        "playful"
+      ]
+    },
+    {
+      "id": "echo-spicy-004",
+      "category": "activities",
+      "answer": "speed dating",
+      "accept": [
+        "speed date",
+        "speed dates",
+        "speed datting",
+        "sped dating",
+        "speed daiting",
+        "speed dateing"
+      ],
+      "reject": [],
+      "family": ["speed", "dat"],
+      "clues": [
+        "minutes",
+        "singles",
+        "bell",
+        "timer",
+        "table",
+        "awkward",
+        "chemistry",
+        "rotate",
+        "nametag",
+        "romance"
+      ]
+    },
+    {
+      "id": "echo-spicy-005",
+      "category": "activities",
+      "answer": "bachelor party",
+      "accept": [
+        "bachelor parties",
+        "batchelor party",
+        "bachlor party",
+        "bachelor partys",
+        "stag party",
+        "stag do"
+      ],
+      "reject": ["bachelorette party"],
+      "family": ["bachelor", "party"],
+      "clues": [
+        "groom",
+        "Vegas",
+        "wedding",
+        "drinks",
+        "limo",
+        "best-man",
+        "boys",
+        "sash",
+        "farewell",
+        "shots"
+      ]
+    },
+    {
+      "id": "echo-spicy-006",
+      "category": "house",
+      "answer": "hot tub",
+      "accept": ["hot tubs", "jacuzzi", "jacuzzis", "whirlpool", "hot tube", "hott tub"],
+      "reject": ["bathtub"],
+      "family": ["hot", "tub"],
+      "clues": [
+        "bubbles",
+        "jets",
+        "warm",
+        "relax",
+        "soak",
+        "steam",
+        "spa",
+        "backyard",
+        "swimsuit",
+        "chlorine"
+      ]
+    },
+    {
+      "id": "echo-spicy-007",
+      "category": "activities",
+      "answer": "skinny dipping",
+      "accept": [
+        "skinny dip",
+        "skinny diping",
+        "skiny dipping",
+        "skinny dippin",
+        "skinny dips",
+        "skinny dipped"
+      ],
+      "reject": [],
+      "family": ["skinny", "dip"],
+      "clues": [
+        "naked",
+        "swimming",
+        "lake",
+        "nude",
+        "moonlight",
+        "dare",
+        "pool",
+        "midnight",
+        "streaking",
+        "towel"
+      ]
+    },
+    {
+      "id": "echo-spicy-008",
+      "category": "activities",
+      "answer": "walk of shame",
+      "accept": ["walks of shame", "walk of shme", "wlak of shame", "walk of shamee"],
+      "reject": [],
+      "family": ["walk", "shame"],
+      "clues": [
+        "morning",
+        "heels",
+        "embarrassed",
+        "sunrise",
+        "sneaking",
+        "messy",
+        "hungover",
+        "dress",
+        "sunglasses",
+        "whispers"
+      ]
+    },
+    {
+      "id": "echo-spicy-009",
+      "category": "places",
+      "answer": "nightclub",
+      "accept": ["nightclubs", "nite club", "nighclub", "nightclubb", "club", "disco"],
+      "reject": [],
+      "family": ["night", "club"],
+      "clues": [
+        "dancing",
+        "dj",
+        "music",
+        "bouncer",
+        "lights",
+        "drinks",
+        "vip",
+        "bass",
+        "strobe",
+        "line"
+      ]
+    },
+    {
+      "id": "echo-spicy-010",
+      "category": "jobs",
+      "answer": "bartender",
+      "accept": ["bartenders", "barman", "barmaid", "bartendar", "bartneder", "mixologist"],
+      "reject": [],
+      "family": ["bar", "tend"],
+      "clues": [
+        "drinks",
+        "cocktails",
+        "tips",
+        "shaker",
+        "pour",
+        "counter",
+        "apron",
+        "stool",
+        "ice",
+        "garnish"
+      ]
+    },
+    {
+      "id": "echo-spicy-011",
+      "category": "places",
+      "answer": "casino",
+      "accept": ["casinos", "cassino", "casion", "casnio", "cassinos", "kasino"],
+      "reject": [],
+      "family": [],
+      "clues": [
+        "Vegas",
+        "gambling",
+        "poker",
+        "chips",
+        "slots",
+        "dice",
+        "roulette",
+        "blackjack",
+        "jackpot",
+        "dealer"
+      ]
+    },
+    {
+      "id": "echo-spicy-012",
+      "category": "objects",
+      "answer": "tattoo",
+      "accept": ["tattoos", "tatoo", "tattooe", "tatto", "tattu", "tat", "tats"],
+      "reject": ["tattle"],
+      "family": [],
+      "clues": [
+        "ink",
+        "needle",
+        "arm",
+        "skin",
+        "sailor",
+        "anchor",
+        "artist",
+        "permanent",
+        "sleeve",
+        "design"
+      ]
+    },
+    {
+      "id": "echo-spicy-013",
+      "category": "activities",
+      "answer": "divorce",
+      "accept": ["divorced", "divorces", "devorce", "divorse", "divource", "divorcee"],
+      "reject": [],
+      "family": [],
+      "clues": [
+        "lawyer",
+        "split",
+        "marriage",
+        "custody",
+        "alimony",
+        "court",
+        "ex",
+        "papers",
+        "settlement",
+        "separation"
+      ]
+    },
+    {
+      "id": "echo-spicy-014",
+      "category": "activities",
+      "answer": "blind date",
+      "accept": ["blind dates", "blind dait", "blinde date", "blind dat"],
+      "reject": [],
+      "family": ["blind", "date"],
+      "clues": [
+        "stranger",
+        "setup",
+        "dinner",
+        "nervous",
+        "restaurant",
+        "awkward",
+        "matchmaker",
+        "surprise",
+        "romance",
+        "first"
+      ]
+    },
+    {
+      "id": "echo-spicy-015",
+      "category": "activities",
+      "answer": "pickup line",
+      "accept": [
+        "pickup lines",
+        "chat-up line",
+        "chat-up lines",
+        "pikup line",
+        "pickup lin",
+        "pickip line"
+      ],
+      "reject": [],
+      "family": ["pick", "line"],
+      "clues": [
+        "cheesy",
+        "flirt",
+        "bar",
+        "corny",
+        "smooth",
+        "opener",
+        "cringe",
+        "joke",
+        "compliment",
+        "charm"
+      ]
+    },
+    {
+      "id": "echo-spicy-016",
+      "category": "jobs",
+      "answer": "wingman",
+      "accept": ["wingmen", "wingwoman", "wingmann", "wingmans", "winngman", "wingmam"],
+      "reject": [],
+      "family": ["wing"],
+      "clues": [
+        "friend",
+        "buddy",
+        "bar",
+        "flirt",
+        "sidekick",
+        "support",
+        "backup",
+        "introduce",
+        "Goose",
+        "loyal"
+      ]
+    },
+    {
+      "id": "echo-spicy-017",
+      "category": "objects",
+      "answer": "lingerie",
+      "accept": ["lingeries", "lingery", "lingere", "lingeree", "langerie", "lingerey"],
+      "reject": [],
+      "family": [],
+      "clues": [
+        "lace",
+        "underwear",
+        "silk",
+        "bra",
+        "French",
+        "satin",
+        "sexy",
+        "nightie",
+        "corset",
+        "boudoir"
+      ]
+    },
+    {
+      "id": "echo-spicy-018",
+      "category": "activities",
+      "answer": "honeymoon",
+      "accept": ["honeymoons", "honymoon", "honeymon", "honneymoon", "hunnymoon", "honeymooon"],
+      "reject": [],
+      "family": ["honey", "moon"],
+      "clues": [
+        "wedding",
+        "newlyweds",
+        "vacation",
+        "Hawaii",
+        "romance",
+        "resort",
+        "beach",
+        "bride",
+        "suite",
+        "Paris"
+      ]
+    },
+    {
+      "id": "echo-spicy-019",
+      "category": "food",
+      "answer": "champagne",
+      "accept": [
+        "champagnes",
+        "champaign",
+        "champange",
+        "champagn",
+        "shampagne",
+        "bubbly",
+        "sparkling wine"
+      ],
+      "reject": [],
+      "family": [],
+      "clues": [
+        "bubbles",
+        "toast",
+        "cork",
+        "celebration",
+        "France",
+        "flute",
+        "wedding",
+        "pop",
+        "bottle",
+        "midnight"
+      ]
+    },
+    {
+      "id": "echo-spicy-020",
+      "category": "sports",
+      "answer": "beer pong",
+      "accept": ["beirut", "bier pong", "beer pnog", "beer ponng", "bear pong", "beer ping pong"],
+      "reject": ["ping pong"],
+      "family": ["beer", "pong"],
+      "clues": [
+        "cups",
+        "table",
+        "college",
+        "ball",
+        "party",
+        "frat",
+        "bounce",
+        "throw",
+        "rack",
+        "tailgate"
+      ]
+    },
+    {
+      "id": "echo-spicy-021",
+      "category": "food",
+      "answer": "cocktail",
+      "accept": ["cocktails", "coctail", "cocktale", "coktail", "cocktial", "mixed drink"],
+      "reject": [],
+      "family": ["cock", "tail"],
+      "clues": [
+        "martini",
+        "umbrella",
+        "drink",
+        "bar",
+        "shaker",
+        "olive",
+        "glass",
+        "mojito",
+        "party",
+        "garnish"
+      ]
+    },
+    {
+      "id": "echo-spicy-022",
+      "category": "food",
+      "answer": "margarita",
+      "accept": ["margaritas", "margarite", "margaretta", "margharita", "magarita", "margerita"],
+      "reject": ["margherita", "margaret"],
+      "family": [],
+      "clues": [
+        "tequila",
+        "lime",
+        "salt",
+        "Mexico",
+        "frozen",
+        "blender",
+        "rim",
+        "tacos",
+        "fiesta",
+        "Cinco-de-Mayo"
+      ]
+    },
+    {
+      "id": "echo-spicy-023",
+      "category": "food",
+      "answer": "vodka",
+      "accept": ["vodkas", "votka", "wodka", "vodca", "vodkha", "vodak"],
+      "reject": [],
+      "family": [],
+      "clues": [
+        "Russia",
+        "shot",
+        "potato",
+        "martini",
+        "clear",
+        "screwdriver",
+        "Moscow",
+        "ice",
+        "Poland",
+        "bottle"
+      ]
+    },
+    {
+      "id": "echo-spicy-024",
+      "category": "food",
+      "answer": "whiskey",
+      "accept": ["whisky", "whiskeys", "whiskies", "wiskey", "wisky", "whiskie"],
+      "reject": ["whisk"],
+      "family": [],
+      "clues": [
+        "bourbon",
+        "scotch",
+        "barrel",
+        "rocks",
+        "Scotland",
+        "cowboy",
+        "oak",
+        "Irish",
+        "saloon",
+        "Kentucky"
+      ]
+    },
+    {
+      "id": "echo-spicy-025",
+      "category": "food",
+      "answer": "wine",
+      "accept": ["wines", "vino", "wyne", "wiine"],
+      "reject": ["whine", "wing", "twine"],
+      "family": [],
+      "clues": [
+        "grapes",
+        "red",
+        "glass",
+        "vineyard",
+        "bottle",
+        "cork",
+        "cheese",
+        "France",
+        "sommelier",
+        "toast"
+      ]
+    },
+    {
+      "id": "echo-spicy-026",
+      "category": "food",
+      "answer": "beer",
+      "accept": ["beers", "bier", "brew", "brewski", "beeer", "beir"],
+      "reject": ["bear", "deer", "beet"],
+      "family": [],
+      "clues": [
+        "foam",
+        "pub",
+        "hops",
+        "keg",
+        "bar",
+        "pint",
+        "Germany",
+        "lager",
+        "Oktoberfest",
+        "bottle"
+      ]
+    },
+    {
+      "id": "echo-spicy-027",
+      "category": "jobs",
+      "answer": "bouncer",
+      "accept": ["bouncers", "doorman", "doormen", "bounser", "bouncor", "bouncre"],
+      "reject": ["bounce"],
+      "family": [],
+      "clues": [
+        "club",
+        "door",
+        "muscles",
+        "security",
+        "rope",
+        "list",
+        "tough",
+        "velvet",
+        "entrance",
+        "burly"
+      ]
+    },
+    {
+      "id": "echo-spicy-028",
+      "category": "activities",
+      "answer": "hickey",
+      "accept": ["hickeys", "hickies", "hickie", "hicky", "love bite", "love bites", "hickee"],
+      "reject": ["hockey", "hiccup"],
+      "family": [],
+      "clues": [
+        "neck",
+        "bruise",
+        "kiss",
+        "scarf",
+        "turtleneck",
+        "concealer",
+        "teenager",
+        "vampire",
+        "purple",
+        "embarrassing"
+      ]
+    },
+    {
+      "id": "echo-spicy-029",
+      "category": "activities",
+      "answer": "crush",
+      "accept": ["crushes", "crushing", "krush", "crsh", "chrush", "crusch"],
+      "reject": ["brush", "crash", "crust"],
+      "family": [],
+      "clues": [
+        "love",
+        "secret",
+        "heart",
+        "blush",
+        "butterflies",
+        "admire",
+        "school",
+        "like",
+        "notes",
+        "smitten"
+      ]
+    },
+    {
+      "id": "echo-spicy-030",
+      "category": "activities",
+      "answer": "breakup",
+      "accept": ["breakups", "breaking up", "brake up", "broke up", "splitting up", "breakupp"],
+      "reject": [],
+      "family": ["break"],
+      "clues": [
+        "dumped",
+        "tears",
+        "ex",
+        "sad",
+        "heart",
+        "ice-cream",
+        "single",
+        "split",
+        "text",
+        "playlist"
+      ]
+    },
+    {
+      "id": "echo-spicy-031",
+      "category": "objects",
+      "answer": "dating app",
+      "accept": [
+        "dating apps",
+        "dating application",
+        "datting app",
+        "dateing app",
+        "online dating",
+        "dating ap"
+      ],
+      "reject": [],
+      "family": ["dat", "app"],
+      "clues": [
+        "swipe",
+        "match",
+        "profile",
+        "phone",
+        "bio",
+        "selfie",
+        "chat",
+        "singles",
+        "algorithm",
+        "ghosting"
+      ]
+    },
+    {
+      "id": "echo-spicy-032",
+      "category": "jobs",
+      "answer": "sugar daddy",
+      "accept": [
+        "sugar daddies",
+        "suger daddy",
+        "sugar dady",
+        "sugar dad",
+        "sugar daddie",
+        "shugar daddy"
+      ],
+      "reject": [],
+      "family": ["sugar", "dad"],
+      "clues": [
+        "rich",
+        "older",
+        "money",
+        "gifts",
+        "allowance",
+        "baby",
+        "wealthy",
+        "generous",
+        "spoiled",
+        "arrangement"
+      ]
+    },
+    {
+      "id": "echo-spicy-033",
+      "category": "animals",
+      "answer": "cougar",
+      "accept": ["cougars", "cooger", "couger", "cougur", "kougar", "cugar"],
+      "reject": ["jaguar", "cigar"],
+      "family": [],
+      "clues": [
+        "older",
+        "woman",
+        "younger",
+        "cat",
+        "puma",
+        "prowl",
+        "predator",
+        "forty",
+        "claws",
+        "bar"
+      ]
+    },
+    {
+      "id": "echo-spicy-034",
+      "category": "activities",
+      "answer": "midlife crisis",
+      "accept": [
+        "midlife crises",
+        "midlife crisses",
+        "midlife crysis",
+        "midlif crisis",
+        "midlife crisi",
+        "midlife crisus"
+      ],
+      "reject": [],
+      "family": ["mid", "life", "crisis"],
+      "clues": [
+        "forty",
+        "sportscar",
+        "convertible",
+        "motorcycle",
+        "divorce",
+        "tattoo",
+        "toupee",
+        "gray",
+        "panic",
+        "earring"
+      ]
+    },
+    {
+      "id": "echo-spicy-035",
+      "category": "jobs",
+      "answer": "therapist",
+      "accept": [
+        "therapists",
+        "therapest",
+        "theripist",
+        "counselor",
+        "counsellor",
+        "shrink",
+        "psychologist"
+      ],
+      "reject": [],
+      "family": [],
+      "clues": [
+        "couch",
+        "feelings",
+        "talk",
+        "listen",
+        "sessions",
+        "mind",
+        "notebook",
+        "childhood",
+        "Freud",
+        "advice"
+      ]
+    },
+    {
+      "id": "echo-spicy-036",
+      "category": "activities",
+      "answer": "taxes",
+      "accept": ["tax", "taxs", "taxxes", "taxess"],
+      "reject": ["taxis", "tacks", "texas"],
+      "family": [],
+      "clues": [
+        "IRS",
+        "April",
+        "money",
+        "refund",
+        "government",
+        "accountant",
+        "deductions",
+        "forms",
+        "audit",
+        "income"
+      ]
+    },
+    {
+      "id": "echo-spicy-037",
+      "category": "house",
+      "answer": "mortgage",
+      "accept": ["mortgages", "morgage", "mortage", "morgtage", "mortgauge", "morgages"],
+      "reject": [],
+      "family": [],
+      "clues": [
+        "house",
+        "bank",
+        "loan",
+        "interest",
+        "payment",
+        "debt",
+        "rate",
+        "home",
+        "lender",
+        "years"
+      ]
+    },
+    {
+      "id": "echo-spicy-038",
+      "category": "objects",
+      "answer": "bikini",
+      "accept": ["bikinis", "bikine", "bekini", "bikinni", "bkini", "two-piece"],
+      "reject": [],
+      "family": [],
+      "clues": [
+        "beach",
+        "swimsuit",
+        "summer",
+        "pool",
+        "tan",
+        "sun",
+        "string",
+        "sand",
+        "island",
+        "sunbathing"
+      ]
+    },
+    {
+      "id": "echo-spicy-039",
+      "category": "activities",
+      "answer": "kiss",
+      "accept": ["kisses", "kissing", "kissed", "smooch", "smooches", "kis"],
+      "reject": ["kids", "kiwi", "miss"],
+      "family": [],
+      "clues": [
+        "lips",
+        "love",
+        "mistletoe",
+        "romance",
+        "goodnight",
+        "pucker",
+        "frog",
+        "cheek",
+        "lipstick",
+        "French"
+      ]
+    },
+    {
+      "id": "echo-spicy-040",
+      "category": "activities",
+      "answer": "cuddle",
+      "accept": ["cuddles", "cuddling", "cudle", "cuddel", "snuggle", "cuddled"],
+      "reject": ["puddle", "huddle"],
+      "family": [],
+      "clues": [
+        "hug",
+        "blanket",
+        "spoon",
+        "warm",
+        "couch",
+        "teddy",
+        "cozy",
+        "pillow",
+        "movie",
+        "embrace"
+      ]
+    },
+    {
+      "id": "echo-spicy-041",
+      "category": "activities",
+      "answer": "happy hour",
+      "accept": ["happy hours", "happy hr", "hapy hour", "happy houre", "hppy hour", "happy our"],
+      "reject": ["rush hour", "happy meal"],
+      "family": ["happy", "hour"],
+      "clues": [
+        "drinks",
+        "discount",
+        "bar",
+        "cheap",
+        "specials",
+        "after-work",
+        "cocktails",
+        "wings",
+        "coworkers",
+        "five"
+      ]
+    },
+    {
+      "id": "echo-spicy-042",
+      "category": "activities",
+      "answer": "drunk text",
+      "accept": [
+        "drunk texts",
+        "drunk texting",
+        "drunk texted",
+        "drunk txt",
+        "drunken text",
+        "drunk message"
+      ],
+      "reject": [],
+      "family": ["drunk", "text"],
+      "clues": [
+        "ex",
+        "regret",
+        "phone",
+        "midnight",
+        "typos",
+        "emoji",
+        "wasted",
+        "blocked",
+        "apology",
+        "autocorrect"
+      ]
+    },
+    {
+      "id": "echo-spicy-043",
+      "category": "activities",
+      "answer": "bar crawl",
+      "accept": ["bar crawls", "pub crawl", "pub crawls", "bar hopping", "bar hop", "bar craw"],
+      "reject": [],
+      "family": ["bar", "crawl"],
+      "clues": [
+        "pub",
+        "drinks",
+        "shots",
+        "friends",
+        "hopping",
+        "route",
+        "wasted",
+        "stumble",
+        "tavern",
+        "nightlife"
+      ]
+    },
+    {
+      "id": "echo-spicy-044",
+      "category": "objects",
+      "answer": "cigar",
+      "accept": ["cigars", "cigarr", "sigar", "cigare", "stogy", "stogie", "cuban cigar"],
+      "reject": ["cigarette", "cigarettes"],
+      "family": [],
+      "clues": [
+        "smoke",
+        "Cuba",
+        "tobacco",
+        "Churchill",
+        "lighter",
+        "ash",
+        "celebration",
+        "humidor",
+        "boss",
+        "brandy"
+      ]
+    },
+    {
+      "id": "echo-spicy-045",
+      "category": "activities",
+      "answer": "poker",
+      "accept": ["pocker", "poeker", "pokr", "texas holdem", "holdem", "poker game"],
+      "reject": ["joker", "broker", "poke"],
+      "family": [],
+      "clues": [
+        "cards",
+        "chips",
+        "bluff",
+        "casino",
+        "Vegas",
+        "face",
+        "bet",
+        "ace",
+        "flush",
+        "royal"
+      ]
+    },
+    {
+      "id": "echo-spicy-046",
+      "category": "objects",
+      "answer": "slot machine",
+      "accept": [
+        "slot machines",
+        "slots",
+        "one armed bandit",
+        "fruit machine",
+        "pokies",
+        "slot machien"
+      ],
+      "reject": [],
+      "family": ["slot", "machine"],
+      "clues": [
+        "casino",
+        "jackpot",
+        "Vegas",
+        "lever",
+        "cherries",
+        "coins",
+        "spin",
+        "gamble",
+        "lucky",
+        "sevens"
+      ]
+    },
+    {
+      "id": "echo-spicy-047",
+      "category": "jobs",
+      "answer": "landlord",
+      "accept": ["landlords", "landlady", "landlrd", "lanlord", "landord", "property owner"],
+      "reject": ["warlord"],
+      "family": ["land", "lord"],
+      "clues": [
+        "rent",
+        "tenant",
+        "lease",
+        "apartment",
+        "deposit",
+        "eviction",
+        "repairs",
+        "keys",
+        "property",
+        "mortgage"
+      ]
+    },
+    {
+      "id": "echo-spicy-048",
+      "category": "objects",
+      "answer": "prenup",
+      "accept": [
+        "prenups",
+        "prenuptial",
+        "prenuptial agreement",
+        "prenuptial agreements",
+        "prenupial",
+        "prenuptual"
+      ],
+      "reject": [],
+      "family": ["nuptial"],
+      "clues": [
+        "marriage",
+        "lawyer",
+        "divorce",
+        "contract",
+        "money",
+        "wedding",
+        "assets",
+        "rich",
+        "signature",
+        "celebrity"
+      ]
+    },
+    {
+      "id": "echo-spicy-049",
+      "category": "activities",
+      "answer": "affair",
+      "accept": ["affairs", "afair", "affiar", "affare", "afaire", "affaire", "adultery"],
+      "reject": ["fair", "flair"],
+      "family": [],
+      "clues": [
+        "cheating",
+        "secret",
+        "lover",
+        "mistress",
+        "married",
+        "scandal",
+        "betrayal",
+        "motel",
+        "lipstick",
+        "divorce"
+      ]
+    },
+    {
+      "id": "echo-spicy-050",
+      "category": "activities",
+      "answer": "jealousy",
+      "accept": ["jealous", "jealousness", "jelousy", "jealosy", "jealousey", "jellousy"],
+      "reject": ["zealous"],
+      "family": [],
+      "clues": [
+        "green",
+        "envy",
+        "monster",
+        "rival",
+        "possessive",
+        "insecure",
+        "ex",
+        "suspicious",
+        "Othello",
+        "petty"
+      ]
+    },
+    {
+      "id": "echo-spicy-051",
+      "category": "activities",
+      "answer": "gossip",
+      "accept": ["gossips", "gossiping", "gossiped", "gosip", "gossipp", "gossup", "goss"],
+      "reject": [],
+      "family": [],
+      "clues": [
+        "rumor",
+        "whisper",
+        "drama",
+        "secret",
+        "tea",
+        "chatter",
+        "neighbors",
+        "hairdresser",
+        "magazine",
+        "spill"
+      ]
+    },
+    {
+      "id": "echo-spicy-052",
+      "category": "activities",
+      "answer": "massage",
+      "accept": ["massages", "masage", "massaje", "massge", "masssage", "rubdown", "back rub"],
+      "reject": ["message", "massacre"],
+      "family": [],
+      "clues": [
+        "relax",
+        "spa",
+        "oil",
+        "back",
+        "shoulders",
+        "knots",
+        "therapist",
+        "hands",
+        "Swedish",
+        "candles"
+      ]
+    },
+    {
+      "id": "echo-spicy-053",
+      "category": "places",
+      "answer": "sauna",
+      "accept": ["saunas", "suana", "sawna", "saunna", "sauana", "sanua", "steam room"],
+      "reject": [],
+      "family": [],
+      "clues": ["hot", "steam", "sweat", "towel", "Finland", "wood", "spa", "gym", "relax", "bench"]
+    },
+    {
+      "id": "echo-spicy-054",
+      "category": "activities",
+      "answer": "ghosting",
+      "accept": ["ghosted", "ghost", "gosting", "ghostting", "goasting", "ghostin"],
+      "reject": [],
+      "family": ["ghost"],
+      "clues": [
+        "dating",
+        "disappear",
+        "silence",
+        "ignore",
+        "texts",
+        "vanish",
+        "unread",
+        "blocked",
+        "cowardly",
+        "rude"
+      ]
+    },
+    {
+      "id": "echo-spicy-055",
+      "category": "animals",
+      "answer": "catfish",
+      "accept": ["catfishes", "catfished", "catfishing", "katfish", "catfsh", "catfishh"],
+      "reject": [],
+      "family": ["cat", "fish"],
+      "clues": [
+        "fake",
+        "profile",
+        "online",
+        "lies",
+        "dating",
+        "photos",
+        "scam",
+        "impostor",
+        "whiskers",
+        "river"
+      ]
+    },
+    {
+      "id": "echo-spicy-056",
+      "category": "places",
+      "answer": "friend zone",
+      "accept": [
+        "friend zoned",
+        "friends zone",
+        "freind zone",
+        "frend zone",
+        "friend zones",
+        "frienzone"
+      ],
+      "reject": [],
+      "family": ["friend", "zone"],
+      "clues": [
+        "crush",
+        "rejection",
+        "platonic",
+        "buddy",
+        "pal",
+        "unrequited",
+        "awkward",
+        "hopeless",
+        "nice-guy",
+        "sister"
+      ]
+    },
+    {
+      "id": "echo-spicy-057",
+      "category": "nature",
+      "answer": "love handles",
+      "accept": [
+        "love handle",
+        "muffin top",
+        "love handels",
+        "love handls",
+        "luv handles",
+        "love handel"
+      ],
+      "reject": ["door handles"],
+      "family": ["love", "handle"],
+      "clues": [
+        "waist",
+        "hips",
+        "fat",
+        "belly",
+        "flab",
+        "sides",
+        "squeeze",
+        "diet",
+        "jiggle",
+        "cuddly"
+      ]
+    },
+    {
+      "id": "echo-spicy-058",
+      "category": "nature",
+      "answer": "beer belly",
+      "accept": ["beer bellies", "beer gut", "beer guts", "bear belly", "beer bely", "pot belly"],
+      "reject": [],
+      "family": ["beer", "belly"],
+      "clues": [
+        "gut",
+        "paunch",
+        "dad",
+        "stomach",
+        "fat",
+        "round",
+        "pints",
+        "keg",
+        "couch",
+        "six-pack"
+      ]
+    },
+    {
+      "id": "echo-spicy-059",
+      "category": "nature",
+      "answer": "bald spot",
+      "accept": ["bald spots", "balding", "bald patch", "bald patches", "bauld spot", "bald spott"],
+      "reject": [],
+      "family": ["bald", "spot"],
+      "clues": [
+        "hair",
+        "head",
+        "comb-over",
+        "hat",
+        "shiny",
+        "scalp",
+        "receding",
+        "crown",
+        "toupee",
+        "monk"
+      ]
+    },
+    {
+      "id": "echo-spicy-060",
+      "category": "nature",
+      "answer": "wrinkles",
+      "accept": ["wrinkle", "wrinkled", "wrinkels", "wrinkls", "rinkles", "wrincles", "wrinckles"],
+      "reject": ["crinkles", "sprinkles", "twinkles"],
+      "family": ["wrinkl"],
+      "clues": [
+        "old",
+        "age",
+        "skin",
+        "face",
+        "forehead",
+        "lines",
+        "cream",
+        "prune",
+        "grandma",
+        "iron"
+      ]
+    },
+    {
+      "id": "echo-spicy-061",
+      "category": "nature",
+      "answer": "hot flash",
+      "accept": [
+        "hot flashes",
+        "hot flush",
+        "hot flushes",
+        "hot flashs",
+        "hot flases",
+        "hot flassh"
+      ],
+      "reject": [],
+      "family": ["hot", "flash"],
+      "clues": [
+        "menopause",
+        "sweat",
+        "fan",
+        "heat",
+        "women",
+        "fifties",
+        "red",
+        "hormones",
+        "ice",
+        "window"
+      ]
+    },
+    {
+      "id": "echo-spicy-062",
+      "category": "activities",
+      "answer": "dad joke",
+      "accept": [
+        "dad jokes",
+        "dad joak",
+        "dad jok",
+        "daddy joke",
+        "dad joek",
+        "dad jokez",
+        "father joke"
+      ],
+      "reject": [],
+      "family": ["dad", "joke"],
+      "clues": [
+        "pun",
+        "groan",
+        "cheesy",
+        "corny",
+        "father",
+        "lame",
+        "eye-roll",
+        "cringe",
+        "wordplay",
+        "hungry"
+      ]
+    },
+    {
+      "id": "echo-spicy-063",
+      "category": "objects",
+      "answer": "minivan",
+      "accept": ["minivans", "minvan", "minivann", "mininvan", "people carrier", "people mover"],
+      "reject": [],
+      "family": ["mini", "van"],
+      "clues": [
+        "mom",
+        "soccer",
+        "kids",
+        "carpool",
+        "family",
+        "sliding",
+        "suburbs",
+        "seats",
+        "road-trip",
+        "practice"
+      ]
+    },
+    {
+      "id": "echo-spicy-064",
+      "category": "food",
+      "answer": "cheat day",
+      "accept": [
+        "cheat days",
+        "cheet day",
+        "cheat meal",
+        "cheat meals",
+        "cheating day",
+        "cheatin day"
+      ],
+      "reject": [],
+      "family": ["cheat", "day"],
+      "clues": [
+        "diet",
+        "pizza",
+        "gym",
+        "junk",
+        "calories",
+        "burger",
+        "binge",
+        "weekend",
+        "splurge",
+        "donuts"
+      ]
+    },
+    {
+      "id": "echo-spicy-065",
+      "category": "nature",
+      "answer": "tan lines",
+      "accept": ["tan line", "tan lins", "tann lines", "tan lnes", "tanning lines", "tan marks"],
+      "reject": [],
+      "family": ["tan", "line"],
+      "clues": [
+        "bikini",
+        "sun",
+        "beach",
+        "strap",
+        "swimsuit",
+        "summer",
+        "pale",
+        "bronze",
+        "sunscreen",
+        "flip-flops"
+      ]
+    },
+    {
+      "id": "echo-spicy-066",
+      "category": "activities",
+      "answer": "tipsy",
+      "accept": ["tipsey", "tipsi", "tipssy", "tippsy", "tispy", "buzzed"],
+      "reject": ["topsy", "tips"],
+      "family": [],
+      "clues": [
+        "drunk",
+        "wine",
+        "giggly",
+        "wobbly",
+        "drinks",
+        "happy",
+        "dizzy",
+        "cocktail",
+        "lightweight",
+        "sloshed"
+      ]
+    },
+    {
+      "id": "echo-spicy-067",
+      "category": "jobs",
+      "answer": "designated driver",
+      "accept": [
+        "designated drivers",
+        "dd",
+        "designate driver",
+        "desiginated driver",
+        "desginated driver",
+        "designated drivr",
+        "sober driver"
+      ],
+      "reject": [],
+      "family": ["design", "driv"],
+      "clues": [
+        "sober",
+        "keys",
+        "car",
+        "soda",
+        "ride",
+        "responsible",
+        "friends",
+        "safe",
+        "water",
+        "taxi"
+      ]
+    },
+    {
+      "id": "echo-spicy-068",
+      "category": "activities",
+      "answer": "last call",
+      "accept": [
+        "last calls",
+        "last orders",
+        "last round",
+        "last caul",
+        "last cal",
+        "closing time",
+        "lst call"
+      ],
+      "reject": [],
+      "family": ["last", "call"],
+      "clues": [
+        "bar",
+        "closing",
+        "bartender",
+        "drinks",
+        "lights",
+        "midnight",
+        "tab",
+        "hurry",
+        "bell",
+        "taxi"
+      ]
+    },
+    {
+      "id": "echo-spicy-069",
+      "category": "jobs",
+      "answer": "wedding crasher",
+      "accept": [
+        "wedding crashers",
+        "weding crasher",
+        "wedding crashr",
+        "wedding crahser",
+        "weddding crasher",
+        "wedding gatecrasher"
+      ],
+      "reject": [],
+      "family": ["wedding", "crash"],
+      "clues": [
+        "uninvited",
+        "reception",
+        "sneak",
+        "buffet",
+        "dancing",
+        "bridesmaid",
+        "stranger",
+        "cake",
+        "fake",
+        "toast"
+      ]
+    },
+    {
+      "id": "echo-spicy-070",
+      "category": "objects",
+      "answer": "bouquet",
+      "accept": ["bouquets", "boquet", "bouqet", "bookay", "buquet", "bouquette", "bokay", "posy"],
+      "reject": ["banquet", "bucket", "parquet", "croquet"],
+      "family": [],
+      "clues": [
+        "flowers",
+        "bride",
+        "toss",
+        "roses",
+        "catch",
+        "wedding",
+        "florist",
+        "ribbon",
+        "petals",
+        "vase"
+      ]
+    },
+    {
+      "id": "echo-spicy-071",
+      "category": "objects",
+      "answer": "handcuffs",
+      "accept": ["handcuff", "cuffs", "handcufs", "hancuffs", "handcuffes", "manacles"],
+      "reject": [],
+      "family": ["hand", "cuff"],
+      "clues": [
+        "police",
+        "arrest",
+        "jail",
+        "keys",
+        "metal",
+        "prisoner",
+        "cop",
+        "chain",
+        "restraint",
+        "fluffy"
+      ]
+    },
+    {
+      "id": "echo-spicy-072",
+      "category": "jobs",
+      "answer": "overtime",
+      "accept": ["overtimes", "ot", "overtim", "overtiem", "overtme", "overtyme", "extra time"],
+      "reject": [],
+      "family": ["over", "time"],
+      "clues": [
+        "work",
+        "late",
+        "pay",
+        "hours",
+        "boss",
+        "extra",
+        "weekend",
+        "tired",
+        "office",
+        "deadline"
+      ]
+    },
+    {
+      "id": "echo-spicy-073",
+      "category": "objects",
+      "answer": "paycheck",
+      "accept": ["paychecks", "paycheque", "paycheques", "paychek", "wages", "pay packet"],
+      "reject": [],
+      "family": ["pay", "check"],
+      "clues": [
+        "money",
+        "salary",
+        "Friday",
+        "job",
+        "bills",
+        "taxes",
+        "rent",
+        "bank",
+        "deposit",
+        "boss"
+      ]
+    },
+    {
+      "id": "echo-spicy-074",
+      "category": "house",
+      "answer": "roommate",
+      "accept": ["roommates", "roomate", "roomie", "flatmate", "housemate", "rommate"],
+      "reject": [],
+      "family": ["room", "mate"],
+      "clues": [
+        "apartment",
+        "rent",
+        "dorm",
+        "dishes",
+        "share",
+        "college",
+        "fridge",
+        "messy",
+        "bills",
+        "snoring"
+      ]
+    },
+    {
+      "id": "echo-spicy-075",
+      "category": "activities",
+      "answer": "anniversary",
+      "accept": [
+        "anniversaries",
+        "aniversary",
+        "anniversery",
+        "anniverasry",
+        "anniversay",
+        "aniversery",
+        "anniversry"
+      ],
+      "reject": [],
+      "family": [],
+      "clues": [
+        "wedding",
+        "years",
+        "dinner",
+        "gift",
+        "celebrate",
+        "roses",
+        "married",
+        "date",
+        "jewelry",
+        "silver"
+      ]
+    },
+    {
+      "id": "echo-spicy-076",
+      "category": "activities",
+      "answer": "valentine",
+      "accept": [
+        "valentines",
+        "valentines day",
+        "valintine",
+        "valentin",
+        "valantine",
+        "valentien",
+        "vallentine"
+      ],
+      "reject": [],
+      "family": [],
+      "clues": [
+        "hearts",
+        "February",
+        "Cupid",
+        "roses",
+        "love",
+        "chocolates",
+        "card",
+        "red",
+        "date",
+        "crush"
+      ]
+    },
+    {
+      "id": "echo-spicy-077",
+      "category": "places",
+      "answer": "dance floor",
+      "accept": [
+        "dance floors",
+        "dance flor",
+        "dancing floor",
+        "dance flore",
+        "danse floor",
+        "dance flooor"
+      ],
+      "reject": [],
+      "family": ["dance", "floor"],
+      "clues": [
+        "disco",
+        "club",
+        "dj",
+        "music",
+        "lights",
+        "groove",
+        "moves",
+        "party",
+        "strobe",
+        "wedding"
+      ]
+    },
+    {
+      "id": "echo-spicy-078",
+      "category": "food",
+      "answer": "jello shot",
+      "accept": [
+        "jello shots",
+        "jelly shot",
+        "jelly shots",
+        "gelatin shot",
+        "jelo shot",
+        "jello shoot"
+      ],
+      "reject": [],
+      "family": ["jell", "shot"],
+      "clues": [
+        "vodka",
+        "party",
+        "college",
+        "wobbly",
+        "gelatin",
+        "cups",
+        "frat",
+        "colorful",
+        "sticky",
+        "spring-break"
+      ]
+    },
+    {
+      "id": "echo-spicy-079",
+      "category": "objects",
+      "answer": "flask",
+      "accept": ["flasks", "hip flask", "hip flasks", "flaks", "flasck", "flassk"],
+      "reject": ["flash", "task", "mask"],
+      "family": [],
+      "clues": [
+        "whiskey",
+        "pocket",
+        "hip",
+        "metal",
+        "booze",
+        "sip",
+        "secret",
+        "silver",
+        "sneaky",
+        "lab"
+      ]
+    },
+    {
+      "id": "echo-spicy-080",
+      "category": "activities",
+      "answer": "retirement",
+      "accept": ["retire", "retired", "retirements", "retirment", "retiremnt", "retiremint"],
+      "reject": [],
+      "family": ["retir"],
+      "clues": [
+        "old",
+        "pension",
+        "golf",
+        "Florida",
+        "savings",
+        "grandkids",
+        "cruise",
+        "relax",
+        "rocking-chair",
+        "vacation"
+      ]
+    }
+  ]
+}
