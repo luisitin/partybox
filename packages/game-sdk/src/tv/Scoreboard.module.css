@@ -354,3 +354,21 @@
   left: 3px;
   width: 0.3em;
 }
+
+/* No ranks (a team's card, ADR-052): the rows drop the rank column along with its cell, so the
+   name takes that room (~110 px at 200 % text; reviewer 69417f). After the tiers so it wins. */
+.noRanks .row,
+.noRanks.tight3 .row,
+.noRanks.tight4 .row {
+  grid-template-columns: auto 1fr auto auto;
+}
+
+@container (max-width: 12em) {
+  .compact.noRanks .row {
+    grid-template-columns: auto 1fr auto auto;
+  }
+
+  .compact.noRanks .row:not(:has(> .delta, > .mark)) {
+    grid-template-columns: auto 1fr auto;
+  }
+}

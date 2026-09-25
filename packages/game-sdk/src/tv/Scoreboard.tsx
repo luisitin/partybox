@@ -214,7 +214,7 @@ export function Scoreboard({
     cols < 2 || noRanks ? null : rankBand(ranks, index, perCol);
   return (
     <ol
-      className={`${styles.board} ${tier === 'roomy' ? '' : styles[tier]} ${size === 'lg' ? styles.lg : size === 'sm' ? styles.sm : ''} ${staggered ? styles.staggered : ''} ${staggered && stagger === 'down' ? styles.down : ''} ${climb ? styles.climb : ''}`}
+      className={`${styles.board} ${tier === 'roomy' ? '' : styles[tier]} ${size === 'lg' ? styles.lg : size === 'sm' ? styles.sm : ''} ${staggered ? styles.staggered : ''} ${staggered && stagger === 'down' ? styles.down : ''} ${climb ? styles.climb : ''} ${noRanks ? styles.noRanks : ''}`}
       style={{ '--pb-board-rows': Math.ceil(rows.length / cols) } as CSSProperties}
       aria-label={L('scoreboard')}
     >
@@ -236,9 +236,12 @@ export function Scoreboard({
               {bandFor(index)}
             </span>
           ) : null}
-          <span className={styles.rank} aria-label={L('rank {rank}', { rank: row.rank })}>
-            {noRanks ? '' : heldRanks ? '·' : row.rank === 1 && trophy ? '🏆' : row.rank}
-          </span>
+          {/* no ranks (a team's card): no rank slot at all, so the name gets its room (reviewer 69417f) */}
+          {noRanks ? null : (
+            <span className={styles.rank} aria-label={L('rank {rank}', { rank: row.rank })}>
+              {heldRanks ? '·' : row.rank === 1 && trophy ? '🏆' : row.rank}
+            </span>
+          )}
           <Avatar
             avatarId={row.avatarId}
             dim={row.connected === false}

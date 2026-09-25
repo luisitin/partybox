@@ -45,12 +45,16 @@
 
 .row {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  gap: var(--pb-space-5);
+  gap: 0 var(--pb-space-5);
 }
 
 /* Secondary choices as text buttons: the footer stays one primary button tall. */
 .secondary {
+  /* each link whole on one line; at large text the row wraps into a column (reviewer 69417f:
+     'Otro / juego' and 'Ir a la / sala' each broke in two) */
+  white-space: nowrap;
   min-height: var(--pb-touch);
   padding: 0 var(--pb-space-2);
   color: var(--pb-text-muted);
