@@ -51,7 +51,9 @@ export function refusal(view: View, target: string, L: Translator): string | nul
   const role = view.role?.id;
   if (role === 'wolf') {
     if (target === me) return L('Pick someone else.');
-    return view.pack.includes(target) ? L.sent(view.words.packmate) : null;
+    // The same words every role gets for a refused pick: 'your packmate' would out a wolf to anyone
+    // reading over a shoulder (reviewer 98b823); the pack is under hold-to-see.
+    return view.pack.includes(target) ? L('Pick someone else.') : null;
   }
   if (role === 'doctor')
     return target === view.lastProtected ? L('You protected them last night.') : null;

@@ -33,14 +33,16 @@ export interface NightfallTvView extends TvView {
 export function statusOf(state: State): (id: string) => PlayerStatus {
   const phase = state.phase.id;
   return (id) => {
+    // The dead hunter aims and the voted-out player speaks: they act after their death.
+    if (phase === 'hunter') return id === state.hunterPending ? 'active' : 'waiting';
+    if (phase === 'last-words')
+      return id === state.verdict?.out && state.step === 0 ? 'active' : 'waiting';
     if (!isAlive(state, id) && phase !== 'roles') return 'waiting';
     if (phase === 'roles' || phase === 'day')
       return state.ready.includes(id) ? 'submitted' : 'active';
     if (phase === 'night') return Object.hasOwn(state.picks, id) ? 'submitted' : 'active';
     if (phase === 'vote' || phase === 'runoff')
       return Object.hasOwn(state.votes, id) ? 'submitted' : 'active';
-    if (phase === 'hunter') return id === state.hunterPending ? 'active' : 'waiting';
-    if (phase === 'last-words') return id === state.verdict?.out ? 'active' : 'waiting';
     return 'waiting';
   };
 }

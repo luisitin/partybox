@@ -1,7 +1,13 @@
 // Nightfall — hidden roles (SPEC: docs/game-pack/nightfall/SPEC.md). `game` is what the registry
 // imports. One file per phase under ./phases; this file owns the phase order (`advance`, which is
 // also what a VIP skip runs) and wires init / reduce / views / results / bot / speech / recap.
-import { applyVip, gameManifestSchema, seedRng, setConnected } from '@partybox/game-sdk';
+import {
+  applyVip,
+  gameManifestSchema,
+  hashString,
+  seedRng,
+  setConnected,
+} from '@partybox/game-sdk';
 import type { GameDefinition, GameEvent, InitContext } from '@partybox/game-sdk';
 import manifestJson from '../manifest.json' with { type: 'json' };
 import { botInput } from './bot';
@@ -82,6 +88,7 @@ function init(ctx: InitContext): State {
     speechMs: {},
     lateKeys: [],
     ghostsDay: null,
+    speechSalt: hashString(`${ctx.seed}|nightfall-speech`).toString(36),
   };
   return enterRoles(base, ctx.now);
 }

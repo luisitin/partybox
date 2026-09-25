@@ -159,6 +159,9 @@ export interface State extends GameStateBase {
   lateKeys: string[];
   /** The day the narrator says "Ghosts, stay silent" (the first day after the first death). */
   ghostsDay: number | null;
+  /** Server-only salt for the keys of lines that pair a name with a role ("Dee was a villager."),
+   *  so a phone can't probe /api/speech for name × role (reviewer 98b823). Never in a view. */
+  speechSalt: string;
 }
 
 export const inputSchema = z.discriminatedUnion('type', [

@@ -35,6 +35,7 @@ function Lines({ view, big }: { view: NightfallTvView; big?: boolean }): JSX.Ele
 }
 
 export function DawnScene({ view }: { view: NightfallTvView }): JSX.Element {
+  const L = useT(STRINGS);
   const news = view.stage.news;
   const deaths = news ?? [];
   // The phase maps to `silence` (its deadline moves each step): every cue is ours, the first too.
@@ -48,6 +49,12 @@ export function DawnScene({ view }: { view: NightfallTvView }): JSX.Element {
       </div>
     );
   }
+  const hunches =
+    (view.stage.tally?.length ?? 0) > 0 ? (
+      <p className={styles.caption}>
+        {L('🤔 = the night’s hunches: who the villagers suspect (anonymous).')}
+      </p>
+    ) : null;
   if (deaths.length === 0) {
     return (
       <div className={styles.column}>
@@ -59,6 +66,7 @@ export function DawnScene({ view }: { view: NightfallTvView }): JSX.Element {
           cast={view.cast}
           tally={view.stage.tally}
         />
+        {hunches}
       </div>
     );
   }
@@ -91,6 +99,7 @@ export function DawnScene({ view }: { view: NightfallTvView }): JSX.Element {
         tally={view.stage.tally}
         narrow
       />
+      {hunches}
     </div>
   );
 }

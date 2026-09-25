@@ -112,7 +112,11 @@ export function PhoneStage({ view }: { view: PushedView<ControllerView> }): JSX.
         {v.result ? (
           <p className={styles.sub}>{v.result.won ? L('You won!') : L('Not this time.')}</p>
         ) : null}
-        <MiniVillage view={v} roles={v.roles !== null} />
+        {/* Every role only once the game is over: a ghost's list stays under hold-to-see. */}
+        <MiniVillage
+          view={v}
+          roles={v.roles !== null && (v.phaseId === 'end' || v.phaseId === 'done')}
+        />
       </div>
     </Screen>
   );

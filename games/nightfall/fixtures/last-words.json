@@ -1,8 +1,8 @@
 {
   "phase": {
     "id": "last-words",
-    "startedAt": 1700000118340,
-    "deadline": 1700000124040
+    "startedAt": 1700000114740,
+    "deadline": 1700000120440
   },
   "rng": {
     "seed": 1,
@@ -192,8 +192,8 @@
   "hunterFrom": null,
   "shot": null,
   "step": 1,
-  "stepAt": 1700000118840,
-  "dayEndsAt": 1700000208300,
+  "stepAt": 1700000115240,
+  "dayEndsAt": 1700000204700,
   "beats": [],
   "winner": null,
   "reason": null,
@@ -313,5 +313,6 @@
   },
   "speechMs": {},
   "lateKeys": [],
-  "ghostsDay": 1
+  "ghostsDay": 1,
+  "speechSalt": "aily8g"
 }

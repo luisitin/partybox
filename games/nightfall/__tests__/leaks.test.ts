@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest';
 import { game } from '../server/index';
 import { isAlive, roleOf } from '../server/rules';
 import type { Role, State } from '../server/types';
-import { playRandom } from './helpers';
+import { EIGHT, night, playRandom, start, toNight } from './helpers';
 
 /** Rotates the roles of `ids` one seat along (a derangement when 2+ differ). */
 function rotate(state: State, ids: readonly string[]): State {
@@ -124,5 +124,31 @@ describe('no leaks (non-interference)', () => {
       for (const g of tv.graveyard) expect(isAlive(s, g.id)).toBe(false);
       for (const n of tv.stage.news ?? []) if (n.role) expect(s.step).toBe(2);
     }
+  });
+
+  it('with Reveal roles off, dawn and the verdict never ask for a role line', () => {
+    const texts = (st: State): string[] =>
+      (game.speech?.(st) ?? []).map((r) => r.parts.map((p) => p.text).join(' '));
+    for (const revealRoles of [false, true]) {
+      const s0 = start({ roles: EIGHT, settings: { reader: 'fable', revealRoles } });
+      const dawn = night(toNight(s0), { ben: 'dee', cy: 'dee' });
+      expect(dawn.phase.id).toBe('dawn');
+      const asked = texts(dawn).join(' | ');
+      expect(asked).toContain('Dee did not survive');
+      if (revealRoles) expect(asked).toMatch(/Dee was a villager/);
+      else expect(asked).not.toMatch(/Dee was/);
+    }
+  });
+
+  it("dawn's name × role line has a salted key: another game's seed gives another key", () => {
+    const keys = [1, 2].map((seed) => {
+      const s = playRandom(8, 3, { reader: 'fable' }).find(
+        (x) => x.phase.id === 'dawn' && x.step >= 2,
+      );
+      if (!s) return null;
+      return game.speech?.({ ...s, speechSalt: `salt${seed}` })?.[0]?.key ?? null;
+    });
+    expect(keys[0]).not.toBeNull();
+    expect(keys[0]).not.toBe(keys[1]);
   });
 });

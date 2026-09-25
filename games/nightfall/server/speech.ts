@@ -48,18 +48,19 @@ function withPronunciations(text: string): string {
   return out;
 }
 
-function keyOf(voice: string, text: string): string {
-  const a = hashString(`${voice}|${text}`).toString(36);
-  const b = hashString(`${text}|${voice}|nf`).toString(36);
+function keyOf(voice: string, text: string, salt = ''): string {
+  const a = hashString(`${voice}|${text}${salt}`).toString(36);
+  const b = hashString(`${text}|${voice}|nf${salt}`).toString(36);
   return `nf${a}${b}`;
 }
 
-function reading(state: State, text: string): Reading | null {
+function reading(state: State, text: string, secret = false): Reading | null {
   const voice = state.cfg.reader;
   if (voice === 'none' || text.trim() === '') return null;
   const said = speakable(withPronunciations(text));
   if (said === '') return null;
-  return { key: keyOf(voice, said), text, voice, parts: [{ text: said }] };
+  const salt = secret ? `|${state.speechSalt}` : '';
+  return { key: keyOf(voice, said, salt), text, voice, parts: [{ text: said }] };
 }
 
 /** "Dee did not survive the night." for each death the room can hear a name for. */
@@ -108,6 +109,7 @@ export function spokenNow(state: State): string | null {
     if (step === 0) return n.dawn;
     const deaths = tonightsDeaths(state);
     if (step === 1) return deaths.length === 0 ? n.survived : newsText(state);
+    if (!state.cfg.revealRoles) return null;
     return revealText(
       state,
       deaths.map((d) => d.id),
@@ -153,13 +155,15 @@ function verdictText(state: State): string | null {
     return readableName(name) ? fillIn(f.live.was, { name }) : null;
   }
   const role = v.out ? roleOf(state, v.out) : undefined;
-  return role ? f.roles[role].reveal : null;
+  return role && state.cfg.revealRoles ? f.roles[role].reveal : null;
 }
 
 /** The reading for the current phase and step (what the TV plays now), or null. */
 export function readingNow(state: State): Reading | null {
   const text = spokenNow(state);
-  return text ? reading(state, text) : null;
+  // Dawn's step 2 pairs names with roles: its key is salted so it can't be guessed.
+  const secret = state.phase.id === 'dawn' && state.step >= 2;
+  return text ? reading(state, text, secret) : null;
 }
 
 /** The role clips of the roles in play ("A wolf!"): public, since the role list is. */
@@ -178,7 +182,9 @@ export function speech(state: State): SpeechRequest[] {
   const phase = state.phase.id;
   const wanted: (Reading | null)[] = [readingNow(state)];
   const later = (step: number): Reading | null => readingNow({ ...state, step });
-  if (phase === 'dawn' || phase === 'verdict') wanted.push(later(1), later(2));
+  // Step 2 turns the cards: only asked for when roles are revealed at all (reviewer 98b823).
+  if (phase === 'dawn' || phase === 'verdict')
+    wanted.push(later(1), state.cfg.revealRoles ? later(2) : null);
   // The shot (once taken) and "Ben's last words" (public since the verdict) come next.
   if (phase === 'hunter' || phase === 'last-words') wanted.push(later(1), later(2));
   // While the hunter aims: "The hunter took X down." for every possible target, and the cast's

@@ -2,27 +2,22 @@
 // strings.ts so each file stays readable; strings.ts spreads this table into STRINGS.es.
 export const STRINGS_UI_ES: Record<string, string> = {
   // phone — shared
+  '🤔 = the night’s hunches: who the villagers suspect (anonymous).':
+    '🤔 = las corazonadas de la noche: de quién sospechan los aldeanos (anónimo).',
   '{ready} of {total} have seen their role': '{ready} de {total} ya vieron su rol',
   'Tap to see your role': 'Toca para ver tu rol',
-  'Tap: your role': 'Toca: tu rol',
   'Tap to see your night job': 'Toca para ver tu tarea de la noche',
-  'Tap: night job': 'Toca: tarea nocturna',
   'Tap to see your night report': 'Toca para ver tu informe de la noche',
-  'Tap: night report': 'Toca: informe nocturno',
   'Tap to see every role': 'Toca para ver todos los roles',
-  'Tap: every role': 'Toca: todos los roles',
   'It hides again by itself.': 'Se vuelve a ocultar sola.',
   'Keep it close: neighbours peek.': 'Tápala bien: los vecinos miran.',
   "You're in as soon as this one ends": 'Entras en cuanto termine esta',
-  'Hold: your role': 'Mantén: tu rol',
   'Hold to see your role': 'Mantén pulsado para ver tu rol',
   'One moment…': 'Un momento…',
   'Watch the TV': 'Mira la TV',
   "You're a ghost.": 'Eres un fantasma.',
   'Watch, but stay silent.': 'Mira, pero en silencio.',
-  'Hold: night report': 'Mantén: informe nocturno',
   'Hold to see your night report': 'Mantén pulsado para ver tu informe de la noche',
-  'Hold: every role': 'Mantén: todos los roles',
   'Hold to see every role': 'Mantén pulsado para ver todos los roles',
   'The village': 'El pueblo',
   // phone — roles and night
@@ -34,7 +29,6 @@ export const STRINGS_UI_ES: Record<string, string> = {
   'You protected them last night.': 'Anoche ya protegiste a esa persona.',
   'Night {n}': 'Noche {n}',
   'Choose someone': 'Elige a alguien',
-  'Hold: night job': 'Mantén: tarea nocturna',
   'Hold to see your night job': 'Mantén pulsado para ver tu tarea de la noche',
   You: 'Tú',
   'Chosen: {name} · tap another to change': 'Elegido: {name} · toca a otro para cambiar',

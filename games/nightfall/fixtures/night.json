@@ -1,8 +1,8 @@
 {
   "phase": {
     "id": "night",
-    "startedAt": 1700000004100,
-    "deadline": 1700000049100
+    "startedAt": 1700000000500,
+    "deadline": 1700000045500
   },
   "rng": {
     "seed": 1,
@@ -116,7 +116,7 @@
   "hunterFrom": null,
   "shot": null,
   "step": 0,
-  "stepAt": 1700000004100,
+  "stepAt": 1700000000500,
   "dayEndsAt": null,
   "beats": [],
   "winner": null,
@@ -183,5 +183,6 @@
   },
   "speechMs": {},
   "lateKeys": [],
-  "ghostsDay": null
+  "ghostsDay": null,
+  "speechSalt": "aily8g"
 }
