@@ -9,7 +9,7 @@ import { PhoneClue } from './PhoneClue';
 import { PhoneAfter, PhoneLast } from './PhoneMoments';
 import { PhoneStageBody } from './PhoneStage';
 import { PhoneTalk, PhoneVote } from './PhoneVote';
-import { useSay } from './shared';
+import { useSay } from './helpers';
 import { STRINGS } from './strings';
 import styles from './phone.module.css';
 

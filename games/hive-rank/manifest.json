@@ -1,13 +1,23 @@
 {
   "id": "hive-rank",
   "name": "Hive Rank",
+  "icon": "🐝",
   "tagline": "Rank five things the way the hive would.",
   "description": "Five things and a question, like best to worst road-trip snack. Everyone puts them in order on their phone, the orders are combined into the hive's order, and the TV counts it down from fifth to first. Score for each thing you put where the hive did — you're predicting the room, not your own taste.",
+  "howToPlay": [
+    "You get five things and a question. Put them in order on your phone.",
+    "Everyone's orders combine into the hive's order, counted down on the TV.",
+    "Score for each thing you put where the hive did: predict the room, not your taste."
+  ],
   "version": "0.1.0",
   "minPlayers": 2,
   "maxPlayers": 16,
   "estimatedMinutes": 5,
-  "tags": ["quick", "comedy"],
+  "tags": ["comedy"],
+  "presence": {
+    "needs": "anywhere"
+  },
+  "addedOn": "2026-09-24",
   "settings": [
     {
       "key": "rounds",
@@ -43,12 +53,30 @@
       "type": "select",
       "default": "jessica",
       "options": [
-        { "value": "none", "label": "No reader" },
-        { "value": "george", "label": "Old British Man" },
-        { "value": "fable", "label": "Young British Man" },
-        { "value": "jessica", "label": "American Woman" },
-        { "value": "sky", "label": "Soft-Spoken Woman" },
-        { "value": "original", "label": "Original" }
+        {
+          "value": "none",
+          "label": "No reader"
+        },
+        {
+          "value": "george",
+          "label": "Old British Man"
+        },
+        {
+          "value": "fable",
+          "label": "Young British Man"
+        },
+        {
+          "value": "jessica",
+          "label": "American Woman"
+        },
+        {
+          "value": "sky",
+          "label": "Soft-Spoken Woman"
+        },
+        {
+          "value": "original",
+          "label": "Original"
+        }
       ]
     }
   ],

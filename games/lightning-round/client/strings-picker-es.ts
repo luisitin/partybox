@@ -1,23 +1,10 @@
-// Lightning Round's manifest lines in Spanish: the game picker shows the tagline, description and
-// settings from here, and the screens reuse the category and topic names (the server sends them
-// as the manifest spells them, content/schema.ts `labelOf`). Keyed by the English sentence.
+// Lightning Round's category and topic names in Spanish (the manifest's options), which the screens
+// show as the server sends them (content/schema.ts `labelOf`), and the tagline the TV's intro shows.
+// The manifest's full sentences live in manifest.es.json (ADR-049). Keyed by the English sentence.
 
 export const PICKER_ES: Readonly<Record<string, string>> = {
   'Fast fingers, sharp minds. Bet big on the last one.':
     'Dedos rápidos, mentes agudas. Apuesta fuerte en la última.',
-  'Speed trivia. Every question has four choices: answer fast for more points, keep a streak for a bonus, then wager part of your score on one final question. Highest score wins.':
-    'Trivia a toda velocidad. Cada pregunta tiene cuatro opciones: responde rápido para sumar más puntos, mantén una racha para ganar un bono y luego apuesta parte de tus puntos en una última pregunta. Gana quien tenga más puntos.',
-  Questions: 'Preguntas',
-  'Regular questions before the final wager question':
-    'Preguntas normales antes de la pregunta final con apuesta',
-  'Answer time': 'Tiempo por pregunta',
-  'Seconds to answer each question': 'Segundos para responder cada pregunta',
-  Category: 'Categoría',
-  'Draw questions from one category only (falls back to all when it is too small)':
-    'Saca preguntas de una sola categoría (usa todas si esa tiene muy pocas)',
-  Topics: 'Temas',
-  'Tick the topics to play inside the category; nothing ticked plays the whole category':
-    'Marca los temas que quieres dentro de la categoría; si no marcas ninguno, se juega la categoría entera',
 
   // Categories
   'All categories': 'Todas las categorías',

@@ -12,6 +12,8 @@ import { useServerInfo } from '../net/info';
 import { STRINGS } from './strings';
 import styles from './TvLobby.module.css';
 import { CROWDED_PLAYERS, Tonight, ordinal } from './Tonight';
+import { gameName, useCatalog } from '../catalog';
+import { Glow } from './Glow';
 
 export interface TvLobbyProps {
   room: RoomSnapshot | null;
@@ -38,7 +40,7 @@ function LastUp({ room }: { room: RoomSnapshot }): JSX.Element | null {
   const lang = useLang();
   const r = room.results;
   if (!r) return null;
-  const game = room.games.find((g) => g.id === r.gameId)?.name ?? r.gameId;
+  const game = gameName(r.gameId);
   // Nobody scored (the VIP ended it early, a room that never answered): every "winner" is on
   // zero — that is no winner, not a sixteen-way tie.
   const scored = r.results.winnerIds.some((id) => (r.results.scores[id] ?? 0) > 0);
@@ -149,10 +151,7 @@ export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
   return (
     <Stage>
       {/* I-029 B: the room breathes — two soft glows drift behind the lobby (transform only). */}
-      <div className={styles.glow} aria-hidden>
-        <span className={styles.glowA} />
-        <span className={styles.glowB} />
-      </div>
+      <Glow />
       <div className={`${styles.split} ${empty ? styles.splitEmpty : ''}`}>
         <div
           className={`${styles.join} ${full || locked ? styles.full : ''} ${empty ? styles.joinWide : ''}`}
@@ -272,9 +271,10 @@ export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
 /** I-650 A: the votes for the next game, most-wanted first — with the voters' faces (C). */
 function VoteTally({ room }: { room: RoomSnapshot }): JSX.Element | null {
   const L = useT(STRINGS);
+  const { games } = useCatalog();
   const votes = Object.entries(room.votes ?? {});
   if (votes.length === 0) return null;
-  const rows = room.games
+  const rows = games
     .map((g) => ({ g, ids: votes.filter(([, v]) => v === g.id).map(([id]) => id) }))
     .filter((r) => r.ids.length > 0)
     .sort((a, b) => b.ids.length - a.ids.length);

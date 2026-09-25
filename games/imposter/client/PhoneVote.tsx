@@ -6,7 +6,7 @@ import type { JSX } from 'react';
 import { Avatar, PrimaryButton, Screen, useT } from '@partybox/game-sdk/ui';
 import { FacePicker } from '@partybox/game-sdk/ui/face-picker';
 import type { Props } from './PhoneCards';
-import { byId, cluesOf } from './shared';
+import { byId, cluesOf } from './helpers';
 import { STRINGS } from './strings';
 import styles from './phone.module.css';
 

@@ -32,7 +32,15 @@ export type {
   ViewPlayer,
   VipGameAction,
 } from '@partybox/shared';
-export type { GameClientModule, GameControllerProps, GameTvProps } from './client-module';
+export type {
+  GameControllerProps,
+  GameLoaders,
+  GamePhoneModule,
+  GameSettingsModule,
+  GameShared,
+  GameTvModule,
+  GameTvProps,
+} from './client-module';
 
 // ── randomness (pure `[value, next]` helpers; `createRng` only for bots) ──────────────────────
 export {
@@ -61,6 +69,18 @@ export { addScores, buildResults, rank, speedPoints } from './scoring';
 export type { RankedRow } from './scoring';
 export { controllerEnvelope, envelope, viewPlayers } from './views';
 export type { EnvelopeOptions } from './views';
+export { compareCodeUnits } from './compare';
+export { majorityPick, rotation, teamsFromSeed } from './turns';
+export type { Teams } from './turns';
+
+// ── answer packs (ADR-048); the matcher itself is `@partybox/game-sdk/match` ─────────────────
+export {
+  answerItemSchema,
+  answerLangSchema,
+  answerPackSchema,
+  checkAnswerPack,
+} from './answer-pack';
+export type { AnswerItem, AnswerPack, AnswerPackOptions, AnswerPackReport } from './answer-pack';
 
 // UI primitives live in `@partybox/game-sdk/ui` (ADR-023): this entry point stays free of React
 // and CSS so game server code can be loaded by Node (server, sim, contract tests).

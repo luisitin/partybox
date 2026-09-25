@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { PHOTO_MAX_BYTES, joinPayloadSchema } from './protocol';
+import { PHOTO_MAX_BYTES } from './constants';
+import { joinPayloadSchema } from './protocol';
 import {
   AVATAR_IDS,
   EVERYDAY_AVATAR_IDS,

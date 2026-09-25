@@ -10,7 +10,7 @@ import { isLegalClue, sameAnswer } from '../match';
 import type { RejectReason } from '../server/types';
 import { PhoneSecret } from './PhoneCards';
 import type { Props } from './PhoneCards';
-import { byId } from './shared';
+import { byId } from './helpers';
 import { STRINGS } from './strings';
 import styles from './phone.module.css';
 

@@ -6,6 +6,7 @@ import type {
   ViewEnvelope,
   ViewPlayer,
 } from '@partybox/shared';
+import { compareCodeUnits } from './compare';
 
 export interface EnvelopeOptions {
   /** Per-player chip state; defaults to 'active'. */
@@ -17,7 +18,7 @@ export interface EnvelopeOptions {
 /** `players[]` for the envelope, in a stable order (by id) so TVs agree. */
 export function viewPlayers(state: GameStateBase, options: EnvelopeOptions = {}): ViewPlayer[] {
   return Object.values(state.players)
-    .sort((a, b) => a.id.localeCompare(b.id))
+    .sort((a, b) => compareCodeUnits(a.id, b.id))
     .map((p) => {
       const player: ViewPlayer = {
         id: p.id,

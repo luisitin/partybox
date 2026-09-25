@@ -6,6 +6,7 @@ import { Avatar, useT } from '@partybox/game-sdk/ui';
 import type { Lang } from '@partybox/game-sdk/ui';
 import { STRINGS } from './strings';
 import styles from './TvLobby.module.css';
+import { gameName } from '../catalog';
 
 /** From this many players the roster takes two more rows and a list under "Last up" ran into the
  *  host bar (the spec's known limit at 9+ players): the card then sits beside "Last up" and keeps
@@ -25,7 +26,7 @@ export function Tonight({ room }: { room: RoomSnapshot }): JSX.Element | null {
   const L = useT(STRINGS);
   const all = [...(room.tonight ?? [])].reverse();
   const crowded = room.players.length >= CROWDED_PLAYERS;
-  const name = (id: string): string => room.games.find((g) => g.id === id)?.name ?? id;
+  const name = (id: string): string => gameName(id);
   // I-652 C: the night's tally — a win per person (bots never count), over every game tonight
   const tally = new Map<string, { n: number; avatarId: string }>();
   for (const g of all)

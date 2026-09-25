@@ -7,13 +7,15 @@ import {
   BigText,
   DeadlineBar,
   PlayerChips,
+  PrimaryButton,
   SoundProvider,
   Stage,
   Timer,
   useT,
 } from '@partybox/game-sdk/ui';
 import { GameErrorBoundary } from '../controller/GameErrorBoundary';
-import { clientGames } from '../games.generated';
+import { useGame } from '../game-loader';
+import { gameLoaders } from '../games.generated';
 import { t } from '../i18n';
 import { countdownSemitones } from '../sound';
 import type { MusicEngine } from '../music';
@@ -22,6 +24,7 @@ import type { SoundCue, SoundEngine } from '../sound';
 import { CrossfadeSwap } from '../CrossfadeSwap';
 import { STRINGS } from './strings';
 import styles from './TvPlaying.module.css';
+import { gameEntry } from '../catalog';
 
 export interface TvPlayingProps {
   room: RoomSnapshot;
@@ -98,8 +101,10 @@ export function TvPlaying({
     [audio],
   );
   const hush = useCallback(() => audio.hushClips(), [audio]);
-  const module = room.selectedGameId ? clientGames[room.selectedGameId] : undefined;
-  const gameName = room.games.find((g) => g.id === room.selectedGameId)?.name ?? '';
+  // ADR-050: the game's TV entry (downloading since the game was chosen, §2.3).
+  const game = useGame(room.selectedGameId, 'tv');
+  const module = game.module;
+  const gameName = gameEntry(room.selectedGameId)?.name ?? '';
   const vip = room.players.find((p) => p.id === (view?.vip ?? room.vip));
   // While a game withholds the strip (Wisecrack's reveal), the chips keep the numbers they last
   // showed, muted: the tally is not spoiled and the row does not reflow (review-loop #32).
@@ -113,6 +118,16 @@ export function TvPlaying({
   }
   const GameTv = module?.Tv as unknown as
     ((props: { view: PushedView<TvView>; skip?: () => void }) => JSX.Element) | undefined;
+  const loading = (
+    <DelayedFallback>
+      <Stage center>
+        <BigText level="h1" tone="muted">
+          {gameName}
+        </BigText>
+        <p className="pb-muted">{t.connection.loadingGame}</p>
+      </Stage>
+    </DelayedFallback>
+  );
   // A phase the game cuts into (its own entrance is the choreography — loop 296).
   const quick = module?.quickInto?.includes(view.phaseId) === true;
   // ADR-030: a game may ask for a quiet timer (bar only — a rhythm, not a countdown) or none.
@@ -192,24 +207,24 @@ export function TvPlaying({
         >
           {GameTv ? (
             <GameErrorBoundary surface="tv">
-              <Suspense
-                fallback={
-                  <DelayedFallback>
-                    <Stage center>
-                      <BigText level="h1" tone="muted">
-                        {gameName}
-                      </BigText>
-                      <p className="pb-muted">{t.connection.loadingGame}</p>
-                    </Stage>
-                  </DelayedFallback>
-                }
-              >
+              <Suspense fallback={loading}>
                 <SoundProvider play={play} clip={clip} hush={hush}>
                   <GameTv view={view} skip={onSkip} />
                   <Ready onReady={onGameReady} />
                 </SoundProvider>
               </Suspense>
             </GameErrorBoundary>
+          ) : game.failed ? (
+            // Part 00 §2.3: three tries failed — the host taps to try again (the room carries on).
+            <Stage center>
+              <BigText level="h1" tone="muted">
+                {gameName}
+              </BigText>
+              <p className="pb-muted">{t.connection.loadFailed}</p>
+              <PrimaryButton onClick={game.retry}>{t.connection.tapRetry}</PrimaryButton>
+            </Stage>
+          ) : room.selectedGameId && gameLoaders[room.selectedGameId] ? (
+            loading
           ) : (
             <BigText tone="muted">
               {L('Unknown game "{id}"', { id: room.selectedGameId ?? '' })}
