@@ -6,6 +6,7 @@ import type { JSX } from 'react';
 import { Avatar, PrimaryButton, Screen, useT } from '@partybox/game-sdk/ui';
 import { FacePicker } from '@partybox/game-sdk/ui/face-picker';
 import type { Props } from './PhoneCards';
+import { EnMark } from './en';
 import { byId, cluesOf } from './helpers';
 import { STRINGS } from './strings';
 import styles from './phone.module.css';
@@ -20,6 +21,7 @@ export function PhoneTalk({ view, skip }: Props): JSX.Element {
       }
     >
       <h2 className={styles.title}>{L("Talk it over. Who's faking?")}</h2>
+      <EnMark />
       <div className={styles.listFrame}>
         <ul className={`${styles.clueList} ${styles.tiles}`}>
           {view.stage.board.map((c) => {
@@ -89,6 +91,7 @@ export function PhoneVote({ view, send }: Props): JSX.Element {
         </span>
         <span>{locked ? L('Voted ✓') : b.picks > 1 ? L('Pick 2') : L('Pick 1')}</span>
       </h2>
+      <EnMark />
       <FacePicker
         label={L('Suspects')}
         options={options}
