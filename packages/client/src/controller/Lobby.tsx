@@ -14,6 +14,7 @@ import type { Controller } from '../net/controller';
 import type { SoundEngine } from '../sound';
 import styles from './Lobby.module.css';
 import { LobbyLine } from './LobbyLine';
+import { PresencePrompt } from './PresencePrompt';
 import type { LobbyLineItem } from './LobbyLine';
 import { LobbyMore } from './LobbyMore';
 import { ShareButton } from './ShareSheet';
@@ -150,6 +151,9 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
           </button>
         </li>
       </ul>
+      {/* ADR-047: someone can't see the TV while the room says together — asked right under the
+          roster, in the flow (a floating card covered the add-bot row and the tip line). */}
+      <PresencePrompt room={room} me={me} controller={controller} />
       <LobbyLine
         lines={lines}
         onDismissTips={

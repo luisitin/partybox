@@ -8,6 +8,7 @@ import { Avatar, PrimaryButton, getLang } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import { serverText } from '../server-text';
 import { PresenceSwitch } from './PresenceSwitch';
+import { RoomSwitch } from './RoomSwitch';
 import { setTipsSeen } from './vipTips';
 import { useServerInfo } from '../net/info';
 import type { Controller } from '../net/controller';
@@ -243,72 +244,40 @@ export function VipMenu({
                 <li key={p.id} className={styles.player}>
                   <Avatar avatarId={p.avatarId} size={32} dim={!p.connected} />
                   <span className={styles.playerName}>{p.name}</span>
-                  <button
-                    type="button"
-                    className={`${styles.small} ${confirm === `vip:${p.id}` ? styles.confirming : ''}`}
-                    onClick={() =>
-                      act(
-                        `vip:${p.id}`,
-                        () => controller.vip({ action: 'transferVip', playerId: p.id }),
-                        true,
-                      )
-                    }
-                  >
-                    {label(`vip:${p.id}`, t.vip.transfer)}
-                  </button>
-                  <button
-                    type="button"
-                    className={`${styles.small} ${styles.danger} ${confirm === `kick:${p.id}` ? styles.confirming : ''}`}
-                    onClick={() =>
-                      act(
-                        `kick:${p.id}`,
-                        () => controller.vip({ action: 'kick', playerId: p.id }),
-                        true,
-                      )
-                    }
-                  >
-                    <span aria-hidden>✕ </span>
-                    {label(`kick:${p.id}`, t.vip.kick)}
-                  </button>
+                  <span className={styles.playerActions}>
+                    <button
+                      type="button"
+                      className={`${styles.small} ${confirm === `vip:${p.id}` ? styles.confirming : ''}`}
+                      onClick={() =>
+                        act(
+                          `vip:${p.id}`,
+                          () => controller.vip({ action: 'transferVip', playerId: p.id }),
+                          true,
+                        )
+                      }
+                    >
+                      {label(`vip:${p.id}`, t.vip.transfer)}
+                    </button>
+                    <button
+                      type="button"
+                      className={`${styles.small} ${styles.danger} ${confirm === `kick:${p.id}` ? styles.confirming : ''}`}
+                      onClick={() =>
+                        act(
+                          `kick:${p.id}`,
+                          () => controller.vip({ action: 'kick', playerId: p.id }),
+                          true,
+                        )
+                      }
+                    >
+                      <span aria-hidden>✕ </span>
+                      {label(`kick:${p.id}`, t.vip.kick)}
+                    </button>
+                  </span>
                 </li>
               ))}
           </ul>
         </section>
       </div>
     </div>
-  );
-}
-
-/** I-642 A: one room switch — the picker's old row, in the ★ menu's Room section. */
-function RoomSwitch({
-  id,
-  label,
-  hint,
-  on,
-  disabled = false,
-  onChange,
-}: {
-  id: string;
-  label: string;
-  hint: string;
-  on: boolean;
-  disabled?: boolean;
-  onChange: (on: boolean) => void;
-}): JSX.Element {
-  return (
-    <label className={`${styles.switchRow} ${disabled ? styles.switchOff : ''}`} htmlFor={id}>
-      <span className={styles.switchLabel}>
-        {label}
-        <small>{hint}</small>
-      </span>
-      <input
-        id={id}
-        type="checkbox"
-        className={styles.switchBox}
-        checked={on}
-        disabled={disabled}
-        onChange={(e) => onChange(e.target.checked)}
-      />
-    </label>
   );
 }

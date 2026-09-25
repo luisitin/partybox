@@ -21,7 +21,6 @@ import { serverText } from '../server-text';
 import { usePhoneUrgency } from './urgency';
 import { VipMenu, vipMenuState } from './VipMenu';
 import { ReclaimVip } from './ReclaimVip';
-import { PresencePrompt } from './PresencePrompt';
 import { JoinLangPick } from './JoinLangs';
 import { ShellCountdown } from './ShellCountdown';
 import { useShellCues } from './useShellCues';
@@ -236,7 +235,6 @@ export function ControllerShell({
       <div className={styles.toasts} aria-live="polite">
         {/* I-347 C: the host whose VIP passed on while they were away can take it back */}
         <ReclaimVip room={room} playerId={state.playerId} controller={controller} />
-        <PresencePrompt room={room} me={me} controller={controller} />
         {state.toasts.map((toast) => (
           // A status line, not a button: screen readers announce it once and it never masquerades
           // as an action (a "… is now the VIP" toast used to match button lookups for /VIP/).

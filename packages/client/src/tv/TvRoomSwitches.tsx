@@ -23,6 +23,20 @@ export function TvRoomSwitches({
     PRESENCE_MODES[(PRESENCE_MODES.indexOf(mode) + 1) % PRESENCE_MODES.length] ?? 'together';
   const away = awayToAsk(room);
   const set = (m: PresenceMode): void => client.act({ action: 'setPresenceMode', mode: m });
+  // While the room is asked where Maya is, the question and its answers ARE the row: two rows
+  // pushed the grid's last games under it (the switches stay on the VIP's phone meanwhile).
+  if (away.length > 0)
+    return (
+      <div className={`${styles.switches} ${styles.switchAsk}`} role="status">
+        {L("{name} can't see the TV. On a call?", { name: away[0]?.name ?? '' })}
+        <button type="button" className={styles.switchChip} onClick={() => set('remote-voice')}>
+          🎧 {L('On a call')}
+        </button>
+        <button type="button" className={styles.switchChip} onClick={() => set('remote-text')}>
+          💬 {L('No call')}
+        </button>
+      </div>
+    );
   return (
     <div className={styles.switches}>
       <button
@@ -53,17 +67,6 @@ export function TvRoomSwitches({
             ? L('Some remote, on a call')
             : L('Some remote, no call')}
       </button>
-      {away.length > 0 ? (
-        <span className={styles.switchAsk} role="status">
-          {L("{name} can't see the TV. On a call?", { name: away[0]?.name ?? '' })}
-          <button type="button" className={styles.switchChip} onClick={() => set('remote-voice')}>
-            🎧 {L('On a call')}
-          </button>
-          <button type="button" className={styles.switchChip} onClick={() => set('remote-text')}>
-            💬 {L('No call')}
-          </button>
-        </span>
-      ) : null}
     </div>
   );
 }

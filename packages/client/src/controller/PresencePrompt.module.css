@@ -1,9 +1,15 @@
-/* The "can't see the TV" question: the toast's look, with answers a thumb can hit (44 px). */
+/* The "can't see the TV" question: a card in the lobby's flow, answers a thumb can hit (44 px). */
 .prompt {
-  pointer-events: auto;
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
   gap: var(--pb-space-2);
+  padding: var(--pb-space-3);
+  border-radius: var(--pb-radius);
+  border: 2px solid var(--pb-accent-2);
+  background: var(--pb-surface);
+  font-weight: 700;
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) backwards;
 }
 
 .actions {
