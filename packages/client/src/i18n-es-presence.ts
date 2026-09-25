@@ -20,9 +20,9 @@ export const esPresence: Pick<Texts, 'presence'> = {
         ? `${name} y ${more} más no ven la TV. ¿Están en una llamada con ustedes?`
         : `${name} no ve la TV. ¿Está en una llamada con ustedes?`,
     onCall: 'En una llamada',
-    onCallHint: 'Los juegos de hablar se juegan igual',
+    onCallHint: 'Se juega igual',
     noCall: 'Sin llamada',
-    noCallHint: 'Los juegos de hablar avisan antes; algunos pasan a escribir',
+    noCallHint: 'Los juegos de hablar avisan antes',
     dismiss: 'Ahora no',
     needsVoice: 'Este juego necesita hablar. Quien esté lejos debería unirse a una llamada de voz.',
     onCallPlay: 'Estamos en una llamada, a jugar',

@@ -106,9 +106,15 @@
 
 @container (max-width: 12em) {
   .compact .row {
-    grid-template-columns: 1.15em auto 1fr auto auto;
+    grid-template-columns: 1.05em auto 1fr auto auto;
     gap: var(--pb-space-1);
-    padding-inline: var(--pb-space-2);
+    padding-inline: var(--pb-space-1) var(--pb-space-2);
+  }
+
+  /* a row with no delta or wager mark drops that empty track and its gap: "Maximiliano" beside a
+     4-digit score needed 203 px against 197 (session-c 42aaee) */
+  .compact .row:not(:has(> .delta, > .mark)) {
+    grid-template-columns: 1.05em auto 1fr auto;
   }
 
   .compact .score {

@@ -2,7 +2,11 @@
   display: block;
   /* a phone width caps it: at 200 % text a three-name tie took 4–5 lines of the sticky title and
      the board could not be reached (session-c) */
-  font-size: min(var(--pb-font-h1), 12vw);
+  /* A name that is one long word (16 letters, the name cap, "Wolfeschlegelste") shrinks the line
+     until that word fits the phone (--pb-longest-word is set from the text, ~0.62 em per letter
+     in the heavy face), and only a word still too long for the line may break (session-c 42aaee). */
+  font-size: min(var(--pb-font-h1), 12vw, calc(88vw / (var(--pb-longest-word, 1) * 0.62)));
+  overflow-wrap: anywhere;
   font-weight: 900;
   color: var(--pb-accent-2);
   text-align: center;

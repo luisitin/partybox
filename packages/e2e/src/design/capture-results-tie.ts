@@ -39,7 +39,7 @@ async function open(browser: Browser, url: string, device: DeviceId, lang: strin
   return page;
 }
 
-type Scenario = 'tie' | 'many' | 'teams';
+type Scenario = 'tie' | 'many' | 'teams' | 'long';
 
 async function run(
   browser: Browser,
@@ -63,7 +63,7 @@ async function run(
       ['p-ana', 'Ana', 'fox'],
       ['p-ben', 'Ben', 'owl'],
       ['p-cleo', 'Cleo', 'frog'],
-      ['p-dev', 'Maximiliano Guadalupe', 'panda'],
+      ['p-dev', scenario === 'long' ? 'Wolfeschlegelste' : 'Maximiliano Guadalupe', 'panda'],
     ].map(([id, name, avatarId]) => ({ id, name, avatarId }));
     // Sam (this phone) shares an award too, so the phone shows "… with Ana"
     const state = (await api.state()) as { room?: { vipId?: string | null } | null };
@@ -140,7 +140,7 @@ async function main(): Promise<void> {
   const browser = await chromium.launch();
   try {
     for (const lang of ['en', 'es'])
-      for (const scenario of ['tie', 'many', 'teams'] as const)
+      for (const scenario of ['tie', 'many', 'teams', 'long'] as const)
         for (const device of ['iphone-se', 'font200'] as const)
           await run(browser, server.url, api, lang, device, scenario);
   } finally {

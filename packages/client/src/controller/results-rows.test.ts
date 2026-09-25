@@ -3,10 +3,11 @@ import { describe, expect, it } from 'vitest';
 import type { RoomSnapshot } from '@partybox/shared';
 import { ordinal } from '../i18n';
 import {
-  outcomeLine,
   groupAwards,
   joinNames,
+  longestWord,
   myRow,
+  outcomeLine,
   teamGroups,
   winnerColor,
   winnerLine,
@@ -304,5 +305,14 @@ describe('ADR-052: a team game grouped by team', () => {
       ['sun', 'Sun', false, ['Sam']],
       ['', 'No team', false, ['Priya']],
     ]);
+  });
+});
+
+describe('longestWord', () => {
+  it('counts the letters of the longest word, so a one-word name can shrink the headline', () => {
+    expect(longestWord('Wolfeschlegelste wins!')).toBe(16);
+    expect(longestWord('¡Gana Wolfeschlegelste!')).toBe(17);
+    expect(longestWord('Ana, Ben & Cleo tie!')).toBe(4);
+    expect(longestWord('')).toBe(1);
   });
 });
