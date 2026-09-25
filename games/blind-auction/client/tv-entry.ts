@@ -7,7 +7,7 @@ export const tv: GameTvModule = {
   ...shared,
   Tv,
   // Every round phase keeps the same table: cut between them, the box never re-rises.
-  quickInto: ['box', 'bet', 'swap', 'potato', 'open'],
+  quickInto: ['box', 'bet', 'swap', 'potato', 'tug', 'open'],
   // Whoever called the open box right.
   stripActive: (view) => {
     const v = view as { phaseId: string; results?: { id: string; delta: number }[] | null };

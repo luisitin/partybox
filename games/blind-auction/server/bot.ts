@@ -12,6 +12,8 @@ export function decide(view: BlindAuctionControllerView, factor: number, rng: Rn
   // Hot potato: pass it on the moment it lands (the server makes you hold it a beat first).
   if (view.phaseId === 'potato')
     return view.potato?.holder === view.me.id ? { type: 'pass' } : null;
+  // Tug of war: pull (the server counts at most one tap every 80 ms).
+  if (view.phaseId === 'tug') return view.myTeam === null ? null : { type: 'tug' };
   if (view.phaseId === 'swap') {
     // Doors: like people, most bots trust their first door; the bolder ones switch.
     if (view.myDoor === null || view.mySwap !== null || view.opened === null) return null;
@@ -31,6 +33,10 @@ export function decide(view: BlindAuctionControllerView, factor: number, rng: Rn
       ? 0
       : Math.pow(o.chance / 100, 1.6 - 1.4 * factor),
   );
+  // Tug of war: your own side, always.
+  if (view.box.event === 'tug') {
+    for (let i = 0; i < weights.length; i++) if (i !== view.myTeam) weights[i] = 0;
+  }
   let roll = rng.float() * weights.reduce((a, b) => a + b, 0);
   let option = options.length - 1;
   for (let i = 0; i < weights.length; i++) {

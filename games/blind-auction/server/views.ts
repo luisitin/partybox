@@ -7,6 +7,7 @@ import { controllerEnvelope, envelope } from '@partybox/game-sdk';
 import type { ControllerView, PlayerStatus, TvView } from '@partybox/game-sdk';
 import { inGame } from './phases/bet';
 import { swappers } from './phases/swap';
+import { shareOf, teamOf } from './phases/tug';
 import { payout, tierOf } from './odds';
 import type { Tier } from './odds';
 import { FIXED_LINES, boxRequest, fixedRequest, lineOf, openRequest } from './speech';
@@ -76,6 +77,9 @@ interface Common {
   opened: number | null;
   /** Hot potato: who holds it (`potato`; at `open`, who got burnt) and how many passes so far. */
   potato: { holder: string; passes: number; ring: string[] } | null;
+  /** Tug of war, from `box` on: the teams; from `tug` on, the rope (−1 Sun won … +1 Moon won);
+   *  `draw` at `open` for a dead heat. */
+  tug: { sun: string[]; moon: string[]; rope: number; draw: boolean } | null;
   results: ResultView[] | null;
   voice: VoiceView | null;
   clips: Partial<Record<FixedLine, string>>;
@@ -107,6 +111,9 @@ export interface BlindAuctionControllerView extends ControllerView, Common {
   mySwap: number | null;
   /** Hot potato: your own option index (you cannot back yourself), null when not a player. */
   mySeat: number | null;
+  /** Tug of war: your team (0 ▲ Sun, 1 ● Moon) and your share of its stake (0…1). */
+  myTeam: 0 | 1 | null;
+  myShare: number;
 }
 
 function boxView(state: State): BoxView | null {
@@ -148,6 +155,12 @@ function runView(state: State): RunView | null {
   if (state.phase.id !== 'open' || !round?.box.event) return null;
   const detail = round.box.event === 'doors' ? [state.r.opened ?? -1] : (round.detail ?? []);
   return { kind: round.box.event, outcome: round.outcome, detail };
+}
+
+function tugView(state: State): Common['tug'] {
+  const round = state.boxes[state.r.idx];
+  if (!round?.teams || state.phase.id === 'rules' || state.phase.id === 'done') return null;
+  return { ...round.teams, rope: state.r.rope ?? 0, draw: state.r.draw === true };
 }
 
 function opened(state: State): boolean {
@@ -220,6 +233,7 @@ function statusOf(state: State): (id: string) => PlayerStatus {
     if (state.phase.id === 'rules') return state.ready.includes(id) ? 'submitted' : 'active';
     if (state.phase.id === 'bet') return Object.hasOwn(state.r.bets, id) ? 'submitted' : 'active';
     if (state.phase.id === 'potato') return state.r.holder === id ? 'active' : 'waiting';
+    if (state.phase.id === 'tug') return teamOf(state, id) === null ? 'waiting' : 'active';
     if (state.phase.id === 'swap')
       return !swappers(state).includes(id) || Object.hasOwn(state.r.swaps ?? {}, id)
         ? 'submitted'
@@ -240,6 +254,8 @@ function skipLabel(state: State): string | undefined {
       return 'Open the doors';
     case 'potato':
       return 'Pop it now';
+    case 'tug':
+      return 'Stop the pull';
     case 'open':
       return state.r.idx + 1 < state.boxes.length ? 'Next box' : 'See results';
     default:
@@ -248,7 +264,8 @@ function skipLabel(state: State): string | undefined {
 }
 
 function timerMode(state: State): 'normal' | 'quiet' | 'hidden' {
-  if (state.phase.id === 'bet' || state.phase.id === 'swap') return 'normal';
+  if (state.phase.id === 'bet' || state.phase.id === 'swap' || state.phase.id === 'tug')
+    return 'normal';
   // The rules' safety net is never shown: nobody should feel hurried while reading.
   return 'hidden';
 }
@@ -265,6 +282,7 @@ function common(state: State): Common {
     run: runView(state),
     opened:
       state.phase.id === 'swap' || state.phase.id === 'open' ? (state.r.opened ?? null) : null,
+    tug: tugView(state),
     potato:
       (state.phase.id === 'potato' || state.phase.id === 'open') && state.r.holder
         ? { holder: state.r.holder, passes: state.r.passes ?? 0, ring: state.seats }
@@ -327,5 +345,7 @@ export function controllerView(state: State, playerId: string): BlindAuctionCont
         : null,
     mySwap: playing && state.phase.id === 'swap' ? (state.r.swaps?.[playerId] ?? null) : null,
     mySeat: playing && state.seats.includes(playerId) ? state.seats.indexOf(playerId) : null,
+    myTeam: playing ? teamOf(state, playerId) : null,
+    myShare: playing && state.phase.id === 'tug' ? shareOf(state, playerId) : 0,
   };
 }

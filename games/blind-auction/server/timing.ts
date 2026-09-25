@@ -34,7 +34,14 @@ export const EVENT_MS = {
   doors: 2_400,
   // The potato has already popped live (`potato`): the reveal only shows who got burnt.
   potato: 600,
+  // Tug of war is pulled live (`tug`): the reveal only names the winning side.
+  tug: 600,
 } as const;
+/** Tug of war: the pull lasts this long at most; a counted tap moves the rope TUG_STEP × your
+ *  share of your team's stake; taps closer than TUG_TAP_MS are one tap. */
+export const TUG_MS = 12_000;
+export const TUG_STEP = 0.035;
+export const TUG_TAP_MS = 80;
 /** Hot potato: it pops between these (ms, secret), checked every POTATO_TICK_MS; a holder must
  *  hold it this long before a pass counts; the burnt holder loses POTATO_BURN coins. */
 export const POTATO_MIN_MS = 3_000;

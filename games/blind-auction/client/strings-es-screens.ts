@@ -73,6 +73,22 @@ export const ES_SCREENS: Record<string, string> = {
   "That's the last box!": '¡Esa fue la última caja!',
   'Tap a card, then choose your coins': 'Toca una carta y luego elige tus monedas',
   // live events
+  'Tug of War': 'Jalar la cuerda',
+  'Two teams, one rope. Bet on your side, then tap to pull!':
+    'Dos equipos, una cuerda. Apuesta por tu lado y luego toca para jalar.',
+  Sun: 'Sol',
+  Moon: 'Luna',
+  'Team Sun': 'Equipo Sol',
+  'Team Moon': 'Equipo Luna',
+  'PULL!': '¡JALA!',
+  'No stake on this one: your pulls count for nothing': 'Sin apuesta: tus jalones no cuentan',
+  'Your pull is {n}% of your team’s': 'Tu jalón es el {n}% del de tu equipo',
+  'PULL! Tap your phone as fast as you can!':
+    '¡JALEN! ¡Toquen el teléfono lo más rápido que puedan!',
+  'Every tap counts as much as your share of your team’s bet.':
+    'Cada toque cuenta según tu parte de la apuesta de tu equipo.',
+  'Dead heat! Every stake goes back.': '¡Empate! Se devuelven todas las apuestas.',
+  'Time! Which side held on?': '¡Tiempo! ¿Qué lado aguantó?',
   // The game's name is a brand: it stays English on Spanish screens (#decisions, Part 00 a).
   'Blind Auction': 'Blind Auction',
   'No passes yet': 'Aún sin pases',

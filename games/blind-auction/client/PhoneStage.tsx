@@ -11,6 +11,7 @@ import liveStyles from './live.module.css';
 import { Doors, LiveStage } from './LiveStage';
 import { LotCard } from './LotCard';
 import { PotatoRing } from './Potato';
+import { TugRope } from './Tug';
 import { OptionBoard } from './Options';
 import { LotTitle, PhoneRules } from './PhoneLot';
 import { OwnLineCard, insideWords } from './PhoneResult';
@@ -36,7 +37,9 @@ function StageOpen({ view }: { view: View }): JSX.Element | null {
       <LotTitle box={view.box} />
       {view.run ? (
         <div className={liveStyles.phoneStage}>
-          {view.run.kind === 'potato' ? (
+          {view.run.kind === 'tug' ? (
+            <TugRope view={view} live={false} />
+          ) : view.run.kind === 'potato' ? (
             <PotatoRing view={view} popped />
           ) : view.run.kind === 'doors' ? (
             <Doors opened={view.run.detail[0] ?? null} car={view.run.outcome} delay={0} />

@@ -6,6 +6,7 @@ import { allConnectedDone, enterPhase, isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { PITY_COINS } from '../timing';
 import type { Input, State, Transition } from '../types';
+import { teamOf } from './tug';
 
 export function inGame(state: State, id: string): boolean {
   return Object.hasOwn(state.players, id) && !state.left.includes(id);
@@ -37,8 +38,17 @@ export function reduceBet(state: State, event: GameEvent<Input>, next: Transitio
   const box = state.boxes[state.r.idx]?.box;
   // Hot potato: you cannot bet on yourself holding it (you could just keep it).
   const self = box?.event === 'potato' && amount > 0 && state.seats[option] === id;
+  // Tug of war: you back your own team (your taps pull for it).
+  const team = box?.event === 'tug' ? teamOf(state, id) : null;
+  const wrongSide = box?.event === 'tug' && amount > 0 && team !== option;
   const code =
-    amount > have ? 'over' : !box || option >= box.options.length ? 'option' : self ? 'self' : null;
+    amount > have
+      ? 'over'
+      : !box || option >= box.options.length || wrongSide
+        ? 'option'
+        : self
+          ? 'self'
+          : null;
   if (code) return { ...state, notices: { ...state.notices, [id]: { code, have, at: event.now } } };
   const { [id]: _cleared, ...notices } = state.notices;
   const after: State = {

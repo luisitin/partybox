@@ -13,6 +13,7 @@ import { COIN, boxWords, iconOf, kindName, nameOf as optionName, payText, toneOf
 import type { Tone } from './copy';
 import { Doors, LiveStage } from './LiveStage';
 import { PotatoRing, passWords } from './Potato';
+import { TugRope } from './Tug';
 import { LotCard } from './LotCard';
 import { OptionBoard } from './Options';
 import { STRINGS } from './strings';
@@ -114,6 +115,21 @@ function PotatoPanel({ view }: { view: View }): JSX.Element | null {
   );
 }
 
+function TugPanel({ view }: { view: View }): JSX.Element | null {
+  const L = useT(STRINGS);
+  const play = useSound();
+  useEffect(() => play('phase'), [play]);
+  if (!view.box) return null;
+  return (
+    <div className={styles.panel}>
+      <h1 className={styles.call}>{L('PULL! Tap your phone as fast as you can!')}</h1>
+      <p className={styles.flavour}>
+        {L('Every tap counts as much as your share of your team’s bet.')}
+      </p>
+    </div>
+  );
+}
+
 function OpenPanel({ view }: { view: View }): JSX.Element | null {
   const L = useT(STRINGS);
   const play = useSound();
@@ -154,11 +170,16 @@ function OpenPanel({ view }: { view: View }): JSX.Element | null {
                 ? L('Bets are closed. Roll the dice!')
                 : view.run.kind === 'doors'
                   ? L('Doors are final. Where is the car?')
-                  : view.run.kind === 'potato'
-                    ? L('POP! {name} got burnt', {
-                        name: view.players.find((p) => p.id === view.potato?.holder)?.name ?? '?',
-                      })
-                    : L('Bets are closed. Spin the wheel!')
+                  : view.run.kind === 'tug' && view.tug?.draw
+                    ? L('Dead heat! Every stake goes back.')
+                    : view.run.kind === 'tug'
+                      ? L('Time! Which side held on?')
+                      : view.run.kind === 'potato'
+                        ? L('POP! {name} got burnt', {
+                            name:
+                              view.players.find((p) => p.id === view.potato?.holder)?.name ?? '?',
+                          })
+                        : L('Bets are closed. Spin the wheel!')
             : bets.length
               ? L('Bets are closed. What’s inside?')
               : L('Nobody bet. What’s inside?')}
@@ -220,7 +241,9 @@ export function TvTable({ view }: { view: View }): JSX.Element {
           <div
             className={`${styles.cardCol} ${inside && toneOf(inside.kind) === 'bad' ? styles.shake : ''}`}
           >
-            {box?.event === 'potato' && (phase === 'potato' || phase === 'open') ? (
+            {box?.event === 'tug' ? (
+              <TugRope view={view} live={phase === 'tug'} />
+            ) : box?.event === 'potato' && (phase === 'potato' || phase === 'open') ? (
               <PotatoRing view={view} popped={phase === 'open'} />
             ) : box?.event === 'doors' && phase !== 'open' ? (
               <Doors opened={phase === 'swap' ? view.opened : null} car={null} />
@@ -249,6 +272,7 @@ export function TvTable({ view }: { view: View }): JSX.Element {
           {phase === 'bet' ? <BetPanel view={view} /> : null}
           {phase === 'swap' ? <SwapPanel view={view} /> : null}
           {phase === 'potato' ? <PotatoPanel view={view} /> : null}
+          {phase === 'tug' ? <TugPanel view={view} /> : null}
           {phase === 'open' ? <OpenPanel view={view} /> : null}
         </div>
       </Stage>

@@ -71,6 +71,9 @@ describe('live events: the draw', () => {
 describe('live events: the reveal', () => {
   const liveAt = (): ReturnType<typeof start> => {
     let s = start(4, { rounds: 5, live: true });
+    // Pin the second box to a race (the draw's order varies; a race needs no teams or seats).
+    const [race] = drawEvent('race', seedRng(9), 1);
+    s = { ...s, boxes: s.boxes.map((b, i) => (i === 1 ? race : b)) };
     s = walkTo(s, 'bet');
     // The second box is the first event.
     s = walkTo(walkTo(s, 'box'), 'bet');
@@ -183,5 +186,60 @@ describe('live events: three doors', () => {
     expect(s.phase.id).toBe('swap');
     s = swap(s, 'p4', other);
     expect(s.phase.id).toBe('open');
+  });
+});
+
+describe('live events: tug of war', () => {
+  /** A 4-player game whose second box is the tug, now at `bet`. */
+  const tugAt = (): ReturnType<typeof start> => {
+    let s = start(4, { rounds: 5 });
+    const [round] = drawEvent('tug', seedRng(5), 1);
+    s = {
+      ...s,
+      boxes: s.boxes.map((b, i) =>
+        i === 1 ? { ...round, teams: { sun: ['p1', 'p3'], moon: ['p2', 'p4'] } } : b,
+      ),
+    };
+    return walkTo(walkTo(walkTo(s, 'bet'), 'box'), 'bet');
+  };
+  const pull = (s: ReturnType<typeof start>, id: string, dt: number) =>
+    send(s, { type: 'input', now: s.phase.startedAt + dt, playerId: id, input: { type: 'tug' } });
+
+  it('teams are public before the bet; you can only back your own side', () => {
+    const s = tugAt();
+    expect(controllerView(s, 'p1').myTeam).toBe(0);
+    expect(tvView(s).tug?.sun).toEqual(['p1', 'p3']);
+    expect(bet(s, 'p1', 1, 10).notices['p1']?.code).toBe('option');
+    expect(bet(s, 'p1', 0, 10).r.bets['p1']?.amount).toBe(10);
+  });
+
+  it('a tap pulls by your share of your team stake; no stake, no pull', () => {
+    let s = tugAt();
+    s = bet(bet(bet(s, 'p1', 0, 30), 'p3', 0, 10), 'p2', 1, 20);
+    s = bet(s, 'p4', 1, 0);
+    expect(s.phase.id).toBe('tug');
+    const a = pull(s, 'p1', 100);
+    expect(a.r.rope).toBeCloseTo(-0.035 * 0.75);
+    expect(pull(a, 'p1', 150).r.rope).toBe(a.r.rope); // inside 80 ms: one tap
+    expect(pull(s, 'p4', 100).r.rope).toBe(0);
+  });
+
+  it('the rope over the line ends it; the side ahead wins and is paid', () => {
+    let s = tugAt();
+    s = bet(bet(bet(bet(s, 'p1', 0, 20), 'p3', 0, 0), 'p2', 1, 20), 'p4', 1, 0);
+    const before = s.coins['p1'] ?? 0;
+    for (let i = 0; s.phase.id === 'tug' && i < 100; i++) s = pull(s, 'p1', 100 + i * 100);
+    expect(s.phase.id).toBe('open');
+    expect(s.boxes[s.r.idx]?.outcome).toBe(0);
+    expect(s.coins['p1']).toBeGreaterThan(before);
+  });
+
+  it('a dead heat gives every stake back', () => {
+    let s = tugAt();
+    s = bet(bet(bet(bet(s, 'p1', 0, 20), 'p3', 0, 0), 'p2', 1, 20), 'p4', 1, 0);
+    const before = { ...s.coins };
+    s = walkTo(s, 'open');
+    expect(s.r.draw).toBe(true);
+    expect(s.coins).toEqual(before);
   });
 });

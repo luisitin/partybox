@@ -9,6 +9,7 @@ export const ES_GAME: Record<string, string> = {
   'See results': 'Ver resultados',
   'Open the doors': 'Abrir las puertas',
   'Pop it now': '¡Que explote ya!',
+  'Stop the pull': 'Parar el jalón',
   // awards
   '🎲 High Roller': '🎲 Gran Apostador',
   'The biggest single bet': 'La apuesta más grande',

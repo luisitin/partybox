@@ -3,7 +3,7 @@
 import { z } from '@partybox/game-sdk';
 import type { GameStateBase } from '@partybox/game-sdk';
 
-export const PHASES = ['rules', 'box', 'bet', 'swap', 'potato', 'open', 'done'] as const;
+export const PHASES = ['rules', 'box', 'bet', 'swap', 'potato', 'tug', 'open', 'done'] as const;
 export type PhaseId = (typeof PHASES)[number];
 
 export const READERS = ['george', 'fable', 'jessica', 'sky', 'original', 'none'] as const;
@@ -28,7 +28,7 @@ export interface Cfg {
 }
 
 /** The live events (the owner's picks, docs/game-pack/blind-auction/LIVE-EVENTS.md). */
-export const LIVE_KINDS = ['race', 'dice', 'wheel', 'doors', 'potato'] as const;
+export const LIVE_KINDS = ['race', 'dice', 'wheel', 'doors', 'potato', 'tug'] as const;
 export type LiveKind = (typeof LIVE_KINDS)[number];
 
 /** What a box can hold. Each kind has its icon and words on the client (EN + ES). */
@@ -73,6 +73,8 @@ export interface Round {
   box: Box;
   outcome: number;
   detail?: number[];
+  /** Tug of war: the two teams (seat ids), dealt at `init`, public from `box` on. */
+  teams?: { sun: string[]; moon: string[] };
 }
 
 export interface Bet {
@@ -101,6 +103,11 @@ export interface RoundState {
   heldAt?: number;
   passes?: number;
   popAt?: number;
+  /** Tug of war (`tug`): the rope, −1 (▲ Sun has won) … +1 (● Moon has won), and each player's
+   *  last counted tap (the rate limit). `draw` = a dead heat: every stake goes back. */
+  rope?: number;
+  lastTap?: Record<string, number>;
+  draw?: boolean;
 }
 
 export interface Stats {
@@ -145,6 +152,8 @@ export const inputSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('swap'), door: z.number().int().min(0).max(2) }),
   // Hot potato: the holder passes it on.
   z.object({ type: z.literal('pass') }),
+  // Tug of war: one pull.
+  z.object({ type: z.literal('tug') }),
   z.object({
     type: z.literal('bet'),
     // Up to 16 for hot potato (one option per player).

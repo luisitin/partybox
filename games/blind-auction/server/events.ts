@@ -77,6 +77,11 @@ const DOORS: readonly Label[] = [
 export const DOOR_PAY = 2;
 
 const EVENT_BOX: Record<LiveKind, { name: string; icon: string; flavour: string }> = {
+  tug: {
+    name: 'Tug of War',
+    icon: '🪢',
+    flavour: 'Two teams, one rope. Bet on your side, then tap to pull!',
+  },
   potato: {
     name: 'Hot Potato',
     icon: '🥔',
@@ -145,6 +150,17 @@ function doors(rng: RngState, n: number): [Round, RngState] {
   return [{ box: eventBox('doors', n, options), outcome }, s1];
 }
 
+/** Tug of war: bet on your own team (▲ Sun or ● Moon, dealt at `init`), even odds. */
+const TEAMS: readonly Label[] = [
+  { icon: '▲', name: 'Sun' },
+  { icon: '●', name: 'Moon' },
+];
+
+function tug(rng: RngState, n: number): [Round, RngState] {
+  const options = TEAMS.map((t) => option(t, 50));
+  return [{ box: eventBox('tug', n, options), outcome: 0 }, rng];
+}
+
 /** Hot potato: its options are the players, filled in at `init` (potatoOptions) — here, none. */
 function potato(rng: RngState, n: number): [Round, RngState] {
   return [{ box: eventBox('potato', n, []), outcome: 0 }, rng];
@@ -165,5 +181,6 @@ export function drawEvent(kind: LiveKind, rng: RngState, n: number): [Round, Rng
   if (kind === 'dice') return dice(rng, n);
   if (kind === 'doors') return doors(rng, n);
   if (kind === 'potato') return potato(rng, n);
+  if (kind === 'tug') return tug(rng, n);
   return wheel(rng, n);
 }

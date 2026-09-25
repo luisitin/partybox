@@ -19,7 +19,10 @@ type Props = GameControllerProps<BlindAuctionControllerView, Input>;
 
 export function PhoneBet({ view, send }: Props): JSX.Element | null {
   const L = useT(STRINGS);
-  const [option, setOption] = useState<number | null>(view.myBet?.option ?? null);
+  // Tug of war: you back your own team, picked for you.
+  const [option, setOption] = useState<number | null>(
+    view.myBet?.option ?? (view.box?.event === 'tug' ? view.myTeam : null),
+  );
   const [amount, setAmount] = useState(view.myBet?.amount ?? 0);
   const box = view.box;
   if (!box) return null;
@@ -94,7 +97,13 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
             size="phone"
             selected={option}
             onSelect={setOption}
-            locked={box.event === 'potato' ? view.mySeat : null}
+            locked={
+              box.event === 'potato'
+                ? view.mySeat
+                : box.event === 'tug' && view.myTeam !== null
+                  ? 1 - view.myTeam
+                  : null
+            }
           />
           {option === null ? (
             // Review: a first-timer didn't know to tap a card or where the stake goes.

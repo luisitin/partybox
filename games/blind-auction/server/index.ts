@@ -10,6 +10,7 @@ import {
   nextFloat,
   seedRng,
   setConnected,
+  teamsFromSeed,
 } from '@partybox/game-sdk';
 import type { GameDefinition, GameEvent, InitContext, Settings } from '@partybox/game-sdk';
 import manifestJson from '../manifest.json' with { type: 'json' };
@@ -18,6 +19,7 @@ import { drawBoxes } from './content';
 import { enterBet, reduceBet } from './phases/bet';
 import { closeSwap, enterSwap, isDoors, reduceSwap, swappers, swapsIn } from './phases/swap';
 import { enterPotato, isPotato, pop, potatoDropped, reducePotato } from './phases/potato';
+import { enterTug, finishTug, isTug, reduceTug } from './phases/tug';
 import { drawEvent, potatoOptions } from './events';
 import { boxSpeech, enterBox, reduceBox } from './phases/box';
 import { enterOpen, openSpeech, reduceOpen } from './phases/open';
@@ -72,6 +74,12 @@ function init(ctx: InitContext): State {
   // back yourself) it is a race instead.
   const names = ctx.players.map((p) => p.name);
   const boxes = drawn.map((round, i) => {
+    if (round.box.event === 'tug') {
+      // Tug of war: the teams are dealt now, so everyone knows their side before betting.
+      const [teams, next] = teamsFromSeed(ctx.players, rng);
+      rng = next;
+      return { ...round, teams };
+    }
     if (round.box.event !== 'potato') return round;
     if (names.length >= 3)
       return { ...round, box: { ...round.box, options: potatoOptions(names) } };
@@ -125,11 +133,14 @@ export function advance(state: State, now: number): State {
     case 'bet':
       // Doors: the host opens a goat door and the bettors stay or switch first.
       if (isPotato(state)) return enterPotato(state, now);
+      if (isTug(state)) return enterTug(state, now);
       return isDoors(state) && swappers(state).length > 0
         ? enterSwap(state, now)
         : enterOpen(state, now);
     case 'potato':
       return enterOpen(pop(state), now);
+    case 'tug':
+      return enterOpen(finishTug(state), now);
     case 'swap':
       return enterOpen(closeSwap(state), now);
     case 'open':
@@ -177,6 +188,8 @@ function reduce(state: State, event: GameEvent<Input>): State {
       return reduceSwap(state, event, advance);
     case 'potato':
       return reducePotato(state, event, advance);
+    case 'tug':
+      return reduceTug(state, event, advance);
     case 'open':
       return reduceOpen(state, event, advance);
     default:

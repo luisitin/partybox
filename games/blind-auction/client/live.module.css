@@ -549,3 +549,134 @@
 .screen {
   gap: var(--pb-space-3);
 }
+
+/* ── tug of war ── (team colours: Sun warm, Moon cool; always with ▲ / ● and the word) */
+.sun {
+  --team: var(--pb-player-2);
+}
+
+.moon {
+  --team: var(--pb-player-4);
+}
+
+.tug {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  align-items: center;
+  gap: var(--pb-space-3);
+  width: min(720px, calc(var(--ba-card-h) * 1.35));
+  height: var(--ba-card-h);
+}
+
+.tugSide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pb-space-2);
+  min-width: 0;
+}
+
+.tugTeam {
+  font-size: calc(var(--ba-card-h) * 0.09);
+  font-weight: 900;
+  color: var(--team);
+  white-space: nowrap;
+}
+
+.tugFaces {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px;
+}
+
+.tugFace {
+  display: block;
+  width: calc(var(--ba-card-h) * 0.12);
+  height: calc(var(--ba-card-h) * 0.12);
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px var(--team);
+}
+
+.rope {
+  position: relative;
+  height: calc(var(--ba-card-h) * 0.3);
+  container-type: inline-size;
+}
+
+.ropeLine {
+  position: absolute;
+  inset-inline: 0;
+  top: 50%;
+  height: 10px;
+  translate: 0 -50%;
+  border-radius: 5px;
+  background: repeating-linear-gradient(60deg, #c89b5d 0 8px, #a07843 8px 16px);
+}
+
+.ropeMid {
+  position: absolute;
+  left: 50%;
+  top: 10%;
+  bottom: 10%;
+  width: 3px;
+  translate: -50% 0;
+  background: var(--pb-text-muted);
+  opacity: 0.6;
+}
+
+.knot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  font-size: calc(var(--ba-card-h) * 0.14);
+  line-height: 1;
+  translate: -50% -50%;
+  /* −1 … +1 across the rope's inner width */
+  transform: translateX(calc(var(--rope) * 45cqw));
+  transition: transform 140ms var(--pb-ease);
+}
+
+.knotLive {
+  animation: ba-jitter 180ms ease-in-out infinite alternate;
+}
+
+.tugScreen {
+  justify-content: center;
+}
+
+.pull {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: 9rem;
+  border: 0;
+  border-radius: var(--pb-radius-lg);
+  background: var(--team);
+  color: #1a0b12;
+  font: inherit;
+  font-size: var(--pb-font-h1);
+  font-weight: 1000;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: transform 60ms var(--pb-ease);
+}
+
+.pull:active {
+  transform: scale(0.96);
+}
+
+.pull:disabled {
+  opacity: 0.4;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .knotLive {
+    animation: none;
+  }
+  .knot {
+    transition-duration: 0ms;
+  }
+}
