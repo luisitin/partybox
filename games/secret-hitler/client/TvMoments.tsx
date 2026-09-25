@@ -55,17 +55,31 @@ function useSeatPoint(
   return id && at ? { x: at.x, y: at.y } : null;
 }
 
+type Point = { x: number; y: number };
+
+/**
+ * Stands at a seat; with `from`, it glides there from another seat as it appears (a keyframe
+ * from the offset, so it plays even though the TV remounts per phase). `from` null: that seat
+ * is not measured yet, so wait for it.
+ */
 function Traveler({
   at,
+  from,
   children,
 }: {
-  at: { x: number; y: number } | null;
+  at: Point | null;
+  from?: Point | null;
   children: JSX.Element;
 }): JSX.Element | null {
-  if (!at) return null;
+  if (!at || from === null) return null;
+  const glide = from
+    ? ({ '--dx': `${from.x - at.x}px`, '--dy': `${from.y - at.y}px` } as CSSProperties)
+    : undefined;
   return (
     <div className={styles.traveler} style={{ transform: `translate(${at.x}px, ${at.y}px)` }}>
-      {children}
+      <div className={styles.glide} data-glide={from ? true : undefined} style={glide}>
+        {children}
+      </div>
     </div>
   );
 }
@@ -104,6 +118,8 @@ export function TvMoments({
     root,
     session ? (phase === 'chanEnact' ? r.nominee : r.president) : null,
   );
+  // The envelope leaves the President when it reaches the Chancellor (§7.8 moment 3).
+  const envelopeFrom = useSeatPoint(root, phase === 'chanEnact' ? r.president : null);
   const p = r.power;
   const folderSeat =
     phase === 'powerReveal' && p?.kind === 'investigate'
@@ -114,6 +130,7 @@ export function TvMoments({
   const folderAt = useSeatPoint(root, folderSeat);
   const plateSeat = phase === 'powerReveal' && p?.kind === 'special' ? p.target : null;
   const plateAt = useSeatPoint(root, plateSeat);
+  const plateFrom = useSeatPoint(root, plateSeat ? r.president : null);
   const execSeat = phase === 'powerReveal' && p?.kind === 'execute' ? p.target : null;
   const execAt = useSeatPoint(root, execSeat);
   // The room darkens around one seat: the new Chancellor at the Hitler check, the executed.
@@ -144,7 +161,7 @@ export function TvMoments({
         />
       ) : null}
       {session ? (
-        <Traveler at={envelopeAt}>
+        <Traveler at={envelopeAt} from={phase === 'chanEnact' ? envelopeFrom : undefined}>
           <div className={styles.envelope} data-veto={phase === 'vetoAsk' || undefined}>
             <span className={styles.flap} />
             <span className={styles.wax} />
@@ -191,7 +208,7 @@ export function TvMoments({
         </Traveler>
       ) : null}
       {plateSeat ? (
-        <Traveler at={plateAt}>
+        <Traveler at={plateAt} from={plateFrom}>
           <div className={styles.plate}>
             <PlateIcon kind="president" size={26} /> {L('President')}
           </div>

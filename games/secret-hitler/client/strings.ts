@@ -143,8 +143,6 @@ export const STRINGS: Strings = {
     'Tap a policy': 'Toca una ley',
     'Discard this {party} policy': 'Descartar esta ley: {party}',
     'Enact this {party} policy': 'Aprobar esta ley: {party}',
-    'Discard one policy. The other two go to Chancellor {name}.':
-      'Descarta una ley. Las otras dos van al Canciller {name}.',
     'Enact one policy.': 'Aprueba una ley.',
     'Request veto': 'Pedir veto',
     'Chancellor {name} requests a veto.': 'El Canciller {name} pide un veto.',

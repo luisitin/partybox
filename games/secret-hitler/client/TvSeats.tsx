@@ -18,18 +18,26 @@ function Placard({
   vote,
   delayMs,
   label,
+  settled,
 }: {
   vote: 'ja' | 'nein';
   delayMs: number;
   label: string;
+  /** Already revealed (the phase after the reveal): face-up at once, no second wave. */
+  settled: boolean;
 }): JSX.Element {
-  const [up, setUp] = useState(false);
+  const [up, setUp] = useState(settled);
   useEffect(() => {
     const t = setTimeout(() => setUp(true), delayMs);
     return () => clearTimeout(t);
   }, [delayMs]);
   return (
-    <span className={styles.placard} data-vote={vote} data-up={up || undefined}>
+    <span
+      className={styles.placard}
+      data-vote={vote}
+      data-up={up || undefined}
+      data-settled={settled || undefined}
+    >
       <span className={styles.placardTurn}>
         <span className={styles.placardBack} />
         <span className={styles.placardFace}>{label}</span>
@@ -86,6 +94,7 @@ export function TvSeats({ view }: { view: ShTvView }): JSX.Element {
             <div className={styles.over}>
               {seat.vote ? (
                 <Placard
+                  settled={phase !== 'voteReveal'}
                   vote={seat.vote}
                   delayMs={500 + i * 40}
                   label={seat.vote === 'ja' ? L('✓ JA!') : L('✗ NEIN!')}

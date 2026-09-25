@@ -35,8 +35,21 @@
   transition: transform var(--sh-dur-pass) var(--sh-ease);
 }
 
-.traveler > * {
+.glide > * {
   translate: -50% -100%;
+}
+
+.glide[data-glide] {
+  animation: shGlide 800ms var(--sh-ease) 150ms both;
+}
+
+@keyframes shGlide {
+  from {
+    transform: translate(var(--dx), var(--dy));
+  }
+  to {
+    transform: none;
+  }
 }
 
 .envelope {
