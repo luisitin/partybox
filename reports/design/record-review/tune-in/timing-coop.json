@@ -1,0 +1,41 @@
+{
+  "settings": "{\"mode\":\"coop\"}",
+  "players": "8",
+  "cpu": "1",
+  "frames": 20351,
+  "long": 5,
+  "pct": 0.02,
+  "over100": 0,
+  "worst": 100,
+  "byPhase": {
+    "intro": 1,
+    "scores": 4
+  },
+  "samples": [
+    {
+      "ms": 100,
+      "phase": "intro",
+      "s": 0.14
+    },
+    {
+      "ms": 50,
+      "phase": "scores",
+      "s": 42.59
+    },
+    {
+      "ms": 50,
+      "phase": "scores",
+      "s": 81.47
+    },
+    {
+      "ms": 50,
+      "phase": "scores",
+      "s": 207.11
+    },
+    {
+      "ms": 50,
+      "phase": "scores",
+      "s": 288.52
+    }
+  ]
+}

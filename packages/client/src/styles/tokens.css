@@ -32,6 +32,11 @@
   --pb-player-7: #48dbfb;
   --pb-player-8: #f368e0;
 
+  /* The two teams (P00 §6 TeamBanner, audit #52): Sun follows the theme's accent, Moon its info
+     colour. Always shown with the shape (▲ / ●) and the name, never as a tint on a face. */
+  --pb-team-sun: var(--pb-accent);
+  --pb-team-moon: var(--pb-info);
+
   --pb-font-family:
     'Nunito Variable', 'Segoe UI Variable Display', 'Segoe UI', system-ui, -apple-system, Roboto,
     'Helvetica Neue', Arial, sans-serif;
