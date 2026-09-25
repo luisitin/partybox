@@ -108,6 +108,8 @@ gold welcome ring that fades over `--pb-motion-pulse` once landed; two soft radi
 stage (14 s / 17 s loops at 18 %, transform only — still under reduced motion). The walk is the `enter` chips' entrance
 wherever `PlayerChips` uses it (the lobby, the game select).
 The empty lobby (I-682): the QR card lies on its side — a 520 px code left, "Scan to join", the address and the room code right — so it fits above the host bar on any 16:9 stage; the first join stands it back up with the shrink (scale 1.44 = 520 / 360). The host bar offers no "Pick a game" until a person (not a bot) is in.
+
+The VIP's phone gone in the lobby (I-663 A, `vipAway.ts`): the TV's lobby line says "Sam's phone dropped — waiting for them to come back" in `--pb-accent-2`; the host bar's VIP-away countdown shows only mid-game, where the handover is real (the lobby hands nothing over, I-347).
 `PlayerChip` (I-009): a link dropping on a mounted chip flickers it out (opacity steps over `--pb-motion-slow`) to a 0.6 ghost; the return pops it back with a green ring fading over `--pb-motion-pulse` (never on a screen swap; the ring skips an `.active` chip). The phone's "Reconnecting…" breathes (`pb-breathe`).
 `TextAnswer` (I-001): under the shell's `data-urgent` the textarea takes the danger border and the once-a-second beat like the primary button (border alone under reduced motion); the "n / max" counter remounts on every keystroke and bumps once (`pb-bump`, `--pb-motion-fast`); a field left empty 3 s breathes (`pb-breathe`, absent under reduced motion) until a character lands — urgency outranks it.
 Timer: in the last 5 s it switches to `--pb-danger`, scales 1.15×, pulses once per second (`--pb-motion-pulse`, 0 under reduced motion) and ticks (sound `countdown`).

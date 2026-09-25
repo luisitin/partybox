@@ -10,6 +10,7 @@ import type { Translator } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import { useServerInfo } from '../net/info';
 import { STRINGS } from './strings';
+import { useVipAway } from '../vipAway';
 import styles from './TvLobby.module.css';
 import { CROWDED_PLAYERS, Tonight, ordinal } from './Tonight';
 import { gameName, useCatalog } from '../catalog';
@@ -137,6 +138,7 @@ export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
   const players = room?.players ?? [];
   const awayLeft = useAwayLeft(players); // I-089 A
   const vip = players.find((p) => p.isVip);
+  const away = useVipAway(room); // I-663 A
   const full = room !== null && players.length >= room.capacity;
   // I-055 A: a locked room reads on the QR panel, like a full one.
   const locked = room?.locked ?? false;
@@ -247,6 +249,11 @@ export function TvLobby({ room, nudgeIds = [] }: TvLobbyProps): JSX.Element {
                   .
                 </span>
               ))}
+            </p>
+          ) : away ? (
+            // I-663 A: the VIP's phone is gone — say so (the lobby hands nothing over: I-347)
+            <p className={styles.awayLine} role="status">
+              {t.lobby.vipDropped(away.vip)}
             </p>
           ) : room && vip ? (
             <p className="pb-muted">{t.lobby.waitingFor(vip.name)}</p>
