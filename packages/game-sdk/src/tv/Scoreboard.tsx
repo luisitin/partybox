@@ -167,8 +167,6 @@ export function tieEdges(
   return up || down ? { top: !up, end: !down } : null;
 }
 
-/** I-146 B: the rank band over a split column's first row ("1–6", or "4" when the column is one
- *  tie), so a column edge reads as a continuation of the ranking, not a second list. */
 /** A column that carries on the previous column's tie and then moves on to other ranks: its band
  *  would read "1–8" beside column 1's "1" (hive-rank 489534), so a board like that shows no band
  *  labels. A column that is all one carried-over rank ("4" after "1–4") still reads right. */
@@ -180,6 +178,8 @@ export function tieSpansColumns(ranks: readonly number[], perCol: number): boole
   return false;
 }
 
+/** I-146 B: the rank band over a split column's first row ("1–6", or "4" when the column is one
+ *  tie), so a column edge reads as a continuation of the ranking, not a second list. */
 export function rankBand(ranks: readonly number[], index: number, perCol: number): string | null {
   if (index % perCol !== 0) return null;
   const first = ranks[index];
