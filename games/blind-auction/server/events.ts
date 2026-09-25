@@ -77,6 +77,11 @@ const DOORS: readonly Label[] = [
 export const DOOR_PAY = 2;
 
 const EVENT_BOX: Record<LiveKind, { name: string; icon: string; flavour: string }> = {
+  coins: {
+    name: 'Coin Streak',
+    icon: '🪙',
+    flavour: 'Heads, heads, heads… how long before tails?',
+  },
   shells: {
     name: 'Shell Game',
     icon: '🥤',
@@ -155,6 +160,31 @@ function doors(rng: RngState, n: number): [Round, RngState] {
   return [{ box: eventBox('doors', n, options), outcome }, s1];
 }
 
+/** Coin-flip streak: how many heads before the first tails? (tails first 50 %, 1–2 heads 37.5 %,
+ *  3 or more 12.5 % — shown in whole %). `detail` = the flips, 1 heads / 0 tails, ending on tails
+ *  (at most 6 flips: a sixth heads ends the streak there). */
+const STREAKS: readonly (Label & { chance: number })[] = [
+  { icon: '🪙', name: 'Tails first', chance: 50 },
+  { icon: '🔥', name: '1 or 2 heads', chance: 37 },
+  { icon: '🚀', name: '3+ heads', chance: 13 },
+];
+
+function coins(rng: RngState, n: number): [Round, RngState] {
+  const options = STREAKS.map((s) => option({ icon: s.icon, name: s.name }, s.chance));
+  const flips: number[] = [];
+  let state = rng;
+  for (let i = 0; i < 6; i++) {
+    const [f, next] = nextFloat(state);
+    state = next;
+    const heads = f < 0.5 ? 1 : 0;
+    flips.push(heads);
+    if (!heads) break;
+  }
+  const streak = flips.filter((f) => f === 1).length;
+  const outcome = streak === 0 ? 0 : streak <= 2 ? 1 : 2;
+  return [{ box: eventBox('coins', n, options), outcome, detail: flips }, state];
+}
+
 /** Shell game: three cups; everyone stakes into one pot first, picks a cup after the shuffle. */
 const CUPS: readonly Label[] = [
   { icon: '🥤', name: 'Cup 1' },
@@ -202,5 +232,6 @@ export function drawEvent(kind: LiveKind, rng: RngState, n: number): [Round, Rng
   if (kind === 'potato') return potato(rng, n);
   if (kind === 'tug') return tug(rng, n);
   if (kind === 'shells') return shells(rng, n);
+  if (kind === 'coins') return coins(rng, n);
   return wheel(rng, n);
 }

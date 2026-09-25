@@ -122,18 +122,21 @@ function OpenPanel({ view }: { view: View }): JSX.Element | null {
                 ? L('Bets are closed. Roll the dice!')
                 : view.run.kind === 'doors'
                   ? L('Doors are final. Where is the car?')
-                  : view.run.kind === 'shells'
-                    ? L('Cups up! Where is the ball?')
-                    : view.run.kind === 'tug' && view.tug?.draw
-                      ? L('Dead heat! Every stake goes back.')
-                      : view.run.kind === 'tug'
-                        ? L('Time! Which side held on?')
-                        : view.run.kind === 'potato'
-                          ? L('POP! {name} got burnt', {
-                              name:
-                                view.players.find((p) => p.id === view.potato?.holder)?.name ?? '?',
-                            })
-                          : L('Bets are closed. Spin the wheel!')
+                  : view.run.kind === 'coins'
+                    ? L('Bets are closed. Flip it!')
+                    : view.run.kind === 'shells'
+                      ? L('Cups up! Where is the ball?')
+                      : view.run.kind === 'tug' && view.tug?.draw
+                        ? L('Dead heat! Every stake goes back.')
+                        : view.run.kind === 'tug'
+                          ? L('Time! Which side held on?')
+                          : view.run.kind === 'potato'
+                            ? L('POP! {name} got burnt', {
+                                name:
+                                  view.players.find((p) => p.id === view.potato?.holder)?.name ??
+                                  '?',
+                              })
+                            : L('Bets are closed. Spin the wheel!')
             : bets.length
               ? L('Bets are closed. What’s inside?')
               : L('Nobody bet. What’s inside?')}

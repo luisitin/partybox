@@ -47,6 +47,11 @@ describe('live events: the draw', () => {
           const sum = a + b;
           expect(outcome).toBe(sum < 7 ? 0 : sum === 7 ? 1 : 2);
         }
+        if (kind === 'coins') {
+          const heads = detail.filter((f) => f === 1).length;
+          expect(detail.length).toBeLessThanOrEqual(6);
+          expect(outcome).toBe(heads === 0 ? 0 : heads <= 2 ? 1 : 2);
+        }
         if (kind === 'wheel') {
           expect(box.options.length).toBeGreaterThanOrEqual(4);
           expect(box.options.length).toBeLessThanOrEqual(6);

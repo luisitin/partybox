@@ -38,7 +38,11 @@ export const EVENT_MS = {
   tug: 600,
   // The shell game's cups lift at `open`: the ball shows under the right one.
   shells: 1_400,
+  // The coin flips one flip at a time (COIN_FLIP_MS each) until tails, then a beat.
+  coins: 5_800,
 } as const;
+/** Coin-flip streak: one flip on the TV. */
+export const COIN_FLIP_MS = 900;
 /** Shell game: speed tiers by how much of the room's coins went into the pot (share of seats ×
  *  start coins): ×1, ×2, ×3, ×5, ×8, ×10 — the owner's breakpoints. */
 export const SHELL_TIER_AT = [0, 0.1, 0.2, 0.35, 0.5, 0.7] as const;

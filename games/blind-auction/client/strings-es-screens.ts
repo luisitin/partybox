@@ -73,6 +73,15 @@ export const ES_SCREENS: Record<string, string> = {
   "That's the last box!": '¡Esa fue la última caja!',
   'Tap a card, then choose your coins': 'Toca una carta y luego elige tus monedas',
   // live events
+  'Coin Streak': 'Racha de monedas',
+  'Heads, heads, heads… how long before tails?': 'Cara, cara, cara… ¿cuánto hasta que salga cruz?',
+  'Tails first': 'Cruz a la primera',
+  '1 or 2 heads': '1 o 2 caras',
+  '3+ heads': '3 o más caras',
+  'Tails! A streak of {n}': '¡Cruz! Una racha de {n}',
+  '{n} heads in a row!': '¡{n} caras seguidas!',
+  'Heads! {n} so far…': '¡Cara! Van {n}…',
+  'Bets are closed. Flip it!': 'Apuestas cerradas. ¡A lanzar!',
   'splits the pot': 'se reparte el bote',
   'Shell Game': 'Los vasitos',
   'Stake the pot, follow the ball. The bigger the pot, the faster the cups.':

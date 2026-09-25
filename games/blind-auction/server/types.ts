@@ -39,7 +39,16 @@ export interface Cfg {
 }
 
 /** The live events (the owner's picks, docs/game-pack/blind-auction/LIVE-EVENTS.md). */
-export const LIVE_KINDS = ['race', 'dice', 'wheel', 'doors', 'potato', 'tug', 'shells'] as const;
+export const LIVE_KINDS = [
+  'race',
+  'dice',
+  'wheel',
+  'doors',
+  'potato',
+  'tug',
+  'shells',
+  'coins',
+] as const;
 export type LiveKind = (typeof LIVE_KINDS)[number];
 
 /** What a box can hold. Each kind has its icon and words on the client (EN + ES). */
