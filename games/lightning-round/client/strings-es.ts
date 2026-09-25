@@ -3,6 +3,12 @@
 // their choices are content and stay in the deck's language.
 
 export const SCREENS_ES: Readonly<Record<string, string>> = {
+  // The content-language marker (EnglishNote.tsx): the questions are English only.
+  'in English': 'en inglés',
+  'First question coming up…': 'Ya viene la primera pregunta…',
+  // Review 6c24ba (4): the TV's reveal hint says whose phone moves on (as Wisecrack's scores do).
+  "Next on the VIP's phone": 'El VIP toca Siguiente',
+  "Next on {name}'s phone": '{name} toca Siguiente',
   // Round, category and difficulty (labels.ts)
   'Final question': 'Pregunta final',
   'Question {number} of {total}': 'Pregunta {number} de {total}',
@@ -17,9 +23,6 @@ export const SCREENS_ES: Readonly<Record<string, string>> = {
   // Phone: waiting, answering, locked in (Controller.tsx)
   Spectating: 'Modo espectador',
   'You are in for the next game.': 'Entras en el próximo juego.',
-  'Get ready!': '¡Prepárate!',
-  'Four choices per question. Faster is worth more.':
-    'Cuatro opciones por pregunta. Cuanto más rápido, más puntos.',
   '✓ Just made it': '✓ ¡Justo a tiempo!',
   '✓ Just made it — look at the TV': '✓ ¡Justo a tiempo! Mira la TV',
   '✓ Locked in with {seconds} s to spare': '✓ Confirmado con {seconds} s de sobra',
@@ -104,6 +107,7 @@ export const SCREENS_ES: Readonly<Record<string, string>> = {
   '+{points} now': '+{points} ahora',
   // I-550 A
   'Final question: {topic}': 'Pregunta final: {topic}',
+  'Final: {topic}': 'Final: {topic}',
   // I-790 C: the reveal band
   '{delta} this round': '{delta} en esta ronda',
   '{total} total': '{total} en total',
