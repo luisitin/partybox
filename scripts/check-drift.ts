@@ -51,10 +51,12 @@ function checkDocsExist(): void {
 /**
  * One rulebook per folder (ADR-055). `AGENTS.md` holds the rules (Codex reads only that name); the
  * `CLAUDE.md` beside it is a pointer that Claude Code expands through its `@AGENTS.md` import. The
- * pointer holds no rules, so the two files can't drift. A folder that still has only a `CLAUDE.md`
- * (a branch cut before the switch) passes under the same cap until it converts.
+ * pointer holds no rules, so the two files can't drift: next to an `AGENTS.md`, a `CLAUDE.md` must be
+ * exactly `POINTER` (docs/CONVENTIONS.md). A folder that still has only a `CLAUDE.md` (a branch cut
+ * before the switch) passes under the same cap until it converts.
  */
-const POINTER_MAX_LINES = 5;
+const POINTER =
+  "@AGENTS.md\n\nThis folder's rules live in AGENTS.md next to this file: one rulebook for every agent (ADR-055). Edit AGENTS.md, not this file.\n";
 
 function checkRulebook(dir: string, cap: number, need: 'strict' | 'required' | 'optional'): void {
   const rel = relative(REPO_ROOT, dir).split(sep).join('/');
@@ -62,12 +64,15 @@ function checkRulebook(dir: string, cap: number, need: 'strict' | 'required' | '
   const agents = join(dir, 'AGENTS.md');
   const claude = join(dir, 'CLAUDE.md');
   const hasClaude = existsSync(claude);
-  const pointer = hasClaude && /^@AGENTS\.md$/m.test(readFileSync(claude, 'utf8'));
+  const text = hasClaude ? readFileSync(claude, 'utf8').replaceAll('\r\n', '\n') : '';
+  const imports = /^@AGENTS\.md$/m.test(text);
   if (existsSync(agents)) {
     if (lines(agents) > cap) bad(`${at}AGENTS.md has ${lines(agents)} lines (max ${cap})`);
-    if (!pointer || lines(claude) > POINTER_MAX_LINES)
-      bad(`${at}CLAUDE.md must be the 3-line pointer to AGENTS.md (docs/CONVENTIONS.md), no rules`);
-  } else if (pointer) bad(`${at}CLAUDE.md imports AGENTS.md, but ${at}AGENTS.md is missing`);
+    if (text !== POINTER)
+      bad(
+        `${at}CLAUDE.md must be exactly the pointer in docs/CONVENTIONS.md; rules go in AGENTS.md`,
+      );
+  } else if (imports) bad(`${at}CLAUDE.md imports AGENTS.md, but ${at}AGENTS.md is missing`);
   else if (need === 'strict' || (need === 'required' && !hasClaude))
     bad(`${at}AGENTS.md is missing`);
   else if (hasClaude && lines(claude) > cap)
