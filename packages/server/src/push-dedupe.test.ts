@@ -62,16 +62,22 @@ describe('I-750 A: only what changed is sent', () => {
     const ben = client();
     await join(ben, 'Ben');
     await quiet(ben, 600); // the joins' own pushes have all arrived
-    let rooms = 0;
-    ben.on('room', () => (rooms += 1));
+    // Judged by `rev`, not by counting pushes: every sent room carries a new rev, while a push that
+    // arrives late (a loaded box let one land after a 600 ms quiet gap) carries an old one.
+    let rev = -1;
+    let picked = false;
+    ben.on('room', (push: { rev: number; room: { selectedGameId: string | null } }) => {
+      rev = Math.max(rev, push.rev);
+      if (push.room.selectedGameId === 'bingo') picked = true;
+    });
     ana.emit('vip', { action: 'selectGame', gameId: 'bingo' });
+    const until = Date.now() + 5000;
+    while (!picked && Date.now() < until) await new Promise((r) => setTimeout(r, 25));
+    expect(picked).toBe(true); // the pick changed the room: sent
     await quiet(ben, 600);
-    expect(rooms).toBeGreaterThanOrEqual(1); // the pick changed the room: sent
-    // Count only from here: under load a late push from the joins landed in the first window and
-    // made it 2 (it failed three branches' verify on 2026-09-25) — the claim is about the no-op.
-    rooms = 0;
+    const before = rev;
     ana.emit('vip', { action: 'updateSettings', settings: {} }); // an empty change: the room is the same
     await quiet(ben, 600);
-    expect(rooms).toBe(0);
+    expect(rev).toBe(before); // nothing newer was sent for the no-op
   });
 });
