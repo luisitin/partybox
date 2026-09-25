@@ -50,15 +50,8 @@ Branch `game/echo` (main merged in). Media is local (gitignored) under
 - The check is skipped when there are fewer than 2 clues. An empty word's result is 4.5 s instead
   of 6.5 s.
 
-## Open questions
+## Open questions (settled on the Agent Hub, outcomes go to #decisions)
 
-1. **Co-op results headline.** The contract suite needs a winner, so everyone shares rank 1 and
-   the shell's results screen says "It's a tie!", even on 🔁 Try again! The finale board below it
-   carries the real verdict (rating, 7 of 10, won and lost cards). **Recommend** a small shell flag
-   (`coop: true` in the client module) so a co-op game's Finale owns the headline. It would be done
-   once and cover Tune In's co-op mode too. Until then, keep the "tie" line?
-2. **Spicy words** (80, adult but never explicit: hangover, walk of shame, sugar daddy, beer
-   pong…). Is that the right edge for this pack?
-3. **Reader.** George reads the surviving clues and "The word was …". The fixed lines ("Echo!",
-   "Got it!", ratings) are live readings until F6's clip pipeline reaches main. Keep George as the
-   default?
+1. **Co-op results headline:** the shell says "It's a tie!" because the contract needs a winner.
+   A proposed `coop` client-module flag is in hub thread #plans `0a6ff2`.
+2. **Spicy pack edge** and 3. **default reader:** hub thread #general `854b65`.
