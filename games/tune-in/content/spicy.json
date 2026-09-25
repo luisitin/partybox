@@ -1,0 +1,3005 @@
+{
+  "lang": "en",
+  "spectra": [
+    {
+      "id": "tn-date-201",
+      "left": "Bad date",
+      "right": "Great date",
+      "kind": "opinion",
+      "clues": [
+        {
+          "text": "brings their mom along",
+          "pos": 3
+        },
+        {
+          "text": "talks about their ex all night",
+          "pos": 7
+        },
+        {
+          "text": "fake emergency phone call",
+          "pos": 14
+        },
+        {
+          "text": "glued to their phone",
+          "pos": 24
+        },
+        {
+          "text": "splitting the bill to the cent",
+          "pos": 34
+        },
+        {
+          "text": "pleasant but no spark",
+          "pos": 44
+        },
+        {
+          "text": "dinner and a movie",
+          "pos": 52
+        },
+        {
+          "text": "making out in the parking lot",
+          "pos": 68
+        },
+        {
+          "text": "lost track of time",
+          "pos": 78
+        },
+        {
+          "text": "kissing in the rain",
+          "pos": 82
+        },
+        {
+          "text": "breakfast the next morning",
+          "pos": 90
+        },
+        {
+          "text": "talked until sunrise",
+          "pos": 95
+        }
+      ],
+      "es": {
+        "left": "Mala cita",
+        "right": "Gran cita"
+      }
+    },
+    {
+      "id": "tn-scandal-202",
+      "left": "Innocent",
+      "right": "Scandalous",
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "sharing a milkshake",
+          "pos": 3
+        },
+        {
+          "text": "a peck on the cheek",
+          "pos": 8
+        },
+        {
+          "text": "a borrowed hoodie",
+          "pos": 16
+        },
+        {
+          "text": "a wink across the room",
+          "pos": 24
+        },
+        {
+          "text": "sliding into their DMs",
+          "pos": 36
+        },
+        {
+          "text": "dancing on the table",
+          "pos": 44
+        },
+        {
+          "text": "leaving the party together",
+          "pos": 52
+        },
+        {
+          "text": "skinny dipping",
+          "pos": 62
+        },
+        {
+          "text": "a secret second phone",
+          "pos": 74
+        },
+        {
+          "text": "taking off the ring at the bar",
+          "pos": 80
+        },
+        {
+          "text": "hooking up at a funeral",
+          "pos": 90
+        },
+        {
+          "text": "running off with the best man",
+          "pos": 96
+        }
+      ],
+      "es": {
+        "left": "Inocente",
+        "right": "Escandaloso"
+      }
+    },
+    {
+      "id": "tn-nightout-203",
+      "left": "Tame night out",
+      "right": "Wild night out",
+      "kind": "opinion",
+      "clues": [
+        {
+          "text": "a single glass of wine",
+          "pos": 4
+        },
+        {
+          "text": "book club with prosecco",
+          "pos": 12
+        },
+        {
+          "text": "dinner then drinks",
+          "pos": 26
+        },
+        {
+          "text": "karaoke with coworkers",
+          "pos": 38
+        },
+        {
+          "text": "bouncer knows your name",
+          "pos": 46
+        },
+        {
+          "text": "kebab at closing time",
+          "pos": 54
+        },
+        {
+          "text": "shots with strangers",
+          "pos": 62
+        },
+        {
+          "text": "lost a shoe",
+          "pos": 72
+        },
+        {
+          "text": "dancing on the bar",
+          "pos": 76
+        },
+        {
+          "text": "jumped in a fountain",
+          "pos": 84
+        },
+        {
+          "text": "a tattoo you don't remember",
+          "pos": 93
+        },
+        {
+          "text": "woke up in another country",
+          "pos": 97
+        }
+      ],
+      "es": {
+        "left": "Noche tranquila",
+        "right": "Noche salvaje"
+      }
+    },
+    {
+      "id": "tn-drunk-204",
+      "left": "Stone-cold sober",
+      "right": "Completely wasted",
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "designated driver",
+          "pos": 2
+        },
+        {
+          "text": "sipping sparkling water",
+          "pos": 6
+        },
+        {
+          "text": "a polite glass of wine",
+          "pos": 16
+        },
+        {
+          "text": "a little giggly",
+          "pos": 28
+        },
+        {
+          "text": "buzzed",
+          "pos": 36
+        },
+        {
+          "text": "tipsy",
+          "pos": 44
+        },
+        {
+          "text": "suddenly fluent in Spanish",
+          "pos": 56
+        },
+        {
+          "text": "drunk-dialing your ex",
+          "pos": 66
+        },
+        {
+          "text": "proposing to the bouncer",
+          "pos": 72
+        },
+        {
+          "text": "asleep in the taxi",
+          "pos": 85
+        },
+        {
+          "text": "hugging the toilet",
+          "pos": 92
+        },
+        {
+          "text": "can't remember getting home",
+          "pos": 97
+        }
+      ],
+      "es": {
+        "left": "Sobrio total",
+        "right": "Borracho perdido"
+      }
+    },
+    {
+      "id": "tn-flag-205",
+      "left": "Green flag",
+      "right": "Red flag",
+      "kind": "opinion",
+      "clues": [
+        {
+          "text": "tips well",
+          "pos": 4
+        },
+        {
+          "text": "remembers your coffee order",
+          "pos": 8
+        },
+        {
+          "text": "has a therapist",
+          "pos": 16
+        },
+        {
+          "text": "calls their mom every day",
+          "pos": 26
+        },
+        {
+          "text": "texts back instantly",
+          "pos": 34
+        },
+        {
+          "text": "still friends with every ex",
+          "pos": 46
+        },
+        {
+          "text": "lives with their parents",
+          "pos": 56
+        },
+        {
+          "text": "too many gym selfies",
+          "pos": 64
+        },
+        {
+          "text": "still has their ex's hoodie",
+          "pos": 72
+        },
+        {
+          "text": "names your future kids",
+          "pos": 82
+        },
+        {
+          "text": "rude to waiters",
+          "pos": 90
+        },
+        {
+          "text": "says all their exes are crazy",
+          "pos": 96
+        }
+      ],
+      "es": {
+        "left": "Bandera verde",
+        "right": "Bandera roja"
+      }
+    },
+    {
+      "id": "tn-flirt-206",
+      "left": "Harmless flirt",
+      "right": "Shameless flirt",
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "a friendly smile",
+          "pos": 3
+        },
+        {
+          "text": "complimenting their shoes",
+          "pos": 10
+        },
+        {
+          "text": "laughing at their jokes",
+          "pos": 18
+        },
+        {
+          "text": "touching their arm",
+          "pos": 30
+        },
+        {
+          "text": "asking for their number",
+          "pos": 38
+        },
+        {
+          "text": "a lingering hug",
+          "pos": 45
+        },
+        {
+          "text": "winking at the waiter",
+          "pos": 52
+        },
+        {
+          "text": "biting your lip",
+          "pos": 64
+        },
+        {
+          "text": "sending a thirst trap",
+          "pos": 74
+        },
+        {
+          "text": "sweet-talking a traffic cop",
+          "pos": 82
+        },
+        {
+          "text": "sitting in their lap",
+          "pos": 88
+        },
+        {
+          "text": "hitting on the bride",
+          "pos": 95
+        }
+      ],
+      "es": {
+        "left": "Coqueteo inocente",
+        "right": "Coqueteo descarado"
+      }
+    },
+    {
+      "id": "tn-mom-207",
+      "left": "Safe to tell mom",
+      "right": "Never tell mom",
+      "kind": "opinion",
+      "clues": [
+        {
+          "text": "got a promotion",
+          "pos": 2
+        },
+        {
+          "text": "joined a church choir",
+          "pos": 6
+        },
+        {
+          "text": "went vegan",
+          "pos": 14
+        },
+        {
+          "text": "moved in with your partner",
+          "pos": 28
+        },
+        {
+          "text": "your credit card debt",
+          "pos": 38
+        },
+        {
+          "text": "got a tattoo",
+          "pos": 44
+        },
+        {
+          "text": "quit your job on the spot",
+          "pos": 52
+        },
+        {
+          "text": "dating someone twice your age",
+          "pos": 66
+        },
+        {
+          "text": "eloped in Vegas",
+          "pos": 74
+        },
+        {
+          "text": "a night in jail",
+          "pos": 84
+        },
+        {
+          "text": "selling feet pics online",
+          "pos": 92
+        },
+        {
+          "text": "what the rash really was",
+          "pos": 96
+        }
+      ],
+      "es": {
+        "left": "Apto para mamá",
+        "right": "Que mamá no sepa"
+      }
+    },
+    {
+      "id": "tn-sugar-208",
+      "left": "Cheapskate",
+      "right": "Sugar daddy",
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "invoices you for gum",
+          "pos": 2
+        },
+        {
+          "text": "always forgets his wallet",
+          "pos": 8
+        },
+        {
+          "text": "tap water only",
+          "pos": 14
+        },
+        {
+          "text": "gas station flowers",
+          "pos": 24
+        },
+        {
+          "text": "going dutch",
+          "pos": 36
+        },
+        {
+          "text": "treats you to brunch",
+          "pos": 48
+        },
+        {
+          "text": "picks up the whole tab",
+          "pos": 58
+        },
+        {
+          "text": "bottle service at the club",
+          "pos": 72
+        },
+        {
+          "text": "a designer bag for no reason",
+          "pos": 78
+        },
+        {
+          "text": "a surprise trip to Paris",
+          "pos": 86
+        },
+        {
+          "text": "pays your rent",
+          "pos": 90
+        },
+        {
+          "text": "buys you a car",
+          "pos": 96
+        }
+      ],
+      "es": {
+        "left": "Tacaño",
+        "right": "Sugar daddy"
+      }
+    },
+    {
+      "id": "tn-kiss-209",
+      "left": "Awkward kiss",
+      "right": "Perfect kiss",
+      "kind": "opinion",
+      "clues": [
+        {
+          "text": "mid-sneeze",
+          "pos": 2
+        },
+        {
+          "text": "bumping teeth",
+          "pos": 6
+        },
+        {
+          "text": "their mom walked in",
+          "pos": 12
+        },
+        {
+          "text": "garlic breath",
+          "pos": 22
+        },
+        {
+          "text": "on a dare at the bar",
+          "pos": 30
+        },
+        {
+          "text": "a quick peck goodbye",
+          "pos": 42
+        },
+        {
+          "text": "laughing mid-smooch",
+          "pos": 48
+        },
+        {
+          "text": "under the mistletoe",
+          "pos": 64
+        },
+        {
+          "text": "at the altar",
+          "pos": 74
+        },
+        {
+          "text": "at midnight on New Year's",
+          "pos": 80
+        },
+        {
+          "text": "ferris wheel at sunset",
+          "pos": 90
+        },
+        {
+          "text": "airport reunion in the rain",
+          "pos": 95
+        }
+      ],
+      "es": {
+        "left": "Beso incómodo",
+        "right": "Beso perfecto"
+      }
+    },
+    {
+      "id": "tn-hr-210",
+      "left": "Office-safe",
+      "right": "HR nightmare",
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "cake in the break room",
+          "pos": 3
+        },
+        {
+          "text": "a potluck sign-up sheet",
+          "pos": 8
+        },
+        {
+          "text": "casual Friday jeans",
+          "pos": 14
+        },
+        {
+          "text": "reply-all with a meme",
+          "pos": 28
+        },
+        {
+          "text": "a hug from the boss",
+          "pos": 38
+        },
+        {
+          "text": "dating a coworker",
+          "pos": 48
+        },
+        {
+          "text": "a karaoke duet with the intern",
+          "pos": 56
+        },
+        {
+          "text": "calling your boss babe",
+          "pos": 68
+        },
+        {
+          "text": "a desk drawer of vodka",
+          "pos": 74
+        },
+        {
+          "text": "unsolicited shoulder rubs",
+          "pos": 84
+        },
+        {
+          "text": "photocopying your butt",
+          "pos": 88
+        },
+        {
+          "text": "lingerie for secret santa",
+          "pos": 92
+        }
+      ],
+      "es": {
+        "left": "Apto en la oficina",
+        "right": "Te despiden"
+      }
+    },
+    {
+      "id": "tn-petty-211",
+      "left": "The bigger person",
+      "right": "Petty",
+      "kind": "opinion",
+      "clues": [
+        {
+          "text": "hugging your ex's new partner",
+          "pos": 5
+        },
+        {
+          "text": "wishing your ex well",
+          "pos": 9
+        },
+        {
+          "text": "apologizing first",
+          "pos": 14
+        },
+        {
+          "text": "letting them win the argument",
+          "pos": 24
+        },
+        {
+          "text": "muting the group chat",
+          "pos": 36
+        },
+        {
+          "text": "unfollowing after a breakup",
+          "pos": 44
+        },
+        {
+          "text": "returning gifts in a trash bag",
+          "pos": 56
+        },
+        {
+          "text": "replying with just k",
+          "pos": 64
+        },
+        {
+          "text": "changing the wifi password",
+          "pos": 72
+        },
+        {
+          "text": "wearing white to their wedding",
+          "pos": 84
+        },
+        {
+          "text": "keeping the dog for spite",
+          "pos": 90
+        },
+        {
+          "text": "shrimp in their curtain rods",
+          "pos": 96
+        }
+      ],
+      "es": {
+        "left": "Da la otra mejilla",
+        "right": "Rencoroso"
+      }
+    },
+    {
+      "id": "tn-hangover-212",
+      "left": "Fresh morning",
+      "right": "Brutal hangover",
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "sunrise yoga",
+          "pos": 2
+        },
+        {
+          "text": "went for a jog",
+          "pos": 7
+        },
+        {
+          "text": "made pancakes for everyone",
+          "pos": 14
+        },
+        {
+          "text": "a little thirsty",
+          "pos": 24
+        },
+        {
+          "text": "a slight headache",
+          "pos": 36
+        },
+        {
+          "text": "coffee and painkillers",
+          "pos": 46
+        },
+        {
+          "text": "craving a greasy burger",
+          "pos": 54
+        },
+        {
+          "text": "sunglasses indoors",
+          "pos": 66
+        },
+        {
+          "text": "still drunk at brunch",
+          "pos": 74
+        },
+        {
+          "text": "the light hurts",
+          "pos": 82
+        },
+        {
+          "text": "vowing to never drink again",
+          "pos": 88
+        },
+        {
+          "text": "lying on the bathroom floor",
+          "pos": 95
+        }
+      ],
+      "es": {
+        "left": "Mañana fresca",
+        "right": "Resaca brutal"
+      }
+    },
+    {
+      "id": "tn-walk-213",
+      "left": "Walk of pride",
+      "right": "Walk of shame",
+      "kind": "opinion",
+      "clues": [
+        {
+          "text": "high-fiving the doorman",
+          "pos": 3
+        },
+        {
+          "text": "they made you breakfast",
+          "pos": 8
+        },
+        {
+          "text": "a kiss goodbye at the door",
+          "pos": 14
+        },
+        {
+          "text": "wearing their hoodie home",
+          "pos": 26
+        },
+        {
+          "text": "they drove you home",
+          "pos": 34
+        },
+        {
+          "text": "the neighbor waved",
+          "pos": 46
+        },
+        {
+          "text": "a cab home at sunrise",
+          "pos": 55
+        },
+        {
+          "text": "leaving before they wake up",
+          "pos": 64
+        },
+        {
+          "text": "didn't catch their name",
+          "pos": 74
+        },
+        {
+          "text": "carrying your heels",
+          "pos": 82
+        },
+        {
+          "text": "same outfit to work",
+          "pos": 90
+        },
+        {
+          "text": "running into your mom",
+          "pos": 96
+        }
+      ],
+      "es": {
+        "left": "Regreso triunfal",
+        "right": "Regreso vergonzoso"
+      }
+    },
+    {
+      "id": "tn-shame-214",
+      "left": "Secret shame",
+      "right": "Proud of it",
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "peeing in the pool",
+          "pos": 3
+        },
+        {
+          "text": "stalking your ex online",
+          "pos": 8
+        },
+        {
+          "text": "a fanfic account",
+          "pos": 16
+        },
+        {
+          "text": "crying at dog food ads",
+          "pos": 24
+        },
+        {
+          "text": "still sleeping with a teddy",
+          "pos": 34
+        },
+        {
+          "text": "reality TV marathons",
+          "pos": 44
+        },
+        {
+          "text": "cereal for dinner",
+          "pos": 54
+        },
+        {
+          "text": "a nude beach tan",
+          "pos": 66
+        },
+        {
+          "text": "a karaoke solo",
+          "pos": 74
+        },
+        {
+          "text": "outdrinking the groom",
+          "pos": 84
+        },
+        {
+          "text": "a perfect parallel park",
+          "pos": 92
+        },
+        {
+          "text": "paying off all your debt",
+          "pos": 96
+        }
+      ],
+      "es": {
+        "left": "Vergüenza secreta",
+        "right": "Con orgullo"
+      }
+    },
+    {
+      "id": "tn-datetopic-215",
+      "left": "Great date topic",
+      "right": "Mood killer",
+      "kind": "opinion",
+      "clues": [
+        {
+          "text": "your dream vacation",
+          "pos": 5
+        },
+        {
+          "text": "childhood pets",
+          "pos": 10
+        },
+        {
+          "text": "guilty pleasure songs",
+          "pos": 16
+        },
+        {
+          "text": "embarrassing school photos",
+          "pos": 24
+        },
+        {
+          "text": "astrology signs",
+          "pos": 36
+        },
+        {
+          "text": "true crime podcasts",
+          "pos": 42
+        },
+        {
+          "text": "how much you earn",
+          "pos": 54
+        },
+        {
+          "text": "your body count",
+          "pos": 64
+        },
+        {
+          "text": "your crypto portfolio",
+          "pos": 78
+        },
+        {
+          "text": "your ex's new partner",
+          "pos": 84
+        },
+        {
+          "text": "baby names",
+          "pos": 90
+        },
+        {
+          "text": "selling them essential oils",
+          "pos": 95
+        }
+      ],
+      "es": {
+        "left": "Tema para cita",
+        "right": "Mata pasiones"
+      }
+    },
+    {
+      "id": "tn-lie-216",
+      "left": "White lie",
+      "right": "Unforgivable lie",
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "loving the ugly sweater",
+          "pos": 2
+        },
+        {
+          "text": "on my way while still in bed",
+          "pos": 8
+        },
+        {
+          "text": "blaming the dog",
+          "pos": 15
+        },
+        {
+          "text": "shaving years off your age",
+          "pos": 26
+        },
+        {
+          "text": "a fake name at the bar",
+          "pos": 34
+        },
+        {
+          "text": "hiding a shopping habit",
+          "pos": 45
+        },
+        {
+          "text": "a secret credit card",
+          "pos": 56
+        },
+        {
+          "text": "a catfish profile",
+          "pos": 68
+        },
+        {
+          "text": "faking a college degree",
+          "pos": 74
+        },
+        {
+          "text": "a whole secret marriage",
+          "pos": 88
+        },
+        {
+          "text": "faking your own death",
+          "pos": 92
+        },
+        {
+          "text": "who the real father is",
+          "pos": 98
+        }
+      ],
+      "es": {
+        "left": "Mentira piadosa",
+        "right": "Mentira sin perdón"
+      }
+    },
+    {
+      "id": "tn-texter-217",
+      "left": "Bad texter",
+      "right": "Great texter",
+      "kind": "opinion",
+      "clues": [
+        {
+          "text": "ghosted for a week",
+          "pos": 3
+        },
+        {
+          "text": "answers a question with lol",
+          "pos": 9
+        },
+        {
+          "text": "a thumbs up to everything",
+          "pos": 16
+        },
+        {
+          "text": "passive-aggressive full stops",
+          "pos": 26
+        },
+        {
+          "text": "voice notes only",
+          "pos": 34
+        },
+        {
+          "text": "triple messaging",
+          "pos": 44
+        },
+        {
+          "text": "a novel for every reply",
+          "pos": 50
+        },
+        {
+          "text": "memes at midnight",
+          "pos": 64
+        },
+        {
+          "text": "replies within minutes",
+          "pos": 76
+        },
+        {
+          "text": "good morning every day",
+          "pos": 84
+        },
+        {
+          "text": "remembers every detail",
+          "pos": 90
+        },
+        {
+          "text": "flirty paragraphs",
+          "pos": 94
+        }
+      ],
+      "es": {
+        "left": "Pésimo en chat",
+        "right": "Genio del chat"
+      }
+    },
+    {
+      "id": "tn-clingy-218",
+      "left": "Distant",
+      "right": "Clingy",
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "replies once a week",
+          "pos": 4
+        },
+        {
+          "text": "forgot your birthday",
+          "pos": 9
+        },
+        {
+          "text": "calls you buddy",
+          "pos": 16
+        },
+        {
+          "text": "separate vacations",
+          "pos": 24
+        },
+        {
+          "text": "needs space on weekends",
+          "pos": 32
+        },
+        {
+          "text": "a goodnight message",
+          "pos": 44
+        },
+        {
+          "text": "shares their location",
+          "pos": 56
+        },
+        {
+          "text": "matching couple outfits",
+          "pos": 66
+        },
+        {
+          "text": "tags you in every post",
+          "pos": 74
+        },
+        {
+          "text": "shows up at your work lunch",
+          "pos": 84
+        },
+        {
+          "text": "follows you to the bathroom",
+          "pos": 90
+        },
+        {
+          "text": "a tattoo of your name",
+          "pos": 97
+        }
+      ],
+      "es": {
+        "left": "Distante",
+        "right": "Absorbente"
+      }
+    },
+    {
+      "id": "tn-crush-219",
+      "left": "Innocent crush",
+      "right": "Emotional affair",
+      "kind": "opinion",
+      "clues": [
+        {
+          "text": "a celebrity poster",
+          "pos": 2
+        },
+        {
+          "text": "the cute barista",
+          "pos": 8
+        },
+        {
+          "text": "blushing at a coworker",
+          "pos": 14
+        },
+        {
+          "text": "timing your gym visits",
+          "pos": 26
+        },
+        {
+          "text": "a work wife",
+          "pos": 38
+        },
+        {
+          "text": "your own inside jokes",
+          "pos": 46
+        },
+        {
+          "text": "lunch together every day",
+          "pos": 54
+        },
+        {
+          "text": "a playlist made for them",
+          "pos": 62
+        },
+        {
+          "text": "venting about your spouse",
+          "pos": 72
+        },
+        {
+          "text": "they know your secrets first",
+          "pos": 82
+        },
+        {
+          "text": "deleting the chat history",
+          "pos": 90
+        },
+        {
+          "text": "planning a life with them",
+          "pos": 96
+        }
+      ],
+      "es": {
+        "left": "Amor platónico",
+        "right": "Infiel emocional"
+      }
+    },
+    {
+      "id": "tn-pickup-220",
+      "left": "Cringey line",
+      "right": "Smooth line",
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "tipping your fedora",
+          "pos": 2
+        },
+        {
+          "text": "did it hurt when you fell",
+          "pos": 6
+        },
+        {
+          "text": "negging their outfit",
+          "pos": 10
+        },
+        {
+          "text": "is it hot in here",
+          "pos": 18
+        },
+        {
+          "text": "you come here often",
+          "pos": 26
+        },
+        {
+          "text": "your place or mine",
+          "pos": 36
+        },
+        {
+          "text": "what's your sign",
+          "pos": 44
+        },
+        {
+          "text": "can I buy you a drink",
+          "pos": 54
+        },
+        {
+          "text": "a simple hi and a smile",
+          "pos": 66
+        },
+        {
+          "text": "I like your laugh",
+          "pos": 74
+        },
+        {
+          "text": "sending a drink over quietly",
+          "pos": 84
+        },
+        {
+          "text": "I'd regret not saying hello",
+          "pos": 92
+        }
+      ],
+      "es": {
+        "left": "Piropo penoso",
+        "right": "Piropo perfecto"
+      }
+    },
+    {
+      "id": "tn-legendparty-221",
+      "left": "Mild party",
+      "right": "Legendary party",
+      "kind": "opinion",
+      "clues": [
+        {
+          "text": "board games and herbal tea",
+          "pos": 3
+        },
+        {
+          "text": "a cheese plate and jazz",
+          "pos": 9
+        },
+        {
+          "text": "everyone home by bedtime",
+          "pos": 16
+        },
+        {
+          "text": "someone brought a guitar",
+          "pos": 26
+        },
+        {
+          "text": "a fight over the aux cord",
+          "pos": 36
+        },
+        {
+          "text": "a limbo contest",
+          "pos": 46
+        },
+        {
+          "text": "the neighbors complain",
+          "pos": 56
+        },
+        {
+          "text": "someone falls in the pool",
+          "pos": 66
+        },
+        {
+          "text": "a hot tub full of strangers",
+          "pos": 76
+        },
+        {
+          "text": "the cops come twice",
+          "pos": 84
+        },
+        {
+          "text": "a goat in the kitchen",
+          "pos": 90
+        },
+        {
+          "text": "still going on Tuesday",
+          "pos": 97
+        }
+      ],
+      "es": {
+        "left": "Fiesta tranquila",
+        "right": "Fiesta legendaria"
+      }
+    },
+    {
+      "id": "tn-turnon-222",
+      "left": "Turn-off",
+      "right": "Turn-on",
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "bad breath",
+          "pos": 2
+        },
+        {
+          "text": "clipping nails in bed",
+          "pos": 6
+        },
+        {
+          "text": "baby talk",
+          "pos": 12
+        },
+        {
+          "text": "socks with sandals",
+          "pos": 22
+        },
+        {
+          "text": "a man bun",
+          "pos": 36
+        },
+        {
+          "text": "a shirtless selfie",
+          "pos": 46
+        },
+        {
+          "text": "reading glasses",
+          "pos": 56
+        },
+        {
+          "text": "smells like campfire",
+          "pos": 66
+        },
+        {
+          "text": "a British accent",
+          "pos": 74
+        },
+        {
+          "text": "rolled-up sleeves",
+          "pos": 82
+        },
+        {
+          "text": "does the dishes unasked",
+          "pos": 90
+        },
+        {
+          "text": "whispering in your ear",
+          "pos": 95
+        }
+      ],
+      "es": {
+        "left": "Me apaga",
+        "right": "Me prende"
+      }
+    },
+    {
+      "id": "tn-soulmate-223",
+      "left": "Friend zone",
+      "right": "Soulmate",
+      "kind": "opinion",
+      "clues": [
+        {
+          "text": "calls you bro",
+          "pos": 2
+        },
+        {
+          "text": "being their wingman",
+          "pos": 7
+        },
+        {
+          "text": "asks you for dating advice",
+          "pos": 14
+        },
+        {
+          "text": "helping them move house",
+          "pos": 24
+        },
+        {
+          "text": "a hug that lasts too long",
+          "pos": 36
+        },
+        {
+          "text": "late-night phone calls",
+          "pos": 48
+        },
+        {
+          "text": "their mom adores you",
+          "pos": 56
+        },
+        {
+          "text": "holding hands at the movies",
+          "pos": 66
+        },
+        {
+          "text": "slow dancing in the kitchen",
+          "pos": 76
+        },
+        {
+          "text": "finishing each other's jokes",
+          "pos": 84
+        },
+        {
+          "text": "loves you at your worst",
+          "pos": 92
+        },
+        {
+          "text": "growing old together",
+          "pos": 97
+        }
+      ],
+      "es": {
+        "left": "Friendzone",
+        "right": "Alma gemela"
+      }
+    },
+    {
+      "id": "tn-grave-224",
+      "left": "Tell a therapist",
+      "right": "Take to the grave",
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "your fear of commitment",
+          "pos": 3
+        },
+        {
+          "text": "your mommy issues",
+          "pos": 8
+        },
+        {
+          "text": "crying at every wedding",
+          "pos": 14
+        },
+        {
+          "text": "envy of your best friend",
+          "pos": 26
+        },
+        {
+          "text": "you still stalk your ex",
+          "pos": 30
+        },
+        {
+          "text": "who broke the fancy vase",
+          "pos": 44
+        },
+        {
+          "text": "who you really voted for",
+          "pos": 56
+        },
+        {
+          "text": "reading their diary",
+          "pos": 64
+        },
+        {
+          "text": "your ex's password still works",
+          "pos": 72
+        },
+        {
+          "text": "your browser history",
+          "pos": 82
+        },
+        {
+          "text": "your brother-in-law crush",
+          "pos": 90
+        },
+        {
+          "text": "the affair nobody knows about",
+          "pos": 97
+        }
+      ],
+      "es": {
+        "left": "Para el terapeuta",
+        "right": "A la tumba conmigo"
+      }
+    },
+    {
+      "id": "tn-gossip-225",
+      "left": "Boring gossip",
+      "right": "Juicy gossip",
+      "kind": "opinion",
+      "clues": [
+        {
+          "text": "a coworker's new couch",
+          "pos": 3
+        },
+        {
+          "text": "the neighbors repainted",
+          "pos": 8
+        },
+        {
+          "text": "someone switched gyms",
+          "pos": 14
+        },
+        {
+          "text": "a brand new car",
+          "pos": 22
+        },
+        {
+          "text": "a couple moving cities",
+          "pos": 32
+        },
+        {
+          "text": "a surprise engagement",
+          "pos": 44
+        },
+        {
+          "text": "a quiet divorce",
+          "pos": 54
+        },
+        {
+          "text": "someone joined a cult",
+          "pos": 64
+        },
+        {
+          "text": "exes dating each other",
+          "pos": 74
+        },
+        {
+          "text": "the boss and the intern",
+          "pos": 84
+        },
+        {
+          "text": "a secret baby",
+          "pos": 90
+        },
+        {
+          "text": "the bride and the best man",
+          "pos": 97
+        }
+      ],
+      "es": {
+        "left": "Chisme aburrido",
+        "right": "Chisme jugoso"
+      }
+    },
+    {
+      "id": "tn-dealbreaker-226",
+      "left": "Dealbreaker",
+      "right": "Must-have",
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "rude to waiters",
+          "pos": 3
+        },
+        {
+          "text": "still married",
+          "pos": 5
+        },
+        {
+          "text": "bad kisser",
+          "pos": 15
+        },
+        {
+          "text": "no bed frame",
+          "pos": 22
+        },
+        {
+          "text": "lots of cats",
+          "pos": 30
+        },
+        {
+          "text": "into astrology",
+          "pos": 38
+        },
+        {
+          "text": "sleeps in socks",
+          "pos": 42
+        },
+        {
+          "text": "calls mom every day",
+          "pos": 52
+        },
+        {
+          "text": "owns a dog",
+          "pos": 66
+        },
+        {
+          "text": "tall",
+          "pos": 72
+        },
+        {
+          "text": "good in bed",
+          "pos": 88
+        },
+        {
+          "text": "makes you laugh",
+          "pos": 94
+        }
+      ],
+      "es": {
+        "left": "Me hace huir",
+        "right": "Indispensable"
+      }
+    },
+    {
+      "id": "tn-wedding-227",
+      "left": "Tasteful wedding",
+      "right": "Trashy wedding",
+      "kind": "opinion",
+      "clues": [
+        {
+          "text": "string quartet",
+          "pos": 4
+        },
+        {
+          "text": "handwritten vows",
+          "pos": 10
+        },
+        {
+          "text": "a sparkler send-off",
+          "pos": 22
+        },
+        {
+          "text": "a photo booth",
+          "pos": 33
+        },
+        {
+          "text": "a chocolate fountain",
+          "pos": 45
+        },
+        {
+          "text": "a garter toss",
+          "pos": 55
+        },
+        {
+          "text": "a cash bar",
+          "pos": 63
+        },
+        {
+          "text": "custom hashtag napkins",
+          "pos": 70
+        },
+        {
+          "text": "a drive-thru chapel",
+          "pos": 78
+        },
+        {
+          "text": "camo bridesmaid dresses",
+          "pos": 86
+        },
+        {
+          "text": "groom's ex officiates",
+          "pos": 90
+        },
+        {
+          "text": "reception at a strip club",
+          "pos": 97
+        }
+      ],
+      "es": {
+        "left": "Boda elegante",
+        "right": "Boda de mal gusto"
+      }
+    },
+    {
+      "id": "tn-influence-228",
+      "left": "Good influence",
+      "right": "Bad influence",
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "reminds you to hydrate",
+          "pos": 5
+        },
+        {
+          "text": "your gym buddy",
+          "pos": 10
+        },
+        {
+          "text": "the designated driver",
+          "pos": 18
+        },
+        {
+          "text": "a book club with wine",
+          "pos": 28
+        },
+        {
+          "text": "your cool aunt",
+          "pos": 38
+        },
+        {
+          "text": "the friend with a boat",
+          "pos": 50
+        },
+        {
+          "text": "the divorced uncle",
+          "pos": 58
+        },
+        {
+          "text": "the recently single friend",
+          "pos": 68
+        },
+        {
+          "text": "orders shots unasked",
+          "pos": 75
+        },
+        {
+          "text": "a bachelor party planner",
+          "pos": 82
+        },
+        {
+          "text": "tequila",
+          "pos": 86
+        },
+        {
+          "text": "the devil on your shoulder",
+          "pos": 97
+        }
+      ],
+      "es": {
+        "left": "Buena influencia",
+        "right": "Mala influencia"
+      }
+    },
+    {
+      "id": "tn-ex-229",
+      "left": "Friendly ex",
+      "right": "Nightmare ex",
+      "kind": "opinion",
+      "clues": [
+        {
+          "text": "godparent to your kid",
+          "pos": 3
+        },
+        {
+          "text": "returns your hoodie",
+          "pos": 10
+        },
+        {
+          "text": "invited to your wedding",
+          "pos": 18
+        },
+        {
+          "text": "likes every post",
+          "pos": 30
+        },
+        {
+          "text": "occasional booty call",
+          "pos": 38
+        },
+        {
+          "text": "kept the dog",
+          "pos": 48
+        },
+        {
+          "text": "watches all your stories",
+          "pos": 58
+        },
+        {
+          "text": "tells your mom everything",
+          "pos": 66
+        },
+        {
+          "text": "dating your cousin",
+          "pos": 76
+        },
+        {
+          "text": "moved in next door",
+          "pos": 85
+        },
+        {
+          "text": "keyed your car",
+          "pos": 92
+        },
+        {
+          "text": "faked a pregnancy",
+          "pos": 97
+        }
+      ],
+      "es": {
+        "left": "Ex amigable",
+        "right": "Ex de pesadilla"
+      }
+    },
+    {
+      "id": "tn-parents-230",
+      "left": "Parents proud",
+      "right": "Parents horrified",
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "married a doctor",
+          "pos": 3
+        },
+        {
+          "text": "made partner",
+          "pos": 8
+        },
+        {
+          "text": "bought a house",
+          "pos": 14
+        },
+        {
+          "text": "went vegan",
+          "pos": 28
+        },
+        {
+          "text": "eloped",
+          "pos": 36
+        },
+        {
+          "text": "moved back home",
+          "pos": 45
+        },
+        {
+          "text": "arrested at a protest",
+          "pos": 52
+        },
+        {
+          "text": "on a reality dating show",
+          "pos": 65
+        },
+        {
+          "text": "a neck tattoo",
+          "pos": 72
+        },
+        {
+          "text": "got a DUI",
+          "pos": 85
+        },
+        {
+          "text": "sells feet pics",
+          "pos": 90
+        },
+        {
+          "text": "joined a cult",
+          "pos": 96
+        }
+      ],
+      "es": {
+        "left": "Papás orgullosos",
+        "right": "Papás horrorizados"
+      }
+    },
+    {
+      "id": "tn-ethics-231",
+      "left": "Totally ethical",
+      "right": "Morally bankrupt",
+      "kind": "opinion",
+      "clues": [
+        {
+          "text": "hands back extra change",
+          "pos": 3
+        },
+        {
+          "text": "tips on takeout",
+          "pos": 10
+        },
+        {
+          "text": "regifting",
+          "pos": 24
+        },
+        {
+          "text": "taking hotel robes",
+          "pos": 30
+        },
+        {
+          "text": "calls in sick hungover",
+          "pos": 36
+        },
+        {
+          "text": "your ex's streaming login",
+          "pos": 44
+        },
+        {
+          "text": "ghosting after a date",
+          "pos": 52
+        },
+        {
+          "text": "flirting for a raise",
+          "pos": 62
+        },
+        {
+          "text": "dating a friend's ex",
+          "pos": 70
+        },
+        {
+          "text": "cheating on your partner",
+          "pos": 85
+        },
+        {
+          "text": "faking grandma's funeral",
+          "pos": 90
+        },
+        {
+          "text": "a crypto scam",
+          "pos": 96
+        }
+      ],
+      "es": {
+        "left": "Totalmente ético",
+        "right": "Sin moral alguna"
+      }
+    },
+    {
+      "id": "tn-prank-232",
+      "left": "Harmless prank",
+      "right": "Actual crime",
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "whoopee cushion",
+          "pos": 2
+        },
+        {
+          "text": "fake spider in the bed",
+          "pos": 8
+        },
+        {
+          "text": "plastic wrap on the toilet",
+          "pos": 14
+        },
+        {
+          "text": "glitter bomb in the mail",
+          "pos": 28
+        },
+        {
+          "text": "signing them up for spam",
+          "pos": 35
+        },
+        {
+          "text": "car full of packing peanuts",
+          "pos": 42
+        },
+        {
+          "text": "fake pregnancy announcement",
+          "pos": 55
+        },
+        {
+          "text": "a goat in their office",
+          "pos": 62
+        },
+        {
+          "text": "ex's number on a billboard",
+          "pos": 70
+        },
+        {
+          "text": "laxative brownies",
+          "pos": 84
+        },
+        {
+          "text": "having their car towed",
+          "pos": 88
+        },
+        {
+          "text": "a staged kidnapping",
+          "pos": 96
+        }
+      ],
+      "es": {
+        "left": "Broma inocente",
+        "right": "Delito real"
+      }
+    },
+    {
+      "id": "tn-messydrunk-233",
+      "left": "Classy drunk",
+      "right": "Messy drunk",
+      "kind": "opinion",
+      "clues": [
+        {
+          "text": "sips a single malt",
+          "pos": 4
+        },
+        {
+          "text": "tips the bartender well",
+          "pos": 12
+        },
+        {
+          "text": "recites poetry",
+          "pos": 18
+        },
+        {
+          "text": "gets philosophical",
+          "pos": 30
+        },
+        {
+          "text": "slow dances alone",
+          "pos": 38
+        },
+        {
+          "text": "tells strangers I love you",
+          "pos": 45
+        },
+        {
+          "text": "karaoke power ballads",
+          "pos": 55
+        },
+        {
+          "text": "cries in the bathroom",
+          "pos": 64
+        },
+        {
+          "text": "texting the ex",
+          "pos": 72
+        },
+        {
+          "text": "loses a shoe",
+          "pos": 80
+        },
+        {
+          "text": "shirtless on a bar top",
+          "pos": 88
+        },
+        {
+          "text": "throws up in the cab",
+          "pos": 95
+        }
+      ],
+      "es": {
+        "left": "Borracho elegante",
+        "right": "Borracho desastre"
+      }
+    },
+    {
+      "id": "tn-wine-234",
+      "left": "Cheap wine",
+      "right": "Fine wine",
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "from a gas station",
+          "pos": 3
+        },
+        {
+          "text": "boxed with a spout",
+          "pos": 6
+        },
+        {
+          "text": "chugged in a hot tub",
+          "pos": 14
+        },
+        {
+          "text": "sangria in a pitcher",
+          "pos": 24
+        },
+        {
+          "text": "has a screw cap",
+          "pos": 33
+        },
+        {
+          "text": "picked for the cute label",
+          "pos": 42
+        },
+        {
+          "text": "the house red",
+          "pos": 50
+        },
+        {
+          "text": "a gift from your boss",
+          "pos": 62
+        },
+        {
+          "text": "comes in a wooden crate",
+          "pos": 74
+        },
+        {
+          "text": "sommelier recommended",
+          "pos": 82
+        },
+        {
+          "text": "decanted tableside",
+          "pos": 88
+        },
+        {
+          "text": "older than you are",
+          "pos": 95
+        }
+      ],
+      "es": {
+        "left": "Vino barato",
+        "right": "Vino fino"
+      }
+    },
+    {
+      "id": "tn-prude-235",
+      "left": "Prude",
+      "right": "Shameless",
+      "kind": "opinion",
+      "clues": [
+        {
+          "text": "blushes at kissing scenes",
+          "pos": 4
+        },
+        {
+          "text": "changes under a towel",
+          "pos": 10
+        },
+        {
+          "text": "no PDA, ever",
+          "pos": 15
+        },
+        {
+          "text": "lights off, always",
+          "pos": 22
+        },
+        {
+          "text": "reads romance novels",
+          "pos": 35
+        },
+        {
+          "text": "makes out at a party",
+          "pos": 50
+        },
+        {
+          "text": "dirty jokes at dinner",
+          "pos": 58
+        },
+        {
+          "text": "a thong bikini",
+          "pos": 68
+        },
+        {
+          "text": "posts thirst traps",
+          "pos": 76
+        },
+        {
+          "text": "skinny dipping",
+          "pos": 82
+        },
+        {
+          "text": "a nude beach",
+          "pos": 90
+        },
+        {
+          "text": "streaks at a wedding",
+          "pos": 96
+        }
+      ],
+      "es": {
+        "left": "Mojigato",
+        "right": "Descarado"
+      }
+    },
+    {
+      "id": "tn-selfie-251",
+      "left": "Tasteful post",
+      "right": "Thirst trap",
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "a sunset over the lake",
+          "pos": 4
+        },
+        {
+          "text": "your dog's birthday",
+          "pos": 8
+        },
+        {
+          "text": "a plate of pasta",
+          "pos": 14
+        },
+        {
+          "text": "graduation photo",
+          "pos": 20
+        },
+        {
+          "text": "a beach pic with friends",
+          "pos": 32
+        },
+        {
+          "text": "a new haircut selfie",
+          "pos": 42
+        },
+        {
+          "text": "gym mirror selfie",
+          "pos": 55
+        },
+        {
+          "text": "a bikini pic",
+          "pos": 64
+        },
+        {
+          "text": "a shirtless boat pic",
+          "pos": 72
+        },
+        {
+          "text": "a bathtub selfie",
+          "pos": 80
+        },
+        {
+          "text": "late-night mirror pic",
+          "pos": 88
+        },
+        {
+          "text": "oiled up on a yacht",
+          "pos": 95
+        }
+      ],
+      "es": {
+        "left": "Foto decente",
+        "right": "Foto provocativa"
+      }
+    },
+    {
+      "id": "tn-breakup-237",
+      "left": "Mature breakup",
+      "right": "Messy breakup",
+      "kind": "opinion",
+      "clues": [
+        {
+          "text": "a calm talk over coffee",
+          "pos": 3
+        },
+        {
+          "text": "a box of their stuff",
+          "pos": 12
+        },
+        {
+          "text": "shared dog custody",
+          "pos": 22
+        },
+        {
+          "text": "mutual unfollow",
+          "pos": 30
+        },
+        {
+          "text": "blocked on everything",
+          "pos": 40
+        },
+        {
+          "text": "over text",
+          "pos": 48
+        },
+        {
+          "text": "mid-vacation",
+          "pos": 60
+        },
+        {
+          "text": "on-again off-again",
+          "pos": 66
+        },
+        {
+          "text": "at their sister's wedding",
+          "pos": 75
+        },
+        {
+          "text": "livestreamed",
+          "pos": 84
+        },
+        {
+          "text": "a screaming match in public",
+          "pos": 90
+        },
+        {
+          "text": "the cops get called",
+          "pos": 96
+        }
+      ],
+      "es": {
+        "left": "Ruptura madura",
+        "right": "Ruptura caótica"
+      }
+    },
+    {
+      "id": "tn-chat-238",
+      "left": "Family group chat",
+      "right": "Friends-only chat",
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "good morning flowers",
+          "pos": 3
+        },
+        {
+          "text": "a baby ultrasound",
+          "pos": 8
+        },
+        {
+          "text": "engagement ring pic",
+          "pos": 15
+        },
+        {
+          "text": "vacation photos",
+          "pos": 26
+        },
+        {
+          "text": "a political rant",
+          "pos": 38
+        },
+        {
+          "text": "a new tattoo reveal",
+          "pos": 50
+        },
+        {
+          "text": "gossip about a cousin",
+          "pos": 58
+        },
+        {
+          "text": "spicy memes",
+          "pos": 68
+        },
+        {
+          "text": "rating your date",
+          "pos": 76
+        },
+        {
+          "text": "a drunk voice note",
+          "pos": 84
+        },
+        {
+          "text": "roasting your mom",
+          "pos": 90
+        },
+        {
+          "text": "walk of shame selfie",
+          "pos": 96
+        }
+      ],
+      "es": {
+        "left": "Chat familiar",
+        "right": "Chat de amigos"
+      }
+    },
+    {
+      "id": "tn-drama-239",
+      "left": "Chill dinner",
+      "right": "Family drama",
+      "kind": "opinion",
+      "clues": [
+        {
+          "text": "takeout on the couch",
+          "pos": 3
+        },
+        {
+          "text": "wine and a movie",
+          "pos": 8
+        },
+        {
+          "text": "board games after",
+          "pos": 16
+        },
+        {
+          "text": "a surprise engagement",
+          "pos": 30
+        },
+        {
+          "text": "meeting the new partner",
+          "pos": 38
+        },
+        {
+          "text": "when are you getting married",
+          "pos": 45
+        },
+        {
+          "text": "mom's little comment",
+          "pos": 55
+        },
+        {
+          "text": "someone mentions politics",
+          "pos": 64
+        },
+        {
+          "text": "the ex shows up",
+          "pos": 74
+        },
+        {
+          "text": "who gets the lake house",
+          "pos": 84
+        },
+        {
+          "text": "announcing a divorce",
+          "pos": 90
+        },
+        {
+          "text": "a paternity test",
+          "pos": 97
+        }
+      ],
+      "es": {
+        "left": "Cena tranquila",
+        "right": "Drama familiar"
+      }
+    },
+    {
+      "id": "tn-liar-240",
+      "left": "Brutally honest",
+      "right": "Pathological liar",
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "says your baby is ugly",
+          "pos": 2
+        },
+        {
+          "text": "spinach in your teeth",
+          "pos": 10
+        },
+        {
+          "text": "says your cooking is dry",
+          "pos": 15
+        },
+        {
+          "text": "I'm fine",
+          "pos": 30
+        },
+        {
+          "text": "it's not you, it's me",
+          "pos": 38
+        },
+        {
+          "text": "loved the gift",
+          "pos": 52
+        },
+        {
+          "text": "stuck in traffic",
+          "pos": 58
+        },
+        {
+          "text": "just a couple drinks",
+          "pos": 64
+        },
+        {
+          "text": "never done this before",
+          "pos": 70
+        },
+        {
+          "text": "adds a few inches",
+          "pos": 76
+        },
+        {
+          "text": "a made-up dead twin",
+          "pos": 90
+        },
+        {
+          "text": "a secret second family",
+          "pos": 97
+        }
+      ],
+      "es": {
+        "left": "Honesto sin filtro",
+        "right": "Mentiroso nato"
+      }
+    },
+    {
+      "id": "tn-naughty-241",
+      "left": "Nice",
+      "right": "Naughty",
+      "kind": "opinion",
+      "clues": [
+        {
+          "text": "volunteers at a shelter",
+          "pos": 2
+        },
+        {
+          "text": "holds the door",
+          "pos": 8
+        },
+        {
+          "text": "compliments strangers",
+          "pos": 12
+        },
+        {
+          "text": "eats dessert first",
+          "pos": 22
+        },
+        {
+          "text": "sneaks snacks into a movie",
+          "pos": 32
+        },
+        {
+          "text": "flirts with the bartender",
+          "pos": 45
+        },
+        {
+          "text": "texting wyd at midnight",
+          "pos": 52
+        },
+        {
+          "text": "a hickey",
+          "pos": 66
+        },
+        {
+          "text": "the office party copier",
+          "pos": 74
+        },
+        {
+          "text": "sends a spicy pic",
+          "pos": 82
+        },
+        {
+          "text": "fuzzy handcuffs",
+          "pos": 86
+        },
+        {
+          "text": "the mile-high club",
+          "pos": 95
+        }
+      ],
+      "es": {
+        "left": "Bien portado",
+        "right": "Travieso"
+      }
+    },
+    {
+      "id": "tn-sunrise-242",
+      "left": "Early night",
+      "right": "Out till sunrise",
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "herbal tea",
+          "pos": 3
+        },
+        {
+          "text": "a baby shower",
+          "pos": 8
+        },
+        {
+          "text": "flight in the morning",
+          "pos": 14
+        },
+        {
+          "text": "a movie date",
+          "pos": 24
+        },
+        {
+          "text": "pub trivia",
+          "pos": 32
+        },
+        {
+          "text": "a house party",
+          "pos": 50
+        },
+        {
+          "text": "a wedding reception",
+          "pos": 58
+        },
+        {
+          "text": "karaoke",
+          "pos": 64
+        },
+        {
+          "text": "a quick drink",
+          "pos": 74
+        },
+        {
+          "text": "espresso martinis",
+          "pos": 82
+        },
+        {
+          "text": "the after-party",
+          "pos": 90
+        },
+        {
+          "text": "a warehouse rave",
+          "pos": 96
+        }
+      ],
+      "es": {
+        "left": "Dormir temprano",
+        "right": "Hasta el amanecer"
+      }
+    },
+    {
+      "id": "tn-tattoo-243",
+      "left": "Tasteful tattoo",
+      "right": "Regret tattoo",
+      "kind": "opinion",
+      "clues": [
+        {
+          "text": "your mom's handwriting",
+          "pos": 4
+        },
+        {
+          "text": "a semicolon",
+          "pos": 10
+        },
+        {
+          "text": "a tiny fine-line flower",
+          "pos": 15
+        },
+        {
+          "text": "a koi fish sleeve",
+          "pos": 26
+        },
+        {
+          "text": "an infinity symbol",
+          "pos": 38
+        },
+        {
+          "text": "a portrait of your cat",
+          "pos": 46
+        },
+        {
+          "text": "a lower-back butterfly",
+          "pos": 58
+        },
+        {
+          "text": "a barcode",
+          "pos": 66
+        },
+        {
+          "text": "kanji you can't read",
+          "pos": 76
+        },
+        {
+          "text": "a meme on your thigh",
+          "pos": 84
+        },
+        {
+          "text": "your ex's name",
+          "pos": 91
+        },
+        {
+          "text": "from a drunk dare",
+          "pos": 96
+        }
+      ],
+      "es": {
+        "left": "Tatuaje con clase",
+        "right": "Tatuaje lamentable"
+      }
+    },
+    {
+      "id": "tn-unhinged-244",
+      "left": "Buttoned-up",
+      "right": "Unhinged",
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "irons their jeans",
+          "pos": 3
+        },
+        {
+          "text": "texts in full sentences",
+          "pos": 8
+        },
+        {
+          "text": "a strict bedtime",
+          "pos": 14
+        },
+        {
+          "text": "a quiet book club",
+          "pos": 22
+        },
+        {
+          "text": "rates dates in a spreadsheet",
+          "pos": 34
+        },
+        {
+          "text": "karaoke on a weeknight",
+          "pos": 44
+        },
+        {
+          "text": "a spontaneous road trip",
+          "pos": 52
+        },
+        {
+          "text": "bangs after a breakup",
+          "pos": 62
+        },
+        {
+          "text": "cereal in the shower",
+          "pos": 74
+        },
+        {
+          "text": "proposes on a second date",
+          "pos": 82
+        },
+        {
+          "text": "quits by reply-all",
+          "pos": 86
+        },
+        {
+          "text": "fights a goose",
+          "pos": 94
+        }
+      ],
+      "es": {
+        "left": "Muy formal",
+        "right": "Desquiciado"
+      }
+    },
+    {
+      "id": "tn-sin-245",
+      "left": "Minor sin",
+      "right": "Deadly sin",
+      "kind": "opinion",
+      "clues": [
+        {
+          "text": "double-dipping",
+          "pos": 4
+        },
+        {
+          "text": "eats the last fry",
+          "pos": 9
+        },
+        {
+          "text": "a rolling stop",
+          "pos": 15
+        },
+        {
+          "text": "reclining on a plane",
+          "pos": 24
+        },
+        {
+          "text": "lying about your age",
+          "pos": 32
+        },
+        {
+          "text": "ghosting a date",
+          "pos": 42
+        },
+        {
+          "text": "objecting at a wedding",
+          "pos": 55
+        },
+        {
+          "text": "snooping in their phone",
+          "pos": 62
+        },
+        {
+          "text": "flirting while taken",
+          "pos": 70
+        },
+        {
+          "text": "stealing a best friend's man",
+          "pos": 84
+        },
+        {
+          "text": "faking your own death",
+          "pos": 88
+        },
+        {
+          "text": "an affair with your in-law",
+          "pos": 95
+        }
+      ],
+      "es": {
+        "left": "Pecado menor",
+        "right": "Pecado capital"
+      }
+    },
+    {
+      "id": "tn-rules-246",
+      "left": "Rule follower",
+      "right": "Rule breaker",
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "reads the terms and conditions",
+          "pos": 3
+        },
+        {
+          "text": "waits for the walk signal",
+          "pos": 10
+        },
+        {
+          "text": "jaywalking",
+          "pos": 24
+        },
+        {
+          "text": "speeding a little",
+          "pos": 34
+        },
+        {
+          "text": "express lane with a full cart",
+          "pos": 44
+        },
+        {
+          "text": "dating a coworker",
+          "pos": 52
+        },
+        {
+          "text": "sneaking into hotel pools",
+          "pos": 62
+        },
+        {
+          "text": "skipping jury duty",
+          "pos": 72
+        },
+        {
+          "text": "a stolen road sign",
+          "pos": 80
+        },
+        {
+          "text": "creative tax returns",
+          "pos": 84
+        },
+        {
+          "text": "streaking at a game",
+          "pos": 88
+        },
+        {
+          "text": "planning a heist",
+          "pos": 97
+        }
+      ],
+      "es": {
+        "left": "Sigue las reglas",
+        "right": "Rompe las reglas"
+      }
+    },
+    {
+      "id": "tn-twisted-247",
+      "left": "Wholesome",
+      "right": "Twisted",
+      "kind": "opinion",
+      "clues": [
+        {
+          "text": "matching pajamas",
+          "pos": 3
+        },
+        {
+          "text": "puppy yoga",
+          "pos": 8
+        },
+        {
+          "text": "a forehead kiss",
+          "pos": 12
+        },
+        {
+          "text": "a haunted house date",
+          "pos": 28
+        },
+        {
+          "text": "a murder mystery party",
+          "pos": 36
+        },
+        {
+          "text": "true crime on date night",
+          "pos": 46
+        },
+        {
+          "text": "dating a mortician",
+          "pos": 55
+        },
+        {
+          "text": "dark humour memes",
+          "pos": 62
+        },
+        {
+          "text": "roleplay night",
+          "pos": 72
+        },
+        {
+          "text": "taxidermy as a hobby",
+          "pos": 80
+        },
+        {
+          "text": "a shrine to a crush",
+          "pos": 88
+        },
+        {
+          "text": "a basement you can't enter",
+          "pos": 96
+        }
+      ],
+      "es": {
+        "left": "Tierno",
+        "right": "Retorcido"
+      }
+    },
+    {
+      "id": "tn-fling-248",
+      "left": "Casual fling",
+      "right": "Marriage material",
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "met on spring break",
+          "pos": 3
+        },
+        {
+          "text": "a guy in a band",
+          "pos": 8
+        },
+        {
+          "text": "a situationship",
+          "pos": 14
+        },
+        {
+          "text": "a smooth talker",
+          "pos": 22
+        },
+        {
+          "text": "your best friend's brother",
+          "pos": 36
+        },
+        {
+          "text": "met on a dating app",
+          "pos": 45
+        },
+        {
+          "text": "a divorced dad",
+          "pos": 54
+        },
+        {
+          "text": "keeps plants alive",
+          "pos": 64
+        },
+        {
+          "text": "cooks you breakfast",
+          "pos": 72
+        },
+        {
+          "text": "brings soup when you're sick",
+          "pos": 84
+        },
+        {
+          "text": "has a retirement plan",
+          "pos": 90
+        },
+        {
+          "text": "your mom adores them",
+          "pos": 95
+        }
+      ],
+      "es": {
+        "left": "Algo casual",
+        "right": "Para casarse"
+      }
+    },
+    {
+      "id": "tn-dump-249",
+      "left": "Kind way to dump",
+      "right": "Brutal way to dump",
+      "kind": "opinion",
+      "clues": [
+        {
+          "text": "in person, over coffee",
+          "pos": 3
+        },
+        {
+          "text": "after the holidays",
+          "pos": 12
+        },
+        {
+          "text": "a handwritten letter",
+          "pos": 16
+        },
+        {
+          "text": "a phone call",
+          "pos": 24
+        },
+        {
+          "text": "a long text",
+          "pos": 38
+        },
+        {
+          "text": "a voicemail",
+          "pos": 48
+        },
+        {
+          "text": "sending a friend to do it",
+          "pos": 56
+        },
+        {
+          "text": "just ghosting them",
+          "pos": 64
+        },
+        {
+          "text": "a sticky note",
+          "pos": 72
+        },
+        {
+          "text": "on their birthday",
+          "pos": 88
+        },
+        {
+          "text": "on the stadium kiss cam",
+          "pos": 94
+        },
+        {
+          "text": "mid-proposal",
+          "pos": 97
+        }
+      ],
+      "es": {
+        "left": "Cortar con cariño",
+        "right": "Cortar sin piedad"
+      }
+    },
+    {
+      "id": "tn-regret-250",
+      "left": "No regrets",
+      "right": "Instant regret",
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "adopting a dog",
+          "pos": 3
+        },
+        {
+          "text": "quitting a bad job",
+          "pos": 7
+        },
+        {
+          "text": "a solo trip abroad",
+          "pos": 12
+        },
+        {
+          "text": "the late-night kebab",
+          "pos": 26
+        },
+        {
+          "text": "dancing on a table",
+          "pos": 36
+        },
+        {
+          "text": "drunk online shopping",
+          "pos": 44
+        },
+        {
+          "text": "a spontaneous tattoo",
+          "pos": 54
+        },
+        {
+          "text": "sleeping with your ex",
+          "pos": 66
+        },
+        {
+          "text": "hitting reply-all",
+          "pos": 74
+        },
+        {
+          "text": "cutting your own bangs",
+          "pos": 82
+        },
+        {
+          "text": "gas station sushi",
+          "pos": 88
+        },
+        {
+          "text": "that last tequila shot",
+          "pos": 94
+        }
+      ],
+      "es": {
+        "left": "Sin remordimientos",
+        "right": "Me arrepiento ya"
+      }
+    }
+  ]
+}
