@@ -121,6 +121,7 @@ export const es: Texts = {
     winner: (name) => `¡Gana ${name}!`,
     winners: (names) => `¡Ganan ${names}!`,
     pair: (a, b) => `${a} y ${b}`,
+    sharedWith: (names) => `con ${names}`,
     tieNamed: (names) => `¡Empate entre ${names}!`,
     tieAmong: (names, others) =>
       `¡Empate entre ${names} y ${others} ${others === 1 ? 'persona más' : 'personas más'}!`,

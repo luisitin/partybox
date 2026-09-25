@@ -103,12 +103,15 @@ export function joinNames(names: string[]): string {
 }
 
 /** One award, everyone who won it: a tie gives the award to each tied player, and a card per
- *  player repeated the award (and collided on its key, echo/imposter play-tests). */
+ *  player repeated the award (and collided on its key, echo/imposter play-tests). A description
+ *  often carries the winner's own number ("Most votes received: 6"): it stays the card's line only
+ *  when every winner's reads the same, else each winner keeps theirs (`perPlayer`). */
 export interface AwardGroup {
   id: string;
   title: string;
-  description: string;
+  description: string | null;
   playerIds: string[];
+  perPlayer: { playerId: string; description: string }[];
 }
 
 export function groupAwards(awards: readonly GameAward[]): AwardGroup[] {
@@ -116,9 +119,13 @@ export function groupAwards(awards: readonly GameAward[]): AwardGroup[] {
   for (const a of awards) {
     const key = `${a.id}|${a.title}`;
     const group = groups.get(key);
-    if (!group)
-      groups.set(key, { id: a.id, title: a.title, description: a.description, playerIds: [a.playerId] }); // prettier-ignore
-    else if (!group.playerIds.includes(a.playerId)) group.playerIds.push(a.playerId);
+    if (!group) {
+      groups.set(key, { id: a.id, title: a.title, description: a.description, playerIds: [a.playerId], perPlayer: [{ playerId: a.playerId, description: a.description }] }); // prettier-ignore
+    } else if (!group.playerIds.includes(a.playerId)) {
+      group.playerIds.push(a.playerId);
+      group.perPlayer.push({ playerId: a.playerId, description: a.description });
+      if (group.description !== a.description) group.description = null;
+    }
   }
   return [...groups.values()];
 }

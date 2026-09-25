@@ -163,4 +163,18 @@ describe('room', () => {
     expect(r.room.status).toBe('playing');
     expect(r.room.game!.state.phase.startedAt).toBe(room.game!.state.phase.startedAt + 10);
   });
+
+  it('dev:results puts a results screen on the room as given; a bad shape is refused', () => {
+    const room = roomWith(2);
+    const results = {
+      gameId: 'fake',
+      players: [],
+      results: { scores: {}, ranking: [], winnerIds: [], awards: [] },
+    };
+    const shown = applyRoomEvent(room, { type: 'dev:results', now: T0, results }, deps).room;
+    expect(shown.status).toBe('results');
+    expect(shown.results).toEqual(results);
+    const bad = applyRoomEvent(room, { type: 'dev:results', now: T0, results: { gameId: 'fake' } }, deps); // prettier-ignore
+    expect(bad.room).toBe(room);
+  });
 });

@@ -33,7 +33,28 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
   const lang = useLang();
   useEffect(() => {
     // I-456 B: to the middle of the list, not its nearest edge (which was half under the footer)
-    list.current?.querySelector('[aria-current="true"]')?.scrollIntoView({ block: 'center' });
+    const toMe = (): void =>
+      list.current?.querySelector('[aria-current="true"]')?.scrollIntoView({ block: 'center' });
+    toMe();
+    // Again once the sticky title has settled (the place line and the award chips arrive after the
+    // first paint and shrink the body): a 5th place otherwise sat under the "more below" fade. Not
+    // if the player has touched the list meanwhile.
+    let moved = false;
+    let scroller: HTMLElement | null = list.current?.parentElement ?? null;
+    while (scroller && !/(auto|scroll)/.test(getComputedStyle(scroller).overflowY))
+      scroller = scroller.parentElement;
+    const touched = (): void => {
+      moved = true;
+    };
+    const events = ['pointerdown', 'wheel', 'touchstart', 'keydown'] as const;
+    for (const e of events) scroller?.addEventListener(e, touched, { passive: true });
+    const again = setTimeout(() => {
+      if (!moved) toMe();
+    }, 700);
+    return () => {
+      clearTimeout(again);
+      for (const e of events) scroller?.removeEventListener(e, touched);
+    };
   }, []);
   const rows = scoreboardRows(room);
   const mine = myRow(room, me.id);
@@ -45,8 +66,14 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
   const awardsForMe = groupAwards(room.results?.results.awards ?? []).sort(
     (x, y) => Number(mineIn(y)) - Number(mineIn(x)),
   );
-  const winnersOf = (a: { playerIds: string[] }): string =>
-    joinNames(a.playerIds.map((id) => room.results?.players.find((p) => p.id === id)?.name ?? '?'));
+  const nameOf = (id: string): string =>
+    room.results?.players.find((p) => p.id === id)?.name ?? '?';
+  const winnersOf = (a: { playerIds: string[] }): string => joinNames(a.playerIds.map(nameOf));
+  // a shared award on my own phone says who shares it ("… with Kenji", tune-in's nit)
+  const sharedWith = (a: { playerIds: string[] }): string => {
+    const others = a.playerIds.filter((id) => id !== me.id).map(nameOf);
+    return others.length > 0 ? ` · ${t.results.sharedWith(joinNames(others))}` : '';
+  };
   // I-155 C: votes received per round, straight off the results payload.
   const myVotes = (
     (room.results?.results as { perRoundVotes?: Record<string, number[]> } | undefined)
@@ -82,6 +109,7 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
                     <strong>
                       {t.results.yourAward(serverText(a.title, lang, room.results?.gameId))}
                     </strong>
+                    {sharedWith(a)}
                   </span>
                 ) : (
                   <span key={`${a.id}|${a.title}`} className={styles.awardChip}>
@@ -153,9 +181,12 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
               <span>
                 {/* I-155 A: the screen already knows whose hand it is in — the award should too. */}
                 {mineIn(a) ? (
-                  <strong>
-                    {t.results.yourAward(serverText(a.title, lang, room.results?.gameId))}
-                  </strong>
+                  <>
+                    <strong>
+                      {t.results.yourAward(serverText(a.title, lang, room.results?.gameId))}
+                    </strong>
+                    {sharedWith(a)}
+                  </>
                 ) : (
                   <>
                     <strong>{serverText(a.title, lang, room.results?.gameId)}</strong> ·{' '}
@@ -164,7 +195,14 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
                 )}
               </span>
               <span className="pb-muted pb-caption">
-                {serverText(a.description, lang, room.results?.gameId)}
+                {a.description !== null
+                  ? serverText(a.description, lang, room.results?.gameId)
+                  : a.perPlayer
+                      .map(
+                        (x) =>
+                          `${nameOf(x.playerId)}: ${serverText(x.description, lang, room.results?.gameId)}`,
+                      ) // prettier-ignore
+                      .join(' · ')}
               </span>
             </li>
           ))}

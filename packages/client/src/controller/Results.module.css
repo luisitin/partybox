@@ -58,6 +58,10 @@
 /* ── I-456 C: the long awards list stays for screen readers only. */
 .srOnly {
   position: absolute;
+  /* pinned to the top corner: at its static place under the board, its 1 px made the scroller
+     say "more below" under your own last row */
+  top: 0;
+  left: 0;
   width: 1px;
   height: 1px;
   overflow: hidden;
@@ -66,14 +70,24 @@
 }
 
 /* ── I-456 C: the awards as a row of chips under your place. */
+/* One row that scrolls sideways: three wrapped rows of chips pushed a three-way tie's last winner
+   under the SE's fold while the headline named them (reviewer, results-ties). */
 .awardChips {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-wrap: nowrap;
+  justify-content: safe center;
   gap: var(--pb-space-1);
   margin-top: var(--pb-space-2);
+  overflow-x: auto;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+.awardChips::-webkit-scrollbar {
+  display: none;
 }
 .awardChip {
+  flex-shrink: 0;
+  white-space: nowrap;
   font-size: var(--pb-font-caption);
   font-weight: 600;
   padding: 3px 10px;

@@ -74,6 +74,13 @@
   animation: global(pb-crown) var(--pb-motion-slow) var(--pb-ease) both;
 }
 
+/* A tie: the faces sit centred above the headline — beside a two-line Spanish headline they
+   floated far left, detached from it (reviewer, results-ties). */
+.crowned.tiedHero {
+  flex-direction: column;
+  gap: var(--pb-space-2);
+}
+
 /* ── I-025 C: a photo finish — the board under the winner sits at 55 % for a beat and comes back
    over 1.2 s (two slow beats, so it collapses with the tokens; opacity only — the winner's own
    row keeps its highlight on the board). */

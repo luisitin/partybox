@@ -193,6 +193,13 @@ export function registerDevApi(app: FastifyInstance, options: DevApiOptions): vo
     return { ok: true, effects: result?.effects ?? [] };
   });
 
+  // Design captures: put a results screen on the room as given (a three-way tie, a shared award).
+  app.post('/api/dev/results', async (req) => {
+    const body = (req.body ?? {}) as { results?: unknown };
+    const result = host.dispatch(roomOf(req.query), { type: 'dev:results', results: body.results });
+    return { ok: !result?.effects.some((e) => e.type === 'log'), status: host.get(roomOf(req.query))?.status }; // prettier-ignore
+  });
+
   app.get('/api/dev/state', async (req) => {
     const code = roomOf(req.query);
     const room = host.get(code);

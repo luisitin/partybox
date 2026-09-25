@@ -188,6 +188,18 @@ describe('awards', () => {
       ['sharp', ['A', 'B']],
       ['clear', ['C']],
     ]);
+    expect(groups[0]?.description).toBe('d');
+  });
+  it('a line that differs per winner stays with its winner', () => {
+    const groups = groupAwards([
+      { id: 'eye', title: 'Bullseye', description: 'Bullseyes: 1', playerId: 'A' },
+      { id: 'eye', title: 'Bullseye', description: 'Bullseyes: 2', playerId: 'B' },
+    ]);
+    expect(groups[0]?.description).toBeNull();
+    expect(groups[0]?.perPlayer.map((x) => x.description)).toEqual([
+      'Bullseyes: 1',
+      'Bullseyes: 2',
+    ]);
   });
   it('names read like a sentence', () => {
     expect(joinNames(['Sam'])).toBe('Sam');

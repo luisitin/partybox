@@ -73,7 +73,7 @@ export function TvResults({ room, lastView = null }: TvResultsProps): JSX.Elemen
     // (review-loop #184).
     <Stage>
       <div
-        className={`${styles.hero} ${crowned ? styles.crowned : 'pb-enter'}`}
+        className={`${styles.hero} ${crowned ? styles.crowned : 'pb-enter'} ${tied.length > 0 ? styles.tiedHero : ''}`}
         data-screen="results"
       >
         {winner ? <Avatar avatarId={winner.avatarId} size={72} /> : null}
@@ -86,7 +86,9 @@ export function TvResults({ room, lastView = null }: TvResultsProps): JSX.Elemen
             ))}
           </span>
         ) : null}
-        <BigText level={many || keepBoard ? 'h1' : 'display'} tone="accent">
+        {/* three or more tied names take the h1 size: at display size a Spanish tie wrapped to
+            two lines and pushed the last award under the host bar */}
+        <BigText level={many || keepBoard || tied.length >= 3 ? 'h1' : 'display'} tone="accent">
           {winnerLine(room, scoreless) || t.results.title}
         </BigText>
         {nobodyScored(room) && !scoreless ? (
@@ -124,7 +126,15 @@ export function TvResults({ room, lastView = null }: TvResultsProps): JSX.Elemen
                 <li key={`${a.id}|${a.title}`} className={styles.award}>
                   <span className={styles.awardTitle}>{said(a.title)}</span>
                   <span className={styles.awardWho}>{joinNames(a.playerIds.map(nameOf))}</span>
-                  <span className="pb-muted pb-caption">{said(a.description)}</span>
+                  {a.description !== null ? (
+                    <span className="pb-muted pb-caption">{said(a.description)}</span>
+                  ) : (
+                    a.perPlayer.map((x) => (
+                      <span key={x.playerId} className="pb-muted pb-caption">
+                        {nameOf(x.playerId)}: {said(x.description)}
+                      </span>
+                    ))
+                  )}
                 </li>
               ))}
             </ul>

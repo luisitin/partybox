@@ -137,6 +137,8 @@ export type RoomEvent =
   | { type: 'input'; now: number; playerId: string; input: unknown; vip?: boolean }
   | { type: 'tick'; now: number }
   | { type: 'dev:loadState'; now: number; gameId: string; state: unknown; settings?: Settings }
+  /** Design captures: a results screen as given (ties, shared awards no fixture produces). */
+  | { type: 'dev:results'; now: number; results: unknown }
   | { type: 'dev:gameEvent'; now: number; event: unknown }
   /** ADR-045: a reading the running game asked for is ready (or failed: ms -1). */
   | { type: 'speech'; now: number; key: string; ms: number };
