@@ -56,6 +56,8 @@ export function KenoPad({
           ? L('Pick {n} lucky numbers', { n: KENO_PICKS - mine.length })
           : L('Your numbers: {list}', { list: mine.join(' · ') })}
       </p>
+      {/* The payouts above the grid: always in view before the stake (play-test). */}
+      <PayTable size="phone" />
       <div className={styles.kenoGrid} role="group" aria-label={L('Your lucky numbers')}>
         {Array.from({ length: KENO_NUMBERS }, (_, i) => i + 1).map((n) => (
           <button
@@ -69,7 +71,6 @@ export function KenoPad({
           </button>
         ))}
       </div>
-      <PayTable size="phone" />
     </div>
   );
 }

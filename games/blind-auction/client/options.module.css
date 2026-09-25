@@ -166,6 +166,8 @@
 }
 
 .phone .option {
+  /* Scrolled into view (the pick, the stake): a few px clear of the header, ✓ badge included. */
+  scroll-margin-block: 14px;
   /* Inner room on both sides: a long word never touches the border (review: 'Treasure' on SE);
      short vertically, so a three-option box sits above the fold on an SE (play-tests). */
   padding: var(--pb-space-1) var(--pb-space-2);
