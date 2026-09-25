@@ -4,9 +4,14 @@
   "private": true,
   "type": "module",
   "types": "./src/index.ts",
+  "sideEffects": [
+    "*.css"
+  ],
   "exports": {
     ".": "./src/index.ts",
+    "./match": "./src/match.ts",
     "./ui": "./src/ui.ts",
+    "./speech": "./src/speech.ts",
     "./ui/secret-card": "./src/ui-secret-card.ts",
     "./ui/face-picker": "./src/ui-face-picker.ts",
     "./ui/word-grid": "./src/ui-word-grid.ts",

@@ -40,15 +40,10 @@ export const wordPackSchema = z.object({
 });
 export type WordPack = z.infer<typeof wordPackSchema>;
 
-/** Game-level pronunciation overrides (Part 00 §5.4, owner ruling 17). */
-export const pronunciationsSchema = z.record(
-  z.string().min(1),
-  z.object({
-    say: z.string().min(1),
-    ipa: z.string().min(1).optional(),
-    anyCase: z.boolean().optional(),
-  }),
-);
+/** Game-level pronunciation overrides: the SDK's schema (Part 00 §5.4, owner ruling 17). */
+import { pronunciationsSchema } from '@partybox/game-sdk/speech';
+
+export { pronunciationsSchema };
 
 export const packs = {
   family: wordPackSchema,

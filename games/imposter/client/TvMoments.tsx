@@ -8,7 +8,7 @@ import { Avatar, BigText, Scoreboard, Stage, useSound, useT } from '@partybox/ga
 import type { PushedView } from '@partybox/game-sdk/ui';
 import type { ImposterTvView } from '../server/index';
 import type { Why } from '../server/types';
-import { byId, pointsOf, useOpeningCue } from './shared';
+import { byId, pointsOf, useOpeningCue } from './helpers';
 import { STRINGS } from './strings';
 import styles from './tv.module.css';
 

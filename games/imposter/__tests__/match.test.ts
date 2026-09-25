@@ -2,7 +2,6 @@
 // SDK's F5 module can run the same table. Also the speech stand-in's name rule.
 import { describe, expect, it } from 'vitest';
 import { isLegalClue, matchAnswer, normalize, sameAnswer, stem } from '../match';
-import { readableName, toSpeakable } from '../server/speakable';
 
 const pizza = {
   id: 'p',
@@ -86,7 +85,7 @@ describe('matchAnswer', () => {
     ['', horse, 'none'],
   ] as const)('%s vs %s', (input, item, level) => expect(matchAnswer(input, item)).toBe(level));
   it('digits never fuzz', () => {
-    expect(matchAnswer('1985', { id: 'y', answer: '1984' })).toBe('none');
+    expect(matchAnswer('1985', { answer: '1984' })).toBe('none');
   });
 });
 
@@ -117,24 +116,4 @@ describe('isLegalClue', () => {
   it.each(['ocean', 'tide-pool', 'reef', 'Coral'])('%s is fine', (clue) =>
     expect(isLegalClue(clue, star, { oneWord: true })).toEqual({ ok: true }),
   );
-});
-
-describe('speech stand-in', () => {
-  it('skips names without vowels or mostly symbols', () => {
-    expect([
-      readableName('Sam'),
-      readableName('xX_Slayer_Xx'),
-      readableName('Brb'),
-      readableName('1337'),
-    ]).toEqual([true, true, false, false]);
-  });
-  it('shouting is lowercased, stretched letters collapse, hyphens read as spaces', () => {
-    expect(toSpeakable('SOOOOO GOOD', { playerText: true })).toEqual([{ text: 'soo good' }]);
-    expect(toSpeakable('hang-ten')).toEqual([{ text: 'hang ten' }]);
-  });
-  it('overrides respell whole words (case-sensitive unless anyCase)', () => {
-    const o = { wifi: { say: 'why-fye', anyCase: true }, Nice: { say: 'Neece' } };
-    expect(toSpeakable('Wifi.', { overrides: o })).toEqual([{ text: 'why-fye' }, { text: '.' }]);
-    expect(toSpeakable('nice', { overrides: o })).toEqual([{ text: 'nice' }]);
-  });
 });

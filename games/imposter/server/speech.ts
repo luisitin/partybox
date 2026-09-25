@@ -1,11 +1,11 @@
-// The reader (SPEC §1.11, ADR-045). Every line goes through the toSpeakable stand-in. Requests go
+// The reader (SPEC §1.11, ADR-045). Every line goes through the SDK's toSpeakable. Requests go
 // out as soon as a line's text is known and public-safe: clues when submitted (they stay in state,
 // never in a view, until their card), the accusation when the vote settles, the next round's
 // category during the vote — and "The word was …" only once wordReveal begins (SPEC §1.5).
 // Fixed lines are requested live too (stand-in for render-clips, audit #22): same voice, cached.
 import type { SpeechRequest } from '@partybox/game-sdk';
 import { PRONUNCIATIONS } from './content';
-import { readableName, toSpeakable } from './speakable';
+import { speakableName, speechKey, toSpeakable } from '@partybox/game-sdk/speech';
 import { isImposter, wordOf } from './round';
 import type { State } from './types';
 
@@ -30,18 +30,6 @@ export interface Line {
   req: SpeechRequest;
 }
 
-function keyOf(voice: string, parts: unknown): string {
-  const text = `${voice}|${JSON.stringify(parts)}`;
-  let a = 0x811c9dc5;
-  let b = 0x01000193;
-  for (let i = 0; i < text.length; i++) {
-    const c = text.charCodeAt(i);
-    a = Math.imul(a ^ c, 0x01000193) >>> 0;
-    b = Math.imul(b ^ c, 0x5bd1e995) >>> 0;
-  }
-  return `imp${a.toString(36)}${b.toString(36)}`;
-}
-
 export function voiceOf(state: State): string | null {
   return state.cfg.reader === 'none' ? null : state.cfg.reader;
 }
@@ -49,8 +37,8 @@ export function voiceOf(state: State): string | null {
 function line(state: State, text: string, playerText = false): Line | null {
   const voice = voiceOf(state);
   if (!voice) return null;
-  const parts = toSpeakable(text, { overrides: PRONUNCIATIONS, playerText });
-  return { text, req: { key: keyOf(voice, parts), voice, parts } };
+  const parts = toSpeakable(text, { voice, lang: 'en', overrides: PRONUNCIATIONS, playerText });
+  return { text, req: { key: speechKey('imposter', voice, parts), voice, parts } };
 }
 
 export function fixedLine(state: State, id: FixedLine): Line | null {
@@ -70,10 +58,8 @@ export function clueLine(state: State, text: string): Line | null {
 
 /** "The room accuses Sam." — or the fixed line when the name can't be read (Part 00 §5.5). */
 export function accuseLine(state: State, id: string): Line | null {
-  const name = state.players[id]?.name ?? '';
-  return readableName(name)
-    ? line(state, `The room accuses ${name}.`, true)
-    : fixedLine(state, 'decided');
+  const name = speakableName(state.players[id]?.name ?? '');
+  return name ? line(state, `The room accuses ${name}.`, true) : fixedLine(state, 'decided');
 }
 
 export function wordLine(state: State): Line | null {

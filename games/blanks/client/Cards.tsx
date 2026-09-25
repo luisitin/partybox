@@ -4,7 +4,7 @@
 // thing. `fill` (server/cards.ts) is the one rule for where the text goes.
 import type { CSSProperties, JSX, ReactNode } from 'react';
 import { usePrefersReducedMotion, useT } from '@partybox/game-sdk/ui';
-import { BLANK } from '../content/schema';
+import { BLANK } from '../content/blank';
 // I-752 B: fill.ts, not cards.ts (cards.ts imports the decks)
 import { fill, fillText, glue } from '../server/fill';
 import type { Segment } from '../server/fill';

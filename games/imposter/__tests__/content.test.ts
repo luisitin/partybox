@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest';
 import { normalize } from '../match';
 import { FAMILY, PRONUNCIATIONS, SPICY } from '../server/content';
 import { checkCategory } from './packRules';
+import pronunciationsJson from '../content/pronunciations.json' with { type: 'json' };
 
 describe('packs', () => {
   it('14 family categories and 6 spicy ones, 12 words each', () => {
@@ -58,7 +59,8 @@ describe('packs', () => {
   });
 
   it('pronunciations parse and each has a respelling', () => {
-    for (const [word, entry] of Object.entries(PRONUNCIATIONS)) {
+    expect(PRONUNCIATIONS).toBeTruthy();
+    for (const [word, entry] of Object.entries(pronunciationsJson.words)) {
       expect(word).toMatch(/^[a-z-]+$/);
       expect(entry.say.length).toBeGreaterThan(0);
     }

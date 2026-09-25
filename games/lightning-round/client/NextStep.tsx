@@ -13,7 +13,7 @@ import type { Translator } from '@partybox/game-sdk/ui';
 import type { RevealNext } from '../server/views';
 import { STRINGS } from './strings';
 import { RACE_MS } from './timing';
-import styles from './Tv.module.css';
+import styles from './NextStep.module.css';
 
 function nextLabel(next: RevealNext, L: Translator): string {
   return next === 'wager' ? L('On to the wager') : L('Next question');

@@ -1,6 +1,6 @@
 // I-189: the picker's minutes follow the settings and the room.
 import { describe, expect, it } from 'vitest';
-import type { GameSummary } from '@partybox/shared';
+import type { CatalogEntry } from '@partybox/shared';
 import { minutesFor } from './estimate';
 
 const blanks = {
@@ -8,14 +8,8 @@ const blanks = {
   minPlayers: 3,
   maxPlayers: 12,
   estimatedMinutes: 15,
-  settings: [{ key: 'rounds', type: 'number', default: 6 }],
-  estimate: {
-    fixedSeconds: 20,
-    perRoundSeconds: 45,
-    perPlayerPerRoundSeconds: 3,
-    roundsSetting: 'rounds',
-  },
-} as unknown as GameSummary;
+  pace: [20, 45, 3, 'rounds', 6],
+} as unknown as CatalogEntry;
 
 describe('I-189: minutes from the pace', () => {
   it('six rounds with four players is about six minutes (the recaps: 5.5–7.5)', () => {
@@ -28,6 +22,6 @@ describe('I-189: minutes from the pace', () => {
     expect(minutesFor(blanks, null, 4)).toBe(minutesFor(blanks, { rounds: 6 }, 4));
   });
   it('a game with no pace keeps its fixed number', () => {
-    expect(minutesFor({ ...blanks, estimate: undefined }, { rounds: 6 }, 4)).toBe(15);
+    expect(minutesFor({ ...blanks, pace: undefined }, { rounds: 6 }, 4)).toBe(15);
   });
 });

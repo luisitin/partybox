@@ -9,7 +9,7 @@ import type { CSSProperties, JSX } from 'react';
 import { Avatar, useSound } from '@partybox/game-sdk/ui';
 import type { PushedView, ViewPlayer } from '@partybox/game-sdk/ui';
 import type { ImposterTvView } from '../server/index';
-import { byId, clueFontPx } from './shared';
+import { byId, clueFontPx } from './helpers';
 import styles from './tv.module.css';
 
 const COLS = 4;

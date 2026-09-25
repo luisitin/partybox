@@ -18,6 +18,7 @@ import type { LobbyLineItem } from './LobbyLine';
 import { LobbyMore } from './LobbyMore';
 import { ShareButton } from './ShareSheet';
 import { VoteRow, tallyLine, voteLeader } from './VoteRow';
+import { useCatalog } from '../catalog';
 import { VIP_TIPS, setTipsSeen, tipsSeen } from './vipTips';
 
 export interface LobbyProps {
@@ -60,13 +61,11 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
       setPoofing(null);
     }, 450);
   };
-  const first = room.games[0];
-  // I-650 B: the picker opens on the room's favourite (the VIP can still pick any game)
-  const leader = voteLeader(room);
-  const pick = (): void => {
-    const gameId = leader?.id ?? first?.id;
-    if (gameId) controller.vip({ action: 'selectGame', gameId });
-  };
+  const { games } = useCatalog();
+  const first = games[0];
+  const leader = voteLeader(room, games);
+  // Part 00 §1.3: the list opens with nothing chosen (the room's favourites sort first there).
+  const pick = (): void => controller.vip({ action: 'selectGame', gameId: null });
   const myBots = room.players.filter((p) => p.bot?.ownerId === me.id);
   const full = room.players.length >= room.capacity;
   const maxed = myBots.length >= MAX_BOTS_PER_OWNER;

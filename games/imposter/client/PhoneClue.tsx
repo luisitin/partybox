@@ -10,7 +10,7 @@ import { isLegalClue, sameAnswer } from '../match';
 import type { RejectReason } from '../server/types';
 import { PhoneSecret } from './PhoneCards';
 import type { Props } from './PhoneCards';
-import { byId } from './shared';
+import { byId } from './helpers';
 import { STRINGS } from './strings';
 import styles from './phone.module.css';
 
@@ -40,7 +40,7 @@ function liveProblem(view: Props['view'], text: string): RejectReason | null {
   if ([...raw].length > MAX) return 'too-long';
   if (raw.split(/\s+/).length > 1) return 'not-one-word';
   if (view.role === 'crew' && view.word) {
-    const v = isLegalClue(raw, { id: 'w', ...view.word }, { oneWord: true, maxChars: MAX });
+    const v = isLegalClue(raw, view.word, { oneWord: true, maxChars: MAX });
     if (!v.ok) return v.reason;
   }
   const board = view.stage.board.flatMap((c) => c.before);

@@ -1,8 +1,14 @@
 {
   "id": "imposter",
   "name": "Imposter",
+  "icon": "🕵️",
   "tagline": "One of you doesn't know the word.",
   "description": "Everyone gets the secret word except the imposter, who only knows the category. Everyone types one word about it, the TV deals the clues, and the room votes. A caught imposter can still steal the round by naming the word.",
+  "howToPlay": [
+    "Everyone gets the secret word except the imposter, who only knows the category.",
+    "Everyone types one word about it. The imposter has to fake it.",
+    "Vote out the imposter. A caught imposter can still steal it by guessing the word."
+  ],
   "version": "0.1.0",
   "minPlayers": 4,
   "maxPlayers": 16,
@@ -14,6 +20,10 @@
     "roundsSetting": "rounds"
   },
   "tags": ["bluff", "hidden-roles", "words"],
+  "presence": {
+    "needs": "anywhere"
+  },
+  "addedOn": "2026-09-24",
   "settings": [
     {
       "key": "rounds",

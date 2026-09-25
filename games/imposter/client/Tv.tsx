@@ -8,7 +8,7 @@ import type { ImposterTvView } from '../server/index';
 import { TvBoard } from './TvBoard';
 import type { BoardMode } from './TvBoard';
 import { TvAccuse, TvLastChance, TvScores, TvWordReveal } from './TvMoments';
-import { byId, useSay } from './shared';
+import { byId, useSay } from './helpers';
 import { STRINGS } from './strings';
 import styles from './tv.module.css';
 

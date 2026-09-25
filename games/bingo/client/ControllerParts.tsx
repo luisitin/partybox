@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
 import { Avatar, PrimaryButton, buzz, useSecondsLeft, useSound, useT } from '@partybox/game-sdk/ui';
 import type { PlayCue, ScoreboardRow } from '@partybox/game-sdk/ui';
-import { ARM_MS } from '../server/types';
+import { ARM_MS } from '../server/constants';
 import type { Input } from '../server/types';
 import type { BingoControllerView, CallView } from '../server/views';
 import styles from './Controller.module.css';

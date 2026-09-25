@@ -4,46 +4,20 @@
 import { avatarIdOf } from './avatar';
 import type {
   ControllerView,
-  GameSummary,
   PlayerPublic,
   PushedView,
   RoomSnapshot,
+  SelectedGame,
   TvView,
 } from '@partybox/shared';
 import type { EngineDeps, RoomState } from './types';
+import { highlightedGameId } from './picker';
 import { canStart } from './vip';
 
-export function gameSummaries(deps: EngineDeps): GameSummary[] {
-  return Object.values(deps.games)
-    .map((g) => g.manifest)
-    .sort((a, b) => a.name.localeCompare(b.name))
-    .map(
-      ({
-        id,
-        name,
-        tagline,
-        description,
-        minPlayers,
-        maxPlayers,
-        estimatedMinutes,
-        estimate,
-        tags,
-        settings,
-        supportsBots,
-      }) => ({
-        id,
-        name,
-        tagline,
-        description,
-        minPlayers,
-        maxPlayers,
-        estimatedMinutes,
-        ...(estimate ? { estimate } : {}), // I-189
-        tags,
-        settings,
-        supportsBots: supportsBots === true,
-      }),
-    );
+/** The chosen game's settings form (the list itself is the host's catalog, sent once). */
+function selectedGame(room: RoomState, deps: EngineDeps): SelectedGame | undefined {
+  const game = room.selectedGameId ? deps.games[room.selectedGameId] : undefined;
+  return game ? { id: game.manifest.id, settings: game.manifest.settings } : undefined;
 }
 
 export function publicPlayers(room: RoomState): PlayerPublic[] {
@@ -73,7 +47,7 @@ export function snapshot(room: RoomState, deps: EngineDeps): RoomSnapshot {
     selectedGameId: room.selectedGameId,
     settings: room.settings,
     ...(room.settingsByGame ? { tuned: room.settingsByGame } : {}),
-    games: gameSummaries(deps),
+    ...(selectedGame(room, deps) ? { selectedGame: selectedGame(room, deps) } : {}),
     results: room.results,
     canStart: canStart(room, deps),
     recording: room.recording,
@@ -92,6 +66,7 @@ export function snapshot(room: RoomState, deps: EngineDeps): RoomSnapshot {
       : {}),
     ...(room.formerVip ? { formerVip: room.formerVip } : {}),
     ...(room.votes ? { votes: peopleVotes(room) } : {}),
+    ...(highlightedGameId(room) ? { highlightedGameId: highlightedGameId(room) ?? undefined } : {}),
   };
 }
 

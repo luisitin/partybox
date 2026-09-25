@@ -99,6 +99,7 @@ const PATTERNS_ES: readonly [RegExp, (m: RegExpMatchArray) => string][] = [
   [/^(.+) left$/, (m) => `${m[1]} se fue`],
   [/^👋 (.+) says: hurry up, (.+)!$/, (m) => `👋 ${m[1]} dice: ¡date prisa, ${m[2]}!`],
   [/^👋 (.+) says: hurry up!$/, (m) => `👋 ${m[1]} dice: ¡date prisa!`],
+  [/^👍 (.+) suggests (.+)$/, (m) => `👍 ${m[1]} propone ${m[2]}`], // ruling 2: Suggest (picker)
   [
     /^Someone's trying to join as (.+) — that name's taken$/,
     (m) => `Alguien intenta entrar como ${m[1]}: ese nombre ya está en uso`,

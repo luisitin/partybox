@@ -7,7 +7,7 @@ import { rank } from '@partybox/game-sdk';
 import { Avatar, Scoreboard, Screen, useT } from '@partybox/game-sdk/ui';
 import type { ControllerView, PushedView } from '@partybox/game-sdk/ui';
 import type { ImposterControllerView } from '../server/index';
-import { byId, cluesOf, pointsOf, useSay } from './shared';
+import { byId, cluesOf, pointsOf, useSay } from './helpers';
 import { STRINGS } from './strings';
 import styles from './phone.module.css';
 

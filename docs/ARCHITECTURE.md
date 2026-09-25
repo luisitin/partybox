@@ -22,6 +22,10 @@ house room, and its QR) put a second, smaller code on the TV's card for friends 
 
 Dev mode (`pnpm dev`) mounts Vite in middleware mode inside Fastify (ADR-006) so phones still use one URL.
 Prod (`pnpm start`) serves `packages/client/dist`. Nothing touches the internet at runtime (ADR-012).
+Its cache rules (`packages/server/src/static-cache.ts`, Part 00 §2.4): Vite's hashed `/assets/*` are
+`immutable` for a year and go out as the `.br`/`.gz` siblings the build writes next to every text
+asset over 1 KB; HTML (index and the SPA fallback) is `no-cache`, because the launcher rebuilds on
+every start; `/music` and `/sfx` keep their names across builds, so a week, never immutable.
 
 ## Data flow
 

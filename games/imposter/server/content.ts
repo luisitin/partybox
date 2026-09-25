@@ -3,7 +3,8 @@
 import { nextInt, shuffle } from '@partybox/game-sdk';
 import type { RngState } from '@partybox/game-sdk';
 import { normalize } from '../match';
-import { pronunciationsSchema, wordPackSchema } from '../content/schema';
+import { parsePronunciations } from '@partybox/game-sdk/speech';
+import { wordPackSchema } from '../content/schema';
 import type { Category, WordItem } from '../content/schema';
 import familyJson from '../content/family.json' with { type: 'json' };
 import spicyJson from '../content/spicy.json' with { type: 'json' };
@@ -12,7 +13,7 @@ import type { Cfg, DrawnWord } from './types';
 
 export const FAMILY = wordPackSchema.parse(familyJson);
 export const SPICY = wordPackSchema.parse(spicyJson);
-export const PRONUNCIATIONS = pronunciationsSchema.parse(pronunciationsJson);
+export const PRONUNCIATIONS = parsePronunciations(pronunciationsJson);
 export const PACK_LANG = FAMILY.lang;
 
 const ALL: readonly Category[] = [...FAMILY.categories, ...SPICY.categories];

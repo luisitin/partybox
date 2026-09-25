@@ -1,6 +1,6 @@
 // Generates the explicit game registries (ADR-003):
 //   packages/server/src/games.generated.ts  -> every games/<id>/server/index.ts `game`
-//   packages/client/src/games.generated.ts  -> every games/<id>/client/index.ts `clientModule`
+//   packages/client/src/games.generated.ts  -> every games/<id>/client/{phone,tv,settings}-entry.ts, lazily
 // Usage: pnpm gen-registry [--check]   (--check exits 1 when the files on disk are stale)
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -29,23 +29,43 @@ const targets: Target[] = [
       games
         .map((g) => `import { game as ${g.ident} } from '../../../games/${g.id}/server/index';\n`)
         .join('') +
+      // ADR-049: each game's manifest sentences in Spanish (the catalog, About, the settings form).
+      games
+        .map(
+          (g) =>
+            `import ${g.ident}Es from '../../../games/${g.id}/manifest.es.json' with { type: 'json' };\n`,
+        )
+        .join('') +
       `\nexport const serverGames: Readonly<Record<string, AnyGameDefinition>> = {\n` +
       games.map((g) => `  '${g.id}': ${g.ident},\n`).join('') +
+      `};\n` +
+      `\nexport const serverGameText: Readonly<Record<string, Readonly<Record<string, Readonly<Record<string, string>>>>>> = {\n` +
+      games.map((g) => `  '${g.id}': { es: ${g.ident}Es },\n`).join('') +
       `};\n`,
   },
   {
     file: join(REPO_ROOT, 'packages/client/src/games.generated.ts'),
     render: (games) =>
-      `${HEADER}import type { GameClientModule } from '@partybox/game-sdk';\n` +
+      // ADR-050: nothing of a game is imported here — each surface is a dynamic import, so the
+      // bundler gives every game its own phone and TV downloads and the entry never grows.
+      `${HEADER}import type { GameLoaders } from '@partybox/game-sdk';\n` +
       (games.length === 0 ? '// No games yet. Add one with: pnpm new-game <id>\n' : '') +
+      `\nexport const gameLoaders: Readonly<Record<string, GameLoaders>> = {\n` +
       games
-        .map(
-          (g) =>
-            `import { clientModule as ${g.ident} } from '../../../games/${g.id}/client/index';\n`,
-        )
+        .map((g) => {
+          const at = `../../../games/${g.id}/client`;
+          const settings = existsSync(join(REPO_ROOT, 'games', g.id, 'client', 'settings-entry.ts'))
+            ? `    settings: () => import('${at}/settings-entry').then((m) => m.settings),\n`
+            : '';
+          return (
+            `  '${g.id}': {\n` +
+            `    phone: () => import('${at}/phone-entry').then((m) => m.phone),\n` +
+            `    tv: () => import('${at}/tv-entry').then((m) => m.tv),\n` +
+            settings +
+            `  },\n`
+          );
+        })
         .join('') +
-      `\nexport const clientGames: Readonly<Record<string, GameClientModule>> = {\n` +
-      games.map((g) => `  '${g.id}': ${g.ident},\n`).join('') +
       `};\n`,
   },
 ];

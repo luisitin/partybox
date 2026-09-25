@@ -13,7 +13,7 @@
         "awkward",
         "nervous",
         "single",
-        "texting",
+        "butterflies",
         "emotions",
         "couple",
         "chemistry",
@@ -31,8 +31,12 @@
             "first date night",
             "first dait"
           ],
-          "reject": ["first mate"],
-          "family": ["first"],
+          "reject": [
+            "first mate"
+          ],
+          "family": [
+            "first"
+          ],
           "clues": [
             "dinner",
             "outfit",
@@ -48,9 +52,22 @@
         {
           "id": "dating-ghosting",
           "answer": "ghosting",
-          "accept": ["ghosted", "ghost", "got ghosted", "ghostin", "gosting", "ghostng"],
-          "reject": ["hosting", "toasting", "boasting"],
-          "family": ["ghost"],
+          "accept": [
+            "ghosted",
+            "ghost",
+            "got ghosted",
+            "ghostin",
+            "gosting",
+            "ghostng"
+          ],
+          "reject": [
+            "hosting",
+            "toasting",
+            "boasting"
+          ],
+          "family": [
+            "ghost"
+          ],
           "clues": [
             "disappear",
             "unread",
@@ -67,8 +84,19 @@
         {
           "id": "dating-crush",
           "answer": "crush",
-          "accept": ["crushes", "crushing", "secret crush", "infatuation", "puppy love", "crsh"],
-          "reject": ["brush", "crust", "crash"],
+          "accept": [
+            "crushes",
+            "crushing",
+            "secret crush",
+            "infatuation",
+            "puppy love",
+            "crsh"
+          ],
+          "reject": [
+            "brush",
+            "crust",
+            "crash"
+          ],
           "family": [],
           "clues": [
             "blushing",
@@ -93,8 +121,12 @@
             "setup date",
             "arranged date"
           ],
-          "reject": ["blind spot"],
-          "family": ["blind"],
+          "reject": [
+            "blind spot"
+          ],
+          "family": [
+            "blind"
+          ],
           "clues": [
             "stranger",
             "setup",
@@ -109,8 +141,18 @@
         {
           "id": "dating-flirting",
           "answer": "flirting",
-          "accept": ["flirt", "flirted", "flirty", "flirtation", "flurting", "flrting"],
-          "reject": ["fitting", "flitting"],
+          "accept": [
+            "flirt",
+            "flirted",
+            "flirty",
+            "flirtation",
+            "flurting",
+            "flrting"
+          ],
+          "reject": [
+            "fitting",
+            "flitting"
+          ],
           "family": [],
           "clues": [
             "wink",
@@ -136,7 +178,10 @@
             "former partner",
             "old flame"
           ],
-          "reject": ["next", "sex"],
+          "reject": [
+            "next",
+            "sex"
+          ],
           "family": [],
           "clues": [
             "baggage",
@@ -153,8 +198,17 @@
         {
           "id": "dating-breakup",
           "answer": "breakup",
-          "accept": ["breakups", "broke up", "breaking up", "split up", "dumped", "brakeup"],
-          "reject": ["makeup"],
+          "accept": [
+            "breakups",
+            "broke up",
+            "breaking up",
+            "split up",
+            "dumped",
+            "brakeup"
+          ],
+          "reject": [
+            "makeup"
+          ],
           "family": [],
           "clues": [
             "tears",
@@ -171,9 +225,20 @@
         {
           "id": "dating-wingman",
           "answer": "wingman",
-          "accept": ["wingmen", "wingwoman", "wingmn", "wingmann", "winman", "wingperson"],
-          "reject": ["winger"],
-          "family": ["wing"],
+          "accept": [
+            "wingmen",
+            "wingwoman",
+            "wingmn",
+            "wingmann",
+            "winman",
+            "wingperson"
+          ],
+          "reject": [
+            "winger"
+          ],
+          "family": [
+            "wing"
+          ],
           "clues": [
             "buddy",
             "backup",
@@ -197,8 +262,12 @@
             "opener",
             "pikup line"
           ],
-          "reject": ["punchline"],
-          "family": ["pickup"],
+          "reject": [
+            "punchline"
+          ],
+          "family": [
+            "pickup"
+          ],
           "clues": [
             "cheesy",
             "corny",
@@ -214,9 +283,21 @@
         {
           "id": "dating-soulmate",
           "answer": "soulmate",
-          "accept": ["soulmates", "sole mate", "soulmat", "the one", "true love", "twin flame"],
-          "reject": ["roommate", "classmate"],
-          "family": ["soul"],
+          "accept": [
+            "soulmates",
+            "sole mate",
+            "soulmat",
+            "the one",
+            "true love",
+            "twin flame"
+          ],
+          "reject": [
+            "roommate",
+            "classmate"
+          ],
+          "family": [
+            "soul"
+          ],
           "clues": [
             "destiny",
             "forever",
@@ -240,8 +321,12 @@
             "couples date",
             "double dait"
           ],
-          "reject": ["double take"],
-          "family": ["double"],
+          "reject": [
+            "double take"
+          ],
+          "family": [
+            "double"
+          ],
           "clues": [
             "four",
             "pairs",
@@ -265,8 +350,13 @@
             "freind zone",
             "friendzoning"
           ],
-          "reject": ["free zone"],
-          "family": ["friend", "zone"],
+          "reject": [
+            "free zone"
+          ],
+          "family": [
+            "friend",
+            "zone"
+          ],
           "clues": [
             "platonic",
             "unrequited",
@@ -311,7 +401,10 @@
             "morning after",
             "hangover headache"
           ],
-          "reject": ["handover", "changeover"],
+          "reject": [
+            "handover",
+            "changeover"
+          ],
           "family": [],
           "clues": [
             "headache",
@@ -328,9 +421,20 @@
         {
           "id": "night-out-bouncer",
           "answer": "bouncer",
-          "accept": ["bouncers", "bounser", "bouncr", "doorman", "door staff", "club security"],
-          "reject": ["pouncer"],
-          "family": ["bounc"],
+          "accept": [
+            "bouncers",
+            "bounser",
+            "bouncr",
+            "doorman",
+            "door staff",
+            "club security"
+          ],
+          "reject": [
+            "pouncer"
+          ],
+          "family": [
+            "bounc"
+          ],
           "clues": [
             "rope",
             "guestlist",
@@ -347,8 +451,19 @@
         {
           "id": "night-out-shots",
           "answer": "shots",
-          "accept": ["shot", "shooter", "shooters", "shotz", "shotts", "round of shots"],
-          "reject": ["shorts", "shoots", "slots"],
+          "accept": [
+            "shot",
+            "shooter",
+            "shooters",
+            "shotz",
+            "shotts",
+            "round of shots"
+          ],
+          "reject": [
+            "shorts",
+            "shoots",
+            "slots"
+          ],
           "family": [],
           "clues": [
             "tequila",
@@ -374,8 +489,12 @@
             "cote check",
             "coat check ticket"
           ],
-          "reject": ["coat rack"],
-          "family": ["coat"],
+          "reject": [
+            "coat rack"
+          ],
+          "family": [
+            "coat"
+          ],
           "clues": [
             "ticket",
             "hanger",
@@ -400,8 +519,13 @@
             "designated drivr",
             "designated driving"
           ],
-          "reject": ["delivery driver"],
-          "family": ["designat", "driver"],
+          "reject": [
+            "delivery driver"
+          ],
+          "family": [
+            "designat",
+            "driver"
+          ],
           "clues": [
             "sober",
             "keys",
@@ -426,8 +550,13 @@
             "club floor",
             "dancing area"
           ],
-          "reject": ["dance hall"],
-          "family": ["dance", "floor"],
+          "reject": [
+            "dance hall"
+          ],
+          "family": [
+            "dance",
+            "floor"
+          ],
           "clues": [
             "moves",
             "sticky",
@@ -443,8 +572,17 @@
         {
           "id": "night-out-cocktail",
           "answer": "cocktail",
-          "accept": ["cocktails", "coctail", "cocktial", "cocktale", "mixed drink", "mixed drinks"],
-          "reject": ["cockatiel"],
+          "accept": [
+            "cocktails",
+            "coctail",
+            "cocktial",
+            "cocktale",
+            "mixed drink",
+            "mixed drinks"
+          ],
+          "reject": [
+            "cockatiel"
+          ],
           "family": [],
           "clues": [
             "umbrella",
@@ -469,8 +607,12 @@
             "closing time",
             "last drinks"
           ],
-          "reject": ["last caller"],
-          "family": ["last"],
+          "reject": [
+            "last caller"
+          ],
+          "family": [
+            "last"
+          ],
           "clues": [
             "bell",
             "lights-on",
@@ -494,8 +636,12 @@
             "bar hop",
             "pub hopping"
           ],
-          "reject": ["pub quiz"],
-          "family": ["crawl"],
+          "reject": [
+            "pub quiz"
+          ],
+          "family": [
+            "crawl"
+          ],
           "clues": [
             "route",
             "stops",
@@ -511,8 +657,18 @@
         {
           "id": "night-out-dj",
           "answer": "dj",
-          "accept": ["djs", "deejay", "deejays", "disc jockey", "disk jockey", "dj set"],
-          "reject": ["jd", "mc"],
+          "accept": [
+            "djs",
+            "deejay",
+            "deejays",
+            "disc jockey",
+            "disk jockey",
+            "dj set"
+          ],
+          "reject": [
+            "jd",
+            "mc"
+          ],
           "family": [],
           "clues": [
             "turntables",
@@ -529,8 +685,17 @@
         {
           "id": "night-out-kebab",
           "answer": "kebab",
-          "accept": ["kebabs", "kabob", "kebob", "kabab", "kebap", "shish kebab"],
-          "reject": ["cabana"],
+          "accept": [
+            "kebabs",
+            "kabob",
+            "kebob",
+            "kabab",
+            "kebap",
+            "shish kebab"
+          ],
+          "reject": [
+            "cabana"
+          ],
           "family": [],
           "clues": [
             "skewer",
@@ -555,8 +720,12 @@
             "half-price drinks",
             "after work drinks"
           ],
-          "reject": ["rush hour"],
-          "family": ["happy"],
+          "reject": [
+            "rush hour"
+          ],
+          "family": [
+            "happy"
+          ],
           "clues": [
             "discount",
             "cheap",
@@ -602,8 +771,13 @@
             "realty tv",
             "reality telly"
           ],
-          "reject": ["reality check", "virtual reality"],
-          "family": ["reality"],
+          "reject": [
+            "reality check",
+            "virtual reality"
+          ],
+          "family": [
+            "reality"
+          ],
           "clues": [
             "drama",
             "contestants",
@@ -628,8 +802,14 @@
             "midnite snack",
             "night snack"
           ],
-          "reject": ["midnight mass", "snack bar"],
-          "family": ["midnight", "snack"],
+          "reject": [
+            "midnight mass",
+            "snack bar"
+          ],
+          "family": [
+            "midnight",
+            "snack"
+          ],
           "clues": [
             "fridge",
             "leftovers",
@@ -654,8 +834,14 @@
             "buble bath",
             "foam bath"
           ],
-          "reject": ["bubble tea", "bird bath"],
-          "family": ["bubble", "bath"],
+          "reject": [
+            "bubble tea",
+            "bird bath"
+          ],
+          "family": [
+            "bubble",
+            "bath"
+          ],
           "clues": [
             "candles",
             "tub",
@@ -681,8 +867,14 @@
             "bodice ripper",
             "trashy read"
           ],
-          "reject": ["graphic novel", "trash can"],
-          "family": ["trash", "novel"],
+          "reject": [
+            "graphic novel",
+            "trash can"
+          ],
+          "family": [
+            "trash",
+            "novel"
+          ],
           "clues": [
             "paperback",
             "beach",
@@ -708,8 +900,16 @@
             "kitty videos",
             "cat vidoes"
           ],
-          "reject": ["dog videos", "cat food"],
-          "family": ["cat", "kitten", "kitty", "video"],
+          "reject": [
+            "dog videos",
+            "cat food"
+          ],
+          "family": [
+            "cat",
+            "kitten",
+            "kitty",
+            "video"
+          ],
           "clues": [
             "whiskers",
             "meow",
@@ -735,8 +935,14 @@
             "drive through",
             "greasy food"
           ],
-          "reject": ["slow food", "fast"],
-          "family": ["fast", "food"],
+          "reject": [
+            "slow food",
+            "fast"
+          ],
+          "family": [
+            "fast",
+            "food"
+          ],
           "clues": [
             "burger",
             "fries",
@@ -762,8 +968,14 @@
             "daytime drama",
             "soap oprah"
           ],
-          "reject": ["opera", "soap bar"],
-          "family": ["soap", "opera"],
+          "reject": [
+            "opera",
+            "soap bar"
+          ],
+          "family": [
+            "soap",
+            "opera"
+          ],
           "clues": [
             "amnesia",
             "twins",
@@ -789,8 +1001,14 @@
             "binge watched",
             "bing watching"
           ],
-          "reject": ["binge drinking", "binge eating"],
-          "family": ["binge", "binging"],
+          "reject": [
+            "binge drinking",
+            "binge eating"
+          ],
+          "family": [
+            "binge",
+            "binging"
+          ],
           "clues": [
             "season",
             "streaming",
@@ -816,8 +1034,14 @@
             "online orders",
             "online purchases"
           ],
-          "reject": ["window shopping", "online banking"],
-          "family": ["online", "shop"],
+          "reject": [
+            "window shopping",
+            "online banking"
+          ],
+          "family": [
+            "online",
+            "shop"
+          ],
           "clues": [
             "cart",
             "checkout",
@@ -843,8 +1067,14 @@
             "sleep late",
             "having a lie in"
           ],
-          "reject": ["sleepwalking", "sleeping bag"],
-          "family": ["sleep", "slept"],
+          "reject": [
+            "sleepwalking",
+            "sleeping bag"
+          ],
+          "family": [
+            "sleep",
+            "slept"
+          ],
           "clues": [
             "alarm",
             "snooze",
@@ -871,8 +1101,14 @@
             "celebrity gossips",
             "gossip mags"
           ],
-          "reject": ["gossip girl", "celebrity chef"],
-          "family": ["celeb", "gossip"],
+          "reject": [
+            "gossip girl",
+            "celebrity chef"
+          ],
+          "family": [
+            "celeb",
+            "gossip"
+          ],
           "clues": [
             "rumors",
             "magazine",
@@ -898,8 +1134,15 @@
             "romcomm",
             "romance movie"
           ],
-          "reject": ["sitcom", "horror movie"],
-          "family": ["romcom", "romantic", "flick"],
+          "reject": [
+            "sitcom",
+            "horror movie"
+          ],
+          "family": [
+            "romcom",
+            "romantic",
+            "flick"
+          ],
           "clues": [
             "meet-cute",
             "kiss",
@@ -947,8 +1190,14 @@
             "forgot their name",
             "name mixup"
           ],
-          "reject": ["nickname", "wrong number"],
-          "family": ["wrong", "name"],
+          "reject": [
+            "nickname",
+            "wrong number"
+          ],
+          "family": [
+            "wrong",
+            "name"
+          ],
           "clues": [
             "forgot",
             "introduction",
@@ -974,8 +1223,15 @@
             "undone fly",
             "open zipper"
           ],
-          "reject": ["open mic", "fruit fly"],
-          "family": ["fly", "zipper", "unzip"],
+          "reject": [
+            "open mic",
+            "fruit fly"
+          ],
+          "family": [
+            "fly",
+            "zipper",
+            "unzip"
+          ],
           "clues": [
             "trousers",
             "jeans",
@@ -1001,8 +1257,14 @@
             "reply all email",
             "email reply all"
           ],
-          "reject": ["reply", "call all"],
-          "family": ["reply", "replied"],
+          "reject": [
+            "reply",
+            "call all"
+          ],
+          "family": [
+            "reply",
+            "replied"
+          ],
           "clues": [
             "email",
             "inbox",
@@ -1028,8 +1290,15 @@
             "food stuck in teeth",
             "spinich in teeth"
           ],
-          "reject": ["spinach salad", "teething"],
-          "family": ["spinach", "teeth", "tooth"],
+          "reject": [
+            "spinach salad",
+            "teething"
+          ],
+          "family": [
+            "spinach",
+            "teeth",
+            "tooth"
+          ],
           "clues": [
             "smile",
             "green",
@@ -1055,8 +1324,14 @@
             "waving at the wrong person",
             "wave back at a stranger"
           ],
-          "reject": ["heat wave", "wave goodbye"],
-          "family": ["wave", "waving"],
+          "reject": [
+            "heat wave",
+            "wave goodbye"
+          ],
+          "family": [
+            "wave",
+            "waving"
+          ],
           "clues": [
             "stranger",
             "behind",
@@ -1081,8 +1356,14 @@
             "awkard silence",
             "akward silence"
           ],
-          "reject": ["silent treatment", "moment of silence"],
-          "family": ["silence", "silent"],
+          "reject": [
+            "silent treatment",
+            "moment of silence"
+          ],
+          "family": [
+            "silence",
+            "silent"
+          ],
           "clues": [
             "crickets",
             "pause",
@@ -1108,8 +1389,14 @@
             "morning walk of shame",
             "walk o shame"
           ],
-          "reject": ["walk of fame", "hall of shame"],
-          "family": ["walk", "shame"],
+          "reject": [
+            "walk of fame",
+            "hall of shame"
+          ],
+          "family": [
+            "walk",
+            "shame"
+          ],
           "clues": [
             "morning",
             "heels",
@@ -1136,8 +1423,14 @@
             "pocket dialing",
             "bum dial"
           ],
-          "reject": ["speed dial", "dial tone"],
-          "family": ["butt", "dial"],
+          "reject": [
+            "speed dial",
+            "dial tone"
+          ],
+          "family": [
+            "butt",
+            "dial"
+          ],
           "clues": [
             "pocket",
             "phone",
@@ -1163,8 +1456,14 @@
             "voice breaking",
             "squeaky voice"
           ],
-          "reject": ["crack", "voicemail"],
-          "family": ["voice", "crack"],
+          "reject": [
+            "crack",
+            "voicemail"
+          ],
+          "family": [
+            "voice",
+            "crack"
+          ],
           "clues": [
             "puberty",
             "squeak",
@@ -1191,8 +1490,14 @@
             "tummy growl",
             "stomach grumble"
           ],
-          "reject": ["stomach ache", "growl"],
-          "family": ["stomach", "growl"],
+          "reject": [
+            "stomach ache",
+            "growl"
+          ],
+          "family": [
+            "stomach",
+            "growl"
+          ],
           "clues": [
             "hungry",
             "exam",
@@ -1220,8 +1525,13 @@
             "tripping up",
             "faceplant"
           ],
-          "reject": ["road trip", "stripping"],
-          "family": ["trip"],
+          "reject": [
+            "road trip",
+            "stripping"
+          ],
+          "family": [
+            "trip"
+          ],
           "clues": [
             "stairs",
             "curb",
@@ -1248,8 +1558,13 @@
             "hanging high five",
             "left hangin"
           ],
-          "reject": ["hangover", "hang glider"],
-          "family": ["hanging"],
+          "reject": [
+            "hangover",
+            "hang glider"
+          ],
+          "family": [
+            "hanging"
+          ],
           "clues": [
             "palm",
             "slap",
@@ -1297,8 +1612,14 @@
             "spilled beer",
             "spilled wine"
           ],
-          "reject": ["mixed drink", "spilled milk"],
-          "family": ["spill", "spilt"],
+          "reject": [
+            "mixed drink",
+            "spilled milk"
+          ],
+          "family": [
+            "spill",
+            "spilt"
+          ],
           "clues": [
             "carpet",
             "sticky",
@@ -1324,8 +1645,14 @@
             "double dipping chips",
             "duble dipping"
           ],
-          "reject": ["skinny dipping", "double take"],
-          "family": ["double", "dipp"],
+          "reject": [
+            "skinny dipping",
+            "double take"
+          ],
+          "family": [
+            "double",
+            "dipp"
+          ],
           "clues": [
             "chip",
             "salsa",
@@ -1351,8 +1678,14 @@
             "glass broken",
             "brokn glass"
           ],
-          "reject": ["broken glasses", "glass eye"],
-          "family": ["broke", "glass"],
+          "reject": [
+            "broken glasses",
+            "glass eye"
+          ],
+          "family": [
+            "broke",
+            "glass"
+          ],
           "clues": [
             "shards",
             "broom",
@@ -1378,8 +1711,14 @@
             "zonked out",
             "out cold"
           ],
-          "reject": ["passing by", "passing over"],
-          "family": ["passing", "passed"],
+          "reject": [
+            "passing by",
+            "passing over"
+          ],
+          "family": [
+            "passing",
+            "passed"
+          ],
           "clues": [
             "couch",
             "marker",
@@ -1406,8 +1745,14 @@
             "sneaking off",
             "leaving without saying bye"
           ],
-          "reject": ["sneaking in", "breaking out"],
-          "family": ["sneak", "snuck"],
+          "reject": [
+            "sneaking in",
+            "breaking out"
+          ],
+          "family": [
+            "sneak",
+            "snuck"
+          ],
           "clues": [
             "farewell",
             "door",
@@ -1433,8 +1778,14 @@
             "drunk messaging",
             "drunk txt"
           ],
-          "reject": ["texting", "drink"],
-          "family": ["drunk", "text"],
+          "reject": [
+            "texting",
+            "drink"
+          ],
+          "family": [
+            "drunk",
+            "text"
+          ],
           "clues": [
             "ex",
             "phone",
@@ -1460,8 +1811,14 @@
             "table dance",
             "tabletop dancing"
           ],
-          "reject": ["table tennis", "dance floor"],
-          "family": ["danc", "table"],
+          "reject": [
+            "table tennis",
+            "dance floor"
+          ],
+          "family": [
+            "danc",
+            "table"
+          ],
           "clues": [
             "wobbly",
             "heels",
@@ -1489,8 +1846,14 @@
             "hurling",
             "barfing"
           ],
-          "reject": ["throwing", "throw pillow"],
-          "family": ["throw", "threw"],
+          "reject": [
+            "throwing",
+            "throw pillow"
+          ],
+          "family": [
+            "throw",
+            "threw"
+          ],
           "clues": [
             "toilet",
             "bucket",
@@ -1516,8 +1879,14 @@
             "crashed the party",
             "crash a party"
           ],
-          "reject": ["party pooper", "car crash"],
-          "family": ["crash", "party"],
+          "reject": [
+            "party pooper",
+            "car crash"
+          ],
+          "family": [
+            "crash",
+            "party"
+          ],
           "clues": [
             "uninvited",
             "stranger",
@@ -1543,8 +1912,13 @@
             "last to leave",
             "wont leave"
           ],
-          "reject": ["overslept", "overstepping"],
-          "family": ["overstay"],
+          "reject": [
+            "overslept",
+            "overstepping"
+          ],
+          "family": [
+            "overstay"
+          ],
           "clues": [
             "hints",
             "yawning",
@@ -1571,8 +1945,13 @@
             "fist fight",
             "punch up"
           ],
-          "reject": ["pillow fight", "food fight"],
-          "family": ["fight"],
+          "reject": [
+            "pillow fight",
+            "food fight"
+          ],
+          "family": [
+            "fight"
+          ],
           "clues": [
             "punch",
             "shove",
@@ -1598,8 +1977,14 @@
             "emtpy handed",
             "empty handded"
           ],
-          "reject": ["empty glass", "heavy handed"],
-          "family": ["empty", "handed"],
+          "reject": [
+            "empty glass",
+            "heavy handed"
+          ],
+          "family": [
+            "empty",
+            "handed"
+          ],
           "clues": [
             "bottle",
             "gift",
@@ -1647,8 +2032,15 @@
             "bites nails",
             "nail bitting"
           ],
-          "reject": ["nail polish", "nail filing"],
-          "family": ["nail", "biting", "biter"],
+          "reject": [
+            "nail polish",
+            "nail filing"
+          ],
+          "family": [
+            "nail",
+            "biting",
+            "biter"
+          ],
           "clues": [
             "fingers",
             "teeth",
@@ -1674,8 +2066,13 @@
             "hitting the snooze button",
             "snoozing alarm"
           ],
-          "reject": ["sneezing", "snoring"],
-          "family": ["snooz"],
+          "reject": [
+            "sneezing",
+            "snoring"
+          ],
+          "family": [
+            "snooz"
+          ],
           "clues": [
             "alarm",
             "morning",
@@ -1701,8 +2098,14 @@
             "popping knuckles",
             "nuckle cracking"
           ],
-          "reject": ["knuckle sandwich", "brass knuckles"],
-          "family": ["knuckle", "cracking"],
+          "reject": [
+            "knuckle sandwich",
+            "brass knuckles"
+          ],
+          "family": [
+            "knuckle",
+            "cracking"
+          ],
           "clues": [
             "pop",
             "joints",
@@ -1728,8 +2131,14 @@
             "putting it off",
             "stalling"
           ],
-          "reject": ["prognostication", "proclamation"],
-          "family": ["procrast", "procast"],
+          "reject": [
+            "prognostication",
+            "proclamation"
+          ],
+          "family": [
+            "procrast",
+            "procast"
+          ],
           "clues": [
             "deadline",
             "tomorrow",
@@ -1755,8 +2164,13 @@
             "tmi",
             "saying too much"
           ],
-          "reject": ["sharing", "oversleeping"],
-          "family": ["share"],
+          "reject": [
+            "sharing",
+            "oversleeping"
+          ],
+          "family": [
+            "share"
+          ],
           "clues": [
             "personal",
             "details",
@@ -1784,8 +2198,14 @@
             "bad language",
             "profanity"
           ],
-          "reject": ["sweating", "wearing"],
-          "family": ["swear", "swore"],
+          "reject": [
+            "sweating",
+            "wearing"
+          ],
+          "family": [
+            "swear",
+            "swore"
+          ],
           "clues": [
             "jar",
             "bleep",
@@ -1811,8 +2231,12 @@
             "impulsive buying",
             "impulse buyer"
           ],
-          "reject": ["impulse control"],
-          "family": ["impuls"],
+          "reject": [
+            "impulse control"
+          ],
+          "family": [
+            "impuls"
+          ],
           "clues": [
             "checkout",
             "cart",
@@ -1838,8 +2262,15 @@
             "booger picking",
             "picks nose"
           ],
-          "reject": ["nose piercing", "nosebleed"],
-          "family": ["nose", "picking", "picker"],
+          "reject": [
+            "nose piercing",
+            "nosebleed"
+          ],
+          "family": [
+            "nose",
+            "picking",
+            "picker"
+          ],
           "clues": [
             "booger",
             "finger",
@@ -1865,8 +2296,13 @@
             "mindless scrolling",
             "doomscrolls"
           ],
-          "reject": ["doomsday"],
-          "family": ["doom", "scroll"],
+          "reject": [
+            "doomsday"
+          ],
+          "family": [
+            "doom",
+            "scroll"
+          ],
           "clues": [
             "phone",
             "news",
@@ -1893,8 +2329,14 @@
             "chronically late",
             "runs late"
           ],
-          "reject": ["running", "latte"],
-          "family": ["late", "running"],
+          "reject": [
+            "running",
+            "latte"
+          ],
+          "family": [
+            "late",
+            "running"
+          ],
           "clues": [
             "clock",
             "traffic",
@@ -1919,8 +2361,12 @@
             "noisy chewing",
             "chomping loudly"
           ],
-          "reject": ["chewing gum"],
-          "family": ["chew"],
+          "reject": [
+            "chewing gum"
+          ],
+          "family": [
+            "chew"
+          ],
           "clues": [
             "smacking",
             "mouth",
@@ -1946,8 +2392,15 @@
             "drinking in the day",
             "day drank"
           ],
-          "reject": ["drinking water", "daydreaming"],
-          "family": ["drink", "drunk", "drank"],
+          "reject": [
+            "drinking water",
+            "daydreaming"
+          ],
+          "family": [
+            "drink",
+            "drunk",
+            "drank"
+          ],
           "clues": [
             "mimosa",
             "brunch",

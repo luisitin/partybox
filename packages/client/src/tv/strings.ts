@@ -34,6 +34,8 @@ export const STRINGS: Strings = {
     Recap: 'Resumen',
     'Phone music': 'Música en teléfonos',
     '{n} players': '{n} jugadores',
+    // Part 00 §1.4: the spotlight names whose About the TV mirrors.
+    '{name} is reading about': '{name} está leyendo sobre',
     // TvLobby
     '{names} and {last}': '{names} y {last}',
     'last game': 'último juego',
