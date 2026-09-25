@@ -28,14 +28,15 @@ export const clientModule: GameClientModule = {
     'done',
   ],
   quickInto: ['voteReveal', 'hitlerCheck', 'chaos', 'enactReveal', 'powerReveal', 'gameOver'],
-  // §12.2 with existing cues. powerReveal steps its deadline (ADR-033) and the choosing phases
-  // move theirs on Last call, so those keep the shell's `phase` chime or stay silent.
+  // §12.2: the reveals play their own cues on their frames (TvMoments' useCueAt: the placard
+  // wave, the stamp, the slam), so the shell stays silent as they begin; the choosing phases
+  // keep the shell's `phase` chime ("pick up your phone").
   sounds: {
     seating: 'card',
-    voteReveal: 'reveal',
+    voteReveal: 'silence',
     hitlerCheck: 'silence',
-    enactReveal: 'reveal',
-    chaos: 'bust',
+    enactReveal: 'silence',
+    chaos: 'silence',
     powerReveal: 'silence',
     gameOver: 'fanfare',
   },

@@ -18,6 +18,16 @@
   display: none;
 }
 
+@media (max-height: 640px) {
+  .roster {
+    padding-block: 0.3rem 0.2rem;
+  }
+
+  .nh {
+    display: none;
+  }
+}
+
 .seat {
   flex: none;
   display: flex;

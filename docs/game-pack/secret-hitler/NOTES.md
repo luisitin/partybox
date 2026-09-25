@@ -8,9 +8,33 @@ harness port 42410.
 | Milestone                       | State                                                                                                                                                                                                                            |
 | ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | M1 rules engine + plain screens | done: 15 phases, every R1–R22 and D1–D11 rule has a named test (81 tests), contract green (random / fast / idle / skipper × normal / relaxed / fast), sim 4,800 games clean (5–10 players × random / idle / mixed / chaos × 200) |
-| M2 Parliament Noir              | not started                                                                                                                                                                                                                      |
+| M2 Parliament Noir              | visual pass in progress after the owner's play-test: tokens, fonts, art, TV moments, phone dossier/roster/cards (see below); claims, Record input, narrator, chat, PhoneStage still to do                                        |
 | M3 variants + S1                | not started                                                                                                                                                                                                                      |
 | M4 polish                       | not started                                                                                                                                                                                                                      |
+
+## The owner's play-test notes (2026-09-24) and the visual pass
+
+1. **Better textures and motion** ("feel things coming in and out"): Parliament Noir — game tokens
+   `--sh-*` scoped to the game root per platform theme (S2, hub #plans `a27573`), vendored Bebas
+   Neue / Playfair Display / Special Elite (OFL, Apache-2.0; licences in `client/fonts/`), inline
+   SVG art (lantern, serpent and cracked column, cracked mask, seals, guilloché backs, stamps,
+   power icons), a rainy chamber backdrop with searchlights and grain, decree cards dealt and
+   flipped in 3D, placards turned in a wave, rubber stamps, the session envelope gliding from the
+   President to the Chancellor, the CLASSIFIED folder, a spotlight dim for the Hitler check and
+   executions, and the newspaper (server-picked headlines, `content/headlines.json`). Cues land on
+   the animation frames (`useCueAt`); the shell stays silent as those reveals begin.
+2. **The dossier was hard to read with hold**: tap to open, tap to close by default (a phone set to
+   "hold" keeps holding); it closes itself on each new phase. Hub #decisions `997c4d` item 4
+   amended accordingly (card rows follow the same default).
+3. **See every player at once**: a roster of every seat along the bottom of every phone screen;
+   while your dossier is open, your teammates are marked there (Fascists see the other Fascists
+   and Hitler), and nothing is marked while it is closed.
+
+Implementation notes: the TV root scales its root font, so TV sizes are px (never rem); the TV
+shell remounts the game per phase, so journeys across phases (the envelope, the plate) are keyframes
+from an offset, and the vote placards arrive already face-up after the reveal; a child's layout
+effect runs before the parent's ref is attached, so seat positions are measured in a frame. Evidence:
+`reports/design/record-review/secret-hitler/m2-p1` (stills, 5 themes) and `m2-p2/burst` (filmstrips).
 
 ## The owner's rulings on the M1 plan (2026-09-24)
 

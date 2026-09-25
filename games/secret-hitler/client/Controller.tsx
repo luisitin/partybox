@@ -9,7 +9,7 @@ import { PrimaryButton, useT } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { Input } from '../server/types';
 import type { ShControllerView } from '../server/views';
-import { MaskEmblem, Stamp } from './art';
+import { MaskEmblem, PartyEmblem, Stamp } from './art';
 import { FlipCard } from './Card';
 import { CREDIT, endingBanner, roleName, winnerLine } from './labels';
 import { phaseLines } from './lines';
@@ -146,9 +146,15 @@ export function Controller({
             {over ? (
               <>
                 {role ? (
-                  <p className={styles.line}>
-                    {L('You were {role}.', { role: roleName(L, role) })}
-                  </p>
+                  <div className={styles.roleReveal} data-role={role}>
+                    {role === 'hitler' ? (
+                      <MaskEmblem size="5rem" />
+                    ) : (
+                      <PartyEmblem party={role === 'liberal' ? 'L' : 'F'} size="4.5rem" />
+                    )}
+                    <span className={styles.roleName}>{roleName(L, role)}</span>
+                    <span>{L('You were {role}.', { role: roleName(L, role) })}</span>
+                  </div>
                 ) : null}
                 <p className={styles.hint}>{L(CREDIT)}</p>
               </>

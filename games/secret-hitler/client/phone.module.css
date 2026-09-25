@@ -36,6 +36,42 @@
   gap: 0.5rem;
 }
 
+/* A two-way choice (Agree / Refuse) sits side by side to leave room for the table. */
+.actions:has(> :nth-child(2)):not(:has(> :nth-child(3))) {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+@media (max-height: 640px) {
+  .body {
+    gap: 0.45rem;
+  }
+}
+
+.roleReveal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 1rem 1.4rem 0.8rem;
+  border-radius: 10px;
+  background: var(--sh-paper);
+  color: var(--sh-ink);
+  box-shadow: 0 12px 26px var(--sh-shadow);
+  animation: global(sh-deal) 500ms var(--sh-ease) both;
+}
+
+.roleReveal[data-role='hitler'] {
+  background: var(--sh-ink);
+  color: var(--sh-paper);
+}
+
+.roleName {
+  font-family: var(--sh-font-display);
+  font-size: 2rem;
+  letter-spacing: 0.08em;
+}
+
 .kicker {
   margin: 0;
   font-family: var(--sh-font-display);
