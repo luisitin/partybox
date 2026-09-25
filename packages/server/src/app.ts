@@ -95,6 +95,7 @@ export async function createApp(options: AppOptions): Promise<App> {
   );
   const host = createHost({
     tuned: () => tunedBook.get(),
+    tvRooms: process.env['PARTYBOX_DESIGN_CAPTURE'] === '1',
     deps,
     clock,
     transport: sockets.transport,

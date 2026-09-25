@@ -14,7 +14,9 @@ import {
 
 describe('VIP validation', () => {
   it('setMusicOnPhones flips the room flag any time, and is a no-op when unchanged (S-004)', () => {
-    const room = roomWith(2);
+    // Owner 2026-09-24: new rooms start with music on the phones; the VIP can turn it off and on.
+    expect(roomWith(2).musicOnPhones).toBe(true);
+    const room = vip(roomWith(2), { action: 'setMusicOnPhones', on: false }).room;
     expect(room.musicOnPhones).toBe(false);
     const on = vip(room, { action: 'setMusicOnPhones', on: true });
     expect(on.room.musicOnPhones).toBe(true);

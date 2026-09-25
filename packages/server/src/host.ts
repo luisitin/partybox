@@ -45,6 +45,9 @@ export interface HostOptions {
   log?: (level: 'warn' | 'error' | 'info', text: string) => void;
   /** I-763 C: the per-game settings every new room starts from (the host PC's saved ones). */
   tuned?: () => Record<string, Settings>;
+  /** New rooms start as TV rooms (phone-only and phone music off): the design/record harnesses
+   *  (PARTYBOX_DESIGN_CAPTURE=1) film a TV, while real rooms default to phones (owner 2026-09-24). */
+  tvRooms?: boolean;
 }
 
 export interface Host {
@@ -233,6 +236,7 @@ export function createHost(options: HostOptions): Host {
     const room: RoomState = {
       ...createRoom({ code, now: clock.now(), listed: options?.listed ?? true }),
       ...(Object.keys(seed).length > 0 ? { settingsByGame: seed } : {}),
+      ...(createOptions.tvRooms ? { phoneOnly: false, musicOnPhones: false } : {}),
     };
     rooms.set(code, room);
     return room;

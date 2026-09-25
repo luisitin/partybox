@@ -33,9 +33,11 @@ export function createRoom(options: CreateRoomOptions): RoomState {
     results: null,
     lastGame: null,
     recording: true,
-    musicOnPhones: false,
+    // Owner 2026-09-24: a new room plays on the phones, sound and music included; the VIP can turn
+    // either off (and back on) in the lobby.
+    musicOnPhones: true,
     listed: options.listed ?? true,
-    phoneOnly: false,
+    phoneOnly: true,
   };
 }
 
