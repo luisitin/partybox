@@ -8,14 +8,14 @@ import type { State } from '../server/types';
 import { bet, playThrough, send, setOutcome, skip, start, timer, walkTo } from './helpers';
 
 describe('flow', () => {
-  it('rules → (box → bet → open) × rounds → done, on deadlines alone', () => {
+  it('(box → bet → open) × rounds → done, on deadlines alone', () => {
     let s = start(4, { rounds: 5 });
     const seen: string[] = [s.phase.id];
     for (let i = 0; i < 200 && s.phase.id !== 'done'; i++) {
       s = timer(s);
       if (seen[seen.length - 1] !== s.phase.id) seen.push(s.phase.id);
     }
-    expect(seen).toEqual(['rules', ...Array(5).fill(['box', 'bet', 'open']).flat(), 'done']);
+    expect(seen).toEqual([...Array(5).fill(['box', 'bet', 'open']).flat(), 'done']);
     expect(game.results(s)?.ranking).toHaveLength(4);
   });
 
@@ -26,9 +26,8 @@ describe('flow', () => {
       labels.push(game.tvView(s).vipSkipLabel ?? '');
       s = skip(s);
     }
-    // The countdown (rules step 1) has no skip label.
-    expect(labels.filter(Boolean).slice(0, 4)).toEqual([
-      'Start now',
+    // The shell's start stage owns the rules; the game opens on the first box.
+    expect(labels.filter(Boolean).slice(0, 3)).toEqual([
       'Skip to betting',
       'Close betting',
       'Next box',
@@ -89,7 +88,7 @@ describe('voice pacing', () => {
 });
 
 describe('bots', () => {
-  it('ready up, then bet a varied stake on a varied content, once per box', () => {
+  it('bet a varied stake on a varied content, once per box', () => {
     const s = start(6, {}, 3, 6);
     expect(new Set(Object.values(s.factors)).size).toBeGreaterThan(3);
     const choices = new Set<string>();
@@ -135,7 +134,7 @@ describe('results, awards, recap, size', () => {
       history,
       results: game.results(end),
     });
-    expect(recap?.markdown).toMatch(/^# Blind Auction · \d{4}-\d{2}-\d{2}/);
+    expect(recap?.markdown).toMatch(/^# Mystery Box · \d{4}-\d{2}-\d{2}/);
     expect(recap?.markdown.match(/^## \d\./gm)).toHaveLength(5);
     expect(recap?.markdown).toContain('Inside: ');
   });

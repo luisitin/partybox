@@ -1,4 +1,4 @@
-// Blind Auction's packs (SPEC §8.16): lots with 1–3 possible outcomes, each with a fixed chance.
+// Mystery Box's packs (SPEC §8.16): lots with 1–3 possible outcomes, each with a fixed chance.
 // `packs` maps content/<name>.json → its zod schema; the contract suite validates every pack.
 // lots.json holds the normal pool (chaos calm / normal) and the wild pool (chaos wild).
 import { z } from '@partybox/game-sdk';

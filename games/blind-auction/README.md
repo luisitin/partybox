@@ -1,4 +1,4 @@
-# Blind Auction
+# Mystery Box
 
 Bid on mystery lots. Treasure or trap? The pack's most openly competitive game. Full design:
 `docs/game-pack/blind-auction/SPEC.md`; this file is the game's spec as built (checked by `pnpm verify`).

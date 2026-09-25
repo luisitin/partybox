@@ -1,4 +1,4 @@
-// Blind Auction — "Bet on the box" (docs/game-pack/blind-auction/, the owner's redesign 2026-09-24).
+// Mystery Box — "Bet on the box" (docs/game-pack/blind-auction/, the owner's redesign 2026-09-24).
 // `game` is what the registry imports. One file per phase under ./phases; this file wires init /
 // reduce / views / results / bot / speech / recap together and owns the phase order (`advance`).
 import {
@@ -34,7 +34,6 @@ import { enterHands, finishHands, handsIn, isBlackjack, reduceHands } from './ph
 import { drawEvent, potatoOptions } from './events';
 import { boxSpeech, enterBox, reduceBox } from './phases/box';
 import { enterOpen, openSpeech, reduceOpen } from './phases/open';
-import { allReady, countDown, enterRules, reduceRules } from './phases/rules';
 import { recap } from './recap';
 import { results } from './scoring';
 import { speech } from './speech';
@@ -107,7 +106,7 @@ function init(ctx: InitContext): State {
     factors[p.id] = Math.round(f * 100) / 100;
   }
   const base: State = {
-    phase: { id: 'rules', startedAt: ctx.now, deadline: null },
+    phase: { id: 'box', startedAt: ctx.now, deadline: null },
     rng,
     players,
     cfg,
@@ -116,9 +115,6 @@ function init(ctx: InitContext): State {
     left: [],
     boxes,
     r: { idx: 0, bets: {}, step: 0, voiceAt: null, turnedAt: null, topped: [] },
-    // Bots have read the rules.
-    ready: ctx.players.filter((p) => p.bot === true).map((p) => p.id),
-    rulesStep: 0,
     coins: Object.fromEntries(seats.map((id) => [id, cfg.startCoins])),
     stats: Object.fromEntries(
       seats.map((id) => [id, { biggestBet: 0, biggestWin: 0, longShots: 0, calls: 0, lost: 0 }]),
@@ -127,7 +123,8 @@ function init(ctx: InitContext): State {
     notices: {},
     speechMs: {},
   };
-  return enterRules(base, ctx.now);
+  // The shell's start stage has shown the rules and counted 3·2·1 (ADR-053): deal the first box.
+  return enterBox(base, ctx.now, 0);
 }
 
 function enterDone(state: State, now: number): State {
@@ -137,9 +134,6 @@ function enterDone(state: State, now: number): State {
 /** The phase order: what a deadline does — and what a VIP skip does. */
 export function advance(state: State, now: number): State {
   switch (state.phase.id) {
-    case 'rules':
-      // "Start now" still counts 3·2·1 first; the countdown's end deals the first box.
-      return state.rulesStep === 0 ? countDown(state, now) : enterBox(state, now, 0);
     case 'box':
       return enterBet(state, now);
     case 'bet':
@@ -173,7 +167,7 @@ export function advance(state: State, now: number): State {
   }
 }
 
-/** Connections (and leaving for good, ADR-046); a drop can complete the ready-up or the betting. */
+/** Connections (and leaving for good, ADR-046); a drop can complete the betting. */
 function onPlayer(state: State, event: Extract<GameEvent<Input>, { type: 'player' }>): State {
   let next = potatoDropped(setConnected(state, event));
   if (event.gone && hasPlayer(state, event.playerId) && !state.left.includes(event.playerId))
@@ -182,11 +176,9 @@ function onPlayer(state: State, event: Extract<GameEvent<Input>, { type: 'player
 }
 
 /** Everyone waited on is in: move on. Run after a drop and after a resume (reviewer [12ea6b]: a
- *  drop or the last Ready during a pause must not leave the phase sitting until its timer). */
+ *  drop during a pause must not leave the phase sitting until its timer). */
 function recheck(next: State, now: number): State {
   if (next.phase.paused) return next;
-  if (next.phase.id === 'rules' && next.rulesStep === 0 && allReady(next))
-    return countDown(next, now);
   if (next.phase.id === 'bet' && allConnectedDone(next, Object.keys(next.r.bets)))
     return advance(next, now);
   if (next.phase.id === 'swap' && swapsIn(next)) return advance(next, now);
@@ -204,7 +196,7 @@ function reduce(state: State, event: GameEvent<Input>): State {
   if (event.type === 'player') return onPlayer(state, event);
   if (event.type === 'speech') return onSpeech(state, event.key, event.ms, event.now);
   const vip = applyVip(state, event, { skip: advance, end: enterDone });
-  // A resume re-checks: whoever dropped (or readied) during the pause may have completed the phase.
+  // A resume re-checks: whoever dropped during the pause may have completed the phase.
   if (vip) {
     if (!state.phase.paused || vip.phase.paused) return vip;
     // Resumed: the potato's secret pop (and its hold) move by the pause (review C3).
@@ -218,8 +210,6 @@ function reduce(state: State, event: GameEvent<Input>): State {
   }
   if (state.phase.paused) return state;
   switch (state.phase.id) {
-    case 'rules':
-      return reduceRules(state, event, advance);
     case 'box':
       return reduceBox(state, event, advance);
     case 'bet':

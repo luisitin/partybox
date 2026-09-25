@@ -1,4 +1,4 @@
-// Phone view for Blind Auction. Every input phase carries all a player needs (P00 §3.7): the box,
+// Phone view for Mystery Box. Every input phase carries all a player needs (P00 §3.7): the box,
 // what it might hold, the odds and your coins. The reveal shows "👀 Watch the TV" until the TV has
 // opened the box, then your own line. `send` is the only way out; the server validates every bet.
 import type { JSX } from 'react';
@@ -7,7 +7,7 @@ import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { Input } from '../server/types';
 import type { BlindAuctionControllerView } from '../server/views';
 import { PhoneBet } from './PhoneBet';
-import { PhoneBox, PhoneRules } from './PhoneLot';
+import { PhoneBox } from './PhoneLot';
 import { PhoneResult } from './PhoneResult';
 import { PhoneSwap } from './PhoneSwap';
 import { PhonePotato } from './Potato';
@@ -19,15 +19,11 @@ import { STRINGS } from './strings';
 type Props = GameControllerProps<BlindAuctionControllerView, Input>;
 
 export function Controller(props: Props): JSX.Element {
-  const { view, send } = props;
+  const { view } = props;
   const L = useT(STRINGS);
   const phoneOnly = usePhoneOnly();
   const spectator = view.me.role !== 'player';
   switch (view.phaseId) {
-    case 'rules':
-      return (
-        <PhoneRules view={view} onReady={spectator ? undefined : () => send({ type: 'ready' })} />
-      );
     case 'box':
       return <PhoneBox view={view} />;
     case 'bet':

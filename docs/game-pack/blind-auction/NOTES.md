@@ -1,6 +1,6 @@
-# Blind Auction — build notes
+# Mystery Box — build notes
 
-Session: Blind Auction · worktree `C:/dev/partybox-game-blind-auction` · branch `game/blind-auction` ·
+Session: Mystery Box · worktree `C:/dev/partybox-game-blind-auction` · branch `game/blind-auction` ·
 harness port 42380. Started 2026-09-24 (after the 30-minute foundation wait).
 
 ## Where it stands

@@ -39,9 +39,6 @@ export const timer = (s: State): State =>
     startedAt: s.phase.startedAt,
   });
 
-export const ready = (s: State, playerId: string, now = s.phase.startedAt + 100): State =>
-  send(s, { type: 'input', now, playerId, input: { type: 'ready' } });
-
 export const bet = (
   s: State,
   playerId: string,

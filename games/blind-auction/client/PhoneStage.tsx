@@ -10,7 +10,7 @@ import { iconOf, nameOf, payText, toneOf } from './copy';
 import { LotCard } from './LotCard';
 import { PhoneEvent } from './PhoneEvent';
 import { OptionBoard } from './Options';
-import { LotTitle, PhoneRules } from './PhoneLot';
+import { LotTitle } from './PhoneLot';
 import { OwnLineCard, insideWords } from './PhoneResult';
 import styles from './phone.module.css';
 import { STRINGS } from './strings';
@@ -76,8 +76,6 @@ function StageOpen({ view }: { view: View }): JSX.Element | null {
 
 export function PhoneStage({ view }: { view: View }): JSX.Element | null {
   switch (view.phaseId) {
-    case 'rules':
-      return <PhoneRules view={view} />;
     case 'open':
       return <StageOpen key={view.box?.n ?? 0} view={view} />;
     default:

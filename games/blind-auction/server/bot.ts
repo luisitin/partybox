@@ -9,7 +9,6 @@ import type { BlindAuctionControllerView } from './views';
 
 export function decide(view: BlindAuctionControllerView, factor: number, rng: Rng): Input | null {
   if (view.me.role !== 'player') return null;
-  if (view.phaseId === 'rules') return view.ready ? null : { type: 'ready' };
   // Hot potato: pass it on the moment it lands (the server makes you hold it a beat first).
   if (view.phaseId === 'potato')
     return view.potato?.holder === view.me.id ? { type: 'pass' } : null;

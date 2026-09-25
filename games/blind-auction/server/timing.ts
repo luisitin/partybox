@@ -1,12 +1,5 @@
-// Every duration Blind Auction paces itself by. Pure constants, shared by the reducer and the TV so
+// Every duration Mystery Box paces itself by. Pure constants, shared by the reducer and the TV so
 // the stage's choreography lands on the server's beats. No content imports.
-
-/** `rules`: nobody is hurried (no clock shown); after this long an idle phone stops holding the room. */
-export const RULES_SAFETY_MS = 180_000;
-/** …and once someone is ready it waits for the rest, but not past this: that phone has gone. */
-export const RULES_GIVE_UP_MS = 600_000;
-/** `rules` step 1: the 3·2·1 once everyone is ready. */
-export const COUNTDOWN_MS = 3_000;
 
 /** `box`: the box lands, then the reading starts (the TV delays the voice by this much). */
 export const BOX_LEAD_MS = 700;

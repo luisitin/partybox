@@ -1,4 +1,4 @@
-// Blind Auction's phone entry (ADR-050): downloaded once the game is chosen, never by the TV.
+// Mystery Box's phone entry (ADR-050): downloaded once the game is chosen, never by the TV.
 import { lazy } from 'react';
 import type { GamePhoneModule } from '@partybox/game-sdk/ui';
 import { Controller } from './Controller';

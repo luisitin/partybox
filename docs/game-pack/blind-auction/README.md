@@ -1,4 +1,4 @@
-# 🔨 Blind Auction
+# 🔨 Mystery Box
 
 - **Game id:** `blind-auction` — code in `games/blind-auction/` on branch `game/blind-auction`.
 - **Status:** built 2026-09-24; review package [REVIEW.md](REVIEW.md) round 1 waiting for the owner; build notes [NOTES.md](NOTES.md). Not merged.

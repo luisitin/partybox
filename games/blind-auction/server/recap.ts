@@ -1,4 +1,4 @@
-// Recap: "Blind Auction · <date>" — per box its name and odds, every bet, what was inside, who
+// Recap: "Mystery Box · <date>" — per box its name and odds, every bet, what was inside, who
 // called it and the coins afterwards; then the final coins and awards. Read from the states each
 // `open` began with (ADR-035 history), so state keeps no per-round log.
 import type { GameRecap, RecapContext } from '@partybox/game-sdk';
@@ -23,7 +23,7 @@ function date(at: number): string {
 
 export function recap(state: State, ctx: RecapContext<State>): GameRecap {
   const name = (id: string): string => state.players[id]?.name ?? '—';
-  const lines = [`# Blind Auction · ${date(ctx.history[0]?.at ?? state.phase.startedAt)}`, ''];
+  const lines = [`# Mystery Box · ${date(ctx.history[0]?.at ?? state.phase.startedAt)}`, ''];
   lines.push(
     `Bet on the box · ${state.boxes.length} boxes · ${state.cfg.startCoins} coins each${state.cfg.spicy ? ' · spicy' : ''}`,
     '',

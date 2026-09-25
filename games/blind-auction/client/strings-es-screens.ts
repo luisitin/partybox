@@ -1,4 +1,4 @@
-// Spanish for Blind Auction's TV and phone screens, keyed by the English sentence (ADR-044).
+// Spanish for Mystery Box's TV and phone screens, keyed by the English sentence (ADR-044).
 // Content (box names and flavour lines) stays in the deck's language.
 export const ES_SCREENS: Record<string, string> = {
   // the rules
@@ -217,7 +217,7 @@ export const ES_SCREENS: Record<string, string> = {
   'Dead heat! Every stake goes back.': '¡Empate! Se devuelven todas las apuestas.',
   'Time! Which side held on?': '¡Tiempo! ¿Qué lado aguantó?',
   // The game's name is a brand: it stays English on Spanish screens (#decisions, Part 00 a).
-  'Blind Auction': 'Blind Auction',
+  'Mystery Box': 'Mystery Box',
   'No passes yet': 'Aún sin pases',
   '1 pass': '1 pase',
   'Everyone: {tier} · {n}% · pays {x}': 'Todos: {tier} · {n}% · paga {x}',

@@ -55,8 +55,6 @@ export interface Common {
   step: 0 | 1;
   startCoins: number;
   box: BoxView | null;
-  /** `rules`: who has tapped Ready. */
-  readyIds: string[];
   /** `open`: every bet, public from here on. */
   bets: BetView[] | null;
   /** `open` step 1: which content was inside. */
@@ -98,7 +96,6 @@ export type OwnLine =
 
 export interface BlindAuctionControllerView extends ControllerView, Common {
   coins: number;
-  ready: boolean;
   myBet: Bet | null;
   /** Broke at the start of this bet: topped up to the pity stake. */
   topped: boolean;

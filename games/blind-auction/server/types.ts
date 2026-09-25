@@ -1,10 +1,9 @@
-// State and input types for Blind Auction — "Bet on the box" (the owner's redesign, 2026-09-24:
+// State and input types for Mystery Box — "Bet on the box" (the owner's redesign, 2026-09-24:
 // everyone bets on what's inside, paid by the odds). Everything JSON-serializable.
 import { z } from '@partybox/game-sdk';
 import type { GameStateBase } from '@partybox/game-sdk';
 
 export const PHASES = [
-  'rules',
   'box',
   'bet',
   'swap',
@@ -186,10 +185,6 @@ export interface State extends GameStateBase {
   /** Each box's outcome index is SECRET until it opens. */
   boxes: Round[];
   r: RoundState;
-  /** `rules`: who has tapped Ready (bots are ready from the start). */
-  ready: string[];
-  /** `rules`: 0 while everyone reads, 1 = the 3·2·1 before the first box. */
-  rulesStep: 0 | 1;
   coins: Record<string, number>;
   stats: Record<string, Stats>;
   /** Bot personalities: 0 cautious (likely, small) … 1 reckless (long shots, big). */
@@ -200,7 +195,6 @@ export interface State extends GameStateBase {
 }
 
 export const inputSchema = z.discriminatedUnion('type', [
-  z.object({ type: z.literal('ready') }),
   // Doors: the door you end on after the host opens one (your own = stay).
   z.object({ type: z.literal('swap'), door: z.number().int().min(0).max(2) }),
   // Hot potato: the holder passes it on.

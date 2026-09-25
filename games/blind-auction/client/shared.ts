@@ -1,4 +1,4 @@
-// What Blind Auction's phone and TV entries both carry (ADR-050): the words, the sound plan and the
+// What Mystery Box's phone and TV entries both carry (ADR-050): the words, the sound plan and the
 // music.
 import type { GameShared } from '@partybox/game-sdk/ui';
 import { STRINGS } from './strings';
@@ -10,7 +10,6 @@ export const shared: GameShared = {
   // `phase` chime under "Place your bets!", the reveal's cue as the box finishes turning, the 3·2·1.
   // Mapped phases re-chime whenever their deadline moves, so every phase maps to `silence`.
   sounds: {
-    rules: 'silence',
     box: 'silence',
     bet: 'silence',
     swap: 'silence',

@@ -1,4 +1,4 @@
-// Words for Blind Auction's screens, shared by the TV, the phone and PhoneStage. Every sentence goes
+// Words for Mystery Box's screens, shared by the TV, the phone and PhoneStage. Every sentence goes
 // through the device's language (`L`); every content travels with its icon and its word (never
 // colour alone).
 import type { Translator } from '@partybox/game-sdk/ui';

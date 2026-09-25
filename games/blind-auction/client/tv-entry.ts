@@ -1,4 +1,4 @@
-// Blind Auction's TV entry (ADR-050): downloaded by the TV once the game is chosen, never by a phone.
+// Mystery Box's TV entry (ADR-050): downloaded by the TV once the game is chosen, never by a phone.
 import type { GameTvModule } from '@partybox/game-sdk/ui';
 import { shared } from './shared';
 import { Tv } from './Tv';

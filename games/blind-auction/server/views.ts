@@ -44,7 +44,7 @@ import type {
 function boxView(state: State): BoxView | null {
   const phase = state.phase.id;
   const round = state.boxes[state.r.idx];
-  if (!round || phase === 'rules' || phase === 'done') return null;
+  if (!round || phase === 'done') return null;
   const { box } = round;
   return {
     n: state.r.idx + 1,
@@ -112,7 +112,7 @@ function blackjackView(state: State): Common['blackjack'] {
 
 function tugView(state: State): Common['tug'] {
   const round = state.boxes[state.r.idx];
-  if (!round?.teams || state.phase.id === 'rules' || state.phase.id === 'done') return null;
+  if (!round?.teams || state.phase.id === 'done') return null;
   return { ...round.teams, rope: state.r.rope ?? 0, draw: state.r.draw === true };
 }
 
@@ -181,7 +181,6 @@ function clips(state: State): Partial<Record<FixedLine, string>> {
 
 function statusOf(state: State): (id: string) => PlayerStatus {
   return (id) => {
-    if (state.phase.id === 'rules') return state.ready.includes(id) ? 'submitted' : 'active';
     if (state.phase.id === 'bet') return Object.hasOwn(state.r.bets, id) ? 'submitted' : 'active';
     if (state.phase.id === 'potato') return state.r.holder === id ? 'active' : 'waiting';
     if (state.phase.id === 'tug') return teamOf(state, id) === null ? 'waiting' : 'active';
@@ -203,8 +202,6 @@ function statusOf(state: State): (id: string) => PlayerStatus {
 
 function skipLabel(state: State): string | undefined {
   switch (state.phase.id) {
-    case 'rules':
-      return state.rulesStep === 0 ? 'Start now' : undefined;
     case 'box':
       return 'Skip to betting';
     case 'bet':
@@ -230,17 +227,14 @@ function skipLabel(state: State): string | undefined {
 
 function timerMode(state: State): 'normal' | 'quiet' | 'hidden' {
   if (['bet', 'swap', 'tug', 'cups', 'hands'].includes(state.phase.id)) return 'normal';
-  // The rules' safety net is never shown: nobody should feel hurried while reading.
   return 'hidden';
 }
 
 function common(state: State): Common {
   return {
-    step: state.phase.id === 'rules' ? state.rulesStep : state.r.step,
+    step: state.r.step,
     startCoins: state.cfg.startCoins,
     box: boxView(state),
-    readyIds:
-      state.phase.id === 'rules' ? state.ready.filter((id) => state.seats.includes(id)) : [],
     bets: betsView(state),
     outcome: opened(state) ? (state.boxes[state.r.idx]?.outcome ?? null) : null,
     run: runView(state),
@@ -300,7 +294,6 @@ export function controllerView(state: State, playerId: string): BlindAuctionCont
     ...(label ? { vipSkipLabel: label } : {}),
     ...common(state),
     coins: shownCoins(state)[playerId] ?? 0,
-    ready: state.ready.includes(playerId),
     myBet: playing && state.phase.id === 'bet' ? (state.r.bets[playerId] ?? null) : null,
     topped: playing && state.phase.id === 'bet' && state.r.topped.includes(playerId),
     notice: playing ? (state.notices[playerId] ?? null) : null,
