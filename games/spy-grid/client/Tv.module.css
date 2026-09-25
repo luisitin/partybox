@@ -260,7 +260,27 @@
   justify-content: center;
   background: var(--pb-scrim);
   border-radius: var(--pb-radius-lg);
-  animation: global(pb-fade-in) var(--pb-motion-base) var(--pb-ease) both;
+  pointer-events: none;
+  /* the turn's result lands, holds ~1.8 s, then lifts away so the room gets the rest of the pause
+     to study the clear board before the next clue (owner, 2026-09-25: "more time to look at your
+     grid"). Runs over TURN_END_MS (5 s). Opacity only, so reduced motion keeps it. */
+  animation: sg-turn-overlay 5s var(--pb-ease) both;
+}
+
+@keyframes sg-turn-overlay {
+  0% {
+    opacity: 0;
+  }
+  6% {
+    opacity: 1;
+  }
+  36% {
+    opacity: 1;
+  }
+  48%,
+  100% {
+    opacity: 0;
+  }
 }
 
 .turnCard {
