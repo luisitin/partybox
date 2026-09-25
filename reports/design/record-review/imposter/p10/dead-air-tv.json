@@ -1,0 +1,21 @@
+{
+  "video": "C:\\dev\\partybox-game-imposter\\reports\\design\\record-review\\imposter\\p10\\video\\tv\\round.webm",
+  "bytes": 11524911,
+  "durationS": 128.1,
+  "fps": 10,
+  "thresholds": {
+    "stillMeanDiff": 0.0025,
+    "minDeadMs": 1500,
+    "cutMeanDiff": 0.22
+  },
+  "deadSpans": [],
+  "deadMsTotal": 0,
+  "hardCuts": [],
+  "samples": 1280,
+  "motion": {
+    "p50": 0.0002,
+    "p90": 0.0029,
+    "p99": 0.0459,
+    "max": 0.1206
+  }
+}

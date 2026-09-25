@@ -37,6 +37,14 @@ export function TvBoard({
   // clueReveal is mapped to 'silence' (it steps its deadline): its opening cue plays here, once.
   useEffect(() => {
     if (view.phaseId === 'clueReveal') sound('reveal', { gain: 0.8 });
+    // The deal: a soft pluck as each card lands (the slots deal 70 ms apart).
+    if (view.phaseId === 'deal') {
+      const plucks = stage.board.map((_, i) =>
+        setTimeout(() => sound('card', { quiet: true, gain: 0.3 }), 120 + i * 70),
+      );
+      return () => plucks.forEach(clearTimeout);
+    }
+    return undefined;
     // eslint-disable-next-line react-hooks/exhaustive-deps -- once per mount (per phase)
   }, []);
   const dealt = stage.board.filter((c) => c.dealt > 0).length;

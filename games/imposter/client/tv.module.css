@@ -801,3 +801,12 @@
   gap: var(--pb-space-3);
   margin: 0;
 }
+/* Word reveal: fixed rooms for the imposter cards and the guess lines, so the word never slides. */
+.guessLines {
+  min-height: 7.5rem;
+  align-content: start;
+}
+.impCards {
+  min-height: 230px;
+  align-items: flex-start;
+}

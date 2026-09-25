@@ -141,27 +141,30 @@ export function TvWordReveal({ view }: V): JSX.Element {
           );
         })}
       </div>
-      {step > 0 ? (
-        <div className={styles.guessLines}>
-          {Object.entries(r.guesses).map(([id, g]) => (
-            <p key={id} className={g.ok ? styles.win : styles.miss}>
-              {g.ok
-                ? L('{name} guessed {word} · stolen! +3', {
-                    name: who.get(id)?.name ?? '?',
-                    word: g.said,
-                  })
-                : L('{name} guessed {word} · no luck', {
-                    name: who.get(id)?.name ?? '?',
-                    word: g.said,
-                  })}
-              {g.byVip ? ` · ${L('Counted by the VIP')}` : ''}
-            </p>
-          ))}
-          {!r.void && escaped.length > 0 ? (
-            <p className={styles.win}>{L('The imposter escapes!')}</p>
-          ) : null}
-        </div>
-      ) : null}
+      {/* The guess line's room is kept from the first frame, so nothing above it moves when it lands. */}
+      <div className={styles.guessLines}>
+        {step > 0 ? (
+          <>
+            {Object.entries(r.guesses).map(([id, g]) => (
+              <p key={id} className={g.ok ? styles.win : styles.miss}>
+                {g.ok
+                  ? L('{name} guessed {word} · stolen! +3', {
+                      name: who.get(id)?.name ?? '?',
+                      word: g.said,
+                    })
+                  : L('{name} guessed {word} · no luck', {
+                      name: who.get(id)?.name ?? '?',
+                      word: g.said,
+                    })}
+                {g.byVip ? ` · ${L('Counted by the VIP')}` : ''}
+              </p>
+            ))}
+            {!r.void && escaped.length > 0 ? (
+              <p className={styles.win}>{L('The imposter escapes!')}</p>
+            ) : null}
+          </>
+        ) : null}
+      </div>
     </Stage>
   );
 }
