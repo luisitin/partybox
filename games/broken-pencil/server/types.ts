@@ -137,3 +137,6 @@ export const EVERYONE = 15;
 
 /** "Leave the current phase now" — injected into phase reducers by server/index.ts. */
 export type Transition = (state: State, now: number) => State;
+
+/** I-491 A: a page can't be turned in its first this-many ms (a pocket's double tap turns one). */
+export const MIN_PAGE_MS = 1_200;

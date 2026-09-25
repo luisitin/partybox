@@ -46,6 +46,6 @@ describe('I-512 B: the verdict gets its beat', () => {
       rng: { seed: 1, step: 0 },
       showing: { book: 0, page: 1, verdict: null, line: null },
     } as State;
-    expect(turn(middle, 1001).showing).toMatchObject({ book: 0, page: 2 });
+    expect(turn(middle, 1000 + 1_200).showing) // I-491 A: past the 1.2 s guard.toMatchObject({ book: 0, page: 2 });
   });
 });
