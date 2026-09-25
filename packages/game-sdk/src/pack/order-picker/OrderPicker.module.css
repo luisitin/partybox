@@ -98,6 +98,12 @@
   background: var(--pb-surface-2);
 }
 
+.lifted {
+  border-color: var(--pb-accent-2);
+  border-style: dashed;
+  transform: translateY(-2px) scale(1.02);
+}
+
 .row:disabled {
   cursor: default;
 }

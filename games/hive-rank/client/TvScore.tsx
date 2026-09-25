@@ -43,6 +43,14 @@ function Queen({ view }: { view: HiveTvView }): JSX.Element {
         {queens.length > 3 ? L('{n} players', { n: queens.length }) : names.join(' · ')}
       </span>
       <span className={styles.queenPts}>+{pts}</span>
+      {view.score?.queenDetail ? (
+        <span className={styles.queenHow}>
+          {L('{exact} exact · {near} one off', {
+            exact: view.score.queenDetail.exact,
+            near: view.score.queenDetail.near,
+          })}
+        </span>
+      ) : null}
     </div>
   );
 }
@@ -70,12 +78,22 @@ export function TvScore({
         ) : null}
         {view.next && skip ? <TvButton label={next} skip={skip} delayMs={2000} /> : null}
       </header>
+      <p className={styles.legend}>
+        <span>{L('✓ Exact spot +2')}</span>
+        <span>{L('±1 One spot off +1')}</span>
+        <span>{L('★ All five +2')}</span>
+      </p>
       <div
         className={styles.scoreBody}
         style={{ '--queen-w': rows.length > 8 ? '400px' : '540px' } as CSSProperties}
       >
         <Queen view={view} />
         <div className={styles.board}>
+          <p className={styles.boardTitle}>
+            {view.next === 'results'
+              ? L('Final standings')
+              : L('Standings after round {n}', { n: view.round })}
+          </p>
           <Scoreboard
             key={view.round}
             rows={rows}

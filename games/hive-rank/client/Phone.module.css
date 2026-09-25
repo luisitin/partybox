@@ -270,6 +270,12 @@
   letter-spacing: 0.08em;
 }
 
+.legendPhone {
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  color: var(--pb-text-muted);
+}
+
 .marks {
   list-style: none;
   margin: 0;
@@ -280,10 +286,10 @@
 }
 
 .markRow {
-  display: grid;
-  grid-template-columns: 28px 1fr auto;
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: var(--pb-space-2);
+  column-gap: var(--pb-space-2);
   min-height: 44px;
   padding: var(--pb-space-1) var(--pb-space-3);
   border-radius: var(--pb-radius);
@@ -303,6 +309,7 @@
 }
 
 .markMine {
+  flex: none;
   display: grid;
   place-items: center;
   width: 28px;
@@ -314,12 +321,15 @@
 }
 
 .markLabel {
+  flex: 1 1 8ch;
   min-width: 0;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
   line-height: 1.2;
 }
 
 .markHive {
+  margin-left: auto;
+  white-space: nowrap;
   display: flex;
   align-items: center;
   gap: var(--pb-space-1);

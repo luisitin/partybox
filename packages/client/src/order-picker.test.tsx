@@ -3,7 +3,7 @@
 // next number in every empty one); locked rows are real disabled buttons.
 import { describe, expect, it } from 'vitest';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { OrderPicker, toggleOrder } from '@partybox/game-sdk/ui/order-picker';
+import { OrderPicker, swapOrder, toggleOrder } from '@partybox/game-sdk/ui/order-picker';
 
 const ITEMS = ['chips', 'jerky', 'grapes', 'gummies', 'egg'].map((id) => ({ id, label: id }));
 const noop = (): void => undefined;
@@ -14,6 +14,13 @@ describe('toggleOrder', () => {
     expect(toggleOrder(['a', 'b', 'c'], 'd')).toEqual(['a', 'b', 'c', 'd']);
     expect(toggleOrder(['a', 'b', 'c'], 'a')).toEqual(['b', 'c']);
     expect(toggleOrder(['a', 'b', 'c'], 'b')).toEqual(['a', 'c']);
+  });
+});
+
+describe('swapOrder', () => {
+  it('trades two placed ids and keeps every other number', () => {
+    expect(swapOrder(['a', 'b', 'c', 'd', 'e'], 'a', 'd')).toEqual(['d', 'b', 'c', 'a', 'e']);
+    expect(swapOrder(['a', 'b'], 'a', 'x')).toEqual(['a', 'b']);
   });
 });
 

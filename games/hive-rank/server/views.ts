@@ -42,6 +42,8 @@ export interface ScoreView {
   rows: RowView[];
   queens: string[];
   perfect: boolean;
+  /** How the (first) Queen Bee scored: things in the exact spot, and one spot off. */
+  queenDetail: { exact: number; near: number } | null;
 }
 
 export interface Reading {
@@ -159,7 +161,14 @@ function scoreView(state: State): ScoreView | null {
   const rows = Object.entries(q.delta)
     .map(([id, d]) => ({ id, pts: d.pts, perfect: d.perfect }))
     .sort((a, b) => b.pts - a.pts || (a.id < b.id ? -1 : 1));
-  return { rows, queens: q.queens, perfect: rows.some((r) => r.perfect) };
+  const first = q.queens[0];
+  const d = first ? q.delta[first] : undefined;
+  return {
+    rows,
+    queens: q.queens,
+    perfect: rows.some((r) => r.perfect),
+    queenDetail: d ? { exact: d.exact, near: d.near } : null,
+  };
 }
 
 function common(state: State): Common {

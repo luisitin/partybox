@@ -88,9 +88,8 @@ export const STRINGS: Strings = {
     '{n} more to place': 'Faltan {n}',
     '✓ Locked in': '✓ Confirmado',
     Change: 'Cambiar',
+    'Tap two to swap them': 'Toca dos para intercambiarlos',
     Reset: 'Borrar',
-    'Your locked order still counts until you lock a new one.':
-      'Tu orden confirmado sigue contando hasta que confirmes uno nuevo.',
     '✗ Didn’t go through — tap Lock it in again': '✗ No se envió: toca Confirmar otra vez',
     'You’re in from the next game': 'Entras en el próximo juego',
     // hive
@@ -110,6 +109,14 @@ export const STRINGS: Strings = {
     'The hive is counting down…': 'La colmena está contando…',
     // score
     Scores: 'Puntos',
+    '{exact} exact · {near} one off': '{exact} exactos · {near} a uno',
+    'Final standings': 'Clasificación final',
+    'Standings after round {n}': 'Clasificación tras la ronda {n}',
+    '✓ Exact spot +2': '✓ Lugar exacto +2',
+    '±1 One spot off +1': '±1 A un lugar +1',
+    '★ All five +2': '★ Las cinco +2',
+    '✓ exact +2 · ±1 one off +1 · all five +2': '✓ exacto +2 · ±1 a uno +1 · las cinco +2',
+    '+1 (hive #{n})': '+1 (colmena #{n})',
     'Queen Bee': 'Abeja reina',
     'Queen Bees': 'Abejas reinas',
     'No Queen Bee this round': 'Sin abeja reina esta ronda',

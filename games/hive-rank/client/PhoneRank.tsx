@@ -121,7 +121,10 @@ export function PhoneRank({
         hint={
           <span className={styles.hintStack}>
             <span className={styles.kicker}>
-              {L('Round {n} of {total}', { n: view.round, total: view.rounds })} <EnglishNote />
+              {full && !locked
+                ? L('Tap two to swap them')
+                : L('Round {n} of {total}', { n: view.round, total: view.rounds })}{' '}
+              <EnglishNote />
             </span>
             <span className={scale.length > 28 ? styles.scaleLong : ''}>{scale}</span>
           </span>
@@ -130,10 +133,6 @@ export function PhoneRank({
       {failed ? (
         <p className={styles.retry} role="status">
           {L('✗ Didn’t go through — tap Lock it in again')}
-        </p>
-      ) : editing && view.locked ? (
-        <p className={styles.note}>
-          {L('Your locked order still counts until you lock a new one.')}
         </p>
       ) : null}
     </Screen>

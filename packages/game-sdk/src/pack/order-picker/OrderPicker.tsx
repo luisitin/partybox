@@ -44,6 +44,17 @@ export const MASH_MS = 350;
 const LONG = 15;
 
 /** The next list after tapping `id`: placed → out (later numbers move up), else → the next number. */
+/** Two placed ids trade places (a full order being rearranged). */
+export function swapOrder(value: readonly string[], a: string, b: string): string[] {
+  const i = value.indexOf(a);
+  const j = value.indexOf(b);
+  if (i < 0 || j < 0) return [...value];
+  const next = [...value];
+  next[i] = b;
+  next[j] = a;
+  return next;
+}
+
 export function toggleOrder(value: readonly string[], id: string): string[] {
   return value.includes(id) ? value.filter((v) => v !== id) : [...value, id];
 }
@@ -61,11 +72,26 @@ export function OrderPicker(props: OrderPickerProps): JSX.Element {
   const joined = value.join('\n');
   if (seen.now !== joined) setSeen({ now: joined, before: seen.now ? seen.now.split('\n') : [] });
   const before = seen.now === joined ? seen.before : [];
+  // A full order rearranges by swapping: tap a row (it lifts), then the row to trade places with.
+  // Taking a row out of a full order read as "Change deletes my answers" (the owner's play-test).
+  const [lifted, setLifted] = useState<string | null>(null);
+  const full = value.length === items.length;
+  const liftedNow = full && lifted !== null && value.includes(lifted) ? lifted : null;
   const tap = (id: string, at: number): void => {
     if (disabled) return;
     const prev = last.current;
     if (prev && prev.id === id && at - prev.at < MASH_MS) return;
     last.current = { id, at };
+    if (full) {
+      buzz(10);
+      if (liftedNow === null) setLifted(id);
+      else if (liftedNow === id) setLifted(null);
+      else {
+        setLifted(null);
+        onChange(swapOrder(value, liftedNow, id));
+      }
+      return;
+    }
     buzz(value.includes(id) ? 10 : 15);
     onChange(toggleOrder(value, id));
   };
@@ -99,16 +125,23 @@ export function OrderPicker(props: OrderPickerProps): JSX.Element {
             <li key={item.id} className={styles.slot}>
               <button
                 type="button"
-                className={`${styles.row} ${placed ? styles.placed : ''}`}
+                className={`${styles.row} ${placed ? styles.placed : ''} ${liftedNow === item.id ? styles.lifted : ''}`}
                 aria-pressed={placed}
                 disabled={disabled}
                 aria-label={
-                  placed
-                    ? L('{label}: number {n}. Tap to take it out.', { label: text, n: at + 1 })
-                    : L('{label}: not placed. Tap to make it number {n}.', {
-                        label: text,
-                        n: value.length + 1,
-                      })
+                  placed && full
+                    ? liftedNow === item.id
+                      ? L('{label}: number {n}, picked up. Tap another to swap.', {
+                          label: text,
+                          n: at + 1,
+                        })
+                      : L('{label}: number {n}. Tap to move it.', { label: text, n: at + 1 })
+                    : placed
+                      ? L('{label}: number {n}. Tap to take it out.', { label: text, n: at + 1 })
+                      : L('{label}: not placed. Tap to make it number {n}.', {
+                          label: text,
+                          n: value.length + 1,
+                        })
                 }
                 onClick={(e) => tap(item.id, e.timeStamp)}
               >

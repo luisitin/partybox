@@ -8,5 +8,8 @@ export const STRINGS: Strings = {
     '{label}: number {n}. Tap to take it out.': '{label}: número {n}. Toca para quitarlo.',
     '{label}: not placed. Tap to make it number {n}.':
       '{label}: sin número. Toca para darle el número {n}.',
+    '{label}: number {n}, picked up. Tap another to swap.':
+      '{label}: número {n}, levantado. Toca otro para intercambiar.',
+    '{label}: number {n}. Tap to move it.': '{label}: número {n}. Toca para moverlo.',
   },
 };

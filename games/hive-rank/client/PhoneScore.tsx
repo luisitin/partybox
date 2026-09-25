@@ -70,6 +70,9 @@ export function PhoneScore({
       {result?.queen ? <p className={styles.queenBanner}>{L('👑 You’re the Queen Bee!')}</p> : null}
       {result?.perfect ? <p className={styles.perfectBanner}>{L('PERFECT HIVE')}</p> : null}
       {result ? (
+        <p className={styles.legendPhone}>{L('✓ exact +2 · ±1 one off +1 · all five +2')}</p>
+      ) : null}
+      {result ? (
         <ol className={styles.marks} aria-label={L('Your order against the hive')}>
           {result.rows.map((row, i) => (
             <li
@@ -84,7 +87,11 @@ export function PhoneScore({
                   {MARK[row.mark]}
                 </span>
                 <span className={styles.markWhere}>
-                  {row.mark === 'exact' ? L('+2') : L('hive #{n}', { n: row.hive })}
+                  {row.mark === 'exact'
+                    ? L('+2')
+                    : row.mark === 'near'
+                      ? L('+1 (hive #{n})', { n: row.hive })
+                      : L('hive #{n}', { n: row.hive })}
                 </span>
                 <span className="pb-visually-hidden">
                   {row.mark === 'exact'

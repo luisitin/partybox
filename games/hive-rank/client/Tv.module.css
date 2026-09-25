@@ -660,6 +660,31 @@
   font-variant-numeric: tabular-nums;
 }
 
+.queenHow {
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  color: var(--pb-text-muted);
+}
+
+/* How points are made, always in view on the score screen (the owner: make it clear). */
+.legend {
+  display: flex;
+  justify-content: center;
+  gap: var(--pb-space-6);
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  color: var(--pb-text-muted);
+}
+
+.boardTitle {
+  margin-bottom: var(--pb-space-2);
+  font-size: var(--pb-font-caption);
+  font-weight: 900;
+  color: var(--pb-accent-2);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
 .queenNone {
   font-size: var(--pb-font-body);
   font-weight: 800;
