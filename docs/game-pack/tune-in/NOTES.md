@@ -11,11 +11,12 @@ the `foundation` branch (the owner's 20 rulings, not merged); F1–F7 were not o
 | 1 Content               | done: 150 family + 50 spicy spectra, 12 bank clues each, all legal and spread (tests)    |
 | 2 Server logic          | done: 6 phases, 3 modes, bot, speech, recap; 118 unit tests, contract suite, sim 200 × 2 |
 | 3 Client                | done (TV stage, phones, PhoneStage, EN + ES); polishing through the passes               |
-| 4 Record → review → fix | p01–p13b + bursts + edge probe (3 modes, 2–16 players, Spanish, drops, skips, late join) |
+| 4 Record → review → fix | p01–p15 + bursts + edge probe (3 modes, 2–16 players, Spanish, drops, skips, late join)  |
 | 5 Review package        | done (a6c50cdf, REVIEW.md); in peer review on the hub ([432612])                         |
 
 2026-09-25: main (Foundation + results-kinds) merged in and ADR-050 adopted (ac3da886); the owner's
-pacing rule [cc45f4] (3141746f, 8f1a8b9f); the reviewer's DESIGN CHANGES [ba045e] (see Decisions).
+pacing rule [cc45f4] (3141746f, 8f1a8b9f); the reviewer's DESIGN CHANGES [ba045e] (see Decisions);
+main with the shell's start stage (ADR-053) merged in and adopted; passes 14–15 record it.
 
 ## Stand-ins for Foundation pieces
 
@@ -70,8 +71,9 @@ returns `ctx.presence` (the SDK's `GamePresence`), else all in one room. Still l
 - **The start is the shell's** (ADR-053, ready-up): its stage shows the manifest's three steps,
   takes everyone's READY and plays the 3 · 2 · 1 before `init` (the owner's [cc45f4]). Tune In has
   no rules, READY, count or idle net of its own any more. Solo and co-op start at turn 1's clue;
-  teams first see a 7 s roster card (TEAMS_CARD_MS: both sides, the side that plays first pulsing,
-  who reads the first dial, "Tune in!") with no READY and no clock, which the VIP can skip; it also
+  teams first see a 7 s roster card (TEAMS_CARD_MS: both sides in large rosters, the side that plays
+  first pulsing, who reads the first dial, "Tune in!") with no READY and no clock, which the VIP can
+  skip; 16 players end ~25 px above the host bar (an 11+ room steps the title and faces down); it also
   gives the first reading time to be made. The per-mode rules (teams' LEFT/RIGHT call, co-op's group
   needle) no longer show before the game: per-mode steps in the manifest are proposed in [cafab2].
 - **The dial ends are Spanish on a Spanish screen** (decision [196a9e] rule 2): every dial carries
