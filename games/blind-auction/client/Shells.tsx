@@ -40,14 +40,22 @@ interface StageProps {
   start: number;
   moves: readonly [number, number][] | null;
   tier: number;
-  /** `open`: lift the cups on the final ball. */
+  /** `open`: lift the cups on the final ball, after `revealAfter` ms (the bets land first). */
   reveal: number | null;
+  revealAfter?: number;
   /** The shuffle is over (`cups`, `open`): cups stand where it left them, no replay. */
   settled?: boolean;
 }
 
 /** Three cups at positions 0, 1, 2 (left to right); each move swaps two positions' cups. */
-export function ShellStage({ start, moves, tier, reveal, settled }: StageProps): JSX.Element {
+export function ShellStage({
+  start,
+  moves,
+  tier,
+  reveal,
+  revealAfter = 0,
+  settled,
+}: StageProps): JSX.Element {
   const reduced = useReducedMotion();
   const play = useSound();
   const speed = SHELL_SPEED[tier] ?? 1;
@@ -76,7 +84,17 @@ export function ShellStage({ start, moves, tier, reveal, settled }: StageProps):
       pos[cb] = a;
     }
   }
-  const lifted = (moves !== null && !settled && step < 0) || reveal !== null;
+  const [shown, setShown] = useState(reveal !== null && (revealAfter <= 0 || reduced));
+  useEffect(() => {
+    if (reveal === null || shown) return;
+    const h = setTimeout(() => {
+      setShown(true);
+      play('reveal');
+    }, revealAfter);
+    return () => clearTimeout(h);
+  }, [reveal, revealAfter, shown, play]);
+  const revealed = reveal !== null && shown;
+  const lifted = (moves !== null && !settled && step < 0) || revealed;
   const ballCup = start;
   return (
     <div
@@ -85,12 +103,12 @@ export function ShellStage({ start, moves, tier, reveal, settled }: StageProps):
     >
       {[0, 1, 2].map((cup) => {
         const at = pos[cup] ?? cup;
-        const showBall = reveal !== null ? at === reveal : cup === ballCup && lifted;
+        const showBall = revealed ? at === reveal : cup === ballCup && lifted;
         return (
           <span key={cup} className={styles.cupSlot} style={{ '--ba-at': at } as CSSProperties}>
             {showBall ? <span className={styles.ball} aria-hidden /> : null}
             <span
-              className={`${styles.cup} ${lifted && (reveal !== null || cup === ballCup) ? styles.cupUp : ''}`}
+              className={`${styles.cup} ${lifted && (revealed || cup === ballCup) ? styles.cupUp : ''}`}
               aria-hidden
             />
           </span>

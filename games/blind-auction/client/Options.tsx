@@ -84,10 +84,12 @@ export function OptionBoard({
             {locked === i ? <span className={styles.odds}>{L('You')}</span> : null}
             {uniform ? null : (
               <>
-                <span className={styles.odds}>
-                  <span className={styles.nowrap}>{tierWord(L, o.tier)}</span>{' '}
-                  <span className={styles.nowrap}>· {o.chance}%</span>
-                </span>
+                {o.pay === 0 ? null : (
+                  <span className={styles.odds}>
+                    <span className={styles.nowrap}>{tierWord(L, o.tier)}</span>{' '}
+                    <span className={styles.nowrap}>· {o.chance}%</span>
+                  </span>
+                )}
                 <span className={styles.pay}>
                   {o.pay > 0 ? L('pays {x}', { x: payText(L, o.pay) }) : L('splits the pot')}
                 </span>

@@ -7,7 +7,7 @@ import { useEffect, useRef } from 'react';
 import type { JSX } from 'react';
 import { Avatar, Confetti, Stage, useSequence, useSound, useT } from '@partybox/game-sdk/ui';
 import type { PushedView, SoundCue } from '@partybox/game-sdk/ui';
-import { BETS_LEAD_MS, BET_STEP_MS, OPEN_LINE_AT_MS } from '../server/timing';
+import { BETS_LEAD_MS, BET_STEP_MS, OPEN_LINE_AT_MS, betsMs } from '../server/timing';
 import type { BlindAuctionTvView } from '../server/views';
 import { COIN, boxWords, iconOf, kindName, nameOf as optionName, payText, toneOf } from './copy';
 import type { Tone } from './copy';
@@ -202,7 +202,8 @@ export function TvTable({ view }: { view: View }): JSX.Element {
                 start={view.shells.start}
                 moves={view.shellSwaps}
                 tier={view.shells.tier}
-                reveal={phase === 'open' ? view.outcome : null}
+                reveal={phase === 'open' ? (view.run?.outcome ?? null) : null}
+                revealAfter={betsMs(view.bets?.length ?? 0)}
                 settled={phase !== 'shuffle'}
               />
             ) : box?.event === 'tug' ? (

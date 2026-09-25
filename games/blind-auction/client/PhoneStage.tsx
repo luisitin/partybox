@@ -4,7 +4,7 @@
 import type { JSX } from 'react';
 import { Screen, useSequence, useT } from '@partybox/game-sdk/ui';
 import type { PushedView } from '@partybox/game-sdk/ui';
-import { BETS_LEAD_MS, BET_STEP_MS, OPEN_LINE_AT_MS } from '../server/timing';
+import { BETS_LEAD_MS, BET_STEP_MS, OPEN_LINE_AT_MS, betsMs } from '../server/timing';
 import type { BlindAuctionControllerView } from '../server/views';
 import { iconOf, nameOf, payText, toneOf } from './copy';
 import liveStyles from './live.module.css';
@@ -43,7 +43,8 @@ function StageOpen({ view }: { view: View }): JSX.Element | null {
               start={view.shells.start}
               moves={view.shellSwaps}
               tier={view.shells.tier}
-              reveal={view.outcome}
+              reveal={view.run.outcome}
+              revealAfter={betsMs(bets.length)}
               settled
             />
           ) : view.run.kind === 'tug' ? (
