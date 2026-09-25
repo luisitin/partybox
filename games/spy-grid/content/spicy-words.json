@@ -1,0 +1,859 @@
+{
+  "lang": "en",
+  "words": [
+    {
+      "id": "beer",
+      "word": "BEER",
+      "themes": ["booze", "bar", "cheers", "pub", "biker"],
+      "hints": ["lager", "pint"],
+      "family": ["beer"]
+    },
+    {
+      "id": "wine",
+      "word": "WINE",
+      "themes": ["booze", "dating", "spa", "vineyard", "cheers", "datenight"],
+      "hints": ["merlot", "sommelier"],
+      "family": ["wine"]
+    },
+    {
+      "id": "vodka",
+      "word": "VODKA",
+      "themes": ["booze", "spirits"],
+      "hints": ["russian", "cosmopolitan"],
+      "family": ["vodka"]
+    },
+    {
+      "id": "whiskey",
+      "word": "WHISKEY",
+      "themes": ["booze", "spirits"],
+      "hints": ["bourbon", "scotch"],
+      "family": ["whiskey", "whisky"]
+    },
+    {
+      "id": "tequila",
+      "word": "TEQUILA",
+      "themes": ["booze", "regret", "spirits"],
+      "hints": ["agave", "jalisco"],
+      "family": ["tequila"]
+    },
+    {
+      "id": "champagne",
+      "word": "CHAMPAGNE",
+      "themes": ["booze", "cheers"],
+      "hints": ["bubbly", "brut"],
+      "family": ["champagne"]
+    },
+    {
+      "id": "martini",
+      "word": "MARTINI",
+      "themes": ["booze", "spirits"],
+      "hints": ["shaken", "stirred"],
+      "family": ["martini"]
+    },
+    {
+      "id": "cocktail",
+      "word": "COCKTAIL",
+      "themes": ["booze", "bar", "nightlife", "springbreak", "tiki"],
+      "hints": ["mixologist", "shaker"],
+      "family": ["cocktail", "cock", "tail"]
+    },
+    {
+      "id": "keg",
+      "word": "KEG",
+      "themes": ["booze", "bar", "college", "rager"],
+      "hints": ["frat", "tapped"],
+      "family": ["keg"]
+    },
+    {
+      "id": "shot",
+      "word": "SHOT",
+      "themes": ["booze", "bar", "regret", "stag", "nightlife", "rager"],
+      "hints": ["chaser", "jigger"],
+      "family": ["shot", "shots"]
+    },
+    {
+      "id": "margarita",
+      "word": "MARGARITA",
+      "themes": ["booze", "tiki"],
+      "hints": ["salted", "blender"],
+      "family": ["margarita"]
+    },
+    {
+      "id": "flask",
+      "word": "FLASK",
+      "themes": ["booze", "spirits"],
+      "hints": ["pewter", "swig"],
+      "family": ["flask"]
+    },
+    {
+      "id": "karaoke",
+      "word": "KARAOKE",
+      "themes": ["bar", "regret", "stag", "coworker", "nightlife", "awkward", "rager"],
+      "hints": ["singalong", "lyrics"],
+      "family": ["karaoke"]
+    },
+    {
+      "id": "tab",
+      "word": "TAB",
+      "themes": ["bar", "pub"],
+      "hints": ["running", "closeout"],
+      "family": ["tab"]
+    },
+    {
+      "id": "darts",
+      "word": "DARTS",
+      "themes": ["bar", "pub"],
+      "hints": ["oche", "treble"],
+      "family": ["darts", "dart"]
+    },
+    {
+      "id": "jukebox",
+      "word": "JUKEBOX",
+      "themes": ["bar", "pub"],
+      "hints": ["quarters", "oldies"],
+      "family": ["jukebox", "juke", "box"]
+    },
+    {
+      "id": "bouncer",
+      "word": "BOUNCER",
+      "themes": ["bar", "nightlife", "biker"],
+      "hints": ["guestlist", "burly"],
+      "family": ["bouncer", "bounce"]
+    },
+    {
+      "id": "hangover",
+      "word": "HANGOVER",
+      "themes": ["regret", "headache", "stag", "college", "rager", "cry"],
+      "hints": ["queasy", "throbbing"],
+      "family": ["hangover", "hang"]
+    },
+    {
+      "id": "tattoo",
+      "word": "TATTOO",
+      "themes": ["regret", "midlife", "rebel", "biker"],
+      "hints": ["parlor", "tribal"],
+      "family": ["tattoo"]
+    },
+    {
+      "id": "ex",
+      "word": "EX",
+      "themes": ["regret", "headache", "breakup", "awkward"],
+      "hints": ["former", "dumped"],
+      "family": ["ex"]
+    },
+    {
+      "id": "selfie",
+      "word": "SELFIE",
+      "themes": ["regret", "dating", "awkward"],
+      "hints": ["filter", "pout"],
+      "family": ["selfie", "self"]
+    },
+    {
+      "id": "sunburn",
+      "word": "SUNBURN",
+      "themes": ["regret", "springbreak"],
+      "hints": ["peeling", "aloe"],
+      "family": ["sunburn", "sun", "burn"]
+    },
+    {
+      "id": "aspirin",
+      "word": "ASPIRIN",
+      "themes": ["headache", "cure"],
+      "hints": ["painkiller", "analgesic"],
+      "family": ["aspirin"]
+    },
+    {
+      "id": "taxes",
+      "word": "TAXES",
+      "themes": ["headache", "adulting", "broke", "paperwork", "payday"],
+      "hints": ["refund", "deduction"],
+      "family": ["taxes", "tax"]
+    },
+    {
+      "id": "mortgage",
+      "word": "MORTGAGE",
+      "themes": ["headache", "adulting", "paperwork"],
+      "hints": ["escrow", "foreclosure"],
+      "family": ["mortgage"]
+    },
+    {
+      "id": "landlord",
+      "word": "LANDLORD",
+      "themes": ["headache", "adulting", "roommate"],
+      "hints": ["tenant", "eviction"],
+      "family": ["landlord", "land", "lord"]
+    },
+    {
+      "id": "crush",
+      "word": "CRUSH",
+      "themes": ["dating", "valentine", "makeout"],
+      "hints": ["unrequited", "infatuated"],
+      "family": ["crush"]
+    },
+    {
+      "id": "date",
+      "word": "DATE",
+      "themes": ["dating", "valentine", "makeout", "nervous"],
+      "hints": ["courting", "rendezvous"],
+      "family": ["date"]
+    },
+    {
+      "id": "flirt",
+      "word": "FLIRT",
+      "themes": ["dating", "sexy"],
+      "hints": ["coquettish", "coy"],
+      "family": ["flirt"]
+    },
+    {
+      "id": "catfish",
+      "word": "CATFISH",
+      "themes": ["dating", "fake"],
+      "hints": ["impostor", "hoax"],
+      "family": ["catfish", "cat", "fish"]
+    },
+    {
+      "id": "dinner",
+      "word": "DINNER",
+      "themes": ["dating", "datenight"],
+      "hints": ["supper", "reservation"],
+      "family": ["dinner"]
+    },
+    {
+      "id": "wingman",
+      "word": "WINGMAN",
+      "themes": ["dating", "nightlife"],
+      "hints": ["sidekick", "buddy"],
+      "family": ["wingman", "wing", "man"]
+    },
+    {
+      "id": "cougar",
+      "word": "COUGAR",
+      "themes": ["dating", "midlife"],
+      "hints": ["puma", "prowl"],
+      "family": ["cougar"]
+    },
+    {
+      "id": "divorce",
+      "word": "DIVORCE",
+      "themes": ["breakup", "cheating", "midlife", "paperwork", "cry"],
+      "hints": ["splitsville", "custody"],
+      "family": ["divorce"]
+    },
+    {
+      "id": "tears",
+      "word": "TEARS",
+      "themes": ["breakup", "cry"],
+      "hints": ["sobbing", "weeping"],
+      "family": ["tears", "tear"]
+    },
+    {
+      "id": "diary",
+      "word": "DIARY",
+      "themes": ["breakup", "secrets"],
+      "hints": ["journal", "confessions"],
+      "family": ["diary"]
+    },
+    {
+      "id": "therapist",
+      "word": "THERAPIST",
+      "themes": ["breakup", "midlife"],
+      "hints": ["psychologist", "sessions"],
+      "family": ["therapist", "therapy"]
+    },
+    {
+      "id": "bra",
+      "word": "BRA",
+      "themes": ["underwear", "hamper"],
+      "hints": ["padded", "strapless"],
+      "family": ["bra"]
+    },
+    {
+      "id": "thong",
+      "word": "THONG",
+      "themes": ["underwear", "swimsuit"],
+      "hints": ["wedgie", "revealing"],
+      "family": ["thong"]
+    },
+    {
+      "id": "boxers",
+      "word": "BOXERS",
+      "themes": ["underwear", "hamper"],
+      "hints": ["undershorts", "plaid"],
+      "family": ["boxers", "boxer"]
+    },
+    {
+      "id": "garter",
+      "word": "GARTER",
+      "themes": ["underwear", "elope"],
+      "hints": ["thigh", "suspender"],
+      "family": ["garter"]
+    },
+    {
+      "id": "corset",
+      "word": "CORSET",
+      "themes": ["underwear", "sexy"],
+      "hints": ["victorian", "cinched"],
+      "family": ["corset"]
+    },
+    {
+      "id": "lingerie",
+      "word": "LINGERIE",
+      "themes": ["underwear", "sexy", "valentine"],
+      "hints": ["negligee", "lacy"],
+      "family": ["lingerie"]
+    },
+    {
+      "id": "briefs",
+      "word": "BRIEFS",
+      "themes": ["underwear", "hamper"],
+      "hints": ["waistband", "skivvies"],
+      "family": ["briefs", "brief"]
+    },
+    {
+      "id": "bikini",
+      "word": "BIKINI",
+      "themes": ["swimsuit", "sexy", "springbreak", "tiki"],
+      "hints": ["swimwear", "sunbathe"],
+      "family": ["bikini"]
+    },
+    {
+      "id": "tan",
+      "word": "TAN",
+      "themes": ["swimsuit", "springbreak", "fake"],
+      "hints": ["bronzed", "solarium"],
+      "family": ["tan"]
+    },
+    {
+      "id": "abs",
+      "word": "ABS",
+      "themes": ["swimsuit", "gym", "sexy"],
+      "hints": ["sixpack", "crunches"],
+      "family": ["abs"]
+    },
+    {
+      "id": "sunscreen",
+      "word": "SUNSCREEN",
+      "themes": ["swimsuit", "springbreak"],
+      "hints": ["spf", "reapply"],
+      "family": ["sunscreen", "sun", "screen"]
+    },
+    {
+      "id": "protein",
+      "word": "PROTEIN",
+      "themes": ["gym", "diet"],
+      "hints": ["whey", "amino"],
+      "family": ["protein"]
+    },
+    {
+      "id": "sweat",
+      "word": "SWEAT",
+      "themes": ["gym", "nervous"],
+      "hints": ["perspire", "drenched"],
+      "family": ["sweat"]
+    },
+    {
+      "id": "dumbbell",
+      "word": "DUMBBELL",
+      "themes": ["gym", "resolution"],
+      "hints": ["curls", "weights"],
+      "family": ["dumbbell", "dumb", "bell"]
+    },
+    {
+      "id": "treadmill",
+      "word": "TREADMILL",
+      "themes": ["gym", "resolution"],
+      "hints": ["incline", "sprinting"],
+      "family": ["treadmill", "tread", "mill"]
+    },
+    {
+      "id": "yoga",
+      "word": "YOGA",
+      "themes": ["gym", "resolution"],
+      "hints": ["namaste", "lotus"],
+      "family": ["yoga"]
+    },
+    {
+      "id": "sauna",
+      "word": "SAUNA",
+      "themes": ["gym", "spa"],
+      "hints": ["finnish", "cedar"],
+      "family": ["sauna"]
+    },
+    {
+      "id": "diet",
+      "word": "DIET",
+      "themes": ["gym", "resolution"],
+      "hints": ["calories", "weightloss"],
+      "family": ["diet"]
+    },
+    {
+      "id": "rent",
+      "word": "RENT",
+      "themes": ["adulting", "broke", "roommate", "payday"],
+      "hints": ["lease", "monthly"],
+      "family": ["rent"]
+    },
+    {
+      "id": "insurance",
+      "word": "INSURANCE",
+      "themes": ["adulting", "paperwork"],
+      "hints": ["premium", "deductible"],
+      "family": ["insurance", "insure"]
+    },
+    {
+      "id": "debt",
+      "word": "DEBT",
+      "themes": ["adulting", "gambling", "broke", "payday"],
+      "hints": ["owing", "creditor"],
+      "family": ["debt"]
+    },
+    {
+      "id": "loan",
+      "word": "LOAN",
+      "themes": ["adulting", "broke", "college", "paperwork"],
+      "hints": ["borrow", "lender"],
+      "family": ["loan"]
+    },
+    {
+      "id": "overtime",
+      "word": "OVERTIME",
+      "themes": ["adulting", "coworker", "boss", "monday", "payday"],
+      "hints": ["grind", "workaholic"],
+      "family": ["overtime", "over", "time"]
+    },
+    {
+      "id": "overdraft",
+      "word": "OVERDRAFT",
+      "themes": ["adulting", "broke"],
+      "hints": ["bounced", "fees"],
+      "family": ["overdraft", "over", "draft"]
+    },
+    {
+      "id": "jackpot",
+      "word": "JACKPOT",
+      "themes": ["gambling", "poker", "vegas"],
+      "hints": ["slots", "winnings"],
+      "family": ["jackpot", "jack", "pot"]
+    },
+    {
+      "id": "poker",
+      "word": "POKER",
+      "themes": ["gambling", "vegas"],
+      "hints": ["flush", "holdem"],
+      "family": ["poker"]
+    },
+    {
+      "id": "bluff",
+      "word": "BLUFF",
+      "themes": ["gambling", "poker", "fake"],
+      "hints": ["deceive", "fakeout"],
+      "family": ["bluff"]
+    },
+    {
+      "id": "lottery",
+      "word": "LOTTERY",
+      "themes": ["gambling", "broke"],
+      "hints": ["sweepstakes", "numbers"],
+      "family": ["lottery"]
+    },
+    {
+      "id": "ace",
+      "word": "ACE",
+      "themes": ["gambling", "poker"],
+      "hints": ["sleeve", "serve"],
+      "family": ["ace"]
+    },
+    {
+      "id": "bachelor",
+      "word": "BACHELOR",
+      "themes": ["stag", "elope"],
+      "hints": ["eligible", "unmarried"],
+      "family": ["bachelor"]
+    },
+    {
+      "id": "limo",
+      "word": "LIMO",
+      "themes": ["stag", "elope", "vegas", "prom"],
+      "hints": ["chauffeur", "stretch"],
+      "family": ["limo", "limousine"]
+    },
+    {
+      "id": "tiara",
+      "word": "TIARA",
+      "themes": ["stag", "elope", "prom"],
+      "hints": ["diadem", "rhinestone"],
+      "family": ["tiara"]
+    },
+    {
+      "id": "chapel",
+      "word": "CHAPEL",
+      "themes": ["elope", "vegas"],
+      "hints": ["pews", "vows"],
+      "family": ["chapel"]
+    },
+    {
+      "id": "gossip",
+      "word": "GOSSIP",
+      "themes": ["coworker", "secrets"],
+      "hints": ["rumor", "whisper"],
+      "family": ["gossip"]
+    },
+    {
+      "id": "intern",
+      "word": "INTERN",
+      "themes": ["coworker", "awkward", "boss"],
+      "hints": ["unpaid", "trainee"],
+      "family": ["intern"]
+    },
+    {
+      "id": "scandal",
+      "word": "SCANDAL",
+      "themes": ["coworker", "secrets"],
+      "hints": ["tabloid", "disgrace"],
+      "family": ["scandal"]
+    },
+    {
+      "id": "affair",
+      "word": "AFFAIR",
+      "themes": ["cheating", "secrets"],
+      "hints": ["adultery", "mistress"],
+      "family": ["affair"]
+    },
+    {
+      "id": "motel",
+      "word": "MOTEL",
+      "themes": ["cheating", "vegas"],
+      "hints": ["vacancy", "roadside"],
+      "family": ["motel"]
+    },
+    {
+      "id": "alibi",
+      "word": "ALIBI",
+      "themes": ["cheating", "crime", "secrets", "fake"],
+      "hints": ["whereabouts", "airtight"],
+      "family": ["alibi"]
+    },
+    {
+      "id": "lawyer",
+      "word": "LAWYER",
+      "themes": ["cheating", "crime", "paperwork"],
+      "hints": ["attorney", "litigator"],
+      "family": ["lawyer", "law"]
+    },
+    {
+      "id": "dj",
+      "word": "DJ",
+      "themes": ["nightlife", "rager"],
+      "hints": ["remix", "spinning"],
+      "family": ["dj"]
+    },
+    {
+      "id": "heels",
+      "word": "HEELS",
+      "themes": ["nightlife", "sexy"],
+      "hints": ["stiletto", "pumps"],
+      "family": ["heels", "heel"]
+    },
+    {
+      "id": "bartender",
+      "word": "BARTENDER",
+      "themes": ["nightlife", "spirits"],
+      "hints": ["publican", "tips"],
+      "family": ["bartender", "bar", "tender"]
+    },
+    {
+      "id": "motorcycle",
+      "word": "MOTORCYCLE",
+      "themes": ["midlife", "rebel", "biker"],
+      "hints": ["chopper", "throttle"],
+      "family": ["motorcycle", "motor", "cycle"]
+    },
+    {
+      "id": "toupee",
+      "word": "TOUPEE",
+      "themes": ["midlife", "fake", "aging"],
+      "hints": ["hairpiece", "rug"],
+      "family": ["toupee"]
+    },
+    {
+      "id": "facelift",
+      "word": "FACELIFT",
+      "themes": ["midlife", "fake", "aging"],
+      "hints": ["cosmetic", "surgeon"],
+      "family": ["facelift", "face", "lift"]
+    },
+    {
+      "id": "wrinkle",
+      "word": "WRINKLE",
+      "themes": ["midlife", "aging"],
+      "hints": ["crease", "furrow"],
+      "family": ["wrinkle"]
+    },
+    {
+      "id": "bald",
+      "word": "BALD",
+      "themes": ["midlife", "aging"],
+      "hints": ["hairless", "receding"],
+      "family": ["bald"]
+    },
+    {
+      "id": "ramen",
+      "word": "RAMEN",
+      "themes": ["broke", "college", "roommate"],
+      "hints": ["noodles", "slurp"],
+      "family": ["ramen"]
+    },
+    {
+      "id": "bail",
+      "word": "BAIL",
+      "themes": ["broke", "crime"],
+      "hints": ["bondsman", "release"],
+      "family": ["bail"]
+    },
+    {
+      "id": "massage",
+      "word": "MASSAGE",
+      "themes": ["spa", "sexy"],
+      "hints": ["kneading", "rubdown"],
+      "family": ["massage"]
+    },
+    {
+      "id": "hottub",
+      "word": "HOTTUB",
+      "themes": ["spa", "sexy"],
+      "hints": ["soak", "bubbling"],
+      "family": ["hottub", "hot", "tub"]
+    },
+    {
+      "id": "robe",
+      "word": "ROBE",
+      "themes": ["spa", "hamper"],
+      "hints": ["terrycloth", "kimono"],
+      "family": ["robe"]
+    },
+    {
+      "id": "wink",
+      "word": "WINK",
+      "themes": ["sexy", "valentine", "makeout"],
+      "hints": ["nudgenudge", "sly"],
+      "family": ["wink"]
+    },
+    {
+      "id": "hiccup",
+      "word": "HICCUP",
+      "themes": ["awkward", "nervous"],
+      "hints": ["diaphragm", "spasm"],
+      "family": ["hiccup"]
+    },
+    {
+      "id": "blush",
+      "word": "BLUSH",
+      "themes": ["awkward", "makeout", "nervous"],
+      "hints": ["flushed", "rouge"],
+      "family": ["blush"]
+    },
+    {
+      "id": "pong",
+      "word": "PONG",
+      "themes": ["college", "rager"],
+      "hints": ["paddle", "rerack"],
+      "family": ["pong"]
+    },
+    {
+      "id": "textbook",
+      "word": "TEXTBOOK",
+      "themes": ["college", "finals"],
+      "hints": ["syllabus", "chapters"],
+      "family": ["textbook", "text", "book"]
+    },
+    {
+      "id": "dorm",
+      "word": "DORM",
+      "themes": ["college", "roommate"],
+      "hints": ["freshman", "roommate"],
+      "family": ["dorm", "dormitory"]
+    },
+    {
+      "id": "frisbee",
+      "word": "FRISBEE",
+      "themes": ["college", "springbreak"],
+      "hints": ["ultimate", "disc"],
+      "family": ["frisbee"]
+    },
+    {
+      "id": "kale",
+      "word": "KALE",
+      "themes": ["diet", "resolution"],
+      "hints": ["superfood", "smoothie"],
+      "family": ["kale"]
+    },
+    {
+      "id": "carbs",
+      "word": "CARBS",
+      "themes": ["diet", "resolution"],
+      "hints": ["keto", "starch"],
+      "family": ["carbs", "carb"]
+    },
+    {
+      "id": "detox",
+      "word": "DETOX",
+      "themes": ["diet", "cure", "resolution"],
+      "hints": ["cleanse", "purify"],
+      "family": ["detox"]
+    },
+    {
+      "id": "cheat",
+      "word": "CHEAT",
+      "themes": ["diet", "finals"],
+      "hints": ["plagiarize", "copying"],
+      "family": ["cheat"]
+    },
+    {
+      "id": "buffet",
+      "word": "BUFFET",
+      "themes": ["diet", "vegas"],
+      "hints": ["unlimited", "stuffed"],
+      "family": ["buffet"]
+    },
+    {
+      "id": "dealer",
+      "word": "DEALER",
+      "themes": ["poker", "vegas"],
+      "hints": ["croupier", "shuffle"],
+      "family": ["dealer", "deal"]
+    },
+    {
+      "id": "mugshot",
+      "word": "MUGSHOT",
+      "themes": ["crime", "rebel"],
+      "hints": ["arrested", "lineup"],
+      "family": ["mugshot", "mug", "shot"]
+    },
+    {
+      "id": "cork",
+      "word": "CORK",
+      "themes": ["vineyard", "pub"],
+      "hints": ["stopper", "popping"],
+      "family": ["cork"]
+    },
+    {
+      "id": "barrel",
+      "word": "BARREL",
+      "themes": ["vineyard", "pub"],
+      "hints": ["cask", "cooper"],
+      "family": ["barrel"]
+    },
+    {
+      "id": "speech",
+      "word": "SPEECH",
+      "themes": ["cheers", "nervous"],
+      "hints": ["podium", "eulogy"],
+      "family": ["speech"]
+    },
+    {
+      "id": "hickey",
+      "word": "HICKEY",
+      "themes": ["makeout", "prom"],
+      "hints": ["concealer", "necking"],
+      "family": ["hickey"]
+    },
+    {
+      "id": "leather",
+      "word": "LEATHER",
+      "themes": ["rebel", "biker"],
+      "hints": ["suede", "studded"],
+      "family": ["leather"]
+    },
+    {
+      "id": "curfew",
+      "word": "CURFEW",
+      "themes": ["rebel", "roommate", "prom"],
+      "hints": ["grounded", "strict"],
+      "family": ["curfew"]
+    },
+    {
+      "id": "detention",
+      "word": "DETENTION",
+      "themes": ["rebel", "finals"],
+      "hints": ["principal", "punishment"],
+      "family": ["detention"]
+    },
+    {
+      "id": "promotion",
+      "word": "PROMOTION",
+      "themes": ["boss", "payday"],
+      "hints": ["advancement", "upgrade"],
+      "family": ["promotion", "promote"]
+    },
+    {
+      "id": "raise",
+      "word": "RAISE",
+      "themes": ["boss", "payday"],
+      "hints": ["boost", "increment"],
+      "family": ["raise"]
+    },
+    {
+      "id": "meeting",
+      "word": "MEETING",
+      "themes": ["boss", "monday"],
+      "hints": ["agenda", "conference"],
+      "family": ["meeting", "meet"]
+    },
+    {
+      "id": "deadline",
+      "word": "DEADLINE",
+      "themes": ["boss", "monday", "finals"],
+      "hints": ["overdue", "cutoff"],
+      "family": ["deadline", "dead", "line"]
+    },
+    {
+      "id": "interview",
+      "word": "INTERVIEW",
+      "themes": ["boss", "nervous"],
+      "hints": ["resume", "recruiter"],
+      "family": ["interview"]
+    },
+    {
+      "id": "commute",
+      "word": "COMMUTE",
+      "themes": ["monday", "rushhour"],
+      "hints": ["gridlock", "suburbs"],
+      "family": ["commute"]
+    },
+    {
+      "id": "espresso",
+      "word": "ESPRESSO",
+      "themes": ["monday", "finals"],
+      "hints": ["barista", "crema"],
+      "family": ["espresso"]
+    },
+    {
+      "id": "cruise",
+      "word": "CRUISE",
+      "themes": ["springbreak", "tiki", "aging"],
+      "hints": ["stateroom", "seasick"],
+      "family": ["cruise"]
+    },
+    {
+      "id": "gin",
+      "word": "GIN",
+      "themes": ["pub", "spirits"],
+      "hints": ["tonic", "juniper"],
+      "family": ["gin"]
+    },
+    {
+      "id": "rum",
+      "word": "RUM",
+      "themes": ["spirits", "tiki"],
+      "hints": ["daiquiri", "molasses"],
+      "family": ["rum"]
+    },
+    {
+      "id": "mojito",
+      "word": "MOJITO",
+      "themes": ["spirits", "tiki"],
+      "hints": ["mint", "havana"],
+      "family": ["mojito"]
+    }
+  ]
+}

@@ -1,38 +1,14 @@
-// Spanish for what the server writes and the shell shows: the manifest's picker lines, the VIP's
-// Skip labels (`vipSkipLabel`) and the awards. Keyed by the English sentence (ADR-044).
+// Spanish for what the server writes and the shell shows (the manifest's lines live in
+// manifest.es.json): the VIP's Skip labels (`vipSkipLabel`) and the awards. Keyed by the English sentence (ADR-044).
 export const ES_GAME: Record<string, string> = {
-  // manifest.json — the game picker
-  "Bet on what's inside the mystery box.": 'Apuesta a lo que hay dentro de la caja misteriosa.',
-  "Everyone starts with 100 coins. A mystery box shows what it might hold and the odds of each. Everyone bets in secret on what's inside: the long shots pay big. Then the box opens. Most coins at the end wins.":
-    'Todos empiezan con 100 monedas. Una caja misteriosa muestra lo que podría tener y las probabilidades de cada cosa. Todos apuestan en secreto a lo que hay dentro: lo improbable paga mucho. Luego la caja se abre. Gana quien tenga más monedas al final.',
-  Boxes: 'Cajas',
-  'How many mystery boxes get opened': 'Cuántas cajas misteriosas se abren',
-  'Starting coins': 'Monedas iniciales',
-  "Every player's coins at the start": 'Las monedas de cada jugador al empezar',
-  'Betting time': 'Tiempo para apostar',
-  'Seconds to place a secret bet': 'Segundos para hacer una apuesta secreta',
-  'Grand box': 'Gran caja',
-  'The last box pays double': 'La última caja paga doble',
-  'Spicy boxes': 'Cajas picantes',
-  'Live events': 'Eventos en vivo',
-  'Every other box is a race, a dice roll or a prize wheel':
-    'Una caja de cada dos es una carrera, una tirada de dados o una ruleta',
-  'Adds grown-up boxes; the rules stay the same': 'Añade cajas para adultos; las reglas no cambian',
-  'Host voice': 'Voz del presentador',
-  'Short calls: place your bets, bets closed, the winners':
-    'Frases cortas: hagan sus apuestas, apuestas cerradas, los ganadores',
-  'Old British Man': 'Señor británico',
-  'Young British Man': 'Joven británico',
-  'American Woman': 'Mujer estadounidense',
-  'Soft-Spoken Woman': 'Mujer de voz suave',
-  Original: 'Original',
-  'No voice': 'Sin voz',
   // vipSkipLabel — the host bar and the ★ menu
   "Let's go": '¡Vamos!',
   'Skip to betting': 'Ir a las apuestas',
   'Close betting': 'Cerrar las apuestas',
   'Next box': 'Siguiente caja',
   'See results': 'Ver resultados',
+  'Open the doors': 'Abrir las puertas',
+  'Pop it now': '¡Que explote ya!',
   // awards
   '🎲 High Roller': '🎲 Gran Apostador',
   'The biggest single bet': 'La apuesta más grande',

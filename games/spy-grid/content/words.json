@@ -1,0 +1,4233 @@
+{
+  "lang": "en",
+  "words": [
+    {
+      "id": "shark",
+      "word": "SHARK",
+      "themes": ["ocean", "danger", "bite"],
+      "hints": ["jaws", "dorsal"],
+      "family": ["shark"]
+    },
+    {
+      "id": "whale",
+      "word": "WHALE",
+      "themes": ["ocean", "big"],
+      "hints": ["humpback", "blubber"],
+      "family": ["whale"]
+    },
+    {
+      "id": "wave",
+      "word": "WAVE",
+      "themes": ["ocean", "beach"],
+      "hints": ["surfing", "tsunami"],
+      "family": ["wave"]
+    },
+    {
+      "id": "dolphin",
+      "word": "DOLPHIN",
+      "themes": ["ocean", "smart"],
+      "hints": ["flipper", "porpoise"],
+      "family": ["dolphin"]
+    },
+    {
+      "id": "octopus",
+      "word": "OCTOPUS",
+      "themes": ["ocean", "monster"],
+      "hints": ["suckers", "eightarms"],
+      "family": ["octopus", "octopi"]
+    },
+    {
+      "id": "coral",
+      "word": "CORAL",
+      "themes": ["ocean", "pink"],
+      "hints": ["reef", "polyp"],
+      "family": ["coral"]
+    },
+    {
+      "id": "crab",
+      "word": "CRAB",
+      "themes": ["ocean", "beach", "claw"],
+      "hints": ["pincer", "crustacean"],
+      "family": ["crab"]
+    },
+    {
+      "id": "anchor",
+      "word": "ANCHOR",
+      "themes": ["ocean", "ship"],
+      "hints": ["moor", "aweigh"],
+      "family": ["anchor"]
+    },
+    {
+      "id": "submarine",
+      "word": "SUBMARINE",
+      "themes": ["ocean", "yellow"],
+      "hints": ["periscope", "torpedo"],
+      "family": ["submarine", "sub", "marine"]
+    },
+    {
+      "id": "diver",
+      "word": "DIVER",
+      "themes": ["ocean", "swimming", "bubbles"],
+      "hints": ["scuba", "snorkel"],
+      "family": ["diver", "dive"]
+    },
+    {
+      "id": "mermaid",
+      "word": "MERMAID",
+      "themes": ["ocean", "myth"],
+      "hints": ["atlantis", "lagoon"],
+      "family": ["mermaid", "mer", "maid"]
+    },
+    {
+      "id": "pearl",
+      "word": "PEARL",
+      "themes": ["ocean", "shiny"],
+      "hints": ["oyster", "necklace"],
+      "family": ["pearl"]
+    },
+    {
+      "id": "rocket",
+      "word": "ROCKET",
+      "themes": ["space", "future", "fast", "science"],
+      "hints": ["liftoff", "launchpad"],
+      "family": ["rocket"]
+    },
+    {
+      "id": "moon",
+      "word": "MOON",
+      "themes": ["space", "sleep", "round", "dark", "night", "sky"],
+      "hints": ["lunar", "crater"],
+      "family": ["moon"]
+    },
+    {
+      "id": "star",
+      "word": "STAR",
+      "themes": ["space", "movie", "shiny", "bright", "night", "sky", "heaven", "wish"],
+      "hints": ["twinkle", "constellation"],
+      "family": ["star"]
+    },
+    {
+      "id": "planet",
+      "word": "PLANET",
+      "themes": ["space", "big"],
+      "hints": ["orbit", "jupiter"],
+      "family": ["planet"]
+    },
+    {
+      "id": "alien",
+      "word": "ALIEN",
+      "themes": ["space", "movie", "future", "monster", "green"],
+      "hints": ["martian", "ufo"],
+      "family": ["alien"]
+    },
+    {
+      "id": "satellite",
+      "word": "SATELLITE",
+      "themes": ["space", "sky"],
+      "hints": ["orbiter", "dish"],
+      "family": ["satellite"]
+    },
+    {
+      "id": "telescope",
+      "word": "TELESCOPE",
+      "themes": ["space", "vision", "science"],
+      "hints": ["observatory", "eyepiece"],
+      "family": ["telescope", "scope"]
+    },
+    {
+      "id": "meteor",
+      "word": "METEOR",
+      "themes": ["space", "prehistoric", "disaster"],
+      "hints": ["shooting", "asteroid"],
+      "family": ["meteor"]
+    },
+    {
+      "id": "astronaut",
+      "word": "ASTRONAUT",
+      "themes": ["space", "future"],
+      "hints": ["spacesuit", "spacewalk"],
+      "family": ["astronaut", "astro", "naut"]
+    },
+    {
+      "id": "knife",
+      "word": "KNIFE",
+      "themes": ["kitchen", "sharp", "pocket"],
+      "hints": ["blade", "carving"],
+      "family": ["knife", "knives"]
+    },
+    {
+      "id": "oven",
+      "word": "OVEN",
+      "themes": ["kitchen", "pizza", "hot"],
+      "hints": ["bake", "preheat"],
+      "family": ["oven"]
+    },
+    {
+      "id": "spoon",
+      "word": "SPOON",
+      "themes": ["kitchen", "infant", "measure"],
+      "hints": ["ladle", "stir"],
+      "family": ["spoon"]
+    },
+    {
+      "id": "pan",
+      "word": "PAN",
+      "themes": ["kitchen", "metal"],
+      "hints": ["skillet", "frying"],
+      "family": ["pan"]
+    },
+    {
+      "id": "fork",
+      "word": "FORK",
+      "themes": ["kitchen", "restaurant"],
+      "hints": ["prongs", "tines"],
+      "family": ["fork"]
+    },
+    {
+      "id": "kettle",
+      "word": "KETTLE",
+      "themes": ["kitchen", "steam"],
+      "hints": ["boil", "whistling"],
+      "family": ["kettle"]
+    },
+    {
+      "id": "apron",
+      "word": "APRON",
+      "themes": ["kitchen", "bakery"],
+      "hints": ["smock", "pinafore"],
+      "family": ["apron"]
+    },
+    {
+      "id": "fridge",
+      "word": "FRIDGE",
+      "themes": ["kitchen", "cold"],
+      "hints": ["freezer", "leftovers"],
+      "family": ["fridge", "refrigerator"]
+    },
+    {
+      "id": "toaster",
+      "word": "TOASTER",
+      "themes": ["kitchen", "electric"],
+      "hints": ["popup", "crumbs"],
+      "family": ["toaster", "toast"]
+    },
+    {
+      "id": "bowl",
+      "word": "BOWL",
+      "themes": ["kitchen", "round"],
+      "hints": ["cereal", "porridge"],
+      "family": ["bowl"]
+    },
+    {
+      "id": "cow",
+      "word": "COW",
+      "themes": ["farm", "spots", "field"],
+      "hints": ["udder", "dairy"],
+      "family": ["cow"]
+    },
+    {
+      "id": "pig",
+      "word": "PIG",
+      "themes": ["farm", "pink", "pork"],
+      "hints": ["oink", "hog"],
+      "family": ["pig"]
+    },
+    {
+      "id": "tractor",
+      "word": "TRACTOR",
+      "themes": ["farm", "rolling"],
+      "hints": ["plow", "harvest"],
+      "family": ["tractor"]
+    },
+    {
+      "id": "horse",
+      "word": "HORSE",
+      "themes": ["farm", "fast", "western", "race", "field"],
+      "hints": ["gallop", "neigh"],
+      "family": ["horse"]
+    },
+    {
+      "id": "chicken",
+      "word": "CHICKEN",
+      "themes": ["farm", "birds"],
+      "hints": ["hen", "cluck"],
+      "family": ["chicken", "chick"]
+    },
+    {
+      "id": "sheep",
+      "word": "SHEEP",
+      "themes": ["farm", "sleep", "white", "field"],
+      "hints": ["lamb", "baa"],
+      "family": ["sheep"]
+    },
+    {
+      "id": "goat",
+      "word": "GOAT",
+      "themes": ["farm", "mountain", "beard"],
+      "hints": ["nanny", "kid"],
+      "family": ["goat"]
+    },
+    {
+      "id": "scarecrow",
+      "word": "SCARECROW",
+      "themes": ["farm", "halloween", "field"],
+      "hints": ["stuffed", "effigy"],
+      "family": ["scarecrow", "scare", "crow"]
+    },
+    {
+      "id": "duck",
+      "word": "DUCK",
+      "themes": ["farm", "bathroom", "birds", "yellow", "hunting", "pond"],
+      "hints": ["quack", "mallard"],
+      "family": ["duck"]
+    },
+    {
+      "id": "straw",
+      "word": "STRAW",
+      "themes": ["farm", "hollow"],
+      "hints": ["hay", "sip"],
+      "family": ["straw"]
+    },
+    {
+      "id": "pen",
+      "word": "PEN",
+      "themes": ["farm", "writing"],
+      "hints": ["quill", "inkwell"],
+      "family": ["pen"]
+    },
+    {
+      "id": "windmill",
+      "word": "WINDMILL",
+      "themes": ["farm", "breeze"],
+      "hints": ["dutch", "quixote"],
+      "family": ["windmill", "wind", "mill"]
+    },
+    {
+      "id": "monkey",
+      "word": "MONKEY",
+      "themes": ["jungle", "circus", "zoo", "cage"],
+      "hints": ["chimp", "baboon"],
+      "family": ["monkey"]
+    },
+    {
+      "id": "tiger",
+      "word": "TIGER",
+      "themes": ["jungle", "zoo", "stripes"],
+      "hints": ["bengal", "roar"],
+      "family": ["tiger"]
+    },
+    {
+      "id": "parrot",
+      "word": "PARROT",
+      "themes": ["jungle", "treasure", "birds", "pets", "cage", "colorful", "palm"],
+      "hints": ["polly", "macaw"],
+      "family": ["parrot"]
+    },
+    {
+      "id": "snake",
+      "word": "SNAKE",
+      "themes": ["jungle", "desert", "reptile", "danger", "bite"],
+      "hints": ["hiss", "cobra"],
+      "family": ["snake"]
+    },
+    {
+      "id": "gorilla",
+      "word": "GORILLA",
+      "themes": ["jungle", "zoo"],
+      "hints": ["primate", "knuckles"],
+      "family": ["gorilla"]
+    },
+    {
+      "id": "leopard",
+      "word": "LEOPARD",
+      "themes": ["jungle", "spots"],
+      "hints": ["panther", "jaguar"],
+      "family": ["leopard"]
+    },
+    {
+      "id": "frog",
+      "word": "FROG",
+      "themes": ["jungle", "fairytale", "river", "green", "swimming", "kiss", "pond"],
+      "hints": ["ribbit", "tadpole"],
+      "family": ["frog"]
+    },
+    {
+      "id": "banana",
+      "word": "BANANA",
+      "themes": ["jungle", "fruit", "yellow", "trash", "bunch"],
+      "hints": ["peel", "split"],
+      "family": ["banana"]
+    },
+    {
+      "id": "sloth",
+      "word": "SLOTH",
+      "themes": ["jungle", "slow"],
+      "hints": ["lazy", "sluggish"],
+      "family": ["sloth"]
+    },
+    {
+      "id": "snowman",
+      "word": "SNOWMAN",
+      "themes": ["winter", "christmas", "cold"],
+      "hints": ["frosty", "melting"],
+      "family": ["snowman", "snow", "man"]
+    },
+    {
+      "id": "ice",
+      "word": "ICE",
+      "themes": ["winter", "cold", "wet", "polar", "crack"],
+      "hints": ["frozen", "cube"],
+      "family": ["ice", "icy"]
+    },
+    {
+      "id": "sled",
+      "word": "SLED",
+      "themes": ["winter", "dog"],
+      "hints": ["toboggan", "luge"],
+      "family": ["sled"]
+    },
+    {
+      "id": "scarf",
+      "word": "SCARF",
+      "themes": ["winter", "clothes", "knitting"],
+      "hints": ["muffler", "neckwear"],
+      "family": ["scarf", "scarves"]
+    },
+    {
+      "id": "glove",
+      "word": "GLOVE",
+      "themes": ["winter", "clothes", "baseball", "boxing", "protect"],
+      "hints": ["fingers", "catcher"],
+      "family": ["glove"]
+    },
+    {
+      "id": "penguin",
+      "word": "PENGUIN",
+      "themes": ["winter", "birds", "cold", "cute", "zoo", "polar"],
+      "hints": ["emperor", "waddle"],
+      "family": ["penguin"]
+    },
+    {
+      "id": "skate",
+      "word": "SKATE",
+      "themes": ["winter", "rolling"],
+      "hints": ["rink", "axel"],
+      "family": ["skate"]
+    },
+    {
+      "id": "blizzard",
+      "word": "BLIZZARD",
+      "themes": ["winter", "weather"],
+      "hints": ["whiteout", "squall"],
+      "family": ["blizzard"]
+    },
+    {
+      "id": "fireplace",
+      "word": "FIREPLACE",
+      "themes": ["winter", "flame", "lounge"],
+      "hints": ["mantel", "embers"],
+      "family": ["fireplace", "fire", "place"]
+    },
+    {
+      "id": "mitten",
+      "word": "MITTEN",
+      "themes": ["winter", "knitting"],
+      "hints": ["thumb", "knitted"],
+      "family": ["mitten", "mitt"]
+    },
+    {
+      "id": "sleigh",
+      "word": "SLEIGH",
+      "themes": ["winter", "christmas"],
+      "hints": ["jingle", "runners"],
+      "family": ["sleigh"]
+    },
+    {
+      "id": "ski",
+      "word": "SKI",
+      "themes": ["winter", "mountain"],
+      "hints": ["slalom", "slopes"],
+      "family": ["ski"]
+    },
+    {
+      "id": "beach",
+      "word": "BEACH",
+      "themes": ["summer", "vacation", "palm"],
+      "hints": ["shore", "seaside"],
+      "family": ["beach"]
+    },
+    {
+      "id": "pool",
+      "word": "POOL",
+      "themes": ["summer", "wet", "swimming", "vacation"],
+      "hints": ["chlorine", "diving"],
+      "family": ["pool"]
+    },
+    {
+      "id": "sandal",
+      "word": "SANDAL",
+      "themes": ["summer", "beach"],
+      "hints": ["flipflop", "opentoed"],
+      "family": ["sandal"]
+    },
+    {
+      "id": "watermelon",
+      "word": "WATERMELON",
+      "themes": ["summer", "fruit"],
+      "hints": ["rind", "juicy"],
+      "family": ["watermelon", "water", "melon"]
+    },
+    {
+      "id": "picnic",
+      "word": "PICNIC",
+      "themes": ["summer", "sandwich"],
+      "hints": ["hamper", "checkered"],
+      "family": ["picnic"]
+    },
+    {
+      "id": "tent",
+      "word": "TENT",
+      "themes": ["summer", "circus", "camping"],
+      "hints": ["campsite", "tarp"],
+      "family": ["tent"]
+    },
+    {
+      "id": "fan",
+      "word": "FAN",
+      "themes": ["summer", "breeze"],
+      "hints": ["blower", "cooling"],
+      "family": ["fan"]
+    },
+    {
+      "id": "lemonade",
+      "word": "LEMONADE",
+      "themes": ["summer", "drinks"],
+      "hints": ["stand", "squeezed"],
+      "family": ["lemonade", "lemon", "ade"]
+    },
+    {
+      "id": "piano",
+      "word": "PIANO",
+      "themes": ["music", "orchestra"],
+      "hints": ["ivories", "concerto"],
+      "family": ["piano", "pianist"]
+    },
+    {
+      "id": "guitar",
+      "word": "GUITAR",
+      "themes": ["music", "concert", "string"],
+      "hints": ["strum", "acoustic"],
+      "family": ["guitar"]
+    },
+    {
+      "id": "drum",
+      "word": "DRUM",
+      "themes": ["music", "concert", "loud", "orchestra", "hollow", "hit"],
+      "hints": ["snare", "bongo"],
+      "family": ["drum"]
+    },
+    {
+      "id": "violin",
+      "word": "VIOLIN",
+      "themes": ["music", "orchestra", "string"],
+      "hints": ["fiddle", "cello"],
+      "family": ["violin"]
+    },
+    {
+      "id": "trumpet",
+      "word": "TRUMPET",
+      "themes": ["music", "loud", "orchestra"],
+      "hints": ["bugle", "brass"],
+      "family": ["trumpet"]
+    },
+    {
+      "id": "flute",
+      "word": "FLUTE",
+      "themes": ["music", "orchestra"],
+      "hints": ["piccolo", "fife"],
+      "family": ["flute"]
+    },
+    {
+      "id": "microphone",
+      "word": "MICROPHONE",
+      "themes": ["music", "concert"],
+      "hints": ["karaoke", "podcast"],
+      "family": ["microphone", "micro", "phone"]
+    },
+    {
+      "id": "harp",
+      "word": "HARP",
+      "themes": ["music", "orchestra", "heaven", "string"],
+      "hints": ["lyre", "cherub"],
+      "family": ["harp"]
+    },
+    {
+      "id": "note",
+      "word": "NOTE",
+      "themes": ["music", "orchestra"],
+      "hints": ["memo", "sticky"],
+      "family": ["note"]
+    },
+    {
+      "id": "speaker",
+      "word": "SPEAKER",
+      "themes": ["music", "concert", "loud"],
+      "hints": ["subwoofer", "stereo"],
+      "family": ["speaker", "speak"]
+    },
+    {
+      "id": "ball",
+      "word": "BALL",
+      "themes": ["sports", "dog", "round", "toys", "golf", "soccer", "hit"],
+      "hints": ["bounce", "dribble"],
+      "family": ["ball"]
+    },
+    {
+      "id": "goal",
+      "word": "GOAL",
+      "themes": ["sports", "soccer"],
+      "hints": ["score", "target"],
+      "family": ["goal"]
+    },
+    {
+      "id": "bat",
+      "word": "BAT",
+      "themes": ["sports", "halloween", "superhero", "dark", "baseball", "night", "wings", "hit"],
+      "hints": ["echolocation", "slugger"],
+      "family": ["bat"]
+    },
+    {
+      "id": "racket",
+      "word": "RACKET",
+      "themes": ["sports", "loud"],
+      "hints": ["tennis", "badminton"],
+      "family": ["racket"]
+    },
+    {
+      "id": "net",
+      "word": "NET",
+      "themes": ["sports", "soccer", "fishing", "grid"],
+      "hints": ["mesh", "hoop"],
+      "family": ["net"]
+    },
+    {
+      "id": "helmet",
+      "word": "HELMET",
+      "themes": ["sports", "emergency", "battle", "baseball", "army", "protect", "construction"],
+      "hints": ["visor", "concussion"],
+      "family": ["helmet"]
+    },
+    {
+      "id": "whistle",
+      "word": "WHISTLE",
+      "themes": ["sports", "police", "railroad", "soccer", "swimming"],
+      "hints": ["tweet", "blow"],
+      "family": ["whistle"]
+    },
+    {
+      "id": "trophy",
+      "word": "TROPHY",
+      "themes": ["sports", "winner"],
+      "hints": ["award", "prize"],
+      "family": ["trophy", "trophies"]
+    },
+    {
+      "id": "coach",
+      "word": "COACH",
+      "themes": ["sports", "leader"],
+      "hints": ["huddle", "sideline"],
+      "family": ["coach"]
+    },
+    {
+      "id": "referee",
+      "word": "REFEREE",
+      "themes": ["sports", "soccer", "stripes"],
+      "hints": ["umpire", "foul"],
+      "family": ["referee", "ref"]
+    },
+    {
+      "id": "match",
+      "word": "MATCH",
+      "themes": ["sports", "flame"],
+      "hints": ["strike", "ignite"],
+      "family": ["match"]
+    },
+    {
+      "id": "teacher",
+      "word": "TEACHER",
+      "themes": ["school", "smart"],
+      "hints": ["classroom", "homework"],
+      "family": ["teacher", "teach"]
+    },
+    {
+      "id": "pencil",
+      "word": "PENCIL",
+      "themes": ["school", "sharp", "art", "wood", "writing"],
+      "hints": ["graphite", "doodle"],
+      "family": ["pencil"]
+    },
+    {
+      "id": "book",
+      "word": "BOOK",
+      "themes": ["school", "paper"],
+      "hints": ["novel", "chapter"],
+      "family": ["book"]
+    },
+    {
+      "id": "desk",
+      "word": "DESK",
+      "themes": ["school", "office"],
+      "hints": ["drawer", "workstation"],
+      "family": ["desk"]
+    },
+    {
+      "id": "ruler",
+      "word": "RULER",
+      "themes": ["school", "measure"],
+      "hints": ["inches", "centimeter"],
+      "family": ["ruler", "rule"]
+    },
+    {
+      "id": "chalk",
+      "word": "CHALK",
+      "themes": ["school", "white", "writing"],
+      "hints": ["hopscotch", "sidewalk"],
+      "family": ["chalk"]
+    },
+    {
+      "id": "eraser",
+      "word": "ERASER",
+      "themes": ["school", "writing"],
+      "hints": ["rubber", "smudge"],
+      "family": ["eraser", "erase"]
+    },
+    {
+      "id": "bus",
+      "word": "BUS",
+      "themes": ["school", "city", "road", "rolling"],
+      "hints": ["stop", "fare"],
+      "family": ["bus"]
+    },
+    {
+      "id": "lunch",
+      "word": "LUNCH",
+      "themes": ["school", "cardboard"],
+      "hints": ["noon", "cafeteria"],
+      "family": ["lunch"]
+    },
+    {
+      "id": "test",
+      "word": "TEST",
+      "themes": ["school", "science"],
+      "hints": ["exam", "quiz"],
+      "family": ["test"]
+    },
+    {
+      "id": "backpack",
+      "word": "BACKPACK",
+      "themes": ["school", "camping"],
+      "hints": ["rucksack", "knapsack"],
+      "family": ["backpack", "back", "pack"]
+    },
+    {
+      "id": "uniform",
+      "word": "UNIFORM",
+      "themes": ["school", "army"],
+      "hints": ["outfit", "regulation"],
+      "family": ["uniform", "form"]
+    },
+    {
+      "id": "castle",
+      "word": "CASTLE",
+      "themes": ["medieval", "royal", "fairytale", "chess", "stone"],
+      "hints": ["moat", "turret"],
+      "family": ["castle"]
+    },
+    {
+      "id": "knight",
+      "word": "KNIGHT",
+      "themes": ["medieval", "chess"],
+      "hints": ["jousting", "chivalry"],
+      "family": ["knight"]
+    },
+    {
+      "id": "dragon",
+      "word": "DRAGON",
+      "themes": ["medieval", "fairytale", "reptile", "monster", "spicy", "myth", "flame", "wings"],
+      "hints": ["wyvern", "hoard"],
+      "family": ["dragon"]
+    },
+    {
+      "id": "sword",
+      "word": "SWORD",
+      "themes": ["medieval", "battle", "sharp", "metal"],
+      "hints": ["hilt", "sabre"],
+      "family": ["sword"]
+    },
+    {
+      "id": "shield",
+      "word": "SHIELD",
+      "themes": ["medieval", "battle", "superhero", "protect"],
+      "hints": ["defend", "buckler"],
+      "family": ["shield"]
+    },
+    {
+      "id": "armor",
+      "word": "ARMOR",
+      "themes": ["medieval", "battle", "metal", "protect"],
+      "hints": ["cuirass", "ironclad"],
+      "family": ["armor", "armour"]
+    },
+    {
+      "id": "tower",
+      "word": "TOWER",
+      "themes": ["medieval", "city", "tall"],
+      "hints": ["rapunzel", "spire"],
+      "family": ["tower"]
+    },
+    {
+      "id": "king",
+      "word": "KING",
+      "themes": ["medieval", "royal", "chess", "casino", "leader"],
+      "hints": ["monarch", "checkmate"],
+      "family": ["king"]
+    },
+    {
+      "id": "queen",
+      "word": "QUEEN",
+      "themes": ["medieval", "royal", "chess", "casino"],
+      "hints": ["empress", "majesty"],
+      "family": ["queen"]
+    },
+    {
+      "id": "crown",
+      "word": "CROWN",
+      "themes": ["medieval", "royal", "shiny", "winner"],
+      "hints": ["tiara", "coronation"],
+      "family": ["crown"]
+    },
+    {
+      "id": "pirate",
+      "word": "PIRATE",
+      "themes": ["treasure", "beard"],
+      "hints": ["buccaneer", "ahoy"],
+      "family": ["pirate"]
+    },
+    {
+      "id": "chest",
+      "word": "CHEST",
+      "themes": ["treasure", "body"],
+      "hints": ["torso", "lid"],
+      "family": ["chest"]
+    },
+    {
+      "id": "gold",
+      "word": "GOLD",
+      "themes": ["treasure", "money", "shiny", "western", "winner"],
+      "hints": ["nugget", "karat"],
+      "family": ["gold", "golden"]
+    },
+    {
+      "id": "map",
+      "word": "MAP",
+      "themes": ["treasure", "camping", "travel", "road", "adventure", "paper", "flat", "grid"],
+      "hints": ["atlas", "legend"],
+      "family": ["map"]
+    },
+    {
+      "id": "coin",
+      "word": "COIN",
+      "themes": ["treasure", "money", "round", "metal", "flat", "pocket", "collect", "wish"],
+      "hints": ["penny", "nickel"],
+      "family": ["coin"]
+    },
+    {
+      "id": "jewel",
+      "word": "JEWEL",
+      "themes": ["treasure", "royal", "shiny"],
+      "hints": ["gem", "ruby"],
+      "family": ["jewel", "jewelry"]
+    },
+    {
+      "id": "island",
+      "word": "ISLAND",
+      "themes": ["treasure", "vacation", "palm"],
+      "hints": ["castaway", "isle"],
+      "family": ["island"]
+    },
+    {
+      "id": "ship",
+      "word": "SHIP",
+      "themes": ["treasure", "battle"],
+      "hints": ["vessel", "hull"],
+      "family": ["ship"]
+    },
+    {
+      "id": "key",
+      "word": "KEY",
+      "themes": ["treasure", "car", "house", "lock", "twist", "pocket", "bunch"],
+      "hints": ["unlock", "locksmith"],
+      "family": ["key"]
+    },
+    {
+      "id": "hook",
+      "word": "HOOK",
+      "themes": ["treasure", "fishing"],
+      "hints": ["bait", "barbed"],
+      "family": ["hook"]
+    },
+    {
+      "id": "clown",
+      "word": "CLOWN",
+      "themes": ["circus", "birthday", "smile"],
+      "hints": ["jester", "honk"],
+      "family": ["clown"]
+    },
+    {
+      "id": "lion",
+      "word": "LION",
+      "themes": ["circus", "loud", "zoo", "cage", "hair"],
+      "hints": ["mane", "pride"],
+      "family": ["lion"]
+    },
+    {
+      "id": "elephant",
+      "word": "ELEPHANT",
+      "themes": ["circus", "big", "zoo"],
+      "hints": ["pachyderm", "tusks"],
+      "family": ["elephant"]
+    },
+    {
+      "id": "ring",
+      "word": "RING",
+      "themes": ["circus", "wedding", "phone", "shiny", "round", "boxing", "love"],
+      "hints": ["engagement", "finger"],
+      "family": ["ring"]
+    },
+    {
+      "id": "cannon",
+      "word": "CANNON",
+      "themes": ["circus", "battle"],
+      "hints": ["artillery", "gunpowder"],
+      "family": ["cannon"]
+    },
+    {
+      "id": "bear",
+      "word": "BEAR",
+      "themes": ["circus", "camping", "forest", "polar", "fishing", "fuzzy", "brown", "claw"],
+      "hints": ["grizzly", "hibernate"],
+      "family": ["bear"]
+    },
+    {
+      "id": "seal",
+      "word": "SEAL",
+      "themes": ["circus", "polar"],
+      "hints": ["walrus", "flippers"],
+      "family": ["seal"]
+    },
+    {
+      "id": "ghost",
+      "word": "GHOST",
+      "themes": ["halloween", "dark", "monster", "white"],
+      "hints": ["haunted", "phantom"],
+      "family": ["ghost"]
+    },
+    {
+      "id": "witch",
+      "word": "WITCH",
+      "themes": ["halloween", "fairytale", "black", "cone"],
+      "hints": ["cauldron", "hex"],
+      "family": ["witch"]
+    },
+    {
+      "id": "pumpkin",
+      "word": "PUMPKIN",
+      "themes": ["halloween", "vegetables", "thanksgiving"],
+      "hints": ["gourd", "squash"],
+      "family": ["pumpkin"]
+    },
+    {
+      "id": "skeleton",
+      "word": "SKELETON",
+      "themes": ["halloween", "museum"],
+      "hints": ["skull", "ribcage"],
+      "family": ["skeleton"]
+    },
+    {
+      "id": "vampire",
+      "word": "VAMPIRE",
+      "themes": ["halloween", "dark", "monster", "bite"],
+      "hints": ["fangs", "dracula"],
+      "family": ["vampire"]
+    },
+    {
+      "id": "candy",
+      "word": "CANDY",
+      "themes": ["halloween", "dessert", "snack", "easter"],
+      "hints": ["sweets", "lollipop"],
+      "family": ["candy"]
+    },
+    {
+      "id": "mummy",
+      "word": "MUMMY",
+      "themes": ["halloween", "monster", "museum"],
+      "hints": ["pharaoh", "wrapped"],
+      "family": ["mummy"]
+    },
+    {
+      "id": "spider",
+      "word": "SPIDER",
+      "themes": ["halloween", "superhero", "insects", "danger", "bite"],
+      "hints": ["tarantula", "arachnid"],
+      "family": ["spider"]
+    },
+    {
+      "id": "zombie",
+      "word": "ZOMBIE",
+      "themes": ["halloween", "monster"],
+      "hints": ["undead", "ghoul"],
+      "family": ["zombie"]
+    },
+    {
+      "id": "broom",
+      "word": "BROOM",
+      "themes": ["halloween", "magic", "clean"],
+      "hints": ["sweep", "bristles"],
+      "family": ["broom", "broomstick"]
+    },
+    {
+      "id": "tree",
+      "word": "TREE",
+      "themes": ["christmas", "wood", "tall", "climb"],
+      "hints": ["oak", "branches"],
+      "family": ["tree"]
+    },
+    {
+      "id": "reindeer",
+      "word": "REINDEER",
+      "themes": ["christmas", "polar"],
+      "hints": ["rudolph", "antlers"],
+      "family": ["reindeer", "rein"]
+    },
+    {
+      "id": "present",
+      "word": "PRESENT",
+      "themes": ["christmas", "birthday", "party", "cardboard"],
+      "hints": ["gift", "wrapping"],
+      "family": ["present"]
+    },
+    {
+      "id": "elf",
+      "word": "ELF",
+      "themes": ["christmas", "fairytale", "small"],
+      "hints": ["workshop", "pointy"],
+      "family": ["elf", "elves"]
+    },
+    {
+      "id": "bell",
+      "word": "BELL",
+      "themes": ["christmas", "loud", "boxing", "chime"],
+      "hints": ["chime", "clapper"],
+      "family": ["bell"]
+    },
+    {
+      "id": "chimney",
+      "word": "CHIMNEY",
+      "themes": ["christmas", "house"],
+      "hints": ["soot", "sweeper"],
+      "family": ["chimney"]
+    },
+    {
+      "id": "wreath",
+      "word": "WREATH",
+      "themes": ["christmas", "flowers"],
+      "hints": ["holly", "garland"],
+      "family": ["wreath"]
+    },
+    {
+      "id": "santa",
+      "word": "SANTA",
+      "themes": ["christmas", "beard"],
+      "hints": ["hohoho", "northpole"],
+      "family": ["santa", "claus"]
+    },
+    {
+      "id": "pudding",
+      "word": "PUDDING",
+      "themes": ["christmas", "dessert"],
+      "hints": ["figgy", "tapioca"],
+      "family": ["pudding"]
+    },
+    {
+      "id": "cake",
+      "word": "CAKE",
+      "themes": ["birthday", "dessert", "wedding", "bakery", "party", "wish"],
+      "hints": ["frosting", "layers"],
+      "family": ["cake"]
+    },
+    {
+      "id": "candle",
+      "word": "CANDLE",
+      "themes": ["birthday", "bright", "night", "flame", "wish"],
+      "hints": ["wick", "wax"],
+      "family": ["candle"]
+    },
+    {
+      "id": "balloon",
+      "word": "BALLOON",
+      "themes": ["birthday", "toys", "sky", "breeze", "party", "string", "colorful", "bunch"],
+      "hints": ["helium", "inflate"],
+      "family": ["balloon"]
+    },
+    {
+      "id": "card",
+      "word": "CARD",
+      "themes": ["birthday", "magic", "casino", "mail", "collect"],
+      "hints": ["greeting", "joker"],
+      "family": ["card"]
+    },
+    {
+      "id": "hat",
+      "word": "HAT",
+      "themes": ["birthday", "magic", "clothes", "party", "cone"],
+      "hints": ["brim", "bonnet"],
+      "family": ["hat"]
+    },
+    {
+      "id": "confetti",
+      "word": "CONFETTI",
+      "themes": ["birthday", "party"],
+      "hints": ["sprinkles", "streamers"],
+      "family": ["confetti"]
+    },
+    {
+      "id": "rose",
+      "word": "ROSE",
+      "themes": ["garden", "red", "flowers", "love"],
+      "hints": ["petals", "valentine"],
+      "family": ["rose"]
+    },
+    {
+      "id": "shovel",
+      "word": "SHOVEL",
+      "themes": ["garden", "beach"],
+      "hints": ["dig", "trowel"],
+      "family": ["shovel"]
+    },
+    {
+      "id": "hose",
+      "word": "HOSE",
+      "themes": ["garden", "emergency", "wet"],
+      "hints": ["nozzle", "sprinkler"],
+      "family": ["hose"]
+    },
+    {
+      "id": "seed",
+      "word": "SEED",
+      "themes": ["garden", "small", "grow"],
+      "hints": ["sprout", "germinate"],
+      "family": ["seed"]
+    },
+    {
+      "id": "worm",
+      "word": "WORM",
+      "themes": ["garden", "insects", "fishing", "underground"],
+      "hints": ["wiggly", "squirm"],
+      "family": ["worm"]
+    },
+    {
+      "id": "bee",
+      "word": "BEE",
+      "themes": ["garden", "insects", "yellow", "flowers", "stripes", "ouch", "wings"],
+      "hints": ["buzz", "hive"],
+      "family": ["bee"]
+    },
+    {
+      "id": "fence",
+      "word": "FENCE",
+      "themes": ["garden", "wood", "grid"],
+      "hints": ["picket", "posts"],
+      "family": ["fence"]
+    },
+    {
+      "id": "tulip",
+      "word": "TULIP",
+      "themes": ["garden", "flowers"],
+      "hints": ["holland", "amsterdam"],
+      "family": ["tulip"]
+    },
+    {
+      "id": "gnome",
+      "word": "GNOME",
+      "themes": ["garden", "beard"],
+      "hints": ["pointyhat", "lawn"],
+      "family": ["gnome"]
+    },
+    {
+      "id": "snail",
+      "word": "SNAIL",
+      "themes": ["garden", "slow"],
+      "hints": ["slimy", "slug"],
+      "family": ["snail"]
+    },
+    {
+      "id": "gate",
+      "word": "GATE",
+      "themes": ["garden", "airport", "heaven"],
+      "hints": ["latch", "hinged"],
+      "family": ["gate"]
+    },
+    {
+      "id": "plant",
+      "word": "PLANT",
+      "themes": ["garden", "grow"],
+      "hints": ["photosynthesis", "potted"],
+      "family": ["plant"]
+    },
+    {
+      "id": "cloud",
+      "word": "CLOUD",
+      "themes": ["weather", "computer", "soft", "sky", "white", "heaven"],
+      "hints": ["cumulus", "fluffy"],
+      "family": ["cloud"]
+    },
+    {
+      "id": "thunder",
+      "word": "THUNDER",
+      "themes": ["weather", "loud"],
+      "hints": ["rumble", "boom"],
+      "family": ["thunder"]
+    },
+    {
+      "id": "lightning",
+      "word": "LIGHTNING",
+      "themes": ["weather", "fast", "electric"],
+      "hints": ["bolt", "flash"],
+      "family": ["lightning", "light"]
+    },
+    {
+      "id": "tornado",
+      "word": "TORNADO",
+      "themes": ["weather", "disaster", "breeze", "twist"],
+      "hints": ["twister", "funnel"],
+      "family": ["tornado"]
+    },
+    {
+      "id": "rainbow",
+      "word": "RAINBOW",
+      "themes": ["weather", "sky", "colorful"],
+      "hints": ["spectrum", "leprechaun"],
+      "family": ["rainbow", "rain", "bow"]
+    },
+    {
+      "id": "umbrella",
+      "word": "UMBRELLA",
+      "themes": ["weather", "beach", "protect"],
+      "hints": ["parasol", "canopy"],
+      "family": ["umbrella"]
+    },
+    {
+      "id": "wind",
+      "word": "WIND",
+      "themes": ["weather", "breeze"],
+      "hints": ["gust", "breezy"],
+      "family": ["wind"]
+    },
+    {
+      "id": "fog",
+      "word": "FOG",
+      "themes": ["weather", "dark"],
+      "hints": ["mist", "haze"],
+      "family": ["fog"]
+    },
+    {
+      "id": "hurricane",
+      "word": "HURRICANE",
+      "themes": ["weather", "disaster", "breeze"],
+      "hints": ["cyclone", "typhoon"],
+      "family": ["hurricane", "cane"]
+    },
+    {
+      "id": "rain",
+      "word": "RAIN",
+      "themes": ["weather", "wet", "fall"],
+      "hints": ["drizzle", "downpour"],
+      "family": ["rain"]
+    },
+    {
+      "id": "camel",
+      "word": "CAMEL",
+      "themes": ["desert", "zoo"],
+      "hints": ["hump", "dromedary"],
+      "family": ["camel"]
+    },
+    {
+      "id": "cactus",
+      "word": "CACTUS",
+      "themes": ["desert", "sharp", "western", "green", "ouch"],
+      "hints": ["succulent", "prickly"],
+      "family": ["cactus", "cacti"]
+    },
+    {
+      "id": "pyramid",
+      "word": "PYRAMID",
+      "themes": ["desert", "stone"],
+      "hints": ["giza", "sphinx"],
+      "family": ["pyramid"]
+    },
+    {
+      "id": "scorpion",
+      "word": "SCORPION",
+      "themes": ["desert", "danger", "claw"],
+      "hints": ["stinger", "arachnids"],
+      "family": ["scorpion"]
+    },
+    {
+      "id": "oasis",
+      "word": "OASIS",
+      "themes": ["desert", "palm"],
+      "hints": ["mirage", "palms"],
+      "family": ["oasis"]
+    },
+    {
+      "id": "lizard",
+      "word": "LIZARD",
+      "themes": ["desert", "reptile"],
+      "hints": ["gecko", "iguana"],
+      "family": ["lizard"]
+    },
+    {
+      "id": "sand",
+      "word": "SAND",
+      "themes": ["desert", "beach"],
+      "hints": ["dune", "hourglass"],
+      "family": ["sand"]
+    },
+    {
+      "id": "nurse",
+      "word": "NURSE",
+      "themes": ["hospital", "infant", "sick"],
+      "hints": ["scrubs", "ward"],
+      "family": ["nurse"]
+    },
+    {
+      "id": "needle",
+      "word": "NEEDLE",
+      "themes": ["hospital", "sharp", "ouch", "knitting"],
+      "hints": ["thread", "injection"],
+      "family": ["needle"]
+    },
+    {
+      "id": "bandage",
+      "word": "BANDAGE",
+      "themes": ["hospital", "emergency", "ouch"],
+      "hints": ["gauze", "plaster"],
+      "family": ["bandage", "band"]
+    },
+    {
+      "id": "ambulance",
+      "word": "AMBULANCE",
+      "themes": ["hospital", "emergency"],
+      "hints": ["paramedic", "stretcher"],
+      "family": ["ambulance"]
+    },
+    {
+      "id": "bed",
+      "word": "BED",
+      "themes": ["hospital", "sleep", "sick"],
+      "hints": ["mattress", "bunk"],
+      "family": ["bed"]
+    },
+    {
+      "id": "pill",
+      "word": "PILL",
+      "themes": ["hospital", "sick"],
+      "hints": ["capsule", "dose"],
+      "family": ["pill"]
+    },
+    {
+      "id": "mask",
+      "word": "MASK",
+      "themes": ["hospital", "secret", "superhero", "theater", "hidden", "protect", "mystery"],
+      "hints": ["masquerade", "facecover"],
+      "family": ["mask"]
+    },
+    {
+      "id": "wheelchair",
+      "word": "WHEELCHAIR",
+      "themes": ["hospital", "rolling"],
+      "hints": ["ramp", "accessible"],
+      "family": ["wheelchair", "wheel", "chair"]
+    },
+    {
+      "id": "badge",
+      "word": "BADGE",
+      "themes": ["police", "law"],
+      "hints": ["emblem", "deputy"],
+      "family": ["badge"]
+    },
+    {
+      "id": "siren",
+      "word": "SIREN",
+      "themes": ["police", "emergency", "loud"],
+      "hints": ["wail", "flashing"],
+      "family": ["siren"]
+    },
+    {
+      "id": "jail",
+      "word": "JAIL",
+      "themes": ["police", "law", "stripes", "cage"],
+      "hints": ["prison", "cell"],
+      "family": ["jail"]
+    },
+    {
+      "id": "thief",
+      "word": "THIEF",
+      "themes": ["police", "law", "mystery"],
+      "hints": ["burglar", "robber"],
+      "family": ["thief", "thieves"]
+    },
+    {
+      "id": "detective",
+      "word": "DETECTIVE",
+      "themes": ["police", "mystery"],
+      "hints": ["sleuth", "magnifying"],
+      "family": ["detective"]
+    },
+    {
+      "id": "car",
+      "word": "CAR",
+      "themes": ["police", "road", "fast", "rolling", "race"],
+      "hints": ["sedan", "driving"],
+      "family": ["car"]
+    },
+    {
+      "id": "dog",
+      "word": "DOG",
+      "themes": ["police", "pets", "bite"],
+      "hints": ["woof", "canine"],
+      "family": ["dog"]
+    },
+    {
+      "id": "handcuffs",
+      "word": "HANDCUFFS",
+      "themes": ["police", "law", "lock"],
+      "hints": ["arrest", "shackles"],
+      "family": ["handcuffs", "hand", "cuffs", "cuff"]
+    },
+    {
+      "id": "spy",
+      "word": "SPY",
+      "themes": ["secret", "vision", "hidden"],
+      "hints": ["espionage", "undercover"],
+      "family": ["spy", "spies"]
+    },
+    {
+      "id": "disguise",
+      "word": "DISGUISE",
+      "themes": ["secret", "hidden"],
+      "hints": ["incognito", "impostor"],
+      "family": ["disguise"]
+    },
+    {
+      "id": "code",
+      "word": "CODE",
+      "themes": ["secret", "mystery"],
+      "hints": ["cipher", "morse"],
+      "family": ["code"]
+    },
+    {
+      "id": "camera",
+      "word": "CAMERA",
+      "themes": ["secret", "travel", "movie", "phone", "vision", "smile", "vacation"],
+      "hints": ["shutter", "tripod"],
+      "family": ["camera"]
+    },
+    {
+      "id": "briefcase",
+      "word": "BRIEFCASE",
+      "themes": ["secret", "office", "suit"],
+      "hints": ["attache", "executive"],
+      "family": ["briefcase", "brief", "case"]
+    },
+    {
+      "id": "passport",
+      "word": "PASSPORT",
+      "themes": ["secret", "travel"],
+      "hints": ["visa", "customs"],
+      "family": ["passport", "pass", "port"]
+    },
+    {
+      "id": "mole",
+      "word": "MOLE",
+      "themes": ["secret", "underground"],
+      "hints": ["burrow", "informant"],
+      "family": ["mole"]
+    },
+    {
+      "id": "bug",
+      "word": "BUG",
+      "themes": ["secret", "computer"],
+      "hints": ["beetle", "glitch"],
+      "family": ["bug"]
+    },
+    {
+      "id": "shadow",
+      "word": "SHADOW",
+      "themes": ["secret", "dark", "hidden", "mystery"],
+      "hints": ["silhouette", "groundhog"],
+      "family": ["shadow"]
+    },
+    {
+      "id": "wire",
+      "word": "WIRE",
+      "themes": ["secret", "electric"],
+      "hints": ["copper", "cable"],
+      "family": ["wire"]
+    },
+    {
+      "id": "alarm",
+      "word": "ALARM",
+      "themes": ["emergency", "sleep", "loud", "chime"],
+      "hints": ["snooze", "burglar"],
+      "family": ["alarm"]
+    },
+    {
+      "id": "fire",
+      "word": "FIRE",
+      "themes": ["emergency", "disaster", "danger", "hot", "spicy", "red"],
+      "hints": ["blaze", "inferno"],
+      "family": ["fire"]
+    },
+    {
+      "id": "ladder",
+      "word": "LADDER",
+      "themes": ["emergency", "tools", "tall", "climb", "construction"],
+      "hints": ["rungs", "stepstool"],
+      "family": ["ladder"]
+    },
+    {
+      "id": "helicopter",
+      "word": "HELICOPTER",
+      "themes": ["emergency", "sky"],
+      "hints": ["rotor", "chopper"],
+      "family": ["helicopter", "heli", "copter"]
+    },
+    {
+      "id": "soap",
+      "word": "SOAP",
+      "themes": ["bathroom", "clean", "bubbles", "laundry"],
+      "hints": ["lather", "suds"],
+      "family": ["soap"]
+    },
+    {
+      "id": "towel",
+      "word": "TOWEL",
+      "themes": ["bathroom", "beach", "swimming", "clean", "laundry"],
+      "hints": ["terrycloth", "washcloth"],
+      "family": ["towel"]
+    },
+    {
+      "id": "sink",
+      "word": "SINK",
+      "themes": ["bathroom", "wet", "clean", "plumbing"],
+      "hints": ["faucet", "basin"],
+      "family": ["sink"]
+    },
+    {
+      "id": "mirror",
+      "word": "MIRROR",
+      "themes": ["bathroom", "car", "shiny", "beauty", "vision", "smile", "crack", "glass"],
+      "hints": ["reflection", "vanity"],
+      "family": ["mirror"]
+    },
+    {
+      "id": "toothbrush",
+      "word": "TOOTHBRUSH",
+      "themes": ["bathroom", "clean"],
+      "hints": ["floss", "fluoride"],
+      "family": ["toothbrush", "tooth", "teeth", "brush"]
+    },
+    {
+      "id": "shampoo",
+      "word": "SHAMPOO",
+      "themes": ["bathroom", "clean"],
+      "hints": ["dandruff", "rinse"],
+      "family": ["shampoo"]
+    },
+    {
+      "id": "sponge",
+      "word": "SPONGE",
+      "themes": ["bathroom", "clean"],
+      "hints": ["absorbent", "porous"],
+      "family": ["sponge"]
+    },
+    {
+      "id": "comb",
+      "word": "COMB",
+      "themes": ["bathroom", "beauty", "hair"],
+      "hints": ["parting", "barber"],
+      "family": ["comb"]
+    },
+    {
+      "id": "plunger",
+      "word": "PLUNGER",
+      "themes": ["bathroom", "plumbing"],
+      "hints": ["clog", "suction"],
+      "family": ["plunger", "plunge"]
+    },
+    {
+      "id": "toilet",
+      "word": "TOILET",
+      "themes": ["bathroom", "seat", "plumbing"],
+      "hints": ["flush", "commode"],
+      "family": ["toilet"]
+    },
+    {
+      "id": "pillow",
+      "word": "PILLOW",
+      "themes": ["sleep", "soft", "night", "lounge"],
+      "hints": ["cushion", "fluffy"],
+      "family": ["pillow"]
+    },
+    {
+      "id": "blanket",
+      "word": "BLANKET",
+      "themes": ["sleep", "soft", "infant", "knitting", "sick"],
+      "hints": ["quilt", "comforter"],
+      "family": ["blanket"]
+    },
+    {
+      "id": "pajamas",
+      "word": "PAJAMAS",
+      "themes": ["sleep", "night"],
+      "hints": ["sleepwear", "sleepover"],
+      "family": ["pajamas", "pajama"]
+    },
+    {
+      "id": "lamp",
+      "word": "LAMP",
+      "themes": ["sleep", "bright", "lounge", "wish"],
+      "hints": ["genie", "bedside"],
+      "family": ["lamp"]
+    },
+    {
+      "id": "dream",
+      "word": "DREAM",
+      "themes": ["sleep", "night"],
+      "hints": ["reverie", "fantasy"],
+      "family": ["dream"]
+    },
+    {
+      "id": "sheet",
+      "word": "SHEET",
+      "themes": ["sleep", "laundry"],
+      "hints": ["linen", "fitted"],
+      "family": ["sheet"]
+    },
+    {
+      "id": "hammer",
+      "word": "HAMMER",
+      "themes": ["tools", "superhero", "law", "construction"],
+      "hints": ["mallet", "anvil"],
+      "family": ["hammer"]
+    },
+    {
+      "id": "nail",
+      "word": "NAIL",
+      "themes": ["tools", "sharp", "beauty", "metal", "ouch", "hit"],
+      "hints": ["manicure", "polish"],
+      "family": ["nail"]
+    },
+    {
+      "id": "saw",
+      "word": "SAW",
+      "themes": ["tools", "magic"],
+      "hints": ["serrated", "woodcutter"],
+      "family": ["saw"]
+    },
+    {
+      "id": "drill",
+      "word": "DRILL",
+      "themes": ["tools", "construction"],
+      "hints": ["auger", "sergeant"],
+      "family": ["drill"]
+    },
+    {
+      "id": "screw",
+      "word": "SCREW",
+      "themes": ["tools", "twist"],
+      "hints": ["threaded", "bolt"],
+      "family": ["screw"]
+    },
+    {
+      "id": "wrench",
+      "word": "WRENCH",
+      "themes": ["tools", "plumbing"],
+      "hints": ["spanner", "torque"],
+      "family": ["wrench"]
+    },
+    {
+      "id": "tape",
+      "word": "TAPE",
+      "themes": ["tools", "sticky", "measure"],
+      "hints": ["cassette", "adhesive"],
+      "family": ["tape"]
+    },
+    {
+      "id": "glue",
+      "word": "GLUE",
+      "themes": ["tools", "sticky"],
+      "hints": ["epoxy", "resin"],
+      "family": ["glue"]
+    },
+    {
+      "id": "axe",
+      "word": "AXE",
+      "themes": ["tools", "sharp", "wood"],
+      "hints": ["hatchet", "chopping"],
+      "family": ["axe"]
+    },
+    {
+      "id": "apple",
+      "word": "APPLE",
+      "themes": ["fruit", "snack", "red", "tree", "crunchy", "fall"],
+      "hints": ["cider", "orchard"],
+      "family": ["apple"]
+    },
+    {
+      "id": "orange",
+      "word": "ORANGE",
+      "themes": ["fruit", "round"],
+      "hints": ["tangerine", "marmalade"],
+      "family": ["orange"]
+    },
+    {
+      "id": "grape",
+      "word": "GRAPE",
+      "themes": ["fruit", "bunch"],
+      "hints": ["vineyard", "raisin"],
+      "family": ["grape"]
+    },
+    {
+      "id": "lemon",
+      "word": "LEMON",
+      "themes": ["fruit", "yellow"],
+      "hints": ["sour", "zest"],
+      "family": ["lemon"]
+    },
+    {
+      "id": "cherry",
+      "word": "CHERRY",
+      "themes": ["fruit", "red"],
+      "hints": ["sundae", "blossom"],
+      "family": ["cherry", "cherries"]
+    },
+    {
+      "id": "peach",
+      "word": "PEACH",
+      "themes": ["fruit", "pink", "fuzzy"],
+      "hints": ["cobbler", "nectarine"],
+      "family": ["peach"]
+    },
+    {
+      "id": "coconut",
+      "word": "COCONUT",
+      "themes": ["fruit", "palm"],
+      "hints": ["macaroon", "husk"],
+      "family": ["coconut", "coco", "nut"]
+    },
+    {
+      "id": "kiwi",
+      "word": "KIWI",
+      "themes": ["fruit", "fuzzy"],
+      "hints": ["gooseberry", "newzealand"],
+      "family": ["kiwi"]
+    },
+    {
+      "id": "strawberry",
+      "word": "STRAWBERRY",
+      "themes": ["fruit", "dessert", "red"],
+      "hints": ["wimbledon", "rhubarb"],
+      "family": ["strawberry", "straw", "berry"]
+    },
+    {
+      "id": "lime",
+      "word": "LIME",
+      "themes": ["fruit", "green"],
+      "hints": ["margarita", "mojito"],
+      "family": ["lime"]
+    },
+    {
+      "id": "carrot",
+      "word": "CARROT",
+      "themes": ["vegetables", "underground", "crunchy", "bunch"],
+      "hints": ["carotene", "parsnip"],
+      "family": ["carrot"]
+    },
+    {
+      "id": "potato",
+      "word": "POTATO",
+      "themes": ["vegetables", "underground", "brown", "thanksgiving"],
+      "hints": ["spud", "tater"],
+      "family": ["potato", "potatoes"]
+    },
+    {
+      "id": "onion",
+      "word": "ONION",
+      "themes": ["vegetables", "smelly", "burger"],
+      "hints": ["shallot", "layers"],
+      "family": ["onion"]
+    },
+    {
+      "id": "corn",
+      "word": "CORN",
+      "themes": ["vegetables", "yellow", "grain", "thanksgiving"],
+      "hints": ["maize", "cob"],
+      "family": ["corn"]
+    },
+    {
+      "id": "pea",
+      "word": "PEA",
+      "themes": ["vegetables", "small", "green"],
+      "hints": ["pod", "split"],
+      "family": ["pea"]
+    },
+    {
+      "id": "tomato",
+      "word": "TOMATO",
+      "themes": ["vegetables", "pizza", "sandwich", "red", "burger"],
+      "hints": ["marinara", "heirloom"],
+      "family": ["tomato", "tomatoes"]
+    },
+    {
+      "id": "pepper",
+      "word": "PEPPER",
+      "themes": ["vegetables", "pizza", "hot", "spicy"],
+      "hints": ["jalapeno", "sneeze"],
+      "family": ["pepper"]
+    },
+    {
+      "id": "lettuce",
+      "word": "LETTUCE",
+      "themes": ["vegetables", "sandwich", "burger"],
+      "hints": ["romaine", "salad"],
+      "family": ["lettuce"]
+    },
+    {
+      "id": "bean",
+      "word": "BEAN",
+      "themes": ["vegetables", "grow"],
+      "hints": ["legume", "burrito"],
+      "family": ["bean"]
+    },
+    {
+      "id": "egg",
+      "word": "EGG",
+      "themes": ["breakfast", "prehistoric", "crack", "easter"],
+      "hints": ["yolk", "omelet"],
+      "family": ["egg"]
+    },
+    {
+      "id": "toast",
+      "word": "TOAST",
+      "themes": ["breakfast", "grain", "crunchy", "french"],
+      "hints": ["burnt", "crumbs"],
+      "family": ["toast"]
+    },
+    {
+      "id": "pancake",
+      "word": "PANCAKE",
+      "themes": ["breakfast", "flat"],
+      "hints": ["griddle", "crepe"],
+      "family": ["pancake", "pan", "cake"]
+    },
+    {
+      "id": "bacon",
+      "word": "BACON",
+      "themes": ["breakfast", "pork"],
+      "hints": ["sizzle", "rasher"],
+      "family": ["bacon"]
+    },
+    {
+      "id": "coffee",
+      "word": "COFFEE",
+      "themes": ["breakfast", "office", "drinks", "hot", "steam", "mug", "brown"],
+      "hints": ["espresso", "caffeine"],
+      "family": ["coffee"]
+    },
+    {
+      "id": "juice",
+      "word": "JUICE",
+      "themes": ["breakfast", "drinks"],
+      "hints": ["squeeze", "pulp"],
+      "family": ["juice"]
+    },
+    {
+      "id": "waffle",
+      "word": "WAFFLE",
+      "themes": ["breakfast", "grid"],
+      "hints": ["belgian", "grid"],
+      "family": ["waffle"]
+    },
+    {
+      "id": "milk",
+      "word": "MILK",
+      "themes": ["breakfast", "drinks", "white", "infant", "mug"],
+      "hints": ["dairy", "lactose"],
+      "family": ["milk"]
+    },
+    {
+      "id": "sausage",
+      "word": "SAUSAGE",
+      "themes": ["breakfast", "pork"],
+      "hints": ["bratwurst", "chorizo"],
+      "family": ["sausage"]
+    },
+    {
+      "id": "syrup",
+      "word": "SYRUP",
+      "themes": ["breakfast", "sticky"],
+      "hints": ["maple", "sap"],
+      "family": ["syrup"]
+    },
+    {
+      "id": "muffin",
+      "word": "MUFFIN",
+      "themes": ["breakfast", "bakery"],
+      "hints": ["blueberry", "bran"],
+      "family": ["muffin"]
+    },
+    {
+      "id": "cookie",
+      "word": "COOKIE",
+      "themes": ["dessert", "snack", "bakery"],
+      "hints": ["biscuit", "snickerdoodle"],
+      "family": ["cookie"]
+    },
+    {
+      "id": "pie",
+      "word": "PIE",
+      "themes": ["dessert", "bakery", "thanksgiving"],
+      "hints": ["crust", "slice"],
+      "family": ["pie"]
+    },
+    {
+      "id": "chocolate",
+      "word": "CHOCOLATE",
+      "themes": ["dessert", "brown", "love", "easter"],
+      "hints": ["fudge", "truffle"],
+      "family": ["chocolate"]
+    },
+    {
+      "id": "donut",
+      "word": "DONUT",
+      "themes": ["dessert", "hollow"],
+      "hints": ["sprinkles", "glazed"],
+      "family": ["donut", "doughnut"]
+    },
+    {
+      "id": "honey",
+      "word": "HONEY",
+      "themes": ["dessert", "sticky"],
+      "hints": ["hive", "nectar"],
+      "family": ["honey"]
+    },
+    {
+      "id": "popcorn",
+      "word": "POPCORN",
+      "themes": ["snack", "movie", "crunchy"],
+      "hints": ["kernel", "cinema"],
+      "family": ["popcorn", "pop", "corn"]
+    },
+    {
+      "id": "pretzel",
+      "word": "PRETZEL",
+      "themes": ["snack", "twist", "knot"],
+      "hints": ["bavarian", "salted"],
+      "family": ["pretzel"]
+    },
+    {
+      "id": "nut",
+      "word": "NUT",
+      "themes": ["snack", "crunchy", "crack"],
+      "hints": ["almond", "cashew"],
+      "family": ["nut"]
+    },
+    {
+      "id": "cracker",
+      "word": "CRACKER",
+      "themes": ["snack", "crunchy"],
+      "hints": ["saltine", "graham"],
+      "family": ["cracker", "crack"]
+    },
+    {
+      "id": "chips",
+      "word": "CHIPS",
+      "themes": ["snack", "crunchy"],
+      "hints": ["crisps", "nachos"],
+      "family": ["chips", "chip"]
+    },
+    {
+      "id": "arrow",
+      "word": "ARROW",
+      "themes": ["battle", "sharp", "hunting"],
+      "hints": ["quiver", "cupid"],
+      "family": ["arrow"]
+    },
+    {
+      "id": "bow",
+      "word": "BOW",
+      "themes": ["battle", "hunting", "knot"],
+      "hints": ["archer", "recurve"],
+      "family": ["bow"]
+    },
+    {
+      "id": "tank",
+      "word": "TANK",
+      "themes": ["battle", "army"],
+      "hints": ["turret", "artillery"],
+      "family": ["tank"]
+    },
+    {
+      "id": "soldier",
+      "word": "SOLDIER",
+      "themes": ["battle", "army"],
+      "hints": ["infantry", "barracks"],
+      "family": ["soldier"]
+    },
+    {
+      "id": "bomb",
+      "word": "BOMB",
+      "themes": ["battle", "danger"],
+      "hints": ["detonate", "dynamite"],
+      "family": ["bomb"]
+    },
+    {
+      "id": "dress",
+      "word": "DRESS",
+      "themes": ["wedding", "clothes"],
+      "hints": ["gown", "hemline"],
+      "family": ["dress"]
+    },
+    {
+      "id": "veil",
+      "word": "VEIL",
+      "themes": ["wedding", "hidden"],
+      "hints": ["tulle", "shroud"],
+      "family": ["veil"]
+    },
+    {
+      "id": "bouquet",
+      "word": "BOUQUET",
+      "themes": ["wedding", "flowers", "bunch"],
+      "hints": ["florist", "posy"],
+      "family": ["bouquet"]
+    },
+    {
+      "id": "church",
+      "word": "CHURCH",
+      "themes": ["wedding", "chime"],
+      "hints": ["steeple", "pew"],
+      "family": ["church"]
+    },
+    {
+      "id": "dance",
+      "word": "DANCE",
+      "themes": ["wedding", "party"],
+      "hints": ["tango", "choreography"],
+      "family": ["dance"]
+    },
+    {
+      "id": "tuxedo",
+      "word": "TUXEDO",
+      "themes": ["wedding", "black", "suit"],
+      "hints": ["cummerbund", "prom"],
+      "family": ["tuxedo"]
+    },
+    {
+      "id": "rice",
+      "word": "RICE",
+      "themes": ["wedding", "grain"],
+      "hints": ["sushi", "paddy"],
+      "family": ["rice"]
+    },
+    {
+      "id": "prince",
+      "word": "PRINCE",
+      "themes": ["royal", "kiss"],
+      "hints": ["heir", "dashing"],
+      "family": ["prince"]
+    },
+    {
+      "id": "princess",
+      "word": "PRINCESS",
+      "themes": ["royal", "fairytale"],
+      "hints": ["tiara", "damsel"],
+      "family": ["princess", "prince"]
+    },
+    {
+      "id": "throne",
+      "word": "THRONE",
+      "themes": ["royal", "seat"],
+      "hints": ["reign", "majesty"],
+      "family": ["throne"]
+    },
+    {
+      "id": "cape",
+      "word": "CAPE",
+      "themes": ["superhero", "magic"],
+      "hints": ["cloak", "matador"],
+      "family": ["cape"]
+    },
+    {
+      "id": "villain",
+      "word": "VILLAIN",
+      "themes": ["superhero", "movie"],
+      "hints": ["nemesis", "henchman"],
+      "family": ["villain"]
+    },
+    {
+      "id": "laser",
+      "word": "LASER",
+      "themes": ["superhero", "future"],
+      "hints": ["beam", "pointer"],
+      "family": ["laser"]
+    },
+    {
+      "id": "giant",
+      "word": "GIANT",
+      "themes": ["fairytale", "big", "monster", "myth", "tall", "grow"],
+      "hints": ["colossal", "titan"],
+      "family": ["giant"]
+    },
+    {
+      "id": "wolf",
+      "word": "WOLF",
+      "themes": ["fairytale", "forest", "hunting"],
+      "hints": ["howl", "ridinghood"],
+      "family": ["wolf", "wolves"]
+    },
+    {
+      "id": "unicorn",
+      "word": "UNICORN",
+      "themes": ["fairytale", "myth", "cone"],
+      "hints": ["pegasus", "narwhal"],
+      "family": ["unicorn", "corn"]
+    },
+    {
+      "id": "wand",
+      "word": "WAND",
+      "themes": ["fairytale", "magic", "bubbles"],
+      "hints": ["abracadabra", "godmother"],
+      "family": ["wand"]
+    },
+    {
+      "id": "troll",
+      "word": "TROLL",
+      "themes": ["fairytale", "monster", "myth"],
+      "hints": ["gruff", "ogre"],
+      "family": ["troll"]
+    },
+    {
+      "id": "slipper",
+      "word": "SLIPPER",
+      "themes": ["fairytale", "soft", "fuzzy", "glass"],
+      "hints": ["cinderella", "moccasin"],
+      "family": ["slipper", "slip"]
+    },
+    {
+      "id": "rabbit",
+      "word": "RABBIT",
+      "themes": ["magic", "pets", "fast", "race", "easter"],
+      "hints": ["hare", "warren"],
+      "family": ["rabbit"]
+    },
+    {
+      "id": "potion",
+      "word": "POTION",
+      "themes": ["magic", "drinks"],
+      "hints": ["elixir", "brew"],
+      "family": ["potion"]
+    },
+    {
+      "id": "crystal",
+      "word": "CRYSTAL",
+      "themes": ["magic", "shiny", "stone"],
+      "hints": ["quartz", "amethyst"],
+      "family": ["crystal"]
+    },
+    {
+      "id": "carpet",
+      "word": "CARPET",
+      "themes": ["magic", "lounge"],
+      "hints": ["vacuum", "rug"],
+      "family": ["carpet"]
+    },
+    {
+      "id": "lantern",
+      "word": "LANTERN",
+      "themes": ["camping", "bright"],
+      "hints": ["wick", "luminary"],
+      "family": ["lantern"]
+    },
+    {
+      "id": "compass",
+      "word": "COMPASS",
+      "themes": ["camping", "adventure"],
+      "hints": ["navigation", "north"],
+      "family": ["compass"]
+    },
+    {
+      "id": "canoe",
+      "word": "CANOE",
+      "themes": ["camping", "river"],
+      "hints": ["paddle", "kayak"],
+      "family": ["canoe"]
+    },
+    {
+      "id": "canvas",
+      "word": "CANVAS",
+      "themes": ["camping", "art"],
+      "hints": ["easel", "tarpaulin"],
+      "family": ["canvas"]
+    },
+    {
+      "id": "deer",
+      "word": "DEER",
+      "themes": ["forest", "hunting"],
+      "hints": ["fawn", "venison"],
+      "family": ["deer"]
+    },
+    {
+      "id": "owl",
+      "word": "OWL",
+      "themes": ["forest", "birds", "dark", "night", "smart"],
+      "hints": ["hoot", "wisdom"],
+      "family": ["owl"]
+    },
+    {
+      "id": "mushroom",
+      "word": "MUSHROOM",
+      "themes": ["forest", "pizza"],
+      "hints": ["fungi", "toadstool"],
+      "family": ["mushroom", "mush", "room"]
+    },
+    {
+      "id": "pine",
+      "word": "PINE",
+      "themes": ["forest", "tree", "cone"],
+      "hints": ["conifer", "evergreen"],
+      "family": ["pine"]
+    },
+    {
+      "id": "moss",
+      "word": "MOSS",
+      "themes": ["forest", "fuzzy"],
+      "hints": ["lichen", "peat"],
+      "family": ["moss"]
+    },
+    {
+      "id": "log",
+      "word": "LOG",
+      "themes": ["forest", "wood", "hollow"],
+      "hints": ["timber", "lumber"],
+      "family": ["log"]
+    },
+    {
+      "id": "squirrel",
+      "word": "SQUIRREL",
+      "themes": ["forest", "city"],
+      "hints": ["scurry", "hoard"],
+      "family": ["squirrel"]
+    },
+    {
+      "id": "fox",
+      "word": "FOX",
+      "themes": ["forest", "red"],
+      "hints": ["vixen", "cunning"],
+      "family": ["fox"]
+    },
+    {
+      "id": "raccoon",
+      "word": "RACCOON",
+      "themes": ["forest", "trash"],
+      "hints": ["rummage", "dumpster"],
+      "family": ["raccoon"]
+    },
+    {
+      "id": "eagle",
+      "word": "EAGLE",
+      "themes": ["mountain", "birds", "wings", "claw"],
+      "hints": ["talons", "bald"],
+      "family": ["eagle"]
+    },
+    {
+      "id": "cliff",
+      "word": "CLIFF",
+      "themes": ["mountain", "danger", "stone", "fall"],
+      "hints": ["precipice", "ledge"],
+      "family": ["cliff"]
+    },
+    {
+      "id": "cave",
+      "word": "CAVE",
+      "themes": ["mountain", "prehistoric", "dark", "adventure", "stone", "hollow"],
+      "hints": ["stalactite", "grotto"],
+      "family": ["cave"]
+    },
+    {
+      "id": "rope",
+      "word": "ROPE",
+      "themes": ["mountain", "adventure", "boxing", "ship", "twist", "climb", "knot"],
+      "hints": ["tugofwar", "rappel"],
+      "family": ["rope"]
+    },
+    {
+      "id": "avalanche",
+      "word": "AVALANCHE",
+      "themes": ["mountain", "disaster"],
+      "hints": ["landslide", "slope"],
+      "family": ["avalanche"]
+    },
+    {
+      "id": "yeti",
+      "word": "YETI",
+      "themes": ["mountain", "monster"],
+      "hints": ["abominable", "himalaya"],
+      "family": ["yeti"]
+    },
+    {
+      "id": "goggles",
+      "word": "GOGGLES",
+      "themes": ["mountain", "swimming"],
+      "hints": ["snorkel", "welding"],
+      "family": ["goggles", "goggle"]
+    },
+    {
+      "id": "bridge",
+      "word": "BRIDGE",
+      "themes": ["river", "city", "road"],
+      "hints": ["suspension", "span"],
+      "family": ["bridge"]
+    },
+    {
+      "id": "fish",
+      "word": "FISH",
+      "themes": ["river", "pets", "smelly", "swimming", "bubbles", "pond"],
+      "hints": ["gills", "aquarium"],
+      "family": ["fish"]
+    },
+    {
+      "id": "boat",
+      "word": "BOAT",
+      "themes": ["river", "adventure", "fishing"],
+      "hints": ["yacht", "dinghy"],
+      "family": ["boat"]
+    },
+    {
+      "id": "beaver",
+      "word": "BEAVER",
+      "themes": ["river", "construction"],
+      "hints": ["lodge", "gnaw"],
+      "family": ["beaver"]
+    },
+    {
+      "id": "dam",
+      "word": "DAM",
+      "themes": ["river", "construction"],
+      "hints": ["reservoir", "levee"],
+      "family": ["dam"]
+    },
+    {
+      "id": "otter",
+      "word": "OTTER",
+      "themes": ["river", "cute"],
+      "hints": ["kelp", "weasel"],
+      "family": ["otter"]
+    },
+    {
+      "id": "bank",
+      "word": "BANK",
+      "themes": ["river", "money"],
+      "hints": ["teller", "loan"],
+      "family": ["bank"]
+    },
+    {
+      "id": "taxi",
+      "word": "TAXI",
+      "themes": ["city", "car", "yellow"],
+      "hints": ["cabbie", "fare"],
+      "family": ["taxi"]
+    },
+    {
+      "id": "skyscraper",
+      "word": "SKYSCRAPER",
+      "themes": ["city", "big", "tall"],
+      "hints": ["highrise", "elevator"],
+      "family": ["skyscraper", "sky", "scraper"]
+    },
+    {
+      "id": "subway",
+      "word": "SUBWAY",
+      "themes": ["city", "underground"],
+      "hints": ["metro", "turnstile"],
+      "family": ["subway", "sub", "way"]
+    },
+    {
+      "id": "traffic",
+      "word": "TRAFFIC",
+      "themes": ["city", "road", "slow", "cone"],
+      "hints": ["gridlock", "congestion"],
+      "family": ["traffic"]
+    },
+    {
+      "id": "park",
+      "word": "PARK",
+      "themes": ["city", "car"],
+      "hints": ["playground", "valet"],
+      "family": ["park"]
+    },
+    {
+      "id": "pigeon",
+      "word": "PIGEON",
+      "themes": ["city", "birds", "mail"],
+      "hints": ["homing", "cooing"],
+      "family": ["pigeon"]
+    },
+    {
+      "id": "bench",
+      "word": "BENCH",
+      "themes": ["city", "seat"],
+      "hints": ["bleachers", "dugout"],
+      "family": ["bench"]
+    },
+    {
+      "id": "suitcase",
+      "word": "SUITCASE",
+      "themes": ["travel", "airport", "vacation"],
+      "hints": ["luggage", "baggage"],
+      "family": ["suitcase", "suit", "case"]
+    },
+    {
+      "id": "plane",
+      "word": "PLANE",
+      "themes": ["travel", "airport", "sky", "wings"],
+      "hints": ["runway", "airliner"],
+      "family": ["plane"]
+    },
+    {
+      "id": "hotel",
+      "word": "HOTEL",
+      "themes": ["travel", "vacation"],
+      "hints": ["concierge", "lobby"],
+      "family": ["hotel"]
+    },
+    {
+      "id": "ticket",
+      "word": "TICKET",
+      "themes": ["travel", "airport", "railroad", "concert", "theater", "movie"],
+      "hints": ["admission", "stub"],
+      "family": ["ticket"]
+    },
+    {
+      "id": "train",
+      "word": "TRAIN",
+      "themes": ["travel", "railroad", "fast", "western", "toys", "steam"],
+      "hints": ["locomotive", "caboose"],
+      "family": ["train"]
+    },
+    {
+      "id": "globe",
+      "word": "GLOBE",
+      "themes": ["travel", "round"],
+      "hints": ["atlas", "sphere"],
+      "family": ["globe"]
+    },
+    {
+      "id": "museum",
+      "word": "MUSEUM",
+      "themes": ["travel", "art"],
+      "hints": ["exhibit", "curator"],
+      "family": ["museum"]
+    },
+    {
+      "id": "pilot",
+      "word": "PILOT",
+      "themes": ["airport", "leader"],
+      "hints": ["aviator", "cockpit"],
+      "family": ["pilot"]
+    },
+    {
+      "id": "jet",
+      "word": "JET",
+      "themes": ["airport", "fast"],
+      "hints": ["supersonic", "afterburner"],
+      "family": ["jet"]
+    },
+    {
+      "id": "track",
+      "word": "TRACK",
+      "themes": ["railroad", "race"],
+      "hints": ["hurdles", "relay"],
+      "family": ["track"]
+    },
+    {
+      "id": "tunnel",
+      "word": "TUNNEL",
+      "themes": ["railroad", "road", "underground", "hollow"],
+      "hints": ["underpass", "excavation"],
+      "family": ["tunnel"]
+    },
+    {
+      "id": "engine",
+      "word": "ENGINE",
+      "themes": ["railroad", "car", "steam"],
+      "hints": ["motor", "piston"],
+      "family": ["engine"]
+    },
+    {
+      "id": "conductor",
+      "word": "CONDUCTOR",
+      "themes": ["railroad", "orchestra"],
+      "hints": ["baton", "maestro"],
+      "family": ["conductor", "conduct"]
+    },
+    {
+      "id": "wheel",
+      "word": "WHEEL",
+      "themes": ["car", "round"],
+      "hints": ["spokes", "axle"],
+      "family": ["wheel"]
+    },
+    {
+      "id": "tire",
+      "word": "TIRE",
+      "themes": ["car", "black", "flat"],
+      "hints": ["radial", "blowout"],
+      "family": ["tire"]
+    },
+    {
+      "id": "horn",
+      "word": "HORN",
+      "themes": ["car", "loud", "french"],
+      "hints": ["honk", "beep"],
+      "family": ["horn"]
+    },
+    {
+      "id": "garage",
+      "word": "GARAGE",
+      "themes": ["car", "house"],
+      "hints": ["driveway", "workshop"],
+      "family": ["garage"]
+    },
+    {
+      "id": "trunk",
+      "word": "TRUNK",
+      "themes": ["car", "tree"],
+      "hints": ["hatchback", "stump"],
+      "family": ["trunk"]
+    },
+    {
+      "id": "jack",
+      "word": "JACK",
+      "themes": ["car", "casino"],
+      "hints": ["knave", "hoist"],
+      "family": ["jack"]
+    },
+    {
+      "id": "truck",
+      "word": "TRUCK",
+      "themes": ["road", "rolling", "construction"],
+      "hints": ["lorry", "semitrailer"],
+      "family": ["truck"]
+    },
+    {
+      "id": "stage",
+      "word": "STAGE",
+      "themes": ["concert", "theater", "dance"],
+      "hints": ["podium", "proscenium"],
+      "family": ["stage"]
+    },
+    {
+      "id": "light",
+      "word": "LIGHT",
+      "themes": ["concert", "bright"],
+      "hints": ["lumens", "illumination"],
+      "family": ["light"]
+    },
+    {
+      "id": "rock",
+      "word": "ROCK",
+      "themes": ["concert", "stone", "collect"],
+      "hints": ["boulder", "granite"],
+      "family": ["rock"]
+    },
+    {
+      "id": "curtain",
+      "word": "CURTAIN",
+      "themes": ["theater", "hidden"],
+      "hints": ["drapes", "valance"],
+      "family": ["curtain"]
+    },
+    {
+      "id": "actor",
+      "word": "ACTOR",
+      "themes": ["theater", "movie"],
+      "hints": ["thespian", "audition"],
+      "family": ["actor", "act"]
+    },
+    {
+      "id": "script",
+      "word": "SCRIPT",
+      "themes": ["theater", "movie"],
+      "hints": ["dialogue", "playwright"],
+      "family": ["script"]
+    },
+    {
+      "id": "ballet",
+      "word": "BALLET",
+      "themes": ["theater", "dance"],
+      "hints": ["tutu", "pirouette"],
+      "family": ["ballet"]
+    },
+    {
+      "id": "spotlight",
+      "word": "SPOTLIGHT",
+      "themes": ["theater", "bright"],
+      "hints": ["celebrity", "fame"],
+      "family": ["spotlight", "spot", "light"]
+    },
+    {
+      "id": "costume",
+      "word": "COSTUME",
+      "themes": ["theater", "party"],
+      "hints": ["masquerade", "wardrobe"],
+      "family": ["costume"]
+    },
+    {
+      "id": "screen",
+      "word": "SCREEN",
+      "themes": ["movie", "computer", "phone", "crack"],
+      "hints": ["monitor", "pixels"],
+      "family": ["screen"]
+    },
+    {
+      "id": "director",
+      "word": "DIRECTOR",
+      "themes": ["movie", "leader"],
+      "hints": ["filmmaker", "auteur"],
+      "family": ["director", "direct"]
+    },
+    {
+      "id": "monster",
+      "word": "MONSTER",
+      "themes": ["movie", "big"],
+      "hints": ["beast", "frankenstein"],
+      "family": ["monster"]
+    },
+    {
+      "id": "mouse",
+      "word": "MOUSE",
+      "themes": ["computer", "pets", "small"],
+      "hints": ["cursor", "squeak"],
+      "family": ["mouse", "mice"]
+    },
+    {
+      "id": "keyboard",
+      "word": "KEYBOARD",
+      "themes": ["computer", "office"],
+      "hints": ["typing", "qwerty"],
+      "family": ["keyboard", "key", "board"]
+    },
+    {
+      "id": "virus",
+      "word": "VIRUS",
+      "themes": ["computer", "sick"],
+      "hints": ["vaccine", "contagious"],
+      "family": ["virus"]
+    },
+    {
+      "id": "web",
+      "word": "WEB",
+      "themes": ["computer", "sticky"],
+      "hints": ["internet", "silk"],
+      "family": ["web"]
+    },
+    {
+      "id": "robot",
+      "word": "ROBOT",
+      "themes": ["computer", "future", "toys", "electric", "smart", "metal", "science"],
+      "hints": ["android", "cyborg"],
+      "family": ["robot"]
+    },
+    {
+      "id": "chip",
+      "word": "CHIP",
+      "themes": ["computer", "casino"],
+      "hints": ["silicon", "processor"],
+      "family": ["chip"]
+    },
+    {
+      "id": "password",
+      "word": "PASSWORD",
+      "themes": ["computer", "lock"],
+      "hints": ["login", "username"],
+      "family": ["password", "pass", "word"]
+    },
+    {
+      "id": "drone",
+      "word": "DRONE",
+      "themes": ["future", "insects"],
+      "hints": ["quadcopter", "unmanned"],
+      "family": ["drone"]
+    },
+    {
+      "id": "battery",
+      "word": "BATTERY",
+      "themes": ["phone", "electric"],
+      "hints": ["voltage", "alkaline"],
+      "family": ["battery"]
+    },
+    {
+      "id": "charger",
+      "word": "CHARGER",
+      "themes": ["phone", "electric"],
+      "hints": ["outlet", "adapter"],
+      "family": ["charger", "charge"]
+    },
+    {
+      "id": "text",
+      "word": "TEXT",
+      "themes": ["phone", "writing"],
+      "hints": ["message", "emoji"],
+      "family": ["text"]
+    },
+    {
+      "id": "computer",
+      "word": "COMPUTER",
+      "themes": ["office", "smart"],
+      "hints": ["laptop", "software"],
+      "family": ["computer", "compute"]
+    },
+    {
+      "id": "printer",
+      "word": "PRINTER",
+      "themes": ["office", "paper"],
+      "hints": ["toner", "copier"],
+      "family": ["printer", "print"]
+    },
+    {
+      "id": "chair",
+      "word": "CHAIR",
+      "themes": ["office", "wood", "seat"],
+      "hints": ["armrest", "stool"],
+      "family": ["chair"]
+    },
+    {
+      "id": "boss",
+      "word": "BOSS",
+      "themes": ["office", "leader"],
+      "hints": ["manager", "employee"],
+      "family": ["boss"]
+    },
+    {
+      "id": "paper",
+      "word": "PAPER",
+      "themes": ["office", "white", "flat", "trash"],
+      "hints": ["origami", "parchment"],
+      "family": ["paper"]
+    },
+    {
+      "id": "phone",
+      "word": "PHONE",
+      "themes": ["office", "chime", "pocket"],
+      "hints": ["dial", "voicemail"],
+      "family": ["phone"]
+    },
+    {
+      "id": "calendar",
+      "word": "CALENDAR",
+      "themes": ["office", "paper"],
+      "hints": ["appointment", "schedule"],
+      "family": ["calendar"]
+    },
+    {
+      "id": "wallet",
+      "word": "WALLET",
+      "themes": ["money", "pocket"],
+      "hints": ["purse", "cash"],
+      "family": ["wallet"]
+    },
+    {
+      "id": "safe",
+      "word": "SAFE",
+      "themes": ["money", "lock"],
+      "hints": ["deposit", "tumblers"],
+      "family": ["safe"]
+    },
+    {
+      "id": "diamond",
+      "word": "DIAMOND",
+      "themes": ["money", "shiny", "bright", "casino", "baseball", "stone"],
+      "hints": ["carat", "engagement"],
+      "family": ["diamond"]
+    },
+    {
+      "id": "dollar",
+      "word": "DOLLAR",
+      "themes": ["money", "green", "paper"],
+      "hints": ["greenback", "currency"],
+      "family": ["dollar"]
+    },
+    {
+      "id": "piggy",
+      "word": "PIGGY",
+      "themes": ["money", "cute"],
+      "hints": ["oink", "savings"],
+      "family": ["piggy", "pig"]
+    },
+    {
+      "id": "bill",
+      "word": "BILL",
+      "themes": ["money", "restaurant"],
+      "hints": ["invoice", "beak"],
+      "family": ["bill"]
+    },
+    {
+      "id": "vault",
+      "word": "VAULT",
+      "themes": ["money", "lock"],
+      "hints": ["heist", "gymnastics"],
+      "family": ["vault"]
+    },
+    {
+      "id": "silver",
+      "word": "SILVER",
+      "themes": ["shiny", "metal"],
+      "hints": ["sterling", "tarnish"],
+      "family": ["silver"]
+    },
+    {
+      "id": "ant",
+      "word": "ANT",
+      "themes": ["insects", "small", "underground"],
+      "hints": ["colony", "aphid"],
+      "family": ["ant"]
+    },
+    {
+      "id": "butterfly",
+      "word": "BUTTERFLY",
+      "themes": ["insects", "wings", "colorful"],
+      "hints": ["chrysalis", "monarch"],
+      "family": ["butterfly", "butter", "fly"]
+    },
+    {
+      "id": "fly",
+      "word": "FLY",
+      "themes": ["insects", "wings"],
+      "hints": ["swatter", "maggot"],
+      "family": ["fly", "flies"]
+    },
+    {
+      "id": "mosquito",
+      "word": "MOSQUITO",
+      "themes": ["insects", "bite"],
+      "hints": ["malaria", "repellent"],
+      "family": ["mosquito", "mosquitoes"]
+    },
+    {
+      "id": "crow",
+      "word": "CROW",
+      "themes": ["birds", "black"],
+      "hints": ["caw", "raven"],
+      "family": ["crow"]
+    },
+    {
+      "id": "swan",
+      "word": "SWAN",
+      "themes": ["birds", "white", "pond"],
+      "hints": ["cygnet", "elegant"],
+      "family": ["swan"]
+    },
+    {
+      "id": "flamingo",
+      "word": "FLAMINGO",
+      "themes": ["birds", "pink"],
+      "hints": ["pink", "shrimp"],
+      "family": ["flamingo"]
+    },
+    {
+      "id": "turkey",
+      "word": "TURKEY",
+      "themes": ["birds", "thanksgiving"],
+      "hints": ["gobble", "stuffing"],
+      "family": ["turkey"]
+    },
+    {
+      "id": "stork",
+      "word": "STORK",
+      "themes": ["birds", "infant"],
+      "hints": ["delivery", "newborn"],
+      "family": ["stork"]
+    },
+    {
+      "id": "cat",
+      "word": "CAT",
+      "themes": ["pets", "black", "lounge", "claw"],
+      "hints": ["meow", "purr"],
+      "family": ["cat"]
+    },
+    {
+      "id": "hamster",
+      "word": "HAMSTER",
+      "themes": ["pets", "rolling", "cage"],
+      "hints": ["gerbil", "rodent"],
+      "family": ["hamster"]
+    },
+    {
+      "id": "turtle",
+      "word": "TURTLE",
+      "themes": ["pets", "reptile", "slow", "pond"],
+      "hints": ["terrapin", "snapping"],
+      "family": ["turtle"]
+    },
+    {
+      "id": "bone",
+      "word": "BONE",
+      "themes": ["dog", "prehistoric", "body", "white"],
+      "hints": ["femur", "tibia"],
+      "family": ["bone"]
+    },
+    {
+      "id": "leash",
+      "word": "LEASH",
+      "themes": ["dog", "lock"],
+      "hints": ["tether", "walkies"],
+      "family": ["leash"]
+    },
+    {
+      "id": "bark",
+      "word": "BARK",
+      "themes": ["dog", "tree"],
+      "hints": ["woof", "yelp"],
+      "family": ["bark"]
+    },
+    {
+      "id": "collar",
+      "word": "COLLAR",
+      "themes": ["dog", "clothes"],
+      "hints": ["lapel", "flea"],
+      "family": ["collar"]
+    },
+    {
+      "id": "tail",
+      "word": "TAIL",
+      "themes": ["dog", "hair"],
+      "hints": ["wagging", "comet"],
+      "family": ["tail"]
+    },
+    {
+      "id": "poodle",
+      "word": "POODLE",
+      "themes": ["dog", "french"],
+      "hints": ["curly", "pompom"],
+      "family": ["poodle"]
+    },
+    {
+      "id": "dalmatian",
+      "word": "DALMATIAN",
+      "themes": ["dog", "spots"],
+      "hints": ["spotted", "speckled"],
+      "family": ["dalmatian"]
+    },
+    {
+      "id": "crocodile",
+      "word": "CROCODILE",
+      "themes": ["reptile", "bite"],
+      "hints": ["alligator", "swamp"],
+      "family": ["crocodile", "croc"]
+    },
+    {
+      "id": "dinosaur",
+      "word": "DINOSAUR",
+      "themes": ["reptile", "prehistoric", "big", "museum"],
+      "hints": ["jurassic", "raptor"],
+      "family": ["dinosaur", "dino"]
+    },
+    {
+      "id": "chameleon",
+      "word": "CHAMELEON",
+      "themes": ["reptile", "hidden"],
+      "hints": ["colorchanging", "blending"],
+      "family": ["chameleon"]
+    },
+    {
+      "id": "mammoth",
+      "word": "MAMMOTH",
+      "themes": ["prehistoric", "big"],
+      "hints": ["mastodon", "iceage"],
+      "family": ["mammoth"]
+    },
+    {
+      "id": "volcano",
+      "word": "VOLCANO",
+      "themes": ["prehistoric", "disaster", "flame", "science", "steam", "cone"],
+      "hints": ["eruption", "magma"],
+      "family": ["volcano", "volcanic"]
+    },
+    {
+      "id": "fossil",
+      "word": "FOSSIL",
+      "themes": ["prehistoric", "museum"],
+      "hints": ["ammonite", "trilobite"],
+      "family": ["fossil"]
+    },
+    {
+      "id": "earthquake",
+      "word": "EARTHQUAKE",
+      "themes": ["disaster", "crack"],
+      "hints": ["tremor", "seismic"],
+      "family": ["earthquake", "earth", "quake"]
+    },
+    {
+      "id": "flood",
+      "word": "FLOOD",
+      "themes": ["disaster", "wet"],
+      "hints": ["deluge", "levee"],
+      "family": ["flood"]
+    },
+    {
+      "id": "lava",
+      "word": "LAVA",
+      "themes": ["danger", "hot", "flame"],
+      "hints": ["molten", "basalt"],
+      "family": ["lava"]
+    },
+    {
+      "id": "trap",
+      "word": "TRAP",
+      "themes": ["danger", "hunting"],
+      "hints": ["snare", "pitfall"],
+      "family": ["trap"]
+    },
+    {
+      "id": "hand",
+      "word": "HAND",
+      "themes": ["body", "casino", "kiss", "palm"],
+      "hints": ["thumb", "fingers"],
+      "family": ["hand"]
+    },
+    {
+      "id": "foot",
+      "word": "FOOT",
+      "themes": ["body", "measure"],
+      "hints": ["toes", "ankle"],
+      "family": ["foot", "feet"]
+    },
+    {
+      "id": "heart",
+      "word": "HEART",
+      "themes": ["body", "casino", "red", "love", "suit"],
+      "hints": ["valentine", "pulse"],
+      "family": ["heart"]
+    },
+    {
+      "id": "nose",
+      "word": "NOSE",
+      "themes": ["body", "face"],
+      "hints": ["nostril", "sniff"],
+      "family": ["nose"]
+    },
+    {
+      "id": "ear",
+      "word": "EAR",
+      "themes": ["body", "face"],
+      "hints": ["cochlea", "auditory"],
+      "family": ["ear"]
+    },
+    {
+      "id": "eye",
+      "word": "EYE",
+      "themes": ["body", "face", "vision"],
+      "hints": ["pupil", "blink"],
+      "family": ["eye"]
+    },
+    {
+      "id": "knee",
+      "word": "KNEE",
+      "themes": ["body", "ouch"],
+      "hints": ["patella", "joint"],
+      "family": ["knee", "kneel"]
+    },
+    {
+      "id": "head",
+      "word": "HEAD",
+      "themes": ["body", "leader"],
+      "hints": ["noggin", "cranium"],
+      "family": ["head"]
+    },
+    {
+      "id": "tooth",
+      "word": "TOOTH",
+      "themes": ["body", "face", "sharp", "white", "smile"],
+      "hints": ["molar", "dentist"],
+      "family": ["tooth", "teeth"]
+    },
+    {
+      "id": "brain",
+      "word": "BRAIN",
+      "themes": ["body", "smart", "science"],
+      "hints": ["neuron", "cerebrum"],
+      "family": ["brain"]
+    },
+    {
+      "id": "mouth",
+      "word": "MOUTH",
+      "themes": ["face", "smile"],
+      "hints": ["tongue", "drool"],
+      "family": ["mouth"]
+    },
+    {
+      "id": "chin",
+      "word": "CHIN",
+      "themes": ["face", "beard"],
+      "hints": ["jawline", "stubble"],
+      "family": ["chin"]
+    },
+    {
+      "id": "lip",
+      "word": "LIP",
+      "themes": ["face", "smile", "kiss"],
+      "hints": ["pucker", "chapped"],
+      "family": ["lip"]
+    },
+    {
+      "id": "cheek",
+      "word": "CHEEK",
+      "themes": ["face", "smile", "kiss"],
+      "hints": ["blush", "dimple"],
+      "family": ["cheek"]
+    },
+    {
+      "id": "shirt",
+      "word": "SHIRT",
+      "themes": ["clothes", "laundry"],
+      "hints": ["sleeve", "blouse"],
+      "family": ["shirt"]
+    },
+    {
+      "id": "sock",
+      "word": "SOCK",
+      "themes": ["clothes", "smelly", "knitting", "laundry"],
+      "hints": ["argyle", "puppet"],
+      "family": ["sock"]
+    },
+    {
+      "id": "shoe",
+      "word": "SHOE",
+      "themes": ["clothes", "dance", "cardboard"],
+      "hints": ["sneaker", "laces"],
+      "family": ["shoe"]
+    },
+    {
+      "id": "belt",
+      "word": "BELT",
+      "themes": ["clothes", "boxing"],
+      "hints": ["buckle", "waist"],
+      "family": ["belt"]
+    },
+    {
+      "id": "boot",
+      "word": "BOOT",
+      "themes": ["clothes", "western", "soccer", "army"],
+      "hints": ["stomp", "wellies"],
+      "family": ["boot"]
+    },
+    {
+      "id": "tie",
+      "word": "TIE",
+      "themes": ["clothes", "suit", "knot"],
+      "hints": ["cravat", "draw"],
+      "family": ["tie"]
+    },
+    {
+      "id": "bread",
+      "word": "BREAD",
+      "themes": ["bakery", "sandwich", "grain", "french"],
+      "hints": ["loaf", "rye"],
+      "family": ["bread"]
+    },
+    {
+      "id": "flour",
+      "word": "FLOUR",
+      "themes": ["bakery", "grain"],
+      "hints": ["sift", "wheat"],
+      "family": ["flour"]
+    },
+    {
+      "id": "croissant",
+      "word": "CROISSANT",
+      "themes": ["bakery", "french"],
+      "hints": ["crescent", "flaky"],
+      "family": ["croissant"]
+    },
+    {
+      "id": "roll",
+      "word": "ROLL",
+      "themes": ["bakery", "sandwich"],
+      "hints": ["tumble", "somersault"],
+      "family": ["roll"]
+    },
+    {
+      "id": "dough",
+      "word": "DOUGH",
+      "themes": ["bakery", "pizza", "twist"],
+      "hints": ["knead", "yeast"],
+      "family": ["dough"]
+    },
+    {
+      "id": "bun",
+      "word": "BUN",
+      "themes": ["bakery", "burger", "hair"],
+      "hints": ["sesame", "topknot"],
+      "family": ["bun"]
+    },
+    {
+      "id": "cheese",
+      "word": "CHEESE",
+      "themes": ["pizza", "smelly", "sandwich", "yellow", "burger"],
+      "hints": ["cheddar", "swiss"],
+      "family": ["cheese"]
+    },
+    {
+      "id": "olive",
+      "word": "OLIVE",
+      "themes": ["pizza", "green"],
+      "hints": ["pimento", "kalamata"],
+      "family": ["olive"]
+    },
+    {
+      "id": "box",
+      "word": "BOX",
+      "themes": ["pizza", "cardboard"],
+      "hints": ["crate", "container"],
+      "family": ["box"]
+    },
+    {
+      "id": "pepperoni",
+      "word": "PEPPERONI",
+      "themes": ["pizza", "pork"],
+      "hints": ["salami", "cured"],
+      "family": ["pepperoni", "pepper"]
+    },
+    {
+      "id": "pasta",
+      "word": "PASTA",
+      "themes": ["pizza", "grain"],
+      "hints": ["spaghetti", "noodle"],
+      "family": ["pasta"]
+    },
+    {
+      "id": "chef",
+      "word": "CHEF",
+      "themes": ["restaurant", "leader"],
+      "hints": ["toque", "cuisine"],
+      "family": ["chef"]
+    },
+    {
+      "id": "table",
+      "word": "TABLE",
+      "themes": ["restaurant", "wood", "thanksgiving"],
+      "hints": ["dining", "periodic"],
+      "family": ["table"]
+    },
+    {
+      "id": "plate",
+      "word": "PLATE",
+      "themes": ["restaurant", "round"],
+      "hints": ["dish", "tectonic"],
+      "family": ["plate"]
+    },
+    {
+      "id": "soup",
+      "word": "SOUP",
+      "themes": ["restaurant", "hot", "steam", "mug", "sick"],
+      "hints": ["broth", "ladle"],
+      "family": ["soup"]
+    },
+    {
+      "id": "napkin",
+      "word": "NAPKIN",
+      "themes": ["restaurant", "paper"],
+      "hints": ["serviette", "folded"],
+      "family": ["napkin"]
+    },
+    {
+      "id": "tea",
+      "word": "TEA",
+      "themes": ["drinks", "mug"],
+      "hints": ["chamomile", "oolong"],
+      "family": ["tea"]
+    },
+    {
+      "id": "water",
+      "word": "WATER",
+      "themes": ["drinks", "wet", "plumbing"],
+      "hints": ["hydrate", "aqua"],
+      "family": ["water"]
+    },
+    {
+      "id": "soda",
+      "word": "SODA",
+      "themes": ["drinks", "bubbles"],
+      "hints": ["fizzy", "carbonated"],
+      "family": ["soda"]
+    },
+    {
+      "id": "cocoa",
+      "word": "COCOA",
+      "themes": ["drinks", "mug", "brown"],
+      "hints": ["marshmallow", "cacao"],
+      "family": ["cocoa"]
+    },
+    {
+      "id": "bottle",
+      "word": "BOTTLE",
+      "themes": ["drinks", "infant", "trash", "glass"],
+      "hints": ["cork", "flask"],
+      "family": ["bottle"]
+    },
+    {
+      "id": "pitcher",
+      "word": "PITCHER",
+      "themes": ["drinks", "baseball"],
+      "hints": ["mound", "jug"],
+      "family": ["pitcher", "pitch"]
+    },
+    {
+      "id": "punch",
+      "word": "PUNCH",
+      "themes": ["drinks", "hit"],
+      "hints": ["uppercut", "haymaker"],
+      "family": ["punch"]
+    },
+    {
+      "id": "sun",
+      "word": "SUN",
+      "themes": ["hot", "bright", "sky", "yellow"],
+      "hints": ["solar", "rays"],
+      "family": ["sun"]
+    },
+    {
+      "id": "desert",
+      "word": "DESERT",
+      "themes": ["hot", "adventure"],
+      "hints": ["dune", "arid"],
+      "family": ["desert"]
+    },
+    {
+      "id": "roast",
+      "word": "ROAST",
+      "themes": ["hot", "pork"],
+      "hints": ["rotisserie", "gravy"],
+      "family": ["roast"]
+    },
+    {
+      "id": "snow",
+      "word": "SNOW",
+      "themes": ["cold", "white", "polar", "fall"],
+      "hints": ["flakes", "flurry"],
+      "family": ["snow"]
+    },
+    {
+      "id": "igloo",
+      "word": "IGLOO",
+      "themes": ["cold", "polar"],
+      "hints": ["inuit", "dome"],
+      "family": ["igloo"]
+    },
+    {
+      "id": "glacier",
+      "word": "GLACIER",
+      "themes": ["cold", "slow", "polar"],
+      "hints": ["calving", "crevasse"],
+      "family": ["glacier"]
+    },
+    {
+      "id": "thorn",
+      "word": "THORN",
+      "themes": ["sharp", "ouch"],
+      "hints": ["bramble", "barb"],
+      "family": ["thorn"]
+    },
+    {
+      "id": "pizza",
+      "word": "PIZZA",
+      "themes": ["round", "cardboard", "flat"],
+      "hints": ["calzone", "margherita"],
+      "family": ["pizza"]
+    },
+    {
+      "id": "button",
+      "word": "BUTTON",
+      "themes": ["round", "small"],
+      "hints": ["zipper", "fasten"],
+      "family": ["button"]
+    },
+    {
+      "id": "clock",
+      "word": "CLOCK",
+      "themes": ["round", "chess", "chime"],
+      "hints": ["tock", "cuckoo"],
+      "family": ["clock"]
+    },
+    {
+      "id": "torch",
+      "word": "TORCH",
+      "themes": ["bright", "adventure", "flame"],
+      "hints": ["olympic", "tiki"],
+      "family": ["torch"]
+    },
+    {
+      "id": "firework",
+      "word": "FIREWORK",
+      "themes": ["bright", "party"],
+      "hints": ["pyrotechnics", "finale"],
+      "family": ["firework", "fire", "work"]
+    },
+    {
+      "id": "night",
+      "word": "NIGHT",
+      "themes": ["dark", "black"],
+      "hints": ["nocturnal", "evening"],
+      "family": ["night"]
+    },
+    {
+      "id": "cheetah",
+      "word": "CHEETAH",
+      "themes": ["fast", "spots"],
+      "hints": ["speediest", "sprinting"],
+      "family": ["cheetah"]
+    },
+    {
+      "id": "tortoise",
+      "word": "TORTOISE",
+      "themes": ["slow", "race"],
+      "hints": ["hare", "galapagos"],
+      "family": ["tortoise"]
+    },
+    {
+      "id": "jam",
+      "word": "JAM",
+      "themes": ["slow", "sticky"],
+      "hints": ["jelly", "preserves"],
+      "family": ["jam"]
+    },
+    {
+      "id": "mountain",
+      "word": "MOUNTAIN",
+      "themes": ["big", "tall", "climb"],
+      "hints": ["summit", "everest"],
+      "family": ["mountain", "mount"]
+    },
+    {
+      "id": "cyclops",
+      "word": "CYCLOPS",
+      "themes": ["big", "myth"],
+      "hints": ["odyssey", "polyphemus"],
+      "family": ["cyclops"]
+    },
+    {
+      "id": "atom",
+      "word": "ATOM",
+      "themes": ["small", "science"],
+      "hints": ["proton", "neutron"],
+      "family": ["atom"]
+    },
+    {
+      "id": "pebble",
+      "word": "PEBBLE",
+      "themes": ["small", "beach"],
+      "hints": ["gravel", "cobble"],
+      "family": ["pebble"]
+    },
+    {
+      "id": "cotton",
+      "word": "COTTON",
+      "themes": ["soft", "white"],
+      "hints": ["boll", "swab"],
+      "family": ["cotton"]
+    },
+    {
+      "id": "feather",
+      "word": "FEATHER",
+      "themes": ["soft", "breeze", "writing", "heaven"],
+      "hints": ["plume", "quill"],
+      "family": ["feather"]
+    },
+    {
+      "id": "wool",
+      "word": "WOOL",
+      "themes": ["soft", "knitting"],
+      "hints": ["yarn", "fleece"],
+      "family": ["wool"]
+    },
+    {
+      "id": "bunny",
+      "word": "BUNNY",
+      "themes": ["soft", "cute", "easter"],
+      "hints": ["easter", "hop"],
+      "family": ["bunny"]
+    },
+    {
+      "id": "gum",
+      "word": "GUM",
+      "themes": ["sticky", "pink", "bubbles"],
+      "hints": ["chewing", "wad"],
+      "family": ["gum"]
+    },
+    {
+      "id": "slime",
+      "word": "SLIME",
+      "themes": ["sticky", "green"],
+      "hints": ["ooze", "goo"],
+      "family": ["slime"]
+    },
+    {
+      "id": "mud",
+      "word": "MUD",
+      "themes": ["sticky", "brown"],
+      "hints": ["sludge", "puddle"],
+      "family": ["mud"]
+    },
+    {
+      "id": "baby",
+      "word": "BABY",
+      "themes": ["loud", "cute", "grow", "kiss"],
+      "hints": ["infant", "cradle"],
+      "family": ["baby", "babies"]
+    },
+    {
+      "id": "skunk",
+      "word": "SKUNK",
+      "themes": ["smelly", "stripes"],
+      "hints": ["spray", "stinky"],
+      "family": ["skunk"]
+    },
+    {
+      "id": "garbage",
+      "word": "GARBAGE",
+      "themes": ["smelly", "trash"],
+      "hints": ["rubbish", "landfill"],
+      "family": ["garbage"]
+    },
+    {
+      "id": "diaper",
+      "word": "DIAPER",
+      "themes": ["smelly", "infant"],
+      "hints": ["nappy", "wipes"],
+      "family": ["diaper"]
+    },
+    {
+      "id": "puppy",
+      "word": "PUPPY",
+      "themes": ["cute", "love"],
+      "hints": ["whelp", "litter"],
+      "family": ["puppy", "pup"]
+    },
+    {
+      "id": "kitten",
+      "word": "KITTEN",
+      "themes": ["cute", "knitting"],
+      "hints": ["tabby", "playful"],
+      "family": ["kitten", "kitty"]
+    },
+    {
+      "id": "panda",
+      "word": "PANDA",
+      "themes": ["cute", "zoo"],
+      "hints": ["bamboo", "sichuan"],
+      "family": ["panda"]
+    },
+    {
+      "id": "koala",
+      "word": "KOALA",
+      "themes": ["cute", "tree"],
+      "hints": ["eucalyptus", "marsupial"],
+      "family": ["koala"]
+    },
+    {
+      "id": "teddy",
+      "word": "TEDDY",
+      "themes": ["cute", "toys", "infant", "fuzzy"],
+      "hints": ["stuffed", "plush"],
+      "family": ["teddy"]
+    },
+    {
+      "id": "werewolf",
+      "word": "WEREWOLF",
+      "themes": ["monster", "night"],
+      "hints": ["shapeshifter", "howling"],
+      "family": ["werewolf", "were", "wolf", "werewolves"]
+    },
+    {
+      "id": "sheriff",
+      "word": "SHERIFF",
+      "themes": ["western", "leader"],
+      "hints": ["deputy", "marshal"],
+      "family": ["sheriff"]
+    },
+    {
+      "id": "lasso",
+      "word": "LASSO",
+      "themes": ["western", "knot"],
+      "hints": ["lariat", "wrangle"],
+      "family": ["lasso"]
+    },
+    {
+      "id": "saddle",
+      "word": "SADDLE",
+      "themes": ["western", "seat"],
+      "hints": ["stirrup", "pommel"],
+      "family": ["saddle"]
+    },
+    {
+      "id": "wagon",
+      "word": "WAGON",
+      "themes": ["western", "rolling"],
+      "hints": ["pioneer", "prairie"],
+      "family": ["wagon"]
+    },
+    {
+      "id": "doll",
+      "word": "DOLL",
+      "themes": ["toys", "infant", "collect"],
+      "hints": ["porcelain", "matryoshka"],
+      "family": ["doll"]
+    },
+    {
+      "id": "kite",
+      "word": "KITE",
+      "themes": ["toys", "sky", "breeze", "paper", "string"],
+      "hints": ["twine", "gust"],
+      "family": ["kite"]
+    },
+    {
+      "id": "yoyo",
+      "word": "YOYO",
+      "themes": ["toys", "string"],
+      "hints": ["spinner", "sleeper"],
+      "family": ["yoyo"]
+    },
+    {
+      "id": "puzzle",
+      "word": "PUZZLE",
+      "themes": ["toys", "smart"],
+      "hints": ["jigsaw", "riddle"],
+      "family": ["puzzle"]
+    },
+    {
+      "id": "board",
+      "word": "BOARD",
+      "themes": ["chess", "grid"],
+      "hints": ["plank", "committee"],
+      "family": ["board"]
+    },
+    {
+      "id": "dice",
+      "word": "DICE",
+      "themes": ["casino", "spots"],
+      "hints": ["craps", "sixsided"],
+      "family": ["dice", "die"]
+    },
+    {
+      "id": "deck",
+      "word": "DECK",
+      "themes": ["casino", "ship"],
+      "hints": ["patio", "shuffle"],
+      "family": ["deck"]
+    },
+    {
+      "id": "club",
+      "word": "CLUB",
+      "themes": ["casino", "golf", "suit"],
+      "hints": ["cudgel", "clover"],
+      "family": ["club"]
+    },
+    {
+      "id": "spade",
+      "word": "SPADE",
+      "themes": ["casino", "beach", "suit"],
+      "hints": ["digging", "trowel"],
+      "family": ["spade"]
+    },
+    {
+      "id": "hole",
+      "word": "HOLE",
+      "themes": ["golf", "hollow"],
+      "hints": ["burrow", "crater"],
+      "family": ["hole"]
+    },
+    {
+      "id": "flag",
+      "word": "FLAG",
+      "themes": ["golf", "breeze", "army", "winner", "stripes", "race"],
+      "hints": ["banner", "salute"],
+      "family": ["flag"]
+    },
+    {
+      "id": "cart",
+      "word": "CART",
+      "themes": ["golf", "rolling"],
+      "hints": ["shopping", "groceries"],
+      "family": ["cart"]
+    },
+    {
+      "id": "swing",
+      "word": "SWING",
+      "themes": ["golf", "dance"],
+      "hints": ["playground", "pendulum"],
+      "family": ["swing"]
+    },
+    {
+      "id": "peanut",
+      "word": "PEANUT",
+      "themes": ["baseball", "crunchy"],
+      "hints": ["legume", "allergy"],
+      "family": ["peanut", "pea", "nut"]
+    },
+    {
+      "id": "judge",
+      "word": "JUDGE",
+      "themes": ["law", "leader"],
+      "hints": ["gavel", "verdict"],
+      "family": ["judge"]
+    },
+    {
+      "id": "shell",
+      "word": "SHELL",
+      "themes": ["beach", "protect", "collect"],
+      "hints": ["conch", "cowrie"],
+      "family": ["shell"]
+    },
+    {
+      "id": "brush",
+      "word": "BRUSH",
+      "themes": ["art", "beauty", "hair"],
+      "hints": ["bristles", "groom"],
+      "family": ["brush"]
+    },
+    {
+      "id": "paint",
+      "word": "PAINT",
+      "themes": ["art", "colorful"],
+      "hints": ["palette", "primer"],
+      "family": ["paint"]
+    },
+    {
+      "id": "crayon",
+      "word": "CRAYON",
+      "themes": ["art", "writing", "colorful"],
+      "hints": ["wax", "scribble"],
+      "family": ["crayon"]
+    },
+    {
+      "id": "frame",
+      "word": "FRAME",
+      "themes": ["art", "museum"],
+      "hints": ["picture", "border"],
+      "family": ["frame"]
+    },
+    {
+      "id": "statue",
+      "word": "STATUE",
+      "themes": ["art", "museum", "stone"],
+      "hints": ["sculpture", "marble"],
+      "family": ["statue"]
+    },
+    {
+      "id": "bird",
+      "word": "BIRD",
+      "themes": ["sky", "cage"],
+      "hints": ["tweet", "nest"],
+      "family": ["bird"]
+    },
+    {
+      "id": "sail",
+      "word": "SAIL",
+      "themes": ["breeze", "ship"],
+      "hints": ["mast", "regatta"],
+      "family": ["sail"]
+    },
+    {
+      "id": "river",
+      "word": "RIVER",
+      "themes": ["wet", "adventure"],
+      "hints": ["stream", "rapids"],
+      "family": ["river"]
+    },
+    {
+      "id": "bucket",
+      "word": "BUCKET",
+      "themes": ["wet", "clean", "fishing"],
+      "hints": ["pail", "mop"],
+      "family": ["bucket"]
+    },
+    {
+      "id": "fountain",
+      "word": "FOUNTAIN",
+      "themes": ["wet", "wish"],
+      "hints": ["spout", "wishing"],
+      "family": ["fountain"]
+    },
+    {
+      "id": "bulb",
+      "word": "BULB",
+      "themes": ["electric", "flowers"],
+      "hints": ["incandescent", "filament"],
+      "family": ["bulb"]
+    },
+    {
+      "id": "door",
+      "word": "DOOR",
+      "themes": ["house", "lock"],
+      "hints": ["knock", "hinge"],
+      "family": ["door"]
+    },
+    {
+      "id": "window",
+      "word": "WINDOW",
+      "themes": ["house", "vision", "grid", "glass"],
+      "hints": ["pane", "shutter"],
+      "family": ["window"]
+    },
+    {
+      "id": "roof",
+      "word": "ROOF",
+      "themes": ["house", "climb"],
+      "hints": ["shingles", "rafters"],
+      "family": ["roof"]
+    },
+    {
+      "id": "stairs",
+      "word": "STAIRS",
+      "themes": ["house", "climb"],
+      "hints": ["steps", "banister"],
+      "family": ["stairs", "stair"]
+    },
+    {
+      "id": "attic",
+      "word": "ATTIC",
+      "themes": ["house", "climb"],
+      "hints": ["loft", "garret"],
+      "family": ["attic"]
+    },
+    {
+      "id": "pinata",
+      "word": "PINATA",
+      "themes": ["party", "hit"],
+      "hints": ["blindfold", "donkey"],
+      "family": ["pinata"]
+    },
+    {
+      "id": "disco",
+      "word": "DISCO",
+      "themes": ["party", "dance"],
+      "hints": ["boogie", "seventies"],
+      "family": ["disco"]
+    },
+    {
+      "id": "salsa",
+      "word": "SALSA",
+      "themes": ["dance", "spicy"],
+      "hints": ["nachos", "mambo"],
+      "family": ["salsa"]
+    },
+    {
+      "id": "mustard",
+      "word": "MUSTARD",
+      "themes": ["spicy", "burger"],
+      "hints": ["dijon", "yellow"],
+      "family": ["mustard"]
+    },
+    {
+      "id": "chili",
+      "word": "CHILI",
+      "themes": ["spicy", "burger"],
+      "hints": ["jalapeno", "carne"],
+      "family": ["chili"]
+    },
+    {
+      "id": "ham",
+      "word": "HAM",
+      "themes": ["sandwich", "pork"],
+      "hints": ["prosciutto", "gammon"],
+      "family": ["ham"]
+    },
+    {
+      "id": "pickle",
+      "word": "PICKLE",
+      "themes": ["sandwich", "burger"],
+      "hints": ["gherkin", "dill"],
+      "family": ["pickle"]
+    },
+    {
+      "id": "grass",
+      "word": "GRASS",
+      "themes": ["green", "field"],
+      "hints": ["lawn", "turf"],
+      "family": ["grass"]
+    },
+    {
+      "id": "leaf",
+      "word": "LEAF",
+      "themes": ["green", "tree", "fall"],
+      "hints": ["foliage", "maple"],
+      "family": ["leaf", "leaves"]
+    },
+    {
+      "id": "lobster",
+      "word": "LOBSTER",
+      "themes": ["red", "claw"],
+      "hints": ["maine", "crustacean"],
+      "family": ["lobster"]
+    },
+    {
+      "id": "ketchup",
+      "word": "KETCHUP",
+      "themes": ["red", "burger"],
+      "hints": ["catsup", "condiment"],
+      "family": ["ketchup"]
+    },
+    {
+      "id": "sunflower",
+      "word": "SUNFLOWER",
+      "themes": ["yellow", "grow"],
+      "hints": ["kansas", "heliotropic"],
+      "family": ["sunflower", "sun", "flower"]
+    },
+    {
+      "id": "phoenix",
+      "word": "PHOENIX",
+      "themes": ["myth", "flame"],
+      "hints": ["rebirth", "ashes"],
+      "family": ["phoenix"]
+    },
+    {
+      "id": "wizard",
+      "word": "WIZARD",
+      "themes": ["myth", "beard"],
+      "hints": ["sorcerer", "merlin"],
+      "family": ["wizard"]
+    },
+    {
+      "id": "treasure",
+      "word": "TREASURE",
+      "themes": ["adventure", "hidden"],
+      "hints": ["loot", "bounty"],
+      "family": ["treasure"]
+    },
+    {
+      "id": "smoke",
+      "word": "SMOKE",
+      "themes": ["flame", "steam"],
+      "hints": ["fumes", "smog"],
+      "family": ["smoke"]
+    },
+    {
+      "id": "coal",
+      "word": "COAL",
+      "themes": ["flame", "black"],
+      "hints": ["anthracite", "miner"],
+      "family": ["coal"]
+    },
+    {
+      "id": "cabin",
+      "word": "CABIN",
+      "themes": ["wood", "ship"],
+      "hints": ["chalet", "cottage"],
+      "family": ["cabin"]
+    },
+    {
+      "id": "acorn",
+      "word": "ACORN",
+      "themes": ["tree", "fall"],
+      "hints": ["oak", "hoard"],
+      "family": ["acorn", "corn"]
+    },
+    {
+      "id": "root",
+      "word": "ROOT",
+      "themes": ["tree", "underground"],
+      "hints": ["origin", "underground"],
+      "family": ["root"]
+    },
+    {
+      "id": "wall",
+      "word": "WALL",
+      "themes": ["stone", "construction"],
+      "hints": ["graffiti", "barrier"],
+      "family": ["wall"]
+    },
+    {
+      "id": "brick",
+      "word": "BRICK",
+      "themes": ["stone", "construction"],
+      "hints": ["mortar", "masonry"],
+      "family": ["brick"]
+    },
+    {
+      "id": "champion",
+      "word": "CHAMPION",
+      "themes": ["boxing", "winner"],
+      "hints": ["undefeated", "victor"],
+      "family": ["champion", "champ"]
+    },
+    {
+      "id": "parachute",
+      "word": "PARACHUTE",
+      "themes": ["army", "fall"],
+      "hints": ["skydiving", "ripcord"],
+      "family": ["parachute", "chute"]
+    },
+    {
+      "id": "medal",
+      "word": "MEDAL",
+      "themes": ["army", "winner"],
+      "hints": ["bronze", "podium"],
+      "family": ["medal"]
+    },
+    {
+      "id": "cup",
+      "word": "CUP",
+      "themes": ["winner", "mug", "measure"],
+      "hints": ["mug", "saucer"],
+      "family": ["cup"]
+    },
+    {
+      "id": "ribbon",
+      "word": "RIBBON",
+      "themes": ["winner", "knot"],
+      "hints": ["satin", "curling"],
+      "family": ["ribbon"]
+    },
+    {
+      "id": "letter",
+      "word": "LETTER",
+      "themes": ["mail", "paper", "writing", "love"],
+      "hints": ["alphabet", "correspondence"],
+      "family": ["letter"]
+    },
+    {
+      "id": "stamp",
+      "word": "STAMP",
+      "themes": ["mail", "collect"],
+      "hints": ["philately", "perforated"],
+      "family": ["stamp"]
+    },
+    {
+      "id": "envelope",
+      "word": "ENVELOPE",
+      "themes": ["mail", "paper"],
+      "hints": ["flap", "stationery"],
+      "family": ["envelope"]
+    },
+    {
+      "id": "package",
+      "word": "PACKAGE",
+      "themes": ["mail", "cardboard"],
+      "hints": ["parcel", "courier"],
+      "family": ["package"]
+    },
+    {
+      "id": "chain",
+      "word": "CHAIN",
+      "themes": ["lock", "metal"],
+      "hints": ["links", "necklace"],
+      "family": ["chain"]
+    },
+    {
+      "id": "guard",
+      "word": "GUARD",
+      "themes": ["lock", "protect"],
+      "hints": ["sentry", "patrol"],
+      "family": ["guard"]
+    },
+    {
+      "id": "captain",
+      "word": "CAPTAIN",
+      "themes": ["ship", "leader"],
+      "hints": ["skipper", "commander"],
+      "family": ["captain"]
+    },
+    {
+      "id": "daisy",
+      "word": "DAISY",
+      "themes": ["flowers", "field"],
+      "hints": ["lovesmenot", "oxeye"],
+      "family": ["daisy"]
+    },
+    {
+      "id": "lily",
+      "word": "LILY",
+      "themes": ["flowers", "pond"],
+      "hints": ["calla", "lotus"],
+      "family": ["lily"]
+    },
+    {
+      "id": "vase",
+      "word": "VASE",
+      "themes": ["flowers", "glass"],
+      "hints": ["urn", "centerpiece"],
+      "family": ["vase"]
+    },
+    {
+      "id": "glasses",
+      "word": "GLASSES",
+      "themes": ["smart", "vision"],
+      "hints": ["spectacles", "bifocals"],
+      "family": ["glasses", "glass"]
+    },
+    {
+      "id": "lipstick",
+      "word": "LIPSTICK",
+      "themes": ["pink", "beauty"],
+      "hints": ["makeup", "rouge"],
+      "family": ["lipstick", "lip", "stick"]
+    },
+    {
+      "id": "wig",
+      "word": "WIG",
+      "themes": ["beauty", "hair"],
+      "hints": ["toupee", "hairpiece"],
+      "family": ["wig"]
+    },
+    {
+      "id": "lens",
+      "word": "LENS",
+      "themes": ["vision", "glass"],
+      "hints": ["optics", "focus"],
+      "family": ["lens"]
+    },
+    {
+      "id": "watch",
+      "word": "WATCH",
+      "themes": ["vision", "pocket"],
+      "hints": ["wrist", "observe"],
+      "family": ["watch"]
+    },
+    {
+      "id": "magnet",
+      "word": "MAGNET",
+      "themes": ["metal", "science"],
+      "hints": ["attract", "polarity"],
+      "family": ["magnet"]
+    },
+    {
+      "id": "can",
+      "word": "CAN",
+      "themes": ["metal", "trash"],
+      "hints": ["aluminum", "opener"],
+      "family": ["can"]
+    },
+    {
+      "id": "giraffe",
+      "word": "GIRAFFE",
+      "themes": ["spots", "tall", "zoo"],
+      "hints": ["longneck", "tallest"],
+      "family": ["giraffe"]
+    },
+    {
+      "id": "zebra",
+      "word": "ZEBRA",
+      "themes": ["zoo", "stripes"],
+      "hints": ["crosswalk", "stripes"],
+      "family": ["zebra"]
+    },
+    {
+      "id": "bike",
+      "word": "BIKE",
+      "themes": ["rolling", "race"],
+      "hints": ["pedal", "tandem"],
+      "family": ["bike", "bicycle"]
+    },
+    {
+      "id": "page",
+      "word": "PAGE",
+      "themes": ["paper", "writing"],
+      "hints": ["margin", "flip"],
+      "family": ["page"]
+    },
+    {
+      "id": "clip",
+      "word": "CLIP",
+      "themes": ["paper", "hair"],
+      "hints": ["barrette", "snippet"],
+      "family": ["clip"]
+    },
+    {
+      "id": "scale",
+      "word": "SCALE",
+      "themes": ["measure", "fishing"],
+      "hints": ["weigh", "balance"],
+      "family": ["scale"]
+    },
+    {
+      "id": "triangle",
+      "word": "TRIANGLE",
+      "themes": ["orchestra", "chime"],
+      "hints": ["hypotenuse", "isosceles"],
+      "family": ["triangle"]
+    },
+    {
+      "id": "ink",
+      "word": "INK",
+      "themes": ["writing", "black"],
+      "hints": ["tattoo", "blot"],
+      "family": ["ink"]
+    },
+    {
+      "id": "fries",
+      "word": "FRIES",
+      "themes": ["burger", "french"],
+      "hints": ["crinkle", "poutine"],
+      "family": ["fries", "fry"]
+    },
+    {
+      "id": "pipe",
+      "word": "PIPE",
+      "themes": ["hollow", "mystery", "plumbing"],
+      "hints": ["plumber", "sewer"],
+      "family": ["pipe"]
+    },
+    {
+      "id": "couch",
+      "word": "COUCH",
+      "themes": ["seat", "lounge"],
+      "hints": ["sofa", "cushion"],
+      "family": ["couch"]
+    },
+    {
+      "id": "tissue",
+      "word": "TISSUE",
+      "themes": ["pocket", "sick"],
+      "hints": ["sneeze", "hanky"],
+      "family": ["tissue"]
+    },
+    {
+      "id": "angel",
+      "word": "ANGEL",
+      "themes": ["wings", "heaven"],
+      "hints": ["halo", "cherub"],
+      "family": ["angel"]
+    },
+    {
+      "id": "basket",
+      "word": "BASKET",
+      "themes": ["easter", "laundry"],
+      "hints": ["wicker", "hamper"],
+      "family": ["basket"]
+    }
+  ]
+}

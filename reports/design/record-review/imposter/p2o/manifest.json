@@ -1,0 +1,522 @@
+[
+  {
+    "file": "imposter/accuse/tv-stage.png",
+    "group": "imposter",
+    "phase": "accuse",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "imposter/accuse/iphone-se-p1-p1.png",
+    "group": "imposter",
+    "phase": "accuse",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p1-p1",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "imposter/accuse/iphone-se-p2-p2.png",
+    "group": "imposter",
+    "phase": "accuse",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p2-p2",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "imposter/accuse/iphone-se-p3-p3.png",
+    "group": "imposter",
+    "phase": "accuse",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p3-p3",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "imposter/clue/tv-stage.png",
+    "group": "imposter",
+    "phase": "clue",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "imposter/clue/iphone-se-p1-p1.png",
+    "group": "imposter",
+    "phase": "clue",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p1-p1",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "imposter/clue/iphone-se-p2-p2.png",
+    "group": "imposter",
+    "phase": "clue",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p2-p2",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "imposter/clue/iphone-se-p3-p3.png",
+    "group": "imposter",
+    "phase": "clue",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p3-p3",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "imposter/clueReveal/tv-stage.png",
+    "group": "imposter",
+    "phase": "clueReveal",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "imposter/clueReveal/iphone-se-p1-p1.png",
+    "group": "imposter",
+    "phase": "clueReveal",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p1-p1",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "imposter/clueReveal/iphone-se-p2-p2.png",
+    "group": "imposter",
+    "phase": "clueReveal",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p2-p2",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "imposter/clueReveal/iphone-se-p3-p3.png",
+    "group": "imposter",
+    "phase": "clueReveal",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p3-p3",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "imposter/deal/tv-stage.png",
+    "group": "imposter",
+    "phase": "deal",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "imposter/deal/iphone-se-p1-p1.png",
+    "group": "imposter",
+    "phase": "deal",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p1-p1",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "imposter/deal/iphone-se-p2-p2.png",
+    "group": "imposter",
+    "phase": "deal",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p2-p2",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "imposter/deal/iphone-se-p3-p3.png",
+    "group": "imposter",
+    "phase": "deal",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p3-p3",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "imposter/done/tv-stage.png",
+    "group": "imposter",
+    "phase": "done",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "imposter/done/iphone-se-p1-p1.png",
+    "group": "imposter",
+    "phase": "done",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p1-p1",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "imposter/done/iphone-se-p2-p2.png",
+    "group": "imposter",
+    "phase": "done",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p2-p2",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "imposter/done/iphone-se-p3-p3.png",
+    "group": "imposter",
+    "phase": "done",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p3-p3",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "imposter/intro/tv-stage.png",
+    "group": "imposter",
+    "phase": "intro",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "imposter/intro/iphone-se-p1-p1.png",
+    "group": "imposter",
+    "phase": "intro",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p1-p1",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "imposter/intro/iphone-se-p2-p2.png",
+    "group": "imposter",
+    "phase": "intro",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p2-p2",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "imposter/intro/iphone-se-p3-p3.png",
+    "group": "imposter",
+    "phase": "intro",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p3-p3",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "imposter/lastChance/tv-stage.png",
+    "group": "imposter",
+    "phase": "lastChance",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "imposter/lastChance/iphone-se-p1-p1.png",
+    "group": "imposter",
+    "phase": "lastChance",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p1-p1",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "imposter/lastChance/iphone-se-p2-p2.png",
+    "group": "imposter",
+    "phase": "lastChance",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p2-p2",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "imposter/lastChance/iphone-se-p3-p3.png",
+    "group": "imposter",
+    "phase": "lastChance",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p3-p3",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "imposter/runoff/tv-stage.png",
+    "group": "imposter",
+    "phase": "runoff",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "imposter/runoff/iphone-se-p1-p1.png",
+    "group": "imposter",
+    "phase": "runoff",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p1-p1",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "imposter/runoff/iphone-se-p2-p2.png",
+    "group": "imposter",
+    "phase": "runoff",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p2-p2",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "imposter/runoff/iphone-se-p3-p3.png",
+    "group": "imposter",
+    "phase": "runoff",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p3-p3",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "imposter/scores/tv-stage.png",
+    "group": "imposter",
+    "phase": "scores",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "imposter/scores/iphone-se-p1-p1.png",
+    "group": "imposter",
+    "phase": "scores",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p1-p1",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "imposter/scores/iphone-se-p2-p2.png",
+    "group": "imposter",
+    "phase": "scores",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p2-p2",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "imposter/scores/iphone-se-p3-p3.png",
+    "group": "imposter",
+    "phase": "scores",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p3-p3",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "imposter/talk/tv-stage.png",
+    "group": "imposter",
+    "phase": "talk",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "imposter/talk/iphone-se-p1-p1.png",
+    "group": "imposter",
+    "phase": "talk",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p1-p1",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "imposter/talk/iphone-se-p2-p2.png",
+    "group": "imposter",
+    "phase": "talk",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p2-p2",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "imposter/talk/iphone-se-p3-p3.png",
+    "group": "imposter",
+    "phase": "talk",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p3-p3",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "imposter/vote/tv-stage.png",
+    "group": "imposter",
+    "phase": "vote",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "imposter/vote/iphone-se-p1-p1.png",
+    "group": "imposter",
+    "phase": "vote",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p1-p1",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "imposter/vote/iphone-se-p2-p2.png",
+    "group": "imposter",
+    "phase": "vote",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p2-p2",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "imposter/vote/iphone-se-p3-p3.png",
+    "group": "imposter",
+    "phase": "vote",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p3-p3",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "imposter/voteReveal/tv-stage.png",
+    "group": "imposter",
+    "phase": "voteReveal",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "imposter/voteReveal/iphone-se-p1-p1.png",
+    "group": "imposter",
+    "phase": "voteReveal",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p1-p1",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "imposter/voteReveal/iphone-se-p2-p2.png",
+    "group": "imposter",
+    "phase": "voteReveal",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p2-p2",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "imposter/voteReveal/iphone-se-p3-p3.png",
+    "group": "imposter",
+    "phase": "voteReveal",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p3-p3",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "imposter/wordReveal/tv-stage.png",
+    "group": "imposter",
+    "phase": "wordReveal",
+    "device": "tv",
+    "deviceLabel": "TV 1080p",
+    "role": "stage",
+    "width": 1920,
+    "height": 1080
+  },
+  {
+    "file": "imposter/wordReveal/iphone-se-p1-p1.png",
+    "group": "imposter",
+    "phase": "wordReveal",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p1-p1",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "imposter/wordReveal/iphone-se-p2-p2.png",
+    "group": "imposter",
+    "phase": "wordReveal",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p2-p2",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "imposter/wordReveal/iphone-se-p3-p3.png",
+    "group": "imposter",
+    "phase": "wordReveal",
+    "device": "iphone-se",
+    "deviceLabel": "iPhone SE",
+    "role": "p3-p3",
+    "width": 320,
+    "height": 568
+  }
+]

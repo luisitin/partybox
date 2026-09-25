@@ -1,8 +1,14 @@
 {
   "id": "blind-auction",
   "name": "Blind Auction",
+  "icon": "📦",
   "tagline": "Bet on what's inside the mystery box.",
   "description": "Everyone starts with 100 coins. A mystery box shows what it might hold and the odds of each. Everyone bets in secret on what's inside: the long shots pay big. Then the box opens. Most coins at the end wins.",
+  "howToPlay": [
+    "A mystery box shows what might be inside, with the odds of each.",
+    "Bet your coins in secret on what's inside. Long shots pay big.",
+    "The box opens and right calls get paid. Most coins at the end wins."
+  ],
   "version": "0.1.0",
   "minPlayers": 2,
   "maxPlayers": 16,
@@ -13,7 +19,11 @@
     "perPlayerPerRoundSeconds": 0.3,
     "roundsSetting": "rounds"
   },
-  "tags": ["bluff", "strategy", "quick"],
+  "tags": ["bluff", "strategy"],
+  "presence": {
+    "needs": "anywhere"
+  },
+  "addedOn": "2026-09-25",
   "settings": [
     {
       "key": "rounds",
@@ -62,7 +72,7 @@
     {
       "key": "live",
       "label": "Live events",
-      "description": "Every other box is a race, a dice roll or a prize wheel",
+      "description": "Every other box is a live event: a race, dice, a wheel, doors or a hot potato",
       "type": "boolean",
       "default": false
     },

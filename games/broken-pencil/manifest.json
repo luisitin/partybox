@@ -1,8 +1,14 @@
 {
   "id": "broken-pencil",
   "name": "Broken Pencil",
+  "icon": "✏️",
   "tagline": "Draw it. Guess it. Watch it fall apart.",
   "description": "Telephone with a pencil. Pick a secret word, draw it on your phone, pass the book on: the next player guesses, the one after draws that guess, and so on around the circle. Then the TV turns the pages of every book one at a time while the VIP holds the Next button. No points — the show is the game.",
+  "howToPlay": [
+    "Pick a secret word and draw it on your phone.",
+    "Pass it on: the next player guesses it, the one after draws that guess.",
+    "The TV turns every book's pages and shows how far each one drifted."
+  ],
   "version": "1.0.0",
   "minPlayers": 3,
   "maxPlayers": 8,
@@ -13,7 +19,9 @@
     "perPlayerPerRoundSeconds": 4,
     "roundsSetting": "players"
   },
-  "tags": ["drawing", "party", "creative", "no-scores"],
+  "tags": ["drawing", "comedy"],
+  "presence": { "needs": "anywhere" },
+  "addedOn": "2026-01-01",
   "maxInputBytes": 6144,
   "settings": [
     {

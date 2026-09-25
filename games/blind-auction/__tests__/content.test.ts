@@ -1,8 +1,7 @@
 // The packs and the draw: sizes, text limits, chances, every lot a real bet (2+ distinct contents),
-// the speech stand-in, and what the draw takes for each setting.
+// and what the draw takes for each setting.
 import { describe, expect, it } from 'vitest';
 import { GRAND_POOL, LOT_POOL, SPICY_POOL, boxOf, drawBoxes } from '../server/content';
-import { numberWords, toSpeakable } from '../server/speak';
 import { start } from './helpers';
 
 const ALL = [...LOT_POOL, ...GRAND_POOL, ...SPICY_POOL];
@@ -32,19 +31,6 @@ describe('packs', () => {
       expect(new Set(box.options.map((o) => o.kind)).size, lot.id).toBe(box.options.length);
       for (const o of box.options) expect(o.pay, lot.id).toBeGreaterThan(1);
     }
-  });
-
-  it('every name and flavour line comes out of the speech stand-in as plain words', () => {
-    for (const lot of ALL) {
-      const said = toSpeakable(`The ${lot.name}. ${lot.flavour}`);
-      expect(said, lot.id).not.toMatch(
-        /\d|[“”"]|\b(?!(?:it|that|what|there|here|let|he|she)'s)[a-z]+'s\b/i,
-      );
-    }
-    expect(toSpeakable("Pirate's Chest. Tagged in 1998. It's 11:58.")).toBe(
-      "Pirates Chest. Tagged in nineteen ninety-eight. It's eleven fifty-eight.",
-    );
-    expect(numberWords(1250)).toBe('one thousand two hundred fifty');
   });
 });
 

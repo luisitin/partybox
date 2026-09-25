@@ -19,7 +19,7 @@ import {
   normalizeName,
   votePayloadSchema,
 } from '@partybox/shared';
-import type { ErrorPayload } from '@partybox/shared';
+import type { Catalog, ErrorPayload } from '@partybox/shared';
 import type { Host, Transport } from './host';
 import type { FunnelBook } from './funnel';
 import { createRateLimiter, jsonBytes } from './rate-limit';
@@ -35,7 +35,7 @@ export interface SocketLayer {
   io: IoServer;
   transport: Transport;
   /** Wires the host once it exists (host and sockets need each other). */
-  attach(host: Host, deps: EngineDeps, funnel?: FunnelBook): void;
+  attach(host: Host, deps: EngineDeps, funnel?: FunnelBook, catalog?: Catalog): void;
 }
 
 export function createSocketLayer(server: HttpServer): SocketLayer {
@@ -71,8 +71,11 @@ export function createSocketLayer(server: HttpServer): SocketLayer {
     },
   };
 
-  function attach(host: Host, deps: EngineDeps, funnel?: FunnelBook): void {
+  function attach(host: Host, deps: EngineDeps, funnel?: FunnelBook, catalog?: Catalog): void {
     io.on('connection', (socket) => {
+      // Part 00 §1.2: the game list once per connection (a reconnect gets it again), never in
+      // the room pushes.
+      if (catalog) socket.emit('catalog', catalog);
       const data: SocketData = { role: null, playerId: null, code: null };
       socket.data = data;
       const limiter = createRateLimiter();

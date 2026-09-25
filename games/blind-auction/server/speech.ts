@@ -4,8 +4,7 @@
 // the box is open. At most 10 keys are ever pending (P00 §5.7). Keys never reach a view before
 // their line plays.
 import type { SpeechRequest } from '@partybox/game-sdk';
-import { PRONUNCIATIONS } from './content';
-import { numberWords, toSpeakable } from './speak';
+import { pendingCap, speechKey, toSpeakable } from '@partybox/game-sdk/speech';
 import type { ContentKind, Reader, State } from './types';
 
 export const FIXED_LINES = {
@@ -24,41 +23,18 @@ export const FIXED_LINES = {
 } as const satisfies Record<string, string> & Record<ContentKind, string>;
 export type FixedLine = keyof typeof FIXED_LINES;
 
-const MAX_PENDING = 10;
-
-/** A stable short key (FNV-1a twice → 64 bits; the host accepts [a-z0-9]{6,40}). */
-export function speechKey(voice: string, text: string): string {
-  const s = `ba2|${voice}|${text}`;
-  let a = 0x811c9dc5;
-  let b = 0x01000193;
-  for (let i = 0; i < s.length; i++) {
-    const c = s.charCodeAt(i);
-    a = Math.imul(a ^ c, 0x01000193) >>> 0;
-    b = Math.imul(b ^ c, 0x5bd1e995) >>> 0;
-  }
-  return `ba${a.toString(36)}${b.toString(36)}`;
-}
-
 export function voiceOf(state: State): Exclude<Reader, 'none'> | null {
   return state.cfg.reader === 'none' ? null : state.cfg.reader;
 }
 
 function request(voice: string, text: string): SpeechRequest {
-  const said = toSpeakable(text, PRONUNCIATIONS);
-  return { key: speechKey(voice, said), voice, parts: [{ text: said }] };
+  const parts = toSpeakable(text, { voice, lang: 'en' });
+  return { key: speechKey('blind-auction', voice, parts), voice, parts };
 }
 
 export function fixedRequest(state: State, line: FixedLine | null): SpeechRequest | null {
   const voice = voiceOf(state);
   return voice && line ? request(voice, FIXED_LINES[line]) : null;
-}
-
-/** "Box three: the Pirate's Chest. Found under a palm tree…" — public from `box` on. */
-export function boxText(state: State, idx: number): string | null {
-  const round = state.boxes[idx];
-  if (!round) return null;
-  const opener = round.box.grand ? 'The grand box!' : `Box ${numberWords(idx + 1)}:`;
-  return `${opener} The ${round.box.name}. ${round.box.flavour} What's inside?`;
 }
 
 /** The owner (2026-09-25): the host just read the screen and was too much — the box is no longer
@@ -87,11 +63,7 @@ export function openRequest(state: State): SpeechRequest | null {
   if (!voice || state.phase.id !== 'open' || state.r.step !== 1) return null;
   const n = winners(state);
   const text =
-    n === 0
-      ? 'Nobody saw that coming!'
-      : n === 1
-        ? 'One lucky winner!'
-        : `${numberWords(n)} winners!`;
+    n === 0 ? 'Nobody saw that coming!' : n === 1 ? 'One lucky winner!' : `${n} winners!`;
   return request(voice, text);
 }
 
@@ -112,7 +84,7 @@ export function speech(state: State): SpeechRequest[] {
     if (!r || seen.has(r.key) || state.speechMs[r.key] !== undefined) continue;
     seen.add(r.key);
     out.push(r);
-    if (out.length >= MAX_PENDING) break;
+    if (out.length >= pendingCap(state.seats.length)) break;
   }
   return out;
 }

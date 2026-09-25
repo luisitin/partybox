@@ -1,6 +1,7 @@
 // Scoring helpers shared by games: rankings with shared ranks for ties, results assembly, and
 // speed-scaled points. Pure; safe inside reducers.
 import type { GameAward, GameResults, GameStateBase } from '@partybox/shared';
+import { compareCodeUnits } from './compare';
 
 export interface RankedRow {
   playerId: string;
@@ -12,7 +13,7 @@ export interface RankedRow {
 export function rank(scores: Record<string, number>): RankedRow[] {
   const rows = Object.entries(scores)
     .map(([playerId, score]) => ({ playerId, score: Number.isFinite(score) ? score : 0, rank: 0 }))
-    .sort((a, b) => b.score - a.score || a.playerId.localeCompare(b.playerId));
+    .sort((a, b) => b.score - a.score || compareCodeUnits(a.playerId, b.playerId));
   let lastScore: number | null = null;
   let lastRank = 0;
   rows.forEach((row, index) => {

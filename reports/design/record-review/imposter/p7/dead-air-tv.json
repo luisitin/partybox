@@ -1,0 +1,92 @@
+{
+  "video": "C:\\dev\\partybox-game-imposter\\reports\\design\\record-review\\imposter\\p7\\video\\tv\\round.webm",
+  "bytes": 31590899,
+  "durationS": 318.8,
+  "fps": 10,
+  "thresholds": {
+    "stillMeanDiff": 0.0025,
+    "minDeadMs": 1500,
+    "cutMeanDiff": 0.22
+  },
+  "deadSpans": [
+    {
+      "fromS": 0.5,
+      "toS": 16.8,
+      "ms": 16300,
+      "during": "(start)",
+      "cueInside": false
+    },
+    {
+      "fromS": 16.9,
+      "toS": 25.5,
+      "ms": 8600,
+      "during": "(start)",
+      "cueInside": false
+    },
+    {
+      "fromS": 27.4,
+      "toS": 30.6,
+      "ms": 3200,
+      "during": "(start)",
+      "cueInside": false
+    },
+    {
+      "fromS": 30.8,
+      "toS": 32.9,
+      "ms": 2100,
+      "during": "(start)",
+      "cueInside": false
+    },
+    {
+      "fromS": 33.4,
+      "toS": 35.7,
+      "ms": 2300,
+      "during": "(start)",
+      "cueInside": false
+    },
+    {
+      "fromS": 37.2,
+      "toS": 39.2,
+      "ms": 2000,
+      "during": "(start)",
+      "cueInside": false
+    },
+    {
+      "fromS": 163,
+      "toS": 169.9,
+      "ms": 6900,
+      "during": "accuse",
+      "cueInside": false
+    },
+    {
+      "fromS": 170,
+      "toS": 177,
+      "ms": 7000,
+      "during": "lastChance",
+      "cueInside": false
+    },
+    {
+      "fromS": 237.7,
+      "toS": 241.8,
+      "ms": 4100,
+      "during": "talk",
+      "cueInside": false
+    },
+    {
+      "fromS": 316.7,
+      "toS": 318.7,
+      "ms": 2000,
+      "during": "results",
+      "cueInside": false
+    }
+  ],
+  "deadMsTotal": 54500,
+  "hardCuts": [],
+  "samples": 3187,
+  "motion": {
+    "p50": 0.0001,
+    "p90": 0.0016,
+    "p99": 0.026,
+    "max": 0.1071
+  }
+}

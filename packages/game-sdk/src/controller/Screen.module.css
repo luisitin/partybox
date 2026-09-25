@@ -78,6 +78,47 @@
     animation: pb-fold linear both;
     animation-timeline: scroll(self);
   }
+  /* fill1: a title drawn down to its bottom edge (the results' award chips) sat flush on the body's
+     clip line, so a row scrolled half out read as hidden under the chips — at 200 % text most of a
+     name. Scrolled away from the top, the body keeps the clear strip it has at rest (its own top
+     padding) and then fades in over twice the caption size, so nothing touches the title at any
+     text size. Paint only: every box stays where it was, and at the top there is no mask at all. */
+  .body.fadeTop {
+    mask-image: linear-gradient(
+      to bottom,
+      transparent var(--pb-fold-clear),
+      #000 calc(var(--pb-fold-clear) + var(--pb-fold-top)),
+      #000 calc(100% - var(--pb-fold)),
+      transparent
+    );
+    animation:
+      pb-fold linear both,
+      pb-fold-top linear both;
+    animation-timeline: scroll(self), scroll(self);
+  }
+}
+
+@property --pb-fold-top {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+@property --pb-fold-clear {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+
+@keyframes pb-fold-top {
+  0% {
+    --pb-fold-clear: 0px;
+    --pb-fold-top: 0px;
+  }
+  8%,
+  100% {
+    --pb-fold-clear: var(--pb-space-4);
+    --pb-fold-top: calc(var(--pb-font-caption) * 2);
+  }
 }
 
 @keyframes pb-fold {

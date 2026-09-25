@@ -21,12 +21,25 @@ export interface ScreenProps {
   className?: string;
   /** Inline style on the frame (TextAnswer pads it by the keyboard's height, I-795 I). */
   style?: CSSProperties;
+  /**
+   * The title is drawn right down to its bottom edge (the results' award chips): once the body
+   * scrolls, its top fades over a band scaled to the text size, so a row scrolling up thins out
+   * below that edge instead of reading as tucked under it. Paint only; the layout does not change.
+   */
+  fadeTop?: boolean;
 }
 
 const GHOST_MS = 350;
 const GHOST = styles['ghost'] ?? 'ghost';
 
-export function Screen({ children, footer, title, className, style }: ScreenProps): JSX.Element {
+export function Screen({
+  children,
+  footer,
+  title,
+  className,
+  style,
+  fadeTop,
+}: ScreenProps): JSX.Element {
   const L = useT(STRINGS);
   const section = useRef<HTMLElement>(null);
   // I-066 B: "more below" — true while the body can scroll further (scroll + resize watched).
@@ -54,7 +67,16 @@ export function Screen({ children, footer, title, className, style }: ScreenProp
     el.addEventListener('scroll', check, { passive: true });
     const ro = new ResizeObserver(check);
     ro.observe(el);
+    for (const child of el.children) ro.observe(child);
+    // A section that opens inside the body (the VIP's Game options) grows the content, not the
+    // body's box: re-check on any change inside, and watch the new children's sizes too.
+    const mo = new MutationObserver(() => {
+      for (const child of el.children) ro.observe(child);
+      check();
+    });
+    mo.observe(el, { childList: true, subtree: true });
     return () => {
+      mo.disconnect();
       el.removeEventListener('scroll', check);
       ro.disconnect();
     };
@@ -81,7 +103,7 @@ export function Screen({ children, footer, title, className, style }: ScreenProp
   return (
     <section ref={section} className={`${styles.screen} ${className ?? ''}`} style={style}>
       {title ? <h2 className={styles.title}>{title}</h2> : null}
-      <div ref={body} className={styles.body}>
+      <div ref={body} className={fadeTop ? `${styles.body} ${styles.fadeTop}` : styles.body}>
         {children}
       </div>
       {footer || room ? (

@@ -1,6 +1,5 @@
 // The TV's store: an observer that renders pushes (room snapshots, views, toasts) — plus the host
 // controls (ADR-031): `act` runs a VIP action as the room's VIP, `bot` adds/removes house bots.
-import { io } from 'socket.io-client';
 import type {
   BotAction,
   ErrorPayload,
@@ -15,6 +14,7 @@ import type {
 import { createRestartWatch } from './stale';
 import { createStore, nextToastId } from './store';
 import type { Store, Toast } from './store';
+import { openSocket } from './socket';
 
 export interface TvState {
   connected: boolean;
@@ -52,7 +52,7 @@ export function createTvClient(roomCode?: string, url?: string): TvClient {
     toasts: [],
     homing: false,
   });
-  const socket = io(url ?? '/', { transports: ['websocket', 'polling'] });
+  const socket = openSocket(url);
 
   const accept = (rev: number, code: string): boolean => {
     const s = store.get();

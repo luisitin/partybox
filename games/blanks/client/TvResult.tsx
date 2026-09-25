@@ -22,12 +22,11 @@ import { FilledCard, LETTERS } from './Cards';
 import { Author, Voters } from './TvResultParts';
 import { votesLabel, winnerLine } from './resultLines';
 import { STRINGS } from './strings';
+import { RESULT_BEATS_MS } from './timing';
 import styles from './blanks.module.css';
 
 type Props = GameTvProps<BlanksTvView>;
 
-/** Authors at 600 ms, the winner at 1200 ms. */
-export const RESULT_BEATS_MS = [0, 600, 1200] as const;
 /** The final board: the scores land, then the card of the night is dealt beside them. The board
  *  stacks bottom-up, so the leaders are the last rows in; the card waits one short beat past them
  *  (twelve rows ≈ 1.4 s, three ≈ 0.8 s — loop #407; a flat 420 ms had it landing mid-stack) and

@@ -2,18 +2,15 @@
 // (prompt) and white (answer) cards. `packs` maps content/<name>.json → its schema; the contract
 // suite validates every pack with it. Ids: <m|c|w>b<n> for black, <m|c|w>w<n> for white.
 import { z } from '@partybox/game-sdk';
+import { blanksIn } from './blank';
 
 export const DECK_IDS = ['mild', 'crude', 'wild'] as const;
 export type DeckId = (typeof DECK_IDS)[number];
 
 export const WHITE_MAX_CHARS = 80;
 export const BLACK_MAX_CHARS = 160;
-/** How a blank is written in a black card's text. */
-export const BLANK = '____';
-
-export function blanksIn(text: string): number {
-  return text.split(BLANK).length - 1;
-}
+// The blank and its count live in blank.ts (no zod): the cards on phones and the TV read them.
+export { BLANK, blanksIn } from './blank';
 
 export const blackCardSchema = z
   .object({

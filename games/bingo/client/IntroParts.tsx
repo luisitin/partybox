@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import type { JSX } from 'react';
 import { PrimaryButton, buzz, useHold, useSecondsLeft, useT } from '@partybox/game-sdk/ui';
 import type { PlayCue } from '@partybox/game-sdk/ui';
-import { dealDoneMs } from '../server/types';
+import { dealDoneMs } from '../server/constants';
 import type { Input } from '../server/types';
 import type { BingoControllerView } from '../server/views';
 import { STRINGS } from './strings';

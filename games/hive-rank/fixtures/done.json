@@ -1,0 +1,414 @@
+{
+  "phase": {
+    "id": "done",
+    "startedAt": 1700000145661,
+    "deadline": null
+  },
+  "rng": {
+    "seed": 1,
+    "step": 203
+  },
+  "players": {
+    "p1": {
+      "id": "p1",
+      "name": "Player 1",
+      "avatarId": "fox",
+      "connected": true
+    },
+    "p2": {
+      "id": "p2",
+      "name": "Player 2",
+      "avatarId": "owl",
+      "connected": true
+    },
+    "p3": {
+      "id": "p3",
+      "name": "Player 3",
+      "avatarId": "frog",
+      "connected": true
+    },
+    "p4": {
+      "id": "p4",
+      "name": "Player 4",
+      "avatarId": "cat",
+      "connected": true
+    },
+    "p5": {
+      "id": "p5",
+      "name": "Player 5",
+      "avatarId": "panda",
+      "connected": true
+    },
+    "p6": {
+      "id": "p6",
+      "name": "Player 6",
+      "avatarId": "koala",
+      "connected": true
+    }
+  },
+  "settings": {
+    "rounds": 6,
+    "rankSeconds": 30,
+    "spicy": false,
+    "reader": "jessica"
+  },
+  "questions": [
+    {
+      "id": "hr-robot-330",
+      "kind": "hypothetical",
+      "prompt": "Best to worst job to hand to a robot",
+      "say": "You get a robot helper. Rank these jobs to give it, from best to worst.",
+      "top": "Best",
+      "bottom": "Worst",
+      "items": [
+        {
+          "id": "dog",
+          "label": "Walking the dog"
+        },
+        {
+          "id": "homework",
+          "label": "Doing homework"
+        },
+        {
+          "id": "toilet",
+          "label": "Scrubbing the toilet"
+        },
+        {
+          "id": "toys",
+          "label": "Picking up toys"
+        },
+        {
+          "id": "laundry",
+          "label": "Folding laundry"
+        }
+      ],
+      "expected": ["toilet", "laundry", "homework", "toys", "dog"]
+    },
+    {
+      "id": "hr-tech-135",
+      "kind": "preference",
+      "prompt": "Best to worst invention ever",
+      "say": "Rank these inventions, from best to worst.",
+      "top": "Best",
+      "bottom": "Worst",
+      "items": [
+        {
+          "id": "bread",
+          "label": "Sliced bread"
+        },
+        {
+          "id": "ac",
+          "label": "Air conditioning"
+        },
+        {
+          "id": "wrap",
+          "label": "Bubble wrap"
+        },
+        {
+          "id": "plumbing",
+          "label": "Indoor plumbing"
+        },
+        {
+          "id": "toaster",
+          "label": "Pop-up toaster"
+        }
+      ],
+      "expected": ["plumbing", "ac", "bread", "toaster", "wrap"]
+    },
+    {
+      "id": "hr-home-337",
+      "kind": "preference",
+      "prompt": "Best to worst part of bedtime",
+      "say": "Rank these parts of bedtime, from best to worst.",
+      "top": "Best",
+      "bottom": "Worst",
+      "items": [
+        {
+          "id": "teeth",
+          "label": "Brushing teeth"
+        },
+        {
+          "id": "story",
+          "label": "Bedtime story"
+        },
+        {
+          "id": "tidy",
+          "label": "Tidying up toys"
+        },
+        {
+          "id": "bath",
+          "label": "Warm bath"
+        },
+        {
+          "id": "pajamas",
+          "label": "Fresh pajamas"
+        }
+      ],
+      "expected": ["story", "pajamas", "bath", "teeth", "tidy"]
+    },
+    {
+      "id": "hr-alien-329",
+      "kind": "hypothetical",
+      "prompt": "Best to worst thing to show a visiting alien",
+      "say": "An alien is visiting. Rank these things to show it, from best to worst.",
+      "top": "Best",
+      "bottom": "Worst",
+      "items": [
+        {
+          "id": "traffic",
+          "label": "A traffic jam"
+        },
+        {
+          "id": "coaster",
+          "label": "A roller coaster"
+        },
+        {
+          "id": "dentist",
+          "label": "A dentist visit"
+        },
+        {
+          "id": "catvideo",
+          "label": "A cat video"
+        },
+        {
+          "id": "pizza",
+          "label": "A pizza"
+        }
+      ],
+      "expected": ["coaster", "pizza", "catvideo", "traffic", "dentist"]
+    },
+    {
+      "id": "hr-music-345",
+      "kind": "preference",
+      "prompt": "Best to worst instrument to learn",
+      "say": "Rank these instruments to learn, from best to worst.",
+      "top": "Best",
+      "bottom": "Worst",
+      "items": [
+        {
+          "id": "violin",
+          "label": "Violin"
+        },
+        {
+          "id": "guitar",
+          "label": "Guitar"
+        },
+        {
+          "id": "recorder",
+          "label": "Recorder"
+        },
+        {
+          "id": "drums",
+          "label": "Drums"
+        },
+        {
+          "id": "piano",
+          "label": "Piano"
+        }
+      ],
+      "expected": ["guitar", "piano", "drums", "violin", "recorder"]
+    },
+    {
+      "id": "hr-fight-302",
+      "kind": "hypothetical",
+      "prompt": "Most to least likely to win a snowball fight",
+      "say": "Who would win a snowball fight? Rank them from most to least likely.",
+      "top": "Wins",
+      "bottom": "Loses",
+      "items": [
+        {
+          "id": "penguin",
+          "label": "A penguin"
+        },
+        {
+          "id": "yeti",
+          "label": "A yeti"
+        },
+        {
+          "id": "plow",
+          "label": "A snowplow driver"
+        },
+        {
+          "id": "kid",
+          "label": "A kid on a snow day"
+        },
+        {
+          "id": "polar",
+          "label": "A polar bear"
+        }
+      ],
+      "expected": ["yeti", "kid", "polar", "plow", "penguin"]
+    }
+  ],
+  "q": {
+    "n": 6,
+    "orders": {
+      "p1": ["penguin", "yeti", "kid", "plow", "polar"],
+      "p3": ["penguin", "yeti", "plow", "kid", "polar"],
+      "p5": ["penguin", "yeti", "plow", "kid", "polar"],
+      "p2": ["yeti", "plow", "penguin", "polar", "kid"],
+      "p4": ["penguin", "yeti", "plow", "kid", "polar"],
+      "p6": ["penguin", "yeti", "plow", "kid", "polar"]
+    },
+    "hive": ["penguin", "yeti", "plow", "kid", "polar"],
+    "totals": {
+      "penguin": 8,
+      "yeti": 11,
+      "plow": 18,
+      "kid": 24,
+      "polar": 29
+    },
+    "step": 5,
+    "voiced": [],
+    "hold": false,
+    "delta": {
+      "p1": {
+        "pts": 8,
+        "exact": 3,
+        "near": 2,
+        "perfect": false
+      },
+      "p3": {
+        "pts": 12,
+        "exact": 5,
+        "near": 0,
+        "perfect": true
+      },
+      "p5": {
+        "pts": 12,
+        "exact": 5,
+        "near": 0,
+        "perfect": true
+      },
+      "p2": {
+        "pts": 4,
+        "exact": 0,
+        "near": 4,
+        "perfect": false
+      },
+      "p4": {
+        "pts": 12,
+        "exact": 5,
+        "near": 0,
+        "perfect": true
+      },
+      "p6": {
+        "pts": 12,
+        "exact": 5,
+        "near": 0,
+        "perfect": true
+      }
+    },
+    "queens": ["p3", "p4", "p5", "p6"],
+    "lows": ["p2"],
+    "short": false,
+    "sayOk": false,
+    "applied": true
+  },
+  "scores": {
+    "p1": 56,
+    "p2": 37,
+    "p3": 64,
+    "p4": 62,
+    "p5": 49,
+    "p6": 64
+  },
+  "stats": {
+    "p6": {
+      "exact": 26,
+      "queens": 4,
+      "lows": 1,
+      "perfects": 4
+    },
+    "p3": {
+      "exact": 26,
+      "queens": 4,
+      "lows": 1,
+      "perfects": 4
+    },
+    "p2": {
+      "exact": 9,
+      "queens": 0,
+      "lows": 6,
+      "perfects": 0
+    },
+    "p5": {
+      "exact": 18,
+      "queens": 1,
+      "lows": 3,
+      "perfects": 1
+    },
+    "p4": {
+      "exact": 24,
+      "queens": 4,
+      "lows": 2,
+      "perfects": 4
+    },
+    "p1": {
+      "exact": 21,
+      "queens": 3,
+      "lows": 2,
+      "perfects": 3
+    }
+  },
+  "pairs": {
+    "p1|p2": 8,
+    "p1|p3": 20,
+    "p1|p4": 18,
+    "p1|p5": 12,
+    "p1|p6": 21,
+    "p2|p3": 7,
+    "p2|p4": 8,
+    "p2|p5": 6,
+    "p2|p6": 10,
+    "p3|p4": 24,
+    "p3|p5": 19,
+    "p3|p6": 23,
+    "p4|p5": 14,
+    "p4|p6": 20,
+    "p5|p6": 16
+  },
+  "speechMs": {
+    "hrjof2zlg2txpr": -1,
+    "hr1m5eofd1hy3vax": -1,
+    "hr12c6ccs8v9d4g": -1,
+    "hrqjwd0b1samlrh": -1,
+    "hrhp9nja11nep6w": -1,
+    "hr1g8k6xi6efwyo": -1,
+    "hrs9exlnk70h3": -1,
+    "hr1y71de4jqfm58": -1,
+    "hr1rwomje1heqmfw": -1,
+    "hr1gke4y81j6jq0q": -1,
+    "hrfz70oliurahn": -1,
+    "hri50q46x1ybxa": -1,
+    "hr2wrrpg1s7prii": -1,
+    "hrdm4lw81ksjvia": -1,
+    "hr1qpdxsh2rjgkf": -1,
+    "hrv3y9osych9vi": -1,
+    "hr1sjvrkxvteuwr": -1,
+    "hr1pljgno33yfyo": -1,
+    "hr1az1jmo448kos": -1,
+    "hr48xyn351a6pj": -1,
+    "hrs9gdh111u3b1x": -1,
+    "hr1u251amfoipy": -1,
+    "hr14s9pb31sqp9d5": -1,
+    "hrua994kuomfg": -1,
+    "hrahzj3w14m9jem": -1,
+    "hrq5jql5ut10rf": -1,
+    "hr1smj9io1h6qrbg": -1,
+    "hr1jjgtgv1p2thxl": -1,
+    "hr177rwnlnhmiyx": -1,
+    "hr17ljxqwv7ixvi": -1,
+    "hroeeyjchxz6va": -1,
+    "hr16e2bjs1i9qys4": -1,
+    "hr15pyk6bfcmu5v": -1,
+    "hr192qht5zsce1f": -1,
+    "hrmrp2m8174f2zs": -1,
+    "hrctd32ks60r7o": -1,
+    "hr144xqwggtq9ju": -1,
+    "hrqv8i6pypfvv": -1,
+    "hrcmgfd12dn97f": -1,
+    "hr1szmkhz1tntu03": -1,
+    "hrj85ins1fza8x8": -1
+  }
+}

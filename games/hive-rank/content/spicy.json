@@ -1,0 +1,1552 @@
+[
+  {
+    "id": "hr-date-400",
+    "kind": "preference",
+    "prompt": "Worst to best first-date activity",
+    "say": "Rank these first-date activities, from worst to best.",
+    "top": "Worst",
+    "bottom": "Best",
+    "items": [
+      {
+        "id": "golf",
+        "label": "Mini golf"
+      },
+      {
+        "id": "mom",
+        "label": "Meeting their mom"
+      },
+      {
+        "id": "dinner",
+        "label": "Dinner and drinks"
+      },
+      {
+        "id": "hike",
+        "label": "A six-hour hike"
+      },
+      {
+        "id": "karaoke",
+        "label": "Karaoke night"
+      }
+    ],
+    "expected": ["mom", "hike", "karaoke", "golf", "dinner"]
+  },
+  {
+    "id": "hr-awkward-401",
+    "kind": "social",
+    "prompt": "Least to most embarrassing way to get caught",
+    "say": "Rank these, from least to most embarrassing thing to be caught doing.",
+    "top": "Least",
+    "bottom": "Most",
+    "items": [
+      {
+        "id": "mirror",
+        "label": "Kissing the mirror"
+      },
+      {
+        "id": "plants",
+        "label": "Talking to your plants"
+      },
+      {
+        "id": "ex",
+        "label": "Snooping on your ex"
+      },
+      {
+        "id": "dog",
+        "label": "Singing to your dog"
+      },
+      {
+        "id": "commerc",
+        "label": "Crying at a commercial"
+      }
+    ],
+    "expected": ["dog", "plants", "commerc", "ex", "mirror"]
+  },
+  {
+    "id": "hr-exes-402",
+    "kind": "social",
+    "prompt": "Worst to best reason to text your ex",
+    "say": "Rank these reasons to text your ex, from worst to best.",
+    "top": "Worst",
+    "bottom": "Best",
+    "items": [
+      {
+        "id": "bday",
+        "label": "It's their birthday"
+      },
+      {
+        "id": "favor",
+        "label": "You need a favor"
+      },
+      {
+        "id": "drunk",
+        "label": "You're drunk"
+      },
+      {
+        "id": "hoodie",
+        "label": "You have their hoodie"
+      },
+      {
+        "id": "dog",
+        "label": "Your dog misses them"
+      }
+    ],
+    "expected": ["drunk", "dog", "favor", "hoodie", "bday"]
+  },
+  {
+    "id": "hr-work-403",
+    "kind": "social",
+    "prompt": "Worst to best move at the office party",
+    "say": "Rank these office party moves, from worst to best.",
+    "top": "Worst",
+    "bottom": "Best",
+    "items": [
+      {
+        "id": "dance",
+        "label": "Dance on a table"
+      },
+      {
+        "id": "kiss",
+        "label": "Kiss a coworker"
+      },
+      {
+        "id": "vanish",
+        "label": "Vanish without a word"
+      },
+      {
+        "id": "roast",
+        "label": "Roast the boss"
+      },
+      {
+        "id": "cry",
+        "label": "Cry in the bathroom"
+      }
+    ],
+    "expected": ["kiss", "roast", "cry", "dance", "vanish"]
+  },
+  {
+    "id": "hr-chat-404",
+    "kind": "social",
+    "prompt": "Worst to mildest thing to send Mom by mistake",
+    "say": "Rank these things to send your mom by mistake, from worst to mildest.",
+    "top": "Worst",
+    "bottom": "Mildest",
+    "items": [
+      {
+        "id": "hangover",
+        "label": "A hangover photo"
+      },
+      {
+        "id": "selfie",
+        "label": "A spicy selfie"
+      },
+      {
+        "id": "outside",
+        "label": "Babe, I'm outside"
+      },
+      {
+        "id": "rant",
+        "label": "A rant about her"
+      },
+      {
+        "id": "profile",
+        "label": "Your dating profile"
+      }
+    ],
+    "expected": ["selfie", "rant", "profile", "hangover", "outside"]
+  },
+  {
+    "id": "hr-lies-405",
+    "kind": "social",
+    "prompt": "Most to least believable dating-profile claim",
+    "say": "Rank these dating profile claims, from most to least believable.",
+    "top": "Most",
+    "bottom": "Least",
+    "items": [
+      {
+        "id": "tall",
+        "label": "Six feet tall"
+      },
+      {
+        "id": "hiking",
+        "label": "Loves hiking"
+      },
+      {
+        "id": "stable",
+        "label": "Financially stable"
+      },
+      {
+        "id": "laid",
+        "label": "Very laid-back"
+      },
+      {
+        "id": "reads",
+        "label": "Reads a lot"
+      }
+    ],
+    "expected": ["laid", "hiking", "reads", "stable", "tall"]
+  },
+  {
+    "id": "hr-drink-406",
+    "kind": "social",
+    "prompt": "Best to worst person to hold your hair back",
+    "say": "Rank these people to hold your hair back after a big night, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "boss",
+        "label": "Your boss"
+      },
+      {
+        "id": "bff",
+        "label": "Your best friend"
+      },
+      {
+        "id": "ex",
+        "label": "Your ex"
+      },
+      {
+        "id": "neighbor",
+        "label": "Your new neighbor"
+      },
+      {
+        "id": "mom",
+        "label": "Your mom"
+      }
+    ],
+    "expected": ["bff", "mom", "neighbor", "ex", "boss"]
+  },
+  {
+    "id": "hr-awkward-407",
+    "kind": "social",
+    "prompt": "Worst to least bad person to walk in on you",
+    "say": "Rank these people to walk in on you, from worst to least bad.",
+    "top": "Worst",
+    "bottom": "Least bad",
+    "items": [
+      {
+        "id": "roomie",
+        "label": "Your roommate"
+      },
+      {
+        "id": "mom",
+        "label": "Your mom"
+      },
+      {
+        "id": "driver",
+        "label": "A delivery driver"
+      },
+      {
+        "id": "boss",
+        "label": "Your boss"
+      },
+      {
+        "id": "ex",
+        "label": "Your ex"
+      }
+    ],
+    "expected": ["mom", "boss", "ex", "roomie", "driver"]
+  },
+  {
+    "id": "hr-date-408",
+    "kind": "social",
+    "prompt": "Worst to best thing to say on a first date",
+    "say": "Rank these things to say on a first date, from worst to best.",
+    "top": "Worst",
+    "bottom": "Best",
+    "items": [
+      {
+        "id": "kids",
+        "label": "Do you want kids?"
+      },
+      {
+        "id": "split",
+        "label": "Split the bill?"
+      },
+      {
+        "id": "ex",
+        "label": "I still love my ex"
+      },
+      {
+        "id": "jobs",
+        "label": "I'm between jobs"
+      },
+      {
+        "id": "mom",
+        "label": "My mom picked my shirt"
+      }
+    ],
+    "expected": ["ex", "kids", "mom", "jobs", "split"]
+  },
+  {
+    "id": "hr-shame-409",
+    "kind": "preference",
+    "prompt": "Worst to best walk-of-shame outfit",
+    "say": "Rank these walk of shame outfits, from worst to best.",
+    "top": "Worst",
+    "bottom": "Best",
+    "items": [
+      {
+        "id": "tux",
+        "label": "A full tuxedo"
+      },
+      {
+        "id": "hoodie",
+        "label": "A borrowed hoodie"
+      },
+      {
+        "id": "toga",
+        "label": "A bedsheet toga"
+      },
+      {
+        "id": "heels",
+        "label": "Last night's heels"
+      },
+      {
+        "id": "robe",
+        "label": "Their bathrobe"
+      }
+    ],
+    "expected": ["toga", "robe", "tux", "heels", "hoodie"]
+  },
+  {
+    "id": "hr-habit-410",
+    "kind": "social",
+    "prompt": "Most to least annoying partner habit in bed",
+    "say": "Rank these habits of a partner in bed, from most to least annoying.",
+    "top": "Most",
+    "bottom": "Least",
+    "items": [
+      {
+        "id": "feet",
+        "label": "Ice-cold feet on you"
+      },
+      {
+        "id": "snore",
+        "label": "Snoring"
+      },
+      {
+        "id": "crumbs",
+        "label": "Crumbs in the sheets"
+      },
+      {
+        "id": "covers",
+        "label": "Stealing the covers"
+      },
+      {
+        "id": "phone",
+        "label": "Scrolling at midnight"
+      }
+    ],
+    "expected": ["snore", "covers", "crumbs", "phone", "feet"]
+  },
+  {
+    "id": "hr-chat-411",
+    "kind": "social",
+    "prompt": "Most to least annoying group-chat member",
+    "say": "Rank these group chat members, from most to least annoying.",
+    "top": "Most",
+    "bottom": "Least",
+    "items": [
+      {
+        "id": "silent",
+        "label": "The silent reader"
+      },
+      {
+        "id": "voice",
+        "label": "The voice-note sender"
+      },
+      {
+        "id": "oneword",
+        "label": "The one-word replier"
+      },
+      {
+        "id": "memes",
+        "label": "The meme spammer"
+      },
+      {
+        "id": "ranter",
+        "label": "The late-night ranter"
+      }
+    ],
+    "expected": ["voice", "ranter", "memes", "oneword", "silent"]
+  },
+  {
+    "id": "hr-secret-412",
+    "kind": "social",
+    "prompt": "Worst to best person to tell a secret to",
+    "say": "Rank these people to tell a secret to, from worst to best.",
+    "top": "Worst",
+    "bottom": "Best",
+    "items": [
+      {
+        "id": "therapy",
+        "label": "Your therapist"
+      },
+      {
+        "id": "chat",
+        "label": "Your group chat"
+      },
+      {
+        "id": "hair",
+        "label": "Your hairdresser"
+      },
+      {
+        "id": "drunk",
+        "label": "Your drunkest friend"
+      },
+      {
+        "id": "mom",
+        "label": "Your mom"
+      }
+    ],
+    "expected": ["chat", "drunk", "hair", "mom", "therapy"]
+  },
+  {
+    "id": "hr-wedding-413",
+    "kind": "social",
+    "prompt": "Worst to best wedding guest to sit next to",
+    "say": "Rank these wedding guests to sit next to, from worst to best.",
+    "top": "Worst",
+    "bottom": "Best",
+    "items": [
+      {
+        "id": "cousin",
+        "label": "The single cousin"
+      },
+      {
+        "id": "ex",
+        "label": "The groom's ex"
+      },
+      {
+        "id": "grandma",
+        "label": "A chatty grandma"
+      },
+      {
+        "id": "toddler",
+        "label": "A sticky toddler"
+      },
+      {
+        "id": "uncle",
+        "label": "A tipsy uncle"
+      }
+    ],
+    "expected": ["ex", "toddler", "grandma", "uncle", "cousin"]
+  },
+  {
+    "id": "hr-roomie-414",
+    "kind": "social",
+    "prompt": "Most to least annoying roommate crime",
+    "say": "Rank these roommate crimes, from most to least annoying.",
+    "top": "Most",
+    "bottom": "Least",
+    "items": [
+      {
+        "id": "hair",
+        "label": "Hair in the drain"
+      },
+      {
+        "id": "walls",
+        "label": "Loud thin-wall romance"
+      },
+      {
+        "id": "wine",
+        "label": "Drinking your wine"
+      },
+      {
+        "id": "guests",
+        "label": "Guests who never leave"
+      },
+      {
+        "id": "leftov",
+        "label": "Eating your leftovers"
+      }
+    ],
+    "expected": ["walls", "leftov", "guests", "wine", "hair"]
+  },
+  {
+    "id": "hr-drink-415",
+    "kind": "social",
+    "prompt": "Worst to best drinking buddy",
+    "say": "Rank these drinking buddies, from worst to best.",
+    "top": "Worst",
+    "bottom": "Best",
+    "items": [
+      {
+        "id": "pirate",
+        "label": "A pirate"
+      },
+      {
+        "id": "boss",
+        "label": "Your boss"
+      },
+      {
+        "id": "nun",
+        "label": "A retired nun"
+      },
+      {
+        "id": "ex",
+        "label": "Your ex"
+      },
+      {
+        "id": "dad",
+        "label": "Your dad"
+      }
+    ],
+    "expected": ["ex", "boss", "nun", "dad", "pirate"]
+  },
+  {
+    "id": "hr-lies-416",
+    "kind": "social",
+    "prompt": "Most to least common lie adults tell",
+    "say": "Rank these lies adults tell, from most to least common.",
+    "top": "Most",
+    "bottom": "Least",
+    "items": [
+      {
+        "id": "gift",
+        "label": "I love the gift"
+      },
+      {
+        "id": "fine",
+        "label": "I'm fine"
+      },
+      {
+        "id": "onemore",
+        "label": "Just one more drink"
+      },
+      {
+        "id": "terms",
+        "label": "I read the terms"
+      },
+      {
+        "id": "omw",
+        "label": "I'm on my way"
+      }
+    ],
+    "expected": ["omw", "fine", "terms", "gift", "onemore"]
+  },
+  {
+    "id": "hr-date-417",
+    "kind": "social",
+    "prompt": "Biggest to smallest first-date red flag",
+    "say": "Rank these first date red flags, from biggest to smallest.",
+    "top": "Biggest",
+    "bottom": "Smallest",
+    "items": [
+      {
+        "id": "phone",
+        "label": "Checks their phone"
+      },
+      {
+        "id": "waiter",
+        "label": "Rude to the waiter"
+      },
+      {
+        "id": "wallet",
+        "label": "Forgot their wallet"
+      },
+      {
+        "id": "mom",
+        "label": "Brings their mom"
+      },
+      {
+        "id": "ex",
+        "label": "Talks about their ex"
+      }
+    ],
+    "expected": ["mom", "waiter", "ex", "wallet", "phone"]
+  },
+  {
+    "id": "hr-party-418",
+    "kind": "social",
+    "prompt": "Most to least annoying kind of drunk",
+    "say": "Rank these kinds of drunk person, from most to least annoying.",
+    "top": "Most",
+    "bottom": "Least",
+    "items": [
+      {
+        "id": "hugger",
+        "label": "The hugger"
+      },
+      {
+        "id": "fighter",
+        "label": "The fighter"
+      },
+      {
+        "id": "music",
+        "label": "The music hijacker"
+      },
+      {
+        "id": "crier",
+        "label": "The crier"
+      },
+      {
+        "id": "share",
+        "label": "The oversharer"
+      }
+    ],
+    "expected": ["fighter", "crier", "share", "music", "hugger"]
+  },
+  {
+    "id": "hr-exes-419",
+    "kind": "social",
+    "prompt": "Worst to best place to run into your ex",
+    "say": "Rank these places to run into your ex, from worst to best.",
+    "top": "Worst",
+    "bottom": "Best",
+    "items": [
+      {
+        "id": "gym",
+        "label": "The gym"
+      },
+      {
+        "id": "nude",
+        "label": "A nude beach"
+      },
+      {
+        "id": "wedding",
+        "label": "Your own wedding"
+      },
+      {
+        "id": "pharm",
+        "label": "The pharmacy line"
+      },
+      {
+        "id": "funeral",
+        "label": "A funeral"
+      }
+    ],
+    "expected": ["wedding", "nude", "pharm", "funeral", "gym"]
+  },
+  {
+    "id": "hr-work-420",
+    "kind": "social",
+    "prompt": "Worst to best coworker to secretly date",
+    "say": "Rank these coworkers to secretly date, from worst to best.",
+    "top": "Worst",
+    "bottom": "Best",
+    "items": [
+      {
+        "id": "desk",
+        "label": "Your desk neighbor"
+      },
+      {
+        "id": "spouse",
+        "label": "Your boss's spouse"
+      },
+      {
+        "id": "newhire",
+        "label": "The new hire"
+      },
+      {
+        "id": "boss",
+        "label": "Your boss"
+      },
+      {
+        "id": "payroll",
+        "label": "The payroll person"
+      }
+    ],
+    "expected": ["spouse", "boss", "desk", "payroll", "newhire"]
+  },
+  {
+    "id": "hr-exes-421",
+    "kind": "social",
+    "prompt": "Worst to best way to get dumped",
+    "say": "Rank these ways to get dumped, from worst to best.",
+    "top": "Worst",
+    "bottom": "Best",
+    "items": [
+      {
+        "id": "voice",
+        "label": "In a voice note"
+      },
+      {
+        "id": "dinner",
+        "label": "Over a nice dinner"
+      },
+      {
+        "id": "bday",
+        "label": "On your birthday"
+      },
+      {
+        "id": "text",
+        "label": "By text"
+      },
+      {
+        "id": "mom",
+        "label": "Through their mom"
+      }
+    ],
+    "expected": ["bday", "mom", "text", "voice", "dinner"]
+  },
+  {
+    "id": "hr-money-422",
+    "kind": "hypothetical",
+    "prompt": "Most to least doable for a million dollars",
+    "say": "Rank these, from most to least doable for a million dollars.",
+    "top": "Most",
+    "bottom": "Least",
+    "items": [
+      {
+        "id": "bug",
+        "label": "Eat a live bug"
+      },
+      {
+        "id": "tattoo",
+        "label": "Tattoo your ex's name"
+      },
+      {
+        "id": "quit",
+        "label": "Quit your job"
+      },
+      {
+        "id": "dateex",
+        "label": "Date your ex again"
+      },
+      {
+        "id": "shave",
+        "label": "Shave your head"
+      }
+    ],
+    "expected": ["quit", "shave", "bug", "dateex", "tattoo"]
+  },
+  {
+    "id": "hr-power-423",
+    "kind": "hypothetical",
+    "prompt": "Best to worst superpower for a first date",
+    "say": "Rank these superpowers for a first date, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "sober",
+        "label": "Instant sobriety"
+      },
+      {
+        "id": "rewind",
+        "label": "Rewinding time"
+      },
+      {
+        "id": "invis",
+        "label": "Invisibility"
+      },
+      {
+        "id": "mind",
+        "label": "Mind reading"
+      },
+      {
+        "id": "breath",
+        "label": "Perfect breath"
+      }
+    ],
+    "expected": ["rewind", "mind", "sober", "breath", "invis"]
+  },
+  {
+    "id": "hr-awkward-424",
+    "kind": "hypothetical",
+    "prompt": "Worst to best person to see your search history",
+    "say": "Rank these people to see your search history, from worst to best.",
+    "top": "Worst",
+    "bottom": "Best",
+    "items": [
+      {
+        "id": "date",
+        "label": "Your date"
+      },
+      {
+        "id": "grandma",
+        "label": "Your grandma"
+      },
+      {
+        "id": "boss",
+        "label": "Your boss"
+      },
+      {
+        "id": "ex",
+        "label": "Your ex"
+      },
+      {
+        "id": "mom",
+        "label": "Your mom"
+      }
+    ],
+    "expected": ["grandma", "mom", "boss", "date", "ex"]
+  },
+  {
+    "id": "hr-revenge-425",
+    "kind": "preference",
+    "prompt": "Most to least satisfying petty revenge",
+    "say": "Rank these bits of petty revenge, from most to least satisfying.",
+    "top": "Most",
+    "bottom": "Least",
+    "items": [
+      {
+        "id": "read",
+        "label": "Leave them on read"
+      },
+      {
+        "id": "glowup",
+        "label": "Glow up and ignore"
+      },
+      {
+        "id": "spoil",
+        "label": "Spoil their show"
+      },
+      {
+        "id": "glitter",
+        "label": "Glitter in their mail"
+      },
+      {
+        "id": "datebf",
+        "label": "Date their best friend"
+      }
+    ],
+    "expected": ["glowup", "glitter", "spoil", "datebf", "read"]
+  },
+  {
+    "id": "hr-drink-426",
+    "kind": "hypothetical",
+    "prompt": "Easiest to hardest thing to do hungover",
+    "say": "Rank these things to do hungover, from easiest to hardest.",
+    "top": "Easiest",
+    "bottom": "Hardest",
+    "items": [
+      {
+        "id": "marathon",
+        "label": "Run a marathon"
+      },
+      {
+        "id": "flight",
+        "label": "Sit on a long flight"
+      },
+      {
+        "id": "speech",
+        "label": "Give a wedding speech"
+      },
+      {
+        "id": "twins",
+        "label": "Babysit twins"
+      },
+      {
+        "id": "interv",
+        "label": "Ace a job interview"
+      }
+    ],
+    "expected": ["flight", "interv", "speech", "twins", "marathon"]
+  },
+  {
+    "id": "hr-date-427",
+    "kind": "hypothetical",
+    "prompt": "Worst to best surprise at your date's place",
+    "say": "Rank these surprises at your date's place, from worst to best.",
+    "top": "Worst",
+    "bottom": "Best",
+    "items": [
+      {
+        "id": "hammock",
+        "label": "No bed, just a hammock"
+      },
+      {
+        "id": "spouse",
+        "label": "A secret spouse"
+      },
+      {
+        "id": "snake",
+        "label": "A pet snake"
+      },
+      {
+        "id": "shrine",
+        "label": "A shrine to you"
+      },
+      {
+        "id": "cats",
+        "label": "Forty cats"
+      }
+    ],
+    "expected": ["spouse", "shrine", "cats", "snake", "hammock"]
+  },
+  {
+    "id": "hr-secret-428",
+    "kind": "hypothetical",
+    "prompt": "Best to worst reason to fake your own death",
+    "say": "Rank these reasons to fake your own death, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "jury",
+        "label": "Jury duty"
+      },
+      {
+        "id": "loans",
+        "label": "Student loans"
+      },
+      {
+        "id": "chat",
+        "label": "Group-chat drama"
+      },
+      {
+        "id": "wedding",
+        "label": "A wedding you dread"
+      },
+      {
+        "id": "expart",
+        "label": "Your ex's new partner"
+      }
+    ],
+    "expected": ["loans", "wedding", "jury", "expart", "chat"]
+  },
+  {
+    "id": "hr-party-429",
+    "kind": "hypothetical",
+    "prompt": "Most to least likely to get you kicked out",
+    "say": "Rank these, from most to least likely to get you kicked out of a bar.",
+    "top": "Most",
+    "bottom": "Least",
+    "items": [
+      {
+        "id": "conga",
+        "label": "Starting a conga line"
+      },
+      {
+        "id": "glass",
+        "label": "Stealing a glass"
+      },
+      {
+        "id": "dance",
+        "label": "Dancing on the bar"
+      },
+      {
+        "id": "sing",
+        "label": "Singing way too loud"
+      },
+      {
+        "id": "kiss",
+        "label": "Kissing the bartender"
+      }
+    ],
+    "expected": ["dance", "kiss", "glass", "sing", "conga"]
+  },
+  {
+    "id": "hr-wedding-430",
+    "kind": "hypothetical",
+    "prompt": "Worst to best wedding-speech reveal",
+    "say": "Rank these wedding speech reveals, from worst to best.",
+    "top": "Worst",
+    "bottom": "Best",
+    "items": [
+      {
+        "id": "app",
+        "label": "They met on an app"
+      },
+      {
+        "id": "spouse",
+        "label": "A secret first spouse"
+      },
+      {
+        "id": "cartoon",
+        "label": "He cried at a cartoon"
+      },
+      {
+        "id": "elope",
+        "label": "They almost eloped"
+      },
+      {
+        "id": "sleep",
+        "label": "A sleepwalking habit"
+      }
+    ],
+    "expected": ["spouse", "elope", "sleep", "app", "cartoon"]
+  },
+  {
+    "id": "hr-tech-431",
+    "kind": "hypothetical",
+    "prompt": "Most to least trusted with your unlocked phone",
+    "say": "Rank these people you would hand your unlocked phone, from most to least trusted.",
+    "top": "Most",
+    "bottom": "Least",
+    "items": [
+      {
+        "id": "stranger",
+        "label": "A drunk stranger"
+      },
+      {
+        "id": "partner",
+        "label": "Your partner"
+      },
+      {
+        "id": "cowork",
+        "label": "Your coworker"
+      },
+      {
+        "id": "bff",
+        "label": "Your best friend"
+      },
+      {
+        "id": "mom",
+        "label": "Your mom"
+      }
+    ],
+    "expected": ["bff", "partner", "mom", "cowork", "stranger"]
+  },
+  {
+    "id": "hr-date-432",
+    "kind": "hypothetical",
+    "prompt": "Best to worst way to escape a bad date",
+    "say": "Rank these ways to escape a bad date, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "honest",
+        "label": "Total honesty"
+      },
+      {
+        "id": "window",
+        "label": "Out the bathroom vent"
+      },
+      {
+        "id": "emerg",
+        "label": "A fake emergency call"
+      },
+      {
+        "id": "food",
+        "label": "Fake food poisoning"
+      },
+      {
+        "id": "dog",
+        "label": "My dog is sick"
+      }
+    ],
+    "expected": ["emerg", "dog", "food", "honest", "window"]
+  },
+  {
+    "id": "hr-work-433",
+    "kind": "hypothetical",
+    "prompt": "Worst to best job to do hungover",
+    "say": "Rank these jobs to do while hungover, from worst to best.",
+    "top": "Worst",
+    "bottom": "Best",
+    "items": [
+      {
+        "id": "mattress",
+        "label": "Mattress tester"
+      },
+      {
+        "id": "clown",
+        "label": "Party clown"
+      },
+      {
+        "id": "surgeon",
+        "label": "Brain surgeon"
+      },
+      {
+        "id": "guard",
+        "label": "Night security"
+      },
+      {
+        "id": "life",
+        "label": "Lifeguard"
+      }
+    ],
+    "expected": ["surgeon", "life", "clown", "guard", "mattress"]
+  },
+  {
+    "id": "hr-awkward-434",
+    "kind": "hypothetical",
+    "prompt": "Most to least awkward find in your parents' room",
+    "say": "Rank these finds in your parents' room, from most to least awkward.",
+    "top": "Most",
+    "bottom": "Least",
+    "items": [
+      {
+        "id": "cash",
+        "label": "A stack of cash"
+      },
+      {
+        "id": "cuffs",
+        "label": "Fuzzy handcuffs"
+      },
+      {
+        "id": "teeth",
+        "label": "Your baby teeth"
+      },
+      {
+        "id": "family",
+        "label": "A second family"
+      },
+      {
+        "id": "diary",
+        "label": "A secret diary"
+      }
+    ],
+    "expected": ["cuffs", "family", "diary", "teeth", "cash"]
+  },
+  {
+    "id": "hr-social-435",
+    "kind": "hypothetical",
+    "prompt": "Best to worst person to share a hot tub with",
+    "say": "Rank these people to share a hot tub with, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "inlaws",
+        "label": "Your in-laws"
+      },
+      {
+        "id": "wizard",
+        "label": "A sweaty wizard"
+      },
+      {
+        "id": "ex",
+        "label": "Your ex"
+      },
+      {
+        "id": "stranger",
+        "label": "A chatty stranger"
+      },
+      {
+        "id": "boss",
+        "label": "Your boss"
+      }
+    ],
+    "expected": ["stranger", "wizard", "inlaws", "boss", "ex"]
+  },
+  {
+    "id": "hr-date-436",
+    "kind": "hypothetical",
+    "prompt": "Most to least likely to ruin a first kiss",
+    "say": "Rank these, from most to least likely to ruin a first kiss.",
+    "top": "Most",
+    "bottom": "Least",
+    "items": [
+      {
+        "id": "laugh",
+        "label": "Laughing too hard"
+      },
+      {
+        "id": "garlic",
+        "label": "Garlic breath"
+      },
+      {
+        "id": "mom",
+        "label": "Mom calling"
+      },
+      {
+        "id": "sneeze",
+        "label": "A surprise sneeze"
+      },
+      {
+        "id": "braces",
+        "label": "Clashing teeth"
+      }
+    ],
+    "expected": ["garlic", "sneeze", "mom", "braces", "laugh"]
+  },
+  {
+    "id": "hr-party-437",
+    "kind": "hypothetical",
+    "prompt": "Worst to best thing to wake up with",
+    "say": "Rank these things to wake up with after a party, from worst to best.",
+    "top": "Worst",
+    "bottom": "Best",
+    "items": [
+      {
+        "id": "cone",
+        "label": "A traffic cone"
+      },
+      {
+        "id": "spouse",
+        "label": "A surprise spouse"
+      },
+      {
+        "id": "fish",
+        "label": "A goldfish"
+      },
+      {
+        "id": "tattoo",
+        "label": "A face tattoo"
+      },
+      {
+        "id": "jacket",
+        "label": "A stranger's jacket"
+      }
+    ],
+    "expected": ["spouse", "tattoo", "jacket", "cone", "fish"]
+  },
+  {
+    "id": "hr-drink-438",
+    "kind": "preference",
+    "prompt": "Best to worst hangover cure",
+    "say": "Rank these hangover cures, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "shower",
+        "label": "A cold shower"
+      },
+      {
+        "id": "another",
+        "label": "Another drink"
+      },
+      {
+        "id": "brekkie",
+        "label": "Greasy breakfast"
+      },
+      {
+        "id": "water",
+        "label": "Lots of water"
+      },
+      {
+        "id": "nap",
+        "label": "A long nap"
+      }
+    ],
+    "expected": ["brekkie", "nap", "water", "shower", "another"]
+  },
+  {
+    "id": "hr-date-439",
+    "kind": "preference",
+    "prompt": "Best to worst dating-profile photo",
+    "say": "Rank these dating profile photos, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "fish",
+        "label": "Holding a big fish"
+      },
+      {
+        "id": "excrop",
+        "label": "Ex badly cropped out"
+      },
+      {
+        "id": "dog",
+        "label": "With a cute dog"
+      },
+      {
+        "id": "mirror",
+        "label": "Gym mirror selfie"
+      },
+      {
+        "id": "car",
+        "label": "Posing by a car"
+      }
+    ],
+    "expected": ["dog", "fish", "car", "mirror", "excrop"]
+  },
+  {
+    "id": "hr-party-440",
+    "kind": "preference",
+    "prompt": "Best to worst party game after a few drinks",
+    "say": "Rank these party games after a few drinks, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "charade",
+        "label": "Charades"
+      },
+      {
+        "id": "truth",
+        "label": "Truth or dare"
+      },
+      {
+        "id": "spin",
+        "label": "Spin the bottle"
+      },
+      {
+        "id": "pong",
+        "label": "Beer pong"
+      },
+      {
+        "id": "karaoke",
+        "label": "Karaoke"
+      }
+    ],
+    "expected": ["pong", "karaoke", "truth", "charade", "spin"]
+  },
+  {
+    "id": "hr-date-441",
+    "kind": "preference",
+    "prompt": "Best to worst place for a first kiss",
+    "say": "Rank these places for a first kiss, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "taxi",
+        "label": "A taxi"
+      },
+      {
+        "id": "dentist",
+        "label": "A dentist's office"
+      },
+      {
+        "id": "roof",
+        "label": "A rooftop"
+      },
+      {
+        "id": "bar",
+        "label": "A crowded bar"
+      },
+      {
+        "id": "door",
+        "label": "Their doorstep"
+      }
+    ],
+    "expected": ["roof", "door", "taxi", "bar", "dentist"]
+  },
+  {
+    "id": "hr-drink-442",
+    "kind": "preference",
+    "prompt": "Best to worst drink to order on a first date",
+    "say": "Rank these drinks to order on a first date, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "tequila",
+        "label": "A shot of tequila"
+      },
+      {
+        "id": "wine",
+        "label": "A glass of wine"
+      },
+      {
+        "id": "juice",
+        "label": "A juice box"
+      },
+      {
+        "id": "cocktail",
+        "label": "A fancy cocktail"
+      },
+      {
+        "id": "tap",
+        "label": "A glass of tap water"
+      }
+    ],
+    "expected": ["wine", "cocktail", "tap", "tequila", "juice"]
+  },
+  {
+    "id": "hr-date-443",
+    "kind": "preference",
+    "prompt": "Best to worst morning-after breakfast",
+    "say": "Rank these morning after breakfasts, from best to worst.",
+    "top": "Best",
+    "bottom": "Worst",
+    "items": [
+      {
+        "id": "cereal",
+        "label": "Their weird cereal"
+      },
+      {
+        "id": "pancake",
+        "label": "Pancakes in bed"
+      },
+      {
+        "id": "nothing",
+        "label": "Nothing, please leave"
+      },
+      {
+        "id": "brunch",
+        "label": "A fancy brunch"
+      },
+      {
+        "id": "pizza",
+        "label": "Cold pizza"
+      }
+    ],
+    "expected": ["pancake", "brunch", "pizza", "cereal", "nothing"]
+  },
+  {
+    "id": "hr-awkward-444",
+    "kind": "preference",
+    "prompt": "Worst to best bathroom surprise at a party",
+    "say": "Rank these bathroom surprises at a party, from worst to best.",
+    "top": "Worst",
+    "bottom": "Best",
+    "items": [
+      {
+        "id": "couple",
+        "label": "A couple in the tub"
+      },
+      {
+        "id": "paper",
+        "label": "No toilet paper"
+      },
+      {
+        "id": "snacks",
+        "label": "A snack basket"
+      },
+      {
+        "id": "lock",
+        "label": "No lock on the door"
+      },
+      {
+        "id": "clog",
+        "label": "A clogged toilet"
+      }
+    ],
+    "expected": ["clog", "paper", "lock", "couple", "snacks"]
+  },
+  {
+    "id": "hr-wedding-445",
+    "kind": "usefulness",
+    "prompt": "Most to least useful at a wedding afterparty",
+    "say": "Rank these, from most to least useful at a wedding afterparty.",
+    "top": "Most useful",
+    "bottom": "Least useful",
+    "items": [
+      {
+        "id": "shirt",
+        "label": "A spare shirt"
+      },
+      {
+        "id": "flats",
+        "label": "Comfy flat shoes"
+      },
+      {
+        "id": "mints",
+        "label": "Breath mints"
+      },
+      {
+        "id": "charger",
+        "label": "A phone charger"
+      },
+      {
+        "id": "tamb",
+        "label": "A tambourine"
+      }
+    ],
+    "expected": ["flats", "charger", "mints", "shirt", "tamb"]
+  },
+  {
+    "id": "hr-shame-446",
+    "kind": "usefulness",
+    "prompt": "Most to least useful on a walk of shame",
+    "say": "Rank these, from most to least useful on a walk of shame.",
+    "top": "Most useful",
+    "bottom": "Least useful",
+    "items": [
+      {
+        "id": "brush",
+        "label": "Hairbrush"
+      },
+      {
+        "id": "story",
+        "label": "Cover story"
+      },
+      {
+        "id": "shades",
+        "label": "Sunglasses"
+      },
+      {
+        "id": "bus",
+        "label": "Bus pass"
+      },
+      {
+        "id": "hoodie",
+        "label": "Big hoodie"
+      }
+    ],
+    "expected": ["shades", "hoodie", "story", "brush", "bus"]
+  },
+  {
+    "id": "hr-drink-447",
+    "kind": "usefulness",
+    "prompt": "Most to least useful the morning after a party",
+    "say": "Rank these, from most to least useful the morning after a party.",
+    "top": "Most useful",
+    "bottom": "Least useful",
+    "items": [
+      {
+        "id": "disco",
+        "label": "Disco ball"
+      },
+      {
+        "id": "pills",
+        "label": "Painkillers"
+      },
+      {
+        "id": "curtain",
+        "label": "Blackout curtains"
+      },
+      {
+        "id": "food",
+        "label": "Greasy takeout"
+      },
+      {
+        "id": "sports",
+        "label": "Sports drink"
+      }
+    ],
+    "expected": ["pills", "sports", "curtain", "food", "disco"]
+  },
+  {
+    "id": "hr-date-448",
+    "kind": "usefulness",
+    "prompt": "Most to least useful on a blind date",
+    "say": "Rank these, from most to least useful on a blind date.",
+    "top": "Most useful",
+    "bottom": "Least useful",
+    "items": [
+      {
+        "id": "cologne",
+        "label": "Good cologne"
+      },
+      {
+        "id": "car",
+        "label": "A getaway car"
+      },
+      {
+        "id": "friend",
+        "label": "A backup friend"
+      },
+      {
+        "id": "cards",
+        "label": "Conversation cards"
+      },
+      {
+        "id": "call",
+        "label": "A fake phone call"
+      }
+    ],
+    "expected": ["call", "friend", "cologne", "cards", "car"]
+  },
+  {
+    "id": "hr-work-449",
+    "kind": "usefulness",
+    "prompt": "Most to least useful at the office party",
+    "say": "Rank these, from most to least useful at the office party.",
+    "top": "Most useful",
+    "bottom": "Least useful",
+    "items": [
+      {
+        "id": "notepad",
+        "label": "A notepad"
+      },
+      {
+        "id": "driver",
+        "label": "A designated driver"
+      },
+      {
+        "id": "stain",
+        "label": "A stain remover pen"
+      },
+      {
+        "id": "exit",
+        "label": "An exit plan"
+      },
+      {
+        "id": "wingman",
+        "label": "A trusted wingman"
+      }
+    ],
+    "expected": ["exit", "driver", "wingman", "stain", "notepad"]
+  }
+]

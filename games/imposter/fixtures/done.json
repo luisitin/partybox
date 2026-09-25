@@ -1,0 +1,359 @@
+{
+  "phase": {
+    "id": "done",
+    "startedAt": 1700000350591,
+    "deadline": null
+  },
+  "rng": {
+    "seed": 3,
+    "step": 240
+  },
+  "players": {
+    "p1": {
+      "id": "p1",
+      "name": "Player 1",
+      "avatarId": "fox",
+      "connected": true
+    },
+    "p2": {
+      "id": "p2",
+      "name": "Player 2",
+      "avatarId": "owl",
+      "connected": true
+    },
+    "p3": {
+      "id": "p3",
+      "name": "Player 3",
+      "avatarId": "frog",
+      "connected": true
+    },
+    "p4": {
+      "id": "p4",
+      "name": "Player 4",
+      "avatarId": "cat",
+      "connected": true
+    },
+    "p5": {
+      "id": "p5",
+      "name": "Player 5",
+      "avatarId": "panda",
+      "connected": true
+    },
+    "p6": {
+      "id": "p6",
+      "name": "Player 6",
+      "avatarId": "koala",
+      "connected": true
+    },
+    "p7": {
+      "id": "p7",
+      "name": "Player 7",
+      "avatarId": "penguin",
+      "connected": true
+    },
+    "p8": {
+      "id": "p8",
+      "name": "Player 8",
+      "avatarId": "octopus",
+      "connected": true
+    }
+  },
+  "cfg": {
+    "rounds": 3,
+    "imposters": "auto",
+    "clueRounds": 1,
+    "clueSeconds": 40,
+    "talk": true,
+    "talkSeconds": 60,
+    "voteSeconds": 30,
+    "hint": "category",
+    "lastChance": "choices",
+    "categories": [],
+    "spicy": false,
+    "reader": "george"
+  },
+  "presence": {
+    "mode": "together",
+    "phoneOnly": false
+  },
+  "seats": ["p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8"],
+  "left": [],
+  "imposterBag": ["p8", "p2", "p1", "p5", "p4"],
+  "words": [
+    {
+      "id": "clothes-tie",
+      "answer": "tie",
+      "accept": ["ties", "necktie", "neckties", "tye", "cravat", "tei"],
+      "reject": ["toe", "pie", "tile"],
+      "family": [],
+      "cat": "clothes",
+      "label": "Clothes"
+    },
+    {
+      "id": "places-supermarket",
+      "answer": "supermarket",
+      "accept": [
+        "supermarkets",
+        "grocery store",
+        "grocery shop",
+        "grocers",
+        "supermaket",
+        "supermarkt"
+      ],
+      "reject": ["hypermarket", "flea market"],
+      "family": ["market"],
+      "cat": "places",
+      "label": "Places"
+    },
+    {
+      "id": "food-pancake",
+      "answer": "pancake",
+      "accept": ["pancakes", "hotcake", "hotcakes", "pankake", "pankakes", "pancackes"],
+      "reject": ["cupcake"],
+      "family": ["pancak"],
+      "cat": "food",
+      "label": "Food"
+    },
+    {
+      "id": "vehicles-bicycle",
+      "answer": "bicycle",
+      "accept": ["bike", "bikes", "bicycles", "pushbike", "bycicle", "bicycel", "cycle"],
+      "reject": ["tricycle", "unicycle"],
+      "family": [],
+      "cat": "vehicles",
+      "label": "Vehicles"
+    },
+    {
+      "id": "fantasy-castle",
+      "answer": "castle",
+      "accept": ["castles", "castel", "castl", "cassle", "fortress", "citadel"],
+      "reject": ["cattle", "hassle"],
+      "family": [],
+      "cat": "fantasy",
+      "label": "Fantasy"
+    }
+  ],
+  "round": {
+    "n": 3,
+    "w": 2,
+    "category": {
+      "id": "food",
+      "label": "Food"
+    },
+    "imposters": ["p3"],
+    "clueRound": 1,
+    "clues": [
+      {
+        "by": "p4",
+        "text": "stack",
+        "r": 1
+      },
+      {
+        "by": "p3",
+        "text": "dinner",
+        "r": 1
+      },
+      {
+        "by": "p7",
+        "text": "flip",
+        "r": 1
+      },
+      {
+        "by": "p5",
+        "text": "stack",
+        "r": 1
+      },
+      {
+        "by": "p2",
+        "text": "flip",
+        "r": 1
+      },
+      {
+        "by": "p6",
+        "text": "batter",
+        "r": 1
+      },
+      {
+        "by": "p8",
+        "text": "tossing",
+        "r": 1
+      },
+      {
+        "by": "p1",
+        "text": "syrup",
+        "r": 1
+      }
+    ],
+    "revealOrder": ["p7", "p4", "p2", "p5", "p6", "p3", "p8", "p1"],
+    "revealed": 8,
+    "ready": ["p7", "p5", "p2", "p6", "p1", "p3", "p8", "p4"],
+    "votes": {
+      "p6": ["p3"],
+      "p5": ["p3"],
+      "p4": ["p3"],
+      "p8": ["p3"],
+      "p3": ["p2"],
+      "p2": ["p3"],
+      "p1": ["p3"],
+      "p7": ["p3"]
+    },
+    "runoff": null,
+    "showing": "main",
+    "accused": ["p3"],
+    "spot": 0,
+    "flipped": true,
+    "options": ["pancake", "taco", "sandwich", "salad", "pizza", "sushi"],
+    "guesses": {
+      "p3": {
+        "said": "pancake",
+        "ok": true,
+        "byVip": false
+      }
+    },
+    "delta": {
+      "p1": {
+        "pts": 3,
+        "why": ["read", "caught"]
+      },
+      "p2": {
+        "pts": 3,
+        "why": ["read", "caught"]
+      },
+      "p3": {
+        "pts": 3,
+        "why": ["stole"]
+      },
+      "p4": {
+        "pts": 3,
+        "why": ["read", "caught"]
+      },
+      "p5": {
+        "pts": 3,
+        "why": ["read", "caught"]
+      },
+      "p6": {
+        "pts": 3,
+        "why": ["read", "caught"]
+      },
+      "p7": {
+        "pts": 3,
+        "why": ["read", "caught"]
+      },
+      "p8": {
+        "pts": 3,
+        "why": ["read", "caught"]
+      }
+    },
+    "void": false,
+    "step": 1,
+    "rejects": {}
+  },
+  "scores": {
+    "p1": 9,
+    "p2": 9,
+    "p3": 9,
+    "p4": 9,
+    "p5": 9,
+    "p6": 6,
+    "p7": 6,
+    "p8": 9
+  },
+  "said": {
+    "p6": ["thrift", "checkout", "batter"],
+    "p2": ["loosen", "basket", "flip"],
+    "p7": ["collar", "weekend", "flip"],
+    "p3": ["loosen", "aisles", "dinner"],
+    "p8": ["clip", "checkout", "tossing"],
+    "p1": ["knot", "frozen", "syrup"],
+    "p4": ["interview", "cashier", "stack"],
+    "p5": ["clip", "checkout", "stack"]
+  },
+  "stats": {
+    "p1": {
+      "escapes": 0,
+      "reads": 3,
+      "steals": 0,
+      "suspicion": 0
+    },
+    "p2": {
+      "escapes": 0,
+      "reads": 3,
+      "steals": 0,
+      "suspicion": 1
+    },
+    "p3": {
+      "escapes": 0,
+      "reads": 2,
+      "steals": 1,
+      "suspicion": 1
+    },
+    "p4": {
+      "escapes": 0,
+      "reads": 3,
+      "steals": 0,
+      "suspicion": 0
+    },
+    "p5": {
+      "escapes": 0,
+      "reads": 3,
+      "steals": 0,
+      "suspicion": 0
+    },
+    "p6": {
+      "escapes": 0,
+      "reads": 2,
+      "steals": 0,
+      "suspicion": 1
+    },
+    "p7": {
+      "escapes": 0,
+      "reads": 2,
+      "steals": 0,
+      "suspicion": 0
+    },
+    "p8": {
+      "escapes": 0,
+      "reads": 3,
+      "steals": 0,
+      "suspicion": 0
+    }
+  },
+  "speechMs": {
+    "impi5augk1ai26ea": -1,
+    "imp1ka2gh618kykle": -1,
+    "imp1y6i0ar78zar9": -1,
+    "imp1lvko6t1adf7i9": -1,
+    "impirldu9ogj6en": -1,
+    "imp14blf3vdz2p7l": -1,
+    "imp15n6hn81qf9mfk": -1,
+    "imp1myir931yikemv": -1,
+    "imp15cozm94k2903": -1,
+    "impq1b8pb1o78owx": -1,
+    "impnqnq7m1s42a16": -1,
+    "imp6icsrx1qnyfhj": -1,
+    "imp1du8rpg1t7owfc": -1,
+    "impqcy8fbl0yhjx": -1,
+    "imphytgxf1xkfdut": -1,
+    "impo3nfig13vrizm": -1,
+    "imp1rsymza32yxyg": -1,
+    "impmavxuxvnezr9": -1,
+    "imp17pc0u71efsxp5": -1,
+    "imp11ivik71hctw1t": -1,
+    "imp1dy2wvg1rs88xm": -1,
+    "imp4wh1up1051rsr": -1,
+    "imp7i0xdmrw24w8": -1,
+    "imp1ku6mbm1waazj0": -1,
+    "impm8v7zzn94tpt": -1,
+    "impuu79hweg5bf0": -1,
+    "imp1pv0p5ah857ew": -1,
+    "imp134s5q2tlytw4": -1,
+    "impwcxl6717pli8d": -1,
+    "imp1bkscs9xjtqn1": -1,
+    "imphi8psy19oa988": -1,
+    "imp1btomyj1yregpn": -1,
+    "impvk9lm61g9uq94": -1,
+    "imp1xszyb4scrz4e": -1,
+    "imphbqyhuxaal3o": -1,
+    "imp1gli6rqiem7ri": -1
+  }
+}
