@@ -1,6 +1,7 @@
 // The phone while the TV tells the story: dawn (the night report strip on every phone that played
 // the night, then — once the TV announced it — your own fate), the verdict (your fate once shown)
 // and the end (your side's result). Every phone gets the same strips; only what they hide differs.
+import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
 import { useT } from '@partybox/game-sdk/ui';
 import type { NightfallControllerView } from '../server/index';
@@ -44,6 +45,12 @@ export function DawnPhone({ view }: { view: View }): JSX.Element {
 
 export function VerdictPhone({ view }: { view: View }): JSX.Element {
   const L = useT(STRINGS);
+  const [roleShown, setRoleShown] = useState(false);
+  useEffect(() => {
+    if (view.step < 2) return undefined;
+    const timer = setTimeout(() => setRoleShown(true), 250);
+    return () => clearTimeout(timer);
+  }, [view.step]);
   const out = view.stage?.verdict?.out ?? null;
   const me = out !== null && out === view.me.id;
   const line = view.step >= 1 && me ? `🪦 ${L('You were voted out.')}` : null;
@@ -51,7 +58,7 @@ export function VerdictPhone({ view }: { view: View }): JSX.Element {
     <WatchTheTv>
       {line ? (
         <p className={styles.sub} aria-live="polite">
-          {line} {L('Your role: {role}', { role: ownRole(view, L) })}
+          {line} {roleShown ? L('Your role: {role}', { role: ownRole(view, L) }) : null}
         </p>
       ) : (
         <p className={styles.sub}>{L('The votes are in.')}</p>

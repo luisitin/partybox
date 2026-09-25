@@ -1,5 +1,17 @@
 # Nightfall — review package (2026-09-25, branch `game/nightfall`)
 
+## Successor review fix (after `4170bbd0`)
+
+- The voted-out phone waits until verdict step 2 to show the player's role. The TV card starts its
+  flip with the role headline instead of waiting another 520 ms after that headline.
+- The hunter's crosshair stays inside the face row, clear of names at 8 and 16 players. TV face
+  names and end-card owners wrap at word boundaries; a long two-word name was checked at 1920×1080.
+- Review screenshots are in `C:/dev/scratch/codex-nightfall/`. A 10 fps verdict preview trace
+  (`verdict-beat/`, 15 paired TV/SE frames) has no page errors; the TV role face precedes the phone's
+  role text. The 16-player verdict still shows a long two-word name with settled ballots below it.
+  Hunter stills: `C:/dev/scratch/codex-nightfall/nightfall-{8,16}-hunter-tv.png`.
+  The current head and exact-head approvals are tracked in Agent Hub review thread [7d17bd].
+
 ## In five lines
 
 1. Hidden roles for 6–16: roles → night → dawn (→ hunter) → day → vote (→ runoff) → verdict (→ last

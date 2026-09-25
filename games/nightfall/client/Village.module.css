@@ -134,10 +134,11 @@
 
 .name {
   max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-size: var(--pb-font-caption);
+  overflow-wrap: anywhere;
+  word-break: normal;
+  text-align: center;
+  line-height: 1.1;
+  font-size: clamp(16px, calc(var(--face) / 5), var(--pb-font-caption));
   font-weight: 800;
   color: var(--pb-text);
 }

@@ -265,10 +265,11 @@
 
 .crosshair {
   position: absolute;
-  top: 10%;
+  /* The sweep stays inside the face row; it must not cover a player's name. */
+  top: 28px;
   left: 10%;
-  width: 140px;
-  height: 140px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   border: 6px solid var(--pb-danger);
   opacity: 0.7;
@@ -286,12 +287,12 @@
 
 .crosshair::before {
   width: 6px;
-  height: 180px;
+  height: 68px;
   transform: translate(-50%, -50%);
 }
 
 .crosshair::after {
-  width: 180px;
+  width: 68px;
   height: 6px;
   transform: translate(-50%, -50%);
 }
@@ -301,13 +302,13 @@
     transform: translate(0, 0);
   }
   33% {
-    transform: translate(900px, 40px);
+    transform: translate(900px, 0);
   }
   66% {
-    transform: translate(420px, 120px);
+    transform: translate(420px, 0);
   }
   100% {
-    transform: translate(1300px, 10px);
+    transform: translate(1300px, 0);
   }
 }
 

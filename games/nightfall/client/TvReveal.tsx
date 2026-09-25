@@ -199,7 +199,8 @@ export function VerdictScene({ view }: { view: NightfallTvView }): JSX.Element {
               cast={view.cast}
               role={v?.role ?? null}
               flipped
-              flipAfterMs={520}
+              flipAfterMs={0}
+              fastFlip
               size="medium"
               dead
             />

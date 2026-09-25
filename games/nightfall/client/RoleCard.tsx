@@ -23,6 +23,8 @@ export interface RoleCardProps {
   dead?: boolean;
   /** A card that mounts already revealed turns this long after it lands (deal, then flip). */
   flipAfterMs?: number;
+  /** The verdict pairs its spoken role with the turning card. */
+  fastFlip?: boolean;
 }
 
 export function RoleCard(p: RoleCardProps): JSX.Element {
@@ -42,7 +44,7 @@ export function RoleCard(p: RoleCardProps): JSX.Element {
   const shown = p.flipped && turned;
   return (
     <div
-      className={`${styles.card} ${styles[p.size ?? 'hero']} ${shown ? styles.flipped : ''} ${p.won ? styles.won : ''}`}
+      className={`${styles.card} ${styles[p.size ?? 'hero']} ${shown ? styles.flipped : ''} ${p.won ? styles.won : ''} ${p.fastFlip ? styles.fastFlip : ''}`}
       style={{ '--delay': `${p.delayMs ?? 0}ms` } as CSSProperties}
     >
       <div className={styles.flipper}>
