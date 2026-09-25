@@ -109,22 +109,31 @@ export function registerCatalogRoutes(
   manifests: Readonly<Record<string, GameManifest>>,
   texts: GameTexts,
 ): void {
-  fastify.get('/api/catalog', async () => catalog);
+  // no-cache (Part 00 §2.4): a restart with a new game changes both.
+  fastify.get('/api/catalog', async (_req, reply) => {
+    void reply.header('cache-control', 'no-cache');
+    return catalog;
+  });
   // Public: the registered games, for tools and tests (the picker reads the catalog).
-  fastify.get('/api/games', async () => catalog.games);
+  fastify.get('/api/games', async (_req, reply) => {
+    void reply.header('cache-control', 'no-cache');
+    return catalog.games;
+  });
   const langOf = (q: unknown): string => {
     const raw = (q as { lang?: unknown } | undefined)?.lang;
     return typeof raw === 'string' && /^[a-z]{2}$/.test(raw) ? raw : 'en';
   };
   fastify.get('/api/games/:id/about', async (req, reply) => {
-    const m = manifests[(req.params as { id: string }).id];
+    // Own keys only: '__proto__' or 'constructor' is not a game (it was a 500).
+    const id = (req.params as { id: string }).id;
+    const m = Object.hasOwn(manifests, id) ? manifests[id] : undefined;
     if (!m) return reply.code(404).send({ error: 'unknown game' });
     void reply.header('cache-control', 'no-cache');
     return aboutOf(m, texts, langOf(req.query));
   });
   fastify.get('/api/games/:id/text', async (req, reply) => {
     const id = (req.params as { id: string }).id;
-    if (!manifests[id]) return reply.code(404).send({ error: 'unknown game' });
+    if (!Object.hasOwn(manifests, id)) return reply.code(404).send({ error: 'unknown game' });
     void reply.header('cache-control', 'no-cache');
     return texts[id]?.[langOf(req.query)] ?? {};
   });

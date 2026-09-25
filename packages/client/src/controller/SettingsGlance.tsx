@@ -18,24 +18,26 @@ export function SettingsGlance({
   values: Settings | undefined;
   lang: Lang;
 }): JSX.Element | null {
-  const words = game.settings.map((s) => settingValue(game, s, values?.[s.key], lang));
-  // the rows whose words changed since the last render glow (same game only)
-  // (same game and language only: a language switch rewords every row but changes nothing)
-  const last = useRef<{ id: string; lang: Lang; words: string[] }>({ id: game.id, lang, words });
+  // A row breathes when its VALUE changes (same game): comparing the rendered words lit every row
+  // when the Spanish arrived a beat after the game was chosen, and on a language switch.
+  const wanted = game.settings.map((s) => JSON.stringify(values?.[s.key] ?? null));
+  const last = useRef<{ id: string; values: string[] }>({ id: game.id, values: wanted });
   const seq = useRef(0);
   const [lit, setLit] = useState<{ keys: string[]; at: number }>({ keys: [], at: 0 });
-  const said = words.join('|');
+  const said = wanted.join('|');
   useEffect(() => {
     const before = last.current;
-    last.current = { id: game.id, lang, words };
-    if (before.id !== game.id || before.lang !== lang) return;
-    const changed = game.settings.filter((_, i) => before.words[i] !== words[i]).map((s) => s.key);
+    last.current = { id: game.id, values: wanted };
+    if (before.id !== game.id) return;
+    const changed = game.settings
+      .filter((_, i) => before.values[i] !== wanted[i])
+      .map((s) => s.key);
     if (changed.length === 0) return;
     seq.current += 1;
     const at = seq.current;
     const on = setTimeout(() => setLit({ keys: changed, at }), 0);
     return () => clearTimeout(on);
-  }, [game.id, lang, said]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [game.id, said]); // eslint-disable-line react-hooks/exhaustive-deps
   // the breath ends 2 s after it starts; a newer change (a new `at`) owns its own 2 s
   useEffect(() => {
     if (lit.at === 0) return;

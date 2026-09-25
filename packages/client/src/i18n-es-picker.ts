@@ -22,7 +22,7 @@ export const esPicker: Pick<Texts, 'picker'> = {
     },
     filters: 'Filtrar los juegos',
     players: (min, max) => (min === max ? `👥 ${min}` : `👥 ${min}–${max}`),
-    minutes: (m) => `⏱ ${m} min`,
+    minutes: (m) => `⏱ ${m} min`,
     needs: (min, n) => `Necesita ${min}+ · sois ${n}`,
     tooMany: (max, n) => `Hasta ${max} · sois ${n}`,
     noBots: 'Solo personas · quita los bots',

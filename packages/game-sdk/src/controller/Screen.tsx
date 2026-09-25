@@ -54,7 +54,16 @@ export function Screen({ children, footer, title, className, style }: ScreenProp
     el.addEventListener('scroll', check, { passive: true });
     const ro = new ResizeObserver(check);
     ro.observe(el);
+    for (const child of el.children) ro.observe(child);
+    // A section that opens inside the body (the VIP's Game options) grows the content, not the
+    // body's box: re-check on any change inside, and watch the new children's sizes too.
+    const mo = new MutationObserver(() => {
+      for (const child of el.children) ro.observe(child);
+      check();
+    });
+    mo.observe(el, { childList: true, subtree: true });
     return () => {
+      mo.disconnect();
       el.removeEventListener('scroll', check);
       ro.disconnect();
     };

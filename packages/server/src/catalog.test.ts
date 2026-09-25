@@ -119,6 +119,10 @@ describe('routes', () => {
     expect((await app.inject({ url: '/api/games/wisecrack/text?lang=en' })).json()).toEqual({});
     expect((await app.inject({ url: '/api/games/nope/about' })).statusCode).toBe(404);
     expect((await app.inject({ url: '/api/games/nope/text?lang=es' })).statusCode).toBe(404);
+    // An object's own-property names are not games (they were a 500).
+    for (const name of ['__proto__', 'constructor', 'toString'])
+      expect((await app.inject({ url: `/api/games/${name}/about` })).statusCode, name).toBe(404);
+    expect((await app.inject({ url: '/api/catalog' })).headers['cache-control']).toBe('no-cache');
     // A bad language reads as English, never as a path.
     const odd = await app.inject({ url: '/api/games/bingo/about?lang=../x' });
     expect(odd.json()).toMatchObject({ lang: 'en' });

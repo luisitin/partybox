@@ -22,7 +22,7 @@ export const enPicker = {
     },
     filters: 'Filter the games',
     players: (min: number, max: number): string => (min === max ? `👥 ${min}` : `👥 ${min}–${max}`),
-    minutes: (m: number): string => `⏱ ${m} min`,
+    minutes: (m: number): string => `⏱ ${m} min`, // nbsp: never '15 / min' at 200 %
     needs: (min: number, n: number): string => `Needs ${min}+ · you have ${n}`,
     tooMany: (max: number, n: number): string => `Up to ${max} · you have ${n}`,
     noBots: 'Humans only · remove the bots',
