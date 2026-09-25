@@ -22,7 +22,7 @@ import { HostBar } from './HostBar';
 import { roomFullToast, seatOpenedToast, soundToast } from './own-toasts';
 import { TvFrame } from './TvFrame';
 import { tvContent } from './tvContent';
-import { CrossfadeSwap } from '../CrossfadeSwap';
+import { CrossfadeSwap, screenKey } from '../CrossfadeSwap';
 import styles from './TvApp.module.css';
 import { useSoundHandOff } from './useSoundHandOff';
 
@@ -327,10 +327,12 @@ export function TvApp(): JSX.Element {
           {/* Game start: hold the lobby until the first game view has painted, so the stage never
             flickers through "Connecting…" / empty / "Getting the game ready…" (review-loop #10). */}
           <CrossfadeSwap
-            swapKey={room?.status ?? 'none'}
+            swapKey={room ? screenKey(room) : 'none'}
             className={styles.swap}
             hold={room?.status === 'playing' && !gameReady}
-            curtain={room?.status === 'playing'} /* I-120 A: the lobby leaves behind a curtain */
+            /* I-120 A: the picker leaves behind a curtain; so does the game's last frame for the
+               results — a dissolve drew the finale's winner line and the results' one at once */
+            curtain={room?.status === 'playing' || room?.status === 'results'}
           >
             {content}
           </CrossfadeSwap>

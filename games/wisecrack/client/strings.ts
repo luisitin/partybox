@@ -7,6 +7,8 @@ import type { Strings } from '@partybox/game-sdk/ui';
 
 export const STRINGS: Strings = {
   es: {
+    // The content-language marker (EnglishNote.tsx): the prompts are English only.
+    'in English': 'en inglés',
     // Written by the server (scoring.ts awardsFor): the results screens show them as sent. First in
     // the table so no looser `{placeholder}` sentence below claims them.
     'Crowd favourite': 'Favorito del público',
@@ -121,6 +123,10 @@ export const STRINGS: Strings = {
     'Next: the final round — double points!': 'Viene la ronda final: ¡puntos dobles!',
     "It's a tie": 'Hay empate',
     'And the winner is': 'Y el ganador es',
-    'Next round coming up…': 'Ya viene otra ronda…',
+    // Pacing rule (2026-09-25): the board between rounds waits for the VIP's Next.
+    'Next round': 'Próxima ronda',
+    'Moving on…': 'Avanzando…',
+    "Next on the VIP's phone": 'El VIP toca Siguiente',
+    "Next on {name}'s phone": '{name} toca Siguiente',
   },
 };

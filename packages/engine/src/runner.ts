@@ -4,6 +4,7 @@ import { avatarIdOf } from './avatar';
 import type { GameEvent, GameStateBase, PlayerInfo, Settings } from '@partybox/shared';
 import { LIMITS } from '@partybox/shared';
 import type { GameResults } from '@partybox/shared';
+import { canSeeTv, gamePresence } from './presence';
 import type { ApplyResult, Effect, EngineDeps, RoomState, RunningGame, TonightGame } from './types';
 
 export function playerInfos(room: RoomState): PlayerInfo[] {
@@ -15,6 +16,7 @@ export function playerInfos(room: RoomState): PlayerInfo[] {
       avatarId: avatarIdOf(p),
       connected: p.connected,
       ...(p.bot ? { bot: true } : {}),
+      canSeeTv: canSeeTv(p), // ADR-047: fixed for the game (bots always can)
     }));
 }
 
@@ -35,7 +37,7 @@ export function startGame(
   const base = { ...room, players };
   let state: GameStateBase;
   try {
-    state = game.init({ players: playerInfos(base), settings, seed, now });
+    state = game.init({ players: playerInfos(base), settings, seed, now, presence: gamePresence(base) }); // prettier-ignore
   } catch (err) {
     return {
       room,
@@ -174,6 +176,9 @@ export function fireDueTimer(room: RoomState, now: number, deps: EngineDeps): Ap
     : result;
 }
 
+/** ADR-053: the start stage's 3·2·1, a second each (start-stage.ts; here for nextWakeAt). */
+export const STAGE_COUNT_MS = 3000;
+
 /** When the host should next send a `tick`, or null when nothing is pending. */
 export function nextWakeAt(room: RoomState): number | null {
   const candidates: number[] = [];
@@ -196,6 +201,9 @@ export function nextWakeAt(room: RoomState): number | null {
     if (p.isVip && canHandOver && room.status === 'playing')
       candidates.push(p.disconnectedAt + LIMITS.vipHandoverMs);
   }
+  // ADR-053: the start stage's 3·2·1 ends
+  const staged = room.starting?.countdownAt;
+  if (staged !== null && staged !== undefined) candidates.push(staged + STAGE_COUNT_MS);
   // I-746 C: an empty room ends 5 minutes after the last phone dropped
   if (room.asleepSince !== undefined && room.status === 'playing')
     candidates.push(room.asleepSince + ASLEEP_END_MS);

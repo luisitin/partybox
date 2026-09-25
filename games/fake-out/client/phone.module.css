@@ -1,0 +1,690 @@
+/* Fake-Out phone (designed at 320 × 568; tokens are rem so 200 % text scales the words). Targets
+   ≥ 44 px, ≥ 8 px apart; nothing selectable or zoomable by accident; transform + opacity only. */
+
+.screen {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.screen button {
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.kicker {
+  margin: 0;
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  color: var(--pb-accent-2);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.kickerFinal {
+  color: var(--pb-accent);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.fact,
+.factCard {
+  padding: var(--pb-space-4);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  border: 1px solid var(--pb-border);
+}
+
+.factCard {
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.factSmall {
+  font-size: var(--pb-font-body);
+  padding: var(--pb-space-3);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  border: 1px solid var(--pb-border);
+}
+
+.getReady {
+  margin: 0;
+  font-size: var(--pb-font-body);
+  color: var(--pb-text-muted);
+  text-align: center;
+}
+
+/* ── intro ─────────────────────────────────────────────────────────────────────────────── */
+
+.introMask {
+  margin: 0;
+  font-size: var(--pb-font-display);
+  line-height: 1;
+  text-align: center;
+}
+
+.introTitle {
+  margin: 0;
+  font-size: var(--pb-font-h1);
+  font-weight: 900;
+  text-align: center;
+}
+
+.how {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.howStep {
+  display: flex;
+  gap: var(--pb-space-3);
+  align-items: flex-start;
+  padding: var(--pb-space-3);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  font-size: var(--pb-font-body);
+  font-weight: 700;
+  line-height: 1.35;
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+  animation-delay: calc(var(--i) * var(--pb-motion-fast));
+}
+
+.howNo {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 1.8em;
+  height: 1.8em;
+  border-radius: 50%;
+  background: var(--pb-accent);
+  color: var(--pb-on-accent);
+  font-weight: 900;
+}
+
+/* ── lie ───────────────────────────────────────────────────────────────────────────────── */
+
+.inputWrap {
+  position: relative;
+  display: block;
+}
+
+.input {
+  width: 100%;
+  min-height: calc(var(--pb-font-h2) * 2.6);
+  padding: var(--pb-space-3) var(--pb-space-4) var(--pb-space-5);
+  border-radius: var(--pb-radius);
+  border: 2px solid var(--pb-surface-2);
+  background: var(--pb-surface);
+  font-size: var(--pb-font-h2);
+  font-weight: 700;
+  line-height: 1.25;
+  resize: none;
+}
+
+.input:focus {
+  border-color: var(--pb-accent);
+  outline: none;
+}
+
+.counter {
+  position: absolute;
+  right: var(--pb-space-3);
+  bottom: var(--pb-space-2);
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+
+.legality {
+  margin: 0;
+  min-height: 1.4em;
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  /* full-contrast text: muted grey read as disabled (reviewer [a62642] #3) */
+  color: var(--pb-text);
+}
+
+.legality[data-bad] {
+  color: var(--pb-danger);
+  animation: global(pb-shake) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.legality[data-bad]::before {
+  content: '⚠ ';
+}
+
+.suggestButton,
+.suggestChip {
+  min-height: var(--pb-touch);
+  padding: var(--pb-space-2) var(--pb-space-4);
+  border-radius: 999px;
+  border: 2px dashed var(--pb-accent-2);
+  background: transparent;
+  color: var(--pb-text);
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+}
+
+.suggestButton {
+  align-self: flex-start;
+}
+
+.suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--pb-space-2);
+}
+
+.suggestLabel {
+  font-size: var(--pb-font-body);
+}
+
+.suggestChip {
+  border-style: solid;
+  border-color: var(--pb-surface-2);
+  background: var(--pb-surface);
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.suggestChip + .suggestChip {
+  animation-delay: var(--pb-motion-fast);
+}
+
+.suggestChip[data-on] {
+  border-color: var(--pb-accent-2);
+}
+
+.suggestChip[data-on]::before {
+  content: '✓ ';
+}
+
+.locked {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-1);
+  padding: var(--pb-space-4);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  border: 2px solid var(--pb-accent-3);
+  animation: global(pb-land) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.lockedLabel,
+.lockedHint {
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  color: var(--pb-text-muted);
+}
+
+.lockedLabel::before {
+  content: '✓ ';
+  color: var(--pb-accent-3);
+}
+
+.lockedText {
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  overflow-wrap: anywhere;
+}
+
+.lockedHint {
+  margin-top: var(--pb-space-2);
+}
+
+/* ── pick ──────────────────────────────────────────────────────────────────────────────── */
+
+/* The header stays put while a long list scrolls under it. */
+.pinned {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-2);
+  padding-bottom: var(--pb-space-2);
+  background: var(--pb-bg);
+}
+
+.pickTitle {
+  margin: 0;
+  font-size: var(--pb-font-body);
+  font-weight: 900;
+}
+
+/* While picking, the fact is a reminder, not the headline: caption size, so the options fit. */
+.pinned .factSmall {
+  font-size: var(--pb-font-caption);
+  line-height: 1.35;
+  padding: var(--pb-space-2) var(--pb-space-3);
+}
+
+.mine {
+  align-self: center;
+  margin: 0;
+  padding: var(--pb-space-1) var(--pb-space-3);
+  border-radius: 999px;
+  background: var(--pb-surface-2);
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  text-align: center;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.row {
+  display: flex;
+  align-items: stretch;
+  gap: var(--pb-space-2);
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+  animation-delay: calc(var(--i) * var(--pb-motion-fast) * 0.4);
+}
+
+.pickButton {
+  flex: 1;
+  min-width: 0;
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  gap: var(--pb-space-2);
+  padding: var(--pb-space-2) var(--pb-space-3);
+  border-radius: var(--pb-radius);
+  border: 2px solid var(--pb-surface-2);
+  background: var(--pb-surface);
+  color: var(--pb-text);
+  text-align: left;
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  line-height: 1.2;
+  transition:
+    border-color var(--pb-motion-fast) var(--pb-ease),
+    transform var(--pb-motion-fast) var(--pb-ease);
+}
+
+.pickButton:active {
+  transform: scale(0.98);
+}
+
+.pickButton[data-picked] {
+  border-color: var(--pb-accent);
+  background: var(--pb-surface-2);
+}
+
+.pickMark {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 50%;
+  border: 2px solid var(--pb-surface-2);
+  color: var(--pb-on-accent);
+  font-weight: 900;
+}
+
+.pickButton[data-picked] .pickMark {
+  border-color: var(--pb-accent);
+  background: var(--pb-accent);
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.pickText {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow-wrap: anywhere;
+}
+
+.likeButton {
+  flex: none;
+  /* grows with the text size, so the 👍 never clips at 200 % (reviewer [d738fb] #6) */
+  min-width: var(--pb-touch);
+  padding: 0 0.35em;
+  min-height: var(--pb-touch);
+  display: grid;
+  place-items: center;
+  border-radius: var(--pb-radius);
+  border: 2px solid var(--pb-surface-2);
+  background: var(--pb-surface);
+  font-size: var(--pb-font-body);
+  opacity: 0.55;
+  transition:
+    opacity var(--pb-motion-fast) var(--pb-ease),
+    transform var(--pb-motion-fast) var(--pb-ease);
+}
+
+.likeButton[data-on] {
+  opacity: 1;
+  border-color: var(--pb-accent-2);
+  background: var(--pb-surface-2);
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.likeButton:disabled {
+  opacity: 0.25;
+}
+
+.likeHint {
+  margin: 0;
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+  text-align: right;
+}
+
+.pickedHint {
+  margin: 0;
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+  text-align: center;
+}
+
+/* ── reveal ────────────────────────────────────────────────────────────────────────────── */
+
+.watch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pb-space-2);
+  padding-top: var(--pb-space-5);
+  text-align: center;
+}
+
+.eyes {
+  display: inline-block;
+  font-size: var(--pb-font-display);
+  line-height: 1;
+  animation: eyes-dart calc(var(--pb-motion-pulse) * 2.4) ease-in-out infinite;
+}
+
+@keyframes eyes-dart {
+  0%,
+  40%,
+  100% {
+    transform: translateX(0);
+  }
+
+  55% {
+    transform: translateX(-8px);
+  }
+
+  75% {
+    transform: translateX(8px);
+  }
+}
+
+.watchTitle {
+  margin: 0;
+  font-size: var(--pb-font-h1);
+  font-weight: 900;
+}
+
+.moments {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.moment {
+  padding: var(--pb-space-3);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  border-left: 6px solid var(--pb-surface-2);
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  overflow-wrap: anywhere;
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.moment[data-k='found'],
+.moment[data-k='fooled'] {
+  border-left-color: var(--pb-accent-3);
+}
+
+.moment[data-k='fell'],
+.moment[data-k='house'] {
+  border-left-color: var(--pb-danger);
+}
+
+.moment[data-k='found']::before,
+.moment[data-k='fooled']::before {
+  content: '✓ ';
+  color: var(--pb-accent-3);
+}
+
+.moment[data-k='fell']::before,
+.moment[data-k='house']::before {
+  content: '✗ ';
+  color: var(--pb-danger);
+}
+
+/* The phone-only reveal feed. */
+.feed {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.feedCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-2);
+  padding: var(--pb-space-4);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface);
+  border: 2px solid var(--pb-surface-2);
+  animation: global(pb-deal) var(--pb-motion-slow) var(--pb-ease) both;
+}
+
+.feedCard[data-stamp='truth'] {
+  border-color: var(--pb-accent-3);
+}
+
+.feedText {
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+  overflow-wrap: anywhere;
+}
+
+.feedMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--pb-space-1) var(--pb-space-2);
+  margin: 0;
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  color: var(--pb-text-muted);
+}
+
+.feedFaces {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: var(--pb-space-2);
+}
+
+.feedFace {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-space-1);
+  color: var(--pb-text);
+}
+
+.feedStamp {
+  align-self: flex-start;
+  padding: var(--pb-space-1) var(--pb-space-3);
+  border-radius: var(--pb-radius);
+  border: 3px solid currentcolor;
+  font-size: var(--pb-font-body);
+  font-weight: 900;
+  transform: rotate(-4deg);
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.feedStamp[data-kind='lie'] {
+  color: var(--pb-danger);
+}
+
+.feedStamp[data-kind='house'] {
+  color: var(--pb-info);
+}
+
+.feedStamp[data-kind='truth'] {
+  color: var(--pb-accent-3);
+}
+
+.feedUnpicked {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-2);
+  animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.feedUnpickedTitle {
+  margin: 0;
+  font-size: var(--pb-font-body);
+  font-weight: 900;
+}
+
+/* ── scores ────────────────────────────────────────────────────────────────────────────── */
+
+.scoreHero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pb-space-2);
+  text-align: center;
+}
+
+.delta {
+  margin: 0;
+  font-size: var(--pb-font-display);
+  font-weight: 900;
+  line-height: 1;
+  color: var(--pb-accent-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.rankLine {
+  margin: 0;
+  font-size: var(--pb-font-h2);
+  font-weight: 900;
+}
+
+.whyRow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--pb-space-2);
+  margin: 0;
+}
+
+.whyChip {
+  padding: 2px var(--pb-space-3);
+  border-radius: 999px;
+  background: var(--pb-surface-2);
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  animation: global(pb-pop) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+.whyChip[data-k='truth'] {
+  color: var(--pb-accent-3);
+}
+
+.whyChip[data-k='final'] {
+  color: var(--pb-accent);
+}
+
+.noPoints {
+  margin: 0;
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eyes {
+    animation: none;
+  }
+}
+
+:global(:root[data-motion='off']) .eyes {
+  animation: none;
+}
+
+/* ── short phones (an iPhone SE is 568 tall): the lie and the intro fit without scrolling ── */
+@media (max-height: 700px) {
+  p.fact {
+    padding: var(--pb-space-3);
+    font-size: var(--pb-font-body);
+  }
+
+  .input {
+    min-height: calc(var(--pb-font-h2) * 1.7);
+    padding-bottom: var(--pb-space-4);
+    font-size: var(--pb-font-body);
+  }
+
+  /* The default hint would sit under the 'more below' fade and read as disabled: short phones
+     show only refusals (the placeholder already says "sounds real"). */
+  .legality:not([data-bad]) {
+    display: none;
+  }
+
+  .introMask {
+    font-size: var(--pb-font-h1);
+  }
+
+  .introTitle {
+    font-size: var(--pb-font-h2);
+  }
+
+  .how {
+    gap: var(--pb-space-2);
+  }
+
+  .howStep {
+    padding: var(--pb-space-2) var(--pb-space-3);
+    font-size: var(--pb-font-caption);
+  }
+}
+
+.readyWait {
+  margin: 0;
+  padding: var(--pb-space-3);
+  text-align: center;
+  font-weight: 700;
+  color: var(--pb-text-muted);
+}
+
+.countdownScreen {
+  display: grid;
+  place-items: center;
+  min-height: 60vh;
+}

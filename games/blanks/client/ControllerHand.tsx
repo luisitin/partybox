@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { CSSProperties, JSX } from 'react';
 import { PrimaryButton, Screen, WaitingScreen, useT } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
+import { EnglishNote } from './EnglishNote';
 import type { BlanksControllerView } from '../server/index';
 import type { Input } from '../server/types';
 import { FilledCard } from './Cards';
@@ -230,6 +231,8 @@ export function ControllerHand({ view, me, send, skip }: Props): JSX.Element {
             whites={picked.map((id) => view.hand.find((c) => c.id === id)?.text ?? '')}
             size="phone"
           />
+          {/* [196a9e]: the cards are English on every phone */}
+          <EnglishNote />
           {list ? null : <FanDots cards={view.hand.length} at={at} />}
         </div>
         <ul

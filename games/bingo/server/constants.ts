@@ -15,16 +15,16 @@ export const DEAL_BOUNCE_MS = 250;
 export function dealDoneMs(cards: number): number {
   return DEAL_START_MS + Math.max(0, cards - 1) * DEAL_STEP_MS + DEAL_BOUNCE_MS + 300;
 }
-/** The first number is never sooner than the deal plus the 3 · 2 · 1, whoever is ready. */
+/** The first number is never sooner than the deal plus that hold, whoever has picked. */
 export function introMinMs(cards: number): number {
-  return dealDoneMs(cards) + INTRO_BREATH_MS + INTRO_READY_MS + 600;
+  return dealDoneMs(cards) + INTRO_BREATH_MS + PICKED_HOLD_MS + 600;
 }
-/** Everyone ready: the first number is this far away (the 3 · 2 · 1)… */
-export const INTRO_READY_MS = 3_000;
 /**
- * …after a breath: the last Ready's lock tick and the ring's first tick were 30 ms apart (loop
- * 349); "everyone is ready" holds this long before the 3 · 2 · 1 starts.
+ * Everyone has picked: "everyone has picked" holds this long, then the first number — no
+ * count-in: the shell's start stage did READY and the 3 · 2 · 1 (ADR-053, reviewer 59a5f4)…
  */
+export const PICKED_HOLD_MS = 1_000;
+/** …after a breath for the last pick's lock tick (loop 349). */
 export const INTRO_BREATH_MS = 400;
 /** The dibs window after the first BINGO! tap. */
 export const ARM_MS = 3_000;
@@ -39,9 +39,22 @@ export const BINGO_MS = 10_000;
 export const BINGO_ABANDONED_MS = 5 * 60_000;
 /** I-400 A: after the verdict is read, nobody picking for this long moves the room on. */
 export const NO_PICK_MS = 20_000;
-/** I-105 A: the vote after a bingo runs this long from its first choice (the note's six seconds). */
-export const VOTE_MS = 6_000;
-export const SCOREBOARD_MS = 6_000;
+/** Owner's pacing rule (Agent Hub #decisions cc45f4, 2026-09-25): "Enough time to read" — a
+ *  screen of words stays up 1.5 s + 1/3 s a word, x1.3 because a Spanish phone or 200 % text
+ *  reads longer (the server cannot see the phones' languages, so the margin is always on). */
+export function readMs(words: number): number {
+  return Math.round((1_500 + words * 333) * 1.3);
+}
+/** I-105 A: the vote after a bingo runs this long from its first choice — three options and the
+ *  hint to read, then a moment to choose (was the note's six seconds; pacing rule 2026-09-25).
+ *  Everyone voting still closes it at once. */
+export const VOTE_MS = 15_000;
+/** The between-rounds board: "Points", the next pattern's line (~8 words) and a name, place and
+ *  score a player — 4 players ≈ 10.6 s, 12 ≈ 21 s (was a flat 6 s). Never under 10 s. */
+export const SCOREBOARD_MIN_MS = 10_000;
+export function scoreboardMs(players: number): number {
+  return Math.max(SCOREBOARD_MIN_MS, readMs(8 + 3 * players));
+}
 export const DECK = 75;
 export const FREE = 12;
 

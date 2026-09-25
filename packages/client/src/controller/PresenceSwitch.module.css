@@ -1,0 +1,51 @@
+/* "Where is everyone?" — a switch row whose answer is one of three: the chosen one filled AND
+   ticked, so it never rests on colour alone. Wraps to a column on a narrow phone. */
+.presence {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-2);
+  padding: var(--pb-space-2) var(--pb-space-3);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface-2);
+}
+
+.off {
+  opacity: 0.55;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  font-weight: 700;
+}
+
+.title small {
+  font-weight: 400;
+  color: var(--pb-text-muted);
+  font-size: var(--pb-font-caption);
+}
+
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pb-space-2);
+}
+
+.option {
+  flex: 1 1 auto;
+  min-height: var(--pb-touch);
+  padding: 0 var(--pb-space-3);
+  border-radius: 999px;
+  border: 2px solid var(--pb-border);
+  background: var(--pb-surface);
+  font-size: var(--pb-font-caption);
+  font-weight: 700;
+  transition: background-color var(--pb-motion-fast) var(--pb-ease);
+}
+
+.option[aria-checked='true'] {
+  background: var(--pb-accent);
+  border-color: var(--pb-accent);
+  color: var(--pb-on-accent);
+}

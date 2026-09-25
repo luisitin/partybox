@@ -306,11 +306,14 @@
   margin: 0;
   color: var(--pb-text-muted);
 }
+/* Links and the Copy button alike: the label centred in the row (`font: inherit` reset the old
+   line-height, so the links' labels sat at the top while Copy's was centred — reviewer). */
 .shareRow {
-  display: block;
+  display: flex;
+  align-items: center;
+  width: 100%;
   min-height: 52px;
-  line-height: 52px;
-  padding: 0 var(--pb-space-3);
+  padding: var(--pb-space-2) var(--pb-space-3);
   border-radius: var(--pb-radius);
   background: var(--pb-surface-2);
   color: var(--pb-text);

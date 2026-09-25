@@ -3,7 +3,9 @@
 import { describe, expect, it } from 'vitest';
 import { game } from '../server/index';
 import type { State } from '../server/types';
-import { INTRO_MS, REVEAL_MS, SCORES_MS, VOTE_MS } from '../server/types';
+import { revealMs } from '../server/phases/reveal';
+import { currentPrompt } from '../server/round';
+import { FIRST_INTRO_MS, INTRO_MS, REVEAL_MIN_MS, SCORES_MS, VOTE_MS } from '../server/types';
 import {
   answer,
   answerAll,
@@ -23,16 +25,33 @@ import {
 } from './helpers';
 
 describe('phase flow', () => {
-  it('intro (5 s) → answer (answerSeconds) → vote (20 s) → reveal (6 s) → … → scores (8 s)', () => {
+  it('intro (2 s title beat in round 1, ADR-053) → answer (answerSeconds) → vote (20 s) → reveal (time to read) → … → scores (Next, 45 s fallback)', () => {
     let s = start({ answerSeconds: 90 });
-    expect(s.phase).toMatchObject({ id: 'intro', deadline: s.phase.startedAt + INTRO_MS });
+    expect(s.phase).toMatchObject({ id: 'intro', deadline: s.phase.startedAt + FIRST_INTRO_MS });
+    expect(FIRST_INTRO_MS).toBeLessThan(INTRO_MS);
     s = timer(s);
     expect(s.phase).toMatchObject({ id: 'answer', deadline: s.phase.startedAt + 90_000 });
     s = answerAll(s);
     expect(s.phase).toMatchObject({ id: 'vote', deadline: s.phase.startedAt + VOTE_MS });
     expect(s.promptIndex).toBe(0);
     s = timer(s);
-    expect(s.phase).toMatchObject({ id: 'reveal', deadline: s.phase.startedAt + REVEAL_MS });
+    // Pacing rule: two blank answers, no voters — the beats + readMs(10) ≈ 8.1 s, never under 8 s.
+    const prompt = currentPrompt(s);
+    expect(prompt).not.toBeNull();
+    const ms = revealMs(s, prompt!);
+    expect(ms).toBeGreaterThanOrEqual(REVEAL_MIN_MS);
+    expect(s.phase).toMatchObject({ id: 'reveal', deadline: s.phase.startedAt + ms });
+    // More to read, more time: long answers and a full room of voters.
+    const answers = Object.fromEntries(prompt!.authors.map((a) => [a, 'word '.repeat(12).trim()]));
+    const votes = Object.fromEntries(
+      ['v1', 'v2', 'v3', 'v4', 'v5', 'v6'].map((v) => [v, prompt!.authors[0]]),
+    );
+    const busy = {
+      ...s,
+      answers: { ...s.answers, [prompt!.id]: answers },
+      votes: { ...s.votes, [prompt!.id]: votes },
+    };
+    expect(revealMs(busy, prompt!)).toBeGreaterThan(ms + 5_000);
     for (let i = 1; i < 4; i++) {
       s = timer(s); // reveal → next vote
       expect(s.phase.id).toBe('vote');

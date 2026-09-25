@@ -277,15 +277,19 @@ export function Join({ controller, state, audio }: JoinProps): JSX.Element {
           {needsCode ? (
             <label className={styles.field}>
               <span className={styles.label}>{roomStrings(lang).code}</span>
+              {/* A line under the label, not the input's placeholder: an input can't wrap, and at
+                  200 % "4 letters from th…" was cut off (spy-grid's play-test). */}
+              <span id="join-code-hint" className={styles.fieldHint}>
+                {roomStrings(lang).codePlaceholder}
+              </span>
               <input
                 ref={codeRef}
                 className={`${styles.input} ${styles.code} ${codeError ? styles.inputError : ''} ${shaking && codeError ? styles.shake : ''}`}
                 onAnimationEnd={() => setShaking(false)}
                 aria-invalid={codeError}
-                aria-describedby={codeError ? 'join-code-error' : undefined}
+                aria-describedby={codeError ? 'join-code-hint join-code-error' : 'join-code-hint'}
                 value={code}
                 onChange={(e) => setCode(e.target.value.toUpperCase())}
-                placeholder={roomStrings(lang).codePlaceholder}
                 maxLength={4}
                 autoCapitalize="characters"
                 autoCorrect="off"
