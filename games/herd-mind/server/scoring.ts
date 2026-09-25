@@ -87,15 +87,15 @@ function ranking(state: State, scores: Record<string, number>): GameResults['ran
 }
 
 /** Everyone tied on the highest count of `pick` shares the award; nobody earns it at zero. */
+/** The one player with the most of `pick` (none when nobody has any). A tie goes to the higher
+ *  score, then the earlier seat: an award tied five ways said nothing (design review 74a3bb). */
 function mostOf(state: State, pick: (s: Stats) => number): string[] {
-  const best = Math.max(
-    0,
-    ...state.seats.map((id) => pick(state.stats[id] ?? { herd: 0, alone: 0, sheepHeld: 0 })),
-  );
+  const of = (id: string): number => pick(state.stats[id] ?? { herd: 0, alone: 0, sheepHeld: 0 });
+  const best = Math.max(0, ...state.seats.map(of));
   if (best === 0) return [];
-  return state.seats.filter(
-    (id) => pick(state.stats[id] ?? { herd: 0, alone: 0, sheepHeld: 0 }) === best,
-  );
+  const tied = state.seats.filter((id) => of(id) === best);
+  const top = Math.max(...tied.map((id) => state.scores[id] ?? 0));
+  return tied.filter((id) => (state.scores[id] ?? 0) === top).slice(0, 1);
 }
 
 export function awards(state: State): GameAward[] {
@@ -123,9 +123,15 @@ export function awards(state: State): GameAward[] {
   );
   const bestPair = Math.max(0, ...Object.values(state.pairs));
   if (bestPair > 1) {
-    const melded = new Set<string>();
-    for (const [key, n] of Object.entries(state.pairs))
-      if (n === bestPair) for (const id of key.split('|')) melded.add(id);
+    // One pair: the first (in seat order) of the pairs tied for most.
+    const seat = (id: string): number => state.seats.indexOf(id);
+    const pair = Object.entries(state.pairs)
+      .filter(([, n]) => n === bestPair)
+      .map(([key]) => key.split('|').sort((a, b) => seat(a) - seat(b)))
+      .sort(
+        (a, b) => seat(a[0] ?? '') - seat(b[0] ?? '') || seat(a[1] ?? '') - seat(b[1] ?? ''),
+      )[0];
+    const melded = new Set<string>(pair ?? []);
     give(
       'mind-meld',
       '🤝 Mind Meld',

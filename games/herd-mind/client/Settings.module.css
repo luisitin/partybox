@@ -55,6 +55,8 @@
   overscroll-behavior: contain;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
+  /* rows keep their height in a short sheet (a squeezed row let a two-line hint run into the next) */
+  grid-auto-rows: max-content;
   gap: var(--pb-space-2);
   padding: var(--pb-space-4);
   border-radius: var(--pb-radius-lg);
@@ -116,6 +118,7 @@
 
 .rowText small {
   font-size: var(--pb-font-caption);
+  line-height: 1.25;
   font-weight: 700;
   color: var(--pb-text-muted);
   overflow-wrap: anywhere;

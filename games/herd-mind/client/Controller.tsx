@@ -1,4 +1,4 @@
-// Phone for Herd Mind: the ready-up, the question with its tiles (or a text box), the stage
+// Phone for Herd Mind: the question with its tiles (or a text box), the stage
 // phases (PhoneStages.tsx) and the VIP's merge tool in typed mode — and over any of them, this
 // phone's settings sheet, the curtain while someone else is in theirs, and the 3 · 2 · 1s.
 // Dumb: `send` is the only way out and the server validates everything.
@@ -57,6 +57,12 @@ export function Controller({
   const now = useServerNow(200);
   // This phone's menu: open at once on a tap (the server echoes `menuOpen`; a reload reopens it).
   const [open, setOpen] = useState(view.menuOpen);
+  // The server closing it (a VIP skip or end clears every hold) closes the sheet here too.
+  const [echoed, setEchoed] = useState(view.menuOpen);
+  if (echoed !== view.menuOpen) {
+    setEchoed(view.menuOpen);
+    if (!view.menuOpen) setOpen(false);
+  }
   if (view.me.role === 'spectator')
     return (
       <WaitingScreen

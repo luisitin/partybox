@@ -43,7 +43,11 @@ function Card({
       {lone ? <SheepCoin size="sm" className={styles.loneCoin} /> : null}
       <Avatar avatarId={player?.avatarId ?? ''} size="var(--face)" className={styles.face} />
       <span className={styles.name}>{player?.name ?? '?'}</span>
-      {answer ? <span className={styles.answer}>{answer}</span> : null}
+      {answer ? (
+        <span className={styles.answer} lang="en">
+          {answer}
+        </span>
+      ) : null}
       {raw ? <span className={styles.raw}>“{raw}”</span> : null}
     </li>
   );

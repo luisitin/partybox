@@ -110,7 +110,7 @@ export const ANSWER_SECONDS: Record<Pace, Record<Mode, number>> = {
 export const ALL_IN_MS = 1_200;
 /** Typed mode: the VIP's merge window before the groups are scored as they stand. */
 export const TYPED_HERD_MS = 20_000;
-export const SCORE_MS = 5_000;
+export const SCORE_MS = 6_000;
 /** A win holds the score screen a little longer for the banner. */
 export const WIN_MS = 6_500;
 

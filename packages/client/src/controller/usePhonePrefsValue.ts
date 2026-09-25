@@ -1,6 +1,6 @@
 // The phone's music and sound switches, handed to the game through @partybox/game-sdk/ui's
 // PhonePrefsProvider (a game's in-game settings menu flips the same switches as the 🎨 sheet).
-import { useMemo, useState, useSyncExternalStore } from 'react';
+import { useCallback, useMemo, useSyncExternalStore } from 'react';
 import type { PhonePrefs } from '@partybox/game-sdk/ui';
 import type { RoomSnapshot } from '@partybox/shared';
 import {
@@ -16,7 +16,16 @@ export function usePhonePrefsValue(
   room: RoomSnapshot,
 ): Omit<PhonePrefs, 'available'> {
   const choice = useSyncExternalStore(subscribePhoneMusic, phoneMusicChoice, () => null);
-  const [muted, setMuted] = useState(() => audio?.muted() ?? true);
+  // The engine owns the mute (the 🎨 sheet flips it too): read it live, never a copy.
+  const subscribeMute = useCallback(
+    (cb: () => void) => audio?.onMuteChange(() => cb()) ?? (() => undefined),
+    [audio],
+  );
+  const muted = useSyncExternalStore(
+    subscribeMute,
+    () => audio?.muted() ?? true,
+    () => true,
+  );
   const { phoneOnly, musicOnPhones } = room;
   return useMemo(
     () => ({
@@ -29,7 +38,6 @@ export function usePhonePrefsValue(
         set: (on: boolean) => {
           if (!audio) return;
           audio.setMuted(!on);
-          setMuted(!on);
           if (on) void audio.enable().then((ok) => ok && audio.play('submit'));
         },
       },

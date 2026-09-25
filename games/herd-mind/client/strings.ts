@@ -108,8 +108,8 @@ export const STRINGS: Strings = {
       '🐑 ¡En el rebaño! +1 ({answer}, {count} de ustedes)',
     "Alone with {answer}. You've got the Black Sheep.":
       'Solo con {answer}. Te llevas la Oveja Negra.',
-    'Alone with {answer}. Nobody takes the sheep this time.':
-      'Solo con {answer}. Esta vez nadie se lleva la oveja.',
+    'Alone with {answer} — but so was someone else, so nobody takes the sheep.':
+      'Solo con {answer}, pero no fuiste el único, así que nadie se lleva la oveja.',
     '{answer}, {count} of you. Tie. Nobody scores.':
       '{answer}, {count} de ustedes. Empate. Nadie suma.',
     '{answer}, {count} of you. Not the herd.': '{answer}, {count} de ustedes. No es el rebaño.',
@@ -121,36 +121,22 @@ export const STRINGS: Strings = {
     Merge: 'Unir',
     'Score it': 'Puntuar',
     Undo: 'Deshacer',
+    'in English': 'en inglés',
+    // awards (scoring.ts — the shell's results screens translate them through this table)
+    '🐑 Head of the Herd': '🐑 Líder del rebaño',
+    'In the herd most often': 'En el rebaño más veces',
+    '🦄 Free Spirit': '🦄 Espíritu libre',
+    'Alone with an answer most often': 'Solo con su respuesta más veces',
+    '🖤 The Black Sheep': '🖤 La Oveja Negra',
+    'Held the sheep for the most questions': 'Tuvo la oveja durante más preguntas',
+    '🤝 Mind Meld': '🤝 Mentes gemelas',
+    'The pair who thought alike most often': 'La pareja que pensó igual más veces',
     // phone: other
     'Watching this game': 'Estás mirando este juego',
     'You can play in the next one.': 'Puedes jugar en el siguiente.',
     'Thanks for playing!': '¡Gracias por jugar!',
-    // the ready-up (owner's play-test, 2026-09-24)
-    "I'm ready": '¡Estoy listo!',
-    'Start now': 'Empezar ya',
-    '✓ Ready · waiting for {names}': '✓ Listo · esperando a {names}',
-    '✓ Everyone is ready': '✓ Todos están listos',
-    'Everyone is ready!': '¡Todos están listos!',
-    '{name} is ready': '{name} está listo',
-    '{ready} of {total} ready · tap “I’m ready” on your phone':
-      '{ready} de {total} listos · toca «¡Estoy listo!» en tu teléfono',
-    'Question 1 coming up': 'Ya viene la pregunta 1',
+    // the settings hold
     'Back to the game': 'Volvemos al juego',
-    'Pick the answer you think MOST people will pick — not your favourite.':
-      'Elige la respuesta que crees que elegirá la MAYORÍA, no tu favorita.',
-    'The biggest group scores 1 point each. A tie for biggest? Nobody scores.':
-      'El grupo más grande suma 1 punto cada quien. ¿Empate por el más grande? Nadie suma.',
-    'You can change your pick until time runs out.':
-      'Puedes cambiar tu respuesta hasta que se acabe el tiempo.',
-    'The Black Sheep': 'La Oveja Negra',
-    'The only one alone on an answer gets the Black Sheep.':
-      'Quien se quede solo con una respuesta se lleva la Oveja Negra.',
-    "While you hold it, you can't win — even at {target} points.":
-      'Mientras la tengas no puedes ganar, ni siquiera con {target} puntos.',
-    'It leaves you when someone else is the only one alone. Two or more alone? It stays put.':
-      'Se va cuando otra persona es la única que queda sola. ¿Dos o más solos? Se queda donde está.',
-    'First to {target} points without the sheep wins.':
-      'Gana quien llegue primero a {target} puntos sin la oveja.',
     // in-game settings (owner's play-test, 2026-09-24)
     Settings: 'Ajustes',
     on: 'sí',

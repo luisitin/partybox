@@ -36,13 +36,15 @@ export function TvAnswer({ view }: { view: PushedView<HerdTvView> }): JSX.Elemen
       </div>
       <div className={styles.ask}>
         <BigText level="h1" className={styles.prompt}>
-          {view.prompt}
+          <span lang="en">{view.prompt}</span>
         </BigText>
         {view.tiles ? (
           <ul className={styles.tiles} aria-label={L('answers')}>
             {view.tiles.map((t, i) => (
               <li key={t.id} className={styles.tile} style={{ '--i': i } as CSSProperties}>
-                <span className={styles.tileText}>{t.label}</span>
+                <span className={styles.tileText} lang="en">
+                  {t.label}
+                </span>
               </li>
             ))}
           </ul>
@@ -57,7 +59,9 @@ export function TvAnswer({ view }: { view: PushedView<HerdTvView> }): JSX.Elemen
         <span key={locked} className={styles.countNum}>
           {L('{locked} / {total} locked in', { locked, total })}
         </span>
-        <span className={styles.onPhone}>· {L('Answer on your phone')}</span>
+        {locked < total ? (
+          <span className={styles.onPhone}> · {L('Answer on your phone')}</span>
+        ) : null}
       </p>
     </div>
   );

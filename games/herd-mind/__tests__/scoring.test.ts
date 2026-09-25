@@ -157,7 +157,7 @@ describe('the end', () => {
     ]);
   });
 
-  it('awards: skipped when unearned, shared on ties', () => {
+  it('awards: skipped when unearned, one winner on a tie (seat order)', () => {
     let s = atAnswer({ maxQuestions: 5, target: 15 }, 3);
     s = scoreWith(s, [0, 0, 1]);
     s = nextQuestion(s);
@@ -166,11 +166,19 @@ describe('the end', () => {
     const ids = (game.results(done)?.awards ?? []).map((a) => `${a.id}:${a.playerId}`);
     expect(ids).toEqual([
       'head-of-herd:ana',
-      'head-of-herd:ben',
       'free-spirit:cy',
       'black-sheep:cy',
       'mind-meld:ana',
       'mind-meld:ben',
     ]);
+  });
+
+  it('awards: a tie goes to the higher score first', () => {
+    let s = atAnswer({ maxQuestions: 5, target: 15 }, 3);
+    s = scoreWith(s, [0, 0, 1]);
+    s = { ...s, scores: { ...s.scores, ben: 5 } };
+    const done = game.reduce(s, { type: 'vip', now: s.phase.startedAt + 1, action: 'end' });
+    const heads = (game.results(done)?.awards ?? []).filter((a) => a.id === 'head-of-herd');
+    expect(heads.map((a) => a.playerId)).toEqual(['ben']);
   });
 });

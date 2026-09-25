@@ -17,7 +17,7 @@ describe('phase order and exits', () => {
     expect(s.phase.id).toBe('herd');
     s = timer(s);
     expect(s.phase.id).toBe('score');
-    expect(s.phase.deadline).toBe(s.phase.startedAt + 5_000);
+    expect(s.phase.deadline).toBe(s.phase.startedAt + 6_000);
     s = timer(s);
     expect([s.phase.id, s.q.n]).toEqual(['answer', 1]);
   });

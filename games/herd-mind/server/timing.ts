@@ -30,7 +30,7 @@ export function bannerAtMs(cards: number, spokenMs: number | null = null): numbe
 }
 
 /** How long the verdict holds after the banner: long enough to read it, and for its voice. */
-export const BANNER_HOLD_MS = 2_600;
+export const BANNER_HOLD_MS = 3_400;
 export const VOICE_BEAT_MS = 700;
 
 /** The whole tiles-mode `herd` phase: the landing, the banner, and the hold (voice-aware). */

@@ -93,11 +93,11 @@
 .alonePen {
   min-width: 280px;
   background: transparent;
-  border: 4px dashed var(--pb-surface-2);
+  border: 4px dashed var(--pb-text-muted);
 }
 
 .dimPen {
-  opacity: 0.5;
+  opacity: 0.72;
   transform: scale(0.97);
 }
 
@@ -231,7 +231,8 @@
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
 .raw {
