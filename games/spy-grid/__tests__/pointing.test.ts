@@ -103,6 +103,22 @@ describe('drops', () => {
     expect(s.turn.flip?.card).toBe(0);
   });
 
+  it('a drop during a pause is recounted on resume (reviewer [12ea6b])', () => {
+    let s = guessing(3);
+    s = send(s, 'p2', { type: 'point', target: 0 });
+    s = send(s, 'p3', { type: 'point', target: 1 });
+    const vip = (x: State, action: 'pause' | 'resume'): State =>
+      game.reduce(x, { type: 'vip', now: x.phase.startedAt + 20, action });
+    s = vip(s, 'pause');
+    s = drop(s, 'p3');
+    s = drop(s, 'p4');
+    // Paused: p2 alone would carry it, but nothing flips until the room resumes.
+    expect(s.phase.id).toBe('guess');
+    s = vip(s, 'resume');
+    expect(s.phase.id).toBe('flip');
+    expect(s.turn.flip?.card).toBe(0);
+  });
+
   it('a team with no connected guessers times out without a flip', () => {
     let s = guessing(1);
     s = drop(s, 'p2');

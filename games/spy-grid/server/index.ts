@@ -104,7 +104,9 @@ function reduce(state: State, event: GameEvent<Input>): State {
     return { ...state, speechMs: { ...state.speechMs, [event.key]: event.ms } };
   }
   const vip = applyVip(state, event, { skip: advance, end });
-  if (vip) return vip;
+  // A resume re-counts: a drop or a leave during the pause may have left a majority standing, and
+  // nothing else would look again until the next tap or the timer (reviewer [12ea6b]).
+  if (vip) return state.phase.paused && !vip.phase.paused ? recount(vip, event.now, advance) : vip;
   if (state.phase.paused) return state;
   switch (state.phase.id) {
     case 'teams':
