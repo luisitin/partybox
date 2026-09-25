@@ -51,13 +51,20 @@
   display: grid;
   place-items: center;
   overflow: hidden;
-  /* A narrow zone (5 of 100 on a small phone is ~15 px) still fits its digit. */
-  font-size: var(--pb-font-caption);
+  /* Each zone sizes its own digit (below), and a clear seam parts it from the next: side by side
+     at 200 % text, "2 3 4 3 2" read as "23 4 32". */
+  container-type: inline-size;
   font-weight: 900;
-  letter-spacing: -0.02em;
   color: var(--pb-on-accent);
-  box-shadow: inset 1px 0 0 var(--pb-surface-2);
+  box-shadow: inset 2px 0 0 var(--pb-bg);
   animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
+}
+
+/* No wider than its zone allows (a 5-of-100 zone on a small phone is ~13 px), whatever the text
+   size. */
+.digit {
+  font-size: min(var(--pb-font-caption), 80cqw);
+  line-height: 1;
 }
 
 .z2 {

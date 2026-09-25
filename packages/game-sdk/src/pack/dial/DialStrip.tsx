@@ -73,7 +73,7 @@ export function DialStrip(props: DialStripProps): JSX.Element {
                 className={`${styles.zone} ${ZONE[w.pts]}`}
                 style={{ left: `${w.from}%`, width: `${w.to - w.from}%` }}
               >
-                {w.label !== null ? w.pts : ''}
+                {w.label !== null ? <span className={styles.digit}>{w.pts}</span> : null}
               </span>
             ))
           : null}
