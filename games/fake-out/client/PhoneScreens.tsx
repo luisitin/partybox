@@ -1,4 +1,4 @@
-// Phone: the intro, the question read-along, the reveal list and the scores. The phone never
+// Phone: the question read-along, the reveal list and the scores. The phone never
 // spoils: a moment appears only once the TV's stamp for it has landed (same server clock).
 import type { JSX } from 'react';
 import {
@@ -13,7 +13,6 @@ import type { GameControllerProps, Translator, ViewPlayer } from '@partybox/game
 import type { FakeOutControllerView, Moment } from '../server/index';
 import type { Input } from '../server/types';
 import { useAfter } from './beats';
-import { Countdown } from './Countdown';
 import { EnglishNote } from './EnglishNote';
 import { FactCard } from './FactCard';
 import { STRINGS } from './strings';
@@ -24,56 +23,6 @@ type Props = GameControllerProps<FakeOutControllerView, Input>;
 
 /** Mirrors --pb-motion-slow (CSS tokens are not readable from JS). */
 const COUNT_MS = 600;
-
-export function HowToPlay(): JSX.Element {
-  const L = useT(STRINGS);
-  return (
-    <ol className={styles.how}>
-      {[
-        L('A strange true fact appears with a blank. Type a fake answer that sounds real.'),
-        L('All answers are mixed with the truth. Pick the one you think is real.'),
-        L('Score for finding the truth, and for every player your fake fools.'),
-      ].map((step, i) => (
-        <li key={i} className={styles.howStep} style={{ ['--i' as string]: i }}>
-          <span className={styles.howNo}>{i + 1}</span>
-          <span>{step}</span>
-        </li>
-      ))}
-    </ol>
-  );
-}
-
-export function PhoneIntro({ view, send, skip }: Props): JSX.Element {
-  const L = useT(STRINGS);
-  const footer =
-    view.goAt !== null ? undefined : !view.meReady ? (
-      <PrimaryButton onClick={() => send({ type: 'ready' })}>{L('I’m ready')}</PrimaryButton>
-    ) : skip ? (
-      <PrimaryButton tone="neutral" onClick={skip}>
-        {L('Start now')}
-      </PrimaryButton>
-    ) : (
-      <p className={styles.readyWait}>{L('Ready! Waiting for the others…')}</p>
-    );
-  if (view.goAt !== null)
-    return (
-      <Screen className={styles.screen}>
-        <div className={styles.countdownScreen}>
-          <Countdown goAt={view.goAt} paused={view.paused} big />
-        </div>
-      </Screen>
-    );
-  return (
-    <Screen className={styles.screen} footer={footer}>
-      <p className={styles.introMask} aria-hidden>
-        🎭
-      </p>
-      <h2 className={styles.introTitle}>Fake-Out</h2>
-      <HowToPlay />
-      <EnglishNote />
-    </Screen>
-  );
-}
 
 export function PhoneQuestion({ view, skip }: Props): JSX.Element {
   const L = useT(STRINGS);
@@ -93,6 +42,7 @@ export function PhoneQuestion({ view, skip }: Props): JSX.Element {
         {kicker(L, view)}
       </p>
       <FactCard fact={view.fact} size="phone" read={view.readAlong} className={styles.factCard} />
+      <EnglishNote />
       <p className={styles.getReady}>
         {phoneOnly
           ? L('Think of a fake answer that sounds real…')

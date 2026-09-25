@@ -10,3 +10,11 @@ export function EnglishNote(): JSX.Element | null {
   if (useLang() === 'en') return null;
   return <p className={styles.englishNote}>{L('The facts and answers are in English.')}</p>;
 }
+
+/** The same note folded into a kicker line (" · in English"), for screens with no room to spare:
+ *  the SE lie screen scrolled 64 px in Spanish with the full line (hive-rank [32d48b]). */
+export function EnglishTag(): JSX.Element | null {
+  const L = useT(STRINGS);
+  if (useLang() === 'en') return null;
+  return <span> · {L('in English')}</span>;
+}
