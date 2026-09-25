@@ -69,6 +69,8 @@ export {
   setConnected,
 } from './timer';
 export type { VipHandlers } from './timer';
+export { readingMs, wordCount } from './reading';
+export type { ReadingOpts } from './reading';
 export { addScores, buildResults, rank, speedPoints } from './scoring';
 export type { RankedRow } from './scoring';
 export { controllerEnvelope, envelope, viewPlayers } from './views';
