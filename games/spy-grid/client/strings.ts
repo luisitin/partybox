@@ -194,7 +194,7 @@ export const STRINGS: Strings = {
     'End turn opens after the first card': 'Terminar turno se abre tras la primera carta',
     'Teams even out at the start: bots move first.':
       'Los equipos se igualan al empezar: primero se mueven los bots.',
-    'The board words are in English.': 'Las palabras del tablero están en inglés.',
+    'The board words are in English.': '🇬🇧 Las palabras del tablero están en inglés.',
     'The crew found {n}.': 'El equipo encontró {n}.',
     'The crew touched the assassin 💀': 'El equipo tocó al asesino 💀',
     'You all play one team. Want to give the clues? Switch on “I’ll be spymaster”.':
@@ -225,11 +225,11 @@ export const STRINGS: Strings = {
       'Solo el jefe de espías 🕶️ sabe de quién es cada una.',
     'The spymaster gives one word and a number.': 'El jefe de espías da una palabra y un número.',
     'Your team points on their phones — the most-pointed word turns over.':
-      'Tu equipo señala en el móvil: la palabra más señalada se voltea.',
+      'Tu equipo señala en el celular: la palabra más señalada se voltea.',
     'Find all your agents first. Never touch the assassin 💀.':
       'Encuentra primero a todos tus agentes. Nunca toques al asesino 💀.',
     '📱 On your phone: want to give the clues? Tap “I’ll be spymaster”':
-      '📱 En tu móvil: ¿quieres dar las pistas? Toca “Seré jefe de espías”',
-    '📱 On your phone: pick ▲ Sun or ● Moon': '📱 En tu móvil: elige ▲ Sol o ● Luna',
+      '📱 En tu celular: ¿quieres dar las pistas? Toca “Seré jefe de espías”',
+    '📱 On your phone: pick ▲ Sun or ● Moon': '📱 En tu celular: elige ▲ Sol o ● Luna',
   },
 };
