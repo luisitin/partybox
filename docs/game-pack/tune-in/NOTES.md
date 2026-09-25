@@ -77,10 +77,14 @@ returns `ctx.presence` (the SDK's `GamePresence`), else all in one room. Still l
   came up (the group standard [e67ec9], reviewer [ba045e] #1). The rules show no clock (timerMode
   `hidden`). The digits follow the live `phase.deadline`, so a pause during the count keeps them in
   step ([a9623e]).
-- **Spanish rooms are told the dials are English** on the rules (TV + phone, `EnglishNote`) and in
-  `manifest.es.json` (reviewer [ba045e] #5; fake-out's pattern). No 🇬🇧: Windows browsers (a PC
-  driving the TV) draw it as the letters "GB". The demo dial's "Hot" is "Calor" in Spanish:
-  "Caliente ▶" broke in two in its narrow end column.
+- **The dial ends are Spanish on a Spanish screen** (decision [196a9e] rule 2): every dial carries
+  `es: { left, right }` in content (Latin American, ≤ 18 characters, tests pin all 200), the view
+  header sends both, and `client/ends.ts` swaps them in once at each root. The clue rule bans the
+  Spanish ends' words too (Spanish stems, accents folded); every bank clue still passes. The bots'
+  clues and the voice stay English, and Spanish rules say so (`EnglishNote`, TV + phone, and
+  `manifest.es.json`; reviewer [ba045e] #5). No 🇬🇧: Windows browsers (a PC driving the TV) draw
+  it as the letters "GB". The rules' demo dial reads "Frío ◀ ▶ Calor": "Caliente ▶" broke in two
+  in its narrow end column.
 - **The rules' demo dial is 260 px tall** so the ready faces end ~40 px above the host bar
   (reviewer [ba045e] #4: the bar cut their ✓s).
 - **Relabelled five weak dials** the clue writers flagged: Fleeting ↔ Everlasting, Easy to learn ↔

@@ -8,6 +8,7 @@ import type { ControllerView, PushedView } from '@partybox/game-sdk/ui';
 import { DialStrip } from '@partybox/game-sdk/ui/dial';
 import type { TuneControllerView } from '../server/index';
 import { avatarOf, ratingText, roundLine, teamName, verdictText } from './copy';
+import { useEnds } from './ends';
 import styles from './phone.module.css';
 import { STRINGS } from './strings';
 import { useReading } from './useReading';
@@ -46,7 +47,7 @@ function Board({ view }: { view: TuneControllerView }): JSX.Element {
 
 export function PhoneStage({ view: raw }: { view: PushedView<ControllerView> }): JSX.Element {
   const L = useT(STRINGS);
-  const view = raw as unknown as TuneControllerView;
+  const view = useEnds(raw as unknown as TuneControllerView);
   useReading(view.reading);
   const reveal = view.reveal;
   const points = reveal !== undefined && (reveal.step === 1 || view.phaseId !== 'reveal');

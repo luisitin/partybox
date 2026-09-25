@@ -3,18 +3,20 @@
 import type { JSX } from 'react';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
 import type { TuneTvView } from '../server/index';
+import { useEnds } from './ends';
 import { TvIntro } from './TvIntro';
 import { TvRound } from './TvRound';
 import { TvScores } from './TvScores';
 
 export function Tv(props: GameTvProps<TuneTvView>): JSX.Element {
-  switch (props.view.phaseId) {
+  const view = useEnds(props.view);
+  switch (view.phaseId) {
     case 'intro':
-      return <TvIntro {...props} />;
+      return <TvIntro {...props} view={view} />;
     case 'scores':
     case 'done':
-      return <TvScores {...props} />;
+      return <TvScores {...props} view={view} />;
     default:
-      return <TvRound {...props} />;
+      return <TvRound {...props} view={view} />;
   }
 }

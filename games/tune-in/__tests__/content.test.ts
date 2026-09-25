@@ -27,10 +27,21 @@ describe('the packs', () => {
       }
   });
 
-  it('every bank clue passes the clue rules against its own spectrum', () => {
+  it('every bank clue passes the clue rules against its own spectrum, Spanish ends too', () => {
     for (const s of ALL)
       for (const c of s.clues)
-        expect(checkClue(c.text, s.left, s.right).ok, `${s.id}: ${c.text}`).toBe(true);
+        expect(checkClue(c.text, s.left, s.right, s.es).ok, `${s.id}: ${c.text}`).toBe(true);
+  });
+
+  it('every dial has Spanish ends: short, capitalised, a distinct pair', () => {
+    expect(new Set(ALL.map((s) => `${s.es.left}|${s.es.right}`.toLowerCase())).size).toBe(
+      ALL.length,
+    );
+    for (const s of ALL)
+      for (const label of [s.es.left, s.es.right]) {
+        expect(label.length, s.id).toBeLessThanOrEqual(18);
+        expect(label[0], s.id).toBe(label[0]?.toUpperCase());
+      }
   });
 
   it('every fifth of the dial holds at least two clues, and no two clues are alike', () => {

@@ -45,6 +45,20 @@ describe('clue rules (Cold ↔ Hot)', () => {
     expect(checkClue('happily ever after', 'Sad', 'Happy').ok).toBe(false);
   });
 
+  it('bans the Spanish ends too (a Spanish psychic sees those), accents folded', () => {
+    const es = { left: 'Frío', right: 'Caliente' };
+    expect(checkClue('muy caliente', 'Cold', 'Hot', es)).toEqual({
+      ok: false,
+      reason: 'label-word',
+    });
+    expect(checkClue('calientes', 'Cold', 'Hot', es).ok).toBe(false);
+    expect(checkClue('frio polar', 'Cold', 'Hot', es).ok).toBe(false);
+    expect(checkClue('volcán', 'Cold', 'Hot', es).ok).toBe(true);
+    const kids = { left: 'Cosa de niños', right: 'Cosa de adultos' };
+    expect(checkClue('de noche', 'Kid stuff', 'Grown-up stuff', kids).ok).toBe(true);
+    expect(checkClue('niños', 'Kid stuff', 'Grown-up stuff', kids).ok).toBe(false);
+  });
+
   it('counts at most 30 characters and trims', () => {
     expect(checkClue('  coffee  ', 'Cold', 'Hot')).toEqual({ ok: true, text: 'coffee' });
     expect(checkClue('a'.repeat(30), 'Cold', 'Hot').ok).toBe(true);

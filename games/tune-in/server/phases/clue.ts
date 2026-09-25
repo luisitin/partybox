@@ -26,7 +26,7 @@ export function reduceClue(state: State, event: GameEvent<Input>, next: Transiti
   if (event.playerId !== turn.psychic || turn.clue !== null) return state;
   const spectrum = state.spectra[turn.spectrum];
   if (!spectrum) return state;
-  const verdict = checkClue(event.input.text, spectrum.left, spectrum.right);
+  const verdict = checkClue(event.input.text, spectrum.left, spectrum.right, spectrum.es);
   if (!verdict.ok) {
     const n = (turn.rejected?.n ?? 0) + 1;
     return { ...state, turn: { ...turn, rejected: { reason: verdict.reason, n } } };

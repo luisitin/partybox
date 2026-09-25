@@ -24,6 +24,10 @@ export interface TurnHeader {
   spectrumId: string;
   left: string;
   right: string;
+  /** The same ends in Spanish (a Spanish phone or TV shows these; the reading stays English). */
+  es: { left: string; right: string };
+  /** Client only (client/ends.ts): the English ends, when a Spanish screen swapped them in. */
+  en?: { left: string; right: string };
   clue: string | null;
   size: TargetSize;
   /** The edges of the 4 / 3 / 2 bands for this target size. */
@@ -69,6 +73,7 @@ export function header(state: State): TurnHeader {
     spectrumId: spectrum?.id ?? '',
     left: spectrum?.left ?? '',
     right: spectrum?.right ?? '',
+    es: spectrum?.es ?? { left: spectrum?.left ?? '', right: spectrum?.right ?? '' },
     clue: turn.clue,
     size: state.cfg.targetSize,
     bands: [four, three, two],

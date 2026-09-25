@@ -9,6 +9,7 @@ import type { TuneControllerView } from '../server/index';
 import type { Input } from '../server/types';
 import { modeLine, nameOf, steps, teamName } from './copy';
 import { Countdown } from './Countdown';
+import { useEnds } from './ends';
 import { EnglishNote } from './EnglishNote';
 import { LockRow } from './LockRow';
 import { PhoneCall } from './PhoneCall';
@@ -126,8 +127,9 @@ function WaitOthers({ view }: { view: TuneControllerView }): JSX.Element {
   );
 }
 
-export function Controller({ view, send, skip }: Props): JSX.Element {
+export function Controller({ view: raw, send, skip }: Props): JSX.Element {
   const L = useT(STRINGS);
+  const view = useEnds(raw);
   const key = `${view.turn.n}`;
   if (view.me.role === 'spectator')
     return <WaitingScreen mood="watch" title={L("You're in as soon as this one ends")} />;
