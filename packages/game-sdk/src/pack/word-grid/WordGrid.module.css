@@ -276,7 +276,15 @@
 
 .list .smallWord {
   position: static;
-  font-size: 0.875rem;
+  /* beside the coordinate and the icon: fit what is left of the row (session-c N1 'VILLAI…') */
+  font-size: min(
+    0.875rem,
+    calc(
+      (100cqw - 2 * var(--pb-space-3) - 1.6em - 1.25rem - 2 * var(--pb-space-2)) /
+        (var(--n, 6) * 0.7)
+    )
+  );
+  white-space: nowrap;
 }
 
 /* the spymaster's key under a face-down card: a tint band and the icon, never colour alone */

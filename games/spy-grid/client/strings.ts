@@ -133,7 +133,7 @@ export const STRINGS: Strings = {
     '{n} left': 'faltan {n}',
     'your team': 'tu equipo',
     you: 'tú',
-    '{n} clues left': 'quedan {n} pistas',
+    '{n} clues left': 'quedan {n} pistas',
     '{n} guesses left': 'quedan {n} intentos',
     'A card flips when most of your team points at it.':
       'Una carta se voltea cuando la mayoría de tu equipo la señala.',
@@ -153,7 +153,7 @@ export const STRINGS: Strings = {
     'React to {word}': 'Reacciona a {word}',
     'Point at {word}?': '¿Señalar {word}?',
     Cancel: 'Cancelar',
-    'Point ☝️': 'Señalar ☝️',
+    'Point ☝️': 'Señalar ☝️',
     'You voted to end the turn ✋': 'Votaste por terminar el turno ✋',
     'You point at {word} ☝️': 'Señalas {word} ☝️',
     'Take back': 'Retirar',
@@ -191,6 +191,9 @@ export const STRINGS: Strings = {
       'Las pistas van por el significado, no por letras ni casillas.',
     'Sending…': 'Enviando…',
     'Send clue': 'Enviar pista',
+    'Teams even out at the start: bots move first.':
+      'Los equipos se igualan al empezar: primero se mueven los bots.',
+    'The board words are in English.': 'Las palabras del tablero están en inglés.',
     'The crew found {n}.': 'El equipo encontró {n}.',
     'The crew touched the assassin 💀': 'El equipo tocó al asesino 💀',
     'You all play one team. Want to give the clues? Switch on “I’ll be spymaster”.':

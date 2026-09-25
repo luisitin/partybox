@@ -136,3 +136,38 @@ export function useBoardLayout(): 'grid' | 'list' {
   const auto = useSyncExternalStore(subscribe, autoLayout, () => 'grid' as const);
   return pref === 'auto' ? auto : pref;
 }
+
+export function teamName(t: Team, L: Translator): string {
+  return t === 'sun' ? L('Sun') : L('Moon');
+}
+
+/** Why a round ended, for the TV banner and the phone's result card. */
+export function reasonLine(
+  view: Pick<AnyView, 'winner' | 'reason' | 'mode'>,
+  L: Translator,
+): string {
+  const w = view.winner;
+  switch (view.reason) {
+    case 'assassin':
+      if (view.mode === 'coop') return L('The crew touched the assassin 💀');
+      return L('{team} found the assassin!', { team: teamName(w === 'sun' ? 'moon' : 'sun', L) });
+    case 'agents':
+      return view.mode === 'coop'
+        ? L('Every agent found!')
+        : L('Every {team} agent found!', { team: teamName(w === 'moon' ? 'moon' : 'sun', L) });
+    case 'cap':
+      return w === 'draw'
+        ? L('Out of turns: level on agents')
+        : L('Out of turns: {team} had fewer agents left', {
+            team: teamName(w === 'moon' ? 'moon' : 'sun', L),
+          });
+    case 'idle':
+      return L("Nobody's talking!");
+    case 'forfeit':
+      return L('The other team left the game');
+    case 'clues':
+      return L('Out of clues');
+    default:
+      return '';
+  }
+}

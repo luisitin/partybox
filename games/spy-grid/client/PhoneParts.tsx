@@ -36,7 +36,7 @@ export function Scores({ view }: { view: SpyControllerView }): JSX.Element {
       ))}
       {view.cluesLeft !== null ? (
         <span className={`${styles.score} ${styles.scoreOn}`}>
-          {L('{n} clues left', { n: view.cluesLeft })}
+          <span className={styles.nowrap}>{L('{n} clues left', { n: view.cluesLeft })}</span>
         </span>
       ) : null}
     </div>

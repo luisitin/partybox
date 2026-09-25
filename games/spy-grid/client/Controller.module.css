@@ -527,3 +527,16 @@
 .keyCard {
   animation: global(pb-flip) var(--pb-motion-slow) var(--pb-ease) both;
 }
+
+.resultWhy {
+  font-size: var(--pb-font-body);
+  font-weight: 700;
+  color: var(--pb-text-muted);
+  text-align: center;
+}
+
+.coveredKey {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-3);
+}

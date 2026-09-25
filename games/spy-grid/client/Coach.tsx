@@ -22,12 +22,17 @@ function lines(view: V, L: Translator): { role: string; next: string; mine: bool
       next: L('You all play one team. Want to give the clues? Switch on “I’ll be spymaster”.'),
       mine: true,
     };
-  if (view.phaseId === 'teams')
+  if (view.phaseId === 'teams') {
+    // Uneven now: say so before the start moves someone (bots first; session-c N3).
+    const uneven = Math.abs(view.teams.sun.length - view.teams.moon.length) > 1;
     return {
       role: L('New here? Here is how it works'),
-      next: L('Pick a team. Want to give the clues? Switch on “I’ll be spymaster”.'),
+      next: uneven
+        ? L('Teams even out at the start: bots move first.')
+        : L('Pick a team. Want to give the clues? Switch on “I’ll be spymaster”.'),
       mine: true,
     };
+  }
   if (view.role === 'spectator')
     return { role: L('Watching'), next: L('You join the next game.'), mine: false };
   if (!mineTurn && view.mode !== 'coop')
@@ -79,6 +84,10 @@ function lines(view: V, L: Translator): { role: string; next: string; mine: bool
 export function Coach({ view }: { view: V }): JSX.Element {
   const L = useT(STRINGS);
   const { role, next, mine } = lines(view, L);
+  // Only a translated game says this: the words on the board stay English (session-c #10).
+  const english = L('The board words are in English.');
+  const boardNote =
+    view.phaseId === 'teams' && english !== 'The board words are in English.' ? english : null;
   return (
     <div
       className={`${styles.coach} ${mine ? styles.mine : ''}`}
@@ -87,6 +96,7 @@ export function Coach({ view }: { view: V }): JSX.Element {
     >
       <div className={styles.role}>{role}</div>
       <div className={styles.next}>{next}</div>
+      {boardNote ? <div className={styles.note}>{boardNote}</div> : null}
     </div>
   );
 }

@@ -32,19 +32,24 @@ export function SpyKey({ view }: { view: SpyControllerView }): JSX.Element {
   const urgent = view.phaseId === 'clue' && view.team === view.turnTeam;
   const [shown, setShown, touch] = useCover();
   const [grid, setGrid] = useState(false);
+  // Covered, the spymaster still watches the public board under the button: the screen is never a
+  // big empty space while the other team plays (session-c #13).
   if (!shown)
     return (
-      <button
-        type="button"
-        className={`${styles.cover} ${urgent ? styles.breathe : ''}`}
-        onClick={() => {
-          play('card', { quiet: true, gain: 0.6 });
-          setShown(true);
-        }}
-      >
-        <span className={styles.coverTitle}>{L('Show key 👁')}</span>
-        <span className={styles.hint}>{L('Tilt your phone away from your team.')}</span>
-      </button>
+      <div className={styles.coveredKey}>
+        <button
+          type="button"
+          className={`${styles.cover} ${urgent ? styles.breathe : ''}`}
+          onClick={() => {
+            play('card', { quiet: true, gain: 0.6 });
+            setShown(true);
+          }}
+        >
+          <span className={styles.coverTitle}>{L('Show key 👁')}</span>
+          <span className={styles.hint}>{L('Tilt your phone away from your team.')}</span>
+        </button>
+        <PhoneBoard view={view} />
+      </div>
     );
   const key = view.key ?? [];
   const mine = view.team ?? 'sun';

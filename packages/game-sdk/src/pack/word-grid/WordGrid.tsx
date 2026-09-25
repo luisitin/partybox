@@ -201,7 +201,12 @@ function Card(props: {
         </span>
         <span className={styles.back} aria-hidden={!kind}>
           {list ? <span className={styles.coord}>{coord(index)}</span> : null}
-          <span className={styles.smallWord}>{card.word}</span>
+          <span
+            className={styles.smallWord}
+            style={{ '--n': fitWidth(card.word) } as CSSProperties}
+          >
+            {card.word}
+          </span>
           <span className={styles.icon}>{kind ? <KindIcon kind={kind} /> : null}</span>
         </span>
       </span>

@@ -1,18 +1,12 @@
 // Pieces of the TV board: the clue bar (who is thinking, the clue, guesses left, End turn), the
 // history strip, the turn's summary card and the round's winner banner.
 import { useEffect } from 'react';
-import type { JSX } from 'react';
+import type { CSSProperties, JSX } from 'react';
 import { Avatar, useSecondsLeft, useSound, useT } from '@partybox/game-sdk/ui';
-import type { Translator } from '@partybox/game-sdk/ui';
 import type { SpyTvView } from '../server/views';
-import { SHAPE, faceOf, nameOf, other, pointersBy } from './model';
-import type { Team } from './model';
+import { SHAPE, faceOf, nameOf, other, pointersBy, reasonLine, teamName } from './model';
 import styles from './Tv.module.css';
 import { STRINGS } from './strings';
-
-export function teamName(t: Team, L: Translator): string {
-  return t === 'sun' ? L('Sun') : L('Moon');
-}
 
 function Thinking({ view }: { view: SpyTvView }): JSX.Element {
   const L = useT(STRINGS);
@@ -104,13 +98,16 @@ export function ClueBar({ view }: { view: SpyTvView }): JSX.Element {
   return (
     <div className={`${styles.clueBar} ${styles[`on-${team}`]}`}>
       {view.phaseId === 'guess' ? <Clock view={view} /> : null}
-      <div
-        className={`${styles.clueMain} ${clueSize(view.clue.word)} ${lands ? styles.clueLands : ''}`}
-      >
-        <span className={styles.clueShape}>{SHAPE[team]}</span>
-        <span className={styles.clueWord}>{view.clue.word}</span>
-        <span className={styles.clueDot}>·</span>
-        <span className={styles.clueNum}>{view.clue.number}</span>
+      <div className={styles.clueFit}>
+        <div
+          className={`${styles.clueMain} ${clueSize(view.clue.word)} ${lands ? styles.clueLands : ''}`}
+          style={{ '--n': view.clue.word.length + 3 } as CSSProperties}
+        >
+          <span className={styles.clueShape}>{SHAPE[team]}</span>
+          <span className={styles.clueWord}>{view.clue.word}</span>
+          <span className={styles.clueDot}>·</span>
+          <span className={styles.clueNum}>{view.clue.number}</span>
+        </div>
       </div>
       <div className={styles.clueMeta}>
         <span>{L('Guesses left: {n}', { n: view.guessesLeft })}</span>
@@ -147,9 +144,11 @@ export function History({ view }: { view: SpyTvView }): JSX.Element {
           key={`${i}${h.word}`}
           className={`${styles.chip} ${styles[`chip-${h.team}`]} ${fresh && i === last ? styles.chipNew : ''}`}
         >
-          <b>{SHAPE[h.team]}</b> {h.word} {h.number}{' '}
-          <span className={styles.nowrap}>
-            <span className={styles.arrow}>→</span> {L('{n} found', { n: h.found })}
+          <b>{SHAPE[h.team]}</b>
+          <span className={styles.chipWord}>{h.word}</span>
+          <span>{h.number}</span>
+          <span className={styles.chipFound} aria-label={L('{n} found', { n: h.found })}>
+            <span className={styles.arrow}>→</span> {h.found} ✓
           </span>
         </span>
       ))}
@@ -191,33 +190,6 @@ export function TurnEndCard({ view }: { view: SpyTvView }): JSX.Element {
       </div>
     </div>
   );
-}
-
-export function reasonLine(view: SpyTvView, L: Translator): string {
-  const w = view.winner;
-  switch (view.reason) {
-    case 'assassin':
-      if (view.mode === 'coop') return L('The crew touched the assassin 💀');
-      return L('{team} found the assassin!', { team: teamName(w === 'sun' ? 'moon' : 'sun', L) });
-    case 'agents':
-      return view.mode === 'coop'
-        ? L('Every agent found!')
-        : L('Every {team} agent found!', { team: teamName(w === 'moon' ? 'moon' : 'sun', L) });
-    case 'cap':
-      return w === 'draw'
-        ? L('Out of turns: level on agents')
-        : L('Out of turns: {team} had fewer agents left', {
-            team: teamName(w === 'moon' ? 'moon' : 'sun', L),
-          });
-    case 'idle':
-      return L("Nobody's talking!");
-    case 'forfeit':
-      return L('The other team left the game');
-    case 'clues':
-      return L('Out of clues');
-    default:
-      return '';
-  }
 }
 
 export function WinBanner({ view }: { view: SpyTvView }): JSX.Element {

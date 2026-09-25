@@ -18,7 +18,7 @@ import type { Input } from '../server/types';
 import { BoardScreen } from './BoardScreen';
 import { Coach } from './Coach';
 import { ClueInputs, SendClue, useClueDraft } from './ClueForm';
-import { SHAPE, other } from './model';
+import { SHAPE, other, reasonLine } from './model';
 import { useVoice } from './moments';
 import { ClueLine, PhoneBoard, Scores } from './PhoneParts';
 import { PhoneGuess } from './PhoneGuess';
@@ -138,6 +138,9 @@ function Result({ view, skip }: { view: V; skip?: () => void }): JSX.Element {
         {shown ? (
           <div className={`${styles.result} ${won ? styles.won : ''}`}>
             <div className={styles.resultHead}>{head}</div>
+            {reasonLine(view, L) ? (
+              <div className={styles.resultWhy}>{reasonLine(view, L)}</div>
+            ) : null}
           </div>
         ) : (
           <div className={styles.watch}>{L('👀 Watch the TV')}</div>

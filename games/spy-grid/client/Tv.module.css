@@ -31,7 +31,9 @@
 .clueBar {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  /* three fixed slots: clock | clue | End turn. The side slots are equal and always there, so the
+     clue is centred in the bar whatever the widgets show (session-c #7) */
+  grid-template-columns: 128px minmax(0, 1fr) 128px;
   grid-template-rows: 1fr auto;
   align-items: center;
   column-gap: var(--pb-space-4);
@@ -40,12 +42,6 @@
   background: var(--pb-surface);
   border: 2px solid var(--pb-border);
   overflow: hidden;
-}
-
-/* the guess clock sits top-left: keep the clue clear of it (the End turn tile now always holds its
-   place on the right, which pulled the centred clue under the digits) */
-.clueBar:has(.clock) {
-  padding-left: 96px;
 }
 
 .on-sun {
@@ -57,6 +53,7 @@
 }
 
 .clueMain {
+  grid-column: 2;
   display: flex;
   align-items: baseline;
   justify-content: center;
@@ -111,7 +108,7 @@
 }
 
 .clueMeta {
-  grid-column: 1;
+  grid-column: 2;
   display: flex;
   justify-content: center;
   gap: var(--pb-space-5);
@@ -122,7 +119,7 @@
 
 .endTile {
   grid-row: 1 / span 2;
-  grid-column: 2;
+  grid-column: 3;
   display: grid;
   grid-template-columns: auto auto;
   grid-template-areas:
@@ -156,7 +153,10 @@
 
 .endLabel {
   grid-area: label;
-  font-size: 24px;
+  font-size: 22px;
+  line-height: 1.1;
+  text-align: center;
+  overflow-wrap: anywhere;
   font-weight: 800;
   color: var(--pb-text-muted);
 }
@@ -296,7 +296,7 @@
   grid-area: side;
   display: flex;
   flex-direction: column;
-  gap: var(--pb-space-3);
+  gap: var(--pb-space-2);
   padding-top: 40px;
   overflow: hidden;
 }
@@ -307,17 +307,27 @@
   color: var(--pb-text-muted);
 }
 
+/* one line per clue: mark · word · number · → found. Every clue of a game fits the column (session-c #8) */
 .chip {
-  display: inline-flex;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
   align-items: center;
   gap: var(--pb-space-2);
-  padding: 6px var(--pb-space-4);
-  border-radius: 999px;
+  padding: 4px var(--pb-space-3);
   background: var(--pb-surface);
-  font-size: 26px;
+  font-size: 22px;
   font-weight: 700;
-  flex-wrap: wrap;
   border-radius: var(--pb-radius);
+  white-space: nowrap;
+}
+
+.chipWord {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chipFound {
+  font-weight: 800;
 }
 
 /* the chip a new clue just added (only on the mount where the clue lands) */
@@ -396,7 +406,12 @@
 
 /* co-op: one crew card, so the how-to-play gets the room */
 .teamsCoop {
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.7fr);
+}
+
+/* the crew card is one team: faces in a column, big, so it never reads as an empty panel */
+.teamsCoop .column {
+  justify-content: center;
 }
 
 .columns {
@@ -554,4 +569,23 @@
 
 .nowrap {
   white-space: nowrap;
+}
+
+.boardNote {
+  margin: 0;
+  text-align: center;
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+}
+
+/* the clue fits its middle slot: the word, the dot and the number never run past it (ES's wider
+   End turn tile cut 'OCEAN' to 'OCE…') */
+.clueFit {
+  container-type: inline-size;
+  grid-column: 2;
+  min-width: 0;
+}
+
+.clueFit .clueMain {
+  font-size: min(var(--pb-font-h1), calc(100cqw / (var(--n, 8) * 0.68)));
 }

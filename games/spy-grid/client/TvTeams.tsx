@@ -66,6 +66,9 @@ export function TvTeams({ view }: { view: SpyTvView }): JSX.Element {
             ? L('📱 On your phone: want to give the clues? Tap “I’ll be spymaster”')
             : L('📱 On your phone: pick ▲ Sun or ● Moon')}
         </p>
+        {L('The board words are in English.') !== 'The board words are in English.' ? (
+          <p className={styles.boardNote}>{L('The board words are in English.')}</p>
+        ) : null}
       </aside>
     </div>
   );
