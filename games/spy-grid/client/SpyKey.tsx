@@ -31,7 +31,7 @@ export function SpyKey({ view }: { view: SpyControllerView }): JSX.Element {
   // The spymaster's first move: the cover breathes while it's their clue to give.
   const urgent = view.phaseId === 'clue' && view.team === view.turnTeam;
   const [shown, setShown, touch] = useCover();
-  const [grid, setGrid] = useState(false);
+  const [grid, setGrid] = useState(true);
   // Covered, the spymaster still watches the public board under the button: the screen is never a
   // big empty space while the other team plays (session-c #13).
   if (!shown)

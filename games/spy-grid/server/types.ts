@@ -141,7 +141,8 @@ export const TEAMS_GIVE_UP_MS = 600_000;
 export const FLIP_STAGE_MS = 800;
 /** Stage 1 → the result: the identity on every screen, the voice saying it. */
 export const FLIP_SHOW_MS = 1_400;
-export const TURN_END_MS = 2_500;
+/** Between clues: time to look over the board before the next team's clue (owner, 2026-09-25). */
+export const TURN_END_MS = 5_000;
 export const WIN_MS = 10_000;
 export const REACTION_MS = 5_000;
 export const IDLE_DRAW_TURNS = 4;

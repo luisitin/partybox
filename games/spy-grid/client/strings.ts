@@ -191,6 +191,16 @@ export const STRINGS: Strings = {
       'Las pistas van por el significado, no por letras ni casillas.',
     'Sending…': 'Enviando…',
     'Send clue': 'Enviar pista',
+    'Your team has secret words on this board. Find all of yours first to win.':
+      'Tu equipo tiene palabras secretas en este tablero. Encuentra todas primero para ganar.',
+    'Only your spymaster 🕶️ sees which words are yours.':
+      'Solo tu jefe de espías 🕶️ ve cuáles son las tuyas.',
+    'They say ONE word + a number. OCEAN 2 = “two of our words go with ocean”.':
+      'Dice UNA palabra y un número. OCEAN 2 = “dos de nuestras palabras van con océano”.',
+    'Your team taps SHARK and SHIP on their phones. Both are yours ✓':
+      'Tu equipo toca SHARK y SHIP en sus celulares. Las dos son suyas ✓',
+    'A wrong word ends your turn. The assassin 💀 loses the game.':
+      'Una palabra equivocada acaba el turno. El asesino 💀 pierde la partida.',
     'The first clue lands here': 'Aquí llega la primera pista',
     'Sun wins! ▲': '¡Gana Sol! ▲',
     'Moon wins! ●': '¡Gana Luna! ●',

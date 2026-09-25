@@ -34,11 +34,11 @@ export function TvDemo(): JSX.Element {
     return () => clearInterval(t);
   }, [reduced]);
   const captions = [
-    L('Everyone sees 25 words.'),
-    L('Only the spymaster 🕶️ sees whose they are.'),
-    L('The spymaster gives one word and a number.'),
-    L('Your team points on their phones — the most-pointed word turns over.'),
-    L('Find all your agents first. Never touch the assassin 💀.'),
+    L('Your team has secret words on this board. Find all of yours first to win.'),
+    L('Only your spymaster 🕶️ sees which words are yours.'),
+    L('They say ONE word + a number. OCEAN 2 = “two of our words go with ocean”.'),
+    L('Your team taps SHARK and SHIP on their phones. Both are yours ✓'),
+    L('A wrong word ends your turn. The assassin 💀 loses the game.'),
   ];
   return (
     <div className={styles.demo} aria-label={L('How to play')}>
@@ -68,6 +68,8 @@ export function TvDemo(): JSX.Element {
                     <span className={styles.icon}>
                       <KindIcon kind={c.kind} />
                     </span>
+                    {/* the word stays readable once turned, so the example still names it */}
+                    <span className={styles.backWord}>{c.word}</span>
                   </span>
                 </span>
                 {pointed ? <span className={styles.finger}>☝️</span> : null}
