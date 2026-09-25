@@ -30,7 +30,7 @@ export function RolesPhone({ view, send }: { view: View; send: (i: Input) => voi
     >
       <div className={styles.stack}>
         <p className={styles.head}>{L('Your secret role')}</p>
-        <HoldCard back={L('Hold to see your role')} label={L('Hold to see your role')}>
+        <HoldCard secret="role">
           <RoleFace view={view} />
         </HoldCard>
         <p className={styles.sub}>{L('Keep it secret. Hold the card close.')}</p>
@@ -80,7 +80,7 @@ export function NightPhone({ view, send }: { view: View; send: (i: Input) => voi
         <p className={styles.head}>
           🌙 {L('Night {n}', { n: view.day })} · {L('Choose someone')}
         </p>
-        <HoldCard strip back={L('Hold: night job')} label={L('Hold to see your night job')}>
+        <HoldCard strip secret="job">
           <span className={styles.jobLine}>
             {view.role?.icon} {view.role ? L.sent(view.role.job) : ''}
             {detail ? ` — ${detail}` : ''}

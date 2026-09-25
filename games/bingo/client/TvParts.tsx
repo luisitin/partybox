@@ -15,7 +15,7 @@ import type { ScoreboardRow, Translator } from '@partybox/game-sdk/ui';
 import type { BingoTvView, CallView, ClaimView } from '../server/views';
 import { Card } from './Card';
 import type { SweepKind } from './Card';
-import { ARM_MS } from '../server/types';
+import { ARM_MS } from '../server/constants';
 import { STRINGS } from './strings';
 import styles from './Tv.module.css';
 

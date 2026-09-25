@@ -1,0 +1,3729 @@
+{
+  "lang": "en",
+  "categories": [
+    {
+      "category": "food",
+      "label": "Food",
+      "imposterClues": [
+        "tasty",
+        "dinner",
+        "snack",
+        "kitchen",
+        "plate",
+        "fork",
+        "hungry",
+        "yum",
+        "menu",
+        "recipe",
+        "lunch",
+        "leftovers",
+        "meal"
+      ],
+      "words": [
+        {
+          "id": "food-pizza",
+          "answer": "pizza",
+          "accept": ["pizzas", "piza", "pitza", "pizzza", "pizza pie", "za"],
+          "reject": ["pasta", "piazza"],
+          "family": ["pizz"],
+          "clues": [
+            "pepperoni",
+            "slice",
+            "cheese",
+            "delivery",
+            "crust",
+            "oven",
+            "toppings",
+            "margherita",
+            "box",
+            "napoli"
+          ]
+        },
+        {
+          "id": "food-sushi",
+          "answer": "sushi",
+          "accept": ["sushi roll", "sushi rolls", "sushie", "sushy", "suhsi", "susi"],
+          "reject": ["sashimi", "sumo"],
+          "family": [],
+          "clues": [
+            "raw",
+            "seaweed",
+            "salmon",
+            "chopsticks",
+            "wasabi",
+            "japan",
+            "rice",
+            "soy",
+            "conveyor",
+            "tuna"
+          ]
+        },
+        {
+          "id": "food-taco",
+          "answer": "taco",
+          "accept": ["tacos", "tacco", "tako", "taco shell", "soft taco", "hard taco"],
+          "reject": ["burrito", "nacho"],
+          "family": [],
+          "clues": [
+            "mexico",
+            "tortilla",
+            "salsa",
+            "shell",
+            "tuesday",
+            "guacamole",
+            "crunchy",
+            "folded",
+            "lime"
+          ]
+        },
+        {
+          "id": "food-burger",
+          "answer": "burger",
+          "accept": ["burgers", "hamburger", "hamburgers", "burgr", "buger", "cheeseburger"],
+          "reject": ["burglar"],
+          "family": [],
+          "clues": [
+            "bun",
+            "patty",
+            "grill",
+            "fries",
+            "ketchup",
+            "pickles",
+            "drive-thru",
+            "sesame",
+            "fast-food"
+          ]
+        },
+        {
+          "id": "food-spaghetti",
+          "answer": "spaghetti",
+          "accept": [
+            "spagetti",
+            "spahgetti",
+            "spagheti",
+            "spaghettti",
+            "spaghetty",
+            "spaghetti bolognese",
+            "spag bol",
+            "spaghetti and meatballs"
+          ],
+          "reject": ["macaroni", "linguine"],
+          "family": ["spag"],
+          "clues": [
+            "meatballs",
+            "italy",
+            "twirl",
+            "sauce",
+            "parmesan",
+            "bolognese",
+            "strands",
+            "boil",
+            "noodles",
+            "slurp"
+          ]
+        },
+        {
+          "id": "food-popcorn",
+          "answer": "popcorn",
+          "accept": [
+            "popcorns",
+            "poppcorn",
+            "popcron",
+            "popcorm",
+            "popped corn",
+            "buttered popcorn",
+            "salted popcorn"
+          ],
+          "reject": ["peppercorn"],
+          "family": [],
+          "clues": [
+            "cinema",
+            "butter",
+            "kernels",
+            "microwave",
+            "bucket",
+            "salty",
+            "fluffy",
+            "caramel",
+            "film"
+          ]
+        },
+        {
+          "id": "food-soup",
+          "answer": "soup",
+          "accept": ["soups", "soop", "soupe", "bowl of soup", "hot soup", "sopa"],
+          "reject": ["soap", "stew"],
+          "family": [],
+          "clues": [
+            "spoon",
+            "broth",
+            "chicken",
+            "tomato",
+            "sick",
+            "ladle",
+            "winter",
+            "crackers",
+            "steaming",
+            "pot"
+          ]
+        },
+        {
+          "id": "food-sandwich",
+          "answer": "sandwich",
+          "accept": ["sandwiches", "sandwhich", "sanwich", "samwich", "sandwitch", "sarnie"],
+          "reject": ["sandwedge"],
+          "family": [],
+          "clues": [
+            "bread",
+            "ham",
+            "lunchbox",
+            "picnic",
+            "club",
+            "deli",
+            "mayo",
+            "filling",
+            "triangle",
+            "layers"
+          ]
+        },
+        {
+          "id": "food-salad",
+          "answer": "salad",
+          "accept": [
+            "salads",
+            "sallad",
+            "salid",
+            "salade",
+            "green salad",
+            "side salad",
+            "garden salad"
+          ],
+          "reject": ["salami", "salsa"],
+          "family": [],
+          "clues": [
+            "lettuce",
+            "dressing",
+            "toss",
+            "healthy",
+            "cucumber",
+            "croutons",
+            "leafy",
+            "veggies",
+            "diet"
+          ]
+        },
+        {
+          "id": "food-omelette",
+          "answer": "omelette",
+          "accept": ["omelet", "omelettes", "omelets", "omlette", "omlet", "omelete", "omlett"],
+          "reject": ["amulet"],
+          "family": ["omel"],
+          "clues": [
+            "eggs",
+            "whisk",
+            "frying",
+            "breakfast",
+            "french",
+            "chives",
+            "brunch",
+            "spatula",
+            "beaten"
+          ]
+        },
+        {
+          "id": "food-pancake",
+          "answer": "pancake",
+          "accept": ["pancakes", "hotcake", "hotcakes", "pankake", "pankakes", "pancackes"],
+          "reject": ["cupcake"],
+          "family": ["pancak"],
+          "clues": ["syrup", "stack", "flip", "batter", "maple", "blueberry", "flat", "tossing"]
+        },
+        {
+          "id": "food-curry",
+          "answer": "curry",
+          "accept": ["curries", "cury", "currie", "curri", "chicken curry", "veggie curry"],
+          "reject": ["currant", "hurry"],
+          "family": [],
+          "clues": [
+            "spicy",
+            "india",
+            "naan",
+            "masala",
+            "coconut",
+            "turmeric",
+            "thai",
+            "lentils",
+            "simmer"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "drinks",
+      "label": "Drinks",
+      "imposterClues": [
+        "thirsty",
+        "sip",
+        "beverage",
+        "refreshing",
+        "pour",
+        "gulp",
+        "swallow",
+        "liquid",
+        "cup",
+        "menu",
+        "order",
+        "tasty",
+        "yum"
+      ],
+      "words": [
+        {
+          "id": "drinks-coffee",
+          "answer": "coffee",
+          "accept": ["coffees", "cofee", "coffe", "koffee", "cup of coffee", "black coffee"],
+          "reject": ["toffee", "coffin"],
+          "family": [],
+          "clues": [
+            "caffeine",
+            "espresso",
+            "beans",
+            "barista",
+            "latte",
+            "morning",
+            "bitter",
+            "awake",
+            "roast"
+          ]
+        },
+        {
+          "id": "drinks-tea",
+          "answer": "tea",
+          "accept": ["teas", "cup of tea", "cuppa", "hot tea", "black tea", "green tea"],
+          "reject": ["tee"],
+          "family": [],
+          "clues": [
+            "kettle",
+            "leaves",
+            "british",
+            "herbal",
+            "chamomile",
+            "steep",
+            "china",
+            "bags",
+            "afternoon"
+          ]
+        },
+        {
+          "id": "drinks-milk",
+          "answer": "milk",
+          "accept": ["milks", "mlik", "glass of milk", "cows milk", "whole milk", "skim milk"],
+          "reject": ["mink", "silk"],
+          "family": [],
+          "clues": [
+            "cow",
+            "dairy",
+            "calcium",
+            "cereal",
+            "white",
+            "carton",
+            "cookies",
+            "udder",
+            "bones",
+            "moo"
+          ]
+        },
+        {
+          "id": "drinks-lemonade",
+          "answer": "lemonade",
+          "accept": [
+            "lemonades",
+            "lemonaid",
+            "lemmonade",
+            "lemonnade",
+            "lemondade",
+            "pink lemonade"
+          ],
+          "reject": ["marmalade"],
+          "family": ["lemon"],
+          "clues": [
+            "sour",
+            "stand",
+            "summer",
+            "sugar",
+            "yellow",
+            "squeeze",
+            "pitcher",
+            "zesty",
+            "picnic",
+            "tangy"
+          ]
+        },
+        {
+          "id": "drinks-hot-chocolate",
+          "answer": "hot chocolate",
+          "accept": [
+            "hot chocolates",
+            "hot cocoa",
+            "cocoa",
+            "hot choc",
+            "drinking chocolate",
+            "hot choclate"
+          ],
+          "reject": ["hot chilli"],
+          "family": ["chocolat", "cocoa"],
+          "clues": [
+            "marshmallows",
+            "winter",
+            "mug",
+            "fireplace",
+            "snow",
+            "blanket",
+            "christmas",
+            "steaming",
+            "whipped"
+          ]
+        },
+        {
+          "id": "drinks-orange-juice",
+          "answer": "orange juice",
+          "accept": [
+            "orange juices",
+            "oj",
+            "orange juce",
+            "orang juice",
+            "fresh orange juice",
+            "freshly squeezed orange juice"
+          ],
+          "reject": ["orangeade"],
+          "family": ["orange"],
+          "clues": [
+            "breakfast",
+            "pulp",
+            "citrus",
+            "vitamin",
+            "florida",
+            "peel",
+            "fresh",
+            "sunshine"
+          ]
+        },
+        {
+          "id": "drinks-smoothie",
+          "answer": "smoothie",
+          "accept": ["smoothies", "smoothy", "smoothee", "smoothi", "smootie", "fruit smoothie"],
+          "reject": ["smooth"],
+          "family": [],
+          "clues": [
+            "blender",
+            "banana",
+            "berries",
+            "yogurt",
+            "healthy",
+            "spinach",
+            "thick",
+            "gym",
+            "mango"
+          ]
+        },
+        {
+          "id": "drinks-milkshake",
+          "answer": "milkshake",
+          "accept": ["milkshakes", "shake", "shakes", "thickshake", "mikshake", "milkshak"],
+          "reject": ["milk"],
+          "family": ["milk", "shake"],
+          "clues": [
+            "straw",
+            "diner",
+            "vanilla",
+            "strawberry",
+            "cherry",
+            "ice-cream",
+            "malt",
+            "fries",
+            "retro"
+          ]
+        },
+        {
+          "id": "drinks-water",
+          "answer": "water",
+          "accept": [
+            "waters",
+            "h2o",
+            "tap water",
+            "bottled water",
+            "glass of water",
+            "watter",
+            "still water"
+          ],
+          "reject": ["waiter", "wafer"],
+          "family": [],
+          "clues": [
+            "tap",
+            "rain",
+            "hydrate",
+            "clear",
+            "plain",
+            "wet",
+            "well",
+            "bottle",
+            "filter",
+            "sparkling"
+          ]
+        },
+        {
+          "id": "drinks-cola",
+          "answer": "cola",
+          "accept": ["colas", "kola", "colla", "cola drink", "fizzy cola", "diet cola"],
+          "reject": ["coal", "coral"],
+          "family": [],
+          "clues": ["fizzy", "bubbles", "burp", "can", "brown", "sugary", "float", "vending"]
+        },
+        {
+          "id": "drinks-energy-drink",
+          "answer": "energy drink",
+          "accept": [
+            "energy drinks",
+            "enrgy drink",
+            "energie drink",
+            "enegry drink",
+            "energy drnk",
+            "energy drinx"
+          ],
+          "reject": ["energy bar"],
+          "family": ["energy"],
+          "clues": [
+            "jittery",
+            "gaming",
+            "taurine",
+            "buzz",
+            "crash",
+            "all-nighter",
+            "boost",
+            "extreme",
+            "caffeine"
+          ]
+        },
+        {
+          "id": "drinks-slushie",
+          "answer": "slushie",
+          "accept": ["slushies", "slushy", "slush", "slushee", "slushi", "slushy drink"],
+          "reject": ["sushi", "slash"],
+          "family": ["slush"],
+          "clues": [
+            "brain-freeze",
+            "icy",
+            "blue",
+            "frozen",
+            "crushed",
+            "rainbow",
+            "tongue",
+            "machine",
+            "fairground"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "animals",
+      "label": "Animals",
+      "imposterClues": [
+        "zoo",
+        "wild",
+        "nature",
+        "species",
+        "habitat",
+        "documentary",
+        "creature",
+        "baby",
+        "feed",
+        "photo",
+        "endangered",
+        "animal"
+      ],
+      "words": [
+        {
+          "id": "animals-elephant",
+          "answer": "elephant",
+          "accept": ["elephants", "elefant", "elephent", "elaphant", "eliphant", "baby elephant"],
+          "reject": ["elegant"],
+          "family": ["eleph"],
+          "clues": [
+            "trunk",
+            "tusks",
+            "ivory",
+            "huge",
+            "memory",
+            "peanuts",
+            "wrinkly",
+            "ears",
+            "heavy"
+          ]
+        },
+        {
+          "id": "animals-giraffe",
+          "answer": "giraffe",
+          "accept": ["giraffes", "girafe", "giraff", "jiraffe", "girraffe", "giraf"],
+          "reject": ["gaffe", "carafe"],
+          "family": ["giraf"],
+          "clues": ["neck", "tall", "spots", "savanna", "treetops", "ossicones", "long", "acacia"]
+        },
+        {
+          "id": "animals-penguin",
+          "answer": "penguin",
+          "accept": ["penguins", "pengiun", "pinguin", "penguine", "pengin", "emperor penguin"],
+          "reject": ["pelican"],
+          "family": ["pengu"],
+          "clues": [
+            "antarctica",
+            "waddle",
+            "tuxedo",
+            "icy",
+            "huddle",
+            "colony",
+            "slide",
+            "flightless"
+          ]
+        },
+        {
+          "id": "animals-kangaroo",
+          "answer": "kangaroo",
+          "accept": ["kangaroos", "kangeroo", "kangaru", "kangarro", "roo", "roos"],
+          "reject": ["wallaby"],
+          "family": ["kanga"],
+          "clues": [
+            "australia",
+            "pouch",
+            "hopping",
+            "joey",
+            "boxing",
+            "outback",
+            "tail",
+            "bouncy",
+            "marsupial"
+          ]
+        },
+        {
+          "id": "animals-octopus",
+          "answer": "octopus",
+          "accept": ["octopuses", "octopi", "octupus", "octapus", "octopous", "octopusses"],
+          "reject": ["octagon", "platypus"],
+          "family": ["octop"],
+          "clues": [
+            "tentacles",
+            "ink",
+            "suckers",
+            "camouflage",
+            "squishy",
+            "arms",
+            "clever",
+            "underwater"
+          ]
+        },
+        {
+          "id": "animals-lion",
+          "answer": "lion",
+          "accept": ["lions", "lioness", "lionesses", "lyon", "male lion", "lion cub"],
+          "reject": ["loin"],
+          "family": [],
+          "clues": [
+            "mane",
+            "roar",
+            "pride",
+            "king",
+            "africa",
+            "predator",
+            "hunt",
+            "brave",
+            "golden",
+            "courage"
+          ]
+        },
+        {
+          "id": "animals-shark",
+          "answer": "shark",
+          "accept": ["sharks", "great white", "great white shark", "shark fish", "sharc", "sahrk"],
+          "reject": ["snark", "shard"],
+          "family": [],
+          "clues": ["teeth", "fin", "jaws", "ocean", "blood", "gills", "hammerhead", "surfers"]
+        },
+        {
+          "id": "animals-owl",
+          "answer": "owl",
+          "accept": ["owls", "owlet", "barn owl", "snowy owl", "owel", "oul"],
+          "reject": ["bowl", "howl"],
+          "family": [],
+          "clues": [
+            "hoot",
+            "wise",
+            "night",
+            "feathers",
+            "nocturnal",
+            "talons",
+            "mice",
+            "swivel",
+            "tree"
+          ]
+        },
+        {
+          "id": "animals-panda",
+          "answer": "panda",
+          "accept": ["pandas", "giant panda", "giant pandas", "panda bear", "panda bears", "pnada"],
+          "reject": ["pander"],
+          "family": [],
+          "clues": [
+            "bamboo",
+            "china",
+            "chubby",
+            "cuddly",
+            "eye-patches",
+            "lazy",
+            "rolling",
+            "fluffy"
+          ]
+        },
+        {
+          "id": "animals-zebra",
+          "answer": "zebra",
+          "accept": ["zebras", "zeebra", "zebbra", "zebrah", "zeebras", "zebera"],
+          "reject": ["zebra crossing", "cobra"],
+          "family": [],
+          "clues": [
+            "stripes",
+            "horse",
+            "herd",
+            "barcode",
+            "crossing",
+            "stampede",
+            "grazing",
+            "monochrome",
+            "pattern"
+          ]
+        },
+        {
+          "id": "animals-crocodile",
+          "answer": "crocodile",
+          "accept": ["crocodiles", "croc", "crocodil", "crocadile", "crockodile", "crocodyle"],
+          "reject": ["alligator"],
+          "family": ["croc"],
+          "clues": ["swamp", "snap", "scales", "river", "tears", "reptile", "nile", "basking"]
+        },
+        {
+          "id": "animals-dolphin",
+          "answer": "dolphin",
+          "accept": ["dolphins", "dolfin", "dolphine", "dophin", "bottlenose dolphin", "dolphn"],
+          "reject": ["porpoise"],
+          "family": ["dolph"],
+          "clues": [
+            "clicks",
+            "flipper",
+            "smart",
+            "pod",
+            "echolocation",
+            "leaping",
+            "friendly",
+            "squeak",
+            "bottlenose"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "home",
+      "label": "Around the house",
+      "imposterClues": [
+        "home",
+        "room",
+        "indoors",
+        "household",
+        "everyday",
+        "family",
+        "useful",
+        "apartment",
+        "daily",
+        "guests",
+        "moving",
+        "buy",
+        "owner"
+      ],
+      "words": [
+        {
+          "id": "home-couch",
+          "answer": "couch",
+          "accept": ["couches", "sofa", "sofas", "settee", "settees", "sofa couch"],
+          "reject": ["coach", "cough"],
+          "family": [],
+          "clues": ["cushions", "potato", "nap", "comfy", "leather", "armrest", "recline", "sprawl"]
+        },
+        {
+          "id": "home-fridge",
+          "answer": "fridge",
+          "accept": [
+            "fridges",
+            "refrigerator",
+            "refrigerators",
+            "refridgerator",
+            "frige",
+            "icebox"
+          ],
+          "reject": ["bridge", "fudge"],
+          "family": [],
+          "clues": ["cold", "magnets", "chill", "freezer", "groceries", "humming", "shelves", "ice"]
+        },
+        {
+          "id": "home-bathtub",
+          "answer": "bathtub",
+          "accept": ["bathtubs", "bath", "baths", "tub", "tubs", "bathub"],
+          "reject": ["bathrobe"],
+          "family": ["bath", "tub"],
+          "clues": [
+            "bubbles",
+            "soak",
+            "rubber-duck",
+            "relax",
+            "drain",
+            "plug",
+            "splash",
+            "foam",
+            "porcelain"
+          ]
+        },
+        {
+          "id": "home-pillow",
+          "answer": "pillow",
+          "accept": ["pillows", "pilow", "pillo", "pilows", "pillw", "bed pillow"],
+          "reject": ["willow", "billow"],
+          "family": [],
+          "clues": [
+            "bed",
+            "sleep",
+            "feathers",
+            "fight",
+            "soft",
+            "case",
+            "fluffy",
+            "headrest",
+            "dreams"
+          ]
+        },
+        {
+          "id": "home-lamp",
+          "answer": "lamp",
+          "accept": [
+            "lamps",
+            "table lamp",
+            "desk lamp",
+            "floor lamp",
+            "bedside lamp",
+            "reading lamp"
+          ],
+          "reject": ["lamb", "lump"],
+          "family": [],
+          "clues": [
+            "light",
+            "bulb",
+            "shade",
+            "switch",
+            "glow",
+            "cord",
+            "dim",
+            "genie",
+            "nightstand"
+          ]
+        },
+        {
+          "id": "home-mirror",
+          "answer": "mirror",
+          "accept": ["mirrors", "miror", "mirrow", "mirrer", "mirrior", "looking glass"],
+          "reject": ["mirage"],
+          "family": [],
+          "clues": [
+            "reflection",
+            "vanity",
+            "vampire",
+            "makeup",
+            "cracked",
+            "fairest",
+            "shiny",
+            "selfie",
+            "glass"
+          ]
+        },
+        {
+          "id": "home-toaster",
+          "answer": "toaster",
+          "accept": ["toasters", "toastr", "toster", "tosater", "bread toaster", "pop-up toaster"],
+          "reject": ["coaster", "roaster"],
+          "family": ["toast"],
+          "clues": [
+            "bread",
+            "crumbs",
+            "pop",
+            "burnt",
+            "slots",
+            "crispy",
+            "golden",
+            "lever",
+            "breakfast"
+          ]
+        },
+        {
+          "id": "home-television",
+          "answer": "television",
+          "accept": ["tv", "tvs", "televisions", "telly", "televison", "telivision", "tele"],
+          "reject": ["telescope"],
+          "family": ["telev"],
+          "clues": [
+            "remote",
+            "channels",
+            "screen",
+            "shows",
+            "antenna",
+            "sitcom",
+            "cartoons",
+            "news",
+            "binge"
+          ]
+        },
+        {
+          "id": "home-stairs",
+          "answer": "stairs",
+          "accept": ["stair", "staircase", "staircases", "stairway", "steps", "stiars"],
+          "reject": ["stares", "chairs"],
+          "family": ["stair"],
+          "clues": [
+            "climb",
+            "banister",
+            "railing",
+            "creaky",
+            "spiral",
+            "landing",
+            "trip",
+            "exercise"
+          ]
+        },
+        {
+          "id": "home-clock",
+          "answer": "clock",
+          "accept": ["clocks", "wall clock", "alarm clock", "clok", "klock", "grandfather clock"],
+          "reject": ["cloak", "block"],
+          "family": [],
+          "clues": ["time", "ticking", "hands", "hours", "minutes", "cuckoo", "late", "numbers"]
+        },
+        {
+          "id": "home-vacuum",
+          "answer": "vacuum",
+          "accept": [
+            "vacuums",
+            "vacuum cleaner",
+            "vacuum cleaners",
+            "hoover",
+            "vaccum",
+            "vacum",
+            "vaccuum"
+          ],
+          "reject": ["vacation"],
+          "family": [],
+          "clues": [
+            "dust",
+            "carpet",
+            "suction",
+            "noisy",
+            "nozzle",
+            "chores",
+            "robot",
+            "bagless",
+            "dirt"
+          ]
+        },
+        {
+          "id": "home-washing-machine",
+          "answer": "washing machine",
+          "accept": [
+            "washing machines",
+            "washer",
+            "washers",
+            "washing machin",
+            "laundry machine",
+            "clothes washer"
+          ],
+          "reject": ["washing up"],
+          "family": ["wash"],
+          "clues": [
+            "laundry",
+            "spin",
+            "detergent",
+            "socks",
+            "suds",
+            "rinse",
+            "dryer",
+            "cycle",
+            "clothes"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "places",
+      "label": "Places",
+      "imposterClues": [
+        "visit",
+        "people",
+        "busy",
+        "weekend",
+        "staff",
+        "parking",
+        "town",
+        "hours",
+        "entrance",
+        "location",
+        "trip",
+        "outing",
+        "nearby"
+      ],
+      "words": [
+        {
+          "id": "places-airport",
+          "answer": "airport",
+          "accept": ["airports", "aerodrome", "airfield", "aiport", "airprt", "airpot"],
+          "reject": ["airbase", "heliport"],
+          "family": [],
+          "clues": [
+            "plane",
+            "runway",
+            "luggage",
+            "passport",
+            "terminal",
+            "gate",
+            "departures",
+            "security",
+            "pilot",
+            "boarding"
+          ]
+        },
+        {
+          "id": "places-hospital",
+          "answer": "hospital",
+          "accept": [
+            "hospitals",
+            "hospitol",
+            "hosptial",
+            "hospitle",
+            "infirmary",
+            "medical center",
+            "medical centre"
+          ],
+          "reject": ["hostel", "hospitality"],
+          "family": ["hospit"],
+          "clues": [
+            "doctor",
+            "nurse",
+            "ambulance",
+            "surgery",
+            "patient",
+            "ward",
+            "emergency",
+            "stretcher",
+            "x-ray",
+            "scrubs"
+          ]
+        },
+        {
+          "id": "places-beach",
+          "answer": "beach",
+          "accept": ["beaches", "seaside", "seashore", "shore", "shoreline", "sandy beach"],
+          "reject": ["beech", "bench"],
+          "family": [],
+          "clues": [
+            "sand",
+            "waves",
+            "towel",
+            "sunscreen",
+            "surf",
+            "shells",
+            "sandcastle",
+            "lifeguard",
+            "tan",
+            "umbrella"
+          ]
+        },
+        {
+          "id": "places-library",
+          "answer": "library",
+          "accept": [
+            "libraries",
+            "libary",
+            "liberary",
+            "librery",
+            "public library",
+            "lending library"
+          ],
+          "reject": ["bookshop", "bookstore"],
+          "family": ["librar"],
+          "clues": [
+            "books",
+            "borrow",
+            "quiet",
+            "shelves",
+            "overdue",
+            "reading",
+            "novels",
+            "fines",
+            "catalog",
+            "return"
+          ]
+        },
+        {
+          "id": "places-school",
+          "answer": "school",
+          "accept": ["schools", "skool", "scool", "shcool", "schoool", "high school"],
+          "reject": ["shoal", "college"],
+          "family": ["school"],
+          "clues": [
+            "teacher",
+            "homework",
+            "classroom",
+            "recess",
+            "desk",
+            "lessons",
+            "principal",
+            "bell",
+            "uniform",
+            "exams"
+          ]
+        },
+        {
+          "id": "places-restaurant",
+          "answer": "restaurant",
+          "accept": ["restaurants", "resturant", "restaraunt", "restraunt", "restuarant", "eatery"],
+          "reject": ["restroom", "rest area"],
+          "family": ["restaur"],
+          "clues": [
+            "waiter",
+            "chef",
+            "reservation",
+            "tip",
+            "dessert",
+            "bill",
+            "appetizer",
+            "napkin",
+            "cuisine",
+            "dine"
+          ]
+        },
+        {
+          "id": "places-museum",
+          "answer": "museum",
+          "accept": ["museums", "musem", "museam", "musuem", "musium", "musseum"],
+          "reject": ["mausoleum"],
+          "family": [],
+          "clues": [
+            "exhibit",
+            "dinosaur",
+            "fossils",
+            "artifacts",
+            "curator",
+            "statue",
+            "history",
+            "painting",
+            "ancient",
+            "display"
+          ]
+        },
+        {
+          "id": "places-zoo",
+          "answer": "zoo",
+          "accept": [
+            "zoos",
+            "zoological garden",
+            "zoological park",
+            "animal park",
+            "wildlife park",
+            "petting zoo"
+          ],
+          "reject": ["safari", "aquarium"],
+          "family": [],
+          "clues": [
+            "lions",
+            "cages",
+            "enclosure",
+            "giraffe",
+            "penguins",
+            "monkeys",
+            "feeding",
+            "elephants",
+            "keeper",
+            "exotic"
+          ]
+        },
+        {
+          "id": "places-supermarket",
+          "answer": "supermarket",
+          "accept": [
+            "supermarkets",
+            "grocery store",
+            "grocery shop",
+            "grocers",
+            "supermaket",
+            "supermarkt"
+          ],
+          "reject": ["hypermarket", "flea market"],
+          "family": ["market"],
+          "clues": [
+            "trolley",
+            "cart",
+            "aisles",
+            "checkout",
+            "cashier",
+            "produce",
+            "receipt",
+            "frozen",
+            "barcode",
+            "basket"
+          ]
+        },
+        {
+          "id": "places-cinema",
+          "answer": "cinema",
+          "accept": [
+            "cinemas",
+            "movie theater",
+            "movie theatre",
+            "movies",
+            "picture house",
+            "multiplex",
+            "cinima"
+          ],
+          "reject": ["theatre", "theater"],
+          "family": [],
+          "clues": [
+            "popcorn",
+            "screen",
+            "trailer",
+            "film",
+            "projector",
+            "premiere",
+            "usher",
+            "matinee",
+            "dark",
+            "sequel"
+          ]
+        },
+        {
+          "id": "places-hotel",
+          "answer": "hotel",
+          "accept": ["hotels", "hotell", "hottel", "hotle", "hotal", "inn"],
+          "reject": ["motel", "hostel"],
+          "family": [],
+          "clues": [
+            "reception",
+            "suite",
+            "lobby",
+            "room-service",
+            "bellhop",
+            "keycard",
+            "minibar",
+            "concierge",
+            "housekeeping",
+            "vacancy"
+          ]
+        },
+        {
+          "id": "places-stadium",
+          "answer": "stadium",
+          "accept": [
+            "stadiums",
+            "stadia",
+            "staduim",
+            "stadum",
+            "stadiem",
+            "arena",
+            "sports stadium"
+          ],
+          "reject": ["studio", "podium"],
+          "family": [],
+          "clues": [
+            "fans",
+            "scoreboard",
+            "cheering",
+            "bleachers",
+            "floodlights",
+            "concert",
+            "pitch",
+            "team",
+            "chant",
+            "grandstand"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "jobs",
+      "label": "Jobs",
+      "imposterClues": [
+        "work",
+        "salary",
+        "shift",
+        "career",
+        "training",
+        "skills",
+        "hours",
+        "colleague",
+        "boss",
+        "wages",
+        "profession",
+        "daily",
+        "qualified"
+      ],
+      "words": [
+        {
+          "id": "jobs-doctor",
+          "answer": "doctor",
+          "accept": ["doctors", "doc", "physician", "docter", "doktor", "dr"],
+          "reject": ["doctorate", "nurse"],
+          "family": ["doct"],
+          "clues": [
+            "stethoscope",
+            "diagnosis",
+            "prescription",
+            "patient",
+            "clinic",
+            "checkup",
+            "symptoms",
+            "medicine",
+            "appointment",
+            "fever"
+          ]
+        },
+        {
+          "id": "jobs-teacher",
+          "answer": "teacher",
+          "accept": ["teachers", "teecher", "techer", "school teacher", "educator", "instructor"],
+          "reject": ["preacher", "principal"],
+          "family": ["teach"],
+          "clues": [
+            "classroom",
+            "homework",
+            "lesson",
+            "chalkboard",
+            "grades",
+            "students",
+            "apple",
+            "marking",
+            "recess",
+            "lecture"
+          ]
+        },
+        {
+          "id": "jobs-firefighter",
+          "answer": "firefighter",
+          "accept": ["firefighters", "fireman", "firemen", "firewoman", "firefigher", "firefiter"],
+          "reject": ["fire station"],
+          "family": ["fire", "fight"],
+          "clues": [
+            "hose",
+            "flames",
+            "ladder",
+            "helmet",
+            "rescue",
+            "smoke",
+            "hydrant",
+            "extinguisher",
+            "blaze"
+          ]
+        },
+        {
+          "id": "jobs-chef",
+          "answer": "chef",
+          "accept": ["chefs", "cook", "head chef", "cheff", "sous chef", "line cook"],
+          "reject": ["chief", "baker"],
+          "family": [],
+          "clues": [
+            "kitchen",
+            "recipe",
+            "apron",
+            "knife",
+            "sauce",
+            "menu",
+            "restaurant",
+            "spatula",
+            "flavor",
+            "dish"
+          ]
+        },
+        {
+          "id": "jobs-pilot",
+          "answer": "pilot",
+          "accept": ["pilots", "aviator", "airline pilot", "pilott", "pylot", "pilote"],
+          "reject": ["pilates", "pirate"],
+          "family": [],
+          "clues": [
+            "cockpit",
+            "runway",
+            "plane",
+            "wings",
+            "captain",
+            "turbulence",
+            "altitude",
+            "landing",
+            "jet",
+            "takeoff"
+          ]
+        },
+        {
+          "id": "jobs-farmer",
+          "answer": "farmer",
+          "accept": ["farmers", "farmhand", "rancher", "farmar", "farmworker", "fermer"],
+          "reject": ["framer", "former"],
+          "family": ["farm"],
+          "clues": [
+            "tractor",
+            "barn",
+            "crops",
+            "harvest",
+            "cows",
+            "field",
+            "overalls",
+            "seeds",
+            "rooster",
+            "hay"
+          ]
+        },
+        {
+          "id": "jobs-police-officer",
+          "answer": "police officer",
+          "accept": [
+            "police officers",
+            "police",
+            "policeman",
+            "policewoman",
+            "cop",
+            "cops",
+            "constable"
+          ],
+          "reject": ["politician", "polish"],
+          "family": ["polic"],
+          "clues": [
+            "badge",
+            "handcuffs",
+            "arrest",
+            "siren",
+            "patrol",
+            "detective",
+            "crime",
+            "uniform",
+            "whistle",
+            "law"
+          ]
+        },
+        {
+          "id": "jobs-dentist",
+          "answer": "dentist",
+          "accept": ["dentists", "dentis", "dentst", "dentest", "dental surgeon", "tooth doctor"],
+          "reject": ["denture"],
+          "family": ["dent"],
+          "clues": [
+            "teeth",
+            "drill",
+            "braces",
+            "cavity",
+            "floss",
+            "filling",
+            "molar",
+            "toothbrush",
+            "gums",
+            "smile"
+          ]
+        },
+        {
+          "id": "jobs-mechanic",
+          "answer": "mechanic",
+          "accept": [
+            "mechanics",
+            "mecanic",
+            "machanic",
+            "mechanik",
+            "auto mechanic",
+            "car mechanic"
+          ],
+          "reject": ["machinist", "mechanism"],
+          "family": ["mechan"],
+          "clues": [
+            "wrench",
+            "garage",
+            "engine",
+            "oil",
+            "brakes",
+            "repair",
+            "spanner",
+            "jack",
+            "grease"
+          ]
+        },
+        {
+          "id": "jobs-plumber",
+          "answer": "plumber",
+          "accept": ["plumbers", "plummer", "plumer", "plumbr", "plumbar", "pipefitter"],
+          "reject": ["plummet", "plum"],
+          "family": ["plumb"],
+          "clues": [
+            "pipes",
+            "leak",
+            "toilet",
+            "faucet",
+            "tap",
+            "drain",
+            "sink",
+            "clog",
+            "plunger",
+            "boiler"
+          ]
+        },
+        {
+          "id": "jobs-astronaut",
+          "answer": "astronaut",
+          "accept": ["astronauts", "cosmonaut", "spaceman", "spacewoman", "astronot", "astranaut"],
+          "reject": ["astronomer", "argonaut"],
+          "family": ["astro"],
+          "clues": [
+            "rocket",
+            "spacesuit",
+            "moon",
+            "orbit",
+            "launch",
+            "gravity",
+            "stars",
+            "shuttle",
+            "planet",
+            "capsule"
+          ]
+        },
+        {
+          "id": "jobs-hairdresser",
+          "answer": "hairdresser",
+          "accept": [
+            "hairdressers",
+            "hairstylist",
+            "stylist",
+            "hairdreser",
+            "hairdressor",
+            "haircutter"
+          ],
+          "reject": ["barber"],
+          "family": ["hair", "dress"],
+          "clues": [
+            "scissors",
+            "salon",
+            "trim",
+            "shampoo",
+            "blow-dry",
+            "highlights",
+            "perm",
+            "curls",
+            "comb",
+            "dye"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "sports",
+      "label": "Sports",
+      "imposterClues": [
+        "fitness",
+        "practice",
+        "compete",
+        "winner",
+        "training",
+        "coach",
+        "exercise",
+        "athlete",
+        "champion",
+        "medal",
+        "sweat",
+        "sporty",
+        "rules"
+      ],
+      "words": [
+        {
+          "id": "sports-soccer",
+          "answer": "soccer",
+          "accept": ["football", "association football", "futbol", "soccar", "socer", "sokker"],
+          "reject": ["american football", "rugby"],
+          "family": [],
+          "clues": [
+            "goalkeeper",
+            "penalty",
+            "striker",
+            "offside",
+            "kick",
+            "header",
+            "pitch",
+            "boots",
+            "corner"
+          ]
+        },
+        {
+          "id": "sports-basketball",
+          "answer": "basketball",
+          "accept": ["hoops", "b-ball", "basketbal", "baskettball", "basketbol", "bascketball"],
+          "reject": ["netball", "baseball"],
+          "family": ["basket"],
+          "clues": [
+            "dunk",
+            "rebound",
+            "dribble",
+            "layup",
+            "backboard",
+            "three-pointer",
+            "tall",
+            "jersey",
+            "free-throw"
+          ]
+        },
+        {
+          "id": "sports-tennis",
+          "answer": "tennis",
+          "accept": ["lawn tennis", "tenis", "tennnis", "tenniss", "tennes", "tennis match"],
+          "reject": ["table tennis", "badminton"],
+          "family": [],
+          "clues": [
+            "racket",
+            "serve",
+            "deuce",
+            "love",
+            "baseline",
+            "ace",
+            "forehand",
+            "backhand",
+            "umpire"
+          ]
+        },
+        {
+          "id": "sports-swimming",
+          "answer": "swimming",
+          "accept": ["swim", "swims", "swiming", "swimmng", "swimmming", "lap swimming"],
+          "reject": ["skimming", "slimming"],
+          "family": ["swim"],
+          "clues": [
+            "pool",
+            "goggles",
+            "freestyle",
+            "lanes",
+            "butterfly",
+            "backstroke",
+            "dive",
+            "laps",
+            "chlorine"
+          ]
+        },
+        {
+          "id": "sports-golf",
+          "answer": "golf",
+          "accept": ["golfing", "golph", "gollf", "goolf", "golf game", "round of golf"],
+          "reject": ["gulf", "polo"],
+          "family": [],
+          "clues": [
+            "putter",
+            "tee",
+            "caddie",
+            "fairway",
+            "birdie",
+            "hole-in-one",
+            "clubs",
+            "bunker",
+            "par",
+            "green"
+          ]
+        },
+        {
+          "id": "sports-boxing",
+          "answer": "boxing",
+          "accept": ["boxing match", "prizefighting", "pugilism", "boxng", "boxin", "boxinng"],
+          "reject": ["kickboxing", "bossing"],
+          "family": ["box"],
+          "clues": [
+            "gloves",
+            "punch",
+            "ring",
+            "knockout",
+            "uppercut",
+            "jab",
+            "heavyweight",
+            "referee",
+            "bell",
+            "mouthguard"
+          ]
+        },
+        {
+          "id": "sports-volleyball",
+          "answer": "volleyball",
+          "accept": [
+            "vollyball",
+            "voleyball",
+            "volleybal",
+            "valleyball",
+            "beach volleyball",
+            "indoor volleyball"
+          ],
+          "reject": ["netball", "valley"],
+          "family": ["volley"],
+          "clues": [
+            "spike",
+            "set",
+            "dig",
+            "net",
+            "serve",
+            "sand",
+            "block",
+            "rotation",
+            "libero",
+            "bump"
+          ]
+        },
+        {
+          "id": "sports-skiing",
+          "answer": "skiing",
+          "accept": ["ski", "skis", "sking", "skiiing", "downhill skiing", "alpine skiing"],
+          "reject": ["skating", "skying"],
+          "family": [],
+          "clues": [
+            "slopes",
+            "snow",
+            "poles",
+            "chairlift",
+            "avalanche",
+            "mountain",
+            "powder",
+            "lodge",
+            "slalom"
+          ]
+        },
+        {
+          "id": "sports-surfing",
+          "answer": "surfing",
+          "accept": ["surf", "surfs", "surfin", "serfing", "surfng", "wave riding"],
+          "reject": ["surfacing", "sailing"],
+          "family": [],
+          "clues": [
+            "waves",
+            "board",
+            "wetsuit",
+            "barrel",
+            "wipeout",
+            "ocean",
+            "reef",
+            "shark",
+            "hang-ten"
+          ]
+        },
+        {
+          "id": "sports-cycling",
+          "answer": "cycling",
+          "accept": ["biking", "bicycling", "bike riding", "cyclng", "cyling", "road cycling"],
+          "reject": ["recycling", "cyclone"],
+          "family": ["cycl"],
+          "clues": [
+            "pedals",
+            "helmet",
+            "spokes",
+            "chain",
+            "saddle",
+            "gears",
+            "peloton",
+            "handlebars",
+            "wheels"
+          ]
+        },
+        {
+          "id": "sports-gymnastics",
+          "answer": "gymnastics",
+          "accept": [
+            "gymnastic",
+            "gymnastiks",
+            "gymnastcs",
+            "gymastics",
+            "gimnastics",
+            "artistic gymnastics"
+          ],
+          "reject": ["gymkhana", "calisthenics"],
+          "family": ["gym"],
+          "clues": [
+            "beam",
+            "vault",
+            "somersault",
+            "handstand",
+            "leotard",
+            "flips",
+            "balance",
+            "cartwheel",
+            "bars",
+            "chalk"
+          ]
+        },
+        {
+          "id": "sports-bowling",
+          "answer": "bowling",
+          "accept": [
+            "tenpin bowling",
+            "ten pin bowling",
+            "tenpins",
+            "bowlng",
+            "bowlling",
+            "boling"
+          ],
+          "reject": ["bowls", "howling"],
+          "family": ["bowl"],
+          "clues": [
+            "pins",
+            "strike",
+            "spare",
+            "gutter",
+            "alley",
+            "shoes",
+            "turkey",
+            "split",
+            "lane"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "vehicles",
+      "label": "Vehicles",
+      "imposterClues": [
+        "ride",
+        "travel",
+        "passengers",
+        "speed",
+        "journey",
+        "trip",
+        "seats",
+        "transport",
+        "steering",
+        "moving",
+        "commute",
+        "controls",
+        "tour"
+      ],
+      "words": [
+        {
+          "id": "vehicles-bus",
+          "answer": "bus",
+          "accept": [
+            "buses",
+            "busses",
+            "city bus",
+            "school bus",
+            "double decker",
+            "autobus",
+            "omnibus"
+          ],
+          "reject": ["bust", "bush"],
+          "family": [],
+          "clues": [
+            "stop",
+            "route",
+            "timetable",
+            "depot",
+            "shelter",
+            "public",
+            "schoolkids",
+            "conductor"
+          ]
+        },
+        {
+          "id": "vehicles-train",
+          "answer": "train",
+          "accept": ["trains", "locomotive", "choo choo", "trian", "trainn", "passenger train"],
+          "reject": ["tram", "drain"],
+          "family": ["train"],
+          "clues": [
+            "tracks",
+            "station",
+            "platform",
+            "carriage",
+            "rails",
+            "steam",
+            "tunnel",
+            "whistle",
+            "railway"
+          ]
+        },
+        {
+          "id": "vehicles-airplane",
+          "answer": "airplane",
+          "accept": [
+            "aeroplane",
+            "plane",
+            "planes",
+            "airplanes",
+            "aircraft",
+            "jet",
+            "airliner",
+            "jumbo jet"
+          ],
+          "reject": ["airport", "planet"],
+          "family": ["plane"],
+          "clues": [
+            "wings",
+            "pilot",
+            "runway",
+            "cockpit",
+            "takeoff",
+            "turbulence",
+            "altitude",
+            "flight",
+            "luggage",
+            "seatbelt"
+          ]
+        },
+        {
+          "id": "vehicles-helicopter",
+          "answer": "helicopter",
+          "accept": [
+            "helicopters",
+            "chopper",
+            "copter",
+            "heli",
+            "helecopter",
+            "helicoptor",
+            "whirlybird"
+          ],
+          "reject": ["helipad", "heliport"],
+          "family": ["heli", "copter"],
+          "clues": [
+            "rotor",
+            "blades",
+            "hover",
+            "rescue",
+            "spinning",
+            "propeller",
+            "news",
+            "whirring",
+            "vertical"
+          ]
+        },
+        {
+          "id": "vehicles-motorcycle",
+          "answer": "motorcycle",
+          "accept": [
+            "motorbike",
+            "motorcycles",
+            "motorbikes",
+            "motocycle",
+            "motercycle",
+            "motorcyle"
+          ],
+          "reject": ["motorboat", "motorcar"],
+          "family": ["motor"],
+          "clues": [
+            "leather",
+            "throttle",
+            "sidecar",
+            "revving",
+            "exhaust",
+            "wheelie",
+            "biker",
+            "kickstand",
+            "roar",
+            "visor"
+          ]
+        },
+        {
+          "id": "vehicles-bicycle",
+          "answer": "bicycle",
+          "accept": ["bike", "bikes", "bicycles", "pushbike", "bycicle", "bicycel", "cycle"],
+          "reject": ["tricycle", "unicycle"],
+          "family": [],
+          "clues": [
+            "pedals",
+            "spokes",
+            "chain",
+            "saddle",
+            "gears",
+            "bell",
+            "tandem",
+            "puncture",
+            "training-wheels"
+          ]
+        },
+        {
+          "id": "vehicles-submarine",
+          "answer": "submarine",
+          "accept": ["submarines", "sub", "subs", "submarene", "submerine", "u-boat"],
+          "reject": ["submersible", "marine"],
+          "family": [],
+          "clues": [
+            "periscope",
+            "torpedo",
+            "sonar",
+            "underwater",
+            "depth",
+            "navy",
+            "dive",
+            "hatch",
+            "ocean",
+            "crew"
+          ]
+        },
+        {
+          "id": "vehicles-tractor",
+          "answer": "tractor",
+          "accept": ["tractors", "traktor", "tracter", "tracktor", "tracor", "farm tractor"],
+          "reject": ["trailer", "traitor"],
+          "family": ["tract"],
+          "clues": [
+            "farm",
+            "plow",
+            "field",
+            "crops",
+            "hay",
+            "mud",
+            "harvest",
+            "barn",
+            "slow",
+            "pulling"
+          ]
+        },
+        {
+          "id": "vehicles-ambulance",
+          "answer": "ambulance",
+          "accept": ["ambulances", "ambulence", "ambulanse", "amberlance", "amblance", "ambulanz"],
+          "reject": ["ambulant", "ambience"],
+          "family": ["ambul"],
+          "clues": [
+            "paramedic",
+            "stretcher",
+            "emergency",
+            "hospital",
+            "injured",
+            "patient",
+            "oxygen",
+            "first-aid",
+            "accident"
+          ]
+        },
+        {
+          "id": "vehicles-fire-truck",
+          "answer": "fire truck",
+          "accept": [
+            "fire engine",
+            "fire trucks",
+            "fire engines",
+            "fire appliance",
+            "fire tender",
+            "firetruk"
+          ],
+          "reject": ["fire station", "tow truck"],
+          "family": ["fire", "truck"],
+          "clues": [
+            "ladder",
+            "hose",
+            "hydrant",
+            "flames",
+            "smoke",
+            "siren",
+            "red",
+            "dalmatian",
+            "blaze"
+          ]
+        },
+        {
+          "id": "vehicles-taxi",
+          "answer": "taxi",
+          "accept": ["taxis", "taxies", "cab", "cabs", "taxicab", "minicab"],
+          "reject": ["taxidermy", "tax"],
+          "family": [],
+          "clues": [
+            "meter",
+            "fare",
+            "driver",
+            "hail",
+            "yellow",
+            "tip",
+            "rank",
+            "pickup",
+            "backseat"
+          ]
+        },
+        {
+          "id": "vehicles-hot-air-balloon",
+          "answer": "hot air balloon",
+          "accept": [
+            "hot air balloons",
+            "air balloon",
+            "hot air ballon",
+            "hot air baloon",
+            "balloon ride",
+            "hot air ballooning"
+          ],
+          "reject": ["blimp", "airship"],
+          "family": ["balloon"],
+          "clues": [
+            "basket",
+            "burner",
+            "float",
+            "drifting",
+            "sunrise",
+            "festival",
+            "propane",
+            "sky",
+            "flame"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "nature",
+      "label": "Nature and weather",
+      "imposterClues": [
+        "outside",
+        "natural",
+        "planet",
+        "photo",
+        "wild",
+        "documentary",
+        "science",
+        "picture",
+        "environment",
+        "wonder",
+        "adventure",
+        "geography",
+        "outdoors"
+      ],
+      "words": [
+        {
+          "id": "nature-rainbow",
+          "answer": "rainbow",
+          "accept": ["rainbows", "ranbow", "rainbo", "raimbow", "rainboww", "reinbow"],
+          "reject": ["rain", "rainfall"],
+          "family": ["rain"],
+          "clues": [
+            "colors",
+            "arch",
+            "prism",
+            "spectrum",
+            "leprechaun",
+            "gold",
+            "double",
+            "seven",
+            "unicorn",
+            "pot"
+          ]
+        },
+        {
+          "id": "nature-tornado",
+          "answer": "tornado",
+          "accept": [
+            "tornadoes",
+            "tornados",
+            "twister",
+            "twisters",
+            "tornadoe",
+            "tornato",
+            "tornedo"
+          ],
+          "reject": ["torpedo", "hurricane"],
+          "family": [],
+          "clues": [
+            "funnel",
+            "spinning",
+            "siren",
+            "basement",
+            "chaser",
+            "debris",
+            "kansas",
+            "vortex",
+            "oz",
+            "trailer"
+          ]
+        },
+        {
+          "id": "nature-volcano",
+          "answer": "volcano",
+          "accept": ["volcanoes", "volcanos", "volcanoe", "vulcano", "volacano", "volcanno"],
+          "reject": ["vulcan", "volleyball"],
+          "family": ["volcan"],
+          "clues": [
+            "lava",
+            "eruption",
+            "magma",
+            "ash",
+            "crater",
+            "pompeii",
+            "molten",
+            "smoke",
+            "hawaii",
+            "dormant"
+          ]
+        },
+        {
+          "id": "nature-waterfall",
+          "answer": "waterfall",
+          "accept": ["waterfalls", "falls", "cascade", "waterfal", "watterfall", "waterfull"],
+          "reject": ["water", "rainfall"],
+          "family": ["water"],
+          "clues": [
+            "niagara",
+            "cliff",
+            "splash",
+            "mist",
+            "plunge",
+            "river",
+            "barrel",
+            "roar",
+            "pool",
+            "drop"
+          ]
+        },
+        {
+          "id": "nature-lightning",
+          "answer": "lightning",
+          "accept": [
+            "lightening",
+            "lightnin",
+            "ligthning",
+            "lightning bolt",
+            "lightning strike",
+            "lightnings"
+          ],
+          "reject": ["lighting", "lighthouse"],
+          "family": [],
+          "clues": [
+            "thunder",
+            "flash",
+            "zap",
+            "electric",
+            "rod",
+            "zigzag",
+            "kite",
+            "strike",
+            "bolt",
+            "crackle"
+          ]
+        },
+        {
+          "id": "nature-snowflake",
+          "answer": "snowflake",
+          "accept": ["snowflakes", "snoflake", "snowflak", "snowflke", "snow crystal", "snowflace"],
+          "reject": ["snowball", "snowman", "cornflake"],
+          "family": ["snow", "flake"],
+          "clues": [
+            "unique",
+            "winter",
+            "frozen",
+            "tongue",
+            "delicate",
+            "crystal",
+            "lace",
+            "flurry",
+            "symmetry",
+            "melt"
+          ]
+        },
+        {
+          "id": "nature-desert",
+          "answer": "desert",
+          "accept": ["deserts", "desrt", "dezert", "desart", "desrts", "desret"],
+          "reject": ["dessert", "deserted"],
+          "family": [],
+          "clues": [
+            "sand",
+            "cactus",
+            "camel",
+            "dune",
+            "oasis",
+            "sahara",
+            "mirage",
+            "dry",
+            "hot",
+            "scorpion"
+          ]
+        },
+        {
+          "id": "nature-forest",
+          "answer": "forest",
+          "accept": ["forests", "woods", "woodland", "forrest", "foreset", "forst"],
+          "reject": ["florist", "fortress"],
+          "family": [],
+          "clues": [
+            "trees",
+            "bear",
+            "hiking",
+            "campfire",
+            "pine",
+            "canopy",
+            "deer",
+            "lost",
+            "owl",
+            "moss"
+          ]
+        },
+        {
+          "id": "nature-glacier",
+          "answer": "glacier",
+          "accept": ["glaciers", "glacer", "glaicer", "glasier", "glacior", "ice sheet"],
+          "reject": ["glazier", "iceberg"],
+          "family": ["glaci"],
+          "clues": [
+            "ice",
+            "melting",
+            "crevasse",
+            "alaska",
+            "arctic",
+            "slow",
+            "mammoth",
+            "calving",
+            "retreat",
+            "blue"
+          ]
+        },
+        {
+          "id": "nature-cave",
+          "answer": "cave",
+          "accept": ["caves", "cavern", "caverns", "grotto", "kave", "cavve"],
+          "reject": ["cove", "cafe", "gave"],
+          "family": [],
+          "clues": [
+            "bats",
+            "stalactite",
+            "echo",
+            "dark",
+            "flashlight",
+            "spelunking",
+            "underground",
+            "drip",
+            "torch",
+            "painting"
+          ]
+        },
+        {
+          "id": "nature-earthquake",
+          "answer": "earthquake",
+          "accept": [
+            "earthquakes",
+            "quake",
+            "quakes",
+            "eartquake",
+            "earthquack",
+            "erthquake",
+            "tremor"
+          ],
+          "reject": ["earthworm", "earthling"],
+          "family": ["quake"],
+          "clues": [
+            "shaking",
+            "richter",
+            "fault",
+            "aftershock",
+            "rubble",
+            "tsunami",
+            "plates",
+            "magnitude",
+            "seismic",
+            "collapse"
+          ]
+        },
+        {
+          "id": "nature-sunset",
+          "answer": "sunset",
+          "accept": ["sunsets", "sundown", "sunsett", "sunet", "dusk", "sunnset"],
+          "reject": ["sunrise", "sunscreen"],
+          "family": ["sun"],
+          "clues": [
+            "orange",
+            "evening",
+            "horizon",
+            "silhouette",
+            "pink",
+            "romantic",
+            "west",
+            "golden",
+            "twilight",
+            "fading"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "clothes",
+      "label": "Clothes",
+      "imposterClues": [
+        "wear",
+        "outfit",
+        "fashion",
+        "closet",
+        "laundry",
+        "wardrobe",
+        "style",
+        "size",
+        "shopping",
+        "fabric",
+        "fold",
+        "mall",
+        "thrift"
+      ],
+      "words": [
+        {
+          "id": "clothes-jeans",
+          "answer": "jeans",
+          "accept": ["jean", "blue jeans", "denim jeans", "jeens", "jeanz", "dungarees"],
+          "reject": ["genes", "jeanie"],
+          "family": [],
+          "clues": [
+            "denim",
+            "blue",
+            "rivets",
+            "ripped",
+            "skinny",
+            "cowboy",
+            "faded",
+            "pockets",
+            "bootcut",
+            "legs"
+          ]
+        },
+        {
+          "id": "clothes-sweater",
+          "answer": "sweater",
+          "accept": ["sweaters", "jumper", "pullover", "sweter", "sweatter", "swetter"],
+          "reject": ["sweatshirt", "sweats"],
+          "family": ["sweat"],
+          "clues": [
+            "wool",
+            "knit",
+            "ugly",
+            "grandma",
+            "turtleneck",
+            "itchy",
+            "yarn",
+            "cardigan",
+            "cozy",
+            "cable"
+          ]
+        },
+        {
+          "id": "clothes-scarf",
+          "answer": "scarf",
+          "accept": ["scarves", "scarfs", "scaf", "scarff", "skarf", "muffler"],
+          "reject": ["scar", "scarecrow"],
+          "family": [],
+          "clues": [
+            "neck",
+            "wrap",
+            "silk",
+            "long",
+            "snowman",
+            "tassels",
+            "striped",
+            "windy",
+            "chilly",
+            "loop"
+          ]
+        },
+        {
+          "id": "clothes-socks",
+          "answer": "socks",
+          "accept": ["sock", "sox", "socs", "sokcs", "soks", "ankle socks"],
+          "reject": ["locks", "smock"],
+          "family": [],
+          "clues": [
+            "feet",
+            "pair",
+            "missing",
+            "toes",
+            "puppet",
+            "stinky",
+            "ankle",
+            "mismatched",
+            "holes",
+            "dryer"
+          ]
+        },
+        {
+          "id": "clothes-gloves",
+          "answer": "gloves",
+          "accept": ["glove", "mittens", "mitten", "gluves", "glovs", "gloes"],
+          "reject": ["globes", "doves"],
+          "family": [],
+          "clues": [
+            "hands",
+            "fingers",
+            "boxing",
+            "leather",
+            "rubber",
+            "baseball",
+            "surgeon",
+            "gardening",
+            "oven",
+            "snowball"
+          ]
+        },
+        {
+          "id": "clothes-pajamas",
+          "answer": "pajamas",
+          "accept": ["pyjamas", "pajama", "pjs", "jammies", "pijamas", "pajamma", "sleepwear"],
+          "reject": ["panama", "bananas"],
+          "family": [],
+          "clues": [
+            "bedtime",
+            "sleepover",
+            "slippers",
+            "flannel",
+            "onesie",
+            "lazy",
+            "morning",
+            "buttons",
+            "teddy",
+            "nightgown"
+          ]
+        },
+        {
+          "id": "clothes-tuxedo",
+          "answer": "tuxedo",
+          "accept": ["tuxedos", "tuxedoes", "tux", "tuxes", "tuxido", "dinner jacket", "tuxedoe"],
+          "reject": ["torpedo", "tornado"],
+          "family": [],
+          "clues": [
+            "bowtie",
+            "prom",
+            "formal",
+            "penguin",
+            "groom",
+            "cummerbund",
+            "rental",
+            "cufflinks",
+            "gala",
+            "black"
+          ]
+        },
+        {
+          "id": "clothes-swimsuit",
+          "answer": "swimsuit",
+          "accept": [
+            "swimsuits",
+            "swimming costume",
+            "bathing suit",
+            "swimwear",
+            "swimsut",
+            "swimsiut",
+            "bathers"
+          ],
+          "reject": ["wetsuit", "sweatsuit"],
+          "family": ["swim"],
+          "clues": [
+            "pool",
+            "beach",
+            "bikini",
+            "summer",
+            "tan",
+            "wet",
+            "lifeguard",
+            "towel",
+            "goggles",
+            "sunscreen"
+          ]
+        },
+        {
+          "id": "clothes-sneakers",
+          "answer": "sneakers",
+          "accept": [
+            "sneaker",
+            "trainers",
+            "trainer",
+            "running shoes",
+            "tennis shoes",
+            "sneekers",
+            "snekers",
+            "kicks"
+          ],
+          "reject": ["snickers", "speakers"],
+          "family": ["sneak"],
+          "clues": [
+            "laces",
+            "gym",
+            "squeak",
+            "sole",
+            "jogging",
+            "basketball",
+            "track",
+            "white",
+            "sporty",
+            "running"
+          ]
+        },
+        {
+          "id": "clothes-tie",
+          "answer": "tie",
+          "accept": ["ties", "necktie", "neckties", "tye", "cravat", "tei"],
+          "reject": ["toe", "pie", "tile"],
+          "family": [],
+          "clues": [
+            "knot",
+            "office",
+            "collar",
+            "suit",
+            "windsor",
+            "business",
+            "dad",
+            "interview",
+            "loosen",
+            "clip"
+          ]
+        },
+        {
+          "id": "clothes-hoodie",
+          "answer": "hoodie",
+          "accept": [
+            "hoodies",
+            "hoody",
+            "hooded sweatshirt",
+            "hoodey",
+            "hoddie",
+            "hoodi",
+            "hooded top"
+          ],
+          "reject": ["hood", "goodie"],
+          "family": [],
+          "clues": [
+            "drawstring",
+            "zipper",
+            "kangaroo",
+            "teenager",
+            "comfy",
+            "fleece",
+            "oversized",
+            "college",
+            "skater",
+            "pouch"
+          ]
+        },
+        {
+          "id": "clothes-dress",
+          "answer": "dress",
+          "accept": ["dresses", "gown", "frock", "sundress", "dres", "dresss"],
+          "reject": ["address", "dresser"],
+          "family": [],
+          "clues": [
+            "skirt",
+            "princess",
+            "twirl",
+            "cocktail",
+            "floral",
+            "frilly",
+            "sleeveless",
+            "hem",
+            "bridesmaid",
+            "sequins"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "holidays",
+      "label": "Holidays and parties",
+      "imposterClues": [
+        "celebrate",
+        "fun",
+        "guests",
+        "friends",
+        "family",
+        "festive",
+        "special",
+        "tradition",
+        "memories",
+        "happy",
+        "event",
+        "occasion",
+        "photos"
+      ],
+      "words": [
+        {
+          "id": "holidays-birthday",
+          "answer": "birthday",
+          "accept": [
+            "birthdays",
+            "bday",
+            "birthdy",
+            "brithday",
+            "birhtday",
+            "birthday party",
+            "bday party"
+          ],
+          "reject": ["birthplace", "birth"],
+          "family": ["birth"],
+          "clues": [
+            "cake",
+            "candles",
+            "wish",
+            "presents",
+            "older",
+            "age",
+            "card",
+            "surprise",
+            "annual",
+            "blowing"
+          ]
+        },
+        {
+          "id": "holidays-wedding",
+          "answer": "wedding",
+          "accept": [
+            "weddings",
+            "marriage",
+            "wedding ceremony",
+            "weding",
+            "weddin",
+            "nuptials",
+            "wedding day"
+          ],
+          "reject": ["bedding", "wedging", "weeding"],
+          "family": [],
+          "clues": [
+            "bride",
+            "groom",
+            "rings",
+            "vows",
+            "veil",
+            "aisle",
+            "bouquet",
+            "honeymoon",
+            "toast",
+            "chapel"
+          ]
+        },
+        {
+          "id": "holidays-fireworks",
+          "answer": "fireworks",
+          "accept": [
+            "firework",
+            "fireworx",
+            "firewerks",
+            "fireworks show",
+            "pyrotechnics",
+            "firworks"
+          ],
+          "reject": ["firewood", "firefighter"],
+          "family": ["fire"],
+          "clues": [
+            "boom",
+            "sparkler",
+            "rocket",
+            "sky",
+            "bang",
+            "display",
+            "loud",
+            "explosion",
+            "crackle",
+            "dazzling"
+          ]
+        },
+        {
+          "id": "holidays-halloween",
+          "answer": "halloween",
+          "accept": [
+            "haloween",
+            "holloween",
+            "halloweens",
+            "hallowen",
+            "halloween party",
+            "all hallows eve",
+            "hallowean"
+          ],
+          "reject": ["hollow", "hallway"],
+          "family": ["hallow"],
+          "clues": [
+            "pumpkin",
+            "costume",
+            "trick",
+            "candy",
+            "witch",
+            "spooky",
+            "ghost",
+            "october",
+            "skeleton",
+            "jack-o-lantern"
+          ]
+        },
+        {
+          "id": "holidays-valentines",
+          "answer": "valentines",
+          "accept": [
+            "valentine",
+            "valentines day",
+            "valentine day",
+            "valentimes",
+            "valentins",
+            "vday"
+          ],
+          "reject": ["valiant", "valencia"],
+          "family": ["valentin"],
+          "clues": [
+            "cupid",
+            "hearts",
+            "roses",
+            "chocolates",
+            "love",
+            "february",
+            "crush",
+            "date",
+            "arrow",
+            "sweetheart"
+          ]
+        },
+        {
+          "id": "holidays-new-year",
+          "answer": "new year",
+          "accept": [
+            "new years",
+            "new years eve",
+            "nye",
+            "new years day",
+            "new yr",
+            "happy new year"
+          ],
+          "reject": ["new yorker", "newer"],
+          "family": ["year"],
+          "clues": [
+            "midnight",
+            "countdown",
+            "resolution",
+            "january",
+            "champagne",
+            "clock",
+            "calendar",
+            "kiss",
+            "noisemaker",
+            "fresh"
+          ]
+        },
+        {
+          "id": "holidays-pinata",
+          "answer": "pinata",
+          "accept": ["pinatas", "pinyata", "pineata", "pinatta", "peniata", "pinnata"],
+          "reject": ["pina colada", "pinto"],
+          "family": [],
+          "clues": [
+            "stick",
+            "blindfold",
+            "swing",
+            "donkey",
+            "smash",
+            "candy",
+            "hanging",
+            "treats",
+            "burst",
+            "mexican"
+          ]
+        },
+        {
+          "id": "holidays-baby-shower",
+          "answer": "baby shower",
+          "accept": [
+            "baby showers",
+            "baby sprinkle",
+            "baby shower party",
+            "babyshowr",
+            "baby shwer",
+            "babie shower"
+          ],
+          "reject": ["bridal shower", "shower"],
+          "family": ["baby", "shower"],
+          "clues": [
+            "diapers",
+            "pregnant",
+            "stroller",
+            "rattle",
+            "pastel",
+            "expecting",
+            "crib",
+            "bottles",
+            "mom-to-be",
+            "registry"
+          ]
+        },
+        {
+          "id": "holidays-graduation",
+          "answer": "graduation",
+          "accept": [
+            "graduations",
+            "grad",
+            "graduation party",
+            "commencement",
+            "graduation day",
+            "gradution",
+            "graduasion"
+          ],
+          "reject": ["gradation", "gradient"],
+          "family": ["gradua"],
+          "clues": [
+            "cap",
+            "diploma",
+            "tassel",
+            "ceremony",
+            "school",
+            "speech",
+            "valedictorian",
+            "toss",
+            "alumni",
+            "degree"
+          ]
+        },
+        {
+          "id": "holidays-balloon",
+          "answer": "balloon",
+          "accept": [
+            "balloons",
+            "baloon",
+            "ballon",
+            "balon",
+            "ballons",
+            "baloons",
+            "helium balloon"
+          ],
+          "reject": ["saloon", "baboon"],
+          "family": [],
+          "clues": [
+            "helium",
+            "pop",
+            "float",
+            "string",
+            "inflate",
+            "twist",
+            "latex",
+            "drifting",
+            "bunch",
+            "needle"
+          ]
+        },
+        {
+          "id": "holidays-confetti",
+          "answer": "confetti",
+          "accept": ["confeti", "confetty", "konfetti", "confettis", "confetii", "confettie"],
+          "reject": ["spaghetti", "confection"],
+          "family": [],
+          "clues": [
+            "paper",
+            "throw",
+            "mess",
+            "cannon",
+            "tiny",
+            "glitter",
+            "popper",
+            "sweep",
+            "shreds",
+            "vacuum"
+          ]
+        },
+        {
+          "id": "holidays-parade",
+          "answer": "parade",
+          "accept": ["parades", "parrade", "paraid", "procession", "street parade", "prade"],
+          "reject": ["paradise", "charade"],
+          "family": [],
+          "clues": [
+            "floats",
+            "marching",
+            "crowd",
+            "baton",
+            "waving",
+            "route",
+            "drummers",
+            "sidewalk",
+            "bands",
+            "mascot"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "music",
+      "label": "Music",
+      "imposterClues": [
+        "sound",
+        "song",
+        "listen",
+        "audio",
+        "tune",
+        "melody",
+        "rhythm",
+        "noise",
+        "studio",
+        "record",
+        "hear",
+        "volume",
+        "performance"
+      ],
+      "words": [
+        {
+          "id": "music-guitar",
+          "answer": "guitar",
+          "accept": [
+            "guitars",
+            "gitar",
+            "guiter",
+            "guittar",
+            "acoustic guitar",
+            "electric guitar",
+            "gutar"
+          ],
+          "reject": ["sitar", "guitarist"],
+          "family": [],
+          "clues": [
+            "strum",
+            "pick",
+            "chords",
+            "frets",
+            "amp",
+            "capo",
+            "campfire",
+            "rockstar",
+            "six",
+            "acoustic"
+          ]
+        },
+        {
+          "id": "music-drums",
+          "answer": "drums",
+          "accept": ["drum", "drum kit", "drum set", "drumms", "percussion", "drumz"],
+          "reject": ["drama", "dream"],
+          "family": [],
+          "clues": [
+            "sticks",
+            "cymbals",
+            "snare",
+            "loud",
+            "kick",
+            "pedal",
+            "beat",
+            "crash",
+            "rimshot",
+            "pounding"
+          ]
+        },
+        {
+          "id": "music-piano",
+          "answer": "piano",
+          "accept": ["pianos", "pianoforte", "grand piano", "paino", "pianno", "pyano"],
+          "reject": ["pianist", "patio"],
+          "family": [],
+          "clues": [
+            "keys",
+            "ivory",
+            "ebony",
+            "bench",
+            "recital",
+            "lessons",
+            "tuner",
+            "chopsticks",
+            "lid",
+            "octave"
+          ]
+        },
+        {
+          "id": "music-violin",
+          "answer": "violin",
+          "accept": ["violins", "fiddle", "fiddles", "violen", "vilin", "vioiln", "violine"],
+          "reject": ["viola", "violence", "violet"],
+          "family": [],
+          "clues": [
+            "bow",
+            "chin",
+            "rosin",
+            "strings",
+            "orchestra",
+            "classical",
+            "quartet",
+            "squeaky",
+            "scroll",
+            "elegant"
+          ]
+        },
+        {
+          "id": "music-trumpet",
+          "answer": "trumpet",
+          "accept": ["trumpets", "trumpit", "trumpett", "trompet", "trumpt", "trumphet"],
+          "reject": ["crumpet", "trombone"],
+          "family": [],
+          "clues": [
+            "brass",
+            "valves",
+            "blow",
+            "fanfare",
+            "mute",
+            "mouthpiece",
+            "bugle",
+            "royal",
+            "military",
+            "lips"
+          ]
+        },
+        {
+          "id": "music-harmonica",
+          "answer": "harmonica",
+          "accept": [
+            "harmonicas",
+            "mouth organ",
+            "harmonika",
+            "harmonca",
+            "harmonnica",
+            "blues harp",
+            "harmoncia"
+          ],
+          "reject": ["harmony", "harmonic"],
+          "family": ["harmon"],
+          "clues": [
+            "blues",
+            "pocket",
+            "cowboy",
+            "breathe",
+            "wail",
+            "reeds",
+            "folk",
+            "holes",
+            "railroad",
+            "porch"
+          ]
+        },
+        {
+          "id": "music-choir",
+          "answer": "choir",
+          "accept": ["choirs", "chorus", "choruses", "chior", "choire", "chorale"],
+          "reject": ["chair", "chore"],
+          "family": [],
+          "clues": [
+            "church",
+            "robes",
+            "harmony",
+            "alto",
+            "conductor",
+            "hymn",
+            "carols",
+            "voices",
+            "tenor",
+            "gospel"
+          ]
+        },
+        {
+          "id": "music-karaoke",
+          "answer": "karaoke",
+          "accept": [
+            "karoke",
+            "karaoki",
+            "carioke",
+            "kareoke",
+            "karaoke night",
+            "karaoke machine",
+            "karioke"
+          ],
+          "reject": ["karate", "kayak"],
+          "family": [],
+          "clues": [
+            "lyrics",
+            "screen",
+            "bar",
+            "off-key",
+            "duet",
+            "singalong",
+            "japan",
+            "embarrassing",
+            "cheesy",
+            "ballad"
+          ]
+        },
+        {
+          "id": "music-opera",
+          "answer": "opera",
+          "accept": ["operas", "opra", "oprea", "operah", "operra", "opera show"],
+          "reject": ["operator", "opal"],
+          "family": [],
+          "clues": [
+            "aria",
+            "dramatic",
+            "phantom",
+            "italian",
+            "tragic",
+            "libretto",
+            "balcony",
+            "binoculars",
+            "diva",
+            "shatter"
+          ]
+        },
+        {
+          "id": "music-jazz",
+          "answer": "jazz",
+          "accept": ["jaz", "jazz music", "smooth jazz", "jass", "jazs", "jazzz"],
+          "reject": ["jams", "jars"],
+          "family": [],
+          "clues": [
+            "saxophone",
+            "improvise",
+            "swing",
+            "scat",
+            "club",
+            "smoky",
+            "bebop",
+            "cool",
+            "snapping",
+            "lounge"
+          ]
+        },
+        {
+          "id": "music-headphones",
+          "answer": "headphones",
+          "accept": [
+            "headphone",
+            "earphones",
+            "earphone",
+            "earbuds",
+            "headset",
+            "headfones",
+            "hedphones"
+          ],
+          "reject": ["headlines", "headstones", "telephones"],
+          "family": [],
+          "clues": [
+            "ears",
+            "wireless",
+            "noise-cancelling",
+            "cord",
+            "tangled",
+            "podcast",
+            "private",
+            "gaming",
+            "commute",
+            "cushions"
+          ]
+        },
+        {
+          "id": "music-microphone",
+          "answer": "microphone",
+          "accept": ["microphones", "mic", "mike", "mics", "microphne", "mircophone", "mikes"],
+          "reject": ["microwave", "megaphone", "microscope"],
+          "family": ["micro"],
+          "clues": [
+            "stand",
+            "podium",
+            "drop",
+            "feedback",
+            "stage",
+            "check",
+            "reporter",
+            "amplify",
+            "cordless",
+            "testing"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "fantasy",
+      "label": "Fantasy",
+      "imposterClues": [
+        "legend",
+        "myth",
+        "medieval",
+        "quest",
+        "ancient",
+        "tale",
+        "enchanted",
+        "epic",
+        "adventure",
+        "folklore",
+        "realm",
+        "mystical",
+        "bedtime"
+      ],
+      "words": [
+        {
+          "id": "fantasy-dragon",
+          "answer": "dragon",
+          "accept": ["dragons", "dragan", "dragen", "dargon", "drgon", "wyrm"],
+          "reject": ["wagon", "drag"],
+          "family": [],
+          "clues": [
+            "fire",
+            "scales",
+            "hoard",
+            "lair",
+            "roar",
+            "egg",
+            "claws",
+            "breath",
+            "flying",
+            "cave"
+          ]
+        },
+        {
+          "id": "fantasy-wizard",
+          "answer": "wizard",
+          "accept": ["wizards", "wizzard", "wizrd", "sorcerer", "sorceror", "mage"],
+          "reject": ["lizard", "blizzard"],
+          "family": [],
+          "clues": [
+            "beard",
+            "staff",
+            "robe",
+            "wise",
+            "spellbook",
+            "apprentice",
+            "elderly",
+            "owl",
+            "school",
+            "hat"
+          ]
+        },
+        {
+          "id": "fantasy-unicorn",
+          "answer": "unicorn",
+          "accept": ["unicorns", "unicorne", "unacorn", "unicron", "unicorm", "unikorn"],
+          "reject": ["uniform"],
+          "family": [],
+          "clues": [
+            "horn",
+            "rainbow",
+            "white",
+            "horse",
+            "sparkle",
+            "mane",
+            "glitter",
+            "pony",
+            "hooves",
+            "pastel"
+          ]
+        },
+        {
+          "id": "fantasy-castle",
+          "answer": "castle",
+          "accept": ["castles", "castel", "castl", "cassle", "fortress", "citadel"],
+          "reject": ["cattle", "hassle"],
+          "family": [],
+          "clues": [
+            "moat",
+            "drawbridge",
+            "tower",
+            "king",
+            "walls",
+            "stone",
+            "throne",
+            "turret",
+            "siege",
+            "battlements"
+          ]
+        },
+        {
+          "id": "fantasy-potion",
+          "answer": "potion",
+          "accept": ["potions", "potian", "pottion", "poshun", "elixir", "love potion"],
+          "reject": ["lotion", "portion", "option"],
+          "family": [],
+          "clues": [
+            "bottle",
+            "bubbling",
+            "drink",
+            "vial",
+            "poison",
+            "ingredients",
+            "cork",
+            "glowing",
+            "flask",
+            "alchemy"
+          ]
+        },
+        {
+          "id": "fantasy-knight",
+          "answer": "knight",
+          "accept": ["knights", "knigt", "kinght", "knigth", "knihgt", "paladin"],
+          "reject": ["night", "knit"],
+          "family": [],
+          "clues": [
+            "armor",
+            "sword",
+            "steed",
+            "shield",
+            "lance",
+            "joust",
+            "helmet",
+            "sir",
+            "chivalry",
+            "squire"
+          ]
+        },
+        {
+          "id": "fantasy-fairy",
+          "answer": "fairy",
+          "accept": ["fairies", "fairys", "faerie", "fairie", "faery", "pixie"],
+          "reject": ["ferry", "dairy", "hairy"],
+          "family": [],
+          "clues": [
+            "wings",
+            "dust",
+            "tiny",
+            "godmother",
+            "tooth",
+            "flowers",
+            "garden",
+            "toadstool",
+            "wish",
+            "flutter"
+          ]
+        },
+        {
+          "id": "fantasy-troll",
+          "answer": "troll",
+          "accept": ["trolls", "trol", "trolle", "trowl", "troal", "trrol"],
+          "reject": ["toll", "ogre"],
+          "family": [],
+          "clues": [
+            "bridge",
+            "ugly",
+            "club",
+            "smelly",
+            "green",
+            "warts",
+            "grumpy",
+            "mountain",
+            "hairy"
+          ]
+        },
+        {
+          "id": "fantasy-mermaid",
+          "answer": "mermaid",
+          "accept": ["mermaids", "mermade", "mermaide", "mermiad", "marmaid", "sea maiden"],
+          "reject": ["merman"],
+          "family": [],
+          "clues": [
+            "tail",
+            "ocean",
+            "seashell",
+            "sailor",
+            "singing",
+            "underwater",
+            "fins",
+            "rock",
+            "comb",
+            "lagoon"
+          ]
+        },
+        {
+          "id": "fantasy-witch",
+          "answer": "witch",
+          "accept": ["witches", "wich", "whitch", "witche", "wtich", "sorceress"],
+          "reject": ["which", "switch", "twitch"],
+          "family": [],
+          "clues": [
+            "broomstick",
+            "cauldron",
+            "cat",
+            "cackle",
+            "halloween",
+            "nose",
+            "coven",
+            "curse",
+            "brew",
+            "gingerbread"
+          ]
+        },
+        {
+          "id": "fantasy-goblin",
+          "answer": "goblin",
+          "accept": ["goblins", "gobblin", "goblen", "goblim", "gobline", "hobgoblin"],
+          "reject": ["gremlin", "gobbling"],
+          "family": [],
+          "clues": [
+            "sneaky",
+            "ears",
+            "mischief",
+            "gold",
+            "thief",
+            "small",
+            "tunnel",
+            "horde",
+            "greedy",
+            "raid"
+          ]
+        },
+        {
+          "id": "fantasy-wand",
+          "answer": "wand",
+          "accept": ["wands", "magic wand", "wond", "whand", "wnad", "magic stick"],
+          "reject": ["want", "wind"],
+          "family": [],
+          "clues": [
+            "stick",
+            "wave",
+            "sparks",
+            "abracadabra",
+            "spell",
+            "wood",
+            "flick",
+            "star",
+            "tip",
+            "swish"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "tech",
+      "label": "Tech",
+      "imposterClues": [
+        "online",
+        "digital",
+        "gadget",
+        "modern",
+        "internet",
+        "computer",
+        "update",
+        "settings",
+        "everyday",
+        "useful",
+        "device",
+        "notification",
+        "upgrade"
+      ],
+      "words": [
+        {
+          "id": "tech-laptop",
+          "answer": "laptop",
+          "accept": ["laptops", "labtop", "leptop", "laptp", "laptop computer", "notebook"],
+          "reject": ["desktop", "lapdog"],
+          "family": [],
+          "clues": [
+            "portable",
+            "lid",
+            "homework",
+            "trackpad",
+            "sticker",
+            "remote",
+            "fold",
+            "backpack",
+            "overheating",
+            "sleeve"
+          ]
+        },
+        {
+          "id": "tech-password",
+          "answer": "password",
+          "accept": ["passwords", "pasword", "passwrod", "passwerd", "passcode", "passphrase"],
+          "reject": ["passport", "crossword"],
+          "family": [],
+          "clues": [
+            "secret",
+            "forgot",
+            "login",
+            "reset",
+            "characters",
+            "hacker",
+            "security",
+            "asterisk",
+            "strong",
+            "locked"
+          ]
+        },
+        {
+          "id": "tech-wifi",
+          "answer": "wifi",
+          "accept": ["wireless", "wifi signal", "wifi network", "wify", "whifi", "wiffi"],
+          "reject": ["hifi", "sci-fi"],
+          "family": [],
+          "clues": [
+            "router",
+            "bars",
+            "signal",
+            "hotspot",
+            "cafe",
+            "free",
+            "slow",
+            "network",
+            "buffering",
+            "guest"
+          ]
+        },
+        {
+          "id": "tech-emoji",
+          "answer": "emoji",
+          "accept": ["emojis", "emoticon", "emogi", "emojii", "emoij", "smiley"],
+          "reject": ["emo"],
+          "family": [],
+          "clues": [
+            "face",
+            "texting",
+            "laughing",
+            "thumbs-up",
+            "yellow",
+            "wink",
+            "skull",
+            "reaction",
+            "cute"
+          ]
+        },
+        {
+          "id": "tech-selfie",
+          "answer": "selfie",
+          "accept": ["selfies", "selfy", "selfee", "sellfie", "selfi", "self portrait"],
+          "reject": ["selfish", "shelfie"],
+          "family": ["self"],
+          "clues": [
+            "pose",
+            "angle",
+            "stick",
+            "filter",
+            "mirror",
+            "duckface",
+            "smile",
+            "arm",
+            "vacation",
+            "pout"
+          ]
+        },
+        {
+          "id": "tech-keyboard",
+          "answer": "keyboard",
+          "accept": ["keyboards", "keybord", "keyboad", "keybaord", "keboard", "qwerty keyboard"],
+          "reject": ["billboard", "cardboard"],
+          "family": [],
+          "clues": [
+            "typing",
+            "qwerty",
+            "keys",
+            "spacebar",
+            "shift",
+            "clicky",
+            "rgb",
+            "backspace",
+            "letters",
+            "crumbs"
+          ]
+        },
+        {
+          "id": "tech-charger",
+          "answer": "charger",
+          "accept": ["chargers", "chager", "charjer", "chrger", "phone charger", "charging cable"],
+          "reject": ["charter"],
+          "family": ["charg"],
+          "clues": [
+            "plug",
+            "cable",
+            "battery",
+            "outlet",
+            "cord",
+            "percent",
+            "bedside",
+            "usb",
+            "adapter",
+            "borrow"
+          ]
+        },
+        {
+          "id": "tech-webcam",
+          "answer": "webcam",
+          "accept": ["webcams", "web camera", "webcamm", "wecam", "webbcam", "computer camera"],
+          "reject": ["webcast", "webcomic"],
+          "family": [],
+          "clues": [
+            "video-call",
+            "meeting",
+            "lens",
+            "tape",
+            "cover",
+            "streamer",
+            "interview",
+            "frozen",
+            "lighting",
+            "grainy"
+          ]
+        },
+        {
+          "id": "tech-printer",
+          "answer": "printer",
+          "accept": ["printers", "printor", "priner", "prnter", "inkjet", "laser printer"],
+          "reject": ["painter", "sprinter"],
+          "family": ["print"],
+          "clues": [
+            "ink",
+            "paper",
+            "jammed",
+            "cartridge",
+            "copies",
+            "tray",
+            "scanner",
+            "toner",
+            "office"
+          ]
+        },
+        {
+          "id": "tech-hashtag",
+          "answer": "hashtag",
+          "accept": ["hashtags", "hastag", "hashtage", "hashteg", "pound sign", "hash sign"],
+          "reject": ["hashbrown"],
+          "family": ["hash"],
+          "clues": [
+            "trending",
+            "caption",
+            "viral",
+            "topic",
+            "symbol",
+            "grid",
+            "campaign",
+            "keyword",
+            "challenge"
+          ]
+        },
+        {
+          "id": "tech-spam",
+          "answer": "spam",
+          "accept": [
+            "spam email",
+            "spam mail",
+            "junk mail",
+            "junk email",
+            "spamm",
+            "spam messages"
+          ],
+          "reject": ["scam", "span", "spa"],
+          "family": [],
+          "clues": [
+            "inbox",
+            "junk",
+            "unsubscribe",
+            "scam",
+            "prince",
+            "lottery",
+            "robocall",
+            "annoying",
+            "delete",
+            "folder"
+          ]
+        },
+        {
+          "id": "tech-screenshot",
+          "answer": "screenshot",
+          "accept": [
+            "screenshots",
+            "screencap",
+            "screen capture",
+            "screengrab",
+            "screenshoot",
+            "sreenshot"
+          ],
+          "reject": ["screenplay"],
+          "family": ["screen"],
+          "clues": [
+            "evidence",
+            "receipts",
+            "crop",
+            "proof",
+            "gallery",
+            "snap",
+            "buttons",
+            "meme",
+            "leaked",
+            "sharing"
+          ]
+        }
+      ]
+    }
+  ]
+}

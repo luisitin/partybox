@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { applyRoomEvent } from './room';
 import { coerceSettings, defaultSettings } from './settings';
-import { controllerView, gameSummaries, snapshot, tvView } from './views';
+import { controllerView, snapshot, tvView } from './views';
 import { deps, joinEvent, playingRoom, roomWith, T0, vip } from './test-utils.helper';
 
 describe('views', () => {
@@ -11,7 +11,8 @@ describe('views', () => {
     expect(snap.players.map((p) => p.id)).toEqual(['p1', 'p2']);
     expect(snap.players[0]).not.toHaveProperty('token');
     expect(snap.players[0]).toMatchObject({ isVip: true, connected: true, spectator: false });
-    expect(snap.games.map((g) => g.id)).toEqual(['fake']);
+    expect(snap).not.toHaveProperty('games');
+    expect(snap).not.toHaveProperty('selectedGame');
     expect(snap.canStart).toEqual({ ok: false, reason: 'Pick a game first.' });
     expect(snap.results).toBeNull();
   });
@@ -63,9 +64,12 @@ describe('views', () => {
     expect(snap.results?.players).toHaveLength(2);
   });
 
-  it('gameSummaries are sorted by name and carry settings specs', () => {
-    const summaries = gameSummaries(deps);
-    expect(summaries[0]?.settings).toHaveLength(3);
+  it('a chosen game brings its settings form; the game list is never in the snapshot', () => {
+    const room = { ...roomWith(2), status: 'selecting' as const, selectedGameId: 'fake' };
+    const snap = snapshot(room, deps);
+    expect(snap.selectedGame?.id).toBe('fake');
+    expect(snap.selectedGame?.settings).toHaveLength(3);
+    expect(snap).not.toHaveProperty('games');
   });
 });
 

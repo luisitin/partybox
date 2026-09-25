@@ -69,6 +69,10 @@ export function lockSemitones(lockedCount: number): number {
 export interface SoundEngine {
   /** Create/resume the AudioContext. Call from a click/tap handler. */
   enable(): Promise<boolean>;
+  /** Fetch and decode the recorded cues (the cheer, the horn) ahead of their moment. Part 00 §2.1:
+   *  audio downloads when it is about to play — the TV warms them as a game starts, and a phone,
+   *  which never plays them, never fetches them. */
+  warm(): void;
   enabled(): boolean;
   play(cue: SoundCue, opts?: PlayOptions): void;
   /** performance.now() of the last cue actually started — lets the shell skip a generic cue
@@ -218,12 +222,14 @@ export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine
         // Not only 'suspended': iOS Safari reports 'interrupted' after a lock or a background
         // tab, which a phone does far more often than a TV.
         if (ctx.state !== 'running') await ctx.resume();
-        // Decode the clips now so the first cheer is instant.
-        for (const samples of Object.values(SAMPLES)) for (const s of samples) void buffer(s.src);
         return ctx.state === 'running';
       } catch {
         return false;
       }
+    },
+    warm() {
+      if (ctx)
+        for (const samples of Object.values(SAMPLES)) for (const s of samples) void buffer(s.src);
     },
     enabled: () => ctx?.state === 'running',
     play(cue, opts) {

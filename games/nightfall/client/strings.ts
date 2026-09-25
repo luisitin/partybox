@@ -6,57 +6,12 @@ import { STRINGS_UI_ES } from './strings-ui';
 
 export const STRINGS: Strings = {
   es: {
-    // manifest.json — the game picker
-    'By night the wolves hunt. By day, the village votes.':
-      'De noche cazan los lobos. De día, vota el pueblo.',
-    "Secret roles on every phone: a few wolves hide among the villagers, with a seer and a doctor on the village's side. At night everyone picks someone in secret. By day the village argues and votes someone out. The village wins when the wolves are gone; the wolves win when they equal the rest.":
-      'Roles secretos en cada teléfono: unos lobos se esconden entre los aldeanos, con una vidente y un médico del lado del pueblo. De noche todos eligen a alguien en secreto. De día el pueblo discute y expulsa a alguien. Gana el pueblo cuando no quedan lobos; ganan los lobos cuando igualan al resto.',
-    Flavour: 'Ambientación',
-    'The same game, reskinned: names, icons and the narrator change':
-      'El mismo juego con otra piel: cambian los nombres, los iconos y el narrador',
-    'Village (wolves)': 'Pueblo (lobos)',
-    'Town (mafia)': 'Ciudad (mafia)',
+    // Words the screens share with the settings (the settings' own Spanish: manifest.es.json)
     Wolves: 'Lobos',
-    'Auto: 2 for 6–8 players, 3 for 9–11, 4 for 12–16; never more than a third':
-      'Auto: 2 con 6–8 jugadores, 3 con 9–11, 4 con 12–16; nunca más de un tercio',
-    Auto: 'Auto',
-    '1': '1',
-    '2': '2',
-    '3': '3',
-    '4': '4',
-    'Special roles': 'Roles especiales',
-    "Each takes a villager's seat; the jester needs 7+ players":
-      'Cada uno ocupa el lugar de un aldeano; el bufón necesita 7 o más jugadores',
-    'Reveal roles': 'Revelar roles',
-    "Show a player's role when they die": 'Mostrar el rol de quien muere',
-    'Ghosts see all': 'Los fantasmas lo ven todo',
-    'Dead players see every role (they must stay silent)':
-      'Los muertos ven todos los roles (y deben callar)',
-    Hunches: 'Corazonadas',
-    'Villagers pick a suspect at night; the anonymous tally shows at dawn':
-      'Los aldeanos eligen un sospechoso de noche; el recuento anónimo se ve al amanecer',
     'Town board': 'Tablón del pueblo',
-    'Typed posts by day; Auto = on only when remote players have no call':
-      'Mensajes escritos de día; Auto = solo si hay jugadores a distancia sin llamada',
-    On: 'Sí',
-    Off: 'No',
     Night: 'Noche',
-    'Seconds to choose at night': 'Segundos para elegir de noche',
     Day: 'Día',
-    'Seconds of discussion': 'Segundos de discusión',
     Vote: 'Votación',
-    'Seconds to vote': 'Segundos para votar',
-    Days: 'Días',
-    'The wolves win if they survive the last day': 'Los lobos ganan si sobreviven al último día',
-    Narrator: 'Narrador',
-    'The voice that tells the story; No narrator = silent':
-      'La voz que cuenta la historia; Sin narrador = en silencio',
-    'No narrator': 'Sin narrador',
-    'Old British Man': 'Señor británico',
-    'Young British Man': 'Joven británico',
-    'American Woman': 'Mujer estadounidense',
-    'Soft-Spoken Woman': 'Mujer de voz suave',
-    Original: 'Original',
 
     // flavours.json — village
     Wolf: 'Lobo',

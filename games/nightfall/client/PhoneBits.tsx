@@ -37,7 +37,7 @@ export function RoleStrip({ view }: { view: View }): JSX.Element | null {
   const L = useT(STRINGS);
   if (!view.role) return null;
   return (
-    <HoldCard strip back={L('Hold: your role')} label={L('Hold to see your role')}>
+    <HoldCard strip secret="role">
       <span className={styles.jobLine}>
         {view.role.icon} {L.sent(view.role.name)}
       </span>
@@ -146,12 +146,12 @@ export function GhostScreen({ view }: { view: View }): JSX.Element {
           <p className={styles.sub}>{L('Watch, but stay silent.')}</p>
         </div>
         {view.report ? (
-          <HoldCard strip back={L('Hold: night report')} label={L('Hold to see your night report')}>
+          <HoldCard strip secret="report">
             <span className={styles.jobLine}>{L.sent(view.report)}</span>
           </HoldCard>
         ) : null}
         {seeAll ? (
-          <HoldCard strip back={L('Hold: every role')} label={L('Hold to see every role')}>
+          <HoldCard strip secret="every">
             <span className={styles.jobLine}>
               {(view.roles ?? [])
                 .map(

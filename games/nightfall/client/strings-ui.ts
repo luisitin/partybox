@@ -2,6 +2,16 @@
 // strings.ts so each file stays readable; strings.ts spreads this table into STRINGS.es.
 export const STRINGS_UI_ES: Record<string, string> = {
   // phone — shared
+  'Tap to see your role': 'Toca para ver tu rol',
+  'Tap: your role': 'Toca: tu rol',
+  'Tap to see your night job': 'Toca para ver tu tarea de la noche',
+  'Tap: night job': 'Toca: tarea nocturna',
+  'Tap to see your night report': 'Toca para ver tu informe de la noche',
+  'Tap: night report': 'Toca: informe nocturno',
+  'Tap to see every role': 'Toca para ver todos los roles',
+  'Tap: every role': 'Toca: todos los roles',
+  'It hides again by itself.': 'Se vuelve a ocultar sola.',
+  'Keep it close: neighbours peek.': 'Tápala bien: los vecinos miran.',
   "You're in as soon as this one ends": 'Entras en cuanto termine esta',
   'Hold: your role': 'Mantén: tu rol',
   'Hold to see your role': 'Mantén pulsado para ver tu rol',

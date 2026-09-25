@@ -1,11 +1,10 @@
 // Entry: three routes, switched on the pathname (ADR-011, no router). Styles are global tokens +
 // CSS Modules per component.
-import { StrictMode } from 'react';
+import { StrictMode, Suspense, lazy } from 'react';
 import type { JSX } from 'react';
 import { createRoot } from 'react-dom/client';
 import { ControllerApp } from './controller/ControllerApp';
 import { guardStaleChunks } from './net/stale';
-import { Preview } from './preview/Preview';
 // Bundled OFL font (ADR-012, BL-001): only the upright weight axis; unicode-range keeps downloads small.
 import '@fontsource-variable/nunito/wght.css';
 import './styles/tokens.css';
@@ -14,7 +13,11 @@ import { applyMotionPreference, getLang, subscribeLang } from '@partybox/game-sd
 import { THEMES, applyTheme } from './theme';
 import type { ThemeId } from './theme';
 import { fitTvToViewport } from './tv/fit';
-import { TvApp } from './tv/TvApp';
+
+// Part 00 §2.1 (#44): a phone's join page downloads the phone shell only — the TV and the preview
+// are their own chunks, fetched by the page that needs them.
+const TvApp = lazy(() => import('./tv/TvApp').then((m) => ({ default: m.TvApp })));
+const Preview = lazy(() => import('./preview/Preview').then((m) => ({ default: m.Preview })));
 
 const THEME_IDS = new Set<string>(THEMES.map((t) => t.id));
 
@@ -28,13 +31,21 @@ function route(pathname: string): JSX.Element {
   if (pathname === '/tv' || pathname === '/tv/') {
     document.documentElement.dataset['surface'] = 'tv';
     fitTvToViewport();
-    return <TvApp />;
+    return (
+      <Suspense fallback={null}>
+        <TvApp />
+      </Suspense>
+    );
   }
   if (pathname.startsWith('/preview/')) {
     const tv = new URLSearchParams(location.search).get('view') !== 'controller';
     document.documentElement.dataset['surface'] = tv ? 'tv' : 'controller';
     if (tv) fitTvToViewport();
-    return <Preview />;
+    return (
+      <Suspense fallback={null}>
+        <Preview />
+      </Suspense>
+    );
   }
   document.documentElement.dataset['surface'] = 'controller';
   return <ControllerApp />;

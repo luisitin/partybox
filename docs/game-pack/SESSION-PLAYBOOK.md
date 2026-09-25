@@ -83,7 +83,7 @@ logic and its tests don't need F1–F4), and check main again each hour.
 ## 5. Working rules
 
 - `pnpm verify` green before every commit on your branch (registry, typecheck, lint max-lines 300,
-  lint:deps, format, unit+contract, sim smoke, build, doc drift).
+  lint:deps, format, unit+contract, sim smoke, build, bundle, doc drift).
 - Edit code with the Edit/Write tools (Python on Windows writes CRLF; heredocs mangle escapes).
 - Keep `docs/game-pack/<id>/NOTES.md` current: decisions, conflicts found, stand-ins in use, what's
   left. It is how the owner and the other sessions see where you are.

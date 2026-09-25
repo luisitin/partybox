@@ -21,6 +21,8 @@ const steps: Step[] = [
   { name: 'unit+contract', args: ['test'] },
   { name: 'sim smoke', args: ['sim', '--smoke'], requires: 'packages/sim/src/smoke.ts' },
   { name: 'build', args: ['build'] },
+  // What phones download: game code in the entry, per-game closures, budgets (FOUNDATION-AUDIT #7).
+  { name: 'bundle', args: ['check-bundle'] },
   { name: 'doc drift', args: ['check-drift'] },
 ];
 

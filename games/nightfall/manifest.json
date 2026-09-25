@@ -1,13 +1,27 @@
 {
   "id": "nightfall",
   "name": "Nightfall",
+  "icon": "🐺",
   "tagline": "By night the wolves hunt. By day, the village votes.",
   "description": "Secret roles on every phone: a few wolves hide among the villagers, with a seer and a doctor on the village's side. At night everyone picks someone in secret. By day the village argues and votes someone out. The village wins when the wolves are gone; the wolves win when they equal the rest.",
+  "howToPlay": [
+    "Check your card for your secret role. Wolves know each other.",
+    "At night everyone taps a face in secret: wolves hunt, the seer looks, the doctor saves.",
+    "By day, talk it out and vote someone out. Find the wolves before they outnumber you."
+  ],
   "version": "0.1.0",
   "minPlayers": 6,
   "maxPlayers": 16,
   "estimatedMinutes": 20,
-  "tags": ["hidden-roles", "bluff"],
+  "tags": [
+    "hidden-roles",
+    "bluff"
+  ],
+  "presence": {
+    "needs": "voice-if-remote",
+    "note": "The day is spoken: remote players need a call (or turn on the Town board)."
+  },
+  "addedOn": "2026-09-25",
   "settings": [
     {
       "key": "flavour",
@@ -16,8 +30,14 @@
       "type": "select",
       "default": "village",
       "options": [
-        { "value": "village", "label": "Village (wolves)" },
-        { "value": "mafia", "label": "Town (mafia)" }
+        {
+          "value": "village",
+          "label": "Village (wolves)"
+        },
+        {
+          "value": "mafia",
+          "label": "Town (mafia)"
+        }
       ]
     },
     {
@@ -27,11 +47,26 @@
       "type": "select",
       "default": "auto",
       "options": [
-        { "value": "auto", "label": "Auto" },
-        { "value": "1", "label": "1" },
-        { "value": "2", "label": "2" },
-        { "value": "3", "label": "3" },
-        { "value": "4", "label": "4" }
+        {
+          "value": "auto",
+          "label": "Auto"
+        },
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        }
       ]
     },
     {
@@ -41,10 +76,22 @@
       "type": "multiselect",
       "default": "seer,doctor",
       "options": [
-        { "value": "seer", "label": "Seer" },
-        { "value": "doctor", "label": "Doctor" },
-        { "value": "hunter", "label": "Hunter" },
-        { "value": "jester", "label": "Jester" }
+        {
+          "value": "seer",
+          "label": "Seer"
+        },
+        {
+          "value": "doctor",
+          "label": "Doctor"
+        },
+        {
+          "value": "hunter",
+          "label": "Hunter"
+        },
+        {
+          "value": "jester",
+          "label": "Jester"
+        }
       ]
     },
     {
@@ -75,9 +122,18 @@
       "type": "select",
       "default": "auto",
       "options": [
-        { "value": "auto", "label": "Auto" },
-        { "value": "on", "label": "On" },
-        { "value": "off", "label": "Off" }
+        {
+          "value": "auto",
+          "label": "Auto"
+        },
+        {
+          "value": "on",
+          "label": "On"
+        },
+        {
+          "value": "off",
+          "label": "Off"
+        }
       ]
     },
     {
@@ -127,12 +183,30 @@
       "type": "select",
       "default": "fable",
       "options": [
-        { "value": "none", "label": "No narrator" },
-        { "value": "george", "label": "Old British Man" },
-        { "value": "fable", "label": "Young British Man" },
-        { "value": "jessica", "label": "American Woman" },
-        { "value": "sky", "label": "Soft-Spoken Woman" },
-        { "value": "original", "label": "Original" }
+        {
+          "value": "none",
+          "label": "No narrator"
+        },
+        {
+          "value": "george",
+          "label": "Old British Man"
+        },
+        {
+          "value": "fable",
+          "label": "Young British Man"
+        },
+        {
+          "value": "jessica",
+          "label": "American Woman"
+        },
+        {
+          "value": "sky",
+          "label": "Soft-Spoken Woman"
+        },
+        {
+          "value": "original",
+          "label": "Original"
+        }
       ]
     }
   ],

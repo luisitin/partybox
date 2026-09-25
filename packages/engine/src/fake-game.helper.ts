@@ -28,13 +28,17 @@ export const fakeGame: GameDefinition<FakeState, FakeInput> = {
   manifest: {
     id: 'fake',
     name: 'Fake',
+    icon: '🎲',
     tagline: 'taps',
+    howToPlay: ['a', 'b', 'c'],
+    presence: { needs: 'anywhere' },
+    addedOn: '2026-01-01',
     description: 'A test game.',
     version: '1.0.0',
     minPlayers: 2,
     maxPlayers: 4,
     estimatedMinutes: 1,
-    tags: [],
+    tags: ['words'],
     settings: [
       { key: 'rounds', label: 'Rounds', type: 'number', default: 3, min: 1, max: 5, step: 1 },
       { key: 'spicy', label: 'Spicy', type: 'boolean', default: false },

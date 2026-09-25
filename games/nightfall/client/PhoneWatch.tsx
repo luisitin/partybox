@@ -30,7 +30,7 @@ export function DawnPhone({ view }: { view: View }): JSX.Element {
   return (
     <WatchTheTv>
       {view.report ? (
-        <HoldCard strip back={L('Hold: night report')} label={L('Hold to see your night report')}>
+        <HoldCard strip secret="report">
           <span className={styles.jobLine}>{L.sent(view.report)}</span>
         </HoldCard>
       ) : null}

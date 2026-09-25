@@ -105,7 +105,7 @@ export function PhoneStage({ view }: { view: PushedView<ControllerView> }): JSX.
         ) : null}
         {v.phaseId === 'verdict' ? <Ballots view={v} /> : null}
         {v.report ? (
-          <HoldCard strip back={L('Hold: night report')} label={L('Hold to see your night report')}>
+          <HoldCard strip secret="report">
             <span className={styles.jobLine}>{L.sent(v.report)}</span>
           </HoldCard>
         ) : null}
