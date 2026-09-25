@@ -8,5 +8,5 @@ import styles from './fakeout.module.css';
 export function EnglishNote(): JSX.Element | null {
   const L = useT(STRINGS);
   if (useLang() === 'en') return null;
-  return <p className={styles.englishNote}>🇬🇧 {L('The facts and answers are in English.')}</p>;
+  return <p className={styles.englishNote}>{L('The facts and answers are in English.')}</p>;
 }
