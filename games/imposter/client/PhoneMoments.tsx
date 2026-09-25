@@ -155,7 +155,13 @@ export function PhoneAfter({ view, skip, send }: Props): JSX.Element {
           ) : null}
         </div>
       ) : null}
-      <PhoneStageBody view={view} />
+      {view.result ? (
+        <PhoneStageBody view={view} />
+      ) : (
+        <div className={styles.stageCenter}>
+          <PhoneStageBody view={view} />
+        </div>
+      )}
     </Screen>
   );
 }
