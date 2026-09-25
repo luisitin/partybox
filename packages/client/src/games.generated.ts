@@ -15,6 +15,10 @@ export const gameLoaders: Readonly<Record<string, GameLoaders>> = {
     phone: () => import('../../../games/broken-pencil/client/phone-entry').then((m) => m.phone),
     tv: () => import('../../../games/broken-pencil/client/tv-entry').then((m) => m.tv),
   },
+  'echo': {
+    phone: () => import('../../../games/echo/client/phone-entry').then((m) => m.phone),
+    tv: () => import('../../../games/echo/client/tv-entry').then((m) => m.tv),
+  },
   'fake-out': {
     phone: () => import('../../../games/fake-out/client/phone-entry').then((m) => m.phone),
     tv: () => import('../../../games/fake-out/client/tv-entry').then((m) => m.tv),
