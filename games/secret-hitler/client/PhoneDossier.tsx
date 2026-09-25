@@ -23,7 +23,8 @@ export function PhoneDossier({ view }: { view: ShControllerView }): JSX.Element 
         </dd>
         <dt>{L('Role')}</dt>
         <dd>
-          <strong>{roleName(L, d.role)}</strong> · {roleGoal(L, d.role)}
+          <strong>{roleName(L, d.role)}</strong>
+          <span className={styles.goal}>{roleGoal(L, d.role)}</span>
         </dd>
         <dt>{L('Team')}</dt>
         <dd>

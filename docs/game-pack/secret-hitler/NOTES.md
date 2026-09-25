@@ -68,6 +68,21 @@ harness port 42410.
 | `toSpeakable`, clips                 | Foundation F6 | none needed in M1 (no narrator yet)                            |
 | presence (P7), PhoneStage per player | Foundation F4 | none in M1                                                     |
 
+## When Foundation lands on main
+
+Foundation asked for review to merge F0–F3 + F5–F7 on 2026-09-24 (hub #merges `3ed9d4`). After it
+lands, `git merge main` here needs: the ADR-050 layout (`client/shared.ts`, `phone-entry.ts`,
+`tv-entry.ts`), `manifest.es.json`, the manifest fields (🏛️, the three `howToPlay` lines from
+`content/about.json`, `presence: { needs: 'voice-if-remote' }`, `addedOn`, tags as now), a
+description ≤ 300 (it is 244), and `rotation` / `majorityPick` from `@partybox/game-sdk` where
+they fit (seat rotation stays game code: R16's return rule is game-specific).
+
+## Screenshots
+
+`reports/design/record-review/secret-hitler/shots/` (gitignored). Main's `/preview` rejects
+camelCase fixture names, so the capture script (kept outside the repo) builds each scene with the
+real reducer from a real room's state and loads it with `/api/dev/load-state`.
+
 ## Left for later milestones
 
 M2: `--sh-*` tokens (S2) and fonts, the art, motion and signature moments, claims + ⚡ + the full

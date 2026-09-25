@@ -123,12 +123,6 @@ export const STRINGS: Strings = {
     'Discards {n}': 'Descartes {n}',
     'Veto unlocked': 'Veto desbloqueado',
     'Next Fascist slot: {power}': 'Siguiente casilla fascista: {power}',
-    'Parliament Record': 'Registro del Parlamento',
-    'No governments yet.': 'Aún no hay gobiernos.',
-    '#{n} · {p} → {c} · {ja} JA {nein} NEIN': '#{n} · {p} → {c} · {ja} JA {nein} NEIN',
-    'L enacted': 'L aprobada',
-    'F enacted': 'F aprobada',
-    'Chaos: {x}': 'Caos: {x}',
     // phone
     'Hold to see your dossier': 'Mantén pulsado para ver tu expediente',
     'Your secret dossier': 'Tu expediente secreto',

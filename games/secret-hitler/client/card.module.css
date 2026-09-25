@@ -12,8 +12,8 @@
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  width: 5.5em;
-  height: 7.5em;
+  width: var(--sh-card-w, 5.5em);
+  height: var(--sh-card-h, 7.5em);
   font-size: var(--pb-font-caption);
   padding: var(--pb-space-1);
   box-sizing: border-box;
@@ -36,6 +36,10 @@
   color: var(--pb-bg);
   border-color: var(--pb-danger);
   border-style: double;
+}
+
+.card[data-size='sm'] .word {
+  display: none; /* the mark still tells them apart; the word sits beside a small card */
 }
 
 .card[data-marked] {

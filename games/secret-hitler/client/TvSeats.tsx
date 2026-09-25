@@ -15,7 +15,14 @@ export function TvSeats({ view }: { view: ShTvView }): JSX.Element {
       {view.seats.map((seat, i) => {
         const p = view.players.find((x) => x.id === seat.id);
         const gone = seat.tags.includes('executed') || seat.tags.includes('exiled');
-        const tags = seat.tags.map((t) => tagName(L, t)).filter((t): t is string => t !== null);
+        const over = view.phaseId === 'gameOver' || view.phaseId === 'done';
+        const plate = over ? undefined : seat.plate;
+        // Term limits matter while a President is choosing; elsewhere they would tag the pair
+        // that was just elected.
+        const shown = seat.tags.filter(
+          (t) => view.phaseId === 'nominate' || (t !== 'lastChancellor' && t !== 'lastPresident'),
+        );
+        const tags = shown.map((t) => tagName(L, t)).filter((t): t is string => t !== null);
         return (
           <li key={seat.id} className={styles.seat} data-gone={gone || undefined}>
             {seat.vote ? (
@@ -26,18 +33,20 @@ export function TvSeats({ view }: { view: ShTvView }): JSX.Element {
             {seat.tags.includes('voted') ? (
               <span className={styles.voted}>{L('✓ voted')}</span>
             ) : null}
-            <Avatar avatarId={p?.avatarId ?? ''} size={88} dim={gone || p?.connected === false} />
+            <Avatar avatarId={p?.avatarId ?? ''} size={72} dim={gone || p?.connected === false} />
             <span className={styles.seatName}>{p?.name ?? '?'}</span>
-            {seat.plate ? (
-              <span className={styles.plate} data-plate={seat.plate}>
-                {seat.plate === 'president'
+            {plate ? (
+              <span className={styles.plate} data-plate={plate}>
+                {plate === 'president'
                   ? L('President')
-                  : seat.plate === 'chancellor'
+                  : plate === 'chancellor'
                     ? L('Chancellor')
                     : L('Nominee')}
               </span>
             ) : null}
-            {seat.tags.includes('next') ? <span className={styles.next}>{L('Next')}</span> : null}
+            {seat.tags.includes('next') && !over ? (
+              <span className={styles.next}>{L('Next')}</span>
+            ) : null}
             {tags.map((t) => (
               <span key={t} className={styles.tag}>
                 {t}

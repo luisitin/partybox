@@ -1,15 +1,23 @@
 /* Secret Hitler TV, plain for M1 (§8.1 zones, simplified). Tokens only (docs/DESIGN_SYSTEM.md). */
 
 .tv {
+  flex: 1;
   display: grid;
-  grid-template-rows: auto 1fr auto;
-  gap: var(--pb-space-4);
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: var(--pb-space-3);
   width: 100%;
-  height: 100%;
+  min-width: 0;
   min-height: 0;
 }
 
+/* TV cards: two tracks + the band must fit between the header and the seat row at 1080p. */
+.tv {
+  --sh-card-w: 4.2em;
+  --sh-card-h: 5em;
+}
+
 .head {
+  min-width: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -35,34 +43,32 @@
   color: var(--pb-danger);
 }
 
-.credit,
-.muted {
+.credit {
   font-size: var(--pb-font-caption);
   color: var(--pb-text-muted);
-}
-
-.main {
-  display: grid;
-  grid-template-columns: 1fr 26rem;
-  gap: var(--pb-space-5);
-  min-height: 0;
 }
 
 .boards {
   display: flex;
   flex-direction: column;
-  gap: var(--pb-space-3);
+  justify-content: center;
+  gap: var(--pb-space-4);
   min-height: 0;
+}
+
+.tracks {
+  display: flex;
+  justify-content: center;
+  gap: var(--pb-space-7);
 }
 
 .track {
   display: flex;
-  align-items: center;
-  gap: var(--pb-space-4);
+  flex-direction: column;
+  gap: var(--pb-space-2);
 }
 
 .trackTitle {
-  width: 7em;
   font-size: var(--pb-font-caption);
   font-weight: 800;
   text-transform: uppercase;
@@ -71,18 +77,42 @@
 
 .slots {
   display: flex;
-  gap: var(--pb-space-3);
+  gap: var(--pb-space-2);
 }
 
 .slot {
   position: relative;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pb-space-1);
+  /* em of the caption size, never rem: the TV scales its root font. */
+  font-size: var(--pb-font-caption);
+  width: 4.6em;
+}
+
+/* The HITLER ZONE line: a rule before Fascist slot 4 with its label above the track. */
+.slot[data-zone]::before {
+  content: '';
+  position: absolute;
+  left: calc(-0.5 * var(--pb-space-2) - 2px);
+  top: 0;
+  height: var(--sh-card-h);
+  border-left: 4px solid var(--pb-accent-2);
+}
+
+.slotLabel {
+  min-height: 2.4em;
+  font-size: var(--pb-font-caption);
+  line-height: 1.2;
+  text-align: center;
+  color: var(--pb-text-muted);
 }
 
 .zone {
   position: absolute;
-  left: calc(-1 * var(--pb-space-3));
-  top: -1.4em;
+  left: 0;
+  top: -1.5em;
   font-size: var(--pb-font-caption);
   font-weight: 800;
   white-space: nowrap;
@@ -96,6 +126,7 @@
 .band {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: var(--pb-space-3) var(--pb-space-6);
   font-size: var(--pb-font-caption);
   color: var(--pb-text);
@@ -105,28 +136,6 @@
   font-weight: 800;
   letter-spacing: 0.1em;
   color: var(--pb-danger);
-}
-
-.record {
-  display: flex;
-  flex-direction: column;
-  gap: var(--pb-space-2);
-  padding: var(--pb-space-3);
-  border-radius: var(--pb-radius);
-  background: var(--pb-surface);
-  min-height: 0;
-  overflow: hidden;
-}
-
-.rows {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: var(--pb-space-2);
-  font-family: var(--pb-font-mono);
-  font-size: calc(var(--pb-font-caption) * 0.8);
 }
 
 .seats {
@@ -166,7 +175,7 @@
   background: var(--pb-accent-2);
   color: var(--pb-on-accent-2-fill);
   font-weight: 800;
-  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .plate[data-plate='nominee'] {
@@ -193,8 +202,6 @@
 }
 
 .placard {
-  position: absolute;
-  top: -2.4em;
   padding: var(--pb-space-1) var(--pb-space-2);
   border-radius: var(--pb-radius);
   font-weight: 800;

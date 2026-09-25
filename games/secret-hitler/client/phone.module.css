@@ -52,6 +52,11 @@
   gap: var(--pb-space-1);
 }
 
+.goal {
+  width: 100%;
+  color: var(--pb-text-muted);
+}
+
 .intel {
   display: block;
   width: 100%;
