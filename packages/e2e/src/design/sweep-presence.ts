@@ -99,7 +99,9 @@ async function sweep(
   }
   const vip = await phone(browser, url, api, device, lang, 'Sam', false);
   const maya = await phone(browser, url, api, device, lang, 'Maya', true);
-  await api.bots(2, 'idle');
+  // a second remote player: the TV and the VIP must name the same people (reviewer a)
+  const kenji = await phone(browser, url, api, device, lang, 'Kenji', true);
+  await api.bots(1, 'idle');
   try {
     await shoot(vip.page, lang, device, 'vip-prompt');
     // The TV asks on its picker (where its room switches live).
@@ -130,7 +132,7 @@ async function sweep(
       if (tv) await shoot(tv, lang, 'tv', `tv-chip-${mode}`);
     }
   } finally {
-    for (const p of [vip.page, maya.page, tv]) await p?.context().close();
+    for (const p of [vip.page, maya.page, kenji.page, tv]) await p?.context().close();
   }
 }
 

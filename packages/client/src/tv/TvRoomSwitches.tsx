@@ -6,6 +6,7 @@ import { PRESENCE_MODES } from '@partybox/shared';
 import type { PresenceMode, RoomSnapshot } from '@partybox/shared';
 import { useT } from '@partybox/game-sdk/ui';
 import type { TvClient } from '../net/tv';
+import { t } from '../i18n';
 import { awayToAsk } from '../presence';
 import { STRINGS } from './strings';
 import styles from './TvSelecting.module.css';
@@ -28,7 +29,8 @@ export function TvRoomSwitches({
   if (away.length > 0)
     return (
       <div className={`${styles.switches} ${styles.switchAsk}`} role="status">
-        {L("{name} can't see the TV. On a call with you?", { name: away[0]?.name ?? '' })}
+        {/* the phone's own sentence, so both name the same people (reviewer a) */}
+        {t.presence.prompt(away[0]?.name ?? '', away.length - 1)}
         <button type="button" className={styles.switchChip} onClick={() => set('remote-voice')}>
           🎧 {L('On a call')}
         </button>

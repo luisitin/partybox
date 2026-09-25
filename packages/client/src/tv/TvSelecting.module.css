@@ -330,14 +330,19 @@
   display: flex;
   gap: var(--pb-space-3);
   counter-increment: step;
-  opacity: 0.55;
   transition:
     opacity var(--pb-motion-base) var(--pb-ease),
     transform var(--pb-motion-base) var(--pb-ease);
 }
 .steps li.stepLit {
-  opacity: 1;
   transform: translateX(6px);
+}
+
+/* Every step reads at full strength ([cc45f4]: nothing a slow reader needs is dimmed); the one
+   the room is on wears the accent badge and steps forward, the others a quiet badge. */
+.steps li:not(.stepLit)::before {
+  background: var(--pb-surface-2);
+  color: var(--pb-text);
 }
 .steps li::before {
   content: counter(step);
