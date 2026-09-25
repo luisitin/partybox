@@ -75,6 +75,8 @@
 }
 .z4 {
   background: var(--pb-accent-2-fill);
+  /* Its own ink: white on yellow was unreadable in Daylight. */
+  color: var(--pb-on-accent-2-fill);
 }
 
 .scan {

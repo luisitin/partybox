@@ -138,7 +138,12 @@ export function Dial(props: DialProps): JSX.Element {
                 if (w.label === null) return null;
                 const p = pointAt(w.label, BOX.face * 0.8);
                 return (
-                  <text key={`t${w.from}`} x={f(p.x)} y={f(p.y)} className={styles.zoneText}>
+                  <text
+                    key={`t${w.from}`}
+                    x={f(p.x)}
+                    y={f(p.y)}
+                    className={`${styles.zoneText} ${w.pts === 4 ? styles.zoneText4 : ''}`}
+                  >
                     {w.pts}
                   </text>
                 );

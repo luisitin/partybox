@@ -70,13 +70,21 @@
   fill: var(--pb-accent-2-fill);
 }
 
+/* The wedges' stroke reaches the numbers too: behind the fill it is a halo, not a thinner glyph. */
 .zoneText {
+  paint-order: stroke;
   fill: var(--pb-on-accent);
   font-family: var(--pb-font-family);
   font-size: 44px;
   font-weight: 900;
   text-anchor: middle;
   dominant-baseline: central;
+}
+
+/* The 4 sits on the accent-2 fill: its own ink (white on yellow was unreadable in Daylight). */
+.zoneText4 {
+  fill: var(--pb-on-accent-2-fill);
+  stroke: none;
 }
 
 .wedges {
