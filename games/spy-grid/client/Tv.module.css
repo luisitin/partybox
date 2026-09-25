@@ -233,7 +233,9 @@
 }
 
 .thinkingLine {
-  font-size: var(--pb-font-h2);
+  /* one line in the clue slot, even for 'Sun's spymaster is thinking…' (session-c) */
+  font-size: min(var(--pb-font-h2), 40px);
+  white-space: nowrap;
   font-weight: 800;
 }
 
@@ -410,8 +412,13 @@
 }
 
 /* the crew card is one team: faces in a column, big, so it never reads as an empty panel */
+.teamsCoop .columns {
+  align-self: center;
+}
+
+/* the crew card hugs its names: no empty thirds above and below (session-c #5) */
 .teamsCoop .column {
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .columns {
@@ -588,4 +595,13 @@
 
 .clueFit .clueMain {
   font-size: min(var(--pb-font-h1), calc(100cqw / (var(--n, 8) * 0.68)));
+}
+
+/* uneven teams: said on the TV too, before the start moves anyone (session-c N3) */
+.evenHint {
+  margin: 0;
+  text-align: center;
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  color: var(--pb-accent-2);
 }

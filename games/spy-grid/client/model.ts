@@ -149,7 +149,7 @@ export function reasonLine(
   const w = view.winner;
   switch (view.reason) {
     case 'assassin':
-      if (view.mode === 'coop') return L('The crew touched the assassin 💀');
+      if (view.mode === 'coop') return keepEmoji(L('The crew touched the assassin 💀'));
       return L('{team} found the assassin!', { team: teamName(w === 'sun' ? 'moon' : 'sun', L) });
     case 'agents':
       return view.mode === 'coop'
@@ -171,3 +171,6 @@ export function reasonLine(
       return '';
   }
 }
+
+/** Glue a trailing emoji to the word before it, so it never wraps onto a line of its own. */
+export const keepEmoji = (s: string): string => s.replace(/ (\p{Extended_Pictographic})/gu, ' $1');

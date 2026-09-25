@@ -5,7 +5,7 @@ import { PrimaryButton, Screen, buzz, useT } from '@partybox/game-sdk/ui';
 import type { SpyControllerView } from '../server/views';
 import type { Input } from '../server/types';
 import { Coach } from './Coach';
-import { SHAPE } from './model';
+import { keepEmoji, SHAPE } from './model';
 import styles from './Controller.module.css';
 import { STRINGS } from './strings';
 
@@ -35,7 +35,7 @@ export function PhoneTeams({
                 className={styles.button}
                 onClick={() => send({ type: 'shuffle' })}
               >
-                {L('Shuffle 🔀')}
+                {keepEmoji(L('Shuffle 🔀'))}
               </button>
             )}
             <PrimaryButton onClick={skip}>{L('Start')}</PrimaryButton>

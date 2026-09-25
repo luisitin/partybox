@@ -170,7 +170,7 @@
 
 .word {
   /* fit the card: never wider than the card allows for this many letters (≈0.66 em per capital) */
-  --sg-fit: calc((100cqw - 10px) / (var(--n, 6) * 0.66));
+  --sg-fit: calc((100cqw - 28px) / (var(--n, 6) * 0.66));
   font-size: min(var(--sg-word), var(--sg-fit));
   font-weight: 800;
   letter-spacing: 0.01em;

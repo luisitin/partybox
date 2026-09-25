@@ -65,7 +65,7 @@ export const STRINGS: Strings = {
     Moon: 'Luna',
     'Your crew': 'Tu equipo',
     'Pick your team': 'Elige tu equipo',
-    'Shuffle 🔀': 'Mezclar 🔀',
+    'Shuffle 🔀': 'Mezclar 🔀',
     'One spymaster gives the clues; everyone else guesses together.':
       'Un jefe de espías da las pistas; los demás adivinan juntos.',
     "✓ You're in · {n} players": '✓ Estás dentro · {n} jugadores',
@@ -191,12 +191,13 @@ export const STRINGS: Strings = {
       'Las pistas van por el significado, no por letras ni casillas.',
     'Sending…': 'Enviando…',
     'Send clue': 'Enviar pista',
+    '🗝 {n} clues': '🗝 {n} pistas',
     'End turn opens after the first card': 'Terminar turno se abre tras la primera carta',
     'Teams even out at the start: bots move first.':
       'Los equipos se igualan al empezar: primero se mueven los bots.',
     'The board words are in English.': '🇬🇧 Las palabras del tablero están en inglés.',
     'The crew found {n}.': 'El equipo encontró {n}.',
-    'The crew touched the assassin 💀': 'El equipo tocó al asesino 💀',
+    'The crew touched the assassin 💀': 'El equipo tocó al asesino 💀',
     'You all play one team. Want to give the clues? Switch on “I’ll be spymaster”.':
       'Todos juegan en un equipo. ¿Quieres dar las pistas? Activa “Seré jefe de espías”.',
     // the coach line and the TV's how-it-works demo (play-test 2026-09-24)

@@ -103,7 +103,7 @@ function shared(state: State, tv: boolean): Shared {
   const flipCard = state.phase.id === 'flip' && t.flip ? t.flip.card : null;
   const history = state.history
     .filter((h) => h.round === state.round)
-    .slice(-4)
+    .slice(-12)
     .map((h) => ({
       team: h.team,
       word: h.word,
