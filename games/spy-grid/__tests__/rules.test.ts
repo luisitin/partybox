@@ -2,7 +2,7 @@
 import { describe, expect, it } from 'vitest';
 import { createRng } from '@partybox/game-sdk';
 import { spymasterClue } from '../server/bot';
-import { clueProblem } from '../server/clue-rules';
+import { clueClash, clueProblem } from '../server/clue-rules';
 import { FAMILY_THEMES } from '../server/content';
 import { game } from '../server/index';
 import { allPoint, clue, finishFlip, rigged, send, skip, start, tick } from './kit';
@@ -116,6 +116,18 @@ describe('bots', () => {
       if (i?.type === 'clue') clues.add(i.word);
     }
     expect(clues.size).toBeGreaterThan(5);
+  });
+});
+
+describe('clue clash message', () => {
+  it('names the board word a clue is too close to (BATHROOM contains BAT)', () => {
+    const board = [
+      { answer: 'bat', family: ['bat'] },
+      { answer: 'piano', family: ['piano'] },
+    ];
+    expect(clueProblem('BATHROOM', board)).toBe('board');
+    expect(clueClash('BATHROOM', board)).toBe('bat');
+    expect(clueClash('OCEAN', board)).toBeNull();
   });
 });
 

@@ -1,7 +1,7 @@
 // Small pieces every phone screen shares: the agents-left line, the clue line, and the board in
 // the phone's chosen layout (grid at 380 px and wider, list below or at large text; the 🎨 sheet
 // can force either).
-import type { JSX } from 'react';
+import type { CSSProperties, JSX } from 'react';
 import { useT } from '@partybox/game-sdk/ui';
 import type { SpyControllerView } from '../server/views';
 import { SHAPE, cardsOf, coordLabel, useBoardLayout } from './model';
@@ -64,7 +64,10 @@ export function ClueLine({
         {SHAPE[view.turnTeam]}
       </span>
       {/* the word and '· 2' travel together: at 200 % the number never wraps alone (session-c) */}
-      <span className={styles.nowrap}>
+      <span
+        className={`${styles.nowrap} ${styles.clueFit}`}
+        style={{ '--n': view.clue.word.length + 4 } as CSSProperties}
+      >
         <span className={styles.clueWord}>{view.clue.word}</span>{' '}
         <span className={styles.clueNum}>
           ·{' '}

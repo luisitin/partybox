@@ -5,13 +5,16 @@ import { useState } from 'react';
 import type { JSX } from 'react';
 import { PrimaryButton, buzz, useSound, useT } from '@partybox/game-sdk/ui';
 import type { Translator } from '@partybox/game-sdk/ui';
-import { CLUE_MAX, clueProblem } from '../server/clue-rules';
+import { CLUE_MAX, clueClash, clueProblem } from '../server/clue-rules';
 import type { SpyControllerView } from '../server/views';
 import type { ClueReason, Input } from '../server/types';
 import styles from './Controller.module.css';
 import { STRINGS } from './strings';
 
-export function reasonText(reason: ClueReason, L: Translator): string {
+export function reasonText(reason: ClueReason, L: Translator, clash?: string | null): string {
+  // Name the clashing word: 'BATHROOM' against BAT reads as a bug until you see why (session-c).
+  if (reason === 'board' && clash)
+    return L('Too close to {word} on the board.', { word: clash.toUpperCase() });
   switch (reason) {
     case 'one-word':
       return L('One word only.');
@@ -109,7 +112,7 @@ export function ClueInputs({
       </div>
       <div className={`${styles.legal} ${bad ? styles.legalBad : styles.legalOk}`}>
         {bad
-          ? reasonText(bad, L)
+          ? reasonText(bad, L, clueClash(draft.word, targets(view)))
           : draft.word.trim()
             ? L("You'll say: {word}, {n}", { word: draft.word.trim().toUpperCase(), n })
             : L('Clues are about meaning — not letters or spots on the grid.')}

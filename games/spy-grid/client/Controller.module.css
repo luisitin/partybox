@@ -68,6 +68,7 @@
 
 /* the clue line */
 .clue {
+  container-type: inline-size;
   display: flex;
   align-items: baseline;
   justify-content: center;
@@ -397,12 +398,15 @@
 
 .clueRow {
   display: flex;
+  flex-wrap: wrap;
   gap: var(--pb-space-2);
   align-items: stretch;
 }
 
 .input {
-  flex: 1;
+  /* at least ~9 letters wide: at 200 % the number picker wraps under it instead of squeezing the
+     word ('ATHROOM', session-c) */
+  flex: 1 1 9em;
   min-width: 0;
   min-height: 52px;
   padding: 0 var(--pb-space-3);
@@ -553,4 +557,10 @@
   opacity: 0.5;
   font-size: var(--pb-font-caption);
   cursor: default;
+}
+
+/* the clue word + '· n' fit the line whatever the text size ('WATERMELON · 2' at 200 %) */
+.clueFit .clueWord,
+.clueFit .clueNum {
+  font-size: min(var(--pb-font-h1), calc(100cqw / (var(--n, 10) * 0.72)));
 }

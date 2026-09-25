@@ -320,7 +320,12 @@
   display: grid;
   /* mark · word · number · → found · a fixed ✓ slot, so every row's word gets the same width and
      the numbers line up whether or not the clue hit (session-c) */
-  grid-template-columns: auto minmax(0, 1fr) auto 3.2em 1em;
+  /* two lines: mark + the whole word on top, 'n → found ✓' under it in fixed columns, so a word
+     gets the rail's full width and the numbers still line up (session-c [63db8d]) */
+  grid-template-columns: 1.2em minmax(0, 1fr) auto 3.2em 1em;
+  grid-template-areas:
+    'mark word word word word'
+    '. . num found tick';
   align-items: center;
   gap: var(--pb-space-2);
   padding: 4px var(--pb-space-3);
@@ -628,4 +633,24 @@
 
 .chipTick {
   text-align: center;
+}
+
+.chip > b {
+  grid-area: mark;
+}
+
+.chipWord {
+  grid-area: word;
+}
+
+.chipNum {
+  grid-area: num;
+}
+
+.chipFound {
+  grid-area: found;
+}
+
+.chipTick {
+  grid-area: tick;
 }

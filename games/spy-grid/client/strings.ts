@@ -191,6 +191,7 @@ export const STRINGS: Strings = {
       'Las pistas van por el significado, no por letras ni casillas.',
     'Sending…': 'Enviando…',
     'Send clue': 'Enviar pista',
+    'Too close to {word} on the board.': 'Se parece demasiado a {word}, del tablero.',
     'Your team has secret words on this board. Find all of yours first to win.':
       'Tu equipo tiene palabras secretas en este tablero. Encuentra todas primero para ganar.',
     'Only your spymaster 🕶️ sees which words are yours.':

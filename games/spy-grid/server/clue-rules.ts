@@ -26,6 +26,18 @@ export function clueProblem(word: string, targets: readonly ClueTarget[]): ClueR
   return null;
 }
 
+/** The board word a clue clashes with (it is, contains, or is contained by it), for the message. */
+export function clueClash(word: string, targets: readonly ClueTarget[]): string | null {
+  const raw = word.trim();
+  if (raw.length === 0) return null;
+  for (const t of targets) {
+    const r = isLegalClue(raw, t, { lang: 'en', oneWord: true, maxChars: CLUE_MAX });
+    if (!r.ok && r.reason !== 'too-long' && r.reason !== 'empty' && r.reason !== 'not-one-word')
+      return t.answer;
+  }
+  return null;
+}
+
 /** How a clue is shown and spoken: capitals, trimmed, inner punctuation kept ("T-REX"). */
 export function clueDisplay(word: string): string {
   return word.trim().toUpperCase();
