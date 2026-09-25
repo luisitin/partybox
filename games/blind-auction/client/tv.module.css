@@ -74,6 +74,10 @@
   flex: 0 0 900px;
   width: 900px;
   min-width: 0;
+}
+
+/* Only the box's own panel rises in; the phases after it cut in place (the cards stay put). */
+.panelRise {
   animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
 }
 
@@ -919,4 +923,14 @@
 .readyRow.stepIn {
   opacity: 1;
   transform: none;
+}
+
+/* The rules' 3·2·1 gets the whole stage, centred well clear of the host bar. */
+.countdownStage {
+  gap: var(--pb-space-5);
+  padding-bottom: 140px;
+}
+
+.countdownStage .countdown {
+  font-size: min(320px, 40cqh);
 }

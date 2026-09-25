@@ -49,7 +49,7 @@ function BoxPanel({ view }: { view: View }): JSX.Element | null {
   useReading(view.voice);
   if (!view.box) return null;
   return (
-    <div className={styles.panel}>
+    <div className={`${styles.panel} ${styles.panelRise}`}>
       <h1 className={styles.plate}>{boxWords(L, view.box).name}</h1>
       <p className={styles.flavour}>{boxWords(L, view.box).flavour}</p>
       <OptionBoard options={view.box.options} />

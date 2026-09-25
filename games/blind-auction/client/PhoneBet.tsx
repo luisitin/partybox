@@ -67,6 +67,8 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
       }}
       onPass={() => {
         setAmount(0);
+        // Sitting out is sitting out: no card stays ticked (play-test: it read as both).
+        if (box.event !== 'tug' && box.event !== 'shells') setOption(null);
         send({ type: 'bet', option: option ?? 0, amount: 0 });
       }}
       blocked={option === null || self}
@@ -115,6 +117,7 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
                     ? 1 - view.myTeam
                     : null
               }
+              hideLocked={box.event === 'tug'}
             />
           )}
           {option === null && box.event !== 'shells' ? (

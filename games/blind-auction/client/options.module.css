@@ -169,8 +169,9 @@
 }
 
 .phone .option {
-  /* Inner room on both sides: a long word never touches the border (review: 'Treasure' on SE). */
-  padding: var(--pb-space-2) var(--pb-space-2);
+  /* Inner room on both sides: a long word never touches the border (review: 'Treasure' on SE);
+     short vertically, so a three-option box sits above the fold on an SE (play-tests). */
+  padding: var(--pb-space-1) var(--pb-space-2);
   border-radius: var(--pb-radius);
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
@@ -180,7 +181,7 @@
 }
 
 .phone .icon {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
 }
 
 .phone .name {

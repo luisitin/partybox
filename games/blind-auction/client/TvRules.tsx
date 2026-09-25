@@ -40,32 +40,35 @@ export function TvRules({ view }: { view: PushedView<BlindAuctionTvView> }): JSX
   const ready = view.readyIds.length;
   return (
     <div className={styles.frame}>
-      <Stage center className={styles.rules}>
-        <h1 className={styles.title}>
-          <span aria-hidden>📦</span> {L('Blind Auction')}
-        </h1>
-        <div className={styles.rulesRow}>
-          <ol className={styles.steps}>
-            {steps.map((text, i) => (
-              <li key={i} className={`${styles.stepItem} ${beat >= i + 1 ? styles.stepIn : ''}`}>
-                <span className={styles.stepNum}>{i + 1}</span>
-                <span className={styles.stepBody}>
-                  <span>{text}</span>
-                </span>
-              </li>
-            ))}
-          </ol>
-          <div className={`${styles.rulesSample} ${beat >= 1 ? styles.stepIn : ''}`} aria-hidden>
-            <OptionBoard options={SAMPLE_OPTIONS} compact />
+      {view.step === 1 ? (
+        <Stage center className={styles.countdownStage}>
+          <p className={styles.soldHead}>{L('Here comes the first box…')}</p>
+          <Countdown view={view} />
+        </Stage>
+      ) : (
+        <Stage center className={styles.rules}>
+          <h1 className={styles.title}>
+            <span aria-hidden>📦</span> {L('Blind Auction')}
+          </h1>
+          <div className={styles.rulesRow}>
+            <ol className={styles.steps}>
+              {steps.map((text, i) => (
+                <li key={i} className={`${styles.stepItem} ${beat >= i + 1 ? styles.stepIn : ''}`}>
+                  <span className={styles.stepNum}>{i + 1}</span>
+                  <span className={styles.stepBody}>
+                    <span>{text}</span>
+                  </span>
+                </li>
+              ))}
+            </ol>
+            <div className={`${styles.rulesSample} ${beat >= 1 ? styles.stepIn : ''}`} aria-hidden>
+              <OptionBoard options={SAMPLE_OPTIONS} compact />
+            </div>
           </div>
-        </div>
-        <div className={`${styles.readyRow} ${beat >= 4 ? styles.stepIn : ''}`}>
-          <p className={styles.startCoins}>
-            {L('Everyone starts with {coin} {n}', { coin: COIN, n: view.startCoins })}
-          </p>
-          {view.step === 1 ? (
-            <Countdown view={view} />
-          ) : (
+          <div className={`${styles.readyRow} ${beat >= 4 ? styles.stepIn : ''}`}>
+            <p className={styles.startCoins}>
+              {L('Everyone starts with {coin} {n}', { coin: COIN, n: view.startCoins })}
+            </p>
             <>
               <p className={styles.readyLine}>
                 {L('Tap Ready on your phone · {n} of {total} ready', {
@@ -88,9 +91,9 @@ export function TvRules({ view }: { view: PushedView<BlindAuctionTvView> }): JSX
                 ))}
               </span>
             </>
-          )}
-        </div>
-      </Stage>
+          </div>
+        </Stage>
+      )}
     </div>
   );
 }

@@ -4,15 +4,11 @@
 import type { JSX } from 'react';
 import { Screen, useSequence, useT } from '@partybox/game-sdk/ui';
 import type { PushedView } from '@partybox/game-sdk/ui';
-import { BETS_LEAD_MS, BET_STEP_MS, OPEN_LINE_AT_MS, betsMs } from '../server/timing';
+import { BETS_LEAD_MS, BET_STEP_MS, OPEN_LINE_AT_MS } from '../server/timing';
 import type { BlindAuctionControllerView } from '../server/views';
 import { iconOf, nameOf, payText, toneOf } from './copy';
-import liveStyles from './live.module.css';
-import { Doors, LiveStage } from './LiveStage';
 import { LotCard } from './LotCard';
-import { PotatoRing } from './Potato';
-import { TugRope } from './Tug';
-import { ShellStage } from './Shells';
+import { PhoneEvent } from './PhoneEvent';
 import { OptionBoard } from './Options';
 import { LotTitle, PhoneRules } from './PhoneLot';
 import { OwnLineCard, insideWords } from './PhoneResult';
@@ -37,26 +33,7 @@ function StageOpen({ view }: { view: View }): JSX.Element | null {
     <Screen className={styles.screen}>
       <LotTitle box={view.box} />
       {view.run ? (
-        <div className={liveStyles.phoneStage}>
-          {view.run.kind === 'shells' && view.shells ? (
-            <ShellStage
-              start={view.shells.start}
-              moves={view.shellSwaps}
-              tier={view.shells.tier}
-              reveal={view.run.outcome}
-              revealAfter={betsMs(bets.length)}
-              settled
-            />
-          ) : view.run.kind === 'tug' ? (
-            <TugRope view={view} live={false} />
-          ) : view.run.kind === 'potato' ? (
-            <PotatoRing view={view} popped />
-          ) : view.run.kind === 'doors' ? (
-            <Doors opened={view.run.detail[0] ?? null} car={view.run.outcome} delay={0} />
-          ) : (
-            <LiveStage run={view.run} options={view.box.options} bets={bets.length} />
-          )}
-        </div>
+        <PhoneEvent view={view} />
       ) : (
         <div className={styles.stageTop}>
           <LotCard

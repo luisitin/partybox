@@ -7,7 +7,8 @@ import { Screen, WaitingScreen, buzz, useCountUp, useSound, useT } from '@partyb
 import type { PushedView } from '@partybox/game-sdk/ui';
 import type { BlindAuctionControllerView, OwnLine } from '../server/views';
 import { iconOf, nameOf, ownLineText } from './copy';
-import { Purse } from './PhoneLot';
+import { LotTitle, Purse } from './PhoneLot';
+import { PhoneEvent } from './PhoneEvent';
 import styles from './phone.module.css';
 import { STRINGS } from './strings';
 
@@ -75,6 +76,13 @@ export function PhoneResult({
   // The coins this phone showed before the box opened: the own line counts from them.
   const [before, setBefore] = useState(view.coins);
   if (view.step === 0 && before !== view.coins) setBefore(view.coins);
+  if ((!view.line || view.step === 0) && view.run && view.box)
+    return (
+      <Screen className={styles.screen}>
+        <LotTitle box={view.box} />
+        <PhoneEvent view={view} />
+      </Screen>
+    );
   if (!view.line || view.step === 0)
     return <WaitingScreen title={L('👀 Watch the TV')} hint={L('What is inside?')} mood="watch" />;
   return (

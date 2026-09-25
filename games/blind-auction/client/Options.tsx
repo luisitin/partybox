@@ -21,6 +21,7 @@ export function OptionBoard({
   compact = false,
   className,
   locked = null,
+  hideLocked = false,
 }: {
   options: readonly OptionView[];
   size?: 'tv' | 'phone';
@@ -37,13 +38,15 @@ export function OptionBoard({
   className?: string;
   /** Phone: an option you may not pick (hot potato: yourself). */
   locked?: number | null;
+  /** …and leave it out altogether (tug of war: the other team). */
+  hideLocked?: boolean;
 }): JSX.Element {
   const L = useT(STRINGS);
   const picker = Boolean(onSelect);
   const visible = (bets ?? []).slice(0, shown);
   // Live events bring four to six options: the TV keeps four in a row (three past that), a phone
   // two or three per row, and the words get smaller rather than break.
-  const n = options.length;
+  const n = options.length - (hideLocked && locked !== null ? 1 : 0);
   const many = n >= 4;
   const cols = size === 'tv' ? (n <= 4 ? n : 3) : n <= 3 ? n : n === 4 ? 2 : 3;
   // Every option the same odds (hot potato: one per player): the odds are said once, above, and
@@ -70,6 +73,7 @@ export function OptionBoard({
         </p>
       ) : null}
       {options.map((o, i) => {
+        if (hideLocked && locked === i) return null;
         const on = selected === i;
         const won = outcome === i;
         const dim = outcome !== null && !won;

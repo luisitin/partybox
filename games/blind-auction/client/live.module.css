@@ -824,3 +824,13 @@
     transition-duration: 0ms;
   }
 }
+
+/* Sideways phones (short screens): the rope gives way so PULL! is never below the fold. */
+@media (max-height: 500px) {
+  .tugScreen .phoneStage {
+    display: none;
+  }
+  .pull {
+    min-height: 5rem;
+  }
+}
