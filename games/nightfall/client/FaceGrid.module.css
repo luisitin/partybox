@@ -3,7 +3,7 @@
    a highlight. */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(clamp(80px, 5.2em, 42%), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(clamp(76px, 4.4em, 42%), 1fr));
   gap: var(--pb-space-2);
   width: 100%;
 }

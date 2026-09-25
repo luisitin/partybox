@@ -41,14 +41,23 @@ function stepText(e: TimelineEntry, view: NightfallTvView, L: Translator): strin
   return `☀️ ${L('Day {n}', { n: e.n })}: ${e.id ? who : L('no one')}`;
 }
 
-export function EndBoard({ view }: { view: NightfallTvView }): JSX.Element | null {
+export function EndBoard({
+  view,
+  finale,
+}: {
+  view: NightfallTvView;
+  /** On the shell's results screen, which already says who won (ADR-052 headline). */
+  finale?: boolean;
+}): JSX.Element | null {
   const L = useT(STRINGS);
   const end = view.stage.end;
   if (!end) return null;
   const dead = new Set(view.graveyard.map((g) => g.id));
   return (
     <div className={styles.column}>
-      <h1 className={`${styles.display} ${styles.banner}`}>{L.sent(end.headline)}</h1>
+      {finale ? null : (
+        <h1 className={`${styles.display} ${styles.banner}`}>{L.sent(end.headline)}</h1>
+      )}
       <p className={styles.lead}>{whyLine(view, L)}</p>
       <div className={`${styles.cards} ${styles.endCards}`}>
         {end.roles.map((r, i) => {
@@ -89,5 +98,5 @@ export function EndScene({ view }: { view: NightfallTvView }): JSX.Element {
 
 /** The results screen keeps the end board (clientModule.Finale). */
 export function Finale({ lastView }: GameFinaleProps<NightfallTvView>): JSX.Element | null {
-  return <EndBoard view={lastView} />;
+  return <EndBoard view={lastView} finale />;
 }
