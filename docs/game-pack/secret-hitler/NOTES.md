@@ -48,6 +48,16 @@ harness port 42410.
 - **`claims` in M1** is the timed "Discuss" beat only; the claim builder, the Record rows' claims
   and the ⚡ checks are M2 (§22).
 
+## Settled on the hub (2026-09-24, #decisions `997c4d`)
+
+Proposed in #plans `1fe99b` at 19:35; no objections by 20:07; Imposter agreed (`c56d4f`).
+
+1. President exiled during `vote`: the candidacy passes on, no tracker change.
+2. The M1 TV has no Parliament Record (tracks side by side); M2 lays out the rows already in the view.
+3. D7's "nominee exiled during `nominate`" is an erratum; the case lives in `vote`.
+4. Card rows stay their own control and follow the phone's SecretCard hold/tap setting, with
+   SecretCard's hardening (`d879c931`).
+
 ## Decisions (small, mine)
 
 - Chaos with a veto behind it goes to `claims`, where no power fires (the government enacted
@@ -56,8 +66,9 @@ harness port 42410.
   `powerReveal`, ADR-033); a VIP skip of the pause still delivers it.
 - The tracker moves at `voteReveal` entry, so the TV shows the rivet with the REJECTED line.
 - History (the Record) keeps the last 40 rows in state; views carry the last 7.
-- The card row on the phone: hold to see, slide onto a card and let go to mark it (one finger);
-  numbered "Card n" keys for keyboards and screen readers never name the card.
+- The card row on the phone: hold to see, slide onto a card and let go to mark it (one finger),
+  or tap mode (see above); numbered "Card n" keys for keyboards and screen readers never name the
+  card.
 
 ## Stand-ins in use
 

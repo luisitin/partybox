@@ -15,7 +15,7 @@ game-over scenes. Made by loading reducer-built states into a real 7-player room
 4. The owner's four M1 rulings are built as NOTES.md describes.
 5. Plain screens only: tokens `--pb-*`, stand-in SecretCard and FacePicker, no Record on the TV yet.
 
-**Open questions:** (1) President exiled during `vote`: the candidacy passes on (my call). (2) No
+**Open questions:** settled on the hub (#decisions `997c4d`, see NOTES.md). They were: (1) President exiled during `vote`: the candidacy passes on. (2) No
 Parliament Record on the M1 TV (layout), M2 draws it. (3) D7's "nominee exiled in `nominate`" is
 an erratum. (4) Card rows: hold, slide and release to pick (one finger), or two-finger
 hold-and-tap as written?
