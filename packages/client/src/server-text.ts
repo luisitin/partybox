@@ -64,6 +64,11 @@ const EXACT_ES: Readonly<Record<string, string>> = {
   '📱 Phone-only room — the phones show what the TV would':
     '📱 Sala solo con teléfonos: los teléfonos muestran lo que mostraría la TV',
   '📺 The TV is the stage again': '📺 La TV vuelve a ser el escenario',
+  // ADR-047: the VIP's "Where is everyone?" (engine presence.ts).
+  '📍 Everyone is in one room': '📍 Todos están en la misma sala',
+  '🎧 Some of you are remote, on a call': '🎧 Algunos están lejos, en una llamada',
+  '💬 Some of you are remote, with no call': '💬 Algunos están lejos, sin llamada',
+  'Bad presence payload.': 'No se pudo procesar ese cambio.',
 };
 
 const PATTERNS_ES: readonly [RegExp, (m: RegExpMatchArray) => string][] = [

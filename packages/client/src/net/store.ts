@@ -46,13 +46,18 @@ export function nextToastId(): number {
   return toastSeq;
 }
 
-/** One toast at a time on a phone, gone after TOAST_MS (the shape every caller used inline). */
-const TOAST_MS = 2500;
+/** How long a toast stays: long enough for a slow reader to finish it ([cc45f4]); a longer line
+ *  (and its longer Spanish) gets more, never past 6 s. */
+export function toastMs(text: string): number {
+  return Math.min(6000, Math.max(2500, 1200 + 70 * [...text].length));
+}
+
+/** One toast at a time on a phone (a new one replaces the last), gone after toastMs. */
 export function toastOnce(store: Store<{ toasts: Toast[] }>, shown: Omit<Toast, 'id'>): void {
   const id = nextToastId();
   store.set(() => ({ toasts: [{ id, ...shown }] }));
   setTimeout(
     () => store.set((prev) => ({ toasts: prev.toasts.filter((t) => t.id !== id) })),
-    TOAST_MS,
+    toastMs(shown.text),
   );
 }
