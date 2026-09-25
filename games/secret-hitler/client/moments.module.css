@@ -268,16 +268,18 @@
 .folder {
   display: grid;
   place-items: center;
-  width: 150px;
+  /* Wide enough for 'CONFIDENCIAL' with its stamp border (herd-mind review nit). */
+  min-width: 150px;
   height: 104px;
+  padding: 0 14px;
   border-radius: 4px 14px 4px 4px;
   background: var(--sh-paper-2);
   box-shadow:
     inset 0 0 0 2px var(--sh-brass-2),
     0 12px 22px var(--sh-shadow);
   font-family: var(--sh-font-display);
-  font-size: 30px;
-  letter-spacing: 0.1em;
+  font-size: 28px;
+  letter-spacing: 0.08em;
   color: var(--sh-alarm);
   animation: global(sh-deal) var(--sh-dur-deal) var(--sh-ease) both;
 }
