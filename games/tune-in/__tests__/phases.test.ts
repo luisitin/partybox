@@ -99,6 +99,37 @@ describe('the VIP', () => {
     expect(s.phase.id).toBe('clue');
   });
 
+  it('resume re-checks what a drop did during the pause (reviewer [12ea6b])', () => {
+    // the last unlocked guesser drops while paused: resume goes straight to the reveal
+    let s = toDial(start(4, { mode: 'solo' }));
+    const [a, b, c] = guessers(s) as [string, string, string];
+    s = send(s, a, { type: 'dial', pos: 40 });
+    s = send(s, a, { type: 'lock' });
+    s = send(s, b, { type: 'dial', pos: 50 });
+    s = send(s, b, { type: 'lock' });
+    s = vip(s, 'pause', s.phase.startedAt + 1000);
+    s = link(s, c, false);
+    expect(s.phase.id).toBe('dial');
+    s = vip(s, 'resume', s.phase.startedAt + 4000);
+    expect(s.phase.id).toBe('reveal');
+    // the psychic drops while paused: resume starts the drop grace, never extends the clue
+    let t = toClue(start(4, { mode: 'solo' }));
+    const psychic = t.turn.psychic;
+    t = vip(t, 'pause', t.phase.startedAt + 1000);
+    t = link(t, psychic, false);
+    const resumedAt = t.phase.startedAt + 3000;
+    t = vip(t, 'resume', resumedAt);
+    expect(t.phase.id).toBe('clue');
+    expect(t.phase.deadline).toBe(resumedAt + DROP_GRACE_MS);
+    // the psychic leaves for good while paused: resume voids the turn
+    let u = toClue(start(4, { mode: 'solo' }));
+    u = vip(u, 'pause', u.phase.startedAt + 1000);
+    u = link(u, u.turn.psychic, false, 'left');
+    u = vip(u, 'resume', u.phase.startedAt + 3000);
+    expect(u.phase.id).toBe('reveal');
+    expect(u.turn.void).toBe(true);
+  });
+
   it('pause holds the clock, resume shifts the deadline, the dial positions stay', () => {
     let s = toDial(start(4, { mode: 'solo' }));
     const id = guessers(s)[0] as string;
