@@ -31,6 +31,11 @@ export function peekPrice(options: number): number {
   return Math.max(2, Math.ceil(25 / Math.max(1, options - 1)));
 }
 
+/** Split twist: the stake on each of the two picks (the odd coin rides on the first). */
+export function splitHalves(amount: number): [number, number] {
+  return [Math.ceil(amount / 2), Math.floor(amount / 2)];
+}
+
 export function insuranceFee(amount: number): number {
   return amount > 0 ? Math.max(1, Math.ceil(amount / 10)) : 0;
 }

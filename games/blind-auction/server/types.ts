@@ -113,10 +113,12 @@ export interface Bet {
   at?: number;
   /** The insurance twist: paid 10 % on top, half the stake back if wrong. */
   insured?: boolean;
+  /** The split twist: a second option; the stake is halved between the two (odd coin on `option`). */
+  also?: number;
 }
 
 /** The twists (LIVE-EVENTS.md): each event with odds may get one. */
-export const TWISTS = ['early', 'insure', 'pool', 'peek'] as const;
+export const TWISTS = ['early', 'insure', 'pool', 'peek', 'split'] as const;
 export type Twist = (typeof TWISTS)[number];
 
 export interface RoundState {
@@ -221,6 +223,7 @@ export const inputSchema = z.discriminatedUnion('type', [
     option: z.number().int().min(0).max(15),
     amount: z.number().int().min(0).max(100000),
     insured: z.boolean().optional(),
+    also: z.number().int().min(0).max(15).optional(),
   }),
 ]);
 export type Input = z.infer<typeof inputSchema>;

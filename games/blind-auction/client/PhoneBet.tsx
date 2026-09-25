@@ -34,17 +34,23 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
   );
   const [amount, setAmount] = useState(view.myBet?.amount ?? 0);
   const [insured, setInsured] = useState(view.myBet?.insured === true);
+  const [also, setAlso] = useState<number | null>(view.myBet?.also ?? null);
   const box = view.box;
   if (!box) return null;
   const what = option !== null ? box.options[option] : undefined;
-  const label = what ? `${iconOf(what)} ${nameOf(L, what)}` : '';
+  const second = box.twist === 'split' && also !== null ? box.options[also] : undefined;
+  const label =
+    (what ? `${iconOf(what)} ${nameOf(L, what)}` : '') +
+    (second ? ` + ${iconOf(second)} ${nameOf(L, second)}` : '');
   // "Placed" only while the shown bet is the one sent: picking another content re-arms the button.
   // Sitting out is sitting out whatever card is picked.
   const placed = !view.myBet
     ? null
     : view.myBet.amount === 0
       ? 0
-      : view.myBet.option === option && (view.myBet.insured === true) === insured
+      : view.myBet.option === option &&
+          (view.myBet.insured === true) === insured &&
+          (view.myBet.also ?? null) === (box.twist === 'split' ? also : null)
         ? view.myBet.amount
         : null;
   // Hot potato: you cannot back yourself (you could just keep it).
@@ -75,7 +81,13 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
       onChange={setAmount}
       onConfirm={(n) => {
         if (option !== null)
-          send({ type: 'bet', option, amount: n, ...(box.twist === 'insure' ? { insured } : {}) });
+          send({
+            type: 'bet',
+            option,
+            amount: n,
+            ...(box.twist === 'insure' ? { insured } : {}),
+            ...(box.twist === 'split' && also !== null ? { also } : {}),
+          });
       }}
       onPass={() => {
         setAmount(0);
@@ -128,7 +140,17 @@ export function PhoneBet({ view, send }: Props): JSX.Element | null {
               options={box.options}
               size="phone"
               selected={option}
-              onSelect={setOption}
+              also={box.twist === 'split' ? also : null}
+              onSelect={(i) => {
+                if (box.twist !== 'split') return setOption(i);
+                // Split: the first tap picks, a second card adds a half; tapping a lit card lets it go.
+                if (option === null) return setOption(i);
+                if (i === option) {
+                  setOption(also);
+                  return setAlso(null);
+                }
+                setAlso(i === also ? null : i);
+              }}
               locked={
                 box.event === 'potato'
                   ? view.mySeat

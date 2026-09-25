@@ -2,7 +2,7 @@
 // so the coins and the own lines never disagree. Boxes and most events pay by the odds; the shell
 // game (the owner's spec) is a shared pot: the right calls split everything staked, in proportion
 // to their stakes; if everyone is wrong, or everyone is right, every stake goes back.
-import { insuranceFee, payout } from './odds';
+import { insuranceFee, payout, splitHalves } from './odds';
 import { blackjackReturn } from './phases/hands';
 import { KENO_PAY } from './timing';
 import type { State } from './types';
@@ -74,6 +74,13 @@ export function returned(state: State, id: string): number {
         staked.reduce((s, b) => s + b.amount, 0),
       )[id] ?? 0
     );
+  }
+  if (twist === 'split' && bet.also !== undefined) {
+    // Each half is paid at its own pick's odds; the other half is lost.
+    const [first, second] = splitHalves(bet.amount);
+    const half = round.outcome === bet.option ? first : round.outcome === bet.also ? second : 0;
+    const inside = round.box.options[round.outcome];
+    return half > 0 && inside ? payout(half, inside.pay, round.box.grand) : 0;
   }
   const option = round.box.options[bet.option];
   if (bet.option !== round.outcome || !option)

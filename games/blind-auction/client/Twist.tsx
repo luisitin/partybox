@@ -24,9 +24,11 @@ export function TwistNote({
         ? L("🛟 Insurance: pay 10 % more to get half your stake back if you're wrong.")
         : twist === 'peek'
           ? L('👁 Peek: pay to rule out one wrong answer, on your phone only.')
-          : L(
-              '🧮 The crowd sets the odds: right calls split the whole pot — back the unpopular pick!',
-            );
+          : twist === 'split'
+            ? L('✂️ Split: tap two answers to put half your stake on each.')
+            : L(
+                '🧮 The crowd sets the odds: right calls split the whole pot — back the unpopular pick!',
+              );
   return (
     <p className={`${styles.twist} ${size === 'phone' ? styles.twistPhone : ''}`}>
       <span className={styles.twistTag}>{L('Twist')}</span> {text}

@@ -94,3 +94,9 @@ The price is known before you tap: max(2, ceil(25 / (options − 1))) coins, so 
 two wrong options costs 13 and one of five costs 7. It scales with how strong the hint is. Pricing
 by the option actually drawn would leak which one it is. The price is paid at the reveal whether
 or not you bet, and it counts against your stake while betting.
+
+## Split twist (2026-09-25)
+
+Tap two answers: the stake is halved between them (the odd coin on the first pick), and each half
+is paid at its own pick's odds, so a split backs two outcomes at the price of a smaller win. On the
+reveal a split bet shows as two chips. A second tap on a lit card lets it go.

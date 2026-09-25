@@ -6,7 +6,8 @@
 import type { Strings } from '@partybox/game-sdk/ui';
 import { ES_GAME } from './strings-es-game';
 import { ES_SCREENS } from './strings-es-screens';
+import { ES_TWISTS } from './strings-es-twists';
 
 export const STRINGS: Strings = {
-  es: { ...ES_GAME, ...ES_SCREENS },
+  es: { ...ES_GAME, ...ES_SCREENS, ...ES_TWISTS },
 };

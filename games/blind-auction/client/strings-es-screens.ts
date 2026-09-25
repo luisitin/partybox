@@ -73,19 +73,6 @@ export const ES_SCREENS: Record<string, string> = {
   "That's the last box!": '¡Esa fue la última caja!',
   'Tap a card, then choose your coins': 'Toca una carta y luego elige tus monedas',
   // live events
-  Twist: 'Giro',
-  '⏰ Early bird: bet now for up to ×1.25 more — it slides to ×1.00 at the buzzer.':
-    '⏰ Madrugador: apuesta ya y gana hasta ×1.25 más; baja a ×1.00 al sonar el timbre.',
-  "🛟 Insurance: pay 10 % more to get half your stake back if you're wrong.":
-    '🛟 Seguro: paga un 10 % más y recupera la mitad de tu apuesta si fallas.',
-  '🧮 The crowd sets the odds: right calls split the whole pot — back the unpopular pick!':
-    '🧮 El público fija las cuotas: los aciertos se reparten todo el bote. ¡Apuesta por lo impopular!',
-  '🛟 Insured (+{coin} {n})': '🛟 Asegurado (+{coin} {n})',
-  '🛟 Add insurance': '🛟 Añadir seguro',
-  '👁 Peek: pay to rule out one wrong answer, on your phone only.':
-    '👁 Espiar: paga para descartar una respuesta equivocada, solo en tu celular.',
-  '👁 Ruled out: the struck card': '👁 Descartada: la carta tachada',
-  '👁 Peek: rule one out ({coin} {n})': '👁 Espiar: descarta una ({coin} {n})',
   'A goat behind door {n}! You are switching to door {m}.':
     '¡Una cabra tras la puerta {n}! Vas a cambiar a la puerta {m}.',
   Blackjack: 'Blackjack',

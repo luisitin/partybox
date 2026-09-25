@@ -4,7 +4,7 @@
 // event's `run` (its winner and how it plays out) is public from `open` step 0 — bets are closed,
 // and the TV needs it to play the event before the payouts.
 import { controllerEnvelope, envelope } from '@partybox/game-sdk';
-import { peekPrice } from './odds';
+import { peekPrice, splitHalves } from './odds';
 import type { PlayerStatus } from '@partybox/game-sdk';
 import { inGame } from './phases/bet';
 import { swappers } from './phases/swap';
@@ -71,11 +71,16 @@ function betsView(state: State): BetView[] | null {
   if (state.phase.id !== 'open') return null;
   return state.seats
     .filter((id) => (state.r.bets[id]?.amount ?? 0) > 0)
-    .map((id) => ({
-      id,
-      option: state.r.bets[id]?.option ?? 0,
-      amount: state.r.bets[id]?.amount ?? 0,
-    }));
+    .flatMap((id) => {
+      const bet = state.r.bets[id];
+      if (!bet) return [];
+      if (bet.also === undefined) return [{ id, option: bet.option, amount: bet.amount }];
+      const [first, second] = splitHalves(bet.amount);
+      return [
+        { id, option: bet.option, amount: first },
+        { id, option: bet.also, amount: second },
+      ];
+    });
 }
 
 function runView(state: State): RunView | null {
@@ -275,8 +280,9 @@ function ownLine(state: State, me: string): OwnLine | null {
   const bet = state.r.bets[me];
   if (!bet || bet.amount <= 0) return { kind: 'sat' };
   const back = deltaOf(state, me) + bet.amount;
-  if (bet.option === state.boxes[state.r.idx]?.outcome && back > bet.amount)
-    return { kind: 'won', option: bet.option, amount: bet.amount, back };
+  const inside = state.boxes[state.r.idx]?.outcome;
+  if ((bet.option === inside || bet.also === inside) && back > bet.amount)
+    return { kind: 'won', option: inside ?? bet.option, amount: bet.amount, back };
   // The shell game's all-right / all-wrong pot: every stake goes back.
   if (back === bet.amount) return { kind: 'back', amount: bet.amount };
   return { kind: 'lost', option: bet.option, amount: bet.amount };

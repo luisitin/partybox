@@ -3,7 +3,7 @@
 import { describe, expect, it } from 'vitest';
 import { drawEvent } from '../server/events';
 import { game } from '../server/index';
-import { insuranceFee, peekPrice } from '../server/odds';
+import { insuranceFee, payout, peekPrice, splitHalves } from '../server/odds';
 import { seedRng } from '@partybox/game-sdk';
 import type { Twist } from '../server/types';
 import { send, start, walkTo } from './helpers';
@@ -111,5 +111,35 @@ describe('twists', () => {
     s = walkTo(s, 'box');
     expect((before['p1'] ?? 0) - (s.coins['p1'] ?? 0)).toBe(price);
     expect(s.coins['p2']).toBe(before['p2']);
+  });
+
+  it('split: half the stake on each of two picks, each half at its own odds', () => {
+    let s = twisted('split');
+    const round = s.boxes[s.r.idx];
+    const win = round?.outcome ?? 0;
+    const other = (win + 1) % (round?.box.options.length ?? 2);
+    const before = { ...s.coins };
+    const splitBet = (st: typeof s, id: string, option: number, also: number, amount: number) =>
+      send(st, {
+        type: 'input',
+        now: st.phase.startedAt + 100,
+        playerId: id,
+        input: { type: 'bet', option, amount, also },
+      });
+    // p1 has the winner as its second pick; p2 misses with both; p3 sits out.
+    s = splitBet(s, 'p1', other, win, 21);
+    expect(s.r.bets['p1']?.also).toBe(win);
+    const third = (win + 2) % (round?.box.options.length ?? 3);
+    s = splitBet(s, 'p2', other, third === win ? other : third, 20);
+    // A second pick equal to the first is not a split.
+    expect(splitBet(s, 'p3', win, win, 10).r.bets['p3']?.also).toBeUndefined();
+    s = betAt(s, 'p3', 0, 0, 100);
+    s = walkTo(s, 'box');
+    const [, second] = splitHalves(21);
+    const pay = round?.box.options[win]?.pay ?? 0;
+    expect((s.coins['p1'] ?? 0) - (before['p1'] ?? 0)).toBe(
+      payout(second, pay, round?.box.grand ?? false) - 21,
+    );
+    expect((before['p2'] ?? 0) - (s.coins['p2'] ?? 0)).toBe(20);
   });
 });

@@ -67,6 +67,14 @@ export function reduceBet(state: State, event: GameEvent<Input>, next: Transitio
   if (!inGame(state, id)) return state;
   const { option, amount } = event.input;
   const insured = event.input.insured === true && state.boxes[state.r.idx]?.box.twist === 'insure';
+  // Split: a second pick, only on its twist, never the first pick again, and 2+ coins to halve.
+  const also =
+    state.boxes[state.r.idx]?.box.twist === 'split' &&
+    event.input.also !== undefined &&
+    event.input.also !== option &&
+    amount >= 2
+      ? event.input.also
+      : undefined;
   const have = state.coins[id] ?? 0;
   const box = state.boxes[state.r.idx]?.box;
   // Hot potato: you cannot bet on yourself holding it (you could just keep it).
@@ -79,7 +87,7 @@ export function reduceBet(state: State, event: GameEvent<Input>, next: Transitio
   const code =
     amount + (insured ? insuranceFee(amount) : 0) + peekPaid(state, id) > have
       ? 'over'
-      : !box || option >= box.options.length || wrongSide
+      : !box || option >= box.options.length || (also ?? 0) >= box.options.length || wrongSide
         ? 'option'
         : self
           ? 'self'
@@ -95,7 +103,13 @@ export function reduceBet(state: State, event: GameEvent<Input>, next: Transitio
       ...state.r,
       bets: {
         ...state.r.bets,
-        [id]: { option, amount, at: event.now, ...(insured ? { insured } : {}) },
+        [id]: {
+          option,
+          amount,
+          at: event.now,
+          ...(insured ? { insured } : {}),
+          ...(also !== undefined ? { also } : {}),
+        },
       },
     },
   };

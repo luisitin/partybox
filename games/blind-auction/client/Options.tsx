@@ -17,6 +17,7 @@ export function OptionBoard({
   players = [],
   outcome = null,
   selected = null,
+  also = null,
   onSelect,
   compact = false,
   className,
@@ -34,6 +35,8 @@ export function OptionBoard({
   outcome?: number | null;
   /** Phone: the picked content, and the tap that picks one. */
   selected?: number | null;
+  /** The split twist: the second pick, lit like the first. */
+  also?: number | null;
   onSelect?: (option: number) => void;
   compact?: boolean;
   className?: string;
@@ -80,7 +83,7 @@ export function OptionBoard({
       ) : null}
       {options.map((o, i) => {
         if (hideLocked && locked === i) return null;
-        const on = selected === i;
+        const on = selected === i || also === i;
         const won = outcome === i;
         const dim = outcome !== null && !won;
         const here = visible.filter((b) => b.option === i);
@@ -110,7 +113,7 @@ export function OptionBoard({
                 {here.map((b) => {
                   const p = players.find((x) => x.id === b.id);
                   return (
-                    <span key={b.id} className={styles.chip} title={p?.name}>
+                    <span key={`${b.id}-${b.option}`} className={styles.chip} title={p?.name}>
                       {p ? (
                         <span className={styles.face}>
                           <Avatar avatarId={p.avatarId} size="100%" />
