@@ -36,7 +36,7 @@ export function advance(state: State, now: number): State {
 
 function skip(state: State, now: number): State {
   // The VIP's Start now on the rules runs the 3 · 2 · 1 first; a second skip cuts it.
-  if (state.phase.id === 'intro' && state.goAt === null) return startCountdown(state, now);
+  if (state.phase.id === 'intro' && !state.counting) return startCountdown(state, now);
   return state.phase.id === 'reveal' ? skipStep(state, now, advance) : advance(state, now);
 }
 

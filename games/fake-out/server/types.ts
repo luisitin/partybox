@@ -102,8 +102,8 @@ export interface State extends GameStateBase {
   speechMs: Record<string, number>;
   /** Intro ready-up (owner, [cc45f4]): who has tapped I'm ready (bots from the start). */
   ready: string[];
-  /** When the 3 · 2 · 1 ends and question 1 starts (server time); null until everyone is ready. */
-  goAt: number | null;
+  /** The 3 · 2 · 1 is running: it ends on the intro's deadline, which a pause shifts. */
+  counting: boolean;
 }
 
 export const inputSchema = z.discriminatedUnion('type', [

@@ -67,7 +67,10 @@ export function timerModeOf(state: State): 'normal' | 'quiet' | 'hidden' {
 
 function counts(state: State): [number, number] {
   const connected = Object.values(state.players).filter((p) => p.connected).length;
-  if (state.phase.id === 'intro') return [state.ready.length, connected];
+  if (state.phase.id === 'intro') {
+    const here = Object.entries(state.players).filter(([, p]) => p.connected);
+    return [here.filter(([id]) => state.ready.includes(id)).length, here.length];
+  }
   if (state.phase.id === 'lie') return [Object.keys(state.q.lies).length, connected];
   if (state.phase.id === 'pick') return [Object.keys(state.q.picks).length, connected];
   return [0, connected];
@@ -96,6 +99,6 @@ export function tvView(state: State, gameId: string): FakeOutTvView {
     likesOn: state.cfg.likes,
     standings: phase === 'scores' || phase === 'done' ? standingsView(state) : [],
     ready: phase === 'intro' ? state.ready : [],
-    goAt: phase === 'intro' ? state.goAt : null,
+    goAt: phase === 'intro' && state.counting ? state.phase.deadline : null,
   };
 }

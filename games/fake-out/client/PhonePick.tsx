@@ -1,4 +1,4 @@
-// Phone "pick" (SPEC §3.4): a pinned header "Pick the truth · 👍 the funniest (optional)", then
+// Phone "pick" (SPEC §3.4): a pinned header "Pick the truth" (a small 👍 hint above the list), then
 // every option but the player's own, full width: tap a row to pick it (✓ + the submit haptic; tap
 // another to change), and a 44 × 44 👍 on the right of each row — two per question. The list
 // scrolls past eight options; the header stays pinned.
@@ -26,14 +26,13 @@ export function PhonePick({ view, send }: Props): JSX.Element {
   return (
     <Screen className={styles.screen}>
       <div className={styles.pinned}>
-        <p className={styles.pickTitle}>
-          {view.likesOn ? L('Pick the truth · 👍 the funniest (optional)') : L('Pick the truth')}
-        </p>
+        <p className={styles.pickTitle}>{L('Pick the truth')}</p>
         <FactCard fact={view.fact} size="phone" className={styles.factSmall} />
         {view.mine ? (
           <p className={styles.mine}>{L('Your lie: {lie}', { lie: view.mine.toUpperCase() })}</p>
         ) : null}
       </div>
+      {view.likesOn ? <p className={styles.likeHint}>{L('👍 = funniest (optional)')}</p> : null}
       <ul className={styles.options}>
         {view.options.map((o, i) => {
           const picked = view.myPick === o.id;

@@ -10,7 +10,9 @@ export const tv: GameTvModule = {
   // The question card's tip is its own entrance. The reveal crossfades in: its first frame is a
   // new composition (the grid folds into the deck).
   quickInto: ['question'],
-  stripCompact: ['pick', 'reveal'],
+  // One indicator at a time (reviewer [d738fb]): the rules' ready row replaces the strip, and the
+  // reveal's own faces replace it too; pick keeps full names + scores.
+  stripHidden: ['intro', 'reveal'],
   // The reveal hands points out step by step: the strip's totals wait for the scoreboard.
   stripScores: (view) => view.phaseId !== 'reveal',
   // The players who picked the option on stage.

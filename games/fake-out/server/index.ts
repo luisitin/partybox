@@ -89,7 +89,7 @@ function init(ctx: InitContext): State {
     offered: {},
     speechMs: {},
     ready: [],
-    goAt: null,
+    counting: false,
   };
   return enterIntro(state, ctx.now);
 }

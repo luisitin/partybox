@@ -34,7 +34,7 @@
 .intro {
   gap: var(--pb-space-3);
   /* the ready row sits clear of the host bar along the bottom */
-  padding-bottom: calc(var(--pb-space-7) * 2);
+  padding-bottom: calc(var(--pb-space-7) * 3);
 }
 
 .mask {
@@ -379,6 +379,24 @@
   position: relative;
   flex: 1;
   min-height: 0;
+}
+
+/* The completed fact stands alone: it centres on the whole stage, and the kicker leaves with the
+   small fact panel, so no hole opens above it (reviewer [d738fb] #4). */
+.revealRound {
+  position: relative;
+}
+
+.revealRound > .kicker {
+  transition: opacity var(--pb-motion-base) var(--pb-ease);
+}
+
+.revealFact > .kicker {
+  opacity: 0;
+}
+
+.revealFact .revealArea {
+  position: static;
 }
 
 /* Every option as a compact chip; the one on stage leaves a dashed gap, shown ones carry their

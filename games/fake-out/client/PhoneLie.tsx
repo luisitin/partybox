@@ -11,7 +11,7 @@ import type { FakeOutControllerView } from '../server/index';
 import type { Input } from '../server/types';
 import { FactCard } from './FactCard';
 import { STRINGS } from './strings';
-import { kicker } from './TvRound';
+import { kicker } from './labels';
 import styles from './phone.module.css';
 
 type Props = GameControllerProps<FakeOutControllerView, Input>;

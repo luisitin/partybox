@@ -157,6 +157,6 @@ export function controllerView(state: State, gameId: string, p: string): FakeOut
     myWhy: onBoard ? (me?.why ?? []) : [],
     standings: onBoard ? standingsView(state) : [],
     meReady: phase === 'intro' && state.ready.includes(p),
-    goAt: phase === 'intro' ? state.goAt : null,
+    goAt: phase === 'intro' && state.counting ? state.phase.deadline : null,
   };
 }

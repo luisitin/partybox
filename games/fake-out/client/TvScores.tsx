@@ -3,19 +3,13 @@
 // truth", "+1000 fooled 2", "×2 final"). The Next button lives on the VIP's phone.
 import type { JSX } from 'react';
 import { Avatar, BigText, Scoreboard, Stage, useT } from '@partybox/game-sdk/ui';
-import type { GameTvProps, Translator } from '@partybox/game-sdk/ui';
+import type { GameTvProps } from '@partybox/game-sdk/ui';
 import type { FakeOutTvView } from '../server/index';
-import type { Why } from '../server/types';
+import { whyChip } from './labels';
 import { STRINGS } from './strings';
 import styles from './tv.module.css';
 
 type Props = GameTvProps<FakeOutTvView>;
-
-export function whyChip(L: Translator, why: Why): string {
-  if (why.k === 'truth') return L('+{pts} truth', { pts: why.pts });
-  if (why.k === 'fooled') return L('+{pts} fooled {n}', { pts: why.pts, n: why.n });
-  return L('×2 final');
-}
 
 export function TvScores({ view }: Props): JSX.Element {
   const L = useT(STRINGS);

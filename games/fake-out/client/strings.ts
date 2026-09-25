@@ -69,6 +69,7 @@ export const STRINGS: Strings = {
     ready: 'listo',
     'not ready': 'no listo',
     'Everyone is ready!': '¡Todos listos!',
+    'The facts and answers are in English.': 'Los datos y las respuestas están en inglés.',
     // TV
     'Final Fake-Out · double points': 'Engaño Final · puntos dobles',
     'Question {n} of {total}': 'Pregunta {n} de {total}',
@@ -119,8 +120,7 @@ export const STRINGS: Strings = {
     'Waiting for the others…': 'Esperando a los demás…',
     'Waiting for the others — watch the TV': 'Esperando a los demás. Mira la TV',
     'Pick the truth': 'Elige la verdad',
-    'Pick the truth · 👍 the funniest (optional)':
-      'Elige la verdad · 👍 a la más graciosa (opcional)',
+    '👍 = funniest (optional)': '👍 = la más graciosa (opcional)',
     'Your lie: {lie}': 'Tu mentira: {lie}',
     'Like {lie}': 'Me gusta {lie}',
     'Unlike {lie}': 'Quitar me gusta de {lie}',

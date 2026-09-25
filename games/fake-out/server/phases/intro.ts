@@ -1,6 +1,6 @@
 // Phase "intro" (once): the rules on every screen and a ready-up (owner, [cc45f4]: "never rush the
 // players"). Each player taps I'm ready (bots are ready from the start; a dropped phone never
-// blocks); once every connected player is, a breath and then the 3 · 2 · 1 (`goAt`), and
+// blocks); once every connected player is, a breath and then the 3 · 2 · 1 (`counting`, ending on the deadline), and
 // question 1. The VIP's Start now (a skip) starts the 3 · 2 · 1 at once; INTRO_MS only stops a
 // room of idle phones from hanging.
 import { connectedIds, enterPhase, hasPlayer, isTimerFor } from '@partybox/game-sdk';
@@ -10,14 +10,14 @@ import type { Input, State, Transition } from '../types';
 
 export function enterIntro(state: State, now: number): State {
   const bots = state.seats.filter((id) => state.players[id]?.bot === true);
-  return enterPhase({ ...state, ready: bots, goAt: null }, 'intro', now, INTRO_MS);
+  return enterPhase({ ...state, ready: bots, counting: false }, 'intro', now, INTRO_MS);
 }
 
 /** The 3 · 2 · 1 before question 1: the intro's deadline becomes its end. */
 export function startCountdown(state: State, now: number): State {
-  if (state.goAt !== null) return state;
-  const goAt = now + READY_BREATH_MS + COUNTDOWN_MS;
-  return { ...state, goAt, phase: { ...state.phase, deadline: goAt } };
+  if (state.counting) return state;
+  const deadline = now + READY_BREATH_MS + COUNTDOWN_MS;
+  return { ...state, counting: true, phase: { ...state.phase, deadline } };
 }
 
 /** Everyone connected (and not gone) has tapped I'm ready, and someone is here. */
@@ -28,7 +28,7 @@ export function allReady(state: State): boolean {
 
 /** A Ready, a drop or a leave may complete the room: start the count (never while paused). */
 export function checkReady(state: State, now: number): State {
-  if (state.phase.id !== 'intro' || state.phase.paused || state.goAt !== null) return state;
+  if (state.phase.id !== 'intro' || state.phase.paused || state.counting) return state;
   return allReady(state) ? startCountdown(state, now) : state;
 }
 

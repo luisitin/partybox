@@ -14,10 +14,10 @@ import type { FakeOutControllerView, Moment } from '../server/index';
 import type { Input } from '../server/types';
 import { useAfter } from './beats';
 import { Countdown } from './Countdown';
+import { EnglishNote } from './EnglishNote';
 import { FactCard } from './FactCard';
 import { STRINGS } from './strings';
-import { kicker } from './TvRound';
-import { whyChip } from './TvScores';
+import { kicker, whyChip } from './labels';
 import styles from './phone.module.css';
 
 type Props = GameControllerProps<FakeOutControllerView, Input>;
@@ -59,7 +59,7 @@ export function PhoneIntro({ view, send, skip }: Props): JSX.Element {
     return (
       <Screen className={styles.screen}>
         <div className={styles.countdownScreen}>
-          <Countdown goAt={view.goAt} big />
+          <Countdown goAt={view.goAt} paused={view.paused} big />
         </div>
       </Screen>
     );
@@ -70,6 +70,7 @@ export function PhoneIntro({ view, send, skip }: Props): JSX.Element {
       </p>
       <h2 className={styles.introTitle}>Fake-Out</h2>
       <HowToPlay />
+      <EnglishNote />
     </Screen>
   );
 }

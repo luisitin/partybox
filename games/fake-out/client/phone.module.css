@@ -352,7 +352,9 @@
 
 .likeButton {
   flex: none;
-  width: var(--pb-touch);
+  /* grows with the text size, so the 👍 never clips at 200 % (reviewer [d738fb] #6) */
+  min-width: var(--pb-touch);
+  padding: 0 0.35em;
   min-height: var(--pb-touch);
   display: grid;
   place-items: center;
@@ -375,6 +377,13 @@
 
 .likeButton:disabled {
   opacity: 0.25;
+}
+
+.likeHint {
+  margin: 0;
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+  text-align: right;
 }
 
 .pickedHint {
@@ -632,7 +641,7 @@
   }
 
   .input {
-    min-height: calc(var(--pb-font-h2) * 1.9);
+    min-height: calc(var(--pb-font-h2) * 1.7);
     padding-bottom: var(--pb-space-4);
     font-size: var(--pb-font-body);
   }

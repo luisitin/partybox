@@ -2,45 +2,18 @@
 // place across lie → pick → reveal so the room's eyes never have to hunt for it.
 import type { JSX, ReactNode } from 'react';
 import { Avatar, Stage, useT } from '@partybox/game-sdk/ui';
-import type { GameTvProps, Translator, ViewPlayer } from '@partybox/game-sdk/ui';
+import type { GameTvProps, ViewPlayer } from '@partybox/game-sdk/ui';
 import type { FakeOutTvView } from '../server/index';
 import { useClipAt, useCueOnce } from './beats';
 import { Countdown } from './Countdown';
+import { EnglishNote } from './EnglishNote';
 import { FactCard } from './FactCard';
 import { OptionGrid } from './OptionGrid';
+import { kicker } from './labels';
 import { STRINGS } from './strings';
 import styles from './tv.module.css';
 
 type Props = GameTvProps<FakeOutTvView>;
-
-export function kicker(
-  L: Translator,
-  view: { final: boolean; n: number; total: number; fact: { category: string } },
-): string {
-  if (view.final) return L('Final Fake-Out · double points');
-  return `${L('Question {n} of {total}', { n: view.n, total: view.total })} · ${L(categoryLabel(view.fact.category))}`;
-}
-
-const CATEGORY_LABELS: Readonly<Record<string, string>> = {
-  animals: 'Animals',
-  history: 'History',
-  food: 'Food',
-  science: 'Science',
-  geography: 'Geography',
-  'weird-laws': 'Weird laws',
-  sports: 'Sports',
-  inventions: 'Inventions',
-  space: 'Space',
-  body: 'The human body',
-  words: 'Words',
-  holidays: 'Holidays',
-  drinking: 'Drinking',
-  dating: 'Dating',
-};
-
-export function categoryLabel(category: string): string {
-  return CATEGORY_LABELS[category] ?? category;
-}
 
 export function TvIntro({ view }: Props): JSX.Element {
   const L = useT(STRINGS);
@@ -54,7 +27,7 @@ export function TvIntro({ view }: Props): JSX.Element {
     return (
       <Stage center className={styles.intro}>
         <h1 className={styles.title}>Fake-Out</h1>
-        <Countdown goAt={view.goAt} big />
+        <Countdown goAt={view.goAt} paused={view.paused} big />
       </Stage>
     );
   return (
@@ -64,6 +37,7 @@ export function TvIntro({ view }: Props): JSX.Element {
       </span>
       <h1 className={styles.title}>Fake-Out</h1>
       <p className={styles.tagline}>{L('Write a fake answer. Find the real one.')}</p>
+      <EnglishNote />
       <ol className={styles.steps}>
         {steps.map((step, i) => (
           <li key={i} className={styles.step} style={{ ['--i' as string]: i }}>

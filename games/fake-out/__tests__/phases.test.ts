@@ -36,7 +36,7 @@ describe('phase order and exits', () => {
   it('a VIP skip leaves every phase (the reveal one page at a time)', () => {
     let s = start({ fact: PENGUIN });
     s = vip(s, 'skip'); // Start now: the 3 · 2 · 1
-    expect([s.phase.id, s.goAt !== null]).toEqual(['intro', true]);
+    expect([s.phase.id, s.counting]).toEqual(['intro', true]);
     s = vip(s, 'skip');
     expect(s.phase.id).toBe('question');
     s = vip(s, 'skip');

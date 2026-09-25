@@ -12,7 +12,7 @@ import { FactCard } from './FactCard';
 import { Deck } from './Deck';
 import { ReadAlong } from './ReadAlong';
 import { STRINGS } from './strings';
-import { kicker } from './TvRound';
+import { kicker } from './labels';
 import styles from './tv.module.css';
 
 type Props = GameTvProps<FakeOutTvView>;
@@ -188,7 +188,9 @@ export function TvReveal({ view }: Props): JSX.Element {
   const current = reveal?.kind === 'option' ? reveal.shown[reveal.shown.length - 1] : undefined;
   const filled = reveal?.kind === 'fact' || reveal?.kind === 'unpicked';
   return (
-    <Stage className={styles.round}>
+    <Stage
+      className={`${styles.round} ${styles.revealRound} ${reveal?.kind === 'fact' ? styles.revealFact : ''}`}
+    >
       <p className={`${styles.kicker} ${view.final ? styles.kickerFinal : ''}`}>
         {kicker(L, view)}
       </p>

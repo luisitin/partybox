@@ -6,9 +6,17 @@ import { useCueOnce } from './beats';
 import { STRINGS } from './strings';
 import styles from './fakeout.module.css';
 
-export function Countdown({ goAt, big }: { goAt: number; big?: boolean }): JSX.Element {
+export function Countdown({
+  goAt,
+  paused,
+  big,
+}: {
+  goAt: number;
+  paused: boolean;
+  big?: boolean;
+}): JSX.Element {
   const L = useT(STRINGS);
-  const left = useSecondsLeft(goAt, false, 50) ?? 0;
+  const left = useSecondsLeft(goAt, paused, 50) ?? 0;
   const digit = left >= 1 && left <= 3 ? left : null;
   useCueOnce(digit === null ? null : 'countdown', digit === null ? null : `c${goAt}-${digit}`);
   return (
