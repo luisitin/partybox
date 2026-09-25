@@ -10,6 +10,7 @@ import { game as lightningRound } from '../../../games/lightning-round/server/in
 import { game as secretHitler } from '../../../games/secret-hitler/server/index';
 import { game as spyGrid } from '../../../games/spy-grid/server/index';
 import { game as tuneIn } from '../../../games/tune-in/server/index';
+import { game as whoSaidIt } from '../../../games/who-said-it/server/index';
 import { game as wisecrack } from '../../../games/wisecrack/server/index';
 import bingoEs from '../../../games/bingo/manifest.es.json' with { type: 'json' };
 import blanksEs from '../../../games/blanks/manifest.es.json' with { type: 'json' };
@@ -21,6 +22,7 @@ import lightningRoundEs from '../../../games/lightning-round/manifest.es.json' w
 import secretHitlerEs from '../../../games/secret-hitler/manifest.es.json' with { type: 'json' };
 import spyGridEs from '../../../games/spy-grid/manifest.es.json' with { type: 'json' };
 import tuneInEs from '../../../games/tune-in/manifest.es.json' with { type: 'json' };
+import whoSaidItEs from '../../../games/who-said-it/manifest.es.json' with { type: 'json' };
 import wisecrackEs from '../../../games/wisecrack/manifest.es.json' with { type: 'json' };
 
 export const serverGames: Readonly<Record<string, AnyGameDefinition>> = {
@@ -34,6 +36,7 @@ export const serverGames: Readonly<Record<string, AnyGameDefinition>> = {
   'secret-hitler': secretHitler,
   'spy-grid': spyGrid,
   'tune-in': tuneIn,
+  'who-said-it': whoSaidIt,
   'wisecrack': wisecrack,
 };
 
@@ -48,5 +51,6 @@ export const serverGameText: Readonly<Record<string, Readonly<Record<string, Rea
   'secret-hitler': { es: secretHitlerEs },
   'spy-grid': { es: spyGridEs },
   'tune-in': { es: tuneInEs },
+  'who-said-it': { es: whoSaidItEs },
   'wisecrack': { es: wisecrackEs },
 };

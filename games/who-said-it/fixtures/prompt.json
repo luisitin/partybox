@@ -1,0 +1,173 @@
+{
+  "phase": {
+    "id": "prompt",
+    "startedAt": 1700000008000,
+    "deadline": 1700000018000
+  },
+  "rng": {
+    "seed": 1,
+    "step": 145
+  },
+  "players": {
+    "p1": {
+      "id": "p1",
+      "name": "Player 1",
+      "avatarId": "fox",
+      "connected": true
+    },
+    "p2": {
+      "id": "p2",
+      "name": "Player 2",
+      "avatarId": "owl",
+      "connected": true
+    },
+    "p3": {
+      "id": "p3",
+      "name": "Player 3",
+      "avatarId": "frog",
+      "connected": true
+    },
+    "p4": {
+      "id": "p4",
+      "name": "Player 4",
+      "avatarId": "cat",
+      "connected": true
+    },
+    "p5": {
+      "id": "p5",
+      "name": "Player 5",
+      "avatarId": "panda",
+      "connected": true
+    }
+  },
+  "cfg": {
+    "prompts": 4,
+    "writeSeconds": 60,
+    "guessSeconds": 12,
+    "ideas": true,
+    "readAnswers": true,
+    "spicy": false,
+    "reader": "sky"
+  },
+  "seats": ["p1", "p2", "p3", "p4", "p5"],
+  "left": [],
+  "prompts": [
+    {
+      "id": "ws-f3-010",
+      "prompt": "Your life gets a theme song. What is it called?",
+      "botAnswers": [
+        "Here Comes Trouble",
+        "Running Late Again",
+        "The Snack Anthem",
+        "Oops, Wrong Door",
+        "Sweet Snooze",
+        "It's Fine, Everything's Fine",
+        "Dance Like Nobody's Awake",
+        "The Ballad of Lost Keys",
+        "WAKE UP",
+        "Coffee Time Blues",
+        "Where Are My Shoes",
+        "Tiny But Mighty!!",
+        "la la la lol",
+        "Stomp Stomp Clap"
+      ]
+    },
+    {
+      "id": "ws-f3-007",
+      "prompt": "You can talk to one kind of animal. Which one?",
+      "botAnswers": [
+        "dogs obviously",
+        "Cats. I need to know what they're plotting.",
+        "Octopus",
+        "squirrels, they know stuff",
+        "Owls for the wisdom",
+        "Parrots so they stop repeating me lol",
+        "Goats!!",
+        "Dolphins",
+        "The crows. They remember faces.",
+        "Horses",
+        "sloths, we'd get along",
+        "ANTS. Imagine the gossip.",
+        "Penguins",
+        "My neighbor's dog, he barks all night"
+      ]
+    },
+    {
+      "id": "ws-f2-035",
+      "prompt": "What little everyday thing makes you way happier than it should?",
+      "botAnswers": [
+        "a green light",
+        "Warm towels.",
+        "peeling a sticker off clean",
+        "finding money in my pocket",
+        "a perfect parking spot",
+        "when the bus comes right away",
+        "popping bubble wrap",
+        "a new pen",
+        "Sunshine!!",
+        "someone holding the door",
+        "when a dog notices me",
+        "hearing my favorite song by accident",
+        "clean socks honestly",
+        "When my phone hits 100 PERCENT"
+      ]
+    },
+    {
+      "id": "ws-f1-021",
+      "prompt": "What do you do when you can't fall asleep?",
+      "botAnswers": [
+        "read a book",
+        "Count sheep. It never works.",
+        "get a snack",
+        "scroll my phone",
+        "watch a boring show",
+        "flip my pillow to the cold side",
+        "get up and walk around",
+        "plan tomorrow in my head",
+        "deep breathing",
+        "replay embarrassing moments lol",
+        "make a cup of tea",
+        "REARRANGE my room in my head",
+        "stare at the ceiling",
+        "write stuff down!!"
+      ]
+    }
+  ],
+  "scores": {
+    "p1": 0,
+    "p2": 0,
+    "p3": 0,
+    "p4": 0,
+    "p5": 0
+  },
+  "stats": {},
+  "pairs": {},
+  "speechMs": {},
+  "log": [],
+  "p": {
+    "n": 0,
+    "seated": ["p1", "p2", "p3", "p4", "p5"],
+    "answers": {},
+    "ideas": {
+      "p1": ["The Snack Anthem", "Here Comes Trouble"],
+      "p2": ["Running Late Again", "Where Are My Shoes"],
+      "p3": ["WAKE UP", "Sweet Snooze"],
+      "p4": ["It's Fine, Everything's Fine", "Dance Like Nobody's Awake"],
+      "p5": ["Stomp Stomp Clap", "la la la lol"]
+    },
+    "ideaUsed": [],
+    "cards": [],
+    "idx": 0,
+    "guesses": {},
+    "step": "land",
+    "flip": null,
+    "startScores": {
+      "p1": 0,
+      "p2": 0,
+      "p3": 0,
+      "p4": 0,
+      "p5": 0
+    },
+    "points": {}
+  }
+}
