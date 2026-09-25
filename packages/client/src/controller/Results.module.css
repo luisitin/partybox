@@ -97,3 +97,16 @@
   color: var(--pb-muted, rgba(255, 255, 255, 0.7));
   font-variant-numeric: tabular-nums;
 }
+
+/* ── I-329: the line for a player who didn't win — above the rank, in the body's voice. */
+.quip {
+  display: block;
+  margin: var(--pb-space-1) 0 0;
+  font-size: var(--pb-font-body);
+  font-weight: 800;
+  line-height: 1.25;
+  text-wrap: balance;
+}
+.quip + .place {
+  margin-top: 0;
+}
