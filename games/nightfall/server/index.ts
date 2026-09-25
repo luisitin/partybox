@@ -11,7 +11,7 @@ import { enterDone, enterEnd, reduceEnd } from './phases/end';
 import { enterHunter, reduceHunter } from './phases/hunter';
 import { enterLastWords, reduceLastWords } from './phases/lastWords';
 import { enterNight, reduceNight } from './phases/night';
-import { checkReady, enterRoles, reduceRoles, startCount } from './phases/roles';
+import { enterRoles, reduceRoles, rolesDone } from './phases/roles';
 import { enterVerdict, reduceVerdict } from './phases/verdict';
 import { closeVote, enterRunoff, enterVote, reduceVote } from './phases/vote';
 import { recap } from './recap';
@@ -117,8 +117,7 @@ function afterVerdict(state: State, now: number): State {
 export function advance(state: State, now: number): State {
   switch (state.phase.id) {
     case 'roles':
-      // The skip (or the idle fallback) during the ready-up starts the 3 · 2 · 1; it always plays.
-      return state.step === 0 ? startCount(state, now) : enterNight(state, now);
+      return enterNight(state, now);
     case 'night':
       return enterDawn(state, now);
     case 'dawn':
@@ -167,9 +166,16 @@ function onPlayer(state: State, event: Extract<GameEvent<Input>, { type: 'player
   if (event.gone && isAlive(s, id) && !s.leaving.includes(id))
     s = { ...s, leaving: [...s.leaving, id] };
   if (s === state || s.phase.paused || event.connected) return s;
-  if (s.phase.id === 'roles') return checkReady(s, event.now);
-  const done = doneIds(s);
-  return done && allLivingDone(s, done) ? advance(s, event.now) : s;
+  return recheck(s, event.now);
+}
+
+/** Everyone the phase waits on is done: move on. Run after a drop and after a resume (a drop or
+ *  the last tap during a pause must not leave the phase waiting for its timer). */
+function recheck(state: State, now: number): State {
+  if (state.phase.paused) return state;
+  if (state.phase.id === 'roles') return rolesDone(state) ? advance(state, now) : state;
+  const done = doneIds(state);
+  return done && allLivingDone(state, done) ? advance(state, now) : state;
 }
 
 function reduce(state: State, event: GameEvent<Input>): State {
@@ -179,7 +185,7 @@ function reduce(state: State, event: GameEvent<Input>): State {
   if (event.type === 'vip' && event.action !== 'pause' && s.phase.paused)
     s = shiftDay(s, Math.max(0, event.now - s.phase.paused.at));
   const vip = applyVip(s, event, { skip: advance, end: enterDone });
-  if (vip) return vip;
+  if (vip) return event.type === 'vip' && event.action === 'resume' ? recheck(vip, event.now) : vip;
   if (state.phase.paused) return state; // inputs and timers wait while paused
   switch (state.phase.id) {
     case 'roles':

@@ -137,12 +137,12 @@ export function votes(state: State, ballots: Record<string, string>): State {
   return s.phase.id === 'vote' || s.phase.id === 'runoff' ? timer(s) : s;
 }
 
-/** From `roles` into night 1: everyone taps Ready, then the 3 · 2 · 1 runs out. */
+/** From `roles` into night 1: everyone taps Got it. */
 export function toNight(state: State): State {
   if (state.phase.id !== 'roles') return state;
   let s = state;
   for (const id of s.seats) s = input(s, id, { type: 'ready' });
-  return s.phase.id === 'roles' ? timer(s) : s;
+  return s;
 }
 
 /** Plays dawn out to the next phase (day, hunter or end). */

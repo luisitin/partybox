@@ -99,7 +99,7 @@ describe('bots', () => {
       playerId: 'p1',
       action: { action: 'selectGame', gameId: 'fake' },
     } as const;
-    const start = { type: 'vip', now: T0, playerId: 'p1', action: { action: 'start' } } as const;
+    const start = { type: 'vip', now: T0, playerId: 'p1', action: { action: 'startNow' } } as const;
     const selected = applyRoomEvent(room, select, noBots).room;
     const blocked = applyRoomEvent(selected, start, noBots);
     expect(blocked.room.status).toBe('selecting');

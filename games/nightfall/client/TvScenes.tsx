@@ -3,9 +3,7 @@
 import type { JSX } from 'react';
 import { Avatar, useT } from '@partybox/game-sdk/ui';
 import type { NightfallTvView } from '../server/index';
-import { Count } from './Count';
 import { castLine, nameOf, playerOf } from './lookup';
-import { rulesFor } from './rules';
 import { useStepCue } from './useNarrator';
 import { STRINGS } from './strings';
 import { Village } from './Village';
@@ -26,36 +24,14 @@ export function CastPills({ view }: { view: NightfallTvView }): JSX.Element {
 
 export function RolesScene({ view }: { view: NightfallTvView }): JSX.Element {
   const L = useT(STRINGS);
-  useStepCue(`roles:${view.step}`, view.step === 0 ? 'card' : null);
-  // Step 0: the rules and the ready-up; step 1: everyone's in, the 3 · 2 · 1 (owner, cc45f4).
-  if (view.countEnd !== null)
-    return (
-      <div className={`${styles.column} ${styles.centered}`}>
-        <p className={styles.kicker}>{L('Everyone’s ready!')}</p>
-        <Count
-          until={view.countEnd}
-          line={L('Night 1 is falling…')}
-          size="tv"
-          paused={view.paused}
-        />
-      </div>
-    );
-  // Dropped phones don't block the start, so they don't count here either.
+  useStepCue('roles:0', 'card');
+  // Dropped phones don't hold the night up, so they don't count here either.
   const here = view.players.filter((p) => p.connected && view.living.includes(p.id));
   const ready = here.filter((p) => p.status === 'submitted').length;
   return (
     <div className={styles.column}>
-      <p className={styles.kicker}>🌙 Nightfall · {L('How to play')}</p>
-      <ol className={styles.rules}>
-        {rulesFor(view.flavour, L).map((r, i) => (
-          <li key={r.icon} className={styles.rule} style={{ animationDelay: `${150 + i * 220}ms` }}>
-            <span className={styles.ruleIcon} aria-hidden="true">
-              {r.icon}
-            </span>
-            <span>{r.text}</span>
-          </li>
-        ))}
-      </ol>
+      <p className={styles.kicker}>🌙 Nightfall</p>
+      <h1 className={styles.h1}>{L('Check your role. Keep it secret.')}</h1>
       <CastPills view={view} />
       <Village
         players={view.players}
@@ -63,11 +39,9 @@ export function RolesScene({ view }: { view: NightfallTvView }): JSX.Element {
         graveyard={view.graveyard}
         cast={view.cast}
         checks
-        narrow
       />
       <p className={styles.caption} aria-live="polite">
-        ✋ {L('{ready} of {total} ready', { ready, total: here.length })} ·{' '}
-        {L('Tap I’m ready on your phone when you’ve read this.')}
+        ✋ {L('{ready} of {total} have seen their role', { ready, total: here.length })}
       </p>
     </div>
   );

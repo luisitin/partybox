@@ -75,11 +75,11 @@
   letter-spacing: 0.3em;
   text-transform: uppercase;
 }
-/* I-041: the placeholder is a sentence ("4 letters from the TV"), not a code — no tracking. */
-.code::placeholder {
-  font-family: var(--pb-font-family);
-  letter-spacing: 0;
-  text-transform: none;
+/* I-041: where the code comes from ("4 letters from the TV") — a line under the label that wraps. */
+.fieldHint {
+  margin-top: calc(-1 * var(--pb-space-1));
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
 }
 
 .avatars {

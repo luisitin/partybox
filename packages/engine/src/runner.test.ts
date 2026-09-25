@@ -48,7 +48,7 @@ describe('runner', () => {
     const selecting = vip(roomWith(2), { action: 'selectGame', gameId: 'fake' }).room;
     const r = applyRoomEvent(
       selecting,
-      { type: 'vip', now: T0 + 5, playerId: 'p1', action: { action: 'start' } },
+      { type: 'vip', now: T0 + 5, playerId: 'p1', action: { action: 'startNow' } },
       broken,
     );
     expect(r.room.status).toBe('selecting');

@@ -175,10 +175,8 @@ export type Input = z.infer<typeof inputSchema>;
 export const TEXT_MAX = 80;
 export const POSTS_PER_DAY = 3;
 
-/** The breath after the last Ready, then the 3 · 2 · 1 (owner, #decisions cc45f4). */
-export const READY_BREATH_MS = 600;
-export const COUNTDOWN_MS = 3_000;
-/** A room where nobody taps Ready at all (everyone walked off) still starts, after 3 minutes. */
+/** A room where no human taps Got it at all (everyone walked off) still starts, after 3 minutes;
+ *  while anyone is reading it re-arms. */
 export const READY_FALLBACK_MS = 180_000;
 export const HUNTER_MS = 20_000;
 export const RUNOFF_MS = 20_000;

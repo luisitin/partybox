@@ -25,7 +25,8 @@ export function Tv({ view, skip }: GameTvProps<LightningTvView>): JSX.Element {
   const standings = view.standings ?? [];
   const standingsUp = useStandingsUp(view.phaseId === 'reveal' ? view.deadline : null); // I-589
   if (view.phaseId === 'intro') {
-    // Bolt + title ride the shell's phase rise; the tagline and the pill follow one beat each.
+    // ADR-053: a 2 s title beat after the shell's stage (which showed the rules): bolt + title
+    // ride the shell's phase rise, the topic pill follows one beat later.
     return (
       <Stage center>
         <Bolt />
@@ -33,9 +34,6 @@ export function Tv({ view, skip }: GameTvProps<LightningTvView>): JSX.Element {
           Lightning Round
         </BigText>
         <div className={styles.introLine} style={{ '--i': 1 } as CSSProperties}>
-          <BigText level="h2">{L('Fast fingers, sharp minds. Bet big on the last one.')}</BigText>
-        </div>
-        <div className={styles.introLine} style={{ '--i': 2 } as CSSProperties}>
           <span className={styles.introPill}>
             {drawText(view.categoryLabel, L)} · {L('faster is worth more')}
           </span>
@@ -83,7 +81,15 @@ export function Tv({ view, skip }: GameTvProps<LightningTvView>): JSX.Element {
           round={view.round}
           question={view.question}
           // I-589: the owner's Next button, with the standings
-          aside={standingsUp && view.next && skip ? <TvNext next={view.next} skip={skip} /> : null}
+          aside={
+            standingsUp && view.next && skip ? (
+              <TvNext
+                next={view.next}
+                skip={skip}
+                vipName={view.players.find((p) => p.id === view.vip)?.name}
+              />
+            ) : null
+          }
         />
         <p className={styles.asked}>{view.question?.text ?? '…'}</p>
         {view.question && view.correctIndex !== undefined ? (

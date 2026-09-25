@@ -87,39 +87,6 @@
   animation: global(pb-rise) var(--pb-motion-slow) var(--pb-ease) 150ms backwards;
 }
 
-/* The ready-up's three rules: a solid panel (the dusk moon sits behind this band), icons in a
-   column, the text left-aligned in a centred block. */
-.rules {
-  margin: 0;
-  padding: var(--pb-space-4) var(--pb-space-5);
-  list-style: none;
-  display: grid;
-  gap: var(--pb-space-3);
-  max-width: 1400px;
-  text-align: start;
-  border-radius: var(--pb-radius-lg);
-  background: color-mix(in oklab, var(--pb-surface) 92%, transparent);
-  position: relative;
-  z-index: 1;
-  animation: global(pb-rise) var(--pb-motion-slow) var(--pb-ease) backwards;
-}
-
-.rule {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  align-items: center;
-  gap: var(--pb-space-4);
-  font-size: var(--pb-font-body);
-  font-weight: 800;
-  line-height: 1.25;
-  color: var(--pb-text);
-  animation: global(pb-rise) var(--pb-motion-slow) var(--pb-ease) backwards;
-}
-
-.ruleIcon {
-  font-size: 1.3em;
-}
-
 .caption {
   margin: 0;
   font-size: var(--pb-font-caption);
@@ -449,7 +416,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .kicker,
-  .rule,
   .display,
   .h1,
   .h2,
@@ -466,7 +432,6 @@
   }
 }
 :global(:root[data-motion='off']) .kicker,
-:global(:root[data-motion='off']) .rule,
 :global(:root[data-motion='off']) .display,
 :global(:root[data-motion='off']) .h1,
 :global(:root[data-motion='off']) .h2,

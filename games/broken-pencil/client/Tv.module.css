@@ -16,15 +16,6 @@
   white-space: nowrap;
 }
 
-.howto {
-  margin: 0;
-  padding-left: 1.2em;
-  font-size: var(--pb-font-body);
-  color: var(--pb-text-muted);
-  text-align: left;
-  line-height: 1.5;
-}
-
 /* Draw / pass / guess: the tile block sits in the vertical middle of a long wait (review-loop #8). */
 .waiting {
   justify-content: center;
@@ -154,6 +145,29 @@
   /* The drawing page measures the room it gets: an eight-player roster (two chip rows) leaves the
      stage ~480 px and a fixed 560 px sheet ran over the kicker and into the host bar. */
   container-type: size;
+}
+
+/* The pacing rule holds a page up to ~10 s; an empty drawing then left the TV with no pixel moving
+   for 5 s (dead-air, c/pacing-5). The held page breathes like a leaf on a table: a slow drift in
+   the individual `scale`/`translate` properties, so it never fights the flip's `transform`. */
+@media (prefers-reduced-motion: no-preference) {
+  .current {
+    animation: pb-bp-held calc(var(--pb-motion-confetti) * 2) ease-in-out infinite;
+  }
+}
+:global(:root[data-motion='off']) .current {
+  animation: none;
+}
+@keyframes pb-bp-held {
+  0%,
+  100% {
+    scale: 1;
+    translate: 0 0;
+  }
+  50% {
+    scale: 1.012;
+    translate: 0 calc(-1 * var(--pb-space-1));
+  }
 }
 
 .page {

@@ -1,12 +1,11 @@
-// Phase "roles" (the owner's pacing rule, #decisions cc45f4): the rules on the TV, every phone
-// holds its SecretCard, and each player taps Ready. No visible clock: the night waits until every
-// connected player is ready (bots are ready from the start; a dropped phone doesn't block; a room
-// nobody taps in at all starts the count after READY_FALLBACK_MS, the idle-room contract). Then
-// step 1: a breath and a 3 · 2 · 1 (the phase deadline is its end), then the night. The VIP's skip
-// is "Start now": it starts the 3 · 2 · 1 at once.
+// Phase "roles": the shell's start stage has already shown the rules, taken everyone's READY and
+// counted 3 · 2 · 1 (#decisions cc45f4). Here every phone holds its secret card and taps Got it;
+// the night falls when every connected player has (bots at once; a dropped phone doesn't block).
+// No visible clock. A hidden net (READY_FALLBACK_MS) starts the night only in a room where no
+// human tapped at all (the idle-room contract); while anyone is still reading it re-arms.
 import { allConnectedDone, enterPhase, hasPlayer, isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
-import { COUNTDOWN_MS, READY_BREATH_MS, READY_FALLBACK_MS } from '../types';
+import { READY_FALLBACK_MS } from '../types';
 import type { Input, State, Transition } from '../types';
 
 export function enterRoles(state: State, now: number): State {
@@ -19,26 +18,22 @@ export function enterRoles(state: State, now: number): State {
   );
 }
 
-/** Step 1: the 3 · 2 · 1 before the first night. */
-export function startCount(state: State, now: number): State {
-  if (state.step !== 0) return state;
-  return {
-    ...state,
-    step: 1,
-    stepAt: now,
-    phase: { ...state.phase, deadline: now + READY_BREATH_MS + COUNTDOWN_MS },
-  };
+/** Every connected player has read their card. */
+export function rolesDone(state: State): boolean {
+  return allConnectedDone(state, state.ready);
 }
 
-/** A Ready or a drop may complete the room. */
-export function checkReady(state: State, now: number): State {
-  if (state.phase.id !== 'roles' || state.step !== 0 || state.phase.paused) return state;
-  return allConnectedDone(state, state.ready) ? startCount(state, now) : state;
+function humanTapped(state: State): boolean {
+  return state.ready.some((id) => state.players[id]?.bot !== true);
 }
 
 export function reduceRoles(state: State, event: GameEvent<Input>, next: Transition): State {
-  if (isTimerFor(state, event)) return next(state, event.now);
+  if (isTimerFor(state, event)) {
+    if (!humanTapped(state)) return next(state, event.now);
+    return { ...state, phase: { ...state.phase, deadline: event.now + READY_FALLBACK_MS } };
+  }
   if (event.type !== 'input' || event.input.type !== 'ready') return state;
   if (!hasPlayer(state, event.playerId) || state.ready.includes(event.playerId)) return state;
-  return checkReady({ ...state, ready: [...state.ready, event.playerId] }, event.now);
+  const after: State = { ...state, ready: [...state.ready, event.playerId] };
+  return rolesDone(after) ? next(after, event.now) : after;
 }

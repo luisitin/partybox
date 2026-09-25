@@ -33,29 +33,6 @@
   line-height: 1.35;
 }
 
-/* The ready-up's three rules, under the card. */
-.rules {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  display: grid;
-  gap: var(--pb-space-2);
-}
-
-.rule {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: var(--pb-space-2);
-  font-size: var(--pb-font-body);
-  line-height: 1.35;
-  color: var(--pb-text);
-}
-
-.middle {
-  flex: 1;
-  justify-content: center;
-}
-
 .status {
   min-height: 2.8em;
   margin: 0;

@@ -1,6 +1,7 @@
 // The game contract (docs/GAME_CONTRACT.md). Games implement `GameDefinition`; the engine drives it.
 // Changing anything here changes every game — write an ADR first (docs/DECISIONS.md).
 import { z } from 'zod';
+import type { GamePresence } from './constants';
 import type { Rng, RngState } from './rng';
 
 // ─── Manifest + settings ────────────────────────────────────────────────────────────────────────
@@ -87,7 +88,6 @@ export const QUICK_MINUTES = 8;
 /** Where the players must be (Part 00 §3.5): the picker's badge and the notice on choosing. */
 export const PRESENCE_NEEDS = ['anywhere', 'voice-if-remote', 'same-room'] as const;
 export type PresenceNeeds = (typeof PRESENCE_NEEDS)[number];
-
 /** One user-perceived character: `icon` is a single emoji (flags and ZWJ sequences included). */
 function oneGrapheme(s: string): boolean {
   return [...new Intl.Segmenter('en', { granularity: 'grapheme' }).segment(s)].length === 1;
@@ -163,6 +163,11 @@ export interface PlayerInfo {
   connected: boolean;
   /** A bot (ADR-028): a game may act for it where a person would tap (Bingo's ready-up). */
   bot?: boolean;
+  /**
+   * ADR-047: whether this player could see the TV when the game started (bots always can). Absent
+   * from hosts before presence. Switch features with it; never branch view content on it.
+   */
+  canSeeTv?: boolean;
 }
 
 export interface PhaseInfo {
@@ -184,6 +189,8 @@ export interface InitContext {
   settings: Settings;
   seed: number;
   now: number;
+  /** ADR-047: where everyone is, fixed at start. Optional: absent means all in one room with a TV. */
+  presence?: GamePresence;
 }
 
 // ─── Events ─────────────────────────────────────────────────────────────────────────────────────
@@ -284,7 +291,10 @@ export type TvView = ViewEnvelope;
 
 export interface ControllerView extends ViewEnvelope {
   me: { id: string; role: 'player' | 'spectator' };
-  /** S-005: the room is in "phone only" mode (the engine stamps it). */
+  /**
+   * This phone is the stage (the engine stamps it): the room is "phone only" (S-005), or this
+   * player can't see the TV (ADR-047). Per phone, live: a mid-game flip moves only this phone.
+   */
   phoneOnly?: boolean;
 }
 

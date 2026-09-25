@@ -8,12 +8,10 @@ import { PrimaryButton, Screen, buzz, useSound, useT } from '@partybox/game-sdk/
 import type { Translator } from '@partybox/game-sdk/ui';
 import type { NightfallControllerView } from '../server/index';
 import type { Input } from '../server/types';
-import { Count } from './Count';
 import { FaceGrid } from './FaceGrid';
 import { HoldCard } from './HoldCard';
 import { nameOf } from './lookup';
 import { CastLine, RoleFace } from './PhoneBits';
-import { rulesFor } from './rules';
 import { STRINGS } from './strings';
 import styles from './Phone.module.css';
 
@@ -21,44 +19,26 @@ type View = NightfallControllerView;
 
 export function RolesPhone({ view, send }: { view: View; send: (i: Input) => void }): JSX.Element {
   const L = useT(STRINGS);
-  // Step 1: everyone's ready, the 3 · 2 · 1 (owner, #decisions cc45f4).
-  if (view.countEnd !== null)
-    return (
-      <Screen className={styles.screen}>
-        <div className={`${styles.stack} ${styles.middle}`}>
-          <Count
-            until={view.countEnd}
-            line={L('Night 1 is falling…')}
-            size="phone"
-            paused={view.paused}
-          />
-        </div>
-      </Screen>
-    );
   return (
     <Screen
       className={styles.screen}
       footer={
         <PrimaryButton done={view.ready} onClick={() => send({ type: 'ready' })}>
           {view.ready
-            ? L('{ready} of {total} ready', { ready: view.readyCount, total: view.livingCount })
-            : L("I'm ready")}
+            ? L('{ready} of {total} have seen their role', {
+                ready: view.readyCount,
+                total: view.livingCount,
+              })
+            : L('Got it')}
         </PrimaryButton>
       }
     >
       <div className={styles.stack}>
-        <ol className={styles.rules} aria-label={L('How to play')}>
-          {rulesFor(view.flavour, L).map((r) => (
-            <li key={r.icon} className={styles.rule}>
-              <span aria-hidden="true">{r.icon}</span>
-              <span>{r.text}</span>
-            </li>
-          ))}
-        </ol>
         <p className={styles.head}>{L('Your secret role')}</p>
         <HoldCard secret="role">
           <RoleFace view={view} />
         </HoldCard>
+        <p className={styles.sub}>{L('Keep it secret. Hold the card close.')}</p>
         <CastLine view={view} />
       </div>
     </Screen>
