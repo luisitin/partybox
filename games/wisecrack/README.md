@@ -39,7 +39,7 @@ once per prompt; trimmed, whitespace-only ignored. `{ type: 'vote', promptId, sl
 `m` = 2 in round `rounds` (the last), else 1. Each vote received = 100 × m; a **sweep** (every vote
 cast went to one answer, ≥ 2 cast; impossible with 3 players) adds 50 × m. Points lock in when `reveal`
 starts, once per prompt. Ties share a rank, no tie-break; winners = every rank-1 player. Awards (a real
-player each; ties → higher score, then lower id): **Crowd favourite** (most votes received, if > 0),
+player each; a tied stat → a player with no award yet — I-474 A — then higher score, then lower id): **Crowd favourite** (most votes received, if > 0),
 **Sweep master** (most sweeps, if ≥ 1), **Speed writer** (most answers in before half the answer time,
 measured against the deadline; if > 0).
 
@@ -55,6 +55,10 @@ measured against the deadline; if > 0).
   deadline. Every phase but `done` has a deadline, so an idle room finishes on timers alone.
 - I-288 A (a Lightning Round pick): the phones' clock follows the TV's `timerMode` — digits only in
   `answer` and `vote`, a quiet bar in the phases with nothing to press.
+- I-796 K (design review K): in a TV room the `reveal` phone is a quiet mirror, not "Look at the TV" —
+  "On the TV now · prompt n of 6", the prompt, both answers as mini cards ("yours" / "your pick"), the
+  authors at the TV's author beat and votes + points at its last (the winner outlined), and "You
+  weren't in this one: 1 more to go." An author's own result still follows the hold.
 
 ## Settings
 

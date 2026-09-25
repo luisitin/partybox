@@ -3,15 +3,19 @@ import type { AnyGameDefinition } from '@partybox/shared';
 import { game as bingo } from '../../../games/bingo/server/index';
 import { game as blanks } from '../../../games/blanks/server/index';
 import { game as brokenPencil } from '../../../games/broken-pencil/server/index';
+import { game as hiveRank } from '../../../games/hive-rank/server/index';
 import { game as lightningRound } from '../../../games/lightning-round/server/index';
 import { game as nightfall } from '../../../games/nightfall/server/index';
+import { game as spyGrid } from '../../../games/spy-grid/server/index';
 import { game as wisecrack } from '../../../games/wisecrack/server/index';
 
 export const serverGames: Readonly<Record<string, AnyGameDefinition>> = {
   'bingo': bingo,
   'blanks': blanks,
   'broken-pencil': brokenPencil,
+  'hive-rank': hiveRank,
   'lightning-round': lightningRound,
   'nightfall': nightfall,
+  'spy-grid': spyGrid,
   'wisecrack': wisecrack,
 };
