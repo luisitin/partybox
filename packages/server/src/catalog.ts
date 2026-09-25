@@ -90,7 +90,8 @@ export function serveCatalog(
   demo: readonly GameManifest[] = [],
 ): Catalog {
   const manifests = Object.fromEntries(
-    [...games.map((g) => g.manifest), ...demo].map((m) => [m.id, m]),
+    // a real game wins over a demo entry with its id (the pack's games land one by one)
+    [...demo, ...games.map((g) => g.manifest)].map((m) => [m.id, m]),
   );
   const catalog = buildCatalog(Object.values(manifests), texts, now);
   registerCatalogRoutes(fastify, catalog, manifests, texts);

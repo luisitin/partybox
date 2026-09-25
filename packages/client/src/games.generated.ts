@@ -15,9 +15,18 @@ export const gameLoaders: Readonly<Record<string, GameLoaders>> = {
     phone: () => import('../../../games/broken-pencil/client/phone-entry').then((m) => m.phone),
     tv: () => import('../../../games/broken-pencil/client/tv-entry').then((m) => m.tv),
   },
+  'hive-rank': {
+    phone: () => import('../../../games/hive-rank/client/phone-entry').then((m) => m.phone),
+    tv: () => import('../../../games/hive-rank/client/tv-entry').then((m) => m.tv),
+  },
   'lightning-round': {
     phone: () => import('../../../games/lightning-round/client/phone-entry').then((m) => m.phone),
     tv: () => import('../../../games/lightning-round/client/tv-entry').then((m) => m.tv),
+  },
+  'spy-grid': {
+    phone: () => import('../../../games/spy-grid/client/phone-entry').then((m) => m.phone),
+    tv: () => import('../../../games/spy-grid/client/tv-entry').then((m) => m.tv),
+    settings: () => import('../../../games/spy-grid/client/settings-entry').then((m) => m.settings),
   },
   'wisecrack': {
     phone: () => import('../../../games/wisecrack/client/phone-entry').then((m) => m.phone),

@@ -1,0 +1,177 @@
+{
+  "id": "spy-grid",
+  "name": "Spy Grid",
+  "icon": "🗂️",
+  "tagline": "One-word clues. Find your agents. Avoid the trap.",
+  "description": "Two teams, one grid of 25 words. Only the spymasters know which words are their agents. Give a one-word clue and a number, point together to flip the cards, and never touch the assassin. With 2–3 players it's a co-op mission.",
+  "howToPlay": [
+    "Two teams, 25 words. Only each spymaster knows which words are their agents.",
+    "Your spymaster gives a one-word clue and a number. Point together at the words that fit.",
+    "Find all your agents first. Touch the assassin and your team loses on the spot."
+  ],
+  "version": "0.1.0",
+  "minPlayers": 2,
+  "maxPlayers": 16,
+  "estimatedMinutes": 18,
+  "tags": ["teams", "words", "strategy"],
+  "presence": {
+    "needs": "anywhere"
+  },
+  "addedOn": "2026-09-24",
+  "phoneSettings": true,
+  "settings": [
+    {
+      "key": "mode",
+      "label": "Mode",
+      "description": "Two teams, or one team on a co-op mission (auto: co-op at 2–3 players)",
+      "type": "select",
+      "default": "auto",
+      "options": [
+        {
+          "value": "auto",
+          "label": "Auto"
+        },
+        {
+          "value": "teams",
+          "label": "Teams"
+        },
+        {
+          "value": "coop",
+          "label": "Co-op"
+        }
+      ]
+    },
+    {
+      "key": "teamPick",
+      "label": "Teams",
+      "description": "Players pick their team and spymaster, or the game deals them",
+      "type": "select",
+      "default": "choose",
+      "options": [
+        {
+          "value": "choose",
+          "label": "Players choose"
+        },
+        {
+          "value": "random",
+          "label": "Random"
+        }
+      ]
+    },
+    {
+      "key": "rounds",
+      "label": "Rounds",
+      "description": "A new board each round; spymasters rotate",
+      "type": "number",
+      "default": 1,
+      "min": 1,
+      "max": 3,
+      "step": 1
+    },
+    {
+      "key": "clueSeconds",
+      "label": "Clue time",
+      "description": "Seconds the spymaster has to give a clue",
+      "type": "number",
+      "default": 75,
+      "min": 30,
+      "max": 180,
+      "step": 15
+    },
+    {
+      "key": "guessSeconds",
+      "label": "Guess time",
+      "description": "Seconds per guess; the clock restarts after every flip",
+      "type": "number",
+      "default": 60,
+      "min": 20,
+      "max": 120,
+      "step": 10
+    },
+    {
+      "key": "maxTurns",
+      "label": "Turn limit",
+      "description": "Turns per round (both teams); then fewer agents left wins",
+      "type": "number",
+      "default": 24,
+      "min": 16,
+      "max": 30,
+      "step": 1
+    },
+    {
+      "key": "coopTurns",
+      "label": "Co-op clues",
+      "description": "Clues the co-op team gets to find all nine agents",
+      "type": "number",
+      "default": 8,
+      "min": 5,
+      "max": 12,
+      "step": 1
+    },
+    {
+      "key": "assassins",
+      "label": "Assassins",
+      "description": "A second assassin replaces a bystander",
+      "type": "select",
+      "default": "1",
+      "options": [
+        {
+          "value": "1",
+          "label": "One"
+        },
+        {
+          "value": "2",
+          "label": "Two"
+        }
+      ]
+    },
+    {
+      "key": "reactions",
+      "label": "Reactions",
+      "description": "👍 👎 🤔 on cards, for teams that can't talk",
+      "type": "boolean",
+      "default": true
+    },
+    {
+      "key": "spicy",
+      "label": "Spicy words",
+      "description": "Mixes in adult words (hangovers, dating, office life) — never explicit",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "key": "reader",
+      "label": "Reader",
+      "description": "The voice that reads each clue aloud",
+      "type": "select",
+      "default": "fable",
+      "options": [
+        {
+          "value": "none",
+          "label": "No reader"
+        },
+        {
+          "value": "george",
+          "label": "Old British Man"
+        },
+        {
+          "value": "fable",
+          "label": "Young British Man"
+        },
+        {
+          "value": "jessica",
+          "label": "American Woman"
+        },
+        {
+          "value": "sky",
+          "label": "Soft-Spoken Woman"
+        },
+        {
+          "value": "original",
+          "label": "Original"
+        }
+      ]
+    }
+  ],
+  "supportsBots": true
+}

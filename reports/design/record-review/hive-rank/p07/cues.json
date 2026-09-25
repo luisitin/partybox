@@ -1,0 +1,312 @@
+[
+  {
+    "t": 1790284791243,
+    "surface": "tv",
+    "freqs": [523, 784],
+    "dur": 100,
+    "cue": "ready",
+    "phase": "lobby",
+    "at": "21:19:51.243",
+    "sinceStartS": -3.54
+  },
+  {
+    "t": 1790284792330,
+    "surface": "tv",
+    "freqs": [523, 659],
+    "dur": 100,
+    "cue": "join",
+    "phase": "lobby",
+    "at": "21:19:52.330",
+    "sinceStartS": -2.45
+  },
+  {
+    "t": 1790284793518,
+    "surface": "tv",
+    "freqs": [587, 740],
+    "dur": 100,
+    "cue": "join",
+    "phase": "lobby",
+    "at": "21:19:53.518",
+    "sinceStartS": -1.26
+  },
+  {
+    "t": 1790284793642,
+    "surface": "tv",
+    "freqs": [659, 830],
+    "dur": 100,
+    "cue": "join",
+    "phase": "lobby",
+    "at": "21:19:53.642",
+    "sinceStartS": -1.14
+  },
+  {
+    "t": 1790284794843,
+    "surface": "tv",
+    "freqs": [392, 523, 659, 784],
+    "dur": 120,
+    "cue": "start",
+    "phase": "intro",
+    "at": "21:19:54.843",
+    "sinceStartS": 0.07
+  },
+  {
+    "t": 1790284802771,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "dur": 120,
+    "cue": "phase",
+    "phase": "intro",
+    "at": "21:20:02.771",
+    "sinceStartS": 7.99
+  },
+  {
+    "t": 1790284806973,
+    "surface": "tv",
+    "freqs": [330, 330, 494, 659, 988, 1319],
+    "dur": 110,
+    "cue": "reveal",
+    "phase": "rank",
+    "at": "21:20:06.973",
+    "sinceStartS": 12.2
+  },
+  {
+    "t": 1790284809904,
+    "surface": "tv",
+    "freqs": [880, 1175],
+    "dur": 80,
+    "cue": "card",
+    "phase": "hive",
+    "at": "21:20:09.904",
+    "sinceStartS": 15.13
+  },
+  {
+    "t": 1790284813838,
+    "surface": "tv",
+    "freqs": [880, 1175],
+    "dur": 80,
+    "cue": "card",
+    "phase": "hive",
+    "at": "21:20:13.838",
+    "sinceStartS": 19.06
+  },
+  {
+    "t": 1790284816228,
+    "surface": "tv",
+    "freqs": [880, 1175],
+    "dur": 80,
+    "cue": "card",
+    "phase": "hive",
+    "at": "21:20:16.228",
+    "sinceStartS": 21.45
+  },
+  {
+    "t": 1790284818231,
+    "surface": "tv",
+    "freqs": [880, 1175],
+    "dur": 80,
+    "cue": "card",
+    "phase": "hive",
+    "at": "21:20:18.231",
+    "sinceStartS": 23.45
+  },
+  {
+    "t": 1790284820258,
+    "surface": "tv",
+    "freqs": [784, 988, 1175, 1568],
+    "dur": 80,
+    "cue": "jackpot",
+    "phase": "hive",
+    "at": "21:20:20.258",
+    "sinceStartS": 25.48
+  },
+  {
+    "t": 1790284823272,
+    "surface": "tv",
+    "freqs": [1319, 1760],
+    "dur": 70,
+    "cue": "tally",
+    "phase": "hive",
+    "at": "21:20:23.272",
+    "sinceStartS": 28.49
+  },
+  {
+    "t": 1790284829255,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "dur": 120,
+    "cue": "phase",
+    "phase": "score",
+    "at": "21:20:29.255",
+    "sinceStartS": 34.48
+  },
+  {
+    "t": 1790284833465,
+    "surface": "phone",
+    "freqs": [660, 880],
+    "dur": 70,
+    "cue": "submit",
+    "phase": "rank",
+    "at": "21:20:33.465",
+    "sinceStartS": 38.69
+  },
+  {
+    "t": 1790284833467,
+    "surface": "tv",
+    "freqs": [1760],
+    "dur": 60,
+    "cue": "lock",
+    "phase": "rank",
+    "at": "21:20:33.467",
+    "sinceStartS": 38.69
+  },
+  {
+    "t": 1790284833718,
+    "surface": "tv",
+    "freqs": [330, 330, 494, 659, 988, 1319],
+    "dur": 110,
+    "cue": "reveal",
+    "phase": "hive",
+    "at": "21:20:33.718",
+    "sinceStartS": 38.94
+  },
+  {
+    "t": 1790284836030,
+    "surface": "tv",
+    "freqs": [880, 1175],
+    "dur": 80,
+    "cue": "card",
+    "phase": "hive",
+    "at": "21:20:36.030",
+    "sinceStartS": 41.25
+  },
+  {
+    "t": 1790284839627,
+    "surface": "tv",
+    "freqs": [880, 1175],
+    "dur": 80,
+    "cue": "card",
+    "phase": "hive",
+    "at": "21:20:39.627",
+    "sinceStartS": 44.85
+  },
+  {
+    "t": 1790284841980,
+    "surface": "tv",
+    "freqs": [880, 1175],
+    "dur": 80,
+    "cue": "card",
+    "phase": "hive",
+    "at": "21:20:41.980",
+    "sinceStartS": 47.2
+  },
+  {
+    "t": 1790284843994,
+    "surface": "tv",
+    "freqs": [880, 1175],
+    "dur": 80,
+    "cue": "card",
+    "phase": "hive",
+    "at": "21:20:43.994",
+    "sinceStartS": 49.22
+  },
+  {
+    "t": 1790284845999,
+    "surface": "tv",
+    "freqs": [880, 1175],
+    "dur": 80,
+    "cue": "card",
+    "phase": "hive",
+    "at": "21:20:45.999",
+    "sinceStartS": 51.22
+  },
+  {
+    "t": 1790284849010,
+    "surface": "tv",
+    "freqs": [1319, 1760],
+    "dur": 70,
+    "cue": "tally",
+    "phase": "hive",
+    "at": "21:20:49.010",
+    "sinceStartS": 54.23
+  },
+  {
+    "t": 1790284855019,
+    "surface": "tv",
+    "freqs": [392, 523, 784],
+    "dur": 120,
+    "cue": "phase",
+    "phase": "score",
+    "at": "21:20:55.019",
+    "sinceStartS": 60.24
+  },
+  {
+    "t": 1790284859215,
+    "surface": "tv",
+    "freqs": [330, 330, 494, 659, 988, 1319],
+    "dur": 110,
+    "cue": "reveal",
+    "phase": "rank",
+    "at": "21:20:59.215",
+    "sinceStartS": 64.44
+  },
+  {
+    "t": 1790284861596,
+    "surface": "tv",
+    "freqs": [880, 1175],
+    "dur": 80,
+    "cue": "card",
+    "phase": "hive",
+    "at": "21:21:01.596",
+    "sinceStartS": 66.82
+  },
+  {
+    "t": 1790284863913,
+    "surface": "tv",
+    "freqs": [880, 1175],
+    "dur": 80,
+    "cue": "card",
+    "phase": "hive",
+    "at": "21:21:03.913",
+    "sinceStartS": 69.14
+  },
+  {
+    "t": 1790284865930,
+    "surface": "tv",
+    "freqs": [880, 1175],
+    "dur": 80,
+    "cue": "card",
+    "phase": "hive",
+    "at": "21:21:05.930",
+    "sinceStartS": 71.15
+  },
+  {
+    "t": 1790284868083,
+    "surface": "tv",
+    "freqs": [880, 1175],
+    "dur": 80,
+    "cue": "card",
+    "phase": "hive",
+    "at": "21:21:08.083",
+    "sinceStartS": 73.31
+  },
+  {
+    "t": 1790284870341,
+    "surface": "tv",
+    "freqs": [880, 1175],
+    "dur": 80,
+    "cue": "card",
+    "phase": "hive",
+    "at": "21:21:10.341",
+    "sinceStartS": 75.56
+  },
+  {
+    "t": 1790284873348,
+    "surface": "tv",
+    "freqs": [1319, 1760],
+    "dur": 70,
+    "cue": "tally",
+    "phase": "hive",
+    "at": "21:21:13.348",
+    "sinceStartS": 78.57
+  }
+]

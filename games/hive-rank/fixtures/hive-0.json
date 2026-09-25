@@ -1,0 +1,325 @@
+{
+  "phase": {
+    "id": "hive",
+    "startedAt": 1790000010000,
+    "deadline": 1790000011800
+  },
+  "rng": {
+    "seed": 7,
+    "step": 203
+  },
+  "players": {
+    "p1": {
+      "id": "p1",
+      "name": "Priya",
+      "avatarId": "fox",
+      "connected": true,
+      "bot": false
+    },
+    "p2": {
+      "id": "p2",
+      "name": "Sam",
+      "avatarId": "owl",
+      "connected": true,
+      "bot": false
+    },
+    "p3": {
+      "id": "p3",
+      "name": "Maximiliano",
+      "avatarId": "frog",
+      "connected": true,
+      "bot": false
+    },
+    "p4": {
+      "id": "p4",
+      "name": "Jo",
+      "avatarId": "cat",
+      "connected": true,
+      "bot": false
+    },
+    "p5": {
+      "id": "p5",
+      "name": "Ana",
+      "avatarId": "bear",
+      "connected": true,
+      "bot": false
+    },
+    "p6": {
+      "id": "p6",
+      "name": "Ben",
+      "avatarId": "panda",
+      "connected": true,
+      "bot": false
+    }
+  },
+  "settings": {
+    "rounds": 6,
+    "rankSeconds": 30,
+    "spicy": false,
+    "reader": "jessica"
+  },
+  "questions": [
+    {
+      "id": "hr-school-128",
+      "kind": "preference",
+      "prompt": "Best to worst school subject",
+      "say": "Rank these school subjects, from best to worst.",
+      "top": "Best",
+      "bottom": "Worst",
+      "items": [
+        {
+          "id": "history",
+          "label": "History"
+        },
+        {
+          "id": "art",
+          "label": "Art"
+        },
+        {
+          "id": "math",
+          "label": "Math"
+        },
+        {
+          "id": "music",
+          "label": "Music"
+        },
+        {
+          "id": "science",
+          "label": "Science"
+        }
+      ],
+      "expected": ["art", "science", "music", "history", "math"]
+    },
+    {
+      "id": "hr-scifi-224",
+      "kind": "usefulness",
+      "prompt": "Most to least useful when meeting an alien",
+      "say": "Rank these from most to least useful when you meet an alien.",
+      "top": "Most useful",
+      "bottom": "Least useful",
+      "items": [
+        {
+          "id": "net",
+          "label": "A big net"
+        },
+        {
+          "id": "cookies",
+          "label": "A plate of cookies"
+        },
+        {
+          "id": "translator",
+          "label": "A translator"
+        },
+        {
+          "id": "photo",
+          "label": "A photo of Earth"
+        },
+        {
+          "id": "wave",
+          "label": "A friendly wave"
+        }
+      ],
+      "expected": ["translator", "wave", "cookies", "photo", "net"]
+    },
+    {
+      "id": "hr-food-111",
+      "kind": "preference",
+      "prompt": "Best to worst soup on a cold day",
+      "say": "Rank these soups for a cold day, from best to worst.",
+      "top": "Best",
+      "bottom": "Worst",
+      "items": [
+        {
+          "id": "splitpea",
+          "label": "Split pea"
+        },
+        {
+          "id": "chicken",
+          "label": "Chicken noodle"
+        },
+        {
+          "id": "gazpacho",
+          "label": "Cold gazpacho"
+        },
+        {
+          "id": "tomato",
+          "label": "Tomato soup"
+        },
+        {
+          "id": "potato",
+          "label": "Potato soup"
+        }
+      ],
+      "expected": ["chicken", "tomato", "potato", "splitpea", "gazpacho"]
+    },
+    {
+      "id": "hr-food-108",
+      "kind": "preference",
+      "prompt": "Best to worst dessert",
+      "say": "Rank these desserts, from best to worst.",
+      "top": "Best",
+      "bottom": "Worst",
+      "items": [
+        {
+          "id": "fruit",
+          "label": "Fruit salad"
+        },
+        {
+          "id": "brownie",
+          "label": "Brownies"
+        },
+        {
+          "id": "pudding",
+          "label": "Rice pudding"
+        },
+        {
+          "id": "split",
+          "label": "Banana split"
+        },
+        {
+          "id": "pie",
+          "label": "Apple pie"
+        }
+      ],
+      "expected": ["brownie", "split", "pie", "fruit", "pudding"]
+    },
+    {
+      "id": "hr-math-206",
+      "kind": "usefulness",
+      "prompt": "Most to least useful in a surprise math test",
+      "say": "Rank these from most to least useful in a surprise math test.",
+      "top": "Most useful",
+      "bottom": "Least useful",
+      "items": [
+        {
+          "id": "eraser",
+          "label": "A big eraser"
+        },
+        {
+          "id": "sleep",
+          "label": "A good night's sleep"
+        },
+        {
+          "id": "sock",
+          "label": "A lucky sock"
+        },
+        {
+          "id": "calc",
+          "label": "A calculator"
+        },
+        {
+          "id": "pencil",
+          "label": "A sharp pencil"
+        }
+      ],
+      "expected": ["calc", "sleep", "pencil", "eraser", "sock"]
+    },
+    {
+      "id": "hr-snow-207",
+      "kind": "usefulness",
+      "prompt": "Most to least useful on a snow day",
+      "say": "Rank these from most to least useful on a snow day.",
+      "top": "Most useful",
+      "bottom": "Least useful",
+      "items": [
+        {
+          "id": "cocoa",
+          "label": "A thermos of cocoa"
+        },
+        {
+          "id": "flip",
+          "label": "A pair of flip-flops"
+        },
+        {
+          "id": "sled",
+          "label": "A sled"
+        },
+        {
+          "id": "shovel",
+          "label": "A snow shovel"
+        },
+        {
+          "id": "scarf",
+          "label": "A warm scarf"
+        }
+      ],
+      "expected": ["shovel", "scarf", "cocoa", "sled", "flip"]
+    }
+  ],
+  "q": {
+    "n": 1,
+    "orders": {
+      "p1": ["history", "art", "math", "music", "science"],
+      "p2": ["art", "history", "math", "music", "science"],
+      "p3": ["history", "math", "art", "music", "science"],
+      "p4": ["history", "art", "math", "science", "music"],
+      "p5": ["math", "art", "history", "music", "science"],
+      "p6": ["history", "art", "music", "math", "science"]
+    },
+    "hive": ["history", "art", "math", "music", "science"],
+    "totals": {
+      "history": 9,
+      "art": 12,
+      "math": 16,
+      "music": 24,
+      "science": 29
+    },
+    "step": 0,
+    "voiced": [],
+    "hold": false,
+    "delta": {
+      "p1": {
+        "pts": 12,
+        "exact": 5,
+        "near": 0,
+        "perfect": true
+      },
+      "p2": {
+        "pts": 8,
+        "exact": 3,
+        "near": 2,
+        "perfect": false
+      },
+      "p3": {
+        "pts": 8,
+        "exact": 3,
+        "near": 2,
+        "perfect": false
+      },
+      "p4": {
+        "pts": 8,
+        "exact": 3,
+        "near": 2,
+        "perfect": false
+      },
+      "p5": {
+        "pts": 6,
+        "exact": 3,
+        "near": 0,
+        "perfect": false
+      },
+      "p6": {
+        "pts": 8,
+        "exact": 3,
+        "near": 2,
+        "perfect": false
+      }
+    },
+    "queens": ["p1"],
+    "lows": ["p5"],
+    "short": false,
+    "sayOk": false,
+    "applied": false
+  },
+  "scores": {
+    "p1": 0,
+    "p2": 0,
+    "p3": 0,
+    "p4": 0,
+    "p5": 0,
+    "p6": 0
+  },
+  "stats": {},
+  "pairs": {},
+  "speechMs": {}
+}
