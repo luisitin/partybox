@@ -6,6 +6,7 @@ import type { GameEvent } from '@partybox/game-sdk';
 import { isIntact } from '../books';
 import { LINES } from '../content';
 import {
+  BIG_SHOW_MS,
   BOT_SHOW_MS,
   SHOW_MS,
   SUMMARY_MS,
@@ -34,7 +35,7 @@ export function showPage(state: State, b: number, page: number, now: number): St
     { ...state, rng, intactBooks, showing: { book: b, page, verdict, line } },
     'show',
     now,
-    (botsBook ? BOT_SHOW_MS : SHOW_MS)[kind],
+    (botsBook ? BOT_SHOW_MS : (state.seats?.length ?? 0) > 8 ? BIG_SHOW_MS : SHOW_MS)[kind],
   );
 }
 

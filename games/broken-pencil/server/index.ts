@@ -41,6 +41,10 @@ import type { PencilControllerView, PencilTvView } from './views';
 // Parsed once: a typo in manifest.json fails at import time instead of deep inside the engine.
 const manifest = gameManifestSchema.parse(manifestJson);
 
+/** I-238 A: a full 8-player game's hands on books (8 books × 7 others): "everyone" in a bigger room
+ *  divides this among the books. */
+const BIG_ROOM_PAGES = 56;
+
 export function readSettings(raw: RawSettings): Settings {
   return {
     passes: Math.min(EVERYONE, Math.max(1, Math.round(Number(raw['passes'] ?? EVERYONE)))),
@@ -58,7 +62,11 @@ function init(ctx: InitContext): State {
   const N = ctx.players.length;
   // Others per book: "everyone" is the whole circle (the book comes home after the last guess);
   // a smaller number shortens the game.
-  const passes = Math.max(1, Math.min(settings.passes, N - 1));
+  // I-238 A: "everyone" in a room of 9+ is fewer others per book — the show reads about as many
+  // pages as a full 8-player game (a 16-player "everyone" ran past an hour idle)
+  const everyone = settings.passes >= EVERYONE;
+  const cap = everyone && N > 8 ? Math.max(2, Math.floor(BIG_ROOM_PAGES / N)) : Infinity;
+  const passes = Math.max(1, Math.min(settings.passes, N - 1, cap));
   let rng = seedRng(ctx.seed);
   const [seats, afterSeats] = shuffle(rng, Object.keys(players).sort());
   rng = afterSeats;

@@ -125,6 +125,8 @@ export const SHOW_MS = { word: 12_000, draw: 20_000, guess: 12_000 } as const;
  * page, so a bot that "sometimes" sent Next left its pages on the 12–20 s fallbacks).
  */
 export const BOT_SHOW_MS = { word: 5_000, draw: 8_000, guess: 5_000 } as const;
+/** I-238 B: a person's page in a room of 9+ (sixteen books to get through): sooner, still readable. */
+export const BIG_SHOW_MS = { word: 8_000, draw: 14_000, guess: 8_000 } as const;
 /** I-512 B: a book's last page can't be turned in its first this-many ms — the verdict's beat. */
 export const VERDICT_BEAT_MS = 2_500;
 /** I-512 B: an UNBROKEN verdict (the rarer reveal) lands a second later on the TV (Tv.tsx `Beat`),
