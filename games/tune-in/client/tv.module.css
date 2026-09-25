@@ -343,8 +343,9 @@
 }
 
 /* ── intro (teams card) ── */
+/* Tight enough that 16 players' rosters end a clear band above the host bar. */
 .intro {
-  gap: var(--pb-space-6);
+  gap: var(--pb-space-4);
 }
 
 .introTitle {
@@ -481,6 +482,35 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--pb-space-2) var(--pb-space-4);
+}
+
+/* The teams card: the sides read from the couch (the card is up for a few seconds). */
+.rostersLarge {
+  width: min(100%, 1720px);
+  gap: var(--pb-space-5);
+}
+
+.rostersLarge .roster {
+  padding: var(--pb-space-4) var(--pb-space-5);
+  gap: var(--pb-space-3);
+}
+
+.rostersLarge .rosterList {
+  gap: var(--pb-space-3) var(--pb-space-5);
+}
+
+.rostersLarge .rosterRow {
+  font-size: var(--pb-font-body);
+}
+
+/* A crowded room (smaller faces): tighter rows, so 16 players end clear of the host bar. */
+.rostersDense .roster {
+  padding: var(--pb-space-3) var(--pb-space-4);
+  gap: var(--pb-space-2);
+}
+
+.rostersDense .rosterList {
+  gap: var(--pb-space-2) var(--pb-space-5);
 }
 
 .rosterRow {

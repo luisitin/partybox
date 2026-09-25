@@ -16,15 +16,17 @@ export function TvIntro({ view }: GameTvProps<TuneTvView>): JSX.Element {
   const L = useT(STRINGS);
   useReading(view.reading);
   const { turn } = view;
+  // 11+ players: three rows of chips in the strip and four names a side, so the title and the faces
+  // step down and the rosters still end above the host bar.
+  const crowded = view.players.length > 10;
   return (
     <Stage center className={styles.intro}>
       <div className={styles.introTitle}>
-        <BigText level="display">{L('📻 Tune In')}</BigText>
+        <BigText level={crowded ? 'h1' : 'display'}>{L('📻 Tune In')}</BigText>
         <BigText level="h2" tone="accent">
           {modeLine(L, turn.mode)}
         </BigText>
       </div>
-      {view.teams ? <Rosters teams={view.teams} players={view.players} first={turn.team} /> : null}
       {turn.team ? (
         <p className={styles.introFirst}>
           {L('{team} plays first · {name} reads the first dial', {
@@ -32,6 +34,15 @@ export function TvIntro({ view }: GameTvProps<TuneTvView>): JSX.Element {
             name: nameOf(view.players, turn.psychic),
           })}
         </p>
+      ) : null}
+      {view.teams ? (
+        <Rosters
+          teams={view.teams}
+          players={view.players}
+          first={turn.team}
+          large
+          faceSize={crowded ? 48 : 56}
+        />
       ) : null}
     </Stage>
   );

@@ -15,9 +15,11 @@ function Roster(props: {
   players: readonly ViewPlayer[];
   won: boolean;
   first: boolean;
+  large: boolean;
+  faceSize: number;
 }): JSX.Element {
   const L = useT(STRINGS);
-  const { team, ids, players, won, first } = props;
+  const { team, ids, players, won, first, large, faceSize } = props;
   return (
     <div
       className={`${styles.roster} ${team === 'moon' ? styles.rosterMoon : ''} ${won ? styles.rosterWon : ''} ${first ? styles.rosterFirst : ''}`}
@@ -29,7 +31,7 @@ function Roster(props: {
       <ul className={styles.rosterList}>
         {ids.map((id, i) => (
           <li key={id} className={styles.rosterRow} style={{ animationDelay: `${i * 80}ms` }}>
-            <Avatar avatarId={avatarOf(players, id)} size={40} />
+            <Avatar avatarId={avatarOf(players, id)} size={large ? faceSize : 40} />
             {nameOf(players, id)}
           </li>
         ))}
@@ -45,10 +47,16 @@ export function Rosters(props: {
   winner?: Team | null;
   /** The intro: the side that plays first. */
   first?: Team | null;
+  /** The teams card: read from the couch in a few seconds (bigger faces and names). */
+  large?: boolean;
+  /** The faces' size when large (a crowded room takes smaller ones). */
+  faceSize?: number;
 }): JSX.Element {
-  const { teams, players, winner = null, first = null } = props;
+  const { teams, players, winner = null, first = null, large = false, faceSize = 56 } = props;
   return (
-    <div className={styles.rosters}>
+    <div
+      className={`${styles.rosters} ${large ? styles.rostersLarge : ''} ${large && faceSize < 56 ? styles.rostersDense : ''}`}
+    >
       {(['sun', 'moon'] as const).map((team) => (
         <Roster
           key={team}
@@ -57,6 +65,8 @@ export function Rosters(props: {
           players={players}
           won={winner === team}
           first={first === team}
+          large={large}
+          faceSize={faceSize}
         />
       ))}
     </div>
