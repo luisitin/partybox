@@ -37,6 +37,10 @@ export const esPhone: Pick<Texts, keyof typeof enPhone> = {
     count: (n, cap) => `${n} de ${cap}`,
     more: 'Más',
     everyoneIn: '¿Están todos? Elige un juego. Los bots pueden llenar asientos vacíos.',
+    playingOnPhones: '📱 Se juega en los teléfonos',
+    playingOnTv: '📺 Se juega en la TV',
+    useTv: 'Usar la TV',
+    usePhones: 'Solo teléfonos',
   },
   tips: {
     bots: 'Añade bots para llenar los asientos vacíos: juegan de verdad.',

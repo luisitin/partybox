@@ -92,8 +92,9 @@ export function AudioGate({ audio, music, beds, onToggle }: AudioGateProps): JSX
     if (!started) return;
     const next = !muted;
     audio.setMuted(next);
-    music?.setMuted(next);
-    beds?.setMuted(next);
+    // A room whose phones carry the sound keeps the TV's music quiet whatever the pill says.
+    music?.setMuted(next || audio.handedOff());
+    beds?.setMuted(next || audio.handedOff());
     setMuted(next);
     setPop(true);
     if (!next) audio.play('ready');

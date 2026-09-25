@@ -42,6 +42,10 @@ export const enPhone = {
     count: (n: number, cap: number) => `${n} of ${cap}`,
     more: 'More',
     everyoneIn: "Everyone's in? Pick a game. Bots can fill empty seats.",
+    playingOnPhones: '📱 Playing on phones',
+    playingOnTv: '📺 Playing on the TV',
+    useTv: 'Use the TV',
+    usePhones: 'Phones only',
   },
   /** I-082 A: the VIP's first-room tips, by id (vipTips.ts). */
   tips: {

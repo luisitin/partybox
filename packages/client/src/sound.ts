@@ -89,6 +89,10 @@ export interface SoundEngine {
   setMuted(muted: boolean): void;
   /** Tells a listener every time the mute changes (the phone's music and beds follow it). */
   onMuteChange(listener: (muted: boolean) => void): () => void;
+  /** The TV hands its sound to the phones (a phone-only or music-on-phones room): cues and clips
+   *  stay silent without touching the viewer's saved mute. */
+  handedOff(): boolean;
+  setHandedOff(on: boolean): void;
 }
 
 export interface SoundEngineOptions {
@@ -109,6 +113,7 @@ export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine
   let ctx: AudioContext | null = null;
   let master: GainNode | null = null;
   let muted = false;
+  let handed = false;
   const muteListeners = new Set<(muted: boolean) => void>();
   let lastPlayedAt = -Infinity;
   let lastCue: { cue: SoundCue; at: number } | null = null;
@@ -168,7 +173,7 @@ export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine
   const playSample = (sample: Sample, t0: number, track = false): void => {
     const gen = hushGen;
     void buffer(sample.src).then((buf) => {
-      if (muted) return;
+      if (muted || handed) return;
       // A clip the Web Audio graph cannot use (a decode Safari refuses, a fetch that failed) is
       // still playable as plain media — a recorded call is worth the fallback.
       if (!buf || !ctx || ctx.state !== 'running') {
@@ -246,7 +251,7 @@ export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine
         semitones: opts?.semitones ?? 0,
         gain: opts?.gain ?? 1,
       });
-      if (!ctx || muted || ctx.state !== 'running') return;
+      if (!ctx || muted || handed || ctx.state !== 'running') return;
       options.onPlay?.(cue);
       const t0 = ctx.currentTime;
       const scale = Math.min(1, Math.max(0, opts?.gain ?? 1));
@@ -285,7 +290,7 @@ export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine
       // The audio trace reads calls as `speak` events (what the caller used to emit).
       if (name.match(/^[bingo]\d+\.wav$/))
         trace('speak', { text: name, voice: 'clip', delayMs: at });
-      if (muted) return;
+      if (muted || handed) return;
       // Parked (iOS after a lock): revive and speak anyway — the buffer path checks again, and
       // the media fallback covers the case where it never comes back.
       if (!ctx || ctx.state !== 'running') revive();
@@ -327,6 +332,10 @@ export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine
         /* ignore */
       }
       for (const l of muteListeners) l(value);
+    },
+    handedOff: () => handed,
+    setHandedOff(on) {
+      handed = on;
     },
     onMuteChange(listener) {
       muteListeners.add(listener);

@@ -360,3 +360,25 @@
   font-weight: 700;
   opacity: 0.85;
 }
+
+/* Owner 2026-09-24: where the room plays (phones by default), with the VIP's one-tap switch. */
+.stageRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pb-space-3);
+  margin: var(--pb-space-2) 0 0;
+  font-size: var(--pb-font-caption);
+  color: var(--pb-text-muted);
+}
+.stageSwitch {
+  min-height: var(--pb-touch);
+  padding: 0 var(--pb-space-3);
+  border: 1px solid var(--pb-surface-2);
+  border-radius: 999px;
+  background: var(--pb-surface);
+  color: var(--pb-text);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}

@@ -24,6 +24,7 @@ import { TvFrame } from './TvFrame';
 import { tvContent } from './tvContent';
 import { CrossfadeSwap } from '../CrossfadeSwap';
 import styles from './TvApp.module.css';
+import { useSoundHandOff } from './useSoundHandOff';
 
 let bedEngine: BedEngine | null = null;
 function bedsInstance(muted: boolean): BedEngine {
@@ -73,6 +74,7 @@ export function TvApp(): JSX.Element {
   const [gameReady, setGameReady] = useState(false);
   if (room?.status !== 'playing' && gameReady) setGameReady(false);
   const markGameReady = useCallback(() => setGameReady(true), []);
+  useSoundHandOff(room, audio, music, beds); // the phones carry the sound: the TV steps back
 
   // Nothing speaks outside play: a game's caller (Bingo) can leave Chrome's speech queue stuck,
   // and a stuck queue plays back later — in the lobby. The shell clears it on every status change.

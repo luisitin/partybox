@@ -150,6 +150,19 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
           </button>
         </li>
       </ul>
+      {me.isVip ? (
+        // Owner 2026-09-24: rooms start phone-only; the VIP sees it and can hand the stage to a TV.
+        <p className={styles.stageRow}>
+          <span>{room.phoneOnly ? t.lobbyTop.playingOnPhones : t.lobbyTop.playingOnTv}</span>
+          <button
+            type="button"
+            className={styles.stageSwitch}
+            onClick={() => controller.vip({ action: 'setPhoneOnly', on: !room.phoneOnly })}
+          >
+            {room.phoneOnly ? t.lobbyTop.useTv : t.lobbyTop.usePhones}
+          </button>
+        </p>
+      ) : null}
       <LobbyLine
         lines={lines}
         onDismissTips={
