@@ -123,6 +123,8 @@ async function main(): Promise<void> {
   // the ratchet counts all of it, so code moved into a shared chunk still counts.
   const joinFiles = [...atJoin(bundle)];
   const entryGzip = gzipTotal(bundle, joinFiles);
+  // surfaceChunks is keyed per game (a game's phone and TV chunks are one entry), so this is the
+  // number of registered games, not of chunks (fake-out 37ed75).
   const registered = surfaceChunks(bundle).size;
   const expected = budget
     ? expectedJoinGzip(budget.entryGzip, budget.entryGames, registered)
