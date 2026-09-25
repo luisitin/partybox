@@ -11,6 +11,7 @@ import { enterReveal, reduceReveal, stepReveal } from './phases/reveal';
 import { enterDone, enterScores, reduceScores } from './phases/scores';
 import { needleOf } from './scoring';
 import { callersOf, connectedGuessers, earnsCatchUp, isOver, otherTeam, planTurn } from './turn';
+import { IDLE_VOIDS } from './types';
 import type { Input, State } from './types';
 
 /** A turn begins: with no psychic to be had (a team with nobody left) it is void at once. */
@@ -21,7 +22,7 @@ export function startTurn(state: State, now: number): State {
 }
 
 function nextTurnOrDone(state: State, now: number): State {
-  if (isOver(state)) return enterDone(state, now);
+  if (isOver(state) || state.voidStreak >= IDLE_VOIDS) return enterDone(state, now);
   const catchUp = earnsCatchUp(state);
   const team = state.turn.team;
   const nextTeam = team ? (catchUp ? team : otherTeam(team)) : state.nextTeam;
@@ -53,7 +54,9 @@ export function afterCall(state: State, now: number): State {
 }
 
 export function afterReveal(state: State, now: number): State {
-  return state.turn.void ? nextTurnOrDone(state, now) : enterScores(state, now);
+  return state.turn.void
+    ? nextTurnOrDone({ ...state, voidStreak: state.voidStreak + 1 }, now)
+    : enterScores({ ...state, voidStreak: 0 }, now);
 }
 
 export function afterScores(state: State, now: number): State {

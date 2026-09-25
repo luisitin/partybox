@@ -33,8 +33,11 @@ describe('the round', () => {
     let s = start(5, { mode: 'solo' });
     const seen: string[] = [];
     while (s.phase.id !== 'done') {
-      if (s.phase.id === 'clue') seen.push(s.turn.psychic);
-      s = timer(s);
+      // Each psychic sends a clue: an idle room ends after a few void rounds (§5.17).
+      if (s.phase.id === 'clue') {
+        seen.push(s.turn.psychic);
+        s = toDial(s);
+      } else s = timer(s);
     }
     expect(seen.sort()).toEqual(['p1', 'p2', 'p3', 'p4', 'p5']);
   });

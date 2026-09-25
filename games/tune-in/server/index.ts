@@ -65,6 +65,7 @@ function init(ctx: InitContext): State {
     team: { sun: 0, moon: 0 },
     coopTotal: 0,
     played: 0,
+    voidStreak: 0,
     stats: {},
     speechMs: {},
   };

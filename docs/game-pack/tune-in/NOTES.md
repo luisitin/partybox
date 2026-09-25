@@ -11,7 +11,7 @@ the `foundation` branch (the owner's 20 rulings, not merged); F1–F7 were not o
 | 1 Content               | done: 150 family + 50 spicy spectra, 12 bank clues each, all legal and spread (tests)   |
 | 2 Server logic          | done: 6 phases, 3 modes, bot, speech, recap; 99 unit tests, contract suite, sim 200 × 2 |
 | 3 Client                | done (TV stage, phones, PhoneStage, EN + ES); polishing through the passes              |
-| 4 Record → review → fix | p01–p08 (solo, teams, co-op; real touch; bursts) — see the record-review README         |
+| 4 Record → review → fix | p01–p11 + bursts + edge probe (3 modes, 2–16 players, Spanish, drops, skips, late join) |
 | 5 Review package        | not started                                                                             |
 
 Foundation watch (2026-09-24 afternoon): `foundation` has F1 (per-game phone / TV / panel
@@ -60,9 +60,19 @@ downloads) and F2 work, not on `main` yet. When F1 lands, Tune In needs its `cli
   the psychic's hold card and the huddle strip sit side by side; the reassurance rows hide; the
   scores beat drops the round's picture (it was just on screen). LEFT / RIGHT sit side by side in
   every orientation — the side you mean is the side you tap.
+- **An idle room ends after three void rounds in a row** (spec §5.17 "the game ends quickly"): a
+  whole idle game otherwise ran every round of "No signal!" (396 s in the sim, now 154 s). A round
+  with a clue starts the count again.
+- **Awards shared by more than three are skipped** (spec: "ties share"): a six-way Sharpshooter
+  at 16 players is no honour and filled the results; the finale shows a shared award as one card.
+- **The teams intro has no demo dial**: at 16 players its fixed height ran the rosters off the
+  card; the rosters sit under the steps and the side that plays first pulses behind its names.
+- **Faces follow the dial's drawn size** (`faceLayout`): spacing, ring distance and each ring's
+  clearance from the end labels; the points are a pill on the face's chin.
 - **Relabelled five weak dials** the clue writers flagged: Fleeting ↔ Everlasting, Easy to learn ↔
   Hard to learn, Angelic ↔ Pure evil, Tidy to eat ↔ Messy to eat, The bigger person ↔ Petty, and
-  Great date topic ↔ Mood killer.
+  Great date topic ↔ Mood killer. Replaced the near-duplicate "Let it go ↔ Petty revenge"
+  (it shared clues with "The bigger person ↔ Petty") with "Tasteful post ↔ Thirst trap".
 
 ## Conflicts for the owner
 
@@ -91,8 +101,17 @@ Trashy TV ↔ Prestige TV is the flattest (no show titles allowed). Unpopular �
 Cursed object ↔ Lucky charm have fuzzy middles. Snack ↔ Feast and Light bite ↔ Calorie bomb overlap;
 so do Nice ↔ Naughty, Prude ↔ Shameless and Wholesome ↔ Twisted in the spicy pack.
 
+## Platform follow-ups (other sessions, agreed on the hub)
+
+- `results-kinds` (Foundation, ADR-052): `GameResults.outcome` + `headline` — fixes the "tie"
+  headline for teams and co-op. When it lands: teams set `{kind:'teams', winner, teams}`, co-op
+  `{kind:'coop', won: rating ≥ Crystal clear}` with the rating as the headline, winnerIds empty
+  for a lost co-op, and the finale drops its own copy of the verdict.
+- The shell goes faces-only when the strip's chips would take more than two rows (Foundation, after
+  its branch lands) — gives the dial back ~136 px at 16 players.
+
 ## Left to do
 
-Remaining record-review scenarios (drop / reconnect / late join, VIP skip in every phase, 3 / 16
-players, phone-only), the speech-lab pass once F6 lands, a content pass (the near-duplicate spicy
-"petty" dials), then the review package.
+Phone-only rooms and remote players once F4 (presence) lands; the speech-lab pass once F6 lands;
+swap the stand-ins (F5 match, F6 speakable, F7 turns) and add the F1/F2 entries when the
+Foundation merges; the review package.

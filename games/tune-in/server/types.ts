@@ -97,6 +97,8 @@ export interface State extends GameStateBase {
   coopTotal: number;
   /** Rounds that ran (void ones included): co-op's maximum is this × 4. */
   played: number;
+  /** Void rounds in a row; IDLE_VOIDS of them end the game (spec §5.17 "Everyone idle"). */
+  voidStreak: number;
   stats: Record<string, PlayerStats>;
   /** READER-VOICES (ADR-045): reading key → its length in ms, or −1 when it failed. */
   speechMs: Record<string, number>;
@@ -123,6 +125,9 @@ export const VOID_MS = 3_500;
 export const SCORES_MS = 6_000;
 /** A psychic who drops mid-clue keeps the clue open this long at most (they may come back). */
 export const DROP_GRACE_MS = 10_000;
+/** Spec §5.17 "Everyone idle … the game ends quickly": this many void rounds in a row end it
+ *  (a whole idle game ran eight rounds of "No signal!", 6.6 minutes, in the sim). */
+export const IDLE_VOIDS = 3;
 /** A reading that is not made yet holds a voiced beat this long at most. */
 export const VOICE_WAIT_MS = 2_500;
 export const VOICE_BEAT_MS = 700;
