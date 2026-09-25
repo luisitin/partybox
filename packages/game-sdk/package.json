@@ -7,9 +7,11 @@
   "exports": {
     ".": "./src/index.ts",
     "./ui": "./src/ui.ts",
-    "./testing": "./src/testing.ts",
     "./ui/secret-card": "./src/ui-secret-card.ts",
-    "./ui/face-picker": "./src/ui-face-picker.ts"
+    "./ui/face-picker": "./src/ui-face-picker.ts",
+    "./ui/word-grid": "./src/ui-word-grid.ts",
+    "./ui/order-picker": "./src/ui-order-picker.ts",
+    "./testing": "./src/testing.ts"
   },
   "dependencies": {
     "@partybox/shared": "workspace:*",
