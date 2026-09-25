@@ -6,6 +6,7 @@ import { buzz } from '@partybox/game-sdk/ui';
 import { peekGame } from '../game-loader';
 import type { ControllerState } from '../net/controller';
 import type { SoundCue, SoundEngine } from '../sound';
+import { isQuietError } from './errorTone';
 import { BUZZ } from './haptics';
 import { tvSoundsOn } from './PhoneSettings';
 
@@ -61,7 +62,7 @@ export function useShellCues(
     // A rejected join or input, once per error object: the strip goes red (Join renders the
     // same error inline).
     if (error && error !== p.error) {
-      audio?.play('error');
+      if (!isQuietError(error.code)) audio?.play('error'); // I-674 B: a quiet refusal is silent
       // I-040 C: a taken name buzzes twice — the one join error that is about someone else.
       buzz(error.code === 'name_taken' ? [40, 60, 40] : BUZZ.error);
     }

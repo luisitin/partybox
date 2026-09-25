@@ -544,3 +544,10 @@
   font-size: 0.72em;
   vertical-align: 0.1em;
 }
+
+/* ── I-674 B: a refusal that changed nothing — the surface's grey, not the danger red. */
+.errorQuiet {
+  background: var(--pb-surface-2);
+  color: var(--pb-text);
+  font-weight: 600;
+}
