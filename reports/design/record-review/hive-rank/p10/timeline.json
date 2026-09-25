@@ -1,0 +1,134 @@
+{
+  "pass": "10",
+  "game": "hive-rank",
+  "players": 6,
+  "scenario": "pause",
+  "focus": "tv",
+  "started": "21:28:09.218",
+  "tvVideoT0": "21:28:04.095",
+  "phoneVideoT0": "21:28:05.670",
+  "changes": [
+    {
+      "t": 1790285289221,
+      "status": "playing",
+      "phase": "intro",
+      "deadline": 1790285297196,
+      "bed": "lofi",
+      "at": "21:28:09.221",
+      "sinceStartS": 0,
+      "videoS": 5.1,
+      "phoneVideoS": 3.6
+    },
+    {
+      "t": 1790285297272,
+      "status": "playing",
+      "phase": "rank",
+      "deadline": 1790285327200,
+      "bed": "lofi",
+      "at": "21:28:17.272",
+      "sinceStartS": 8.1,
+      "videoS": 13.2,
+      "phoneVideoS": 11.6
+    },
+    {
+      "t": 1790285301721,
+      "status": "playing",
+      "phase": "hive",
+      "deadline": 1790285303989,
+      "bed": "latenight",
+      "at": "21:28:21.721",
+      "sinceStartS": 12.5,
+      "videoS": 17.6,
+      "phoneVideoS": 16.1
+    },
+    {
+      "t": 1790285321560,
+      "status": "playing",
+      "phase": "score",
+      "deadline": 1790285327543,
+      "bed": "warm",
+      "at": "21:28:41.560",
+      "sinceStartS": 32.3,
+      "videoS": 37.5,
+      "phoneVideoS": 35.9
+    },
+    {
+      "t": 1790285327557,
+      "status": "playing",
+      "phase": "rank",
+      "deadline": 1790285357552,
+      "bed": "lofi",
+      "at": "21:28:47.557",
+      "sinceStartS": 38.3,
+      "videoS": 43.5,
+      "phoneVideoS": 41.9
+    },
+    {
+      "t": 1790285331717,
+      "status": "playing",
+      "phase": "hive",
+      "deadline": 1790285333887,
+      "bed": "latenight",
+      "at": "21:28:51.717",
+      "sinceStartS": 42.5,
+      "videoS": 47.6,
+      "phoneVideoS": 46
+    },
+    {
+      "t": 1790285346590,
+      "status": "playing",
+      "phase": "score",
+      "deadline": 1790285352498,
+      "bed": "warm",
+      "at": "21:29:06.590",
+      "sinceStartS": 57.4,
+      "videoS": 62.5,
+      "phoneVideoS": 60.9
+    },
+    {
+      "t": 1790285352527,
+      "status": "playing",
+      "phase": "rank",
+      "deadline": 1790285382509,
+      "bed": "lofi",
+      "at": "21:29:12.527",
+      "sinceStartS": 63.3,
+      "videoS": 68.4,
+      "phoneVideoS": 66.9
+    },
+    {
+      "t": 1790285356990,
+      "status": "playing",
+      "phase": "hive",
+      "deadline": 1790285359286,
+      "bed": "latenight",
+      "at": "21:29:16.990",
+      "sinceStartS": 67.8,
+      "videoS": 72.9,
+      "phoneVideoS": 71.3
+    },
+    {
+      "t": 1790285371688,
+      "status": "playing",
+      "phase": "score",
+      "deadline": 1790285377608,
+      "bed": "warm",
+      "at": "21:29:31.688",
+      "sinceStartS": 82.5,
+      "videoS": 87.6,
+      "phoneVideoS": 86
+    },
+    {
+      "t": 1790285377662,
+      "status": "results",
+      "phase": "results",
+      "deadline": null,
+      "bed": null,
+      "at": "21:29:37.662",
+      "sinceStartS": 88.4,
+      "videoS": 93.6,
+      "phoneVideoS": 92
+    }
+  ],
+  "notes": ["pause: VIP paused 6 s at 2026-09-24T21:28:25.773Z in hive"]
+}

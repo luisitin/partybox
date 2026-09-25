@@ -1,0 +1,99 @@
+.big {
+  --sg-sun: var(--pb-team-sun, var(--pb-accent));
+  --sg-moon: var(--pb-team-moon, var(--pb-info));
+  position: relative;
+  height: 9rem;
+  perspective: 1000px;
+}
+
+.inner {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+
+.sun .inner,
+.moon .inner,
+.bystander .inner,
+.assassin .inner {
+  animation: turn var(--pb-motion-slow) var(--pb-ease) both;
+}
+
+@keyframes turn {
+  0% {
+    transform: rotateY(0deg);
+  }
+  50% {
+    transform: translateZ(30px) rotateY(90deg);
+  }
+  100% {
+    transform: rotateY(180deg);
+  }
+}
+
+.front,
+.back {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--pb-radius-lg);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  font-size: var(--pb-font-h1);
+  font-weight: 900;
+}
+
+.front {
+  background: var(--pb-surface);
+}
+
+.back {
+  transform: rotateY(180deg);
+  flex-direction: column;
+  gap: 2px;
+  background: var(--pb-surface-2);
+}
+
+.sun .back {
+  background: var(--sg-sun);
+  color: var(--pb-on-accent);
+}
+
+.moon .back {
+  background: var(--sg-moon);
+  color: var(--pb-on-accent);
+}
+
+.assassin .back {
+  background: var(--pb-danger);
+  color: var(--pb-on-accent);
+}
+
+.icon {
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.word {
+  font-size: var(--pb-font-body);
+}
+
+.what {
+  font-size: var(--pb-font-body);
+  font-weight: 900;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .inner {
+    animation: none !important;
+    transform: none;
+  }
+  .back {
+    transform: none;
+  }
+  .big:not(.sun, .moon, .bystander, .assassin) .back {
+    opacity: 0;
+  }
+}

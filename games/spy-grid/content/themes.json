@@ -1,0 +1,2107 @@
+{
+  "themes": [
+    {
+      "id": "ocean",
+      "clue": "ocean",
+      "alts": ["sea", "underwater", "deep"],
+      "members": [
+        "shark",
+        "whale",
+        "wave",
+        "dolphin",
+        "octopus",
+        "coral",
+        "crab",
+        "anchor",
+        "submarine",
+        "diver",
+        "mermaid",
+        "pearl"
+      ]
+    },
+    {
+      "id": "space",
+      "clue": "space",
+      "alts": ["galaxy", "cosmic", "universe"],
+      "members": [
+        "rocket",
+        "moon",
+        "star",
+        "planet",
+        "alien",
+        "satellite",
+        "telescope",
+        "meteor",
+        "astronaut"
+      ]
+    },
+    {
+      "id": "kitchen",
+      "clue": "kitchen",
+      "alts": ["cooking", "chef", "cuisine"],
+      "members": [
+        "knife",
+        "oven",
+        "spoon",
+        "pan",
+        "fork",
+        "kettle",
+        "apron",
+        "fridge",
+        "toaster",
+        "bowl"
+      ]
+    },
+    {
+      "id": "farm",
+      "clue": "farm",
+      "alts": ["barn", "rural", "ranch"],
+      "members": [
+        "cow",
+        "pig",
+        "tractor",
+        "horse",
+        "chicken",
+        "sheep",
+        "goat",
+        "scarecrow",
+        "duck",
+        "straw",
+        "pen",
+        "windmill"
+      ]
+    },
+    {
+      "id": "jungle",
+      "clue": "jungle",
+      "alts": ["rainforest", "tropical", "wild"],
+      "members": [
+        "monkey",
+        "tiger",
+        "parrot",
+        "snake",
+        "gorilla",
+        "leopard",
+        "frog",
+        "banana",
+        "sloth"
+      ]
+    },
+    {
+      "id": "winter",
+      "clue": "winter",
+      "alts": ["frozen", "chilly", "frosty"],
+      "members": [
+        "snowman",
+        "ice",
+        "sled",
+        "scarf",
+        "glove",
+        "penguin",
+        "skate",
+        "blizzard",
+        "fireplace",
+        "mitten",
+        "sleigh",
+        "ski"
+      ]
+    },
+    {
+      "id": "summer",
+      "clue": "summer",
+      "alts": ["vacation", "hot", "sunny"],
+      "members": ["beach", "pool", "sandal", "watermelon", "picnic", "tent", "fan", "lemonade"]
+    },
+    {
+      "id": "music",
+      "clue": "music",
+      "alts": ["song", "band", "melody"],
+      "members": [
+        "piano",
+        "guitar",
+        "drum",
+        "violin",
+        "trumpet",
+        "flute",
+        "microphone",
+        "harp",
+        "note",
+        "speaker"
+      ]
+    },
+    {
+      "id": "sports",
+      "clue": "sports",
+      "alts": ["athlete", "team", "game"],
+      "members": [
+        "ball",
+        "goal",
+        "bat",
+        "racket",
+        "net",
+        "helmet",
+        "whistle",
+        "trophy",
+        "coach",
+        "referee",
+        "match"
+      ]
+    },
+    {
+      "id": "school",
+      "clue": "school",
+      "alts": ["class", "lesson", "student"],
+      "members": [
+        "teacher",
+        "pencil",
+        "book",
+        "desk",
+        "ruler",
+        "chalk",
+        "eraser",
+        "bus",
+        "lunch",
+        "test",
+        "backpack",
+        "uniform"
+      ]
+    },
+    {
+      "id": "medieval",
+      "clue": "medieval",
+      "alts": ["feudal", "chivalry", "olden"],
+      "members": [
+        "castle",
+        "knight",
+        "dragon",
+        "sword",
+        "shield",
+        "armor",
+        "tower",
+        "king",
+        "queen",
+        "crown"
+      ]
+    },
+    {
+      "id": "treasure",
+      "clue": "treasure",
+      "alts": ["loot", "booty", "plunder"],
+      "members": [
+        "pirate",
+        "chest",
+        "gold",
+        "map",
+        "parrot",
+        "coin",
+        "jewel",
+        "island",
+        "ship",
+        "key",
+        "hook"
+      ]
+    },
+    {
+      "id": "circus",
+      "clue": "circus",
+      "alts": ["carnival", "bigtop", "showman"],
+      "members": ["clown", "lion", "elephant", "tent", "ring", "cannon", "monkey", "bear", "seal"]
+    },
+    {
+      "id": "halloween",
+      "clue": "halloween",
+      "alts": ["spooky", "haunted", "creepy"],
+      "members": [
+        "ghost",
+        "witch",
+        "pumpkin",
+        "skeleton",
+        "bat",
+        "vampire",
+        "candy",
+        "mummy",
+        "spider",
+        "zombie",
+        "broom",
+        "scarecrow"
+      ]
+    },
+    {
+      "id": "christmas",
+      "clue": "christmas",
+      "alts": ["festive", "yuletide", "holiday"],
+      "members": [
+        "tree",
+        "reindeer",
+        "present",
+        "elf",
+        "snowman",
+        "bell",
+        "chimney",
+        "sleigh",
+        "wreath",
+        "santa",
+        "pudding"
+      ]
+    },
+    {
+      "id": "birthday",
+      "clue": "birthday",
+      "alts": ["party", "celebrate", "surprise"],
+      "members": ["cake", "candle", "balloon", "present", "card", "hat", "clown", "confetti"]
+    },
+    {
+      "id": "garden",
+      "clue": "garden",
+      "alts": ["yard", "backyard", "gardening"],
+      "members": [
+        "rose",
+        "shovel",
+        "hose",
+        "seed",
+        "worm",
+        "bee",
+        "fence",
+        "tulip",
+        "gnome",
+        "snail",
+        "gate",
+        "plant"
+      ]
+    },
+    {
+      "id": "weather",
+      "clue": "weather",
+      "alts": ["forecast", "climate", "meteorology"],
+      "members": [
+        "cloud",
+        "thunder",
+        "lightning",
+        "tornado",
+        "rainbow",
+        "umbrella",
+        "wind",
+        "fog",
+        "hurricane",
+        "rain",
+        "blizzard"
+      ]
+    },
+    {
+      "id": "desert",
+      "clue": "desert",
+      "alts": ["arid", "dunes", "dry"],
+      "members": ["camel", "cactus", "pyramid", "scorpion", "oasis", "snake", "lizard", "sand"]
+    },
+    {
+      "id": "hospital",
+      "clue": "hospital",
+      "alts": ["doctor", "medical", "clinic"],
+      "members": ["nurse", "needle", "bandage", "ambulance", "bed", "pill", "mask", "wheelchair"]
+    },
+    {
+      "id": "police",
+      "clue": "police",
+      "alts": ["cop", "officer", "cops"],
+      "members": [
+        "badge",
+        "siren",
+        "jail",
+        "thief",
+        "detective",
+        "car",
+        "whistle",
+        "dog",
+        "handcuffs"
+      ]
+    },
+    {
+      "id": "secret",
+      "clue": "secret",
+      "alts": ["undercover", "covert", "espionage"],
+      "members": [
+        "spy",
+        "disguise",
+        "code",
+        "mask",
+        "camera",
+        "briefcase",
+        "passport",
+        "mole",
+        "bug",
+        "shadow",
+        "wire"
+      ]
+    },
+    {
+      "id": "emergency",
+      "clue": "emergency",
+      "alts": ["rescue", "urgent", "crisis"],
+      "members": [
+        "ambulance",
+        "siren",
+        "alarm",
+        "fire",
+        "ladder",
+        "helmet",
+        "hose",
+        "bandage",
+        "helicopter"
+      ]
+    },
+    {
+      "id": "bathroom",
+      "clue": "bathroom",
+      "alts": ["shower", "washroom", "restroom"],
+      "members": [
+        "soap",
+        "towel",
+        "sink",
+        "mirror",
+        "toothbrush",
+        "shampoo",
+        "sponge",
+        "duck",
+        "comb",
+        "plunger",
+        "toilet"
+      ]
+    },
+    {
+      "id": "sleep",
+      "clue": "sleep",
+      "alts": ["nap", "snooze", "tired"],
+      "members": [
+        "pillow",
+        "blanket",
+        "bed",
+        "pajamas",
+        "alarm",
+        "lamp",
+        "sheep",
+        "moon",
+        "dream",
+        "sheet"
+      ]
+    },
+    {
+      "id": "tools",
+      "clue": "tools",
+      "alts": ["toolbox", "workshop", "repair"],
+      "members": [
+        "hammer",
+        "nail",
+        "saw",
+        "drill",
+        "screw",
+        "wrench",
+        "ladder",
+        "tape",
+        "glue",
+        "axe"
+      ]
+    },
+    {
+      "id": "fruit",
+      "clue": "fruit",
+      "alts": ["juicy", "orchard", "fruity"],
+      "members": [
+        "apple",
+        "banana",
+        "orange",
+        "grape",
+        "lemon",
+        "cherry",
+        "peach",
+        "coconut",
+        "kiwi",
+        "strawberry",
+        "watermelon",
+        "lime"
+      ]
+    },
+    {
+      "id": "vegetables",
+      "clue": "vegetables",
+      "alts": ["veggie", "salad", "produce"],
+      "members": [
+        "carrot",
+        "potato",
+        "onion",
+        "corn",
+        "pea",
+        "tomato",
+        "pepper",
+        "lettuce",
+        "bean",
+        "pumpkin"
+      ]
+    },
+    {
+      "id": "breakfast",
+      "clue": "breakfast",
+      "alts": ["morning", "brunch", "cereal"],
+      "members": [
+        "egg",
+        "toast",
+        "pancake",
+        "bacon",
+        "coffee",
+        "juice",
+        "waffle",
+        "milk",
+        "sausage",
+        "syrup",
+        "muffin"
+      ]
+    },
+    {
+      "id": "dessert",
+      "clue": "dessert",
+      "alts": ["sweet", "sugary", "treat"],
+      "members": [
+        "cake",
+        "cookie",
+        "pie",
+        "chocolate",
+        "candy",
+        "pudding",
+        "donut",
+        "honey",
+        "strawberry"
+      ]
+    },
+    {
+      "id": "snack",
+      "clue": "snack",
+      "alts": ["munchies", "nibble", "snacks"],
+      "members": ["popcorn", "pretzel", "cookie", "nut", "cracker", "chips", "candy", "apple"]
+    },
+    {
+      "id": "battle",
+      "clue": "battle",
+      "alts": ["war", "combat", "fight"],
+      "members": [
+        "sword",
+        "shield",
+        "arrow",
+        "bow",
+        "cannon",
+        "tank",
+        "helmet",
+        "armor",
+        "soldier",
+        "bomb",
+        "ship"
+      ]
+    },
+    {
+      "id": "wedding",
+      "clue": "wedding",
+      "alts": ["marriage", "bride", "groom"],
+      "members": ["ring", "dress", "cake", "veil", "bouquet", "church", "dance", "tuxedo", "rice"]
+    },
+    {
+      "id": "royal",
+      "clue": "royal",
+      "alts": ["royalty", "majesty", "regal"],
+      "members": ["king", "queen", "prince", "princess", "crown", "throne", "castle", "jewel"]
+    },
+    {
+      "id": "superhero",
+      "clue": "superhero",
+      "alts": ["hero", "powers", "comic"],
+      "members": ["cape", "mask", "villain", "laser", "shield", "spider", "bat", "hammer"]
+    },
+    {
+      "id": "fairytale",
+      "clue": "fairytale",
+      "alts": ["fairy", "storybook", "enchanted"],
+      "members": [
+        "dragon",
+        "princess",
+        "witch",
+        "frog",
+        "castle",
+        "giant",
+        "wolf",
+        "unicorn",
+        "wand",
+        "troll",
+        "elf",
+        "slipper"
+      ]
+    },
+    {
+      "id": "magic",
+      "clue": "magic",
+      "alts": ["wizard", "spell", "sorcery"],
+      "members": [
+        "wand",
+        "hat",
+        "rabbit",
+        "card",
+        "potion",
+        "cape",
+        "crystal",
+        "broom",
+        "saw",
+        "carpet"
+      ]
+    },
+    {
+      "id": "camping",
+      "clue": "camping",
+      "alts": ["outdoors", "hiking", "wilderness"],
+      "members": ["tent", "lantern", "compass", "backpack", "canoe", "bear", "map", "canvas"]
+    },
+    {
+      "id": "forest",
+      "clue": "forest",
+      "alts": ["woods", "woodland", "trees"],
+      "members": [
+        "bear",
+        "wolf",
+        "deer",
+        "owl",
+        "mushroom",
+        "pine",
+        "moss",
+        "log",
+        "squirrel",
+        "fox",
+        "raccoon"
+      ]
+    },
+    {
+      "id": "mountain",
+      "clue": "mountain",
+      "alts": ["peak", "summit", "alpine"],
+      "members": ["goat", "eagle", "cliff", "cave", "rope", "avalanche", "yeti", "ski", "goggles"]
+    },
+    {
+      "id": "river",
+      "clue": "river",
+      "alts": ["stream", "creek", "rapids"],
+      "members": ["bridge", "fish", "boat", "frog", "beaver", "canoe", "dam", "otter", "bank"]
+    },
+    {
+      "id": "city",
+      "clue": "city",
+      "alts": ["urban", "downtown", "metropolis"],
+      "members": [
+        "taxi",
+        "skyscraper",
+        "subway",
+        "bus",
+        "traffic",
+        "tower",
+        "bridge",
+        "park",
+        "pigeon",
+        "bench",
+        "squirrel"
+      ]
+    },
+    {
+      "id": "travel",
+      "clue": "travel",
+      "alts": ["trip", "journey", "tourist"],
+      "members": [
+        "passport",
+        "suitcase",
+        "plane",
+        "map",
+        "hotel",
+        "camera",
+        "ticket",
+        "train",
+        "globe",
+        "museum"
+      ]
+    },
+    {
+      "id": "airport",
+      "clue": "airport",
+      "alts": ["flight", "flying", "terminal"],
+      "members": ["plane", "pilot", "ticket", "suitcase", "gate", "jet"]
+    },
+    {
+      "id": "railroad",
+      "clue": "railroad",
+      "alts": ["railway", "station", "locomotive"],
+      "members": ["train", "ticket", "track", "tunnel", "whistle", "engine", "conductor"]
+    },
+    {
+      "id": "car",
+      "clue": "car",
+      "alts": ["driving", "vehicle", "motor"],
+      "members": [
+        "wheel",
+        "engine",
+        "tire",
+        "horn",
+        "key",
+        "mirror",
+        "garage",
+        "taxi",
+        "trunk",
+        "park",
+        "jack"
+      ]
+    },
+    {
+      "id": "road",
+      "clue": "road",
+      "alts": ["highway", "street", "roadtrip"],
+      "members": ["bridge", "tunnel", "truck", "map", "car", "bus", "traffic"]
+    },
+    {
+      "id": "concert",
+      "clue": "concert",
+      "alts": ["gig", "live", "show"],
+      "members": ["stage", "ticket", "speaker", "guitar", "drum", "microphone", "light", "rock"]
+    },
+    {
+      "id": "theater",
+      "clue": "theater",
+      "alts": ["drama", "broadway", "playhouse"],
+      "members": [
+        "curtain",
+        "mask",
+        "ticket",
+        "actor",
+        "script",
+        "ballet",
+        "spotlight",
+        "costume",
+        "stage"
+      ]
+    },
+    {
+      "id": "movie",
+      "clue": "movie",
+      "alts": ["film", "cinema", "blockbuster"],
+      "members": [
+        "popcorn",
+        "ticket",
+        "screen",
+        "camera",
+        "actor",
+        "director",
+        "star",
+        "monster",
+        "alien",
+        "villain",
+        "script"
+      ]
+    },
+    {
+      "id": "computer",
+      "clue": "computer",
+      "alts": ["digital", "tech", "online"],
+      "members": [
+        "mouse",
+        "keyboard",
+        "screen",
+        "virus",
+        "web",
+        "cloud",
+        "bug",
+        "robot",
+        "chip",
+        "password"
+      ]
+    },
+    {
+      "id": "future",
+      "clue": "future",
+      "alts": ["futuristic", "scifi", "tomorrow"],
+      "members": ["robot", "laser", "rocket", "alien", "astronaut", "drone"]
+    },
+    {
+      "id": "phone",
+      "clue": "phone",
+      "alts": ["mobile", "cellphone", "smartphone"],
+      "members": ["battery", "charger", "camera", "screen", "ring", "text"]
+    },
+    {
+      "id": "office",
+      "clue": "office",
+      "alts": ["work", "job", "business"],
+      "members": [
+        "desk",
+        "computer",
+        "printer",
+        "chair",
+        "boss",
+        "coffee",
+        "paper",
+        "phone",
+        "briefcase",
+        "keyboard",
+        "calendar"
+      ]
+    },
+    {
+      "id": "money",
+      "clue": "money",
+      "alts": ["cash", "wealth", "rich"],
+      "members": [
+        "coin",
+        "bank",
+        "gold",
+        "wallet",
+        "safe",
+        "diamond",
+        "dollar",
+        "piggy",
+        "bill",
+        "vault"
+      ]
+    },
+    {
+      "id": "shiny",
+      "clue": "shiny",
+      "alts": ["sparkle", "glitter", "bling"],
+      "members": [
+        "diamond",
+        "gold",
+        "crystal",
+        "pearl",
+        "ring",
+        "crown",
+        "jewel",
+        "mirror",
+        "star",
+        "silver"
+      ]
+    },
+    {
+      "id": "insects",
+      "clue": "insects",
+      "alts": ["bugs", "creepy", "crawly"],
+      "members": ["bee", "ant", "spider", "butterfly", "fly", "mosquito", "worm", "drone"]
+    },
+    {
+      "id": "birds",
+      "clue": "birds",
+      "alts": ["feathers", "flock", "beaks"],
+      "members": [
+        "eagle",
+        "owl",
+        "parrot",
+        "penguin",
+        "duck",
+        "chicken",
+        "crow",
+        "swan",
+        "flamingo",
+        "pigeon",
+        "turkey",
+        "stork"
+      ]
+    },
+    {
+      "id": "pets",
+      "clue": "pets",
+      "alts": ["companion", "furry", "petshop"],
+      "members": ["dog", "cat", "fish", "hamster", "rabbit", "parrot", "turtle", "mouse"]
+    },
+    {
+      "id": "dog",
+      "clue": "dog",
+      "alts": ["puppy", "canine", "woof"],
+      "members": ["bone", "leash", "bark", "collar", "tail", "ball", "poodle", "dalmatian", "sled"]
+    },
+    {
+      "id": "reptile",
+      "clue": "reptile",
+      "alts": ["scaly", "coldblooded", "reptilian"],
+      "members": ["snake", "lizard", "turtle", "crocodile", "dragon", "dinosaur", "chameleon"]
+    },
+    {
+      "id": "prehistoric",
+      "clue": "prehistoric",
+      "alts": ["extinct", "jurassic", "ancient"],
+      "members": ["dinosaur", "mammoth", "volcano", "cave", "bone", "egg", "meteor", "fossil"]
+    },
+    {
+      "id": "disaster",
+      "clue": "disaster",
+      "alts": ["catastrophe", "calamity", "havoc"],
+      "members": [
+        "volcano",
+        "earthquake",
+        "tornado",
+        "flood",
+        "fire",
+        "avalanche",
+        "hurricane",
+        "meteor"
+      ]
+    },
+    {
+      "id": "danger",
+      "clue": "danger",
+      "alts": ["risky", "peril", "hazard"],
+      "members": ["shark", "bomb", "fire", "lava", "cliff", "trap", "snake", "spider", "scorpion"]
+    },
+    {
+      "id": "body",
+      "clue": "body",
+      "alts": ["anatomy", "human", "organs"],
+      "members": [
+        "hand",
+        "foot",
+        "heart",
+        "nose",
+        "ear",
+        "eye",
+        "knee",
+        "head",
+        "tooth",
+        "bone",
+        "brain",
+        "chest"
+      ]
+    },
+    {
+      "id": "face",
+      "clue": "face",
+      "alts": ["facial", "features", "portrait"],
+      "members": ["nose", "eye", "ear", "mouth", "chin", "lip", "cheek", "tooth"]
+    },
+    {
+      "id": "clothes",
+      "clue": "clothes",
+      "alts": ["clothing", "outfit", "fashion"],
+      "members": [
+        "shirt",
+        "hat",
+        "sock",
+        "shoe",
+        "dress",
+        "belt",
+        "scarf",
+        "glove",
+        "boot",
+        "tie",
+        "collar"
+      ]
+    },
+    {
+      "id": "bakery",
+      "clue": "bakery",
+      "alts": ["baker", "baking", "bakes"],
+      "members": [
+        "bread",
+        "cake",
+        "cookie",
+        "flour",
+        "muffin",
+        "pie",
+        "croissant",
+        "roll",
+        "dough",
+        "apron",
+        "bun"
+      ]
+    },
+    {
+      "id": "pizza",
+      "clue": "pizza",
+      "alts": ["pizzeria", "italian", "slice"],
+      "members": [
+        "cheese",
+        "tomato",
+        "dough",
+        "oven",
+        "olive",
+        "mushroom",
+        "pepper",
+        "box",
+        "pepperoni",
+        "pasta"
+      ]
+    },
+    {
+      "id": "restaurant",
+      "clue": "restaurant",
+      "alts": ["dining", "menu", "waiter"],
+      "members": ["chef", "table", "fork", "plate", "bill", "soup", "napkin"]
+    },
+    {
+      "id": "drinks",
+      "clue": "drinks",
+      "alts": ["beverage", "thirsty", "sip"],
+      "members": [
+        "coffee",
+        "tea",
+        "juice",
+        "milk",
+        "water",
+        "soda",
+        "lemonade",
+        "cocoa",
+        "bottle",
+        "potion",
+        "pitcher",
+        "punch"
+      ]
+    },
+    {
+      "id": "hot",
+      "clue": "hot",
+      "alts": ["heat", "warm", "burning"],
+      "members": ["fire", "sun", "oven", "pepper", "lava", "coffee", "desert", "soup", "roast"]
+    },
+    {
+      "id": "cold",
+      "clue": "cold",
+      "alts": ["freezing", "frosty", "wintry"],
+      "members": ["ice", "snow", "fridge", "penguin", "igloo", "glacier", "snowman"]
+    },
+    {
+      "id": "sharp",
+      "clue": "sharp",
+      "alts": ["pointy", "spiky", "prickly"],
+      "members": [
+        "knife",
+        "needle",
+        "sword",
+        "thorn",
+        "cactus",
+        "pencil",
+        "tooth",
+        "arrow",
+        "nail",
+        "axe"
+      ]
+    },
+    {
+      "id": "round",
+      "clue": "round",
+      "alts": ["circle", "circular", "sphere"],
+      "members": [
+        "ball",
+        "wheel",
+        "coin",
+        "moon",
+        "plate",
+        "ring",
+        "globe",
+        "orange",
+        "pizza",
+        "button",
+        "clock",
+        "bowl"
+      ]
+    },
+    {
+      "id": "bright",
+      "clue": "bright",
+      "alts": ["glow", "shine", "glowing"],
+      "members": [
+        "lamp",
+        "sun",
+        "candle",
+        "star",
+        "lantern",
+        "torch",
+        "spotlight",
+        "firework",
+        "diamond",
+        "light"
+      ]
+    },
+    {
+      "id": "dark",
+      "clue": "dark",
+      "alts": ["darkness", "gloomy", "murky"],
+      "members": ["bat", "owl", "cave", "shadow", "moon", "ghost", "vampire", "night", "fog"]
+    },
+    {
+      "id": "fast",
+      "clue": "fast",
+      "alts": ["speed", "quick", "rapid"],
+      "members": ["cheetah", "rocket", "jet", "car", "lightning", "rabbit", "horse", "train"]
+    },
+    {
+      "id": "slow",
+      "clue": "slow",
+      "alts": ["sluggish", "lazy", "crawl"],
+      "members": ["snail", "turtle", "traffic", "glacier", "sloth", "tortoise", "jam"]
+    },
+    {
+      "id": "big",
+      "clue": "big",
+      "alts": ["huge", "enormous", "massive"],
+      "members": [
+        "whale",
+        "elephant",
+        "giant",
+        "mountain",
+        "skyscraper",
+        "dinosaur",
+        "planet",
+        "mammoth",
+        "cyclops",
+        "monster"
+      ]
+    },
+    {
+      "id": "small",
+      "clue": "small",
+      "alts": ["tiny", "little", "mini"],
+      "members": ["ant", "mouse", "seed", "button", "pea", "atom", "pebble", "elf"]
+    },
+    {
+      "id": "soft",
+      "clue": "soft",
+      "alts": ["fluffy", "gentle", "cuddly"],
+      "members": ["pillow", "cloud", "cotton", "feather", "blanket", "wool", "bunny", "slipper"]
+    },
+    {
+      "id": "sticky",
+      "clue": "sticky",
+      "alts": ["gooey", "tacky", "clingy"],
+      "members": ["glue", "honey", "tape", "gum", "syrup", "web", "jam", "slime", "mud"]
+    },
+    {
+      "id": "loud",
+      "clue": "loud",
+      "alts": ["noisy", "deafening", "blaring"],
+      "members": [
+        "drum",
+        "siren",
+        "thunder",
+        "horn",
+        "alarm",
+        "trumpet",
+        "speaker",
+        "bell",
+        "baby",
+        "lion",
+        "racket"
+      ]
+    },
+    {
+      "id": "smelly",
+      "clue": "smelly",
+      "alts": ["stinky", "odor", "stench"],
+      "members": ["skunk", "sock", "cheese", "garbage", "onion", "fish", "diaper"]
+    },
+    {
+      "id": "cute",
+      "clue": "cute",
+      "alts": ["adorable", "aww", "cuddle"],
+      "members": [
+        "puppy",
+        "kitten",
+        "bunny",
+        "panda",
+        "baby",
+        "koala",
+        "penguin",
+        "teddy",
+        "otter",
+        "piggy"
+      ]
+    },
+    {
+      "id": "monster",
+      "clue": "monster",
+      "alts": ["creature", "beast", "creepy"],
+      "members": [
+        "vampire",
+        "zombie",
+        "werewolf",
+        "dragon",
+        "yeti",
+        "troll",
+        "ghost",
+        "alien",
+        "mummy",
+        "giant",
+        "octopus"
+      ]
+    },
+    {
+      "id": "western",
+      "clue": "western",
+      "alts": ["cowboy", "frontier", "wildwest"],
+      "members": ["horse", "sheriff", "cactus", "lasso", "boot", "gold", "train", "saddle", "wagon"]
+    },
+    {
+      "id": "toys",
+      "clue": "toys",
+      "alts": ["playtime", "toybox", "toyshop"],
+      "members": ["doll", "ball", "kite", "yoyo", "puzzle", "robot", "teddy", "train", "balloon"]
+    },
+    {
+      "id": "chess",
+      "clue": "chess",
+      "alts": ["checkmate", "grandmaster", "gambit"],
+      "members": ["king", "queen", "knight", "board", "clock", "castle"]
+    },
+    {
+      "id": "casino",
+      "clue": "casino",
+      "alts": ["gamble", "bet", "poker"],
+      "members": [
+        "card",
+        "dice",
+        "chip",
+        "king",
+        "queen",
+        "jack",
+        "deck",
+        "diamond",
+        "heart",
+        "club",
+        "spade",
+        "hand"
+      ]
+    },
+    {
+      "id": "golf",
+      "clue": "golf",
+      "alts": ["fairway", "putt", "golfer"],
+      "members": ["club", "ball", "hole", "flag", "cart", "swing"]
+    },
+    {
+      "id": "baseball",
+      "clue": "baseball",
+      "alts": ["inning", "homerun", "slugger"],
+      "members": ["bat", "glove", "diamond", "pitcher", "helmet", "peanut"]
+    },
+    {
+      "id": "soccer",
+      "clue": "soccer",
+      "alts": ["kick", "striker", "pitch"],
+      "members": ["goal", "ball", "net", "boot", "referee", "whistle"]
+    },
+    {
+      "id": "law",
+      "clue": "law",
+      "alts": ["legal", "justice", "court"],
+      "members": ["judge", "jail", "thief", "badge", "hammer", "handcuffs"]
+    },
+    {
+      "id": "beach",
+      "clue": "beach",
+      "alts": ["shore", "seaside", "coast"],
+      "members": [
+        "sand",
+        "shell",
+        "towel",
+        "umbrella",
+        "wave",
+        "crab",
+        "shovel",
+        "pebble",
+        "spade",
+        "sandal"
+      ]
+    },
+    {
+      "id": "art",
+      "clue": "art",
+      "alts": ["artist", "creative", "gallery"],
+      "members": ["brush", "paint", "canvas", "crayon", "pencil", "frame", "museum", "statue"]
+    },
+    {
+      "id": "museum",
+      "clue": "museum",
+      "alts": ["exhibit", "history", "exhibition"],
+      "members": ["statue", "mummy", "dinosaur", "frame", "fossil", "skeleton"]
+    },
+    {
+      "id": "night",
+      "clue": "night",
+      "alts": ["midnight", "evening", "nighttime"],
+      "members": ["moon", "star", "owl", "bat", "dream", "pillow", "candle", "pajamas", "werewolf"]
+    },
+    {
+      "id": "sky",
+      "clue": "sky",
+      "alts": ["above", "heavens", "skies"],
+      "members": [
+        "cloud",
+        "bird",
+        "plane",
+        "kite",
+        "sun",
+        "moon",
+        "star",
+        "rainbow",
+        "balloon",
+        "helicopter",
+        "satellite"
+      ]
+    },
+    {
+      "id": "breeze",
+      "clue": "breeze",
+      "alts": ["gust", "blowing", "gale"],
+      "members": [
+        "kite",
+        "sail",
+        "fan",
+        "flag",
+        "feather",
+        "tornado",
+        "hurricane",
+        "windmill",
+        "balloon",
+        "wind"
+      ]
+    },
+    {
+      "id": "wet",
+      "clue": "wet",
+      "alts": ["liquid", "aqua", "splash"],
+      "members": [
+        "rain",
+        "river",
+        "pool",
+        "ice",
+        "sink",
+        "hose",
+        "bucket",
+        "fountain",
+        "water",
+        "flood"
+      ]
+    },
+    {
+      "id": "electric",
+      "clue": "electric",
+      "alts": ["power", "energy", "electricity"],
+      "members": ["battery", "lightning", "wire", "bulb", "robot", "charger", "toaster"]
+    },
+    {
+      "id": "house",
+      "clue": "house",
+      "alts": ["home", "household", "dwelling"],
+      "members": ["door", "window", "roof", "chimney", "stairs", "key", "garage", "attic"]
+    },
+    {
+      "id": "party",
+      "clue": "party",
+      "alts": ["fiesta", "celebration", "bash"],
+      "members": [
+        "balloon",
+        "cake",
+        "pinata",
+        "confetti",
+        "hat",
+        "present",
+        "disco",
+        "dance",
+        "costume",
+        "firework"
+      ]
+    },
+    {
+      "id": "dance",
+      "clue": "dance",
+      "alts": ["dancing", "groove", "boogie"],
+      "members": ["ballet", "disco", "salsa", "shoe", "stage", "swing"]
+    },
+    {
+      "id": "spicy",
+      "clue": "spicy",
+      "alts": ["fiery", "zesty", "hotsauce"],
+      "members": ["pepper", "salsa", "mustard", "dragon", "fire", "chili"]
+    },
+    {
+      "id": "sandwich",
+      "clue": "sandwich",
+      "alts": ["lunch", "sub", "deli"],
+      "members": ["bread", "ham", "cheese", "lettuce", "tomato", "pickle", "roll", "picnic"]
+    },
+    {
+      "id": "green",
+      "clue": "green",
+      "alts": ["emerald", "verdant", "jade"],
+      "members": [
+        "frog",
+        "grass",
+        "leaf",
+        "pea",
+        "lime",
+        "cactus",
+        "alien",
+        "dollar",
+        "olive",
+        "slime"
+      ]
+    },
+    {
+      "id": "red",
+      "clue": "red",
+      "alts": ["crimson", "scarlet", "ruby"],
+      "members": [
+        "fire",
+        "apple",
+        "rose",
+        "heart",
+        "cherry",
+        "tomato",
+        "strawberry",
+        "lobster",
+        "fox",
+        "ketchup"
+      ]
+    },
+    {
+      "id": "yellow",
+      "clue": "yellow",
+      "alts": ["golden", "canary", "blonde"],
+      "members": [
+        "banana",
+        "lemon",
+        "sun",
+        "taxi",
+        "bee",
+        "corn",
+        "cheese",
+        "duck",
+        "submarine",
+        "sunflower"
+      ]
+    },
+    {
+      "id": "white",
+      "clue": "white",
+      "alts": ["ivory", "pale", "blank"],
+      "members": [
+        "snow",
+        "cloud",
+        "ghost",
+        "milk",
+        "paper",
+        "sheep",
+        "swan",
+        "tooth",
+        "bone",
+        "chalk",
+        "cotton"
+      ]
+    },
+    {
+      "id": "myth",
+      "clue": "myth",
+      "alts": ["legend", "mythology", "folklore"],
+      "members": ["dragon", "unicorn", "giant", "phoenix", "mermaid", "cyclops", "troll", "wizard"]
+    },
+    {
+      "id": "adventure",
+      "clue": "adventure",
+      "alts": ["quest", "expedition", "explore"],
+      "members": ["map", "compass", "treasure", "rope", "torch", "cave", "boat", "desert", "river"]
+    },
+    {
+      "id": "flame",
+      "clue": "flame",
+      "alts": ["burning", "blaze", "burn"],
+      "members": [
+        "candle",
+        "match",
+        "torch",
+        "dragon",
+        "volcano",
+        "lava",
+        "smoke",
+        "fireplace",
+        "coal",
+        "phoenix"
+      ]
+    },
+    {
+      "id": "wood",
+      "clue": "wood",
+      "alts": ["wooden", "timber", "lumber"],
+      "members": ["log", "tree", "pencil", "chair", "table", "axe", "fence", "cabin"]
+    },
+    {
+      "id": "tree",
+      "clue": "tree",
+      "alts": ["oak", "forest", "arbor"],
+      "members": ["leaf", "bark", "trunk", "apple", "pine", "acorn", "koala", "root"]
+    },
+    {
+      "id": "stone",
+      "clue": "stone",
+      "alts": ["boulder", "granite", "pebbles"],
+      "members": [
+        "rock",
+        "cliff",
+        "cave",
+        "crystal",
+        "diamond",
+        "statue",
+        "wall",
+        "castle",
+        "pyramid",
+        "brick"
+      ]
+    },
+    {
+      "id": "boxing",
+      "clue": "boxing",
+      "alts": ["punch", "boxer", "knockout"],
+      "members": ["ring", "glove", "bell", "belt", "champion", "rope"]
+    },
+    {
+      "id": "army",
+      "clue": "army",
+      "alts": ["military", "troops", "battalion"],
+      "members": ["tank", "helmet", "parachute", "boot", "flag", "uniform", "medal", "soldier"]
+    },
+    {
+      "id": "winner",
+      "clue": "winner",
+      "alts": ["victory", "win", "triumph"],
+      "members": ["trophy", "medal", "crown", "gold", "cup", "flag", "ribbon", "champion"]
+    },
+    {
+      "id": "mail",
+      "clue": "mail",
+      "alts": ["postal", "post", "delivery"],
+      "members": ["letter", "stamp", "envelope", "package", "pigeon", "card"]
+    },
+    {
+      "id": "lock",
+      "clue": "lock",
+      "alts": ["secure", "locked", "security"],
+      "members": [
+        "key",
+        "safe",
+        "chain",
+        "door",
+        "password",
+        "vault",
+        "guard",
+        "handcuffs",
+        "leash"
+      ]
+    },
+    {
+      "id": "ship",
+      "clue": "ship",
+      "alts": ["nautical", "voyage", "fleet"],
+      "members": ["sail", "anchor", "rope", "captain", "deck", "cabin"]
+    },
+    {
+      "id": "flowers",
+      "clue": "flowers",
+      "alts": ["bloom", "petal", "blossom"],
+      "members": ["rose", "tulip", "daisy", "lily", "bee", "vase", "bouquet", "wreath", "bulb"]
+    },
+    {
+      "id": "grain",
+      "clue": "grain",
+      "alts": ["wheat", "cereal", "harvest"],
+      "members": ["bread", "flour", "corn", "rice", "pasta", "toast"]
+    },
+    {
+      "id": "smart",
+      "clue": "smart",
+      "alts": ["clever", "genius", "wise"],
+      "members": ["owl", "brain", "dolphin", "computer", "robot", "teacher", "puzzle", "glasses"]
+    },
+    {
+      "id": "pink",
+      "clue": "pink",
+      "alts": ["rosy", "blush", "fuchsia"],
+      "members": ["flamingo", "pig", "coral", "peach", "gum", "lipstick"]
+    },
+    {
+      "id": "beauty",
+      "clue": "beauty",
+      "alts": ["makeup", "cosmetics", "glamour"],
+      "members": ["lipstick", "mirror", "brush", "comb", "wig", "nail"]
+    },
+    {
+      "id": "swimming",
+      "clue": "swimming",
+      "alts": ["swim", "laps", "swimmer"],
+      "members": ["pool", "diver", "goggles", "towel", "whistle", "frog", "fish"]
+    },
+    {
+      "id": "vision",
+      "clue": "vision",
+      "alts": ["sight", "view", "seeing"],
+      "members": [
+        "eye",
+        "telescope",
+        "camera",
+        "mirror",
+        "window",
+        "glasses",
+        "spy",
+        "lens",
+        "watch"
+      ]
+    },
+    {
+      "id": "infant",
+      "clue": "infant",
+      "alts": ["newborn", "toddler", "baby"],
+      "members": ["diaper", "bottle", "spoon", "teddy", "blanket", "stork", "milk", "doll", "nurse"]
+    },
+    {
+      "id": "metal",
+      "clue": "metal",
+      "alts": ["steel", "metallic", "iron"],
+      "members": [
+        "robot",
+        "armor",
+        "coin",
+        "chain",
+        "magnet",
+        "nail",
+        "pan",
+        "sword",
+        "can",
+        "silver"
+      ]
+    },
+    {
+      "id": "science",
+      "clue": "science",
+      "alts": ["lab", "experiment", "scientist"],
+      "members": ["atom", "magnet", "robot", "rocket", "telescope", "brain", "test", "volcano"]
+    },
+    {
+      "id": "steam",
+      "clue": "steam",
+      "alts": ["steamy", "vapor", "boiling"],
+      "members": ["kettle", "train", "engine", "soup", "coffee", "volcano", "smoke"]
+    },
+    {
+      "id": "spots",
+      "clue": "spots",
+      "alts": ["spotty", "dotted", "polka"],
+      "members": ["cow", "dice", "leopard", "cheetah", "giraffe", "dalmatian"]
+    },
+    {
+      "id": "tall",
+      "clue": "tall",
+      "alts": ["lofty", "height", "highrise"],
+      "members": ["giraffe", "skyscraper", "tower", "ladder", "giant", "tree", "mountain"]
+    },
+    {
+      "id": "zoo",
+      "clue": "zoo",
+      "alts": ["safari", "zookeeper", "exhibit"],
+      "members": [
+        "monkey",
+        "lion",
+        "elephant",
+        "giraffe",
+        "penguin",
+        "zebra",
+        "tiger",
+        "panda",
+        "gorilla",
+        "camel"
+      ]
+    },
+    {
+      "id": "stripes",
+      "clue": "stripes",
+      "alts": ["striped", "stripy", "lined"],
+      "members": ["zebra", "tiger", "bee", "skunk", "flag", "referee", "jail"]
+    },
+    {
+      "id": "rolling",
+      "clue": "rolling",
+      "alts": ["spinning", "rollers", "rolls"],
+      "members": [
+        "car",
+        "bus",
+        "bike",
+        "wagon",
+        "cart",
+        "truck",
+        "tractor",
+        "wheelchair",
+        "hamster",
+        "skate"
+      ]
+    },
+    {
+      "id": "polar",
+      "clue": "polar",
+      "alts": ["arctic", "northpole", "antarctic"],
+      "members": ["igloo", "seal", "bear", "ice", "glacier", "snow", "penguin", "reindeer"]
+    },
+    {
+      "id": "paper",
+      "clue": "paper",
+      "alts": ["sheet", "stationery", "pulp"],
+      "members": [
+        "page",
+        "letter",
+        "envelope",
+        "napkin",
+        "kite",
+        "calendar",
+        "dollar",
+        "map",
+        "book",
+        "printer",
+        "clip"
+      ]
+    },
+    {
+      "id": "clean",
+      "clue": "clean",
+      "alts": ["cleaning", "tidy", "scrub"],
+      "members": ["soap", "sponge", "broom", "bucket", "shampoo", "toothbrush", "towel", "sink"]
+    },
+    {
+      "id": "mug",
+      "clue": "mug",
+      "alts": ["warmdrink", "cozy", "tumbler"],
+      "members": ["coffee", "tea", "cocoa", "soup", "milk", "cup"]
+    },
+    {
+      "id": "bubbles",
+      "clue": "bubbles",
+      "alts": ["fizzy", "bubbly", "foam"],
+      "members": ["soda", "soap", "gum", "wand", "fish", "diver"]
+    },
+    {
+      "id": "ouch",
+      "clue": "ouch",
+      "alts": ["hurt", "painful", "injury"],
+      "members": ["thorn", "bee", "needle", "cactus", "knee", "bandage", "nail"]
+    },
+    {
+      "id": "smile",
+      "clue": "smile",
+      "alts": ["grin", "happy", "smiling"],
+      "members": ["mouth", "tooth", "lip", "cheek", "camera", "clown", "mirror"]
+    },
+    {
+      "id": "beard",
+      "clue": "beard",
+      "alts": ["whiskers", "bearded", "mustache"],
+      "members": ["chin", "wizard", "pirate", "goat", "santa", "gnome"]
+    },
+    {
+      "id": "measure",
+      "clue": "measure",
+      "alts": ["measuring", "length", "size"],
+      "members": ["ruler", "foot", "tape", "scale", "cup", "spoon"]
+    },
+    {
+      "id": "fishing",
+      "clue": "fishing",
+      "alts": ["angler", "fisherman", "catch"],
+      "members": ["hook", "worm", "net", "boat", "bucket", "scale", "bear"]
+    },
+    {
+      "id": "orchestra",
+      "clue": "orchestra",
+      "alts": ["symphony", "classical", "maestro"],
+      "members": [
+        "violin",
+        "piano",
+        "flute",
+        "harp",
+        "conductor",
+        "drum",
+        "trumpet",
+        "note",
+        "triangle"
+      ]
+    },
+    {
+      "id": "writing",
+      "clue": "writing",
+      "alts": ["write", "author", "scribble"],
+      "members": [
+        "pencil",
+        "pen",
+        "chalk",
+        "crayon",
+        "eraser",
+        "letter",
+        "feather",
+        "ink",
+        "text",
+        "page"
+      ]
+    },
+    {
+      "id": "black",
+      "clue": "black",
+      "alts": ["ebony", "pitch", "jet"],
+      "members": ["ink", "crow", "coal", "tire", "tuxedo", "night", "witch", "cat"]
+    },
+    {
+      "id": "cardboard",
+      "clue": "cardboard",
+      "alts": ["crate", "carton", "parcel"],
+      "members": ["box", "package", "lunch", "pizza", "present", "shoe"]
+    },
+    {
+      "id": "underground",
+      "clue": "underground",
+      "alts": ["dig", "digging", "burrow"],
+      "members": ["mole", "worm", "subway", "tunnel", "root", "potato", "carrot", "ant"]
+    },
+    {
+      "id": "twist",
+      "clue": "twist",
+      "alts": ["spin", "twisty", "turn"],
+      "members": ["tornado", "screw", "pretzel", "key", "rope", "dough"]
+    },
+    {
+      "id": "burger",
+      "clue": "burger",
+      "alts": ["hamburger", "patty", "grill"],
+      "members": [
+        "bun",
+        "ketchup",
+        "mustard",
+        "pickle",
+        "cheese",
+        "lettuce",
+        "onion",
+        "tomato",
+        "fries",
+        "chili"
+      ]
+    },
+    {
+      "id": "fuzzy",
+      "clue": "fuzzy",
+      "alts": ["furry", "hairy", "fuzz"],
+      "members": ["kiwi", "peach", "teddy", "bear", "moss", "slipper"]
+    },
+    {
+      "id": "grow",
+      "clue": "grow",
+      "alts": ["growing", "sprout", "growth"],
+      "members": ["seed", "bean", "sunflower", "plant", "baby", "giant"]
+    },
+    {
+      "id": "flat",
+      "clue": "flat",
+      "alts": ["flatten", "level", "squash"],
+      "members": ["pancake", "tire", "map", "paper", "pizza", "coin"]
+    },
+    {
+      "id": "grid",
+      "clue": "grid",
+      "alts": ["squares", "checkered", "lattice"],
+      "members": ["waffle", "net", "window", "fence", "board", "map"]
+    },
+    {
+      "id": "pork",
+      "clue": "pork",
+      "alts": ["hog", "swine", "meat"],
+      "members": ["bacon", "ham", "pig", "sausage", "pepperoni", "roast"]
+    },
+    {
+      "id": "brown",
+      "clue": "brown",
+      "alts": ["tan", "beige", "brunette"],
+      "members": ["chocolate", "coffee", "bear", "mud", "potato", "cocoa"]
+    },
+    {
+      "id": "hollow",
+      "clue": "hollow",
+      "alts": ["gap", "empty", "void"],
+      "members": ["donut", "tunnel", "cave", "log", "pipe", "drum", "straw", "hole"]
+    },
+    {
+      "id": "cone",
+      "clue": "cone",
+      "alts": ["conical", "cones", "pointed"],
+      "members": ["volcano", "pine", "witch", "unicorn", "hat", "traffic"]
+    },
+    {
+      "id": "crunchy",
+      "clue": "crunchy",
+      "alts": ["crunch", "crispy", "snappy"],
+      "members": ["nut", "chips", "cracker", "carrot", "apple", "popcorn", "toast", "peanut"]
+    },
+    {
+      "id": "hunting",
+      "clue": "hunting",
+      "alts": ["hunter", "hunt", "prey"],
+      "members": ["deer", "bow", "arrow", "trap", "duck", "wolf"]
+    },
+    {
+      "id": "hidden",
+      "clue": "hidden",
+      "alts": ["hide", "concealed", "hiding"],
+      "members": ["veil", "mask", "disguise", "curtain", "shadow", "treasure", "spy", "chameleon"]
+    },
+    {
+      "id": "chime",
+      "clue": "chime",
+      "alts": ["ding", "jingle", "dingdong"],
+      "members": ["bell", "church", "alarm", "phone", "clock", "triangle"]
+    },
+    {
+      "id": "kiss",
+      "clue": "kiss",
+      "alts": ["smooch", "peck", "kissing"],
+      "members": ["lip", "cheek", "frog", "prince", "hand", "baby"]
+    },
+    {
+      "id": "seat",
+      "clue": "seat",
+      "alts": ["seating", "sit", "sitting"],
+      "members": ["chair", "throne", "bench", "saddle", "couch", "toilet"]
+    },
+    {
+      "id": "lounge",
+      "clue": "lounge",
+      "alts": ["sofa", "livingroom", "relax"],
+      "members": ["couch", "lamp", "carpet", "pillow", "fireplace", "cat"]
+    },
+    {
+      "id": "leader",
+      "clue": "leader",
+      "alts": ["chief", "commander", "ruler"],
+      "members": [
+        "king",
+        "captain",
+        "coach",
+        "director",
+        "judge",
+        "sheriff",
+        "boss",
+        "chef",
+        "pilot",
+        "head"
+      ]
+    },
+    {
+      "id": "vacation",
+      "clue": "vacation",
+      "alts": ["holiday", "getaway", "resort"],
+      "members": ["hotel", "beach", "island", "suitcase", "camera", "pool"]
+    },
+    {
+      "id": "race",
+      "clue": "race",
+      "alts": ["racing", "racer", "derby"],
+      "members": ["track", "car", "horse", "flag", "bike", "rabbit", "tortoise"]
+    },
+    {
+      "id": "pocket",
+      "clue": "pocket",
+      "alts": ["pockets", "pocketful", "pouch"],
+      "members": ["wallet", "key", "phone", "coin", "watch", "knife", "tissue"]
+    },
+    {
+      "id": "wings",
+      "clue": "wings",
+      "alts": ["winged", "flapping", "flap"],
+      "members": ["butterfly", "angel", "plane", "dragon", "bat", "eagle", "bee", "fly"]
+    },
+    {
+      "id": "heaven",
+      "clue": "heaven",
+      "alts": ["paradise", "afterlife", "halo"],
+      "members": ["angel", "cloud", "harp", "gate", "star", "feather"]
+    },
+    {
+      "id": "bite",
+      "clue": "bite",
+      "alts": ["chomp", "bites", "biting"],
+      "members": ["mosquito", "vampire", "shark", "dog", "snake", "spider", "crocodile"]
+    },
+    {
+      "id": "thanksgiving",
+      "clue": "thanksgiving",
+      "alts": ["feast", "pilgrim", "gratitude"],
+      "members": ["turkey", "pumpkin", "pie", "corn", "potato", "table"]
+    },
+    {
+      "id": "cage",
+      "clue": "cage",
+      "alts": ["caged", "bars", "captive"],
+      "members": ["hamster", "parrot", "lion", "jail", "bird", "monkey"]
+    },
+    {
+      "id": "hair",
+      "clue": "hair",
+      "alts": ["hairdo", "hairstyle", "haircut"],
+      "members": ["comb", "brush", "wig", "bun", "tail", "lion", "clip"]
+    },
+    {
+      "id": "crack",
+      "clue": "crack",
+      "alts": ["cracked", "split", "shatter"],
+      "members": ["egg", "ice", "mirror", "nut", "screen", "earthquake"]
+    },
+    {
+      "id": "trash",
+      "clue": "trash",
+      "alts": ["rubbish", "junk", "litter"],
+      "members": ["garbage", "raccoon", "can", "bottle", "banana", "paper"]
+    },
+    {
+      "id": "love",
+      "clue": "love",
+      "alts": ["romance", "romantic", "adore"],
+      "members": ["heart", "rose", "puppy", "chocolate", "ring", "letter"]
+    },
+    {
+      "id": "knitting",
+      "clue": "knitting",
+      "alts": ["knit", "yarn", "crochet"],
+      "members": ["wool", "scarf", "mitten", "sock", "needle", "blanket", "kitten"]
+    },
+    {
+      "id": "string",
+      "clue": "string",
+      "alts": ["strings", "twine", "thread"],
+      "members": ["yoyo", "kite", "guitar", "violin", "balloon", "harp"]
+    },
+    {
+      "id": "suit",
+      "clue": "suit",
+      "alts": ["suits", "formal", "tailored"],
+      "members": ["tuxedo", "tie", "spade", "heart", "club", "briefcase"]
+    },
+    {
+      "id": "protect",
+      "clue": "protect",
+      "alts": ["protection", "defend", "safety"],
+      "members": ["armor", "shell", "helmet", "shield", "umbrella", "glove", "mask", "guard"]
+    },
+    {
+      "id": "colorful",
+      "clue": "colorful",
+      "alts": ["vivid", "colors", "multicolor"],
+      "members": ["rainbow", "crayon", "paint", "parrot", "butterfly", "balloon"]
+    },
+    {
+      "id": "collect",
+      "clue": "collect",
+      "alts": ["collection", "collector", "hobby"],
+      "members": ["stamp", "coin", "card", "shell", "rock", "doll"]
+    },
+    {
+      "id": "climb",
+      "clue": "climb",
+      "alts": ["climbing", "ascend", "upward"],
+      "members": ["ladder", "stairs", "roof", "attic", "mountain", "rope", "tree"]
+    },
+    {
+      "id": "wish",
+      "clue": "wish",
+      "alts": ["wishes", "wishing", "genie"],
+      "members": ["fountain", "star", "candle", "coin", "lamp", "cake"]
+    },
+    {
+      "id": "easter",
+      "clue": "easter",
+      "alts": ["spring", "pastel", "springtime"],
+      "members": ["bunny", "egg", "basket", "chocolate", "rabbit", "candy"]
+    },
+    {
+      "id": "laundry",
+      "clue": "laundry",
+      "alts": ["washing", "dirty", "wash"],
+      "members": ["sock", "shirt", "towel", "soap", "basket", "sheet"]
+    },
+    {
+      "id": "knot",
+      "clue": "knot",
+      "alts": ["tangled", "loop", "knotted"],
+      "members": ["tie", "rope", "pretzel", "bow", "ribbon", "lasso"]
+    },
+    {
+      "id": "claw",
+      "clue": "claw",
+      "alts": ["claws", "pincer", "clawed"],
+      "members": ["lobster", "crab", "cat", "bear", "eagle", "scorpion"]
+    },
+    {
+      "id": "field",
+      "clue": "field",
+      "alts": ["meadow", "pasture", "prairie"],
+      "members": ["grass", "cow", "sheep", "horse", "daisy", "scarecrow"]
+    },
+    {
+      "id": "pond",
+      "clue": "pond",
+      "alts": ["lake", "marsh", "pondlife"],
+      "members": ["frog", "lily", "duck", "fish", "swan", "turtle"]
+    },
+    {
+      "id": "glass",
+      "clue": "glass",
+      "alts": ["glassy", "seethrough", "crystalclear"],
+      "members": ["vase", "mirror", "window", "bottle", "lens", "slipper"]
+    },
+    {
+      "id": "fall",
+      "clue": "fall",
+      "alts": ["falling", "drop", "plunge"],
+      "members": ["parachute", "leaf", "rain", "apple", "snow", "cliff", "acorn"]
+    },
+    {
+      "id": "hit",
+      "clue": "hit",
+      "alts": ["smack", "whack", "strike"],
+      "members": ["pinata", "ball", "drum", "nail", "bat", "punch"]
+    },
+    {
+      "id": "french",
+      "clue": "french",
+      "alts": ["paris", "france", "parisian"],
+      "members": ["croissant", "toast", "horn", "fries", "poodle", "bread"]
+    },
+    {
+      "id": "sick",
+      "clue": "sick",
+      "alts": ["ill", "flu", "sickness"],
+      "members": ["pill", "nurse", "soup", "bed", "tissue", "virus", "blanket"]
+    },
+    {
+      "id": "construction",
+      "clue": "construction",
+      "alts": ["builder", "building", "build"],
+      "members": ["beaver", "hammer", "brick", "ladder", "drill", "truck", "helmet", "dam", "wall"]
+    },
+    {
+      "id": "bunch",
+      "clue": "bunch",
+      "alts": ["cluster", "bundle", "clump"],
+      "members": ["grape", "banana", "balloon", "bouquet", "key", "carrot"]
+    },
+    {
+      "id": "palm",
+      "clue": "palm",
+      "alts": ["palms", "palmtree", "tropics"],
+      "members": ["coconut", "oasis", "island", "hand", "beach", "parrot"]
+    },
+    {
+      "id": "mystery",
+      "clue": "mystery",
+      "alts": ["whodunit", "sleuth", "riddle"],
+      "members": ["detective", "pipe", "code", "shadow", "mask", "thief"]
+    },
+    {
+      "id": "plumbing",
+      "clue": "plumbing",
+      "alts": ["plumber", "leak", "drain"],
+      "members": ["pipe", "plunger", "wrench", "sink", "toilet", "water"]
+    }
+  ]
+}

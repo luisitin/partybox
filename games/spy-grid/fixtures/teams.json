@@ -1,0 +1,149 @@
+{
+  "phase": {
+    "id": "teams",
+    "startedAt": 1000000,
+    "deadline": 1045000
+  },
+  "rng": {
+    "seed": 7,
+    "step": 5
+  },
+  "players": {
+    "p1": {
+      "id": "p1",
+      "name": "P1",
+      "avatarId": "0",
+      "connected": true
+    },
+    "p2": {
+      "id": "p2",
+      "name": "P2",
+      "avatarId": "1",
+      "connected": true
+    },
+    "p3": {
+      "id": "p3",
+      "name": "P3",
+      "avatarId": "2",
+      "connected": true
+    },
+    "p4": {
+      "id": "p4",
+      "name": "P4",
+      "avatarId": "3",
+      "connected": true
+    },
+    "p5": {
+      "id": "p5",
+      "name": "P5",
+      "avatarId": "4",
+      "connected": true
+    },
+    "p6": {
+      "id": "p6",
+      "name": "P6",
+      "avatarId": "5",
+      "connected": true
+    }
+  },
+  "settings": {
+    "mode": "teams",
+    "teamPick": "choose",
+    "rounds": 1,
+    "clueSeconds": 75,
+    "guessSeconds": 60,
+    "maxTurns": 24,
+    "coopTurns": 8,
+    "assassins": 1,
+    "reactions": true,
+    "spicy": false,
+    "reader": "fable"
+  },
+  "seats": ["p1", "p2", "p3", "p4", "p5", "p6"],
+  "left": [],
+  "mode": "teams",
+  "teams": {
+    "sun": ["p1", "p4", "p5"],
+    "moon": ["p2", "p3", "p6"]
+  },
+  "spymaster": {
+    "sun": null,
+    "moon": null
+  },
+  "volunteers": ["p1", "p4"],
+  "round": 0,
+  "roundWins": {
+    "sun": 0,
+    "moon": 0
+  },
+  "board": [],
+  "key": [],
+  "flipped": [],
+  "starter": "sun",
+  "turn": {
+    "team": "sun",
+    "n": 0,
+    "spymaster": null,
+    "clue": null,
+    "clueError": null,
+    "left": 0,
+    "made": 0,
+    "pointers": {},
+    "firsts": {},
+    "reactions": {},
+    "flip": null,
+    "ended": null,
+    "newSpymaster": null
+  },
+  "idleTurns": 0,
+  "winner": null,
+  "reason": null,
+  "coop": null,
+  "history": [],
+  "stats": {
+    "p1": {
+      "clues": 0,
+      "agentsFromClues": 0,
+      "bestClue": 0,
+      "sharp": 0,
+      "trap": 0
+    },
+    "p2": {
+      "clues": 0,
+      "agentsFromClues": 0,
+      "bestClue": 0,
+      "sharp": 0,
+      "trap": 0
+    },
+    "p3": {
+      "clues": 0,
+      "agentsFromClues": 0,
+      "bestClue": 0,
+      "sharp": 0,
+      "trap": 0
+    },
+    "p4": {
+      "clues": 0,
+      "agentsFromClues": 0,
+      "bestClue": 0,
+      "sharp": 0,
+      "trap": 0
+    },
+    "p5": {
+      "clues": 0,
+      "agentsFromClues": 0,
+      "bestClue": 0,
+      "sharp": 0,
+      "trap": 0
+    },
+    "p6": {
+      "clues": 0,
+      "agentsFromClues": 0,
+      "bestClue": 0,
+      "sharp": 0,
+      "trap": 0
+    }
+  },
+  "speechMs": {},
+  "usedThemes": []
+}
