@@ -9,6 +9,15 @@ import type { BlindAuctionControllerView } from './views';
 export function decide(view: BlindAuctionControllerView, factor: number, rng: Rng): Input | null {
   if (view.me.role !== 'player') return null;
   if (view.phaseId === 'rules') return view.ready ? null : { type: 'ready' };
+  if (view.phaseId === 'swap') {
+    // Doors: like people, most bots trust their first door; the bolder ones switch.
+    if (view.myDoor === null || view.mySwap !== null || view.opened === null) return null;
+    const others = [0, 1, 2].filter((d) => d !== view.opened && d !== view.myDoor);
+    const forced = view.myDoor === view.opened;
+    const move = forced || rng.float() < 0.35 + 0.3 * factor;
+    const door = move ? (others[Math.floor(rng.float() * others.length)] ?? 0) : view.myDoor;
+    return { type: 'swap', door };
+  }
   if (view.phaseId !== 'bet' || view.myBet !== null || !view.box) return null;
   const options = view.box.options;
   if (options.length === 0) return null;

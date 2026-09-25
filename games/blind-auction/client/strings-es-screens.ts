@@ -74,6 +74,28 @@ export const ES_SCREENS: Record<string, string> = {
   'Look at the TV': 'Mira la TV',
   "That's the last box!": '¡Esa fue la última caja!',
   // live events
+  'Stay or switch?': '¿Te quedas o cambias?',
+  'A goat behind door {n}! Keep your door, or switch to the other one.':
+    '¡Una cabra tras la puerta {n}! Quédate con tu puerta o cambia a la otra.',
+  '{n} of {total} have chosen': '{n} de {total} ya eligieron',
+  'Doors are final. Where is the car?': 'Puertas decididas. ¿Dónde está el coche?',
+  'Door {n}': 'Puerta {n}',
+  'Door 1': 'Puerta 1',
+  'Door 2': 'Puerta 2',
+  'Door 3': 'Puerta 3',
+  'Three Doors': 'Tres puertas',
+  'A car behind one, goats behind two. Stay or switch?':
+    'Un coche tras una, cabras tras dos. ¿Te quedas o cambias?',
+  'No stake on these doors: watch the others choose.':
+    'No apostaste en estas puertas: mira cómo eligen los demás.',
+  'A goat behind your door {n}! Pick one of the other two.':
+    '¡Una cabra tras tu puerta {n}! Elige una de las otras dos.',
+  'A goat behind door {n}! You are on door {m}.':
+    '¡Una cabra tras la puerta {n}! Estás en la puerta {m}.',
+  'Stay on door {n}': 'Quedarme en la puerta {n}',
+  'Switch to door {n}': 'Cambiar a la puerta {n}',
+  'Choose before the doors open.': 'Elige antes de que se abran las puertas.',
+  '✓ Locked in. You can still change.': '✓ Elegido. Aún puedes cambiar.',
   'Bets are closed. And they’re off!': 'Apuestas cerradas. ¡Arrancan!',
   'Bets are closed. Roll the dice!': 'Apuestas cerradas. ¡A tirar los dados!',
   'Bets are closed. Spin the wheel!': 'Apuestas cerradas. ¡A girar la ruleta!',

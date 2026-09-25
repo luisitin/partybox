@@ -6,6 +6,7 @@
 import { controllerEnvelope, envelope } from '@partybox/game-sdk';
 import type { ControllerView, PlayerStatus, TvView } from '@partybox/game-sdk';
 import { inGame } from './phases/bet';
+import { swappers } from './phases/swap';
 import { payout, tierOf } from './odds';
 import type { Tier } from './odds';
 import { FIXED_LINES, boxRequest, fixedRequest, lineOf, openRequest } from './speech';
@@ -71,6 +72,8 @@ interface Common {
   /** `open` step 1: which content was inside. */
   outcome: number | null;
   run: RunView | null;
+  /** Doors, from `swap` on: the goat door the host opened. */
+  opened: number | null;
   results: ResultView[] | null;
   voice: VoiceView | null;
   clips: Partial<Record<FixedLine, string>>;
@@ -79,6 +82,9 @@ interface Common {
 export interface BlindAuctionTvView extends TvView, Common {
   betsIn: number;
   bettors: number;
+  /** Doors `swap`: how many bettors have chosen, of how many. */
+  swapsIn: number;
+  swappers: number;
 }
 
 export type OwnLine =
@@ -94,6 +100,9 @@ export interface BlindAuctionControllerView extends ControllerView, Common {
   topped: boolean;
   notice: { code: 'over' | 'option'; have: number; at: number } | null;
   line: OwnLine | null;
+  /** Doors `swap`: the door you bet on (null = no stake, nothing to choose) and where you are now. */
+  myDoor: number | null;
+  mySwap: number | null;
 }
 
 function boxView(state: State): BoxView | null {
@@ -133,7 +142,8 @@ function betsView(state: State): BetView[] | null {
 function runView(state: State): RunView | null {
   const round = state.boxes[state.r.idx];
   if (state.phase.id !== 'open' || !round?.box.event) return null;
-  return { kind: round.box.event, outcome: round.outcome, detail: round.detail ?? [] };
+  const detail = round.box.event === 'doors' ? [state.r.opened ?? -1] : (round.detail ?? []);
+  return { kind: round.box.event, outcome: round.outcome, detail };
 }
 
 function opened(state: State): boolean {
@@ -205,6 +215,10 @@ function statusOf(state: State): (id: string) => PlayerStatus {
   return (id) => {
     if (state.phase.id === 'rules') return state.ready.includes(id) ? 'submitted' : 'active';
     if (state.phase.id === 'bet') return Object.hasOwn(state.r.bets, id) ? 'submitted' : 'active';
+    if (state.phase.id === 'swap')
+      return !swappers(state).includes(id) || Object.hasOwn(state.r.swaps ?? {}, id)
+        ? 'submitted'
+        : 'active';
     return 'waiting';
   };
 }
@@ -217,6 +231,8 @@ function skipLabel(state: State): string | undefined {
       return 'Skip to betting';
     case 'bet':
       return 'Close betting';
+    case 'swap':
+      return 'Open the doors';
     case 'open':
       return state.r.idx + 1 < state.boxes.length ? 'Next box' : 'See results';
     default:
@@ -225,7 +241,7 @@ function skipLabel(state: State): string | undefined {
 }
 
 function timerMode(state: State): 'normal' | 'quiet' | 'hidden' {
-  if (state.phase.id === 'bet') return 'normal';
+  if (state.phase.id === 'bet' || state.phase.id === 'swap') return 'normal';
   return state.phase.id === 'rules' && state.rulesStep === 0 ? 'quiet' : 'hidden';
 }
 
@@ -239,6 +255,8 @@ function common(state: State): Common {
     bets: betsView(state),
     outcome: opened(state) ? (state.boxes[state.r.idx]?.outcome ?? null) : null,
     run: runView(state),
+    opened:
+      state.phase.id === 'swap' || state.phase.id === 'open' ? (state.r.opened ?? null) : null,
     results: resultsView(state),
     voice: voice(state),
     clips: clips(state),
@@ -254,6 +272,8 @@ export function tvView(state: State): BlindAuctionTvView {
     ...common(state),
     betsIn: Object.keys(state.r.bets).length,
     bettors: state.seats.filter((id) => inGame(state, id) && state.players[id]?.connected).length,
+    swapsIn: state.phase.id === 'swap' ? Object.keys(state.r.swaps ?? {}).length : 0,
+    swappers: state.phase.id === 'swap' ? swappers(state).length : 0,
   };
 }
 
@@ -289,5 +309,10 @@ export function controllerView(state: State, playerId: string): BlindAuctionCont
     topped: playing && state.phase.id === 'bet' && state.r.topped.includes(playerId),
     notice: playing ? (state.notices[playerId] ?? null) : null,
     line: playing ? ownLine(state, playerId) : null,
+    myDoor:
+      playing && state.phase.id === 'swap' && swappers(state).includes(playerId)
+        ? (state.r.bets[playerId]?.option ?? null)
+        : null,
+    mySwap: playing && state.phase.id === 'swap' ? (state.r.swaps?.[playerId] ?? null) : null,
   };
 }

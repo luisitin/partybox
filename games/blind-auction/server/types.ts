@@ -3,7 +3,7 @@
 import { z } from '@partybox/game-sdk';
 import type { GameStateBase } from '@partybox/game-sdk';
 
-export const PHASES = ['rules', 'box', 'bet', 'open', 'done'] as const;
+export const PHASES = ['rules', 'box', 'bet', 'swap', 'open', 'done'] as const;
 export type PhaseId = (typeof PHASES)[number];
 
 export const READERS = ['george', 'fable', 'jessica', 'sky', 'original', 'none'] as const;
@@ -28,7 +28,7 @@ export interface Cfg {
 }
 
 /** The live events (the owner's picks, docs/game-pack/blind-auction/LIVE-EVENTS.md). */
-export const LIVE_KINDS = ['race', 'dice', 'wheel'] as const;
+export const LIVE_KINDS = ['race', 'dice', 'wheel', 'doors'] as const;
 export type LiveKind = (typeof LIVE_KINDS)[number];
 
 /** What a box can hold. Each kind has its icon and words on the client (EN + ES). */
@@ -92,6 +92,10 @@ export interface RoundState {
   turnedAt: number | null;
   /** Players topped up to the pity stake this round (they were broke). */
   topped: string[];
+  /** Doors (`swap`): the goat door the host opened, and each bettor's stay/switch choice (their
+   *  final door; absent = undecided, which stays). */
+  opened?: number;
+  swaps?: Record<string, number>;
 }
 
 export interface Stats {
@@ -132,6 +136,8 @@ export interface State extends GameStateBase {
 
 export const inputSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('ready') }),
+  // Doors: the door you end on after the host opens one (your own = stay).
+  z.object({ type: z.literal('swap'), door: z.number().int().min(0).max(2) }),
   z.object({
     type: z.literal('bet'),
     option: z.number().int().min(0).max(3),

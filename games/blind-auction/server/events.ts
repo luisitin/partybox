@@ -68,10 +68,23 @@ const WHEEL_CHANCES: Record<number, number[]> = {
   6: [35, 25, 15, 10, 10, 5],
 };
 
+/** Three doors, one car: a right door pays ×2 (the owner's call), whichever door you end on. */
+const DOORS: readonly Label[] = [
+  { icon: '🚪', name: 'Door 1' },
+  { icon: '🚪', name: 'Door 2' },
+  { icon: '🚪', name: 'Door 3' },
+];
+export const DOOR_PAY = 2;
+
 const EVENT_BOX: Record<LiveKind, { name: string; icon: string; flavour: string }> = {
   race: { name: 'Animal Race', icon: '🏁', flavour: 'Four racers, one finish line. Who wins?' },
   dice: { name: 'Dice Roll', icon: '🎲', flavour: 'Two dice. Under seven, lucky seven, or over?' },
   wheel: { name: 'Prize Wheel', icon: '🎡', flavour: 'Round and round it goes. Where it stops…' },
+  doors: {
+    name: 'Three Doors',
+    icon: '🚪',
+    flavour: 'A car behind one, goats behind two. Stay or switch?',
+  },
 };
 
 function option(label: Label, chance: number): BoxOption {
@@ -121,8 +134,15 @@ function wheel(rng: RngState, n: number): [Round, RngState] {
   return [{ box: eventBox('wheel', n, options), outcome, detail: [at + 10] }, s4];
 }
 
+function doors(rng: RngState, n: number): [Round, RngState] {
+  const options = DOORS.map((d, i) => ({ ...option(d, i === 2 ? 34 : 33), pay: DOOR_PAY }));
+  const [outcome, s1] = int(rng, 3);
+  return [{ box: eventBox('doors', n, options), outcome }, s1];
+}
+
 export function drawEvent(kind: LiveKind, rng: RngState, n: number): [Round, RngState] {
   if (kind === 'race') return race(rng, n);
   if (kind === 'dice') return dice(rng, n);
+  if (kind === 'doors') return doors(rng, n);
   return wheel(rng, n);
 }

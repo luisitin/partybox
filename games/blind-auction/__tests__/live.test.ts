@@ -6,7 +6,7 @@ import { EVENT_MS, betsMs } from '../server/timing';
 import { controllerView, tvView } from '../server/views';
 import { LIVE_KINDS } from '../server/types';
 import { seedRng } from '@partybox/game-sdk';
-import { bet, playThrough, start, walkTo } from './helpers';
+import { bet, playThrough, send, start, walkTo } from './helpers';
 
 describe('live events: the draw', () => {
   it('off by default; on, every other ordinary box is an event and the grand box stays last', () => {
@@ -105,5 +105,83 @@ describe('live events: the reveal', () => {
       const states = playThrough(seed, 5, { live: true, rounds: 6 });
       expect(states.at(-1)?.phase.id, `seed ${seed}`).toBe('done');
     }
+  });
+});
+
+describe('live events: three doors', () => {
+  /** A game whose second box is the doors, car behind `car`, now at `bet`. */
+  const doorsAt = (car: number): ReturnType<typeof start> => {
+    let s = start(4, { rounds: 5 });
+    const [round] = drawEvent('doors', seedRng(3), 1);
+    s = { ...s, boxes: s.boxes.map((b, i) => (i === 1 ? { ...round, outcome: car } : b)) };
+    s = walkTo(walkTo(walkTo(s, 'bet'), 'box'), 'bet');
+    expect(s.boxes[s.r.idx]?.box.event).toBe('doors');
+    return s;
+  };
+  const swap = (s: ReturnType<typeof start>, id: string, door: number) =>
+    send(s, {
+      type: 'input',
+      now: s.phase.startedAt + 200,
+      playerId: id,
+      input: { type: 'swap', door },
+    });
+
+  it('the host opens a goat door, never the car, preferring one nobody backed', () => {
+    for (let car = 0; car < 3; car++) {
+      let s = doorsAt(car);
+      const goat = [0, 1, 2].find((d) => d !== car) ?? 0;
+      s = bet(s, 'p1', goat, 10);
+      s = walkTo(s, 'swap');
+      expect(s.r.opened).not.toBe(car);
+      expect(s.r.opened).not.toBe(goat);
+      expect(tvView(s).opened).toBe(s.r.opened);
+      // The car stays secret while players choose.
+      expect(tvView(s).run).toBeNull();
+      expect(tvView(s).outcome).toBeNull();
+    }
+  });
+
+  it('no stake on the doors: straight to open', () => {
+    const s = walkTo(doorsAt(0), 'open');
+    expect(s.r.opened).toBeUndefined();
+  });
+
+  it('switching to the car pays ×2; staying on a goat loses', () => {
+    let s = doorsAt(2);
+    s = bet(s, 'p1', 0, 20);
+    s = bet(s, 'p2', 0, 20);
+    s = walkTo(s, 'swap');
+    expect(s.r.opened).toBe(1);
+    const before = { ...s.coins };
+    s = swap(s, 'p1', 2);
+    s = swap(s, 'p2', 0);
+    s = walkTo(s, 'open');
+    expect(s.coins['p1']).toBe((before['p1'] ?? 0) + 20);
+    expect(s.coins['p2']).toBe((before['p2'] ?? 0) - 20);
+  });
+
+  it('a bettor on the opened door must move; the opened door is refused', () => {
+    let s = doorsAt(0);
+    s = bet(s, 'p1', 1, 10);
+    s = bet(s, 'p2', 2, 10);
+    s = walkTo(s, 'swap');
+    const opened = s.r.opened ?? -1;
+    const victim = opened === 1 ? 'p1' : 'p2';
+    expect(controllerView(s, victim).myDoor).toBe(opened);
+    expect(swap(s, victim, opened).r.swaps?.[victim]).toBeUndefined();
+    // Undecided at the deadline: moved off the goat anyway.
+    s = walkTo(s, 'open');
+    expect(s.r.bets[victim]?.option).not.toBe(opened);
+  });
+
+  it('everyone chose: the doors open at once', () => {
+    let s = doorsAt(1);
+    for (const id of ['p1', 'p2', 'p3', 'p4']) s = bet(s, id, 0, 5);
+    expect(s.phase.id).toBe('swap');
+    const other = [1, 2].find((d) => d !== s.r.opened) ?? 1;
+    for (const id of ['p1', 'p2', 'p3']) s = swap(s, id, 0);
+    expect(s.phase.id).toBe('swap');
+    s = swap(s, 'p4', other);
+    expect(s.phase.id).toBe('open');
   });
 });

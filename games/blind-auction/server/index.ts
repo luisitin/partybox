@@ -16,6 +16,7 @@ import manifestJson from '../manifest.json' with { type: 'json' };
 import { decide } from './bot';
 import { drawBoxes } from './content';
 import { enterBet, reduceBet } from './phases/bet';
+import { closeSwap, enterSwap, isDoors, reduceSwap, swappers, swapsIn } from './phases/swap';
 import { boxSpeech, enterBox, reduceBox } from './phases/box';
 import { enterOpen, openSpeech, reduceOpen } from './phases/open';
 import { allReady, countDown, enterRules, reduceRules } from './phases/rules';
@@ -107,7 +108,12 @@ export function advance(state: State, now: number): State {
     case 'box':
       return enterBet(state, now);
     case 'bet':
-      return enterOpen(state, now);
+      // Doors: the host opens a goat door and the bettors stay or switch first.
+      return isDoors(state) && swappers(state).length > 0
+        ? enterSwap(state, now)
+        : enterOpen(state, now);
+    case 'swap':
+      return enterOpen(closeSwap(state), now);
     case 'open':
       return state.r.idx + 1 < state.boxes.length
         ? enterBox(state, now, state.r.idx + 1)
@@ -127,6 +133,7 @@ function onPlayer(state: State, event: Extract<GameEvent<Input>, { type: 'player
     return countDown(next, event.now);
   if (next.phase.id === 'bet' && allConnectedDone(next, Object.keys(next.r.bets)))
     return advance(next, event.now);
+  if (next.phase.id === 'swap' && swapsIn(next)) return advance(next, event.now);
   return next;
 }
 
@@ -148,6 +155,8 @@ function reduce(state: State, event: GameEvent<Input>): State {
       return reduceBox(state, event, advance);
     case 'bet':
       return reduceBet(state, event, advance);
+    case 'swap':
+      return reduceSwap(state, event, advance);
     case 'open':
       return reduceOpen(state, event, advance);
     default:

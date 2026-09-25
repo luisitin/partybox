@@ -11,7 +11,7 @@ import { BETS_LEAD_MS, BET_STEP_MS, OPEN_LINE_AT_MS } from '../server/timing';
 import type { BlindAuctionTvView } from '../server/views';
 import { COIN, iconOf, kindName, nameOf as optionName, payText, toneOf } from './copy';
 import type { Tone } from './copy';
-import { LiveStage } from './LiveStage';
+import { Doors, LiveStage } from './LiveStage';
 import { LotCard } from './LotCard';
 import { OptionBoard } from './Options';
 import { STRINGS } from './strings';
@@ -77,6 +77,26 @@ function BetPanel({ view }: { view: View }): JSX.Element | null {
   );
 }
 
+function SwapPanel({ view }: { view: View }): JSX.Element | null {
+  const L = useT(STRINGS);
+  const play = useSound();
+  useEffect(() => play('phase'), [play]);
+  if (!view.box) return null;
+  return (
+    <div className={styles.panel}>
+      <h1 className={styles.call}>{L('Stay or switch?')}</h1>
+      <p className={styles.flavour}>
+        {L('A goat behind door {n}! Keep your door, or switch to the other one.', {
+          n: (view.opened ?? 0) + 1,
+        })}
+      </p>
+      <p className={styles.count} aria-live="polite">
+        {L('{n} of {total} have chosen', { n: view.swapsIn, total: view.swappers })}
+      </p>
+    </div>
+  );
+}
+
 function OpenPanel({ view }: { view: View }): JSX.Element | null {
   const L = useT(STRINGS);
   const play = useSound();
@@ -115,7 +135,9 @@ function OpenPanel({ view }: { view: View }): JSX.Element | null {
               ? L('Bets are closed. And they’re off!')
               : view.run.kind === 'dice'
                 ? L('Bets are closed. Roll the dice!')
-                : L('Bets are closed. Spin the wheel!')
+                : view.run.kind === 'doors'
+                  ? L('Doors are final. Where is the car?')
+                  : L('Bets are closed. Spin the wheel!')
             : bets.length
               ? L('Bets are closed. What’s inside?')
               : L('Nobody bet. What’s inside?')}
@@ -177,7 +199,9 @@ export function TvTable({ view }: { view: View }): JSX.Element {
           <div
             className={`${styles.cardCol} ${inside && toneOf(inside.kind) === 'bad' ? styles.shake : ''}`}
           >
-            {phase === 'open' && view.run && box ? (
+            {box?.event === 'doors' && phase !== 'open' ? (
+              <Doors opened={phase === 'swap' ? view.opened : null} car={null} />
+            ) : phase === 'open' && view.run && box ? (
               <LiveStage run={view.run} options={box.options} bets={view.bets?.length ?? 0} />
             ) : (
               <LotCard
@@ -200,6 +224,7 @@ export function TvTable({ view }: { view: View }): JSX.Element {
           </div>
           {phase === 'box' ? <BoxPanel view={view} /> : null}
           {phase === 'bet' ? <BetPanel view={view} /> : null}
+          {phase === 'swap' ? <SwapPanel view={view} /> : null}
           {phase === 'open' ? <OpenPanel view={view} /> : null}
         </div>
       </Stage>

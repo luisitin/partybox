@@ -9,6 +9,7 @@ import type { BlindAuctionControllerView } from '../server/views';
 import { PhoneBet } from './PhoneBet';
 import { PhoneBox, PhoneRules } from './PhoneLot';
 import { PhoneResult } from './PhoneResult';
+import { PhoneSwap } from './PhoneSwap';
 import { STRINGS } from './strings';
 
 type Props = GameControllerProps<BlindAuctionControllerView, Input>;
@@ -32,6 +33,8 @@ export function Controller(props: Props): JSX.Element {
         // Keyed by box: a fresh picker and pad for every box.
         <PhoneBet key={view.box?.n ?? 0} {...props} />
       );
+    case 'swap':
+      return <PhoneSwap key={view.box?.n ?? 0} {...props} />;
     case 'open':
       return <PhoneResult view={view} />;
     default:

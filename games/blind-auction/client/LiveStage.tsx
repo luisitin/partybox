@@ -217,8 +217,56 @@ function Wheel({ run, options, bets }: Props): JSX.Element {
   );
 }
 
+/** Three doors: `opened` shows its goat (the host's door); `car` set = every door swings open
+ *  after `delay`, the car behind it. Used by `swap` (no car yet) and `open`. */
+export function Doors({
+  opened,
+  car,
+  delay = 0,
+}: {
+  opened: number | null;
+  car: number | null;
+  delay?: number;
+}): JSX.Element {
+  const L = useT(STRINGS);
+  const reduced = useReducedMotion();
+  const [all, setAll] = useState(reduced && car !== null);
+  useEffect(() => {
+    if (car === null || reduced) return;
+    const h = setTimeout(() => setAll(true), delay);
+    return () => clearTimeout(h);
+  }, [car, delay, reduced]);
+  return (
+    <div className={styles.doors}>
+      {[0, 1, 2].map((d) => {
+        const open = d === opened || all;
+        const prize = d === car ? '🚗' : '🐐';
+        return (
+          <div key={d} className={`${styles.doorCell} ${all && d === car ? styles.doorWin : ''}`}>
+            <span className={styles.behind} aria-hidden={!open}>
+              {open ? (d === opened || car !== null ? prize : '') : ''}
+            </span>
+            <span className={`${styles.door} ${open ? styles.doorOpen : ''}`} aria-hidden>
+              {d + 1}
+            </span>
+            <span className={styles.doorLabel}>{L('Door {n}', { n: d + 1 })}</span>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 export function LiveStage(props: Props): JSX.Element {
   if (props.run.kind === 'race') return <Race {...props} />;
   if (props.run.kind === 'dice') return <Dice {...props} />;
+  if (props.run.kind === 'doors')
+    return (
+      <Doors
+        opened={props.run.detail[0] ?? null}
+        car={props.run.outcome}
+        delay={betsMs(props.bets)}
+      />
+    );
   return <Wheel {...props} />;
 }
