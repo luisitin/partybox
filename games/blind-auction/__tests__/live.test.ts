@@ -354,3 +354,25 @@ describe('live events: keno', () => {
     expect(s.coins['p3']).toBe((before['p3'] ?? 0) - 10);
   });
 });
+
+describe('live events: every word the server writes has its Spanish', () => {
+  it('names, flavour lines and option labels of every event', async () => {
+    const { STRINGS } = await import('../client/strings');
+    const es = (STRINGS as { es: Record<string, string> }).es;
+    const missing: string[] = [];
+    for (const kind of LIVE_KINDS.filter((k) => k !== 'potato')) {
+      let rng = seedRng(3);
+      for (let i = 0; i < 6; i++) {
+        const [round, next] = drawEvent(kind, rng, 1);
+        rng = next;
+        for (const text of [
+          round.box.name,
+          round.box.flavour,
+          ...round.box.options.map((o) => o.label?.name ?? ''),
+        ])
+          if (text && !es[text]) missing.push(`${kind}: ${text}`);
+      }
+    }
+    expect([...new Set(missing)]).toEqual([]);
+  });
+});
