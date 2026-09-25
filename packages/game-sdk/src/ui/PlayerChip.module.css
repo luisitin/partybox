@@ -99,10 +99,13 @@
 }
 
 /* faces only (the TV strip past two rows, a claim): no empty name slot, so the chips close up */
-/* A bot's owner part ellipsizes; its "bot 2" tail stays (reviewer 90838c). */
+/* A bot's owner part ellipsizes; its "bot 2" tail stays (reviewer 90838c). The person cap (9 em)
+   plus room for the tail, so "Maximiliano's bot 2" is whole where the row has room and only the
+   owner part gives way where it hasn't (reviewer 277967). */
 .split {
   display: inline-flex;
   min-width: 0;
+  max-width: 13em;
 }
 .nameHead {
   min-width: 0;
