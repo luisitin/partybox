@@ -7,6 +7,7 @@ import type { PlayerPublic, RoomSnapshot, ViewEnvelope } from '@partybox/shared'
 import { Avatar, PrimaryButton, getLang } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import { serverText } from '../server-text';
+import { PresenceSwitch } from './PresenceSwitch';
 import { setTipsSeen } from './vipTips';
 import { useServerInfo } from '../net/info';
 import type { Controller } from '../net/controller';
@@ -219,6 +220,7 @@ export function VipMenu({
               disabled={playing}
               onChange={(on) => controller.vip({ action: 'setPhoneOnly', on })}
             />
+            <PresenceSwitch room={room} controller={controller} disabled={playing} />
             {playing ? <p className={styles.switchNote}>{t.roomRow.betweenGames}</p> : null}
             {info?.lastRecap ? (
               <a

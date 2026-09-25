@@ -7,69 +7,23 @@ import type {
   KickedPayload,
   PushedView,
   RoomPush,
-  RoomSnapshot,
   ToastPayload,
   ViewPush,
-  VipAction,
   WelcomePayload,
-  BotAction,
-  JoinPayload,
 } from '@partybox/shared';
 import { createLinkWatch } from './link-watch';
 import { dropRoomFromUrl } from './leave-url';
+import { storeCanSeeTv, storedCanSeeTv } from '../presence';
 import { createRestartWatch } from './stale';
 import { createSeatChannel } from './seat-channel';
 import { loadIdentity, loadSession, saveIdentity, saveSession } from './session-store';
-import type { Identity, Session } from './session-store';
+import type { Session } from './session-store';
 import { createStore, toastOnce } from './store';
-import type { Store, Toast } from './store';
 import { followHouseRoom, replaceRoomParam } from './room-param';
 import { openSocket } from './socket';
+import type { Controller, ControllerState } from './controller-types';
 
-export type Connection = 'connecting' | 'connected' | 'reconnecting';
-
-export interface ControllerState {
-  connection: Connection;
-  /** True once a welcome arrived for this session. */
-  joined: boolean;
-  /** Auto-resume in progress (token from localStorage). */
-  resuming: boolean;
-  playerId: string | null;
-  room: RoomSnapshot | null;
-  view: PushedView<ControllerView> | null;
-  rev: number;
-  offsetMs: number;
-  error: ErrorPayload | null;
-  toasts: Toast[];
-  kicked: string | null;
-  /** I-755 A: this phone has PartyBox open in another tab, which holds the seat. */
-  otherTab: boolean;
-  /** The stored session was rejected (server restarted, room gone): the join form explains why. */
-  restarted: boolean;
-}
-
-export interface Controller {
-  store: Store<ControllerState>;
-  /** `takeOver` (I-741 C): "That's me — take my seat". */
-  join(input: Omit<JoinPayload, 'token'>): void;
-  sendInput(input: unknown): void;
-  vip(action: VipAction): void;
-  /** Add a bot you own, or remove one of yours (VIPs may remove any). */
-  bot(action: BotAction): void;
-  /** I-070 A: nudge the VIP (lobby only; the server rate-limits it). */
-  nudge(): void;
-  /** I-650: vote for the next game (null takes the vote back). */
-  vote(gameId: string | null): void;
-  leave(): void;
-  /** I-755 A: take the seat back from the other tab. */
-  playHere(): void;
-  dismissError(): void;
-  dismissToast(id: number): void;
-  session(): Session | null;
-  /** Last name + avatar this phone joined with (survives the session). */
-  identity(): Identity | null;
-}
-
+export type { Connection, Controller, ControllerState } from './controller-types';
 export type { Identity } from './session-store';
 
 export function createController(url?: string): Controller {
@@ -141,6 +95,7 @@ export function createController(url?: string): Controller {
       token,
       ...(takeOver ? { takeOver: true } : {}),
       ...(session.photo ? { photo: session.photo } : {}),
+      ...(storedCanSeeTv() !== undefined ? { canSeeTv: storedCanSeeTv() } : {}),
     });
   };
 
@@ -326,6 +281,10 @@ export function createController(url?: string): Controller {
     },
     vote(gameId) {
       socket.emit('vote', { gameId });
+    },
+    setCanSeeTv(on) {
+      storeCanSeeTv(on);
+      socket.emit('presence', { canSeeTv: on });
     },
     leave() {
       socket.emit('leave', {});

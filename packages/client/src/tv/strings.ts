@@ -33,6 +33,13 @@ export const STRINGS: Strings = {
     // I-668 C: the picker's switch chips
     Recap: 'Resumen',
     'Phone music': 'Música en teléfonos',
+    // ADR-047: where everyone is (a chip that cycles), and the question when someone is away.
+    'All in one room': 'Todos en la misma sala',
+    'Some remote, on a call': 'Algunos lejos, en una llamada',
+    'Some remote, no call': 'Algunos lejos, sin llamada',
+    "{name} can't see the TV. On a call?": '{name} no ve la TV. ¿Estáis en una llamada?',
+    'On a call': 'En una llamada',
+    'No call': 'Sin llamada',
     '{n} players': '{n} jugadores',
     // Part 00 §1.4: the spotlight names whose About the TV mirrors.
     '{name} is reading about': '{name} está leyendo sobre',

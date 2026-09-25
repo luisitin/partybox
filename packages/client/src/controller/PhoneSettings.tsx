@@ -24,6 +24,7 @@ import {
   setPhoneMusicVolume,
 } from '../phone-music';
 import pickerStyles from '../ThemePicker.module.css';
+import { SeeTvToggle } from './SeeTvToggle';
 
 const SUBMIT_BUZZ = 20;
 
@@ -36,9 +37,12 @@ export interface PhoneSettingsProps {
    *  both are reachable mid-game and not only from the lobby. */
   room?: { code: string } | null;
   onLeave?: () => void;
+  /** ADR-047: this phone's "I can see the TV" once it is in a room. */
+  seeTv?: { on: boolean; set: (on: boolean) => void };
 }
 
-export function PhoneSettings({ audio, what, room, onLeave }: PhoneSettingsProps): JSX.Element {
+export function PhoneSettings(props: PhoneSettingsProps): JSX.Element {
+  const { audio, what, room, onLeave, seeTv } = props;
   const lang = useLang();
   const [leaving, setLeaving] = useState(false);
   useEffect(() => {
@@ -213,6 +217,7 @@ export function PhoneSettings({ audio, what, room, onLeave }: PhoneSettingsProps
       ) : null}
       {/* S-003 A: each game's own phone settings, a closed row per game (its own download). */}
       <GameSettingsRows />
+      {seeTv ? <SeeTvToggle on={seeTv.on} set={seeTv.set} /> : null}
       {/* S-005 C: the TV's sounds on this phone (a phone-only room). */}
       <button
         type="button"

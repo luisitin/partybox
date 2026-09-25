@@ -20,8 +20,9 @@ primitives, and hosts the contract tests that run against every game.
 - `src/turns.ts` — `teamsFromSeed` (▲ Sun / ● Moon, even sizes, bots spread), `majorityPick` (seeded tie-break, `null` with no votes), `rotation` (whose turn, skipping who left). Pure, never throw.
 - `src/scoring.ts` — `rank` (shared ranks on ties), `buildResults`, `speedPoints`, `addScores`. `src/views.ts` — `envelope`, `controllerEnvelope`, `viewPlayers`.
 - `src/controller/` — `Screen` (safe-area frame + sticky footer), `PrimaryButton`, `WaitingScreen`, `TextAnswer`, `ChoiceGrid`, `VoteList`.
-  `usePhoneOnly()` (S-005) is true in a "phone only" room (the shell provides it); those controls use it so none says
-  "look at the TV" when there is no TV. A game's own copy should do the same (or read `view.phoneOnly`).
+  `usePhoneOnly()` is true when this phone is the stage — a "phone only" room (S-005) or a player who can't see the TV
+  (ADR-047); `useCanSeeTv()` is its opposite for copy. Those controls use it so none says "look at the TV" to someone
+  who can't; a game's own copy should do the same (or read `view.phoneOnly`, stamped per phone).
 - `src/tv/` — `Stage` (overscan frame), `BigText`, `Timer` (last-5-s urgency + `onTick`), `PlayerChips`, `Scoreboard`, `Reveal`.
 - `src/contract-tests/` — the suite every game must pass: `contract.test.ts` (rules), `play.ts` (headless runner), `fuzz.ts`, `hash.ts`, `load.ts` (docs/TESTING.md).
 

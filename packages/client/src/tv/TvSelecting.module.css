@@ -276,6 +276,17 @@
   color: var(--pb-text);
 }
 
+/* ADR-047: someone can't see the TV while the room says together — the TV asks too (the host's
+   screen, ADR-031), one line: the question and its two answers. */
+.switchAsk {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--pb-space-2);
+  font-weight: 700;
+  color: var(--pb-accent-2);
+}
+
 /* Part 00 §1.6: back to the grid from the chosen game. */
 .allGames {
   align-self: flex-start;

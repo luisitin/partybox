@@ -4,8 +4,10 @@ import type { GameManifest, VipAction } from '@partybox/shared';
 import { removePlayer } from './players';
 import { abortGame, applyGameEvent, startGame } from './runner';
 import { applyHighlight } from './picker';
+import { setPresenceMode } from './presence';
 import { coerceSettings, defaultSettings } from './settings';
-import type { ApplyResult, Effect, EngineDeps, RoomState } from './types';
+import { switchToast } from './switch-toast';
+import type { ApplyResult, EngineDeps, RoomState } from './types';
 
 function reject(
   room: RoomState,
@@ -282,6 +284,12 @@ export function applyVip(
         ],
       };
     }
+    case 'setPresenceMode': {
+      const done = setPresenceMode(room, action.mode);
+      return done === 'mid-game'
+        ? reject(room, playerId, 'cannot_start', 'Change that before the next game.')
+        : done;
+    }
     case 'highlight':
       return applyHighlight(room, action.gameId, playerId, deps);
     case 'toLobby': {
@@ -294,6 +302,3 @@ export function applyVip(
 }
 
 /** I-642 C: a room switch changed — everyone is told what it means. */
-function switchToast(text: string): Effect {
-  return { type: 'toast', to: 'all', kind: 'info', text };
-}

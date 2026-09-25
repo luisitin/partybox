@@ -245,6 +245,15 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Added
 
+- **Friends who can't see the TV** (game pack F4, ADR-047): the VIP's ★ menu asks "Where is everyone?" —
+  all in one room, some remote on a call, some remote with no call (between games; the TV has the same
+  chip). Each phone has "I can see the TV" in its 🎨 sheet; until someone answers, the host guesses from
+  where the phone connects (home Wi-Fi sees the TV; a Tailscale or tunnel phone does not). A phone that
+  can't see the TV gets the TV's moments on its own screen, the reader, the TV's cues and the music, in
+  every game that already worked phone-only. The VIP is asked "Maya can't see the TV. Are you on a
+  call?" and choosing a game that needs talking or the same room says so first. Games learn the room's
+  presence when they start.
+
 - **A new game picker** (game pack F3, ADR-051): "Pick a game" opens a list with nothing chosen —
   a count of who is here, filter chips that only appear when they narrow the list, and one compact
   row per game (icon, NEW, tagline, players · minutes, why it doesn't fit tonight). Games that fit

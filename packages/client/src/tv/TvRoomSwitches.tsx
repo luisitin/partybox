@@ -1,9 +1,12 @@
 // I-668 C: the room's switches as one line of toggle chips on the TV's picker (the TV is the host's
-// screen, ADR-031): the recap and phone music.
+// screen, ADR-031): the recap, phone music and — ADR-047 — where everyone is (a chip that turns to
+// the next answer), with the question when someone can't see the TV while the room says together.
 import type { JSX } from 'react';
-import type { RoomSnapshot } from '@partybox/shared';
+import { PRESENCE_MODES } from '@partybox/shared';
+import type { PresenceMode, RoomSnapshot } from '@partybox/shared';
 import { useT } from '@partybox/game-sdk/ui';
 import type { TvClient } from '../net/tv';
+import { awayToAsk } from '../presence';
 import { STRINGS } from './strings';
 import styles from './TvSelecting.module.css';
 
@@ -15,6 +18,11 @@ export function TvRoomSwitches({
   client: TvClient;
 }): JSX.Element {
   const L = useT(STRINGS);
+  const mode: PresenceMode = room.presenceMode ?? 'together';
+  const next =
+    PRESENCE_MODES[(PRESENCE_MODES.indexOf(mode) + 1) % PRESENCE_MODES.length] ?? 'together';
+  const away = awayToAsk(room);
+  const set = (m: PresenceMode): void => client.act({ action: 'setPresenceMode', mode: m });
   return (
     <div className={styles.switches}>
       <button
@@ -33,6 +41,35 @@ export function TvRoomSwitches({
       >
         🎵 {L('Phone music')} {room.musicOnPhones ? '✓' : ''}
       </button>
+      <button
+        type="button"
+        className={`${styles.switchChip} ${mode === 'together' ? '' : styles.switchOn}`}
+        onClick={() => set(next)}
+      >
+        {MODE_ICON[mode]}{' '}
+        {mode === 'together'
+          ? L('All in one room')
+          : mode === 'remote-voice'
+            ? L('Some remote, on a call')
+            : L('Some remote, no call')}
+      </button>
+      {away.length > 0 ? (
+        <span className={styles.switchAsk} role="status">
+          {L("{name} can't see the TV. On a call?", { name: away[0]?.name ?? '' })}
+          <button type="button" className={styles.switchChip} onClick={() => set('remote-voice')}>
+            🎧 {L('On a call')}
+          </button>
+          <button type="button" className={styles.switchChip} onClick={() => set('remote-text')}>
+            💬 {L('No call')}
+          </button>
+        </span>
+      ) : null}
     </div>
   );
 }
+
+const MODE_ICON: Record<PresenceMode, string> = {
+  together: '📍',
+  'remote-voice': '🎧',
+  'remote-text': '💬',
+};

@@ -149,6 +149,7 @@ export function Preview(): JSX.Element {
     playHere: () => undefined,
     dismissError: () => undefined,
     dismissToast: () => undefined,
+    setCanSeeTv: () => undefined,
     session: () => null,
     identity: () => null,
   };

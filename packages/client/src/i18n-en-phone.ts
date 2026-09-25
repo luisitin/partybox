@@ -28,6 +28,9 @@ export const enPhone = {
     leaveConfirm: 'Leave the room?',
     tapAgain: 'tap again',
     tvSounds: 'TV sounds on this phone',
+    // ADR-047: where this phone's player is.
+    seeTv: 'I can see the TV',
+    seeTvOff: 'The TV’s moments and the reader come to this phone.',
   },
   /** S-004 B: what the phone's music is on right now. */
   music: {

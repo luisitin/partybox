@@ -3,7 +3,7 @@
 // `packs` and the optional __tests__/contract.config.ts.
 import { describe, expect, it } from 'vitest';
 import type { GameStateBase } from '@partybox/shared';
-import { STATE_SIZE_LIMIT_BYTES, gameManifestSchema } from '@partybox/shared';
+import { PRESENCE_MODES, STATE_SIZE_LIMIT_BYTES, gameManifestSchema } from '@partybox/shared';
 import { fuzzOnce } from './fuzz';
 import { hashState, jsonSize } from './hash';
 import { loadAllGames } from './load';
@@ -234,6 +234,27 @@ for (const loaded of games) {
       const b = replay(game, run.init, run.events).map(hashState);
       expect(a).toEqual(b);
       expect(a.at(-1)).toBe(hashState(run.finalState));
+    });
+
+    it('plays through in every presence (ADR-047): three modes × phone only, one seat remote', () => {
+      // Presence is a seeded input: a game may switch features on it, never stall or diverge.
+      for (const mode of PRESENCE_MODES)
+        for (const phoneOnly of [false, true]) {
+          const options = {
+            players: playerCounts(loaded).at(-1) as number,
+            seed: 31,
+            strategy: 'random' as const,
+            maxSimMs: budgetMs,
+            presence: { mode, phoneOnly },
+            remote: mode === 'together' ? 0 : 1,
+          };
+          const run = playGame(game, options);
+          const label = `${mode}${phoneOnly ? ' + phone only' : ''}`;
+          expect(run.stuck, `stuck in ${label}`).toBe(false);
+          expect(run.init.presence, label).toEqual({ mode, phoneOnly });
+          const again = replay(game, run.init, run.events).map(hashState);
+          expect(again.at(-1), `not deterministic in ${label}`).toBe(hashState(run.finalState));
+        }
     });
 
     it('ignores stale timers and survives fuzzed events mid-game', () => {
