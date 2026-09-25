@@ -111,6 +111,12 @@ stale timers, VIP actions in any order.
 On `vip.pause` the shared helper stores `phase.paused = { at: now }`; on `resume` it shifts `deadline` by
 the paused duration and clears `paused`. While paused, ignore inputs and timers (the helper does this for you).
 
+### Enough time to read [cc45f4]
+
+The owner's pacing rule: no screen with words moves on before a slow reader could read it. Size such a
+deadline with `readingMs(words, { ui, lang, largeText })` from `@partybox/game-sdk` (1.5 s + 333 ms a word;
+x1.3 for the UI's own words, x1.1 Spanish, x1.2 large text) and `wordCount(text)`; don't keep a per-game copy.
+
 ### The start is the shell's (ADR-053)
 
 `init` runs after the shell's start stage: the room has read the manifest's three `howToPlay` steps,
