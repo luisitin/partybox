@@ -1,13 +1,24 @@
 {
   "id": "spy-grid",
   "name": "Spy Grid",
+  "icon": "🗂️",
   "tagline": "One-word clues. Find your agents. Avoid the trap.",
   "description": "Two teams, one grid of 25 words. Only the spymasters know which words are their agents. Give a one-word clue and a number, point together to flip the cards, and never touch the assassin. With 2–3 players it's a co-op mission.",
+  "howToPlay": [
+    "Two teams, 25 words. Only each spymaster knows which words are their agents.",
+    "Your spymaster gives a one-word clue and a number. Point together at the words that fit.",
+    "Find all your agents first. Touch the assassin and your team loses on the spot."
+  ],
   "version": "0.1.0",
   "minPlayers": 2,
   "maxPlayers": 16,
   "estimatedMinutes": 18,
   "tags": ["teams", "words", "strategy"],
+  "presence": {
+    "needs": "anywhere"
+  },
+  "addedOn": "2026-09-24",
+  "phoneSettings": true,
   "settings": [
     {
       "key": "mode",
@@ -16,9 +27,18 @@
       "type": "select",
       "default": "auto",
       "options": [
-        { "value": "auto", "label": "Auto" },
-        { "value": "teams", "label": "Teams" },
-        { "value": "coop", "label": "Co-op" }
+        {
+          "value": "auto",
+          "label": "Auto"
+        },
+        {
+          "value": "teams",
+          "label": "Teams"
+        },
+        {
+          "value": "coop",
+          "label": "Co-op"
+        }
       ]
     },
     {
@@ -28,8 +48,14 @@
       "type": "select",
       "default": "choose",
       "options": [
-        { "value": "choose", "label": "Players choose" },
-        { "value": "random", "label": "Random" }
+        {
+          "value": "choose",
+          "label": "Players choose"
+        },
+        {
+          "value": "random",
+          "label": "Random"
+        }
       ]
     },
     {
@@ -89,8 +115,14 @@
       "type": "select",
       "default": "1",
       "options": [
-        { "value": "1", "label": "One" },
-        { "value": "2", "label": "Two" }
+        {
+          "value": "1",
+          "label": "One"
+        },
+        {
+          "value": "2",
+          "label": "Two"
+        }
       ]
     },
     {
@@ -114,12 +146,30 @@
       "type": "select",
       "default": "fable",
       "options": [
-        { "value": "none", "label": "No reader" },
-        { "value": "george", "label": "Old British Man" },
-        { "value": "fable", "label": "Young British Man" },
-        { "value": "jessica", "label": "American Woman" },
-        { "value": "sky", "label": "Soft-Spoken Woman" },
-        { "value": "original", "label": "Original" }
+        {
+          "value": "none",
+          "label": "No reader"
+        },
+        {
+          "value": "george",
+          "label": "Old British Man"
+        },
+        {
+          "value": "fable",
+          "label": "Young British Man"
+        },
+        {
+          "value": "jessica",
+          "label": "American Woman"
+        },
+        {
+          "value": "sky",
+          "label": "Soft-Spoken Woman"
+        },
+        {
+          "value": "original",
+          "label": "Original"
+        }
       ]
     }
   ],

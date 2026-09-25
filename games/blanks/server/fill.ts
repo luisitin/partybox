@@ -1,6 +1,6 @@
 // I-752 B: the card-filling text (a black card with its answers in the blanks), with no deck
 // import, so the phones can render it without downloading every card of every deck.
-import { BLANK, blanksIn } from '../content/schema';
+import { BLANK, blanksIn } from '../content/blank';
 
 export interface Segment {
   kind: 'text' | 'fill';

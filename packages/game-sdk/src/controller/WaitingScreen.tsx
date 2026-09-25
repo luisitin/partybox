@@ -7,14 +7,15 @@ import styles from './WaitingScreen.module.css';
 export interface WaitingScreenProps {
   title: string;
   hint?: ReactNode;
-  /** 'done' shows a big ✓ (you submitted), 'watch' an eye (spectator), 'wait' dots. */
-  mood?: 'done' | 'watch' | 'wait';
+  /** 'done' shows a big ✓ (you submitted), 'watch' an eye (spectator), 'wait' dots, 'oops' a
+   *  still ! (something needs a tap: a game that did not download). */
+  mood?: 'done' | 'watch' | 'wait' | 'oops';
   children?: ReactNode;
   /** Forwarded to the Screen frame (e.g. `pb-enter` so the screen rises in as a new card). */
   className?: string;
 }
 
-const GLYPH = { done: '✓', watch: '◎', wait: '…' } as const;
+const GLYPH = { done: '✓', watch: '◎', wait: '…', oops: '!' } as const;
 
 export function WaitingScreen({
   title,

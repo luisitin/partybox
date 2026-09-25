@@ -9,7 +9,7 @@ import type { Translator } from '@partybox/game-sdk/ui';
 import type { Why } from '../server/types';
 import type { Props } from './PhoneCards';
 import { PhoneStageBody } from './PhoneStage';
-import { byId, pointsOf } from './shared';
+import { byId, pointsOf } from './helpers';
 import { STRINGS } from './strings';
 import styles from './phone.module.css';
 

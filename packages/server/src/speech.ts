@@ -13,8 +13,10 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { FastifyInstance } from 'fastify';
 import type { EngineDeps } from '@partybox/engine';
+import { SPEECH_KEY_PATTERN } from '@partybox/shared';
 import type { SpeechRequest } from '@partybox/shared';
 import type { Host } from './host';
+import { CACHE_HASHED } from './static-cache';
 
 /** Kokoro voice ids with the speed and accent the owner heard in the samples. */
 const KOKORO: Readonly<Record<string, { voice: string; speed: number; lang: string }>> = {
@@ -23,7 +25,9 @@ const KOKORO: Readonly<Record<string, { voice: string; speed: number; lang: stri
   jessica: { voice: 'af_jessica', speed: 1.1, lang: 'en-us' },
   sky: { voice: 'af_sky', speed: 1.1, lang: 'en-us' },
 };
-const KEY = /^[a-z0-9]{6,40}$/;
+// Hyphens allowed, so `<gameId>-<hash>` keys of hyphenated ids (broken-pencil) are made and served
+// (audit #18); no dot or slash, so a key never names a path outside the cache.
+const KEY = SPEECH_KEY_PATTERN;
 const HERE = dirname(fileURLToPath(import.meta.url));
 const SIDECAR = resolve(HERE, '..', 'speech', 'kokoro_sidecar.py');
 
@@ -125,7 +129,8 @@ export function createSpeechService(cacheDir = join(tmpdir(), 'partybox-speech')
 
   const zira = (req: SpeechRequest): void => {
     if (process.platform !== 'win32') return finish(req.key, -1);
-    const text = req.parts.map((p) => ('ipa' in p ? (p.text ?? '') : p.text)).join(' ');
+    // Every part carries its words, phoneme parts too (audit #17): Zira says them.
+    const text = req.parts.map((p) => p.text).join(' ');
     const ssml = `<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="en-US"><prosody rate="+15%" pitch="+10%">${xml(text)}</prosody></speak>`;
     const script =
       "Add-Type -AssemblyName System.Speech; $s = New-Object System.Speech.Synthesis.SpeechSynthesizer; try { $s.SelectVoice('Microsoft Zira Desktop') } catch {}; $s.SetOutputToWaveFile($env:PB_OUT); $s.SpeakSsml($env:PB_SSML); $s.Dispose()";
@@ -218,10 +223,9 @@ export function attachSpeech(
     const { file } = req.params as { file: string };
     const path = service.file(file.replace(/\.wav$/, ''));
     if (!path) return reply.code(404).send({ error: 'not found' });
-    return reply
-      .type('audio/wav')
-      .header('cache-control', 'max-age=86400')
-      .send(readFileSync(path));
+    // A key hashes the engine version, the voice and the parts (speechKey, ADR-045 addendum): the
+    // audio behind it never changes, so a phone or TV may keep it for good.
+    return reply.type('audio/wav').header('cache-control', CACHE_HASHED).send(readFileSync(path));
   });
   return () => {
     unsubscribe();

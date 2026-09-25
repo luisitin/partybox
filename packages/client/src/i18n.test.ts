@@ -5,9 +5,14 @@ import { setLang } from '@partybox/game-sdk/ui';
 import { t, tEn, textsFor } from './i18n';
 
 /** Same in both languages on purpose: names, symbols, units. */
-const SAME = new Set(['PartyBox', 'PB', 'VIP', 'Bot', 'OK', 'robot']);
-/** Units read the same in Spanish ("~5 min", "12 s"). */
-const SAME_PATHS = new Set(['t.selecting.minutes', 't.connection.seconds']);
+const SAME = new Set(['PartyBox', 'PB', 'VIP', 'Bot', 'OK', 'robot', 'Bots']);
+/** Units and symbols read the same in Spanish ("~5 min", "12 s", "👥 3–8", "⏱ 10 min"). */
+const SAME_PATHS = new Set([
+  't.selecting.minutes',
+  't.connection.seconds',
+  't.picker.players',
+  't.picker.minutes',
+]);
 
 type Leaf = { path: string; en: string; es: string };
 

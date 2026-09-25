@@ -1,19 +1,10 @@
 // The theme sheet's footer on a phone: this phone's own sound and vibration toggles (R-048).
 // Turning one on plays/buzzes the `submit` pattern so the player hears or feels what they enabled.
-import { Suspense, useEffect, useState, useSyncExternalStore } from 'react';
-import type { ComponentType, LazyExoticComponent } from 'react';
-import { clientGames } from '../games.generated';
+import { useEffect, useState, useSyncExternalStore } from 'react';
+import { GameSettingsRows } from './GameSettingsRows';
 import { JoinLangs } from './JoinLangs';
 import { ShareButton } from './ShareSheet';
 
-/** The games' display names for the settings headings (the manifest names, by id). */
-const GAME_NAMES: Record<string, string> = {
-  bingo: 'Bingo',
-  blanks: 'Blanks',
-  wisecrack: 'Wisecrack',
-  'lightning-round': 'Lightning Round',
-  'broken-pencil': 'Broken Pencil',
-};
 import type { JSX } from 'react';
 import {
   buzz,
@@ -220,20 +211,8 @@ export function PhoneSettings({ audio, what, room, onLeave }: PhoneSettingsProps
           ) : null}
         </section>
       ) : null}
-      {/* S-003 A: each installed game's own phone settings, under its name. */}
-      {Object.entries(clientGames)
-        .filter(([, m]) => m.PhoneSettings)
-        .map(([id, m]) => {
-          const Panel = m.PhoneSettings as LazyExoticComponent<ComponentType>;
-          return (
-            <section key={id} className={pickerStyles.gameSection}>
-              <h4 className={pickerStyles.gameTitle}>{GAME_NAMES[id] ?? id}</h4>
-              <Suspense fallback={null}>
-                <Panel />
-              </Suspense>
-            </section>
-          );
-        })}
+      {/* S-003 A: each game's own phone settings, a closed row per game (its own download). */}
+      <GameSettingsRows />
       {/* S-005 C: the TV's sounds on this phone (a phone-only room). */}
       <button
         type="button"
