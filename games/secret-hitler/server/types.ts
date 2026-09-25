@@ -183,6 +183,12 @@ export const COUNTDOWN_MS = 3_600;
  * never taps still gets its count after this long (hidden: nobody sees a clock at seating).
  */
 export const SEATING_SAFETY_MS = 180_000;
+/**
+ * Once a person has tapped, the net re-arms instead of starting, until seating has lasted this
+ * long: no slow reader is rushed, and a phone left connected on a table still can't hang the game
+ * (the sim's mixed strategy seats idle players and needs every game to end).
+ */
+export const SEATING_PATIENCE_MS = 600_000;
 /** D7: a dropped seat is exiled after the brief's hold (game-side, the owner's call 2026-09-24). */
 export const EXILE_MS = 120_000;
 

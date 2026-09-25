@@ -2,12 +2,14 @@
 // owner's pacing rule (2026-09-24) replaces D1's 30 s here: nothing starts until every connected
 // seat is ready (bots are ready from the start; a dropped phone doesn't block), then a breath and
 // 3 · 2 · 1 (`startAt`, the phase's deadline), then round 1. The VIP's Start now (a skip) starts
-// the count at once. A connected phone that never taps gets SEATING_SAFETY_MS (3 min, no clock
-// shown), then the count starts anyway: the contract suite needs idle tables to end.
+// the count at once. The hidden SEATING_SAFETY_MS net exists for idle tables (the contract suite's,
+// where nobody taps): when it fires and a person has tapped, it re-arms and keeps waiting, so a
+// slow reader is never started on (hub review, 2026-09-25), up to SEATING_PATIENCE_MS in all (the
+// sim's mixed tables keep an idle phone connected and must still end).
 import { hasPlayer, isTimerFor } from '@partybox/game-sdk';
 import type { GameEvent } from '@partybox/game-sdk';
 import { go } from '../phase';
-import { COUNTDOWN_MS, SEATING_SAFETY_MS } from '../types';
+import { COUNTDOWN_MS, SEATING_PATIENCE_MS, SEATING_SAFETY_MS } from '../types';
 import type { Input, State, Transition } from '../types';
 
 export function enterSeating(state: State, now: number): State {
@@ -32,8 +34,13 @@ export function checkReady(state: State, now: number): State {
 }
 
 export function reduceSeating(state: State, event: GameEvent<Input>, next: Transition): State {
-  if (isTimerFor(state, event))
-    return state.startAt !== null ? next(state, event.now) : startCountdown(state, event.now);
+  if (isTimerFor(state, event)) {
+    if (state.startAt !== null) return next(state, event.now);
+    const someoneTapped = state.ready.some((id) => state.players[id]?.bot !== true);
+    const waited = event.now - state.phase.startedAt;
+    if (!someoneTapped || waited >= SEATING_PATIENCE_MS) return startCountdown(state, event.now);
+    return { ...state, phase: { ...state.phase, deadline: event.now + SEATING_SAFETY_MS } };
+  }
   if (event.type !== 'input' || event.input.type !== 'ready') return state;
   const id = event.playerId;
   if (!hasPlayer(state, id) || !state.alive.includes(id) || state.ready.includes(id)) return state;

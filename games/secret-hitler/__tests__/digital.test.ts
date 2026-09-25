@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { game } from '../server/index';
 import { stepMs } from '../server/rules';
 import { controllerView, tvView } from '../server/views';
-import { COUNTDOWN_MS, SEATING_SAFETY_MS } from '../server/types';
+import { COUNTDOWN_MS, SEATING_PATIENCE_MS, SEATING_SAFETY_MS } from '../server/types';
 import type { Party } from '../server/types';
 import {
   T0,
@@ -38,10 +38,34 @@ describe('D1 · deadlines and timeouts', () => {
     expect(timeout(s).phase.id).toBe('nominate');
   });
 
-  it('D1 seating: a phone that never taps gets 3 minutes, then the count starts anyway', () => {
+  it('D1 seating: the hidden net starts only an idle table (nobody tapped)', () => {
     const s = timeout(rig(5));
     expect(s.phase.id).toBe('seating');
     expect(s.startAt).toBe(s.phase.deadline);
+    expect(timeout(s).phase.id).toBe('nominate');
+  });
+
+  it('D1 seating: with 4 of 5 ready, the net re-arms and the table keeps waiting', () => {
+    let s = rig(5);
+    for (const id of ['p1', 'p2', 'p3', 'p4']) s = send(s, id, { type: 'ready' });
+    const first = s.phase.deadline ?? 0;
+    s = timeout(s);
+    expect(s.phase.id).toBe('seating');
+    expect(s.startAt).toBeNull();
+    expect(s.phase.deadline).toBe(first + SEATING_SAFETY_MS);
+    s = timeout(s);
+    expect(s.startAt).toBeNull();
+    s = send(s, 'p5', { type: 'ready' });
+    expect(s.startAt).not.toBeNull();
+  });
+
+  it('D1 seating: a phone left connected untapped still starts after 10 minutes', () => {
+    let s = rig(5);
+    for (const id of ['p1', 'p2', 'p3', 'p4']) s = send(s, id, { type: 'ready' });
+    while (s.startAt === null) s = timeout(s);
+    expect((s.startAt ?? 0) - COUNTDOWN_MS - s.phase.startedAt).toBeGreaterThanOrEqual(
+      SEATING_PATIENCE_MS,
+    );
     expect(timeout(s).phase.id).toBe('nominate');
   });
 
