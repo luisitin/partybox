@@ -15,9 +15,9 @@ export function readMs(words: number): number {
 export function wordCount(text: string): number {
   return text.split(/\s+/).filter((w) => w.length > 0).length;
 }
-/** The title card: the name, the tagline (9 words) and the topic pill (~5), in two beats:
- *  readMs(16) ≈ 8.9 s (was 4 s). */
-export const INTRO_MS = 9_000;
+/** The title card: a 2 s beat — the name and the topic pill (~5 words). ADR-053: the shell's start
+ *  stage has just shown the rules and counted 3 · 2 · 1, so the tagline is gone (was 9 s). */
+export const INTRO_MS = 2_000;
 /** A regular reveal: the race (2 s), then the standings with the VIP's Next (the owner's note on
  *  I-589). The standings stay up long enough to read every row (~3 words a player) and the answer
  *  — at least REVEAL_MS (was a flat 8 s: short at 8+ players; pacing rule 2026-09-25). */
