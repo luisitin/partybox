@@ -37,6 +37,8 @@
 
 .on::before {
   opacity: 1;
+  /* the team on the clock breathes, so a quiet guess step still moves */
+  animation: global(pb-breathe) 2.4s ease-in-out infinite;
 }
 
 .on {

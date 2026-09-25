@@ -418,6 +418,8 @@
   margin: 0;
   padding: 0;
   display: grid;
+  /* one column up to six players, two beyond (16 players = 8 a side) */
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: var(--pb-space-3);
   align-content: start;
   overflow: hidden;

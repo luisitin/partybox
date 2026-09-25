@@ -37,7 +37,8 @@ export const clientModule: GameClientModule = {
   // cross-fading read as still), each phase's own entrance is the motion.
   quickInto: BOARD,
   // The TeamBanners show the players; the board needs the room (SPEC §9.4 client hooks).
-  stripHidden: ['clue', 'guess', 'flip', 'turn-end', 'win'],
+  // `teams` too: its two columns list every player (16 chips in four rows pushed them off the stage).
+  stripHidden: ['teams', 'clue', 'guess', 'flip', 'turn-end', 'win'],
   stripActive: (view) => {
     const v = view as unknown as SpyTvView;
     if (v.phaseId === 'clue') {
