@@ -12,7 +12,7 @@ const CHOICE_INDICES = [0, 1, 2, 3] as const;
 export function sampleInput(state: State, playerId: string, rng: Rng): Input | null {
   if (!isPlayer(state, playerId)) return null;
   if (state.phase.id === 'question' && !Object.hasOwn(state.picks, playerId)) {
-    const question = questionById(state.questionIds[state.index] ?? '');
+    const question = questionById(state.questionIds[state.index] ?? '', state.contentLang);
     if (!question) return { type: 'pick', index: rng.pick(CHOICE_INDICES) };
     if (rng.chance(BOT_CORRECT_PROBABILITY)) return { type: 'pick', index: question.answerIndex };
     const wrong = CHOICE_INDICES.filter((i) => i !== question.answerIndex);

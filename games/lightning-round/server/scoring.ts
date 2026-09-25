@@ -49,7 +49,7 @@ export function wagerOptions(score: number): WagerOption[] {
  * correct = +wager, wrong/none = −wager (the only place a score can go down).
  */
 export function scoreCurrentQuestion(state: State): State {
-  const question = questionById(state.questionIds[state.index] ?? '');
+  const question = questionById(state.questionIds[state.index] ?? '', state.contentLang);
   const final = isFinalIndex(state, state.index);
   const scores = { ...state.scores };
   const streaks = { ...state.streaks };

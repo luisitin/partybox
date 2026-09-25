@@ -20,7 +20,7 @@ import type { Advance } from './intro';
 /** How long this reveal stays up: its beats, then a slow reader's time for the answer and every
  *  player's row (I-589's 8 s and the final's 5 s are now the floors' neighbours, not the rule). */
 export function revealMs(state: State): number {
-  const q = questionById(state.questionIds[state.index] ?? '');
+  const q = questionById(state.questionIds[state.index] ?? '', state.contentLang);
   const answer = q ? wordCount(q.choices[q.answerIndex] ?? '') : 3;
   const players = Object.keys(state.players).length;
   if (isFinalIndex(state, state.index))

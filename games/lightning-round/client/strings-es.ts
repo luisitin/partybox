@@ -1,9 +1,9 @@
 // Lightning Round's screens in Spanish, keyed by the English sentence each screen writes as
 // `L('…')`. `{name}` marks a placeholder and must survive the translation. The questions and
-// their choices are content and stay in the deck's language.
+// their choices are content, in the game's deck language (ADR-054: English or Spanish).
 
 export const SCREENS_ES: Readonly<Record<string, string>> = {
-  // The content-language marker (EnglishNote.tsx): the questions are English only.
+  // The content-language marker (EnglishNote.tsx): shown while the game's questions are English.
   'in English': 'en inglés',
   'First question coming up…': 'Ya viene la primera pregunta…',
   // Review 6c24ba (4): the TV's reveal hint says whose phone moves on (as Wisecrack's scores do).

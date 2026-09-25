@@ -6,7 +6,7 @@
 // topics the screens show) and the screens' own sentences.
 import type { Strings } from '@partybox/game-sdk/ui';
 import { SCREENS_ES } from './strings-es';
-import { PICKER_ES } from './strings-picker-es';
+import { PICKER_ES } from '../content/labels-es';
 
 export const STRINGS: Strings = {
   es: { ...PICKER_ES, ...SCREENS_ES },

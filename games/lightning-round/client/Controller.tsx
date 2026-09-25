@@ -117,7 +117,7 @@ export function Controller({
             <>
               {view.question.text}
               {/* [196a9e]: an ES phone is told the question and answers are English */}
-              <EnglishNote />
+              <EnglishNote contentLang={view.contentLang} />
               {/* I-789 B: after the tap the line keeps its space — locking in moves nothing;
                   I-790 C: the reveal band takes its place */}
               <Worth worth={view.worth} deadline={view.deadline} held={locked || revealed} />
@@ -125,7 +125,7 @@ export function Controller({
           ) : (
             <>
               {view.question.text}
-              <EnglishNote />
+              <EnglishNote contentLang={view.contentLang} />
             </>
           )
         }

@@ -67,6 +67,7 @@ function init(ctx: InitContext): State {
     settings.category,
     settings.questions,
     settings.subcategories,
+    ctx.contentLang === 'es' ? 'es' : undefined,
   );
   const base: State = {
     phase: { id: 'intro', startedAt: ctx.now, deadline: null },
@@ -83,6 +84,8 @@ function init(ctx: InitContext): State {
     wagers: {},
     lastDelta: {},
     stats,
+    // ADR-054: the deck's language, fixed for the game (absent = English).
+    ...(ctx.contentLang === 'es' ? { contentLang: 'es' as const } : {}),
   };
   return enterIntro(base, ctx.now);
 }

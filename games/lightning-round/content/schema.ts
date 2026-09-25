@@ -121,27 +121,28 @@ export function labelOf(id: string): string {
     .join(' ');
 }
 
-export const questionSchema = z
-  .object({
-    id: z.string().regex(/^[a-z]{3}-\d{3,4}$/),
-    category: z.enum(CATEGORIES),
-    subcategory: z.string().min(1),
-    difficulty: z.enum(DIFFICULTIES),
-    question: z.string().min(1).max(160),
-    // Exactly four distinct choices; distractors must not duplicate the answer (case-insensitive).
-    choices: z
-      .array(z.string().min(1).max(60))
-      .length(4)
-      .refine((c) => new Set(c.map((s) => s.trim().toLowerCase())).size === 4, {
-        message: 'choices must be four distinct strings',
-      }),
-    answerIndex: z.number().int().min(0).max(3),
-    /** Short attribution note — the pack contains only widely documented, non-time-sensitive facts. */
-    source: z.string().min(1).max(200),
-  })
-  .refine((q) => SUBCATEGORIES[q.category].includes(q.subcategory), {
-    message: 'subcategory must belong to the category',
-  });
+const questionFields = z.object({
+  id: z.string().regex(/^[a-z]{3}-\d{3,4}$/),
+  category: z.enum(CATEGORIES),
+  subcategory: z.string().min(1),
+  difficulty: z.enum(DIFFICULTIES),
+  question: z.string().min(1).max(160),
+  // Exactly four distinct choices; distractors must not duplicate the answer (case-insensitive).
+  choices: z
+    .array(z.string().min(1).max(60))
+    .length(4)
+    .refine((c) => new Set(c.map((s) => s.trim().toLowerCase())).size === 4, {
+      message: 'choices must be four distinct strings',
+    }),
+  answerIndex: z.number().int().min(0).max(3),
+  /** Short attribution note — the pack contains only widely documented, non-time-sensitive facts. */
+  source: z.string().min(1).max(200),
+});
+const inCategory = (q: { category: Category; subcategory: string }): boolean =>
+  SUBCATEGORIES[q.category].includes(q.subcategory);
+export const questionSchema = questionFields.refine(inCategory, {
+  message: 'subcategory must belong to the category',
+});
 export type Question = z.infer<typeof questionSchema>;
 
 export const questionsPackSchema = z
@@ -154,4 +155,27 @@ export const questionsPackSchema = z
   });
 export type QuestionsPack = z.infer<typeof questionsPackSchema>;
 
-export const packs = { questions: questionsPackSchema } as const;
+/** ADR-054: the Spanish deck. Same shape; an ES-only replacement carries its English item's id plus
+ *  "-es"; `dropped` lists the English ids with no Spanish version (questions about English itself).
+ *  The content test proves every English id is either present or dropped. */
+export const questionsEsPackSchema = z
+  .object({
+    lang: z.literal('es'),
+    dropped: z.array(z.string().regex(/^[a-z]{3}-\d{3,4}$/)),
+    items: z
+      .array(
+        questionFields
+          .extend({ id: z.string().regex(/^[a-z]{3}-\d{3,4}(-es)?$/) })
+          .refine(inCategory, { message: 'subcategory must belong to the category' }),
+      )
+      .min(MIN_QUESTIONS),
+  })
+  .refine((p) => new Set(p.items.map((q) => q.id)).size === p.items.length, {
+    message: 'question ids must be unique',
+  });
+export type QuestionsEsPack = z.infer<typeof questionsEsPackSchema>;
+
+export const packs = {
+  questions: questionsPackSchema,
+  'questions.es': questionsEsPackSchema,
+} as const;

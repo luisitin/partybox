@@ -3,7 +3,8 @@
 import { shuffle } from '@partybox/game-sdk';
 import type { RngState } from '@partybox/game-sdk';
 import type { Difficulty, Question } from '../content/schema';
-import { QUESTIONS, questionsIn } from './content';
+import { questionsIn, questionsOf } from './content';
+import type { ContentLang } from './content';
 
 export interface Draw {
   ids: string[];
@@ -17,23 +18,25 @@ const HARDEST_FIRST: readonly Difficulty[] = ['hard', 'medium', 'easy'];
 
 /**
  * The pool a game draws from: the ticked topics of the chosen category if they hold
- * `questions + 1` items, else the whole category if it does, else everything.
+ * `questions + 1` items, else the whole category if it does, else everything — all in the game's
+ * content language (ADR-054: the Spanish deck lacks the dropped English ids, so its counts are its own).
  */
 export function poolFor(
   category: string,
   subcategories: readonly string[],
   questions: number,
+  lang?: ContentLang,
 ): { pool: readonly Question[]; from: string; subs: string[] } {
   if (category !== 'all') {
     if (subcategories.length > 0) {
-      const topics = questionsIn(category, subcategories);
+      const topics = questionsIn(category, subcategories, lang);
       if (topics.length >= questions + 1)
         return { pool: topics, from: category, subs: [...subcategories] };
     }
-    const pool = questionsIn(category);
+    const pool = questionsIn(category, [], lang);
     if (pool.length >= questions + 1) return { pool, from: category, subs: [] };
   }
-  return { pool: QUESTIONS, from: 'all', subs: [] };
+  return { pool: questionsOf(lang), from: 'all', subs: [] };
 }
 
 export function drawQuestions(
@@ -41,8 +44,9 @@ export function drawQuestions(
   category: string,
   questions: number,
   subcategories: readonly string[] = [],
+  lang?: ContentLang,
 ): [Draw, RngState] {
-  const { pool, from, subs } = poolFor(category, subcategories, questions);
+  const { pool, from, subs } = poolFor(category, subcategories, questions, lang);
   const [shuffled, next] = shuffle(rng, pool);
   // Never more regular questions than leave one for the final (the pack guarantees >= 200 anyway).
   const regularCount = Math.max(0, Math.min(questions, shuffled.length - 1));

@@ -68,6 +68,8 @@ export interface State extends GameStateBase {
   drawnFrom: string;
   /** Topics actually drawn from (empty = the whole category; absent in older states). */
   drawnSubs?: string[];
+  /** ADR-054: the deck's language, fixed at init. Absent (older states, fixtures) = English. */
+  contentLang?: 'en' | 'es';
   /** Drawn question ids: `settings.questions` regular ones followed by the final question. */
   questionIds: string[];
   /** Index into `questionIds` of the question being asked or just revealed; -1 during `intro`. */

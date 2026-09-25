@@ -130,7 +130,7 @@ export function roundOf(state: State): RoundView | null {
 
 export function questionOf(state: State): QuestionView | null {
   if (state.index < 0) return null;
-  const q = questionById(state.questionIds[state.index] ?? '');
+  const q = questionById(state.questionIds[state.index] ?? '', state.contentLang);
   if (!q) return null;
   return {
     id: q.id,
@@ -212,7 +212,7 @@ export function tvView(state: State, gameId: string): LightningTvView {
     ...nextOf(state),
   };
   if (phase === 'reveal') {
-    const q = questionById(state.questionIds[state.index] ?? '');
+    const q = questionById(state.questionIds[state.index] ?? '', state.contentLang);
     if (q) {
       view.correctIndex = q.answerIndex;
       view.rows = revealRows(state, q.answerIndex, isFinalIndex(state, state.index));
@@ -263,7 +263,7 @@ export function controllerView(
       windowMs: state.settings.answerSeconds * 1000,
     };
   if (phase === 'reveal') {
-    const q = questionById(state.questionIds[state.index] ?? '');
+    const q = questionById(state.questionIds[state.index] ?? '', state.contentLang);
     if (q) {
       view.correctIndex = q.answerIndex;
       view.outcome = {
@@ -291,7 +291,7 @@ export function controllerView(
 export type Topic = Pick<QuestionView, 'categoryLabel' | 'subcategoryLabel' | 'difficulty'>;
 
 function finalTopicOf(state: State): Topic | null {
-  const q = questionById(state.questionIds[state.questionIds.length - 1] ?? '');
+  const q = questionById(state.questionIds[state.questionIds.length - 1] ?? '', state.contentLang);
   if (!q) return null;
   return {
     categoryLabel: categoryLabel(q.category),

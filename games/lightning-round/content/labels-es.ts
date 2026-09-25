@@ -1,3 +1,5 @@
+// Moved from client/strings-picker-es.ts (ADR-054): plain data shared by the phone strings and the
+// server's Spanish recap, so neither side imports the other.
 // Lightning Round's category and topic names in Spanish (the manifest's options), which the screens
 // show as the server sends them (content/schema.ts `labelOf`), and the tagline the TV's intro shows.
 // The manifest's full sentences live in manifest.es.json (ADR-049). Keyed by the English sentence.

@@ -4,19 +4,48 @@
 import type { GameRecap, RecapContext } from '@partybox/game-sdk';
 import { categoryLabel, drawLabel, questionById } from './content';
 import { labelOf } from '../content/schema';
+import { PICKER_ES } from '../content/labels-es';
 import type { State } from './types';
 import { isFinalIndex } from './types';
 
+/** ADR-054: a Spanish game's recap is written in Spanish (its questions are); English otherwise. */
+const RECAP_ES: Readonly<Record<string, string>> = {
+  '# Lightning Round — recap': '# Lightning Round — resumen',
+  Players: 'Jugadores',
+  Settings: 'Ajustes',
+  questions: 'preguntas',
+  's each': 's cada una',
+  '_The game was ended early._': '_La partida terminó antes de tiempo._',
+  'Final question': 'Pregunta final',
+  Question: 'Pregunta',
+  easy: 'fácil',
+  medium: 'media',
+  hard: 'difícil',
+  'no answer': 'sin respuesta',
+  bet: 'apostó',
+  in: 'en',
+  '## Final scores': '## Puntuaciones finales',
+  '## Awards': '## Premios',
+};
+
 export function recap(state: State, ctx: RecapContext<State>): GameRecap | null {
+  const es = state.contentLang === 'es';
+  const T = (s: string): string => (es ? (RECAP_ES[s] ?? s) : s);
+  const label = (s: string): string => (es ? (PICKER_ES[s] ?? s) : s);
+  const drawn = (): string => {
+    const subs = state.drawnSubs ?? [];
+    const head = label(labelOf(state.drawnFrom));
+    return subs.length === 0 ? head : `${head} · ${subs.map((t) => label(labelOf(t))).join(', ')}`;
+  };
   const name = (id: string): string =>
     ctx.players.find((p) => p.id === id)?.name ?? state.players[id]?.name ?? id;
   const lines: string[] = [];
-  lines.push('# Lightning Round — recap', '');
-  lines.push(`Players: ${ctx.players.map((p) => p.name).join(', ')}`);
+  lines.push(T('# Lightning Round — recap'), '');
+  lines.push(`${T('Players')}: ${ctx.players.map((p) => p.name).join(', ')}`);
   lines.push(
-    `Settings: ${state.settings.questions} questions · ${state.settings.answerSeconds} s each · ${drawLabel(state.drawnFrom, state.drawnSubs ?? [])}`,
+    `${T('Settings')}: ${state.settings.questions} ${T('questions')} · ${state.settings.answerSeconds} ${T('s each')} · ${es ? drawn() : drawLabel(state.drawnFrom, state.drawnSubs ?? [])}`,
   );
-  if (!ctx.results) lines.push('', '_The game was ended early._');
+  if (!ctx.results) lines.push('', T('_The game was ended early._'));
   lines.push('');
   const seen = new Set<number>();
   for (const h of ctx.history) {
@@ -25,11 +54,11 @@ export function recap(state: State, ctx: RecapContext<State>): GameRecap | null 
     if (seen.has(st.index)) continue;
     seen.add(st.index);
     const id = st.questionIds[st.index];
-    const q = id ? questionById(id) : undefined;
+    const q = id ? questionById(id, st.contentLang) : undefined;
     if (!q) continue;
     const final = isFinalIndex(st, st.index);
     lines.push(
-      `## ${final ? 'Final question' : `Question ${st.index + 1}`} · ${categoryLabel(q.category)} · ${labelOf(q.subcategory)} · ${q.difficulty}`,
+      `## ${final ? T('Final question') : `${T('Question')} ${st.index + 1}`} · ${label(categoryLabel(q.category))} · ${label(labelOf(q.subcategory))} · ${T(q.difficulty)}`,
       '',
       `**${q.question}**`,
       '',
@@ -42,20 +71,21 @@ export function recap(state: State, ctx: RecapContext<State>): GameRecap | null 
       const pick = st.picks[p.id];
       const delta = st.lastDelta[p.id] ?? 0;
       const wager = final ? st.wagers[p.id] : undefined;
-      const bet = wager ? ` · bet ${wager}` : '';
-      if (!pick) lines.push(`- ${p.name}: no answer${bet} → ${delta >= 0 ? '+' : ''}${delta}`);
+      const bet = wager ? ` · ${T('bet')} ${wager}` : '';
+      if (!pick)
+        lines.push(`- ${p.name}: ${T('no answer')}${bet} → ${delta >= 0 ? '+' : ''}${delta}`);
       else
         lines.push(
-          `- ${p.name}: ${'ABCD'[pick.index]} ${pick.index === q.answerIndex ? '✓' : '✗'} in ${(pick.elapsedMs / 1000).toFixed(1)} s${bet} → ${delta >= 0 ? '+' : ''}${delta}`,
+          `- ${p.name}: ${'ABCD'[pick.index]} ${pick.index === q.answerIndex ? '✓' : '✗'} ${T('in')} ${(pick.elapsedMs / 1000).toFixed(1)} s${bet} → ${delta >= 0 ? '+' : ''}${delta}`,
         );
     }
     lines.push('');
   }
   if (ctx.results) {
-    lines.push('## Final scores', '');
+    lines.push(T('## Final scores'), '');
     for (const r of ctx.results.ranking) lines.push(`${r.rank}. ${name(r.playerId)} — ${r.score}`);
     if (ctx.results.awards.length) {
-      lines.push('', '## Awards', '');
+      lines.push('', T('## Awards'), '');
       for (const a of ctx.results.awards)
         lines.push(`- **${a.title}** — ${name(a.playerId)} (${a.description})`);
     }

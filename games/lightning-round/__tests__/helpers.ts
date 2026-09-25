@@ -36,7 +36,7 @@ export function start(
 }
 
 export function current(state: State): NonNullable<ReturnType<typeof questionById>> {
-  const q = questionById(state.questionIds[state.index] ?? '');
+  const q = questionById(state.questionIds[state.index] ?? '', state.contentLang);
   if (!q) throw new Error(`no question at index ${state.index}`);
   return q;
 }
