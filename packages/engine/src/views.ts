@@ -104,9 +104,9 @@ export function tvView(room: RoomState, deps: EngineDeps): PushedView<TvView> | 
   const game = deps.games[running.gameId];
   if (!game) return null;
   try {
-    return { ...game.tvView(running.state), vip: room.vipId };
+    return { ...game.tvView(running.state), vip: room.vipId, contentLang: running.contentLang ?? 'en' }; // prettier-ignore
   } catch {
-    return { ...fallbackEnvelope(room), vip: room.vipId };
+    return { ...fallbackEnvelope(room), vip: room.vipId, contentLang: running.contentLang ?? 'en' }; // prettier-ignore
   }
 }
 
@@ -126,9 +126,12 @@ export function controllerView(
       vip: room.vipId,
       // ADR-047: per phone — a remote phone in a TV room is the stage too (live, not the game's copy)
       phoneOnly: stageOnPhone(room, playerId),
+      // ADR-054: the running game's own language — a client-rendered deck reads this, never the
+      // room's (which is the NEXT game's and may be switched mid-game)
+      contentLang: running.contentLang ?? 'en',
     };
   } catch {
-    return { ...fallbackEnvelope(room), me: { id: playerId, role }, vip: room.vipId };
+    return { ...fallbackEnvelope(room), me: { id: playerId, role }, vip: room.vipId, contentLang: running.contentLang ?? 'en' }; // prettier-ignore
   }
 }
 

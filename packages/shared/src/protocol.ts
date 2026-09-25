@@ -211,7 +211,8 @@ export interface RoomSnapshot {
   /** S-004: every phone plays the room's music plan (the VIP's switch, default off). */
   musicOnPhones: boolean;
   /** ADR-054: the language of the next game's shared content: the VIP's or TV's choice, else the
-   *  VIP phone's language, else 'en'. The TV's own UI follows it; each phone's UI stays its own. */
+   *  VIP phone's language, else 'en'. Every device's UI (the TV's too) keeps its own language. A
+   *  running game's deck reads the view's contentLang, which is fixed at its start. */
   contentLang: ContentLang;
   /** S-005: "phone only" — games hand the phones what the TV would show; set by the VIP. */
   phoneOnly: boolean;

@@ -253,8 +253,8 @@ export function applyVip(
       return { room: { ...room, listed: action.on }, effects: [{ type: 'push' }] };
     }
     case 'setContentLang': {
-      // ADR-054: any time. A running game keeps the language it started with; the choice is for
-      // the next game, and the TV's own UI follows it at once (its language switch sends this).
+      // ADR-054: any time. A running game keeps the language it started with (its views carry
+      // it); the choice is for the next game. The TV's language switch sends this too.
       if (room.contentLang === action.lang) return { room, effects: [] };
       return { room: { ...room, contentLang: action.lang }, effects: [{ type: 'push' }] };
     }

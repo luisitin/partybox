@@ -42,6 +42,7 @@ describe('views', () => {
       players: [],
       me: { id: 'throw-me', role: 'spectator' },
       vip: 'p1',
+      contentLang: 'en', // ADR-054: the running game's language rides on every view
     });
     const brokenTv = {
       games: {

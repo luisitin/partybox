@@ -42,6 +42,8 @@ export interface RunningGame {
   startedAt: number;
   /** The one phase instance we already fired a timer for (ADR-004: exactly once). */
   firedTimer: { phaseId: string; startedAt: number } | null;
+  /** ADR-054: the content language this game started with (optional so saved rooms still load). */
+  contentLang?: ContentLang;
 }
 
 export interface RoomState {

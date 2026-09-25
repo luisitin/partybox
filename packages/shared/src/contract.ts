@@ -303,7 +303,13 @@ export interface ControllerView extends ViewEnvelope {
 }
 
 /** What actually goes over the wire: the engine adds the VIP (ADR-020). */
-export type PushedView<V extends ViewEnvelope> = V & { vip: string | null };
+export type PushedView<V extends ViewEnvelope> = V & {
+  vip: string | null;
+  /** ADR-054: the running game's content language, fixed at its start (absent = 'en'). A deck
+   *  rendered on the client picks its pack from this, not from the room snapshot's contentLang
+   *  (that one is the next game's and can change mid-game). */
+  contentLang?: ContentLang;
+};
 
 // ─── Results ────────────────────────────────────────────────────────────────────────────────────
 

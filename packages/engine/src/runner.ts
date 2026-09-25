@@ -37,15 +37,16 @@ export function startGame(
   for (const p of Object.values(room.players)) players[p.id] = { ...p, spectator: false };
   const base = { ...room, players };
   let state: GameStateBase;
+  const contentLang = contentLangOf(base);
   try {
-    state = game.init({ players: playerInfos(base), settings, seed, now, presence: gamePresence(base), contentLang: contentLangOf(base) }); // prettier-ignore
+    state = game.init({ players: playerInfos(base), settings, seed, now, presence: gamePresence(base), contentLang }); // prettier-ignore
   } catch (err) {
     return {
       room,
       effects: [{ type: 'log', level: 'error', text: `init(${gameId}) threw: ${String(err)}` }],
     };
   }
-  const running: RunningGame = { gameId, seed, settings, state, startedAt: now, firedTimer: null };
+  const running: RunningGame = { gameId, seed, settings, state, startedAt: now, firedTimer: null, contentLang }; // prettier-ignore
   return {
     room: {
       ...base,

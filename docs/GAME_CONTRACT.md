@@ -17,7 +17,7 @@ export interface GameDefinition<
   manifest: GameManifest; // must deep-equal games/<id>/manifest.json (contract test)
   phases: readonly string[]; // every phase id, in typical order; each needs fixtures/<id>.json
   inputSchema: z.ZodType<I>; // validated at the socket BEFORE reduce sees the input
-  init(ctx: InitContext): S; // { players, settings, seed, now, presence?, contentLang? } — presence (ADR-047): { mode: 'together' | 'remote-voice' | 'remote-text', phoneOnly }, fixed for the game; absent = together with a TV. contentLang (ADR-054): 'en' | 'es', the language of the game's deck, bot lines, reader and matcher, fixed for the game; absent = 'en'
+  init(ctx: InitContext): S; // { players, settings, seed, now, presence?, contentLang? } — presence (ADR-047): { mode: 'together' | 'remote-voice' | 'remote-text', phoneOnly }, fixed for the game; absent = together with a TV. contentLang (ADR-054): 'en' | 'es', the language of the game's deck, bot lines, reader and matcher, fixed for the game; absent = 'en'. On the client, a deck rendered there reads the pushed view's `contentLang` (the running game's), never `room.contentLang` (the next game's)
   reduce(state: S, event: GameEvent<I>): S; // PURE + TOTAL — never throws
   tvView(state: S): TV; // JSON; identical for every TV
   controllerView(state: S, playerId: string): CV; // JSON; per player

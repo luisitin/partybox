@@ -7,7 +7,7 @@ import { fakeGame } from './fake-game.helper';
 import { applyRoomEvent } from './room';
 import type { EngineDeps, RoomState } from './types';
 import { T0, deps, errorsOf, joinEvent, vip } from './test-utils.helper';
-import { snapshot } from './views';
+import { controllerView, snapshot, tvView } from './views';
 
 /** A lobby whose phones joined with these languages (p1 first, so p1 is the VIP). */
 function roomIn(...langs: (ContentLang | undefined)[]): RoomState {
@@ -77,5 +77,8 @@ describe('what the game is told', () => {
     expect(switched.game?.gameId).toBe('spy');
     expect(snapshot(switched, spyDeps).contentLang).toBe('en');
     expect(seen).toHaveLength(1);
+    // the running game's views keep its own language: a client-rendered deck never flips mid-game
+    expect(tvView(switched, spyDeps)?.contentLang).toBe('es');
+    expect(controllerView(switched, 'p2', spyDeps)?.contentLang).toBe('es');
   });
 });
