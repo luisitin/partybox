@@ -1,0 +1,671 @@
+{
+  "phase": {
+    "id": "reveal",
+    "startedAt": 1700000195619,
+    "deadline": 1700000202219
+  },
+  "rng": {
+    "seed": 1,
+    "step": 163
+  },
+  "players": {
+    "p1": {
+      "id": "p1",
+      "name": "Player 1",
+      "avatarId": "fox",
+      "connected": true
+    },
+    "p2": {
+      "id": "p2",
+      "name": "Player 2",
+      "avatarId": "owl",
+      "connected": true
+    },
+    "p3": {
+      "id": "p3",
+      "name": "Player 3",
+      "avatarId": "frog",
+      "connected": true
+    },
+    "p4": {
+      "id": "p4",
+      "name": "Player 4",
+      "avatarId": "cat",
+      "connected": true
+    },
+    "p5": {
+      "id": "p5",
+      "name": "Player 5",
+      "avatarId": "panda",
+      "connected": true
+    },
+    "p6": {
+      "id": "p6",
+      "name": "Player 6",
+      "avatarId": "koala",
+      "connected": true
+    },
+    "p7": {
+      "id": "p7",
+      "name": "Player 7",
+      "avatarId": "penguin",
+      "connected": true
+    },
+    "p8": {
+      "id": "p8",
+      "name": "Player 8",
+      "avatarId": "octopus",
+      "connected": true
+    }
+  },
+  "cfg": {
+    "mode": "solo",
+    "rounds": 8,
+    "targetScore": 10,
+    "maxTurns": 12,
+    "clueSeconds": 45,
+    "dialSeconds": 25,
+    "callSeconds": 15,
+    "targetSize": "normal",
+    "huddle": false,
+    "spicy": false,
+    "reader": "sky"
+  },
+  "presence": {
+    "mode": "together",
+    "phoneOnly": false
+  },
+  "seats": ["p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8"],
+  "left": [],
+  "mode": "solo",
+  "teams": null,
+  "psychicBag": {
+    "all": ["p8", "p2"],
+    "sun": [],
+    "moon": []
+  },
+  "spectra": [
+    {
+      "id": "tn-authentic-131",
+      "left": "Fake",
+      "right": "Authentic",
+      "kind": "opinion",
+      "clues": [
+        {
+          "text": "plastic fruit",
+          "pos": 2
+        },
+        {
+          "text": "a laugh track",
+          "pos": 5
+        },
+        {
+          "text": "a knockoff handbag",
+          "pos": 10
+        },
+        {
+          "text": "a spray tan",
+          "pos": 16
+        },
+        {
+          "text": "a reality TV show",
+          "pos": 24
+        },
+        {
+          "text": "a mall Santa",
+          "pos": 32
+        },
+        {
+          "text": "a fortune cookie",
+          "pos": 44
+        },
+        {
+          "text": "a Renaissance fair",
+          "pos": 52
+        },
+        {
+          "text": "a diamond ring",
+          "pos": 70
+        },
+        {
+          "text": "a street taco",
+          "pos": 76
+        },
+        {
+          "text": "a baby's laugh",
+          "pos": 90
+        },
+        {
+          "text": "the Mona Lisa",
+          "pos": 97
+        }
+      ]
+    },
+    {
+      "id": "tn-cursed-138",
+      "left": "Cursed object",
+      "right": "Lucky charm",
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "a monkey's paw",
+          "pos": 2
+        },
+        {
+          "text": "a haunted doll",
+          "pos": 5
+        },
+        {
+          "text": "a creepy clown painting",
+          "pos": 10
+        },
+        {
+          "text": "an antique mirror",
+          "pos": 22
+        },
+        {
+          "text": "your ex's hoodie",
+          "pos": 30
+        },
+        {
+          "text": "a garden gnome",
+          "pos": 44
+        },
+        {
+          "text": "a snow globe",
+          "pos": 54
+        },
+        {
+          "text": "a rubber duck",
+          "pos": 60
+        },
+        {
+          "text": "unwashed game-day socks",
+          "pos": 70
+        },
+        {
+          "text": "a dreamcatcher",
+          "pos": 78
+        },
+        {
+          "text": "a pot of gold",
+          "pos": 86
+        },
+        {
+          "text": "a horseshoe",
+          "pos": 94
+        }
+      ]
+    },
+    {
+      "id": "tn-forgive-146",
+      "left": "Totally fine",
+      "right": "Unforgivable",
+      "kind": "opinion",
+      "clues": [
+        {
+          "text": "a sneeze",
+          "pos": 2
+        },
+        {
+          "text": "clapping when the plane lands",
+          "pos": 12
+        },
+        {
+          "text": "running a bit late",
+          "pos": 16
+        },
+        {
+          "text": "hitting reply all",
+          "pos": 22
+        },
+        {
+          "text": "pineapple on pizza",
+          "pos": 30
+        },
+        {
+          "text": "double-dipping",
+          "pos": 38
+        },
+        {
+          "text": "reclining your airplane seat",
+          "pos": 46
+        },
+        {
+          "text": "cheating at board games",
+          "pos": 56
+        },
+        {
+          "text": "eating my leftovers",
+          "pos": 62
+        },
+        {
+          "text": "spoiling a movie ending",
+          "pos": 72
+        },
+        {
+          "text": "forgetting a kid at school",
+          "pos": 88
+        },
+        {
+          "text": "kicking a puppy",
+          "pos": 99
+        }
+      ]
+    },
+    {
+      "id": "tn-creepy-036",
+      "left": "Cozy",
+      "right": "Creepy",
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "a fireplace",
+          "pos": 3
+        },
+        {
+          "text": "a kitten on your lap",
+          "pos": 6
+        },
+        {
+          "text": "a treehouse",
+          "pos": 24
+        },
+        {
+          "text": "a rocking chair",
+          "pos": 34
+        },
+        {
+          "text": "a thunderstorm",
+          "pos": 42
+        },
+        {
+          "text": "a cabin in the woods",
+          "pos": 50
+        },
+        {
+          "text": "a music box",
+          "pos": 56
+        },
+        {
+          "text": "the attic",
+          "pos": 62
+        },
+        {
+          "text": "a scarecrow",
+          "pos": 74
+        },
+        {
+          "text": "a porcelain doll",
+          "pos": 84
+        },
+        {
+          "text": "a ventriloquist dummy",
+          "pos": 88
+        },
+        {
+          "text": "a foggy graveyard",
+          "pos": 95
+        }
+      ]
+    },
+    {
+      "id": "tn-grip-103",
+      "left": "Sticky",
+      "right": "Slippery",
+      "kind": "measurable",
+      "clues": [
+        {
+          "text": "duct tape",
+          "pos": 2
+        },
+        {
+          "text": "chewed gum",
+          "pos": 4
+        },
+        {
+          "text": "a spider web",
+          "pos": 8
+        },
+        {
+          "text": "maple syrup",
+          "pos": 12
+        },
+        {
+          "text": "sandpaper",
+          "pos": 25
+        },
+        {
+          "text": "a rubber tire",
+          "pos": 32
+        },
+        {
+          "text": "a snail",
+          "pos": 45
+        },
+        {
+          "text": "a wooden floor",
+          "pos": 52
+        },
+        {
+          "text": "a frog",
+          "pos": 64
+        },
+        {
+          "text": "silk pajamas",
+          "pos": 72
+        },
+        {
+          "text": "a banana peel",
+          "pos": 88
+        },
+        {
+          "text": "wet soap",
+          "pos": 96
+        }
+      ]
+    },
+    {
+      "id": "tn-trip-130",
+      "left": "Quick errand",
+      "right": "Epic journey",
+      "kind": "measurable",
+      "clues": [
+        {
+          "text": "checking the mailbox",
+          "pos": 2
+        },
+        {
+          "text": "taking out the trash",
+          "pos": 5
+        },
+        {
+          "text": "a run for milk",
+          "pos": 10
+        },
+        {
+          "text": "the DMV",
+          "pos": 28
+        },
+        {
+          "text": "a day at the zoo",
+          "pos": 38
+        },
+        {
+          "text": "Black Friday shopping",
+          "pos": 44
+        },
+        {
+          "text": "a road trip to Grandma's",
+          "pos": 54
+        },
+        {
+          "text": "moving to a new city",
+          "pos": 64
+        },
+        {
+          "text": "driving coast to coast",
+          "pos": 76
+        },
+        {
+          "text": "the Oregon Trail",
+          "pos": 86
+        },
+        {
+          "text": "climbing Mount Everest",
+          "pos": 92
+        },
+        {
+          "text": "a trip to the moon",
+          "pos": 98
+        }
+      ]
+    },
+    {
+      "id": "tn-survive-078",
+      "left": "Lost in the woods",
+      "right": "Survival expert",
+      "kind": "playful",
+      "clues": [
+        {
+          "text": "Hansel and Gretel",
+          "pos": 3
+        },
+        {
+          "text": "a cruise ship tourist",
+          "pos": 9
+        },
+        {
+          "text": "Little Red Riding Hood",
+          "pos": 16
+        },
+        {
+          "text": "a golden retriever",
+          "pos": 24
+        },
+        {
+          "text": "a nature documentary fan",
+          "pos": 33
+        },
+        {
+          "text": "your uncle with a compass",
+          "pos": 42
+        },
+        {
+          "text": "a pirate",
+          "pos": 52
+        },
+        {
+          "text": "a scout troop",
+          "pos": 64
+        },
+        {
+          "text": "a raccoon",
+          "pos": 74
+        },
+        {
+          "text": "a lumberjack",
+          "pos": 82
+        },
+        {
+          "text": "Robinson Crusoe",
+          "pos": 90
+        },
+        {
+          "text": "a grizzly bear",
+          "pos": 97
+        }
+      ]
+    },
+    {
+      "id": "tn-difficulty-043",
+      "left": "Easy",
+      "right": "Difficult",
+      "kind": "measurable",
+      "clues": [
+        {
+          "text": "breathing",
+          "pos": 2
+        },
+        {
+          "text": "making toast",
+          "pos": 6
+        },
+        {
+          "text": "riding a bike",
+          "pos": 14
+        },
+        {
+          "text": "wrapping a present",
+          "pos": 22
+        },
+        {
+          "text": "opening a pickle jar",
+          "pos": 34
+        },
+        {
+          "text": "baking bread",
+          "pos": 45
+        },
+        {
+          "text": "doing a cartwheel",
+          "pos": 52
+        },
+        {
+          "text": "parallel parking",
+          "pos": 64
+        },
+        {
+          "text": "folding a fitted sheet",
+          "pos": 74
+        },
+        {
+          "text": "teaching a cat tricks",
+          "pos": 85
+        },
+        {
+          "text": "climbing Mount Everest",
+          "pos": 95
+        },
+        {
+          "text": "brain surgery",
+          "pos": 97
+        }
+      ]
+    }
+  ],
+  "turn": {
+    "n": 6,
+    "psychic": "p4",
+    "team": null,
+    "catchUp": false,
+    "spectrum": 5,
+    "target": 5,
+    "clue": "checking the mailbox",
+    "clueAt": 1700000173046,
+    "clueDeadline": 1700000217440,
+    "rejected": null,
+    "dials": {
+      "p5": 1,
+      "p7": 5,
+      "p3": 3,
+      "p6": 8,
+      "p8": 0,
+      "p1": 0,
+      "p2": 8
+    },
+    "locked": ["p2", "p6", "p3", "p5", "p7", "p1", "p8"],
+    "needle": null,
+    "calls": {},
+    "points": {
+      "p1": 4,
+      "p2": 4,
+      "p3": 4,
+      "p5": 4,
+      "p6": 4,
+      "p7": 4,
+      "p8": 4,
+      "p4": 6
+    },
+    "teamPoints": {
+      "sun": 0,
+      "moon": 0
+    },
+    "void": false,
+    "step": 1
+  },
+  "nextTeam": "moon",
+  "scores": {
+    "p1": 21,
+    "p2": 24,
+    "p3": 22,
+    "p4": 24,
+    "p5": 21,
+    "p6": 22,
+    "p7": 20,
+    "p8": 21
+  },
+  "turnStartScores": {
+    "p1": 17,
+    "p2": 20,
+    "p3": 18,
+    "p4": 18,
+    "p5": 17,
+    "p6": 18,
+    "p7": 16,
+    "p8": 17
+  },
+  "team": {
+    "sun": 0,
+    "moon": 0
+  },
+  "coopTotal": 0,
+  "played": 6,
+  "stats": {
+    "p1": {
+      "bulls": 3,
+      "dials": 5,
+      "dist": 29,
+      "zeros": 0,
+      "psyTurns": 1,
+      "psyPts": 4
+    },
+    "p2": {
+      "bulls": 6,
+      "dials": 6,
+      "dist": 16,
+      "zeros": 0,
+      "psyTurns": 0,
+      "psyPts": 0
+    },
+    "p3": {
+      "bulls": 3,
+      "dials": 5,
+      "dist": 20,
+      "zeros": 0,
+      "psyTurns": 1,
+      "psyPts": 4
+    },
+    "p4": {
+      "bulls": 3,
+      "dials": 5,
+      "dist": 26,
+      "zeros": 0,
+      "psyTurns": 1,
+      "psyPts": 6
+    },
+    "p6": {
+      "bulls": 4,
+      "dials": 5,
+      "dist": 22,
+      "zeros": 0,
+      "psyTurns": 1,
+      "psyPts": 3
+    },
+    "p7": {
+      "bulls": 3,
+      "dials": 5,
+      "dist": 29,
+      "zeros": 0,
+      "psyTurns": 1,
+      "psyPts": 3
+    },
+    "p8": {
+      "bulls": 3,
+      "dials": 6,
+      "dist": 38,
+      "zeros": 0,
+      "psyTurns": 0,
+      "psyPts": 0
+    },
+    "p5": {
+      "bulls": 2,
+      "dials": 5,
+      "dist": 32,
+      "zeros": 0,
+      "psyTurns": 1,
+      "psyPts": 4
+    }
+  },
+  "speechMs": {}
+}

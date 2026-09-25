@@ -2,10 +2,12 @@
 // five wedges (2 · 3 · 4 · 3 · 2, each number printed inside, so colour is never the only signal)
 // under a shutter that swings away around the pivot (transform only), a needle, and the players'
 // faces riding arms from the pivot so a huddle glides and a reveal lands without layout work.
-import type { CSSProperties, JSX, ReactNode } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
+import type { CSSProperties, JSX, ReactNode, RefObject } from 'react';
 import { Avatar } from '../../ui/Avatar';
 import styles from './Dial.module.css';
-import { BOX, fanOut, pointAt, posToDeg, slicePath, wedges } from './geometry';
+import { BOX, faceLayout, fanOut, pointAt, posToDeg, slicePath, wedges } from './geometry';
+import type { FaceLayout } from './geometry';
 
 /** Keeps an end's arrow on its word when a label wraps (200 % text). */
 const NBSP = '\u00a0';
@@ -53,12 +55,32 @@ const ZONE_CLASS: Record<2 | 3 | 4, string> = {
   4: styles.zone4 ?? '',
 };
 
-/** How far out a face rides: on the rim, or one or two rings further for a crowd. */
-const faceRadius = (ring: number): number => BOX.rim + 34 + ring * 46;
+/** The box's drawn width in CSS px (layout width, so a scaled stage does not skew it), measured
+ *  before paint and again when it resizes; 0 until measured. */
+function useBoxPx(ref: RefObject<HTMLDivElement | null>): number {
+  const [px, setPx] = useState(0);
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) return undefined;
+    const measure = (): void => setPx(Math.round(el.offsetWidth / 8) * 8);
+    measure();
+    if (typeof ResizeObserver === 'undefined') return undefined;
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [ref]);
+  return px;
+}
 
-function faceStyle(pos: number, ring: number, i: number, landGapMs: number): CSSProperties {
+function faceStyle(
+  pos: number,
+  ring: number,
+  i: number,
+  landGapMs: number,
+  layout: FaceLayout,
+): CSSProperties {
   // ring −1: the needle's own badge, riding partway along it (clear of the faces on the rim).
-  const radius = ring < 0 ? BOX.face * 0.58 : faceRadius(ring);
+  const radius = ring < 0 ? BOX.face * 0.58 : (layout.radii[ring] ?? layout.radii[0]);
   return {
     '--arm': `${(radius / BOX.w) * 100}%`,
     '--deg': `${-posToDeg(pos)}deg`,
@@ -71,16 +93,23 @@ export function Dial(props: DialProps): JSX.Element {
   const { left, right, target, bands, open, swing = false, markers = [], landing = false } = props;
   const { needle = null, needleSettles = false, needleBadge, showPoints = false } = props;
   const { entrance = false, landGapMs = 90, className, label } = props;
+  const boxRef = useRef<HTMLDivElement>(null);
+  const layout = faceLayout(useBoxPx(boxRef));
   // Live huddle faces glide at their true spots; the reveal fans a crowd out along the rim.
   const slots = landing
-    ? fanOut(markers.map((m) => m.pos))
+    ? fanOut(
+        markers.map((m) => m.pos),
+        layout.gap,
+        layout.gap * 1.9,
+        layout.edges,
+      )
     : markers.map((m) => ({ at: m.pos, ring: 0 }));
   const leaders = landing
     ? markers.flatMap((m, i) => {
         const slot = slots[i] ?? { at: m.pos, ring: 0 };
         if (slot.ring === 0 && Math.abs(slot.at - m.pos) < 0.6) return [];
         const a = pointAt(m.pos, BOX.rim + 2);
-        const b = pointAt(slot.at, faceRadius(slot.ring) - 20);
+        const b = pointAt(slot.at, (layout.radii[slot.ring] ?? layout.radii[0]) - 20);
         return [{ id: m.id, a, b }];
       })
     : [];
@@ -91,7 +120,7 @@ export function Dial(props: DialProps): JSX.Element {
       aria-label={label ?? `${left} — ${right}`}
     >
       <span className={`${styles.end} ${styles.endLeft}`}>{`◀${NBSP}${left}`}</span>
-      <div className={styles.box}>
+      <div ref={boxRef} className={styles.box}>
         {/* The still parts are one SVG, painted once; everything that moves is its own layer. */}
         <svg className={styles.svg} viewBox={`0 0 ${BOX.w} ${BOX.h}`} aria-hidden>
           <path d={slicePath(0, 100, BOX.rim)} className={styles.bezel} />
@@ -159,7 +188,7 @@ export function Dial(props: DialProps): JSX.Element {
         ) : null}
         <span className={styles.hub} aria-hidden />
         {needle !== null && needleBadge ? (
-          <span className={styles.arm} style={faceStyle(needle, -1, 0, landGapMs)}>
+          <span className={styles.arm} style={faceStyle(needle, -1, 0, landGapMs, layout)}>
             <span className={styles.upright}>
               <span className={`${styles.badge} ${styles.needleBadge}`}>{needleBadge}</span>
             </span>
@@ -169,7 +198,7 @@ export function Dial(props: DialProps): JSX.Element {
           <span
             key={m.id}
             className={`${styles.arm} ${landing ? '' : styles.glide}`}
-            style={faceStyle(slots[i]?.at ?? m.pos, slots[i]?.ring ?? 0, i, landGapMs)}
+            style={faceStyle(slots[i]?.at ?? m.pos, slots[i]?.ring ?? 0, i, landGapMs, layout)}
           >
             <span className={`${styles.upright} ${landing ? '' : styles.glide}`}>
               <span className={landing ? styles.land : styles.face40}>

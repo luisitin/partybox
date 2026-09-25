@@ -57,7 +57,7 @@ export interface FanSlot {
 
 /** Spreads one ring's positions at least `gap` apart, each cluster centred on its true spots,
  *  inside 0–100. Returns the drawn positions in the input order. */
-function spread(pos: readonly number[], gap: number): number[] {
+function spread(pos: readonly number[], gap: number, lo = 0, hi = 100): number[] {
   const order = pos.map((p, i) => ({ p, i })).sort((a, b) => a.p - b.p || a.i - b.i);
   const d = order.map((o) => o.p);
   for (let pass = 0; pass < 3; pass += 1) {
@@ -73,9 +73,9 @@ function spread(pos: readonly number[], gap: number): number[] {
       start = k;
     }
     for (let k = d.length - 1; k >= 0; k -= 1)
-      d[k] = Math.min(d[k] as number, k === d.length - 1 ? 100 : (d[k + 1] as number) - gap);
+      d[k] = Math.min(d[k] as number, k === d.length - 1 ? hi : (d[k + 1] as number) - gap);
     for (let k = 0; k < d.length; k += 1)
-      d[k] = Math.max(d[k] as number, k === 0 ? 0 : (d[k - 1] as number) + gap);
+      d[k] = Math.max(d[k] as number, k === 0 ? lo : (d[k - 1] as number) + gap);
   }
   const out = new Array<number>(pos.length);
   order.forEach((o, k) => {
@@ -84,20 +84,31 @@ function spread(pos: readonly number[], gap: number): number[] {
   return out;
 }
 
+/** How far from either end each ring's faces may sit. An outer ring stands further off the rim,
+ *  so at the bottom of the arc it would reach past the dial into the end labels at its feet
+ *  (p09: a crowd at "Nightmare fuel" covered the label); its faces rise to here instead, and the
+ *  leader lines point at their true spots. */
+export const FAN_EDGES = [4, 14, 20] as const;
+
 /** The reveal's faces (spec §5.5 "faces stack outwards where they overlap"): spread along the
  *  rim `gap` apart; a face that would drift more than `maxShift` from its true spot moves out a
- *  ring (every other face of a crowd), up to three rings. */
-export function fanOut(pos: readonly number[], gap = 3.2, maxShift = 6): FanSlot[] {
+ *  ring (every other face of a crowd), up to three rings; each ring keeps `edges[ring]` from the
+ *  ends. */
+export function fanOut(
+  pos: readonly number[],
+  gap = 3.2,
+  maxShift = 6,
+  edges: readonly number[] = FAN_EDGES,
+): FanSlot[] {
   const slots: FanSlot[] = pos.map((p) => ({ at: p, ring: 0 }));
   let pending = pos.map((_, i) => i);
   for (let ring = 0; ring < 3 && pending.length > 0; ring += 1) {
     const last = ring === 2;
-    const at = spread(
-      pending.map((i) => pos[i] as number),
-      gap * (1 - ring * 0.08),
-    );
+    const lo = edges[ring] ?? 0;
+    const home = (i: number): number => Math.min(100 - lo, Math.max(lo, pos[i] as number));
+    const at = spread(pending.map(home), gap * (1 - ring * 0.08), lo, 100 - lo);
     const far = pending.filter(
-      (_, k) => Math.abs((at[k] as number) - (pos[pending[k] as number] as number)) > maxShift,
+      (_, k) => Math.abs((at[k] as number) - home(pending[k] as number)) > maxShift,
     );
     if (far.length === 0 || last) {
       pending.forEach((i, k) => (slots[i] = { at: at[k] as number, ring }));
@@ -106,14 +117,40 @@ export function fanOut(pos: readonly number[], gap = 3.2, maxShift = 6): FanSlot
     // A crowd: keep every other face (by true spot) on this ring, send the rest one ring out.
     const sorted = [...pending].sort((a, b) => (pos[a] as number) - (pos[b] as number) || a - b);
     const stay = sorted.filter((_, k) => k % 2 === 0);
-    const keep = spread(
-      stay.map((i) => pos[i] as number),
-      gap * (1 - ring * 0.08),
-    );
+    const keep = spread(stay.map(home), gap * (1 - ring * 0.08), lo, 100 - lo);
     stay.forEach((i, k) => (slots[i] = { at: keep[k] as number, ring }));
     pending = sorted.filter((_, k) => k % 2 === 1);
   }
   return slots;
+}
+
+/** Where the reveal's faces ride for a dial drawn `boxPx` wide. Faces are a fixed `facePx`, so on
+ *  a smaller dial (a 720p TV, the phone stage) a fixed spacing in dial units packed them onto one
+ *  another; here the spacing along the rim, the distance between rings and each ring's clearance
+ *  from the ends (a face never reaches past the dial into the end labels at its feet) all follow
+ *  the drawn size. Unmeasured (`boxPx` 0) reads as a 1080p TV. */
+export interface FaceLayout {
+  /** Along the rim, in dial positions. */
+  gap: number;
+  /** Each ring's distance from the pivot, in box units. */
+  radii: readonly [number, number, number];
+  /** Each ring's clearance from both ends, in dial positions. */
+  edges: readonly [number, number, number];
+}
+
+export function faceLayout(boxPx: number, facePx = 40): FaceLayout {
+  const unitPx = boxPx > 0 ? boxPx / BOX.w : 0.9;
+  const face = (facePx + 6) / unitPx;
+  const r0 = BOX.rim + Math.max(34, (facePx / 2 + 6) / unitPx);
+  const step = Math.max(46, face);
+  const radii = [r0, r0 + step, r0 + 2 * step] as const;
+  const deg = 180 / Math.PI;
+  const edge = (r: number): number => (Math.acos(Math.min(1, BOX.w / 2 / r)) * deg) / 1.8;
+  return {
+    gap: Math.max(3.2, ((face / r0) * deg) / 1.8),
+    radii,
+    edges: [edge(radii[0]), edge(radii[1]), edge(radii[2])],
+  };
 }
 
 /** Markers that sit within `gap` of an earlier one stack one ring further out (spec §5.5). */

@@ -106,3 +106,33 @@ double-tap Lock in; callers tap a side; Priya's phone (iPhone SE, 320 × 568) ge
   the banner; the needle's result reads "Your team's needle scored +4 · You were 3 away" and a miss
   "0 · Your team's needle missed."; LEFT / RIGHT side by side; sideways layouts side by side (see
   NOTES). Re-shot: SE, 200 % text, sideways and Spanish all on one page.
+
+## p08 — teams, real touch (6 players, seed 7), after the bursts
+
+- TV dead-air: 141.6 s, **0 dead spans, 0 hard cuts**. Phones: one still span each, the last
+  seconds on the platform's results screen. Long frames 2.2 % under the recorder (stills stall
+  the page), worst 117 ms.
+- Found: a thin dark sliver with the lid's grille dots along the left of the dial's baseline after
+  every reveal — the lid swings to 182°, so its far edge tilts back above the clip line; the race
+  track showed holes where this turn's cells had not popped yet; the lanes had no numbers until
+  they landed; the results headline read "Lu, Sam & the bot tie!" when Sun won 11–8 (platform —
+  owner question, hub #ideas 4550fc; the Foundation's results-kinds branch will add an outcome);
+  the kept finale dropped the awards and left half the stage bare.
+- Fixed: the lid fades out over the last few degrees; a new point is an empty cell whose colour
+  pops in; the old total shows from the first frame and swaps as the last cell lands; the finale
+  shows both rosters (the winners' card lit) and the awards; co-op's meter grows from its old
+  total on the scores beat. Checked with the end probe (teams in English, co-op in Spanish).
+
+## p09 — solo, real touch (6 players, seed 21)
+
+- TV dead-air: 168.0 s, **0 dead spans, 0 hard cuts**; phones: only the results screen at the
+  end. Long frames: both over 90 ms are the game's first frames (the dev server compiling).
+- Found: a crowd of dials at one end ("Nightmare fuel", "Hard to spell") put faces and their +N
+  tags over the end label — the outer rings stand further off the rim and, at the bottom of the
+  arc, reach past the dial; within the crowd the tags (as big as a face) covered the neighbours'
+  faces. Faces are a fixed 40 px while spacing was in dial units, so a smaller dial packed them
+  tighter still.
+- Fixed: the face layout follows the dial's drawn size (spacing along the rim, ring distance,
+  each ring's clearance from the ends — `faceLayout`, tested); the points are a small pill on the
+  face's chin, inside its footprint. A new `reveal-edge` fixture (target 5, seven dials 0–8)
+  re-shot on a 1080p and a 720p TV: every face distinct, the labels clear.

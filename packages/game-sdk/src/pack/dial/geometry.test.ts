@@ -1,6 +1,15 @@
 // The dial's geometry and the huddle throttle (Tune In §5.9, §5.18 "Throttle").
 import { describe, expect, it } from 'vitest';
-import { createThrottle, posFromX, posToDeg, stackRings, wedges } from './geometry';
+import {
+  createThrottle,
+  FAN_EDGES,
+  faceLayout,
+  fanOut,
+  posFromX,
+  posToDeg,
+  stackRings,
+  wedges,
+} from './geometry';
 
 describe('positions', () => {
   it('maps 0 to the left end, 50 straight up, 100 to the right end', () => {
@@ -39,6 +48,41 @@ describe('wedges', () => {
     const w = wedges(99, [5, 10, 15]);
     expect(w.find((x) => x.pts === 4)?.label).not.toBeNull();
     expect(wedges(100, [4, 8, 12]).every((x) => x.to <= 100)).toBe(true);
+  });
+});
+
+describe('faces near an end', () => {
+  it('rise clear of the end labels: each ring keeps its distance from both ends', () => {
+    const crowd = [0, 1, 2, 2, 3, 4, 5, 97, 98, 99, 100, 100];
+    const slots = fanOut(crowd);
+    for (const s of slots) {
+      const edge = FAN_EDGES[s.ring] ?? 0;
+      expect(s.at).toBeGreaterThanOrEqual(edge - 1e-9);
+      expect(s.at).toBeLessThanOrEqual(100 - edge + 1e-9);
+    }
+    expect(slots.some((s) => s.ring > 0)).toBe(true);
+  });
+
+  it('spaces faces for the size the dial is drawn at', () => {
+    const tv = faceLayout(900);
+    const small = faceLayout(450);
+    expect(small.gap).toBeGreaterThan(tv.gap);
+    expect(small.radii[1] - small.radii[0]).toBeGreaterThan(tv.radii[1] - tv.radii[0]);
+    // A 40 px face and its air fit between neighbours along the rim, at either size.
+    for (const [px, l] of [
+      [900, tv],
+      [450, small],
+    ] as const) {
+      const arcPx = ((l.gap * 1.8 * Math.PI) / 180) * l.radii[0] * (px / 1000);
+      expect(arcPx).toBeGreaterThanOrEqual(46 - 1e-6);
+    }
+    // Outer rings keep further from the ends.
+    expect(tv.edges[2]).toBeGreaterThan(tv.edges[1]);
+    expect(tv.edges[1]).toBeGreaterThan(tv.edges[0]);
+  });
+
+  it('leaves a face in the middle at its true spot', () => {
+    expect(fanOut([50])[0]).toEqual({ at: 50, ring: 0 });
   });
 });
 

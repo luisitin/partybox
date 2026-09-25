@@ -329,22 +329,25 @@
   animation-delay: calc(var(--pb-motion-fast) + var(--pb-motion-slow) + var(--i) * var(--gap));
 }
 
-/* A face's points: a tag on its top-right corner, so stacked faces never cover each other's. */
+/* A face's points: a small pill on its own chin, inside the face's footprint, sized from the
+   40 px face — the old corner tag was as big as a face, and a crowd at one end of the dial packed
+   the tags onto the neighbours' faces (p09). */
 .badge {
   position: absolute;
-  left: 62%;
-  bottom: 62%;
-  min-width: 34px;
-  padding: 0 var(--pb-space-1);
+  left: 50%;
+  bottom: -5px;
+  min-width: 26px;
+  padding: 0 4px;
   border-radius: 999px;
   background: var(--pb-accent-2-fill);
   color: var(--pb-on-accent-2-fill);
   border: 2px solid var(--pb-bg);
-  font-size: var(--pb-font-caption);
+  font-size: 15px;
   font-weight: 900;
-  line-height: 1.25;
+  line-height: 1.15;
   text-align: center;
   white-space: nowrap;
+  transform: translateX(-50%);
   animation: tune-badge var(--pb-motion-base) var(--pb-ease) both;
   animation-delay: calc(var(--i) * 40ms);
 }
@@ -367,11 +370,11 @@
 
 @keyframes tune-badge {
   from {
-    transform: scale(0.4);
+    transform: translateX(-50%) scale(0.4);
     opacity: 0;
   }
   to {
-    transform: none;
+    transform: translateX(-50%);
     opacity: 1;
   }
 }
