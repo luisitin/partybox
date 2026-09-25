@@ -44,11 +44,15 @@ function stacks(r: RevealView, order: string[], byId: Map<string, ViewPlayer>): 
   const out: Mini[] = [];
   const filled = new Map<string, number>();
   const totals = new Map<string, number>();
-  for (const g of order) {
+  // Walk the guesses themselves: before the flip their keys are anonymous (not seats), after it
+  // they are seats, drawn in seat order.
+  const rank = (g: string): number => (order.includes(g) ? order.indexOf(g) : order.length);
+  const guessers = Object.keys(r.guesses).sort((a, b) => rank(a) - rank(b));
+  for (const g of guessers) {
     const t = r.guesses[g];
     if (t !== undefined) totals.set(t, (totals.get(t) ?? 0) + 1);
   }
-  for (const g of order) {
+  for (const g of guessers) {
     const t = r.guesses[g];
     // Before the flip the guessers are anonymous (server: RevealView.guesses): a blank face.
     const guesser =

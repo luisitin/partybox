@@ -1,6 +1,7 @@
 // tvView / controllerView (SPEC §4.9). Secrets: an answer's author reaches a view only at that
-// card's flip; upcoming cards never; guesses at the reveal. A phone's view during a card is the same
-// for the author and for everyone else (§4.5 camouflage): no "this one is yours" field exists.
+// card's flip; upcoming cards never; guesses at the reveal, anonymous until the flip. The author
+// sits out their own card (the owner's ruling over §4.5's camouflage): only their own phone gets
+// `mine`; the TV and every other phone read the same for any author, statuses included.
 import { controllerEnvelope, envelope } from '@partybox/game-sdk';
 import type { ControllerView, TvView } from '@partybox/game-sdk';
 import { guessDone } from './phases/guess';
