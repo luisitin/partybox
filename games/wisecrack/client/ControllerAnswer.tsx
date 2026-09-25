@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
 import { TextAnswer, WaitingScreen, usePrefersReducedMotion, useT } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
+import { EnglishNote } from './EnglishNote';
 import type { WisecrackControllerView } from '../server/index';
 import type { Input } from '../server/types';
 import { STRINGS } from './strings';
@@ -51,7 +52,12 @@ export function ControllerAnswer({
       <TextAnswer
         key={heldPrompt.id}
         kicker={kickerFor(heldIndex, sent - 1)}
-        prompt={heldPrompt.text}
+        prompt={
+          <>
+            {heldPrompt.text}
+            <EnglishNote />
+          </>
+        }
         submitted
         promptKey={heldPrompt.id}
         submittedHint={sent < total ? L('One more…') : undefined}
@@ -84,7 +90,13 @@ export function ControllerAnswer({
       key={current.id}
       className="pb-enter"
       kicker={kickerFor(index, sent)}
-      prompt={current.text}
+      prompt={
+        <>
+          {current.text}
+          {/* [196a9e]: the prompts are English on every phone */}
+          <EnglishNote />
+        </>
+      }
       placeholder={L('Your funniest answer…')}
       maxLength={MAX_CHARS}
       submitted={sentId === current.id}
