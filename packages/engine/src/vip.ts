@@ -151,6 +151,17 @@ export function applyVip(
       // A game that ignores `end` still has to stop: fall back to aborting without a scoreboard.
       if (action.action === 'end' && result.room.status === 'playing')
         return abortGame(result.room);
+      // I-546: an ended game's results say so — who stopped it
+      if (action.action === 'end' && result.room.status === 'results' && result.room.results) {
+        const by = host ? null : (sender?.name ?? null);
+        return {
+          ...result,
+          room: {
+            ...result.room,
+            results: { ...result.room.results, endedEarly: { by } },
+          },
+        };
+      }
       return result;
     }
     case 'kick': {

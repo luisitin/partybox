@@ -7,7 +7,7 @@ import type { JSX } from 'react';
 import type { PushedView, RoomSnapshot, TvView } from '@partybox/shared';
 import { Avatar, BigText, Confetti, Scoreboard, Stage, useT } from '@partybox/game-sdk/ui';
 import { GameErrorBoundary } from '../controller/GameErrorBoundary';
-import { nobodyScored, scoreboardRows, winnerLine } from '../controller/results-rows';
+import { endedLine, nobodyScored, scoreboardRows, winnerLine } from '../controller/results-rows';
 import { clientGames } from '../games.generated';
 import { t } from '../i18n';
 import { serverText } from '../server-text';
@@ -25,13 +25,15 @@ export function TvResults({ room, lastView = null }: TvResultsProps): JSX.Elemen
   // An award is the game server's sentence: its own table carries the Spanish.
   const said = (text: string): string => serverText(text, L.lang, room.results?.gameId);
   const rows = scoreboardRows(room);
-  const awards = room.results?.results.awards ?? [];
+  // I-546: a game the VIP stopped gets no crowning, no trophy and no awards — a board as it stood
+  const ended = endedLine(room);
+  const awards = ended ? [] : (room.results?.results.awards ?? []);
   const many = rows.length >= 7;
   const nameOf = (id: string): string =>
     room.results?.players.find((p) => p.id === id)?.name ?? '?';
   const module = room.results ? clientGames[room.results.gameId] : undefined;
   const Finale = module?.Finale;
-  const keepBoard = Boolean(Finale && lastView && module?.finale?.(lastView));
+  const keepBoard = !ended && Boolean(Finale && lastView && module?.finale?.(lastView));
   const scoreless = module?.scoreless === true;
   // 7–8 rows sit in two columns of ≤ 4: large rows and a wider board column, or the lower half of
   // the stage is bare (review-loop #32).
@@ -40,12 +42,12 @@ export function TvResults({ room, lastView = null }: TvResultsProps): JSX.Elemen
   // a game nobody scored in stays the plain line).
   const winnerIds = room.results?.results.winnerIds ?? [];
   const winner =
-    winnerIds.length === 1 && !nobodyScored(room) && !scoreless
+    winnerIds.length === 1 && !nobodyScored(room) && !scoreless && !ended
       ? (room.results?.players.find((p) => p.id === winnerIds[0]) ?? null)
       : null;
   // I-037 A: a real tie shares the crown — the tied faces together beside the line.
   const tied =
-    winnerIds.length > 1 && !nobodyScored(room) && !scoreless
+    winnerIds.length > 1 && !nobodyScored(room) && !scoreless && !ended
       ? (room.results?.players.filter((p) => winnerIds.includes(p.id)) ?? []).slice(0, 4)
       : [];
   const crowned = winner !== null || tied.length > 0;
@@ -74,6 +76,7 @@ export function TvResults({ room, lastView = null }: TvResultsProps): JSX.Elemen
         {nobodyScored(room) && !scoreless ? (
           <p className="pb-muted">{t.results.nobodyScored}</p>
         ) : null}
+        {ended ? <p className={`pb-muted ${styles.endedLine}`}>{ended}</p> : null}
       </div>
       {/* I-025 B: confetti for a person — a gentle sixteen pieces when a bot takes it. */}
       {winner ? <Confetti pieces={winner.bot ? 16 : 48} /> : null}
@@ -94,7 +97,7 @@ export function TvResults({ room, lastView = null }: TvResultsProps): JSX.Elemen
         >
           <Scoreboard
             rows={rows}
-            noTrophy={nobodyScored(room)}
+            noTrophy={nobodyScored(room) || Boolean(ended)}
             noRanks={nobodyScored(room)}
             size={large ? 'lg' : 'md'}
           />

@@ -133,6 +133,8 @@ export interface RoomResults {
   results: GameResults;
   /** Names/avatars of everyone who played, including players who left. */
   players: PlayerInfo[];
+  /** I-546: the VIP (or the TV: `by` null) ended the game — a result, not a finish. */
+  endedEarly?: { by: string | null };
 }
 
 export interface RoomSnapshot {

@@ -151,6 +151,10 @@ export const en = {
     waitingFor: (name: string) => `Waiting for ${name}…`,
     youWin: 'You win! 🏆',
     youTie: 'You tie for first! 🏆',
+    // I-546: a game the VIP stopped is not won
+    stoppedLeading: (name: string) => `Game stopped — ${name} was leading`,
+    stoppedLevel: 'Game stopped — level at the top',
+    endedBy: (name: string | null) => (name ? `Ended early by ${name}` : 'Ended early'),
     yourPlace: (rank: number, score: number) => `You finished ${ordinal(rank)} · ${score} pts`,
     /** I-155 A: an award you won, on your own phone ("Your card of the night"). */
     yourAward: (title: string) => `Your ${title.charAt(0).toLowerCase()}${title.slice(1)}`,

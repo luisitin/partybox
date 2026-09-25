@@ -226,7 +226,8 @@ export function TvApp(): JSX.Element {
     // The winner moment (owner pick): a party horn with a crowd cheer under it (music ducked).
     if (room.status === 'results' && p.status !== 'results' && !homing) {
       // I-128 C: an all-zero board gets a soft note, not the cheer.
-      if (nobodyScored(room)) audio.play('leave', { quiet: true });
+      // I-546: a game the VIP stopped gets the same soft note
+      if (nobodyScored(room) || room.results?.endedEarly) audio.play('leave', { quiet: true });
       else {
         music.duck(9000);
         // I-037 C: several winners — the suspended chord, not the horn.
