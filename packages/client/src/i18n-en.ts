@@ -161,6 +161,7 @@ export const en = {
     /** ADR-052: your team's result on your phone. */
     yourTeamWon: 'Your team won!',
     yourTeamLost: 'Your team lost this one',
+    yourTeamDrew: 'Your team drew',
     over: 'Game over',
     show: "That's the show!",
     scorelessHint: 'No points in this game — the books on the TV are the result.',

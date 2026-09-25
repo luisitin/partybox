@@ -7,6 +7,18 @@
   width: 100%;
 }
 
+/* Side by side on the TV: two teams of four stacked ran the losing side's last row and the
+   "Recap saved" line under the host bar (session-c fb4b9c #1). Each side is a column (the count
+   comes inline); "No team" spans them, under — a third narrow column cut its names to "Max…". */
+.sideBySide {
+  display: grid;
+  align-items: start;
+}
+
+.sideBySide .teamless {
+  grid-column: 1 / -1;
+}
+
 .team {
   display: flex;
   flex-direction: column;
@@ -26,23 +38,24 @@
   background: color-mix(in srgb, var(--team) 10%, transparent);
 }
 
+/* A name and its tag share the row while they fit; a long name (or 200 % text) sends the tag to a
+   line of its own, so the name keeps the width and wraps between words, never mid-word
+   (session-c fb4b9c #2: "Moonlig / ht", the tag taking half the row). */
 .head {
   margin: 0;
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
-  gap: var(--pb-space-2);
+  gap: 0 var(--pb-space-2);
   font-size: var(--pb-font-h2);
   font-weight: 900;
   color: var(--team);
 }
 
-.mark {
-  flex-shrink: 0;
-}
-
 .name {
+  flex: 1 1 auto;
   min-width: 0;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word; /* a word wider than the whole row still breaks, as a last resort */
 }
 
 .tag {

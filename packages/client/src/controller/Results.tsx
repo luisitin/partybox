@@ -45,11 +45,17 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
       ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   // ADR-052: in a team game the line is your team's result, and a tap brings your team's group
   // (its header and your row) into view: a losing side opens under the winners (tune-in af72d6).
-  const toMyTeam = (): void =>
-    list.current
-      ?.querySelector('[aria-current="true"]')
-      ?.closest('section')
-      ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // A group taller than the list (four a side on a small phone) centres your row instead: its
+  // header at the top left your row below the fold (session-c fb4b9c #3).
+  const toMyTeam = (): void => {
+    const row = list.current?.querySelector('[aria-current="true"]');
+    const group = row?.closest('section');
+    if (!row || !group) return;
+    const view = scrollParent(group);
+    const margin = parseFloat(getComputedStyle(group).scrollMarginTop) || 0;
+    const fits = !view || group.offsetHeight + margin <= view.clientHeight;
+    (fits ? group : row).scrollIntoView({ behavior: 'smooth', block: fits ? 'start' : 'center' });
+  };
   const teams = teamGroups(room);
   const teamColor = winnerColor(room);
   const teamLine = yourTeamLine(room, me.id);
@@ -261,4 +267,12 @@ export function Results({ controller, room, me }: ResultsProps): JSX.Element {
       ) : null}
     </Screen>
   );
+}
+
+/** The nearest ancestor that scrolls (the Screen's body on a phone), or null. */
+function scrollParent(el: Element): HTMLElement | null {
+  for (let p = el.parentElement; p; p = p.parentElement) {
+    if (/(auto|scroll)/.test(getComputedStyle(p).overflowY)) return p;
+  }
+  return null;
 }

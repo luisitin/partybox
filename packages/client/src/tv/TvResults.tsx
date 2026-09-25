@@ -136,8 +136,15 @@ export function TvResults({ room, lastView = null }: TvResultsProps): JSX.Elemen
         >
           {/* ADR-052: a team game's board is grouped by team, the winners first */}
           {teams ? (
-            // body-size rows: two team headers on top of the board ran it under the host bar
-            <TeamBoards groups={teams} size="sm" wonLabel={t.results.teamWonTag} />
+            // body-size rows: two team headers on top of the board ran it under the host bar. A
+            // header costs about a row and a half, so from eight rows-and-headers (4 + 4, 3 + 3,
+            // 2 + 2 + a "No team" row) the groups stand side by side (session-c fb4b9c #1)
+            <TeamBoards
+              groups={teams}
+              size="sm"
+              sideBySide={rows.length + teams.length >= 8}
+              wonLabel={t.results.teamWonTag}
+            />
           ) : (
             <Scoreboard
               rows={rows}

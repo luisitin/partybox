@@ -9,33 +9,41 @@ import styles from './TeamBoards.module.css';
 export function TeamBoards({
   groups,
   compact = false,
+  sideBySide = false,
   highlightId,
   size,
   wonLabel,
 }: {
   groups: TeamGroup[];
   compact?: boolean;
+  /** The groups in columns, not stacked (the TV when stacked groups would run under the host bar). */
+  sideBySide?: boolean;
   highlightId?: string;
   size?: 'sm' | 'md' | 'lg';
   /** The winners' tag beside the team name ("Winners" / "Ganadores"). */
   wonLabel: string;
 }): JSX.Element {
+  const sides = Math.max(1, groups.filter((g) => g.id !== '').length);
   return (
-    <div className={`${styles.teams} ${compact ? styles.compact : ''}`}>
+    <div
+      className={`${styles.teams} ${compact ? styles.compact : ''} ${sideBySide ? styles.sideBySide : ''}`}
+      // one column per side; the "No team" group spans them all under the sides
+      style={sideBySide ? { gridTemplateColumns: `repeat(${sides}, minmax(0, 1fr))` } : undefined}
+    >
       {groups.map((g) => (
         <section
           key={g.id || 'teamless'}
-          className={`${styles.team} ${g.won ? styles.won : ''}`}
+          className={`${styles.team} ${g.won ? styles.won : ''} ${g.id === '' ? styles.teamless : ''}`}
           style={{ '--team': g.color ?? 'var(--pb-accent-2)' } as CSSProperties}
           aria-label={`${g.mark ? `${g.mark} ` : ''}${g.name}${g.won ? `, ${wonLabel}` : ''}`}
         >
           <h3 className={styles.head}>
-            {g.mark ? (
-              <span className={styles.mark} aria-hidden>
-                {g.mark}
-              </span>
-            ) : null}
-            <span className={styles.name}>{g.name}</span>
+            {/* the mark rides in the name's box: when the tag drops to its own line, the mark and
+                the name stay together on the first */}
+            <span className={styles.name}>
+              {g.mark ? <span aria-hidden>{g.mark} </span> : null}
+              {g.name}
+            </span>
             {g.won ? <span className={styles.tag}>🏆 {wonLabel}</span> : null}
           </h3>
           <Scoreboard

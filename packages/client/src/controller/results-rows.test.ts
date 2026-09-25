@@ -284,10 +284,14 @@ describe('ADR-052: a team game grouped by team', () => {
     ]);
     expect(winnerColor(teamsRoom('moon'))).toBe('var(--pb-info)');
   });
-  it('tells each phone its team won or lost; a draw says neither', () => {
+  it('tells each phone its team won, lost or drew; a player in no team gets no team line', () => {
     expect(yourTeamLine(teamsRoom('moon'), 'Ana')).toBe('Your team won!');
     expect(yourTeamLine(teamsRoom('moon'), 'Sam')).toBe('Your team lost this one');
-    expect(yourTeamLine(teamsRoom(null), 'Sam')).toBeNull();
+    expect(yourTeamLine(teamsRoom(null), 'Sam')).toBe('Your team drew');
+    const left = teamsRoom('moon');
+    const o = left.results?.results.outcome;
+    if (o?.kind === 'teams') o.teams[0] = { ...o.teams[0]!, members: ['Sam'] };
+    expect(yourTeamLine(left, 'Priya')).toBeNull();
     expect(teamGroups(room({ Sam: 1 }, ['Sam'], []))).toBeNull();
   });
   it('closes the headline with the winning mark, never mid-sentence', () => {

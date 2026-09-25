@@ -141,6 +141,7 @@ export const es: Texts = {
     teamless: 'Sin equipo',
     yourTeamWon: '¡Ganó tu equipo!',
     yourTeamLost: 'Tu equipo perdió esta vez',
+    yourTeamDrew: 'Tu equipo empató',
     over: 'Fin del juego',
     show: '¡Y eso fue todo!',
     scorelessHint: 'Este juego no da puntos: los libros en la TV son el resultado.',

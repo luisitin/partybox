@@ -5,6 +5,7 @@
 // of a player who shares one. TV + a phone (SE), English and Spanish. Always pass --build after a
 // client change: without it the prebuilt client is served.
 // Usage: tsx packages/e2e/src/design/capture-results-tie.ts [--out <dir>] [--port 42303] [--build]
+//   [--only teams8,teamsDraw]
 import { mkdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { parseArgs } from 'node:util';
@@ -22,6 +23,7 @@ const { values } = parseArgs({
     out: { type: 'string' },
     port: { type: 'string', default: '42303' },
     build: { type: 'boolean', default: false },
+    only: { type: 'string' },
   },
 });
 const OUT =
@@ -39,7 +41,8 @@ async function open(browser: Browser, url: string, device: DeviceId, lang: strin
   return page;
 }
 
-type Scenario = 'tie' | 'many' | 'teams' | 'long' | 'coop';
+// 'teams8': four a side with long team names (session-c fb4b9c); 'teamsDraw': the teams drew
+type Scenario = 'tie' | 'many' | 'teams' | 'teams8' | 'teamsDraw' | 'long' | 'coop';
 
 async function run(
   browser: Browser,
@@ -64,6 +67,9 @@ async function run(
       ['p-ben', 'Ben', 'owl'],
       ['p-cleo', 'Cleo', 'frog'],
       ['p-dev', scenario === 'long' ? 'Wolfeschlegelste' : 'Maximiliano Guadalupe', 'panda'],
+      ...(scenario === 'teams8'
+        ? [['p-eve', 'Evelyn', 'lion'], ['p-fin', 'Finn', 'whale'], ['p-gus', 'Gustavo', 'koala']] // prettier-ignore
+        : []),
     ].map(([id, name, avatarId]) => ({ id, name, avatarId }));
     // Sam (this phone) shares an award too, so the phone shows "… with Ana"
     const state = (await api.state()) as { room?: { vipId?: string | null } | null };
@@ -73,12 +79,16 @@ async function run(
     const tie = scenario === 'tie';
     // 'many': one long-named winner and eight awards — the TV caps the cards at six (+ 2 more)
     const coop = scenario === 'coop';
+    const teams = scenario === 'teams' || scenario === 'teams8' || scenario === 'teamsDraw';
+    const eight = scenario === 'teams8';
     // 'coop': a lost co-op game (Tune In's): everyone on the same group score, no winner
     const scores = coop
       ? { 'p-ana': 3, 'p-ben': 3, 'p-cleo': 3, 'p-dev': 3, [me]: 3 }
       : tie
         ? { 'p-ana': 1050, 'p-ben': 1050, 'p-cleo': 1050, 'p-dev': 300, [me]: 200 }
-        : { 'p-dev': 1200, 'p-ana': 1050, 'p-ben': 800, 'p-cleo': 300, [me]: 200 };
+        : eight
+          ? { 'p-dev': 1200, 'p-ana': 1050, 'p-eve': 900, 'p-ben': 800, 'p-fin': 650, 'p-gus': 400, 'p-cleo': 300, [me]: 200 } // prettier-ignore
+          : { 'p-dev': 1200, 'p-ana': 1050, 'p-ben': 800, 'p-cleo': 300, [me]: 200 };
     const order = Object.entries(scores).sort((x, y) => y[1] - x[1]);
     const ranking = order.map(([playerId, score]) => ({ playerId, score, rank: 1 + order.filter(([, v]) => v > score).length })); // prettier-ignore
     const awards = tie
@@ -100,19 +110,24 @@ async function run(
         results: {
           scores,
           ranking,
-          winnerIds: coop ? [] : scenario === 'teams' ? ['p-ben', 'p-cleo'] : tie ? ['p-ana', 'p-ben', 'p-cleo'] : ['p-dev'], // prettier-ignore
-          awards: scenario === 'teams' ? awards.slice(0, 2) : awards,
+          winnerIds: coop || scenario === 'teamsDraw' ? [] : eight ? ['p-ben', 'p-cleo', 'p-eve', 'p-fin'] : teams ? ['p-ben', 'p-cleo'] : tie ? ['p-ana', 'p-ben', 'p-cleo'] : ['p-dev'], // prettier-ignore
+          awards: teams ? awards.slice(0, 2) : awards,
           // ADR-052: a team game, Moon wins (its members first, the headline in its colour);
           // Maximiliano is in no team (they left), so the board ends on a "No team" group
-          ...(scenario === 'teams'
+          ...(teams
             ? {
                 outcome: {
                   kind: 'teams',
-                  winner: 'moon',
-                  teams: [
-                    { id: 'sun', name: 'Sun', mark: '▲', color: 'var(--pb-accent-2)', members: ['p-ana', me] }, // prettier-ignore
-                    { id: 'moon', name: 'Moon', mark: '●', color: 'var(--pb-info)', members: ['p-ben', 'p-cleo'] }, // prettier-ignore
-                  ],
+                  winner: scenario === 'teamsDraw' ? null : 'moon',
+                  teams: eight
+                    ? [
+                        { id: 'sun', name: 'Supercalifragilistic Sunbeams', mark: '▲', color: 'var(--pb-accent-2)', members: ['p-ana', 'p-dev', 'p-gus', me] }, // prettier-ignore
+                        { id: 'moon', name: 'Moonlight Midnight Marauders', mark: '●', color: 'var(--pb-info)', members: ['p-ben', 'p-cleo', 'p-eve', 'p-fin'] }, // prettier-ignore
+                      ]
+                    : [
+                        { id: 'sun', name: 'Sun', mark: '▲', color: 'var(--pb-accent-2)', members: ['p-ana', me] }, // prettier-ignore
+                        { id: 'moon', name: 'Moon', mark: '●', color: 'var(--pb-info)', members: ['p-ben', 'p-cleo'] }, // prettier-ignore
+                      ],
                 },
               }
             : coop
@@ -124,8 +139,9 @@ async function run(
     await settle(4500); // the board lands, the headline and awards follow
     if (device === 'iphone-se') await tv.screenshot({ path: join(OUT, `${lang}-tv-${scenario}.png`) }); // prettier-ignore
     await page.screenshot({ path: join(OUT, `${lang}-${device}-${scenario}.png`) });
-    if (scenario === 'teams') {
-      // this phone's team lost: a tap on its line brings its own group into view
+    if (teams) {
+      // this phone's team lost (or drew): a tap on its line brings its own group into view — at
+      // four a side on a small phone, your row centred
       await page.getByRole('button', { name: /Your team|Tu equipo/ }).click();
       await settle(900);
       await page.screenshot({ path: join(OUT, `${lang}-${device}-${scenario}-mine.png`) });
@@ -139,6 +155,10 @@ async function run(
   }
 }
 
+const ALL: Scenario[] = ['tie', 'many', 'teams', 'teams8', 'teamsDraw', 'long', 'coop'];
+// --only teams8,teamsDraw: just those scenarios
+const SCENARIOS = values.only ? (values.only.split(',') as Scenario[]) : ALL;
+
 async function main(): Promise<void> {
   mkdirSync(OUT, { recursive: true });
   const server = await startProdServer(Number(values.port), { build: values.build });
@@ -146,7 +166,7 @@ async function main(): Promise<void> {
   const browser = await chromium.launch();
   try {
     for (const lang of ['en', 'es'])
-      for (const scenario of ['tie', 'many', 'teams', 'long', 'coop'] as const)
+      for (const scenario of SCENARIOS)
         for (const device of ['iphone-se', 'font200'] as const)
           await run(browser, server.url, api, lang, device, scenario);
   } finally {

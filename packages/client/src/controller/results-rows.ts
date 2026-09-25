@@ -196,10 +196,13 @@ export function winnerColor(room: RoomSnapshot): string | undefined {
   return teamGroups(room)?.find((g) => g.won)?.color;
 }
 
-/** Your team's line on your phone: won or lost (null outside a decided team game). */
+/** Your team's line on your phone: won, lost or drew (null outside a team game, or in no team). */
 export function yourTeamLine(room: RoomSnapshot, meId: string): string | null {
   const groups = teamGroups(room);
   const mine = groups?.find((g) => g.rows.some((row) => row.playerId === meId));
-  if (!groups || !mine || !groups.some((g) => g.won)) return null;
+  // the "No team" group is nobody's team: a player who left a side gets no team line
+  if (!groups || !mine || mine.id === '') return null;
+  // a draw still says where you were, and the tap finds your side (session-c fb4b9c #4)
+  if (!groups.some((g) => g.won)) return t.results.yourTeamDrew;
   return mine.won ? t.results.yourTeamWon : t.results.yourTeamLost;
 }
