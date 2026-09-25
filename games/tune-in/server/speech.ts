@@ -3,7 +3,7 @@
 // (the host caches every key) until F6's clip renderer exists (NOTES.md). A key reaches a view only
 // in the phase its line plays; the target is never spoken.
 import type { SpeechRequest } from '@partybox/game-sdk';
-import { PRONUNCIATIONS } from './content';
+import { endsFor, PRONUNCIATIONS } from './content';
 import { bandPoints, coopRating, isPerfectTune, roundedAverage } from './scoring';
 import { pendingCap, speakableName, speechKey, toSpeakable } from '@partybox/game-sdk/speech';
 import { earnsCatchUp, guessersOf, isOver, planTurn } from './turn';
@@ -26,20 +26,49 @@ export const FIXED = {
 } as const;
 export type LineId = keyof typeof FIXED;
 
-export function voiceOf(state: State): Reader | null {
-  return state.cfg.reader === 'none' ? null : state.cfg.reader;
+/** ADR-054: the same lines in a Spanish game, worded as the TV shows them (client/strings-tv.ts). */
+export const FIXED_ES: Record<LineId, string> = {
+  tuneIn: '¡A sintonizar!',
+  newPsychic: 'Nuevo vidente.',
+  lockIn: '¡Fíjalo ya!',
+  leftOrRight: '¿Izquierda o derecha?',
+  bullseye: '¡En el blanco!',
+  close: '¡Cerca!',
+  missed: 'Fallado.',
+  perfect: '¡Sintonía perfecta!',
+  catchUp: '¡Remontada! Otra vez.',
+  static: 'Estática.',
+  tuning: 'Sintonizando.',
+  clear: '¡Clarísimo!',
+  meld: '¡Conexión mental!',
+};
+
+/** A Spanish game's reader: the Latin American voice nearest the one picked (ADR-054's dora, alex
+ *  and santa, spoken es-419 by the host). */
+const SPANISH_VOICE: Record<Reader, string> = {
+  george: 'alex',
+  fable: 'santa',
+  jessica: 'dora',
+  sky: 'dora',
+  original: 'dora',
+};
+
+export function voiceOf(state: State): string | null {
+  if (state.cfg.reader === 'none') return null;
+  return state.lang === 'es' ? SPANISH_VOICE[state.cfg.reader] : state.cfg.reader;
 }
 
 /** A whole line through the shared rules (F6) and Tune In's own list; nothing when it is empty.
  *  A player's words (the clue) get the player-text rules: a shout is calmed, not spelled. */
 function request(
-  voice: Reader,
+  state: State,
+  voice: string,
   text: string,
   from: { itemId?: string; playerText?: boolean } = {},
 ): SpeechRequest | null {
   const parts = toSpeakable(text, {
     voice,
-    lang: 'en',
+    lang: state.lang,
     overrides: PRONUNCIATIONS,
     ...(from.itemId ? { itemId: from.itemId } : {}),
     ...(from.playerText ? { playerText: true } : {}),
@@ -49,19 +78,22 @@ function request(
 
 export function fixedReading(state: State, line: LineId): SpeechRequest | null {
   const voice = voiceOf(state);
-  return voice ? request(voice, FIXED[line]) : null;
+  return voice ? request(state, voice, (state.lang === 'es' ? FIXED_ES : FIXED)[line]) : null;
 }
 
-/** "Ana is the psychic. From cold, to hot." (or "New psychic." when the name can't be read). */
+/** "Ana is the psychic. From cold, to hot." (or "New psychic." when the name can't be read); in a
+ *  Spanish game "Ana es el vidente. De frío a caliente." with the Spanish ends. */
 export function announceReading(state: State): SpeechRequest | null {
   const voice = voiceOf(state);
   const spectrum = state.spectra[state.turn.spectrum];
   if (!voice || !spectrum || !state.turn.psychic) return null;
   const name = speakableName(state.players[state.turn.psychic]?.name ?? '');
-  const who = name ? `${name} is the psychic.` : FIXED.newPsychic;
-  return request(voice, `${who} From ${spectrum.left}, to ${spectrum.right}.`, {
-    itemId: spectrum.id,
-  });
+  const { left, right } = endsFor(spectrum, state.lang);
+  const line =
+    state.lang === 'es'
+      ? `${name ? `${name} es el vidente.` : FIXED_ES.newPsychic} De ${left} a ${right}.`
+      : `${name ? `${name} is the psychic.` : FIXED.newPsychic} From ${left}, to ${right}.`;
+  return request(state, voice, line, { itemId: spectrum.id });
 }
 
 /** The clue itself ("Coffee."), asked for the moment the psychic sends it. */
@@ -69,7 +101,7 @@ export function clueReading(state: State): SpeechRequest | null {
   const voice = voiceOf(state);
   const clue = state.turn.clue?.trim() ?? '';
   if (!voice || !clue) return null;
-  return request(voice, /[.!?]$/.test(clue) ? clue : `${clue}.`, { playerText: true });
+  return request(state, voice, /[.!?]$/.test(clue) ? clue : `${clue}.`, { playerText: true });
 }
 
 /** The reveal's verdict: Perfect tune (solo), else the best dial's (or the needle's) band. */

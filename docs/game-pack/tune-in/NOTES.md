@@ -83,6 +83,17 @@ returns `ctx.presence` (the SDK's `GamePresence`), else all in one room. Still l
   clues and the voice stay English, and the Spanish how-to-play (step 2 in `manifest.es.json`,
   shown by the shell's stage) says so (reviewer [ba045e] #5). No 🇬🇧: Windows browsers (a PC
   driving the TV) draw it as the letters "GB".
+- **A Spanish game** (ADR-054, wired ahead of Session C's banks on tune-in/content-es): the room's
+  content language is read at init (`readContentLang`) and kept in `state.lang`. It becomes 'es'
+  only when every dial has its Spanish bank (`ES_READY`), so a half-translated deck never switches
+  language between rounds. In a Spanish game the bots write and recognise Spanish clues from the
+  bank; the clue check also refuses Spanish number and position words (only there: "social media"
+  in an English room must not trip over "medio"); the reader takes the nearest Latin American voice
+  (sky/jessica/original → dora, george → alex, fable → santa) and says the TV's own Spanish words
+  ("¡En el blanco!", "Ana es el vidente. De Frío a Caliente."); every screen shows the Spanish ends,
+  whatever the phone's own language; and the "(pista en inglés)" note goes. The hand-off lands in
+  `content/es.ts` (its comment lists the three steps), and the content test then pins it like the
+  English banks. Until then `content/es.ts` is empty and nothing changes.
 - **Relabelled five weak dials** the clue writers flagged: Fleeting ↔ Everlasting, Easy to learn ↔
   Hard to learn, Angelic ↔ Pure evil, Tidy to eat ↔ Messy to eat, The bigger person ↔ Petty, and
   Great date topic ↔ Mood killer. Replaced the near-duplicate "Let it go ↔ Petty revenge"

@@ -7,7 +7,8 @@ import type {
   SettingSpec,
   Settings as RawSettings,
 } from '@partybox/game-sdk';
-import type { Mode, PresenceMode, Reader, Settings, TargetSize } from './types';
+import { ES_READY } from './content';
+import type { ContentLang, Mode, PresenceMode, Reader, Settings, TargetSize } from './types';
 
 const READERS: readonly Reader[] = ['george', 'fable', 'jessica', 'sky', 'original'];
 const SIZES: readonly TargetSize[] = ['narrow', 'normal', 'wide'];
@@ -41,6 +42,14 @@ export function resolveRounds(chosen: unknown, players: number): number {
  *  room with a TV). */
 export function readPresence(ctx: InitContext): GamePresence {
   return ctx.presence ?? { mode: 'together', phoneOnly: false };
+}
+
+/** ADR-054: the room's content language, fixed at start. Spanish only once every dial has its
+ *  Spanish bank (else the room plays in English and the phones mark the bots' clues). The cast goes
+ *  when InitContext.contentLang is on main. */
+export function readContentLang(ctx: InitContext, ready = ES_READY): ContentLang {
+  const lang = (ctx as InitContext & { contentLang?: string }).contentLang;
+  return lang === 'es' && ready ? 'es' : 'en';
 }
 
 export function readSettings(

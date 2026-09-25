@@ -12,6 +12,9 @@ export type Side = 'left' | 'right';
 export type TargetSize = 'narrow' | 'normal' | 'wide';
 export type Reader = 'george' | 'fable' | 'jessica' | 'sky' | 'original';
 export type { PresenceMode } from '@partybox/game-sdk';
+/** ADR-054: the language of the game's shared content (the bots' clues, the reader, the clue
+ *  check). A local copy of the SDK's ContentLang until content-lang is on main. */
+export type ContentLang = 'en' | 'es';
 
 export interface Settings {
   mode: Mode;
@@ -78,6 +81,8 @@ export interface PlayerStats {
 export interface State extends GameStateBase {
   cfg: Settings;
   presence: GamePresence;
+  /** ADR-054: fixed at start; 'es' only when the Spanish banks are complete. */
+  lang: ContentLang;
   /** Seat order at the start (bots included); everyone here is in the results. */
   seats: string[];
   /** Players who left for good: never drawn as psychic again. */

@@ -2,11 +2,12 @@
 // huddle's live markers. Secrets go out under keys no other field shares (`bullseyeAt`,
 // `huddleMarks`, `revealDials`, `revealCalls`) so the contract suite can check them by name.
 import type { PlayerStatus } from '@partybox/game-sdk';
+import { endsFor } from './content';
 import { BANDS, bandPoints, coopRating, teamCall, targetSide } from './scoring';
 import { verdictLine } from './speech';
 import type { LineId } from './speech';
 import { callersOf, guessersOf, plannedTurns } from './turn';
-import type { Mode, Side, State, TargetSize, TeamId } from './types';
+import type { ContentLang, Mode, Side, State, TargetSize, TeamId } from './types';
 
 export interface Mark {
   id: string;
@@ -23,13 +24,15 @@ export interface TurnHeader {
   spectrumId: string;
   left: string;
   right: string;
-  /** The same ends in Spanish (a Spanish phone or TV shows these; the reading stays English). */
+  /** The same ends in Spanish: a Spanish screen shows these, and every screen does in a Spanish game. */
   es: { left: string; right: string };
   /** Client only (client/ends.ts): the English ends, when a Spanish screen swapped them in. */
   en?: { left: string; right: string };
   clue: string | null;
-  /** The clue is a bot's (the English clue bank): a Spanish screen marks it (decision [196a9e]). */
+  /** The clue is a bot's (from the bank): in an English game a Spanish screen marks it ([196a9e]). */
   botClue: boolean;
+  /** ADR-054: the game's content language (the bots' clues, the reader, the clue check). */
+  lang: ContentLang;
   size: TargetSize;
   /** The edges of the 4 / 3 / 2 bands for this target size. */
   bands: [number, number, number];
@@ -74,9 +77,10 @@ export function header(state: State): TurnHeader {
     spectrumId: spectrum?.id ?? '',
     left: spectrum?.left ?? '',
     right: spectrum?.right ?? '',
-    es: spectrum?.es ?? { left: spectrum?.left ?? '', right: spectrum?.right ?? '' },
+    es: spectrum ? endsFor(spectrum, 'es') : { left: '', right: '' },
     clue: turn.clue,
     botClue: turn.clue !== null && state.players[turn.psychic]?.bot === true,
+    lang: state.lang,
     size: state.cfg.targetSize,
     bands: [four, three, two],
     voiced: state.cfg.reader !== 'none',

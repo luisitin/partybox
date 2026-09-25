@@ -2,7 +2,7 @@
 // is the psychic, the clue, the needle, its own dial. The spectrum's clue bank is its general
 // knowledge — the way a person knows coffee is hot — never the secret target.
 import type { Rng } from '@partybox/game-sdk';
-import { spectrumById } from './content';
+import { cluesFor, spectrumById } from './content';
 import type { TuneControllerView } from './controller-view';
 import { sameAnswer } from '@partybox/game-sdk/match';
 import type { Input } from './types';
@@ -12,7 +12,8 @@ export function estimate(view: TuneControllerView): number | null {
   const spectrum = spectrumById(view.turn.spectrumId);
   const clue = view.turn.clue;
   if (!spectrum || !clue) return null;
-  const known = spectrum.clues.find((c) => sameAnswer(c.text, clue, 'en'));
+  const lang = view.turn.lang;
+  const known = cluesFor(spectrum, lang).find((c) => sameAnswer(c.text, clue, lang));
   return known ? known.pos : null;
 }
 
@@ -25,7 +26,7 @@ function psychicClue(view: TuneControllerView, rng: Rng): Input | null {
   const spectrum = spectrumById(view.turn.spectrumId);
   const target = view.bullseyeAt;
   if (!spectrum || target === undefined || view.turn.clue !== null) return null;
-  const nearest = [...spectrum.clues]
+  const nearest = [...cluesFor(spectrum, view.turn.lang)]
     .sort((a, b) => Math.abs(a.pos - target) - Math.abs(b.pos - target))
     .slice(0, 2);
   if (nearest.length === 0) return null;

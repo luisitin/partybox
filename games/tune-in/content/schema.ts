@@ -36,6 +36,21 @@ export const spectrumPackSchema = z.object({
 });
 export type SpectrumPack = z.infer<typeof spectrumPackSchema>;
 
+/** ADR-054: one dial's Spanish bank (Session C's hand-off, [f58857]): the same id as the English
+ *  dial, its Spanish ends and twelve clues written in Spanish, each with its own spot on the dial. */
+export const spectrumEsSchema = z.object({
+  id: spectrumSchema.shape.id,
+  es: endsSchema,
+  clues: z.array(bankClueSchema).length(BANK_CLUES),
+});
+export type SpectrumEs = z.infer<typeof spectrumEsSchema>;
+
+export const spectrumEsPackSchema = z.object({
+  lang: z.literal('es'),
+  spectra: z.array(spectrumEsSchema).min(1),
+});
+export type SpectrumEsPack = z.infer<typeof spectrumEsPackSchema>;
+
 export const packs = {
   family: spectrumPackSchema,
   spicy: spectrumPackSchema,

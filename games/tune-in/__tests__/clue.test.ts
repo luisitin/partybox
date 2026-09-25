@@ -87,3 +87,31 @@ describe('the server re-checks', () => {
     expect(send(s, other, { type: 'clue', text: 'coffee' })).toBe(s);
   });
 });
+
+// ADR-054: a Spanish game also refuses Spanish number and position words; an English game doesn't
+// (its words stem differently: "social media" must not trip over "medio").
+describe('clue rules in a Spanish game', () => {
+  const es = { left: 'Frío', right: 'Caliente' };
+  const check = (text: string, lang: 'en' | 'es'): string => {
+    const verdict = checkClue(text, 'Cold', 'Hot', es, lang);
+    return verdict.ok ? 'ok' : verdict.reason;
+  };
+
+  it('refuses Spanish position and big-number words', () => {
+    expect(check('a la izquierda', 'es')).toBe('position-word');
+    expect(check('justo en el centro', 'es')).toBe('position-word');
+    expect(check('medio dormido', 'es')).toBe('position-word');
+    expect(check('un millón de pesos', 'es')).toBe('number');
+    expect(check('mil grullas', 'es')).toBe('number');
+  });
+
+  it('keeps the English rules and lets an ordinary Spanish clue through', () => {
+    expect(check('left field', 'es')).toBe('position-word');
+    expect(check('una sopa de tortilla', 'es')).toBe('ok');
+  });
+
+  it('an English game keeps its own list', () => {
+    expect(check('social media', 'en')).toBe('ok');
+    expect(check('medio dormido', 'en')).toBe('ok');
+  });
+});

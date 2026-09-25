@@ -4,6 +4,7 @@
 import { describe, expect, it } from 'vitest';
 import { estimate } from '../server/bot';
 import { checkClue } from '../server/clue';
+import { ES_PACKS } from '../content/es';
 import { FAMILY, SPICY } from '../server/content';
 import { game } from '../server/index';
 import { sameAnswer } from '@partybox/game-sdk/match';
@@ -108,5 +109,36 @@ describe('state size', () => {
     console.log(`tune-in: largest 16-player state ${worst} bytes`);
     expect(worst).toBeLessThan(32 * 1024);
     expect(worst).toBeLessThan(16 * 1024);
+  });
+});
+
+// ADR-054: Session C's Spanish banks ([f58857]), pinned the same way as the English ones once they
+// land in content/es.ts. While the slot is empty these skip and every room plays in English.
+describe('the Spanish banks', () => {
+  const ES = ES_PACKS.flatMap((p) => p.spectra);
+  const none = ES.length === 0;
+
+  it.skipIf(none)('cover every dial exactly once, with short Spanish ends', () => {
+    expect(ES.map((s) => s.id).sort()).toEqual(ALL.map((s) => s.id).sort());
+    for (const s of ES) {
+      expect(s.es.left.length, s.id).toBeLessThanOrEqual(18);
+      expect(s.es.right.length, s.id).toBeLessThanOrEqual(18);
+    }
+  });
+
+  it.skipIf(none)('every clue is legal in a Spanish game, spread and unlike the others', () => {
+    for (const s of ES) {
+      const en = ALL.find((e) => e.id === s.id);
+      const fifths = [0, 0, 0, 0, 0];
+      s.clues.forEach((c, i) => {
+        const verdict = checkClue(c.text, en?.left ?? '', en?.right ?? '', s.es, 'es');
+        expect(verdict.ok ? 'ok' : verdict.reason, `${s.id}: ${c.text}`).toBe('ok');
+        const k = Math.min(4, Math.floor(c.pos / 20));
+        fifths[k] = (fifths[k] ?? 0) + 1;
+        for (const d of s.clues.slice(i + 1))
+          expect(sameAnswer(c.text, d.text, 'es'), `${s.id}: ${c.text}`).toBe(false);
+      });
+      expect(Math.min(...fifths), s.id).toBeGreaterThanOrEqual(2);
+    }
   });
 });

@@ -45,7 +45,7 @@ export function PsychicClue({ view, send }: Props): JSX.Element {
   const [sent, setSent] = useState<string | null>(null);
   const input = useRef<HTMLInputElement>(null);
   const en = view.turn.en ?? view.turn;
-  const verdict = checkClue(text, en.left, en.right, view.turn.es);
+  const verdict = checkClue(text, en.left, en.right, view.turn.es, view.turn.lang);
   const rejected = view.rejected;
   // The server refused what we sent (a rule the phone missed): say why, buzz, let them retype.
   const lastRejection = useRef(rejected?.n ?? 0);

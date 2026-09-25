@@ -46,6 +46,34 @@ const BIG_NUMBERS = new Set([
   'dozen',
   'dozens',
 ]);
+/** A Spanish game's own position and big-number words (ADR-054). Only there: "social media" in an
+ *  English room must not trip over "medio". Accents are folded before the check. */
+const POSITION_STEMS_ES = new Set(
+  [
+    'izquierda',
+    'derecha',
+    'medio',
+    'mitad',
+    'centro',
+    'porcentaje',
+    'escala',
+    'espectro',
+    'dial',
+  ].map((w) => stem(w, 'es')),
+);
+const BIG_NUMBERS_ES = new Set([
+  'cien',
+  'ciento',
+  'cientos',
+  'mil',
+  'miles',
+  'millon',
+  'millones',
+  'billon',
+  'billones',
+  'docena',
+  'docenas',
+]);
 /** Label words too plain to be "the dial's own words" (NOTES.md): "Easy to love" bans love, not to. */
 const LABEL_STOP = new Set(['the', 'and', 'for', 'with', 'you', 'your', 'not', 'are', 'from']);
 /** The same for the Spanish ends ("Cosa de niños" bans niños, not de). */
@@ -109,18 +137,25 @@ function spanishStems(es: { left: string; right: string }): Set<string> {
 }
 
 /** Spec §5.8, in the table's order; the first failing rule is the one the player sees. `es`: the
- *  dial's Spanish ends, whose words are banned too. */
+ *  dial's Spanish ends, whose words are banned too. `lang`: the game's content language; a Spanish
+ *  game also bans Spanish number and position words. */
 export function checkClue(
   text: string,
   left: string,
   right: string,
   es?: { left: string; right: string },
+  lang: 'en' | 'es' = 'en',
 ): ClueCheck {
   const trimmed = text.trim().replace(/\s+/g, ' ');
   const words = wordsOf(trimmed);
+  const spanish = lang === 'es' ? wordsOf(trimmed, 'es') : [];
   if (words.length === 0) return { ok: false, reason: 'empty' };
   if ([...trimmed].length > CLUE_MAX_CHARS) return { ok: false, reason: 'too-long' };
-  if (words.some((w) => /\d/.test(w) || BIG_NUMBERS.has(w))) return { ok: false, reason: 'number' };
+  if (
+    words.some((w) => /\d/.test(w) || BIG_NUMBERS.has(w)) ||
+    spanish.some((w) => BIG_NUMBERS_ES.has(w))
+  )
+    return { ok: false, reason: 'number' };
   const labels = labelIndex(left, right);
   if (words.some((w) => labels.forms.has(w) || labels.stems.has(stem(w, 'en'))))
     return { ok: false, reason: 'label-word' };
@@ -129,7 +164,10 @@ export function checkClue(
     if (wordsOf(trimmed, 'es').some((w) => banned.has(stem(w, 'es'))))
       return { ok: false, reason: 'label-word' };
   }
-  if (words.some((w) => POSITION_STEMS.has(stem(w, 'en'))))
+  if (
+    words.some((w) => POSITION_STEMS.has(stem(w, 'en'))) ||
+    spanish.some((w) => POSITION_STEMS_ES.has(stem(w, 'es')))
+  )
     return { ok: false, reason: 'position-word' };
   return { ok: true, text: trimmed };
 }

@@ -7,7 +7,8 @@ import { useLang } from '@partybox/game-sdk/ui';
 import type { TurnHeader } from '../server/view-common';
 
 export function withEnds<V extends { turn: TurnHeader }>(view: V, lang: string): V {
-  if (lang !== 'es') return view;
+  // A Spanish game (ADR-054) is Spanish on every screen: its clues are, so its ends must be too.
+  if (lang !== 'es' && view.turn.lang !== 'es') return view;
   const { left, right, es } = view.turn;
   return { ...view, turn: { ...view.turn, left: es.left, right: es.right, en: { left, right } } };
 }

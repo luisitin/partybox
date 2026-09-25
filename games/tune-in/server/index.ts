@@ -12,7 +12,7 @@ import { reduce, startTurn } from './flow';
 import { enterIntro } from './phases/intro';
 import { recap } from './recap';
 import { results } from './scoring';
-import { readPresence, readSettings } from './settings';
+import { readContentLang, readPresence, readSettings } from './settings';
 import { speech } from './speech';
 import { coin } from './teams';
 import { plannedTurns, planTurn, turnZero } from './turn';
@@ -52,6 +52,7 @@ function init(ctx: InitContext): State {
     players,
     cfg,
     presence,
+    lang: readContentLang(ctx),
     seats,
     left: [],
     mode: cfg.mode,
