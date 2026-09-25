@@ -38,19 +38,30 @@ describe('the stored answer', () => {
     return map;
   };
 
-  it('is unset until the player answers, then remembered', () => {
+  it('is unset until the player answers, then remembered in that room', () => {
     const map = stub('', null);
-    expect(storedCanSeeTv()).toBeUndefined();
-    storeCanSeeTv(false);
-    expect(map.get('partybox:can-see-tv')).toBe('off');
-    expect(storedCanSeeTv()).toBe(false);
+    expect(storedCanSeeTv('ABCD')).toBeUndefined();
+    storeCanSeeTv(false, 'ABCD');
+    expect(JSON.parse(map.get('partybox:can-see-tv') ?? '{}')).toMatchObject({ on: false, room: 'ABCD' }); // prettier-ignore
+    expect(storedCanSeeTv('ABCD')).toBe(false);
+  });
+
+  it('never follows the phone to another room, or past the night (reviewer C3)', () => {
+    const at = Date.now();
+    stub('', JSON.stringify({ on: false, room: 'ABCD', at }));
+    expect(storedCanSeeTv('WXYZ')).toBeUndefined();
+    expect(storedCanSeeTv(undefined)).toBeUndefined();
+    stub('', JSON.stringify({ on: false, room: 'ABCD', at: at - 13 * 60 * 60 * 1000 }));
+    expect(storedCanSeeTv('ABCD')).toBeUndefined();
+    stub('', 'off'); // the old global value from before this fix
+    expect(storedCanSeeTv('ABCD')).toBeUndefined();
   });
 
   it('?canSeeTv=0 / =1 on the URL wins (the harness films a remote phone)', () => {
-    stub('?canSeeTv=0', 'on');
-    expect(storedCanSeeTv()).toBe(false);
-    stub('?room=ABCD&canSeeTv=1', 'off');
-    expect(storedCanSeeTv()).toBe(true);
+    stub('?canSeeTv=0', JSON.stringify({ on: true, room: 'ABCD', at: Date.now() }));
+    expect(storedCanSeeTv('ABCD')).toBe(false);
+    stub('?room=ABCD&canSeeTv=1', null);
+    expect(storedCanSeeTv(undefined)).toBe(true);
   });
 });
 

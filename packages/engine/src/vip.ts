@@ -242,7 +242,10 @@ export function applyVip(
       return {
         room: { ...room, recording: action.on },
         effects: [
-          switchToast(action.on ? '📼 Saving a recap of each game' : '📼 Not saving recaps'),
+          ...switchToast(
+            room,
+            action.on ? '📼 Saving a recap of each game' : '📼 Not saving recaps',
+          ),
           { type: 'push' },
         ],
       };
@@ -253,7 +256,8 @@ export function applyVip(
       return {
         room: { ...room, musicOnPhones: action.on },
         effects: [
-          switchToast(
+          ...switchToast(
+            room,
             action.on
               ? '🎵 Music on every phone'
               : '🎵 Music on the TV only — a phone can turn its own on',
@@ -275,7 +279,8 @@ export function applyVip(
       return {
         room: { ...room, phoneOnly: action.on },
         effects: [
-          switchToast(
+          ...switchToast(
+            room,
             action.on
               ? '📱 Phone-only room — the phones show what the TV would'
               : '📺 The TV is the stage again',
@@ -300,5 +305,3 @@ export function applyVip(
     }
   }
 }
-
-/** I-642 C: a room switch changed — everyone is told what it means. */

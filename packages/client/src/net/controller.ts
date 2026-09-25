@@ -95,7 +95,9 @@ export function createController(url?: string): Controller {
       token,
       ...(takeOver ? { takeOver: true } : {}),
       ...(session.photo ? { photo: session.photo } : {}),
-      ...(storedCanSeeTv() !== undefined ? { canSeeTv: storedCanSeeTv() } : {}),
+      ...(storedCanSeeTv(session.roomCode) !== undefined
+        ? { canSeeTv: storedCanSeeTv(session.roomCode) }
+        : {}),
     });
   };
 
@@ -283,7 +285,7 @@ export function createController(url?: string): Controller {
       socket.emit('vote', { gameId });
     },
     setCanSeeTv(on) {
-      storeCanSeeTv(on);
+      storeCanSeeTv(on, store.get().room?.code);
       socket.emit('presence', { canSeeTv: on });
     },
     leave() {

@@ -25,7 +25,10 @@ export const esPhone: Pick<Texts, keyof typeof enPhone> = {
     leaveConfirm: '¿Salir de la sala?',
     tapAgain: 'toca otra vez',
     tvSounds: 'Sonidos de la TV en este teléfono',
+    tvSoundsHint: 'Cuando este teléfono hace de pantalla',
+    thisPhone: 'Este teléfono',
     seeTv: 'Veo la TV',
+    seeTvOn: 'La TV muestra el juego; este teléfono, tu parte.',
     seeTvOff: 'Los momentos de la TV y el locutor llegan a este teléfono.',
   },
   music: {

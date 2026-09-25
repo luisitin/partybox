@@ -17,10 +17,12 @@ export const enPresence = {
     /** Part 00 §3.3: someone can't see the TV while the room says everyone is together. */
     prompt: (name: string, more: number): string =>
       more > 0
-        ? `${name} and ${more} more can't see the TV. Are you on a call?`
-        : `${name} can't see the TV. Are you on a call?`,
+        ? `${name} and ${more} more can't see the TV. Are they on a call with you?`
+        : `${name} can't see the TV. Is ${name} on a call with you?`,
     onCall: 'On a call',
+    onCallHint: 'Talking games play as usual',
     noCall: 'No call',
+    noCallHint: 'Talking games warn you first; some switch to typing',
     dismiss: 'Not now',
     /** Part 00 §3.5: choosing a game the room's presence doesn't suit. */
     needsVoice: 'This game needs talking. Remote players should join a voice call.',

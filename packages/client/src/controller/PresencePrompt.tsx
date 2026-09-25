@@ -1,6 +1,6 @@
 // Part 00 §3.3 / audit #33 (ADR-047): the room says everyone is together, yet a phone says it can't
 // see the TV — the VIP is asked, between games only and never in a phone-only room: "Maya can't
-// see the TV. Are you on a call?" On a call / No call set the room's mode; Not now puts it away
+// see the TV. Is Maya on a call with you?" On a call / No call (each with what it changes) set the room's mode; Not now puts it away
 // until the set of remote players changes. Derived from the snapshot: no server prompt state.
 // It sits in the lobby's flow, under the roster (the lobby is where people arrive).
 import { useState } from 'react';
@@ -27,23 +27,26 @@ export function PresencePrompt({
   return (
     <div className={styles.prompt} role="group">
       <span role="status">{t.presence.prompt(away[0]?.name ?? '', away.length - 1)}</span>
+      {/* Each answer says what it changes (reviewer D2); neither is the pushed default. */}
       <div className={styles.actions}>
         <button
           type="button"
           onClick={() => controller.vip({ action: 'setPresenceMode', mode: 'remote-voice' })}
         >
-          {t.presence.onCall}
+          🎧 {t.presence.onCall}
+          <small>{t.presence.onCallHint}</small>
         </button>
         <button
           type="button"
           onClick={() => controller.vip({ action: 'setPresenceMode', mode: 'remote-text' })}
         >
-          {t.presence.noCall}
-        </button>
-        <button type="button" className={styles.quiet} onClick={() => setDismissed(key)}>
-          {t.presence.dismiss}
+          💬 {t.presence.noCall}
+          <small>{t.presence.noCallHint}</small>
         </button>
       </div>
+      <button type="button" className={styles.quiet} onClick={() => setDismissed(key)}>
+        {t.presence.dismiss}
+      </button>
     </div>
   );
 }

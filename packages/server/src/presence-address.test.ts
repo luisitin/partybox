@@ -24,6 +24,7 @@ describe('canSeeTvByAddress', () => {
     ['IPv6 link-local', 'fe80::1c2d:3e4f', {}, true],
     ['IPv6 unique-local', 'fd12:3456::9', {}, true],
     ['Tailscale / CGNAT 100.64/10', '100.70.239.96', {}, false],
+    ['Tailscale IPv6 (inside unique-local)', 'fd7a:115c:a1e0::1234', {}, false],
     ['a public address', '203.0.113.50', {}, false],
     ['a public IPv6 address', '2001:db8::5', {}, false],
     ['a LAN phone faking the tunnel header stays at the TV', '192.168.4.30', tunnel, true],

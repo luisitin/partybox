@@ -12,28 +12,44 @@
   animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) backwards;
 }
 
+/* Two answers of equal weight, stacked so each has room for its line on a 320 px SE. */
 .actions {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: var(--pb-space-2);
 }
 
 .actions button {
-  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
   min-height: var(--pb-touch);
-  padding: 0 var(--pb-space-3);
-  border: none;
-  border-radius: 999px;
-  background: var(--pb-accent);
-  color: var(--pb-on-accent);
+  padding: var(--pb-space-2) var(--pb-space-3);
+  border: 2px solid var(--pb-accent);
+  border-radius: var(--pb-radius);
+  background: var(--pb-surface-2);
+  color: var(--pb-text);
   font: inherit;
   font-weight: 800;
+  text-align: left;
   cursor: pointer;
 }
 
-.actions .quiet {
-  flex: 0 1 auto;
+.actions small {
+  font-size: var(--pb-font-caption);
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+.quiet {
+  align-self: center;
+  min-height: var(--pb-touch);
+  padding: 0 var(--pb-space-3);
+  border: none;
   background: transparent;
   color: inherit;
+  font: inherit;
   text-decoration: underline;
+  cursor: pointer;
 }

@@ -17,7 +17,10 @@ describe('the room switch', () => {
     expect(snapshot(room, deps)).not.toHaveProperty('presenceMode');
     const result = vip(room, { action: 'setPresenceMode', mode: 'remote-text' });
     expect(snapshot(result.room, deps).presenceMode).toBe('remote-text');
-    expect(toasts(result.effects)).toEqual(['💬 Some of you are remote, with no call']);
+    // told on the TV and the VIP's phone, not over every guest's screen (S2)
+    expect(toasts(result.effects)).toEqual(
+      Array(2).fill('💬 Some of you are remote, with no call'),
+    );
     const back = vip(result.room, { action: 'setPresenceMode', mode: 'together' }).room;
     expect(back.presenceMode).toBeUndefined();
   });

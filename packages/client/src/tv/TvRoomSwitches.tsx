@@ -28,7 +28,7 @@ export function TvRoomSwitches({
   if (away.length > 0)
     return (
       <div className={`${styles.switches} ${styles.switchAsk}`} role="status">
-        {L("{name} can't see the TV. On a call?", { name: away[0]?.name ?? '' })}
+        {L("{name} can't see the TV. On a call with you?", { name: away[0]?.name ?? '' })}
         <button type="button" className={styles.switchChip} onClick={() => set('remote-voice')}>
           🎧 {L('On a call')}
         </button>

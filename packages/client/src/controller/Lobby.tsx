@@ -102,6 +102,10 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
       }
     >
       {room.locked ? <p className={`pb-caption ${styles.count}`}>{t.lobby.locked}</p> : null}
+      {/* ADR-047: someone can't see the TV while the room says together — asked in the flow (a
+          floating card covered the add-bot row), above the roster so both answers are on an SE's
+          first screen (under it, the second answer fell below the fold). */}
+      <PresencePrompt room={room} me={me} controller={controller} />
       <ul key={room.players.length} className={styles.list} aria-label={t.lobby.playersList}>
         {room.players.map((p, i) => {
           // The owner or the VIP may remove a bot (ADR-028): one tap, no confirm — re-adding is one tap too.
@@ -151,9 +155,6 @@ export function Lobby({ controller, room, me, audio, onSetup }: LobbyProps): JSX
           </button>
         </li>
       </ul>
-      {/* ADR-047: someone can't see the TV while the room says together — asked right under the
-          roster, in the flow (a floating card covered the add-bot row and the tip line). */}
-      <PresencePrompt room={room} me={me} controller={controller} />
       <LobbyLine
         lines={lines}
         onDismissTips={

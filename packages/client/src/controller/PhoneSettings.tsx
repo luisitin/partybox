@@ -1,20 +1,13 @@
-// The theme sheet's footer on a phone: this phone's own sound and vibration toggles (R-048).
-// Turning one on plays/buzzes the `submit` pattern so the player hears or feels what they enabled.
+// The theme sheet's footer on a phone: this phone's pad, sound and music (R-048), its language, the
+// room's row and each game's settings. Turning sound on plays the `submit` cue so the player hears
+// what they enabled. Where the phone is, TV sounds and vibration head the sheet (ThisPhone.tsx).
 import { useEffect, useState, useSyncExternalStore } from 'react';
 import { GameSettingsRows } from './GameSettingsRows';
 import { JoinLangs } from './JoinLangs';
 import { ShareButton } from './ShareSheet';
 
 import type { JSX } from 'react';
-import {
-  buzz,
-  hapticsEnabled,
-  setHapticsEnabled,
-  setPadStyle,
-  usePadStyle,
-  setLang,
-  useLang,
-} from '@partybox/game-sdk/ui';
+import { setPadStyle, usePadStyle, setLang, useLang } from '@partybox/game-sdk/ui';
 import { t } from '../i18n';
 import type { SoundEngine } from '../sound';
 import {
@@ -24,9 +17,6 @@ import {
   setPhoneMusicVolume,
 } from '../phone-music';
 import pickerStyles from '../ThemePicker.module.css';
-import { SeeTvToggle } from './SeeTvToggle';
-
-const SUBMIT_BUZZ = 20;
 
 export interface PhoneSettingsProps {
   /** The phone's sound engine; absent in /preview (the sound toggle is then disabled). */
@@ -37,12 +27,10 @@ export interface PhoneSettingsProps {
    *  both are reachable mid-game and not only from the lobby. */
   room?: { code: string } | null;
   onLeave?: () => void;
-  /** ADR-047: this phone's "I can see the TV" once it is in a room. */
-  seeTv?: { on: boolean; set: (on: boolean) => void };
 }
 
 export function PhoneSettings(props: PhoneSettingsProps): JSX.Element {
-  const { audio, what, room, onLeave, seeTv } = props;
+  const { audio, what, room, onLeave } = props;
   const lang = useLang();
   const [leaving, setLeaving] = useState(false);
   useEffect(() => {
@@ -65,10 +53,6 @@ export function PhoneSettings(props: PhoneSettingsProps): JSX.Element {
     }, 100);
     return () => clearInterval(h);
   }, [audio]);
-  const [haptics, setHaptics] = useState(() => hapticsEnabled());
-  // iOS Safari has no navigator.vibrate at all: say so instead of offering a switch that does
-  // nothing (Android Chrome has it, after the page's first tap).
-  const canVibrate = typeof navigator !== 'undefined' && 'vibrate' in navigator;
   const toggleSound = (): void => {
     if (!audio) return;
     const next = !soundOn;
@@ -80,12 +64,6 @@ export function PhoneSettings(props: PhoneSettingsProps): JSX.Element {
     setSoundOn(next);
     if (next) void audio.enable().then((ok) => ok && audio.play('submit'));
   };
-  const toggleHaptics = (): void => {
-    const next = !haptics;
-    setHapticsEnabled(next);
-    setHaptics(next);
-    if (next) buzz(SUBMIT_BUZZ);
-  };
   // I-021 (the owner): the drawing pad's paper and pencil are this phone's choice — ruled paper
   // and a pencil as picked, plain / pen one tap away; nothing crosses the wire.
   const pad = usePadStyle();
@@ -95,7 +73,6 @@ export function PhoneSettings(props: PhoneSettingsProps): JSX.Element {
   const volume = useSyncExternalStore(subscribePhoneMusic, phoneMusicVolume, () => 70);
   const toggleMusic = (): void => setPhoneMusicOn(!musicOn);
   const musicWhat = what ?? t.music.roomQuiet;
-  const [tvSounds, setTvSounds] = useState(() => tvSoundsOn());
   return (
     <>
       <button
@@ -217,45 +194,6 @@ export function PhoneSettings(props: PhoneSettingsProps): JSX.Element {
       ) : null}
       {/* S-003 A: each game's own phone settings, a closed row per game (its own download). */}
       <GameSettingsRows />
-      {seeTv ? <SeeTvToggle on={seeTv.on} set={seeTv.set} /> : null}
-      {/* S-005 C: the TV's sounds on this phone (a phone-only room). */}
-      <button
-        type="button"
-        className={pickerStyles.toggle}
-        aria-pressed={tvSounds}
-        onClick={() => {
-          setTvSoundsOn(!tvSounds);
-          setTvSounds(!tvSounds);
-        }}
-      >
-        <span className={pickerStyles.toggleGlyph} aria-hidden>
-          📺
-        </span>
-        {t.phone.tvSounds}
-        <span className={pickerStyles.toggleState}>
-          {tvSounds ? t.controller.on : t.controller.off}
-        </span>
-      </button>
-      {canVibrate ? (
-        <button
-          type="button"
-          className={pickerStyles.toggle}
-          aria-pressed={haptics}
-          onClick={toggleHaptics}
-        >
-          <span className={pickerStyles.toggleGlyph} aria-hidden>
-            📳
-          </span>
-          {t.controller.vibration}
-          <span className={pickerStyles.toggleState}>
-            {haptics ? t.controller.on : t.controller.off}
-          </span>
-        </button>
-      ) : (
-        <p className={pickerStyles.toggleNote}>
-          <span aria-hidden>📳</span> {t.controller.noVibration}
-        </p>
-      )}
     </>
   );
 }

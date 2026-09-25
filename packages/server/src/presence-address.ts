@@ -23,6 +23,9 @@ export function isLoopback(address: string): boolean {
   return ip === '::1' || ipv4(ip)?.[0] === 127;
 }
 
+/** Tailscale's IPv6 range sits inside unique-local, but its phones are remote (ADR-047). */
+const TAILSCALE_V6 = /^fd7a:115c:a1e0:/;
+
 /** RFC 1918, IPv4 link-local, IPv6 link-local (fe80::/10) and unique-local (fc00::/7). */
 export function isPrivateLan(address: string): boolean {
   const ip = unmapped(address);
@@ -31,6 +34,7 @@ export function isPrivateLan(address: string): boolean {
     const [a, b] = v4 as [number, number];
     return a === 10 || (a === 172 && b >= 16 && b <= 31) || (a === 192 && b === 168) || (a === 169 && b === 254); // prettier-ignore
   }
+  if (TAILSCALE_V6.test(ip)) return false;
   return /^fe[89ab][0-9a-f]:/.test(ip) || /^f[cd][0-9a-f]{2}:/.test(ip);
 }
 

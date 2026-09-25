@@ -238,26 +238,30 @@ for (const loaded of games) {
       expect(a.at(-1)).toBe(hashState(run.finalState));
     });
 
-    it('plays through in every presence (ADR-047): three modes × phone only, one seat remote', () => {
-      // Presence is a seeded input: a game may switch features on it, never stall or diverge.
-      for (const mode of PRESENCE_MODES)
-        for (const phoneOnly of [false, true]) {
-          const options = {
-            players: playerCounts(loaded).at(-1) as number,
-            seed: 31,
-            strategy: 'random' as const,
-            maxSimMs: budgetMs,
-            presence: { mode, phoneOnly },
-            remote: mode === 'together' ? 0 : 1,
-          };
-          const run = playGame(game, options);
-          const label = `${mode}${phoneOnly ? ' + phone only' : ''}`;
-          expect(run.stuck, `stuck in ${label}`).toBe(false);
-          expect(run.init.presence, label).toEqual({ mode, phoneOnly });
-          const again = replay(game, run.init, run.events).map(hashState);
-          expect(again.at(-1), `not deterministic in ${label}`).toBe(hashState(run.finalState));
-        }
-    });
+    // Presence is a seeded input: a game may switch features on it, never stall or diverge. One
+    // case per mode × phone only, at the fewest players (six full games at max players in one `it`
+    // was every branch's flaky verify step, reviewer C1).
+    const presences = PRESENCE_MODES.flatMap((mode) =>
+      [false, true].map((phoneOnly) => ({ mode, phoneOnly })),
+    );
+    it.each(presences)(
+      'plays through in presence $mode, phone only $phoneOnly (ADR-047)',
+      ({ mode, phoneOnly }) => {
+        const options = {
+          players: playerCounts(loaded)[0] as number,
+          seed: 31,
+          strategy: 'random' as const,
+          maxSimMs: budgetMs,
+          presence: { mode, phoneOnly },
+          remote: mode === 'together' ? 0 : 1,
+        };
+        const run = playGame(game, options);
+        expect(run.stuck).toBe(false);
+        expect(run.init.presence).toEqual({ mode, phoneOnly });
+        const again = replay(game, run.init, run.events).map(hashState);
+        expect(again.at(-1), 'not deterministic').toBe(hashState(run.finalState));
+      },
+    );
 
     it('ignores stale timers and survives fuzzed events mid-game', () => {
       const visited: GameStateBase[] = [];

@@ -42,7 +42,7 @@ export function setPresenceMode(room: RoomState, mode: PresenceMode): ApplyResul
   void _old;
   return {
     room: mode === 'together' ? rest : { ...rest, presenceMode: mode },
-    effects: [switchToast(MODE_TOASTS[mode]), { type: 'push' }],
+    effects: [...switchToast(room, MODE_TOASTS[mode]), { type: 'push' }],
   };
 }
 

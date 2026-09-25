@@ -37,7 +37,8 @@ export const STRINGS: Strings = {
     'All in one room': 'Todos en la misma sala',
     'Some remote, on a call': 'Algunos lejos, en una llamada',
     'Some remote, no call': 'Algunos lejos, sin llamada',
-    "{name} can't see the TV. On a call?": '{name} no ve la TV. ¿Estáis en una llamada?',
+    "{name} can't see the TV. On a call with you?":
+      '{name} no ve la TV. ¿Está en una llamada con vosotros?',
     'On a call': 'En una llamada',
     'No call': 'Sin llamada',
     '{n} players': '{n} jugadores',

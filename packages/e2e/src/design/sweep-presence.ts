@@ -1,7 +1,8 @@
 // Design sweep of F4's screens (ADR-047), the way sweep-picker does the picker: a room with a TV,
 // the VIP's phone and a remote phone (`?canSeeTv=0`), on every phone size, in English and Spanish.
 // Stills: the VIP's "can't see the TV" question in the lobby, the TV asking on its picker, the
-// remote phone's 🎨 row, the ★ menu's "Where is everyone?", and the TV's chip once answered. Each
+// remote phone's "This phone" group, the ★ menu's "Where is everyone?", a guest's phone after the
+// switch (no toast, S2) and the TV's chip in each mode (D4). Each
 // still is fit-audited; each screen gets a montage.
 // Usage: tsx packages/e2e/src/design/sweep-presence.ts [--out <dir>] [--port 42300] [--build]
 //        [--devices iphone-se,iphone,font200,landscape] [--langs en,es]
@@ -116,7 +117,18 @@ async function sweep(
     await group.getByRole('radio').nth(1).click();
     await settle(600);
     await shoot(vip.page, lang, device, 'vip-menu-answered');
-    if (tv) await shoot(tv, lang, 'tv', 'tv-chip');
+    // S2: the switch's toast reaches the TV and the VIP only; a guest's screen stays clear.
+    await shoot(maya.page, lang, device, 'guest-after-switch');
+    // D4: the TV's chip in every mode (1 = on a call, 2 = no call, 0 = back to together).
+    for (const [i, mode] of [
+      [1, 'remote-voice'],
+      [2, 'remote-text'],
+      [0, 'together'],
+    ] as const) {
+      if (i !== 1) await group.getByRole('radio').nth(i).click();
+      await settle(600);
+      if (tv) await shoot(tv, lang, 'tv', `tv-chip-${mode}`);
+    }
   } finally {
     for (const p of [vip.page, maya.page, tv]) await p?.context().close();
   }
