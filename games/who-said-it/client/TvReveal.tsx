@@ -50,7 +50,10 @@ function stacks(r: RevealView, order: string[], byId: Map<string, ViewPlayer>): 
   }
   for (const g of order) {
     const t = r.guesses[g];
-    const guesser = byId.get(g);
+    // Before the flip the guessers are anonymous (server: RevealView.guesses): a blank face.
+    const guesser =
+      byId.get(g) ??
+      ({ id: g, name: '', avatarId: 'ghost', connected: true, status: 'active' } as ViewPlayer);
     if (t === undefined || !guesser || !order.includes(t)) continue;
     const slot = filled.get(t) ?? 0;
     filled.set(t, slot + 1);

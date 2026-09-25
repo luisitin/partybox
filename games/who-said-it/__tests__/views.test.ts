@@ -15,10 +15,29 @@ describe('the author sits out their own card (the owner, 2026-09-24)', () => {
     expect(phone(s, author)).toMatchObject({ mine: true, candidates: [] });
     expect(phone(s, other).mine).toBe(false);
     expect(phone(s, other).candidates).toHaveLength(4);
-    // The author's tap is ignored; they already count as done (✓ on the strip).
+    // The author's tap is ignored.
     s = guess(s, author, other);
     expect(s.p.guesses[author]).toBeUndefined();
-    expect(tv(s).players.find((p) => p.id === author)?.status).toBe('submitted');
+  });
+
+  it('at guess start every seated player reads the same, so no ✓ names the author (imposter, a030b2)', () => {
+    const s = until(written(start({ players: 5 }), FIVE), 'guess');
+    expect(new Set(tv(s).players.map((p) => p.status))).toEqual(new Set(['active']));
+  });
+
+  it('the landing shows anonymous taps; names arrive with the flip', () => {
+    let s = until(written(start({ players: 5 }), FIVE), 'guess');
+    const author = authorsNow(s)[0] as string;
+    for (const id of s.seats.filter((x) => x !== author))
+      s = guess(s, id, s.seats.find((x) => x !== id) as string);
+    s = until(s, 'reveal');
+    expect(s.p.step).toBe('land');
+    const land = tv(s).reveal?.guesses ?? {};
+    expect(Object.keys(land)).toHaveLength(4);
+    expect(Object.keys(land).every((k) => k.startsWith('anon-'))).toBe(true);
+    expect(Object.values(land).sort()).toEqual(Object.values(s.p.guesses).sort());
+    s = timer(s);
+    expect(Object.keys(tv(s).reveal?.guesses ?? {}).sort()).toEqual(s.seats.filter((x) => x !== author).sort()); // prettier-ignore
   });
 
   it('the guess closes once every other connected player has tapped', () => {

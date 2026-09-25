@@ -67,7 +67,8 @@ export function statusOf(state: State): (id: string) => PlayerStatus {
     if (phase === 'write' || phase === 'guess') {
       if (!state.p.seated.includes(id)) return 'waiting';
       const done = phase === 'write' ? answered : guessed;
-      if (phase === 'guess' && currentCard(state)?.authors.includes(id)) return 'submitted';
+      // The author sits out, but reads as still guessing: a tick at t=0 would name them. The phase
+      // closes once everyone else is in, so they are never the last one left.
       return done.has(id) ? 'submitted' : 'active';
     }
     return 'active';
@@ -76,7 +77,8 @@ export function statusOf(state: State): (id: string) => PlayerStatus {
 
 export interface RevealView {
   step: 'land' | 'shown';
-  /** Every seated player's tap (the authors' too, so the landing gives nobody away). */
+  /** Guesser → the face they tapped. Before the flip the guessers are anonymous ('anon-N', ordered
+   *  by target): the author sits out, so a named map would give them away by their absence. */
   guesses: Record<string, string>;
   /** From the flip on: the author(s), who was right, each player's points on this card. */
   authors: string[];
@@ -95,11 +97,16 @@ export function revealOf(state: State): RevealView | null {
   const shown = state.p.step === 'shown';
   return {
     step: state.p.step,
-    guesses,
+    guesses: shown ? guesses : anonymous(guesses),
     authors: shown ? card.authors : [],
     right: shown ? tallyCard(state, card).right : [],
     points: shown ? state.p.points : {},
   };
+}
+
+function anonymous(guesses: Record<string, string>): Record<string, string> {
+  const targets = Object.values(guesses).sort();
+  return Object.fromEntries(targets.map((t, i) => [`anon-${i}`, t]));
 }
 
 /** The card on stage: text, its number and how many this prompt has. */
