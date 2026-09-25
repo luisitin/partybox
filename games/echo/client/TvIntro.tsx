@@ -1,6 +1,6 @@
-// TV `intro` (8 s, once): "Echo" and its fainter echo, the tagline, the three steps rising one by
-// one, and the deck size.
-import type { CSSProperties, JSX } from 'react';
+// TV `intro` (1.5 s, once): the title, the tagline and the deck size. The rules are the shell's
+// ready stage's job (ADR-053).
+import type { JSX } from 'react';
 import { Stage, useT } from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
 import type { EchoTvView } from '../server/views';
@@ -22,14 +22,6 @@ export function TvIntro({ view }: GameTvProps<EchoTvView>): JSX.Element {
         <span>{L('Echo')}</span>
       </span>
       <span className={res.tagline}>{L('One clue each. Same clue? Both vanish.')}</span>
-      <ol className={res.steps}>
-        {STEPS.map((s, i) => (
-          <li key={s} className={res.step} style={{ '--i': i } as CSSProperties}>
-            <span className={res.stepNum}>{i + 1}</span>
-            {L(s)}
-          </li>
-        ))}
-      </ol>
       <span className={res.deckLine}>{L('Deck: {n} words', { n: view.deckSize })}</span>
     </Stage>
   );

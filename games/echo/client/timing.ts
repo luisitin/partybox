@@ -1,4 +1,4 @@
-import { GUESS_BEATS } from '../server/types';
+import { GUESS_BEATS } from '../shared/rules';
 
 // Echo's client beats (ms from the phase's start). One place, so the TV's cards, the reader and the
 // phones' holds line up. Every beat stays inside the server's phase length (types.ts RESULT_MS).

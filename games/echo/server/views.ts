@@ -165,8 +165,6 @@ function tvFields(state: State): EchoTvFields {
 
 function skipLabel(state: State): string | undefined {
   switch (state.phase.id) {
-    case 'intro':
-      return "Let's go";
     case 'clue':
       return 'Close the clues';
     case 'check':

@@ -3,7 +3,7 @@
 import type { CSSProperties, JSX } from 'react';
 import { useT } from '@partybox/game-sdk/ui';
 import type { GameFinaleProps } from '@partybox/game-sdk/ui';
-import { RATINGS } from '../server/deck';
+import { RATINGS } from '../shared/rules';
 import type { EchoTvView } from '../server/views';
 import { useLine } from './useLine';
 import { STRINGS } from './strings';

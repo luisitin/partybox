@@ -195,7 +195,7 @@
   font-weight: 700;
   color: var(--pb-accent-2);
   animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
-  animation-delay: 900ms;
+  animation-delay: 250ms;
 }
 
 .steps {
@@ -240,7 +240,7 @@
   font-weight: 800;
   color: var(--pb-text-muted);
   animation: global(pb-rise) var(--pb-motion-base) var(--pb-ease) both;
-  animation-delay: 3800ms;
+  animation-delay: 500ms;
 }
 
 /* ── Finale board ──────────────────────────────────────────────────────────────────────────── */

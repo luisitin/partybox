@@ -6,9 +6,9 @@ import type { State } from '../server/types';
 import { atClue, botRng, clue, input, skip, start, T0, timer, withClues } from './helpers';
 
 describe('phase order and exits', () => {
-  it('intro → clue on the clock or the VIP; 8 s', () => {
+  it('intro → clue on the clock or the VIP; a 1.5 s title beat (the shell stage has the rules)', () => {
     const s = start(5);
-    expect(s.phase).toMatchObject({ id: 'intro', deadline: T0 + 8000 });
+    expect(s.phase).toMatchObject({ id: 'intro', deadline: T0 + 1500 });
     expect(timer(s).phase.id).toBe('clue');
     expect(skip(s, T0 + 10).phase.id).toBe('clue');
   });
@@ -156,6 +156,29 @@ describe('drops, leavers, idle', () => {
     s = game.reduce(s, { type: 'player', now: T0 + 5, playerId: 'p1', connected: false });
     s = skip(withClues(s, ['stars', 'lens', 'zoom']));
     expect(timer(s).w.guess?.result).toBe('pass');
+  });
+
+  it('a drop during a pause is re-checked on resume (no waiting out the clock)', () => {
+    let s = withClues(atClue(5), ['stars', 'lens', 'Galileo']);
+    const at = s.phase.startedAt;
+    s = game.reduce(s, { type: 'vip', now: at + 2000, action: 'pause' });
+    s = game.reduce(s, { type: 'player', now: at + 3000, playerId: 'p5', connected: false });
+    expect(s.phase.id).toBe('clue');
+    s = game.reduce(s, { type: 'vip', now: at + 4000, action: 'resume' });
+    expect(s.phase.id).toBe('check');
+  });
+
+  it('a guesser who leaves for good during guess passes at once', () => {
+    const g = skip(withClues(atClue(4), ['stars', 'lens', 'zoom']));
+    const s = game.reduce(g, {
+      type: 'player',
+      now: g.phase.startedAt + 3000,
+      playerId: 'p1',
+      connected: false,
+      gone: 'left',
+    });
+    expect(s.phase.id).toBe('result');
+    expect(s.w.guess?.result).toBe('pass');
   });
 
   it('a player who left is skipped in the rotation', () => {

@@ -110,22 +110,29 @@ export function advance(state: State, now: number): State {
   }
 }
 
+/** A drop (or a resume after one) may leave everyone still here done; a guesser who left
+ *  for good passes at once instead of running out the clock. */
+function recheck(state: State, now: number): State {
+  if (state.phase.paused) return state;
+  if (state.phase.id === 'clue') return recheckClue(state, now, advance);
+  if (state.phase.id === 'check') return recheckCheck(state, now, advance);
+  if (state.phase.id === 'guess' && state.left.includes(state.w.guesser))
+    return closeGuess(state, now, enterResult);
+  return state;
+}
+
 function onPlayer(state: State, event: Extract<GameEvent<Input>, { type: 'player' }>): State {
   let next = setConnected(state, event);
   if (event.gone && state.seats.includes(event.playerId) && !state.left.includes(event.playerId))
     next = { ...next, left: [...next.left, event.playerId] };
-  if (next.phase.paused) return next;
-  // A drop may leave everyone still here done.
-  if (next.phase.id === 'clue') return recheckClue(next, event.now, advance);
-  if (next.phase.id === 'check') return recheckCheck(next, event.now, advance);
-  return next;
+  return recheck(next, event.now);
 }
 
 function reduce(state: State, event: GameEvent<Input>): State {
   if (event.type === 'player') return onPlayer(state, event);
   if (event.type === 'speech') return applySpeech(state, event.key, event.ms);
   const vip = applyVip(state, event, { skip: advance, end: enterDone });
-  if (vip) return vip;
+  if (vip) return event.type === 'vip' && event.action === 'resume' ? recheck(vip, event.now) : vip;
   if (state.phase.paused) return state;
   switch (state.phase.id) {
     case 'intro':

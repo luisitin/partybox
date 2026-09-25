@@ -105,35 +105,16 @@ export const inputSchema = z.discriminatedUnion('type', [
 ]);
 export type Input = z.infer<typeof inputSchema>;
 
-/** The TV's guess reveal (client/timing.ts reads these): echoes go blank, then one survivor
- *  turns over per step while the reader says them. */
-export const GUESS_BEATS = {
-  deal: 0,
-  dealStep: 90,
-  echoFlip: 700,
-  firstSurvivor: 1300,
-  survivorStep: 420,
-};
-/** After the last card turns: time for the reading to finish before an early guess lands. */
-export const GUESS_TAIL_MS = 1_400;
+export {
+  CLUE_MAX_CHARS,
+  GUESS_BEATS,
+  GUESS_TAIL_MS,
+  guessShowMs,
+  survivorStepMs,
+} from '../shared/rules';
 
-/** One survivor turns over per step; with a reading, the steps follow the voice (its length
- *  shared across the cards, 420–900 ms each) so each card lands as the reader says it. */
-export function survivorStepMs(survivors: number, readingMs: number | null | undefined): number {
-  if (!readingMs || readingMs <= 0 || survivors <= 0) return GUESS_BEATS.survivorStep;
-  return Math.round(Math.min(900, Math.max(GUESS_BEATS.survivorStep, readingMs / survivors)));
-}
-
-/** How long the TV needs to show `survivors` clues before a guess may end the phase. */
-export function guessShowMs(survivors: number, readingMs?: number | null): number {
-  const last =
-    survivors > 0
-      ? GUESS_BEATS.firstSurvivor + (survivors - 1) * survivorStepMs(survivors, readingMs)
-      : GUESS_BEATS.echoFlip;
-  return last + GUESS_TAIL_MS;
-}
-
-export const INTRO_MS = 8_000;
+/** A title beat only: the shell's ready stage carries the rules (ADR-053). */
+export const INTRO_MS = 1_500;
 export const CHECK_MS = 12_000;
 /** The result beat: the word, the guess, the uncovered echoes. A burn adds its slide. */
 export const RESULT_MS = 6_500;
@@ -144,7 +125,6 @@ export const EMPTY_RESULT_MS = 4_500;
 export const DONT_KNOW_WINDOW_MS = 15_000;
 export const MAX_SWAPS = 2;
 export const SPARES = 6;
-export const CLUE_MAX_CHARS = 20;
 
 /** "Leave the current phase now" — injected into phase reducers by server/index.ts. */
 export type Transition = (state: State, now: number) => State;

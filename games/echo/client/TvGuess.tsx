@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react';
 import type { JSX } from 'react';
 import { Avatar, Stage, useSound, useT } from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
-import { survivorStepMs } from '../server/types';
+import { survivorStepMs } from '../shared/rules';
 import type { EchoTvView } from '../server/views';
 import { Card, ClueText, Deck, EchoFace } from './TvParts';
 import { GUESS } from './timing';

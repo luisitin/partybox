@@ -1,11 +1,10 @@
 // Calm phones: the guesser while the others write and check ("You're guessing! No peeking"), the
 // intro's how-to-play (with the VIP's Let's go), and spectators, who get the TV's story only.
-import type { CSSProperties, JSX } from 'react';
-import { PrimaryButton, Screen, useT } from '@partybox/game-sdk/ui';
+import type { JSX } from 'react';
+import { Screen, useT } from '@partybox/game-sdk/ui';
 import type { GameControllerProps } from '@partybox/game-sdk/ui';
 import type { Input } from '../server/types';
 import type { EchoControllerView } from '../server/views';
-import { STEPS } from './TvIntro';
 import { STRINGS } from './strings';
 import styles from './phone.module.css';
 
@@ -54,26 +53,13 @@ export function PhoneGuesserWait({ view }: { view: EchoControllerView }): JSX.El
   );
 }
 
-export function PhoneIntro({
-  view,
-  skip,
-}: GameControllerProps<EchoControllerView, Input>): JSX.Element {
+export function PhoneIntro({ view }: GameControllerProps<EchoControllerView, Input>): JSX.Element {
   const L = useT(STRINGS);
   return (
-    <Screen
-      className={styles.screen}
-      footer={skip ? <PrimaryButton onClick={skip}>{L("Let's go")}</PrimaryButton> : undefined}
-    >
+    <Screen className={styles.screen}>
       <div className={`${styles.stack} ${styles.center}`}>
-        <p className={styles.kicker}>{L('How to play')}</p>
-        <ol className={styles.steps}>
-          {STEPS.map((s, i) => (
-            <li key={s} className={styles.step} style={{ '--i': i } as CSSProperties}>
-              <span className={styles.stepNum}>{i + 1}</span>
-              {L(s)}
-            </li>
-          ))}
-        </ol>
+        <p className={styles.bigIcon}>🔁</p>
+        <p className={styles.line}>{L('Echo')}</p>
         <p className={styles.hint}>{L('Deck: {n} words', { n: view.tv.deckSize })}</p>
       </div>
     </Screen>

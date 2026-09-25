@@ -61,25 +61,5 @@ export function settle(
   return { ...base, unwon: won[won.length - 1] ?? null };
 }
 
-export type RatingId = 'flawless' | 'brilliant' | 'great' | 'solid' | 'warming' | 'again';
-
-export const RATINGS: { id: RatingId; icon: string; label: string; min: number }[] = [
-  { id: 'flawless', icon: '🏆', label: 'Flawless', min: 1 },
-  { id: 'brilliant', icon: '🌟', label: 'Brilliant', min: 0.85 },
-  { id: 'great', icon: '🎉', label: 'Great', min: 0.7 },
-  { id: 'solid', icon: '👍', label: 'Solid', min: 0.55 },
-  { id: 'warming', icon: '🔥', label: 'Warming up', min: 0.3 },
-  { id: 'again', icon: '🔁', label: 'Try again!', min: 0 },
-];
-
-export function ratingOf(won: number, deckSize: number): RatingId {
-  const share = deckSize > 0 ? won / deckSize : 0;
-  if (won >= deckSize && deckSize > 0) return 'flawless';
-  for (const r of RATINGS.slice(1)) if (share >= r.min) return r.id;
-  return 'again';
-}
-
-/** Great or better crowns everyone (§7.7). */
-export function crowns(rating: RatingId): boolean {
-  return rating === 'flawless' || rating === 'brilliant' || rating === 'great';
-}
+export { RATINGS, crowns, ratingOf } from '../shared/rules';
+export type { RatingId } from '../shared/rules';

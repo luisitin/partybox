@@ -6,9 +6,9 @@ import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
 import { PrimaryButton, Screen, useHold, useServerNow, useT } from '@partybox/game-sdk/ui';
 import type { GameControllerProps, Translator } from '@partybox/game-sdk/ui';
-import { isLegalClue, sameAnswer } from '../server/match/index';
+import { isLegalClue, sameAnswer } from '@partybox/game-sdk/match';
 import type { ClueReject, Input } from '../server/types';
-import { CLUE_MAX_CHARS } from '../server/types';
+import { CLUE_MAX_CHARS } from '../shared/rules';
 import type { EchoControllerView } from '../server/views';
 import { SecretCard } from '@partybox/game-sdk/ui/secret-card';
 import { STRINGS } from './strings';
@@ -37,7 +37,7 @@ type Secret = NonNullable<EchoControllerView['secret']>;
 
 function problemOf(text: string, secret: Secret): ClueReject | null {
   if (text.trim().length === 0) return null;
-  const res = isLegalClue(text, secret, 'en', { oneWord: true, maxChars: CLUE_MAX_CHARS });
+  const res = isLegalClue(text, secret, { lang: 'en', oneWord: true, maxChars: CLUE_MAX_CHARS });
   return res.ok ? null : res.reason;
 }
 
