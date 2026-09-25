@@ -14,6 +14,24 @@
   box-shadow: inset 0 1px 0 var(--sh-brass-2);
 }
 
+.roster[data-more-right] {
+  mask-image: linear-gradient(to right, black calc(100% - 2.2rem), transparent);
+}
+
+.roster[data-more-left] {
+  mask-image: linear-gradient(to left, black calc(100% - 2.2rem), transparent);
+}
+
+.roster[data-more-left][data-more-right] {
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 2.2rem,
+    black calc(100% - 2.2rem),
+    transparent
+  );
+}
+
 .roster::-webkit-scrollbar {
   display: none;
 }

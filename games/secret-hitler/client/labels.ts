@@ -123,5 +123,7 @@ export function nameIn(
   id: string | null,
 ): string {
   if (id === null) return '';
-  return players.find((p) => p.id === id)?.name ?? '?';
+  const name = players.find((p) => p.id === id)?.name ?? '?';
+  // A name never splits across lines in a headline (review 0016f2 #2); long ones may still wrap.
+  return name.length <= 16 ? name.replace(/ /g, ' ') : name;
 }

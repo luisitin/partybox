@@ -93,7 +93,7 @@ export const STRINGS: Strings = {
     '{players} players · {lib} Liberals · 1 Fascist · Hitler':
       '{players} jugadores · {lib} liberales · 1 fascista · Hitler',
     'President {name} is choosing a Chancellor': 'El Presidente {name} está eligiendo Canciller',
-    'President {p} · Chancellor {c}': 'Presidente {p} · Canciller {c}',
+    'President {p} · Chancellor {c}': 'Presidente {p} · Canciller {c}',
     'Vote now': 'Voten ahora',
     '{n} of {m} have voted': 'Han votado {n} de {m}',
     Elected: 'Elegido',

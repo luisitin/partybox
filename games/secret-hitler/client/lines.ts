@@ -52,7 +52,7 @@ export function phaseLines(L: Translator, view: View): Lines {
         (s) => !s.tags.includes('executed') && !s.tags.includes('exiled'),
       );
       return {
-        title: L('President {p} · Chancellor {c}', { p: pres, c: chan }),
+        title: L('President {p} · Chancellor {c}', { p: pres, c: chan }),
         lines: [L('Vote now'), L('{n} of {m} have voted', { n: voted, m: alive.length }), ...note],
       };
     }

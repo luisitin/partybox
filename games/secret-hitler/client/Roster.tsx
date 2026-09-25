@@ -3,6 +3,7 @@
 // executed, ✓ Not Hitler, who has voted. While a player's dossier is open, the teammates it names
 // are marked too (a Fascist sees the other Fascists and Hitler); closed, the roster shows only
 // public facts, so a glance over a shoulder gives nothing away.
+import { useEffect, useRef, useState } from 'react';
 import type { JSX } from 'react';
 import { Avatar, useT } from '@partybox/game-sdk/ui';
 import type { ShControllerView } from '../server/views';
@@ -24,8 +25,38 @@ export function Roster({
 }): JSX.Element {
   const L = useT(STRINGS);
   const team = new Map((showTeam ? (view.dossier?.team ?? []) : []).map((t) => [t.id, t.role]));
+  // More seats than fit: the strip scrolls sideways, and a fade on the hidden side says so.
+  const ref = useRef<HTMLOListElement>(null);
+  const [more, setMore] = useState<{ left: boolean; right: boolean }>({
+    left: false,
+    right: false,
+  });
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const measure = (): void => {
+      const left = el.scrollLeft > 2;
+      const right = el.scrollLeft + el.clientWidth < el.scrollWidth - 2;
+      setMore((m) => (m.left === left && m.right === right ? m : { left, right }));
+    };
+    measure();
+    el.addEventListener('scroll', measure, { passive: true });
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => {
+      el.removeEventListener('scroll', measure);
+      ro.disconnect();
+    };
+  }, []);
   return (
-    <ol className={styles.roster} aria-label={L('Seat order')} data-faces={facesOnly || undefined}>
+    <ol
+      ref={ref}
+      className={styles.roster}
+      aria-label={L('Seat order')}
+      data-faces={facesOnly || undefined}
+      data-more-left={more.left || undefined}
+      data-more-right={more.right || undefined}
+    >
       {view.seats.map((seat) => {
         const p = view.players.find((x) => x.id === seat.id);
         const gone = seat.tags.includes('executed') || seat.tags.includes('exiled');

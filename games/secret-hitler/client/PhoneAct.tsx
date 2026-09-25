@@ -119,7 +119,7 @@ export function PhoneAct({ frame, act, send }: Props): JSX.Element {
         <PhoneFrame
           frame={frame}
           kicker={L('Vote now')}
-          title={L('President {p} · Chancellor {c}', { p: pres, c: chan })}
+          title={L('President {p} · Chancellor {c}', { p: pres, c: chan })}
         >
           <div className={styles.placards}>
             {[true, false].map((ja) => (
