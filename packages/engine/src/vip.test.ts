@@ -148,8 +148,8 @@ describe('VIP validation', () => {
   it('kick removes the player and notifies them; self-kick and ghosts rejected', () => {
     const r = vip(roomWith(3), { action: 'kick', playerId: 'p3' });
     expect(r.room.players['p3']).toBeUndefined();
-    expect(effectTypes(r.effects)).toEqual(['kicked', 'toast', 'push']);
-    expect(toasts(r.effects)).toEqual(['P3 was kicked']);
+    expect(effectTypes(r.effects)).toEqual(['kicked', 'toast', 'toast', 'push']); // I-373: + the VIP's own
+    expect(toasts(r.effects)).toEqual(['P3 left', 'Removed P3']); // I-373: the room hears "left"
     expect(errorsOf(vip(roomWith(2), { action: 'kick', playerId: 'p1' }).effects)).toEqual([
       'cannot_start',
     ]);
@@ -201,5 +201,22 @@ describe('VIP validation', () => {
     expect(errorsOf(vip(tooMany, { action: 'playAgain' }, T0 + 400).effects)).toEqual([
       'cannot_start',
     ]);
+  });
+});
+
+describe('I-373: a removal is not announced as one', () => {
+  it('the room hears "left"; the VIP alone hears "Removed"', () => {
+    const r = vip(roomWith(3), { action: 'kick', playerId: 'p3' });
+    const toastsOf = r.effects.filter((e) => e.type === 'toast') as { to: string; text: string }[];
+    expect(toastsOf.find((e) => e.to === 'all')?.text).toBe('P3 left');
+    expect(toastsOf.find((e) => e.to === 'p1')?.text).toBe('Removed P3');
+    expect(toastsOf.some((e) => /kicked/.test(e.text))).toBe(false);
+  });
+  it('B: a ghost seat (its phone already gone) leaves without a word to the room', () => {
+    const room = roomWith(3);
+    const ghost = { ...room, players: { ...room.players, p3: { ...room.players['p3']!, connected: false } } };
+    const r = vip(ghost, { action: 'kick', playerId: 'p3' });
+    const toastsOf = r.effects.filter((e) => e.type === 'toast') as { to: string; text: string }[];
+    expect(toastsOf.map((e) => e.text)).toEqual(['Removed P3']);
   });
 });
