@@ -1,4 +1,5 @@
 // A row/grid of player chips built from the view envelope's `players[]`.
+import { useEffect, useRef, useState } from 'react';
 import type { JSX } from 'react';
 import type { ViewPlayer } from '@partybox/shared';
 import { useT } from '../ui/lang';
@@ -35,6 +36,9 @@ export interface PlayerChipsProps {
   enter?: boolean;
   /** Empty dashed seats rendered after the players (an empty lobby shows where people go). */
   seats?: number;
+  /** The TV strip: go faces-only by itself when the named chips would take more than this many
+   *  rows (Tune In: 10+ players pushed the stage up). Re-checked when the players change. */
+  autoFacesPastRows?: number;
 }
 
 export function PlayerChips({
@@ -54,8 +58,26 @@ export function PlayerChips({
   botIds = [],
   enter = false,
   seats = 0,
+  autoFacesPastRows,
 }: PlayerChipsProps): JSX.Element {
   const L = useT(STRINGS);
+  // Auto faces-only: the named chips are laid out, their rows counted (distinct tops), and past the
+  // limit the strip drops the names. A new set of players starts over with names.
+  const list = useRef<HTMLUListElement>(null);
+  const key = players.map((p) => `${p.id}:${p.name}`).join('|');
+  const [auto, setAuto] = useState<{ key: string; faces: boolean }>({ key, faces: false });
+  if (auto.key !== key) setAuto({ key, faces: false });
+  useEffect(() => {
+    const el = list.current;
+    if (!el || !autoFacesPastRows || auto.faces) return undefined;
+    const ro = new ResizeObserver(() => {
+      const tops = new Set([...el.children].map((c) => (c as HTMLElement).offsetTop));
+      if (tops.size > autoFacesPastRows) setAuto({ key, faces: true });
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [autoFacesPastRows, auto.faces, key]);
+  const faces = facesOnly || auto.faces;
   // Same rule as Scoreboard's 🏆: no leader mark when nobody has scored or everyone is tied.
   // Alphabetical everywhere chips appear (lobby, selecting, game strip), so a player finds their
   // chip in the same place on every screen; numeric-aware so Bot 2 precedes Bot 10 (review-loop #3).
@@ -70,13 +92,14 @@ export function PlayerChips({
       : new Set<string>();
   return (
     <ul
+      ref={list}
       className={`${styles.list} ${styles[layout]} ${align === 'start' ? styles.start : ''}`}
       aria-label={L('players')}
     >
       {ordered.map((p) => (
         <li key={p.id} className={`${styles.item} ${enter ? styles.enter : ''}`}>
           <PlayerChip
-            name={facesOnly && p.id !== leadId ? '' : p.name}
+            name={faces && p.id !== leadId ? '' : p.name}
             avatarId={p.avatarId}
             connected={p.connected}
             status={p.status}
@@ -85,7 +108,7 @@ export function PlayerChips({
             waving={wavingIds.includes(p.id)}
             awayLeft={awayLeft[p.id] ?? null}
             thinking={thinkingIds.includes(p.id)}
-            score={showScores && !(facesOnly && p.id !== leadId) ? p.score : undefined}
+            score={showScores && !(faces && p.id !== leadId) ? p.score : undefined}
             scoreMuted={scoresMuted}
             leader={leaders.has(p.id)}
             isBot={botIds.includes(p.id)}

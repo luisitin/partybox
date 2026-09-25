@@ -161,6 +161,14 @@ export function ControllerApp(): JSX.Element {
     beds.setPaused(paused);
   }, [beds, bedsWanted, room, view, gameBeds, paused, musicVolume]);
   const me = state.room?.players.find((p) => p.id === state.playerId) ?? null;
+  // Joining scrolled the page for the keyboard (sideways, the name field sits low): the lobby then
+  // opened with its header half off the top (spy-grid's play-test). The shell scrolls inside its
+  // screens, never the page, so a join puts the page back at the top.
+  const joined = state.joined;
+  useEffect(() => {
+    if (joined && (window.scrollY !== 0 || document.documentElement.scrollTop !== 0))
+      window.scrollTo(0, 0);
+  }, [joined]);
   // I-070 B: a nudge is felt on the VIP's phone — a buzz and the `phase` note as the toast lands.
   const lastNudge = useRef(0);
   useEffect(() => {
