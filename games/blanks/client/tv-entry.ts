@@ -2,7 +2,11 @@
 import type { GameTvModule } from '@partybox/game-sdk/ui';
 import type { BlanksTvView } from '../server/index';
 import { shared } from './shared';
+import { RESULT_BEATS_MS } from './timing';
 import { Tv } from './Tv';
+
+/** The result's last beat: the winner named (TvResult's BEAT_WINNER). */
+const RESULT_WINNER_MS = RESULT_BEATS_MS[2];
 
 export const tv: GameTvModule = {
   ...shared,
@@ -11,8 +15,9 @@ export const tv: GameTvModule = {
   // on the table (TvRound.tsx), so the shell's `lock` tick stays quiet there — one note per card.
   ownLocks: ['answer'],
   // The point lands on result entry but the stage names the winner on its last beat: the strip
-  // waits for the next phase.
-  stripScores: (view) => view.phaseId !== 'result',
+  // holds its old numbers until that beat, then counts the point (retro 0ac5d8 — it used to wait
+  // for the next phase, and the result now waits on the VIP's Next).
+  stripScores: (view) => (view.phaseId === 'result' ? RESULT_WINNER_MS : true),
   // Whoever the room should look at: the seat reading a card out (the judge in czar mode) while
   // it reads (I-017 A); while the room votes, whoever has not voted yet (I-004 B).
   stripActive: (view) => {

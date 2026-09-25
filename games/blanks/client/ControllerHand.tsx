@@ -187,10 +187,15 @@ export function ControllerHand({ view, me, send, skip }: Props): JSX.Element {
               ? L('Round {round} · pick {n}, in order', { round: view.round, n: pick })
               : L('Round {round} · pick one', { round: view.round })}
           </span>
-          {/* I-159 B: Fan or List, this phone's own choice */}
+          {/* I-159 B: Fan or List, this phone's own choice. Retro 0ac5d8: a bare "Fan" beside the
+              kicker meant nothing to a first-timer — the pill names the view it is showing, with
+              an icon, and says what a tap does. */}
           <button
             type="button"
             className={styles.handMode}
+            aria-label={
+              list ? L('Hand view: list. Show as a fan') : L('Hand view: fan. Show as a list')
+            }
             onClick={() => {
               const next = list ? 'fan' : 'list';
               setMode(next);
@@ -201,7 +206,7 @@ export function ControllerHand({ view, me, send, skip }: Props): JSX.Element {
               }
             }}
           >
-            {list ? L('Fan') : L('List')}
+            <span aria-hidden>{list ? '☰' : '🃏'}</span> {list ? L('View: list') : L('View: fan')}
           </button>
         </span>
       }

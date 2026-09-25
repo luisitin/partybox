@@ -1,6 +1,7 @@
 // Phone during "reveal" (the same card the TV is reading, so a phone-only room can read along)
 // and "judge" (voters get the list; the judge in czar mode is the only voter; everyone else reads
 // the cards and waits). A voter's own card is listed but not votable.
+import { useLayoutEffect, useRef, useState } from 'react';
 import type { JSX } from 'react';
 import { Avatar, Screen, VoteList, WaitingScreen, useT } from '@partybox/game-sdk/ui';
 import type { GameControllerProps, Translator } from '@partybox/game-sdk/ui';
@@ -13,6 +14,34 @@ import { STRINGS } from './strings';
 import styles from './blanks.module.css';
 
 type Props = GameControllerProps<BlanksControllerView, Input>;
+
+/** Past this share of the screen the vote's question card goes compact (below). */
+const PROMPT_MAX_SHARE = 0.25;
+
+/**
+ * The question above the vote list. At 200 % text (or on a short phone) the full card took the
+ * whole first screen and only answer A showed (retro 0ac5d8): when it stands taller than a quarter
+ * of the screen it drops to caption type, so at least two answers are in view. Measured once per
+ * card, before paint, so it never flickers between sizes.
+ */
+function VotePrompt({ text, pick }: { text: string; pick: number }): JSX.Element {
+  const ref = useRef<HTMLDivElement>(null);
+  const [compact, setCompact] = useState(false);
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el || compact) return;
+    if (el.offsetHeight > window.innerHeight * PROMPT_MAX_SHARE) setCompact(true);
+  }, [text, compact]);
+  return (
+    <div
+      ref={ref}
+      className={compact ? styles.votePromptCompact : undefined}
+      data-compact={compact || undefined}
+    >
+      <FilledCard text={text} pick={pick} size="phone" />
+    </div>
+  );
+}
 
 /** No card to show yet: the TV has it, or (a phone-only room) it is a moment away. */
 function Elsewhere({ view, L }: { view: BlanksControllerView; L: Translator }): JSX.Element {
@@ -105,7 +134,7 @@ export function ControllerJudge({ view, send, skip }: Props): JSX.Element {
     return (
       <VoteList
         kicker={kicker}
-        header={<FilledCard text={black.text} pick={black.pick} size="phone" />}
+        header={<VotePrompt key={black.text} text={black.text} pick={black.pick} />}
         prompt={
           <>
             {L('Which one will the judge take?')}
@@ -141,7 +170,7 @@ export function ControllerJudge({ view, send, skip }: Props): JSX.Element {
       <VoteList
         kicker={kicker}
         header={
-          answersOnly ? <FilledCard text={black.text} pick={black.pick} size="phone" /> : null
+          answersOnly ? <VotePrompt key={black.text} text={black.text} pick={black.pick} /> : null
         }
         prompt={
           <>

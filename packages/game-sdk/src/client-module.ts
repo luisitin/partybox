@@ -101,8 +101,10 @@ export interface GameTvModule extends GameShared {
    * Whether the TV strip may show running scores for this view (default: yes whenever players
    * carry a `score`). Return false for a phase whose stage reveals points beat by beat, so the
    * strip never leads the stage (a reveal that applies points on entry but steps its rows).
+   * A number is a delay: the strip holds for that many ms after the phase starts on this TV, then
+   * shows the new totals (the stage's own beat — Blanks names its winner 1200 ms into the result).
    */
-  stripScores?: (view: PushedView<TvView>) => boolean;
+  stripScores?: (view: PushedView<TvView>) => boolean | number;
   /**
    * Player ids the TV strip should ring as "on" for this view (I-017): the seat asked to read a
    * card out, the judge deciding — whoever the room should look at. Default: nobody.

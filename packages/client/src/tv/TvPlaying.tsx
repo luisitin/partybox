@@ -25,6 +25,7 @@ import { CrossfadeSwap } from '../CrossfadeSwap';
 import { STRINGS } from './strings';
 import styles from './TvPlaying.module.css';
 import { gameEntry } from '../catalog';
+import { useStripScores } from './stripScores';
 
 export interface TvPlayingProps {
   room: RoomSnapshot;
@@ -109,6 +110,9 @@ export function TvPlaying({
   // While a game withholds the strip (Wisecrack's reveal), the chips keep the numbers they last
   // showed, muted: the tally is not spoiled and the row does not reflow (review-loop #32).
   const [held, setHeld] = useState<Record<string, number>>({});
+  // A game may hold the strip for part of a phase (a number of ms: the stage's reveal beat).
+  const stripRule = view ? (module?.stripScores?.(view) ?? true) : true;
+  const stripOpen = useStripScores(view?.phaseId ?? '', stripRule);
   if (!view) {
     return (
       <div className={styles.center}>
@@ -134,8 +138,7 @@ export function TvPlaying({
   const timerMode = view.timerMode ?? 'normal';
   // Running totals on the strip (R-068): every ViewPlayer already carries `score`; spectators and
   // score-less games (Broken Pencil) stay number-free; a game can hold the strip back per phase.
-  const showScores =
-    view.players.some((p) => p.score !== undefined) && (module?.stripScores?.(view) ?? true);
+  const showScores = view.players.some((p) => p.score !== undefined) && stripOpen;
   if (showScores && view.players.some((p) => p.score !== undefined && held[p.id] !== p.score)) {
     const next: Record<string, number> = {};
     for (const p of view.players) if (p.score !== undefined) next[p.id] = p.score;

@@ -220,6 +220,8 @@ export const SCREENS_ES: Readonly<Record<string, string>> = {
   'Next card ({n} of {total})': 'Siguiente carta ({n} de {total})',
   'Open the vote': 'Abrir la votación',
   // I-159 B
-  Fan: 'Abanico',
-  List: 'Lista',
+  'View: fan': 'Vista: abanico',
+  'View: list': 'Vista: lista',
+  'Hand view: fan. Show as a list': 'Vista de la mano: abanico. Mostrar en lista',
+  'Hand view: list. Show as a fan': 'Vista de la mano: lista. Mostrar en abanico',
 };
