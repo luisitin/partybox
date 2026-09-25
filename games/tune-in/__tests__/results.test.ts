@@ -22,8 +22,8 @@ describe('teams', () => {
       kind: 'teams',
       winner: 'sun',
       teams: [
-        { id: 'sun', name: 'Sun', mark: '▲', members: teams.sun },
-        { id: 'moon', name: 'Moon', mark: '●', members: teams.moon },
+        { id: 'sun', name: 'Sun', mark: '▲', color: 'var(--pb-team-sun)', members: teams.sun },
+        { id: 'moon', name: 'Moon', mark: '●', color: 'var(--pb-team-moon)', members: teams.moon },
       ],
     });
     expect([...(r?.winnerIds ?? [])].sort()).toEqual([...teams.sun].sort());

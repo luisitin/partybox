@@ -228,8 +228,21 @@ export function results(state: State): GameResults | null {
         kind: 'teams',
         winner: sun === moon ? null : sun > moon ? 'sun' : 'moon',
         teams: [
-          { id: 'sun', name: 'Sun', mark: '▲', members: state.teams.sun },
-          { id: 'moon', name: 'Moon', mark: '●', members: state.teams.moon },
+          // results-teams: the shell heads each group and tints the winner's headline in these
+          {
+            id: 'sun',
+            name: 'Sun',
+            mark: '▲',
+            color: 'var(--pb-team-sun)',
+            members: state.teams.sun,
+          },
+          {
+            id: 'moon',
+            name: 'Moon',
+            mark: '●',
+            color: 'var(--pb-team-moon)',
+            members: state.teams.moon,
+          },
         ],
       },
     };

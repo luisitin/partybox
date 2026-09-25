@@ -123,6 +123,10 @@ so do Nice ↔ Naughty, Prude ↔ Shameless and Wholesome ↔ Twisted in the spi
   `{kind:'coop', won: rating ≥ Crystal clear}` with the rating as the headline.
 - `results-ties` ([304c6e], Foundation): one award card naming every tied winner, three tied names in
   the headline, the gold outline on a tie's last row (reviewer [ba045e] #3). Tune In needs no change.
+- `results-teams` (Foundation, ADR-052 `teams[].color`): Tune In sends its team tokens,
+  `var(--pb-team-sun)` / `var(--pb-team-moon)`, so the shell heads each group and tints the winner's
+  headline in the colours the game used all along (branch tune-in/team-colors, stacked on
+  results-teams; it lands after it).
 - The shell's ready-up stage (ADR-053): adopted (above). Per-mode how-to-play steps for the stage:
   proposed [cafab2].
 - The strip's scores frozen at 0 (TvPlaying.tsx:137, reported [ac5036] with a one-line fix).
