@@ -42,8 +42,7 @@ export const SCREENS_ES: Readonly<Record<string, string>> = {
   'Right answer: +wager. Wrong or no answer: −wager.':
     'Acierto: +apuesta. Fallo o sin respuesta: −apuesta.',
   'nothing at stake': 'nada en juego',
-  'All in · 100 %': 'Con todo · 100 %',
-  '{percent} % of your {score}': '{percent} % de tus {score}',
+  'All in': 'Con todo',
   'Your bet: {amount}': 'Tu apuesta: {amount}',
   'right +{amount} · wrong −{amount}': 'acierto +{amount} · fallo −{amount}',
   'Nothing riding on this one — play for pride': 'Sin apuesta: juega por orgullo',
@@ -63,14 +62,6 @@ export const SCREENS_ES: Readonly<Record<string, string>> = {
   'No answer': 'Sin respuesta',
   'Too slow': 'Muy tarde',
   Wrong: 'Incorrecto',
-  'It was {letter} · {answer}': 'Era la {letter} · {answer}',
-  'Wagered nothing · final score {score}': 'Sin apuesta · puntuación final {score}',
-  'Won the wager · you bet {bet} · final score {score}':
-    'Ganaste la apuesta · apostaste {bet} · puntuación final {score}',
-  'Lost the wager · you bet {bet} · final score {score}':
-    'Perdiste la apuesta · apostaste {bet} · puntuación final {score}',
-  '🔥 streak {streak}': '🔥 racha de {streak}',
-  '{seconds} s to spare': '{seconds} s de sobra',
   'Streak of {streak} over': 'Se cortó tu racha de {streak}',
   "everyone's results": 'resultados de todos',
 
@@ -105,4 +96,15 @@ export const SCREENS_ES: Readonly<Record<string, string>> = {
   'High roller': 'Gran apuesta',
   'Won a {points}-point wager on the final question':
     'Ganó una apuesta de {points} puntos en la pregunta final',
+  // I-589 (the owner's note): the standings' Next button
+  'Next question': 'Siguiente pregunta',
+  'On to the wager': 'A las apuestas',
+  'Moving on…': 'Avanzando…',
+  // I-288 B
+  '+{points} now': '+{points} ahora',
+  // I-550 A
+  'Final question: {topic}': 'Pregunta final: {topic}',
+  // I-790 C: the reveal band
+  '{delta} this round': '{delta} en esta ronda',
+  '{total} total': '{total} en total',
 };

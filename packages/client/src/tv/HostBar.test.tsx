@@ -64,3 +64,22 @@ describe('I-682 C: no "Pick a game" for a room of nobody', () => {
     expect(html(lobby([player('sam', false)]))).toContain('Pick a game');
   });
 });
+
+describe('I-589: a game with its own Next hides the host bar skip', () => {
+  const view = (extra: object) =>
+    ({
+      gameId: 'g',
+      phaseId: 'reveal',
+      deadline: null,
+      paused: false,
+      players: [],
+      vip: null,
+      ...extra,
+    }) as never;
+  const html = (v: never): string =>
+    renderToStaticMarkup(<HostBar client={client} room={room('playing')} view={v} />);
+  it('shows Skip / Next normally and drops it when the view says so', () => {
+    expect(html(view({}))).toContain('⏭');
+    expect(html(view({ vipSkipHidden: true }))).not.toContain('⏭');
+  });
+});

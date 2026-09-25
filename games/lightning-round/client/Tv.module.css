@@ -326,8 +326,8 @@
 }
 
 .crown {
-  flex-shrink: 0;
   font-size: var(--pb-font-caption);
+  color: var(--pb-accent-2);
 }
 
 .name {
@@ -484,4 +484,21 @@
 }
 .crowdFace:first-child {
   margin-left: 0;
+}
+
+/* ── I-589 A: a right answer's time on its reveal row; the fastest wears the bolt. */
+.raceTime {
+  font-size: var(--pb-font-caption);
+  font-weight: 800;
+  color: var(--pb-accent-2);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* ── I-550 A: the final's topic under "Place your wagers". */
+.finalTopic {
+  margin: 0;
+  color: var(--pb-accent-2);
+  font-size: var(--pb-font-h2);
+  font-weight: 800;
 }

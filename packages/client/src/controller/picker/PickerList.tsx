@@ -68,7 +68,19 @@ export function PickerList({ controller, room, me, lang }: PickerListProps): JSX
     <Screen
       title={
         <span className={styles.head}>
-          <span className={styles.headTitle}>{t.lobby.pickGame}</span>
+          {me.isVip ? (
+            <span className={styles.headTitle}>{t.lobby.pickGame}</span>
+          ) : (
+            // A guest does not pick: the TV's thinking line, its "…" as dots that rise in turn.
+            <span className={styles.headTitle} aria-label={t.selecting.vipChoosing(vipName)}>
+              <span aria-hidden>{t.selecting.vipChoosing(vipName).replace(/…$/, '')}</span>
+              <span className={styles.dots} aria-hidden>
+                <span />
+                <span />
+                <span />
+              </span>
+            </span>
+          )}
           <span className={styles.pill}>{t.picker.playersPill(room.players.length)}</span>
         </span>
       }

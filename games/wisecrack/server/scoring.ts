@@ -69,21 +69,36 @@ export function applyTally(state: State, tallies: AuthorTally[]): State {
   return { ...state, scores, stats: { ...state.stats, votesReceived, sweeps } };
 }
 
-/** Player with the highest stat (> 0); ties go to the higher total score, then the lower id. */
-function leader(state: State, stat: Record<string, number>): string | null {
+/** Player with the highest stat (> 0); ties go to one without an award yet, then the higher total score, then the lower id. */
+function leader(
+  state: State,
+  stat: Record<string, number>,
+  won: Set<string> = new Set(),
+): string | null {
   const ids = Object.keys(state.players).filter((id) => (stat[id] ?? 0) > 0);
+  // I-474 A: a tied stat goes to someone without an award yet, before the higher score
   ids.sort(
     (a, b) =>
       (stat[b] ?? 0) - (stat[a] ?? 0) ||
+      Number(won.has(a)) - Number(won.has(b)) ||
       (state.scores[b] ?? 0) - (state.scores[a] ?? 0) ||
       compareCodeUnits(a, b),
   );
-  return ids[0] ?? null;
+  const top = ids[0];
+  return top === undefined ? null : claim(won, top);
+}
+
+/** I-474: an award is taken — remembered so the next award prefers someone else on a tie. */
+function claim(won: Set<string>, id: string): string {
+  won.add(id);
+  return id;
 }
 
 export function awardsFor(state: State): GameAward[] {
   const out: GameAward[] = [];
-  const crowd = leader(state, state.stats.votesReceived);
+  // I-474: who already holds an award tonight
+  const won = new Set<string>();
+  const crowd = leader(state, state.stats.votesReceived, won);
   if (crowd)
     out.push({
       id: 'crowd-favourite',
@@ -91,7 +106,7 @@ export function awardsFor(state: State): GameAward[] {
       description: `Most votes received: ${state.stats.votesReceived[crowd] ?? 0}`,
       playerId: crowd,
     });
-  const sweeper = leader(state, state.stats.sweeps);
+  const sweeper = leader(state, state.stats.sweeps, won);
   if (sweeper)
     out.push({
       id: 'sweep-master',
@@ -99,7 +114,7 @@ export function awardsFor(state: State): GameAward[] {
       description: `Unanimous wins: ${state.stats.sweeps[sweeper] ?? 0}`,
       playerId: sweeper,
     });
-  const speedy = leader(state, state.stats.fastAnswers);
+  const speedy = leader(state, state.stats.fastAnswers, won);
   if (speedy)
     out.push({
       id: 'speed-writer',

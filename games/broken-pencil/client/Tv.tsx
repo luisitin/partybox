@@ -8,6 +8,7 @@ import type { GameTvProps, Translator } from '@partybox/game-sdk/ui';
 import type { PageView, PencilTvView } from '../server/views';
 import { DrawingView } from './DrawingView';
 import { Summary } from './Finale';
+import { Verdict } from './Verdict';
 import { STRINGS } from './strings';
 import styles from './Tv.module.css';
 
@@ -158,7 +159,8 @@ function Thumb({ page }: { page: PageView }): JSX.Element {
 
 /** The show's sheet: 560 px when the stage has it, else what is left under the "X drew" caption
  * (an eight-player roster leaves ~480 px; `.current` is the size container). */
-const SHEET_SIZE = 'min(560px, calc(100cqh - 72px))';
+// I-211 B: the sheet fills the page area's height (no caption row above it any more), never wider
+const SHEET_SIZE = 'min(calc(100cqh - 16px), 100cqw)';
 
 function CurrentPage({ page }: { page: PageView }): JSX.Element {
   const L = useT(STRINGS);
@@ -175,13 +177,14 @@ function CurrentPage({ page }: { page: PageView }): JSX.Element {
     );
   if (page.kind === 'draw')
     return (
-      <div className={`${styles.page} ${styles.flip}`}>
-        <p className={styles.pageWho}>{L('{name} drew', { name })}</p>
+      <div className={`${styles.page} ${styles.flip} ${styles.sheetWrap}`}>
         <DrawingView
           drawing={page.drawing}
           size={SHEET_SIZE}
           label={L("{name}'s drawing", { name })}
         />
+        {/* I-211 B: who drew it, on the sheet's corner */}
+        <p className={`${styles.pageWho} ${styles.sheetTag}`}>{L('{name} drew', { name })}</p>
       </div>
     );
   return (
@@ -209,9 +212,28 @@ export function Tv({ view }: GameTvProps<PencilTvView>): JSX.Element {
           <li>
             {L('Your drawing goes to the next player: they guess it, then draw their guess.')}
           </li>
-          <li>{L('That goes on round the circle; the last player only guesses.')}</li>
+          {/* I-507 A: the rule as this room will play it */}
+          <li>
+            {view.fullCircle
+              ? L('That goes on round the circle; the last player only guesses.')
+              : view.passes === 1
+                ? L('It passes to 1 player, who only guesses.')
+                : L('It passes to {n} players in turn; the last of them only guesses.', {
+                    n: view.passes,
+                  })}
+          </li>
           <li>{L('Then everyone presents their own book on the TV, page by page.')}</li>
         </ol>
+        {/* I-507 B: the book as it will be — the word, then drawing, guess, drawing… */}
+        <p className={styles.chain} aria-label={L('{n} pages', { n: view.pageCount })}>
+          <span aria-hidden>
+            📖
+            {Array.from({ length: view.pageCount - 1 }, (_, i) =>
+              i % 2 === 0 ? ' ✏️' : ' ❓',
+            ).join('')}
+          </span>
+          <span className={styles.chainCount}>{L('{n} pages', { n: view.pageCount })}</span>
+        </p>
         <p className={styles.count} role="status">
           {picked === 1
             ? L('1 of {total} picked', { total: view.progress.length })
@@ -251,53 +273,44 @@ export function Tv({ view }: GameTvProps<PencilTvView>): JSX.Element {
     const earlier = s.pages.length - 1 - STRIP_MAX;
     return (
       <Stage>
-        <div className={styles.head}>
-          <BigText level="h1" tone="accent">
-            {L("{name}'s book", { name: s.ownerName })}
-          </BigText>
-          <p className={styles.kicker}>
-            {L('{name} turns the pages · book {book} of {books} · page {page} of {pages}', {
-              name: s.ownerName,
-              book: s.book + 1,
-              books: view.bookCount,
-              page: s.page + 1,
-              pages: view.pageCount,
-            })}
-          </p>
-        </div>
         <div className={styles.showBody}>
-          <ul className={styles.strip} aria-label={L('pages so far')}>
-            {/* The stage fits about six thumbnails; a long chain keeps its newest pages (the context
-                for the current one) and folds the rest into a count (review-loop #67). */}
-            {earlier > 0 ? (
-              <li className={styles.thumbMore}>
-                {earlier === 1 ? L('1 earlier page…') : L('{n} earlier pages…', { n: earlier })}
-              </li>
-            ) : null}
-            {s.pages
-              .slice(0, -1)
-              .slice(-STRIP_MAX)
-              .map((p, i) => (
-                <Thumb key={i} page={p} />
-              ))}
-          </ul>
+          {/* I-211 B: the title and page count sit above the thumbnails — the page gets the height */}
+          <div className={styles.showSide}>
+            <div className={`${styles.head} ${styles.sideHead}`}>
+              <BigText level="h2" tone="accent">
+                {L("{name}'s book", { name: s.ownerName })}
+              </BigText>
+              {/* The owner's note on I-211: the three-line kicker was crammed — the title already names
+                  who turns the pages, so the column keeps "book 1 of 6" and "page 2 of 5". */}
+              <p className={styles.kicker}>
+                <span className={styles.kickerLine}>
+                  {L('book {book} of {books}', { book: s.book + 1, books: view.bookCount })}
+                </span>
+                <span className={styles.kickerLine}>
+                  {L('page {page} of {pages}', { page: s.page + 1, pages: view.pageCount })}
+                </span>
+              </p>
+            </div>
+            <ul className={styles.strip} aria-label={L('pages so far')}>
+              {/* The stage fits about six thumbnails; a long chain keeps its newest pages (the context
+                  for the current one) and folds the rest into a count (review-loop #67). */}
+              {earlier > 0 ? (
+                <li className={styles.thumbMore}>
+                  {earlier === 1 ? L('1 earlier page…') : L('{n} earlier pages…', { n: earlier })}
+                </li>
+              ) : null}
+              {s.pages
+                .slice(0, -1)
+                .slice(-STRIP_MAX)
+                .map((p, i) => (
+                  <Thumb key={i} page={p} />
+                ))}
+            </ul>
+          </div>
           <div className={styles.current}>
             {current ? <CurrentPage page={current} /> : null}
-            {last ? (
-              <div
-                className={`${styles.verdict} ${s.verdict === 'intact' ? styles.intact : styles.broken} pb-enter`}
-              >
-                {/* The server picks the line (content/lines.json, or the VIP's "close enough"):
-                    it arrives in English and shows through the table. */}
-                <span className={styles.verdictLine}>
-                  {s.verdictLine === null ? null : L.sent(s.verdictLine)}
-                </span>
-                <span className={styles.verdictPair}>
-                  “{s.pages[0]?.kind === 'word' ? s.pages[0].text : '—'}” → “
-                  {current?.kind === 'guess' ? (current.text ?? '???') : '—'}”
-                </span>
-              </div>
-            ) : null}
+            {/* I-512 A: the guess alone first — the verdict lands a beat later (Verdict.tsx) */}
+            {last ? <Verdict showing={s} current={current} /> : null}
           </div>
         </div>
       </Stage>

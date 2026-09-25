@@ -26,6 +26,7 @@ export type {
 export { Avatar, AvatarPhotos, avatarColorVar } from './ui/Avatar';
 export type { AvatarProps } from './ui/Avatar';
 export { PlayerChip } from './ui/PlayerChip';
+export { LeadMark } from './ui/LeadMark';
 export type { PlayerChipProps } from './ui/PlayerChip';
 export { ServerClockProvider, useSecondsLeft, useServerNow, useServerOffset } from './ui/clock';
 export { DeadlineBar } from './ui/DeadlineBar';
@@ -42,6 +43,8 @@ export type { ClipOptions, PlayCue, PlayCueOptions, SoundApi, SoundCue } from '.
 export { buzz, hapticsEnabled, setHapticsEnabled } from './ui/haptics';
 export { DEFAULT_PAD_STYLE, getPadStyle, setPadStyle, usePadStyle } from './ui/pad';
 export type { PadPaper, PadPencil, PadStyle } from './ui/pad';
+export { useShellTimerLabel, useTimerLabel } from './ui/timerLabel';
+export type { TimerLabel } from './ui/timerLabel';
 export { trace } from './ui/trace';
 export type { TraceEvent } from './ui/trace';
 export {

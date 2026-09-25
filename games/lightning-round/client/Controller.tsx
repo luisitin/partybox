@@ -8,6 +8,7 @@ import {
   buzz,
   useHold,
   useSecondsLeft,
+  useServerNow,
   useT,
 } from '@partybox/game-sdk/ui';
 import type { GameControllerProps, Translator } from '@partybox/game-sdk/ui';
@@ -15,8 +16,9 @@ import type { LightningControllerView } from '../server/index';
 import type { Input } from '../server/types';
 import { Outcome, RoomRows, Stake, wagerLabel } from './ControllerBits';
 import { CustomStake } from './CustomStake';
+import { PhoneNext } from './NextStep';
 import styles from './Controller.module.css';
-import { pointsText, roundLabel } from './labels';
+import { topicLine, pointsText, roundLabel } from './labels';
 import { STRINGS } from './strings';
 import { FINAL_REVEAL_HOLD_MS, REVEAL_BEAT_MS } from './timing';
 
@@ -36,6 +38,7 @@ function lockedLine(spare: number, phoneOnly: boolean, L: Translator): string {
 export function Controller({
   view,
   send,
+  skip,
 }: GameControllerProps<LightningControllerView, Input>): JSX.Element {
   const L = useT(STRINGS);
   const { phaseId } = view;
@@ -99,7 +102,6 @@ export function Controller({
             ? `${roundKicker(view, L)} · ${L('you bet {stake}', { stake })}`
             : roundKicker(view, L)
         } /* I-039 C */
-        prompt={view.question.text}
         choices={view.question.choices.map((label, index) => ({ id: String(index), label }))}
         selectedId={locked ? String(view.myPickIndex) : null}
         correctId={
@@ -107,6 +109,21 @@ export function Controller({
         }
         disabled={revealed}
         lockedHint={lockedHint}
+        // I-288 B: while it's open, what a right answer is worth now
+        prompt={
+          view.worth && !(revealed && shown) ? (
+            <>
+              {view.question.text}
+              {/* I-789 B: after the tap the line keeps its space — locking in moves nothing;
+                  I-790 C: the reveal band takes its place */}
+              <Worth worth={view.worth} deadline={view.deadline} held={locked || revealed} />
+            </>
+          ) : (
+            view.question.text
+          )
+        }
+        // I-790 C: the verdict and the two numbers, one band under the question
+        band={revealed && shown ? <Outcome view={view} streakBefore={streakBefore} /> : undefined}
         // A "phone only" room: the TV's rows, on the phone under the answers (the owner).
         after={
           revealed && shown && view.phoneOnly && view.rows ? <RoomRows rows={view.rows} /> : null
@@ -117,7 +134,10 @@ export function Controller({
         }}
         footer={
           revealed && shown ? (
-            <Outcome view={view} streakBefore={streakBefore} spare={spare} />
+            // I-589: the owner's Next button, on the VIP's phone only
+            view.next && skip ? (
+              <PhoneNext next={view.next} skip={skip} phaseKey={view.deadline} />
+            ) : null
           ) : revealed && finalQ ? (
             <div className={styles.stake} role="status">
               🎲 {view.phoneOnly ? L('The bets are in…') : L('The bets are in — look at the TV')}
@@ -145,7 +165,11 @@ export function Controller({
         letters={false}
         tone="final"
         promptKey="wager"
-        kicker={L('Final question next')}
+        kicker={
+          view.finalTopic
+            ? L('Final question: {topic}', { topic: topicLine(view.finalTopic, L) }) // I-550 A
+            : L('Final question next')
+        }
         prompt={
           <>
             {/* I-026 B: once placed, the prompt is the pot. */}
@@ -153,10 +177,12 @@ export function Controller({
               <span key="pot" className={`${styles.pot} pb-pop`}>
                 {L('{amount} in the pot', { amount: potAmount })}
               </span>
-            ) : view.myScore > 0 ? (
-              L('Wager part of your {points}', { points: pointsText(view.myScore, L) })
             ) : (
-              L('No points yet — you can only wager 0')
+              <span className={styles.wagerPrompt}>
+                {view.myScore > 0
+                  ? L('Wager part of your {points}', { points: pointsText(view.myScore, L) })
+                  : L('No points yet — you can only wager 0')}
+              </span>
             )}
             <span className={styles.rule}>
               {L('Right answer: +wager. Wrong or no answer: −wager.')}
@@ -165,7 +191,7 @@ export function Controller({
         }
         choices={options.map((o) => ({
           id: String(o.percent),
-          label: wagerLabel(o, view.myScore, L),
+          label: wagerLabel(o, L),
         }))}
         selectedId={selected ? String(selected.percent) : null}
         disabled={customPlaced !== null}
@@ -187,7 +213,8 @@ export function Controller({
             />
           ) : null
         }
-        className={potAmount !== null ? styles.placed : undefined}
+        // I-550 (the owner's note): the bet page is laid out to fit — presets two by two
+        className={`${styles.wagerScreen} ${potAmount !== null ? styles.placed : ''}`}
       />
     );
   }
@@ -213,5 +240,30 @@ export function Controller({
       hint={view.phoneOnly ? L('the next question is on its way') : undefined}
       mood="watch"
     />
+  );
+}
+
+/** I-288 B: "+812 now" — a right answer's worth this instant, draining with the speed bonus. */
+function Worth({
+  worth,
+  deadline,
+  held = false,
+}: {
+  worth: NonNullable<LightningControllerView['worth']>;
+  deadline: number | null;
+  /** Locked in: the line is hidden but keeps its height. */
+  held?: boolean;
+}): JSX.Element | null {
+  const L = useT(STRINGS);
+  // The server's clock (the shell's offset), not this phone's: a phone a second off would promise
+  // points the server does not give. Ten looks a second, like the branch.
+  const now = useServerNow(100);
+  if (deadline === null) return null;
+  const left = Math.max(0, Math.min(worth.windowMs, deadline - now));
+  const points = worth.base + Math.round(worth.speedMax * (left / worth.windowMs)) + worth.bonus;
+  return (
+    <span className={`${styles.worth} ${held ? styles.worthHeld : ''}`} aria-hidden={held}>
+      {L('+{points} now', { points })}
+    </span>
   );
 }

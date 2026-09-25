@@ -4,9 +4,10 @@ import type { CSSProperties, JSX } from 'react';
 import { BigText, Scoreboard, Stage, useT } from '@partybox/game-sdk/ui';
 import type { GameTvProps } from '@partybox/game-sdk/ui';
 import type { LightningTvView } from '../server/index';
-import { drawText } from './labels';
+import { topicLine, drawText } from './labels';
 import { STRINGS } from './strings';
 import { FinalReveal } from './TvFinal';
+import { TvNext, useStandingsUp } from './NextStep';
 import { AnswerCard, RevealRows, RoundHeader, TvQuestion } from './TvQuestion';
 import styles from './Tv.module.css';
 
@@ -19,9 +20,10 @@ function Bolt(): JSX.Element {
   );
 }
 
-export function Tv({ view }: GameTvProps<LightningTvView>): JSX.Element {
+export function Tv({ view, skip }: GameTvProps<LightningTvView>): JSX.Element {
   const L = useT(STRINGS);
   const standings = view.standings ?? [];
+  const standingsUp = useStandingsUp(view.phaseId === 'reveal' ? view.deadline : null); // I-589
   if (view.phaseId === 'intro') {
     // Bolt + title ride the shell's phase rise; the tagline and the pill follow one beat each.
     return (
@@ -77,7 +79,12 @@ export function Tv({ view }: GameTvProps<LightningTvView>): JSX.Element {
     }
     return (
       <Stage>
-        <RoundHeader round={view.round} question={view.question} />
+        <RoundHeader
+          round={view.round}
+          question={view.question}
+          // I-589: the owner's Next button, with the standings
+          aside={standingsUp && view.next && skip ? <TvNext next={view.next} skip={skip} /> : null}
+        />
         <p className={styles.asked}>{view.question?.text ?? '…'}</p>
         {view.question && view.correctIndex !== undefined ? (
           <AnswerCard question={view.question} correctIndex={view.correctIndex} />
@@ -100,6 +107,12 @@ export function Tv({ view }: GameTvProps<LightningTvView>): JSX.Element {
           </span>
         </div>
         <BigText level="h2">{L('Place your wagers')}</BigText>
+        {/* I-550 A: the bet is on a topic the room can see */}
+        {view.finalTopic ? (
+          <p className={styles.finalTopic}>
+            {L('Final question: {topic}', { topic: topicLine(view.finalTopic, L) })}
+          </p>
+        ) : null}
         <p className={`pb-muted pb-caption ${styles.rules}`}>
           {L('Right answer wins the bet · wrong answer loses it')}
           {gap > 0 ? ` · ${L('{name} leads by {gap}', { name: standings[0]!.name, gap })}` : ''}

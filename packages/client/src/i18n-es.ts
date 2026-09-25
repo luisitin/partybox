@@ -49,6 +49,11 @@ export const es: Texts = {
     takenBadge: 'ya',
     thisMonth: 'este mes',
     yourPhoto: 'tu foto',
+    roomLabel: 'Sala',
+    peopleIn: (n) =>
+      n === 0 ? 'aún no hay nadie' : n === 1 ? '1 persona dentro' : `${n} personas dentro`,
+    faceSwipe: 'Cara · desliza para ver más',
+    colourLabel: 'Color',
     openFailed: 'No se pudo abrir una sala.',
     noAnswer: 'El anfitrión no respondió.',
   },

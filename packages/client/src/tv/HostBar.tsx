@@ -200,16 +200,19 @@ export function HostBar({ client, room, view }: HostBarProps): JSX.Element | nul
           >
             {view?.paused ? `▶ ${t.vip.resume}` : `⏸ ${t.vip.pause}`}
           </button>
-          <button
-            type="button"
-            className={styles.button}
-            onClick={() => client.act({ action: 'skip' })}
-          >
-            ⏭{' '}
-            {view?.vipSkipLabel
-              ? serverText(view.vipSkipLabel, L.lang, room.selectedGameId)
-              : t.host.skip}
-          </button>
+          {/* I-589: a phase with the game's own Next button on the stage leaves this one out */}
+          {view?.vipSkipHidden ? null : (
+            <button
+              type="button"
+              className={styles.button}
+              onClick={() => client.act({ action: 'skip' })}
+            >
+              ⏭{' '}
+              {view?.vipSkipLabel
+                ? serverText(view.vipSkipLabel, L.lang, room.selectedGameId)
+                : t.host.skip}
+            </button>
+          )}
           <button
             type="button"
             className={`${styles.button} ${confirm === 'end' ? styles.danger : ''}`}

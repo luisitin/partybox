@@ -26,6 +26,9 @@ export const ES_GAME: Readonly<Record<string, string>> = {
   'Memory test (nothing)': 'Prueba de memoria (nada)',
   'Last call only': 'Solo el último',
   'Full board': 'Tablero completo',
+  // I-407: the slim preview bar
+  '{style}?': '¿{style}?',
+  Change: 'Cambiar',
 
   // What the server writes: the pattern's hint (its name is one of the manifest's options above).
   'Five in a row — across, down or diagonal. FREE counts.':

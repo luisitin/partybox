@@ -13,6 +13,12 @@ export const STRINGS: Strings = {
     '{passes} of your {others} friends will touch your book.':
       'Tu libro pasará por las manos de {passes} de tus {others} amigos.',
     'Pick something drawable.': 'Elige algo que se pueda dibujar.',
+    // I-507 A
+    'It passes to 1 player, who only guesses.': 'Pasa a 1 jugador, que solo adivina.',
+    'It passes to {n} players in turn; the last of them only guesses.':
+      'Pasa a {n} jugadores por turnos; el último solo adivina.',
+    // I-507 B
+    '{n} pages': '{n} páginas',
     'Locked in': '¡Elegida!',
     'Drawing starts when everyone has picked.': 'Se empieza a dibujar cuando todos hayan elegido.',
     'Pick your secret word': 'Elige tu palabra secreta',
@@ -34,10 +40,16 @@ export const STRINGS: Strings = {
     'That was the last page of this book.': 'Esa fue la última página de este libro.',
     'Send an empty sheet': 'Enviar hoja en blanco',
     'Done drawing': 'Dibujo listo',
-    'Draw your word: “{text}”': 'Dibuja tu palabra: “{text}”',
-    'Now draw your guess: “{text}”': 'Ahora dibuja tu respuesta: “{text}”',
+    // I-794 H: one bold line over the sheet (the word follows, in the accent), and whose book
+    // rides in the timer bar ("Max's book · 1/6").
+    'Draw:': 'Dibuja:',
+    'Draw your guess:': 'Dibuja tu respuesta:',
+    "Someone's book": 'El libro de alguien', // "{name}'s book" is the TV's (below)
     'the drawing to guess': 'el dibujo por adivinar',
-    'Last guess — what is this?': 'Última respuesta: ¿qué es esto?',
+    // I-795 I: the drawing to guess opens large on a tap.
+    'Show the drawing large': 'Ver el dibujo en grande',
+    Close: 'Cerrar',
+    'Last guess: what is this?': 'Última respuesta: ¿qué es esto?',
     'What is this? (you draw it next)': '¿Qué es esto? (luego lo dibujas tú)',
     'Your best guess…': 'Tu mejor respuesta…',
     'Send guess': 'Responder',
@@ -82,6 +94,9 @@ export const STRINGS: Strings = {
     "{name}'s book · page {page} of {pages}. Your turn comes when your book is up.":
       'Libro de {name} · página {page} de {pages}. Te tocará cuando salga tu libro.',
     'Your book is up': '¡Sale tu libro!',
+    // I-796 K: a TV room's phone holds a thumbnail of the page on stage.
+    'On the TV now': 'Ahora en la TV',
+    'Your turn comes when your book is up.': 'Te tocará cuando salga tu libro.',
     'Your book is on the TV': 'Tu libro está en la TV',
     'your word': 'tu palabra',
     'a guess': 'una respuesta',
@@ -135,8 +150,7 @@ export const STRINGS: Strings = {
 
     // TV: the show.
     "{name}'s book": 'El libro de {name}',
-    '{name} turns the pages · book {book} of {books} · page {page} of {pages}':
-      '{name} pasa las páginas · libro {book} de {books} · página {page} de {pages}',
+    'book {book} of {books}': 'libro {book} de {books}',
     'pages so far': 'páginas hasta ahora',
     '1 earlier page…': '1 página anterior…',
     '{n} earlier pages…': '{n} páginas anteriores…',

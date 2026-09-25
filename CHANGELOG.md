@@ -6,6 +6,46 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com/); co
 
 ### Fixed
 
+- **Everyone sees the settings while the VIP tunes** (I-648, option B): while the VIP picks a game, every other phone lists that game's settings under its name, read-only, updating as the VIP changes them — so nobody finds out spicy is ON after the first card. The setting that just changed breathes yellow once over 2 s (held still under reduced motion).
+
+- **Broken Pencil: the drawing on the show fills its stage.** The book's title and page count move to the left column above the WORD tile, and "X drew" becomes a tag on the sheet's corner. A drawing is now about 650 px tall on the 1080-px TV instead of 480. The crammed text under the title is shortened to two lines, "BOOK 1 OF 6" / "PAGE 2 OF 5". (I-211, option B)
+
+- **Broken Pencil: the verdict lands a beat after the last guess.** On a book's last page the guess shows alone, and the CHAIN BROKEN / UNBROKEN box rises 2.5 s later (3.5 s for a book that survived). The presenter's Next is held for that beat too, so a quick thumb can't skip the verdict. (I-512, option B)
+
+- **The night's leader no longer sweeps every tied award.** A tied stat now goes to a player who has no award yet, and only then to the higher score, so one player can no longer take all three on ties. This applies to Blanks, and to Wisecrack, which uses the same award code. (I-474, option A)
+
+- **The leader is "1st", everywhere** (I-268, option C): the roster's ▲ that nobody read as "leading" is now a small "1st" tag ("1.º" in Spanish); the same tag replaces the 👑 on Lightning's reveal rows and the 🏆 on a late joiner's bench, with no mark while nobody has scored or everyone is tied. A roster score that goes up shows "+N" over it for 2 seconds.
+
+- **"More below" is part of the footer now, not a pill on top of the page.** The ▾ arrow used to land on "Play again", "Start Bingo", the avatar grid and answer C. It is now a slim row at the top of the footer, with a grab bar and the words "more below", and the whole row is the button. It is laid out only while the page can scroll and fades out at the end, so nothing moves under your thumb. A screen with no footer shows the same row in the bottom safe area. (I-788, option A)
+
+- **When your phone loses the Wi‑Fi, you can see it, and coming back is one clean step.** The game dims and can't be tapped under one calm card: "Reconnecting…", "Your seat is held for 1:57", and whether your answer was sent. When the link holds again, a one-beat "You're back" card says where the game is ("You missed questions 1 and 2. This is question 3 of 10: 8 seconds left.", "You · 3rd · 1,000"). Then the live screen appears, with no old question fading over it. (I-791, option D)
+
+- **"Look at the TV" screens now give your phone something to hold.** During a Wisecrack reveal, your phone shows the moment in miniature: the prompt and where it sits in the round, both answers as small cards ("yours" or "your pick" tagged), the authors and the votes as they land on the TV, the winner outlined, and "You weren't in this one: 1 more to go." In Broken Pencil's show, every phone holds a small framed copy of the page on the TV. (I-796, option K)
+
+- **The bet names the final's topic, and the bet page fits** — the owner: "fix how the bet page looks … a bit cramped and visually unappealing". While wagers are placed, the TV and every phone say "Final question: Food & Drink · Drinks · hard". On the phone the stakes are laid out two by two, amount over share with the chips beside it; the 100 % tile says "All in", and the custom row is one line. On an iPhone SE every stake is on screen at once. (I-550, option A)
+
+- **All four answers fit on every phone and stay put after you tap** — the answer tiles share the height under the question: 66 px each, down to their content on a small phone, so four fit an iPhone SE with no scroll. Four short answers go two by two. Sideways, the question sits on the left and the answers on the right. Locking in moves nothing: your tile gets the ring and the others only dim. (I-789, design review B)
+
+- **The reveal happens on the answers, and the result is one line on top** — the right answer's tile gets a green ring and "✓ the answer"; your wrong pick gets a red ring and "you". One band under the question keeps the two numbers apart: "Wrong · +0 this round · 987 total". Nobody reads a wrong answer as paying 1000 any more, and on a small phone the answer, your pick and your score are in one look. (I-790, design review C)
+
+- **The lobby shows people first; the tips go into one line** — a title row "Lobby 6 of 16" with Share and a ⋯ menu (Hurry up the VIP, set up your phone, Leave), the players straight after as a two-column grid with the add-a-bot slot, and every tip in one rotating line under them; on an iPhone SE the six players, the bot slot and the tip fit with no scrolling, and at 200 % text Share is no longer cut off (I-792, option E)
+
+- **Joining fits on one screen: name, face, colour, Join** — the face sits beside the name field (tap it to use a photo), the faces are one sideways-swiping strip in your colour, the colours are one row of dots, and the five languages sit behind one "🌐 EN ▾" in the header; nothing scrolls on any phone, iPhone SE included (I-793, option F)
+
+- **The drawing sheet gets the height; the header is one line** — whose book and the round now ride in the phone's timer bar ("Maximiliano's book · 1/6"), the prompt is one bold line ("Draw: “yoga class”"), and the colours plus one band of ink / pen size / Undo / Clear sit under a sheet that takes whatever height is left, so no tool hides under Send on an SE and Clear is never cut off at 200% text (I-794, option H)
+
+- **On a guess, the box to type in is always on screen** — the field and Send are laid out first and the drawing takes the height that is left (tap it to see it large), and when the keyboard opens the drawing shrinks instead of the box sliding away (I-795, option I)
+
+- **Bingo's style preview no longer covers your cards, and it can't hold the room forever** — the "like it?" block is now one slim row (the style's mark, "Stack?", Change, Confirm), so both cards show whole in the new style, and a line drains along the bar and confirms the pick by itself after 20 s, so a slow chooser holds the caller for 20 seconds at most (I-407, option B).
+
+- **The how-to says how this room will play** — Broken Pencil's rule 3 was always "round the circle", which is wrong when players per book is set below the number of players. It now follows the setting ("It passes to 2 players in turn; the last of them only guesses."), and a row under the how-to shows the book's pages as they will be: 📖 ✏️ ❓ ✏️ ❓ · 5 pages (I-507, option B).
+
+- **Lightning Round: the reveal shows the race, then the standings, with a Next button.** Right answers are dealt fastest first, each with its time (⚡ on the fastest). After 2 s the rows re-deal into score order. The standings now get "a bit more time": a regular reveal lasts 8 s instead of 5, and the final reveal stays at 5 s. When the standings arrive, a "next question" button shows up that "the vip or tv can click to go next": it sits on the TV in the header and on the VIP's phone. The usual Skip / Next is hidden on those screens. (I-589, option B)
+
+- **Lightning Round: the phone's clock no longer counts down when there is nothing to press, and it shows what an answer is worth right now.** During the intro and the reveal the phone keeps the bar but drops the seconds, like the TV. Wisecrack's phones now do the same outside answering and voting. While a question is open, "+974 now" sits under it and drops as time runs. (I-288, option B)
+
+- **Bots no longer gang up on a person's joke in Blanks.** A bot's vote leans a little toward cards from people, and each bot now has its own taste, so a person wins about their fair share of a bot room (I-445, option B).
+
 - **Blanks' hand at big text sizes** (I-159, option B): when the phone's text is so big the fan
   would show one unreadable card per screen, the hand becomes a list you scroll, every card whole.
   A small Fan / List switch at the end of the round line lets any phone choose, and remembers it.

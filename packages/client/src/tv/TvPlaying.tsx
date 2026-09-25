@@ -34,6 +34,8 @@ export interface TvPlayingProps {
   music?: MusicEngine;
   /** Fires once the game's own component has mounted (module loaded, first view rendered). */
   onGameReady?: () => void;
+  /** I-589: the host's skip, handed to the game for its own on-stage Next button. */
+  onSkip?: () => void;
 }
 
 /** Mounts next to the game inside Suspense, so it reports exactly when the game painted. */
@@ -57,7 +59,14 @@ function DelayedFallback({ children }: { children: ReactNode }): JSX.Element | n
   return show ? <>{children}</> : null;
 }
 
-export function TvPlaying({ room, view, audio, onGameReady, music }: TvPlayingProps): JSX.Element {
+export function TvPlaying({
+  room,
+  view,
+  audio,
+  onGameReady,
+  music,
+  onSkip,
+}: TvPlayingProps): JSX.Element {
   const L = useT(STRINGS);
   // The curtain stays mounted while it fades out after a resume ("adjust state during render":
   // the paused flag flipping true → false starts the leave; animationend or 400 ms clears it).
@@ -108,7 +117,7 @@ export function TvPlaying({ room, view, audio, onGameReady, music }: TvPlayingPr
     );
   }
   const GameTv = module?.Tv as unknown as
-    ((props: { view: PushedView<TvView> }) => JSX.Element) | undefined;
+    ((props: { view: PushedView<TvView>; skip?: () => void }) => JSX.Element) | undefined;
   const loading = (
     <DelayedFallback>
       <Stage center>
@@ -200,7 +209,7 @@ export function TvPlaying({ room, view, audio, onGameReady, music }: TvPlayingPr
             <GameErrorBoundary surface="tv">
               <Suspense fallback={loading}>
                 <SoundProvider play={play} clip={clip} hush={hush}>
-                  <GameTv view={view} />
+                  <GameTv view={view} skip={onSkip} />
                   <Ready onReady={onGameReady} />
                 </SoundProvider>
               </Suspense>
