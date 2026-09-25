@@ -22,6 +22,9 @@ export const ES_GAME: Readonly<Record<string, string>> = {
   'American Woman': 'Mujer estadounidense',
   'Soft-Spoken Woman': 'Mujer de voz suave',
   Original: 'Original',
+  'Spanish Woman': 'Mujer latina',
+  'Spanish Man': 'Hombre latino',
+  'Jolly Spanish Man': 'Señor alegre',
   // I-112 C: one three-way choice replaced "Called board" and "Previous number".
   'Memory test (nothing)': 'Prueba de memoria (nada)',
   'Last call only': 'Solo el último',

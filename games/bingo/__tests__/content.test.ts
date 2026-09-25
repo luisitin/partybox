@@ -48,12 +48,14 @@ describe('Spanish calls (ADR-054)', () => {
     expect(callFor(1, true, 'es')).toBe(FAMILY_ES.calls[0]?.call);
   });
 
-  it('a Spanish game has no reader (the clips are English); English keeps its voice', () => {
+  it('a Spanish game reads in a Spanish voice, never an English one; English keeps its voice', () => {
     const ctx = { players, settings: { reader: 'george' }, seed: 5, now: 0 };
     const es = game.init({ ...ctx, contentLang: 'es' });
     const en = game.init(ctx);
     expect(es.contentLang).toBe('es');
-    expect((game.tvView(es) as { reader: string }).reader).toBe('none');
+    expect((game.tvView(es) as { reader: string }).reader).toBe('dora');
+    const santa = game.init({ ...ctx, settings: { reader: 'santa' }, contentLang: 'es' });
+    expect((game.tvView(santa) as { reader: string }).reader).toBe('santa');
     expect((game.tvView(en) as { reader: string }).reader).toBe('george');
   });
 });

@@ -23,7 +23,15 @@ import {
 } from './phases/scoreboard';
 import { results } from './scoring';
 import { menusOpen } from './claims';
-import { DECK, MAX_CARDS, MAX_ROUNDS, PATTERNS, PHASES, READERS, inputSchema } from './types';
+import {
+  DECK,
+  MAX_CARDS,
+  MAX_ROUNDS,
+  PATTERNS,
+  PHASES,
+  READERS_BY_LANG,
+  inputSchema,
+} from './types';
 import type { Input, Pattern, Reader, Settings, State } from './types';
 import { controllerView, tvView } from './views';
 import type { BingoControllerView, BingoTvView } from './views';
@@ -47,7 +55,8 @@ function callFlags(raw: RawSettings): { showBoard: boolean; showPrevious: boolea
   return { showBoard, showPrevious: showBoard || raw['showPrevious'] !== false };
 }
 
-export function readSettings(raw: RawSettings): Settings {
+export function readSettings(raw: RawSettings, lang?: 'en' | 'es'): Settings {
+  const voices = READERS_BY_LANG[lang === 'es' ? 'es' : 'en'];
   const rounds = Math.min(MAX_ROUNDS, Math.max(1, Math.round(Number(raw['rounds'] ?? 3))));
   const patterns: Pattern[] = [];
   for (let i = 1; i <= rounds; i++) patterns.push(asPattern(raw[`round${i}`], 'line'));
@@ -59,10 +68,11 @@ export function readSettings(raw: RawSettings): Settings {
     spicy: raw['spicy'] === true,
     ...callFlags(raw),
     showClose: raw['showClose'] === true,
-    // READER-VOICES: Bingo's default reader is the Soft-Spoken Woman (Kokoro "sky").
-    reader: (READERS as readonly unknown[]).includes(raw['reader'])
+    // READER-VOICES: Bingo's default reader is the Soft-Spoken Woman (Kokoro "sky"); a Spanish
+    // game's is Dora, and a voice of the other language never calls (owner 2026-09-25).
+    reader: (voices.readers as readonly unknown[]).includes(raw['reader'])
       ? (raw['reader'] as Reader)
-      : 'sky',
+      : voices.fallback,
   };
 }
 
@@ -77,7 +87,7 @@ function init(ctx: InitContext): State {
     phase: { id: 'intro', startedAt: ctx.now, deadline: null },
     rng: seedRng(ctx.seed),
     players,
-    settings: readSettings(ctx.settings),
+    settings: readSettings(ctx.settings, ctx.contentLang === 'es' ? 'es' : 'en'),
     // ADR-054: the calls' language, fixed for the game (absent = English).
     ...(ctx.contentLang === 'es' ? { contentLang: 'es' as const } : {}),
     round: {

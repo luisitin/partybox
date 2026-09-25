@@ -3,7 +3,7 @@
 // phone's game picker and the TV's host panel (ADR-031) so both edit the same spec the same way.
 import type { JSX } from 'react';
 import { multiselectPicks } from '@partybox/shared';
-import type { SettingSpec, Settings } from '@partybox/shared';
+import type { ContentLang, SettingSpec, Settings } from '@partybox/shared';
 import { useLang } from '@partybox/game-sdk/ui';
 import { t } from './i18n';
 import { gameText } from './i18n-games';
@@ -21,6 +21,28 @@ export interface SettingFieldProps {
   settings?: Settings;
   /** Whose manifest this is: its labels read in the device's language from the game's table. */
   gameId?: string;
+  /** ADR-054: the language the game will play in — a select offers only its options of that
+   *  language (and those with none), e.g. Bingo's Spanish reader voices in a Spanish game. */
+  contentLang?: ContentLang;
+}
+
+/** The select options offered in `lang` (all of them when it is unknown). */
+export function optionsFor<O extends { lang?: ContentLang }>(
+  options: readonly O[],
+  lang: ContentLang | undefined,
+): readonly O[] {
+  return lang === undefined
+    ? options
+    : options.filter((o) => o.lang === undefined || o.lang === lang);
+}
+
+/** The game's content language in a room (`gameContentLang` of the engine, from the catalog). */
+export function playLang(
+  game: { contentLangs?: readonly ContentLang[] } | undefined,
+  roomLang: ContentLang,
+): ContentLang {
+  const langs = game?.contentLangs ?? ['en'];
+  return langs.includes(roomLang) ? roomLang : (langs[0] ?? 'en');
 }
 
 export function SettingField({
@@ -31,6 +53,7 @@ export function SettingField({
   players,
   settings,
   gameId,
+  contentLang,
 }: SettingFieldProps): JSX.Element {
   const id = `${idPrefix}-${spec.key}`;
   const lang = useLang();
@@ -145,7 +168,17 @@ export function SettingField({
         </fieldset>
       );
     }
-    case 'select':
+    case 'select': {
+      const offered = optionsFor(spec.options, contentLang);
+      // A value of the other language (the default, or the room switched) shows the default if it
+      // is offered, else the language's first own option — the game's fallback (Bingo: Dora).
+      const current = String(value ?? spec.default);
+      const has = (v: string): boolean => offered.some((o) => o.value === v);
+      const shownValue = has(current)
+        ? current
+        : has(spec.default)
+          ? spec.default
+          : (offered.find((o) => o.lang === contentLang)?.value ?? offered[0]?.value ?? current);
       return (
         <label className={styles.setting} htmlFor={id}>
           <span className={styles.settingLabel}>
@@ -155,10 +188,10 @@ export function SettingField({
           <select
             id={id}
             className={styles.select}
-            value={String(value ?? spec.default)}
+            value={shownValue}
             onChange={(e) => onChange(e.target.value)}
           >
-            {spec.options.map((o) => (
+            {offered.map((o) => (
               <option key={o.value} value={o.value}>
                 {L(o.label)}
               </option>
@@ -166,5 +199,6 @@ export function SettingField({
           </select>
         </label>
       );
+    }
   }
 }

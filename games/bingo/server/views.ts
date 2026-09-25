@@ -218,9 +218,7 @@ function common(state: State): Common {
   const winnerId =
     state.phase.id === 'bingo' || state.phase.id === 'scoreboard' ? round.winnerId : null;
   return {
-    // ADR-054: the clips say the call in English; a Spanish game's calls show silently (the
-    // owner's call on Spanish recordings is pending) — never an English voice over Spanish text.
-    reader: state.contentLang === 'es' ? 'none' : (state.settings.reader ?? 'sky'),
+    reader: state.settings.reader ?? 'sky',
     round: round.number,
     totalRounds: state.settings.rounds,
     pattern: round.pattern,

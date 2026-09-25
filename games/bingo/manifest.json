@@ -133,11 +133,14 @@
       "default": "sky",
       "options": [
         { "value": "none", "label": "No reader" },
-        { "value": "george", "label": "Old British Man" },
-        { "value": "fable", "label": "Young British Man" },
-        { "value": "jessica", "label": "American Woman" },
-        { "value": "sky", "label": "Soft-Spoken Woman" },
-        { "value": "original", "label": "Original" }
+        { "value": "george", "label": "Old British Man", "lang": "en" },
+        { "value": "fable", "label": "Young British Man", "lang": "en" },
+        { "value": "jessica", "label": "American Woman", "lang": "en" },
+        { "value": "sky", "label": "Soft-Spoken Woman", "lang": "en" },
+        { "value": "original", "label": "Original", "lang": "en" },
+        { "value": "dora", "label": "Spanish Woman", "lang": "es" },
+        { "value": "alex", "label": "Spanish Man", "lang": "es" },
+        { "value": "santa", "label": "Jolly Spanish Man", "lang": "es" }
       ]
     },
     {

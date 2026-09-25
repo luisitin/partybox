@@ -13,7 +13,20 @@ import voices from './call-voices.json';
  *  offset (5 % of peak, 5 ms early so the attack is kept — per clip: the Kokoro leads vary from
  *  25 to 200 ms) and its length (the rule "the room waits for the reader": calls-shown.test). */
 type Clips = Readonly<Record<string, Readonly<Record<string, readonly [number, number]>>>>;
-const CLIPS = voices as unknown as Clips;
+const EN_CLIPS = voices as unknown as Clips;
+/** Owner 2026-09-25 (ADR-054): Kokoro's es-419 voices (dora, alex, santa) said the same 75 calls
+ *  ("B, 12." in Spanish), measured the same way, in `call-voices.es.json` — its own chunk, fetched
+ *  as this module loads (well before a round's first call), so the phone's Bingo closure stays in
+ *  budget. Until it lands a Spanish clip still plays, from its first sample (`ES_LEAD_S`). */
+let CLIPS: Clips = EN_CLIPS;
+const ES_VOICES: ReadonlySet<string> = new Set(['dora', 'alex', 'santa']);
+const ES_LEAD_S = 0;
+export const spanishClipsLoaded: Promise<void> = import('./call-voices.es.json').then(
+  (m) => {
+    CLIPS = { ...EN_CLIPS, ...(m.default as unknown as Clips) };
+  },
+  () => undefined,
+);
 
 /** The clip for a call in the room's voice, or null for "No reader". */
 export function callClip(
@@ -23,7 +36,7 @@ export function callClip(
 ): string | null {
   if (reader === 'none') return null;
   const name = `${letter.toLowerCase()}${number}`;
-  return reader === 'original' || !CLIPS[reader]
+  return reader === 'original' || (!CLIPS[reader] && !ES_VOICES.has(reader))
     ? `/sfx/calls/${name}.wav`
     : `/sfx/calls/${reader}/${name}.wav`;
 }
@@ -33,6 +46,7 @@ export const BALL_LAND_MS = 190;
 
 /** Where the first syllable starts in a clip (the caller skips the silence before it). */
 export function clipLeadS(letter: string, number: number, reader: string = 'original'): number {
+  if (ES_VOICES.has(reader) && !CLIPS[reader]) return ES_LEAD_S;
   const set = CLIPS[reader === 'none' ? 'original' : reader] ?? CLIPS['original'];
   return set?.[`${letter.toLowerCase()}${number}`]?.[0] ?? 0.084;
 }

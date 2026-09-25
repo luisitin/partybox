@@ -13,7 +13,7 @@ import { gameText } from '../i18n-games';
 import { keySetting } from '../keySetting';
 import type { TvClient } from '../net/tv';
 import { serverText } from '../server-text';
-import { SettingField } from '../SettingField';
+import { SettingField, playLang } from '../SettingField';
 import { useStepCycle } from '../useStepCycle';
 import { STRINGS } from './strings';
 import { TvRoomSwitches } from './TvRoomSwitches';
@@ -147,6 +147,7 @@ export function TvChosen({ room, client }: { room: RoomSnapshot; client: TvClien
                   settings={room.settings}
                   idPrefix="tv-setting"
                   gameId={game.id}
+                  contentLang={playLang(game, room.contentLang)}
                   onChange={(v) =>
                     client.act({ action: 'updateSettings', settings: { [spec.key]: v } })
                   }

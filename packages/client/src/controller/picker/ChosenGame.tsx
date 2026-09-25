@@ -13,7 +13,7 @@ import { gameText } from '../../i18n-games';
 import { keySetting } from '../../keySetting';
 import type { Controller } from '../../net/controller';
 import { serverText } from '../../server-text';
-import { SettingField } from '../../SettingField';
+import { SettingField, playLang } from '../../SettingField';
 import { fixLabel, runFix, startFix } from '../../startFix';
 import selecting from '../Selecting.module.css';
 import { tunedLine, tunedSettings } from '../tunedLine';
@@ -172,6 +172,7 @@ export function ChosenGame({ controller, room, me }: ChosenGameProps): JSX.Eleme
                   players={room.players.length}
                   settings={room.settings}
                   gameId={form.id}
+                  contentLang={playLang(game, room.contentLang)}
                   onChange={(v) =>
                     controller.vip({ action: 'updateSettings', settings: { [spec.key]: v } })
                   }

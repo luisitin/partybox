@@ -31,9 +31,28 @@ export interface Settings {
   reader: Reader;
 }
 
-/** The Reader setting's voices, in the owner's order: none, four Kokoro voices, the shipped Zira. */
-export const READERS = ['none', 'george', 'fable', 'jessica', 'sky', 'original'] as const;
+/** The Reader setting's voices, in the owner's order: none, four Kokoro voices, the shipped Zira;
+ *  then (owner 2026-09-25, ADR-054) Kokoro's three Latin American Spanish voices, the only ones a
+ *  Spanish game offers (`READERS_BY_LANG`). */
+export const READERS = [
+  'none',
+  'george',
+  'fable',
+  'jessica',
+  'sky',
+  'original',
+  'dora',
+  'alex',
+  'santa',
+] as const;
 export type Reader = (typeof READERS)[number];
+/** The voices a game in each content language may use, and its default. 'none' is in both. */
+export const READERS_BY_LANG: Readonly<
+  Record<'en' | 'es', { readers: readonly Reader[]; fallback: Reader }>
+> = {
+  en: { readers: ['none', 'george', 'fable', 'jessica', 'sky', 'original'], fallback: 'sky' },
+  es: { readers: ['none', 'dora', 'alex', 'santa'], fallback: 'dora' },
+};
 
 /** What the TV shows while a claim is checked (or celebrated). Computed once, never re-evaluated. */
 /** How the room moves on after a bingo: keep going (same pattern / blackout) or next. */
@@ -142,8 +161,7 @@ export interface RoundState {
 export interface State extends GameStateBase {
   settings: Settings;
   /** ADR-054: the language of the calls, fixed at init. Absent (older states, fixtures) =
-   *  English. The recorded call clips are English only, so a Spanish game calls silently
-   *  (views.ts `reader`) until Spanish recordings exist. */
+   *  English. A Spanish game's reader is one of the Spanish voices (`READERS_BY_LANG`). */
   contentLang?: 'en' | 'es';
   round: RoundState;
   /** Bingos won. */

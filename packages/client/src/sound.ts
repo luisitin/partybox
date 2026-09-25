@@ -281,7 +281,14 @@ export function createSoundEngine(options: SoundEngineOptions = {}): SoundEngine
       const name = src.split('/').pop() ?? src;
       // The trace records when the sound STARTS (its scheduled delay), not when it was asked for.
       const at = opts?.delayMs ?? 0;
-      trace('clip', { src: name, muted, ready: ctx?.state === 'running', delayMs: at });
+      trace('clip', {
+        src: name,
+        path: src,
+        offsetS: opts?.offsetS ?? 0,
+        muted,
+        ready: ctx?.state === 'running',
+        delayMs: at,
+      });
       // The audio trace reads calls as `speak` events (what the caller used to emit).
       if (name.match(/^[bingo]\d+\.wav$/))
         trace('speak', { text: name, voice: 'clip', delayMs: at });

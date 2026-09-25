@@ -44,7 +44,13 @@ export const settingSpecSchema = z.discriminatedUnion('type', [
     ...settingBase,
     type: z.literal('select'),
     default: z.string(),
-    options: z.array(z.object({ value: z.string(), label: z.string() })).min(2),
+    /** `lang` (ADR-054): offered only when the room's content language is that one (a reader's
+     *  voice); an option without it is offered in every language. */
+    options: z
+      .array(
+        z.object({ value: z.string(), label: z.string(), lang: z.enum(CONTENT_LANGS).optional() }),
+      )
+      .min(2),
   }),
   /**
    * Several picks from a list (ADR-034): the value is the picked option values joined by commas
