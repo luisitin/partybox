@@ -4,7 +4,7 @@
 // a game can offer the same two rows without importing the shell. Vibration and motion are already
 // in the SDK (`hapticsEnabled` / `setHapticsEnabled`, `useMotionOff` / `setMotionOff`).
 // Without a shell (tests, /preview) both switches read "off" and do nothing.
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useMemo } from 'react';
 import type { JSX, ReactNode } from 'react';
 
 export interface PhoneSwitch {
@@ -32,9 +32,10 @@ export function PhonePrefsProvider({
   value: Omit<PhonePrefs, 'available'>;
   children: ReactNode;
 }): JSX.Element {
-  return (
-    <PrefsContext.Provider value={{ ...value, available: true }}>{children}</PrefsContext.Provider>
-  );
+  // Memoized on the shell's (already memoized) value, so a Playing render doesn't re-render every
+  // usePhonePrefs consumer (foundation ba3450).
+  const ctx = useMemo(() => ({ ...value, available: true }), [value]);
+  return <PrefsContext.Provider value={ctx}>{children}</PrefsContext.Provider>;
 }
 
 export function usePhonePrefs(): PhonePrefs {
