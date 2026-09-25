@@ -4,8 +4,10 @@
 import type {
   AnyGameDefinition,
   GameEvent,
+  GamePresence,
   GameResults,
   GameStateBase,
+  InitContext,
   PlayerInfo,
   Settings,
 } from '@partybox/shared';
@@ -18,6 +20,10 @@ export interface PlayOptions {
   seed: number;
   strategy: PlayStrategy;
   settings?: Settings;
+  /** ADR-047: where everyone is (absent: a host from before presence), and how many of the last
+   *  seats can't see the TV. */
+  presence?: GamePresence;
+  remote?: number;
   /** Simulated wall-clock budget; the run stops (stuck=true) when exceeded. */
   maxSimMs: number;
   /** Hard cap on events, independent of simulated time. */
@@ -26,7 +32,7 @@ export interface PlayOptions {
 }
 
 export interface PlayResult {
-  init: { players: PlayerInfo[]; settings: Settings; seed: number; now: number };
+  init: InitContext;
   events: GameEvent<unknown>[];
   finalState: GameStateBase;
   results: GameResults | null;
@@ -58,9 +64,18 @@ function phaseKey(state: GameStateBase): string {
 
 export function playGame(game: AnyGameDefinition, options: PlayOptions): PlayResult {
   const rng = createRng(options.seed);
-  const players = makePlayers(options.players);
+  const remote = options.remote ?? 0;
+  const players = makePlayers(options.players).map((p, i) =>
+    options.presence ? { ...p, canSeeTv: i < options.players - remote } : p,
+  );
   const settings = defaultSettingsOf(game, options.settings);
-  const init = { players, settings, seed: options.seed, now: T0 };
+  const init: InitContext = {
+    players,
+    settings,
+    seed: options.seed,
+    now: T0,
+    ...(options.presence ? { presence: options.presence } : {}),
+  };
   let state: GameStateBase = game.init(init);
   let now = T0;
   const events: GameEvent<unknown>[] = [];

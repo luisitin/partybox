@@ -20,6 +20,7 @@ export function TvScores({ view }: Props): JSX.Element {
   // all zeros instead of landing unexplained (review-loop #35).
   const tied = view.standings.filter((r) => r.rank === 1).length > 1;
   const silentRound = view.promptsPlayed === 0;
+  const vipName = view.players.find((p) => p.id === view.vip)?.name;
   // I-027: where every row stood before this round — by pre-delta score, ties in roster order
   // (after round 1 everyone was level: the roster IS the old board).
   const roster = new Map(view.players.map((p, i) => [p.id, i]));
@@ -38,6 +39,16 @@ export function TvScores({ view }: Props): JSX.Element {
           : final
             ? L('Final round played')
             : L('After round {round} of {rounds}', { round: view.round, rounds: view.rounds })}
+        {/* Pacing rule (2026-09-25): the board waits for the VIP's Next — say whose phone on the
+            kicker line, so the board keeps its room above the host bar (reviews d0daab, 6eb6dd). */}
+        {final || finalNext ? null : (
+          <>
+            {' · '}
+            {vipName
+              ? L("Next on {name}'s phone", { name: vipName })
+              : L("Next on the VIP's phone")}
+          </>
+        )}
       </p>
       <BigText level="h1">{final ? L('Final scores') : L('Scores so far')}</BigText>
       {/* The hook goes above the board: at 5-6 players the bottom slot is the first thing clipped. */}
@@ -56,11 +67,7 @@ export function TvScores({ view }: Props): JSX.Element {
             …
           </span>
         </BigText>
-      ) : finalNext ? null : (
-        <BigText level="h2" tone="muted">
-          {L('Next round coming up…')}
-        </BigText>
-      )}
+      ) : null}
     </Stage>
   );
 }

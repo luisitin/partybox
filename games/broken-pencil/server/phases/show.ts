@@ -9,8 +9,11 @@ import {
   BOT_SHOW_MS,
   SHOW_MS,
   SUMMARY_MS,
+  SUMMARY_WORDS_PER_BOOK,
   VERDICT_BEAT_INTACT_MS,
   VERDICT_BEAT_MS,
+  readMs,
+  wordCount,
 } from '../types';
 import type { Input, State, Transition } from '../types';
 
@@ -30,12 +33,23 @@ export function showPage(state: State, b: number, page: number, now: number): St
   }
   // A bot owns no thumb: its pages turn on the shorter presenter-pace timers instead.
   const botsBook = book !== undefined && state.players[book.ownerId]?.bot === true;
+  // Pacing rule (2026-09-25): never before a slow reader has read the page — its word or guess,
+  // who wrote it (~4 words), and on a last page the verdict's beat and line.
+  const text = current && current.kind !== 'draw' ? (current.text ?? '???') : '';
+  const words = wordCount(text) + 4 + (line ? wordCount(line) + 2 : 0);
+  const beat = verdict === 'intact' ? VERDICT_BEAT_INTACT_MS : verdict ? VERDICT_BEAT_MS : 0;
+  const ms = Math.max((botsBook ? BOT_SHOW_MS : SHOW_MS)[kind], beat + readMs(words));
   return enterPhase(
     { ...state, rng, intactBooks, showing: { book: b, page, verdict, line } },
     'show',
     now,
-    (botsBook ? BOT_SHOW_MS : SHOW_MS)[kind],
+    ms,
   );
+}
+
+/** The summary's fallback: at least SUMMARY_MS, or a slow reader's time for every book. */
+export function summaryMs(state: State): number {
+  return Math.max(SUMMARY_MS, readMs(6 + SUMMARY_WORDS_PER_BOOK * state.books.length));
 }
 
 /** The first page of the first book (what closing the last step leads to). */
@@ -99,7 +113,7 @@ export function reduceShow(state: State, event: GameEvent<Input>, next: Transiti
 
 /** Phase "summary": every book's word → last guess, then `done` (the engine's results screen). */
 export function enterSummary(state: State, now: number): State {
-  return enterPhase(state, 'summary', now, SUMMARY_MS);
+  return enterPhase(state, 'summary', now, summaryMs(state));
 }
 
 export function reduceSummary(state: State, event: GameEvent<Input>, next: Transition): State {

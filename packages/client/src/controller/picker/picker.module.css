@@ -528,13 +528,14 @@
 
 /* The guest's steps light in turn, like the TV's (useStepCycle): the room reads together, and the
    screen never sits still past the phone gate. Every step lit when motion is reduced. */
-.guestSteps li {
-  opacity: 0.55;
-  transition: opacity var(--pb-motion-base) var(--pb-ease);
-}
-
-.guestSteps li.stepLit {
-  opacity: 1;
+/* Every step reads at full strength ([cc45f4]: nothing a slow reader needs is dimmed); the one
+   the room is on wears the accent badge, the others a quiet one. */
+.guestSteps li:not(.stepLit)::before {
+  background: var(--pb-surface-2);
+  color: var(--pb-text);
+  transition:
+    background var(--pb-motion-base) var(--pb-ease),
+    color var(--pb-motion-base) var(--pb-ease);
 }
 
 /* "Sam is choosing a game" + three dots that rise in turn, the TV's thinking line on a guest's
@@ -625,4 +626,43 @@
 
 .readingRow {
   border-color: var(--pb-accent);
+}
+
+/* Part 00 §3.5 (ADR-047): a game the room's presence doesn't suit — the notice above Start. */
+.notice {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-space-2);
+  margin-top: var(--pb-space-3);
+  padding: var(--pb-space-3);
+  border-radius: var(--pb-radius);
+  border: 2px solid var(--pb-accent-2);
+  background: var(--pb-surface);
+}
+
+.notice p {
+  margin: 0;
+  font-weight: 700;
+}
+
+.noticeActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pb-space-2);
+}
+
+.noticeActions button {
+  flex: 1 1 auto;
+  min-height: var(--pb-touch);
+  padding: 0 var(--pb-space-3);
+  border: none;
+  border-radius: 999px;
+  background: var(--pb-accent);
+  color: var(--pb-on-accent);
+  font-weight: 800;
+}
+
+.noticeActions .noticeQuiet {
+  background: var(--pb-surface-2);
+  color: var(--pb-text);
 }
